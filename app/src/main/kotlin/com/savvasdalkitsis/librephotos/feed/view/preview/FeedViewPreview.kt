@@ -1,14 +1,14 @@
-package com.savvasdalkitsis.librephotos.main.view.preview
+package com.savvasdalkitsis.librephotos.feed.view.preview
 
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.savvasdalkitsis.librephotos.main.state.MainState
-import com.savvasdalkitsis.librephotos.main.view.MainView
+import com.savvasdalkitsis.librephotos.feed.state.FeedState
+import com.savvasdalkitsis.librephotos.feed.view.FeedView
 import com.savvasdalkitsis.librephotos.ui.theme.AppTheme
 
-val mainStatePreview = MainState(listOf(
+val feedStatePreview = FeedState(listOf(
     "https://images.pexels.com/photos/459301/pexels-photo-459301.jpeg?auto=compress&cs=tinysrgb&dpr=3&h=750&w=1260",
     "https://images.pexels.com/photos/414032/pexels-photo-414032.jpeg?auto=compress&cs=tinysrgb&dpr=3&h=750&w=1260",
     "https://images.pexels.com/photos/6992/forest-trees-northwestisbest-exploress.jpg?auto=compress&cs=tinysrgb&dpr=3&h=750&w=1260",
@@ -51,6 +51,6 @@ val mainStatePreview = MainState(listOf(
 @Composable
 fun MainViewPreview() {
     AppTheme {
-        MainView(PaddingValues(0.dp), mainStatePreview)
+        FeedView(PaddingValues(0.dp), feedStatePreview)
     }
 }
