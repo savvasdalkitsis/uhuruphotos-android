@@ -17,33 +17,18 @@ import com.google.accompanist.insets.ui.Scaffold
 import com.google.accompanist.insets.ui.TopAppBar
 import com.savvasdalkitsis.librephotos.feed.view.FeedView
 import com.savvasdalkitsis.librephotos.home.state.HomeState
+import com.savvasdalkitsis.librephotos.main.MainScaffolding
 import com.savvasdalkitsis.librephotos.ui.insets.systemPadding
 
 @Composable
 fun Home(state: HomeState) {
-    val toolbarColor = MaterialTheme.colors
-        .background.copy(alpha = 0.8f)
-    Scaffold(
-        contentPadding = systemPadding(Bottom),
-        topBar = {
-            TopAppBar(
-                backgroundColor = toolbarColor,
-                contentPadding = systemPadding(Top),
-                title = { Text(text = "LibrePhotos") }
-            )
-        }
-    ) { contentPadding ->
-        Surface(
-            modifier = Modifier.fillMaxSize(),
-            color = MaterialTheme.colors.background
-        ) {
-            if (state.isLoading) {
-                Box(contentAlignment = Alignment.Center) {
-                    CircularProgressIndicator(modifier = Modifier.size(48.dp))
-                }
-            } else {
-                FeedView(contentPadding, state.feedState)
+    MainScaffolding { contentPadding ->
+        if (state.isLoading) {
+            Box(contentAlignment = Alignment.Center) {
+                CircularProgressIndicator(modifier = Modifier.size(48.dp))
             }
+        } else {
+            FeedView(contentPadding, state.feedState)
         }
     }
 }

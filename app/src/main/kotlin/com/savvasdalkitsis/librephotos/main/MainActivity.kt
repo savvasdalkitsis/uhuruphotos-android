@@ -4,19 +4,12 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.material.MaterialTheme
-import androidx.compose.runtime.getValue
 import androidx.compose.runtime.SideEffect
-import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.graphics.Color
 import androidx.core.view.WindowCompat
-import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.navigation.compose.NavHost
-import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
-import com.savvasdalkitsis.librephotos.home.state.HomeState
-import com.savvasdalkitsis.librephotos.home.view.Home
-import com.savvasdalkitsis.librephotos.home.viewmodel.HomeViewModel
+import com.savvasdalkitsis.librephotos.navigation.LibrePhotosNavigator
 import com.savvasdalkitsis.librephotos.ui.theme.AppTheme
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -37,12 +30,7 @@ class MainActivity : ComponentActivity() {
                         darkIcons = useDarkIcons
                     )
                 }
-                NavHost(navController = navController, startDestination = "home") {
-                    composable("home") {
-                        val state by hiltViewModel<HomeViewModel>().state.observeAsState(HomeState())
-                        Home(state)
-                    }
-                }
+                LibrePhotosNavigator(navController)
             }
         }
     }

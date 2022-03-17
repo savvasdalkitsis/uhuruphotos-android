@@ -1,8 +1,8 @@
 package com.savvasdalkitsis.librephotos.home.viewmodel
 
-import com.savvasdalkitsis.librephotos.home.mutation.HomeMutation
-import com.savvasdalkitsis.librephotos.home.mutation.HomeMutation.Loaded
-import com.savvasdalkitsis.librephotos.home.mutation.HomeMutation.Loading
+import com.savvasdalkitsis.librephotos.home.mvflow.HomeMutation
+import com.savvasdalkitsis.librephotos.home.mvflow.HomeMutation.Loaded
+import com.savvasdalkitsis.librephotos.home.mvflow.HomeMutation.Loading
 import com.savvasdalkitsis.librephotos.home.state.HomeState
 import net.pedroloureiro.mvflow.Reducer
 

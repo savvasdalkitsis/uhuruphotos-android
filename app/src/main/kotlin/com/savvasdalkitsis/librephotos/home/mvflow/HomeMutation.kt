@@ -1,4 +1,4 @@
-package com.savvasdalkitsis.librephotos.home.mutation
+package com.savvasdalkitsis.librephotos.home.mvflow
 
 import com.savvasdalkitsis.librephotos.feed.state.FeedState
 

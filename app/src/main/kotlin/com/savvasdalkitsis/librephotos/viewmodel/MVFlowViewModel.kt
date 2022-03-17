@@ -6,7 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.FlowCollector
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
 import net.pedroloureiro.mvflow.HandlerWithEffects
@@ -18,13 +18,12 @@ open class MVFlowViewModel<STATE, ACTION, MUTATION, EFFECT>(
     handler: HandlerWithEffects<STATE, ACTION, MUTATION, EFFECT>,
     reducer: Reducer<STATE, MUTATION>,
     initialState: STATE,
-    initialAction: ACTION? = null,
+    private val initialAction: ACTION,
 ) : ViewModel() {
 
     private val _state: MutableLiveData<STATE> = MutableLiveData()
     val state: LiveData<STATE> = _state
-    private val _effects: Channel<EFFECT> = Channel()
-    val effects: Flow<EFFECT> = _effects.receiveAsFlow()
+    private val effects: Channel<EFFECT> = Channel()
     val actions: Channel<ACTION> = Channel()
 
     init {
@@ -35,14 +34,19 @@ open class MVFlowViewModel<STATE, ACTION, MUTATION, EFFECT>(
             mvflowCoroutineScope = viewModelScope,
             defaultLogger = { Timber.d(it) }
         )
-        mvFlow.takeView(viewModelScope, MVFlowView(),
-            initialActions = listOfNotNull(initialAction)
-        )
+        mvFlow.takeView(viewModelScope, MVFlowView())
         viewModelScope.launch {
             mvFlow.observeEffects().collect { effect ->
-                _effects.trySend(effect)
+                effects.trySend(effect)
             }
         }
+    }
+
+    suspend fun start(
+       effectsCollector: FlowCollector<EFFECT>,
+    ) {
+        actions.send(initialAction)
+        effects.receiveAsFlow().collect(effectsCollector)
     }
 
     inner class MVFlowView : MVFlow.View<STATE, ACTION> {

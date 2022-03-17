@@ -3,11 +3,11 @@ package com.savvasdalkitsis.librephotos.home.viewmodel
 import com.savvasdalkitsis.librephotos.auth.model.AuthStatus
 import com.savvasdalkitsis.librephotos.auth.usecase.AuthenticationUseCase
 import com.savvasdalkitsis.librephotos.feed.view.preview.feedStatePreview
-import com.savvasdalkitsis.librephotos.home.actions.HomeAction
-import com.savvasdalkitsis.librephotos.home.actions.HomeAction.LoadFeed
-import com.savvasdalkitsis.librephotos.home.effect.HomeEffect
-import com.savvasdalkitsis.librephotos.home.effect.HomeEffect.LaunchAuthentication
-import com.savvasdalkitsis.librephotos.home.mutation.HomeMutation
+import com.savvasdalkitsis.librephotos.home.mvflow.HomeAction
+import com.savvasdalkitsis.librephotos.home.mvflow.HomeAction.LoadFeed
+import com.savvasdalkitsis.librephotos.home.mvflow.HomeEffect
+import com.savvasdalkitsis.librephotos.home.mvflow.HomeEffect.LaunchAuthentication
+import com.savvasdalkitsis.librephotos.home.mvflow.HomeMutation
 import com.savvasdalkitsis.librephotos.home.state.HomeState
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.channelFlow

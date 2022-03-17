@@ -1,4 +1,4 @@
-package com.savvasdalkitsis.librephotos.home.actions
+package com.savvasdalkitsis.librephotos.home.mvflow
 
 sealed class HomeAction {
 

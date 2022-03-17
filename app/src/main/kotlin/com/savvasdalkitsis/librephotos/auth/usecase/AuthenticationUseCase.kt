@@ -1,18 +1,24 @@
 package com.savvasdalkitsis.librephotos.auth.usecase
 
+import com.savvasdalkitsis.librephotos.auth.db.dao.AuthDao
 import com.savvasdalkitsis.librephotos.auth.model.AuthStatus
 import kotlinx.coroutines.delay
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.*
 import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class AuthenticationUseCase @Inject constructor() {
+class AuthenticationUseCase @Inject constructor(
+    private val authDao: AuthDao,
+) {
 
-    fun authenticationStatus(): Flow<AuthStatus> = flow {
-        emit(AuthStatus.Unauthenticated)
-        delay(5000)
-        emit(AuthStatus.Authenticated)
-    }
+    fun authenticationStatus(): Flow<AuthStatus> =
+        authDao.getToken()
+            .onEmpty { AuthStatus.Unauthenticated }
+            .map {
+                when (it) {
+                    null -> AuthStatus.Unauthenticated
+                    else -> AuthStatus.Authenticated(it)
+                }
+            }
 }
