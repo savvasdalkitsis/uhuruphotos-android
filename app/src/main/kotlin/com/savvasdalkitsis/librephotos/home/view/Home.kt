@@ -16,13 +16,11 @@ import androidx.compose.ui.unit.dp
 import com.google.accompanist.insets.ui.Scaffold
 import com.google.accompanist.insets.ui.TopAppBar
 import com.savvasdalkitsis.librephotos.feed.view.FeedView
-import com.savvasdalkitsis.librephotos.feed.view.preview.feedStatePreview
-import com.savvasdalkitsis.librephotos.home.state.HomeViewState
-import com.savvasdalkitsis.librephotos.home.viewmodel.HomeViewModel
+import com.savvasdalkitsis.librephotos.home.state.HomeState
 import com.savvasdalkitsis.librephotos.ui.insets.systemPadding
 
 @Composable
-fun Home(state: HomeViewState) {
+fun Home(state: HomeState) {
     val toolbarColor = MaterialTheme.colors
         .background.copy(alpha = 0.8f)
     Scaffold(
