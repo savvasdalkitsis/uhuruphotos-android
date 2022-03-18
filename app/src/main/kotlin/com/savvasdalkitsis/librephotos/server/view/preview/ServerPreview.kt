@@ -10,16 +10,13 @@ import com.savvasdalkitsis.librephotos.ui.theme.AppTheme
 @Preview(showBackground = true)
 fun ServerPreviewLoading() {
     AppTheme {
-        Server(ServerState(isLoading = true))
+        Server(ServerState.Loading)
     }
 }
 @Composable
 @Preview(showBackground = true)
 fun ServerPreviewServerDetails() {
     AppTheme {
-        Server(ServerState(
-            isLoading = false,
-            serverUrl = "",
-        ))
+        Server(ServerState.ServerUrl(""))
     }
 }

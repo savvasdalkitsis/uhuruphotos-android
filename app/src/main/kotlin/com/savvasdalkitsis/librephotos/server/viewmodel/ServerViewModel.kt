@@ -15,6 +15,6 @@ class ServerViewModel @Inject constructor(
 ) : MVFlowViewModel<ServerState, ServerAction, ServerMutation, ServerEffect>(
     handler = handler,
     reducer = reducer,
-    ServerState(),
+    ServerState.Loading,
     ServerAction.CheckPersistedServer,
 )

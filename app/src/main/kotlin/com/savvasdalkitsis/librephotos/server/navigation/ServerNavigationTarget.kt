@@ -1,5 +1,6 @@
 package com.savvasdalkitsis.librephotos.server.navigation
 
+import android.app.Activity
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import com.savvasdalkitsis.librephotos.navigation.navigationTarget
@@ -12,10 +13,10 @@ import com.savvasdalkitsis.librephotos.server.viewmodel.state.ServerState
 
 const val serverNavigationTargetName = "server"
 
-fun NavGraphBuilder.serverNavigationTarget(navController: NavHostController) =
+fun NavGraphBuilder.serverNavigationTarget(navController: NavHostController, activity: Activity) =
     navigationTarget<ServerState, ServerAction, ServerEffect, ServerViewModel>(
         name = serverNavigationTargetName,
-        effects = ServerEffectsHandler(),
+        effects = ServerEffectsHandler(activity),
         viewBuilder = { state, actions -> Server(state, actions) },
         navController,
     )

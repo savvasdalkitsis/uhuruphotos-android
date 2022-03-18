@@ -1,7 +1,9 @@
 package com.savvasdalkitsis.librephotos.server.viewmodel.state
 
-data class ServerState(
-    val isLoading: Boolean = true,
-    val serverUrl: String? = null,
-    val showUserCredentialsInput: Boolean = false,
-)
+import dev.zacsweers.redacted.annotations.Redacted
+
+sealed class ServerState {
+    object Loading: ServerState()
+    data class ServerUrl(val url: String): ServerState()
+    data class UserCredentials(val userEmail: String, @Redacted val password: String): ServerState()
+}

@@ -30,7 +30,7 @@ class MainActivity : ComponentActivity() {
                         darkIcons = useDarkIcons
                     )
                 }
-                LibrePhotosNavigator(navController)
+                LibrePhotosNavigator(navController, this)
             }
         }
     }

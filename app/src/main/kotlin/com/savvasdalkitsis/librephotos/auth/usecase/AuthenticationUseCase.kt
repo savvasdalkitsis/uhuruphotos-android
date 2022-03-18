@@ -21,4 +21,9 @@ class AuthenticationUseCase @Inject constructor(
                     else -> AuthStatus.Authenticated(it)
                 }
             }
+
+    suspend fun login(userEmail: String, password: String) {
+        delay(3000)
+        throw IllegalArgumentException("Not implemente")
+    }
 }
