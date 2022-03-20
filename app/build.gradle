@@ -91,10 +91,13 @@ dependencies {
             "com.squareup.moshi:moshi-kotlin:1.13.0",
             "com.auth0.android:jwtdecode:2.0.1",
             "com.dropbox.mobile.store:store4:4.0.3-KT15",
-            "com.squareup.okhttp3:logging-interceptor:4.9.3"
+            "com.squareup.okhttp3:logging-interceptor:4.9.3",
+            "com.github.bumptech.glide:glide:4.12.0",
+            "com.github.bumptech.glide:okhttp3-integration:4.12.0",
     )
     ksp "com.squareup.moshi:moshi-kotlin-codegen:1.13.0"
     kapt "com.google.dagger:hilt-compiler:2.38.1"
+    kapt "com.github.bumptech.glide:compiler:4.12.0"
     kapt "androidx.room:room-compiler:2.4.2"
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.3'

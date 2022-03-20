@@ -12,9 +12,12 @@ class AuthenticationHeaderInjector @Inject constructor(
     private val authDao: AuthDao,
 ) {
 
-    fun inject(chain: Interceptor.Chain): Request =
-        chain.request().newBuilder()
-            .header("Authorization", "Bearer " + runBlocking { authDao.getAccessToken() })
+    fun inject(chain: Interceptor.Chain): Request {
+        val accessToken = runBlocking { authDao.getAccessToken() }
+        return chain.request().newBuilder()
+            .header("Authorization", "Bearer $accessToken")
+            .header("Cookie", "jwt=$accessToken")
             .build()
+    }
 
 }

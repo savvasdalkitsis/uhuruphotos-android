@@ -6,6 +6,7 @@ import com.facebook.imagepipeline.backends.okhttp3.OkHttpImagePipelineConfigFact
 import dagger.hilt.android.HiltAndroidApp
 import okhttp3.OkHttpClient
 import timber.log.Timber
+import javax.inject.Inject
 
 @HiltAndroidApp
 class LibrePhotosApplication : Application() {

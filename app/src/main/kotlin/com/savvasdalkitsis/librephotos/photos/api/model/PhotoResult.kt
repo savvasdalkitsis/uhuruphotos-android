@@ -5,5 +5,5 @@ import com.squareup.moshi.JsonClass
 
 @JsonClass(generateAdapter = true)
 data class PhotoResult(
-    @field:Json(name = "square_thumbnail_url") val bigThumbnailUrl: String
+    @field:Json(name = "big_thumbnail_url") val bigThumbnailUrl: String
 )
