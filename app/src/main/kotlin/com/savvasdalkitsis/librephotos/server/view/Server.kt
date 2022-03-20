@@ -5,9 +5,9 @@ import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Email
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Lock
+import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -93,14 +93,14 @@ fun Server(
                         OutlinedTextField(
                             singleLine = true,
                             keyboardOptions = KeyboardOptions.Default.copy(
-                                keyboardType = KeyboardType.Email,
+                                keyboardType = KeyboardType.Text,
                                 imeAction = ImeAction.Next,
                             ),
-                            leadingIcon = { Icon(imageVector = Icons.Default.Email, contentDescription = "emailIcon") },
+                            leadingIcon = { Icon(imageVector = Icons.Default.Person, contentDescription = "usernameIcon") },
                             label = { Text("User email address") },
-                            value = state.userEmail,
+                            value = state.username,
                             onValueChange = {
-                                action(UserEmailChangedTo(it))
+                                action(UsernameChangedTo(it))
                             },
                         )
                         OutlinedTextField(

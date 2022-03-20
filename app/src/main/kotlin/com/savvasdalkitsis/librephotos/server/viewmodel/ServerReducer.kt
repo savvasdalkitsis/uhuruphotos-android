@@ -17,7 +17,7 @@ class ServerReducer @Inject constructor() : Reducer<ServerState, ServerMutation>
         is AskForUserCredentials -> UserCredentials(mutation.userName, mutation.password)
         is ChangeUrlTo -> ServerUrl(mutation.url)
         is ChangePasswordTo -> (state as UserCredentials).copy(password = mutation.password)
-        is ChangeUserEmailTo -> (state as UserCredentials).copy(userEmail = mutation.userEmail)
+        is ChangeUsernameTo -> (state as UserCredentials).copy(username = mutation.username)
         PerformingBackgroundJob -> Loading
     }
 

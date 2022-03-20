@@ -15,6 +15,7 @@ import com.savvasdalkitsis.librephotos.server.viewmodel.state.ServerState.UserCr
 import kotlinx.coroutines.flow.*
 import net.pedroloureiro.mvflow.EffectSender
 import net.pedroloureiro.mvflow.HandlerWithEffects
+import timber.log.Timber
 import javax.inject.Inject
 
 class ServerHandler @Inject constructor(
@@ -30,7 +31,7 @@ class ServerHandler @Inject constructor(
         CheckPersistedServer -> flow {
             when (serverUseCase.getServerUrl()) {
                 null -> emit(AskForServerDetails(null))
-                else -> when (authenticationUseCase.authenticationStatus().first()) {
+                else -> when (authenticationUseCase.authenticationStatus()) {
                     is AuthStatus.Authenticated -> effect.send(Close)
                     is AuthStatus.Unauthenticated -> emit(AskForUserCredentials("", ""))
                 }
@@ -48,14 +49,15 @@ class ServerHandler @Inject constructor(
             emit(PerformingBackgroundJob)
             val credentials = state as UserCredentials
             try {
-                authenticationUseCase.login(credentials.userEmail, credentials.password)
+                authenticationUseCase.login(credentials.username, credentials.password)
                 effect.send(Close)
             } catch (e: Exception) {
-                emit(AskForUserCredentials(credentials.userEmail, credentials.password))
+                Timber.w(e)
                 effect.send(ErrorLoggingIn(e))
+                emit(AskForUserCredentials(credentials.username, credentials.password))
             }
         }
-        is UserEmailChangedTo -> flowOf(ChangeUserEmailTo(action.userEmail))
+        is UsernameChangedTo -> flowOf(ChangeUsernameTo(action.username))
         is UserPasswordChangedTo -> flowOf(ChangePasswordTo(action.password))
     }
 

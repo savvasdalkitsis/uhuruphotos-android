@@ -8,13 +8,18 @@ import androidx.compose.runtime.SideEffect
 import androidx.compose.ui.graphics.Color
 import androidx.core.view.WindowCompat
 import androidx.navigation.compose.rememberNavController
+import coil.ImageLoader
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import com.savvasdalkitsis.librephotos.navigation.LibrePhotosNavigator
 import com.savvasdalkitsis.librephotos.ui.theme.AppTheme
 import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
+
+    @Inject lateinit var imageLoader: ImageLoader
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         WindowCompat.setDecorFitsSystemWindows(window, false)
@@ -30,7 +35,7 @@ class MainActivity : ComponentActivity() {
                         darkIcons = useDarkIcons
                     )
                 }
-                LibrePhotosNavigator(navController, this)
+                LibrePhotosNavigator(navController, this, imageLoader)
             }
         }
     }
