@@ -4,7 +4,7 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.savvasdalkitsis.librephotos.feed.state.FeedState
+import com.savvasdalkitsis.librephotos.feed.view.FeedState
 import com.savvasdalkitsis.librephotos.feed.view.FeedView
 import com.savvasdalkitsis.librephotos.ui.theme.AppTheme
 

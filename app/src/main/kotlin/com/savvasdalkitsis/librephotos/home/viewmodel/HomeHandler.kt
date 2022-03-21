@@ -2,8 +2,8 @@ package com.savvasdalkitsis.librephotos.home.viewmodel
 
 import com.savvasdalkitsis.librephotos.auth.model.AuthStatus
 import com.savvasdalkitsis.librephotos.auth.usecase.AuthenticationUseCase
-import com.savvasdalkitsis.librephotos.feed.state.FeedState
-import com.savvasdalkitsis.librephotos.feed.view.preview.feedStatePreview
+import com.savvasdalkitsis.librephotos.extensions.throttleFirst
+import com.savvasdalkitsis.librephotos.feed.view.FeedState
 import com.savvasdalkitsis.librephotos.home.mvflow.HomeAction
 import com.savvasdalkitsis.librephotos.home.mvflow.HomeAction.LoadFeed
 import com.savvasdalkitsis.librephotos.home.mvflow.HomeEffect
@@ -30,12 +30,15 @@ class HomeHandler @Inject constructor(
     ): Flow<HomeMutation> = when (action) {
         is LoadFeed -> flow {
             emit(HomeMutation.Loading)
-            val serverUrl = serverUseCase.getServerUrl()
             when (authenticationUseCase.authenticationStatus()) {
                 is AuthStatus.Unauthenticated -> effect.send(LaunchAuthentication)
-                else -> emit(HomeMutation.Loaded(FeedState(photosUseCase.getPhotos().paths.map {
-                    serverUrl + it
-                })))
+                else -> emitAll(photosUseCase.getPhotos().throttleFirst(200).map {
+                    if (it.finished) {
+                        HomeMutation.Loaded(FeedState(it.paths))
+                    } else {
+                        HomeMutation.PartiallyLoaded(FeedState(it.paths))
+                    }
+                })
             }
         }
     }

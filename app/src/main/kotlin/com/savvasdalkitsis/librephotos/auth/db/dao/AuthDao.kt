@@ -2,6 +2,7 @@ package com.savvasdalkitsis.librephotos.auth.db.dao
 
 import androidx.room.*
 import com.savvasdalkitsis.librephotos.auth.db.entities.Token
+import com.savvasdalkitsis.librephotos.auth.db.entities.TokenType
 import com.savvasdalkitsis.librephotos.auth.db.entities.TokenTypeConverter
 import javax.inject.Inject
 

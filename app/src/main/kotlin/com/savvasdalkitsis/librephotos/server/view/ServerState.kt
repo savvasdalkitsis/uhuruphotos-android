@@ -1,4 +1,4 @@
-package com.savvasdalkitsis.librephotos.server.viewmodel.state
+package com.savvasdalkitsis.librephotos.server.view
 
 import dev.zacsweers.redacted.annotations.Redacted
 

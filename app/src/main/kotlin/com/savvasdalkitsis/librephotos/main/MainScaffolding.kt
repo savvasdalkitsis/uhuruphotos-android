@@ -1,6 +1,7 @@
 package com.savvasdalkitsis.librephotos.main
 
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.WindowInsetsSides
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.MaterialTheme

@@ -14,7 +14,6 @@ import com.savvasdalkitsis.librephotos.network.jwt
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
 import timber.log.Timber
-import java.util.concurrent.Semaphore
 import javax.inject.Inject
 import javax.inject.Singleton
 

@@ -1,6 +1,6 @@
 package com.savvasdalkitsis.librephotos.home.state
 
-import com.savvasdalkitsis.librephotos.feed.state.FeedState
+import com.savvasdalkitsis.librephotos.feed.view.FeedState
 
 data class HomeState(
     val isLoading: Boolean = true,

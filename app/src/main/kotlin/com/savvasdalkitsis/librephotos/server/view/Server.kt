@@ -20,8 +20,7 @@ import androidx.compose.ui.unit.dp
 import com.savvasdalkitsis.librephotos.main.MainScaffolding
 import com.savvasdalkitsis.librephotos.server.mvflow.ServerAction
 import com.savvasdalkitsis.librephotos.server.mvflow.ServerAction.*
-import com.savvasdalkitsis.librephotos.server.viewmodel.state.ServerState
-import com.savvasdalkitsis.librephotos.server.viewmodel.state.ServerState.*
+import com.savvasdalkitsis.librephotos.server.view.ServerState.*
 
 @Composable
 fun Server(

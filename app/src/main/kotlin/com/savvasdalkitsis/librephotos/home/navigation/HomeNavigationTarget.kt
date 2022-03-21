@@ -9,14 +9,24 @@ import com.savvasdalkitsis.librephotos.home.state.HomeState
 import com.savvasdalkitsis.librephotos.home.view.Home
 import com.savvasdalkitsis.librephotos.home.viewmodel.HomeEffectsHandler
 import com.savvasdalkitsis.librephotos.home.viewmodel.HomeViewModel
+import com.savvasdalkitsis.librephotos.navigation.NavControllerProvider
 import com.savvasdalkitsis.librephotos.navigation.navigationTarget
+import javax.inject.Inject
 
-const val homeNavigationTargetName = "home"
+class HomeNavigationTarget @Inject constructor(
+    private val navControllerProvider: NavControllerProvider,
+    private val imageLoader: ImageLoader,
+) {
 
-fun NavGraphBuilder.homeNavigationTarget(navController: NavHostController, imageLoader: ImageLoader) =
-    navigationTarget<HomeState, HomeAction, HomeEffect, HomeViewModel>(
-        name = homeNavigationTargetName,
-        effects = HomeEffectsHandler(),
-        viewBuilder = { state, _ -> Home(state, imageLoader) },
-        navController,
-    )
+    fun NavGraphBuilder.create() =
+        navigationTarget<HomeState, HomeAction, HomeEffect, HomeViewModel>(
+            name = name,
+            effects = HomeEffectsHandler(),
+            viewBuilder = { state, _ -> Home(state, imageLoader) },
+            navController = navControllerProvider.navController!!,
+        )
+
+    companion object {
+        const val name = "home"
+    }
+}

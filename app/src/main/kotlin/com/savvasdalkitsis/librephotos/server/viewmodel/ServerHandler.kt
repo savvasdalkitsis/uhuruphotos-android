@@ -10,8 +10,8 @@ import com.savvasdalkitsis.librephotos.server.mvflow.ServerEffect.ErrorLoggingIn
 import com.savvasdalkitsis.librephotos.server.mvflow.ServerMutation
 import com.savvasdalkitsis.librephotos.server.mvflow.ServerMutation.*
 import com.savvasdalkitsis.librephotos.server.usecase.ServerUseCase
-import com.savvasdalkitsis.librephotos.server.viewmodel.state.ServerState
-import com.savvasdalkitsis.librephotos.server.viewmodel.state.ServerState.UserCredentials
+import com.savvasdalkitsis.librephotos.server.view.ServerState
+import com.savvasdalkitsis.librephotos.server.view.ServerState.UserCredentials
 import kotlinx.coroutines.flow.*
 import net.pedroloureiro.mvflow.EffectSender
 import net.pedroloureiro.mvflow.HandlerWithEffects

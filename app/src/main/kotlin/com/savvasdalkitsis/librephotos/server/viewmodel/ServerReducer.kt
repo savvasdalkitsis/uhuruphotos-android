@@ -2,8 +2,8 @@ package com.savvasdalkitsis.librephotos.server.viewmodel
 
 import com.savvasdalkitsis.librephotos.server.mvflow.ServerMutation
 import com.savvasdalkitsis.librephotos.server.mvflow.ServerMutation.*
-import com.savvasdalkitsis.librephotos.server.viewmodel.state.ServerState
-import com.savvasdalkitsis.librephotos.server.viewmodel.state.ServerState.*
+import com.savvasdalkitsis.librephotos.server.view.ServerState
+import com.savvasdalkitsis.librephotos.server.view.ServerState.*
 import net.pedroloureiro.mvflow.Reducer
 import javax.inject.Inject
 

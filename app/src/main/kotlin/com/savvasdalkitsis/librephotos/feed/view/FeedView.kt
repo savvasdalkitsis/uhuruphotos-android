@@ -10,7 +10,6 @@ import androidx.compose.ui.unit.dp
 import coil.ImageLoader
 import com.nesyou.staggeredgrid.LazyStaggeredGrid
 import com.nesyou.staggeredgrid.StaggeredCells
-import com.savvasdalkitsis.librephotos.feed.state.FeedState
 import com.skydoves.landscapist.ShimmerParams
 import com.skydoves.landscapist.coil.CoilImage
 import com.skydoves.landscapist.coil.LocalCoilImageLoader
