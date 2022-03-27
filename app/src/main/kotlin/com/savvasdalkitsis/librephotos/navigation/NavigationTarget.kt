@@ -18,6 +18,7 @@ import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.composable
+import androidx.navigation.compose.currentBackStackEntryAsState
 import com.savvasdalkitsis.librephotos.viewmodel.MVFlowViewModel
 import kotlinx.coroutines.launch
 
@@ -61,11 +62,15 @@ fun RowScope.BottomNavItem(
     routeName: String,
     icon: ImageVector
 ) {
+
     BottomNavigationItem(
         icon = { Icon(icon, contentDescription = label) },
         label = { Text(label) },
         selected = currentDestination?.hierarchy?.any { it.route == routeName } == true,
         onClick = {
+            if (currentDestination?.route == routeName)
+                return@BottomNavigationItem
+
             navController.navigate(routeName) {
                 popUpTo(navController.graph.findStartDestination().id) {
                     saveState = true
