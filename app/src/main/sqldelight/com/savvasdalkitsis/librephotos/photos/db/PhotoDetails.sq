@@ -22,3 +22,6 @@ CREATE TABLE photoDetails (
 
 insert:
 INSERT OR REPLACE INTO photoDetails VALUES ?;
+
+count:
+SELECT count(imageHash) FROM photoDetails;

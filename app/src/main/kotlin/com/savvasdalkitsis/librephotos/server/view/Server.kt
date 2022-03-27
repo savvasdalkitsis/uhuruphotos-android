@@ -17,17 +17,17 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
-import com.savvasdalkitsis.librephotos.main.MainScaffolding
 import com.savvasdalkitsis.librephotos.server.mvflow.ServerAction
 import com.savvasdalkitsis.librephotos.server.mvflow.ServerAction.*
 import com.savvasdalkitsis.librephotos.server.view.ServerState.*
+import com.savvasdalkitsis.librephotos.views.CommonScaffolding
 
 @Composable
 fun Server(
     state: ServerState,
     action: (ServerAction) -> Unit = {},
 ) {
-    MainScaffolding { contentPadding ->
+    CommonScaffolding { contentPadding ->
         Box(
             modifier = Modifier
                 .fillMaxHeight()
@@ -46,6 +46,7 @@ fun Server(
                         text = "Enter LibrePhotos server url:"
                     )
                     OutlinedTextField(
+                        maxLines = 1,
                         singleLine = true,
                         keyboardOptions = KeyboardOptions.Default.copy(
                             keyboardType = KeyboardType.Uri,
@@ -67,7 +68,7 @@ fun Server(
                 }
                 is UserCredentials -> {
                     Column {
-                        Spacer(modifier = Modifier.height(contentPadding.calculateTopPadding()))
+                    Spacer(modifier = Modifier.height(contentPadding.calculateTopPadding()))
                         Row {
                             IconButton(
                                 onClick = { action(RequestServerUrlChange) },
@@ -90,6 +91,7 @@ fun Server(
                             text = "Login to server"
                         )
                         OutlinedTextField(
+                            maxLines = 1,
                             singleLine = true,
                             keyboardOptions = KeyboardOptions.Default.copy(
                                 keyboardType = KeyboardType.Text,
@@ -103,6 +105,7 @@ fun Server(
                             },
                         )
                         OutlinedTextField(
+                            maxLines = 1,
                             singleLine = true,
                             visualTransformation = PasswordVisualTransformation(),
                             keyboardOptions = KeyboardOptions.Default.copy(

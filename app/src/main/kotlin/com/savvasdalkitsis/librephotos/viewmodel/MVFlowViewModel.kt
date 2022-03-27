@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.FlowCollector
@@ -13,6 +14,7 @@ import net.pedroloureiro.mvflow.HandlerWithEffects
 import net.pedroloureiro.mvflow.MVFlow
 import net.pedroloureiro.mvflow.Reducer
 import timber.log.Timber
+import kotlin.coroutines.coroutineContext
 
 open class MVFlowViewModel<STATE, ACTION, MUTATION, EFFECT>(
     handler: HandlerWithEffects<STATE, ACTION, MUTATION, EFFECT>,
@@ -45,7 +47,9 @@ open class MVFlowViewModel<STATE, ACTION, MUTATION, EFFECT>(
     suspend fun start(
        effectsCollector: FlowCollector<EFFECT>,
     ) {
-        actions.send(initialAction)
+        CoroutineScope(coroutineContext).launch {
+            actions.send(initialAction)
+        }
         effects.receiveAsFlow().collect(effectsCollector)
     }
 

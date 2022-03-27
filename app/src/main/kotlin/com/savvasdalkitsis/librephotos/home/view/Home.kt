@@ -13,13 +13,15 @@ import coil.ImageLoader
 import com.savvasdalkitsis.librephotos.feed.view.FeedView
 import com.savvasdalkitsis.librephotos.home.state.HomeState
 import com.savvasdalkitsis.librephotos.main.MainScaffolding
+import com.savvasdalkitsis.librephotos.navigation.ControllersProvider
 
 @Composable
 fun Home(
     state: HomeState,
     imageLoader: ImageLoader,
+    controllersProvider: ControllersProvider,
 ) {
-    MainScaffolding { contentPadding ->
+    MainScaffolding(controllersProvider.navController!!) { contentPadding ->
         if (state.isLoading && state.feedState.albums.isEmpty()) {
             Box(contentAlignment = Alignment.Center) {
                 CircularProgressIndicator(modifier = Modifier.size(48.dp))
@@ -28,8 +30,9 @@ fun Home(
             Box {
                 FeedView(contentPadding, state.feedState, imageLoader)
                 if (state.isLoading) {
-                    Column(modifier = Modifier
-                        .align(Alignment.BottomCenter)
+                    Column(
+                        modifier = Modifier
+                            .align(Alignment.BottomCenter)
                     ) {
                         Box(
                             Modifier

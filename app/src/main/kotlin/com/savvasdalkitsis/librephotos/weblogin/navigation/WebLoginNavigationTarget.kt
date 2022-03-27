@@ -3,7 +3,7 @@ package com.savvasdalkitsis.librephotos.weblogin.navigation
 import android.util.Base64
 import androidx.navigation.NavGraphBuilder
 import com.savvasdalkitsis.librephotos.auth.cookies.CookieMonitor
-import com.savvasdalkitsis.librephotos.navigation.NavControllerProvider
+import com.savvasdalkitsis.librephotos.navigation.ControllersProvider
 import com.savvasdalkitsis.librephotos.navigation.navigationTarget
 import com.savvasdalkitsis.librephotos.weblogin.mvflow.WebLoginAction
 import com.savvasdalkitsis.librephotos.weblogin.mvflow.WebLoginEffect
@@ -15,15 +15,18 @@ import kotlinx.coroutines.Dispatchers
 import javax.inject.Inject
 
 class WebLoginNavigationTarget @Inject constructor(
-    private val navControllerProvider: NavControllerProvider,
+    private val controllersProvider: ControllersProvider,
     private val cookieMonitor: CookieMonitor,
 ) {
 
     fun NavGraphBuilder.create() {
-        val navController = navControllerProvider.navController!!
+        val navController = controllersProvider.navController!!
         navigationTarget<WebLoginState, WebLoginAction, WebLoginEffect, WebLoginViewModel>(
             name = name,
             effects = WebLoginEffectsHandler(),
+            viewBuilder = { state, actions ->
+                WebLogin(state, actions)
+            },
             initializer = { navBackStackEntry, actions ->
                 val encodedUrl = navBackStackEntry.arguments!!.getString("url")!!
                 val url = Base64.decode(encodedUrl, Base64.URL_SAFE)
@@ -34,10 +37,7 @@ class WebLoginNavigationTarget @Inject constructor(
                 }
                 actions(WebLoginAction.LoadPage(String(url)))
             },
-            viewBuilder = { state, actions ->
-                WebLogin(state, actions)
-            },
-            navController = navController,
+            controllersProvider = controllersProvider,
         )
     }
 

@@ -32,6 +32,11 @@ class AlbumsRepository @Inject constructor(
 
     suspend fun refreshAlbums() {
         val albums = albumsService.getAlbumsByDate()
+        val allPhotoCount = albums.results.sumOf { it.numberOfItems }.toLong()
+        val existingPhotoDetails = photoDetailsQueries.count().awaitSingle()
+        if (existingPhotoDetails == allPhotoCount)
+            return
+
         albumsQueries.transaction {
             albumsQueries.clearAlbums()
             for (album in albums.results.map { it.toAlbum() }) {

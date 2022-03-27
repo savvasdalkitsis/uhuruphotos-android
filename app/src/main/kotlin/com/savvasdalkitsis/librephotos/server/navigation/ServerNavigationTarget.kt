@@ -2,8 +2,7 @@ package com.savvasdalkitsis.librephotos.server.navigation
 
 import android.app.Activity
 import androidx.navigation.NavGraphBuilder
-import androidx.navigation.NavHostController
-import com.savvasdalkitsis.librephotos.navigation.NavControllerProvider
+import com.savvasdalkitsis.librephotos.navigation.ControllersProvider
 import com.savvasdalkitsis.librephotos.navigation.navigationTarget
 import com.savvasdalkitsis.librephotos.server.mvflow.ServerAction
 import com.savvasdalkitsis.librephotos.server.mvflow.ServerEffect
@@ -14,7 +13,7 @@ import com.savvasdalkitsis.librephotos.server.view.ServerState
 import javax.inject.Inject
 
 class ServerNavigationTarget @Inject constructor(
-    private val navControllerProvider: NavControllerProvider,
+    private val controllersProvider: ControllersProvider,
 ) {
 
     fun NavGraphBuilder.create(activity: Activity) =
@@ -22,7 +21,7 @@ class ServerNavigationTarget @Inject constructor(
             name = name,
             effects = ServerEffectsHandler(activity),
             viewBuilder = { state, actions -> Server(state, actions) },
-            navController = navControllerProvider.navController!!,
+            controllersProvider = controllersProvider,
         )
 
     companion object {
