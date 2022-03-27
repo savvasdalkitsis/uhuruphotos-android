@@ -20,7 +20,7 @@ fun Home(
     imageLoader: ImageLoader,
 ) {
     MainScaffolding { contentPadding ->
-        if (state.isLoading && state.feedState.photos.isEmpty()) {
+        if (state.isLoading && state.feedState.albums.isEmpty()) {
             Box(contentAlignment = Alignment.Center) {
                 CircularProgressIndicator(modifier = Modifier.size(48.dp))
             }

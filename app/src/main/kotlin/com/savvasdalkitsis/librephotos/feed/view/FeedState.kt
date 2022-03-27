@@ -1,9 +1,9 @@
 package com.savvasdalkitsis.librephotos.feed.view
 
-import com.savvasdalkitsis.librephotos.photos.model.Photo
+import com.savvasdalkitsis.librephotos.albums.model.Album
 
 data class FeedState(
-    val photos: List<Photo> = emptyList(),
+    val albums: List<Album> = emptyList(),
 ) {
-    override fun toString() = "Feed with size: ${photos.size}. First photo: ${photos.firstOrNull()}"
+    override fun toString() = "Feed with ${albums.size} albums."
 }

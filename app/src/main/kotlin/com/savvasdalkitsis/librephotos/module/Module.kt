@@ -1,5 +1,6 @@
 package com.savvasdalkitsis.librephotos.module
 
+import android.content.Context
 import com.savvasdalkitsis.librephotos.auth.api.AuthenticationHeaderInterceptor
 import com.savvasdalkitsis.librephotos.auth.api.WebLoginInterceptor
 import com.savvasdalkitsis.librephotos.network.DynamicDomainInterceptor
@@ -7,9 +8,11 @@ import com.savvasdalkitsis.librephotos.web.WebkitCookieManager
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
+import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
+import java.text.SimpleDateFormat
 import java.util.concurrent.TimeUnit
 
 @Module
@@ -35,4 +38,8 @@ class Module {
         .addInterceptor(HttpLoggingInterceptor()
             .setLevel(HttpLoggingInterceptor.Level.BASIC)
         )
+
+    @Provides
+    fun dateFormat(@ApplicationContext context: Context): java.text.DateFormat =
+        SimpleDateFormat("yyy-MM-dd", context.resources.configuration.locale)
 }

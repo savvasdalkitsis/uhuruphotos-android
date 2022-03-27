@@ -1,5 +1,6 @@
 package com.savvasdalkitsis.librephotos.albums.usecase
 
+import android.text.format.DateUtils
 import com.savvasdalkitsis.librephotos.albums.model.Album
 import com.savvasdalkitsis.librephotos.albums.repository.AlbumsRepository
 import com.savvasdalkitsis.librephotos.photos.model.Photo
@@ -9,12 +10,14 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
-import timber.log.Timber
+import java.text.DateFormat
 import javax.inject.Inject
+
 
 class AlbumsUseCase @Inject constructor(
     private val albumsRepository: AlbumsRepository,
     private val serverUseCase: ServerUseCase,
+    private val dateFormat: DateFormat,
 ) {
 
     fun getAlbums(
@@ -24,12 +27,18 @@ class AlbumsUseCase @Inject constructor(
         if (refresh) {
             refreshAlbums(onDoneRefreshing)
         }
+        val now = System.currentTimeMillis()
         return albumsRepository.getAlbumsByDate()
             .map { albums ->
                 albums.items.map { (_, photos) ->
                     val serverUrl = serverUseCase.getServerUrl()
+                    val albumDate = photos.firstOrNull()?.albumDate
+                    val albumLocation = photos.firstOrNull()?.albumLocation
+
                     Album(
                         photoCount = photos.size,
+                        date = dateString(albumDate, now),
+                        location = albumLocation ?: "",
                         photos = photos.map { item ->
                             val url = item.bigThumbnailUrl?.removeSuffix(".webp")
                             Photo(
@@ -41,6 +50,18 @@ class AlbumsUseCase @Inject constructor(
                     )
                 }
             }
+    }
+
+    private fun dateString(albumDate: String?, now: Long): String = when (albumDate) {
+        null -> ""
+        else -> when (val millis = dateFormat.parse(albumDate)) {
+            null -> ""
+            else -> DateUtils.getRelativeTimeSpanString(
+                millis.time,
+                now,
+                DateUtils.DAY_IN_MILLIS
+            ).toString()
+        }
     }
 
     private fun refreshAlbums(

@@ -9,6 +9,8 @@ CREATE TABLE albums (
 getAlbums:
 SELECT
  albums.id,
+ albums.date AS albumDate,
+ albums.location AS albumLocation,
  summary.id AS photoId,
  summary.dominantColor,
  summary.aspectRatio,

@@ -1,6 +1,5 @@
 package com.savvasdalkitsis.librephotos.home.viewmodel
 
-import com.savvasdalkitsis.librephotos.albums.model.Album
 import com.savvasdalkitsis.librephotos.albums.usecase.AlbumsUseCase
 import com.savvasdalkitsis.librephotos.auth.model.AuthStatus
 import com.savvasdalkitsis.librephotos.auth.usecase.AuthenticationUseCase
@@ -37,7 +36,7 @@ class HomeHandler @Inject constructor(
                 else -> emitAll(albumsUseCase.getAlbums(refresh = true)
                     .debounce(200)
                     .map { albums ->
-                        ShowAlbums(FeedState(albums.flatMap(Album::photos)))
+                        ShowAlbums(FeedState(albums))
                     }
                 )
             }
