@@ -25,11 +25,11 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         WindowCompat.setDecorFitsSystemWindows(window, false)
         setContent {
-            val systemUiController = rememberSystemUiController()
-            val useDarkIcons = MaterialTheme.colors.isLight
-            val navController = rememberNavController()
-
             AppTheme {
+                val systemUiController = rememberSystemUiController()
+                val useDarkIcons = MaterialTheme.colors.isLight
+                val navController = rememberNavController()
+
                 SideEffect {
                     systemUiController.setSystemBarsColor(
                         color = Color.Transparent,
