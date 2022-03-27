@@ -1,0 +1,24 @@
+CREATE TABLE photoDetails (
+  imageHash TEXT NOT NULL PRIMARY KEY,
+  gpsLat TEXT,
+  gpsLon TEXT,
+  timestamp TEXT,
+  captions TEXT,
+  location TEXT,
+  thumbnailUrl TEXT,
+  thumbnailHeight TEXT,
+  thumbnailWidth TEXT,
+  bigThumbnailUrl TEXT,
+  smallThumbnailUrl TEXT,
+  squareThumbnailUrl TEXT,
+  bigSquareThumbnailUrl TEXT,
+  smallSquareThumbnailUrl TEXT,
+  tinySquareThumbnailUrl TEXT,
+  video INTEGER AS Boolean,
+  albumId TEXT NOT NULL,
+
+  FOREIGN KEY (albumId) REFERENCES albums(id)
+);
+
+insert:
+INSERT OR REPLACE INTO photoDetails VALUES ?;

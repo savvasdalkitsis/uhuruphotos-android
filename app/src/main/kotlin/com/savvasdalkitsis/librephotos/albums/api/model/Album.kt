@@ -1,5 +1,6 @@
 package com.savvasdalkitsis.librephotos.albums.api.model
 
+import com.savvasdalkitsis.librephotos.albums.db.Albums
 import com.squareup.moshi.JsonClass
 
 sealed class Album(
@@ -29,3 +30,5 @@ sealed class Album(
         val items: List<AlbumItem>,
     ) : Album(id, date, location, incomplete, numberOfItems)
 }
+
+fun Album.IncompleteAlbum.toAlbum() = Albums(id, date, location, incomplete, numberOfItems)

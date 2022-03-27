@@ -1,7 +1,9 @@
 package com.savvasdalkitsis.librephotos.module
 
-import android.content.Context
-import android.webkit.CookieManager
+import com.savvasdalkitsis.librephotos.Database
+import com.savvasdalkitsis.librephotos.albums.db.AlbumsQueries
+import com.savvasdalkitsis.librephotos.albums.db.PhotoDetailsQueries
+import com.savvasdalkitsis.librephotos.albums.db.PhotoSummaryQueries
 import com.savvasdalkitsis.librephotos.auth.api.AuthenticationHeaderInterceptor
 import com.savvasdalkitsis.librephotos.auth.api.WebLoginInterceptor
 import com.savvasdalkitsis.librephotos.network.DynamicDomainInterceptor
@@ -9,14 +11,9 @@ import com.savvasdalkitsis.librephotos.web.WebkitCookieManager
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
-import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
-import okhttp3.Cache
-import okhttp3.JavaNetCookieJar
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
-import java.io.File
-import java.time.Duration
 import java.util.concurrent.TimeUnit
 
 @Module
@@ -40,6 +37,12 @@ class Module {
         .addInterceptor(webLoginInterceptor)
         .addInterceptor(authenticationHeaderInterceptor)
         .addInterceptor(HttpLoggingInterceptor()
-            .setLevel(HttpLoggingInterceptor.Level.HEADERS)
+            .setLevel(HttpLoggingInterceptor.Level.BASIC)
         )
+
+    @Provides
+    fun photoDetailsQueries(database: Database): PhotoDetailsQueries = database.photoDetailsQueries
+
+    @Provides
+    fun photoSummaryQueries(database: Database): PhotoSummaryQueries = database.photoSummaryQueries
 }

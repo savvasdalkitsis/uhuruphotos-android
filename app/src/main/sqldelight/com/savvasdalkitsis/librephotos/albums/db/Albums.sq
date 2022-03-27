@@ -1,0 +1,26 @@
+CREATE TABLE albums (
+  id TEXT NOT NULL PRIMARY KEY,
+  date TEXT,
+  location TEXT,
+  incomplete INTEGER AS Boolean NOT NULL,
+  numberOfItems INTEGER AS Int NOT NULL
+);
+
+getAlbums:
+SELECT
+ albums.id,
+ summary.id AS photoId,
+ summary.dominantColor,
+ summary.aspectRatio,
+ details.bigThumbnailUrl
+FROM albums
+LEFT JOIN photoSummary AS summary ON albums.id = summary.albumId
+LEFT JOIN photoDetails AS details ON summary.id = details.imageHash
+GROUP BY summary.id
+ORDER BY albums.date DESC;
+
+clearAlbums:
+DELETE FROM albums;
+
+insert:
+INSERT OR REPLACE INTO albums VALUES ?;

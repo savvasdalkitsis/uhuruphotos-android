@@ -1,0 +1,24 @@
+CREATE TABLE photoSummary (
+  id TEXT NOT NULL PRIMARY KEY ,
+  dominantColor TEXT,
+  url TEXT NOT NULL,
+  location TEXT,
+  date TEXT,
+  birthTime TEXT,
+  aspectRatio REAL AS Float,
+  type TEXT,
+  videoLength TEXT,
+  rating INTEGER AS Int,
+  albumId TEXT NOT NULL,
+
+  FOREIGN KEY (albumId) REFERENCES albums(id)
+);
+
+insert:
+INSERT OR REPLACE INTO photoSummary VALUES ?;
+
+getPhotoSummariesCountForAlbum:
+SELECT count(id) FROM photoSummary WHERE id=?;
+
+getPhotoSummariesForAlbum:
+SELECT id, url FROM photoSummary WHERE albumId=?;

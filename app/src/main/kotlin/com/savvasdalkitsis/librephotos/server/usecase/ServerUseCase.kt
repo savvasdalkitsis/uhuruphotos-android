@@ -1,17 +1,23 @@
 package com.savvasdalkitsis.librephotos.server.usecase
 
-import com.savvasdalkitsis.librephotos.server.db.dao.ServerDao
-import com.savvasdalkitsis.librephotos.server.db.entities.Server
+import com.savvasdalkitsis.librephotos.albums.db.Server
+import com.savvasdalkitsis.librephotos.albums.db.ServerQueries
+import com.savvasdalkitsis.librephotos.extensions.awaitSingleOrNull
+import com.savvasdalkitsis.librephotos.extensions.crud
 import javax.inject.Inject
 
 class ServerUseCase @Inject constructor(
-    private val serverDao: ServerDao
+    private val serverQueries: ServerQueries
 ) {
 
-    suspend fun getServerUrl(): String? = serverDao.getServerUrl()
+    suspend fun getServerUrl(): String? = serverQueries.getServerUrl().awaitSingleOrNull()?.trim()
 
     suspend fun setServerUrl(serverUrl: String) {
-        serverDao.deleteAll()
-        serverDao.setServerUrl(Server(serverUrl))
+        crud {
+            serverQueries.transaction {
+                serverQueries.delete()
+                serverQueries.setServerUrl(Server(serverUrl))
+            }
+        }
     }
 }

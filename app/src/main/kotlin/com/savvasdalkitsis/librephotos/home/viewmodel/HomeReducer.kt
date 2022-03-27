@@ -12,8 +12,8 @@ class HomeReducer : Reducer<HomeState, HomeMutation> {
         mutation: HomeMutation
     ): HomeState = when (mutation) {
         is Loading -> state.copy(isLoading = true)
-        is PartiallyLoaded -> state.copy(isLoading = true, feedState = mutation.feedState)
-        is Loaded -> state.copy(isLoading = false, feedState = mutation.feedState)
+        is ShowAlbums -> state.copy(feedState = mutation.feedState)
+        FinishedLoading -> state.copy(isLoading = false)
     }
 
 }

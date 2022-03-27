@@ -1,5 +1,8 @@
 package com.savvasdalkitsis.librephotos.auth.module
 
+import com.savvasdalkitsis.librephotos.Database
+import com.savvasdalkitsis.librephotos.albums.db.AlbumsQueries
+import com.savvasdalkitsis.librephotos.albums.db.TokenQueries
 import com.savvasdalkitsis.librephotos.auth.api.model.CallErrorResponse
 import com.squareup.moshi.JsonAdapter
 import com.squareup.moshi.Moshi
@@ -21,4 +24,7 @@ class Module {
     @CallErrorResponseAdapter
     fun callErrorResponseAdapter(moshi: Moshi): JsonAdapter<CallErrorResponse> =
         moshi.adapter(CallErrorResponse::class.java)
+
+    @Provides
+    fun tokenQueries(database: Database): TokenQueries = database.tokenQueries
 }

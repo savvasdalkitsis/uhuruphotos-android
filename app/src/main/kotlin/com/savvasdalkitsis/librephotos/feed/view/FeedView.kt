@@ -1,18 +1,23 @@
 package com.savvasdalkitsis.librephotos.feed.view
 
-import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material.MaterialTheme
+import android.graphics.drawable.ColorDrawable
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
 import coil.ImageLoader
 import com.nesyou.staggeredgrid.LazyStaggeredGrid
 import com.nesyou.staggeredgrid.StaggeredCells
-import com.skydoves.landscapist.ShimmerParams
+import com.savvasdalkitsis.librephotos.extensions.toAndroidColor
+import com.savvasdalkitsis.librephotos.extensions.toColor
 import com.skydoves.landscapist.coil.CoilImage
 import com.skydoves.landscapist.coil.LocalCoilImageLoader
+import com.skydoves.landscapist.rememberDrawablePainter
 
 @Composable
 fun FeedView(
@@ -26,26 +31,24 @@ fun FeedView(
             start = 1.dp,
             end = 1.dp,
         ),
-        cells = StaggeredCells.Adaptive(minSize = 180.dp)) {
-        state.images.forEach { image ->
+//        columns = GridCells.Adaptive(minSize = 180.dp)
+        cells = StaggeredCells.Adaptive(minSize = 180.dp)
+    ) {
+        state.photos.forEach { photo ->
             item {
-                CoilImage(
-                    modifier = Modifier.padding(1.dp),
-                    imageLoader = { imageLoader ?: LocalCoilImageLoader.current!! },
-                    imageModel = image,
-                    shimmerParams = ShimmerParams(
-                        baseColor = MaterialTheme.colors.background,
-                        highlightColor = MaterialTheme.colors.primary,
-                        durationMillis = 350,
-                        dropOff = 0.65f,
-                        tilt = 20f
-                    ),
-                    contentScale = ContentScale.Fit,
-                    //                    // shows a placeholder while loading the image.
-                    //                    placeHolder = ImageBitmap.imageResource(R.drawable.placeholder),
-                    //                    // shows an error ImageBitmap when the request failed.
-                    //                    error = ImageBitmap.imageResource(R.drawable.error)
-                )
+                Box(modifier = Modifier
+                    .fillMaxSize()
+                    .aspectRatio(photo.ratio)
+                    .padding(1.dp)
+                    .background(photo.fallbackColor.toColor())
+                ) {
+                    CoilImage(
+                        modifier = Modifier.fillMaxWidth(),
+                        imageLoader = { imageLoader ?: LocalCoilImageLoader.current!! },
+                        imageModel = photo.url,
+                        contentScale = ContentScale.FillBounds,
+                    )
+                }
             }
         }
     }

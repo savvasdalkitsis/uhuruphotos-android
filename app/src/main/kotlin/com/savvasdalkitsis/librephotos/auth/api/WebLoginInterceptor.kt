@@ -1,8 +1,6 @@
 package com.savvasdalkitsis.librephotos.auth.api
 
 import android.webkit.CookieManager
-import com.savvasdalkitsis.librephotos.auth.db.dao.AuthDao
-import com.savvasdalkitsis.librephotos.auth.db.entities.TokenType
 import com.savvasdalkitsis.librephotos.navigation.NavControllerProvider
 import com.savvasdalkitsis.librephotos.server.usecase.ServerUseCase
 import com.savvasdalkitsis.librephotos.weblogin.navigation.WebLoginNavigationTarget

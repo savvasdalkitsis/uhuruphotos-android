@@ -2,11 +2,14 @@ package com.savvasdalkitsis.librephotos.module
 
 import android.content.Context
 import android.webkit.CookieManager
-import androidx.room.Room
+import com.savvasdalkitsis.librephotos.Database
+import com.savvasdalkitsis.librephotos.albums.db.Token
 import com.savvasdalkitsis.librephotos.auth.api.AuthenticationService
 import com.savvasdalkitsis.librephotos.auth.api.TokenRefreshInterceptor
-import com.savvasdalkitsis.librephotos.db.LibrePhotosDatabase
 import com.squareup.moshi.Moshi
+import com.squareup.sqldelight.EnumColumnAdapter
+import com.squareup.sqldelight.android.AndroidSqliteDriver
+import com.squareup.sqldelight.db.SqlDriver
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -26,21 +29,15 @@ class SingletonModule {
 
     @Provides
     @Singleton
-    fun authDao(db: LibrePhotosDatabase) = db.authDao()
+    fun driver(@ApplicationContext context: Context): SqlDriver =
+        AndroidSqliteDriver(Database.Schema, context, "librePhotos.db")
 
     @Provides
     @Singleton
-    fun serverDao(db: LibrePhotosDatabase) = db.serverDao()
-
-    @Provides
-    @Singleton
-    fun provideAppDatabase(@ApplicationContext appContext: Context): LibrePhotosDatabase {
-        return Room.databaseBuilder(
-            appContext,
-            LibrePhotosDatabase::class.java,
-            "LibrePhotos"
-        ).build()
-    }
+    fun database(driver: SqlDriver) = Database(
+        driver = driver,
+        tokenAdapter = Token.Adapter(typeAdapter = EnumColumnAdapter())
+    )
 
     @Provides
     @Singleton

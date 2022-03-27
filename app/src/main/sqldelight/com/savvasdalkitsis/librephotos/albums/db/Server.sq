@@ -1,0 +1,12 @@
+CREATE TABLE server (
+  url TEXT NOT NULL PRIMARY KEY
+);
+
+getServerUrl:
+SELECT url FROM server LIMIT 1;
+
+delete:
+DELETE FROM server;
+
+setServerUrl:
+INSERT INTO server VALUES ?;
