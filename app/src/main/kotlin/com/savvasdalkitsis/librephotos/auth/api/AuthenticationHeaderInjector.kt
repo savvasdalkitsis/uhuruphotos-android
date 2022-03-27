@@ -1,7 +1,7 @@
 package com.savvasdalkitsis.librephotos.auth.api
 
 import android.webkit.CookieManager
-import com.savvasdalkitsis.librephotos.albums.db.TokenQueries
+import com.savvasdalkitsis.librephotos.token.db.TokenQueries
 import okhttp3.Interceptor
 import okhttp3.Request
 import javax.inject.Inject

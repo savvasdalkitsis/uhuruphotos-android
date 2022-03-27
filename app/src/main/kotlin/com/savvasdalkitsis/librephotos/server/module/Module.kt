@@ -1,7 +1,7 @@
 package com.savvasdalkitsis.librephotos.server.module
 
 import com.savvasdalkitsis.librephotos.Database
-import com.savvasdalkitsis.librephotos.albums.db.ServerQueries
+import com.savvasdalkitsis.librephotos.server.db.ServerQueries
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

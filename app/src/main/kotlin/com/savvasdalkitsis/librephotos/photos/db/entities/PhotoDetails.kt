@@ -1,7 +1,7 @@
 package com.savvasdalkitsis.librephotos.photos.db.entities
 
-import com.savvasdalkitsis.librephotos.albums.db.PhotoDetails
 import com.savvasdalkitsis.librephotos.photos.api.model.PhotoResult
+import com.savvasdalkitsis.librephotos.photos.db.PhotoDetails
 
 fun PhotoResult.toPhotoDetails(albumId: String) = PhotoDetails(
     imageHash = imageHash,

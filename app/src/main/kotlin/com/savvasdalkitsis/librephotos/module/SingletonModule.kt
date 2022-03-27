@@ -3,9 +3,9 @@ package com.savvasdalkitsis.librephotos.module
 import android.content.Context
 import android.webkit.CookieManager
 import com.savvasdalkitsis.librephotos.Database
-import com.savvasdalkitsis.librephotos.albums.db.Token
 import com.savvasdalkitsis.librephotos.auth.api.AuthenticationService
 import com.savvasdalkitsis.librephotos.auth.api.TokenRefreshInterceptor
+import com.savvasdalkitsis.librephotos.token.db.Token
 import com.squareup.moshi.Moshi
 import com.squareup.sqldelight.EnumColumnAdapter
 import com.squareup.sqldelight.android.AndroidSqliteDriver

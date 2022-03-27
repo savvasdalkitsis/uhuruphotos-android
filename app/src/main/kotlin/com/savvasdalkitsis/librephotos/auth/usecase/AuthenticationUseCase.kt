@@ -1,7 +1,5 @@
 package com.savvasdalkitsis.librephotos.auth.usecase
 
-import com.savvasdalkitsis.librephotos.albums.db.Token
-import com.savvasdalkitsis.librephotos.albums.db.TokenQueries
 import com.savvasdalkitsis.librephotos.auth.api.AuthenticationService
 import com.savvasdalkitsis.librephotos.auth.api.model.AuthenticationCredentials
 import com.savvasdalkitsis.librephotos.auth.api.model.AuthenticationObtainResponse
@@ -10,10 +8,11 @@ import com.savvasdalkitsis.librephotos.auth.db.entities.TokenType
 import com.savvasdalkitsis.librephotos.auth.model.AuthStatus
 import com.savvasdalkitsis.librephotos.auth.model.AuthStatus.Authenticated
 import com.savvasdalkitsis.librephotos.auth.model.AuthStatus.Unauthenticated
-import com.savvasdalkitsis.librephotos.extensions.awaitSingle
 import com.savvasdalkitsis.librephotos.extensions.awaitSingleOrNull
 import com.savvasdalkitsis.librephotos.extensions.crud
 import com.savvasdalkitsis.librephotos.network.jwt
+import com.savvasdalkitsis.librephotos.token.db.Token
+import com.savvasdalkitsis.librephotos.token.db.TokenQueries
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
 import timber.log.Timber

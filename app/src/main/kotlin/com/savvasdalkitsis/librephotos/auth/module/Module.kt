@@ -1,9 +1,8 @@
 package com.savvasdalkitsis.librephotos.auth.module
 
 import com.savvasdalkitsis.librephotos.Database
-import com.savvasdalkitsis.librephotos.albums.db.AlbumsQueries
-import com.savvasdalkitsis.librephotos.albums.db.TokenQueries
 import com.savvasdalkitsis.librephotos.auth.api.model.CallErrorResponse
+import com.savvasdalkitsis.librephotos.token.db.TokenQueries
 import com.squareup.moshi.JsonAdapter
 import com.squareup.moshi.Moshi
 import dagger.Module

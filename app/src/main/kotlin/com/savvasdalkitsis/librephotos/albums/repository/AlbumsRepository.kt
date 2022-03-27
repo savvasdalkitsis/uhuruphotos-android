@@ -2,12 +2,16 @@ package com.savvasdalkitsis.librephotos.albums.repository
 
 import com.savvasdalkitsis.librephotos.albums.api.AlbumsService
 import com.savvasdalkitsis.librephotos.albums.api.model.toAlbum
-import com.savvasdalkitsis.librephotos.albums.db.*
+import com.savvasdalkitsis.librephotos.albums.db.AlbumsQueries
+import com.savvasdalkitsis.librephotos.albums.db.GetAlbums
 import com.savvasdalkitsis.librephotos.extensions.Group
 import com.savvasdalkitsis.librephotos.extensions.await
 import com.savvasdalkitsis.librephotos.extensions.awaitSingle
 import com.savvasdalkitsis.librephotos.extensions.groupBy
 import com.savvasdalkitsis.librephotos.photos.api.PhotosService
+import com.savvasdalkitsis.librephotos.photos.db.GetPhotoSummariesForAlbum
+import com.savvasdalkitsis.librephotos.photos.db.PhotoDetailsQueries
+import com.savvasdalkitsis.librephotos.photos.db.PhotoSummaryQueries
 import com.savvasdalkitsis.librephotos.photos.db.entities.toPhotoDetails
 import com.savvasdalkitsis.librephotos.photos.db.entities.toPhotoSummary
 import com.squareup.sqldelight.runtime.coroutines.asFlow

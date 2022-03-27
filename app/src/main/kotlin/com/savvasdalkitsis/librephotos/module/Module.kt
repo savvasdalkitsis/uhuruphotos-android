@@ -1,9 +1,5 @@
 package com.savvasdalkitsis.librephotos.module
 
-import com.savvasdalkitsis.librephotos.Database
-import com.savvasdalkitsis.librephotos.albums.db.AlbumsQueries
-import com.savvasdalkitsis.librephotos.albums.db.PhotoDetailsQueries
-import com.savvasdalkitsis.librephotos.albums.db.PhotoSummaryQueries
 import com.savvasdalkitsis.librephotos.auth.api.AuthenticationHeaderInterceptor
 import com.savvasdalkitsis.librephotos.auth.api.WebLoginInterceptor
 import com.savvasdalkitsis.librephotos.network.DynamicDomainInterceptor
@@ -39,10 +35,4 @@ class Module {
         .addInterceptor(HttpLoggingInterceptor()
             .setLevel(HttpLoggingInterceptor.Level.BASIC)
         )
-
-    @Provides
-    fun photoDetailsQueries(database: Database): PhotoDetailsQueries = database.photoDetailsQueries
-
-    @Provides
-    fun photoSummaryQueries(database: Database): PhotoSummaryQueries = database.photoSummaryQueries
 }
