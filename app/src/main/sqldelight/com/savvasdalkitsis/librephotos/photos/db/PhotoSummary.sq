@@ -9,9 +9,9 @@ CREATE TABLE photoSummary (
   type TEXT,
   videoLength TEXT,
   rating INTEGER AS Int,
-  albumId TEXT NOT NULL,
+  containerId TEXT NOT NULL,
 
-  FOREIGN KEY (albumId) REFERENCES albums(id)
+  FOREIGN KEY (containerId) REFERENCES albums(id)
 );
 
 insert:
@@ -21,4 +21,4 @@ getPhotoSummariesCountForAlbum:
 SELECT count(id) FROM photoSummary WHERE id=?;
 
 getPhotoSummariesForAlbum:
-SELECT id, url FROM photoSummary WHERE albumId=?;
+SELECT id, url FROM photoSummary WHERE containerId=?;

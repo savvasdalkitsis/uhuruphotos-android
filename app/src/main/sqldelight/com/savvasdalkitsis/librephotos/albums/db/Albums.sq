@@ -16,7 +16,7 @@ SELECT
  summary.aspectRatio,
  details.bigThumbnailUrl
 FROM albums
-LEFT JOIN photoSummary AS summary ON albums.id = summary.albumId
+LEFT JOIN photoSummary AS summary ON albums.id = summary.containerId
 LEFT JOIN photoDetails AS details ON summary.id = details.imageHash
 GROUP BY summary.id
 ORDER BY albums.date DESC;

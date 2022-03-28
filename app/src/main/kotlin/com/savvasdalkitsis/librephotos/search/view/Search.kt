@@ -6,37 +6,40 @@ import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.material.Icon
-import androidx.compose.material.IconButton
-import androidx.compose.material.Text
-import androidx.compose.material.TextField
+import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.focus.onFocusChanged
-import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
+import coil.ImageLoader
+import com.savvasdalkitsis.librephotos.feed.view.FeedState
+import com.savvasdalkitsis.librephotos.feed.view.FeedView
 import com.savvasdalkitsis.librephotos.main.MainScaffolding
 import com.savvasdalkitsis.librephotos.navigation.ControllersProvider
 import com.savvasdalkitsis.librephotos.search.mvflow.SearchAction
 import com.savvasdalkitsis.librephotos.search.mvflow.SearchAction.*
+import com.savvasdalkitsis.librephotos.search.view.state.SearchResults
+import com.savvasdalkitsis.librephotos.search.view.state.SearchState
 
 @ExperimentalComposeUiApi
 @Composable fun Search(
     state: SearchState,
     action: (SearchAction) -> Unit,
     controllersProvider: ControllersProvider,
+    imageLoader: ImageLoader,
 ) {
     MainScaffolding(navController = controllersProvider.navController!!) { contentPadding ->
         Column {
             Spacer(modifier = Modifier.height(contentPadding.calculateTopPadding()))
-
             TextField(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -66,7 +69,7 @@ import com.savvasdalkitsis.librephotos.search.mvflow.SearchAction.*
                     imeAction = ImeAction.Search,
                 ),
                 keyboardActions = KeyboardActions(
-                    onDone = { action(SearchFor(state.query)) }
+                    onSearch = { action(SearchFor(state.query)) }
                 ),
                 leadingIcon = {
                     Icon(
@@ -80,6 +83,25 @@ import com.savvasdalkitsis.librephotos.search.mvflow.SearchAction.*
                     action(ChangeQuery(it))
                 }
             )
+            when (state.searchResults) {
+                SearchResults.Idle -> {}
+                SearchResults.Searching -> Box(
+                    modifier = Modifier.fillMaxSize(),
+                    contentAlignment = Alignment.Center
+                ) {
+                    CircularProgressIndicator(modifier = Modifier.size(48.dp))
+                }
+                is SearchResults.Found -> FeedView(
+                    contentPadding = PaddingValues(
+                        start = contentPadding.calculateStartPadding(LayoutDirection.Ltr),
+                        end = contentPadding.calculateEndPadding(LayoutDirection.Ltr),
+                        bottom = contentPadding.calculateBottomPadding(),
+                    ),
+                    state = FeedState(state.searchResults.albums),
+                    imageLoader = imageLoader,
+                )
+            }
+
         }
     }
 }

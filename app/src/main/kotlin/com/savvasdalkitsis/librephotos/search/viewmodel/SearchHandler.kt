@@ -6,18 +6,22 @@ import com.savvasdalkitsis.librephotos.search.mvflow.SearchEffect.FocusSearchBar
 import com.savvasdalkitsis.librephotos.search.mvflow.SearchEffect.HideKeyboard
 import com.savvasdalkitsis.librephotos.search.mvflow.SearchMutation
 import com.savvasdalkitsis.librephotos.search.mvflow.SearchMutation.*
-import com.savvasdalkitsis.librephotos.search.view.SearchState
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.emptyFlow
-import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.flow.flowOf
+import com.savvasdalkitsis.librephotos.search.usecase.SearchUseCase
+import com.savvasdalkitsis.librephotos.search.view.state.SearchState
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.currentCoroutineContext
+import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.launch
 import net.pedroloureiro.mvflow.EffectSender
 import net.pedroloureiro.mvflow.HandlerWithEffects
 import javax.inject.Inject
 
 class SearchHandler @Inject constructor(
-
+    private val searchUseCase: SearchUseCase,
 ): HandlerWithEffects<SearchState, SearchAction, SearchMutation, SearchEffect> {
+
+    private var lastSearch: Job? = null
 
     override fun invoke(
         state: SearchState,
@@ -28,8 +32,22 @@ class SearchHandler @Inject constructor(
             effect.send(FocusSearchBar)
         }
         is SearchAction.ChangeQuery -> flowOf(QueryChanged(action.query))
-        is SearchAction.SearchFor -> flow {
+        is SearchAction.SearchFor -> channelFlow {
+            lastSearch?.cancel()
+            send(SearchStarted)
             effect.send(HideKeyboard)
+            lastSearch = CoroutineScope(currentCoroutineContext()).launch {
+                searchUseCase.searchFor(state.query)
+                    .debounce(200)
+                    .map { albums ->
+                        when {
+                            albums.isEmpty() -> SearchStarted
+                            else -> SearchResultsUpdated(albums)
+                        }
+                    }
+                    .cancellable()
+                    .collect { send(it) }
+            }
         }
         is SearchAction.ChangeFocus -> flowOf(FocusChanged(action.focused))
         SearchAction.ClearSearch -> flowOf(SearchCleared)

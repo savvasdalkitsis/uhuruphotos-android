@@ -16,6 +16,7 @@ import com.nesyou.staggeredgrid.StaggeredCells
 import com.savvasdalkitsis.librephotos.extensions.toColor
 import com.skydoves.landscapist.coil.CoilImage
 import com.skydoves.landscapist.coil.LocalCoilImageLoader
+import timber.log.Timber
 
 @Composable
 fun FeedView(

@@ -5,14 +5,9 @@ import com.savvasdalkitsis.librephotos.albums.api.model.toAlbum
 import com.savvasdalkitsis.librephotos.albums.db.AlbumsQueries
 import com.savvasdalkitsis.librephotos.albums.db.GetAlbums
 import com.savvasdalkitsis.librephotos.extensions.Group
-import com.savvasdalkitsis.librephotos.extensions.await
 import com.savvasdalkitsis.librephotos.extensions.awaitSingle
 import com.savvasdalkitsis.librephotos.extensions.groupBy
-import com.savvasdalkitsis.librephotos.photos.api.PhotosService
-import com.savvasdalkitsis.librephotos.photos.db.GetPhotoSummariesForAlbum
-import com.savvasdalkitsis.librephotos.photos.db.PhotoDetailsQueries
 import com.savvasdalkitsis.librephotos.photos.db.PhotoSummaryQueries
-import com.savvasdalkitsis.librephotos.photos.db.entities.toPhotoDetails
 import com.savvasdalkitsis.librephotos.photos.db.entities.toPhotoSummary
 import com.squareup.sqldelight.runtime.coroutines.asFlow
 import com.squareup.sqldelight.runtime.coroutines.mapToList
@@ -21,10 +16,8 @@ import javax.inject.Inject
 
 class AlbumsRepository @Inject constructor(
     private val albumsService: AlbumsService,
-    private val photosService: PhotosService,
     private val albumsQueries: AlbumsQueries,
     private val photoSummaryQueries: PhotoSummaryQueries,
-    private val photoDetailsQueries: PhotoDetailsQueries,
 ){
 
     fun getAlbumsByDate() : Flow<Group<String, GetAlbums>> =
@@ -32,10 +25,6 @@ class AlbumsRepository @Inject constructor(
 
     suspend fun refreshAlbums() {
         val albums = albumsService.getAlbumsByDate()
-        val allPhotoCount = albums.results.sumOf { it.numberOfItems }.toLong()
-        val existingPhotoDetails = photoDetailsQueries.count().awaitSingle()
-        if (existingPhotoDetails == allPhotoCount)
-            return
 
         albumsQueries.transaction {
             albumsQueries.clearAlbums()
@@ -47,16 +36,7 @@ class AlbumsRepository @Inject constructor(
         for (incompleteAlbum in albums.results) {
             val id = incompleteAlbum.id
             maybeFetchSummaries(id)
-
-            for (summary in photoSummaryQueries.getPhotoSummariesForAlbum(id).await()) {
-                summary.maybeFetchDetails(id)
-            }
         }
-    }
-
-    private suspend fun GetPhotoSummariesForAlbum.maybeFetchDetails(id: String) {
-        val photoResult = photosService.getPhoto(url)
-        photoDetailsQueries.insert(photoResult.toPhotoDetails(id))
     }
 
     private suspend fun maybeFetchSummaries(id: String) {

@@ -1,0 +1,28 @@
+CREATE TABLE search (
+  id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+  query TEXT NOT NULL,
+  date TEXT NOT NULL,
+  location TEXT,
+  photoId TEXT NOT NULL
+);
+
+CREATE UNIQUE INDEX photoQuery ON search(query, photoId);
+
+getSearchResults:
+SELECT
+ search.`query`,
+ search.date,
+ search.location,
+ summary.id AS summaryId,
+ summary.dominantColor,
+ summary.aspectRatio
+FROM search
+LEFT JOIN photoSummary AS summary ON search.photoId = summary.id AND search.`query` = :query AND summary.containerId = :query
+GROUP BY summary.id
+ORDER BY CASE search.date
+  WHEN 'No timestamp' THEN 0
+  ELSE search.date END
+DESC;
+
+addSearchResult:
+INSERT OR REPLACE INTO search VALUES (?, ?, ?, ?, ?);

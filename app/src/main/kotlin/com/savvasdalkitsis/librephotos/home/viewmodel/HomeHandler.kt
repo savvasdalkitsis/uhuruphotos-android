@@ -12,7 +12,6 @@ import com.savvasdalkitsis.librephotos.home.mvflow.HomeMutation
 import com.savvasdalkitsis.librephotos.home.mvflow.HomeMutation.Loading
 import com.savvasdalkitsis.librephotos.home.mvflow.HomeMutation.ShowAlbums
 import com.savvasdalkitsis.librephotos.home.state.HomeState
-import com.savvasdalkitsis.librephotos.server.usecase.ServerUseCase
 import kotlinx.coroutines.flow.*
 import net.pedroloureiro.mvflow.EffectSender
 import net.pedroloureiro.mvflow.HandlerWithEffects
@@ -21,7 +20,6 @@ import javax.inject.Inject
 class HomeHandler @Inject constructor(
     private val authenticationUseCase: AuthenticationUseCase,
     private val albumsUseCase: AlbumsUseCase,
-    private val serverUseCase: ServerUseCase,
 ) : HandlerWithEffects<HomeState, HomeAction, HomeMutation, HomeEffect> {
 
     override fun invoke(
