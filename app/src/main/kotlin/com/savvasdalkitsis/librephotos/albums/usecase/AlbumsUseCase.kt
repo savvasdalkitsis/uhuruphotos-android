@@ -8,6 +8,7 @@ import com.savvasdalkitsis.librephotos.albums.model.Album
 import com.savvasdalkitsis.librephotos.albums.repository.AlbumsRepository
 import com.savvasdalkitsis.librephotos.albums.worker.AlbumDownloadWorker
 import com.savvasdalkitsis.librephotos.date.DateDisplayer
+import com.savvasdalkitsis.librephotos.photos.api.model.isVideo
 import com.savvasdalkitsis.librephotos.photos.model.Photo
 import com.savvasdalkitsis.librephotos.photos.usecase.PhotosUseCase
 import kotlinx.coroutines.CoroutineScope
@@ -41,10 +42,11 @@ class AlbumsUseCase @Inject constructor(
                     photos = photos.map { item ->
                         Photo(
                             url = with(photosUseCase) {
-                                item.photoId.toThumbnailUrlFromId(item.type == "video")
+                                item.photoId.toThumbnailUrlFromId(item.isVideo)
                             },
                             fallbackColor = item.dominantColor,
                             ratio = item.aspectRatio ?: 1.0f,
+                            isVideo = item.isVideo,
                         )
                     }
                 )

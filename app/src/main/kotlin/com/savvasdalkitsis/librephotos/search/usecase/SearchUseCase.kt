@@ -2,6 +2,7 @@ package com.savvasdalkitsis.librephotos.search.usecase
 
 import com.savvasdalkitsis.librephotos.albums.model.Album
 import com.savvasdalkitsis.librephotos.date.DateDisplayer
+import com.savvasdalkitsis.librephotos.photos.api.model.isVideo
 import com.savvasdalkitsis.librephotos.photos.model.Photo
 import com.savvasdalkitsis.librephotos.photos.usecase.PhotosUseCase
 import com.savvasdalkitsis.librephotos.search.repository.SearchRepository
@@ -33,10 +34,11 @@ class SearchUseCase @Inject constructor(
                         photos = photos.map { photo ->
                             Photo(
                                 url = with(photosUseCase) {
-                                    photo.summaryId.toThumbnailUrlFromId(photo.type == "video")
+                                    photo.summaryId.toThumbnailUrlFromId(photo.isVideo)
                                 },
                                 fallbackColor = photo.dominantColor,
-                                ratio = photo.aspectRatio ?: 1f
+                                ratio = photo.aspectRatio ?: 1f,
+                                isVideo = photo.isVideo,
                             )
                         }
                     )
