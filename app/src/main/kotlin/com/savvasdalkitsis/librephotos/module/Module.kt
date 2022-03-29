@@ -1,6 +1,7 @@
 package com.savvasdalkitsis.librephotos.module
 
 import android.content.Context
+import androidx.work.WorkManager
 import com.savvasdalkitsis.librephotos.auth.api.AuthenticationHeaderInterceptor
 import com.savvasdalkitsis.librephotos.auth.api.WebLoginInterceptor
 import com.savvasdalkitsis.librephotos.network.DynamicDomainInterceptor
@@ -35,11 +36,15 @@ class Module {
         .addInterceptor(dynamicDomainInterceptor)
         .addInterceptor(webLoginInterceptor)
         .addInterceptor(authenticationHeaderInterceptor)
-        .addInterceptor(HttpLoggingInterceptor()
-            .setLevel(HttpLoggingInterceptor.Level.BASIC)
-        )
+//        .addInterceptor(HttpLoggingInterceptor()
+//            .setLevel(HttpLoggingInterceptor.Level.BASIC)
+//        )
 
     @Provides
     fun dateFormat(@ApplicationContext context: Context): java.text.DateFormat =
         SimpleDateFormat("yyy-MM-dd", context.resources.configuration.locale)
+
+    @Provides
+    fun workManager(@ApplicationContext context: Context): WorkManager = WorkManager
+        .getInstance(context)
 }

@@ -18,14 +18,13 @@ import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.composable
-import androidx.navigation.compose.currentBackStackEntryAsState
 import com.savvasdalkitsis.librephotos.viewmodel.MVFlowViewModel
 import kotlinx.coroutines.launch
 
 inline fun <S, A, E, reified M : MVFlowViewModel<S, A, *, E>> NavGraphBuilder.navigationTarget(
     name: String,
     crossinline effects: (E, ControllersProvider) -> Unit,
-    crossinline viewBuilder: @Composable (S, (A) -> Unit) -> Unit,
+    crossinline viewBuilder: @Composable (S, (A) -> Unit, NavGraphBuilder) -> Unit,
     crossinline initializer: (NavBackStackEntry, (A) -> Unit) -> Unit = { _, _ -> },
     controllersProvider: ControllersProvider,
 ) {
@@ -41,6 +40,7 @@ inline fun <S, A, E, reified M : MVFlowViewModel<S, A, *, E>> NavGraphBuilder.na
         }
         initializer(navBackStackEntry, actions)
 
+        viewBuilder(state!!, actions, this)
         LaunchedEffect(key1 = name) {
             scope.launch {
                 model.start {
@@ -48,7 +48,6 @@ inline fun <S, A, E, reified M : MVFlowViewModel<S, A, *, E>> NavGraphBuilder.na
                 }
             }
         }
-        viewBuilder(state!!, actions)
     }
 }
 

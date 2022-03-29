@@ -24,7 +24,7 @@ class WebLoginNavigationTarget @Inject constructor(
         navigationTarget<WebLoginState, WebLoginAction, WebLoginEffect, WebLoginViewModel>(
             name = name,
             effects = WebLoginEffectsHandler(),
-            viewBuilder = { state, actions ->
+            viewBuilder = { state, actions, _ ->
                 WebLogin(state, actions)
             },
             initializer = { navBackStackEntry, actions ->

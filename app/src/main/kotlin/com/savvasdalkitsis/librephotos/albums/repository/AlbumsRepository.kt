@@ -20,6 +20,8 @@ class AlbumsRepository @Inject constructor(
     private val photoSummaryQueries: PhotoSummaryQueries,
 ){
 
+    suspend fun hasAlbums() = albumsQueries.albumsCount().awaitSingle() > 0
+
     fun getAlbumsByDate() : Flow<Group<String, GetAlbums>> =
         albumsQueries.getAlbums().asFlow().mapToList().groupBy(GetAlbums::id)
 

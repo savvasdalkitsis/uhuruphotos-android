@@ -18,12 +18,12 @@ import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
-import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
 import coil.ImageLoader
-import com.savvasdalkitsis.librephotos.feed.view.FeedState
-import com.savvasdalkitsis.librephotos.feed.view.FeedView
-import com.savvasdalkitsis.librephotos.main.MainScaffolding
+import com.savvasdalkitsis.librephotos.extensions.copy
+import com.savvasdalkitsis.librephotos.feed.view.Feed
+import com.savvasdalkitsis.librephotos.feed.view.state.FeedState
+import com.savvasdalkitsis.librephotos.home.view.HomeScaffold
 import com.savvasdalkitsis.librephotos.navigation.ControllersProvider
 import com.savvasdalkitsis.librephotos.search.mvflow.SearchAction
 import com.savvasdalkitsis.librephotos.search.mvflow.SearchAction.*
@@ -37,7 +37,7 @@ import com.savvasdalkitsis.librephotos.search.view.state.SearchState
     controllersProvider: ControllersProvider,
     imageLoader: ImageLoader,
 ) {
-    MainScaffolding(navController = controllersProvider.navController!!) { contentPadding ->
+    HomeScaffold(navController = controllersProvider.navController!!) { contentPadding ->
         Column {
             Spacer(modifier = Modifier.height(contentPadding.calculateTopPadding()))
             TextField(
@@ -91,13 +91,9 @@ import com.savvasdalkitsis.librephotos.search.view.state.SearchState
                 ) {
                     CircularProgressIndicator(modifier = Modifier.size(48.dp))
                 }
-                is SearchResults.Found -> FeedView(
-                    contentPadding = PaddingValues(
-                        start = contentPadding.calculateStartPadding(LayoutDirection.Ltr),
-                        end = contentPadding.calculateEndPadding(LayoutDirection.Ltr),
-                        bottom = contentPadding.calculateBottomPadding(),
-                    ),
-                    state = FeedState(state.searchResults.albums),
+                is SearchResults.Found -> Feed(
+                    contentPadding = contentPadding.copy(top = 0.dp),
+                    state = FeedState(isLoading = false, state.searchResults.albums),
                     imageLoader = imageLoader,
                 )
             }

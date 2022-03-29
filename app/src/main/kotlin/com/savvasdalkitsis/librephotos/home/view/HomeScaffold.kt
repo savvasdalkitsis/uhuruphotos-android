@@ -1,7 +1,8 @@
-package com.savvasdalkitsis.librephotos.main
+package com.savvasdalkitsis.librephotos.home.view
 
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.material.BottomNavigation
+import androidx.compose.material.Icon
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Home
@@ -9,19 +10,21 @@ import androidx.compose.material.icons.filled.Search
 import androidx.compose.material.primarySurface
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.res.painterResource
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
-import com.savvasdalkitsis.librephotos.home.navigation.HomeNavigationTarget
+import com.savvasdalkitsis.librephotos.R
+import com.savvasdalkitsis.librephotos.feed.navigation.FeedNavigationTarget
 import com.savvasdalkitsis.librephotos.navigation.BottomNavItem
 import com.savvasdalkitsis.librephotos.search.navigation.SearchNavigationTarget
-import com.savvasdalkitsis.librephotos.views.CommonScaffolding
+import com.savvasdalkitsis.librephotos.main.view.MainScaffold
 
 @Composable
-fun MainScaffolding(
+fun HomeScaffold(
     navController: NavHostController,
     content: @Composable (PaddingValues) -> Unit,
 ) {
-    CommonScaffolding(
+    MainScaffold(
         bottomBar = {
             BottomNavigation(
                 backgroundColor = MaterialTheme.colors.primarySurface.copy(alpha = 0.8f)
@@ -31,8 +34,8 @@ fun MainScaffolding(
 
                 BottomNavItem(
                     currentDestination, navController,
-                    label = "Home",
-                    routeName = HomeNavigationTarget.name,
+                    label = "Feed",
+                    routeName = FeedNavigationTarget.name,
                     Icons.Filled.Home,
                 )
                 BottomNavItem(
@@ -42,7 +45,14 @@ fun MainScaffolding(
                     Icons.Filled.Search,
                 )
             }
-        }
+        },
+//        actionBarContent = {
+//            Icon(painter = painterResource(
+//                id = R.drawable.ic_launcher_background
+//            ),
+//                contentDescription = "syncJobStatus"
+//            )
+//        }
     ) { contentPadding ->
         content(contentPadding)
     }

@@ -15,7 +15,8 @@ SELECT
  search.location,
  summary.id AS summaryId,
  summary.dominantColor,
- summary.aspectRatio
+ summary.aspectRatio,
+ summary.type
 FROM search
 LEFT JOIN photoSummary AS summary ON search.photoId = summary.id AND search.`query` = :query AND summary.containerId = :query
 GROUP BY summary.id

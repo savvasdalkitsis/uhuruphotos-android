@@ -1,26 +1,28 @@
 package com.savvasdalkitsis.librephotos.server.navigation
 
-import android.app.Activity
+import android.content.Context
 import androidx.navigation.NavGraphBuilder
 import com.savvasdalkitsis.librephotos.navigation.ControllersProvider
 import com.savvasdalkitsis.librephotos.navigation.navigationTarget
 import com.savvasdalkitsis.librephotos.server.mvflow.ServerAction
 import com.savvasdalkitsis.librephotos.server.mvflow.ServerEffect
 import com.savvasdalkitsis.librephotos.server.view.Server
+import com.savvasdalkitsis.librephotos.server.view.ServerState
 import com.savvasdalkitsis.librephotos.server.viewmodel.ServerEffectsHandler
 import com.savvasdalkitsis.librephotos.server.viewmodel.ServerViewModel
-import com.savvasdalkitsis.librephotos.server.view.ServerState
+import dagger.hilt.android.qualifiers.ApplicationContext
 import javax.inject.Inject
 
 class ServerNavigationTarget @Inject constructor(
     private val controllersProvider: ControllersProvider,
+    @ApplicationContext private val context: Context,
 ) {
 
-    fun NavGraphBuilder.create(activity: Activity) =
+    fun NavGraphBuilder.create() =
         navigationTarget<ServerState, ServerAction, ServerEffect, ServerViewModel>(
             name = name,
-            effects = ServerEffectsHandler(activity),
-            viewBuilder = { state, actions -> Server(state, actions) },
+            effects = ServerEffectsHandler(context),
+            viewBuilder = { state, actions, _ -> Server(state, actions) },
             controllersProvider = controllersProvider,
         )
 

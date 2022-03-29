@@ -33,7 +33,7 @@ class SearchUseCase @Inject constructor(
                         photos = photos.map { photo ->
                             Photo(
                                 url = with(photosUseCase) {
-                                    photo.summaryId.toThumbnailUrlFromId()
+                                    photo.summaryId.toThumbnailUrlFromId(photo.type == "video")
                                 },
                                 fallbackColor = photo.dominantColor,
                                 ratio = photo.aspectRatio ?: 1f

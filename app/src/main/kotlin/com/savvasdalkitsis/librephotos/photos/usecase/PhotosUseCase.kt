@@ -9,11 +9,17 @@ class PhotosUseCase @Inject constructor(
 
     suspend fun String?.toAbsoluteUrl(): String? {
         val serverUrl = serverUseCase.getServerUrl()
-        return this?.removeSuffix(".webp")?.let { serverUrl + it }
+        return this
+            ?.removeSuffix(".webp")
+            ?.removeSuffix(".mp4")
+            ?.let { serverUrl + it }
     }
 
-    suspend fun String?.toThumbnailUrlFromId(): String? = this?.let {
-        "/media/thumbnails_big/$it".toAbsoluteUrl()
+    suspend fun String?.toThumbnailUrlFromId(video: Boolean = false): String? = this?.let {
+        when (video) {
+            true -> "/media/square_thumbnails/$it"
+            else -> "/media/thumbnails_big/$it"
+        }.toAbsoluteUrl()
     }
 
 }

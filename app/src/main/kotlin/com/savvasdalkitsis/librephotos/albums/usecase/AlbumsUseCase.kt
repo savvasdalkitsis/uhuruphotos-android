@@ -1,7 +1,12 @@
 package com.savvasdalkitsis.librephotos.albums.usecase
 
+import androidx.work.ExistingWorkPolicy
+import androidx.work.OneTimeWorkRequestBuilder
+import androidx.work.OutOfQuotaPolicy
+import androidx.work.WorkManager
 import com.savvasdalkitsis.librephotos.albums.model.Album
 import com.savvasdalkitsis.librephotos.albums.repository.AlbumsRepository
+import com.savvasdalkitsis.librephotos.albums.worker.AlbumDownloadWorker
 import com.savvasdalkitsis.librephotos.date.DateDisplayer
 import com.savvasdalkitsis.librephotos.photos.model.Photo
 import com.savvasdalkitsis.librephotos.photos.usecase.PhotosUseCase
@@ -18,6 +23,7 @@ class AlbumsUseCase @Inject constructor(
     private val albumsRepository: AlbumsRepository,
     private val dateDisplayer: DateDisplayer,
     private val photosUseCase: PhotosUseCase,
+    private val workManager: WorkManager,
 ) {
 
     fun getAlbums(
@@ -35,7 +41,7 @@ class AlbumsUseCase @Inject constructor(
                     photos = photos.map { item ->
                         Photo(
                             url = with(photosUseCase) {
-                                item.photoId.toThumbnailUrlFromId()
+                                item.photoId.toThumbnailUrlFromId(item.type == "video")
                             },
                             fallbackColor = item.dominantColor,
                             ratio = item.aspectRatio ?: 1.0f,
@@ -44,9 +50,15 @@ class AlbumsUseCase @Inject constructor(
                 )
             }
         }.onStart {
-            if (refresh) {
-                CoroutineScope(Dispatchers.IO).launch {
-                    albumsRepository.refreshAlbums()
+            CoroutineScope(Dispatchers.IO).launch {
+                if (refresh || !albumsRepository.hasAlbums()) {
+                    workManager.enqueueUniqueWork(
+                        AlbumDownloadWorker.WORK_NAME,
+                        ExistingWorkPolicy.KEEP,
+                        OneTimeWorkRequestBuilder<AlbumDownloadWorker>()
+                            .setExpedited(OutOfQuotaPolicy.RUN_AS_NON_EXPEDITED_WORK_REQUEST)
+                            .build()
+                    )
                 }
             }
         }

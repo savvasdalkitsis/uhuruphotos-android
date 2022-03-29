@@ -23,7 +23,7 @@ class SearchNavigationTarget @Inject constructor(
         navigationTarget<SearchState, SearchAction, SearchEffect, SearchViewModel>(
             name = name,
             effects = SearchEffectsHandler(),
-            viewBuilder = { state, actions ->
+            viewBuilder = { state, actions, _ ->
                 Search(state, actions, controllersProvider, imageLoader)
             },
             controllersProvider = controllersProvider,

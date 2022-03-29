@@ -14,6 +14,7 @@ SELECT
  summary.id AS photoId,
  summary.dominantColor,
  summary.aspectRatio,
+ summary.type,
  details.bigThumbnailUrl
 FROM albums
 LEFT JOIN photoSummary AS summary ON albums.id = summary.containerId
@@ -26,3 +27,6 @@ DELETE FROM albums;
 
 insert:
 INSERT OR REPLACE INTO albums VALUES ?;
+
+albumsCount:
+SELECT count(id) FROM albums;

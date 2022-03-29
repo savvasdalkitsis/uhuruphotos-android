@@ -20,14 +20,14 @@ import androidx.compose.ui.unit.dp
 import com.savvasdalkitsis.librephotos.server.mvflow.ServerAction
 import com.savvasdalkitsis.librephotos.server.mvflow.ServerAction.*
 import com.savvasdalkitsis.librephotos.server.view.ServerState.*
-import com.savvasdalkitsis.librephotos.views.CommonScaffolding
+import com.savvasdalkitsis.librephotos.main.view.MainScaffold
 
 @Composable
 fun Server(
     state: ServerState,
     action: (ServerAction) -> Unit = {},
 ) {
-    CommonScaffolding { contentPadding ->
+    MainScaffold { contentPadding ->
         Box(
             modifier = Modifier
                 .fillMaxHeight()

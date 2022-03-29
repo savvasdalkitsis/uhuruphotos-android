@@ -5,6 +5,7 @@ import android.os.Build
 import coil.ImageLoader
 import coil.decode.GifDecoder
 import coil.decode.ImageDecoderDecoder
+import coil.decode.VideoFrameDecoder
 import com.savvasdalkitsis.librephotos.auth.api.TokenRefreshInterceptor
 import dagger.Module
 import dagger.Provides
@@ -30,11 +31,12 @@ class ActivityModule {
                 .cache(imageCache)
                 .addInterceptor(tokenRefreshInterceptor)
                 .build())
-            .componentRegistry {
+            .components {
+                add(VideoFrameDecoder.Factory())
                 if (Build.VERSION.SDK_INT >= 28) {
-                    add(ImageDecoderDecoder(context))
+                    add(ImageDecoderDecoder.Factory())
                 } else {
-                    add(GifDecoder())
+                    add(GifDecoder.Factory())
                 }
             }
             .build()
