@@ -42,7 +42,15 @@ fun MainScaffold(
                                 )
                             }
                         }
-                        Box(modifier = Modifier.align(Alignment.CenterEnd)) {
+                        Box(modifier = Modifier
+                            .align(Alignment.CenterEnd)
+                            .padding(
+                                start = 2.dp,
+                                top = 2.dp,
+                                bottom = 2.dp,
+                                end = 12.dp,
+                            )
+                        ) {
                             actionBarContent()
                         }
                     }

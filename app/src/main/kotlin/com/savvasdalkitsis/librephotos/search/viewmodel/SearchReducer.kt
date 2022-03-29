@@ -21,6 +21,7 @@ class SearchReducer : Reducer<SearchState, SearchMutation> {
                 else -> SearchResults.Found(mutation.albums)
             }
         )
+        is SearchMutation.UserBadgeStateChanged -> state.copy(userBadgeState = mutation.userBadgeState)
     }
 
 }

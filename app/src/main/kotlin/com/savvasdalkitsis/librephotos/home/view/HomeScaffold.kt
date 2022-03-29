@@ -13,15 +13,21 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.res.painterResource
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
+import coil.ImageLoader
 import com.savvasdalkitsis.librephotos.R
 import com.savvasdalkitsis.librephotos.feed.navigation.FeedNavigationTarget
 import com.savvasdalkitsis.librephotos.navigation.BottomNavItem
 import com.savvasdalkitsis.librephotos.search.navigation.SearchNavigationTarget
 import com.savvasdalkitsis.librephotos.main.view.MainScaffold
+import com.savvasdalkitsis.librephotos.userbadge.view.UserBadge
+import com.savvasdalkitsis.librephotos.userbadge.view.state.SyncState
+import com.savvasdalkitsis.librephotos.userbadge.view.state.UserBadgeState
 
 @Composable
 fun HomeScaffold(
     navController: NavHostController,
+    userBadgeState: UserBadgeState? = null,
+    imageLoader: ImageLoader?,
     content: @Composable (PaddingValues) -> Unit,
 ) {
     MainScaffold(
@@ -46,13 +52,11 @@ fun HomeScaffold(
                 )
             }
         },
-//        actionBarContent = {
-//            Icon(painter = painterResource(
-//                id = R.drawable.ic_launcher_background
-//            ),
-//                contentDescription = "syncJobStatus"
-//            )
-//        }
+        actionBarContent = {
+            userBadgeState?.let {
+                UserBadge(it, imageLoader)
+            }
+        }
     ) { contentPadding ->
         content(contentPadding)
     }

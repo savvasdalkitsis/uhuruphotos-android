@@ -21,7 +21,7 @@ class LibrePhotosApplication : Application(), Configuration.Provider {
         WebView.setWebContentsDebuggingEnabled(true)
         Timber.plant(Timber.DebugTree())
         workManager.enqueueUniquePeriodicWork(
-            AlbumDownloadWorker.WORK_NAME,
+            AlbumDownloadWorker.PERIODIC_WORK_NAME,
             ExistingPeriodicWorkPolicy.KEEP,
             PeriodicWorkRequestBuilder<AlbumDownloadWorker>(2, TimeUnit.HOURS)
                 .setInitialDelay(1, TimeUnit.HOURS)

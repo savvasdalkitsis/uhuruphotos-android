@@ -53,7 +53,7 @@ class AlbumsUseCase @Inject constructor(
             CoroutineScope(Dispatchers.IO).launch {
                 if (refresh || !albumsRepository.hasAlbums()) {
                     workManager.enqueueUniqueWork(
-                        AlbumDownloadWorker.WORK_NAME,
+                        AlbumDownloadWorker.ONE_OFF_WORK_NAME,
                         ExistingWorkPolicy.KEEP,
                         OneTimeWorkRequestBuilder<AlbumDownloadWorker>()
                             .setExpedited(OutOfQuotaPolicy.RUN_AS_NON_EXPEDITED_WORK_REQUEST)

@@ -1,0 +1,17 @@
+CREATE TABLE user (
+ id INTEGER AS Int NOT NULL PRIMARY KEY,
+ username TEXT NOT NULL,
+ email TEXT NOT NULL,
+ avatar TEXT,
+ firstName TEXT,
+ lastName TEXT
+);
+
+getUser:
+SELECT * FROM user LIMIT 1;
+
+addUser:
+INSERT OR REPLACE INTO user VALUES ?;
+
+deleteUser:
+DELETE FROM user;

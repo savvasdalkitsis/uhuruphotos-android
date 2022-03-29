@@ -2,6 +2,7 @@ package com.savvasdalkitsis.librephotos.home.navigation
 
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.navigation.NavGraphBuilder
+import coil.ImageLoader
 import com.savvasdalkitsis.librephotos.home.mvflow.HomeAction
 import com.savvasdalkitsis.librephotos.home.mvflow.HomeEffect
 import com.savvasdalkitsis.librephotos.home.view.Home
@@ -15,6 +16,7 @@ import javax.inject.Inject
 @ExperimentalComposeUiApi
 class HomeNavigationTarget @Inject constructor(
     private val controllersProvider: ControllersProvider,
+    private val imageLoader: ImageLoader,
 ) {
 
     fun NavGraphBuilder.create() =
@@ -22,7 +24,7 @@ class HomeNavigationTarget @Inject constructor(
             name = name,
             effects = HomeEffectsHandler(),
             viewBuilder = { state, _, _ ->
-                Home(state, controllersProvider)
+                Home(state, controllersProvider, imageLoader)
             },
             controllersProvider = controllersProvider,
         )

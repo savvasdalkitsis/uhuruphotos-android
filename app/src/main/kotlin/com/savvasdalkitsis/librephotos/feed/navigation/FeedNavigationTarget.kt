@@ -6,6 +6,7 @@ import com.savvasdalkitsis.librephotos.feed.mvflow.FeedAction
 import com.savvasdalkitsis.librephotos.feed.mvflow.FeedEffect
 import com.savvasdalkitsis.librephotos.feed.view.Feed
 import com.savvasdalkitsis.librephotos.feed.view.FeedPage
+import com.savvasdalkitsis.librephotos.feed.view.state.FeedPageState
 import com.savvasdalkitsis.librephotos.feed.view.state.FeedState
 import com.savvasdalkitsis.librephotos.feed.viewmodel.FeedViewModel
 import com.savvasdalkitsis.librephotos.navigation.ControllersProvider
@@ -18,7 +19,7 @@ class FeedNavigationTarget @Inject constructor(
 ) {
 
     fun NavGraphBuilder.create() =
-        navigationTarget<FeedState, FeedAction, FeedEffect, FeedViewModel>(
+        navigationTarget<FeedPageState, FeedAction, FeedEffect, FeedViewModel>(
             name = name,
             effects = { _, _ ->  },
             viewBuilder = { state, _, _ -> FeedPage(controllersProvider, state, imageLoader) },

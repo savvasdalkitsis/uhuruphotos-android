@@ -1,15 +1,13 @@
 package com.savvasdalkitsis.librephotos.feed.viewmodel
 
 import com.savvasdalkitsis.librephotos.albums.usecase.AlbumsUseCase
-import com.savvasdalkitsis.librephotos.albums.worker.AlbumDownloadWorker
 import com.savvasdalkitsis.librephotos.feed.mvflow.FeedAction
 import com.savvasdalkitsis.librephotos.feed.mvflow.FeedAction.LoadFeed
 import com.savvasdalkitsis.librephotos.feed.mvflow.FeedEffect
 import com.savvasdalkitsis.librephotos.feed.mvflow.FeedMutation
 import com.savvasdalkitsis.librephotos.feed.mvflow.FeedMutation.*
-import com.savvasdalkitsis.librephotos.feed.view.state.FeedState
-import com.savvasdalkitsis.librephotos.home.mvflow.HomeMutation
-import com.savvasdalkitsis.librephotos.worker.usecase.WorkerStatusUseCase
+import com.savvasdalkitsis.librephotos.feed.view.state.FeedPageState
+import com.savvasdalkitsis.librephotos.userbadge.usecase.UserBadgeUseCase
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.channels.awaitClose
@@ -20,11 +18,11 @@ import javax.inject.Inject
 
 class FeedHandler @Inject constructor(
     private val albumsUseCase: AlbumsUseCase,
-    private val workerStatusUseCase: WorkerStatusUseCase,
-) : HandlerWithEffects<FeedState, FeedAction, FeedMutation, FeedEffect> {
+    private val userBadgeUseCase: UserBadgeUseCase,
+) : HandlerWithEffects<FeedPageState, FeedAction, FeedMutation, FeedEffect> {
 
     override fun invoke(
-        state: FeedState,
+        state: FeedPageState,
         action: FeedAction,
         effect: EffectSender<FeedEffect>
     ): Flow<FeedMutation> = when (action) {
@@ -36,8 +34,8 @@ class FeedHandler @Inject constructor(
                 .onEach(this::send)
                 .launchIn(CoroutineScope(Dispatchers.Default))
 
-            workerStatusUseCase.monitorUniqueJobStatus(AlbumDownloadWorker.WORK_NAME)
-                .map(::SyncJobUpdate)
+            userBadgeUseCase.getUserBadgeState()
+                .map(::UserBadgeUpdate)
                 .onEach(this::send)
                 .launchIn(CoroutineScope(Dispatchers.Default))
 

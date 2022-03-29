@@ -37,7 +37,8 @@ import com.savvasdalkitsis.librephotos.search.view.state.SearchState
     controllersProvider: ControllersProvider,
     imageLoader: ImageLoader,
 ) {
-    HomeScaffold(navController = controllersProvider.navController!!) { contentPadding ->
+    HomeScaffold(
+        controllersProvider.navController!!, state.userBadgeState, imageLoader,) { contentPadding ->
         Column {
             Spacer(modifier = Modifier.height(contentPadding.calculateTopPadding()))
             TextField(
@@ -97,7 +98,6 @@ import com.savvasdalkitsis.librephotos.search.view.state.SearchState
                     imageLoader = imageLoader,
                 )
             }
-
         }
     }
 }

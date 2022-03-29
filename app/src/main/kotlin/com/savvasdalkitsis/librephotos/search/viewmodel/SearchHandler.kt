@@ -8,6 +8,7 @@ import com.savvasdalkitsis.librephotos.search.mvflow.SearchMutation
 import com.savvasdalkitsis.librephotos.search.mvflow.SearchMutation.*
 import com.savvasdalkitsis.librephotos.search.usecase.SearchUseCase
 import com.savvasdalkitsis.librephotos.search.view.state.SearchState
+import com.savvasdalkitsis.librephotos.userbadge.usecase.UserBadgeUseCase
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.currentCoroutineContext
@@ -19,6 +20,7 @@ import javax.inject.Inject
 
 class SearchHandler @Inject constructor(
     private val searchUseCase: SearchUseCase,
+    private val userBadgeUseCase: UserBadgeUseCase,
 ): HandlerWithEffects<SearchState, SearchAction, SearchMutation, SearchEffect> {
 
     private var lastSearch: Job? = null
@@ -30,6 +32,7 @@ class SearchHandler @Inject constructor(
     ): Flow<SearchMutation> = when (action) {
         SearchAction.Initialise -> flow {
             effect.send(FocusSearchBar)
+            emitAll(userBadgeUseCase.getUserBadgeState().map(::UserBadgeStateChanged))
         }
         is SearchAction.ChangeQuery -> flowOf(QueryChanged(action.query))
         is SearchAction.SearchFor -> channelFlow {
