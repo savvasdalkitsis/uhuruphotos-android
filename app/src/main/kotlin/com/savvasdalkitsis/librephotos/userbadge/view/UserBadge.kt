@@ -14,11 +14,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.painter.ColorPainter
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
-import coil.request.ImageRequest
 import com.savvasdalkitsis.librephotos.R
 import com.savvasdalkitsis.librephotos.ui.theme.CustomColors
 import com.savvasdalkitsis.librephotos.userbadge.view.state.SyncState.*
@@ -49,10 +47,7 @@ fun UserBadge(
                     .size(size - 6.dp)
                     .clip(CircleShape)
                     .align(Alignment.Center),
-                model = ImageRequest.Builder(LocalContext.current)
-                    .data(state.avatarUrl)
-                    .crossfade(true)
-                    .build(),
+                model = state.avatarUrl,
                 contentScale = ContentScale.FillBounds,
                 placeholder = ColorPainter(backgroundColor),
                 contentDescription = "profileImage"

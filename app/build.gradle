@@ -77,7 +77,6 @@ dependencies {
             'androidx.lifecycle:lifecycle-runtime-ktx:2.4.1',
             'androidx.activity:activity-compose:1.5.0-alpha03',
             "androidx.compose.runtime:runtime-livedata:1.2.0-alpha05",
-            'com.github.nesyou01:LazyStaggeredGrid:1.1',
             "io.coil-kt:coil-compose:2.0.0-rc02",
             "io.coil-kt:coil-video:2.0.0-rc02",
             "io.coil-kt:coil-gif:2.0.0-rc02",

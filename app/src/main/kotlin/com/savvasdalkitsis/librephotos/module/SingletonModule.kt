@@ -128,6 +128,8 @@ class SingletonModule {
         .okHttpClient(okHttpBuilder
             .addInterceptor(tokenRefreshInterceptor)
             .build())
+        .crossfade(true)
+        .respectCacheHeaders(false)
         .components {
             add(VideoFrameDecoder.Factory())
             if (Build.VERSION.SDK_INT >= 28) {
