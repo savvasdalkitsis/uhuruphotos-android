@@ -41,6 +41,7 @@ class AlbumsUseCase @Inject constructor(
                     location = albumLocation ?: "",
                     photos = photos.map { item ->
                         Photo(
+                            id = item.photoId,
                             url = with(photosUseCase) {
                                 item.photoId.toThumbnailUrlFromId(item.isVideo)
                             },

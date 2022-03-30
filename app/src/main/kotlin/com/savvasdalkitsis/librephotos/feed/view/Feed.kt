@@ -39,7 +39,7 @@ fun Feed(
                 contentPadding = contentPadding,
             ) {
                 state.albums.flatMap { it.photos }.forEach { photo ->
-                    item {
+                    item(key = photo.id) {
                         Box(
                             modifier = Modifier
                                 .fillMaxSize()

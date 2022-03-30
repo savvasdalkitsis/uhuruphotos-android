@@ -33,6 +33,7 @@ class SearchUseCase @Inject constructor(
                         location = albumLocation,
                         photos = photos.map { photo ->
                             Photo(
+                                id = photo.summaryId,
                                 url = with(photosUseCase) {
                                     photo.summaryId.toThumbnailUrlFromId(photo.isVideo)
                                 },

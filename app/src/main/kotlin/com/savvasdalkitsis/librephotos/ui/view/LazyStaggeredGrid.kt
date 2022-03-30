@@ -61,9 +61,9 @@ fun LazyStaggeredGrid(
                     .nestedScroll(scrollConnections[index])
                     .weight(1f)
             ) {
-                for (item in gridScope.items[index]) {
-                    item {
-                        item()
+                for ((key, content) in gridScope.items[index]) {
+                    item(key = key) {
+                        content()
                     }
                 }
             }
@@ -76,10 +76,10 @@ class LazyStaggeredGridScope(
 ) {
 
     var currentIndex = 0
-    val items: Array<MutableList<@Composable () -> Unit>> = Array(columnCount) { mutableListOf() }
+    val items: Array<MutableList<Pair<Any?, @Composable () -> Unit>>> = Array(columnCount) { mutableListOf() }
 
-    fun item(content: @Composable () -> Unit) {
-        items[currentIndex % columnCount] += content
+    fun item(key: Any? = null, content: @Composable () -> Unit) {
+        items[currentIndex % columnCount] += key to content
         currentIndex += 1
     }
 }
