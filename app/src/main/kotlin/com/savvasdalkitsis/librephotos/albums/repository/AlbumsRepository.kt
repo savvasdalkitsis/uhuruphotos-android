@@ -12,6 +12,7 @@ import com.savvasdalkitsis.librephotos.photos.db.entities.toPhotoSummary
 import com.squareup.sqldelight.runtime.coroutines.asFlow
 import com.squareup.sqldelight.runtime.coroutines.mapToList
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.distinctUntilChanged
 import javax.inject.Inject
 
 class AlbumsRepository @Inject constructor(
@@ -24,6 +25,7 @@ class AlbumsRepository @Inject constructor(
 
     fun getAlbumsByDate() : Flow<Group<String, GetAlbums>> =
         albumsQueries.getAlbums().asFlow().mapToList().groupBy(GetAlbums::id)
+            .distinctUntilChanged()
 
     suspend fun refreshAlbums() {
         val albums = albumsService.getAlbumsByDate()

@@ -20,9 +20,7 @@ class CookieMonitor @Inject constructor(
         var cookie: String?
         do {
             cookie = cookies.getCookie(server)
-            Timber.w(cookie)
             delay(500)
         } while (cookie?.contains("_forward_auth=") == false)
     }
 }
-//uQYwQ6rJAodqBZC2x7tmex

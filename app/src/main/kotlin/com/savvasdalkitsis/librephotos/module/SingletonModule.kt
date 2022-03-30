@@ -1,7 +1,14 @@
 package com.savvasdalkitsis.librephotos.module
 
 import android.content.Context
+import android.os.Build
 import android.webkit.CookieManager
+import coil.ImageLoader
+import coil.decode.GifDecoder
+import coil.decode.ImageDecoderDecoder
+import coil.decode.VideoFrameDecoder
+import coil.disk.DiskCache
+import coil.memory.MemoryCache
 import com.savvasdalkitsis.librephotos.Database
 import com.savvasdalkitsis.librephotos.auth.api.AuthenticationService
 import com.savvasdalkitsis.librephotos.auth.api.TokenRefreshInterceptor
@@ -48,16 +55,9 @@ class SingletonModule {
     @Qualifier
     @Retention(AnnotationRetention.BINARY)
     annotation class AuthenticationRetrofit
-    @Qualifier
-    @Retention(AnnotationRetention.BINARY)
-    annotation class HttpCache
-    @Qualifier
-    @Retention(AnnotationRetention.BINARY)
-    annotation class ImageCache
 
     @Provides
     @Singleton
-    @HttpCache
     fun httpCache(
         @ApplicationContext context: Context,
     ) = Cache(
@@ -67,19 +67,9 @@ class SingletonModule {
 
     @Provides
     @Singleton
-    @ImageCache
-    fun imageCache(
-        @ApplicationContext context: Context,
-    ) = Cache(
-        File(context.cacheDir, "image_cache"),
-        600 * 1024L * 1024L
-    )
-
-    @Provides
-    @Singleton
     @AuthenticationRetrofit
     fun authenticationRetrofit(
-        @HttpCache httpCache: Cache,
+        httpCache: Cache,
         retrofitBuilder: Retrofit.Builder,
         okHttpBuilder: OkHttpClient.Builder,
     ): Retrofit = retrofitBuilder
@@ -91,7 +81,7 @@ class SingletonModule {
     @Provides
     @Singleton
     fun retrofit(
-        @HttpCache httpCache: Cache,
+        httpCache: Cache,
         retrofitBuilder: Retrofit.Builder,
         okHttpBuilder: OkHttpClient.Builder,
         tokenRefreshInterceptor: TokenRefreshInterceptor,
@@ -116,4 +106,35 @@ class SingletonModule {
     @Provides
     @Singleton
     fun cookieManager(): CookieManager = CookieManager.getInstance()
+
+    @Provides
+    @Singleton
+    fun imageLoader(
+        @ApplicationContext context: Context,
+        okHttpBuilder: OkHttpClient.Builder,
+        tokenRefreshInterceptor: TokenRefreshInterceptor,
+    ): ImageLoader = ImageLoader.Builder(context)
+        .memoryCache {
+            MemoryCache.Builder(context)
+                .maxSizePercent(0.25)
+                .build()
+        }
+        .diskCache {
+            DiskCache.Builder()
+                .directory(context.cacheDir.resolve("image_cache"))
+                .maxSizeBytes(250 * 1024 * 1024)
+                .build()
+        }
+        .okHttpClient(okHttpBuilder
+            .addInterceptor(tokenRefreshInterceptor)
+            .build())
+        .components {
+            add(VideoFrameDecoder.Factory())
+            if (Build.VERSION.SDK_INT >= 28) {
+                add(ImageDecoderDecoder.Factory())
+            } else {
+                add(GifDecoder.Factory())
+            }
+        }
+        .build()
 }

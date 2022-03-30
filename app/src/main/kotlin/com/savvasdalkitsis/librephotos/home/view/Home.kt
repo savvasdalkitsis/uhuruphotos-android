@@ -7,7 +7,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import coil.ImageLoader
 import com.savvasdalkitsis.librephotos.home.view.state.HomeState
 import com.savvasdalkitsis.librephotos.navigation.ControllersProvider
 
@@ -15,7 +14,6 @@ import com.savvasdalkitsis.librephotos.navigation.ControllersProvider
 fun Home(
     state: HomeState,
     controllersProvider: ControllersProvider,
-    imageLoader: ImageLoader,
 ) {
     HomeScaffold(
         controllersProvider.navController!!,
@@ -26,7 +24,6 @@ fun Home(
                 }
             }
         },
-        imageLoader = imageLoader,
     )
 }
 

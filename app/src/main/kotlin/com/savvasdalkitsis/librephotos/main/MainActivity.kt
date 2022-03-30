@@ -39,7 +39,7 @@ class MainActivity : ComponentActivity() {
                     )
                 }
 
-                librePhotosNavigator.createTargets(navController)
+                librePhotosNavigator.NavigationTargets(navController)
             }
         }
     }

@@ -51,8 +51,7 @@ class AlbumDownloadWorker @AssistedInject constructor(
         }
     }
     companion object {
-        const val PERIODIC_WORK_NAME = "refreshAlbumsPeriodically"
-        const val ONE_OFF_WORK_NAME = "refreshAlbumsOnce"
+        const val WORK_NAME = "refreshAlbums"
         private const val NOTIFICATION_ID = 1273
     }
 }

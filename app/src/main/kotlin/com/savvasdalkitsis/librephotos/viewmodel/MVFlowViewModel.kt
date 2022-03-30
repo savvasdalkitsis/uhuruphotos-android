@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.cancel
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.FlowCollector
@@ -47,10 +48,10 @@ open class MVFlowViewModel<STATE, ACTION, MUTATION, EFFECT>(
     suspend fun start(
        effectsCollector: FlowCollector<EFFECT>,
     ) {
-        CoroutineScope(coroutineContext).launch {
+        viewModelScope.launch {
             actions.send(initialAction)
+            effects.receiveAsFlow().collect(effectsCollector)
         }
-        effects.receiveAsFlow().collect(effectsCollector)
     }
 
     inner class MVFlowView : MVFlow.View<STATE, ACTION> {

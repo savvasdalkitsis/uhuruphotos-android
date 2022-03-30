@@ -25,7 +25,7 @@ class LibrePhotosNavigator @Inject constructor(
 ) {
 
     @Composable
-    fun createTargets(navHostController: NavHostController) {
+    fun NavigationTargets(navHostController: NavHostController) {
         with(controllersProvider) {
             navController = navHostController
             keyboardController = androidx.compose.ui.platform.LocalSoftwareKeyboardController.current

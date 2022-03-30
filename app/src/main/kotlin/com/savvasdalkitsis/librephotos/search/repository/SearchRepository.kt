@@ -10,6 +10,7 @@ import com.savvasdalkitsis.librephotos.search.api.SearchService
 import com.squareup.sqldelight.runtime.coroutines.asFlow
 import com.squareup.sqldelight.runtime.coroutines.mapToList
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.distinctUntilChanged
 import javax.inject.Inject
 
 class SearchRepository @Inject constructor(
@@ -20,6 +21,7 @@ class SearchRepository @Inject constructor(
 
     fun getSearchResults(query: String): Flow<Group<String, GetSearchResults>> =
         searchQueries.getSearchResults(query).asFlow().mapToList().groupBy(GetSearchResults::date)
+            .distinctUntilChanged()
 
     suspend fun refreshSearch(query: String) {
         val results = searchService.search(query)

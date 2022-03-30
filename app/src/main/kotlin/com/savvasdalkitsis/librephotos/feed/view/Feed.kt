@@ -4,31 +4,25 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.Icon
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Star
-import androidx.compose.material.icons.materialIcon
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
-import coil.ImageLoader
+import coil.compose.AsyncImage
+import coil.request.ImageRequest
 import com.nesyou.staggeredgrid.LazyStaggeredGrid
 import com.nesyou.staggeredgrid.StaggeredCells
 import com.savvasdalkitsis.librephotos.R
 import com.savvasdalkitsis.librephotos.extensions.toColor
 import com.savvasdalkitsis.librephotos.feed.view.state.FeedState
-import com.savvasdalkitsis.librephotos.home.view.HomeScaffold
-import com.savvasdalkitsis.librephotos.navigation.ControllersProvider
-import com.skydoves.landscapist.coil.CoilImage
-import com.skydoves.landscapist.coil.LocalCoilImageLoader
 
 @Composable
 fun Feed(
     contentPadding: PaddingValues = PaddingValues(0.dp),
     state: FeedState,
-    imageLoader: ImageLoader? = null,
 ) {
     if (state.isLoading && state.albums.isEmpty()) {
         Box(contentAlignment = Alignment.Center) {
@@ -71,11 +65,14 @@ fun Feed(
                                 .padding(1.dp)
                                 .background(photo.fallbackColor.toColor())
                         ) {
-                            CoilImage(
+                            AsyncImage(
                                 modifier = Modifier.fillMaxWidth(),
-                                imageLoader = { imageLoader ?: LocalCoilImageLoader.current!! },
-                                imageModel = photo.url,
+                                model = ImageRequest.Builder(LocalContext.current)
+                                    .data(photo.url)
+                                    .crossfade(true)
+                                    .build(),
                                 contentScale = ContentScale.FillBounds,
+                                contentDescription = "photo",
                             )
                             if (photo.isVideo) {
                                 Icon(

@@ -11,6 +11,7 @@ import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavBackStackEntry
 import androidx.navigation.NavDestination
 import androidx.navigation.NavDestination.Companion.hierarchy
@@ -31,7 +32,7 @@ inline fun <S, A, E, reified M : MVFlowViewModel<S, A, *, E>> NavGraphBuilder.na
     composable(name) { navBackStackEntry ->
         val model = hiltViewModel<M>()
         val state by model.state.observeAsState()
-        val scope = rememberCoroutineScope()
+        val scope = model.viewModelScope
 
         val actions: (A) -> Unit = {
             scope.launch {
@@ -50,8 +51,6 @@ inline fun <S, A, E, reified M : MVFlowViewModel<S, A, *, E>> NavGraphBuilder.na
         }
     }
 }
-
-
 
 @Composable
 fun RowScope.BottomNavItem(

@@ -19,7 +19,6 @@ import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
-import coil.ImageLoader
 import com.savvasdalkitsis.librephotos.extensions.copy
 import com.savvasdalkitsis.librephotos.feed.view.Feed
 import com.savvasdalkitsis.librephotos.feed.view.state.FeedState
@@ -35,10 +34,9 @@ import com.savvasdalkitsis.librephotos.search.view.state.SearchState
     state: SearchState,
     action: (SearchAction) -> Unit,
     controllersProvider: ControllersProvider,
-    imageLoader: ImageLoader,
 ) {
     HomeScaffold(
-        controllersProvider.navController!!, state.userBadgeState, imageLoader,) { contentPadding ->
+        controllersProvider.navController!!, state.userBadgeState,) { contentPadding ->
         Column {
             Spacer(modifier = Modifier.height(contentPadding.calculateTopPadding()))
             TextField(
@@ -95,7 +93,6 @@ import com.savvasdalkitsis.librephotos.search.view.state.SearchState
                 is SearchResults.Found -> Feed(
                     contentPadding = contentPadding.copy(top = 0.dp),
                     state = FeedState(isLoading = false, state.searchResults.albums),
-                    imageLoader = imageLoader,
                 )
             }
         }

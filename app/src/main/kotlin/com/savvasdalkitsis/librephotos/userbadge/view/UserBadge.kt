@@ -1,34 +1,32 @@
 package com.savvasdalkitsis.librephotos.userbadge.view
 
-import android.graphics.drawable.ColorDrawable
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.material.*
+import androidx.compose.material.CircularProgressIndicator
+import androidx.compose.material.Icon
+import androidx.compose.material.MaterialTheme
+import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.toArgb
+import androidx.compose.ui.graphics.painter.ColorPainter
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.res.colorResource
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
-import coil.ImageLoader
+import coil.compose.AsyncImage
+import coil.request.ImageRequest
 import com.savvasdalkitsis.librephotos.R
 import com.savvasdalkitsis.librephotos.ui.theme.CustomColors
 import com.savvasdalkitsis.librephotos.userbadge.view.state.SyncState.*
 import com.savvasdalkitsis.librephotos.userbadge.view.state.UserBadgeState
-import com.skydoves.landscapist.coil.CoilImage
-import com.skydoves.landscapist.coil.LocalCoilImageLoader
-import com.skydoves.landscapist.rememberDrawablePainter
 
 @Composable
 fun UserBadge(
     state: UserBadgeState,
-    imageLoader: ImageLoader? = null
 ) {
     val size = 38.dp
     val backgroundColor = when (state.syncState) {
@@ -46,15 +44,18 @@ fun UserBadge(
         }
 
         when {
-            !state.avatarUrl.isNullOrEmpty() -> CoilImage(
+            !state.avatarUrl.isNullOrEmpty() -> AsyncImage(
                 modifier = Modifier
                     .size(size - 6.dp)
                     .clip(CircleShape)
                     .align(Alignment.Center),
-                imageLoader = { imageLoader ?: LocalCoilImageLoader.current!! },
-                imageModel = state.avatarUrl,
+                model = ImageRequest.Builder(LocalContext.current)
+                    .data(state.avatarUrl)
+                    .crossfade(true)
+                    .build(),
                 contentScale = ContentScale.FillBounds,
-                placeHolder = rememberDrawablePainter(ColorDrawable(backgroundColor.toArgb())),
+                placeholder = ColorPainter(backgroundColor),
+                contentDescription = "profileImage"
             )
             state.initials.isNotEmpty() -> Text(
                 modifier = Modifier

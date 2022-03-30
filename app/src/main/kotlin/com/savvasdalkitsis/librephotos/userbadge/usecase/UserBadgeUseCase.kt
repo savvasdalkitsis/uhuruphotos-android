@@ -19,9 +19,7 @@ class UserBadgeUseCase @Inject constructor(
 ) {
 
     fun getUserBadgeState(): Flow<UserBadgeState> = userUseCase.getUser()
-        .combine(workerStatusUseCase.monitorUniqueJobStatus(AlbumDownloadWorker.ONE_OFF_WORK_NAME)
-            .combine(workerStatusUseCase.monitorUniqueJobStatus(AlbumDownloadWorker.PERIODIC_WORK_NAME))
-            { a, b -> a + b })
+        .combine(workerStatusUseCase.monitorUniqueJobStatus(AlbumDownloadWorker.WORK_NAME))
         { user, status ->
             UserBadgeState(
                 avatarUrl = with(photosUseCase) { user.avatar?.toAbsoluteUrl() },
