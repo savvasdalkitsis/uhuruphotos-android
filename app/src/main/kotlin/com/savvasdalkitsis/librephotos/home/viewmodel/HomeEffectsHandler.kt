@@ -12,11 +12,14 @@ class HomeEffectsHandler : (HomeEffect, ControllersProvider) -> Unit {
         effect: HomeEffect,
         controllersProvider: ControllersProvider,
     ) {
-        controllersProvider.navController!!.navigate(
-            when (effect) {
-                LaunchAuthentication -> ServerNavigationTarget.name
-                HomeEffect.LoadFeed -> FeedNavigationTarget.name
-            }
-        )
+        with(controllersProvider.navController!!) {
+            popBackStack()
+            navigate(
+                when (effect) {
+                    LaunchAuthentication -> ServerNavigationTarget.name
+                    HomeEffect.LoadFeed -> FeedNavigationTarget.name
+                }
+            )
+        }
     }
 }
