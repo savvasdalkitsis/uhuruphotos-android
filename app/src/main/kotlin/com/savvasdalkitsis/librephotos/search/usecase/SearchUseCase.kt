@@ -10,6 +10,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.currentCoroutineContext
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.launch
@@ -56,7 +57,9 @@ class SearchUseCase @Inject constructor(
                     .filter { album ->
                         album.photoCount > 0
                     }
-            }.onStart {
+            }
+            .distinctUntilChanged()
+            .onStart {
                 CoroutineScope(currentCoroutineContext() + Dispatchers.IO).launch {
                     searchRepository.refreshSearch(query)
                 }

@@ -14,6 +14,7 @@ import com.savvasdalkitsis.librephotos.photos.usecase.PhotosUseCase
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.launch
@@ -52,7 +53,9 @@ class AlbumsUseCase @Inject constructor(
                     }
                 )
             }
-        }.onStart {
+        }
+        .distinctUntilChanged()
+        .onStart {
             CoroutineScope(Dispatchers.IO).launch {
                 if (refresh || !albumsRepository.hasAlbums()) {
                     workManager.enqueueUniqueWork(
