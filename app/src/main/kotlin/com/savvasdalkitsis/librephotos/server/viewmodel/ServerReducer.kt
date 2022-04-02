@@ -4,15 +4,10 @@ import com.savvasdalkitsis.librephotos.server.mvflow.ServerMutation
 import com.savvasdalkitsis.librephotos.server.mvflow.ServerMutation.*
 import com.savvasdalkitsis.librephotos.server.view.ServerState
 import com.savvasdalkitsis.librephotos.server.view.ServerState.*
-import net.pedroloureiro.mvflow.Reducer
-import javax.inject.Inject
+import com.savvasdalkitsis.librephotos.viewmodel.Reducer
 
-class ServerReducer @Inject constructor() : Reducer<ServerState, ServerMutation> {
-
-    override fun invoke(
-        state: ServerState,
-        mutation: ServerMutation
-    ): ServerState = when (mutation) {
+fun serverReducer() : Reducer<ServerState, ServerMutation> = { state, mutation ->
+    when (mutation) {
         is AskForServerDetails -> ServerUrl(mutation.previousUrl.orEmpty())
         is AskForUserCredentials -> UserCredentials(mutation.userName, mutation.password)
         is ChangeUrlTo -> ServerUrl(mutation.url)
@@ -20,5 +15,4 @@ class ServerReducer @Inject constructor() : Reducer<ServerState, ServerMutation>
         is ChangeUsernameTo -> (state as UserCredentials).copy(username = mutation.username)
         PerformingBackgroundJob -> Loading
     }
-
 }

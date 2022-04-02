@@ -6,11 +6,8 @@ import androidx.compose.foundation.layout.calculateStartPadding
 import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.LayoutDirection
-import timber.log.Timber
-import java.lang.Exception
 
 @Composable fun String?.toColor(): Color = when (this) {
     null -> MaterialTheme.colors.background
@@ -20,8 +17,6 @@ import java.lang.Exception
         MaterialTheme.colors.background
     }
 }
-
-@Composable fun String?.toAndroidColor(): Int = toColor().toArgb()
 
 fun PaddingValues.copy(
     layoutDirection: LayoutDirection = LayoutDirection.Ltr,

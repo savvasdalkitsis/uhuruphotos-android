@@ -4,7 +4,6 @@ import android.webkit.CookieManager
 import com.savvasdalkitsis.librephotos.auth.usecase.AuthenticationUseCase
 import com.savvasdalkitsis.librephotos.server.usecase.ServerUseCase
 import kotlinx.coroutines.*
-import timber.log.Timber
 import javax.inject.Inject
 import javax.inject.Singleton
 

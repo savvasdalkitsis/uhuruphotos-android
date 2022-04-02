@@ -1,3 +1,5 @@
 package com.savvasdalkitsis.librephotos.weblogin.mvflow
 
-sealed class WebLoginEffect
+sealed class WebLoginEffect {
+    object Close : WebLoginEffect()
+}

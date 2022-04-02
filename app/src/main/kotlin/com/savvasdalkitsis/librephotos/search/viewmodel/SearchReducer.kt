@@ -3,14 +3,10 @@ package com.savvasdalkitsis.librephotos.search.viewmodel
 import com.savvasdalkitsis.librephotos.search.mvflow.SearchMutation
 import com.savvasdalkitsis.librephotos.search.view.state.SearchResults
 import com.savvasdalkitsis.librephotos.search.view.state.SearchState
-import net.pedroloureiro.mvflow.Reducer
+import com.savvasdalkitsis.librephotos.viewmodel.Reducer
 
-class SearchReducer : Reducer<SearchState, SearchMutation> {
-
-    override fun invoke(
-        state: SearchState,
-        mutation: SearchMutation,
-    ): SearchState = when (mutation) {
+fun searchReducer() : Reducer<SearchState, SearchMutation> = { state, mutation ->
+    when (mutation) {
         is SearchMutation.QueryChanged -> state.copy(query = mutation.query)
         is SearchMutation.FocusChanged -> state.copy(showClearButton = mutation.focused)
         SearchMutation.SearchCleared -> state.copy(query = "")
@@ -23,5 +19,4 @@ class SearchReducer : Reducer<SearchState, SearchMutation> {
         )
         is SearchMutation.UserBadgeStateChanged -> state.copy(userBadgeState = mutation.userBadgeState)
     }
-
 }

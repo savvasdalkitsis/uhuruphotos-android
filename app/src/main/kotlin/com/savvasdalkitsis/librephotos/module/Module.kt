@@ -2,6 +2,8 @@ package com.savvasdalkitsis.librephotos.module
 
 import android.content.Context
 import androidx.work.WorkManager
+import com.orhanobut.logger.AndroidLogAdapter
+import com.orhanobut.logger.PrettyFormatStrategy
 import com.savvasdalkitsis.librephotos.auth.api.AuthenticationHeaderInterceptor
 import com.savvasdalkitsis.librephotos.auth.api.WebLoginInterceptor
 import com.savvasdalkitsis.librephotos.network.DynamicDomainInterceptor
@@ -47,4 +49,12 @@ class Module {
     @Provides
     fun workManager(@ApplicationContext context: Context): WorkManager = WorkManager
         .getInstance(context)
+
+    @Provides
+    fun androidLogAdapter(): AndroidLogAdapter = AndroidLogAdapter(
+        PrettyFormatStrategy.newBuilder()
+            .showThreadInfo(true)
+            .methodCount(0)
+            .tag("")
+            .build())
 }

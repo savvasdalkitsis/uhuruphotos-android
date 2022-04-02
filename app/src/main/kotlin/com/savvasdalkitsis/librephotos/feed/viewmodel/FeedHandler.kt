@@ -8,38 +8,27 @@ import com.savvasdalkitsis.librephotos.feed.mvflow.FeedMutation
 import com.savvasdalkitsis.librephotos.feed.mvflow.FeedMutation.*
 import com.savvasdalkitsis.librephotos.feed.view.state.FeedPageState
 import com.savvasdalkitsis.librephotos.userbadge.usecase.UserBadgeUseCase
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.channels.awaitClose
+import com.savvasdalkitsis.librephotos.viewmodel.Handler
 import kotlinx.coroutines.flow.*
-import net.pedroloureiro.mvflow.EffectSender
-import net.pedroloureiro.mvflow.HandlerWithEffects
 import javax.inject.Inject
 
 class FeedHandler @Inject constructor(
     private val albumsUseCase: AlbumsUseCase,
     private val userBadgeUseCase: UserBadgeUseCase,
-) : HandlerWithEffects<FeedPageState, FeedAction, FeedMutation, FeedEffect> {
+) : Handler<FeedPageState, FeedEffect, FeedAction, FeedMutation> {
 
     override fun invoke(
         state: FeedPageState,
         action: FeedAction,
-        effect: EffectSender<FeedEffect>
+        effect: suspend (FeedEffect) -> Unit,
     ): Flow<FeedMutation> = when (action) {
-        is LoadFeed -> channelFlow {
-            send(Loading)
+        is LoadFeed -> merge(
+            flowOf(Loading),
             albumsUseCase.getAlbums(refresh = false)
                 .debounce(200)
-                .map(::ShowAlbums)
-                .onEach(this::send)
-                .launchIn(CoroutineScope(Dispatchers.Default))
-
+                .map(::ShowAlbums),
             userBadgeUseCase.getUserBadgeState()
-                .map(::UserBadgeUpdate)
-                .onEach(this::send)
-                .launchIn(CoroutineScope(Dispatchers.Default))
-
-            awaitClose()
-        }
+                .map(::UserBadgeUpdate),
+        )
     }
 }

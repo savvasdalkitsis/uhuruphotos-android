@@ -14,18 +14,18 @@ import javax.inject.Inject
 
 @ExperimentalComposeUiApi
 class HomeNavigationTarget @Inject constructor(
+    private val effectsHandler: HomeEffectsHandler,
     private val controllersProvider: ControllersProvider,
 ) {
 
     fun NavGraphBuilder.create() =
-        navigationTarget<HomeState, HomeAction, HomeEffect, HomeViewModel>(
+        navigationTarget<HomeState, HomeEffect, HomeAction, HomeViewModel>(
             name = name,
-            effects = HomeEffectsHandler(),
-            viewBuilder = { state, _, _ ->
-                Home(state, controllersProvider)
-            },
-            controllersProvider = controllersProvider,
-        )
+            effects = effectsHandler,
+            initializer = { _, actions -> actions(HomeAction.Load) },
+        ) { state, _ ->
+            Home(state, controllersProvider)
+        }
 
     companion object {
         const val name = "home"

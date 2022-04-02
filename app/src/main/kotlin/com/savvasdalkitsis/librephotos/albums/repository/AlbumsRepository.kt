@@ -11,6 +11,7 @@ import com.savvasdalkitsis.librephotos.photos.db.PhotoSummaryQueries
 import com.savvasdalkitsis.librephotos.photos.db.entities.toPhotoSummary
 import com.squareup.sqldelight.runtime.coroutines.asFlow
 import com.squareup.sqldelight.runtime.coroutines.mapToList
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.distinctUntilChanged
 import javax.inject.Inject
@@ -40,6 +41,7 @@ class AlbumsRepository @Inject constructor(
         for (incompleteAlbum in albums.results) {
             val id = incompleteAlbum.id
             maybeFetchSummaries(id)
+            delay(1000)
         }
     }
 

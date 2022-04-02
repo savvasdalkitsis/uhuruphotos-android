@@ -9,9 +9,12 @@ import androidx.work.PeriodicWorkRequestBuilder
 import androidx.work.WorkManager
 import coil.ImageLoader
 import coil.ImageLoaderFactory
+import com.orhanobut.logger.AndroidLogAdapter
+import com.orhanobut.logger.Logger
+import com.orhanobut.logger.PrettyFormatStrategy
 import com.savvasdalkitsis.librephotos.albums.worker.AlbumDownloadWorker
+import com.savvasdalkitsis.librephotos.log.log
 import dagger.hilt.android.HiltAndroidApp
-import timber.log.Timber
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
@@ -24,11 +27,12 @@ class LibrePhotosApplication :
     @Inject lateinit var workerFactory: HiltWorkerFactory
     @Inject lateinit var workManager: WorkManager
     @Inject lateinit var imageLoader: ImageLoader
+    @Inject lateinit var logAdapter: AndroidLogAdapter
 
     override fun onCreate() {
         super.onCreate()
         WebView.setWebContentsDebuggingEnabled(true)
-        Timber.plant(Timber.DebugTree())
+        Logger.addLogAdapter(logAdapter)
         workManager.enqueueUniquePeriodicWork(
             AlbumDownloadWorker.WORK_NAME,
             ExistingPeriodicWorkPolicy.KEEP,

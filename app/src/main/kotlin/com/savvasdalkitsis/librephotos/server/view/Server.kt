@@ -98,7 +98,7 @@ fun Server(
                                 imeAction = ImeAction.Next,
                             ),
                             leadingIcon = { Icon(imageVector = Icons.Default.Person, contentDescription = "usernameIcon") },
-                            label = { Text("User email address") },
+                            label = { Text("Username") },
                             value = state.username,
                             onValueChange = {
                                 action(UsernameChangedTo(it))

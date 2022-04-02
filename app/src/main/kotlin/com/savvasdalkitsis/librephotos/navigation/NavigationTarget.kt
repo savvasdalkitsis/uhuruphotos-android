@@ -4,14 +4,10 @@ import androidx.compose.foundation.layout.RowScope
 import androidx.compose.material.BottomNavigationItem
 import androidx.compose.material.Icon
 import androidx.compose.material.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.livedata.observeAsState
-import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.*
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.ViewModel
 import androidx.navigation.NavBackStackEntry
 import androidx.navigation.NavDestination
 import androidx.navigation.NavDestination.Companion.hierarchy
@@ -19,35 +15,47 @@ import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.composable
-import com.savvasdalkitsis.librephotos.viewmodel.MVFlowViewModel
+import com.savvasdalkitsis.librephotos.log.log
+import com.savvasdalkitsis.librephotos.viewmodel.ActionReceiverHost
+import com.savvasdalkitsis.librephotos.viewmodel.EffectHandler
 import kotlinx.coroutines.launch
+import org.orbitmvi.orbit.viewmodel.observe
 
-inline fun <S, A, E, reified M : MVFlowViewModel<S, A, *, E>> NavGraphBuilder.navigationTarget(
+inline fun <S : Any, E : Any, A : Any, reified VM> NavGraphBuilder.navigationTarget(
     name: String,
-    crossinline effects: (E, ControllersProvider) -> Unit,
-    crossinline viewBuilder: @Composable (S, (A) -> Unit, NavGraphBuilder) -> Unit,
+    crossinline effects: EffectHandler<E>,
     crossinline initializer: (NavBackStackEntry, (A) -> Unit) -> Unit = { _, _ -> },
-    controllersProvider: ControllersProvider,
-) {
+    crossinline content: @Composable (state: S, actions: (A) -> Unit) -> Unit,
+) where VM : ViewModel, VM : ActionReceiverHost<S, E, A, *> {
     composable(name) { navBackStackEntry ->
-        val model = hiltViewModel<M>()
-        val state by model.state.observeAsState()
-        val scope = model.viewModelScope
-
-        val actions: (A) -> Unit = {
-            scope.launch {
-                model.actions.send(it)
-            }
-        }
-        initializer(navBackStackEntry, actions)
-
-        viewBuilder(state!!, actions, this)
-        LaunchedEffect(key1 = name) {
-            scope.launch {
-                model.start {
-                    effects(it, controllersProvider)
+        val model = hiltViewModel<VM>()
+        val scope = rememberCoroutineScope()
+        val actions: (A) -> Unit = remember {
+            {
+                scope.launch {
+                    log("New action: $it", tag = "MVI")
+                    model.actionReceiver.action(it)
                 }
             }
+        }
+
+        var state by remember {
+            mutableStateOf(model.initialState)
+        }
+        model.actionReceiver.observe(navBackStackEntry,
+            state = {
+                log( "New state: $it", tag = "MVI")
+                state = it
+            },
+            sideEffect = {
+                log("New side effect: $it", tag = "MVI")
+                effects(it)
+            }
+        )
+        content(state, actions)
+
+        LaunchedEffect(Unit) {
+            initializer(navBackStackEntry, actions)
         }
     }
 }

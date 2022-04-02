@@ -12,20 +12,21 @@ import com.savvasdalkitsis.librephotos.search.viewmodel.SearchEffectsHandler
 import com.savvasdalkitsis.librephotos.search.viewmodel.SearchViewModel
 import javax.inject.Inject
 
-class SearchNavigationTarget @Inject constructor(
+class SearchNavigationTarget @ExperimentalComposeUiApi
+@Inject constructor(
+    private val effectsHandler: SearchEffectsHandler,
     private val controllersProvider: ControllersProvider,
 ) {
 
     @ExperimentalComposeUiApi
     fun NavGraphBuilder.create() {
-        navigationTarget<SearchState, SearchAction, SearchEffect, SearchViewModel>(
+        navigationTarget<SearchState, SearchEffect, SearchAction, SearchViewModel>(
             name = name,
-            effects = SearchEffectsHandler(),
-            viewBuilder = { state, actions, _ ->
-                Search(state, actions, controllersProvider)
-            },
-            controllersProvider = controllersProvider,
-        )
+            effects = effectsHandler,
+            initializer = { _, actions -> actions(SearchAction.Initialise) },
+        ) { state, actions ->
+            Search(state, actions, controllersProvider)
+        }
     }
 
     companion object {

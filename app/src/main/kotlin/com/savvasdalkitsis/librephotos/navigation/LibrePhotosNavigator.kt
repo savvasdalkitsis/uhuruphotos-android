@@ -8,7 +8,6 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import com.savvasdalkitsis.librephotos.feed.navigation.FeedNavigationTarget
 import com.savvasdalkitsis.librephotos.home.navigation.HomeNavigationTarget
-import com.savvasdalkitsis.librephotos.navigation.ControllersProvider
 import com.savvasdalkitsis.librephotos.search.navigation.SearchNavigationTarget
 import com.savvasdalkitsis.librephotos.server.navigation.ServerNavigationTarget
 import com.savvasdalkitsis.librephotos.weblogin.navigation.WebLoginNavigationTarget

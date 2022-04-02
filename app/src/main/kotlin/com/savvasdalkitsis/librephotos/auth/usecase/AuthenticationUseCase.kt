@@ -1,5 +1,6 @@
 package com.savvasdalkitsis.librephotos.auth.usecase
 
+import com.orhanobut.logger.Logger
 import com.savvasdalkitsis.librephotos.auth.api.AuthenticationService
 import com.savvasdalkitsis.librephotos.auth.api.model.AuthenticationCredentials
 import com.savvasdalkitsis.librephotos.auth.api.model.AuthenticationObtainResponse
@@ -15,7 +16,6 @@ import com.savvasdalkitsis.librephotos.token.db.Token
 import com.savvasdalkitsis.librephotos.token.db.TokenQueries
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
-import timber.log.Timber
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -56,7 +56,7 @@ class AuthenticationUseCase @Inject constructor(
                 refreshAccessToken(refreshToken)
                 Authenticated
             } catch (e: Exception) {
-                Timber.w(e)
+                Logger.log(Logger.VERBOSE, "AuthenticationUseCase", e.message, e)
                 Unauthenticated
             }
         }

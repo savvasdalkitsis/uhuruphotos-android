@@ -1,5 +1,7 @@
 package com.savvasdalkitsis.librephotos.server.viewmodel
 
+import com.orhanobut.logger.Logger
+import com.orhanobut.logger.Logger.VERBOSE
 import com.savvasdalkitsis.librephotos.auth.model.AuthStatus
 import com.savvasdalkitsis.librephotos.auth.usecase.AuthenticationUseCase
 import com.savvasdalkitsis.librephotos.server.mvflow.ServerAction
@@ -12,27 +14,27 @@ import com.savvasdalkitsis.librephotos.server.mvflow.ServerMutation.*
 import com.savvasdalkitsis.librephotos.server.usecase.ServerUseCase
 import com.savvasdalkitsis.librephotos.server.view.ServerState
 import com.savvasdalkitsis.librephotos.server.view.ServerState.UserCredentials
-import kotlinx.coroutines.flow.*
-import net.pedroloureiro.mvflow.EffectSender
-import net.pedroloureiro.mvflow.HandlerWithEffects
-import timber.log.Timber
+import com.savvasdalkitsis.librephotos.viewmodel.Handler
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.flowOf
 import javax.inject.Inject
 
 class ServerHandler @Inject constructor(
     private val serverUseCase: ServerUseCase,
     private val authenticationUseCase: AuthenticationUseCase,
-) : HandlerWithEffects<ServerState, ServerAction, ServerMutation, ServerEffect> {
+) : Handler<ServerState, ServerEffect, ServerAction, ServerMutation> {
 
     override fun invoke(
         state: ServerState,
         action: ServerAction,
-        effect: EffectSender<ServerEffect>
+        effect: suspend (ServerEffect) -> Unit,
     ): Flow<ServerMutation> = when (action) {
         CheckPersistedServer -> flow {
             when (serverUseCase.getServerUrl()) {
                 null -> emit(AskForServerDetails(null))
                 else -> when (authenticationUseCase.authenticationStatus()) {
-                    is AuthStatus.Authenticated -> effect.send(Close)
+                    is AuthStatus.Authenticated -> effect(Close)
                     is AuthStatus.Unauthenticated -> emit(AskForUserCredentials("", ""))
                 }
             }
@@ -43,17 +45,17 @@ class ServerHandler @Inject constructor(
         is UrlTyped -> flowOf(ChangeUrlTo(action.url))
         is ChangeServerUrlTo -> flow {
             serverUseCase.setServerUrl(action.url)
-            effect.send(Close)
+            effect(Close)
         }
         Login -> flow {
             emit(PerformingBackgroundJob)
             val credentials = state as UserCredentials
             try {
                 authenticationUseCase.login(credentials.username, credentials.password)
-                effect.send(Close)
+                effect(Close)
             } catch (e: Exception) {
-                Timber.w(e)
-                effect.send(ErrorLoggingIn(e))
+                Logger.log(VERBOSE, "ServerHandler", e.message, e)
+                effect(ErrorLoggingIn(e))
                 emit(AskForUserCredentials(credentials.username, credentials.password))
             }
         }
