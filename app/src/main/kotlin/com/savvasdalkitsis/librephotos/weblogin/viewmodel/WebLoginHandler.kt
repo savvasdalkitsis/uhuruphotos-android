@@ -10,14 +10,10 @@ import com.savvasdalkitsis.librephotos.weblogin.mvflow.WebLoginMutation
 import com.savvasdalkitsis.librephotos.weblogin.mvflow.WebLoginMutation.LoadPage
 import com.savvasdalkitsis.librephotos.weblogin.mvflow.WebLoginMutation.Loading
 import com.savvasdalkitsis.librephotos.weblogin.view.WebLoginState
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.flow.flowOf
-import kotlinx.coroutines.launch
 import javax.inject.Inject
+import kotlin.coroutines.coroutineContext
 
 class WebLoginHandler @Inject constructor(
     private val cookieMonitor: CookieMonitor,
@@ -29,9 +25,9 @@ class WebLoginHandler @Inject constructor(
         effect: suspend (WebLoginEffect) -> Unit,
     ): Flow<WebLoginMutation> =
         when(action) {
-            is WebLoginAction.LoadPage -> flow{
+            is WebLoginAction.LoadPage -> flow {
                 emit(Loading)
-                cookieMonitor.monitor().invokeOnCompletion {
+                cookieMonitor.monitor(coroutineContext).invokeOnCompletion {
                     onMain {
                         effect(Close)
                     }

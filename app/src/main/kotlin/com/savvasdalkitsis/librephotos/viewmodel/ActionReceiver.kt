@@ -16,15 +16,13 @@ class ActionReceiver<S : Any, E : Any, A : Any, M : Any>(
 ) : ContainerHost<S, E> {
 
     fun action(action: A) = intent {
-        repeatOnSubscription {
-            log("Starting handling of action $action", tag = "MVI")
-            handler(state, action) { effect ->
-                log("Received side effect to post: $effect", tag = "MVI")
-                postSideEffect(effect)
-            }.collect { mutation ->
-                Logger.log(Logger.VERBOSE, "MVI","Received mutation $mutation", null)
-                reduce { reducer(state, mutation) }
-            }
+        log("Starting handling of action $action", tag = "MVI")
+        handler(state, action) { effect ->
+            log("Received side effect to post: $effect", tag = "MVI")
+            postSideEffect(effect)
+        }.collect { mutation ->
+            Logger.log(Logger.VERBOSE, "MVI","Received mutation $mutation", null)
+            reduce { reducer(state, mutation) }
         }
     }
 }

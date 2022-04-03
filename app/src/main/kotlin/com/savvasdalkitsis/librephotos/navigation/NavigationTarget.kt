@@ -30,12 +30,10 @@ inline fun <S : Any, E : Any, A : Any, reified VM> NavGraphBuilder.navigationTar
     composable(name) { navBackStackEntry ->
         val model = hiltViewModel<VM>()
         val scope = rememberCoroutineScope()
-        val actions: (A) -> Unit = remember {
-            {
-                scope.launch {
-                    log("New action: $it", tag = "MVI")
-                    model.actionReceiver.action(it)
-                }
+        val actions: (A) -> Unit = {
+            scope.launch {
+                log("New action: $it", tag = "MVI")
+                model.actionReceiver.action(it)
             }
         }
 

@@ -11,7 +11,7 @@ import androidx.compose.ui.unit.dp
 import com.google.accompanist.web.WebView
 import com.google.accompanist.web.rememberWebViewState
 import com.savvasdalkitsis.librephotos.main.view.MainScaffold
-import com.savvasdalkitsis.librephotos.weblogin.mvflow.WebLoginAction
+
 
 @SuppressLint("SetJavaScriptEnabled")
 @Composable
@@ -30,7 +30,7 @@ fun WebLogin(state: WebLoginState) {
                     onCreated = {
                         CookieManager.getInstance().setAcceptThirdPartyCookies(it, true)
                         with(it.settings) {
-                            userAgentString = "Mozilla/5.0 (Linux; Android 4.1.1; Galaxy Nexus Build/JRO03C) AppleWebKit/535.19 (KHTML, like Gecko) Chrome/18.0.1025.166 Mobile Safari/535.19"
+                            userAgentString = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/98.0.4758.109 Safari/537.36 OPR/84.0.4316.42"
                             javaScriptEnabled = true
                         }
                     }

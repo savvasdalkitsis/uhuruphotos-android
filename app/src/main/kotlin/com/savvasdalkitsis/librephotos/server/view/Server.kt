@@ -1,5 +1,6 @@
 package com.savvasdalkitsis.librephotos.server.view
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
@@ -72,8 +73,10 @@ fun Server(
                 }
                 is UserCredentials -> {
                     Column {
-                    Spacer(modifier = Modifier.height(contentPadding.calculateTopPadding()))
-                        Row {
+                        Spacer(modifier = Modifier.height(contentPadding.calculateTopPadding()))
+                        Row(
+                            modifier = Modifier.clickable { action(RequestServerUrlChange) }
+                        ) {
                             IconButton(
                                 onClick = { action(RequestServerUrlChange) },
                                 modifier = Modifier.align(CenterVertically)
@@ -85,8 +88,10 @@ fun Server(
                             }
                             Text(
                                 text = "Change server url",
-                                modifier = Modifier.align(CenterVertically)
+                                modifier = Modifier
+                                    .align(CenterVertically)
                             )
+                            Spacer(modifier = Modifier.width(16.dp))
                         }
                     }
                     Column(modifier = Modifier.align(Alignment.Center)) {

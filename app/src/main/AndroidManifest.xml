@@ -7,13 +7,17 @@
     <uses-permission android:name="android.permission.INTERNET"/>
 
     <application
-        android:allowBackup="true"
+        android:allowBackup="false"
+        android:fullBackupContent="@xml/data_extraction"
+        android:dataExtractionRules="@xml/data_extraction"
+        android:fullBackupOnly="false"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.LibrePhotos"
-        android:name=".LibrePhotosApplication">
+        android:name=".LibrePhotosApplication"
+        tools:targetApi="s">
 
         <provider
             android:name="androidx.startup.InitializationProvider"
