@@ -30,7 +30,7 @@ fun WebLogin(state: WebLoginState) {
                     onCreated = {
                         CookieManager.getInstance().setAcceptThirdPartyCookies(it, true)
                         with(it.settings) {
-                            userAgentString = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/98.0.4758.109 Safari/537.36 OPR/84.0.4316.42"
+                            userAgentString = "Mozilla/5.0 (Linux; Android 10) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/100.0.4896.58 Mobile Safari/537.36"
                             javaScriptEnabled = true
                         }
                     }

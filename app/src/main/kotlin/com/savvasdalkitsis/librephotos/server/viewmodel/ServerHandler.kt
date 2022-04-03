@@ -15,6 +15,7 @@ import com.savvasdalkitsis.librephotos.server.mvflow.ServerMutation.*
 import com.savvasdalkitsis.librephotos.server.usecase.ServerUseCase
 import com.savvasdalkitsis.librephotos.server.view.ServerState
 import com.savvasdalkitsis.librephotos.server.view.ServerState.UserCredentials
+import com.savvasdalkitsis.librephotos.user.User
 import com.savvasdalkitsis.librephotos.viewmodel.Handler
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
@@ -36,7 +37,12 @@ class ServerHandler @Inject constructor(
                 null -> emit(AskForServerDetails(null, isValid = false))
                 else -> when (authenticationUseCase.authenticationStatus()) {
                     is AuthStatus.Authenticated -> effect(Close)
-                    is AuthStatus.Unauthenticated -> emit(AskForUserCredentials("", ""))
+                    is AuthStatus.Unauthenticated -> {
+                        when (state) {
+                            is UserCredentials -> emit(AskForUserCredentials(state.username, state.password))
+                            else -> emit(AskForUserCredentials("", ""))
+                        }
+                    }
                 }
             }
         }
@@ -54,6 +60,9 @@ class ServerHandler @Inject constructor(
             }
         }
         Login -> flow {
+            if ((state as? UserCredentials)?.allowLogin == false) {
+                return@flow
+            }
             emit(PerformingBackgroundJob)
             val credentials = state as UserCredentials
             try {

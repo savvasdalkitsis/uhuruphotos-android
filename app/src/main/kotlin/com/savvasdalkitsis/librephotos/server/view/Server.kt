@@ -65,7 +65,7 @@ fun Server(
                         },
                     )
                     Button(
-                        enabled = state.isUrlValid,
+                        enabled = state.allowSaveUrl,
                         onClick = { action(ChangeServerUrlTo(state.url)) }
                     ) {
                         Text("Save")
@@ -131,7 +131,10 @@ fun Server(
                                 action(UserPasswordChangedTo(it))
                             },
                         )
-                        Button(onClick = { action(Login) }) {
+                        Button(
+                            enabled = state.allowLogin,
+                            onClick = { action(Login) }
+                        ) {
                             Text("Login")
                         }
                     }
