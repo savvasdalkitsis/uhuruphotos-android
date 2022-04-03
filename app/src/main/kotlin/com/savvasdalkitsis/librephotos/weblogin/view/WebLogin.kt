@@ -24,7 +24,7 @@ fun WebLogin(state: WebLoginState) {
         val webState = rememberWebViewState(url = state.url)
         MainScaffold { contentPadding ->
             Column {
-            Spacer(modifier = Modifier.height(contentPadding.calculateTopPadding()))
+                Spacer(modifier = Modifier.height(contentPadding.calculateTopPadding()))
                 WebView(
                     webState,
                     onCreated = {
