@@ -4,6 +4,7 @@ import com.orhanobut.logger.Logger
 import com.orhanobut.logger.Logger.VERBOSE
 import com.savvasdalkitsis.librephotos.auth.model.AuthStatus
 import com.savvasdalkitsis.librephotos.auth.usecase.AuthenticationUseCase
+import com.savvasdalkitsis.librephotos.extensions.isValidUrl
 import com.savvasdalkitsis.librephotos.server.mvflow.ServerAction
 import com.savvasdalkitsis.librephotos.server.mvflow.ServerAction.*
 import com.savvasdalkitsis.librephotos.server.mvflow.ServerEffect
@@ -32,7 +33,7 @@ class ServerHandler @Inject constructor(
     ): Flow<ServerMutation> = when (action) {
         CheckPersistedServer -> flow {
             when (serverUseCase.getServerUrl()) {
-                null -> emit(AskForServerDetails(null))
+                null -> emit(AskForServerDetails(null, isValid = false))
                 else -> when (authenticationUseCase.authenticationStatus()) {
                     is AuthStatus.Authenticated -> effect(Close)
                     is AuthStatus.Unauthenticated -> emit(AskForUserCredentials("", ""))
@@ -40,12 +41,17 @@ class ServerHandler @Inject constructor(
             }
         }
         is RequestServerUrlChange -> flow {
-            emit(AskForServerDetails(serverUseCase.getServerUrl()))
+            val previousUrl = serverUseCase.getServerUrl()
+            emit(AskForServerDetails(previousUrl, previousUrl?.isValidUrl == true))
         }
-        is UrlTyped -> flowOf(ChangeUrlTo(action.url))
+        is UrlTyped -> flow {
+            emit(ChangeUrlTo(action.url, action.url.isValidUrl))
+        }
         is ChangeServerUrlTo -> flow {
-            serverUseCase.setServerUrl(action.url)
-            effect(Close)
+            if (action.url.isValidUrl) {
+                serverUseCase.setServerUrl(action.url)
+                effect(Close)
+            }
         }
         Login -> flow {
             emit(PerformingBackgroundJob)

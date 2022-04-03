@@ -8,9 +8,9 @@ import com.savvasdalkitsis.librephotos.viewmodel.Reducer
 
 fun serverReducer() : Reducer<ServerState, ServerMutation> = { state, mutation ->
     when (mutation) {
-        is AskForServerDetails -> ServerUrl(mutation.previousUrl.orEmpty())
+        is AskForServerDetails -> ServerUrl(mutation.previousUrl.orEmpty(), mutation.isValid)
         is AskForUserCredentials -> UserCredentials(mutation.userName, mutation.password)
-        is ChangeUrlTo -> ServerUrl(mutation.url)
+        is ChangeUrlTo -> ServerUrl(mutation.url, mutation.isValid)
         is ChangePasswordTo -> (state as UserCredentials).copy(password = mutation.password)
         is ChangeUsernameTo -> (state as UserCredentials).copy(username = mutation.username)
         PerformingBackgroundJob -> Loading

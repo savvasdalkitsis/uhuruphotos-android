@@ -17,6 +17,6 @@ fun ServerPreviewLoading() {
 @Preview(showBackground = true)
 fun ServerPreviewServerDetails() {
     AppTheme {
-        Server(ServerState.ServerUrl(""))
+        Server(ServerState.ServerUrl("", true))
     }
 }

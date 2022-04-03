@@ -58,11 +58,15 @@ fun Server(
                         leadingIcon = { Icon(imageVector = Icons.Default.Home, contentDescription = "serverIcon") },
                         label = { Text("Server Url") },
                         value = state.url,
+                        isError = !state.isUrlValid,
                         onValueChange = {
                             action(UrlTyped(it))
                         },
                     )
-                    Button(onClick = { action(ChangeServerUrlTo(state.url)) }) {
+                    Button(
+                        enabled = state.isUrlValid,
+                        onClick = { action(ChangeServerUrlTo(state.url)) }
+                    ) {
                         Text("Save")
                     }
                 }
