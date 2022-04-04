@@ -2,7 +2,10 @@ package com.savvasdalkitsis.librephotos.account.view
 
 import androidx.compose.animation.*
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
@@ -14,8 +17,6 @@ import androidx.compose.ui.graphics.TransformOrigin
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Popup
 import com.savvasdalkitsis.librephotos.userbadge.view.state.UserBadgeState
-import com.savvasdalkitsis.librephotos.window.WindowSize
-import com.savvasdalkitsis.librephotos.window.WindowSizeClass
 
 @ExperimentalAnimationApi
 @Composable

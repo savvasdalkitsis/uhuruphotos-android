@@ -11,6 +11,7 @@ import com.savvasdalkitsis.librephotos.feed.viewmodel.FeedPageEffectsHandler
 import com.savvasdalkitsis.librephotos.feed.viewmodel.FeedPageViewModel
 import com.savvasdalkitsis.librephotos.navigation.ControllersProvider
 import com.savvasdalkitsis.librephotos.navigation.navigationTarget
+import kotlinx.coroutines.FlowPreview
 import javax.inject.Inject
 
 class FeedPageNavigationTarget @Inject constructor(
@@ -18,6 +19,7 @@ class FeedPageNavigationTarget @Inject constructor(
     private val feedPageEffectsHandler: FeedPageEffectsHandler,
 ) {
 
+    @FlowPreview
     @ExperimentalComposeUiApi
     @ExperimentalAnimationApi
     fun NavGraphBuilder.create() {

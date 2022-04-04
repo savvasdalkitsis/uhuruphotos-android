@@ -11,9 +11,7 @@ import coil.ImageLoader
 import coil.ImageLoaderFactory
 import com.orhanobut.logger.AndroidLogAdapter
 import com.orhanobut.logger.Logger
-import com.orhanobut.logger.PrettyFormatStrategy
 import com.savvasdalkitsis.librephotos.albums.worker.AlbumDownloadWorker
-import com.savvasdalkitsis.librephotos.log.log
 import dagger.hilt.android.HiltAndroidApp
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject

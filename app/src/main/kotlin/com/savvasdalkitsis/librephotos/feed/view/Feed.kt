@@ -3,8 +3,6 @@ package com.savvasdalkitsis.librephotos.feed.view
 import android.content.res.Configuration.ORIENTATION_LANDSCAPE
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.Icon
 import androidx.compose.runtime.Composable
@@ -35,7 +33,7 @@ fun Feed(
     } else {
         LazyStaggeredGrid(
             modifier = Modifier
-                .padding(start = 1.dp, end = 1.dp,),
+                .padding(start = 1.dp, end = 1.dp),
             columnCount = when (LocalConfiguration.current.orientation) {
                 ORIENTATION_LANDSCAPE -> 5
                 else -> 2

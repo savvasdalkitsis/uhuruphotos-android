@@ -12,6 +12,7 @@ import com.savvasdalkitsis.librephotos.home.navigation.HomeNavigationTarget
 import com.savvasdalkitsis.librephotos.search.navigation.SearchNavigationTarget
 import com.savvasdalkitsis.librephotos.server.navigation.ServerNavigationTarget
 import com.savvasdalkitsis.librephotos.weblogin.navigation.WebLoginNavigationTarget
+import kotlinx.coroutines.FlowPreview
 import javax.inject.Inject
 
 @ExperimentalComposeUiApi
@@ -24,6 +25,7 @@ class LibrePhotosNavigator @Inject constructor(
     private val controllersProvider: ControllersProvider,
 ) {
 
+    @FlowPreview
     @ExperimentalAnimationApi
     @Composable
     fun NavigationTargets(navHostController: NavHostController) {

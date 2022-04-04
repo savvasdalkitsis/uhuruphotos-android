@@ -7,8 +7,9 @@ import com.savvasdalkitsis.librephotos.coroutines.onMain
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.channels.awaitClose
-import kotlinx.coroutines.currentCoroutineContext
-import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.cancellable
+import kotlinx.coroutines.flow.channelFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -17,8 +18,8 @@ class WorkerStatusUseCase @Inject constructor(
 ) {
 
     fun monitorUniqueJobStatus(jobName: String): Flow<WorkInfo.State> {
-        var observer: ((MutableList<WorkInfo>) -> Unit)? = null
-        var liveData: LiveData<MutableList<WorkInfo>>? = null
+        var observer: ((MutableList<WorkInfo>) -> Unit)?
+        var liveData: LiveData<MutableList<WorkInfo>>?
         return channelFlow {
             observer = {
                 val workInfo = it.getOrNull(0)

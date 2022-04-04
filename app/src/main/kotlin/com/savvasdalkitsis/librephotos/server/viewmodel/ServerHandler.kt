@@ -15,7 +15,6 @@ import com.savvasdalkitsis.librephotos.server.mvflow.ServerMutation.*
 import com.savvasdalkitsis.librephotos.server.usecase.ServerUseCase
 import com.savvasdalkitsis.librephotos.server.view.ServerState
 import com.savvasdalkitsis.librephotos.server.view.ServerState.UserCredentials
-import com.savvasdalkitsis.librephotos.user.User
 import com.savvasdalkitsis.librephotos.viewmodel.Handler
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow

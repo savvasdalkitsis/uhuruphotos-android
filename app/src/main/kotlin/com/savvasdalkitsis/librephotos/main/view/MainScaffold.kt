@@ -6,10 +6,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import com.google.accompanist.insets.ui.Scaffold
-import com.savvasdalkitsis.librephotos.R
 import com.savvasdalkitsis.librephotos.ui.insets.systemPadding
 
 @Composable

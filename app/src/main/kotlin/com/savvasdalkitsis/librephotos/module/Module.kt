@@ -14,7 +14,6 @@ import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import okhttp3.OkHttpClient
-import okhttp3.logging.HttpLoggingInterceptor
 import java.text.SimpleDateFormat
 import java.util.concurrent.TimeUnit
 
@@ -42,6 +41,7 @@ class Module {
 //            .setLevel(HttpLoggingInterceptor.Level.BASIC)
 //        )
 
+    @Suppress("DEPRECATION")
     @Provides
     fun dateFormat(@ApplicationContext context: Context): java.text.DateFormat =
         SimpleDateFormat("yyy-MM-dd", context.resources.configuration.locale)

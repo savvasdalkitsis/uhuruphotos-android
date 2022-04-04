@@ -18,11 +18,13 @@ import com.savvasdalkitsis.librephotos.ui.theme.AppTheme
 import com.savvasdalkitsis.librephotos.window.WindowSize
 import com.savvasdalkitsis.librephotos.window.windowSizeClass
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.FlowPreview
 import javax.inject.Inject
 
 @AndroidEntryPoint
 @ExperimentalComposeUiApi
 @ExperimentalAnimationApi
+@FlowPreview
 class MainActivity : ComponentActivity() {
 
     @Inject lateinit var librePhotosNavigator: LibrePhotosNavigator
