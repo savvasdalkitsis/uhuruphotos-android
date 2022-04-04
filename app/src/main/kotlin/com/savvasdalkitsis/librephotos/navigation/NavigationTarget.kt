@@ -1,5 +1,6 @@
 package com.savvasdalkitsis.librephotos.navigation
 
+import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.runtime.*
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
@@ -7,13 +8,14 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.ViewModel
 import androidx.navigation.NavBackStackEntry
 import androidx.navigation.NavGraphBuilder
-import androidx.navigation.compose.composable
+import com.google.accompanist.navigation.animation.composable
 import com.savvasdalkitsis.librephotos.log.log
 import com.savvasdalkitsis.librephotos.viewmodel.ActionReceiverHost
 import com.savvasdalkitsis.librephotos.viewmodel.EffectHandler
 import kotlinx.coroutines.launch
 import org.orbitmvi.orbit.viewmodel.observe
 
+@ExperimentalAnimationApi
 @ExperimentalComposeUiApi
 inline fun <S : Any, E : Any, A : Any, reified VM> NavGraphBuilder.navigationTarget(
     name: String,

@@ -11,6 +11,7 @@ import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.graphics.Color
 import androidx.core.view.WindowCompat
 import androidx.navigation.compose.rememberNavController
+import com.google.accompanist.navigation.animation.rememberAnimatedNavController
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import com.savvasdalkitsis.librephotos.navigation.LibrePhotosNavigator
 import com.savvasdalkitsis.librephotos.navigation.ControllersProvider
@@ -42,7 +43,7 @@ class MainActivity : ComponentActivity() {
                 AppTheme {
                     val systemUiController = rememberSystemUiController()
                     val useDarkIcons = MaterialTheme.colors.isLight
-                    val navController = rememberNavController()
+                    val navController = rememberAnimatedNavController()
 
                     SideEffect {
                         systemUiController.setSystemBarsColor(

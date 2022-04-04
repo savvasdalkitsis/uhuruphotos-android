@@ -1,6 +1,7 @@
 package com.savvasdalkitsis.librephotos.weblogin.navigation
 
 import android.util.Base64
+import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.navigation.NavBackStackEntry
 import androidx.navigation.NavGraphBuilder
@@ -17,6 +18,7 @@ class WebLoginNavigationTarget @Inject constructor(
     private val effectsHandler: WebEffectsHandler,
 ) {
 
+    @ExperimentalAnimationApi
     @ExperimentalComposeUiApi
     fun NavGraphBuilder.create() {
         navigationTarget<WebLoginState, WebLoginEffect, WebLoginAction, WebLoginViewModel>(

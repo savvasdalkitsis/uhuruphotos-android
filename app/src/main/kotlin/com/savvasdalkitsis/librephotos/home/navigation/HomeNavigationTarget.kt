@@ -1,5 +1,6 @@
 package com.savvasdalkitsis.librephotos.home.navigation
 
+import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.navigation.NavGraphBuilder
 import com.savvasdalkitsis.librephotos.home.mvflow.HomeAction
@@ -17,6 +18,7 @@ class HomeNavigationTarget @Inject constructor(
     private val controllersProvider: ControllersProvider,
 ) {
 
+    @ExperimentalAnimationApi
     @ExperimentalComposeUiApi
     fun NavGraphBuilder.create() =
         navigationTarget<HomeState, HomeEffect, HomeAction, HomeViewModel>(
