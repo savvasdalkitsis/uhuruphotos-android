@@ -135,6 +135,7 @@ private fun NavRailNavItem(
     icon: ImageVector
 ) {
     NavigationRailItem(
+        selectedContentColor = LocalContentColor.current,
         icon = { Icon(icon, contentDescription = label) },
         label = { Text(label) },
         selected = isSelected(currentDestination, routeName),
