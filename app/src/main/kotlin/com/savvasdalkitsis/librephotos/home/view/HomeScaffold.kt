@@ -1,8 +1,9 @@
 package com.savvasdalkitsis.librephotos.home.view
 
-import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.*
 import androidx.compose.material.BottomNavigation
 import androidx.compose.material.MaterialTheme
+import androidx.compose.material.NavigationRail
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Search
@@ -13,11 +14,15 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import com.savvasdalkitsis.librephotos.feed.navigation.FeedNavigationTarget
+import com.savvasdalkitsis.librephotos.home.navigation.*
+import com.savvasdalkitsis.librephotos.home.navigation.NavigationStyle.BOTTOM_BAR
+import com.savvasdalkitsis.librephotos.home.navigation.NavigationStyle.NAVIGATION_RAIL
 import com.savvasdalkitsis.librephotos.main.view.MainScaffold
-import com.savvasdalkitsis.librephotos.navigation.BottomNavItem
 import com.savvasdalkitsis.librephotos.search.navigation.SearchNavigationTarget
 import com.savvasdalkitsis.librephotos.userbadge.view.UserBadge
 import com.savvasdalkitsis.librephotos.userbadge.view.state.UserBadgeState
+import com.savvasdalkitsis.librephotos.window.WindowSize
+import com.savvasdalkitsis.librephotos.window.WindowSizeClass
 
 @Composable
 fun HomeScaffold(
@@ -30,24 +35,8 @@ fun HomeScaffold(
     MainScaffold(
         modifier = modifier,
         bottomBar = {
-            BottomNavigation(
-                backgroundColor = MaterialTheme.colors.primarySurface.copy(alpha = 0.8f)
-            ) {
-                val navBackStackEntry by navController.currentBackStackEntryAsState()
-                val currentDestination = navBackStackEntry?.destination
-
-                BottomNavItem(
-                    currentDestination, navController,
-                    label = "Feed",
-                    routeName = FeedNavigationTarget.name,
-                    Icons.Filled.Home,
-                )
-                BottomNavItem(
-                    currentDestination, navController,
-                    label = "Search",
-                    routeName = SearchNavigationTarget.name,
-                    Icons.Filled.Search,
-                )
+            if (homeNavigationStyle() == BOTTOM_BAR) {
+                HomeNavigationBar(navController = navController)
             }
         },
         actionBarContent = {
@@ -56,6 +45,15 @@ fun HomeScaffold(
             }
         }
     ) { contentPadding ->
-        content(contentPadding)
+        when (homeNavigationStyle()) {
+            BOTTOM_BAR -> content(contentPadding)
+            NAVIGATION_RAIL -> Row {
+                HomeNavigationBar(
+                    contentPadding = contentPadding,
+                    navController = navController,
+                )
+                content(contentPadding)
+            }
+        }
     }
 }

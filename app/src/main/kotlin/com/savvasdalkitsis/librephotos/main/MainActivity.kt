@@ -5,6 +5,7 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.material.MaterialTheme
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.SideEffect
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.graphics.Color
@@ -14,6 +15,8 @@ import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import com.savvasdalkitsis.librephotos.navigation.LibrePhotosNavigator
 import com.savvasdalkitsis.librephotos.navigation.ControllersProvider
 import com.savvasdalkitsis.librephotos.ui.theme.AppTheme
+import com.savvasdalkitsis.librephotos.window.WindowSize
+import com.savvasdalkitsis.librephotos.window.windowSizeClass
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -29,19 +32,25 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         WindowCompat.setDecorFitsSystemWindows(window, false)
         setContent {
-            AppTheme {
-                val systemUiController = rememberSystemUiController()
-                val useDarkIcons = MaterialTheme.colors.isLight
-                val navController = rememberNavController()
+            val (width, height) = windowSizeClass()
+            CompositionLocalProvider(
+                WindowSize.LOCAL_WIDTH provides width,
+                WindowSize.LOCAL_HEIGHT provides height,
+            ) {
+                AppTheme {
+                    val systemUiController = rememberSystemUiController()
+                    val useDarkIcons = MaterialTheme.colors.isLight
+                    val navController = rememberNavController()
 
-                SideEffect {
-                    systemUiController.setSystemBarsColor(
-                        color = Color.Transparent,
-                        darkIcons = useDarkIcons
-                    )
+                    SideEffect {
+                        systemUiController.setSystemBarsColor(
+                            color = Color.Transparent,
+                            darkIcons = useDarkIcons
+                        )
+                    }
+
+                    librePhotosNavigator.NavigationTargets(navController)
                 }
-
-                librePhotosNavigator.NavigationTargets(navController)
             }
         }
     }

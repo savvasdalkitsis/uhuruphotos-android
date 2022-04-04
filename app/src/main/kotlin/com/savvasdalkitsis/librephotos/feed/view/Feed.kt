@@ -24,7 +24,10 @@ fun Feed(
     state: FeedState,
 ) {
     if (state.isLoading && state.albums.isEmpty()) {
-        Box(contentAlignment = Alignment.Center) {
+        Box(
+            contentAlignment = Alignment.Center,
+            modifier = Modifier.fillMaxSize(),
+        ) {
             CircularProgressIndicator(modifier = Modifier.size(48.dp))
         }
     } else {
