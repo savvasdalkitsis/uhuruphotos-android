@@ -13,5 +13,7 @@ fun feedReducer() : Reducer<FeedPageState, FeedMutation> = { state, mutation ->
         is UserBadgeUpdate -> state.copy(userBadgeState = mutation.state)
         ShowAccountOverview -> state.copy(showAccountOverview = true)
         HideAccountOverview -> state.copy(showAccountOverview = false)
+        StartRefreshing -> state.copy(isRefreshing = true)
+        StopRefreshing -> state.copy(isRefreshing = false)
     }
 }

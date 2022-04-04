@@ -12,6 +12,7 @@ import com.savvasdalkitsis.librephotos.feed.view.state.FeedPageState
 import com.savvasdalkitsis.librephotos.userbadge.usecase.UserBadgeUseCase
 import com.savvasdalkitsis.librephotos.viewmodel.Handler
 import kotlinx.coroutines.FlowPreview
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.*
 import javax.inject.Inject
 
@@ -40,6 +41,12 @@ class FeedHandler @Inject constructor(
         LogOut -> flow {
             accountUseCase.logOut()
             effect(ReloadApp)
+        }
+        RefreshAlbums -> flow {
+            emit(StartRefreshing)
+            albumsUseCase.startRefreshAlbumsWork()
+            delay(200)
+            emit(StopRefreshing)
         }
     }
 }

@@ -5,4 +5,5 @@ sealed class FeedAction {
     object UserBadgePressed : FeedAction()
     object DismissAccountOverview : FeedAction()
     object LogOut : FeedAction()
+    object RefreshAlbums : FeedAction()
 }

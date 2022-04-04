@@ -8,6 +8,8 @@ sealed class FeedMutation {
     object FinishedLoading : FeedMutation()
     object ShowAccountOverview : FeedMutation()
     object HideAccountOverview : FeedMutation()
+    object StartRefreshing : FeedMutation()
+    object StopRefreshing : FeedMutation()
 
     data class ShowAlbums(val albums: List<Album>) : FeedMutation() {
         override fun toString() = "Showing ${albums.size} albums"

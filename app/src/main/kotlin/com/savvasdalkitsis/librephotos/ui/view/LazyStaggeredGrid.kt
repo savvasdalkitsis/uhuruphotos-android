@@ -8,18 +8,23 @@ import androidx.compose.foundation.gestures.scrollable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.rememberLazyListState
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import com.savvasdalkitsis.librephotos.log.log
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 @Composable
 fun LazyStaggeredGrid(
+    modifier: Modifier = Modifier,
     columnCount: Int,
     contentPadding: PaddingValues = PaddingValues(0.dp),
     content: @Composable LazyStaggeredGridScope.() -> Unit,
@@ -30,12 +35,17 @@ fun LazyStaggeredGrid(
     val scope = rememberCoroutineScope { Dispatchers.Main.immediate }
     val scroll = rememberScrollableState { delta ->
         scope.launch { states.forEach {  it.scrollBy(-delta) }}
-        delta
+        when {
+            delta > 0 && states.all {
+                it.firstVisibleItemIndex == 0 && it.firstVisibleItemScrollOffset == 0
+            } -> 0f
+            else -> delta
+        }
     }
     val gridScope = LazyStaggeredGridScope(columnCount)
     content(gridScope)
 
-    Box(modifier = Modifier
+    Box(modifier = modifier
         .scrollable(scroll, Vertical, flingBehavior = ScrollableDefaults.flingBehavior())
     ) {
         Row {

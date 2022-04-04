@@ -58,14 +58,16 @@ class AlbumsUseCase @Inject constructor(
         .onStart {
             CoroutineScope(Dispatchers.IO).launch {
                 if (refresh || !albumsRepository.hasAlbums()) {
-                    workManager.enqueueUniqueWork(
-                        AlbumDownloadWorker.WORK_NAME,
-                        ExistingWorkPolicy.REPLACE,
-                        OneTimeWorkRequestBuilder<AlbumDownloadWorker>()
-                            .setExpedited(OutOfQuotaPolicy.RUN_AS_NON_EXPEDITED_WORK_REQUEST)
-                            .build()
-                    )
+                    startRefreshAlbumsWork()
                 }
             }
         }
+
+    fun startRefreshAlbumsWork() = workManager.enqueueUniqueWork(
+        AlbumDownloadWorker.WORK_NAME,
+        ExistingWorkPolicy.REPLACE,
+        OneTimeWorkRequestBuilder<AlbumDownloadWorker>()
+            .setExpedited(OutOfQuotaPolicy.RUN_AS_NON_EXPEDITED_WORK_REQUEST)
+            .build()
+    )
 }
