@@ -5,18 +5,20 @@ import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.graphics.painter.Painter
+import androidx.compose.ui.graphics.vector.rememberVectorPainter
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavDestination
 import androidx.navigation.NavDestination.Companion.hierarchy
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
+import com.savvasdalkitsis.librephotos.R
 import com.savvasdalkitsis.librephotos.feed.navigation.FeedNavigationTarget
 import com.savvasdalkitsis.librephotos.home.navigation.NavigationStyle.BOTTOM_BAR
 import com.savvasdalkitsis.librephotos.home.navigation.NavigationStyle.NAVIGATION_RAIL
@@ -66,15 +68,15 @@ private fun Items(
         currentDestination, navController,
         label = "Feed",
         routeName = FeedNavigationTarget.name,
-        Icons.Filled.Home,
+        painterResource(id = R.drawable.ic_feed),
         rowScope,
     )
     NavItem(
         currentDestination, navController,
         label = "Search",
         routeName = SearchNavigationTarget.name,
-        Icons.Filled.Search,
-        rowScope,
+        icon = rememberVectorPainter(Icons.Filled.Search),
+        rowScope = rowScope,
     )
 }
 
@@ -84,7 +86,7 @@ private fun NavItem(
     navController: NavHostController,
     label: String,
     routeName: String,
-    icon: ImageVector,
+    icon: Painter,
     rowScope: RowScope? = null,
 ) {
     when (homeNavigationStyle()) {
@@ -114,7 +116,7 @@ private fun BottomNavItem(
     navController: NavHostController,
     label: String,
     routeName: String,
-    icon: ImageVector
+    icon: Painter,
 ) {
     with(rowScope) {
         BottomNavigationItem(
@@ -132,7 +134,7 @@ private fun NavRailNavItem(
     navController: NavHostController,
     label: String,
     routeName: String,
-    icon: ImageVector
+    icon: Painter,
 ) {
     NavigationRailItem(
         selectedContentColor = LocalContentColor.current,
