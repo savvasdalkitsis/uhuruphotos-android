@@ -1,6 +1,8 @@
 package com.savvasdalkitsis.librephotos.navigation
 
 import androidx.compose.runtime.*
+import androidx.compose.ui.ExperimentalComposeUiApi
+import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.ViewModel
 import androidx.navigation.NavBackStackEntry
@@ -12,6 +14,7 @@ import com.savvasdalkitsis.librephotos.viewmodel.EffectHandler
 import kotlinx.coroutines.launch
 import org.orbitmvi.orbit.viewmodel.observe
 
+@ExperimentalComposeUiApi
 inline fun <S : Any, E : Any, A : Any, reified VM> NavGraphBuilder.navigationTarget(
     name: String,
     crossinline effects: EffectHandler<E>,
@@ -42,8 +45,10 @@ inline fun <S : Any, E : Any, A : Any, reified VM> NavGraphBuilder.navigationTar
             }
         )
         content(state, actions)
+        val keyboard = LocalSoftwareKeyboardController.current
 
         LaunchedEffect(Unit) {
+            keyboard?.hide()
             initializer(navBackStackEntry, actions)
         }
     }

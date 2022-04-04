@@ -1,10 +1,9 @@
 package com.savvasdalkitsis.librephotos.weblogin.navigation
 
 import android.util.Base64
+import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.navigation.NavBackStackEntry
 import androidx.navigation.NavGraphBuilder
-import com.savvasdalkitsis.librephotos.auth.cookies.CookieMonitor
-import com.savvasdalkitsis.librephotos.navigation.ControllersProvider
 import com.savvasdalkitsis.librephotos.navigation.navigationTarget
 import com.savvasdalkitsis.librephotos.weblogin.mvflow.WebEffectsHandler
 import com.savvasdalkitsis.librephotos.weblogin.mvflow.WebLoginAction
@@ -15,11 +14,10 @@ import com.savvasdalkitsis.librephotos.weblogin.viewmodel.WebLoginViewModel
 import javax.inject.Inject
 
 class WebLoginNavigationTarget @Inject constructor(
-    private val controllersProvider: ControllersProvider,
-    private val cookieMonitor: CookieMonitor,
     private val effectsHandler: WebEffectsHandler,
 ) {
 
+    @ExperimentalComposeUiApi
     fun NavGraphBuilder.create() {
         navigationTarget<WebLoginState, WebLoginEffect, WebLoginAction, WebLoginViewModel>(
             name = name,

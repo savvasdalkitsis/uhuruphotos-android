@@ -2,6 +2,7 @@ package com.savvasdalkitsis.librephotos.search.viewmodel
 
 import com.savvasdalkitsis.librephotos.account.usecase.AccountUseCase
 import com.savvasdalkitsis.librephotos.search.mvflow.SearchAction
+import com.savvasdalkitsis.librephotos.search.mvflow.SearchAction.*
 import com.savvasdalkitsis.librephotos.search.mvflow.SearchEffect
 import com.savvasdalkitsis.librephotos.search.mvflow.SearchEffect.FocusSearchBar
 import com.savvasdalkitsis.librephotos.search.mvflow.SearchEffect.HideKeyboard
@@ -29,13 +30,13 @@ class SearchHandler @Inject constructor(
         action: SearchAction,
         effect: suspend (SearchEffect) -> Unit,
     ): Flow<SearchMutation> = when (action) {
-        SearchAction.Initialise -> userBadgeUseCase.getUserBadgeState()
+        Initialise -> userBadgeUseCase.getUserBadgeState()
             .map(::UserBadgeStateChanged)
             .onStart {
                 effect(FocusSearchBar)
             }
-        is SearchAction.ChangeQuery -> flowOf(QueryChanged(action.query))
-        is SearchAction.SearchFor -> channelFlow {
+        is ChangeQuery -> flowOf(QueryChanged(action.query))
+        is SearchFor -> channelFlow {
             lastSearch?.cancel()
             send(SearchStarted)
             effect(HideKeyboard)
@@ -52,11 +53,11 @@ class SearchHandler @Inject constructor(
                     .collect { send(it) }
             }
         }
-        is SearchAction.ChangeFocus -> flowOf(FocusChanged(action.focused))
-        SearchAction.ClearSearch -> flowOf(SearchCleared)
-        SearchAction.UserBadgePressed -> flowOf(ShowAccountOverview)
-        SearchAction.DismissAccountOverview -> flowOf(HideAccountOverview)
-        SearchAction.LogOut -> flow {
+        is ChangeFocus -> flowOf(FocusChanged(action.focused))
+        ClearSearch -> flowOf(SearchCleared)
+        UserBadgePressed -> flowOf(ShowAccountOverview)
+        DismissAccountOverview -> flowOf(HideAccountOverview)
+        LogOut -> flow {
             accountUseCase.logOut()
             effect(SearchEffect.ReloadApp)
         }

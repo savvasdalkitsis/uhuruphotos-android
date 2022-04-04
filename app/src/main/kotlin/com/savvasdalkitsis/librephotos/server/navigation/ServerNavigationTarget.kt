@@ -1,5 +1,6 @@
 package com.savvasdalkitsis.librephotos.server.navigation
 
+import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.navigation.NavGraphBuilder
 import com.savvasdalkitsis.librephotos.navigation.navigationTarget
 import com.savvasdalkitsis.librephotos.server.mvflow.ServerAction
@@ -15,6 +16,7 @@ class ServerNavigationTarget @Inject constructor(
     private val effectsHandler: ServerEffectsHandler,
 ) {
 
+    @ExperimentalComposeUiApi
     fun NavGraphBuilder.create() =
         navigationTarget<ServerState, ServerEffect, ServerAction, ServerViewModel>(
             name = name,
