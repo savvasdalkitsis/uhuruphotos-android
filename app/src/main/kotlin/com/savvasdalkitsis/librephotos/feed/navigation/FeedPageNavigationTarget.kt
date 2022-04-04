@@ -3,28 +3,28 @@ package com.savvasdalkitsis.librephotos.feed.navigation
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.navigation.NavGraphBuilder
-import com.savvasdalkitsis.librephotos.feed.mvflow.FeedAction
-import com.savvasdalkitsis.librephotos.feed.mvflow.FeedEffect
+import com.savvasdalkitsis.librephotos.feed.mvflow.FeedPageAction
+import com.savvasdalkitsis.librephotos.feed.mvflow.FeedPageEffect
 import com.savvasdalkitsis.librephotos.feed.view.FeedPage
 import com.savvasdalkitsis.librephotos.feed.view.state.FeedPageState
-import com.savvasdalkitsis.librephotos.feed.viewmodel.FeedEffectsHandler
-import com.savvasdalkitsis.librephotos.feed.viewmodel.FeedViewModel
+import com.savvasdalkitsis.librephotos.feed.viewmodel.FeedPageEffectsHandler
+import com.savvasdalkitsis.librephotos.feed.viewmodel.FeedPageViewModel
 import com.savvasdalkitsis.librephotos.navigation.ControllersProvider
 import com.savvasdalkitsis.librephotos.navigation.navigationTarget
 import javax.inject.Inject
 
-class FeedNavigationTarget @Inject constructor(
+class FeedPageNavigationTarget @Inject constructor(
     private val controllersProvider: ControllersProvider,
-    private val feedEffectsHandler: FeedEffectsHandler,
+    private val feedPageEffectsHandler: FeedPageEffectsHandler,
 ) {
 
     @ExperimentalComposeUiApi
     @ExperimentalAnimationApi
     fun NavGraphBuilder.create() {
-        navigationTarget<FeedPageState, FeedEffect, FeedAction, FeedViewModel>(
+        navigationTarget<FeedPageState, FeedPageEffect, FeedPageAction, FeedPageViewModel>(
             name = name,
-            effects = feedEffectsHandler,
-            initializer = { _, actions -> actions(FeedAction.LoadFeed) }
+            effects = feedPageEffectsHandler,
+            initializer = { _, actions -> actions(FeedPageAction.LoadFeed) }
         ) { state, actions ->
             FeedPage(controllersProvider, state, actions)
         }

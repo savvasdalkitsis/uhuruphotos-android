@@ -19,7 +19,7 @@ import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import com.savvasdalkitsis.librephotos.R
-import com.savvasdalkitsis.librephotos.feed.navigation.FeedNavigationTarget
+import com.savvasdalkitsis.librephotos.feed.navigation.FeedPageNavigationTarget
 import com.savvasdalkitsis.librephotos.home.navigation.NavigationStyle.BOTTOM_BAR
 import com.savvasdalkitsis.librephotos.home.navigation.NavigationStyle.NAVIGATION_RAIL
 import com.savvasdalkitsis.librephotos.search.navigation.SearchNavigationTarget
@@ -67,7 +67,7 @@ private fun Items(
     NavItem(
         currentDestination, navController,
         label = "Feed",
-        routeName = FeedNavigationTarget.name,
+        routeName = FeedPageNavigationTarget.name,
         painterResource(id = R.drawable.ic_feed),
         rowScope,
     )

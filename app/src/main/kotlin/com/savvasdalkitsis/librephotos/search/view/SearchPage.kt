@@ -6,7 +6,6 @@ import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import com.savvasdalkitsis.librephotos.account.view.AccountOverviewPopUp
 import com.savvasdalkitsis.librephotos.extensions.blurIf
-import com.savvasdalkitsis.librephotos.feed.mvflow.FeedAction
 import com.savvasdalkitsis.librephotos.home.view.HomeScaffold
 import com.savvasdalkitsis.librephotos.navigation.ControllersProvider
 import com.savvasdalkitsis.librephotos.search.mvflow.SearchAction

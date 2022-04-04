@@ -7,8 +7,8 @@ import com.google.accompanist.swiperefresh.SwipeRefresh
 import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 import com.savvasdalkitsis.librephotos.account.view.AccountOverviewPopUp
 import com.savvasdalkitsis.librephotos.extensions.blurIf
-import com.savvasdalkitsis.librephotos.feed.mvflow.FeedAction
-import com.savvasdalkitsis.librephotos.feed.mvflow.FeedAction.*
+import com.savvasdalkitsis.librephotos.feed.mvflow.FeedPageAction
+import com.savvasdalkitsis.librephotos.feed.mvflow.FeedPageAction.*
 import com.savvasdalkitsis.librephotos.feed.view.state.FeedPageState
 import com.savvasdalkitsis.librephotos.home.view.HomeScaffold
 import com.savvasdalkitsis.librephotos.navigation.ControllersProvider
@@ -18,7 +18,7 @@ import com.savvasdalkitsis.librephotos.navigation.ControllersProvider
 fun FeedPage(
     controllersProvider: ControllersProvider,
     state: FeedPageState,
-    action: (FeedAction) -> Unit,
+    action: (FeedPageAction) -> Unit,
 ) {
     HomeScaffold(
         modifier = Modifier
