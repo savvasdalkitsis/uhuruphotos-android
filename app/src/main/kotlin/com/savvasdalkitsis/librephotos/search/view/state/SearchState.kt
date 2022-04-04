@@ -6,5 +6,6 @@ data class SearchState(
     val query: String = "",
     val showClearButton: Boolean = false,
     val searchResults: SearchResults = SearchResults.Idle,
-    val userBadgeState: UserBadgeState? = null,
+    val userBadgeState: UserBadgeState = UserBadgeState(),
+    val showAccountOverview: Boolean = false,
 )

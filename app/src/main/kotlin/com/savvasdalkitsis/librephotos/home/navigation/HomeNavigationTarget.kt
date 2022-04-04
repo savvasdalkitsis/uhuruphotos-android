@@ -12,12 +12,12 @@ import com.savvasdalkitsis.librephotos.navigation.ControllersProvider
 import com.savvasdalkitsis.librephotos.navigation.navigationTarget
 import javax.inject.Inject
 
-@ExperimentalComposeUiApi
 class HomeNavigationTarget @Inject constructor(
     private val effectsHandler: HomeEffectsHandler,
     private val controllersProvider: ControllersProvider,
 ) {
 
+    @ExperimentalComposeUiApi
     fun NavGraphBuilder.create() =
         navigationTarget<HomeState, HomeEffect, HomeAction, HomeViewModel>(
             name = name,

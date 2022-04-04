@@ -9,6 +9,7 @@ import androidx.compose.material.icons.filled.Search
 import androidx.compose.material.primarySurface
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import com.savvasdalkitsis.librephotos.feed.navigation.FeedNavigationTarget
@@ -20,11 +21,14 @@ import com.savvasdalkitsis.librephotos.userbadge.view.state.UserBadgeState
 
 @Composable
 fun HomeScaffold(
+    modifier: Modifier = Modifier,
     navController: NavHostController,
     userBadgeState: UserBadgeState? = null,
+    userBadgePressed: () -> Unit = {},
     content: @Composable (PaddingValues) -> Unit,
 ) {
     MainScaffold(
+        modifier = modifier,
         bottomBar = {
             BottomNavigation(
                 backgroundColor = MaterialTheme.colors.primarySurface.copy(alpha = 0.8f)
@@ -48,7 +52,7 @@ fun HomeScaffold(
         },
         actionBarContent = {
             userBadgeState?.let {
-                UserBadge(it)
+                UserBadge(state = it, userBadgePressed = userBadgePressed)
             }
         }
     ) { contentPadding ->

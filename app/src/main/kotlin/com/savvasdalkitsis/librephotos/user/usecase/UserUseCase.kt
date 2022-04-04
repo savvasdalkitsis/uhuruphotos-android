@@ -1,11 +1,7 @@
 package com.savvasdalkitsis.librephotos.user.usecase
 
-import com.savvasdalkitsis.librephotos.extensions.crud
 import com.savvasdalkitsis.librephotos.user.User
-import com.savvasdalkitsis.librephotos.user.UserQueries
-import com.savvasdalkitsis.librephotos.user.api.UserApi
-import com.squareup.sqldelight.runtime.coroutines.asFlow
-import com.squareup.sqldelight.runtime.coroutines.mapToOneNotNull
+import com.savvasdalkitsis.librephotos.user.repository.UserRepository
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
@@ -14,17 +10,13 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 class UserUseCase @Inject constructor(
-    private val userApi: UserApi,
-    private val userQueries: UserQueries,
+    private val userRepository: UserRepository,
 ) {
 
-    fun getUser(): Flow<User> = userQueries.getUser().asFlow().mapToOneNotNull()
+    fun getUser(): Flow<User> = userRepository.getUser()
         .onStart {
             CoroutineScope(Dispatchers.IO).launch {
-                val userResults = userApi.getUser()
-                for (userResult in userResults.results) {
-                    crud { userQueries.addUser(userResult.toUser()) }
-                }
+                userRepository.refreshUser()
             }
         }
 

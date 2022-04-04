@@ -1,6 +1,7 @@
 package com.savvasdalkitsis.librephotos.userbadge.view
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
@@ -15,6 +16,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.painter.ColorPainter
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import com.savvasdalkitsis.librephotos.R
@@ -25,14 +27,16 @@ import com.savvasdalkitsis.librephotos.userbadge.view.state.UserBadgeState
 @Composable
 fun UserBadge(
     state: UserBadgeState,
+    userBadgePressed: () -> Unit = {},
+    size: Dp = 38.dp,
 ) {
-    val size = 38.dp
     val backgroundColor = when (state.syncState) {
         BAD -> CustomColors.syncError
         GOOD -> CustomColors.syncSuccess
         IN_PROGRESS -> MaterialTheme.colors.background
     }
     Box(modifier = Modifier
+        .clickable { userBadgePressed() }
         .clip(CircleShape)
         .background(backgroundColor)
         .size(size)

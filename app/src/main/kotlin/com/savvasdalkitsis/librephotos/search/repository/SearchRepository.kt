@@ -1,6 +1,7 @@
 package com.savvasdalkitsis.librephotos.search.repository
 
 import com.savvasdalkitsis.librephotos.extensions.Group
+import com.savvasdalkitsis.librephotos.extensions.crud
 import com.savvasdalkitsis.librephotos.extensions.groupBy
 import com.savvasdalkitsis.librephotos.photos.db.PhotoSummary
 import com.savvasdalkitsis.librephotos.photos.db.PhotoSummaryQueries
@@ -18,6 +19,10 @@ class SearchRepository @Inject constructor(
     private val searchQueries: SearchQueries,
     private val photoSummaryQueries: PhotoSummaryQueries,
 ) {
+
+    suspend fun removeAllSearchResults() {
+        crud { searchQueries.clearSearchResults() }
+    }
 
     fun getSearchResults(query: String): Flow<Group<String, GetSearchResults>> =
         searchQueries.getSearchResults(query).asFlow().mapToList().groupBy(GetSearchResults::date)

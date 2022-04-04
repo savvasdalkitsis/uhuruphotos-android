@@ -1,5 +1,6 @@
 package com.savvasdalkitsis.librephotos.navigation
 
+import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.ExperimentalComposeUiApi
@@ -23,6 +24,7 @@ class LibrePhotosNavigator @Inject constructor(
     private val controllersProvider: ControllersProvider,
 ) {
 
+    @ExperimentalAnimationApi
     @Composable
     fun NavigationTargets(navHostController: NavHostController) {
         with(controllersProvider) {

@@ -1,3 +1,5 @@
 package com.savvasdalkitsis.librephotos.auth.api
 
-class AccessTokenRefreshError : Exception("Could not refresh access token")
+import java.io.IOException
+
+class AccessTokenRefreshError : IOException("Could not refresh access token")

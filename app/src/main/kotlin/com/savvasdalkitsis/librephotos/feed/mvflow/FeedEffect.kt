@@ -1,3 +1,5 @@
 package com.savvasdalkitsis.librephotos.feed.mvflow
 
-object FeedEffect
+sealed class FeedEffect {
+    object ReloadApp : FeedEffect()
+}

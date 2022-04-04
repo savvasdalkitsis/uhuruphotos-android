@@ -14,6 +14,7 @@ import com.savvasdalkitsis.librephotos.ui.insets.systemPadding
 
 @Composable
 fun MainScaffold(
+    modifier: Modifier = Modifier,
     bottomBar: @Composable () -> Unit = {},
     actionBarContent: @Composable () -> Unit = {},
     content: @Composable (PaddingValues) -> Unit,
@@ -21,6 +22,7 @@ fun MainScaffold(
     val toolbarColor = MaterialTheme.colors
         .background.copy(alpha = 0.8f)
     Scaffold(
+        modifier = modifier,
         contentPadding = systemPadding(WindowInsetsSides.Bottom),
         bottomBar = { bottomBar() },
         topBar = {
@@ -61,8 +63,7 @@ fun MainScaffold(
         Surface(
             modifier = Modifier.fillMaxSize(),
             color = MaterialTheme.colors.background
-        )
-        {
+        ) {
             content(contentPadding)
         }
     }

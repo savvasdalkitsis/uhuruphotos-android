@@ -1,31 +1,38 @@
-package com.savvasdalkitsis.librephotos.feed.view
+package com.savvasdalkitsis.librephotos.search.view
 
-import androidx.compose.animation.*
+import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import com.savvasdalkitsis.librephotos.account.view.AccountOverviewPopUp
 import com.savvasdalkitsis.librephotos.extensions.blurIf
 import com.savvasdalkitsis.librephotos.feed.mvflow.FeedAction
-import com.savvasdalkitsis.librephotos.feed.mvflow.FeedAction.*
-import com.savvasdalkitsis.librephotos.feed.view.state.FeedPageState
 import com.savvasdalkitsis.librephotos.home.view.HomeScaffold
 import com.savvasdalkitsis.librephotos.navigation.ControllersProvider
+import com.savvasdalkitsis.librephotos.search.mvflow.SearchAction
+import com.savvasdalkitsis.librephotos.search.mvflow.SearchAction.*
+import com.savvasdalkitsis.librephotos.search.view.state.SearchState
 
 @ExperimentalAnimationApi
-@Composable
-fun FeedPage(
+@ExperimentalComposeUiApi
+@Composable fun SearchPage(
+    state: SearchState,
+    action: (SearchAction) -> Unit,
     controllersProvider: ControllersProvider,
-    state: FeedPageState,
-    action: (FeedAction) -> Unit,
 ) {
     HomeScaffold(
         modifier = Modifier
             .blurIf(state.showAccountOverview),
-        controllersProvider.navController!!,
+        navController = controllersProvider.navController!!,
         userBadgeState = state.userBadgeState,
-        userBadgePressed = { action(UserBadgePressed) },
+        userBadgePressed = { action(UserBadgePressed) }
     ) { contentPadding ->
-        Feed(contentPadding, state.feedState)
+        Search(
+            state = state,
+            action = action,
+            controllersProvider = controllersProvider,
+            contentPadding = contentPadding
+        )
         AccountOverviewPopUp(
             visible = state.showAccountOverview,
             userBadgeState = state.userBadgeState,

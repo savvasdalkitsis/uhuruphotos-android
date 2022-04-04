@@ -1,12 +1,13 @@
 package com.savvasdalkitsis.librephotos.search.navigation
 
+import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.navigation.NavGraphBuilder
 import com.savvasdalkitsis.librephotos.navigation.ControllersProvider
 import com.savvasdalkitsis.librephotos.navigation.navigationTarget
 import com.savvasdalkitsis.librephotos.search.mvflow.SearchAction
 import com.savvasdalkitsis.librephotos.search.mvflow.SearchEffect
-import com.savvasdalkitsis.librephotos.search.view.Search
+import com.savvasdalkitsis.librephotos.search.view.SearchPage
 import com.savvasdalkitsis.librephotos.search.view.state.SearchState
 import com.savvasdalkitsis.librephotos.search.viewmodel.SearchEffectsHandler
 import com.savvasdalkitsis.librephotos.search.viewmodel.SearchViewModel
@@ -18,6 +19,7 @@ class SearchNavigationTarget @ExperimentalComposeUiApi
     private val controllersProvider: ControllersProvider,
 ) {
 
+    @ExperimentalAnimationApi
     @ExperimentalComposeUiApi
     fun NavGraphBuilder.create() {
         navigationTarget<SearchState, SearchEffect, SearchAction, SearchViewModel>(
@@ -25,7 +27,7 @@ class SearchNavigationTarget @ExperimentalComposeUiApi
             effects = effectsHandler,
             initializer = { _, actions -> actions(SearchAction.Initialise) },
         ) { state, actions ->
-            Search(state, actions, controllersProvider)
+            SearchPage(state, actions, controllersProvider)
         }
     }
 

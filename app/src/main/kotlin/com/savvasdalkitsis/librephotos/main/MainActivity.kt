@@ -3,6 +3,7 @@ package com.savvasdalkitsis.librephotos.main
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.SideEffect
 import androidx.compose.ui.ExperimentalComposeUiApi
@@ -18,6 +19,7 @@ import javax.inject.Inject
 
 @AndroidEntryPoint
 @ExperimentalComposeUiApi
+@ExperimentalAnimationApi
 class MainActivity : ComponentActivity() {
 
     @Inject lateinit var librePhotosNavigator: LibrePhotosNavigator

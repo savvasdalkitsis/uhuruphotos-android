@@ -1,5 +1,6 @@
 package com.savvasdalkitsis.librephotos.search.viewmodel
 
+import com.savvasdalkitsis.librephotos.account.usecase.AccountUseCase
 import com.savvasdalkitsis.librephotos.search.mvflow.SearchAction
 import com.savvasdalkitsis.librephotos.search.mvflow.SearchEffect
 import com.savvasdalkitsis.librephotos.search.mvflow.SearchEffect.FocusSearchBar
@@ -10,16 +11,15 @@ import com.savvasdalkitsis.librephotos.search.usecase.SearchUseCase
 import com.savvasdalkitsis.librephotos.search.view.state.SearchState
 import com.savvasdalkitsis.librephotos.userbadge.usecase.UserBadgeUseCase
 import com.savvasdalkitsis.librephotos.viewmodel.Handler
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Job
-import kotlinx.coroutines.currentCoroutineContext
+import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.*
-import kotlinx.coroutines.launch
 import javax.inject.Inject
 
+@FlowPreview
 class SearchHandler @Inject constructor(
     private val searchUseCase: SearchUseCase,
     private val userBadgeUseCase: UserBadgeUseCase,
+    private val accountUseCase: AccountUseCase,
 ): Handler<SearchState, SearchEffect, SearchAction, SearchMutation> {
 
     private var lastSearch: Job? = null
@@ -54,6 +54,12 @@ class SearchHandler @Inject constructor(
         }
         is SearchAction.ChangeFocus -> flowOf(FocusChanged(action.focused))
         SearchAction.ClearSearch -> flowOf(SearchCleared)
+        SearchAction.UserBadgePressed -> flowOf(ShowAccountOverview)
+        SearchAction.DismissAccountOverview -> flowOf(HideAccountOverview)
+        SearchAction.LogOut -> flow {
+            accountUseCase.logOut()
+            effect(SearchEffect.ReloadApp)
+        }
     }
 
 }

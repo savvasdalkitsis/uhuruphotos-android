@@ -6,6 +6,7 @@ import com.savvasdalkitsis.librephotos.albums.db.AlbumsQueries
 import com.savvasdalkitsis.librephotos.albums.db.GetAlbums
 import com.savvasdalkitsis.librephotos.extensions.Group
 import com.savvasdalkitsis.librephotos.extensions.awaitSingle
+import com.savvasdalkitsis.librephotos.extensions.crud
 import com.savvasdalkitsis.librephotos.extensions.groupBy
 import com.savvasdalkitsis.librephotos.photos.db.PhotoSummaryQueries
 import com.savvasdalkitsis.librephotos.photos.db.entities.toPhotoSummary
@@ -23,6 +24,10 @@ class AlbumsRepository @Inject constructor(
 ){
 
     suspend fun hasAlbums() = albumsQueries.albumsCount().awaitSingle() > 0
+
+    suspend fun removeAllAlbums() {
+        crud { albumsQueries.clearAlbums() }
+    }
 
     fun getAlbumsByDate() : Flow<Group<String, GetAlbums>> =
         albumsQueries.getAlbums().asFlow().mapToList().groupBy(GetAlbums::id)

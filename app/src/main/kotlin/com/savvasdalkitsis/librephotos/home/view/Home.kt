@@ -16,7 +16,7 @@ fun Home(
     controllersProvider: ControllersProvider,
 ) {
     HomeScaffold(
-        controllersProvider.navController!!,
+        navController = controllersProvider.navController!!,
         content = {
             if (state.isLoading) {
                 Box(contentAlignment = Alignment.Center) {

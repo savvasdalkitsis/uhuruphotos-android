@@ -22,7 +22,6 @@ import androidx.compose.ui.unit.dp
 import com.savvasdalkitsis.librephotos.extensions.copy
 import com.savvasdalkitsis.librephotos.feed.view.Feed
 import com.savvasdalkitsis.librephotos.feed.view.state.FeedState
-import com.savvasdalkitsis.librephotos.home.view.HomeScaffold
 import com.savvasdalkitsis.librephotos.navigation.ControllersProvider
 import com.savvasdalkitsis.librephotos.search.mvflow.SearchAction
 import com.savvasdalkitsis.librephotos.search.mvflow.SearchAction.*
@@ -34,67 +33,65 @@ import com.savvasdalkitsis.librephotos.search.view.state.SearchState
     state: SearchState,
     action: (SearchAction) -> Unit,
     controllersProvider: ControllersProvider,
+    contentPadding: PaddingValues,
 ) {
-    HomeScaffold(
-        controllersProvider.navController!!, state.userBadgeState,) { contentPadding ->
-        Column {
-            Spacer(modifier = Modifier.height(contentPadding.calculateTopPadding()))
-            TextField(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(12.dp)
-                    .onFocusChanged { focusState ->
-                        action(ChangeFocus(focusState.isFocused))
-                    }
-                    .focusRequester(controllersProvider.focusRequester!!),
-                maxLines = 1,
-                singleLine = true,
-                trailingIcon = {
-                    AnimatedVisibility(
-                        visible = state.showClearButton,
-                        enter = fadeIn(),
-                        exit = fadeOut()
-                    ) {
-                        IconButton(onClick = { action(ClearSearch) }) {
-                            Icon(
-                                imageVector = Icons.Filled.Close,
-                                contentDescription = "Clear"
-                            )
-                        }
-                    }
-                },
-                keyboardOptions = KeyboardOptions.Default.copy(
-                    keyboardType = KeyboardType.Text,
-                    imeAction = ImeAction.Search,
-                ),
-                keyboardActions = KeyboardActions(
-                    onSearch = { action(SearchFor(state.query)) }
-                ),
-                leadingIcon = {
-                    Icon(
-                        imageVector = Icons.Default.Search,
-                        contentDescription = "searchIcon"
-                    )
-                },
-                label = { Text("Search for something") },
-                value = state.query,
-                onValueChange = {
-                    action(ChangeQuery(it))
+    Column {
+        Spacer(modifier = Modifier.height(contentPadding.calculateTopPadding()))
+        TextField(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(12.dp)
+                .onFocusChanged { focusState ->
+                    action(ChangeFocus(focusState.isFocused))
                 }
-            )
-            when (state.searchResults) {
-                SearchResults.Idle -> {}
-                SearchResults.Searching -> Box(
-                    modifier = Modifier.fillMaxSize(),
-                    contentAlignment = Alignment.Center
+                .focusRequester(controllersProvider.focusRequester!!),
+            maxLines = 1,
+            singleLine = true,
+            trailingIcon = {
+                AnimatedVisibility(
+                    visible = state.showClearButton,
+                    enter = fadeIn(),
+                    exit = fadeOut()
                 ) {
-                    CircularProgressIndicator(modifier = Modifier.size(48.dp))
+                    IconButton(onClick = { action(ClearSearch) }) {
+                        Icon(
+                            imageVector = Icons.Filled.Close,
+                            contentDescription = "Clear"
+                        )
+                    }
                 }
-                is SearchResults.Found -> Feed(
-                    contentPadding = contentPadding.copy(top = 0.dp),
-                    state = FeedState(isLoading = false, state.searchResults.albums),
+            },
+            keyboardOptions = KeyboardOptions.Default.copy(
+                keyboardType = KeyboardType.Text,
+                imeAction = ImeAction.Search,
+            ),
+            keyboardActions = KeyboardActions(
+                onSearch = { action(SearchFor(state.query)) }
+            ),
+            leadingIcon = {
+                Icon(
+                    imageVector = Icons.Default.Search,
+                    contentDescription = "searchIcon"
                 )
+            },
+            label = { Text("Search for something") },
+            value = state.query,
+            onValueChange = {
+                action(ChangeQuery(it))
             }
+        )
+        when (state.searchResults) {
+            SearchResults.Idle -> {}
+            SearchResults.Searching -> Box(
+                modifier = Modifier.fillMaxSize(),
+                contentAlignment = Alignment.Center
+            ) {
+                CircularProgressIndicator(modifier = Modifier.size(48.dp))
+            }
+            is SearchResults.Found -> Feed(
+                contentPadding = contentPadding.copy(top = 0.dp),
+                state = FeedState(isLoading = false, state.searchResults.albums),
+            )
         }
     }
 }

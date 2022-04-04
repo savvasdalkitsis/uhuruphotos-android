@@ -6,6 +6,9 @@ import com.savvasdalkitsis.librephotos.userbadge.view.state.UserBadgeState
 sealed class FeedMutation {
     object Loading : FeedMutation()
     object FinishedLoading : FeedMutation()
+    object ShowAccountOverview : FeedMutation()
+    object HideAccountOverview : FeedMutation()
+
     data class ShowAlbums(val albums: List<Album>) : FeedMutation() {
         override fun toString() = "Showing ${albums.size} albums"
     }
