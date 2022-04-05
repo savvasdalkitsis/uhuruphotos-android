@@ -2,6 +2,7 @@ package com.savvasdalkitsis.librephotos.feed.view
 
 import android.content.res.Configuration.ORIENTATION_LANDSCAPE
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.Icon
@@ -16,12 +17,14 @@ import coil.compose.AsyncImage
 import com.savvasdalkitsis.librephotos.R
 import com.savvasdalkitsis.librephotos.extensions.toColor
 import com.savvasdalkitsis.librephotos.feed.view.state.FeedState
+import com.savvasdalkitsis.librephotos.photos.model.Photo
 import com.savvasdalkitsis.librephotos.ui.view.LazyStaggeredGrid
 
 @Composable
 fun Feed(
     contentPadding: PaddingValues = PaddingValues(0.dp),
     state: FeedState,
+    onPhotoSelected: (Photo) -> Unit = {},
 ) {
     if (state.isLoading && state.albums.isEmpty()) {
         Box(
@@ -48,6 +51,7 @@ fun Feed(
                             .aspectRatio(photo.ratio)
                             .padding(1.dp)
                             .background(photo.fallbackColor.toColor())
+                            .clickable { onPhotoSelected(photo) }
                     ) {
                         AsyncImage(
                             modifier = Modifier.fillMaxWidth(),

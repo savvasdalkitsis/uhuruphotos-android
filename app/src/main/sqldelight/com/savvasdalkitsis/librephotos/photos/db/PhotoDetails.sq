@@ -20,6 +20,9 @@ CREATE TABLE photoDetails (
   FOREIGN KEY (albumId) REFERENCES albums(id)
 );
 
+getPhoto:
+SELECT * FROM photoDetails WHERE imageHash = :id LIMIT 1;
+
 insert:
 INSERT OR REPLACE INTO photoDetails VALUES ?;
 

@@ -44,7 +44,7 @@ class AlbumsUseCase @Inject constructor(
                         Photo(
                             id = item.photoId,
                             url = with(photosUseCase) {
-                                item.photoId.toThumbnailUrlFromId(item.isVideo)
+                                item.photoId.toThumbnailUrlFromId()
                             },
                             fallbackColor = item.dominantColor,
                             ratio = item.aspectRatio ?: 1.0f,

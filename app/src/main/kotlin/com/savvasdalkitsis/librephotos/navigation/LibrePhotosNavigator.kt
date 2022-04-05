@@ -1,6 +1,7 @@
 package com.savvasdalkitsis.librephotos.navigation
 
 import androidx.compose.animation.ExperimentalAnimationApi
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.ExperimentalComposeUiApi
@@ -9,6 +10,7 @@ import androidx.navigation.NavHostController
 import com.google.accompanist.navigation.animation.AnimatedNavHost
 import com.savvasdalkitsis.librephotos.feed.navigation.FeedPageNavigationTarget
 import com.savvasdalkitsis.librephotos.home.navigation.HomeNavigationTarget
+import com.savvasdalkitsis.librephotos.photos.navigation.PhotoNavigationTarget
 import com.savvasdalkitsis.librephotos.search.navigation.SearchNavigationTarget
 import com.savvasdalkitsis.librephotos.server.navigation.ServerNavigationTarget
 import com.savvasdalkitsis.librephotos.weblogin.navigation.WebLoginNavigationTarget
@@ -22,9 +24,11 @@ class LibrePhotosNavigator @Inject constructor(
     private val searchNavigationTarget: SearchNavigationTarget,
     private val serverNavigationTarget: ServerNavigationTarget,
     private val webLoginNavigationTarget: WebLoginNavigationTarget,
+    private val photoNavigationTarget: PhotoNavigationTarget,
     private val controllersProvider: ControllersProvider,
 ) {
 
+    @ExperimentalFoundationApi
     @FlowPreview
     @ExperimentalAnimationApi
     @Composable
@@ -43,6 +47,7 @@ class LibrePhotosNavigator @Inject constructor(
             with(searchNavigationTarget) { create() }
             with(serverNavigationTarget) { create() }
             with(webLoginNavigationTarget) { create() }
+            with(photoNavigationTarget) { create() }
         }
     }
 }

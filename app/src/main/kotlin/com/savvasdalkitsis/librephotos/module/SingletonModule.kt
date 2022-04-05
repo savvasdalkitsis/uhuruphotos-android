@@ -109,22 +109,32 @@ class SingletonModule {
 
     @Provides
     @Singleton
+    fun memoryCache(
+        @ApplicationContext context: Context,
+    ): MemoryCache = MemoryCache.Builder(context)
+        .maxSizePercent(0.25)
+        .build()
+
+    @Provides
+    @Singleton
+    fun diskCache(
+        @ApplicationContext context: Context,
+    ): DiskCache = DiskCache.Builder()
+        .directory(context.cacheDir.resolve("image_cache"))
+        .maxSizeBytes(250 * 1024 * 1024)
+        .build()
+
+    @Provides
+    @Singleton
     fun imageLoader(
         @ApplicationContext context: Context,
         okHttpBuilder: OkHttpClient.Builder,
         tokenRefreshInterceptor: TokenRefreshInterceptor,
+        memoryCache: MemoryCache,
+        diskCache: DiskCache,
     ): ImageLoader = ImageLoader.Builder(context)
-        .memoryCache {
-            MemoryCache.Builder(context)
-                .maxSizePercent(0.25)
-                .build()
-        }
-        .diskCache {
-            DiskCache.Builder()
-                .directory(context.cacheDir.resolve("image_cache"))
-                .maxSizeBytes(250 * 1024 * 1024)
-                .build()
-        }
+        .memoryCache { memoryCache }
+        .diskCache { diskCache }
         .okHttpClient(okHttpBuilder
             .addInterceptor(tokenRefreshInterceptor)
             .build())

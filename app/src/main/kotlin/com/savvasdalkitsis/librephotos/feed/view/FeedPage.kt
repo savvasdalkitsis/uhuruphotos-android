@@ -32,7 +32,11 @@ fun FeedPage(
             state = rememberSwipeRefreshState(isRefreshing = state.isRefreshing),
             onRefresh = { action(RefreshAlbums) }
         ) {
-            Feed(contentPadding, state.feedState)
+            Feed(
+                contentPadding,
+                state.feedState,
+                onPhotoSelected = { action(SelectedPhoto(it)) }
+            )
         }
         AccountOverviewPopUp(
             visible = state.showAccountOverview,

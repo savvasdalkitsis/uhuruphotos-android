@@ -1,5 +1,7 @@
 package com.savvasdalkitsis.librephotos.account.usecase
 
+import com.bumptech.glide.load.engine.cache.DiskCache
+import com.bumptech.glide.load.engine.cache.MemoryCache
 import com.savvasdalkitsis.librephotos.albums.repository.AlbumsRepository
 import com.savvasdalkitsis.librephotos.extensions.crud
 import com.savvasdalkitsis.librephotos.search.repository.SearchRepository
@@ -12,6 +14,8 @@ class AccountUseCase @Inject constructor(
     private val albumsRepository: AlbumsRepository,
     private val searchRepository: SearchRepository,
     private val tokenQueries: TokenQueries,
+    private val memoryCache: MemoryCache,
+    private val diskCache: DiskCache,
 ) {
 
     suspend fun logOut() {
@@ -19,5 +23,7 @@ class AccountUseCase @Inject constructor(
         searchRepository.removeAllSearchResults()
         userRepository.removeUser()
         crud { tokenQueries.removeAllTokens() }
+        crud { memoryCache.clearMemory() }
+        crud { diskCache.clear() }
     }
 }

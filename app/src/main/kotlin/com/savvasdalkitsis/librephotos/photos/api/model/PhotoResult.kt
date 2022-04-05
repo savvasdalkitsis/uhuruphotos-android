@@ -1,5 +1,6 @@
 package com.savvasdalkitsis.librephotos.photos.api.model
 
+import com.savvasdalkitsis.librephotos.photos.db.PhotoDetails
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 
@@ -21,4 +22,24 @@ data class PhotoResult(
     @field:Json(name = "tiny_square_thumbnail_url") val tinySquareThumbnailUrl: String?,
     @field:Json(name = "image_hash") val imageHash: String,
     @field:Json(name = "video") val video: Boolean,
+)
+
+fun PhotoResult.toPhotoDetails() = PhotoDetails(
+    imageHash = imageHash,
+    gpsLat = gpsLat,
+    gpsLon = gpsLon,
+    timestamp = timestamp,
+    captions = captions,
+    location = location,
+    thumbnailHeight = thumbnailHeight,
+    thumbnailUrl = thumbnailUrl,
+    thumbnailWidth = thumbnailWidth,
+    bigThumbnailUrl = bigThumbnailUrl,
+    bigSquareThumbnailUrl = bigSquareThumbnailUrl,
+    smallSquareThumbnailUrl = smallSquareThumbnailUrl,
+    smallThumbnailUrl = smallThumbnailUrl,
+    squareThumbnailUrl = smallSquareThumbnailUrl,
+    tinySquareThumbnailUrl = tinySquareThumbnailUrl,
+    video = video,
+    albumId = "",
 )
