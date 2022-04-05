@@ -1,7 +1,8 @@
 package com.savvasdalkitsis.librephotos.account.usecase
 
-import com.bumptech.glide.load.engine.cache.DiskCache
-import com.bumptech.glide.load.engine.cache.MemoryCache
+import coil.annotation.ExperimentalCoilApi
+import coil.disk.DiskCache
+import coil.memory.MemoryCache
 import com.savvasdalkitsis.librephotos.albums.repository.AlbumsRepository
 import com.savvasdalkitsis.librephotos.extensions.crud
 import com.savvasdalkitsis.librephotos.search.repository.SearchRepository
@@ -18,12 +19,13 @@ class AccountUseCase @Inject constructor(
     private val diskCache: DiskCache,
 ) {
 
+    @ExperimentalCoilApi
     suspend fun logOut() {
         albumsRepository.removeAllAlbums()
         searchRepository.removeAllSearchResults()
         userRepository.removeUser()
         crud { tokenQueries.removeAllTokens() }
-        crud { memoryCache.clearMemory() }
+        crud { memoryCache.clear() }
         crud { diskCache.clear() }
     }
 }

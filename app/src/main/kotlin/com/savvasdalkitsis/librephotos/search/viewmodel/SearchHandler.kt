@@ -1,5 +1,6 @@
 package com.savvasdalkitsis.librephotos.search.viewmodel
 
+import coil.annotation.ExperimentalCoilApi
 import com.savvasdalkitsis.librephotos.account.usecase.AccountUseCase
 import com.savvasdalkitsis.librephotos.search.mvflow.SearchAction
 import com.savvasdalkitsis.librephotos.search.mvflow.SearchAction.*
@@ -16,6 +17,7 @@ import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.*
 import javax.inject.Inject
 
+@ExperimentalCoilApi
 @FlowPreview
 class SearchHandler @Inject constructor(
     private val searchUseCase: SearchUseCase,
