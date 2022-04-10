@@ -3,13 +3,14 @@ package com.savvasdalkitsis.librephotos.account.view
 import androidx.compose.animation.*
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.widthIn
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.Icon
+import androidx.compose.material.IconButton
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Close
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -33,7 +34,7 @@ fun AccountOverviewPopUp(
                 modifier = Modifier
                     .fillMaxSize()
                     .background(MaterialTheme.colors.background.copy(alpha = 0.3f))
-                    .clickable {  }
+                    .clickable { }
             )
         }
         Popup(onDismissRequest = onDismiss) {
@@ -57,6 +58,15 @@ fun AccountOverviewPopUp(
                     elevation = 4.dp,
                     shape = RoundedCornerShape(12.dp),
                 ) {
+                    Row {
+                        Spacer(modifier = Modifier.fillMaxWidth().weight(1f))
+                        IconButton(
+                            modifier = Modifier.align(Alignment.Top),
+                            onClick = onDismiss
+                        ) {
+                            Icon(imageVector = Icons.Default.Close, contentDescription = "close")
+                        }
+                    }
                     AccountOverview(userBadgeState, onLogoutClicked = onLogoutClicked)
                 }
             }

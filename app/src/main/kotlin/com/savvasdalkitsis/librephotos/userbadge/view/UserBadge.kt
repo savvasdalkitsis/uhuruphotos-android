@@ -27,7 +27,7 @@ import com.savvasdalkitsis.librephotos.userbadge.view.state.UserBadgeState
 @Composable
 fun UserBadge(
     state: UserBadgeState,
-    userBadgePressed: () -> Unit = {},
+    userBadgePressed: (() -> Unit)? = null,
     size: Dp = 38.dp,
 ) {
     val backgroundColor = when (state.syncState) {
@@ -36,7 +36,12 @@ fun UserBadge(
         IN_PROGRESS -> MaterialTheme.colors.background
     }
     Box(modifier = Modifier
-        .clickable { userBadgePressed() }
+        .let {
+            when(userBadgePressed) {
+                null -> it
+                else -> it.clickable { userBadgePressed() }
+            }
+        }
         .clip(CircleShape)
         .background(backgroundColor)
         .size(size)
