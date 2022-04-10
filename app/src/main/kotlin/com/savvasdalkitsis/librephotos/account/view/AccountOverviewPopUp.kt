@@ -2,6 +2,7 @@ package com.savvasdalkitsis.librephotos.account.view
 
 import androidx.compose.animation.*
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -32,6 +33,7 @@ fun AccountOverviewPopUp(
                 modifier = Modifier
                     .fillMaxSize()
                     .background(MaterialTheme.colors.background.copy(alpha = 0.3f))
+                    .clickable {  }
             )
         }
         Popup(onDismissRequest = onDismiss) {
