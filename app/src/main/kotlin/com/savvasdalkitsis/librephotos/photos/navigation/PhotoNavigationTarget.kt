@@ -11,12 +11,13 @@ import com.savvasdalkitsis.librephotos.photos.mvflow.PhotoAction.LoadPhoto
 import com.savvasdalkitsis.librephotos.photos.mvflow.PhotoEffect
 import com.savvasdalkitsis.librephotos.photos.view.Photo
 import com.savvasdalkitsis.librephotos.photos.view.state.PhotoState
+import com.savvasdalkitsis.librephotos.photos.viewmodel.PhotoEffectsHandler
 import com.savvasdalkitsis.librephotos.photos.viewmodel.PhotoViewModel
-import com.savvasdalkitsis.librephotos.viewmodel.noOp
 import kotlinx.coroutines.FlowPreview
 import javax.inject.Inject
 
 class PhotoNavigationTarget @Inject constructor(
+    private val effectsHandler: PhotoEffectsHandler,
 ) {
 
     @ExperimentalFoundationApi
@@ -26,7 +27,7 @@ class PhotoNavigationTarget @Inject constructor(
     fun NavGraphBuilder.create() {
         navigationTarget<PhotoState, PhotoEffect, PhotoAction, PhotoViewModel>(
             name = name,
-            effects = noOp(),
+            effects = effectsHandler,
             initializer = { navBackStackEntry, actions ->
                 actions(LoadPhoto(navBackStackEntry.photoId))
             }

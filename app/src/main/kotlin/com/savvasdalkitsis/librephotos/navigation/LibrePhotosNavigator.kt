@@ -14,6 +14,7 @@ import com.savvasdalkitsis.librephotos.photos.navigation.PhotoNavigationTarget
 import com.savvasdalkitsis.librephotos.search.navigation.SearchNavigationTarget
 import com.savvasdalkitsis.librephotos.server.navigation.ServerNavigationTarget
 import com.savvasdalkitsis.librephotos.weblogin.navigation.WebLoginNavigationTarget
+import com.savvasdalkitsis.librephotos.window.LocalSystemUiController
 import kotlinx.coroutines.FlowPreview
 import javax.inject.Inject
 
@@ -37,6 +38,7 @@ class LibrePhotosNavigator @Inject constructor(
             navController = navHostController
             keyboardController = androidx.compose.ui.platform.LocalSoftwareKeyboardController.current
             focusRequester = remember { FocusRequester() }
+            systemUiController = LocalSystemUiController.current
         }
         AnimatedNavHost(
             navController = navHostController,

@@ -9,5 +9,7 @@ fun photoReducer(): Reducer<PhotoState, PhotoMutation> = { state, mutation ->
     when (mutation) {
         is PhotoMutation.ReceivedUrl -> state.copy(isLoading = false, lowResUrl = mutation.lowResUrl, fullResUrl = mutation.fullResUrl)
         is PhotoMutation.ReceivedDetails -> state.copy()
+        PhotoMutation.HideUI -> state.copy(isUIShowing = false)
+        PhotoMutation.ShowUI -> state.copy(isUIShowing = true)
     }
 }

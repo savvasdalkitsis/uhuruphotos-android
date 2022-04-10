@@ -16,6 +16,7 @@ import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import com.savvasdalkitsis.librephotos.navigation.ControllersProvider
 import com.savvasdalkitsis.librephotos.navigation.LibrePhotosNavigator
 import com.savvasdalkitsis.librephotos.ui.theme.AppTheme
+import com.savvasdalkitsis.librephotos.window.LocalSystemUiController
 import com.savvasdalkitsis.librephotos.window.WindowSize
 import com.savvasdalkitsis.librephotos.window.windowSizeClass
 import dagger.hilt.android.AndroidEntryPoint
@@ -37,12 +38,13 @@ class MainActivity : ComponentActivity() {
         WindowCompat.setDecorFitsSystemWindows(window, false)
         setContent {
             val (width, height) = windowSizeClass()
+            val systemUiController = rememberSystemUiController()
             CompositionLocalProvider(
                 WindowSize.LOCAL_WIDTH provides width,
                 WindowSize.LOCAL_HEIGHT provides height,
+                LocalSystemUiController provides systemUiController
             ) {
                 AppTheme {
-                    val systemUiController = rememberSystemUiController()
                     val useDarkIcons = MaterialTheme.colors.isLight
                     val navController = rememberAnimatedNavController()
 

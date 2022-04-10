@@ -20,6 +20,7 @@ import kotlin.math.abs
 @ExperimentalFoundationApi
 fun Modifier.zoomable(
     maxZoom: Float = 8f,
+    onTap: () -> Unit = {},
 ) = composed {
 
     val coroutineScope = rememberCoroutineScope()
@@ -28,15 +29,18 @@ fun Modifier.zoomable(
     var composableCenter by remember { mutableStateOf(Offset.Zero) }
 
     this
-        .pointerInput("doubleTap") {
-            detectTapGestures(onDoubleTap = {
-                if (zoomableState.scale != 1f) {
-                    zoomableState.animateOffsetBy(-zoomableState.offset)
-                    zoomableState.animateScaleTo(1f)
-                } else {
-                    zoomableState.animateZoomTo(it, composableCenter, maxZoom / 2)
+        .pointerInput("taps") {
+            detectTapGestures(
+                onTap = { onTap() },
+                onDoubleTap = {
+                    if (zoomableState.scale != 1f) {
+                        zoomableState.animateOffsetBy(-zoomableState.offset)
+                        zoomableState.animateScaleTo(1f)
+                    } else {
+                        zoomableState.animateZoomTo(it, composableCenter, maxZoom / 2)
+                    }
                 }
-            })
+            )
         }
         .pointerInput("gestures") {
             forEachGesture {
