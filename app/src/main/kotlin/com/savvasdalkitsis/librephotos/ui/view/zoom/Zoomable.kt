@@ -177,8 +177,11 @@ fun Modifier.zoomable(
                     coordinates.size.height.toFloat() / 2
                 )
             val windowOffset = coordinates.localToWindow(localOffset)
-            composableCenter =
+            composableCenter = try {
                 coordinates.parentLayoutCoordinates?.windowToLocal(windowOffset)
                     ?: Offset.Zero
+            } catch (e: Throwable) {
+                Offset.Zero
+            }
         }
 }

@@ -1,6 +1,6 @@
 package com.savvasdalkitsis.librephotos.photos.navigation
 
-import androidx.compose.animation.ExperimentalAnimationApi
+import androidx.compose.animation.*
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.navigation.NavBackStackEntry
@@ -28,6 +28,8 @@ class PhotoNavigationTarget @Inject constructor(
         navigationTarget<PhotoState, PhotoEffect, PhotoAction, PhotoViewModel>(
             name = name,
             effects = effectsHandler,
+            enterTransition = { scaleIn() + fadeIn() },
+            exitTransition = { scaleOut() + fadeOut() },
             initializer = { navBackStackEntry, actions ->
                 actions(LoadPhoto(navBackStackEntry.photoId))
             }

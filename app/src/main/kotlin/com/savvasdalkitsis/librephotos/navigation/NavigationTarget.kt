@@ -1,5 +1,8 @@
 package com.savvasdalkitsis.librephotos.navigation
 
+import androidx.compose.animation.AnimatedContentScope
+import androidx.compose.animation.EnterTransition
+import androidx.compose.animation.ExitTransition
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.runtime.*
 import androidx.compose.ui.ExperimentalComposeUiApi
@@ -19,11 +22,17 @@ import org.orbitmvi.orbit.viewmodel.observe
 @ExperimentalComposeUiApi
 inline fun <S : Any, E : Any, A : Any, reified VM> NavGraphBuilder.navigationTarget(
     name: String,
+    noinline enterTransition: (AnimatedContentScope<NavBackStackEntry>.() -> EnterTransition?)? = null,
+    noinline exitTransition: (AnimatedContentScope<NavBackStackEntry>.() -> ExitTransition?)? = null,
     crossinline effects: EffectHandler<E>,
     crossinline initializer: (NavBackStackEntry, (A) -> Unit) -> Unit = { _, _ -> },
     crossinline content: @Composable (state: S, actions: (A) -> Unit) -> Unit,
 ) where VM : ViewModel, VM : ActionReceiverHost<S, E, A, *> {
-    composable(name) { navBackStackEntry ->
+    composable(
+        name,
+        enterTransition = enterTransition,
+        exitTransition = exitTransition,
+    ) { navBackStackEntry ->
         val model = hiltViewModel<VM>()
         val scope = rememberCoroutineScope()
         val actions: (A) -> Unit = {

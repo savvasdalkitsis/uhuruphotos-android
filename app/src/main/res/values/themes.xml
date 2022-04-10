@@ -3,5 +3,6 @@
 
     <style name="Theme.LibrePhotos" parent="android:Theme.Material.Light.NoActionBar">
         <item name="android:statusBarColor">@color/transparent</item>
+        <item name="android:windowBackground">@color/transparent</item>
     </style>
 </resources>
