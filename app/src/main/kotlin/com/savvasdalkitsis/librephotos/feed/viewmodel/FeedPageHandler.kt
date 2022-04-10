@@ -5,6 +5,7 @@ import com.savvasdalkitsis.librephotos.account.usecase.AccountUseCase
 import com.savvasdalkitsis.librephotos.albums.usecase.AlbumsUseCase
 import com.savvasdalkitsis.librephotos.feed.mvflow.FeedPageAction
 import com.savvasdalkitsis.librephotos.feed.mvflow.FeedPageAction.*
+import com.savvasdalkitsis.librephotos.feed.mvflow.FeedPageAction.ChangeDisplay
 import com.savvasdalkitsis.librephotos.feed.mvflow.FeedPageEffect
 import com.savvasdalkitsis.librephotos.feed.mvflow.FeedPageEffect.OpenPhotoDetails
 import com.savvasdalkitsis.librephotos.feed.mvflow.FeedPageEffect.ReloadApp
@@ -53,6 +54,11 @@ class FeedPageHandler @Inject constructor(
         }
         is SelectedPhoto -> flow {
             effect(OpenPhotoDetails(action.photo.id!!))
+        }
+        is ChangeDisplay -> flow {
+            if (state.feedState.feedDisplay != action.display) {
+                emit(FeedPageMutation.ChangeDisplay(action.display))
+            }
         }
     }
 }

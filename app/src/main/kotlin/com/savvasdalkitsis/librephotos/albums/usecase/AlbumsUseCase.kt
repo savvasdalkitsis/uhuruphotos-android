@@ -32,11 +32,12 @@ class AlbumsUseCase @Inject constructor(
         refresh: Boolean = true,
     ): Flow<List<Album>> = albumsRepository.getAlbumsByDate()
         .map { albums ->
-            albums.items.map { (_, photos) ->
+            albums.items.map { (id, photos) ->
                 val albumDate = photos.firstOrNull()?.albumDate
                 val albumLocation = photos.firstOrNull()?.albumLocation
 
                 Album(
+                    id = id,
                     photoCount = photos.size,
                     date = dateDisplayer.dateString(albumDate),
                     location = albumLocation ?: "",

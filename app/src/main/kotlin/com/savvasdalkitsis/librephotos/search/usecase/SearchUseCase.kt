@@ -25,10 +25,11 @@ class SearchUseCase @Inject constructor(
     fun searchFor(query: String): Flow<List<Album>> =
         searchRepository.getSearchResults(query)
             .map { groups ->
-                groups.items.map { (_, photos) ->
+                groups.items.map { (id, photos) ->
                     val albumLocation = photos.firstOrNull()?.location
                     val albumDate = photos.firstOrNull()?.date
                     Album(
+                        id = id,
                         photoCount = photos.size,
                         date = dateDisplayer.dateString(albumDate),
                         location = albumLocation,

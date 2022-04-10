@@ -35,7 +35,8 @@ fun FeedPage(
             Feed(
                 contentPadding,
                 state.feedState,
-                onPhotoSelected = { action(SelectedPhoto(it)) }
+                onPhotoSelected = { action(SelectedPhoto(it)) },
+                onChangeDisplay = { action(ChangeDisplay(it)) }
             )
         }
         AccountOverviewPopUp(
