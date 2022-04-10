@@ -18,9 +18,9 @@ import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import coil.size.Size
-import com.savvasdalkitsis.librephotos.extensions.zoomable
 import com.savvasdalkitsis.librephotos.photos.mvflow.PhotoAction
 import com.savvasdalkitsis.librephotos.photos.view.state.PhotoState
+import com.savvasdalkitsis.librephotos.ui.view.zoom.zoomable
 
 @ExperimentalFoundationApi
 @Composable
@@ -37,10 +37,11 @@ fun Photo(
         }
     } else {
         var showLowRes = remember { true }
-        Box(modifier = Modifier
-            .fillMaxSize()
-            .background(MaterialTheme.colors.background)
-            .zoomable()
+        Box(
+            modifier = Modifier
+                .fillMaxSize()
+                .background(MaterialTheme.colors.background)
+                .zoomable()
         ) {
             if (showLowRes) {
                 AsyncImage(
