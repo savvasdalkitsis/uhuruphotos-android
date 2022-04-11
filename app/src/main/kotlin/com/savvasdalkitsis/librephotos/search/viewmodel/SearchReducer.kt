@@ -20,5 +20,6 @@ fun searchReducer() : Reducer<SearchState, SearchMutation> = { state, mutation -
         is SearchMutation.UserBadgeStateChanged -> state.copy(userBadgeState = mutation.userBadgeState)
         SearchMutation.HideAccountOverview -> state.copy(showAccountOverview = false)
         SearchMutation.ShowAccountOverview -> state.copy(showAccountOverview = true)
+        is SearchMutation.ChangeDisplay -> state.copy(feedDisplay = mutation.feedDisplay)
     }
 }

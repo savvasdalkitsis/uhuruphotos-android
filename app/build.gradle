@@ -103,6 +103,8 @@ dependencies {
             "org.orbit-mvi:orbit-viewmodel:4.3.2",
             'androidx.window:window:1.0.0',
             'androidx.compose.ui:ui-util:1.2.0-alpha07',
+            "com.fredporciuncula:flow-preferences:1.5.0",
+            'androidx.preference:preference-ktx:1.2.0',
     )
     ksp "com.squareup.moshi:moshi-kotlin-codegen:1.13.0"
     kapt "com.google.dagger:hilt-compiler:2.40.5"

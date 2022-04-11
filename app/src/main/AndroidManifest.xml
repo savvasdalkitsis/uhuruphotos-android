@@ -17,7 +17,10 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.LibrePhotos"
         android:name=".LibrePhotosApplication"
+        android:largeHeap="true"
         tools:targetApi="s">
+
+        <profileable android:shell="true"/>
 
         <provider
             android:name="androidx.startup.InitializationProvider"
@@ -36,6 +39,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <service
+            android:name="androidx.work.impl.foreground.SystemForegroundService"
+            android:foregroundServiceType="dataSync"
+            tools:node="merge" />
     </application>
 
 </manifest>

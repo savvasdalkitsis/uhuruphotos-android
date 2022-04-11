@@ -2,6 +2,8 @@ package com.savvasdalkitsis.librephotos.search.viewmodel
 
 import coil.annotation.ExperimentalCoilApi
 import com.savvasdalkitsis.librephotos.account.usecase.AccountUseCase
+import com.savvasdalkitsis.librephotos.feed.mvflow.FeedPageMutation
+import com.savvasdalkitsis.librephotos.feed.usecase.FeedUseCase
 import com.savvasdalkitsis.librephotos.search.mvflow.SearchAction
 import com.savvasdalkitsis.librephotos.search.mvflow.SearchAction.*
 import com.savvasdalkitsis.librephotos.search.mvflow.SearchEffect
@@ -17,12 +19,14 @@ import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.*
 import javax.inject.Inject
 
+@ExperimentalCoroutinesApi
 @ExperimentalCoilApi
 @FlowPreview
 class SearchHandler @Inject constructor(
     private val searchUseCase: SearchUseCase,
     private val userBadgeUseCase: UserBadgeUseCase,
     private val accountUseCase: AccountUseCase,
+    private val feedUseCase: FeedUseCase,
 ): Handler<SearchState, SearchEffect, SearchAction, SearchMutation> {
 
     private var lastSearch: Job? = null
@@ -32,11 +36,16 @@ class SearchHandler @Inject constructor(
         action: SearchAction,
         effect: suspend (SearchEffect) -> Unit,
     ): Flow<SearchMutation> = when (action) {
-        Initialise -> userBadgeUseCase.getUserBadgeState()
-            .map(::UserBadgeStateChanged)
-            .onStart {
-                effect(FocusSearchBar)
-            }
+        Initialise -> merge(
+            feedUseCase
+                .getFeedDisplay()
+                .distinctUntilChanged()
+                .map(::ChangeDisplay),
+            userBadgeUseCase.getUserBadgeState()
+                .map(::UserBadgeStateChanged)
+        ).onStart {
+            effect(FocusSearchBar)
+        }
         is ChangeQuery -> flowOf(QueryChanged(action.query))
         is SearchFor -> channelFlow {
             lastSearch?.cancel()

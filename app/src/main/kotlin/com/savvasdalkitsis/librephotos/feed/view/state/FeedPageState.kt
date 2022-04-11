@@ -7,4 +7,5 @@ data class FeedPageState(
     val userBadgeState: UserBadgeState = UserBadgeState(),
     val showAccountOverview: Boolean = false,
     val isRefreshing: Boolean = false,
+    val showFeedDisplayChoice: Boolean = false,
 )

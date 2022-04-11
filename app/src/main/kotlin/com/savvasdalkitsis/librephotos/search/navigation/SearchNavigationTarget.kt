@@ -2,6 +2,7 @@ package com.savvasdalkitsis.librephotos.search.navigation
 
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.ui.ExperimentalComposeUiApi
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavGraphBuilder
 import com.savvasdalkitsis.librephotos.navigation.ControllersProvider
 import com.savvasdalkitsis.librephotos.navigation.navigationTarget
@@ -26,6 +27,7 @@ class SearchNavigationTarget @ExperimentalComposeUiApi
             name = name,
             effects = effectsHandler,
             initializer = { _, actions -> actions(SearchAction.Initialise) },
+            createModel = { hiltViewModel() }
         ) { state, actions ->
             SearchPage(state, actions, controllersProvider)
         }

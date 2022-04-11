@@ -3,6 +3,7 @@ package com.savvasdalkitsis.librephotos.photos.navigation
 import androidx.compose.animation.*
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.ui.ExperimentalComposeUiApi
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavBackStackEntry
 import androidx.navigation.NavGraphBuilder
 import com.savvasdalkitsis.librephotos.navigation.navigationTarget
@@ -32,7 +33,8 @@ class PhotoNavigationTarget @Inject constructor(
             exitTransition = { scaleOut() + fadeOut() },
             initializer = { navBackStackEntry, actions ->
                 actions(LoadPhoto(navBackStackEntry.photoId))
-            }
+            },
+            createModel = { hiltViewModel() }
         ) { state, actions ->
             Photo(state, actions)
         }

@@ -2,6 +2,7 @@ package com.savvasdalkitsis.librephotos.server.navigation
 
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.ui.ExperimentalComposeUiApi
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavGraphBuilder
 import com.savvasdalkitsis.librephotos.navigation.navigationTarget
 import com.savvasdalkitsis.librephotos.server.mvflow.ServerAction
@@ -25,6 +26,7 @@ class ServerNavigationTarget @Inject constructor(
             effects = effectsHandler,
             initializer = {_, action -> action(CheckPersistedServer) },
             content = { state, actions -> Server(state, actions) },
+            createModel = { hiltViewModel() }
         )
 
     companion object {

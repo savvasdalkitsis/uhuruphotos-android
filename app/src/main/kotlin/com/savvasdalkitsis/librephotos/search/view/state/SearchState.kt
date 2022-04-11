@@ -1,5 +1,6 @@
 package com.savvasdalkitsis.librephotos.search.view.state
 
+import com.savvasdalkitsis.librephotos.feed.view.state.FeedDisplay
 import com.savvasdalkitsis.librephotos.userbadge.view.state.UserBadgeState
 
 data class SearchState(
@@ -8,4 +9,5 @@ data class SearchState(
     val searchResults: SearchResults = SearchResults.Idle,
     val userBadgeState: UserBadgeState = UserBadgeState(),
     val showAccountOverview: Boolean = false,
+    val feedDisplay: FeedDisplay = FeedDisplay.default,
 )

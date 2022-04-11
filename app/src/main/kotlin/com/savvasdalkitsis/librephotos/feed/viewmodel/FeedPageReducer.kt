@@ -17,6 +17,8 @@ fun feedPageReducer() : Reducer<FeedPageState, FeedPageMutation> = { state, muta
         StartRefreshing -> state.copy(isRefreshing = true)
         StopRefreshing -> state.copy(isRefreshing = false)
         is ChangeDisplay -> state.mutateFeed { copy(feedDisplay = mutation.display) }
+        HideFeedDisplayChoice -> state.copy(showFeedDisplayChoice = false)
+        ShowFeedDisplayChoice -> state.copy(showFeedDisplayChoice = true)
     }
 }
 

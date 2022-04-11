@@ -3,6 +3,7 @@ package com.savvasdalkitsis.librephotos.weblogin.navigation
 import android.util.Base64
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.ui.ExperimentalComposeUiApi
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavBackStackEntry
 import androidx.navigation.NavGraphBuilder
 import com.savvasdalkitsis.librephotos.navigation.navigationTarget
@@ -27,6 +28,7 @@ class WebLoginNavigationTarget @Inject constructor(
             initializer = { navBackStackEntry, actions ->
                 actions(WebLoginAction.LoadPage(navBackStackEntry.url))
             },
+            createModel = { hiltViewModel() }
         ) { state, _ ->
             WebLogin(state)
         }

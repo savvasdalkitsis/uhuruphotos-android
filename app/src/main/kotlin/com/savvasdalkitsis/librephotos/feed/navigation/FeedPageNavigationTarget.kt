@@ -2,6 +2,7 @@ package com.savvasdalkitsis.librephotos.feed.navigation
 
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.ui.ExperimentalComposeUiApi
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavGraphBuilder
 import com.savvasdalkitsis.librephotos.feed.mvflow.FeedPageAction
 import com.savvasdalkitsis.librephotos.feed.mvflow.FeedPageEffect
@@ -26,7 +27,8 @@ class FeedPageNavigationTarget @Inject constructor(
         navigationTarget<FeedPageState, FeedPageEffect, FeedPageAction, FeedPageViewModel>(
             name = name,
             effects = feedPageEffectsHandler,
-            initializer = { _, actions -> actions(FeedPageAction.LoadFeed) }
+            initializer = { _, actions -> actions(FeedPageAction.LoadFeed) },
+            createModel = { hiltViewModel() }
         ) { state, actions ->
             FeedPage(controllersProvider, state, actions)
         }

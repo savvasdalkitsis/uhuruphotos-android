@@ -7,7 +7,6 @@ import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.runtime.*
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
-import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.ViewModel
 import androidx.navigation.NavBackStackEntry
 import androidx.navigation.NavGraphBuilder
@@ -20,20 +19,21 @@ import org.orbitmvi.orbit.viewmodel.observe
 
 @ExperimentalAnimationApi
 @ExperimentalComposeUiApi
-inline fun <S : Any, E : Any, A : Any, reified VM> NavGraphBuilder.navigationTarget(
+fun <S : Any, E : Any, A : Any, VM> NavGraphBuilder.navigationTarget(
     name: String,
-    noinline enterTransition: (AnimatedContentScope<NavBackStackEntry>.() -> EnterTransition?)? = null,
-    noinline exitTransition: (AnimatedContentScope<NavBackStackEntry>.() -> ExitTransition?)? = null,
-    crossinline effects: EffectHandler<E>,
-    crossinline initializer: (NavBackStackEntry, (A) -> Unit) -> Unit = { _, _ -> },
-    crossinline content: @Composable (state: S, actions: (A) -> Unit) -> Unit,
+    enterTransition: (AnimatedContentScope<NavBackStackEntry>.() -> EnterTransition?)? = null,
+    exitTransition: (AnimatedContentScope<NavBackStackEntry>.() -> ExitTransition?)? = null,
+    effects: EffectHandler<E>,
+    initializer: (NavBackStackEntry, (A) -> Unit) -> Unit = { _, _ -> },
+    createModel: @Composable () -> VM,
+    content: @Composable (state: S, actions: (A) -> Unit) -> Unit,
 ) where VM : ViewModel, VM : ActionReceiverHost<S, E, A, *> {
     composable(
         name,
         enterTransition = enterTransition,
         exitTransition = exitTransition,
     ) { navBackStackEntry ->
-        val model = hiltViewModel<VM>()
+        val model = createModel()
         val scope = rememberCoroutineScope()
         val actions: (A) -> Unit = {
             scope.launch {

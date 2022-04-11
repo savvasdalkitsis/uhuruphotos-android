@@ -4,6 +4,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
+import com.savvasdalkitsis.librephotos.feed.view.state.FeedDisplay
 import com.savvasdalkitsis.librephotos.home.navigation.*
 import com.savvasdalkitsis.librephotos.home.navigation.NavigationStyle.BOTTOM_BAR
 import com.savvasdalkitsis.librephotos.home.navigation.NavigationStyle.NAVIGATION_RAIL
@@ -16,17 +17,23 @@ fun HomeScaffold(
     modifier: Modifier = Modifier,
     navController: NavHostController,
     userBadgeState: UserBadgeState? = null,
+    feedDisplay: FeedDisplay = FeedDisplay.default,
     userBadgePressed: () -> Unit = {},
+    actionBarContent: @Composable RowScope.() -> Unit = {},
     content: @Composable (PaddingValues) -> Unit,
 ) {
     MainScaffold(
         modifier = modifier,
         bottomBar = {
             if (homeNavigationStyle() == BOTTOM_BAR) {
-                HomeNavigationBar(navController = navController)
+                HomeNavigationBar(
+                    navController = navController,
+                    feedDisplay = feedDisplay,
+                )
             }
         },
         actionBarContent = {
+            actionBarContent()
             userBadgeState?.let {
                 UserBadge(state = it, userBadgePressed = userBadgePressed)
             }
@@ -37,6 +44,7 @@ fun HomeScaffold(
             NAVIGATION_RAIL -> Row {
                 HomeNavigationBar(
                     contentPadding = contentPadding,
+                    feedDisplay = feedDisplay,
                     navController = navController,
                 )
                 content(contentPadding)

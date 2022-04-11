@@ -1,5 +1,6 @@
 package com.savvasdalkitsis.librephotos.feed.view
 
+import android.content.res.Configuration
 import androidx.compose.animation.core.Animatable
 import androidx.compose.foundation.gestures.awaitFirstDown
 import androidx.compose.foundation.gestures.calculateZoom
@@ -9,22 +10,33 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.CircularProgressIndicator
-import androidx.compose.runtime.*
+import androidx.compose.material.icons.Icons
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.scale
 import androidx.compose.ui.input.pointer.consumeAllChanges
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.input.pointer.positionChangeConsumed
 import androidx.compose.ui.input.pointer.positionChanged
+import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.util.fastAny
 import androidx.compose.ui.util.fastForEach
 import com.savvasdalkitsis.librephotos.feed.view.state.FeedDisplay
-import com.savvasdalkitsis.librephotos.feed.view.state.FeedDisplay.BY_DATE
-import com.savvasdalkitsis.librephotos.feed.view.state.FeedDisplay.FULL
 import com.savvasdalkitsis.librephotos.feed.view.state.FeedState
 import com.savvasdalkitsis.librephotos.photos.model.Photo
+import com.savvasdalkitsis.librephotos.window.WindowSize
 import kotlinx.coroutines.launch
+import kotlin.math.max
+import kotlin.math.min
+
+private const val zoomMin = 0.8f
+private const val zoomMax = 1.2f
+private const val zoomLowTrigger = 0.9f
+private const val zoomHighTrigger = 1.1f
 
 @Composable
 fun Feed(
@@ -43,8 +55,9 @@ fun Feed(
             CircularProgressIndicator(modifier = Modifier.size(48.dp))
         }
     } else {
+        val feedDisplay = state.feedDisplay
         val modifier = Modifier
-            .pointerInput(Unit) {
+            .pointerInput(feedDisplay) {
                 forEachGesture {
                     awaitPointerEventScope {
                         awaitFirstDown(requireUnconsumed = false)
@@ -55,7 +68,7 @@ fun Feed(
                                 if (!canceled) {
                                     val zoomChange = event.calculateZoom()
                                     coroutineScope.launch {
-                                        zoom.snapTo(zoom.value * zoomChange)
+                                        zoom.snapTo(max(zoomMin, min(zoom.value * zoomChange, zoomMax)))
                                     }
                                 }
 
@@ -66,21 +79,39 @@ fun Feed(
                                 }
                             }
                         } while (!canceled && event.changes.fastAny { it.pressed })
-                        if (zoom.value < 0.8) {
-                            onChangeDisplay(BY_DATE)
+                        if (zoom.value < zoomLowTrigger) {
+                            onChangeDisplay(feedDisplay.zoomOut)
                         }
-                        if (zoom.value > 1.2) {
-                            onChangeDisplay(FULL)
+                        if (zoom.value > zoomHighTrigger) {
+                            onChangeDisplay(feedDisplay.zoomIn)
                         }
                         coroutineScope.launch {
                             zoom.animateTo(1f)
                         }
                     }
                 }
-            }
-        when (state.feedDisplay) {
-            FULL -> FullFeed(modifier, contentPadding, state.albums, onPhotoSelected)
-            BY_DATE -> ByDateFeed(modifier, contentPadding, state.albums, onPhotoSelected)
+            }.scale(zoom.value)
+        val columnCount = feedDisplay.columnCount(
+            windowSizeClass = WindowSize.LOCAL_WIDTH.current,
+            landscape = LocalConfiguration.current.orientation == Configuration.ORIENTATION_LANDSCAPE
+        )
+        if (feedDisplay == FeedDisplay.TINY) {
+            GridDateFeed(
+                modifier = modifier,
+                contentPadding = contentPadding,
+                albums = state.albums,
+                columnCount = columnCount,
+                onPhotoSelected = onPhotoSelected
+            )
+        } else {
+            StaggeredDateFeed(
+                modifier = modifier,
+                contentPadding = contentPadding,
+                albums = state.albums,
+                columnCount = columnCount,
+                shouldAddEmptyPhotosInRows = feedDisplay.shouldAddEmptyPhotosInRows,
+                onPhotoSelected = onPhotoSelected
+            )
         }
     }
 }

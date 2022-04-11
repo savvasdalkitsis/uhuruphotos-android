@@ -2,6 +2,7 @@ package com.savvasdalkitsis.librephotos.home.navigation
 
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.ui.ExperimentalComposeUiApi
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavGraphBuilder
 import com.savvasdalkitsis.librephotos.home.mvflow.HomeAction
 import com.savvasdalkitsis.librephotos.home.mvflow.HomeEffect
@@ -25,6 +26,7 @@ class HomeNavigationTarget @Inject constructor(
             name = name,
             effects = effectsHandler,
             initializer = { _, actions -> actions(HomeAction.Load) },
+            createModel = { hiltViewModel() }
         ) { state, _ ->
             Home(state, controllersProvider)
         }

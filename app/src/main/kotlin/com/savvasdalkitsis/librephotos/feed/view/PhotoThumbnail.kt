@@ -19,11 +19,13 @@ import com.savvasdalkitsis.librephotos.photos.model.Photo
 fun PhotoThumbnail(
     modifier: Modifier = Modifier,
     photo: Photo,
-    onPhotoSelected: (Photo) -> Unit
+    onPhotoSelected: (Photo) -> Unit,
+    ratio: Float = photo.ratio,
+    contentScale: ContentScale = ContentScale.FillBounds,
 ) {
     Box(
         modifier = modifier
-            .aspectRatio(photo.ratio)
+            .aspectRatio(ratio)
             .padding(1.dp)
             .background(photo.fallbackColor.toColor())
             .clickable { onPhotoSelected(photo) }
@@ -31,7 +33,7 @@ fun PhotoThumbnail(
         AsyncImage(
             modifier = Modifier.fillMaxWidth(),
             model = photo.url,
-            contentScale = ContentScale.FillBounds,
+            contentScale = contentScale,
             contentDescription = "photo",
         )
         if (photo.isVideo) {

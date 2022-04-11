@@ -11,6 +11,8 @@ sealed class FeedPageMutation {
     object HideAccountOverview : FeedPageMutation()
     object StartRefreshing : FeedPageMutation()
     object StopRefreshing : FeedPageMutation()
+    object ShowFeedDisplayChoice : FeedPageMutation()
+    object HideFeedDisplayChoice : FeedPageMutation()
 
     data class ShowAlbums(val albums: List<Album>) : FeedPageMutation() {
         override fun toString() = "Showing ${albums.size} albums"
