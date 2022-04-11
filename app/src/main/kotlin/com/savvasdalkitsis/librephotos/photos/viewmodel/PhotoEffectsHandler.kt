@@ -19,6 +19,6 @@ class PhotoEffectsHandler @Inject constructor(
     }
 
     private fun setBars(visible: Boolean) {
-        controllersProvider.systemUiController!!.isNavigationBarVisible = visible
+        controllersProvider.systemUiController!!.isSystemBarsVisible = visible
     }
 }
