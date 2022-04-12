@@ -1,0 +1,46 @@
+[versions]
+    accompanist = '0.24.5-alpha'
+    coil = "2.0.0-rc02"
+    compose = "1.2.0-alpha07"
+    okhttp = "4.9.3"
+    retrofit = "2.9.0"
+    sqldelight = "1.5.3"
+
+[libraries]
+accompanist-insets = { module = 'com.google.accompanist:accompanist-insets-ui', version.ref = "accompanist" }
+accompanist-navigation = { module = 'com.google.accompanist:accompanist-navigation-animation', version.ref = "accompanist" }
+accompanist-swiperefresh = { module = 'com.google.accompanist:accompanist-swiperefresh', version.ref = "accompanist" }
+accompanist-systemui = { module = 'com.google.accompanist:accompanist-systemuicontroller', version.ref = "accompanist" }
+accompanist-webview = { module = 'com.google.accompanist:accompanist-webview', version.ref = "accompanist" }
+androidx-activity = 'androidx.activity:activity-compose:1.5.0-alpha03'
+androidx-compose-foundation = { module = 'androidx.compose.foundation:foundation', version.ref = "compose" }
+androidx-compose-foundation-layout = { module = 'androidx.compose.foundation:foundation-layout', version.ref = "compose" }
+androidx-compose-hilt-navigation = 'androidx.hilt:hilt-navigation-compose:1.0.0'
+androidx-compose-livedata = { module = 'androidx.compose.runtime:runtime-livedata', version.ref = "compose" }
+androidx-compose-material = { module = 'androidx.compose.material:material', version.ref = "compose" }
+androidx-compose-navigation = 'androidx.navigation:navigation-compose:2.5.0-alpha03'
+androidx-compose-tooling = { module = 'androidx.compose.ui:ui-tooling-preview', version.ref = "compose" }
+androidx-compose-ui = { module = 'androidx.compose.ui:ui', version.ref = "compose" }
+androidx-compose-ui-util = { module = 'androidx.compose.ui:ui-util', version.ref = "compose" }
+androidx-core = 'androidx.core:core-ktx:1.7.0'
+androidx-datastore-preferences = 'androidx.datastore:datastore-preferences:1.0.0'
+androidx-lifecycle = 'androidx.lifecycle:lifecycle-runtime-ktx:2.4.1'
+androidx-preference = 'androidx.preference:preference-ktx:1.2.0'
+androidx-window = 'androidx.window:window:1.0.0'
+androidx-work = 'androidx.work:work-runtime-ktx:2.7.1'
+androidx-work-hilt = 'androidx.hilt:hilt-work:1.0.0'
+coil-compose = { module = 'io.coil-kt:coil-compose', version.ref = "coil" }
+coil-gif = { module = 'io.coil-kt:coil-gif', version.ref = "coil" }
+coil-video = { module = 'io.coil-kt:coil-video', version.ref = "coil" }
+flowpreferences = 'com.fredporciuncula:flow-preferences:1.5.0'
+hilt = 'com.google.dagger:hilt-android:2.38.1'
+jwt = 'com.auth0.android:jwtdecode:2.0.1'
+logger = 'com.orhanobut:logger:2.2.0'
+moshi = 'com.squareup.moshi:moshi-kotlin:1.13.0'
+okhttp-logging = { module = 'com.squareup.okhttp3:logging-interceptor', version.ref = "okhttp" }
+okhttp-url = { module = 'com.squareup.okhttp3:okhttp-urlconnection', version.ref = "okhttp" }
+orbit = 'org.orbit-mvi:orbit-viewmodel:4.3.2'
+retrofit-core = { module = 'com.squareup.retrofit2:retrofit', version.ref = "retrofit" }
+retrofit-moshi = { module = 'com.squareup.retrofit2:converter-moshi', version.ref = "retrofit" }
+sqldelight-android = { module = 'com.squareup.sqldelight:android-driver', version.ref = "sqldelight" }
+sqldelight-coroutines = { module = 'com.squareup.sqldelight:coroutines-extensions', version.ref = "sqldelight" }
