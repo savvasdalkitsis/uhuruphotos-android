@@ -63,7 +63,7 @@ class FeedPageHandler @Inject constructor(
             emit(StopRefreshing)
         }
         is SelectedPhoto -> flow {
-            effect(OpenPhotoDetails(action.photo.id!!))
+            effect(OpenPhotoDetails(action.photo.id!!, action.offset))
         }
         is ChangeDisplay -> flow {
             feedUseCase.setFeedDisplay(action.display)

@@ -19,6 +19,8 @@ class FeedPageEffectsHandler @Inject constructor(
             }
         }
         is FeedPageEffect.OpenPhotoDetails ->
-            controllersProvider.navController!!.navigate(PhotoNavigationTarget.id(effect.id))
+            controllersProvider.navController!!.navigate(
+                PhotoNavigationTarget.idWithOffset(effect.id, effect.offset)
+            )
     }
 }

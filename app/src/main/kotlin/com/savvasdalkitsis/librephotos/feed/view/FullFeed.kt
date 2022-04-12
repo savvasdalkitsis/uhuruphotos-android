@@ -4,6 +4,7 @@ import android.content.res.Configuration.ORIENTATION_LANDSCAPE
 import androidx.compose.foundation.layout.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.unit.dp
 import com.savvasdalkitsis.librephotos.albums.model.Album
@@ -15,7 +16,7 @@ fun FullFeed(
     modifier: Modifier = Modifier,
     contentPadding: PaddingValues,
     albums: List<Album>,
-    onPhotoSelected: (Photo) -> Unit
+    onPhotoSelected: (Photo, Offset) -> Unit,
 ) {
     LazyStaggeredGrid(
         modifier = modifier

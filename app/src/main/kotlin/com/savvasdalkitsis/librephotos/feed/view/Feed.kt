@@ -20,6 +20,7 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.scale
+import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.input.pointer.consumeAllChanges
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.input.pointer.positionChangeConsumed
@@ -47,7 +48,7 @@ fun Feed(
     state: FeedState,
     gridState: LazyGridState = rememberLazyGridState(),
     listState: LazyListState = rememberLazyListState(),
-    onPhotoSelected: (Photo) -> Unit = {},
+    onPhotoSelected: (Photo, Offset) -> Unit = { _, _ ->},
     onChangeDisplay: (FeedDisplay) -> Unit = {},
 ) {
     val zoom = remember { Animatable(1f) }

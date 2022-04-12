@@ -3,6 +3,8 @@ package com.savvasdalkitsis.librephotos.photos.navigation
 import androidx.compose.animation.*
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.ui.ExperimentalComposeUiApi
+import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.graphics.TransformOrigin
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavBackStackEntry
 import androidx.navigation.NavGraphBuilder
@@ -29,8 +31,14 @@ class PhotoNavigationTarget @Inject constructor(
         navigationTarget<PhotoState, PhotoEffect, PhotoAction, PhotoViewModel>(
             name = name,
             effects = effectsHandler,
-            enterTransition = { scaleIn() + fadeIn() },
-            exitTransition = { scaleOut() + fadeOut() },
+            enterTransition = {
+                val offset = targetState.offset
+                scaleIn(transformOrigin = TransformOrigin(offset.x, offset.y))
+            },
+            exitTransition = {
+                val offset = initialState.offset
+                scaleOut(transformOrigin = TransformOrigin(offset.x, offset.y))
+            },
             initializer = { navBackStackEntry, actions ->
                 actions(LoadPhoto(navBackStackEntry.photoId))
             },
@@ -41,10 +49,17 @@ class PhotoNavigationTarget @Inject constructor(
     }
 
     companion object {
-        private const val name = "photo/{id}"
-        fun id(id: String) = name.replace("{id}", id)
-        private val NavBackStackEntry.photoId : String get() {
-            return arguments!!.getString("id")!!
-        }
+        private const val name = "photo/{id}/{x}/{y}"
+        fun id(id: String) = idWithOffset(id, Offset(0.5f, 0.5f))
+        fun idWithOffset(id: String, offset: Offset) = name
+            .replace("{id}", id)
+            .replace("{x}", offset.x.toString())
+            .replace("{y}", offset.y.toString())
+
+        private val NavBackStackEntry.photoId : String get() = get("id")
+        private val NavBackStackEntry.offset : Offset get() =
+            Offset(get("x").toFloat(), get("y").toFloat())
+
+        private fun NavBackStackEntry.get(arg: String) = arguments!!.getString(arg)!!
     }
 }

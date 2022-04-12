@@ -4,7 +4,6 @@ import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.foundation.lazy.grid.rememberLazyGridState
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import com.google.accompanist.swiperefresh.SwipeRefresh
@@ -17,8 +16,6 @@ import com.savvasdalkitsis.librephotos.feed.view.state.FeedPageState
 import com.savvasdalkitsis.librephotos.home.view.HomeScaffold
 import com.savvasdalkitsis.librephotos.navigation.ControllersProvider
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.sync.Mutex
-import kotlinx.coroutines.sync.withLock
 
 @ExperimentalAnimationApi
 @Composable
@@ -63,7 +60,7 @@ fun FeedPage(
                 state.feedState,
                 listState = listState,
                 gridState = gridState,
-                onPhotoSelected = { action(SelectedPhoto(it)) },
+                onPhotoSelected = { photo, offset -> action(SelectedPhoto(photo, offset)) },
                 onChangeDisplay = { action(ChangeDisplay(it)) }
             )
         }
