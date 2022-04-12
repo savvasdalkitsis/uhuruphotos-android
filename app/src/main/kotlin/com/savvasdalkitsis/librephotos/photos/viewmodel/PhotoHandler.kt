@@ -27,6 +27,7 @@ class PhotoHandler @Inject constructor(
     ): Flow<PhotoMutation> = when(action) {
         is LoadPhoto -> flow {
             emit(with(photosUseCase) { ReceivedUrl(
+                id = action.id,
                 lowResUrl = action.id.toThumbnailUrlFromId(),
                 fullResUrl = action.id.toFullSizeUrlFromId(),
             )})
@@ -45,6 +46,12 @@ class PhotoHandler @Inject constructor(
         }
         NavigateBack -> flow {
             effect(PhotoEffect.NavigateBack)
+        }
+        is SetFavourite -> flow {
+            photosUseCase.setPhotoFavourite(state.id, action.favourite)
+        }
+        Refresh -> flow {
+            photosUseCase.refreshDetails(state.id)
         }
     }
 

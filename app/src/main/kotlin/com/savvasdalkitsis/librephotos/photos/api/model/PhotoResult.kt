@@ -22,6 +22,7 @@ data class PhotoResult(
     @field:Json(name = "tiny_square_thumbnail_url") val tinySquareThumbnailUrl: String?,
     @field:Json(name = "image_hash") val imageHash: String,
     @field:Json(name = "video") val video: Boolean,
+    @field:Json(name = "rating") val rating: Int,
 )
 
 fun PhotoResult.toPhotoDetails() = PhotoDetails(
@@ -41,5 +42,6 @@ fun PhotoResult.toPhotoDetails() = PhotoDetails(
     squareThumbnailUrl = smallSquareThumbnailUrl,
     tinySquareThumbnailUrl = tinySquareThumbnailUrl,
     video = video,
+    rating = rating,
     albumId = "",
 )

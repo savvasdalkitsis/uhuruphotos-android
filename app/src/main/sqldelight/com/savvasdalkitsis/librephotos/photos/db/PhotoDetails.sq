@@ -15,6 +15,7 @@ CREATE TABLE photoDetails (
   smallSquareThumbnailUrl TEXT,
   tinySquareThumbnailUrl TEXT,
   video INTEGER AS Boolean,
+  rating INTEGER AS Int,
   albumId TEXT NOT NULL,
 
   FOREIGN KEY (albumId) REFERENCES albums(id)
@@ -26,5 +27,5 @@ SELECT * FROM photoDetails WHERE imageHash = :id LIMIT 1;
 insert:
 INSERT OR REPLACE INTO photoDetails VALUES ?;
 
-count:
-SELECT count(imageHash) FROM photoDetails;
+setRating:
+UPDATE photoDetails SET rating = :rating WHERE imageHash = :id;

@@ -23,10 +23,22 @@ class PhotoRepository @Inject constructor(
         photoDetailsQueries.getPhoto(id).asFlow().mapToOneNotNull()
             .onStart {
                 when (photoDetailsQueries.getPhoto(id).awaitSingleOrNull()) {
-                    null -> photosService.getPhoto(id).toPhotoDetails().apply {
-                        crud { photoDetailsQueries.insert(this) }
-                    }
+                    null -> refreshDetails(id)
                 }
             }
+
+    suspend fun refreshDetails(id: String) {
+        photosService.getPhoto(id).toPhotoDetails().apply {
+            insertPhoto(this)
+        }
+    }
+
+    suspend fun insertPhoto(photoDetails: PhotoDetails) {
+        crud { photoDetailsQueries.insert(photoDetails) }
+    }
+
+    suspend fun setPhotoRating(id: String, rating: Int) {
+        crud { photoDetailsQueries.setRating(rating, id) }
+    }
 
 }

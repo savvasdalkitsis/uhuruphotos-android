@@ -1,15 +1,13 @@
 package com.savvasdalkitsis.librephotos.photos.view
 
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.size
-import androidx.compose.material.CircularProgressIndicator
-import androidx.compose.material.Icon
-import androidx.compose.material.IconButton
-import androidx.compose.material.MaterialTheme
+import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.runtime.Composable
@@ -23,25 +21,43 @@ import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import coil.size.Size
+import com.savvasdalkitsis.librephotos.R
 import com.savvasdalkitsis.librephotos.main.view.MainScaffold
 import com.savvasdalkitsis.librephotos.photos.mvflow.PhotoAction
-import com.savvasdalkitsis.librephotos.photos.mvflow.PhotoAction.NavigateBack
+import com.savvasdalkitsis.librephotos.photos.mvflow.PhotoAction.*
 import com.savvasdalkitsis.librephotos.photos.view.state.PhotoState
+import com.savvasdalkitsis.librephotos.ui.view.ActionBarIcon
 import com.savvasdalkitsis.librephotos.ui.view.zoom.zoomable
 
 @ExperimentalFoundationApi
 @Composable
 fun Photo(
     state: PhotoState,
-    actions: (PhotoAction) -> Unit,
+    action: (PhotoAction) -> Unit,
 ) {
     MainScaffold(
         title = {},
         toolbarColor = Color.Transparent,
         displayed = state.isUIShowing,
         navigationIcon = {
-            IconButton(onClick = { actions(NavigateBack) }) {
+            IconButton(onClick = { action(NavigateBack) }) {
                 Icon(imageVector = Icons.Default.ArrowBack, contentDescription = "back")
+            }
+        },
+        actionBarContent = {
+            ActionBarIcon(
+                onClick = { action(Refresh) },
+                icon = R.drawable.ic_refresh,
+                contentDescription = "refresh"
+            )
+            AnimatedVisibility(visible = state.isFavourite != null) {
+                if (state.isFavourite != null) {
+                    ActionBarIcon(
+                        onClick = { action(SetFavourite(!state.isFavourite)) },
+                        icon = if (state.isFavourite) R.drawable.ic_favourite else R.drawable.ic_not_favourite,
+                        contentDescription = if (state.isFavourite) "favourite" else "not favourite"
+                    )
+                }
             }
         })
     {
@@ -59,12 +75,8 @@ fun Photo(
                     .fillMaxSize()
                     .background(MaterialTheme.colors.background)
                     .zoomable(
-                        onTap = {
-                            actions(PhotoAction.ToggleUI)
-                        },
-                        onSwipeAway = {
-                            actions(NavigateBack)
-                        }
+                        onTap = { action(ToggleUI) },
+                        onSwipeAway = { action(NavigateBack) }
                     )
             ) {
                 if (showLowRes) {

@@ -2,6 +2,7 @@ package com.savvasdalkitsis.librephotos.photos.usecase
 
 import com.savvasdalkitsis.librephotos.photos.db.PhotoDetails
 import com.savvasdalkitsis.librephotos.photos.repository.PhotoRepository
+import com.savvasdalkitsis.librephotos.photos.worker.PhotoWorkScheduler
 import com.savvasdalkitsis.librephotos.server.usecase.ServerUseCase
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
@@ -9,6 +10,7 @@ import javax.inject.Inject
 class PhotosUseCase @Inject constructor(
     private val serverUseCase: ServerUseCase,
     private val photoRepository: PhotoRepository,
+    private val photoWorkScheduler: PhotoWorkScheduler,
 ) {
 
     @JvmName("toAbsoluteUrlNull")
@@ -34,4 +36,16 @@ class PhotosUseCase @Inject constructor(
     fun getPhoto(id: String): Flow<PhotoDetails> =
         photoRepository.getPhoto(id)
 
+    suspend fun setPhotoFavourite(id: String, favourite: Boolean) {
+        photoRepository.setPhotoRating(id, if (favourite) FAVOURITES_RATING_THRESHOLD else 0)
+        photoWorkScheduler.schedulePhotoFavourite(id, favourite)
+    }
+
+    suspend fun refreshDetails(id: String) {
+        photoRepository.refreshDetails(id)
+    }
+
+    companion object {
+        const val FAVOURITES_RATING_THRESHOLD = 4
+    }
 }

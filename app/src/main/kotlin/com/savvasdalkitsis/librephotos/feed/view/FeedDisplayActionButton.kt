@@ -13,6 +13,7 @@ import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import com.savvasdalkitsis.librephotos.feed.view.state.FeedDisplay
+import com.savvasdalkitsis.librephotos.ui.view.ActionBarIcon
 
 @Composable
 fun FeedDisplayActionButton(
@@ -24,7 +25,7 @@ fun FeedDisplayActionButton(
 ) {
 
     Box {
-        IconButton(
+        ActionBarIcon(
             modifier = Modifier
                 .pointerInput(currentFeedDisplay) {
                     detectVerticalDragGestures { _, dragAmount ->
@@ -37,13 +38,9 @@ fun FeedDisplayActionButton(
                     }
                 },
             onClick = onShow,
-        ) {
-            Icon(
-                painterResource(currentFeedDisplay.iconResource),
-                contentDescription = "feed display",
-                tint = MaterialTheme.colors.onBackground
-            )
-        }
+            icon = currentFeedDisplay.iconResource,
+            contentDescription = "feed display",
+        )
         DropdownMenu(
             expanded = expanded,
             onDismissRequest = onHide,
