@@ -18,7 +18,7 @@ fun StaggeredDateFeed(
     columnCount: Int,
     shouldAddEmptyPhotosInRows: Boolean,
     listState: LazyListState = rememberLazyListState(),
-    onPhotoSelected: (Photo, Offset) -> Unit,
+    onPhotoSelected: PhotoSelected,
 ) {
     LazyColumn(
         modifier = modifier,
@@ -54,7 +54,7 @@ fun StaggeredDateFeed(
 
 @Composable
 private fun PhotoRow(
-    onPhotoSelected: (Photo, Offset) -> Unit,
+    onPhotoSelected: PhotoSelected,
     vararg photos: Photo
 ) {
     Row {

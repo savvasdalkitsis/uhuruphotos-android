@@ -20,7 +20,7 @@ class FeedPageEffectsHandler @Inject constructor(
         }
         is FeedPageEffect.OpenPhotoDetails ->
             controllersProvider.navController!!.navigate(
-                PhotoNavigationTarget.idWithOffset(effect.id, effect.offset)
+                PhotoNavigationTarget.idWithCenterAndScale(effect.id, effect.center, effect.scale)
             )
     }
 }

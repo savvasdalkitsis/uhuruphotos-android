@@ -4,7 +4,8 @@ import androidx.compose.animation.*
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.geometry.Offset
-import androidx.compose.ui.graphics.TransformOrigin
+import androidx.compose.ui.unit.IntOffset
+import androidx.compose.ui.unit.IntSize
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavBackStackEntry
 import androidx.navigation.NavGraphBuilder
@@ -32,12 +33,16 @@ class PhotoNavigationTarget @Inject constructor(
             name = name,
             effects = effectsHandler,
             enterTransition = {
-                val offset = targetState.offset
-                scaleIn(transformOrigin = TransformOrigin(offset.x, offset.y))
+                slideIn(initialOffset = { fullSize ->
+                    targetState.center.offsetFrom(fullSize)
+                }) +
+                scaleIn(initialScale = targetState.scale) + fadeIn()
             },
             exitTransition = {
-                val offset = initialState.offset
-                scaleOut(transformOrigin = TransformOrigin(offset.x, offset.y))
+               slideOut(targetOffset = { fullSize ->
+                   initialState.center.offsetFrom(fullSize)
+               }) +
+                scaleOut(targetScale = initialState.scale) + fadeOut()
             },
             initializer = { navBackStackEntry, actions ->
                 actions(LoadPhoto(navBackStackEntry.photoId))
@@ -49,17 +54,27 @@ class PhotoNavigationTarget @Inject constructor(
     }
 
     companion object {
-        private const val name = "photo/{id}/{x}/{y}"
-        fun id(id: String) = idWithOffset(id, Offset(0.5f, 0.5f))
-        fun idWithOffset(id: String, offset: Offset) = name
+        private const val name = "photo/{id}/{centerX}/{centerY}/{scale}"
+        fun id(id: String) = idWithCenterAndScale(id, Offset(0.5f, 0.5f), 0.3f)
+        fun idWithCenterAndScale(id: String, offset: Offset, scale: Float) = name
             .replace("{id}", id)
-            .replace("{x}", offset.x.toString())
-            .replace("{y}", offset.y.toString())
+            .replace("{centerX}", offset.x.toString())
+            .replace("{centerY}", offset.y.toString())
+            .replace("{scale}", scale.toString())
 
-        private val NavBackStackEntry.photoId : String get() = get("id")
-        private val NavBackStackEntry.offset : Offset get() =
-            Offset(get("x").toFloat(), get("y").toFloat())
+        private val NavBackStackEntry.photoId : String get() = get("id")!!
+        private val NavBackStackEntry.center : Offset? get() {
+            val x = get("centerX")?.toFloat()
+            val y = get("centerY")?.toFloat()
+            return if (x != null && y != null) Offset(x, y) else null
+        }
+        private val NavBackStackEntry.scale : Float get() = get("scale")?.toFloat() ?: 0.3f
 
-        private fun NavBackStackEntry.get(arg: String) = arguments!!.getString(arg)!!
+        private fun NavBackStackEntry.get(arg: String) = arguments!!.getString(arg)
+    }
+
+    private fun Offset?.offsetFrom(size: IntSize) = when {
+        this != null -> IntOffset((x - size.width/2).toInt(), (y - size.height/2).toInt())
+        else -> IntOffset.Zero
     }
 }

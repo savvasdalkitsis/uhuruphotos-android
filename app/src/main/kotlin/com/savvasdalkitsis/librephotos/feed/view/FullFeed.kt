@@ -16,7 +16,7 @@ fun FullFeed(
     modifier: Modifier = Modifier,
     contentPadding: PaddingValues,
     albums: List<Album>,
-    onPhotoSelected: (Photo, Offset) -> Unit,
+    onPhotoSelected: PhotoSelected,
 ) {
     LazyStaggeredGrid(
         modifier = modifier

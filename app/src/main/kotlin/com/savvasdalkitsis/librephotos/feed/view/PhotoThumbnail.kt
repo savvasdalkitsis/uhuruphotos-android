@@ -11,39 +11,38 @@ import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.layout.boundsInWindow
 import androidx.compose.ui.layout.onGloballyPositioned
-import androidx.compose.ui.layout.positionInWindow
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import com.savvasdalkitsis.librephotos.R
 import com.savvasdalkitsis.librephotos.extensions.toColor
-import com.savvasdalkitsis.librephotos.log.log
 import com.savvasdalkitsis.librephotos.photos.model.Photo
 
 @Composable
 fun PhotoThumbnail(
     modifier: Modifier = Modifier,
     photo: Photo,
-    onPhotoSelected: (Photo, Offset) -> Unit,
+    onPhotoSelected: PhotoSelected,
     ratio: Float = photo.ratio,
     contentScale: ContentScale = ContentScale.FillBounds,
 ) {
     val configuration = LocalConfiguration.current
     val screenDensity = configuration.densityDpi / 160f
-    var relativeOffset by remember { mutableStateOf(Offset.Zero) }
+    var relativeCenter by remember { mutableStateOf(Offset.Zero) }
+    var relativeScale by remember { mutableStateOf(0f) }
     Box(
         modifier = modifier
             .aspectRatio(ratio)
             .padding(1.dp)
             .background(photo.fallbackColor.toColor())
-            .onGloballyPositioned { coords ->
+            .onGloballyPositioned { coordinates ->
                 val screenWidth = configuration.screenWidthDp.toFloat() * screenDensity
-                val screenHeight = configuration.screenHeightDp.toFloat() * screenDensity
-                val center = coords.boundsInWindow().center
-                relativeOffset = Offset(center.x / screenWidth, center.y / screenHeight)
+                val boundsInWindow = coordinates.boundsInWindow()
+                relativeCenter = boundsInWindow.center
+                relativeScale = boundsInWindow.width / screenWidth
             }
-            .clickable { onPhotoSelected(photo, relativeOffset) }
+            .clickable { onPhotoSelected(photo, relativeCenter, relativeScale) }
     ) {
         AsyncImage(
             modifier = Modifier.fillMaxWidth(),
@@ -62,3 +61,5 @@ fun PhotoThumbnail(
         }
     }
 }
+
+typealias PhotoSelected = (photo: Photo, center: Offset, scale: Float) -> Unit

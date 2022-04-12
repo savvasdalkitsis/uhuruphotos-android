@@ -20,7 +20,6 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.scale
-import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.input.pointer.consumeAllChanges
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.input.pointer.positionChangeConsumed
@@ -31,7 +30,6 @@ import androidx.compose.ui.util.fastAny
 import androidx.compose.ui.util.fastForEach
 import com.savvasdalkitsis.librephotos.feed.view.state.FeedDisplay
 import com.savvasdalkitsis.librephotos.feed.view.state.FeedState
-import com.savvasdalkitsis.librephotos.photos.model.Photo
 import com.savvasdalkitsis.librephotos.window.WindowSize
 import kotlinx.coroutines.launch
 import kotlin.math.max
@@ -48,7 +46,7 @@ fun Feed(
     state: FeedState,
     gridState: LazyGridState = rememberLazyGridState(),
     listState: LazyListState = rememberLazyListState(),
-    onPhotoSelected: (Photo, Offset) -> Unit = { _, _ ->},
+    onPhotoSelected: PhotoSelected = { _, _, _ ->},
     onChangeDisplay: (FeedDisplay) -> Unit = {},
 ) {
     val zoom = remember { Animatable(1f) }

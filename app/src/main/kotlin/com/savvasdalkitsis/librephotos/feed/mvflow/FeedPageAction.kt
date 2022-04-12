@@ -5,7 +5,7 @@ import com.savvasdalkitsis.librephotos.feed.view.state.FeedDisplay
 import com.savvasdalkitsis.librephotos.photos.model.Photo
 
 sealed class FeedPageAction {
-    data class SelectedPhoto(val photo: Photo, val offset: Offset) : FeedPageAction()
+    data class SelectedPhoto(val photo: Photo, val center: Offset, val scale: Float) : FeedPageAction()
     data class ChangeDisplay(val display: FeedDisplay) : FeedPageAction()
     object LoadFeed : FeedPageAction()
     object UserBadgePressed : FeedPageAction()

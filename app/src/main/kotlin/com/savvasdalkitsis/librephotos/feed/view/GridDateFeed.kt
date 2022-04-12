@@ -17,7 +17,7 @@ fun GridDateFeed(
     albums: List<Album>,
     columnCount: Int,
     gridState: LazyGridState = rememberLazyGridState(),
-    onPhotoSelected: (Photo, Offset) -> Unit,
+    onPhotoSelected: PhotoSelected,
 ) {
     LazyVerticalGrid(
         modifier = modifier,
