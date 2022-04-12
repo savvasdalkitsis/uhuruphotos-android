@@ -20,6 +20,7 @@ fun HomeScaffold(
     feedDisplay: FeedDisplay = FeedDisplay.default,
     userBadgePressed: () -> Unit = {},
     actionBarContent: @Composable RowScope.() -> Unit = {},
+    onReselected: () -> Unit = {},
     content: @Composable (PaddingValues) -> Unit,
 ) {
     MainScaffold(
@@ -29,6 +30,7 @@ fun HomeScaffold(
                 HomeNavigationBar(
                     navController = navController,
                     feedDisplay = feedDisplay,
+                    onReselected = onReselected,
                 )
             }
         },

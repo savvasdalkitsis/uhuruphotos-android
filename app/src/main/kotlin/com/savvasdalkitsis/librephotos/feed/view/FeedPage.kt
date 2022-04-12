@@ -1,25 +1,24 @@
 package com.savvasdalkitsis.librephotos.feed.view
 
 import androidx.compose.animation.ExperimentalAnimationApi
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material.*
+import androidx.compose.foundation.lazy.grid.rememberLazyGridState
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment.Companion.CenterVertically
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.unit.dp
 import com.google.accompanist.swiperefresh.SwipeRefresh
 import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 import com.savvasdalkitsis.librephotos.account.view.AccountOverviewPopUp
 import com.savvasdalkitsis.librephotos.extensions.blurIf
 import com.savvasdalkitsis.librephotos.feed.mvflow.FeedPageAction
 import com.savvasdalkitsis.librephotos.feed.mvflow.FeedPageAction.*
-import com.savvasdalkitsis.librephotos.feed.view.state.FeedDisplay
 import com.savvasdalkitsis.librephotos.feed.view.state.FeedPageState
 import com.savvasdalkitsis.librephotos.home.view.HomeScaffold
 import com.savvasdalkitsis.librephotos.navigation.ControllersProvider
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.sync.Mutex
+import kotlinx.coroutines.sync.withLock
 
 @ExperimentalAnimationApi
 @Composable
@@ -28,12 +27,22 @@ fun FeedPage(
     state: FeedPageState,
     action: (FeedPageAction) -> Unit,
 ) {
+    val coroutineScope = rememberCoroutineScope()
+    val listState = rememberLazyListState()
+    val gridState = rememberLazyGridState()
+
     HomeScaffold(
         modifier = Modifier.blurIf(state.showAccountOverview),
         navController = controllersProvider.navController!!,
         userBadgeState = state.userBadgeState,
         feedDisplay = state.feedState.feedDisplay,
         userBadgePressed = { action(UserBadgePressed) },
+        onReselected = {
+            coroutineScope.launch {
+                listState.animateScrollToItem(0, 0)
+                gridState.animateScrollToItem(0, 0)
+            }
+        },
         actionBarContent = {
             FeedDisplayActionButton(
                 onShow = { action(ShowFeedDisplayChoice) },
@@ -52,6 +61,8 @@ fun FeedPage(
             Feed(
                 contentPadding,
                 state.feedState,
+                listState = listState,
+                gridState = gridState,
                 onPhotoSelected = { action(SelectedPhoto(it)) },
                 onChangeDisplay = { action(ChangeDisplay(it)) }
             )

@@ -2,9 +2,7 @@ package com.savvasdalkitsis.librephotos.feed.view
 
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.grid.GridCells
-import androidx.compose.foundation.lazy.grid.GridItemSpan
-import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.lazy.grid.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
@@ -17,10 +15,12 @@ fun GridDateFeed(
     contentPadding: PaddingValues,
     albums: List<Album>,
     columnCount: Int,
+    gridState: LazyGridState = rememberLazyGridState(),
     onPhotoSelected: (Photo) -> Unit
 ) {
     LazyVerticalGrid(
         modifier = modifier,
+        state = gridState,
         columns = GridCells.Fixed(columnCount),
         contentPadding = contentPadding,
     ) {

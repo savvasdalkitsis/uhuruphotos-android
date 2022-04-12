@@ -2,6 +2,8 @@ package com.savvasdalkitsis.librephotos.feed.view
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyListState
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import com.savvasdalkitsis.librephotos.albums.model.Album
@@ -14,10 +16,12 @@ fun StaggeredDateFeed(
     albums: List<Album>,
     columnCount: Int,
     shouldAddEmptyPhotosInRows: Boolean,
+    listState: LazyListState = rememberLazyListState(),
     onPhotoSelected: (Photo) -> Unit
 ) {
     LazyColumn(
         modifier = modifier,
+        state = listState,
         contentPadding = contentPadding,
     ) {
         albums.forEach { album ->

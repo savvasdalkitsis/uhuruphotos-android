@@ -9,8 +9,11 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.lazy.LazyListState
+import androidx.compose.foundation.lazy.grid.LazyGridState
+import androidx.compose.foundation.lazy.grid.rememberLazyGridState
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material.CircularProgressIndicator
-import androidx.compose.material.icons.Icons
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
@@ -42,6 +45,8 @@ private const val zoomHighTrigger = 1.1f
 fun Feed(
     contentPadding: PaddingValues = PaddingValues(0.dp),
     state: FeedState,
+    gridState: LazyGridState = rememberLazyGridState(),
+    listState: LazyListState = rememberLazyListState(),
     onPhotoSelected: (Photo) -> Unit = {},
     onChangeDisplay: (FeedDisplay) -> Unit = {},
 ) {
@@ -68,7 +73,12 @@ fun Feed(
                                 if (!canceled) {
                                     val zoomChange = event.calculateZoom()
                                     coroutineScope.launch {
-                                        zoom.snapTo(max(zoomMin, min(zoom.value * zoomChange, zoomMax)))
+                                        zoom.snapTo(
+                                            max(
+                                                zoomMin,
+                                                min(zoom.value * zoomChange, zoomMax)
+                                            )
+                                        )
                                     }
                                 }
 
@@ -90,7 +100,8 @@ fun Feed(
                         }
                     }
                 }
-            }.scale(zoom.value)
+            }
+            .scale(zoom.value)
         val columnCount = feedDisplay.columnCount(
             windowSizeClass = WindowSize.LOCAL_WIDTH.current,
             landscape = LocalConfiguration.current.orientation == Configuration.ORIENTATION_LANDSCAPE
@@ -101,6 +112,7 @@ fun Feed(
                 contentPadding = contentPadding,
                 albums = state.albums,
                 columnCount = columnCount,
+                gridState = gridState,
                 onPhotoSelected = onPhotoSelected
             )
         } else {
@@ -108,6 +120,7 @@ fun Feed(
                 modifier = modifier,
                 contentPadding = contentPadding,
                 albums = state.albums,
+                listState = listState,
                 columnCount = columnCount,
                 shouldAddEmptyPhotosInRows = feedDisplay.shouldAddEmptyPhotosInRows,
                 onPhotoSelected = onPhotoSelected

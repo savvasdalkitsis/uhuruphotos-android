@@ -38,6 +38,7 @@ fun HomeNavigationBar(
     contentPadding: PaddingValues = PaddingValues(0.dp),
     feedDisplay: FeedDisplay,
     navController: NavHostController,
+    onReselected: () -> Unit = {},
 ) {
     val navBackStackEntry by navController.currentBackStackEntryAsState()
     val currentDestination = navBackStackEntry?.destination
@@ -48,14 +49,14 @@ fun HomeNavigationBar(
             BottomNavigation(
                 backgroundColor = backgroundColor
             ) {
-                Items(currentDestination, navController, feedDisplay, rowScope = this)
+                Items(currentDestination, navController, feedDisplay, onReselected, rowScope = this)
             }
         }
         NAVIGATION_RAIL -> NavigationRail(
             modifier = Modifier.padding(top = contentPadding.calculateTopPadding()),
             backgroundColor = backgroundColor,
         ) {
-            Items(currentDestination, navController, feedDisplay)
+            Items(currentDestination, navController, feedDisplay, onReselected)
         }
     }
 }
@@ -65,6 +66,7 @@ private fun Items(
     currentDestination: NavDestination?,
     navController: NavHostController,
     feedDisplay: FeedDisplay,
+    onReselected: () -> Unit,
     rowScope: RowScope? = null,
 ) {
     NavItem(
@@ -72,6 +74,7 @@ private fun Items(
         label = "Feed",
         routeName = FeedPageNavigationTarget.name,
         painterResource(id = feedDisplay.iconResource),
+        onReselected,
         rowScope,
     )
     NavItem(
@@ -80,6 +83,7 @@ private fun Items(
         routeName = SearchNavigationTarget.name,
         icon = rememberVectorPainter(Icons.Filled.Search),
         rowScope = rowScope,
+        onReselected = onReselected,
     )
 }
 
@@ -90,6 +94,7 @@ private fun NavItem(
     label: String,
     routeName: String,
     icon: Painter,
+    onReselected: () -> Unit,
     rowScope: RowScope? = null,
 ) {
     when (homeNavigationStyle()) {
@@ -99,14 +104,16 @@ private fun NavItem(
             navController,
             label,
             routeName,
-            icon
+            icon,
+            onReselected,
         )
         NAVIGATION_RAIL -> NavRailNavItem(
             currentDestination,
             navController,
             label,
             routeName,
-            icon
+            icon,
+            onReselected,
         )
     }
 
@@ -120,13 +127,14 @@ private fun BottomNavItem(
     label: String,
     routeName: String,
     icon: Painter,
+    onReselected: () -> Unit,
 ) {
     with(rowScope) {
         BottomNavigationItem(
             icon = { Icon(icon, contentDescription = label) },
             label = { Text(label) },
             selected = isSelected(currentDestination, routeName),
-            onClick = selectNavigationItem(currentDestination, routeName, navController)
+            onClick = selectNavigationItem(currentDestination, routeName, navController, onReselected)
         )
     }
 }
@@ -138,13 +146,14 @@ private fun NavRailNavItem(
     label: String,
     routeName: String,
     icon: Painter,
+    onReselected: () -> Unit,
 ) {
     NavigationRailItem(
         selectedContentColor = LocalContentColor.current,
         icon = { Icon(icon, contentDescription = label) },
         label = { Text(label) },
         selected = isSelected(currentDestination, routeName),
-        onClick = selectNavigationItem(currentDestination, routeName, navController)
+        onClick = selectNavigationItem(currentDestination, routeName, navController, onReselected)
     )
 }
 
@@ -158,7 +167,8 @@ private fun isSelected(
 private fun selectNavigationItem(
     currentDestination: NavDestination?,
     routeName: String,
-    navController: NavHostController
+    navController: NavHostController,
+    onReselected: () -> Unit,
 ): () -> Unit = {
     if (currentDestination?.route != routeName) {
         navController.navigate(routeName) {
@@ -168,5 +178,7 @@ private fun selectNavigationItem(
             launchSingleTop = true
             restoreState = true
         }
+    } else {
+        onReselected()
     }
 }
