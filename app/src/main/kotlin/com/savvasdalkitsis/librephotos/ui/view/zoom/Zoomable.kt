@@ -15,17 +15,19 @@ import androidx.compose.ui.input.pointer.util.VelocityTracker
 import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.util.fastAny
 import androidx.compose.ui.util.fastForEach
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import kotlin.math.abs
 
 @ExperimentalFoundationApi
 fun Modifier.zoomable(
     maxZoom: Float = 8f,
     onTap: () -> Unit = {},
+    onSwipeAway: () -> Unit = {},
 ) = composed {
 
     val coroutineScope = rememberCoroutineScope()
     val zoomableState = rememberZoomableState(coroutineScope = coroutineScope)
-    var dragOffset by remember { mutableStateOf(Offset.Zero) }
     var composableCenter by remember { mutableStateOf(Offset.Zero) }
 
     this
@@ -136,19 +138,13 @@ fun Modifier.zoomable(
                         }
                     } while (drag != null && !drag.positionChangeConsumed())
                     if (drag != null) {
-                        dragOffset = Offset.Zero
-                        if (zoomableState.scale !in 0.92f..1.08f) {
-                            zoomableState.offset += overSlop
-                        } else {
-                            dragOffset += overSlop
+                        zoomableState.offset += overSlop
+                        if (zoomableState.scale in 0.92f..1.08f) {
+                            zoomableState.animateScaleTo(0.6f)
                         }
                         drag(drag.id) {
                             val positionChange = it.positionChange()
-                            if (zoomableState.scale !in 0.92f..1.08f) {
-                                zoomableState.offset += positionChange
-                            } else {
-                                dragOffset += positionChange
-                            }
+                            zoomableState.offset += positionChange
                             velocityTracker.addPosition(
                                 it.uptimeMillis,
                                 it.position
@@ -159,6 +155,14 @@ fun Modifier.zoomable(
                     val velocity = velocityTracker.calculateVelocity()
                     if (zoomableState.scale > 1f) {
                         zoomableState.fling(velocity, decay)
+                    }
+                    if (zoomableState.scale < 0.92) {
+                        if (zoomableState.offset.y > 0) {
+                            onSwipeAway()
+                        } else {
+                            zoomableState.animateScaleTo(1f)
+                            zoomableState.animateOffsetTo(0f, 0f)
+                        }
                     }
                 }
             }

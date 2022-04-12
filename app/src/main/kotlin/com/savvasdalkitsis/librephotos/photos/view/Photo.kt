@@ -58,9 +58,14 @@ fun Photo(
                 modifier = Modifier
                     .fillMaxSize()
                     .background(MaterialTheme.colors.background)
-                    .zoomable(onTap = {
-                        actions(PhotoAction.ToggleUI)
-                    })
+                    .zoomable(
+                        onTap = {
+                            actions(PhotoAction.ToggleUI)
+                        },
+                        onSwipeAway = {
+                            actions(NavigateBack)
+                        }
+                    )
             ) {
                 if (showLowRes) {
                     AsyncImage(
