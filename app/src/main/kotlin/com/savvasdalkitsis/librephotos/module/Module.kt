@@ -1,5 +1,6 @@
 package com.savvasdalkitsis.librephotos.module
 
+import android.annotation.SuppressLint
 import android.content.Context
 import androidx.preference.PreferenceManager
 import androidx.work.WorkManager
@@ -17,8 +18,11 @@ import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import okhttp3.OkHttpClient
+import java.text.DateFormat
+import java.text.DateFormat.FULL
 import java.text.SimpleDateFormat
 import java.util.concurrent.TimeUnit
+import javax.inject.Qualifier
 
 @Module
 @InstallIn(SingletonComponent::class)
@@ -44,10 +48,22 @@ class Module {
 //            .setLevel(HttpLoggingInterceptor.Level.BASIC)
 //        )
 
+    @Qualifier
+    @Retention(AnnotationRetention.BINARY)
+    annotation class ParsingDateFormat
+    @Qualifier
+    @Retention(AnnotationRetention.BINARY)
+    annotation class DisplayingDateFormat
+
+    @SuppressLint("SimpleDateFormat")
+    @Provides
+    @ParsingDateFormat
+    fun parsingDateFormat(): DateFormat = SimpleDateFormat("yyy-MM-dd")
+
     @Suppress("DEPRECATION")
     @Provides
-    fun dateFormat(@ApplicationContext context: Context): java.text.DateFormat =
-        SimpleDateFormat("yyy-MM-dd", context.resources.configuration.locale)
+    @DisplayingDateFormat
+    fun displayingDateFormat(): DateFormat = DateFormat.getDateInstance(FULL)
 
     @Provides
     fun workManager(@ApplicationContext context: Context): WorkManager = WorkManager

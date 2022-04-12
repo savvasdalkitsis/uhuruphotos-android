@@ -1,29 +1,35 @@
 package com.savvasdalkitsis.librephotos.date
 
 import android.text.format.DateUtils
+import com.savvasdalkitsis.librephotos.module.Module
 import java.text.DateFormat
+import java.util.*
 import javax.inject.Inject
 
 class DateDisplayer @Inject constructor(
-    private val dateFormat: DateFormat,
+    @Module.ParsingDateFormat
+    private val parsingDateFormat: DateFormat,
+    @Module.DisplayingDateFormat
+    private val displayingDateFormat: DateFormat,
 ) {
 
     fun dateString(albumDate: String?): String {
-        val now = System.currentTimeMillis()
         return when (albumDate) {
             null -> ""
             else -> try {
-                when (val millis = dateFormat.parse(albumDate)) {
+                when (val date = parsingDateFormat.parse(albumDate)) {
                     null -> ""
-                    else -> DateUtils.getRelativeTimeSpanString(
-                        millis.time,
-                        now,
-                        DateUtils.DAY_IN_MILLIS
-                    ).toString()
+                    else -> format(date)
                 }
             } catch (e: Exception) {
                 albumDate
             }
         }
+    }
+
+    private fun format(date: Date): String = if (DateUtils.isToday(date.time)) {
+        "Today"
+    } else {
+        displayingDateFormat.format(date)
     }
 }
