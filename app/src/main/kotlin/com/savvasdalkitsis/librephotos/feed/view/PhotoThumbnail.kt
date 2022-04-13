@@ -1,13 +1,16 @@
 package com.savvasdalkitsis.librephotos.feed.view
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.Icon
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.layout.boundsInWindow
 import androidx.compose.ui.layout.onGloballyPositioned
@@ -56,6 +59,16 @@ fun PhotoThumbnail(
                     .size(48.dp)
                     .align(Alignment.Center),
                 painter = painterResource(id = R.drawable.ic_play_filled),
+                contentDescription = null
+            )
+        }
+        if (photo.isFavourite) {
+            Icon(
+                modifier = Modifier
+                    .size(24.dp)
+                    .align(Alignment.TopEnd)
+                    .padding(2.dp),
+                painter = painterResource(id = R.drawable.ic_favourite),
                 contentDescription = null
             )
         }

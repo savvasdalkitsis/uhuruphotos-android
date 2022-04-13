@@ -1,24 +1,32 @@
 package com.savvasdalkitsis.librephotos.photos.worker
 
-import androidx.work.Data
-import androidx.work.ExistingWorkPolicy
-import androidx.work.OneTimeWorkRequestBuilder
-import androidx.work.WorkManager
+import androidx.work.*
 import javax.inject.Inject
 
 class PhotoWorkScheduler @Inject constructor(
     private val workManager: WorkManager,
 ) {
 
-    fun schedulePhotoFavourite(id: String, favourite: Boolean) {
+    fun schedulePhotoFavourite(id: String, favourite: Boolean) =
+        schedule<PhotoFavouriteWorker>(PhotoFavouriteWorker.workName(id)) {
+            putString(PhotoFavouriteWorker.KEY_ID, id)
+            putBoolean(PhotoFavouriteWorker.KEY_FAVOURITE, favourite)
+        }
+
+    fun schedulePhotoDetailsRetrieve(id: String) =
+        schedule<PhotoDetailsRetrieveWorker>(PhotoDetailsRetrieveWorker.workName(id)) {
+            putString(PhotoDetailsRetrieveWorker.KEY_ID, id)
+        }
+
+    private inline fun <reified W: CoroutineWorker> schedule(
+        workName: String,
+        params: Data.Builder.() -> Data.Builder,
+    ) {
         workManager.enqueueUniqueWork(
-            PhotoFavouriteWorker.workName(id),
+            workName,
             ExistingWorkPolicy.REPLACE,
-            OneTimeWorkRequestBuilder<PhotoFavouriteWorker>()
-                .setInputData(Data.Builder()
-                    .putString(PhotoFavouriteWorker.KEY_ID, id)
-                    .putBoolean(PhotoFavouriteWorker.KEY_FAVOURITE, favourite)
-                    .build())
+            OneTimeWorkRequestBuilder<W>()
+                .setInputData(params(Data.Builder()).build())
                 .build(),
         )
     }

@@ -2,6 +2,7 @@ CREATE TABLE albums (
   id TEXT NOT NULL PRIMARY KEY,
   date TEXT,
   location TEXT,
+  rating INTEGER AS Int,
   incomplete INTEGER AS Boolean NOT NULL,
   numberOfItems INTEGER AS Int NOT NULL
 );
@@ -13,6 +14,7 @@ SELECT
  albums.location AS albumLocation,
  summary.id AS photoId,
  summary.dominantColor,
+ summary.rating,
  summary.aspectRatio,
  summary.type,
  details.bigThumbnailUrl

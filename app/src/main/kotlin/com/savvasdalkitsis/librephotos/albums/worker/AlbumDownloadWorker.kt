@@ -11,6 +11,7 @@ import androidx.work.ForegroundInfo
 import androidx.work.WorkerParameters
 import com.savvasdalkitsis.librephotos.R
 import com.savvasdalkitsis.librephotos.albums.repository.AlbumsRepository
+import com.savvasdalkitsis.librephotos.log.log
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedInject
 import kotlinx.coroutines.Dispatchers
@@ -24,8 +25,13 @@ class AlbumDownloadWorker @AssistedInject constructor(
 ) : CoroutineWorker(context, params) {
 
     override suspend fun doWork() = withContext(Dispatchers.IO) {
-        albumsRepository.refreshAlbums()
-        Result.success()
+        try {
+            albumsRepository.refreshAlbums()
+            Result.success()
+        } catch (e: Exception) {
+            log(e)
+            Result.retry()
+        }
     }
 
     override suspend fun getForegroundInfo(): ForegroundInfo {

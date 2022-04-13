@@ -47,6 +47,7 @@ class AlbumsUseCase @Inject constructor(
                             url = with(photosUseCase) {
                                 item.photoId.toThumbnailUrlFromId()
                             },
+                            isFavourite = item.rating ?: 0 >= PhotosUseCase.FAVOURITES_RATING_THRESHOLD,
                             fallbackColor = item.dominantColor,
                             ratio = item.aspectRatio ?: 1.0f,
                             isVideo = item.isVideo,

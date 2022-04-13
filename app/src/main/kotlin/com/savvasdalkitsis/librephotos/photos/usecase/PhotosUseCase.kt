@@ -41,7 +41,7 @@ class PhotosUseCase @Inject constructor(
         photoWorkScheduler.schedulePhotoFavourite(id, favourite)
     }
 
-    suspend fun refreshDetails(id: String) {
+    fun refreshDetails(id: String) {
         photoRepository.refreshDetails(id)
     }
 

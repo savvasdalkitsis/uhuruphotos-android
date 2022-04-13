@@ -22,3 +22,6 @@ SELECT count(id) FROM photoSummary WHERE id=?;
 
 getPhotoSummariesForAlbum:
 SELECT id, url FROM photoSummary WHERE containerId=?;
+
+setRating:
+UPDATE photoSummary SET rating = :rating WHERE id = :id;
