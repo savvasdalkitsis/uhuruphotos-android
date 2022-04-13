@@ -5,6 +5,8 @@ data class PhotoState(
     val isLoading: Boolean = false,
     val fullResUrl: String = "",
     val lowResUrl: String = "",
-    val isUIShowing: Boolean = true,
+    val errorMessage: String? = null,
+    val showUI: Boolean = true,
+    val showRefresh: Boolean = false,
     val isFavourite: Boolean? = null,
 )

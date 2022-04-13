@@ -34,6 +34,7 @@ coil-gif = { module = 'io.coil-kt:coil-gif', version.ref = "coil" }
 coil-video = { module = 'io.coil-kt:coil-video', version.ref = "coil" }
 flowpreferences = 'com.fredporciuncula:flow-preferences:1.5.0'
 hilt = 'com.google.dagger:hilt-android:2.38.1'
+infobar = 'com.radusalagean:info-bar-compose:1.0.0'
 jwt = 'com.auth0.android:jwtdecode:2.0.1'
 logger = 'com.orhanobut:logger:2.2.0'
 moshi = 'com.squareup.moshi:moshi-kotlin:1.13.0'

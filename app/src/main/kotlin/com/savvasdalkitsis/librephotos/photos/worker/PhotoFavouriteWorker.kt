@@ -39,7 +39,11 @@ class PhotoFavouriteWorker @AssistedInject constructor(
                 Result.failure()
             }
         } catch (e: Exception) {
-            Result.retry()
+            if (params.runAttemptCount < 4) {
+                Result.retry()
+            } else {
+                Result.failure()
+            }
         }
     }
 

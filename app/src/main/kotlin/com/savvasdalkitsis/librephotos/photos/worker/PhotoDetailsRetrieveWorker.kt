@@ -27,7 +27,11 @@ class PhotoDetailsRetrieveWorker @AssistedInject constructor(
             }
             Result.success()
         } catch (e: Exception) {
-            Result.retry()
+            if (params.runAttemptCount < 2) {
+                Result.retry()
+            } else {
+                Result.failure()
+            }
         }
     }
 

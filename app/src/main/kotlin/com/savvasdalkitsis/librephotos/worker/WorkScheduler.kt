@@ -1,5 +1,6 @@
 package com.savvasdalkitsis.librephotos.worker
 
+import androidx.annotation.NonNull
 import androidx.work.*
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
@@ -9,6 +10,9 @@ class WorkScheduler @Inject constructor(
 ) {
     inline fun <reified W: CoroutineWorker> scheduleNow(
         workName: String,
+        backoffPolicy: BackoffPolicy = BackoffPolicy.EXPONENTIAL,
+        backoffDelay: Long = 1,
+        backoffTimeUnit: TimeUnit = TimeUnit.MINUTES,
         params: Data.Builder.() -> Data.Builder = { this },
     ) {
         workManager.enqueueUniqueWork(
@@ -16,6 +20,7 @@ class WorkScheduler @Inject constructor(
             ExistingWorkPolicy.REPLACE,
             OneTimeWorkRequestBuilder<W>()
                 .setInputData(params(Data.Builder()).build())
+                .setBackoffCriteria(backoffPolicy, backoffDelay, backoffTimeUnit)
                 .setExpedited(OutOfQuotaPolicy.RUN_AS_NON_EXPEDITED_WORK_REQUEST)
                 .build(),
         )
@@ -27,12 +32,16 @@ class WorkScheduler @Inject constructor(
         repeatIntervalTimeUnit: TimeUnit,
         initialDelayDuration: Long,
         initialDelayTimeUnit: TimeUnit,
+        backoffPolicy: BackoffPolicy = BackoffPolicy.EXPONENTIAL,
+        backoffDelay: Long = 1,
+        backoffTimeUnit: TimeUnit = TimeUnit.MINUTES,
     ) {
         workManager.enqueueUniquePeriodicWork(
             workName,
             ExistingPeriodicWorkPolicy.KEEP,
             PeriodicWorkRequestBuilder<W>(repeatInterval, repeatIntervalTimeUnit)
                 .setInitialDelay(initialDelayDuration, initialDelayTimeUnit)
+                .setBackoffCriteria(backoffPolicy, backoffDelay, backoffTimeUnit)
                 .build(),
         )
     }

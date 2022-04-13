@@ -25,7 +25,7 @@ fun MainScaffold(
     bottomBar: @Composable () -> Unit = {},
     actionBarContent: @Composable (RowScope.() -> Unit) = {},
     toolbarColor: Color = MaterialTheme.colors.background.copy(alpha = 0.8f),
-    displayed: Boolean = true,
+    topBarDisplayed: Boolean = true,
     navigationIcon: @Composable (() -> Unit)? = null,
     content: @Composable (PaddingValues) -> Unit
 ) {
@@ -35,7 +35,7 @@ fun MainScaffold(
         bottomBar = { bottomBar() },
         topBar = {
             AnimatedVisibility(
-                visible = displayed,
+                visible = topBarDisplayed,
                 enter = fadeIn(),
                 exit = fadeOut(),
             ) {

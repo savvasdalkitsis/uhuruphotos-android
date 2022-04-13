@@ -3,10 +3,7 @@ package com.savvasdalkitsis.librephotos.photos.view
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
@@ -21,6 +18,8 @@ import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import coil.size.Size
+import com.radusalagean.infobarcompose.InfoBar
+import com.radusalagean.infobarcompose.InfoBarMessage
 import com.savvasdalkitsis.librephotos.R
 import com.savvasdalkitsis.librephotos.main.view.MainScaffold
 import com.savvasdalkitsis.librephotos.photos.mvflow.PhotoAction
@@ -38,18 +37,30 @@ fun Photo(
     MainScaffold(
         title = {},
         toolbarColor = Color.Transparent,
-        displayed = state.isUIShowing,
+        topBarDisplayed = state.showUI,
         navigationIcon = {
             IconButton(onClick = { action(NavigateBack) }) {
                 Icon(imageVector = Icons.Default.ArrowBack, contentDescription = "back")
             }
         },
         actionBarContent = {
-            ActionBarIcon(
-                onClick = { action(Refresh) },
-                icon = R.drawable.ic_refresh,
-                contentDescription = "refresh"
-            )
+            AnimatedVisibility(visible = state.isLoading) {
+                if (state.isLoading) {
+                    CircularProgressIndicator(
+                        modifier = Modifier
+                            .size(38.dp)
+                    )
+                }
+            }
+            AnimatedVisibility(visible = state.showRefresh) {
+                if (state.showRefresh) {
+                    ActionBarIcon(
+                        onClick = { action(Refresh) },
+                        icon = R.drawable.ic_refresh,
+                        contentDescription = "refresh"
+                    )
+                }
+            }
             AnimatedVisibility(visible = state.isFavourite != null) {
                 if (state.isFavourite != null) {
                     ActionBarIcon(
@@ -60,8 +71,8 @@ fun Photo(
                 }
             }
         })
-    {
-        if (state.isLoading) {
+    { contentPadding ->
+        if (state.isLoading && state.lowResUrl.isEmpty()) {
             Box(
                 contentAlignment = Alignment.Center,
                 modifier = Modifier.fillMaxSize(),
@@ -105,6 +116,13 @@ fun Photo(
                     contentScale = ContentScale.Fit,
                     contentDescription = "photo",
                 )
+
+                Column {
+                    Spacer(modifier = Modifier.height(contentPadding.calculateTopPadding()))
+                    InfoBar(offeredMessage = state.errorMessage?.let { InfoBarMessage(it) }) {
+                        action(DismissErrorMessage)
+                    }
+                }
             }
         }
     }
