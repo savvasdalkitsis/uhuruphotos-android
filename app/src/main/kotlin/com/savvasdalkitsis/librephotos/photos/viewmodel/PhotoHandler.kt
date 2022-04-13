@@ -57,6 +57,7 @@ class PhotoHandler @Inject constructor(
             }
         }
         NavigateBack -> flow {
+            emit(HideUI)
             effect(PhotoEffect.NavigateBack)
         }
         is SetFavourite -> flow {
