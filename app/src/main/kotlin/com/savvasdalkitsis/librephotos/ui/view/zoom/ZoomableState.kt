@@ -5,6 +5,7 @@ import androidx.compose.animation.core.AnimationVector1D
 import androidx.compose.animation.core.DecayAnimationSpec
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.unit.Velocity
 import kotlinx.coroutines.CoroutineScope
@@ -112,11 +113,16 @@ class ZoomableState(
             offsetY.animateDecay(velocity.y, decay)
         }
     }
+
+    fun reset() {
+        animateScaleTo(1f)
+        animateOffsetTo(0f, 0f)
+    }
 }
 
 @Composable
 fun rememberZoomableState(
-    coroutineScope: CoroutineScope,
+    coroutineScope: CoroutineScope = rememberCoroutineScope(),
 ): ZoomableState {
     val zoomR = remember { Animatable(1f) }
     val offsetX = remember { Animatable(0f) }

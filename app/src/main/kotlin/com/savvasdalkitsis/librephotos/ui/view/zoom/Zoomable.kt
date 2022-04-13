@@ -13,10 +13,10 @@ import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.input.pointer.*
 import androidx.compose.ui.input.pointer.util.VelocityTracker
 import androidx.compose.ui.layout.onGloballyPositioned
+import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.unit.dp
 import androidx.compose.ui.util.fastAny
 import androidx.compose.ui.util.fastForEach
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
 import kotlin.math.abs
 
 @ExperimentalFoundationApi
@@ -24,10 +24,26 @@ fun Modifier.zoomable(
     maxZoom: Float = 8f,
     onTap: () -> Unit = {},
     onSwipeAway: () -> Unit = {},
+    onSwipeUp: () -> Unit = {},
 ) = composed {
+    zoomable(
+        maxZoom,
+        rememberZoomableState(),
+        onTap,
+        onSwipeAway,
+        onSwipeUp,
+    )
+}
 
-    val coroutineScope = rememberCoroutineScope()
-    val zoomableState = rememberZoomableState(coroutineScope = coroutineScope)
+@ExperimentalFoundationApi
+fun Modifier.zoomable(
+    maxZoom: Float = 8f,
+    zoomableState: ZoomableState,
+    onTap: () -> Unit = {},
+    onSwipeAway: () -> Unit = {},
+    onSwipeUp: () -> Unit = {},
+) = composed {
+    val density = LocalDensity.current
     var composableCenter by remember { mutableStateOf(Offset.Zero) }
 
     this
@@ -126,8 +142,7 @@ fun Modifier.zoomable(
                     } while (!canceled && event.changes.fastAny { it.pressed } && relevant)
 
                     if (zoomableState.scale < 1f) {
-                        zoomableState.animateScaleTo(1f)
-                        zoomableState.animateOffsetTo(0f, 0f)
+                        zoomableState.reset()
                     }
 
                     do {
@@ -157,11 +172,13 @@ fun Modifier.zoomable(
                         zoomableState.fling(velocity, decay)
                     }
                     if (zoomableState.scale < 0.92) {
-                        if (zoomableState.offset.y > 0) {
-                            onSwipeAway()
-                        } else {
-                            zoomableState.animateScaleTo(1f)
-                            zoomableState.animateOffsetTo(0f, 0f)
+                        with(density) {
+                            val swipeOffset = zoomableState.offset.y.toDp()
+                            when {
+                                swipeOffset > 24.dp -> onSwipeAway()
+                                swipeOffset < (-24).dp -> onSwipeUp()
+                                else -> zoomableState.reset()
+                            }
                         }
                     }
                 }

@@ -2,6 +2,7 @@ package com.savvasdalkitsis.librephotos.navigation
 
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.ExperimentalComposeUiApi
@@ -27,8 +28,10 @@ class LibrePhotosNavigator @Inject constructor(
     private val webLoginNavigationTarget: WebLoginNavigationTarget,
     private val photoNavigationTarget: PhotoNavigationTarget,
     private val controllersProvider: ControllersProvider,
+    private val intentLauncher: IntentLauncher,
 ) {
 
+    @ExperimentalMaterialApi
     @ExperimentalFoundationApi
     @FlowPreview
     @ExperimentalAnimationApi
@@ -39,6 +42,7 @@ class LibrePhotosNavigator @Inject constructor(
             keyboardController = androidx.compose.ui.platform.LocalSoftwareKeyboardController.current
             focusRequester = remember { FocusRequester() }
             systemUiController = LocalSystemUiController.current
+            launcher = intentLauncher
         }
         AnimatedNavHost(
             navController = navHostController,

@@ -7,6 +7,7 @@ plugins {
     id 'kotlin-parcelize'
     id "dev.zacsweers.redacted" version "1.0.1"
     id "com.google.devtools.ksp" version "1.6.10-1.0.4"
+    id 'com.google.android.libraries.mapsplatform.secrets-gradle-plugin'
 }
 
 android {
@@ -97,6 +98,8 @@ dependencies {
             libs.infobar,
             libs.jwt,
             libs.logger,
+            libs.maps,
+            libs.maps.compose,
             libs.moshi,
             libs.okhttp.logging,
             libs.okhttp.url,

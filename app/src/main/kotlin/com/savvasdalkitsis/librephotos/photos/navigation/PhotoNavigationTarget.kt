@@ -2,6 +2,7 @@ package com.savvasdalkitsis.librephotos.photos.navigation
 
 import androidx.compose.animation.*
 import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.unit.IntOffset
@@ -24,6 +25,7 @@ class PhotoNavigationTarget @Inject constructor(
     private val effectsHandler: PhotoEffectsHandler,
 ) {
 
+    @ExperimentalMaterialApi
     @ExperimentalFoundationApi
     @FlowPreview
     @ExperimentalComposeUiApi

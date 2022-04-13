@@ -37,6 +37,8 @@ hilt = 'com.google.dagger:hilt-android:2.38.1'
 infobar = 'com.radusalagean:info-bar-compose:1.0.0'
 jwt = 'com.auth0.android:jwtdecode:2.0.1'
 logger = 'com.orhanobut:logger:2.2.0'
+maps = 'com.google.android.gms:play-services-maps:18.0.2'
+maps-compose = 'com.google.maps.android:maps-compose:2.1.0'
 moshi = 'com.squareup.moshi:moshi-kotlin:1.13.0'
 okhttp-logging = { module = 'com.squareup.okhttp3:logging-interceptor', version.ref = "okhttp" }
 okhttp-url = { module = 'com.squareup.okhttp3:okhttp-urlconnection', version.ref = "okhttp" }

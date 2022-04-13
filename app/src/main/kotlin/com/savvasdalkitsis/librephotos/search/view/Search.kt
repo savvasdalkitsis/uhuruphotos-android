@@ -27,6 +27,7 @@ import com.savvasdalkitsis.librephotos.search.mvflow.SearchAction
 import com.savvasdalkitsis.librephotos.search.mvflow.SearchAction.*
 import com.savvasdalkitsis.librephotos.search.view.state.SearchResults
 import com.savvasdalkitsis.librephotos.search.view.state.SearchState
+import com.savvasdalkitsis.librephotos.ui.view.FullProgressBar
 
 @ExperimentalComposeUiApi
 @Composable fun Search(
@@ -82,12 +83,7 @@ import com.savvasdalkitsis.librephotos.search.view.state.SearchState
         )
         when (state.searchResults) {
             SearchResults.Idle -> {}
-            SearchResults.Searching -> Box(
-                modifier = Modifier.fillMaxSize(),
-                contentAlignment = Alignment.Center
-            ) {
-                CircularProgressIndicator(modifier = Modifier.size(48.dp))
-            }
+            SearchResults.Searching -> FullProgressBar()
             is SearchResults.Found -> Feed(
                 contentPadding = contentPadding.copy(top = 0.dp),
                 state = FeedState(isLoading = false, state.searchResults.albums),

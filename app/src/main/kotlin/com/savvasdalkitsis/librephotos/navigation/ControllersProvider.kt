@@ -16,5 +16,6 @@ class ControllersProvider @Inject constructor() {
     var navController: NavHostController? = null
     var focusRequester: FocusRequester? = null
     var systemUiController: SystemUiController? = null
+    var launcher: IntentLauncher? = null
 
 }

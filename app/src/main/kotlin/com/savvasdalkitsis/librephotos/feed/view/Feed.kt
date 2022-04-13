@@ -5,19 +5,14 @@ import androidx.compose.animation.core.Animatable
 import androidx.compose.foundation.gestures.awaitFirstDown
 import androidx.compose.foundation.gestures.calculateZoom
 import androidx.compose.foundation.gestures.forEachGesture
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.grid.LazyGridState
 import androidx.compose.foundation.lazy.grid.rememberLazyGridState
 import androidx.compose.foundation.lazy.rememberLazyListState
-import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.scale
 import androidx.compose.ui.input.pointer.consumeAllChanges
@@ -30,6 +25,7 @@ import androidx.compose.ui.util.fastAny
 import androidx.compose.ui.util.fastForEach
 import com.savvasdalkitsis.librephotos.feed.view.state.FeedDisplay
 import com.savvasdalkitsis.librephotos.feed.view.state.FeedState
+import com.savvasdalkitsis.librephotos.ui.view.FullProgressBar
 import com.savvasdalkitsis.librephotos.window.WindowSize
 import kotlinx.coroutines.launch
 import kotlin.math.max
@@ -52,12 +48,7 @@ fun Feed(
     val zoom = remember { Animatable(1f) }
     val coroutineScope = rememberCoroutineScope()
     if (state.isLoading && state.albums.isEmpty()) {
-        Box(
-            contentAlignment = Alignment.Center,
-            modifier = Modifier.fillMaxSize(),
-        ) {
-            CircularProgressIndicator(modifier = Modifier.size(48.dp))
-        }
+        FullProgressBar()
     } else {
         val feedDisplay = state.feedDisplay
         val modifier = Modifier
