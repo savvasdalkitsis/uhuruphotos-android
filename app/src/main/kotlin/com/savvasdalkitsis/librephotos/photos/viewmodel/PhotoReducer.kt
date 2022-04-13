@@ -16,7 +16,8 @@ fun photoReducer(): Reducer<PhotoState, PhotoMutation> = { state, mutation ->
             fullResUrl = mutation.fullResUrl
         )
         is ReceivedDetails -> state.copy(
-            isFavourite = mutation.details.rating ?: 0 >= PhotosUseCase.FAVOURITES_RATING_THRESHOLD
+            isFavourite = mutation.details.rating ?: 0 >= PhotosUseCase.FAVOURITES_RATING_THRESHOLD,
+            showRefresh = true,
         )
         HideUI -> state.copy(showUI = false)
         ShowUI -> state.copy(showUI = true)

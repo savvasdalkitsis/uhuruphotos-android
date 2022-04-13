@@ -48,7 +48,7 @@ fun Photo(
                 if (state.isLoading) {
                     CircularProgressIndicator(
                         modifier = Modifier
-                            .size(38.dp)
+                            .size(26.dp)
                     )
                 }
             }
