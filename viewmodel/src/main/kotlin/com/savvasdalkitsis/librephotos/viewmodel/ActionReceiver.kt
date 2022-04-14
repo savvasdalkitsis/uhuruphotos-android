@@ -1,6 +1,5 @@
 package com.savvasdalkitsis.librephotos.viewmodel
 
-import com.orhanobut.logger.Logger
 import com.savvasdalkitsis.librephotos.infrastructure.log.log
 import org.orbitmvi.orbit.Container
 import org.orbitmvi.orbit.ContainerHost
@@ -15,12 +14,12 @@ class ActionReceiver<S : Any, E : Any, A : Any, M : Any>(
 ) : ContainerHost<S, E> {
 
     fun action(action: A) = intent {
-        log(tag = "MVI") { "Starting handling of action $action" }
+        log("MVI") { "Starting handling of action $action" }
         handler(state, action) { effect ->
-            log(tag = "MVI") { "Received side effect to post: $effect" }
+            log("MVI") { "Received side effect to post: $effect" }
             postSideEffect(effect)
         }.collect { mutation ->
-            Logger.log(Logger.VERBOSE, "MVI", "Received mutation $mutation", null)
+            log("MVI") {"Received mutation $mutation" }
             reduce { reducer(state, mutation) }
         }
     }

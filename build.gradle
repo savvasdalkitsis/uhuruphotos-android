@@ -43,12 +43,6 @@ subprojects {
                 minifyEnabled false
             }
         }
-        buildFeatures {
-            compose true
-        }
-        composeOptions {
-            kotlinCompilerExtensionVersion compose_version
-        }
         compileOptions {
             sourceCompatibility JavaVersion.VERSION_1_8
             targetCompatibility JavaVersion.VERSION_1_8
@@ -56,5 +50,10 @@ subprojects {
         kotlinOptions {
             jvmTarget = '1.8'
         }
+    }
+
+    dependencies {
+        kapt "com.google.dagger:hilt-compiler:2.40.5"
+        kapt "androidx.hilt:hilt-compiler:1.0.0"
     }
 }

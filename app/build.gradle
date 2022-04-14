@@ -10,6 +10,13 @@ plugins {
 android {
     compileSdk 31
 
+    buildFeatures {
+        compose true
+    }
+    composeOptions {
+        kotlinCompilerExtensionVersion compose_version
+    }
+
     defaultConfig {
         applicationId "com.savvasdalkitsis.librephotos"
         minSdk 23

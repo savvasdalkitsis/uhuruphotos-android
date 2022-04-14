@@ -6,6 +6,15 @@ plugins {
     id 'kotlin-parcelize'
 }
 
+android {
+    buildFeatures {
+        compose true
+    }
+    composeOptions {
+        kotlinCompilerExtensionVersion compose_version
+    }
+}
+
 dependencies {
 
     implementation project(":db")

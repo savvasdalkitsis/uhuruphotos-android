@@ -4,6 +4,15 @@ plugins {
     id 'kotlin-kapt'
 }
 
+android {
+    buildFeatures {
+        compose true
+    }
+    composeOptions {
+        kotlinCompilerExtensionVersion compose_version
+    }
+}
+
 dependencies {
 
     api project(":viewmodel")

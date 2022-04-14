@@ -5,6 +5,15 @@ plugins {
     id 'com.squareup.sqldelight'
 }
 
+android {
+    buildFeatures {
+        compose true
+    }
+    composeOptions {
+        kotlinCompilerExtensionVersion compose_version
+    }
+}
+
 dependencies {
 
     implementation project(":photos")
