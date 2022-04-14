@@ -8,6 +8,7 @@ import javax.inject.Inject
 import javax.inject.Singleton
 import kotlin.coroutines.CoroutineContext
 
+@ExperimentalCoroutinesApi
 @Singleton
 class CookieMonitor @Inject constructor(
     private val serverUseCase: ServerUseCase,
@@ -19,7 +20,7 @@ class CookieMonitor @Inject constructor(
         var cookie: String?
         do {
             cookie = cookies.getCookie(server)
-            log("Cookie was: $cookie")
+            log { "Cookie was: $cookie" }
             delay(500)
         } while (cookie?.contains("_forward_auth=") == false)
     }

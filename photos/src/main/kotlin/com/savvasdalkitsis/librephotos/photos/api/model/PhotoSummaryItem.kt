@@ -1,7 +1,7 @@
 package com.savvasdalkitsis.librephotos.photos.api.model
 
-import com.savvasdalkitsis.librephotos.albums.db.GetAlbums
-import com.savvasdalkitsis.librephotos.search.GetSearchResults
+import com.savvasdalkitsis.librephotos.db.albums.GetAlbums
+import com.savvasdalkitsis.librephotos.db.search.GetSearchResults
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 

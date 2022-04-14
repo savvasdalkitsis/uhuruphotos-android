@@ -15,15 +15,18 @@ import com.savvasdalkitsis.librephotos.photos.mvflow.PhotoMutation.*
 import com.savvasdalkitsis.librephotos.photos.usecase.PhotosUseCase
 import com.savvasdalkitsis.librephotos.photos.view.state.PhotoState
 import com.savvasdalkitsis.librephotos.photos.worker.PhotoDetailsRetrieveWorker
+import com.savvasdalkitsis.librephotos.viewmodel.Handler
 import com.savvasdalkitsis.librephotos.worker.usecase.WorkerStatusUseCase
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.*
 import javax.inject.Inject
 
+@ExperimentalCoroutinesApi
 @ExperimentalMaterialApi
 class PhotoHandler @Inject constructor(
     private val photosUseCase: PhotosUseCase,
     private val workerStatusUseCase: WorkerStatusUseCase,
-) : com.savvasdalkitsis.librephotos.viewmodel.Handler<PhotoState, PhotoEffect, PhotoAction, PhotoMutation> {
+) : Handler<PhotoState, PhotoEffect, PhotoAction, PhotoMutation> {
 
     override fun invoke(
         state: PhotoState,

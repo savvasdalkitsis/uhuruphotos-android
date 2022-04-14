@@ -19,3 +19,7 @@ suspend fun <R : Any> Query<R>.await(): List<R> = withContext(Dispatchers.IO) {
 suspend fun crud(action: () -> Unit) = withContext(Dispatchers.IO) {
     action()
 }
+
+suspend fun <T> read(action: () -> T) = withContext(Dispatchers.IO) {
+    action()
+}

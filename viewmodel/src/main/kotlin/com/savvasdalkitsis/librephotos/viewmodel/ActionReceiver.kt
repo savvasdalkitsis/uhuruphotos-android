@@ -15,12 +15,12 @@ class ActionReceiver<S : Any, E : Any, A : Any, M : Any>(
 ) : ContainerHost<S, E> {
 
     fun action(action: A) = intent {
-        log("Starting handling of action $action", tag = "MVI")
+        log(tag = "MVI") { "Starting handling of action $action" }
         handler(state, action) { effect ->
-            log("Received side effect to post: $effect", tag = "MVI")
+            log(tag = "MVI") { "Received side effect to post: $effect" }
             postSideEffect(effect)
         }.collect { mutation ->
-            Logger.log(Logger.VERBOSE, "MVI","Received mutation $mutation", null)
+            Logger.log(Logger.VERBOSE, "MVI", "Received mutation $mutation", null)
             reduce { reducer(state, mutation) }
         }
     }

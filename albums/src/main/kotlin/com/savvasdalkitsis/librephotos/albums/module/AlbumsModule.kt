@@ -1,7 +1,7 @@
 package com.savvasdalkitsis.librephotos.albums.module
 
 import com.savvasdalkitsis.librephotos.albums.api.AlbumsService
-import com.savvasdalkitsis.librephotos.albums.db.AlbumsQueries
+import com.savvasdalkitsis.librephotos.db.albums.AlbumsQueries
 import com.savvasdalkitsis.librephotos.db.Database
 import dagger.Module
 import dagger.Provides

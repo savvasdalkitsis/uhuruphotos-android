@@ -12,13 +12,14 @@ import coil.decode.VideoFrameDecoder
 import coil.disk.DiskCache
 import coil.memory.MemoryCache
 import com.fredporciuncula.flow.preferences.FlowSharedPreferences
-import com.orhanobut.logger.AndroidLogAdapter
-import com.orhanobut.logger.PrettyFormatStrategy
+import com.savvasdalkitsis.librephotos.BuildConfig
+import com.savvasdalkitsis.librephotos.auth.api.AuthenticationHeaderInterceptor
+import com.savvasdalkitsis.librephotos.auth.api.AuthenticationService
+import com.savvasdalkitsis.librephotos.auth.api.WebLoginInterceptor
 import com.savvasdalkitsis.librephotos.auth.weblogin.WebkitCookieManager
 import com.savvasdalkitsis.librephotos.db.Database
-import com.savvasdalkitsis.librephotos.server.navigation.ServerNavigationTarget
+import com.savvasdalkitsis.librephotos.db.auth.Token
 import com.savvasdalkitsis.librephotos.server.network.DynamicDomainInterceptor
-import com.savvasdalkitsis.librephotos.token.db.Token
 import com.squareup.moshi.Moshi
 import com.squareup.sqldelight.EnumColumnAdapter
 import com.squareup.sqldelight.android.AndroidSqliteDriver
@@ -31,6 +32,7 @@ import dagger.hilt.components.SingletonComponent
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import okhttp3.Cache
 import okhttp3.OkHttpClient
+import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 import java.io.File
@@ -42,15 +44,12 @@ import javax.inject.Singleton
 @InstallIn(SingletonComponent::class)
 class AppModule {
 
-    @Provides
-    @com.savvasdalkitsis.librephotos.home.module.HomeModule.HomeNavigationTargetSearch
-    fun homeNavigationTargetSearch(): String = ServerNavigationTarget.name
-
+    @ExperimentalCoroutinesApi
     @Provides
     fun okHttpBuilder(
-        authenticationHeaderInterceptor: com.savvasdalkitsis.librephotos.auth.api.AuthenticationHeaderInterceptor,
+        authenticationHeaderInterceptor: AuthenticationHeaderInterceptor,
         dynamicDomainInterceptor: DynamicDomainInterceptor,
-        webLoginInterceptor: com.savvasdalkitsis.librephotos.auth.api.WebLoginInterceptor,
+        webLoginInterceptor: WebLoginInterceptor,
         webkitCookieManager: WebkitCookieManager,
     ): OkHttpClient.Builder = OkHttpClient().newBuilder()
         .followRedirects(false)
@@ -62,21 +61,17 @@ class AppModule {
         .addInterceptor(dynamicDomainInterceptor)
         .addInterceptor(webLoginInterceptor)
         .addInterceptor(authenticationHeaderInterceptor)
-//        .addInterceptor(HttpLoggingInterceptor()
-//            .setLevel(HttpLoggingInterceptor.Level.BASIC)
-//        )
+        .apply {
+            if (BuildConfig.DEBUG) {
+                addInterceptor(HttpLoggingInterceptor()
+                    .setLevel(HttpLoggingInterceptor.Level.BODY)
+                )
+            }
+        }
 
     @Provides
     fun workManager(@ApplicationContext context: Context): WorkManager = WorkManager
         .getInstance(context)
-
-    @Provides
-    fun androidLogAdapter(): AndroidLogAdapter = AndroidLogAdapter(
-        PrettyFormatStrategy.newBuilder()
-            .showThreadInfo(true)
-            .methodCount(0)
-            .tag("")
-            .build())
 
     @ExperimentalCoroutinesApi
     @Provides
@@ -99,7 +94,7 @@ class AppModule {
     @Singleton
     fun authenticationService(
         @AuthenticationRetrofit retrofit: Retrofit,
-    ): com.savvasdalkitsis.librephotos.auth.api.AuthenticationService = retrofit.create(com.savvasdalkitsis.librephotos.auth.api.AuthenticationService::class.java)
+    ): AuthenticationService = retrofit.create(AuthenticationService::class.java)
 
     @Qualifier
     @Retention(AnnotationRetention.BINARY)

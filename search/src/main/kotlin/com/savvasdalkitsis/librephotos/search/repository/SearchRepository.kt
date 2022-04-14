@@ -3,10 +3,10 @@ package com.savvasdalkitsis.librephotos.search.repository
 import com.savvasdalkitsis.librephotos.db.extensions.crud
 import com.savvasdalkitsis.librephotos.infrastructure.extensions.Group
 import com.savvasdalkitsis.librephotos.infrastructure.extensions.groupBy
-import com.savvasdalkitsis.librephotos.photos.db.PhotoSummary
-import com.savvasdalkitsis.librephotos.photos.db.PhotoSummaryQueries
-import com.savvasdalkitsis.librephotos.search.GetSearchResults
-import com.savvasdalkitsis.librephotos.search.SearchQueries
+import com.savvasdalkitsis.librephotos.db.photos.PhotoSummary
+import com.savvasdalkitsis.librephotos.db.photos.PhotoSummaryQueries
+import com.savvasdalkitsis.librephotos.db.search.GetSearchResults
+import com.savvasdalkitsis.librephotos.db.search.SearchQueries
 import com.savvasdalkitsis.librephotos.search.api.SearchService
 import com.squareup.sqldelight.runtime.coroutines.asFlow
 import com.squareup.sqldelight.runtime.coroutines.mapToList

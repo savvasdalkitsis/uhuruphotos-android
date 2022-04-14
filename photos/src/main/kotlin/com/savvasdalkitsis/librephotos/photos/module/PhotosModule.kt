@@ -2,8 +2,8 @@ package com.savvasdalkitsis.librephotos.photos.module
 
 import com.savvasdalkitsis.librephotos.db.Database
 import com.savvasdalkitsis.librephotos.photos.api.PhotosService
-import com.savvasdalkitsis.librephotos.photos.db.PhotoDetailsQueries
-import com.savvasdalkitsis.librephotos.photos.db.PhotoSummaryQueries
+import com.savvasdalkitsis.librephotos.db.photos.PhotoDetailsQueries
+import com.savvasdalkitsis.librephotos.db.photos.PhotoSummaryQueries
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

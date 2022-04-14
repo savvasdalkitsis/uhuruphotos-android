@@ -37,7 +37,7 @@ fun <S : Any, E : Any, A : Any, VM> NavGraphBuilder.navigationTarget(
         val scope = rememberCoroutineScope()
         val actions: (A) -> Unit = {
             scope.launch {
-                log("New action: $it", tag = "MVI")
+                log(tag = "MVI") { "New action: $it" }
                 model.actionReceiver.action(it)
             }
         }
@@ -47,11 +47,11 @@ fun <S : Any, E : Any, A : Any, VM> NavGraphBuilder.navigationTarget(
         }
         model.actionReceiver.observe(navBackStackEntry,
             state = {
-                log( "New state: $it", tag = "MVI")
+                log(tag = "MVI") { "New state: $it" }
                 state = it
             },
             sideEffect = {
-                log("New side effect: $it", tag = "MVI")
+                log(tag = "MVI") { "New side effect: $it" }
                 effects(it)
             }
         )

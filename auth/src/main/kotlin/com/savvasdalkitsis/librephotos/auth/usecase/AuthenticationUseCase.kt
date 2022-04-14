@@ -12,8 +12,8 @@ import com.savvasdalkitsis.librephotos.auth.network.jwt
 import com.savvasdalkitsis.librephotos.db.entities.auth.TokenType
 import com.savvasdalkitsis.librephotos.db.extensions.awaitSingleOrNull
 import com.savvasdalkitsis.librephotos.db.extensions.crud
-import com.savvasdalkitsis.librephotos.token.db.Token
-import com.savvasdalkitsis.librephotos.token.db.TokenQueries
+import com.savvasdalkitsis.librephotos.db.auth.Token
+import com.savvasdalkitsis.librephotos.db.auth.TokenQueries
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
 import javax.inject.Inject

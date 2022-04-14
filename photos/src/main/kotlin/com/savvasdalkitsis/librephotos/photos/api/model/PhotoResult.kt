@@ -1,6 +1,6 @@
 package com.savvasdalkitsis.librephotos.photos.api.model
 
-import com.savvasdalkitsis.librephotos.photos.db.PhotoDetails
+import com.savvasdalkitsis.librephotos.db.photos.PhotoDetails
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 

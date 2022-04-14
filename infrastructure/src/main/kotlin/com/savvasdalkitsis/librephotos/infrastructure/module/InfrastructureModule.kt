@@ -1,6 +1,11 @@
 package com.savvasdalkitsis.librephotos.infrastructure.module
 
 import android.annotation.SuppressLint
+import com.orhanobut.logger.AndroidLogAdapter
+import com.orhanobut.logger.LogAdapter
+import com.orhanobut.logger.PrettyFormatStrategy
+import com.savvasdalkitsis.librephotos.infrastructure.BuildConfig
+import com.savvasdalkitsis.librephotos.infrastructure.log.NoOpLogAdapter
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -46,4 +51,15 @@ class InfrastructureModule {
         DateFormat.FULL,
         DateFormat.FULL
     )
+
+    @Provides
+    fun logAdapter(): LogAdapter = when  {
+        BuildConfig.DEBUG -> AndroidLogAdapter(
+            PrettyFormatStrategy.newBuilder()
+                .showThreadInfo(true)
+                .methodCount(0)
+                .tag("")
+                .build())
+        else -> NoOpLogAdapter()
+    }
 }

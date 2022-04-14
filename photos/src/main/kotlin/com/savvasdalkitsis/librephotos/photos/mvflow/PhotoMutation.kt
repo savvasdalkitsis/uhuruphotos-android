@@ -1,6 +1,6 @@
 package com.savvasdalkitsis.librephotos.photos.mvflow
 
-import com.savvasdalkitsis.librephotos.photos.db.PhotoDetails
+import com.savvasdalkitsis.librephotos.db.photos.PhotoDetails
 
 sealed class PhotoMutation {
     object HideUI : PhotoMutation()

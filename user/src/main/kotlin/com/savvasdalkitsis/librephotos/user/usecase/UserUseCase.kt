@@ -1,6 +1,6 @@
 package com.savvasdalkitsis.librephotos.user.usecase
 
-import com.savvasdalkitsis.librephotos.user.User
+import com.savvasdalkitsis.librephotos.db.user.User
 import com.savvasdalkitsis.librephotos.user.repository.UserRepository
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers

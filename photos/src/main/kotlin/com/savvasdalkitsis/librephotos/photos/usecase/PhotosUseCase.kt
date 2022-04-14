@@ -1,12 +1,14 @@
 package com.savvasdalkitsis.librephotos.photos.usecase
 
-import com.savvasdalkitsis.librephotos.photos.db.PhotoDetails
+import com.savvasdalkitsis.librephotos.auth.usecase.ServerUseCase
+import com.savvasdalkitsis.librephotos.db.photos.PhotoDetails
 import com.savvasdalkitsis.librephotos.photos.repository.PhotoRepository
 import com.savvasdalkitsis.librephotos.photos.worker.PhotoWorkScheduler
-import com.savvasdalkitsis.librephotos.auth.usecase.ServerUseCase
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
+@ExperimentalCoroutinesApi
 class PhotosUseCase @Inject constructor(
     private val serverUseCase: ServerUseCase,
     private val photoRepository: PhotoRepository,

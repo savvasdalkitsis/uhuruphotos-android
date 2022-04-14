@@ -1,7 +1,7 @@
 package com.savvasdalkitsis.librephotos.user.module
 
 import com.savvasdalkitsis.librephotos.db.Database
-import com.savvasdalkitsis.librephotos.user.UserQueries
+import com.savvasdalkitsis.librephotos.db.user.UserQueries
 import com.savvasdalkitsis.librephotos.user.api.UserApi
 import dagger.Module
 import dagger.Provides

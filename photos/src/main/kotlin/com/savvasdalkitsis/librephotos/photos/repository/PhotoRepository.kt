@@ -2,10 +2,9 @@ package com.savvasdalkitsis.librephotos.photos.repository
 
 import com.savvasdalkitsis.librephotos.db.extensions.awaitSingleOrNull
 import com.savvasdalkitsis.librephotos.db.extensions.crud
-import com.savvasdalkitsis.librephotos.photos.api.PhotosService
-import com.savvasdalkitsis.librephotos.photos.db.PhotoDetails
-import com.savvasdalkitsis.librephotos.photos.db.PhotoDetailsQueries
-import com.savvasdalkitsis.librephotos.photos.db.PhotoSummaryQueries
+import com.savvasdalkitsis.librephotos.db.photos.PhotoDetails
+import com.savvasdalkitsis.librephotos.db.photos.PhotoDetailsQueries
+import com.savvasdalkitsis.librephotos.db.photos.PhotoSummaryQueries
 import com.savvasdalkitsis.librephotos.photos.worker.PhotoWorkScheduler
 import com.squareup.sqldelight.runtime.coroutines.asFlow
 import com.squareup.sqldelight.runtime.coroutines.mapToOneNotNull
@@ -16,7 +15,6 @@ import javax.inject.Inject
 class PhotoRepository @Inject constructor(
     private val photoDetailsQueries: PhotoDetailsQueries,
     private val photoSummaryQueries: PhotoSummaryQueries,
-    private val photosService: PhotosService,
     private val photoWorkScheduler: PhotoWorkScheduler,
 ) {
 

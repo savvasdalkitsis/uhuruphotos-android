@@ -6,7 +6,7 @@ import androidx.hilt.work.HiltWorkerFactory
 import androidx.work.Configuration
 import coil.ImageLoader
 import coil.ImageLoaderFactory
-import com.orhanobut.logger.AndroidLogAdapter
+import com.orhanobut.logger.LogAdapter
 import com.orhanobut.logger.Logger
 import com.savvasdalkitsis.librephotos.albums.worker.AlbumWorkScheduler
 import dagger.hilt.android.HiltAndroidApp
@@ -25,7 +25,7 @@ class App :
     @Inject
     lateinit var imageLoader: ImageLoader
     @Inject
-    lateinit var logAdapter: AndroidLogAdapter
+    lateinit var logAdapter: LogAdapter
 
     override fun onCreate() {
         super.onCreate()

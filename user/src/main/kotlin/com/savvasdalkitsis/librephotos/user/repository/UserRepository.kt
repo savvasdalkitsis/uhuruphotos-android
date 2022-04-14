@@ -1,8 +1,8 @@
 package com.savvasdalkitsis.librephotos.user.repository
 
 import com.savvasdalkitsis.librephotos.db.extensions.crud
-import com.savvasdalkitsis.librephotos.user.User
-import com.savvasdalkitsis.librephotos.user.UserQueries
+import com.savvasdalkitsis.librephotos.db.user.User
+import com.savvasdalkitsis.librephotos.db.user.UserQueries
 import com.savvasdalkitsis.librephotos.user.api.UserApi
 import com.squareup.sqldelight.runtime.coroutines.asFlow
 import com.squareup.sqldelight.runtime.coroutines.mapToOneNotNull
