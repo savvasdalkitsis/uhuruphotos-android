@@ -1,7 +1,6 @@
 package com.savvasdalkitsis.librephotos.ui.view.zoom
 
 import androidx.compose.animation.splineBasedDecay
-import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.gestures.*
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -22,7 +21,6 @@ import androidx.compose.ui.util.fastAny
 import androidx.compose.ui.util.fastForEach
 import kotlin.math.abs
 
-@ExperimentalFoundationApi
 fun Modifier.zoomable(
     maxZoom: Float = 8f,
     onTap: () -> Unit = {},
@@ -38,7 +36,6 @@ fun Modifier.zoomable(
     )
 }
 
-@ExperimentalFoundationApi
 fun Modifier.zoomable(
     maxZoom: Float = 8f,
     zoomableState: ZoomableState,

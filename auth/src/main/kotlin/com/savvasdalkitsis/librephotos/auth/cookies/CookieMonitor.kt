@@ -8,7 +8,6 @@ import javax.inject.Inject
 import javax.inject.Singleton
 import kotlin.coroutines.CoroutineContext
 
-@ExperimentalCoroutinesApi
 @Singleton
 class CookieMonitor @Inject constructor(
     private val serverUseCase: ServerUseCase,

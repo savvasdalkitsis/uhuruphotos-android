@@ -1,6 +1,5 @@
 package com.savvasdalkitsis.librephotos.feedpage.viewmodel
 
-import coil.annotation.ExperimentalCoilApi
 import com.savvasdalkitsis.librephotos.albums.usecase.AlbumsUseCase
 import com.savvasdalkitsis.librephotos.account.usecase.AccountUseCase
 import com.savvasdalkitsis.librephotos.feedpage.mvflow.FeedPageAction
@@ -17,15 +16,10 @@ import com.savvasdalkitsis.librephotos.feedpage.usecase.FeedPageUseCase
 import com.savvasdalkitsis.librephotos.feedpage.view.state.FeedPageState
 import com.savvasdalkitsis.librephotos.userbadge.usecase.UserBadgeUseCase
 import com.savvasdalkitsis.librephotos.viewmodel.Handler
-import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.*
 import javax.inject.Inject
 
-@ExperimentalCoroutinesApi
-@ExperimentalCoilApi
-@FlowPreview
 class FeedPageHandler @Inject constructor(
     private val albumsUseCase: AlbumsUseCase,
     private val userBadgeUseCase: UserBadgeUseCase,

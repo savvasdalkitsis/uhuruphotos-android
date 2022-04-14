@@ -10,13 +10,11 @@ import com.savvasdalkitsis.librephotos.auth.weblogin.weblogin.mvflow.WebLoginMut
 import com.savvasdalkitsis.librephotos.auth.weblogin.weblogin.view.WebLoginState
 import com.savvasdalkitsis.librephotos.infrastructure.coroutines.onMain
 import com.savvasdalkitsis.librephotos.viewmodel.Handler
-import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
 import kotlin.coroutines.coroutineContext
 
-@ExperimentalCoroutinesApi
 class WebLoginHandler @Inject constructor(
     private val cookieMonitor: CookieMonitor,
 ): Handler<WebLoginState, WebLoginEffect, WebLoginAction, WebLoginMutation> {

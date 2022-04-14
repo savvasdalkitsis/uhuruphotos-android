@@ -1,6 +1,5 @@
 package com.savvasdalkitsis.librephotos.photos.viewmodel
 
-import androidx.compose.material.ExperimentalMaterialApi
 import androidx.lifecycle.ViewModel
 import com.savvasdalkitsis.librephotos.photos.mvflow.PhotoAction
 import com.savvasdalkitsis.librephotos.photos.mvflow.PhotoEffect
@@ -12,7 +11,6 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import org.orbitmvi.orbit.viewmodel.container
 import javax.inject.Inject
 
-@ExperimentalMaterialApi
 @HiltViewModel
 class PhotoViewModel @Inject constructor(
     handler: PhotoHandler,

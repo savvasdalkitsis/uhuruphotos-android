@@ -56,4 +56,16 @@ subprojects {
         kapt "com.google.dagger:hilt-compiler:2.40.5"
         kapt "androidx.hilt:hilt-compiler:1.0.0"
     }
+
+    tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).configureEach {
+        kotlinOptions {
+            freeCompilerArgs += "-opt-in=androidx.compose.animation.ExperimentalAnimationApi"
+            freeCompilerArgs += "-opt-in=androidx.compose.foundation.ExperimentalFoundationApi"
+            freeCompilerArgs += "-opt-in=androidx.compose.material.ExperimentalMaterialApi"
+            freeCompilerArgs += "-opt-in=androidx.compose.ui.ExperimentalComposeUiApi"
+            freeCompilerArgs += "-opt-in=coil.annotation.ExperimentalCoilApi"
+            freeCompilerArgs += "-opt-in=kotlinx.coroutines.ExperimentalCoroutinesApi"
+            freeCompilerArgs += "-opt-in=kotlinx.coroutines.FlowPreview"
+        }
+    }
 }

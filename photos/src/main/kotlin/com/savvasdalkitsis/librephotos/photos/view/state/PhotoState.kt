@@ -1,10 +1,8 @@
 package com.savvasdalkitsis.librephotos.photos.view.state
 
-import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.ModalBottomSheetValue
 import com.google.android.gms.maps.model.LatLng
 
-@ExperimentalMaterialApi
 data class PhotoState(
     val id: String = "",
     val isLoading: Boolean = false,

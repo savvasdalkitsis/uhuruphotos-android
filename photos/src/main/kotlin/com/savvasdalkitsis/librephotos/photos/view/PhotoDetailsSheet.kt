@@ -3,7 +3,6 @@ package com.savvasdalkitsis.librephotos.photos.view
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -21,7 +20,6 @@ import com.savvasdalkitsis.librephotos.photos.mvflow.PhotoAction
 import com.savvasdalkitsis.librephotos.photos.view.state.PhotoState
 import com.savvasdalkitsis.librephotos.ui.view.TextWithIcon
 
-@ExperimentalMaterialApi
 @Composable
 fun PhotoDetailsSheet(
     size: DpSize,

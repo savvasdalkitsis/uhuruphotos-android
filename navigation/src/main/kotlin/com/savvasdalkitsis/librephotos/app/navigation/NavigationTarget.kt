@@ -3,9 +3,7 @@ package com.savvasdalkitsis.librephotos.app.navigation
 import androidx.compose.animation.AnimatedContentScope
 import androidx.compose.animation.EnterTransition
 import androidx.compose.animation.ExitTransition
-import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.runtime.*
-import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.lifecycle.ViewModel
 import androidx.navigation.NavBackStackEntry
@@ -17,8 +15,6 @@ import com.savvasdalkitsis.librephotos.viewmodel.EffectHandler
 import kotlinx.coroutines.launch
 import org.orbitmvi.orbit.viewmodel.observe
 
-@ExperimentalAnimationApi
-@ExperimentalComposeUiApi
 fun <S : Any, E : Any, A : Any, VM> NavGraphBuilder.navigationTarget(
     name: String,
     enterTransition: (AnimatedContentScope<NavBackStackEntry>.() -> EnterTransition?)? = null,

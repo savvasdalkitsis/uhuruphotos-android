@@ -6,13 +6,11 @@ import com.savvasdalkitsis.librephotos.auth.usecase.ServerUseCase
 import com.savvasdalkitsis.librephotos.auth.weblogin.weblogin.navigation.WebLoginNavigationTarget
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.launch
 import okhttp3.Interceptor
 import okhttp3.Response
 import javax.inject.Inject
 
-@ExperimentalCoroutinesApi
 class WebLoginInterceptor @Inject constructor(
     private val controllersProvider: ControllersProvider,
     private val serverUseCase: ServerUseCase,

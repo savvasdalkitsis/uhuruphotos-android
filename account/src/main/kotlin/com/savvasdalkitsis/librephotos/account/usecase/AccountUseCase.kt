@@ -1,6 +1,5 @@
 package com.savvasdalkitsis.librephotos.account.usecase
 
-import coil.annotation.ExperimentalCoilApi
 import coil.disk.DiskCache
 import coil.memory.MemoryCache
 import com.savvasdalkitsis.librephotos.db.albums.AlbumsQueries
@@ -19,7 +18,6 @@ class AccountUseCase @Inject constructor(
     private val diskCache: DiskCache,
 ) {
 
-    @ExperimentalCoilApi
     suspend fun logOut() {
         crud {
             albumsQueries.clearAlbums()

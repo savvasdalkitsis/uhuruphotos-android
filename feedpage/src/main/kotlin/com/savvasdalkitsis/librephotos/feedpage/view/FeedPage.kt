@@ -1,6 +1,5 @@
 package com.savvasdalkitsis.librephotos.feedpage.view
 
-import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.foundation.lazy.grid.rememberLazyGridState
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.runtime.Composable
@@ -17,7 +16,6 @@ import com.savvasdalkitsis.librephotos.home.view.HomeScaffold
 import com.savvasdalkitsis.librephotos.infrastructure.extensions.blurIf
 import kotlinx.coroutines.launch
 
-@ExperimentalAnimationApi
 @Composable
 fun FeedPage(
     controllersProvider: com.savvasdalkitsis.librephotos.app.navigation.ControllersProvider,

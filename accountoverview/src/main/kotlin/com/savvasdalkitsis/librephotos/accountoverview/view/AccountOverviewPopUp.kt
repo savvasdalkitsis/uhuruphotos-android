@@ -20,7 +20,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Popup
 import com.savvasdalkitsis.librephotos.userbadge.view.state.UserBadgeState
 
-@ExperimentalAnimationApi
 @Composable
 fun AccountOverviewPopUp(
     visible: Boolean,

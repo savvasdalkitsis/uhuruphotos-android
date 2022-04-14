@@ -1,7 +1,5 @@
 package com.savvasdalkitsis.librephotos.home.navigation
 
-import androidx.compose.animation.ExperimentalAnimationApi
-import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavGraphBuilder
 import com.savvasdalkitsis.librephotos.home.module.HomeModule
@@ -21,8 +19,6 @@ class HomeNavigationTarget @Inject constructor(
     @HomeModule.HomeNavigationTargetSearch private val searchNavigationName: String,
 ) {
 
-    @ExperimentalAnimationApi
-    @ExperimentalComposeUiApi
     fun NavGraphBuilder.create() =
         navigationTarget<HomeState, HomeEffect, HomeAction, HomeViewModel>(
             name = name,

@@ -29,7 +29,6 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
-import kotlinx.coroutines.ExperimentalCoroutinesApi
 import okhttp3.Cache
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -44,7 +43,6 @@ import javax.inject.Singleton
 @InstallIn(SingletonComponent::class)
 class AppModule {
 
-    @ExperimentalCoroutinesApi
     @Provides
     fun okHttpBuilder(
         authenticationHeaderInterceptor: AuthenticationHeaderInterceptor,
@@ -73,7 +71,6 @@ class AppModule {
     fun workManager(@ApplicationContext context: Context): WorkManager = WorkManager
         .getInstance(context)
 
-    @ExperimentalCoroutinesApi
     @Provides
     fun preferences(@ApplicationContext context: Context): FlowSharedPreferences =
         FlowSharedPreferences(PreferenceManager.getDefaultSharedPreferences(context))

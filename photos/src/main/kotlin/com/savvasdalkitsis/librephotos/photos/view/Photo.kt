@@ -1,6 +1,5 @@
 package com.savvasdalkitsis.librephotos.photos.view
 
-import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -33,8 +32,6 @@ import com.savvasdalkitsis.librephotos.ui.view.FullProgressBar
 import com.savvasdalkitsis.librephotos.ui.view.zoom.rememberZoomableState
 import com.savvasdalkitsis.librephotos.ui.view.zoom.zoomable
 
-@ExperimentalMaterialApi
-@ExperimentalFoundationApi
 @Composable
 fun Photo(
     state: PhotoState,

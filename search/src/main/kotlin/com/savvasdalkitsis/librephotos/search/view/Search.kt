@@ -14,7 +14,6 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.focus.onFocusChanged
@@ -30,7 +29,6 @@ import com.savvasdalkitsis.librephotos.search.view.state.SearchResults
 import com.savvasdalkitsis.librephotos.search.view.state.SearchState
 import com.savvasdalkitsis.librephotos.ui.view.FullProgressBar
 
-@ExperimentalComposeUiApi
 @Composable fun Search(
     state: SearchState,
     action: (SearchAction) -> Unit,

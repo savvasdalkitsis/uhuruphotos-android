@@ -1,6 +1,5 @@
 package com.savvasdalkitsis.librephotos.photos.viewmodel
 
-import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.ModalBottomSheetValue
 import com.google.android.gms.maps.model.LatLng
 import com.savvasdalkitsis.librephotos.infrastructure.date.DateDisplayer
@@ -11,7 +10,6 @@ import com.savvasdalkitsis.librephotos.photos.view.state.PhotoState
 import com.savvasdalkitsis.librephotos.viewmodel.Reducer
 import javax.inject.Inject
 
-@ExperimentalMaterialApi
 class PhotoReducer @Inject constructor(
     private val dateDisplayer: DateDisplayer
 ) : Reducer<PhotoState, PhotoMutation> {

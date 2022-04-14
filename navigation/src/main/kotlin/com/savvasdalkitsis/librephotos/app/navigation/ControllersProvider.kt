@@ -1,6 +1,5 @@
 package com.savvasdalkitsis.librephotos.app.navigation
 
-import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.platform.SoftwareKeyboardController
 import androidx.navigation.NavHostController
@@ -13,7 +12,6 @@ class ControllersProvider @Inject constructor(
     val intentLauncher: IntentLauncher,
 ) {
 
-    @ExperimentalComposeUiApi
     var keyboardController: SoftwareKeyboardController? = null
     var navController: NavHostController? = null
     var focusRequester: FocusRequester? = null

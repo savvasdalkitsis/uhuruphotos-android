@@ -2,11 +2,9 @@ package com.savvasdalkitsis.librephotos.feedpage.usecase
 
 import com.fredporciuncula.flow.preferences.FlowSharedPreferences
 import com.savvasdalkitsis.librephotos.feed.view.state.FeedDisplay
-import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
-@ExperimentalCoroutinesApi
 class FeedPageUseCase @Inject constructor(
     preferences: FlowSharedPreferences,
 ) {

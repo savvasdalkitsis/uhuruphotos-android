@@ -1,6 +1,5 @@
 package com.savvasdalkitsis.librephotos.photos.viewmodel
 
-import androidx.compose.material.ExperimentalMaterialApi
 import androidx.work.WorkInfo.State.*
 import com.savvasdalkitsis.librephotos.photos.mvflow.PhotoAction
 import com.savvasdalkitsis.librephotos.photos.mvflow.PhotoAction.*
@@ -17,12 +16,9 @@ import com.savvasdalkitsis.librephotos.photos.view.state.PhotoState
 import com.savvasdalkitsis.librephotos.photos.worker.PhotoDetailsRetrieveWorker
 import com.savvasdalkitsis.librephotos.viewmodel.Handler
 import com.savvasdalkitsis.librephotos.worker.usecase.WorkerStatusUseCase
-import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.*
 import javax.inject.Inject
 
-@ExperimentalCoroutinesApi
-@ExperimentalMaterialApi
 class PhotoHandler @Inject constructor(
     private val photosUseCase: PhotosUseCase,
     private val workerStatusUseCase: WorkerStatusUseCase,
