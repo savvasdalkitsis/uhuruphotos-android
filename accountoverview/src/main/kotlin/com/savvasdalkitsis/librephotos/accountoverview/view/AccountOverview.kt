@@ -1,4 +1,4 @@
-package com.savvasdalkitsis.librephotos.account.view
+package com.savvasdalkitsis.librephotos.accountoverview.view
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.Button

@@ -8,7 +8,7 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import com.google.accompanist.swiperefresh.SwipeRefresh
 import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
-import com.savvasdalkitsis.librephotos.account.view.AccountOverviewPopUp
+import com.savvasdalkitsis.librephotos.accountoverview.view.AccountOverviewPopUp
 import com.savvasdalkitsis.librephotos.feedpage.mvflow.FeedPageAction
 import com.savvasdalkitsis.librephotos.feedpage.mvflow.FeedPageAction.*
 import com.savvasdalkitsis.librephotos.feedpage.view.state.FeedPageState

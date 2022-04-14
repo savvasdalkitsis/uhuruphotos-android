@@ -1,71 +1,14 @@
 plugins {
-    id 'dagger.hilt.android.plugin'
+    id 'com.android.library'
+    id 'org.jetbrains.kotlin.android'
+    id 'kotlin-kapt'
     id 'com.squareup.sqldelight'
-    id 'kotlin-parcelize'
-    id "dev.zacsweers.redacted" version "1.0.1"
-    id "com.google.devtools.ksp" version "1.6.10-1.0.4"
-    id 'com.google.android.libraries.mapsplatform.secrets-gradle-plugin'
-}
-
-android {
-    compileSdk 31
-
-    defaultConfig {
-        applicationId "com.savvasdalkitsis.librephotos"
-        minSdk 23
-        targetSdk 31
-        versionCode 1
-        versionName "1.0"
-
-        vectorDrawables {
-            useSupportLibrary true
-        }
-    }
-
-    signingConfigs {
-        release {
-            storeFile file(KEYSTORE_FILE)
-            storePassword KEYSTORE_PASS
-            keyAlias KEYSTORE_ALIAS
-            keyPassword KEYSTORE_PASS
-        }
-    }
-
-    buildTypes {
-        debug {
-            minifyEnabled false
-        }
-        release {
-            minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-            signingConfig signingConfigs.release
-        }
-    }
-    packagingOptions {
-        resources {
-            excludes += '/META-INF/{AL2.0,LGPL2.1}'
-        }
-    }
 }
 
 dependencies {
 
-    implementation project(":db")
-    implementation project(":server")
-    implementation project(":navigation")
-    implementation project(":viewmodel")
-    implementation project(":infrastructure")
-    implementation project(":auth")
-    implementation project(":ui")
-    implementation project(":user")
-    implementation project(":worker")
-    implementation project(":map")
-    implementation project(":photos")
     implementation project(":icons")
-    implementation project(":albums")
-    implementation project(":feed")
     implementation project(":userbadge")
-    implementation project(":accountoverview")
     implementation(
             libs.accompanist.insets,
             libs.accompanist.navigation,
