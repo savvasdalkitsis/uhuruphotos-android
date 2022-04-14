@@ -17,13 +17,8 @@ import com.savvasdalkitsis.librephotos.auth.api.AuthenticationHeaderInterceptor
 import com.savvasdalkitsis.librephotos.auth.api.AuthenticationService
 import com.savvasdalkitsis.librephotos.auth.api.WebLoginInterceptor
 import com.savvasdalkitsis.librephotos.auth.weblogin.WebkitCookieManager
-import com.savvasdalkitsis.librephotos.db.Database
-import com.savvasdalkitsis.librephotos.db.auth.Token
 import com.savvasdalkitsis.librephotos.server.network.DynamicDomainInterceptor
 import com.squareup.moshi.Moshi
-import com.squareup.sqldelight.EnumColumnAdapter
-import com.squareup.sqldelight.android.AndroidSqliteDriver
-import com.squareup.sqldelight.db.SqlDriver
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -74,18 +69,6 @@ class AppModule {
     @Provides
     fun preferences(@ApplicationContext context: Context): FlowSharedPreferences =
         FlowSharedPreferences(PreferenceManager.getDefaultSharedPreferences(context))
-
-    @Provides
-    @Singleton
-    fun driver(@ApplicationContext context: Context): SqlDriver =
-        AndroidSqliteDriver(Database.Schema, context, "librePhotos.db")
-
-    @Provides
-    @Singleton
-    fun database(driver: SqlDriver) = Database(
-        driver = driver,
-        tokenAdapter = Token.Adapter(typeAdapter = EnumColumnAdapter())
-    )
 
     @Provides
     @Singleton

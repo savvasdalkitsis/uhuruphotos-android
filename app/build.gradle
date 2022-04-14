@@ -1,9 +1,5 @@
 plugins {
     id 'dagger.hilt.android.plugin'
-    id 'com.squareup.sqldelight'
-    id 'kotlin-parcelize'
-    id "dev.zacsweers.redacted" version "1.0.1"
-    id "com.google.devtools.ksp" version "1.6.10-1.0.4"
     id 'com.google.android.libraries.mapsplatform.secrets-gradle-plugin'
 }
 
@@ -116,8 +112,6 @@ dependencies {
             libs.orbit,
             libs.retrofit.core,
             libs.retrofit.moshi,
-            libs.sqldelight.android,
-            libs.sqldelight.coroutines,
     )
     kapt "com.squareup.moshi:moshi-kotlin-codegen:1.13.0"
     kapt "com.google.dagger:hilt-compiler:2.40.5"
