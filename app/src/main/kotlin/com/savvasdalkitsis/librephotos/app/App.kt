@@ -1,4 +1,4 @@
-package com.savvasdalkitsis.librephotos
+package com.savvasdalkitsis.librephotos.app
 
 import android.app.Application
 import android.webkit.WebView
@@ -13,15 +13,19 @@ import dagger.hilt.android.HiltAndroidApp
 import javax.inject.Inject
 
 @HiltAndroidApp
-class LibrePhotosApplication :
+class App :
     Application(),
     Configuration.Provider,
     ImageLoaderFactory {
 
-    @Inject lateinit var workerFactory: HiltWorkerFactory
-    @Inject lateinit var albumWorkScheduler: AlbumWorkScheduler
-    @Inject lateinit var imageLoader: ImageLoader
-    @Inject lateinit var logAdapter: AndroidLogAdapter
+    @Inject
+    lateinit var workerFactory: HiltWorkerFactory
+    @Inject
+    lateinit var albumWorkScheduler: AlbumWorkScheduler
+    @Inject
+    lateinit var imageLoader: ImageLoader
+    @Inject
+    lateinit var logAdapter: AndroidLogAdapter
 
     override fun onCreate() {
         super.onCreate()

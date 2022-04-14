@@ -1,6 +1,6 @@
 package com.savvasdalkitsis.librephotos.auth.weblogin.weblogin.mvflow
 
-import com.savvasdalkitsis.librephotos.navigation.ControllersProvider
+import com.savvasdalkitsis.librephotos.app.navigation.ControllersProvider
 import javax.inject.Inject
 
 class WebEffectsHandler @Inject constructor(

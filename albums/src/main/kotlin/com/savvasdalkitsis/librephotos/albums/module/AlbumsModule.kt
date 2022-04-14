@@ -11,7 +11,7 @@ import retrofit2.Retrofit
 
 @InstallIn(SingletonComponent::class)
 @Module
-class Module {
+class AlbumsModule {
 
     @Provides
     fun albumsService(

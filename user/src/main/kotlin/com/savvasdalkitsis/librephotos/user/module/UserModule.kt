@@ -11,7 +11,7 @@ import retrofit2.Retrofit
 
 @Module
 @InstallIn(SingletonComponent::class)
-class Module {
+class UserModule {
 
     @Provides
     fun userApi(retrofit: Retrofit): UserApi = retrofit.create(UserApi::class.java)

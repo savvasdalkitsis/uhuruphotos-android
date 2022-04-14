@@ -9,7 +9,7 @@ fun Home(
     state: HomeState,
     feedNavigationName: String,
     searchNavigationName: String,
-    controllersProvider: com.savvasdalkitsis.librephotos.navigation.ControllersProvider,
+    controllersProvider: com.savvasdalkitsis.librephotos.app.navigation.ControllersProvider,
 ) {
     HomeScaffold(
         navController = controllersProvider.navController!!,

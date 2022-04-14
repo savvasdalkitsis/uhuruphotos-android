@@ -13,7 +13,7 @@ import javax.inject.Qualifier
 
 @Module
 @InstallIn(SingletonComponent::class)
-class Module {
+class AuthModule {
 
     @Qualifier
     @Retention(AnnotationRetention.BINARY)

@@ -1,4 +1,4 @@
-package com.savvasdalkitsis.librephotos.navigation
+package com.savvasdalkitsis.librephotos.app.navigation
 
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.focus.FocusRequester

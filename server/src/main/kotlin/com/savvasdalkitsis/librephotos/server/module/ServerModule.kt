@@ -9,7 +9,7 @@ import dagger.hilt.components.SingletonComponent
 
 @Module
 @InstallIn(SingletonComponent::class)
-class Module {
+class ServerModule {
 
     @Provides
     fun serverQueries(database: Database): ServerQueries = database.serverQueries

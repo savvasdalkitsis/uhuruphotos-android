@@ -11,7 +11,7 @@ import okhttp3.Response
 import javax.inject.Inject
 
 class WebLoginInterceptor @Inject constructor(
-    private val controllersProvider: com.savvasdalkitsis.librephotos.navigation.ControllersProvider,
+    private val controllersProvider: com.savvasdalkitsis.librephotos.app.navigation.ControllersProvider,
     private val serverUseCase: ServerUseCase,
     private val cookieManager: CookieManager,
 ) : Interceptor {

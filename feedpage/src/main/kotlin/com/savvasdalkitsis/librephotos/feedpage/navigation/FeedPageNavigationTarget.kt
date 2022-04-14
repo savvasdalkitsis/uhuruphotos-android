@@ -11,10 +11,9 @@ import com.savvasdalkitsis.librephotos.feedpage.mvflow.FeedPageEffect
 import com.savvasdalkitsis.librephotos.feedpage.view.state.FeedPageState
 import com.savvasdalkitsis.librephotos.feedpage.viewmodel.FeedPageEffectsHandler
 import com.savvasdalkitsis.librephotos.feedpage.viewmodel.FeedPageViewModel
-import com.savvasdalkitsis.librephotos.home.module.Module
-import com.savvasdalkitsis.librephotos.home.module.Module.HomeNavigationTargetSearch
-import com.savvasdalkitsis.librephotos.navigation.ControllersProvider
-import com.savvasdalkitsis.librephotos.navigation.navigationTarget
+import com.savvasdalkitsis.librephotos.home.module.HomeModule.HomeNavigationTargetSearch
+import com.savvasdalkitsis.librephotos.app.navigation.ControllersProvider
+import com.savvasdalkitsis.librephotos.app.navigation.navigationTarget
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.FlowPreview
 import javax.inject.Inject

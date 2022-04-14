@@ -4,7 +4,7 @@ import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavGraphBuilder
-import com.savvasdalkitsis.librephotos.navigation.navigationTarget
+import com.savvasdalkitsis.librephotos.app.navigation.navigationTarget
 import com.savvasdalkitsis.librephotos.server.mvflow.ServerAction
 import com.savvasdalkitsis.librephotos.server.mvflow.ServerAction.CheckPersistedServer
 import com.savvasdalkitsis.librephotos.server.mvflow.ServerEffect

@@ -12,7 +12,7 @@ import com.savvasdalkitsis.librephotos.auth.weblogin.weblogin.mvflow.WebLoginEff
 import com.savvasdalkitsis.librephotos.auth.weblogin.weblogin.view.WebLogin
 import com.savvasdalkitsis.librephotos.auth.weblogin.weblogin.view.WebLoginState
 import com.savvasdalkitsis.librephotos.auth.weblogin.weblogin.viewmodel.WebLoginViewModel
-import com.savvasdalkitsis.librephotos.navigation.navigationTarget
+import com.savvasdalkitsis.librephotos.app.navigation.navigationTarget
 import javax.inject.Inject
 
 class WebLoginNavigationTarget @Inject constructor(

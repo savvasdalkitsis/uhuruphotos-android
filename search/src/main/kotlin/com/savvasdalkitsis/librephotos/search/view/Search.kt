@@ -34,7 +34,7 @@ import com.savvasdalkitsis.librephotos.ui.view.FullProgressBar
 @Composable fun Search(
     state: SearchState,
     action: (SearchAction) -> Unit,
-    controllersProvider: com.savvasdalkitsis.librephotos.navigation.ControllersProvider,
+    controllersProvider: com.savvasdalkitsis.librephotos.app.navigation.ControllersProvider,
     contentPadding: PaddingValues,
 ) {
     Column {

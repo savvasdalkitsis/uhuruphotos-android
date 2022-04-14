@@ -11,7 +11,7 @@ import javax.inject.Qualifier
 
 @Module
 @InstallIn(SingletonComponent::class)
-class Module {
+class InfrastructureModule {
 
     @Qualifier
     @Retention(AnnotationRetention.BINARY)

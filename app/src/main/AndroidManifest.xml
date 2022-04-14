@@ -16,7 +16,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.LibrePhotos"
-        android:name=".LibrePhotosApplication"
+        android:name=".app.App"
         android:largeHeap="true"
         tools:targetApi="s">
         <meta-data
@@ -34,7 +34,7 @@
         </provider>
 
         <activity
-            android:name=".main.MainActivity"
+            android:name=".app.AppActivity"
             android:exported="true"
             android:theme="@style/Theme.LibrePhotos"
             android:windowSoftInputMode="adjustResize">

@@ -2,7 +2,7 @@ package com.savvasdalkitsis.librephotos.home.module
 
 import javax.inject.Qualifier
 
-class Module {
+class HomeModule {
 
     @Qualifier
     @Retention(AnnotationRetention.BINARY)

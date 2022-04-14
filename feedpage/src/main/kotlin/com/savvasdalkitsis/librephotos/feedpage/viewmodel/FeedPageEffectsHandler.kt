@@ -6,7 +6,7 @@ import com.savvasdalkitsis.librephotos.photos.navigation.PhotoNavigationTarget
 import javax.inject.Inject
 
 class FeedPageEffectsHandler @Inject constructor(
-    private val controllersProvider: com.savvasdalkitsis.librephotos.navigation.ControllersProvider,
+    private val controllersProvider: com.savvasdalkitsis.librephotos.app.navigation.ControllersProvider,
 ) : com.savvasdalkitsis.librephotos.viewmodel.EffectHandler<FeedPageEffect> {
 
     override fun invoke(effect: FeedPageEffect) = when (effect) {

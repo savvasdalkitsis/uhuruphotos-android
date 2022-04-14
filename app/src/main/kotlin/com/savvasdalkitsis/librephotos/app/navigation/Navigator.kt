@@ -1,4 +1,4 @@
-package com.savvasdalkitsis.librephotos.navigation
+package com.savvasdalkitsis.librephotos.app.navigation
 
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.foundation.ExperimentalFoundationApi
@@ -23,7 +23,7 @@ import kotlinx.coroutines.FlowPreview
 import javax.inject.Inject
 
 @ExperimentalComposeUiApi
-class LibrePhotosNavigator @Inject constructor(
+class Navigator @Inject constructor(
     private val homeNavigationTarget: HomeNavigationTarget,
     private val feedPageNavigationTarget: FeedPageNavigationTarget,
     private val searchNavigationTarget: SearchNavigationTarget,

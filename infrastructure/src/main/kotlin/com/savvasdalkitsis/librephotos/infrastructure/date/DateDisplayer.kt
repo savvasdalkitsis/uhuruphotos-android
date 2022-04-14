@@ -2,19 +2,19 @@ package com.savvasdalkitsis.librephotos.infrastructure.date
 
 import android.text.format.DateUtils
 import com.savvasdalkitsis.librephotos.infrastructure.log.log
-import com.savvasdalkitsis.librephotos.infrastructure.module.Module
+import com.savvasdalkitsis.librephotos.infrastructure.module.InfrastructureModule
 import java.text.DateFormat
 import java.util.*
 import javax.inject.Inject
 
 class DateDisplayer @Inject constructor(
-    @Module.ParsingDateFormat
+    @InfrastructureModule.ParsingDateFormat
     private val parsingDateFormat: DateFormat,
-    @Module.ParsingDateTimeFormat
+    @InfrastructureModule.ParsingDateTimeFormat
     private val parsingDateTimeFormat: DateFormat,
-    @Module.DisplayingDateFormat
+    @InfrastructureModule.DisplayingDateFormat
     private val displayingDateFormat: DateFormat,
-    @Module.DisplayingDateTimeFormat
+    @InfrastructureModule.DisplayingDateTimeFormat
     private val displayingDateTimeFormat: DateFormat,
 ) {
 

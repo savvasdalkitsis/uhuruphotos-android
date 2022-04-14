@@ -18,7 +18,7 @@ import com.savvasdalkitsis.librephotos.search.view.state.SearchState
     action: (SearchAction) -> Unit,
     feedNavigationName: String,
     searchNavigationName: String,
-    controllersProvider: com.savvasdalkitsis.librephotos.navigation.ControllersProvider,
+    controllersProvider: com.savvasdalkitsis.librephotos.app.navigation.ControllersProvider,
 ) {
     HomeScaffold(
         modifier = Modifier

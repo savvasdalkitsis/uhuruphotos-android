@@ -7,7 +7,7 @@ import javax.inject.Inject
 
 @ExperimentalComposeUiApi
 class SearchEffectsHandler @Inject constructor(
-    private val controllersProvider: com.savvasdalkitsis.librephotos.navigation.ControllersProvider,
+    private val controllersProvider: com.savvasdalkitsis.librephotos.app.navigation.ControllersProvider,
 ) : (SearchEffect) -> Unit {
 
     override fun invoke(

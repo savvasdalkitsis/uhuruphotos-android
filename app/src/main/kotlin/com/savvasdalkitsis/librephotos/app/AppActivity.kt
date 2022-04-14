@@ -1,4 +1,4 @@
-package com.savvasdalkitsis.librephotos.main
+package com.savvasdalkitsis.librephotos.app
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -15,7 +15,7 @@ import androidx.core.view.WindowCompat
 import coil.annotation.ExperimentalCoilApi
 import com.google.accompanist.navigation.animation.rememberAnimatedNavController
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
-import com.savvasdalkitsis.librephotos.navigation.LibrePhotosNavigator
+import com.savvasdalkitsis.librephotos.app.navigation.Navigator
 import com.savvasdalkitsis.librephotos.ui.theme.AppTheme
 import com.savvasdalkitsis.librephotos.ui.window.window.LocalSystemUiController
 import com.savvasdalkitsis.librephotos.ui.window.WindowSize
@@ -33,10 +33,10 @@ import javax.inject.Inject
 @ExperimentalComposeUiApi
 @ExperimentalAnimationApi
 @FlowPreview
-class MainActivity : ComponentActivity() {
+class AppActivity : ComponentActivity() {
 
-    @Inject lateinit var librePhotosNavigator: LibrePhotosNavigator
-    @Inject lateinit var controllersProvider: com.savvasdalkitsis.librephotos.navigation.ControllersProvider
+    @Inject lateinit var navigator: Navigator
+    @Inject lateinit var controllersProvider: com.savvasdalkitsis.librephotos.app.navigation.ControllersProvider
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -60,7 +60,7 @@ class MainActivity : ComponentActivity() {
                         )
                     }
 
-                    librePhotosNavigator.NavigationTargets(navController)
+                    navigator.NavigationTargets(navController)
                 }
             }
         }

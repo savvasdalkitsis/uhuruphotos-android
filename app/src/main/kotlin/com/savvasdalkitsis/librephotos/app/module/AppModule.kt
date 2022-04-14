@@ -1,15 +1,23 @@
-package com.savvasdalkitsis.librephotos.module
+package com.savvasdalkitsis.librephotos.app.module
 
 import android.content.Context
 import android.os.Build
 import android.webkit.CookieManager
+import androidx.preference.PreferenceManager
+import androidx.work.WorkManager
 import coil.ImageLoader
 import coil.decode.GifDecoder
 import coil.decode.ImageDecoderDecoder
 import coil.decode.VideoFrameDecoder
 import coil.disk.DiskCache
 import coil.memory.MemoryCache
+import com.fredporciuncula.flow.preferences.FlowSharedPreferences
+import com.orhanobut.logger.AndroidLogAdapter
+import com.orhanobut.logger.PrettyFormatStrategy
+import com.savvasdalkitsis.librephotos.auth.weblogin.WebkitCookieManager
 import com.savvasdalkitsis.librephotos.db.Database
+import com.savvasdalkitsis.librephotos.server.navigation.ServerNavigationTarget
+import com.savvasdalkitsis.librephotos.server.network.DynamicDomainInterceptor
 import com.savvasdalkitsis.librephotos.token.db.Token
 import com.squareup.moshi.Moshi
 import com.squareup.sqldelight.EnumColumnAdapter
@@ -20,17 +28,60 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import okhttp3.Cache
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 import java.io.File
+import java.util.concurrent.TimeUnit
 import javax.inject.Qualifier
 import javax.inject.Singleton
 
-@InstallIn(SingletonComponent::class)
 @Module
-class SingletonModule {
+@InstallIn(SingletonComponent::class)
+class AppModule {
+
+    @Provides
+    @com.savvasdalkitsis.librephotos.home.module.HomeModule.HomeNavigationTargetSearch
+    fun homeNavigationTargetSearch(): String = ServerNavigationTarget.name
+
+    @Provides
+    fun okHttpBuilder(
+        authenticationHeaderInterceptor: com.savvasdalkitsis.librephotos.auth.api.AuthenticationHeaderInterceptor,
+        dynamicDomainInterceptor: DynamicDomainInterceptor,
+        webLoginInterceptor: com.savvasdalkitsis.librephotos.auth.api.WebLoginInterceptor,
+        webkitCookieManager: WebkitCookieManager,
+    ): OkHttpClient.Builder = OkHttpClient().newBuilder()
+        .followRedirects(false)
+        .callTimeout(60, TimeUnit.SECONDS)
+        .connectTimeout(60, TimeUnit.SECONDS)
+        .readTimeout(60, TimeUnit.SECONDS)
+        .writeTimeout(60, TimeUnit.SECONDS)
+        .cookieJar(webkitCookieManager)
+        .addInterceptor(dynamicDomainInterceptor)
+        .addInterceptor(webLoginInterceptor)
+        .addInterceptor(authenticationHeaderInterceptor)
+//        .addInterceptor(HttpLoggingInterceptor()
+//            .setLevel(HttpLoggingInterceptor.Level.BASIC)
+//        )
+
+    @Provides
+    fun workManager(@ApplicationContext context: Context): WorkManager = WorkManager
+        .getInstance(context)
+
+    @Provides
+    fun androidLogAdapter(): AndroidLogAdapter = AndroidLogAdapter(
+        PrettyFormatStrategy.newBuilder()
+            .showThreadInfo(true)
+            .methodCount(0)
+            .tag("")
+            .build())
+
+    @ExperimentalCoroutinesApi
+    @Provides
+    fun preferences(@ApplicationContext context: Context): FlowSharedPreferences =
+        FlowSharedPreferences(PreferenceManager.getDefaultSharedPreferences(context))
 
     @Provides
     @Singleton
@@ -99,7 +150,7 @@ class SingletonModule {
     @Provides
     @Singleton
     fun moshi(): Moshi = Moshi.Builder()
-            .build()
+        .build()
 
     @Provides
     @Singleton

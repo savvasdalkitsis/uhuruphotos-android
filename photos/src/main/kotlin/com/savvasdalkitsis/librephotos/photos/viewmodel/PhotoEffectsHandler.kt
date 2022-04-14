@@ -9,7 +9,7 @@ import com.savvasdalkitsis.librephotos.viewmodel.EffectHandler
 import javax.inject.Inject
 
 class PhotoEffectsHandler @Inject constructor(
-    private val controllersProvider: com.savvasdalkitsis.librephotos.navigation.ControllersProvider,
+    private val controllersProvider: com.savvasdalkitsis.librephotos.app.navigation.ControllersProvider,
 ) : EffectHandler<PhotoEffect> {
 
     override fun invoke(effect: PhotoEffect) {

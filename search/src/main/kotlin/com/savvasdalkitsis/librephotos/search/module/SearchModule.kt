@@ -11,7 +11,7 @@ import retrofit2.Retrofit
 
 @Module
 @InstallIn(SingletonComponent::class)
-class Module {
+class SearchModule {
 
     @Provides
     fun searchService(retrofit: Retrofit): SearchService = retrofit.create(SearchService::class.java)
