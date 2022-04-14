@@ -12,6 +12,7 @@ import com.savvasdalkitsis.librephotos.feedpage.view.state.FeedPageState
 import com.savvasdalkitsis.librephotos.feedpage.viewmodel.FeedPageEffectsHandler
 import com.savvasdalkitsis.librephotos.feedpage.viewmodel.FeedPageViewModel
 import com.savvasdalkitsis.librephotos.home.module.Module
+import com.savvasdalkitsis.librephotos.home.module.Module.HomeNavigationTargetSearch
 import com.savvasdalkitsis.librephotos.navigation.ControllersProvider
 import com.savvasdalkitsis.librephotos.navigation.navigationTarget
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -21,8 +22,7 @@ import javax.inject.Inject
 class FeedPageNavigationTarget @Inject constructor(
     private val controllersProvider: ControllersProvider,
     private val feedPageEffectsHandler: FeedPageEffectsHandler,
-    @Module.HomeNavigationTargetFeed private val feedNavigationName: String,
-    @Module.HomeNavigationTargetSearch private val searchNavigationName: String,
+    @HomeNavigationTargetSearch private val searchNavigationName: String,
 ) {
 
     @ExperimentalCoroutinesApi
@@ -37,7 +37,7 @@ class FeedPageNavigationTarget @Inject constructor(
             initializer = { _, actions -> actions(FeedPageAction.LoadFeed) },
             createModel = { hiltViewModel() }
         ) { state, actions ->
-            FeedPage(controllersProvider, state, feedNavigationName, searchNavigationName, actions)
+            FeedPage(controllersProvider, state, name, searchNavigationName, actions)
         }
     }
 

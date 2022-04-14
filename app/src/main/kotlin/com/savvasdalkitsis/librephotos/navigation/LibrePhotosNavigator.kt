@@ -7,6 +7,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.focus.FocusRequester
+import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.navigation.NavHostController
 import coil.annotation.ExperimentalCoilApi
 import com.google.accompanist.navigation.animation.AnimatedNavHost
@@ -30,7 +31,6 @@ class LibrePhotosNavigator @Inject constructor(
     private val webLoginNavigationTarget: WebLoginNavigationTarget,
     private val photoNavigationTarget: PhotoNavigationTarget,
     private val controllersProvider: ControllersProvider,
-    private val intentLauncher: IntentLauncher,
 ) {
 
     @ExperimentalCoilApi
@@ -43,10 +43,9 @@ class LibrePhotosNavigator @Inject constructor(
     fun NavigationTargets(navHostController: NavHostController) {
         with(controllersProvider) {
             navController = navHostController
-            keyboardController = androidx.compose.ui.platform.LocalSoftwareKeyboardController.current
+            keyboardController = LocalSoftwareKeyboardController.current
             focusRequester = remember { FocusRequester() }
             systemUiController = LocalSystemUiController.current
-            launcher = intentLauncher
         }
         AnimatedNavHost(
             navController = navHostController,

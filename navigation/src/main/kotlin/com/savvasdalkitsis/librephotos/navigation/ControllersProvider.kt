@@ -9,13 +9,13 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class ControllersProvider @Inject constructor() {
+class ControllersProvider @Inject constructor(
+    val intentLauncher: IntentLauncher,
+) {
 
     @ExperimentalComposeUiApi
     var keyboardController: SoftwareKeyboardController? = null
     var navController: NavHostController? = null
     var focusRequester: FocusRequester? = null
     var systemUiController: SystemUiController? = null
-    var launcher: IntentLauncher? = null
-
 }

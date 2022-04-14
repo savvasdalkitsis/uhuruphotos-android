@@ -6,6 +6,8 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavGraphBuilder
 import coil.annotation.ExperimentalCoilApi
 import com.savvasdalkitsis.librephotos.home.module.Module
+import com.savvasdalkitsis.librephotos.home.module.Module.HomeNavigationTargetFeed
+import com.savvasdalkitsis.librephotos.navigation.ControllersProvider
 import com.savvasdalkitsis.librephotos.navigation.navigationTarget
 import com.savvasdalkitsis.librephotos.search.mvflow.SearchAction
 import com.savvasdalkitsis.librephotos.search.mvflow.SearchEffect
@@ -20,9 +22,8 @@ import javax.inject.Inject
 class SearchNavigationTarget @ExperimentalComposeUiApi
 @Inject constructor(
     private val effectsHandler: SearchEffectsHandler,
-    private val controllersProvider: com.savvasdalkitsis.librephotos.navigation.ControllersProvider,
-    @Module.HomeNavigationTargetFeed private val feedNavigationName: String,
-    @Module.HomeNavigationTargetSearch private val searchNavigationName: String,
+    private val controllersProvider: ControllersProvider,
+    @HomeNavigationTargetFeed private val feedNavigationName: String,
 ) {
 
     @ExperimentalCoroutinesApi
@@ -37,7 +38,7 @@ class SearchNavigationTarget @ExperimentalComposeUiApi
             initializer = { _, actions -> actions(SearchAction.Initialise) },
             createModel = { hiltViewModel() }
         ) { state, actions ->
-            SearchPage(state, actions, feedNavigationName, searchNavigationName, controllersProvider)
+            SearchPage(state, actions, feedNavigationName, name, controllersProvider)
         }
     }
 

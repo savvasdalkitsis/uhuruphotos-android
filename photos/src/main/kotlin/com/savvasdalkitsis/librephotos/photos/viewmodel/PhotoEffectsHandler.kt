@@ -17,7 +17,7 @@ class PhotoEffectsHandler @Inject constructor(
             HideSystemBars -> setBars(false)
             ShowSystemBars -> setBars(true)
             NavigateBack -> controllersProvider.navController!!.popBackStack()
-            is LaunchMap -> controllersProvider.launcher?.launch(geoLocation(effect.gps))
+            is LaunchMap -> controllersProvider.intentLauncher.launch(geoLocation(effect.gps))
         }
     }
 
