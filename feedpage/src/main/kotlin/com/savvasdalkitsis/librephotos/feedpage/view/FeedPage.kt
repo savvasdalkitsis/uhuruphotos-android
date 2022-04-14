@@ -1,4 +1,4 @@
-package com.savvasdalkitsis.librephotos.feed.view
+package com.savvasdalkitsis.librephotos.feedpage.view
 
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.foundation.lazy.grid.rememberLazyGridState
@@ -9,6 +9,7 @@ import androidx.compose.ui.Modifier
 import com.google.accompanist.swiperefresh.SwipeRefresh
 import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 import com.savvasdalkitsis.librephotos.accountoverview.view.AccountOverviewPopUp
+import com.savvasdalkitsis.librephotos.feed.view.Feed
 import com.savvasdalkitsis.librephotos.feedpage.mvflow.FeedPageAction
 import com.savvasdalkitsis.librephotos.feedpage.mvflow.FeedPageAction.*
 import com.savvasdalkitsis.librephotos.feedpage.view.state.FeedPageState

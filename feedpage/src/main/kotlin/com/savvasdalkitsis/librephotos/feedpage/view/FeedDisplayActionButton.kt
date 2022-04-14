@@ -1,4 +1,4 @@
-package com.savvasdalkitsis.librephotos.feed.view
+package com.savvasdalkitsis.librephotos.feedpage.view
 
 import androidx.compose.foundation.gestures.detectVerticalDragGestures
 import androidx.compose.foundation.layout.Box

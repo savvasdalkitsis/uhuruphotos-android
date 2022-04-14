@@ -25,10 +25,6 @@ import java.util.concurrent.TimeUnit
 class Module {
 
     @Provides
-    @com.savvasdalkitsis.librephotos.home.module.Module.HomeNavigationTargetFeed
-    fun homeNavigationTargetFeed(): String = FeedPageNavigationTarget.name
-
-    @Provides
     @com.savvasdalkitsis.librephotos.home.module.Module.HomeNavigationTargetSearch
     fun homeNavigationTargetSearch(): String = ServerNavigationTarget.name
 
