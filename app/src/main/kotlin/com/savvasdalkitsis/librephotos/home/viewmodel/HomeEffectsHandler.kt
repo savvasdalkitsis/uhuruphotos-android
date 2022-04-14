@@ -1,6 +1,6 @@
 package com.savvasdalkitsis.librephotos.home.viewmodel
 
-import com.savvasdalkitsis.librephotos.feed.navigation.FeedPageNavigationTarget
+import com.savvasdalkitsis.librephotos.feedpage.navigation.FeedPageNavigationTarget
 import com.savvasdalkitsis.librephotos.home.mvflow.HomeEffect
 import com.savvasdalkitsis.librephotos.home.mvflow.HomeEffect.LaunchAuthentication
 import com.savvasdalkitsis.librephotos.home.mvflow.HomeEffect.LoadFeed

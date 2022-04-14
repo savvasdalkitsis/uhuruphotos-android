@@ -1,4 +1,4 @@
-package com.savvasdalkitsis.librephotos.feed.mvflow
+package com.savvasdalkitsis.librephotos.feedpage.mvflow
 
 import com.savvasdalkitsis.librephotos.albums.model.Album
 import com.savvasdalkitsis.librephotos.feed.view.state.FeedDisplay

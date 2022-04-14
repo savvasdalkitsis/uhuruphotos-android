@@ -2,7 +2,7 @@ package com.savvasdalkitsis.librephotos.search.viewmodel
 
 import coil.annotation.ExperimentalCoilApi
 import com.savvasdalkitsis.librephotos.account.usecase.AccountUseCase
-import com.savvasdalkitsis.librephotos.feed.usecase.FeedUseCase
+import com.savvasdalkitsis.librephotos.feedpage.usecase.FeedPageUseCase
 import com.savvasdalkitsis.librephotos.search.mvflow.SearchAction
 import com.savvasdalkitsis.librephotos.search.mvflow.SearchAction.*
 import com.savvasdalkitsis.librephotos.search.mvflow.SearchEffect
@@ -24,7 +24,7 @@ class SearchHandler @Inject constructor(
     private val searchUseCase: SearchUseCase,
     private val userBadgeUseCase: UserBadgeUseCase,
     private val accountUseCase: AccountUseCase,
-    private val feedUseCase: FeedUseCase,
+    private val feedPageUseCase: FeedPageUseCase,
 ): com.savvasdalkitsis.librephotos.viewmodel.Handler<SearchState, SearchEffect, SearchAction, SearchMutation> {
 
     private var lastSearch: Job? = null
@@ -35,7 +35,7 @@ class SearchHandler @Inject constructor(
         effect: suspend (SearchEffect) -> Unit,
     ): Flow<SearchMutation> = when (action) {
         Initialise -> merge(
-            feedUseCase
+            feedPageUseCase
                 .getFeedDisplay()
                 .distinctUntilChanged()
                 .map(::ChangeDisplay),

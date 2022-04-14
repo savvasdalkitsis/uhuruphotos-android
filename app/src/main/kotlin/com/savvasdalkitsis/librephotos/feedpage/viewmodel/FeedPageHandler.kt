@@ -1,20 +1,20 @@
-package com.savvasdalkitsis.librephotos.feed.viewmodel
+package com.savvasdalkitsis.librephotos.feedpage.viewmodel
 
 import coil.annotation.ExperimentalCoilApi
 import com.savvasdalkitsis.librephotos.albums.usecase.AlbumsUseCase
 import com.savvasdalkitsis.librephotos.account.usecase.AccountUseCase
-import com.savvasdalkitsis.librephotos.feed.mvflow.FeedPageAction
-import com.savvasdalkitsis.librephotos.feed.mvflow.FeedPageAction.*
-import com.savvasdalkitsis.librephotos.feed.mvflow.FeedPageAction.ChangeDisplay
-import com.savvasdalkitsis.librephotos.feed.mvflow.FeedPageAction.HideFeedDisplayChoice
-import com.savvasdalkitsis.librephotos.feed.mvflow.FeedPageAction.ShowFeedDisplayChoice
-import com.savvasdalkitsis.librephotos.feed.mvflow.FeedPageEffect
-import com.savvasdalkitsis.librephotos.feed.mvflow.FeedPageEffect.OpenPhotoDetails
-import com.savvasdalkitsis.librephotos.feed.mvflow.FeedPageEffect.ReloadApp
-import com.savvasdalkitsis.librephotos.feed.mvflow.FeedPageMutation
-import com.savvasdalkitsis.librephotos.feed.mvflow.FeedPageMutation.*
-import com.savvasdalkitsis.librephotos.feed.usecase.FeedUseCase
-import com.savvasdalkitsis.librephotos.feed.view.state.FeedPageState
+import com.savvasdalkitsis.librephotos.feedpage.mvflow.FeedPageAction
+import com.savvasdalkitsis.librephotos.feedpage.mvflow.FeedPageAction.*
+import com.savvasdalkitsis.librephotos.feedpage.mvflow.FeedPageAction.ChangeDisplay
+import com.savvasdalkitsis.librephotos.feedpage.mvflow.FeedPageAction.HideFeedDisplayChoice
+import com.savvasdalkitsis.librephotos.feedpage.mvflow.FeedPageAction.ShowFeedDisplayChoice
+import com.savvasdalkitsis.librephotos.feedpage.mvflow.FeedPageEffect
+import com.savvasdalkitsis.librephotos.feedpage.mvflow.FeedPageEffect.OpenPhotoDetails
+import com.savvasdalkitsis.librephotos.feedpage.mvflow.FeedPageEffect.ReloadApp
+import com.savvasdalkitsis.librephotos.feedpage.mvflow.FeedPageMutation
+import com.savvasdalkitsis.librephotos.feedpage.mvflow.FeedPageMutation.*
+import com.savvasdalkitsis.librephotos.feedpage.usecase.FeedPageUseCase
+import com.savvasdalkitsis.librephotos.feedpage.view.state.FeedPageState
 import com.savvasdalkitsis.librephotos.userbadge.usecase.UserBadgeUseCase
 import com.savvasdalkitsis.librephotos.viewmodel.Handler
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -30,7 +30,7 @@ class FeedPageHandler @Inject constructor(
     private val albumsUseCase: AlbumsUseCase,
     private val userBadgeUseCase: UserBadgeUseCase,
     private val accountUseCase: AccountUseCase,
-    private val feedUseCase: FeedUseCase,
+    private val feedPageUseCase: FeedPageUseCase,
 ) : Handler<FeedPageState, FeedPageEffect, FeedPageAction, FeedPageMutation> {
 
     override fun invoke(
@@ -39,7 +39,7 @@ class FeedPageHandler @Inject constructor(
         effect: suspend (FeedPageEffect) -> Unit,
     ): Flow<FeedPageMutation> = when (action) {
         is LoadFeed -> merge(
-            feedUseCase
+            feedPageUseCase
                 .getFeedDisplay()
                 .distinctUntilChanged()
                 .map(FeedPageMutation::ChangeDisplay),
@@ -66,7 +66,7 @@ class FeedPageHandler @Inject constructor(
             effect(OpenPhotoDetails(action.photo.id!!, action.center, action.scale))
         }
         is ChangeDisplay -> flow {
-            feedUseCase.setFeedDisplay(action.display)
+            feedPageUseCase.setFeedDisplay(action.display)
             emit(FeedPageMutation.HideFeedDisplayChoice)
         }
         HideFeedDisplayChoice -> flowOf(FeedPageMutation.HideFeedDisplayChoice)

@@ -9,9 +9,9 @@ import androidx.compose.ui.Modifier
 import com.google.accompanist.swiperefresh.SwipeRefresh
 import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 import com.savvasdalkitsis.librephotos.account.view.AccountOverviewPopUp
-import com.savvasdalkitsis.librephotos.feed.mvflow.FeedPageAction
-import com.savvasdalkitsis.librephotos.feed.mvflow.FeedPageAction.*
-import com.savvasdalkitsis.librephotos.feed.view.state.FeedPageState
+import com.savvasdalkitsis.librephotos.feedpage.mvflow.FeedPageAction
+import com.savvasdalkitsis.librephotos.feedpage.mvflow.FeedPageAction.*
+import com.savvasdalkitsis.librephotos.feedpage.view.state.FeedPageState
 import com.savvasdalkitsis.librephotos.home.view.HomeScaffold
 import com.savvasdalkitsis.librephotos.infrastructure.extensions.blurIf
 import kotlinx.coroutines.launch

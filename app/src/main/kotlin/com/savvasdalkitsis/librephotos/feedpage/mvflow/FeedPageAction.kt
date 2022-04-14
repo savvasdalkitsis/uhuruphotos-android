@@ -1,4 +1,4 @@
-package com.savvasdalkitsis.librephotos.feed.mvflow
+package com.savvasdalkitsis.librephotos.feedpage.mvflow
 
 import androidx.compose.ui.geometry.Offset
 import com.savvasdalkitsis.librephotos.feed.view.state.FeedDisplay

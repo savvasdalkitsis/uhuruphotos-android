@@ -1,8 +1,8 @@
-package com.savvasdalkitsis.librephotos.feed.viewmodel
+package com.savvasdalkitsis.librephotos.feedpage.viewmodel
 
-import com.savvasdalkitsis.librephotos.feed.mvflow.FeedPageMutation
-import com.savvasdalkitsis.librephotos.feed.mvflow.FeedPageMutation.*
-import com.savvasdalkitsis.librephotos.feed.view.state.FeedPageState
+import com.savvasdalkitsis.librephotos.feedpage.mvflow.FeedPageMutation
+import com.savvasdalkitsis.librephotos.feedpage.mvflow.FeedPageMutation.*
+import com.savvasdalkitsis.librephotos.feedpage.view.state.FeedPageState
 import com.savvasdalkitsis.librephotos.feed.view.state.FeedState
 
 fun feedPageReducer() : com.savvasdalkitsis.librephotos.viewmodel.Reducer<FeedPageState, FeedPageMutation> = { state, mutation ->

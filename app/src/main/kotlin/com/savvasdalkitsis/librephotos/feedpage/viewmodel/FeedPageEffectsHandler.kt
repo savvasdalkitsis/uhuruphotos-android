@@ -1,6 +1,6 @@
-package com.savvasdalkitsis.librephotos.feed.viewmodel
+package com.savvasdalkitsis.librephotos.feedpage.viewmodel
 
-import com.savvasdalkitsis.librephotos.feed.mvflow.FeedPageEffect
+import com.savvasdalkitsis.librephotos.feedpage.mvflow.FeedPageEffect
 import com.savvasdalkitsis.librephotos.home.navigation.HomeNavigationTarget
 import com.savvasdalkitsis.librephotos.photos.navigation.PhotoNavigationTarget
 import javax.inject.Inject

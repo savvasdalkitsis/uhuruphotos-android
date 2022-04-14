@@ -1,4 +1,4 @@
-package com.savvasdalkitsis.librephotos.feed.usecase
+package com.savvasdalkitsis.librephotos.feedpage.usecase
 
 import com.fredporciuncula.flow.preferences.FlowSharedPreferences
 import com.savvasdalkitsis.librephotos.feed.view.state.FeedDisplay
@@ -7,7 +7,7 @@ import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
 @ExperimentalCoroutinesApi
-class FeedUseCase @Inject constructor(
+class FeedPageUseCase @Inject constructor(
     preferences: FlowSharedPreferences,
 ) {
     private val preference = preferences.getEnum("feedDisplay", defaultValue = FeedDisplay.default)

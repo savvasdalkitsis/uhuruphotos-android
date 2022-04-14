@@ -1,15 +1,19 @@
-package com.savvasdalkitsis.librephotos.feed.viewmodel
+package com.savvasdalkitsis.librephotos.feedpage.viewmodel
 
 import androidx.lifecycle.ViewModel
-import com.savvasdalkitsis.librephotos.feed.mvflow.FeedPageAction
-import com.savvasdalkitsis.librephotos.feed.mvflow.FeedPageEffect
-import com.savvasdalkitsis.librephotos.feed.mvflow.FeedPageMutation
-import com.savvasdalkitsis.librephotos.feed.view.state.FeedPageState
+import coil.annotation.ExperimentalCoilApi
+import com.savvasdalkitsis.librephotos.feedpage.mvflow.FeedPageAction
+import com.savvasdalkitsis.librephotos.feedpage.mvflow.FeedPageEffect
+import com.savvasdalkitsis.librephotos.feedpage.mvflow.FeedPageMutation
+import com.savvasdalkitsis.librephotos.feedpage.view.state.FeedPageState
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.FlowPreview
 import org.orbitmvi.orbit.viewmodel.container
 import javax.inject.Inject
 
+@ExperimentalCoilApi
+@ExperimentalCoroutinesApi
 @FlowPreview
 @HiltViewModel
 class FeedPageViewModel @Inject constructor(
