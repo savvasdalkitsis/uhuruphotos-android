@@ -6,7 +6,7 @@ import com.savvasdalkitsis.librephotos.feed.view.state.FeedPageState
 import com.savvasdalkitsis.librephotos.feed.view.state.FeedState
 import com.savvasdalkitsis.librephotos.viewmodel.Reducer
 
-fun feedPageReducer() : Reducer<FeedPageState, FeedPageMutation> = { state, mutation ->
+fun feedPageReducer() : com.savvasdalkitsis.librephotos.viewmodel.Reducer<FeedPageState, FeedPageMutation> = { state, mutation ->
     when (mutation) {
         is Loading -> state.mutateFeed { copy(isLoading = true) }
         is ShowAlbums -> state.mutateFeed { copy(albums = mutation.albums) }

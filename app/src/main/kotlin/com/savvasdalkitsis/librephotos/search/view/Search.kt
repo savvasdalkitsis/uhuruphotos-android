@@ -11,7 +11,6 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.focusRequester
@@ -19,10 +18,9 @@ import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
-import com.savvasdalkitsis.librephotos.extensions.copy
+import com.savvasdalkitsis.librephotos.infrastructure.extensions.copy
 import com.savvasdalkitsis.librephotos.feed.view.Feed
 import com.savvasdalkitsis.librephotos.feed.view.state.FeedState
-import com.savvasdalkitsis.librephotos.navigation.ControllersProvider
 import com.savvasdalkitsis.librephotos.search.mvflow.SearchAction
 import com.savvasdalkitsis.librephotos.search.mvflow.SearchAction.*
 import com.savvasdalkitsis.librephotos.search.view.state.SearchResults
@@ -33,7 +31,7 @@ import com.savvasdalkitsis.librephotos.ui.view.FullProgressBar
 @Composable fun Search(
     state: SearchState,
     action: (SearchAction) -> Unit,
-    controllersProvider: ControllersProvider,
+    controllersProvider: com.savvasdalkitsis.librephotos.navigation.ControllersProvider,
     contentPadding: PaddingValues,
 ) {
     Column {

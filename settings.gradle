@@ -17,3 +17,13 @@ dependencyResolutionManagement {
 }
 rootProject.name = "librephotos-android"
 include ':app'
+include ':db'
+include ':server'
+include ':navigation'
+include ':viewmodel'
+include ':infrastructure'
+include ':auth'
+include ':ui'
+include ':user'
+include ':worker'
+include ':map'

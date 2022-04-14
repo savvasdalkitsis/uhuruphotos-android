@@ -5,10 +5,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import com.savvasdalkitsis.librephotos.account.view.AccountOverviewPopUp
-import com.savvasdalkitsis.librephotos.extensions.blurIf
-import com.savvasdalkitsis.librephotos.feed.view.state.FeedDisplay
+import com.savvasdalkitsis.librephotos.infrastructure.extensions.blurIf
 import com.savvasdalkitsis.librephotos.home.view.HomeScaffold
-import com.savvasdalkitsis.librephotos.navigation.ControllersProvider
 import com.savvasdalkitsis.librephotos.search.mvflow.SearchAction
 import com.savvasdalkitsis.librephotos.search.mvflow.SearchAction.*
 import com.savvasdalkitsis.librephotos.search.view.state.SearchState
@@ -18,7 +16,7 @@ import com.savvasdalkitsis.librephotos.search.view.state.SearchState
 @Composable fun SearchPage(
     state: SearchState,
     action: (SearchAction) -> Unit,
-    controllersProvider: ControllersProvider,
+    controllersProvider: com.savvasdalkitsis.librephotos.navigation.ControllersProvider,
 ) {
     HomeScaffold(
         modifier = Modifier

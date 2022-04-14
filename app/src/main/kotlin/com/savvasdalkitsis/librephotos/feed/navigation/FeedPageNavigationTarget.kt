@@ -16,7 +16,7 @@ import kotlinx.coroutines.FlowPreview
 import javax.inject.Inject
 
 class FeedPageNavigationTarget @Inject constructor(
-    private val controllersProvider: ControllersProvider,
+    private val controllersProvider: com.savvasdalkitsis.librephotos.navigation.ControllersProvider,
     private val feedPageEffectsHandler: FeedPageEffectsHandler,
 ) {
 

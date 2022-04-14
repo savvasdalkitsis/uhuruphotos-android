@@ -5,7 +5,7 @@ import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
 class AlbumWorkScheduler @Inject constructor(
-    private val workScheduler: WorkScheduler,
+    private val workScheduler: com.savvasdalkitsis.librephotos.worker.WorkScheduler,
 ) {
 
     fun scheduleAlbumsRefreshNow() =

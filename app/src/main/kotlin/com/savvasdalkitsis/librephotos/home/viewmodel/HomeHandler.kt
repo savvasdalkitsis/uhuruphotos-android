@@ -15,8 +15,8 @@ import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
 
 class HomeHandler @Inject constructor(
-    private val authenticationUseCase: AuthenticationUseCase,
-) : Handler<HomeState, HomeEffect, HomeAction, HomeMutation> {
+    private val authenticationUseCase: com.savvasdalkitsis.librephotos.auth.usecase.AuthenticationUseCase,
+) : com.savvasdalkitsis.librephotos.viewmodel.Handler<HomeState, HomeEffect, HomeAction, HomeMutation> {
 
     override fun invoke(
         state: HomeState,
@@ -26,7 +26,7 @@ class HomeHandler @Inject constructor(
         is Load -> flow {
             emit(Loading)
             when (authenticationUseCase.authenticationStatus()) {
-                is AuthStatus.Unauthenticated -> effect(LaunchAuthentication)
+                is com.savvasdalkitsis.librephotos.auth.model.AuthStatus.Unauthenticated -> effect(LaunchAuthentication)
                 else -> effect(HomeEffect.LoadFeed)
             }
         }

@@ -14,11 +14,12 @@ import javax.inject.Inject
 @HiltViewModel
 class SearchViewModel @Inject constructor(
     searchHandler: SearchHandler,
-) : ViewModel(), ActionReceiverHost<SearchState, SearchEffect, SearchAction, SearchMutation> {
+) : ViewModel(),
+    com.savvasdalkitsis.librephotos.viewmodel.ActionReceiverHost<SearchState, SearchEffect, SearchAction, SearchMutation> {
 
     override val initialState = SearchState()
 
-    override val actionReceiver = ActionReceiver(
+    override val actionReceiver = com.savvasdalkitsis.librephotos.viewmodel.ActionReceiver(
         searchHandler,
         searchReducer(),
         container(initialState)

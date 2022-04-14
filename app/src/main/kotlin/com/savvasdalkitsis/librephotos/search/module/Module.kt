@@ -1,6 +1,6 @@
 package com.savvasdalkitsis.librephotos.search.module
 
-import com.savvasdalkitsis.librephotos.Database
+import com.savvasdalkitsis.librephotos.db.Database
 import com.savvasdalkitsis.librephotos.search.SearchQueries
 import com.savvasdalkitsis.librephotos.search.api.SearchService
 import dagger.Module

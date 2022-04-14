@@ -1,9 +1,8 @@
 package com.savvasdalkitsis.librephotos.photos.repository
 
-import com.savvasdalkitsis.librephotos.extensions.awaitSingleOrNull
-import com.savvasdalkitsis.librephotos.extensions.crud
+import com.savvasdalkitsis.librephotos.db.extensions.awaitSingleOrNull
+import com.savvasdalkitsis.librephotos.db.extensions.crud
 import com.savvasdalkitsis.librephotos.photos.api.PhotosService
-import com.savvasdalkitsis.librephotos.photos.api.model.toPhotoDetails
 import com.savvasdalkitsis.librephotos.photos.db.PhotoDetails
 import com.savvasdalkitsis.librephotos.photos.db.PhotoDetailsQueries
 import com.savvasdalkitsis.librephotos.photos.db.PhotoSummaryQueries
@@ -11,8 +10,6 @@ import com.savvasdalkitsis.librephotos.photos.worker.PhotoWorkScheduler
 import com.squareup.sqldelight.runtime.coroutines.asFlow
 import com.squareup.sqldelight.runtime.coroutines.mapToOneNotNull
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.emitAll
-import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.onStart
 import javax.inject.Inject
 

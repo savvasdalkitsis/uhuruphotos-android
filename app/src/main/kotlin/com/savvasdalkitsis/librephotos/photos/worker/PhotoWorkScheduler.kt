@@ -6,7 +6,7 @@ import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
 class PhotoWorkScheduler @Inject constructor(
-    private val workScheduler: WorkScheduler
+    private val workScheduler: com.savvasdalkitsis.librephotos.worker.WorkScheduler
 ) {
 
     fun schedulePhotoFavourite(id: String, favourite: Boolean) =

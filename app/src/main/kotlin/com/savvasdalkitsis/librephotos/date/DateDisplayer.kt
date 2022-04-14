@@ -1,7 +1,7 @@
 package com.savvasdalkitsis.librephotos.date
 
 import android.text.format.DateUtils
-import com.savvasdalkitsis.librephotos.log.log
+import com.savvasdalkitsis.librephotos.infrastructure.log.log
 import com.savvasdalkitsis.librephotos.module.Module
 import java.text.DateFormat
 import java.util.*

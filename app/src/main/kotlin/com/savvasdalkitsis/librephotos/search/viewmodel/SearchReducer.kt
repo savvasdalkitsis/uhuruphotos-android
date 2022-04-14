@@ -5,7 +5,7 @@ import com.savvasdalkitsis.librephotos.search.view.state.SearchResults
 import com.savvasdalkitsis.librephotos.search.view.state.SearchState
 import com.savvasdalkitsis.librephotos.viewmodel.Reducer
 
-fun searchReducer() : Reducer<SearchState, SearchMutation> = { state, mutation ->
+fun searchReducer() : com.savvasdalkitsis.librephotos.viewmodel.Reducer<SearchState, SearchMutation> = { state, mutation ->
     when (mutation) {
         is SearchMutation.QueryChanged -> state.copy(query = mutation.query)
         is SearchMutation.FocusChanged -> state.copy(showClearButton = mutation.focused)

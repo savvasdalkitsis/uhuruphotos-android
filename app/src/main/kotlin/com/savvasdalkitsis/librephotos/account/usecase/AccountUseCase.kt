@@ -4,7 +4,7 @@ import coil.annotation.ExperimentalCoilApi
 import coil.disk.DiskCache
 import coil.memory.MemoryCache
 import com.savvasdalkitsis.librephotos.albums.repository.AlbumsRepository
-import com.savvasdalkitsis.librephotos.extensions.crud
+import com.savvasdalkitsis.librephotos.db.extensions.crud
 import com.savvasdalkitsis.librephotos.search.repository.SearchRepository
 import com.savvasdalkitsis.librephotos.token.db.TokenQueries
 import com.savvasdalkitsis.librephotos.user.repository.UserRepository

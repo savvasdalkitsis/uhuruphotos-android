@@ -15,7 +15,7 @@ import javax.inject.Inject
 @ExperimentalMaterialApi
 class PhotoReducer @Inject constructor(
     private val dateDisplayer: DateDisplayer
-) : Reducer<PhotoState, PhotoMutation> {
+) : com.savvasdalkitsis.librephotos.viewmodel.Reducer<PhotoState, PhotoMutation> {
 
     override fun invoke(
         state: PhotoState,

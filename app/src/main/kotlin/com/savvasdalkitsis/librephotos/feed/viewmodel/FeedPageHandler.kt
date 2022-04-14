@@ -31,7 +31,7 @@ class FeedPageHandler @Inject constructor(
     private val userBadgeUseCase: UserBadgeUseCase,
     private val accountUseCase: AccountUseCase,
     private val feedUseCase: FeedUseCase,
-) : Handler<FeedPageState, FeedPageEffect, FeedPageAction, FeedPageMutation> {
+) : com.savvasdalkitsis.librephotos.viewmodel.Handler<FeedPageState, FeedPageEffect, FeedPageAction, FeedPageMutation> {
 
     override fun invoke(
         state: FeedPageState,

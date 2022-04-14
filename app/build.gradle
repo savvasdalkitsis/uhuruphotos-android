@@ -1,7 +1,4 @@
 plugins {
-    id 'com.android.application'
-    id 'org.jetbrains.kotlin.android'
-    id 'kotlin-kapt'
     id 'dagger.hilt.android.plugin'
     id 'com.squareup.sqldelight'
     id 'kotlin-parcelize'
@@ -20,7 +17,6 @@ android {
         versionCode 1
         versionName "1.0"
 
-        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {
             useSupportLibrary true
         }
@@ -45,19 +41,6 @@ android {
             signingConfig signingConfigs.release
         }
     }
-    compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
-    }
-    kotlinOptions {
-        jvmTarget = '1.8'
-    }
-    buildFeatures {
-        compose true
-    }
-    composeOptions {
-        kotlinCompilerExtensionVersion compose_version
-    }
     packagingOptions {
         resources {
             excludes += '/META-INF/{AL2.0,LGPL2.1}'
@@ -67,6 +50,16 @@ android {
 
 dependencies {
 
+    implementation project(":db")
+    implementation project(":server")
+    implementation project(":navigation")
+    implementation project(":viewmodel")
+    implementation project(":infrastructure")
+    implementation project(":auth")
+    implementation project(":ui")
+    implementation project(":user")
+    implementation project(":worker")
+    implementation project(":map")
     implementation(
             libs.accompanist.insets,
             libs.accompanist.navigation,

@@ -4,7 +4,6 @@ import androidx.work.WorkInfo
 import androidx.work.WorkInfo.State.*
 import com.savvasdalkitsis.librephotos.albums.worker.AlbumDownloadWorker
 import com.savvasdalkitsis.librephotos.photos.usecase.PhotosUseCase
-import com.savvasdalkitsis.librephotos.user.usecase.UserUseCase
 import com.savvasdalkitsis.librephotos.userbadge.view.state.SyncState.*
 import com.savvasdalkitsis.librephotos.userbadge.view.state.UserBadgeState
 import com.savvasdalkitsis.librephotos.worker.usecase.WorkerStatusUseCase
@@ -13,7 +12,7 @@ import kotlinx.coroutines.flow.combine
 import javax.inject.Inject
 
 class UserBadgeUseCase @Inject constructor(
-    private val userUseCase: UserUseCase,
+    private val userUseCase: com.savvasdalkitsis.librephotos.user.usecase.UserUseCase,
     private val workerStatusUseCase: WorkerStatusUseCase,
     private val photosUseCase: PhotosUseCase,
 ) {

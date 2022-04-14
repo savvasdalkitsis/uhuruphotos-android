@@ -16,11 +16,12 @@ import javax.inject.Inject
 @HiltViewModel
 class FeedPageViewModel @Inject constructor(
     feedPageHandler: FeedPageHandler,
-) : ViewModel(), ActionReceiverHost<FeedPageState, FeedPageEffect, FeedPageAction, FeedPageMutation> {
+) : ViewModel(),
+    com.savvasdalkitsis.librephotos.viewmodel.ActionReceiverHost<FeedPageState, FeedPageEffect, FeedPageAction, FeedPageMutation> {
 
     override val initialState = FeedPageState()
 
-    override val actionReceiver = ActionReceiver(
+    override val actionReceiver = com.savvasdalkitsis.librephotos.viewmodel.ActionReceiver(
         feedPageHandler,
         feedPageReducer(),
         container(initialState)

@@ -17,7 +17,7 @@ import javax.inject.Inject
 class SearchNavigationTarget @ExperimentalComposeUiApi
 @Inject constructor(
     private val effectsHandler: SearchEffectsHandler,
-    private val controllersProvider: ControllersProvider,
+    private val controllersProvider: com.savvasdalkitsis.librephotos.navigation.ControllersProvider,
 ) {
 
     @ExperimentalAnimationApi

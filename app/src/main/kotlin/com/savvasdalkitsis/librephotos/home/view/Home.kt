@@ -8,7 +8,7 @@ import com.savvasdalkitsis.librephotos.ui.view.FullProgressBar
 @Composable
 fun Home(
     state: HomeState,
-    controllersProvider: ControllersProvider,
+    controllersProvider: com.savvasdalkitsis.librephotos.navigation.ControllersProvider,
 ) {
     HomeScaffold(
         navController = controllersProvider.navController!!,

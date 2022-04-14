@@ -3,7 +3,7 @@ package com.savvasdalkitsis.librephotos.photos.usecase
 import com.savvasdalkitsis.librephotos.photos.db.PhotoDetails
 import com.savvasdalkitsis.librephotos.photos.repository.PhotoRepository
 import com.savvasdalkitsis.librephotos.photos.worker.PhotoWorkScheduler
-import com.savvasdalkitsis.librephotos.server.usecase.ServerUseCase
+import com.savvasdalkitsis.librephotos.auth.usecase.ServerUseCase
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 

@@ -1,16 +1,13 @@
 package com.savvasdalkitsis.librephotos.feed.view
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.Icon
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.geometry.Offset
-import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.layout.boundsInWindow
 import androidx.compose.ui.layout.onGloballyPositioned
@@ -19,7 +16,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import com.savvasdalkitsis.librephotos.R
-import com.savvasdalkitsis.librephotos.extensions.toColor
+import com.savvasdalkitsis.librephotos.infrastructure.extensions.toColor
 import com.savvasdalkitsis.librephotos.photos.model.Photo
 
 @Composable

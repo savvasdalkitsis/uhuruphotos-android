@@ -3,15 +3,14 @@ package com.savvasdalkitsis.librephotos.photos.viewmodel
 import android.content.Intent
 import android.net.Uri
 import com.google.android.gms.maps.model.LatLng
-import com.savvasdalkitsis.librephotos.navigation.ControllersProvider
 import com.savvasdalkitsis.librephotos.photos.mvflow.PhotoEffect
 import com.savvasdalkitsis.librephotos.photos.mvflow.PhotoEffect.*
 import com.savvasdalkitsis.librephotos.viewmodel.EffectHandler
 import javax.inject.Inject
 
 class PhotoEffectsHandler @Inject constructor(
-    private val controllersProvider: ControllersProvider,
-) : EffectHandler<PhotoEffect> {
+    private val controllersProvider: com.savvasdalkitsis.librephotos.navigation.ControllersProvider,
+) : com.savvasdalkitsis.librephotos.viewmodel.EffectHandler<PhotoEffect> {
 
     override fun invoke(effect: PhotoEffect) {
         when (effect) {

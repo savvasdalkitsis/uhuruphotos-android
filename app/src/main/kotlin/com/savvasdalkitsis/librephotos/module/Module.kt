@@ -8,10 +8,8 @@ import androidx.work.WorkManager
 import com.fredporciuncula.flow.preferences.FlowSharedPreferences
 import com.orhanobut.logger.AndroidLogAdapter
 import com.orhanobut.logger.PrettyFormatStrategy
-import com.savvasdalkitsis.librephotos.auth.api.AuthenticationHeaderInterceptor
-import com.savvasdalkitsis.librephotos.auth.api.WebLoginInterceptor
-import com.savvasdalkitsis.librephotos.network.DynamicDomainInterceptor
-import com.savvasdalkitsis.librephotos.web.WebkitCookieManager
+import com.savvasdalkitsis.librephotos.server.network.DynamicDomainInterceptor
+import com.savvasdalkitsis.librephotos.auth.weblogin.WebkitCookieManager
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -31,9 +29,9 @@ class Module {
 
     @Provides
     fun okHttpBuilder(
-        authenticationHeaderInterceptor: AuthenticationHeaderInterceptor,
+        authenticationHeaderInterceptor: com.savvasdalkitsis.librephotos.auth.api.AuthenticationHeaderInterceptor,
         dynamicDomainInterceptor: DynamicDomainInterceptor,
-        webLoginInterceptor: WebLoginInterceptor,
+        webLoginInterceptor: com.savvasdalkitsis.librephotos.auth.api.WebLoginInterceptor,
         webkitCookieManager: WebkitCookieManager,
     ): OkHttpClient.Builder = OkHttpClient().newBuilder()
         .followRedirects(false)

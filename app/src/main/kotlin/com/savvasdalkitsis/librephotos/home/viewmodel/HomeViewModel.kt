@@ -14,11 +14,12 @@ import javax.inject.Inject
 @HiltViewModel
 class HomeViewModel @Inject constructor(
     homeHandler: HomeHandler,
-) : ViewModel(), ActionReceiverHost<HomeState, HomeEffect, HomeAction, HomeMutation> {
+) : ViewModel(),
+    com.savvasdalkitsis.librephotos.viewmodel.ActionReceiverHost<HomeState, HomeEffect, HomeAction, HomeMutation> {
 
     override val initialState = HomeState()
 
-    override val actionReceiver = ActionReceiver(
+    override val actionReceiver = com.savvasdalkitsis.librephotos.viewmodel.ActionReceiver(
         homeHandler,
         homeReducer(),
         container(initialState)

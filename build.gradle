@@ -19,3 +19,42 @@ plugins {
 task clean(type: Delete) {
     delete rootProject.buildDir
 }
+
+subprojects {
+    if (name == "app") {
+        apply plugin: "com.android.application"
+    } else {
+        apply plugin: "com.android.library"
+    }
+
+    apply plugin: 'org.jetbrains.kotlin.android'
+    apply plugin: 'kotlin-kapt'
+
+    android {
+        compileSdk 31
+
+        defaultConfig {
+            minSdk 21
+            targetSdk 31
+        }
+
+        buildTypes {
+            release {
+                minifyEnabled false
+            }
+        }
+        buildFeatures {
+            compose true
+        }
+        composeOptions {
+            kotlinCompilerExtensionVersion compose_version
+        }
+        compileOptions {
+            sourceCompatibility JavaVersion.VERSION_1_8
+            targetCompatibility JavaVersion.VERSION_1_8
+        }
+        kotlinOptions {
+            jvmTarget = '1.8'
+        }
+    }
+}

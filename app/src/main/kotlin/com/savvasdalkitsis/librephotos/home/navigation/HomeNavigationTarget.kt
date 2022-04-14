@@ -16,7 +16,7 @@ import javax.inject.Inject
 
 class HomeNavigationTarget @Inject constructor(
     private val effectsHandler: HomeEffectsHandler,
-    private val controllersProvider: ControllersProvider,
+    private val controllersProvider: com.savvasdalkitsis.librephotos.navigation.ControllersProvider,
 ) {
 
     @ExperimentalAnimationApi

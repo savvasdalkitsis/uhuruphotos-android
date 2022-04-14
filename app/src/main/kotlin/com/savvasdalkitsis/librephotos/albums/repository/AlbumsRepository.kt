@@ -4,10 +4,10 @@ import com.savvasdalkitsis.librephotos.albums.api.AlbumsService
 import com.savvasdalkitsis.librephotos.albums.api.model.toAlbum
 import com.savvasdalkitsis.librephotos.albums.db.AlbumsQueries
 import com.savvasdalkitsis.librephotos.albums.db.GetAlbums
-import com.savvasdalkitsis.librephotos.extensions.Group
-import com.savvasdalkitsis.librephotos.extensions.awaitSingle
-import com.savvasdalkitsis.librephotos.extensions.crud
-import com.savvasdalkitsis.librephotos.extensions.groupBy
+import com.savvasdalkitsis.librephotos.db.extensions.awaitSingle
+import com.savvasdalkitsis.librephotos.db.extensions.crud
+import com.savvasdalkitsis.librephotos.infrastructure.extensions.Group
+import com.savvasdalkitsis.librephotos.infrastructure.extensions.groupBy
 import com.savvasdalkitsis.librephotos.photos.db.PhotoSummaryQueries
 import com.savvasdalkitsis.librephotos.photos.db.entities.toPhotoSummary
 import com.squareup.sqldelight.runtime.coroutines.asFlow

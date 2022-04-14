@@ -9,7 +9,7 @@ import coil.decode.ImageDecoderDecoder
 import coil.decode.VideoFrameDecoder
 import coil.disk.DiskCache
 import coil.memory.MemoryCache
-import com.savvasdalkitsis.librephotos.Database
+import com.savvasdalkitsis.librephotos.db.Database
 import com.savvasdalkitsis.librephotos.auth.api.AuthenticationService
 import com.savvasdalkitsis.librephotos.auth.api.TokenRefreshInterceptor
 import com.savvasdalkitsis.librephotos.token.db.Token
@@ -50,7 +50,7 @@ class SingletonModule {
     @Singleton
     fun authenticationService(
         @AuthenticationRetrofit retrofit: Retrofit,
-    ): AuthenticationService = retrofit.create(AuthenticationService::class.java)
+    ): com.savvasdalkitsis.librephotos.auth.api.AuthenticationService = retrofit.create(com.savvasdalkitsis.librephotos.auth.api.AuthenticationService::class.java)
 
     @Qualifier
     @Retention(AnnotationRetention.BINARY)
@@ -84,7 +84,7 @@ class SingletonModule {
         httpCache: Cache,
         retrofitBuilder: Retrofit.Builder,
         okHttpBuilder: OkHttpClient.Builder,
-        tokenRefreshInterceptor: TokenRefreshInterceptor,
+        tokenRefreshInterceptor: com.savvasdalkitsis.librephotos.auth.api.TokenRefreshInterceptor,
     ): Retrofit = retrofitBuilder
         .client(okHttpBuilder
             .cache(httpCache)
@@ -129,7 +129,7 @@ class SingletonModule {
     fun imageLoader(
         @ApplicationContext context: Context,
         okHttpBuilder: OkHttpClient.Builder,
-        tokenRefreshInterceptor: TokenRefreshInterceptor,
+        tokenRefreshInterceptor: com.savvasdalkitsis.librephotos.auth.api.TokenRefreshInterceptor,
         memoryCache: MemoryCache,
         diskCache: DiskCache,
     ): ImageLoader = ImageLoader.Builder(context)
