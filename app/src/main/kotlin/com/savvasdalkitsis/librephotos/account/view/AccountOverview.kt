@@ -25,7 +25,10 @@ fun AccountOverview(
             .padding(16.dp)
     ) {
         Row {
-            UserBadge(state = userBadgeState, size = 48.dp)
+            UserBadge(
+                state = userBadgeState,
+                size = 48.dp
+            )
         }
         Button(
             modifier = Modifier.align(End),

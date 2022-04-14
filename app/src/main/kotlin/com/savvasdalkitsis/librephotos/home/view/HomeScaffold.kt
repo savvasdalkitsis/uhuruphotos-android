@@ -40,7 +40,10 @@ fun HomeScaffold(
         actionBarContent = {
             actionBarContent()
             userBadgeState?.let {
-                UserBadge(state = it, userBadgePressed = userBadgePressed)
+                UserBadge(
+                    state = it,
+                    userBadgePressed = userBadgePressed
+                )
             }
         }
     ) { contentPadding ->
