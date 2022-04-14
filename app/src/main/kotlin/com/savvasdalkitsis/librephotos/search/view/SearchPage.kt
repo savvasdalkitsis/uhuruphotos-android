@@ -16,6 +16,8 @@ import com.savvasdalkitsis.librephotos.search.view.state.SearchState
 @Composable fun SearchPage(
     state: SearchState,
     action: (SearchAction) -> Unit,
+    feedNavigationName: String,
+    searchNavigationName: String,
     controllersProvider: com.savvasdalkitsis.librephotos.navigation.ControllersProvider,
 ) {
     HomeScaffold(
@@ -24,7 +26,9 @@ import com.savvasdalkitsis.librephotos.search.view.state.SearchState
         navController = controllersProvider.navController!!,
         userBadgeState = state.userBadgeState,
         feedDisplay = state.feedDisplay,
-        userBadgePressed = { action(UserBadgePressed) }
+        userBadgePressed = { action(UserBadgePressed) },
+        feedNavigationName = feedNavigationName,
+        searchNavigationName = searchNavigationName,
     ) { contentPadding ->
         Search(
             state = state,

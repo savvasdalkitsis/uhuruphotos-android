@@ -8,6 +8,8 @@ import com.fredporciuncula.flow.preferences.FlowSharedPreferences
 import com.orhanobut.logger.AndroidLogAdapter
 import com.orhanobut.logger.PrettyFormatStrategy
 import com.savvasdalkitsis.librephotos.auth.weblogin.WebkitCookieManager
+import com.savvasdalkitsis.librephotos.feedpage.navigation.FeedPageNavigationTarget
+import com.savvasdalkitsis.librephotos.server.navigation.ServerNavigationTarget
 import com.savvasdalkitsis.librephotos.server.network.DynamicDomainInterceptor
 import dagger.Module
 import dagger.Provides
@@ -21,6 +23,14 @@ import java.util.concurrent.TimeUnit
 @Module
 @InstallIn(SingletonComponent::class)
 class Module {
+
+    @Provides
+    @com.savvasdalkitsis.librephotos.home.module.Module.HomeNavigationTargetFeed
+    fun homeNavigationTargetFeed(): String = FeedPageNavigationTarget.name
+
+    @Provides
+    @com.savvasdalkitsis.librephotos.home.module.Module.HomeNavigationTargetSearch
+    fun homeNavigationTargetSearch(): String = ServerNavigationTarget.name
 
     @Provides
     fun okHttpBuilder(

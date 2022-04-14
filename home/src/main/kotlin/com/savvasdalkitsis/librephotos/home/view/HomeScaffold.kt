@@ -21,6 +21,8 @@ fun HomeScaffold(
     navController: NavHostController,
     userBadgeState: UserBadgeState? = null,
     feedDisplay: FeedDisplay = FeedDisplay.default,
+    feedNavigationName: String,
+    searchNavigationName: String,
     userBadgePressed: () -> Unit = {},
     actionBarContent: @Composable RowScope.() -> Unit = {},
     onReselected: () -> Unit = {},
@@ -34,6 +36,8 @@ fun HomeScaffold(
                     navController = navController,
                     feedDisplay = feedDisplay,
                     onReselected = onReselected,
+                    feedNavigationName = feedNavigationName,
+                    searchNavigationName = searchNavigationName,
                 )
             }
         },
@@ -54,6 +58,8 @@ fun HomeScaffold(
                     contentPadding = contentPadding,
                     feedDisplay = feedDisplay,
                     navController = navController,
+                    feedNavigationName = feedNavigationName,
+                    searchNavigationName = searchNavigationName,
                 )
                 content(contentPadding)
             }

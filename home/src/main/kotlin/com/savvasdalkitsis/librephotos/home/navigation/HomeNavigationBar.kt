@@ -18,11 +18,9 @@ import androidx.navigation.NavDestination.Companion.hierarchy
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
-import com.savvasdalkitsis.librephotos.feedpage.navigation.FeedPageNavigationTarget
 import com.savvasdalkitsis.librephotos.feed.view.state.FeedDisplay
 import com.savvasdalkitsis.librephotos.home.navigation.NavigationStyle.BOTTOM_BAR
 import com.savvasdalkitsis.librephotos.home.navigation.NavigationStyle.NAVIGATION_RAIL
-import com.savvasdalkitsis.librephotos.search.navigation.SearchNavigationTarget
 import com.savvasdalkitsis.librephotos.ui.window.WindowSize
 import com.savvasdalkitsis.librephotos.ui.window.WindowSizeClass.COMPACT
 
@@ -37,6 +35,8 @@ fun HomeNavigationBar(
     contentPadding: PaddingValues = PaddingValues(0.dp),
     feedDisplay: FeedDisplay,
     navController: NavHostController,
+    feedNavigationName: String,
+    searchNavigationName: String,
     onReselected: () -> Unit = {},
 ) {
     val navBackStackEntry by navController.currentBackStackEntryAsState()
@@ -48,14 +48,14 @@ fun HomeNavigationBar(
             BottomNavigation(
                 backgroundColor = backgroundColor
             ) {
-                Items(currentDestination, navController, feedDisplay, onReselected, rowScope = this)
+                Items(currentDestination, navController, feedDisplay, feedNavigationName, searchNavigationName, onReselected, rowScope = this)
             }
         }
         NAVIGATION_RAIL -> NavigationRail(
             modifier = Modifier.padding(top = contentPadding.calculateTopPadding()),
             backgroundColor = backgroundColor,
         ) {
-            Items(currentDestination, navController, feedDisplay, onReselected)
+            Items(currentDestination, navController, feedDisplay, feedNavigationName, searchNavigationName, onReselected)
         }
     }
 }
@@ -65,13 +65,15 @@ private fun Items(
     currentDestination: NavDestination?,
     navController: NavHostController,
     feedDisplay: FeedDisplay,
+    feedNavigationName: String,
+    searchNavigationName: String,
     onReselected: () -> Unit,
     rowScope: RowScope? = null,
 ) {
     NavItem(
         currentDestination, navController,
         label = "Feed",
-        routeName = FeedPageNavigationTarget.name,
+        routeName = feedNavigationName,
         painterResource(id = feedDisplay.iconResource),
         onReselected,
         rowScope,
@@ -79,7 +81,7 @@ private fun Items(
     NavItem(
         currentDestination, navController,
         label = "Search",
-        routeName = SearchNavigationTarget.name,
+        routeName = searchNavigationName,
         icon = rememberVectorPainter(Icons.Filled.Search),
         rowScope = rowScope,
         onReselected = onReselected,

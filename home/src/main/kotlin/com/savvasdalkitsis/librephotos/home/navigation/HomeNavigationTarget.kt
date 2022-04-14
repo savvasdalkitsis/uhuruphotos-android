@@ -4,6 +4,7 @@ import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavGraphBuilder
+import com.savvasdalkitsis.librephotos.home.module.Module
 import com.savvasdalkitsis.librephotos.home.mvflow.HomeAction
 import com.savvasdalkitsis.librephotos.home.mvflow.HomeEffect
 import com.savvasdalkitsis.librephotos.home.view.Home
@@ -16,6 +17,8 @@ import javax.inject.Inject
 class HomeNavigationTarget @Inject constructor(
     private val effectsHandler: HomeEffectsHandler,
     private val controllersProvider: com.savvasdalkitsis.librephotos.navigation.ControllersProvider,
+    @Module.HomeNavigationTargetFeed private val feedNavigationName: String,
+    @Module.HomeNavigationTargetSearch private val searchNavigationName: String,
 ) {
 
     @ExperimentalAnimationApi
@@ -27,7 +30,7 @@ class HomeNavigationTarget @Inject constructor(
             initializer = { _, actions -> actions(HomeAction.Load) },
             createModel = { hiltViewModel() }
         ) { state, _ ->
-            Home(state, controllersProvider)
+            Home(state, feedNavigationName, searchNavigationName, controllersProvider)
         }
 
     companion object {

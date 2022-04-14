@@ -21,6 +21,8 @@ import kotlinx.coroutines.launch
 fun FeedPage(
     controllersProvider: com.savvasdalkitsis.librephotos.navigation.ControllersProvider,
     state: FeedPageState,
+    feedNavigationName: String,
+    searchNavigationName: String,
     action: (FeedPageAction) -> Unit,
 ) {
     val coroutineScope = rememberCoroutineScope()
@@ -32,6 +34,8 @@ fun FeedPage(
         navController = controllersProvider.navController!!,
         userBadgeState = state.userBadgeState,
         feedDisplay = state.feedState.feedDisplay,
+        feedNavigationName = feedNavigationName,
+        searchNavigationName = searchNavigationName,
         userBadgePressed = { action(UserBadgePressed) },
         onReselected = {
             coroutineScope.launch {

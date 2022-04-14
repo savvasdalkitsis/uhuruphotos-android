@@ -7,6 +7,8 @@ import com.savvasdalkitsis.librephotos.ui.view.FullProgressBar
 @Composable
 fun Home(
     state: HomeState,
+    feedNavigationName: String,
+    searchNavigationName: String,
     controllersProvider: com.savvasdalkitsis.librephotos.navigation.ControllersProvider,
 ) {
     HomeScaffold(
@@ -16,6 +18,8 @@ fun Home(
                 FullProgressBar()
             }
         },
+        feedNavigationName = feedNavigationName,
+        searchNavigationName = searchNavigationName,
     )
 }
 
