@@ -18,11 +18,11 @@ class PhotoViewModel @Inject constructor(
     handler: PhotoHandler,
     reducer: PhotoReducer,
 ) : ViewModel(),
-    com.savvasdalkitsis.librephotos.viewmodel.ActionReceiverHost<PhotoState, PhotoEffect, PhotoAction, PhotoMutation> {
+    ActionReceiverHost<PhotoState, PhotoEffect, PhotoAction, PhotoMutation> {
 
     override val initialState = PhotoState()
 
-    override val actionReceiver = com.savvasdalkitsis.librephotos.viewmodel.ActionReceiver(
+    override val actionReceiver = ActionReceiver(
         handler,
         reducer,
         container(initialState)

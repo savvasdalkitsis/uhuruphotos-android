@@ -47,37 +47,6 @@ class Module {
 //            .setLevel(HttpLoggingInterceptor.Level.BASIC)
 //        )
 
-    @Qualifier
-    @Retention(AnnotationRetention.BINARY)
-    annotation class ParsingDateFormat
-    @Qualifier
-    @Retention(AnnotationRetention.BINARY)
-    annotation class ParsingDateTimeFormat
-    @Qualifier
-    @Retention(AnnotationRetention.BINARY)
-    annotation class DisplayingDateFormat
-    @Qualifier
-    @Retention(AnnotationRetention.BINARY)
-    annotation class DisplayingDateTimeFormat
-
-    @SuppressLint("SimpleDateFormat")
-    @Provides
-    @ParsingDateFormat
-    fun parsingDateFormat(): DateFormat = SimpleDateFormat("yyy-MM-dd")
-
-    @SuppressLint("SimpleDateFormat")
-    @Provides
-    @ParsingDateTimeFormat
-    fun parsingDateTimeFormat(): DateFormat = SimpleDateFormat("yyy-MM-dd'T'kk:mm:ss'Z'")
-
-    @Provides
-    @DisplayingDateFormat
-    fun displayingDateFormat(): DateFormat = DateFormat.getDateInstance(FULL)
-
-    @Provides
-    @DisplayingDateTimeFormat
-    fun displayingDateTimeFormat(): DateFormat = DateFormat.getDateTimeInstance(FULL, FULL)
-
     @Provides
     fun workManager(@ApplicationContext context: Context): WorkManager = WorkManager
         .getInstance(context)

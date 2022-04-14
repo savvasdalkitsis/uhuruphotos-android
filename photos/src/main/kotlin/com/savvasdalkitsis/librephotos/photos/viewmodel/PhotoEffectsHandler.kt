@@ -10,7 +10,7 @@ import javax.inject.Inject
 
 class PhotoEffectsHandler @Inject constructor(
     private val controllersProvider: com.savvasdalkitsis.librephotos.navigation.ControllersProvider,
-) : com.savvasdalkitsis.librephotos.viewmodel.EffectHandler<PhotoEffect> {
+) : EffectHandler<PhotoEffect> {
 
     override fun invoke(effect: PhotoEffect) {
         when (effect) {

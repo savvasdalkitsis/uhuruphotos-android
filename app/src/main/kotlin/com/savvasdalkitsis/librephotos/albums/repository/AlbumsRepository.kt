@@ -9,7 +9,7 @@ import com.savvasdalkitsis.librephotos.db.extensions.crud
 import com.savvasdalkitsis.librephotos.infrastructure.extensions.Group
 import com.savvasdalkitsis.librephotos.infrastructure.extensions.groupBy
 import com.savvasdalkitsis.librephotos.photos.db.PhotoSummaryQueries
-import com.savvasdalkitsis.librephotos.photos.db.entities.toPhotoSummary
+import com.savvasdalkitsis.librephotos.photos.entities.toPhotoSummary
 import com.squareup.sqldelight.runtime.coroutines.asFlow
 import com.squareup.sqldelight.runtime.coroutines.mapToList
 import kotlinx.coroutines.delay

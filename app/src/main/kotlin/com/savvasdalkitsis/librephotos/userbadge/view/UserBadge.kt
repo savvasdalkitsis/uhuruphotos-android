@@ -19,7 +19,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
-import com.savvasdalkitsis.librephotos.R
+import com.savvasdalkitsis.librephotos.icons.R
 import com.savvasdalkitsis.librephotos.ui.theme.CustomColors
 import com.savvasdalkitsis.librephotos.userbadge.view.state.SyncState.*
 import com.savvasdalkitsis.librephotos.userbadge.view.state.UserBadgeState

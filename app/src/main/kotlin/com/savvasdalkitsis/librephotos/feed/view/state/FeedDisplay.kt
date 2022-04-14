@@ -2,7 +2,7 @@ package com.savvasdalkitsis.librephotos.feed.view.state
 
 
 import androidx.annotation.DrawableRes
-import com.savvasdalkitsis.librephotos.R
+import com.savvasdalkitsis.librephotos.icons.R
 import com.savvasdalkitsis.librephotos.window.WindowSizeClass
 import kotlin.math.max
 import kotlin.math.min

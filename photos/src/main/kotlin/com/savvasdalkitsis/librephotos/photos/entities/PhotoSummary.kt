@@ -1,4 +1,4 @@
-package com.savvasdalkitsis.librephotos.photos.db.entities
+package com.savvasdalkitsis.librephotos.photos.entities
 
 import com.savvasdalkitsis.librephotos.photos.api.model.PhotoSummaryItem
 import com.savvasdalkitsis.librephotos.photos.db.PhotoSummary
