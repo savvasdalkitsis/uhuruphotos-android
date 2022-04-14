@@ -1,4 +1,4 @@
-package com.savvasdalkitsis.librephotos.window
+package com.savvasdalkitsis.librephotos.ui.window.window
 
 import androidx.compose.runtime.ProvidableCompositionLocal
 import androidx.compose.runtime.compositionLocalOf

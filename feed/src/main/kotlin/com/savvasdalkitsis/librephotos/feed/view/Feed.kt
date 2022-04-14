@@ -26,7 +26,7 @@ import androidx.compose.ui.util.fastForEach
 import com.savvasdalkitsis.librephotos.feed.view.state.FeedDisplay
 import com.savvasdalkitsis.librephotos.feed.view.state.FeedState
 import com.savvasdalkitsis.librephotos.ui.view.FullProgressBar
-import com.savvasdalkitsis.librephotos.window.WindowSize
+import com.savvasdalkitsis.librephotos.ui.window.WindowSize
 import kotlinx.coroutines.launch
 import kotlin.math.max
 import kotlin.math.min

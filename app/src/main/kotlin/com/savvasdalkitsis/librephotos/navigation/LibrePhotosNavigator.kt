@@ -16,7 +16,7 @@ import com.savvasdalkitsis.librephotos.home.navigation.HomeNavigationTarget
 import com.savvasdalkitsis.librephotos.photos.navigation.PhotoNavigationTarget
 import com.savvasdalkitsis.librephotos.search.navigation.SearchNavigationTarget
 import com.savvasdalkitsis.librephotos.server.navigation.ServerNavigationTarget
-import com.savvasdalkitsis.librephotos.window.LocalSystemUiController
+import com.savvasdalkitsis.librephotos.ui.window.window.LocalSystemUiController
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.FlowPreview
 import javax.inject.Inject

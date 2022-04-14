@@ -23,8 +23,8 @@ import com.savvasdalkitsis.librephotos.feed.view.state.FeedDisplay
 import com.savvasdalkitsis.librephotos.home.navigation.NavigationStyle.BOTTOM_BAR
 import com.savvasdalkitsis.librephotos.home.navigation.NavigationStyle.NAVIGATION_RAIL
 import com.savvasdalkitsis.librephotos.search.navigation.SearchNavigationTarget
-import com.savvasdalkitsis.librephotos.window.WindowSize
-import com.savvasdalkitsis.librephotos.window.WindowSizeClass.COMPACT
+import com.savvasdalkitsis.librephotos.ui.window.WindowSize
+import com.savvasdalkitsis.librephotos.ui.window.WindowSizeClass.COMPACT
 
 @Composable
 fun homeNavigationStyle() = when (WindowSize.LOCAL_WIDTH.current) {

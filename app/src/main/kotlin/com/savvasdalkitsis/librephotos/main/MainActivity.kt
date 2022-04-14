@@ -12,17 +12,21 @@ import androidx.compose.runtime.SideEffect
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.graphics.Color
 import androidx.core.view.WindowCompat
+import coil.annotation.ExperimentalCoilApi
 import com.google.accompanist.navigation.animation.rememberAnimatedNavController
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import com.savvasdalkitsis.librephotos.navigation.LibrePhotosNavigator
 import com.savvasdalkitsis.librephotos.ui.theme.AppTheme
-import com.savvasdalkitsis.librephotos.window.LocalSystemUiController
-import com.savvasdalkitsis.librephotos.window.WindowSize
-import com.savvasdalkitsis.librephotos.window.windowSizeClass
+import com.savvasdalkitsis.librephotos.ui.window.window.LocalSystemUiController
+import com.savvasdalkitsis.librephotos.ui.window.WindowSize
+import com.savvasdalkitsis.librephotos.ui.window.window.windowSizeClass
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.FlowPreview
 import javax.inject.Inject
 
+@ExperimentalCoroutinesApi
+@ExperimentalCoilApi
 @ExperimentalMaterialApi
 @ExperimentalFoundationApi
 @AndroidEntryPoint
