@@ -6,13 +6,13 @@ import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavBackStackEntry
 import androidx.navigation.NavGraphBuilder
-import com.savvasdalkitsis.librephotos.navigation.navigationTarget
 import com.savvasdalkitsis.librephotos.auth.weblogin.weblogin.mvflow.WebEffectsHandler
 import com.savvasdalkitsis.librephotos.auth.weblogin.weblogin.mvflow.WebLoginAction
 import com.savvasdalkitsis.librephotos.auth.weblogin.weblogin.mvflow.WebLoginEffect
 import com.savvasdalkitsis.librephotos.auth.weblogin.weblogin.view.WebLogin
 import com.savvasdalkitsis.librephotos.auth.weblogin.weblogin.view.WebLoginState
 import com.savvasdalkitsis.librephotos.auth.weblogin.weblogin.viewmodel.WebLoginViewModel
+import com.savvasdalkitsis.librephotos.navigation.navigationTarget
 import javax.inject.Inject
 
 class WebLoginNavigationTarget @Inject constructor(

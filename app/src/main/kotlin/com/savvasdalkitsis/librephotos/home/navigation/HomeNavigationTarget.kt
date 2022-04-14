@@ -10,7 +10,6 @@ import com.savvasdalkitsis.librephotos.home.view.Home
 import com.savvasdalkitsis.librephotos.home.view.state.HomeState
 import com.savvasdalkitsis.librephotos.home.viewmodel.HomeEffectsHandler
 import com.savvasdalkitsis.librephotos.home.viewmodel.HomeViewModel
-import com.savvasdalkitsis.librephotos.navigation.ControllersProvider
 import com.savvasdalkitsis.librephotos.navigation.navigationTarget
 import javax.inject.Inject
 

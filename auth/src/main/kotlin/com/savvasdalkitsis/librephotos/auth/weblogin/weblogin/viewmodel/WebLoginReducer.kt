@@ -1,6 +1,5 @@
 package com.savvasdalkitsis.librephotos.auth.weblogin.weblogin.viewmodel
 
-import com.savvasdalkitsis.librephotos.viewmodel.Reducer
 import com.savvasdalkitsis.librephotos.auth.weblogin.weblogin.mvflow.WebLoginMutation
 import com.savvasdalkitsis.librephotos.auth.weblogin.weblogin.view.WebLoginState
 

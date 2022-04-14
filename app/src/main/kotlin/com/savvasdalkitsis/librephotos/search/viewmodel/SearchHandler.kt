@@ -13,7 +13,6 @@ import com.savvasdalkitsis.librephotos.search.mvflow.SearchMutation.*
 import com.savvasdalkitsis.librephotos.search.usecase.SearchUseCase
 import com.savvasdalkitsis.librephotos.search.view.state.SearchState
 import com.savvasdalkitsis.librephotos.userbadge.usecase.UserBadgeUseCase
-import com.savvasdalkitsis.librephotos.viewmodel.Handler
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.*
 import javax.inject.Inject

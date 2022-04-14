@@ -1,8 +1,8 @@
 package com.savvasdalkitsis.librephotos.feed.viewmodel
 
 import coil.annotation.ExperimentalCoilApi
-import com.savvasdalkitsis.librephotos.account.usecase.AccountUseCase
 import com.savvasdalkitsis.librephotos.albums.usecase.AlbumsUseCase
+import com.savvasdalkitsis.librephotos.account.usecase.AccountUseCase
 import com.savvasdalkitsis.librephotos.feed.mvflow.FeedPageAction
 import com.savvasdalkitsis.librephotos.feed.mvflow.FeedPageAction.*
 import com.savvasdalkitsis.librephotos.feed.mvflow.FeedPageAction.ChangeDisplay
@@ -31,7 +31,7 @@ class FeedPageHandler @Inject constructor(
     private val userBadgeUseCase: UserBadgeUseCase,
     private val accountUseCase: AccountUseCase,
     private val feedUseCase: FeedUseCase,
-) : com.savvasdalkitsis.librephotos.viewmodel.Handler<FeedPageState, FeedPageEffect, FeedPageAction, FeedPageMutation> {
+) : Handler<FeedPageState, FeedPageEffect, FeedPageAction, FeedPageMutation> {
 
     override fun invoke(
         state: FeedPageState,

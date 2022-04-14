@@ -1,8 +1,6 @@
 package com.savvasdalkitsis.librephotos.auth.weblogin.weblogin.viewmodel
 
 import androidx.lifecycle.ViewModel
-import com.savvasdalkitsis.librephotos.viewmodel.ActionReceiver
-import com.savvasdalkitsis.librephotos.viewmodel.ActionReceiverHost
 import com.savvasdalkitsis.librephotos.auth.weblogin.weblogin.mvflow.WebLoginAction
 import com.savvasdalkitsis.librephotos.auth.weblogin.weblogin.mvflow.WebLoginEffect
 import com.savvasdalkitsis.librephotos.auth.weblogin.weblogin.mvflow.WebLoginMutation

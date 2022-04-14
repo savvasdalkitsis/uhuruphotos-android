@@ -3,7 +3,6 @@ package com.savvasdalkitsis.librephotos.search.viewmodel
 import com.savvasdalkitsis.librephotos.search.mvflow.SearchMutation
 import com.savvasdalkitsis.librephotos.search.view.state.SearchResults
 import com.savvasdalkitsis.librephotos.search.view.state.SearchState
-import com.savvasdalkitsis.librephotos.viewmodel.Reducer
 
 fun searchReducer() : com.savvasdalkitsis.librephotos.viewmodel.Reducer<SearchState, SearchMutation> = { state, mutation ->
     when (mutation) {

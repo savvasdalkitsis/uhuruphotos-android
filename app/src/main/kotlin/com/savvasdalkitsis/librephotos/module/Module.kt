@@ -1,6 +1,5 @@
 package com.savvasdalkitsis.librephotos.module
 
-import android.annotation.SuppressLint
 import android.content.Context
 import android.content.pm.PackageManager
 import androidx.preference.PreferenceManager
@@ -8,8 +7,8 @@ import androidx.work.WorkManager
 import com.fredporciuncula.flow.preferences.FlowSharedPreferences
 import com.orhanobut.logger.AndroidLogAdapter
 import com.orhanobut.logger.PrettyFormatStrategy
-import com.savvasdalkitsis.librephotos.server.network.DynamicDomainInterceptor
 import com.savvasdalkitsis.librephotos.auth.weblogin.WebkitCookieManager
+import com.savvasdalkitsis.librephotos.server.network.DynamicDomainInterceptor
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -17,11 +16,7 @@ import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import okhttp3.OkHttpClient
-import java.text.DateFormat
-import java.text.DateFormat.FULL
-import java.text.SimpleDateFormat
 import java.util.concurrent.TimeUnit
-import javax.inject.Qualifier
 
 @Module
 @InstallIn(SingletonComponent::class)

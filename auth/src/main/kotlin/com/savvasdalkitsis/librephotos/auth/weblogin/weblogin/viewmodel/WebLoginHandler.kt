@@ -1,6 +1,5 @@
 package com.savvasdalkitsis.librephotos.auth.weblogin.weblogin.viewmodel
 
-import com.savvasdalkitsis.librephotos.infrastructure.coroutines.onMain
 import com.savvasdalkitsis.librephotos.auth.weblogin.weblogin.mvflow.WebLoginAction
 import com.savvasdalkitsis.librephotos.auth.weblogin.weblogin.mvflow.WebLoginEffect
 import com.savvasdalkitsis.librephotos.auth.weblogin.weblogin.mvflow.WebLoginEffect.Close
@@ -8,6 +7,7 @@ import com.savvasdalkitsis.librephotos.auth.weblogin.weblogin.mvflow.WebLoginMut
 import com.savvasdalkitsis.librephotos.auth.weblogin.weblogin.mvflow.WebLoginMutation.LoadPage
 import com.savvasdalkitsis.librephotos.auth.weblogin.weblogin.mvflow.WebLoginMutation.Loading
 import com.savvasdalkitsis.librephotos.auth.weblogin.weblogin.view.WebLoginState
+import com.savvasdalkitsis.librephotos.infrastructure.coroutines.onMain
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import javax.inject.Inject

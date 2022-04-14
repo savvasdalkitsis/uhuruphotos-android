@@ -5,8 +5,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import com.savvasdalkitsis.librephotos.account.view.AccountOverviewPopUp
-import com.savvasdalkitsis.librephotos.infrastructure.extensions.blurIf
 import com.savvasdalkitsis.librephotos.home.view.HomeScaffold
+import com.savvasdalkitsis.librephotos.infrastructure.extensions.blurIf
 import com.savvasdalkitsis.librephotos.search.mvflow.SearchAction
 import com.savvasdalkitsis.librephotos.search.mvflow.SearchAction.*
 import com.savvasdalkitsis.librephotos.search.view.state.SearchState

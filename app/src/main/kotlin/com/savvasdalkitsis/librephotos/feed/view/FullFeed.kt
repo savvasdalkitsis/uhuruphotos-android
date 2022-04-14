@@ -1,14 +1,14 @@
 package com.savvasdalkitsis.librephotos.feed.view
 
 import android.content.res.Configuration.ORIENTATION_LANDSCAPE
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.unit.dp
 import com.savvasdalkitsis.librephotos.albums.model.Album
-import com.savvasdalkitsis.librephotos.photos.model.Photo
 import com.savvasdalkitsis.librephotos.ui.view.LazyStaggeredGrid
 
 @Composable

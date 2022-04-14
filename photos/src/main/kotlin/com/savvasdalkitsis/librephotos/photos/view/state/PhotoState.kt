@@ -2,7 +2,6 @@ package com.savvasdalkitsis.librephotos.photos.view.state
 
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.ModalBottomSheetValue
-import androidx.compose.ui.text.AnnotatedString
 import com.google.android.gms.maps.model.LatLng
 
 @ExperimentalMaterialApi

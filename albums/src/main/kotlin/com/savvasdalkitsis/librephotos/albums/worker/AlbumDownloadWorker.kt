@@ -9,8 +9,8 @@ import androidx.hilt.work.HiltWorker
 import androidx.work.CoroutineWorker
 import androidx.work.ForegroundInfo
 import androidx.work.WorkerParameters
-import com.savvasdalkitsis.librephotos.R
 import com.savvasdalkitsis.librephotos.albums.repository.AlbumsRepository
+import com.savvasdalkitsis.librephotos.icons.R
 import com.savvasdalkitsis.librephotos.infrastructure.log.log
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedInject

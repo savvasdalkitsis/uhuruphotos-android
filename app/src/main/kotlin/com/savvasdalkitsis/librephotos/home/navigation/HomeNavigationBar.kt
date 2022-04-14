@@ -18,7 +18,6 @@ import androidx.navigation.NavDestination.Companion.hierarchy
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
-import com.savvasdalkitsis.librephotos.icons.R
 import com.savvasdalkitsis.librephotos.feed.navigation.FeedPageNavigationTarget
 import com.savvasdalkitsis.librephotos.feed.view.state.FeedDisplay
 import com.savvasdalkitsis.librephotos.home.navigation.NavigationStyle.BOTTOM_BAR

@@ -1,14 +1,11 @@
 package com.savvasdalkitsis.librephotos.feed.view
 
 import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.grid.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.layout.ContentScale
 import com.savvasdalkitsis.librephotos.albums.model.Album
-import com.savvasdalkitsis.librephotos.photos.model.Photo
 
 @Composable
 fun GridDateFeed(

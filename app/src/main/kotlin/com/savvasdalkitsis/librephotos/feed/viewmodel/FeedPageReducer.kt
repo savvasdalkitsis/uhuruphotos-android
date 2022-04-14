@@ -4,7 +4,6 @@ import com.savvasdalkitsis.librephotos.feed.mvflow.FeedPageMutation
 import com.savvasdalkitsis.librephotos.feed.mvflow.FeedPageMutation.*
 import com.savvasdalkitsis.librephotos.feed.view.state.FeedPageState
 import com.savvasdalkitsis.librephotos.feed.view.state.FeedState
-import com.savvasdalkitsis.librephotos.viewmodel.Reducer
 
 fun feedPageReducer() : com.savvasdalkitsis.librephotos.viewmodel.Reducer<FeedPageState, FeedPageMutation> = { state, mutation ->
     when (mutation) {

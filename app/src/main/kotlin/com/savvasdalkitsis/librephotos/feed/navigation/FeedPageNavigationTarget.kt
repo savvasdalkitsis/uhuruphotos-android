@@ -10,7 +10,6 @@ import com.savvasdalkitsis.librephotos.feed.view.FeedPage
 import com.savvasdalkitsis.librephotos.feed.view.state.FeedPageState
 import com.savvasdalkitsis.librephotos.feed.viewmodel.FeedPageEffectsHandler
 import com.savvasdalkitsis.librephotos.feed.viewmodel.FeedPageViewModel
-import com.savvasdalkitsis.librephotos.navigation.ControllersProvider
 import com.savvasdalkitsis.librephotos.navigation.navigationTarget
 import kotlinx.coroutines.FlowPreview
 import javax.inject.Inject

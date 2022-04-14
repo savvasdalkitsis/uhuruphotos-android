@@ -5,13 +5,13 @@ import com.savvasdalkitsis.librephotos.auth.api.AuthenticationService
 import com.savvasdalkitsis.librephotos.auth.api.model.AuthenticationCredentials
 import com.savvasdalkitsis.librephotos.auth.api.model.AuthenticationObtainResponse
 import com.savvasdalkitsis.librephotos.auth.api.model.AuthenticationRefreshResponse
-import com.savvasdalkitsis.librephotos.db.entities.auth.TokenType
 import com.savvasdalkitsis.librephotos.auth.model.AuthStatus
 import com.savvasdalkitsis.librephotos.auth.model.AuthStatus.Authenticated
 import com.savvasdalkitsis.librephotos.auth.model.AuthStatus.Unauthenticated
+import com.savvasdalkitsis.librephotos.auth.network.jwt
+import com.savvasdalkitsis.librephotos.db.entities.auth.TokenType
 import com.savvasdalkitsis.librephotos.db.extensions.awaitSingleOrNull
 import com.savvasdalkitsis.librephotos.db.extensions.crud
-import com.savvasdalkitsis.librephotos.auth.network.jwt
 import com.savvasdalkitsis.librephotos.token.db.Token
 import com.savvasdalkitsis.librephotos.token.db.TokenQueries
 import kotlinx.coroutines.sync.Mutex
