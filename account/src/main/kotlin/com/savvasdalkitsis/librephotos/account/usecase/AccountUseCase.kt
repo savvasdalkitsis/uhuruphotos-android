@@ -3,16 +3,17 @@ package com.savvasdalkitsis.librephotos.account.usecase
 import coil.annotation.ExperimentalCoilApi
 import coil.disk.DiskCache
 import coil.memory.MemoryCache
-import com.savvasdalkitsis.librephotos.albums.repository.AlbumsRepository
+import com.savvasdalkitsis.librephotos.db.albums.AlbumsQueries
 import com.savvasdalkitsis.librephotos.db.auth.TokenQueries
 import com.savvasdalkitsis.librephotos.db.extensions.crud
-import com.savvasdalkitsis.librephotos.user.repository.UserRepository
+import com.savvasdalkitsis.librephotos.db.search.SearchQueries
+import com.savvasdalkitsis.librephotos.db.user.UserQueries
 import javax.inject.Inject
 
 class AccountUseCase @Inject constructor(
-    private val userRepository: UserRepository,
-    private val albumsRepository: AlbumsRepository,
-//    private val searchRepository: SearchRepository,
+    private val userQueries: UserQueries,
+    private val albumsQueries: AlbumsQueries,
+    private val searchQueries: SearchQueries,
     private val tokenQueries: TokenQueries,
     private val memoryCache: MemoryCache,
     private val diskCache: DiskCache,
@@ -20,11 +21,13 @@ class AccountUseCase @Inject constructor(
 
     @ExperimentalCoilApi
     suspend fun logOut() {
-        albumsRepository.removeAllAlbums()
-//        searchRepository.removeAllSearchResults()
-        userRepository.removeUser()
-        crud { tokenQueries.removeAllTokens() }
-        crud { memoryCache.clear() }
-        crud { diskCache.clear() }
+        crud {
+            albumsQueries.clearAlbums()
+            searchQueries.clearSearchResults()
+            userQueries.deleteUser()
+            tokenQueries.removeAllTokens()
+            memoryCache.clear()
+            diskCache.clear()
+        }
     }
 }

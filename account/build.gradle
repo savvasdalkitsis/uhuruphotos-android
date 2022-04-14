@@ -7,10 +7,7 @@ plugins {
 
 dependencies {
 
-    implementation project(":albums")
     implementation project(":db")
-    implementation project(":user")
-    implementation project(":auth")
     implementation(
             libs.accompanist.insets,
             libs.accompanist.navigation,
