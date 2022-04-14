@@ -1,11 +1,10 @@
 package com.savvasdalkitsis.librephotos.server.viewmodel
 
-import com.orhanobut.logger.Logger
-import com.orhanobut.logger.Logger.VERBOSE
 import com.savvasdalkitsis.librephotos.auth.model.AuthStatus
 import com.savvasdalkitsis.librephotos.auth.usecase.AuthenticationUseCase
 import com.savvasdalkitsis.librephotos.auth.usecase.ServerUseCase
 import com.savvasdalkitsis.librephotos.infrastructure.extensions.isValidUrl
+import com.savvasdalkitsis.librephotos.infrastructure.log.log
 import com.savvasdalkitsis.librephotos.server.mvflow.ServerAction
 import com.savvasdalkitsis.librephotos.server.mvflow.ServerAction.*
 import com.savvasdalkitsis.librephotos.server.mvflow.ServerEffect
@@ -68,7 +67,7 @@ class ServerHandler @Inject constructor(
                 authenticationUseCase.login(credentials.username, credentials.password)
                 effect(Close)
             } catch (e: Exception) {
-                Logger.log(VERBOSE, "ServerHandler", e.message, e)
+                log(e)
                 effect(ErrorLoggingIn(e))
                 emit(AskForUserCredentials(credentials.username, credentials.password))
             }
