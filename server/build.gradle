@@ -1,5 +1,4 @@
 plugins {
-    id 'com.android.library'
     id "dev.zacsweers.redacted" version "1.0.1"
     id 'kotlin-parcelize'
 }
