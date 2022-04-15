@@ -1,7 +1,7 @@
 package com.savvasdalkitsis.librephotos.auth.api
 
 import android.webkit.CookieManager
-import com.savvasdalkitsis.librephotos.app.navigation.ControllersProvider
+import com.savvasdalkitsis.librephotos.navigation.ControllersProvider
 import com.savvasdalkitsis.librephotos.auth.usecase.ServerUseCase
 import com.savvasdalkitsis.librephotos.auth.weblogin.weblogin.navigation.WebLoginNavigationTarget
 import kotlinx.coroutines.CoroutineScope

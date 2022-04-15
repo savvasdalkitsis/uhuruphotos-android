@@ -5,6 +5,7 @@ import androidx.compose.ui.Modifier
 import com.savvasdalkitsis.librephotos.accountoverview.view.AccountOverviewPopUp
 import com.savvasdalkitsis.librephotos.home.view.HomeScaffold
 import com.savvasdalkitsis.librephotos.infrastructure.extensions.blurIf
+import com.savvasdalkitsis.librephotos.navigation.ControllersProvider
 import com.savvasdalkitsis.librephotos.search.mvflow.SearchAction
 import com.savvasdalkitsis.librephotos.search.mvflow.SearchAction.*
 import com.savvasdalkitsis.librephotos.search.view.state.SearchState
@@ -15,7 +16,7 @@ fun SearchPage(
     action: (SearchAction) -> Unit,
     feedNavigationName: String,
     searchNavigationName: String,
-    controllersProvider: com.savvasdalkitsis.librephotos.app.navigation.ControllersProvider,
+    controllersProvider: ControllersProvider,
 ) {
     HomeScaffold(
         modifier = Modifier

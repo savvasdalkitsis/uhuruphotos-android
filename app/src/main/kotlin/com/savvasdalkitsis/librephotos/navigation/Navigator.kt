@@ -1,4 +1,4 @@
-package com.savvasdalkitsis.librephotos.app.navigation
+package com.savvasdalkitsis.librephotos.navigation
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember

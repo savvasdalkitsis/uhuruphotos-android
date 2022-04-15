@@ -4,7 +4,7 @@ import com.savvasdalkitsis.librephotos.home.module.HomeModule
 import com.savvasdalkitsis.librephotos.home.mvflow.HomeEffect
 import com.savvasdalkitsis.librephotos.home.mvflow.HomeEffect.LaunchAuthentication
 import com.savvasdalkitsis.librephotos.home.mvflow.HomeEffect.LoadFeed
-import com.savvasdalkitsis.librephotos.app.navigation.ControllersProvider
+import com.savvasdalkitsis.librephotos.navigation.ControllersProvider
 import com.savvasdalkitsis.librephotos.server.navigation.ServerNavigationTarget
 import javax.inject.Inject
 

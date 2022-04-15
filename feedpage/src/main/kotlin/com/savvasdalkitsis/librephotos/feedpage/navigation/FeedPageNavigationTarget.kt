@@ -9,8 +9,8 @@ import com.savvasdalkitsis.librephotos.feedpage.view.state.FeedPageState
 import com.savvasdalkitsis.librephotos.feedpage.viewmodel.FeedPageEffectsHandler
 import com.savvasdalkitsis.librephotos.feedpage.viewmodel.FeedPageViewModel
 import com.savvasdalkitsis.librephotos.home.module.HomeModule.HomeNavigationTargetSearch
-import com.savvasdalkitsis.librephotos.app.navigation.ControllersProvider
-import com.savvasdalkitsis.librephotos.app.navigation.navigationTarget
+import com.savvasdalkitsis.librephotos.navigation.ControllersProvider
+import com.savvasdalkitsis.librephotos.navigation.navigationTarget
 import javax.inject.Inject
 
 class FeedPageNavigationTarget @Inject constructor(

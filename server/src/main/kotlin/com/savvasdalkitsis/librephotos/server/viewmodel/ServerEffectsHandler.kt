@@ -2,7 +2,7 @@ package com.savvasdalkitsis.librephotos.server.viewmodel
 
 import android.content.Context
 import android.widget.Toast
-import com.savvasdalkitsis.librephotos.app.navigation.ControllersProvider
+import com.savvasdalkitsis.librephotos.navigation.ControllersProvider
 import com.savvasdalkitsis.librephotos.server.mvflow.ServerEffect
 import com.savvasdalkitsis.librephotos.server.mvflow.ServerEffect.Close
 import com.savvasdalkitsis.librephotos.server.mvflow.ServerEffect.ErrorLoggingIn

@@ -23,6 +23,7 @@ import androidx.compose.ui.unit.dp
 import com.savvasdalkitsis.librephotos.feed.view.Feed
 import com.savvasdalkitsis.librephotos.feed.view.state.FeedState
 import com.savvasdalkitsis.librephotos.infrastructure.extensions.copy
+import com.savvasdalkitsis.librephotos.navigation.ControllersProvider
 import com.savvasdalkitsis.librephotos.search.mvflow.SearchAction
 import com.savvasdalkitsis.librephotos.search.mvflow.SearchAction.*
 import com.savvasdalkitsis.librephotos.search.view.state.SearchResults
@@ -32,7 +33,7 @@ import com.savvasdalkitsis.librephotos.ui.view.FullProgressBar
 @Composable fun Search(
     state: SearchState,
     action: (SearchAction) -> Unit,
-    controllersProvider: com.savvasdalkitsis.librephotos.app.navigation.ControllersProvider,
+    controllersProvider: ControllersProvider,
     contentPadding: PaddingValues,
 ) {
     Column {

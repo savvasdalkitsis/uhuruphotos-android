@@ -10,8 +10,8 @@ import androidx.compose.ui.graphics.Color
 import androidx.core.view.WindowCompat
 import com.google.accompanist.navigation.animation.rememberAnimatedNavController
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
-import com.savvasdalkitsis.librephotos.app.navigation.ControllersProvider
-import com.savvasdalkitsis.librephotos.app.navigation.Navigator
+import com.savvasdalkitsis.librephotos.navigation.ControllersProvider
+import com.savvasdalkitsis.librephotos.navigation.Navigator
 import com.savvasdalkitsis.librephotos.ui.theme.AppTheme
 import com.savvasdalkitsis.librephotos.ui.window.window.LocalSystemUiController
 import com.savvasdalkitsis.librephotos.ui.window.WindowSize

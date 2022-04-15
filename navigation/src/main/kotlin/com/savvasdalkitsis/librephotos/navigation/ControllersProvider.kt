@@ -1,4 +1,4 @@
-package com.savvasdalkitsis.librephotos.app.navigation
+package com.savvasdalkitsis.librephotos.navigation
 
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.platform.SoftwareKeyboardController

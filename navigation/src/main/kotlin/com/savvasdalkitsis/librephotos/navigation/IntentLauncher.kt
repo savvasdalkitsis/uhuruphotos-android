@@ -1,4 +1,4 @@
-package com.savvasdalkitsis.librephotos.app.navigation
+package com.savvasdalkitsis.librephotos.navigation
 
 import android.content.ActivityNotFoundException
 import android.content.Context

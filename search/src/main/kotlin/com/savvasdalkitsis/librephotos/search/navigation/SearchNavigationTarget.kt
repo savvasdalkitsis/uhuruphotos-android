@@ -3,8 +3,8 @@ package com.savvasdalkitsis.librephotos.search.navigation
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavGraphBuilder
 import com.savvasdalkitsis.librephotos.home.module.HomeModule.HomeNavigationTargetFeed
-import com.savvasdalkitsis.librephotos.app.navigation.ControllersProvider
-import com.savvasdalkitsis.librephotos.app.navigation.navigationTarget
+import com.savvasdalkitsis.librephotos.navigation.ControllersProvider
+import com.savvasdalkitsis.librephotos.navigation.navigationTarget
 import com.savvasdalkitsis.librephotos.search.mvflow.SearchAction
 import com.savvasdalkitsis.librephotos.search.mvflow.SearchEffect
 import com.savvasdalkitsis.librephotos.search.view.SearchPage

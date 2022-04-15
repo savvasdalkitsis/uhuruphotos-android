@@ -1,4 +1,4 @@
-package com.savvasdalkitsis.librephotos.app.navigation
+package com.savvasdalkitsis.librephotos.navigation
 
 import androidx.compose.animation.AnimatedContentScope
 import androidx.compose.animation.EnterTransition

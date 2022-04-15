@@ -7,7 +7,7 @@ import androidx.compose.ui.unit.IntSize
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavBackStackEntry
 import androidx.navigation.NavGraphBuilder
-import com.savvasdalkitsis.librephotos.app.navigation.navigationTarget
+import com.savvasdalkitsis.librephotos.navigation.navigationTarget
 import com.savvasdalkitsis.librephotos.photos.mvflow.PhotoAction
 import com.savvasdalkitsis.librephotos.photos.mvflow.PhotoAction.LoadPhoto
 import com.savvasdalkitsis.librephotos.photos.mvflow.PhotoEffect

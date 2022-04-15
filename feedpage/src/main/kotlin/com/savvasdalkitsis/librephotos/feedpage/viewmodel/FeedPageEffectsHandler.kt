@@ -2,11 +2,12 @@ package com.savvasdalkitsis.librephotos.feedpage.viewmodel
 
 import com.savvasdalkitsis.librephotos.feedpage.mvflow.FeedPageEffect
 import com.savvasdalkitsis.librephotos.home.navigation.HomeNavigationTarget
+import com.savvasdalkitsis.librephotos.navigation.ControllersProvider
 import com.savvasdalkitsis.librephotos.photos.navigation.PhotoNavigationTarget
 import javax.inject.Inject
 
 class FeedPageEffectsHandler @Inject constructor(
-    private val controllersProvider: com.savvasdalkitsis.librephotos.app.navigation.ControllersProvider,
+    private val controllersProvider: ControllersProvider,
 ) : com.savvasdalkitsis.librephotos.viewmodel.EffectHandler<FeedPageEffect> {
 
     override fun invoke(effect: FeedPageEffect) = when (effect) {

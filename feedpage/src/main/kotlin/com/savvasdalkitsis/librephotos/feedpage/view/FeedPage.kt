@@ -18,7 +18,7 @@ import kotlinx.coroutines.launch
 
 @Composable
 fun FeedPage(
-    controllersProvider: com.savvasdalkitsis.librephotos.app.navigation.ControllersProvider,
+    controllersProvider: com.savvasdalkitsis.librephotos.navigation.ControllersProvider,
     state: FeedPageState,
     feedNavigationName: String,
     searchNavigationName: String,
