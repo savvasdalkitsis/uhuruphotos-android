@@ -10,6 +10,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.core.view.WindowCompat
 import com.google.accompanist.navigation.animation.rememberAnimatedNavController
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
+import com.savvasdalkitsis.librephotos.app.navigation.ControllersProvider
 import com.savvasdalkitsis.librephotos.app.navigation.Navigator
 import com.savvasdalkitsis.librephotos.ui.theme.AppTheme
 import com.savvasdalkitsis.librephotos.ui.window.window.LocalSystemUiController
@@ -22,7 +23,7 @@ import javax.inject.Inject
 class AppActivity : ComponentActivity() {
 
     @Inject lateinit var navigator: Navigator
-    @Inject lateinit var controllersProvider: com.savvasdalkitsis.librephotos.app.navigation.ControllersProvider
+    @Inject lateinit var controllersProvider: ControllersProvider
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

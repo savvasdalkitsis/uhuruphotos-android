@@ -4,8 +4,6 @@ plugins {
 }
 
 android {
-    compileSdk 31
-
     buildFeatures {
         compose true
     }
@@ -52,48 +50,26 @@ android {
 }
 
 dependencies {
-
-    implementation project(":db")
-    implementation project(":server")
-    implementation project(":navigation")
-    implementation project(":viewmodel")
-    implementation project(":infrastructure")
-    implementation project(":auth")
-    implementation project(":ui")
-    implementation project(":user")
-    implementation project(":worker")
-    implementation project(":map")
-    implementation project(":photos")
-    implementation project(":icons")
     implementation project(":albums")
-    implementation project(":feed")
-    implementation project(":userbadge")
-    implementation project(":accountoverview")
-    implementation project(":home")
+    implementation project(":auth")
     implementation project(":feedpage")
-    implementation project(":account")
+    implementation project(":home")
+    implementation project(":navigation")
+    implementation project(":photos")
+    implementation project(":ui")
     implementation project(":search")
+    implementation project(":server")
     implementation(
-            libs.accompanist.insets,
             libs.accompanist.navigation,
-            libs.accompanist.swiperefresh,
             libs.accompanist.systemui,
-            libs.accompanist.webview,
             libs.androidx.activity,
-            libs.androidx.compose.foundation,
-            libs.androidx.compose.foundation.layout,
             libs.androidx.compose.hilt.navigation,
-            libs.androidx.compose.livedata,
             libs.androidx.compose.material,
             libs.androidx.compose.navigation,
-            libs.androidx.compose.tooling,
             libs.androidx.compose.ui,
-            libs.androidx.compose.ui.util,
-            libs.androidx.core,
             libs.androidx.datastore.preferences,
             libs.androidx.lifecycle,
             libs.androidx.preference,
-            libs.androidx.window,
             libs.androidx.work,
             libs.androidx.work.hilt,
             libs.coil.compose,
@@ -101,19 +77,11 @@ dependencies {
             libs.coil.video,
             libs.flowpreferences,
             libs.hilt,
-            libs.infobar,
-            libs.jwt,
             libs.logger,
-            libs.maps,
-            libs.maps.compose,
             libs.moshi,
             libs.okhttp.logging,
             libs.okhttp.url,
-            libs.orbit,
             libs.retrofit.core,
             libs.retrofit.moshi,
     )
-    kapt "com.squareup.moshi:moshi-kotlin-codegen:1.13.0"
-    kapt "com.google.dagger:hilt-compiler:2.40.5"
-    kapt "androidx.hilt:hilt-compiler:1.0.0"
 }
