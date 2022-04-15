@@ -1,0 +1,12 @@
+dependencies {
+
+    implementation(
+            libs.hilt,
+            libs.moshi,
+            libs.okhttp,
+            libs.okhttp.logging,
+            libs.okhttp.url,
+            libs.retrofit.core,
+            libs.retrofit.moshi,
+    )
+}

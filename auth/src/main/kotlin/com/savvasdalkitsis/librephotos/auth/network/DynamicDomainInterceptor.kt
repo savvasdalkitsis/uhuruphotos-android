@@ -1,4 +1,4 @@
-package com.savvasdalkitsis.librephotos.server.network
+package com.savvasdalkitsis.librephotos.auth.network
 
 import com.savvasdalkitsis.librephotos.auth.usecase.ServerUseCase
 import kotlinx.coroutines.runBlocking

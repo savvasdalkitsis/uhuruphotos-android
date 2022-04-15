@@ -14,6 +14,7 @@ dependencies {
     implementation project(":infrastructure")
     implementation project(":navigation")
     implementation project(":ui")
+    implementation project(":network")
     implementation(
             libs.accompanist.webview,
             libs.androidx.compose.hilt.navigation,
