@@ -1,4 +1,4 @@
-package com.savvasdalkitsis.librephotos.image
+package com.savvasdalkitsis.librephotos.image.cache
 
 import coil.disk.DiskCache
 import coil.memory.MemoryCache

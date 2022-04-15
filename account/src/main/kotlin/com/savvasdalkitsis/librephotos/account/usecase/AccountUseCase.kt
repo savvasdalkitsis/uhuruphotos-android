@@ -5,7 +5,7 @@ import com.savvasdalkitsis.librephotos.db.auth.TokenQueries
 import com.savvasdalkitsis.librephotos.db.extensions.crud
 import com.savvasdalkitsis.librephotos.db.search.SearchQueries
 import com.savvasdalkitsis.librephotos.db.user.UserQueries
-import com.savvasdalkitsis.librephotos.image.ImageCacheController
+import com.savvasdalkitsis.librephotos.image.cache.ImageCacheController
 import javax.inject.Inject
 
 class AccountUseCase @Inject constructor(

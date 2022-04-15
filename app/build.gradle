@@ -50,17 +50,15 @@ android {
 }
 
 dependencies {
-    implementation project(":albums")
     implementation project(":auth")
     implementation project(":feedpage")
     implementation project(":home")
     implementation project(":navigation")
     implementation project(":photos")
     implementation project(":ui")
-    implementation project(":image")
     implementation project(":search")
     implementation project(":server")
-    implementation project(":log")
+    implementation project(":initializer")
     implementation(
             libs.accompanist.navigation,
             libs.accompanist.systemui,

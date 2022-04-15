@@ -15,6 +15,7 @@ dependencies {
     implementation project(":photos")
     implementation project(":icons")
     implementation project(":worker")
+    implementation project(":initializer")
     implementation(
             libs.androidx.compose.hilt.navigation,
             libs.androidx.work,
