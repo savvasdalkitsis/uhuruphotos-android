@@ -1,6 +1,5 @@
 package com.savvasdalkitsis.librephotos.auth.usecase
 
-import com.orhanobut.logger.Logger
 import com.savvasdalkitsis.librephotos.auth.api.AuthenticationService
 import com.savvasdalkitsis.librephotos.auth.api.model.AuthenticationCredentials
 import com.savvasdalkitsis.librephotos.auth.api.model.AuthenticationObtainResponse
@@ -9,11 +8,12 @@ import com.savvasdalkitsis.librephotos.auth.model.AuthStatus
 import com.savvasdalkitsis.librephotos.auth.model.AuthStatus.Authenticated
 import com.savvasdalkitsis.librephotos.auth.model.AuthStatus.Unauthenticated
 import com.savvasdalkitsis.librephotos.auth.network.jwt
+import com.savvasdalkitsis.librephotos.db.auth.Token
+import com.savvasdalkitsis.librephotos.db.auth.TokenQueries
 import com.savvasdalkitsis.librephotos.db.entities.auth.TokenType
 import com.savvasdalkitsis.librephotos.db.extensions.awaitSingleOrNull
 import com.savvasdalkitsis.librephotos.db.extensions.crud
-import com.savvasdalkitsis.librephotos.db.auth.Token
-import com.savvasdalkitsis.librephotos.db.auth.TokenQueries
+import com.savvasdalkitsis.librephotos.infrastructure.log.log
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
 import javax.inject.Inject
@@ -56,7 +56,7 @@ class AuthenticationUseCase @Inject constructor(
                 refreshAccessToken(refreshToken)
                 Authenticated
             } catch (e: Exception) {
-                Logger.log(Logger.VERBOSE, "AuthenticationUseCase", e.message, e)
+                log(e)
                 Unauthenticated
             }
         }
