@@ -78,7 +78,6 @@ dependencies {
             libs.coil.video,
             libs.flowpreferences,
             libs.hilt,
-            libs.logger,
             libs.moshi,
             libs.okhttp.logging,
             libs.okhttp.url,

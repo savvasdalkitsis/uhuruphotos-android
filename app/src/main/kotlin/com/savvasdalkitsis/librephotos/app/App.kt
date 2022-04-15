@@ -6,9 +6,8 @@ import androidx.hilt.work.HiltWorkerFactory
 import androidx.work.Configuration
 import coil.ImageLoader
 import coil.ImageLoaderFactory
-import com.orhanobut.logger.LogAdapter
-import com.orhanobut.logger.Logger
 import com.savvasdalkitsis.librephotos.albums.worker.AlbumWorkScheduler
+import com.savvasdalkitsis.librephotos.log.LogInitializer
 import dagger.hilt.android.HiltAndroidApp
 import javax.inject.Inject
 
@@ -25,12 +24,12 @@ class App :
     @Inject
     lateinit var imageLoader: ImageLoader
     @Inject
-    lateinit var logAdapter: LogAdapter
+    lateinit var logInitializer: LogInitializer
 
     override fun onCreate() {
         super.onCreate()
         WebView.setWebContentsDebuggingEnabled(true)
-        Logger.addLogAdapter(logAdapter)
+        logInitializer.initialize()
         albumWorkScheduler.scheduleAlbumsRefreshPeriodic()
     }
 
