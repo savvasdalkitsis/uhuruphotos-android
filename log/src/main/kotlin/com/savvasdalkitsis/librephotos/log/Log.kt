@@ -1,15 +1,22 @@
 package com.savvasdalkitsis.librephotos.log
 
-import com.orhanobut.logger.Logger
+import android.util.Log
+import timber.log.Timber
 
-fun log(tag: String = "", msg: () -> String) {
+
+inline fun log(tag: String = "", msg: () -> String) {
     if (BuildConfig.DEBUG) {
-        Logger.log(Logger.VERBOSE, tag, msg(), null)
+        if (tag.isNotEmpty()) {
+            Timber.tag(tag).log(Log.VERBOSE, msg())
+        } else {
+            Timber.log(Log.VERBOSE, msg())
+        }
     }
 }
 
-fun log(t: Throwable) {
+@Suppress("NOTHING_TO_INLINE")
+inline fun log(t: Throwable) {
     if (BuildConfig.DEBUG) {
-        Logger.log(Logger.WARN, "", t.message, t)
+        Timber.log(Log.WARN, t)
     }
 }
