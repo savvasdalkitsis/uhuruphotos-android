@@ -1,6 +1,6 @@
 package com.savvasdalkitsis.librephotos.viewmodel
 
-import com.savvasdalkitsis.librephotos.infrastructure.log.log
+import com.savvasdalkitsis.librephotos.log.log
 import org.orbitmvi.orbit.Container
 import org.orbitmvi.orbit.ContainerHost
 import org.orbitmvi.orbit.syntax.simple.intent

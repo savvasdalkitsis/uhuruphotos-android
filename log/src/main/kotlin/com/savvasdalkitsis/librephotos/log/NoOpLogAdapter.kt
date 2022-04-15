@@ -1,4 +1,4 @@
-package com.savvasdalkitsis.librephotos.infrastructure.log
+package com.savvasdalkitsis.librephotos.log
 
 import com.orhanobut.logger.LogAdapter
 

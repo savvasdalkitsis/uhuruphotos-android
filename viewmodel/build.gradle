@@ -1,6 +1,6 @@
 dependencies {
 
-    implementation project(":infrastructure")
+    implementation project(":log")
     implementation(
             libs.kotlinx.coroutines,
     )

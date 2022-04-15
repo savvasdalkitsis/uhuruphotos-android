@@ -59,6 +59,7 @@ dependencies {
     implementation project(":ui")
     implementation project(":search")
     implementation project(":server")
+    implementation project(":log")
     implementation(
             libs.accompanist.navigation,
             libs.accompanist.systemui,

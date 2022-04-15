@@ -10,7 +10,6 @@ android {
 dependencies {
 
     implementation project(":db")
-    implementation project(":infrastructure")
     implementation project(":navigation")
     implementation(
             libs.accompanist.systemui,

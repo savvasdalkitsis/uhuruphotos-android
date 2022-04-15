@@ -9,7 +9,7 @@ import androidx.lifecycle.ViewModel
 import androidx.navigation.NavBackStackEntry
 import androidx.navigation.NavGraphBuilder
 import com.google.accompanist.navigation.animation.composable
-import com.savvasdalkitsis.librephotos.infrastructure.log.log
+import com.savvasdalkitsis.librephotos.log.log
 import com.savvasdalkitsis.librephotos.viewmodel.ActionReceiverHost
 import com.savvasdalkitsis.librephotos.viewmodel.EffectHandler
 import kotlinx.coroutines.launch

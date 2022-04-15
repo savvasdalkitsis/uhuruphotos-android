@@ -1,7 +1,6 @@
-package com.savvasdalkitsis.librephotos.infrastructure.log
+package com.savvasdalkitsis.librephotos.log
 
 import com.orhanobut.logger.Logger
-import com.savvasdalkitsis.librephotos.infrastructure.BuildConfig
 
 fun log(tag: String = "", msg: () -> String) {
     if (BuildConfig.DEBUG) {

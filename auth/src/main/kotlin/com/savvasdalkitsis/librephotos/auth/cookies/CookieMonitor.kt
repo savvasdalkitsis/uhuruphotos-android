@@ -2,7 +2,7 @@ package com.savvasdalkitsis.librephotos.auth.cookies
 
 import android.webkit.CookieManager
 import com.savvasdalkitsis.librephotos.auth.usecase.ServerUseCase
-import com.savvasdalkitsis.librephotos.infrastructure.log.log
+import com.savvasdalkitsis.librephotos.log.log
 import kotlinx.coroutines.*
 import javax.inject.Inject
 import javax.inject.Singleton

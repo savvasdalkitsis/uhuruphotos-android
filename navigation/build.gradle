@@ -10,7 +10,7 @@ android {
 dependencies {
 
     api project(":viewmodel")
-    implementation project(":infrastructure")
+    implementation project(":log")
     implementation(
             libs.accompanist.navigation,
             libs.accompanist.systemui,

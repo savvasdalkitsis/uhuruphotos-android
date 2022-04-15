@@ -13,7 +13,7 @@ import com.savvasdalkitsis.librephotos.db.auth.TokenQueries
 import com.savvasdalkitsis.librephotos.db.entities.auth.TokenType
 import com.savvasdalkitsis.librephotos.db.extensions.awaitSingleOrNull
 import com.savvasdalkitsis.librephotos.db.extensions.crud
-import com.savvasdalkitsis.librephotos.infrastructure.log.log
+import com.savvasdalkitsis.librephotos.log.log
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
 import javax.inject.Inject

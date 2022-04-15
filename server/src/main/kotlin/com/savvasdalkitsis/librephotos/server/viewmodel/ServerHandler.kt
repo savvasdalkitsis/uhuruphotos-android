@@ -4,7 +4,7 @@ import com.savvasdalkitsis.librephotos.auth.model.AuthStatus
 import com.savvasdalkitsis.librephotos.auth.usecase.AuthenticationUseCase
 import com.savvasdalkitsis.librephotos.auth.usecase.ServerUseCase
 import com.savvasdalkitsis.librephotos.infrastructure.extensions.isValidUrl
-import com.savvasdalkitsis.librephotos.infrastructure.log.log
+import com.savvasdalkitsis.librephotos.log.log
 import com.savvasdalkitsis.librephotos.server.mvflow.ServerAction
 import com.savvasdalkitsis.librephotos.server.mvflow.ServerAction.*
 import com.savvasdalkitsis.librephotos.server.mvflow.ServerEffect

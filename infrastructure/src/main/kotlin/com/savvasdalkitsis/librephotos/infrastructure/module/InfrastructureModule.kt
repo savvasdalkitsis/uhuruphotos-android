@@ -5,7 +5,7 @@ import com.orhanobut.logger.AndroidLogAdapter
 import com.orhanobut.logger.LogAdapter
 import com.orhanobut.logger.PrettyFormatStrategy
 import com.savvasdalkitsis.librephotos.infrastructure.BuildConfig
-import com.savvasdalkitsis.librephotos.infrastructure.log.NoOpLogAdapter
+import com.savvasdalkitsis.librephotos.log.NoOpLogAdapter
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

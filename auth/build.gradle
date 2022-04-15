@@ -9,6 +9,7 @@ android {
 
 dependencies {
 
+    implementation project(":log")
     implementation project(":db")
     implementation project(":infrastructure")
     implementation project(":navigation")
