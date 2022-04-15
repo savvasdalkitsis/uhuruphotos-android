@@ -18,7 +18,7 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
-import com.savvasdalkitsis.librephotos.infrastructure.view.CommonScaffold
+import com.savvasdalkitsis.librephotos.ui.view.CommonScaffold
 import com.savvasdalkitsis.librephotos.server.mvflow.ServerAction
 import com.savvasdalkitsis.librephotos.server.mvflow.ServerAction.*
 import com.savvasdalkitsis.librephotos.server.view.ServerState.*

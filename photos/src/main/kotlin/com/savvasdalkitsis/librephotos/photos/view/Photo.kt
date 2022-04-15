@@ -23,7 +23,7 @@ import coil.request.ImageRequest
 import coil.size.Size
 import com.radusalagean.infobarcompose.InfoBar
 import com.radusalagean.infobarcompose.InfoBarMessage
-import com.savvasdalkitsis.librephotos.infrastructure.view.CommonScaffold
+import com.savvasdalkitsis.librephotos.ui.view.CommonScaffold
 import com.savvasdalkitsis.librephotos.photos.mvflow.PhotoAction
 import com.savvasdalkitsis.librephotos.photos.mvflow.PhotoAction.*
 import com.savvasdalkitsis.librephotos.photos.view.state.PhotoState

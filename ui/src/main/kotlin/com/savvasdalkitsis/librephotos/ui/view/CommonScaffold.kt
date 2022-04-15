@@ -1,4 +1,4 @@
-package com.savvasdalkitsis.librephotos.infrastructure.view
+package com.savvasdalkitsis.librephotos.ui.view
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.fadeIn
@@ -14,7 +14,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import com.google.accompanist.insets.ui.Scaffold
-import com.savvasdalkitsis.librephotos.infrastructure.ui.insets.systemPadding
+import com.savvasdalkitsis.librephotos.ui.insets.systemPadding
 
 @Composable
 fun CommonScaffold(

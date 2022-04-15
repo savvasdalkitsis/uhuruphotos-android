@@ -12,6 +12,7 @@ dependencies {
     implementation project(":db")
     implementation project(":navigation")
     implementation(
+            libs.accompanist.insets,
             libs.accompanist.systemui,
             libs.androidx.activity,
             libs.androidx.compose.foundation.layout,

@@ -11,7 +11,7 @@ import com.savvasdalkitsis.librephotos.home.navigation.HomeNavigationBar
 import com.savvasdalkitsis.librephotos.home.navigation.NavigationStyle.BOTTOM_BAR
 import com.savvasdalkitsis.librephotos.home.navigation.NavigationStyle.NAVIGATION_RAIL
 import com.savvasdalkitsis.librephotos.home.navigation.homeNavigationStyle
-import com.savvasdalkitsis.librephotos.infrastructure.view.CommonScaffold
+import com.savvasdalkitsis.librephotos.ui.view.CommonScaffold
 import com.savvasdalkitsis.librephotos.userbadge.view.UserBadge
 import com.savvasdalkitsis.librephotos.userbadge.view.state.UserBadgeState
 

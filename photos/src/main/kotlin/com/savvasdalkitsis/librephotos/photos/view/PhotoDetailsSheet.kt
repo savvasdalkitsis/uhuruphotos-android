@@ -14,7 +14,7 @@ import com.google.maps.android.compose.Marker
 import com.google.maps.android.compose.MarkerState
 import com.savvasdalkitsis.librephotos.icons.R
 import com.savvasdalkitsis.librephotos.infrastructure.extensions.round
-import com.savvasdalkitsis.librephotos.infrastructure.ui.insets.systemPadding
+import com.savvasdalkitsis.librephotos.ui.insets.systemPadding
 import com.savvasdalkitsis.librephotos.map.view.MapView
 import com.savvasdalkitsis.librephotos.photos.mvflow.PhotoAction
 import com.savvasdalkitsis.librephotos.photos.view.state.PhotoState
