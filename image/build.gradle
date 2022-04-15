@@ -1,0 +1,19 @@
+android {
+    buildFeatures {
+        compose true
+    }
+    composeOptions {
+        kotlinCompilerExtensionVersion compose_version
+    }
+}
+
+dependencies {
+
+    implementation project(":auth")
+    implementation(
+            libs.coil.compose,
+            libs.coil.gif,
+            libs.coil.video,
+            libs.hilt,
+    )
+}

@@ -1,8 +1,8 @@
 dependencies {
 
     implementation project(":db")
+    implementation project(":image")
     implementation(
-            libs.coil.base,
             libs.hilt,
     )
 }

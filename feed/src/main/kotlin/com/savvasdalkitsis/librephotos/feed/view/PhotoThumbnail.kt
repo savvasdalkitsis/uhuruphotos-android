@@ -14,8 +14,8 @@ import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
-import coil.compose.AsyncImage
 import com.savvasdalkitsis.librephotos.icons.R
+import com.savvasdalkitsis.librephotos.image.view.Image
 import com.savvasdalkitsis.librephotos.infrastructure.extensions.toColor
 import com.savvasdalkitsis.librephotos.photos.model.Photo
 
@@ -44,9 +44,9 @@ fun PhotoThumbnail(
             }
             .clickable { onPhotoSelected(photo, relativeCenter, relativeScale) }
     ) {
-        AsyncImage(
+        Image(
             modifier = Modifier.fillMaxWidth(),
-            model = photo.url,
+            url = photo.url,
             contentScale = contentScale,
             contentDescription = "photo",
         )

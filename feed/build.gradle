@@ -13,6 +13,7 @@ dependencies {
     implementation project(":ui")
     implementation project(":albums")
     implementation project(":photos")
+    implementation project(":image")
     implementation project(":infrastructure")
     implementation(
             libs.androidx.compose.foundation.layout,
@@ -20,6 +21,5 @@ dependencies {
             libs.androidx.compose.ui,
             libs.androidx.compose.ui.util,
             libs.androidx.core,
-            libs.coil.compose,
     )
 }

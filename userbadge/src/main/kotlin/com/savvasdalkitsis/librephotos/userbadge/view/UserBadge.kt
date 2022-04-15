@@ -18,8 +18,8 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import coil.compose.AsyncImage
 import com.savvasdalkitsis.librephotos.icons.R
+import com.savvasdalkitsis.librephotos.image.view.Image
 import com.savvasdalkitsis.librephotos.ui.theme.CustomColors
 import com.savvasdalkitsis.librephotos.userbadge.view.state.SyncState.*
 import com.savvasdalkitsis.librephotos.userbadge.view.state.UserBadgeState
@@ -51,12 +51,12 @@ fun UserBadge(
         }
 
         when {
-            !state.avatarUrl.isNullOrEmpty() -> AsyncImage(
+            !state.avatarUrl.isNullOrEmpty() -> Image(
                 modifier = Modifier
                     .size(size - 6.dp)
                     .clip(CircleShape)
                     .align(Alignment.Center),
-                model = state.avatarUrl,
+                url = state.avatarUrl,
                 contentScale = ContentScale.FillBounds,
                 placeholder = ColorPainter(backgroundColor),
                 contentDescription = "profileImage"

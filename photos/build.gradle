@@ -17,15 +17,13 @@ dependencies {
     implementation project(":worker")
     implementation project(":auth")
     implementation project(":icons")
+    implementation project(":image")
     implementation(
             libs.accompanist.systemui,
             libs.androidx.compose.hilt.navigation,
             libs.androidx.compose.material,
             libs.androidx.work,
             libs.androidx.work.hilt,
-            libs.coil.compose,
-            libs.coil.gif,
-            libs.coil.video,
             libs.hilt,
             libs.infobar,
             libs.maps,

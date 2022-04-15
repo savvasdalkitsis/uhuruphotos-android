@@ -16,10 +16,10 @@ dependencies {
     implementation project(":worker")
     implementation project(":user")
     implementation project(":db")
+    implementation project(":image")
     implementation(
             libs.androidx.compose.material,
             libs.androidx.work,
-            libs.coil.compose,
             libs.hilt,
     )
 }

@@ -13,21 +13,18 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.layout.onGloballyPositioned
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.DpSize
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.toSize
-import coil.compose.AsyncImage
-import coil.request.ImageRequest
-import coil.size.Size
 import com.radusalagean.infobarcompose.InfoBar
 import com.radusalagean.infobarcompose.InfoBarMessage
-import com.savvasdalkitsis.librephotos.ui.view.CommonScaffold
+import com.savvasdalkitsis.librephotos.image.view.Image
 import com.savvasdalkitsis.librephotos.photos.mvflow.PhotoAction
 import com.savvasdalkitsis.librephotos.photos.mvflow.PhotoAction.*
 import com.savvasdalkitsis.librephotos.photos.view.state.PhotoState
 import com.savvasdalkitsis.librephotos.ui.view.BackPressHandler
+import com.savvasdalkitsis.librephotos.ui.view.CommonScaffold
 import com.savvasdalkitsis.librephotos.ui.view.FullProgressBar
 import com.savvasdalkitsis.librephotos.ui.view.zoom.rememberZoomableState
 import com.savvasdalkitsis.librephotos.ui.view.zoom.zoomable
@@ -80,7 +77,6 @@ fun Photo(
             if (state.isLoading && state.lowResUrl.isEmpty()) {
                 FullProgressBar()
             } else {
-                var showLowRes = remember { true }
                 Box(
                     modifier = Modifier
                         .fillMaxSize()
@@ -92,33 +88,15 @@ fun Photo(
                             onSwipeUp = { action(ShowInfo) },
                         )
                 ) {
-                    if (showLowRes) {
-                        AsyncImage(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .align(Alignment.Center),
-                            model = ImageRequest.Builder(LocalContext.current)
-                                .data(state.lowResUrl)
-                                .build(),
-                            contentScale = ContentScale.Fit,
-                            contentDescription = null,
-                        )
-                    }
-                    AsyncImage(
+                    Image(
                         modifier = Modifier
                             .fillMaxWidth()
                             .align(Alignment.Center),
-                        model = ImageRequest.Builder(LocalContext.current)
-                            .data(state.fullResUrl)
-                            .size(Size.ORIGINAL)
-                            .listener(onSuccess = { _, _ ->
-                                showLowRes = false
-                            })
-                            .build(),
+                        lowResUrl = state.lowResUrl,
+                        fullResUrl = state.fullResUrl,
                         contentScale = ContentScale.Fit,
                         contentDescription = "photo",
                     )
-
                     Column {
                         Spacer(modifier = Modifier.height(contentPadding.calculateTopPadding()))
                         InfoBar(offeredMessage = state.errorMessage?.let { InfoBarMessage(it) }) {

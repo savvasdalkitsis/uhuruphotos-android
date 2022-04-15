@@ -57,6 +57,7 @@ dependencies {
     implementation project(":navigation")
     implementation project(":photos")
     implementation project(":ui")
+    implementation project(":image")
     implementation project(":search")
     implementation project(":server")
     implementation project(":log")
@@ -73,12 +74,7 @@ dependencies {
             libs.androidx.preference,
             libs.androidx.work,
             libs.androidx.work.hilt,
-            libs.coil.compose,
-            libs.coil.gif,
-            libs.coil.video,
             libs.flowpreferences,
             libs.hilt,
-            libs.okhttp.logging,
-            libs.okhttp.url,
     )
 }
