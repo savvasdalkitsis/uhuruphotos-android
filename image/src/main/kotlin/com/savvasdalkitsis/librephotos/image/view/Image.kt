@@ -41,10 +41,10 @@ fun Image(
 ) {
     var showLowRes = remember { true }
 
-    Box {
+    Box(modifier = modifier) {
         if (showLowRes) {
             Image(
-                modifier = modifier
+                modifier = Modifier
                     .fillMaxWidth()
                     .align(Alignment.Center),
                 url = lowResUrl,
@@ -54,7 +54,7 @@ fun Image(
             )
         }
         AsyncImage(
-            modifier = modifier
+            modifier = Modifier
                 .fillMaxWidth()
                 .align(Alignment.Center),
             model = ImageRequest.Builder(LocalContext.current)
