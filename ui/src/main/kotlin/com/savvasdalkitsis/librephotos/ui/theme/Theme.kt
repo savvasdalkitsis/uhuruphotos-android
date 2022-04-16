@@ -1,11 +1,18 @@
 package com.savvasdalkitsis.librephotos.ui.theme
 
+import android.app.Activity
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.darkColors
 import androidx.compose.material.lightColors
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.SideEffect
 import androidx.compose.ui.graphics.Color
+import com.google.accompanist.systemuicontroller.rememberSystemUiController
+import com.savvasdalkitsis.librephotos.ui.window.LocalSystemUiController
+import com.savvasdalkitsis.librephotos.ui.window.WindowSize
+import com.savvasdalkitsis.librephotos.ui.window.windowSizeClass
 
 private val DarkColorPalette = darkColors(
     primary = Purple200,
@@ -38,7 +45,7 @@ object CustomColors {
 }
 
 @Composable
-fun AppTheme(
+fun Activity.AppTheme(
     darkTheme: Boolean = isSystemInDarkTheme(),
     content: @Composable () -> Unit
 ) {
@@ -48,10 +55,26 @@ fun AppTheme(
         LightColorPalette
     }
 
-    MaterialTheme(
-        colors = colors,
-        typography = Typography,
-        shapes = Shapes,
-        content = content
-    )
+    val (width, height) = windowSizeClass()
+    val systemUiController = rememberSystemUiController()
+    CompositionLocalProvider(
+        WindowSize.LOCAL_WIDTH provides width,
+        WindowSize.LOCAL_HEIGHT provides height,
+        LocalSystemUiController provides systemUiController
+    ) {
+        MaterialTheme(
+            colors = colors,
+            typography = Typography,
+            shapes = Shapes,
+        ) {
+            val useDarkIcons = MaterialTheme.colors.isLight
+            SideEffect {
+                systemUiController.setSystemBarsColor(
+                    color = Color.Transparent,
+                    darkIcons = useDarkIcons
+                )
+            }
+            content()
+        }
+    }
 }

@@ -1,4 +1,4 @@
-package com.savvasdalkitsis.librephotos.ui.window.window
+package com.savvasdalkitsis.librephotos.ui.window
 
 import android.app.Activity
 import androidx.compose.runtime.Composable
@@ -8,7 +8,6 @@ import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.dp
 import androidx.window.layout.WindowMetricsCalculator
-import com.savvasdalkitsis.librephotos.ui.window.WindowSizeClass
 
 @Composable
 fun Activity.windowSizeClass(): Pair<WindowSizeClass, WindowSizeClass> {

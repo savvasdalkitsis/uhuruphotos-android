@@ -4,15 +4,15 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
-import androidx.navigation.NavHostController
 import com.google.accompanist.navigation.animation.AnimatedNavHost
+import com.google.accompanist.navigation.animation.rememberAnimatedNavController
 import com.savvasdalkitsis.librephotos.auth.weblogin.weblogin.navigation.WebLoginNavigationTarget
 import com.savvasdalkitsis.librephotos.feedpage.navigation.FeedPageNavigationTarget
 import com.savvasdalkitsis.librephotos.home.navigation.HomeNavigationTarget
 import com.savvasdalkitsis.librephotos.photos.navigation.PhotoNavigationTarget
 import com.savvasdalkitsis.librephotos.search.navigation.SearchNavigationTarget
 import com.savvasdalkitsis.librephotos.server.navigation.ServerNavigationTarget
-import com.savvasdalkitsis.librephotos.ui.window.window.LocalSystemUiController
+import com.savvasdalkitsis.librephotos.ui.window.LocalSystemUiController
 import javax.inject.Inject
 
 class Navigator @Inject constructor(
@@ -26,7 +26,8 @@ class Navigator @Inject constructor(
 ) {
 
     @Composable
-    fun NavigationTargets(navHostController: NavHostController) {
+    fun NavigationTargets() {
+        val navHostController = rememberAnimatedNavController()
         with(controllersProvider) {
             navController = navHostController
             keyboardController = LocalSoftwareKeyboardController.current
