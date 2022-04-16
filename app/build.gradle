@@ -61,6 +61,7 @@ dependencies {
     implementation project(":initializer")
     implementation(
             libs.accompanist.navigation,
+            libs.accompanist.systemui,
             libs.androidx.activity,
             libs.androidx.compose.hilt.navigation,
             libs.androidx.compose.material,
