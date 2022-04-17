@@ -1,6 +1,7 @@
 package com.savvasdalkitsis.librephotos.photos.view
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.MaterialTheme
@@ -8,6 +9,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.platform.ClipboardManager
+import androidx.compose.ui.platform.LocalClipboardManager
 import androidx.compose.ui.unit.DpSize
 import androidx.compose.ui.unit.dp
 import com.google.maps.android.compose.Marker
@@ -17,6 +20,7 @@ import com.savvasdalkitsis.librephotos.infrastructure.extensions.round
 import com.savvasdalkitsis.librephotos.ui.insets.systemPadding
 import com.savvasdalkitsis.librephotos.map.view.MapView
 import com.savvasdalkitsis.librephotos.photos.mvflow.PhotoAction
+import com.savvasdalkitsis.librephotos.photos.mvflow.PhotoAction.ClickedOnGps
 import com.savvasdalkitsis.librephotos.photos.view.state.PhotoState
 import com.savvasdalkitsis.librephotos.ui.view.TextWithIcon
 
@@ -77,10 +81,11 @@ fun PhotoDetailsSheet(
                 icon = R.drawable.ic_location_place,
                 text = state.location,
             )
-            state.gps?.let {
+            state.gps?.let { gps ->
                 TextWithIcon(
+                    modifier = Modifier.clickable { action(ClickedOnGps(gps)) },
                     icon = R.drawable.ic_location_pin,
-                    text = "${it.latitude.round(2)}:${it.longitude.round(2)}",
+                    text = "${gps.latitude.round(2)}:${gps.longitude.round(2)}",
                 )
             }
         }

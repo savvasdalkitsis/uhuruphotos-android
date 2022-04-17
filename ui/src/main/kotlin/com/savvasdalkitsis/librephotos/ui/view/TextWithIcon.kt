@@ -14,10 +14,14 @@ import androidx.compose.ui.unit.dp
 
 @Composable
 fun TextWithIcon(
+    modifier: Modifier = Modifier,
     @DrawableRes icon: Int,
     text: String,
 ) {
-    Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+    Row(
+        modifier = modifier,
+        horizontalArrangement = Arrangement.spacedBy(8.dp),
+    ) {
         Icon(
             modifier = Modifier
                 .size(16.dp)

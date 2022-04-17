@@ -12,4 +12,5 @@ sealed class PhotoAction {
     data class ClickedOnMap(val gps: LatLng) : PhotoAction()
     data class LoadPhoto(val id: String) : PhotoAction()
     data class SetFavourite(val favourite: Boolean) : PhotoAction()
+    data class ClickedOnGps(val gps: LatLng) : PhotoAction()
 }

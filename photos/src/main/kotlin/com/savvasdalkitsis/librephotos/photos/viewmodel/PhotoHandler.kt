@@ -74,5 +74,8 @@ class PhotoHandler @Inject constructor(
         is ClickedOnMap -> flow {
             effect(LaunchMap(action.gps))
         }
+        is ClickedOnGps -> flow {
+            effect(CopyToClipboard(action.gps.toString()))
+        }
     }
 }
