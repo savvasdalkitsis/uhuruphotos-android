@@ -2,6 +2,7 @@ dependencies {
 
     implementation project(":db")
     implementation project(":image")
+    implementation project(":worker")
     implementation(
             libs.hilt,
     )

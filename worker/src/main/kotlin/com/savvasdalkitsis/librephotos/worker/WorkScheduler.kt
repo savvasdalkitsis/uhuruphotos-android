@@ -44,4 +44,8 @@ class WorkScheduler @Inject constructor(
                 .build(),
         )
     }
+
+    fun cancelAllScheduledWork() {
+        workManager.cancelAllWork()
+    }
 }
