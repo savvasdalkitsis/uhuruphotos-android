@@ -64,7 +64,9 @@ fun Photo(
             },
             title = {},
             toolbarColor = Color.Transparent,
+            bottomBarColor = Color.Transparent,
             topBarDisplayed = state.showUI,
+            bottomBarDisplayed = state.showUI,
             navigationIcon = {
                 IconButton(onClick = { action(NavigateBack) }) {
                     Icon(imageVector = Icons.Default.ArrowBack, contentDescription = "back")
@@ -72,7 +74,10 @@ fun Photo(
             },
             actionBarContent = {
                PhotoDetailsActionBar(state, action)
-            }
+            },
+            bottomBarContent = {
+                PhotoDetailsBottomActionBar(action)
+            },
         ) { contentPadding ->
             if (state.isLoading && state.lowResUrl.isEmpty()) {
                 FullProgressBar()
@@ -102,6 +107,9 @@ fun Photo(
                         InfoBar(offeredMessage = state.errorMessage?.let { InfoBarMessage(it) }) {
                             action(DismissErrorMessage)
                         }
+                    }
+                    if (state.showPhotoDeletionConfirmationDialog) {
+                        DeletePermissionDialog(action)
                     }
                 }
             }

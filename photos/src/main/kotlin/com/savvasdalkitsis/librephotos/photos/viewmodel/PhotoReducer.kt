@@ -45,17 +45,19 @@ class PhotoReducer @Inject constructor(
             showRefresh = true,
             errorMessage = mutation.message,
         )
-        FinishedLoadingDetails -> state.copy(
+        FinishedLoading -> state.copy(
             isLoading = false,
             showRefresh = true,
             showInfoButton = true,
         )
-        LoadingDetails -> state.copy(
+        Loading -> state.copy(
             isLoading = true,
             showRefresh = false,
         )
         DismissErrorMessage -> state.copy(errorMessage = null)
         ShowInfo -> state.copy(infoSheetState = ModalBottomSheetValue.HalfExpanded)
         HideInfo -> state.copy(infoSheetState = ModalBottomSheetValue.Hidden)
+        ShowDeletionConfirmationDialog -> state.copy(showPhotoDeletionConfirmationDialog = true)
+        HideDeletionConfirmationDialog -> state.copy(showPhotoDeletionConfirmationDialog = false)
     }
 }

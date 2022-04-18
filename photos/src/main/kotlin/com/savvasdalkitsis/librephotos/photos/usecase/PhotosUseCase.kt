@@ -45,6 +45,10 @@ class PhotosUseCase @Inject constructor(
         photoRepository.refreshDetails(id)
     }
 
+    fun deletePhoto(id: String) {
+        photoWorkScheduler.schedulePhotoDeletion(id)
+    }
+
     companion object {
         const val FAVOURITES_RATING_THRESHOLD = 4
     }

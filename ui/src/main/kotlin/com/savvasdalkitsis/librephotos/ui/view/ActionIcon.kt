@@ -9,7 +9,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 
 @Composable
-fun ActionBarIcon(
+fun ActionIcon(
     modifier: Modifier = Modifier,
     onClick: () -> Unit,
     @DrawableRes icon: Int,

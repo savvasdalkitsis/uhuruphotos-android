@@ -43,8 +43,8 @@ class PhotoHandler @Inject constructor(
                 ).map {
                     when (it) {
                         BLOCKED, CANCELLED, FAILED -> ShowErrorMessage("Error loading photo details")
-                        SUCCEEDED -> FinishedLoadingDetails
-                        ENQUEUED, RUNNING -> LoadingDetails
+                        SUCCEEDED -> FinishedLoading
+                        ENQUEUED, RUNNING -> Loading
                     }
                 }
             ))
@@ -76,6 +76,14 @@ class PhotoHandler @Inject constructor(
         }
         is ClickedOnGps -> flow {
             effect(CopyToClipboard(action.gps.toString()))
+        }
+        AskForPhotoDeletion -> flowOf(ShowDeletionConfirmationDialog)
+        DismissPhotoDeletionDialog -> flowOf(HideDeletionConfirmationDialog)
+        DeletePhoto -> flow {
+            emit(Loading)
+            emit(HideDeletionConfirmationDialog)
+            photosUseCase.deletePhoto(state.id)
+            effect(PhotoEffect.NavigateBack)
         }
     }
 }

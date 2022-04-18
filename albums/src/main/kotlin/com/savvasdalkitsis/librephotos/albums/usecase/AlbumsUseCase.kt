@@ -50,7 +50,7 @@ class AlbumsUseCase @Inject constructor(
                         )
                     }
                 )
-            }
+            }.filter { it.photos.isNotEmpty() }
         }
         .distinctUntilChanged()
         .onStart {

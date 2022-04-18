@@ -44,4 +44,11 @@ class PhotoRepository @Inject constructor(
         }
     }
 
+    suspend fun deletePhoto(id: String) {
+        crud {
+            photoDetailsQueries.delete(id)
+            photoSummaryQueries.delete(id)
+        }
+    }
+
 }

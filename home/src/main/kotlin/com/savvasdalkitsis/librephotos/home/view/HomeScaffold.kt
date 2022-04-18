@@ -30,7 +30,7 @@ fun HomeScaffold(
 ) {
     CommonScaffold(
         modifier = modifier,
-        bottomBar = {
+        bottomBarContent = {
             if (homeNavigationStyle() == BOTTOM_BAR) {
                 HomeNavigationBar(
                     navController = navController,

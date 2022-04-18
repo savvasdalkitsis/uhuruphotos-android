@@ -29,3 +29,6 @@ INSERT OR REPLACE INTO photoDetails VALUES ?;
 
 setRating:
 UPDATE photoDetails SET rating = :rating WHERE imageHash = :id;
+
+delete:
+DELETE FROM photoDetails WHERE imageHash = :id;

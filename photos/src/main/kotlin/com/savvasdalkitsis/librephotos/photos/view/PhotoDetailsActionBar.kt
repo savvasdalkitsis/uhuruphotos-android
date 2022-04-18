@@ -9,7 +9,7 @@ import androidx.compose.ui.unit.dp
 import com.savvasdalkitsis.librephotos.icons.R
 import com.savvasdalkitsis.librephotos.photos.mvflow.PhotoAction
 import com.savvasdalkitsis.librephotos.photos.view.state.PhotoState
-import com.savvasdalkitsis.librephotos.ui.view.ActionBarIcon
+import com.savvasdalkitsis.librephotos.ui.view.ActionIcon
 
 @Composable
 fun PhotoDetailsActionBar(
@@ -26,7 +26,7 @@ fun PhotoDetailsActionBar(
     }
     AnimatedVisibility(visible = state.showRefresh) {
         if (state.showRefresh) {
-            ActionBarIcon(
+            ActionIcon(
                 onClick = { action(PhotoAction.Refresh) },
                 icon = R.drawable.ic_refresh,
                 contentDescription = "refresh"
@@ -35,7 +35,7 @@ fun PhotoDetailsActionBar(
     }
     AnimatedVisibility(visible = state.isFavourite != null) {
         if (state.isFavourite != null) {
-            ActionBarIcon(
+            ActionIcon(
                 onClick = { action(PhotoAction.SetFavourite(!state.isFavourite)) },
                 icon = if (state.isFavourite) R.drawable.ic_favourite else R.drawable.ic_not_favourite,
                 contentDescription = if (state.isFavourite) "favourite" else "not favourite"
@@ -44,7 +44,7 @@ fun PhotoDetailsActionBar(
     }
     AnimatedVisibility(visible = state.showInfoButton) {
         if (state.showInfoButton) {
-            ActionBarIcon(
+            ActionIcon(
                 onClick = { action(PhotoAction.ShowInfo) },
                 icon = R.drawable.ic_info,
                 contentDescription = "info",
