@@ -37,17 +37,19 @@ class AlbumsUseCase @Inject constructor(
                     photoCount = photos.size,
                     date = dateDisplayer.dateString(albumDate),
                     location = albumLocation ?: "",
-                    photos = photos.map { item ->
-                        Photo(
-                            id = item.photoId,
-                            url = with(photosUseCase) {
-                                item.photoId.toThumbnailUrlFromId()
-                            },
-                            isFavourite = item.rating ?: 0 >= PhotosUseCase.FAVOURITES_RATING_THRESHOLD,
-                            fallbackColor = item.dominantColor,
-                            ratio = item.aspectRatio ?: 1.0f,
-                            isVideo = item.isVideo,
-                        )
+                    photos = photos.mapNotNull { item ->
+                        item.photoId?.let { id ->
+                            Photo(
+                                id = id,
+                                url = with(photosUseCase) {
+                                    item.photoId.toThumbnailUrlFromId()
+                                },
+                                fallbackColor = item.dominantColor,
+                                isFavourite = item.rating ?: 0 >= PhotosUseCase.FAVOURITES_RATING_THRESHOLD,
+                                ratio = item.aspectRatio ?: 1.0f,
+                                isVideo = item.isVideo,
+                            )
+                        }
                     }
                 )
             }.filter { it.photos.isNotEmpty() }

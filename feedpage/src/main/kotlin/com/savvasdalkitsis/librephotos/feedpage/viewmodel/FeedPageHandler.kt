@@ -2,6 +2,8 @@ package com.savvasdalkitsis.librephotos.feedpage.viewmodel
 
 import com.savvasdalkitsis.librephotos.albums.usecase.AlbumsUseCase
 import com.savvasdalkitsis.librephotos.account.usecase.AccountUseCase
+import com.savvasdalkitsis.librephotos.albums.model.Album
+import com.savvasdalkitsis.librephotos.feedpage.SelectionList
 import com.savvasdalkitsis.librephotos.feedpage.mvflow.FeedPageAction
 import com.savvasdalkitsis.librephotos.feedpage.mvflow.FeedPageAction.*
 import com.savvasdalkitsis.librephotos.feedpage.mvflow.FeedPageAction.ChangeDisplay
@@ -14,6 +16,9 @@ import com.savvasdalkitsis.librephotos.feedpage.mvflow.FeedPageMutation
 import com.savvasdalkitsis.librephotos.feedpage.mvflow.FeedPageMutation.*
 import com.savvasdalkitsis.librephotos.feedpage.usecase.FeedPageUseCase
 import com.savvasdalkitsis.librephotos.feedpage.view.state.FeedPageState
+import com.savvasdalkitsis.librephotos.photos.model.Photo
+import com.savvasdalkitsis.librephotos.photos.mvflow.PhotoMutation
+import com.savvasdalkitsis.librephotos.photos.usecase.PhotosUseCase
 import com.savvasdalkitsis.librephotos.userbadge.usecase.UserBadgeUseCase
 import com.savvasdalkitsis.librephotos.viewmodel.Handler
 import kotlinx.coroutines.delay
@@ -25,6 +30,8 @@ class FeedPageHandler @Inject constructor(
     private val userBadgeUseCase: UserBadgeUseCase,
     private val accountUseCase: AccountUseCase,
     private val feedPageUseCase: FeedPageUseCase,
+    private val photosUseCase: PhotosUseCase,
+    private val selectionList: SelectionList,
 ) : Handler<FeedPageState, FeedPageEffect, FeedPageAction, FeedPageMutation> {
 
     override fun invoke(
@@ -38,9 +45,12 @@ class FeedPageHandler @Inject constructor(
                 .distinctUntilChanged()
                 .map(FeedPageMutation::ChangeDisplay),
             flowOf(Loading),
-            albumsUseCase.getAlbums(refresh = false)
-                .debounce(200)
-                .map(::ShowAlbums),
+            combine(
+                albumsUseCase.getAlbums(refresh = false).debounce(200),
+                selectionList.ids,
+            ) { albums, ids ->
+                albums.selectPhotos(ids)
+            }.map(::ShowAlbums),
             userBadgeUseCase.getUserBadgeState()
                 .map(::UserBadgeUpdate),
         )
@@ -57,7 +67,11 @@ class FeedPageHandler @Inject constructor(
             emit(StopRefreshing)
         }
         is SelectedPhoto -> flow {
-            effect(OpenPhotoDetails(action.photo.id!!, action.center, action.scale))
+            when {
+                state.selectedPhotoCount == 0 -> effect(OpenPhotoDetails(action.photo.id, action.center, action.scale))
+                action.photo.isSelected -> action.photo.deselect()
+                else -> action.photo.select()
+            }
         }
         is ChangeDisplay -> flow {
             feedPageUseCase.setFeedDisplay(action.display)
@@ -65,5 +79,44 @@ class FeedPageHandler @Inject constructor(
         }
         HideFeedDisplayChoice -> flowOf(FeedPageMutation.HideFeedDisplayChoice)
         ShowFeedDisplayChoice -> flowOf(FeedPageMutation.ShowFeedDisplayChoice)
+        is PhotoLongPressed -> flow {
+            if (state.selectedPhotoCount == 0) {
+                action.photo.select()
+            }
+        }
+        ClearSelected -> flow {
+            selectionList.clear()
+        }
+        AskForSelectedPhotosDeletion -> flowOf(ShowDeletionConfirmationDialog)
+        is AlbumSelectionClicked -> flow {
+            val photos = action.album.photos
+            if (photos.all { it.isSelected }) {
+                photos.forEach { it.deselect() }
+            } else {
+                photos.forEach { it.select() }
+            }
+        }
+        DismissSelectedPhotosDeletion -> flowOf(HideDeletionConfirmationDialog)
+        DeleteSelectedPhotos -> flow {
+            emit(HideDeletionConfirmationDialog)
+            state.selectedPhotos.forEach {
+                photosUseCase.deletePhoto(it.id)
+            }
+            selectionList.clear()
+        }
+    }
+
+    private suspend fun Photo.deselect() {
+        selectionList.deselect(id)
+    }
+
+    private suspend fun Photo.select() {
+        selectionList.select(id)
+    }
+
+    private fun List<Album>.selectPhotos(ids: Set<String>): List<Album> = map { album ->
+        album.copy(photos = album.photos.map { photo ->
+            photo.copy(isSelected = photo.id in ids)
+        })
     }
 }

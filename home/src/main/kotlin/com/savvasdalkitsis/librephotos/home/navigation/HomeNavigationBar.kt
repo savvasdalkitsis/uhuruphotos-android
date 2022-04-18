@@ -9,6 +9,7 @@ import androidx.compose.material.icons.filled.Search
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.graphics.vector.rememberVectorPainter
 import androidx.compose.ui.res.painterResource
@@ -41,19 +42,18 @@ fun HomeNavigationBar(
 ) {
     val navBackStackEntry by navController.currentBackStackEntryAsState()
     val currentDestination = navBackStackEntry?.destination
-    val backgroundColor = MaterialTheme.colors.primarySurface.copy(alpha = 0.8f)
 
     when (homeNavigationStyle()) {
         BOTTOM_BAR -> {
             BottomNavigation(
-                backgroundColor = backgroundColor
+                backgroundColor = Color.Transparent
             ) {
                 Items(currentDestination, navController, feedDisplay, feedNavigationName, searchNavigationName, onReselected, rowScope = this)
             }
         }
         NAVIGATION_RAIL -> NavigationRail(
             modifier = Modifier.padding(top = contentPadding.calculateTopPadding()),
-            backgroundColor = backgroundColor,
+            backgroundColor = MaterialTheme.colors.primarySurface.copy(alpha = 0.8f),
         ) {
             Items(currentDestination, navController, feedDisplay, feedNavigationName, searchNavigationName, onReselected)
         }

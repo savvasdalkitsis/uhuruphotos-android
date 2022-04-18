@@ -20,7 +20,7 @@ fun CommonScaffold(
     bottomBarContent: @Composable () -> Unit = {},
     actionBarContent: @Composable RowScope.() -> Unit = {},
     toolbarColor: Color = MaterialTheme.colors.background.copy(alpha = 0.8f),
-    bottomBarColor: Color = MaterialTheme.colors.primarySurface.copy(alpha = 0.8f),
+    bottomBarColor: Color = MaterialTheme.colors.background.copy(alpha = 0.8f),
     topBarDisplayed: Boolean = true,
     bottomBarDisplayed: Boolean = true,
     navigationIcon: @Composable (() -> Unit)? = null,
@@ -48,7 +48,7 @@ fun CommonScaffold(
                                 ).calculateBottomPadding()
                             )
                             .fillMaxWidth()
-                            .background(toolbarColor)
+                            .background(bottomBarColor)
                     )
                 }
             }

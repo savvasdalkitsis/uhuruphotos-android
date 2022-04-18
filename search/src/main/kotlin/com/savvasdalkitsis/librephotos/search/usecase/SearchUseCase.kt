@@ -33,16 +33,18 @@ class SearchUseCase @Inject constructor(
                         photoCount = photos.size,
                         date = dateDisplayer.dateString(albumDate),
                         location = albumLocation,
-                        photos = photos.map { photo ->
-                            Photo(
-                                id = photo.summaryId,
-                                url = with(photosUseCase) {
-                                    photo.summaryId.toThumbnailUrlFromId()
-                                },
-                                fallbackColor = photo.dominantColor,
-                                ratio = photo.aspectRatio ?: 1f,
-                                isVideo = photo.isVideo,
-                            )
+                        photos = photos.mapNotNull { photo ->
+                            photo.summaryId?.let { id ->
+                                Photo(
+                                    id = id,
+                                    url = with(photosUseCase) {
+                                        photo.summaryId.toThumbnailUrlFromId()
+                                    },
+                                    fallbackColor = photo.dominantColor,
+                                    ratio = photo.aspectRatio ?: 1f,
+                                    isVideo = photo.isVideo,
+                                )
+                            }
                         }
                     )
                 }

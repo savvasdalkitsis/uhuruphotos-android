@@ -1,9 +1,11 @@
 package com.savvasdalkitsis.librephotos.feedpage.viewmodel
 
+import com.savvasdalkitsis.librephotos.albums.model.Album
 import com.savvasdalkitsis.librephotos.feedpage.mvflow.FeedPageMutation
 import com.savvasdalkitsis.librephotos.feedpage.mvflow.FeedPageMutation.*
 import com.savvasdalkitsis.librephotos.feedpage.view.state.FeedPageState
 import com.savvasdalkitsis.librephotos.feed.view.state.FeedState
+import com.savvasdalkitsis.librephotos.photos.model.Photo
 
 fun feedPageReducer() : com.savvasdalkitsis.librephotos.viewmodel.Reducer<FeedPageState, FeedPageMutation> = { state, mutation ->
     when (mutation) {
@@ -18,6 +20,8 @@ fun feedPageReducer() : com.savvasdalkitsis.librephotos.viewmodel.Reducer<FeedPa
         is ChangeDisplay -> state.copyFeed { copy(feedDisplay = mutation.display) }
         HideFeedDisplayChoice -> state.copy(showFeedDisplayChoice = false)
         ShowFeedDisplayChoice -> state.copy(showFeedDisplayChoice = true)
+        ShowDeletionConfirmationDialog -> state.copy(showPhotoDeletionConfirmationDialog = true)
+        HideDeletionConfirmationDialog -> state.copy(showPhotoDeletionConfirmationDialog = false)
     }
 }
 

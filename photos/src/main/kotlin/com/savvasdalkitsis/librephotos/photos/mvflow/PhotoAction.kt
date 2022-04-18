@@ -1,6 +1,7 @@
 package com.savvasdalkitsis.librephotos.photos.mvflow
 
 import com.google.android.gms.maps.model.LatLng
+import com.savvasdalkitsis.librephotos.photos.model.Photo
 
 sealed class PhotoAction {
     object ToggleUI : PhotoAction()

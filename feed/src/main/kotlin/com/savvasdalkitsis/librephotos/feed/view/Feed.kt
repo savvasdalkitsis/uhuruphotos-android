@@ -10,8 +10,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.unit.dp
+import com.savvasdalkitsis.librephotos.albums.model.Album
 import com.savvasdalkitsis.librephotos.feed.view.state.FeedDisplay
 import com.savvasdalkitsis.librephotos.feed.view.state.FeedState
+import com.savvasdalkitsis.librephotos.photos.model.Photo
 import com.savvasdalkitsis.librephotos.ui.view.FullProgressBar
 import com.savvasdalkitsis.librephotos.ui.window.WindowSize
 
@@ -19,11 +21,14 @@ import com.savvasdalkitsis.librephotos.ui.window.WindowSize
 fun Feed(
     contentPadding: PaddingValues = PaddingValues(0.dp),
     state: FeedState,
+    showSelectionHeader: Boolean = false,
     gridState: LazyGridState = rememberLazyGridState(),
     listState: LazyListState = rememberLazyListState(),
     onPhotoSelected: PhotoSelected = { _, _, _ ->},
     onChangeDisplay: (FeedDisplay) -> Unit = {},
-) {
+    onPhotoLongPressed: (Photo) -> Unit = {},
+    onAlbumSelectionClicked: (Album) -> Unit = {},
+    ) {
     if (state.isLoading && state.albums.isEmpty()) {
         FullProgressBar()
     } else {
@@ -42,19 +47,25 @@ fun Feed(
                 modifier = modifier,
                 contentPadding = contentPadding,
                 albums = state.albums,
+                showSelectionHeader = showSelectionHeader,
                 columnCount = columnCount,
                 gridState = gridState,
-                onPhotoSelected = onPhotoSelected
+                onPhotoSelected = onPhotoSelected,
+                onPhotoLongPressed = onPhotoLongPressed,
+                onAlbumSelectionClicked = onAlbumSelectionClicked,
             )
         } else {
             StaggeredDateFeed(
                 modifier = modifier,
                 contentPadding = contentPadding,
                 albums = state.albums,
+                showSelectionHeader = showSelectionHeader,
                 listState = listState,
                 columnCount = columnCount,
                 shouldAddEmptyPhotosInRows = feedDisplay.shouldAddEmptyPhotosInRows,
-                onPhotoSelected = onPhotoSelected
+                onPhotoSelected = onPhotoSelected,
+                onPhotoLongPressed = onPhotoLongPressed,
+                onAlbumSelectionClicked = onAlbumSelectionClicked,
             )
         }
     }

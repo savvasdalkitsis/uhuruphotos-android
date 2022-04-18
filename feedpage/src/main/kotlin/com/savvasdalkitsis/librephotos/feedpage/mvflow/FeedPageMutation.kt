@@ -13,6 +13,8 @@ sealed class FeedPageMutation {
     object StopRefreshing : FeedPageMutation()
     object ShowFeedDisplayChoice : FeedPageMutation()
     object HideFeedDisplayChoice : FeedPageMutation()
+    object ShowDeletionConfirmationDialog : FeedPageMutation()
+    object HideDeletionConfirmationDialog : FeedPageMutation()
 
     data class ShowAlbums(val albums: List<Album>) : FeedPageMutation() {
         override fun toString() = "Showing ${albums.size} albums"

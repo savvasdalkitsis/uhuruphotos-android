@@ -15,10 +15,13 @@ fun StaggeredDateFeed(
     modifier: Modifier = Modifier,
     contentPadding: PaddingValues,
     albums: List<Album>,
+    showSelectionHeader: Boolean = false,
     columnCount: Int,
     shouldAddEmptyPhotosInRows: Boolean,
     listState: LazyListState = rememberLazyListState(),
     onPhotoSelected: PhotoSelected,
+    onPhotoLongPressed: (Photo) -> Unit,
+    onAlbumSelectionClicked: (Album) -> Unit,
 ) {
     LazyColumn(
         modifier = modifier,
@@ -27,11 +30,13 @@ fun StaggeredDateFeed(
     ) {
         albums.forEach { album ->
             item(album.id) {
-                AlbumHeader(album)
+                AlbumHeader(album, showSelectionHeader) {
+                    onAlbumSelectionClicked(album)
+                }
             }
             val (photos, rows) = if (shouldAddEmptyPhotosInRows) {
                 val emptyPhotos = (columnCount - album.photos.size % columnCount) % columnCount
-                val paddedPhotos = album.photos + List(emptyPhotos) { Photo(id = "empty") }
+                val paddedPhotos = album.photos + List(emptyPhotos) { Photo(id = "empty",) }
                 paddedPhotos to paddedPhotos.size / columnCount
             } else {
                 val evenRows = album.photos.size / columnCount
@@ -44,6 +49,7 @@ fun StaggeredDateFeed(
                 item(photosInRow.joinToString { it.url.orEmpty() }) {
                     PhotoRow(
                         onPhotoSelected = onPhotoSelected,
+                        onPhotoLongPressed = onPhotoLongPressed,
                         photos = photosInRow
                     )
                 }
@@ -55,6 +61,7 @@ fun StaggeredDateFeed(
 @Composable
 private fun PhotoRow(
     onPhotoSelected: PhotoSelected,
+    onPhotoLongPressed: (Photo) -> Unit,
     vararg photos: Photo
 ) {
     Row {
@@ -63,7 +70,8 @@ private fun PhotoRow(
                 modifier = Modifier
                     .weight(photo.ratio),
                 photo = photo,
-                onPhotoSelected = onPhotoSelected
+                onPhotoSelected = onPhotoSelected,
+                onLongClick = onPhotoLongPressed,
             )
         }
     }

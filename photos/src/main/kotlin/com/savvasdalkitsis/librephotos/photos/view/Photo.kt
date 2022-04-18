@@ -110,7 +110,10 @@ fun Photo(
                         }
                     }
                     if (state.showPhotoDeletionConfirmationDialog) {
-                        DeletePermissionDialog(action)
+                        DeletePermissionDialog(
+                            photoCount = 1,
+                            onDismiss = { action(DismissPhotoDeletionDialog) }
+                        ) { action(DeletePhoto) }
                     }
                 }
             }
