@@ -24,9 +24,7 @@ class AlbumsUseCase @Inject constructor(
     private val albumWorkScheduler: AlbumWorkScheduler,
 ) {
 
-    fun getAlbums(
-        refresh: Boolean = true,
-    ): Flow<List<Album>> = albumsRepository.getAlbumsByDate()
+    fun getAlbums(): Flow<List<Album>> = albumsRepository.getAlbumsByDate()
         .map { albums ->
             albums.items.map { (id, photos) ->
                 val albumDate = photos.firstOrNull()?.albumDate
@@ -57,7 +55,7 @@ class AlbumsUseCase @Inject constructor(
         .distinctUntilChanged()
         .onStart {
             CoroutineScope(Dispatchers.IO).launch {
-                if (refresh || !albumsRepository.hasAlbums()) {
+                if (!albumsRepository.hasAlbums()) {
                     startRefreshAlbumsWork()
                 }
             }
