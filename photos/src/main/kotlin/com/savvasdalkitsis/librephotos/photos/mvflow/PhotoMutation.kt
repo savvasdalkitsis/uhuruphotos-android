@@ -13,6 +13,7 @@ sealed class PhotoMutation {
     object HideInfo : PhotoMutation()
     object ShowDeletionConfirmationDialog : PhotoMutation()
     object HideDeletionConfirmationDialog : PhotoMutation()
+    object ShowShareIcon : PhotoMutation()
     data class ReceivedUrl(val id: String, val lowResUrl: String, val fullResUrl: String) : PhotoMutation()
     data class ReceivedDetails(val details: PhotoDetails) : PhotoMutation()
 }

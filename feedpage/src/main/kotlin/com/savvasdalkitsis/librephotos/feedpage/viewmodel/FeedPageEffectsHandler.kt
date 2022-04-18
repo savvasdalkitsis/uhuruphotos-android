@@ -10,7 +10,7 @@ class FeedPageEffectsHandler @Inject constructor(
     private val controllersProvider: ControllersProvider,
 ) : com.savvasdalkitsis.librephotos.viewmodel.EffectHandler<FeedPageEffect> {
 
-    override fun invoke(effect: FeedPageEffect) = when (effect) {
+    override suspend fun invoke(effect: FeedPageEffect) = when (effect) {
         FeedPageEffect.ReloadApp -> {
             with(controllersProvider.navController!!) {
                 backQueue.clear()

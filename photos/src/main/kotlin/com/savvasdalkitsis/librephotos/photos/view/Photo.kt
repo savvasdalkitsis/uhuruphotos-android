@@ -76,7 +76,7 @@ fun Photo(
                PhotoDetailsActionBar(state, action)
             },
             bottomBarContent = {
-                PhotoDetailsBottomActionBar(action)
+                PhotoDetailsBottomActionBar(state, action)
             },
         ) { contentPadding ->
             if (state.isLoading && state.lowResUrl.isEmpty()) {
@@ -99,6 +99,7 @@ fun Photo(
                             .align(Alignment.Center),
                         lowResUrl = state.lowResUrl,
                         fullResUrl = state.fullResUrl,
+                        onFullResImageLoaded = { action(FullImageLoaded) },
                         contentScale = ContentScale.Fit,
                         contentDescription = "photo",
                     )

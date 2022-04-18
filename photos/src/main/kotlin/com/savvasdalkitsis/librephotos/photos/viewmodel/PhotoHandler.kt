@@ -6,6 +6,7 @@ import com.savvasdalkitsis.librephotos.photos.mvflow.PhotoAction.*
 import com.savvasdalkitsis.librephotos.photos.mvflow.PhotoAction.DismissErrorMessage
 import com.savvasdalkitsis.librephotos.photos.mvflow.PhotoAction.HideInfo
 import com.savvasdalkitsis.librephotos.photos.mvflow.PhotoAction.NavigateBack
+import com.savvasdalkitsis.librephotos.photos.mvflow.PhotoAction.SharePhoto
 import com.savvasdalkitsis.librephotos.photos.mvflow.PhotoAction.ShowInfo
 import com.savvasdalkitsis.librephotos.photos.mvflow.PhotoEffect
 import com.savvasdalkitsis.librephotos.photos.mvflow.PhotoEffect.*
@@ -85,5 +86,9 @@ class PhotoHandler @Inject constructor(
             photosUseCase.deletePhoto(state.id)
             effect(PhotoEffect.NavigateBack)
         }
+        SharePhoto -> flow {
+            effect(PhotoEffect.SharePhoto(state.fullResUrl))
+        }
+        FullImageLoaded -> flowOf(ShowShareIcon)
     }
 }

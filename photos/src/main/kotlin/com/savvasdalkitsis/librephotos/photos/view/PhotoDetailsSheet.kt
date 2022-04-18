@@ -53,6 +53,7 @@ fun PhotoDetailsSheet(
                         .height(4.dp)
                 )
             }
+            PhotoDetailsBottomActionBar(state, action)
             TextWithIcon(
                 icon = R.drawable.ic_calendar,
                 text = state.dateAndTime,

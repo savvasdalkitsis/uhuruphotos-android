@@ -59,5 +59,6 @@ class PhotoReducer @Inject constructor(
         HideInfo -> state.copy(infoSheetState = ModalBottomSheetValue.Hidden)
         ShowDeletionConfirmationDialog -> state.copy(showPhotoDeletionConfirmationDialog = true)
         HideDeletionConfirmationDialog -> state.copy(showPhotoDeletionConfirmationDialog = false)
+        ShowShareIcon -> state.copy(showShareIcon = true)
     }
 }

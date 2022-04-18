@@ -6,11 +6,11 @@ import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.widget.Toast
-import androidx.compose.material.contentColorFor
 import com.google.android.gms.maps.model.LatLng
 import com.savvasdalkitsis.librephotos.navigation.ControllersProvider
 import com.savvasdalkitsis.librephotos.photos.mvflow.PhotoEffect
 import com.savvasdalkitsis.librephotos.photos.mvflow.PhotoEffect.*
+import com.savvasdalkitsis.librephotos.share.ShareImage
 import com.savvasdalkitsis.librephotos.viewmodel.EffectHandler
 import dagger.hilt.android.qualifiers.ApplicationContext
 import javax.inject.Inject
@@ -18,10 +18,11 @@ import javax.inject.Inject
 class PhotoEffectsHandler @Inject constructor(
     private val controllersProvider: ControllersProvider,
     private val clipboardManager: ClipboardManager,
+    private val shareImage: ShareImage,
     @ApplicationContext private val context: Context,
 ) : EffectHandler<PhotoEffect> {
 
-    override fun invoke(effect: PhotoEffect) {
+    override suspend fun invoke(effect: PhotoEffect) {
         when (effect) {
             HideSystemBars -> setBars(false)
             ShowSystemBars -> setBars(true)
@@ -31,6 +32,7 @@ class PhotoEffectsHandler @Inject constructor(
                 clipboardManager.setPrimaryClip(ClipData.newPlainText("", effect.content))
                 Toast.makeText(context, "Copied to clipboard", Toast.LENGTH_LONG).show()
             }
+            is SharePhoto -> shareImage.share(effect.url)
         }
     }
 

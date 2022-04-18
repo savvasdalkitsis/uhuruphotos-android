@@ -35,6 +35,7 @@ fun Image(
     modifier: Modifier = Modifier,
     lowResUrl: String?,
     fullResUrl: String?,
+    onFullResImageLoaded: () -> Unit = {},
     contentScale: ContentScale,
     placeholder: Painter? = null,
     contentDescription: String?,
@@ -62,6 +63,7 @@ fun Image(
                 .size(Size.ORIGINAL)
                 .listener(onSuccess = { _, _ ->
                     showLowRes = false
+                    onFullResImageLoaded()
                 })
                 .build(),
             contentScale = contentScale,

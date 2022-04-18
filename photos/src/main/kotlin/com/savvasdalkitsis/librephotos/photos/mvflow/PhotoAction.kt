@@ -12,6 +12,8 @@ sealed class PhotoAction {
     object AskForPhotoDeletion : PhotoAction()
     object DismissPhotoDeletionDialog : PhotoAction()
     object DeletePhoto : PhotoAction()
+    object SharePhoto : PhotoAction()
+    object FullImageLoaded : PhotoAction()
     data class ClickedOnMap(val gps: LatLng) : PhotoAction()
     data class LoadPhoto(val id: String) : PhotoAction()
     data class SetFavourite(val favourite: Boolean) : PhotoAction()
