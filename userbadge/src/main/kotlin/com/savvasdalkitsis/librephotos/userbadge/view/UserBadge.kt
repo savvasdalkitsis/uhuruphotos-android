@@ -22,11 +22,11 @@ import com.savvasdalkitsis.librephotos.icons.R
 import com.savvasdalkitsis.librephotos.image.view.Image
 import com.savvasdalkitsis.librephotos.ui.theme.CustomColors
 import com.savvasdalkitsis.librephotos.userbadge.view.state.SyncState.*
-import com.savvasdalkitsis.librephotos.userbadge.view.state.UserBadgeState
+import com.savvasdalkitsis.librephotos.userbadge.view.state.UserInformationState
 
 @Composable
 fun UserBadge(
-    state: UserBadgeState,
+    state: UserInformationState,
     userBadgePressed: (() -> Unit)? = null,
     size: Dp = 38.dp,
 ) {

@@ -2,7 +2,7 @@ package com.savvasdalkitsis.librephotos.feedpage.mvflow
 
 import com.savvasdalkitsis.librephotos.albums.model.Album
 import com.savvasdalkitsis.librephotos.feed.view.state.FeedDisplay
-import com.savvasdalkitsis.librephotos.userbadge.view.state.UserBadgeState
+import com.savvasdalkitsis.librephotos.userbadge.view.state.UserInformationState
 
 sealed class FeedPageMutation {
     object Loading : FeedPageMutation()
@@ -19,6 +19,6 @@ sealed class FeedPageMutation {
     data class ShowAlbums(val albums: List<Album>) : FeedPageMutation() {
         override fun toString() = "Showing ${albums.size} albums"
     }
-    data class UserBadgeUpdate(val state: UserBadgeState) : FeedPageMutation()
+    data class UserBadgeUpdate(val state: UserInformationState) : FeedPageMutation()
     data class ChangeDisplay(val display: FeedDisplay) : FeedPageMutation()
 }

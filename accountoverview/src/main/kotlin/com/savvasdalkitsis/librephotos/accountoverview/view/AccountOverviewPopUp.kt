@@ -18,14 +18,15 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.TransformOrigin
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Popup
-import com.savvasdalkitsis.librephotos.userbadge.view.state.UserBadgeState
+import com.savvasdalkitsis.librephotos.userbadge.view.state.UserInformationState
 
 @Composable
 fun AccountOverviewPopUp(
     visible: Boolean,
-    userBadgeState: UserBadgeState,
+    userInformationState: UserInformationState,
     onDismiss: () -> Unit,
     onLogoutClicked: () -> Unit,
+    onEditServerClicked: () -> Unit,
 ) {
     Box {
         if (visible) {
@@ -66,7 +67,11 @@ fun AccountOverviewPopUp(
                             Icon(imageVector = Icons.Default.Close, contentDescription = "close")
                         }
                     }
-                    AccountOverview(userBadgeState, onLogoutClicked = onLogoutClicked)
+                    AccountOverview(
+                        userInformationState,
+                        onLogoutClicked,
+                        onEditServerClicked,
+                    )
                 }
             }
         }

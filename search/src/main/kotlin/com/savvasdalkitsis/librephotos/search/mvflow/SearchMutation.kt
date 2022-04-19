@@ -2,7 +2,7 @@ package com.savvasdalkitsis.librephotos.search.mvflow
 
 import com.savvasdalkitsis.librephotos.albums.model.Album
 import com.savvasdalkitsis.librephotos.feed.view.state.FeedDisplay
-import com.savvasdalkitsis.librephotos.userbadge.view.state.UserBadgeState
+import com.savvasdalkitsis.librephotos.userbadge.view.state.UserInformationState
 
 sealed class SearchMutation {
 
@@ -16,5 +16,5 @@ sealed class SearchMutation {
     data class SearchResultsUpdated(val albums: List<Album>) : SearchMutation() {
         override fun toString() = "Updating results with ${albums.size} albums"
     }
-    data class UserBadgeStateChanged(val userBadgeState: UserBadgeState) : SearchMutation()
+    data class UserBadgeStateChanged(val userInformationState: UserInformationState) : SearchMutation()
 }

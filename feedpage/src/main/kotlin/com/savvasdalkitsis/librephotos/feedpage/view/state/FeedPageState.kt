@@ -2,11 +2,11 @@ package com.savvasdalkitsis.librephotos.feedpage.view.state
 
 import com.savvasdalkitsis.librephotos.feed.view.state.FeedState
 import com.savvasdalkitsis.librephotos.photos.model.Photo
-import com.savvasdalkitsis.librephotos.userbadge.view.state.UserBadgeState
+import com.savvasdalkitsis.librephotos.userbadge.view.state.UserInformationState
 
 data class FeedPageState(
     val feedState: FeedState = FeedState(),
-    val userBadgeState: UserBadgeState = UserBadgeState(),
+    val userInformationState: UserInformationState = UserInformationState(),
     val showAccountOverview: Boolean = false,
     val isRefreshing: Boolean = false,
     val showFeedDisplayChoice: Boolean = false,

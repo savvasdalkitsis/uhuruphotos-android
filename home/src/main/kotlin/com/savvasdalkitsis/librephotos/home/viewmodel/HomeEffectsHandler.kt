@@ -18,7 +18,7 @@ class HomeEffectsHandler @Inject constructor(
     ) {
         with(controllersProvider.navController!!) {
             when (effect) {
-                LaunchAuthentication -> navigate(ServerNavigationTarget.name)
+                LaunchAuthentication -> navigate(ServerNavigationTarget.name())
                 LoadFeed -> {
                     popBackStack()
                     navigate(feedNavigationTargetName)

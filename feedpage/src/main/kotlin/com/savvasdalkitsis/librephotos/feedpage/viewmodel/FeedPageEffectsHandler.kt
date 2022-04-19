@@ -1,10 +1,12 @@
 package com.savvasdalkitsis.librephotos.feedpage.viewmodel
 
+import androidx.compose.ui.hapticfeedback.HapticFeedbackType
 import com.savvasdalkitsis.librephotos.feedpage.mvflow.FeedPageEffect
 import com.savvasdalkitsis.librephotos.feedpage.mvflow.FeedPageEffect.*
 import com.savvasdalkitsis.librephotos.home.navigation.HomeNavigationTarget
 import com.savvasdalkitsis.librephotos.navigation.ControllersProvider
 import com.savvasdalkitsis.librephotos.photos.navigation.PhotoNavigationTarget
+import com.savvasdalkitsis.librephotos.server.navigation.ServerNavigationTarget
 import com.savvasdalkitsis.librephotos.share.ShareImage
 import com.savvasdalkitsis.librephotos.toaster.Toaster
 import com.savvasdalkitsis.librephotos.viewmodel.EffectHandler
@@ -30,5 +32,9 @@ class FeedPageEffectsHandler @Inject constructor(
                 it.fullResUrl
             })
         }
+        NavigateToServerEdit -> controllersProvider.navController!!.navigate(
+            ServerNavigationTarget.name(auto = false)
+        )
+        Vibrate -> controllersProvider.haptics!!.performHapticFeedback(HapticFeedbackType.LongPress)
     }
 }

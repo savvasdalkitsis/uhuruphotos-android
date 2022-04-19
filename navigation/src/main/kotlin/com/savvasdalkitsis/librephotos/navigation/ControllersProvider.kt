@@ -1,6 +1,7 @@
 package com.savvasdalkitsis.librephotos.navigation
 
 import androidx.compose.ui.focus.FocusRequester
+import androidx.compose.ui.hapticfeedback.HapticFeedback
 import androidx.compose.ui.platform.SoftwareKeyboardController
 import androidx.navigation.NavHostController
 import com.google.accompanist.systemuicontroller.SystemUiController
@@ -16,4 +17,5 @@ class ControllersProvider @Inject constructor(
     var navController: NavHostController? = null
     var focusRequester: FocusRequester? = null
     var systemUiController: SystemUiController? = null
+    var haptics: HapticFeedback? = null
 }

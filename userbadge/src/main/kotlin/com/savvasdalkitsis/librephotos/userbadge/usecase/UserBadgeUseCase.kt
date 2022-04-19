@@ -3,9 +3,10 @@ package com.savvasdalkitsis.librephotos.userbadge.usecase
 import androidx.work.WorkInfo
 import androidx.work.WorkInfo.State.*
 import com.savvasdalkitsis.librephotos.albums.worker.AlbumDownloadWorker
+import com.savvasdalkitsis.librephotos.auth.usecase.ServerUseCase
 import com.savvasdalkitsis.librephotos.photos.usecase.PhotosUseCase
 import com.savvasdalkitsis.librephotos.userbadge.view.state.SyncState.*
-import com.savvasdalkitsis.librephotos.userbadge.view.state.UserBadgeState
+import com.savvasdalkitsis.librephotos.userbadge.view.state.UserInformationState
 import com.savvasdalkitsis.librephotos.worker.usecase.WorkerStatusUseCase
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.combine
@@ -15,21 +16,26 @@ class UserBadgeUseCase @Inject constructor(
     private val userUseCase: com.savvasdalkitsis.librephotos.user.usecase.UserUseCase,
     private val workerStatusUseCase: WorkerStatusUseCase,
     private val photosUseCase: PhotosUseCase,
+    private val serverUseCase: ServerUseCase,
 ) {
 
-    fun getUserBadgeState(): Flow<UserBadgeState> = userUseCase.getUser()
-        .combine(workerStatusUseCase.monitorUniqueJobStatus(AlbumDownloadWorker.WORK_NAME))
-        { user, status ->
-            UserBadgeState(
-                avatarUrl = with(photosUseCase) { user.avatar?.toAbsoluteUrl() },
-                syncState = when (status) {
-                    BLOCKED, CANCELLED, FAILED -> BAD
-                    ENQUEUED, SUCCEEDED -> GOOD
-                    RUNNING -> IN_PROGRESS
-                },
-                initials = user.firstName.initial() + user.lastName.initial()
-            )
-        }
+    fun getUserBadgeState(): Flow<UserInformationState> = combine(
+        userUseCase.getUser(),
+        workerStatusUseCase.monitorUniqueJobStatus(AlbumDownloadWorker.WORK_NAME),
+        serverUseCase.observeServerUrl(),
+    ) { user, status, serverUrl ->
+        UserInformationState(
+            avatarUrl = with(photosUseCase) { user.avatar?.toAbsoluteUrl() },
+            syncState = when (status) {
+                BLOCKED, CANCELLED, FAILED -> BAD
+                ENQUEUED, SUCCEEDED -> GOOD
+                RUNNING -> IN_PROGRESS
+            },
+            initials = user.firstName.initial() + user.lastName.initial(),
+            userFullName = "${user.firstName} ${user.lastName}",
+            serverUrl = serverUrl,
+        )
+    }
 
     private fun String?.initial() =
         orEmpty().firstOrNull()?.toString()?.uppercase() ?: ""

@@ -22,7 +22,7 @@ fun SearchPage(
         modifier = Modifier
             .blurIf(state.showAccountOverview),
         navController = controllersProvider.navController!!,
-        userBadgeState = state.userBadgeState,
+        userInformationState = state.userInformationState,
         feedDisplay = state.feedDisplay,
         userBadgePressed = { action(UserBadgePressed) },
         feedNavigationName = feedNavigationName,
@@ -36,9 +36,10 @@ fun SearchPage(
         )
         AccountOverviewPopUp(
             visible = state.showAccountOverview,
-            userBadgeState = state.userBadgeState,
+            userInformationState = state.userInformationState,
             onDismiss = { action(DismissAccountOverview) },
             onLogoutClicked = { action(LogOut) },
+            onEditServerClicked = {},
         )
     }
 }

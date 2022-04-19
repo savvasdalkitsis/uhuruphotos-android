@@ -19,14 +19,14 @@ import com.savvasdalkitsis.librephotos.home.navigation.NavigationStyle.NAVIGATIO
 import com.savvasdalkitsis.librephotos.home.navigation.homeNavigationStyle
 import com.savvasdalkitsis.librephotos.ui.view.CommonScaffold
 import com.savvasdalkitsis.librephotos.userbadge.view.UserBadge
-import com.savvasdalkitsis.librephotos.userbadge.view.state.UserBadgeState
+import com.savvasdalkitsis.librephotos.userbadge.view.state.UserInformationState
 
 @Composable
 fun HomeScaffold(
     modifier: Modifier = Modifier,
     title: @Composable () -> Unit = { Text("LibrePhotos") },
     navController: NavHostController,
-    userBadgeState: UserBadgeState? = null,
+    userInformationState: UserInformationState? = null,
     feedDisplay: FeedDisplay = FeedDisplay.default,
     feedNavigationName: String,
     searchNavigationName: String,
@@ -63,7 +63,7 @@ fun HomeScaffold(
         },
         actionBarContent = {
             actionBarContent()
-            userBadgeState?.let {
+            userInformationState?.let {
                 UserBadge(
                     state = it,
                     userBadgePressed = userBadgePressed

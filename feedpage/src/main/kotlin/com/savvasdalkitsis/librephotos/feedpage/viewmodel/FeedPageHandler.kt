@@ -69,8 +69,14 @@ class FeedPageHandler @Inject constructor(
                 state.selectedPhotoCount == 0 -> effect(with(action) {
                     OpenPhotoDetails(photo.id, center, scale, photo.isVideo)
                 })
-                action.photo.isSelected -> action.photo.deselect()
-                else -> action.photo.select()
+                action.photo.isSelected -> {
+                    effect(Vibrate)
+                    action.photo.deselect()
+                }
+                else -> {
+                    effect(Vibrate)
+                    action.photo.select()
+                }
             }
         }
         is ChangeDisplay -> flow {
@@ -81,15 +87,18 @@ class FeedPageHandler @Inject constructor(
         ShowFeedDisplayChoice -> flowOf(FeedPageMutation.ShowFeedDisplayChoice)
         is PhotoLongPressed -> flow {
             if (state.selectedPhotoCount == 0) {
+                effect(Vibrate)
                 action.photo.select()
             }
         }
         ClearSelected -> flow {
+            effect(Vibrate)
             selectionList.clear()
         }
         AskForSelectedPhotosDeletion -> flowOf(ShowDeletionConfirmationDialog)
         is AlbumSelectionClicked -> flow {
             val photos = action.album.photos
+            effect(Vibrate)
             if (photos.all { it.isSelected }) {
                 photos.forEach { it.deselect() }
             } else {
@@ -106,6 +115,9 @@ class FeedPageHandler @Inject constructor(
         }
         ShareSelectedPhotos -> flow {
             effect(SharePhotos(state.selectedPhotos))
+        }
+        EditServer -> flow {
+            effect(NavigateToServerEdit)
         }
     }
 

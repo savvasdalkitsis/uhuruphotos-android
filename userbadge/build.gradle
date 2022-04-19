@@ -17,6 +17,7 @@ dependencies {
     implementation project(":user")
     implementation project(":db")
     implementation project(":image")
+    implementation project(":auth")
     implementation(
             libs.androidx.compose.material,
             libs.androidx.work,

@@ -16,7 +16,7 @@ fun searchReducer() : com.savvasdalkitsis.librephotos.viewmodel.Reducer<SearchSt
                 else -> SearchResults.Found(mutation.albums)
             }
         )
-        is SearchMutation.UserBadgeStateChanged -> state.copy(userBadgeState = mutation.userBadgeState)
+        is SearchMutation.UserBadgeStateChanged -> state.copy(userInformationState = mutation.userInformationState)
         SearchMutation.HideAccountOverview -> state.copy(showAccountOverview = false)
         SearchMutation.ShowAccountOverview -> state.copy(showAccountOverview = true)
         is SearchMutation.ChangeDisplay -> state.copy(feedDisplay = mutation.feedDisplay)

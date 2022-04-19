@@ -3,6 +3,7 @@ package com.savvasdalkitsis.librephotos.navigation
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.focus.FocusRequester
+import androidx.compose.ui.platform.LocalHapticFeedback
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import com.google.accompanist.navigation.animation.AnimatedNavHost
 import com.google.accompanist.navigation.animation.rememberAnimatedNavController
@@ -33,6 +34,7 @@ class Navigator @Inject constructor(
             keyboardController = LocalSoftwareKeyboardController.current
             focusRequester = remember { FocusRequester() }
             systemUiController = LocalSystemUiController.current
+            haptics = LocalHapticFeedback.current
         }
         AnimatedNavHost(
             navController = navHostController,

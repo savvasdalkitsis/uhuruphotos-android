@@ -67,7 +67,7 @@ fun FeedPage(
             }
         },
         navController = controllersProvider.navController!!,
-        userBadgeState = state.userBadgeState,
+        userInformationState = state.userInformationState,
         feedDisplay = state.feedState.feedDisplay,
         feedNavigationName = feedNavigationName,
         searchNavigationName = searchNavigationName,
@@ -120,9 +120,10 @@ fun FeedPage(
         }
         AccountOverviewPopUp(
             visible = state.showAccountOverview,
-            userBadgeState = state.userBadgeState,
+            userInformationState = state.userInformationState,
             onDismiss = { action(DismissAccountOverview) },
             onLogoutClicked = { action(LogOut) },
+            onEditServerClicked = { action(EditServer) },
         )
         if (state.showPhotoDeletionConfirmationDialog) {
             DeletePermissionDialog(

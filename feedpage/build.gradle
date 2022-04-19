@@ -22,6 +22,7 @@ dependencies {
     implementation project(":viewmodel")
     implementation project(":navigation")
     implementation project(":share")
+    implementation project(":server")
     implementation project(":toaster")
     implementation(
             libs.accompanist.swiperefresh,

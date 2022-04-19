@@ -13,4 +13,6 @@ sealed class FeedPageEffect {
 
     data class SharePhotos(val selectedPhotos: List<Photo>) : FeedPageEffect()
     object ReloadApp : FeedPageEffect()
+    object NavigateToServerEdit : FeedPageEffect()
+    object Vibrate : FeedPageEffect()
 }
