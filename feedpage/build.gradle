@@ -21,6 +21,7 @@ dependencies {
     implementation project(":infrastructure")
     implementation project(":viewmodel")
     implementation project(":navigation")
+    implementation project(":share")
     implementation(
             libs.accompanist.swiperefresh,
             libs.androidx.compose.foundation.layout,

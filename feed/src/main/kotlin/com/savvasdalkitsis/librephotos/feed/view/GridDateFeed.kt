@@ -33,7 +33,7 @@ fun GridDateFeed(
                 }
             }
             for (photo in album.photos) {
-                item(photo.url.orEmpty()) {
+                item(photo.thumbnailUrl.orEmpty()) {
                     PhotoThumbnail(
                         onPhotoSelected = onPhotoSelected,
                         photo = photo,

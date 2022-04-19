@@ -39,8 +39,11 @@ class AlbumsUseCase @Inject constructor(
                         item.photoId?.let { id ->
                             Photo(
                                 id = id,
-                                url = with(photosUseCase) {
-                                    item.photoId.toThumbnailUrlFromId()
+                                thumbnailUrl = with(photosUseCase) {
+                                    id.toThumbnailUrlFromId()
+                                },
+                                fullResUrl = with(photosUseCase) {
+                                    id.toFullSizeUrlFromId(item.isVideo)
                                 },
                                 fallbackColor = item.dominantColor,
                                 isFavourite = item.rating ?: 0 >= PhotosUseCase.FAVOURITES_RATING_THRESHOLD,

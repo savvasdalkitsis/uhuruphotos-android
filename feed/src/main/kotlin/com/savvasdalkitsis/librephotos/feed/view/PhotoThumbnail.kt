@@ -62,7 +62,7 @@ fun PhotoThumbnail(
         ) {
             Image(
                 modifier = Modifier.fillMaxWidth(),
-                url = photo.url,
+                url = photo.thumbnailUrl,
                 contentScale = contentScale,
                 contentDescription = "photo",
             )

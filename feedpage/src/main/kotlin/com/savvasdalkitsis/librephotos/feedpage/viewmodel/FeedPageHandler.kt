@@ -10,8 +10,7 @@ import com.savvasdalkitsis.librephotos.feedpage.mvflow.FeedPageAction.ChangeDisp
 import com.savvasdalkitsis.librephotos.feedpage.mvflow.FeedPageAction.HideFeedDisplayChoice
 import com.savvasdalkitsis.librephotos.feedpage.mvflow.FeedPageAction.ShowFeedDisplayChoice
 import com.savvasdalkitsis.librephotos.feedpage.mvflow.FeedPageEffect
-import com.savvasdalkitsis.librephotos.feedpage.mvflow.FeedPageEffect.OpenPhotoDetails
-import com.savvasdalkitsis.librephotos.feedpage.mvflow.FeedPageEffect.ReloadApp
+import com.savvasdalkitsis.librephotos.feedpage.mvflow.FeedPageEffect.*
 import com.savvasdalkitsis.librephotos.feedpage.mvflow.FeedPageMutation
 import com.savvasdalkitsis.librephotos.feedpage.mvflow.FeedPageMutation.*
 import com.savvasdalkitsis.librephotos.feedpage.usecase.FeedPageUseCase
@@ -104,6 +103,9 @@ class FeedPageHandler @Inject constructor(
                 photosUseCase.deletePhoto(it.id)
             }
             selectionList.clear()
+        }
+        ShareSelectedPhotos -> flow {
+            effect(SharePhotos(state.selectedPhotos))
         }
     }
 

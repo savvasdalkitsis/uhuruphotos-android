@@ -46,7 +46,7 @@ fun StaggeredDateFeed(
                 val photosInRow = (0 until columnCount).mapNotNull { column ->
                     photos.getOrNull(row * columnCount + column)
                 }.toTypedArray()
-                item(photosInRow.joinToString { it.url.orEmpty() }) {
+                item(photosInRow.joinToString { it.thumbnailUrl.orEmpty() }) {
                     PhotoRow(
                         onPhotoSelected = onPhotoSelected,
                         onPhotoLongPressed = onPhotoLongPressed,

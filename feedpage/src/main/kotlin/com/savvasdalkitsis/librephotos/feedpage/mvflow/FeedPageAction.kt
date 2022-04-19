@@ -25,4 +25,5 @@ sealed class FeedPageAction {
     object AskForSelectedPhotosDeletion : FeedPageAction()
     object DismissSelectedPhotosDeletion : FeedPageAction()
     object DeleteSelectedPhotos : FeedPageAction()
+    object ShareSelectedPhotos : FeedPageAction()
 }

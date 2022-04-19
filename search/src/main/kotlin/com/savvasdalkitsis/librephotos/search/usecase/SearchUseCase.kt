@@ -37,7 +37,7 @@ class SearchUseCase @Inject constructor(
                             photo.summaryId?.let { id ->
                                 Photo(
                                     id = id,
-                                    url = with(photosUseCase) {
+                                    thumbnailUrl = with(photosUseCase) {
                                         photo.summaryId.toThumbnailUrlFromId()
                                     },
                                     fallbackColor = photo.dominantColor,
@@ -53,7 +53,7 @@ class SearchUseCase @Inject constructor(
                 albums
                     .map { album ->
                         val photos = album.photos.filter { photo ->
-                            !photo.url.isNullOrEmpty()
+                            !photo.thumbnailUrl.isNullOrEmpty()
                         }
                         album.copy(photoCount = photos.size, photos = photos)
                     }

@@ -80,6 +80,9 @@ fun FeedPage(
             }
         },
         actionBarContent = {
+            AnimatedVisibility(visible = state.shouldShowShareIcon) {
+                ActionIcon(onClick = { action(ShareSelectedPhotos) }, icon = R.drawable.ic_share)
+            }
             AnimatedVisibility(visible = state.selectedPhotoCount > 0) {
                 ActionIcon(onClick = { action(AskForSelectedPhotosDeletion) }, icon = R.drawable.ic_delete)
             }

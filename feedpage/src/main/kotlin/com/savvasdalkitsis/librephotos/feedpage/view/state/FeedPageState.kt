@@ -22,4 +22,7 @@ data class FeedPageState(
             photo.isSelected
         }
     }
+    val shouldShowShareIcon: Boolean = selectedPhotos.let { selected ->
+        selected.isNotEmpty() && selected.none(Photo::isVideo)
+    }
 }
