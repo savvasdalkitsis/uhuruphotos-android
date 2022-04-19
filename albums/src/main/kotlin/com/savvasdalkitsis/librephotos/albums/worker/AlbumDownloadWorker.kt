@@ -20,13 +20,14 @@ import kotlinx.coroutines.withContext
 @HiltWorker
 class AlbumDownloadWorker @AssistedInject constructor(
     @Assisted context: Context,
-    @Assisted params: WorkerParameters,
+    @Assisted private val params: WorkerParameters,
     private val albumsRepository: AlbumsRepository,
 ) : CoroutineWorker(context, params) {
 
     override suspend fun doWork() = withContext(Dispatchers.IO) {
         try {
-            albumsRepository.refreshAlbums()
+            val shallow = params.inputData.getBoolean(KEY_SHALLOW, false)
+            albumsRepository.refreshAlbums(shallow)
             Result.success()
         } catch (e: Exception) {
             log(e)
@@ -58,6 +59,7 @@ class AlbumDownloadWorker @AssistedInject constructor(
     }
     companion object {
         const val WORK_NAME = "refreshAlbums"
+        const val KEY_SHALLOW = "shallow"
         private const val NOTIFICATION_ID = 1273
     }
 }

@@ -5,10 +5,9 @@ import com.savvasdalkitsis.librephotos.albums.api.model.toAlbum
 import com.savvasdalkitsis.librephotos.db.albums.AlbumsQueries
 import com.savvasdalkitsis.librephotos.db.albums.GetAlbums
 import com.savvasdalkitsis.librephotos.db.extensions.awaitSingle
-import com.savvasdalkitsis.librephotos.db.extensions.crud
+import com.savvasdalkitsis.librephotos.db.photos.PhotoSummaryQueries
 import com.savvasdalkitsis.librephotos.infrastructure.extensions.Group
 import com.savvasdalkitsis.librephotos.infrastructure.extensions.groupBy
-import com.savvasdalkitsis.librephotos.db.photos.PhotoSummaryQueries
 import com.savvasdalkitsis.librephotos.photos.entities.toPhotoSummary
 import com.squareup.sqldelight.runtime.coroutines.asFlow
 import com.squareup.sqldelight.runtime.coroutines.mapToList
@@ -25,15 +24,11 @@ class AlbumsRepository @Inject constructor(
 
     suspend fun hasAlbums() = albumsQueries.albumsCount().awaitSingle() > 0
 
-    suspend fun removeAllAlbums() {
-        crud { albumsQueries.clearAlbums() }
-    }
-
     fun getAlbumsByDate() : Flow<Group<String, GetAlbums>> =
         albumsQueries.getAlbums().asFlow().mapToList().groupBy(GetAlbums::id)
             .distinctUntilChanged()
 
-    suspend fun refreshAlbums() {
+    suspend fun refreshAlbums(shallow: Boolean) {
         val albums = albumsService.getAlbumsByDate()
 
         albumsQueries.transaction {
@@ -43,7 +38,11 @@ class AlbumsRepository @Inject constructor(
             }
         }
 
-        for (incompleteAlbum in albums.results) {
+        val albumsToDownloadSummaries = when {
+            shallow -> albums.results.take(3)
+            else -> albums.results
+        }
+        for (incompleteAlbum in albumsToDownloadSummaries) {
             val id = incompleteAlbum.id
             maybeFetchSummaries(id)
             delay(1000)

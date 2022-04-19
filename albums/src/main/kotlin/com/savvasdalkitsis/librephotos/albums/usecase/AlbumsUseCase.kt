@@ -59,12 +59,12 @@ class AlbumsUseCase @Inject constructor(
         .onStart {
             CoroutineScope(Dispatchers.IO).launch {
                 if (!albumsRepository.hasAlbums()) {
-                    startRefreshAlbumsWork()
+                    startRefreshAlbumsWork(shallow = false)
                 }
             }
         }
 
-    fun startRefreshAlbumsWork() {
-        albumWorkScheduler.scheduleAlbumsRefreshNow()
+    fun startRefreshAlbumsWork(shallow: Boolean) {
+        albumWorkScheduler.scheduleAlbumsRefreshNow(shallow)
     }
 }

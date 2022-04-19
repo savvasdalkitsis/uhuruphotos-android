@@ -60,7 +60,7 @@ class FeedPageHandler @Inject constructor(
         }
         RefreshAlbums -> flow {
             emit(StartRefreshing)
-            albumsUseCase.startRefreshAlbumsWork()
+            albumsUseCase.startRefreshAlbumsWork(shallow = true)
             delay(200)
             emit(StopRefreshing)
         }
