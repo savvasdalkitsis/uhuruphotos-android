@@ -28,13 +28,16 @@ fun GridDateFeed(
     ) {
         albums.forEach { album ->
             item(album.id, span = { GridItemSpan(columnCount) }) {
-                AlbumHeader(album, showSelectionHeader) {
+                AlbumHeader(
+                    modifier = Modifier.animateItemPlacement(),
+                    album, showSelectionHeader) {
                     onAlbumSelectionClicked(album)
                 }
             }
             for (photo in album.photos) {
                 item(photo.thumbnailUrl.orEmpty()) {
                     PhotoThumbnail(
+                        modifier = Modifier.animateItemPlacement(),
                         onPhotoSelected = onPhotoSelected,
                         photo = photo,
                         ratio = 1f,

@@ -30,7 +30,9 @@ fun StaggeredDateFeed(
     ) {
         albums.forEach { album ->
             item(album.id) {
-                AlbumHeader(album, showSelectionHeader) {
+                AlbumHeader(
+                    modifier = Modifier.animateItemPlacement(),
+                    album, showSelectionHeader) {
                     onAlbumSelectionClicked(album)
                 }
             }
@@ -48,6 +50,7 @@ fun StaggeredDateFeed(
                 }.toTypedArray()
                 item(photosInRow.joinToString { it.thumbnailUrl.orEmpty() }) {
                     PhotoRow(
+                        modifier = Modifier.animateItemPlacement(),
                         onPhotoSelected = onPhotoSelected,
                         onPhotoLongPressed = onPhotoLongPressed,
                         photos = photosInRow
@@ -60,11 +63,12 @@ fun StaggeredDateFeed(
 
 @Composable
 private fun PhotoRow(
+    modifier: Modifier,
     onPhotoSelected: PhotoSelected,
     onPhotoLongPressed: (Photo) -> Unit,
     vararg photos: Photo
 ) {
-    Row {
+    Row(modifier = modifier) {
         for (photo in photos) {
             PhotoThumbnail(
                 modifier = Modifier

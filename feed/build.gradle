@@ -16,6 +16,7 @@ dependencies {
     implementation project(":image")
     implementation project(":infrastructure")
     implementation(
+            libs.androidx.compose.foundation,
             libs.androidx.compose.foundation.layout,
             libs.androidx.compose.material,
             libs.androidx.compose.ui,

@@ -16,11 +16,15 @@ import com.savvasdalkitsis.librephotos.ui.view.ActionIcon
 
 @Composable
 fun AlbumHeader(
+    modifier: Modifier,
     album: Album,
     showSelectionHeader: Boolean,
     onSelectionHeaderClicked: () -> Unit = {},
 ) {
-    Row(verticalAlignment = Alignment.CenterVertically) {
+    Row(
+        modifier = modifier,
+        verticalAlignment = Alignment.CenterVertically,
+    ) {
         AnimatedVisibility(visible = showSelectionHeader) {
             ActionIcon(
                 onClick = onSelectionHeaderClicked,
