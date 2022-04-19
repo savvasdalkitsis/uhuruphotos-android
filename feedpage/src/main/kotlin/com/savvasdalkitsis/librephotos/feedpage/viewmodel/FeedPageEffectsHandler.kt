@@ -24,12 +24,7 @@ class FeedPageEffectsHandler @Inject constructor(
             navigate(HomeNavigationTarget.name)
         }
         is OpenPhotoDetails -> controllersProvider.navController!!.navigate(
-            when {
-                effect.isVideo ->
-                    PhotoNavigationTarget.photo(effect.id, effect.center, effect.scale)
-                else ->
-                    PhotoNavigationTarget.video(effect.id, effect.center, effect.scale)
-            }
+            PhotoNavigationTarget.name(effect.id, effect.center, effect.scale, effect.isVideo)
         )
         is SharePhotos -> {
             Toast.makeText(context, "Downloading photos and will share soon", Toast.LENGTH_LONG).show()

@@ -29,13 +29,13 @@ class PhotoNavigationTarget @Inject constructor(
                 slideIn(initialOffset = { fullSize ->
                     targetState.center.offsetFrom(fullSize)
                 }) +
-                scaleIn(initialScale = targetState.scale) + fadeIn()
+                        scaleIn(initialScale = targetState.scale) + fadeIn()
             },
             exitTransition = {
-               slideOut(targetOffset = { fullSize ->
-                   initialState.center.offsetFrom(fullSize)
-               }) +
-                scaleOut(targetScale = initialState.scale) + fadeOut()
+                slideOut(targetOffset = { fullSize ->
+                    initialState.center.offsetFrom(fullSize)
+                }) +
+                        scaleOut(targetScale = initialState.scale) + fadeOut()
             },
             initializer = { navBackStackEntry, actions ->
                 actions(LoadPhoto(navBackStackEntry.photoId, navBackStackEntry.isVideo))
@@ -48,31 +48,33 @@ class PhotoNavigationTarget @Inject constructor(
 
     companion object {
         private const val name = "details/{type}/{id}/{centerX}/{centerY}/{scale}"
-        fun video(id: String, offset: Offset, scale: Float) = name
-            .replace("photo", id, offset, scale)
-        fun photo(id: String, offset: Offset, scale: Float) = name
-            .replace("video", id, offset, scale)
-        private fun String.replace(type: String, id: String, offset: Offset, scale: Float) =
-            replace("{type}", type)
-                .replace("{id}", id)
-                .replace("{centerX}", offset.x.toString())
-                .replace("{centerY}", offset.y.toString())
-                .replace("{scale}", scale.toString())
+        fun name(id: String, offset: Offset, scale: Float, isVideo: Boolean) = name
+            .replace("{id}", id)
+            .replace("{centerX}", offset.x.toString())
+            .replace("{centerY}", offset.y.toString())
+            .replace("{scale}", scale.toString())
+            .replace(
+                "{type}", when {
+                    isVideo -> "video"
+                    else -> "photo"
+                }
+            )
 
         private val NavBackStackEntry.photoId: String get() = get("id")!!
         private val NavBackStackEntry.isVideo: Boolean get() = get("type") == "video"
-        private val NavBackStackEntry.center : Offset? get() {
-            val x = get("centerX")?.toFloat()
-            val y = get("centerY")?.toFloat()
-            return if (x != null && y != null) Offset(x, y) else null
-        }
-        private val NavBackStackEntry.scale : Float get() = get("scale")?.toFloat() ?: 0.3f
+        private val NavBackStackEntry.center: Offset?
+            get() {
+                val x = get("centerX")?.toFloat()
+                val y = get("centerY")?.toFloat()
+                return if (x != null && y != null) Offset(x, y) else null
+            }
+        private val NavBackStackEntry.scale: Float get() = get("scale")?.toFloat() ?: 0.3f
 
         private fun NavBackStackEntry.get(arg: String) = arguments!!.getString(arg)
     }
 
     private fun Offset?.offsetFrom(size: IntSize) = when {
-        this != null -> IntOffset((x - size.width/2).toInt(), (y - size.height/2).toInt())
+        this != null -> IntOffset((x - size.width / 2).toInt(), (y - size.height / 2).toInt())
         else -> IntOffset.Zero
     }
 }
