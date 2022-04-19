@@ -36,6 +36,6 @@ class ServerNavigationTarget @Inject constructor(
         private const val name = "server/{auto}"
         fun name(auto: Boolean = true) = name
             .replace("{auto}", auto.toString())
-        val NavBackStackEntry.auto get() = arguments?.getBoolean("{auto}", false) == true
+        val NavBackStackEntry.auto get() = arguments?.getString("auto") == "true"
     }
 }

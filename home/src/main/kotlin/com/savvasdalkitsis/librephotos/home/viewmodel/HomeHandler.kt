@@ -1,5 +1,6 @@
 package com.savvasdalkitsis.librephotos.home.viewmodel
 
+import com.savvasdalkitsis.librephotos.auth.model.AuthStatus.Unauthenticated
 import com.savvasdalkitsis.librephotos.auth.usecase.AuthenticationUseCase
 import com.savvasdalkitsis.librephotos.home.mvflow.HomeAction
 import com.savvasdalkitsis.librephotos.home.mvflow.HomeAction.Load
@@ -25,7 +26,7 @@ class HomeHandler @Inject constructor(
         is Load -> flow {
             emit(Loading)
             when (authenticationUseCase.authenticationStatus()) {
-                is com.savvasdalkitsis.librephotos.auth.model.AuthStatus.Unauthenticated -> effect(LaunchAuthentication)
+                is Unauthenticated -> effect(LaunchAuthentication)
                 else -> effect(HomeEffect.LoadFeed)
             }
         }
