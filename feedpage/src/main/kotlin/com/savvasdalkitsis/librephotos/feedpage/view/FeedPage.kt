@@ -104,7 +104,7 @@ fun FeedPage(
                 listState = listState,
                 gridState = gridState,
                 onPhotoSelected = { photo, center, scale ->
-                    action(SelectedPhoto(photo, center, scale))
+                    action(SelectedPhoto(photo, center, scale,))
                 },
                 onChangeDisplay = { action(ChangeDisplay(it)) },
                 onPhotoLongPressed = {

@@ -1,0 +1,24 @@
+android {
+    buildFeatures {
+        compose true
+    }
+    composeOptions {
+        kotlinCompilerExtensionVersion compose_version
+    }
+}
+
+dependencies {
+
+    implementation project(":auth")
+    implementation project(":image")
+    implementation(
+            libs.androidx.compose.foundation,
+            libs.androidx.compose.material,
+            libs.androidx.compose.ui,
+            libs.exoplayer.okhttp,
+            libs.hilt,
+    )
+    api(
+            libs.exoplayer.base,
+    )
+}

@@ -16,7 +16,7 @@ sealed class PhotoAction {
     object SharePhoto : PhotoAction()
     object FullImageLoaded : PhotoAction()
     data class ClickedOnMap(val gps: LatLng) : PhotoAction()
-    data class LoadPhoto(val id: String) : PhotoAction()
+    data class LoadPhoto(val id: String, val isVideo: Boolean) : PhotoAction()
     data class SetFavourite(val favourite: Boolean) : PhotoAction()
     data class ClickedOnGps(val gps: LatLng) : PhotoAction()
 }

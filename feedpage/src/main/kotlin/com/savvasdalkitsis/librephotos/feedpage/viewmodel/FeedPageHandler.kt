@@ -1,8 +1,8 @@
 package com.savvasdalkitsis.librephotos.feedpage.viewmodel
 
-import com.savvasdalkitsis.librephotos.albums.usecase.AlbumsUseCase
 import com.savvasdalkitsis.librephotos.account.usecase.AccountUseCase
 import com.savvasdalkitsis.librephotos.albums.model.Album
+import com.savvasdalkitsis.librephotos.albums.usecase.AlbumsUseCase
 import com.savvasdalkitsis.librephotos.feedpage.SelectionList
 import com.savvasdalkitsis.librephotos.feedpage.mvflow.FeedPageAction
 import com.savvasdalkitsis.librephotos.feedpage.mvflow.FeedPageAction.*
@@ -17,7 +17,6 @@ import com.savvasdalkitsis.librephotos.feedpage.mvflow.FeedPageMutation.*
 import com.savvasdalkitsis.librephotos.feedpage.usecase.FeedPageUseCase
 import com.savvasdalkitsis.librephotos.feedpage.view.state.FeedPageState
 import com.savvasdalkitsis.librephotos.photos.model.Photo
-import com.savvasdalkitsis.librephotos.photos.mvflow.PhotoMutation
 import com.savvasdalkitsis.librephotos.photos.usecase.PhotosUseCase
 import com.savvasdalkitsis.librephotos.userbadge.usecase.UserBadgeUseCase
 import com.savvasdalkitsis.librephotos.viewmodel.Handler
@@ -68,7 +67,9 @@ class FeedPageHandler @Inject constructor(
         }
         is SelectedPhoto -> flow {
             when {
-                state.selectedPhotoCount == 0 -> effect(OpenPhotoDetails(action.photo.id, action.center, action.scale))
+                state.selectedPhotoCount == 0 -> effect(with(action) {
+                    OpenPhotoDetails(photo.id, center, scale, photo.isVideo)
+                })
                 action.photo.isSelected -> action.photo.deselect()
                 else -> action.photo.select()
             }

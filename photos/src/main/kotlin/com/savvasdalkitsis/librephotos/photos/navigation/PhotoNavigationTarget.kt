@@ -38,7 +38,7 @@ class PhotoNavigationTarget @Inject constructor(
                 scaleOut(targetScale = initialState.scale) + fadeOut()
             },
             initializer = { navBackStackEntry, actions ->
-                actions(LoadPhoto(navBackStackEntry.photoId))
+                actions(LoadPhoto(navBackStackEntry.photoId, navBackStackEntry.isVideo))
             },
             createModel = { hiltViewModel() }
         ) { state, actions ->
@@ -47,15 +47,20 @@ class PhotoNavigationTarget @Inject constructor(
     }
 
     companion object {
-        private const val name = "photo/{id}/{centerX}/{centerY}/{scale}"
-        fun id(id: String) = idWithCenterAndScale(id, Offset(0.5f, 0.5f), 0.3f)
-        fun idWithCenterAndScale(id: String, offset: Offset, scale: Float) = name
-            .replace("{id}", id)
-            .replace("{centerX}", offset.x.toString())
-            .replace("{centerY}", offset.y.toString())
-            .replace("{scale}", scale.toString())
+        private const val name = "details/{type}/{id}/{centerX}/{centerY}/{scale}"
+        fun video(id: String, offset: Offset, scale: Float) = name
+            .replace("photo", id, offset, scale)
+        fun photo(id: String, offset: Offset, scale: Float) = name
+            .replace("video", id, offset, scale)
+        private fun String.replace(type: String, id: String, offset: Offset, scale: Float) =
+            replace("{type}", type)
+                .replace("{id}", id)
+                .replace("{centerX}", offset.x.toString())
+                .replace("{centerY}", offset.y.toString())
+                .replace("{scale}", scale.toString())
 
-        private val NavBackStackEntry.photoId : String get() = get("id")!!
+        private val NavBackStackEntry.photoId: String get() = get("id")!!
+        private val NavBackStackEntry.isVideo: Boolean get() = get("type") == "video"
         private val NavBackStackEntry.center : Offset? get() {
             val x = get("centerX")?.toFloat()
             val y = get("centerY")?.toFloat()

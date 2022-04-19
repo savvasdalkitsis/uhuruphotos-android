@@ -31,7 +31,12 @@ class PhotosUseCase @Inject constructor(
     suspend fun String.toThumbnailUrlFromId(): String =
         "/media/square_thumbnails/$this".toAbsoluteUrl()
 
-    suspend fun String.toFullSizeUrlFromId() = "/media/photos/$this".toAbsoluteUrl()
+    suspend fun String.toFullSizeUrlFromId(
+        isVideo: Boolean = false,
+    ) = when {
+        isVideo -> "/media/video/$this".toAbsoluteUrl()
+        else -> "/media/photos/$this".toAbsoluteUrl()
+    }
 
     fun getPhoto(id: String): Flow<PhotoDetails> =
         photoRepository.getPhoto(id)

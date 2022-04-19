@@ -27,6 +27,7 @@ class PhotoReducer @Inject constructor(
         is ReceivedDetails -> with(mutation.details) {
             state.copy(
                 isFavourite = rating ?: 0 >= PhotosUseCase.FAVOURITES_RATING_THRESHOLD,
+                isVideo = video == true,
                 showRefresh = true,
                 showInfoButton = true,
                 dateAndTime = dateDisplayer.dateTimeString(timestamp),

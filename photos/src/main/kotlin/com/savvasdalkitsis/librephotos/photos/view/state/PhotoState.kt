@@ -19,4 +19,5 @@ data class PhotoState(
     val dateAndTime: String = "",
     val location: String = "",
     val gps: LatLng? = null,
+    val isVideo: Boolean = false,
 )

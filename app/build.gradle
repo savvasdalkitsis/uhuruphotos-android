@@ -59,6 +59,7 @@ dependencies {
     implementation project(":search")
     implementation project(":server")
     implementation project(":initializer")
+    implementation project(":video")
     implementation(
             libs.accompanist.navigation,
             libs.accompanist.systemui,

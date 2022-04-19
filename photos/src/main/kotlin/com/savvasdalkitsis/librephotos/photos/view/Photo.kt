@@ -28,6 +28,7 @@ import com.savvasdalkitsis.librephotos.ui.view.CommonScaffold
 import com.savvasdalkitsis.librephotos.ui.view.FullProgressBar
 import com.savvasdalkitsis.librephotos.ui.view.zoom.rememberZoomableState
 import com.savvasdalkitsis.librephotos.ui.view.zoom.zoomable
+import com.savvasdalkitsis.librephotos.video.view.Video
 
 @Composable
 fun Photo(
@@ -93,16 +94,28 @@ fun Photo(
                             onSwipeUp = { action(ShowInfo) },
                         )
                 ) {
-                    Image(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .align(Alignment.Center),
-                        lowResUrl = state.lowResUrl,
-                        fullResUrl = state.fullResUrl,
-                        onFullResImageLoaded = { action(FullImageLoaded) },
-                        contentScale = ContentScale.Fit,
-                        contentDescription = "photo",
-                    )
+                    when {
+                        state.isVideo -> {
+                            Video(
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .align(Alignment.Center),
+                                videoUrl = state.fullResUrl,
+                                videoThumbnailUrl = state.lowResUrl,
+                                play = true,
+                            )
+                        }
+                        else -> Image(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .align(Alignment.Center),
+                            lowResUrl = state.lowResUrl,
+                            fullResUrl = state.fullResUrl,
+                            onFullResImageLoaded = { action(FullImageLoaded) },
+                            contentScale = ContentScale.Fit,
+                            contentDescription = "photo",
+                        )
+                    }
                     Column {
                         Spacer(modifier = Modifier.height(contentPadding.calculateTopPadding()))
                         InfoBar(offeredMessage = state.errorMessage?.let { InfoBarMessage(it) }) {

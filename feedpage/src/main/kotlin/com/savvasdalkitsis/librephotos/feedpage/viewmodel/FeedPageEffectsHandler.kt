@@ -19,7 +19,11 @@ class FeedPageEffectsHandler @Inject constructor(
         }
         is FeedPageEffect.OpenPhotoDetails ->
             controllersProvider.navController!!.navigate(
-                PhotoNavigationTarget.idWithCenterAndScale(effect.id, effect.center, effect.scale)
-            )
+                when {
+                    effect.isVideo ->
+                        PhotoNavigationTarget.photo(effect.id, effect.center, effect.scale)
+                    else ->
+                        PhotoNavigationTarget.video(effect.id, effect.center, effect.scale)
+                })
     }
 }

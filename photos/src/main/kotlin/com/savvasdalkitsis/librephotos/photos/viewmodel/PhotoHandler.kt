@@ -34,7 +34,7 @@ class PhotoHandler @Inject constructor(
             emit(with(photosUseCase) { ReceivedUrl(
                 id = action.id,
                 lowResUrl = action.id.toThumbnailUrlFromId(),
-                fullResUrl = action.id.toFullSizeUrlFromId(),
+                fullResUrl = action.id.toFullSizeUrlFromId(action.isVideo),
             )})
             emitAll(merge(
                 photosUseCase.getPhoto(action.id)

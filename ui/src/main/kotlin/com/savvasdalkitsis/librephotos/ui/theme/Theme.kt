@@ -46,10 +46,9 @@ object CustomColors {
 
 @Composable
 fun Activity.AppTheme(
-    darkTheme: Boolean = isSystemInDarkTheme(),
     content: @Composable () -> Unit
 ) {
-    val colors = if (darkTheme) {
+    val colors = if (isSystemInDarkTheme()) {
         DarkColorPalette
     } else {
         LightColorPalette
@@ -60,7 +59,7 @@ fun Activity.AppTheme(
     CompositionLocalProvider(
         WindowSize.LOCAL_WIDTH provides width,
         WindowSize.LOCAL_HEIGHT provides height,
-        LocalSystemUiController provides systemUiController
+        LocalSystemUiController provides systemUiController,
     ) {
         MaterialTheme(
             colors = colors,

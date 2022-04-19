@@ -19,6 +19,7 @@ dependencies {
     implementation project(":icons")
     implementation project(":image")
     implementation project(":share")
+    implementation project(":video")
     implementation(
             libs.accompanist.systemui,
             libs.androidx.compose.hilt.navigation,
