@@ -3,12 +3,13 @@ package com.savvasdalkitsis.librephotos.navigation
 import android.content.ActivityNotFoundException
 import android.content.Context
 import android.content.Intent
-import android.widget.Toast
+import com.savvasdalkitsis.librephotos.toaster.Toaster
 import dagger.hilt.android.qualifiers.ApplicationContext
 import javax.inject.Inject
 
 class IntentLauncher @Inject constructor(
-    @ApplicationContext private val context: Context
+    @ApplicationContext private val context: Context,
+    private val toaster: Toaster,
 ) {
 
     fun launch(intent: Intent) {
@@ -17,7 +18,7 @@ class IntentLauncher @Inject constructor(
                 addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
             })
         } catch (e: ActivityNotFoundException) {
-            Toast.makeText(context, "Could not find an app to open", Toast.LENGTH_LONG).show()
+            toaster.show("Could not find an app to open")
         }
     }
 

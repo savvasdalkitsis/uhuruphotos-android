@@ -11,6 +11,7 @@ dependencies {
 
     api project(":viewmodel")
     implementation project(":log")
+    implementation project(":toaster")
     implementation(
             libs.accompanist.navigation,
             libs.accompanist.systemui,

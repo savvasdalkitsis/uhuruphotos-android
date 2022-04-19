@@ -1,17 +1,15 @@
 package com.savvasdalkitsis.librephotos.server.viewmodel
 
-import android.content.Context
-import android.widget.Toast
 import com.savvasdalkitsis.librephotos.navigation.ControllersProvider
 import com.savvasdalkitsis.librephotos.server.mvflow.ServerEffect
 import com.savvasdalkitsis.librephotos.server.mvflow.ServerEffect.Close
 import com.savvasdalkitsis.librephotos.server.mvflow.ServerEffect.ErrorLoggingIn
-import dagger.hilt.android.qualifiers.ApplicationContext
+import com.savvasdalkitsis.librephotos.toaster.Toaster
 import javax.inject.Inject
 
 class ServerEffectsHandler @Inject constructor(
     private val controllersProvider: ControllersProvider,
-    @ApplicationContext private val context: Context,
+    private val toaster: Toaster,
 ) : (ServerEffect) -> Unit {
 
     override fun invoke(
@@ -19,7 +17,7 @@ class ServerEffectsHandler @Inject constructor(
     ) {
         when (effect) {
             Close -> controllersProvider.navController!!.popBackStack()
-            is ErrorLoggingIn -> Toast.makeText(context, "There was an error logging in", Toast.LENGTH_LONG).show()
+            is ErrorLoggingIn -> toaster.show("There was an error logging in")
         }
     }
 }

@@ -20,6 +20,7 @@ dependencies {
     implementation project(":auth")
     implementation project(":log")
     implementation project(":ui")
+    implementation project(":toaster")
     implementation(
             libs.androidx.compose.hilt.navigation,
             libs.androidx.compose.material,

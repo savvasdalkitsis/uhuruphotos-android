@@ -26,7 +26,7 @@ class ShareImage @Inject constructor(
     private fun shareFile(postfix: String = "") = File(shareDir, "Photo$postfix.jpg")
 
     suspend fun share(url: String) = withContext(Dispatchers.IO) {
-        uriFor(url)?.let { uri ->
+        download(url).firstOrNull()?.let { uri ->
             launch(Intent(Intent.ACTION_SEND).apply {
                 putExtra(Intent.EXTRA_STREAM, uri)
                 putExtra(Intent.EXTRA_TEXT, "Share Photo")
@@ -36,6 +36,16 @@ class ShareImage @Inject constructor(
     }
 
     suspend fun shareMultiple(urls: List<String>) = withContext(Dispatchers.IO) {
+        val uris = download(*urls.toTypedArray())
+        launch(Intent().apply {
+            action = Intent.ACTION_SEND_MULTIPLE
+            type = "image/*"
+            putParcelableArrayListExtra(Intent.EXTRA_STREAM, uris)
+            putExtra(Intent.EXTRA_TEXT, "Share Photos")
+        })
+    }
+
+    private suspend fun download(vararg urls: String): ArrayList<out Parcelable> {
         urls.map { url ->
             imageLoader.enqueue(
                 ImageRequest.Builder(context)
@@ -43,14 +53,8 @@ class ShareImage @Inject constructor(
                     .build()
             ).job
         }.awaitAll()
-        val uris: ArrayList<out Parcelable> = ArrayList(urls.mapIndexedNotNull { index, url ->
+        return ArrayList(urls.mapIndexedNotNull { index, url ->
             uriFor(url, "-$index")
-        })
-        launch(Intent().apply {
-            action = Intent.ACTION_SEND_MULTIPLE
-            type = "image/*"
-            putParcelableArrayListExtra(Intent.EXTRA_STREAM, uris)
-            putExtra(Intent.EXTRA_TEXT, "Share Photos")
         })
     }
 

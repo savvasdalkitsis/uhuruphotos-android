@@ -20,6 +20,7 @@ dependencies {
     implementation project(":image")
     implementation project(":share")
     implementation project(":video")
+    implementation project(":toaster")
     implementation(
             libs.accompanist.systemui,
             libs.androidx.compose.hilt.navigation,
