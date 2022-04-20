@@ -2,19 +2,15 @@ package com.savvasdalkitsis.librephotos.photos.view
 
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.ModalBottomSheetLayout
-import androidx.compose.material.ModalBottomSheetValue.*
+import androidx.compose.material.ModalBottomSheetValue.Hidden
 import androidx.compose.material.rememberModalBottomSheetState
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.layout.onGloballyPositioned
-import androidx.compose.ui.platform.LocalDensity
-import androidx.compose.ui.unit.DpSize
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.toSize
 import com.savvasdalkitsis.librephotos.photos.mvflow.PhotoAction
-import com.savvasdalkitsis.librephotos.photos.mvflow.PhotoAction.HideInfo
 import com.savvasdalkitsis.librephotos.photos.mvflow.PhotoAction.NavigateBack
+import com.savvasdalkitsis.librephotos.photos.view.BottomSheetSize.Companion.rememberBottomSheetSize
 import com.savvasdalkitsis.librephotos.photos.view.state.PhotoState
 import com.savvasdalkitsis.librephotos.ui.view.BackNavButton
 import com.savvasdalkitsis.librephotos.ui.view.CommonScaffold
@@ -28,25 +24,20 @@ fun Photo(
 ) {
     val infoSheetState = rememberModalBottomSheetState(initialValue = Hidden)
     val zoomableState = rememberZoomableState()
-    var size by remember { mutableStateOf(DpSize(0.dp, 0.dp)) }
-    val density = LocalDensity.current
+    val bottomSheetSize = rememberBottomSheetSize()
 
     PhotoBackPressHandler(state, action)
 
     ModalBottomSheetLayout(
         sheetShape = RoundedCornerShape(12.dp),
         sheetContent = {
-            PhotoDetailsSheet(size, state, action)
+            PhotoDetailsSheet(bottomSheetSize, state, infoSheetState, zoomableState, action)
         },
         sheetState = infoSheetState
     ) {
         CommonScaffold(
             modifier = Modifier
-                .onGloballyPositioned { coordinates ->
-                    with(density) {
-                        size = coordinates.size.toSize().toDpSize()
-                    }
-                },
+                .adjustingBottomSheetSize(bottomSheetSize),
             title = {},
             toolbarColor = Color.Transparent,
             bottomBarColor = Color.Transparent,
@@ -65,31 +56,6 @@ fun Photo(
             when {
                 state.isLoading && state.lowResUrl.isEmpty() -> FullProgressBar()
                 else -> PhotoDetails(zoomableState, action, state, contentPadding)
-            }
-        }
-    }
-    LaunchedEffect(state.infoSheetState) {
-        when (state.infoSheetState) {
-            Hidden -> {
-                zoomableState.reset()
-                infoSheetState.hide()
-            }
-            Expanded, HalfExpanded -> with (density) {
-                if (state.showInfoButton) {
-                    zoomableState.animateScaleTo(0.7f)
-                    zoomableState.animateOffsetTo(0f, -size.height.toPx() / 4f)
-                    infoSheetState.show()
-                } else {
-                    action(HideInfo)
-                    zoomableState.reset()
-                }
-            }
-        }
-    }
-    if (infoSheetState.currentValue != Hidden) {
-        DisposableEffect(Unit) {
-            onDispose {
-                action(HideInfo)
             }
         }
     }
