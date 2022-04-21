@@ -3,7 +3,9 @@ package com.savvasdalkitsis.librephotos.photos.view
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
@@ -45,6 +47,7 @@ fun PhotoDetailsSheet(
         Column(
             verticalArrangement = Arrangement.spacedBy(16.dp),
             modifier = Modifier
+                .verticalScroll(rememberScrollState())
                 .padding(16.dp)
         ) {
             PhotoDetailsBottomActionBar(state, action)
