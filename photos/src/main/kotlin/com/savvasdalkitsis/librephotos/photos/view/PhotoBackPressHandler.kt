@@ -1,6 +1,5 @@
 package com.savvasdalkitsis.librephotos.photos.view
 
-import androidx.compose.material.ModalBottomSheetValue
 import androidx.compose.runtime.Composable
 import com.savvasdalkitsis.librephotos.photos.mvflow.PhotoAction
 import com.savvasdalkitsis.librephotos.photos.view.state.PhotoState
@@ -12,10 +11,10 @@ fun PhotoBackPressHandler(
     action: (PhotoAction) -> Unit
 ) {
     BackPressHandler {
-        if (state.infoSheetState != ModalBottomSheetValue.Hidden) {
-            action(PhotoAction.HideInfo)
-        } else {
+        if (state.infoSheetHidden) {
             action(PhotoAction.NavigateBack)
+        } else {
+            action(PhotoAction.HideInfo)
         }
     }
 }

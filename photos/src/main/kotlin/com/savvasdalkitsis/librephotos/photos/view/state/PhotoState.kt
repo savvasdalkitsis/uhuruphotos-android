@@ -15,7 +15,7 @@ data class PhotoState(
     val showPhotoDeletionConfirmationDialog: Boolean = false,
     val showShareIcon: Boolean = false,
     val isFavourite: Boolean? = null,
-    val infoSheetState: ModalBottomSheetValue = ModalBottomSheetValue.Hidden,
+    val infoSheetHidden: Boolean = true,
     val dateAndTime: String = "",
     val location: String = "",
     val gps: LatLng? = null,

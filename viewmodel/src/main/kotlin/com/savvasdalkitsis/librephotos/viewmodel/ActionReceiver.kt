@@ -16,10 +16,10 @@ class ActionReceiver<S : Any, E : Any, A : Any, M : Any>(
     fun action(action: A) = intent {
         log("MVI") { "Starting handling of action $action" }
         handler(state, action) { effect ->
-            log("MVI") { "Received side effect to post: $effect" }
+            log("MVI") { "Received side effect to post: $effect from action: $action" }
             postSideEffect(effect)
         }.collect { mutation ->
-            log("MVI") {"Received mutation $mutation" }
+            log("MVI") {"Received mutation $mutation due to action $action" }
             reduce { reducer(state, mutation) }
         }
     }

@@ -5,18 +5,17 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.MaterialTheme
-import androidx.compose.material.ModalBottomSheetState
-import androidx.compose.material.ModalBottomSheetValue.*
-import androidx.compose.runtime.*
-import androidx.compose.ui.Alignment
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.MutableState
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.composed
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.platform.LocalDensity
-import androidx.compose.ui.unit.DpSize
+import androidx.compose.ui.platform.LocalLayoutDirection
+import androidx.compose.ui.unit.LayoutDirection.Ltr
+import androidx.compose.ui.unit.LayoutDirection.Rtl
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.toSize
 import com.google.maps.android.compose.Marker
 import com.google.maps.android.compose.MarkerState
 import com.savvasdalkitsis.librephotos.icons.R
@@ -25,22 +24,22 @@ import com.savvasdalkitsis.librephotos.map.view.MapView
 import com.savvasdalkitsis.librephotos.photos.mvflow.PhotoAction
 import com.savvasdalkitsis.librephotos.photos.mvflow.PhotoAction.ClickedOnGps
 import com.savvasdalkitsis.librephotos.photos.mvflow.PhotoAction.HideInfo
+import com.savvasdalkitsis.librephotos.photos.view.PhotoSheetStyle.BOTTOM
 import com.savvasdalkitsis.librephotos.photos.view.state.PhotoState
-import com.savvasdalkitsis.librephotos.ui.insets.systemPadding
 import com.savvasdalkitsis.librephotos.ui.view.TextWithIcon
 import com.savvasdalkitsis.librephotos.ui.view.zoom.ZoomableState
 
 @Composable
 fun PhotoDetailsSheet(
-    bottomSheetSize: BottomSheetSize,
+    modifier: Modifier = Modifier,
+    sheetSize: SheetSize,
     state: PhotoState,
-    infoSheetState: ModalBottomSheetState,
+    sheetState: SheetState,
     zoomableState: ZoomableState,
     action: (PhotoAction) -> Unit,
 ) {
     Box(
-        modifier = Modifier
-            .heightIn(min = bottomSheetSize.size.height - systemPadding(WindowInsetsSides.Top).calculateTopPadding())
+        modifier = modifier
             .background(MaterialTheme.colors.background)
     ) {
         Column(
@@ -48,19 +47,6 @@ fun PhotoDetailsSheet(
             modifier = Modifier
                 .padding(16.dp)
         ) {
-            Box(
-                modifier = Modifier
-                    .padding(8.dp)
-                    .clip(RoundedCornerShape(4.dp))
-                    .align(Alignment.CenterHorizontally)
-            ) {
-                Box(
-                    modifier = Modifier
-                        .background(MaterialTheme.colors.onBackground)
-                        .width(24.dp)
-                        .height(4.dp)
-                )
-            }
             PhotoDetailsBottomActionBar(state, action)
             TextWithIcon(
                 icon = R.drawable.ic_calendar,
@@ -101,17 +87,27 @@ fun PhotoDetailsSheet(
     }
 
     val density = LocalDensity.current
-    LaunchedEffect(state.infoSheetState) {
-        when (state.infoSheetState) {
-            Hidden -> {
+    val sheetStyle = LocalPhotoSheetStyle.current
+    val layoutDirection = LocalLayoutDirection.current
+    LaunchedEffect(state.infoSheetHidden, sheetStyle, layoutDirection) {
+        when  {
+            state.infoSheetHidden -> {
                 zoomableState.reset()
-                infoSheetState.hide()
+                sheetState.hide()
             }
-            Expanded, HalfExpanded -> with(density) {
+            else -> with(density) {
                 if (state.showInfoButton) {
                     zoomableState.animateScaleTo(0.7f)
-                    zoomableState.animateOffsetTo(0f, -bottomSheetSize.size.height.toPx() / 4f)
-                    infoSheetState.show()
+                    if (sheetStyle == BOTTOM) {
+                        zoomableState.animateOffsetTo(0f, -sheetSize.size.height.toPx() / 4f)
+                    } else {
+                        val multiplier = when (layoutDirection) {
+                            Rtl -> 1
+                            Ltr -> -1
+                        }
+                        zoomableState.animateOffsetTo(multiplier * sheetSize.size.width.toPx() / 4f, 0f)
+                    }
+                    sheetState.show()
                 } else {
                     zoomableState.reset()
                     action(HideInfo)
@@ -119,33 +115,11 @@ fun PhotoDetailsSheet(
             }
         }
     }
-    if (infoSheetState.currentValue != Hidden) {
+    if (!sheetState.isHidden) {
         DisposableEffect(Unit) {
             onDispose {
                 action(HideInfo)
             }
-        }
-    }
-}
-
-class BottomSheetSize private constructor(
-    internal var size: DpSize
-) {
-
-    companion object {
-        @Composable
-        fun rememberBottomSheetSize(): BottomSheetSize {
-            val size by remember { mutableStateOf(DpSize(0.dp, 0.dp)) }
-            return BottomSheetSize(size)
-        }
-    }
-}
-
-fun Modifier.adjustingBottomSheetSize(bottomSheetSize: BottomSheetSize) = composed {
-    val density = LocalDensity.current
-    onGloballyPositioned { coordinates ->
-        with(density) {
-            bottomSheetSize.size = coordinates.size.toSize().toDpSize()
         }
     }
 }

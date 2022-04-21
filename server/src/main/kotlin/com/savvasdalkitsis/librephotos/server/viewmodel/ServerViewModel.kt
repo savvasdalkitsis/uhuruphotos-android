@@ -16,7 +16,8 @@ import javax.inject.Inject
 class ServerViewModel @Inject constructor(
     handler: ServerHandler,
     savedStateHandle: SavedStateHandle,
-) : ViewModel(), ActionReceiverHost<ServerState, ServerEffect, ServerAction, ServerMutation> {
+) : ViewModel(),
+    ActionReceiverHost<ServerState, ServerEffect, ServerAction, ServerMutation> {
 
     override val initialState = ServerState.Loading
 

@@ -11,6 +11,8 @@ import com.radusalagean.infobarcompose.InfoBar
 import com.radusalagean.infobarcompose.InfoBarMessage
 import com.savvasdalkitsis.librephotos.image.view.Image
 import com.savvasdalkitsis.librephotos.photos.mvflow.PhotoAction
+import com.savvasdalkitsis.librephotos.photos.view.PhotoSheetStyle.BOTTOM
+import com.savvasdalkitsis.librephotos.photos.view.PhotoSheetStyle.SIDE
 import com.savvasdalkitsis.librephotos.photos.view.state.PhotoState
 import com.savvasdalkitsis.librephotos.ui.view.zoom.ZoomableState
 import com.savvasdalkitsis.librephotos.ui.view.zoom.zoomable
@@ -23,6 +25,16 @@ fun PhotoDetails(
     state: PhotoState,
     contentPadding: PaddingValues
 ) {
+    val photoSheetStyle = LocalPhotoSheetStyle.current
+
+    fun showInfoIfSheetStyle(expected: PhotoSheetStyle): Boolean =
+        if (photoSheetStyle == expected) {
+            action(PhotoAction.ShowInfo)
+            true
+        } else {
+            false
+        }
+
     Box(
         modifier = Modifier
             .fillMaxSize()
@@ -31,7 +43,8 @@ fun PhotoDetails(
                 zoomableState = zoomableState,
                 onTap = { action(PhotoAction.ToggleUI) },
                 onSwipeAway = { action(PhotoAction.NavigateBack) },
-                onSwipeUp = { action(PhotoAction.ShowInfo) },
+                onSwipeUp = { showInfoIfSheetStyle(BOTTOM) },
+                onSwipeToStart = { showInfoIfSheetStyle(SIDE) },
             )
     ) {
         when {

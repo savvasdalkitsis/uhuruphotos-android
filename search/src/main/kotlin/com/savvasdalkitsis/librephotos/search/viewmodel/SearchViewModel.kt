@@ -5,6 +5,7 @@ import com.savvasdalkitsis.librephotos.search.mvflow.SearchAction
 import com.savvasdalkitsis.librephotos.search.mvflow.SearchEffect
 import com.savvasdalkitsis.librephotos.search.mvflow.SearchMutation
 import com.savvasdalkitsis.librephotos.search.view.state.SearchState
+import com.savvasdalkitsis.librephotos.viewmodel.ActionReceiver
 import com.savvasdalkitsis.librephotos.viewmodel.ActionReceiverHost
 import dagger.hilt.android.lifecycle.HiltViewModel
 import org.orbitmvi.orbit.viewmodel.container
@@ -18,7 +19,7 @@ class SearchViewModel @Inject constructor(
 
     override val initialState = SearchState()
 
-    override val actionReceiver = com.savvasdalkitsis.librephotos.viewmodel.ActionReceiver(
+    override val actionReceiver = ActionReceiver(
         searchHandler,
         searchReducer(),
         container(initialState)

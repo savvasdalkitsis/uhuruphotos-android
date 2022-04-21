@@ -10,10 +10,9 @@ import androidx.navigation.NavBackStackEntry
 import androidx.navigation.NavGraphBuilder
 import com.google.accompanist.navigation.animation.composable
 import com.savvasdalkitsis.librephotos.log.log
-import com.savvasdalkitsis.librephotos.viewmodel.ActionReceiverHost
 import com.savvasdalkitsis.librephotos.viewmodel.EffectHandler
+import com.savvasdalkitsis.librephotos.viewmodel.MVIHost
 import kotlinx.coroutines.launch
-import org.orbitmvi.orbit.viewmodel.observe
 
 fun <S : Any, E : Any, A : Any, VM> NavGraphBuilder.navigationTarget(
     name: String,
@@ -23,7 +22,7 @@ fun <S : Any, E : Any, A : Any, VM> NavGraphBuilder.navigationTarget(
     initializer: (NavBackStackEntry, (A) -> Unit) -> Unit = { _, _ -> },
     createModel: @Composable () -> VM,
     content: @Composable (state: S, actions: (A) -> Unit) -> Unit,
-) where VM : ViewModel, VM : ActionReceiverHost<S, E, A, *> {
+) where VM : ViewModel, VM : MVIHost<S, E, A, *> {
     composable(
         name,
         enterTransition = enterTransition,
@@ -32,31 +31,17 @@ fun <S : Any, E : Any, A : Any, VM> NavGraphBuilder.navigationTarget(
         val model = createModel()
         val scope = rememberCoroutineScope()
         val actions: (A) -> Unit = {
-            scope.launch {
-                log(tag = "MVI") { "New action: $it" }
-                model.actionReceiver.action(it)
-            }
+            scope.launch { model.action(it) }
         }
 
-        var state by remember {
-            mutableStateOf(model.initialState)
-        }
-        model.actionReceiver.observe(navBackStackEntry,
-            state = {
-                log(tag = "MVI") { "New state: $it" }
-                state = it
-            },
-            sideEffect = {
-                log(tag = "MVI") { "New side effect: $it" }
-                effects(it)
-            }
-        )
+        val state by model.state.collectAsState()
         content(state, actions)
-        val keyboard = LocalSoftwareKeyboardController.current
 
+        val keyboard = LocalSoftwareKeyboardController.current
         LaunchedEffect(Unit) {
             keyboard?.hide()
             initializer(navBackStackEntry, actions)
+            model.sideEffects.collect { effects(it) }
         }
     }
 }

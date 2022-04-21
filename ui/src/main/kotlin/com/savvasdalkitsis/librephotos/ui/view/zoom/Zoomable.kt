@@ -16,6 +16,9 @@ import androidx.compose.ui.input.pointer.*
 import androidx.compose.ui.input.pointer.util.VelocityTracker
 import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.platform.LocalLayoutDirection
+import androidx.compose.ui.unit.LayoutDirection.Ltr
+import androidx.compose.ui.unit.LayoutDirection.Rtl
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.util.fastAny
 import androidx.compose.ui.util.fastForEach
@@ -25,7 +28,7 @@ fun Modifier.zoomable(
     maxZoom: Float = 8f,
     onTap: () -> Unit = {},
     onSwipeAway: () -> Unit = {},
-    onSwipeUp: () -> Unit = {},
+    onSwipeUp: () -> Boolean = { false },
 ) = composed {
     zoomable(
         maxZoom,
@@ -41,10 +44,12 @@ fun Modifier.zoomable(
     zoomableState: ZoomableState,
     onTap: () -> Unit = {},
     onSwipeAway: () -> Unit = {},
-    onSwipeUp: () -> Unit = {},
+    onSwipeUp: () -> Boolean = { false },
+    onSwipeToStart: () -> Boolean = {false},
 ) = composed {
     val density = LocalDensity.current
     var composableCenter by remember { mutableStateOf(Offset.Zero) }
+    val layoutDirection = LocalLayoutDirection.current
 
     this
         .pointerInput("taps") {
@@ -60,7 +65,7 @@ fun Modifier.zoomable(
                 }
             )
         }
-        .pointerInput("gestures") {
+        .pointerInput("gestures", layoutDirection) {
             forEachGesture {
                 val decay = splineBasedDecay<Float>(this)
                 val velocityTracker = VelocityTracker()
@@ -173,10 +178,13 @@ fun Modifier.zoomable(
                     }
                     if (zoomableState.scale < 0.92) {
                         with(density) {
-                            val swipeOffset = zoomableState.offset.y.toDp()
+                            val swipeYOffset = zoomableState.offset.y.toDp()
+                            val swipeXOffset = zoomableState.offset.x.toDp()
                             when {
-                                swipeOffset > 24.dp -> onSwipeAway()
-                                swipeOffset < (-24).dp -> onSwipeUp()
+                                swipeYOffset < (-24).dp && onSwipeUp() -> {}
+                                layoutDirection == Rtl && swipeXOffset > 24.dp && onSwipeToStart() -> {}
+                                layoutDirection == Ltr && swipeXOffset < (-24).dp && onSwipeToStart() -> {}
+                                swipeYOffset > 24.dp -> onSwipeAway()
                                 else -> zoomableState.reset()
                             }
                         }
