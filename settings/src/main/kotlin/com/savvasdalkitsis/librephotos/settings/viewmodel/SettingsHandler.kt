@@ -4,6 +4,7 @@ import com.savvasdalkitsis.librephotos.settings.usecase.CacheUseCase
 import com.savvasdalkitsis.librephotos.settings.usecase.SettingsUseCase
 import com.savvasdalkitsis.librephotos.settings.view.state.SettingsState
 import com.savvasdalkitsis.librephotos.settings.viewmodel.SettingsAction.*
+import com.savvasdalkitsis.librephotos.settings.viewmodel.SettingsEffect.ShowMessage
 import com.savvasdalkitsis.librephotos.settings.viewmodel.SettingsMutation.*
 import com.savvasdalkitsis.librephotos.viewmodel.Handler
 import kotlinx.coroutines.flow.Flow
@@ -27,10 +28,12 @@ internal class SettingsHandler @Inject constructor(
                 .map(::DisplayDiskCacheMaxLimit),
             settingsUseCase.observeMemCacheMaxLimit()
                 .map(::DisplayMemCacheMaxLimit),
+            settingsUseCase.observeFeedSyncFrequency()
+                .map(::DisplayFeedSyncFrequency),
             cacheUseCase.observeDiskCacheCurrentUse()
                 .map(::DisplayDiskCacheCurrentUse),
             cacheUseCase.observeMemCacheCurrentUse()
-                .map(::DisplayMemCacheCurrentUse)
+                .map(::DisplayMemCacheCurrentUse),
         )
         NavigateBack -> flow {
             effect(SettingsEffect.NavigateBack)
@@ -46,6 +49,12 @@ internal class SettingsHandler @Inject constructor(
         }
         ClearMemCache -> flow {
             cacheUseCase.clearMemCache()
+        }
+        is ChangingFeedSyncFrequency -> flow {
+            settingsUseCase.setFeedSyncFrequency(action.frequency.toInt())
+        }
+        FinaliseFeedSyncFrequencyChange -> flow {
+            effect(ShowMessage("Feed sync frequency changed"))
         }
     }
 

@@ -10,12 +10,15 @@ class SettingsUseCase @Inject constructor(
 
     private val diskCacheSize = flowSharedPreferences.getInt("diskCacheSize", 500)
     private val memCacheSize = flowSharedPreferences.getInt("memCacheSize", 200)
+    private val feedSyncFrequency = flowSharedPreferences.getInt("feedSyncFrequency", 12)
 
     fun getDiskCacheMaxLimit(): Int = diskCacheSize.get()
     fun getMemCacheMaxLimit(): Int = memCacheSize.get()
+    fun getFeedSyncFrequency(): Int = feedSyncFrequency.get()
 
     fun observeDiskCacheMaxLimit(): Flow<Int> = diskCacheSize.asFlow()
     fun observeMemCacheMaxLimit(): Flow<Int> = memCacheSize.asFlow()
+    fun observeFeedSyncFrequency(): Flow<Int> = feedSyncFrequency.asFlow()
 
     suspend fun setDiskCacheMaxLimit(sizeInMb: Int) {
         diskCacheSize.setAndCommit(sizeInMb)
@@ -23,5 +26,9 @@ class SettingsUseCase @Inject constructor(
 
     suspend fun setMemCacheMaxLimit(sizeInMb: Int) {
         memCacheSize.setAndCommit(sizeInMb)
+    }
+
+    suspend fun setFeedSyncFrequency(frequency: Int) {
+        feedSyncFrequency.setAndCommit(frequency)
     }
 }

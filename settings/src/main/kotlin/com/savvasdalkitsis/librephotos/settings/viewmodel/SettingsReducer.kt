@@ -21,5 +21,9 @@ fun settingsReducer(): Reducer<SettingsState, SettingsMutation> = { state, mutat
             isLoading = false,
             memCacheCurrent = mutation.current,
         )
+        is SettingsMutation.DisplayFeedSyncFrequency -> state.copy(
+            isLoading = false,
+            feedSyncFrequency = mutation.frequency,
+        )
     }
 }

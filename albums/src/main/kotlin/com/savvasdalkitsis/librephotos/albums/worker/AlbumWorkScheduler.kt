@@ -1,6 +1,6 @@
 package com.savvasdalkitsis.librephotos.albums.worker
 
-import com.savvasdalkitsis.librephotos.photos.worker.PhotoFavouriteWorker
+import androidx.work.ExistingPeriodicWorkPolicy
 import com.savvasdalkitsis.librephotos.worker.WorkScheduler
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
@@ -14,13 +14,17 @@ class AlbumWorkScheduler @Inject constructor(
             putBoolean(AlbumDownloadWorker.KEY_SHALLOW, shallow)
         }
 
-    fun scheduleAlbumsRefreshPeriodic() {
+    fun scheduleAlbumsRefreshPeriodic(
+        hoursInterval: Int,
+        existingPeriodicWorkPolicy: ExistingPeriodicWorkPolicy
+    ) {
         workScheduler.schedulePeriodic<AlbumDownloadWorker>(
             AlbumDownloadWorker.WORK_NAME,
-            repeatInterval = 12,
+            repeatInterval = hoursInterval.toLong(),
             repeatIntervalTimeUnit = TimeUnit.HOURS,
             initialDelayDuration = 1,
             initialDelayTimeUnit = TimeUnit.HOURS,
+            existingPeriodicWorkPolicy = existingPeriodicWorkPolicy,
         )
     }
 }

@@ -62,6 +62,16 @@ fun Settings(
                         onValueChange = { action(ChangeMemCache(it)) }
                     )
                 }
+                SettingsGroup(title = "Jobs") {
+                    SettingsSliderRow(
+                        text = "Full photo feed sync frequency: ${state.feedSyncFrequency ?: "-"} hour(s)",
+                        value = state.feedSyncFrequency?.toFloat(),
+                        range = 1f..(7*24f),
+                        steps = 24 * 7,
+                        onValueChange = { action(ChangingFeedSyncFrequency(it)) },
+                        onValueChangeFinished = { action(FinaliseFeedSyncFrequencyChange) }
+                    )
+                }
             }
         }
     }

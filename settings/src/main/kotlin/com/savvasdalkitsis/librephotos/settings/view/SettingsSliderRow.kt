@@ -1,14 +1,14 @@
 
 package com.savvasdalkitsis.librephotos.settings.view
 
-import android.util.Range
-import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.heightIn
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Slider
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 
@@ -16,9 +16,11 @@ import androidx.compose.ui.unit.dp
 fun SettingsSliderRow(
     text: String,
     subtext: String? = null,
-    value: Float,
+    value: Float?,
     range: ClosedFloatingPointRange<Float>,
+    steps: Int = 0,
     onValueChange: (Float) -> Unit,
+    onValueChangeFinished: () -> Unit = {},
 ) {
     Column(
         modifier = Modifier
@@ -28,11 +30,14 @@ fun SettingsSliderRow(
     ) {
         Text(text)
         Slider(
+            enabled = value != null,
             modifier = Modifier
                 .fillMaxWidth(),
-            value = value,
+            value = value ?: range.start,
             valueRange = range,
+            steps = steps,
             onValueChange = onValueChange,
+            onValueChangeFinished = onValueChangeFinished,
         )
         if (subtext != null) {
             Text(subtext, style = MaterialTheme.typography.subtitle2)

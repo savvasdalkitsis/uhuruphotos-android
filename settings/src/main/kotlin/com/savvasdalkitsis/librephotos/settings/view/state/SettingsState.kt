@@ -6,4 +6,5 @@ data class SettingsState(
     val diskCacheCurrent: Int = 0,
     val memCacheMax: Int = 0,
     val memCacheCurrent: Int = 0,
+    val feedSyncFrequency: Int? = null,
 )

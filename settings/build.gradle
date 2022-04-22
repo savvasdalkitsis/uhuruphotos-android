@@ -11,6 +11,8 @@ dependencies {
 
     implementation project(":navigation")
     implementation project(":ui")
+    implementation project(":initializer")
+    implementation project(":toaster")
     implementation(
             libs.androidx.compose.foundation,
             libs.androidx.compose.foundation.layout,

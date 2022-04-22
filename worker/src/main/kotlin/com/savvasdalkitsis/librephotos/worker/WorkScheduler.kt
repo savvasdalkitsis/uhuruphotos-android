@@ -34,10 +34,11 @@ class WorkScheduler @Inject constructor(
         backoffPolicy: BackoffPolicy = BackoffPolicy.EXPONENTIAL,
         backoffDelay: Long = 1,
         backoffTimeUnit: TimeUnit = TimeUnit.MINUTES,
+        existingPeriodicWorkPolicy: ExistingPeriodicWorkPolicy = ExistingPeriodicWorkPolicy.REPLACE,
     ) {
         workManager.enqueueUniquePeriodicWork(
             workName,
-            ExistingPeriodicWorkPolicy.KEEP,
+            existingPeriodicWorkPolicy,
             PeriodicWorkRequestBuilder<W>(repeatInterval, repeatIntervalTimeUnit)
                 .setInitialDelay(initialDelayDuration, initialDelayTimeUnit)
                 .setBackoffCriteria(backoffPolicy, backoffDelay, backoffTimeUnit)
