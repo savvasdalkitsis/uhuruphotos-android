@@ -67,6 +67,7 @@ class SearchHandler @Inject constructor(
             effect(ReloadApp)
         }
         EditServer -> flow {
+            emit(HideAccountOverview)
             effect(NavigateToEditServer)
         }
         SettingsClick -> flow {

@@ -117,6 +117,7 @@ class FeedPageHandler @Inject constructor(
             effect(SharePhotos(state.selectedPhotos))
         }
         EditServer -> flow {
+            emit(HideAccountOverview)
             effect(NavigateToServerEdit)
         }
         SettingsClick -> flow {

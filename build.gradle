@@ -1,10 +1,10 @@
 buildscript {
     ext {
-        kotlin_version = '1.6.10'
-        compose_version = '1.2.0-alpha07'
+        kotlin_version = '1.6.20'
+        compose_version = '1.2.0-alpha08'
     }
     dependencies {
-        classpath 'com.google.dagger:hilt-android-gradle-plugin:2.40.5'
+        classpath 'com.google.dagger:hilt-android-gradle-plugin:2.41'
         classpath 'com.squareup.sqldelight:gradle-plugin:1.5.3'
     }
 }// Top-level build file where you can add configuration options common to all sub-projects/modules.
@@ -53,7 +53,7 @@ subprojects {
     }
 
     dependencies {
-        kapt "com.google.dagger:hilt-compiler:2.40.5"
+        kapt "com.google.dagger:hilt-compiler:2.41"
         kapt "androidx.hilt:hilt-compiler:1.0.0"
     }
 

@@ -12,7 +12,10 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.graphics.graphicsLayer
-import androidx.compose.ui.input.pointer.*
+import androidx.compose.ui.input.pointer.PointerInputChange
+import androidx.compose.ui.input.pointer.pointerInput
+import androidx.compose.ui.input.pointer.positionChange
+import androidx.compose.ui.input.pointer.positionChanged
 import androidx.compose.ui.input.pointer.util.VelocityTracker
 import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.platform.LocalDensity
@@ -23,21 +26,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.util.fastAny
 import androidx.compose.ui.util.fastForEach
 import kotlin.math.abs
-
-fun Modifier.zoomable(
-    maxZoom: Float = 8f,
-    onTap: () -> Unit = {},
-    onSwipeAway: () -> Unit = {},
-    onSwipeUp: () -> Boolean = { false },
-) = composed {
-    zoomable(
-        maxZoom,
-        rememberZoomableState(),
-        onTap,
-        onSwipeAway,
-        onSwipeUp,
-    )
-}
 
 fun Modifier.zoomable(
     maxZoom: Float = 8f,
@@ -85,7 +73,7 @@ fun Modifier.zoomable(
                     var transformEventCounter = 0
                     do {
                         val event = awaitPointerEvent()
-                        val canceled = event.changes.fastAny { it.positionChangeConsumed() }
+                        val canceled = event.changes.fastAny { it.isConsumed }
                         var relevant = true
                         if (event.changes.size > 1) {
                             if (!canceled) {
@@ -137,7 +125,7 @@ fun Modifier.zoomable(
                                     )
                                     event.changes.fastForEach {
                                         if (it.positionChanged()) {
-                                            it.consumeAllChanges()
+                                            it.consume()
                                         }
                                     }
                                 }
@@ -153,10 +141,10 @@ fun Modifier.zoomable(
                     do {
                         awaitPointerEvent()
                         drag = awaitTouchSlopOrCancellation(down.id) { change, over ->
-                            change.consumePositionChange()
+                            if (change.positionChange() != Offset.Zero) change.consume()
                             overSlop = over
                         }
-                    } while (drag != null && !drag.positionChangeConsumed())
+                    } while (drag != null && !drag.isConsumed)
                     if (drag != null) {
                         zoomableState.offset += overSlop
                         if (zoomableState.scale in 0.92f..1.08f) {
@@ -169,7 +157,7 @@ fun Modifier.zoomable(
                                 it.uptimeMillis,
                                 it.position
                             )
-                            it.consumePositionChange()
+                            if (it.positionChange() != Offset.Zero) it.consume()
                         }
                     }
                     val velocity = velocityTracker.calculateVelocity()

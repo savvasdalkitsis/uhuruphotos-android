@@ -35,7 +35,7 @@ fun AccountOverviewPopUp(
                 modifier = Modifier
                     .fillMaxSize()
                     .background(MaterialTheme.colors.background.copy(alpha = 0.3f))
-                    .clickable { }
+                    .clickable { onDismiss() }
             )
         }
         Popup(onDismissRequest = onDismiss) {
