@@ -39,7 +39,8 @@ fun SearchPage(
             userInformationState = state.userInformationState,
             onDismiss = { action(DismissAccountOverview) },
             onLogoutClicked = { action(LogOut) },
-            onEditServerClicked = {},
+            onEditServerClicked = { action(EditServer) },
+            onSettingsClicked = { action(SettingsClick)}
         )
     }
 }

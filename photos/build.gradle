@@ -27,7 +27,6 @@ dependencies {
             libs.androidx.compose.material,
             libs.androidx.work,
             libs.androidx.work.hilt,
-            libs.hilt,
             libs.infobar,
             libs.maps,
             libs.maps.compose,

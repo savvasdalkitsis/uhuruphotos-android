@@ -27,4 +27,5 @@ sealed class FeedPageAction {
     object DeleteSelectedPhotos : FeedPageAction()
     object ShareSelectedPhotos : FeedPageAction()
     object EditServer : FeedPageAction()
+    object SettingsClick : FeedPageAction()
 }

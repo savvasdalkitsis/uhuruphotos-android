@@ -21,12 +21,13 @@ dependencies {
     implementation project(":accountoverview")
     implementation project(":account")
     implementation project(":feedpage")
+    implementation project(":server")
+    implementation project(":settings")
 
     implementation(
             libs.androidx.compose.hilt.navigation,
             libs.androidx.compose.material,
             libs.androidx.lifecycle,
-            libs.hilt,
             libs.moshi,
             libs.retrofit.core,
             libs.retrofit.moshi,

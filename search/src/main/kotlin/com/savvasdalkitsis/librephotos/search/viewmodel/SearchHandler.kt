@@ -5,13 +5,13 @@ import com.savvasdalkitsis.librephotos.feedpage.usecase.FeedPageUseCase
 import com.savvasdalkitsis.librephotos.search.mvflow.SearchAction
 import com.savvasdalkitsis.librephotos.search.mvflow.SearchAction.*
 import com.savvasdalkitsis.librephotos.search.mvflow.SearchEffect
-import com.savvasdalkitsis.librephotos.search.mvflow.SearchEffect.FocusSearchBar
-import com.savvasdalkitsis.librephotos.search.mvflow.SearchEffect.HideKeyboard
+import com.savvasdalkitsis.librephotos.search.mvflow.SearchEffect.*
 import com.savvasdalkitsis.librephotos.search.mvflow.SearchMutation
 import com.savvasdalkitsis.librephotos.search.mvflow.SearchMutation.*
 import com.savvasdalkitsis.librephotos.search.usecase.SearchUseCase
 import com.savvasdalkitsis.librephotos.search.view.state.SearchState
 import com.savvasdalkitsis.librephotos.userbadge.usecase.UserBadgeUseCase
+import com.savvasdalkitsis.librephotos.viewmodel.Handler
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.*
 import javax.inject.Inject
@@ -21,7 +21,7 @@ class SearchHandler @Inject constructor(
     private val userBadgeUseCase: UserBadgeUseCase,
     private val accountUseCase: AccountUseCase,
     private val feedPageUseCase: FeedPageUseCase,
-): com.savvasdalkitsis.librephotos.viewmodel.Handler<SearchState, SearchEffect, SearchAction, SearchMutation> {
+): Handler<SearchState, SearchEffect, SearchAction, SearchMutation> {
 
     private var lastSearch: Job? = null
 
@@ -64,7 +64,14 @@ class SearchHandler @Inject constructor(
         DismissAccountOverview -> flowOf(HideAccountOverview)
         LogOut -> flow {
             accountUseCase.logOut()
-            effect(SearchEffect.ReloadApp)
+            effect(ReloadApp)
+        }
+        EditServer -> flow {
+            effect(NavigateToEditServer)
+        }
+        SettingsClick -> flow {
+            emit(HideAccountOverview)
+            effect(NavigateToSettings)
         }
     }
 

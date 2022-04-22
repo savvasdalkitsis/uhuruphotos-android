@@ -24,7 +24,6 @@ dependencies {
     implementation(
             libs.androidx.compose.hilt.navigation,
             libs.androidx.compose.material,
-            libs.hilt,
             libs.okhttp,
     )
 }

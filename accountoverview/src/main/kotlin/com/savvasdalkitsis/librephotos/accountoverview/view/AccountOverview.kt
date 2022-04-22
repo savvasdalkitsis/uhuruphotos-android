@@ -1,10 +1,9 @@
 package com.savvasdalkitsis.librephotos.accountoverview.view
 
 import androidx.compose.foundation.layout.*
-import androidx.compose.material.Button
-import androidx.compose.material.Icon
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Text
+import androidx.compose.material.*
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Settings
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Alignment.Companion.End
@@ -25,6 +24,7 @@ fun AccountOverview(
     userInformationState: UserInformationState,
     onLogoutClicked: () -> Unit,
     onEditServerClicked: () -> Unit,
+    onSettingsClicked: () -> Unit,
 ) {
     Column(
         modifier = Modifier
@@ -59,7 +59,15 @@ fun AccountOverview(
                 icon = R.drawable.ic_edit,
             )
         }
-        Button(
+        TextButton(
+            modifier = Modifier
+                .fillMaxWidth(),
+            onClick = onSettingsClicked
+        ) {
+            Icon(Icons.Default.Settings, contentDescription = null)
+            Text(modifier = Modifier.padding(start = 8.dp), text = "Settings")
+        }
+        OutlinedButton(
             modifier = Modifier.align(End),
             onClick = onLogoutClicked,
         ) {

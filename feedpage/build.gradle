@@ -24,6 +24,7 @@ dependencies {
     implementation project(":share")
     implementation project(":server")
     implementation project(":toaster")
+    implementation project(":settings")
     implementation(
             libs.accompanist.swiperefresh,
             libs.androidx.compose.foundation.layout,

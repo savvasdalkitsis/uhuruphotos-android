@@ -7,6 +7,7 @@ import com.savvasdalkitsis.librephotos.home.navigation.HomeNavigationTarget
 import com.savvasdalkitsis.librephotos.navigation.ControllersProvider
 import com.savvasdalkitsis.librephotos.photos.navigation.PhotoNavigationTarget
 import com.savvasdalkitsis.librephotos.server.navigation.ServerNavigationTarget
+import com.savvasdalkitsis.librephotos.settings.navigation.SettingsNavigationTarget
 import com.savvasdalkitsis.librephotos.share.ShareImage
 import com.savvasdalkitsis.librephotos.toaster.Toaster
 import com.savvasdalkitsis.librephotos.viewmodel.EffectHandler
@@ -23,7 +24,7 @@ class FeedPageEffectsHandler @Inject constructor(
             backQueue.clear()
             navigate(HomeNavigationTarget.name)
         }
-        is OpenPhotoDetails -> controllersProvider.navController!!.navigate(
+        is OpenPhotoDetails -> navigateTo(
             PhotoNavigationTarget.name(effect.id, effect.center, effect.scale, effect.isVideo)
         )
         is SharePhotos -> {
@@ -32,9 +33,14 @@ class FeedPageEffectsHandler @Inject constructor(
                 it.fullResUrl
             })
         }
-        NavigateToServerEdit -> controllersProvider.navController!!.navigate(
+        NavigateToServerEdit -> navigateTo(
             ServerNavigationTarget.name(auto = false)
         )
         Vibrate -> controllersProvider.haptics!!.performHapticFeedback(HapticFeedbackType.LongPress)
+        NavigateToSettings -> navigateTo(SettingsNavigationTarget.name)
+    }
+
+    private fun navigateTo(target: String) {
+        controllersProvider.navController!!.navigate(target)
     }
 }

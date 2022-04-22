@@ -119,6 +119,10 @@ class FeedPageHandler @Inject constructor(
         EditServer -> flow {
             effect(NavigateToServerEdit)
         }
+        SettingsClick -> flow {
+            emit(HideAccountOverview)
+            effect(NavigateToSettings)
+        }
     }
 
     private suspend fun Photo.deselect() {

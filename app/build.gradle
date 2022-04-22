@@ -60,8 +60,8 @@ dependencies {
     implementation project(":server")
     implementation project(":initializer")
     implementation project(":video")
+    implementation project(":settings")
     implementation(
-            libs.accompanist.navigation,
             libs.accompanist.systemui,
             libs.androidx.activity,
             libs.androidx.compose.hilt.navigation,

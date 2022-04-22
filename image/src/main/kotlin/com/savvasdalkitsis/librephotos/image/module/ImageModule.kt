@@ -10,6 +10,7 @@ import coil.disk.DiskCache
 import coil.memory.MemoryCache
 import com.savvasdalkitsis.librephotos.auth.api.TokenRefreshInterceptor
 import com.savvasdalkitsis.librephotos.auth.module.AuthModule
+import com.savvasdalkitsis.librephotos.settings.usecase.SettingsUseCase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -25,18 +26,20 @@ class ImageModule {
     @Provides
     @Singleton
     fun memoryCache(
+        settingsUseCase: SettingsUseCase,
         @ApplicationContext context: Context,
     ): MemoryCache = MemoryCache.Builder(context)
-        .maxSizePercent(0.25)
+        .maxSizeBytes(settingsUseCase.getMemCacheMaxLimit() * 1024 * 1024)
         .build()
 
     @Provides
     @Singleton
     fun diskCache(
         @ApplicationContext context: Context,
+        settingsUseCase: SettingsUseCase,
     ): DiskCache = DiskCache.Builder()
         .directory(context.cacheDir.resolve("image_cache"))
-        .maxSizeBytes(250 * 1024 * 1024)
+        .maxSizeBytes(settingsUseCase.getDiskCacheMaxLimit() * 1024 * 1024L)
         .build()
 
     @Provides

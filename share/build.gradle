@@ -2,7 +2,6 @@ dependencies {
 
     implementation project(":navigation")
     implementation(
-            libs.hilt,
             libs.coil.base,
     )
 }

@@ -13,8 +13,11 @@ dependencies {
     implementation project(":log")
     implementation project(":toaster")
     implementation(
-            libs.accompanist.navigation,
             libs.accompanist.systemui,
+    )
+    api(
+            libs.accompanist.navigation,
+            libs.androidx.compose.hilt.navigation,
             libs.hilt,
     )
 }

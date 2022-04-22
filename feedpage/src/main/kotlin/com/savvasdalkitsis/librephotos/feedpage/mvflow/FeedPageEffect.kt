@@ -15,4 +15,5 @@ sealed class FeedPageEffect {
     object ReloadApp : FeedPageEffect()
     object NavigateToServerEdit : FeedPageEffect()
     object Vibrate : FeedPageEffect()
+    object NavigateToSettings : FeedPageEffect()
 }

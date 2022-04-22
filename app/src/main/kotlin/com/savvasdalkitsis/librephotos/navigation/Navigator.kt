@@ -13,6 +13,7 @@ import com.savvasdalkitsis.librephotos.home.navigation.HomeNavigationTarget
 import com.savvasdalkitsis.librephotos.photos.navigation.PhotoNavigationTarget
 import com.savvasdalkitsis.librephotos.search.navigation.SearchNavigationTarget
 import com.savvasdalkitsis.librephotos.server.navigation.ServerNavigationTarget
+import com.savvasdalkitsis.librephotos.settings.navigation.SettingsNavigationTarget
 import com.savvasdalkitsis.librephotos.ui.window.LocalSystemUiController
 import javax.inject.Inject
 
@@ -23,6 +24,7 @@ class Navigator @Inject constructor(
     private val serverNavigationTarget: ServerNavigationTarget,
     private val webLoginNavigationTarget: WebLoginNavigationTarget,
     private val photoNavigationTarget: PhotoNavigationTarget,
+    private val settingsNavigationTarget: SettingsNavigationTarget,
     private val controllersProvider: ControllersProvider,
 ) {
 
@@ -46,6 +48,7 @@ class Navigator @Inject constructor(
             with(serverNavigationTarget) { create() }
             with(webLoginNavigationTarget) { create() }
             with(photoNavigationTarget) { create() }
+            with(settingsNavigationTarget) { create() }
         }
     }
 }

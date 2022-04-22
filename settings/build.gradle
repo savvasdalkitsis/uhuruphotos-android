@@ -9,17 +9,14 @@ android {
 
 dependencies {
 
-    implementation project(":feed")
-    implementation project(":ui")
     implementation project(":navigation")
-    implementation project(":userbadge")
-    implementation project(":server")
-    implementation project(":auth")
+    implementation project(":ui")
     implementation(
+            libs.androidx.compose.foundation,
             libs.androidx.compose.foundation.layout,
-            libs.androidx.compose.hilt.navigation,
             libs.androidx.compose.material,
-            libs.androidx.compose.ui,
-            libs.androidx.lifecycle,
+            libs.androidx.datastore.preferences,
+            libs.coil.base,
+            libs.flowpreferences,
     )
 }
