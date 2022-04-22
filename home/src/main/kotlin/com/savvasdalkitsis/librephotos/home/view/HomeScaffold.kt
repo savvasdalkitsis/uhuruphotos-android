@@ -18,8 +18,8 @@ import com.savvasdalkitsis.librephotos.home.navigation.NavigationStyle.BOTTOM_BA
 import com.savvasdalkitsis.librephotos.home.navigation.NavigationStyle.NAVIGATION_RAIL
 import com.savvasdalkitsis.librephotos.home.navigation.homeNavigationStyle
 import com.savvasdalkitsis.librephotos.ui.view.CommonScaffold
-import com.savvasdalkitsis.librephotos.userbadge.view.UserBadge
-import com.savvasdalkitsis.librephotos.userbadge.view.state.UserInformationState
+import com.savvasdalkitsis.librephotos.userbadge.api.view.UserBadge
+import com.savvasdalkitsis.librephotos.userbadge.api.view.state.UserInformationState
 
 @Composable
 fun HomeScaffold(

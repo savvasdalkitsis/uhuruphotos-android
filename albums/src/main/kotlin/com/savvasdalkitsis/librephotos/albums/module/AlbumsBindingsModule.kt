@@ -1,6 +1,7 @@
 package com.savvasdalkitsis.librephotos.albums.module
 
 import com.savvasdalkitsis.librephotos.albums.initializer.AlbumsInitializer
+import com.savvasdalkitsis.librephotos.albums.worker.AlbumWorkScheduler
 import com.savvasdalkitsis.librephotos.initializer.ApplicationCreated
 import dagger.Binds
 import dagger.Module
@@ -14,4 +15,8 @@ abstract class AlbumsBindingsModule {
 
     @Binds @IntoSet
     abstract fun albumInitializer(albumsInitializer: AlbumsInitializer): ApplicationCreated
+
+    @Binds
+    abstract fun albumWorkScheduler(albumWorkScheduler: AlbumWorkScheduler):
+            com.savvasdalkitsis.librephotos.albums.api.worker.AlbumWorkScheduler
 }

@@ -1,20 +1,23 @@
 package com.savvasdalkitsis.librephotos.settings.viewmodel
 
+import androidx.work.ExistingPeriodicWorkPolicy.REPLACE
+import androidx.work.WorkInfo.State.RUNNING
+import com.savvasdalkitsis.librephotos.albums.api.worker.AlbumWorkScheduler
 import com.savvasdalkitsis.librephotos.settings.usecase.CacheUseCase
 import com.savvasdalkitsis.librephotos.settings.usecase.SettingsUseCase
 import com.savvasdalkitsis.librephotos.settings.view.state.SettingsState
 import com.savvasdalkitsis.librephotos.settings.viewmodel.SettingsAction.*
 import com.savvasdalkitsis.librephotos.settings.viewmodel.SettingsEffect.ShowMessage
 import com.savvasdalkitsis.librephotos.settings.viewmodel.SettingsMutation.*
+import com.savvasdalkitsis.librephotos.userbadge.api.UserBadgeUseCase
 import com.savvasdalkitsis.librephotos.viewmodel.Handler
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.flow.merge
+import kotlinx.coroutines.flow.*
 import javax.inject.Inject
 
 internal class SettingsHandler @Inject constructor(
     private val settingsUseCase: SettingsUseCase,
+    private val albumWorkScheduler: AlbumWorkScheduler,
+    private val userBadgeUseCase: UserBadgeUseCase,
     private val cacheUseCase: CacheUseCase,
 ) : Handler<SettingsState, SettingsEffect, SettingsAction, SettingsMutation> {
 
@@ -34,7 +37,16 @@ internal class SettingsHandler @Inject constructor(
                 .map(::DisplayDiskCacheCurrentUse),
             cacheUseCase.observeMemCacheCurrentUse()
                 .map(::DisplayMemCacheCurrentUse),
-        )
+            userBadgeUseCase.getUserBadgeState()
+                .map(::UserBadgeUpdate),
+            albumWorkScheduler.observeAlbumRefreshJobStatus()
+                .map {
+                    when (it) {
+                        RUNNING -> DisableFullSyncButton
+                        else -> EnableFullSyncButton
+                    }
+                }
+            )
         NavigateBack -> flow {
             effect(SettingsEffect.NavigateBack)
         }
@@ -54,7 +66,16 @@ internal class SettingsHandler @Inject constructor(
             settingsUseCase.setFeedSyncFrequency(action.frequency.toInt())
         }
         FinaliseFeedSyncFrequencyChange -> flow {
+            albumWorkScheduler.scheduleAlbumsRefreshPeriodic(
+                hoursInterval = settingsUseCase.getFeedSyncFrequency(),
+                existingPeriodicWorkPolicy = REPLACE
+            )
             effect(ShowMessage("Feed sync frequency changed"))
+        }
+        AskForFullFeedSync -> flowOf(ShowFullFeedSyncDialog)
+        DismissFullFeedSyncDialog -> flowOf(HideFullFeedSyncDialog)
+        PerformFullFeedSync -> flow {
+            albumWorkScheduler.scheduleAlbumsRefreshNow(shallow = false)
         }
     }
 

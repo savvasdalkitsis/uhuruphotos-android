@@ -61,6 +61,8 @@ dependencies {
     implementation project(":initializer")
     implementation project(":video")
     implementation project(":settings")
+    implementation project(":userbadge-api")
+    implementation project(":userbadge")
     implementation(
             libs.accompanist.systemui,
             libs.androidx.activity,

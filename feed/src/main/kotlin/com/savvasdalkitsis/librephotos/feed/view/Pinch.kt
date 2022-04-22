@@ -38,7 +38,7 @@ fun Modifier.pinchToChange(
                 awaitFirstDown(requireUnconsumed = false)
                 do {
                     val event = awaitPointerEvent()
-                    val canceled = event.changes.fastAny { it.positionChangeConsumed() }
+                    val canceled = event.changes.fastAny { it.isConsumed }
                     if (event.changes.size > 1) {
                         if (!canceled) {
                             val zoomChange = event.calculateZoom()
@@ -54,7 +54,7 @@ fun Modifier.pinchToChange(
 
                         event.changes.fastForEach {
                             if (it.positionChanged()) {
-                                it.consumeAllChanges()
+                                it.consume()
                             }
                         }
                     }

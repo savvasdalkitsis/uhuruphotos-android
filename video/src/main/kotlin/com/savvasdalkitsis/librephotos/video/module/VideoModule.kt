@@ -4,7 +4,7 @@ import android.content.Context
 import com.google.android.exoplayer2.ExoPlayer
 import com.google.android.exoplayer2.ext.okhttp.OkHttpDataSource
 import com.google.android.exoplayer2.source.DefaultMediaSourceFactory
-import com.savvasdalkitsis.librephotos.auth.api.TokenRefreshInterceptor
+import com.savvasdalkitsis.librephotos.auth.service.TokenRefreshInterceptor
 import com.savvasdalkitsis.librephotos.auth.module.AuthModule
 import dagger.Module
 import dagger.Provides

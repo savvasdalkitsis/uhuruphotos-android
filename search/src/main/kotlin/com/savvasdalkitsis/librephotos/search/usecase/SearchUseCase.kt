@@ -2,7 +2,7 @@ package com.savvasdalkitsis.librephotos.search.usecase
 
 import com.savvasdalkitsis.librephotos.albums.model.Album
 import com.savvasdalkitsis.librephotos.infrastructure.date.DateDisplayer
-import com.savvasdalkitsis.librephotos.photos.api.model.isVideo
+import com.savvasdalkitsis.librephotos.photos.service.model.isVideo
 import com.savvasdalkitsis.librephotos.photos.model.Photo
 import com.savvasdalkitsis.librephotos.photos.usecase.PhotosUseCase
 import com.savvasdalkitsis.librephotos.search.repository.SearchRepository

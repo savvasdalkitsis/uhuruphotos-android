@@ -12,7 +12,7 @@ dependencies {
     implementation project(":feed")
     implementation project(":ui")
     implementation project(":navigation")
-    implementation project(":userbadge")
+    implementation project(":userbadge-api")
     implementation project(":server")
     implementation project(":auth")
     implementation(

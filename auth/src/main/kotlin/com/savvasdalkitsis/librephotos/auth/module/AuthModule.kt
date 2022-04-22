@@ -1,17 +1,15 @@
 package com.savvasdalkitsis.librephotos.auth.module
 
 import android.webkit.CookieManager
-import com.savvasdalkitsis.librephotos.auth.api.AuthenticationHeaderInterceptor
-import com.savvasdalkitsis.librephotos.auth.api.AuthenticationService
-import com.savvasdalkitsis.librephotos.auth.api.TokenRefreshInterceptor
-import com.savvasdalkitsis.librephotos.auth.api.WebLoginInterceptor
+import com.savvasdalkitsis.librephotos.auth.service.AuthenticationHeaderInterceptor
+import com.savvasdalkitsis.librephotos.auth.service.AuthenticationService
+import com.savvasdalkitsis.librephotos.auth.service.TokenRefreshInterceptor
+import com.savvasdalkitsis.librephotos.auth.service.WebLoginInterceptor
 import com.savvasdalkitsis.librephotos.auth.network.DynamicDomainInterceptor
 import com.savvasdalkitsis.librephotos.auth.weblogin.WebkitCookieManager
 import com.savvasdalkitsis.librephotos.db.Database
 import com.savvasdalkitsis.librephotos.db.auth.TokenQueries
 import com.savvasdalkitsis.librephotos.network.module.OkHttpBuilder
-import com.squareup.moshi.JsonAdapter
-import com.squareup.moshi.Moshi
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

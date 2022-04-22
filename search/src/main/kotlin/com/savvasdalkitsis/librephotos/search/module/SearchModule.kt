@@ -3,7 +3,7 @@ package com.savvasdalkitsis.librephotos.search.module
 import com.savvasdalkitsis.librephotos.db.Database
 import com.savvasdalkitsis.librephotos.db.search.SearchQueries
 import com.savvasdalkitsis.librephotos.home.module.HomeModule.HomeNavigationTargetSearch
-import com.savvasdalkitsis.librephotos.search.api.SearchService
+import com.savvasdalkitsis.librephotos.search.service.SearchService
 import com.savvasdalkitsis.librephotos.search.navigation.SearchNavigationTarget
 import dagger.Module
 import dagger.Provides

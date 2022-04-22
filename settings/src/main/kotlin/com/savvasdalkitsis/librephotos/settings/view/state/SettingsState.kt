@@ -1,5 +1,7 @@
 package com.savvasdalkitsis.librephotos.settings.view.state
 
+import com.savvasdalkitsis.librephotos.userbadge.api.view.state.UserInformationState
+
 data class SettingsState(
     val isLoading: Boolean = true,
     val diskCacheMax: Int = 0,
@@ -7,4 +9,7 @@ data class SettingsState(
     val memCacheMax: Int = 0,
     val memCacheCurrent: Int = 0,
     val feedSyncFrequency: Int? = null,
+    val userInformationState: UserInformationState = UserInformationState(),
+    val showFullFeedSyncDialog: Boolean = false,
+    val fullSyncButtonEnabled: Boolean = false,
 )

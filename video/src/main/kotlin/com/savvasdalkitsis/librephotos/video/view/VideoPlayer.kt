@@ -11,14 +11,13 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
 import com.google.android.exoplayer2.MediaItem
 import com.google.android.exoplayer2.Player
 import com.google.android.exoplayer2.Player.STATE_READY
 import com.google.android.exoplayer2.ui.StyledPlayerView
-import com.savvasdalkitsis.librephotos.image.view.Image
+import com.savvasdalkitsis.librephotos.image.api.view.Image
 import com.savvasdalkitsis.librephotos.video.LocalExoPlayer
 import com.savvasdalkitsis.librephotos.video.R
 

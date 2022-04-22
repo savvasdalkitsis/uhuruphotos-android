@@ -17,7 +17,7 @@ import com.savvasdalkitsis.librephotos.feedpage.usecase.FeedPageUseCase
 import com.savvasdalkitsis.librephotos.feedpage.view.state.FeedPageState
 import com.savvasdalkitsis.librephotos.photos.model.Photo
 import com.savvasdalkitsis.librephotos.photos.usecase.PhotosUseCase
-import com.savvasdalkitsis.librephotos.userbadge.usecase.UserBadgeUseCase
+import com.savvasdalkitsis.librephotos.userbadge.api.UserBadgeUseCase
 import com.savvasdalkitsis.librephotos.viewmodel.Handler
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.*

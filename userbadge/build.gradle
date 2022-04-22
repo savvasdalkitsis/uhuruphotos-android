@@ -16,8 +16,9 @@ dependencies {
     implementation project(":worker")
     implementation project(":user")
     implementation project(":db")
-    implementation project(":image")
+    implementation project(":image-api")
     implementation project(":auth")
+    implementation project(":userbadge-api")
     implementation(
             libs.androidx.compose.material,
             libs.androidx.work,

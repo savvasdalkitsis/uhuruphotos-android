@@ -1,7 +1,7 @@
 package com.savvasdalkitsis.librephotos.albums.repository
 
-import com.savvasdalkitsis.librephotos.albums.api.AlbumsService
-import com.savvasdalkitsis.librephotos.albums.api.model.toAlbum
+import com.savvasdalkitsis.librephotos.albums.service.AlbumsService
+import com.savvasdalkitsis.librephotos.albums.service.model.toAlbum
 import com.savvasdalkitsis.librephotos.db.albums.AlbumsQueries
 import com.savvasdalkitsis.librephotos.db.albums.GetAlbums
 import com.savvasdalkitsis.librephotos.db.extensions.awaitSingle

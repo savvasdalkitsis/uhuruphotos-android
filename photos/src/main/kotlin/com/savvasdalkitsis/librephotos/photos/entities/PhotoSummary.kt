@@ -1,6 +1,6 @@
 package com.savvasdalkitsis.librephotos.photos.entities
 
-import com.savvasdalkitsis.librephotos.photos.api.model.PhotoSummaryItem
+import com.savvasdalkitsis.librephotos.photos.service.model.PhotoSummaryItem
 import com.savvasdalkitsis.librephotos.db.photos.PhotoSummary
 
 fun PhotoSummaryItem.toPhotoSummary(albumId: String) = PhotoSummary(

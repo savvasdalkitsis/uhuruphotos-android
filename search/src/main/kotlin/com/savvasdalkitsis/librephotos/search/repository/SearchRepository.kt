@@ -7,7 +7,7 @@ import com.savvasdalkitsis.librephotos.db.photos.PhotoSummary
 import com.savvasdalkitsis.librephotos.db.photos.PhotoSummaryQueries
 import com.savvasdalkitsis.librephotos.db.search.GetSearchResults
 import com.savvasdalkitsis.librephotos.db.search.SearchQueries
-import com.savvasdalkitsis.librephotos.search.api.SearchService
+import com.savvasdalkitsis.librephotos.search.service.SearchService
 import com.squareup.sqldelight.runtime.coroutines.asFlow
 import com.squareup.sqldelight.runtime.coroutines.mapToList
 import kotlinx.coroutines.flow.Flow

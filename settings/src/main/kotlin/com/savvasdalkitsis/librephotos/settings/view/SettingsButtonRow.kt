@@ -1,6 +1,5 @@
 package com.savvasdalkitsis.librephotos.settings.view
 
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -14,7 +13,7 @@ import androidx.compose.ui.unit.dp
 
 @Composable
 fun SettingsButtonRow(
-    text: String,
+    enabled: Boolean,
     buttonText: String,
     onClick: (() -> Unit),
 ) {
@@ -23,17 +22,14 @@ fun SettingsButtonRow(
             .height(64.dp)
             .fillMaxWidth(),
     ) {
-        Text(
-            modifier = Modifier
-                .padding(8.dp)
-                .align(Alignment.CenterStart),
-            text = text,
-        )
         Button(
             modifier = Modifier
                 .padding(8.dp)
-                .align(Alignment.CenterEnd),
-            onClick = onClick) {
+                .fillMaxWidth()
+                .align(Alignment.Center),
+            enabled = enabled,
+            onClick = onClick
+        ) {
             Text(buttonText)
         }
     }

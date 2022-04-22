@@ -8,7 +8,7 @@ import coil.decode.ImageDecoderDecoder
 import coil.decode.VideoFrameDecoder
 import coil.disk.DiskCache
 import coil.memory.MemoryCache
-import com.savvasdalkitsis.librephotos.auth.api.TokenRefreshInterceptor
+import com.savvasdalkitsis.librephotos.auth.service.TokenRefreshInterceptor
 import com.savvasdalkitsis.librephotos.auth.module.AuthModule
 import com.savvasdalkitsis.librephotos.settings.usecase.SettingsUseCase
 import dagger.Module

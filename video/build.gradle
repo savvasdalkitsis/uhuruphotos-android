@@ -10,7 +10,7 @@ android {
 dependencies {
 
     implementation project(":auth")
-    implementation project(":image")
+    implementation project(":image-api")
     implementation(
             libs.androidx.compose.foundation,
             libs.androidx.compose.material,

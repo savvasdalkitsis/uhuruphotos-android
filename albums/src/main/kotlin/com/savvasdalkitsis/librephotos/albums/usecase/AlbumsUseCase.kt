@@ -4,7 +4,7 @@ import com.savvasdalkitsis.librephotos.albums.model.Album
 import com.savvasdalkitsis.librephotos.albums.repository.AlbumsRepository
 import com.savvasdalkitsis.librephotos.albums.worker.AlbumWorkScheduler
 import com.savvasdalkitsis.librephotos.infrastructure.date.DateDisplayer
-import com.savvasdalkitsis.librephotos.photos.api.model.isVideo
+import com.savvasdalkitsis.librephotos.photos.service.model.isVideo
 import com.savvasdalkitsis.librephotos.photos.model.Photo
 import com.savvasdalkitsis.librephotos.photos.usecase.PhotosUseCase
 import kotlinx.coroutines.CoroutineScope

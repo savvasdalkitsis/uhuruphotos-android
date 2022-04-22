@@ -2,7 +2,7 @@ package com.savvasdalkitsis.librephotos.feedpage.view.state
 
 import com.savvasdalkitsis.librephotos.feed.view.state.FeedState
 import com.savvasdalkitsis.librephotos.photos.model.Photo
-import com.savvasdalkitsis.librephotos.userbadge.view.state.UserInformationState
+import com.savvasdalkitsis.librephotos.userbadge.api.view.state.UserInformationState
 
 data class FeedPageState(
     val feedState: FeedState = FeedState(),

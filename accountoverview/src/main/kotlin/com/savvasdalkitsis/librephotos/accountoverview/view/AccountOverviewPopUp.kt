@@ -18,7 +18,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.TransformOrigin
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Popup
-import com.savvasdalkitsis.librephotos.userbadge.view.state.UserInformationState
+import com.savvasdalkitsis.librephotos.userbadge.api.view.state.UserInformationState
 
 @Composable
 fun AccountOverviewPopUp(

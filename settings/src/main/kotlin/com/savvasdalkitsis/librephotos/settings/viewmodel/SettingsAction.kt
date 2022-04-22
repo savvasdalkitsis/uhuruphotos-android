@@ -11,4 +11,7 @@ sealed class SettingsAction {
     object NavigateBack : SettingsAction()
     object ClearDiskCache : SettingsAction()
     object ClearMemCache : SettingsAction()
+    object AskForFullFeedSync : SettingsAction()
+    object DismissFullFeedSyncDialog : SettingsAction()
+    object PerformFullFeedSync : SettingsAction()
 }

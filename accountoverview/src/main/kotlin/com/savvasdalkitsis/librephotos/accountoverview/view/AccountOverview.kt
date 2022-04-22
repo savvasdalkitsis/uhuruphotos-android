@@ -16,8 +16,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.savvasdalkitsis.librephotos.icons.R
 import com.savvasdalkitsis.librephotos.ui.view.ActionIcon
-import com.savvasdalkitsis.librephotos.userbadge.view.UserBadge
-import com.savvasdalkitsis.librephotos.userbadge.view.state.UserInformationState
+import com.savvasdalkitsis.librephotos.userbadge.api.view.UserBadge
+import com.savvasdalkitsis.librephotos.userbadge.api.view.state.UserInformationState
 
 @Composable
 fun AccountOverview(

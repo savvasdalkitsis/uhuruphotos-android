@@ -1,9 +1,9 @@
 package com.savvasdalkitsis.librephotos.auth.usecase
 
-import com.savvasdalkitsis.librephotos.auth.api.AuthenticationService
-import com.savvasdalkitsis.librephotos.auth.api.model.AuthenticationCredentials
-import com.savvasdalkitsis.librephotos.auth.api.model.AuthenticationObtainResponse
-import com.savvasdalkitsis.librephotos.auth.api.model.AuthenticationRefreshResponse
+import com.savvasdalkitsis.librephotos.auth.service.AuthenticationService
+import com.savvasdalkitsis.librephotos.auth.service.model.AuthenticationCredentials
+import com.savvasdalkitsis.librephotos.auth.service.model.AuthenticationObtainResponse
+import com.savvasdalkitsis.librephotos.auth.service.model.AuthenticationRefreshResponse
 import com.savvasdalkitsis.librephotos.auth.model.AuthStatus
 import com.savvasdalkitsis.librephotos.auth.model.AuthStatus.Authenticated
 import com.savvasdalkitsis.librephotos.auth.model.AuthStatus.Unauthenticated

@@ -1,0 +1,17 @@
+android {
+    buildFeatures {
+        compose true
+    }
+    composeOptions {
+        kotlinCompilerExtensionVersion compose_version
+    }
+}
+
+dependencies {
+
+    implementation(
+            libs.coil.compose,
+            libs.coil.gif,
+            libs.coil.video,
+    )
+}

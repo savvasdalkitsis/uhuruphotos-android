@@ -25,5 +25,13 @@ fun settingsReducer(): Reducer<SettingsState, SettingsMutation> = { state, mutat
             isLoading = false,
             feedSyncFrequency = mutation.frequency,
         )
+        is SettingsMutation.UserBadgeUpdate -> state.copy(
+            isLoading = false,
+            userInformationState = mutation.userInformationState,
+        )
+        SettingsMutation.HideFullFeedSyncDialog -> state.copy(showFullFeedSyncDialog = false)
+        SettingsMutation.ShowFullFeedSyncDialog -> state.copy(showFullFeedSyncDialog = true)
+        SettingsMutation.DisableFullSyncButton -> state.copy(fullSyncButtonEnabled = false)
+        SettingsMutation.EnableFullSyncButton -> state.copy(fullSyncButtonEnabled = true)
     }
 }

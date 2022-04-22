@@ -12,6 +12,7 @@ dependencies {
     implementation project(":auth")
     implementation project(":initializer")
     implementation project(":settings")
+    implementation project(":image-api")
     implementation(
             libs.coil.compose,
             libs.coil.gif,

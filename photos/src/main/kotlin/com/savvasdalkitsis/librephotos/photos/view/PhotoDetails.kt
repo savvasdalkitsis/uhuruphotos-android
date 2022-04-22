@@ -9,7 +9,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import com.radusalagean.infobarcompose.InfoBar
 import com.radusalagean.infobarcompose.InfoBarMessage
-import com.savvasdalkitsis.librephotos.image.view.Image
+import com.savvasdalkitsis.librephotos.image.api.view.Image
 import com.savvasdalkitsis.librephotos.photos.mvflow.PhotoAction
 import com.savvasdalkitsis.librephotos.photos.view.PhotoSheetStyle.BOTTOM
 import com.savvasdalkitsis.librephotos.photos.view.PhotoSheetStyle.SIDE

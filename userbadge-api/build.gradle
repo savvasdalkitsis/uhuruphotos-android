@@ -1,0 +1,20 @@
+android {
+    buildFeatures {
+        compose true
+    }
+    composeOptions {
+        kotlinCompilerExtensionVersion compose_version
+    }
+}
+
+dependencies {
+
+    implementation project(":icons")
+    implementation project(":image-api")
+    implementation project(":ui")
+    implementation(
+            libs.androidx.compose.material,
+            libs.androidx.work,
+            libs.hilt,
+    )
+}

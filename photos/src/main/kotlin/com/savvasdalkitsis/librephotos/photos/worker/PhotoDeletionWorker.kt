@@ -4,9 +4,7 @@ import android.content.Context
 import androidx.hilt.work.HiltWorker
 import androidx.work.CoroutineWorker
 import androidx.work.WorkerParameters
-import com.savvasdalkitsis.librephotos.photos.api.PhotosService
-import com.savvasdalkitsis.librephotos.photos.api.model.PhotoFavouriteRequest
-import com.savvasdalkitsis.librephotos.photos.api.model.toPhotoDetails
+import com.savvasdalkitsis.librephotos.photos.service.PhotosService
 import com.savvasdalkitsis.librephotos.photos.repository.PhotoRepository
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedInject

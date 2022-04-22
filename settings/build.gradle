@@ -13,11 +13,14 @@ dependencies {
     implementation project(":ui")
     implementation project(":initializer")
     implementation project(":toaster")
+    implementation project(":userbadge-api")
+    implementation project(":albums-api")
     implementation(
             libs.androidx.compose.foundation,
             libs.androidx.compose.foundation.layout,
             libs.androidx.compose.material,
             libs.androidx.datastore.preferences,
+            libs.androidx.work,
             libs.coil.base,
             libs.flowpreferences,
     )

@@ -18,7 +18,7 @@ import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import com.savvasdalkitsis.librephotos.icons.R
-import com.savvasdalkitsis.librephotos.image.view.Image
+import com.savvasdalkitsis.librephotos.image.api.view.Image
 import com.savvasdalkitsis.librephotos.infrastructure.extensions.toColor
 import com.savvasdalkitsis.librephotos.photos.model.Photo
 

@@ -1,7 +1,7 @@
 package com.savvasdalkitsis.librephotos.search.view.state
 
 import com.savvasdalkitsis.librephotos.feed.view.state.FeedDisplay
-import com.savvasdalkitsis.librephotos.userbadge.view.state.UserInformationState
+import com.savvasdalkitsis.librephotos.userbadge.api.view.state.UserInformationState
 
 data class SearchState(
     val query: String = "",
