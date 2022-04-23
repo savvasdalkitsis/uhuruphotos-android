@@ -13,7 +13,7 @@ import androidx.compose.ui.unit.dp
 
 @Composable
 fun SettingsButtonRow(
-    enabled: Boolean,
+    enabled: Boolean = true,
     buttonText: String,
     onClick: (() -> Unit),
 ) {

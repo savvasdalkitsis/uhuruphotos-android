@@ -1,5 +1,8 @@
 package com.savvasdalkitsis.librephotos.settings.viewmodel
 
+import androidx.work.NetworkType
+import com.savvasdalkitsis.librephotos.userbadge.api.view.state.UserInformationState
+
 sealed class SettingsMutation {
     object ShowFullFeedSyncDialog : SettingsMutation()
     object HideFullFeedSyncDialog : SettingsMutation()
@@ -11,5 +14,6 @@ sealed class SettingsMutation {
     data class DisplayDiskCacheCurrentUse(val current: Int): SettingsMutation()
     data class DisplayMemCacheCurrentUse(val current: Int): SettingsMutation()
     data class DisplayFeedSyncFrequency(val frequency: Int): SettingsMutation()
-    data class UserBadgeUpdate(val userInformationState: com.savvasdalkitsis.librephotos.userbadge.api.view.state.UserInformationState): SettingsMutation()
+    data class DisplayFullSyncNetworkRequirements(val networkType: NetworkType): SettingsMutation()
+    data class UserBadgeUpdate(val userInformationState: UserInformationState): SettingsMutation()
 }

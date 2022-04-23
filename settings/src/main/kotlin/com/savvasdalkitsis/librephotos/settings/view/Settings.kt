@@ -1,8 +1,8 @@
 package com.savvasdalkitsis.librephotos.settings.view
 
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.verticalScroll
+import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -13,6 +13,8 @@ import com.savvasdalkitsis.librephotos.settings.viewmodel.SettingsAction.*
 import com.savvasdalkitsis.librephotos.ui.view.BackNavButton
 import com.savvasdalkitsis.librephotos.ui.view.CommonScaffold
 import com.savvasdalkitsis.librephotos.ui.view.FullProgressBar
+import com.savvasdalkitsis.librephotos.ui.window.WindowSize
+import com.savvasdalkitsis.librephotos.ui.window.WindowSizeClass.*
 import com.savvasdalkitsis.librephotos.userbadge.api.view.UserBadge
 
 @Composable
@@ -32,15 +34,27 @@ fun Settings(
         if (state.isLoading) {
             FullProgressBar()
         } else {
-            Column(
+            val columns = when (WindowSize.LOCAL_WIDTH.current) {
+                COMPACT -> 1
+                MEDIUM -> 2
+                EXPANDED -> 3
+            }
+            LazyVerticalGrid(
                 modifier = Modifier
-                    .verticalScroll(rememberScrollState())
                     .padding(top = contentPadding.calculateTopPadding()),
-                verticalArrangement = Arrangement.spacedBy(12.dp)
+                verticalArrangement = Arrangement.spacedBy(12.dp),
+                horizontalArrangement = Arrangement.spacedBy(12.dp),
+                columns = GridCells.Fixed(columns),
             ) {
-                SettingsGroupDiskCache(state, action)
-                SettingsGroupMemoryCache(state, action)
-                SettingsGroupJobs(state, action)
+                item {
+                    SettingsGroupDiskCache(state, action)
+                }
+                item {
+                    SettingsGroupMemoryCache(state, action)
+                }
+                item {
+                    SettingsGroupJobs(state, action)
+                }
             }
         }
         if (state.showFullFeedSyncDialog) {

@@ -8,12 +8,10 @@ import javax.inject.Inject
 
 class AlbumsInitializer @Inject constructor(
     private val albumWorkScheduler: AlbumWorkScheduler,
-    private val settingsUseCase: SettingsUseCase,
 ): ApplicationCreated {
 
     override fun onAppCreated() {
         albumWorkScheduler.scheduleAlbumsRefreshPeriodic(
-            hoursInterval = settingsUseCase.getFeedSyncFrequency(),
             existingPeriodicWorkPolicy = KEEP
         )
     }

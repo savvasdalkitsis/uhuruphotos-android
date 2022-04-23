@@ -12,6 +12,7 @@ class WorkScheduler @Inject constructor(
         backoffPolicy: BackoffPolicy = BackoffPolicy.EXPONENTIAL,
         backoffDelay: Long = 1,
         backoffTimeUnit: TimeUnit = TimeUnit.MINUTES,
+        networkRequirement: NetworkType = NetworkType.CONNECTED,
         params: Data.Builder.() -> Data.Builder = { this },
     ) {
         workManager.enqueueUniqueWork(
@@ -20,6 +21,9 @@ class WorkScheduler @Inject constructor(
             OneTimeWorkRequestBuilder<W>()
                 .setInputData(params(Data.Builder()).build())
                 .setBackoffCriteria(backoffPolicy, backoffDelay, backoffTimeUnit)
+                .setConstraints(Constraints.Builder()
+                    .setRequiredNetworkType(networkRequirement)
+                    .build())
                 .setExpedited(OutOfQuotaPolicy.RUN_AS_NON_EXPEDITED_WORK_REQUEST)
                 .build(),
         )
@@ -34,6 +38,7 @@ class WorkScheduler @Inject constructor(
         backoffPolicy: BackoffPolicy = BackoffPolicy.EXPONENTIAL,
         backoffDelay: Long = 1,
         backoffTimeUnit: TimeUnit = TimeUnit.MINUTES,
+        networkRequirement: NetworkType = NetworkType.CONNECTED,
         existingPeriodicWorkPolicy: ExistingPeriodicWorkPolicy = ExistingPeriodicWorkPolicy.REPLACE,
     ) {
         workManager.enqueueUniquePeriodicWork(
@@ -42,6 +47,9 @@ class WorkScheduler @Inject constructor(
             PeriodicWorkRequestBuilder<W>(repeatInterval, repeatIntervalTimeUnit)
                 .setInitialDelay(initialDelayDuration, initialDelayTimeUnit)
                 .setBackoffCriteria(backoffPolicy, backoffDelay, backoffTimeUnit)
+                .setConstraints(Constraints.Builder()
+                    .setRequiredNetworkType(networkRequirement)
+                    .build())
                 .build(),
         )
     }

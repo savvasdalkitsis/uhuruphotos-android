@@ -33,6 +33,8 @@ internal class SettingsHandler @Inject constructor(
                 .map(::DisplayMemCacheMaxLimit),
             settingsUseCase.observeFeedSyncFrequency()
                 .map(::DisplayFeedSyncFrequency),
+            settingsUseCase.observeFullSyncNetworkRequirements()
+                .map(::DisplayFullSyncNetworkRequirements),
             cacheUseCase.observeDiskCacheCurrentUse()
                 .map(::DisplayDiskCacheCurrentUse),
             cacheUseCase.observeMemCacheCurrentUse()
@@ -66,16 +68,19 @@ internal class SettingsHandler @Inject constructor(
             settingsUseCase.setFeedSyncFrequency(action.frequency.toInt())
         }
         FinaliseFeedSyncFrequencyChange -> flow {
-            albumWorkScheduler.scheduleAlbumsRefreshPeriodic(
-                hoursInterval = settingsUseCase.getFeedSyncFrequency(),
-                existingPeriodicWorkPolicy = REPLACE
-            )
+            albumWorkScheduler.scheduleAlbumsRefreshPeriodic(REPLACE)
             effect(ShowMessage("Feed sync frequency changed"))
         }
         AskForFullFeedSync -> flowOf(ShowFullFeedSyncDialog)
         DismissFullFeedSyncDialog -> flowOf(HideFullFeedSyncDialog)
         PerformFullFeedSync -> flow {
             albumWorkScheduler.scheduleAlbumsRefreshNow(shallow = false)
+            emit(HideFullFeedSyncDialog)
+        }
+        is ChangeFullSyncNetworkRequirements -> flow {
+            settingsUseCase.setFullSyncNetworkRequirements(action.networkType)
+            albumWorkScheduler.scheduleAlbumsRefreshPeriodic(REPLACE)
+            effect(ShowMessage("Feed sync network requirement changed"))
         }
     }
 

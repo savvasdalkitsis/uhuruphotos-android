@@ -1,5 +1,6 @@
 package com.savvasdalkitsis.librephotos.settings.view.state
 
+import androidx.work.NetworkType
 import com.savvasdalkitsis.librephotos.userbadge.api.view.state.UserInformationState
 
 data class SettingsState(
@@ -12,4 +13,5 @@ data class SettingsState(
     val userInformationState: UserInformationState = UserInformationState(),
     val showFullFeedSyncDialog: Boolean = false,
     val fullSyncButtonEnabled: Boolean = false,
+    val fullSyncNetworkRequirement: NetworkType? = null,
 )

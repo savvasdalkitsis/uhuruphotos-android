@@ -1,5 +1,6 @@
 package com.savvasdalkitsis.librephotos.settings.usecase
 
+import androidx.work.NetworkType
 import com.fredporciuncula.flow.preferences.FlowSharedPreferences
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
@@ -11,14 +12,17 @@ class SettingsUseCase @Inject constructor(
     private val diskCacheSize = flowSharedPreferences.getInt("diskCacheSize", 500)
     private val memCacheSize = flowSharedPreferences.getInt("memCacheSize", 200)
     private val feedSyncFrequency = flowSharedPreferences.getInt("feedSyncFrequency", 12)
+    private val fullSyncNetworkRequirements = flowSharedPreferences.getEnum("fullSyncNetworkRequirements", NetworkType.NOT_ROAMING)
 
     fun getDiskCacheMaxLimit(): Int = diskCacheSize.get()
     fun getMemCacheMaxLimit(): Int = memCacheSize.get()
     fun getFeedSyncFrequency(): Int = feedSyncFrequency.get()
+    fun getFullSyncNetworkRequirements(): NetworkType = fullSyncNetworkRequirements.get()
 
     fun observeDiskCacheMaxLimit(): Flow<Int> = diskCacheSize.asFlow()
     fun observeMemCacheMaxLimit(): Flow<Int> = memCacheSize.asFlow()
     fun observeFeedSyncFrequency(): Flow<Int> = feedSyncFrequency.asFlow()
+    fun observeFullSyncNetworkRequirements(): Flow<NetworkType> = fullSyncNetworkRequirements.asFlow()
 
     suspend fun setDiskCacheMaxLimit(sizeInMb: Int) {
         diskCacheSize.setAndCommit(sizeInMb)
@@ -30,5 +34,9 @@ class SettingsUseCase @Inject constructor(
 
     suspend fun setFeedSyncFrequency(frequency: Int) {
         feedSyncFrequency.setAndCommit(frequency)
+    }
+
+    suspend fun setFullSyncNetworkRequirements(networkType: NetworkType) {
+        fullSyncNetworkRequirements.setAndCommit(networkType)
     }
 }

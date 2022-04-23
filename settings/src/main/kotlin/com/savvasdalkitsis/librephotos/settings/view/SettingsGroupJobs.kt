@@ -22,6 +22,8 @@ fun SettingsGroupJobs(
             onValueChangeFinished = { action(FinaliseFeedSyncFrequencyChange) }
         )
         Divider()
+        SettingsFullSyncNetworkRequirements(state, action)
+        Divider()
         SettingsButtonRow(
             enabled = state.fullSyncButtonEnabled,
             buttonText = "Perform full sync now"

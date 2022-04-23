@@ -8,7 +8,6 @@ interface AlbumWorkScheduler {
 
     fun scheduleAlbumsRefreshNow(shallow: Boolean)
     fun scheduleAlbumsRefreshPeriodic(
-        hoursInterval: Int,
         existingPeriodicWorkPolicy: ExistingPeriodicWorkPolicy
     )
     fun observeAlbumRefreshJobStatus(): Flow<WorkInfo.State>
