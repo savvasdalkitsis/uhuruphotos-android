@@ -59,25 +59,28 @@ fun AccountOverview(
                 icon = R.drawable.ic_edit,
             )
         }
-        TextButton(
+        Row(
             modifier = Modifier
-                .fillMaxWidth(),
-            onClick = onSettingsClicked
+                .fillMaxWidth()
         ) {
-            Icon(Icons.Default.Settings, contentDescription = null)
-            Text(modifier = Modifier.padding(start = 8.dp), text = "Settings")
-        }
-        OutlinedButton(
-            modifier = Modifier.align(End),
-            onClick = onLogoutClicked,
-        ) {
-            Icon(
-                modifier = Modifier.size(24.dp),
-                painter = painterResource(id = R.drawable.ic_logout),
-                contentDescription = null
-            )
-            Spacer(modifier = Modifier.width(8.dp))
-            Text(text = "Log out")
+            OutlinedButton(
+                onClick = onSettingsClicked
+            ) {
+                Icon(Icons.Default.Settings, contentDescription = null)
+                Spacer(modifier = Modifier.width(8.dp))
+                Text(text = "Settings")
+            }
+            Spacer(modifier = Modifier.weight(1f))
+            OutlinedButton(
+                onClick = onLogoutClicked,
+            ) {
+                Icon(
+                    painter = painterResource(id = R.drawable.ic_logout),
+                    contentDescription = null
+                )
+                Spacer(modifier = Modifier.width(8.dp))
+                Text(text = "Log out")
+            }
         }
     }
 }
