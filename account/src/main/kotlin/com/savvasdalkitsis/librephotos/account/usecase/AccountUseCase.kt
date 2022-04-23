@@ -6,7 +6,9 @@ import com.savvasdalkitsis.librephotos.db.extensions.crud
 import com.savvasdalkitsis.librephotos.db.search.SearchQueries
 import com.savvasdalkitsis.librephotos.db.user.UserQueries
 import com.savvasdalkitsis.librephotos.image.cache.ImageCacheController
+import com.savvasdalkitsis.librephotos.video.api.VideoCache
 import com.savvasdalkitsis.librephotos.worker.WorkScheduler
+import okhttp3.Cache
 import javax.inject.Inject
 
 class AccountUseCase @Inject constructor(
@@ -15,6 +17,8 @@ class AccountUseCase @Inject constructor(
     private val searchQueries: SearchQueries,
     private val tokenQueries: TokenQueries,
     private val imageCacheController: ImageCacheController,
+    @VideoCache
+    private val videoCache: Cache,
     private val workScheduler: WorkScheduler,
 ) {
 
@@ -26,6 +30,7 @@ class AccountUseCase @Inject constructor(
             userQueries.deleteUser()
             tokenQueries.removeAllTokens()
             imageCacheController.clear()
+            videoCache.evictAll()
         }
     }
 }

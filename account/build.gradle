@@ -3,7 +3,9 @@ dependencies {
     implementation project(":db")
     implementation project(":image")
     implementation project(":worker")
+    implementation project(":video-api")
     implementation(
+            libs.okhttp,
             libs.hilt,
     )
 }
