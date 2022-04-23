@@ -24,16 +24,20 @@ class AlbumWorkScheduler @Inject constructor(
     override fun scheduleAlbumsRefreshPeriodic(
         existingPeriodicWorkPolicy: ExistingPeriodicWorkPolicy
     ) {
-        workScheduler.schedulePeriodic<AlbumDownloadWorker>(
-            AlbumDownloadWorker.WORK_NAME,
-            repeatInterval = settingsUseCase.getFeedSyncFrequency().toLong(),
-            repeatIntervalTimeUnit = TimeUnit.HOURS,
-            initialDelayDuration = 1,
-            initialDelayTimeUnit = TimeUnit.HOURS,
-            existingPeriodicWorkPolicy = existingPeriodicWorkPolicy,
-            networkRequirement = settingsUseCase.getFullSyncNetworkRequirements(),
-            requiresCharging = settingsUseCase.getFullSyncRequiresCharging(),
-        )
+        if (settingsUseCase.getShouldPerformPeriodicFullSync()) {
+            workScheduler.schedulePeriodic<AlbumDownloadWorker>(
+                AlbumDownloadWorker.WORK_NAME,
+                repeatInterval = settingsUseCase.getFeedSyncFrequency().toLong(),
+                repeatIntervalTimeUnit = TimeUnit.HOURS,
+                initialDelayDuration = 1,
+                initialDelayTimeUnit = TimeUnit.HOURS,
+                existingPeriodicWorkPolicy = existingPeriodicWorkPolicy,
+                networkRequirement = settingsUseCase.getFullSyncNetworkRequirements(),
+                requiresCharging = settingsUseCase.getFullSyncRequiresCharging(),
+            )
+        } else {
+            workScheduler.workManager.cancelUniqueWork(AlbumDownloadWorker.WORK_NAME)
+        }
     }
 
     override fun observeAlbumRefreshJobStatus(): Flow<WorkInfo.State> =

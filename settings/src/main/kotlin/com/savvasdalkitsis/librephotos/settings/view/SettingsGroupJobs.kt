@@ -15,12 +15,19 @@ fun SettingsGroupJobs(
     SettingsGroup(title = "Jobs") {
         val days = 7
         val initialValue  = (state.feedSyncFrequency ?: 0).toFloat()
+        val upperLimit = days * 24f
         SettingsSliderRow(
-            text = { "Full photo feed sync frequency: ${it.toInt()} hour(s)" },
+            text = {
+                val frequency = when (it) {
+                    upperLimit -> "never"
+                    else -> "${it.toInt()} hour(s)"
+                }
+                "Full photo feed sync frequency: $frequency"
+            },
             initialValue = initialValue,
-            range = 1f..(days * 24f),
-            steps = days * 24,
-            onValueChanged = { action(FeedSyncFrequencyChanged(it)) }
+            range = 1f..upperLimit,
+            steps = upperLimit.toInt(),
+            onValueChanged = { action(FeedSyncFrequencyChanged(it, upperLimit)) }
         )
         Divider()
         SettingsCheckBox(

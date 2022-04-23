@@ -12,6 +12,7 @@ class SettingsUseCase @Inject constructor(
     private val diskCacheSize = flowSharedPreferences.getInt("diskCacheSize", 500)
     private val memCacheSize = flowSharedPreferences.getInt("memCacheSize", 200)
     private val feedSyncFrequency = flowSharedPreferences.getInt("feedSyncFrequency", 12)
+    private val shouldPerformPeriodicFeedSync = flowSharedPreferences.getBoolean("shouldPerformPeriodicFeedSync", true)
     private val fullSyncNetworkRequirements = flowSharedPreferences.getEnum("fullSyncNetworkRequirements", NetworkType.NOT_ROAMING)
     private val fullSyncRequiresCharging = flowSharedPreferences.getBoolean("fullSyncRequiresCharging", false)
 
@@ -20,6 +21,7 @@ class SettingsUseCase @Inject constructor(
     fun getFeedSyncFrequency(): Int = feedSyncFrequency.get()
     fun getFullSyncNetworkRequirements(): NetworkType = fullSyncNetworkRequirements.get()
     fun getFullSyncRequiresCharging(): Boolean = fullSyncRequiresCharging.get()
+    fun getShouldPerformPeriodicFullSync(): Boolean = shouldPerformPeriodicFeedSync.get()
 
     fun observeDiskCacheMaxLimit(): Flow<Int> = diskCacheSize.asFlow()
     fun observeMemCacheMaxLimit(): Flow<Int> = memCacheSize.asFlow()
@@ -45,5 +47,9 @@ class SettingsUseCase @Inject constructor(
 
     suspend fun setFullSyncRequiresCharging(requiresCharging: Boolean) {
         fullSyncRequiresCharging.setAndCommit(requiresCharging)
+    }
+
+    suspend fun setShouldPerformPeriodicFullSync(perform: Boolean) {
+        shouldPerformPeriodicFeedSync.setAndCommit(perform)
     }
 }

@@ -68,6 +68,7 @@ internal class SettingsHandler @Inject constructor(
         }
         is FeedSyncFrequencyChanged -> flow {
             settingsUseCase.setFeedSyncFrequency(action.frequency.toInt())
+            settingsUseCase.setShouldPerformPeriodicFullSync(action.frequency != action.upperLimit)
             albumWorkScheduler.scheduleAlbumsRefreshPeriodic(REPLACE)
             effect(ShowMessage("Feed sync frequency changed"))
         }

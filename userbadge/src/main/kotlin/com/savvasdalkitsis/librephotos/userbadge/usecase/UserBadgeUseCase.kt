@@ -29,8 +29,8 @@ class UserBadgeUseCase @Inject constructor(
         UserInformationState(
             avatarUrl = with(photosUseCase) { user.avatar?.toAbsoluteUrl() },
             syncState = when (status) {
-                BLOCKED, CANCELLED, FAILED -> BAD
-                ENQUEUED, SUCCEEDED -> GOOD
+                BLOCKED, FAILED -> BAD
+                CANCELLED, ENQUEUED, SUCCEEDED -> GOOD
                 RUNNING -> IN_PROGRESS
             },
             initials = user.firstName.initial() + user.lastName.initial(),
