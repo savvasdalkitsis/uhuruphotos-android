@@ -15,5 +15,6 @@ sealed class SettingsMutation {
     data class DisplayMemCacheCurrentUse(val current: Int): SettingsMutation()
     data class DisplayFeedSyncFrequency(val frequency: Int): SettingsMutation()
     data class DisplayFullSyncNetworkRequirements(val networkType: NetworkType): SettingsMutation()
+    data class DisplayFullSyncRequiresCharging(val requiresCharging: Boolean): SettingsMutation()
     data class UserBadgeUpdate(val userInformationState: UserInformationState): SettingsMutation()
 }

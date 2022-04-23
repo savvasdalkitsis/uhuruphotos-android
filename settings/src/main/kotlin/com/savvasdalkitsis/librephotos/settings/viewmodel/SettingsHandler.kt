@@ -35,6 +35,8 @@ internal class SettingsHandler @Inject constructor(
                 .map(::DisplayFeedSyncFrequency),
             settingsUseCase.observeFullSyncNetworkRequirements()
                 .map(::DisplayFullSyncNetworkRequirements),
+            settingsUseCase.observeFullSyncRequiresCharging()
+                .map(::DisplayFullSyncRequiresCharging),
             cacheUseCase.observeDiskCacheCurrentUse()
                 .map(::DisplayDiskCacheCurrentUse),
             cacheUseCase.observeMemCacheCurrentUse()
@@ -81,6 +83,11 @@ internal class SettingsHandler @Inject constructor(
             settingsUseCase.setFullSyncNetworkRequirements(action.networkType)
             albumWorkScheduler.scheduleAlbumsRefreshPeriodic(REPLACE)
             effect(ShowMessage("Feed sync network requirement changed"))
+        }
+        is ChangeFullSyncChargingRequirements -> flow {
+            settingsUseCase.setFullSyncRequiresCharging(action.requiredCharging)
+            albumWorkScheduler.scheduleAlbumsRefreshPeriodic(REPLACE)
+            effect(ShowMessage("Feed sync charging requirements changed"))
         }
     }
 

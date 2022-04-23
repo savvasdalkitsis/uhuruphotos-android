@@ -2,6 +2,7 @@ package com.savvasdalkitsis.librephotos.settings.view
 
 import androidx.compose.material.Divider
 import androidx.compose.runtime.Composable
+import com.savvasdalkitsis.librephotos.icons.R
 import com.savvasdalkitsis.librephotos.settings.view.state.SettingsState
 import com.savvasdalkitsis.librephotos.settings.viewmodel.SettingsAction
 import com.savvasdalkitsis.librephotos.settings.viewmodel.SettingsAction.*
@@ -21,6 +22,14 @@ fun SettingsGroupJobs(
             onValueChange = { action(ChangingFeedSyncFrequency(it)) },
             onValueChangeFinished = { action(FinaliseFeedSyncFrequencyChange) }
         )
+        Divider()
+        SettingsCheckBox(
+            text = "Requires charging",
+            icon = R.drawable.ic_power,
+            isChecked = state.fullSyncRequiresCharging,
+        ) { selected ->
+            action(ChangeFullSyncChargingRequirements(selected))
+        }
         Divider()
         SettingsFullSyncNetworkRequirements(state, action)
         Divider()

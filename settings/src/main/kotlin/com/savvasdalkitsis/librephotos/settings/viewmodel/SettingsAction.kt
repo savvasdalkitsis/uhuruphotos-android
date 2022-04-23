@@ -8,6 +8,8 @@ sealed class SettingsAction {
     data class ChangeMemCache(val sizeInMb: Float) : SettingsAction()
     data class ChangingFeedSyncFrequency(val frequency: Float) : SettingsAction()
     data class ChangeFullSyncNetworkRequirements(val networkType: NetworkType) : SettingsAction()
+    data class ChangeFullSyncChargingRequirements(val requiredCharging: Boolean) : SettingsAction()
+
     object FinaliseFeedSyncFrequencyChange : SettingsAction()
 
     object LoadSettings : SettingsAction()

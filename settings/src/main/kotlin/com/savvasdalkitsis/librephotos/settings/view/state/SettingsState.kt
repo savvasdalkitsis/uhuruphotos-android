@@ -14,4 +14,5 @@ data class SettingsState(
     val showFullFeedSyncDialog: Boolean = false,
     val fullSyncButtonEnabled: Boolean = false,
     val fullSyncNetworkRequirement: NetworkType? = null,
+    val fullSyncRequiresCharging: Boolean = false,
 )

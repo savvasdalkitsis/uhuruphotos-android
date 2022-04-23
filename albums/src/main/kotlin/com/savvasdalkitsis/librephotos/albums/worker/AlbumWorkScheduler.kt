@@ -32,6 +32,7 @@ class AlbumWorkScheduler @Inject constructor(
             initialDelayTimeUnit = TimeUnit.HOURS,
             existingPeriodicWorkPolicy = existingPeriodicWorkPolicy,
             networkRequirement = settingsUseCase.getFullSyncNetworkRequirements(),
+            requiresCharging = settingsUseCase.getFullSyncRequiresCharging(),
         )
     }
 

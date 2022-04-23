@@ -39,6 +39,7 @@ class WorkScheduler @Inject constructor(
         backoffDelay: Long = 1,
         backoffTimeUnit: TimeUnit = TimeUnit.MINUTES,
         networkRequirement: NetworkType = NetworkType.CONNECTED,
+        requiresCharging: Boolean = false,
         existingPeriodicWorkPolicy: ExistingPeriodicWorkPolicy = ExistingPeriodicWorkPolicy.REPLACE,
     ) {
         workManager.enqueueUniquePeriodicWork(
@@ -49,6 +50,7 @@ class WorkScheduler @Inject constructor(
                 .setBackoffCriteria(backoffPolicy, backoffDelay, backoffTimeUnit)
                 .setConstraints(Constraints.Builder()
                     .setRequiredNetworkType(networkRequirement)
+                    .setRequiresCharging(requiresCharging)
                     .build())
                 .build(),
         )

@@ -35,5 +35,6 @@ fun settingsReducer(): Reducer<SettingsState, SettingsMutation> = { state, mutat
         DisableFullSyncButton -> state.copy(fullSyncButtonEnabled = false)
         EnableFullSyncButton -> state.copy(fullSyncButtonEnabled = true)
         is DisplayFullSyncNetworkRequirements -> state.copy(fullSyncNetworkRequirement = mutation.networkType)
+        is DisplayFullSyncRequiresCharging -> state.copy(fullSyncRequiresCharging = mutation.requiresCharging)
     }
 }
