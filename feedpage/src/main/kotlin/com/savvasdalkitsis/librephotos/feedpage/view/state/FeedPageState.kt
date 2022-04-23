@@ -11,6 +11,7 @@ data class FeedPageState(
     val isRefreshing: Boolean = false,
     val showFeedDisplayChoice: Boolean = false,
     val showPhotoDeletionConfirmationDialog: Boolean = false,
+    val showLogOutConfirmation: Boolean = false,
 ) {
     val selectedPhotoCount: Int = feedState.albums.sumOf { album ->
         album.photos.count { photo ->

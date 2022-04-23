@@ -13,6 +13,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.google.accompanist.swiperefresh.SwipeRefresh
 import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
+import com.savvasdalkitsis.librephotos.account.view.LogOutConfirmationDialog
 import com.savvasdalkitsis.librephotos.accountoverview.view.AccountOverviewPopUp
 import com.savvasdalkitsis.librephotos.feed.view.Feed
 import com.savvasdalkitsis.librephotos.feedpage.mvflow.FeedPageAction
@@ -122,7 +123,7 @@ fun FeedPage(
             visible = state.showAccountOverview,
             userInformationState = state.userInformationState,
             onDismiss = { action(DismissAccountOverview) },
-            onLogoutClicked = { action(LogOut) },
+            onLogoutClicked = { action(AskToLogOut) },
             onEditServerClicked = { action(EditServer) },
             onSettingsClicked = { action(SettingsClick) }
         )
@@ -131,6 +132,12 @@ fun FeedPage(
                 photoCount = state.selectedPhotoCount,
                 onDismiss = { action(DismissSelectedPhotosDeletion) },
                 onDelete = { action(DeleteSelectedPhotos) }
+            )
+        }
+        if (state.showLogOutConfirmation) {
+            LogOutConfirmationDialog(
+                onDismiss = { action(DismissLogOutDialog) },
+                onLogOut = { action(LogOut) },
             )
         }
     }

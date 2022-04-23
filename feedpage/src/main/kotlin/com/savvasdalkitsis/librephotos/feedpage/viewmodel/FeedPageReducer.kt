@@ -20,6 +20,8 @@ fun feedPageReducer() : com.savvasdalkitsis.librephotos.viewmodel.Reducer<FeedPa
         ShowFeedDisplayChoice -> state.copy(showFeedDisplayChoice = true)
         ShowDeletionConfirmationDialog -> state.copy(showPhotoDeletionConfirmationDialog = true)
         HideDeletionConfirmationDialog -> state.copy(showPhotoDeletionConfirmationDialog = false)
+        HideLogOutConfirmation -> state.copy(showLogOutConfirmation = false)
+        ShowLogOutConfirmation -> state.copy(showLogOutConfirmation = true)
     }
 }
 

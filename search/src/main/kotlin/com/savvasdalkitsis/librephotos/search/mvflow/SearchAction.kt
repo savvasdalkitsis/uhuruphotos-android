@@ -6,6 +6,8 @@ sealed class SearchAction {
     object ClearSearch : SearchAction()
     object UserBadgePressed : SearchAction()
     object DismissAccountOverview : SearchAction()
+    object AskToLogOut : SearchAction()
+    object DismissLogOutDialog : SearchAction()
     object LogOut : SearchAction()
     object EditServer : SearchAction()
     object SettingsClick : SearchAction()

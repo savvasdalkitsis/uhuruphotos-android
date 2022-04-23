@@ -10,6 +10,8 @@ sealed class SearchMutation {
     object SearchStarted : SearchMutation()
     object ShowAccountOverview : SearchMutation()
     object HideAccountOverview : SearchMutation()
+    object ShowLogOutConfirmation : SearchMutation()
+    object HideLogOutConfirmation : SearchMutation()
     data class ChangeDisplay(val feedDisplay: FeedDisplay) : SearchMutation()
     data class QueryChanged(val query: String) : SearchMutation()
     data class FocusChanged(val focused: Boolean) : SearchMutation()

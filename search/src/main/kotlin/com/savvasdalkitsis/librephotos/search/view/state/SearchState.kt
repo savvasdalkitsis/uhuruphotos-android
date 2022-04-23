@@ -9,5 +9,6 @@ data class SearchState(
     val searchResults: SearchResults = SearchResults.Idle,
     val userInformationState: UserInformationState = UserInformationState(),
     val showAccountOverview: Boolean = false,
+    val showLogOutConfirmation: Boolean = false,
     val feedDisplay: FeedDisplay = FeedDisplay.default,
 )

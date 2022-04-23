@@ -54,6 +54,8 @@ class FeedPageHandler @Inject constructor(
         )
         UserBadgePressed -> flowOf(ShowAccountOverview)
         DismissAccountOverview -> flowOf(HideAccountOverview)
+        AskToLogOut -> flowOf(ShowLogOutConfirmation)
+        DismissLogOutDialog -> flowOf(HideLogOutConfirmation)
         LogOut -> flow {
             accountUseCase.logOut()
             effect(ReloadApp)

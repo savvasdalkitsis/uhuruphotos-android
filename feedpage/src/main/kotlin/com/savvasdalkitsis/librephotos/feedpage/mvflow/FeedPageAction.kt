@@ -17,6 +17,8 @@ sealed class FeedPageAction {
     object LoadFeed : FeedPageAction()
     object UserBadgePressed : FeedPageAction()
     object DismissAccountOverview : FeedPageAction()
+    object AskToLogOut : FeedPageAction()
+    object DismissLogOutDialog : FeedPageAction()
     object LogOut : FeedPageAction()
     object RefreshAlbums : FeedPageAction()
     object ShowFeedDisplayChoice : FeedPageAction()

@@ -9,6 +9,8 @@ sealed class FeedPageMutation {
     object FinishedLoading : FeedPageMutation()
     object ShowAccountOverview : FeedPageMutation()
     object HideAccountOverview : FeedPageMutation()
+    object ShowLogOutConfirmation : FeedPageMutation()
+    object HideLogOutConfirmation : FeedPageMutation()
     object StartRefreshing : FeedPageMutation()
     object StopRefreshing : FeedPageMutation()
     object ShowFeedDisplayChoice : FeedPageMutation()

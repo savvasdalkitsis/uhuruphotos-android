@@ -21,5 +21,7 @@ fun searchReducer() : Reducer<SearchState, SearchMutation> = { state, mutation -
         SearchMutation.HideAccountOverview -> state.copy(showAccountOverview = false)
         SearchMutation.ShowAccountOverview -> state.copy(showAccountOverview = true)
         is SearchMutation.ChangeDisplay -> state.copy(feedDisplay = mutation.feedDisplay)
+        SearchMutation.HideLogOutConfirmation -> state.copy(showLogOutConfirmation = false)
+        SearchMutation.ShowLogOutConfirmation -> state.copy(showLogOutConfirmation = true)
     }
 }

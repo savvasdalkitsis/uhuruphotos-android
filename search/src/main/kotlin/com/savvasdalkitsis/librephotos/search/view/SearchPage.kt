@@ -2,6 +2,7 @@ package com.savvasdalkitsis.librephotos.search.view
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import com.savvasdalkitsis.librephotos.account.view.LogOutConfirmationDialog
 import com.savvasdalkitsis.librephotos.accountoverview.view.AccountOverviewPopUp
 import com.savvasdalkitsis.librephotos.home.view.HomeScaffold
 import com.savvasdalkitsis.librephotos.infrastructure.extensions.blurIf
@@ -38,9 +39,15 @@ fun SearchPage(
             visible = state.showAccountOverview,
             userInformationState = state.userInformationState,
             onDismiss = { action(DismissAccountOverview) },
-            onLogoutClicked = { action(LogOut) },
+            onLogoutClicked = { action(AskToLogOut) },
             onEditServerClicked = { action(EditServer) },
             onSettingsClicked = { action(SettingsClick)}
         )
+        if (state.showLogOutConfirmation) {
+            LogOutConfirmationDialog(
+                onDismiss = { action(DismissLogOutDialog) },
+                onLogOut = { action(LogOut) },
+            )
+        }
     }
 }
