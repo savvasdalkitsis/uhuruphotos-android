@@ -6,23 +6,23 @@ import com.savvasdalkitsis.librephotos.settings.view.state.SettingsState
 import com.savvasdalkitsis.librephotos.settings.viewmodel.SettingsAction
 
 @Composable
-fun SettingsGroupDiskCache(
+fun SettingsGroupImageDiskCache(
     state: SettingsState,
     action: (SettingsAction) -> Unit
 ) {
-    SettingsGroup(title = "Disk cache") {
+    SettingsGroup(title = "Image Disk cache") {
         SettingsTextButtonRow(
-            text = "Currently used: ${state.diskCacheCurrent}mb",
+            text = "Currently used: ${state.imageDiskCacheCurrent}mb",
             buttonText = "Clear",
-            onClick = { action(SettingsAction.ClearDiskCache) }
+            onClick = { action(SettingsAction.ClearImageDiskCache) }
         )
         Divider()
         SettingsSliderRow(
             text = { "Max limit: ${it.toInt()}mb" },
             subtext = "(changes will take effect after restart)",
-            initialValue = state.diskCacheMax.toFloat(),
+            initialValue = state.imageDiskCacheMax.toFloat(),
             range = 10f..2000f,
-            onValueChanged = { action(SettingsAction.ChangeDiskCache(it)) }
+            onValueChanged = { action(SettingsAction.ChangeImageDiskCache(it)) }
         )
     }
 }

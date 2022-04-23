@@ -27,20 +27,24 @@ internal class SettingsHandler @Inject constructor(
         effect: suspend (SettingsEffect) -> Unit
     ): Flow<SettingsMutation> = when (action) {
         LoadSettings -> merge(
-            settingsUseCase.observeDiskCacheMaxLimit()
+            settingsUseCase.observeImageDiskCacheMaxLimit()
                 .map(::DisplayDiskCacheMaxLimit),
-            settingsUseCase.observeMemCacheMaxLimit()
+            settingsUseCase.observeImageMemCacheMaxLimit()
                 .map(::DisplayMemCacheMaxLimit),
+            settingsUseCase.observeVideoDiskCacheMaxLimit()
+                .map(::DisplayVideoDiskCacheMaxLimit),
             settingsUseCase.observeFeedSyncFrequency()
                 .map(::DisplayFeedSyncFrequency),
             settingsUseCase.observeFullSyncNetworkRequirements()
                 .map(::DisplayFullSyncNetworkRequirements),
             settingsUseCase.observeFullSyncRequiresCharging()
                 .map(::DisplayFullSyncRequiresCharging),
-            cacheUseCase.observeDiskCacheCurrentUse()
-                .map(::DisplayDiskCacheCurrentUse),
-            cacheUseCase.observeMemCacheCurrentUse()
-                .map(::DisplayMemCacheCurrentUse),
+            cacheUseCase.observeImageDiskCacheCurrentUse()
+                .map(::DisplayImageDiskCacheCurrentUse),
+            cacheUseCase.observeImageMemCacheCurrentUse()
+                .map(::DisplayImageMemCacheCurrentUse),
+            cacheUseCase.observeVideoDiskCacheCurrentUse()
+                .map(::DisplayVideoDiskCacheCurrentUse),
             userBadgeUseCase.getUserBadgeState()
                 .map(::UserBadgeUpdate),
             albumWorkScheduler.observeAlbumRefreshJobStatus()
@@ -54,17 +58,23 @@ internal class SettingsHandler @Inject constructor(
         NavigateBack -> flow {
             effect(SettingsEffect.NavigateBack)
         }
-        is ChangeDiskCache -> flow {
-            settingsUseCase.setDiskCacheMaxLimit(action.sizeInMb.toInt())
+        is ChangeImageDiskCache -> flow {
+            settingsUseCase.setImageDiskCacheMaxLimit(action.sizeInMb.toInt())
         }
-        ClearDiskCache -> flow {
-            cacheUseCase.clearDiskCache()
+        ClearImageDiskCache -> flow {
+            cacheUseCase.clearImageDiskCache()
         }
-        is ChangeMemCache -> flow {
-            settingsUseCase.setMemCacheMaxLimit(action.sizeInMb.toInt())
+        is ChangeImageMemCache -> flow {
+            settingsUseCase.setImageMemCacheMaxLimit(action.sizeInMb.toInt())
         }
-        ClearMemCache -> flow {
-            cacheUseCase.clearMemCache()
+        ClearImageMemCache -> flow {
+            cacheUseCase.clearImageMemCache()
+        }
+        is ChangeVideoDiskCache -> flow {
+            settingsUseCase.setVideoDiskCacheMaxLimit(action.sizeInMb.toInt())
+        }
+        ClearVideoDiskCache -> flow {
+            cacheUseCase.clearVideoDiskCache()
         }
         is FeedSyncFrequencyChanged -> flow {
             settingsUseCase.setFeedSyncFrequency(action.frequency.toInt())

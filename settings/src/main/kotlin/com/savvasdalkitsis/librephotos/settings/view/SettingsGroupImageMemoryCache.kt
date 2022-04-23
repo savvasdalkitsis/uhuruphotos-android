@@ -6,23 +6,23 @@ import com.savvasdalkitsis.librephotos.settings.view.state.SettingsState
 import com.savvasdalkitsis.librephotos.settings.viewmodel.SettingsAction
 
 @Composable
-fun SettingsGroupMemoryCache(
+fun SettingsGroupImageMemoryCache(
     state: SettingsState,
     action: (SettingsAction) -> Unit
 ) {
-    SettingsGroup(title = "Memory cache") {
+    SettingsGroup(title = "Image Memory cache") {
         SettingsTextButtonRow(
-            text = "Currently used: ${state.memCacheCurrent}mb",
+            text = "Currently used: ${state.imageMemCacheCurrent}mb",
             buttonText = "Clear",
-            onClick = { action(SettingsAction.ClearMemCache) }
+            onClick = { action(SettingsAction.ClearImageMemCache) }
         )
         Divider()
         SettingsSliderRow(
             text = { "Max limit: ${it.toInt()}mb" },
             subtext = "(changes will take effect after restart)",
-            initialValue = state.memCacheMax.toFloat(),
+            initialValue = state.imageMemCacheMax.toFloat(),
             range = 10f..2000f,
-            onValueChanged = { action(SettingsAction.ChangeMemCache(it)) }
+            onValueChanged = { action(SettingsAction.ChangeImageMemCache(it)) }
         )
     }
 }

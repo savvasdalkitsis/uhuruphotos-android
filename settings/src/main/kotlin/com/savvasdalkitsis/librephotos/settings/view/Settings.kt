@@ -47,10 +47,13 @@ fun Settings(
                 columns = GridCells.Fixed(columns),
             ) {
                 item {
-                    SettingsGroupDiskCache(state, action)
+                    SettingsGroupImageDiskCache(state, action)
                 }
                 item {
-                    SettingsGroupMemoryCache(state, action)
+                    SettingsGroupImageMemoryCache(state, action)
+                }
+                item {
+                    SettingsGroupVideoDiskCache(state, action)
                 }
                 item {
                     SettingsGroupJobs(state, action)

@@ -4,8 +4,9 @@ import androidx.work.NetworkType
 
 sealed class SettingsAction {
 
-    data class ChangeDiskCache(val sizeInMb: Float) : SettingsAction()
-    data class ChangeMemCache(val sizeInMb: Float) : SettingsAction()
+    data class ChangeImageDiskCache(val sizeInMb: Float) : SettingsAction()
+    data class ChangeVideoDiskCache(val sizeInMb: Float) : SettingsAction()
+    data class ChangeImageMemCache(val sizeInMb: Float) : SettingsAction()
     data class ChangeFullSyncNetworkRequirements(val networkType: NetworkType) : SettingsAction()
     data class ChangeFullSyncChargingRequirements(val requiredCharging: Boolean) : SettingsAction()
 
@@ -13,8 +14,9 @@ sealed class SettingsAction {
 
     object LoadSettings : SettingsAction()
     object NavigateBack : SettingsAction()
-    object ClearDiskCache : SettingsAction()
-    object ClearMemCache : SettingsAction()
+    object ClearImageDiskCache : SettingsAction()
+    object ClearImageMemCache : SettingsAction()
+    object ClearVideoDiskCache : SettingsAction()
     object AskForFullFeedSync : SettingsAction()
     object DismissFullFeedSyncDialog : SettingsAction()
     object PerformFullFeedSync : SettingsAction()

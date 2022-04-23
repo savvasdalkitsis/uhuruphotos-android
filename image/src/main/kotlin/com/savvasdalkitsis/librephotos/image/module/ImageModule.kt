@@ -29,7 +29,7 @@ class ImageModule {
         settingsUseCase: SettingsUseCase,
         @ApplicationContext context: Context,
     ): MemoryCache = MemoryCache.Builder(context)
-        .maxSizeBytes(settingsUseCase.getMemCacheMaxLimit() * 1024 * 1024)
+        .maxSizeBytes(settingsUseCase.getImageMemCacheMaxLimit() * 1024 * 1024)
         .build()
 
     @Provides
@@ -39,7 +39,7 @@ class ImageModule {
         settingsUseCase: SettingsUseCase,
     ): DiskCache = DiskCache.Builder()
         .directory(context.cacheDir.resolve("image_cache"))
-        .maxSizeBytes(settingsUseCase.getDiskCacheMaxLimit() * 1024 * 1024L)
+        .maxSizeBytes(settingsUseCase.getImageDiskCacheMaxLimit() * 1024 * 1024L)
         .build()
 
     @Provides

@@ -16,6 +16,7 @@ dependencies {
     implementation project(":userbadge-api")
     implementation project(":albums-api")
     implementation project(":icons")
+    implementation project(":video-api")
     implementation(
             libs.androidx.compose.foundation,
             libs.androidx.compose.foundation.layout,

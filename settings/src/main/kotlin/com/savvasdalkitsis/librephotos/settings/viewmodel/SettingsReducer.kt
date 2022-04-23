@@ -8,19 +8,19 @@ fun settingsReducer(): Reducer<SettingsState, SettingsMutation> = { state, mutat
     when (mutation) {
         is DisplayDiskCacheMaxLimit -> state.copy(
             isLoading = false,
-            diskCacheMax = mutation.limit,
+            imageDiskCacheMax = mutation.limit,
         )
-        is DisplayDiskCacheCurrentUse -> state.copy(
+        is DisplayImageDiskCacheCurrentUse -> state.copy(
             isLoading = false,
-            diskCacheCurrent = mutation.current,
+            imageDiskCacheCurrent = mutation.current,
         )
         is DisplayMemCacheMaxLimit -> state.copy(
             isLoading = false,
-            memCacheMax = mutation.limit,
+            imageMemCacheMax = mutation.limit,
         )
-        is DisplayMemCacheCurrentUse -> state.copy(
+        is DisplayImageMemCacheCurrentUse -> state.copy(
             isLoading = false,
-            memCacheCurrent = mutation.current,
+            imageMemCacheCurrent = mutation.current,
         )
         is DisplayFeedSyncFrequency -> state.copy(
             isLoading = false,
@@ -36,5 +36,7 @@ fun settingsReducer(): Reducer<SettingsState, SettingsMutation> = { state, mutat
         EnableFullSyncButton -> state.copy(fullSyncButtonEnabled = true)
         is DisplayFullSyncNetworkRequirements -> state.copy(fullSyncNetworkRequirement = mutation.networkType)
         is DisplayFullSyncRequiresCharging -> state.copy(fullSyncRequiresCharging = mutation.requiresCharging)
+        is DisplayVideoDiskCacheCurrentUse -> state.copy(videoDiskCacheCurrent = mutation.current)
+        is DisplayVideoDiskCacheMaxLimit -> state.copy(videoDiskCacheMax = mutation.limit)
     }
 }

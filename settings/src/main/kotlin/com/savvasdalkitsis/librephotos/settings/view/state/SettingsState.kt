@@ -5,10 +5,12 @@ import com.savvasdalkitsis.librephotos.userbadge.api.view.state.UserInformationS
 
 data class SettingsState(
     val isLoading: Boolean = true,
-    val diskCacheMax: Int = 0,
-    val diskCacheCurrent: Int = 0,
-    val memCacheMax: Int = 0,
-    val memCacheCurrent: Int = 0,
+    val imageDiskCacheMax: Int = 0,
+    val imageDiskCacheCurrent: Int = 0,
+    val videoDiskCacheMax: Int = 0,
+    val videoDiskCacheCurrent: Int = 0,
+    val imageMemCacheMax: Int = 0,
+    val imageMemCacheCurrent: Int = 0,
     val feedSyncFrequency: Int? = null,
     val userInformationState: UserInformationState = UserInformationState(),
     val showFullFeedSyncDialog: Boolean = false,

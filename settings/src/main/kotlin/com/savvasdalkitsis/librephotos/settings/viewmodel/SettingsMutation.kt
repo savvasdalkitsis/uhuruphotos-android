@@ -11,8 +11,10 @@ sealed class SettingsMutation {
 
     data class DisplayDiskCacheMaxLimit(val limit: Int) : SettingsMutation()
     data class DisplayMemCacheMaxLimit(val limit: Int) : SettingsMutation()
-    data class DisplayDiskCacheCurrentUse(val current: Int): SettingsMutation()
-    data class DisplayMemCacheCurrentUse(val current: Int): SettingsMutation()
+    data class DisplayVideoDiskCacheMaxLimit(val limit: Int) : SettingsMutation()
+    data class DisplayImageDiskCacheCurrentUse(val current: Int): SettingsMutation()
+    data class DisplayImageMemCacheCurrentUse(val current: Int): SettingsMutation()
+    data class DisplayVideoDiskCacheCurrentUse(val current: Int): SettingsMutation()
     data class DisplayFeedSyncFrequency(val frequency: Int): SettingsMutation()
     data class DisplayFullSyncNetworkRequirements(val networkType: NetworkType): SettingsMutation()
     data class DisplayFullSyncRequiresCharging(val requiresCharging: Boolean): SettingsMutation()
