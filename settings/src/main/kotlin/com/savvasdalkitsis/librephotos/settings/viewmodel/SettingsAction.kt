@@ -6,11 +6,10 @@ sealed class SettingsAction {
 
     data class ChangeDiskCache(val sizeInMb: Float) : SettingsAction()
     data class ChangeMemCache(val sizeInMb: Float) : SettingsAction()
-    data class ChangingFeedSyncFrequency(val frequency: Float) : SettingsAction()
     data class ChangeFullSyncNetworkRequirements(val networkType: NetworkType) : SettingsAction()
     data class ChangeFullSyncChargingRequirements(val requiredCharging: Boolean) : SettingsAction()
 
-    object FinaliseFeedSyncFrequencyChange : SettingsAction()
+    data class FeedSyncFrequencyChanged(val frequency: Float) : SettingsAction()
 
     object LoadSettings : SettingsAction()
     object NavigateBack : SettingsAction()

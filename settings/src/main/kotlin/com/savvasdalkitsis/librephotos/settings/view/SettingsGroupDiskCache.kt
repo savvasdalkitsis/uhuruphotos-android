@@ -18,11 +18,11 @@ fun SettingsGroupDiskCache(
         )
         Divider()
         SettingsSliderRow(
-            text = "Max limit: ${state.diskCacheMax}mb",
+            text = { "Max limit: ${it.toInt()}mb" },
             subtext = "(changes will take effect after restart)",
-            value = state.diskCacheMax.toFloat(),
+            initialValue = state.diskCacheMax.toFloat(),
             range = 10f..2000f,
-            onValueChange = { action(SettingsAction.ChangeDiskCache(it)) }
+            onValueChanged = { action(SettingsAction.ChangeDiskCache(it)) }
         )
     }
 }

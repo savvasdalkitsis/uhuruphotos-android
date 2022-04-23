@@ -18,11 +18,11 @@ fun SettingsGroupMemoryCache(
         )
         Divider()
         SettingsSliderRow(
-            text = "Max limit: ${state.memCacheMax}mb",
+            text = { "Max limit: ${it.toInt()}mb" },
             subtext = "(changes will take effect after restart)",
-            value = state.memCacheMax.toFloat(),
+            initialValue = state.memCacheMax.toFloat(),
             range = 10f..2000f,
-            onValueChange = { action(SettingsAction.ChangeMemCache(it)) }
+            onValueChanged = { action(SettingsAction.ChangeMemCache(it)) }
         )
     }
 }

@@ -8,19 +8,18 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Slider
 import androidx.compose.material.Text
-import androidx.compose.runtime.Composable
+import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 
 @Composable
 fun SettingsSliderRow(
-    text: String,
+    text: (Float) -> String,
     subtext: String? = null,
-    value: Float?,
+    initialValue: Float,
     range: ClosedFloatingPointRange<Float>,
     steps: Int = 0,
-    onValueChange: (Float) -> Unit,
-    onValueChangeFinished: () -> Unit = {},
+    onValueChanged: (Float) -> Unit = {},
 ) {
     Column(
         modifier = Modifier
@@ -28,16 +27,16 @@ fun SettingsSliderRow(
             .fillMaxWidth()
             .padding(8.dp),
     ) {
-        Text(text)
+        var sliderValue by remember { mutableStateOf(initialValue) }
+        Text(text(sliderValue))
         Slider(
-            enabled = value != null,
             modifier = Modifier
                 .fillMaxWidth(),
-            value = value ?: range.start,
+            value = sliderValue,
             valueRange = range,
             steps = steps,
-            onValueChange = onValueChange,
-            onValueChangeFinished = onValueChangeFinished,
+            onValueChange = { sliderValue = it },
+            onValueChangeFinished = { onValueChanged(sliderValue) },
         )
         if (subtext != null) {
             Text(subtext, style = MaterialTheme.typography.subtitle2)
