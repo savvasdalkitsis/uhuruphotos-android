@@ -2,6 +2,7 @@ package com.savvasdalkitsis.uhuruphotos.feedpage.view.state
 
 import com.savvasdalkitsis.uhuruphotos.feed.view.state.FeedState
 import com.savvasdalkitsis.uhuruphotos.photos.model.Photo
+import com.savvasdalkitsis.uhuruphotos.photos.model.SelectionMode
 import com.savvasdalkitsis.uhuruphotos.userbadge.api.view.state.UserInformationState
 
 data class FeedPageState(
@@ -15,13 +16,13 @@ data class FeedPageState(
 ) {
     val selectedPhotoCount: Int = feedState.albums.sumOf { album ->
         album.photos.count { photo ->
-            photo.isSelected
+            photo.selectionMode == SelectionMode.SELECTED
         }
     }
     val hasSelection = selectedPhotoCount > 0
     val selectedPhotos: List<Photo> = feedState.albums.flatMap { album ->
         album.photos.filter { photo ->
-            photo.isSelected
+            photo.selectionMode == SelectionMode.SELECTED
         }
     }
     val shouldShowShareIcon: Boolean = selectedPhotos.let { selected ->

@@ -8,5 +8,9 @@ data class Photo(
     val isFavourite: Boolean = false,
     val ratio: Float = 1f,
     val isVideo: Boolean = false,
-    val isSelected: Boolean = false,
+    val selectionMode: SelectionMode = SelectionMode.UNDEFINED,
 )
+
+enum class SelectionMode {
+    UNDEFINED, SELECTED, UNSELECTED
+}

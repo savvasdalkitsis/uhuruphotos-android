@@ -16,6 +16,7 @@ import com.savvasdalkitsis.uhuruphotos.feedpage.mvflow.FeedPageMutation.*
 import com.savvasdalkitsis.uhuruphotos.feedpage.usecase.FeedPageUseCase
 import com.savvasdalkitsis.uhuruphotos.feedpage.view.state.FeedPageState
 import com.savvasdalkitsis.uhuruphotos.photos.model.Photo
+import com.savvasdalkitsis.uhuruphotos.photos.model.SelectionMode
 import com.savvasdalkitsis.uhuruphotos.photos.usecase.PhotosUseCase
 import com.savvasdalkitsis.uhuruphotos.userbadge.api.UserBadgeUseCase
 import com.savvasdalkitsis.uhuruphotos.viewmodel.Handler
@@ -71,7 +72,7 @@ class FeedPageHandler @Inject constructor(
                 state.selectedPhotoCount == 0 -> effect(with(action) {
                     OpenPhotoDetails(photo.id, center, scale, photo.isVideo)
                 })
-                action.photo.isSelected -> {
+                action.photo.selectionMode == SelectionMode.SELECTED -> {
                     effect(Vibrate)
                     action.photo.deselect()
                 }
@@ -101,7 +102,7 @@ class FeedPageHandler @Inject constructor(
         is AlbumSelectionClicked -> flow<FeedPageMutation> {
             val photos = action.album.photos
             effect(Vibrate)
-            if (photos.all { it.isSelected }) {
+            if (photos.all { it.selectionMode == SelectionMode.SELECTED }) {
                 photos.forEach { it.deselect() }
             } else {
                 photos.forEach { it.select() }
@@ -136,9 +137,15 @@ class FeedPageHandler @Inject constructor(
         selectionList.select(id)
     }
 
-    private fun List<Album>.selectPhotos(ids: Set<String>): List<Album> = map { album ->
-        album.copy(photos = album.photos.map { photo ->
-            photo.copy(isSelected = photo.id in ids)
-        })
+    private fun List<Album>.selectPhotos(ids: Set<String>): List<Album> = when {
+        ids.isNotEmpty() -> map { album ->
+            album.copy(photos = album.photos.map { photo ->
+                photo.copy(selectionMode = when (photo.id) {
+                    in ids -> SelectionMode.SELECTED
+                    else -> SelectionMode.UNSELECTED
+                })
+            })
+        }
+        else -> this
     }
 }

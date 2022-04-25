@@ -1,14 +1,17 @@
 package com.savvasdalkitsis.uhuruphotos.feed.view
 
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.Animatable
 import androidx.compose.foundation.background
 import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.Icon
 import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.scale
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
@@ -22,6 +25,8 @@ import com.savvasdalkitsis.uhuruphotos.icons.R
 import com.savvasdalkitsis.uhuruphotos.image.api.view.Image
 import com.savvasdalkitsis.uhuruphotos.infrastructure.extensions.toColor
 import com.savvasdalkitsis.uhuruphotos.photos.model.Photo
+import com.savvasdalkitsis.uhuruphotos.photos.model.SelectionMode
+import com.savvasdalkitsis.uhuruphotos.ui.theme.CustomColors
 
 @Composable
 fun PhotoThumbnail(
@@ -41,10 +46,11 @@ fun PhotoThumbnail(
         modifier = modifier
             .aspectRatio(ratio)
             .padding(1.dp)
-            .background(if (photo.isSelected)
-                MaterialTheme.colors.primary
-            else
-                photo.fallbackColor.toColor()
+            .background(
+                if (photo.selectionMode == SelectionMode.SELECTED)
+                    Color.LightGray
+                else
+                    photo.fallbackColor.toColor()
             )
             .combinedClickable(
                 onClick = { onPhotoSelected(photo, relativeCenter, relativeScale) },
@@ -89,11 +95,35 @@ fun PhotoThumbnail(
                 )
             }
         }
+        AnimatedVisibility(visible = photo.selectionMode != SelectionMode.UNDEFINED) {
+            Icon(
+                modifier = Modifier
+                    .size(24.dp)
+                    .align(Alignment.TopStart)
+                    .padding(2.dp)
+                    .clip(CircleShape)
+                    .background(if (photo.selectionMode == SelectionMode.SELECTED)
+                        Color.White
+                    else
+                        Color.Transparent
+                    ),
+                painter = painterResource(id = if (photo.selectionMode == SelectionMode.SELECTED)
+                    R.drawable.ic_check_circle
+                else
+                    R.drawable.ic_outline_unselected
+                ),
+                tint = if (photo.selectionMode == SelectionMode.SELECTED)
+                    CustomColors.selected
+                else
+                    Color.White,
+                contentDescription = null
+            )
+        }
     }
 
-    LaunchedEffect(photo.id, photo.isSelected) {
-        if (photo.isSelected) {
-            scale.animateTo(0.8f)
+    LaunchedEffect(photo.id, photo.selectionMode) {
+        if (photo.selectionMode == SelectionMode.SELECTED) {
+            scale.animateTo(0.85f)
         } else {
             scale.animateTo(1f)
         }

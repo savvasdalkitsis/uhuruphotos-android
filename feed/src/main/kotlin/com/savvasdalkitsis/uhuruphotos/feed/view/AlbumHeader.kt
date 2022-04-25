@@ -12,6 +12,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.savvasdalkitsis.uhuruphotos.albums.model.Album
 import com.savvasdalkitsis.uhuruphotos.icons.R
+import com.savvasdalkitsis.uhuruphotos.photos.model.SelectionMode
 import com.savvasdalkitsis.uhuruphotos.ui.view.ActionIcon
 
 @Composable
@@ -29,7 +30,7 @@ fun AlbumHeader(
             ActionIcon(
                 onClick = onSelectionHeaderClicked,
                 icon = when {
-                    album.photos.any { !it.isSelected } -> R.drawable.ic_check_circle
+                    album.photos.any { it.selectionMode == SelectionMode.UNSELECTED } -> R.drawable.ic_check_circle
                     else -> R.drawable.ic_clear
                 }
             )
