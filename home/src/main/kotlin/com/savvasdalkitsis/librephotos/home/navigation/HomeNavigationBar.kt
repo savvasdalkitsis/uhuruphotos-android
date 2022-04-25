@@ -46,6 +46,7 @@ fun HomeNavigationBar(
     when (homeNavigationStyle()) {
         BOTTOM_BAR -> {
             BottomNavigation(
+                elevation = 0.dp,
                 backgroundColor = Color.Transparent
             ) {
                 Items(currentDestination, navController, feedDisplay, feedNavigationName, searchNavigationName, onReselected, rowScope = this)
