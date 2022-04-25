@@ -25,9 +25,9 @@ fun SearchPage(
         navController = controllersProvider.navController!!,
         userInformationState = state.userInformationState,
         feedDisplay = state.feedDisplay,
-        userBadgePressed = { action(UserBadgePressed) },
         feedNavigationName = feedNavigationName,
         searchNavigationName = searchNavigationName,
+        userBadgePressed = { action(UserBadgePressed) },
     ) { contentPadding ->
         Search(
             state = state,

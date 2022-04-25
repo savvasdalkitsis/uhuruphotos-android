@@ -23,13 +23,13 @@ fun Settings(
     action: (SettingsAction) -> Unit,
 ) {
     CommonScaffold(
-        navigationIcon = { BackNavButton {
-            action(NavigateBack)
-        }},
+        title = { Text(text = "Settings") },
         actionBarContent = {
             UserBadge(state = state.userInformationState)
         },
-        title = { Text(text = "Settings") }
+        navigationIcon = { BackNavButton {
+            action(NavigateBack)
+        }}
     ) { contentPadding ->
         if (state.isLoading) {
             FullProgressBar()

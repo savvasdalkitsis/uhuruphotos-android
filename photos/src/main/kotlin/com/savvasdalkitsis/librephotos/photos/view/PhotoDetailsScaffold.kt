@@ -2,7 +2,6 @@ package com.savvasdalkitsis.librephotos.photos.view
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.MutableState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import com.savvasdalkitsis.librephotos.photos.mvflow.PhotoAction
@@ -23,22 +22,22 @@ internal fun PhotoDetailsScaffold(
     CommonScaffold(
         modifier = Modifier
             .adjustingSheetSize(sheetSize),
-        title = {},
-        toolbarColor = Color.Transparent,
-        bottomBarColor = Color.Transparent,
-        topBarDisplayed = state.showUI,
-        bottomBarDisplayed = state.showUI,
-        navigationIcon = {
-            BackNavButton { action(PhotoAction.NavigateBack) }
-        },
-        actionBarContent = {
-            PhotoDetailsActionBar(state, action)
-        },
+        title = { },
         bottomBarContent = {
             val style = LocalPhotoSheetStyle.current
             AnimatedVisibility(visible = style == BOTTOM || state.infoSheetHidden) {
                 PhotoDetailsBottomActionBar(state, action)
             }
+        },
+        actionBarContent = {
+            PhotoDetailsActionBar(state, action)
+        },
+        toolbarColor = { Color.Transparent },
+        bottomBarColor = { Color.Transparent },
+        topBarDisplayed = state.showUI,
+        bottomBarDisplayed = state.showUI,
+        navigationIcon = {
+            BackNavButton { action(PhotoAction.NavigateBack) }
         },
     ) { contentPadding ->
         when {

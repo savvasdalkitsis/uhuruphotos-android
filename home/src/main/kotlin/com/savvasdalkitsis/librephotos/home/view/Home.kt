@@ -14,13 +14,12 @@ fun Home(
 ) {
     HomeScaffold(
         navController = controllersProvider.navController!!,
-        content = {
-            if (state.isLoading) {
-                FullProgressBar()
-            }
-        },
         feedNavigationName = feedNavigationName,
         searchNavigationName = searchNavigationName,
-    )
+    ) {
+        if (state.isLoading) {
+            FullProgressBar()
+        }
+    }
 }
 

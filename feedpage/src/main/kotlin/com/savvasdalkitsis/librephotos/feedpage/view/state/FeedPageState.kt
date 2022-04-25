@@ -18,6 +18,7 @@ data class FeedPageState(
             photo.isSelected
         }
     }
+    val hasSelection = selectedPhotoCount > 0
     val selectedPhotos: List<Photo> = feedState.albums.flatMap { album ->
         album.photos.filter { photo ->
             photo.isSelected

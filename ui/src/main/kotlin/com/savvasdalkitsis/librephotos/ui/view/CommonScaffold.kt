@@ -1,11 +1,12 @@
 package com.savvasdalkitsis.librephotos.ui.view
 
-import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.animation.fadeIn
-import androidx.compose.animation.fadeOut
+import androidx.compose.animation.*
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
-import androidx.compose.material.*
+import androidx.compose.material.MaterialTheme
+import androidx.compose.material.Surface
+import androidx.compose.material.Text
+import androidx.compose.material.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -18,12 +19,12 @@ fun CommonScaffold(
     modifier: Modifier = Modifier,
     title: @Composable () -> Unit = { Text("LibrePhotos") },
     bottomBarContent: @Composable () -> Unit = {},
-    actionBarContent: @Composable RowScope.() -> Unit = {},
-    toolbarColor: Color = MaterialTheme.colors.background.copy(alpha = 0.8f),
-    bottomBarColor: Color = MaterialTheme.colors.background.copy(alpha = 0.8f),
+    actionBarContent: @Composable() (RowScope.() -> Unit) = {},
+    toolbarColor: @Composable () -> Color = { MaterialTheme.colors.background.copy(alpha = 0.8f) },
+    bottomBarColor: @Composable () -> Color = { MaterialTheme.colors.background.copy(alpha = 0.8f) },
     topBarDisplayed: Boolean = true,
     bottomBarDisplayed: Boolean = true,
-    navigationIcon: @Composable (() -> Unit)? = null,
+    navigationIcon: @Composable() (() -> Unit)? = null,
     content: @Composable (PaddingValues) -> Unit
 ) {
     Scaffold(
@@ -32,12 +33,12 @@ fun CommonScaffold(
         bottomBar = {
             AnimatedVisibility(
                 visible = bottomBarDisplayed,
-                enter = fadeIn(),
-                exit = fadeOut(),
+                enter = fadeIn() + slideInVertically(initialOffsetY = { it } ),
+                exit = fadeOut() + slideOutVertically(targetOffsetY = { it }),
             ) {
                 Column(
                     Modifier
-                        .background(bottomBarColor)
+                        .background(bottomBarColor())
                 ) {
                     bottomBarContent()
                     Spacer(
@@ -67,11 +68,11 @@ fun CommonScaffold(
                                 ).calculateTopPadding()
                             )
                             .fillMaxWidth()
-                            .background(toolbarColor)
+                            .background(toolbarColor())
                     )
                     TopAppBar(
                         title = title,
-                        backgroundColor = toolbarColor,
+                        backgroundColor = toolbarColor(),
                         elevation = 0.dp,
                         navigationIcon = navigationIcon,
                         actions = {

@@ -1,15 +1,13 @@
 package com.savvasdalkitsis.librephotos.home.view
 
-import androidx.compose.animation.animateColorAsState
-import androidx.compose.animation.core.LinearEasing
-import androidx.compose.animation.core.tween
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.slideInVertically
+import androidx.compose.animation.slideOutVertically
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.RowScope
-import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import com.savvasdalkitsis.librephotos.feed.view.state.FeedDisplay
@@ -32,24 +30,14 @@ fun HomeScaffold(
     searchNavigationName: String,
     selectionMode: Boolean = false,
     userBadgePressed: () -> Unit = {},
-    actionBarContent: @Composable RowScope.() -> Unit = {},
+    actionBarContent: @Composable() (RowScope.() -> Unit) = {},
     onReselected: () -> Unit = {},
     content: @Composable (PaddingValues) -> Unit,
 ) {
-    val selectedBackground by animateColorAsState(
-        when {
-            selectionMode -> MaterialTheme.colors.primary
-            else -> MaterialTheme.colors.background
-        }.copy(alpha = 0.8f),
-        animationSpec = tween(
-            durationMillis = 200,
-            delayMillis = 100,
-            easing = LinearEasing
-        ))
     CommonScaffold(
         modifier = modifier,
         title = title,
-        toolbarColor = selectedBackground,
+        bottomBarDisplayed = !selectionMode,
         bottomBarContent = {
             if (homeNavigationStyle() == BOTTOM_BAR) {
                 HomeNavigationBar(
@@ -74,13 +62,15 @@ fun HomeScaffold(
         when (homeNavigationStyle()) {
             BOTTOM_BAR -> content(contentPadding)
             NAVIGATION_RAIL -> Row {
-                HomeNavigationBar(
-                    contentPadding = contentPadding,
-                    feedDisplay = feedDisplay,
-                    navController = navController,
-                    feedNavigationName = feedNavigationName,
-                    searchNavigationName = searchNavigationName,
-                )
+                AnimatedVisibility(visible = !selectionMode) {
+                    HomeNavigationBar(
+                        contentPadding = contentPadding,
+                        feedDisplay = feedDisplay,
+                        navController = navController,
+                        feedNavigationName = feedNavigationName,
+                        searchNavigationName = searchNavigationName,
+                    )
+                }
                 content(contentPadding)
             }
         }

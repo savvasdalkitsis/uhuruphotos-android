@@ -45,8 +45,8 @@ fun FeedPage(
                 horizontalArrangement = Arrangement.spacedBy(12.dp),
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                Text("LibrePhotos")
-                AnimatedVisibility(visible = state.selectedPhotoCount > 0) {
+                Text(text = "LibrePhotos")
+                AnimatedVisibility(visible = state.hasSelection) {
                     OutlinedButton(
                         modifier = Modifier
                             .heightIn(max = 48.dp),
@@ -67,24 +67,18 @@ fun FeedPage(
                 }
             }
         },
+        selectionMode = state.hasSelection,
         navController = controllersProvider.navController!!,
         userInformationState = state.userInformationState,
         feedDisplay = state.feedState.feedDisplay,
         feedNavigationName = feedNavigationName,
         searchNavigationName = searchNavigationName,
-        selectionMode = state.selectedPhotoCount > 0,
         userBadgePressed = { action(UserBadgePressed) },
-        onReselected = {
-            coroutineScope.launch {
-                listState.animateScrollToItem(0, 0)
-                gridState.animateScrollToItem(0, 0)
-            }
-        },
         actionBarContent = {
             AnimatedVisibility(visible = state.shouldShowShareIcon) {
                 ActionIcon(onClick = { action(ShareSelectedPhotos) }, icon = R.drawable.ic_share)
             }
-            AnimatedVisibility(visible = state.selectedPhotoCount > 0) {
+            AnimatedVisibility(visible = state.hasSelection) {
                 ActionIcon(onClick = { action(AskForSelectedPhotosDeletion) }, icon = R.drawable.ic_delete)
             }
             FeedDisplayActionButton(
@@ -95,6 +89,12 @@ fun FeedPage(
                 currentFeedDisplay = state.feedState.feedDisplay
             )
         },
+        onReselected = {
+            coroutineScope.launch {
+                listState.animateScrollToItem(0, 0)
+                gridState.animateScrollToItem(0, 0)
+            }
+        },
     ) { contentPadding ->
         SwipeRefresh(
             indicatorPadding = contentPadding,
@@ -104,7 +104,7 @@ fun FeedPage(
             Feed(
                 contentPadding,
                 state.feedState,
-                showSelectionHeader = state.selectedPhotoCount > 0,
+                showSelectionHeader = state.hasSelection,
                 listState = listState,
                 gridState = gridState,
                 onPhotoSelected = { photo, center, scale ->
