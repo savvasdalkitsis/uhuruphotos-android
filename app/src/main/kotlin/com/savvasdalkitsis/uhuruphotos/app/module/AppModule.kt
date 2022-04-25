@@ -1,0 +1,25 @@
+package com.savvasdalkitsis.uhuruphotos.app.module
+
+import android.content.ClipboardManager
+import android.content.Context
+import androidx.preference.PreferenceManager
+import com.fredporciuncula.flow.preferences.FlowSharedPreferences
+import dagger.Module
+import dagger.Provides
+import dagger.hilt.InstallIn
+import dagger.hilt.android.qualifiers.ApplicationContext
+import dagger.hilt.components.SingletonComponent
+
+@Module
+@InstallIn(SingletonComponent::class)
+class AppModule {
+
+    @Provides
+    fun preferences(@ApplicationContext context: Context): FlowSharedPreferences =
+        FlowSharedPreferences(PreferenceManager.getDefaultSharedPreferences(context))
+
+    @Provides
+    fun clipboardManager(@ApplicationContext context: Context): ClipboardManager =
+        context.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
+
+}

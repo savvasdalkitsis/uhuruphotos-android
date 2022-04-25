@@ -12,7 +12,7 @@ android {
     }
 
     defaultConfig {
-        applicationId "com.savvasdalkitsis.librephotos"
+        applicationId "com.savvasdalkitsis.uhuruphotos"
         minSdk 23
         targetSdk 31
         versionCode 1

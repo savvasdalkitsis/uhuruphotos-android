@@ -10,6 +10,7 @@ android {
 dependencies {
 
     implementation project(":db")
+    implementation project(":icons")
     implementation(
             libs.accompanist.insets,
             libs.accompanist.systemui,

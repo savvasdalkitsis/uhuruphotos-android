@@ -15,7 +15,7 @@ dependencyResolutionManagement {
         maven { url 'https://jitpack.io' }
     }
 }
-rootProject.name = "librephotos-android"
+rootProject.name = "uhuruphotos-android"
 include ':app'
 include ':db'
 include ':server'

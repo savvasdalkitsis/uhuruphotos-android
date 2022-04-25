@@ -1,0 +1,18 @@
+package com.savvasdalkitsis.uhuruphotos.search.mvflow
+
+sealed class SearchAction {
+
+    object Initialise : SearchAction()
+    object ClearSearch : SearchAction()
+    object UserBadgePressed : SearchAction()
+    object DismissAccountOverview : SearchAction()
+    object AskToLogOut : SearchAction()
+    object DismissLogOutDialog : SearchAction()
+    object LogOut : SearchAction()
+    object EditServer : SearchAction()
+    object SettingsClick : SearchAction()
+
+    data class ChangeQuery(val query: String) : SearchAction()
+    data class SearchFor(val query: String) : SearchAction()
+    data class ChangeFocus(val focused: Boolean) : SearchAction()
+}
