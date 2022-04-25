@@ -11,6 +11,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.scale
 import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.layout.boundsInWindow
 import androidx.compose.ui.layout.onGloballyPositioned
@@ -72,6 +73,7 @@ fun PhotoThumbnail(
                         .size(48.dp)
                         .align(Alignment.Center),
                     painter = painterResource(id = R.drawable.ic_play_filled),
+                    tint = Color.White,
                     contentDescription = null
                 )
             }
@@ -82,6 +84,7 @@ fun PhotoThumbnail(
                         .align(Alignment.TopEnd)
                         .padding(2.dp),
                     painter = painterResource(id = R.drawable.ic_favourite),
+                    tint = Color.White,
                     contentDescription = null
                 )
             }
