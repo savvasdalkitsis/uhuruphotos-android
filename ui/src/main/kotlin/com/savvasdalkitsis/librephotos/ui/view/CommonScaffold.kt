@@ -48,7 +48,6 @@ fun CommonScaffold(
                                 ).calculateBottomPadding()
                             )
                             .fillMaxWidth()
-                            .background(bottomBarColor)
                     )
                 }
             }

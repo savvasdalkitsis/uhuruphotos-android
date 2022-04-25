@@ -6,6 +6,7 @@ import com.savvasdalkitsis.librephotos.photos.mvflow.PhotoAction
 import com.savvasdalkitsis.librephotos.photos.view.PhotoSheetStyle.BOTTOM
 import com.savvasdalkitsis.librephotos.photos.view.PhotoSheetStyle.SIDE
 import com.savvasdalkitsis.librephotos.photos.view.state.PhotoState
+import com.savvasdalkitsis.librephotos.ui.theme.AppTheme
 import com.savvasdalkitsis.librephotos.ui.view.zoom.rememberZoomableState
 import com.savvasdalkitsis.librephotos.ui.window.WindowSize
 import com.savvasdalkitsis.librephotos.ui.window.WindowSizeClass.EXPANDED

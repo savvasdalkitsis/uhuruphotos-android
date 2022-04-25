@@ -25,6 +25,7 @@ class PhotoNavigationTarget @Inject constructor(
         navigationTarget<PhotoState, PhotoEffect, PhotoAction, PhotoViewModel>(
             name = name,
             effects = effectsHandler,
+            darkTheme = { true },
             enterTransition = {
                 slideIn(initialOffset = { fullSize ->
                     targetState.center.offsetFrom(fullSize)

@@ -12,8 +12,10 @@ dependencies {
     api project(":viewmodel")
     implementation project(":log")
     implementation project(":toaster")
+    implementation project(":ui")
     implementation(
             libs.accompanist.systemui,
+            libs.androidx.compose.foundation,
     )
     api(
             libs.accompanist.navigation,

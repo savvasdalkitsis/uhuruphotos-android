@@ -15,18 +15,17 @@ import com.savvasdalkitsis.librephotos.ui.window.WindowSize
 import com.savvasdalkitsis.librephotos.ui.window.windowSizeClass
 
 private val DarkColorPalette = darkColors(
-    primary = Purple200,
-    primaryVariant = Purple700,
-    secondary = Teal200,
+    primary = Color.White,
+    primaryVariant = Color.White,
+    secondary = Color.White,
     background = Color.Black,
     surface = Color.Black,
 )
 
 private val LightColorPalette = lightColors(
-    primary = Purple500,
-    primaryVariant = Purple700,
-    secondary = Teal200,
-    onSecondary = Color.Gray,
+    primary = Color.Black,
+    primaryVariant = Color.Black,
+    secondary = Color.Black,
     background = Color.White,
     surface = Color.White,
 
@@ -45,35 +44,29 @@ object CustomColors {
 }
 
 @Composable
-fun Activity.AppTheme(
+fun AppTheme(
+    darkTheme: Boolean = isSystemInDarkTheme(),
     content: @Composable () -> Unit
 ) {
-    val colors = if (isSystemInDarkTheme()) {
+    val colors = if (darkTheme) {
         DarkColorPalette
     } else {
         LightColorPalette
     }
 
-    val (width, height) = windowSizeClass()
-    val systemUiController = rememberSystemUiController()
-    CompositionLocalProvider(
-        WindowSize.LOCAL_WIDTH provides width,
-        WindowSize.LOCAL_HEIGHT provides height,
-        LocalSystemUiController provides systemUiController,
+    MaterialTheme(
+        colors = colors,
+        typography = Typography,
+        shapes = Shapes,
     ) {
-        MaterialTheme(
-            colors = colors,
-            typography = Typography,
-            shapes = Shapes,
-        ) {
-            val useDarkIcons = MaterialTheme.colors.isLight
-            SideEffect {
-                systemUiController.setSystemBarsColor(
-                    color = Color.Transparent,
-                    darkIcons = useDarkIcons
-                )
-            }
-            content()
+        val isLight = MaterialTheme.colors.isLight
+        val systemUiController = LocalSystemUiController.current
+        SideEffect {
+            systemUiController.setSystemBarsColor(
+                color = Color.Transparent,
+                darkIcons = isLight
+            )
         }
+        content()
     }
 }

@@ -3,12 +3,14 @@ package com.savvasdalkitsis.librephotos.navigation
 import androidx.compose.animation.AnimatedContentScope
 import androidx.compose.animation.EnterTransition
 import androidx.compose.animation.ExitTransition
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.runtime.*
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.lifecycle.ViewModel
 import androidx.navigation.NavBackStackEntry
 import androidx.navigation.NavGraphBuilder
 import com.google.accompanist.navigation.animation.composable
+import com.savvasdalkitsis.librephotos.ui.theme.AppTheme
 import com.savvasdalkitsis.librephotos.viewmodel.ActionReceiverHost
 import com.savvasdalkitsis.librephotos.viewmodel.EffectHandler
 import kotlinx.coroutines.*
@@ -18,6 +20,7 @@ fun <S : Any, E : Any, A : Any, VM> NavGraphBuilder.navigationTarget(
     name: String,
     enterTransition: (AnimatedContentScope<NavBackStackEntry>.() -> EnterTransition?)? = null,
     exitTransition: (AnimatedContentScope<NavBackStackEntry>.() -> ExitTransition?)? = null,
+    darkTheme: @Composable () -> Boolean = { isSystemInDarkTheme() },
     effects: EffectHandler<E>,
     initializer: (NavBackStackEntry, (A) -> Unit) -> Unit = { _, _ -> },
     createModel: @Composable () -> VM,
@@ -37,7 +40,9 @@ fun <S : Any, E : Any, A : Any, VM> NavGraphBuilder.navigationTarget(
         }
 
         val state by model.actionReceiver.state.collectAsState()
-        content(state, action)
+        AppTheme(darkTheme = darkTheme()) {
+            content(state, action)
+        }
 
         val keyboard = LocalSoftwareKeyboardController.current
         LaunchedEffect(Unit) {
