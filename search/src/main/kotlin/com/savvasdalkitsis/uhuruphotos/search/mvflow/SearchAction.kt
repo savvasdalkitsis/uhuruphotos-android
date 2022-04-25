@@ -1,5 +1,8 @@
 package com.savvasdalkitsis.uhuruphotos.search.mvflow
 
+import androidx.compose.ui.geometry.Offset
+import com.savvasdalkitsis.uhuruphotos.photos.model.Photo
+
 sealed class SearchAction {
 
     object Initialise : SearchAction()
@@ -15,4 +18,5 @@ sealed class SearchAction {
     data class ChangeQuery(val query: String) : SearchAction()
     data class SearchFor(val query: String) : SearchAction()
     data class ChangeFocus(val focused: Boolean) : SearchAction()
+    data class SelectedPhoto(val photo: Photo, val center: Offset, val scale: Float) : SearchAction()
 }

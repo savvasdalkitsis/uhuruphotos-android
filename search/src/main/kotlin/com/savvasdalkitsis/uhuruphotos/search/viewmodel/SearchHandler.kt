@@ -76,6 +76,9 @@ class SearchHandler @Inject constructor(
             emit(HideAccountOverview)
             effect(NavigateToSettings)
         }
+        is SelectedPhoto -> flow {
+            effect(OpenPhotoDetails(action.photo.id, action.center, action.scale, action.photo.isVideo))
+        }
     }
 
 }

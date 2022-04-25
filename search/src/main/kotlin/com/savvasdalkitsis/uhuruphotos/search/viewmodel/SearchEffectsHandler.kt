@@ -2,6 +2,7 @@ package com.savvasdalkitsis.uhuruphotos.search.viewmodel
 
 import com.savvasdalkitsis.uhuruphotos.home.navigation.HomeNavigationTarget
 import com.savvasdalkitsis.uhuruphotos.navigation.ControllersProvider
+import com.savvasdalkitsis.uhuruphotos.photos.navigation.PhotoNavigationTarget
 import com.savvasdalkitsis.uhuruphotos.search.mvflow.SearchEffect
 import com.savvasdalkitsis.uhuruphotos.search.mvflow.SearchEffect.*
 import com.savvasdalkitsis.uhuruphotos.server.navigation.ServerNavigationTarget
@@ -27,6 +28,9 @@ class SearchEffectsHandler @Inject constructor(
             ServerNavigationTarget.name(auto = false)
         )
         NavigateToSettings -> navigateTo(SettingsNavigationTarget.name)
+        is OpenPhotoDetails -> navigateTo(
+            PhotoNavigationTarget.name(effect.id, effect.center, effect.scale, effect.isVideo)
+        )
     }
 
     private fun navigateTo(target: String) {

@@ -22,6 +22,7 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import com.savvasdalkitsis.uhuruphotos.feed.view.Feed
 import com.savvasdalkitsis.uhuruphotos.feed.view.state.FeedState
+import com.savvasdalkitsis.uhuruphotos.feedpage.mvflow.FeedPageAction
 import com.savvasdalkitsis.uhuruphotos.infrastructure.extensions.copy
 import com.savvasdalkitsis.uhuruphotos.navigation.ControllersProvider
 import com.savvasdalkitsis.uhuruphotos.search.mvflow.SearchAction
@@ -86,6 +87,9 @@ import com.savvasdalkitsis.uhuruphotos.ui.view.FullProgressBar
             SearchResults.Searching -> FullProgressBar()
             is SearchResults.Found -> Feed(
                 contentPadding = contentPadding.copy(top = 0.dp),
+                onPhotoSelected = { photo, center, scale ->
+                    action(SelectedPhoto(photo, center, scale))
+                },
                 state = FeedState(isLoading = false, state.searchResults.albums),
             )
         }
