@@ -8,7 +8,6 @@ import com.savvasdalkitsis.librephotos.feedpage.view.state.FeedPageState
 import com.savvasdalkitsis.librephotos.viewmodel.ActionReceiver
 import com.savvasdalkitsis.librephotos.viewmodel.ActionReceiverHost
 import dagger.hilt.android.lifecycle.HiltViewModel
-import org.orbitmvi.orbit.viewmodel.container
 import javax.inject.Inject
 
 @HiltViewModel
@@ -17,11 +16,9 @@ class FeedPageViewModel @Inject constructor(
 ) : ViewModel(),
     ActionReceiverHost<FeedPageState, FeedPageEffect, FeedPageAction, FeedPageMutation> {
 
-    override val initialState = FeedPageState()
-
     override val actionReceiver = ActionReceiver(
         feedPageHandler,
         feedPageReducer(),
-        container(initialState)
+        FeedPageState(),
     )
 }

@@ -48,7 +48,6 @@ moshi = 'com.squareup.moshi:moshi-kotlin:1.13.0'
 okhttp = { module = 'com.squareup.okhttp3:okhttp', version.ref = "okhttp" }
 okhttp-logging = { module = 'com.squareup.okhttp3:logging-interceptor', version.ref = "okhttp" }
 okhttp-url = { module = 'com.squareup.okhttp3:okhttp-urlconnection', version.ref = "okhttp" }
-orbit = 'org.orbit-mvi:orbit-viewmodel:4.3.2'
 retrofit-core = { module = 'com.squareup.retrofit2:retrofit', version.ref = "retrofit" }
 retrofit-moshi = { module = 'com.squareup.retrofit2:converter-moshi', version.ref = "retrofit" }
 sqldelight-android = { module = 'com.squareup.sqldelight:android-driver', version.ref = "sqldelight" }

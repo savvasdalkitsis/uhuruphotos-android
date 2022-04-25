@@ -9,10 +9,10 @@ import androidx.lifecycle.ViewModel
 import androidx.navigation.NavBackStackEntry
 import androidx.navigation.NavGraphBuilder
 import com.google.accompanist.navigation.animation.composable
-import com.savvasdalkitsis.librephotos.log.log
+import com.savvasdalkitsis.librephotos.viewmodel.ActionReceiverHost
 import com.savvasdalkitsis.librephotos.viewmodel.EffectHandler
-import com.savvasdalkitsis.librephotos.viewmodel.MVIHost
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.*
+import kotlinx.coroutines.flow.cancellable
 
 fun <S : Any, E : Any, A : Any, VM> NavGraphBuilder.navigationTarget(
     name: String,
@@ -22,7 +22,7 @@ fun <S : Any, E : Any, A : Any, VM> NavGraphBuilder.navigationTarget(
     initializer: (NavBackStackEntry, (A) -> Unit) -> Unit = { _, _ -> },
     createModel: @Composable () -> VM,
     content: @Composable (state: S, actions: (A) -> Unit) -> Unit,
-) where VM : ViewModel, VM : MVIHost<S, E, A, *> {
+) where VM : ViewModel, VM : ActionReceiverHost<S, E, A, *> {
     composable(
         name,
         enterTransition = enterTransition,
@@ -30,18 +30,20 @@ fun <S : Any, E : Any, A : Any, VM> NavGraphBuilder.navigationTarget(
     ) { navBackStackEntry ->
         val model = createModel()
         val scope = rememberCoroutineScope()
-        val actions: (A) -> Unit = {
-            scope.launch { model.action(it) }
+        val action: (A) -> Unit = {
+            scope.launch {
+                model.actionReceiver.action(it)
+            }
         }
 
-        val state by model.state.collectAsState()
-        content(state, actions)
+        val state by model.actionReceiver.state.collectAsState()
+        content(state, action)
 
         val keyboard = LocalSoftwareKeyboardController.current
         LaunchedEffect(Unit) {
             keyboard?.hide()
-            initializer(navBackStackEntry, actions)
-            model.sideEffects.collect { effects(it) }
+            initializer(navBackStackEntry, action)
+            model.actionReceiver.effects.cancellable().collect { effects(it) }
         }
     }
 }

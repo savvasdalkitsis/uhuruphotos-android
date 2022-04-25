@@ -4,7 +4,4 @@ dependencies {
     implementation(
             libs.kotlinx.coroutines,
     )
-    api(
-            libs.orbit,
-    )
 }

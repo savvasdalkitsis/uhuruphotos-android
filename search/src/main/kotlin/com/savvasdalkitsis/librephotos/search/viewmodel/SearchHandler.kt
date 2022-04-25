@@ -21,7 +21,7 @@ class SearchHandler @Inject constructor(
     private val userBadgeUseCase: UserBadgeUseCase,
     private val accountUseCase: AccountUseCase,
     private val feedPageUseCase: FeedPageUseCase,
-): Handler<SearchState, SearchEffect, SearchAction, SearchMutation> {
+) : Handler<SearchState, SearchEffect, SearchAction, SearchMutation> {
 
     private var lastSearch: Job? = null
 

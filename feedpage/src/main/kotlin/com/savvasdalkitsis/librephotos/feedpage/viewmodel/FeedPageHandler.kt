@@ -3,6 +3,7 @@ package com.savvasdalkitsis.librephotos.feedpage.viewmodel
 import com.savvasdalkitsis.librephotos.account.usecase.AccountUseCase
 import com.savvasdalkitsis.librephotos.albums.model.Album
 import com.savvasdalkitsis.librephotos.albums.usecase.AlbumsUseCase
+import com.savvasdalkitsis.librephotos.feed.view.state.FeedDisplay
 import com.savvasdalkitsis.librephotos.feedpage.SelectionList
 import com.savvasdalkitsis.librephotos.feedpage.mvflow.FeedPageAction
 import com.savvasdalkitsis.librephotos.feedpage.mvflow.FeedPageAction.*
@@ -15,13 +16,16 @@ import com.savvasdalkitsis.librephotos.feedpage.mvflow.FeedPageMutation
 import com.savvasdalkitsis.librephotos.feedpage.mvflow.FeedPageMutation.*
 import com.savvasdalkitsis.librephotos.feedpage.usecase.FeedPageUseCase
 import com.savvasdalkitsis.librephotos.feedpage.view.state.FeedPageState
+import com.savvasdalkitsis.librephotos.log.log
 import com.savvasdalkitsis.librephotos.photos.model.Photo
 import com.savvasdalkitsis.librephotos.photos.usecase.PhotosUseCase
 import com.savvasdalkitsis.librephotos.userbadge.api.UserBadgeUseCase
 import com.savvasdalkitsis.librephotos.viewmodel.Handler
-import kotlinx.coroutines.delay
+import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.*
 import javax.inject.Inject
+import kotlin.coroutines.CoroutineContext
+import kotlin.coroutines.coroutineContext
 
 class FeedPageHandler @Inject constructor(
     private val albumsUseCase: AlbumsUseCase,
@@ -93,12 +97,12 @@ class FeedPageHandler @Inject constructor(
                 action.photo.select()
             }
         }
-        ClearSelected -> flow {
+        ClearSelected -> flow<FeedPageMutation> {
             effect(Vibrate)
             selectionList.clear()
         }
         AskForSelectedPhotosDeletion -> flowOf(ShowDeletionConfirmationDialog)
-        is AlbumSelectionClicked -> flow {
+        is AlbumSelectionClicked -> flow<FeedPageMutation> {
             val photos = action.album.photos
             effect(Vibrate)
             if (photos.all { it.isSelected }) {

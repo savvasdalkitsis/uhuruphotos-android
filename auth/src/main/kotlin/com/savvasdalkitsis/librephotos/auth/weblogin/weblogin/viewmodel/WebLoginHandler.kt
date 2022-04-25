@@ -17,7 +17,7 @@ import kotlin.coroutines.coroutineContext
 
 class WebLoginHandler @Inject constructor(
     private val cookieMonitor: CookieMonitor,
-): Handler<WebLoginState, WebLoginEffect, WebLoginAction, WebLoginMutation> {
+) : Handler<WebLoginState, WebLoginEffect, WebLoginAction, WebLoginMutation> {
 
     override fun invoke(
         state: WebLoginState,

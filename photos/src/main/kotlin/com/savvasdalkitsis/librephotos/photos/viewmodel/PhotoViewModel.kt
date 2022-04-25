@@ -8,7 +8,6 @@ import com.savvasdalkitsis.librephotos.photos.view.state.PhotoState
 import com.savvasdalkitsis.librephotos.viewmodel.ActionReceiver
 import com.savvasdalkitsis.librephotos.viewmodel.ActionReceiverHost
 import dagger.hilt.android.lifecycle.HiltViewModel
-import org.orbitmvi.orbit.viewmodel.container
 import javax.inject.Inject
 
 @HiltViewModel
@@ -18,11 +17,9 @@ class PhotoViewModel @Inject constructor(
 ) : ViewModel(),
     ActionReceiverHost<PhotoState, PhotoEffect, PhotoAction, PhotoMutation> {
 
-    override val initialState = PhotoState()
-
     override val actionReceiver = ActionReceiver(
         handler,
         reducer,
-        container(initialState)
+        PhotoState(),
     )
 }
