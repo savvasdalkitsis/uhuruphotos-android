@@ -10,6 +10,7 @@ import com.savvasdalkitsis.uhuruphotos.feedpage.viewmodel.FeedPageEffectsHandler
 import com.savvasdalkitsis.uhuruphotos.feedpage.viewmodel.FeedPageViewModel
 import com.savvasdalkitsis.uhuruphotos.home.module.HomeModule.HomeNavigationTargetSearch
 import com.savvasdalkitsis.uhuruphotos.navigation.ControllersProvider
+import com.savvasdalkitsis.uhuruphotos.navigation.NavigationTarget
 import com.savvasdalkitsis.uhuruphotos.navigation.navigationTarget
 import javax.inject.Inject
 
@@ -17,9 +18,9 @@ class FeedPageNavigationTarget @Inject constructor(
     private val controllersProvider: ControllersProvider,
     private val feedPageEffectsHandler: FeedPageEffectsHandler,
     @HomeNavigationTargetSearch private val searchNavigationName: String,
-) {
+) : NavigationTarget {
 
-    fun NavGraphBuilder.create() {
+    override fun NavGraphBuilder.create() {
         navigationTarget<FeedPageState, FeedPageEffect, FeedPageAction, FeedPageViewModel>(
             name = name,
             effects = feedPageEffectsHandler,

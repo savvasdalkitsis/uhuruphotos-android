@@ -3,6 +3,7 @@ package com.savvasdalkitsis.uhuruphotos.server.navigation
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavBackStackEntry
 import androidx.navigation.NavGraphBuilder
+import com.savvasdalkitsis.uhuruphotos.navigation.NavigationTarget
 import com.savvasdalkitsis.uhuruphotos.navigation.navigationTarget
 import com.savvasdalkitsis.uhuruphotos.server.mvflow.ServerAction
 import com.savvasdalkitsis.uhuruphotos.server.mvflow.ServerAction.CheckPersistedServer
@@ -16,9 +17,9 @@ import javax.inject.Inject
 
 class ServerNavigationTarget @Inject constructor(
     private val effectsHandler: ServerEffectsHandler,
-) {
+) : NavigationTarget {
 
-    fun NavGraphBuilder.create() =
+    override fun NavGraphBuilder.create() =
         navigationTarget<ServerState, ServerEffect, ServerAction, ServerViewModel>(
             name = name,
             effects = effectsHandler,

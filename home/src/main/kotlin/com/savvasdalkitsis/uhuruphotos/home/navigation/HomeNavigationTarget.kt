@@ -10,6 +10,7 @@ import com.savvasdalkitsis.uhuruphotos.home.view.state.HomeState
 import com.savvasdalkitsis.uhuruphotos.home.viewmodel.HomeEffectsHandler
 import com.savvasdalkitsis.uhuruphotos.home.viewmodel.HomeViewModel
 import com.savvasdalkitsis.uhuruphotos.navigation.ControllersProvider
+import com.savvasdalkitsis.uhuruphotos.navigation.NavigationTarget
 import com.savvasdalkitsis.uhuruphotos.navigation.navigationTarget
 import javax.inject.Inject
 
@@ -18,9 +19,9 @@ class HomeNavigationTarget @Inject constructor(
     private val controllersProvider: ControllersProvider,
     @HomeModule.HomeNavigationTargetFeed private val feedNavigationName: String,
     @HomeModule.HomeNavigationTargetSearch private val searchNavigationName: String,
-) {
+) : NavigationTarget {
 
-    fun NavGraphBuilder.create() =
+    override fun NavGraphBuilder.create() =
         navigationTarget<HomeState, HomeEffect, HomeAction, HomeViewModel>(
             name = name,
             effects = effectsHandler,

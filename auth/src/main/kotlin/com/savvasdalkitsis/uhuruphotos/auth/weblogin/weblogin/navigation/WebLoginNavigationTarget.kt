@@ -10,14 +10,15 @@ import com.savvasdalkitsis.uhuruphotos.auth.weblogin.weblogin.mvflow.WebLoginEff
 import com.savvasdalkitsis.uhuruphotos.auth.weblogin.weblogin.view.WebLogin
 import com.savvasdalkitsis.uhuruphotos.auth.weblogin.weblogin.view.WebLoginState
 import com.savvasdalkitsis.uhuruphotos.auth.weblogin.weblogin.viewmodel.WebLoginViewModel
+import com.savvasdalkitsis.uhuruphotos.navigation.NavigationTarget
 import com.savvasdalkitsis.uhuruphotos.navigation.navigationTarget
 import javax.inject.Inject
 
 class WebLoginNavigationTarget @Inject constructor(
     private val effectsHandler: WebEffectsHandler,
-) {
+) : NavigationTarget {
 
-    fun NavGraphBuilder.create() {
+    override fun NavGraphBuilder.create() {
         navigationTarget<WebLoginState, WebLoginEffect, WebLoginAction, WebLoginViewModel>(
             name = name,
             effects = effectsHandler,

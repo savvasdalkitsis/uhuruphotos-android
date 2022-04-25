@@ -52,3 +52,7 @@ fun <S : Any, E : Any, A : Any, VM> NavGraphBuilder.navigationTarget(
         }
     }
 }
+
+interface NavigationTarget {
+    fun NavGraphBuilder.create()
+}

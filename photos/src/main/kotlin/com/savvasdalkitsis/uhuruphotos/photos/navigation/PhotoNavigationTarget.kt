@@ -7,6 +7,7 @@ import androidx.compose.ui.unit.IntSize
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavBackStackEntry
 import androidx.navigation.NavGraphBuilder
+import com.savvasdalkitsis.uhuruphotos.navigation.NavigationTarget
 import com.savvasdalkitsis.uhuruphotos.navigation.navigationTarget
 import com.savvasdalkitsis.uhuruphotos.photos.mvflow.PhotoAction
 import com.savvasdalkitsis.uhuruphotos.photos.mvflow.PhotoAction.LoadPhoto
@@ -19,9 +20,9 @@ import javax.inject.Inject
 
 class PhotoNavigationTarget @Inject constructor(
     private val effectsHandler: PhotoEffectsHandler,
-) {
+) : NavigationTarget {
 
-    fun NavGraphBuilder.create() {
+    override fun NavGraphBuilder.create() {
         navigationTarget<PhotoState, PhotoEffect, PhotoAction, PhotoViewModel>(
             name = name,
             effects = effectsHandler,

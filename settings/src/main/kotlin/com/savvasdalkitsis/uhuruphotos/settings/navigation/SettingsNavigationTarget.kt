@@ -2,6 +2,7 @@ package com.savvasdalkitsis.uhuruphotos.settings.navigation
 
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavGraphBuilder
+import com.savvasdalkitsis.uhuruphotos.navigation.NavigationTarget
 import com.savvasdalkitsis.uhuruphotos.navigation.navigationTarget
 import com.savvasdalkitsis.uhuruphotos.settings.view.Settings
 import com.savvasdalkitsis.uhuruphotos.settings.view.state.SettingsState
@@ -14,9 +15,9 @@ import javax.inject.Inject
 
 class SettingsNavigationTarget @Inject constructor(
     private val settingsEffectHandler: SettingsEffectHandler,
-) {
+) : NavigationTarget {
 
-    fun NavGraphBuilder.create() {
+    override fun NavGraphBuilder.create() {
         navigationTarget<SettingsState, SettingsEffect, SettingsAction, SettingsViewModel>(
             name = name,
             effects = settingsEffectHandler,
