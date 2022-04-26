@@ -3,13 +3,16 @@ package com.savvasdalkitsis.uhuruphotos.ui.view
 import androidx.compose.animation.*
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
-import androidx.compose.material.*
+import androidx.compose.foundation.layout.WindowInsetsSides.Companion.Bottom
+import androidx.compose.material.MaterialTheme
+import androidx.compose.material.Surface
+import androidx.compose.material.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import com.google.accompanist.insets.ui.Scaffold
-import com.savvasdalkitsis.uhuruphotos.ui.insets.systemPadding
+import com.savvasdalkitsis.uhuruphotos.ui.insets.*
 
 @Composable
 fun CommonScaffold(
@@ -26,7 +29,7 @@ fun CommonScaffold(
 ) {
     Scaffold(
         modifier = modifier,
-        contentPadding = systemPadding(WindowInsetsSides.Bottom),
+        contentPadding = systemPadding(Bottom),
         bottomBar = {
             AnimatedVisibility(
                 visible = bottomBarDisplayed,
@@ -40,11 +43,7 @@ fun CommonScaffold(
                     bottomBarContent()
                     Spacer(
                         modifier = Modifier
-                            .height(
-                                systemPadding(
-                                    WindowInsetsSides.Bottom
-                                ).calculateBottomPadding()
-                            )
+                            .height(insetsBottom())
                             .fillMaxWidth()
                     )
                 }
@@ -59,11 +58,7 @@ fun CommonScaffold(
                 Column {
                     Spacer(
                         modifier = Modifier
-                            .height(
-                                systemPadding(
-                                    WindowInsetsSides.Top
-                                ).calculateTopPadding()
-                            )
+                            .height(insetsTop())
                             .fillMaxWidth()
                             .background(toolbarColor())
                     )
@@ -81,7 +76,12 @@ fun CommonScaffold(
         }
     ) { contentPadding ->
         Surface(
-            modifier = Modifier.fillMaxSize(),
+            modifier = Modifier
+                .padding(
+                    start = insetsStart(),
+                    end = insetsEnd(),
+                )
+                .fillMaxSize(),
             color = MaterialTheme.colors.background
         ) {
             content(contentPadding)
