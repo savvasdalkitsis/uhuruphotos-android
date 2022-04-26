@@ -25,10 +25,10 @@ android {
 
     signingConfigs {
         release {
-            storeFile file(project.ext.properties.KEYSTORE_FILE)
-            storePassword project.ext.properties.KEYSTORE_PASS
-            keyAlias project.ext.properties.KEYSTORE_ALIAS
-            keyPassword project.ext.properties.KEYSTORE_PASS
+            storeFile file(project.ext.properties.KEYSTORE_FILE ?: "")
+            storePassword project.ext.properties.KEYSTORE_PASS ?: ""
+            keyAlias project.ext.properties.KEYSTORE_ALIAS ?: ""
+            keyPassword project.ext.properties.KEYSTORE_PASS ?: ""
         }
     }
 
