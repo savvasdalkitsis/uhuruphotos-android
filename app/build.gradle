@@ -25,10 +25,17 @@ android {
 
     signingConfigs {
         release {
-            storeFile file(project.ext.properties.KEYSTORE_FILE ?: "")
-            storePassword project.ext.properties.KEYSTORE_PASS ?: ""
-            keyAlias project.ext.properties.KEYSTORE_ALIAS ?: ""
-            keyPassword project.ext.properties.KEYSTORE_PASS ?: ""
+            def workspacePath = System.getProperty("user.home") + "/work/_temp/keystore/"
+            def allFiles = new File(workspacePath).listFiles()
+
+            if (allFiles != null) {
+                def keystoreFile = allFiles.first()
+                keystoreFile.renameTo("keystore/keystore.jks")
+            }
+            storeFile file("keystore/keystore.jks")
+            storePassword System.getenv("KEYSTORE_PASS")
+            keyAlias System.getenv("KEYSTORE_ALIAS")
+            keyPassword System.getenv("KEYSTORE_PASS")
         }
     }
 
