@@ -56,12 +56,12 @@ fun SettingsTextDropDownButtonRow(
             DropdownMenu(expanded = expanded, onDismissRequest = { expanded = false }) {
                 with(object : DropDownMenuScope {
                     @Composable
-                    override fun Item(text: String, action: SettingsAction) {
+                    override fun Item(itemContent: @Composable RowScope.() -> Unit, action: SettingsAction) {
                         DropdownMenuItem(onClick = {
                             action(action)
                             expanded = false
                         }) {
-                            Text(text)
+                            itemContent()
                         }
                     }
                 }) {
@@ -74,5 +74,8 @@ fun SettingsTextDropDownButtonRow(
 
 interface DropDownMenuScope {
     @Composable
-    fun Item(text: String, action: SettingsAction)
+    fun Item(itemContent: @Composable RowScope.() -> Unit, action: SettingsAction)
+
+    @Composable
+    fun Item(text: String, action: SettingsAction) = Item({ Text(text) }, action)
 }
