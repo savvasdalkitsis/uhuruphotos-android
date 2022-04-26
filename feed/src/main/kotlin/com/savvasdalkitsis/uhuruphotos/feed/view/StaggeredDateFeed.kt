@@ -1,13 +1,14 @@
 package com.savvasdalkitsis.uhuruphotos.feed.view
 
 import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import com.savvasdalkitsis.uhuruphotos.albums.model.Album
+import com.savvasdalkitsis.uhuruphotos.feed.view.PhotoRowSlot.EmptySlot
+import com.savvasdalkitsis.uhuruphotos.feed.view.PhotoRowSlot.PhotoSlot
 import com.savvasdalkitsis.uhuruphotos.photos.model.Photo
 
 @Composable
@@ -36,48 +37,27 @@ fun StaggeredDateFeed(
                     onAlbumSelectionClicked(album)
                 }
             }
-            val (photos, rows) = if (shouldAddEmptyPhotosInRows) {
+            val (slots, rows) = if (shouldAddEmptyPhotosInRows) {
                 val emptyPhotos = (columnCount - album.photos.size % columnCount) % columnCount
-                val paddedPhotos = album.photos + List(emptyPhotos) { Photo(id = "empty",) }
-                paddedPhotos to paddedPhotos.size / columnCount
+                val paddedSlots = album.photos.map(::PhotoSlot) + List(emptyPhotos) { EmptySlot }
+                paddedSlots to paddedSlots.size / columnCount
             } else {
                 val evenRows = album.photos.size / columnCount
-                album.photos to evenRows + if (album.photos.size % columnCount == 0) 0 else 1
+                album.photos.map(::PhotoSlot) to evenRows + if (album.photos.size % columnCount == 0) 0 else 1
             }
             for (row in 0 until rows) {
-                val photosInRow = (0 until columnCount).mapNotNull { column ->
-                    photos.getOrNull(row * columnCount + column)
+                val slotsInRow = (0 until columnCount).mapNotNull { column ->
+                    slots.getOrNull(row * columnCount + column)
                 }.toTypedArray()
-                item(photosInRow.first().id) {
+                item(slotsInRow.mapNotNull { it as? PhotoSlot }.first().photo.id) {
                     PhotoRow(
                         modifier = Modifier.animateItemPlacement(),
                         onPhotoSelected = onPhotoSelected,
                         onPhotoLongPressed = onPhotoLongPressed,
-                        photos = photosInRow
+                        slots = slotsInRow
                     )
                 }
             }
         }
     }
 }
-
-@Composable
-private fun PhotoRow(
-    modifier: Modifier,
-    onPhotoSelected: PhotoSelected,
-    onPhotoLongPressed: (Photo) -> Unit,
-    vararg photos: Photo
-) {
-    Row(modifier = modifier) {
-        for (photo in photos) {
-            PhotoThumbnail(
-                modifier = Modifier
-                    .weight(photo.ratio),
-                photo = photo,
-                onPhotoSelected = onPhotoSelected,
-                onLongClick = onPhotoLongPressed,
-            )
-        }
-    }
-}
-
