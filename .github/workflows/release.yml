@@ -37,8 +37,7 @@ jobs:
         KEYSTORE_ALIAS: ${{ secrets.KEYSTORE_ALIAS }}
     - name: Archive release bundle
       uses: actions/upload-artifact@v3
-      if: always()
       with:
-        name: workspace
+        name: bundle
         path: |
-          .
+          app/build/outputs/bundle/release
