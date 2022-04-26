@@ -27,8 +27,8 @@ jobs:
       env:
         ENCODED_STRING: ${{ secrets.KEYSTORE }}
       run: |
-        mkdir "keystore"
-        echo $ENCODED_STRING | base64 -di > "keystore/keystore.jks
+        mkdir keystore
+        echo $ENCODED_STRING | base64 -di > keystore/keystore.jks
 
     - name: Build with Gradle
       run: ./gradlew app:bundleRelease
