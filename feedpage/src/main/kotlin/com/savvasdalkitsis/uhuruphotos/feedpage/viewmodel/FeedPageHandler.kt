@@ -16,11 +16,11 @@ import com.savvasdalkitsis.uhuruphotos.feedpage.mvflow.FeedPageMutation.*
 import com.savvasdalkitsis.uhuruphotos.feedpage.usecase.FeedPageUseCase
 import com.savvasdalkitsis.uhuruphotos.feedpage.view.state.FeedPageState
 import com.savvasdalkitsis.uhuruphotos.photos.model.Photo
-import com.savvasdalkitsis.uhuruphotos.photos.model.SelectionMode
+import com.savvasdalkitsis.uhuruphotos.photos.model.SelectionMode.*
 import com.savvasdalkitsis.uhuruphotos.photos.usecase.PhotosUseCase
 import com.savvasdalkitsis.uhuruphotos.userbadge.api.UserBadgeUseCase
 import com.savvasdalkitsis.uhuruphotos.viewmodel.Handler
-import kotlinx.coroutines.*
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.*
 import javax.inject.Inject
 
@@ -72,7 +72,7 @@ class FeedPageHandler @Inject constructor(
                 state.selectedPhotoCount == 0 -> effect(with(action) {
                     OpenPhotoDetails(photo.id, center, scale, photo.isVideo)
                 })
-                action.photo.selectionMode == SelectionMode.SELECTED -> {
+                action.photo.selectionMode == SELECTED -> {
                     effect(Vibrate)
                     action.photo.deselect()
                 }
@@ -102,7 +102,7 @@ class FeedPageHandler @Inject constructor(
         is AlbumSelectionClicked -> flow<FeedPageMutation> {
             val photos = action.album.photos
             effect(Vibrate)
-            if (photos.all { it.selectionMode == SelectionMode.SELECTED }) {
+            if (photos.all { it.selectionMode == SELECTED }) {
                 photos.forEach { it.deselect() }
             } else {
                 photos.forEach { it.select() }
@@ -137,15 +137,16 @@ class FeedPageHandler @Inject constructor(
         selectionList.select(id)
     }
 
-    private fun List<Album>.selectPhotos(ids: Set<String>): List<Album> = when {
-        ids.isNotEmpty() -> map { album ->
+    private fun List<Album>.selectPhotos(ids: Set<String>): List<Album> {
+        val empty = ids.isEmpty()
+        return map { album ->
             album.copy(photos = album.photos.map { photo ->
-                photo.copy(selectionMode = when (photo.id) {
-                    in ids -> SelectionMode.SELECTED
-                    else -> SelectionMode.UNSELECTED
+                photo.copy(selectionMode = when {
+                    empty -> UNDEFINED
+                    photo.id in ids -> SELECTED
+                    else -> UNSELECTED
                 })
             })
         }
-        else -> this
     }
 }
