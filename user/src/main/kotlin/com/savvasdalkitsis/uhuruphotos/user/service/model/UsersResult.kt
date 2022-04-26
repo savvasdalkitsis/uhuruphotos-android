@@ -1,4 +1,4 @@
-package com.savvasdalkitsis.uhuruphotos.user.api.model
+package com.savvasdalkitsis.uhuruphotos.user.service.model
 
 import com.squareup.moshi.JsonClass
 

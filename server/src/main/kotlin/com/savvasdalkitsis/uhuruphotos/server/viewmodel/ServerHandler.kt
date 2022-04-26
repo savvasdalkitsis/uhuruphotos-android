@@ -1,6 +1,6 @@
 package com.savvasdalkitsis.uhuruphotos.server.viewmodel
 
-import com.savvasdalkitsis.uhuruphotos.auth.model.AuthStatus
+import com.savvasdalkitsis.uhuruphotos.auth.model.AuthStatus.*
 import com.savvasdalkitsis.uhuruphotos.auth.usecase.AuthenticationUseCase
 import com.savvasdalkitsis.uhuruphotos.auth.usecase.ServerUseCase
 import com.savvasdalkitsis.uhuruphotos.infrastructure.extensions.isValidUrl
@@ -34,8 +34,8 @@ class ServerHandler @Inject constructor(
             when (serverUseCase.getServerUrl()) {
                 null -> emit(AskForServerDetails(null, isValid = false))
                 else -> when (authenticationUseCase.authenticationStatus()) {
-                    is AuthStatus.Authenticated -> effect(Close)
-                    is AuthStatus.Unauthenticated -> {
+                    is Offline, is Authenticated -> effect(Close)
+                    is Unauthenticated -> {
                         when (state) {
                             is UserCredentials -> emit(AskForUserCredentials(state.username, state.password))
                             else -> emit(AskForUserCredentials("", ""))

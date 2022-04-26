@@ -20,7 +20,7 @@ class TokenRefreshInterceptor @Inject constructor(
                 response.close()
                 when (runBlocking { authenticationUseCase.refreshToken() }) {
                     Unauthenticated -> throw AccessTokenRefreshError()
-                    Authenticated -> chain.proceed(authenticationHeaderInjector.inject(chain))
+                    else -> chain.proceed(authenticationHeaderInjector.inject(chain))
                 }
             }
             else -> response

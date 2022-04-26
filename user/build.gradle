@@ -1,6 +1,7 @@
 dependencies {
 
     implementation project(":db")
+    implementation project(":log")
     implementation(
             libs.hilt,
             libs.kotlinx.coroutines,

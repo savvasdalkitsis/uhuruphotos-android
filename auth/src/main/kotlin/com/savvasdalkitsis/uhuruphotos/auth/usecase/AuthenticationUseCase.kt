@@ -5,8 +5,7 @@ import com.savvasdalkitsis.uhuruphotos.auth.service.model.AuthenticationCredenti
 import com.savvasdalkitsis.uhuruphotos.auth.service.model.AuthenticationObtainResponse
 import com.savvasdalkitsis.uhuruphotos.auth.service.model.AuthenticationRefreshResponse
 import com.savvasdalkitsis.uhuruphotos.auth.model.AuthStatus
-import com.savvasdalkitsis.uhuruphotos.auth.model.AuthStatus.Authenticated
-import com.savvasdalkitsis.uhuruphotos.auth.model.AuthStatus.Unauthenticated
+import com.savvasdalkitsis.uhuruphotos.auth.model.AuthStatus.*
 import com.savvasdalkitsis.uhuruphotos.auth.network.jwt
 import com.savvasdalkitsis.uhuruphotos.db.auth.Token
 import com.savvasdalkitsis.uhuruphotos.db.auth.TokenQueries
@@ -16,6 +15,7 @@ import com.savvasdalkitsis.uhuruphotos.db.extensions.crud
 import com.savvasdalkitsis.uhuruphotos.log.log
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
+import java.io.IOException
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -55,6 +55,9 @@ class AuthenticationUseCase @Inject constructor(
             else -> try {
                 refreshAccessToken(refreshToken)
                 Authenticated
+            } catch (e: IOException) {
+                log(e)
+                Offline
             } catch (e: Exception) {
                 log(e)
                 Unauthenticated
