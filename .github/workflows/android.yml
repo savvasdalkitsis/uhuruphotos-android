@@ -25,6 +25,4 @@ jobs:
     - name: Touch local properties
       run: touch local.properties
     - name: Build with Gradle
-      run: ./gradlew assembleDebug
-      env:
-        ORG_GRADLE_PROJECT_MAPS_API_KEY: ${{ secrets.MAPS_API_KEY }}
+      run: ./gradlew assembleDebug -PMAPS_API_KEY=${{ secrets.MAPS_API_KEY }}
