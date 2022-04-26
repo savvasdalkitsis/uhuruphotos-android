@@ -12,16 +12,19 @@ import com.savvasdalkitsis.uhuruphotos.auth.weblogin.weblogin.view.WebLoginState
 import com.savvasdalkitsis.uhuruphotos.auth.weblogin.weblogin.viewmodel.WebLoginViewModel
 import com.savvasdalkitsis.uhuruphotos.navigation.NavigationTarget
 import com.savvasdalkitsis.uhuruphotos.navigation.navigationTarget
+import com.savvasdalkitsis.uhuruphotos.settings.usecase.SettingsUseCase
 import javax.inject.Inject
 
 class WebLoginNavigationTarget @Inject constructor(
     private val effectsHandler: WebEffectsHandler,
+    private val settingsUseCase: SettingsUseCase,
 ) : NavigationTarget {
 
-    override fun NavGraphBuilder.create() {
+    override suspend fun NavGraphBuilder.create() {
         navigationTarget<WebLoginState, WebLoginEffect, WebLoginAction, WebLoginViewModel>(
             name = name,
             effects = effectsHandler,
+            themeMode = settingsUseCase.observeThemeModeState(),
             initializer = { navBackStackEntry, actions ->
                 actions(WebLoginAction.LoadPage(navBackStackEntry.url))
             },

@@ -11,16 +11,19 @@ import androidx.navigation.NavBackStackEntry
 import androidx.navigation.NavGraphBuilder
 import com.google.accompanist.navigation.animation.composable
 import com.savvasdalkitsis.uhuruphotos.ui.theme.AppTheme
+import com.savvasdalkitsis.uhuruphotos.ui.theme.ThemeMode
+import com.savvasdalkitsis.uhuruphotos.ui.theme.ThemeMode.*
 import com.savvasdalkitsis.uhuruphotos.viewmodel.ActionReceiverHost
 import com.savvasdalkitsis.uhuruphotos.viewmodel.EffectHandler
-import kotlinx.coroutines.*
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.cancellable
+import kotlinx.coroutines.launch
 
 fun <S : Any, E : Any, A : Any, VM> NavGraphBuilder.navigationTarget(
     name: String,
     enterTransition: (AnimatedContentScope<NavBackStackEntry>.() -> EnterTransition?)? = null,
     exitTransition: (AnimatedContentScope<NavBackStackEntry>.() -> ExitTransition?)? = null,
-    darkTheme: @Composable () -> Boolean = { isSystemInDarkTheme() },
+    themeMode: StateFlow<ThemeMode>,
     effects: EffectHandler<E>,
     initializer: (NavBackStackEntry, (A) -> Unit) -> Unit = { _, _ -> },
     createModel: @Composable () -> VM,
@@ -40,7 +43,13 @@ fun <S : Any, E : Any, A : Any, VM> NavGraphBuilder.navigationTarget(
         }
 
         val state by model.actionReceiver.state.collectAsState()
-        AppTheme(darkTheme = darkTheme()) {
+        val theme by themeMode.collectAsState()
+        val dark = when (theme) {
+            FOLLOW_SYSTEM -> isSystemInDarkTheme()
+            DARK_MODE -> true
+            LIGHT_MODE -> false
+        }
+        AppTheme(dark) {
             content(state, action)
         }
 
@@ -54,5 +63,5 @@ fun <S : Any, E : Any, A : Any, VM> NavGraphBuilder.navigationTarget(
 }
 
 interface NavigationTarget {
-    fun NavGraphBuilder.create()
+    suspend fun NavGraphBuilder.create()
 }

@@ -25,16 +25,12 @@ fun SettingsFullSyncNetworkRequirements(
 ) {
     SettingsTextDropDownButtonRow(
         text = "Network requirements: ${state.fullSyncNetworkRequirement.friendlyName}",
-        buttonText = "Change"
-    ) { dismiss ->
+        buttonText = "Change",
+        action = action,
+    ) {
         @Composable
         fun item(networkType: NetworkType) {
-            DropdownMenuItem(onClick = {
-                action(ChangeFullSyncNetworkRequirements(networkType))
-                dismiss()
-            }) {
-                Text(networkType.friendlyName)
-            }
+            Item(networkType.friendlyName, ChangeFullSyncNetworkRequirements(networkType))
         }
         item(CONNECTED)
         item(UNMETERED)

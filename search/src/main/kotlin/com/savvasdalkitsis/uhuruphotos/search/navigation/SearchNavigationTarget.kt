@@ -12,18 +12,21 @@ import com.savvasdalkitsis.uhuruphotos.search.view.SearchPage
 import com.savvasdalkitsis.uhuruphotos.search.view.state.SearchState
 import com.savvasdalkitsis.uhuruphotos.search.viewmodel.SearchEffectsHandler
 import com.savvasdalkitsis.uhuruphotos.search.viewmodel.SearchViewModel
+import com.savvasdalkitsis.uhuruphotos.settings.usecase.SettingsUseCase
 import javax.inject.Inject
 
 class SearchNavigationTarget @Inject constructor(
     private val effectsHandler: SearchEffectsHandler,
     private val controllersProvider: ControllersProvider,
+    private val settingsUseCase: SettingsUseCase,
     @HomeNavigationTargetFeed private val feedNavigationName: String,
 ) : NavigationTarget {
 
-    override fun NavGraphBuilder.create() {
+    override suspend fun NavGraphBuilder.create() {
         navigationTarget<SearchState, SearchEffect, SearchAction, SearchViewModel>(
             name = name,
             effects = effectsHandler,
+            themeMode = settingsUseCase.observeThemeModeState(),
             initializer = { _, actions -> actions(SearchAction.Initialise) },
             createModel = { hiltViewModel() }
         ) { state, actions ->

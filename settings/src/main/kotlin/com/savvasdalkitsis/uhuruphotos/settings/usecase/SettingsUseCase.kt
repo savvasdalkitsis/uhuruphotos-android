@@ -2,7 +2,13 @@ package com.savvasdalkitsis.uhuruphotos.settings.usecase
 
 import androidx.work.NetworkType
 import com.fredporciuncula.flow.preferences.FlowSharedPreferences
+import com.savvasdalkitsis.uhuruphotos.ui.theme.ThemeMode
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.currentCoroutineContext
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.stateIn
 import javax.inject.Inject
 
 class SettingsUseCase @Inject constructor(
@@ -16,6 +22,7 @@ class SettingsUseCase @Inject constructor(
     private val shouldPerformPeriodicFeedSync = flowSharedPreferences.getBoolean("shouldPerformPeriodicFeedSync", true)
     private val fullSyncNetworkRequirements = flowSharedPreferences.getEnum("fullSyncNetworkRequirements", NetworkType.NOT_ROAMING)
     private val fullSyncRequiresCharging = flowSharedPreferences.getBoolean("fullSyncRequiresCharging", false)
+    private val themeMode = flowSharedPreferences.getEnum("themeMode", ThemeMode.default)
 
     fun getImageDiskCacheMaxLimit(): Int = imageDiskCacheSize.get()
     fun getImageMemCacheMaxLimit(): Int = imageMemCacheSize.get()
@@ -24,6 +31,7 @@ class SettingsUseCase @Inject constructor(
     fun getFullSyncNetworkRequirements(): NetworkType = fullSyncNetworkRequirements.get()
     fun getFullSyncRequiresCharging(): Boolean = fullSyncRequiresCharging.get()
     fun getShouldPerformPeriodicFullSync(): Boolean = shouldPerformPeriodicFeedSync.get()
+    fun getThemeMode(): ThemeMode = themeMode.get()
 
     fun observeImageDiskCacheMaxLimit(): Flow<Int> = imageDiskCacheSize.asFlow()
     fun observeImageMemCacheMaxLimit(): Flow<Int> = imageMemCacheSize.asFlow()
@@ -31,6 +39,10 @@ class SettingsUseCase @Inject constructor(
     fun observeFeedSyncFrequency(): Flow<Int> = feedSyncFrequency.asFlow()
     fun observeFullSyncNetworkRequirements(): Flow<NetworkType> = fullSyncNetworkRequirements.asFlow()
     fun observeFullSyncRequiresCharging(): Flow<Boolean> = fullSyncRequiresCharging.asFlow()
+    fun observeThemeMode(): Flow<ThemeMode> = themeMode.asFlow()
+    suspend fun observeThemeModeState(): StateFlow<ThemeMode> = observeThemeMode().stateIn(
+        CoroutineScope(Dispatchers.IO)
+    )
 
     suspend fun setImageDiskCacheMaxLimit(sizeInMb: Int) {
         imageDiskCacheSize.setAndCommit(sizeInMb)
@@ -58,5 +70,9 @@ class SettingsUseCase @Inject constructor(
 
     suspend fun setShouldPerformPeriodicFullSync(perform: Boolean) {
         shouldPerformPeriodicFeedSync.setAndCommit(perform)
+    }
+
+    suspend fun setThemeMode(mode: ThemeMode) {
+        themeMode.setAndCommit(mode)
     }
 }

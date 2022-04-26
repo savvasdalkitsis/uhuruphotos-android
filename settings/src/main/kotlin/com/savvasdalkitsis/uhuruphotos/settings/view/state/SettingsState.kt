@@ -1,6 +1,7 @@
 package com.savvasdalkitsis.uhuruphotos.settings.view.state
 
 import androidx.work.NetworkType
+import com.savvasdalkitsis.uhuruphotos.ui.theme.ThemeMode
 import com.savvasdalkitsis.uhuruphotos.userbadge.api.view.state.UserInformationState
 
 data class SettingsState(
@@ -17,4 +18,5 @@ data class SettingsState(
     val fullSyncButtonEnabled: Boolean = false,
     val fullSyncNetworkRequirement: NetworkType? = null,
     val fullSyncRequiresCharging: Boolean = false,
+    val themeMode: ThemeMode = ThemeMode.default,
 )

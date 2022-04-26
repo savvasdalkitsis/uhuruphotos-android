@@ -12,18 +12,21 @@ import com.savvasdalkitsis.uhuruphotos.home.module.HomeModule.HomeNavigationTarg
 import com.savvasdalkitsis.uhuruphotos.navigation.ControllersProvider
 import com.savvasdalkitsis.uhuruphotos.navigation.NavigationTarget
 import com.savvasdalkitsis.uhuruphotos.navigation.navigationTarget
+import com.savvasdalkitsis.uhuruphotos.settings.usecase.SettingsUseCase
 import javax.inject.Inject
 
 class FeedPageNavigationTarget @Inject constructor(
     private val controllersProvider: ControllersProvider,
     private val feedPageEffectsHandler: FeedPageEffectsHandler,
+    private val settingsUseCase: SettingsUseCase,
     @HomeNavigationTargetSearch private val searchNavigationName: String,
 ) : NavigationTarget {
 
-    override fun NavGraphBuilder.create() {
+    override suspend fun NavGraphBuilder.create() {
         navigationTarget<FeedPageState, FeedPageEffect, FeedPageAction, FeedPageViewModel>(
             name = name,
             effects = feedPageEffectsHandler,
+            themeMode = settingsUseCase.observeThemeModeState(),
             initializer = { _, actions -> actions(FeedPageAction.LoadFeed) },
             createModel = { hiltViewModel() }
         ) { state, actions ->

@@ -2,6 +2,7 @@ package com.savvasdalkitsis.uhuruphotos.navigation
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.platform.LocalHapticFeedback
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
@@ -9,6 +10,8 @@ import com.google.accompanist.navigation.animation.AnimatedNavHost
 import com.google.accompanist.navigation.animation.rememberAnimatedNavController
 import com.savvasdalkitsis.uhuruphotos.home.navigation.HomeNavigationTarget
 import com.savvasdalkitsis.uhuruphotos.ui.window.LocalSystemUiController
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 import javax.inject.Inject
 
 class Navigator @Inject constructor(
@@ -30,7 +33,11 @@ class Navigator @Inject constructor(
             navController = navHostController,
             startDestination = HomeNavigationTarget.name
         ) {
-            navigationTargets.forEach { with(it) { create() } }
+            runBlocking {
+                navigationTargets.forEach { navigationTarget ->
+                    with(navigationTarget) { create() }
+                }
+            }
         }
     }
 }

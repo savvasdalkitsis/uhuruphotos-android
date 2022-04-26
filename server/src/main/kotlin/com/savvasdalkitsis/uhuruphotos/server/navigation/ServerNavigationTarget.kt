@@ -13,16 +13,19 @@ import com.savvasdalkitsis.uhuruphotos.server.view.Server
 import com.savvasdalkitsis.uhuruphotos.server.view.ServerState
 import com.savvasdalkitsis.uhuruphotos.server.viewmodel.ServerEffectsHandler
 import com.savvasdalkitsis.uhuruphotos.server.viewmodel.ServerViewModel
+import com.savvasdalkitsis.uhuruphotos.settings.usecase.SettingsUseCase
 import javax.inject.Inject
 
 class ServerNavigationTarget @Inject constructor(
     private val effectsHandler: ServerEffectsHandler,
+    private val settingsUseCase: SettingsUseCase,
 ) : NavigationTarget {
 
-    override fun NavGraphBuilder.create() =
+    override suspend fun NavGraphBuilder.create() =
         navigationTarget<ServerState, ServerEffect, ServerAction, ServerViewModel>(
             name = name,
             effects = effectsHandler,
+            themeMode = settingsUseCase.observeThemeModeState(),
             initializer = { navBackStackEntry, action -> action(
                 when {
                     navBackStackEntry.auto -> CheckPersistedServer

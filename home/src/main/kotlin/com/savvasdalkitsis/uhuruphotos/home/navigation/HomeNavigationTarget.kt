@@ -12,19 +12,22 @@ import com.savvasdalkitsis.uhuruphotos.home.viewmodel.HomeViewModel
 import com.savvasdalkitsis.uhuruphotos.navigation.ControllersProvider
 import com.savvasdalkitsis.uhuruphotos.navigation.NavigationTarget
 import com.savvasdalkitsis.uhuruphotos.navigation.navigationTarget
+import com.savvasdalkitsis.uhuruphotos.settings.usecase.SettingsUseCase
 import javax.inject.Inject
 
 class HomeNavigationTarget @Inject constructor(
     private val effectsHandler: HomeEffectsHandler,
     private val controllersProvider: ControllersProvider,
+    private val settingsUseCase: SettingsUseCase,
     @HomeModule.HomeNavigationTargetFeed private val feedNavigationName: String,
     @HomeModule.HomeNavigationTargetSearch private val searchNavigationName: String,
 ) : NavigationTarget {
 
-    override fun NavGraphBuilder.create() =
+    override suspend fun NavGraphBuilder.create() =
         navigationTarget<HomeState, HomeEffect, HomeAction, HomeViewModel>(
             name = name,
             effects = effectsHandler,
+            themeMode = settingsUseCase.observeThemeModeState(),
             initializer = { _, actions -> actions(HomeAction.Load) },
             createModel = { hiltViewModel() }
         ) { state, _ ->

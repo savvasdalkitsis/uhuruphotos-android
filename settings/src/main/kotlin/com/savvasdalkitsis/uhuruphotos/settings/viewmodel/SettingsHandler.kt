@@ -39,6 +39,8 @@ internal class SettingsHandler @Inject constructor(
                 .map(::DisplayFullSyncNetworkRequirements),
             settingsUseCase.observeFullSyncRequiresCharging()
                 .map(::DisplayFullSyncRequiresCharging),
+            settingsUseCase.observeThemeMode()
+                .map(::DisplayThemeMode),
             cacheUseCase.observeImageDiskCacheCurrentUse()
                 .map(::DisplayImageDiskCacheCurrentUse),
             cacheUseCase.observeImageMemCacheCurrentUse()
@@ -97,6 +99,9 @@ internal class SettingsHandler @Inject constructor(
             settingsUseCase.setFullSyncRequiresCharging(action.requiredCharging)
             albumWorkScheduler.scheduleAlbumsRefreshPeriodic(REPLACE)
             effect(ShowMessage("Feed sync charging requirements changed"))
+        }
+        is ChangeThemeMode -> flow {
+            settingsUseCase.setThemeMode(action.themeMode)
         }
     }
 

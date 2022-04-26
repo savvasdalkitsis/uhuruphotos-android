@@ -1,6 +1,7 @@
 package com.savvasdalkitsis.uhuruphotos.settings.viewmodel
 
 import androidx.work.NetworkType
+import com.savvasdalkitsis.uhuruphotos.ui.theme.ThemeMode
 import com.savvasdalkitsis.uhuruphotos.userbadge.api.view.state.UserInformationState
 
 sealed class SettingsMutation {
@@ -18,5 +19,6 @@ sealed class SettingsMutation {
     data class DisplayFeedSyncFrequency(val frequency: Int): SettingsMutation()
     data class DisplayFullSyncNetworkRequirements(val networkType: NetworkType): SettingsMutation()
     data class DisplayFullSyncRequiresCharging(val requiresCharging: Boolean): SettingsMutation()
+    data class DisplayThemeMode(val themeMode: ThemeMode): SettingsMutation()
     data class UserBadgeUpdate(val userInformationState: UserInformationState): SettingsMutation()
 }

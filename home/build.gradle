@@ -15,6 +15,7 @@ dependencies {
     implementation project(":userbadge-api")
     implementation project(":server")
     implementation project(":auth")
+    implementation project(":settings")
     implementation(
             libs.androidx.compose.foundation.layout,
             libs.androidx.compose.hilt.navigation,

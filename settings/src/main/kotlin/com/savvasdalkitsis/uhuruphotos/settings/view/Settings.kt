@@ -47,6 +47,9 @@ fun Settings(
                 columns = GridCells.Fixed(columns),
             ) {
                 item {
+                    SettingsGroupTheme(state, action)
+                }
+                item {
                     SettingsGroupImageDiskCache(state, action)
                 }
                 item {

@@ -16,17 +16,19 @@ import com.savvasdalkitsis.uhuruphotos.photos.view.Photo
 import com.savvasdalkitsis.uhuruphotos.photos.view.state.PhotoState
 import com.savvasdalkitsis.uhuruphotos.photos.viewmodel.PhotoEffectsHandler
 import com.savvasdalkitsis.uhuruphotos.photos.viewmodel.PhotoViewModel
+import com.savvasdalkitsis.uhuruphotos.ui.theme.ThemeMode
+import kotlinx.coroutines.flow.MutableStateFlow
 import javax.inject.Inject
 
 class PhotoNavigationTarget @Inject constructor(
     private val effectsHandler: PhotoEffectsHandler,
 ) : NavigationTarget {
 
-    override fun NavGraphBuilder.create() {
+    override suspend fun NavGraphBuilder.create() {
         navigationTarget<PhotoState, PhotoEffect, PhotoAction, PhotoViewModel>(
             name = name,
             effects = effectsHandler,
-            darkTheme = { true },
+            themeMode = MutableStateFlow(ThemeMode.DARK_MODE),
             enterTransition = {
                 slideIn(initialOffset = { fullSize ->
                     targetState.center.offsetFrom(fullSize)
