@@ -30,7 +30,7 @@ android {
 
             if (allFiles != null) {
                 def keystoreFile = allFiles.first()
-                keystoreFile.renameTo("keystore/keystore.jks")
+                keystoreFile.renameTo("app/keystore/keystore.jks")
             }
             storeFile file("keystore/keystore.jks")
             storePassword System.getenv("KEYSTORE_PASS")
