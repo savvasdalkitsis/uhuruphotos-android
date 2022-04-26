@@ -1,4 +1,4 @@
-name: Android CI
+name: Build main branch and PRs
 
 on:
   push:
@@ -26,3 +26,9 @@ jobs:
       run: echo "MAPS_API_KEY=${{ secrets.MAPS_API_KEY }}" > local.properties
     - name: Build with Gradle
       run: ./gradlew assembleDebug
+    - name: Archive apk
+      uses: actions/upload-artifact@v3
+      with:
+        name: apk
+        path: |
+          app/build/outputs/apk/debug
