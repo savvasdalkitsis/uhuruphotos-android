@@ -54,7 +54,8 @@ fun HomeNavigationBar(
         }
         NAVIGATION_RAIL -> NavigationRail(
             modifier = Modifier.padding(top = contentPadding.calculateTopPadding()),
-            backgroundColor = MaterialTheme.colors.primarySurface.copy(alpha = 0.8f),
+            elevation = 0.dp,
+            backgroundColor = Color.Transparent,
         ) {
             Items(currentDestination, navController, feedDisplay, feedNavigationName, searchNavigationName, onReselected)
         }
