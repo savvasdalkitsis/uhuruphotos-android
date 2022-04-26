@@ -2,6 +2,7 @@ package com.savvasdalkitsis.uhuruphotos.app.module
 
 import android.content.ClipboardManager
 import android.content.Context
+import androidx.core.app.NotificationManagerCompat
 import androidx.preference.PreferenceManager
 import com.fredporciuncula.flow.preferences.FlowSharedPreferences
 import dagger.Module
@@ -22,4 +23,7 @@ class AppModule {
     fun clipboardManager(@ApplicationContext context: Context): ClipboardManager =
         context.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
 
+    @Provides
+    fun notificationManager(@ApplicationContext context: Context): NotificationManagerCompat =
+        NotificationManagerCompat.from(context)
 }
