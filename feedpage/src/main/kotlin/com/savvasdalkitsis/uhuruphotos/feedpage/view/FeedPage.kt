@@ -1,15 +1,18 @@
 package com.savvasdalkitsis.uhuruphotos.feedpage.view
 
 import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.grid.rememberLazyGridState
 import androidx.compose.foundation.lazy.rememberLazyListState
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.unit.dp
 import com.google.accompanist.swiperefresh.SwipeRefresh
 import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
@@ -39,6 +42,13 @@ fun FeedPage(
     val listState = rememberLazyListState()
     val gridState = rememberLazyGridState()
 
+    fun scrollToTop() {
+        coroutineScope.launch {
+            listState.animateScrollToItem(0, 0)
+            gridState.animateScrollToItem(0, 0)
+        }
+    }
+
     HomeScaffold(
         modifier = Modifier.blurIf(state.showAccountOverview),
         title = {
@@ -46,7 +56,9 @@ fun FeedPage(
                 horizontalArrangement = Arrangement.spacedBy(12.dp),
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                Logo()
+                Logo(
+                    onClick = { scrollToTop() }
+                )
                 AnimatedVisibility(visible = state.hasSelection) {
                     OutlinedButton(
                         modifier = Modifier
@@ -91,10 +103,7 @@ fun FeedPage(
             )
         },
         onReselected = {
-            coroutineScope.launch {
-                listState.animateScrollToItem(0, 0)
-                gridState.animateScrollToItem(0, 0)
-            }
+            scrollToTop()
         },
     ) { contentPadding ->
         SwipeRefresh(
