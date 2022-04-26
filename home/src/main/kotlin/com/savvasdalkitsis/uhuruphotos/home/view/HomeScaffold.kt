@@ -65,6 +65,7 @@ fun HomeScaffold(
                     HomeNavigationBar(
                         contentPadding = contentPadding,
                         feedDisplay = feedDisplay,
+                        onReselected = onReselected,
                         navController = navController,
                         feedNavigationName = feedNavigationName,
                         searchNavigationName = searchNavigationName,
