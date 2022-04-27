@@ -56,21 +56,28 @@ fun CommonScaffold(
                 enter = fadeIn(),
                 exit = fadeOut(),
             ) {
-                Column {
+                Row(modifier = Modifier
+                    .background(toolbarColor())
+                ) {
+                    Spacer(modifier = Modifier.width(insetsStart()))
+                    Column(modifier = Modifier
+                        .weight(1f)
+                    ) {
+                        Spacer(modifier = Modifier.height(insetsTop()))
+                        TopAppBar(
+                            title = title,
+                            backgroundColor = Color.Transparent,
+                            elevation = 0.dp,
+                            navigationIcon = navigationIcon,
+                            actions = {
+                                actionBarContent()
+                            }
+                        )
+                    }
                     Spacer(
                         modifier = Modifier
-                            .height(insetsTop())
-                            .fillMaxWidth()
+                            .width(insetsEnd())
                             .background(toolbarColor())
-                    )
-                    TopAppBar(
-                        title = title,
-                        backgroundColor = toolbarColor(),
-                        elevation = 0.dp,
-                        navigationIcon = navigationIcon,
-                        actions = {
-                            actionBarContent()
-                        }
                     )
                 }
             }
