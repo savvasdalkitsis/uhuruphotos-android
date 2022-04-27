@@ -7,7 +7,6 @@ import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.Icon
-import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -33,7 +32,7 @@ fun PhotoThumbnail(
     modifier: Modifier = Modifier,
     photo: Photo,
     onPhotoSelected: PhotoSelected,
-    ratio: Float = photo.ratio,
+    aspectRatio: Float = photo.ratio,
     contentScale: ContentScale = ContentScale.FillBounds,
     onLongClick: (Photo) -> Unit = {},
 ) {
@@ -44,7 +43,7 @@ fun PhotoThumbnail(
     var relativeScale by remember(photo.id) { mutableStateOf(0f) }
     Box(
         modifier = modifier
-            .aspectRatio(ratio)
+            .aspectRatio(aspectRatio)
             .padding(1.dp)
             .background(
                 if (photo.selectionMode == SelectionMode.SELECTED)

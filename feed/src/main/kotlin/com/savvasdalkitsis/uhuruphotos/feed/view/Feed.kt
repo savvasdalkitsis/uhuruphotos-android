@@ -22,9 +22,8 @@ fun Feed(
     contentPadding: PaddingValues = PaddingValues(0.dp),
     state: FeedState,
     showSelectionHeader: Boolean = false,
-    gridState: LazyGridState = rememberLazyGridState(),
     listState: LazyListState = rememberLazyListState(),
-    onPhotoSelected: PhotoSelected = { _, _, _ ->},
+    onPhotoSelected: PhotoSelected = { _, _, _ -> },
     onChangeDisplay: (FeedDisplay) -> Unit = {},
     onPhotoLongPressed: (Photo) -> Unit = {},
     onAlbumSelectionClicked: (Album) -> Unit = {},
@@ -42,31 +41,18 @@ fun Feed(
             windowSizeClass = WindowSize.LOCAL_WIDTH.current,
             landscape = LocalConfiguration.current.orientation == Configuration.ORIENTATION_LANDSCAPE
         )
-        if (feedDisplay == FeedDisplay.TINY) {
-            GridDateFeed(
-                modifier = modifier,
-                contentPadding = contentPadding,
-                albums = state.albums,
-                showSelectionHeader = showSelectionHeader,
-                columnCount = columnCount,
-                gridState = gridState,
-                onPhotoSelected = onPhotoSelected,
-                onPhotoLongPressed = onPhotoLongPressed,
-                onAlbumSelectionClicked = onAlbumSelectionClicked,
-            )
-        } else {
-            StaggeredDateFeed(
-                modifier = modifier,
-                contentPadding = contentPadding,
-                albums = state.albums,
-                showSelectionHeader = showSelectionHeader,
-                listState = listState,
-                columnCount = columnCount,
-                shouldAddEmptyPhotosInRows = feedDisplay.shouldAddEmptyPhotosInRows,
-                onPhotoSelected = onPhotoSelected,
-                onPhotoLongPressed = onPhotoLongPressed,
-                onAlbumSelectionClicked = onAlbumSelectionClicked,
-            )
-        }
+        StaggeredDateFeed(
+            modifier = modifier,
+            contentPadding = contentPadding,
+            albums = state.albums,
+            showSelectionHeader = showSelectionHeader,
+            maintainAspectRatio = feedDisplay.maintainAspectRatio,
+            listState = listState,
+            columnCount = columnCount,
+            shouldAddEmptyPhotosInRows = feedDisplay.shouldAddEmptyPhotosInRows,
+            onPhotoSelected = onPhotoSelected,
+            onPhotoLongPressed = onPhotoLongPressed,
+            onAlbumSelectionClicked = onAlbumSelectionClicked,
+        )
     }
 }

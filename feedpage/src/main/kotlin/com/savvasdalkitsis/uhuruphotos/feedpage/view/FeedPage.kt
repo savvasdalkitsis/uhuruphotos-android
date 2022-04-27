@@ -1,18 +1,15 @@
 package com.savvasdalkitsis.uhuruphotos.feedpage.view
 
 import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.lazy.grid.rememberLazyGridState
 import androidx.compose.foundation.lazy.rememberLazyListState
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.*
+import androidx.compose.material.OutlinedButton
+import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.unit.dp
 import com.google.accompanist.swiperefresh.SwipeRefresh
 import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
@@ -40,12 +37,10 @@ fun FeedPage(
 ) {
     val coroutineScope = rememberCoroutineScope()
     val listState = rememberLazyListState()
-    val gridState = rememberLazyGridState()
 
     fun scrollToTop() {
         coroutineScope.launch {
             listState.animateScrollToItem(0, 0)
-            gridState.animateScrollToItem(0, 0)
         }
     }
 
@@ -116,18 +111,16 @@ fun FeedPage(
                 state.feedState,
                 showSelectionHeader = state.hasSelection,
                 listState = listState,
-                gridState = gridState,
                 onPhotoSelected = { photo, center, scale ->
                     action(SelectedPhoto(photo, center, scale,))
                 },
                 onChangeDisplay = { action(ChangeDisplay(it)) },
                 onPhotoLongPressed = {
                     action(PhotoLongPressed(it))
-                },
-                onAlbumSelectionClicked = {
-                    action(AlbumSelectionClicked(it))
                 }
-            )
+            ) {
+                action(AlbumSelectionClicked(it))
+            }
         }
         AccountOverviewPopUp(
             visible = state.showAccountOverview,

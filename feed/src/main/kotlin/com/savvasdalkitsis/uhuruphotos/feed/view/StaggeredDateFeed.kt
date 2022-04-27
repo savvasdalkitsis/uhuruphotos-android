@@ -1,5 +1,9 @@
 package com.savvasdalkitsis.uhuruphotos.feed.view
 
+import androidx.compose.animation.animateContentSize
+import androidx.compose.animation.core.spring
+import androidx.compose.animation.core.tween
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListState
@@ -17,6 +21,7 @@ fun StaggeredDateFeed(
     contentPadding: PaddingValues,
     albums: List<Album>,
     showSelectionHeader: Boolean = false,
+    maintainAspectRatio: Boolean = true,
     columnCount: Int,
     shouldAddEmptyPhotosInRows: Boolean,
     listState: LazyListState = rememberLazyListState(),
@@ -51,7 +56,10 @@ fun StaggeredDateFeed(
                 }.toTypedArray()
                 item(slotsInRow.mapNotNull { it as? PhotoSlot }.first().photo.id) {
                     PhotoRow(
-                        modifier = Modifier.animateItemPlacement(),
+                        modifier = Modifier
+                            .animateContentSize()
+                            .animateItemPlacement(),
+                        maintainAspectRatio = maintainAspectRatio,
                         onPhotoSelected = onPhotoSelected,
                         onPhotoLongPressed = onPhotoLongPressed,
                         slots = slotsInRow

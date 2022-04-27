@@ -14,6 +14,7 @@ enum class FeedDisplay(
     val wideColumnsLandscape: Int,
     val shouldAddEmptyPhotosInRows: Boolean,
     @DrawableRes val iconResource: Int,
+    val maintainAspectRatio: Boolean,
     val friendlyName: String,
 ) {
     TINY(
@@ -23,6 +24,7 @@ enum class FeedDisplay(
         wideColumnsLandscape = 9,
         shouldAddEmptyPhotosInRows = true,
         iconResource = R.drawable.ic_feed_tiny,
+        maintainAspectRatio = false,
         friendlyName = "Tiny",
     ),
     COMPACT(
@@ -32,6 +34,7 @@ enum class FeedDisplay(
         wideColumnsLandscape = 8,
         shouldAddEmptyPhotosInRows = true,
         iconResource = R.drawable.ic_feed_compact,
+        maintainAspectRatio = true,
         friendlyName = "Compact",
     ),
     COMFORTABLE(
@@ -41,6 +44,7 @@ enum class FeedDisplay(
         wideColumnsLandscape = 6,
         shouldAddEmptyPhotosInRows = true,
         iconResource = R.drawable.ic_feed_comfortable,
+        maintainAspectRatio = true,
         friendlyName = "Comfortable",
     ),
     BIG(
@@ -50,6 +54,7 @@ enum class FeedDisplay(
         wideColumnsLandscape = 5,
         shouldAddEmptyPhotosInRows = false,
         iconResource = R.drawable.ic_feed_big,
+        maintainAspectRatio = true,
         friendlyName = "Big",
     ),
     FULL(
@@ -59,6 +64,7 @@ enum class FeedDisplay(
         wideColumnsLandscape = 4,
         shouldAddEmptyPhotosInRows = false,
         iconResource = R.drawable.ic_feed_full,
+        maintainAspectRatio = true,
         friendlyName = "Full",
     );
 
