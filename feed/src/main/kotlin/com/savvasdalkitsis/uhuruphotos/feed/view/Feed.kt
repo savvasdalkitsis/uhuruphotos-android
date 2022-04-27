@@ -1,10 +1,9 @@
 package com.savvasdalkitsis.uhuruphotos.feed.view
 
 import android.content.res.Configuration
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.lazy.LazyListState
-import androidx.compose.foundation.lazy.grid.LazyGridState
-import androidx.compose.foundation.lazy.grid.rememberLazyGridState
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -32,27 +31,28 @@ fun Feed(
         FullProgressBar()
     } else {
         val feedDisplay = state.feedDisplay
-        val modifier = Modifier
-            .pinchToChange(
-                feedDisplay,
-                onChangeDisplay,
+        Box(
+            modifier = Modifier
+                .pinchToChange(
+                    feedDisplay,
+                    onChangeDisplay,
+                ),
+        ) {
+            StaggeredDateFeed(
+                contentPadding = contentPadding,
+                albums = state.albums,
+                showSelectionHeader = showSelectionHeader,
+                maintainAspectRatio = feedDisplay.maintainAspectRatio,
+                listState = listState,
+                columnCount = feedDisplay.columnCount(
+                    windowSizeClass = WindowSize.LOCAL_WIDTH.current,
+                    landscape = LocalConfiguration.current.orientation == Configuration.ORIENTATION_LANDSCAPE
+                ),
+                shouldAddEmptyPhotosInRows = feedDisplay.shouldAddEmptyPhotosInRows,
+                onPhotoSelected = onPhotoSelected,
+                onPhotoLongPressed = onPhotoLongPressed,
+                onAlbumSelectionClicked = onAlbumSelectionClicked,
             )
-        val columnCount = feedDisplay.columnCount(
-            windowSizeClass = WindowSize.LOCAL_WIDTH.current,
-            landscape = LocalConfiguration.current.orientation == Configuration.ORIENTATION_LANDSCAPE
-        )
-        StaggeredDateFeed(
-            modifier = modifier,
-            contentPadding = contentPadding,
-            albums = state.albums,
-            showSelectionHeader = showSelectionHeader,
-            maintainAspectRatio = feedDisplay.maintainAspectRatio,
-            listState = listState,
-            columnCount = columnCount,
-            shouldAddEmptyPhotosInRows = feedDisplay.shouldAddEmptyPhotosInRows,
-            onPhotoSelected = onPhotoSelected,
-            onPhotoLongPressed = onPhotoLongPressed,
-            onAlbumSelectionClicked = onAlbumSelectionClicked,
-        )
+        }
     }
 }

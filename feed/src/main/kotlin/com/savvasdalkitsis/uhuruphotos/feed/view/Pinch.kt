@@ -36,18 +36,15 @@ fun Modifier.pinchToChange(
                 awaitFirstDown(requireUnconsumed = false)
                 do {
                     val event = awaitPointerEvent()
-                    val canceled = event.changes.fastAny { it.isConsumed }
                     if (event.changes.size > 1) {
-                        if (!canceled) {
-                            val zoomChange = event.calculateZoom()
-                            coroutineScope.launch {
-                                zoom.snapTo(
-                                    max(
-                                        zoomMin,
-                                        min(zoom.value * zoomChange, zoomMax)
-                                    )
+                        val zoomChange = event.calculateZoom()
+                        coroutineScope.launch {
+                            zoom.snapTo(
+                                max(
+                                    zoomMin,
+                                    min(zoom.value * zoomChange, zoomMax)
                                 )
-                            }
+                            )
                         }
 
                         event.changes.fastForEach {
@@ -56,7 +53,7 @@ fun Modifier.pinchToChange(
                             }
                         }
                     }
-                } while (!canceled && event.changes.fastAny { it.pressed })
+                } while (event.changes.fastAny { it.pressed })
                 if (zoom.value < zoomLowTrigger) {
                     onChangeDisplay(feedDisplay.zoomOut)
                 }
