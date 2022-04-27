@@ -3,7 +3,6 @@ package com.savvasdalkitsis.uhuruphotos.ui.view
 import androidx.compose.animation.*
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.layout.WindowInsetsSides.Companion.Bottom
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.material.TopAppBar
@@ -12,7 +11,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import com.google.accompanist.insets.ui.Scaffold
-import com.savvasdalkitsis.uhuruphotos.ui.insets.*
+import com.savvasdalkitsis.uhuruphotos.ui.insets.insetsBottom
+import com.savvasdalkitsis.uhuruphotos.ui.insets.insetsEnd
+import com.savvasdalkitsis.uhuruphotos.ui.insets.insetsStart
+import com.savvasdalkitsis.uhuruphotos.ui.insets.insetsTop
 
 @Composable
 fun CommonScaffold(
@@ -29,7 +31,6 @@ fun CommonScaffold(
 ) {
     Scaffold(
         modifier = modifier,
-        contentPadding = systemPadding(Bottom),
         bottomBar = {
             AnimatedVisibility(
                 visible = bottomBarDisplayed,
