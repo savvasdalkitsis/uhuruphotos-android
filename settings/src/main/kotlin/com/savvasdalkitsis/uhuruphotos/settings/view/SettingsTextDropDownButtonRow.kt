@@ -9,9 +9,7 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import androidx.work.NetworkType
 import com.savvasdalkitsis.uhuruphotos.settings.viewmodel.SettingsAction
-
 
 @Composable
 fun SettingsTextDropDownButtonRow(
@@ -34,21 +32,22 @@ fun SettingsTextDropDownButtonRow(
     dropDownItems: @Composable DropDownMenuScope.() -> Unit,
 ) {
     var expanded by remember { mutableStateOf(false) }
-    Box(
+    Row(
         modifier = Modifier
-            .height(64.dp)
+            .heightIn(min = 64.dp)
             .fillMaxWidth(),
     ) {
        Box(
            modifier = Modifier
                .padding(8.dp)
-               .align(Alignment.CenterStart)) {
+               .weight(1f)
+               .align(Alignment.CenterVertically)) {
            content()
        }
         Box(
             modifier = Modifier
                 .padding(8.dp)
-                .align(Alignment.CenterEnd)
+                .align(Alignment.CenterVertically)
         ) {
             Button(onClick = { expanded = true }) {
                 Text(buttonText)

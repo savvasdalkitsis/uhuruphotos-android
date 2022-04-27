@@ -1,16 +1,15 @@
 package com.savvasdalkitsis.uhuruphotos.settings.view
 
-import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.lazy.grid.GridCells
-import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
 import com.savvasdalkitsis.uhuruphotos.settings.view.state.SettingsState
 import com.savvasdalkitsis.uhuruphotos.settings.viewmodel.SettingsAction
-import com.savvasdalkitsis.uhuruphotos.settings.viewmodel.SettingsAction.*
-import com.savvasdalkitsis.uhuruphotos.ui.view.*
+import com.savvasdalkitsis.uhuruphotos.settings.viewmodel.SettingsAction.DismissFullFeedSyncDialog
+import com.savvasdalkitsis.uhuruphotos.settings.viewmodel.SettingsAction.NavigateBack
+import com.savvasdalkitsis.uhuruphotos.ui.view.BackNavButton
+import com.savvasdalkitsis.uhuruphotos.ui.view.CommonScaffold
+import com.savvasdalkitsis.uhuruphotos.ui.view.FullProgressBar
+import com.savvasdalkitsis.uhuruphotos.ui.view.StaggeredGrid
 import com.savvasdalkitsis.uhuruphotos.ui.window.WindowSize
 import com.savvasdalkitsis.uhuruphotos.ui.window.WindowSizeClass.*
 import com.savvasdalkitsis.uhuruphotos.userbadge.api.view.UserBadge
@@ -37,13 +36,10 @@ fun Settings(
                 MEDIUM -> 2
                 EXPANDED -> 3
             }
-            LazyStaggeredGrid(
-                modifier = Modifier
-                    .padding(
-                        top = contentPadding.calculateTopPadding(),
-                        bottom = contentPadding.calculateBottomPadding()
-                    ),
-                columnCount = columns
+            StaggeredGrid(
+                contentPadding = contentPadding,
+                syncScrolling = false,
+                columnCount = columns,
             ) {
                 item {
                     SettingsGroupTheme(state, action)
