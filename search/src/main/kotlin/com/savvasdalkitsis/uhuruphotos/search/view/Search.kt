@@ -89,7 +89,12 @@ import com.savvasdalkitsis.uhuruphotos.ui.view.FullProgressBar
                 onPhotoSelected = { photo, center, scale ->
                     action(SelectedPhoto(photo, center, scale))
                 },
-                state = FeedState(isLoading = false, state.searchResults.albums),
+                onChangeDisplay = { action(ChangeDisplay(it)) },
+                state = FeedState(
+                    isLoading = false,
+                    albums = state.searchResults.albums,
+                    feedDisplay = state.searchDisplay,
+                ),
             )
         }
     }

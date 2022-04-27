@@ -4,6 +4,7 @@ import com.savvasdalkitsis.uhuruphotos.account.usecase.AccountUseCase
 import com.savvasdalkitsis.uhuruphotos.feedpage.usecase.FeedPageUseCase
 import com.savvasdalkitsis.uhuruphotos.search.mvflow.SearchAction
 import com.savvasdalkitsis.uhuruphotos.search.mvflow.SearchAction.*
+import com.savvasdalkitsis.uhuruphotos.search.mvflow.SearchAction.ChangeDisplay
 import com.savvasdalkitsis.uhuruphotos.search.mvflow.SearchEffect
 import com.savvasdalkitsis.uhuruphotos.search.mvflow.SearchEffect.*
 import com.savvasdalkitsis.uhuruphotos.search.mvflow.SearchMutation
@@ -34,7 +35,7 @@ class SearchHandler @Inject constructor(
             feedPageUseCase
                 .getFeedDisplay()
                 .distinctUntilChanged()
-                .map(::ChangeDisplay),
+                .map(::ChangeFeedDisplay),
             userBadgeUseCase.getUserBadgeState()
                 .map(::UserBadgeStateChanged)
         ).onStart {
@@ -79,6 +80,6 @@ class SearchHandler @Inject constructor(
         is SelectedPhoto -> flow {
             effect(OpenPhotoDetails(action.photo.id, action.center, action.scale, action.photo.isVideo))
         }
+        is ChangeDisplay -> flowOf(ChangeSearchDisplay(action.display))
     }
-
 }

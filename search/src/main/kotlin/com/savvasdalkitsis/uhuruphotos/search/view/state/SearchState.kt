@@ -11,4 +11,5 @@ data class SearchState(
     val showAccountOverview: Boolean = false,
     val showLogOutConfirmation: Boolean = false,
     val feedDisplay: FeedDisplay = FeedDisplay.default,
+    val searchDisplay: FeedDisplay = FeedDisplay.default,
 )

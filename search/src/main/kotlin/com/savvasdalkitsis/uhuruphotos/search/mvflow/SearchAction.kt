@@ -1,6 +1,7 @@
 package com.savvasdalkitsis.uhuruphotos.search.mvflow
 
 import androidx.compose.ui.geometry.Offset
+import com.savvasdalkitsis.uhuruphotos.feed.view.state.FeedDisplay
 import com.savvasdalkitsis.uhuruphotos.photos.model.Photo
 
 sealed class SearchAction {
@@ -19,4 +20,5 @@ sealed class SearchAction {
     data class SearchFor(val query: String) : SearchAction()
     data class ChangeFocus(val focused: Boolean) : SearchAction()
     data class SelectedPhoto(val photo: Photo, val center: Offset, val scale: Float) : SearchAction()
+    data class ChangeDisplay(val display: FeedDisplay) : SearchAction()
 }

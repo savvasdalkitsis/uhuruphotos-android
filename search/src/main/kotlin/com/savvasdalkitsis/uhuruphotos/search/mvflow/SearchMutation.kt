@@ -12,7 +12,8 @@ sealed class SearchMutation {
     object HideAccountOverview : SearchMutation()
     object ShowLogOutConfirmation : SearchMutation()
     object HideLogOutConfirmation : SearchMutation()
-    data class ChangeDisplay(val feedDisplay: FeedDisplay) : SearchMutation()
+    data class ChangeFeedDisplay(val display: FeedDisplay) : SearchMutation()
+    data class ChangeSearchDisplay(val display: FeedDisplay) : SearchMutation()
     data class QueryChanged(val query: String) : SearchMutation()
     data class FocusChanged(val focused: Boolean) : SearchMutation()
     data class SearchResultsUpdated(val albums: List<Album>) : SearchMutation() {
