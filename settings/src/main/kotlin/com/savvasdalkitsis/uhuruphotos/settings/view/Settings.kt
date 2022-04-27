@@ -10,9 +10,7 @@ import androidx.compose.ui.unit.dp
 import com.savvasdalkitsis.uhuruphotos.settings.view.state.SettingsState
 import com.savvasdalkitsis.uhuruphotos.settings.viewmodel.SettingsAction
 import com.savvasdalkitsis.uhuruphotos.settings.viewmodel.SettingsAction.*
-import com.savvasdalkitsis.uhuruphotos.ui.view.BackNavButton
-import com.savvasdalkitsis.uhuruphotos.ui.view.CommonScaffold
-import com.savvasdalkitsis.uhuruphotos.ui.view.FullProgressBar
+import com.savvasdalkitsis.uhuruphotos.ui.view.*
 import com.savvasdalkitsis.uhuruphotos.ui.window.WindowSize
 import com.savvasdalkitsis.uhuruphotos.ui.window.WindowSizeClass.*
 import com.savvasdalkitsis.uhuruphotos.userbadge.api.view.UserBadge
@@ -39,12 +37,13 @@ fun Settings(
                 MEDIUM -> 2
                 EXPANDED -> 3
             }
-            LazyVerticalGrid(
+            LazyStaggeredGrid(
                 modifier = Modifier
-                    .padding(top = contentPadding.calculateTopPadding()),
-                verticalArrangement = Arrangement.spacedBy(12.dp),
-                horizontalArrangement = Arrangement.spacedBy(12.dp),
-                columns = GridCells.Fixed(columns),
+                    .padding(
+                        top = contentPadding.calculateTopPadding(),
+                        bottom = contentPadding.calculateBottomPadding()
+                    ),
+                columnCount = columns
             ) {
                 item {
                     SettingsGroupTheme(state, action)

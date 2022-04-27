@@ -21,7 +21,10 @@ fun SettingsGroup(
     title: String,
     content: @Composable ColumnScope.() -> Unit,
 ) {
-    Surface(elevation = 4.dp) {
+    Surface(
+        modifier = Modifier.padding(4.dp),
+        elevation = 4.dp,
+    ) {
         Column {
             val arrowAngle = remember { Animatable(180f) }
             var collapsed by remember { mutableStateOf(false) }
