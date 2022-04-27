@@ -28,7 +28,8 @@ class AlbumsRepository @Inject constructor(
         albumsQueries.getAlbums().asFlow().mapToList().groupBy(GetAlbums::id)
             .distinctUntilChanged()
 
-    suspend fun refreshAlbums(shallow: Boolean) {
+    suspend fun refreshAlbums(shallow: Boolean, onProgressChange: suspend (Int) -> Unit) {
+        onProgressChange(0)
         val albums = albumsService.getAlbumsByDate()
 
         albumsQueries.transaction {
@@ -42,10 +43,10 @@ class AlbumsRepository @Inject constructor(
             shallow -> albums.results.take(3)
             else -> albums.results
         }
-        for (incompleteAlbum in albumsToDownloadSummaries) {
+        for ((index, incompleteAlbum) in albumsToDownloadSummaries.withIndex()) {
             val id = incompleteAlbum.id
             maybeFetchSummaries(id)
-            delay(1000)
+            onProgressChange((100 * (index / albumsToDownloadSummaries.size.toFloat())).toInt())
         }
     }
 

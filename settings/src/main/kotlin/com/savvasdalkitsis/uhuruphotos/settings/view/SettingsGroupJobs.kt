@@ -1,5 +1,6 @@
 package com.savvasdalkitsis.uhuruphotos.settings.view
 
+import androidx.compose.animation.AnimatedContent
 import androidx.compose.material.Divider
 import androidx.compose.runtime.Composable
 import com.savvasdalkitsis.uhuruphotos.icons.R
@@ -14,7 +15,7 @@ fun SettingsGroupJobs(
 ) {
     SettingsGroup(title = "Jobs") {
         val days = 7
-        val initialValue  = (state.feedSyncFrequency ?: 0).toFloat()
+        val initialValue = (state.feedSyncFrequency ?: 0).toFloat()
         val upperLimit = days * 24f
         SettingsSliderRow(
             text = {
@@ -40,11 +41,20 @@ fun SettingsGroupJobs(
         Divider()
         SettingsFullSyncNetworkRequirements(state, action)
         Divider()
-        SettingsButtonRow(
-            enabled = state.fullSyncButtonEnabled,
-            buttonText = "Perform full sync now"
-        ) {
-            action(AskForFullFeedSync)
+
+        AnimatedContent(targetState = state.fullSyncButtonEnabled) { enabled ->
+            when {
+                enabled -> SettingsButtonRow(
+                    buttonText = "Perform full sync now"
+                ) {
+                    action(AskForFullFeedSync)
+                }
+                else -> SettingsProgressIndicator(
+                    text = "Full photo feed sync progress",
+                    progress = state.fullSyncJobProgress,
+                )
+            }
         }
+
     }
 }

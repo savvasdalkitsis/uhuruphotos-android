@@ -10,5 +10,5 @@ interface AlbumWorkScheduler {
     fun scheduleAlbumsRefreshPeriodic(
         existingPeriodicWorkPolicy: ExistingPeriodicWorkPolicy
     )
-    fun observeAlbumRefreshJobStatus(): Flow<WorkInfo.State>
+    fun observeAlbumRefreshJob(): Flow<RefreshJobState>
 }

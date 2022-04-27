@@ -10,6 +10,7 @@ import androidx.hilt.work.HiltWorker
 import androidx.work.CoroutineWorker
 import androidx.work.ForegroundInfo
 import androidx.work.WorkerParameters
+import androidx.work.workDataOf
 import com.savvasdalkitsis.uhuruphotos.albums.repository.AlbumsRepository
 import com.savvasdalkitsis.uhuruphotos.icons.R
 import com.savvasdalkitsis.uhuruphotos.log.log
@@ -31,7 +32,9 @@ class AlbumDownloadWorker @AssistedInject constructor(
     override suspend fun doWork() = withContext(Dispatchers.IO) {
         try {
             val shallow = params.inputData.getBoolean(KEY_SHALLOW, false)
-            albumsRepository.refreshAlbums(shallow)
+            albumsRepository.refreshAlbums(shallow) { progress ->
+                setProgress(workDataOf(Progress to progress))
+            }
             Result.success()
         } catch (e: Exception) {
             log(e)
@@ -59,6 +62,7 @@ class AlbumDownloadWorker @AssistedInject constructor(
         }
     }
     companion object {
+        const val Progress = "Progress"
         const val WORK_NAME = "refreshAlbums"
         const val KEY_SHALLOW = "shallow"
         private const val NOTIFICATION_ID = 1273

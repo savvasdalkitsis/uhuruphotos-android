@@ -19,4 +19,5 @@ data class SettingsState(
     val fullSyncNetworkRequirement: NetworkType? = null,
     val fullSyncRequiresCharging: Boolean = false,
     val themeMode: ThemeMode = ThemeMode.default,
+    val fullSyncJobProgress: Int = 0,
 )

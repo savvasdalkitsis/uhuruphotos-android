@@ -49,12 +49,15 @@ internal class SettingsHandler @Inject constructor(
                 .map(::DisplayVideoDiskCacheCurrentUse),
             userBadgeUseCase.getUserBadgeState()
                 .map(::UserBadgeUpdate),
-            albumWorkScheduler.observeAlbumRefreshJobStatus()
-                .map {
-                    when (it) {
-                        RUNNING -> DisableFullSyncButton
-                        else -> EnableFullSyncButton
-                    }
+            albumWorkScheduler.observeAlbumRefreshJob()
+                .flatMapMerge {
+                    flowOf(
+                        when (it.status) {
+                            RUNNING -> DisableFullSyncButton
+                            else -> EnableFullSyncButton
+                        },
+                        DisplayFullSyncProgress(it.progress)
+                    )
                 }
             )
         NavigateBack -> flow {

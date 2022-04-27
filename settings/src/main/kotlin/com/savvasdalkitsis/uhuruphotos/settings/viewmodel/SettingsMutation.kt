@@ -10,6 +10,7 @@ sealed class SettingsMutation {
     object EnableFullSyncButton : SettingsMutation()
     object DisableFullSyncButton : SettingsMutation()
 
+    data class DisplayFullSyncProgress(val progress: Int) : SettingsMutation()
     data class DisplayDiskCacheMaxLimit(val limit: Int) : SettingsMutation()
     data class DisplayMemCacheMaxLimit(val limit: Int) : SettingsMutation()
     data class DisplayVideoDiskCacheMaxLimit(val limit: Int) : SettingsMutation()
