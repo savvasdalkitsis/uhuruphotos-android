@@ -20,4 +20,5 @@ data class SettingsState(
     val fullSyncRequiresCharging: Boolean = false,
     val themeMode: ThemeMode = ThemeMode.default,
     val fullSyncJobProgress: Int = 0,
+    val searchSuggestionsEnabled: Boolean = true,
 )

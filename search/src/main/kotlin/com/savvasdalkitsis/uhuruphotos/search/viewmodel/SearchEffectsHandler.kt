@@ -7,10 +7,12 @@ import com.savvasdalkitsis.uhuruphotos.search.mvflow.SearchEffect
 import com.savvasdalkitsis.uhuruphotos.search.mvflow.SearchEffect.*
 import com.savvasdalkitsis.uhuruphotos.server.navigation.ServerNavigationTarget
 import com.savvasdalkitsis.uhuruphotos.settings.navigation.SettingsNavigationTarget
+import com.savvasdalkitsis.uhuruphotos.toaster.Toaster
 import javax.inject.Inject
 
 class SearchEffectsHandler @Inject constructor(
     private val controllersProvider: ControllersProvider,
+    private val toaster: Toaster,
 ) : (SearchEffect) -> Unit {
 
     override fun invoke(
@@ -31,6 +33,7 @@ class SearchEffectsHandler @Inject constructor(
         is OpenPhotoDetails -> navigateTo(
             PhotoNavigationTarget.name(effect.id, effect.center, effect.scale, effect.isVideo)
         )
+        ErrorSearching -> toaster.show("There was an error while searching")
     }
 
     private fun navigateTo(target: String) {

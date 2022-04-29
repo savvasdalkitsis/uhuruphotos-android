@@ -56,6 +56,9 @@ fun Settings(
                 item {
                     SettingsGroupJobs(state, action)
                 }
+                item {
+                    SettingsGroupSearch(state, action)
+                }
             }
         }
         if (state.showFullFeedSyncDialog) {

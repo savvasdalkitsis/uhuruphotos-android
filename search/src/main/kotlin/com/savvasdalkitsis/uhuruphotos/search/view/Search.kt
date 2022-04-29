@@ -6,14 +6,12 @@ import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.material.Icon
-import androidx.compose.material.IconButton
-import androidx.compose.material.Text
-import androidx.compose.material.TextField
+import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.focus.onFocusChanged
@@ -81,6 +79,29 @@ import com.savvasdalkitsis.uhuruphotos.ui.view.FullProgressBar
                 action(ChangeQuery(it))
             }
         )
+        val suggestion = state.suggestion
+        AnimatedVisibility(visible = suggestion != null) {
+            if (suggestion != null) {
+                Row(
+                    modifier = Modifier
+                        .padding(
+                            start = 12.dp,
+                            end = 12.dp,
+                            bottom = 12.dp,
+                        ),
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.spacedBy(8.dp),
+                ) {
+                    Text(modifier = Modifier.weight(1f), text = "Search suggestions:")
+                    OutlinedButton(onClick = {
+                        action(ChangeQuery(suggestion))
+                        action(SearchFor(suggestion))
+                    }) {
+                        Text(suggestion)
+                    }
+                }
+            }
+        }
         when (state.searchResults) {
             SearchResults.Idle -> {}
             SearchResults.Searching -> FullProgressBar()

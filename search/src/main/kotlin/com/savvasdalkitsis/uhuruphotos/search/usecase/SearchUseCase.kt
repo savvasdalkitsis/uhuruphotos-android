@@ -6,15 +6,10 @@ import com.savvasdalkitsis.uhuruphotos.photos.service.model.isVideo
 import com.savvasdalkitsis.uhuruphotos.photos.model.Photo
 import com.savvasdalkitsis.uhuruphotos.photos.usecase.PhotosUseCase
 import com.savvasdalkitsis.uhuruphotos.search.repository.SearchRepository
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.currentCoroutineContext
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.distinctUntilChanged
-import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.flow.onStart
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.*
+import kotlinx.coroutines.flow.*
 import javax.inject.Inject
+import kotlin.random.Random
 
 class SearchUseCase @Inject constructor(
     private val searchRepository: SearchRepository,
@@ -67,4 +62,19 @@ class SearchUseCase @Inject constructor(
                     searchRepository.refreshSearch(query)
                 }
             }
+
+    fun getSearchSuggestions(): Flow<String> = searchRepository.getSearchSuggestions()
+        .flatMapLatest { suggestions ->
+            val r = Random(System.currentTimeMillis())
+            flow {
+                if (suggestions.isNotEmpty()) {
+                    while (currentCoroutineContext().isActive) {
+                        emit(suggestions[r.nextInt(suggestions.size - 1)])
+                        delay(3000)
+                    }
+                }
+            }
+        }.onStart {
+            searchRepository.refreshSearchSuggestions()
+        }
 }

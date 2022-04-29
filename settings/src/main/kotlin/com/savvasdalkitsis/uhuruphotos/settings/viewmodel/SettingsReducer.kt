@@ -40,5 +40,6 @@ fun settingsReducer(): Reducer<SettingsState, SettingsMutation> = { state, mutat
         is DisplayVideoDiskCacheMaxLimit -> state.copy(videoDiskCacheMax = mutation.limit)
         is DisplayThemeMode -> state.copy(themeMode = mutation.themeMode)
         is DisplayFullSyncProgress -> state.copy(fullSyncJobProgress = mutation.progress)
+        is DisplaySearchSuggestionsEnabled -> state.copy(searchSuggestionsEnabled = mutation.enabled)
     }
 }

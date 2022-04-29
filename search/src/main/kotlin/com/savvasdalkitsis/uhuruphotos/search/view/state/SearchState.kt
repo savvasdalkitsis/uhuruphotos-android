@@ -12,4 +12,5 @@ data class SearchState(
     val showLogOutConfirmation: Boolean = false,
     val feedDisplay: FeedDisplay = FeedDisplay.default,
     val searchDisplay: FeedDisplay = FeedDisplay.default,
+    val suggestion: String? = null,
 )

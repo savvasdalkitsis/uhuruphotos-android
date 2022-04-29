@@ -41,6 +41,8 @@ internal class SettingsHandler @Inject constructor(
                 .map(::DisplayFullSyncRequiresCharging),
             settingsUseCase.observeThemeMode()
                 .map(::DisplayThemeMode),
+            settingsUseCase.observeSearchSuggestionsEnabledMode()
+                .map(::DisplaySearchSuggestionsEnabled),
             cacheUseCase.observeImageDiskCacheCurrentUse()
                 .map(::DisplayImageDiskCacheCurrentUse),
             cacheUseCase.observeImageMemCacheCurrentUse()
@@ -105,6 +107,9 @@ internal class SettingsHandler @Inject constructor(
         }
         is ChangeThemeMode -> flow {
             settingsUseCase.setThemeMode(action.themeMode)
+        }
+        is ChangeSearchSuggestionsEnabled -> flow {
+            settingsUseCase.setSearchSuggestionsEnabled(action.enabled)
         }
     }
 

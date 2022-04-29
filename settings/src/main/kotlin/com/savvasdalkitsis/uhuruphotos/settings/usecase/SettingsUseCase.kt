@@ -23,6 +23,7 @@ class SettingsUseCase @Inject constructor(
     private val fullSyncNetworkRequirements = flowSharedPreferences.getEnum("fullSyncNetworkRequirements", NetworkType.NOT_ROAMING)
     private val fullSyncRequiresCharging = flowSharedPreferences.getBoolean("fullSyncRequiresCharging", false)
     private val themeMode = flowSharedPreferences.getEnum("themeMode", ThemeMode.default)
+    private val searchSuggestionsEnabled = flowSharedPreferences.getBoolean("searchSuggestionsEnabled", true)
 
     fun getImageDiskCacheMaxLimit(): Int = imageDiskCacheSize.get()
     fun getImageMemCacheMaxLimit(): Int = imageMemCacheSize.get()
@@ -31,7 +32,6 @@ class SettingsUseCase @Inject constructor(
     fun getFullSyncNetworkRequirements(): NetworkType = fullSyncNetworkRequirements.get()
     fun getFullSyncRequiresCharging(): Boolean = fullSyncRequiresCharging.get()
     fun getShouldPerformPeriodicFullSync(): Boolean = shouldPerformPeriodicFeedSync.get()
-    fun getThemeMode(): ThemeMode = themeMode.get()
 
     fun observeImageDiskCacheMaxLimit(): Flow<Int> = imageDiskCacheSize.asFlow()
     fun observeImageMemCacheMaxLimit(): Flow<Int> = imageMemCacheSize.asFlow()
@@ -40,6 +40,7 @@ class SettingsUseCase @Inject constructor(
     fun observeFullSyncNetworkRequirements(): Flow<NetworkType> = fullSyncNetworkRequirements.asFlow()
     fun observeFullSyncRequiresCharging(): Flow<Boolean> = fullSyncRequiresCharging.asFlow()
     fun observeThemeMode(): Flow<ThemeMode> = themeMode.asFlow()
+    fun observeSearchSuggestionsEnabledMode(): Flow<Boolean> = searchSuggestionsEnabled.asFlow()
     suspend fun observeThemeModeState(): StateFlow<ThemeMode> = observeThemeMode().stateIn(
         CoroutineScope(Dispatchers.IO)
     )
@@ -74,5 +75,9 @@ class SettingsUseCase @Inject constructor(
 
     suspend fun setThemeMode(mode: ThemeMode) {
         themeMode.setAndCommit(mode)
+    }
+
+    suspend fun setSearchSuggestionsEnabled(enabled: Boolean) {
+        searchSuggestionsEnabled.setAndCommit(enabled)
     }
 }

@@ -8,6 +8,8 @@ sealed class SearchEffect {
     object ReloadApp : SearchEffect()
     object NavigateToEditServer : SearchEffect()
     object NavigateToSettings : SearchEffect()
+    object ErrorSearching : SearchEffect()
+
     data class OpenPhotoDetails(
         val id: String,
         val center: Offset,

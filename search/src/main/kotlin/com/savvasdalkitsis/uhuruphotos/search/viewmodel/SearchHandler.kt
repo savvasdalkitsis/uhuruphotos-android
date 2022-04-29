@@ -2,6 +2,7 @@ package com.savvasdalkitsis.uhuruphotos.search.viewmodel
 
 import com.savvasdalkitsis.uhuruphotos.account.usecase.AccountUseCase
 import com.savvasdalkitsis.uhuruphotos.feedpage.usecase.FeedPageUseCase
+import com.savvasdalkitsis.uhuruphotos.log.log
 import com.savvasdalkitsis.uhuruphotos.search.mvflow.SearchAction
 import com.savvasdalkitsis.uhuruphotos.search.mvflow.SearchAction.*
 import com.savvasdalkitsis.uhuruphotos.search.mvflow.SearchAction.ChangeDisplay
@@ -11,6 +12,7 @@ import com.savvasdalkitsis.uhuruphotos.search.mvflow.SearchMutation
 import com.savvasdalkitsis.uhuruphotos.search.mvflow.SearchMutation.*
 import com.savvasdalkitsis.uhuruphotos.search.usecase.SearchUseCase
 import com.savvasdalkitsis.uhuruphotos.search.view.state.SearchState
+import com.savvasdalkitsis.uhuruphotos.settings.usecase.SettingsUseCase
 import com.savvasdalkitsis.uhuruphotos.userbadge.api.UserBadgeUseCase
 import com.savvasdalkitsis.uhuruphotos.viewmodel.Handler
 import kotlinx.coroutines.*
@@ -22,6 +24,7 @@ class SearchHandler @Inject constructor(
     private val userBadgeUseCase: UserBadgeUseCase,
     private val accountUseCase: AccountUseCase,
     private val feedPageUseCase: FeedPageUseCase,
+    private val settingsUseCase: SettingsUseCase,
 ) : Handler<SearchState, SearchEffect, SearchAction, SearchMutation> {
 
     private var lastSearch: Job? = null
@@ -37,7 +40,14 @@ class SearchHandler @Inject constructor(
                 .distinctUntilChanged()
                 .map(::ChangeFeedDisplay),
             userBadgeUseCase.getUserBadgeState()
-                .map(::UserBadgeStateChanged)
+                .map(::UserBadgeStateChanged),
+            settingsUseCase.observeSearchSuggestionsEnabledMode().flatMapLatest { enabled ->
+                if (enabled)
+                    searchUseCase.getSearchSuggestions()
+                        .map(::ShowSearchSuggestion)
+                else
+                    flowOf(HideSuggestions)
+            }
         ).onStart {
             effect(FocusSearchBar)
         }
@@ -56,6 +66,11 @@ class SearchHandler @Inject constructor(
                         }
                     }
                     .cancellable()
+                    .catch {
+                        log(it)
+                        effect(ErrorSearching)
+                        send(SearchStopped)
+                    }
                     .collect { send(it) }
             }
         }

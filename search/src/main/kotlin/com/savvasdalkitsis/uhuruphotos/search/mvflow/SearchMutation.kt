@@ -8,10 +8,12 @@ sealed class SearchMutation {
 
     object SearchCleared : SearchMutation()
     object SearchStarted : SearchMutation()
+    object SearchStopped : SearchMutation()
     object ShowAccountOverview : SearchMutation()
     object HideAccountOverview : SearchMutation()
     object ShowLogOutConfirmation : SearchMutation()
     object HideLogOutConfirmation : SearchMutation()
+    object HideSuggestions : SearchMutation()
     data class ChangeFeedDisplay(val display: FeedDisplay) : SearchMutation()
     data class ChangeSearchDisplay(val display: FeedDisplay) : SearchMutation()
     data class QueryChanged(val query: String) : SearchMutation()
@@ -20,4 +22,5 @@ sealed class SearchMutation {
         override fun toString() = "Updating results with ${albums.size} albums"
     }
     data class UserBadgeStateChanged(val userInformationState: UserInformationState) : SearchMutation()
+    data class ShowSearchSuggestion(val suggestion: String) : SearchMutation()
 }

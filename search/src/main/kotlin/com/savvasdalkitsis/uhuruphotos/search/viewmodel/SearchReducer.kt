@@ -12,6 +12,7 @@ fun searchReducer() : Reducer<SearchState, SearchMutation> = { state, mutation -
         is FocusChanged -> state.copy(showClearButton = mutation.focused)
         SearchCleared -> state.copy(query = "")
         SearchStarted -> state.copy(searchResults = SearchResults.Searching)
+        SearchStopped -> state.copy(searchResults = SearchResults.Idle)
         is SearchResultsUpdated -> state.copy(
             searchResults = when {
                 mutation.albums.isEmpty() -> SearchResults.Searching
@@ -25,5 +26,7 @@ fun searchReducer() : Reducer<SearchState, SearchMutation> = { state, mutation -
         is ChangeSearchDisplay -> state.copy(searchDisplay = mutation.display)
         HideLogOutConfirmation -> state.copy(showLogOutConfirmation = false)
         ShowLogOutConfirmation -> state.copy(showLogOutConfirmation = true)
+        is ShowSearchSuggestion -> state.copy(suggestion = mutation.suggestion)
+        HideSuggestions -> state.copy(suggestion = null)
     }
 }
