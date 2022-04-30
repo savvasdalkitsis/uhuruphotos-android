@@ -2,6 +2,8 @@ package com.savvasdalkitsis.uhuruphotos.search.viewmodel
 
 import com.savvasdalkitsis.uhuruphotos.home.navigation.HomeNavigationTarget
 import com.savvasdalkitsis.uhuruphotos.navigation.ControllersProvider
+import com.savvasdalkitsis.uhuruphotos.people.navigation.PeopleNavigationTarget
+import com.savvasdalkitsis.uhuruphotos.person.api.navigation.PersonNavigationTarget
 import com.savvasdalkitsis.uhuruphotos.photos.navigation.PhotoNavigationTarget
 import com.savvasdalkitsis.uhuruphotos.search.mvflow.SearchEffect
 import com.savvasdalkitsis.uhuruphotos.search.mvflow.SearchEffect.*
@@ -34,6 +36,9 @@ class SearchEffectsHandler @Inject constructor(
             PhotoNavigationTarget.name(effect.id, effect.center, effect.scale, effect.isVideo)
         )
         ErrorSearching -> toaster.show("There was an error while searching")
+        NavigateToAllPeople -> navigateTo(PeopleNavigationTarget.name)
+        ErrorRefreshingPeople -> toaster.show("There was an error refreshing people")
+        is NavigateToPerson -> navigateTo(PersonNavigationTarget.name(effect.personId))
     }
 
     private fun navigateTo(target: String) {

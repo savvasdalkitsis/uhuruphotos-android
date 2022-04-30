@@ -87,7 +87,4 @@ class AuthModule {
             .cache(httpCache)
             .build())
         .build()
-
-    @Provides
-    fun tokenQueries(database: Database): TokenQueries = database.tokenQueries
 }

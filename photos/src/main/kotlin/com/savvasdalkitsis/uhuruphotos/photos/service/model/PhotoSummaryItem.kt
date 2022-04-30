@@ -1,6 +1,7 @@
 package com.savvasdalkitsis.uhuruphotos.photos.service.model
 
 import com.savvasdalkitsis.uhuruphotos.db.albums.GetAlbums
+import com.savvasdalkitsis.uhuruphotos.db.albums.GetPersonAlbums
 import com.savvasdalkitsis.uhuruphotos.db.search.GetSearchResults
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
@@ -20,5 +21,6 @@ data class PhotoSummaryItem(
 )
 
 val GetAlbums.isVideo get() = type.isVideo
+val GetPersonAlbums.isVideo get() = type.isVideo
 val GetSearchResults.isVideo get() = type.isVideo
 private val String?.isVideo get() = this == "video"

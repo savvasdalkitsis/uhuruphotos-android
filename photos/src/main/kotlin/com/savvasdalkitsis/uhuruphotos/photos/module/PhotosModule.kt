@@ -21,9 +21,4 @@ class PhotosModule {
         retrofit: Retrofit,
     ): PhotosService = retrofit.create(PhotosService::class.java)
 
-    @Provides
-    fun photoDetailsQueries(database: Database): PhotoDetailsQueries = database.photoDetailsQueries
-
-    @Provides
-    fun photoSummaryQueries(database: Database): PhotoSummaryQueries = database.photoSummaryQueries
 }

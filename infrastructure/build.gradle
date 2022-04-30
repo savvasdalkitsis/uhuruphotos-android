@@ -17,4 +17,7 @@ dependencies {
             libs.androidx.compose.ui,
             libs.hilt,
     )
+    api(
+            libs.result,
+    )
 }

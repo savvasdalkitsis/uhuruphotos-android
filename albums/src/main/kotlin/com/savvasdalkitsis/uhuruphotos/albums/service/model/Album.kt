@@ -33,4 +33,11 @@ sealed class Album(
     ) : Album(id, date, location, incomplete, numberOfItems)
 }
 
-fun Album.IncompleteAlbum.toAlbum() = Albums(id, date, location, rating = null, incomplete, numberOfItems)
+fun Album.IncompleteAlbum.toAlbum() = Albums(
+    id,
+    date,
+    location,
+    rating = null,
+    incomplete,
+    numberOfItems,
+)

@@ -13,12 +13,13 @@ import javax.inject.Inject
 @HiltViewModel
 class SearchViewModel @Inject constructor(
     searchHandler: SearchHandler,
+    searchReducer: SearchReducer,
 ) : ViewModel(),
     ActionReceiverHost<SearchState, SearchEffect, SearchAction, SearchMutation> {
 
     override val actionReceiver = ActionReceiver(
         searchHandler,
-        searchReducer(),
+        searchReducer,
         SearchState(),
     )
 }

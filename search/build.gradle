@@ -25,6 +25,9 @@ dependencies {
     implementation project(":settings")
     implementation project(":log")
     implementation project(":toaster")
+    implementation project(":people")
+    implementation project(":infrastructure")
+    implementation project(":person-api")
 
     implementation(
             libs.androidx.compose.hilt.navigation,

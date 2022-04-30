@@ -1,6 +1,7 @@
 package com.savvasdalkitsis.uhuruphotos.search.view.state
 
 import com.savvasdalkitsis.uhuruphotos.feed.view.state.FeedDisplay
+import com.savvasdalkitsis.uhuruphotos.people.view.state.Person
 import com.savvasdalkitsis.uhuruphotos.userbadge.api.view.state.UserInformationState
 
 data class SearchState(
@@ -13,4 +14,5 @@ data class SearchState(
     val feedDisplay: FeedDisplay = FeedDisplay.default,
     val searchDisplay: FeedDisplay = FeedDisplay.default,
     val suggestion: String? = null,
+    val people: List<Person> = emptyList()
 )

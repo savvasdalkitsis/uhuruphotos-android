@@ -1,0 +1,6 @@
+dependencies {
+    implementation project(":navigation")
+    implementation(
+            libs.hilt,
+    )
+}

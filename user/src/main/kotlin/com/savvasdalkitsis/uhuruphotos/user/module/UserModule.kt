@@ -16,7 +16,4 @@ class UserModule {
     @Provides
     fun userApi(retrofit: Retrofit): UserService = retrofit.create(UserService::class.java)
 
-    @Provides
-    fun userQueries(database: Database): UserQueries = database.userQueries
-
 }

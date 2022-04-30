@@ -1,6 +1,7 @@
 package com.savvasdalkitsis.uhuruphotos.search.mvflow
 
 import com.savvasdalkitsis.uhuruphotos.albums.model.Album
+import com.savvasdalkitsis.uhuruphotos.db.people.People
 import com.savvasdalkitsis.uhuruphotos.feed.view.state.FeedDisplay
 import com.savvasdalkitsis.uhuruphotos.userbadge.api.view.state.UserInformationState
 
@@ -23,4 +24,5 @@ sealed class SearchMutation {
     }
     data class UserBadgeStateChanged(val userInformationState: UserInformationState) : SearchMutation()
     data class ShowSearchSuggestion(val suggestion: String) : SearchMutation()
+    data class ShowPeople(val people: List<People>) : SearchMutation()
 }

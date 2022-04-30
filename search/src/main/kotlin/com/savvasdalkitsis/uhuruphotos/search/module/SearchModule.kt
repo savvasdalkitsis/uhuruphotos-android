@@ -22,6 +22,4 @@ class SearchModule {
     @Provides
     fun searchService(retrofit: Retrofit): SearchService = retrofit.create(SearchService::class.java)
 
-    @Provides
-    fun searchQueries(database: Database): SearchQueries = database.searchQueries
 }

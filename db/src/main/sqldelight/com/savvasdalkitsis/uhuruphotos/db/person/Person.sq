@@ -1,0 +1,8 @@
+CREATE TABLE personPhotos (
+    id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+    personId INTEGER AS Int NOT NULL,
+    photoId TEXT NOT NULL
+);
+
+insert:
+INSERT OR REPLACE INTO personPhotos VALUES (?, ?, ?);

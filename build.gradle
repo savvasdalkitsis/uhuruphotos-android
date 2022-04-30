@@ -66,6 +66,7 @@ subprojects {
             freeCompilerArgs += "-opt-in=coil.annotation.ExperimentalCoilApi"
             freeCompilerArgs += "-opt-in=kotlinx.coroutines.ExperimentalCoroutinesApi"
             freeCompilerArgs += "-opt-in=kotlinx.coroutines.FlowPreview"
+            freeCompilerArgs += "-Xcontext-receivers"
         }
     }
 }

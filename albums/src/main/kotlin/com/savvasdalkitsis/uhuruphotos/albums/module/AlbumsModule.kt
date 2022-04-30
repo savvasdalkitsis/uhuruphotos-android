@@ -17,8 +17,4 @@ class AlbumsModule {
     fun albumsService(
         retrofit: Retrofit,
     ): AlbumsService = retrofit.create(AlbumsService::class.java)
-
-
-    @Provides
-    fun albumsQueries(database: Database): AlbumsQueries = database.albumsQueries
 }

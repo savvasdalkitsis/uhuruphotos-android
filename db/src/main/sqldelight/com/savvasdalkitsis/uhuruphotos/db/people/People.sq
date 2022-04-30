@@ -1,0 +1,22 @@
+CREATE TABLE people (
+    id INTEGER AS Int NOT NULL PRIMARY KEY,
+    name TEXT NOT NULL,
+    faceCount INTEGER AS Int NOT NULL,
+    faceUrl TEXT,
+    facePhotoUrl TEXT
+);
+
+getPeopleByName:
+SELECT * FROM people ORDER BY name ASC;
+
+getPeopleByFaceCount:
+SELECT * FROM people ORDER BY faceCount DESC;
+
+getPerson:
+SELECT * FROM people WHERE id == :id LIMIT 1;
+
+deleteAll:
+DELETE FROM people;
+
+insertPerson:
+INSERT OR REPLACE INTO people VALUES ?;

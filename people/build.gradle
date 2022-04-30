@@ -1,0 +1,31 @@
+android {
+    buildFeatures {
+        compose true
+    }
+    composeOptions {
+        kotlinCompilerExtensionVersion compose_version
+    }
+}
+
+dependencies {
+    implementation project(":db")
+    implementation project(":icons")
+    implementation project(":network")
+    implementation project(":infrastructure")
+    implementation project(":log")
+    implementation project(":toaster")
+    implementation project(":ui")
+    implementation project(":image-api")
+    implementation project(":photos")
+    implementation project(":navigation")
+    implementation project(":settings")
+    implementation project(":person-api")
+    implementation(
+            libs.androidx.compose.foundation,
+            libs.androidx.compose.material,
+            libs.kotlinx.coroutines,
+            libs.hilt,
+            libs.sqldelight.coroutines,
+    )
+    kapt "com.squareup.moshi:moshi-kotlin-codegen:1.13.0"
+}

@@ -13,7 +13,7 @@ class PhotoReducer @Inject constructor(
     private val dateDisplayer: DateDisplayer
 ) : Reducer<PhotoState, PhotoMutation> {
 
-    override fun invoke(
+    override suspend fun  invoke(
         state: PhotoState,
         mutation: PhotoMutation
     ): PhotoState = when (mutation) {

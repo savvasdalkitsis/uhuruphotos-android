@@ -4,8 +4,9 @@ import com.savvasdalkitsis.uhuruphotos.feedpage.mvflow.FeedPageMutation
 import com.savvasdalkitsis.uhuruphotos.feedpage.mvflow.FeedPageMutation.*
 import com.savvasdalkitsis.uhuruphotos.feedpage.view.state.FeedPageState
 import com.savvasdalkitsis.uhuruphotos.feed.view.state.FeedState
+import com.savvasdalkitsis.uhuruphotos.viewmodel.Reducer
 
-fun feedPageReducer() : com.savvasdalkitsis.uhuruphotos.viewmodel.Reducer<FeedPageState, FeedPageMutation> = { state, mutation ->
+fun feedPageReducer() : Reducer<FeedPageState, FeedPageMutation> = { state, mutation ->
     when (mutation) {
         is Loading -> state.copyFeed { copy(isLoading = true) }
         is ShowAlbums -> state.copyFeed { copy(albums = mutation.albums) }

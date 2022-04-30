@@ -1,13 +1,18 @@
 package com.savvasdalkitsis.uhuruphotos.search.usecase
 
+import com.github.michaelbull.result.Result
 import com.savvasdalkitsis.uhuruphotos.albums.model.Album
 import com.savvasdalkitsis.uhuruphotos.infrastructure.date.DateDisplayer
-import com.savvasdalkitsis.uhuruphotos.photos.service.model.isVideo
+import com.savvasdalkitsis.uhuruphotos.infrastructure.extensions.safelyOnStart
+import com.savvasdalkitsis.uhuruphotos.infrastructure.extensions.safelyOnStartIgnoring
 import com.savvasdalkitsis.uhuruphotos.photos.model.Photo
+import com.savvasdalkitsis.uhuruphotos.photos.service.model.isVideo
 import com.savvasdalkitsis.uhuruphotos.photos.usecase.PhotosUseCase
 import com.savvasdalkitsis.uhuruphotos.search.repository.SearchRepository
-import kotlinx.coroutines.*
+import kotlinx.coroutines.currentCoroutineContext
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.isActive
 import javax.inject.Inject
 import kotlin.random.Random
 
@@ -17,7 +22,7 @@ class SearchUseCase @Inject constructor(
     private val photosUseCase: PhotosUseCase,
 ) {
 
-    fun searchFor(query: String): Flow<List<Album>> =
+    fun searchFor(query: String): Flow<Result<List<Album>, Throwable>> =
         searchRepository.getSearchResults(query)
             .map { groups ->
                 groups.items.map { (id, photos) ->
@@ -57,10 +62,8 @@ class SearchUseCase @Inject constructor(
                     }
             }
             .distinctUntilChanged()
-            .onStart {
-                CoroutineScope(currentCoroutineContext() + Dispatchers.IO).launch {
-                    searchRepository.refreshSearch(query)
-                }
+            .safelyOnStart {
+                searchRepository.refreshSearch(query)
             }
 
     fun getSearchSuggestions(): Flow<String> = searchRepository.getSearchSuggestions()
@@ -74,7 +77,7 @@ class SearchUseCase @Inject constructor(
                     }
                 }
             }
-        }.onStart {
+        }.safelyOnStartIgnoring {
             searchRepository.refreshSearchSuggestions()
         }
 }
