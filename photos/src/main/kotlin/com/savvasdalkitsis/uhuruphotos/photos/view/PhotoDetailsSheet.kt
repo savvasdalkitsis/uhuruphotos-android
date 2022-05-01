@@ -78,10 +78,12 @@ fun PhotoDetailsSheet(
                         )
                     }
                 }
-                TextWithIcon(
-                    icon = R.drawable.ic_location_place,
-                    text = state.location,
-                )
+                if (state.location.isNotEmpty()) {
+                    TextWithIcon(
+                        icon = R.drawable.ic_location_place,
+                        text = state.location,
+                    )
+                }
                 state.gps?.let { gps ->
                     TextWithIcon(
                         modifier = Modifier.clickable { action(ClickedOnGps(gps)) },
