@@ -2,7 +2,7 @@ package com.savvasdalkitsis.uhuruphotos.search.viewmodel
 
 import com.savvasdalkitsis.uhuruphotos.home.navigation.HomeNavigationTarget
 import com.savvasdalkitsis.uhuruphotos.navigation.ControllersProvider
-import com.savvasdalkitsis.uhuruphotos.people.navigation.PeopleNavigationTarget
+import com.savvasdalkitsis.uhuruphotos.people.api.navigation.PeopleNavigationTarget
 import com.savvasdalkitsis.uhuruphotos.person.api.navigation.PersonNavigationTarget
 import com.savvasdalkitsis.uhuruphotos.photos.navigation.PhotoNavigationTarget
 import com.savvasdalkitsis.uhuruphotos.search.mvflow.SearchEffect

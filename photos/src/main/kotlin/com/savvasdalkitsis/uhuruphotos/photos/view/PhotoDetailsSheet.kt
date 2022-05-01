@@ -22,9 +22,9 @@ import com.google.maps.android.compose.MarkerState
 import com.savvasdalkitsis.uhuruphotos.icons.R
 import com.savvasdalkitsis.uhuruphotos.infrastructure.extensions.round
 import com.savvasdalkitsis.uhuruphotos.map.view.MapView
+import com.savvasdalkitsis.uhuruphotos.people.api.view.PeopleBar
 import com.savvasdalkitsis.uhuruphotos.photos.mvflow.PhotoAction
-import com.savvasdalkitsis.uhuruphotos.photos.mvflow.PhotoAction.ClickedOnGps
-import com.savvasdalkitsis.uhuruphotos.photos.mvflow.PhotoAction.HideInfo
+import com.savvasdalkitsis.uhuruphotos.photos.mvflow.PhotoAction.*
 import com.savvasdalkitsis.uhuruphotos.photos.view.PhotoSheetStyle.BOTTOM
 import com.savvasdalkitsis.uhuruphotos.photos.view.state.PhotoState
 import com.savvasdalkitsis.uhuruphotos.ui.view.TextWithIcon
@@ -47,42 +47,53 @@ fun PhotoDetailsSheet(
             verticalArrangement = Arrangement.spacedBy(16.dp),
             modifier = Modifier
                 .verticalScroll(rememberScrollState())
-                .padding(16.dp)
         ) {
-            PhotoDetailsBottomActionBar(state, action)
-            TextWithIcon(
-                icon = R.drawable.ic_calendar,
-                text = state.dateAndTime,
-            )
-            state.gps?.let { gps ->
-                MapView(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .height(240.dp)
-                        .clip(RoundedCornerShape(12.dp)),
-                    location = gps,
-                    zoom = 15f,
-                    onMapClick = { action(PhotoAction.ClickedOnMap(gps)) },
-                    mapSettings = {
-                        copy(
-                            zoomControlsEnabled = true,
+            Column(
+                verticalArrangement = Arrangement.spacedBy(16.dp),
+                modifier = Modifier
+                    .padding(16.dp)
+            ) {
+                PhotoDetailsBottomActionBar(state, action)
+                TextWithIcon(
+                    icon = R.drawable.ic_calendar,
+                    text = state.dateAndTime,
+                )
+                state.gps?.let { gps ->
+                    MapView(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .height(240.dp)
+                            .clip(RoundedCornerShape(12.dp)),
+                        location = gps,
+                        zoom = 15f,
+                        onMapClick = { action(ClickedOnMap(gps)) },
+                        mapSettings = {
+                            copy(
+                                zoomControlsEnabled = true,
+                            )
+                        }
+                    ) {
+                        Marker(
+                            state = MarkerState(position = gps),
                         )
                     }
-                ) {
-                    Marker(
-                        state = MarkerState(position = gps),
+                }
+                TextWithIcon(
+                    icon = R.drawable.ic_location_place,
+                    text = state.location,
+                )
+                state.gps?.let { gps ->
+                    TextWithIcon(
+                        modifier = Modifier.clickable { action(ClickedOnGps(gps)) },
+                        icon = R.drawable.ic_location_pin,
+                        text = "${gps.latitude.round(2)}:${gps.longitude.round(2)}",
                     )
                 }
             }
-            TextWithIcon(
-                icon = R.drawable.ic_location_place,
-                text = state.location,
-            )
-            state.gps?.let { gps ->
-                TextWithIcon(
-                    modifier = Modifier.clickable { action(ClickedOnGps(gps)) },
-                    icon = R.drawable.ic_location_pin,
-                    text = "${gps.latitude.round(2)}:${gps.longitude.round(2)}",
+            if (state.peopleInPhoto.isNotEmpty()) {
+                PeopleBar(
+                    people = state.peopleInPhoto,
+                    onPersonSelected = { action(PersonSelected(it)) }
                 )
             }
         }

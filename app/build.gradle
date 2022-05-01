@@ -64,6 +64,7 @@ dependencies {
     implementation project(":userbadge-api")
     implementation project(":userbadge")
     implementation project(":person")
+    implementation project(":people")
     implementation(
             libs.accompanist.systemui,
             libs.androidx.activity,

@@ -6,6 +6,7 @@ import android.content.Intent
 import android.net.Uri
 import com.google.android.gms.maps.model.LatLng
 import com.savvasdalkitsis.uhuruphotos.navigation.ControllersProvider
+import com.savvasdalkitsis.uhuruphotos.person.api.navigation.PersonNavigationTarget
 import com.savvasdalkitsis.uhuruphotos.photos.mvflow.PhotoEffect
 import com.savvasdalkitsis.uhuruphotos.photos.mvflow.PhotoEffect.*
 import com.savvasdalkitsis.uhuruphotos.share.ShareImage
@@ -31,6 +32,10 @@ class PhotoEffectsHandler @Inject constructor(
                 toaster.show("Copied to clipboard")
             }
             is SharePhoto -> shareImage.share(effect.url)
+            is NavigateToPerson -> controllersProvider.navController!!.navigate(
+                PersonNavigationTarget.name(effect.id)
+            )
+            ErrorRefreshingPeople -> toaster.show("Error refreshing people")
         }
     }
 

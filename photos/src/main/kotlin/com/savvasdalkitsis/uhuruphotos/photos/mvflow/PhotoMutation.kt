@@ -1,6 +1,7 @@
 package com.savvasdalkitsis.uhuruphotos.photos.mvflow
 
 import com.savvasdalkitsis.uhuruphotos.db.photos.PhotoDetails
+import com.savvasdalkitsis.uhuruphotos.people.api.view.state.Person
 
 sealed class PhotoMutation {
     object HideUI : PhotoMutation()
@@ -15,5 +16,5 @@ sealed class PhotoMutation {
     object HideDeletionConfirmationDialog : PhotoMutation()
     object ShowShareIcon : PhotoMutation()
     data class ReceivedUrl(val id: String, val lowResUrl: String, val fullResUrl: String) : PhotoMutation()
-    data class ReceivedDetails(val details: PhotoDetails) : PhotoMutation()
+    data class ReceivedDetails(val details: PhotoDetails, val peopleInPhoto: List<Person>) : PhotoMutation()
 }

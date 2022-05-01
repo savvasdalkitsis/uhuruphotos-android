@@ -1,6 +1,9 @@
 package com.savvasdalkitsis.uhuruphotos.photos.viewmodel
 
 import androidx.work.WorkInfo.State.*
+import com.savvasdalkitsis.uhuruphotos.infrastructure.extensions.onErrorsEmit
+import com.savvasdalkitsis.uhuruphotos.people.api.usecase.PeopleUseCase
+import com.savvasdalkitsis.uhuruphotos.people.api.view.state.toPerson
 import com.savvasdalkitsis.uhuruphotos.photos.mvflow.PhotoAction
 import com.savvasdalkitsis.uhuruphotos.photos.mvflow.PhotoAction.*
 import com.savvasdalkitsis.uhuruphotos.photos.mvflow.PhotoAction.DismissErrorMessage
@@ -12,6 +15,7 @@ import com.savvasdalkitsis.uhuruphotos.photos.mvflow.PhotoEffect
 import com.savvasdalkitsis.uhuruphotos.photos.mvflow.PhotoEffect.*
 import com.savvasdalkitsis.uhuruphotos.photos.mvflow.PhotoMutation
 import com.savvasdalkitsis.uhuruphotos.photos.mvflow.PhotoMutation.*
+import com.savvasdalkitsis.uhuruphotos.photos.service.model.deserializePeopleNames
 import com.savvasdalkitsis.uhuruphotos.photos.usecase.PhotosUseCase
 import com.savvasdalkitsis.uhuruphotos.photos.view.state.PhotoState
 import com.savvasdalkitsis.uhuruphotos.photos.worker.PhotoDetailsRetrieveWorker
@@ -23,6 +27,7 @@ import javax.inject.Inject
 class PhotoHandler @Inject constructor(
     private val photosUseCase: PhotosUseCase,
     private val workerStatusUseCase: WorkerStatusUseCase,
+    private val peopleUseCase: PeopleUseCase,
 ) : Handler<PhotoState, PhotoEffect, PhotoAction, PhotoMutation> {
 
     override fun invoke(
@@ -37,8 +42,27 @@ class PhotoHandler @Inject constructor(
                 fullResUrl = action.id.toFullSizeUrlFromId(action.isVideo),
             )})
             emitAll(merge(
-                photosUseCase.getPhoto(action.id)
-                    .map(::ReceivedDetails),
+                combine(
+                    photosUseCase.getPhoto(action.id),
+                    peopleUseCase.getPeopleByName()
+                        .onErrorsEmit {
+                            effect(ErrorRefreshingPeople)
+                            emptyList()
+                        }
+                ) { details, people ->
+                    val names = details.peopleNames.orEmpty().deserializePeopleNames
+                    val peopleInPhoto = when {
+                        names.isEmpty() -> emptyList()
+                        else -> people.filter { it.name in names }
+                    }.map {
+                        it.toPerson {
+                            with(photosUseCase) {
+                                it.toAbsoluteUrl()
+                            }
+                        }
+                    }
+                    ReceivedDetails(details, peopleInPhoto)
+                },
                 workerStatusUseCase.monitorUniqueJobStatus(
                     PhotoDetailsRetrieveWorker.workName(action.id)
                 ).map {
@@ -90,5 +114,8 @@ class PhotoHandler @Inject constructor(
             effect(PhotoEffect.SharePhoto(state.fullResUrl))
         }
         FullImageLoaded -> flowOf(ShowShareIcon)
+        is PersonSelected -> flow {
+            effect(NavigateToPerson(action.person.id))
+        }
     }
 }

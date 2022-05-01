@@ -1,4 +1,4 @@
-package com.savvasdalkitsis.uhuruphotos.people.view
+package com.savvasdalkitsis.uhuruphotos.people.api.view
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -16,7 +16,7 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.savvasdalkitsis.uhuruphotos.image.api.view.Image
-import com.savvasdalkitsis.uhuruphotos.people.view.state.Person
+import com.savvasdalkitsis.uhuruphotos.people.api.view.state.Person
 
 @Composable
 fun PersonThumbnail(

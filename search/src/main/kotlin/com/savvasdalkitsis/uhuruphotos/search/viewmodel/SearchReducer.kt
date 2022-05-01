@@ -1,6 +1,6 @@
 package com.savvasdalkitsis.uhuruphotos.search.viewmodel
 
-import com.savvasdalkitsis.uhuruphotos.people.view.state.toPerson
+import com.savvasdalkitsis.uhuruphotos.people.api.view.state.toPerson
 import com.savvasdalkitsis.uhuruphotos.photos.usecase.PhotosUseCase
 import com.savvasdalkitsis.uhuruphotos.search.mvflow.SearchMutation
 import com.savvasdalkitsis.uhuruphotos.search.mvflow.SearchMutation.*
@@ -40,7 +40,7 @@ class SearchReducer @Inject constructor(
             is ShowPeople -> with(photosUseCase) {
                 state.copy(people = mutation.people
                     .subList(0, max(0, min(10, mutation.people.size - 1)))
-                    .map { it.toPerson() })
+                    .map { it.toPerson { url -> url.toAbsoluteUrl() } })
             }
         }
 }

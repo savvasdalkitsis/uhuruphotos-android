@@ -1,7 +1,5 @@
 package com.savvasdalkitsis.uhuruphotos.people.module
 
-import com.savvasdalkitsis.uhuruphotos.db.Database
-import com.savvasdalkitsis.uhuruphotos.db.people.PeopleQueries
 import com.savvasdalkitsis.uhuruphotos.people.service.PeopleService
 import dagger.Module
 import dagger.Provides

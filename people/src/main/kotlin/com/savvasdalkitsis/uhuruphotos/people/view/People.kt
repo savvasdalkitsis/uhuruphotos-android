@@ -10,6 +10,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.savvasdalkitsis.uhuruphotos.icons.R
+import com.savvasdalkitsis.uhuruphotos.people.api.view.PersonThumbnail
 import com.savvasdalkitsis.uhuruphotos.people.view.state.PeopleState
 import com.savvasdalkitsis.uhuruphotos.people.view.state.SortOrder.ASCENDING
 import com.savvasdalkitsis.uhuruphotos.people.view.state.SortOrder.DESCENDING

@@ -11,14 +11,13 @@ import com.squareup.sqldelight.runtime.coroutines.mapToList
 import com.squareup.sqldelight.runtime.coroutines.mapToOne
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.distinctUntilChanged
-import kotlinx.coroutines.flow.onStart
 import java.io.IOException
 import javax.inject.Inject
 
 class PeopleRepository @Inject constructor(
     private val peopleQueries: PeopleQueries,
     private val peopleService: PeopleService,
-){
+) {
 
     fun getPeopleByName(): Flow<List<People>> = peopleQueries.getPeopleByName()
         .asFlow().mapToList().distinctUntilChanged()

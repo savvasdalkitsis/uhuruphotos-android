@@ -5,6 +5,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavGraphBuilder
 import com.savvasdalkitsis.uhuruphotos.navigation.NavigationTarget
 import com.savvasdalkitsis.uhuruphotos.navigation.navigationTarget
+import com.savvasdalkitsis.uhuruphotos.people.api.navigation.PeopleNavigationTarget
 import com.savvasdalkitsis.uhuruphotos.people.view.People
 import com.savvasdalkitsis.uhuruphotos.people.view.state.PeopleState
 import com.savvasdalkitsis.uhuruphotos.people.viewmodel.PeopleAction
@@ -23,7 +24,7 @@ class PeopleNavigationTarget @Inject constructor(
 
     override suspend fun NavGraphBuilder.create() {
         navigationTarget<PeopleState, PeopleEffect, PeopleAction, PeopleViewModel>(
-            name = name,
+            name = PeopleNavigationTarget.name,
             themeMode = settingsUseCase.observeThemeModeState(),
             effects = effectHandler,
             initializer = { _, action -> action(LoadPeople) },
@@ -31,9 +32,5 @@ class PeopleNavigationTarget @Inject constructor(
         ) { state, actions ->
             People(state, actions)
         }
-    }
-
-    companion object {
-        const val name = "people"
     }
 }

@@ -10,10 +10,10 @@ import com.savvasdalkitsis.uhuruphotos.viewmodel.Reducer
 import javax.inject.Inject
 
 class PhotoReducer @Inject constructor(
-    private val dateDisplayer: DateDisplayer
+    private val dateDisplayer: DateDisplayer,
 ) : Reducer<PhotoState, PhotoMutation> {
 
-    override suspend fun  invoke(
+    override suspend fun invoke(
         state: PhotoState,
         mutation: PhotoMutation
     ): PhotoState = when (mutation) {
@@ -35,7 +35,8 @@ class PhotoReducer @Inject constructor(
                     gpsLon?.toDoubleOrNull()?.let { lon ->
                         LatLng(lat, lon)
                     }
-                }
+                },
+                peopleInPhoto = mutation.peopleInPhoto
             )
         }
         HideUI -> state.copy(showUI = false)

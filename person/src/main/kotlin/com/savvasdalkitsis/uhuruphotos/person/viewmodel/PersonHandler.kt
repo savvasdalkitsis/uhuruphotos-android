@@ -1,7 +1,6 @@
 package com.savvasdalkitsis.uhuruphotos.person.viewmodel
 
-import com.savvasdalkitsis.uhuruphotos.people.repository.PeopleRepository
-import com.savvasdalkitsis.uhuruphotos.people.usecase.PeopleUseCase
+import com.savvasdalkitsis.uhuruphotos.people.api.usecase.PeopleUseCase
 import com.savvasdalkitsis.uhuruphotos.person.usecase.PersonUseCase
 import com.savvasdalkitsis.uhuruphotos.person.view.state.PersonState
 import com.savvasdalkitsis.uhuruphotos.person.viewmodel.PersonAction.*

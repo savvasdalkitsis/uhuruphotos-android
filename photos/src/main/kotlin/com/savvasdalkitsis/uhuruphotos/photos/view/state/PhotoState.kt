@@ -1,6 +1,7 @@
 package com.savvasdalkitsis.uhuruphotos.photos.view.state
 
 import com.google.android.gms.maps.model.LatLng
+import com.savvasdalkitsis.uhuruphotos.people.api.view.state.Person
 
 data class PhotoState(
     val id: String = "",
@@ -19,4 +20,5 @@ data class PhotoState(
     val location: String = "",
     val gps: LatLng? = null,
     val isVideo: Boolean = false,
+    val peopleInPhoto: List<Person> = emptyList(),
 )

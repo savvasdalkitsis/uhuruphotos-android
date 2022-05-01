@@ -8,5 +8,8 @@ sealed class PhotoEffect {
     object HideSystemBars : PhotoEffect()
     object ShowSystemBars : PhotoEffect()
     object NavigateBack : PhotoEffect()
+    object ErrorRefreshingPeople : PhotoEffect()
+
     data class SharePhoto(val url: String) : PhotoEffect()
+    data class NavigateToPerson(val id: Int) : PhotoEffect()
 }

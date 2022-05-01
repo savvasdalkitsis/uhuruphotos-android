@@ -17,6 +17,7 @@ CREATE TABLE photoDetails (
   video INTEGER AS Boolean,
   rating INTEGER AS Int,
   albumId TEXT NOT NULL,
+  peopleNames TEXT,
 
   FOREIGN KEY (albumId) REFERENCES albums(id)
 );

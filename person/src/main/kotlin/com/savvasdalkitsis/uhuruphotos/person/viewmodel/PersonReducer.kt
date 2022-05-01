@@ -1,7 +1,7 @@
 package com.savvasdalkitsis.uhuruphotos.person.viewmodel
 
 import com.savvasdalkitsis.uhuruphotos.feed.view.state.FeedState
-import com.savvasdalkitsis.uhuruphotos.people.view.state.toPerson
+import com.savvasdalkitsis.uhuruphotos.people.api.view.state.toPerson
 import com.savvasdalkitsis.uhuruphotos.person.view.state.PersonState
 import com.savvasdalkitsis.uhuruphotos.person.viewmodel.PersonMutation.*
 import com.savvasdalkitsis.uhuruphotos.photos.usecase.PhotosUseCase
@@ -18,7 +18,7 @@ class PersonReducer @Inject constructor(
         when (mutation) {
             is Loading -> state.copyFeed { copy(isLoading = true) }
             is ShowPersonDetails -> with(photosUseCase) {
-                state.copy(person = mutation.person.toPerson())
+                state.copy(person = mutation.person.toPerson { it.toAbsoluteUrl() })
             }
             is ShowPersonPhotos -> state.copyFeed { copy(
                 isLoading = false,

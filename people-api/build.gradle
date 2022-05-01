@@ -8,20 +8,23 @@ android {
 }
 
 dependencies {
-    implementation project(":ui")
-    implementation project(":person-api")
     implementation project(":db")
-    implementation project(":navigation")
+    implementation project(":icons")
+    implementation project(":network")
+    implementation project(":infrastructure")
+    implementation project(":log")
+    implementation project(":toaster")
+    implementation project(":ui")
     implementation project(":image-api")
+    implementation project(":navigation")
     implementation project(":settings")
-    implementation project(":albums")
-    implementation project(":feed")
-    implementation project(":photos")
-    implementation project(":people-api")
+    implementation project(":person-api")
     implementation(
             libs.androidx.compose.foundation,
             libs.androidx.compose.material,
             libs.kotlinx.coroutines,
             libs.hilt,
+            libs.sqldelight.coroutines,
     )
+    kapt "com.squareup.moshi:moshi-kotlin-codegen:1.13.0"
 }

@@ -59,3 +59,12 @@ fun <V> Flow<Result<V, Throwable>>.onErrors(onError: suspend (Throwable) -> Unit
         }
     }
 }
+
+fun <V> Flow<Result<V, Throwable>>.onErrorsEmit(onError: suspend (Throwable) -> V) : Flow<V> = mapNotNull {
+    when (it) {
+        is Ok -> it.value
+        is Err -> {
+            onError(it.error)
+        }
+    }
+}

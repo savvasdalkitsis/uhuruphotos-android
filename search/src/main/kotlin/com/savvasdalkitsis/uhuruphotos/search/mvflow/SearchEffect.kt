@@ -1,7 +1,6 @@
 package com.savvasdalkitsis.uhuruphotos.search.mvflow
 
 import androidx.compose.ui.geometry.Offset
-import com.savvasdalkitsis.uhuruphotos.people.view.state.Person
 
 sealed class SearchEffect {
     object HideKeyboard : SearchEffect()

@@ -2,11 +2,11 @@ package com.savvasdalkitsis.uhuruphotos.person.view
 
 import androidx.compose.animation.AnimatedContent
 import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.aspectRatio
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
@@ -52,7 +52,7 @@ fun Person(
             }
         },
     ) { contentPadding ->
-        if (state.feedState.isLoading && state.feedState.albums.isEmpty()) {
+        if (state.feedState.isLoading || state.feedState.albums.isEmpty()) {
             FullProgressBar()
         } else {
             Feed(

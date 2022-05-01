@@ -5,10 +5,9 @@ import com.savvasdalkitsis.uhuruphotos.account.usecase.AccountUseCase
 import com.savvasdalkitsis.uhuruphotos.feedpage.usecase.FeedPageUseCase
 import com.savvasdalkitsis.uhuruphotos.infrastructure.extensions.onErrors
 import com.savvasdalkitsis.uhuruphotos.log.log
-import com.savvasdalkitsis.uhuruphotos.people.usecase.PeopleUseCase
+import com.savvasdalkitsis.uhuruphotos.people.api.usecase.PeopleUseCase
 import com.savvasdalkitsis.uhuruphotos.search.mvflow.SearchAction
 import com.savvasdalkitsis.uhuruphotos.search.mvflow.SearchAction.*
-import com.savvasdalkitsis.uhuruphotos.search.mvflow.SearchAction.ChangeDisplay
 import com.savvasdalkitsis.uhuruphotos.search.mvflow.SearchEffect
 import com.savvasdalkitsis.uhuruphotos.search.mvflow.SearchEffect.*
 import com.savvasdalkitsis.uhuruphotos.search.mvflow.SearchMutation
@@ -18,8 +17,10 @@ import com.savvasdalkitsis.uhuruphotos.search.view.state.SearchState
 import com.savvasdalkitsis.uhuruphotos.settings.usecase.SettingsUseCase
 import com.savvasdalkitsis.uhuruphotos.userbadge.api.UserBadgeUseCase
 import com.savvasdalkitsis.uhuruphotos.viewmodel.Handler
-import kotlinx.coroutines.*
+import kotlinx.coroutines.CancellationException
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 class SearchHandler @Inject constructor(

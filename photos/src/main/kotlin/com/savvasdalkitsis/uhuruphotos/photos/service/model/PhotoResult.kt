@@ -23,7 +23,14 @@ data class PhotoResult(
     @field:Json(name = "image_hash") val imageHash: String,
     @field:Json(name = "video") val video: Boolean,
     @field:Json(name = "rating") val rating: Int,
+    @field:Json(name = "people") val peopleNames: List<String>?,
 )
+
+private val PhotoResult.serializePeople: String?
+    get() = peopleNames?.joinToString(separator = "::")
+
+val String.deserializePeopleNames: List<String>
+    get() = split("::")
 
 fun PhotoResult.toPhotoDetails() = PhotoDetails(
     imageHash = imageHash,
@@ -44,4 +51,5 @@ fun PhotoResult.toPhotoDetails() = PhotoDetails(
     video = video,
     rating = rating,
     albumId = "",
+    peopleNames = serializePeople
 )
