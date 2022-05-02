@@ -18,25 +18,31 @@ import com.savvasdalkitsis.uhuruphotos.ui.window.WindowSize
 
 @Composable
 fun Feed(
+    modifier: Modifier = Modifier,
     contentPadding: PaddingValues = PaddingValues(0.dp),
     state: FeedState,
     showSelectionHeader: Boolean = false,
     listState: LazyListState = rememberLazyListState(),
     onPhotoSelected: PhotoSelected = { _, _, _ -> },
-    onChangeDisplay: (FeedDisplay) -> Unit = {},
+    onChangeDisplay: ((FeedDisplay) -> Unit)? = null,
     onPhotoLongPressed: (Photo) -> Unit = {},
     onAlbumSelectionClicked: (Album) -> Unit = {},
-    ) {
+) {
     if (state.isLoading && state.albums.isEmpty()) {
         FullProgressBar()
     } else {
         val feedDisplay = state.feedDisplay
         Box(
-            modifier = Modifier
-                .pinchToChange(
-                    feedDisplay,
-                    onChangeDisplay,
-                ),
+            modifier = modifier
+                .let {
+                    when {
+                        onChangeDisplay != null -> it.pinchToChange(
+                            feedDisplay,
+                            onChangeDisplay,
+                        )
+                        else -> it
+                    }
+                }
         ) {
             StaggeredDateFeed(
                 contentPadding = contentPadding,

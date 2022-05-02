@@ -45,7 +45,7 @@ class AlbumsUseCase @Inject constructor(
         }
         .mapToAlbums()
 
-    private fun  Flow<Group<String, DbAlbums>>.mapToAlbums(): Flow<List<Album>> = map { albums ->
+    private fun Flow<Group<String, DbAlbums>>.mapToAlbums(): Flow<List<Album>> = map { albums ->
         albums.items.map { (id, photos) ->
             val albumDate = photos.firstOrNull()?.albumDate
             val albumLocation = photos.firstOrNull()?.albumLocation

@@ -124,5 +124,8 @@ class SearchHandler @Inject constructor(
         is PersonSelected -> flow {
             effect(NavigateToPerson(action.person.id))
         }
+        LoadHeatMap -> flow {
+            effect(NavigateToHeatMap)
+        }
     }
 }

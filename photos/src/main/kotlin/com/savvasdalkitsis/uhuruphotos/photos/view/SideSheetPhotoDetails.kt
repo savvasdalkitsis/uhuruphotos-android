@@ -25,6 +25,7 @@ import com.savvasdalkitsis.uhuruphotos.photos.mvflow.PhotoAction
 import com.savvasdalkitsis.uhuruphotos.photos.view.state.PhotoState
 import com.savvasdalkitsis.uhuruphotos.ui.layout.WithDirection
 import com.savvasdalkitsis.uhuruphotos.ui.layout.reverse
+import com.savvasdalkitsis.uhuruphotos.ui.view.SheetSize
 import com.savvasdalkitsis.uhuruphotos.ui.view.zoom.ZoomableState
 import kotlin.math.min
 

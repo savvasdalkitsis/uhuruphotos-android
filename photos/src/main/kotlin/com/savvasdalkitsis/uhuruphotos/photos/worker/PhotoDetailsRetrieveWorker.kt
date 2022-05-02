@@ -22,9 +22,7 @@ class PhotoDetailsRetrieveWorker @AssistedInject constructor(
 
     override suspend fun doWork() = withContext(Dispatchers.IO) {
         try {
-            photosService.getPhoto(params.inputData.getString(KEY_ID)!!).toPhotoDetails().apply {
-                photoRepository.insertPhoto(this)
-            }
+            photoRepository.refreshDetailsNow(params.inputData.getString(KEY_ID)!!)
             Result.success()
         } catch (e: Exception) {
             if (params.runAttemptCount < 2) {

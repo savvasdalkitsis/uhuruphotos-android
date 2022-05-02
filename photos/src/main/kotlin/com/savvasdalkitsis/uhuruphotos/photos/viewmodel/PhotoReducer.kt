@@ -2,6 +2,7 @@ package com.savvasdalkitsis.uhuruphotos.photos.viewmodel
 
 import com.google.android.gms.maps.model.LatLng
 import com.savvasdalkitsis.uhuruphotos.infrastructure.date.DateDisplayer
+import com.savvasdalkitsis.uhuruphotos.photos.model.latLng
 import com.savvasdalkitsis.uhuruphotos.photos.mvflow.PhotoMutation
 import com.savvasdalkitsis.uhuruphotos.photos.mvflow.PhotoMutation.*
 import com.savvasdalkitsis.uhuruphotos.photos.usecase.PhotosUseCase
@@ -31,11 +32,7 @@ class PhotoReducer @Inject constructor(
                 showInfoButton = true,
                 dateAndTime = dateDisplayer.dateTimeString(timestamp),
                 location = location ?: "",
-                gps = gpsLat?.toDoubleOrNull()?.let { lat ->
-                    gpsLon?.toDoubleOrNull()?.let { lon ->
-                        LatLng(lat, lon)
-                    }
-                },
+                gps = latLng,
                 peopleInPhoto = mutation.peopleInPhoto
             )
         }

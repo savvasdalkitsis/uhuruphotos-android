@@ -3,6 +3,7 @@ package com.savvasdalkitsis.uhuruphotos.search.mvflow
 import com.savvasdalkitsis.uhuruphotos.albums.model.Album
 import com.savvasdalkitsis.uhuruphotos.db.people.People
 import com.savvasdalkitsis.uhuruphotos.feed.view.state.FeedDisplay
+import com.savvasdalkitsis.uhuruphotos.feed.view.state.FeedDisplays
 import com.savvasdalkitsis.uhuruphotos.userbadge.api.view.state.UserInformationState
 
 sealed class SearchMutation {

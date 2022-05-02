@@ -22,6 +22,9 @@ CREATE TABLE photoDetails (
   FOREIGN KEY (albumId) REFERENCES albums(id)
 );
 
+getAll:
+SELECT * FROM photoDetails;
+
 getPhoto:
 SELECT * FROM photoDetails WHERE imageHash = :id LIMIT 1;
 

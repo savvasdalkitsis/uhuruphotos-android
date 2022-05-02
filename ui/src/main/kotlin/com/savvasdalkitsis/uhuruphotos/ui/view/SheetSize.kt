@@ -1,4 +1,4 @@
-package com.savvasdalkitsis.uhuruphotos.photos.view
+package com.savvasdalkitsis.uhuruphotos.ui.view
 
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
@@ -10,7 +10,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.toSize
 
 class SheetSize private constructor(
-    internal var size: DpSize
+    var size: DpSize
 ) {
 
     companion object {
@@ -22,7 +22,7 @@ class SheetSize private constructor(
     }
 }
 
-internal fun Modifier.adjustingSheetSize(sheetSize: SheetSize) = composed {
+fun Modifier.adjustingSheetSize(sheetSize: SheetSize) = composed {
     val density = LocalDensity.current
     onGloballyPositioned { coordinates ->
         with(density) {

@@ -38,7 +38,9 @@ fun StaggeredDateFeed(
             item(album.id) {
                 AlbumHeader(
                     modifier = Modifier.animateItemPlacement(),
-                    album, showSelectionHeader) {
+                    album,
+                    showSelectionHeader
+                ) {
                     onAlbumSelectionClicked(album)
                 }
             }

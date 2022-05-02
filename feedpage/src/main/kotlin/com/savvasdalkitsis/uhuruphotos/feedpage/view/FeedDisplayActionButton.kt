@@ -12,6 +12,7 @@ import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import com.savvasdalkitsis.uhuruphotos.feed.view.state.FeedDisplay
+import com.savvasdalkitsis.uhuruphotos.feed.view.state.FeedDisplays
 import com.savvasdalkitsis.uhuruphotos.ui.view.ActionIcon
 
 @Composable
@@ -44,7 +45,7 @@ fun FeedDisplayActionButton(
             expanded = expanded,
             onDismissRequest = onHide,
         ) {
-            FeedDisplay.values().reversedArray().forEach { display ->
+            FeedDisplays.values().reversedArray().forEach { display ->
                 FeedDisplayDropDownItem(onChange, display, currentFeedDisplay)
             }
         }
@@ -53,8 +54,8 @@ fun FeedDisplayActionButton(
 
 @Composable
 private fun FeedDisplayDropDownItem(
-    onChange: (FeedDisplay) -> Unit,
-    display: FeedDisplay,
+    onChange: (FeedDisplays) -> Unit,
+    display: FeedDisplays,
     currentFeedDisplay: FeedDisplay
 ) {
     DropdownMenuItem(

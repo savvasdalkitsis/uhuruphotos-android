@@ -1,7 +1,7 @@
 package com.savvasdalkitsis.uhuruphotos.feedpage.mvflow
 
 import com.savvasdalkitsis.uhuruphotos.albums.model.Album
-import com.savvasdalkitsis.uhuruphotos.feed.view.state.FeedDisplay
+import com.savvasdalkitsis.uhuruphotos.feed.view.state.FeedDisplays
 import com.savvasdalkitsis.uhuruphotos.userbadge.api.view.state.UserInformationState
 
 sealed class FeedPageMutation {
@@ -22,5 +22,5 @@ sealed class FeedPageMutation {
         override fun toString() = "Showing ${albums.size} albums"
     }
     data class UserBadgeUpdate(val state: UserInformationState) : FeedPageMutation()
-    data class ChangeDisplay(val display: FeedDisplay) : FeedPageMutation()
+    data class ChangeDisplay(val display: FeedDisplays) : FeedPageMutation()
 }

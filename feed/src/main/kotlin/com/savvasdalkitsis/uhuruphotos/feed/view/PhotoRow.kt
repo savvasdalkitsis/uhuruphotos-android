@@ -32,7 +32,7 @@ fun PhotoRow(
                         aspectRatio = aspectRatio,
                         contentScale = when {
                             maintainAspectRatio -> ContentScale.FillBounds
-                            else ->ContentScale.Crop
+                            else -> ContentScale.Crop
                         },
                         onPhotoSelected = onPhotoSelected,
                         onLongClick = onPhotoLongPressed,

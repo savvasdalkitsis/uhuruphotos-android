@@ -3,6 +3,7 @@ package com.savvasdalkitsis.uhuruphotos.feedpage.mvflow
 import androidx.compose.ui.geometry.Offset
 import com.savvasdalkitsis.uhuruphotos.albums.model.Album
 import com.savvasdalkitsis.uhuruphotos.feed.view.state.FeedDisplay
+import com.savvasdalkitsis.uhuruphotos.feed.view.state.FeedDisplays
 import com.savvasdalkitsis.uhuruphotos.photos.model.Photo
 
 sealed class FeedPageAction {
@@ -11,7 +12,7 @@ sealed class FeedPageAction {
         val center: Offset,
         val scale: Float,
     ) : FeedPageAction()
-    data class ChangeDisplay(val display: FeedDisplay) : FeedPageAction()
+    data class ChangeDisplay(val display: FeedDisplays) : FeedPageAction()
     data class PhotoLongPressed(val photo: Photo) : FeedPageAction()
     data class AlbumSelectionClicked(val album: Album) : FeedPageAction()
     object LoadFeed : FeedPageAction()

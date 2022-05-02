@@ -27,6 +27,7 @@ import com.savvasdalkitsis.uhuruphotos.photos.mvflow.PhotoAction
 import com.savvasdalkitsis.uhuruphotos.photos.mvflow.PhotoAction.*
 import com.savvasdalkitsis.uhuruphotos.photos.view.PhotoSheetStyle.BOTTOM
 import com.savvasdalkitsis.uhuruphotos.photos.view.state.PhotoState
+import com.savvasdalkitsis.uhuruphotos.ui.view.SheetSize
 import com.savvasdalkitsis.uhuruphotos.ui.view.TextWithIcon
 import com.savvasdalkitsis.uhuruphotos.ui.view.zoom.ZoomableState
 

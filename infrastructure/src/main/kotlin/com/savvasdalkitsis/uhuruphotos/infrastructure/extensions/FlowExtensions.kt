@@ -6,10 +6,8 @@ import com.github.michaelbull.result.Result
 import com.savvasdalkitsis.uhuruphotos.log.log
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.flow.mapNotNull
-import kotlinx.coroutines.flow.onStart
+import kotlinx.coroutines.currentCoroutineContext
+import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import java.io.IOException
 
@@ -28,7 +26,7 @@ fun <T> Flow<T>.safelyOnStart(
 ): Flow<Result<T, Throwable>> =
     map<T, Result<T, Throwable>>(::Ok)
         .onStart {
-            CoroutineScope(Dispatchers.IO).launch {
+            CoroutineScope(currentCoroutineContext() + Dispatchers.IO).launch {
                 try {
                     block()
                 } catch (e: IOException) {
@@ -41,7 +39,7 @@ fun <T> Flow<T>.safelyOnStart(
 fun <T> Flow<T>.safelyOnStartIgnoring(
     block: suspend () -> Unit
 ): Flow<T> = onStart {
-    CoroutineScope(Dispatchers.IO).launch {
+    CoroutineScope(currentCoroutineContext() + Dispatchers.IO).launch {
         try {
             block()
         } catch (e: IOException) {

@@ -1,0 +1,35 @@
+android {
+    buildFeatures {
+        compose true
+    }
+    composeOptions {
+        kotlinCompilerExtensionVersion compose_version
+    }
+}
+
+dependencies {
+
+    implementation project(":ui")
+    implementation project(":navigation")
+    implementation project(":map")
+    implementation project(":settings")
+    implementation project(":albums")
+    implementation project(":photos")
+    implementation project(":db")
+    implementation project(":toaster")
+    implementation project(":feed")
+    implementation project(":infrastructure")
+    implementation project(":icons")
+
+    implementation(
+            libs.accompanist.permissions,
+            libs.androidx.compose.foundation.layout,
+            libs.androidx.compose.material,
+            libs.androidx.compose.ui,
+            libs.hilt,
+            libs.maps,
+            libs.maps.compose,
+            libs.maps.utils,
+            libs.maps.utils.ktx,
+    )
+}

@@ -7,9 +7,7 @@ import androidx.compose.ui.graphics.Color
 import com.savvasdalkitsis.uhuruphotos.photos.mvflow.PhotoAction
 import com.savvasdalkitsis.uhuruphotos.photos.view.PhotoSheetStyle.BOTTOM
 import com.savvasdalkitsis.uhuruphotos.photos.view.state.PhotoState
-import com.savvasdalkitsis.uhuruphotos.ui.view.BackNavButton
-import com.savvasdalkitsis.uhuruphotos.ui.view.CommonScaffold
-import com.savvasdalkitsis.uhuruphotos.ui.view.FullProgressBar
+import com.savvasdalkitsis.uhuruphotos.ui.view.*
 import com.savvasdalkitsis.uhuruphotos.ui.view.zoom.ZoomableState
 
 @Composable

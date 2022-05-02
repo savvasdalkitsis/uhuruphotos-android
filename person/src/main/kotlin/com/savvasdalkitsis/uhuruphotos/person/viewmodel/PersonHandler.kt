@@ -33,9 +33,9 @@ class PersonHandler @Inject constructor(
         }
         is ChangeDisplay -> flowOf(SetFeedDisplay(action.display))
         is SelectedPhoto -> flow {
-            effect(
-                OpenPhotoDetails(action.photo.id, action.center, action.scale, action.photo.isVideo)
-            )
+            effect(with(action) {
+                OpenPhotoDetails(photo.id, center, scale, photo.isVideo)
+            })
         }
     }
 

@@ -1,5 +1,6 @@
 package com.savvasdalkitsis.uhuruphotos.search.viewmodel
 
+import com.savvasdalkitsis.uhuruphotos.heatmap.navigation.HeatMapNavigationTarget
 import com.savvasdalkitsis.uhuruphotos.home.navigation.HomeNavigationTarget
 import com.savvasdalkitsis.uhuruphotos.navigation.ControllersProvider
 import com.savvasdalkitsis.uhuruphotos.people.api.navigation.PeopleNavigationTarget
@@ -39,6 +40,7 @@ class SearchEffectsHandler @Inject constructor(
         NavigateToAllPeople -> navigateTo(PeopleNavigationTarget.name)
         ErrorRefreshingPeople -> toaster.show("There was an error refreshing people")
         is NavigateToPerson -> navigateTo(PersonNavigationTarget.name(effect.personId))
+        NavigateToHeatMap -> navigateTo(HeatMapNavigationTarget.name)
     }
 
     private fun navigateTo(target: String) {

@@ -1,19 +1,20 @@
 package com.savvasdalkitsis.uhuruphotos.photos.view
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.max
 import com.savvasdalkitsis.uhuruphotos.photos.mvflow.PhotoAction
 import com.savvasdalkitsis.uhuruphotos.photos.view.state.PhotoState
-import com.savvasdalkitsis.uhuruphotos.ui.insets.systemPadding
+import com.savvasdalkitsis.uhuruphotos.ui.insets.insetsTop
+import com.savvasdalkitsis.uhuruphotos.ui.view.SheetHandle
+import com.savvasdalkitsis.uhuruphotos.ui.view.SheetSize
 import com.savvasdalkitsis.uhuruphotos.ui.view.zoom.ZoomableState
 
 @Composable
@@ -29,7 +30,7 @@ internal fun BottomSheetPhotoDetails(
         sheetShape = RoundedCornerShape(12.dp),
         sheetContent = {
             Column(modifier = Modifier
-                .heightIn(min = max(100.dp, sheetSize.size.height - systemPadding(WindowInsetsSides.Top).calculateTopPadding()))
+                .heightIn(min = max(100.dp, sheetSize.size.height - insetsTop()))
                 .background(MaterialTheme.colors.background)
             ) {
                 SheetHandle()
@@ -45,24 +46,6 @@ internal fun BottomSheetPhotoDetails(
         sheetState = infoSheetState
     ) {
         PhotoDetailsScaffold(sheetSize, state, action, zoomableState)
-    }
-}
-
-@Composable
-private fun ColumnScope.SheetHandle() {
-    Box(
-        modifier = Modifier
-            .padding(8.dp)
-            .background(MaterialTheme.colors.onBackground)
-            .clip(RoundedCornerShape(4.dp))
-            .align(Alignment.CenterHorizontally)
-    ) {
-        Box(
-            modifier = Modifier
-                .background(MaterialTheme.colors.onBackground)
-                .width(24.dp)
-                .height(4.dp)
-        )
     }
 }
 

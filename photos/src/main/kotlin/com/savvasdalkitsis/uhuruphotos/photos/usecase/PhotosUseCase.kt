@@ -38,6 +38,9 @@ class PhotosUseCase @Inject constructor(
         else -> "/media/photos/$this".toAbsoluteUrl()
     }
 
+    fun getAllPhotos(): Flow<List<PhotoDetails>> =
+        photoRepository.getAllPhotos()
+
     fun getPhoto(id: String): Flow<PhotoDetails> =
         photoRepository.getPhoto(id)
 
@@ -48,6 +51,10 @@ class PhotosUseCase @Inject constructor(
 
     fun refreshDetails(id: String) {
         photoRepository.refreshDetails(id)
+    }
+
+    suspend fun refreshDetailsNowIfMissing(id: String) {
+        photoRepository.refreshDetailsNowIfMissing(id)
     }
 
     fun deletePhoto(id: String) {

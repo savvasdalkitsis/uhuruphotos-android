@@ -17,6 +17,7 @@ sealed class SearchAction {
     object EditServer : SearchAction()
     object SettingsClick : SearchAction()
     object ViewAllPeopleSelected : SearchAction()
+    object LoadHeatMap : SearchAction()
 
     data class ChangeQuery(val query: String) : SearchAction()
     data class SearchFor(val query: String) : SearchAction()

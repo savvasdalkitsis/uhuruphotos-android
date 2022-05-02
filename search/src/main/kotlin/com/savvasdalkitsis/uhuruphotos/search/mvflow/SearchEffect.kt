@@ -11,6 +11,7 @@ sealed class SearchEffect {
     object ErrorSearching : SearchEffect()
     object NavigateToAllPeople : SearchEffect()
     object ErrorRefreshingPeople : SearchEffect()
+    object NavigateToHeatMap : SearchEffect()
 
     data class NavigateToPerson(val personId: Int) : SearchEffect()
     data class OpenPhotoDetails(

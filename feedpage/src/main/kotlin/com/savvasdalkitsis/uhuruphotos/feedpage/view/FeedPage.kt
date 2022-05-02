@@ -16,6 +16,7 @@ import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 import com.savvasdalkitsis.uhuruphotos.account.view.LogOutConfirmationDialog
 import com.savvasdalkitsis.uhuruphotos.accountoverview.view.AccountOverviewPopUp
 import com.savvasdalkitsis.uhuruphotos.feed.view.Feed
+import com.savvasdalkitsis.uhuruphotos.feed.view.state.FeedDisplays
 import com.savvasdalkitsis.uhuruphotos.feedpage.mvflow.FeedPageAction
 import com.savvasdalkitsis.uhuruphotos.feedpage.mvflow.FeedPageAction.*
 import com.savvasdalkitsis.uhuruphotos.feedpage.view.state.FeedPageState
@@ -92,7 +93,7 @@ fun FeedPage(
             FeedDisplayActionButton(
                 onShow = { action(ShowFeedDisplayChoice) },
                 onHide = { action(HideFeedDisplayChoice) },
-                onChange = { action(ChangeDisplay(it)) },
+                onChange = { action(ChangeDisplay(it as FeedDisplays)) },
                 expanded = state.showFeedDisplayChoice,
                 currentFeedDisplay = state.feedState.feedDisplay
             )
@@ -107,14 +108,14 @@ fun FeedPage(
             onRefresh = { action(RefreshAlbums) }
         ) {
             Feed(
-                contentPadding,
-                state.feedState,
+                contentPadding = contentPadding,
+                state = state.feedState,
                 showSelectionHeader = state.hasSelection,
                 listState = listState,
                 onPhotoSelected = { photo, center, scale ->
                     action(SelectedPhoto(photo, center, scale,))
                 },
-                onChangeDisplay = { action(ChangeDisplay(it)) },
+                onChangeDisplay = { action(ChangeDisplay(it as FeedDisplays)) },
                 onPhotoLongPressed = {
                     action(PhotoLongPressed(it))
                 }
