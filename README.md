@@ -8,7 +8,9 @@ using an MVI architecture.
 It borrows a lot of ideas from Google Photos and aims to become a full featured photo album 
 replacement, including features like offline support, backup and sync etc.
 
-|![screen1](assets/screen-1.png)|![screen2](assets/screen-2.png)|![screen3](assets/screen-3.png)|
+<img src="./assets/screen1.png" alt="screen 1" width = 360px>
+<img src="./assets/screen2.png" alt="screen 2" width = 360px>
+<img src="./assets/screen3.png" alt="screen 2" width = 360px>
 
 While still early days, it already has a lot of features:
 
