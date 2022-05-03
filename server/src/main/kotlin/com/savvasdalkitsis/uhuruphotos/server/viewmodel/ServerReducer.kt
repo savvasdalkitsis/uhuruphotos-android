@@ -9,7 +9,7 @@ import com.savvasdalkitsis.uhuruphotos.viewmodel.Reducer
 fun serverReducer() : Reducer<ServerState, ServerMutation> = { state, mutation ->
     when (mutation) {
         is AskForServerDetails -> ServerUrl(
-            url = mutation.previousUrl.orEmpty(),
+            prefilledUrl = mutation.previousUrl.orEmpty(),
             isUrlValid = mutation.isValid,
             allowSaveUrl = mutation.isValid,
         )
@@ -18,8 +18,8 @@ fun serverReducer() : Reducer<ServerState, ServerMutation> = { state, mutation -
             mutation.password,
             allowLogin = false
         ).shouldAllowLogin()
-        is ChangeUrlTo -> ServerUrl(
-            url = mutation.url,
+        is ShowUrlValidation -> ServerUrl(
+            prefilledUrl = mutation.prefilledUrl.orEmpty(),
             isUrlValid = mutation.isValid,
             allowSaveUrl = mutation.isValid,
         )

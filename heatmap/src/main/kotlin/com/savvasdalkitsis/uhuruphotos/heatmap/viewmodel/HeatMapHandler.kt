@@ -21,7 +21,7 @@ class HeatMapHandler @Inject constructor(
     private val photosUseCase: PhotosUseCase,
 ): Handler<HeatMapState, HeatMapEffect, HeatMapAction, HeatMapMutation> {
 
-    private var boundsChecker: (LatLng) -> Boolean = { true }
+    private var boundsChecker: suspend (LatLng) -> Boolean = { true }
     private val detailsDownloading = MutableStateFlow(false)
 
     override fun invoke(
@@ -60,6 +60,7 @@ class HeatMapHandler @Inject constructor(
                     }
                 }
                 .debounce(500)
+                .distinctUntilChanged()
                 .onErrors { effect(ErrorLoadingPhotoDetails) }
                 .flatMapLatest { photos ->
                     flowOf(UpdateAllPhotos(photos), updateDisplay(photos))
@@ -81,7 +82,7 @@ class HeatMapHandler @Inject constructor(
         }
     }
 
-    private fun updateDisplay(allPhotos: List<Photo>): UpdateDisplay {
+    private suspend fun updateDisplay(allPhotos: List<Photo>): UpdateDisplay {
         val photosToDisplay = allPhotos
             .filter { photo ->
                 val latLng = photo.latLng.toLatLng()

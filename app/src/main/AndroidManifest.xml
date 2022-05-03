@@ -11,15 +11,13 @@
         android:fullBackupContent="@xml/data_extraction"
         android:dataExtractionRules="@xml/data_extraction"
         android:fullBackupOnly="false"
-        android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.UhuruPhotos"
         android:name="com.savvasdalkitsis.uhuruphotos.app.App"
         android:largeHeap="true"
-        tools:targetApi="s">
-        <profileable android:shell="true"/>
+        tools:targetApi="s"
+        tools:ignore="MissingApplicationIcon">
 
         <provider
             android:name="androidx.startup.InitializationProvider"

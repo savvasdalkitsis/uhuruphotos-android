@@ -16,6 +16,7 @@ import com.savvasdalkitsis.uhuruphotos.heatmap.viewmodel.HeatMapAction
 import com.savvasdalkitsis.uhuruphotos.map.Locations
 import com.savvasdalkitsis.uhuruphotos.map.view.MapView
 import com.savvasdalkitsis.uhuruphotos.ui.insets.insetsTop
+import kotlinx.coroutines.withContext
 
 @Composable
 fun HeatMapContent(
@@ -31,12 +32,15 @@ fun HeatMapContent(
     if (cameraPositionState.isMoving) {
         startedMoving = true
     }
+    val scope = rememberCoroutineScope()
     if (startedMoving && !cameraPositionState.isMoving) {
         @Suppress("UNUSED_VALUE")
         startedMoving = false
-        action(HeatMapAction.CameraViewPortChanged { latLng ->
-            cameraPositionState.projection?.visibleRegion?.latLngBounds?.contains(latLng)
-                ?: false
+        action(HeatMapAction.CameraViewPortChanged {  latLng ->
+            withContext(scope.coroutineContext) {
+                cameraPositionState.projection?.visibleRegion?.latLngBounds?.contains(latLng)
+                    ?: false
+            }
         })
     }
 

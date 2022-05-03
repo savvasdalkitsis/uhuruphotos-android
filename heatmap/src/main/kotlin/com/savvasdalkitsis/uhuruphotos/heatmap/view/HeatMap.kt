@@ -1,8 +1,8 @@
 package com.savvasdalkitsis.uhuruphotos.heatmap.view
 
-import android.content.res.Configuration
 import android.content.res.Configuration.ORIENTATION_LANDSCAPE
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.platform.LocalConfiguration
 import com.google.accompanist.permissions.isGranted
 import com.google.accompanist.permissions.rememberPermissionState

@@ -70,7 +70,7 @@ class ShareImage @Inject constructor(
         snapshot.close()
         FileProvider.getUriForFile(
             context,
-            "com.savvasdalkitsis.uhuruphotos.share.fileprovider",
+            "${context.packageName}.share.fileprovider",
             path
         )
     }

@@ -45,11 +45,12 @@ class ServerHandler @Inject constructor(
             }
         }
         is RequestServerUrlChange -> flow {
-            val previousUrl = serverUseCase.getServerUrl()
-            emit(AskForServerDetails(previousUrl, previousUrl?.isValidUrl == true))
+            val prefilledUrl = serverUseCase.getServerUrl()
+            emit(AskForServerDetails(prefilledUrl, prefilledUrl?.isValidUrl == true))
         }
         is UrlTyped -> flow {
-            emit(ChangeUrlTo(action.url, action.url.isValidUrl))
+            val prefilledUrl = serverUseCase.getServerUrl()
+            emit(ShowUrlValidation(prefilledUrl, action.url.isValidUrl))
         }
         is ChangeServerUrlTo -> flow {
             if (action.url.isValidUrl) {

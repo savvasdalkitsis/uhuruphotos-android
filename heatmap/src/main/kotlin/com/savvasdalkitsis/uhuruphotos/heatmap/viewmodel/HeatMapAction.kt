@@ -5,7 +5,7 @@ import com.google.android.gms.maps.model.LatLng
 import com.savvasdalkitsis.uhuruphotos.photos.model.Photo
 
 sealed class HeatMapAction {
-    data class CameraViewPortChanged(val boundsChecker: (LatLng) -> Boolean) : HeatMapAction()
+    data class CameraViewPortChanged(val boundsChecker: suspend (LatLng) -> Boolean) : HeatMapAction()
     data class SelectedPhoto(
         val photo: Photo,
         val center: Offset,

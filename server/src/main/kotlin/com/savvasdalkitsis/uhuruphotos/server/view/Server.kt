@@ -10,7 +10,7 @@ import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Lock
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.filled.Settings
-import androidx.compose.runtime.Composable
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Alignment.Companion.CenterVertically
 import androidx.compose.ui.Modifier
@@ -46,6 +46,7 @@ fun Server(
                         modifier = Modifier.padding(bottom = 8.dp),
                         text = "Enter LibrePhotos server url:"
                     )
+                    var textFieldValue by remember { mutableStateOf(state.prefilledUrl) }
                     OutlinedTextField(
                         maxLines = 1,
                         singleLine = true,
@@ -54,19 +55,20 @@ fun Server(
                             imeAction = ImeAction.Done,
                         ),
                         keyboardActions = KeyboardActions(
-                            onDone = { action(ChangeServerUrlTo(state.url)) }
+                            onDone = { action(ChangeServerUrlTo(textFieldValue)) }
                         ),
                         leadingIcon = { Icon(imageVector = Icons.Default.Home, contentDescription = "serverIcon") },
                         label = { Text("Server Url") },
-                        value = state.url,
+                        value = textFieldValue,
                         isError = !state.isUrlValid,
                         onValueChange = {
+                            textFieldValue = it
                             action(UrlTyped(it))
                         },
                     )
                     Button(
                         enabled = state.allowSaveUrl,
-                        onClick = { action(ChangeServerUrlTo(state.url)) }
+                        onClick = { action(ChangeServerUrlTo(textFieldValue)) }
                     ) {
                         Text("Save")
                     }

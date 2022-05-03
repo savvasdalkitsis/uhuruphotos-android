@@ -9,7 +9,7 @@ sealed class ServerState : Parcelable {
     object Loading: ServerState()
     @Parcelize
     data class ServerUrl(
-        val url: String,
+        val prefilledUrl: String,
         val isUrlValid: Boolean,
         val allowSaveUrl: Boolean,
     ): ServerState(), Parcelable
