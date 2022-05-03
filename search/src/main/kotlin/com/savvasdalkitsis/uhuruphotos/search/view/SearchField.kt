@@ -16,13 +16,12 @@ import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
-import com.savvasdalkitsis.uhuruphotos.navigation.ControllersProvider
 import com.savvasdalkitsis.uhuruphotos.search.mvflow.SearchAction
+import com.savvasdalkitsis.uhuruphotos.search.mvflow.SearchAction.ChangeFocus
 import com.savvasdalkitsis.uhuruphotos.search.mvflow.SearchAction.ClearSearch
 import com.savvasdalkitsis.uhuruphotos.search.view.state.SearchState
 
@@ -30,16 +29,14 @@ import com.savvasdalkitsis.uhuruphotos.search.view.state.SearchState
 fun SearchField(
     state: SearchState,
     action: (SearchAction) -> Unit,
-    controllersProvider: ControllersProvider
 ) {
     TextField(
         modifier = Modifier
             .fillMaxWidth()
             .padding(12.dp)
             .onFocusChanged { focusState ->
-                action(SearchAction.ChangeFocus(focusState.isFocused))
-            }
-            .focusRequester(controllersProvider.focusRequester!!),
+                action(ChangeFocus(focusState.isFocused))
+            },
         maxLines = 1,
         singleLine = true,
         trailingIcon = {

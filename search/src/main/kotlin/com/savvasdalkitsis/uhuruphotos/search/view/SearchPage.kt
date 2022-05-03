@@ -32,7 +32,6 @@ fun SearchPage(
         Search(
             state = state,
             action = action,
-            controllersProvider = controllersProvider,
             contentPadding = contentPadding
         )
         AccountOverviewPopUp(

@@ -22,7 +22,6 @@ class SearchEffectsHandler @Inject constructor(
         effect: SearchEffect,
     ) = when (effect) {
         HideKeyboard -> controllersProvider.keyboardController!!.hide()
-        FocusSearchBar -> controllersProvider.focusRequester!!.requestFocus()
         ReloadApp -> {
             with(controllersProvider.navController!!) {
                 backQueue.clear()

@@ -58,9 +58,7 @@ class SearchHandler @Inject constructor(
                     effect(ErrorRefreshingPeople)
                 }
                 .map(::ShowPeople)
-        ).onStart {
-            effect(FocusSearchBar)
-        }
+        )
         is ChangeQuery -> flowOf(QueryChanged(action.query))
         is SearchFor -> channelFlow {
             lastSearch?.cancel()

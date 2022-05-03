@@ -1,6 +1,5 @@
 package com.savvasdalkitsis.uhuruphotos.navigation
 
-import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.hapticfeedback.HapticFeedback
 import androidx.compose.ui.platform.SoftwareKeyboardController
 import androidx.navigation.NavHostController
@@ -15,7 +14,6 @@ class ControllersProvider @Inject constructor(
 
     var keyboardController: SoftwareKeyboardController? = null
     var navController: NavHostController? = null
-    var focusRequester: FocusRequester? = null
     var systemUiController: SystemUiController? = null
     var haptics: HapticFeedback? = null
 }

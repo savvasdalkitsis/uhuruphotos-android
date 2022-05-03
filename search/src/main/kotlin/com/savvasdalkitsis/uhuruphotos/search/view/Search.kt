@@ -6,9 +6,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import com.savvasdalkitsis.uhuruphotos.navigation.ControllersProvider
 import com.savvasdalkitsis.uhuruphotos.search.mvflow.SearchAction
-import com.savvasdalkitsis.uhuruphotos.search.view.state.SearchResults
 import com.savvasdalkitsis.uhuruphotos.search.view.state.SearchResults.*
 import com.savvasdalkitsis.uhuruphotos.search.view.state.SearchState
 import com.savvasdalkitsis.uhuruphotos.ui.view.FullProgressBar
@@ -16,12 +14,11 @@ import com.savvasdalkitsis.uhuruphotos.ui.view.FullProgressBar
 @Composable fun Search(
     state: SearchState,
     action: (SearchAction) -> Unit,
-    controllersProvider: ControllersProvider,
     contentPadding: PaddingValues,
 ) {
     Column {
         Spacer(modifier = Modifier.height(contentPadding.calculateTopPadding()))
-        SearchField(state, action, controllersProvider)
+        SearchField(state, action)
         when (state.searchResults) {
             Idle -> SearchIdle(state, action)
             Searching -> FullProgressBar()
