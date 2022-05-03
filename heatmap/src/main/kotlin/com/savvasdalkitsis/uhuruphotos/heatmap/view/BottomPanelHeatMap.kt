@@ -29,7 +29,7 @@ fun BottomPanelHeatMap(
         sheetPeekHeight = sheetPeekHeight,
         sheetShape = RoundedCornerShape(12.dp),
         sheetContent = {
-            val height = max(sheetPeekHeight, sheetSize.size.height - insetsTop())
+            val height = max(sheetPeekHeight, sheetSize.size.height - insetsTop() - 120.dp)
             Column(
                 modifier = Modifier
                     .fillMaxWidth()
