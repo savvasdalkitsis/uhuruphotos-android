@@ -1,6 +1,7 @@
 package com.savvasdalkitsis.uhuruphotos.network.module
 
 import android.content.Context
+import com.savvasdalkitsis.uhuruphotos.network.interceptors.UserAgentInterceptor
 import com.squareup.moshi.Moshi
 import dagger.Module
 import dagger.Provides
@@ -26,12 +27,15 @@ class NetworkModule {
 
     @Provides
     @BasicOkHttpClient
-    fun basicOkHttpBuilder(): OkHttpClient.Builder = OkHttpClient().newBuilder()
+    fun basicOkHttpBuilder(
+        userAgentInterceptor: UserAgentInterceptor,
+    ): OkHttpClient.Builder = OkHttpClient().newBuilder()
         .followRedirects(false)
         .callTimeout(60, TimeUnit.SECONDS)
         .connectTimeout(60, TimeUnit.SECONDS)
         .readTimeout(60, TimeUnit.SECONDS)
         .writeTimeout(60, TimeUnit.SECONDS)
+        .addInterceptor(userAgentInterceptor)
 
     @Provides
     @Singleton
