@@ -18,7 +18,6 @@ package com.savvasdalkitsis.uhuruphotos.viewmodel
 import com.savvasdalkitsis.uhuruphotos.log.log
 import kotlinx.coroutines.Dispatchers.Default
 import kotlinx.coroutines.flow.*
-import kotlinx.coroutines.withContext
 
 class ActionReceiver<S : Any, E : Any, A : Any, M : Any>(
     private val handler: Handler<S, E, A, M>,
@@ -43,10 +42,7 @@ class ActionReceiver<S : Any, E : Any, A : Any, M : Any>(
             .cancellable()
             .collect { mutation ->
                 log("MVI") { "Received mutation $mutation due to action $action" }
-                val newState = withContext(Default) {
-                    reducer(_state.value, mutation)
-                }
-                _state.update { newState }
+                _state.update { reducer(_state.value, mutation) }
             }
     }
 }

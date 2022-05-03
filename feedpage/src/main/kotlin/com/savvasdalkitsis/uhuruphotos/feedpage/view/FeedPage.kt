@@ -38,6 +38,7 @@ import com.savvasdalkitsis.uhuruphotos.feedpage.view.state.FeedPageState
 import com.savvasdalkitsis.uhuruphotos.home.view.HomeScaffold
 import com.savvasdalkitsis.uhuruphotos.icons.R
 import com.savvasdalkitsis.uhuruphotos.infrastructure.extensions.blurIf
+import com.savvasdalkitsis.uhuruphotos.navigation.ControllersProvider
 import com.savvasdalkitsis.uhuruphotos.photos.view.DeletePermissionDialog
 import com.savvasdalkitsis.uhuruphotos.ui.view.ActionIcon
 import com.savvasdalkitsis.uhuruphotos.ui.view.Logo
@@ -45,7 +46,7 @@ import kotlinx.coroutines.launch
 
 @Composable
 fun FeedPage(
-    controllersProvider: com.savvasdalkitsis.uhuruphotos.navigation.ControllersProvider,
+    controllersProvider: ControllersProvider,
     state: FeedPageState,
     feedNavigationName: String,
     searchNavigationName: String,
