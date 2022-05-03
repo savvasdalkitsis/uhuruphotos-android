@@ -1,5 +1,4 @@
 # UhuruPhotos. A LibrePhotos client
-======
 
 UhuruPhotos is an Android client for [LibrePhotos](https://github.com/LibrePhotos/librephotos) 
 written using the latest Android technologies, like Jetpack Compose, SQLDelight, Coroutines etc 
@@ -8,9 +7,7 @@ using an MVI architecture.
 It borrows a lot of ideas from Google Photos and aims to become a full featured photo album 
 replacement, including features like offline support, backup and sync etc.
 
-<img src="https://github.com/savvasdalkitsis/uhuruphotos-android/raw/main/assets/screen-1.png" alt="screen 1" width = 240px>
-<img src="https://github.com/savvasdalkitsis/uhuruphotos-android/raw/main/assets/screen-2.png" alt="screen 2" width = 240px>
-<img src="https://github.com/savvasdalkitsis/uhuruphotos-android/raw/main/assets/screen-3.png" alt="screen 2" width = 240px>
+|<img src="https://github.com/savvasdalkitsis/uhuruphotos-android/raw/main/assets/screen-1.png" alt="screen 1" width = 240px>|<img src="https://github.com/savvasdalkitsis/uhuruphotos-android/raw/main/assets/screen-2.png" alt="screen 2" width = 240px>|<img src="https://github.com/savvasdalkitsis/uhuruphotos-android/raw/main/assets/screen-3.png" alt="screen 2" width = 240px>|
 
 While still early days, it already has a lot of features:
 
@@ -43,7 +40,6 @@ mainly:
 * ...and more
 
 # Play Store
-======
 
 The app is currently in closed beta on the Google Play store. Contact me on 
 [twitter](https://twitter.com/geeky_android) for access.
