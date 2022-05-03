@@ -1,4 +1,4 @@
-# UhuruPhotos. A LibrePhotos client
+# <img src="https://github.com/savvasdalkitsis/uhuruphotos-android/raw/main/icons/src/main/ic_launcher-playstore.png" alt="logo" width = 60px> UhuruPhotos. A LibrePhotos client
 
 UhuruPhotos is an Android client for [LibrePhotos](https://github.com/LibrePhotos/librephotos) 
 written using the latest Android technologies, like Jetpack Compose, SQLDelight, Coroutines etc 
