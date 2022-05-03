@@ -1,4 +1,5 @@
 # UhuruPhotos. A LibrePhotos client
+======
 
 UhuruPhotos is an Android client for [LibrePhotos](https://github.com/LibrePhotos/librephotos) 
 written using the latest Android technologies, like Jetpack Compose, SQLDelight, Coroutines etc 
@@ -6,6 +7,8 @@ using an MVI architecture.
 
 It borrows a lot of ideas from Google Photos and aims to become a full featured photo album 
 replacement, including features like offline support, backup and sync etc.
+
+|![screen1](assets/screen-1.png)|![screen2](assets/screen-2.png)|![screen3](assets/screen-3.png)|
 
 While still early days, it already has a lot of features:
 
@@ -19,6 +22,8 @@ While still early days, it already has a lot of features:
 * People view and suggestions for people with most photos.
 * Photo map. See a heatmap of your photos. Navigate around the globe with the interactive map and 
   see photos taken in the location currently viewed.
+* Dark/Light mode (manual and auto)
+* Tablet support
 * A lot of settings to help you control the app storage and memory requirements along with how 
   frequently to perform synchronization with the LibrePhotos server.
   
@@ -32,9 +37,11 @@ mainly:
 * Album support. Currently the app only shows the full photo feed. Soon, user created albums will be
   supported as well.
 * Basic photo editing capabilities.
+* Foldables support.
 * ...and more
 
 # Play Store
+======
 
 The app is currently in closed beta on the Google Play store. Contact me on 
 [twitter](https://twitter.com/geeky_android) for access.
