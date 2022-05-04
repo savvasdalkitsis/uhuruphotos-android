@@ -74,6 +74,9 @@ fun Settings(
                 item {
                     SettingsGroupSearch(state, action)
                 }
+                item {
+                    SettingsGroupShare(state, action)
+                }
             }
         }
         if (state.showFullFeedSyncDialog) {

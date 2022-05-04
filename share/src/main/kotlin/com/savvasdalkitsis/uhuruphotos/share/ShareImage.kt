@@ -23,6 +23,7 @@ import coil.ImageLoader
 import coil.disk.DiskCache
 import coil.request.ImageRequest
 import com.savvasdalkitsis.uhuruphotos.navigation.IntentLauncher
+import com.savvasdalkitsis.uhuruphotos.settings.usecase.SettingsUseCase
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.awaitAll
@@ -35,6 +36,7 @@ class ShareImage @Inject constructor(
     private val diskCache: DiskCache,
     private val launcher: IntentLauncher,
     private val imageLoader: ImageLoader,
+    private val settingsUseCase: SettingsUseCase,
     @ApplicationContext private val context: Context,
 ) {
     private val shareDir = File(context.cacheDir, "share_cache")
@@ -45,6 +47,7 @@ class ShareImage @Inject constructor(
             launch(Intent(Intent.ACTION_SEND).apply {
                 putExtra(Intent.EXTRA_STREAM, uri)
                 putExtra(Intent.EXTRA_TEXT, "Share Photo")
+                addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
                 type = "image/jpg"
             })
         }
@@ -54,9 +57,10 @@ class ShareImage @Inject constructor(
         val uris = download(*urls.toTypedArray())
         launch(Intent().apply {
             action = Intent.ACTION_SEND_MULTIPLE
+            addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
             type = "image/*"
             putParcelableArrayListExtra(Intent.EXTRA_STREAM, uris)
-            putExtra(Intent.EXTRA_TEXT, "Share Photos")
+            putExtra(Intent.EXTRA_TEXT, ArrayList<CharSequence>(listOf("Share Photos" as CharSequence)))
         })
     }
 
@@ -75,7 +79,9 @@ class ShareImage @Inject constructor(
 
     private fun launch(intent: Intent) {
         launcher.launch(
-            Intent.createChooser(intent, "Share Via")
+            Intent.createChooser(intent, "Share Via").apply {
+                addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+            }
         )
     }
 
@@ -83,6 +89,9 @@ class ShareImage @Inject constructor(
         val data = snapshot.data
         val path = data.toFile().copyTo(shareFile(postfix), overwrite = true)
         snapshot.close()
+        if (settingsUseCase.getShareRemoveGpsData()) {
+            path.removeGpsData()
+        }
         FileProvider.getUriForFile(
             context,
             "${context.packageName}.share.fileprovider",

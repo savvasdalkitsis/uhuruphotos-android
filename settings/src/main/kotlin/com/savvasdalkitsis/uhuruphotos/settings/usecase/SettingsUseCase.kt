@@ -39,6 +39,7 @@ class SettingsUseCase @Inject constructor(
     private val fullSyncRequiresCharging = flowSharedPreferences.getBoolean("fullSyncRequiresCharging", false)
     private val themeMode = flowSharedPreferences.getEnum("themeMode", ThemeMode.default)
     private val searchSuggestionsEnabled = flowSharedPreferences.getBoolean("searchSuggestionsEnabled", true)
+    private val shareRemoveGpsData = flowSharedPreferences.getBoolean("shareRemoveGpsData", false)
 
     fun getImageDiskCacheMaxLimit(): Int = imageDiskCacheSize.get()
     fun getImageMemCacheMaxLimit(): Int = imageMemCacheSize.get()
@@ -47,6 +48,7 @@ class SettingsUseCase @Inject constructor(
     fun getFullSyncNetworkRequirements(): NetworkType = fullSyncNetworkRequirements.get()
     fun getFullSyncRequiresCharging(): Boolean = fullSyncRequiresCharging.get()
     fun getShouldPerformPeriodicFullSync(): Boolean = shouldPerformPeriodicFeedSync.get()
+    fun getShareRemoveGpsData(): Boolean = shareRemoveGpsData.get()
 
     fun observeImageDiskCacheMaxLimit(): Flow<Int> = imageDiskCacheSize.asFlow()
     fun observeImageMemCacheMaxLimit(): Flow<Int> = imageMemCacheSize.asFlow()
@@ -56,6 +58,7 @@ class SettingsUseCase @Inject constructor(
     fun observeFullSyncRequiresCharging(): Flow<Boolean> = fullSyncRequiresCharging.asFlow()
     fun observeThemeMode(): Flow<ThemeMode> = themeMode.asFlow()
     fun observeSearchSuggestionsEnabledMode(): Flow<Boolean> = searchSuggestionsEnabled.asFlow()
+    fun observeShareRemoveGpsData(): Flow<Boolean> = shareRemoveGpsData.asFlow()
     suspend fun observeThemeModeState(): StateFlow<ThemeMode> = observeThemeMode().stateIn(
         CoroutineScope(Dispatchers.IO)
     )
@@ -94,5 +97,9 @@ class SettingsUseCase @Inject constructor(
 
     suspend fun setSearchSuggestionsEnabled(enabled: Boolean) {
         searchSuggestionsEnabled.setAndCommit(enabled)
+    }
+
+    suspend fun setShareRemoveGpsData(enabled: Boolean) {
+        shareRemoveGpsData.setAndCommit(enabled)
     }
 }

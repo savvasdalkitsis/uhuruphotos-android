@@ -1,7 +1,9 @@
 dependencies {
 
     implementation project(":navigation")
+    implementation project(":settings")
     implementation(
             libs.coil.base,
+            libs.exif,
     )
 }

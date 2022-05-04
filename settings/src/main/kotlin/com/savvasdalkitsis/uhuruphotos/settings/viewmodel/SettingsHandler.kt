@@ -58,6 +58,8 @@ internal class SettingsHandler @Inject constructor(
                 .map(::DisplayThemeMode),
             settingsUseCase.observeSearchSuggestionsEnabledMode()
                 .map(::DisplaySearchSuggestionsEnabled),
+            settingsUseCase.observeShareRemoveGpsData()
+                .map(::DisplayShareGpsDataEnabled),
             cacheUseCase.observeImageDiskCacheCurrentUse()
                 .map(::DisplayImageDiskCacheCurrentUse),
             cacheUseCase.observeImageMemCacheCurrentUse()
@@ -125,6 +127,9 @@ internal class SettingsHandler @Inject constructor(
         }
         is ChangeSearchSuggestionsEnabled -> flow {
             settingsUseCase.setSearchSuggestionsEnabled(action.enabled)
+        }
+        is ChangeShareGpsDataEnabled -> flow {
+            settingsUseCase.setShareRemoveGpsData(action.enabled)
         }
     }
 

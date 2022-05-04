@@ -36,4 +36,5 @@ data class SettingsState(
     val themeMode: ThemeMode = ThemeMode.default,
     val fullSyncJobProgress: Int = 0,
     val searchSuggestionsEnabled: Boolean = true,
+    val shareRemoveGpsDataEnabled: Boolean = false,
 )
