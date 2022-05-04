@@ -57,3 +57,4 @@ retrofit-moshi = { module = 'com.squareup.retrofit2:converter-moshi', version.re
 result = "com.michael-bull.kotlin-result:kotlin-result:1.1.16"
 sqldelight-android = { module = 'com.squareup.sqldelight:android-driver', version.ref = "sqldelight" }
 sqldelight-coroutines = { module = 'com.squareup.sqldelight:coroutines-extensions', version.ref = "sqldelight" }
+urlvalidator = "commons-validator:commons-validator:1.7"

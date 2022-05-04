@@ -16,7 +16,7 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.auth.usecase
 
 import com.fredporciuncula.flow.preferences.FlowSharedPreferences
-import com.savvasdalkitsis.uhuruphotos.db.extensions.read
+import com.savvasdalkitsis.uhuruphotos.infrastructure.extensions.prefixedWithHttpsIfNeeded
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.filterNot
 import kotlinx.coroutines.flow.filterNotNull
@@ -36,6 +36,6 @@ class ServerUseCase @Inject constructor(
     fun getServerUrl(): String? = preference.get()?.trim()
 
     suspend fun setServerUrl(serverUrl: String) {
-        preference.setAndCommit(serverUrl)
+        preference.setAndCommit(serverUrl.prefixedWithHttpsIfNeeded)
     }
 }

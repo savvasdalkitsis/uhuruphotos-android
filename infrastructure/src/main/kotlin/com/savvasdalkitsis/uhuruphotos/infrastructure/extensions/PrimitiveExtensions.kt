@@ -15,8 +15,25 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.infrastructure.extensions
 
-import android.webkit.URLUtil
+import org.apache.commons.validator.routines.UrlValidator
 
-val String.isValidUrl get() = URLUtil.isValidUrl(this)
+private val httpValidator = UrlValidator(arrayOf("http"))
+private val httpsValidator = UrlValidator(arrayOf("https"))
+
+val String.isValidUrlOrDomain get() = isValidUrl || "https://$this".isValidUrl
+
+private val String.isValidUrl get() = isHttpUrl || isHttpsUrl
+
+private val String.isHttpUrl get() = httpValidator.isValid(this.trim())
+
+private val String.isHttpsUrl get() = httpsValidator.isValid(this.trim())
+
+val String.needsHttpsPrefix get() =
+    !isValidUrl && "https://$this".isValidUrl
+
+val String.prefixedWithHttpsIfNeeded get() = when {
+    needsHttpsPrefix -> "https://$this"
+    else -> this
+}.trim()
 
 fun Double.round(decimals: Int = 2): String = "%.${decimals}f".format(this)

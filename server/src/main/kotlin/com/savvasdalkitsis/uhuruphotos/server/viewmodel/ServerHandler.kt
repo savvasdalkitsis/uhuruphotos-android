@@ -18,7 +18,7 @@ package com.savvasdalkitsis.uhuruphotos.server.viewmodel
 import com.savvasdalkitsis.uhuruphotos.auth.model.AuthStatus.*
 import com.savvasdalkitsis.uhuruphotos.auth.usecase.AuthenticationUseCase
 import com.savvasdalkitsis.uhuruphotos.auth.usecase.ServerUseCase
-import com.savvasdalkitsis.uhuruphotos.infrastructure.extensions.isValidUrl
+import com.savvasdalkitsis.uhuruphotos.infrastructure.extensions.isValidUrlOrDomain
 import com.savvasdalkitsis.uhuruphotos.log.log
 import com.savvasdalkitsis.uhuruphotos.server.mvflow.ServerAction
 import com.savvasdalkitsis.uhuruphotos.server.mvflow.ServerAction.*
@@ -61,14 +61,14 @@ class ServerHandler @Inject constructor(
         }
         is RequestServerUrlChange -> flow {
             val prefilledUrl = serverUseCase.getServerUrl()
-            emit(AskForServerDetails(prefilledUrl, prefilledUrl?.isValidUrl == true))
+            emit(AskForServerDetails(prefilledUrl, prefilledUrl?.isValidUrlOrDomain == true))
         }
         is UrlTyped -> flow {
             val prefilledUrl = serverUseCase.getServerUrl()
-            emit(ShowUrlValidation(prefilledUrl, action.url.isValidUrl))
+            emit(ShowUrlValidation(prefilledUrl, action.url.isValidUrlOrDomain))
         }
         is ChangeServerUrlTo -> flow {
-            if (action.url.isValidUrl) {
+            if (action.url.isValidUrlOrDomain) {
                 serverUseCase.setServerUrl(action.url)
                 effect(Close)
             }

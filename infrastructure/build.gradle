@@ -16,6 +16,7 @@ dependencies {
             libs.androidx.compose.material,
             libs.androidx.compose.ui,
             libs.hilt,
+            libs.urlvalidator,
     )
     api(
             libs.result,
