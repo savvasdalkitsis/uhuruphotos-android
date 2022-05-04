@@ -15,17 +15,10 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feedpage.view
 
-import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.rememberLazyListState
-import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.OutlinedButton
-import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
 import com.google.accompanist.swiperefresh.SwipeRefresh
 import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 import com.savvasdalkitsis.uhuruphotos.account.view.LogOutConfirmationDialog
@@ -36,12 +29,9 @@ import com.savvasdalkitsis.uhuruphotos.feedpage.mvflow.FeedPageAction
 import com.savvasdalkitsis.uhuruphotos.feedpage.mvflow.FeedPageAction.*
 import com.savvasdalkitsis.uhuruphotos.feedpage.view.state.FeedPageState
 import com.savvasdalkitsis.uhuruphotos.home.view.HomeScaffold
-import com.savvasdalkitsis.uhuruphotos.icons.R
 import com.savvasdalkitsis.uhuruphotos.infrastructure.extensions.blurIf
 import com.savvasdalkitsis.uhuruphotos.navigation.ControllersProvider
 import com.savvasdalkitsis.uhuruphotos.photos.view.DeletePermissionDialog
-import com.savvasdalkitsis.uhuruphotos.ui.view.ActionIcon
-import com.savvasdalkitsis.uhuruphotos.ui.view.Logo
 import kotlinx.coroutines.launch
 
 @Composable
@@ -64,33 +54,7 @@ fun FeedPage(
     HomeScaffold(
         modifier = Modifier.blurIf(state.showAccountOverview),
         title = {
-            Row(
-                horizontalArrangement = Arrangement.spacedBy(12.dp),
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                Logo(
-                    onClick = { scrollToTop() }
-                )
-                AnimatedVisibility(visible = state.hasSelection) {
-                    OutlinedButton(
-                        modifier = Modifier
-                            .heightIn(max = 48.dp),
-                        contentPadding = PaddingValues(2.dp),
-                        onClick = { action(ClearSelected) },
-                        shape = RoundedCornerShape(12.dp),
-                    ) {
-                        Text(
-                            modifier = Modifier.padding(end = 8.dp),
-                            text = state.selectedPhotoCount.toString(),
-                        )
-                        ActionIcon(
-                            modifier = Modifier.size(16.dp),
-                            onClick = { action(ClearSelected) },
-                            icon = R.drawable.ic_clear
-                        )
-                    }
-                }
-            }
+            FeedPageTitle(state, action, ::scrollToTop)
         },
         selectionMode = state.hasSelection,
         navController = controllersProvider.navController!!,
@@ -100,23 +64,9 @@ fun FeedPage(
         searchNavigationName = searchNavigationName,
         userBadgePressed = { action(UserBadgePressed) },
         actionBarContent = {
-            AnimatedVisibility(visible = state.shouldShowShareIcon) {
-                ActionIcon(onClick = { action(ShareSelectedPhotos) }, icon = R.drawable.ic_share)
-            }
-            AnimatedVisibility(visible = state.hasSelection) {
-                ActionIcon(onClick = { action(AskForSelectedPhotosDeletion) }, icon = R.drawable.ic_delete)
-            }
-            FeedDisplayActionButton(
-                onShow = { action(ShowFeedDisplayChoice) },
-                onHide = { action(HideFeedDisplayChoice) },
-                onChange = { action(ChangeDisplay(it as FeedDisplays)) },
-                expanded = state.showFeedDisplayChoice,
-                currentFeedDisplay = state.feedState.feedDisplay
-            )
+            FeedPageActionBar(state, action)
         },
-        onReselected = {
-            scrollToTop()
-        },
+        onReselected = { scrollToTop() },
     ) { contentPadding ->
         SwipeRefresh(
             indicatorPadding = contentPadding,

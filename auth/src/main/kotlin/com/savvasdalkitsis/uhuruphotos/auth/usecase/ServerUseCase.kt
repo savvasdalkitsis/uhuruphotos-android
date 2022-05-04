@@ -33,7 +33,7 @@ class ServerUseCase @Inject constructor(
         .filterNot { it.isNullOrEmpty() }
         .filterNotNull()
 
-    suspend fun getServerUrl(): String? = read { preference.get()?.trim() }
+    fun getServerUrl(): String? = preference.get()?.trim()
 
     suspend fun setServerUrl(serverUrl: String) {
         preference.setAndCommit(serverUrl)
