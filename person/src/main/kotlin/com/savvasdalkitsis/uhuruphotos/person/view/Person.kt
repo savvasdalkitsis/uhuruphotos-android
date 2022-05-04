@@ -20,6 +20,7 @@ import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -66,8 +67,15 @@ fun Person(
                 action(NavigateBack)
             }
         },
+        actionBarContent = {
+            AnimatedVisibility(
+                visible = state.feedState.albums.isNotEmpty() && state.feedState.isLoading
+            ) {
+                CircularProgressIndicator()
+            }
+        }
     ) { contentPadding ->
-        if (state.feedState.isLoading || state.feedState.albums.isEmpty()) {
+        if (state.feedState.albums.isEmpty()) {
             FullProgressBar()
         } else {
             Feed(
