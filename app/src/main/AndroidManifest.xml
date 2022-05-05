@@ -16,6 +16,7 @@
         android:theme="@style/Theme.UhuruPhotos"
         android:name="com.savvasdalkitsis.uhuruphotos.app.App"
         android:largeHeap="true"
+        android:networkSecurityConfig="@xml/network_security_config"
         tools:targetApi="s"
         tools:ignore="MissingApplicationIcon">
 
