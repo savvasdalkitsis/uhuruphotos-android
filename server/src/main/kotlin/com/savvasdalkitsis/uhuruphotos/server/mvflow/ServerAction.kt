@@ -25,4 +25,5 @@ sealed class ServerAction {
     data class UsernameChangedTo(val username: String) : ServerAction()
     data class UserPasswordChangedTo(@Redacted val password: String) : ServerAction()
     object Login : ServerAction()
+    object SendLogsClick : ServerAction()
 }

@@ -13,20 +13,21 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
  */
-package com.savvasdalkitsis.uhuruphotos.log.initializer
+package com.savvasdalkitsis.uhuruphotos.log
 
+import android.content.Context
+import com.michaelflisar.lumberjack.FileLoggingSetup
 import com.michaelflisar.lumberjack.L
-import com.savvasdalkitsis.uhuruphotos.initializer.ApplicationCreated
-import timber.log.Timber
+import com.michaelflisar.lumberjack.sendFeedback
+import dagger.hilt.android.qualifiers.ApplicationContext
 import javax.inject.Inject
 
-class LogInitializer @Inject constructor(
-    private val trees: Set<@JvmSuppressWildcards Timber.Tree>,
-) : ApplicationCreated {
+class FeedbackSender @Inject constructor(
+    @ApplicationContext private val context: Context,
+    private val loggingSetup: FileLoggingSetup,
+) {
 
-    override fun onAppCreated() {
-        for (tree in trees) {
-            L.plant(tree)
-        }
+    fun sendFeedback() {
+        L.sendFeedback(context, loggingSetup.getLatestLogFiles(), "kurosavvas@gmail.com")
     }
 }

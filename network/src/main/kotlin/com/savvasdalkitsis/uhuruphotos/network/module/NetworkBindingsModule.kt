@@ -13,20 +13,18 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
  */
-package com.savvasdalkitsis.uhuruphotos.log.initializer
+package com.savvasdalkitsis.uhuruphotos.network.module
 
-import com.michaelflisar.lumberjack.L
-import com.savvasdalkitsis.uhuruphotos.initializer.ApplicationCreated
-import timber.log.Timber
-import javax.inject.Inject
+import com.savvasdalkitsis.uhuruphotos.network.logging.TimberLogger
+import dagger.Binds
+import dagger.Module
+import dagger.hilt.InstallIn
+import dagger.hilt.components.SingletonComponent
+import okhttp3.logging.HttpLoggingInterceptor
 
-class LogInitializer @Inject constructor(
-    private val trees: Set<@JvmSuppressWildcards Timber.Tree>,
-) : ApplicationCreated {
-
-    override fun onAppCreated() {
-        for (tree in trees) {
-            L.plant(tree)
-        }
-    }
+@Module
+@InstallIn(SingletonComponent::class)
+abstract class NetworkBindingsModule {
+    @Binds
+    abstract fun httpLogger(logger: TimberLogger): HttpLoggingInterceptor.Logger
 }

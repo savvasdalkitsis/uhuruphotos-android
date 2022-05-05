@@ -19,6 +19,7 @@ import android.content.Context
 import androidx.hilt.work.HiltWorker
 import androidx.work.CoroutineWorker
 import androidx.work.WorkerParameters
+import com.savvasdalkitsis.uhuruphotos.log.log
 import com.savvasdalkitsis.uhuruphotos.photos.service.PhotosService
 import com.savvasdalkitsis.uhuruphotos.photos.service.model.PhotoFavouriteRequest
 import com.savvasdalkitsis.uhuruphotos.photos.service.model.toPhotoDetails
@@ -54,6 +55,7 @@ class PhotoFavouriteWorker @AssistedInject constructor(
                 Result.failure()
             }
         } catch (e: Exception) {
+            log(e)
             if (params.runAttemptCount < 4) {
                 Result.retry()
             } else {

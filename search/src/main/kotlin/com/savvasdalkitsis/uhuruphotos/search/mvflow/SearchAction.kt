@@ -31,6 +31,7 @@ sealed class SearchAction {
     object LogOut : SearchAction()
     object EditServer : SearchAction()
     object SettingsClick : SearchAction()
+    object SendLogsClick : SearchAction()
     object ViewAllPeopleSelected : SearchAction()
     object LoadHeatMap : SearchAction()
 

@@ -15,22 +15,23 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.network.module
 
-import com.savvasdalkitsis.uhuruphotos.network.BuildConfig
+import com.savvasdalkitsis.uhuruphotos.network.BuildConfig.DEBUG
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
+import okhttp3.logging.HttpLoggingInterceptor.Level.BASIC
+import okhttp3.logging.HttpLoggingInterceptor.Level.BODY
 import javax.inject.Inject
 
 class OkHttpBuilder @Inject constructor(
     @NetworkModule.BasicOkHttpClient private val okHttpBuilder: OkHttpClient.Builder,
+    private val logger: HttpLoggingInterceptor.Logger,
 ) {
 
     fun build(builder: OkHttpClient.Builder.() -> OkHttpClient.Builder): OkHttpClient.Builder =
-        builder(okHttpBuilder)
-            .apply {
-                if (BuildConfig.DEBUG) {
-                    addInterceptor(
-                        HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY)
-                    )
-                }
-            }
+        builder(okHttpBuilder).addInterceptor(
+            HttpLoggingInterceptor(logger).setLevel(when {
+                DEBUG -> BODY
+                else -> BASIC
+            })
+        )
 }

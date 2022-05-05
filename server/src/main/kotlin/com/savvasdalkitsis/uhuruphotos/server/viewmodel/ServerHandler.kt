@@ -23,8 +23,7 @@ import com.savvasdalkitsis.uhuruphotos.log.log
 import com.savvasdalkitsis.uhuruphotos.server.mvflow.ServerAction
 import com.savvasdalkitsis.uhuruphotos.server.mvflow.ServerAction.*
 import com.savvasdalkitsis.uhuruphotos.server.mvflow.ServerEffect
-import com.savvasdalkitsis.uhuruphotos.server.mvflow.ServerEffect.Close
-import com.savvasdalkitsis.uhuruphotos.server.mvflow.ServerEffect.ErrorLoggingIn
+import com.savvasdalkitsis.uhuruphotos.server.mvflow.ServerEffect.*
 import com.savvasdalkitsis.uhuruphotos.server.mvflow.ServerMutation
 import com.savvasdalkitsis.uhuruphotos.server.mvflow.ServerMutation.*
 import com.savvasdalkitsis.uhuruphotos.server.view.ServerState
@@ -90,6 +89,9 @@ class ServerHandler @Inject constructor(
         }
         is UsernameChangedTo -> flowOf(ChangeUsernameTo(action.username))
         is UserPasswordChangedTo -> flowOf(ChangePasswordTo(action.password))
+        SendLogsClick -> flow {
+            effect(SendFeedback)
+        }
     }
 
 }

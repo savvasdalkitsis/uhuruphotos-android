@@ -19,6 +19,7 @@ import android.content.Context
 import androidx.hilt.work.HiltWorker
 import androidx.work.CoroutineWorker
 import androidx.work.WorkerParameters
+import com.savvasdalkitsis.uhuruphotos.log.log
 import com.savvasdalkitsis.uhuruphotos.photos.service.PhotosService
 import com.savvasdalkitsis.uhuruphotos.photos.service.model.toPhotoDetails
 import com.savvasdalkitsis.uhuruphotos.photos.repository.PhotoRepository
@@ -40,6 +41,7 @@ class PhotoDetailsRetrieveWorker @AssistedInject constructor(
             photoRepository.refreshDetailsNow(params.inputData.getString(KEY_ID)!!)
             Result.success()
         } catch (e: Exception) {
+            log(e)
             if (params.runAttemptCount < 2) {
                 Result.retry()
             } else {

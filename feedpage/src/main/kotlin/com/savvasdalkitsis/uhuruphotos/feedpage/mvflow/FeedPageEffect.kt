@@ -31,4 +31,5 @@ sealed class FeedPageEffect {
     object NavigateToServerEdit : FeedPageEffect()
     object Vibrate : FeedPageEffect()
     object NavigateToSettings : FeedPageEffect()
+    object SendFeedback : FeedPageEffect()
 }

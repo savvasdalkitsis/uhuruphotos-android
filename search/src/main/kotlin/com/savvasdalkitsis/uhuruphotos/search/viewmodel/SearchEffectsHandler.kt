@@ -17,6 +17,7 @@ package com.savvasdalkitsis.uhuruphotos.search.viewmodel
 
 import com.savvasdalkitsis.uhuruphotos.heatmap.navigation.HeatMapNavigationTarget
 import com.savvasdalkitsis.uhuruphotos.home.navigation.HomeNavigationTarget
+import com.savvasdalkitsis.uhuruphotos.log.FeedbackSender
 import com.savvasdalkitsis.uhuruphotos.navigation.ControllersProvider
 import com.savvasdalkitsis.uhuruphotos.people.api.navigation.PeopleNavigationTarget
 import com.savvasdalkitsis.uhuruphotos.person.api.navigation.PersonNavigationTarget
@@ -31,6 +32,7 @@ import javax.inject.Inject
 class SearchEffectsHandler @Inject constructor(
     private val controllersProvider: ControllersProvider,
     private val toaster: Toaster,
+    private val feedbackSender: FeedbackSender,
 ) : (SearchEffect) -> Unit {
 
     override fun invoke(
@@ -55,6 +57,7 @@ class SearchEffectsHandler @Inject constructor(
         ErrorRefreshingPeople -> toaster.show("There was an error refreshing people")
         is NavigateToPerson -> navigateTo(PersonNavigationTarget.name(effect.personId))
         NavigateToHeatMap -> navigateTo(HeatMapNavigationTarget.name)
+        SendFeedback -> feedbackSender.sendFeedback()
     }
 
     private fun navigateTo(target: String) {

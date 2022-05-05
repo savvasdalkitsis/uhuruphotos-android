@@ -15,23 +15,17 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.log
 
-import android.util.Log
-import timber.log.Timber
-
+import com.michaelflisar.lumberjack.L
 
 inline fun log(tag: String = "", msg: () -> String) {
-    if (BuildConfig.DEBUG) {
-        if (tag.isNotEmpty()) {
-            Timber.tag(tag).log(Log.VERBOSE, msg())
-        } else {
-            Timber.log(Log.VERBOSE, msg())
-        }
+    if (tag.isNotEmpty()) {
+        L.tag(tag).v(msg)
+    } else {
+        L.v(msg)
     }
 }
 
 @Suppress("NOTHING_TO_INLINE")
 inline fun log(t: Throwable) {
-    if (BuildConfig.DEBUG) {
-        Timber.log(Log.WARN, t)
-    }
+    L.w(t)
 }

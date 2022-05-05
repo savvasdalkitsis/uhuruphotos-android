@@ -15,21 +15,42 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.log.module
 
+import android.content.Context
+import com.michaelflisar.lumberjack.FileLoggingSetup
+import com.michaelflisar.lumberjack.FileLoggingTree
+import com.michaelflisar.lumberjack.L
 import com.savvasdalkitsis.uhuruphotos.log.BuildConfig
 import com.savvasdalkitsis.uhuruphotos.log.NoOpTree
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
+import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
+import dagger.multibindings.IntoSet
+import timber.log.ConsoleTree
 import timber.log.Timber
+import java.util.logging.Logger
+import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
 internal class LogModule {
 
     @Provides
-    fun tree(): Timber.Tree = when  {
-        BuildConfig.DEBUG -> Timber.DebugTree()
+    @Singleton
+    fun loggingSetup(@ApplicationContext context: Context): FileLoggingSetup =
+        FileLoggingSetup.DateFiles(context)
+
+    @Provides
+    @IntoSet
+    fun consoleTree(): Timber.Tree = when  {
+        BuildConfig.DEBUG -> ConsoleTree()
         else -> NoOpTree()
     }
+
+    @Provides
+    @IntoSet
+    fun fileTree(
+        loggingSetup: FileLoggingSetup,
+    ): Timber.Tree = FileLoggingTree(loggingSetup)
 }

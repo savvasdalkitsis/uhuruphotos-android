@@ -19,6 +19,7 @@ import android.content.Context
 import androidx.hilt.work.HiltWorker
 import androidx.work.CoroutineWorker
 import androidx.work.WorkerParameters
+import com.savvasdalkitsis.uhuruphotos.log.log
 import com.savvasdalkitsis.uhuruphotos.photos.service.PhotosService
 import com.savvasdalkitsis.uhuruphotos.photos.repository.PhotoRepository
 import dagger.assisted.Assisted
@@ -47,6 +48,7 @@ class PhotoDeletionWorker @AssistedInject constructor(
                 failOrRetry()
             }
         } catch (e: Exception) {
+            log(e)
             failOrRetry()
         }
     }

@@ -3,6 +3,7 @@
     coil = "2.0.0-rc03"
     compose = "1.2.0-alpha08"
     exoplayer = "2.17.1"
+    lumberjack = "5.2.5"
     okhttp = "4.9.3"
     retrofit = "2.9.0"
     sqldelight = "1.5.3"
@@ -43,7 +44,11 @@ hilt = 'com.google.dagger:hilt-android:2.41'
 infobar = 'com.radusalagean:info-bar-compose:1.0.0'
 jwt = 'com.auth0.android:jwtdecode:2.0.1'
 kotlinx-coroutines = "org.jetbrains.kotlinx:kotlinx-coroutines-core-jvm:1.6.1"
-logger = 'com.jakewharton.timber:timber:5.0.1'
+lumberjack-core = { module = "com.github.MFlisar.Lumberjack:lumberjack-library", version.ref = "lumberjack" }
+lumberjack-file = { module = "com.github.MFlisar.Lumberjack:lumberjack-filelogger", version.ref = "lumberjack" }
+lumberjack-feedback = { module = "com.github.MFlisar.Lumberjack:lumberjack-feedback", version.ref = "lumberjack" }
+lumberjack-notification = { module = "com.github.MFlisar.Lumberjack:lumberjack-notification", version.ref = "lumberjack" }
+logger = 'com.jakewharton.timber:timber:4.7.1'
 maps = 'com.google.android.gms:play-services-maps:18.0.2'
 maps-compose = 'com.google.maps.android:maps-compose:2.1.0'
 maps-utils = 'com.google.maps.android:android-maps-utils:2.3.0'
@@ -58,3 +63,6 @@ result = "com.michael-bull.kotlin-result:kotlin-result:1.1.16"
 sqldelight-android = { module = 'com.squareup.sqldelight:android-driver', version.ref = "sqldelight" }
 sqldelight-coroutines = { module = 'com.squareup.sqldelight:coroutines-extensions', version.ref = "sqldelight" }
 urlvalidator = "commons-validator:commons-validator:1.7"
+
+[bundles]
+lumberjack = ["lumberjack-core", "lumberjack-file", "lumberjack-feedback", "lumberjack-notification"]

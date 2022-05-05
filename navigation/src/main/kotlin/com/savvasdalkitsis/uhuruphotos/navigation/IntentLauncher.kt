@@ -18,6 +18,7 @@ package com.savvasdalkitsis.uhuruphotos.navigation
 import android.content.ActivityNotFoundException
 import android.content.Context
 import android.content.Intent
+import com.savvasdalkitsis.uhuruphotos.log.log
 import com.savvasdalkitsis.uhuruphotos.toaster.Toaster
 import dagger.hilt.android.qualifiers.ApplicationContext
 import javax.inject.Inject
@@ -33,6 +34,7 @@ class IntentLauncher @Inject constructor(
                 addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
             })
         } catch (e: ActivityNotFoundException) {
+            log(e)
             toaster.show("Could not find an app to open")
         }
     }

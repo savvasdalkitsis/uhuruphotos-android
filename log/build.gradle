@@ -1,6 +1,7 @@
 dependencies {
     implementation project(":initializer")
     implementation(
+            libs.bundles.lumberjack,
             libs.hilt,
             libs.logger,
     )

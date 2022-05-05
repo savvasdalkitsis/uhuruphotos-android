@@ -29,12 +29,14 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
+import com.savvasdalkitsis.uhuruphotos.log.log
 
 @Composable fun String?.toColor(): Color = when (this) {
     null -> MaterialTheme.colors.background
     else -> try {
         Color(android.graphics.Color.parseColor(this))
     } catch (e: Exception) {
+        log(e)
         MaterialTheme.colors.background
     }
 }

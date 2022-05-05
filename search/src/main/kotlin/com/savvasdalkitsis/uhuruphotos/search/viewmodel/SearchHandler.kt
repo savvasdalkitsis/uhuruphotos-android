@@ -140,5 +140,8 @@ class SearchHandler @Inject constructor(
         LoadHeatMap -> flow {
             effect(NavigateToHeatMap)
         }
+        SendLogsClick -> flow {
+            effect(SendFeedback)
+        }
     }
 }

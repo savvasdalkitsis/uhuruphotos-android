@@ -43,6 +43,7 @@ fun AccountOverviewPopUp(
     onLogoutClicked: () -> Unit,
     onEditServerClicked: () -> Unit,
     onSettingsClicked: () -> Unit,
+    onSendLogsClicked: () -> Unit,
 ) {
     Box {
         if (visible) {
@@ -88,6 +89,7 @@ fun AccountOverviewPopUp(
                         onLogoutClicked,
                         onEditServerClicked,
                         onSettingsClicked,
+                        onSendLogsClicked,
                     )
                 }
             }
