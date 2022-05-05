@@ -28,6 +28,10 @@ class FeedbackSender @Inject constructor(
 ) {
 
     fun sendFeedback() {
-        L.sendFeedback(context, loggingSetup.getLatestLogFiles(), "kurosavvas@gmail.com")
+        L.sendFeedback(context, loggingSetup.getLatestLogFiles(), EMAIL)
+    }
+
+    companion object {
+        const val EMAIL = "kurosavvas@gmail.com"
     }
 }

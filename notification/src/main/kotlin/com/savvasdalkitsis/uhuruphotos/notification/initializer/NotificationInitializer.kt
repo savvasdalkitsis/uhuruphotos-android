@@ -19,6 +19,7 @@ import androidx.core.app.NotificationChannelCompat.Builder
 import androidx.core.app.NotificationManagerCompat
 import androidx.core.app.NotificationManagerCompat.IMPORTANCE_LOW
 import com.savvasdalkitsis.uhuruphotos.initializer.ApplicationCreated
+import com.savvasdalkitsis.uhuruphotos.notification.NotificationChannels.CRASH_CHANNEL_ID
 import com.savvasdalkitsis.uhuruphotos.notification.NotificationChannels.JOBS_CHANNEL_ID
 import javax.inject.Inject
 
@@ -31,6 +32,12 @@ class NotificationInitializer @Inject constructor(
             Builder(JOBS_CHANNEL_ID, IMPORTANCE_LOW)
                 .setName("Jobs")
                 .setDescription("Background jobs")
+                .build()
+        )
+        notificationManager.createNotificationChannel(
+            Builder(CRASH_CHANNEL_ID, IMPORTANCE_LOW)
+                .setName("Crash reports")
+                .setDescription("Send crash logs for troubleshooting")
                 .build()
         )
     }

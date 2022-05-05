@@ -29,3 +29,8 @@ inline fun log(tag: String = "", msg: () -> String) {
 inline fun log(t: Throwable) {
     L.w(t)
 }
+
+@Suppress("NOTHING_TO_INLINE")
+inline fun logError(t: Throwable) {
+    L.e(t)
+}

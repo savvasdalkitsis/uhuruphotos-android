@@ -18,7 +18,6 @@ package com.savvasdalkitsis.uhuruphotos.albums.worker
 import android.content.Context
 import android.content.pm.ServiceInfo
 import android.os.Build
-import androidx.core.app.NotificationChannelCompat
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationCompat.Builder
 import androidx.hilt.work.HiltWorker
@@ -29,9 +28,7 @@ import androidx.work.workDataOf
 import com.savvasdalkitsis.uhuruphotos.albums.repository.AlbumsRepository
 import com.savvasdalkitsis.uhuruphotos.icons.R
 import com.savvasdalkitsis.uhuruphotos.log.log
-import com.savvasdalkitsis.uhuruphotos.notification.NotificationChannels
 import com.savvasdalkitsis.uhuruphotos.notification.NotificationChannels.JOBS_CHANNEL_ID
-import com.savvasdalkitsis.uhuruphotos.notification.initializer.NotificationInitializer
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedInject
 import kotlinx.coroutines.Dispatchers
