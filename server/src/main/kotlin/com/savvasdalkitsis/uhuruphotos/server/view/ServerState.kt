@@ -27,6 +27,7 @@ sealed class ServerState : Parcelable {
         val prefilledUrl: String,
         val isUrlValid: Boolean,
         val allowSaveUrl: Boolean,
+        val showUnsecureServerConfirmation: Boolean = false,
     ): ServerState(), Parcelable
     @Parcelize
     data class UserCredentials(

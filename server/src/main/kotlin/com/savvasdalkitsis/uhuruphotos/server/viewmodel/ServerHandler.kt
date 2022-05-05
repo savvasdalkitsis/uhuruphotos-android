@@ -18,6 +18,7 @@ package com.savvasdalkitsis.uhuruphotos.server.viewmodel
 import com.savvasdalkitsis.uhuruphotos.auth.model.AuthStatus.*
 import com.savvasdalkitsis.uhuruphotos.auth.usecase.AuthenticationUseCase
 import com.savvasdalkitsis.uhuruphotos.auth.usecase.ServerUseCase
+import com.savvasdalkitsis.uhuruphotos.infrastructure.extensions.isHttpUrl
 import com.savvasdalkitsis.uhuruphotos.infrastructure.extensions.isValidUrlOrDomain
 import com.savvasdalkitsis.uhuruphotos.log.log
 import com.savvasdalkitsis.uhuruphotos.server.mvflow.ServerAction
@@ -67,11 +68,23 @@ class ServerHandler @Inject constructor(
             emit(ShowUrlValidation(prefilledUrl, action.url.isValidUrlOrDomain))
         }
         is ChangeServerUrlTo -> flow {
+            emit(HideUnsecureServerConfirmation)
             if (action.url.isValidUrlOrDomain) {
                 serverUseCase.setServerUrl(action.url)
                 effect(Close)
             }
         }
+        is AttemptChangeServerUrlTo -> flow {
+            if (action.url.isValidUrlOrDomain) {
+                if (action.url.isHttpUrl) {
+                    emit(ShowUnsecureServerConfirmation)
+                } else {
+                    serverUseCase.setServerUrl(action.url)
+                    effect(Close)
+                }
+            }
+        }
+        DismissUnsecuredServerDialog -> flowOf(HideUnsecureServerConfirmation)
         Login -> flow {
             if ((state as? UserCredentials)?.allowLogin == false) {
                 return@flow

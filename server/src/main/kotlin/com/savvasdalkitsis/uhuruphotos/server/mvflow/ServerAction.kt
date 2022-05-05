@@ -20,7 +20,9 @@ import dev.zacsweers.redacted.annotations.Redacted
 sealed class ServerAction {
     object CheckPersistedServer : ServerAction()
     object RequestServerUrlChange: ServerAction()
+    object DismissUnsecuredServerDialog: ServerAction()
     data class ChangeServerUrlTo(val url: String) : ServerAction()
+    data class AttemptChangeServerUrlTo(val url: String) : ServerAction()
     data class UrlTyped(val url: String) : ServerAction()
     data class UsernameChangedTo(val username: String) : ServerAction()
     data class UserPasswordChangedTo(@Redacted val password: String) : ServerAction()

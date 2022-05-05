@@ -21,7 +21,6 @@ import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Home
-import androidx.compose.material.icons.filled.Settings
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -31,13 +30,14 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import com.savvasdalkitsis.uhuruphotos.icons.R
 import com.savvasdalkitsis.uhuruphotos.server.mvflow.ServerAction
-import com.savvasdalkitsis.uhuruphotos.server.mvflow.ServerAction.SendLogsClick
+import com.savvasdalkitsis.uhuruphotos.server.mvflow.ServerAction.*
 
 @Composable
 fun BoxScope.ServerUrlPage(
     state: ServerState.ServerUrl,
     action: (ServerAction) -> Unit
 ) {
+    var serverTextFieldValue by remember { mutableStateOf(state.prefilledUrl) }
     OutlinedButton(
         modifier = Modifier.align(Alignment.TopEnd),
         onClick = { action(SendLogsClick) }
@@ -51,7 +51,6 @@ fun BoxScope.ServerUrlPage(
             modifier = Modifier.padding(bottom = 8.dp),
             text = "Enter LibrePhotos server url:"
         )
-        var textFieldValue by remember { mutableStateOf(state.prefilledUrl) }
         OutlinedTextField(
             maxLines = 1,
             singleLine = true,
@@ -60,7 +59,7 @@ fun BoxScope.ServerUrlPage(
                 imeAction = ImeAction.Done,
             ),
             keyboardActions = KeyboardActions(
-                onDone = { action(ServerAction.ChangeServerUrlTo(textFieldValue)) }
+                onDone = { action(AttemptChangeServerUrlTo(serverTextFieldValue)) }
             ),
             leadingIcon = {
                 Icon(
@@ -69,18 +68,21 @@ fun BoxScope.ServerUrlPage(
                 )
             },
             label = { Text("Server Url") },
-            value = textFieldValue,
+            value = serverTextFieldValue,
             isError = !state.isUrlValid,
             onValueChange = {
-                textFieldValue = it
-                action(ServerAction.UrlTyped(it))
+                serverTextFieldValue = it
+                action(UrlTyped(it))
             },
         )
         Button(
             enabled = state.allowSaveUrl,
-            onClick = { action(ServerAction.ChangeServerUrlTo(textFieldValue)) }
+            onClick = { action(AttemptChangeServerUrlTo(serverTextFieldValue)) }
         ) {
             Text("Save")
         }
+    }
+    if (state.showUnsecureServerConfirmation) {
+        UnsecuredServerConfirmationDialog(serverTextFieldValue, action)
     }
 }

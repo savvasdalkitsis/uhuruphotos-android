@@ -24,7 +24,7 @@ val String.isValidUrlOrDomain get() = isValidUrl || "https://$this".isValidUrl
 
 private val String.isValidUrl get() = isHttpUrl || isHttpsUrl
 
-private val String.isHttpUrl get() = httpValidator.isValid(this.trim())
+val String.isHttpUrl get() = httpValidator.isValid(this.trim())
 
 private val String.isHttpsUrl get() = httpsValidator.isValid(this.trim())
 

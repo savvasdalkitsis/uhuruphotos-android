@@ -41,6 +41,8 @@ fun serverReducer() : Reducer<ServerState, ServerMutation> = { state, mutation -
         is ChangePasswordTo -> (state as UserCredentials).copy(password = mutation.password).shouldAllowLogin()
         is ChangeUsernameTo -> (state as UserCredentials).copy(username = mutation.username).shouldAllowLogin()
         PerformingBackgroundJob -> Loading
+        ShowUnsecureServerConfirmation -> (state as ServerUrl).copy(showUnsecureServerConfirmation = true)
+        HideUnsecureServerConfirmation -> (state as ServerUrl).copy(showUnsecureServerConfirmation = false)
     }
 }
 
