@@ -22,5 +22,6 @@ dependencies {
             libs.androidx.compose.ui,
             libs.androidx.compose.ui.util,
             libs.androidx.core,
+            libs.scrollbar,
     )
 }

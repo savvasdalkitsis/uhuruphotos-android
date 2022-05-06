@@ -47,7 +47,7 @@ fun Feed(
         FullProgressBar()
     } else {
         val feedDisplay = state.feedDisplay
-        Box(
+        StaggeredDateFeed(
             modifier = modifier
                 .let {
                     when {
@@ -57,23 +57,20 @@ fun Feed(
                         )
                         else -> it
                     }
-                }
-        ) {
-            StaggeredDateFeed(
-                contentPadding = contentPadding,
-                albums = state.albums,
-                showSelectionHeader = showSelectionHeader,
-                maintainAspectRatio = feedDisplay.maintainAspectRatio,
-                listState = listState,
-                columnCount = feedDisplay.columnCount(
-                    windowSizeClass = WindowSize.LOCAL_WIDTH.current,
-                    landscape = LocalConfiguration.current.orientation == Configuration.ORIENTATION_LANDSCAPE
-                ),
-                shouldAddEmptyPhotosInRows = feedDisplay.shouldAddEmptyPhotosInRows,
-                onPhotoSelected = onPhotoSelected,
-                onPhotoLongPressed = onPhotoLongPressed,
-                onAlbumSelectionClicked = onAlbumSelectionClicked,
-            )
-        }
+                },
+            contentPadding = contentPadding,
+            albums = state.albums,
+            showSelectionHeader = showSelectionHeader,
+            maintainAspectRatio = feedDisplay.maintainAspectRatio,
+            listState = listState,
+            columnCount = feedDisplay.columnCount(
+                windowSizeClass = WindowSize.LOCAL_WIDTH.current,
+                landscape = LocalConfiguration.current.orientation == Configuration.ORIENTATION_LANDSCAPE
+            ),
+            shouldAddEmptyPhotosInRows = feedDisplay.shouldAddEmptyPhotosInRows,
+            onPhotoSelected = onPhotoSelected,
+            onPhotoLongPressed = onPhotoLongPressed,
+            onAlbumSelectionClicked = onAlbumSelectionClicked,
+        )
     }
 }
