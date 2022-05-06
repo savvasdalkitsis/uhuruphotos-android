@@ -24,6 +24,7 @@ dependencies {
     implementation project(":share")
     implementation project(":video")
     implementation project(":toaster")
+    implementation project(":notification")
     implementation(
             libs.accompanist.systemui,
             libs.androidx.compose.hilt.navigation,

@@ -16,19 +16,15 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.albums.worker
 
 import android.content.Context
-import android.content.pm.ServiceInfo
-import android.os.Build
-import androidx.core.app.NotificationCompat
-import androidx.core.app.NotificationCompat.Builder
 import androidx.hilt.work.HiltWorker
 import androidx.work.CoroutineWorker
 import androidx.work.ForegroundInfo
 import androidx.work.WorkerParameters
 import androidx.work.workDataOf
 import com.savvasdalkitsis.uhuruphotos.albums.repository.AlbumsRepository
-import com.savvasdalkitsis.uhuruphotos.icons.R
 import com.savvasdalkitsis.uhuruphotos.log.log
 import com.savvasdalkitsis.uhuruphotos.notification.NotificationChannels.JOBS_CHANNEL_ID
+import com.savvasdalkitsis.uhuruphotos.notification.foregroundInfo
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedInject
 import kotlinx.coroutines.Dispatchers
@@ -54,25 +50,12 @@ class AlbumDownloadWorker @AssistedInject constructor(
         }
     }
 
-    override suspend fun getForegroundInfo(): ForegroundInfo {
-        val notification = Builder(applicationContext, JOBS_CHANNEL_ID)
-            .setContentTitle("Refreshing albums")
-            .setSmallIcon(R.mipmap.ic_launcher_round)
-            .setPriority(NotificationCompat.PRIORITY_LOW)
-            .build()
-        return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-            ForegroundInfo(
-                NOTIFICATION_ID,
-                notification,
-                ServiceInfo.FOREGROUND_SERVICE_TYPE_DATA_SYNC
-            )
-        } else {
-            ForegroundInfo(
-                NOTIFICATION_ID,
-                notification
-            )
-        }
-    }
+    override suspend fun getForegroundInfo(): ForegroundInfo = foregroundInfo(
+        applicationContext,
+        "Refreshing albums",
+        NOTIFICATION_ID,
+        JOBS_CHANNEL_ID
+    )
     companion object {
         const val Progress = "Progress"
         const val WORK_NAME = "refreshAlbums"

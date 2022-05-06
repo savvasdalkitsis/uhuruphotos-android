@@ -1,7 +1,9 @@
 dependencies {
     implementation project(":initializer")
+    implementation project(":icons")
     implementation(
             libs.androidx.core,
+            libs.androidx.work,
             libs.hilt,
     )
 }
