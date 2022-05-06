@@ -8,8 +8,8 @@ buildscript {
         classpath 'com.squareup.sqldelight:gradle-plugin:1.5.3'
     }
 
-    project.ext.set("app_version_code", 10)
-    project.ext.set("app_version_name", "0.0.17")
+    project.ext.set("app_version_code", 11)
+    project.ext.set("app_version_name", "0.0.18")
 
 }// Top-level build file where you can add configuration options common to all sub-projects/modules.
 plugins {
