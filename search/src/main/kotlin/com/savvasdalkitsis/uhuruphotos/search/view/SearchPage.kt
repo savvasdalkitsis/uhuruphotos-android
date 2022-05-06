@@ -56,7 +56,6 @@ fun SearchPage(
             onLogoutClicked = { action(AskToLogOut) },
             onEditServerClicked = { action(EditServer) },
             onSettingsClicked = { action(SettingsClick) },
-            onSendLogsClicked = { action(SendLogsClick) }
         )
         if (state.showLogOutConfirmation) {
             LogOutConfirmationDialog(

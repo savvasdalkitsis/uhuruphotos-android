@@ -19,7 +19,6 @@ import androidx.compose.ui.hapticfeedback.HapticFeedbackType
 import com.savvasdalkitsis.uhuruphotos.feedpage.mvflow.FeedPageEffect
 import com.savvasdalkitsis.uhuruphotos.feedpage.mvflow.FeedPageEffect.*
 import com.savvasdalkitsis.uhuruphotos.home.navigation.HomeNavigationTarget
-import com.savvasdalkitsis.uhuruphotos.log.FeedbackSender
 import com.savvasdalkitsis.uhuruphotos.navigation.ControllersProvider
 import com.savvasdalkitsis.uhuruphotos.photos.navigation.PhotoNavigationTarget
 import com.savvasdalkitsis.uhuruphotos.server.navigation.ServerNavigationTarget
@@ -33,7 +32,6 @@ class FeedPageEffectsHandler @Inject constructor(
     private val controllersProvider: ControllersProvider,
     private val shareImage: ShareImage,
     private val toaster: Toaster,
-    private val feedbackSender: FeedbackSender,
 ) : EffectHandler<FeedPageEffect> {
 
     override suspend fun invoke(effect: FeedPageEffect) = when (effect) {
@@ -55,7 +53,6 @@ class FeedPageEffectsHandler @Inject constructor(
         )
         Vibrate -> controllersProvider.haptics!!.performHapticFeedback(HapticFeedbackType.LongPress)
         NavigateToSettings -> navigateTo(SettingsNavigationTarget.name)
-        SendFeedback -> feedbackSender.sendFeedback()
     }
 
     private fun navigateTo(target: String) {

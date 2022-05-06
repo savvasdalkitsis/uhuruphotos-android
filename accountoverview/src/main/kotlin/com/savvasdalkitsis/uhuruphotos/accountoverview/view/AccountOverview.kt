@@ -42,7 +42,6 @@ fun AccountOverview(
     onLogoutClicked: () -> Unit,
     onEditServerClicked: () -> Unit,
     onSettingsClicked: () -> Unit,
-    onSendLogsClicked: () -> Unit,
 ) {
     Column(
         modifier = Modifier
@@ -76,13 +75,6 @@ fun AccountOverview(
                 onClick = onEditServerClicked,
                 icon = R.drawable.ic_edit,
             )
-        }
-        OutlinedButton(
-            onClick = onSendLogsClicked
-        ) {
-            Icon(painter = painterResource(id = R.drawable.ic_feedback), contentDescription = null)
-            Spacer(modifier = Modifier.width(8.dp))
-            Text(text = "Send logs for troubleshooting")
         }
         Row(
             modifier = Modifier

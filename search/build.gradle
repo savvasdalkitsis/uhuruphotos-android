@@ -12,7 +12,6 @@ dependencies {
     implementation project(":feed")
     implementation project(":infrastructure")
     implementation project(":ui")
-    implementation project(":log")
     implementation project(":photos")
     implementation project(":db")
     implementation project(":albums")

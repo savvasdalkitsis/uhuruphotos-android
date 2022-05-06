@@ -22,13 +22,17 @@ import com.michaelflisar.lumberjack.sendFeedback
 import dagger.hilt.android.qualifiers.ApplicationContext
 import javax.inject.Inject
 
-class FeedbackSender @Inject constructor(
+class FeedbackUseCase @Inject constructor(
     @ApplicationContext private val context: Context,
     private val loggingSetup: FileLoggingSetup,
 ) {
 
     fun sendFeedback() {
         L.sendFeedback(context, loggingSetup.getLatestLogFiles(), EMAIL)
+    }
+
+    fun clearLogs() {
+        loggingSetup.clearLogFiles()
     }
 
     companion object {

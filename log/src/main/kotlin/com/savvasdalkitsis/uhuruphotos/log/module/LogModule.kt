@@ -39,7 +39,9 @@ internal class LogModule {
     @Provides
     @Singleton
     fun loggingSetup(@ApplicationContext context: Context): FileLoggingSetup =
-        FileLoggingSetup.DateFiles(context)
+        FileLoggingSetup.DateFiles(context, setup = FileLoggingSetup.Setup(
+            logsToKeep = 1
+        ))
 
     @Provides
     @IntoSet

@@ -96,7 +96,6 @@ fun FeedPage(
             onLogoutClicked = { action(AskToLogOut) },
             onEditServerClicked = { action(EditServer) },
             onSettingsClicked = { action(SettingsClick) },
-            onSendLogsClicked = { action(SendLogsClick) }
         )
         if (state.showPhotoDeletionConfirmationDialog) {
             DeletePermissionDialog(

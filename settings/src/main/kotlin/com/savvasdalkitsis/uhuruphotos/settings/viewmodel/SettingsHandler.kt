@@ -18,6 +18,7 @@ package com.savvasdalkitsis.uhuruphotos.settings.viewmodel
 import androidx.work.ExistingPeriodicWorkPolicy.REPLACE
 import androidx.work.WorkInfo.State.RUNNING
 import com.savvasdalkitsis.uhuruphotos.albums.api.worker.AlbumWorkScheduler
+import com.savvasdalkitsis.uhuruphotos.log.FeedbackUseCase
 import com.savvasdalkitsis.uhuruphotos.settings.usecase.CacheUseCase
 import com.savvasdalkitsis.uhuruphotos.settings.usecase.SettingsUseCase
 import com.savvasdalkitsis.uhuruphotos.settings.view.state.SettingsState
@@ -34,6 +35,7 @@ internal class SettingsHandler @Inject constructor(
     private val albumWorkScheduler: AlbumWorkScheduler,
     private val userBadgeUseCase: UserBadgeUseCase,
     private val cacheUseCase: CacheUseCase,
+    private val feedbackUseCase: FeedbackUseCase,
 ) : Handler<SettingsState, SettingsEffect, SettingsAction, SettingsMutation> {
 
     override fun invoke(
@@ -130,6 +132,13 @@ internal class SettingsHandler @Inject constructor(
         }
         is ChangeShareGpsDataEnabled -> flow {
             settingsUseCase.setShareRemoveGpsData(action.enabled)
+        }
+        ClearLogFileClicked -> flow {
+            feedbackUseCase.clearLogs()
+            effect(ShowMessage("Logs cleared"))
+        }
+        SendFeedbackClicked -> flow {
+            feedbackUseCase.sendFeedback()
         }
     }
 

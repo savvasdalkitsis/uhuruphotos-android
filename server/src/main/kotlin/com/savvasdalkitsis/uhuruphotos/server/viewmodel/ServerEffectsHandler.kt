@@ -15,7 +15,7 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.server.viewmodel
 
-import com.savvasdalkitsis.uhuruphotos.log.FeedbackSender
+import com.savvasdalkitsis.uhuruphotos.log.FeedbackUseCase
 import com.savvasdalkitsis.uhuruphotos.navigation.ControllersProvider
 import com.savvasdalkitsis.uhuruphotos.server.mvflow.ServerEffect
 import com.savvasdalkitsis.uhuruphotos.server.mvflow.ServerEffect.*
@@ -25,7 +25,7 @@ import javax.inject.Inject
 class ServerEffectsHandler @Inject constructor(
     private val controllersProvider: ControllersProvider,
     private val toaster: Toaster,
-    private val feedbackSender: FeedbackSender,
+    private val feedbackUseCase: FeedbackUseCase,
 ) : (ServerEffect) -> Unit {
 
     override fun invoke(
@@ -34,7 +34,7 @@ class ServerEffectsHandler @Inject constructor(
         when (effect) {
             Close -> controllersProvider.navController!!.popBackStack()
             is ErrorLoggingIn -> toaster.show("There was an error logging in")
-            SendFeedback -> feedbackSender.sendFeedback()
+            SendFeedback -> feedbackUseCase.sendFeedback()
         }
     }
 }

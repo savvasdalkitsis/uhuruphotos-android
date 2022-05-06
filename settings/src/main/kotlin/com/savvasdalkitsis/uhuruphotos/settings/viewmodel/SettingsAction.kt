@@ -39,4 +39,6 @@ sealed class SettingsAction {
     object AskForFullFeedSync : SettingsAction()
     object DismissFullFeedSyncDialog : SettingsAction()
     object PerformFullFeedSync : SettingsAction()
+    object ClearLogFileClicked : SettingsAction()
+    object SendFeedbackClicked : SettingsAction()
 }

@@ -142,9 +142,6 @@ class FeedPageHandler @Inject constructor(
             emit(HideAccountOverview)
             effect(NavigateToSettings)
         }
-        SendLogsClick -> flow {
-            effect(SendFeedback)
-        }
     }
 
     private suspend fun Photo.deselect() {

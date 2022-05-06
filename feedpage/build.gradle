@@ -14,7 +14,6 @@ dependencies {
     implementation project(":feed")
     implementation project(":userbadge-api")
     implementation project(":ui")
-    implementation project(":log")
     implementation project(":icons")
     implementation project(":home")
     implementation project(":account")
