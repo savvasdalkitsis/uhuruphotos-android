@@ -44,7 +44,7 @@ fun SearchSuggestion(
     ) {
         Text(modifier = Modifier.weight(1f), text = "Search suggestions:")
         OutlinedButton(onClick = {
-            action(SearchAction.ChangeQuery(suggestion))
+            action(SearchAction.QueryChanged(suggestion))
             action(SearchAction.SearchFor(suggestion))
         }) {
             Text(

@@ -38,8 +38,8 @@ import androidx.compose.ui.unit.dp
 import com.savvasdalkitsis.uhuruphotos.icons.R
 import com.savvasdalkitsis.uhuruphotos.image.api.view.Image
 import com.savvasdalkitsis.uhuruphotos.infrastructure.extensions.toColor
-import com.savvasdalkitsis.uhuruphotos.photos.model.Photo
-import com.savvasdalkitsis.uhuruphotos.photos.model.SelectionMode
+import com.savvasdalkitsis.uhuruphotos.photos.api.model.Photo
+import com.savvasdalkitsis.uhuruphotos.photos.api.model.SelectionMode
 import com.savvasdalkitsis.uhuruphotos.ui.theme.CustomColors
 
 @Composable

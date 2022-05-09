@@ -15,7 +15,7 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.person.viewmodel
 
-import com.savvasdalkitsis.uhuruphotos.albums.model.Album
+import com.savvasdalkitsis.uhuruphotos.albums.api.model.Album
 import com.savvasdalkitsis.uhuruphotos.db.people.People
 import com.savvasdalkitsis.uhuruphotos.feed.view.state.FeedDisplay
 

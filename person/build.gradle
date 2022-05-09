@@ -15,8 +15,10 @@ dependencies {
     implementation project(":image-api")
     implementation project(":settings")
     implementation project(":albums")
+    implementation project(":albums-api")
     implementation project(":feed")
     implementation project(":photos")
+    implementation project(":photos-api")
     implementation project(":people-api")
     implementation(
             libs.androidx.compose.foundation,

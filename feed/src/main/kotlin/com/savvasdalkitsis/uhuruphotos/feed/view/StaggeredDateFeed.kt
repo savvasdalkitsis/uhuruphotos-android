@@ -26,10 +26,10 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.savvasdalkitsis.uhuruphotos.albums.model.Album
+import com.savvasdalkitsis.uhuruphotos.albums.api.model.Album
 import com.savvasdalkitsis.uhuruphotos.feed.view.PhotoRowSlot.EmptySlot
 import com.savvasdalkitsis.uhuruphotos.feed.view.PhotoRowSlot.PhotoSlot
-import com.savvasdalkitsis.uhuruphotos.photos.model.Photo
+import com.savvasdalkitsis.uhuruphotos.photos.api.model.Photo
 
 @Composable
 fun StaggeredDateFeed(

@@ -16,7 +16,7 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.feedpage.viewmodel
 
 import com.savvasdalkitsis.uhuruphotos.account.usecase.AccountUseCase
-import com.savvasdalkitsis.uhuruphotos.albums.model.Album
+import com.savvasdalkitsis.uhuruphotos.albums.api.model.Album
 import com.savvasdalkitsis.uhuruphotos.albums.usecase.AlbumsUseCase
 import com.savvasdalkitsis.uhuruphotos.feedpage.SelectionList
 import com.savvasdalkitsis.uhuruphotos.feedpage.mvflow.FeedPageAction
@@ -28,8 +28,8 @@ import com.savvasdalkitsis.uhuruphotos.feedpage.mvflow.FeedPageMutation
 import com.savvasdalkitsis.uhuruphotos.feedpage.mvflow.FeedPageMutation.*
 import com.savvasdalkitsis.uhuruphotos.feedpage.usecase.FeedPageUseCase
 import com.savvasdalkitsis.uhuruphotos.feedpage.view.state.FeedPageState
-import com.savvasdalkitsis.uhuruphotos.photos.model.Photo
-import com.savvasdalkitsis.uhuruphotos.photos.model.SelectionMode.*
+import com.savvasdalkitsis.uhuruphotos.photos.api.model.Photo
+import com.savvasdalkitsis.uhuruphotos.photos.api.model.SelectionMode.*
 import com.savvasdalkitsis.uhuruphotos.photos.usecase.PhotosUseCase
 import com.savvasdalkitsis.uhuruphotos.userbadge.api.UserBadgeUseCase
 import com.savvasdalkitsis.uhuruphotos.viewmodel.Handler

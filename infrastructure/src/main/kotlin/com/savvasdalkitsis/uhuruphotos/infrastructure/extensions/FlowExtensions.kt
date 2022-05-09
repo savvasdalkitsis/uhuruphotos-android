@@ -81,3 +81,5 @@ fun <V> Flow<Result<V, Throwable>>.onErrorsEmit(onError: suspend (Throwable) -> 
         }
     }
 }
+
+fun <V> Flow<Result<V, Throwable>>.onErrorsIgnore() : Flow<V> = onErrors { }

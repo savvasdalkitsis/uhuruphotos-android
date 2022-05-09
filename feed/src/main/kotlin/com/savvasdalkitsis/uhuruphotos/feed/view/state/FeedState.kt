@@ -15,7 +15,7 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feed.view.state
 
-import com.savvasdalkitsis.uhuruphotos.albums.model.Album
+import com.savvasdalkitsis.uhuruphotos.albums.api.model.Album
 
 data class FeedState(
     val isLoading: Boolean = true,

@@ -16,13 +16,14 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.search.usecase
 
 import com.github.michaelbull.result.Result
-import com.savvasdalkitsis.uhuruphotos.albums.model.Album
+import com.savvasdalkitsis.uhuruphotos.albums.api.model.Album
 import com.savvasdalkitsis.uhuruphotos.infrastructure.date.DateDisplayer
 import com.savvasdalkitsis.uhuruphotos.infrastructure.extensions.safelyOnStart
 import com.savvasdalkitsis.uhuruphotos.infrastructure.extensions.safelyOnStartIgnoring
-import com.savvasdalkitsis.uhuruphotos.photos.model.Photo
+import com.savvasdalkitsis.uhuruphotos.photos.api.model.Photo
 import com.savvasdalkitsis.uhuruphotos.photos.service.model.isVideo
 import com.savvasdalkitsis.uhuruphotos.photos.usecase.PhotosUseCase
+import com.savvasdalkitsis.uhuruphotos.search.api.SearchUseCase
 import com.savvasdalkitsis.uhuruphotos.search.repository.SearchRepository
 import kotlinx.coroutines.currentCoroutineContext
 import kotlinx.coroutines.delay
@@ -35,9 +36,9 @@ class SearchUseCase @Inject constructor(
     private val searchRepository: SearchRepository,
     private val dateDisplayer: DateDisplayer,
     private val photosUseCase: PhotosUseCase,
-) {
+) : SearchUseCase {
 
-    fun searchFor(query: String): Flow<Result<List<Album>, Throwable>> =
+    override fun searchFor(query: String): Flow<Result<List<Album>, Throwable>> =
         searchRepository.getSearchResults(query)
             .map { groups ->
                 groups.items.map { (id, photos) ->
@@ -81,7 +82,7 @@ class SearchUseCase @Inject constructor(
                 searchRepository.refreshSearch(query)
             }
 
-    fun getSearchSuggestions(): Flow<String> = searchRepository.getSearchSuggestions()
+    override fun getRandomSearchSuggestion(): Flow<String> = getSearchSuggestions()
         .flatMapLatest { suggestions ->
             val r = Random(System.currentTimeMillis())
             flow {
@@ -92,7 +93,24 @@ class SearchUseCase @Inject constructor(
                     }
                 }
             }
-        }.safelyOnStartIgnoring {
+        }
+        .safelyOnStartIgnoring {
             searchRepository.refreshSearchSuggestions()
         }
+
+    override fun getSearchSuggestions(): Flow<List<String>> = searchRepository.getSearchSuggestions()
+
+    override fun getRecentTextSearches(): Flow<List<String>> = searchRepository.getRecentSearches()
+
+    override suspend fun addSearchToRecentSearches(query: String) {
+        searchRepository.addSearchToRecentSearches(query)
+    }
+
+    override suspend fun removeFromRecentSearches(query: String) {
+        searchRepository.removeFromRecentSearches(query)
+    }
+
+    override suspend fun clearRecentSearchSuggestions() {
+        searchRepository.clearRecentSearchSuggestions()
+    }
 }

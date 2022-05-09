@@ -41,4 +41,5 @@ sealed class SettingsAction {
     object PerformFullFeedSync : SettingsAction()
     object ClearLogFileClicked : SettingsAction()
     object SendFeedbackClicked : SettingsAction()
+    object ClearRecentSearches : SettingsAction()
 }

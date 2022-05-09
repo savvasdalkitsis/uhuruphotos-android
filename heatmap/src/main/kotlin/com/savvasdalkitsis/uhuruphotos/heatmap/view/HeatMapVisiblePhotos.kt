@@ -19,7 +19,7 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import com.savvasdalkitsis.uhuruphotos.albums.model.Album
+import com.savvasdalkitsis.uhuruphotos.albums.api.model.Album
 import com.savvasdalkitsis.uhuruphotos.feed.view.Feed
 import com.savvasdalkitsis.uhuruphotos.feed.view.state.FeedState
 import com.savvasdalkitsis.uhuruphotos.heatmap.view.state.HeatMapFeedDisplay

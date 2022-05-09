@@ -20,6 +20,7 @@ import com.savvasdalkitsis.uhuruphotos.icons.R
 import com.savvasdalkitsis.uhuruphotos.settings.view.state.SettingsState
 import com.savvasdalkitsis.uhuruphotos.settings.viewmodel.SettingsAction
 import com.savvasdalkitsis.uhuruphotos.settings.viewmodel.SettingsAction.ChangeSearchSuggestionsEnabled
+import com.savvasdalkitsis.uhuruphotos.settings.viewmodel.SettingsAction.ClearRecentSearches
 
 @Composable
 fun SettingsGroupSearch(
@@ -37,5 +38,11 @@ fun SettingsGroupSearch(
             isChecked = checked,
             onCheckedChange = { action(ChangeSearchSuggestionsEnabled(it)) }
         )
+        SettingsOutlineButtonRow(
+            buttonText = "Clear recent searches",
+            icon = R.drawable.ic_clear_all,
+        ) {
+            action(ClearRecentSearches)
+        }
     }
 }

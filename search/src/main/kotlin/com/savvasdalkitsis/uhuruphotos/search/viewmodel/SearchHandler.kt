@@ -17,10 +17,14 @@ package com.savvasdalkitsis.uhuruphotos.search.viewmodel
 
 import com.github.michaelbull.result.Ok
 import com.savvasdalkitsis.uhuruphotos.account.usecase.AccountUseCase
+import com.savvasdalkitsis.uhuruphotos.db.people.People
 import com.savvasdalkitsis.uhuruphotos.feedpage.usecase.FeedPageUseCase
 import com.savvasdalkitsis.uhuruphotos.infrastructure.extensions.onErrors
+import com.savvasdalkitsis.uhuruphotos.infrastructure.extensions.onErrorsIgnore
 import com.savvasdalkitsis.uhuruphotos.log.log
 import com.savvasdalkitsis.uhuruphotos.people.api.usecase.PeopleUseCase
+import com.savvasdalkitsis.uhuruphotos.people.api.view.state.toPerson
+import com.savvasdalkitsis.uhuruphotos.photos.usecase.PhotosUseCase
 import com.savvasdalkitsis.uhuruphotos.search.mvflow.SearchAction
 import com.savvasdalkitsis.uhuruphotos.search.mvflow.SearchAction.*
 import com.savvasdalkitsis.uhuruphotos.search.mvflow.SearchEffect
@@ -28,7 +32,10 @@ import com.savvasdalkitsis.uhuruphotos.search.mvflow.SearchEffect.*
 import com.savvasdalkitsis.uhuruphotos.search.mvflow.SearchMutation
 import com.savvasdalkitsis.uhuruphotos.search.mvflow.SearchMutation.*
 import com.savvasdalkitsis.uhuruphotos.search.usecase.SearchUseCase
+import com.savvasdalkitsis.uhuruphotos.search.view.state.SearchResults.Found
 import com.savvasdalkitsis.uhuruphotos.search.view.state.SearchState
+import com.savvasdalkitsis.uhuruphotos.search.view.state.SearchSuggestion
+import com.savvasdalkitsis.uhuruphotos.search.view.state.SearchSuggestion.*
 import com.savvasdalkitsis.uhuruphotos.settings.usecase.SettingsUseCase
 import com.savvasdalkitsis.uhuruphotos.userbadge.api.UserBadgeUseCase
 import com.savvasdalkitsis.uhuruphotos.viewmodel.Handler
@@ -37,6 +44,8 @@ import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import javax.inject.Inject
+import kotlin.math.max
+import kotlin.math.min
 
 class SearchHandler @Inject constructor(
     private val searchUseCase: SearchUseCase,
@@ -45,71 +54,36 @@ class SearchHandler @Inject constructor(
     private val feedPageUseCase: FeedPageUseCase,
     private val settingsUseCase: SettingsUseCase,
     private val peopleUseCase: PeopleUseCase,
+    private val photosUseCase: PhotosUseCase,
 ) : Handler<SearchState, SearchEffect, SearchAction, SearchMutation> {
 
     private var lastSearch: Job? = null
+    private var lastSuggestions: Job? = null
+    private val queryFilter = MutableSharedFlow<String>()
 
     override fun invoke(
         state: SearchState,
         action: SearchAction,
         effect: suspend (SearchEffect) -> Unit,
     ): Flow<SearchMutation> = when (action) {
-        Initialise -> merge(
-            feedPageUseCase
-                .getFeedDisplay()
-                .distinctUntilChanged()
-                .map(::ChangeFeedDisplay),
-            userBadgeUseCase.getUserBadgeState()
-                .map(::UserBadgeStateChanged),
-            settingsUseCase.observeSearchSuggestionsEnabledMode().flatMapLatest { enabled ->
-                if (enabled)
-                    searchUseCase.getSearchSuggestions()
-                        .map(::ShowSearchSuggestion)
-                else
-                    flowOf(HideSuggestions)
-            },
-            peopleUseCase.getPeopleByPhotoCount()
-                .onErrors {
-                    effect(ErrorRefreshingPeople)
-                }
-                .map(::ShowPeople)
-        )
-        is ChangeQuery -> flowOf(QueryChanged(action.query))
-        is SearchFor -> channelFlow {
-            lastSearch?.cancel()
-            send(SearchStarted)
-            effect(HideKeyboard)
-            lastSearch = launch {
-                searchUseCase.searchFor(state.query)
-                    .debounce(200)
-                    .mapNotNull { result ->
-                        if (result is Ok) {
-                            val albums = result.value
-                            when {
-                                albums.isEmpty() -> SearchStarted
-                                else -> SearchResultsUpdated(albums)
-                            }
-                        } else {
-                            effect(ErrorSearching)
-                            null
-                        }
-                    }
-                    .cancellable()
-                    .catch {
-                        if (it !is CancellationException) {
-                            log(it)
-                            effect(ErrorSearching)
-                        }
-                        send(SearchStopped)
-                    }
-                    .collect { send(it) }
-            }
+        Initialise -> with(photosUseCase) {
+            merge(
+                showFeedDisplay(),
+                showUserBadgeState(),
+                showServerSearchSuggestion(),
+                showPeopleSuggestion(effect),
+                showSearchSuggestions()
+            )
         }
+        is QueryChanged -> flow {
+            queryFilter.emit(action.query)
+        }
+        is SearchFor -> performSearch(effect, action)
         is ChangeFocus -> flowOf(FocusChanged(action.focused))
-        ClearSearch -> flow {
-            emit(SearchCleared)
+        SearchCleared -> flow {
             lastSearch?.cancel()
-            emit(SearchStopped)
+            lastSuggestions?.cancel()
+            emit(SwitchStateToIdle)
         }
         UserBadgePressed -> flowOf(ShowAccountOverview)
         DismissAccountOverview -> flowOf(HideAccountOverview)
@@ -140,5 +114,104 @@ class SearchHandler @Inject constructor(
         LoadHeatMap -> flow {
             effect(NavigateToHeatMap)
         }
+        is RemoveFromRecentSearches -> flow {
+            searchUseCase.removeFromRecentSearches(action.query)
+        }
     }
+
+    private fun performSearch(
+        effect: suspend (SearchEffect) -> Unit,
+        action: SearchFor
+    ) = channelFlow {
+        lastSearch?.cancel()
+        send(SwitchStateToSearching)
+        effect(HideKeyboard)
+        lastSearch = launch {
+            searchUseCase.addSearchToRecentSearches(action.query)
+            searchUseCase.searchFor(action.query)
+                .debounce(200)
+                .mapNotNull { result ->
+                    if (result is Ok) {
+                        val albums = result.value
+                        when {
+                            albums.isEmpty() -> SwitchStateToSearching
+                            else -> SwitchStateToFound(Found(albums))
+                        }
+                    } else {
+                        effect(ErrorSearching)
+                        null
+                    }
+                }
+                .cancellable()
+                .catch {
+                    if (it !is CancellationException) {
+                        log(it)
+                        effect(ErrorSearching)
+                    }
+                    send(SwitchStateToIdle)
+                }
+                .collect { send(it) }
+        }
+    }
+
+    context(PhotosUseCase)
+    private fun showSearchSuggestions() = combine(
+        searchUseCase.getRecentTextSearches()
+            .map {
+                it.map(::RecentSearchSuggestion)
+            },
+        peopleUseCase.getPeopleByPhotoCount()
+            .onErrorsIgnore()
+            .toPeople()
+            .map {
+                it.map(::PersonSearchSuggestion)
+            },
+        searchUseCase.getSearchSuggestions()
+            .map {
+                it.map(::ServerSearchSuggestion)
+            },
+        queryFilter,
+    ) { recentSearches, people, searchSuggestions, query ->
+        when {
+            query.isEmpty() -> emptyList()
+            else -> recentSearches + people + searchSuggestions
+        }.filterQuery(query)
+    }.map(::ShowSearchSuggestions)
+
+    context(PhotosUseCase)
+    private fun showPeopleSuggestion(effect: suspend (SearchEffect) -> Unit) =
+        peopleUseCase.getPeopleByPhotoCount()
+            .onErrors {
+                effect(ErrorRefreshingPeople)
+            }
+            .toPeople()
+            .map { it.subList(0, max(0, min(10, it.size - 1))) }
+            .map(::ShowPeople)
+
+    private fun showServerSearchSuggestion() =
+        settingsUseCase.observeSearchSuggestionsEnabledMode().flatMapLatest { enabled ->
+            if (enabled)
+                searchUseCase.getRandomSearchSuggestion()
+                    .map(::ShowSearchSuggestion)
+            else
+                flowOf(HideSuggestions)
+        }
+
+    private fun showUserBadgeState() = userBadgeUseCase.getUserBadgeState()
+        .map(::UserBadgeStateChanged)
+
+    private fun showFeedDisplay() = feedPageUseCase
+        .getFeedDisplay()
+        .distinctUntilChanged()
+        .map(::ChangeFeedDisplay)
+
+    context(PhotosUseCase)
+    private fun Flow<List<People>>.toPeople() = map { people ->
+        people.map {
+            it.toPerson { url -> url.toAbsoluteUrl() }
+        }
+    }
+
+    private fun List<SearchSuggestion>.filterQuery(query: String): List<SearchSuggestion> =
+        filter { it.filterable.contains(query, ignoreCase = true) }
 }

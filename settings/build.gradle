@@ -17,6 +17,7 @@ dependencies {
     implementation project(":albums-api")
     implementation project(":icons")
     implementation project(":video-api")
+    implementation project(":search-api")
     implementation project(":log")
     implementation(
             libs.androidx.compose.foundation,

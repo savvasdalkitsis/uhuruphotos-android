@@ -19,6 +19,7 @@ import androidx.work.ExistingPeriodicWorkPolicy.REPLACE
 import androidx.work.WorkInfo.State.RUNNING
 import com.savvasdalkitsis.uhuruphotos.albums.api.worker.AlbumWorkScheduler
 import com.savvasdalkitsis.uhuruphotos.log.FeedbackUseCase
+import com.savvasdalkitsis.uhuruphotos.search.api.SearchUseCase
 import com.savvasdalkitsis.uhuruphotos.settings.usecase.CacheUseCase
 import com.savvasdalkitsis.uhuruphotos.settings.usecase.SettingsUseCase
 import com.savvasdalkitsis.uhuruphotos.settings.view.state.SettingsState
@@ -36,6 +37,7 @@ internal class SettingsHandler @Inject constructor(
     private val userBadgeUseCase: UserBadgeUseCase,
     private val cacheUseCase: CacheUseCase,
     private val feedbackUseCase: FeedbackUseCase,
+    private val searchUseCase: SearchUseCase,
 ) : Handler<SettingsState, SettingsEffect, SettingsAction, SettingsMutation> {
 
     override fun invoke(
@@ -139,6 +141,10 @@ internal class SettingsHandler @Inject constructor(
         }
         SendFeedbackClicked -> flow {
             feedbackUseCase.sendFeedback()
+        }
+        ClearRecentSearches -> flow {
+            searchUseCase.clearRecentSearchSuggestions()
+            effect(ShowMessage("Recent searches cleared"))
         }
     }
 

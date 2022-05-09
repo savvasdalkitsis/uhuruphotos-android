@@ -1,5 +1,6 @@
 dependencies {
 
+    implementation project(":photos-api")
     implementation(
             libs.androidx.work,
     )

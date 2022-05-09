@@ -42,6 +42,9 @@ class SearchRepository @Inject constructor(
     private val suggestions = flowSharedPreferences
         .getNullableStringSet("searchSuggestions", emptySet())
 
+    private val recentSearches = flowSharedPreferences
+        .getNullableStringSet("recentSearches", emptySet())
+
     fun getSearchResults(query: String): Flow<Group<String, GetSearchResults>> =
         searchQueries.getSearchResults(query).asFlow().mapToList().groupBy(GetSearchResults::date)
             .distinctUntilChanged()
@@ -89,5 +92,20 @@ class SearchRepository @Inject constructor(
         } catch (e: IOException) {
             log(e)
         }
+    }
+
+    fun getRecentSearches(): Flow<List<String>> = recentSearches.asFlow()
+        .map { it.orEmpty().toList() }
+
+    suspend fun addSearchToRecentSearches(query: String) {
+        recentSearches.setAndCommit(recentSearches.get().orEmpty() + query)
+    }
+
+    suspend fun removeFromRecentSearches(query: String) {
+        recentSearches.setAndCommit(recentSearches.get().orEmpty() - query)
+    }
+
+    suspend fun clearRecentSearchSuggestions() {
+        recentSearches.setAndCommit(emptySet())
     }
 }

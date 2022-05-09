@@ -13,6 +13,7 @@ dependencies {
     implementation project(":infrastructure")
     implementation project(":ui")
     implementation project(":photos")
+    implementation project(":photos-api")
     implementation project(":db")
     implementation project(":albums")
     implementation project(":userbadge-api")
@@ -25,11 +26,13 @@ dependencies {
     implementation project(":settings")
     implementation project(":map")
     implementation project(":log")
+    implementation project(":icons")
     implementation project(":toaster")
     implementation project(":people-api")
     implementation project(":infrastructure")
     implementation project(":person-api")
     implementation project(":heatmap")
+    implementation project(":search-api")
 
     implementation(
             libs.androidx.compose.hilt.navigation,

@@ -16,8 +16,8 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.feedpage.view.state
 
 import com.savvasdalkitsis.uhuruphotos.feed.view.state.FeedState
-import com.savvasdalkitsis.uhuruphotos.photos.model.Photo
-import com.savvasdalkitsis.uhuruphotos.photos.model.SelectionMode
+import com.savvasdalkitsis.uhuruphotos.photos.api.model.Photo
+import com.savvasdalkitsis.uhuruphotos.photos.api.model.SelectionMode
 import com.savvasdalkitsis.uhuruphotos.userbadge.api.view.state.UserInformationState
 
 data class FeedPageState(

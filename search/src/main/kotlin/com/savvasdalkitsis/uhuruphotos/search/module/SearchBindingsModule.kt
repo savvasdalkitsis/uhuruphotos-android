@@ -17,6 +17,7 @@ package com.savvasdalkitsis.uhuruphotos.search.module
 
 import com.savvasdalkitsis.uhuruphotos.navigation.NavigationTarget
 import com.savvasdalkitsis.uhuruphotos.search.navigation.SearchNavigationTarget
+import com.savvasdalkitsis.uhuruphotos.search.usecase.SearchUseCase
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -30,4 +31,8 @@ abstract class SearchBindingsModule {
     @Binds
     @IntoSet
     abstract fun navigationTarget(navigationTarget: SearchNavigationTarget): NavigationTarget
+
+    @Binds
+    abstract fun searchUseCase(useCase: SearchUseCase):
+            com.savvasdalkitsis.uhuruphotos.search.api.SearchUseCase
 }

@@ -23,7 +23,7 @@ import com.savvasdalkitsis.uhuruphotos.heatmap.viewmodel.HeatMapEffect.*
 import com.savvasdalkitsis.uhuruphotos.heatmap.viewmodel.HeatMapMutation.*
 import com.savvasdalkitsis.uhuruphotos.infrastructure.extensions.onErrors
 import com.savvasdalkitsis.uhuruphotos.infrastructure.extensions.safelyOnStart
-import com.savvasdalkitsis.uhuruphotos.photos.model.Photo
+import com.savvasdalkitsis.uhuruphotos.photos.api.model.Photo
 import com.savvasdalkitsis.uhuruphotos.photos.model.latLng
 import com.savvasdalkitsis.uhuruphotos.photos.usecase.PhotosUseCase
 import com.savvasdalkitsis.uhuruphotos.viewmodel.Handler
@@ -49,16 +49,18 @@ class HeatMapHandler @Inject constructor(
                 .map { photos ->
                     photos
                         .filter { it.latLng != null }
-                        .map { Photo(
-                            id = it.imageHash,
-                            thumbnailUrl = with (photosUseCase) {
-                                it.imageHash.toThumbnailUrlFromId()
-                            },
-                            latLng = it.latLng?.let { latLng ->
-                                latLng.latitude to latLng.longitude
-                            },
-                            isVideo = it.video ?: false,
-                        ) }
+                        .map {
+                            Photo(
+                                id = it.imageHash,
+                                thumbnailUrl = with(photosUseCase) {
+                                    it.imageHash.toThumbnailUrlFromId()
+                                },
+                                latLng = it.latLng?.let { latLng ->
+                                    latLng.latitude to latLng.longitude
+                                },
+                                isVideo = it.video ?: false,
+                            )
+                        }
                 }
                 .safelyOnStart {
                     albumsUseCase.getAlbums().collect { albums ->

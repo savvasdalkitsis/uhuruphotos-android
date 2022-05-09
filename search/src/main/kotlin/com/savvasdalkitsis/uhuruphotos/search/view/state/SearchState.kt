@@ -21,7 +21,6 @@ import com.savvasdalkitsis.uhuruphotos.people.api.view.state.Person
 import com.savvasdalkitsis.uhuruphotos.userbadge.api.view.state.UserInformationState
 
 data class SearchState(
-    val query: String = "",
     val showClearButton: Boolean = false,
     val searchResults: SearchResults = SearchResults.Idle,
     val userInformationState: UserInformationState = UserInformationState(),
@@ -30,5 +29,6 @@ data class SearchState(
     val feedDisplay: FeedDisplay = FeedDisplays.default,
     val searchDisplay: FeedDisplay = FeedDisplays.default,
     val suggestion: String? = null,
-    val people: List<Person> = emptyList()
+    val people: List<Person> = emptyList(),
+    val searchSuggestions: List<SearchSuggestion> = emptyList(),
 )
