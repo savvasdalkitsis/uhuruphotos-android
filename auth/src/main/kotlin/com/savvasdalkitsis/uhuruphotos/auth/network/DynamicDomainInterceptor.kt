@@ -17,8 +17,10 @@ package com.savvasdalkitsis.uhuruphotos.auth.network
 
 import com.savvasdalkitsis.uhuruphotos.auth.usecase.ServerUseCase
 import kotlinx.coroutines.runBlocking
+import okhttp3.HttpUrl
 import okhttp3.Interceptor
 import okhttp3.Response
+import java.io.IOException
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -30,14 +32,17 @@ class DynamicDomainInterceptor @Inject constructor(
     @Throws(Exception::class)
     override fun intercept(chain: Interceptor.Chain): Response {
         val request = chain.request()
-        return chain.proceed(
-            request.newBuilder()
-                .url(request.url.toString()
-                    .replace("https://localhost",
-                        runBlocking { serverUseCase.getServerUrl() }!!
-                    )
+        return when (val serverUrl = runBlocking { serverUseCase.getServerUrl() }) {
+            null -> throw IOException("Server url is not initialised")
+            else -> chain.proceed(
+                request
+                    .newBuilder()
+                    .url(request.url.replace(serverUrl))
+                    .build()
                 )
-                .build()
-        )
+        }
     }
+
+    private fun HttpUrl.replace(url: String) = toString()
+            .replace("https://localhost", url)
 }
