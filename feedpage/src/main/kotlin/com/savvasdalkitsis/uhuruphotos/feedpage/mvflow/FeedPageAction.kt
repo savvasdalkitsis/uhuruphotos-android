@@ -36,8 +36,6 @@ sealed class FeedPageAction {
     object DismissLogOutDialog : FeedPageAction()
     object LogOut : FeedPageAction()
     object RefreshAlbums : FeedPageAction()
-    object ShowFeedDisplayChoice : FeedPageAction()
-    object HideFeedDisplayChoice : FeedPageAction()
     object ClearSelected : FeedPageAction()
     object AskForSelectedPhotosDeletion : FeedPageAction()
     object DismissSelectedPhotosDeletion : FeedPageAction()

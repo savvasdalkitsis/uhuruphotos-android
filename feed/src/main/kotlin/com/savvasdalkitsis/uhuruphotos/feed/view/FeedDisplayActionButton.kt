@@ -13,14 +13,14 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
  */
-package com.savvasdalkitsis.uhuruphotos.feedpage.view
+package com.savvasdalkitsis.uhuruphotos.feed.view
 
 import androidx.compose.foundation.gestures.detectVerticalDragGestures
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.*
-import androidx.compose.runtime.Composable
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.pointer.pointerInput
@@ -32,13 +32,10 @@ import com.savvasdalkitsis.uhuruphotos.ui.view.ActionIcon
 
 @Composable
 fun FeedDisplayActionButton(
-    onShow: () -> Unit,
-    onHide: () -> Unit,
     onChange: (FeedDisplay) -> Unit,
-    expanded: Boolean,
     currentFeedDisplay: FeedDisplay,
 ) {
-
+    var isOpen by remember { mutableStateOf(false) }
     Box {
         ActionIcon(
             modifier = Modifier
@@ -52,16 +49,19 @@ fun FeedDisplayActionButton(
                         )
                     }
                 },
-            onClick = onShow,
+            onClick = { isOpen = true },
             icon = currentFeedDisplay.iconResource,
             contentDescription = "feed display",
         )
         DropdownMenu(
-            expanded = expanded,
-            onDismissRequest = onHide,
+            expanded = isOpen,
+            onDismissRequest = { isOpen = false },
         ) {
             FeedDisplays.values().reversedArray().forEach { display ->
-                FeedDisplayDropDownItem(onChange, display, currentFeedDisplay)
+                FeedDisplayDropDownItem(display, currentFeedDisplay) {
+                    isOpen = false
+                    onChange(it)
+                }
             }
         }
     }
@@ -69,9 +69,9 @@ fun FeedDisplayActionButton(
 
 @Composable
 private fun FeedDisplayDropDownItem(
-    onChange: (FeedDisplays) -> Unit,
     display: FeedDisplays,
-    currentFeedDisplay: FeedDisplay
+    currentFeedDisplay: FeedDisplay,
+    onChange: (FeedDisplays) -> Unit
 ) {
     DropdownMenuItem(
         onClick = { onChange(display) }

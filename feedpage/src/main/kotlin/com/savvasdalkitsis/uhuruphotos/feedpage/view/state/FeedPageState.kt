@@ -25,7 +25,6 @@ data class FeedPageState(
     val userInformationState: UserInformationState = UserInformationState(),
     val showAccountOverview: Boolean = false,
     val isRefreshing: Boolean = false,
-    val showFeedDisplayChoice: Boolean = false,
     val showPhotoDeletionConfirmationDialog: Boolean = false,
     val showLogOutConfirmation: Boolean = false,
 ) {

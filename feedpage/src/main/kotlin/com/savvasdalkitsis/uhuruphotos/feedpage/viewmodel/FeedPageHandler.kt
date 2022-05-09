@@ -22,8 +22,6 @@ import com.savvasdalkitsis.uhuruphotos.feedpage.SelectionList
 import com.savvasdalkitsis.uhuruphotos.feedpage.mvflow.FeedPageAction
 import com.savvasdalkitsis.uhuruphotos.feedpage.mvflow.FeedPageAction.*
 import com.savvasdalkitsis.uhuruphotos.feedpage.mvflow.FeedPageAction.ChangeDisplay
-import com.savvasdalkitsis.uhuruphotos.feedpage.mvflow.FeedPageAction.HideFeedDisplayChoice
-import com.savvasdalkitsis.uhuruphotos.feedpage.mvflow.FeedPageAction.ShowFeedDisplayChoice
 import com.savvasdalkitsis.uhuruphotos.feedpage.mvflow.FeedPageEffect
 import com.savvasdalkitsis.uhuruphotos.feedpage.mvflow.FeedPageEffect.*
 import com.savvasdalkitsis.uhuruphotos.feedpage.mvflow.FeedPageMutation
@@ -99,22 +97,19 @@ class FeedPageHandler @Inject constructor(
         }
         is ChangeDisplay -> flow {
             feedPageUseCase.setFeedDisplay(action.display)
-            emit(FeedPageMutation.HideFeedDisplayChoice)
         }
-        HideFeedDisplayChoice -> flowOf(FeedPageMutation.HideFeedDisplayChoice)
-        ShowFeedDisplayChoice -> flowOf(FeedPageMutation.ShowFeedDisplayChoice)
         is PhotoLongPressed -> flow {
             if (state.selectedPhotoCount == 0) {
                 effect(Vibrate)
                 action.photo.select()
             }
         }
-        ClearSelected -> flow<FeedPageMutation> {
+        ClearSelected -> flow {
             effect(Vibrate)
             selectionList.clear()
         }
         AskForSelectedPhotosDeletion -> flowOf(ShowDeletionConfirmationDialog)
-        is AlbumSelectionClicked -> flow<FeedPageMutation> {
+        is AlbumSelectionClicked -> flow {
             val photos = action.album.photos
             effect(Vibrate)
             if (photos.all { it.selectionMode == SELECTED }) {

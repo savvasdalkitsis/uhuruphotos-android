@@ -28,6 +28,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
 import com.savvasdalkitsis.uhuruphotos.feed.view.Feed
+import com.savvasdalkitsis.uhuruphotos.feed.view.FeedDisplayActionButton
 import com.savvasdalkitsis.uhuruphotos.image.api.view.Image
 import com.savvasdalkitsis.uhuruphotos.person.view.state.PersonState
 import com.savvasdalkitsis.uhuruphotos.person.viewmodel.PersonAction
@@ -72,6 +73,12 @@ fun Person(
                 visible = state.feedState.albums.isNotEmpty() && state.feedState.isLoading
             ) {
                 CircularProgressIndicator()
+            }
+            AnimatedVisibility(state.feedState.albums.isNotEmpty()) {
+                FeedDisplayActionButton(
+                    onChange = { action(ChangeDisplay(it)) },
+                    currentFeedDisplay = state.feedState.feedDisplay
+                )
             }
         }
     ) { contentPadding ->

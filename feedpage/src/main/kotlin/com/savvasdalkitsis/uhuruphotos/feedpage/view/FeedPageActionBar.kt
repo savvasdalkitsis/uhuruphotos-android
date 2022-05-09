@@ -3,8 +3,10 @@ package com.savvasdalkitsis.uhuruphotos.feedpage.view
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.layout.RowScope
 import androidx.compose.runtime.Composable
+import com.savvasdalkitsis.uhuruphotos.feed.view.FeedDisplayActionButton
 import com.savvasdalkitsis.uhuruphotos.feed.view.state.FeedDisplays
 import com.savvasdalkitsis.uhuruphotos.feedpage.mvflow.FeedPageAction
+import com.savvasdalkitsis.uhuruphotos.feedpage.mvflow.FeedPageAction.*
 import com.savvasdalkitsis.uhuruphotos.feedpage.view.state.FeedPageState
 import com.savvasdalkitsis.uhuruphotos.icons.R
 import com.savvasdalkitsis.uhuruphotos.ui.view.ActionIcon
@@ -16,21 +18,18 @@ fun RowScope.FeedPageActionBar(
 ) {
     AnimatedVisibility(visible = state.shouldShowShareIcon) {
         ActionIcon(
-            onClick = { action(FeedPageAction.ShareSelectedPhotos) },
+            onClick = { action(ShareSelectedPhotos) },
             icon = R.drawable.ic_share
         )
     }
     AnimatedVisibility(visible = state.hasSelection) {
         ActionIcon(
-            onClick = { action(FeedPageAction.AskForSelectedPhotosDeletion) },
+            onClick = { action(AskForSelectedPhotosDeletion) },
             icon = R.drawable.ic_delete
         )
     }
     FeedDisplayActionButton(
-        onShow = { action(FeedPageAction.ShowFeedDisplayChoice) },
-        onHide = { action(FeedPageAction.HideFeedDisplayChoice) },
-        onChange = { action(FeedPageAction.ChangeDisplay(it as FeedDisplays)) },
-        expanded = state.showFeedDisplayChoice,
+        onChange = { action(ChangeDisplay(it as FeedDisplays)) },
         currentFeedDisplay = state.feedState.feedDisplay
     )
 }

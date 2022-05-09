@@ -28,8 +28,6 @@ sealed class FeedPageMutation {
     object HideLogOutConfirmation : FeedPageMutation()
     object StartRefreshing : FeedPageMutation()
     object StopRefreshing : FeedPageMutation()
-    object ShowFeedDisplayChoice : FeedPageMutation()
-    object HideFeedDisplayChoice : FeedPageMutation()
     object ShowDeletionConfirmationDialog : FeedPageMutation()
     object HideDeletionConfirmationDialog : FeedPageMutation()
 
