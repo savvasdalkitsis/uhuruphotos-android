@@ -27,7 +27,7 @@ internal fun LazyListScope.personSuggestion(
     person: Person,
     action: (SearchAction) -> Unit,
 ) {
-    item(person.name, contentType = "personSuggestion") {
+    item("person-${person.name}", contentType = "personSuggestion") {
         Suggestion(
             modifier = Modifier.animateItemPlacement(),
             text = person.name,

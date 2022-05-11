@@ -28,7 +28,7 @@ internal fun LazyListScope.serverSearchSuggestion(
     suggestion: String,
     onClick: () -> Unit,
 ) {
-    item(suggestion, contentType = "serverSearchSuggestion") {
+    item("server-$suggestion", contentType = "serverSearchSuggestion") {
         Suggestion(
             modifier = Modifier.animateItemPlacement(),
             text = suggestion,

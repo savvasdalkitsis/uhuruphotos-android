@@ -31,7 +31,7 @@ internal fun LazyListScope.recentSearchSuggestion(
     action: (SearchAction) -> Unit,
     onClick: () -> Unit,
 ) {
-    item(suggestion, contentType = "recentSearchSuggestion") {
+    item("recent-$suggestion", contentType = "recentSearchSuggestion") {
         Suggestion(
             modifier = Modifier.animateItemPlacement(),
             text = suggestion,
