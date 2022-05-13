@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "999",
+    "project_id": "project",
+    "storage_bucket": "project.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "",
+        "android_client_info": {
+          "package_name": "com.savvasdalkitsis.uhuruphotos"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "project.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "key"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "project.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
