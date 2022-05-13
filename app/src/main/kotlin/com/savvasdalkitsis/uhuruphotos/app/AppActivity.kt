@@ -38,7 +38,9 @@ class AppActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        WindowCompat.setDecorFitsSystemWindows(window, false)
+        try {
+            WindowCompat.setDecorFitsSystemWindows(window, false)
+        } catch (_: Exception) {}
         setContent {
             val systemUiController = rememberSystemUiController()
             val windowSizeClass = calculateWindowSizeClass(this)
