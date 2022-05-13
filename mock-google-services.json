@@ -7,7 +7,7 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "",
+        "mobilesdk_app_id": "1:999:android:abcdef1234567890abcdef",
         "android_client_info": {
           "package_name": "com.savvasdalkitsis.uhuruphotos.debug"
         }
