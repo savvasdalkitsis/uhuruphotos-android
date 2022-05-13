@@ -29,6 +29,11 @@ jobs:
       run: |
         mkdir app/keystore
         echo $ENCODED_STRING | base64 -di > app/keystore/keystore.jks
+    - name: Decode Google Services json
+      env:
+        ENCODED_STRING: ${{ secrets.GOOGLE_SERVICES }}
+      run: |
+        echo $ENCODED_STRING | base64 -di > google-services.json
 
     - name: Build with Gradle
       run: ./gradlew app:bundleRelease
