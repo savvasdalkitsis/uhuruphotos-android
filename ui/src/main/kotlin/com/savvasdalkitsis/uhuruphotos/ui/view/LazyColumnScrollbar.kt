@@ -113,7 +113,7 @@ fun LazyColumnScrollbar(
 		val remainder: Float = exactIndex - floor(exactIndex)
 
 		coroutineScope.launch {
-			listState.animateScrollToItem(index = index, scrollOffset = 0)
+			listState.scrollToItem(index = index, scrollOffset = 0)
 			val offset = listState.layoutInfo.visibleItemsInfo.firstOrNull()?.size?.let { it.toFloat() * remainder }?.toInt() ?: 0
 			listState.animateScrollToItem(index = index, scrollOffset = offset)
 		}
