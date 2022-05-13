@@ -6,6 +6,7 @@ android {
     composeOptions {
         kotlinCompilerExtensionVersion compose_version
     }
+    namespace 'com.savvasdalkitsis.accountoverview'
 }
 
 dependencies {

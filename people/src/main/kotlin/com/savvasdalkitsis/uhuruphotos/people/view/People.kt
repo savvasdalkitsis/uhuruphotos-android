@@ -21,6 +21,8 @@ import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Text
+import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass.Companion.Compact
+import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass.Companion.Medium
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
@@ -31,9 +33,11 @@ import com.savvasdalkitsis.uhuruphotos.people.view.state.SortOrder.ASCENDING
 import com.savvasdalkitsis.uhuruphotos.people.view.state.SortOrder.DESCENDING
 import com.savvasdalkitsis.uhuruphotos.people.viewmodel.PeopleAction
 import com.savvasdalkitsis.uhuruphotos.people.viewmodel.PeopleAction.*
-import com.savvasdalkitsis.uhuruphotos.ui.view.*
-import com.savvasdalkitsis.uhuruphotos.ui.window.WindowSize
-import com.savvasdalkitsis.uhuruphotos.ui.window.WindowSizeClass.*
+import com.savvasdalkitsis.uhuruphotos.ui.view.ActionIcon
+import com.savvasdalkitsis.uhuruphotos.ui.view.BackNavButton
+import com.savvasdalkitsis.uhuruphotos.ui.view.CommonScaffold
+import com.savvasdalkitsis.uhuruphotos.ui.view.FullProgressBar
+import com.savvasdalkitsis.uhuruphotos.ui.window.LocalWindowSize
 
 @Composable
 fun People(
@@ -55,10 +59,10 @@ fun People(
         if (state.people.isEmpty()) {
             FullProgressBar()
         } else {
-            val columns = when (WindowSize.LOCAL_WIDTH.current) {
-                COMPACT -> 4
-                MEDIUM -> 6
-                EXPANDED -> 9
+            val columns = when (LocalWindowSize.current.widthSizeClass) {
+                Compact -> 4
+                Medium -> 6
+                else -> 9
             }
             LazyVerticalGrid(
                 modifier = Modifier.padding(start = 8.dp, end = 8.dp),

@@ -13,3 +13,7 @@ dependencies {
     )
     kapt "com.squareup.moshi:moshi-kotlin-codegen:1.13.0"
 }
+
+android {
+    namespace 'com.savvasdalkitsis.uhuruphotos.user'
+}

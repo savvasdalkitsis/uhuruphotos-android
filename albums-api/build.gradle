@@ -5,3 +5,7 @@ dependencies {
             libs.androidx.work,
     )
 }
+
+android {
+    namespace 'com.savvasdalkitsis.uhuruphotos.albums.api'
+}

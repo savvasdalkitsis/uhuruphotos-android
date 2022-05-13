@@ -21,6 +21,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Search
+import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass.Companion.Compact
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
@@ -37,12 +38,11 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import com.savvasdalkitsis.uhuruphotos.feed.view.state.FeedDisplay
 import com.savvasdalkitsis.uhuruphotos.home.navigation.NavigationStyle.BOTTOM_BAR
 import com.savvasdalkitsis.uhuruphotos.home.navigation.NavigationStyle.NAVIGATION_RAIL
-import com.savvasdalkitsis.uhuruphotos.ui.window.WindowSize
-import com.savvasdalkitsis.uhuruphotos.ui.window.WindowSizeClass.COMPACT
+import com.savvasdalkitsis.uhuruphotos.ui.window.LocalWindowSize
 
 @Composable
-fun homeNavigationStyle() = when (WindowSize.LOCAL_WIDTH.current) {
-    COMPACT -> BOTTOM_BAR
+fun homeNavigationStyle() = when (LocalWindowSize.current.widthSizeClass) {
+    Compact -> BOTTOM_BAR
     else -> NAVIGATION_RAIL
 }
 

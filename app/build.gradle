@@ -14,7 +14,7 @@ android {
     defaultConfig {
         applicationId "com.savvasdalkitsis.uhuruphotos"
         minSdk 23
-        targetSdk 31
+        targetSdk 32
         versionCode project.app_version_code
         versionName "${project.app_version_name}"
 
@@ -49,6 +49,7 @@ android {
             excludes += '/META-INF/{AL2.0,LGPL2.1}'
         }
     }
+    namespace 'com.savvasdalkitsis.uhuruphotos'
 }
 
 dependencies {
@@ -72,6 +73,7 @@ dependencies {
             libs.androidx.activity,
             libs.androidx.compose.hilt.navigation,
             libs.androidx.compose.material,
+            libs.androidx.compose.material.windowsize,
             libs.androidx.compose.navigation,
             libs.androidx.compose.ui,
             libs.androidx.datastore.preferences,

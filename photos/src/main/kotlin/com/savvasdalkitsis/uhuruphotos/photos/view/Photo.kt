@@ -15,6 +15,7 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.photos.view
 
+import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass.Companion.Expanded
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import com.savvasdalkitsis.uhuruphotos.photos.mvflow.PhotoAction
@@ -22,8 +23,7 @@ import com.savvasdalkitsis.uhuruphotos.photos.view.PhotoSheetStyle.BOTTOM
 import com.savvasdalkitsis.uhuruphotos.photos.view.PhotoSheetStyle.SIDE
 import com.savvasdalkitsis.uhuruphotos.photos.view.state.PhotoState
 import com.savvasdalkitsis.uhuruphotos.ui.view.zoom.rememberZoomableState
-import com.savvasdalkitsis.uhuruphotos.ui.window.WindowSize
-import com.savvasdalkitsis.uhuruphotos.ui.window.WindowSizeClass.EXPANDED
+import com.savvasdalkitsis.uhuruphotos.ui.window.LocalWindowSize
 
 @Composable
 fun Photo(
@@ -32,8 +32,8 @@ fun Photo(
 ) {
     val zoomableState = rememberZoomableState()
     PhotoBackPressHandler(state, action)
-    val style = when (WindowSize.LOCAL_WIDTH.current) {
-        EXPANDED -> SIDE
+    val style = when (LocalWindowSize.current.widthSizeClass) {
+        Expanded -> SIDE
         else -> BOTTOM
     }
     CompositionLocalProvider(LocalPhotoSheetStyle provides style) {

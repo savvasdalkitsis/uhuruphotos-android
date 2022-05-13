@@ -16,6 +16,8 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.settings.view
 
 import androidx.compose.material.Text
+import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass.Companion.Compact
+import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass.Companion.Medium
 import androidx.compose.runtime.Composable
 import com.savvasdalkitsis.uhuruphotos.settings.view.state.SettingsState
 import com.savvasdalkitsis.uhuruphotos.settings.viewmodel.SettingsAction
@@ -25,8 +27,7 @@ import com.savvasdalkitsis.uhuruphotos.ui.view.BackNavButton
 import com.savvasdalkitsis.uhuruphotos.ui.view.CommonScaffold
 import com.savvasdalkitsis.uhuruphotos.ui.view.FullProgressBar
 import com.savvasdalkitsis.uhuruphotos.ui.view.StaggeredGrid
-import com.savvasdalkitsis.uhuruphotos.ui.window.WindowSize
-import com.savvasdalkitsis.uhuruphotos.ui.window.WindowSizeClass.*
+import com.savvasdalkitsis.uhuruphotos.ui.window.LocalWindowSize
 import com.savvasdalkitsis.uhuruphotos.userbadge.api.view.UserBadge
 
 @Composable
@@ -46,10 +47,10 @@ fun Settings(
         if (state.isLoading) {
             FullProgressBar()
         } else {
-            val columns = when (WindowSize.LOCAL_WIDTH.current) {
-                COMPACT -> 1
-                MEDIUM -> 2
-                EXPANDED -> 3
+            val columns = when (LocalWindowSize.current.widthSizeClass) {
+                Compact -> 1
+                Medium -> 2
+                else -> 3
             }
             StaggeredGrid(
                 contentPadding = contentPadding,

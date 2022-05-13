@@ -7,3 +7,7 @@ dependencies {
             libs.hilt,
     )
 }
+
+android {
+    namespace 'com.savvasdalkitsis.uhuruphotos.notification'
+}

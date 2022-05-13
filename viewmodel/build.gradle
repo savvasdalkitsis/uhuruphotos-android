@@ -5,3 +5,7 @@ dependencies {
             libs.kotlinx.coroutines,
     )
 }
+
+android {
+    namespace 'com.savvasdalkitsis.uhuruphotos.viewmodel'
+}

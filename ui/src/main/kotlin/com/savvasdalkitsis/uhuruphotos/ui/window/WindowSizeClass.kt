@@ -15,13 +15,9 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.ui.window
 
+import androidx.compose.material3.windowsizeclass.WindowSizeClass
 import androidx.compose.runtime.compositionLocalOf
 
-enum class WindowSizeClass {
-    COMPACT, MEDIUM, EXPANDED
-}
-
-object WindowSize {
-   val LOCAL_WIDTH = compositionLocalOf { WindowSizeClass.COMPACT }
-   val LOCAL_HEIGHT = compositionLocalOf { WindowSizeClass.COMPACT }
+val LocalWindowSize = compositionLocalOf<WindowSizeClass> {
+    throw IllegalStateException("Not initialised")
 }

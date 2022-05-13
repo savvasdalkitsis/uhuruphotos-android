@@ -16,6 +16,7 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.search.view
 
 import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.foundation.layout.imeNestedScroll
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import com.savvasdalkitsis.uhuruphotos.account.view.LogOutConfirmationDialog
@@ -39,7 +40,8 @@ fun SearchPage(
 ) {
     HomeScaffold(
         modifier = Modifier
-            .blurIf(state.showAccountOverview),
+            .blurIf(state.showAccountOverview)
+            .imeNestedScroll(),
         navController = controllersProvider.navController!!,
         userInformationState = state.userInformationState,
         feedDisplay = state.feedDisplay,

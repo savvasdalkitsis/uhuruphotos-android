@@ -3,3 +3,7 @@ dependencies {
             libs.hilt,
     )
 }
+
+android {
+    namespace 'com.savvasdalkitsis.uhuruphotos.video.api'
+}

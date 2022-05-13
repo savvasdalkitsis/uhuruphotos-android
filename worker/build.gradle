@@ -6,3 +6,7 @@ dependencies {
             libs.androidx.work.hilt,
     )
 }
+
+android {
+    namespace 'com.savvasdalkitsis.uhuruphotos.worker'
+}

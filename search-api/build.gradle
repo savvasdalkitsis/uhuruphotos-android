@@ -5,3 +5,7 @@ dependencies {
             libs.result,
     )
 }
+
+android {
+    namespace 'com.savvasdalkitsis.uhuruphotos.search.api'
+}

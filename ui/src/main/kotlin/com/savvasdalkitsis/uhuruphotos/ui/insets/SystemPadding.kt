@@ -16,7 +16,6 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.ui.insets
 
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.layout.WindowInsetsSides.Companion.Bottom
 import androidx.compose.foundation.layout.WindowInsetsSides.Companion.End
 import androidx.compose.foundation.layout.WindowInsetsSides.Companion.Start
 import androidx.compose.foundation.layout.WindowInsetsSides.Companion.Top
@@ -35,5 +34,3 @@ fun insetsStart() = systemPadding(Start).calculateStartPadding(LocalLayoutDirect
 fun insetsEnd() = systemPadding(End).calculateEndPadding(LocalLayoutDirection.current)
 @Composable
 fun insetsTop() = systemPadding(Top).calculateTopPadding()
-@Composable
-fun insetsBottom() = systemPadding(Bottom).calculateBottomPadding()

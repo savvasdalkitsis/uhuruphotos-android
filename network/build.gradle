@@ -14,3 +14,7 @@ dependencies {
             libs.retrofit.core,
     )
 }
+
+android {
+    namespace 'com.savvasdalkitsis.uhuruphotos.network'
+}

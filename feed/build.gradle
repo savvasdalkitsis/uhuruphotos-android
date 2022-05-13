@@ -5,6 +5,7 @@ android {
     composeOptions {
         kotlinCompilerExtensionVersion compose_version
     }
+    namespace 'com.savvasdalkitsis.uhuruphotos.feed'
 }
 
 dependencies {
@@ -21,6 +22,7 @@ dependencies {
             libs.androidx.compose.foundation,
             libs.androidx.compose.foundation.layout,
             libs.androidx.compose.material,
+            libs.androidx.compose.material.windowsize,
             libs.androidx.compose.ui,
             libs.androidx.compose.ui.util,
             libs.androidx.core,

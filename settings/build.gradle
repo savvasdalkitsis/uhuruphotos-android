@@ -5,6 +5,7 @@ android {
     composeOptions {
         kotlinCompilerExtensionVersion compose_version
     }
+    namespace 'com.savvasdalkitsis.uhuruphotos.settings'
 }
 
 dependencies {
@@ -23,6 +24,7 @@ dependencies {
             libs.androidx.compose.foundation,
             libs.androidx.compose.foundation.layout,
             libs.androidx.compose.material,
+            libs.androidx.compose.material.windowsize,
             libs.androidx.datastore.preferences,
             libs.androidx.work,
             libs.coil.base,

@@ -15,7 +15,8 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feed.view.state
 
-import com.savvasdalkitsis.uhuruphotos.ui.window.WindowSizeClass
+import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
+import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass.Companion.Compact
 
 interface FeedDisplay {
     val compactColumnsPortrait: Int
@@ -30,15 +31,15 @@ interface FeedDisplay {
     val zoomOut: FeedDisplay
 
     fun columnCount(
-        windowSizeClass: WindowSizeClass,
+        widthSizeClass: WindowWidthSizeClass,
         landscape: Boolean,
     ) = when {
-        landscape -> when (windowSizeClass) {
-            WindowSizeClass.COMPACT -> compactColumnsLandscape
+        landscape -> when (widthSizeClass) {
+            Compact -> compactColumnsLandscape
             else -> wideColumnsLandscape
         }
-        else -> when (windowSizeClass) {
-            WindowSizeClass.COMPACT -> compactColumnsPortrait
+        else -> when (widthSizeClass) {
+            Compact -> compactColumnsPortrait
             else -> wideColumnsPortrait
         }
     }

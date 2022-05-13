@@ -8,3 +8,7 @@ dependencies {
             libs.logger,
     )
 }
+
+android {
+    namespace 'com.savvasdalkitsis.uhuruphotos.log'
+}

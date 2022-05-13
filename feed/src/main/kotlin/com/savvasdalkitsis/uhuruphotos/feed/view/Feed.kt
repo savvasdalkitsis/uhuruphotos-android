@@ -28,7 +28,7 @@ import com.savvasdalkitsis.uhuruphotos.feed.view.state.FeedDisplay
 import com.savvasdalkitsis.uhuruphotos.feed.view.state.FeedState
 import com.savvasdalkitsis.uhuruphotos.photos.api.model.Photo
 import com.savvasdalkitsis.uhuruphotos.ui.view.FullProgressBar
-import com.savvasdalkitsis.uhuruphotos.ui.window.WindowSize
+import com.savvasdalkitsis.uhuruphotos.ui.window.LocalWindowSize
 
 @Composable
 fun Feed(
@@ -63,7 +63,7 @@ fun Feed(
             maintainAspectRatio = feedDisplay.maintainAspectRatio,
             listState = listState,
             columnCount = feedDisplay.columnCount(
-                windowSizeClass = WindowSize.LOCAL_WIDTH.current,
+                widthSizeClass = LocalWindowSize.current.widthSizeClass,
                 landscape = LocalConfiguration.current.orientation == Configuration.ORIENTATION_LANDSCAPE
             ),
             shouldAddEmptyPhotosInRows = feedDisplay.shouldAddEmptyPhotosInRows,

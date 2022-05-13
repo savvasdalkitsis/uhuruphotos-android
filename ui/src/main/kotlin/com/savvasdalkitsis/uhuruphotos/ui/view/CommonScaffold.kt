@@ -24,7 +24,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import com.google.accompanist.insets.ui.Scaffold
-import com.savvasdalkitsis.uhuruphotos.ui.insets.insetsBottom
 import com.savvasdalkitsis.uhuruphotos.ui.insets.insetsEnd
 import com.savvasdalkitsis.uhuruphotos.ui.insets.insetsStart
 
@@ -67,23 +66,20 @@ fun CommonScaffold(
     content: @Composable (PaddingValues) -> Unit
 ) {
     Scaffold(
-        modifier = modifier,
+        modifier = modifier
+            .imePadding(),
         bottomBar = {
             AnimatedVisibility(
                 visible = bottomBarDisplayed,
                 enter = fadeIn() + slideInVertically(initialOffsetY = { it } ),
                 exit = fadeOut() + slideOutVertically(targetOffsetY = { it }),
             ) {
-                Column(
+                Box(
                     Modifier
                         .background(bottomBarColor())
+                        .navigationBarsPadding()
                 ) {
                     bottomBarContent()
-                    Spacer(
-                        modifier = Modifier
-                            .height(insetsBottom())
-                            .fillMaxWidth()
-                    )
                 }
             }
         },
