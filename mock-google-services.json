@@ -9,7 +9,7 @@
       "client_info": {
         "mobilesdk_app_id": "",
         "android_client_info": {
-          "package_name": "com.savvasdalkitsis.uhuruphotos"
+          "package_name": "com.savvasdalkitsis.uhuruphotos.debug"
         }
       },
       "oauth_client": [
