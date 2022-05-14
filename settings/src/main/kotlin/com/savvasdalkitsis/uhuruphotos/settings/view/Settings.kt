@@ -19,10 +19,12 @@ import androidx.compose.material.Text
 import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass.Companion.Compact
 import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass.Companion.Medium
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.res.stringResource
 import com.savvasdalkitsis.uhuruphotos.settings.view.state.SettingsState
 import com.savvasdalkitsis.uhuruphotos.settings.viewmodel.SettingsAction
 import com.savvasdalkitsis.uhuruphotos.settings.viewmodel.SettingsAction.DismissFullFeedSyncDialog
 import com.savvasdalkitsis.uhuruphotos.settings.viewmodel.SettingsAction.NavigateBack
+import com.savvasdalkitsis.uhuruphotos.strings.R
 import com.savvasdalkitsis.uhuruphotos.ui.view.BackNavButton
 import com.savvasdalkitsis.uhuruphotos.ui.view.CommonScaffold
 import com.savvasdalkitsis.uhuruphotos.ui.view.FullProgressBar
@@ -36,7 +38,7 @@ fun Settings(
     action: (SettingsAction) -> Unit,
 ) {
     CommonScaffold(
-        title = { Text(text = "Settings") },
+        title = { Text(stringResource(R.string.settings)) },
         actionBarContent = {
             UserBadge(state = state.userInformationState)
         },

@@ -21,6 +21,7 @@ dependencies {
     implementation project(":people-api")
     implementation project(":navigation")
     implementation project(":settings")
+    implementation project(":strings")
     implementation project(":person-api")
     implementation(
             libs.androidx.compose.foundation,

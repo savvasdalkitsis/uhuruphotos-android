@@ -15,6 +15,7 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.albums.initializer
 
+import android.app.Application
 import androidx.work.ExistingPeriodicWorkPolicy.KEEP
 import com.savvasdalkitsis.uhuruphotos.albums.worker.AlbumWorkScheduler
 import com.savvasdalkitsis.uhuruphotos.initializer.ApplicationCreated
@@ -24,7 +25,7 @@ class AlbumsInitializer @Inject constructor(
     private val albumWorkScheduler: AlbumWorkScheduler,
 ): ApplicationCreated {
 
-    override fun onAppCreated() {
+    override fun onAppCreated(app: Application) {
         albumWorkScheduler.scheduleAlbumsRefreshPeriodic(
             existingPeriodicWorkPolicy = KEEP
         )

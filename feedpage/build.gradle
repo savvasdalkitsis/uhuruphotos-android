@@ -29,6 +29,7 @@ dependencies {
     implementation project(":toaster")
     implementation project(":settings")
     implementation project(":log")
+    implementation project(":strings")
     implementation(
             libs.accompanist.swiperefresh,
             libs.androidx.compose.foundation.layout,

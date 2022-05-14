@@ -17,6 +17,7 @@ package com.savvasdalkitsis.uhuruphotos.photos.viewmodel
 
 import android.content.ClipData
 import android.content.ClipboardManager
+import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import com.google.android.gms.maps.model.LatLng
@@ -25,8 +26,10 @@ import com.savvasdalkitsis.uhuruphotos.person.api.navigation.PersonNavigationTar
 import com.savvasdalkitsis.uhuruphotos.photos.mvflow.PhotoEffect
 import com.savvasdalkitsis.uhuruphotos.photos.mvflow.PhotoEffect.*
 import com.savvasdalkitsis.uhuruphotos.share.ShareImage
+import com.savvasdalkitsis.uhuruphotos.strings.R
 import com.savvasdalkitsis.uhuruphotos.toaster.Toaster
 import com.savvasdalkitsis.uhuruphotos.viewmodel.EffectHandler
+import dagger.hilt.android.qualifiers.ApplicationContext
 import javax.inject.Inject
 
 class PhotoEffectsHandler @Inject constructor(
@@ -34,6 +37,7 @@ class PhotoEffectsHandler @Inject constructor(
     private val clipboardManager: ClipboardManager,
     private val shareImage: ShareImage,
     private val toaster: Toaster,
+    @ApplicationContext private val context: Context,
 ) : EffectHandler<PhotoEffect> {
 
     override suspend fun invoke(effect: PhotoEffect) {
@@ -44,18 +48,18 @@ class PhotoEffectsHandler @Inject constructor(
             is LaunchMap -> controllersProvider.intentLauncher.launch(geoLocation(effect.gps))
             is CopyToClipboard -> {
                 clipboardManager.setPrimaryClip(ClipData.newPlainText("", effect.content))
-                toaster.show("Copied to clipboard")
+                toaster.show(R.string.copied_to_clipboard)
             }
             is SharePhoto -> shareImage.share(effect.url)
             is NavigateToPerson -> controllersProvider.navController!!.navigate(
                 PersonNavigationTarget.name(effect.id)
             )
-            ErrorRefreshingPeople -> toaster.show("Error refreshing people")
+            ErrorRefreshingPeople -> toaster.show(R.string.error_refreshing_people)
         }
     }
 
     private fun geoLocation(gps: LatLng): Intent =
-        Intent(Intent.ACTION_VIEW, Uri.parse("geo:${gps.latitude},${gps.longitude}?q=${gps.latitude},${gps.longitude}(Photo)"))
+        Intent(Intent.ACTION_VIEW, Uri.parse("geo:${gps.latitude},${gps.longitude}?q=${gps.latitude},${gps.longitude}(${context.getString(R.string.photo)})"))
 
     private fun setBars(visible: Boolean) {
         controllersProvider.systemUiController!!.isSystemBarsVisible = visible

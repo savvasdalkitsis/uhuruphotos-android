@@ -29,7 +29,7 @@ import androidx.compose.ui.unit.dp
 
 @Composable
 fun SettingsSliderRow(
-    text: (Float) -> String,
+    text: @Composable (Float) -> String,
     subtext: String? = null,
     initialValue: Float,
     range: ClosedFloatingPointRange<Float>,

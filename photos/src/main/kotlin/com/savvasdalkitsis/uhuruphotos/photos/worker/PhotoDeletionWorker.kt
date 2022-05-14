@@ -25,6 +25,7 @@ import com.savvasdalkitsis.uhuruphotos.notification.NotificationChannels.JOBS_CH
 import com.savvasdalkitsis.uhuruphotos.notification.foregroundInfo
 import com.savvasdalkitsis.uhuruphotos.photos.repository.PhotoRepository
 import com.savvasdalkitsis.uhuruphotos.photos.service.PhotosService
+import com.savvasdalkitsis.uhuruphotos.strings.R
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedInject
 import kotlinx.coroutines.Dispatchers
@@ -64,7 +65,7 @@ class PhotoDeletionWorker @AssistedInject constructor(
 
     override suspend fun getForegroundInfo(): ForegroundInfo = foregroundInfo(
         applicationContext,
-        "Deleting photo",
+        R.string.deleting_photo,
         NOTIFICATION_ID,
         JOBS_CHANNEL_ID
     )

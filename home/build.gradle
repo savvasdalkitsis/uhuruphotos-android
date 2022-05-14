@@ -17,6 +17,7 @@ dependencies {
     implementation project(":server")
     implementation project(":auth")
     implementation project(":settings")
+    implementation project(":strings")
     implementation(
             libs.androidx.compose.foundation.layout,
             libs.androidx.compose.hilt.navigation,

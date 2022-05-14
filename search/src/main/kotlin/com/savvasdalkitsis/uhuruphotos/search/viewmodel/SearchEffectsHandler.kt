@@ -25,6 +25,7 @@ import com.savvasdalkitsis.uhuruphotos.search.mvflow.SearchEffect
 import com.savvasdalkitsis.uhuruphotos.search.mvflow.SearchEffect.*
 import com.savvasdalkitsis.uhuruphotos.server.navigation.ServerNavigationTarget
 import com.savvasdalkitsis.uhuruphotos.settings.navigation.SettingsNavigationTarget
+import com.savvasdalkitsis.uhuruphotos.strings.R
 import com.savvasdalkitsis.uhuruphotos.toaster.Toaster
 import com.savvasdalkitsis.uhuruphotos.viewmodel.EffectHandler
 import javax.inject.Inject
@@ -51,9 +52,9 @@ class SearchEffectsHandler @Inject constructor(
         is OpenPhotoDetails -> navigateTo(
             PhotoNavigationTarget.name(effect.id, effect.center, effect.scale, effect.isVideo)
         )
-        ErrorSearching -> toaster.show("There was an error while searching")
+        ErrorSearching -> toaster.show(R.string.error_searching)
         NavigateToAllPeople -> navigateTo(PeopleNavigationTarget.name)
-        ErrorRefreshingPeople -> toaster.show("There was an error refreshing people")
+        ErrorRefreshingPeople -> toaster.show(R.string.error_refreshing_people)
         is NavigateToPerson -> navigateTo(PersonNavigationTarget.name(effect.personId))
         NavigateToHeatMap -> navigateTo(HeatMapNavigationTarget.name)
     }

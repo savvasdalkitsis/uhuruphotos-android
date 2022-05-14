@@ -34,6 +34,7 @@ import com.savvasdalkitsis.uhuruphotos.photos.service.model.deserializePeopleNam
 import com.savvasdalkitsis.uhuruphotos.photos.usecase.PhotosUseCase
 import com.savvasdalkitsis.uhuruphotos.photos.view.state.PhotoState
 import com.savvasdalkitsis.uhuruphotos.photos.worker.PhotoDetailsRetrieveWorker
+import com.savvasdalkitsis.uhuruphotos.strings.R
 import com.savvasdalkitsis.uhuruphotos.viewmodel.Handler
 import com.savvasdalkitsis.uhuruphotos.worker.usecase.WorkerStatusUseCase
 import kotlinx.coroutines.flow.*
@@ -82,7 +83,7 @@ class PhotoHandler @Inject constructor(
                     PhotoDetailsRetrieveWorker.workName(action.id)
                 ).map {
                     when (it) {
-                        BLOCKED, CANCELLED, FAILED -> ShowErrorMessage("Error loading photo details")
+                        BLOCKED, CANCELLED, FAILED -> ShowErrorMessage(R.string.error_loading_photo_details)
                         SUCCEEDED -> FinishedLoading
                         ENQUEUED, RUNNING -> Loading
                     }

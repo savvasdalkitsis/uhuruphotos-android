@@ -26,6 +26,7 @@ import com.savvasdalkitsis.uhuruphotos.settings.view.state.SettingsState
 import com.savvasdalkitsis.uhuruphotos.settings.viewmodel.SettingsAction.*
 import com.savvasdalkitsis.uhuruphotos.settings.viewmodel.SettingsEffect.ShowMessage
 import com.savvasdalkitsis.uhuruphotos.settings.viewmodel.SettingsMutation.*
+import com.savvasdalkitsis.uhuruphotos.strings.R
 import com.savvasdalkitsis.uhuruphotos.userbadge.api.UserBadgeUseCase
 import com.savvasdalkitsis.uhuruphotos.viewmodel.Handler
 import kotlinx.coroutines.flow.*
@@ -108,7 +109,7 @@ internal class SettingsHandler @Inject constructor(
             settingsUseCase.setFeedSyncFrequency(action.frequency.toInt())
             settingsUseCase.setShouldPerformPeriodicFullSync(action.frequency != action.upperLimit)
             albumWorkScheduler.scheduleAlbumsRefreshPeriodic(REPLACE)
-            effect(ShowMessage("Feed sync frequency changed"))
+            effect(ShowMessage(R.string.feed_sync_freq_changed))
         }
         AskForFullFeedSync -> flowOf(ShowFullFeedSyncDialog)
         DismissFullFeedSyncDialog -> flowOf(HideFullFeedSyncDialog)
@@ -119,12 +120,12 @@ internal class SettingsHandler @Inject constructor(
         is ChangeFullSyncNetworkRequirements -> flow {
             settingsUseCase.setFullSyncNetworkRequirements(action.networkType)
             albumWorkScheduler.scheduleAlbumsRefreshPeriodic(REPLACE)
-            effect(ShowMessage("Feed sync network requirement changed"))
+            effect(ShowMessage(R.string.feed_sync_network_changed))
         }
         is ChangeFullSyncChargingRequirements -> flow {
             settingsUseCase.setFullSyncRequiresCharging(action.requiredCharging)
             albumWorkScheduler.scheduleAlbumsRefreshPeriodic(REPLACE)
-            effect(ShowMessage("Feed sync charging requirements changed"))
+            effect(ShowMessage(R.string.feed_sync_charging_changed))
         }
         is ChangeThemeMode -> flow {
             settingsUseCase.setThemeMode(action.themeMode)
@@ -137,14 +138,14 @@ internal class SettingsHandler @Inject constructor(
         }
         ClearLogFileClicked -> flow {
             feedbackUseCase.clearLogs()
-            effect(ShowMessage("Logs cleared"))
+            effect(ShowMessage(R.string.logs_cleared))
         }
         SendFeedbackClicked -> flow {
             feedbackUseCase.sendFeedback()
         }
         ClearRecentSearches -> flow {
             searchUseCase.clearRecentSearchSuggestions()
-            effect(ShowMessage("Recent searches cleared"))
+            effect(ShowMessage(R.string.recent_searches_cleared))
         }
     }
 

@@ -21,6 +21,7 @@ dependencies {
     implementation project(":albums-api")
     implementation project(":photos-api")
     implementation project(":notification")
+    implementation project(":strings")
     implementation(
             libs.androidx.compose.hilt.navigation,
             libs.androidx.work,

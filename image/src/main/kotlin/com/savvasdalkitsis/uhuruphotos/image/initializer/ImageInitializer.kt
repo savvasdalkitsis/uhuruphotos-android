@@ -15,6 +15,7 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.image.initializer
 
+import android.app.Application
 import coil.Coil
 import coil.ImageLoader
 import com.savvasdalkitsis.uhuruphotos.initializer.ApplicationCreated
@@ -24,7 +25,7 @@ class ImageInitializer @Inject constructor(
     private val imageLoader: ImageLoader,
 ) : ApplicationCreated {
 
-    override fun onAppCreated() {
+    override fun onAppCreated(app: Application) {
         Coil.setImageLoader(imageLoader)
     }
 }

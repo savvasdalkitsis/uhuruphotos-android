@@ -18,6 +18,7 @@ package com.savvasdalkitsis.uhuruphotos.people.viewmodel
 import com.savvasdalkitsis.uhuruphotos.navigation.ControllersProvider
 import com.savvasdalkitsis.uhuruphotos.people.viewmodel.PeopleEffect.*
 import com.savvasdalkitsis.uhuruphotos.person.api.navigation.PersonNavigationTarget
+import com.savvasdalkitsis.uhuruphotos.strings.R
 import com.savvasdalkitsis.uhuruphotos.toaster.Toaster
 import com.savvasdalkitsis.uhuruphotos.viewmodel.EffectHandler
 import javax.inject.Inject
@@ -29,7 +30,7 @@ class PeopleEffectHandler @Inject constructor(
 
     override suspend fun invoke(effect: PeopleEffect) {
         when (effect) {
-            ErrorLoadingPeople -> toaster.show("There was an error refreshing people")
+            ErrorLoadingPeople -> toaster.show(R.string.error_refreshing_people)
             NavigateBack -> controllersProvider.navController!!.popBackStack()
             is NavigateToPerson -> controllersProvider.navController!!.navigate(
                 PersonNavigationTarget.name(effect.person.id)

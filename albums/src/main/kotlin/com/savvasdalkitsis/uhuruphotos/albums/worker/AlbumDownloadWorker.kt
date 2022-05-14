@@ -25,6 +25,7 @@ import com.savvasdalkitsis.uhuruphotos.albums.repository.AlbumsRepository
 import com.savvasdalkitsis.uhuruphotos.log.log
 import com.savvasdalkitsis.uhuruphotos.notification.NotificationChannels.JOBS_CHANNEL_ID
 import com.savvasdalkitsis.uhuruphotos.notification.foregroundInfo
+import com.savvasdalkitsis.uhuruphotos.strings.R
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedInject
 import kotlinx.coroutines.Dispatchers
@@ -52,7 +53,7 @@ class AlbumDownloadWorker @AssistedInject constructor(
 
     override suspend fun getForegroundInfo(): ForegroundInfo = foregroundInfo(
         applicationContext,
-        "Refreshing albums",
+        R.string.refreshing_albums,
         NOTIFICATION_ID,
         JOBS_CHANNEL_ID
     )

@@ -17,9 +17,11 @@ package com.savvasdalkitsis.uhuruphotos.feed.view.state
 
 
 import androidx.annotation.DrawableRes
-import com.savvasdalkitsis.uhuruphotos.icons.R
+import androidx.annotation.StringRes
 import kotlin.math.max
 import kotlin.math.min
+import com.savvasdalkitsis.uhuruphotos.icons.R as Icons
+import com.savvasdalkitsis.uhuruphotos.strings.R as Strings
 
 enum class FeedDisplays(
     override val compactColumnsPortrait: Int,
@@ -29,7 +31,7 @@ enum class FeedDisplays(
     override val shouldAddEmptyPhotosInRows: Boolean,
     @DrawableRes override val iconResource: Int,
     override val maintainAspectRatio: Boolean,
-    override val friendlyName: String,
+    @StringRes override val friendlyName: Int,
 ) : FeedDisplay {
     TINY(
         compactColumnsPortrait = 5,
@@ -37,9 +39,9 @@ enum class FeedDisplays(
         wideColumnsPortrait = 8,
         wideColumnsLandscape = 9,
         shouldAddEmptyPhotosInRows = true,
-        iconResource = R.drawable.ic_feed_tiny,
+        iconResource = Icons.drawable.ic_feed_tiny,
         maintainAspectRatio = false,
-        friendlyName = "Tiny",
+        friendlyName = Strings.string.tiny,
     ),
     COMPACT(
         compactColumnsPortrait = 4,
@@ -47,9 +49,9 @@ enum class FeedDisplays(
         wideColumnsPortrait = 7,
         wideColumnsLandscape = 8,
         shouldAddEmptyPhotosInRows = true,
-        iconResource = R.drawable.ic_feed_compact,
+        iconResource = Icons.drawable.ic_feed_compact,
         maintainAspectRatio = true,
-        friendlyName = "Compact",
+        friendlyName = Strings.string.compact,
     ),
     COMFORTABLE(
         compactColumnsPortrait = 3,
@@ -57,9 +59,9 @@ enum class FeedDisplays(
         wideColumnsPortrait = 4,
         wideColumnsLandscape = 6,
         shouldAddEmptyPhotosInRows = true,
-        iconResource = R.drawable.ic_feed_comfortable,
+        iconResource = Icons.drawable.ic_feed_comfortable,
         maintainAspectRatio = true,
-        friendlyName = "Comfortable",
+        friendlyName = Strings.string.comfortable,
     ),
     BIG(
         compactColumnsPortrait = 2,
@@ -67,9 +69,9 @@ enum class FeedDisplays(
         wideColumnsPortrait = 3,
         wideColumnsLandscape = 5,
         shouldAddEmptyPhotosInRows = false,
-        iconResource = R.drawable.ic_feed_big,
+        iconResource = Icons.drawable.ic_feed_big,
         maintainAspectRatio = true,
-        friendlyName = "Big",
+        friendlyName = Strings.string.big,
     ),
     FULL(
         compactColumnsPortrait = 1,
@@ -77,9 +79,9 @@ enum class FeedDisplays(
         wideColumnsPortrait = 2,
         wideColumnsLandscape = 4,
         shouldAddEmptyPhotosInRows = false,
-        iconResource = R.drawable.ic_feed_full,
+        iconResource = Icons.drawable.ic_feed_full,
         maintainAspectRatio = true,
-        friendlyName = "Full",
+        friendlyName = Strings.string.full,
     );
 
     override val zoomIn: FeedDisplay get() = values()[min(ordinal + 1, values().size - 1)]

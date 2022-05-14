@@ -27,6 +27,7 @@ import com.savvasdalkitsis.uhuruphotos.photos.repository.PhotoRepository
 import com.savvasdalkitsis.uhuruphotos.photos.service.PhotosService
 import com.savvasdalkitsis.uhuruphotos.photos.service.model.PhotoFavouriteRequest
 import com.savvasdalkitsis.uhuruphotos.photos.service.model.toPhotoDetails
+import com.savvasdalkitsis.uhuruphotos.strings.R
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedInject
 import kotlinx.coroutines.Dispatchers
@@ -69,7 +70,7 @@ class PhotoFavouriteWorker @AssistedInject constructor(
 
     override suspend fun getForegroundInfo(): ForegroundInfo = foregroundInfo(
         applicationContext,
-        "Setting photo favourite state",
+        R.string.setting_photo_favourite,
         NOTIFICATION_ID,
         JOBS_CHANNEL_ID
     )

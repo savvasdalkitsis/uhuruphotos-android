@@ -18,27 +18,30 @@ package com.savvasdalkitsis.uhuruphotos.settings.view
 import androidx.compose.animation.AnimatedContent
 import androidx.compose.material.Divider
 import androidx.compose.runtime.Composable
-import com.savvasdalkitsis.uhuruphotos.icons.R
+import androidx.compose.ui.res.pluralStringResource
+import androidx.compose.ui.res.stringResource
 import com.savvasdalkitsis.uhuruphotos.settings.view.state.SettingsState
 import com.savvasdalkitsis.uhuruphotos.settings.viewmodel.SettingsAction
 import com.savvasdalkitsis.uhuruphotos.settings.viewmodel.SettingsAction.*
+import com.savvasdalkitsis.uhuruphotos.icons.R as Icons
+import com.savvasdalkitsis.uhuruphotos.strings.R as Strings
 
 @Composable
 fun SettingsGroupJobs(
     state: SettingsState,
     action: (SettingsAction) -> Unit
 ) {
-    SettingsGroup(title = "Jobs") {
+    SettingsGroup(title = stringResource(Strings.string.jobs)) {
         val days = 7
         val initialValue = (state.feedSyncFrequency ?: 0).toFloat()
         val upperLimit = days * 24f
         SettingsSliderRow(
             text = {
                 val frequency = when (it) {
-                    upperLimit -> "never"
-                    else -> "${it.toInt()} hour(s)"
+                    upperLimit -> stringResource(Strings.string.never)
+                    else -> pluralStringResource(Strings.plurals.hours, it.toInt(), it.toInt())
                 }
-                "Full photo feed sync frequency: $frequency"
+                "${stringResource(Strings.string.feed_sync_freq)}: $frequency"
             },
             initialValue = initialValue,
             range = 1f..upperLimit,
@@ -47,8 +50,8 @@ fun SettingsGroupJobs(
         )
         Divider()
         SettingsCheckBox(
-            text = "Requires charging",
-            icon = R.drawable.ic_power,
+            text = stringResource(Strings.string.requires_charging),
+            icon = Icons.drawable.ic_power,
             isChecked = state.fullSyncRequiresCharging,
         ) { selected ->
             action(ChangeFullSyncChargingRequirements(selected))
@@ -60,12 +63,12 @@ fun SettingsGroupJobs(
         AnimatedContent(targetState = state.fullSyncButtonEnabled) { enabled ->
             when {
                 enabled -> SettingsButtonRow(
-                    buttonText = "Perform full sync now"
+                    buttonText = stringResource(Strings.string.perform_full_sync)
                 ) {
                     action(AskForFullFeedSync)
                 }
                 else -> SettingsProgressIndicator(
-                    text = "Full photo feed sync progress",
+                    text = stringResource(Strings.string.feed_sync_progress),
                     progress = state.fullSyncJobProgress,
                 )
             }

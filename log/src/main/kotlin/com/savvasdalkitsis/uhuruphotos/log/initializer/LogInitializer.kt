@@ -15,6 +15,7 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.log.initializer
 
+import android.app.Application
 import android.content.Context
 import com.michaelflisar.lumberjack.FileLoggingSetup
 import com.michaelflisar.lumberjack.L
@@ -34,7 +35,7 @@ class LogInitializer @Inject constructor(
     private val fileLoggingSetup: FileLoggingSetup,
 ) : ApplicationCreated {
 
-    override fun onAppCreated() {
+    override fun onAppCreated(app: Application) {
         for (tree in trees) {
             L.plant(tree)
         }

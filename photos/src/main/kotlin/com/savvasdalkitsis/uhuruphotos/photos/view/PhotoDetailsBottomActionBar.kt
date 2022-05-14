@@ -19,12 +19,14 @@ import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.layout.Row
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import com.savvasdalkitsis.uhuruphotos.icons.R
+import androidx.compose.ui.res.stringResource
 import com.savvasdalkitsis.uhuruphotos.photos.mvflow.PhotoAction
 import com.savvasdalkitsis.uhuruphotos.photos.mvflow.PhotoAction.AskForPhotoDeletion
 import com.savvasdalkitsis.uhuruphotos.photos.mvflow.PhotoAction.SharePhoto
 import com.savvasdalkitsis.uhuruphotos.photos.view.state.PhotoState
 import com.savvasdalkitsis.uhuruphotos.ui.view.ActionIconWithText
+import com.savvasdalkitsis.uhuruphotos.icons.R as Icons
+import com.savvasdalkitsis.uhuruphotos.strings.R as Strings
 
 @Composable
 fun PhotoDetailsBottomActionBar(
@@ -38,16 +40,16 @@ fun PhotoDetailsBottomActionBar(
             visible = state.showShareIcon) {
             ActionIconWithText(
                 onClick = { action(SharePhoto) },
-                icon = R.drawable.ic_share,
-                text = "Share",
+                icon = Icons.drawable.ic_share,
+                text = stringResource(Strings.string.share),
             )
         }
         ActionIconWithText(
             onClick = { action(AskForPhotoDeletion) },
             modifier = Modifier
                 .weight(1f),
-            icon = R.drawable.ic_delete,
-            text = "Delete",
+            icon = Icons.drawable.ic_delete,
+            text = stringResource(Strings.string.delete),
         )
     }
 }

@@ -34,13 +34,15 @@ import androidx.compose.ui.layout.boundsInWindow
 import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import com.savvasdalkitsis.uhuruphotos.icons.R
 import com.savvasdalkitsis.uhuruphotos.image.api.view.Image
 import com.savvasdalkitsis.uhuruphotos.infrastructure.extensions.toColor
 import com.savvasdalkitsis.uhuruphotos.photos.api.model.Photo
 import com.savvasdalkitsis.uhuruphotos.photos.api.model.SelectionMode
 import com.savvasdalkitsis.uhuruphotos.ui.theme.CustomColors
+import com.savvasdalkitsis.uhuruphotos.icons.R as Icons
+import com.savvasdalkitsis.uhuruphotos.strings.R as Strings
 
 @Composable
 fun PhotoThumbnail(
@@ -85,14 +87,14 @@ fun PhotoThumbnail(
                 modifier = Modifier.fillMaxWidth(),
                 url = photo.thumbnailUrl,
                 contentScale = contentScale,
-                contentDescription = "photo",
+                contentDescription = stringResource(Strings.string.photo),
             )
             if (photo.isVideo) {
                 Icon(
                     modifier = Modifier
                         .size(48.dp)
                         .align(Alignment.Center),
-                    painter = painterResource(id = R.drawable.ic_play_filled),
+                    painter = painterResource(id = Icons.drawable.ic_play_filled),
                     tint = Color.White,
                     contentDescription = null
                 )
@@ -103,7 +105,7 @@ fun PhotoThumbnail(
                         .size(24.dp)
                         .align(Alignment.TopEnd)
                         .padding(2.dp),
-                    painter = painterResource(id = R.drawable.ic_favourite),
+                    painter = painterResource(id = Icons.drawable.ic_favourite),
                     tint = Color.White,
                     contentDescription = null
                 )
@@ -122,9 +124,9 @@ fun PhotoThumbnail(
                         Color.Transparent
                     ),
                 painter = painterResource(id = if (photo.selectionMode == SelectionMode.SELECTED)
-                    R.drawable.ic_check_circle
+                    Icons.drawable.ic_check_circle
                 else
-                    R.drawable.ic_outline_unselected
+                    Icons.drawable.ic_outline_unselected
                 ),
                 tint = if (photo.selectionMode == SelectionMode.SELECTED)
                     CustomColors.selected

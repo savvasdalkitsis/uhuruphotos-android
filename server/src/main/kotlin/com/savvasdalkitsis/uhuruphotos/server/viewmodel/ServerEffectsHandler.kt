@@ -19,6 +19,7 @@ import com.savvasdalkitsis.uhuruphotos.log.FeedbackUseCase
 import com.savvasdalkitsis.uhuruphotos.navigation.ControllersProvider
 import com.savvasdalkitsis.uhuruphotos.server.mvflow.ServerEffect
 import com.savvasdalkitsis.uhuruphotos.server.mvflow.ServerEffect.*
+import com.savvasdalkitsis.uhuruphotos.strings.R
 import com.savvasdalkitsis.uhuruphotos.toaster.Toaster
 import javax.inject.Inject
 
@@ -33,7 +34,7 @@ class ServerEffectsHandler @Inject constructor(
     ) {
         when (effect) {
             Close -> controllersProvider.navController!!.popBackStack()
-            is ErrorLoggingIn -> toaster.show("There was an error logging in")
+            is ErrorLoggingIn -> toaster.show(R.string.error_logging_in)
             SendFeedback -> feedbackUseCase.sendFeedback()
         }
     }

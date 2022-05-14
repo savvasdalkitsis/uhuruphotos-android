@@ -15,7 +15,9 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.settings.viewmodel
 
+import androidx.annotation.StringRes
+
 sealed class SettingsEffect {
-    data class ShowMessage(val message: String) : SettingsEffect()
+    data class ShowMessage(@StringRes val message: Int) : SettingsEffect()
     object NavigateBack : SettingsEffect()
 }

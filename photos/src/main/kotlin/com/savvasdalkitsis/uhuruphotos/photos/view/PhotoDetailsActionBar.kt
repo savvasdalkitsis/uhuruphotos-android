@@ -20,11 +20,13 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import com.savvasdalkitsis.uhuruphotos.icons.R
 import com.savvasdalkitsis.uhuruphotos.photos.mvflow.PhotoAction
 import com.savvasdalkitsis.uhuruphotos.photos.view.state.PhotoState
 import com.savvasdalkitsis.uhuruphotos.ui.view.ActionIcon
+import com.savvasdalkitsis.uhuruphotos.icons.R as Icons
+import com.savvasdalkitsis.uhuruphotos.strings.R as Strings
 
 @Composable
 fun PhotoDetailsActionBar(
@@ -43,8 +45,8 @@ fun PhotoDetailsActionBar(
         if (state.showRefresh) {
             ActionIcon(
                 onClick = { action(PhotoAction.Refresh) },
-                icon = R.drawable.ic_refresh,
-                contentDescription = "refresh"
+                icon = Icons.drawable.ic_refresh,
+                contentDescription = stringResource(Strings.string.refresh)
             )
         }
     }
@@ -52,8 +54,13 @@ fun PhotoDetailsActionBar(
         if (state.isFavourite != null) {
             ActionIcon(
                 onClick = { action(PhotoAction.SetFavourite(!state.isFavourite)) },
-                icon = if (state.isFavourite) R.drawable.ic_favourite else R.drawable.ic_not_favourite,
-                contentDescription = if (state.isFavourite) "favourite" else "not favourite"
+                icon = if (state.isFavourite) Icons.drawable.ic_favourite else Icons.drawable.ic_not_favourite,
+                contentDescription = stringResource(
+                    when {
+                        state.isFavourite -> Strings.string.remove_favourite
+                        else -> Strings.string.favourite
+                    }
+                )
             )
         }
     }
@@ -61,8 +68,8 @@ fun PhotoDetailsActionBar(
         if (state.showInfoButton) {
             ActionIcon(
                 onClick = { action(PhotoAction.ShowInfo) },
-                icon = R.drawable.ic_info,
-                contentDescription = "info",
+                icon = Icons.drawable.ic_info,
+                contentDescription = stringResource(Strings.string.info),
             )
         }
     }

@@ -18,6 +18,7 @@ dependencies {
     implementation project(":photos-api")
     implementation project(":image-api")
     implementation project(":infrastructure")
+    implementation project(":strings")
     implementation(
             libs.androidx.compose.foundation,
             libs.androidx.compose.foundation.layout,

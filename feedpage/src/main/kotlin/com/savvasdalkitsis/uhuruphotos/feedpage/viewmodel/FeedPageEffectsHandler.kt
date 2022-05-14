@@ -24,6 +24,7 @@ import com.savvasdalkitsis.uhuruphotos.photos.navigation.PhotoNavigationTarget
 import com.savvasdalkitsis.uhuruphotos.server.navigation.ServerNavigationTarget
 import com.savvasdalkitsis.uhuruphotos.settings.navigation.SettingsNavigationTarget
 import com.savvasdalkitsis.uhuruphotos.share.ShareImage
+import com.savvasdalkitsis.uhuruphotos.strings.R
 import com.savvasdalkitsis.uhuruphotos.toaster.Toaster
 import com.savvasdalkitsis.uhuruphotos.viewmodel.EffectHandler
 import javax.inject.Inject
@@ -43,7 +44,7 @@ class FeedPageEffectsHandler @Inject constructor(
             PhotoNavigationTarget.name(effect.id, effect.center, effect.scale, effect.isVideo)
         )
         is SharePhotos -> {
-            toaster.show("Downloading photos and will share soon")
+            toaster.show(R.string.downloading_photos_sharing)
             shareImage.shareMultiple(effect.selectedPhotos.mapNotNull {
                 it.fullResUrl
             })

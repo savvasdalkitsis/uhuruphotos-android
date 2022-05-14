@@ -15,6 +15,7 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.home.navigation
 
+import androidx.annotation.StringRes
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.padding
@@ -29,6 +30,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.graphics.vector.rememberVectorPainter
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavDestination
 import androidx.navigation.NavDestination.Companion.hierarchy
@@ -38,6 +40,7 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import com.savvasdalkitsis.uhuruphotos.feed.view.state.FeedDisplay
 import com.savvasdalkitsis.uhuruphotos.home.navigation.NavigationStyle.BOTTOM_BAR
 import com.savvasdalkitsis.uhuruphotos.home.navigation.NavigationStyle.NAVIGATION_RAIL
+import com.savvasdalkitsis.uhuruphotos.strings.R
 import com.savvasdalkitsis.uhuruphotos.ui.window.LocalWindowSize
 
 @Composable
@@ -89,7 +92,7 @@ private fun Items(
 ) {
     NavItem(
         currentDestination, navController,
-        label = "Feed",
+        label = R.string.feed,
         routeName = feedNavigationName,
         painterResource(id = feedDisplay.iconResource),
         onReselected,
@@ -97,7 +100,7 @@ private fun Items(
     )
     NavItem(
         currentDestination, navController,
-        label = "Search",
+        label = R.string.search,
         routeName = searchNavigationName,
         icon = rememberVectorPainter(Icons.Filled.Search),
         rowScope = rowScope,
@@ -109,7 +112,7 @@ private fun Items(
 private fun NavItem(
     currentDestination: NavDestination?,
     navController: NavHostController,
-    label: String,
+    @StringRes label: Int,
     routeName: String,
     icon: Painter,
     onReselected: () -> Unit,
@@ -142,15 +145,15 @@ private fun BottomNavItem(
     rowScope: RowScope,
     currentDestination: NavDestination?,
     navController: NavHostController,
-    label: String,
+    @StringRes label: Int,
     routeName: String,
     icon: Painter,
     onReselected: () -> Unit,
 ) {
     with(rowScope) {
         BottomNavigationItem(
-            icon = { Icon(icon, contentDescription = label) },
-            label = { Text(label) },
+            icon = { Icon(icon, contentDescription = null) },
+            label = { Text(stringResource(label)) },
             selected = isSelected(currentDestination, routeName),
             onClick = selectNavigationItem(currentDestination, routeName, navController, onReselected)
         )
@@ -161,15 +164,15 @@ private fun BottomNavItem(
 private fun NavRailNavItem(
     currentDestination: NavDestination?,
     navController: NavHostController,
-    label: String,
+    @StringRes label: Int,
     routeName: String,
     icon: Painter,
     onReselected: () -> Unit,
 ) {
     NavigationRailItem(
         selectedContentColor = LocalContentColor.current,
-        icon = { Icon(icon, contentDescription = label) },
-        label = { Text(label) },
+        icon = { Icon(icon, contentDescription = null) },
+        label = { Text(stringResource(label)) },
         selected = isSelected(currentDestination, routeName),
         onClick = selectNavigationItem(currentDestination, routeName, navController, onReselected)
     )

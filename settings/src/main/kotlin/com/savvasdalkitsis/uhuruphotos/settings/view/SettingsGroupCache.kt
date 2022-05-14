@@ -17,7 +17,9 @@ package com.savvasdalkitsis.uhuruphotos.settings.view
 
 import androidx.compose.material.Divider
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.res.stringResource
 import com.savvasdalkitsis.uhuruphotos.settings.viewmodel.SettingsAction
+import com.savvasdalkitsis.uhuruphotos.strings.R
 
 @Composable
 fun SettingsGroupCache(
@@ -31,14 +33,14 @@ fun SettingsGroupCache(
 ) {
     SettingsGroup(title = title) {
         SettingsTextButtonRow(
-            text = "Currently used: ${current}mb",
-            buttonText = "Clear",
+            text = stringResource(R.string.currently_used, current),
+            buttonText = stringResource(R.string.clear),
             onClick = { action(clearAction) }
         )
         Divider()
         SettingsSliderRow(
-            text = { "Max limit: ${it.toInt()}mb" },
-            subtext = "(changes will take effect after restart)",
+            text = { stringResource(R.string.max_limit, it.toInt()) },
+            subtext = stringResource(R.string.changes_effect_after_restart),
             initialValue = initialMaxLimit,
             range = range,
             onValueChanged = { action(changeCacheSizeAction(it)) }

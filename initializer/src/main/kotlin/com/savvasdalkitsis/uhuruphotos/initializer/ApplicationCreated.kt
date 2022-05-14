@@ -15,7 +15,9 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.initializer
 
+import android.app.Application
+
 interface ApplicationCreated {
 
-    fun onAppCreated()
+    fun onAppCreated(app: Application)
 }

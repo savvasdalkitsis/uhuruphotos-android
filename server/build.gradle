@@ -24,6 +24,7 @@ dependencies {
     implementation project(":ui")
     implementation project(":toaster")
     implementation project(":settings")
+    implementation project(":strings")
     implementation(
             libs.androidx.compose.hilt.navigation,
             libs.androidx.compose.material,

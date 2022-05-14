@@ -19,6 +19,7 @@ import android.content.ActivityNotFoundException
 import android.content.Context
 import android.content.Intent
 import com.savvasdalkitsis.uhuruphotos.log.log
+import com.savvasdalkitsis.uhuruphotos.strings.R
 import com.savvasdalkitsis.uhuruphotos.toaster.Toaster
 import dagger.hilt.android.qualifiers.ApplicationContext
 import javax.inject.Inject
@@ -35,7 +36,7 @@ class IntentLauncher @Inject constructor(
             })
         } catch (e: ActivityNotFoundException) {
             log(e)
-            toaster.show("Could not find an app to open")
+            toaster.show(R.string.could_not_find_app_to_open)
         }
     }
 

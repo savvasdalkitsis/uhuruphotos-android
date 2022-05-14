@@ -16,8 +16,6 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.heatmap.view
 
 import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.animation.slideInHorizontally
-import androidx.compose.animation.slideOutHorizontally
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
@@ -31,15 +29,17 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.google.accompanist.permissions.PermissionState
 import com.google.accompanist.permissions.isGranted
 import com.savvasdalkitsis.uhuruphotos.heatmap.view.state.HeatMapState
 import com.savvasdalkitsis.uhuruphotos.heatmap.viewmodel.HeatMapAction
-import com.savvasdalkitsis.uhuruphotos.icons.R
 import com.savvasdalkitsis.uhuruphotos.ui.view.ActionIcon
 import com.savvasdalkitsis.uhuruphotos.ui.view.BackNavButton
 import com.savvasdalkitsis.uhuruphotos.ui.view.CommonTopBar
+import com.savvasdalkitsis.uhuruphotos.icons.R as Icons
+import com.savvasdalkitsis.uhuruphotos.strings.R as Strings
 
 @Composable
 fun HeatMapTopBar(
@@ -63,7 +63,7 @@ fun HeatMapTopBar(
                 horizontalArrangement = Arrangement.spacedBy(8.dp),
                 verticalAlignment = Alignment.CenterVertically,
             ) {
-                Text("Photo map")
+                Text(stringResource(Strings.string.photo_map))
                 if (actionsInTitle) {
                     Actions(state, locationPermissionState)
                 }
@@ -90,7 +90,7 @@ private fun RowScope.Actions(
     AnimatedVisibility(visible = !locationPermissionState.status.isGranted) {
         ActionIcon(
             onClick = { locationPermissionState.launchPermissionRequest() },
-            icon = R.drawable.ic_my_location,
+            icon = Icons.drawable.ic_my_location,
         )
     }
 }

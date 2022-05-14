@@ -22,6 +22,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.stringResource
 import com.radusalagean.infobarcompose.InfoBar
 import com.radusalagean.infobarcompose.InfoBarMessage
 import com.savvasdalkitsis.uhuruphotos.image.api.view.Image
@@ -29,6 +30,7 @@ import com.savvasdalkitsis.uhuruphotos.photos.mvflow.PhotoAction
 import com.savvasdalkitsis.uhuruphotos.photos.view.PhotoSheetStyle.BOTTOM
 import com.savvasdalkitsis.uhuruphotos.photos.view.PhotoSheetStyle.SIDE
 import com.savvasdalkitsis.uhuruphotos.photos.view.state.PhotoState
+import com.savvasdalkitsis.uhuruphotos.strings.R
 import com.savvasdalkitsis.uhuruphotos.ui.view.zoom.ZoomableState
 import com.savvasdalkitsis.uhuruphotos.ui.view.zoom.zoomable
 import com.savvasdalkitsis.uhuruphotos.video.view.Video
@@ -79,12 +81,14 @@ fun PhotoDetails(
                 fullResUrl = state.fullResUrl,
                 onFullResImageLoaded = { action(PhotoAction.FullImageLoaded) },
                 contentScale = ContentScale.Fit,
-                contentDescription = "photo",
+                contentDescription = stringResource(R.string.photo),
             )
         }
         Column {
             Spacer(modifier = Modifier.height(contentPadding.calculateTopPadding()))
-            InfoBar(offeredMessage = state.errorMessage?.let { InfoBarMessage(it) }) {
+            InfoBar(offeredMessage = state.errorMessage?.let {
+                InfoBarMessage(textStringResId = it)
+            }) {
                 action(PhotoAction.DismissErrorMessage)
             }
         }

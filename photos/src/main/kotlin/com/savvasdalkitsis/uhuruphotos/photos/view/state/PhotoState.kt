@@ -15,6 +15,7 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.photos.view.state
 
+import androidx.annotation.StringRes
 import com.google.android.gms.maps.model.LatLng
 import com.savvasdalkitsis.uhuruphotos.people.api.view.state.Person
 
@@ -23,7 +24,7 @@ data class PhotoState(
     val isLoading: Boolean = false,
     val fullResUrl: String = "",
     val lowResUrl: String = "",
-    val errorMessage: String? = null,
+    @StringRes val errorMessage: Int? = null,
     val showUI: Boolean = true,
     val showRefresh: Boolean = false,
     val showInfoButton: Boolean = false,

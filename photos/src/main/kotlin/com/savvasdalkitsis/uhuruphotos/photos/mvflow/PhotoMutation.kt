@@ -15,6 +15,7 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.photos.mvflow
 
+import androidx.annotation.StringRes
 import com.savvasdalkitsis.uhuruphotos.db.photos.PhotoDetails
 import com.savvasdalkitsis.uhuruphotos.people.api.view.state.Person
 
@@ -22,7 +23,7 @@ sealed class PhotoMutation {
     object HideUI : PhotoMutation()
     object ShowUI : PhotoMutation()
     object DismissErrorMessage : PhotoMutation()
-    data class ShowErrorMessage(val message: String) : PhotoMutation()
+    data class ShowErrorMessage(@StringRes val message: Int) : PhotoMutation()
     object FinishedLoading : PhotoMutation()
     object Loading : PhotoMutation()
     object ShowInfo : PhotoMutation()

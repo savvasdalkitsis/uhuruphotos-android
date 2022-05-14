@@ -25,9 +25,11 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.savvasdalkitsis.uhuruphotos.feed.view.state.FeedDisplay
 import com.savvasdalkitsis.uhuruphotos.feed.view.state.FeedDisplays
+import com.savvasdalkitsis.uhuruphotos.strings.R
 import com.savvasdalkitsis.uhuruphotos.ui.view.ActionIcon
 
 @Composable
@@ -51,7 +53,7 @@ fun FeedDisplayActionButton(
                 },
             onClick = { isOpen = true },
             icon = currentFeedDisplay.iconResource,
-            contentDescription = "feed display",
+            contentDescription = stringResource(R.string.feed_size),
         )
         DropdownMenu(
             expanded = isOpen,
@@ -85,14 +87,14 @@ private fun FeedDisplayDropDownItem(
                 modifier = Modifier
                     .align(Alignment.CenterVertically)
                     .weight(1f),
-                text = display.friendlyName
+                text = stringResource(display.friendlyName)
             )
             Icon(
                 modifier = Modifier
                     .align(Alignment.CenterVertically)
                     .padding(8.dp),
                 painter = painterResource(id = display.iconResource),
-                contentDescription = display.friendlyName
+                contentDescription = null
             )
         }
     }

@@ -19,6 +19,7 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import com.savvasdalkitsis.uhuruphotos.albums.api.model.Album
 import com.savvasdalkitsis.uhuruphotos.feed.view.Feed
 import com.savvasdalkitsis.uhuruphotos.feed.view.state.FeedState
@@ -26,6 +27,7 @@ import com.savvasdalkitsis.uhuruphotos.heatmap.view.state.HeatMapFeedDisplay
 import com.savvasdalkitsis.uhuruphotos.heatmap.view.state.HeatMapState
 import com.savvasdalkitsis.uhuruphotos.heatmap.viewmodel.HeatMapAction
 import com.savvasdalkitsis.uhuruphotos.heatmap.viewmodel.HeatMapAction.SelectedPhoto
+import com.savvasdalkitsis.uhuruphotos.strings.R
 
 @Composable
 fun HeatMapVisiblePhotos(
@@ -49,7 +51,7 @@ fun HeatMapVisiblePhotos(
                         id = "visiblePhotos",
                         photoCount = state.photosToDisplay.size,
                         photos = state.photosToDisplay,
-                        date = "Photos on map (${state.photosToDisplay.size} out of ${state.allPhotos.size})",
+                        date = stringResource(R.string.photos_on_map, state.photosToDisplay.size, state.allPhotos.size),
                         location = null,
                     )
                 )

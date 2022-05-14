@@ -19,6 +19,9 @@ import androidx.compose.material.AlertDialog
 import androidx.compose.material.Button
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.res.pluralStringResource
+import androidx.compose.ui.res.stringResource
+import com.savvasdalkitsis.uhuruphotos.strings.R
 
 @Composable
 fun DeletePermissionDialog(
@@ -29,25 +32,19 @@ fun DeletePermissionDialog(
     AlertDialog(
         onDismissRequest = onDismiss,
         title = {
-            when (photoCount) {
-                1 -> Text("Delete photo")
-                else -> Text("Delete $photoCount photos")
-            }
+            Text(pluralStringResource(R.plurals.delete_photos, photoCount, photoCount))
         },
         text = {
-            when (photoCount) {
-                1 -> Text("Are you sure you want to delete this photo?")
-                else -> Text("Are you sure you want to delete these $photoCount photos?")
-            }
+            Text(pluralStringResource(R.plurals.delete_photos_confirmation, count = photoCount, photoCount))
         },
         confirmButton = {
             Button(onClick = onDelete) {
-                Text("Yes")
+                Text(stringResource(R.string.yes))
             }
         },
         dismissButton = {
             Button(onClick = onDismiss) {
-                Text("No")
+                Text(stringResource(R.string.no))
             }
         },
     )

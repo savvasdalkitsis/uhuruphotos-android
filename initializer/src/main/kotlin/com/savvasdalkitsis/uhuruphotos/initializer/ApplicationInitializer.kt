@@ -15,6 +15,7 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.initializer
 
+import android.app.Application
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -23,7 +24,7 @@ class ApplicationInitializer @Inject constructor(
     private val listeners: Set<@JvmSuppressWildcards ApplicationCreated>,
 ) {
 
-    fun onCreated() {
-        listeners.forEach(ApplicationCreated::onAppCreated)
+    fun onCreated(app: Application) {
+        listeners.forEach { it.onAppCreated(app) }
     }
 }

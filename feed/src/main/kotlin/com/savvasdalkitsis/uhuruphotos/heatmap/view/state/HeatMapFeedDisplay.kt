@@ -26,7 +26,7 @@ object HeatMapFeedDisplay : FeedDisplay {
     override val iconResource: Int
         get() = throw IllegalStateException("This is not used")
     override val maintainAspectRatio = false
-    override val friendlyName = "HeatMap"
+    override val friendlyName = 0
     override val zoomIn get() = HeatMapFeedDisplay
     override val zoomOut get() = HeatMapFeedDisplay
 }

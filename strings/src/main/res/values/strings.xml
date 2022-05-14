@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="feed_size">Feed Size</string>
+    <string name="photo">Photo</string>
+    <plurals name="delete_photos">
+        <item quantity="one">Delete %d photo</item>
+        <item quantity="other">Delete %d photos</item>
+    </plurals>
+    <plurals name="delete_photos_confirmation">
+        <item quantity="one">Are you sure you want to delete this %d photo?</item>
+        <item quantity="other">Are you sure you want to delete these %d photos?</item>
+    </plurals>
+    <string name="error_refreshing_people">There was an error refreshing people</string>
+    <string name="error_loading_photo_details">There was an error loading photo details</string>
+    <string name="error_searching">There was an error while searching</string>
+    <string name="feed_sync_freq">Full photo feed sync frequency</string>
+    <string name="feed_sync_freq_changed">Feed sync frequency changed</string>
+    <string name="feed_sync_network_changed">Feed sync network requirement changed</string>
+    <string name="feed_sync_charging_changed">Feed sync charging requirements changed</string>
+    <string name="logs_cleared">Logs cleared</string>
+    <string name="recent_searches_cleared">Recent searches cleared</string>
+    <string name="downloading_photos_sharing">Downloading photos and will share soon</string>
+    <string name="copied_to_clipboard">Copied to clipboard</string>
+    <string name="could_not_find_app_to_open">Could not find an app to open</string>
+    <string name="error_logging_in">There was an error logging in</string>
+    <string name="photo_map">Photo map</string>
+    <string name="feed">Feed</string>
+    <string name="search">Search</string>
+    <string name="tiny">Tiny</string>
+    <string name="compact">Compact</string>
+    <string name="comfortable">Comfortable</string>
+    <string name="big">Big</string>
+    <string name="full">Full</string>
+    <string name="requires_charging">Requires charging</string>
+    <string name="perform_full_sync">Perform full sync now</string>
+    <string name="feed_sync_progress">Full photo feed sync progress</string>
+    <string name="jobs">Jobs</string>
+    <string name="never">never</string>
+    <string name="settings">Settings</string>
+    <plurals name="hours">
+        <item quantity="one">%d hour</item>
+        <item quantity="other">%d hours</item>
+    </plurals>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
+    <string name="clear">Clear</string>
+    <string name="currently_used">Currently used: %dmb</string>
+    <string name="max_limit">Max limit: %dmb</string>
+    <string name="changes_effect_after_restart">(changes will take effect after restart)</string>
+    <string name="share">Share</string>
+    <string name="delete">Delete</string>
+    <string name="setting_photo_favourite">Setting photo favourite state</string>
+    <string name="downloading_photo_details">Downloading photo details</string>
+    <string name="deleting_photo">Deleting photo</string>
+    <string name="refreshing_albums">Refreshing albums</string>
+    <string name="photos_on_map">Photos on map (%1$d out of %2$d)</string>
+    <string name="refresh">Refresh</string>
+    <string name="favourite">Favourite</string>
+    <string name="remove_favourite">Remove favourite</string>
+    <string name="info">Info</string>
+    <string name="background_jobs">Background jobs</string>
+    <string name="crash_reports">Crash reports</string>
+    <string name="send_crash_logs">Send crash logs for troubleshooting</string>
+</resources>

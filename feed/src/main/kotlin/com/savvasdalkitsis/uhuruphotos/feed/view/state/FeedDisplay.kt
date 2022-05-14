@@ -15,6 +15,8 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feed.view.state
 
+import androidx.annotation.DrawableRes
+import androidx.annotation.StringRes
 import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
 import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass.Companion.Compact
 
@@ -24,9 +26,9 @@ interface FeedDisplay {
     val wideColumnsPortrait: Int
     val wideColumnsLandscape: Int
     val shouldAddEmptyPhotosInRows: Boolean
-    val iconResource: Int
+    @get:DrawableRes val iconResource: Int
     val maintainAspectRatio: Boolean
-    val friendlyName: String
+    @get:StringRes val friendlyName: Int
     val zoomIn: FeedDisplay
     val zoomOut: FeedDisplay
 

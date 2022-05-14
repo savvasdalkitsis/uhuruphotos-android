@@ -18,18 +18,19 @@ package com.savvasdalkitsis.uhuruphotos.notification
 import android.content.Context
 import android.content.pm.ServiceInfo
 import android.os.Build
+import androidx.annotation.StringRes
 import androidx.core.app.NotificationCompat
 import androidx.work.ForegroundInfo
 import com.savvasdalkitsis.uhuruphotos.icons.R
 
 fun foregroundInfo(
     context: Context,
-    title: String,
+    @StringRes title: Int,
     notificationId: Int,
     channel: String
 ): ForegroundInfo {
     val notification = NotificationCompat.Builder(context,channel)
-        .setContentTitle(title)
+        .setContentTitle(context.getString(title))
         .setSmallIcon(R.mipmap.ic_launcher_round)
         .setPriority(NotificationCompat.PRIORITY_LOW)
         .build()

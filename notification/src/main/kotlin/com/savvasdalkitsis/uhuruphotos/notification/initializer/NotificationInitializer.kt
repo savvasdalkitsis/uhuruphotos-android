@@ -15,29 +15,31 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.notification.initializer
 
+import android.app.Application
 import androidx.core.app.NotificationChannelCompat.Builder
 import androidx.core.app.NotificationManagerCompat
 import androidx.core.app.NotificationManagerCompat.IMPORTANCE_LOW
 import com.savvasdalkitsis.uhuruphotos.initializer.ApplicationCreated
 import com.savvasdalkitsis.uhuruphotos.notification.NotificationChannels.CRASH_CHANNEL_ID
 import com.savvasdalkitsis.uhuruphotos.notification.NotificationChannels.JOBS_CHANNEL_ID
+import com.savvasdalkitsis.uhuruphotos.strings.R
 import javax.inject.Inject
 
 class NotificationInitializer @Inject constructor(
     private val notificationManager: NotificationManagerCompat,
 ): ApplicationCreated {
 
-    override fun onAppCreated() {
+    override fun onAppCreated(app: Application) {
         notificationManager.createNotificationChannel(
             Builder(JOBS_CHANNEL_ID, IMPORTANCE_LOW)
-                .setName("Jobs")
-                .setDescription("Background jobs")
+                .setName(app.getString(R.string.jobs))
+                .setDescription(app.getString(R.string.background_jobs))
                 .build()
         )
         notificationManager.createNotificationChannel(
             Builder(CRASH_CHANNEL_ID, IMPORTANCE_LOW)
-                .setName("Crash reports")
-                .setDescription("Send crash logs for troubleshooting")
+                .setName(app.getString(R.string.crash_reports))
+                .setDescription(app.getString(R.string.send_crash_logs))
                 .build()
         )
     }

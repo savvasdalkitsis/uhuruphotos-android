@@ -36,7 +36,7 @@ class App :
     override fun onCreate() {
         super.onCreate()
         WebView.setWebContentsDebuggingEnabled(true)
-        applicationInitializer.onCreated()
+        applicationInitializer.onCreated(this)
     }
 
     override fun getWorkManagerConfiguration() = Configuration.Builder()
