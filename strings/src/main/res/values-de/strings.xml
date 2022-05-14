@@ -1,2 +1,49 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources></resources>
+<resources>
+    <string name="logs_cleared">Protokolle gelöscht</string>
+    <string name="recent_searches_cleared">Letzte Suchanfragen gelöscht</string>
+    <string name="feed_size">Feed-Größe</string>
+    <string name="photo">Foto</string>
+    <plurals name="delete_photos">
+        <item quantity="one">%d Foto löschen</item>
+        <item quantity="other">%d Fotos löschen</item>
+    </plurals>
+    <plurals name="delete_photos_confirmation">
+        <item quantity="one">Sind Sie sicher, dass Sie dieses %d Foto löschen wollen\?</item>
+        <item quantity="other">Sind Sie sicher, dass Sie diese %d Fotos löschen wollen\?</item>
+    </plurals>
+    <string name="copied_to_clipboard">In die Zwischenablage kopiert</string>
+    <string name="could_not_find_app_to_open">Es konnte keine Anwendung zum Öffnen gefunden werden</string>
+    <string name="error_loading_photo_details">Es ist ein Fehler beim Laden der Fotodetails aufgetreten</string>
+    <string name="tiny">Mini</string>
+    <string name="compact">Kompakt</string>
+    <string name="comfortable">Bequem</string>
+    <string name="big">Groß</string>
+    <string name="never">nie</string>
+    <string name="settings">Einstellungen</string>
+    <plurals name="hours">
+        <item quantity="one">%d Stunde</item>
+        <item quantity="other">%d Stunden</item>
+    </plurals>
+    <string name="yes">Ja</string>
+    <string name="no">Nein</string>
+    <string name="clear">Löschen</string>
+    <string name="currently_used">Derzeit verwendet: %d MB</string>
+    <string name="max_limit">Obergrenze: %d MB</string>
+    <string name="changes_effect_after_restart">(Änderungen werden nach dem Neustart wirksam)</string>
+    <string name="share">Teilen</string>
+    <string name="deleting_photo">Foto wird gelöscht</string>
+    <string name="refreshing_albums">Alben werden aktualisiert</string>
+    <string name="photos_on_map">Fotos auf der Karte (%1$d von %2$d)</string>
+    <string name="refresh">Aktualisieren</string>
+    <string name="info">Infos</string>
+    <string name="crash_reports">Absturzberichte</string>
+    <string name="send_crash_logs">Absturzprotokolle zur Fehlerbehebung senden</string>
+    <string name="error_logging_in">Bei der Anmeldung ist ein Fehler aufgetreten</string>
+    <string name="delete">Löschen</string>
+    <string name="photo_map">Fotokarte</string>
+    <string name="feed">Feed</string>
+    <string name="search">Suche</string>
+    <string name="error_searching">Bei der Suche ist ein Fehler aufgetreten</string>
+    <string name="favourite">Favorit</string>
+</resources>
