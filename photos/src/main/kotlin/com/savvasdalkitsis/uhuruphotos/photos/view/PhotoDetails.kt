@@ -18,85 +18,97 @@ package com.savvasdalkitsis.uhuruphotos.photos.view
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.MaterialTheme
-import androidx.compose.runtime.Composable
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.stringResource
+import com.mxalbert.zoomable.OverZoomConfig
+import com.mxalbert.zoomable.Zoomable
+import com.mxalbert.zoomable.rememberZoomableState
 import com.radusalagean.infobarcompose.InfoBar
 import com.radusalagean.infobarcompose.InfoBarMessage
 import com.savvasdalkitsis.uhuruphotos.image.api.view.Image
 import com.savvasdalkitsis.uhuruphotos.photos.mvflow.PhotoAction
-import com.savvasdalkitsis.uhuruphotos.photos.view.PhotoSheetStyle.BOTTOM
-import com.savvasdalkitsis.uhuruphotos.photos.view.PhotoSheetStyle.SIDE
+import com.savvasdalkitsis.uhuruphotos.photos.mvflow.PhotoAction.*
 import com.savvasdalkitsis.uhuruphotos.photos.view.state.PhotoState
 import com.savvasdalkitsis.uhuruphotos.strings.R
-import com.savvasdalkitsis.uhuruphotos.ui.view.zoom.ZoomableState
-import com.savvasdalkitsis.uhuruphotos.ui.view.zoom.zoomable
 import com.savvasdalkitsis.uhuruphotos.video.view.Video
 
 @Composable
 fun PhotoDetails(
-    zoomableState: ZoomableState,
     action: (PhotoAction) -> Unit,
     state: PhotoState,
+    index: Int,
     contentPadding: PaddingValues
 ) {
-    val photoSheetStyle = LocalPhotoSheetStyle.current
+    val zoomState = rememberZoomableState(
+        minScale = 0.6f,
+        maxScale = 6f,
+        overZoomConfig = OverZoomConfig(1f, 4f)
+    )
+    // reflection call until, hopefully, this is implemented:
+    // https://github.com/mxalbert1996/Zoomable/issues/17
+    val dismissDragOffsetY = remember {
+        zoomState.javaClass.declaredMethods.find { it.name == "getDismissDragOffsetY\$zoomable_release" }!!
+    }
 
-    fun showInfoIfSheetStyle(expected: PhotoSheetStyle): Boolean =
-        if (photoSheetStyle == expected) {
-            action(PhotoAction.ShowInfo)
-            true
-        } else {
+    val offset by derivedStateOf {
+        dismissDragOffsetY.invoke(zoomState) as Float
+    }
+    Zoomable(
+        state = zoomState,
+        onTap = { action(ToggleUI) },
+        dismissGestureEnabled = true,
+        onDismiss = {
+            if (offset > 0) {
+                action(NavigateBack)
+            } else {
+                action(ShowInfo)
+            }
             false
         }
-
-    Box(
-        modifier = Modifier
-            .fillMaxSize()
-            .background(MaterialTheme.colors.background)
-            .zoomable(
-                zoomableState = zoomableState,
-                onTap = { action(PhotoAction.ToggleUI) },
-                onSwipeAway = { action(PhotoAction.NavigateBack) },
-                onSwipeUp = { showInfoIfSheetStyle(BOTTOM) },
-                onSwipeToStart = { showInfoIfSheetStyle(SIDE) },
-            )
     ) {
-        when {
-            state.isVideo -> Video(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .align(Alignment.Center),
-                videoUrl = state.fullResUrl,
-                videoThumbnailUrl = state.lowResUrl,
-                play = true,
-            )
-            else -> Image(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .align(Alignment.Center),
-                lowResUrl = state.lowResUrl,
-                fullResUrl = state.fullResUrl,
-                onFullResImageLoaded = { action(PhotoAction.FullImageLoaded) },
-                contentScale = ContentScale.Fit,
-                contentDescription = stringResource(R.string.photo),
-            )
-        }
-        Column {
-            Spacer(modifier = Modifier.height(contentPadding.calculateTopPadding()))
-            InfoBar(offeredMessage = state.errorMessage?.let {
-                InfoBarMessage(textStringResId = it)
-            }) {
-                action(PhotoAction.DismissErrorMessage)
+        Box(
+            modifier = Modifier
+                .fillMaxSize()
+                .background(MaterialTheme.colors.background)
+        ) {
+            val photo = state.photos[index]
+            when {
+                photo.isVideo -> Video(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .align(Alignment.Center),
+                    videoUrl = photo.fullResUrl,
+                    videoThumbnailUrl = photo.lowResUrl,
+                    play = true,
+                )
+                else -> Image(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .align(Alignment.Center),
+                    lowResUrl = photo.lowResUrl,
+                    fullResUrl = photo.fullResUrl,
+                    onFullResImageLoaded = { action(FullImageLoaded(photo.id)) },
+                    contentScale = ContentScale.Fit,
+                    contentDescription = stringResource(R.string.photo),
+                )
             }
-        }
-        if (state.showPhotoDeletionConfirmationDialog) {
-            DeletePermissionDialog(
-                photoCount = 1,
-                onDismiss = { action(PhotoAction.DismissPhotoDeletionDialog) }
-            ) { action(PhotoAction.DeletePhoto) }
+            Column {
+                Spacer(modifier = Modifier.height(contentPadding.calculateTopPadding()))
+                InfoBar(offeredMessage = state.errorMessage?.let {
+                    InfoBarMessage(textStringResId = it)
+                }) {
+                    action(DismissErrorMessage)
+                }
+            }
+            if (state.showPhotoDeletionConfirmationDialog) {
+                DeletePermissionDialog(
+                    photoCount = 1,
+                    onDismiss = { action(DismissPhotoDeletionDialog) }
+                ) { action(DeletePhoto) }
+            }
         }
     }
 }

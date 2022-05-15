@@ -24,6 +24,8 @@ import androidx.navigation.NavBackStackEntry
 import androidx.navigation.NavGraphBuilder
 import com.savvasdalkitsis.uhuruphotos.navigation.NavigationTarget
 import com.savvasdalkitsis.uhuruphotos.navigation.navigationTarget
+import com.savvasdalkitsis.uhuruphotos.photos.model.PhotoSequenceDataSource
+import com.savvasdalkitsis.uhuruphotos.photos.model.PhotoSequenceDataSource.*
 import com.savvasdalkitsis.uhuruphotos.photos.mvflow.PhotoAction
 import com.savvasdalkitsis.uhuruphotos.photos.mvflow.PhotoAction.LoadPhoto
 import com.savvasdalkitsis.uhuruphotos.photos.mvflow.PhotoEffect
@@ -57,7 +59,9 @@ class PhotoNavigationTarget @Inject constructor(
                         scaleOut(targetScale = initialState.scale) + fadeOut()
             },
             initializer = { navBackStackEntry, actions ->
-                actions(LoadPhoto(navBackStackEntry.photoId, navBackStackEntry.isVideo))
+                with(navBackStackEntry) {
+                    actions(LoadPhoto(photoId, isVideo, datasource))
+                }
             },
             createModel = { hiltViewModel() }
         ) { state, actions ->
@@ -66,8 +70,14 @@ class PhotoNavigationTarget @Inject constructor(
     }
 
     companion object {
-        private const val name = "details/{type}/{id}/{centerX}/{centerY}/{scale}"
-        fun name(id: String, offset: Offset, scale: Float, isVideo: Boolean) = name
+        private const val name = "details/{type}/{id}/{centerX}/{centerY}/{scale}/{dataSource}"
+        fun name(
+            id: String,
+            offset: Offset,
+            scale: Float,
+            isVideo: Boolean,
+            photoSequenceDataSource: PhotoSequenceDataSource = Single,
+        ) = name
             .replace("{id}", id)
             .replace("{centerX}", offset.x.toString())
             .replace("{centerY}", offset.y.toString())
@@ -78,6 +88,7 @@ class PhotoNavigationTarget @Inject constructor(
                     else -> "photo"
                 }
             )
+            .replace("{dataSource}", photoSequenceDataSource.toString())
 
         private val NavBackStackEntry.photoId: String get() = get("id")!!
         private val NavBackStackEntry.isVideo: Boolean get() = get("type") == "video"
@@ -88,6 +99,11 @@ class PhotoNavigationTarget @Inject constructor(
                 return if (x != null && y != null) Offset(x, y) else null
             }
         private val NavBackStackEntry.scale: Float get() = get("scale")?.toFloat() ?: 0.3f
+        private val NavBackStackEntry.datasource: PhotoSequenceDataSource get() =
+            when(get("dataSource")) {
+                AllPhotos.toString() -> AllPhotos
+                else -> Single
+            }
 
         private fun NavBackStackEntry.get(arg: String) = arguments!!.getString(arg)
     }

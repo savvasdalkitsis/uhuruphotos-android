@@ -15,6 +15,7 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.people.repository
 
+import com.savvasdalkitsis.uhuruphotos.db.extensions.await
 import com.savvasdalkitsis.uhuruphotos.db.extensions.crud
 import com.savvasdalkitsis.uhuruphotos.db.people.People
 import com.savvasdalkitsis.uhuruphotos.db.people.PeopleQueries
@@ -34,13 +35,16 @@ class PeopleRepository @Inject constructor(
     private val peopleService: PeopleService,
 ) {
 
-    fun getPeopleByName(): Flow<List<People>> = peopleQueries.getPeopleByName()
+    fun observePeopleByName(): Flow<List<People>> = peopleQueries.getPeopleByName()
         .asFlow().mapToList().distinctUntilChanged()
 
-    fun getPeopleByPhotoCount(): Flow<List<People>> = peopleQueries.getPeopleByFaceCount()
+    suspend fun getPeopleByName(): List<People> = peopleQueries.getPeopleByName()
+        .await()
+
+    fun observePeopleByPhotoCount(): Flow<List<People>> = peopleQueries.getPeopleByFaceCount()
         .asFlow().mapToList().distinctUntilChanged()
 
-    fun getPerson(id: Int): Flow<People> = peopleQueries.getPerson(id)
+    fun observePerson(id: Int): Flow<People> = peopleQueries.getPerson(id)
         .asFlow().mapToOne().distinctUntilChanged()
 
     suspend fun refreshPerson(id: Int) {

@@ -28,7 +28,9 @@ dependencies {
     implementation project(":toaster")
     implementation project(":notification")
     implementation project(":strings")
+    implementation project(":albums-api")
     implementation(
+            libs.accompanist.pager,
             libs.accompanist.systemui,
             libs.androidx.compose.hilt.navigation,
             libs.androidx.compose.material,
@@ -42,6 +44,7 @@ dependencies {
             libs.retrofit.core,
             libs.retrofit.moshi,
             libs.sqldelight.coroutines,
+            libs.zoomable,
     )
     kapt "com.squareup.moshi:moshi-kotlin-codegen:1.13.0"
 }

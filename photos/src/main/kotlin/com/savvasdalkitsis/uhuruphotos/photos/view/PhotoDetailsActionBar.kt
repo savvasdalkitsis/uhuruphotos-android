@@ -31,8 +31,10 @@ import com.savvasdalkitsis.uhuruphotos.strings.R as Strings
 @Composable
 fun PhotoDetailsActionBar(
     state: PhotoState,
+    index: Int,
     action: (PhotoAction) -> Unit,
 ) {
+    val photo = state.photos[index]
     AnimatedVisibility(visible = state.isLoading) {
         if (state.isLoading) {
             CircularProgressIndicator(
@@ -50,14 +52,14 @@ fun PhotoDetailsActionBar(
             )
         }
     }
-    AnimatedVisibility(visible = state.isFavourite != null) {
-        if (state.isFavourite != null) {
+    AnimatedVisibility(visible = photo.isFavourite != null) {
+        if (photo.isFavourite != null) {
             ActionIcon(
-                onClick = { action(PhotoAction.SetFavourite(!state.isFavourite)) },
-                icon = if (state.isFavourite) Icons.drawable.ic_favourite else Icons.drawable.ic_not_favourite,
+                onClick = { action(PhotoAction.SetFavourite(!photo.isFavourite)) },
+                icon = if (photo.isFavourite) Icons.drawable.ic_favourite else Icons.drawable.ic_not_favourite,
                 contentDescription = stringResource(
                     when {
-                        state.isFavourite -> Strings.string.remove_favourite
+                        photo.isFavourite -> Strings.string.remove_favourite
                         else -> Strings.string.favourite
                     }
                 )

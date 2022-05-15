@@ -37,17 +37,20 @@ class PhotoRepository @Inject constructor(
     private val photosService: PhotosService,
 ) {
 
-    fun getAllPhotos(): Flow<List<PhotoDetails>> = photoDetailsQueries.getAll()
+    fun observeAllPhotoDetails(): Flow<List<PhotoDetails>> = photoDetailsQueries.getAll()
         .asFlow().mapToList()
 
-    fun getPhoto(id: String): Flow<PhotoDetails> =
+    fun observePhotoDetails(id: String): Flow<PhotoDetails> =
         photoDetailsQueries.getPhoto(id).asFlow().mapToOneNotNull()
             .onStart {
                refreshDetailsIfMissing(id)
             }
 
+    suspend fun getPhotoDetails(id: String): PhotoDetails? =
+        photoDetailsQueries.getPhoto(id).awaitSingleOrNull()
+
     suspend fun refreshDetailsIfMissing(id: String) {
-        when (photoDetailsQueries.getPhoto(id).awaitSingleOrNull()) {
+        when (getPhotoDetails(id)) {
             null -> {
                 refreshDetails(id)
             }
@@ -55,7 +58,7 @@ class PhotoRepository @Inject constructor(
     }
 
     suspend fun refreshDetailsNowIfMissing(id: String) {
-        when (photoDetailsQueries.getPhoto(id).awaitSingleOrNull()) {
+        when (getPhotoDetails(id)) {
             null -> {
                 refreshDetailsNow(id)
             }

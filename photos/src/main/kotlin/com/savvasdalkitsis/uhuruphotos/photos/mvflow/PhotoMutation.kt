@@ -18,6 +18,7 @@ package com.savvasdalkitsis.uhuruphotos.photos.mvflow
 import androidx.annotation.StringRes
 import com.savvasdalkitsis.uhuruphotos.db.photos.PhotoDetails
 import com.savvasdalkitsis.uhuruphotos.people.api.view.state.Person
+import com.savvasdalkitsis.uhuruphotos.photos.view.state.SinglePhotoState
 
 sealed class PhotoMutation {
     object HideUI : PhotoMutation()
@@ -30,7 +31,11 @@ sealed class PhotoMutation {
     object HideInfo : PhotoMutation()
     object ShowDeletionConfirmationDialog : PhotoMutation()
     object HideDeletionConfirmationDialog : PhotoMutation()
-    object ShowShareIcon : PhotoMutation()
-    data class ReceivedUrl(val id: String, val lowResUrl: String, val fullResUrl: String) : PhotoMutation()
+    data class ShowShareIcon(val id: String) : PhotoMutation()
+    data class ShowSinglePhoto(val photoState: SinglePhotoState) : PhotoMutation()
+    data class ShowMultiplePhotos(val photoStates: List<SinglePhotoState>, val index: Int) : PhotoMutation()
     data class ReceivedDetails(val details: PhotoDetails, val peopleInPhoto: List<Person>) : PhotoMutation()
+    data class ChangeCurrentIndex(val index: Int) : PhotoMutation()
+    data class ShowPhotoFavourite(val id: String, val favourite: Boolean) : PhotoMutation()
+    data class RemovePhotoFromSource(val id: String) : PhotoMutation()
 }

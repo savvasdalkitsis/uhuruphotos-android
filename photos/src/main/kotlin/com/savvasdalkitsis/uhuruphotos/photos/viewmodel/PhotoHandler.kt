@@ -15,10 +15,12 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.photos.viewmodel
 
-import androidx.work.WorkInfo.State.*
-import com.savvasdalkitsis.uhuruphotos.infrastructure.extensions.onErrorsEmit
+import com.savvasdalkitsis.uhuruphotos.albums.api.usecase.AlbumsUseCase
+import com.savvasdalkitsis.uhuruphotos.db.people.People
 import com.savvasdalkitsis.uhuruphotos.people.api.usecase.PeopleUseCase
 import com.savvasdalkitsis.uhuruphotos.people.api.view.state.toPerson
+import com.savvasdalkitsis.uhuruphotos.photos.model.PhotoSequenceDataSource.AllPhotos
+import com.savvasdalkitsis.uhuruphotos.photos.model.PhotoSequenceDataSource.Single
 import com.savvasdalkitsis.uhuruphotos.photos.mvflow.PhotoAction
 import com.savvasdalkitsis.uhuruphotos.photos.mvflow.PhotoAction.*
 import com.savvasdalkitsis.uhuruphotos.photos.mvflow.PhotoAction.DismissErrorMessage
@@ -33,17 +35,19 @@ import com.savvasdalkitsis.uhuruphotos.photos.mvflow.PhotoMutation.*
 import com.savvasdalkitsis.uhuruphotos.photos.service.model.deserializePeopleNames
 import com.savvasdalkitsis.uhuruphotos.photos.usecase.PhotosUseCase
 import com.savvasdalkitsis.uhuruphotos.photos.view.state.PhotoState
-import com.savvasdalkitsis.uhuruphotos.photos.worker.PhotoDetailsRetrieveWorker
+import com.savvasdalkitsis.uhuruphotos.photos.view.state.SinglePhotoState
 import com.savvasdalkitsis.uhuruphotos.strings.R
 import com.savvasdalkitsis.uhuruphotos.viewmodel.Handler
-import com.savvasdalkitsis.uhuruphotos.worker.usecase.WorkerStatusUseCase
-import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.FlowCollector
+import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.flowOf
 import javax.inject.Inject
 
 class PhotoHandler @Inject constructor(
     private val photosUseCase: PhotosUseCase,
-    private val workerStatusUseCase: WorkerStatusUseCase,
     private val peopleUseCase: PeopleUseCase,
+    private val albumsUseCase: AlbumsUseCase,
 ) : Handler<PhotoState, PhotoEffect, PhotoAction, PhotoMutation> {
 
     override fun invoke(
@@ -52,43 +56,41 @@ class PhotoHandler @Inject constructor(
         effect: suspend (PhotoEffect) -> Unit
     ): Flow<PhotoMutation> = when(action) {
         is LoadPhoto -> flow {
-            emit(with(photosUseCase) { ReceivedUrl(
-                id = action.id,
-                lowResUrl = action.id.toThumbnailUrlFromId(),
-                fullResUrl = action.id.toFullSizeUrlFromId(action.isVideo),
-            )})
-            emitAll(merge(
-                combine(
-                    photosUseCase.getPhoto(action.id),
-                    peopleUseCase.getPeopleByName()
-                        .onErrorsEmit {
-                            effect(ErrorRefreshingPeople)
-                            emptyList()
+            with(photosUseCase) {
+                emit(ShowSinglePhoto(
+                    SinglePhotoState(
+                        id = action.id,
+                        lowResUrl = action.id.toThumbnailUrlFromId(),
+                        fullResUrl = action.id.toFullSizeUrlFromId(action.isVideo),
+                    )
+                ))
+                when (action.datasource) {
+                    Single -> loadPhotoDetails(action.id)
+                    AllPhotos -> {
+                        val photoStates = albumsUseCase.getAlbums().flatMap { album ->
+                            album.photos
+                        }.map { photo ->
+                            SinglePhotoState(
+                                id = photo.id,
+                                lowResUrl = photo.id.toThumbnailUrlFromId(),
+                                fullResUrl = photo.id.toFullSizeUrlFromId(action.isVideo),
+                                isFavourite = photo.isFavourite,
+                                isVideo = photo.isVideo,
+                            )
                         }
-                ) { details, people ->
-                    val names = details.peopleNames.orEmpty().deserializePeopleNames
-                    val peopleInPhoto = when {
-                        names.isEmpty() -> emptyList()
-                        else -> people.filter { it.name in names }
-                    }.map {
-                        it.toPerson {
-                            with(photosUseCase) {
-                                it.toAbsoluteUrl()
-                            }
-                        }
-                    }
-                    ReceivedDetails(details, peopleInPhoto)
-                },
-                workerStatusUseCase.monitorUniqueJobStatus(
-                    PhotoDetailsRetrieveWorker.workName(action.id)
-                ).map {
-                    when (it) {
-                        BLOCKED, CANCELLED, FAILED -> ShowErrorMessage(R.string.error_loading_photo_details)
-                        SUCCEEDED -> FinishedLoading
-                        ENQUEUED, RUNNING -> Loading
+                        val index = photoStates.indexOfFirst { it.id == action.id }
+                        emit(ShowMultiplePhotos(photoStates, index))
+                        loadPhotoDetails(action.id)
                     }
                 }
-            ))
+            }
+        }
+        is ChangedToPage -> flow {
+            emit(ChangeCurrentIndex(action.page))
+            if (state.photos.isNotEmpty()) {
+                val photo = state.photos[action.page]
+                loadPhotoDetails(photo.id)
+            }
         }
         ToggleUI -> flow {
             if (state.showUI) {
@@ -104,10 +106,11 @@ class PhotoHandler @Inject constructor(
             effect(PhotoEffect.NavigateBack)
         }
         is SetFavourite -> flow {
-            photosUseCase.setPhotoFavourite(state.id, action.favourite)
+            photosUseCase.setPhotoFavourite(state.currentPhoto.id, action.favourite)
+            emit(ShowPhotoFavourite(state.currentPhoto.id, action.favourite))
         }
         Refresh -> flow {
-            photosUseCase.refreshDetails(state.id)
+            loadPhotoDetails(state.currentPhoto.id, refresh = true)
         }
         DismissErrorMessage -> flowOf(PhotoMutation.DismissErrorMessage)
         ShowInfo -> flowOf(PhotoMutation.ShowInfo)
@@ -123,15 +126,56 @@ class PhotoHandler @Inject constructor(
         DeletePhoto -> flow {
             emit(Loading)
             emit(HideDeletionConfirmationDialog)
-            photosUseCase.deletePhoto(state.id)
-            effect(PhotoEffect.NavigateBack)
+            photosUseCase.deletePhoto(state.currentPhoto.id)
+            emit(FinishedLoading)
+            emit(RemovePhotoFromSource(state.currentPhoto.id))
+            if (state.photos.size == 1) {
+                effect(PhotoEffect.NavigateBack)
+            }
         }
         SharePhoto -> flow {
-            effect(PhotoEffect.SharePhoto(state.fullResUrl))
+            effect(PhotoEffect.SharePhoto(state.currentPhoto.fullResUrl))
         }
-        FullImageLoaded -> flowOf(ShowShareIcon)
+        is FullImageLoaded -> flowOf(ShowShareIcon(action.id))
         is PersonSelected -> flow {
             effect(NavigateToPerson(action.person.id))
         }
     }
+
+    private suspend fun FlowCollector<PhotoMutation>.loadPhotoDetails(
+        photoId: String,
+        refresh: Boolean = false,
+    ) {
+        emit(Loading)
+        if (refresh) {
+            photosUseCase.refreshDetailsNow(photoId)
+        } else {
+            photosUseCase.refreshDetailsNowIfMissing(photoId)
+        }
+        when (val details = photosUseCase.getPhotoDetails(photoId)) {
+            null -> emit(ShowErrorMessage(R.string.error_loading_photo_details))
+            else -> {
+                val people = maybeRefreshPeople()
+                val names = details.peopleNames.orEmpty().deserializePeopleNames
+                val peopleInPhoto = when {
+                    names.isEmpty() -> emptyList()
+                    else -> people.filter { it.name in names }
+                }.map {
+                    it.toPerson {
+                        with(photosUseCase) {
+                            it.toAbsoluteUrl()
+                        }
+                    }
+                }
+                emit(ReceivedDetails(details, peopleInPhoto))
+            }
+        }
+        emit(FinishedLoading)
+    }
+
+    private suspend fun maybeRefreshPeople(): List<People> =
+        peopleUseCase.getPeopleByName().ifEmpty {
+            peopleUseCase.refreshPeople()
+            peopleUseCase.getPeopleByName()
+        }
 }

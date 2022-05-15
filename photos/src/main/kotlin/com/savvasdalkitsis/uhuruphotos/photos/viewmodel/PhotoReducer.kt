@@ -15,15 +15,16 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.photos.viewmodel
 
-import com.google.android.gms.maps.model.LatLng
 import com.savvasdalkitsis.uhuruphotos.infrastructure.date.DateDisplayer
 import com.savvasdalkitsis.uhuruphotos.photos.model.latLng
 import com.savvasdalkitsis.uhuruphotos.photos.mvflow.PhotoMutation
 import com.savvasdalkitsis.uhuruphotos.photos.mvflow.PhotoMutation.*
 import com.savvasdalkitsis.uhuruphotos.photos.usecase.PhotosUseCase
 import com.savvasdalkitsis.uhuruphotos.photos.view.state.PhotoState
+import com.savvasdalkitsis.uhuruphotos.photos.view.state.SinglePhotoState
 import com.savvasdalkitsis.uhuruphotos.viewmodel.Reducer
 import javax.inject.Inject
+import kotlin.math.min
 
 class PhotoReducer @Inject constructor(
     private val dateDisplayer: DateDisplayer,
@@ -33,23 +34,26 @@ class PhotoReducer @Inject constructor(
         state: PhotoState,
         mutation: PhotoMutation
     ): PhotoState = when (mutation) {
-        is ReceivedUrl -> state.copy(
-            id = mutation.id,
-            isLoading = false,
-            lowResUrl = mutation.lowResUrl,
-            fullResUrl = mutation.fullResUrl
+        is ShowSinglePhoto -> state.copy(
+            currentIndex = 0,
+            photos = listOf(mutation.photoState)
         )
+        is ShowMultiplePhotos -> state.copy(
+            currentIndex = mutation.index,
+            photos = mutation.photoStates,
+        )
+        is ChangeCurrentIndex -> state.copy(currentIndex = mutation.index)
         is ReceivedDetails -> with(mutation.details) {
-            state.copy(
-                isFavourite = rating ?: 0 >= PhotosUseCase.FAVOURITES_RATING_THRESHOLD,
-                isVideo = video == true,
-                showRefresh = true,
-                showInfoButton = true,
-                dateAndTime = dateDisplayer.dateTimeString(timestamp),
-                location = location ?: "",
-                gps = latLng,
-                peopleInPhoto = mutation.peopleInPhoto
-            )
+            state.copyPhoto(imageHash) {
+                it.copy(
+                    isFavourite = (rating ?: 0) >= PhotosUseCase.FAVOURITES_RATING_THRESHOLD,
+                    isVideo = video == true,
+                    dateAndTime = dateDisplayer.dateTimeString(timestamp),
+                    location = location ?: "",
+                    gps = latLng,
+                    peopleInPhoto = mutation.peopleInPhoto
+                )
+            }
         }
         HideUI -> state.copy(showUI = false)
         ShowUI -> state.copy(showUI = true)
@@ -72,6 +76,29 @@ class PhotoReducer @Inject constructor(
         HideInfo -> state.copy(infoSheetHidden = true)
         ShowDeletionConfirmationDialog -> state.copy(showPhotoDeletionConfirmationDialog = true)
         HideDeletionConfirmationDialog -> state.copy(showPhotoDeletionConfirmationDialog = false)
-        ShowShareIcon -> state.copy(showShareIcon = true)
+        is ShowShareIcon -> state.copyPhoto(mutation.id) {
+            it.copy(showShareIcon = true)
+        }
+        is ShowPhotoFavourite -> state.copyPhoto(mutation.id) {
+            it.copy(isFavourite = mutation.favourite)
+        }
+        is RemovePhotoFromSource -> {
+            val removed = state.copy(
+                photos = state.photos.filter { it.id != mutation.id },
+            )
+            removed.copy(
+                currentIndex = min(state.currentIndex, removed.photos.size - 1)
+            )
+        }
     }
+
+    private fun PhotoState.copyPhoto(
+        imageHash: String,
+        copy: (SinglePhotoState) -> SinglePhotoState
+    ): PhotoState = copy(photos = photos.map { photo ->
+        when (photo.id) {
+            imageHash -> copy(photo)
+            else -> photo
+        }
+    })
 }

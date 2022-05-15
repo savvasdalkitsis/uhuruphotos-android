@@ -43,7 +43,7 @@ class PeopleHandler @Inject constructor(
         effect: suspend (PeopleEffect) -> Unit
     ): Flow<PeopleMutation> = when (action) {
         LoadPeople -> combine(
-            peopleUseCase.getPeopleByName()
+            peopleUseCase.observePeopleByName()
                 .onErrors {
                     effect(ErrorLoadingPeople)
                 },

@@ -22,6 +22,7 @@ import com.savvasdalkitsis.uhuruphotos.albums.service.model.toAlbum
 import com.savvasdalkitsis.uhuruphotos.db.albums.AlbumsQueries
 import com.savvasdalkitsis.uhuruphotos.db.albums.GetAlbums
 import com.savvasdalkitsis.uhuruphotos.db.albums.GetPersonAlbums
+import com.savvasdalkitsis.uhuruphotos.db.extensions.await
 import com.savvasdalkitsis.uhuruphotos.db.extensions.awaitSingle
 import com.savvasdalkitsis.uhuruphotos.db.person.PersonQueries
 import com.savvasdalkitsis.uhuruphotos.db.photos.PhotoSummaryQueries
@@ -44,9 +45,12 @@ class AlbumsRepository @Inject constructor(
 
     suspend fun hasAlbums() = albumsQueries.albumsCount().awaitSingle() > 0
 
-    fun getAlbumsByDate() : Flow<Group<String, GetAlbums>> =
+    fun observeAlbumsByDate() : Flow<Group<String, GetAlbums>> =
         albumsQueries.getAlbums().asFlow().mapToList().groupBy(GetAlbums::id)
             .distinctUntilChanged()
+
+    suspend fun getAlbumsByDate() : Group<String, GetAlbums> =
+        albumsQueries.getAlbums().await().groupBy(GetAlbums::id).let(::Group)
 
     fun getPersonAlbums(personId: Int) : Flow<Group<String, GetPersonAlbums>> =
         albumsQueries.getPersonAlbums(personId).asFlow().mapToList().groupBy(GetPersonAlbums::id)

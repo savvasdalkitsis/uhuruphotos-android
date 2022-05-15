@@ -38,7 +38,7 @@ class PersonHandler @Inject constructor(
     ): Flow<PersonMutation> = when (action) {
         is LoadPerson -> merge(
             flowOf(Loading),
-            peopleUseCase.getPerson(action.id)
+            peopleUseCase.observePerson(action.id)
                 .map(::ShowPersonDetails),
             personUseCase.getPersonAlbums(action.id)
                 .map(::ShowPersonPhotos)

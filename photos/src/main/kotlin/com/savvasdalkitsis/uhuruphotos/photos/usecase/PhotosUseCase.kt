@@ -29,9 +29,9 @@ class PhotosUseCase @Inject constructor(
 ) {
 
     @JvmName("toAbsoluteUrlNull")
-    suspend fun String?.toAbsoluteUrl(): String? = this?.toAbsoluteUrl()
+    fun String?.toAbsoluteUrl(): String? = this?.toAbsoluteUrl()
 
-    suspend fun String.toAbsoluteUrl(): String {
+    fun String.toAbsoluteUrl(): String {
         val serverUrl = serverUseCase.getServerUrl()
         return this
             .removeSuffix(".webp")
@@ -43,21 +43,24 @@ class PhotosUseCase @Inject constructor(
     suspend fun String?.toThumbnailUrlFromId(): String? =
         this?.toThumbnailUrlFromId()
 
-    suspend fun String.toThumbnailUrlFromId(): String =
+    fun String.toThumbnailUrlFromId(): String =
         "/media/square_thumbnails/$this".toAbsoluteUrl()
 
-    suspend fun String.toFullSizeUrlFromId(
+    fun String.toFullSizeUrlFromId(
         isVideo: Boolean = false,
     ) = when {
         isVideo -> "/media/video/$this".toAbsoluteUrl()
         else -> "/media/photos/$this".toAbsoluteUrl()
     }
 
-    fun getAllPhotos(): Flow<List<PhotoDetails>> =
-        photoRepository.getAllPhotos()
+    fun observeAllPhotoDetails(): Flow<List<PhotoDetails>> =
+        photoRepository.observeAllPhotoDetails()
 
-    fun getPhoto(id: String): Flow<PhotoDetails> =
-        photoRepository.getPhoto(id)
+    fun observePhotoDetails(id: String): Flow<PhotoDetails> =
+        photoRepository.observePhotoDetails(id)
+
+    suspend fun getPhotoDetails(id: String): PhotoDetails? =
+        photoRepository.getPhotoDetails(id)
 
     suspend fun setPhotoFavourite(id: String, favourite: Boolean) {
         photoRepository.setPhotoRating(id, if (favourite) FAVOURITES_RATING_THRESHOLD else 0)
@@ -70,6 +73,10 @@ class PhotosUseCase @Inject constructor(
 
     suspend fun refreshDetailsNowIfMissing(id: String) {
         photoRepository.refreshDetailsNowIfMissing(id)
+    }
+
+    suspend fun refreshDetailsNow(id: String) {
+        photoRepository.refreshDetailsNow(id)
     }
 
     fun deletePhoto(id: String) {

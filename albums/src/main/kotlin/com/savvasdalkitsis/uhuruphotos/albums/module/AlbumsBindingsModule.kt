@@ -16,6 +16,7 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.albums.module
 
 import com.savvasdalkitsis.uhuruphotos.albums.initializer.AlbumsInitializer
+import com.savvasdalkitsis.uhuruphotos.albums.usecase.AlbumsUseCase
 import com.savvasdalkitsis.uhuruphotos.albums.worker.AlbumWorkScheduler
 import com.savvasdalkitsis.uhuruphotos.initializer.ApplicationCreated
 import dagger.Binds
@@ -34,4 +35,8 @@ abstract class AlbumsBindingsModule {
     @Binds
     abstract fun albumWorkScheduler(albumWorkScheduler: AlbumWorkScheduler):
             com.savvasdalkitsis.uhuruphotos.albums.api.worker.AlbumWorkScheduler
+
+    @Binds
+    abstract fun albumsUseCase(albumsUseCase: AlbumsUseCase):
+            com.savvasdalkitsis.uhuruphotos.albums.api.usecase.AlbumsUseCase
 }

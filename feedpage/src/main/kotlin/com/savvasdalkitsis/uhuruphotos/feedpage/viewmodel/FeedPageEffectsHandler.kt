@@ -20,6 +20,7 @@ import com.savvasdalkitsis.uhuruphotos.feedpage.mvflow.FeedPageEffect
 import com.savvasdalkitsis.uhuruphotos.feedpage.mvflow.FeedPageEffect.*
 import com.savvasdalkitsis.uhuruphotos.home.navigation.HomeNavigationTarget
 import com.savvasdalkitsis.uhuruphotos.navigation.ControllersProvider
+import com.savvasdalkitsis.uhuruphotos.photos.model.PhotoSequenceDataSource.AllPhotos
 import com.savvasdalkitsis.uhuruphotos.photos.navigation.PhotoNavigationTarget
 import com.savvasdalkitsis.uhuruphotos.server.navigation.ServerNavigationTarget
 import com.savvasdalkitsis.uhuruphotos.settings.navigation.SettingsNavigationTarget
@@ -40,9 +41,9 @@ class FeedPageEffectsHandler @Inject constructor(
             backQueue.clear()
             navigate(HomeNavigationTarget.name)
         }
-        is OpenPhotoDetails -> navigateTo(
-            PhotoNavigationTarget.name(effect.id, effect.center, effect.scale, effect.isVideo)
-        )
+        is OpenPhotoDetails -> with(effect) {
+            navigateTo(PhotoNavigationTarget.name(id, center, scale, isVideo, AllPhotos))
+        }
         is SharePhotos -> {
             toaster.show(R.string.downloading_photos_sharing)
             shareImage.shareMultiple(effect.selectedPhotos.mapNotNull {

@@ -16,6 +16,7 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.albums.usecase
 
 import com.savvasdalkitsis.uhuruphotos.albums.api.model.Album
+import com.savvasdalkitsis.uhuruphotos.albums.api.usecase.AlbumsUseCase
 import com.savvasdalkitsis.uhuruphotos.albums.repository.AlbumsRepository
 import com.savvasdalkitsis.uhuruphotos.albums.worker.AlbumWorkScheduler
 import com.savvasdalkitsis.uhuruphotos.db.albums.GetAlbums
@@ -39,9 +40,9 @@ class AlbumsUseCase @Inject constructor(
     private val dateDisplayer: DateDisplayer,
     private val photosUseCase: PhotosUseCase,
     private val albumWorkScheduler: AlbumWorkScheduler,
-) {
+) : AlbumsUseCase {
 
-    fun getPersonAlbums(personId: Int): Flow<List<Album>> = albumsRepository.getPersonAlbums(personId)
+    override fun getPersonAlbums(personId: Int): Flow<List<Album>> = albumsRepository.getPersonAlbums(personId)
         .map {
             it.mapValues {
                 getPersonAlbums -> getPersonAlbums.toDbAlbums()
@@ -49,7 +50,7 @@ class AlbumsUseCase @Inject constructor(
         }
         .mapToAlbums()
 
-    fun getAlbums(): Flow<List<Album>> = albumsRepository.getAlbumsByDate()
+    override fun observeAlbums(): Flow<List<Album>> = albumsRepository.observeAlbumsByDate()
         .map {
             it.mapValues {
                     getAlbums -> getAlbums.toDbAlbums()
@@ -57,44 +58,52 @@ class AlbumsUseCase @Inject constructor(
         }
         .mapToAlbums()
 
-    private fun Flow<Group<String, DbAlbums>>.mapToAlbums(): Flow<List<Album>> = map { albums ->
-        albums.items.map { (id, photos) ->
-            val albumDate = photos.firstOrNull()?.albumDate
-            val albumLocation = photos.firstOrNull()?.albumLocation
-
-            Album(
-                id = id,
-                photoCount = photos.size,
-                date = dateDisplayer.dateString(albumDate),
-                location = albumLocation ?: "",
-                photos = photos.mapNotNull { item ->
-                    item.photoId?.let { id ->
-                        Photo(
-                            id = id,
-                            thumbnailUrl = with(photosUseCase) {
-                                id.toThumbnailUrlFromId()
-                            },
-                            fullResUrl = with(photosUseCase) {
-                                id.toFullSizeUrlFromId(item.isVideo)
-                            },
-                            fallbackColor = item.dominantColor,
-                            isFavourite = (item.rating ?: 0) >= FAVOURITES_RATING_THRESHOLD,
-                            ratio = item.aspectRatio ?: 1.0f,
-                            isVideo = item.isVideo,
-                        )
-                    }
-                }
-            )
-        }.filter { it.photos.isNotEmpty() }
-    }
-    .distinctUntilChanged()
-    .safelyOnStartIgnoring {
-        if (!albumsRepository.hasAlbums()) {
-            startRefreshAlbumsWork(shallow = false)
+    override suspend fun getAlbums(): List<Album> = albumsRepository.getAlbumsByDate()
+        .mapValues {
+            getAlbums -> getAlbums.toDbAlbums()
         }
-    }
+        .mapToAlbums()
 
-    fun startRefreshAlbumsWork(shallow: Boolean) {
+    private fun Flow<Group<String, DbAlbums>>.mapToAlbums(): Flow<List<Album>> = map { albums ->
+        albums.mapToAlbums()
+    }
+        .distinctUntilChanged()
+        .safelyOnStartIgnoring {
+            if (!albumsRepository.hasAlbums()) {
+                startRefreshAlbumsWork(shallow = false)
+            }
+        }
+
+    private suspend fun Group<String, DbAlbums>.mapToAlbums(): List<Album> = items.map { (id, photos) ->
+        val albumDate = photos.firstOrNull()?.albumDate
+        val albumLocation = photos.firstOrNull()?.albumLocation
+
+        Album(
+            id = id,
+            photoCount = photos.size,
+            date = dateDisplayer.dateString(albumDate),
+            location = albumLocation ?: "",
+            photos = photos.mapNotNull { item ->
+                item.photoId?.let { id ->
+                    Photo(
+                        id = id,
+                        thumbnailUrl = with(photosUseCase) {
+                            id.toThumbnailUrlFromId()
+                        },
+                        fullResUrl = with(photosUseCase) {
+                            id.toFullSizeUrlFromId(item.isVideo)
+                        },
+                        fallbackColor = item.dominantColor,
+                        isFavourite = (item.rating ?: 0) >= FAVOURITES_RATING_THRESHOLD,
+                        ratio = item.aspectRatio ?: 1.0f,
+                        isVideo = item.isVideo,
+                    )
+                }
+            }
+        )
+    }.filter { it.photos.isNotEmpty() }
+
+    override fun startRefreshAlbumsWork(shallow: Boolean) {
         albumWorkScheduler.scheduleAlbumsRefreshNow(shallow)
     }
 }

@@ -11,6 +11,7 @@
 [libraries]
 accompanist-insets = { module = 'com.google.accompanist:accompanist-insets-ui', version.ref = "accompanist" }
 accompanist-navigation = { module = 'com.google.accompanist:accompanist-navigation-animation', version.ref = "accompanist" }
+accompanist-pager = { module = 'com.google.accompanist:accompanist-pager', version.ref = "accompanist" }
 accompanist-permissions = { module = 'com.google.accompanist:accompanist-permissions', version.ref = "accompanist" }
 accompanist-swiperefresh = { module = 'com.google.accompanist:accompanist-swiperefresh', version.ref = "accompanist" }
 accompanist-systemui = { module = 'com.google.accompanist:accompanist-systemuicontroller', version.ref = "accompanist" }
@@ -66,6 +67,7 @@ scrollbar = "com.github.nanihadesuka:LazyColumnScrollbar:1.0.3"
 sqldelight-android = { module = 'com.squareup.sqldelight:android-driver', version.ref = "sqldelight" }
 sqldelight-coroutines = { module = 'com.squareup.sqldelight:coroutines-extensions', version.ref = "sqldelight" }
 urlvalidator = "commons-validator:commons-validator:1.7"
+zoomable = "com.mxalbert.zoomable:zoomable:1.4.2"
 
 [bundles]
 lumberjack = ["lumberjack-core", "lumberjack-file", "lumberjack-feedback", "lumberjack-notification", "lumberjack-feedback-manager"]

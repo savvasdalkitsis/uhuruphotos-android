@@ -16,34 +16,39 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.photos.view
 
 import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.slideInVertically
+import androidx.compose.animation.slideOutVertically
+import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass.Companion.Compact
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import com.savvasdalkitsis.uhuruphotos.photos.mvflow.PhotoAction
-import com.savvasdalkitsis.uhuruphotos.photos.view.PhotoSheetStyle.BOTTOM
 import com.savvasdalkitsis.uhuruphotos.photos.view.state.PhotoState
 import com.savvasdalkitsis.uhuruphotos.ui.view.*
-import com.savvasdalkitsis.uhuruphotos.ui.view.zoom.ZoomableState
+import com.savvasdalkitsis.uhuruphotos.ui.window.LocalWindowSize
 
 @Composable
 internal fun PhotoDetailsScaffold(
     sheetSize: SheetSize,
     state: PhotoState,
+    index: Int,
     action: (PhotoAction) -> Unit,
-    zoomableState: ZoomableState
 ) {
     CommonScaffold(
         modifier = Modifier
             .adjustingSheetSize(sheetSize),
         title = { },
         bottomBarContent = {
-            val style = LocalPhotoSheetStyle.current
-            AnimatedVisibility(visible = style == BOTTOM || state.infoSheetHidden) {
-                PhotoDetailsBottomActionBar(state, action)
+            AnimatedVisibility(
+                visible = LocalWindowSize.current.widthSizeClass == Compact || state.infoSheetHidden,
+                enter = slideInVertically(initialOffsetY = { it }),
+                exit = slideOutVertically(targetOffsetY = { it }),
+            ) {
+                PhotoDetailsBottomActionBar(state, index, action)
             }
         },
         actionBarContent = {
-            PhotoDetailsActionBar(state, action)
+            PhotoDetailsActionBar(state, index, action)
         },
         toolbarColor = { Color.Transparent },
         bottomBarColor = { Color.Transparent },
@@ -54,8 +59,8 @@ internal fun PhotoDetailsScaffold(
         },
     ) { contentPadding ->
         when {
-            state.isLoading && state.lowResUrl.isEmpty() -> FullProgressBar()
-            else -> PhotoDetails(zoomableState, action, state, contentPadding)
+            state.isLoading && state.photos[index].lowResUrl.isEmpty() -> FullProgressBar()
+            else -> PhotoDetails(action, state, index, contentPadding)
         }
     }
 }

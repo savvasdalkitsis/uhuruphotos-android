@@ -58,7 +58,7 @@ class FeedPageHandler @Inject constructor(
                 .map(FeedPageMutation::ChangeDisplay),
             flowOf(Loading),
             combine(
-                albumsUseCase.getAlbums().debounce(200),
+                albumsUseCase.observeAlbums().debounce(200),
                 selectionList.ids,
             ) { albums, ids ->
                 albums.selectPhotos(ids)

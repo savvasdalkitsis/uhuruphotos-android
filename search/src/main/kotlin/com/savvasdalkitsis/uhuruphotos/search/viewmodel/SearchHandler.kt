@@ -160,7 +160,7 @@ class SearchHandler @Inject constructor(
             .map {
                 it.map(::RecentSearchSuggestion)
             },
-        peopleUseCase.getPeopleByPhotoCount()
+        peopleUseCase.observePeopleByPhotoCount()
             .onErrorsIgnore()
             .toPeople()
             .map {
@@ -180,7 +180,7 @@ class SearchHandler @Inject constructor(
 
     context(PhotosUseCase)
     private fun showPeopleSuggestion(effect: suspend (SearchEffect) -> Unit) =
-        peopleUseCase.getPeopleByPhotoCount()
+        peopleUseCase.observePeopleByPhotoCount()
             .onErrors {
                 effect(ErrorRefreshingPeople)
             }

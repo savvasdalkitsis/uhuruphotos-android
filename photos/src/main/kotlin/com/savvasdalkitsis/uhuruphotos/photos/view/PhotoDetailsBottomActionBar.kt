@@ -16,6 +16,8 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.photos.view
 
 import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.slideInVertically
+import androidx.compose.animation.slideOutVertically
 import androidx.compose.foundation.layout.Row
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -31,13 +33,17 @@ import com.savvasdalkitsis.uhuruphotos.strings.R as Strings
 @Composable
 fun PhotoDetailsBottomActionBar(
     state: PhotoState,
+    index: Int,
     action: (PhotoAction) -> Unit,
 ) {
     Row {
         AnimatedVisibility(
             modifier = Modifier
                 .weight(1f),
-            visible = state.showShareIcon) {
+            visible = state.photos[index].showShareIcon,
+            enter = slideInVertically(initialOffsetY = { it }),
+            exit = slideOutVertically(targetOffsetY = { it }),
+        ) {
             ActionIconWithText(
                 onClick = { action(SharePhoto) },
                 icon = Icons.drawable.ic_share,

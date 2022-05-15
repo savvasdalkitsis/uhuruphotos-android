@@ -20,21 +20,28 @@ import com.google.android.gms.maps.model.LatLng
 import com.savvasdalkitsis.uhuruphotos.people.api.view.state.Person
 
 data class PhotoState(
-    val id: String = "",
+    val currentIndex: Int = 0,
+    val photos: List<SinglePhotoState> = emptyList(),
     val isLoading: Boolean = false,
-    val fullResUrl: String = "",
-    val lowResUrl: String = "",
     @StringRes val errorMessage: Int? = null,
     val showUI: Boolean = true,
     val showRefresh: Boolean = false,
     val showInfoButton: Boolean = false,
     val showPhotoDeletionConfirmationDialog: Boolean = false,
-    val showShareIcon: Boolean = false,
-    val isFavourite: Boolean? = null,
     val infoSheetHidden: Boolean = true,
+) {
+    val currentPhoto: SinglePhotoState get() = photos[currentIndex]
+}
+
+data class SinglePhotoState(
+    val id: String = "",
+    val fullResUrl: String = "",
+    val lowResUrl: String = "",
+    val isFavourite: Boolean? = null,
     val dateAndTime: String = "",
     val location: String = "",
     val gps: LatLng? = null,
     val isVideo: Boolean = false,
+    val showShareIcon: Boolean = false,
     val peopleInPhoto: List<Person> = emptyList(),
 )

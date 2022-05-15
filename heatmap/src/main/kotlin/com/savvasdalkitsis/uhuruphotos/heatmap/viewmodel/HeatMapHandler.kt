@@ -45,7 +45,7 @@ class HeatMapHandler @Inject constructor(
         effect: suspend (HeatMapEffect) -> Unit
     ): Flow<HeatMapMutation> = when (action) {
         Load -> merge(
-            photosUseCase.getAllPhotos()
+            photosUseCase.observeAllPhotoDetails()
                 .map { photos ->
                     photos
                         .filter { it.latLng != null }
@@ -63,7 +63,7 @@ class HeatMapHandler @Inject constructor(
                         }
                 }
                 .safelyOnStart {
-                    albumsUseCase.getAlbums().collect { albums ->
+                    albumsUseCase.observeAlbums().collect { albums ->
                         detailsDownloading.emit(true)
                         albums
                             .flatMap { it.photos }
