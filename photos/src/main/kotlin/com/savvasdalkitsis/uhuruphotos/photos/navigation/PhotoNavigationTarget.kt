@@ -25,7 +25,7 @@ import androidx.navigation.NavGraphBuilder
 import com.savvasdalkitsis.uhuruphotos.navigation.NavigationTarget
 import com.savvasdalkitsis.uhuruphotos.navigation.navigationTarget
 import com.savvasdalkitsis.uhuruphotos.photos.model.PhotoSequenceDataSource
-import com.savvasdalkitsis.uhuruphotos.photos.model.PhotoSequenceDataSource.*
+import com.savvasdalkitsis.uhuruphotos.photos.model.PhotoSequenceDataSource.Single
 import com.savvasdalkitsis.uhuruphotos.photos.mvflow.PhotoAction
 import com.savvasdalkitsis.uhuruphotos.photos.mvflow.PhotoAction.LoadPhoto
 import com.savvasdalkitsis.uhuruphotos.photos.mvflow.PhotoEffect
@@ -88,7 +88,10 @@ class PhotoNavigationTarget @Inject constructor(
                     else -> "photo"
                 }
             )
-            .replace("{dataSource}", photoSequenceDataSource.toString())
+            .replace("{dataSource}", photoSequenceDataSource.toArgument)
+
+        private val NavBackStackEntry.datasource: PhotoSequenceDataSource get() =
+            PhotoSequenceDataSource.from(get("dataSource").orEmpty())
 
         private val NavBackStackEntry.photoId: String get() = get("id")!!
         private val NavBackStackEntry.isVideo: Boolean get() = get("type") == "video"
@@ -99,11 +102,6 @@ class PhotoNavigationTarget @Inject constructor(
                 return if (x != null && y != null) Offset(x, y) else null
             }
         private val NavBackStackEntry.scale: Float get() = get("scale")?.toFloat() ?: 0.3f
-        private val NavBackStackEntry.datasource: PhotoSequenceDataSource get() =
-            when(get("dataSource")) {
-                AllPhotos.toString() -> AllPhotos
-                else -> Single
-            }
 
         private fun NavBackStackEntry.get(arg: String) = arguments!!.getString(arg)
     }

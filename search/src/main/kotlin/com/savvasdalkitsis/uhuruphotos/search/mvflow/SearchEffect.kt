@@ -33,5 +33,6 @@ sealed class SearchEffect {
         val center: Offset,
         val scale: Float,
         val isVideo: Boolean,
+        val currentQuery: String,
     ) : SearchEffect()
 }

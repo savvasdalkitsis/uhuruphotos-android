@@ -21,6 +21,7 @@ import kotlinx.coroutines.flow.Flow
 
 interface SearchUseCase {
     fun searchFor(query: String): Flow<Result<List<Album>, Throwable>>
+    suspend fun searchResultsFor(query: String): List<Album>
     fun getRandomSearchSuggestion(): Flow<String>
     fun getSearchSuggestions(): Flow<List<String>>
     fun getRecentTextSearches(): Flow<List<String>>

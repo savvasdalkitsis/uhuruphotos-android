@@ -15,12 +15,12 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.photos.viewmodel
 
+import com.savvasdalkitsis.uhuruphotos.albums.api.model.Album
 import com.savvasdalkitsis.uhuruphotos.albums.api.usecase.AlbumsUseCase
 import com.savvasdalkitsis.uhuruphotos.db.people.People
 import com.savvasdalkitsis.uhuruphotos.people.api.usecase.PeopleUseCase
 import com.savvasdalkitsis.uhuruphotos.people.api.view.state.toPerson
-import com.savvasdalkitsis.uhuruphotos.photos.model.PhotoSequenceDataSource.AllPhotos
-import com.savvasdalkitsis.uhuruphotos.photos.model.PhotoSequenceDataSource.Single
+import com.savvasdalkitsis.uhuruphotos.photos.model.PhotoSequenceDataSource.*
 import com.savvasdalkitsis.uhuruphotos.photos.mvflow.PhotoAction
 import com.savvasdalkitsis.uhuruphotos.photos.mvflow.PhotoAction.*
 import com.savvasdalkitsis.uhuruphotos.photos.mvflow.PhotoAction.DismissErrorMessage
@@ -36,6 +36,7 @@ import com.savvasdalkitsis.uhuruphotos.photos.service.model.deserializePeopleNam
 import com.savvasdalkitsis.uhuruphotos.photos.usecase.PhotosUseCase
 import com.savvasdalkitsis.uhuruphotos.photos.view.state.PhotoState
 import com.savvasdalkitsis.uhuruphotos.photos.view.state.SinglePhotoState
+import com.savvasdalkitsis.uhuruphotos.search.api.SearchUseCase
 import com.savvasdalkitsis.uhuruphotos.strings.R
 import com.savvasdalkitsis.uhuruphotos.viewmodel.Handler
 import kotlinx.coroutines.flow.Flow
@@ -48,6 +49,7 @@ class PhotoHandler @Inject constructor(
     private val photosUseCase: PhotosUseCase,
     private val peopleUseCase: PeopleUseCase,
     private val albumsUseCase: AlbumsUseCase,
+    private val searchUseCase: SearchUseCase,
 ) : Handler<PhotoState, PhotoEffect, PhotoAction, PhotoMutation> {
 
     override fun invoke(
@@ -66,22 +68,11 @@ class PhotoHandler @Inject constructor(
                 ))
                 when (action.datasource) {
                     Single -> loadPhotoDetails(action.id)
-                    AllPhotos -> {
-                        val photoStates = albumsUseCase.getAlbums().flatMap { album ->
-                            album.photos
-                        }.map { photo ->
-                            SinglePhotoState(
-                                id = photo.id,
-                                lowResUrl = photo.id.toThumbnailUrlFromId(),
-                                fullResUrl = photo.id.toFullSizeUrlFromId(action.isVideo),
-                                isFavourite = photo.isFavourite,
-                                isVideo = photo.isVideo,
-                            )
-                        }
-                        val index = photoStates.indexOfFirst { it.id == action.id }
-                        emit(ShowMultiplePhotos(photoStates, index))
-                        loadPhotoDetails(action.id)
-                    }
+                    AllPhotos -> loadAlbums(albumsUseCase.getAlbums(), action)
+                    is SearchResults -> loadAlbums(
+                        searchUseCase.searchResultsFor(action.datasource.query),
+                        action,
+                    )
                 }
             }
         }
@@ -140,6 +131,27 @@ class PhotoHandler @Inject constructor(
         is PersonSelected -> flow {
             effect(NavigateToPerson(action.person.id))
         }
+    }
+
+    context(PhotosUseCase)
+    private suspend fun FlowCollector<PhotoMutation>.loadAlbums(
+        albums: List<Album>,
+        action: LoadPhoto
+    ) {
+        val photoStates = albums.flatMap { album ->
+            album.photos
+        }.map { photo ->
+            SinglePhotoState(
+                id = photo.id,
+                lowResUrl = photo.id.toThumbnailUrlFromId(),
+                fullResUrl = photo.id.toFullSizeUrlFromId(action.isVideo),
+                isFavourite = photo.isFavourite,
+                isVideo = photo.isVideo,
+            )
+        }
+        val index = photoStates.indexOfFirst { it.id == action.id }
+        emit(ShowMultiplePhotos(photoStates, index))
+        loadPhotoDetails(action.id)
     }
 
     private suspend fun FlowCollector<PhotoMutation>.loadPhotoDetails(

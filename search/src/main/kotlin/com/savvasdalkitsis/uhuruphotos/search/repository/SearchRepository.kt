@@ -16,6 +16,7 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.search.repository
 
 import com.fredporciuncula.flow.preferences.FlowSharedPreferences
+import com.savvasdalkitsis.uhuruphotos.db.extensions.await
 import com.savvasdalkitsis.uhuruphotos.db.photos.PhotoSummary
 import com.savvasdalkitsis.uhuruphotos.db.photos.PhotoSummaryQueries
 import com.savvasdalkitsis.uhuruphotos.db.search.GetSearchResults
@@ -45,9 +46,12 @@ class SearchRepository @Inject constructor(
     private val recentSearches = flowSharedPreferences
         .getNullableStringSet("recentSearches", emptySet())
 
-    fun getSearchResults(query: String): Flow<Group<String, GetSearchResults>> =
+    fun observeSearchResults(query: String): Flow<Group<String, GetSearchResults>> =
         searchQueries.getSearchResults(query).asFlow().mapToList().groupBy(GetSearchResults::date)
             .distinctUntilChanged()
+
+    suspend fun getSearchResults(query: String): Group<String, GetSearchResults> =
+        searchQueries.getSearchResults(query).await().groupBy(GetSearchResults::date).let(::Group)
 
     suspend fun refreshSearch(query: String) {
         val results = searchService.search(query)

@@ -17,7 +17,9 @@ package com.savvasdalkitsis.uhuruphotos.search.usecase
 
 import com.github.michaelbull.result.Result
 import com.savvasdalkitsis.uhuruphotos.albums.api.model.Album
+import com.savvasdalkitsis.uhuruphotos.db.search.GetSearchResults
 import com.savvasdalkitsis.uhuruphotos.infrastructure.date.DateDisplayer
+import com.savvasdalkitsis.uhuruphotos.infrastructure.extensions.Group
 import com.savvasdalkitsis.uhuruphotos.infrastructure.extensions.safelyOnStart
 import com.savvasdalkitsis.uhuruphotos.infrastructure.extensions.safelyOnStartIgnoring
 import com.savvasdalkitsis.uhuruphotos.photos.api.model.Photo
@@ -38,49 +40,53 @@ class SearchUseCase @Inject constructor(
     private val photosUseCase: PhotosUseCase,
 ) : SearchUseCase {
 
-    override fun searchFor(query: String): Flow<Result<List<Album>, Throwable>> =
+    override suspend fun searchResultsFor(query: String): List<Album> =
         searchRepository.getSearchResults(query)
+            .mapToAlbums()
+
+    override fun searchFor(query: String): Flow<Result<List<Album>, Throwable>> =
+        searchRepository.observeSearchResults(query)
             .map { groups ->
-                groups.items.map { (id, photos) ->
-                    val albumLocation = photos.firstOrNull()?.location
-                    val albumDate = photos.firstOrNull()?.date
-                    Album(
-                        id = id,
-                        photoCount = photos.size,
-                        date = dateDisplayer.dateString(albumDate),
-                        location = albumLocation,
-                        photos = photos.mapNotNull { photo ->
-                            photo.summaryId?.let { id ->
-                                Photo(
-                                    id = id,
-                                    thumbnailUrl = with(photosUseCase) {
-                                        photo.summaryId.toThumbnailUrlFromId()
-                                    },
-                                    fallbackColor = photo.dominantColor,
-                                    ratio = photo.aspectRatio ?: 1f,
-                                    isVideo = photo.isVideo,
-                                )
-                            }
-                        }
-                    )
-                }
-            }
-            .map { albums ->
-                albums
-                    .map { album ->
-                        val photos = album.photos.filter { photo ->
-                            !photo.thumbnailUrl.isNullOrEmpty()
-                        }
-                        album.copy(photoCount = photos.size, photos = photos)
-                    }
-                    .filter { album ->
-                        album.photoCount > 0
-                    }
+                groups.mapToAlbums()
             }
             .distinctUntilChanged()
             .safelyOnStart {
                 searchRepository.refreshSearch(query)
             }
+
+    private suspend fun Group<String, GetSearchResults>.mapToAlbums() = items
+        .map { (id, photos) ->
+            val albumLocation = photos.firstOrNull()?.location
+            val albumDate = photos.firstOrNull()?.date
+            Album(
+                id = id,
+                photoCount = photos.size,
+                date = dateDisplayer.dateString(albumDate),
+                location = albumLocation,
+                photos = photos.mapNotNull { photo ->
+                    photo.summaryId?.let { id ->
+                        Photo(
+                            id = id,
+                            thumbnailUrl = with(photosUseCase) {
+                                photo.summaryId.toThumbnailUrlFromId()
+                            },
+                            fallbackColor = photo.dominantColor,
+                            ratio = photo.aspectRatio ?: 1f,
+                            isVideo = photo.isVideo,
+                        )
+                    }
+                }
+            )
+        }
+        .map { album ->
+            val photos = album.photos.filter { photo ->
+                !photo.thumbnailUrl.isNullOrEmpty()
+            }
+            album.copy(photoCount = photos.size, photos = photos)
+        }
+        .filter { album ->
+            album.photoCount > 0
+        }
 
     override fun getRandomSearchSuggestion(): Flow<String> = getSearchSuggestions()
         .flatMapLatest { suggestions ->

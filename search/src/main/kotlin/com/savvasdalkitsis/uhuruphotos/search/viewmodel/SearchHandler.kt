@@ -77,6 +77,7 @@ class SearchHandler @Inject constructor(
         }
         is QueryChanged -> flow {
             queryFilter.emit(action.query)
+            emit(UpdateLatestQuery(action.query))
         }
         is SearchFor -> performSearch(effect, action)
         is ChangeFocus -> flowOf(FocusChanged(action.focused))
@@ -102,7 +103,9 @@ class SearchHandler @Inject constructor(
             effect(NavigateToSettings)
         }
         is SelectedPhoto -> flow {
-            effect(OpenPhotoDetails(action.photo.id, action.center, action.scale, action.photo.isVideo))
+            with(action) {
+                effect(OpenPhotoDetails(photo.id, center, scale, photo.isVideo, state.latestQuery))
+            }
         }
         is ChangeDisplay -> flowOf(ChangeSearchDisplay(action.display))
         ViewAllPeopleSelected -> flow {
@@ -124,6 +127,7 @@ class SearchHandler @Inject constructor(
         action: SearchFor
     ) = channelFlow {
         lastSearch?.cancel()
+        send(UpdateLatestQuery(action.query))
         send(SwitchStateToSearching)
         effect(HideKeyboard)
         lastSearch = launch {

@@ -19,6 +19,7 @@ dependencies {
     implementation project(":people-api")
     implementation project(":person-api")
     implementation project(":photos-api")
+    implementation project(":search-api")
     implementation project(":worker")
     implementation project(":auth")
     implementation project(":icons")

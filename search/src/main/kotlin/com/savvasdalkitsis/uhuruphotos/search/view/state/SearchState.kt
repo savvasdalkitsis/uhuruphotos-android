@@ -31,4 +31,5 @@ data class SearchState(
     val suggestion: String? = null,
     val people: List<Person> = emptyList(),
     val searchSuggestions: List<SearchSuggestion> = emptyList(),
+    val latestQuery: String = "",
 )

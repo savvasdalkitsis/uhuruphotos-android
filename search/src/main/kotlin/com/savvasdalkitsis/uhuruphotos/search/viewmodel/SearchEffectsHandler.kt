@@ -20,6 +20,7 @@ import com.savvasdalkitsis.uhuruphotos.home.navigation.HomeNavigationTarget
 import com.savvasdalkitsis.uhuruphotos.navigation.ControllersProvider
 import com.savvasdalkitsis.uhuruphotos.people.api.navigation.PeopleNavigationTarget
 import com.savvasdalkitsis.uhuruphotos.person.api.navigation.PersonNavigationTarget
+import com.savvasdalkitsis.uhuruphotos.photos.model.PhotoSequenceDataSource.SearchResults
 import com.savvasdalkitsis.uhuruphotos.photos.navigation.PhotoNavigationTarget
 import com.savvasdalkitsis.uhuruphotos.search.mvflow.SearchEffect
 import com.savvasdalkitsis.uhuruphotos.search.mvflow.SearchEffect.*
@@ -50,7 +51,9 @@ class SearchEffectsHandler @Inject constructor(
         )
         NavigateToSettings -> navigateTo(SettingsNavigationTarget.name)
         is OpenPhotoDetails -> navigateTo(
-            PhotoNavigationTarget.name(effect.id, effect.center, effect.scale, effect.isVideo)
+            with(effect) {
+                PhotoNavigationTarget.name(id, center, scale, isVideo, SearchResults(currentQuery))
+            }
         )
         ErrorSearching -> toaster.show(R.string.error_searching)
         NavigateToAllPeople -> navigateTo(PeopleNavigationTarget.name)

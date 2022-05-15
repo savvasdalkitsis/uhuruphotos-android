@@ -38,5 +38,6 @@ fun searchReducer(): Reducer<SearchState, SearchMutation> = { state, mutation ->
         HideSuggestions -> state.copy(suggestion = null)
         is ShowPeople -> state.copy(people = mutation.people)
         is ShowSearchSuggestions -> state.copy(searchSuggestions = mutation.suggestions)
+        is UpdateLatestQuery -> state.copy(latestQuery = mutation.query)
     }
 }
