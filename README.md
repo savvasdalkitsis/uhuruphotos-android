@@ -43,3 +43,8 @@ mainly:
 
 The app is currently in closed beta on the Google Play store. Contact me on 
 [twitter](https://twitter.com/geeky_android) for access.
+
+# Contributions
+
+* Translation: UhuruPhotos uses Weblate for its translations. Feel free to contribute or view
+existing translations at [weblate](https://hosted.weblate.org/engage/uhuruphotos/)
