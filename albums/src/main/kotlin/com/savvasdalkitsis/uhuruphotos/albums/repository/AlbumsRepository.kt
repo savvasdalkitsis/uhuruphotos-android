@@ -52,12 +52,15 @@ class AlbumsRepository @Inject constructor(
     suspend fun getAlbumsByDate() : Group<String, GetAlbums> =
         albumsQueries.getAlbums().await().groupBy(GetAlbums::id).let(::Group)
 
-    fun getPersonAlbums(personId: Int) : Flow<Group<String, GetPersonAlbums>> =
+    fun observePersonAlbums(personId: Int) : Flow<Group<String, GetPersonAlbums>> =
         albumsQueries.getPersonAlbums(personId).asFlow().mapToList().groupBy(GetPersonAlbums::id)
             .distinctUntilChanged()
             .safelyOnStartIgnoring {
                 downloadPersonAlbums(personId)
             }
+
+    suspend fun getPersonAlbums(personId: Int) : Group<String, GetPersonAlbums> =
+        albumsQueries.getPersonAlbums(personId).await().groupBy(GetPersonAlbums::id).let(::Group)
 
     private suspend fun downloadPersonAlbums(personId: Int) {
         process(

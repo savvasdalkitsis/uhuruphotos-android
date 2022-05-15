@@ -42,7 +42,7 @@ class AlbumsUseCase @Inject constructor(
     private val albumWorkScheduler: AlbumWorkScheduler,
 ) : AlbumsUseCase {
 
-    override fun getPersonAlbums(personId: Int): Flow<List<Album>> = albumsRepository.getPersonAlbums(personId)
+    override fun observePersonAlbums(personId: Int): Flow<List<Album>> = albumsRepository.observePersonAlbums(personId)
         .map {
             it.mapValues {
                 getPersonAlbums -> getPersonAlbums.toDbAlbums()
@@ -55,6 +55,12 @@ class AlbumsUseCase @Inject constructor(
             it.mapValues {
                     getAlbums -> getAlbums.toDbAlbums()
             }
+        }
+        .mapToAlbums()
+
+    override suspend fun getPersonAlbums(personId: Int): List<Album> = albumsRepository.getPersonAlbums(personId)
+        .mapValues {
+            getAlbums -> getAlbums.toDbAlbums()
         }
         .mapToAlbums()
 
@@ -74,7 +80,7 @@ class AlbumsUseCase @Inject constructor(
             }
         }
 
-    private suspend fun Group<String, DbAlbums>.mapToAlbums(): List<Album> = items.map { (id, photos) ->
+    private fun Group<String, DbAlbums>.mapToAlbums(): List<Album> = items.map { (id, photos) ->
         val albumDate = photos.firstOrNull()?.albumDate
         val albumLocation = photos.firstOrNull()?.albumLocation
 

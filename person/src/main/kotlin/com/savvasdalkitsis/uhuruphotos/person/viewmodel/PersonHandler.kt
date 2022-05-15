@@ -16,7 +16,7 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.person.viewmodel
 
 import com.savvasdalkitsis.uhuruphotos.people.api.usecase.PeopleUseCase
-import com.savvasdalkitsis.uhuruphotos.person.usecase.PersonUseCase
+import com.savvasdalkitsis.uhuruphotos.person.api.usecase.PersonUseCase
 import com.savvasdalkitsis.uhuruphotos.person.view.state.PersonState
 import com.savvasdalkitsis.uhuruphotos.person.viewmodel.PersonAction.*
 import com.savvasdalkitsis.uhuruphotos.person.viewmodel.PersonEffect.OpenPhotoDetails
@@ -40,7 +40,7 @@ class PersonHandler @Inject constructor(
             flowOf(Loading),
             peopleUseCase.observePerson(action.id)
                 .map(::ShowPersonDetails),
-            personUseCase.getPersonAlbums(action.id)
+            personUseCase.observePersonAlbums(action.id)
                 .map(::ShowPersonPhotos)
         )
         NavigateBack -> flow {
@@ -49,7 +49,7 @@ class PersonHandler @Inject constructor(
         is ChangeDisplay -> flowOf(SetFeedDisplay(action.display))
         is SelectedPhoto -> flow {
             effect(with(action) {
-                OpenPhotoDetails(photo.id, center, scale, photo.isVideo)
+                OpenPhotoDetails(photo.id, center, scale, photo.isVideo, state.person!!)
             })
         }
     }

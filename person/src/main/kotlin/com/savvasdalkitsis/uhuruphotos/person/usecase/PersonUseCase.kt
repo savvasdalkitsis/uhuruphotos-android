@@ -17,13 +17,17 @@ package com.savvasdalkitsis.uhuruphotos.person.usecase
 
 import com.savvasdalkitsis.uhuruphotos.albums.api.model.Album
 import com.savvasdalkitsis.uhuruphotos.albums.usecase.AlbumsUseCase
+import com.savvasdalkitsis.uhuruphotos.person.api.usecase.PersonUseCase
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
 class PersonUseCase @Inject constructor(
     private val albumsUseCase: AlbumsUseCase,
-) {
+) : PersonUseCase {
 
-    fun getPersonAlbums(id: Int): Flow<List<Album>> =
+    override fun observePersonAlbums(id: Int): Flow<List<Album>> =
+        albumsUseCase.observePersonAlbums(id)
+
+    override suspend fun getPersonAlbums(id: Int): List<Album> =
         albumsUseCase.getPersonAlbums(id)
 }

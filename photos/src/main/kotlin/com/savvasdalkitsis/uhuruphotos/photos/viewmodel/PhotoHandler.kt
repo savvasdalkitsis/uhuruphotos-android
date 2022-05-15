@@ -20,6 +20,7 @@ import com.savvasdalkitsis.uhuruphotos.albums.api.usecase.AlbumsUseCase
 import com.savvasdalkitsis.uhuruphotos.db.people.People
 import com.savvasdalkitsis.uhuruphotos.people.api.usecase.PeopleUseCase
 import com.savvasdalkitsis.uhuruphotos.people.api.view.state.toPerson
+import com.savvasdalkitsis.uhuruphotos.person.api.usecase.PersonUseCase
 import com.savvasdalkitsis.uhuruphotos.photos.model.PhotoSequenceDataSource.*
 import com.savvasdalkitsis.uhuruphotos.photos.mvflow.PhotoAction
 import com.savvasdalkitsis.uhuruphotos.photos.mvflow.PhotoAction.*
@@ -48,6 +49,7 @@ import javax.inject.Inject
 class PhotoHandler @Inject constructor(
     private val photosUseCase: PhotosUseCase,
     private val peopleUseCase: PeopleUseCase,
+    private val personUseCase: PersonUseCase,
     private val albumsUseCase: AlbumsUseCase,
     private val searchUseCase: SearchUseCase,
 ) : Handler<PhotoState, PhotoEffect, PhotoAction, PhotoMutation> {
@@ -71,6 +73,10 @@ class PhotoHandler @Inject constructor(
                     AllPhotos -> loadAlbums(albumsUseCase.getAlbums(), action)
                     is SearchResults -> loadAlbums(
                         searchUseCase.searchResultsFor(action.datasource.query),
+                        action,
+                    )
+                    is PersonResults -> loadAlbums(
+                        personUseCase.getPersonAlbums(action.datasource.personId),
                         action,
                     )
                 }

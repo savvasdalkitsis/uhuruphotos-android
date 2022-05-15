@@ -16,13 +16,15 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.person.viewmodel
 
 import androidx.compose.ui.geometry.Offset
+import com.savvasdalkitsis.uhuruphotos.people.api.view.state.Person
 
 sealed class PersonEffect {
     data class OpenPhotoDetails(
         val id: String,
         val center: Offset,
         val scale: Float,
-        val video: Boolean
+        val video: Boolean,
+        val person: Person,
     ) : PersonEffect()
 
     object NavigateBack : PersonEffect()

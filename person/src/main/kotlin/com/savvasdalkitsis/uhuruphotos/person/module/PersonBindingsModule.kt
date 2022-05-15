@@ -17,6 +17,7 @@ package com.savvasdalkitsis.uhuruphotos.person.module
 
 import com.savvasdalkitsis.uhuruphotos.navigation.NavigationTarget
 import com.savvasdalkitsis.uhuruphotos.person.navigation.PersonNavigationTarget
+import com.savvasdalkitsis.uhuruphotos.person.usecase.PersonUseCase
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -30,5 +31,9 @@ abstract class PersonBindingsModule {
     @Binds
     @IntoSet
     abstract fun personNavigationTarget(target: PersonNavigationTarget): NavigationTarget
+
+    @Binds
+    abstract fun personUseCase(personUseCase: PersonUseCase):
+            com.savvasdalkitsis.uhuruphotos.person.api.usecase.PersonUseCase
 
 }

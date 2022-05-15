@@ -40,7 +40,7 @@ class PhotosUseCase @Inject constructor(
     }
 
     @JvmName("toThumbnailUrlFromIdNull")
-    suspend fun String?.toThumbnailUrlFromId(): String? =
+    fun String?.toThumbnailUrlFromId(): String? =
         this?.toThumbnailUrlFromId()
 
     fun String.toThumbnailUrlFromId(): String =
