@@ -49,4 +49,4 @@ The app is currently in closed beta on the Google Play store. Contact me on
 * Translation: UhuruPhotos uses Weblate for its translations. Feel free to contribute or view
 existing translations at [weblate](https://hosted.weblate.org/engage/uhuruphotos/)
 
-<a href="https://hosted.weblate.org/engage/uhuruphotos/"><img src="https://hosted.weblate.org/widgets/uhuruphotos/-/open-graph.png" alt="Translation status" width = 240px>/></a>
+<a href="https://hosted.weblate.org/engage/uhuruphotos/"><img src="https://hosted.weblate.org/widgets/uhuruphotos/-/open-graph.png" alt="Translation status" width = 240px></a>
