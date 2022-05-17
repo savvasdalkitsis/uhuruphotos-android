@@ -31,8 +31,8 @@ jobs:
     - name: run tests
       uses: reactivecircus/android-emulator-runner@v2
       with:
-        api-level: 31
-        arch: x86_64
+        api-level: 30
+        arch: x86
         script: ./gradlew connectedCheck
     - name: Archive apk
       uses: actions/upload-artifact@v3
