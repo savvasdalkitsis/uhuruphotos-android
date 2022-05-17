@@ -27,6 +27,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
@@ -35,9 +36,10 @@ import com.savvasdalkitsis.uhuruphotos.icons.R
 import com.savvasdalkitsis.uhuruphotos.ui.view.ActionIcon
 import com.savvasdalkitsis.uhuruphotos.userbadge.api.view.UserBadge
 import com.savvasdalkitsis.uhuruphotos.userbadge.api.view.state.UserInformationState
+import com.savvasdalkitsis.uhuruphotos.strings.R as Strings
 
 @Composable
-fun AccountOverview(
+internal fun AccountOverview(
     userInformationState: UserInformationState,
     onLogoutClicked: () -> Unit,
     onEditServerClicked: () -> Unit,
@@ -74,6 +76,7 @@ fun AccountOverview(
             ActionIcon(
                 onClick = onEditServerClicked,
                 icon = R.drawable.ic_edit,
+                contentDescription = stringResource(Strings.string.edit_server_url)
             )
         }
         Row(
@@ -85,7 +88,7 @@ fun AccountOverview(
             ) {
                 Icon(Icons.Default.Settings, contentDescription = null)
                 Spacer(modifier = Modifier.width(8.dp))
-                Text(text = "Settings")
+                Text(text = stringResource(Strings.string.settings))
             }
             Spacer(modifier = Modifier.weight(1f))
             OutlinedButton(
@@ -96,7 +99,7 @@ fun AccountOverview(
                     contentDescription = null
                 )
                 Spacer(modifier = Modifier.width(8.dp))
-                Text(text = "Log out")
+                Text(text = stringResource(Strings.string.log_out))
             }
         }
     }

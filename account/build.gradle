@@ -20,4 +20,10 @@ dependencies {
             libs.okhttp,
             libs.hilt,
     )
+    androidTestImplementation(
+            libs.bundles.test.android,
+    )
+    testImplementation(
+            libs.bundles.test,
+    )
 }

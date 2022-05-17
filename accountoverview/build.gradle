@@ -14,9 +14,13 @@ dependencies {
     implementation project(":icons")
     implementation project(":userbadge-api")
     implementation project(":ui")
+    implementation project(":strings")
     implementation(
             libs.androidx.compose.foundation.layout,
             libs.androidx.compose.material,
             libs.androidx.compose.ui,
+    )
+    androidTestImplementation(
+            libs.bundles.test.android,
     )
 }

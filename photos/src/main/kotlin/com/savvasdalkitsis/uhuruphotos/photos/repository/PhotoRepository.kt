@@ -16,7 +16,7 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.photos.repository
 
 import com.savvasdalkitsis.uhuruphotos.db.extensions.awaitSingleOrNull
-import com.savvasdalkitsis.uhuruphotos.db.extensions.crud
+import com.savvasdalkitsis.uhuruphotos.db.extensions.async
 import com.savvasdalkitsis.uhuruphotos.db.photos.PhotoDetails
 import com.savvasdalkitsis.uhuruphotos.db.photos.PhotoDetailsQueries
 import com.savvasdalkitsis.uhuruphotos.db.photos.PhotoSummaryQueries
@@ -76,21 +76,21 @@ class PhotoRepository @Inject constructor(
     }
 
     suspend fun insertPhoto(photoDetails: PhotoDetails) {
-        crud {
+        async {
             photoDetailsQueries.insert(photoDetails)
             photoSummaryQueries.setRating(photoDetails.rating, photoDetails.imageHash)
         }
     }
 
     suspend fun setPhotoRating(id: String, rating: Int) {
-        crud {
+        async {
             photoDetailsQueries.setRating(rating, id)
             photoSummaryQueries.setRating(rating, id)
         }
     }
 
     suspend fun deletePhoto(id: String) {
-        crud {
+        async {
             photoDetailsQueries.delete(id)
             photoSummaryQueries.delete(id)
         }

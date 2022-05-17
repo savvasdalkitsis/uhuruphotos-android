@@ -61,4 +61,6 @@
     <string name="background_jobs">Background jobs</string>
     <string name="crash_reports">Crash reports</string>
     <string name="send_crash_logs">Send crash logs for troubleshooting</string>
+    <string name="edit_server_url">Edit server url</string>
+    <string name="log_out">Log out</string>
 </resources>

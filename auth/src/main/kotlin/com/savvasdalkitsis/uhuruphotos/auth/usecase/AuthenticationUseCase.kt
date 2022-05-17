@@ -26,7 +26,7 @@ import com.savvasdalkitsis.uhuruphotos.db.auth.Token
 import com.savvasdalkitsis.uhuruphotos.db.auth.TokenQueries
 import com.savvasdalkitsis.uhuruphotos.db.entities.auth.TokenType
 import com.savvasdalkitsis.uhuruphotos.db.extensions.awaitSingleOrNull
-import com.savvasdalkitsis.uhuruphotos.db.extensions.crud
+import com.savvasdalkitsis.uhuruphotos.db.extensions.async
 import com.savvasdalkitsis.uhuruphotos.log.log
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
@@ -52,7 +52,7 @@ class AuthenticationUseCase @Inject constructor(
 
     suspend fun login(username: String, password: String) {
         val response = authenticationService.login(AuthenticationCredentials(username, password))
-        crud {
+        async {
             tokenQueries.saveToken(
                 Token(
                     token = response.refresh,
@@ -82,7 +82,7 @@ class AuthenticationUseCase @Inject constructor(
 
     private suspend fun refreshAccessToken(refreshToken: String): AuthenticationRefreshResponse {
         val response = authenticationService.refreshToken(AuthenticationObtainResponse(refreshToken))
-        crud {
+        async {
             tokenQueries.saveToken(
                 Token(
                     token = response.access,

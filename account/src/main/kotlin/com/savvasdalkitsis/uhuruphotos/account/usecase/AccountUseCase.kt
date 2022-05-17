@@ -17,7 +17,7 @@ package com.savvasdalkitsis.uhuruphotos.account.usecase
 
 import com.savvasdalkitsis.uhuruphotos.db.albums.AlbumsQueries
 import com.savvasdalkitsis.uhuruphotos.db.auth.TokenQueries
-import com.savvasdalkitsis.uhuruphotos.db.extensions.crud
+import com.savvasdalkitsis.uhuruphotos.db.extensions.async
 import com.savvasdalkitsis.uhuruphotos.db.search.SearchQueries
 import com.savvasdalkitsis.uhuruphotos.db.user.UserQueries
 import com.savvasdalkitsis.uhuruphotos.image.cache.ImageCacheController
@@ -38,7 +38,7 @@ class AccountUseCase @Inject constructor(
 ) {
 
     suspend fun logOut() {
-        crud {
+        async {
             workScheduler.cancelAllScheduledWork()
             albumsQueries.clearAlbums()
             searchQueries.clearSearchResults()

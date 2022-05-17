@@ -15,7 +15,7 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.user.repository
 
-import com.savvasdalkitsis.uhuruphotos.db.extensions.crud
+import com.savvasdalkitsis.uhuruphotos.db.extensions.async
 import com.savvasdalkitsis.uhuruphotos.db.user.User
 import com.savvasdalkitsis.uhuruphotos.db.user.UserQueries
 import com.savvasdalkitsis.uhuruphotos.log.log
@@ -37,7 +37,7 @@ class UserRepository @Inject constructor(
         try {
             val userResults = userService.getUser()
             for (userResult in userResults.results) {
-                crud { userQueries.addUser(userResult.toUser()) }
+                async { userQueries.addUser(userResult.toUser()) }
             }
         } catch (e: IOException) {
             log(e)

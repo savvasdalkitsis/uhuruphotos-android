@@ -31,7 +31,7 @@ suspend fun <R : Any> Query<R>.await(): List<R> = withContext(Dispatchers.IO) {
     executeAsList()
 }
 
-suspend fun crud(action: () -> Unit) = withContext(Dispatchers.IO) {
+suspend fun async(action: () -> Unit) = withContext(Dispatchers.IO) {
     action()
 }
 

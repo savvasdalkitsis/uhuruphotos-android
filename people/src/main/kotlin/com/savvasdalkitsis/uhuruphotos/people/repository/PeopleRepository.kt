@@ -16,7 +16,7 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.people.repository
 
 import com.savvasdalkitsis.uhuruphotos.db.extensions.await
-import com.savvasdalkitsis.uhuruphotos.db.extensions.crud
+import com.savvasdalkitsis.uhuruphotos.db.extensions.async
 import com.savvasdalkitsis.uhuruphotos.db.people.People
 import com.savvasdalkitsis.uhuruphotos.db.people.PeopleQueries
 import com.savvasdalkitsis.uhuruphotos.log.log
@@ -49,7 +49,7 @@ class PeopleRepository @Inject constructor(
 
     suspend fun refreshPerson(id: Int) {
         val person = peopleService.getPerson(id)
-        crud {
+        async {
             peopleQueries.insertPerson(person.toPerson())
         }
     }
@@ -57,7 +57,7 @@ class PeopleRepository @Inject constructor(
     suspend fun refreshPeople() {
         try {
             val people = peopleService.getPeople().results
-            crud {
+            async {
                 peopleQueries.transaction {
                     peopleQueries.deleteAll()
                     for (person in people) {
