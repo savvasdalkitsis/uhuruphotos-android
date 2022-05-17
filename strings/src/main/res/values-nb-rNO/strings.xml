@@ -24,7 +24,7 @@
         <item quantity="one">%d time</item>
         <item quantity="other">%d timer</item>
     </plurals>
-    <string name="refreshing_albums">Gjenoppfrisker album …</string>
+    <string name="refreshing_albums">Gjenoppfrisker album</string>
     <string name="refresh">Gjenoppfrisk</string>
     <string name="favourite">Favorittmerk</string>
     <string name="remove_favourite">Fjern som favoritt</string>
@@ -35,7 +35,7 @@
     <string name="currently_used">%d MB i bruk</string>
     <string name="max_limit">Maks. grense: %d MB</string>
     <string name="changes_effect_after_restart">(start programmet på ny for å ta i bruk endringene)</string>
-    <string name="setting_photo_favourite">Setter favorittstatus for bilde …</string>
+    <string name="setting_photo_favourite">Setter favorittstatus for bilde</string>
     <string name="photos_on_map">Bilder på kartet (%1$d av %2$d)</string>
     <string name="full">Fullt</string>
     <string name="error_refreshing_people">Kunne ikke gjenoppfriske folk</string>
@@ -55,8 +55,8 @@
     <string name="big">Stort</string>
     <string name="no">Nei</string>
     <string name="delete">Slett</string>
-    <string name="downloading_photo_details">Laster ned bildedetaljer …</string>
-    <string name="deleting_photo">Sletter bilde …</string>
+    <string name="downloading_photo_details">Laster ned bildedetaljer</string>
+    <string name="deleting_photo">Sletter bilde</string>
     <string name="settings">Innstillinger</string>
     <string name="yes">Ja</string>
     <string name="share">Del</string>
