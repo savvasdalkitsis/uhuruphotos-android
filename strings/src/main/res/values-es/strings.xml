@@ -1,2 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources></resources>
+<resources>
+    <string name="feed_size">Tamaño de fotos</string>
+    <string name="photo">Foto</string>
+    <plurals name="delete_photos">
+        <item quantity="one">Eliminar %d foto</item>
+        <item quantity="other">Eliminar %d fotos</item>
+    </plurals>
+    <plurals name="delete_photos_confirmation">
+        <item quantity="one">¿Está seguro de que desea eliminar esta %d foto\?</item>
+        <item quantity="other">¿Está seguro de que desea eliminar estas %d fotos\?</item>
+    </plurals>
+    <string name="error_refreshing_people">Hubo un error al actualizar a las personas</string>
+    <string name="error_loading_photo_details">Hubo un error al cargar los detalles de la foto</string>
+    <string name="error_searching">Hubo un error al buscar</string>
+    <string name="feed_sync_freq">Frecuencia de sincronización completa de fotos</string>
+    <string name="feed_sync_freq_changed">La frecuencia de sincronización del feed cambió</string>
+    <string name="feed_sync_network_changed">Se modificó el requisito de la red de sincronización de feeds</string>
+    <string name="feed_sync_charging_changed">Los requisitos de carga de sincronización de feeds cambiaron</string>
+    <string name="logs_cleared">Registros borrados</string>
+    <string name="recent_searches_cleared">Búsquedas recientes borradas</string>
+</resources>
