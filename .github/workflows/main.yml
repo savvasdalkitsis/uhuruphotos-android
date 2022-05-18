@@ -28,12 +28,12 @@ jobs:
       run: cp mock-google-services.json app/google-services.json
     - name: Build with Gradle
       run: ./gradlew assembleDebug
-    - name: run tests
-      uses: reactivecircus/android-emulator-runner@v2
-      with:
-        api-level: 30
-        arch: x86
-        script: ./gradlew connectedCheck
+#    - name: run tests
+#      uses: reactivecircus/android-emulator-runner@v2
+#      with:
+#        api-level: 30
+#        arch: x86
+#        script: ./gradlew connectedCheck
     - name: Archive apk
       uses: actions/upload-artifact@v3
       with:
