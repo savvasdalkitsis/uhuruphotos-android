@@ -100,7 +100,7 @@ class ServerHandler @Inject constructor(
                 emit(AskForUserCredentials(credentials.username, credentials.password))
             }
         }
-        is UsernameChangedTo -> flowOf(ChangeUsernameTo(action.username))
+        is UsernameChangedTo -> flowOf(ChangeUsernameTo(action.username.lowercase()))
         is UserPasswordChangedTo -> flowOf(ChangePasswordTo(action.password))
         SendLogsClick -> flow {
             effect(SendFeedback)
