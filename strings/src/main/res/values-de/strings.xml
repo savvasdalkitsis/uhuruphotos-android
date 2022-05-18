@@ -46,4 +46,5 @@
     <string name="search">Suche</string>
     <string name="error_searching">Bei der Suche ist ein Fehler aufgetreten</string>
     <string name="favourite">Favorit</string>
+    <string name="error_refreshing_people">Es gab einen Fehler beim Aktualisieren von Personen</string>
 </resources>
