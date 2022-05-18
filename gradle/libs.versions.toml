@@ -72,13 +72,16 @@ okhttp-url = { module = 'com.squareup.okhttp3:okhttp-urlconnection', version.ref
 retrofit-core = { module = 'com.squareup.retrofit2:retrofit', version.ref = "retrofit" }
 retrofit-moshi = { module = 'com.squareup.retrofit2:converter-moshi', version.ref = "retrofit" }
 result = "com.michael-bull.kotlin-result:kotlin-result:1.1.16"
+shazamcrest = "com.shazam:shazamcrest:0.11"
 scrollbar = "com.github.nanihadesuka:LazyColumnScrollbar:1.0.3"
 sqldelight-android = { module = 'com.squareup.sqldelight:android-driver', version.ref = "sqldelight" }
+sqldelight-jvm = { module = 'com.squareup.sqldelight:sqlite-driver', version.ref = "sqldelight" }
 sqldelight-coroutines = { module = 'com.squareup.sqldelight:coroutines-extensions', version.ref = "sqldelight" }
+turbine = "app.cash.turbine:turbine:0.8.0"
 urlvalidator = "commons-validator:commons-validator:1.7"
 zoomable = "com.mxalbert.zoomable:zoomable:1.4.2"
 
 [bundles]
 lumberjack = ["lumberjack-core", "lumberjack-file", "lumberjack-feedback", "lumberjack-notification", "lumberjack-feedback-manager"]
-test = ["junit", "mockk"]
+test = ["junit", "mockk", "turbine", "shazamcrest"]
 test-android = ["junit", "mockk-android", "androidx-espresso", "androidx-test-core", "androidx-test-runner", "androidx-compose-test-junit", "androidx-compose-test-manifest"]

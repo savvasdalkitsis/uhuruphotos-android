@@ -1,3 +1,8 @@
+plugins {
+    id "com.bnorm.power.kotlin-power-assert"
+    id 'java-test-fixtures'
+}
+
 android {
     buildFeatures {
         compose true
@@ -31,5 +36,12 @@ dependencies {
             libs.retrofit.moshi,
             libs.sqldelight.coroutines,
     )
+    testImplementation testFixtures(project(":db"))
+    testImplementation testFixtures(project(":photos"))
+    testImplementation(
+            libs.bundles.test,
+    )
+    testFixturesImplementation testFixtures(project(":db"))
+    testFixturesImplementation project(":photos")
     kapt "com.squareup.moshi:moshi-kotlin-codegen:1.13.0"
 }

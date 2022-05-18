@@ -67,6 +67,13 @@ class AlbumsRepository @Inject constructor(
             albumsFetcher = { albumsService.getAlbumsForPerson(personId) },
             albumFetcher = { albumsService.getAlbumForPerson(it, personId).results },
             shallow = false,
+            incompleteAlbumsProcessor = { albums ->
+                albumsQueries.transaction {
+                    for (album in albums.map { it.toAlbum() }) {
+                        albumsQueries.insert(album)
+                    }
+                }
+            },
             completeAlbumProcessor = { album ->
                 for (photo in album.items) {
                     personQueries.insert(
@@ -124,8 +131,8 @@ class AlbumsRepository @Inject constructor(
         completeAlbumProcessor: suspend (Album.CompleteAlbum) -> Unit,
     ) {
         val completeAlbum = albumFetcher(id)
-        val summaryCount = photoSummaryQueries.getPhotoSummariesCountForAlbum(id).awaitSingle()
         completeAlbumProcessor(completeAlbum)
+        val summaryCount = photoSummaryQueries.getPhotoSummariesCountForAlbum(id).awaitSingle()
         if (completeAlbum.items.size.toLong() != summaryCount) {
             for (albumItem in completeAlbum.items) {
                 val photoSummary = albumItem.toPhotoSummary(id)

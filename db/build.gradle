@@ -1,5 +1,6 @@
 plugins {
     id 'com.squareup.sqldelight'
+    id 'java-test-fixtures'
 }
 
 dependencies {
@@ -8,5 +9,8 @@ dependencies {
             libs.hilt,
             libs.sqldelight.android,
             libs.sqldelight.coroutines,
+    )
+    testFixturesImplementation(
+            libs.sqldelight.jvm,
     )
 }

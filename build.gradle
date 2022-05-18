@@ -48,7 +48,9 @@ subprojects {
             buildConfigField 'String', 'APP_VERSION_NAME', "\"${project.app_version_name}\""
             testInstrumentationRunner 'androidx.test.runner.AndroidJUnitRunner'
         }
-
+        testFixtures {
+            enable = true
+        }
         buildTypes {
             release {
                 minifyEnabled false

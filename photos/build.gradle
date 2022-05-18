@@ -1,3 +1,7 @@
+plugins {
+    id 'java-test-fixtures'
+}
+
 android {
     buildFeatures {
         compose true
@@ -47,5 +51,6 @@ dependencies {
             libs.sqldelight.coroutines,
             libs.zoomable,
     )
+    testFixturesImplementation project(":db")
     kapt "com.squareup.moshi:moshi-kotlin-codegen:1.13.0"
 }
