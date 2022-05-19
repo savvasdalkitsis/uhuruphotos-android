@@ -28,3 +28,6 @@ UPDATE photoSummary SET rating = :rating WHERE id = :id;
 
 delete:
 DELETE FROM photoSummary WHERE id = :id;
+
+clearAll:
+DELETE FROM photoSummary;

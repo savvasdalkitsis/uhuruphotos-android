@@ -4,6 +4,7 @@ import app.cash.turbine.test
 import com.savvasdalkitsis.uhuruphotos.albums.TestAlbums.*
 import com.savvasdalkitsis.uhuruphotos.albums.TestGetAlbums.getAlbum
 import com.savvasdalkitsis.uhuruphotos.albums.TestGetAlbums.getPersonAlbum
+import com.savvasdalkitsis.uhuruphotos.albums.TestGetPhotoSummaries.photoSummariesForAlbum
 import com.savvasdalkitsis.uhuruphotos.albums.service.AlbumsService
 import com.savvasdalkitsis.uhuruphotos.albums.service.model.AlbumById
 import com.savvasdalkitsis.uhuruphotos.albums.service.model.AlbumsByDate
@@ -11,6 +12,7 @@ import com.savvasdalkitsis.uhuruphotos.db.TestDatabase
 import com.savvasdalkitsis.uhuruphotos.db.albums.Albums
 import com.savvasdalkitsis.uhuruphotos.db.albums.GetAlbums
 import com.savvasdalkitsis.uhuruphotos.db.albums.GetPersonAlbums
+import com.savvasdalkitsis.uhuruphotos.db.extensions.await
 import com.savvasdalkitsis.uhuruphotos.db.photos.PhotoSummary
 import com.savvasdalkitsis.uhuruphotos.infrastructure.extensions.Group
 import com.savvasdalkitsis.uhuruphotos.photos.TestPhotos.photoSummaryItem
@@ -19,6 +21,8 @@ import com.shazam.shazamcrest.matcher.Matchers.sameBeanAs
 import io.mockk.coEvery
 import io.mockk.mockk
 import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.sync.Mutex
+import kotlinx.coroutines.sync.withLock
 import org.junit.Test
 import com.savvasdalkitsis.uhuruphotos.photos.TestPhotoSummaries.photoSummary as photo
 
@@ -154,26 +158,43 @@ class AlbumsRepositoryTest {
         given(photo(1, inAlbum = 1))
         given(person = 1).hasPhotos(1)
 
-        coEvery { albumsService.getAlbumsForPerson(1) } returns AlbumsByDate(2, listOf(
-            incompleteAlbum(1).copy(location = serverAlbumLocation),
-            incompleteAlbum(2).copy(location = serverAlbumLocation),
-        ))
-        coEvery { albumsService.getAlbumForPerson(albumId(1), 1) } returns AlbumById(
-            completeAlbum(1).copy(
-                items = listOf(
-                    photoSummaryItem(1),
-                    photoSummaryItem(2),
+        val albumsResponse = Mutex(locked = true)
+        coEvery { albumsService.getAlbumsForPerson(1) } coAnswers {
+            albumsResponse.withLock {
+                AlbumsByDate(
+                    2, listOf(
+                        incompleteAlbum(1).copy(location = serverAlbumLocation),
+                        incompleteAlbum(2).copy(location = serverAlbumLocation),
+                    )
                 )
-            )
-        )
-        coEvery { albumsService.getAlbumForPerson(albumId(2), 1) } returns AlbumById(
-            completeAlbum(2).copy(
-                items = listOf(
-                    photoSummaryItem(3),
-                    photoSummaryItem(4),
+            }
+        }
+        val album1Response = Mutex(locked = true)
+        coEvery { albumsService.getAlbumForPerson(albumId(1), 1) } coAnswers {
+            album1Response.withLock {
+                AlbumById(
+                    completeAlbum(1).copy(
+                        items = listOf(
+                            photoSummaryItem(1),
+                            photoSummaryItem(2),
+                        )
+                    )
                 )
-            )
-        )
+            }
+        }
+        val album2Response = Mutex(locked = true)
+        coEvery { albumsService.getAlbumForPerson(albumId(2), 1) } coAnswers {
+            album2Response.withLock {
+                AlbumById(
+                    completeAlbum(2).copy(
+                        items = listOf(
+                            photoSummaryItem(3),
+                            photoSummaryItem(4),
+                        )
+                    )
+                )
+            }
+        }
 
         underTest.observePersonAlbums(1).test {
             awaitItem().assertSameAs(
@@ -182,9 +203,19 @@ class AlbumsRepositoryTest {
                 )
             )
 
+            albumsResponse.completes()
+
             awaitItem().assertSameAs(
                 album(1,
                     entry(personId = 1, photo(1)).copy(albumLocation = serverAlbumLocation),
+                )
+            )
+
+            album1Response.completes()
+
+            awaitItem().assertSameAs(
+                album(1,
+                    entry(personId = 1, photo(1)).withServerResponseData(),
                 )
             )
 
@@ -193,6 +224,18 @@ class AlbumsRepositoryTest {
                     entry(personId = 1, photo(2)).withServerResponseData(),
                     entry(personId = 1, photo(1)).withServerResponseData(),
                 )
+            )
+
+            album2Response.completes()
+
+            awaitItem().assertSameAs(
+                album(1,
+                    entry(personId = 1, photo(2)).withServerResponseData(),
+                    entry(personId = 1, photo(1)).withServerResponseData(),
+                ),
+                album(2,
+                    entry(personId = 1, photo(3)).withServerResponseData(),
+                ),
             )
 
             awaitItem().assertSameAs(
@@ -206,6 +249,41 @@ class AlbumsRepositoryTest {
                 ),
             )
         }
+    }
+
+    @Test
+    fun `refreshes albums on demand`() = runBlocking {
+        db.albumsQueries.clearAlbums()
+        db.photoSummaryQueries.clearAll()
+        coEvery { albumsService.getAlbumsByDate() } returns AlbumsByDate(1, listOf(
+            incompleteAlbum(1).copy(location = serverAlbumLocation),
+        ))
+        coEvery { albumsService.getAlbum(albumId(1)) } returns AlbumById(
+            completeAlbum(1).copy(
+                items = listOf(
+                    photoSummaryItem(1),
+                    photoSummaryItem(2),
+                )
+            )
+        )
+
+        underTest.refreshAlbums(shallow = false) {}
+
+        val album1 = album(1)
+
+        assertThat(db.albumsQueries.getAlbums().await(), sameBeanAs(listOf(
+            entry(photo(2, inAlbum = 1))
+                .copy(id = album1.id, albumDate = album1.date)
+                .withServerResponseData(),
+            entry(photo(1, inAlbum = 1))
+                .copy(id = album1.id, albumDate = album1.date)
+                .withServerResponseData(),
+        )))
+
+        assertThat(db.photoSummaryQueries.getPhotoSummariesForAlbum(album1.id).await(), sameBeanAs(listOf(
+            photoSummariesForAlbum.copy(id = photoId(1)),
+            photoSummariesForAlbum.copy(id = photoId(2)),
+        )))
     }
 
     private fun given(vararg albums: Albums) = insert(*albums)
@@ -239,8 +317,8 @@ class AlbumsRepositoryTest {
     private fun album(id: Int) = album.copy(id = albumId(id), date = "2000-01-0$id")
     private fun photoId(id: Int) = "photo$id"
     private fun photo(id: Int) = photo.copy(id = photoId(id))
-    private fun photo(id: Int, inAlbum: Int) = photo.copy(id = "photo$id", containerId = albumId(inAlbum))
-    private fun photoSummaryItem(id: Int) = photoSummaryItem.copy(id = "photo$id")
+    private fun photo(id: Int, inAlbum: Int) = photo.copy(id = photoId(id), containerId = albumId(inAlbum))
+    private fun photoSummaryItem(id: Int) = photoSummaryItem.copy(id = photoId(id))
     private fun incompleteAlbum(id: Int) = incompleteAlbum.copy(
         id = album(id).id,
         date = album(id).date
@@ -268,4 +346,12 @@ class AlbumsRepositoryTest {
         type = "",
         albumLocation = serverAlbumLocation,
     )
+    private fun GetAlbums.withServerResponseData() = copy(
+        dominantColor = "",
+        rating = 0,
+        aspectRatio = 1f,
+        type = "",
+        albumLocation = serverAlbumLocation,
+    )
+    private fun Mutex.completes() = unlock()
 }
