@@ -1,2 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources></resources>
+<resources>
+    <string name="error_refreshing_people">Probleem bij het vernieuwen van personen</string>
+    <plurals name="delete_photos_confirmation">
+        <item quantity="one">Bent u zeker dat u foto %d wilt verwijderen\?</item>
+        <item quantity="other">Bent u zeker dat u deze foto\'s %d wilt verwijderen\?</item>
+    </plurals>
+    <string name="recent_searches_cleared">Recente zoekopdrachten verwijderd</string>
+    <plurals name="delete_photos">
+        <item quantity="one">Verwijder %d foto</item>
+        <item quantity="other">Verwijder %d foto\'s</item>
+    </plurals>
+    <string name="photo">Foto</string>
+    <string name="error_searching">Probleem bij de zoekopdracht</string>
+    <string name="error_loading_photo_details">Probleem bij het laden van foto details</string>
+</resources>
