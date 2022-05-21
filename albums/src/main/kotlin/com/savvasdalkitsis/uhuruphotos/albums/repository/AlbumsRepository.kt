@@ -121,7 +121,7 @@ class AlbumsRepository @Inject constructor(
         for ((index, incompleteAlbum) in albumsToDownloadSummaries.withIndex()) {
             val id = incompleteAlbum.id
             maybeFetchSummaries(id, albumFetcher, completeAlbumProcessor)
-            onProgressChange((100 * (index / albumsToDownloadSummaries.size.toFloat())).toInt())
+            onProgressChange((100 * ((index + 1)/ albumsToDownloadSummaries.size.toFloat())).toInt())
         }
     }
 
