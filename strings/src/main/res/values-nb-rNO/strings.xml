@@ -61,4 +61,6 @@
     <string name="yes">Ja</string>
     <string name="share">Del</string>
     <string name="clear">Tøm</string>
+    <string name="log_out">Logg ut</string>
+    <string name="edit_server_url">Rediger tjenernettadresse</string>
 </resources>
