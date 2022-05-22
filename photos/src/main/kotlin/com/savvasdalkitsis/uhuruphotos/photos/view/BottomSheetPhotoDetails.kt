@@ -51,8 +51,10 @@ internal fun BottomSheetPhotoDetails(
     val infoSheetState = rememberModalBottomSheetState(initialValue = ModalBottomSheetValue.Hidden)
     val sheetSize by SheetSize.rememberSheetSize()
     val pagerState = rememberPagerState()
-    LaunchedEffect(state.photos.size) {
-        pagerState.scrollToPage(state.currentIndex)
+    LaunchedEffect(state.photos.size, pagerState.pageCount) {
+        if (pagerState.pageCount > state.currentIndex) {
+            pagerState.scrollToPage(state.currentIndex)
+        }
     }
     LaunchedEffect(pagerState) {
         snapshotFlow { pagerState.currentPage }.collectLatest { page ->
