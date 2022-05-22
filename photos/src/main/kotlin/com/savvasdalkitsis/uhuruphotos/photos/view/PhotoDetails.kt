@@ -22,7 +22,9 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.unit.dp
 import com.mxalbert.zoomable.OverZoomConfig
 import com.mxalbert.zoomable.Zoomable
 import com.mxalbert.zoomable.rememberZoomableState
@@ -56,18 +58,28 @@ fun PhotoDetails(
     val offset by derivedStateOf {
         dismissDragOffsetY.invoke(zoomState) as Float
     }
+    val density = LocalDensity.current
+    val showInfo by derivedStateOf {
+        with(density) { offset.toDp() < (-64).dp }
+    }
+    val navigateBack by derivedStateOf {
+        with(density) { offset.toDp() > 64.dp }
+    }
+
+    LaunchedEffect(showInfo) {
+        if (showInfo) {
+            action(ShowInfo)
+        }
+    }
+    LaunchedEffect(navigateBack) {
+        if (navigateBack) {
+            action(NavigateBack)
+        }
+    }
     Zoomable(
         state = zoomState,
         onTap = { action(ToggleUI) },
         dismissGestureEnabled = true,
-        onDismiss = {
-            if (offset > 0) {
-                action(NavigateBack)
-            } else {
-                action(ShowInfo)
-            }
-            false
-        }
     ) {
         Box(
             modifier = Modifier
