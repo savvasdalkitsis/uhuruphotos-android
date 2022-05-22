@@ -43,7 +43,9 @@ fun BoxScope.UserCredentialsPage(
     state: ServerState.UserCredentials
 ) {
     OutlinedButton(
-        modifier = Modifier.align(Alignment.TopEnd),
+        modifier = Modifier
+            .align(Alignment.TopEnd)
+            .padding(16.dp),
         onClick = { action(SendLogsClick) }
     ) {
         Icon(painter = painterResource(id = R.drawable.ic_feedback), contentDescription = null)
