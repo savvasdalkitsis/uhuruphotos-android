@@ -10,8 +10,8 @@ buildscript {
         classpath 'com.google.firebase:firebase-crashlytics-gradle:2.8.1'
     }
 
-    project.ext.set("app_version_code", 18)
-    project.ext.set("app_version_name", "0.0.25")
+    project.ext.set("app_version_code", 19)
+    project.ext.set("app_version_name", "0.0.26")
 
 }// Top-level build file where you can add configuration options common to all sub-projects/modules.
 plugins {
