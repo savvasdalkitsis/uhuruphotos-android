@@ -34,5 +34,6 @@ sealed class ServerState : Parcelable {
         val username: String,
         @Redacted val password: String,
         val allowLogin: Boolean,
+        val passwordVisible: Boolean,
     ): ServerState(), Parcelable
 }

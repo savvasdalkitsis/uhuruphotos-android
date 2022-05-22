@@ -105,6 +105,7 @@ class ServerHandler @Inject constructor(
         SendLogsClick -> flow {
             effect(SendFeedback)
         }
+        TogglePasswordVisibility -> flowOf(SetPasswordVisibility(!(state as UserCredentials).passwordVisible))
     }
 
 }

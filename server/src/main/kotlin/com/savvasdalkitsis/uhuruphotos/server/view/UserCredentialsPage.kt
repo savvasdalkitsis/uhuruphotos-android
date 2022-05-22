@@ -31,10 +31,12 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
+import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
 import com.savvasdalkitsis.uhuruphotos.icons.R
 import com.savvasdalkitsis.uhuruphotos.server.mvflow.ServerAction
 import com.savvasdalkitsis.uhuruphotos.server.mvflow.ServerAction.*
+import com.savvasdalkitsis.uhuruphotos.ui.view.ActionIcon
 
 @Composable
 fun BoxScope.UserCredentialsPage(
@@ -101,7 +103,10 @@ fun BoxScope.UserCredentialsPage(
         OutlinedTextField(
             maxLines = 1,
             singleLine = true,
-            visualTransformation = PasswordVisualTransformation(),
+            visualTransformation = when {
+                state.passwordVisible -> VisualTransformation.None
+                else -> PasswordVisualTransformation()
+            },
             keyboardOptions = KeyboardOptions.Default.copy(
                 keyboardType = KeyboardType.Password,
                 imeAction = ImeAction.Done,
@@ -114,6 +119,15 @@ fun BoxScope.UserCredentialsPage(
                     imageVector = Icons.Default.Lock,
                     contentDescription = "passwordIcon"
                 )
+            },
+            trailingIcon = {
+               ActionIcon(
+                   onClick = { action(TogglePasswordVisibility) },
+                   icon = when {
+                       state.passwordVisible -> R.drawable.ic_visible
+                       else -> R.drawable.ic_invisible
+                   }
+               )
             },
             label = { Text("User password") },
             value = state.password,

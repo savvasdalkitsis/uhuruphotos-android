@@ -31,7 +31,8 @@ fun serverReducer() : Reducer<ServerState, ServerMutation> = { state, mutation -
         is AskForUserCredentials -> UserCredentials(
             mutation.userName,
             mutation.password,
-            allowLogin = false
+            allowLogin = false,
+            passwordVisible = false,
         ).shouldAllowLogin()
         is ShowUrlValidation -> ServerUrl(
             prefilledUrl = mutation.prefilledUrl.orEmpty(),
@@ -43,6 +44,7 @@ fun serverReducer() : Reducer<ServerState, ServerMutation> = { state, mutation -
         PerformingBackgroundJob -> Loading
         ShowUnsecureServerConfirmation -> (state as ServerUrl).copy(showUnsecureServerConfirmation = true)
         HideUnsecureServerConfirmation -> (state as ServerUrl).copy(showUnsecureServerConfirmation = false)
+        is SetPasswordVisibility -> (state as UserCredentials).copy(passwordVisible = mutation.visible)
     }
 }
 

@@ -27,4 +27,5 @@ sealed class ServerMutation {
     data class ShowUrlValidation(val prefilledUrl: String?, val isValid: Boolean) : ServerMutation()
     data class ChangeUsernameTo(val username: String) : ServerMutation()
     data class ChangePasswordTo(@Redacted val password: String) : ServerMutation()
+    data class SetPasswordVisibility(val visible: Boolean) : ServerMutation()
 }
