@@ -1,14 +1,23 @@
 package com.savvasdalkitsis.uhuruphotos.albums;
 
-import com.savvasdalkitsis.uhuruphotos.albums.service.model.Album;
+import com.savvasdalkitsis.uhuruphotos.albums.api.model.Album;
+import com.savvasdalkitsis.uhuruphotos.albums.service.model.Album.CompleteAlbum;
+import com.savvasdalkitsis.uhuruphotos.albums.service.model.Album.IncompleteAlbum;
 import com.savvasdalkitsis.uhuruphotos.db.albums.Albums;
-import com.savvasdalkitsis.uhuruphotos.photos.service.model.PhotoSummaryItem;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class TestAlbums {
 
-    public static Albums album = new Albums(
+    public static Album album = new Album(
+            "id",
+            Collections.emptyList(),
+            "",
+            ""
+    );
+
+    public static Albums albums = new Albums(
             "id",
             null,
             null,
@@ -17,7 +26,7 @@ public class TestAlbums {
             0
     );
 
-    public static Album.IncompleteAlbum incompleteAlbum = new Album.IncompleteAlbum(
+    public static IncompleteAlbum incompleteAlbum = new IncompleteAlbum(
             "id",
             "",
             "",
@@ -25,7 +34,7 @@ public class TestAlbums {
             0
     );
 
-    public static Album.CompleteAlbum completeAlbum = new Album.CompleteAlbum(
+    public static CompleteAlbum completeAlbum = new CompleteAlbum(
             "id",
             "",
             "",

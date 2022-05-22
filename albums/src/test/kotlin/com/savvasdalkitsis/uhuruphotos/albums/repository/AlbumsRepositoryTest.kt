@@ -2,7 +2,7 @@ package com.savvasdalkitsis.uhuruphotos.albums.repository
 
 import app.cash.turbine.test
 import com.savvasdalkitsis.uhuruphotos.albums.*
-import com.savvasdalkitsis.uhuruphotos.albums.TestAlbums.album
+import com.savvasdalkitsis.uhuruphotos.albums.TestAlbums.albums
 import com.savvasdalkitsis.uhuruphotos.albums.TestGetPhotoSummaries.photoSummariesForAlbum
 import com.savvasdalkitsis.uhuruphotos.albums.service.AlbumsService
 import com.savvasdalkitsis.uhuruphotos.db.TestDatabase
@@ -30,7 +30,7 @@ class AlbumsRepositoryTest {
 
     @Test
     fun `reports having albums if 1 or more exists`() = runBlocking {
-        given(album)
+        given(albums)
 
         assert(underTest.hasAlbums())
     }

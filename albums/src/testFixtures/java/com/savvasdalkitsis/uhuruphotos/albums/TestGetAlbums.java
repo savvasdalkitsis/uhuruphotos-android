@@ -6,10 +6,10 @@ import com.savvasdalkitsis.uhuruphotos.db.albums.GetPersonAlbums;
 public class TestGetAlbums {
 
     public static GetAlbums getAlbum = new GetAlbums(
-        "id",
+        "albumId",
         null,
         null,
-        null,
+        "photoId",
         null,
         null,
         null,
@@ -17,7 +17,7 @@ public class TestGetAlbums {
     );
 
     public static GetPersonAlbums getPersonAlbum = new GetPersonAlbums(
-        "id",
+            "albumId",
         null,
         null,
         null,

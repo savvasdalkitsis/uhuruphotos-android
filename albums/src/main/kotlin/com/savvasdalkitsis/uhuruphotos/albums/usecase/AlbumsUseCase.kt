@@ -34,7 +34,6 @@ import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
-
 class AlbumsUseCase @Inject constructor(
     private val albumsRepository: AlbumsRepository,
     private val dateDisplayer: DateDisplayer,
@@ -48,7 +47,8 @@ class AlbumsUseCase @Inject constructor(
                 getPersonAlbums -> getPersonAlbums.toDbAlbums()
             }
         }
-        .mapToAlbums()
+        .map { it.mapToAlbums() }
+        .initialize()
 
     override fun observeAlbums(): Flow<List<Album>> = albumsRepository.observeAlbumsByDate()
         .map {
@@ -56,24 +56,18 @@ class AlbumsUseCase @Inject constructor(
                     getAlbums -> getAlbums.toDbAlbums()
             }
         }
-        .mapToAlbums()
+        .map { it.mapToAlbums() }
+        .initialize()
 
     override suspend fun getPersonAlbums(personId: Int): List<Album> = albumsRepository.getPersonAlbums(personId)
-        .mapValues {
-            getAlbums -> getAlbums.toDbAlbums()
-        }
+        .mapValues { it.toDbAlbums() }
         .mapToAlbums()
 
     override suspend fun getAlbums(): List<Album> = albumsRepository.getAlbumsByDate()
-        .mapValues {
-            getAlbums -> getAlbums.toDbAlbums()
-        }
+        .mapValues { it.toDbAlbums() }
         .mapToAlbums()
 
-    private fun Flow<Group<String, DbAlbums>>.mapToAlbums(): Flow<List<Album>> = map { albums ->
-        albums.mapToAlbums()
-    }
-        .distinctUntilChanged()
+    private fun Flow<List<Album>>.initialize(): Flow<List<Album>> = distinctUntilChanged()
         .safelyOnStartIgnoring {
             if (!albumsRepository.hasAlbums()) {
                 startRefreshAlbumsWork(shallow = false)
@@ -86,24 +80,27 @@ class AlbumsUseCase @Inject constructor(
 
         Album(
             id = id,
-            photoCount = photos.size,
             date = dateDisplayer.dateString(albumDate),
             location = albumLocation ?: "",
             photos = photos.mapNotNull { item ->
-                item.photoId?.let { id ->
-                    Photo(
-                        id = id,
-                        thumbnailUrl = with(photosUseCase) {
-                            id.toThumbnailUrlFromId()
-                        },
-                        fullResUrl = with(photosUseCase) {
-                            id.toFullSizeUrlFromId(item.isVideo)
-                        },
-                        fallbackColor = item.dominantColor,
-                        isFavourite = (item.rating ?: 0) >= FAVOURITES_RATING_THRESHOLD,
-                        ratio = item.aspectRatio ?: 1.0f,
-                        isVideo = item.isVideo,
-                    )
+                when {
+                    item.photoId.isNullOrBlank() -> null
+                    else -> {
+                        val photoId = item.photoId
+                        Photo(
+                            id = photoId,
+                            thumbnailUrl = with(photosUseCase) {
+                                photoId.toThumbnailUrlFromId()
+                            },
+                            fullResUrl = with(photosUseCase) {
+                                photoId.toFullSizeUrlFromId(item.isVideo)
+                            },
+                            fallbackColor = item.dominantColor,
+                            isFavourite = (item.rating ?: 0) >= FAVOURITES_RATING_THRESHOLD,
+                            ratio = item.aspectRatio ?: 1.0f,
+                            isVideo = item.isVideo,
+                        )
+                    }
                 }
             }
         )
@@ -113,8 +110,6 @@ class AlbumsUseCase @Inject constructor(
         albumWorkScheduler.scheduleAlbumsRefreshNow(shallow)
     }
 }
-
-
 
 private data class DbAlbums(
     val id: String,

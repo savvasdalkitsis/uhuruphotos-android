@@ -52,5 +52,6 @@ dependencies {
             libs.zoomable,
     )
     testFixturesImplementation project(":db")
+    testFixturesImplementation project(":photos-api")
     kapt "com.squareup.moshi:moshi-kotlin-codegen:1.13.0"
 }

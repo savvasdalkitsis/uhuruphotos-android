@@ -43,5 +43,7 @@ dependencies {
     )
     testFixturesImplementation testFixtures(project(":db"))
     testFixturesImplementation project(":photos")
+    testFixturesImplementation project(":photos-api")
+    testFixturesImplementation project(":albums-api")
     kapt "com.squareup.moshi:moshi-kotlin-codegen:1.13.0"
 }

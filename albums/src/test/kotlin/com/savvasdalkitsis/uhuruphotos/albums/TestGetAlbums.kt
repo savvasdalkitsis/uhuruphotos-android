@@ -9,7 +9,7 @@ val serverAlbumLocation = "serverAlbumLocation"
 
 fun albumId(id: Int) = "album$id"
 
-fun album(id: Int) = album.copy(id = albumId(id), date = "2000-01-0$id")
+fun album(id: Int) = albums.copy(id = albumId(id), date = "2000-01-0$id")
 
 fun incompleteAlbum(id: Int) = incompleteAlbum.copy(
     id = album(id).id,

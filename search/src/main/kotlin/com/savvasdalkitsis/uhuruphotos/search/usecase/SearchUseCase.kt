@@ -54,13 +54,12 @@ class SearchUseCase @Inject constructor(
                 searchRepository.refreshSearch(query)
             }
 
-    private suspend fun Group<String, GetSearchResults>.mapToAlbums() = items
+    private fun Group<String, GetSearchResults>.mapToAlbums() = items
         .map { (id, photos) ->
             val albumLocation = photos.firstOrNull()?.location
             val albumDate = photos.firstOrNull()?.date
             Album(
                 id = id,
-                photoCount = photos.size,
                 date = dateDisplayer.dateString(albumDate),
                 location = albumLocation,
                 photos = photos.mapNotNull { photo ->
@@ -82,10 +81,10 @@ class SearchUseCase @Inject constructor(
             val photos = album.photos.filter { photo ->
                 !photo.thumbnailUrl.isNullOrEmpty()
             }
-            album.copy(photoCount = photos.size, photos = photos)
+            album.copy(photos = photos)
         }
         .filter { album ->
-            album.photoCount > 0
+            album.photos.isNotEmpty()
         }
 
     override fun getRandomSearchSuggestion(): Flow<String> = getSearchSuggestions()

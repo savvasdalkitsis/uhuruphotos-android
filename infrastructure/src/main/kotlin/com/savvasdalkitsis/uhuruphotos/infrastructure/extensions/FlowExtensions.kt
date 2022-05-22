@@ -22,7 +22,10 @@ import com.savvasdalkitsis.uhuruphotos.log.log
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.currentCoroutineContext
-import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.mapNotNull
+import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.launch
 import java.io.IOException
 
@@ -57,7 +60,7 @@ fun <T> Flow<T>.safelyOnStartIgnoring(
     CoroutineScope(currentCoroutineContext() + Dispatchers.IO).launch {
         try {
             block()
-        } catch (e: IOException) {
+        } catch (e: Exception) {
             log(e)
         }
     }
