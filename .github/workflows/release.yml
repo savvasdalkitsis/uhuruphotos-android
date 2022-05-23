@@ -22,7 +22,9 @@ jobs:
     - name: Grant execute permission for gradlew
       run: chmod +x gradlew
     - name: Create local properties
-      run: echo "MAPS_API_KEY=${{ secrets.MAPS_API_KEY }}" > local.properties
+      run: touch local.properties
+    - name: Create maps api key
+      run: echo "MAPS_API_KEY=${{ secrets.MAPS_API_KEY }}" >> gradle.properties
     - name: Decode Keystore
       env:
         ENCODED_STRING: ${{ secrets.KEYSTORE }}
