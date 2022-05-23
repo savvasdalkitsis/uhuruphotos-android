@@ -19,18 +19,13 @@ plugins {
     id 'com.android.library' version '7.2.0' apply false
     id 'org.jetbrains.kotlin.android' version "$kotlin_version" apply false
     id 'com.squareup.sqldelight' version '1.5.3' apply false
-    id 'com.google.android.libraries.mapsplatform.secrets-gradle-plugin' version '2.0.1' apply true
+    id 'com.google.android.libraries.mapsplatform.secrets-gradle-plugin' version '2.0.1' apply false
     id "com.bnorm.power.kotlin-power-assert" version "0.11.0"
     id "org.sonarqube" version "3.3"
 }
 
 task clean(type: Delete) {
     delete rootProject.buildDir
-}
-
-secrets {
-    propertiesFileName = "secrets.properties"
-    defaultPropertiesFileName = 'local.defaults.properties'
 }
 
 sonarqube {
