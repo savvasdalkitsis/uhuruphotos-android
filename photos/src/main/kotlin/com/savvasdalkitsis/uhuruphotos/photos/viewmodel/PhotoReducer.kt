@@ -19,7 +19,6 @@ import com.savvasdalkitsis.uhuruphotos.infrastructure.date.DateDisplayer
 import com.savvasdalkitsis.uhuruphotos.photos.model.latLng
 import com.savvasdalkitsis.uhuruphotos.photos.mvflow.PhotoMutation
 import com.savvasdalkitsis.uhuruphotos.photos.mvflow.PhotoMutation.*
-import com.savvasdalkitsis.uhuruphotos.photos.usecase.PhotosUseCase
 import com.savvasdalkitsis.uhuruphotos.photos.view.state.PhotoState
 import com.savvasdalkitsis.uhuruphotos.photos.view.state.SinglePhotoState
 import com.savvasdalkitsis.uhuruphotos.viewmodel.Reducer
@@ -45,8 +44,10 @@ class PhotoReducer @Inject constructor(
         is ChangeCurrentIndex -> state.copy(currentIndex = mutation.index)
         is ReceivedDetails -> with(mutation.details) {
             state.copyPhoto(imageHash) {
+                val threshold = mutation.favouriteThreshold
                 it.copy(
-                    isFavourite = (rating ?: 0) >= PhotosUseCase.FAVOURITES_RATING_THRESHOLD,
+                    isFavourite = threshold != null
+                            && (rating ?: 0) >= threshold,
                     isVideo = video == true,
                     dateAndTime = dateDisplayer.dateTimeString(timestamp),
                     location = location ?: "",

@@ -50,6 +50,22 @@ data class UserResult(
         email = email,
         avatar = avatarUrl,
         firstName = firstName,
-        lastName = lastName
+        lastName = lastName,
+        favoriteMinRating = favoriteMinRating,
+        scanDirectory = scanDirectory,
+        confidence = confidence,
+        transcodeVideos = transcodeVideos,
+        semanticSearchTopK = semanticSearchTopK,
+        publicPhotoCount = publicPhotoCount,
+        dateJoined = dateJoined,
+        photoCount = photoCount,
+        nextcloudServerAddress = nextcloudServerAddress,
+        nextcloudUsername = nextcloudUsername,
+        nextcloudScanDirectory = nextcloudScanDirectory,
+        avatarUrl = avatarUrl,
+        imageScale = imageScale,
+        saveMetadataToDisk = saveMetadataToDisk,
+        datetimeRules = datetimeRules,
+        defaultTimezone = defaultTimezone,
     )
 }

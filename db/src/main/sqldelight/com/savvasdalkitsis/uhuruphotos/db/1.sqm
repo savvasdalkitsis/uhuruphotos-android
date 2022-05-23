@@ -1,0 +1,16 @@
+ALTER TABLE user ADD COLUMN favoriteMinRating INTEGER AS Int;
+ALTER TABLE user ADD COLUMN scanDirectory TEXT;
+ALTER TABLE user ADD COLUMN confidence REAL AS Float;
+ALTER TABLE user ADD COLUMN transcodeVideos INTEGER AS Boolean;
+ALTER TABLE user ADD COLUMN semanticSearchTopK INTEGER AS Int;
+ALTER TABLE user ADD COLUMN publicPhotoCount INTEGER AS Int;
+ALTER TABLE user ADD COLUMN dateJoined TEXT;
+ALTER TABLE user ADD COLUMN photoCount INTEGER AS Int;
+ALTER TABLE user ADD COLUMN nextcloudServerAddress TEXT;
+ALTER TABLE user ADD COLUMN nextcloudUsername TEXT;
+ALTER TABLE user ADD COLUMN nextcloudScanDirectory TEXT;
+ALTER TABLE user ADD COLUMN avatarUrl TEXT;
+ALTER TABLE user ADD COLUMN imageScale INTEGER AS Int;
+ALTER TABLE user ADD COLUMN saveMetadataToDisk TEXT ;
+ALTER TABLE user ADD COLUMN datetimeRules TEXT;
+ALTER TABLE user ADD COLUMN defaultTimezone TEXT;

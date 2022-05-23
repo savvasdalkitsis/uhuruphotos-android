@@ -19,6 +19,7 @@ import com.savvasdalkitsis.uhuruphotos.auth.usecase.ServerUseCase
 import com.savvasdalkitsis.uhuruphotos.db.photos.PhotoDetails
 import com.savvasdalkitsis.uhuruphotos.photos.repository.PhotoRepository
 import com.savvasdalkitsis.uhuruphotos.photos.worker.PhotoWorkScheduler
+import com.savvasdalkitsis.uhuruphotos.user.usecase.UserUseCase
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
@@ -26,6 +27,7 @@ class PhotosUseCase @Inject constructor(
     private val serverUseCase: ServerUseCase,
     private val photoRepository: PhotoRepository,
     private val photoWorkScheduler: PhotoWorkScheduler,
+    private val userUseCase: UserUseCase,
 ) {
 
     @JvmName("toAbsoluteUrlNull")
@@ -63,8 +65,10 @@ class PhotosUseCase @Inject constructor(
         photoRepository.getPhotoDetails(id)
 
     suspend fun setPhotoFavourite(id: String, favourite: Boolean) {
-        photoRepository.setPhotoRating(id, if (favourite) FAVOURITES_RATING_THRESHOLD else 0)
-        photoWorkScheduler.schedulePhotoFavourite(id, favourite)
+        userUseCase.getUserOrRefresh()?.let { user ->
+            photoRepository.setPhotoRating(id, user.favoriteMinRating?.takeIf { favourite } ?: 0)
+            photoWorkScheduler.schedulePhotoFavourite(id, favourite)
+        }
     }
 
     fun refreshDetails(id: String) {
@@ -81,9 +85,5 @@ class PhotosUseCase @Inject constructor(
 
     fun deletePhoto(id: String) {
         photoWorkScheduler.schedulePhotoDeletion(id)
-    }
-
-    companion object {
-        const val FAVOURITES_RATING_THRESHOLD = 4
     }
 }

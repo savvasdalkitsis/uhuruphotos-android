@@ -4,7 +4,23 @@ CREATE TABLE user (
  email TEXT NOT NULL,
  avatar TEXT,
  firstName TEXT,
- lastName TEXT
+ lastName TEXT,
+ favoriteMinRating INTEGER AS Int,
+ scanDirectory TEXT,
+ confidence REAL AS Float,
+ transcodeVideos INTEGER AS Boolean,
+ semanticSearchTopK INTEGER AS Int,
+ publicPhotoCount INTEGER AS Int,
+ dateJoined TEXT,
+ photoCount INTEGER AS Int,
+ nextcloudServerAddress TEXT,
+ nextcloudUsername TEXT,
+ nextcloudScanDirectory TEXT,
+ avatarUrl TEXT,
+ imageScale INTEGER AS Int,
+ saveMetadataToDisk TEXT ,
+ datetimeRules TEXT,
+ defaultTimezone TEXT
 );
 
 getUser:

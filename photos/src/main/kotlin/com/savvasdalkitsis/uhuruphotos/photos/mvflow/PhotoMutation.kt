@@ -34,7 +34,11 @@ sealed class PhotoMutation {
     data class ShowShareIcon(val id: String) : PhotoMutation()
     data class ShowSinglePhoto(val photoState: SinglePhotoState) : PhotoMutation()
     data class ShowMultiplePhotos(val photoStates: List<SinglePhotoState>, val index: Int) : PhotoMutation()
-    data class ReceivedDetails(val details: PhotoDetails, val peopleInPhoto: List<Person>) : PhotoMutation()
+    data class ReceivedDetails(
+        val details: PhotoDetails,
+        val peopleInPhoto: List<Person>,
+        val favouriteThreshold: Int?
+    ) : PhotoMutation()
     data class ChangeCurrentIndex(val index: Int) : PhotoMutation()
     data class ShowPhotoFavourite(val id: String, val favourite: Boolean) : PhotoMutation()
     data class RemovePhotoFromSource(val id: String) : PhotoMutation()

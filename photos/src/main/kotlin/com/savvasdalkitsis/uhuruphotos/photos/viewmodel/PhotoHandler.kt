@@ -39,6 +39,7 @@ import com.savvasdalkitsis.uhuruphotos.photos.view.state.PhotoState
 import com.savvasdalkitsis.uhuruphotos.photos.view.state.SinglePhotoState
 import com.savvasdalkitsis.uhuruphotos.search.api.SearchUseCase
 import com.savvasdalkitsis.uhuruphotos.strings.R
+import com.savvasdalkitsis.uhuruphotos.user.usecase.UserUseCase
 import com.savvasdalkitsis.uhuruphotos.viewmodel.Handler
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.FlowCollector
@@ -50,6 +51,7 @@ class PhotoHandler @Inject constructor(
     private val photosUseCase: PhotosUseCase,
     private val peopleUseCase: PeopleUseCase,
     private val personUseCase: PersonUseCase,
+    private val userUseCase: UserUseCase,
     private val albumsUseCase: AlbumsUseCase,
     private val searchUseCase: SearchUseCase,
 ) : Handler<PhotoState, PhotoEffect, PhotoAction, PhotoMutation> {
@@ -185,7 +187,9 @@ class PhotoHandler @Inject constructor(
                         }
                     }
                 }
-                emit(ReceivedDetails(details, peopleInPhoto))
+
+                val favouriteThreshold = userUseCase.getUserOrRefresh()?.favoriteMinRating
+                emit(ReceivedDetails(details, peopleInPhoto, favouriteThreshold))
             }
         }
         emit(FinishedLoading)

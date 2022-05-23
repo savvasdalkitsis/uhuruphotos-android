@@ -10,11 +10,13 @@ import com.savvasdalkitsis.uhuruphotos.albums.repository.AlbumsRepository
 import com.savvasdalkitsis.uhuruphotos.albums.worker.AlbumWorkScheduler
 import com.savvasdalkitsis.uhuruphotos.db.albums.GetAlbums
 import com.savvasdalkitsis.uhuruphotos.db.albums.GetPersonAlbums
+import com.savvasdalkitsis.uhuruphotos.db.user.User
 import com.savvasdalkitsis.uhuruphotos.infrastructure.date.DateDisplayer
 import com.savvasdalkitsis.uhuruphotos.infrastructure.extensions.Group
 import com.savvasdalkitsis.uhuruphotos.photos.TestPhotos.photo
 import com.savvasdalkitsis.uhuruphotos.photos.usecase.PhotosUseCase
-import com.savvasdalkitsis.uhuruphotos.photos.usecase.PhotosUseCase.Companion.FAVOURITES_RATING_THRESHOLD
+import com.savvasdalkitsis.uhuruphotos.user.TestUsers.user
+import com.savvasdalkitsis.uhuruphotos.user.usecase.UserUseCase
 import com.shazam.shazamcrest.MatcherAssert.assertThat
 import com.shazam.shazamcrest.matcher.Matchers.sameBeanAs
 import io.mockk.*
@@ -22,6 +24,7 @@ import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.runBlocking
+import org.junit.Before
 import org.junit.Test
 
 class AlbumsUseCaseTest {
@@ -30,7 +33,19 @@ class AlbumsUseCaseTest {
     private val albumsRepository = mockk<AlbumsRepository>(relaxed = true)
     private val dateDisplayer = mockk<DateDisplayer>(relaxed = true)
     private val photosUseCase = mockk<PhotosUseCase>(relaxed = true)
-    private val underTest = AlbumsUseCase(albumsRepository, dateDisplayer, photosUseCase, albumWorkScheduler)
+    private val userUseCase = mockk<UserUseCase>(relaxed = true)
+    private val underTest = AlbumsUseCase(
+        albumsRepository,
+        dateDisplayer,
+        photosUseCase,
+        albumWorkScheduler,
+        userUseCase
+    )
+
+    @Before
+    fun setUp() {
+        userUseCase.returnsUser(user)
+    }
 
     @Test
     fun `starts shallow refresh album work`() {
@@ -140,8 +155,10 @@ class AlbumsUseCaseTest {
 
     @Test
     fun `maps photo as favourite is rating is at threshold`() = runBlocking {
+        userUseCase.returnsUser(user.copy(favoriteMinRating = 999))
+
         albumsRepository.returnsAlbumWithEntries(getAlbum.copy(
-            rating = FAVOURITES_RATING_THRESHOLD
+            rating = 999
         ))
 
         assert(underTest.getAlbums().lastPhoto.isFavourite)
@@ -149,8 +166,9 @@ class AlbumsUseCaseTest {
 
     @Test
     fun `maps photo as favourite is rating is over threshold`() = runBlocking {
+        userUseCase.returnsUser(user.copy(favoriteMinRating = 999))
         albumsRepository.returnsAlbumWithEntries(getAlbum.copy(
-            rating = FAVOURITES_RATING_THRESHOLD + 1
+            rating = 1000
         ))
 
         assert(underTest.getAlbums().lastPhoto.isFavourite)
@@ -158,8 +176,9 @@ class AlbumsUseCaseTest {
 
     @Test
     fun `maps photo as not favourite is rating is below threshold`() = runBlocking {
+        userUseCase.returnsUser(user.copy(favoriteMinRating = 999))
         albumsRepository.returnsAlbumWithEntries(getAlbum.copy(
-            rating = FAVOURITES_RATING_THRESHOLD - 1
+            rating = 998
         ))
 
         assert(!underTest.getAlbums().lastPhoto.isFavourite)
@@ -167,8 +186,20 @@ class AlbumsUseCaseTest {
 
     @Test
     fun `maps photo as not favourite is rating is missing`() = runBlocking {
+        userUseCase.returnsUser(user.copy(favoriteMinRating = 999))
         albumsRepository.returnsAlbumWithEntries(getAlbum.copy(
             rating = null
+        ))
+
+        assert(!underTest.getAlbums().lastPhoto.isFavourite)
+    }
+
+
+    @Test
+    fun `maps photo as not favourite is user favourite threshold is missing`() = runBlocking {
+        userUseCase.returnsUser(user.copy(favoriteMinRating = null))
+        albumsRepository.returnsAlbumWithEntries(getAlbum.copy(
+            rating = 999
         ))
 
         assert(!underTest.getAlbums().lastPhoto.isFavourite)
@@ -304,4 +335,7 @@ class AlbumsUseCaseTest {
 
     private val List<Album>.firstPhoto get() = first().photos.first()
     private val List<Album>.lastPhoto get() = last().photos.last()
+    private fun UserUseCase.returnsUser(user: User) {
+        coEvery { getUserOrRefresh() } returns user
+    }
 }

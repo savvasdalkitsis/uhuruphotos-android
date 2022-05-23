@@ -16,6 +16,7 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.user.repository
 
 import com.savvasdalkitsis.uhuruphotos.db.extensions.async
+import com.savvasdalkitsis.uhuruphotos.db.extensions.awaitSingleOrNull
 import com.savvasdalkitsis.uhuruphotos.db.user.User
 import com.savvasdalkitsis.uhuruphotos.db.user.UserQueries
 import com.savvasdalkitsis.uhuruphotos.log.log
@@ -31,16 +32,18 @@ class UserRepository @Inject constructor(
     private val userQueries: UserQueries,
 ) {
 
-    fun getUser(): Flow<User> = userQueries.getUser().asFlow().mapToOneNotNull()
+    fun observeUser(): Flow<User> = userQueries.getUser().asFlow().mapToOneNotNull()
 
-    suspend fun refreshUser() {
-        try {
-            val userResults = userService.getUser()
-            for (userResult in userResults.results) {
-                async { userQueries.addUser(userResult.toUser()) }
-            }
-        } catch (e: IOException) {
-            log(e)
+    suspend fun getUser(): User? = userQueries.getUser().awaitSingleOrNull()
+
+    suspend fun refreshUser(): User? = try {
+        val userResults = userService.getUser()
+        for (userResult in userResults.results) {
+            async { userQueries.addUser(userResult.toUser()) }
         }
+        userResults.results.last().toUser()
+    } catch (e: IOException) {
+        log(e)
+        null
     }
 }

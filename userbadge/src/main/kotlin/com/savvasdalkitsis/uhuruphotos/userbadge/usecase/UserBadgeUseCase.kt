@@ -37,7 +37,7 @@ class UserBadgeUseCase @Inject constructor(
 ) : UserBadgeUseCase {
 
     override fun getUserBadgeState(): Flow<UserInformationState> = combine(
-        userUseCase.getUser(),
+        userUseCase.observeUser(),
         workerStatusUseCase.monitorUniqueJobStatus(AlbumDownloadWorker.WORK_NAME),
         serverUseCase.observeServerUrl(),
     ) { user, status, serverUrl ->

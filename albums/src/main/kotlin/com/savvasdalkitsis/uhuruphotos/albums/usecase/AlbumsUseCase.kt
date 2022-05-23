@@ -28,7 +28,7 @@ import com.savvasdalkitsis.uhuruphotos.infrastructure.extensions.safelyOnStartIg
 import com.savvasdalkitsis.uhuruphotos.photos.service.model.isVideo
 import com.savvasdalkitsis.uhuruphotos.photos.api.model.Photo
 import com.savvasdalkitsis.uhuruphotos.photos.usecase.PhotosUseCase
-import com.savvasdalkitsis.uhuruphotos.photos.usecase.PhotosUseCase.Companion.FAVOURITES_RATING_THRESHOLD
+import com.savvasdalkitsis.uhuruphotos.user.usecase.UserUseCase
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.map
@@ -39,6 +39,7 @@ class AlbumsUseCase @Inject constructor(
     private val dateDisplayer: DateDisplayer,
     private val photosUseCase: PhotosUseCase,
     private val albumWorkScheduler: AlbumWorkScheduler,
+    private val userUseCase: UserUseCase,
 ) : AlbumsUseCase {
 
     override fun observePersonAlbums(personId: Int): Flow<List<Album>> = albumsRepository.observePersonAlbums(personId)
@@ -74,37 +75,41 @@ class AlbumsUseCase @Inject constructor(
             }
         }
 
-    private fun Group<String, DbAlbums>.mapToAlbums(): List<Album> = items.map { (id, photos) ->
-        val albumDate = photos.firstOrNull()?.albumDate
-        val albumLocation = photos.firstOrNull()?.albumLocation
+    private suspend fun Group<String, DbAlbums>.mapToAlbums(): List<Album> {
+        val favouriteThreshold = userUseCase.getUserOrRefresh()?.favoriteMinRating
+        return items.map { (id, photos) ->
+            val albumDate = photos.firstOrNull()?.albumDate
+            val albumLocation = photos.firstOrNull()?.albumLocation
 
-        Album(
-            id = id,
-            date = dateDisplayer.dateString(albumDate),
-            location = albumLocation ?: "",
-            photos = photos.mapNotNull { item ->
-                when {
-                    item.photoId.isNullOrBlank() -> null
-                    else -> {
-                        val photoId = item.photoId
-                        Photo(
-                            id = photoId,
-                            thumbnailUrl = with(photosUseCase) {
-                                photoId.toThumbnailUrlFromId()
-                            },
-                            fullResUrl = with(photosUseCase) {
-                                photoId.toFullSizeUrlFromId(item.isVideo)
-                            },
-                            fallbackColor = item.dominantColor,
-                            isFavourite = (item.rating ?: 0) >= FAVOURITES_RATING_THRESHOLD,
-                            ratio = item.aspectRatio ?: 1.0f,
-                            isVideo = item.isVideo,
-                        )
+            Album(
+                id = id,
+                date = dateDisplayer.dateString(albumDate),
+                location = albumLocation ?: "",
+                photos = photos.mapNotNull { item ->
+                    when {
+                        item.photoId.isNullOrBlank() -> null
+                        else -> {
+                            val photoId = item.photoId
+                            Photo(
+                                id = photoId,
+                                thumbnailUrl = with(photosUseCase) {
+                                    photoId.toThumbnailUrlFromId()
+                                },
+                                fullResUrl = with(photosUseCase) {
+                                    photoId.toFullSizeUrlFromId(item.isVideo)
+                                },
+                                fallbackColor = item.dominantColor,
+                                isFavourite = favouriteThreshold != null
+                                        && (item.rating ?: 0) >= favouriteThreshold,
+                                ratio = item.aspectRatio ?: 1.0f,
+                                isVideo = item.isVideo,
+                            )
+                        }
                     }
                 }
-            }
-        )
-    }.filter { it.photos.isNotEmpty() }
+            )
+        }.filter { it.photos.isNotEmpty() }
+    }
 
     override fun startRefreshAlbumsWork(shallow: Boolean) {
         albumWorkScheduler.scheduleAlbumsRefreshNow(shallow)

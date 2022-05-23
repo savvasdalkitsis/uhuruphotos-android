@@ -27,6 +27,7 @@ dependencies {
     implementation project(":photos-api")
     implementation project(":notification")
     implementation project(":strings")
+    implementation project(":user")
     implementation(
             libs.androidx.compose.hilt.navigation,
             libs.androidx.work,
@@ -38,6 +39,7 @@ dependencies {
     )
     testImplementation testFixtures(project(":db"))
     testImplementation testFixtures(project(":photos"))
+    testImplementation testFixtures(project(":user"))
     testImplementation(
             libs.bundles.test,
     )

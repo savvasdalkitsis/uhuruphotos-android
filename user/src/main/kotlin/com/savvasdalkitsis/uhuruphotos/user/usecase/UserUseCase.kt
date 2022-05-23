@@ -25,9 +25,11 @@ class UserUseCase @Inject constructor(
     private val userRepository: UserRepository,
 ) {
 
-    fun getUser(): Flow<User> = userRepository.getUser()
+    fun observeUser(): Flow<User> = userRepository.observeUser()
         .safelyOnStartIgnoring {
             userRepository.refreshUser()
         }
 
+    suspend fun getUserOrRefresh(): User? =
+        userRepository.getUser() ?: userRepository.refreshUser()
 }

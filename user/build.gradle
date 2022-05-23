@@ -11,6 +11,7 @@ dependencies {
             libs.retrofit.moshi,
             libs.sqldelight.coroutines,
     )
+    testFixturesImplementation project(":db")
     kapt "com.squareup.moshi:moshi-kotlin-codegen:1.13.0"
 }
 
