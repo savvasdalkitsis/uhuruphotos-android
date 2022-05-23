@@ -5,6 +5,7 @@ on:
     branches: [ main ]
   pull_request:
     branches: [ main ]
+    types: [opened, synchronize, reopened]
 
 jobs:
   build:
@@ -19,7 +20,18 @@ jobs:
         java-version: '11'
         distribution: 'temurin'
         cache: gradle
-
+    - name: Cache SonarCloud packages
+      uses: actions/cache@v1
+      with:
+        path: ~/.sonar/cache
+        key: ${{ runner.os }}-sonar
+        restore-keys: ${{ runner.os }}-sonar
+    - name: Cache Gradle packages
+      uses: actions/cache@v1
+      with:
+        path: ~/.gradle/caches
+        key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle') }}
+        restore-keys: ${{ runner.os }}-gradle
     - name: Grant execute permission for gradlew
       run: chmod +x gradlew
     - name: Create local properties
@@ -27,7 +39,10 @@ jobs:
     - name: Copy mock google services
       run: cp mock-google-services.json app/google-services.json
     - name: Build with Gradle
-      run: ./gradlew assembleDebug
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+      run: ./gradlew assembleDebug sonarqube
 #    - name: run tests
 #      uses: reactivecircus/android-emulator-runner@v2
 #      with:
