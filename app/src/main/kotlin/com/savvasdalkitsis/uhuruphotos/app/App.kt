@@ -16,7 +16,6 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.app
 
 import android.app.Application
-import android.webkit.WebView
 import androidx.hilt.work.HiltWorkerFactory
 import androidx.work.Configuration
 import com.savvasdalkitsis.uhuruphotos.initializer.ApplicationInitializer
@@ -35,7 +34,6 @@ class App :
 
     override fun onCreate() {
         super.onCreate()
-        WebView.setWebContentsDebuggingEnabled(true)
         applicationInitializer.onCreated(this)
     }
 
