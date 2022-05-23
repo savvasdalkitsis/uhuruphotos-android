@@ -36,8 +36,6 @@ jobs:
       run: chmod +x gradlew
     - name: Create local properties
       run: touch local.properties
-    - name: Create maps api key
-      run: echo "MAPS_API_KEY=DUMMY" >> gradle.properties
     - name: Copy mock google services
       run: cp mock-google-services.json app/google-services.json
     - name: Build with Gradle

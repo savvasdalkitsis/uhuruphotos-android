@@ -28,6 +28,11 @@ task clean(type: Delete) {
     delete rootProject.buildDir
 }
 
+secrets {
+    propertiesFileName = "secrets.properties"
+    defaultPropertiesFileName = 'local.defaults.properties'
+}
+
 sonarqube {
     properties {
         property "sonar.projectKey", "savvasdalkitsis_uhuruphotos-android"

@@ -24,7 +24,7 @@ jobs:
     - name: Create local properties
       run: touch local.properties
     - name: Create maps api key
-      run: echo "MAPS_API_KEY=${{ secrets.MAPS_API_KEY }}" >> gradle.properties
+      run: echo "MAPS_API_KEY=${{ secrets.MAPS_API_KEY }}" > secrets.properties
     - name: Decode Keystore
       env:
         ENCODED_STRING: ${{ secrets.KEYSTORE }}
