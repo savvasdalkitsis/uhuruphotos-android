@@ -16,7 +16,6 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.albums.api.worker
 
 import androidx.work.ExistingPeriodicWorkPolicy
-import androidx.work.WorkInfo
 import kotlinx.coroutines.flow.Flow
 
 interface AlbumWorkScheduler {

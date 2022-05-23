@@ -25,8 +25,8 @@ import com.savvasdalkitsis.uhuruphotos.infrastructure.date.DateDisplayer
 import com.savvasdalkitsis.uhuruphotos.infrastructure.extensions.Group
 import com.savvasdalkitsis.uhuruphotos.infrastructure.extensions.mapValues
 import com.savvasdalkitsis.uhuruphotos.infrastructure.extensions.safelyOnStartIgnoring
-import com.savvasdalkitsis.uhuruphotos.photos.service.model.isVideo
 import com.savvasdalkitsis.uhuruphotos.photos.api.model.Photo
+import com.savvasdalkitsis.uhuruphotos.photos.service.model.isVideo
 import com.savvasdalkitsis.uhuruphotos.photos.usecase.PhotosUseCase
 import com.savvasdalkitsis.uhuruphotos.user.usecase.UserUseCase
 import kotlinx.coroutines.flow.Flow

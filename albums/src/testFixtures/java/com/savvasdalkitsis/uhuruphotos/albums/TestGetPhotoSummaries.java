@@ -4,7 +4,11 @@ import com.savvasdalkitsis.uhuruphotos.db.photos.GetPhotoSummariesForAlbum;
 
 public class TestGetPhotoSummaries {
 
-    public static GetPhotoSummariesForAlbum photoSummariesForAlbum = new GetPhotoSummariesForAlbum(
+    private TestGetPhotoSummaries() {
+        // not to be instantiated
+    }
+
+    public static final GetPhotoSummariesForAlbum photoSummariesForAlbum = new GetPhotoSummariesForAlbum(
             "photoSummariesForAlbumId",
             ""
     );

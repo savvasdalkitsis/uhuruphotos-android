@@ -16,7 +16,7 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.feedpage.module
 
 import com.savvasdalkitsis.uhuruphotos.feedpage.navigation.FeedPageNavigationTarget
-import com.savvasdalkitsis.uhuruphotos.home.module.HomeModule.*
+import com.savvasdalkitsis.uhuruphotos.home.module.HomeModule.HomeNavigationTargetFeed
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

@@ -4,7 +4,11 @@ import com.savvasdalkitsis.uhuruphotos.db.photos.PhotoSummary;
 
 public class TestPhotoSummaries {
 
-    public static PhotoSummary photoSummary = new PhotoSummary(
+    private TestPhotoSummaries() {
+        // not to be instantiated
+    }
+
+    public static final PhotoSummary photoSummary = new PhotoSummary(
             "id",
             null,
             "url",

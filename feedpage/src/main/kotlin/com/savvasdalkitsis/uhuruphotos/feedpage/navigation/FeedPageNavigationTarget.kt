@@ -17,9 +17,9 @@ package com.savvasdalkitsis.uhuruphotos.feedpage.navigation
 
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavGraphBuilder
-import com.savvasdalkitsis.uhuruphotos.feedpage.view.FeedPage
 import com.savvasdalkitsis.uhuruphotos.feedpage.mvflow.FeedPageAction
 import com.savvasdalkitsis.uhuruphotos.feedpage.mvflow.FeedPageEffect
+import com.savvasdalkitsis.uhuruphotos.feedpage.view.FeedPage
 import com.savvasdalkitsis.uhuruphotos.feedpage.view.state.FeedPageState
 import com.savvasdalkitsis.uhuruphotos.feedpage.viewmodel.FeedPageEffectsHandler
 import com.savvasdalkitsis.uhuruphotos.feedpage.viewmodel.FeedPageViewModel

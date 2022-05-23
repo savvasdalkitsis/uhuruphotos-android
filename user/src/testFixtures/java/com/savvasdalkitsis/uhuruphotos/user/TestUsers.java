@@ -4,7 +4,11 @@ import com.savvasdalkitsis.uhuruphotos.db.user.User;
 
 public class TestUsers {
 
-    public static User user = new User(
+    private TestUsers() {
+        // not to be instantiated
+    }
+
+    public static final User user = new User(
             0,
             "",
             "",

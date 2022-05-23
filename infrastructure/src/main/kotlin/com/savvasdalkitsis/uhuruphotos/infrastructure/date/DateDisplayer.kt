@@ -16,8 +16,8 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.infrastructure.date
 
 import android.text.format.DateUtils
-import com.savvasdalkitsis.uhuruphotos.log.log
 import com.savvasdalkitsis.uhuruphotos.infrastructure.module.InfrastructureModule
+import com.savvasdalkitsis.uhuruphotos.log.log
 import java.text.DateFormat
 import java.util.*
 import javax.inject.Inject

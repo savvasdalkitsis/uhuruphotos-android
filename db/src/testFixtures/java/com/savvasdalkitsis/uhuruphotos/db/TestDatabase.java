@@ -7,10 +7,13 @@ import com.squareup.sqldelight.sqlite.driver.JdbcSqliteDriver;
 
 import java.io.File;
 import java.io.IOException;
-import java.nio.file.Files;
 import java.util.Properties;
 
 public class TestDatabase {
+
+    private TestDatabase() {
+        // not to be instantiated
+    }
 
     public static Database getDb() throws IOException {
         String file = File.createTempFile("temp-db-", ".db").toURI().getRawPath();

@@ -15,7 +15,6 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.auth.service
 
-import com.savvasdalkitsis.uhuruphotos.auth.model.AuthStatus.Authenticated
 import com.savvasdalkitsis.uhuruphotos.auth.model.AuthStatus.Unauthenticated
 import com.savvasdalkitsis.uhuruphotos.auth.usecase.AuthenticationUseCase
 import kotlinx.coroutines.runBlocking

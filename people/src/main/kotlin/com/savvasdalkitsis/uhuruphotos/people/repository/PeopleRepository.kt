@@ -15,8 +15,8 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.people.repository
 
-import com.savvasdalkitsis.uhuruphotos.db.extensions.await
 import com.savvasdalkitsis.uhuruphotos.db.extensions.async
+import com.savvasdalkitsis.uhuruphotos.db.extensions.await
 import com.savvasdalkitsis.uhuruphotos.db.people.People
 import com.savvasdalkitsis.uhuruphotos.db.people.PeopleQueries
 import com.savvasdalkitsis.uhuruphotos.log.log

@@ -40,7 +40,7 @@ class AppActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         try {
             WindowCompat.setDecorFitsSystemWindows(window, false)
-        } catch (_: Exception) {}
+        } catch (_: Exception) { /* safe to ignore */ }
         setContent {
             val systemUiController = rememberSystemUiController()
             val windowSizeClass = calculateWindowSizeClass(this)

@@ -17,7 +17,6 @@ package com.savvasdalkitsis.uhuruphotos.settings.view
 
 import androidx.annotation.DrawableRes
 import androidx.compose.foundation.layout.*
-import androidx.compose.material.Button
 import androidx.compose.material.Icon
 import androidx.compose.material.OutlinedButton
 import androidx.compose.material.Text
@@ -26,7 +25,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
-import com.savvasdalkitsis.uhuruphotos.icons.R
 
 @Composable
 fun SettingsOutlineButtonRow(

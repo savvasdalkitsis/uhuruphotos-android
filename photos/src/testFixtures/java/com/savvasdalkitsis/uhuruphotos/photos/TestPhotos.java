@@ -6,7 +6,11 @@ import com.savvasdalkitsis.uhuruphotos.photos.service.model.PhotoSummaryItem;
 
 public class TestPhotos {
 
-    public static PhotoSummaryItem photoSummaryItem = new PhotoSummaryItem(
+    private TestPhotos() {
+        // not to be instantiated
+    }
+
+    public static final PhotoSummaryItem photoSummaryItem = new PhotoSummaryItem(
             "id",
             "",
             "",

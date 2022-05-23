@@ -10,14 +10,18 @@ import java.util.Collections;
 
 public class TestAlbums {
 
-    public static Album album = new Album(
+    private TestAlbums() {
+        // not to be instantiated
+    }
+
+    public static final Album album = new Album(
             "id",
             Collections.emptyList(),
             "",
             ""
     );
 
-    public static Albums albums = new Albums(
+    public static final Albums albums = new Albums(
             "id",
             null,
             null,
@@ -26,7 +30,7 @@ public class TestAlbums {
             0
     );
 
-    public static IncompleteAlbum incompleteAlbum = new IncompleteAlbum(
+    public static final IncompleteAlbum incompleteAlbum = new IncompleteAlbum(
             "id",
             "",
             "",
@@ -34,7 +38,7 @@ public class TestAlbums {
             0
     );
 
-    public static CompleteAlbum completeAlbum = new CompleteAlbum(
+    public static final CompleteAlbum completeAlbum = new CompleteAlbum(
             "id",
             "",
             "",

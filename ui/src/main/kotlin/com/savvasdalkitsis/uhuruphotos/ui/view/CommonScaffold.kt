@@ -32,7 +32,7 @@ fun CommonScaffold(
     modifier: Modifier = Modifier,
     title: @Composable () -> Unit = { Logo() },
     bottomBarContent: @Composable () -> Unit = {},
-    actionBarContent: @Composable() (RowScope.() -> Unit) = {},
+    actionBarContent: @Composable (RowScope.() -> Unit) = {},
     toolbarColor: @Composable () -> Color = { MaterialTheme.colors.background.copy(alpha = 0.8f) },
     bottomBarColor: @Composable () -> Color = { MaterialTheme.colors.background.copy(alpha = 0.8f) },
     topBarDisplayed: Boolean = true,

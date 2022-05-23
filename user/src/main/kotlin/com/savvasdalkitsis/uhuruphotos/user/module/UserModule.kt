@@ -15,8 +15,6 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.user.module
 
-import com.savvasdalkitsis.uhuruphotos.db.Database
-import com.savvasdalkitsis.uhuruphotos.db.user.UserQueries
 import com.savvasdalkitsis.uhuruphotos.user.service.UserService
 import dagger.Module
 import dagger.Provides

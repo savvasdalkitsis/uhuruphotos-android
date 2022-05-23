@@ -15,8 +15,6 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.settings.view
 
-import androidx.compose.material.DropdownMenuItem
-import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.work.NetworkType
 import androidx.work.NetworkType.*

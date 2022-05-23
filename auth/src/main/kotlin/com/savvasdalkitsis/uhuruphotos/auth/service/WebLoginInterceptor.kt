@@ -16,9 +16,9 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.auth.service
 
 import android.webkit.CookieManager
-import com.savvasdalkitsis.uhuruphotos.navigation.ControllersProvider
 import com.savvasdalkitsis.uhuruphotos.auth.usecase.ServerUseCase
 import com.savvasdalkitsis.uhuruphotos.auth.weblogin.weblogin.navigation.WebLoginNavigationTarget
+import com.savvasdalkitsis.uhuruphotos.navigation.ControllersProvider
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch

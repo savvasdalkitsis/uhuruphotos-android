@@ -15,18 +15,19 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.heatmap.view
 
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.WindowInsetsSides.Companion.Bottom
 import androidx.compose.foundation.layout.WindowInsetsSides.Companion.End
 import androidx.compose.foundation.layout.WindowInsetsSides.Companion.Top
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import com.google.accompanist.permissions.PermissionState
 import com.savvasdalkitsis.uhuruphotos.heatmap.view.state.HeatMapState
 import com.savvasdalkitsis.uhuruphotos.heatmap.viewmodel.HeatMapAction
-import com.savvasdalkitsis.uhuruphotos.ui.insets.insetsTop
 import com.savvasdalkitsis.uhuruphotos.ui.insets.systemPadding
 import com.savvasdalkitsis.uhuruphotos.ui.view.CommonScaffold
 

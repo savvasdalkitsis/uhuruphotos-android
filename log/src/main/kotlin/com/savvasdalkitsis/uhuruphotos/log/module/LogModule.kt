@@ -18,7 +18,6 @@ package com.savvasdalkitsis.uhuruphotos.log.module
 import android.content.Context
 import com.michaelflisar.lumberjack.FileLoggingSetup
 import com.michaelflisar.lumberjack.FileLoggingTree
-import com.michaelflisar.lumberjack.L
 import com.savvasdalkitsis.uhuruphotos.log.BuildConfig
 import com.savvasdalkitsis.uhuruphotos.log.NoOpTree
 import dagger.Module
@@ -29,7 +28,6 @@ import dagger.hilt.components.SingletonComponent
 import dagger.multibindings.IntoSet
 import timber.log.ConsoleTree
 import timber.log.Timber
-import java.util.logging.Logger
 import javax.inject.Singleton
 
 @Module

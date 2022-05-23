@@ -22,8 +22,6 @@ import com.savvasdalkitsis.uhuruphotos.auth.service.AuthenticationService
 import com.savvasdalkitsis.uhuruphotos.auth.service.TokenRefreshInterceptor
 import com.savvasdalkitsis.uhuruphotos.auth.service.WebLoginInterceptor
 import com.savvasdalkitsis.uhuruphotos.auth.weblogin.WebkitCookieManager
-import com.savvasdalkitsis.uhuruphotos.db.Database
-import com.savvasdalkitsis.uhuruphotos.db.auth.TokenQueries
 import com.savvasdalkitsis.uhuruphotos.network.module.OkHttpBuilder
 import dagger.Module
 import dagger.Provides

@@ -16,14 +16,14 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.server.view
 
 import androidx.compose.foundation.layout.*
-import androidx.compose.material.*
-import androidx.compose.runtime.*
+import androidx.compose.material.CircularProgressIndicator
+import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.savvasdalkitsis.uhuruphotos.ui.view.CommonScaffold
 import com.savvasdalkitsis.uhuruphotos.server.mvflow.ServerAction
 import com.savvasdalkitsis.uhuruphotos.server.view.ServerState.*
+import com.savvasdalkitsis.uhuruphotos.ui.view.CommonScaffold
 
 @Composable
 fun Server(

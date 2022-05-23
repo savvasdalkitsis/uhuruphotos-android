@@ -16,7 +16,6 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.albums.worker
 
 import androidx.work.ExistingPeriodicWorkPolicy
-import androidx.work.WorkInfo
 import com.savvasdalkitsis.uhuruphotos.albums.api.worker.AlbumWorkScheduler
 import com.savvasdalkitsis.uhuruphotos.albums.api.worker.RefreshJobState
 import com.savvasdalkitsis.uhuruphotos.settings.usecase.SettingsUseCase

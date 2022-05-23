@@ -1,7 +1,7 @@
 package com.savvasdalkitsis.uhuruphotos.albums
 
-import com.savvasdalkitsis.uhuruphotos.photos.TestPhotoSummaries.*
-import com.savvasdalkitsis.uhuruphotos.photos.TestPhotos.*
+import com.savvasdalkitsis.uhuruphotos.photos.TestPhotoSummaries.photoSummary
+import com.savvasdalkitsis.uhuruphotos.photos.TestPhotos.photoSummaryItem
 
 fun photoId(id: Int) = "photo$id"
 fun photo(id: Int) = photoSummary.copy(id = photoId(id))

@@ -16,7 +16,6 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.people.navigation
 
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavGraphBuilder
 import com.savvasdalkitsis.uhuruphotos.navigation.NavigationTarget
 import com.savvasdalkitsis.uhuruphotos.navigation.navigationTarget
@@ -29,7 +28,6 @@ import com.savvasdalkitsis.uhuruphotos.people.viewmodel.PeopleEffect
 import com.savvasdalkitsis.uhuruphotos.people.viewmodel.PeopleEffectHandler
 import com.savvasdalkitsis.uhuruphotos.people.viewmodel.PeopleViewModel
 import com.savvasdalkitsis.uhuruphotos.settings.usecase.SettingsUseCase
-import com.savvasdalkitsis.uhuruphotos.viewmodel.noOp
 import javax.inject.Inject
 
 class PeopleNavigationTarget @Inject constructor(
