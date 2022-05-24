@@ -16,6 +16,9 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.infrastructure.extensions
 
 import org.apache.commons.validator.routines.UrlValidator
+import kotlin.time.DurationUnit
+import kotlin.time.toDuration
+import kotlin.time.toJavaDuration
 
 private val httpValidator = UrlValidator(arrayOf("http"))
 private val httpsValidator = UrlValidator(arrayOf("https"))
@@ -37,3 +40,8 @@ val String.prefixedWithHttpsIfNeeded get() = when {
 }.trim()
 
 fun Double.round(decimals: Int = 2): String = "%.${decimals}f".format(this)
+
+private const val K = 1024L
+
+val Int.mb get() = this * K * K
+val Int.seconds get() = this.toDuration(DurationUnit.SECONDS).toJavaDuration()

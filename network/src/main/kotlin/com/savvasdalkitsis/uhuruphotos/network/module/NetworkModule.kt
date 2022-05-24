@@ -16,6 +16,8 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.network.module
 
 import android.content.Context
+import com.savvasdalkitsis.uhuruphotos.infrastructure.extensions.mb
+import com.savvasdalkitsis.uhuruphotos.infrastructure.extensions.seconds
 import com.savvasdalkitsis.uhuruphotos.network.interceptors.UserAgentInterceptor
 import com.squareup.moshi.Moshi
 import dagger.Module
@@ -46,10 +48,10 @@ class NetworkModule {
         userAgentInterceptor: UserAgentInterceptor,
     ): OkHttpClient.Builder = OkHttpClient().newBuilder()
         .followRedirects(false)
-        .callTimeout(60, TimeUnit.SECONDS)
-        .connectTimeout(60, TimeUnit.SECONDS)
-        .readTimeout(60, TimeUnit.SECONDS)
-        .writeTimeout(60, TimeUnit.SECONDS)
+        .callTimeout(60.seconds)
+        .connectTimeout(60.seconds)
+        .readTimeout(60.seconds)
+        .writeTimeout(60.seconds)
         .addInterceptor(userAgentInterceptor)
 
     @Provides
@@ -58,7 +60,7 @@ class NetworkModule {
         @ApplicationContext context: Context,
     ) = Cache(
         File(context.cacheDir, "http_cache"),
-        50 * 1024L * 1024L
+        50.mb
     )
 
     @Provides

@@ -33,10 +33,10 @@ import kotlinx.coroutines.launch
 import kotlin.math.max
 import kotlin.math.min
 
-private const val zoomMin = 0.8f
-private const val zoomMax = 1.2f
-private const val zoomLowTrigger = 0.9f
-private const val zoomHighTrigger = 1.1f
+private const val ZOOM_MIN = 0.8f
+private const val ZOOM_MAX = 1.2f
+private const val ZOOM_LOW_TRIGGER = 0.9f
+private const val ZOOM_HIGH_TRIGGER = 1.1f
 
 fun Modifier.pinchToChange(
     feedDisplay: FeedDisplay,
@@ -56,8 +56,8 @@ fun Modifier.pinchToChange(
                         coroutineScope.launch {
                             zoom.snapTo(
                                 max(
-                                    zoomMin,
-                                    min(zoom.value * zoomChange, zoomMax)
+                                    ZOOM_MIN,
+                                    min(zoom.value * zoomChange, ZOOM_MAX)
                                 )
                             )
                         }
@@ -69,10 +69,10 @@ fun Modifier.pinchToChange(
                         }
                     }
                 } while (event.changes.fastAny { it.pressed })
-                if (zoom.value < zoomLowTrigger) {
+                if (zoom.value < ZOOM_LOW_TRIGGER) {
                     onChangeDisplay(feedDisplay.zoomOut)
                 }
-                if (zoom.value > zoomHighTrigger) {
+                if (zoom.value > ZOOM_HIGH_TRIGGER) {
                     onChangeDisplay(feedDisplay.zoomIn)
                 }
                 coroutineScope.launch {

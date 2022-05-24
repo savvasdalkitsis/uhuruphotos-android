@@ -25,6 +25,7 @@ import coil.disk.DiskCache
 import coil.memory.MemoryCache
 import com.savvasdalkitsis.uhuruphotos.auth.module.AuthModule
 import com.savvasdalkitsis.uhuruphotos.auth.service.TokenRefreshInterceptor
+import com.savvasdalkitsis.uhuruphotos.infrastructure.extensions.mb
 import com.savvasdalkitsis.uhuruphotos.settings.usecase.SettingsUseCase
 import dagger.Module
 import dagger.Provides
@@ -54,7 +55,7 @@ class ImageModule {
         settingsUseCase: SettingsUseCase,
     ): DiskCache = DiskCache.Builder()
         .directory(context.cacheDir.resolve("image_cache"))
-        .maxSizeBytes(settingsUseCase.getImageDiskCacheMaxLimit() * 1024 * 1024L)
+        .maxSizeBytes(settingsUseCase.getImageDiskCacheMaxLimit().mb)
         .build()
 
     @Provides
