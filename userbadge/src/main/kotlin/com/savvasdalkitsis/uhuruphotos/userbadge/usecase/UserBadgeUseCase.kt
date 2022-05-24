@@ -65,9 +65,9 @@ class UserBadgeUseCase @Inject constructor(
         orEmpty().firstOrNull()?.toString()?.uppercase() ?: ""
 }
 
-private operator fun WorkInfo.State.plus(other: WorkInfo.State): WorkInfo.State {
-    if (this == RUNNING || other == RUNNING) return RUNNING
-    if (this == FAILED || other == FAILED) return FAILED
-    if (this == SUCCEEDED && other == SUCCEEDED) return SUCCEEDED
-    return this
+private operator fun WorkInfo.State.plus(other: WorkInfo.State): WorkInfo.State = when {
+    this == RUNNING || other == RUNNING -> RUNNING
+    this == FAILED || other == FAILED -> FAILED
+    this == SUCCEEDED && other == SUCCEEDED -> SUCCEEDED
+    else -> this
 }
