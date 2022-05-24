@@ -61,4 +61,6 @@
     <string name="remove_favourite">Retirer des favoris</string>
     <string name="background_jobs">Tâches d\'arrière-plan</string>
     <string name="send_crash_logs">Envoyer les journaux de plantage pour le dépannage</string>
+    <string name="log_out">Déconnexion</string>
+    <string name="edit_server_url">Modifier l\'URL du serveur</string>
 </resources>
