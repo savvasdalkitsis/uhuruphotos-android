@@ -60,4 +60,5 @@
     <string name="changes_effect_after_restart">(los cambios tendrán efecto tras el reinicio)</string>
     <string name="delete">Borrar</string>
     <string name="crash_reports">Informar de errores</string>
+    <string name="requires_charging">Requiere carga</string>
 </resources>
