@@ -61,4 +61,6 @@
         <item quantity="other">%d ώρες</item>
     </plurals>
     <string name="max_limit">Μέγιστο όριο: %dmb</string>
+    <string name="edit_server_url">Επεξεργασία διεύθυνσης server</string>
+    <string name="log_out">Αποσύνδεση</string>
 </resources>
