@@ -1,3 +1,4 @@
+@file:Suppress("AbsentOrWrongFileLicense")
 /*
 Copyright (c) 2021 nani
 

@@ -30,7 +30,7 @@ import com.savvasdalkitsis.uhuruphotos.albums.photoId
 import com.savvasdalkitsis.uhuruphotos.albums.photoSummaryItem
 import com.savvasdalkitsis.uhuruphotos.albums.respondsForAlbum
 import com.savvasdalkitsis.uhuruphotos.albums.respondsWith
-import com.savvasdalkitsis.uhuruphotos.albums.serverAlbumLocation
+import com.savvasdalkitsis.uhuruphotos.albums.SERVER_ALBUM_LOCATION
 import com.savvasdalkitsis.uhuruphotos.albums.service.AlbumsService
 import com.savvasdalkitsis.uhuruphotos.albums.willRespondForAlbum
 import com.savvasdalkitsis.uhuruphotos.albums.willRespondForPersonAlbum
@@ -184,8 +184,8 @@ class AlbumsRepositoryTest {
         given(person = 1).hasPhotos(1)
 
         val albumsResponse = albumsService.willRespondForPersonWith(personId = 1,
-            incompleteAlbum(1).copy(location = serverAlbumLocation),
-            incompleteAlbum(2).copy(location = serverAlbumLocation),
+            incompleteAlbum(1).copy(location = SERVER_ALBUM_LOCATION),
+            incompleteAlbum(2).copy(location = SERVER_ALBUM_LOCATION),
         )
         val album1Response = albumsService.willRespondForPersonAlbum(personId = 1, albumId = 1,
             completeAlbum(1).copy(
@@ -215,7 +215,7 @@ class AlbumsRepositoryTest {
 
             awaitItem().assertSameAs(
                 album(1,
-                    entry(personId = 1, photo(1)).copy(albumLocation = serverAlbumLocation),
+                    entry(personId = 1, photo(1)).copy(albumLocation = SERVER_ALBUM_LOCATION),
                 )
             )
 
@@ -264,7 +264,7 @@ class AlbumsRepositoryTest {
         db.albumsQueries.clearAlbums()
         db.photoSummaryQueries.clearAll()
         albumsService.respondsWith(
-            incompleteAlbum(1).copy(location = serverAlbumLocation),
+            incompleteAlbum(1).copy(location = SERVER_ALBUM_LOCATION),
         )
         albumsService.respondsForAlbum(1,
             completeAlbum(1).copy(
