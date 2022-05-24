@@ -19,7 +19,7 @@ import com.github.michaelbull.result.Result
 import com.savvasdalkitsis.uhuruphotos.albums.api.model.Album
 import com.savvasdalkitsis.uhuruphotos.db.search.GetSearchResults
 import com.savvasdalkitsis.uhuruphotos.infrastructure.date.DateDisplayer
-import com.savvasdalkitsis.uhuruphotos.infrastructure.extensions.Group
+import com.savvasdalkitsis.uhuruphotos.infrastructure.model.Group
 import com.savvasdalkitsis.uhuruphotos.infrastructure.extensions.safelyOnStart
 import com.savvasdalkitsis.uhuruphotos.infrastructure.extensions.safelyOnStartIgnoring
 import com.savvasdalkitsis.uhuruphotos.photos.api.model.Photo

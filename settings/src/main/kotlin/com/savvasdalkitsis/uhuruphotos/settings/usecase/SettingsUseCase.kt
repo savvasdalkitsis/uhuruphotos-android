@@ -29,16 +29,26 @@ class SettingsUseCase @Inject constructor(
     flowSharedPreferences: FlowSharedPreferences,
 ){
 
-    private val imageDiskCacheSize = flowSharedPreferences.getInt("imageDiskCacheSize", 500)
-    private val imageMemCacheSize = flowSharedPreferences.getInt("imageDiskCacheSize", 200)
-    private val videoDiskCacheSize = flowSharedPreferences.getInt("videoDiskCacheSize", 700)
-    private val feedSyncFrequency = flowSharedPreferences.getInt("feedSyncFrequency", 12)
-    private val shouldPerformPeriodicFeedSync = flowSharedPreferences.getBoolean("shouldPerformPeriodicFeedSync", true)
-    private val fullSyncNetworkRequirements = flowSharedPreferences.getEnum("fullSyncNetworkRequirements", NetworkType.NOT_ROAMING)
-    private val fullSyncRequiresCharging = flowSharedPreferences.getBoolean("fullSyncRequiresCharging", false)
-    private val themeMode = flowSharedPreferences.getEnum("themeMode", ThemeMode.default)
-    private val searchSuggestionsEnabled = flowSharedPreferences.getBoolean("searchSuggestionsEnabled", true)
-    private val shareRemoveGpsData = flowSharedPreferences.getBoolean("shareRemoveGpsData", false)
+    private val imageDiskCacheSize =
+        flowSharedPreferences.getInt("imageDiskCacheSize", 500)
+    private val imageMemCacheSize =
+        flowSharedPreferences.getInt("imageDiskCacheSize", 200)
+    private val videoDiskCacheSize =
+        flowSharedPreferences.getInt("videoDiskCacheSize", 700)
+    private val feedSyncFrequency =
+        flowSharedPreferences.getInt("feedSyncFrequency", 12)
+    private val shouldPerformPeriodicFeedSync =
+        flowSharedPreferences.getBoolean("shouldPerformPeriodicFeedSync", true)
+    private val fullSyncNetworkRequirements =
+        flowSharedPreferences.getEnum("fullSyncNetworkRequirements", NetworkType.NOT_ROAMING)
+    private val fullSyncRequiresCharging =
+        flowSharedPreferences.getBoolean("fullSyncRequiresCharging", false)
+    private val themeMode =
+        flowSharedPreferences.getEnum("themeMode", ThemeMode.default)
+    private val searchSuggestionsEnabled =
+        flowSharedPreferences.getBoolean("searchSuggestionsEnabled", true)
+    private val shareRemoveGpsData =
+        flowSharedPreferences.getBoolean("shareRemoveGpsData", false)
 
     fun getImageDiskCacheMaxLimit(): Int = imageDiskCacheSize.get()
     fun getImageMemCacheMaxLimit(): Int = imageMemCacheSize.get()

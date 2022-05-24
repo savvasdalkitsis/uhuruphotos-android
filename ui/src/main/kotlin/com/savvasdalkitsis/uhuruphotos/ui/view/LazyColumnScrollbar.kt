@@ -90,7 +90,8 @@ fun LazyColumnScrollbar(
 	var dragOffset by remember { mutableStateOf(0f) }
 
 	fun LazyListItemInfo.fractionHiddenTop() = -offset.toFloat() / size.toFloat()
-	fun LazyListItemInfo.fractionVisibleBottom(viewportEndOffset: Int) = (viewportEndOffset - offset).toFloat() / size.toFloat()
+	fun LazyListItemInfo.fractionVisibleBottom(viewportEndOffset: Int) =
+		(viewportEndOffset - offset).toFloat() / size.toFloat()
 
 	fun normalizedThumbSize() = listState.layoutInfo.let {
 		if (it.totalItemsCount == 0) return@let 0f
@@ -101,7 +102,9 @@ fun LazyColumnScrollbar(
 	}.coerceAtLeast(thumbMinHeight)
 
 	fun LazyListLayoutInfo.calcOffset(top:Float): Float {
-		val bottom = visibleItemsInfo.last().run { index.toFloat() + fractionVisibleBottom(viewportEndOffset) } / totalItemsCount.toFloat()
+		val bottom = visibleItemsInfo.last().run {
+			index.toFloat() + fractionVisibleBottom(viewportEndOffset)
+		} / totalItemsCount.toFloat()
 		val offset = top * (1 - bottom) + bottom * bottom
 		return offset * (1f - normalizedThumbSize())
 	}
@@ -126,7 +129,9 @@ fun LazyColumnScrollbar(
 
 		coroutineScope.launch {
 			listState.scrollToItem(index = index, scrollOffset = 0)
-			val offset = listState.layoutInfo.visibleItemsInfo.firstOrNull()?.size?.let { it.toFloat() * remainder }?.toInt() ?: 0
+			val offset = listState.layoutInfo.visibleItemsInfo.firstOrNull()?.size?.let {
+				it.toFloat() * remainder
+			}?.toInt() ?: 0
 			listState.animateScrollToItem(index = index, scrollOffset = offset)
 		}
 	}
@@ -135,12 +140,18 @@ fun LazyColumnScrollbar(
 
 	val alpha by animateFloatAsState(
 		targetValue = if (isInAction) 1f else 0f,
-		animationSpec = tween(durationMillis = if (isInAction) 75 else 500, delayMillis = if (isInAction) 0 else 500)
+		animationSpec = tween(
+			durationMillis = if (isInAction) 75 else 500,
+			delayMillis = if (isInAction) 0 else 500
+		)
 	)
 
 	val displacement by animateFloatAsState(
 		targetValue = if (isInAction) 0f else 14f,
-		animationSpec = tween(durationMillis = if (isInAction) 75 else 500, delayMillis = if (isInAction) 0 else 500)
+		animationSpec = tween(
+			durationMillis = if (isInAction) 75 else 500,
+			delayMillis = if (isInAction) 0 else 500
+		)
 	)
 
 	BoxWithConstraints(Modifier.fillMaxWidth()) {

@@ -31,7 +31,7 @@ import com.savvasdalkitsis.uhuruphotos.db.albums.GetAlbums
 import com.savvasdalkitsis.uhuruphotos.db.albums.GetPersonAlbums
 import com.savvasdalkitsis.uhuruphotos.db.user.User
 import com.savvasdalkitsis.uhuruphotos.infrastructure.date.DateDisplayer
-import com.savvasdalkitsis.uhuruphotos.infrastructure.extensions.Group
+import com.savvasdalkitsis.uhuruphotos.infrastructure.model.Group
 import com.savvasdalkitsis.uhuruphotos.photos.TestPhotos.photo
 import com.savvasdalkitsis.uhuruphotos.photos.usecase.PhotosUseCase
 import com.savvasdalkitsis.uhuruphotos.user.TestUsers.user
@@ -103,12 +103,14 @@ class AlbumsUseCaseTest {
         coEvery { albumsRepository.observePersonAlbums(1) } returns personAlbums.receiveAsFlow()
 
         underTest.observePersonAlbums(1).test {
-            personAlbums.send(Group(mapOf(
+            personAlbums.send(
+                Group(mapOf(
                 "albumId" to listOf(getPersonAlbum.copy(
                     id = "albumId",
                     photoId = "photoId",
                 ))
-            )))
+            ))
+            )
 
             assertThat(awaitItem(), sameBeanAs(listOf(album.copy(
                 id = "albumId",
@@ -290,12 +292,14 @@ class AlbumsUseCaseTest {
         coEvery { albumsRepository.observeAlbumsByDate() } returns albums.receiveAsFlow()
 
         underTest.observeAlbums().test {
-            albums.send(Group(mapOf(
+            albums.send(
+                Group(mapOf(
                 "albumId" to listOf(getAlbum.copy(
                     id = "albumId",
                     photoId = "photoId",
                 ))
-            )))
+            ))
+            )
             assertThat(awaitItem(), sameBeanAs(listOf(album.copy(
                 id = "albumId",
                 photos = listOf(photo.copy(id = "photoId"))

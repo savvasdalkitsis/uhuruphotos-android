@@ -26,7 +26,7 @@ import com.savvasdalkitsis.uhuruphotos.db.extensions.await
 import com.savvasdalkitsis.uhuruphotos.db.extensions.awaitSingle
 import com.savvasdalkitsis.uhuruphotos.db.person.PersonQueries
 import com.savvasdalkitsis.uhuruphotos.db.photos.PhotoSummaryQueries
-import com.savvasdalkitsis.uhuruphotos.infrastructure.extensions.Group
+import com.savvasdalkitsis.uhuruphotos.infrastructure.model.Group
 import com.savvasdalkitsis.uhuruphotos.infrastructure.extensions.groupBy
 import com.savvasdalkitsis.uhuruphotos.infrastructure.extensions.safelyOnStartIgnoring
 import com.savvasdalkitsis.uhuruphotos.photos.entities.toPhotoSummary

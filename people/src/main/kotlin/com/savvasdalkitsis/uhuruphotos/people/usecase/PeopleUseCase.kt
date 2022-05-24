@@ -35,10 +35,11 @@ class PeopleUseCase @Inject constructor(
 
     override suspend fun getPeopleByName(): List<People> = peopleRepository.getPeopleByName()
 
-    override fun observePeopleByPhotoCount(): Flow<Result<List<People>, Throwable>> = peopleRepository.observePeopleByPhotoCount()
-        .safelyOnStart {
-            refreshPeople()
-        }
+    override fun observePeopleByPhotoCount(): Flow<Result<List<People>, Throwable>> =
+        peopleRepository.observePeopleByPhotoCount()
+            .safelyOnStart {
+                refreshPeople()
+            }
 
     override fun observePerson(id: Int): Flow<People> = peopleRepository.observePerson(id)
         .safelyOnStartIgnoring {

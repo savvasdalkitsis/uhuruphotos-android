@@ -73,7 +73,15 @@ fun HomeNavigationBar(
                 elevation = 0.dp,
                 backgroundColor = Color.Transparent
             ) {
-                Items(currentDestination, navController, feedDisplay, feedNavigationName, searchNavigationName, onReselected, rowScope = this)
+                Items(
+                    currentDestination = currentDestination,
+                    navController = navController,
+                    feedDisplay = feedDisplay,
+                    feedNavigationName = feedNavigationName,
+                    searchNavigationName = searchNavigationName,
+                    onReselected = onReselected,
+                    rowScope = this,
+                )
             }
         }
         NAVIGATION_RAIL -> NavigationRail(
@@ -81,7 +89,14 @@ fun HomeNavigationBar(
             elevation = 0.dp,
             backgroundColor = Color.Transparent,
         ) {
-            Items(currentDestination, navController, feedDisplay, feedNavigationName, searchNavigationName, onReselected)
+            Items(
+                currentDestination = currentDestination,
+                navController = navController,
+                feedDisplay = feedDisplay,
+                feedNavigationName = feedNavigationName,
+                searchNavigationName = searchNavigationName,
+                onReselected = onReselected,
+            )
         }
     }
 }

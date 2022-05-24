@@ -22,7 +22,7 @@ import com.savvasdalkitsis.uhuruphotos.albums.worker.AlbumWorkScheduler
 import com.savvasdalkitsis.uhuruphotos.db.albums.GetAlbums
 import com.savvasdalkitsis.uhuruphotos.db.albums.GetPersonAlbums
 import com.savvasdalkitsis.uhuruphotos.infrastructure.date.DateDisplayer
-import com.savvasdalkitsis.uhuruphotos.infrastructure.extensions.Group
+import com.savvasdalkitsis.uhuruphotos.infrastructure.model.Group
 import com.savvasdalkitsis.uhuruphotos.infrastructure.extensions.mapValues
 import com.savvasdalkitsis.uhuruphotos.infrastructure.extensions.safelyOnStartIgnoring
 import com.savvasdalkitsis.uhuruphotos.photos.api.model.Photo

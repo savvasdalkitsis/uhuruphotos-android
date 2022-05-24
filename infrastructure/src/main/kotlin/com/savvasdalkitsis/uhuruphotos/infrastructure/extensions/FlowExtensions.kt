@@ -18,6 +18,7 @@ package com.savvasdalkitsis.uhuruphotos.infrastructure.extensions
 import com.github.michaelbull.result.Err
 import com.github.michaelbull.result.Ok
 import com.github.michaelbull.result.Result
+import com.savvasdalkitsis.uhuruphotos.infrastructure.model.Group
 import com.savvasdalkitsis.uhuruphotos.log.log
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -28,8 +29,6 @@ import kotlinx.coroutines.flow.mapNotNull
 import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.launch
 import java.io.IOException
-
-data class Group<K, T>(val items: Map<K, List<T>>)
 
 fun <K, T, N> Group<K, T>.mapValues(mapper: (T) -> N): Group<K, N> = Group(
     items.mapValues { (_,v) -> v.map(mapper) }

@@ -65,8 +65,11 @@ class PhotoEffectsHandler @Inject constructor(
         }
     }
 
-    private fun geoLocation(gps: LatLng): Intent =
-        Intent(Intent.ACTION_VIEW, Uri.parse("geo:${gps.latitude},${gps.longitude}?q=${gps.latitude},${gps.longitude}(${context.getString(R.string.photo)})"))
+    private fun geoLocation(gps: LatLng): Intent = Intent(Intent.ACTION_VIEW, with(gps) {
+        "geo:$latitude,$longitude?q=$latitude,$longitude(${context.getString(R.string.photo)})".uri
+    })
+
+    private val String.uri get () = Uri.parse(this)
 
     private fun setBars(visible: Boolean) {
         controllersProvider.systemUiController!!.isSystemBarsVisible = visible

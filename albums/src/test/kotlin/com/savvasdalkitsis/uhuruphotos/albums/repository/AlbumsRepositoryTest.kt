@@ -41,7 +41,7 @@ import com.savvasdalkitsis.uhuruphotos.db.TestDatabase
 import com.savvasdalkitsis.uhuruphotos.db.albums.Albums
 import com.savvasdalkitsis.uhuruphotos.db.extensions.await
 import com.savvasdalkitsis.uhuruphotos.db.photos.PhotoSummary
-import com.savvasdalkitsis.uhuruphotos.infrastructure.extensions.Group
+import com.savvasdalkitsis.uhuruphotos.infrastructure.model.Group
 import com.shazam.shazamcrest.MatcherAssert.assertThat
 import com.shazam.shazamcrest.matcher.Matchers.sameBeanAs
 import io.mockk.coVerify
