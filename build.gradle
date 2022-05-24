@@ -8,6 +8,7 @@ buildscript {
         classpath 'com.squareup.sqldelight:gradle-plugin:1.5.3'
         classpath 'com.google.gms:google-services:4.3.10'
         classpath 'com.google.firebase:firebase-crashlytics-gradle:2.8.1'
+        classpath "io.gitlab.arturbosch.detekt:detekt-gradle-plugin:1.20.0"
     }
 
     project.ext.set("app_version_code", 19)
@@ -22,6 +23,33 @@ plugins {
     id 'com.google.android.libraries.mapsplatform.secrets-gradle-plugin' version '2.0.1' apply false
     id "com.bnorm.power.kotlin-power-assert" version "0.11.0"
     id "org.sonarqube" version "3.3"
+    id "io.gitlab.arturbosch.detekt" version "1.20.0" apply true
+}
+
+
+def projectSource = file(projectDir)
+def configFile = files("$rootDir/config/detekt/detekt.yml")
+def kotlinFiles = "**/*.kt"
+def resourceFiles = "**/resources/**"
+def buildFiles = "**/build/**"
+
+tasks.register("detektAll", io.gitlab.arturbosch.detekt.Detekt) {
+    def autoFix = project.hasProperty('detektAutoFix')
+
+    description = "Custom DETEKT build for all modules"
+    parallel = true
+    ignoreFailures = false
+    autoCorrect = autoFix
+    buildUponDefaultConfig = true
+    setSource(projectSource)
+    config.setFrom(configFile)
+    include(kotlinFiles)
+    exclude(resourceFiles, buildFiles)
+    reports {
+        html.enabled = true
+        xml.enabled = false
+        txt.enabled = false
+    }
 }
 
 task clean(type: Delete) {
