@@ -16,7 +16,9 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.people.viewmodel
 
 import com.savvasdalkitsis.uhuruphotos.navigation.ControllersProvider
-import com.savvasdalkitsis.uhuruphotos.people.viewmodel.PeopleEffect.*
+import com.savvasdalkitsis.uhuruphotos.people.viewmodel.PeopleEffect.ErrorLoadingPeople
+import com.savvasdalkitsis.uhuruphotos.people.viewmodel.PeopleEffect.NavigateBack
+import com.savvasdalkitsis.uhuruphotos.people.viewmodel.PeopleEffect.NavigateToPerson
 import com.savvasdalkitsis.uhuruphotos.person.api.navigation.PersonNavigationTarget
 import com.savvasdalkitsis.uhuruphotos.strings.R
 import com.savvasdalkitsis.uhuruphotos.toaster.Toaster

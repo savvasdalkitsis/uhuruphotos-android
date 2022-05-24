@@ -20,7 +20,9 @@ import com.savvasdalkitsis.uhuruphotos.settings.view.state.SettingsState
 import com.savvasdalkitsis.uhuruphotos.settings.viewmodel.SettingsAction
 import com.savvasdalkitsis.uhuruphotos.settings.viewmodel.SettingsAction.ChangeThemeMode
 import com.savvasdalkitsis.uhuruphotos.ui.theme.ThemeMode
-import com.savvasdalkitsis.uhuruphotos.ui.theme.ThemeMode.*
+import com.savvasdalkitsis.uhuruphotos.ui.theme.ThemeMode.DARK_MODE
+import com.savvasdalkitsis.uhuruphotos.ui.theme.ThemeMode.FOLLOW_SYSTEM
+import com.savvasdalkitsis.uhuruphotos.ui.theme.ThemeMode.LIGHT_MODE
 
 @Composable
 fun SettingsGroupTheme(

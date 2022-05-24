@@ -19,7 +19,11 @@ import androidx.compose.animation.AnimatedContentScope
 import androidx.compose.animation.EnterTransition
 import androidx.compose.animation.ExitTransition
 import androidx.compose.foundation.isSystemInDarkTheme
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.lifecycle.ViewModel
 import androidx.navigation.NavBackStackEntry
@@ -27,7 +31,9 @@ import androidx.navigation.NavGraphBuilder
 import com.google.accompanist.navigation.animation.composable
 import com.savvasdalkitsis.uhuruphotos.ui.theme.AppTheme
 import com.savvasdalkitsis.uhuruphotos.ui.theme.ThemeMode
-import com.savvasdalkitsis.uhuruphotos.ui.theme.ThemeMode.*
+import com.savvasdalkitsis.uhuruphotos.ui.theme.ThemeMode.DARK_MODE
+import com.savvasdalkitsis.uhuruphotos.ui.theme.ThemeMode.FOLLOW_SYSTEM
+import com.savvasdalkitsis.uhuruphotos.ui.theme.ThemeMode.LIGHT_MODE
 import com.savvasdalkitsis.uhuruphotos.viewmodel.ActionReceiverHost
 import com.savvasdalkitsis.uhuruphotos.viewmodel.EffectHandler
 import kotlinx.coroutines.flow.StateFlow

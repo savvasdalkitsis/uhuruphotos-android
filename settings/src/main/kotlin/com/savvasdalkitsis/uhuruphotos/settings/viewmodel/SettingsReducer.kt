@@ -16,7 +16,24 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.settings.viewmodel
 
 import com.savvasdalkitsis.uhuruphotos.settings.view.state.SettingsState
-import com.savvasdalkitsis.uhuruphotos.settings.viewmodel.SettingsMutation.*
+import com.savvasdalkitsis.uhuruphotos.settings.viewmodel.SettingsMutation.DisableFullSyncButton
+import com.savvasdalkitsis.uhuruphotos.settings.viewmodel.SettingsMutation.DisplayDiskCacheMaxLimit
+import com.savvasdalkitsis.uhuruphotos.settings.viewmodel.SettingsMutation.DisplayFeedSyncFrequency
+import com.savvasdalkitsis.uhuruphotos.settings.viewmodel.SettingsMutation.DisplayFullSyncNetworkRequirements
+import com.savvasdalkitsis.uhuruphotos.settings.viewmodel.SettingsMutation.DisplayFullSyncProgress
+import com.savvasdalkitsis.uhuruphotos.settings.viewmodel.SettingsMutation.DisplayFullSyncRequiresCharging
+import com.savvasdalkitsis.uhuruphotos.settings.viewmodel.SettingsMutation.DisplayImageDiskCacheCurrentUse
+import com.savvasdalkitsis.uhuruphotos.settings.viewmodel.SettingsMutation.DisplayImageMemCacheCurrentUse
+import com.savvasdalkitsis.uhuruphotos.settings.viewmodel.SettingsMutation.DisplayMemCacheMaxLimit
+import com.savvasdalkitsis.uhuruphotos.settings.viewmodel.SettingsMutation.DisplaySearchSuggestionsEnabled
+import com.savvasdalkitsis.uhuruphotos.settings.viewmodel.SettingsMutation.DisplayShareGpsDataEnabled
+import com.savvasdalkitsis.uhuruphotos.settings.viewmodel.SettingsMutation.DisplayThemeMode
+import com.savvasdalkitsis.uhuruphotos.settings.viewmodel.SettingsMutation.DisplayVideoDiskCacheCurrentUse
+import com.savvasdalkitsis.uhuruphotos.settings.viewmodel.SettingsMutation.DisplayVideoDiskCacheMaxLimit
+import com.savvasdalkitsis.uhuruphotos.settings.viewmodel.SettingsMutation.EnableFullSyncButton
+import com.savvasdalkitsis.uhuruphotos.settings.viewmodel.SettingsMutation.HideFullFeedSyncDialog
+import com.savvasdalkitsis.uhuruphotos.settings.viewmodel.SettingsMutation.ShowFullFeedSyncDialog
+import com.savvasdalkitsis.uhuruphotos.settings.viewmodel.SettingsMutation.UserBadgeUpdate
 import com.savvasdalkitsis.uhuruphotos.viewmodel.Reducer
 
 fun settingsReducer(): Reducer<SettingsState, SettingsMutation> = { state, mutation ->

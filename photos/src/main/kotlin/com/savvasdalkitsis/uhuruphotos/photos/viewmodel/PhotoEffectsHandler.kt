@@ -24,7 +24,14 @@ import com.google.android.gms.maps.model.LatLng
 import com.savvasdalkitsis.uhuruphotos.navigation.ControllersProvider
 import com.savvasdalkitsis.uhuruphotos.person.api.navigation.PersonNavigationTarget
 import com.savvasdalkitsis.uhuruphotos.photos.mvflow.PhotoEffect
-import com.savvasdalkitsis.uhuruphotos.photos.mvflow.PhotoEffect.*
+import com.savvasdalkitsis.uhuruphotos.photos.mvflow.PhotoEffect.CopyToClipboard
+import com.savvasdalkitsis.uhuruphotos.photos.mvflow.PhotoEffect.ErrorRefreshingPeople
+import com.savvasdalkitsis.uhuruphotos.photos.mvflow.PhotoEffect.HideSystemBars
+import com.savvasdalkitsis.uhuruphotos.photos.mvflow.PhotoEffect.LaunchMap
+import com.savvasdalkitsis.uhuruphotos.photos.mvflow.PhotoEffect.NavigateBack
+import com.savvasdalkitsis.uhuruphotos.photos.mvflow.PhotoEffect.NavigateToPerson
+import com.savvasdalkitsis.uhuruphotos.photos.mvflow.PhotoEffect.SharePhoto
+import com.savvasdalkitsis.uhuruphotos.photos.mvflow.PhotoEffect.ShowSystemBars
 import com.savvasdalkitsis.uhuruphotos.share.ShareImage
 import com.savvasdalkitsis.uhuruphotos.strings.R
 import com.savvasdalkitsis.uhuruphotos.toaster.Toaster

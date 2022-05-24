@@ -18,7 +18,9 @@ package com.savvasdalkitsis.uhuruphotos.server.viewmodel
 import com.savvasdalkitsis.uhuruphotos.log.FeedbackUseCase
 import com.savvasdalkitsis.uhuruphotos.navigation.ControllersProvider
 import com.savvasdalkitsis.uhuruphotos.server.mvflow.ServerEffect
-import com.savvasdalkitsis.uhuruphotos.server.mvflow.ServerEffect.*
+import com.savvasdalkitsis.uhuruphotos.server.mvflow.ServerEffect.Close
+import com.savvasdalkitsis.uhuruphotos.server.mvflow.ServerEffect.ErrorLoggingIn
+import com.savvasdalkitsis.uhuruphotos.server.mvflow.ServerEffect.SendFeedback
 import com.savvasdalkitsis.uhuruphotos.strings.R
 import com.savvasdalkitsis.uhuruphotos.toaster.Toaster
 import javax.inject.Inject

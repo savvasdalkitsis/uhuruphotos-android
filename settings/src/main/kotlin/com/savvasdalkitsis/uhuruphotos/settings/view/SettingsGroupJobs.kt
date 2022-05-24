@@ -22,7 +22,9 @@ import androidx.compose.ui.res.pluralStringResource
 import androidx.compose.ui.res.stringResource
 import com.savvasdalkitsis.uhuruphotos.settings.view.state.SettingsState
 import com.savvasdalkitsis.uhuruphotos.settings.viewmodel.SettingsAction
-import com.savvasdalkitsis.uhuruphotos.settings.viewmodel.SettingsAction.*
+import com.savvasdalkitsis.uhuruphotos.settings.viewmodel.SettingsAction.AskForFullFeedSync
+import com.savvasdalkitsis.uhuruphotos.settings.viewmodel.SettingsAction.ChangeFullSyncChargingRequirements
+import com.savvasdalkitsis.uhuruphotos.settings.viewmodel.SettingsAction.FeedSyncFrequencyChanged
 import com.savvasdalkitsis.uhuruphotos.icons.R as Icons
 import com.savvasdalkitsis.uhuruphotos.strings.R as Strings
 

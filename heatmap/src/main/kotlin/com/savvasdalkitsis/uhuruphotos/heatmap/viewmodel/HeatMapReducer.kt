@@ -17,7 +17,9 @@ package com.savvasdalkitsis.uhuruphotos.heatmap.viewmodel
 
 import com.google.android.gms.maps.model.LatLng
 import com.savvasdalkitsis.uhuruphotos.heatmap.view.state.HeatMapState
-import com.savvasdalkitsis.uhuruphotos.heatmap.viewmodel.HeatMapMutation.*
+import com.savvasdalkitsis.uhuruphotos.heatmap.viewmodel.HeatMapMutation.ShowLoading
+import com.savvasdalkitsis.uhuruphotos.heatmap.viewmodel.HeatMapMutation.UpdateAllPhotos
+import com.savvasdalkitsis.uhuruphotos.heatmap.viewmodel.HeatMapMutation.UpdateDisplay
 import com.savvasdalkitsis.uhuruphotos.viewmodel.Reducer
 
 fun heatMapReducer(): Reducer<HeatMapState, HeatMapMutation> = { state, mutation ->

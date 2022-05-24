@@ -16,7 +16,22 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.search.viewmodel
 
 import com.savvasdalkitsis.uhuruphotos.search.mvflow.SearchMutation
-import com.savvasdalkitsis.uhuruphotos.search.mvflow.SearchMutation.*
+import com.savvasdalkitsis.uhuruphotos.search.mvflow.SearchMutation.ChangeFeedDisplay
+import com.savvasdalkitsis.uhuruphotos.search.mvflow.SearchMutation.ChangeSearchDisplay
+import com.savvasdalkitsis.uhuruphotos.search.mvflow.SearchMutation.FocusChanged
+import com.savvasdalkitsis.uhuruphotos.search.mvflow.SearchMutation.HideAccountOverview
+import com.savvasdalkitsis.uhuruphotos.search.mvflow.SearchMutation.HideLogOutConfirmation
+import com.savvasdalkitsis.uhuruphotos.search.mvflow.SearchMutation.HideSuggestions
+import com.savvasdalkitsis.uhuruphotos.search.mvflow.SearchMutation.ShowAccountOverview
+import com.savvasdalkitsis.uhuruphotos.search.mvflow.SearchMutation.ShowLogOutConfirmation
+import com.savvasdalkitsis.uhuruphotos.search.mvflow.SearchMutation.ShowPeople
+import com.savvasdalkitsis.uhuruphotos.search.mvflow.SearchMutation.ShowSearchSuggestion
+import com.savvasdalkitsis.uhuruphotos.search.mvflow.SearchMutation.ShowSearchSuggestions
+import com.savvasdalkitsis.uhuruphotos.search.mvflow.SearchMutation.SwitchStateToFound
+import com.savvasdalkitsis.uhuruphotos.search.mvflow.SearchMutation.SwitchStateToIdle
+import com.savvasdalkitsis.uhuruphotos.search.mvflow.SearchMutation.SwitchStateToSearching
+import com.savvasdalkitsis.uhuruphotos.search.mvflow.SearchMutation.UpdateLatestQuery
+import com.savvasdalkitsis.uhuruphotos.search.mvflow.SearchMutation.UserBadgeStateChanged
 import com.savvasdalkitsis.uhuruphotos.search.view.state.SearchResults
 import com.savvasdalkitsis.uhuruphotos.search.view.state.SearchState
 import com.savvasdalkitsis.uhuruphotos.viewmodel.Reducer

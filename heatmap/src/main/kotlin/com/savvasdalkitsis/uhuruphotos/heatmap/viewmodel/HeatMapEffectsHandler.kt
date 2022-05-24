@@ -15,7 +15,9 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.heatmap.viewmodel
 
-import com.savvasdalkitsis.uhuruphotos.heatmap.viewmodel.HeatMapEffect.*
+import com.savvasdalkitsis.uhuruphotos.heatmap.viewmodel.HeatMapEffect.ErrorLoadingPhotoDetails
+import com.savvasdalkitsis.uhuruphotos.heatmap.viewmodel.HeatMapEffect.NavigateBack
+import com.savvasdalkitsis.uhuruphotos.heatmap.viewmodel.HeatMapEffect.NavigateToPhoto
 import com.savvasdalkitsis.uhuruphotos.navigation.ControllersProvider
 import com.savvasdalkitsis.uhuruphotos.photos.navigation.PhotoNavigationTarget
 import com.savvasdalkitsis.uhuruphotos.strings.R

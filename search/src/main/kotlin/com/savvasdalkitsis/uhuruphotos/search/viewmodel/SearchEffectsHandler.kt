@@ -23,7 +23,16 @@ import com.savvasdalkitsis.uhuruphotos.person.api.navigation.PersonNavigationTar
 import com.savvasdalkitsis.uhuruphotos.photos.model.PhotoSequenceDataSource.SearchResults
 import com.savvasdalkitsis.uhuruphotos.photos.navigation.PhotoNavigationTarget
 import com.savvasdalkitsis.uhuruphotos.search.mvflow.SearchEffect
-import com.savvasdalkitsis.uhuruphotos.search.mvflow.SearchEffect.*
+import com.savvasdalkitsis.uhuruphotos.search.mvflow.SearchEffect.ErrorRefreshingPeople
+import com.savvasdalkitsis.uhuruphotos.search.mvflow.SearchEffect.ErrorSearching
+import com.savvasdalkitsis.uhuruphotos.search.mvflow.SearchEffect.HideKeyboard
+import com.savvasdalkitsis.uhuruphotos.search.mvflow.SearchEffect.NavigateToAllPeople
+import com.savvasdalkitsis.uhuruphotos.search.mvflow.SearchEffect.NavigateToEditServer
+import com.savvasdalkitsis.uhuruphotos.search.mvflow.SearchEffect.NavigateToHeatMap
+import com.savvasdalkitsis.uhuruphotos.search.mvflow.SearchEffect.NavigateToPerson
+import com.savvasdalkitsis.uhuruphotos.search.mvflow.SearchEffect.NavigateToSettings
+import com.savvasdalkitsis.uhuruphotos.search.mvflow.SearchEffect.OpenPhotoDetails
+import com.savvasdalkitsis.uhuruphotos.search.mvflow.SearchEffect.ReloadApp
 import com.savvasdalkitsis.uhuruphotos.server.navigation.ServerNavigationTarget
 import com.savvasdalkitsis.uhuruphotos.settings.navigation.SettingsNavigationTarget
 import com.savvasdalkitsis.uhuruphotos.strings.R

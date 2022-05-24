@@ -17,7 +17,12 @@ package com.savvasdalkitsis.uhuruphotos.photos.view
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
@@ -39,7 +44,10 @@ import com.savvasdalkitsis.uhuruphotos.infrastructure.extensions.round
 import com.savvasdalkitsis.uhuruphotos.map.view.MapView
 import com.savvasdalkitsis.uhuruphotos.people.api.view.PeopleBar
 import com.savvasdalkitsis.uhuruphotos.photos.mvflow.PhotoAction
-import com.savvasdalkitsis.uhuruphotos.photos.mvflow.PhotoAction.*
+import com.savvasdalkitsis.uhuruphotos.photos.mvflow.PhotoAction.ClickedOnGps
+import com.savvasdalkitsis.uhuruphotos.photos.mvflow.PhotoAction.ClickedOnMap
+import com.savvasdalkitsis.uhuruphotos.photos.mvflow.PhotoAction.HideInfo
+import com.savvasdalkitsis.uhuruphotos.photos.mvflow.PhotoAction.PersonSelected
 import com.savvasdalkitsis.uhuruphotos.photos.view.state.PhotoState
 import com.savvasdalkitsis.uhuruphotos.ui.view.TextWithIcon
 

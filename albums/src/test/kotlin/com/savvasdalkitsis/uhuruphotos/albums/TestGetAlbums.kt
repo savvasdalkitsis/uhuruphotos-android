@@ -1,6 +1,8 @@
 package com.savvasdalkitsis.uhuruphotos.albums
 
-import com.savvasdalkitsis.uhuruphotos.albums.TestAlbums.*
+import com.savvasdalkitsis.uhuruphotos.albums.TestAlbums.albums
+import com.savvasdalkitsis.uhuruphotos.albums.TestAlbums.completeAlbum
+import com.savvasdalkitsis.uhuruphotos.albums.TestAlbums.incompleteAlbum
 import com.savvasdalkitsis.uhuruphotos.db.albums.GetAlbums
 import com.savvasdalkitsis.uhuruphotos.db.albums.GetPersonAlbums
 import com.savvasdalkitsis.uhuruphotos.db.photos.PhotoSummary

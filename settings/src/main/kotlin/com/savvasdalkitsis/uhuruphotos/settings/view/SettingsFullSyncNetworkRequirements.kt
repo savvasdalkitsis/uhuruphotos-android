@@ -17,7 +17,10 @@ package com.savvasdalkitsis.uhuruphotos.settings.view
 
 import androidx.compose.runtime.Composable
 import androidx.work.NetworkType
-import androidx.work.NetworkType.*
+import androidx.work.NetworkType.CONNECTED
+import androidx.work.NetworkType.METERED
+import androidx.work.NetworkType.NOT_ROAMING
+import androidx.work.NetworkType.UNMETERED
 import com.savvasdalkitsis.uhuruphotos.settings.view.state.SettingsState
 import com.savvasdalkitsis.uhuruphotos.settings.viewmodel.SettingsAction
 import com.savvasdalkitsis.uhuruphotos.settings.viewmodel.SettingsAction.ChangeFullSyncNetworkRequirements

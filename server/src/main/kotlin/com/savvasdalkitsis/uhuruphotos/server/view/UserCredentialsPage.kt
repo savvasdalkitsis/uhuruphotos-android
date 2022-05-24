@@ -16,10 +16,22 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.server.view
 
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.BoxScope
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.material.*
+import androidx.compose.material.Button
+import androidx.compose.material.Icon
+import androidx.compose.material.IconButton
+import androidx.compose.material.OutlinedButton
+import androidx.compose.material.OutlinedTextField
+import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Lock
 import androidx.compose.material.icons.filled.Person
@@ -35,7 +47,12 @@ import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
 import com.savvasdalkitsis.uhuruphotos.icons.R
 import com.savvasdalkitsis.uhuruphotos.server.mvflow.ServerAction
-import com.savvasdalkitsis.uhuruphotos.server.mvflow.ServerAction.*
+import com.savvasdalkitsis.uhuruphotos.server.mvflow.ServerAction.Login
+import com.savvasdalkitsis.uhuruphotos.server.mvflow.ServerAction.RequestServerUrlChange
+import com.savvasdalkitsis.uhuruphotos.server.mvflow.ServerAction.SendLogsClick
+import com.savvasdalkitsis.uhuruphotos.server.mvflow.ServerAction.TogglePasswordVisibility
+import com.savvasdalkitsis.uhuruphotos.server.mvflow.ServerAction.UserPasswordChangedTo
+import com.savvasdalkitsis.uhuruphotos.server.mvflow.ServerAction.UsernameChangedTo
 import com.savvasdalkitsis.uhuruphotos.ui.view.ActionIcon
 
 @Composable

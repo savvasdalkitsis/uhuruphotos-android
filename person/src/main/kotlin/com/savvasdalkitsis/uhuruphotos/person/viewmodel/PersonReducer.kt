@@ -18,7 +18,10 @@ package com.savvasdalkitsis.uhuruphotos.person.viewmodel
 import com.savvasdalkitsis.uhuruphotos.feed.view.state.FeedState
 import com.savvasdalkitsis.uhuruphotos.people.api.view.state.toPerson
 import com.savvasdalkitsis.uhuruphotos.person.view.state.PersonState
-import com.savvasdalkitsis.uhuruphotos.person.viewmodel.PersonMutation.*
+import com.savvasdalkitsis.uhuruphotos.person.viewmodel.PersonMutation.Loading
+import com.savvasdalkitsis.uhuruphotos.person.viewmodel.PersonMutation.SetFeedDisplay
+import com.savvasdalkitsis.uhuruphotos.person.viewmodel.PersonMutation.ShowPersonDetails
+import com.savvasdalkitsis.uhuruphotos.person.viewmodel.PersonMutation.ShowPersonPhotos
 import com.savvasdalkitsis.uhuruphotos.photos.usecase.PhotosUseCase
 import com.savvasdalkitsis.uhuruphotos.viewmodel.Reducer
 import javax.inject.Inject

@@ -30,14 +30,21 @@ import androidx.compose.material.TextField
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.Search
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import com.savvasdalkitsis.uhuruphotos.search.mvflow.SearchAction
-import com.savvasdalkitsis.uhuruphotos.search.mvflow.SearchAction.*
+import com.savvasdalkitsis.uhuruphotos.search.mvflow.SearchAction.ChangeFocus
+import com.savvasdalkitsis.uhuruphotos.search.mvflow.SearchAction.QueryChanged
+import com.savvasdalkitsis.uhuruphotos.search.mvflow.SearchAction.SearchCleared
+import com.savvasdalkitsis.uhuruphotos.search.mvflow.SearchAction.SearchFor
 import com.savvasdalkitsis.uhuruphotos.search.view.state.SearchResults.Idle
 import com.savvasdalkitsis.uhuruphotos.search.view.state.SearchState
 

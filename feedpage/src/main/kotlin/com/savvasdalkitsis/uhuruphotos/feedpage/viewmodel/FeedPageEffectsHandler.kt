@@ -17,7 +17,12 @@ package com.savvasdalkitsis.uhuruphotos.feedpage.viewmodel
 
 import androidx.compose.ui.hapticfeedback.HapticFeedbackType
 import com.savvasdalkitsis.uhuruphotos.feedpage.mvflow.FeedPageEffect
-import com.savvasdalkitsis.uhuruphotos.feedpage.mvflow.FeedPageEffect.*
+import com.savvasdalkitsis.uhuruphotos.feedpage.mvflow.FeedPageEffect.NavigateToServerEdit
+import com.savvasdalkitsis.uhuruphotos.feedpage.mvflow.FeedPageEffect.NavigateToSettings
+import com.savvasdalkitsis.uhuruphotos.feedpage.mvflow.FeedPageEffect.OpenPhotoDetails
+import com.savvasdalkitsis.uhuruphotos.feedpage.mvflow.FeedPageEffect.ReloadApp
+import com.savvasdalkitsis.uhuruphotos.feedpage.mvflow.FeedPageEffect.SharePhotos
+import com.savvasdalkitsis.uhuruphotos.feedpage.mvflow.FeedPageEffect.Vibrate
 import com.savvasdalkitsis.uhuruphotos.home.navigation.HomeNavigationTarget
 import com.savvasdalkitsis.uhuruphotos.navigation.ControllersProvider
 import com.savvasdalkitsis.uhuruphotos.photos.model.PhotoSequenceDataSource.AllPhotos

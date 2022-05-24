@@ -16,13 +16,20 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.userbadge.usecase
 
 import androidx.work.WorkInfo
-import androidx.work.WorkInfo.State.*
+import androidx.work.WorkInfo.State.BLOCKED
+import androidx.work.WorkInfo.State.CANCELLED
+import androidx.work.WorkInfo.State.ENQUEUED
+import androidx.work.WorkInfo.State.FAILED
+import androidx.work.WorkInfo.State.RUNNING
+import androidx.work.WorkInfo.State.SUCCEEDED
 import com.savvasdalkitsis.uhuruphotos.albums.worker.AlbumDownloadWorker
 import com.savvasdalkitsis.uhuruphotos.auth.usecase.ServerUseCase
 import com.savvasdalkitsis.uhuruphotos.photos.usecase.PhotosUseCase
 import com.savvasdalkitsis.uhuruphotos.user.usecase.UserUseCase
 import com.savvasdalkitsis.uhuruphotos.userbadge.api.UserBadgeUseCase
-import com.savvasdalkitsis.uhuruphotos.userbadge.api.view.state.SyncState.*
+import com.savvasdalkitsis.uhuruphotos.userbadge.api.view.state.SyncState.BAD
+import com.savvasdalkitsis.uhuruphotos.userbadge.api.view.state.SyncState.GOOD
+import com.savvasdalkitsis.uhuruphotos.userbadge.api.view.state.SyncState.IN_PROGRESS
 import com.savvasdalkitsis.uhuruphotos.userbadge.api.view.state.UserInformationState
 import com.savvasdalkitsis.uhuruphotos.worker.usecase.WorkerStatusUseCase
 import kotlinx.coroutines.flow.Flow

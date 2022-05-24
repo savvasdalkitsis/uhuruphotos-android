@@ -16,9 +16,19 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.server.viewmodel
 
 import com.savvasdalkitsis.uhuruphotos.server.mvflow.ServerMutation
-import com.savvasdalkitsis.uhuruphotos.server.mvflow.ServerMutation.*
+import com.savvasdalkitsis.uhuruphotos.server.mvflow.ServerMutation.AskForServerDetails
+import com.savvasdalkitsis.uhuruphotos.server.mvflow.ServerMutation.AskForUserCredentials
+import com.savvasdalkitsis.uhuruphotos.server.mvflow.ServerMutation.ChangePasswordTo
+import com.savvasdalkitsis.uhuruphotos.server.mvflow.ServerMutation.ChangeUsernameTo
+import com.savvasdalkitsis.uhuruphotos.server.mvflow.ServerMutation.HideUnsecureServerConfirmation
+import com.savvasdalkitsis.uhuruphotos.server.mvflow.ServerMutation.PerformingBackgroundJob
+import com.savvasdalkitsis.uhuruphotos.server.mvflow.ServerMutation.SetPasswordVisibility
+import com.savvasdalkitsis.uhuruphotos.server.mvflow.ServerMutation.ShowUnsecureServerConfirmation
+import com.savvasdalkitsis.uhuruphotos.server.mvflow.ServerMutation.ShowUrlValidation
 import com.savvasdalkitsis.uhuruphotos.server.view.ServerState
-import com.savvasdalkitsis.uhuruphotos.server.view.ServerState.*
+import com.savvasdalkitsis.uhuruphotos.server.view.ServerState.Loading
+import com.savvasdalkitsis.uhuruphotos.server.view.ServerState.ServerUrl
+import com.savvasdalkitsis.uhuruphotos.server.view.ServerState.UserCredentials
 import com.savvasdalkitsis.uhuruphotos.viewmodel.Reducer
 
 fun serverReducer() : Reducer<ServerState, ServerMutation> = { state, mutation ->

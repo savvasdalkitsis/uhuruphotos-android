@@ -16,7 +16,9 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.auth.usecase
 
 import com.savvasdalkitsis.uhuruphotos.auth.model.AuthStatus
-import com.savvasdalkitsis.uhuruphotos.auth.model.AuthStatus.*
+import com.savvasdalkitsis.uhuruphotos.auth.model.AuthStatus.Authenticated
+import com.savvasdalkitsis.uhuruphotos.auth.model.AuthStatus.Offline
+import com.savvasdalkitsis.uhuruphotos.auth.model.AuthStatus.Unauthenticated
 import com.savvasdalkitsis.uhuruphotos.auth.network.jwt
 import com.savvasdalkitsis.uhuruphotos.auth.service.AuthenticationService
 import com.savvasdalkitsis.uhuruphotos.auth.service.model.AuthenticationCredentials

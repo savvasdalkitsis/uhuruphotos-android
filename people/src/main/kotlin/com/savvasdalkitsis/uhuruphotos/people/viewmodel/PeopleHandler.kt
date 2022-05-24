@@ -21,13 +21,20 @@ import com.savvasdalkitsis.uhuruphotos.people.view.state.PeopleState
 import com.savvasdalkitsis.uhuruphotos.people.view.state.SortOrder
 import com.savvasdalkitsis.uhuruphotos.people.view.state.SortOrder.ASCENDING
 import com.savvasdalkitsis.uhuruphotos.people.view.state.SortOrder.DESCENDING
-import com.savvasdalkitsis.uhuruphotos.people.viewmodel.PeopleAction.*
+import com.savvasdalkitsis.uhuruphotos.people.viewmodel.PeopleAction.LoadPeople
+import com.savvasdalkitsis.uhuruphotos.people.viewmodel.PeopleAction.NavigateBack
+import com.savvasdalkitsis.uhuruphotos.people.viewmodel.PeopleAction.PersonSelected
+import com.savvasdalkitsis.uhuruphotos.people.viewmodel.PeopleAction.ToggleSortOrder
 import com.savvasdalkitsis.uhuruphotos.people.viewmodel.PeopleEffect.ErrorLoadingPeople
 import com.savvasdalkitsis.uhuruphotos.people.viewmodel.PeopleEffect.NavigateToPerson
 import com.savvasdalkitsis.uhuruphotos.people.viewmodel.PeopleMutation.DisplayPeople
 import com.savvasdalkitsis.uhuruphotos.people.viewmodel.PeopleMutation.SetSortOrder
 import com.savvasdalkitsis.uhuruphotos.viewmodel.Handler
-import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
 
 class PeopleHandler @Inject constructor(

@@ -1,12 +1,16 @@
 package com.savvasdalkitsis.uhuruphotos.albums.usecase
 
 import app.cash.turbine.test
-import com.savvasdalkitsis.uhuruphotos.albums.*
 import com.savvasdalkitsis.uhuruphotos.albums.TestAlbums.album
 import com.savvasdalkitsis.uhuruphotos.albums.TestGetAlbums.getAlbum
 import com.savvasdalkitsis.uhuruphotos.albums.TestGetAlbums.getPersonAlbum
 import com.savvasdalkitsis.uhuruphotos.albums.api.model.Album
+import com.savvasdalkitsis.uhuruphotos.albums.reportsHavingAlbums
+import com.savvasdalkitsis.uhuruphotos.albums.reportsHavingNoAlbums
 import com.savvasdalkitsis.uhuruphotos.albums.repository.AlbumsRepository
+import com.savvasdalkitsis.uhuruphotos.albums.returnsAlbumWithEntries
+import com.savvasdalkitsis.uhuruphotos.albums.returnsAlbums
+import com.savvasdalkitsis.uhuruphotos.albums.returnsPersonAlbumWithEntries
 import com.savvasdalkitsis.uhuruphotos.albums.worker.AlbumWorkScheduler
 import com.savvasdalkitsis.uhuruphotos.db.albums.GetAlbums
 import com.savvasdalkitsis.uhuruphotos.db.albums.GetPersonAlbums
@@ -19,7 +23,11 @@ import com.savvasdalkitsis.uhuruphotos.user.TestUsers.user
 import com.savvasdalkitsis.uhuruphotos.user.usecase.UserUseCase
 import com.shazam.shazamcrest.MatcherAssert.assertThat
 import com.shazam.shazamcrest.matcher.Matchers.sameBeanAs
-import io.mockk.*
+import io.mockk.Called
+import io.mockk.coEvery
+import io.mockk.every
+import io.mockk.mockk
+import io.mockk.verify
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.receiveAsFlow

@@ -36,7 +36,9 @@ import androidx.compose.ui.unit.dp
 import com.savvasdalkitsis.uhuruphotos.icons.R
 import com.savvasdalkitsis.uhuruphotos.image.api.view.Image
 import com.savvasdalkitsis.uhuruphotos.ui.theme.CustomColors
-import com.savvasdalkitsis.uhuruphotos.userbadge.api.view.state.SyncState.*
+import com.savvasdalkitsis.uhuruphotos.userbadge.api.view.state.SyncState.BAD
+import com.savvasdalkitsis.uhuruphotos.userbadge.api.view.state.SyncState.GOOD
+import com.savvasdalkitsis.uhuruphotos.userbadge.api.view.state.SyncState.IN_PROGRESS
 import com.savvasdalkitsis.uhuruphotos.userbadge.api.view.state.UserInformationState
 
 @Composable

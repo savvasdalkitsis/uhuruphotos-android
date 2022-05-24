@@ -18,11 +18,21 @@ package com.savvasdalkitsis.uhuruphotos.person.viewmodel
 import com.savvasdalkitsis.uhuruphotos.people.api.usecase.PeopleUseCase
 import com.savvasdalkitsis.uhuruphotos.person.api.usecase.PersonUseCase
 import com.savvasdalkitsis.uhuruphotos.person.view.state.PersonState
-import com.savvasdalkitsis.uhuruphotos.person.viewmodel.PersonAction.*
+import com.savvasdalkitsis.uhuruphotos.person.viewmodel.PersonAction.ChangeDisplay
+import com.savvasdalkitsis.uhuruphotos.person.viewmodel.PersonAction.LoadPerson
+import com.savvasdalkitsis.uhuruphotos.person.viewmodel.PersonAction.NavigateBack
+import com.savvasdalkitsis.uhuruphotos.person.viewmodel.PersonAction.SelectedPhoto
 import com.savvasdalkitsis.uhuruphotos.person.viewmodel.PersonEffect.OpenPhotoDetails
-import com.savvasdalkitsis.uhuruphotos.person.viewmodel.PersonMutation.*
+import com.savvasdalkitsis.uhuruphotos.person.viewmodel.PersonMutation.Loading
+import com.savvasdalkitsis.uhuruphotos.person.viewmodel.PersonMutation.SetFeedDisplay
+import com.savvasdalkitsis.uhuruphotos.person.viewmodel.PersonMutation.ShowPersonDetails
+import com.savvasdalkitsis.uhuruphotos.person.viewmodel.PersonMutation.ShowPersonPhotos
 import com.savvasdalkitsis.uhuruphotos.viewmodel.Handler
-import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.flowOf
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.merge
 import javax.inject.Inject
 
 class PersonHandler @Inject constructor(
