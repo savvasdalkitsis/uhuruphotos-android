@@ -70,6 +70,7 @@ internal fun BottomSheetPhotoDetails(
         count = state.photos.size,
         state = pagerState,
         itemSpacing = 12.dp,
+        key = { page -> state.photos.getOrNull(page)?.id ?: page.toString() },
         userScrollEnabled = true,
     ) { index ->
         ModalBottomSheetLayout(
