@@ -14,7 +14,11 @@ jobs:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
         with:
           args: --sarif-file-output=snyk.sarif --all-sub-projects
+      - name: Prepare scan results
+        uses: microsoft/sarif-actions@v0.1
+        with:
+          command: merge --merge-runs --output-file snyk-merged.sarif snyk.sarif
       - name: Upload result to GitHub Code Scanning
         uses: github/codeql-action/upload-sarif@v2
         with:
-          sarif_file: snyk.sarif
+          sarif_file: snyk-merged.sarif
