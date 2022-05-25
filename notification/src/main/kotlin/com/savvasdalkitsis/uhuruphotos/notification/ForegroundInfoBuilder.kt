@@ -22,14 +22,15 @@ import androidx.annotation.StringRes
 import androidx.core.app.NotificationCompat
 import androidx.work.ForegroundInfo
 import com.savvasdalkitsis.uhuruphotos.icons.R
+import javax.inject.Inject
 
-interface ForegroundInfoBuilder {
+class ForegroundInfoBuilder @Inject constructor() {
     fun build(
         context: Context,
         @StringRes title: Int,
         notificationId: Int,
         channel: String
-    ): ForegroundInfo
+    ): ForegroundInfo = foregroundInfo(context, title, notificationId, channel)
 }
 
 fun foregroundInfo(
