@@ -23,6 +23,15 @@ import androidx.core.app.NotificationCompat
 import androidx.work.ForegroundInfo
 import com.savvasdalkitsis.uhuruphotos.icons.R
 
+interface ForegroundInfoBuilder {
+    fun build(
+        context: Context,
+        @StringRes title: Int,
+        notificationId: Int,
+        channel: String
+    ): ForegroundInfo
+}
+
 fun foregroundInfo(
     context: Context,
     @StringRes title: Int,

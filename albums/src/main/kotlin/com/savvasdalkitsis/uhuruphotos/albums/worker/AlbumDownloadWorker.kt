@@ -23,8 +23,8 @@ import androidx.work.WorkerParameters
 import androidx.work.workDataOf
 import com.savvasdalkitsis.uhuruphotos.albums.repository.AlbumsRepository
 import com.savvasdalkitsis.uhuruphotos.log.log
+import com.savvasdalkitsis.uhuruphotos.notification.ForegroundInfoBuilder
 import com.savvasdalkitsis.uhuruphotos.notification.NotificationChannels.JOBS_CHANNEL_ID
-import com.savvasdalkitsis.uhuruphotos.notification.foregroundInfo
 import com.savvasdalkitsis.uhuruphotos.strings.R
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedInject
@@ -36,6 +36,7 @@ class AlbumDownloadWorker @AssistedInject constructor(
     @Assisted context: Context,
     @Assisted private val params: WorkerParameters,
     private val albumsRepository: AlbumsRepository,
+    private val foregroundInfoBuilder: ForegroundInfoBuilder,
 ) : CoroutineWorker(context, params) {
 
     override suspend fun doWork() = withContext(Dispatchers.IO) {
@@ -51,11 +52,11 @@ class AlbumDownloadWorker @AssistedInject constructor(
         }
     }
 
-    override suspend fun getForegroundInfo(): ForegroundInfo = foregroundInfo(
+    override suspend fun getForegroundInfo(): ForegroundInfo = foregroundInfoBuilder.build(
         applicationContext,
         R.string.refreshing_albums,
         NOTIFICATION_ID,
-        JOBS_CHANNEL_ID
+        JOBS_CHANNEL_ID,
     )
     companion object {
         const val Progress = "Progress"
