@@ -18,6 +18,7 @@ package com.savvasdalkitsis.uhuruphotos.server.view
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.imeNestedScroll
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.CircularProgressIndicator
@@ -36,7 +37,10 @@ fun Server(
     state: ServerState,
     action: (ServerAction) -> Unit = {},
 ) {
-    CommonScaffold { contentPadding ->
+    CommonScaffold(
+        modifier = Modifier
+            .imeNestedScroll()
+    ) { contentPadding ->
         Box(
             modifier = Modifier
                 .padding(contentPadding)
@@ -51,7 +55,7 @@ fun Server(
                             .align(Alignment.Center)
                     )
                 is ServerUrl -> ServerUrlPage(state, action)
-                is UserCredentials -> UserCredentialsPage(contentPadding, action, state)
+                is UserCredentials -> UserCredentialsPage(action, state)
             }
         }
     }
