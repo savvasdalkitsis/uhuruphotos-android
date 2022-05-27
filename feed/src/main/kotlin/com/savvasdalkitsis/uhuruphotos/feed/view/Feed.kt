@@ -17,6 +17,7 @@ package com.savvasdalkitsis.uhuruphotos.feed.view
 
 import android.content.res.Configuration
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.lazy.LazyItemScope
 import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
@@ -38,6 +39,7 @@ fun Feed(
     state: FeedState,
     showSelectionHeader: Boolean = false,
     listState: LazyListState = rememberLazyListState(),
+    feedHeader: @Composable (LazyItemScope.() -> Unit)? = null,
     onPhotoSelected: PhotoSelected = { _, _, _ -> },
     onChangeDisplay: ((FeedDisplay) -> Unit)? = null,
     onPhotoLongPressed: (Photo) -> Unit = {},
@@ -63,6 +65,7 @@ fun Feed(
             showSelectionHeader = showSelectionHeader,
             maintainAspectRatio = feedDisplay.maintainAspectRatio,
             listState = listState,
+            feedHeader = feedHeader,
             columnCount = feedDisplay.columnCount(
                 widthSizeClass = LocalWindowSize.current.widthSizeClass,
                 landscape = LocalConfiguration.current.orientation == Configuration.ORIENTATION_LANDSCAPE

@@ -41,6 +41,7 @@ class AutoAlbumReducer @Inject constructor(
         ))
         is ShowAutoAlbum -> state.copy(
             title = mutation.album.title,
+            people = mutation.album.people,
             feedState = state.feedState.copy(
                 albums = mutation.album.albums,
                 feedDisplay = AutoAlbumFeedDisplay,

@@ -21,6 +21,7 @@ dependencies {
     implementation project(":ui")
     implementation project(":feed")
     implementation project(":strings")
+    implementation project(":person-api")
     implementation(
             libs.accompanist.swiperefresh,
             libs.androidx.compose.foundation,

@@ -22,7 +22,12 @@ CREATE TABLE autoAlbumPhotos (
 
     PRIMARY KEY (imageHash, albumId)
 );
+CREATE TABLE autoAlbumPeople (
+    personId INTEGER AS Int NOT NULL,
+    albumId TEXT NOT NULL,
 
+    PRIMARY KEY (personId, albumId)
+);
 CREATE TEMPORARY TABLE photoDetailsBackup (
     imageHash TEXT NOT NULL PRIMARY KEY,
     gpsLat TEXT,

@@ -16,6 +16,7 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.autoalbum.mvflow
 
 import androidx.compose.ui.geometry.Offset
+import com.savvasdalkitsis.uhuruphotos.people.api.view.state.Person
 import com.savvasdalkitsis.uhuruphotos.photos.api.model.Photo
 
 sealed class AutoAlbumAction {
@@ -28,4 +29,6 @@ sealed class AutoAlbumAction {
         val center: Offset,
         val scale: Float,
     ) : AutoAlbumAction()
+
+    data class PersonSelected(val person: Person) : AutoAlbumAction()
 }

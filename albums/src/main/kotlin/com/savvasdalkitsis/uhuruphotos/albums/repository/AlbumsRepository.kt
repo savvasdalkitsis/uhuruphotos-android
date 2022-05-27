@@ -22,21 +22,25 @@ import com.savvasdalkitsis.uhuruphotos.albums.service.model.toAlbum
 import com.savvasdalkitsis.uhuruphotos.albums.service.model.toAutoAlbums
 import com.savvasdalkitsis.uhuruphotos.db.Database
 import com.savvasdalkitsis.uhuruphotos.db.albums.AlbumsQueries
+import com.savvasdalkitsis.uhuruphotos.db.albums.AutoAlbumPeopleQueries
 import com.savvasdalkitsis.uhuruphotos.db.albums.AutoAlbumPhotosQueries
 import com.savvasdalkitsis.uhuruphotos.db.albums.AutoAlbumQueries
 import com.savvasdalkitsis.uhuruphotos.db.albums.AutoAlbums
 import com.savvasdalkitsis.uhuruphotos.db.albums.AutoAlbumsQueries
 import com.savvasdalkitsis.uhuruphotos.db.albums.GetAlbums
 import com.savvasdalkitsis.uhuruphotos.db.albums.GetAutoAlbum
+import com.savvasdalkitsis.uhuruphotos.db.albums.GetPeopleForAutoAlbum
 import com.savvasdalkitsis.uhuruphotos.db.albums.GetPersonAlbums
 import com.savvasdalkitsis.uhuruphotos.db.extensions.await
 import com.savvasdalkitsis.uhuruphotos.db.extensions.awaitSingle
+import com.savvasdalkitsis.uhuruphotos.db.people.PeopleQueries
 import com.savvasdalkitsis.uhuruphotos.db.person.PersonQueries
 import com.savvasdalkitsis.uhuruphotos.db.photos.PhotoDetailsQueries
 import com.savvasdalkitsis.uhuruphotos.db.photos.PhotoSummaryQueries
 import com.savvasdalkitsis.uhuruphotos.infrastructure.extensions.groupBy
 import com.savvasdalkitsis.uhuruphotos.infrastructure.extensions.safelyOnStartIgnoring
 import com.savvasdalkitsis.uhuruphotos.infrastructure.model.Group
+import com.savvasdalkitsis.uhuruphotos.people.service.model.toPerson
 import com.savvasdalkitsis.uhuruphotos.photos.entities.toPhotoSummary
 import com.savvasdalkitsis.uhuruphotos.photos.service.model.toPhotoDetails
 import com.squareup.sqldelight.runtime.coroutines.asFlow
@@ -52,7 +56,9 @@ class AlbumsRepository @Inject constructor(
     private val autoAlbumsQueries: AutoAlbumsQueries,
     private val autoAlbumQueries: AutoAlbumQueries,
     private val autoAlbumPhotosQueries: AutoAlbumPhotosQueries,
+    private val autoAlbumPeopleQueries: AutoAlbumPeopleQueries,
     private val personQueries: PersonQueries,
+    private val peopleQueries: PeopleQueries,
     private val photoSummaryQueries: PhotoSummaryQueries,
     private val photoDetailsQueries: PhotoDetailsQueries,
 ){
@@ -84,6 +90,10 @@ class AlbumsRepository @Inject constructor(
         autoAlbumQueries.getAutoAlbum(albumId.toString()).asFlow().mapToList()
             .distinctUntilChanged()
 
+    fun observeAutoAlbumPeople(albumId: Int): Flow<List<GetPeopleForAutoAlbum>> =
+        autoAlbumPeopleQueries.getPeopleForAutoAlbum(albumId.toString())
+            .asFlow().mapToList()
+
     suspend fun refreshAutoAlbums() {
         val albums = albumsService.getAutoAlbums()
         autoAlbumsQueries.transaction {
@@ -106,6 +116,12 @@ class AlbumsRepository @Inject constructor(
                 gpsLat = album.gpsLat,
                 gpsLon = album.gpsLon,
             )
+            autoAlbumPeopleQueries.removePeopleForAlbum(albumId.toString())
+            for (person in album.people) {
+                peopleQueries.insertPerson(person.toPerson())
+                autoAlbumPeopleQueries.insert(person.id, albumId.toString())
+            }
+            autoAlbumPhotosQueries.removePhotosForAlbum(albumId.toString())
             for (photo in album.photos) {
                 photoDetailsQueries.insert(photo.toPhotoDetails())
                 autoAlbumPhotosQueries.insert(photo.imageHash, albumId.toString())

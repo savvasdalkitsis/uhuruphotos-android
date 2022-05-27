@@ -7,3 +7,6 @@ CREATE TABLE autoAlbumPhotos (
 
 insert:
 INSERT OR REPLACE INTO autoAlbumPhotos VALUES (?, ?);
+
+removePhotosForAlbum:
+DELETE FROM autoAlbumPhotos WHERE albumId == :albumId;

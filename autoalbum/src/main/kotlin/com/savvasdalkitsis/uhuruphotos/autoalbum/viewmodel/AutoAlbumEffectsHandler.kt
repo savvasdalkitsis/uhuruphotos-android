@@ -18,6 +18,7 @@ package com.savvasdalkitsis.uhuruphotos.autoalbum.viewmodel
 import com.savvasdalkitsis.uhuruphotos.autoalbum.mvflow.AutoAlbumEffect
 import com.savvasdalkitsis.uhuruphotos.autoalbum.mvflow.AutoAlbumEffect.*
 import com.savvasdalkitsis.uhuruphotos.navigation.ControllersProvider
+import com.savvasdalkitsis.uhuruphotos.person.api.navigation.PersonNavigationTarget
 import com.savvasdalkitsis.uhuruphotos.photos.navigation.PhotoNavigationTarget
 import com.savvasdalkitsis.uhuruphotos.viewmodel.EffectHandler
 import javax.inject.Inject
@@ -28,16 +29,22 @@ class AutoAlbumEffectsHandler @Inject constructor(
 
     override suspend fun invoke(effect: AutoAlbumEffect) {
         when (effect) {
-            is OpenPhotoDetails -> controllersProvider.navController!!
-                .navigate(
-                    PhotoNavigationTarget.name(
-                        effect.id,
-                        effect.center,
-                        effect.scale,
-                        effect.video,
-                    )
+            is OpenPhotoDetails -> navigate(
+                PhotoNavigationTarget.name(
+                    effect.id,
+                    effect.center,
+                    effect.scale,
+                    effect.video,
                 )
+            )
             NavigateBack -> controllersProvider.navController!!.popBackStack()
+            is NavigateToPerson -> navigate(
+                PersonNavigationTarget.name(effect.personId)
+            )
         }
+    }
+
+    private fun navigate(name: String) {
+        controllersProvider.navController!!.navigate(name)
     }
 }

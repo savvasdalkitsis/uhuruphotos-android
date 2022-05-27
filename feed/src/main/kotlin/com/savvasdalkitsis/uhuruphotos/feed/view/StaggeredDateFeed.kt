@@ -20,6 +20,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyItemScope
 import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material.MaterialTheme
@@ -42,6 +43,7 @@ fun StaggeredDateFeed(
     columnCount: Int,
     shouldAddEmptyPhotosInRows: Boolean,
     listState: LazyListState = rememberLazyListState(),
+    feedHeader: @Composable (LazyItemScope.() -> Unit)? = null,
     onPhotoSelected: PhotoSelected,
     onPhotoLongPressed: (Photo) -> Unit,
     onAlbumSelectionClicked: (Album) -> Unit,
@@ -52,6 +54,11 @@ fun StaggeredDateFeed(
             state = listState,
             contentPadding = contentPadding,
         ) {
+            feedHeader?.let { header ->
+                item("feedHeader", "feedHeader") {
+                    header(this)
+                }
+            }
             albums.forEach { album ->
                 item(album.id, "header") {
                     AlbumHeader(

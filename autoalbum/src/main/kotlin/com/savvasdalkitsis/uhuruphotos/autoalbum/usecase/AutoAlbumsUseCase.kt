@@ -15,45 +15,23 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.autoalbum.usecase
 
-import com.savvasdalkitsis.uhuruphotos.albums.api.model.Album
 import com.savvasdalkitsis.uhuruphotos.albums.repository.AlbumsRepository
-import com.savvasdalkitsis.uhuruphotos.autoalbum.view.state.AutoAlbum
-import com.savvasdalkitsis.uhuruphotos.infrastructure.date.DateDisplayer
-import com.savvasdalkitsis.uhuruphotos.photos.api.model.Photo
-import com.savvasdalkitsis.uhuruphotos.photos.usecase.PhotosUseCase
+import com.savvasdalkitsis.uhuruphotos.db.albums.GetAutoAlbum
+import com.savvasdalkitsis.uhuruphotos.db.albums.GetPeopleForAutoAlbum
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.combine
 import javax.inject.Inject
 
 class AutoAlbumsUseCase @Inject constructor(
     private val albumsRepository: AlbumsRepository,
-    private val photosUseCase: PhotosUseCase,
-    private val dateDisplayer: DateDisplayer,
 ) {
 
-    fun observeAutoAlbum(albumId: Int): Flow<AutoAlbum> =
-        albumsRepository.observeAutoAlbum(albumId).map { entries ->
-            val albums = entries.groupBy { entry ->
-                dateDisplayer.dateString(entry.timestamp)
-            }
-            AutoAlbum(
-                title = entries.firstOrNull()?.title ?: "",
-                albums = albums.entries.map { (date, photos) ->
-                    Album(
-                        id = date,
-                        date = date,
-                        location = null,
-                        photos = photos.map { Photo(
-                            id = it.photoId.toString(),
-                            thumbnailUrl = with(photosUseCase) {
-                                it.photoId.toThumbnailUrlFromId()
-                            },
-                            isFavourite = it.isFavorite ?: false,
-                            isVideo = it.video ?: false,
-                        ) }
-                    )
-                }
-            )
+    fun observeAutoAlbum(albumId: Int): Flow<Pair<List<GetAutoAlbum>, List<GetPeopleForAutoAlbum>>> =
+        combine(
+            albumsRepository.observeAutoAlbum(albumId),
+            albumsRepository.observeAutoAlbumPeople(albumId),
+        ) { album, people ->
+            album to people
         }
 
     suspend fun refreshAutoAlbum(albumId: Int) {

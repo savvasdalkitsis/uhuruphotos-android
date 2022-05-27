@@ -15,6 +15,7 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.people.api.view.state
 
+import com.savvasdalkitsis.uhuruphotos.db.albums.GetPeopleForAutoAlbum
 import com.savvasdalkitsis.uhuruphotos.db.people.People
 
 data class Person(
@@ -29,4 +30,11 @@ suspend fun People.toPerson(urlResolver: suspend (String?) -> String?) = Person(
     name = name,
     imageUrl = urlResolver(faceUrl),
     photos = faceCount,
+)
+
+suspend fun GetPeopleForAutoAlbum.toPerson(urlResolver: suspend (String?) -> String?) = Person(
+    id = personId,
+    name = name ?: "",
+    imageUrl = urlResolver(faceUrl),
+    photos = faceCount ?: 0,
 )

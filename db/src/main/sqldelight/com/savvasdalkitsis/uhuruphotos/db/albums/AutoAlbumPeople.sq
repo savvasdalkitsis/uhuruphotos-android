@@ -1,0 +1,24 @@
+CREATE TABLE autoAlbumPeople (
+    personId INTEGER AS Int NOT NULL,
+    albumId TEXT NOT NULL,
+
+    PRIMARY KEY (personId, albumId)
+);
+
+insert:
+INSERT OR REPLACE INTO autoAlbumPeople VALUES (?, ?);
+
+removePeopleForAlbum:
+DELETE FROM autoAlbumPeople WHERE albumId == :albumId;
+
+getPeopleForAutoAlbum:
+SELECT
+    personId,
+    people.faceCount,
+    people.facePhotoUrl,
+    people.faceCount,
+    people.faceUrl,
+    people.name
+FROM autoAlbumPeople
+LEFT JOIN people ON personId == people.id
+WHERE albumId == :albumId;

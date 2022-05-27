@@ -25,4 +25,6 @@ sealed class AutoAlbumEffect {
         val scale: Float,
         val video: Boolean
     ) : AutoAlbumEffect()
+
+    data class NavigateToPerson(val personId: Int) : AutoAlbumEffect()
 }

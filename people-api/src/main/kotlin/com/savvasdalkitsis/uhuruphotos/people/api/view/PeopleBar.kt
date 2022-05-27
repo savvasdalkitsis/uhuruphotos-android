@@ -34,12 +34,13 @@ import com.savvasdalkitsis.uhuruphotos.people.api.view.state.Person
 
 @Composable
 fun PeopleBar(
+    modifier: Modifier = Modifier,
     people: List<Person>,
     onViewAllClicked: (() -> Unit)? = null,
     onPersonSelected: (Person) -> Unit,
 ) {
     Column(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxWidth(),
         verticalArrangement = Arrangement.spacedBy(8.dp),
     ) {

@@ -17,14 +17,17 @@ package com.savvasdalkitsis.uhuruphotos.autoalbum.view
 
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
 import com.google.accompanist.swiperefresh.SwipeRefresh
 import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 import com.savvasdalkitsis.uhuruphotos.autoalbum.mvflow.AutoAlbumAction
 import com.savvasdalkitsis.uhuruphotos.autoalbum.mvflow.AutoAlbumAction.NavigateBack
+import com.savvasdalkitsis.uhuruphotos.autoalbum.mvflow.AutoAlbumAction.PersonSelected
 import com.savvasdalkitsis.uhuruphotos.autoalbum.mvflow.AutoAlbumAction.SelectedPhoto
 import com.savvasdalkitsis.uhuruphotos.autoalbum.mvflow.AutoAlbumAction.SwipeToRefresh
 import com.savvasdalkitsis.uhuruphotos.autoalbum.view.state.AutoAlbumState
 import com.savvasdalkitsis.uhuruphotos.feed.view.Feed
+import com.savvasdalkitsis.uhuruphotos.people.api.view.PeopleBar
 import com.savvasdalkitsis.uhuruphotos.ui.view.BackNavButton
 import com.savvasdalkitsis.uhuruphotos.ui.view.CommonScaffold
 
@@ -50,6 +53,15 @@ fun AutoAlbum(
             Feed(
                 contentPadding = contentPadding,
                 state = state.feedState,
+                feedHeader = state.people.takeIf { it.isNotEmpty() }?.let {
+                    {
+                        PeopleBar(
+                            modifier = Modifier.animateItemPlacement(),
+                            people = state.people,
+                            onPersonSelected = { action(PersonSelected(it)) }
+                        )
+                    }
+                },
                 onPhotoSelected = { photo, center, scale ->
                     action(SelectedPhoto(photo, center, scale,))
                 },
