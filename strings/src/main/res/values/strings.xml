@@ -63,4 +63,15 @@
     <string name="send_crash_logs">Send crash logs for troubleshooting</string>
     <string name="edit_server_url">Edit server URL</string>
     <string name="log_out">Log out</string>
+    <string name="albums">Albums</string>
+    <string name="library">Library</string>
+    <string name="missing_album_title">Missing album title</string>
+    <string name="auto_generated_albums">Auto generated albums</string>
+    <string name="sorting">Sorting</string>
+    <string name="error_loading_auto_albums">There was an error loading automatically generated albums</string>
+    <string name="error_loading_album">There was an error loading the album</string>
+    <plurals name="item_count">
+        <item quantity="one">%d item</item>
+        <item quantity="other">%d items</item>
+    </plurals>
 </resources>

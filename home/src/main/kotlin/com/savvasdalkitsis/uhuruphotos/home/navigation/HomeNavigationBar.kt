@@ -46,8 +46,10 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import com.savvasdalkitsis.uhuruphotos.feed.view.state.FeedDisplay
 import com.savvasdalkitsis.uhuruphotos.home.navigation.NavigationStyle.BOTTOM_BAR
 import com.savvasdalkitsis.uhuruphotos.home.navigation.NavigationStyle.NAVIGATION_RAIL
-import com.savvasdalkitsis.uhuruphotos.strings.R
+import com.savvasdalkitsis.uhuruphotos.homenavigation.HomeNavigationRoutes
+import com.savvasdalkitsis.uhuruphotos.icons.R
 import com.savvasdalkitsis.uhuruphotos.ui.window.LocalWindowSize
+import com.savvasdalkitsis.uhuruphotos.strings.R as Strings
 
 @Composable
 fun homeNavigationStyle() = when (LocalWindowSize.current.widthSizeClass) {
@@ -58,10 +60,8 @@ fun homeNavigationStyle() = when (LocalWindowSize.current.widthSizeClass) {
 @Composable
 fun HomeNavigationBar(
     contentPadding: PaddingValues = PaddingValues(0.dp),
-    feedDisplay: FeedDisplay,
+    homeFeedDisplay: FeedDisplay,
     navController: NavHostController,
-    feedNavigationName: String,
-    searchNavigationName: String,
     onReselected: () -> Unit = {},
 ) {
     val navBackStackEntry by navController.currentBackStackEntryAsState()
@@ -76,9 +76,7 @@ fun HomeNavigationBar(
                 Items(
                     currentDestination = currentDestination,
                     navController = navController,
-                    feedDisplay = feedDisplay,
-                    feedNavigationName = feedNavigationName,
-                    searchNavigationName = searchNavigationName,
+                    homeFeedDisplay = homeFeedDisplay,
                     onReselected = onReselected,
                     rowScope = this,
                 )
@@ -92,9 +90,7 @@ fun HomeNavigationBar(
             Items(
                 currentDestination = currentDestination,
                 navController = navController,
-                feedDisplay = feedDisplay,
-                feedNavigationName = feedNavigationName,
-                searchNavigationName = searchNavigationName,
+                homeFeedDisplay = homeFeedDisplay,
                 onReselected = onReselected,
             )
         }
@@ -105,25 +101,31 @@ fun HomeNavigationBar(
 private fun Items(
     currentDestination: NavDestination?,
     navController: NavHostController,
-    feedDisplay: FeedDisplay,
-    feedNavigationName: String,
-    searchNavigationName: String,
+    homeFeedDisplay: FeedDisplay,
     onReselected: () -> Unit,
     rowScope: RowScope? = null,
 ) {
     NavItem(
         currentDestination, navController,
-        label = R.string.feed,
-        routeName = feedNavigationName,
-        painterResource(id = feedDisplay.iconResource),
+        label = Strings.string.feed,
+        routeName = HomeNavigationRoutes.feed,
+        painterResource(id = homeFeedDisplay.iconResource),
         onReselected,
         rowScope,
     )
     NavItem(
         currentDestination, navController,
-        label = R.string.search,
-        routeName = searchNavigationName,
+        label = Strings.string.search,
+        routeName = HomeNavigationRoutes.search,
         icon = rememberVectorPainter(Icons.Filled.Search),
+        rowScope = rowScope,
+        onReselected = onReselected,
+    )
+    NavItem(
+        currentDestination, navController,
+        label = Strings.string.library,
+        routeName = HomeNavigationRoutes.library,
+        icon = painterResource(R.drawable.ic_photo_album),
         rowScope = rowScope,
         onReselected = onReselected,
     )

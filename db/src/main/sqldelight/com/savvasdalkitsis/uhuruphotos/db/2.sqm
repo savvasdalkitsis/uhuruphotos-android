@@ -1,0 +1,77 @@
+CREATE TABLE autoAlbums (
+    id INTEGER AS Int NOT NULL PRIMARY KEY,
+    isFavorite INTEGER AS Boolean,
+    photoCount INTEGER AS Int,
+    coverPhotoHash TEXT NOT NULL,
+    coverPhotoIsVideo INTEGER AS Boolean,
+    timestamp TEXT,
+    title TEXT
+);
+CREATE TABLE autoAlbum (
+    id TEXT NOT NULL PRIMARY KEY,
+    title TEXT,
+    timestamp TEXT,
+    createdOn TEXT,
+    isFavorite INTEGER AS Boolean,
+    gpsLat REAL AS Double,
+    gpsLon REAL AS Double
+);
+CREATE TABLE autoAlbumPhotos (
+    imageHash TEXT NOT NULL,
+    albumId TEXT NOT NULL,
+
+    PRIMARY KEY (imageHash, albumId)
+);
+
+CREATE TEMPORARY TABLE photoDetailsBackup (
+    imageHash TEXT NOT NULL PRIMARY KEY,
+    gpsLat TEXT,
+    gpsLon TEXT,
+    timestamp TEXT,
+    captions TEXT,
+    location TEXT,
+    thumbnailUrl TEXT,
+    thumbnailHeight TEXT,
+    thumbnailWidth TEXT,
+    bigThumbnailUrl TEXT,
+    smallThumbnailUrl TEXT,
+    squareThumbnailUrl TEXT,
+    bigSquareThumbnailUrl TEXT,
+    smallSquareThumbnailUrl TEXT,
+    tinySquareThumbnailUrl TEXT,
+    video INTEGER AS Boolean,
+    rating INTEGER AS Int,
+    albumId TEXT NOT NULL,
+    peopleNames TEXT,
+
+    FOREIGN KEY (albumId) REFERENCES albums(id)
+);
+
+INSERT INTO photoDetailsBackup SELECT * FROM photoDetails;
+DROP TABLE photoDetails;
+CREATE TABLE photoDetails (
+  imageHash TEXT NOT NULL PRIMARY KEY,
+  gpsLat TEXT,
+  gpsLon TEXT,
+  timestamp TEXT,
+  captions TEXT,
+  location TEXT,
+  thumbnailUrl TEXT,
+  thumbnailHeight TEXT,
+  thumbnailWidth TEXT,
+  bigThumbnailUrl TEXT,
+  smallThumbnailUrl TEXT,
+  squareThumbnailUrl TEXT,
+  bigSquareThumbnailUrl TEXT,
+  smallSquareThumbnailUrl TEXT,
+  tinySquareThumbnailUrl TEXT,
+  video INTEGER AS Boolean,
+  rating INTEGER AS Int,
+  peopleNames TEXT
+);
+INSERT INTO photoDetails SELECT
+imageHash, gpsLat, gpsLon, timestamp,captions, location, thumbnailUrl,
+thumbnailHeight, thumbnailWidth, bigThumbnailUrl, smallThumbnailUrl,
+squareThumbnailUrl, bigSquareThumbnailUrl, smallSquareThumbnailUrl,
+tinySquareThumbnailUrl, video, rating, peopleNames FROM photoDetailsBackup;
+DROP TABLE photoDetailsBackup;

@@ -47,17 +47,19 @@ fun CommonScaffold(
     bottomBarColor: @Composable () -> Color = { MaterialTheme.colors.background.copy(alpha = 0.8f) },
     topBarDisplayed: Boolean = true,
     bottomBarDisplayed: Boolean = true,
+    expandableTopBar: Boolean = false,
     navigationIcon: @Composable (() -> Unit)? = null,
     content: @Composable (PaddingValues) -> Unit
 ) = CommonScaffold(
     modifier = modifier,
     topBar = {
         CommonTopBar(
-            topBarDisplayed,
-            toolbarColor,
-            title,
-            navigationIcon,
-            actionBarContent
+            topBarDisplayed = topBarDisplayed,
+            toolbarColor = toolbarColor,
+            title = title,
+            expandable = expandableTopBar,
+            navigationIcon = navigationIcon,
+            actionBarContent = actionBarContent
         )
     },
     bottomBarContent = bottomBarContent,

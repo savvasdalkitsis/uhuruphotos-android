@@ -17,7 +17,7 @@ package com.savvasdalkitsis.uhuruphotos.search.navigation
 
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavGraphBuilder
-import com.savvasdalkitsis.uhuruphotos.home.module.HomeModule.HomeNavigationTargetFeed
+import com.savvasdalkitsis.uhuruphotos.homenavigation.HomeNavigationRoutes
 import com.savvasdalkitsis.uhuruphotos.navigation.ControllersProvider
 import com.savvasdalkitsis.uhuruphotos.navigation.NavigationTarget
 import com.savvasdalkitsis.uhuruphotos.navigation.navigationTarget
@@ -34,22 +34,21 @@ class SearchNavigationTarget @Inject constructor(
     private val effectsHandler: SearchEffectsHandler,
     private val controllersProvider: ControllersProvider,
     private val settingsUseCase: SettingsUseCase,
-    @HomeNavigationTargetFeed private val feedNavigationName: String,
 ) : NavigationTarget {
 
     override suspend fun NavGraphBuilder.create() {
         navigationTarget<SearchState, SearchEffect, SearchAction, SearchViewModel>(
-            name = name,
+            name = HomeNavigationRoutes.search,
             effects = effectsHandler,
             themeMode = settingsUseCase.observeThemeModeState(),
             initializer = { _, actions -> actions(SearchAction.Initialise) },
             createModel = { hiltViewModel() }
         ) { state, actions ->
-            SearchPage(state, actions, feedNavigationName, name, controllersProvider)
+            SearchPage(
+                state,
+                actions,
+                controllersProvider
+            )
         }
-    }
-
-    companion object {
-        const val name = "search"
     }
 }

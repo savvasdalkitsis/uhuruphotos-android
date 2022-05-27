@@ -23,7 +23,7 @@ import com.savvasdalkitsis.uhuruphotos.feedpage.view.FeedPage
 import com.savvasdalkitsis.uhuruphotos.feedpage.view.state.FeedPageState
 import com.savvasdalkitsis.uhuruphotos.feedpage.viewmodel.FeedPageEffectsHandler
 import com.savvasdalkitsis.uhuruphotos.feedpage.viewmodel.FeedPageViewModel
-import com.savvasdalkitsis.uhuruphotos.home.module.HomeModule.HomeNavigationTargetSearch
+import com.savvasdalkitsis.uhuruphotos.homenavigation.HomeNavigationRoutes
 import com.savvasdalkitsis.uhuruphotos.navigation.ControllersProvider
 import com.savvasdalkitsis.uhuruphotos.navigation.NavigationTarget
 import com.savvasdalkitsis.uhuruphotos.navigation.navigationTarget
@@ -34,22 +34,21 @@ class FeedPageNavigationTarget @Inject constructor(
     private val controllersProvider: ControllersProvider,
     private val feedPageEffectsHandler: FeedPageEffectsHandler,
     private val settingsUseCase: SettingsUseCase,
-    @HomeNavigationTargetSearch private val searchNavigationName: String,
 ) : NavigationTarget {
 
     override suspend fun NavGraphBuilder.create() {
         navigationTarget<FeedPageState, FeedPageEffect, FeedPageAction, FeedPageViewModel>(
-            name = name,
+            name = HomeNavigationRoutes.feed,
             effects = feedPageEffectsHandler,
             themeMode = settingsUseCase.observeThemeModeState(),
             initializer = { _, actions -> actions(FeedPageAction.LoadFeed) },
             createModel = { hiltViewModel() }
         ) { state, actions ->
-            FeedPage(controllersProvider, state, name, searchNavigationName, actions)
+            FeedPage(
+                controllersProvider,
+                state,
+                actions
+            )
         }
-    }
-
-    companion object {
-        const val name = "feed"
     }
 }

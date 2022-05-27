@@ -25,7 +25,7 @@ import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.width
-import androidx.compose.material.TopAppBar
+import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -36,11 +36,12 @@ import com.savvasdalkitsis.uhuruphotos.ui.insets.insetsTop
 
 @Composable
 fun CommonTopBar(
-    topBarDisplayed: Boolean,
-    toolbarColor: @Composable () -> Color,
+    topBarDisplayed: Boolean = true,
+    toolbarColor: @Composable () -> Color = { MaterialTheme.colors.background.copy(alpha = 0.8f) },
     title: @Composable () -> Unit,
+    expandable: Boolean = false,
     navigationIcon: @Composable (() -> Unit)? = null,
-    actionBarContent: @Composable (RowScope.() -> Unit) = {}
+    actionBarContent: @Composable (RowScope.() -> Unit) = {},
 ) {
     AnimatedVisibility(
         visible = topBarDisplayed,
@@ -57,11 +58,12 @@ fun CommonTopBar(
                     .weight(1f)
             ) {
                 Spacer(modifier = Modifier.height(insetsTop()))
-                TopAppBar(
+                ExpandableTopAppBar(
                     title = title,
                     backgroundColor = Color.Transparent,
                     elevation = 0.dp,
                     navigationIcon = navigationIcon,
+                    expandable = expandable,
                     actions = {
                         actionBarContent()
                     }

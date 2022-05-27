@@ -1,0 +1,18 @@
+CREATE TABLE autoAlbums (
+    id INTEGER AS Int NOT NULL PRIMARY KEY,
+    isFavorite INTEGER AS Boolean,
+    photoCount INTEGER AS Int,
+    coverPhotoHash TEXT NOT NULL,
+    coverPhotoIsVideo INTEGER AS Boolean,
+    timestamp TEXT,
+    title TEXT
+);
+
+insert:
+INSERT OR REPLACE INTO autoAlbums VALUES ?;
+
+getAutoAlbums:
+SELECT * FROM autoAlbums ORDER BY timestamp DESC;
+
+clear:
+DELETE FROM autoAlbums;

@@ -17,6 +17,9 @@ package com.savvasdalkitsis.uhuruphotos.db
 
 import android.content.Context
 import com.savvasdalkitsis.uhuruphotos.db.albums.AlbumsQueries
+import com.savvasdalkitsis.uhuruphotos.db.albums.AutoAlbumPhotosQueries
+import com.savvasdalkitsis.uhuruphotos.db.albums.AutoAlbumQueries
+import com.savvasdalkitsis.uhuruphotos.db.albums.AutoAlbumsQueries
 import com.savvasdalkitsis.uhuruphotos.db.auth.Token
 import com.savvasdalkitsis.uhuruphotos.db.auth.TokenQueries
 import com.savvasdalkitsis.uhuruphotos.db.people.PeopleQueries
@@ -74,4 +77,13 @@ class DbModule {
 
     @Provides
     fun searchQueries(database: Database): SearchQueries = database.searchQueries
+
+    @Provides
+    fun autoAlbumsQueries(database: Database): AutoAlbumsQueries = database.autoAlbumsQueries
+
+    @Provides
+    fun autoAlbumQueries(database: Database): AutoAlbumQueries = database.autoAlbumQueries
+
+    @Provides
+    fun autoAlbumPhotosQueries(database: Database): AutoAlbumPhotosQueries = database.autoAlbumPhotosQueries
 }

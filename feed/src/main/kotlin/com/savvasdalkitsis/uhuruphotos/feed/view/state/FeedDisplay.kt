@@ -17,8 +17,6 @@ package com.savvasdalkitsis.uhuruphotos.feed.view.state
 
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
-import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
-import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass.Companion.Compact
 
 interface FeedDisplay {
     val compactColumnsPortrait: Int
@@ -31,18 +29,4 @@ interface FeedDisplay {
     @get:StringRes val friendlyName: Int
     val zoomIn: FeedDisplay
     val zoomOut: FeedDisplay
-
-    fun columnCount(
-        widthSizeClass: WindowWidthSizeClass,
-        landscape: Boolean,
-    ) = when {
-        landscape -> when (widthSizeClass) {
-            Compact -> compactColumnsLandscape
-            else -> wideColumnsLandscape
-        }
-        else -> when (widthSizeClass) {
-            Compact -> compactColumnsPortrait
-            else -> wideColumnsPortrait
-        }
-    }
 }

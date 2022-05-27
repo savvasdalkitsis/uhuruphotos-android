@@ -19,6 +19,7 @@ import android.content.res.Configuration
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.rememberLazyListState
+import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalConfiguration
@@ -71,5 +72,19 @@ fun Feed(
             onPhotoLongPressed = onPhotoLongPressed,
             onAlbumSelectionClicked = onAlbumSelectionClicked,
         )
+    }
+}
+
+private fun FeedDisplay.columnCount(
+    widthSizeClass: WindowWidthSizeClass,
+    landscape: Boolean,
+) = when {
+    landscape -> when (widthSizeClass) {
+        WindowWidthSizeClass.Compact -> compactColumnsLandscape
+        else -> wideColumnsLandscape
+    }
+    else -> when (widthSizeClass) {
+        WindowWidthSizeClass.Compact -> compactColumnsPortrait
+        else -> wideColumnsPortrait
     }
 }

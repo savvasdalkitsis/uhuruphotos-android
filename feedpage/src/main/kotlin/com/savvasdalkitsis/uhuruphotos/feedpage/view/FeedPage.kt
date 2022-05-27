@@ -51,8 +51,6 @@ import kotlinx.coroutines.launch
 fun FeedPage(
     controllersProvider: ControllersProvider,
     state: FeedPageState,
-    feedNavigationName: String,
-    searchNavigationName: String,
     action: (FeedPageAction) -> Unit,
 ) {
     val coroutineScope = rememberCoroutineScope()
@@ -69,12 +67,10 @@ fun FeedPage(
         title = {
             FeedPageTitle(state, action, ::scrollToTop)
         },
-        selectionMode = state.hasSelection,
         navController = controllersProvider.navController!!,
         userInformationState = state.userInformationState,
-        feedDisplay = state.feedState.feedDisplay,
-        feedNavigationName = feedNavigationName,
-        searchNavigationName = searchNavigationName,
+        homeFeedDisplay = state.feedState.feedDisplay,
+        selectionMode = state.hasSelection,
         userBadgePressed = { action(UserBadgePressed) },
         actionBarContent = {
             FeedPageActionBar(state, action)

@@ -39,9 +39,7 @@ fun HomeScaffold(
     title: @Composable () -> Unit = { Logo() },
     navController: NavHostController,
     userInformationState: UserInformationState? = null,
-    feedDisplay: FeedDisplay = FeedDisplays.default,
-    feedNavigationName: String,
-    searchNavigationName: String,
+    homeFeedDisplay: FeedDisplay = FeedDisplays.default,
     selectionMode: Boolean = false,
     userBadgePressed: () -> Unit = {},
     actionBarContent: @Composable() (RowScope.() -> Unit) = {},
@@ -55,11 +53,9 @@ fun HomeScaffold(
         bottomBarContent = {
             if (homeNavigationStyle() == BOTTOM_BAR) {
                 HomeNavigationBar(
+                    homeFeedDisplay = homeFeedDisplay,
                     navController = navController,
-                    feedDisplay = feedDisplay,
                     onReselected = onReselected,
-                    feedNavigationName = feedNavigationName,
-                    searchNavigationName = searchNavigationName,
                 )
             }
         },
@@ -79,11 +75,9 @@ fun HomeScaffold(
                 AnimatedVisibility(visible = !selectionMode) {
                     HomeNavigationBar(
                         contentPadding = contentPadding,
-                        feedDisplay = feedDisplay,
-                        onReselected = onReselected,
+                        homeFeedDisplay = homeFeedDisplay,
                         navController = navController,
-                        feedNavigationName = feedNavigationName,
-                        searchNavigationName = searchNavigationName,
+                        onReselected = onReselected,
                     )
                 }
                 content(contentPadding)

@@ -19,17 +19,26 @@ import com.savvasdalkitsis.uhuruphotos.albums.service.AlbumsService
 import com.savvasdalkitsis.uhuruphotos.albums.service.model.Album
 import com.savvasdalkitsis.uhuruphotos.albums.service.model.AlbumsByDate
 import com.savvasdalkitsis.uhuruphotos.albums.service.model.toAlbum
+import com.savvasdalkitsis.uhuruphotos.albums.service.model.toAutoAlbums
+import com.savvasdalkitsis.uhuruphotos.db.Database
 import com.savvasdalkitsis.uhuruphotos.db.albums.AlbumsQueries
+import com.savvasdalkitsis.uhuruphotos.db.albums.AutoAlbumPhotosQueries
+import com.savvasdalkitsis.uhuruphotos.db.albums.AutoAlbumQueries
+import com.savvasdalkitsis.uhuruphotos.db.albums.AutoAlbums
+import com.savvasdalkitsis.uhuruphotos.db.albums.AutoAlbumsQueries
 import com.savvasdalkitsis.uhuruphotos.db.albums.GetAlbums
+import com.savvasdalkitsis.uhuruphotos.db.albums.GetAutoAlbum
 import com.savvasdalkitsis.uhuruphotos.db.albums.GetPersonAlbums
 import com.savvasdalkitsis.uhuruphotos.db.extensions.await
 import com.savvasdalkitsis.uhuruphotos.db.extensions.awaitSingle
 import com.savvasdalkitsis.uhuruphotos.db.person.PersonQueries
+import com.savvasdalkitsis.uhuruphotos.db.photos.PhotoDetailsQueries
 import com.savvasdalkitsis.uhuruphotos.db.photos.PhotoSummaryQueries
-import com.savvasdalkitsis.uhuruphotos.infrastructure.model.Group
 import com.savvasdalkitsis.uhuruphotos.infrastructure.extensions.groupBy
 import com.savvasdalkitsis.uhuruphotos.infrastructure.extensions.safelyOnStartIgnoring
+import com.savvasdalkitsis.uhuruphotos.infrastructure.model.Group
 import com.savvasdalkitsis.uhuruphotos.photos.entities.toPhotoSummary
+import com.savvasdalkitsis.uhuruphotos.photos.service.model.toPhotoDetails
 import com.squareup.sqldelight.runtime.coroutines.asFlow
 import com.squareup.sqldelight.runtime.coroutines.mapToList
 import kotlinx.coroutines.flow.Flow
@@ -37,10 +46,15 @@ import kotlinx.coroutines.flow.distinctUntilChanged
 import javax.inject.Inject
 
 class AlbumsRepository @Inject constructor(
+    private val db: Database,
     private val albumsService: AlbumsService,
     private val albumsQueries: AlbumsQueries,
+    private val autoAlbumsQueries: AutoAlbumsQueries,
+    private val autoAlbumQueries: AutoAlbumQueries,
+    private val autoAlbumPhotosQueries: AutoAlbumPhotosQueries,
     private val personQueries: PersonQueries,
     private val photoSummaryQueries: PhotoSummaryQueries,
+    private val photoDetailsQueries: PhotoDetailsQueries,
 ){
 
     suspend fun hasAlbums() = albumsQueries.albumsCount().awaitSingle() > 0
@@ -61,6 +75,43 @@ class AlbumsRepository @Inject constructor(
 
     suspend fun getPersonAlbums(personId: Int) : Group<String, GetPersonAlbums> =
         albumsQueries.getPersonAlbums(personId).await().groupBy(GetPersonAlbums::id).let(::Group)
+
+    fun observeAutoAlbums(): Flow<List<AutoAlbums>> =
+        autoAlbumsQueries.getAutoAlbums().asFlow().mapToList()
+            .distinctUntilChanged()
+
+    fun observeAutoAlbum(albumId: Int): Flow<List<GetAutoAlbum>> =
+        autoAlbumQueries.getAutoAlbum(albumId.toString()).asFlow().mapToList()
+            .distinctUntilChanged()
+
+    suspend fun refreshAutoAlbums() {
+        val albums = albumsService.getAutoAlbums()
+        autoAlbumsQueries.transaction {
+            autoAlbumsQueries.clear()
+            for (album in albums.results) {
+                autoAlbumsQueries.insert(album.toAutoAlbums())
+            }
+        }
+    }
+
+    suspend fun refreshAutoAlbum(albumId: Int) {
+        val album = albumsService.getAutoAlbum(albumId.toString())
+        db.transaction {
+            autoAlbumQueries.insert(
+                id = albumId.toString(),
+                title = album.title,
+                timestamp = album.timestamp,
+                createdOn = album.createdOn,
+                isFavorite = album.isFavorite,
+                gpsLat = album.gpsLat,
+                gpsLon = album.gpsLon,
+            )
+            for (photo in album.photos) {
+                photoDetailsQueries.insert(photo.toPhotoDetails())
+                autoAlbumPhotosQueries.insert(photo.imageHash, albumId.toString())
+            }
+        }
+    }
 
     private suspend fun downloadPersonAlbums(personId: Int) {
         process(

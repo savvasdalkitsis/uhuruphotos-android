@@ -1,0 +1,35 @@
+android {
+    buildFeatures {
+        compose true
+    }
+    composeOptions {
+        kotlinCompilerExtensionVersion compose_version
+    }
+    namespace 'com.savvasdalkitsis.uhuruphotos.library'
+}
+
+dependencies {
+    implementation project(":albums")
+    implementation project(":home")
+    implementation project(":navigation")
+    implementation project(":settings")
+    implementation project(":infrastructure")
+    implementation project(":photos")
+    implementation project(":photos-api")
+    implementation project(":log")
+    implementation project(":strings")
+    implementation project(":icons")
+    implementation project(":feed")
+    implementation project(":ui")
+    implementation project(":db")
+    implementation project(":userbadge-api")
+    implementation project(":toaster")
+    implementation project(":autoalbum")
+    implementation project(":homenavigation")
+    implementation(
+            libs.accompanist.swiperefresh,
+            libs.androidx.compose.foundation,
+            libs.androidx.compose.material,
+            libs.flowpreferences,
+    )
+}

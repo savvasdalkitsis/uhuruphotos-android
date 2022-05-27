@@ -65,6 +65,5 @@ fun PhotoResult.toPhotoDetails() = PhotoDetails(
     tinySquareThumbnailUrl = tinySquareThumbnailUrl,
     video = video,
     rating = rating,
-    albumId = "",
     peopleNames = serializePeople
 )

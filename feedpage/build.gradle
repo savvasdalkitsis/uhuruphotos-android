@@ -30,6 +30,7 @@ dependencies {
     implementation project(":settings")
     implementation project(":log")
     implementation project(":strings")
+    implementation project(":homenavigation")
     implementation(
             libs.accompanist.swiperefresh,
             libs.androidx.compose.foundation.layout,

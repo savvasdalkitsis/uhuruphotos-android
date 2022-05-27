@@ -69,6 +69,9 @@ dependencies {
     implementation project(":userbadge")
     implementation project(":person")
     implementation project(":people")
+    implementation project(":library")
+    implementation project(":homenavigation")
+
     implementation(
             libs.accompanist.systemui,
             libs.androidx.activity,

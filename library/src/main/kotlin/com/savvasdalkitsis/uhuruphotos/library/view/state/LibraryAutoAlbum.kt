@@ -13,17 +13,13 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
  */
-package com.savvasdalkitsis.uhuruphotos.home.module
+package com.savvasdalkitsis.uhuruphotos.library.view.state
 
-import javax.inject.Qualifier
+import com.savvasdalkitsis.uhuruphotos.photos.api.model.Photo
 
-class HomeModule {
-
-    @Qualifier
-    @Retention(AnnotationRetention.BINARY)
-    annotation class HomeNavigationTargetFeed
-    @Qualifier
-    @Retention(AnnotationRetention.BINARY)
-    annotation class HomeNavigationTargetSearch
-
-}
+data class LibraryAutoAlbum(
+    val id: Int,
+    val cover: Photo,
+    val title: String,
+    val photoCount: Int?,
+)

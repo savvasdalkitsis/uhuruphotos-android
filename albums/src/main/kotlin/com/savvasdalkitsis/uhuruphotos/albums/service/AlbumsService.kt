@@ -17,6 +17,8 @@ package com.savvasdalkitsis.uhuruphotos.albums.service
 
 import com.savvasdalkitsis.uhuruphotos.albums.service.model.AlbumById
 import com.savvasdalkitsis.uhuruphotos.albums.service.model.AlbumsByDate
+import com.savvasdalkitsis.uhuruphotos.albums.service.model.AutoAlbum
+import com.savvasdalkitsis.uhuruphotos.albums.service.model.AutoAlbums
 import retrofit2.http.GET
 import retrofit2.http.Path
 import retrofit2.http.Query
@@ -26,8 +28,14 @@ interface AlbumsService {
     @GET("/api/albums/date/list/")
     suspend fun getAlbumsByDate(): AlbumsByDate
 
+    @GET("api/albums/auto/list/")
+    suspend fun getAutoAlbums(): AutoAlbums
+
     @GET("/api/albums/date/{id}/")
     suspend fun getAlbum(@Path("id") id: String): AlbumById
+
+    @GET("api/albums/auto/{id}/")
+    suspend fun getAutoAlbum(@Path("id") id: String): AutoAlbum
 
     @GET("/api/albums/date/list/")
     suspend fun getAlbumsForPerson(@Query("person") personId: Int): AlbumsByDate

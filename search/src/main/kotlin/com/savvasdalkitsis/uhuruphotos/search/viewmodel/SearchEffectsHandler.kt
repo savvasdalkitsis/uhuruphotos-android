@@ -16,7 +16,7 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.search.viewmodel
 
 import com.savvasdalkitsis.uhuruphotos.heatmap.navigation.HeatMapNavigationTarget
-import com.savvasdalkitsis.uhuruphotos.home.navigation.HomeNavigationTarget
+import com.savvasdalkitsis.uhuruphotos.homenavigation.HomeNavigationRoutes
 import com.savvasdalkitsis.uhuruphotos.navigation.ControllersProvider
 import com.savvasdalkitsis.uhuruphotos.people.api.navigation.PeopleNavigationTarget
 import com.savvasdalkitsis.uhuruphotos.person.api.navigation.PersonNavigationTarget
@@ -52,7 +52,7 @@ class SearchEffectsHandler @Inject constructor(
         ReloadApp -> {
             with(controllersProvider.navController!!) {
                 backQueue.clear()
-                navigate(HomeNavigationTarget.name)
+                navigate(HomeNavigationRoutes.home)
             }
         }
         NavigateToEditServer -> navigateTo(

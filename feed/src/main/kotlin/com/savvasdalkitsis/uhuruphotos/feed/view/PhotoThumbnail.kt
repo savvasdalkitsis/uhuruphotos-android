@@ -38,6 +38,8 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.scale
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.RectangleShape
+import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.layout.boundsInWindow
 import androidx.compose.ui.layout.onGloballyPositioned
@@ -60,6 +62,7 @@ fun PhotoThumbnail(
     onPhotoSelected: PhotoSelected,
     aspectRatio: Float = photo.ratio,
     contentScale: ContentScale = ContentScale.FillBounds,
+    shape: Shape = RectangleShape,
     onLongClick: (Photo) -> Unit = {},
 ) {
     val scale = remember(photo.id) { Animatable(1f) }
@@ -77,6 +80,7 @@ fun PhotoThumbnail(
                 else
                     photo.fallbackColor.toColor()
             )
+            .clip(shape)
             .combinedClickable(
                 onClick = { onPhotoSelected(photo, relativeCenter, relativeScale) },
                 onLongClick = { onLongClick(photo) }

@@ -41,8 +41,6 @@ import com.savvasdalkitsis.uhuruphotos.search.view.state.SearchState
 fun SearchPage(
     state: SearchState,
     action: (SearchAction) -> Unit,
-    feedNavigationName: String,
-    searchNavigationName: String,
     controllersProvider: ControllersProvider,
 ) {
     HomeScaffold(
@@ -51,9 +49,7 @@ fun SearchPage(
             .imeNestedScroll(),
         navController = controllersProvider.navController!!,
         userInformationState = state.userInformationState,
-        feedDisplay = state.feedDisplay,
-        feedNavigationName = feedNavigationName,
-        searchNavigationName = searchNavigationName,
+        homeFeedDisplay = state.feedDisplay,
         userBadgePressed = { action(UserBadgePressed) },
         actionBarContent = {
             AnimatedVisibility(state.searchResults is Found) {

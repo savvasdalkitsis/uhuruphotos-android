@@ -13,21 +13,19 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
  */
-package com.savvasdalkitsis.uhuruphotos.feedpage.module
+package com.savvasdalkitsis.uhuruphotos.autoalbum.mvflow
 
-import com.savvasdalkitsis.uhuruphotos.feedpage.navigation.FeedPageNavigationTarget
-import com.savvasdalkitsis.uhuruphotos.home.module.HomeModule.HomeNavigationTargetFeed
-import dagger.Module
-import dagger.Provides
-import dagger.hilt.InstallIn
-import dagger.hilt.components.SingletonComponent
+import androidx.compose.ui.geometry.Offset
+import com.savvasdalkitsis.uhuruphotos.photos.api.model.Photo
 
-@Module
-@InstallIn(SingletonComponent::class)
-class FeedPageModule {
+sealed class AutoAlbumAction {
+    object SwipeToRefresh : AutoAlbumAction()
+    object NavigateBack : AutoAlbumAction()
 
-    @Provides
-    @HomeNavigationTargetFeed
-    fun homeNavigationTargetFeed(): String = FeedPageNavigationTarget.name
-
+    data class LoadAlbum(val albumId: Int) : AutoAlbumAction()
+    data class SelectedPhoto(
+        val photo: Photo,
+        val center: Offset,
+        val scale: Float,
+    ) : AutoAlbumAction()
 }

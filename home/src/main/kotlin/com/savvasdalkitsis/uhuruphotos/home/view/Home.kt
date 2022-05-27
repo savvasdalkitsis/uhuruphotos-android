@@ -23,14 +23,10 @@ import com.savvasdalkitsis.uhuruphotos.ui.view.FullProgressBar
 @Composable
 fun Home(
     state: HomeState,
-    feedNavigationName: String,
-    searchNavigationName: String,
     controllersProvider: ControllersProvider,
 ) {
     HomeScaffold(
         navController = controllersProvider.navController!!,
-        feedNavigationName = feedNavigationName,
-        searchNavigationName = searchNavigationName,
     ) {
         if (state.isLoading) {
             FullProgressBar()

@@ -1,0 +1,37 @@
+CREATE TABLE autoAlbum (
+    id TEXT NOT NULL PRIMARY KEY,
+    title TEXT,
+    timestamp TEXT,
+    createdOn TEXT,
+    isFavorite INTEGER AS Boolean,
+    gpsLat REAL AS Double,
+    gpsLon REAL AS Double
+);
+
+insert:
+INSERT OR REPLACE INTO autoAlbum VALUES (
+    :id,
+    :title,
+    :timestamp,
+    :createdOn,
+    :isFavorite,
+    :gpsLat,
+    :gpsLon
+);
+
+getAutoAlbum:
+SELECT
+    autoAlbum.title,
+    autoAlbum.createdOn,
+    autoAlbum.isFavorite,
+    autoAlbum.gpsLat,
+    autoAlbum.gpsLon,
+    photoDetails.imageHash AS photoId,
+    photoDetails.rating,
+    photoDetails.video,
+    photoDetails.timestamp
+FROM autoAlbum
+LEFT JOIN autoAlbumPhotos ON autoAlbum.id == autoAlbumPhotos.albumId
+LEFT JOIN photoDetails ON autoAlbumPhotos.imageHash == photoDetails.imageHash
+WHERE autoAlbum.id == :albumId
+ORDER BY photoDetails.timestamp DESC;

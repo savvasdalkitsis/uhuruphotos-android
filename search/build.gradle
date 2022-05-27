@@ -35,6 +35,7 @@ dependencies {
     implementation project(":heatmap")
     implementation project(":search-api")
     implementation project(":strings")
+    implementation project(":homenavigation")
 
     implementation(
             libs.androidx.compose.hilt.navigation,

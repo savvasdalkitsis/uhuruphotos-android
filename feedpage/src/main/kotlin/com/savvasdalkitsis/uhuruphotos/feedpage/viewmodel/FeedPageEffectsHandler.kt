@@ -23,7 +23,7 @@ import com.savvasdalkitsis.uhuruphotos.feedpage.mvflow.FeedPageEffect.OpenPhotoD
 import com.savvasdalkitsis.uhuruphotos.feedpage.mvflow.FeedPageEffect.ReloadApp
 import com.savvasdalkitsis.uhuruphotos.feedpage.mvflow.FeedPageEffect.SharePhotos
 import com.savvasdalkitsis.uhuruphotos.feedpage.mvflow.FeedPageEffect.Vibrate
-import com.savvasdalkitsis.uhuruphotos.home.navigation.HomeNavigationTarget
+import com.savvasdalkitsis.uhuruphotos.homenavigation.HomeNavigationRoutes
 import com.savvasdalkitsis.uhuruphotos.navigation.ControllersProvider
 import com.savvasdalkitsis.uhuruphotos.photos.model.PhotoSequenceDataSource.AllPhotos
 import com.savvasdalkitsis.uhuruphotos.photos.navigation.PhotoNavigationTarget
@@ -44,7 +44,7 @@ class FeedPageEffectsHandler @Inject constructor(
     override suspend fun invoke(effect: FeedPageEffect) = when (effect) {
         ReloadApp -> with(controllersProvider.navController!!) {
             backQueue.clear()
-            navigate(HomeNavigationTarget.name)
+            navigate(HomeNavigationRoutes.home)
         }
         is OpenPhotoDetails -> with(effect) {
             navigateTo(PhotoNavigationTarget.name(id, center, scale, isVideo, AllPhotos))
