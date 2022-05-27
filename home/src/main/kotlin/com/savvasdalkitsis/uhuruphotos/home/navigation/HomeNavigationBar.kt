@@ -16,6 +16,7 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.home.navigation
 
 import androidx.annotation.StringRes
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.padding
@@ -61,6 +62,7 @@ fun homeNavigationStyle() = when (LocalWindowSize.current.widthSizeClass) {
 fun HomeNavigationBar(
     contentPadding: PaddingValues = PaddingValues(0.dp),
     homeFeedDisplay: FeedDisplay,
+    showLibrary: Boolean,
     navController: NavHostController,
     onReselected: () -> Unit = {},
 ) {
@@ -77,6 +79,7 @@ fun HomeNavigationBar(
                     currentDestination = currentDestination,
                     navController = navController,
                     homeFeedDisplay = homeFeedDisplay,
+                    showLibrary = showLibrary,
                     onReselected = onReselected,
                     rowScope = this,
                 )
@@ -91,6 +94,7 @@ fun HomeNavigationBar(
                 currentDestination = currentDestination,
                 navController = navController,
                 homeFeedDisplay = homeFeedDisplay,
+                showLibrary = showLibrary,
                 onReselected = onReselected,
             )
         }
@@ -102,6 +106,7 @@ private fun Items(
     currentDestination: NavDestination?,
     navController: NavHostController,
     homeFeedDisplay: FeedDisplay,
+    showLibrary: Boolean,
     onReselected: () -> Unit,
     rowScope: RowScope? = null,
 ) {
@@ -121,14 +126,16 @@ private fun Items(
         rowScope = rowScope,
         onReselected = onReselected,
     )
-    NavItem(
-        currentDestination, navController,
-        label = Strings.string.library,
-        routeName = HomeNavigationRoutes.library,
-        icon = painterResource(R.drawable.ic_photo_album),
-        rowScope = rowScope,
-        onReselected = onReselected,
-    )
+    if (showLibrary) {
+        NavItem(
+            currentDestination, navController,
+            label = Strings.string.library,
+            routeName = HomeNavigationRoutes.library,
+            icon = painterResource(R.drawable.ic_photo_album),
+            rowScope = rowScope,
+            onReselected = onReselected,
+        )
+    }
 }
 
 @Composable

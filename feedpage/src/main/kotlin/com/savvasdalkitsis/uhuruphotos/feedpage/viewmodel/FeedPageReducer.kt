@@ -48,6 +48,7 @@ fun feedPageReducer() : Reducer<FeedPageState, FeedPageMutation> = { state, muta
         HideDeletionConfirmationDialog -> state.copy(showPhotoDeletionConfirmationDialog = false)
         HideLogOutConfirmation -> state.copy(showLogOutConfirmation = false)
         ShowLogOutConfirmation -> state.copy(showLogOutConfirmation = true)
+        is FeedPageMutation.ShowLibrary -> state.copy(showLibrary = mutation.showLibrary)
     }
 }
 

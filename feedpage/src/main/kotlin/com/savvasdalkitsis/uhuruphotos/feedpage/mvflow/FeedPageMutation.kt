@@ -34,6 +34,8 @@ sealed class FeedPageMutation {
     data class ShowAlbums(val albums: List<Album>) : FeedPageMutation() {
         override fun toString() = "Showing ${albums.size} albums"
     }
+
     data class UserBadgeUpdate(val state: UserInformationState) : FeedPageMutation()
     data class ChangeDisplay(val display: FeedDisplays) : FeedPageMutation()
+    data class ShowLibrary(val showLibrary: Boolean) : FeedPageMutation()
 }

@@ -27,6 +27,7 @@ fun Home(
 ) {
     HomeScaffold(
         navController = controllersProvider.navController!!,
+        showLibrary = state.showLibrary,
     ) {
         if (state.isLoading) {
             FullProgressBar()

@@ -69,6 +69,7 @@ fun FeedPage(
         },
         navController = controllersProvider.navController!!,
         userInformationState = state.userInformationState,
+        showLibrary = state.showLibrary,
         homeFeedDisplay = state.feedState.feedDisplay,
         selectionMode = state.hasSelection,
         userBadgePressed = { action(UserBadgePressed) },

@@ -50,6 +50,7 @@ fun SearchPage(
         navController = controllersProvider.navController!!,
         userInformationState = state.userInformationState,
         homeFeedDisplay = state.feedDisplay,
+        showLibrary = state.showLibrary,
         userBadgePressed = { action(UserBadgePressed) },
         actionBarContent = {
             AnimatedVisibility(state.searchResults is Found) {

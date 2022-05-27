@@ -23,7 +23,9 @@ import com.savvasdalkitsis.uhuruphotos.home.mvflow.HomeEffect
 import com.savvasdalkitsis.uhuruphotos.home.mvflow.HomeEffect.LaunchAuthentication
 import com.savvasdalkitsis.uhuruphotos.home.mvflow.HomeMutation
 import com.savvasdalkitsis.uhuruphotos.home.mvflow.HomeMutation.Loading
+import com.savvasdalkitsis.uhuruphotos.home.mvflow.HomeMutation.ShowLibrary
 import com.savvasdalkitsis.uhuruphotos.home.view.state.HomeState
+import com.savvasdalkitsis.uhuruphotos.settings.usecase.SettingsUseCase
 import com.savvasdalkitsis.uhuruphotos.viewmodel.Handler
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
@@ -31,6 +33,7 @@ import javax.inject.Inject
 
 class HomeHandler @Inject constructor(
     private val authenticationUseCase: AuthenticationUseCase,
+    private val settingsUseCase: SettingsUseCase,
 ) : Handler<HomeState, HomeEffect, HomeAction, HomeMutation> {
 
     override fun invoke(
@@ -40,6 +43,7 @@ class HomeHandler @Inject constructor(
     ): Flow<HomeMutation> = when (action) {
         is Load -> flow {
             emit(Loading)
+            emit(ShowLibrary(settingsUseCase.getShowLibrary()))
             when (authenticationUseCase.authenticationStatus()) {
                 is Unauthenticated -> effect(LaunchAuthentication)
                 else -> effect(HomeEffect.LoadFeed)

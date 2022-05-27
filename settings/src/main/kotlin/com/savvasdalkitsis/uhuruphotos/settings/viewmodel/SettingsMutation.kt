@@ -38,5 +38,6 @@ sealed class SettingsMutation {
     data class DisplayThemeMode(val themeMode: ThemeMode): SettingsMutation()
     data class DisplaySearchSuggestionsEnabled(val enabled: Boolean): SettingsMutation()
     data class DisplayShareGpsDataEnabled(val enabled: Boolean): SettingsMutation()
+    data class DisplayShowLibrary(val show: Boolean): SettingsMutation()
     data class UserBadgeUpdate(val userInformationState: UserInformationState): SettingsMutation()
 }

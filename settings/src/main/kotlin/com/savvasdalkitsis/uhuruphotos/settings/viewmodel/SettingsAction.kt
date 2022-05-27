@@ -27,6 +27,7 @@ sealed class SettingsAction {
     data class ChangeFullSyncChargingRequirements(val requiredCharging: Boolean) : SettingsAction()
     data class ChangeSearchSuggestionsEnabled(val enabled: Boolean) : SettingsAction()
     data class ChangeShareGpsDataEnabled(val enabled: Boolean) : SettingsAction()
+    data class ChangeShowLibrary(val show: Boolean) : SettingsAction()
 
     data class FeedSyncFrequencyChanged(val frequency: Float, val upperLimit: Float) : SettingsAction()
     data class ChangeThemeMode(val themeMode: ThemeMode) : SettingsAction()

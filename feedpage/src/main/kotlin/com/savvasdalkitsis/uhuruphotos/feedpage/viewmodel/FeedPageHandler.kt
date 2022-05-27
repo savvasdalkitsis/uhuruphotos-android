@@ -53,6 +53,7 @@ import com.savvasdalkitsis.uhuruphotos.feedpage.mvflow.FeedPageMutation.Loading
 import com.savvasdalkitsis.uhuruphotos.feedpage.mvflow.FeedPageMutation.ShowAccountOverview
 import com.savvasdalkitsis.uhuruphotos.feedpage.mvflow.FeedPageMutation.ShowAlbums
 import com.savvasdalkitsis.uhuruphotos.feedpage.mvflow.FeedPageMutation.ShowDeletionConfirmationDialog
+import com.savvasdalkitsis.uhuruphotos.feedpage.mvflow.FeedPageMutation.ShowLibrary
 import com.savvasdalkitsis.uhuruphotos.feedpage.mvflow.FeedPageMutation.ShowLogOutConfirmation
 import com.savvasdalkitsis.uhuruphotos.feedpage.mvflow.FeedPageMutation.StartRefreshing
 import com.savvasdalkitsis.uhuruphotos.feedpage.mvflow.FeedPageMutation.StopRefreshing
@@ -64,6 +65,7 @@ import com.savvasdalkitsis.uhuruphotos.photos.api.model.SelectionMode.SELECTED
 import com.savvasdalkitsis.uhuruphotos.photos.api.model.SelectionMode.UNDEFINED
 import com.savvasdalkitsis.uhuruphotos.photos.api.model.SelectionMode.UNSELECTED
 import com.savvasdalkitsis.uhuruphotos.photos.usecase.PhotosUseCase
+import com.savvasdalkitsis.uhuruphotos.settings.usecase.SettingsUseCase
 import com.savvasdalkitsis.uhuruphotos.userbadge.api.UserBadgeUseCase
 import com.savvasdalkitsis.uhuruphotos.viewmodel.Handler
 import kotlinx.coroutines.delay
@@ -84,6 +86,7 @@ class FeedPageHandler @Inject constructor(
     private val feedPageUseCase: FeedPageUseCase,
     private val photosUseCase: PhotosUseCase,
     private val selectionList: SelectionList,
+    private val settingsUseCase: SettingsUseCase,
 ) : Handler<FeedPageState, FeedPageEffect, FeedPageAction, FeedPageMutation> {
 
     override fun invoke(
@@ -92,6 +95,8 @@ class FeedPageHandler @Inject constructor(
         effect: suspend (FeedPageEffect) -> Unit,
     ): Flow<FeedPageMutation> = when (action) {
         is LoadFeed -> merge(
+            settingsUseCase.observeShowLibrary()
+                .map(::ShowLibrary),
             feedPageUseCase
                 .getFeedDisplay()
                 .distinctUntilChanged()

@@ -28,6 +28,7 @@ data class SearchState(
     val showLogOutConfirmation: Boolean = false,
     val feedDisplay: FeedDisplay = FeedDisplays.default,
     val searchDisplay: FeedDisplay = FeedDisplays.default,
+    val showLibrary: Boolean = true,
     val suggestion: String? = null,
     val people: List<Person> = emptyList(),
     val searchSuggestions: List<SearchSuggestion> = emptyList(),

@@ -30,6 +30,7 @@ import com.savvasdalkitsis.uhuruphotos.settings.viewmodel.SettingsAction.ChangeI
 import com.savvasdalkitsis.uhuruphotos.settings.viewmodel.SettingsAction.ChangeImageMemCache
 import com.savvasdalkitsis.uhuruphotos.settings.viewmodel.SettingsAction.ChangeSearchSuggestionsEnabled
 import com.savvasdalkitsis.uhuruphotos.settings.viewmodel.SettingsAction.ChangeShareGpsDataEnabled
+import com.savvasdalkitsis.uhuruphotos.settings.viewmodel.SettingsAction.ChangeShowLibrary
 import com.savvasdalkitsis.uhuruphotos.settings.viewmodel.SettingsAction.ChangeThemeMode
 import com.savvasdalkitsis.uhuruphotos.settings.viewmodel.SettingsAction.ChangeVideoDiskCache
 import com.savvasdalkitsis.uhuruphotos.settings.viewmodel.SettingsAction.ClearImageDiskCache
@@ -55,6 +56,7 @@ import com.savvasdalkitsis.uhuruphotos.settings.viewmodel.SettingsMutation.Displ
 import com.savvasdalkitsis.uhuruphotos.settings.viewmodel.SettingsMutation.DisplayMemCacheMaxLimit
 import com.savvasdalkitsis.uhuruphotos.settings.viewmodel.SettingsMutation.DisplaySearchSuggestionsEnabled
 import com.savvasdalkitsis.uhuruphotos.settings.viewmodel.SettingsMutation.DisplayShareGpsDataEnabled
+import com.savvasdalkitsis.uhuruphotos.settings.viewmodel.SettingsMutation.DisplayShowLibrary
 import com.savvasdalkitsis.uhuruphotos.settings.viewmodel.SettingsMutation.DisplayThemeMode
 import com.savvasdalkitsis.uhuruphotos.settings.viewmodel.SettingsMutation.DisplayVideoDiskCacheCurrentUse
 import com.savvasdalkitsis.uhuruphotos.settings.viewmodel.SettingsMutation.DisplayVideoDiskCacheMaxLimit
@@ -106,6 +108,8 @@ internal class SettingsHandler @Inject constructor(
                 .map(::DisplaySearchSuggestionsEnabled),
             settingsUseCase.observeShareRemoveGpsData()
                 .map(::DisplayShareGpsDataEnabled),
+            settingsUseCase.observeShowLibrary()
+                .map(::DisplayShowLibrary),
             cacheUseCase.observeImageDiskCacheCurrentUse()
                 .map(::DisplayImageDiskCacheCurrentUse),
             cacheUseCase.observeImageMemCacheCurrentUse()
@@ -176,6 +180,9 @@ internal class SettingsHandler @Inject constructor(
         }
         is ChangeShareGpsDataEnabled -> flow {
             settingsUseCase.setShareRemoveGpsData(action.enabled)
+        }
+        is ChangeShowLibrary -> flow {
+            settingsUseCase.setShowLibrary(action.show)
         }
         ClearLogFileClicked -> flow {
             feedbackUseCase.clearLogs()

@@ -41,4 +41,5 @@ sealed class SearchMutation {
     data class ShowPeople(val people: List<Person>) : SearchMutation()
     data class ShowSearchSuggestions(val suggestions: List<SearchSuggestion>) : SearchMutation()
     data class UpdateLatestQuery(val query: String) : SearchMutation()
+    data class ShowLibrary(val showLibrary: Boolean) : SearchMutation()
 }

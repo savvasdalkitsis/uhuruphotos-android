@@ -63,6 +63,7 @@ import com.savvasdalkitsis.uhuruphotos.search.mvflow.SearchMutation.HideAccountO
 import com.savvasdalkitsis.uhuruphotos.search.mvflow.SearchMutation.HideLogOutConfirmation
 import com.savvasdalkitsis.uhuruphotos.search.mvflow.SearchMutation.HideSuggestions
 import com.savvasdalkitsis.uhuruphotos.search.mvflow.SearchMutation.ShowAccountOverview
+import com.savvasdalkitsis.uhuruphotos.search.mvflow.SearchMutation.ShowLibrary
 import com.savvasdalkitsis.uhuruphotos.search.mvflow.SearchMutation.ShowLogOutConfirmation
 import com.savvasdalkitsis.uhuruphotos.search.mvflow.SearchMutation.ShowPeople
 import com.savvasdalkitsis.uhuruphotos.search.mvflow.SearchMutation.ShowSearchSuggestion
@@ -124,6 +125,7 @@ class SearchHandler @Inject constructor(
     ): Flow<SearchMutation> = when (action) {
         Initialise -> with(photosUseCase) {
             merge(
+                showLibrary(),
                 showFeedDisplay(),
                 showUserBadgeState(),
                 showServerSearchSuggestion(),
@@ -259,6 +261,9 @@ class SearchHandler @Inject constructor(
 
     private fun showUserBadgeState() = userBadgeUseCase.getUserBadgeState()
         .map(::UserBadgeStateChanged)
+
+    private fun showLibrary() = settingsUseCase.observeShowLibrary()
+        .map(::ShowLibrary)
 
     private fun showFeedDisplay() = feedPageUseCase
         .getFeedDisplay()

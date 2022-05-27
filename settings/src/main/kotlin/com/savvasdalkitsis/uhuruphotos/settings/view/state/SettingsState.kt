@@ -37,4 +37,5 @@ data class SettingsState(
     val fullSyncJobProgress: Int = 0,
     val searchSuggestionsEnabled: Boolean = true,
     val shareRemoveGpsDataEnabled: Boolean = false,
+    val showLibrary: Boolean = true,
 )

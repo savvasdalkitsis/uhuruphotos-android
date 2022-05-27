@@ -81,6 +81,9 @@ fun Settings(
                     SettingsGroupShare(state, action)
                 }
                 item {
+                    SettingsGroupLibrary(state, action)
+                }
+                item {
                     SettingsGroupFeedback(action)
                 }
             }

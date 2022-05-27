@@ -27,6 +27,7 @@ import com.savvasdalkitsis.uhuruphotos.settings.viewmodel.SettingsMutation.Displ
 import com.savvasdalkitsis.uhuruphotos.settings.viewmodel.SettingsMutation.DisplayMemCacheMaxLimit
 import com.savvasdalkitsis.uhuruphotos.settings.viewmodel.SettingsMutation.DisplaySearchSuggestionsEnabled
 import com.savvasdalkitsis.uhuruphotos.settings.viewmodel.SettingsMutation.DisplayShareGpsDataEnabled
+import com.savvasdalkitsis.uhuruphotos.settings.viewmodel.SettingsMutation.DisplayShowLibrary
 import com.savvasdalkitsis.uhuruphotos.settings.viewmodel.SettingsMutation.DisplayThemeMode
 import com.savvasdalkitsis.uhuruphotos.settings.viewmodel.SettingsMutation.DisplayVideoDiskCacheCurrentUse
 import com.savvasdalkitsis.uhuruphotos.settings.viewmodel.SettingsMutation.DisplayVideoDiskCacheMaxLimit
@@ -74,5 +75,6 @@ fun settingsReducer(): Reducer<SettingsState, SettingsMutation> = { state, mutat
         is DisplayFullSyncProgress -> state.copy(fullSyncJobProgress = mutation.progress)
         is DisplaySearchSuggestionsEnabled -> state.copy(searchSuggestionsEnabled = mutation.enabled)
         is DisplayShareGpsDataEnabled -> state.copy(shareRemoveGpsDataEnabled = mutation.enabled)
+        is DisplayShowLibrary -> state.copy(showLibrary = mutation.show)
     }
 }

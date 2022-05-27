@@ -39,6 +39,7 @@ fun Library(
 ) {
     HomeScaffold(
         modifier = Modifier,
+        showLibrary = true,
         navController = controllersProvider.navController!!,
         userInformationState = null,
         homeFeedDisplay = homeFeedDisplay,

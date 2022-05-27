@@ -41,8 +41,9 @@ fun HomeScaffold(
     userInformationState: UserInformationState? = null,
     homeFeedDisplay: FeedDisplay = FeedDisplays.default,
     selectionMode: Boolean = false,
+    showLibrary: Boolean = true,
     userBadgePressed: () -> Unit = {},
-    actionBarContent: @Composable() (RowScope.() -> Unit) = {},
+    actionBarContent: @Composable (RowScope.() -> Unit) = {},
     onReselected: () -> Unit = {},
     content: @Composable (PaddingValues) -> Unit,
 ) {
@@ -54,6 +55,7 @@ fun HomeScaffold(
             if (homeNavigationStyle() == BOTTOM_BAR) {
                 HomeNavigationBar(
                     homeFeedDisplay = homeFeedDisplay,
+                    showLibrary = showLibrary,
                     navController = navController,
                     onReselected = onReselected,
                 )
@@ -76,6 +78,7 @@ fun HomeScaffold(
                     HomeNavigationBar(
                         contentPadding = contentPadding,
                         homeFeedDisplay = homeFeedDisplay,
+                        showLibrary = showLibrary,
                         navController = navController,
                         onReselected = onReselected,
                     )

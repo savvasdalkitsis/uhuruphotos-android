@@ -17,4 +17,5 @@ package com.savvasdalkitsis.uhuruphotos.home.mvflow
 
 sealed class HomeMutation {
     object Loading : HomeMutation()
+    data class ShowLibrary(val showLibrary: Boolean) : HomeMutation()
 }
