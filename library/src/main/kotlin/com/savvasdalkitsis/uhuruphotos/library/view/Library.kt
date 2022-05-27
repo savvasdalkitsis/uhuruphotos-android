@@ -48,16 +48,19 @@ fun Library(
             state = rememberSwipeRefreshState(isRefreshing = state.isLoading),
             onRefresh = { action(RefreshAutoAlbums) }
         ) {
-            LazyVerticalGrid(
-                columns = GridCells.Adaptive(160.dp),
-                contentPadding = contentPadding,
-            ) {
-                item("header", span = { GridItemSpan(maxCurrentLineSpan) }) {
-                    AutoAlbumsHeader(state, action)
-                }
-                state.autoAlbums.forEach { album ->
-                    item(album.id) {
-                        AutoAlbumItem(album, action)
+            when {
+                !state.isLoading && state.autoAlbums.isEmpty() -> NoAutoAlbums()
+                else -> LazyVerticalGrid(
+                    columns = GridCells.Adaptive(160.dp),
+                    contentPadding = contentPadding,
+                ) {
+                    item("header", span = { GridItemSpan(maxCurrentLineSpan) }) {
+                        AutoAlbumsHeader(state, action)
+                    }
+                    state.autoAlbums.forEach { album ->
+                        item(album.id) {
+                            AutoAlbumItem(album, action)
+                        }
                     }
                 }
             }

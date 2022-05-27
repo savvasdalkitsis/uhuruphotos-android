@@ -70,6 +70,7 @@
     <string name="sorting">Sorting</string>
     <string name="error_loading_auto_albums">There was an error loading automatically generated albums</string>
     <string name="error_loading_album">There was an error loading the album</string>
+    <string name="no_auto_albums">There are no auto generated albums for this user</string>
     <plurals name="item_count">
         <item quantity="one">%d item</item>
         <item quantity="other">%d items</item>

@@ -29,6 +29,7 @@ import com.savvasdalkitsis.uhuruphotos.library.usecase.LibraryUseCase
 import com.savvasdalkitsis.uhuruphotos.library.view.state.LibraryState
 import com.savvasdalkitsis.uhuruphotos.log.log
 import com.savvasdalkitsis.uhuruphotos.viewmodel.Handler
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.flow
@@ -78,6 +79,9 @@ class LibraryHandler @Inject constructor(
             log(e)
             effect(ErrorLoadingAutoAlbums)
         } finally {
+            // delaying to give ui time to receive the new albums before
+            // dismissing the loading bar since no albums logic relies on that
+            delay(500)
             loading.emit(false)
         }
     }
