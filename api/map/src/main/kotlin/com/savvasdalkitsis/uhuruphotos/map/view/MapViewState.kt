@@ -13,13 +13,11 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
  */
-package com.savvasdalkitsis.uhuruphotos.photos.model
+package com.savvasdalkitsis.uhuruphotos.map.view
 
-import com.savvasdalkitsis.uhuruphotos.db.photos.PhotoDetails
 import com.savvasdalkitsis.uhuruphotos.map.model.LatLon
 
-val PhotoDetails.latLng get() = gpsLat?.toDoubleOrNull()?.let { lat ->
-    gpsLon?.toDoubleOrNull()?.let { lon ->
-        LatLon(lat, lon)
-    }
+interface MapViewState {
+    val isMoving: Boolean
+    fun contains(latLon: LatLon): Boolean
 }

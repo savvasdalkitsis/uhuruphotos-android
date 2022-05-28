@@ -63,12 +63,12 @@ dependencies {
     implementation project(":initializer")
     implementation project(":settings")
     implementation project(':api:userbadge')
-    implementation project(":library")
     implementation project(":homenavigation")
 
     // internal projects
     implementation project(":internal:albums")
     implementation project(":internal:heatmap")
+    implementation project(":internal:library")
     implementation project(":internal:person")
     implementation project(":internal:people")
     implementation project(":internal:photos")

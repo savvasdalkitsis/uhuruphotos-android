@@ -37,8 +37,6 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.unit.dp
-import com.google.maps.android.compose.Marker
-import com.google.maps.android.compose.MarkerState
 import com.savvasdalkitsis.uhuruphotos.icons.R
 import com.savvasdalkitsis.uhuruphotos.infrastructure.extensions.round
 import com.savvasdalkitsis.uhuruphotos.map.view.MapView
@@ -87,16 +85,14 @@ fun PhotoDetailsSheet(
                             .clip(RoundedCornerShape(12.dp)),
                         location = gps,
                         zoom = 15f,
-                        onMapClick = { action(ClickedOnMap(gps)) },
-                        mapSettings = {
+                        mapOptions = {
                             copy(
                                 zoomControlsEnabled = true,
                             )
-                        }
+                        },
+                        onMapClick = { action(ClickedOnMap(gps)) }
                     ) {
-                        Marker(
-                            state = MarkerState(position = gps),
-                        )
+                        Marker(gps)
                     }
                 }
                 if (photo.location.isNotEmpty()) {
@@ -109,7 +105,7 @@ fun PhotoDetailsSheet(
                     TextWithIcon(
                         modifier = Modifier.clickable { action(ClickedOnGps(gps)) },
                         icon = R.drawable.ic_location_pin,
-                        text = "${gps.latitude.round(2)}:${gps.longitude.round(2)}",
+                        text = "${gps.lat.round(2)}:${gps.lon.round(2)}",
                     )
                 }
             }

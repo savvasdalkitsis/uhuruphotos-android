@@ -13,7 +13,7 @@ dependencies {
     implementation project(":ui")
     implementation project(":api:heatmap")
     implementation project(":navigation")
-    implementation project(":map")
+    implementation project(":api:map")
     implementation project(":settings")
     implementation project(':api:albums')
     implementation project(":internal:photos")
@@ -31,9 +31,5 @@ dependencies {
             libs.androidx.compose.material,
             libs.androidx.compose.ui,
             libs.hilt,
-            libs.maps,
-            libs.maps.compose,
-            libs.maps.utils,
-            libs.maps.utils.ktx,
     )
 }

@@ -24,7 +24,7 @@ dependencies {
     implementation project(":feedpage")
     implementation project(":server")
     implementation project(":settings")
-    implementation project(":map")
+    implementation project(":api:map")
     implementation project(":log")
     implementation project(":icons")
     implementation project(":toaster")
@@ -41,8 +41,6 @@ dependencies {
             libs.androidx.compose.material,
             libs.androidx.lifecycle,
             libs.flowpreferences,
-            libs.maps,
-            libs.maps.compose,
             libs.moshi,
             libs.retrofit.core,
             libs.retrofit.moshi,

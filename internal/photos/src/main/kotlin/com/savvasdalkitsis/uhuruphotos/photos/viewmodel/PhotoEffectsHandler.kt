@@ -20,7 +20,7 @@ import android.content.ClipboardManager
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
-import com.google.android.gms.maps.model.LatLng
+import com.savvasdalkitsis.uhuruphotos.map.model.LatLon
 import com.savvasdalkitsis.uhuruphotos.navigation.ControllersProvider
 import com.savvasdalkitsis.uhuruphotos.person.api.navigation.PersonNavigationTarget
 import com.savvasdalkitsis.uhuruphotos.photos.mvflow.PhotoEffect
@@ -65,8 +65,8 @@ class PhotoEffectsHandler @Inject constructor(
         }
     }
 
-    private fun geoLocation(gps: LatLng): Intent = Intent(Intent.ACTION_VIEW, with(gps) {
-        "geo:$latitude,$longitude?q=$latitude,$longitude(${context.getString(R.string.photo)})".uri
+    private fun geoLocation(gps: LatLon): Intent = Intent(Intent.ACTION_VIEW, with(gps) {
+        "geo:$lat,$lon?q=$lat,$lon(${context.getString(R.string.photo)})".uri
     })
 
     private val String.uri get () = Uri.parse(this)

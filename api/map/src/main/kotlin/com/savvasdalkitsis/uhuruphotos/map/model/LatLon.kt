@@ -13,13 +13,13 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
  */
-package com.savvasdalkitsis.uhuruphotos.photos.model
+package com.savvasdalkitsis.uhuruphotos.map.model
 
-import com.savvasdalkitsis.uhuruphotos.db.photos.PhotoDetails
-import com.savvasdalkitsis.uhuruphotos.map.model.LatLon
+import com.google.android.gms.maps.model.LatLng
 
-val PhotoDetails.latLng get() = gpsLat?.toDoubleOrNull()?.let { lat ->
-    gpsLon?.toDoubleOrNull()?.let { lon ->
-        LatLon(lat, lon)
-    }
+data class LatLon(val lat: Double, val lon: Double) {
+
+    internal val toLatLng get() = LatLng(lat, lon)
+
+    override fun toString() = "$lat,$lon"
 }

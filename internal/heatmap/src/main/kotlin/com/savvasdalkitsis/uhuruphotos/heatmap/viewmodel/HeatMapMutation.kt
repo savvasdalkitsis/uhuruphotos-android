@@ -15,14 +15,14 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.heatmap.viewmodel
 
-import com.google.android.gms.maps.model.LatLng
+import com.savvasdalkitsis.uhuruphotos.map.model.LatLon
 import com.savvasdalkitsis.uhuruphotos.photos.api.model.Photo
 
 sealed class HeatMapMutation {
     data class UpdateAllPhotos(val photos: List<Photo>) : HeatMapMutation()
     data class UpdateDisplay(
         val photosToDisplay: List<Photo>,
-        val pointsToDisplay: List<LatLng>,
+        val pointsToDisplay: List<LatLon>,
     ) : HeatMapMutation()
     data class ShowLoading(val loading: Boolean) : HeatMapMutation()
 }

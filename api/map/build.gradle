@@ -1,0 +1,31 @@
+plugins {
+    id 'com.google.android.libraries.mapsplatform.secrets-gradle-plugin'
+}
+
+secrets {
+    propertiesFileName = "secrets.properties"
+    defaultPropertiesFileName = 'local.defaults.properties'
+}
+
+android {
+    buildFeatures {
+        compose true
+    }
+    composeOptions {
+        kotlinCompilerExtensionVersion compose_version
+    }
+    namespace 'com.savvasdalkitsis.uhuruphotos.map'
+}
+
+dependencies {
+
+    implementation(
+            libs.androidx.compose.foundation.layout,
+            libs.androidx.compose.material,
+            libs.androidx.compose.ui,
+            libs.maps,
+            libs.maps.compose,
+            libs.maps.utils,
+            libs.maps.utils.ktx,
+    )
+}

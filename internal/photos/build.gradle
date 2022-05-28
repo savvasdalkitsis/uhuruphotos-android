@@ -19,7 +19,7 @@ dependencies {
     implementation project(":navigation")
     implementation project(":log")
     implementation project(":ui")
-    implementation project(":map")
+    implementation project(":api:map")
     implementation project(':api:people')
     implementation project(':api:person')
     implementation project(':api:photos')
@@ -44,8 +44,6 @@ dependencies {
             libs.androidx.work,
             libs.androidx.work.hilt,
             libs.infobar,
-            libs.maps,
-            libs.maps.compose,
             libs.moshi,
             libs.retrofit.core,
             libs.retrofit.moshi,

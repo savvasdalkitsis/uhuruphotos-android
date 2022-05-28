@@ -26,15 +26,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.google.accompanist.permissions.PermissionState
 import com.google.accompanist.permissions.isGranted
-import com.google.android.gms.maps.model.CameraPosition
-import com.google.maps.android.compose.MapProperties
-import com.google.maps.android.compose.TileOverlay
-import com.google.maps.android.compose.rememberCameraPositionState
-import com.google.maps.android.heatmaps.HeatmapTileProvider
 import com.savvasdalkitsis.uhuruphotos.heatmap.view.state.HeatMapState
 import com.savvasdalkitsis.uhuruphotos.heatmap.viewmodel.HeatMapAction
 import com.savvasdalkitsis.uhuruphotos.map.Locations
-import com.savvasdalkitsis.uhuruphotos.map.view.MapView
+import com.savvasdalkitsis.uhuruphotos.map.view.GoogleMapView
+import com.savvasdalkitsis.uhuruphotos.map.view.rememberGoogleMapViewState
 import com.savvasdalkitsis.uhuruphotos.ui.insets.insetsTop
 import kotlinx.coroutines.withContext
 
@@ -45,49 +41,40 @@ fun HeatMapContent(
     locationPermissionState: PermissionState,
     state: HeatMapState
 ) {
-    val cameraPositionState = rememberCameraPositionState {
-        position = CameraPosition.fromLatLngZoom(Locations.TRAFALGAR_SQUARE, 2f)
-    }
+    val mapViewState = rememberGoogleMapViewState(
+        initialPosition = Locations.TRAFALGAR_SQUARE,
+        zoom = 2f,
+    )
     var startedMoving by remember { mutableStateOf(false) }
-    if (cameraPositionState.isMoving) {
+    if (mapViewState.isMoving) {
         startedMoving = true
     }
     val scope = rememberCoroutineScope()
-    if (startedMoving && !cameraPositionState.isMoving) {
+    if (startedMoving && !mapViewState.isMoving) {
         @Suppress("UNUSED_VALUE")
         startedMoving = false
         action(HeatMapAction.CameraViewPortChanged {  latLng ->
             withContext(scope.coroutineContext) {
-                cameraPositionState.projection?.visibleRegion?.latLngBounds?.contains(latLng)
-                    ?: false
+                mapViewState.contains(latLng)
             }
         })
     }
 
     val showLocationButton = locationPermissionState.status.isGranted
 
-    MapView(
+    GoogleMapView(
         modifier = modifier,
-        contentPadding = PaddingValues(top = insetsTop() + 56.dp),
-        cameraPositionState = cameraPositionState,
-        mapProperties = MapProperties(
-            isMyLocationEnabled = showLocationButton,
-        ),
-        mapSettings = {
+        mapViewState = mapViewState,
+        mapOptions = {
             copy(
                 scrollGesturesEnabled = true,
                 zoomControlsEnabled = true,
                 zoomGesturesEnabled = true,
                 myLocationButtonEnabled = showLocationButton,
             )
-        }
+        },
+        contentPadding = PaddingValues(top = insetsTop() + 56.dp)
     ) {
-        if (state.pointsToDisplay.isNotEmpty()) {
-            TileOverlay(
-                tileProvider = HeatmapTileProvider.Builder()
-                    .data(state.pointsToDisplay)
-                    .build()
-            )
-        }
+        HeatMap(state.pointsToDisplay)
     }
 }

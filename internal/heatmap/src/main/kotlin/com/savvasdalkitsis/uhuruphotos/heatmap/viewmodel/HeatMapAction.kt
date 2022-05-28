@@ -16,11 +16,11 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.heatmap.viewmodel
 
 import androidx.compose.ui.geometry.Offset
-import com.google.android.gms.maps.model.LatLng
+import com.savvasdalkitsis.uhuruphotos.map.model.LatLon
 import com.savvasdalkitsis.uhuruphotos.photos.api.model.Photo
 
 sealed class HeatMapAction {
-    data class CameraViewPortChanged(val boundsChecker: suspend (LatLng) -> Boolean) : HeatMapAction()
+    data class CameraViewPortChanged(val boundsChecker: suspend (LatLon) -> Boolean) : HeatMapAction()
     data class SelectedPhoto(
         val photo: Photo,
         val center: Offset,

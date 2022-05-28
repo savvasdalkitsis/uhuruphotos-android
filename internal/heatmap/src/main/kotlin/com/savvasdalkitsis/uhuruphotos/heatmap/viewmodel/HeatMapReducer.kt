@@ -15,11 +15,11 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.heatmap.viewmodel
 
-import com.google.android.gms.maps.model.LatLng
 import com.savvasdalkitsis.uhuruphotos.heatmap.view.state.HeatMapState
 import com.savvasdalkitsis.uhuruphotos.heatmap.viewmodel.HeatMapMutation.ShowLoading
 import com.savvasdalkitsis.uhuruphotos.heatmap.viewmodel.HeatMapMutation.UpdateAllPhotos
 import com.savvasdalkitsis.uhuruphotos.heatmap.viewmodel.HeatMapMutation.UpdateDisplay
+import com.savvasdalkitsis.uhuruphotos.map.model.LatLon
 import com.savvasdalkitsis.uhuruphotos.viewmodel.Reducer
 
 fun heatMapReducer(): Reducer<HeatMapState, HeatMapMutation> = { state, mutation ->
@@ -27,7 +27,7 @@ fun heatMapReducer(): Reducer<HeatMapState, HeatMapMutation> = { state, mutation
         is UpdateAllPhotos -> state.copy(
             pointsToDisplay = mutation.photos
                 .mapNotNull { it.latLng }
-                .map { (lat, lon) -> LatLng(lat, lon) },
+                .map { (lat, lon) -> LatLon(lat, lon) },
             allPhotos = mutation.photos,
         )
         is ShowLoading -> state.copy(loading = mutation.loading)

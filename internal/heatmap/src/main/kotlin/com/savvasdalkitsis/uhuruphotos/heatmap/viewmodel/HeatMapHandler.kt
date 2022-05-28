@@ -15,7 +15,6 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.heatmap.viewmodel
 
-import com.google.android.gms.maps.model.LatLng
 import com.savvasdalkitsis.uhuruphotos.albums.api.usecase.AlbumsUseCase
 import com.savvasdalkitsis.uhuruphotos.heatmap.view.state.HeatMapState
 import com.savvasdalkitsis.uhuruphotos.heatmap.viewmodel.HeatMapAction.BackPressed
@@ -30,6 +29,7 @@ import com.savvasdalkitsis.uhuruphotos.heatmap.viewmodel.HeatMapMutation.UpdateA
 import com.savvasdalkitsis.uhuruphotos.heatmap.viewmodel.HeatMapMutation.UpdateDisplay
 import com.savvasdalkitsis.uhuruphotos.infrastructure.extensions.onErrors
 import com.savvasdalkitsis.uhuruphotos.infrastructure.extensions.safelyOnStart
+import com.savvasdalkitsis.uhuruphotos.map.model.LatLon
 import com.savvasdalkitsis.uhuruphotos.photos.api.model.Photo
 import com.savvasdalkitsis.uhuruphotos.photos.model.latLng
 import com.savvasdalkitsis.uhuruphotos.photos.usecase.PhotosUseCase
@@ -55,7 +55,7 @@ class HeatMapHandler @Inject constructor(
     private val photosUseCase: PhotosUseCase,
 ): Handler<HeatMapState, HeatMapEffect, HeatMapAction, HeatMapMutation> {
 
-    private var boundsChecker: suspend (LatLng) -> Boolean = { true }
+    private var boundsChecker: suspend (LatLon) -> Boolean = { true }
     private val detailsDownloading = MutableStateFlow(false)
 
     override fun invoke(
@@ -75,7 +75,7 @@ class HeatMapHandler @Inject constructor(
                                     it.imageHash.toThumbnailUrlFromId()
                                 },
                                 latLng = it.latLng?.let { latLng ->
-                                    latLng.latitude to latLng.longitude
+                                    latLng.lat to latLng.lon
                                 },
                                 isVideo = it.video ?: false,
                             )
@@ -121,15 +121,15 @@ class HeatMapHandler @Inject constructor(
     private suspend fun updateDisplay(allPhotos: List<Photo>): UpdateDisplay {
         val photosToDisplay = allPhotos
             .filter { photo ->
-                val latLng = photo.latLng.toLatLng()
-                latLng != null && boundsChecker(latLng)
+                val latLon = photo.latLng.toLatLon()
+                latLon != null && boundsChecker(latLon)
             }
         val pointsToDisplay = photosToDisplay
-            .mapNotNull { it.latLng.toLatLng() }
+            .mapNotNull { it.latLng.toLatLon() }
         return UpdateDisplay(photosToDisplay, pointsToDisplay)
     }
 
 }
 
-private fun Pair<Double, Double>?.toLatLng() =
-    this?.let { (lat, lon) -> LatLng(lat, lon) }
+private fun Pair<Double, Double>?.toLatLon() =
+    this?.let { (lat, lon) -> LatLon(lat, lon) }

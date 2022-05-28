@@ -15,10 +15,10 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.photos.mvflow
 
-import com.google.android.gms.maps.model.LatLng
+import com.savvasdalkitsis.uhuruphotos.map.model.LatLon
 
 sealed class PhotoEffect {
-    data class LaunchMap(val gps: LatLng) : PhotoEffect()
+    data class LaunchMap(val gps: LatLon) : PhotoEffect()
     data class CopyToClipboard(val content: String) : PhotoEffect()
     object HideSystemBars : PhotoEffect()
     object ShowSystemBars : PhotoEffect()
