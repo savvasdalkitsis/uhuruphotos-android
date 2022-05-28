@@ -17,7 +17,7 @@ package com.savvasdalkitsis.uhuruphotos.library.usecase
 
 import android.content.Context
 import com.fredporciuncula.flow.preferences.FlowSharedPreferences
-import com.savvasdalkitsis.uhuruphotos.albums.repository.AlbumsRepository
+import com.savvasdalkitsis.uhuruphotos.albums.api.repository.AlbumsRepository
 import com.savvasdalkitsis.uhuruphotos.library.view.state.AutoAlbumSorting
 import com.savvasdalkitsis.uhuruphotos.library.view.state.AutoAlbumSorting.ALPHABETICAL_ASC
 import com.savvasdalkitsis.uhuruphotos.library.view.state.AutoAlbumSorting.ALPHABETICAL_DESC

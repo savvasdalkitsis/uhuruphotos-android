@@ -13,11 +13,21 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
  */
-package com.savvasdalkitsis.uhuruphotos.albums.service.model
+package com.savvasdalkitsis.uhuruphotos.photos.api.service.model
 
+import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 
 @JsonClass(generateAdapter = true)
-data class AlbumById(
-    val results: Album.CompleteAlbum,
+data class PhotoSummaryItem(
+    val id: String,
+    val dominantColor: String,
+    val url: String,
+    val location: String,
+    val date: String?,
+    val birthTime: String,
+    val aspectRatio: Float,
+    val type: String,
+    @Json(name = "video_length") val videoLength: String,
+    val rating: Int
 )

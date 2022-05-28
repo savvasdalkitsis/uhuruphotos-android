@@ -31,7 +31,7 @@ import com.savvasdalkitsis.uhuruphotos.albums.photoSummaryItem
 import com.savvasdalkitsis.uhuruphotos.albums.respondsForAlbum
 import com.savvasdalkitsis.uhuruphotos.albums.respondsWith
 import com.savvasdalkitsis.uhuruphotos.albums.SERVER_ALBUM_LOCATION
-import com.savvasdalkitsis.uhuruphotos.albums.service.AlbumsService
+import com.savvasdalkitsis.uhuruphotos.albums.api.service.AlbumsService
 import com.savvasdalkitsis.uhuruphotos.albums.willRespondForAlbum
 import com.savvasdalkitsis.uhuruphotos.albums.willRespondForPersonAlbum
 import com.savvasdalkitsis.uhuruphotos.albums.willRespondForPersonWith

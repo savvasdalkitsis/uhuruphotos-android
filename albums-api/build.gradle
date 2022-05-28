@@ -1,8 +1,13 @@
 dependencies {
 
     api project(":photos-api")
+    api project(":people-api")
+    api project(":db")
+    api project(":infrastructure")
     implementation(
             libs.androidx.work,
+            libs.moshi,
+            libs.retrofit.moshi,
     )
 }
 

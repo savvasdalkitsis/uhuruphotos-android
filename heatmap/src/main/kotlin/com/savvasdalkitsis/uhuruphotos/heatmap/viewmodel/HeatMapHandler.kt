@@ -16,7 +16,7 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.heatmap.viewmodel
 
 import com.google.android.gms.maps.model.LatLng
-import com.savvasdalkitsis.uhuruphotos.albums.usecase.AlbumsUseCase
+import com.savvasdalkitsis.uhuruphotos.albums.api.usecase.AlbumsUseCase
 import com.savvasdalkitsis.uhuruphotos.heatmap.view.state.HeatMapState
 import com.savvasdalkitsis.uhuruphotos.heatmap.viewmodel.HeatMapAction.BackPressed
 import com.savvasdalkitsis.uhuruphotos.heatmap.viewmodel.HeatMapAction.CameraViewPortChanged

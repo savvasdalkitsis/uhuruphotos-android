@@ -13,14 +13,12 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
  */
-package com.savvasdalkitsis.uhuruphotos.albums.service.model
+package com.savvasdalkitsis.uhuruphotos.albums.api.service.model
 
-import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 
 @JsonClass(generateAdapter = true)
-data class AutoAlbumPhoto(
-    @field:Json(name = "image_hash")
-    val imageHash: String,
-    val video: Boolean,
+data class AlbumsByDate(
+    val count: Int,
+    val results: List<Album.IncompleteAlbum>,
 )

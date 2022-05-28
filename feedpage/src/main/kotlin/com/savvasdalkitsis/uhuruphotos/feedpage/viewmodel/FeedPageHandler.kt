@@ -17,7 +17,7 @@ package com.savvasdalkitsis.uhuruphotos.feedpage.viewmodel
 
 import com.savvasdalkitsis.uhuruphotos.account.usecase.AccountUseCase
 import com.savvasdalkitsis.uhuruphotos.albums.api.model.Album
-import com.savvasdalkitsis.uhuruphotos.albums.usecase.AlbumsUseCase
+import com.savvasdalkitsis.uhuruphotos.albums.api.usecase.AlbumsUseCase
 import com.savvasdalkitsis.uhuruphotos.feedpage.SelectionList
 import com.savvasdalkitsis.uhuruphotos.feedpage.mvflow.FeedPageAction
 import com.savvasdalkitsis.uhuruphotos.feedpage.mvflow.FeedPageAction.AlbumSelectionClicked

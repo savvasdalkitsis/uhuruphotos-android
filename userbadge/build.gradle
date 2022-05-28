@@ -12,9 +12,8 @@ dependencies {
 
     implementation project(":icons")
     implementation project(":ui")
-    implementation project(":albums")
+    implementation project(":albums-api")
     implementation project(":photos")
-    implementation project(":worker")
     implementation project(":user")
     implementation project(":db")
     implementation project(":image-api")

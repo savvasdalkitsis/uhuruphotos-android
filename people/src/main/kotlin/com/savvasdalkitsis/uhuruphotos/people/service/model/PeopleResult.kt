@@ -15,6 +15,7 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.people.service.model
 
+import com.savvasdalkitsis.uhuruphotos.people.api.service.model.PersonResult
 import com.squareup.moshi.JsonClass
 
 @JsonClass(generateAdapter = true)

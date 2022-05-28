@@ -72,6 +72,9 @@ dependencies {
     implementation project(":library")
     implementation project(":homenavigation")
 
+    // internal projects
+    implementation project(":albums")
+
     implementation(
             libs.accompanist.systemui,
             libs.androidx.activity,

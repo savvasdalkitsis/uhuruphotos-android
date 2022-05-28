@@ -13,18 +13,16 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
  */
-package com.savvasdalkitsis.uhuruphotos.albums.api.worker
+package com.savvasdalkitsis.uhuruphotos.people.api.service.model
 
-import androidx.work.ExistingPeriodicWorkPolicy
-import androidx.work.WorkInfo
-import kotlinx.coroutines.flow.Flow
+import com.squareup.moshi.Json
+import com.squareup.moshi.JsonClass
 
-interface AlbumWorkScheduler {
-
-    fun scheduleAlbumsRefreshNow(shallow: Boolean)
-    fun scheduleAlbumsRefreshPeriodic(
-        existingPeriodicWorkPolicy: ExistingPeriodicWorkPolicy
-    )
-    fun observeAlbumRefreshJob(): Flow<RefreshJobState>
-    fun observeAlbumRefreshJobStatus(): Flow<WorkInfo.State>
-}
+@JsonClass(generateAdapter = true)
+data class PersonResult(
+    val name: String,
+    val id: Int,
+    @field:Json(name = "face_count") val faceCount: Int,
+    @field:Json(name = "face_url") val faceUrl: String,
+    @field:Json(name = "face_photo_url") val facePhotoUrl: String,
+)

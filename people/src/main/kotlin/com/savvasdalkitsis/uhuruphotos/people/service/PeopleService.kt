@@ -16,7 +16,7 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.people.service
 
 import com.savvasdalkitsis.uhuruphotos.people.service.model.PeopleResult
-import com.savvasdalkitsis.uhuruphotos.people.service.model.PersonResult
+import com.savvasdalkitsis.uhuruphotos.people.api.service.model.PersonResult
 import retrofit2.http.GET
 import retrofit2.http.Path
 

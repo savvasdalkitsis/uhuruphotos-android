@@ -1,4 +1,7 @@
 dependencies {
+    implementation(
+            libs.moshi,
+    )
 }
 
 android {

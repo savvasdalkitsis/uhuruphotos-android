@@ -15,7 +15,7 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.autoalbum.usecase
 
-import com.savvasdalkitsis.uhuruphotos.albums.repository.AlbumsRepository
+import com.savvasdalkitsis.uhuruphotos.albums.api.repository.AlbumsRepository
 import com.savvasdalkitsis.uhuruphotos.db.albums.GetAutoAlbum
 import com.savvasdalkitsis.uhuruphotos.db.albums.GetPeopleForAutoAlbum
 import kotlinx.coroutines.flow.Flow

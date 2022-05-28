@@ -13,12 +13,12 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
  */
-package com.savvasdalkitsis.uhuruphotos.albums.service
+package com.savvasdalkitsis.uhuruphotos.albums.api.service
 
-import com.savvasdalkitsis.uhuruphotos.albums.service.model.AlbumById
-import com.savvasdalkitsis.uhuruphotos.albums.service.model.AlbumsByDate
-import com.savvasdalkitsis.uhuruphotos.albums.service.model.AutoAlbum
-import com.savvasdalkitsis.uhuruphotos.albums.service.model.AutoAlbums
+import com.savvasdalkitsis.uhuruphotos.albums.api.service.model.AlbumById
+import com.savvasdalkitsis.uhuruphotos.albums.api.service.model.AlbumsByDate
+import com.savvasdalkitsis.uhuruphotos.albums.api.service.model.AutoAlbum
+import com.savvasdalkitsis.uhuruphotos.albums.api.service.model.AutoAlbums
 import retrofit2.http.GET
 import retrofit2.http.Path
 import retrofit2.http.Query

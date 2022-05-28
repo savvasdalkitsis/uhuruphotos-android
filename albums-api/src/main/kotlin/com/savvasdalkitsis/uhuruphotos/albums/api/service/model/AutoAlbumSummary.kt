@@ -13,26 +13,31 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
  */
-package com.savvasdalkitsis.uhuruphotos.albums.service.model
+package com.savvasdalkitsis.uhuruphotos.albums.api.service.model
 
-import com.savvasdalkitsis.uhuruphotos.people.service.model.PersonResult
-import com.savvasdalkitsis.uhuruphotos.photos.service.model.PhotoResult
+import com.savvasdalkitsis.uhuruphotos.db.albums.AutoAlbums
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 
 @JsonClass(generateAdapter = true)
-data class AutoAlbum(
-    @field:Json(name = "created_on")
-    val createdOn: String,
+data class AutoAlbumSummary(
     @field:Json(name = "favorited")
     val isFavorite: Boolean,
-    @field:Json(name = "gps_lat")
-    val gpsLat: Double,
-    @field:Json(name = "gps_lon")
-    val gpsLon: Double,
     val id: Int,
+    @field:Json(name = "photo_count")
+    val photoCount: Int,
+    @field:Json(name = "photos")
+    val coverPhoto: AutoAlbumPhoto,
     val timestamp: String,
     val title: String,
-    val photos: List<PhotoResult>,
-    val people: List<PersonResult>,
+)
+
+fun AutoAlbumSummary.toAutoAlbums() = AutoAlbums(
+    id = id,
+    isFavorite = isFavorite,
+    photoCount = photoCount,
+    coverPhotoHash = coverPhoto.imageHash,
+    coverPhotoIsVideo = coverPhoto.video,
+    timestamp = timestamp,
+    title = title,
 )

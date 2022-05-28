@@ -15,7 +15,7 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.albums.module
 
-import com.savvasdalkitsis.uhuruphotos.albums.service.AlbumsService
+import com.savvasdalkitsis.uhuruphotos.albums.api.service.AlbumsService
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -24,7 +24,7 @@ import retrofit2.Retrofit
 
 @InstallIn(SingletonComponent::class)
 @Module
-class AlbumsModule {
+internal class AlbumsModule {
 
     @Provides
     fun albumsService(

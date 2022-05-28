@@ -16,15 +16,15 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.albums.usecase
 
 import com.savvasdalkitsis.uhuruphotos.albums.api.model.Album
+import com.savvasdalkitsis.uhuruphotos.albums.api.repository.AlbumsRepository
 import com.savvasdalkitsis.uhuruphotos.albums.api.usecase.AlbumsUseCase
-import com.savvasdalkitsis.uhuruphotos.albums.repository.AlbumsRepository
 import com.savvasdalkitsis.uhuruphotos.albums.worker.AlbumWorkScheduler
 import com.savvasdalkitsis.uhuruphotos.db.albums.GetAlbums
 import com.savvasdalkitsis.uhuruphotos.db.albums.GetPersonAlbums
 import com.savvasdalkitsis.uhuruphotos.infrastructure.date.DateDisplayer
-import com.savvasdalkitsis.uhuruphotos.infrastructure.model.Group
 import com.savvasdalkitsis.uhuruphotos.infrastructure.extensions.mapValues
 import com.savvasdalkitsis.uhuruphotos.infrastructure.extensions.safelyOnStartIgnoring
+import com.savvasdalkitsis.uhuruphotos.infrastructure.model.Group
 import com.savvasdalkitsis.uhuruphotos.photos.api.model.Photo
 import com.savvasdalkitsis.uhuruphotos.photos.service.model.isVideo
 import com.savvasdalkitsis.uhuruphotos.photos.usecase.PhotosUseCase
@@ -34,7 +34,7 @@ import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
-class AlbumsUseCase @Inject constructor(
+internal class AlbumsUseCase @Inject constructor(
     private val albumsRepository: AlbumsRepository,
     private val dateDisplayer: DateDisplayer,
     private val photosUseCase: PhotosUseCase,

@@ -9,7 +9,7 @@ android {
 }
 
 dependencies {
-    implementation project(":albums")
+    implementation project(":albums-api")
     implementation project(":home")
     implementation project(":navigation")
     implementation project(":settings")

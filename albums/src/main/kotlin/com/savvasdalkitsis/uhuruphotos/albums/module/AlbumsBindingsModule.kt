@@ -16,6 +16,7 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.albums.module
 
 import com.savvasdalkitsis.uhuruphotos.albums.initializer.AlbumsInitializer
+import com.savvasdalkitsis.uhuruphotos.albums.repository.AlbumsRepository
 import com.savvasdalkitsis.uhuruphotos.albums.usecase.AlbumsUseCase
 import com.savvasdalkitsis.uhuruphotos.albums.worker.AlbumWorkScheduler
 import com.savvasdalkitsis.uhuruphotos.initializer.ApplicationCreated
@@ -27,7 +28,7 @@ import dagger.multibindings.IntoSet
 
 @Module
 @InstallIn(SingletonComponent::class)
-abstract class AlbumsBindingsModule {
+internal abstract class AlbumsBindingsModule {
 
     @Binds @IntoSet
     abstract fun albumInitializer(albumsInitializer: AlbumsInitializer): ApplicationCreated
@@ -39,4 +40,8 @@ abstract class AlbumsBindingsModule {
     @Binds
     abstract fun albumsUseCase(albumsUseCase: AlbumsUseCase):
             com.savvasdalkitsis.uhuruphotos.albums.api.usecase.AlbumsUseCase
+
+    @Binds
+    abstract fun albumsRepository(albumsRepository: AlbumsRepository):
+            com.savvasdalkitsis.uhuruphotos.albums.api.repository.AlbumsRepository
 }

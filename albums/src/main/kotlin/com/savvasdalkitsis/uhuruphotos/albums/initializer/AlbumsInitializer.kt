@@ -21,7 +21,7 @@ import com.savvasdalkitsis.uhuruphotos.albums.worker.AlbumWorkScheduler
 import com.savvasdalkitsis.uhuruphotos.initializer.ApplicationCreated
 import javax.inject.Inject
 
-class AlbumsInitializer @Inject constructor(
+internal class AlbumsInitializer @Inject constructor(
     private val albumWorkScheduler: AlbumWorkScheduler,
 ): ApplicationCreated {
 

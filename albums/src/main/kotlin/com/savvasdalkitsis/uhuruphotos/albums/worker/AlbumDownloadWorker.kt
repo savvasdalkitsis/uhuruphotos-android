@@ -21,7 +21,7 @@ import androidx.work.CoroutineWorker
 import androidx.work.ForegroundInfo
 import androidx.work.WorkerParameters
 import androidx.work.workDataOf
-import com.savvasdalkitsis.uhuruphotos.albums.repository.AlbumsRepository
+import com.savvasdalkitsis.uhuruphotos.albums.api.repository.AlbumsRepository
 import com.savvasdalkitsis.uhuruphotos.log.log
 import com.savvasdalkitsis.uhuruphotos.notification.ForegroundInfoBuilder
 import com.savvasdalkitsis.uhuruphotos.notification.NotificationChannels.JOBS_CHANNEL_ID
@@ -32,7 +32,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
 @HiltWorker
-class AlbumDownloadWorker @AssistedInject constructor(
+internal class AlbumDownloadWorker @AssistedInject constructor(
     @Assisted context: Context,
     @Assisted private val params: WorkerParameters,
     private val albumsRepository: AlbumsRepository,

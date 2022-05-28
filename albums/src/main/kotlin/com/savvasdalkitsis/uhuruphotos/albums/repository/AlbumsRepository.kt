@@ -15,11 +15,12 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.albums.repository
 
-import com.savvasdalkitsis.uhuruphotos.albums.service.AlbumsService
-import com.savvasdalkitsis.uhuruphotos.albums.service.model.Album
-import com.savvasdalkitsis.uhuruphotos.albums.service.model.AlbumsByDate
-import com.savvasdalkitsis.uhuruphotos.albums.service.model.toAlbum
-import com.savvasdalkitsis.uhuruphotos.albums.service.model.toAutoAlbums
+import com.savvasdalkitsis.uhuruphotos.albums.api.repository.AlbumsRepository
+import com.savvasdalkitsis.uhuruphotos.albums.api.service.AlbumsService
+import com.savvasdalkitsis.uhuruphotos.albums.api.service.model.Album
+import com.savvasdalkitsis.uhuruphotos.albums.api.service.model.AlbumsByDate
+import com.savvasdalkitsis.uhuruphotos.albums.api.service.model.toAlbum
+import com.savvasdalkitsis.uhuruphotos.albums.api.service.model.toAutoAlbums
 import com.savvasdalkitsis.uhuruphotos.db.Database
 import com.savvasdalkitsis.uhuruphotos.db.albums.AlbumsQueries
 import com.savvasdalkitsis.uhuruphotos.db.albums.AutoAlbumPeopleQueries
@@ -49,7 +50,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.distinctUntilChanged
 import javax.inject.Inject
 
-class AlbumsRepository @Inject constructor(
+internal class AlbumsRepository @Inject constructor(
     private val db: Database,
     private val albumsService: AlbumsService,
     private val albumsQueries: AlbumsQueries,
@@ -61,40 +62,40 @@ class AlbumsRepository @Inject constructor(
     private val peopleQueries: PeopleQueries,
     private val photoSummaryQueries: PhotoSummaryQueries,
     private val photoDetailsQueries: PhotoDetailsQueries,
-){
+) : AlbumsRepository {
 
-    suspend fun hasAlbums() = albumsQueries.albumsCount().awaitSingle() > 0
+    override suspend fun hasAlbums() = albumsQueries.albumsCount().awaitSingle() > 0
 
-    fun observeAlbumsByDate() : Flow<Group<String, GetAlbums>> =
+    override fun observeAlbumsByDate() : Flow<Group<String, GetAlbums>> =
         albumsQueries.getAlbums().asFlow().mapToList().groupBy(GetAlbums::id)
             .distinctUntilChanged()
 
-    suspend fun getAlbumsByDate() : Group<String, GetAlbums> =
+    override suspend fun getAlbumsByDate() : Group<String, GetAlbums> =
         albumsQueries.getAlbums().await().groupBy(GetAlbums::id).let(::Group)
 
-    fun observePersonAlbums(personId: Int) : Flow<Group<String, GetPersonAlbums>> =
+    override fun observePersonAlbums(personId: Int) : Flow<Group<String, GetPersonAlbums>> =
         albumsQueries.getPersonAlbums(personId).asFlow().mapToList().groupBy(GetPersonAlbums::id)
             .distinctUntilChanged()
             .safelyOnStartIgnoring {
                 downloadPersonAlbums(personId)
             }
 
-    suspend fun getPersonAlbums(personId: Int) : Group<String, GetPersonAlbums> =
+    override suspend fun getPersonAlbums(personId: Int) : Group<String, GetPersonAlbums> =
         albumsQueries.getPersonAlbums(personId).await().groupBy(GetPersonAlbums::id).let(::Group)
 
-    fun observeAutoAlbums(): Flow<List<AutoAlbums>> =
+    override fun observeAutoAlbums(): Flow<List<AutoAlbums>> =
         autoAlbumsQueries.getAutoAlbums().asFlow().mapToList()
             .distinctUntilChanged()
 
-    fun observeAutoAlbum(albumId: Int): Flow<List<GetAutoAlbum>> =
+    override fun observeAutoAlbum(albumId: Int): Flow<List<GetAutoAlbum>> =
         autoAlbumQueries.getAutoAlbum(albumId.toString()).asFlow().mapToList()
             .distinctUntilChanged()
 
-    fun observeAutoAlbumPeople(albumId: Int): Flow<List<GetPeopleForAutoAlbum>> =
+    override fun observeAutoAlbumPeople(albumId: Int): Flow<List<GetPeopleForAutoAlbum>> =
         autoAlbumPeopleQueries.getPeopleForAutoAlbum(albumId.toString())
             .asFlow().mapToList()
 
-    suspend fun refreshAutoAlbums() {
+    override suspend fun refreshAutoAlbums() {
         val albums = albumsService.getAutoAlbums()
         autoAlbumsQueries.transaction {
             autoAlbumsQueries.clear()
@@ -104,7 +105,7 @@ class AlbumsRepository @Inject constructor(
         }
     }
 
-    suspend fun refreshAutoAlbum(albumId: Int) {
+    override suspend fun refreshAutoAlbum(albumId: Int) {
         val album = albumsService.getAutoAlbum(albumId.toString())
         db.transaction {
             autoAlbumQueries.insert(
@@ -153,7 +154,7 @@ class AlbumsRepository @Inject constructor(
         )
     }
 
-    suspend fun refreshAlbums(shallow: Boolean, onProgressChange: suspend (Int) -> Unit) {
+    override suspend fun refreshAlbums(shallow: Boolean, onProgressChange: suspend (Int) -> Unit) {
         process(
             albumsFetcher = { albumsService.getAlbumsByDate() },
             albumFetcher = { albumsService.getAlbum(it).results },
