@@ -16,31 +16,33 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.settings.view
 
 import androidx.compose.runtime.Composable
-import com.savvasdalkitsis.uhuruphotos.icons.R
+import androidx.compose.ui.res.stringResource
 import com.savvasdalkitsis.uhuruphotos.settings.view.state.SettingsState
 import com.savvasdalkitsis.uhuruphotos.settings.viewmodel.SettingsAction
 import com.savvasdalkitsis.uhuruphotos.settings.viewmodel.SettingsAction.ChangeSearchSuggestionsEnabled
 import com.savvasdalkitsis.uhuruphotos.settings.viewmodel.SettingsAction.ClearRecentSearches
+import com.savvasdalkitsis.uhuruphotos.strings.R
+import com.savvasdalkitsis.uhuruphotos.icons.R as Icons
 
 @Composable
 fun SettingsGroupSearch(
     state: SettingsState,
     action: (SettingsAction) -> Unit
 ) {
-    SettingsGroup(title = "Search") {
+    SettingsGroup(title = stringResource(R.string.settings)) {
         val checked = state.searchSuggestionsEnabled
         SettingsCheckBox(
-            text = "Enable suggestions",
+            text = stringResource(R.string.enable_suggestions),
             icon = when {
-                checked -> R.drawable.ic_lightbulb
-                else -> R.drawable.ic_lightbulb_off
+                checked -> Icons.drawable.ic_lightbulb
+                else -> Icons.drawable.ic_lightbulb_off
             },
             isChecked = checked,
             onCheckedChange = { action(ChangeSearchSuggestionsEnabled(it)) }
         )
         SettingsOutlineButtonRow(
-            buttonText = "Clear recent searches",
-            icon = R.drawable.ic_clear_all,
+            buttonText = stringResource(R.string.clear_recent_searches),
+            icon = Icons.drawable.ic_clear_all,
         ) {
             action(ClearRecentSearches)
         }

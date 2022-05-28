@@ -16,23 +16,25 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.settings.view
 
 import androidx.compose.runtime.Composable
-import com.savvasdalkitsis.uhuruphotos.icons.R
+import androidx.compose.ui.res.stringResource
 import com.savvasdalkitsis.uhuruphotos.settings.view.state.SettingsState
 import com.savvasdalkitsis.uhuruphotos.settings.viewmodel.SettingsAction
 import com.savvasdalkitsis.uhuruphotos.settings.viewmodel.SettingsAction.ChangeShareGpsDataEnabled
+import com.savvasdalkitsis.uhuruphotos.strings.R
+import com.savvasdalkitsis.uhuruphotos.icons.R as Icons
 
 @Composable
 fun SettingsGroupShare(
     state: SettingsState,
     action: (SettingsAction) -> Unit,
 ) {
-    SettingsGroup(title = "Share") {
+    SettingsGroup(title = stringResource(R.string.share)) {
         val checked = state.shareRemoveGpsDataEnabled
         SettingsCheckBox(
-            text = "Remove GPS data when sharing",
+            text = stringResource(R.string.remove_gps_data_when_sharing),
             icon = when {
-                checked -> R.drawable.ic_gps_off
-                else -> R.drawable.ic_gps_on
+                checked -> Icons.drawable.ic_gps_off
+                else -> Icons.drawable.ic_gps_on
             },
             isChecked = checked,
             onCheckedChange = { action(ChangeShareGpsDataEnabled(it)) }

@@ -16,10 +16,12 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.settings.view
 
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.res.stringResource
 import com.savvasdalkitsis.uhuruphotos.settings.view.state.SettingsState
 import com.savvasdalkitsis.uhuruphotos.settings.viewmodel.SettingsAction
 import com.savvasdalkitsis.uhuruphotos.settings.viewmodel.SettingsAction.ChangeImageMemCache
 import com.savvasdalkitsis.uhuruphotos.settings.viewmodel.SettingsAction.ClearImageMemCache
+import com.savvasdalkitsis.uhuruphotos.strings.R
 
 @Composable
 fun SettingsGroupImageMemoryCache(
@@ -27,7 +29,7 @@ fun SettingsGroupImageMemoryCache(
     action: (SettingsAction) -> Unit
 ) {
     SettingsGroupCache(
-        title = "Image Memory cache",
+        title = stringResource(R.string.image_memory_cache),
         current = state.imageMemCacheCurrent,
         initialMaxLimit = state.imageMemCacheMax.toFloat(),
         clearAction = ClearImageMemCache,

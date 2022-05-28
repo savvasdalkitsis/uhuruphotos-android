@@ -16,9 +16,11 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.settings.view
 
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.res.stringResource
 import com.savvasdalkitsis.uhuruphotos.settings.view.state.SettingsState
 import com.savvasdalkitsis.uhuruphotos.settings.viewmodel.SettingsAction
 import com.savvasdalkitsis.uhuruphotos.settings.viewmodel.SettingsAction.ChangeThemeMode
+import com.savvasdalkitsis.uhuruphotos.strings.R
 import com.savvasdalkitsis.uhuruphotos.ui.theme.ThemeMode
 import com.savvasdalkitsis.uhuruphotos.ui.theme.ThemeMode.DARK_MODE
 import com.savvasdalkitsis.uhuruphotos.ui.theme.ThemeMode.FOLLOW_SYSTEM
@@ -29,12 +31,12 @@ fun SettingsGroupTheme(
     state: SettingsState,
     action: (SettingsAction) -> Unit,
 ) {
-    SettingsGroup(title = "Theme") {
+    SettingsGroup(title = stringResource(R.string.theme)) {
         SettingsTextDropDownButtonRow(
             content = {
                 ThemeRow(state.themeMode)
             },
-            buttonText = "Change",
+            buttonText = stringResource(R.string.change),
             action = action,
         ) {
             @Composable

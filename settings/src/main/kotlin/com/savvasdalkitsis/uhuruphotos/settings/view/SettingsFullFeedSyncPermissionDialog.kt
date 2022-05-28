@@ -21,7 +21,9 @@ import androidx.compose.material.Button
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.res.stringResource
 import com.savvasdalkitsis.uhuruphotos.settings.viewmodel.SettingsAction
+import com.savvasdalkitsis.uhuruphotos.strings.R
 
 @Composable
 fun SettingsFullFeedSyncPermissionDialog(
@@ -30,24 +32,24 @@ fun SettingsFullFeedSyncPermissionDialog(
 ) {
     AlertDialog(
         onDismissRequest = onDismiss,
-        title = { Text("Perform full feed sync") },
+        title = { Text(stringResource(R.string.perform_full_feed_sync)) },
         text = {
             Column {
-                Text("Are you sure you want to start a full feed sync?")
+                Text(stringResource(R.string.are_you_sure_you_want_to_perform_full_sync))
                 Text(
-                    "This process takes a while and consumes battery.",
+                    stringResource(R.string.process_takes_while_consumes_battery),
                     style = MaterialTheme.typography.caption
                 )
             }
         },
         confirmButton = {
             Button(onClick = { action(SettingsAction.PerformFullFeedSync) }) {
-                Text("Yes")
+                Text(stringResource(R.string.yes))
             }
         },
         dismissButton = {
             Button(onClick = onDismiss) {
-                Text("No")
+                Text(stringResource(R.string.no))
             }
         },
     )

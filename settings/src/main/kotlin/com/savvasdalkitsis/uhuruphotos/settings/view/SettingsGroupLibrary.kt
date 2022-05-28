@@ -16,22 +16,22 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.settings.view
 
 import androidx.compose.runtime.Composable
-import com.savvasdalkitsis.uhuruphotos.icons.R
+import androidx.compose.ui.res.stringResource
 import com.savvasdalkitsis.uhuruphotos.settings.view.state.SettingsState
 import com.savvasdalkitsis.uhuruphotos.settings.viewmodel.SettingsAction
 import com.savvasdalkitsis.uhuruphotos.settings.viewmodel.SettingsAction.ChangeShowLibrary
-import com.savvasdalkitsis.uhuruphotos.settings.viewmodel.SettingsAction.ClearLogFileClicked
-import com.savvasdalkitsis.uhuruphotos.settings.viewmodel.SettingsAction.SendFeedbackClicked
+import com.savvasdalkitsis.uhuruphotos.strings.R
+import com.savvasdalkitsis.uhuruphotos.icons.R as Icons
 
 @Composable
 fun SettingsGroupLibrary(
     state: SettingsState,
     action: (SettingsAction) -> Unit
 ) {
-    SettingsGroup(title = "Library") {
+    SettingsGroup(title = stringResource(R.string.library)) {
         SettingsCheckBox(
-            text = "Show Library on home screen",
-            icon = R.drawable.ic_photo_album,
+            text = stringResource(R.string.show_library_on_home),
+            icon = Icons.drawable.ic_photo_album,
             isChecked = state.showLibrary,
         ) {
             action(ChangeShowLibrary(it))

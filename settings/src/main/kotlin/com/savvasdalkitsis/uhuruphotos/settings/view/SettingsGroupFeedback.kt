@@ -16,23 +16,25 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.settings.view
 
 import androidx.compose.runtime.Composable
-import com.savvasdalkitsis.uhuruphotos.icons.R
+import androidx.compose.ui.res.stringResource
 import com.savvasdalkitsis.uhuruphotos.settings.viewmodel.SettingsAction
 import com.savvasdalkitsis.uhuruphotos.settings.viewmodel.SettingsAction.ClearLogFileClicked
 import com.savvasdalkitsis.uhuruphotos.settings.viewmodel.SettingsAction.SendFeedbackClicked
+import com.savvasdalkitsis.uhuruphotos.strings.R
+import com.savvasdalkitsis.uhuruphotos.icons.R as Icons
 
 @Composable
 fun SettingsGroupFeedback(
     action: (SettingsAction) -> Unit
 ) {
-    SettingsGroup(title = "Feedback") {
+    SettingsGroup(title = stringResource(R.string.feedback)) {
         SettingsOutlineButtonRow(
-            buttonText = "Send feedback with logs",
-            icon = R.drawable.ic_feedback,
+            buttonText = stringResource(R.string.send_feedback_with_logs),
+            icon = Icons.drawable.ic_feedback,
         ) {
             action(SendFeedbackClicked)
         }
-        SettingsButtonRow(buttonText = "Clear log file") {
+        SettingsButtonRow(buttonText = stringResource(R.string.clear_log_file)) {
             action(ClearLogFileClicked)
         }
     }

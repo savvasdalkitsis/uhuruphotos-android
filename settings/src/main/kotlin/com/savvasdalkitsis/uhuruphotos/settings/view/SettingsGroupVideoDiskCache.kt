@@ -16,10 +16,12 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.settings.view
 
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.res.stringResource
 import com.savvasdalkitsis.uhuruphotos.settings.view.state.SettingsState
 import com.savvasdalkitsis.uhuruphotos.settings.viewmodel.SettingsAction
 import com.savvasdalkitsis.uhuruphotos.settings.viewmodel.SettingsAction.ChangeVideoDiskCache
 import com.savvasdalkitsis.uhuruphotos.settings.viewmodel.SettingsAction.ClearVideoDiskCache
+import com.savvasdalkitsis.uhuruphotos.strings.R
 
 @Composable
 fun SettingsGroupVideoDiskCache(
@@ -27,7 +29,7 @@ fun SettingsGroupVideoDiskCache(
     action: (SettingsAction) -> Unit
 ) {
     SettingsGroupCache(
-        title = "Video Disk cache",
+        title = stringResource(R.string.video_disk_cache),
         current = state.videoDiskCacheCurrent,
         initialMaxLimit = state.videoDiskCacheMax.toFloat(),
         clearAction = ClearVideoDiskCache,

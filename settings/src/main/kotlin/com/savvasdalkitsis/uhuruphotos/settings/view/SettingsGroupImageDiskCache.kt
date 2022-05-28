@@ -16,10 +16,12 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.settings.view
 
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.res.stringResource
 import com.savvasdalkitsis.uhuruphotos.settings.view.state.SettingsState
 import com.savvasdalkitsis.uhuruphotos.settings.viewmodel.SettingsAction
 import com.savvasdalkitsis.uhuruphotos.settings.viewmodel.SettingsAction.ChangeImageDiskCache
 import com.savvasdalkitsis.uhuruphotos.settings.viewmodel.SettingsAction.ClearImageDiskCache
+import com.savvasdalkitsis.uhuruphotos.strings.R
 
 @Composable
 fun SettingsGroupImageDiskCache(
@@ -27,7 +29,7 @@ fun SettingsGroupImageDiskCache(
     action: (SettingsAction) -> Unit
 ) {
     SettingsGroupCache(
-        title = "Image Disk cache",
+        title = stringResource(R.string.image_disk_cache),
         current = state.imageDiskCacheCurrent,
         initialMaxLimit = state.imageDiskCacheMax.toFloat(),
         clearAction = ClearImageDiskCache,

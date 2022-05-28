@@ -16,6 +16,7 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.settings.view
 
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.res.stringResource
 import androidx.work.NetworkType
 import androidx.work.NetworkType.CONNECTED
 import androidx.work.NetworkType.METERED
@@ -24,13 +25,14 @@ import androidx.work.NetworkType.UNMETERED
 import com.savvasdalkitsis.uhuruphotos.settings.view.state.SettingsState
 import com.savvasdalkitsis.uhuruphotos.settings.viewmodel.SettingsAction
 import com.savvasdalkitsis.uhuruphotos.settings.viewmodel.SettingsAction.ChangeFullSyncNetworkRequirements
+import com.savvasdalkitsis.uhuruphotos.strings.R
 
-private val NetworkType?.friendlyName: String
-    get() = when (this) {
-        CONNECTED -> "Any connected"
-        UNMETERED -> "Unmetered"
-        NOT_ROAMING -> "Not roaming"
-        METERED -> "Metered"
+@Composable
+private fun NetworkType?.friendlyName(): String =  when (this) {
+        CONNECTED -> stringResource(R.string.any_connected)
+        UNMETERED -> stringResource(R.string.unmetered)
+        NOT_ROAMING -> stringResource(R.string.not_roaming)
+        METERED -> stringResource(R.string.metered)
         else -> "-"
     }
 
@@ -40,13 +42,15 @@ fun SettingsFullSyncNetworkRequirements(
     action: (SettingsAction) -> Unit
 ) {
     SettingsTextDropDownButtonRow(
-        text = "Network requirements: ${state.fullSyncNetworkRequirement.friendlyName}",
-        buttonText = "Change",
+        text = stringResource(R.string.network_requirements,
+            state.fullSyncNetworkRequirement.friendlyName()
+        ),
+        buttonText = stringResource(R.string.change),
         action = action,
     ) {
         @Composable
         fun item(networkType: NetworkType) {
-            Item(networkType.friendlyName, ChangeFullSyncNetworkRequirements(networkType))
+            Item(networkType.friendlyName(), ChangeFullSyncNetworkRequirements(networkType))
         }
         item(CONNECTED)
         item(UNMETERED)
