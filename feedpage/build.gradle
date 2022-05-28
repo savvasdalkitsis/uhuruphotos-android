@@ -29,7 +29,7 @@ dependencies {
     implementation project(":settings")
     implementation project(":api:log")
     implementation project(":strings")
-    implementation project(":homenavigation")
+    implementation project(":api:homenavigation")
     implementation(
             libs.accompanist.swiperefresh,
             libs.androidx.compose.foundation.layout,

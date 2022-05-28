@@ -19,7 +19,7 @@ dependencies {
     implementation project(":settings")
     implementation project(":strings")
     implementation project(":icons")
-    implementation project(":homenavigation")
+    implementation project(":api:homenavigation")
     implementation(
             libs.androidx.compose.foundation.layout,
             libs.androidx.compose.hilt.navigation,

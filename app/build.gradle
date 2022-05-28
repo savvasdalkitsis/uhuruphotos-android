@@ -63,7 +63,7 @@ dependencies {
     implementation project(":initializer")
     implementation project(":settings")
     implementation project(':api:userbadge')
-    implementation project(":homenavigation")
+    implementation project(":api:homenavigation")
 
     // internal projects
     implementation project(":internal:albums")
