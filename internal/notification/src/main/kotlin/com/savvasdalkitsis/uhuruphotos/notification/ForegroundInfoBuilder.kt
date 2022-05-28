@@ -18,42 +18,37 @@ package com.savvasdalkitsis.uhuruphotos.notification
 import android.content.Context
 import android.content.pm.ServiceInfo
 import android.os.Build
-import androidx.annotation.StringRes
 import androidx.core.app.NotificationCompat
 import androidx.work.ForegroundInfo
+import com.savvasdalkitsis.uhuruphotos.api.notification.ForegroundInfoBuilder
 import com.savvasdalkitsis.uhuruphotos.icons.R
 import javax.inject.Inject
 
-class ForegroundInfoBuilder @Inject constructor() {
-    fun build(
+internal class ForegroundInfoBuilder @Inject constructor(
+) : ForegroundInfoBuilder{
+
+    override fun build(
         context: Context,
-        @StringRes title: Int,
+        title: Int,
         notificationId: Int,
         channel: String
-    ): ForegroundInfo = foregroundInfo(context, title, notificationId, channel)
-}
-
-fun foregroundInfo(
-    context: Context,
-    @StringRes title: Int,
-    notificationId: Int,
-    channel: String
-): ForegroundInfo {
-    val notification = NotificationCompat.Builder(context,channel)
-        .setContentTitle(context.getString(title))
-        .setSmallIcon(R.mipmap.ic_launcher_round)
-        .setPriority(NotificationCompat.PRIORITY_LOW)
-        .build()
-    return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-        ForegroundInfo(
-            notificationId,
-            notification,
-            ServiceInfo.FOREGROUND_SERVICE_TYPE_DATA_SYNC
-        )
-    } else {
-        ForegroundInfo(
-            notificationId,
-            notification
-        )
+    ): ForegroundInfo {
+        val notification = NotificationCompat.Builder(context, channel)
+            .setContentTitle(context.getString(title))
+            .setSmallIcon(R.mipmap.ic_launcher_round)
+            .setPriority(NotificationCompat.PRIORITY_LOW)
+            .build()
+        return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+            ForegroundInfo(
+                notificationId,
+                notification,
+                ServiceInfo.FOREGROUND_SERVICE_TYPE_DATA_SYNC
+            )
+        } else {
+            ForegroundInfo(
+                notificationId,
+                notification
+            )
+        }
     }
 }

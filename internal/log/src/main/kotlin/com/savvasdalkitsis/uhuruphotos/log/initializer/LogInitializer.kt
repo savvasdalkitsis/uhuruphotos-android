@@ -24,7 +24,7 @@ import com.savvasdalkitsis.uhuruphotos.initializer.ApplicationCreated
 import com.savvasdalkitsis.uhuruphotos.log.FeedbackUseCase
 import com.savvasdalkitsis.uhuruphotos.api.log.logError
 import com.savvasdalkitsis.uhuruphotos.log.showCrashNotification
-import com.savvasdalkitsis.uhuruphotos.notification.NotificationChannels
+import com.savvasdalkitsis.uhuruphotos.api.notification.NotificationChannels
 import dagger.hilt.android.qualifiers.ApplicationContext
 import timber.log.Timber
 import javax.inject.Inject

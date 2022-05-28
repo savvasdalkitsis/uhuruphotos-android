@@ -29,8 +29,8 @@ import androidx.work.workDataOf
 import com.google.common.util.concurrent.Futures.immediateFuture
 import com.savvasdalkitsis.uhuruphotos.albums.repository.AlbumsRepository
 import com.savvasdalkitsis.uhuruphotos.albums.worker.AlbumDownloadWorker.Companion.Progress
-import com.savvasdalkitsis.uhuruphotos.notification.ForegroundInfoBuilder
-import com.savvasdalkitsis.uhuruphotos.notification.NotificationChannels.JOBS_CHANNEL_ID
+import com.savvasdalkitsis.uhuruphotos.api.notification.ForegroundInfoBuilder
+import com.savvasdalkitsis.uhuruphotos.api.notification.NotificationChannels.JOBS_CHANNEL_ID
 import com.savvasdalkitsis.uhuruphotos.strings.R
 import io.mockk.coEvery
 import io.mockk.coVerify

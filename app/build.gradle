@@ -70,6 +70,7 @@ dependencies {
     implementation project(":internal:heatmap")
     implementation project(":internal:library")
     implementation project(":internal:log")
+    implementation project(":internal:notification")
     implementation project(":internal:person")
     implementation project(":internal:people")
     implementation project(":internal:photos")

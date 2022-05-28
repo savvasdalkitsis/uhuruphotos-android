@@ -18,11 +18,10 @@ package com.savvasdalkitsis.uhuruphotos.photos.worker
 import android.content.Context
 import androidx.hilt.work.HiltWorker
 import androidx.work.CoroutineWorker
-import androidx.work.ForegroundInfo
 import androidx.work.WorkerParameters
 import com.savvasdalkitsis.uhuruphotos.api.log.log
-import com.savvasdalkitsis.uhuruphotos.notification.NotificationChannels.JOBS_CHANNEL_ID
-import com.savvasdalkitsis.uhuruphotos.notification.foregroundInfo
+import com.savvasdalkitsis.uhuruphotos.api.notification.NotificationChannels.JOBS_CHANNEL_ID
+import com.savvasdalkitsis.uhuruphotos.api.notification.ForegroundInfoBuilder
 import com.savvasdalkitsis.uhuruphotos.photos.repository.PhotoRepository
 import com.savvasdalkitsis.uhuruphotos.strings.R
 import dagger.assisted.Assisted
@@ -35,6 +34,7 @@ class PhotoDetailsRetrieveWorker @AssistedInject constructor(
     @Assisted context: Context,
     @Assisted val params: WorkerParameters,
     private val photoRepository: PhotoRepository,
+    private val foregroundInfoBuilder: ForegroundInfoBuilder,
 ) : CoroutineWorker(context, params) {
 
     override suspend fun doWork() = withContext(Dispatchers.IO) {
@@ -51,7 +51,7 @@ class PhotoDetailsRetrieveWorker @AssistedInject constructor(
         }
     }
 
-    override suspend fun getForegroundInfo(): ForegroundInfo = foregroundInfo(
+    override suspend fun getForegroundInfo() = foregroundInfoBuilder.build(
         applicationContext,
         R.string.downloading_photo_details,
         NOTIFICATION_ID,

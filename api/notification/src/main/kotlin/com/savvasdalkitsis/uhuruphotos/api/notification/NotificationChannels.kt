@@ -13,7 +13,7 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
  */
-package com.savvasdalkitsis.uhuruphotos.notification
+package com.savvasdalkitsis.uhuruphotos.api.notification
 
 object NotificationChannels {
     const val JOBS_CHANNEL_ID = "UHURU_PHOTOS_BACKGROUND_JOBS_CHANNEL_ID"

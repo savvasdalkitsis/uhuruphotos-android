@@ -1,4 +1,5 @@
 dependencies {
+    implementation project(":api:notification")
     implementation project(":api:initializer")
     implementation project(":api:icons")
     implementation project(":api:strings")
