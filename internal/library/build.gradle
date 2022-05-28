@@ -23,7 +23,7 @@ dependencies {
     implementation project(":ui")
     implementation project(":db")
     implementation project(':api:userbadge')
-    implementation project(":toaster")
+    implementation project(":api:toaster")
     implementation project(":autoalbum")
     implementation project(":api:homenavigation")
     implementation(

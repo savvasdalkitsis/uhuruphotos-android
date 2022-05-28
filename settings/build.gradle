@@ -13,7 +13,7 @@ dependencies {
     implementation project(":navigation")
     implementation project(":ui")
     implementation project(":api:initializer")
-    implementation project(":toaster")
+    implementation project(":api:toaster")
     implementation project(':api:userbadge')
     implementation project(':api:albums')
     implementation project(":icons")

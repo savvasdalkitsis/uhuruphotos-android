@@ -27,7 +27,7 @@ dependencies {
     implementation project(":api:map")
     implementation project(":api:log")
     implementation project(":icons")
-    implementation project(":toaster")
+    implementation project(":api:toaster")
     implementation project(':api:people')
     implementation project(":infrastructure")
     implementation project(':api:person')

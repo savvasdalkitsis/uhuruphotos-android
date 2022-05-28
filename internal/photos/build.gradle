@@ -30,7 +30,7 @@ dependencies {
     implementation project(':api:image')
     implementation project(":api:share")
     implementation project(":internal:video")
-    implementation project(":toaster")
+    implementation project(":api:toaster")
     implementation project(":notification")
     implementation project(":strings")
     implementation project(':api:albums')

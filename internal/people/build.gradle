@@ -14,7 +14,7 @@ dependencies {
     implementation project(":network")
     implementation project(":infrastructure")
     implementation project(":api:log")
-    implementation project(":toaster")
+    implementation project(":api:toaster")
     implementation project(":ui")
     implementation project(':api:image')
     implementation project(":internal:photos")

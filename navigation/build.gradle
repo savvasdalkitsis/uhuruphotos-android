@@ -12,7 +12,7 @@ dependencies {
 
     api project(":viewmodel")
     implementation project(":api:log")
-    implementation project(":toaster")
+    implementation project(":api:toaster")
     implementation project(":ui")
     implementation project(":strings")
     implementation(
