@@ -9,20 +9,20 @@ android {
 }
 
 dependencies {
-    implementation project(":albums-api")
+    implementation project(':api:albums')
     implementation project(":home")
     implementation project(":navigation")
     implementation project(":settings")
     implementation project(":infrastructure")
     implementation project(":photos")
-    implementation project(":photos-api")
+    implementation project(':api:photos')
     implementation project(":log")
     implementation project(":strings")
     implementation project(":icons")
     implementation project(":feed")
     implementation project(":ui")
     implementation project(":db")
-    implementation project(":userbadge-api")
+    implementation project(':api:userbadge')
     implementation project(":toaster")
     implementation project(":autoalbum")
     implementation project(":homenavigation")

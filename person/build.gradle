@@ -10,16 +10,16 @@ android {
 
 dependencies {
     implementation project(":ui")
-    implementation project(":person-api")
+    implementation project(':api:person')
     implementation project(":db")
     implementation project(":navigation")
-    implementation project(":image-api")
+    implementation project(':api:image')
     implementation project(":settings")
-    implementation project(":albums-api")
+    implementation project(':api:albums')
     implementation project(":feed")
     implementation project(":photos")
-    implementation project(":photos-api")
-    implementation project(":people-api")
+    implementation project(':api:photos')
+    implementation project(':api:people')
     implementation(
             libs.androidx.compose.foundation,
             libs.androidx.compose.material,

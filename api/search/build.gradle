@@ -1,0 +1,11 @@
+dependencies {
+    api project(':api:albums')
+    api(
+            libs.kotlinx.coroutines,
+            libs.result,
+    )
+}
+
+android {
+    namespace 'com.savvasdalkitsis.uhuruphotos.search.api'
+}

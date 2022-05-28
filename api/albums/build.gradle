@@ -1,0 +1,16 @@
+dependencies {
+
+    api project(':api:photos')
+    api project(':api:people')
+    api project(":db")
+    api project(":infrastructure")
+    implementation(
+            libs.androidx.work,
+            libs.moshi,
+            libs.retrofit.moshi,
+    )
+}
+
+android {
+    namespace 'com.savvasdalkitsis.uhuruphotos.albums.api'
+}

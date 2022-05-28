@@ -23,8 +23,8 @@ dependencies {
     implementation project(":worker")
     implementation project(":initializer")
     implementation project(":settings")
-    implementation project(":albums-api")
-    implementation project(":photos-api")
+    implementation project(':api:albums')
+    implementation project(':api:photos')
     implementation project(":notification")
     implementation project(":strings")
     implementation project(":user")
@@ -46,7 +46,7 @@ dependencies {
     )
     testFixturesImplementation testFixtures(project(":db"))
     testFixturesImplementation project(":photos")
-    testFixturesImplementation project(":photos-api")
-    testFixturesImplementation project(":albums-api")
+    testFixturesImplementation project(':api:photos')
+    testFixturesImplementation project(':api:albums')
     kapt "com.squareup.moshi:moshi-kotlin-codegen:1.13.0"
 }

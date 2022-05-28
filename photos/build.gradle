@@ -20,20 +20,20 @@ dependencies {
     implementation project(":log")
     implementation project(":ui")
     implementation project(":map")
-    implementation project(":people-api")
-    implementation project(":person-api")
-    implementation project(":photos-api")
-    implementation project(":search-api")
+    implementation project(':api:people')
+    implementation project(':api:person')
+    implementation project(':api:photos')
+    implementation project(':api:search')
     implementation project(":worker")
     implementation project(":auth")
     implementation project(":icons")
-    implementation project(":image-api")
+    implementation project(':api:image')
     implementation project(":share")
     implementation project(":video")
     implementation project(":toaster")
     implementation project(":notification")
     implementation project(":strings")
-    implementation project(":albums-api")
+    implementation project(':api:albums')
     implementation project(":user")
     implementation(
             libs.accompanist.pager,
@@ -53,6 +53,6 @@ dependencies {
             libs.zoomable,
     )
     testFixturesImplementation project(":db")
-    testFixturesImplementation project(":photos-api")
+    testFixturesImplementation project(':api:photos')
     kapt "com.squareup.moshi:moshi-kotlin-codegen:1.13.0"
 }

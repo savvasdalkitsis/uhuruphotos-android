@@ -14,7 +14,7 @@ dependencies {
     implementation project(":initializer")
     implementation project(":infrastructure")
     implementation project(":settings")
-    implementation project(":image-api")
+    implementation project(':api:image')
     implementation(
             libs.coil.compose,
             libs.coil.gif,

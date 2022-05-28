@@ -11,10 +11,10 @@ android {
 dependencies {
 
     implementation project(":photos")
-    implementation project(":photos-api")
-    implementation project(":albums-api")
+    implementation project(':api:photos')
+    implementation project(':api:albums')
     implementation project(":feed")
-    implementation project(":userbadge-api")
+    implementation project(':api:userbadge')
     implementation project(":ui")
     implementation project(":icons")
     implementation project(":home")

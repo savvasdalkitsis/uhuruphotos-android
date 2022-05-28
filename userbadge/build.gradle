@@ -12,13 +12,13 @@ dependencies {
 
     implementation project(":icons")
     implementation project(":ui")
-    implementation project(":albums-api")
+    implementation project(':api:albums')
     implementation project(":photos")
     implementation project(":user")
     implementation project(":db")
-    implementation project(":image-api")
+    implementation project(':api:image')
     implementation project(":auth")
-    implementation project(":userbadge-api")
+    implementation project(':api:userbadge')
     implementation(
             libs.androidx.compose.material,
             libs.androidx.work,

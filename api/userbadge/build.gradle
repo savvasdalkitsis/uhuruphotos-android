@@ -1,0 +1,21 @@
+android {
+    buildFeatures {
+        compose true
+    }
+    composeOptions {
+        kotlinCompilerExtensionVersion compose_version
+    }
+    namespace 'com.savvasdalkitsis.uhuruphotos.userbadge.api'
+}
+
+dependencies {
+
+    implementation project(":icons")
+    implementation project(':api:image')
+    implementation project(":ui")
+    implementation(
+            libs.androidx.compose.material,
+            libs.androidx.work,
+            libs.hilt,
+    )
+}

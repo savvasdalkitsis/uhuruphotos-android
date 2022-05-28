@@ -1,0 +1,25 @@
+-- Merging decision tree log ---
+manifest
+ADDED from C:\Users\kuros\StudioProjects\uhuruphotos-android\api\build\intermediates\tmp\ProcessLibraryManifest\release\tempAndroidManifest3778472037344213267.xml:2:13-3:64
+INJECTED from C:\Users\kuros\StudioProjects\uhuruphotos-android\api\build\intermediates\tmp\ProcessLibraryManifest\release\tempAndroidManifest3778472037344213267.xml:2:13-3:64
+INJECTED from C:\Users\kuros\StudioProjects\uhuruphotos-android\api\build\intermediates\tmp\ProcessLibraryManifest\release\tempAndroidManifest3778472037344213267.xml:2:13-3:64
+	package
+		ADDED from C:\Users\kuros\StudioProjects\uhuruphotos-android\api\build\intermediates\tmp\ProcessLibraryManifest\release\tempAndroidManifest3778472037344213267.xml:3:16-61
+		INJECTED from C:\Users\kuros\StudioProjects\uhuruphotos-android\api\build\intermediates\tmp\ProcessLibraryManifest\release\tempAndroidManifest3778472037344213267.xml
+		INJECTED from C:\Users\kuros\StudioProjects\uhuruphotos-android\api\build\intermediates\tmp\ProcessLibraryManifest\release\tempAndroidManifest3778472037344213267.xml
+	xmlns:android
+		ADDED from C:\Users\kuros\StudioProjects\uhuruphotos-android\api\build\intermediates\tmp\ProcessLibraryManifest\release\tempAndroidManifest3778472037344213267.xml:2:23-81
+uses-sdk
+INJECTED from C:\Users\kuros\StudioProjects\uhuruphotos-android\api\build\intermediates\tmp\ProcessLibraryManifest\release\tempAndroidManifest3778472037344213267.xml reason: use-sdk injection requested
+INJECTED from C:\Users\kuros\StudioProjects\uhuruphotos-android\api\build\intermediates\tmp\ProcessLibraryManifest\release\tempAndroidManifest3778472037344213267.xml
+INJECTED from C:\Users\kuros\StudioProjects\uhuruphotos-android\api\build\intermediates\tmp\ProcessLibraryManifest\release\tempAndroidManifest3778472037344213267.xml
+INJECTED from C:\Users\kuros\StudioProjects\uhuruphotos-android\api\build\intermediates\tmp\ProcessLibraryManifest\release\tempAndroidManifest3778472037344213267.xml
+INJECTED from C:\Users\kuros\StudioProjects\uhuruphotos-android\api\build\intermediates\tmp\ProcessLibraryManifest\release\tempAndroidManifest3778472037344213267.xml
+	android:targetSdkVersion
+		INJECTED from C:\Users\kuros\StudioProjects\uhuruphotos-android\api\build\intermediates\tmp\ProcessLibraryManifest\release\tempAndroidManifest3778472037344213267.xml
+		ADDED from C:\Users\kuros\StudioProjects\uhuruphotos-android\api\build\intermediates\tmp\ProcessLibraryManifest\release\tempAndroidManifest3778472037344213267.xml
+		INJECTED from C:\Users\kuros\StudioProjects\uhuruphotos-android\api\build\intermediates\tmp\ProcessLibraryManifest\release\tempAndroidManifest3778472037344213267.xml
+	android:minSdkVersion
+		INJECTED from C:\Users\kuros\StudioProjects\uhuruphotos-android\api\build\intermediates\tmp\ProcessLibraryManifest\release\tempAndroidManifest3778472037344213267.xml
+		ADDED from C:\Users\kuros\StudioProjects\uhuruphotos-android\api\build\intermediates\tmp\ProcessLibraryManifest\release\tempAndroidManifest3778472037344213267.xml
+		INJECTED from C:\Users\kuros\StudioProjects\uhuruphotos-android\api\build\intermediates\tmp\ProcessLibraryManifest\release\tempAndroidManifest3778472037344213267.xml

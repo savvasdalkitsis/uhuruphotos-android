@@ -1,0 +1,11 @@
+dependencies {
+    implementation project(":navigation")
+    implementation project(':api:albums')
+    implementation(
+            libs.hilt,
+    )
+}
+
+android {
+    namespace 'com.savvasdalkitsis.uhuruphotos.person.api'
+}

@@ -16,13 +16,13 @@ dependencies {
     implementation project(":log")
     implementation project(":toaster")
     implementation project(":ui")
-    implementation project(":image-api")
+    implementation project(':api:image')
     implementation project(":photos")
-    implementation project(":people-api")
+    implementation project(':api:people')
     implementation project(":navigation")
     implementation project(":settings")
     implementation project(":strings")
-    implementation project(":person-api")
+    implementation project(':api:person')
     implementation(
             libs.androidx.compose.foundation,
             libs.androidx.compose.material,

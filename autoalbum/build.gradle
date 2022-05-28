@@ -10,17 +10,17 @@ android {
 
 dependencies {
     implementation project(":db")
-    implementation project(":albums-api")
+    implementation project(':api:albums')
     implementation project(":photos")
     implementation project(":infrastructure")
     implementation project(":log")
     implementation project(":navigation")
-    implementation project(":people-api")
+    implementation project(':api:people')
     implementation project(":settings")
     implementation project(":ui")
     implementation project(":feed")
     implementation project(":strings")
-    implementation project(":person-api")
+    implementation project(':api:person')
     implementation(
             libs.accompanist.swiperefresh,
             libs.androidx.compose.foundation,

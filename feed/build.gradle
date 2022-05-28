@@ -12,10 +12,10 @@ dependencies {
 
     implementation project(":icons")
     implementation project(":ui")
-    implementation project(":albums-api")
+    implementation project(':api:albums')
     implementation project(":photos")
-    implementation project(":photos-api")
-    implementation project(":image-api")
+    implementation project(':api:photos')
+    implementation project(':api:image')
     implementation project(":infrastructure")
     implementation project(":strings")
     implementation(
