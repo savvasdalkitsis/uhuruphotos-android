@@ -14,7 +14,7 @@ dependencies {
     implementation project(":api:log")
     implementation project(":api:toaster")
     implementation project(":ui")
-    implementation project(":strings")
+    implementation project(":api:strings")
     implementation(
             libs.accompanist.systemui,
             libs.androidx.compose.foundation,

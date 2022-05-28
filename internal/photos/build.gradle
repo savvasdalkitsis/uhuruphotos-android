@@ -32,7 +32,7 @@ dependencies {
     implementation project(":internal:video")
     implementation project(":api:toaster")
     implementation project(":notification")
-    implementation project(":strings")
+    implementation project(":api:strings")
     implementation project(':api:albums')
     implementation project(":user")
     implementation(

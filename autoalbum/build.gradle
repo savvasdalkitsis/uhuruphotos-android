@@ -19,7 +19,7 @@ dependencies {
     implementation project(":settings")
     implementation project(":ui")
     implementation project(":feed")
-    implementation project(":strings")
+    implementation project(":api:strings")
     implementation project(':api:person')
     implementation(
             libs.accompanist.swiperefresh,

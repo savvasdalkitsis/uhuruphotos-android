@@ -23,7 +23,7 @@ dependencies {
     implementation project(":feed")
     implementation project(":infrastructure")
     implementation project(":api:icons")
-    implementation project(":strings")
+    implementation project(":api:strings")
 
     implementation(
             libs.accompanist.permissions,

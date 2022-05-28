@@ -26,7 +26,7 @@ dependencies {
     implementation project(':api:albums')
     implementation project(':api:photos')
     implementation project(":notification")
-    implementation project(":strings")
+    implementation project(":api:strings")
     implementation project(":user")
     implementation project(":internal:people")
     implementation(

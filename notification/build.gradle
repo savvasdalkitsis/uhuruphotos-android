@@ -1,7 +1,7 @@
 dependencies {
     implementation project(":api:initializer")
     implementation project(":api:icons")
-    implementation project(":strings")
+    implementation project(":api:strings")
     implementation(
             libs.androidx.core,
             libs.androidx.work,

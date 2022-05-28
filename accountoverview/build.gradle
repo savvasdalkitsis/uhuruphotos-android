@@ -14,7 +14,7 @@ dependencies {
     implementation project(":api:icons")
     implementation project(':api:userbadge')
     implementation project(":ui")
-    implementation project(":strings")
+    implementation project(":api:strings")
     implementation(
             libs.androidx.compose.foundation.layout,
             libs.androidx.compose.material,

@@ -33,7 +33,7 @@ dependencies {
     implementation project(':api:person')
     implementation project(":api:heatmap")
     implementation project(':api:search')
-    implementation project(":strings")
+    implementation project(":api:strings")
     implementation project(":api:homenavigation")
 
     implementation(

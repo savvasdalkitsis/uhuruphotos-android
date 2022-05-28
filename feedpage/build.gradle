@@ -28,7 +28,7 @@ dependencies {
     implementation project(":api:toaster")
     implementation project(":settings")
     implementation project(":api:log")
-    implementation project(":strings")
+    implementation project(":api:strings")
     implementation project(":api:homenavigation")
     implementation(
             libs.accompanist.swiperefresh,
