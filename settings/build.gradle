@@ -19,7 +19,7 @@ dependencies {
     implementation project(":icons")
     implementation project(':api:video')
     implementation project(':api:search')
-    implementation project(":log")
+    implementation project(":api:log")
     implementation project(":strings")
     implementation(
             libs.androidx.compose.foundation,

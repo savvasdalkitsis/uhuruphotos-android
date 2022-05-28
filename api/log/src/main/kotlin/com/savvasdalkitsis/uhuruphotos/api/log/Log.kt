@@ -13,21 +13,24 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
  */
-package com.savvasdalkitsis.uhuruphotos.log.module
+package com.savvasdalkitsis.uhuruphotos.api.log
 
-import com.savvasdalkitsis.uhuruphotos.initializer.ApplicationCreated
-import com.savvasdalkitsis.uhuruphotos.log.initializer.LogInitializer
-import dagger.Binds
-import dagger.Module
-import dagger.hilt.InstallIn
-import dagger.hilt.components.SingletonComponent
-import dagger.multibindings.IntoSet
+import com.michaelflisar.lumberjack.L
 
-@Module
-@InstallIn(SingletonComponent::class)
-abstract class LogBindingsModule {
+inline fun log(tag: String = "", msg: () -> String) {
+    if (tag.isNotEmpty()) {
+        L.tag(tag).v(msg)
+    } else {
+        L.v(msg)
+    }
+}
 
-    @Binds
-    @IntoSet
-    abstract fun logInitializer(logInitializer: LogInitializer): ApplicationCreated
+@Suppress("NOTHING_TO_INLINE")
+inline fun log(t: Throwable) {
+    L.w(t)
+}
+
+@Suppress("NOTHING_TO_INLINE")
+inline fun logError(t: Throwable) {
+    L.e(t)
 }

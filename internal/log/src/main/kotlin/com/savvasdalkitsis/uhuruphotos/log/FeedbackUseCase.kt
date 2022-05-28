@@ -19,19 +19,20 @@ import android.content.Context
 import com.michaelflisar.lumberjack.FileLoggingSetup
 import com.michaelflisar.lumberjack.L
 import com.michaelflisar.lumberjack.sendFeedback
+import com.savvasdalkitsis.api.log.usecase.FeedbackUseCase
 import dagger.hilt.android.qualifiers.ApplicationContext
 import javax.inject.Inject
 
-class FeedbackUseCase @Inject constructor(
+internal class FeedbackUseCase @Inject constructor(
     @ApplicationContext private val context: Context,
     private val loggingSetup: FileLoggingSetup,
-) {
+) : FeedbackUseCase {
 
-    fun sendFeedback() {
+    override fun sendFeedback() {
         L.sendFeedback(context, loggingSetup.getLatestLogFiles(), EMAIL)
     }
 
-    fun clearLogs() {
+    override fun clearLogs() {
         loggingSetup.clearLogFiles()
     }
 

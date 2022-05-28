@@ -1,6 +1,6 @@
 dependencies {
 
-    implementation project(":log")
+    implementation project(":api:log")
     implementation project(":infrastructure")
 
     implementation(

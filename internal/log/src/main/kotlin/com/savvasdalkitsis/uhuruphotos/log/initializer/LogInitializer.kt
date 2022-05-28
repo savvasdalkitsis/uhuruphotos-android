@@ -22,14 +22,14 @@ import com.michaelflisar.lumberjack.L
 import com.savvasdalkitsis.uhuruphotos.icons.R
 import com.savvasdalkitsis.uhuruphotos.initializer.ApplicationCreated
 import com.savvasdalkitsis.uhuruphotos.log.FeedbackUseCase
-import com.savvasdalkitsis.uhuruphotos.log.logError
+import com.savvasdalkitsis.uhuruphotos.api.log.logError
 import com.savvasdalkitsis.uhuruphotos.log.showCrashNotification
 import com.savvasdalkitsis.uhuruphotos.notification.NotificationChannels
 import dagger.hilt.android.qualifiers.ApplicationContext
 import timber.log.Timber
 import javax.inject.Inject
 
-class LogInitializer @Inject constructor(
+internal class LogInitializer @Inject constructor(
     private val trees: Set<@JvmSuppressWildcards Timber.Tree>,
     @ApplicationContext private val context: Context,
     private val fileLoggingSetup: FileLoggingSetup,

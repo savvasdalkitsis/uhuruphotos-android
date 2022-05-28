@@ -13,7 +13,7 @@ dependencies {
     implementation project(':api:albums')
     implementation project(":internal:photos")
     implementation project(":infrastructure")
-    implementation project(":log")
+    implementation project(":api:log")
     implementation project(":navigation")
     implementation project(':api:people')
     implementation project(":settings")

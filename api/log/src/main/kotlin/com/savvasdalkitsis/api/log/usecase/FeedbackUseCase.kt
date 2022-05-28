@@ -13,13 +13,10 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
  */
-package com.savvasdalkitsis.uhuruphotos.log
+package com.savvasdalkitsis.api.log.usecase
 
-import timber.log.Timber
+interface FeedbackUseCase {
 
-class NoOpTree : Timber.Tree() {
-
-    override fun log(priority: Int, tag: String?, message: String, t: Throwable?) {
-        // no-op
-    }
+    fun sendFeedback()
+    fun clearLogs()
 }

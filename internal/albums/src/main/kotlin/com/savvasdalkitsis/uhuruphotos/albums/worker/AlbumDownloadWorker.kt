@@ -22,7 +22,7 @@ import androidx.work.ForegroundInfo
 import androidx.work.WorkerParameters
 import androidx.work.workDataOf
 import com.savvasdalkitsis.uhuruphotos.albums.api.repository.AlbumsRepository
-import com.savvasdalkitsis.uhuruphotos.log.log
+import com.savvasdalkitsis.uhuruphotos.api.log.log
 import com.savvasdalkitsis.uhuruphotos.notification.ForegroundInfoBuilder
 import com.savvasdalkitsis.uhuruphotos.notification.NotificationChannels.JOBS_CHANNEL_ID
 import com.savvasdalkitsis.uhuruphotos.strings.R

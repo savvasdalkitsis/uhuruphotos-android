@@ -27,7 +27,7 @@ import com.savvasdalkitsis.uhuruphotos.library.mvflow.LibraryMutation.Loading
 import com.savvasdalkitsis.uhuruphotos.library.mvflow.LibraryMutation.ShowAutoAlbumSorting
 import com.savvasdalkitsis.uhuruphotos.library.usecase.LibraryUseCase
 import com.savvasdalkitsis.uhuruphotos.library.view.state.LibraryState
-import com.savvasdalkitsis.uhuruphotos.log.log
+import com.savvasdalkitsis.uhuruphotos.api.log.log
 import com.savvasdalkitsis.uhuruphotos.viewmodel.Handler
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow

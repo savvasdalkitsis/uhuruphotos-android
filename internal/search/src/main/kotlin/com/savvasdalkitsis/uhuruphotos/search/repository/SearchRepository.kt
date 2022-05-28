@@ -23,7 +23,7 @@ import com.savvasdalkitsis.uhuruphotos.db.search.GetSearchResults
 import com.savvasdalkitsis.uhuruphotos.db.search.SearchQueries
 import com.savvasdalkitsis.uhuruphotos.infrastructure.model.Group
 import com.savvasdalkitsis.uhuruphotos.infrastructure.extensions.groupBy
-import com.savvasdalkitsis.uhuruphotos.log.log
+import com.savvasdalkitsis.uhuruphotos.api.log.log
 import com.savvasdalkitsis.uhuruphotos.search.service.SearchService
 import com.squareup.sqldelight.runtime.coroutines.asFlow
 import com.squareup.sqldelight.runtime.coroutines.mapToList

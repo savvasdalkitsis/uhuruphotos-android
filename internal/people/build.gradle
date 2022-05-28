@@ -13,7 +13,7 @@ dependencies {
     implementation project(":icons")
     implementation project(":network")
     implementation project(":infrastructure")
-    implementation project(":log")
+    implementation project(":api:log")
     implementation project(":toaster")
     implementation project(":ui")
     implementation project(':api:image')

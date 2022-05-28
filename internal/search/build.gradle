@@ -25,7 +25,7 @@ dependencies {
     implementation project(":server")
     implementation project(":settings")
     implementation project(":api:map")
-    implementation project(":log")
+    implementation project(":api:log")
     implementation project(":icons")
     implementation project(":toaster")
     implementation project(':api:people')

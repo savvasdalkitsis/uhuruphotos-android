@@ -36,7 +36,7 @@ import com.savvasdalkitsis.uhuruphotos.db.albums.GetAutoAlbum
 import com.savvasdalkitsis.uhuruphotos.db.albums.GetPeopleForAutoAlbum
 import com.savvasdalkitsis.uhuruphotos.infrastructure.date.DateDisplayer
 import com.savvasdalkitsis.uhuruphotos.infrastructure.extensions.safelyOnStartIgnoring
-import com.savvasdalkitsis.uhuruphotos.log.log
+import com.savvasdalkitsis.uhuruphotos.api.log.log
 import com.savvasdalkitsis.uhuruphotos.people.api.view.state.toPerson
 import com.savvasdalkitsis.uhuruphotos.photos.api.model.Photo
 import com.savvasdalkitsis.uhuruphotos.photos.usecase.PhotosUseCase

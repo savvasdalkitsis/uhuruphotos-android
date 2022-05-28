@@ -11,7 +11,7 @@ android {
 dependencies {
 
     api project(":viewmodel")
-    implementation project(":log")
+    implementation project(":api:log")
     implementation project(":toaster")
     implementation project(":ui")
     implementation project(":strings")

@@ -15,22 +15,11 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.log
 
-import com.michaelflisar.lumberjack.L
+import timber.log.Timber
 
-inline fun log(tag: String = "", msg: () -> String) {
-    if (tag.isNotEmpty()) {
-        L.tag(tag).v(msg)
-    } else {
-        L.v(msg)
+internal class NoOpTree : Timber.Tree() {
+
+    override fun log(priority: Int, tag: String?, message: String, t: Throwable?) {
+        // no-op
     }
-}
-
-@Suppress("NOTHING_TO_INLINE")
-inline fun log(t: Throwable) {
-    L.w(t)
-}
-
-@Suppress("NOTHING_TO_INLINE")
-inline fun logError(t: Throwable) {
-    L.e(t)
 }

@@ -29,7 +29,7 @@ import com.savvasdalkitsis.uhuruphotos.db.auth.TokenQueries
 import com.savvasdalkitsis.uhuruphotos.db.entities.auth.TokenType
 import com.savvasdalkitsis.uhuruphotos.db.extensions.async
 import com.savvasdalkitsis.uhuruphotos.db.extensions.awaitSingleOrNull
-import com.savvasdalkitsis.uhuruphotos.log.log
+import com.savvasdalkitsis.uhuruphotos.api.log.log
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
 import java.io.IOException

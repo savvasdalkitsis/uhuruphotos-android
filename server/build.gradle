@@ -19,7 +19,7 @@ dependencies {
     implementation project(":navigation")
     implementation project(":infrastructure")
     implementation project(":auth")
-    implementation project(":log")
+    implementation project(":api:log")
     implementation project(":icons")
     implementation project(":ui")
     implementation project(":toaster")

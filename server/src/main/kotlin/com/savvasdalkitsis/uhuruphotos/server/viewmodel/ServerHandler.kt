@@ -22,7 +22,7 @@ import com.savvasdalkitsis.uhuruphotos.auth.usecase.AuthenticationUseCase
 import com.savvasdalkitsis.uhuruphotos.auth.usecase.ServerUseCase
 import com.savvasdalkitsis.uhuruphotos.infrastructure.extensions.isHttpUrl
 import com.savvasdalkitsis.uhuruphotos.infrastructure.extensions.isValidUrlOrDomain
-import com.savvasdalkitsis.uhuruphotos.log.log
+import com.savvasdalkitsis.uhuruphotos.api.log.log
 import com.savvasdalkitsis.uhuruphotos.server.mvflow.ServerAction
 import com.savvasdalkitsis.uhuruphotos.server.mvflow.ServerAction.AttemptChangeServerUrlTo
 import com.savvasdalkitsis.uhuruphotos.server.mvflow.ServerAction.ChangeServerUrlTo

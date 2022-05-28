@@ -30,7 +30,7 @@ import java.io.File
 /**
  * To be removed once https://github.com/MFlisar/Lumberjack/issues/14 is fixed
  */
-fun showCrashNotification(
+internal fun showCrashNotification(
     context: Context,
     logFile: File?,
     receiver: String,

@@ -15,7 +15,7 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.server.viewmodel
 
-import com.savvasdalkitsis.uhuruphotos.log.FeedbackUseCase
+import com.savvasdalkitsis.api.log.usecase.FeedbackUseCase
 import com.savvasdalkitsis.uhuruphotos.navigation.ControllersProvider
 import com.savvasdalkitsis.uhuruphotos.server.mvflow.ServerEffect
 import com.savvasdalkitsis.uhuruphotos.server.mvflow.ServerEffect.Close

@@ -21,7 +21,7 @@ import com.savvasdalkitsis.uhuruphotos.db.people.People
 import com.savvasdalkitsis.uhuruphotos.feedpage.usecase.FeedPageUseCase
 import com.savvasdalkitsis.uhuruphotos.infrastructure.extensions.onErrors
 import com.savvasdalkitsis.uhuruphotos.infrastructure.extensions.onErrorsIgnore
-import com.savvasdalkitsis.uhuruphotos.log.log
+import com.savvasdalkitsis.uhuruphotos.api.log.log
 import com.savvasdalkitsis.uhuruphotos.people.api.usecase.PeopleUseCase
 import com.savvasdalkitsis.uhuruphotos.people.api.view.state.toPerson
 import com.savvasdalkitsis.uhuruphotos.photos.usecase.PhotosUseCase

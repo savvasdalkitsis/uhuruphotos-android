@@ -20,7 +20,7 @@ import androidx.hilt.work.HiltWorker
 import androidx.work.CoroutineWorker
 import androidx.work.ForegroundInfo
 import androidx.work.WorkerParameters
-import com.savvasdalkitsis.uhuruphotos.log.log
+import com.savvasdalkitsis.uhuruphotos.api.log.log
 import com.savvasdalkitsis.uhuruphotos.notification.NotificationChannels.JOBS_CHANNEL_ID
 import com.savvasdalkitsis.uhuruphotos.notification.foregroundInfo
 import com.savvasdalkitsis.uhuruphotos.photos.repository.PhotoRepository

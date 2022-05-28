@@ -20,7 +20,7 @@ import com.savvasdalkitsis.uhuruphotos.infrastructure.module.InfrastructureModul
 import com.savvasdalkitsis.uhuruphotos.infrastructure.module.InfrastructureModule.DisplayingDateTimeFormat
 import com.savvasdalkitsis.uhuruphotos.infrastructure.module.InfrastructureModule.ParsingDateFormat
 import com.savvasdalkitsis.uhuruphotos.infrastructure.module.InfrastructureModule.ParsingDateTimeFormat
-import com.savvasdalkitsis.uhuruphotos.log.log
+import com.savvasdalkitsis.uhuruphotos.api.log.log
 import java.text.DateFormat
 import java.util.*
 import javax.inject.Inject

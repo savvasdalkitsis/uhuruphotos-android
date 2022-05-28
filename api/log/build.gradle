@@ -1,0 +1,9 @@
+android {
+    namespace 'com.savvasdalkitsis.api.log'
+}
+
+dependencies {
+    implementation(
+            libs.bundles.lumberjack,
+    )
+}

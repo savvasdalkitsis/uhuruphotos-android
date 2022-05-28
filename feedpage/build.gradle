@@ -27,7 +27,7 @@ dependencies {
     implementation project(":server")
     implementation project(":toaster")
     implementation project(":settings")
-    implementation project(":log")
+    implementation project(":api:log")
     implementation project(":strings")
     implementation project(":homenavigation")
     implementation(

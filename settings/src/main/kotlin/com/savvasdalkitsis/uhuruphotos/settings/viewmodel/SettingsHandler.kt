@@ -17,8 +17,8 @@ package com.savvasdalkitsis.uhuruphotos.settings.viewmodel
 
 import androidx.work.ExistingPeriodicWorkPolicy.REPLACE
 import androidx.work.WorkInfo.State.RUNNING
+import com.savvasdalkitsis.api.log.usecase.FeedbackUseCase
 import com.savvasdalkitsis.uhuruphotos.albums.api.worker.AlbumWorkScheduler
-import com.savvasdalkitsis.uhuruphotos.log.FeedbackUseCase
 import com.savvasdalkitsis.uhuruphotos.search.api.SearchUseCase
 import com.savvasdalkitsis.uhuruphotos.settings.usecase.CacheUseCase
 import com.savvasdalkitsis.uhuruphotos.settings.usecase.SettingsUseCase

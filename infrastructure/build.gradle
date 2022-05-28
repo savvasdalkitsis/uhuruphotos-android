@@ -10,7 +10,7 @@ android {
 
 
 dependencies {
-    implementation project(":log")
+    implementation project(":api:log")
     implementation(
             libs.accompanist.insets,
             libs.androidx.compose.foundation.layout,
