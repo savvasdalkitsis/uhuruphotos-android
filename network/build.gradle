@@ -14,6 +14,7 @@ dependencies {
             libs.moshi,
             libs.retrofit.core,
     )
+    kapt libs.moshi.kapt
 }
 
 android {

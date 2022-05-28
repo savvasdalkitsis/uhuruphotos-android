@@ -2,6 +2,7 @@ dependencies {
     implementation(
             libs.moshi,
     )
+    kapt libs.moshi.kapt
 }
 
 android {

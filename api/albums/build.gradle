@@ -9,6 +9,7 @@ dependencies {
             libs.moshi,
             libs.retrofit.moshi,
     )
+    kapt libs.moshi.kapt
 }
 
 android {

@@ -22,4 +22,5 @@ dependencies {
             libs.moshi,
             libs.sqldelight.coroutines,
     )
+    kapt libs.moshi.kapt
 }

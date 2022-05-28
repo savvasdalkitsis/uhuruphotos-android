@@ -1,87 +1,90 @@
 [versions]
-    accompanist = '0.24.8-beta'
-    coil = "2.0.0"
-    compose = "1.2.0-beta01"
-    exoplayer = "2.17.1"
-    lumberjack = "5.2.5"
-    mockk = "1.12.3"
-    okhttp = "4.9.3"
-    retrofit = "2.9.0"
-    sqldelight = "1.5.3"
+accompanist = "0.24.9-beta"
+androidx-hilt = "1.0.0"
+coil = "2.1.0"
+com-squareup-moshi = "1.13.0"
+compose = "1.2.0-beta02"
+exoplayer = "2.17.1"
+lumberjack = "5.2.5"
+mockk = "1.12.4"
+okhttp = "5.0.0-alpha.7"
+retrofit = "2.9.0"
+sqldelight = "1.5.3"
 
 [libraries]
-accompanist-insets = { module = 'com.google.accompanist:accompanist-insets-ui', version.ref = "accompanist" }
-accompanist-navigation = { module = 'com.google.accompanist:accompanist-navigation-animation', version.ref = "accompanist" }
-accompanist-pager = { module = 'com.google.accompanist:accompanist-pager', version.ref = "accompanist" }
-accompanist-permissions = { module = 'com.google.accompanist:accompanist-permissions', version.ref = "accompanist" }
-accompanist-swiperefresh = { module = 'com.google.accompanist:accompanist-swiperefresh', version.ref = "accompanist" }
-accompanist-systemui = { module = 'com.google.accompanist:accompanist-systemuicontroller', version.ref = "accompanist" }
-accompanist-webview = { module = 'com.google.accompanist:accompanist-webview', version.ref = "accompanist" }
-androidx-activity = 'androidx.activity:activity-compose:1.6.0-alpha03'
-androidx-compose-foundation = { module = 'androidx.compose.foundation:foundation', version.ref = "compose" }
-androidx-compose-foundation-layout = { module = 'androidx.compose.foundation:foundation-layout', version.ref = "compose" }
-androidx-compose-hilt-navigation = 'androidx.hilt:hilt-navigation-compose:1.0.0'
-androidx-compose-livedata = { module = 'androidx.compose.runtime:runtime-livedata', version.ref = "compose" }
-androidx-compose-material = { module = 'androidx.compose.material:material', version.ref = "compose" }
-androidx-compose-material-windowsize = "androidx.compose.material3:material3-window-size-class:1.0.0-alpha11"
-androidx-compose-navigation = 'androidx.navigation:navigation-compose:2.5.0-rc01'
-androidx-compose-test-junit = { module = 'androidx.compose.ui:ui-test-junit4', version.ref = "compose" }
-androidx-compose-test-manifest = { module = 'androidx.compose.ui:ui-test-manifest', version.ref = "compose" }
-androidx-compose-tooling = { module = 'androidx.compose.ui:ui-tooling-preview', version.ref = "compose" }
-androidx-compose-ui = { module = 'androidx.compose.ui:ui', version.ref = "compose" }
-androidx-compose-ui-util = { module = 'androidx.compose.ui:ui-util', version.ref = "compose" }
-androidx-core = 'androidx.core:core-ktx:1.9.0-alpha03'
-androidx-datastore-preferences = 'androidx.datastore:datastore-preferences:1.0.0'
-androidx-espresso = 'androidx.test.espresso:espresso-core:3.4.0'
-androidx-lifecycle = 'androidx.lifecycle:lifecycle-runtime-ktx:2.5.0-rc01'
-androidx-preference = 'androidx.preference:preference-ktx:1.2.0'
-androidx-test-core = 'androidx.test:core:1.3.0'
-androidx-test-runner = 'androidx.test:runner:1.4.0'
-androidx-window = 'androidx.window:window:1.1.0-alpha02'
-androidx-work = 'androidx.work:work-runtime-ktx:2.8.0-alpha02'
-androidx-work-hilt = 'androidx.hilt:hilt-work:1.0.0'
-coil-base = { module = 'io.coil-kt:coil-base', version.ref = "coil" }
-coil-compose = { module = 'io.coil-kt:coil-compose', version.ref = "coil" }
-coil-gif = { module = 'io.coil-kt:coil-gif', version.ref = "coil" }
-coil-video = { module = 'io.coil-kt:coil-video', version.ref = "coil" }
+accompanist-insets = { module = "com.google.accompanist:accompanist-insets-ui", version.ref = "accompanist" }
+accompanist-navigation = { module = "com.google.accompanist:accompanist-navigation-animation", version.ref = "accompanist" }
+accompanist-pager = { module = "com.google.accompanist:accompanist-pager", version.ref = "accompanist" }
+accompanist-permissions = { module = "com.google.accompanist:accompanist-permissions", version.ref = "accompanist" }
+accompanist-swiperefresh = { module = "com.google.accompanist:accompanist-swiperefresh", version.ref = "accompanist" }
+accompanist-systemui = { module = "com.google.accompanist:accompanist-systemuicontroller", version.ref = "accompanist" }
+accompanist-webview = { module = "com.google.accompanist:accompanist-webview", version.ref = "accompanist" }
+androidx-activity = "androidx.activity:activity-compose:1.6.0-alpha03"
+androidx-compose-foundation = { module = "androidx.compose.foundation:foundation", version.ref = "compose" }
+androidx-compose-foundation-layout = { module = "androidx.compose.foundation:foundation-layout", version.ref = "compose" }
+androidx-compose-hilt-navigation = { module = "androidx.hilt:hilt-navigation-compose", version.ref = "androidx-hilt" }
+androidx-compose-material = { module = "androidx.compose.material:material", version.ref = "compose" }
+androidx-compose-material-windowsize = "androidx.compose.material3:material3-window-size-class:1.0.0-alpha12"
+androidx-compose-navigation = "androidx.navigation:navigation-compose:2.5.0-rc01"
+androidx-compose-test-junit = { module = "androidx.compose.ui:ui-test-junit4", version.ref = "compose" }
+androidx-compose-test-manifest = { module = "androidx.compose.ui:ui-test-manifest", version.ref = "compose" }
+androidx-compose-ui = { module = "androidx.compose.ui:ui", version.ref = "compose" }
+androidx-compose-ui-util = { module = "androidx.compose.ui:ui-util", version.ref = "compose" }
+androidx-core = "androidx.core:core-ktx:1.9.0-alpha04"
+androidx-datastore-preferences = "androidx.datastore:datastore-preferences:1.0.0"
+androidx-espresso = "androidx.test.espresso:espresso-core:3.5.0-alpha06"
+androidx-lifecycle = "androidx.lifecycle:lifecycle-runtime-ktx:2.5.0-rc01"
+androidx-preference = "androidx.preference:preference-ktx:1.2.0"
+androidx-test-core = "androidx.test:core:1.4.1-alpha06"
+androidx-test-runner = "androidx.test:runner:1.5.0-alpha03"
+androidx-window = "androidx.window:window:1.1.0-alpha02"
+androidx-work = "androidx.work:work-runtime-ktx:2.8.0-alpha02"
+androidx-work-hilt = { module = "androidx.hilt:hilt-work", version.ref = "androidx-hilt" }
+coil-base = { module = "io.coil-kt:coil-base", version.ref = "coil" }
+coil-compose = { module = "io.coil-kt:coil-compose", version.ref = "coil" }
+coil-gif = { module = "io.coil-kt:coil-gif", version.ref = "coil" }
+coil-video = { module = "io.coil-kt:coil-video", version.ref = "coil" }
 exif = "androidx.exifinterface:exifinterface:1.3.3"
 exoplayer-base = { module = "com.google.android.exoplayer:exoplayer", version.ref = "exoplayer" }
 exoplayer-okhttp = { module = "com.google.android.exoplayer:extension-okhttp", version.ref = "exoplayer" }
-flowpreferences = 'com.fredporciuncula:flow-preferences:1.6.0'
-hilt = 'com.google.dagger:hilt-android:2.42'
-infobar = 'com.radusalagean:info-bar-compose:1.0.0'
+firebase-bom = "com.google.firebase:firebase-bom:30.1.0"
+flowpreferences = "com.fredporciuncula:flow-preferences:1.7.0"
+hilt = "com.google.dagger:hilt-android:2.42"
+infobar = "com.radusalagean:info-bar-compose:1.0.0"
 junit = "junit:junit:4.13.2"
-jwt = 'com.auth0.android:jwtdecode:2.0.1'
-kotlinx-coroutines = "org.jetbrains.kotlinx:kotlinx-coroutines-core-jvm:1.6.1"
+jwt = "com.auth0.android:jwtdecode:2.0.1"
+kotlinx-coroutines = "org.jetbrains.kotlinx:kotlinx-coroutines-core-jvm:1.6.2"
+# @pin cannot update until lumbejack supports timber 5
+logger = "com.jakewharton.timber:timber:4.7.1"
 lumberjack-core = { module = "com.github.MFlisar.Lumberjack:lumberjack-library", version.ref = "lumberjack" }
-lumberjack-file = { module = "com.github.MFlisar.Lumberjack:lumberjack-filelogger", version.ref = "lumberjack" }
 lumberjack-feedback = { module = "com.github.MFlisar.Lumberjack:lumberjack-feedback", version.ref = "lumberjack" }
 lumberjack-feedback-manager = "com.github.MFlisar:FeedbackManager:2.0.2"
+lumberjack-file = { module = "com.github.MFlisar.Lumberjack:lumberjack-filelogger", version.ref = "lumberjack" }
 lumberjack-notification = { module = "com.github.MFlisar.Lumberjack:lumberjack-notification", version.ref = "lumberjack" }
-logger = 'com.jakewharton.timber:timber:4.7.1'
-maps = 'com.google.android.gms:play-services-maps:18.0.2'
-maps-compose = 'com.google.maps.android:maps-compose:2.1.1'
-maps-utils = 'com.google.maps.android:android-maps-utils:2.3.0'
-maps-utils-ktx = 'com.google.maps.android:maps-utils-ktx:3.4.0'
+maps = "com.google.android.gms:play-services-maps:18.0.2"
+maps-compose = "com.google.maps.android:maps-compose:2.1.1"
+maps-utils = "com.google.maps.android:android-maps-utils:2.3.0"
+maps-utils-ktx = "com.google.maps.android:maps-utils-ktx:3.4.0"
 mockk = { module = "io.mockk:mockk", version.ref = "mockk" }
 mockk-android = { module = "io.mockk:mockk-android", version.ref = "mockk" }
-moshi = 'com.squareup.moshi:moshi-kotlin:1.13.0'
-okhttp = { module = 'com.squareup.okhttp3:okhttp', version.ref = "okhttp" }
-okhttp-logging = { module = 'com.squareup.okhttp3:logging-interceptor', version.ref = "okhttp" }
-okhttp-url = { module = 'com.squareup.okhttp3:okhttp-urlconnection', version.ref = "okhttp" }
-retrofit-core = { module = 'com.squareup.retrofit2:retrofit', version.ref = "retrofit" }
-retrofit-moshi = { module = 'com.squareup.retrofit2:converter-moshi', version.ref = "retrofit" }
+moshi = { module = "com.squareup.moshi:moshi-kotlin", version.ref = "com-squareup-moshi" }
+moshi-kapt = { module = "com.squareup.moshi:moshi-kotlin-codegen", version.ref = "com-squareup-moshi" }
+okhttp = { module = "com.squareup.okhttp3:okhttp", version.ref = "okhttp" }
+okhttp-logging = { module = "com.squareup.okhttp3:logging-interceptor", version.ref = "okhttp" }
+okhttp-url = { module = "com.squareup.okhttp3:okhttp-urlconnection", version.ref = "okhttp" }
 result = "com.michael-bull.kotlin-result:kotlin-result:1.1.16"
-shazamcrest = "com.shazam:shazamcrest:0.11"
+retrofit-core = { module = "com.squareup.retrofit2:retrofit", version.ref = "retrofit" }
+retrofit-moshi = { module = "com.squareup.retrofit2:converter-moshi", version.ref = "retrofit" }
 scrollbar = "com.github.nanihadesuka:LazyColumnScrollbar:1.0.3"
-sqldelight-android = { module = 'com.squareup.sqldelight:android-driver', version.ref = "sqldelight" }
-sqldelight-jvm = { module = 'com.squareup.sqldelight:sqlite-driver', version.ref = "sqldelight" }
-sqldelight-coroutines = { module = 'com.squareup.sqldelight:coroutines-extensions', version.ref = "sqldelight" }
+shazamcrest = "com.shazam:shazamcrest:0.11"
+sqldelight-android = { module = "com.squareup.sqldelight:android-driver", version.ref = "sqldelight" }
+sqldelight-coroutines = { module = "com.squareup.sqldelight:coroutines-extensions", version.ref = "sqldelight" }
+sqldelight-jvm = { module = "com.squareup.sqldelight:sqlite-driver", version.ref = "sqldelight" }
 turbine = "app.cash.turbine:turbine:0.8.0"
 urlvalidator = "commons-validator:commons-validator:1.7"
 zoomable = "com.mxalbert.zoomable:zoomable:1.4.2"
 
 [bundles]
-lumberjack = ["lumberjack-core", "lumberjack-file", "lumberjack-feedback", "lumberjack-notification", "lumberjack-feedback-manager"]
-test = ["junit", "mockk", "turbine", "shazamcrest"]
-test-android = ["junit", "mockk-android", "androidx-espresso", "androidx-test-core", "androidx-test-runner", "androidx-compose-test-junit", "androidx-compose-test-manifest"]
+lumberjack = ["lumberjack-core", "lumberjack-feedback", "lumberjack-feedback-manager", "lumberjack-file", "lumberjack-notification"]
+test = ["junit", "mockk", "shazamcrest", "turbine"]
+test-android = ["androidx-compose-test-junit", "androidx-compose-test-manifest", "androidx-espresso", "androidx-test-core", "androidx-test-runner", "junit", "mockk-android"]
