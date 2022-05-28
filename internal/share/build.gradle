@@ -2,7 +2,7 @@ dependencies {
 
     implementation project(":api:share")
     implementation project(":navigation")
-    implementation project(":settings")
+    implementation project(":api:settings")
     implementation(
             libs.coil.base,
             libs.exif,

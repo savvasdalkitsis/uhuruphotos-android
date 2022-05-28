@@ -61,7 +61,6 @@ dependencies {
     implementation project(":ui")
     implementation project(":server")
     implementation project(":api:initializer")
-    implementation project(":settings")
     implementation project(':api:userbadge')
     implementation project(":api:homenavigation")
 
@@ -75,6 +74,7 @@ dependencies {
     implementation project(":internal:people")
     implementation project(":internal:photos")
     implementation project(":internal:search")
+    implementation project(":internal:settings")
     implementation project(":internal:share")
     implementation project(":internal:userbadge")
     implementation project(":internal:video")

@@ -26,7 +26,7 @@ dependencies {
     implementation project(":api:share")
     implementation project(":server")
     implementation project(":api:toaster")
-    implementation project(":settings")
+    implementation project(":api:settings")
     implementation project(":api:log")
     implementation project(":api:strings")
     implementation project(":api:homenavigation")

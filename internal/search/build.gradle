@@ -23,7 +23,7 @@ dependencies {
     implementation project(":account")
     implementation project(":feedpage")
     implementation project(":server")
-    implementation project(":settings")
+    implementation project(":api:settings")
     implementation project(":api:map")
     implementation project(":api:log")
     implementation project(":api:icons")

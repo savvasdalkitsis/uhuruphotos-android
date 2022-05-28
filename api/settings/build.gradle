@@ -1,0 +1,11 @@
+android {
+    namespace 'com.savvasdalkitsis.uhuruphotos.api.settings'
+}
+
+dependencies {
+    api project(":ui")
+    api(
+            libs.androidx.work,
+            libs.kotlinx.coroutines,
+    )
+}

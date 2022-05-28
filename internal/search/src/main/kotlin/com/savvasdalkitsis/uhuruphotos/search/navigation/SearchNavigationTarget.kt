@@ -27,7 +27,7 @@ import com.savvasdalkitsis.uhuruphotos.search.view.SearchPage
 import com.savvasdalkitsis.uhuruphotos.search.view.state.SearchState
 import com.savvasdalkitsis.uhuruphotos.search.viewmodel.SearchEffectsHandler
 import com.savvasdalkitsis.uhuruphotos.search.viewmodel.SearchViewModel
-import com.savvasdalkitsis.uhuruphotos.settings.usecase.SettingsUseCase
+import com.savvasdalkitsis.uhuruphotos.api.settings.usecase.SettingsUseCase
 import javax.inject.Inject
 
 class SearchNavigationTarget @Inject constructor(

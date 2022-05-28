@@ -14,7 +14,7 @@ dependencies {
     implementation project(":api:heatmap")
     implementation project(":navigation")
     implementation project(":api:map")
-    implementation project(":settings")
+    implementation project(":api:settings")
     implementation project(':api:albums')
     implementation project(":internal:photos")
     implementation project(':api:photos')

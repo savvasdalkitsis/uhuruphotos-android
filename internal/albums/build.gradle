@@ -22,7 +22,7 @@ dependencies {
     implementation project(":api:icons")
     implementation project(":worker")
     implementation project(":api:initializer")
-    implementation project(":settings")
+    implementation project(":api:settings")
     implementation project(':api:albums')
     implementation project(':api:photos')
     implementation project(":api:notification")

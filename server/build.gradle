@@ -23,7 +23,7 @@ dependencies {
     implementation project(":api:icons")
     implementation project(":ui")
     implementation project(":api:toaster")
-    implementation project(":settings")
+    implementation project(":api:settings")
     implementation project(":api:strings")
     implementation(
             libs.androidx.compose.hilt.navigation,

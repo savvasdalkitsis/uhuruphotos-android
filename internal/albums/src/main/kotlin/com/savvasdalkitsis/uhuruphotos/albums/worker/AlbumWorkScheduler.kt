@@ -19,7 +19,7 @@ import androidx.work.ExistingPeriodicWorkPolicy
 import androidx.work.WorkInfo
 import com.savvasdalkitsis.uhuruphotos.albums.api.worker.AlbumWorkScheduler
 import com.savvasdalkitsis.uhuruphotos.albums.api.worker.RefreshJobState
-import com.savvasdalkitsis.uhuruphotos.settings.usecase.SettingsUseCase
+import com.savvasdalkitsis.uhuruphotos.api.settings.usecase.SettingsUseCase
 import com.savvasdalkitsis.uhuruphotos.worker.WorkScheduler
 import com.savvasdalkitsis.uhuruphotos.worker.usecase.WorkerStatusUseCase
 import kotlinx.coroutines.flow.Flow

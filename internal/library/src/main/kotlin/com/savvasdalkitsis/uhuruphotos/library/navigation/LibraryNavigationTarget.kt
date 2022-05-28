@@ -28,7 +28,7 @@ import com.savvasdalkitsis.uhuruphotos.library.viewmodel.LibraryViewModel
 import com.savvasdalkitsis.uhuruphotos.navigation.ControllersProvider
 import com.savvasdalkitsis.uhuruphotos.navigation.NavigationTarget
 import com.savvasdalkitsis.uhuruphotos.navigation.navigationTarget
-import com.savvasdalkitsis.uhuruphotos.settings.usecase.SettingsUseCase
+import com.savvasdalkitsis.uhuruphotos.api.settings.usecase.SettingsUseCase
 import javax.inject.Inject
 
 class LibraryNavigationTarget @Inject constructor(

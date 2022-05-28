@@ -34,7 +34,7 @@ import com.savvasdalkitsis.uhuruphotos.search.mvflow.SearchEffect.NavigateToSett
 import com.savvasdalkitsis.uhuruphotos.search.mvflow.SearchEffect.OpenPhotoDetails
 import com.savvasdalkitsis.uhuruphotos.search.mvflow.SearchEffect.ReloadApp
 import com.savvasdalkitsis.uhuruphotos.server.navigation.ServerNavigationTarget
-import com.savvasdalkitsis.uhuruphotos.settings.navigation.SettingsNavigationTarget
+import com.savvasdalkitsis.uhuruphotos.api.settings.navigation.SettingsNavigationTarget
 import com.savvasdalkitsis.uhuruphotos.strings.R
 import com.savvasdalkitsis.uhuruphotos.toaster.Toaster
 import com.savvasdalkitsis.uhuruphotos.viewmodel.EffectHandler

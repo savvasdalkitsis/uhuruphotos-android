@@ -29,7 +29,7 @@ import com.savvasdalkitsis.uhuruphotos.navigation.ControllersProvider
 import com.savvasdalkitsis.uhuruphotos.photos.model.PhotoSequenceDataSource.AllPhotos
 import com.savvasdalkitsis.uhuruphotos.photos.navigation.PhotoNavigationTarget
 import com.savvasdalkitsis.uhuruphotos.server.navigation.ServerNavigationTarget
-import com.savvasdalkitsis.uhuruphotos.settings.navigation.SettingsNavigationTarget
+import com.savvasdalkitsis.uhuruphotos.api.settings.navigation.SettingsNavigationTarget
 import com.savvasdalkitsis.uhuruphotos.strings.R
 import com.savvasdalkitsis.uhuruphotos.toaster.Toaster
 import com.savvasdalkitsis.uhuruphotos.viewmodel.EffectHandler

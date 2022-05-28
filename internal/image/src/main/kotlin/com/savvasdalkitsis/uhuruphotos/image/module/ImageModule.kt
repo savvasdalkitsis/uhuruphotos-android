@@ -26,7 +26,7 @@ import coil.memory.MemoryCache
 import com.savvasdalkitsis.uhuruphotos.auth.module.AuthModule
 import com.savvasdalkitsis.uhuruphotos.auth.service.TokenRefreshInterceptor
 import com.savvasdalkitsis.uhuruphotos.infrastructure.extensions.mb
-import com.savvasdalkitsis.uhuruphotos.settings.usecase.SettingsUseCase
+import com.savvasdalkitsis.uhuruphotos.api.settings.usecase.SettingsUseCase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

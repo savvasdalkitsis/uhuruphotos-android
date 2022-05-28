@@ -80,7 +80,7 @@ import com.savvasdalkitsis.uhuruphotos.search.view.state.SearchSuggestion
 import com.savvasdalkitsis.uhuruphotos.search.view.state.SearchSuggestion.PersonSearchSuggestion
 import com.savvasdalkitsis.uhuruphotos.search.view.state.SearchSuggestion.RecentSearchSuggestion
 import com.savvasdalkitsis.uhuruphotos.search.view.state.SearchSuggestion.ServerSearchSuggestion
-import com.savvasdalkitsis.uhuruphotos.settings.usecase.SettingsUseCase
+import com.savvasdalkitsis.uhuruphotos.api.settings.usecase.SettingsUseCase
 import com.savvasdalkitsis.uhuruphotos.userbadge.api.UserBadgeUseCase
 import com.savvasdalkitsis.uhuruphotos.viewmodel.Handler
 import kotlinx.coroutines.CancellationException

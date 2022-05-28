@@ -27,7 +27,7 @@ import com.savvasdalkitsis.uhuruphotos.people.viewmodel.PeopleAction.LoadPeople
 import com.savvasdalkitsis.uhuruphotos.people.viewmodel.PeopleEffect
 import com.savvasdalkitsis.uhuruphotos.people.viewmodel.PeopleEffectHandler
 import com.savvasdalkitsis.uhuruphotos.people.viewmodel.PeopleViewModel
-import com.savvasdalkitsis.uhuruphotos.settings.usecase.SettingsUseCase
+import com.savvasdalkitsis.uhuruphotos.api.settings.usecase.SettingsUseCase
 import javax.inject.Inject
 
 class PeopleNavigationTarget @Inject constructor(

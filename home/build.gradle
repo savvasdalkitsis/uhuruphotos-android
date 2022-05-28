@@ -16,7 +16,7 @@ dependencies {
     implementation project(':api:userbadge')
     implementation project(":server")
     implementation project(":auth")
-    implementation project(":settings")
+    implementation project(":api:settings")
     implementation project(":api:strings")
     implementation project(":api:icons")
     implementation project(":api:homenavigation")

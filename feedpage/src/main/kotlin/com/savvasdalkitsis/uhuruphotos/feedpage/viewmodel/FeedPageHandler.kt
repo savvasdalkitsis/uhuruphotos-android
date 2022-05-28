@@ -65,7 +65,7 @@ import com.savvasdalkitsis.uhuruphotos.photos.api.model.SelectionMode.SELECTED
 import com.savvasdalkitsis.uhuruphotos.photos.api.model.SelectionMode.UNDEFINED
 import com.savvasdalkitsis.uhuruphotos.photos.api.model.SelectionMode.UNSELECTED
 import com.savvasdalkitsis.uhuruphotos.photos.usecase.PhotosUseCase
-import com.savvasdalkitsis.uhuruphotos.settings.usecase.SettingsUseCase
+import com.savvasdalkitsis.uhuruphotos.api.settings.usecase.SettingsUseCase
 import com.savvasdalkitsis.uhuruphotos.userbadge.api.UserBadgeUseCase
 import com.savvasdalkitsis.uhuruphotos.viewmodel.Handler
 import kotlinx.coroutines.delay

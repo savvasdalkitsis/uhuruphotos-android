@@ -28,7 +28,7 @@ import com.savvasdalkitsis.uhuruphotos.server.view.Server
 import com.savvasdalkitsis.uhuruphotos.server.view.ServerState
 import com.savvasdalkitsis.uhuruphotos.server.viewmodel.ServerEffectsHandler
 import com.savvasdalkitsis.uhuruphotos.server.viewmodel.ServerViewModel
-import com.savvasdalkitsis.uhuruphotos.settings.usecase.SettingsUseCase
+import com.savvasdalkitsis.uhuruphotos.api.settings.usecase.SettingsUseCase
 import javax.inject.Inject
 
 class ServerNavigationTarget @Inject constructor(

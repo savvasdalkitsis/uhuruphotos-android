@@ -27,7 +27,7 @@ import com.savvasdalkitsis.uhuruphotos.autoalbum.viewmodel.AutoAlbumEffectsHandl
 import com.savvasdalkitsis.uhuruphotos.autoalbum.viewmodel.AutoAlbumViewModel
 import com.savvasdalkitsis.uhuruphotos.navigation.NavigationTarget
 import com.savvasdalkitsis.uhuruphotos.navigation.navigationTarget
-import com.savvasdalkitsis.uhuruphotos.settings.usecase.SettingsUseCase
+import com.savvasdalkitsis.uhuruphotos.api.settings.usecase.SettingsUseCase
 import javax.inject.Inject
 
 class AutoAlbumNavigationTarget @Inject constructor(

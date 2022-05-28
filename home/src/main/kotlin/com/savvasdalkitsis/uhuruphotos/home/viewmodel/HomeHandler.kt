@@ -25,7 +25,7 @@ import com.savvasdalkitsis.uhuruphotos.home.mvflow.HomeMutation
 import com.savvasdalkitsis.uhuruphotos.home.mvflow.HomeMutation.Loading
 import com.savvasdalkitsis.uhuruphotos.home.mvflow.HomeMutation.ShowLibrary
 import com.savvasdalkitsis.uhuruphotos.home.view.state.HomeState
-import com.savvasdalkitsis.uhuruphotos.settings.usecase.SettingsUseCase
+import com.savvasdalkitsis.uhuruphotos.api.settings.usecase.SettingsUseCase
 import com.savvasdalkitsis.uhuruphotos.viewmodel.Handler
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
