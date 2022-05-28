@@ -28,7 +28,7 @@ dependencies {
     implementation project(":notification")
     implementation project(":strings")
     implementation project(":user")
-    implementation project(":people")
+    implementation project(":internal:people")
     implementation(
             libs.androidx.compose.hilt.navigation,
             libs.androidx.work,

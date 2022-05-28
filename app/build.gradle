@@ -60,20 +60,20 @@ dependencies {
     implementation project(":navigation")
     implementation project(":photos")
     implementation project(":ui")
-    implementation project(":search")
+    implementation project(":internal:search")
     implementation project(":server")
     implementation project(":initializer")
-    implementation project(":video")
+    implementation project(":internal:video")
     implementation project(":settings")
     implementation project(':api:userbadge')
-    implementation project(":userbadge")
+    implementation project(":internal:userbadge")
     implementation project(":person")
-    implementation project(":people")
+    implementation project(":internal:people")
     implementation project(":library")
     implementation project(":homenavigation")
 
     // internal projects
-    implementation project(":albums")
+    implementation project(":internal:albums")
 
     implementation(
             libs.accompanist.systemui,
