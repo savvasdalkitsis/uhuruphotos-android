@@ -16,6 +16,9 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.settings.view
 
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.res.stringResource
 import com.savvasdalkitsis.uhuruphotos.settings.viewmodel.SettingsAction
 import com.savvasdalkitsis.uhuruphotos.settings.viewmodel.SettingsAction.ClearLogFileClicked
@@ -25,9 +28,13 @@ import com.savvasdalkitsis.uhuruphotos.icons.R as Icons
 
 @Composable
 internal fun SettingsGroupFeedback(
-    action: (SettingsAction) -> Unit
+    action: (SettingsAction) -> Unit,
+    collapsed: MutableState<Boolean> = remember { mutableStateOf(false) },
 ) {
-    SettingsGroup(title = stringResource(R.string.feedback)) {
+    SettingsGroup(
+        title = stringResource(R.string.feedback),
+        collapsed = collapsed,
+    ) {
         SettingsOutlineButtonRow(
             buttonText = stringResource(R.string.send_feedback_with_logs),
             icon = Icons.drawable.ic_feedback,

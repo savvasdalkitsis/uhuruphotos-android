@@ -91,6 +91,8 @@
     <string name="remove_gps_data_when_sharing">Remove GPS data when sharing</string>
     <string name="theme">Theme</string>
     <string name="video_disk_cache">Video Disk cache</string>
+    <string name="expand_all">Expand all</string>
+    <string name="collapse_all">Collapse all</string>
     <plurals name="item_count">
         <item quantity="one">%d item</item>
         <item quantity="other">%d items</item>

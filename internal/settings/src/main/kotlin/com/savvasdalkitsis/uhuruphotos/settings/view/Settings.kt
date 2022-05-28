@@ -19,27 +19,61 @@ import androidx.compose.material.Text
 import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass.Companion.Compact
 import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass.Companion.Medium
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.res.stringResource
 import com.savvasdalkitsis.uhuruphotos.settings.view.state.SettingsState
 import com.savvasdalkitsis.uhuruphotos.settings.viewmodel.SettingsAction
 import com.savvasdalkitsis.uhuruphotos.settings.viewmodel.SettingsAction.DismissFullFeedSyncDialog
 import com.savvasdalkitsis.uhuruphotos.settings.viewmodel.SettingsAction.NavigateBack
 import com.savvasdalkitsis.uhuruphotos.strings.R
+import com.savvasdalkitsis.uhuruphotos.ui.view.ActionIcon
 import com.savvasdalkitsis.uhuruphotos.ui.view.BackNavButton
 import com.savvasdalkitsis.uhuruphotos.ui.view.CommonScaffold
 import com.savvasdalkitsis.uhuruphotos.ui.view.FullProgressBar
 import com.savvasdalkitsis.uhuruphotos.ui.view.StaggeredGrid
 import com.savvasdalkitsis.uhuruphotos.ui.window.LocalWindowSize
 import com.savvasdalkitsis.uhuruphotos.userbadge.api.view.UserBadge
+import com.savvasdalkitsis.uhuruphotos.icons.R as Icons
 
 @Composable
 internal fun Settings(
     state: SettingsState,
     action: (SettingsAction) -> Unit,
 ) {
+    val collapsedTheme = remember { mutableStateOf(false) }
+    val collapsedImageDiskCache = remember { mutableStateOf(false) }
+    val collapsedImageMemoryCache = remember { mutableStateOf(false) }
+    val collapsedVideoDiskCache = remember { mutableStateOf(false) }
+    val collapsedJobs = remember { mutableStateOf(false) }
+    val collapsedSearch = remember { mutableStateOf(false) }
+    val collapsedShare = remember { mutableStateOf(false) }
+    val collapsedLibrary = remember { mutableStateOf(false) }
+    val collapsedFeedback = remember { mutableStateOf(false) }
+    val allCollapse = listOf(
+        collapsedTheme,
+        collapsedImageDiskCache,
+        collapsedImageMemoryCache,
+        collapsedVideoDiskCache,
+        collapsedJobs,
+        collapsedSearch,
+        collapsedShare,
+        collapsedLibrary,
+        collapsedFeedback,
+    )
     CommonScaffold(
         title = { Text(stringResource(R.string.settings)) },
         actionBarContent = {
+            ActionIcon(
+                onClick = { allCollapse.forEach { it.value = false } },
+                icon = Icons.drawable.ic_expand_all,
+                contentDescription = stringResource(R.string.expand_all),
+            )
+            ActionIcon(
+                onClick = { allCollapse.forEach { it.value = true } },
+                icon = Icons.drawable.ic_collapse_all,
+                contentDescription = stringResource(R.string.collapse_all),
+            )
             UserBadge(state = state.userInformationState)
         },
         navigationIcon = { BackNavButton {
@@ -60,31 +94,31 @@ internal fun Settings(
                 columnCount = columns,
             ) {
                 item {
-                    SettingsGroupTheme(state, action)
+                    SettingsGroupTheme(state, action, collapsedTheme)
                 }
                 item {
-                    SettingsGroupImageDiskCache(state, action)
+                    SettingsGroupImageDiskCache(state, action, collapsedImageDiskCache)
                 }
                 item {
-                    SettingsGroupImageMemoryCache(state, action)
+                    SettingsGroupImageMemoryCache(state, action, collapsedImageMemoryCache)
                 }
                 item {
-                    SettingsGroupVideoDiskCache(state, action)
+                    SettingsGroupVideoDiskCache(state, action, collapsedVideoDiskCache)
                 }
                 item {
-                    SettingsGroupJobs(state, action)
+                    SettingsGroupJobs(state, action, collapsedJobs)
                 }
                 item {
-                    SettingsGroupSearch(state, action)
+                    SettingsGroupSearch(state, action, collapsedSearch)
                 }
                 item {
-                    SettingsGroupShare(state, action)
+                    SettingsGroupShare(state, action, collapsedShare)
                 }
                 item {
-                    SettingsGroupLibrary(state, action)
+                    SettingsGroupLibrary(state, action, collapsedLibrary)
                 }
                 item {
-                    SettingsGroupFeedback(action)
+                    SettingsGroupFeedback(action, collapsedFeedback)
                 }
             }
         }

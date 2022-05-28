@@ -31,6 +31,7 @@ import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -45,6 +46,7 @@ import com.savvasdalkitsis.uhuruphotos.icons.R
 @Composable
 internal fun SettingsGroup(
     title: String,
+    collapsed: MutableState<Boolean> = remember { mutableStateOf(false) },
     content: @Composable ColumnScope.() -> Unit,
 ) {
     Surface(
@@ -53,10 +55,9 @@ internal fun SettingsGroup(
     ) {
         Column {
             val arrowAngle = remember { Animatable(180f) }
-            var collapsed by remember { mutableStateOf(false) }
             Box(modifier = Modifier
                 .fillMaxWidth()
-                .clickable { collapsed = !collapsed }
+                .clickable { collapsed.value = !collapsed.value }
             ) {
                 Row(
                     modifier = Modifier
@@ -75,15 +76,15 @@ internal fun SettingsGroup(
                     )
                 }
             }
-            AnimatedVisibility(visible = !collapsed) {
+            AnimatedVisibility(visible = !collapsed.value) {
                 Column {
                     content()
                 }
             }
-            LaunchedEffect(collapsed) {
+            LaunchedEffect(collapsed.value) {
                 arrowAngle.animateTo(
                     when {
-                        collapsed -> 180f
+                        collapsed.value -> 180f
                         else -> 0f
                     }
                 )

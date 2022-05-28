@@ -16,6 +16,9 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.settings.view
 
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.res.stringResource
 import com.savvasdalkitsis.uhuruphotos.settings.view.state.SettingsState
 import com.savvasdalkitsis.uhuruphotos.settings.viewmodel.SettingsAction
@@ -27,9 +30,13 @@ import com.savvasdalkitsis.uhuruphotos.icons.R as Icons
 @Composable
 internal fun SettingsGroupSearch(
     state: SettingsState,
-    action: (SettingsAction) -> Unit
+    action: (SettingsAction) -> Unit,
+    collapsed: MutableState<Boolean> = remember { mutableStateOf(false) },
 ) {
-    SettingsGroup(title = stringResource(R.string.settings)) {
+    SettingsGroup(
+        title = stringResource(R.string.settings),
+        collapsed = collapsed,
+    ) {
         val checked = state.searchSuggestionsEnabled
         SettingsCheckBox(
             text = stringResource(R.string.enable_suggestions),

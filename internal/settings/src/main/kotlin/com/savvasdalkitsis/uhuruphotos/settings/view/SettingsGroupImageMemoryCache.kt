@@ -16,6 +16,9 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.settings.view
 
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.res.stringResource
 import com.savvasdalkitsis.uhuruphotos.settings.view.state.SettingsState
 import com.savvasdalkitsis.uhuruphotos.settings.viewmodel.SettingsAction
@@ -26,7 +29,8 @@ import com.savvasdalkitsis.uhuruphotos.strings.R
 @Composable
 internal fun SettingsGroupImageMemoryCache(
     state: SettingsState,
-    action: (SettingsAction) -> Unit
+    action: (SettingsAction) -> Unit,
+    collapsed: MutableState<Boolean> = remember { mutableStateOf(false) },
 ) {
     SettingsGroupCache(
         title = stringResource(R.string.image_memory_cache),
@@ -35,5 +39,6 @@ internal fun SettingsGroupImageMemoryCache(
         clearAction = ClearImageMemCache,
         changeCacheSizeAction = { ChangeImageMemCache(it) },
         action = action,
+        collapsed = collapsed,
     )
 }
