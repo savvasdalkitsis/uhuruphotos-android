@@ -10,7 +10,7 @@ android {
 
 dependencies {
 
-    implementation project(":photos")
+    implementation project(":internal:photos")
     implementation project(':api:photos')
     implementation project(':api:albums')
     implementation project(":feed")

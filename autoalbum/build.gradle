@@ -11,7 +11,7 @@ android {
 dependencies {
     implementation project(":db")
     implementation project(':api:albums')
-    implementation project(":photos")
+    implementation project(":internal:photos")
     implementation project(":infrastructure")
     implementation project(":log")
     implementation project(":navigation")

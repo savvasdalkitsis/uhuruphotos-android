@@ -18,7 +18,7 @@ dependencies {
     implementation project(":db")
     implementation project(":log")
     implementation project(":infrastructure")
-    implementation project(":photos")
+    implementation project(":internal:photos")
     implementation project(":icons")
     implementation project(":worker")
     implementation project(":initializer")
@@ -39,13 +39,13 @@ dependencies {
             libs.sqldelight.coroutines,
     )
     testImplementation testFixtures(project(":db"))
-    testImplementation testFixtures(project(":photos"))
+    testImplementation testFixtures(project(":internal:photos"))
     testImplementation testFixtures(project(":user"))
     testImplementation(
             libs.bundles.test,
     )
     testFixturesImplementation testFixtures(project(":db"))
-    testFixturesImplementation project(":photos")
+    testFixturesImplementation project(":internal:photos")
     testFixturesImplementation project(':api:photos')
     testFixturesImplementation project(':api:albums')
     kapt libs.moshi.kapt

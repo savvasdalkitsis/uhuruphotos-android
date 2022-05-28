@@ -17,7 +17,7 @@ dependencies {
     implementation project(":toaster")
     implementation project(":ui")
     implementation project(':api:image')
-    implementation project(":photos")
+    implementation project(":internal:photos")
     implementation project(':api:people')
     implementation project(":navigation")
     implementation project(":settings")

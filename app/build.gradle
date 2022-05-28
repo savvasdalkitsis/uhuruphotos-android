@@ -58,22 +58,22 @@ dependencies {
     implementation project(":feedpage")
     implementation project(":home")
     implementation project(":navigation")
-    implementation project(":photos")
     implementation project(":ui")
-    implementation project(":internal:search")
     implementation project(":server")
     implementation project(":initializer")
-    implementation project(":internal:video")
     implementation project(":settings")
     implementation project(':api:userbadge')
-    implementation project(":internal:userbadge")
-    implementation project(":person")
-    implementation project(":internal:people")
     implementation project(":library")
     implementation project(":homenavigation")
 
     // internal projects
     implementation project(":internal:albums")
+    implementation project(":internal:person")
+    implementation project(":internal:people")
+    implementation project(":internal:photos")
+    implementation project(":internal:search")
+    implementation project(":internal:userbadge")
+    implementation project(":internal:video")
 
     implementation(
             libs.accompanist.systemui,

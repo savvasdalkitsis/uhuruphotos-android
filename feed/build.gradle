@@ -13,7 +13,7 @@ dependencies {
     implementation project(":icons")
     implementation project(":ui")
     implementation project(':api:albums')
-    implementation project(":photos")
+    implementation project(":internal:photos")
     implementation project(':api:photos')
     implementation project(':api:image')
     implementation project(":infrastructure")
