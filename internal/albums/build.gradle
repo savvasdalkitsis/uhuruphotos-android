@@ -21,7 +21,7 @@ dependencies {
     implementation project(":internal:photos")
     implementation project(":icons")
     implementation project(":worker")
-    implementation project(":initializer")
+    implementation project(":api:initializer")
     implementation project(":settings")
     implementation project(':api:albums')
     implementation project(':api:photos')

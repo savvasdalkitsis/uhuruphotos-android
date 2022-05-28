@@ -1,5 +1,5 @@
 dependencies {
-    implementation project(":initializer")
+    implementation project(":api:initializer")
     implementation project(":icons")
     implementation project(":strings")
     implementation(

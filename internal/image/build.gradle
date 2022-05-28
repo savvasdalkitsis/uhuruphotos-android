@@ -11,7 +11,7 @@ android {
 dependencies {
 
     implementation project(":auth")
-    implementation project(":initializer")
+    implementation project(":api:initializer")
     implementation project(":infrastructure")
     implementation project(":settings")
     implementation project(':api:image')
