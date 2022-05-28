@@ -63,4 +63,36 @@
     <string name="edit_server_url">Server-url bewerken</string>
     <string name="delete">Verwijderen</string>
     <string name="downloading_photo_details">Bezig met ophalen van foto-informatie…</string>
+    <string name="perform_full_feed_sync">Fotorol volledig synchroniseren</string>
+    <string name="albums">Albums</string>
+    <string name="missing_album_title">Albumtitel ontbreekt</string>
+    <string name="auto_generated_albums">Automatisch samengestelde albums</string>
+    <string name="sorting">Sorteren</string>
+    <string name="error_loading_auto_albums">Er is een fout opgetreden tijdens het laden van de albums</string>
+    <string name="are_you_sure_you_want_to_perform_full_sync">Weet u zeker dat u een volledige synchronisatie wilt uitvoeren\?</string>
+    <string name="process_takes_while_consumes_battery">Dit proces kan even duren en verhoogt het accuverbruik.</string>
+    <string name="send_feedback_with_logs">Verstuur feedback incl. logboeken</string>
+    <string name="clear_log_file">Logboek wissen</string>
+    <string name="image_disk_cache">Afbeeldingencache op schijf</string>
+    <string name="image_memory_cache">Afbeeldingencache in geheugen</string>
+    <string name="enable_suggestions">Suggesties inschakelen</string>
+    <plurals name="item_count">
+        <item quantity="one">%d item</item>
+        <item quantity="other">%d items</item>
+    </plurals>
+    <string name="library">Verzameling</string>
+    <string name="remove_gps_data_when_sharing">Gps-gegevens wissen tijdens delen</string>
+    <string name="error_loading_album">Er is een fout opgetreden tijdens het laden van dit album</string>
+    <string name="no_auto_albums">Deze gebruiker heeft geen automatisch samengestelde albums</string>
+    <string name="any_connected">Iedere verbinding</string>
+    <string name="metered">Beperkte verbindingen</string>
+    <string name="network_requirements">Netwerkvereisten: %s</string>
+    <string name="unmetered">Onbeperkte verbindingen</string>
+    <string name="not_roaming">Niet tijdens roamen</string>
+    <string name="change">Wijzigen</string>
+    <string name="theme">Thema</string>
+    <string name="feedback">Feedback</string>
+    <string name="show_library_on_home">Verzameling op startscherm tonen</string>
+    <string name="clear_recent_searches">Recente zoekopdrachten wissen</string>
+    <string name="video_disk_cache">Videocache op schijf</string>
 </resources>
