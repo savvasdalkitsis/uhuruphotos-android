@@ -21,7 +21,7 @@ dependencies {
     implementation project(":account")
     implementation project(":accountoverview")
     implementation project(":infrastructure")
-    implementation project(":viewmodel")
+    implementation project(":api:viewmodel")
     implementation project(":navigation")
     implementation project(":api:share")
     implementation project(":server")

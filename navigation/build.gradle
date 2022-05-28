@@ -10,7 +10,7 @@ android {
 
 dependencies {
 
-    api project(":viewmodel")
+    api project(":api:viewmodel")
     implementation project(":api:log")
     implementation project(":api:toaster")
     implementation project(":ui")
