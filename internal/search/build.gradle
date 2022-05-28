@@ -31,7 +31,7 @@ dependencies {
     implementation project(':api:people')
     implementation project(":infrastructure")
     implementation project(':api:person')
-    implementation project(":heatmap")
+    implementation project(":api:heatmap")
     implementation project(':api:search')
     implementation project(":strings")
     implementation project(":homenavigation")

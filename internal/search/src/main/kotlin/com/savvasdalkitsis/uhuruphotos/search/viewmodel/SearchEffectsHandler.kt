@@ -15,7 +15,7 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.search.viewmodel
 
-import com.savvasdalkitsis.uhuruphotos.heatmap.navigation.HeatMapNavigationTarget
+import com.savvasdalkitsis.uhuruphotos.api.heatmap.navigation.HeatMapNavigationTarget
 import com.savvasdalkitsis.uhuruphotos.homenavigation.HomeNavigationRoutes
 import com.savvasdalkitsis.uhuruphotos.navigation.ControllersProvider
 import com.savvasdalkitsis.uhuruphotos.people.api.navigation.PeopleNavigationTarget

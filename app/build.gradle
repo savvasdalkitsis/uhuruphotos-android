@@ -68,6 +68,7 @@ dependencies {
 
     // internal projects
     implementation project(":internal:albums")
+    implementation project(":internal:heatmap")
     implementation project(":internal:person")
     implementation project(":internal:people")
     implementation project(":internal:photos")
