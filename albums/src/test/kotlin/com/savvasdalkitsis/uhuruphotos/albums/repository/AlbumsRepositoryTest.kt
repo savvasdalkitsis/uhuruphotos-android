@@ -57,7 +57,17 @@ class AlbumsRepositoryTest {
     private val db = TestDatabase.getDb()
     private val albumsService = mockk<AlbumsService>(relaxed = true)
     private val underTest = AlbumsRepository(
-        albumsService, db.albumsQueries, db.personQueries, db.photoSummaryQueries
+        db,
+        albumsService,
+        db.albumsQueries,
+        db.autoAlbumsQueries,
+        db.autoAlbumQueries,
+        db.autoAlbumPhotosQueries,
+        db.autoAlbumPeopleQueries,
+        db.personQueries,
+        db.peopleQueries,
+        db.photoSummaryQueries,
+        db.photoDetailsQueries,
     )
 
     @Test
