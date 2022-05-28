@@ -16,6 +16,7 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.feedpage.viewmodel
 
 import androidx.compose.ui.hapticfeedback.HapticFeedbackType
+import com.savvasdalkitsis.uhuruphotos.api.share.usecase.ShareUseCase
 import com.savvasdalkitsis.uhuruphotos.feedpage.mvflow.FeedPageEffect
 import com.savvasdalkitsis.uhuruphotos.feedpage.mvflow.FeedPageEffect.NavigateToServerEdit
 import com.savvasdalkitsis.uhuruphotos.feedpage.mvflow.FeedPageEffect.NavigateToSettings
@@ -29,7 +30,6 @@ import com.savvasdalkitsis.uhuruphotos.photos.model.PhotoSequenceDataSource.AllP
 import com.savvasdalkitsis.uhuruphotos.photos.navigation.PhotoNavigationTarget
 import com.savvasdalkitsis.uhuruphotos.server.navigation.ServerNavigationTarget
 import com.savvasdalkitsis.uhuruphotos.settings.navigation.SettingsNavigationTarget
-import com.savvasdalkitsis.uhuruphotos.share.ShareImage
 import com.savvasdalkitsis.uhuruphotos.strings.R
 import com.savvasdalkitsis.uhuruphotos.toaster.Toaster
 import com.savvasdalkitsis.uhuruphotos.viewmodel.EffectHandler
@@ -37,7 +37,7 @@ import javax.inject.Inject
 
 class FeedPageEffectsHandler @Inject constructor(
     private val controllersProvider: ControllersProvider,
-    private val shareImage: ShareImage,
+    private val shareUseCase: ShareUseCase,
     private val toaster: Toaster,
 ) : EffectHandler<FeedPageEffect> {
 
@@ -51,7 +51,7 @@ class FeedPageEffectsHandler @Inject constructor(
         }
         is SharePhotos -> {
             toaster.show(R.string.downloading_photos_sharing)
-            shareImage.shareMultiple(effect.selectedPhotos.mapNotNull {
+            shareUseCase.shareMultiple(effect.selectedPhotos.mapNotNull {
                 it.fullResUrl
             })
         }

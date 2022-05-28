@@ -74,6 +74,7 @@ dependencies {
     implementation project(":internal:people")
     implementation project(":internal:photos")
     implementation project(":internal:search")
+    implementation project(":internal:share")
     implementation project(":internal:userbadge")
     implementation project(":internal:video")
 

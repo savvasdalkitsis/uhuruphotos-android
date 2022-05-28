@@ -20,6 +20,7 @@ import android.content.ClipboardManager
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
+import com.savvasdalkitsis.uhuruphotos.api.share.usecase.ShareUseCase
 import com.savvasdalkitsis.uhuruphotos.map.model.LatLon
 import com.savvasdalkitsis.uhuruphotos.navigation.ControllersProvider
 import com.savvasdalkitsis.uhuruphotos.person.api.navigation.PersonNavigationTarget
@@ -32,7 +33,6 @@ import com.savvasdalkitsis.uhuruphotos.photos.mvflow.PhotoEffect.NavigateBack
 import com.savvasdalkitsis.uhuruphotos.photos.mvflow.PhotoEffect.NavigateToPerson
 import com.savvasdalkitsis.uhuruphotos.photos.mvflow.PhotoEffect.SharePhoto
 import com.savvasdalkitsis.uhuruphotos.photos.mvflow.PhotoEffect.ShowSystemBars
-import com.savvasdalkitsis.uhuruphotos.share.ShareImage
 import com.savvasdalkitsis.uhuruphotos.strings.R
 import com.savvasdalkitsis.uhuruphotos.toaster.Toaster
 import com.savvasdalkitsis.uhuruphotos.viewmodel.EffectHandler
@@ -42,7 +42,7 @@ import javax.inject.Inject
 class PhotoEffectsHandler @Inject constructor(
     private val controllersProvider: ControllersProvider,
     private val clipboardManager: ClipboardManager,
-    private val shareImage: ShareImage,
+    private val shareUseCase: ShareUseCase,
     private val toaster: Toaster,
     @ApplicationContext private val context: Context,
 ) : EffectHandler<PhotoEffect> {
@@ -57,7 +57,7 @@ class PhotoEffectsHandler @Inject constructor(
                 clipboardManager.setPrimaryClip(ClipData.newPlainText("", effect.content))
                 toaster.show(R.string.copied_to_clipboard)
             }
-            is SharePhoto -> shareImage.share(effect.url)
+            is SharePhoto -> shareUseCase.share(effect.url)
             is NavigateToPerson -> controllersProvider.navController!!.navigate(
                 PersonNavigationTarget.name(effect.id)
             )

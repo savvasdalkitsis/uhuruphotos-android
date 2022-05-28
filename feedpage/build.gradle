@@ -23,7 +23,7 @@ dependencies {
     implementation project(":infrastructure")
     implementation project(":viewmodel")
     implementation project(":navigation")
-    implementation project(":share")
+    implementation project(":api:share")
     implementation project(":server")
     implementation project(":toaster")
     implementation project(":settings")

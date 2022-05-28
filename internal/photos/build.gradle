@@ -28,7 +28,7 @@ dependencies {
     implementation project(":auth")
     implementation project(":icons")
     implementation project(':api:image')
-    implementation project(":share")
+    implementation project(":api:share")
     implementation project(":internal:video")
     implementation project(":toaster")
     implementation project(":notification")
