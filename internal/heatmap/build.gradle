@@ -22,7 +22,7 @@ dependencies {
     implementation project(":api:toaster")
     implementation project(":feed")
     implementation project(":infrastructure")
-    implementation project(":icons")
+    implementation project(":api:icons")
     implementation project(":strings")
 
     implementation(

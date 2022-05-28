@@ -19,7 +19,7 @@ dependencies {
     implementation project(":api:log")
     implementation project(":infrastructure")
     implementation project(":internal:photos")
-    implementation project(":icons")
+    implementation project(":api:icons")
     implementation project(":worker")
     implementation project(":api:initializer")
     implementation project(":settings")

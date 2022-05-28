@@ -10,7 +10,7 @@ android {
 
 dependencies {
     implementation project(":db")
-    implementation project(":icons")
+    implementation project(":api:icons")
     implementation project(":network")
     implementation project(":infrastructure")
     implementation project(":api:log")

@@ -18,7 +18,7 @@ dependencies {
     implementation project(":auth")
     implementation project(":settings")
     implementation project(":strings")
-    implementation project(":icons")
+    implementation project(":api:icons")
     implementation project(":api:homenavigation")
     implementation(
             libs.androidx.compose.foundation.layout,

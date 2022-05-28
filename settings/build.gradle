@@ -16,7 +16,7 @@ dependencies {
     implementation project(":api:toaster")
     implementation project(':api:userbadge')
     implementation project(':api:albums')
-    implementation project(":icons")
+    implementation project(":api:icons")
     implementation project(':api:video')
     implementation project(':api:search')
     implementation project(":api:log")
