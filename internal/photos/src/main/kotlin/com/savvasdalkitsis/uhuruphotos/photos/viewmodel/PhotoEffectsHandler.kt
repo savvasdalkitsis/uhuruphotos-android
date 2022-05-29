@@ -35,6 +35,7 @@ import com.savvasdalkitsis.uhuruphotos.photos.mvflow.PhotoEffect.SharePhoto
 import com.savvasdalkitsis.uhuruphotos.photos.mvflow.PhotoEffect.ShowSystemBars
 import com.savvasdalkitsis.uhuruphotos.strings.R
 import com.savvasdalkitsis.uhuruphotos.toaster.Toaster
+import com.savvasdalkitsis.uhuruphotos.ui.usecase.UiUseCase
 import com.savvasdalkitsis.uhuruphotos.viewmodel.EffectHandler
 import dagger.hilt.android.qualifiers.ApplicationContext
 import javax.inject.Inject
@@ -44,6 +45,7 @@ class PhotoEffectsHandler @Inject constructor(
     private val clipboardManager: ClipboardManager,
     private val shareUseCase: ShareUseCase,
     private val toaster: Toaster,
+    private val uiUseCase: UiUseCase,
     @ApplicationContext private val context: Context,
 ) : EffectHandler<PhotoEffect> {
 
@@ -72,6 +74,6 @@ class PhotoEffectsHandler @Inject constructor(
     private val String.uri get () = Uri.parse(this)
 
     private fun setBars(visible: Boolean) {
-        controllersProvider.systemUiController!!.isSystemBarsVisible = visible
+        uiUseCase.setSystemBarsVisibility(visible)
     }
 }

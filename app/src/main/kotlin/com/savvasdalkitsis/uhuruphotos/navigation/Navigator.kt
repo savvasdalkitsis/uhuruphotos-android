@@ -21,6 +21,7 @@ import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import com.google.accompanist.navigation.animation.AnimatedNavHost
 import com.google.accompanist.navigation.animation.rememberAnimatedNavController
 import com.savvasdalkitsis.uhuruphotos.homenavigation.HomeNavigationRoutes
+import com.savvasdalkitsis.uhuruphotos.internal.ui.usecase.UiUseCase
 import com.savvasdalkitsis.uhuruphotos.ui.window.LocalSystemUiController
 import kotlinx.coroutines.runBlocking
 import javax.inject.Inject
@@ -28,6 +29,7 @@ import javax.inject.Inject
 class Navigator @Inject constructor(
     private val navigationTargets: Set<@JvmSuppressWildcards NavigationTarget>,
     private val controllersProvider: ControllersProvider,
+    private val uiUseCase: UiUseCase,
 ) {
 
     @Composable
@@ -35,7 +37,9 @@ class Navigator @Inject constructor(
         val navHostController = rememberAnimatedNavController()
         with(controllersProvider) {
             navController = navHostController
-            keyboardController = LocalSoftwareKeyboardController.current
+        }
+        with(uiUseCase) {
+            keyboardController = LocalSoftwareKeyboardController.current!!
             systemUiController = LocalSystemUiController.current
             haptics = LocalHapticFeedback.current
         }

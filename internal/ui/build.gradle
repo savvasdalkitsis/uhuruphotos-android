@@ -1,0 +1,12 @@
+android {
+    namespace 'com.savvasdalkitsis.uhuruphotos.api.ui'
+}
+
+dependencies {
+    implementation project(":api:ui")
+    implementation(
+            libs.accompanist.systemui,
+            libs.androidx.compose.ui,
+            libs.hilt,
+    )
+}

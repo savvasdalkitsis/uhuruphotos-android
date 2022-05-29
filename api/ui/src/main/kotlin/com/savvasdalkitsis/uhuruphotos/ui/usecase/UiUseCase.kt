@@ -13,16 +13,11 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
  */
-package com.savvasdalkitsis.uhuruphotos.navigation
+package com.savvasdalkitsis.uhuruphotos.ui.usecase
 
-import androidx.navigation.NavHostController
-import javax.inject.Inject
-import javax.inject.Singleton
+interface UiUseCase {
 
-@Singleton
-class ControllersProvider @Inject constructor(
-    val intentLauncher: IntentLauncher,
-) {
-
-    var navController: NavHostController? = null
+    fun hideKeyboard()
+    fun setSystemBarsVisibility(visible: Boolean)
+    fun performLongPressHaptic()
 }

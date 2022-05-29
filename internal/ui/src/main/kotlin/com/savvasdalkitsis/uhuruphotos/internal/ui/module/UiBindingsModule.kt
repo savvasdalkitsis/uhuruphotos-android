@@ -13,16 +13,19 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
  */
-package com.savvasdalkitsis.uhuruphotos.navigation
+package com.savvasdalkitsis.uhuruphotos.internal.ui.module
 
-import androidx.navigation.NavHostController
-import javax.inject.Inject
-import javax.inject.Singleton
+import com.savvasdalkitsis.uhuruphotos.internal.ui.usecase.UiUseCase
+import dagger.Binds
+import dagger.Module
+import dagger.hilt.InstallIn
+import dagger.hilt.components.SingletonComponent
 
-@Singleton
-class ControllersProvider @Inject constructor(
-    val intentLauncher: IntentLauncher,
-) {
+@InstallIn(SingletonComponent::class)
+@Module
+abstract class UiBindingsModule {
 
-    var navController: NavHostController? = null
+    @Binds
+    abstract fun uiUseCase(uiUseCase: UiUseCase):
+            com.savvasdalkitsis.uhuruphotos.ui.usecase.UiUseCase
 }

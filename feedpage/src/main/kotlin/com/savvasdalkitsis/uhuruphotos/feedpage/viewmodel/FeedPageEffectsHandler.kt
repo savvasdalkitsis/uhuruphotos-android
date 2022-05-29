@@ -15,7 +15,7 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feedpage.viewmodel
 
-import androidx.compose.ui.hapticfeedback.HapticFeedbackType
+import com.savvasdalkitsis.uhuruphotos.api.settings.navigation.SettingsNavigationTarget
 import com.savvasdalkitsis.uhuruphotos.api.share.usecase.ShareUseCase
 import com.savvasdalkitsis.uhuruphotos.feedpage.mvflow.FeedPageEffect
 import com.savvasdalkitsis.uhuruphotos.feedpage.mvflow.FeedPageEffect.NavigateToServerEdit
@@ -29,9 +29,9 @@ import com.savvasdalkitsis.uhuruphotos.navigation.ControllersProvider
 import com.savvasdalkitsis.uhuruphotos.photos.model.PhotoSequenceDataSource.AllPhotos
 import com.savvasdalkitsis.uhuruphotos.photos.navigation.PhotoNavigationTarget
 import com.savvasdalkitsis.uhuruphotos.server.navigation.ServerNavigationTarget
-import com.savvasdalkitsis.uhuruphotos.api.settings.navigation.SettingsNavigationTarget
 import com.savvasdalkitsis.uhuruphotos.strings.R
 import com.savvasdalkitsis.uhuruphotos.toaster.Toaster
+import com.savvasdalkitsis.uhuruphotos.ui.usecase.UiUseCase
 import com.savvasdalkitsis.uhuruphotos.viewmodel.EffectHandler
 import javax.inject.Inject
 
@@ -39,6 +39,7 @@ class FeedPageEffectsHandler @Inject constructor(
     private val controllersProvider: ControllersProvider,
     private val shareUseCase: ShareUseCase,
     private val toaster: Toaster,
+    private val uiUseCase: UiUseCase,
 ) : EffectHandler<FeedPageEffect> {
 
     override suspend fun invoke(effect: FeedPageEffect) = when (effect) {
@@ -58,7 +59,7 @@ class FeedPageEffectsHandler @Inject constructor(
         NavigateToServerEdit -> navigateTo(
             ServerNavigationTarget.name(auto = false)
         )
-        Vibrate -> controllersProvider.haptics!!.performHapticFeedback(HapticFeedbackType.LongPress)
+        Vibrate -> uiUseCase.performLongPressHaptic()
         NavigateToSettings -> navigateTo(SettingsNavigationTarget.name)
     }
 

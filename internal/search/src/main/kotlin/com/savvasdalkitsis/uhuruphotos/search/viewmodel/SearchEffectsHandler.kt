@@ -16,6 +16,7 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.search.viewmodel
 
 import com.savvasdalkitsis.uhuruphotos.api.heatmap.navigation.HeatMapNavigationTarget
+import com.savvasdalkitsis.uhuruphotos.api.settings.navigation.SettingsNavigationTarget
 import com.savvasdalkitsis.uhuruphotos.homenavigation.HomeNavigationRoutes
 import com.savvasdalkitsis.uhuruphotos.navigation.ControllersProvider
 import com.savvasdalkitsis.uhuruphotos.people.api.navigation.PeopleNavigationTarget
@@ -34,21 +35,22 @@ import com.savvasdalkitsis.uhuruphotos.search.mvflow.SearchEffect.NavigateToSett
 import com.savvasdalkitsis.uhuruphotos.search.mvflow.SearchEffect.OpenPhotoDetails
 import com.savvasdalkitsis.uhuruphotos.search.mvflow.SearchEffect.ReloadApp
 import com.savvasdalkitsis.uhuruphotos.server.navigation.ServerNavigationTarget
-import com.savvasdalkitsis.uhuruphotos.api.settings.navigation.SettingsNavigationTarget
 import com.savvasdalkitsis.uhuruphotos.strings.R
 import com.savvasdalkitsis.uhuruphotos.toaster.Toaster
+import com.savvasdalkitsis.uhuruphotos.ui.usecase.UiUseCase
 import com.savvasdalkitsis.uhuruphotos.viewmodel.EffectHandler
 import javax.inject.Inject
 
 class SearchEffectsHandler @Inject constructor(
     private val controllersProvider: ControllersProvider,
+    private val uiUseCase: UiUseCase,
     private val toaster: Toaster,
 ) : EffectHandler<SearchEffect> {
 
     override suspend fun invoke(
         effect: SearchEffect,
     ) = when (effect) {
-        HideKeyboard -> controllersProvider.keyboardController!!.hide()
+        HideKeyboard -> uiUseCase.hideKeyboard()
         ReloadApp -> {
             with(controllersProvider.navController!!) {
                 backQueue.clear()
