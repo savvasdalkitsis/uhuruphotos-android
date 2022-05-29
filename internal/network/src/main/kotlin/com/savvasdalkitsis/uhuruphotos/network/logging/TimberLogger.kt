@@ -19,7 +19,7 @@ import com.savvasdalkitsis.uhuruphotos.api.log.log
 import okhttp3.logging.HttpLoggingInterceptor
 import javax.inject.Inject
 
-class TimberLogger @Inject constructor() : HttpLoggingInterceptor.Logger {
+internal class TimberLogger @Inject constructor() : HttpLoggingInterceptor.Logger {
 
     override fun log(message: String) = log("OkHttp") { message }
 }

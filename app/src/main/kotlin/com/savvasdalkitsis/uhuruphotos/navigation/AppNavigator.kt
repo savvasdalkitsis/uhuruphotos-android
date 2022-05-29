@@ -26,7 +26,7 @@ import com.savvasdalkitsis.uhuruphotos.ui.window.LocalSystemUiController
 import kotlinx.coroutines.runBlocking
 import javax.inject.Inject
 
-class Navigator @Inject constructor(
+class AppNavigator @Inject constructor(
     private val navigationTargets: Set<@JvmSuppressWildcards NavigationTarget>,
     private val controllersProvider: ControllersProvider,
     private val uiUseCase: UiUseCase,

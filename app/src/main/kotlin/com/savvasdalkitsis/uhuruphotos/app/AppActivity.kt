@@ -23,7 +23,7 @@ import androidx.compose.runtime.CompositionLocalProvider
 import androidx.core.view.WindowCompat
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import com.google.android.exoplayer2.ExoPlayer
-import com.savvasdalkitsis.uhuruphotos.navigation.Navigator
+import com.savvasdalkitsis.uhuruphotos.navigation.AppNavigator
 import com.savvasdalkitsis.uhuruphotos.ui.window.LocalSystemUiController
 import com.savvasdalkitsis.uhuruphotos.ui.window.LocalWindowSize
 import com.savvasdalkitsis.uhuruphotos.video.LocalExoPlayer
@@ -33,7 +33,7 @@ import javax.inject.Inject
 @AndroidEntryPoint
 class AppActivity : ComponentActivity() {
 
-    @Inject lateinit var navigator: Navigator
+    @Inject lateinit var navigator: AppNavigator
     @Inject lateinit var exoPlayer: ExoPlayer
 
     override fun onCreate(savedInstanceState: Bundle?) {

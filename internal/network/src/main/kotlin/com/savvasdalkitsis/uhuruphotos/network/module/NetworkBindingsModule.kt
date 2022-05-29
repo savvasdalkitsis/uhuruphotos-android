@@ -24,7 +24,12 @@ import okhttp3.logging.HttpLoggingInterceptor
 
 @Module
 @InstallIn(SingletonComponent::class)
-abstract class NetworkBindingsModule {
+internal abstract class NetworkBindingsModule {
+
     @Binds
     abstract fun httpLogger(logger: TimberLogger): HttpLoggingInterceptor.Logger
+
+    @Binds
+    abstract fun okHttpBuilder(okHttpBuilder: OkHttpBuilder):
+            com.savvasdalkitsis.uhuruphotos.api.network.OkHttpBuilder
 }

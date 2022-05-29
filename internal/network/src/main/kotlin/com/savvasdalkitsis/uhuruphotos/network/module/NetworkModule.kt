@@ -16,6 +16,7 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.network.module
 
 import android.content.Context
+import com.savvasdalkitsis.uhuruphotos.network.BasicOkHttpClient
 import com.savvasdalkitsis.uhuruphotos.infrastructure.extensions.mb
 import com.savvasdalkitsis.uhuruphotos.infrastructure.extensions.seconds
 import com.savvasdalkitsis.uhuruphotos.network.interceptors.UserAgentInterceptor
@@ -30,17 +31,11 @@ import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 import java.io.File
-import java.util.concurrent.TimeUnit
-import javax.inject.Qualifier
 import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
-class NetworkModule {
-
-    @Qualifier
-    @Retention(AnnotationRetention.BINARY)
-    internal annotation class BasicOkHttpClient
+internal class NetworkModule {
 
     @Provides
     @BasicOkHttpClient

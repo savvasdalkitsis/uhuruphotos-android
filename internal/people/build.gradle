@@ -11,7 +11,7 @@ android {
 dependencies {
     implementation project(":db")
     implementation project(":api:icons")
-    implementation project(":network")
+    implementation project(":api:network")
     implementation project(":infrastructure")
     implementation project(":api:log")
     implementation project(":api:toaster")
@@ -29,6 +29,8 @@ dependencies {
             libs.androidx.compose.material.windowsize,
             libs.kotlinx.coroutines,
             libs.hilt,
+            libs.moshi,
+            libs.retrofit.core,
             libs.sqldelight.coroutines,
     )
     kapt libs.moshi.kapt

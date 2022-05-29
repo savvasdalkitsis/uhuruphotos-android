@@ -16,13 +16,13 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.auth.module
 
 import android.webkit.CookieManager
+import com.savvasdalkitsis.uhuruphotos.api.network.OkHttpBuilder
 import com.savvasdalkitsis.uhuruphotos.auth.network.DynamicDomainInterceptor
 import com.savvasdalkitsis.uhuruphotos.auth.service.AuthenticationHeaderInterceptor
 import com.savvasdalkitsis.uhuruphotos.auth.service.AuthenticationService
 import com.savvasdalkitsis.uhuruphotos.auth.service.TokenRefreshInterceptor
 import com.savvasdalkitsis.uhuruphotos.auth.service.WebLoginInterceptor
 import com.savvasdalkitsis.uhuruphotos.auth.weblogin.WebkitCookieManager
-import com.savvasdalkitsis.uhuruphotos.network.module.OkHttpBuilder
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

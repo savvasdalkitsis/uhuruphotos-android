@@ -1,0 +1,12 @@
+android {
+    namespace 'com.savvasdalkitsis.uhuruphotos.api.network'
+}
+
+dependencies {
+    api(
+            libs.okhttp,
+    )
+    implementation(
+            libs.hilt,
+    )
+}

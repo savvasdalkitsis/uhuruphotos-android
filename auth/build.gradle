@@ -15,7 +15,7 @@ dependencies {
     implementation project(":infrastructure")
     implementation project(":navigation")
     implementation project(":api:ui")
-    implementation project(":network")
+    implementation project(":api:network")
     implementation project(":api:settings")
     implementation(
             libs.accompanist.webview,
