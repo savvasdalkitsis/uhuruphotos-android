@@ -19,7 +19,7 @@ import com.savvasdalkitsis.uhuruphotos.auth.usecase.ServerUseCase
 import com.savvasdalkitsis.uhuruphotos.db.photos.PhotoDetails
 import com.savvasdalkitsis.uhuruphotos.photos.repository.PhotoRepository
 import com.savvasdalkitsis.uhuruphotos.photos.worker.PhotoWorkScheduler
-import com.savvasdalkitsis.uhuruphotos.user.usecase.UserUseCase
+import com.savvasdalkitsis.uhuruphotos.api.user.usecase.UserUseCase
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 

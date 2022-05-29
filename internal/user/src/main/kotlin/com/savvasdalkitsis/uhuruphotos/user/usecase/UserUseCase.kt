@@ -15,21 +15,22 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.user.usecase
 
+import com.savvasdalkitsis.uhuruphotos.api.user.usecase.UserUseCase
 import com.savvasdalkitsis.uhuruphotos.db.user.User
 import com.savvasdalkitsis.uhuruphotos.infrastructure.extensions.safelyOnStartIgnoring
 import com.savvasdalkitsis.uhuruphotos.user.repository.UserRepository
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
-class UserUseCase @Inject constructor(
+internal class UserUseCase @Inject constructor(
     private val userRepository: UserRepository,
-) {
+) : UserUseCase {
 
-    fun observeUser(): Flow<User> = userRepository.observeUser()
+    override fun observeUser(): Flow<User> = userRepository.observeUser()
         .safelyOnStartIgnoring {
             userRepository.refreshUser()
         }
 
-    suspend fun getUserOrRefresh(): User? =
+    override suspend fun getUserOrRefresh(): User? =
         userRepository.getUser() ?: userRepository.refreshUser()
 }

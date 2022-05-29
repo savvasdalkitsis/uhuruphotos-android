@@ -15,18 +15,18 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.user.module
 
-import com.savvasdalkitsis.uhuruphotos.user.service.UserService
+import com.savvasdalkitsis.uhuruphotos.user.usecase.UserUseCase
+import dagger.Binds
 import dagger.Module
-import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
-import retrofit2.Retrofit
 
-@Module
 @InstallIn(SingletonComponent::class)
-class UserModule {
+@Module
+internal abstract class UserBindingsModule {
 
-    @Provides
-    fun userApi(retrofit: Retrofit): UserService = retrofit.create(UserService::class.java)
+    @Binds
+    abstract fun userUseCase(userUseCase: UserUseCase):
+            com.savvasdalkitsis.uhuruphotos.api.user.usecase.UserUseCase
 
 }

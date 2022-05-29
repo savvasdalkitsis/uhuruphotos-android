@@ -20,7 +20,7 @@ import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 
 @JsonClass(generateAdapter = true)
-data class UserResult(
+internal data class UserResult(
     val id: Int,
     val username: String,
     val email: String,

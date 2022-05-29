@@ -27,7 +27,7 @@ import kotlinx.coroutines.flow.Flow
 import java.io.IOException
 import javax.inject.Inject
 
-class UserRepository @Inject constructor(
+internal class UserRepository @Inject constructor(
     private val userService: UserService,
     private val userQueries: UserQueries,
 ) {

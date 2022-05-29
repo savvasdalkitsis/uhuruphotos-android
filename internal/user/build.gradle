@@ -2,6 +2,7 @@ dependencies {
 
     implementation project(":db")
     implementation project(":api:log")
+    api project(":api:user")
     implementation project(":infrastructure")
     implementation(
             libs.hilt,

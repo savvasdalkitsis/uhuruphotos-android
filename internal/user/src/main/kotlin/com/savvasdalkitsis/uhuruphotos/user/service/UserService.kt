@@ -13,11 +13,13 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
  */
-package com.savvasdalkitsis.uhuruphotos.user.service.model
+package com.savvasdalkitsis.uhuruphotos.user.service
 
-import com.squareup.moshi.JsonClass
+import com.savvasdalkitsis.uhuruphotos.user.service.model.UsersResult
+import retrofit2.http.GET
 
-@JsonClass(generateAdapter = true)
-data class UsersResult(
-    val results: List<UserResult>
-)
+internal interface UserService {
+
+    @GET("/api/user/")
+    suspend fun getUser(): UsersResult
+}
