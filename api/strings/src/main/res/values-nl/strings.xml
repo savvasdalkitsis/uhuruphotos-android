@@ -95,4 +95,6 @@
     <string name="show_library_on_home">Verzameling op startscherm tonen</string>
     <string name="clear_recent_searches">Recente zoekopdrachten wissen</string>
     <string name="video_disk_cache">Videocache op schijf</string>
+    <string name="collapse_all">Alles inklappen</string>
+    <string name="expand_all">Alles uitklappen</string>
 </resources>
