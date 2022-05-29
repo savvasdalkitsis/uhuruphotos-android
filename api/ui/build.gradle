@@ -10,7 +10,6 @@ android {
 
 dependencies {
 
-    implementation project(":db")
     implementation project(":api:icons")
     implementation(
             libs.accompanist.insets,
@@ -22,6 +21,5 @@ dependencies {
             libs.androidx.compose.ui,
             libs.androidx.compose.ui.util,
             libs.androidx.window,
-            libs.okhttp,
     )
 }

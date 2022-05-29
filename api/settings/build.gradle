@@ -3,7 +3,7 @@ android {
 }
 
 dependencies {
-    api project(":ui")
+    api project(":api:ui")
     api(
             libs.androidx.work,
             libs.kotlinx.coroutines,

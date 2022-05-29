@@ -12,7 +12,7 @@ dependencies {
 
     implementation project(":api:icons")
     implementation project(':api:image')
-    implementation project(":ui")
+    implementation project(":api:ui")
     implementation(
             libs.androidx.compose.material,
             libs.androidx.work,

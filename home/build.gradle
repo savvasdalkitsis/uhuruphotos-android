@@ -11,7 +11,7 @@ android {
 dependencies {
 
     implementation project(":feed")
-    implementation project(":ui")
+    implementation project(":api:ui")
     implementation project(":navigation")
     implementation project(':api:userbadge')
     implementation project(":server")

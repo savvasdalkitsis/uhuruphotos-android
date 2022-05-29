@@ -9,7 +9,7 @@ android {
 }
 
 dependencies {
-    implementation project(":ui")
+    implementation project(":api:ui")
     implementation project(':api:person')
     implementation project(":db")
     implementation project(":navigation")

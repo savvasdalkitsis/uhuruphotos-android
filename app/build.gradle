@@ -58,7 +58,7 @@ dependencies {
     implementation project(":feedpage")
     implementation project(":home")
     implementation project(":navigation")
-    implementation project(":ui")
+    implementation project(":api:ui")
     implementation project(":server")
     implementation project(":api:initializer")
     implementation project(':api:userbadge')

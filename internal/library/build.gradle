@@ -20,7 +20,7 @@ dependencies {
     implementation project(":api:strings")
     implementation project(":api:icons")
     implementation project(":feed")
-    implementation project(":ui")
+    implementation project(":api:ui")
     implementation project(":db")
     implementation project(':api:userbadge')
     implementation project(":api:toaster")
