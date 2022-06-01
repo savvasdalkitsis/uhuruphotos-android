@@ -1,5 +1,6 @@
 [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=savvasdalkitsis_uhuruphotos-android&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=savvasdalkitsis_uhuruphotos-android)
 [![Translation status](https://hosted.weblate.org/widgets/uhuruphotos/-/app-translations/svg-badge.svg)](https://hosted.weblate.org/engage/uhuruphotos/)
+[![Lines of code](https://tokei.rs/b1/github/savvasdalkitsis/uhuruphotos-android)](https://github.com/savvasdalkitsis/uhuruphotos-android)
 
 # <img src="https://github.com/savvasdalkitsis/uhuruphotos-android/raw/main/api/icons/src/main/ic_launcher-playstore.png" alt="logo" width = 60px> UhuruPhotos. A LibrePhotos client
 
