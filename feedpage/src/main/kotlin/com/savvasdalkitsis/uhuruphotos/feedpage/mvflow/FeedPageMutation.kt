@@ -21,7 +21,6 @@ import com.savvasdalkitsis.uhuruphotos.userbadge.api.view.state.UserInformationS
 
 sealed class FeedPageMutation {
     object Loading : FeedPageMutation()
-    object FinishedLoading : FeedPageMutation()
     object ShowAccountOverview : FeedPageMutation()
     object HideAccountOverview : FeedPageMutation()
     object ShowLogOutConfirmation : FeedPageMutation()
@@ -30,6 +29,7 @@ sealed class FeedPageMutation {
     object StopRefreshing : FeedPageMutation()
     object ShowDeletionConfirmationDialog : FeedPageMutation()
     object HideDeletionConfirmationDialog : FeedPageMutation()
+    object ShowNoPhotosFound : FeedPageMutation()
 
     data class ShowAlbums(val albums: List<Album>) : FeedPageMutation() {
         override fun toString() = "Showing ${albums.size} albums"

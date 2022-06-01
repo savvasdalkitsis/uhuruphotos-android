@@ -29,6 +29,8 @@ import com.savvasdalkitsis.uhuruphotos.library.mvflow.LibraryAction
 import com.savvasdalkitsis.uhuruphotos.library.mvflow.LibraryAction.RefreshAutoAlbums
 import com.savvasdalkitsis.uhuruphotos.library.view.state.LibraryState
 import com.savvasdalkitsis.uhuruphotos.navigation.ControllersProvider
+import com.savvasdalkitsis.uhuruphotos.strings.R
+import com.savvasdalkitsis.uhuruphotos.ui.view.NoContent
 
 @Composable
 fun Library(
@@ -50,7 +52,7 @@ fun Library(
             onRefresh = { action(RefreshAutoAlbums) }
         ) {
             when {
-                !state.isLoading && state.autoAlbums.isEmpty() -> NoAutoAlbums()
+                !state.isLoading && state.autoAlbums.isEmpty() -> NoContent(R.string.no_auto_albums)
                 else -> LazyVerticalGrid(
                     columns = GridCells.Adaptive(160.dp),
                     contentPadding = contentPadding,

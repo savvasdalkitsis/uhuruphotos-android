@@ -18,9 +18,13 @@ package com.savvasdalkitsis.uhuruphotos.feed.view.state
 import com.savvasdalkitsis.uhuruphotos.albums.api.model.Album
 
 data class FeedState(
-    val isLoading: Boolean = true,
+    val isLoading: Boolean = false,
+    val isEmpty: Boolean = false,
     val albums: List<Album> = emptyList(),
     val feedDisplay: FeedDisplay = FeedDisplays.default,
 ) {
-    override fun toString() = "Feed with ${albums.size} albums."
+    override fun toString(): String {
+        return "FeedState(isLoading=$isLoading, isEmpty=$isEmpty, albumsSize=${albums.size}, feedDisplay=$feedDisplay)"
+    }
+
 }

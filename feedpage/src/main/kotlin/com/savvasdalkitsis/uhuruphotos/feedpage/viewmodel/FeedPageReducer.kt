@@ -17,27 +17,15 @@ package com.savvasdalkitsis.uhuruphotos.feedpage.viewmodel
 
 import com.savvasdalkitsis.uhuruphotos.feed.view.state.FeedState
 import com.savvasdalkitsis.uhuruphotos.feedpage.mvflow.FeedPageMutation
-import com.savvasdalkitsis.uhuruphotos.feedpage.mvflow.FeedPageMutation.ChangeDisplay
-import com.savvasdalkitsis.uhuruphotos.feedpage.mvflow.FeedPageMutation.FinishedLoading
-import com.savvasdalkitsis.uhuruphotos.feedpage.mvflow.FeedPageMutation.HideAccountOverview
-import com.savvasdalkitsis.uhuruphotos.feedpage.mvflow.FeedPageMutation.HideDeletionConfirmationDialog
-import com.savvasdalkitsis.uhuruphotos.feedpage.mvflow.FeedPageMutation.HideLogOutConfirmation
-import com.savvasdalkitsis.uhuruphotos.feedpage.mvflow.FeedPageMutation.Loading
-import com.savvasdalkitsis.uhuruphotos.feedpage.mvflow.FeedPageMutation.ShowAccountOverview
-import com.savvasdalkitsis.uhuruphotos.feedpage.mvflow.FeedPageMutation.ShowAlbums
-import com.savvasdalkitsis.uhuruphotos.feedpage.mvflow.FeedPageMutation.ShowDeletionConfirmationDialog
-import com.savvasdalkitsis.uhuruphotos.feedpage.mvflow.FeedPageMutation.ShowLogOutConfirmation
-import com.savvasdalkitsis.uhuruphotos.feedpage.mvflow.FeedPageMutation.StartRefreshing
-import com.savvasdalkitsis.uhuruphotos.feedpage.mvflow.FeedPageMutation.StopRefreshing
-import com.savvasdalkitsis.uhuruphotos.feedpage.mvflow.FeedPageMutation.UserBadgeUpdate
+import com.savvasdalkitsis.uhuruphotos.feedpage.mvflow.FeedPageMutation.*
 import com.savvasdalkitsis.uhuruphotos.feedpage.view.state.FeedPageState
 import com.savvasdalkitsis.uhuruphotos.viewmodel.Reducer
 
 fun feedPageReducer() : Reducer<FeedPageState, FeedPageMutation> = { state, mutation ->
     when (mutation) {
         is Loading -> state.copyFeed { copy(isLoading = true) }
-        is ShowAlbums -> state.copyFeed { copy(albums = mutation.albums) }
-        FinishedLoading -> state.copyFeed { copy(isLoading = false) }
+        is ShowAlbums -> state.copyFeed { copy(isLoading = false, isEmpty = false, albums = mutation.albums) }
+        ShowNoPhotosFound -> state.copyFeed { copy(isLoading = false, isEmpty = true, albums = emptyList()) }
         is UserBadgeUpdate -> state.copy(userInformationState = mutation.state)
         ShowAccountOverview -> state.copy(showAccountOverview = true)
         HideAccountOverview -> state.copy(showAccountOverview = false)
@@ -48,7 +36,7 @@ fun feedPageReducer() : Reducer<FeedPageState, FeedPageMutation> = { state, muta
         HideDeletionConfirmationDialog -> state.copy(showPhotoDeletionConfirmationDialog = false)
         HideLogOutConfirmation -> state.copy(showLogOutConfirmation = false)
         ShowLogOutConfirmation -> state.copy(showLogOutConfirmation = true)
-        is FeedPageMutation.ShowLibrary -> state.copy(showLibrary = mutation.showLibrary)
+        is ShowLibrary -> state.copy(showLibrary = mutation.showLibrary)
     }
 }
 

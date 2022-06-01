@@ -29,7 +29,9 @@ import com.savvasdalkitsis.uhuruphotos.albums.api.model.Album
 import com.savvasdalkitsis.uhuruphotos.feed.view.state.FeedDisplay
 import com.savvasdalkitsis.uhuruphotos.feed.view.state.FeedState
 import com.savvasdalkitsis.uhuruphotos.photos.api.model.Photo
+import com.savvasdalkitsis.uhuruphotos.strings.R
 import com.savvasdalkitsis.uhuruphotos.ui.view.FullProgressBar
+import com.savvasdalkitsis.uhuruphotos.ui.view.NoContent
 import com.savvasdalkitsis.uhuruphotos.ui.window.LocalWindowSize
 
 @Composable
@@ -44,10 +46,10 @@ fun Feed(
     onChangeDisplay: ((FeedDisplay) -> Unit)? = null,
     onPhotoLongPressed: (Photo) -> Unit = {},
     onAlbumSelectionClicked: (Album) -> Unit = {},
-) {
-    if (state.isLoading && state.albums.isEmpty()) {
-        FullProgressBar()
-    } else {
+) = when {
+    state.isLoading || (!state.isEmpty && state.albums.isEmpty()) -> FullProgressBar()
+    state.isEmpty && state.albums.isEmpty() -> NoContent(R.string.no_photos)
+    else -> {
         val feedDisplay = state.feedDisplay
         StaggeredDateFeed(
             modifier = modifier

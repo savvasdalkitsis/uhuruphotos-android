@@ -49,6 +49,7 @@ class ActionReceiver<S : Any, E : Any, A : Any, M : Any>(
             .collect { mutation ->
                 log("MVI") { "Received mutation $mutation due to action $action" }
                 _state.update { reducer(_state.value, mutation) }
+                log("MVI") { "State updated to: ${_state.value}" }
             }
     }
 }

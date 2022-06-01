@@ -13,8 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
  */
-package com.savvasdalkitsis.uhuruphotos.library.view
+package com.savvasdalkitsis.uhuruphotos.ui.view
 
+import androidx.annotation.StringRes
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -31,10 +32,11 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.savvasdalkitsis.uhuruphotos.strings.R
 
 @Composable
-internal fun NoAutoAlbums() {
+fun NoContent(
+    @StringRes message: Int,
+) {
     Box(
         modifier = Modifier
             .fillMaxSize()
@@ -50,7 +52,7 @@ internal fun NoAutoAlbums() {
                 fontSize = 48.sp,
             )
             Text(
-                text = stringResource(id = R.string.no_auto_albums),
+                text = stringResource(id = message),
                 textAlign = TextAlign.Center,
                 style = MaterialTheme.typography.h4
                     .copy(fontWeight = FontWeight.Bold),

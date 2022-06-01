@@ -66,7 +66,10 @@ import com.savvasdalkitsis.uhuruphotos.photos.api.model.SelectionMode.UNDEFINED
 import com.savvasdalkitsis.uhuruphotos.photos.api.model.SelectionMode.UNSELECTED
 import com.savvasdalkitsis.uhuruphotos.photos.usecase.PhotosUseCase
 import com.savvasdalkitsis.uhuruphotos.api.settings.usecase.SettingsUseCase
+import com.savvasdalkitsis.uhuruphotos.feedpage.mvflow.FeedPageMutation.ShowNoPhotosFound
 import com.savvasdalkitsis.uhuruphotos.userbadge.api.UserBadgeUseCase
+import com.savvasdalkitsis.uhuruphotos.userbadge.api.view.state.SyncState
+import com.savvasdalkitsis.uhuruphotos.userbadge.api.view.state.SyncState.IN_PROGRESS
 import com.savvasdalkitsis.uhuruphotos.viewmodel.Handler
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
@@ -105,9 +108,15 @@ class FeedPageHandler @Inject constructor(
             combine(
                 albumsUseCase.observeAlbums().debounce(200),
                 selectionList.ids,
-            ) { albums, ids ->
+                userBadgeUseCase.getUserBadgeState()
+            ) { albums, ids, userBadge ->
                 albums.selectPhotos(ids)
-            }.map(::ShowAlbums),
+                if (userBadge.syncState != IN_PROGRESS && albums.photosCount == 0) {
+                    ShowNoPhotosFound
+                } else {
+                    ShowAlbums(albums)
+                }
+            },
             userBadgeUseCase.getUserBadgeState()
                 .map(::UserBadgeUpdate),
         )
@@ -191,6 +200,8 @@ class FeedPageHandler @Inject constructor(
     private suspend fun Photo.select() {
         selectionList.select(id)
     }
+
+    private val List<Album>.photosCount get() = sumOf { it.photos.size }
 
     private fun List<Album>.selectPhotos(ids: Set<String>): List<Album> {
         val empty = ids.isEmpty()
