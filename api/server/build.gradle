@@ -1,0 +1,9 @@
+android {
+    namespace 'com.savvasdalkitsis.uhuruphotos.api.server'
+}
+
+dependencies {
+    implementation(
+            libs.androidx.compose.navigation,
+    )
+}

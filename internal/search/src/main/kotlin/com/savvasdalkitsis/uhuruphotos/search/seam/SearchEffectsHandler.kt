@@ -23,7 +23,6 @@ import com.savvasdalkitsis.uhuruphotos.people.api.navigation.PeopleNavigationTar
 import com.savvasdalkitsis.uhuruphotos.person.api.navigation.PersonNavigationTarget
 import com.savvasdalkitsis.uhuruphotos.photos.model.PhotoSequenceDataSource.SearchResults
 import com.savvasdalkitsis.uhuruphotos.photos.navigation.PhotoNavigationTarget
-import com.savvasdalkitsis.uhuruphotos.search.seam.SearchEffect
 import com.savvasdalkitsis.uhuruphotos.search.seam.SearchEffect.ErrorRefreshingPeople
 import com.savvasdalkitsis.uhuruphotos.search.seam.SearchEffect.ErrorSearching
 import com.savvasdalkitsis.uhuruphotos.search.seam.SearchEffect.HideKeyboard
@@ -34,7 +33,7 @@ import com.savvasdalkitsis.uhuruphotos.search.seam.SearchEffect.NavigateToPerson
 import com.savvasdalkitsis.uhuruphotos.search.seam.SearchEffect.NavigateToSettings
 import com.savvasdalkitsis.uhuruphotos.search.seam.SearchEffect.OpenPhotoDetails
 import com.savvasdalkitsis.uhuruphotos.search.seam.SearchEffect.ReloadApp
-import com.savvasdalkitsis.uhuruphotos.server.navigation.ServerNavigationTarget
+import com.savvasdalkitsis.uhuruphotos.api.server.navigation.ServerNavigationTarget
 import com.savvasdalkitsis.uhuruphotos.strings.R
 import com.savvasdalkitsis.uhuruphotos.toaster.Toaster
 import com.savvasdalkitsis.uhuruphotos.ui.usecase.UiUseCase

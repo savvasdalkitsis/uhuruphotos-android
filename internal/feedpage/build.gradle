@@ -25,7 +25,7 @@ dependencies {
     implementation project(':api:seam')
     implementation project(":navigation")
     implementation project(":api:share")
-    implementation project(":server")
+    implementation project(":api:server")
     implementation project(":api:toaster")
     implementation project(":api:settings")
     implementation project(":api:log")
