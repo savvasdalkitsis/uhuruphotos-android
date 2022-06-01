@@ -17,11 +17,11 @@ package com.savvasdalkitsis.uhuruphotos.home.navigation
 
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavGraphBuilder
-import com.savvasdalkitsis.uhuruphotos.home.mvflow.HomeAction
-import com.savvasdalkitsis.uhuruphotos.home.mvflow.HomeEffect
+import com.savvasdalkitsis.uhuruphotos.home.seam.HomeAction
+import com.savvasdalkitsis.uhuruphotos.home.seam.HomeEffect
 import com.savvasdalkitsis.uhuruphotos.home.view.Home
 import com.savvasdalkitsis.uhuruphotos.home.view.state.HomeState
-import com.savvasdalkitsis.uhuruphotos.home.viewmodel.HomeEffectsHandler
+import com.savvasdalkitsis.uhuruphotos.home.seam.HomeEffectsHandler
 import com.savvasdalkitsis.uhuruphotos.home.viewmodel.HomeViewModel
 import com.savvasdalkitsis.uhuruphotos.homenavigation.HomeNavigationRoutes
 import com.savvasdalkitsis.uhuruphotos.navigation.ControllersProvider

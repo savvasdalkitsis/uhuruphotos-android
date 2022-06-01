@@ -38,8 +38,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.max
 import com.google.accompanist.pager.HorizontalPager
 import com.google.accompanist.pager.rememberPagerState
-import com.savvasdalkitsis.uhuruphotos.photos.mvflow.PhotoAction
-import com.savvasdalkitsis.uhuruphotos.photos.mvflow.PhotoAction.ChangedToPage
+import com.savvasdalkitsis.uhuruphotos.photos.seam.PhotoAction
+import com.savvasdalkitsis.uhuruphotos.photos.seam.PhotoAction.ChangedToPage
 import com.savvasdalkitsis.uhuruphotos.photos.view.state.PhotoState
 import com.savvasdalkitsis.uhuruphotos.ui.insets.insetsTop
 import com.savvasdalkitsis.uhuruphotos.ui.view.SheetHandle

@@ -17,8 +17,12 @@ package com.savvasdalkitsis.uhuruphotos.settings.viewmodel
 
 import androidx.lifecycle.ViewModel
 import com.savvasdalkitsis.uhuruphotos.settings.view.state.SettingsState
-import com.savvasdalkitsis.uhuruphotos.viewmodel.ActionReceiver
-import com.savvasdalkitsis.uhuruphotos.viewmodel.ActionReceiverHost
+import com.savvasdalkitsis.uhuruphotos.api.seam.Seam
+import com.savvasdalkitsis.uhuruphotos.api.seam.SeamViaHandler.Companion.handler
+import com.savvasdalkitsis.uhuruphotos.settings.seam.SettingsAction
+import com.savvasdalkitsis.uhuruphotos.settings.seam.SettingsEffect
+import com.savvasdalkitsis.uhuruphotos.settings.seam.SettingsHandler
+import com.savvasdalkitsis.uhuruphotos.settings.seam.SettingsMutation
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
@@ -26,10 +30,7 @@ import javax.inject.Inject
 internal class SettingsViewModel @Inject constructor(
     handler: SettingsHandler,
 ) : ViewModel(),
-    ActionReceiverHost<SettingsState, SettingsEffect, SettingsAction, SettingsMutation> {
-
-    override val actionReceiver = ActionReceiver(
+    Seam<SettingsState, SettingsEffect, SettingsAction, SettingsMutation> by handler(
         handler,
         SettingsState(),
     )
-}

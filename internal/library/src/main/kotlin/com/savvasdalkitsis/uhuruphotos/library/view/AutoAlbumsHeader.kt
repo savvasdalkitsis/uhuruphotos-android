@@ -26,8 +26,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import com.savvasdalkitsis.uhuruphotos.library.mvflow.LibraryAction
-import com.savvasdalkitsis.uhuruphotos.library.mvflow.LibraryAction.ChangeSorting
+import com.savvasdalkitsis.uhuruphotos.library.seam.LibraryAction
+import com.savvasdalkitsis.uhuruphotos.library.seam.LibraryAction.ChangeSorting
 import com.savvasdalkitsis.uhuruphotos.library.view.state.AutoAlbumSorting.ALPHABETICAL_ASC
 import com.savvasdalkitsis.uhuruphotos.library.view.state.AutoAlbumSorting.ALPHABETICAL_DESC
 import com.savvasdalkitsis.uhuruphotos.library.view.state.AutoAlbumSorting.DATE_ASC

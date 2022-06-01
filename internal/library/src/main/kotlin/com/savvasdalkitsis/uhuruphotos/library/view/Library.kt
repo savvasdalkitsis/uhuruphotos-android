@@ -25,8 +25,8 @@ import com.google.accompanist.swiperefresh.SwipeRefresh
 import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 import com.savvasdalkitsis.uhuruphotos.feed.view.state.FeedDisplay
 import com.savvasdalkitsis.uhuruphotos.home.view.HomeScaffold
-import com.savvasdalkitsis.uhuruphotos.library.mvflow.LibraryAction
-import com.savvasdalkitsis.uhuruphotos.library.mvflow.LibraryAction.RefreshAutoAlbums
+import com.savvasdalkitsis.uhuruphotos.library.seam.LibraryAction
+import com.savvasdalkitsis.uhuruphotos.library.seam.LibraryAction.RefreshAutoAlbums
 import com.savvasdalkitsis.uhuruphotos.library.view.state.LibraryState
 import com.savvasdalkitsis.uhuruphotos.navigation.ControllersProvider
 import com.savvasdalkitsis.uhuruphotos.strings.R

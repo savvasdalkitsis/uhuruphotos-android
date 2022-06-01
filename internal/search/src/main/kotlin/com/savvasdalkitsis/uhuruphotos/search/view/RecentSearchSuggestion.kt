@@ -23,7 +23,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import com.savvasdalkitsis.uhuruphotos.icons.R
-import com.savvasdalkitsis.uhuruphotos.search.mvflow.SearchAction
+import com.savvasdalkitsis.uhuruphotos.search.seam.SearchAction
 import com.savvasdalkitsis.uhuruphotos.ui.view.ActionIcon
 
 internal fun LazyListScope.recentSearchSuggestion(

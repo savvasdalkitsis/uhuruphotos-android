@@ -27,7 +27,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import com.google.accompanist.permissions.PermissionState
 import com.savvasdalkitsis.uhuruphotos.heatmap.view.state.HeatMapState
-import com.savvasdalkitsis.uhuruphotos.heatmap.viewmodel.HeatMapAction
+import com.savvasdalkitsis.uhuruphotos.heatmap.seam.HeatMapAction
 import com.savvasdalkitsis.uhuruphotos.ui.insets.systemPadding
 import com.savvasdalkitsis.uhuruphotos.ui.view.CommonScaffold
 

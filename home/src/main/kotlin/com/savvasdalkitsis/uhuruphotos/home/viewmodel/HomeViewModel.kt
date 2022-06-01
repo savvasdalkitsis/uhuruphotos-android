@@ -16,12 +16,13 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.home.viewmodel
 
 import androidx.lifecycle.ViewModel
-import com.savvasdalkitsis.uhuruphotos.home.mvflow.HomeAction
-import com.savvasdalkitsis.uhuruphotos.home.mvflow.HomeEffect
-import com.savvasdalkitsis.uhuruphotos.home.mvflow.HomeMutation
+import com.savvasdalkitsis.uhuruphotos.home.seam.HomeAction
+import com.savvasdalkitsis.uhuruphotos.home.seam.HomeEffect
+import com.savvasdalkitsis.uhuruphotos.home.seam.HomeMutation
 import com.savvasdalkitsis.uhuruphotos.home.view.state.HomeState
-import com.savvasdalkitsis.uhuruphotos.viewmodel.ActionReceiver
-import com.savvasdalkitsis.uhuruphotos.viewmodel.ActionReceiverHost
+import com.savvasdalkitsis.uhuruphotos.api.seam.Seam
+import com.savvasdalkitsis.uhuruphotos.api.seam.SeamViaHandler.Companion.handler
+import com.savvasdalkitsis.uhuruphotos.home.seam.HomeHandler
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
@@ -29,10 +30,7 @@ import javax.inject.Inject
 class HomeViewModel @Inject constructor(
     homeHandler: HomeHandler,
 ) : ViewModel(),
-    ActionReceiverHost<HomeState, HomeEffect, HomeAction, HomeMutation> {
-
-    override val actionReceiver = ActionReceiver(
+    Seam<HomeState, HomeEffect, HomeAction, HomeMutation> by handler(
         homeHandler,
         HomeState(),
     )
-}

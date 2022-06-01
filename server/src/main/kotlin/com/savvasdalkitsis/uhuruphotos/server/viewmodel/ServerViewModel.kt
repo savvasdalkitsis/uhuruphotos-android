@@ -16,12 +16,13 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.server.viewmodel
 
 import androidx.lifecycle.ViewModel
-import com.savvasdalkitsis.uhuruphotos.server.mvflow.ServerAction
-import com.savvasdalkitsis.uhuruphotos.server.mvflow.ServerEffect
-import com.savvasdalkitsis.uhuruphotos.server.mvflow.ServerMutation
+import com.savvasdalkitsis.uhuruphotos.server.seam.ServerAction
+import com.savvasdalkitsis.uhuruphotos.server.seam.ServerEffect
+import com.savvasdalkitsis.uhuruphotos.server.seam.ServerMutation
 import com.savvasdalkitsis.uhuruphotos.server.view.ServerState
-import com.savvasdalkitsis.uhuruphotos.viewmodel.ActionReceiver
-import com.savvasdalkitsis.uhuruphotos.viewmodel.ActionReceiverHost
+import com.savvasdalkitsis.uhuruphotos.api.seam.Seam
+import com.savvasdalkitsis.uhuruphotos.api.seam.SeamViaHandler.Companion.handler
+import com.savvasdalkitsis.uhuruphotos.server.seam.ServerHandler
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
@@ -29,10 +30,7 @@ import javax.inject.Inject
 class ServerViewModel @Inject constructor(
     handler: ServerHandler,
 ) : ViewModel(),
-    ActionReceiverHost<ServerState, ServerEffect, ServerAction, ServerMutation> {
-
-    override val actionReceiver = ActionReceiver(
+    Seam<ServerState, ServerEffect, ServerAction, ServerMutation> by handler(
         handler,
         ServerState.Loading,
     )
-}

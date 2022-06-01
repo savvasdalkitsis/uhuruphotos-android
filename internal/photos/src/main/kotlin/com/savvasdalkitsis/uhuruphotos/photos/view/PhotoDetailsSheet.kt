@@ -41,11 +41,11 @@ import com.savvasdalkitsis.uhuruphotos.icons.R
 import com.savvasdalkitsis.uhuruphotos.infrastructure.extensions.round
 import com.savvasdalkitsis.uhuruphotos.map.view.MapView
 import com.savvasdalkitsis.uhuruphotos.people.api.view.PeopleBar
-import com.savvasdalkitsis.uhuruphotos.photos.mvflow.PhotoAction
-import com.savvasdalkitsis.uhuruphotos.photos.mvflow.PhotoAction.ClickedOnGps
-import com.savvasdalkitsis.uhuruphotos.photos.mvflow.PhotoAction.ClickedOnMap
-import com.savvasdalkitsis.uhuruphotos.photos.mvflow.PhotoAction.HideInfo
-import com.savvasdalkitsis.uhuruphotos.photos.mvflow.PhotoAction.PersonSelected
+import com.savvasdalkitsis.uhuruphotos.photos.seam.PhotoAction
+import com.savvasdalkitsis.uhuruphotos.photos.seam.PhotoAction.ClickedOnGps
+import com.savvasdalkitsis.uhuruphotos.photos.seam.PhotoAction.ClickedOnMap
+import com.savvasdalkitsis.uhuruphotos.photos.seam.PhotoAction.HideInfo
+import com.savvasdalkitsis.uhuruphotos.photos.seam.PhotoAction.PersonSelected
 import com.savvasdalkitsis.uhuruphotos.photos.view.state.PhotoState
 import com.savvasdalkitsis.uhuruphotos.ui.view.TextWithIcon
 

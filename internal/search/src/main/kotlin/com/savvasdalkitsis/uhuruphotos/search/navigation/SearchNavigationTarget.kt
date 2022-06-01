@@ -21,11 +21,11 @@ import com.savvasdalkitsis.uhuruphotos.homenavigation.HomeNavigationRoutes
 import com.savvasdalkitsis.uhuruphotos.navigation.ControllersProvider
 import com.savvasdalkitsis.uhuruphotos.navigation.NavigationTarget
 import com.savvasdalkitsis.uhuruphotos.navigation.navigationTarget
-import com.savvasdalkitsis.uhuruphotos.search.mvflow.SearchAction
-import com.savvasdalkitsis.uhuruphotos.search.mvflow.SearchEffect
+import com.savvasdalkitsis.uhuruphotos.search.seam.SearchAction
+import com.savvasdalkitsis.uhuruphotos.search.seam.SearchEffect
 import com.savvasdalkitsis.uhuruphotos.search.view.SearchPage
 import com.savvasdalkitsis.uhuruphotos.search.view.state.SearchState
-import com.savvasdalkitsis.uhuruphotos.search.viewmodel.SearchEffectsHandler
+import com.savvasdalkitsis.uhuruphotos.search.seam.SearchEffectsHandler
 import com.savvasdalkitsis.uhuruphotos.search.viewmodel.SearchViewModel
 import com.savvasdalkitsis.uhuruphotos.api.settings.usecase.SettingsUseCase
 import javax.inject.Inject

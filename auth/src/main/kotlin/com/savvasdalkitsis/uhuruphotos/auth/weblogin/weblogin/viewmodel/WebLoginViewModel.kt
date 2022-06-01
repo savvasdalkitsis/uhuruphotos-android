@@ -16,12 +16,13 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.auth.weblogin.weblogin.viewmodel
 
 import androidx.lifecycle.ViewModel
-import com.savvasdalkitsis.uhuruphotos.auth.weblogin.weblogin.mvflow.WebLoginAction
-import com.savvasdalkitsis.uhuruphotos.auth.weblogin.weblogin.mvflow.WebLoginEffect
-import com.savvasdalkitsis.uhuruphotos.auth.weblogin.weblogin.mvflow.WebLoginMutation
+import com.savvasdalkitsis.uhuruphotos.auth.weblogin.weblogin.seam.WebLoginAction
+import com.savvasdalkitsis.uhuruphotos.auth.weblogin.weblogin.seam.WebLoginEffect
+import com.savvasdalkitsis.uhuruphotos.auth.weblogin.weblogin.seam.WebLoginMutation
 import com.savvasdalkitsis.uhuruphotos.auth.weblogin.weblogin.view.WebLoginState
-import com.savvasdalkitsis.uhuruphotos.viewmodel.ActionReceiver
-import com.savvasdalkitsis.uhuruphotos.viewmodel.ActionReceiverHost
+import com.savvasdalkitsis.uhuruphotos.api.seam.Seam
+import com.savvasdalkitsis.uhuruphotos.api.seam.SeamViaHandler.Companion.handler
+import com.savvasdalkitsis.uhuruphotos.auth.weblogin.weblogin.seam.WebLoginHandler
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
@@ -29,10 +30,7 @@ import javax.inject.Inject
 class WebLoginViewModel @Inject constructor(
     handler: WebLoginHandler,
 ) : ViewModel(),
-    ActionReceiverHost<WebLoginState, WebLoginEffect, WebLoginAction, WebLoginMutation> {
-
-    override val actionReceiver = ActionReceiver(
+    Seam<WebLoginState, WebLoginEffect, WebLoginAction, WebLoginMutation> by handler(
         handler,
         WebLoginState(""),
     )
-}

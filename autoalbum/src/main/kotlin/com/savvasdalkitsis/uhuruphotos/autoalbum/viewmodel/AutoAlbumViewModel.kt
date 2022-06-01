@@ -16,12 +16,13 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.autoalbum.viewmodel
 
 import androidx.lifecycle.ViewModel
-import com.savvasdalkitsis.uhuruphotos.autoalbum.mvflow.AutoAlbumAction
-import com.savvasdalkitsis.uhuruphotos.autoalbum.mvflow.AutoAlbumEffect
-import com.savvasdalkitsis.uhuruphotos.autoalbum.mvflow.AutoAlbumMutation
+import com.savvasdalkitsis.uhuruphotos.autoalbum.seam.AutoAlbumAction
+import com.savvasdalkitsis.uhuruphotos.autoalbum.seam.AutoAlbumEffect
+import com.savvasdalkitsis.uhuruphotos.autoalbum.seam.AutoAlbumMutation
 import com.savvasdalkitsis.uhuruphotos.autoalbum.view.state.AutoAlbumState
-import com.savvasdalkitsis.uhuruphotos.viewmodel.ActionReceiver
-import com.savvasdalkitsis.uhuruphotos.viewmodel.ActionReceiverHost
+import com.savvasdalkitsis.uhuruphotos.api.seam.Seam
+import com.savvasdalkitsis.uhuruphotos.api.seam.SeamViaHandler.Companion.handler
+import com.savvasdalkitsis.uhuruphotos.autoalbum.seam.AutoAlbumHandler
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
@@ -29,10 +30,7 @@ import javax.inject.Inject
 class AutoAlbumViewModel @Inject constructor(
     autoAlbumHandler: AutoAlbumHandler,
 ) : ViewModel(),
-    ActionReceiverHost<AutoAlbumState, AutoAlbumEffect, AutoAlbumAction, AutoAlbumMutation> {
-
-    override val actionReceiver = ActionReceiver(
+    Seam<AutoAlbumState, AutoAlbumEffect, AutoAlbumAction, AutoAlbumMutation> by handler(
         autoAlbumHandler,
         AutoAlbumState(),
     )
-}

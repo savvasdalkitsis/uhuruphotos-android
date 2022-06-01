@@ -27,7 +27,7 @@ import androidx.compose.ui.unit.dp
 import com.google.accompanist.permissions.PermissionState
 import com.google.accompanist.permissions.isGranted
 import com.savvasdalkitsis.uhuruphotos.heatmap.view.state.HeatMapState
-import com.savvasdalkitsis.uhuruphotos.heatmap.viewmodel.HeatMapAction
+import com.savvasdalkitsis.uhuruphotos.heatmap.seam.HeatMapAction
 import com.savvasdalkitsis.uhuruphotos.map.Locations
 import com.savvasdalkitsis.uhuruphotos.map.view.GoogleMapView
 import com.savvasdalkitsis.uhuruphotos.map.view.rememberGoogleMapViewState

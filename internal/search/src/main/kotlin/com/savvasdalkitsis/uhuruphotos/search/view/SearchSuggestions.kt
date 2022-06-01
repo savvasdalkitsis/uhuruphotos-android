@@ -24,7 +24,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Popup
-import com.savvasdalkitsis.uhuruphotos.search.mvflow.SearchAction
+import com.savvasdalkitsis.uhuruphotos.search.seam.SearchAction
 import com.savvasdalkitsis.uhuruphotos.search.view.state.SearchState
 import com.savvasdalkitsis.uhuruphotos.search.view.state.SearchSuggestion
 

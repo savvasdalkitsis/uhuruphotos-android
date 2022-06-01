@@ -22,9 +22,9 @@ import androidx.compose.material.Button
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.unit.dp
-import com.savvasdalkitsis.uhuruphotos.server.mvflow.ServerAction
-import com.savvasdalkitsis.uhuruphotos.server.mvflow.ServerAction.ChangeServerUrlTo
-import com.savvasdalkitsis.uhuruphotos.server.mvflow.ServerAction.DismissUnsecuredServerDialog
+import com.savvasdalkitsis.uhuruphotos.server.seam.ServerAction
+import com.savvasdalkitsis.uhuruphotos.server.seam.ServerAction.ChangeServerUrlTo
+import com.savvasdalkitsis.uhuruphotos.server.seam.ServerAction.DismissUnsecuredServerDialog
 
 @Composable
 fun UnsecuredServerConfirmationDialog(

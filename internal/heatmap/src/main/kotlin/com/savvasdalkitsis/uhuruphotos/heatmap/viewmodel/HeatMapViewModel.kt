@@ -17,20 +17,20 @@ package com.savvasdalkitsis.uhuruphotos.heatmap.viewmodel
 
 import androidx.lifecycle.ViewModel
 import com.savvasdalkitsis.uhuruphotos.heatmap.view.state.HeatMapState
-import com.savvasdalkitsis.uhuruphotos.viewmodel.ActionReceiver
-import com.savvasdalkitsis.uhuruphotos.viewmodel.ActionReceiverHost
+import com.savvasdalkitsis.uhuruphotos.api.seam.Seam
+import com.savvasdalkitsis.uhuruphotos.api.seam.SeamViaHandler.Companion.handler
+import com.savvasdalkitsis.uhuruphotos.heatmap.seam.HeatMapAction
+import com.savvasdalkitsis.uhuruphotos.heatmap.seam.HeatMapEffect
+import com.savvasdalkitsis.uhuruphotos.heatmap.seam.HeatMapHandler
+import com.savvasdalkitsis.uhuruphotos.heatmap.seam.HeatMapMutation
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
 @HiltViewModel
 class HeatMapViewModel @Inject constructor(
     heatMapHandler: HeatMapHandler,
-): ViewModel(),
-    ActionReceiverHost<HeatMapState, HeatMapEffect, HeatMapAction, HeatMapMutation> {
-
-    override val actionReceiver = ActionReceiver<HeatMapState, HeatMapEffect, HeatMapAction, HeatMapMutation>(
+) : ViewModel(),
+    Seam<HeatMapState, HeatMapEffect, HeatMapAction, HeatMapMutation> by handler(
         heatMapHandler,
         HeatMapState(),
     )
-
-}

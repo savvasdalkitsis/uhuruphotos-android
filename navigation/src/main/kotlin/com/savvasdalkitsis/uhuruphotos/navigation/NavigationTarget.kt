@@ -34,8 +34,8 @@ import com.savvasdalkitsis.uhuruphotos.ui.theme.ThemeMode
 import com.savvasdalkitsis.uhuruphotos.ui.theme.ThemeMode.DARK_MODE
 import com.savvasdalkitsis.uhuruphotos.ui.theme.ThemeMode.FOLLOW_SYSTEM
 import com.savvasdalkitsis.uhuruphotos.ui.theme.ThemeMode.LIGHT_MODE
-import com.savvasdalkitsis.uhuruphotos.viewmodel.ActionReceiverHost
-import com.savvasdalkitsis.uhuruphotos.viewmodel.EffectHandler
+import com.savvasdalkitsis.uhuruphotos.api.seam.Seam
+import com.savvasdalkitsis.uhuruphotos.api.seam.EffectHandler
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.cancellable
 import kotlinx.coroutines.launch
@@ -49,7 +49,7 @@ fun <S : Any, E : Any, A : Any, VM> NavGraphBuilder.navigationTarget(
     initializer: (NavBackStackEntry, (A) -> Unit) -> Unit = { _, _ -> },
     createModel: @Composable () -> VM,
     content: @Composable (state: S, actions: (A) -> Unit) -> Unit,
-) where VM : ViewModel, VM : ActionReceiverHost<S, E, A, *> {
+) where VM : ViewModel, VM : Seam<S, E, A, *> {
     composable(
         name,
         enterTransition = enterTransition,
@@ -59,11 +59,11 @@ fun <S : Any, E : Any, A : Any, VM> NavGraphBuilder.navigationTarget(
         val scope = rememberCoroutineScope()
         val action: (A) -> Unit = {
             scope.launch {
-                model.actionReceiver.action(it)
+                model.action(it)
             }
         }
 
-        val state by model.actionReceiver.state.collectAsState()
+        val state by model.state.collectAsState()
         val theme by themeMode.collectAsState()
         val dark = when (theme) {
             FOLLOW_SYSTEM -> isSystemInDarkTheme()
@@ -78,7 +78,7 @@ fun <S : Any, E : Any, A : Any, VM> NavGraphBuilder.navigationTarget(
         LaunchedEffect(Unit) {
             keyboard?.hide()
             initializer(navBackStackEntry, action)
-            model.actionReceiver.effects.cancellable().collect {
+            model.effects.cancellable().collect {
                 effects.handleEffect(it)
             }
         }

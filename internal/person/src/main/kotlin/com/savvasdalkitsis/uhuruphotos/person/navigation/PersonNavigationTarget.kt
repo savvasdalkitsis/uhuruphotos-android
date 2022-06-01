@@ -23,10 +23,10 @@ import com.savvasdalkitsis.uhuruphotos.person.api.navigation.PersonNavigationTar
 import com.savvasdalkitsis.uhuruphotos.person.api.navigation.PersonNavigationTarget.personId
 import com.savvasdalkitsis.uhuruphotos.person.view.Person
 import com.savvasdalkitsis.uhuruphotos.person.view.state.PersonState
-import com.savvasdalkitsis.uhuruphotos.person.viewmodel.PersonAction
-import com.savvasdalkitsis.uhuruphotos.person.viewmodel.PersonAction.LoadPerson
-import com.savvasdalkitsis.uhuruphotos.person.viewmodel.PersonEffect
-import com.savvasdalkitsis.uhuruphotos.person.viewmodel.PersonEffectHandler
+import com.savvasdalkitsis.uhuruphotos.person.seam.PersonAction
+import com.savvasdalkitsis.uhuruphotos.person.seam.PersonAction.LoadPerson
+import com.savvasdalkitsis.uhuruphotos.person.seam.PersonEffect
+import com.savvasdalkitsis.uhuruphotos.person.seam.PersonEffectHandler
 import com.savvasdalkitsis.uhuruphotos.person.viewmodel.PersonViewModel
 import com.savvasdalkitsis.uhuruphotos.api.settings.usecase.SettingsUseCase
 import javax.inject.Inject

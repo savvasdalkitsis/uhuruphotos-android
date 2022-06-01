@@ -22,7 +22,7 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.stringResource
-import com.savvasdalkitsis.uhuruphotos.settings.viewmodel.SettingsAction
+import com.savvasdalkitsis.uhuruphotos.settings.seam.SettingsAction
 import com.savvasdalkitsis.uhuruphotos.strings.R
 
 @Composable

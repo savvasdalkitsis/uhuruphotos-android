@@ -18,12 +18,12 @@ package com.savvasdalkitsis.uhuruphotos.autoalbum.navigation
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavBackStackEntry
 import androidx.navigation.NavGraphBuilder
-import com.savvasdalkitsis.uhuruphotos.autoalbum.mvflow.AutoAlbumAction
-import com.savvasdalkitsis.uhuruphotos.autoalbum.mvflow.AutoAlbumAction.LoadAlbum
-import com.savvasdalkitsis.uhuruphotos.autoalbum.mvflow.AutoAlbumEffect
+import com.savvasdalkitsis.uhuruphotos.autoalbum.seam.AutoAlbumAction
+import com.savvasdalkitsis.uhuruphotos.autoalbum.seam.AutoAlbumAction.LoadAlbum
+import com.savvasdalkitsis.uhuruphotos.autoalbum.seam.AutoAlbumEffect
 import com.savvasdalkitsis.uhuruphotos.autoalbum.view.AutoAlbum
 import com.savvasdalkitsis.uhuruphotos.autoalbum.view.state.AutoAlbumState
-import com.savvasdalkitsis.uhuruphotos.autoalbum.viewmodel.AutoAlbumEffectsHandler
+import com.savvasdalkitsis.uhuruphotos.autoalbum.seam.AutoAlbumEffectsHandler
 import com.savvasdalkitsis.uhuruphotos.autoalbum.viewmodel.AutoAlbumViewModel
 import com.savvasdalkitsis.uhuruphotos.navigation.NavigationTarget
 import com.savvasdalkitsis.uhuruphotos.navigation.navigationTarget

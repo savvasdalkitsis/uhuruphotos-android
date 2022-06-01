@@ -21,8 +21,8 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.res.stringResource
 import com.savvasdalkitsis.uhuruphotos.settings.view.state.SettingsState
-import com.savvasdalkitsis.uhuruphotos.settings.viewmodel.SettingsAction
-import com.savvasdalkitsis.uhuruphotos.settings.viewmodel.SettingsAction.ChangeShowLibrary
+import com.savvasdalkitsis.uhuruphotos.settings.seam.SettingsAction
+import com.savvasdalkitsis.uhuruphotos.settings.seam.SettingsAction.ChangeShowLibrary
 import com.savvasdalkitsis.uhuruphotos.strings.R
 import com.savvasdalkitsis.uhuruphotos.icons.R as Icons
 

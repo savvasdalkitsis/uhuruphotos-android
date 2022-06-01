@@ -41,10 +41,10 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import com.savvasdalkitsis.uhuruphotos.icons.R
-import com.savvasdalkitsis.uhuruphotos.server.mvflow.ServerAction
-import com.savvasdalkitsis.uhuruphotos.server.mvflow.ServerAction.AttemptChangeServerUrlTo
-import com.savvasdalkitsis.uhuruphotos.server.mvflow.ServerAction.SendLogsClick
-import com.savvasdalkitsis.uhuruphotos.server.mvflow.ServerAction.UrlTyped
+import com.savvasdalkitsis.uhuruphotos.server.seam.ServerAction
+import com.savvasdalkitsis.uhuruphotos.server.seam.ServerAction.AttemptChangeServerUrlTo
+import com.savvasdalkitsis.uhuruphotos.server.seam.ServerAction.SendLogsClick
+import com.savvasdalkitsis.uhuruphotos.server.seam.ServerAction.UrlTyped
 
 @Composable
 fun BoxScope.ServerUrlPage(

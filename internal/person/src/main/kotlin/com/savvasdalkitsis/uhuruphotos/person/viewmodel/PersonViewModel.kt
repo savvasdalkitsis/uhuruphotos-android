@@ -17,8 +17,12 @@ package com.savvasdalkitsis.uhuruphotos.person.viewmodel
 
 import androidx.lifecycle.ViewModel
 import com.savvasdalkitsis.uhuruphotos.person.view.state.PersonState
-import com.savvasdalkitsis.uhuruphotos.viewmodel.ActionReceiver
-import com.savvasdalkitsis.uhuruphotos.viewmodel.ActionReceiverHost
+import com.savvasdalkitsis.uhuruphotos.api.seam.Seam
+import com.savvasdalkitsis.uhuruphotos.api.seam.SeamViaHandler.Companion.handler
+import com.savvasdalkitsis.uhuruphotos.person.seam.PersonAction
+import com.savvasdalkitsis.uhuruphotos.person.seam.PersonEffect
+import com.savvasdalkitsis.uhuruphotos.person.seam.PersonHandler
+import com.savvasdalkitsis.uhuruphotos.person.seam.PersonMutation
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
@@ -26,11 +30,7 @@ import javax.inject.Inject
 class PersonViewModel @Inject constructor(
     personHandler: PersonHandler,
 ) : ViewModel(),
-    ActionReceiverHost<PersonState, PersonEffect, PersonAction, PersonMutation> {
-
-    override val actionReceiver = ActionReceiver(
+    Seam<PersonState, PersonEffect, PersonAction, PersonMutation> by handler(
         personHandler,
         PersonState()
     )
-
-}

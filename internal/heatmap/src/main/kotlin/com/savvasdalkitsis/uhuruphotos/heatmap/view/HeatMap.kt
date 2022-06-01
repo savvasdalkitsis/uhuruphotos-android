@@ -23,7 +23,7 @@ import com.google.accompanist.permissions.isGranted
 import com.google.accompanist.permissions.rememberPermissionState
 import com.google.accompanist.permissions.shouldShowRationale
 import com.savvasdalkitsis.uhuruphotos.heatmap.view.state.HeatMapState
-import com.savvasdalkitsis.uhuruphotos.heatmap.viewmodel.HeatMapAction
+import com.savvasdalkitsis.uhuruphotos.heatmap.seam.HeatMapAction
 
 @Composable
 fun HeatMap(

@@ -25,15 +25,15 @@ import com.savvasdalkitsis.uhuruphotos.feed.view.FeedDisplayActionButton
 import com.savvasdalkitsis.uhuruphotos.home.view.HomeScaffold
 import com.savvasdalkitsis.uhuruphotos.infrastructure.extensions.blurIf
 import com.savvasdalkitsis.uhuruphotos.navigation.ControllersProvider
-import com.savvasdalkitsis.uhuruphotos.search.mvflow.SearchAction
-import com.savvasdalkitsis.uhuruphotos.search.mvflow.SearchAction.AskToLogOut
-import com.savvasdalkitsis.uhuruphotos.search.mvflow.SearchAction.ChangeDisplay
-import com.savvasdalkitsis.uhuruphotos.search.mvflow.SearchAction.DismissAccountOverview
-import com.savvasdalkitsis.uhuruphotos.search.mvflow.SearchAction.DismissLogOutDialog
-import com.savvasdalkitsis.uhuruphotos.search.mvflow.SearchAction.EditServer
-import com.savvasdalkitsis.uhuruphotos.search.mvflow.SearchAction.LogOut
-import com.savvasdalkitsis.uhuruphotos.search.mvflow.SearchAction.SettingsClick
-import com.savvasdalkitsis.uhuruphotos.search.mvflow.SearchAction.UserBadgePressed
+import com.savvasdalkitsis.uhuruphotos.search.seam.SearchAction
+import com.savvasdalkitsis.uhuruphotos.search.seam.SearchAction.AskToLogOut
+import com.savvasdalkitsis.uhuruphotos.search.seam.SearchAction.ChangeDisplay
+import com.savvasdalkitsis.uhuruphotos.search.seam.SearchAction.DismissAccountOverview
+import com.savvasdalkitsis.uhuruphotos.search.seam.SearchAction.DismissLogOutDialog
+import com.savvasdalkitsis.uhuruphotos.search.seam.SearchAction.EditServer
+import com.savvasdalkitsis.uhuruphotos.search.seam.SearchAction.LogOut
+import com.savvasdalkitsis.uhuruphotos.search.seam.SearchAction.SettingsClick
+import com.savvasdalkitsis.uhuruphotos.search.seam.SearchAction.UserBadgePressed
 import com.savvasdalkitsis.uhuruphotos.search.view.state.SearchResults.Found
 import com.savvasdalkitsis.uhuruphotos.search.view.state.SearchState
 

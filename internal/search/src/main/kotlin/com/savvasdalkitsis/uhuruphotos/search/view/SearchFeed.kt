@@ -21,7 +21,7 @@ import androidx.compose.ui.unit.dp
 import com.savvasdalkitsis.uhuruphotos.feed.view.Feed
 import com.savvasdalkitsis.uhuruphotos.feed.view.state.FeedState
 import com.savvasdalkitsis.uhuruphotos.infrastructure.extensions.copy
-import com.savvasdalkitsis.uhuruphotos.search.mvflow.SearchAction
+import com.savvasdalkitsis.uhuruphotos.search.seam.SearchAction
 import com.savvasdalkitsis.uhuruphotos.search.view.state.SearchResults
 import com.savvasdalkitsis.uhuruphotos.search.view.state.SearchState
 

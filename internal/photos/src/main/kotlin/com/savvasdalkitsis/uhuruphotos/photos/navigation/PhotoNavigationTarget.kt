@@ -31,12 +31,12 @@ import com.savvasdalkitsis.uhuruphotos.navigation.NavigationTarget
 import com.savvasdalkitsis.uhuruphotos.navigation.navigationTarget
 import com.savvasdalkitsis.uhuruphotos.photos.model.PhotoSequenceDataSource
 import com.savvasdalkitsis.uhuruphotos.photos.model.PhotoSequenceDataSource.Single
-import com.savvasdalkitsis.uhuruphotos.photos.mvflow.PhotoAction
-import com.savvasdalkitsis.uhuruphotos.photos.mvflow.PhotoAction.LoadPhoto
-import com.savvasdalkitsis.uhuruphotos.photos.mvflow.PhotoEffect
+import com.savvasdalkitsis.uhuruphotos.photos.seam.PhotoAction
+import com.savvasdalkitsis.uhuruphotos.photos.seam.PhotoAction.LoadPhoto
+import com.savvasdalkitsis.uhuruphotos.photos.seam.PhotoEffect
 import com.savvasdalkitsis.uhuruphotos.photos.view.Photo
 import com.savvasdalkitsis.uhuruphotos.photos.view.state.PhotoState
-import com.savvasdalkitsis.uhuruphotos.photos.viewmodel.PhotoEffectsHandler
+import com.savvasdalkitsis.uhuruphotos.photos.seam.PhotoEffectsHandler
 import com.savvasdalkitsis.uhuruphotos.photos.viewmodel.PhotoViewModel
 import com.savvasdalkitsis.uhuruphotos.ui.theme.ThemeMode
 import kotlinx.coroutines.flow.MutableStateFlow

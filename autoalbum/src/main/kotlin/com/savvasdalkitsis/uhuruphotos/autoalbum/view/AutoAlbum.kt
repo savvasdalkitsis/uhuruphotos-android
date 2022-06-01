@@ -20,11 +20,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import com.google.accompanist.swiperefresh.SwipeRefresh
 import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
-import com.savvasdalkitsis.uhuruphotos.autoalbum.mvflow.AutoAlbumAction
-import com.savvasdalkitsis.uhuruphotos.autoalbum.mvflow.AutoAlbumAction.NavigateBack
-import com.savvasdalkitsis.uhuruphotos.autoalbum.mvflow.AutoAlbumAction.PersonSelected
-import com.savvasdalkitsis.uhuruphotos.autoalbum.mvflow.AutoAlbumAction.SelectedPhoto
-import com.savvasdalkitsis.uhuruphotos.autoalbum.mvflow.AutoAlbumAction.SwipeToRefresh
+import com.savvasdalkitsis.uhuruphotos.autoalbum.seam.AutoAlbumAction
+import com.savvasdalkitsis.uhuruphotos.autoalbum.seam.AutoAlbumAction.NavigateBack
+import com.savvasdalkitsis.uhuruphotos.autoalbum.seam.AutoAlbumAction.PersonSelected
+import com.savvasdalkitsis.uhuruphotos.autoalbum.seam.AutoAlbumAction.SelectedPhoto
+import com.savvasdalkitsis.uhuruphotos.autoalbum.seam.AutoAlbumAction.SwipeToRefresh
 import com.savvasdalkitsis.uhuruphotos.autoalbum.view.state.AutoAlbumState
 import com.savvasdalkitsis.uhuruphotos.feed.view.Feed
 import com.savvasdalkitsis.uhuruphotos.people.api.view.PeopleBar

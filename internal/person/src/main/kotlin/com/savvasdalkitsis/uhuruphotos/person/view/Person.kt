@@ -31,10 +31,10 @@ import com.savvasdalkitsis.uhuruphotos.feed.view.Feed
 import com.savvasdalkitsis.uhuruphotos.feed.view.FeedDisplayActionButton
 import com.savvasdalkitsis.uhuruphotos.image.api.view.Image
 import com.savvasdalkitsis.uhuruphotos.person.view.state.PersonState
-import com.savvasdalkitsis.uhuruphotos.person.viewmodel.PersonAction
-import com.savvasdalkitsis.uhuruphotos.person.viewmodel.PersonAction.ChangeDisplay
-import com.savvasdalkitsis.uhuruphotos.person.viewmodel.PersonAction.NavigateBack
-import com.savvasdalkitsis.uhuruphotos.person.viewmodel.PersonAction.SelectedPhoto
+import com.savvasdalkitsis.uhuruphotos.person.seam.PersonAction
+import com.savvasdalkitsis.uhuruphotos.person.seam.PersonAction.ChangeDisplay
+import com.savvasdalkitsis.uhuruphotos.person.seam.PersonAction.NavigateBack
+import com.savvasdalkitsis.uhuruphotos.person.seam.PersonAction.SelectedPhoto
 import com.savvasdalkitsis.uhuruphotos.ui.view.BackNavButton
 import com.savvasdalkitsis.uhuruphotos.ui.view.CommonScaffold
 import com.savvasdalkitsis.uhuruphotos.ui.view.FullProgressBar

@@ -19,9 +19,9 @@ import android.util.Base64
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavBackStackEntry
 import androidx.navigation.NavGraphBuilder
-import com.savvasdalkitsis.uhuruphotos.auth.weblogin.weblogin.mvflow.WebEffectsHandler
-import com.savvasdalkitsis.uhuruphotos.auth.weblogin.weblogin.mvflow.WebLoginAction
-import com.savvasdalkitsis.uhuruphotos.auth.weblogin.weblogin.mvflow.WebLoginEffect
+import com.savvasdalkitsis.uhuruphotos.auth.weblogin.weblogin.seam.WebEffectsHandler
+import com.savvasdalkitsis.uhuruphotos.auth.weblogin.weblogin.seam.WebLoginAction
+import com.savvasdalkitsis.uhuruphotos.auth.weblogin.weblogin.seam.WebLoginEffect
 import com.savvasdalkitsis.uhuruphotos.auth.weblogin.weblogin.view.WebLogin
 import com.savvasdalkitsis.uhuruphotos.auth.weblogin.weblogin.view.WebLoginState
 import com.savvasdalkitsis.uhuruphotos.auth.weblogin.weblogin.viewmodel.WebLoginViewModel

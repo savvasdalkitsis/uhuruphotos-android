@@ -29,7 +29,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.savvasdalkitsis.uhuruphotos.feedpage.mvflow.FeedPageAction
+import com.savvasdalkitsis.uhuruphotos.feedpage.seam.FeedPageAction
 import com.savvasdalkitsis.uhuruphotos.feedpage.view.state.FeedPageState
 import com.savvasdalkitsis.uhuruphotos.icons.R
 import com.savvasdalkitsis.uhuruphotos.ui.view.ActionIcon

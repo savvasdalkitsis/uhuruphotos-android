@@ -22,7 +22,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import com.savvasdalkitsis.uhuruphotos.photos.mvflow.PhotoAction
+import com.savvasdalkitsis.uhuruphotos.photos.seam.PhotoAction
 import com.savvasdalkitsis.uhuruphotos.photos.view.state.PhotoState
 import com.savvasdalkitsis.uhuruphotos.ui.view.ActionIcon
 import com.savvasdalkitsis.uhuruphotos.icons.R as Icons

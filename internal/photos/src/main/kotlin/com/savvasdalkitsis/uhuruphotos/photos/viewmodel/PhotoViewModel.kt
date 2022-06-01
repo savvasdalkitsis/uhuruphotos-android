@@ -16,12 +16,13 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.photos.viewmodel
 
 import androidx.lifecycle.ViewModel
-import com.savvasdalkitsis.uhuruphotos.photos.mvflow.PhotoAction
-import com.savvasdalkitsis.uhuruphotos.photos.mvflow.PhotoEffect
-import com.savvasdalkitsis.uhuruphotos.photos.mvflow.PhotoMutation
+import com.savvasdalkitsis.uhuruphotos.photos.seam.PhotoAction
+import com.savvasdalkitsis.uhuruphotos.photos.seam.PhotoEffect
+import com.savvasdalkitsis.uhuruphotos.photos.seam.PhotoMutation
 import com.savvasdalkitsis.uhuruphotos.photos.view.state.PhotoState
-import com.savvasdalkitsis.uhuruphotos.viewmodel.ActionReceiver
-import com.savvasdalkitsis.uhuruphotos.viewmodel.ActionReceiverHost
+import com.savvasdalkitsis.uhuruphotos.api.seam.Seam
+import com.savvasdalkitsis.uhuruphotos.api.seam.SeamViaHandler.Companion.handler
+import com.savvasdalkitsis.uhuruphotos.photos.seam.PhotoHandler
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
@@ -29,10 +30,7 @@ import javax.inject.Inject
 class PhotoViewModel @Inject constructor(
     handler: PhotoHandler,
 ) : ViewModel(),
-    ActionReceiverHost<PhotoState, PhotoEffect, PhotoAction, PhotoMutation> {
-
-    override val actionReceiver = ActionReceiver(
+    Seam<PhotoState, PhotoEffect, PhotoAction, PhotoMutation> by handler(
         handler,
         PhotoState(),
     )
-}

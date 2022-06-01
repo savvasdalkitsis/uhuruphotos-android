@@ -26,7 +26,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
-import com.savvasdalkitsis.uhuruphotos.server.mvflow.ServerAction
+import com.savvasdalkitsis.uhuruphotos.server.seam.ServerAction
 
 @Composable
 internal fun UsernameField(

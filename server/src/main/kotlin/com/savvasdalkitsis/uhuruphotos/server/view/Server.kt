@@ -26,7 +26,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.savvasdalkitsis.uhuruphotos.server.mvflow.ServerAction
+import com.savvasdalkitsis.uhuruphotos.server.seam.ServerAction
 import com.savvasdalkitsis.uhuruphotos.server.view.ServerState.Loading
 import com.savvasdalkitsis.uhuruphotos.server.view.ServerState.ServerUrl
 import com.savvasdalkitsis.uhuruphotos.server.view.ServerState.UserCredentials

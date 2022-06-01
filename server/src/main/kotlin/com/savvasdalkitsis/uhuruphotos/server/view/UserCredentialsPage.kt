@@ -37,10 +37,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import com.savvasdalkitsis.uhuruphotos.icons.R
-import com.savvasdalkitsis.uhuruphotos.server.mvflow.ServerAction
-import com.savvasdalkitsis.uhuruphotos.server.mvflow.ServerAction.Login
-import com.savvasdalkitsis.uhuruphotos.server.mvflow.ServerAction.RequestServerUrlChange
-import com.savvasdalkitsis.uhuruphotos.server.mvflow.ServerAction.SendLogsClick
+import com.savvasdalkitsis.uhuruphotos.server.seam.ServerAction
+import com.savvasdalkitsis.uhuruphotos.server.seam.ServerAction.Login
+import com.savvasdalkitsis.uhuruphotos.server.seam.ServerAction.RequestServerUrlChange
+import com.savvasdalkitsis.uhuruphotos.server.seam.ServerAction.SendLogsClick
 
 @Composable
 fun UserCredentialsPage(

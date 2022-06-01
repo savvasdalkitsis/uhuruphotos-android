@@ -20,10 +20,10 @@ import androidx.compose.foundation.layout.RowScope
 import androidx.compose.runtime.Composable
 import com.savvasdalkitsis.uhuruphotos.feed.view.FeedDisplayActionButton
 import com.savvasdalkitsis.uhuruphotos.feed.view.state.FeedDisplays
-import com.savvasdalkitsis.uhuruphotos.feedpage.mvflow.FeedPageAction
-import com.savvasdalkitsis.uhuruphotos.feedpage.mvflow.FeedPageAction.AskForSelectedPhotosDeletion
-import com.savvasdalkitsis.uhuruphotos.feedpage.mvflow.FeedPageAction.ChangeDisplay
-import com.savvasdalkitsis.uhuruphotos.feedpage.mvflow.FeedPageAction.ShareSelectedPhotos
+import com.savvasdalkitsis.uhuruphotos.feedpage.seam.FeedPageAction
+import com.savvasdalkitsis.uhuruphotos.feedpage.seam.FeedPageAction.AskForSelectedPhotosDeletion
+import com.savvasdalkitsis.uhuruphotos.feedpage.seam.FeedPageAction.ChangeDisplay
+import com.savvasdalkitsis.uhuruphotos.feedpage.seam.FeedPageAction.ShareSelectedPhotos
 import com.savvasdalkitsis.uhuruphotos.feedpage.view.state.FeedPageState
 import com.savvasdalkitsis.uhuruphotos.icons.R
 import com.savvasdalkitsis.uhuruphotos.ui.view.ActionIcon

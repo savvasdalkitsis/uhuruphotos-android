@@ -31,7 +31,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.max
 import com.google.accompanist.permissions.PermissionState
 import com.savvasdalkitsis.uhuruphotos.heatmap.view.state.HeatMapState
-import com.savvasdalkitsis.uhuruphotos.heatmap.viewmodel.HeatMapAction
+import com.savvasdalkitsis.uhuruphotos.heatmap.seam.HeatMapAction
 import com.savvasdalkitsis.uhuruphotos.ui.insets.insetsTop
 import com.savvasdalkitsis.uhuruphotos.ui.view.SheetHandle
 import com.savvasdalkitsis.uhuruphotos.ui.view.SheetSize

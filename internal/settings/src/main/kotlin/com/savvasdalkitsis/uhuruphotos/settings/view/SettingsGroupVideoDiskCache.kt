@@ -21,9 +21,9 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.res.stringResource
 import com.savvasdalkitsis.uhuruphotos.settings.view.state.SettingsState
-import com.savvasdalkitsis.uhuruphotos.settings.viewmodel.SettingsAction
-import com.savvasdalkitsis.uhuruphotos.settings.viewmodel.SettingsAction.ChangeVideoDiskCache
-import com.savvasdalkitsis.uhuruphotos.settings.viewmodel.SettingsAction.ClearVideoDiskCache
+import com.savvasdalkitsis.uhuruphotos.settings.seam.SettingsAction
+import com.savvasdalkitsis.uhuruphotos.settings.seam.SettingsAction.ChangeVideoDiskCache
+import com.savvasdalkitsis.uhuruphotos.settings.seam.SettingsAction.ClearVideoDiskCache
 import com.savvasdalkitsis.uhuruphotos.strings.R
 
 @Composable

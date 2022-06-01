@@ -21,7 +21,7 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.ui.Modifier
 import com.savvasdalkitsis.uhuruphotos.people.api.view.PersonImage
 import com.savvasdalkitsis.uhuruphotos.people.api.view.state.Person
-import com.savvasdalkitsis.uhuruphotos.search.mvflow.SearchAction
+import com.savvasdalkitsis.uhuruphotos.search.seam.SearchAction
 
 internal fun LazyListScope.personSuggestion(
     person: Person,
