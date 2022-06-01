@@ -13,11 +13,10 @@ dependencies {
     implementation project(":api:icons")
     implementation project(":api:ui")
     implementation project(':api:albums')
-    implementation project(":internal:photos")
     implementation project(':api:photos')
     implementation project(':api:image')
-    implementation project(":infrastructure")
     implementation project(":api:strings")
+    implementation project(":infrastructure")
     implementation(
             libs.androidx.compose.foundation,
             libs.androidx.compose.foundation.layout,

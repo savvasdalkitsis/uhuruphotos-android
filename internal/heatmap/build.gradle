@@ -20,7 +20,7 @@ dependencies {
     implementation project(':api:photos')
     implementation project(":db")
     implementation project(":api:toaster")
-    implementation project(":feed")
+    implementation project(":api:feed")
     implementation project(":infrastructure")
     implementation project(":api:icons")
     implementation project(":api:strings")

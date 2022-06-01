@@ -18,7 +18,7 @@ dependencies {
     implementation project(':api:people')
     implementation project(":api:settings")
     implementation project(":api:ui")
-    implementation project(":feed")
+    implementation project(":api:feed")
     implementation project(":api:strings")
     implementation project(':api:person')
     implementation(
