@@ -17,6 +17,7 @@ package com.savvasdalkitsis.uhuruphotos.photos.viewmodel
 
 import com.savvasdalkitsis.uhuruphotos.albums.api.model.Album
 import com.savvasdalkitsis.uhuruphotos.albums.api.usecase.AlbumsUseCase
+import com.savvasdalkitsis.uhuruphotos.api.user.usecase.UserUseCase
 import com.savvasdalkitsis.uhuruphotos.db.people.People
 import com.savvasdalkitsis.uhuruphotos.people.api.usecase.PeopleUseCase
 import com.savvasdalkitsis.uhuruphotos.people.api.view.state.toPerson
@@ -70,7 +71,6 @@ import com.savvasdalkitsis.uhuruphotos.photos.view.state.PhotoState
 import com.savvasdalkitsis.uhuruphotos.photos.view.state.SinglePhotoState
 import com.savvasdalkitsis.uhuruphotos.search.api.SearchUseCase
 import com.savvasdalkitsis.uhuruphotos.strings.R
-import com.savvasdalkitsis.uhuruphotos.api.user.usecase.UserUseCase
 import com.savvasdalkitsis.uhuruphotos.viewmodel.Handler
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.FlowCollector
@@ -137,7 +137,12 @@ class PhotoHandler @Inject constructor(
         }
         is SetFavourite -> flow {
             photosUseCase.setPhotoFavourite(state.currentPhoto.id, action.favourite)
-            emit(ShowPhotoFavourite(state.currentPhoto.id, action.favourite))
+                .onFailure {
+                    emit(ShowErrorMessage(R.string.error_changing_photo_favourite))
+                }
+                .onSuccess {
+                    emit(ShowPhotoFavourite(state.currentPhoto.id, action.favourite))
+                }
         }
         Refresh -> flow {
             loadPhotoDetails(state.currentPhoto.id, refresh = true)
@@ -202,6 +207,8 @@ class PhotoHandler @Inject constructor(
             photosUseCase.refreshDetailsNow(photoId)
         } else {
             photosUseCase.refreshDetailsNowIfMissing(photoId)
+        }.onFailure {
+            emit(ShowErrorMessage(R.string.error_loading_photo_details))
         }
         when (val details = photosUseCase.getPhotoDetails(photoId)) {
             null -> emit(ShowErrorMessage(R.string.error_loading_photo_details))

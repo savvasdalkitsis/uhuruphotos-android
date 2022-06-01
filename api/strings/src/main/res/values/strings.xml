@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="feed_size">Feed Size</string>
     <string name="photo">Photo</string>
@@ -12,6 +13,7 @@
     </plurals>
     <string name="error_refreshing_people">There was an error refreshing people</string>
     <string name="error_loading_photo_details">There was an error loading photo details</string>
+    <string name="error_changing_photo_favourite">There was an error changing the photo favourite status</string>
     <string name="error_searching">There was an error while searching</string>
     <string name="feed_sync_freq">Full photo feed sync frequency</string>
     <string name="feed_sync_freq_changed">Feed sync frequency changed</string>

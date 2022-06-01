@@ -15,11 +15,12 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.photos.usecase
 
+import com.savvasdalkitsis.uhuruphotos.api.user.usecase.UserUseCase
 import com.savvasdalkitsis.uhuruphotos.auth.usecase.ServerUseCase
 import com.savvasdalkitsis.uhuruphotos.db.photos.PhotoDetails
+import com.savvasdalkitsis.uhuruphotos.infrastructure.model.runCatchingWithLog
 import com.savvasdalkitsis.uhuruphotos.photos.repository.PhotoRepository
 import com.savvasdalkitsis.uhuruphotos.photos.worker.PhotoWorkScheduler
-import com.savvasdalkitsis.uhuruphotos.api.user.usecase.UserUseCase
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
@@ -64,22 +65,22 @@ class PhotosUseCase @Inject constructor(
     suspend fun getPhotoDetails(id: String): PhotoDetails? =
         photoRepository.getPhotoDetails(id)
 
-    suspend fun setPhotoFavourite(id: String, favourite: Boolean) {
+    suspend fun setPhotoFavourite(id: String, favourite: Boolean) = runCatchingWithLog {
         userUseCase.getUserOrRefresh()?.let { user ->
             photoRepository.setPhotoRating(id, user.favoriteMinRating?.takeIf { favourite } ?: 0)
             photoWorkScheduler.schedulePhotoFavourite(id, favourite)
         }
     }
 
-    fun refreshDetails(id: String) {
+    fun refreshDetails(id: String) = runCatchingWithLog {
         photoRepository.refreshDetails(id)
     }
 
-    suspend fun refreshDetailsNowIfMissing(id: String) {
+    suspend fun refreshDetailsNowIfMissing(id: String) : Result<Unit> = runCatchingWithLog {
         photoRepository.refreshDetailsNowIfMissing(id)
     }
 
-    suspend fun refreshDetailsNow(id: String) {
+    suspend fun refreshDetailsNow(id: String) : Result<Unit> = runCatchingWithLog {
         photoRepository.refreshDetailsNow(id)
     }
 
