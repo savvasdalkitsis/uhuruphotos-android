@@ -1,0 +1,28 @@
+android {
+    buildFeatures {
+        compose true
+    }
+    composeOptions {
+        kotlinCompilerExtensionVersion compose_version
+    }
+    namespace 'com.savvasdalkitsis.uhuruphotos.home'
+}
+
+dependencies {
+
+    implementation project(":api:home")
+    implementation project(":api:ui")
+    implementation project(":navigation")
+    implementation project(":api:server")
+    implementation project(":auth")
+    implementation project(":api:settings")
+    implementation project(":api:homenavigation")
+    implementation(
+            libs.androidx.compose.foundation.layout,
+            libs.androidx.compose.hilt.navigation,
+            libs.androidx.compose.material,
+            libs.androidx.compose.material.windowsize,
+            libs.androidx.compose.ui,
+            libs.androidx.lifecycle,
+    )
+}

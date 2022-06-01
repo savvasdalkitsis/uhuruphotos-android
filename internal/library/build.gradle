@@ -10,7 +10,7 @@ android {
 
 dependencies {
     implementation project(':api:albums')
-    implementation project(":home")
+    implementation project(":api:home")
     implementation project(":navigation")
     implementation project(":api:settings")
     implementation project(":infrastructure")

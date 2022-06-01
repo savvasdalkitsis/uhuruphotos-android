@@ -55,7 +55,6 @@ android {
 
 dependencies {
     implementation project(":auth")
-    implementation project(":home")
     implementation project(":navigation")
     implementation project(":api:ui")
     implementation project(":api:initializer")
@@ -66,6 +65,7 @@ dependencies {
     implementation project(":internal:albums")
     implementation project(":internal:feedpage")
     implementation project(":internal:heatmap")
+    implementation project(":internal:home")
     implementation project(":internal:library")
     implementation project(":internal:log")
     implementation project(":internal:network")

@@ -17,7 +17,7 @@ dependencies {
     implementation project(':api:photos')
     implementation project(":db")
     implementation project(':api:userbadge')
-    implementation project(":home")
+    implementation project(":api:home")
     implementation project(":navigation")
     implementation project(":accountoverview")
     implementation project(":account")

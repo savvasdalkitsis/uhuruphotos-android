@@ -41,7 +41,7 @@ import com.savvasdalkitsis.uhuruphotos.feedpage.seam.FeedPageAction.SelectedPhot
 import com.savvasdalkitsis.uhuruphotos.feedpage.seam.FeedPageAction.SettingsClick
 import com.savvasdalkitsis.uhuruphotos.feedpage.seam.FeedPageAction.UserBadgePressed
 import com.savvasdalkitsis.uhuruphotos.feedpage.view.state.FeedPageState
-import com.savvasdalkitsis.uhuruphotos.home.view.HomeScaffold
+import com.savvasdalkitsis.uhuruphotos.api.home.view.HomeScaffold
 import com.savvasdalkitsis.uhuruphotos.infrastructure.extensions.blurIf
 import com.savvasdalkitsis.uhuruphotos.navigation.ControllersProvider
 import com.savvasdalkitsis.uhuruphotos.photos.view.DeletePermissionDialog
