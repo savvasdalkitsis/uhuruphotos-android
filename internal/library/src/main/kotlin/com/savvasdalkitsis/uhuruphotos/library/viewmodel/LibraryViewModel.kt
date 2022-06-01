@@ -33,7 +33,6 @@ class LibraryViewModel @Inject constructor(
 
     override val actionReceiver = ActionReceiver(
         libraryHandler,
-        libraryReducer(),
         LibraryState(),
     )
 }

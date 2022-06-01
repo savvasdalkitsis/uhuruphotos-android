@@ -78,7 +78,9 @@ fun <S : Any, E : Any, A : Any, VM> NavGraphBuilder.navigationTarget(
         LaunchedEffect(Unit) {
             keyboard?.hide()
             initializer(navBackStackEntry, action)
-            model.actionReceiver.effects.cancellable().collect { effects(it) }
+            model.actionReceiver.effects.cancellable().collect {
+                effects.handleEffect(it)
+            }
         }
     }
 }

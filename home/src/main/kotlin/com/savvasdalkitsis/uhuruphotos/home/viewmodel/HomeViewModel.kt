@@ -33,7 +33,6 @@ class HomeViewModel @Inject constructor(
 
     override val actionReceiver = ActionReceiver(
         homeHandler,
-        homeReducer(),
         HomeState(),
     )
 }

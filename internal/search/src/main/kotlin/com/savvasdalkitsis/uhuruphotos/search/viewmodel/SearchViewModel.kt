@@ -33,7 +33,6 @@ class SearchViewModel @Inject constructor(
 
     override val actionReceiver = ActionReceiver(
         searchHandler,
-        searchReducer(),
         SearchState(),
     )
 }

@@ -13,15 +13,8 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
  */
-package com.savvasdalkitsis.uhuruphotos.auth.weblogin.weblogin.viewmodel
+package com.savvasdalkitsis.uhuruphotos.viewmodel
 
-import com.savvasdalkitsis.uhuruphotos.auth.weblogin.weblogin.mvflow.WebLoginMutation
-import com.savvasdalkitsis.uhuruphotos.auth.weblogin.weblogin.view.WebLoginState
-import com.savvasdalkitsis.uhuruphotos.viewmodel.Reducer
-
-fun webLoginReducer() : Reducer<WebLoginState, WebLoginMutation> = { state, mutation ->
-    when (mutation) {
-        is WebLoginMutation.LoadPage -> state.copy(url = mutation.url)
-        WebLoginMutation.Loading -> state.copy(url = null)
-    }
+fun interface Mutation<S> {
+    fun reduce(state: S): S
 }

@@ -23,17 +23,16 @@ import com.savvasdalkitsis.uhuruphotos.server.mvflow.ServerEffect.ErrorLoggingIn
 import com.savvasdalkitsis.uhuruphotos.server.mvflow.ServerEffect.SendFeedback
 import com.savvasdalkitsis.uhuruphotos.strings.R
 import com.savvasdalkitsis.uhuruphotos.toaster.Toaster
+import com.savvasdalkitsis.uhuruphotos.viewmodel.EffectHandler
 import javax.inject.Inject
 
 class ServerEffectsHandler @Inject constructor(
     private val controllersProvider: ControllersProvider,
     private val toaster: Toaster,
     private val feedbackUseCase: FeedbackUseCase,
-) : (ServerEffect) -> Unit {
+) : EffectHandler<ServerEffect> {
 
-    override fun invoke(
-        effect: ServerEffect,
-    ) {
+    override suspend fun handleEffect(effect: ServerEffect) {
         when (effect) {
             Close -> controllersProvider.navController!!.popBackStack()
             is ErrorLoggingIn -> toaster.show(R.string.error_logging_in)

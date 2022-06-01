@@ -33,7 +33,6 @@ class WebLoginViewModel @Inject constructor(
 
     override val actionReceiver = ActionReceiver(
         handler,
-        webLoginReducer(),
         WebLoginState(""),
     )
 }

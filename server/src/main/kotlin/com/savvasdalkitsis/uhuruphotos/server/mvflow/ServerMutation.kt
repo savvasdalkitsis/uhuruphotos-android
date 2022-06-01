@@ -15,17 +15,75 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.server.mvflow
 
+import com.savvasdalkitsis.uhuruphotos.server.view.ServerState
+import com.savvasdalkitsis.uhuruphotos.server.view.ServerState.Loading
+import com.savvasdalkitsis.uhuruphotos.server.view.ServerState.ServerUrl
+import com.savvasdalkitsis.uhuruphotos.server.view.ServerState.UserCredentials
+import com.savvasdalkitsis.uhuruphotos.viewmodel.Mutation
 import dev.zacsweers.redacted.annotations.Redacted
 
-sealed class ServerMutation {
+sealed class ServerMutation(
+    mutation: Mutation<ServerState>,
+) : Mutation<ServerState> by mutation {
 
-    data class AskForServerDetails(val previousUrl: String?, val isValid: Boolean) : ServerMutation()
-    data class AskForUserCredentials(val userName: String, @Redacted val password: String) : ServerMutation()
-    object PerformingBackgroundJob : ServerMutation()
-    object ShowUnsecureServerConfirmation : ServerMutation()
-    object HideUnsecureServerConfirmation : ServerMutation()
-    data class ShowUrlValidation(val prefilledUrl: String?, val isValid: Boolean) : ServerMutation()
-    data class ChangeUsernameTo(val username: String) : ServerMutation()
-    data class ChangePasswordTo(@Redacted val password: String) : ServerMutation()
-    data class SetPasswordVisibility(val visible: Boolean) : ServerMutation()
+    data class AskForServerDetails(
+        val previousUrl: String?,
+        val isValid: Boolean,
+    ) : ServerMutation({
+        ServerUrl(
+            prefilledUrl = previousUrl.orEmpty(),
+            isUrlValid = isValid,
+            allowSaveUrl = isValid,
+        )
+    })
+
+    data class AskForUserCredentials(
+        val userName: String,
+        @Redacted val password: String,
+    ) : ServerMutation({
+        UserCredentials(
+            userName,
+            password,
+            allowLogin = false,
+            passwordVisible = false,
+        ).shouldAllowLogin()
+    })
+
+    data class ShowUrlValidation(
+        val prefilledUrl: String?,
+        val isValid: Boolean,
+    ) : ServerMutation({
+        ServerUrl(
+            prefilledUrl = prefilledUrl.orEmpty(),
+            isUrlValid = isValid,
+            allowSaveUrl = isValid,
+        )
+    })
+
+    object PerformingBackgroundJob : ServerMutation({
+        Loading
+    })
+
+    object ShowUnsecureServerConfirmation : ServerMutation({
+        (it as ServerUrl).copy(showUnsecureServerConfirmation = true)
+    })
+
+    object HideUnsecureServerConfirmation : ServerMutation({
+        (it as ServerUrl).copy(showUnsecureServerConfirmation = false)
+    })
+
+    data class ChangeUsernameTo(val username: String) : ServerMutation({
+        (it as UserCredentials).copy(username = username).shouldAllowLogin()
+    })
+
+    data class ChangePasswordTo(@Redacted val password: String) : ServerMutation({
+        (it as UserCredentials).copy(password = password).shouldAllowLogin()
+    })
+
+    data class SetPasswordVisibility(val visible: Boolean) : ServerMutation({
+        (it as UserCredentials).copy(passwordVisible = visible)
+    })
 }
+
+private fun UserCredentials.shouldAllowLogin(): UserCredentials =
+    copy(allowLogin = username.isNotEmpty() && password.isNotEmpty())

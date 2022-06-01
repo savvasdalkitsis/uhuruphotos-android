@@ -25,9 +25,8 @@ import kotlinx.coroutines.flow.cancellable
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.update
 
-class ActionReceiver<S : Any, E : Any, A : Any, M : Any>(
-    private val handler: Handler<S, E, A, M>,
-    private val reducer: Reducer<S, M>,
+class ActionReceiver<S : Any, E : Any, A : Any, M : Mutation<S>>(
+    private val handler: ActionHandler<S, E, A, M>,
     initialState: S,
 ) {
 
@@ -38,7 +37,7 @@ class ActionReceiver<S : Any, E : Any, A : Any, M : Any>(
 
     suspend fun action(action: A)  {
         log("MVI") { "Starting handling of action $action" }
-        handler(
+        handler.handleAction(
             _state.value,
             action
         ) { effect ->
@@ -48,7 +47,7 @@ class ActionReceiver<S : Any, E : Any, A : Any, M : Any>(
             .cancellable()
             .collect { mutation ->
                 log("MVI") { "Received mutation $mutation due to action $action" }
-                _state.update { reducer(_state.value, mutation) }
+                _state.update { mutation.reduce(_state.value) }
                 log("MVI") { "State updated to: ${_state.value}" }
             }
     }

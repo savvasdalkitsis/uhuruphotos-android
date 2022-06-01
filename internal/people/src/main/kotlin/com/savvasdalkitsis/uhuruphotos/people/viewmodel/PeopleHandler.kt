@@ -16,6 +16,7 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.people.viewmodel
 
 import com.savvasdalkitsis.uhuruphotos.infrastructure.extensions.onErrors
+import com.savvasdalkitsis.uhuruphotos.people.api.view.state.toPerson
 import com.savvasdalkitsis.uhuruphotos.people.usecase.PeopleUseCase
 import com.savvasdalkitsis.uhuruphotos.people.view.state.PeopleState
 import com.savvasdalkitsis.uhuruphotos.people.view.state.SortOrder
@@ -29,7 +30,8 @@ import com.savvasdalkitsis.uhuruphotos.people.viewmodel.PeopleEffect.ErrorLoadin
 import com.savvasdalkitsis.uhuruphotos.people.viewmodel.PeopleEffect.NavigateToPerson
 import com.savvasdalkitsis.uhuruphotos.people.viewmodel.PeopleMutation.DisplayPeople
 import com.savvasdalkitsis.uhuruphotos.people.viewmodel.PeopleMutation.SetSortOrder
-import com.savvasdalkitsis.uhuruphotos.viewmodel.Handler
+import com.savvasdalkitsis.uhuruphotos.photos.usecase.PhotosUseCase
+import com.savvasdalkitsis.uhuruphotos.viewmodel.ActionHandler
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -39,12 +41,13 @@ import javax.inject.Inject
 
 class PeopleHandler @Inject constructor(
     private val peopleUseCase: PeopleUseCase,
-) : Handler<PeopleState, PeopleEffect, PeopleAction, PeopleMutation> {
+    private val photosUseCase: PhotosUseCase,
+) : ActionHandler<PeopleState, PeopleEffect, PeopleAction, PeopleMutation> {
 
     private
     val sort: MutableSharedFlow<SortOrder> = MutableStateFlow(SortOrder.default)
 
-    override fun invoke(
+    override fun handleAction(
         state: PeopleState,
         action: PeopleAction,
         effect: suspend (PeopleEffect) -> Unit
@@ -56,10 +59,16 @@ class PeopleHandler @Inject constructor(
                 },
             sort
         ) { people, sortOrder ->
-            DisplayPeople(when (sortOrder) {
-                ASCENDING -> people
-                DESCENDING -> people.reversed()
-            })
+            with(photosUseCase) {
+                DisplayPeople(
+                    when (sortOrder) {
+                        ASCENDING -> people
+                        DESCENDING -> people.reversed()
+                    }.map {
+                        it.toPerson { url -> url.toAbsoluteUrl() }
+                    }
+                )
+            }
         }
         ToggleSortOrder -> flow {
             val sortOrder = state.sortOrder.toggle()

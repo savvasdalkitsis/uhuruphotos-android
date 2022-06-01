@@ -30,7 +30,7 @@ class HeatMapEffectsHandler @Inject constructor(
     private val toaster: Toaster,
 ): EffectHandler<HeatMapEffect> {
 
-    override suspend fun invoke(
+    override suspend fun handleEffect(
         effect: HeatMapEffect
     ) {
         when (effect) {

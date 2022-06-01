@@ -15,10 +15,20 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.people.viewmodel
 
-import com.savvasdalkitsis.uhuruphotos.db.people.People
+import com.savvasdalkitsis.uhuruphotos.people.api.view.state.Person
+import com.savvasdalkitsis.uhuruphotos.people.view.state.PeopleState
 import com.savvasdalkitsis.uhuruphotos.people.view.state.SortOrder
+import com.savvasdalkitsis.uhuruphotos.viewmodel.Mutation
 
-sealed class PeopleMutation {
-    data class DisplayPeople(val people: List<People>) : PeopleMutation()
-    data class SetSortOrder(val sortOrder: SortOrder) : PeopleMutation()
+sealed class PeopleMutation(
+    mutation: Mutation<PeopleState>,
+) : Mutation<PeopleState> by mutation {
+
+    data class DisplayPeople(val people: List<Person>) : PeopleMutation({
+        it.copy(people = people)
+    })
+
+    data class SetSortOrder(val sortOrder: SortOrder) : PeopleMutation({
+        it.copy(sortOrder = sortOrder)
+    })
 }

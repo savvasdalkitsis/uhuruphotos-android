@@ -13,16 +13,10 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
  */
-package com.savvasdalkitsis.uhuruphotos.home.viewmodel
+package com.savvasdalkitsis.uhuruphotos.viewmodel
 
-import com.savvasdalkitsis.uhuruphotos.home.mvflow.HomeMutation
-import com.savvasdalkitsis.uhuruphotos.home.mvflow.HomeMutation.*
-import com.savvasdalkitsis.uhuruphotos.home.view.state.HomeState
-import com.savvasdalkitsis.uhuruphotos.viewmodel.Reducer
+import kotlinx.coroutines.flow.Flow
 
-fun homeReducer() : Reducer<HomeState, HomeMutation> = { state, mutation ->
-    when (mutation) {
-        Loading -> state.copy(isLoading = true)
-        is ShowLibrary -> state.copy(showLibrary = mutation.showLibrary)
-    }
+interface ActionHandler<S, E, A, M : Mutation<S>> {
+    fun handleAction(state: S, action: A, effect: suspend (E) -> Unit): Flow<M>
 }

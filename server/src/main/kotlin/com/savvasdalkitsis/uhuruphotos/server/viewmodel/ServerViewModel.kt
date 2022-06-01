@@ -33,7 +33,6 @@ class ServerViewModel @Inject constructor(
 
     override val actionReceiver = ActionReceiver(
         handler,
-        serverReducer(),
         ServerState.Loading,
     )
 }

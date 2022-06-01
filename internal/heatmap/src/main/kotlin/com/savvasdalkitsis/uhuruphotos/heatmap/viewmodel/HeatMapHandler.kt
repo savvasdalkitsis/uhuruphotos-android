@@ -33,7 +33,7 @@ import com.savvasdalkitsis.uhuruphotos.map.model.LatLon
 import com.savvasdalkitsis.uhuruphotos.photos.api.model.Photo
 import com.savvasdalkitsis.uhuruphotos.photos.model.latLng
 import com.savvasdalkitsis.uhuruphotos.photos.usecase.PhotosUseCase
-import com.savvasdalkitsis.uhuruphotos.viewmodel.Handler
+import com.savvasdalkitsis.uhuruphotos.viewmodel.ActionHandler
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
@@ -53,12 +53,12 @@ import javax.inject.Inject
 class HeatMapHandler @Inject constructor(
     private val albumsUseCase: AlbumsUseCase,
     private val photosUseCase: PhotosUseCase,
-): Handler<HeatMapState, HeatMapEffect, HeatMapAction, HeatMapMutation> {
+): ActionHandler<HeatMapState, HeatMapEffect, HeatMapAction, HeatMapMutation> {
 
     private var boundsChecker: suspend (LatLon) -> Boolean = { true }
     private val detailsDownloading = MutableStateFlow(false)
 
-    override fun invoke(
+    override fun handleAction(
         state: HeatMapState,
         action: HeatMapAction,
         effect: suspend (HeatMapEffect) -> Unit

@@ -15,7 +15,18 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.home.mvflow
 
-sealed class HomeMutation {
-    object Loading : HomeMutation()
-    data class ShowLibrary(val showLibrary: Boolean) : HomeMutation()
+import com.savvasdalkitsis.uhuruphotos.home.view.state.HomeState
+import com.savvasdalkitsis.uhuruphotos.viewmodel.Mutation
+
+sealed class HomeMutation(
+    mutation: Mutation<HomeState>,
+) : Mutation<HomeState> by mutation {
+
+    object Loading : HomeMutation({
+      it.copy(isLoading = true)
+    })
+
+    data class ShowLibrary(val showLibrary: Boolean) : HomeMutation({
+        it.copy(showLibrary = showLibrary)
+    })
 }

@@ -21,15 +21,14 @@ import com.savvasdalkitsis.uhuruphotos.home.mvflow.HomeEffect.LoadFeed
 import com.savvasdalkitsis.uhuruphotos.homenavigation.HomeNavigationRoutes
 import com.savvasdalkitsis.uhuruphotos.navigation.ControllersProvider
 import com.savvasdalkitsis.uhuruphotos.server.navigation.ServerNavigationTarget
+import com.savvasdalkitsis.uhuruphotos.viewmodel.EffectHandler
 import javax.inject.Inject
 
 class HomeEffectsHandler @Inject constructor(
     private val controllersProvider: ControllersProvider,
-) : (HomeEffect) -> Unit {
+) : EffectHandler<HomeEffect> {
 
-    override fun invoke(
-        effect: HomeEffect,
-    ) {
+    override suspend fun handleEffect(effect: HomeEffect) {
         with(controllersProvider.navController!!) {
             when (effect) {
                 LaunchAuthentication -> navigate(ServerNavigationTarget.name())

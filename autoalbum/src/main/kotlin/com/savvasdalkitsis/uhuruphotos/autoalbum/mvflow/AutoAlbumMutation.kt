@@ -16,9 +16,33 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.autoalbum.mvflow
 
 import com.savvasdalkitsis.uhuruphotos.autoalbum.view.state.AutoAlbum
+import com.savvasdalkitsis.uhuruphotos.autoalbum.view.state.AutoAlbumFeedDisplay
+import com.savvasdalkitsis.uhuruphotos.autoalbum.view.state.AutoAlbumState
+import com.savvasdalkitsis.uhuruphotos.strings.R
+import com.savvasdalkitsis.uhuruphotos.viewmodel.Mutation
 
-sealed class AutoAlbumMutation {
-    object ErrorLoading : AutoAlbumMutation()
-    data class ShowAutoAlbum(val album: AutoAlbum) : AutoAlbumMutation()
-    data class Loading(val loading: Boolean) : AutoAlbumMutation()
+sealed class AutoAlbumMutation(
+    mutation: Mutation<AutoAlbumState>,
+) : Mutation<AutoAlbumState> by mutation {
+
+    object ErrorLoading : AutoAlbumMutation({
+        it.copy(error = R.string.error_loading_album)
+    })
+
+    data class ShowAutoAlbum(val album: AutoAlbum) : AutoAlbumMutation({
+        it.copy(
+            title = album.title,
+            people = album.people,
+            feedState = it.feedState.copy(
+                albums = album.albums,
+                feedDisplay = AutoAlbumFeedDisplay,
+            )
+        )
+    })
+
+    data class Loading(val loading: Boolean) : AutoAlbumMutation({
+        it.copy(feedState = it.feedState.copy(
+            isLoading = loading,
+        ))
+    })
 }

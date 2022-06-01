@@ -19,6 +19,7 @@ import com.savvasdalkitsis.uhuruphotos.albums.api.model.Album
 import com.savvasdalkitsis.uhuruphotos.albums.api.usecase.AlbumsUseCase
 import com.savvasdalkitsis.uhuruphotos.api.user.usecase.UserUseCase
 import com.savvasdalkitsis.uhuruphotos.db.people.People
+import com.savvasdalkitsis.uhuruphotos.infrastructure.date.DateDisplayer
 import com.savvasdalkitsis.uhuruphotos.people.api.usecase.PeopleUseCase
 import com.savvasdalkitsis.uhuruphotos.people.api.view.state.toPerson
 import com.savvasdalkitsis.uhuruphotos.person.api.usecase.PersonUseCase
@@ -71,7 +72,7 @@ import com.savvasdalkitsis.uhuruphotos.photos.view.state.PhotoState
 import com.savvasdalkitsis.uhuruphotos.photos.view.state.SinglePhotoState
 import com.savvasdalkitsis.uhuruphotos.search.api.SearchUseCase
 import com.savvasdalkitsis.uhuruphotos.strings.R
-import com.savvasdalkitsis.uhuruphotos.viewmodel.Handler
+import com.savvasdalkitsis.uhuruphotos.viewmodel.ActionHandler
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.FlowCollector
 import kotlinx.coroutines.flow.flow
@@ -85,9 +86,10 @@ class PhotoHandler @Inject constructor(
     private val userUseCase: UserUseCase,
     private val albumsUseCase: AlbumsUseCase,
     private val searchUseCase: SearchUseCase,
-) : Handler<PhotoState, PhotoEffect, PhotoAction, PhotoMutation> {
+    private val dateDisplayer: DateDisplayer,
+) : ActionHandler<PhotoState, PhotoEffect, PhotoAction, PhotoMutation> {
 
-    override fun invoke(
+    override fun handleAction(
         state: PhotoState,
         action: PhotoAction,
         effect: suspend (PhotoEffect) -> Unit
@@ -227,7 +229,12 @@ class PhotoHandler @Inject constructor(
                 }
 
                 val favouriteThreshold = userUseCase.getUserOrRefresh()?.favoriteMinRating
-                emit(ReceivedDetails(details, peopleInPhoto, favouriteThreshold))
+                emit(ReceivedDetails(
+                    details = details,
+                    peopleInPhoto = peopleInPhoto,
+                    favouriteThreshold = favouriteThreshold,
+                    formattedDateAndTime = dateDisplayer.dateTimeString(details.timestamp)
+                ))
             }
         }
         emit(FinishedLoading)

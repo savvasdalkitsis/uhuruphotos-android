@@ -30,7 +30,7 @@ class PeopleEffectHandler @Inject constructor(
     private val toaster: Toaster,
 ) : EffectHandler<PeopleEffect> {
 
-    override suspend fun invoke(effect: PeopleEffect) {
+    override suspend fun handleEffect(effect: PeopleEffect) {
         when (effect) {
             ErrorLoadingPeople -> toaster.show(R.string.error_refreshing_people)
             NavigateBack -> controllersProvider.navController!!.popBackStack()

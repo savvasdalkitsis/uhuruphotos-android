@@ -47,7 +47,7 @@ class SearchEffectsHandler @Inject constructor(
     private val toaster: Toaster,
 ) : EffectHandler<SearchEffect> {
 
-    override suspend fun invoke(
+    override suspend fun handleEffect(
         effect: SearchEffect,
     ) = when (effect) {
         HideKeyboard -> uiUseCase.hideKeyboard()

@@ -25,13 +25,11 @@ import javax.inject.Inject
 @HiltViewModel
 class PersonViewModel @Inject constructor(
     personHandler: PersonHandler,
-    reducer: PersonReducer,
 ) : ViewModel(),
     ActionReceiverHost<PersonState, PersonEffect, PersonAction, PersonMutation> {
 
     override val actionReceiver = ActionReceiver(
         personHandler,
-        reducer,
         PersonState()
     )
 

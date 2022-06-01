@@ -16,13 +16,14 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.auth.weblogin.weblogin.mvflow
 
 import com.savvasdalkitsis.uhuruphotos.navigation.ControllersProvider
+import com.savvasdalkitsis.uhuruphotos.viewmodel.EffectHandler
 import javax.inject.Inject
 
 class WebEffectsHandler @Inject constructor(
     private val controllersProvider: ControllersProvider,
-): (WebLoginEffect) -> Unit {
+): EffectHandler<WebLoginEffect> {
 
-    override fun invoke(effect: WebLoginEffect) {
+    override suspend fun handleEffect(effect: WebLoginEffect) {
         when (effect) {
             WebLoginEffect.Close -> controllersProvider.navController!!.popBackStack()
         }

@@ -16,12 +16,35 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.person.viewmodel
 
 import com.savvasdalkitsis.uhuruphotos.albums.api.model.Album
-import com.savvasdalkitsis.uhuruphotos.db.people.People
 import com.savvasdalkitsis.uhuruphotos.feed.view.state.FeedDisplay
+import com.savvasdalkitsis.uhuruphotos.feed.view.state.FeedState
+import com.savvasdalkitsis.uhuruphotos.people.api.view.state.Person
+import com.savvasdalkitsis.uhuruphotos.person.view.state.PersonState
+import com.savvasdalkitsis.uhuruphotos.viewmodel.Mutation
 
-sealed class PersonMutation {
-    object Loading : PersonMutation()
-    data class ShowPersonPhotos(val albums: List<Album>) : PersonMutation()
-    data class ShowPersonDetails(val person: People) : PersonMutation()
-    data class SetFeedDisplay(val display: FeedDisplay) : PersonMutation()
+sealed class PersonMutation(
+    mutation: Mutation<PersonState>,
+) : Mutation<PersonState> by mutation {
+
+    object Loading : PersonMutation({
+        it.copyFeed { copy(isLoading = true) }
+    })
+
+    data class ShowPersonPhotos(val albums: List<Album>) : PersonMutation({
+        it.copyFeed { copy(
+            isLoading = false,
+            albums = albums,
+        ) }
+    })
+
+    data class ShowPersonDetails(val person: Person) : PersonMutation({
+        it.copy(person = person)
+    })
+
+    data class SetFeedDisplay(val display: FeedDisplay) : PersonMutation({
+        it.copyFeed { copy(feedDisplay = display) }
+    })
 }
+
+private fun PersonState.copyFeed(feedCopy: FeedState.() -> FeedState): PersonState =
+    copy(feedState = feedState.feedCopy())

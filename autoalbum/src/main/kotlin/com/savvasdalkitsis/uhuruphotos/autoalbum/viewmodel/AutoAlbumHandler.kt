@@ -40,7 +40,7 @@ import com.savvasdalkitsis.uhuruphotos.api.log.log
 import com.savvasdalkitsis.uhuruphotos.people.api.view.state.toPerson
 import com.savvasdalkitsis.uhuruphotos.photos.api.model.Photo
 import com.savvasdalkitsis.uhuruphotos.photos.usecase.PhotosUseCase
-import com.savvasdalkitsis.uhuruphotos.viewmodel.Handler
+import com.savvasdalkitsis.uhuruphotos.viewmodel.ActionHandler
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.flow
@@ -53,12 +53,12 @@ class AutoAlbumHandler @Inject constructor(
     private val autoAlbumsUseCase: AutoAlbumsUseCase,
     private val photosUseCase: PhotosUseCase,
     private val dateDisplayer: DateDisplayer,
-) : Handler<AutoAlbumState, AutoAlbumEffect, AutoAlbumAction, AutoAlbumMutation> {
+) : ActionHandler<AutoAlbumState, AutoAlbumEffect, AutoAlbumAction, AutoAlbumMutation> {
 
     private val loading = MutableSharedFlow<AutoAlbumMutation>()
     private var albumId: Int? = null
 
-    override fun invoke(
+    override fun handleAction(
         state: AutoAlbumState,
         action: AutoAlbumAction,
         effect: suspend (AutoAlbumEffect) -> Unit,

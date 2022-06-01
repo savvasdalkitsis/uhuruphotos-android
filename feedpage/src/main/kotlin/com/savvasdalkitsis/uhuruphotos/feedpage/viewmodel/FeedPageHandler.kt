@@ -68,9 +68,8 @@ import com.savvasdalkitsis.uhuruphotos.photos.usecase.PhotosUseCase
 import com.savvasdalkitsis.uhuruphotos.api.settings.usecase.SettingsUseCase
 import com.savvasdalkitsis.uhuruphotos.feedpage.mvflow.FeedPageMutation.ShowNoPhotosFound
 import com.savvasdalkitsis.uhuruphotos.userbadge.api.UserBadgeUseCase
-import com.savvasdalkitsis.uhuruphotos.userbadge.api.view.state.SyncState
 import com.savvasdalkitsis.uhuruphotos.userbadge.api.view.state.SyncState.IN_PROGRESS
-import com.savvasdalkitsis.uhuruphotos.viewmodel.Handler
+import com.savvasdalkitsis.uhuruphotos.viewmodel.ActionHandler
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.combine
@@ -90,9 +89,9 @@ class FeedPageHandler @Inject constructor(
     private val photosUseCase: PhotosUseCase,
     private val selectionList: SelectionList,
     private val settingsUseCase: SettingsUseCase,
-) : Handler<FeedPageState, FeedPageEffect, FeedPageAction, FeedPageMutation> {
+) : ActionHandler<FeedPageState, FeedPageEffect, FeedPageAction, FeedPageMutation> {
 
-    override fun invoke(
+    override fun handleAction(
         state: FeedPageState,
         action: FeedPageAction,
         effect: suspend (FeedPageEffect) -> Unit,

@@ -28,13 +28,11 @@ import javax.inject.Inject
 @HiltViewModel
 class PhotoViewModel @Inject constructor(
     handler: PhotoHandler,
-    reducer: PhotoReducer,
 ) : ViewModel(),
     ActionReceiverHost<PhotoState, PhotoEffect, PhotoAction, PhotoMutation> {
 
     override val actionReceiver = ActionReceiver(
         handler,
-        reducer,
         PhotoState(),
     )
 }

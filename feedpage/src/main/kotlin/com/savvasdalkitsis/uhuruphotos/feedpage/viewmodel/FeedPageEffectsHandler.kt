@@ -42,7 +42,7 @@ class FeedPageEffectsHandler @Inject constructor(
     private val uiUseCase: UiUseCase,
 ) : EffectHandler<FeedPageEffect> {
 
-    override suspend fun invoke(effect: FeedPageEffect) = when (effect) {
+    override suspend fun handleEffect(effect: FeedPageEffect) = when (effect) {
         ReloadApp -> with(controllersProvider.navController!!) {
             backQueue.clear()
             navigate(HomeNavigationRoutes.home)

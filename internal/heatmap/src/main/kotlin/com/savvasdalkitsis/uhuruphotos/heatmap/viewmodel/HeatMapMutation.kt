@@ -15,14 +15,35 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.heatmap.viewmodel
 
+import com.savvasdalkitsis.uhuruphotos.heatmap.view.state.HeatMapState
 import com.savvasdalkitsis.uhuruphotos.map.model.LatLon
 import com.savvasdalkitsis.uhuruphotos.photos.api.model.Photo
+import com.savvasdalkitsis.uhuruphotos.viewmodel.Mutation
 
-sealed class HeatMapMutation {
-    data class UpdateAllPhotos(val photos: List<Photo>) : HeatMapMutation()
+sealed class HeatMapMutation(
+    mutation: Mutation<HeatMapState>,
+) : Mutation<HeatMapState> by mutation {
+
+    data class UpdateAllPhotos(val photos: List<Photo>) : HeatMapMutation({
+        it.copy(
+            pointsToDisplay = photos
+                .mapNotNull { photo -> photo.latLng }
+                .map { (lat, lon) -> LatLon(lat, lon) },
+            allPhotos = photos,
+        )
+    })
+
     data class UpdateDisplay(
         val photosToDisplay: List<Photo>,
         val pointsToDisplay: List<LatLon>,
-    ) : HeatMapMutation()
-    data class ShowLoading(val loading: Boolean) : HeatMapMutation()
+    ) : HeatMapMutation({
+        it.copy(
+            photosToDisplay = photosToDisplay,
+            pointsToDisplay = pointsToDisplay,
+        )
+    })
+
+    data class ShowLoading(val loading: Boolean) : HeatMapMutation({
+        it.copy(loading = loading)
+    })
 }

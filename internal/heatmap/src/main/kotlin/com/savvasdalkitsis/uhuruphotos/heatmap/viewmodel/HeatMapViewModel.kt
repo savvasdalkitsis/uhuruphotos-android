@@ -30,7 +30,6 @@ class HeatMapViewModel @Inject constructor(
 
     override val actionReceiver = ActionReceiver<HeatMapState, HeatMapEffect, HeatMapAction, HeatMapMutation>(
         heatMapHandler,
-        heatMapReducer(),
         HeatMapState(),
     )
 

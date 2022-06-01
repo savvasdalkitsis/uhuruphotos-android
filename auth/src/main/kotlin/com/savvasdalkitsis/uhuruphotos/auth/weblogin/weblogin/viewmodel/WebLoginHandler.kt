@@ -24,7 +24,7 @@ import com.savvasdalkitsis.uhuruphotos.auth.weblogin.weblogin.mvflow.WebLoginMut
 import com.savvasdalkitsis.uhuruphotos.auth.weblogin.weblogin.mvflow.WebLoginMutation.Loading
 import com.savvasdalkitsis.uhuruphotos.auth.weblogin.weblogin.view.WebLoginState
 import com.savvasdalkitsis.uhuruphotos.infrastructure.coroutines.onMain
-import com.savvasdalkitsis.uhuruphotos.viewmodel.Handler
+import com.savvasdalkitsis.uhuruphotos.viewmodel.ActionHandler
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
@@ -32,9 +32,9 @@ import kotlin.coroutines.coroutineContext
 
 class WebLoginHandler @Inject constructor(
     private val cookieMonitor: CookieMonitor,
-) : Handler<WebLoginState, WebLoginEffect, WebLoginAction, WebLoginMutation> {
+) : ActionHandler<WebLoginState, WebLoginEffect, WebLoginAction, WebLoginMutation> {
 
-    override fun invoke(
+    override fun handleAction(
         state: WebLoginState,
         action: WebLoginAction,
         effect: suspend (WebLoginEffect) -> Unit,

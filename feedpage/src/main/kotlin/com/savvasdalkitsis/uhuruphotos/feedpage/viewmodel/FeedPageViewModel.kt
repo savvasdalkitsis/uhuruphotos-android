@@ -33,7 +33,6 @@ class FeedPageViewModel @Inject constructor(
 
     override val actionReceiver = ActionReceiver(
         feedPageHandler,
-        feedPageReducer(),
         FeedPageState(),
     )
 }

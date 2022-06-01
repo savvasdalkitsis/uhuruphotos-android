@@ -28,7 +28,7 @@ import com.savvasdalkitsis.uhuruphotos.library.mvflow.LibraryMutation.ShowAutoAl
 import com.savvasdalkitsis.uhuruphotos.library.usecase.LibraryUseCase
 import com.savvasdalkitsis.uhuruphotos.library.view.state.LibraryState
 import com.savvasdalkitsis.uhuruphotos.api.log.log
-import com.savvasdalkitsis.uhuruphotos.viewmodel.Handler
+import com.savvasdalkitsis.uhuruphotos.viewmodel.ActionHandler
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -40,11 +40,11 @@ import javax.inject.Inject
 
 class LibraryHandler @Inject constructor(
     private val libraryUseCase: LibraryUseCase,
-) : Handler<LibraryState, LibraryEffect, LibraryAction, LibraryMutation> {
+) : ActionHandler<LibraryState, LibraryEffect, LibraryAction, LibraryMutation> {
 
     private val loading = MutableSharedFlow<Boolean>()
 
-    override fun invoke(
+    override fun handleAction(
         state: LibraryState,
         action: LibraryAction,
         effect: suspend (LibraryEffect) -> Unit,

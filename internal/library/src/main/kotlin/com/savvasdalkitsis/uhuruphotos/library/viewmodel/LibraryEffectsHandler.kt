@@ -29,7 +29,7 @@ class LibraryEffectsHandler @Inject constructor(
     private val toaster: Toaster,
 ) : EffectHandler<LibraryEffect> {
 
-    override suspend fun invoke(effect: LibraryEffect) = when (effect) {
+    override suspend fun handleEffect(effect: LibraryEffect) = when (effect) {
         ErrorLoadingAutoAlbums -> toaster.show(R.string.error_loading_auto_albums)
         is NavigateToAutoAlbum -> controllersProvider.navController!!
             .navigate(AutoAlbumNavigationTarget.name(effect.album.id))

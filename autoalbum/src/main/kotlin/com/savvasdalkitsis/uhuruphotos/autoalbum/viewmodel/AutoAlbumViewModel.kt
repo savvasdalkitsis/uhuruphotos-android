@@ -28,13 +28,11 @@ import javax.inject.Inject
 @HiltViewModel
 class AutoAlbumViewModel @Inject constructor(
     autoAlbumHandler: AutoAlbumHandler,
-    autoAlbumReducer: AutoAlbumReducer,
 ) : ViewModel(),
     ActionReceiverHost<AutoAlbumState, AutoAlbumEffect, AutoAlbumAction, AutoAlbumMutation> {
 
     override val actionReceiver = ActionReceiver(
         autoAlbumHandler,
-        autoAlbumReducer,
         AutoAlbumState(),
     )
 }

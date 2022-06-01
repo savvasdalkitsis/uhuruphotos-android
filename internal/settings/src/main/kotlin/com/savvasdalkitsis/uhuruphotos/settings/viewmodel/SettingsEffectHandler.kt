@@ -27,7 +27,7 @@ internal class SettingsEffectHandler @Inject constructor(
     private val toaster: Toaster,
 ) : EffectHandler<SettingsEffect> {
 
-    override suspend fun invoke(
+    override suspend fun handleEffect(
         effect: SettingsEffect,
     ) {
         when(effect) {

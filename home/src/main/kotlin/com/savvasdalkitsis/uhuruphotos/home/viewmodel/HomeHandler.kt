@@ -26,7 +26,7 @@ import com.savvasdalkitsis.uhuruphotos.home.mvflow.HomeMutation.Loading
 import com.savvasdalkitsis.uhuruphotos.home.mvflow.HomeMutation.ShowLibrary
 import com.savvasdalkitsis.uhuruphotos.home.view.state.HomeState
 import com.savvasdalkitsis.uhuruphotos.api.settings.usecase.SettingsUseCase
-import com.savvasdalkitsis.uhuruphotos.viewmodel.Handler
+import com.savvasdalkitsis.uhuruphotos.viewmodel.ActionHandler
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
@@ -34,9 +34,9 @@ import javax.inject.Inject
 class HomeHandler @Inject constructor(
     private val authenticationUseCase: AuthenticationUseCase,
     private val settingsUseCase: SettingsUseCase,
-) : Handler<HomeState, HomeEffect, HomeAction, HomeMutation> {
+) : ActionHandler<HomeState, HomeEffect, HomeAction, HomeMutation> {
 
-    override fun invoke(
+    override fun handleAction(
         state: HomeState,
         action: HomeAction,
         effect: suspend (HomeEffect) -> Unit,

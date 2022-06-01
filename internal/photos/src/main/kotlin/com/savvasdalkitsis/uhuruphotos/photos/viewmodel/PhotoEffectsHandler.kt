@@ -49,7 +49,7 @@ class PhotoEffectsHandler @Inject constructor(
     @ApplicationContext private val context: Context,
 ) : EffectHandler<PhotoEffect> {
 
-    override suspend fun invoke(effect: PhotoEffect) {
+    override suspend fun handleEffect(effect: PhotoEffect) {
         when (effect) {
             HideSystemBars -> setBars(false)
             ShowSystemBars -> setBars(true)

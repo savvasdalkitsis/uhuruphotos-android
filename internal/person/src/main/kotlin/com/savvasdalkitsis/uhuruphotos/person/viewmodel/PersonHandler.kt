@@ -16,6 +16,7 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.person.viewmodel
 
 import com.savvasdalkitsis.uhuruphotos.people.api.usecase.PeopleUseCase
+import com.savvasdalkitsis.uhuruphotos.people.api.view.state.toPerson
 import com.savvasdalkitsis.uhuruphotos.person.api.usecase.PersonUseCase
 import com.savvasdalkitsis.uhuruphotos.person.view.state.PersonState
 import com.savvasdalkitsis.uhuruphotos.person.viewmodel.PersonAction.ChangeDisplay
@@ -27,7 +28,8 @@ import com.savvasdalkitsis.uhuruphotos.person.viewmodel.PersonMutation.Loading
 import com.savvasdalkitsis.uhuruphotos.person.viewmodel.PersonMutation.SetFeedDisplay
 import com.savvasdalkitsis.uhuruphotos.person.viewmodel.PersonMutation.ShowPersonDetails
 import com.savvasdalkitsis.uhuruphotos.person.viewmodel.PersonMutation.ShowPersonPhotos
-import com.savvasdalkitsis.uhuruphotos.viewmodel.Handler
+import com.savvasdalkitsis.uhuruphotos.photos.usecase.PhotosUseCase
+import com.savvasdalkitsis.uhuruphotos.viewmodel.ActionHandler
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOf
@@ -38,10 +40,10 @@ import javax.inject.Inject
 class PersonHandler @Inject constructor(
     private val personUseCase: PersonUseCase,
     private val peopleUseCase: PeopleUseCase,
+    private val photosUseCase: PhotosUseCase,
+) : ActionHandler<PersonState, PersonEffect, PersonAction, PersonMutation> {
 
-) : Handler<PersonState, PersonEffect, PersonAction, PersonMutation> {
-
-    override fun invoke(
+    override fun handleAction(
         state: PersonState,
         action: PersonAction,
         effect: suspend (PersonEffect) -> Unit
@@ -49,6 +51,9 @@ class PersonHandler @Inject constructor(
         is LoadPerson -> merge(
             flowOf(Loading),
             peopleUseCase.observePerson(action.id)
+                .map { with(photosUseCase) {
+                    it.toPerson { it.toAbsoluteUrl() }
+                } }
                 .map(::ShowPersonDetails),
             personUseCase.observePersonAlbums(action.id)
                 .map(::ShowPersonPhotos)

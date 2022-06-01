@@ -15,8 +15,16 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.auth.weblogin.weblogin.mvflow
 
-sealed class WebLoginMutation {
+import com.savvasdalkitsis.uhuruphotos.auth.weblogin.weblogin.view.WebLoginState
+import com.savvasdalkitsis.uhuruphotos.viewmodel.Mutation
 
-    data class LoadPage(val url: String) : WebLoginMutation()
-    object Loading : WebLoginMutation()
+sealed class WebLoginMutation : Mutation<WebLoginState> {
+
+    data class LoadPage(val url: String) : WebLoginMutation() {
+        override fun reduce(state: WebLoginState) = state.copy(url = url)
+    }
+
+    object Loading : WebLoginMutation() {
+        override fun reduce(state: WebLoginState) = state.copy(url = null)
+    }
 }

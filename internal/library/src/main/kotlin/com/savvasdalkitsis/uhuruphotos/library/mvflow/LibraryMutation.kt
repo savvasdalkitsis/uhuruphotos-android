@@ -17,9 +17,22 @@ package com.savvasdalkitsis.uhuruphotos.library.mvflow
 
 import com.savvasdalkitsis.uhuruphotos.library.view.state.AutoAlbumSorting
 import com.savvasdalkitsis.uhuruphotos.library.view.state.LibraryAutoAlbum
+import com.savvasdalkitsis.uhuruphotos.library.view.state.LibraryState
+import com.savvasdalkitsis.uhuruphotos.viewmodel.Mutation
 
-sealed class LibraryMutation {
-    data class DisplayAutoAlbums(val albums: List<LibraryAutoAlbum>) : LibraryMutation()
-    data class ShowAutoAlbumSorting(val sorting: AutoAlbumSorting) : LibraryMutation()
-    data class Loading(val loading: Boolean) : LibraryMutation()
+sealed class LibraryMutation(
+    mutation: Mutation<LibraryState>,
+) : Mutation<LibraryState> by mutation {
+
+    data class DisplayAutoAlbums(val albums: List<LibraryAutoAlbum>) : LibraryMutation({
+        it.copy(autoAlbums = albums)
+    })
+
+    data class ShowAutoAlbumSorting(val sorting: AutoAlbumSorting) : LibraryMutation({
+        it.copy(sorting = sorting)
+    })
+
+    data class Loading(val loading: Boolean) : LibraryMutation({
+        it.copy(isLoading = loading)
+    })
 }

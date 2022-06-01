@@ -27,7 +27,7 @@ class AutoAlbumEffectsHandler @Inject constructor(
     private val controllersProvider: ControllersProvider,
 ) : EffectHandler<AutoAlbumEffect> {
 
-    override suspend fun invoke(effect: AutoAlbumEffect) {
+    override suspend fun handleEffect(effect: AutoAlbumEffect) {
         when (effect) {
             is OpenPhotoDetails -> navigate(
                 PhotoNavigationTarget.name(

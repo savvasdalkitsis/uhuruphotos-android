@@ -66,7 +66,7 @@ import com.savvasdalkitsis.uhuruphotos.settings.viewmodel.SettingsMutation.ShowF
 import com.savvasdalkitsis.uhuruphotos.settings.viewmodel.SettingsMutation.UserBadgeUpdate
 import com.savvasdalkitsis.uhuruphotos.strings.R
 import com.savvasdalkitsis.uhuruphotos.userbadge.api.UserBadgeUseCase
-import com.savvasdalkitsis.uhuruphotos.viewmodel.Handler
+import com.savvasdalkitsis.uhuruphotos.viewmodel.ActionHandler
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flatMapMerge
 import kotlinx.coroutines.flow.flow
@@ -82,9 +82,9 @@ internal class SettingsHandler @Inject constructor(
     private val cacheUseCase: CacheUseCase,
     private val feedbackUseCase: FeedbackUseCase,
     private val searchUseCase: SearchUseCase,
-) : Handler<SettingsState, SettingsEffect, SettingsAction, SettingsMutation> {
+) : ActionHandler<SettingsState, SettingsEffect, SettingsAction, SettingsMutation> {
 
-    override fun invoke(
+    override fun handleAction(
         state: SettingsState,
         action: SettingsAction,
         effect: suspend (SettingsEffect) -> Unit

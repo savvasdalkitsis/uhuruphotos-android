@@ -15,7 +15,7 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.viewmodel
 
-interface ActionReceiverHost<S: Any, E: Any, A: Any, M : Any> {
+interface ActionReceiverHost<S: Any, E: Any, A: Any, M : Mutation<S>> {
 
     val actionReceiver: ActionReceiver<S, E, A, M>
 

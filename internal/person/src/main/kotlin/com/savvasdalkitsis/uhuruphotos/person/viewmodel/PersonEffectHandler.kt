@@ -27,7 +27,7 @@ class PersonEffectHandler @Inject constructor(
     private val controllersProvider: ControllersProvider,
 ) : EffectHandler<PersonEffect> {
 
-    override suspend fun invoke(effect: PersonEffect) {
+    override suspend fun handleEffect(effect: PersonEffect) {
         when (effect) {
             NavigateBack -> controllersProvider.navController!!.popBackStack()
             is OpenPhotoDetails -> controllersProvider.navController!!.navigate(with(effect) {

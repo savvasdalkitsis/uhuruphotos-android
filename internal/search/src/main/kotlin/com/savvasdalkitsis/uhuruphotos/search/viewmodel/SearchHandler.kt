@@ -82,7 +82,7 @@ import com.savvasdalkitsis.uhuruphotos.search.view.state.SearchSuggestion.Recent
 import com.savvasdalkitsis.uhuruphotos.search.view.state.SearchSuggestion.ServerSearchSuggestion
 import com.savvasdalkitsis.uhuruphotos.api.settings.usecase.SettingsUseCase
 import com.savvasdalkitsis.uhuruphotos.userbadge.api.UserBadgeUseCase
-import com.savvasdalkitsis.uhuruphotos.viewmodel.Handler
+import com.savvasdalkitsis.uhuruphotos.viewmodel.ActionHandler
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.Flow
@@ -112,13 +112,13 @@ class SearchHandler @Inject constructor(
     private val settingsUseCase: SettingsUseCase,
     private val peopleUseCase: PeopleUseCase,
     private val photosUseCase: PhotosUseCase,
-) : Handler<SearchState, SearchEffect, SearchAction, SearchMutation> {
+) : ActionHandler<SearchState, SearchEffect, SearchAction, SearchMutation> {
 
     private var lastSearch: Job? = null
     private var lastSuggestions: Job? = null
     private val queryFilter = MutableSharedFlow<String>()
 
-    override fun invoke(
+    override fun handleAction(
         state: SearchState,
         action: SearchAction,
         effect: suspend (SearchEffect) -> Unit,

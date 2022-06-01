@@ -17,25 +17,73 @@ package com.savvasdalkitsis.uhuruphotos.feedpage.mvflow
 
 import com.savvasdalkitsis.uhuruphotos.albums.api.model.Album
 import com.savvasdalkitsis.uhuruphotos.feed.view.state.FeedDisplays
+import com.savvasdalkitsis.uhuruphotos.feed.view.state.FeedState
+import com.savvasdalkitsis.uhuruphotos.feedpage.view.state.FeedPageState
 import com.savvasdalkitsis.uhuruphotos.userbadge.api.view.state.UserInformationState
+import com.savvasdalkitsis.uhuruphotos.viewmodel.Mutation
 
-sealed class FeedPageMutation {
-    object Loading : FeedPageMutation()
-    object ShowAccountOverview : FeedPageMutation()
-    object HideAccountOverview : FeedPageMutation()
-    object ShowLogOutConfirmation : FeedPageMutation()
-    object HideLogOutConfirmation : FeedPageMutation()
-    object StartRefreshing : FeedPageMutation()
-    object StopRefreshing : FeedPageMutation()
-    object ShowDeletionConfirmationDialog : FeedPageMutation()
-    object HideDeletionConfirmationDialog : FeedPageMutation()
-    object ShowNoPhotosFound : FeedPageMutation()
+sealed class FeedPageMutation(
+    mutation: Mutation<FeedPageState>,
+) : Mutation<FeedPageState> by mutation {
 
-    data class ShowAlbums(val albums: List<Album>) : FeedPageMutation() {
+    object Loading : FeedPageMutation({
+        it.copyFeed { copy(isLoading = true) }
+    })
+
+    object ShowAccountOverview : FeedPageMutation({
+        it.copy(showAccountOverview = true)
+    })
+
+    object HideAccountOverview : FeedPageMutation({
+        it.copy(showAccountOverview = false)
+    })
+
+    object ShowLogOutConfirmation : FeedPageMutation({
+        it.copy(showLogOutConfirmation = true)
+    })
+
+    object HideLogOutConfirmation : FeedPageMutation({
+        it.copy(showLogOutConfirmation = false)
+    })
+
+    object StartRefreshing : FeedPageMutation({
+        it.copy(isRefreshing = true)
+    })
+
+    object StopRefreshing : FeedPageMutation({
+        it.copy(isRefreshing = false)
+    })
+
+    object ShowDeletionConfirmationDialog : FeedPageMutation({
+        it.copy(showPhotoDeletionConfirmationDialog = true)
+    })
+
+    object HideDeletionConfirmationDialog : FeedPageMutation({
+        it.copy(showPhotoDeletionConfirmationDialog = false)
+    })
+
+    object ShowNoPhotosFound : FeedPageMutation({
+        it.copyFeed { copy(isLoading = false, isEmpty = true, albums = emptyList()) }
+    })
+
+    data class ShowAlbums(val albums: List<Album>) : FeedPageMutation({
+        it.copyFeed { copy(isLoading = false, isEmpty = false, albums = albums) }
+    }) {
         override fun toString() = "Showing ${albums.size} albums"
     }
 
-    data class UserBadgeUpdate(val state: UserInformationState) : FeedPageMutation()
-    data class ChangeDisplay(val display: FeedDisplays) : FeedPageMutation()
-    data class ShowLibrary(val showLibrary: Boolean) : FeedPageMutation()
+    data class UserBadgeUpdate(val userInformationState: UserInformationState) : FeedPageMutation({
+        it.copy(userInformationState = userInformationState)
+    })
+
+    data class ChangeDisplay(val display: FeedDisplays) : FeedPageMutation({
+        it.copyFeed { copy(feedDisplay = display) }
+    })
+
+    data class ShowLibrary(val showLibrary: Boolean) : FeedPageMutation({
+        it.copy(showLibrary = showLibrary)
+    })
 }
+
+private fun FeedPageState.copyFeed(feedStateMutation: FeedState.() -> FeedState) =
+    copy(feedState = feedStateMutation(feedState))

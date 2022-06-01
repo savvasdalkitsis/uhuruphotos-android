@@ -51,7 +51,7 @@ import com.savvasdalkitsis.uhuruphotos.server.mvflow.ServerMutation.ShowUnsecure
 import com.savvasdalkitsis.uhuruphotos.server.mvflow.ServerMutation.ShowUrlValidation
 import com.savvasdalkitsis.uhuruphotos.server.view.ServerState
 import com.savvasdalkitsis.uhuruphotos.server.view.ServerState.UserCredentials
-import com.savvasdalkitsis.uhuruphotos.viewmodel.Handler
+import com.savvasdalkitsis.uhuruphotos.viewmodel.ActionHandler
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOf
@@ -60,9 +60,9 @@ import javax.inject.Inject
 class ServerHandler @Inject constructor(
     private val serverUseCase: ServerUseCase,
     private val authenticationUseCase: AuthenticationUseCase,
-) : Handler<ServerState, ServerEffect, ServerAction, ServerMutation> {
+) : ActionHandler<ServerState, ServerEffect, ServerAction, ServerMutation> {
 
-    override fun invoke(
+    override fun handleAction(
         state: ServerState,
         action: ServerAction,
         effect: suspend (ServerEffect) -> Unit,

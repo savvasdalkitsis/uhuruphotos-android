@@ -30,7 +30,6 @@ internal class SettingsViewModel @Inject constructor(
 
     override val actionReceiver = ActionReceiver(
         handler,
-        settingsReducer(),
         SettingsState(),
     )
 }
