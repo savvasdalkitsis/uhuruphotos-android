@@ -21,7 +21,7 @@ dependencies {
     implementation project(":navigation")
     implementation project(":accountoverview")
     implementation project(":account")
-    implementation project(":feedpage")
+    implementation project(":api:feedpage")
     implementation project(":server")
     implementation project(":api:settings")
     implementation project(":api:map")

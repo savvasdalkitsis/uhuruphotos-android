@@ -55,7 +55,6 @@ android {
 
 dependencies {
     implementation project(":auth")
-    implementation project(":feedpage")
     implementation project(":home")
     implementation project(":navigation")
     implementation project(":api:ui")
@@ -66,6 +65,7 @@ dependencies {
 
     // internal projects
     implementation project(":internal:albums")
+    implementation project(":internal:feedpage")
     implementation project(":internal:heatmap")
     implementation project(":internal:library")
     implementation project(":internal:log")
