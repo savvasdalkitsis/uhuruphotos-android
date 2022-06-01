@@ -24,7 +24,7 @@ dependencies {
     implementation project(":db")
     implementation project(':api:userbadge')
     implementation project(":api:toaster")
-    implementation project(":autoalbum")
+    implementation project(":api:autoalbum")
     implementation project(":api:homenavigation")
     implementation(
             libs.accompanist.swiperefresh,

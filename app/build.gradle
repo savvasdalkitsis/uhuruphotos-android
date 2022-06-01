@@ -63,6 +63,7 @@ dependencies {
 
     // internal projects
     implementation project(":internal:albums")
+    implementation project(":internal:autoalbum")
     implementation project(":internal:feedpage")
     implementation project(":internal:heatmap")
     implementation project(":internal:home")
