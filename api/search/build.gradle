@@ -2,7 +2,6 @@ dependencies {
     api project(':api:albums')
     api(
             libs.kotlinx.coroutines,
-            libs.result,
     )
 }
 

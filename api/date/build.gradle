@@ -1,0 +1,11 @@
+android {
+    namespace 'com.savvasdalkitsis.uhuruphotos.api.date'
+}
+
+dependencies {
+
+    implementation project(":api:log")
+    implementation(
+            libs.hilt,
+    )
+}

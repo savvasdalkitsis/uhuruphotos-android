@@ -15,13 +15,9 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.people.seam
 
-import com.savvasdalkitsis.uhuruphotos.infrastructure.extensions.onErrors
+import com.savvasdalkitsis.uhuruphotos.api.coroutines.onErrors
+import com.savvasdalkitsis.uhuruphotos.api.seam.ActionHandler
 import com.savvasdalkitsis.uhuruphotos.people.api.view.state.toPerson
-import com.savvasdalkitsis.uhuruphotos.people.usecase.PeopleUseCase
-import com.savvasdalkitsis.uhuruphotos.people.view.state.PeopleState
-import com.savvasdalkitsis.uhuruphotos.people.view.state.SortOrder
-import com.savvasdalkitsis.uhuruphotos.people.view.state.SortOrder.ASCENDING
-import com.savvasdalkitsis.uhuruphotos.people.view.state.SortOrder.DESCENDING
 import com.savvasdalkitsis.uhuruphotos.people.seam.PeopleAction.LoadPeople
 import com.savvasdalkitsis.uhuruphotos.people.seam.PeopleAction.NavigateBack
 import com.savvasdalkitsis.uhuruphotos.people.seam.PeopleAction.PersonSelected
@@ -30,8 +26,12 @@ import com.savvasdalkitsis.uhuruphotos.people.seam.PeopleEffect.ErrorLoadingPeop
 import com.savvasdalkitsis.uhuruphotos.people.seam.PeopleEffect.NavigateToPerson
 import com.savvasdalkitsis.uhuruphotos.people.seam.PeopleMutation.DisplayPeople
 import com.savvasdalkitsis.uhuruphotos.people.seam.PeopleMutation.SetSortOrder
+import com.savvasdalkitsis.uhuruphotos.people.usecase.PeopleUseCase
+import com.savvasdalkitsis.uhuruphotos.people.view.state.PeopleState
+import com.savvasdalkitsis.uhuruphotos.people.view.state.SortOrder
+import com.savvasdalkitsis.uhuruphotos.people.view.state.SortOrder.ASCENDING
+import com.savvasdalkitsis.uhuruphotos.people.view.state.SortOrder.DESCENDING
 import com.savvasdalkitsis.uhuruphotos.photos.usecase.PhotosUseCase
-import com.savvasdalkitsis.uhuruphotos.api.seam.ActionHandler
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow

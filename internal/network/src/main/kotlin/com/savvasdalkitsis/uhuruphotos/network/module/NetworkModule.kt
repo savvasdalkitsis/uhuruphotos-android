@@ -17,8 +17,6 @@ package com.savvasdalkitsis.uhuruphotos.network.module
 
 import android.content.Context
 import com.savvasdalkitsis.uhuruphotos.network.BasicOkHttpClient
-import com.savvasdalkitsis.uhuruphotos.infrastructure.extensions.mb
-import com.savvasdalkitsis.uhuruphotos.infrastructure.extensions.seconds
 import com.savvasdalkitsis.uhuruphotos.network.interceptors.UserAgentInterceptor
 import com.squareup.moshi.Moshi
 import dagger.Module
@@ -32,6 +30,9 @@ import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 import java.io.File
 import javax.inject.Singleton
+import kotlin.time.DurationUnit
+import kotlin.time.toDuration
+import kotlin.time.toJavaDuration
 
 @Module
 @InstallIn(SingletonComponent::class)
@@ -55,7 +56,7 @@ internal class NetworkModule {
         @ApplicationContext context: Context,
     ) = Cache(
         File(context.cacheDir, "http_cache"),
-        50.mb
+        50 * 1024L * 1024L
     )
 
     @Provides
@@ -66,4 +67,6 @@ internal class NetworkModule {
 
     @Provides
     fun moshi(): Moshi = Moshi.Builder().build()
+
+    private val Int.seconds get() = this.toDuration(DurationUnit.SECONDS).toJavaDuration()
 }

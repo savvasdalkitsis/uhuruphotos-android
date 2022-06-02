@@ -15,10 +15,10 @@ android {
 
 dependencies {
 
+    implementation project(":api:http")
     implementation project(":api:server")
     implementation project(":api:db")
     implementation project(":navigation")
-    implementation project(":infrastructure")
     implementation project(":auth")
     implementation project(":api:log")
     implementation project(":api:icons")
@@ -30,5 +30,6 @@ dependencies {
             libs.androidx.compose.hilt.navigation,
             libs.androidx.compose.material,
             libs.okhttp,
+            libs.urlvalidator,
     )
 }

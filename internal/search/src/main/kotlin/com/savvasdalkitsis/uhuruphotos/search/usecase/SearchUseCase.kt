@@ -15,13 +15,12 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.search.usecase
 
-import com.github.michaelbull.result.Result
 import com.savvasdalkitsis.uhuruphotos.albums.api.model.Album
+import com.savvasdalkitsis.uhuruphotos.api.coroutines.safelyOnStart
+import com.savvasdalkitsis.uhuruphotos.api.coroutines.safelyOnStartIgnoring
+import com.savvasdalkitsis.uhuruphotos.api.date.DateDisplayer
 import com.savvasdalkitsis.uhuruphotos.db.search.GetSearchResults
-import com.savvasdalkitsis.uhuruphotos.infrastructure.date.DateDisplayer
-import com.savvasdalkitsis.uhuruphotos.infrastructure.model.Group
-import com.savvasdalkitsis.uhuruphotos.infrastructure.extensions.safelyOnStart
-import com.savvasdalkitsis.uhuruphotos.infrastructure.extensions.safelyOnStartIgnoring
+import com.savvasdalkitsis.uhuruphotos.group.model.Group
 import com.savvasdalkitsis.uhuruphotos.photos.api.model.Photo
 import com.savvasdalkitsis.uhuruphotos.photos.service.model.isVideo
 import com.savvasdalkitsis.uhuruphotos.photos.usecase.PhotosUseCase
@@ -48,7 +47,7 @@ class SearchUseCase @Inject constructor(
         searchRepository.getSearchResults(query)
             .mapToAlbums()
 
-    override fun searchFor(query: String): Flow<Result<List<Album>, Throwable>> =
+    override fun searchFor(query: String): Flow<Result<List<Album>>> =
         searchRepository.observeSearchResults(query)
             .map { groups ->
                 groups.mapToAlbums()

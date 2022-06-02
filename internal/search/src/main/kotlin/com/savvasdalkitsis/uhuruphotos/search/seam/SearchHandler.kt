@@ -15,13 +15,14 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.search.seam
 
-import com.github.michaelbull.result.Ok
 import com.savvasdalkitsis.uhuruphotos.api.account.usecase.AccountUseCase
-import com.savvasdalkitsis.uhuruphotos.db.people.People
+import com.savvasdalkitsis.uhuruphotos.api.coroutines.onErrors
+import com.savvasdalkitsis.uhuruphotos.api.coroutines.onErrorsIgnore
 import com.savvasdalkitsis.uhuruphotos.api.feedpage.usecase.FeedPageUseCase
-import com.savvasdalkitsis.uhuruphotos.infrastructure.extensions.onErrors
-import com.savvasdalkitsis.uhuruphotos.infrastructure.extensions.onErrorsIgnore
 import com.savvasdalkitsis.uhuruphotos.api.log.log
+import com.savvasdalkitsis.uhuruphotos.api.seam.ActionHandler
+import com.savvasdalkitsis.uhuruphotos.api.settings.usecase.SettingsUseCase
+import com.savvasdalkitsis.uhuruphotos.db.people.People
 import com.savvasdalkitsis.uhuruphotos.people.api.usecase.PeopleUseCase
 import com.savvasdalkitsis.uhuruphotos.people.api.view.state.toPerson
 import com.savvasdalkitsis.uhuruphotos.photos.usecase.PhotosUseCase
@@ -77,9 +78,7 @@ import com.savvasdalkitsis.uhuruphotos.search.view.state.SearchSuggestion
 import com.savvasdalkitsis.uhuruphotos.search.view.state.SearchSuggestion.PersonSearchSuggestion
 import com.savvasdalkitsis.uhuruphotos.search.view.state.SearchSuggestion.RecentSearchSuggestion
 import com.savvasdalkitsis.uhuruphotos.search.view.state.SearchSuggestion.ServerSearchSuggestion
-import com.savvasdalkitsis.uhuruphotos.api.settings.usecase.SettingsUseCase
 import com.savvasdalkitsis.uhuruphotos.userbadge.api.UserBadgeUseCase
-import com.savvasdalkitsis.uhuruphotos.api.seam.ActionHandler
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.Flow
@@ -190,13 +189,13 @@ class SearchHandler @Inject constructor(
             searchUseCase.searchFor(action.query)
                 .debounce(200)
                 .mapNotNull { result ->
-                    if (result is Ok) {
-                        val albums = result.value
+                    val albums = result.getOrNull()
+                    if (albums != null)
                         when {
                             albums.isEmpty() -> SwitchStateToSearching
                             else -> SwitchStateToFound(Found(albums))
                         }
-                    } else {
+                    else {
                         effect(ErrorSearching)
                         null
                     }

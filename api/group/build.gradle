@@ -1,0 +1,9 @@
+android {
+    namespace 'com.savvasdalkitsis.uhuruphotos.api.group'
+}
+
+dependencies {
+    api(
+            libs.kotlinx.coroutines,
+    )
+}

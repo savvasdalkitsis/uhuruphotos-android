@@ -12,6 +12,7 @@ dependencies {
 
     implementation project(":api:ui")
     implementation project(":api:heatmap")
+    implementation project(":api:coroutines")
     implementation project(":navigation")
     implementation project(":api:map")
     implementation project(":api:settings")
@@ -21,7 +22,6 @@ dependencies {
     implementation project(":api:db")
     implementation project(":api:toaster")
     implementation project(":api:feed")
-    implementation project(":infrastructure")
     implementation project(":api:icons")
     implementation project(":api:strings")
 

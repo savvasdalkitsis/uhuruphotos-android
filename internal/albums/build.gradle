@@ -17,9 +17,10 @@ dependencies {
 
     implementation project(":api:db")
     implementation project(":api:log")
-    implementation project(":infrastructure")
     implementation project(":internal:photos")
     implementation project(":api:icons")
+    implementation project(":api:date")
+    implementation project(":api:coroutines")
     implementation project(":api:worker")
     implementation project(":api:initializer")
     implementation project(":api:settings")

@@ -15,7 +15,6 @@ android {
 dependencies {
 
     implementation project(":api:db")
-    implementation project(":infrastructure")
     implementation project(":navigation")
     implementation project(":api:log")
     implementation project(":api:ui")
@@ -25,6 +24,7 @@ dependencies {
     implementation project(':api:photos')
     implementation project(':api:search')
     implementation project(":api:worker")
+    implementation project(":api:date")
     implementation project(":auth")
     implementation project(":api:icons")
     implementation project(':api:image')

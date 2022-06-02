@@ -18,7 +18,7 @@ package com.savvasdalkitsis.uhuruphotos.worker.usecase
 import androidx.lifecycle.LiveData
 import androidx.work.WorkInfo
 import androidx.work.WorkManager
-import com.savvasdalkitsis.uhuruphotos.infrastructure.coroutines.onMain
+import com.savvasdalkitsis.uhuruphotos.api.launchers.onMain
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.channels.awaitClose

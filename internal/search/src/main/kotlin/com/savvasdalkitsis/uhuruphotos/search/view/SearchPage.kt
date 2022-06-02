@@ -19,11 +19,11 @@ import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.layout.imeNestedScroll
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import com.savvasdalkitsis.uhuruphotos.api.account.view.LogOutConfirmationDialog
 import com.savvasdalkitsis.uhuruphotos.accountoverview.view.AccountOverviewPopUp
-import com.savvasdalkitsis.uhuruphotos.feed.view.FeedDisplayActionButton
+import com.savvasdalkitsis.uhuruphotos.api.account.view.LogOutConfirmationDialog
+import com.savvasdalkitsis.uhuruphotos.api.compose.blurIf
 import com.savvasdalkitsis.uhuruphotos.api.home.view.HomeScaffold
-import com.savvasdalkitsis.uhuruphotos.infrastructure.extensions.blurIf
+import com.savvasdalkitsis.uhuruphotos.feed.view.FeedDisplayActionButton
 import com.savvasdalkitsis.uhuruphotos.navigation.ControllersProvider
 import com.savvasdalkitsis.uhuruphotos.search.seam.SearchAction
 import com.savvasdalkitsis.uhuruphotos.search.seam.SearchAction.AskToLogOut

@@ -3,7 +3,7 @@ dependencies {
     api project(':api:photos')
     api project(':api:people')
     api project(":api:db")
-    api project(":infrastructure")
+    api project(':api:group')
     implementation(
             libs.androidx.work,
             libs.moshi,

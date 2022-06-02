@@ -15,14 +15,13 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.people.api.usecase
 
-import com.github.michaelbull.result.Result
 import com.savvasdalkitsis.uhuruphotos.db.people.People
 import kotlinx.coroutines.flow.Flow
 
 interface PeopleUseCase {
-    fun observePeopleByName(): Flow<Result<List<People>, Throwable>>
+    fun observePeopleByName(): Flow<Result<List<People>>>
     suspend fun getPeopleByName(): List<People>
-    fun observePeopleByPhotoCount(): Flow<Result<List<People>, Throwable>>
+    fun observePeopleByPhotoCount(): Flow<Result<List<People>>>
     fun observePerson(id: Int): Flow<People>
     suspend fun refreshPeople()
 }

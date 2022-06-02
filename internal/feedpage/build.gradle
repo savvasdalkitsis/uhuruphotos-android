@@ -11,6 +11,7 @@ android {
 dependencies {
 
     implementation project(":api:feedpage")
+    implementation project(":api:compose")
     implementation project(":internal:photos")
     implementation project(':api:photos')
     implementation project(':api:albums')
@@ -21,7 +22,6 @@ dependencies {
     implementation project(":api:home")
     implementation project(":api:account")
     implementation project(":api:accountoverview")
-    implementation project(":infrastructure")
     implementation project(':api:seam')
     implementation project(":navigation")
     implementation project(":api:share")

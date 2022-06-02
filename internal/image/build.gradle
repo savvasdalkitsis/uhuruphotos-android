@@ -12,7 +12,6 @@ dependencies {
 
     implementation project(":auth")
     implementation project(":api:initializer")
-    implementation project(":infrastructure")
     implementation project(":api:settings")
     implementation project(':api:image')
     implementation(

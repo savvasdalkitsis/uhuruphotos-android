@@ -1,0 +1,9 @@
+android {
+    namespace 'com.savvasdalkitsis.uhuruphotos.api.http'
+}
+
+dependencies {
+    implementation(
+            libs.urlvalidator,
+    )
+}

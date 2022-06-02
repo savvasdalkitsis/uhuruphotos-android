@@ -2,8 +2,8 @@ dependencies {
 
     implementation project(":api:db")
     implementation project(":api:log")
+    implementation project(":api:coroutines")
     api project(":api:user")
-    implementation project(":infrastructure")
     implementation(
             libs.hilt,
             libs.kotlinx.coroutines,

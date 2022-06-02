@@ -10,9 +10,6 @@ android {
 
 dependencies {
     api project(":api:db")
-    api(
-            libs.result,
-    )
     implementation project(':api:image')
     implementation(
             libs.androidx.compose.foundation,

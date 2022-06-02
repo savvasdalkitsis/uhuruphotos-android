@@ -38,7 +38,6 @@ import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.unit.dp
 import com.savvasdalkitsis.uhuruphotos.icons.R
-import com.savvasdalkitsis.uhuruphotos.infrastructure.extensions.round
 import com.savvasdalkitsis.uhuruphotos.map.view.MapView
 import com.savvasdalkitsis.uhuruphotos.people.api.view.PeopleBar
 import com.savvasdalkitsis.uhuruphotos.photos.seam.PhotoAction
@@ -142,3 +141,4 @@ fun PhotoDetailsSheet(
         }
     }
 }
+fun Double.round(decimals: Int = 2): String = "%.${decimals}f".format(this)

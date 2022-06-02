@@ -14,7 +14,6 @@ dependencies {
     implementation project(':api:image')
     implementation project(':api:video')
     implementation project(":api:settings")
-    implementation project(":infrastructure")
     implementation(
             libs.androidx.compose.foundation,
             libs.androidx.compose.material,

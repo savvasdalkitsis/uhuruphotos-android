@@ -72,7 +72,6 @@ moshi-kapt = { module = "com.squareup.moshi:moshi-kotlin-codegen", version.ref =
 okhttp = { module = "com.squareup.okhttp3:okhttp", version.ref = "okhttp" }
 okhttp-logging = { module = "com.squareup.okhttp3:logging-interceptor", version.ref = "okhttp" }
 okhttp-url = { module = "com.squareup.okhttp3:okhttp-urlconnection", version.ref = "okhttp" }
-result = "com.michael-bull.kotlin-result:kotlin-result:1.1.16"
 retrofit-core = { module = "com.squareup.retrofit2:retrofit", version.ref = "retrofit" }
 retrofit-moshi = { module = "com.squareup.retrofit2:converter-moshi", version.ref = "retrofit" }
 scrollbar = "com.github.nanihadesuka:LazyColumnScrollbar:1.1.0"

@@ -21,7 +21,6 @@ import com.google.android.exoplayer2.ext.okhttp.OkHttpDataSource
 import com.google.android.exoplayer2.source.DefaultMediaSourceFactory
 import com.savvasdalkitsis.uhuruphotos.auth.module.AuthModule
 import com.savvasdalkitsis.uhuruphotos.auth.service.TokenRefreshInterceptor
-import com.savvasdalkitsis.uhuruphotos.infrastructure.extensions.mb
 import com.savvasdalkitsis.uhuruphotos.api.settings.usecase.SettingsUseCase
 import com.savvasdalkitsis.uhuruphotos.video.api.VideoCache
 import dagger.Module
@@ -46,7 +45,7 @@ class VideoModule {
         @ApplicationContext context: Context,
     ) = Cache(
         File(context.cacheDir, "video_cache"),
-        settingsUseCase.getVideoDiskCacheMaxLimit().mb
+        settingsUseCase.getVideoDiskCacheMaxLimit() * 1024L * 1024L
     )
 
     @Provides

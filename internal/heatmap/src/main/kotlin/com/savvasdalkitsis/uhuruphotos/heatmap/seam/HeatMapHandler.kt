@@ -16,7 +16,9 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.heatmap.seam
 
 import com.savvasdalkitsis.uhuruphotos.albums.api.usecase.AlbumsUseCase
-import com.savvasdalkitsis.uhuruphotos.heatmap.view.state.HeatMapState
+import com.savvasdalkitsis.uhuruphotos.api.coroutines.onErrors
+import com.savvasdalkitsis.uhuruphotos.api.coroutines.safelyOnStart
+import com.savvasdalkitsis.uhuruphotos.api.seam.ActionHandler
 import com.savvasdalkitsis.uhuruphotos.heatmap.seam.HeatMapAction.BackPressed
 import com.savvasdalkitsis.uhuruphotos.heatmap.seam.HeatMapAction.CameraViewPortChanged
 import com.savvasdalkitsis.uhuruphotos.heatmap.seam.HeatMapAction.Load
@@ -27,13 +29,11 @@ import com.savvasdalkitsis.uhuruphotos.heatmap.seam.HeatMapEffect.NavigateToPhot
 import com.savvasdalkitsis.uhuruphotos.heatmap.seam.HeatMapMutation.ShowLoading
 import com.savvasdalkitsis.uhuruphotos.heatmap.seam.HeatMapMutation.UpdateAllPhotos
 import com.savvasdalkitsis.uhuruphotos.heatmap.seam.HeatMapMutation.UpdateDisplay
-import com.savvasdalkitsis.uhuruphotos.infrastructure.extensions.onErrors
-import com.savvasdalkitsis.uhuruphotos.infrastructure.extensions.safelyOnStart
+import com.savvasdalkitsis.uhuruphotos.heatmap.view.state.HeatMapState
 import com.savvasdalkitsis.uhuruphotos.map.model.LatLon
 import com.savvasdalkitsis.uhuruphotos.photos.api.model.Photo
 import com.savvasdalkitsis.uhuruphotos.photos.model.latLng
 import com.savvasdalkitsis.uhuruphotos.photos.usecase.PhotosUseCase
-import com.savvasdalkitsis.uhuruphotos.api.seam.ActionHandler
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async

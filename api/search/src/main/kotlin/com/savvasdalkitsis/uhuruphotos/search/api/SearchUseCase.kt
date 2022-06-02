@@ -15,12 +15,11 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.search.api
 
-import com.github.michaelbull.result.Result
 import com.savvasdalkitsis.uhuruphotos.albums.api.model.Album
 import kotlinx.coroutines.flow.Flow
 
 interface SearchUseCase {
-    fun searchFor(query: String): Flow<Result<List<Album>, Throwable>>
+    fun searchFor(query: String): Flow<Result<List<Album>>>
     suspend fun searchResultsFor(query: String): List<Album>
     fun getRandomSearchSuggestion(): Flow<String>
     fun getSearchSuggestions(): Flow<List<String>>

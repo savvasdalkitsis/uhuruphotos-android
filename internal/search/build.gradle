@@ -11,7 +11,6 @@ android {
 dependencies {
 
     implementation project(":api:feed")
-    implementation project(":infrastructure")
     implementation project(":api:ui")
     implementation project(":internal:photos")
     implementation project(':api:photos')
@@ -29,9 +28,11 @@ dependencies {
     implementation project(":api:icons")
     implementation project(":api:toaster")
     implementation project(':api:people')
-    implementation project(":infrastructure")
     implementation project(':api:person')
     implementation project(":api:heatmap")
+    implementation project(":api:date")
+    implementation project(":api:compose")
+    implementation project(":api:coroutines")
     implementation project(':api:search')
     implementation project(":api:strings")
     implementation project(":api:homenavigation")

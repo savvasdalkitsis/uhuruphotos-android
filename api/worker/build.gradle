@@ -1,9 +1,10 @@
 dependencies {
 
-    implementation project(":infrastructure")
+    implementation project(":api:launchers")
     implementation(
             libs.androidx.work,
             libs.androidx.work.hilt,
+            libs.hilt,
     )
 }
 

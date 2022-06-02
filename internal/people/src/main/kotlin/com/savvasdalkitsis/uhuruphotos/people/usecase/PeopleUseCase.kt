@@ -15,10 +15,9 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.people.usecase
 
-import com.github.michaelbull.result.Result
+import com.savvasdalkitsis.uhuruphotos.api.coroutines.safelyOnStart
+import com.savvasdalkitsis.uhuruphotos.api.coroutines.safelyOnStartIgnoring
 import com.savvasdalkitsis.uhuruphotos.db.people.People
-import com.savvasdalkitsis.uhuruphotos.infrastructure.extensions.safelyOnStart
-import com.savvasdalkitsis.uhuruphotos.infrastructure.extensions.safelyOnStartIgnoring
 import com.savvasdalkitsis.uhuruphotos.people.api.usecase.PeopleUseCase
 import com.savvasdalkitsis.uhuruphotos.people.repository.PeopleRepository
 import kotlinx.coroutines.flow.Flow
@@ -28,14 +27,14 @@ class PeopleUseCase @Inject constructor(
     private val peopleRepository: PeopleRepository,
 ) : PeopleUseCase {
 
-    override fun observePeopleByName(): Flow<Result<List<People>, Throwable>> = peopleRepository.observePeopleByName()
+    override fun observePeopleByName(): Flow<Result<List<People>>> = peopleRepository.observePeopleByName()
         .safelyOnStart {
             refreshPeople()
         }
 
     override suspend fun getPeopleByName(): List<People> = peopleRepository.getPeopleByName()
 
-    override fun observePeopleByPhotoCount(): Flow<Result<List<People>, Throwable>> =
+    override fun observePeopleByPhotoCount(): Flow<Result<List<People>>> =
         peopleRepository.observePeopleByPhotoCount()
             .safelyOnStart {
                 refreshPeople()

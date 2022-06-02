@@ -47,8 +47,8 @@ import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import com.savvasdalkitsis.uhuruphotos.api.compose.toColor
 import com.savvasdalkitsis.uhuruphotos.image.api.view.Image
-import com.savvasdalkitsis.uhuruphotos.infrastructure.extensions.toColor
 import com.savvasdalkitsis.uhuruphotos.photos.api.model.Photo
 import com.savvasdalkitsis.uhuruphotos.photos.api.model.SelectionMode
 import com.savvasdalkitsis.uhuruphotos.ui.theme.CustomColors

@@ -16,14 +16,11 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.auth.weblogin.weblogin.seam
 
 import com.savvasdalkitsis.uhuruphotos.auth.cookies.CookieMonitor
-import com.savvasdalkitsis.uhuruphotos.auth.weblogin.weblogin.seam.WebLoginAction
-import com.savvasdalkitsis.uhuruphotos.auth.weblogin.weblogin.seam.WebLoginEffect
 import com.savvasdalkitsis.uhuruphotos.auth.weblogin.weblogin.seam.WebLoginEffect.Close
-import com.savvasdalkitsis.uhuruphotos.auth.weblogin.weblogin.seam.WebLoginMutation
 import com.savvasdalkitsis.uhuruphotos.auth.weblogin.weblogin.seam.WebLoginMutation.LoadPage
 import com.savvasdalkitsis.uhuruphotos.auth.weblogin.weblogin.seam.WebLoginMutation.Loading
 import com.savvasdalkitsis.uhuruphotos.auth.weblogin.weblogin.view.WebLoginState
-import com.savvasdalkitsis.uhuruphotos.infrastructure.coroutines.onMain
+import com.savvasdalkitsis.uhuruphotos.api.launchers.onMain
 import com.savvasdalkitsis.uhuruphotos.api.seam.ActionHandler
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
