@@ -15,6 +15,7 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.image.module
 
+import com.savvasdalkitsis.uhuruphotos.image.cache.ImageCacheController
 import com.savvasdalkitsis.uhuruphotos.image.initializer.ImageInitializer
 import com.savvasdalkitsis.uhuruphotos.initializer.ApplicationCreated
 import dagger.Binds
@@ -30,4 +31,8 @@ abstract class ImageBindingsModule {
     @Binds
     @IntoSet
     abstract fun imageInitializer(imageInitializer: ImageInitializer): ApplicationCreated
+
+    @Binds
+    abstract fun imageCacheController(imageCacheController: ImageCacheController):
+            com.savvasdalkitsis.uhuruphotos.image.api.cache.ImageCacheController
 }

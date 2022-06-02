@@ -13,20 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
  */
-package com.savvasdalkitsis.uhuruphotos.image.cache
+package com.savvasdalkitsis.uhuruphotos.image.api.cache
 
-import coil.disk.DiskCache
-import coil.memory.MemoryCache
-import com.savvasdalkitsis.uhuruphotos.image.api.cache.ImageCacheController
-import javax.inject.Inject
+interface ImageCacheController {
 
-class ImageCacheController @Inject constructor(
-    private val memoryCache: MemoryCache,
-    private val diskCache: DiskCache,
-) : ImageCacheController {
-
-    override fun clear() {
-        memoryCache.clear()
-        diskCache.clear()
-    }
+    fun clear()
 }

@@ -16,7 +16,7 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.search.seam
 
 import com.github.michaelbull.result.Ok
-import com.savvasdalkitsis.uhuruphotos.account.usecase.AccountUseCase
+import com.savvasdalkitsis.uhuruphotos.api.account.usecase.AccountUseCase
 import com.savvasdalkitsis.uhuruphotos.db.people.People
 import com.savvasdalkitsis.uhuruphotos.api.feedpage.usecase.FeedPageUseCase
 import com.savvasdalkitsis.uhuruphotos.infrastructure.extensions.onErrors

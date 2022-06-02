@@ -62,11 +62,13 @@ dependencies {
     implementation project(":api:homenavigation")
 
     // internal projects
+    implementation project(":internal:account")
     implementation project(":internal:albums")
     implementation project(":internal:autoalbum")
     implementation project(":internal:feedpage")
     implementation project(":internal:heatmap")
     implementation project(":internal:home")
+    implementation project(":internal:image")
     implementation project(":internal:library")
     implementation project(":internal:log")
     implementation project(":internal:network")

@@ -1,0 +1,9 @@
+android {
+    namespace 'com.savvasdalkitsis.uhuruphotos.api.account'
+}
+
+dependencies {
+    implementation(
+            libs.androidx.compose.material,
+    )
+}

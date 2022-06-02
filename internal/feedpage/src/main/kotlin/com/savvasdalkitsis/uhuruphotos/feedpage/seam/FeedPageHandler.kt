@@ -15,7 +15,7 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feedpage.seam
 
-import com.savvasdalkitsis.uhuruphotos.account.usecase.AccountUseCase
+import com.savvasdalkitsis.uhuruphotos.api.account.usecase.AccountUseCase
 import com.savvasdalkitsis.uhuruphotos.albums.api.model.Album
 import com.savvasdalkitsis.uhuruphotos.albums.api.usecase.AlbumsUseCase
 import com.savvasdalkitsis.uhuruphotos.api.seam.ActionHandler

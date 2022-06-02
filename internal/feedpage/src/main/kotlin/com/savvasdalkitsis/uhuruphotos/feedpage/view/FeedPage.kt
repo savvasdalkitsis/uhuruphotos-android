@@ -21,7 +21,7 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import com.google.accompanist.swiperefresh.SwipeRefresh
 import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
-import com.savvasdalkitsis.uhuruphotos.account.view.LogOutConfirmationDialog
+import com.savvasdalkitsis.uhuruphotos.api.account.view.LogOutConfirmationDialog
 import com.savvasdalkitsis.uhuruphotos.accountoverview.view.AccountOverviewPopUp
 import com.savvasdalkitsis.uhuruphotos.feed.view.Feed
 import com.savvasdalkitsis.uhuruphotos.feed.view.state.FeedDisplays

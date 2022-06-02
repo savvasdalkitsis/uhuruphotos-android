@@ -20,7 +20,7 @@ dependencies {
     implementation project(":api:home")
     implementation project(":navigation")
     implementation project(":accountoverview")
-    implementation project(":account")
+    implementation project(":api:account")
     implementation project(":api:feedpage")
     implementation project(":api:server")
     implementation project(":api:settings")

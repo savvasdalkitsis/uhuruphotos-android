@@ -17,6 +17,7 @@ dependencyResolutionManagement {
 }
 rootProject.name = "uhuruphotos-android"
 include ':app'
+include ':api:account'
 include ':api:albums'
 include ':api:autoalbum'
 include ':api:feed'
@@ -51,7 +52,7 @@ include ':infrastructure'
 include ':auth'
 include ':worker'
 include ':accountoverview'
-include ':account'
+include ':internal:account'
 include ':internal:albums'
 include ':internal:autoalbum'
 include ':internal:feedpage'

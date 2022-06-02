@@ -19,7 +19,7 @@ import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.layout.imeNestedScroll
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import com.savvasdalkitsis.uhuruphotos.account.view.LogOutConfirmationDialog
+import com.savvasdalkitsis.uhuruphotos.api.account.view.LogOutConfirmationDialog
 import com.savvasdalkitsis.uhuruphotos.accountoverview.view.AccountOverviewPopUp
 import com.savvasdalkitsis.uhuruphotos.feed.view.FeedDisplayActionButton
 import com.savvasdalkitsis.uhuruphotos.api.home.view.HomeScaffold

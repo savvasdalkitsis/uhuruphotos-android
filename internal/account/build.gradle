@@ -1,0 +1,30 @@
+android {
+    buildFeatures {
+        compose true
+    }
+    composeOptions {
+        kotlinCompilerExtensionVersion compose_version
+    }
+    namespace 'com.savvasdalkitsis.uhuruphotos.account'
+}
+
+dependencies {
+
+    implementation project(":api:account")
+    implementation project(":db")
+    implementation project(":api:image")
+    implementation project(":worker")
+    implementation project(':api:video')
+    implementation(
+            libs.androidx.compose.foundation,
+            libs.androidx.compose.material,
+            libs.okhttp,
+            libs.hilt,
+    )
+    androidTestImplementation(
+            libs.bundles.test.android,
+    )
+    testImplementation(
+            libs.bundles.test,
+    )
+}
