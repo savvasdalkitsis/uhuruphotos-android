@@ -6,4 +6,10 @@ dependencies {
     implementation(
             libs.androidx.compose.material,
     )
+    androidTestImplementation(
+            libs.bundles.test.android,
+    )
+    testImplementation(
+            libs.bundles.test,
+    )
 }
