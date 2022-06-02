@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="feed_sync_freq_changed">Changement de la fréquence de synchronisation du flux</string>
+    <string name="feed_sync_freq_changed">Fréquence de synchronisation du flux changé</string>
     <plurals name="delete_photos_confirmation">
         <item quantity="one">Voulez-vous vraiment supprimer %d photo \?</item>
         <item quantity="other">Voulez-vous vraiment supprimer %d photos \?</item>
     </plurals>
     <string name="error_loading_photo_details">Une erreur s\'est produite lors du chargement des détails de la photo</string>
-    <string name="feed_sync_freq">Fréquence de synchronisation du flux de photos complète</string>
-    <string name="feed_sync_charging_changed">Exigences en matière de chargement de la synchronisation du flux changées</string>
+    <string name="feed_sync_freq">Fréquence de synchronisation du flux complet de photos</string>
+    <string name="feed_sync_charging_changed">Exigence en matière de chargement pour la synchronisation du flux changée</string>
     <string name="logs_cleared">Journaux effacés</string>
     <string name="big">Grand</string>
     <string name="feed_sync_progress">Progression de la synchro complète du flux de photos</string>
@@ -24,33 +24,33 @@
     </plurals>
     <string name="recent_searches_cleared">Recherches récentes effacées</string>
     <string name="photo">Photo</string>
-    <string name="max_limit">Limite max : %d Mo</string>
-    <string name="error_refreshing_people">Il y a eu une erreur en rafraîchissant les gens</string>
-    <string name="error_searching">Il y a eu une erreur lors de la recherche</string>
+    <string name="max_limit">Limite maximale : %d Mo</string>
+    <string name="error_refreshing_people">Une erreur s\'est produite lors du rafraîchissement des personnes</string>
+    <string name="error_searching">Une erreur s\'est produite lors de la recherche</string>
     <string name="feed_sync_network_changed">Exigence relative au réseau de synchronisation du flux changée</string>
-    <string name="photo_map">Carte photo</string>
+    <string name="photo_map">Carte des photos</string>
     <string name="feed">Flux</string>
     <string name="compact">Compact</string>
-    <string name="downloading_photos_sharing">Téléchargement des photos et partage bientôt</string>
+    <string name="downloading_photos_sharing">Téléchargement des photos en cours et partage bientôt prêt</string>
     <string name="copied_to_clipboard">Copié dans le presse-papiers</string>
-    <string name="search">Recherche</string>
-    <string name="tiny">Mini</string>
+    <string name="search">Rechercher</string>
+    <string name="tiny">Petit</string>
     <string name="could_not_find_app_to_open">Impossible de trouver une application à ouvrir</string>
-    <string name="error_logging_in">Il y a eu une erreur de connexion</string>
+    <string name="error_logging_in">Il y a eu une erreur pour se connecter</string>
     <string name="comfortable">Confortable</string>
-    <string name="jobs">Emplois</string>
-    <string name="full">Complet</string>
+    <string name="jobs">Calculs</string>
+    <string name="full">Plein</string>
     <string name="requires_charging">Nécessite un chargement</string>
     <string name="perform_full_sync">Effectuer une synchro complète maintenant</string>
     <string name="never">jamais</string>
     <string name="settings">Paramètres</string>
-    <string name="currently_used">Utilisé actuellement : %d Mo</string>
+    <string name="currently_used">Actuellement utilisé : %d Mo</string>
     <string name="favourite">Favori</string>
     <plurals name="hours">
         <item quantity="one">%d heure</item>
         <item quantity="other">%d heures</item>
     </plurals>
-    <string name="setting_photo_favourite">Réglage de l\'état des photos préférées</string>
+    <string name="setting_photo_favourite">Régler l\'état favori de la photo</string>
     <string name="refresh">Actualiser</string>
     <string name="info">Infos</string>
     <string name="yes">Oui</string>
@@ -59,9 +59,9 @@
     <string name="deleting_photo">Suppression de la photo</string>
     <string name="photos_on_map">Photos sur la carte (%1$d sur %2$d)</string>
     <string name="remove_favourite">Retirer des favoris</string>
-    <string name="background_jobs">Tâches d\'arrière-plan</string>
+    <string name="background_jobs">Tâches en arrière-plan</string>
     <string name="send_crash_logs">Envoyer les journaux de plantage pour le dépannage</string>
-    <string name="log_out">Déconnexion</string>
+    <string name="log_out">Se déconnecter</string>
     <string name="edit_server_url">Modifier l\'URL du serveur</string>
     <string name="no_auto_albums">Il n\'y a pas d\'albums générés automatiquement pour cet utilisateur</string>
     <string name="sorting">Tri en cours</string>
