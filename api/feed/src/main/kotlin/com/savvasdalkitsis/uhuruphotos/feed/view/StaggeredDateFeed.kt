@@ -31,7 +31,7 @@ import com.savvasdalkitsis.uhuruphotos.albums.api.model.Album
 import com.savvasdalkitsis.uhuruphotos.feed.view.PhotoRowSlot.EmptySlot
 import com.savvasdalkitsis.uhuruphotos.feed.view.PhotoRowSlot.PhotoSlot
 import com.savvasdalkitsis.uhuruphotos.photos.api.model.Photo
-import com.savvasdalkitsis.uhuruphotos.ui.view.LazyColumnScrollbar
+import my.nanihadesuka.compose.LazyColumnScrollbar
 
 @Composable
 fun StaggeredDateFeed(
@@ -101,10 +101,6 @@ fun StaggeredDateFeed(
         Box(modifier = Modifier
             .padding(contentPadding)
         ) {
-            /*
-            Use our own copy of the scrollbar until
-            https://github.com/nanihadesuka/LazyColumnScrollbar/pull/1 is fixed
-             */
             LazyColumnScrollbar(
                 listState = listState,
                 thickness = 8.dp,
