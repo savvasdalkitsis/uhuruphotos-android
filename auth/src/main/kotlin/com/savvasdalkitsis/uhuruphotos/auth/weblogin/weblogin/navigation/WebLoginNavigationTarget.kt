@@ -19,6 +19,7 @@ import android.util.Base64
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavBackStackEntry
 import androidx.navigation.NavGraphBuilder
+import com.savvasdalkitsis.uhuruphotos.api.settings.usecase.SettingsUseCase
 import com.savvasdalkitsis.uhuruphotos.auth.weblogin.weblogin.seam.WebEffectsHandler
 import com.savvasdalkitsis.uhuruphotos.auth.weblogin.weblogin.seam.WebLoginAction
 import com.savvasdalkitsis.uhuruphotos.auth.weblogin.weblogin.seam.WebLoginEffect
@@ -27,7 +28,6 @@ import com.savvasdalkitsis.uhuruphotos.auth.weblogin.weblogin.view.WebLoginState
 import com.savvasdalkitsis.uhuruphotos.auth.weblogin.weblogin.viewmodel.WebLoginViewModel
 import com.savvasdalkitsis.uhuruphotos.navigation.NavigationTarget
 import com.savvasdalkitsis.uhuruphotos.navigation.navigationTarget
-import com.savvasdalkitsis.uhuruphotos.api.settings.usecase.SettingsUseCase
 import javax.inject.Inject
 
 class WebLoginNavigationTarget @Inject constructor(

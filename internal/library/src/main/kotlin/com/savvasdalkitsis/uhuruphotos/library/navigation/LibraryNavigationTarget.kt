@@ -17,18 +17,18 @@ package com.savvasdalkitsis.uhuruphotos.library.navigation
 
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavGraphBuilder
+import com.savvasdalkitsis.uhuruphotos.api.settings.usecase.SettingsUseCase
 import com.savvasdalkitsis.uhuruphotos.feed.view.state.FeedDisplays
 import com.savvasdalkitsis.uhuruphotos.homenavigation.HomeNavigationRoutes
 import com.savvasdalkitsis.uhuruphotos.library.seam.LibraryAction
 import com.savvasdalkitsis.uhuruphotos.library.seam.LibraryEffect
+import com.savvasdalkitsis.uhuruphotos.library.seam.LibraryEffectsHandler
 import com.savvasdalkitsis.uhuruphotos.library.view.Library
 import com.savvasdalkitsis.uhuruphotos.library.view.state.LibraryState
-import com.savvasdalkitsis.uhuruphotos.library.seam.LibraryEffectsHandler
 import com.savvasdalkitsis.uhuruphotos.library.viewmodel.LibraryViewModel
 import com.savvasdalkitsis.uhuruphotos.navigation.ControllersProvider
 import com.savvasdalkitsis.uhuruphotos.navigation.NavigationTarget
 import com.savvasdalkitsis.uhuruphotos.navigation.navigationTarget
-import com.savvasdalkitsis.uhuruphotos.api.settings.usecase.SettingsUseCase
 import javax.inject.Inject
 
 class LibraryNavigationTarget @Inject constructor(

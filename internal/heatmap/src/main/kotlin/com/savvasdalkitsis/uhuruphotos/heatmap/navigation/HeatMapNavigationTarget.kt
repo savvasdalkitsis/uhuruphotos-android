@@ -18,15 +18,15 @@ package com.savvasdalkitsis.uhuruphotos.heatmap.navigation
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavGraphBuilder
 import com.savvasdalkitsis.uhuruphotos.api.heatmap.navigation.HeatMapNavigationTarget
-import com.savvasdalkitsis.uhuruphotos.heatmap.view.HeatMap
-import com.savvasdalkitsis.uhuruphotos.heatmap.view.state.HeatMapState
+import com.savvasdalkitsis.uhuruphotos.api.settings.usecase.SettingsUseCase
 import com.savvasdalkitsis.uhuruphotos.heatmap.seam.HeatMapAction
 import com.savvasdalkitsis.uhuruphotos.heatmap.seam.HeatMapEffect
 import com.savvasdalkitsis.uhuruphotos.heatmap.seam.HeatMapEffectsHandler
+import com.savvasdalkitsis.uhuruphotos.heatmap.view.HeatMap
+import com.savvasdalkitsis.uhuruphotos.heatmap.view.state.HeatMapState
 import com.savvasdalkitsis.uhuruphotos.heatmap.viewmodel.HeatMapViewModel
 import com.savvasdalkitsis.uhuruphotos.navigation.NavigationTarget
 import com.savvasdalkitsis.uhuruphotos.navigation.navigationTarget
-import com.savvasdalkitsis.uhuruphotos.api.settings.usecase.SettingsUseCase
 import javax.inject.Inject
 
 class HeatMapNavigationTarget @Inject constructor(

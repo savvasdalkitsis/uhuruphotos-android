@@ -15,13 +15,13 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.search.seam
 
+import com.savvasdalkitsis.uhuruphotos.api.seam.Mutation
 import com.savvasdalkitsis.uhuruphotos.feed.view.state.FeedDisplay
 import com.savvasdalkitsis.uhuruphotos.people.api.view.state.Person
 import com.savvasdalkitsis.uhuruphotos.search.view.state.SearchResults
 import com.savvasdalkitsis.uhuruphotos.search.view.state.SearchState
 import com.savvasdalkitsis.uhuruphotos.search.view.state.SearchSuggestion
 import com.savvasdalkitsis.uhuruphotos.userbadge.api.view.state.UserInformationState
-import com.savvasdalkitsis.uhuruphotos.api.seam.Mutation
 
 sealed class SearchMutation(
     mutation: Mutation<SearchState>,

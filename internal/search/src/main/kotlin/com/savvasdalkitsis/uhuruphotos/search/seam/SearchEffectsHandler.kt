@@ -16,6 +16,8 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.search.seam
 
 import com.savvasdalkitsis.uhuruphotos.api.heatmap.navigation.HeatMapNavigationTarget
+import com.savvasdalkitsis.uhuruphotos.api.seam.EffectHandler
+import com.savvasdalkitsis.uhuruphotos.api.server.navigation.ServerNavigationTarget
 import com.savvasdalkitsis.uhuruphotos.api.settings.navigation.SettingsNavigationTarget
 import com.savvasdalkitsis.uhuruphotos.homenavigation.HomeNavigationRoutes
 import com.savvasdalkitsis.uhuruphotos.navigation.ControllersProvider
@@ -33,11 +35,9 @@ import com.savvasdalkitsis.uhuruphotos.search.seam.SearchEffect.NavigateToPerson
 import com.savvasdalkitsis.uhuruphotos.search.seam.SearchEffect.NavigateToSettings
 import com.savvasdalkitsis.uhuruphotos.search.seam.SearchEffect.OpenPhotoDetails
 import com.savvasdalkitsis.uhuruphotos.search.seam.SearchEffect.ReloadApp
-import com.savvasdalkitsis.uhuruphotos.api.server.navigation.ServerNavigationTarget
 import com.savvasdalkitsis.uhuruphotos.strings.R
 import com.savvasdalkitsis.uhuruphotos.toaster.Toaster
 import com.savvasdalkitsis.uhuruphotos.ui.usecase.UiUseCase
-import com.savvasdalkitsis.uhuruphotos.api.seam.EffectHandler
 import javax.inject.Inject
 
 class SearchEffectsHandler @Inject constructor(

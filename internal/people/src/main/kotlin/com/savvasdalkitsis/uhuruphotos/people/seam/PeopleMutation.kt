@@ -15,10 +15,10 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.people.seam
 
+import com.savvasdalkitsis.uhuruphotos.api.seam.Mutation
 import com.savvasdalkitsis.uhuruphotos.people.api.view.state.Person
 import com.savvasdalkitsis.uhuruphotos.people.view.state.PeopleState
 import com.savvasdalkitsis.uhuruphotos.people.view.state.SortOrder
-import com.savvasdalkitsis.uhuruphotos.api.seam.Mutation
 
 sealed class PeopleMutation(
     mutation: Mutation<PeopleState>,

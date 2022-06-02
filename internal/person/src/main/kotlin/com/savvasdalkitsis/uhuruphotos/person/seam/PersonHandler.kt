@@ -15,10 +15,10 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.person.seam
 
+import com.savvasdalkitsis.uhuruphotos.api.seam.ActionHandler
 import com.savvasdalkitsis.uhuruphotos.people.api.usecase.PeopleUseCase
 import com.savvasdalkitsis.uhuruphotos.people.api.view.state.toPerson
 import com.savvasdalkitsis.uhuruphotos.person.api.usecase.PersonUseCase
-import com.savvasdalkitsis.uhuruphotos.person.view.state.PersonState
 import com.savvasdalkitsis.uhuruphotos.person.seam.PersonAction.ChangeDisplay
 import com.savvasdalkitsis.uhuruphotos.person.seam.PersonAction.LoadPerson
 import com.savvasdalkitsis.uhuruphotos.person.seam.PersonAction.NavigateBack
@@ -28,8 +28,8 @@ import com.savvasdalkitsis.uhuruphotos.person.seam.PersonMutation.Loading
 import com.savvasdalkitsis.uhuruphotos.person.seam.PersonMutation.SetFeedDisplay
 import com.savvasdalkitsis.uhuruphotos.person.seam.PersonMutation.ShowPersonDetails
 import com.savvasdalkitsis.uhuruphotos.person.seam.PersonMutation.ShowPersonPhotos
+import com.savvasdalkitsis.uhuruphotos.person.view.state.PersonState
 import com.savvasdalkitsis.uhuruphotos.photos.usecase.PhotosUseCase
-import com.savvasdalkitsis.uhuruphotos.api.seam.ActionHandler
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOf

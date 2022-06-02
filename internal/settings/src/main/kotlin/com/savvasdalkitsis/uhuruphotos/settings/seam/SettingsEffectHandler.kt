@@ -15,11 +15,11 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.settings.seam
 
+import com.savvasdalkitsis.uhuruphotos.api.seam.EffectHandler
 import com.savvasdalkitsis.uhuruphotos.navigation.ControllersProvider
 import com.savvasdalkitsis.uhuruphotos.settings.seam.SettingsEffect.NavigateBack
 import com.savvasdalkitsis.uhuruphotos.settings.seam.SettingsEffect.ShowMessage
 import com.savvasdalkitsis.uhuruphotos.toaster.Toaster
-import com.savvasdalkitsis.uhuruphotos.api.seam.EffectHandler
 import javax.inject.Inject
 
 internal class SettingsEffectHandler @Inject constructor(

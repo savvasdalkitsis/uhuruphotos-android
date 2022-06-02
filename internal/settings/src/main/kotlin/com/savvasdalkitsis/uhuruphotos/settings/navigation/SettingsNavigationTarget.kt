@@ -21,12 +21,12 @@ import com.savvasdalkitsis.uhuruphotos.api.settings.navigation.SettingsNavigatio
 import com.savvasdalkitsis.uhuruphotos.api.settings.usecase.SettingsUseCase
 import com.savvasdalkitsis.uhuruphotos.navigation.NavigationTarget
 import com.savvasdalkitsis.uhuruphotos.navigation.navigationTarget
-import com.savvasdalkitsis.uhuruphotos.settings.view.Settings
-import com.savvasdalkitsis.uhuruphotos.settings.view.state.SettingsState
 import com.savvasdalkitsis.uhuruphotos.settings.seam.SettingsAction
 import com.savvasdalkitsis.uhuruphotos.settings.seam.SettingsAction.LoadSettings
 import com.savvasdalkitsis.uhuruphotos.settings.seam.SettingsEffect
 import com.savvasdalkitsis.uhuruphotos.settings.seam.SettingsEffectHandler
+import com.savvasdalkitsis.uhuruphotos.settings.view.Settings
+import com.savvasdalkitsis.uhuruphotos.settings.view.state.SettingsState
 import com.savvasdalkitsis.uhuruphotos.settings.viewmodel.SettingsViewModel
 import javax.inject.Inject
 

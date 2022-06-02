@@ -16,13 +16,13 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.feedpage.viewmodel
 
 import androidx.lifecycle.ViewModel
-import com.savvasdalkitsis.uhuruphotos.feedpage.view.state.FeedPageState
 import com.savvasdalkitsis.uhuruphotos.api.seam.Seam
 import com.savvasdalkitsis.uhuruphotos.api.seam.SeamViaHandler.Companion.handler
 import com.savvasdalkitsis.uhuruphotos.feedpage.seam.FeedPageAction
 import com.savvasdalkitsis.uhuruphotos.feedpage.seam.FeedPageEffect
 import com.savvasdalkitsis.uhuruphotos.feedpage.seam.FeedPageHandler
 import com.savvasdalkitsis.uhuruphotos.feedpage.seam.FeedPageMutation
+import com.savvasdalkitsis.uhuruphotos.feedpage.view.state.FeedPageState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 

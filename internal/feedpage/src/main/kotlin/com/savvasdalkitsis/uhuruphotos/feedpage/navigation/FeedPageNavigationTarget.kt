@@ -17,17 +17,17 @@ package com.savvasdalkitsis.uhuruphotos.feedpage.navigation
 
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavGraphBuilder
+import com.savvasdalkitsis.uhuruphotos.api.settings.usecase.SettingsUseCase
 import com.savvasdalkitsis.uhuruphotos.feedpage.seam.FeedPageAction
 import com.savvasdalkitsis.uhuruphotos.feedpage.seam.FeedPageEffect
+import com.savvasdalkitsis.uhuruphotos.feedpage.seam.FeedPageEffectsHandler
 import com.savvasdalkitsis.uhuruphotos.feedpage.view.FeedPage
 import com.savvasdalkitsis.uhuruphotos.feedpage.view.state.FeedPageState
-import com.savvasdalkitsis.uhuruphotos.feedpage.seam.FeedPageEffectsHandler
 import com.savvasdalkitsis.uhuruphotos.feedpage.viewmodel.FeedPageViewModel
 import com.savvasdalkitsis.uhuruphotos.homenavigation.HomeNavigationRoutes
 import com.savvasdalkitsis.uhuruphotos.navigation.ControllersProvider
 import com.savvasdalkitsis.uhuruphotos.navigation.NavigationTarget
 import com.savvasdalkitsis.uhuruphotos.navigation.navigationTarget
-import com.savvasdalkitsis.uhuruphotos.api.settings.usecase.SettingsUseCase
 import javax.inject.Inject
 
 internal class FeedPageNavigationTarget @Inject constructor(

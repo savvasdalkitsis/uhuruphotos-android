@@ -15,11 +15,11 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.server.seam
 
+import com.savvasdalkitsis.uhuruphotos.api.seam.Mutation
 import com.savvasdalkitsis.uhuruphotos.server.view.ServerState
 import com.savvasdalkitsis.uhuruphotos.server.view.ServerState.Loading
 import com.savvasdalkitsis.uhuruphotos.server.view.ServerState.ServerUrl
 import com.savvasdalkitsis.uhuruphotos.server.view.ServerState.UserCredentials
-import com.savvasdalkitsis.uhuruphotos.api.seam.Mutation
 import dev.zacsweers.redacted.annotations.Redacted
 
 internal sealed class ServerMutation(

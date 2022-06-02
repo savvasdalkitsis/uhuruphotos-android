@@ -16,11 +16,12 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.library.seam
 
 import com.savvasdalkitsis.uhuruphotos.api.autoalbum.navigation.AutoAlbumNavigationTarget
-import com.savvasdalkitsis.uhuruphotos.library.seam.LibraryEffect.*
+import com.savvasdalkitsis.uhuruphotos.api.seam.EffectHandler
+import com.savvasdalkitsis.uhuruphotos.library.seam.LibraryEffect.ErrorLoadingAutoAlbums
+import com.savvasdalkitsis.uhuruphotos.library.seam.LibraryEffect.NavigateToAutoAlbum
 import com.savvasdalkitsis.uhuruphotos.navigation.ControllersProvider
 import com.savvasdalkitsis.uhuruphotos.strings.R
 import com.savvasdalkitsis.uhuruphotos.toaster.Toaster
-import com.savvasdalkitsis.uhuruphotos.api.seam.EffectHandler
 import javax.inject.Inject
 
 class LibraryEffectsHandler @Inject constructor(

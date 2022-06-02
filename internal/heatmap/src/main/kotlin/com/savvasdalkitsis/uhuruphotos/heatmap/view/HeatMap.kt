@@ -22,8 +22,8 @@ import androidx.compose.ui.platform.LocalConfiguration
 import com.google.accompanist.permissions.isGranted
 import com.google.accompanist.permissions.rememberPermissionState
 import com.google.accompanist.permissions.shouldShowRationale
-import com.savvasdalkitsis.uhuruphotos.heatmap.view.state.HeatMapState
 import com.savvasdalkitsis.uhuruphotos.heatmap.seam.HeatMapAction
+import com.savvasdalkitsis.uhuruphotos.heatmap.view.state.HeatMapState
 
 @Composable
 fun HeatMap(

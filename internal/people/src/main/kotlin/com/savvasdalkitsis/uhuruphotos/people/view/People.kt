@@ -28,13 +28,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.savvasdalkitsis.uhuruphotos.icons.R
 import com.savvasdalkitsis.uhuruphotos.people.api.view.PersonThumbnail
-import com.savvasdalkitsis.uhuruphotos.people.view.state.PeopleState
-import com.savvasdalkitsis.uhuruphotos.people.view.state.SortOrder.ASCENDING
-import com.savvasdalkitsis.uhuruphotos.people.view.state.SortOrder.DESCENDING
 import com.savvasdalkitsis.uhuruphotos.people.seam.PeopleAction
 import com.savvasdalkitsis.uhuruphotos.people.seam.PeopleAction.NavigateBack
 import com.savvasdalkitsis.uhuruphotos.people.seam.PeopleAction.PersonSelected
 import com.savvasdalkitsis.uhuruphotos.people.seam.PeopleAction.ToggleSortOrder
+import com.savvasdalkitsis.uhuruphotos.people.view.state.PeopleState
+import com.savvasdalkitsis.uhuruphotos.people.view.state.SortOrder.ASCENDING
+import com.savvasdalkitsis.uhuruphotos.people.view.state.SortOrder.DESCENDING
 import com.savvasdalkitsis.uhuruphotos.ui.view.ActionIcon
 import com.savvasdalkitsis.uhuruphotos.ui.view.BackNavButton
 import com.savvasdalkitsis.uhuruphotos.ui.view.CommonScaffold

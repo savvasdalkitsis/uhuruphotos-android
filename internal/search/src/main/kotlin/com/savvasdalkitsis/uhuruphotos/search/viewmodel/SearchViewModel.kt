@@ -16,13 +16,13 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.search.viewmodel
 
 import androidx.lifecycle.ViewModel
-import com.savvasdalkitsis.uhuruphotos.search.seam.SearchAction
-import com.savvasdalkitsis.uhuruphotos.search.seam.SearchEffect
-import com.savvasdalkitsis.uhuruphotos.search.seam.SearchMutation
-import com.savvasdalkitsis.uhuruphotos.search.view.state.SearchState
 import com.savvasdalkitsis.uhuruphotos.api.seam.Seam
 import com.savvasdalkitsis.uhuruphotos.api.seam.SeamViaHandler.Companion.handler
+import com.savvasdalkitsis.uhuruphotos.search.seam.SearchAction
+import com.savvasdalkitsis.uhuruphotos.search.seam.SearchEffect
 import com.savvasdalkitsis.uhuruphotos.search.seam.SearchHandler
+import com.savvasdalkitsis.uhuruphotos.search.seam.SearchMutation
+import com.savvasdalkitsis.uhuruphotos.search.view.state.SearchState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 

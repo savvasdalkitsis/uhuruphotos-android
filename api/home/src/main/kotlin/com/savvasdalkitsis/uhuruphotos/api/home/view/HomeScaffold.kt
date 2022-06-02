@@ -22,12 +22,12 @@ import androidx.compose.foundation.layout.RowScope
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
-import com.savvasdalkitsis.uhuruphotos.feed.view.state.FeedDisplay
-import com.savvasdalkitsis.uhuruphotos.feed.view.state.FeedDisplays
 import com.savvasdalkitsis.uhuruphotos.api.home.navigation.HomeNavigationBar
 import com.savvasdalkitsis.uhuruphotos.api.home.navigation.NavigationStyle.BOTTOM_BAR
 import com.savvasdalkitsis.uhuruphotos.api.home.navigation.NavigationStyle.NAVIGATION_RAIL
 import com.savvasdalkitsis.uhuruphotos.api.home.navigation.homeNavigationStyle
+import com.savvasdalkitsis.uhuruphotos.feed.view.state.FeedDisplay
+import com.savvasdalkitsis.uhuruphotos.feed.view.state.FeedDisplays
 import com.savvasdalkitsis.uhuruphotos.ui.view.CommonScaffold
 import com.savvasdalkitsis.uhuruphotos.ui.view.Logo
 import com.savvasdalkitsis.uhuruphotos.userbadge.api.view.UserBadge

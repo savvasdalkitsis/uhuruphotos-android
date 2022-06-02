@@ -15,10 +15,10 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.library.seam
 
+import com.savvasdalkitsis.uhuruphotos.api.seam.Mutation
 import com.savvasdalkitsis.uhuruphotos.library.view.state.AutoAlbumSorting
 import com.savvasdalkitsis.uhuruphotos.library.view.state.LibraryAutoAlbum
 import com.savvasdalkitsis.uhuruphotos.library.view.state.LibraryState
-import com.savvasdalkitsis.uhuruphotos.api.seam.Mutation
 
 sealed class LibraryMutation(
     mutation: Mutation<LibraryState>,

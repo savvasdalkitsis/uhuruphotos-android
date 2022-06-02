@@ -17,17 +17,17 @@ package com.savvasdalkitsis.uhuruphotos.people.navigation
 
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavGraphBuilder
+import com.savvasdalkitsis.uhuruphotos.api.settings.usecase.SettingsUseCase
 import com.savvasdalkitsis.uhuruphotos.navigation.NavigationTarget
 import com.savvasdalkitsis.uhuruphotos.navigation.navigationTarget
 import com.savvasdalkitsis.uhuruphotos.people.api.navigation.PeopleNavigationTarget
-import com.savvasdalkitsis.uhuruphotos.people.view.People
-import com.savvasdalkitsis.uhuruphotos.people.view.state.PeopleState
 import com.savvasdalkitsis.uhuruphotos.people.seam.PeopleAction
 import com.savvasdalkitsis.uhuruphotos.people.seam.PeopleAction.LoadPeople
 import com.savvasdalkitsis.uhuruphotos.people.seam.PeopleEffect
 import com.savvasdalkitsis.uhuruphotos.people.seam.PeopleEffectHandler
+import com.savvasdalkitsis.uhuruphotos.people.view.People
+import com.savvasdalkitsis.uhuruphotos.people.view.state.PeopleState
 import com.savvasdalkitsis.uhuruphotos.people.viewmodel.PeopleViewModel
-import com.savvasdalkitsis.uhuruphotos.api.settings.usecase.SettingsUseCase
 import javax.inject.Inject
 
 class PeopleNavigationTarget @Inject constructor(

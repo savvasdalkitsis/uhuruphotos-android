@@ -15,9 +15,9 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.photos.service
 
+import com.savvasdalkitsis.uhuruphotos.photos.api.service.model.PhotoResult
 import com.savvasdalkitsis.uhuruphotos.photos.service.model.PhotoFavouriteRequest
 import com.savvasdalkitsis.uhuruphotos.photos.service.model.PhotoOperationResponse
-import com.savvasdalkitsis.uhuruphotos.photos.api.service.model.PhotoResult
 import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.DELETE

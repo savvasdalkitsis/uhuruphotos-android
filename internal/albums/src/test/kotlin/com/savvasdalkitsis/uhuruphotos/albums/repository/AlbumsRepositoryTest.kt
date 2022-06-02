@@ -17,10 +17,12 @@ package com.savvasdalkitsis.uhuruphotos.albums.repository
 
 import app.cash.turbine.test
 import com.savvasdalkitsis.uhuruphotos.albums.ProgressUpdate
+import com.savvasdalkitsis.uhuruphotos.albums.SERVER_ALBUM_LOCATION
 import com.savvasdalkitsis.uhuruphotos.albums.TestAlbums.albums
 import com.savvasdalkitsis.uhuruphotos.albums.TestGetPhotoSummaries.photoSummariesForAlbum
 import com.savvasdalkitsis.uhuruphotos.albums.album
 import com.savvasdalkitsis.uhuruphotos.albums.albumId
+import com.savvasdalkitsis.uhuruphotos.albums.api.service.AlbumsService
 import com.savvasdalkitsis.uhuruphotos.albums.completeAlbum
 import com.savvasdalkitsis.uhuruphotos.albums.completes
 import com.savvasdalkitsis.uhuruphotos.albums.entry
@@ -30,8 +32,6 @@ import com.savvasdalkitsis.uhuruphotos.albums.photoId
 import com.savvasdalkitsis.uhuruphotos.albums.photoSummaryItem
 import com.savvasdalkitsis.uhuruphotos.albums.respondsForAlbum
 import com.savvasdalkitsis.uhuruphotos.albums.respondsWith
-import com.savvasdalkitsis.uhuruphotos.albums.SERVER_ALBUM_LOCATION
-import com.savvasdalkitsis.uhuruphotos.albums.api.service.AlbumsService
 import com.savvasdalkitsis.uhuruphotos.albums.willRespondForAlbum
 import com.savvasdalkitsis.uhuruphotos.albums.willRespondForPersonAlbum
 import com.savvasdalkitsis.uhuruphotos.albums.willRespondForPersonWith

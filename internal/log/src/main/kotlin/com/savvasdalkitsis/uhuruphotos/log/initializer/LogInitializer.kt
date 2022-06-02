@@ -19,12 +19,12 @@ import android.app.Application
 import android.content.Context
 import com.michaelflisar.lumberjack.FileLoggingSetup
 import com.michaelflisar.lumberjack.L
+import com.savvasdalkitsis.uhuruphotos.api.log.logError
+import com.savvasdalkitsis.uhuruphotos.api.notification.NotificationChannels
 import com.savvasdalkitsis.uhuruphotos.icons.R
 import com.savvasdalkitsis.uhuruphotos.initializer.ApplicationCreated
 import com.savvasdalkitsis.uhuruphotos.log.FeedbackUseCase
-import com.savvasdalkitsis.uhuruphotos.api.log.logError
 import com.savvasdalkitsis.uhuruphotos.log.showCrashNotification
-import com.savvasdalkitsis.uhuruphotos.api.notification.NotificationChannels
 import dagger.hilt.android.qualifiers.ApplicationContext
 import timber.log.Timber
 import javax.inject.Inject

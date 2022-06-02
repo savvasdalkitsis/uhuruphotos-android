@@ -16,13 +16,13 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.server.viewmodel
 
 import androidx.lifecycle.ViewModel
-import com.savvasdalkitsis.uhuruphotos.server.seam.ServerAction
-import com.savvasdalkitsis.uhuruphotos.server.seam.ServerEffect
-import com.savvasdalkitsis.uhuruphotos.server.seam.ServerMutation
-import com.savvasdalkitsis.uhuruphotos.server.view.ServerState
 import com.savvasdalkitsis.uhuruphotos.api.seam.Seam
 import com.savvasdalkitsis.uhuruphotos.api.seam.SeamViaHandler.Companion.handler
+import com.savvasdalkitsis.uhuruphotos.server.seam.ServerAction
+import com.savvasdalkitsis.uhuruphotos.server.seam.ServerEffect
 import com.savvasdalkitsis.uhuruphotos.server.seam.ServerHandler
+import com.savvasdalkitsis.uhuruphotos.server.seam.ServerMutation
+import com.savvasdalkitsis.uhuruphotos.server.view.ServerState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 

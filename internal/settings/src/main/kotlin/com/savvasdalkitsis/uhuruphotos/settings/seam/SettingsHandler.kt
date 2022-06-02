@@ -19,10 +19,9 @@ import androidx.work.ExistingPeriodicWorkPolicy.REPLACE
 import androidx.work.WorkInfo.State.RUNNING
 import com.savvasdalkitsis.api.log.usecase.FeedbackUseCase
 import com.savvasdalkitsis.uhuruphotos.albums.api.worker.AlbumWorkScheduler
-import com.savvasdalkitsis.uhuruphotos.search.api.SearchUseCase
-import com.savvasdalkitsis.uhuruphotos.settings.usecase.CacheUseCase
+import com.savvasdalkitsis.uhuruphotos.api.seam.ActionHandler
 import com.savvasdalkitsis.uhuruphotos.api.settings.usecase.SettingsUseCase
-import com.savvasdalkitsis.uhuruphotos.settings.view.state.SettingsState
+import com.savvasdalkitsis.uhuruphotos.search.api.SearchUseCase
 import com.savvasdalkitsis.uhuruphotos.settings.seam.SettingsAction.AskForFullFeedSync
 import com.savvasdalkitsis.uhuruphotos.settings.seam.SettingsAction.ChangeFullSyncChargingRequirements
 import com.savvasdalkitsis.uhuruphotos.settings.seam.SettingsAction.ChangeFullSyncNetworkRequirements
@@ -64,9 +63,10 @@ import com.savvasdalkitsis.uhuruphotos.settings.seam.SettingsMutation.EnableFull
 import com.savvasdalkitsis.uhuruphotos.settings.seam.SettingsMutation.HideFullFeedSyncDialog
 import com.savvasdalkitsis.uhuruphotos.settings.seam.SettingsMutation.ShowFullFeedSyncDialog
 import com.savvasdalkitsis.uhuruphotos.settings.seam.SettingsMutation.UserBadgeUpdate
+import com.savvasdalkitsis.uhuruphotos.settings.usecase.CacheUseCase
+import com.savvasdalkitsis.uhuruphotos.settings.view.state.SettingsState
 import com.savvasdalkitsis.uhuruphotos.strings.R
 import com.savvasdalkitsis.uhuruphotos.userbadge.api.UserBadgeUseCase
-import com.savvasdalkitsis.uhuruphotos.api.seam.ActionHandler
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flatMapMerge
 import kotlinx.coroutines.flow.flow

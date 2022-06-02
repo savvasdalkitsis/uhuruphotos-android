@@ -15,8 +15,8 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.home.seam
 
-import com.savvasdalkitsis.uhuruphotos.home.view.state.HomeState
 import com.savvasdalkitsis.uhuruphotos.api.seam.Mutation
+import com.savvasdalkitsis.uhuruphotos.home.view.state.HomeState
 
 internal sealed class HomeMutation(
     mutation: Mutation<HomeState>,

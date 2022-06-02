@@ -20,11 +20,11 @@ import android.content.ClipboardManager
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
+import com.savvasdalkitsis.uhuruphotos.api.seam.EffectHandler
 import com.savvasdalkitsis.uhuruphotos.api.share.usecase.ShareUseCase
 import com.savvasdalkitsis.uhuruphotos.map.model.LatLon
 import com.savvasdalkitsis.uhuruphotos.navigation.ControllersProvider
 import com.savvasdalkitsis.uhuruphotos.person.api.navigation.PersonNavigationTarget
-import com.savvasdalkitsis.uhuruphotos.photos.seam.PhotoEffect
 import com.savvasdalkitsis.uhuruphotos.photos.seam.PhotoEffect.CopyToClipboard
 import com.savvasdalkitsis.uhuruphotos.photos.seam.PhotoEffect.ErrorRefreshingPeople
 import com.savvasdalkitsis.uhuruphotos.photos.seam.PhotoEffect.HideSystemBars
@@ -36,7 +36,6 @@ import com.savvasdalkitsis.uhuruphotos.photos.seam.PhotoEffect.ShowSystemBars
 import com.savvasdalkitsis.uhuruphotos.strings.R
 import com.savvasdalkitsis.uhuruphotos.toaster.Toaster
 import com.savvasdalkitsis.uhuruphotos.ui.usecase.UiUseCase
-import com.savvasdalkitsis.uhuruphotos.api.seam.EffectHandler
 import dagger.hilt.android.qualifiers.ApplicationContext
 import javax.inject.Inject
 

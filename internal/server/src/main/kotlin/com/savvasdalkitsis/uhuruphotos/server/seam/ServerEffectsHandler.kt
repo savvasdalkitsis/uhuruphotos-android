@@ -16,13 +16,13 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.server.seam
 
 import com.savvasdalkitsis.api.log.usecase.FeedbackUseCase
+import com.savvasdalkitsis.uhuruphotos.api.seam.EffectHandler
 import com.savvasdalkitsis.uhuruphotos.navigation.ControllersProvider
 import com.savvasdalkitsis.uhuruphotos.server.seam.ServerEffect.Close
 import com.savvasdalkitsis.uhuruphotos.server.seam.ServerEffect.ErrorLoggingIn
 import com.savvasdalkitsis.uhuruphotos.server.seam.ServerEffect.SendFeedback
 import com.savvasdalkitsis.uhuruphotos.strings.R
 import com.savvasdalkitsis.uhuruphotos.toaster.Toaster
-import com.savvasdalkitsis.uhuruphotos.api.seam.EffectHandler
 import javax.inject.Inject
 
 internal class ServerEffectsHandler @Inject constructor(

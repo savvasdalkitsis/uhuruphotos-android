@@ -27,15 +27,15 @@ import com.savvasdalkitsis.uhuruphotos.albums.returnsAlbumWithEntries
 import com.savvasdalkitsis.uhuruphotos.albums.returnsAlbums
 import com.savvasdalkitsis.uhuruphotos.albums.returnsPersonAlbumWithEntries
 import com.savvasdalkitsis.uhuruphotos.albums.worker.AlbumWorkScheduler
+import com.savvasdalkitsis.uhuruphotos.api.date.DateDisplayer
+import com.savvasdalkitsis.uhuruphotos.api.user.usecase.UserUseCase
 import com.savvasdalkitsis.uhuruphotos.db.albums.GetAlbums
 import com.savvasdalkitsis.uhuruphotos.db.albums.GetPersonAlbums
 import com.savvasdalkitsis.uhuruphotos.db.user.User
-import com.savvasdalkitsis.uhuruphotos.api.date.DateDisplayer
 import com.savvasdalkitsis.uhuruphotos.group.model.Group
 import com.savvasdalkitsis.uhuruphotos.photos.TestPhotos.photo
 import com.savvasdalkitsis.uhuruphotos.photos.usecase.PhotosUseCase
 import com.savvasdalkitsis.uhuruphotos.user.TestUsers.user
-import com.savvasdalkitsis.uhuruphotos.api.user.usecase.UserUseCase
 import com.shazam.shazamcrest.MatcherAssert.assertThat
 import com.shazam.shazamcrest.matcher.Matchers.sameBeanAs
 import io.mockk.Called

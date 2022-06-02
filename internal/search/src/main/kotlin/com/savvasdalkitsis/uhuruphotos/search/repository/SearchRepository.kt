@@ -16,6 +16,7 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.search.repository
 
 import com.fredporciuncula.flow.preferences.FlowSharedPreferences
+import com.savvasdalkitsis.uhuruphotos.api.log.log
 import com.savvasdalkitsis.uhuruphotos.db.extensions.await
 import com.savvasdalkitsis.uhuruphotos.db.photos.PhotoSummary
 import com.savvasdalkitsis.uhuruphotos.db.photos.PhotoSummaryQueries
@@ -23,7 +24,6 @@ import com.savvasdalkitsis.uhuruphotos.db.search.GetSearchResults
 import com.savvasdalkitsis.uhuruphotos.db.search.SearchQueries
 import com.savvasdalkitsis.uhuruphotos.group.model.Group
 import com.savvasdalkitsis.uhuruphotos.group.model.groupBy
-import com.savvasdalkitsis.uhuruphotos.api.log.log
 import com.savvasdalkitsis.uhuruphotos.search.service.SearchService
 import com.squareup.sqldelight.runtime.coroutines.asFlow
 import com.squareup.sqldelight.runtime.coroutines.mapToList

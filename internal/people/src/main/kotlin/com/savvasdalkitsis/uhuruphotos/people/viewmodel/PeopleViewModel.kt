@@ -16,13 +16,13 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.people.viewmodel
 
 import androidx.lifecycle.ViewModel
-import com.savvasdalkitsis.uhuruphotos.people.view.state.PeopleState
 import com.savvasdalkitsis.uhuruphotos.api.seam.Seam
 import com.savvasdalkitsis.uhuruphotos.api.seam.SeamViaHandler.Companion.handler
 import com.savvasdalkitsis.uhuruphotos.people.seam.PeopleAction
 import com.savvasdalkitsis.uhuruphotos.people.seam.PeopleEffect
 import com.savvasdalkitsis.uhuruphotos.people.seam.PeopleHandler
 import com.savvasdalkitsis.uhuruphotos.people.seam.PeopleMutation
+import com.savvasdalkitsis.uhuruphotos.people.view.state.PeopleState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 

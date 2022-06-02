@@ -34,9 +34,9 @@ import com.savvasdalkitsis.uhuruphotos.photos.model.PhotoSequenceDataSource.Sing
 import com.savvasdalkitsis.uhuruphotos.photos.seam.PhotoAction
 import com.savvasdalkitsis.uhuruphotos.photos.seam.PhotoAction.LoadPhoto
 import com.savvasdalkitsis.uhuruphotos.photos.seam.PhotoEffect
+import com.savvasdalkitsis.uhuruphotos.photos.seam.PhotoEffectsHandler
 import com.savvasdalkitsis.uhuruphotos.photos.view.Photo
 import com.savvasdalkitsis.uhuruphotos.photos.view.state.PhotoState
-import com.savvasdalkitsis.uhuruphotos.photos.seam.PhotoEffectsHandler
 import com.savvasdalkitsis.uhuruphotos.photos.viewmodel.PhotoViewModel
 import com.savvasdalkitsis.uhuruphotos.ui.theme.ThemeMode
 import kotlinx.coroutines.flow.MutableStateFlow
