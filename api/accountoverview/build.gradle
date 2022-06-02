@@ -11,8 +11,8 @@ android {
 
 dependencies {
 
+    api project(':api:userbadge')
     implementation project(":api:icons")
-    implementation project(':api:userbadge')
     implementation project(":api:ui")
     implementation project(":api:strings")
     implementation(
