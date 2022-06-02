@@ -13,7 +13,7 @@ dependencies {
     implementation project(":api:account")
     implementation project(":db")
     implementation project(":api:image")
-    implementation project(":worker")
+    implementation project(":api:worker")
     implementation project(':api:video')
     implementation(
             libs.androidx.compose.foundation,
