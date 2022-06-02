@@ -14,7 +14,7 @@ android {
 
 dependencies {
 
-    implementation project(":db")
+    implementation project(":api:db")
     implementation project(":infrastructure")
     implementation project(":navigation")
     implementation project(":api:log")
@@ -50,7 +50,7 @@ dependencies {
             libs.sqldelight.coroutines,
             libs.zoomable,
     )
-    testFixturesImplementation project(":db")
+    testFixturesImplementation project(":api:db")
     testFixturesImplementation project(':api:photos')
     kapt libs.moshi.kapt
 }

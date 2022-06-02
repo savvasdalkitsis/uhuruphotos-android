@@ -2,7 +2,7 @@ dependencies {
 
     api project(':api:photos')
     api project(':api:people')
-    api project(":db")
+    api project(":api:db")
     api project(":infrastructure")
     implementation(
             libs.androidx.work,

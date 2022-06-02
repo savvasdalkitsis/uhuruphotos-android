@@ -18,7 +18,7 @@ dependencies {
     implementation project(':api:albums')
     implementation project(":internal:photos")
     implementation project(':api:photos')
-    implementation project(":db")
+    implementation project(":api:db")
     implementation project(":api:toaster")
     implementation project(":api:feed")
     implementation project(":infrastructure")

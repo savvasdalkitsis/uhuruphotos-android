@@ -15,7 +15,7 @@ android {
 
 dependencies {
 
-    implementation project(":db")
+    implementation project(":api:db")
     implementation project(":api:log")
     implementation project(":infrastructure")
     implementation project(":internal:photos")
@@ -38,13 +38,13 @@ dependencies {
             libs.retrofit.moshi,
             libs.sqldelight.coroutines,
     )
-    testImplementation testFixtures(project(":db"))
+    testImplementation testFixtures(project(":api:db"))
     testImplementation testFixtures(project(":internal:photos"))
     testImplementation testFixtures(project(":internal:user"))
     testImplementation(
             libs.bundles.test,
     )
-    testFixturesImplementation testFixtures(project(":db"))
+    testFixturesImplementation testFixtures(project(":api:db"))
     testFixturesImplementation project(":internal:photos")
     testFixturesImplementation project(':api:photos')
     testFixturesImplementation project(':api:albums')

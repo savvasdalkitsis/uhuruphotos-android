@@ -1,6 +1,6 @@
 dependencies {
 
-    implementation project(":db")
+    implementation project(":api:db")
     implementation project(":api:log")
     api project(":api:user")
     implementation project(":infrastructure")
@@ -12,7 +12,7 @@ dependencies {
             libs.retrofit.moshi,
             libs.sqldelight.coroutines,
     )
-    testFixturesImplementation project(":db")
+    testFixturesImplementation project(":api:db")
     kapt libs.moshi.kapt
 }
 

@@ -11,7 +11,7 @@ android {
 dependencies {
 
     implementation project(":api:log")
-    implementation project(":db")
+    implementation project(":api:db")
     implementation project(":infrastructure")
     implementation project(":navigation")
     implementation project(":api:ui")

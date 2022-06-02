@@ -11,7 +11,7 @@ android {
 dependencies {
 
     implementation project(":api:account")
-    implementation project(":db")
+    implementation project(":api:db")
     implementation project(":api:image")
     implementation project(":api:worker")
     implementation project(':api:video')

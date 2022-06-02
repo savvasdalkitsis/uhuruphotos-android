@@ -21,7 +21,7 @@ dependencies {
     implementation project(":api:icons")
     implementation project(":api:feed")
     implementation project(":api:ui")
-    implementation project(":db")
+    implementation project(":api:db")
     implementation project(':api:userbadge')
     implementation project(":api:toaster")
     implementation project(":api:autoalbum")

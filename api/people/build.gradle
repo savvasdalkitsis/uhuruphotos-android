@@ -9,7 +9,7 @@ android {
 }
 
 dependencies {
-    api project(":db")
+    api project(":api:db")
     api(
             libs.result,
     )
