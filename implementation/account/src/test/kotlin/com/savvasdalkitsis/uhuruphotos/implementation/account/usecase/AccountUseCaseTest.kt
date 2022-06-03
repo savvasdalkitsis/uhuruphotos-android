@@ -13,7 +13,7 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
  */
-package com.savvasdalkitsis.uhuruphotos.account.usecase
+package com.savvasdalkitsis.uhuruphotos.implementation.account.usecase
 
 import com.savvasdalkitsis.uhuruphotos.api.db.albums.AlbumsQueries
 import com.savvasdalkitsis.uhuruphotos.api.db.auth.TokenQueries
@@ -21,6 +21,7 @@ import com.savvasdalkitsis.uhuruphotos.api.db.search.SearchQueries
 import com.savvasdalkitsis.uhuruphotos.api.db.user.UserQueries
 import com.savvasdalkitsis.uhuruphotos.api.image.cache.ImageCacheController
 import com.savvasdalkitsis.uhuruphotos.api.worker.WorkScheduler
+import com.savvasdalkitsis.uhuruphotos.implementation.account.usecase.AccountUseCase
 import io.mockk.mockk
 import io.mockk.verify
 import kotlinx.coroutines.runBlocking

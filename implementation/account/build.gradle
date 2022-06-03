@@ -5,7 +5,7 @@ android {
     composeOptions {
         kotlinCompilerExtensionVersion compose_version
     }
-    namespace 'com.savvasdalkitsis.uhuruphotos.account'
+    namespace 'com.savvasdalkitsis.uhuruphotos.implementation.account'
 }
 
 dependencies {
