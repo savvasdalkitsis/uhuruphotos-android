@@ -35,7 +35,7 @@ import com.savvasdalkitsis.uhuruphotos.library.view.state.AutoAlbumSorting.DATE_
 import com.savvasdalkitsis.uhuruphotos.library.view.state.LibraryState
 import com.savvasdalkitsis.uhuruphotos.strings.R
 import com.savvasdalkitsis.uhuruphotos.ui.view.DropDownActionIcon
-import com.savvasdalkitsis.uhuruphotos.icons.R as Icons
+import com.savvasdalkitsis.uhuruphotos.api.icons.R as Icons
 
 @Composable
 internal fun AutoAlbumsHeader(

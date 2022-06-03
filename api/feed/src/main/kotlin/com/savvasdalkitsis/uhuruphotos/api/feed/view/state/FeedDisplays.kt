@@ -20,7 +20,7 @@ import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 import kotlin.math.max
 import kotlin.math.min
-import com.savvasdalkitsis.uhuruphotos.icons.R as Icons
+import com.savvasdalkitsis.uhuruphotos.api.icons.R as Icons
 import com.savvasdalkitsis.uhuruphotos.strings.R as Strings
 
 enum class FeedDisplays(

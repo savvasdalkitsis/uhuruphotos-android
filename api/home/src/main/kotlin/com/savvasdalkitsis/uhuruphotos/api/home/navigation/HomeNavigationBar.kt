@@ -47,7 +47,7 @@ import com.savvasdalkitsis.uhuruphotos.api.home.navigation.NavigationStyle.BOTTO
 import com.savvasdalkitsis.uhuruphotos.api.home.navigation.NavigationStyle.NAVIGATION_RAIL
 import com.savvasdalkitsis.uhuruphotos.api.feed.view.state.FeedDisplay
 import com.savvasdalkitsis.uhuruphotos.api.homenavigation.HomeNavigationRoutes
-import com.savvasdalkitsis.uhuruphotos.icons.R
+import com.savvasdalkitsis.uhuruphotos.api.icons.R
 import com.savvasdalkitsis.uhuruphotos.ui.window.LocalWindowSize
 import com.savvasdalkitsis.uhuruphotos.strings.R as Strings
 

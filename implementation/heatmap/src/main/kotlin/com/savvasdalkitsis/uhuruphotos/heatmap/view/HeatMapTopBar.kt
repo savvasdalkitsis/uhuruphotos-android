@@ -38,7 +38,7 @@ import com.savvasdalkitsis.uhuruphotos.heatmap.view.state.HeatMapState
 import com.savvasdalkitsis.uhuruphotos.ui.view.ActionIcon
 import com.savvasdalkitsis.uhuruphotos.ui.view.BackNavButton
 import com.savvasdalkitsis.uhuruphotos.ui.view.CommonTopBar
-import com.savvasdalkitsis.uhuruphotos.icons.R as Icons
+import com.savvasdalkitsis.uhuruphotos.api.icons.R as Icons
 import com.savvasdalkitsis.uhuruphotos.strings.R as Strings
 
 @Composable

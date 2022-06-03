@@ -26,7 +26,7 @@ import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass.Companion
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.savvasdalkitsis.uhuruphotos.icons.R
+import com.savvasdalkitsis.uhuruphotos.api.icons.R
 import com.savvasdalkitsis.uhuruphotos.people.api.view.PersonThumbnail
 import com.savvasdalkitsis.uhuruphotos.people.seam.PeopleAction
 import com.savvasdalkitsis.uhuruphotos.people.seam.PeopleAction.NavigateBack

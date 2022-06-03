@@ -16,7 +16,7 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.ui.theme
 
 import androidx.annotation.DrawableRes
-import com.savvasdalkitsis.uhuruphotos.icons.R
+import com.savvasdalkitsis.uhuruphotos.api.icons.R
 
 enum class ThemeMode(
     val friendlyName: String,

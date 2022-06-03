@@ -37,7 +37,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.unit.dp
-import com.savvasdalkitsis.uhuruphotos.icons.R
+import com.savvasdalkitsis.uhuruphotos.api.icons.R
 import com.savvasdalkitsis.uhuruphotos.map.view.MapView
 import com.savvasdalkitsis.uhuruphotos.people.api.view.PeopleBar
 import com.savvasdalkitsis.uhuruphotos.photos.seam.PhotoAction

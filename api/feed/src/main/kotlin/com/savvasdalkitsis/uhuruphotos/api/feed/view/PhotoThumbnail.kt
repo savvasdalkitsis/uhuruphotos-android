@@ -52,7 +52,7 @@ import com.savvasdalkitsis.uhuruphotos.image.api.view.Image
 import com.savvasdalkitsis.uhuruphotos.photos.api.model.Photo
 import com.savvasdalkitsis.uhuruphotos.photos.api.model.SelectionMode
 import com.savvasdalkitsis.uhuruphotos.ui.theme.CustomColors
-import com.savvasdalkitsis.uhuruphotos.icons.R as Icons
+import com.savvasdalkitsis.uhuruphotos.api.icons.R as Icons
 import com.savvasdalkitsis.uhuruphotos.strings.R as Strings
 
 @Composable

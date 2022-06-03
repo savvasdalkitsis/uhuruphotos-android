@@ -22,7 +22,7 @@ import androidx.compose.material.Icon
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
-import com.savvasdalkitsis.uhuruphotos.icons.R
+import com.savvasdalkitsis.uhuruphotos.api.icons.R
 
 internal fun LazyListScope.serverSearchSuggestion(
     suggestion: String,

@@ -24,7 +24,7 @@ import com.savvasdalkitsis.uhuruphotos.settings.seam.SettingsAction
 import com.savvasdalkitsis.uhuruphotos.settings.seam.SettingsAction.ChangeShowLibrary
 import com.savvasdalkitsis.uhuruphotos.settings.view.state.SettingsState
 import com.savvasdalkitsis.uhuruphotos.strings.R
-import com.savvasdalkitsis.uhuruphotos.icons.R as Icons
+import com.savvasdalkitsis.uhuruphotos.api.icons.R as Icons
 
 @Composable
 internal fun SettingsGroupLibrary(

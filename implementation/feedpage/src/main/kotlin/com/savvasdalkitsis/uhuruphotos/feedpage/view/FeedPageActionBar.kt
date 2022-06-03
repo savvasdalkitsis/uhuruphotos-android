@@ -25,7 +25,7 @@ import com.savvasdalkitsis.uhuruphotos.feedpage.seam.FeedPageAction.AskForSelect
 import com.savvasdalkitsis.uhuruphotos.feedpage.seam.FeedPageAction.ChangeDisplay
 import com.savvasdalkitsis.uhuruphotos.feedpage.seam.FeedPageAction.ShareSelectedPhotos
 import com.savvasdalkitsis.uhuruphotos.feedpage.view.state.FeedPageState
-import com.savvasdalkitsis.uhuruphotos.icons.R
+import com.savvasdalkitsis.uhuruphotos.api.icons.R
 import com.savvasdalkitsis.uhuruphotos.ui.view.ActionIcon
 
 @Composable

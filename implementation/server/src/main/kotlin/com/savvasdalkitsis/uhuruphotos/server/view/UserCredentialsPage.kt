@@ -36,7 +36,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
-import com.savvasdalkitsis.uhuruphotos.icons.R
+import com.savvasdalkitsis.uhuruphotos.api.icons.R
 import com.savvasdalkitsis.uhuruphotos.server.seam.ServerAction
 import com.savvasdalkitsis.uhuruphotos.server.seam.ServerAction.Login
 import com.savvasdalkitsis.uhuruphotos.server.seam.ServerAction.RequestServerUrlChange

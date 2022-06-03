@@ -31,7 +31,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.savvasdalkitsis.uhuruphotos.feedpage.seam.FeedPageAction
 import com.savvasdalkitsis.uhuruphotos.feedpage.view.state.FeedPageState
-import com.savvasdalkitsis.uhuruphotos.icons.R
+import com.savvasdalkitsis.uhuruphotos.api.icons.R
 import com.savvasdalkitsis.uhuruphotos.ui.view.ActionIcon
 import com.savvasdalkitsis.uhuruphotos.ui.view.Logo
 

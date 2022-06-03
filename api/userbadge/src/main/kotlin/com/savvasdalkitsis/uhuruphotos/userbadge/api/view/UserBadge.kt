@@ -33,7 +33,7 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import com.savvasdalkitsis.uhuruphotos.icons.R
+import com.savvasdalkitsis.uhuruphotos.api.icons.R
 import com.savvasdalkitsis.uhuruphotos.image.api.view.Image
 import com.savvasdalkitsis.uhuruphotos.ui.theme.CustomColors
 import com.savvasdalkitsis.uhuruphotos.userbadge.api.view.state.SyncState.BAD

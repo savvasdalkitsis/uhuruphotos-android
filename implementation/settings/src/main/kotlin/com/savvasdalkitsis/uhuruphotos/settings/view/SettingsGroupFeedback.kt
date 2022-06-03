@@ -24,7 +24,7 @@ import com.savvasdalkitsis.uhuruphotos.settings.seam.SettingsAction
 import com.savvasdalkitsis.uhuruphotos.settings.seam.SettingsAction.ClearLogFileClicked
 import com.savvasdalkitsis.uhuruphotos.settings.seam.SettingsAction.SendFeedbackClicked
 import com.savvasdalkitsis.uhuruphotos.strings.R
-import com.savvasdalkitsis.uhuruphotos.icons.R as Icons
+import com.savvasdalkitsis.uhuruphotos.api.icons.R as Icons
 
 @Composable
 internal fun SettingsGroupFeedback(

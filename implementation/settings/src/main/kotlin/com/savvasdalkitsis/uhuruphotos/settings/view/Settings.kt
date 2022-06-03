@@ -34,7 +34,7 @@ import com.savvasdalkitsis.uhuruphotos.ui.view.FullProgressBar
 import com.savvasdalkitsis.uhuruphotos.ui.view.StaggeredGrid
 import com.savvasdalkitsis.uhuruphotos.ui.window.LocalWindowSize
 import com.savvasdalkitsis.uhuruphotos.userbadge.api.view.UserBadge
-import com.savvasdalkitsis.uhuruphotos.icons.R as Icons
+import com.savvasdalkitsis.uhuruphotos.api.icons.R as Icons
 
 @Composable
 internal fun Settings(
