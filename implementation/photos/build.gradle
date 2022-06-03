@@ -14,27 +14,27 @@ android {
 
 dependencies {
 
+    implementation project(':api:albums')
+    implementation project(":api:auth")
+    implementation project(":api:date")
     implementation project(":api:db")
-    implementation project(":api:navigation")
+    implementation project(":api:icons")
+    implementation project(':api:image')
     implementation project(":api:log")
-    implementation project(":api:ui")
     implementation project(":api:map")
+    implementation project(":api:navigation")
+    implementation project(":api:notification")
     implementation project(':api:people')
     implementation project(':api:person')
     implementation project(':api:photos')
     implementation project(':api:search')
-    implementation project(":api:worker")
-    implementation project(":api:date")
-    implementation project(":api:auth")
-    implementation project(":api:icons")
-    implementation project(':api:image')
     implementation project(":api:share")
-    implementation project(":implementation:video")
-    implementation project(":api:toaster")
-    implementation project(":api:notification")
     implementation project(":api:strings")
-    implementation project(':api:albums')
+    implementation project(":api:toaster")
+    implementation project(":api:ui")
     implementation project(":api:user")
+    implementation project(":api:video")
+    implementation project(":api:worker")
     implementation(
             libs.accompanist.pager,
             libs.accompanist.systemui,

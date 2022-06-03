@@ -21,7 +21,7 @@ import com.savvasdalkitsis.uhuruphotos.api.db.extensions.await
 import com.savvasdalkitsis.uhuruphotos.api.db.people.People
 import com.savvasdalkitsis.uhuruphotos.api.db.people.PeopleQueries
 import com.savvasdalkitsis.uhuruphotos.implementation.people.service.PeopleService
-import com.savvasdalkitsis.uhuruphotos.implementation.people.service.model.toPerson
+import com.savvasdalkitsis.uhuruphotos.api.people.service.model.toPerson
 import com.squareup.sqldelight.runtime.coroutines.asFlow
 import com.squareup.sqldelight.runtime.coroutines.mapToList
 import com.squareup.sqldelight.runtime.coroutines.mapToOne

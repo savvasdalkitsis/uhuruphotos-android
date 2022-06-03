@@ -15,21 +15,20 @@ android {
 
 dependencies {
 
-    implementation project(":api:db")
-    implementation project(":api:log")
-    implementation project(":implementation:photos")
-    implementation project(":api:icons")
-    implementation project(":api:date")
-    implementation project(":api:coroutines")
-    implementation project(":api:worker")
-    implementation project(":api:initializer")
-    implementation project(":api:settings")
     implementation project(':api:albums')
-    implementation project(':api:photos')
+    implementation project(":api:coroutines")
+    implementation project(":api:date")
+    implementation project(":api:db")
+    implementation project(":api:icons")
+    implementation project(":api:initializer")
+    implementation project(":api:log")
     implementation project(":api:notification")
+    implementation project(":api:people")
+    implementation project(':api:photos')
+    implementation project(":api:settings")
     implementation project(":api:strings")
     implementation project(":api:user")
-    implementation project(":implementation:people")
+    implementation project(":api:worker")
     implementation(
             libs.androidx.compose.hilt.navigation,
             libs.androidx.work,

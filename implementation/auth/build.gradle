@@ -11,13 +11,13 @@ android {
 dependencies {
 
     api project(":api:auth")
-    implementation project(":api:log")
     implementation project(":api:db")
     implementation project(":api:http")
     implementation project(":api:launchers")
+    implementation project(":api:log")
     implementation project(":api:navigation")
-    implementation project(":api:ui")
     implementation project(":api:network")
+    implementation project(":api:ui")
     implementation project(":api:settings")
     implementation(
             libs.accompanist.webview,

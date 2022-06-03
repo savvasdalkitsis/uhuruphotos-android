@@ -41,6 +41,9 @@ import com.mxalbert.zoomable.rememberZoomableState
 import com.radusalagean.infobarcompose.InfoBar
 import com.radusalagean.infobarcompose.InfoBarMessage
 import com.savvasdalkitsis.uhuruphotos.api.image.view.Image
+import com.savvasdalkitsis.uhuruphotos.api.photos.view.DeletePermissionDialog
+import com.savvasdalkitsis.uhuruphotos.api.strings.R
+import com.savvasdalkitsis.uhuruphotos.api.video.view.Video
 import com.savvasdalkitsis.uhuruphotos.implementation.photos.seam.PhotoAction
 import com.savvasdalkitsis.uhuruphotos.implementation.photos.seam.PhotoAction.DeletePhoto
 import com.savvasdalkitsis.uhuruphotos.implementation.photos.seam.PhotoAction.DismissErrorMessage
@@ -50,8 +53,6 @@ import com.savvasdalkitsis.uhuruphotos.implementation.photos.seam.PhotoAction.Na
 import com.savvasdalkitsis.uhuruphotos.implementation.photos.seam.PhotoAction.ShowInfo
 import com.savvasdalkitsis.uhuruphotos.implementation.photos.seam.PhotoAction.ToggleUI
 import com.savvasdalkitsis.uhuruphotos.implementation.photos.view.state.PhotoState
-import com.savvasdalkitsis.uhuruphotos.api.strings.R
-import com.savvasdalkitsis.uhuruphotos.implementation.video.view.Video
 
 @Composable
 fun PhotoDetails(

@@ -15,23 +15,23 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.implementation.feedpage.seam
 
+import com.savvasdalkitsis.uhuruphotos.api.homenavigation.HomeNavigationRoutes
+import com.savvasdalkitsis.uhuruphotos.api.navigation.Navigator
+import com.savvasdalkitsis.uhuruphotos.api.photos.model.PhotoSequenceDataSource.AllPhotos
+import com.savvasdalkitsis.uhuruphotos.api.photos.navigation.PhotoNavigationTarget
 import com.savvasdalkitsis.uhuruphotos.api.seam.EffectHandler
 import com.savvasdalkitsis.uhuruphotos.api.server.navigation.ServerNavigationTarget
 import com.savvasdalkitsis.uhuruphotos.api.settings.navigation.SettingsNavigationTarget
 import com.savvasdalkitsis.uhuruphotos.api.share.usecase.ShareUseCase
+import com.savvasdalkitsis.uhuruphotos.api.strings.R
+import com.savvasdalkitsis.uhuruphotos.api.toaster.Toaster
+import com.savvasdalkitsis.uhuruphotos.api.ui.usecase.UiUseCase
 import com.savvasdalkitsis.uhuruphotos.implementation.feedpage.seam.FeedPageEffect.NavigateToServerEdit
 import com.savvasdalkitsis.uhuruphotos.implementation.feedpage.seam.FeedPageEffect.NavigateToSettings
 import com.savvasdalkitsis.uhuruphotos.implementation.feedpage.seam.FeedPageEffect.OpenPhotoDetails
 import com.savvasdalkitsis.uhuruphotos.implementation.feedpage.seam.FeedPageEffect.ReloadApp
 import com.savvasdalkitsis.uhuruphotos.implementation.feedpage.seam.FeedPageEffect.SharePhotos
 import com.savvasdalkitsis.uhuruphotos.implementation.feedpage.seam.FeedPageEffect.Vibrate
-import com.savvasdalkitsis.uhuruphotos.api.homenavigation.HomeNavigationRoutes
-import com.savvasdalkitsis.uhuruphotos.api.navigation.Navigator
-import com.savvasdalkitsis.uhuruphotos.implementation.photos.model.PhotoSequenceDataSource.AllPhotos
-import com.savvasdalkitsis.uhuruphotos.implementation.photos.navigation.PhotoNavigationTarget
-import com.savvasdalkitsis.uhuruphotos.api.strings.R
-import com.savvasdalkitsis.uhuruphotos.api.toaster.Toaster
-import com.savvasdalkitsis.uhuruphotos.api.ui.usecase.UiUseCase
 import javax.inject.Inject
 
 internal class FeedPageEffectsHandler @Inject constructor(

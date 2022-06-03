@@ -20,8 +20,8 @@ import com.savvasdalkitsis.uhuruphotos.api.db.extensions.awaitSingleOrNull
 import com.savvasdalkitsis.uhuruphotos.api.db.photos.PhotoDetails
 import com.savvasdalkitsis.uhuruphotos.api.db.photos.PhotoDetailsQueries
 import com.savvasdalkitsis.uhuruphotos.api.db.photos.PhotoSummaryQueries
+import com.savvasdalkitsis.uhuruphotos.api.photos.model.toPhotoDetails
 import com.savvasdalkitsis.uhuruphotos.implementation.photos.service.PhotosService
-import com.savvasdalkitsis.uhuruphotos.implementation.photos.service.model.toPhotoDetails
 import com.savvasdalkitsis.uhuruphotos.implementation.photos.worker.PhotoWorkScheduler
 import com.squareup.sqldelight.runtime.coroutines.asFlow
 import com.squareup.sqldelight.runtime.coroutines.mapToList

@@ -19,6 +19,7 @@ import com.savvasdalkitsis.uhuruphotos.api.log.runCatchingWithLog
 import com.savvasdalkitsis.uhuruphotos.api.user.usecase.UserUseCase
 import com.savvasdalkitsis.uhuruphotos.api.auth.usecase.ServerUseCase
 import com.savvasdalkitsis.uhuruphotos.api.db.photos.PhotoDetails
+import com.savvasdalkitsis.uhuruphotos.api.photos.usecase.PhotosUseCase
 import com.savvasdalkitsis.uhuruphotos.implementation.photos.repository.PhotoRepository
 import com.savvasdalkitsis.uhuruphotos.implementation.photos.worker.PhotoWorkScheduler
 import kotlinx.coroutines.flow.Flow
@@ -29,12 +30,12 @@ class PhotosUseCase @Inject constructor(
     private val photoRepository: PhotoRepository,
     private val photoWorkScheduler: PhotoWorkScheduler,
     private val userUseCase: UserUseCase,
-) {
+) : PhotosUseCase {
 
-    @JvmName("toAbsoluteUrlNull")
-    fun String?.toAbsoluteUrl(): String? = this?.toAbsoluteUrl()
+    override fun String?.toAbsoluteUrl(): String? = this?.toAbsoluteUrl()
 
-    fun String.toAbsoluteUrl(): String {
+    @JvmName("toAbsoluteUrlNotNull")
+    private fun String.toAbsoluteUrl(): String {
         val serverUrl = serverUseCase.getServerUrl()
         return this
             .removeSuffix(".webp")
@@ -42,49 +43,46 @@ class PhotosUseCase @Inject constructor(
             .let { serverUrl + it }
     }
 
-    @JvmName("toThumbnailUrlFromIdNull")
-    fun String?.toThumbnailUrlFromId(): String? =
+    override fun String?.toThumbnailUrlFromIdNullable(): String? =
         this?.toThumbnailUrlFromId()
 
-    fun String.toThumbnailUrlFromId(): String =
+    override fun String.toThumbnailUrlFromId(): String =
         "/media/square_thumbnails/$this".toAbsoluteUrl()
 
-    fun String.toFullSizeUrlFromId(
-        isVideo: Boolean = false,
-    ) = when {
+    override fun String.toFullSizeUrlFromId(isVideo: Boolean): String = when {
         isVideo -> "/media/video/$this".toAbsoluteUrl()
         else -> "/media/photos/$this".toAbsoluteUrl()
     }
 
-    fun observeAllPhotoDetails(): Flow<List<PhotoDetails>> =
+    override fun observeAllPhotoDetails(): Flow<List<PhotoDetails>> =
         photoRepository.observeAllPhotoDetails()
 
-    fun observePhotoDetails(id: String): Flow<PhotoDetails> =
+    override fun observePhotoDetails(id: String): Flow<PhotoDetails> =
         photoRepository.observePhotoDetails(id)
 
-    suspend fun getPhotoDetails(id: String): PhotoDetails? =
+    override suspend fun getPhotoDetails(id: String): PhotoDetails? =
         photoRepository.getPhotoDetails(id)
 
-    suspend fun setPhotoFavourite(id: String, favourite: Boolean) = runCatchingWithLog {
+    override suspend fun setPhotoFavourite(id: String, favourite: Boolean): Result<Unit> = runCatchingWithLog {
         userUseCase.getUserOrRefresh()?.let { user ->
             photoRepository.setPhotoRating(id, user.favoriteMinRating?.takeIf { favourite } ?: 0)
             photoWorkScheduler.schedulePhotoFavourite(id, favourite)
         }
     }
 
-    fun refreshDetails(id: String) = runCatchingWithLog {
+    override fun refreshDetails(id: String): Result<Unit> = runCatchingWithLog {
         photoRepository.refreshDetails(id)
     }
 
-    suspend fun refreshDetailsNowIfMissing(id: String) : Result<Unit> = runCatchingWithLog {
+    override suspend fun refreshDetailsNowIfMissing(id: String) : Result<Unit> = runCatchingWithLog {
         photoRepository.refreshDetailsNowIfMissing(id)
     }
 
-    suspend fun refreshDetailsNow(id: String) : Result<Unit> = runCatchingWithLog {
+    override suspend fun refreshDetailsNow(id: String) : Result<Unit> = runCatchingWithLog {
         photoRepository.refreshDetailsNow(id)
     }
 
-    fun deletePhoto(id: String) {
+    override fun deletePhoto(id: String) {
         photoWorkScheduler.schedulePhotoDeletion(id)
     }
 }

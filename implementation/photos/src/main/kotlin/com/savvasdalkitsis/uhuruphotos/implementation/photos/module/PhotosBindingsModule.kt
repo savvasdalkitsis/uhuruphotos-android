@@ -17,6 +17,7 @@ package com.savvasdalkitsis.uhuruphotos.implementation.photos.module
 
 import com.savvasdalkitsis.uhuruphotos.api.navigation.NavigationTarget
 import com.savvasdalkitsis.uhuruphotos.implementation.photos.navigation.PhotoNavigationTarget
+import com.savvasdalkitsis.uhuruphotos.implementation.photos.usecase.PhotosUseCase
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -30,4 +31,8 @@ abstract class PhotosBindingsModule {
     @Binds
     @IntoSet
     abstract fun navigationTarget(navigationTarget: PhotoNavigationTarget): NavigationTarget
+
+    @Binds
+    abstract fun photosUseCase(photosUseCase: PhotosUseCase):
+            com.savvasdalkitsis.uhuruphotos.api.photos.usecase.PhotosUseCase
 }

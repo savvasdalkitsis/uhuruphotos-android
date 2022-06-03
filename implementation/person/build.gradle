@@ -9,17 +9,16 @@ android {
 }
 
 dependencies {
-    implementation project(":api:ui")
-    implementation project(':api:person')
-    implementation project(":api:db")
-    implementation project(":api:navigation")
-    implementation project(':api:image')
-    implementation project(":api:settings")
     implementation project(':api:albums')
+    implementation project(":api:db")
     implementation project(":api:feed")
-    implementation project(":implementation:photos")
-    implementation project(':api:photos')
+    implementation project(':api:image')
+    implementation project(":api:navigation")
     implementation project(':api:people')
+    implementation project(':api:person')
+    implementation project(':api:photos')
+    implementation project(":api:settings")
+    implementation project(":api:ui")
     implementation(
             libs.androidx.compose.foundation,
             libs.androidx.compose.material,

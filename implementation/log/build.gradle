@@ -1,7 +1,7 @@
 dependencies {
-    implementation project(":api:log")
-    implementation project(":api:initializer")
     implementation project(":api:icons")
+    implementation project(":api:initializer")
+    implementation project(":api:log")
     implementation project(":api:notification")
     implementation(
             libs.bundles.lumberjack,

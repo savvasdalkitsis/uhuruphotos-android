@@ -11,9 +11,9 @@ android {
 dependencies {
 
     implementation project(":api:auth")
+    implementation project(':api:image')
     implementation project(":api:initializer")
     implementation project(":api:settings")
-    implementation project(':api:image')
     implementation(
             libs.coil.compose,
             libs.coil.gif,

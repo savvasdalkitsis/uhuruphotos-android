@@ -1,5 +1,13 @@
 dependencies {
+    api project(":api:db")
+    api project(":api:map")
+    api(
+            libs.androidx.compose.navigation,
+            libs.kotlinx.coroutines,
+    )
+    implementation project(":api:strings")
     implementation(
+            libs.androidx.compose.material,
             libs.moshi,
     )
     kapt libs.moshi.kapt

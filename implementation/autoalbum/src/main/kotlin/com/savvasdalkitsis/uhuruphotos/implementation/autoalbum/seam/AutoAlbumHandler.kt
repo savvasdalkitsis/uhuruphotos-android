@@ -37,7 +37,7 @@ import com.savvasdalkitsis.uhuruphotos.api.db.albums.GetAutoAlbum
 import com.savvasdalkitsis.uhuruphotos.api.db.albums.GetPeopleForAutoAlbum
 import com.savvasdalkitsis.uhuruphotos.api.people.view.state.toPerson
 import com.savvasdalkitsis.uhuruphotos.api.photos.model.Photo
-import com.savvasdalkitsis.uhuruphotos.implementation.photos.usecase.PhotosUseCase
+import com.savvasdalkitsis.uhuruphotos.api.photos.usecase.PhotosUseCase
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.flow
@@ -119,7 +119,7 @@ internal class AutoAlbumHandler @Inject constructor(
                             Photo(
                                 id = it.photoId.toString(),
                                 thumbnailUrl = with(photosUseCase) {
-                                    it.photoId.toThumbnailUrlFromId()
+                                    it.photoId.toThumbnailUrlFromIdNullable()
                                 },
                                 isFavourite = it.isFavorite ?: false,
                                 isVideo = it.video ?: false,

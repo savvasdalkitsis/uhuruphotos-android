@@ -10,13 +10,13 @@ android {
 
 dependencies {
 
+    implementation project(":api:auth")
     implementation project(":api:home")
-    implementation project(":api:ui")
+    implementation project(":api:homenavigation")
     implementation project(":api:navigation")
     implementation project(":api:server")
-    implementation project(":api:auth")
     implementation project(":api:settings")
-    implementation project(":api:homenavigation")
+    implementation project(":api:ui")
     implementation(
             libs.androidx.compose.foundation.layout,
             libs.androidx.compose.hilt.navigation,

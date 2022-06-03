@@ -9,20 +9,20 @@ android {
 }
 
 dependencies {
-    implementation project(":api:db")
-    implementation project(":api:icons")
-    implementation project(":api:network")
-    implementation project(":api:log")
-    implementation project(":api:toaster")
-    implementation project(":api:ui")
-    implementation project(':api:image')
-    implementation project(":implementation:photos")
-    implementation project(':api:people')
     implementation project(':api:coroutines')
+    implementation project(":api:db")
+    implementation project(':api:image')
+    implementation project(":api:icons")
+    implementation project(":api:log")
     implementation project(":api:navigation")
+    implementation project(":api:network")
+    implementation project(':api:people')
+    implementation project(':api:person')
+    implementation project(":api:photos")
+    implementation project(":api:toaster")
     implementation project(":api:settings")
     implementation project(":api:strings")
-    implementation project(':api:person')
+    implementation project(":api:ui")
     implementation(
             libs.androidx.compose.foundation,
             libs.androidx.compose.material,

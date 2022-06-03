@@ -15,6 +15,7 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.api.photos.model
 
+import com.savvasdalkitsis.uhuruphotos.api.db.photos.PhotoDetails
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 
@@ -38,4 +39,31 @@ data class PhotoResult(
     @field:Json(name = "video") val video: Boolean,
     @field:Json(name = "rating") val rating: Int,
     @field:Json(name = "people") val peopleNames: List<String>?,
+)
+
+private val PhotoResult.serializePeople: String?
+    get() = peopleNames?.joinToString(separator = "::")
+
+val String.deserializePeopleNames: List<String>
+    get() = split("::")
+
+fun PhotoResult.toPhotoDetails() = PhotoDetails(
+    imageHash = imageHash,
+    gpsLat = gpsLat,
+    gpsLon = gpsLon,
+    timestamp = timestamp,
+    captions = captions,
+    location = location,
+    thumbnailHeight = thumbnailHeight,
+    thumbnailUrl = thumbnailUrl,
+    thumbnailWidth = thumbnailWidth,
+    bigThumbnailUrl = bigThumbnailUrl,
+    bigSquareThumbnailUrl = bigSquareThumbnailUrl,
+    smallSquareThumbnailUrl = smallSquareThumbnailUrl,
+    smallThumbnailUrl = smallThumbnailUrl,
+    squareThumbnailUrl = smallSquareThumbnailUrl,
+    tinySquareThumbnailUrl = tinySquareThumbnailUrl,
+    video = video,
+    rating = rating,
+    peopleNames = serializePeople
 )

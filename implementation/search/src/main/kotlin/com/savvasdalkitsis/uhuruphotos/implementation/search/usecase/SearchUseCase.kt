@@ -19,11 +19,11 @@ import com.savvasdalkitsis.uhuruphotos.api.albums.model.Album
 import com.savvasdalkitsis.uhuruphotos.api.coroutines.safelyOnStart
 import com.savvasdalkitsis.uhuruphotos.api.coroutines.safelyOnStartIgnoring
 import com.savvasdalkitsis.uhuruphotos.api.date.DateDisplayer
+import com.savvasdalkitsis.uhuruphotos.api.db.extensions.isVideo
 import com.savvasdalkitsis.uhuruphotos.api.db.search.GetSearchResults
 import com.savvasdalkitsis.uhuruphotos.api.group.model.Group
 import com.savvasdalkitsis.uhuruphotos.api.photos.model.Photo
-import com.savvasdalkitsis.uhuruphotos.implementation.photos.service.model.isVideo
-import com.savvasdalkitsis.uhuruphotos.implementation.photos.usecase.PhotosUseCase
+import com.savvasdalkitsis.uhuruphotos.api.photos.usecase.PhotosUseCase
 import com.savvasdalkitsis.uhuruphotos.api.search.SearchUseCase
 import com.savvasdalkitsis.uhuruphotos.implementation.search.repository.SearchRepository
 import kotlinx.coroutines.currentCoroutineContext
@@ -70,7 +70,7 @@ class SearchUseCase @Inject constructor(
                         Photo(
                             id = id,
                             thumbnailUrl = with(photosUseCase) {
-                                photo.summaryId.toThumbnailUrlFromId()
+                                photo.summaryId.toThumbnailUrlFromIdNullable()
                             },
                             fallbackColor = photo.dominantColor,
                             ratio = photo.aspectRatio ?: 1f,

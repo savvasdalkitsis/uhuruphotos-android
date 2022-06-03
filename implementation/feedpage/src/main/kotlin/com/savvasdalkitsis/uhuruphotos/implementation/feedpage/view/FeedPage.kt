@@ -44,7 +44,7 @@ import com.savvasdalkitsis.uhuruphotos.implementation.feedpage.seam.FeedPageActi
 import com.savvasdalkitsis.uhuruphotos.implementation.feedpage.seam.FeedPageAction.SettingsClick
 import com.savvasdalkitsis.uhuruphotos.implementation.feedpage.seam.FeedPageAction.UserBadgePressed
 import com.savvasdalkitsis.uhuruphotos.implementation.feedpage.view.state.FeedPageState
-import com.savvasdalkitsis.uhuruphotos.implementation.photos.view.DeletePermissionDialog
+import com.savvasdalkitsis.uhuruphotos.api.photos.view.DeletePermissionDialog
 import kotlinx.coroutines.launch
 
 @Composable

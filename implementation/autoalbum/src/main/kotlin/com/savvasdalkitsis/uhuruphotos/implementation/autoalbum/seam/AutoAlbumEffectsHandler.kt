@@ -15,13 +15,13 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.implementation.autoalbum.seam
 
+import com.savvasdalkitsis.uhuruphotos.api.navigation.Navigator
+import com.savvasdalkitsis.uhuruphotos.api.person.navigation.PersonNavigationTarget
+import com.savvasdalkitsis.uhuruphotos.api.photos.navigation.PhotoNavigationTarget
 import com.savvasdalkitsis.uhuruphotos.api.seam.EffectHandler
 import com.savvasdalkitsis.uhuruphotos.implementation.autoalbum.seam.AutoAlbumEffect.NavigateBack
 import com.savvasdalkitsis.uhuruphotos.implementation.autoalbum.seam.AutoAlbumEffect.NavigateToPerson
 import com.savvasdalkitsis.uhuruphotos.implementation.autoalbum.seam.AutoAlbumEffect.OpenPhotoDetails
-import com.savvasdalkitsis.uhuruphotos.api.navigation.Navigator
-import com.savvasdalkitsis.uhuruphotos.api.person.navigation.PersonNavigationTarget
-import com.savvasdalkitsis.uhuruphotos.implementation.photos.navigation.PhotoNavigationTarget
 import javax.inject.Inject
 
 internal class AutoAlbumEffectsHandler @Inject constructor(

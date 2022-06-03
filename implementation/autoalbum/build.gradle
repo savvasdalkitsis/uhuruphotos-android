@@ -9,20 +9,20 @@ android {
 }
 
 dependencies {
-    implementation project(":api:autoalbum")
-    implementation project(":api:db")
     implementation project(':api:albums')
-    implementation project(':api:date')
+    implementation project(":api:autoalbum")
     implementation project(':api:coroutines')
-    implementation project(":implementation:photos")
+    implementation project(':api:date')
+    implementation project(":api:db")
+    implementation project(":api:feed")
     implementation project(":api:log")
     implementation project(":api:navigation")
-    implementation project(':api:people')
-    implementation project(":api:settings")
-    implementation project(":api:ui")
-    implementation project(":api:feed")
-    implementation project(":api:strings")
     implementation project(':api:person')
+    implementation project(':api:people')
+    implementation project(":api:photos")
+    implementation project(":api:settings")
+    implementation project(":api:strings")
+    implementation project(":api:ui")
     implementation(
             libs.accompanist.swiperefresh,
             libs.androidx.compose.foundation,

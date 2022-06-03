@@ -31,7 +31,7 @@ import com.savvasdalkitsis.uhuruphotos.implementation.people.view.state.PeopleSt
 import com.savvasdalkitsis.uhuruphotos.implementation.people.view.state.SortOrder
 import com.savvasdalkitsis.uhuruphotos.implementation.people.view.state.SortOrder.ASCENDING
 import com.savvasdalkitsis.uhuruphotos.implementation.people.view.state.SortOrder.DESCENDING
-import com.savvasdalkitsis.uhuruphotos.implementation.photos.usecase.PhotosUseCase
+import com.savvasdalkitsis.uhuruphotos.api.photos.usecase.PhotosUseCase
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow

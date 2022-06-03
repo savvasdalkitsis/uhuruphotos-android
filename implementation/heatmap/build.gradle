@@ -10,20 +10,19 @@ android {
 
 dependencies {
 
-    implementation project(":api:ui")
-    implementation project(":api:heatmap")
+    implementation project(':api:albums')
     implementation project(":api:coroutines")
+    implementation project(":api:db")
+    implementation project(":api:feed")
+    implementation project(":api:heatmap")
+    implementation project(":api:icons")
     implementation project(":api:navigation")
     implementation project(":api:map")
-    implementation project(":api:settings")
-    implementation project(':api:albums')
-    implementation project(":implementation:photos")
     implementation project(':api:photos')
-    implementation project(":api:db")
-    implementation project(":api:toaster")
-    implementation project(":api:feed")
-    implementation project(":api:icons")
+    implementation project(":api:settings")
     implementation project(":api:strings")
+    implementation project(":api:toaster")
+    implementation project(":api:ui")
 
     implementation(
             libs.accompanist.permissions,

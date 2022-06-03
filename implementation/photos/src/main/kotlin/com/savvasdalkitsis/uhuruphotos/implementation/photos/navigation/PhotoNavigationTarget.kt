@@ -21,17 +21,19 @@ import androidx.compose.animation.scaleIn
 import androidx.compose.animation.scaleOut
 import androidx.compose.animation.slideIn
 import androidx.compose.animation.slideOut
-import androidx.compose.ui.geometry.Offset
-import androidx.compose.ui.unit.IntOffset
-import androidx.compose.ui.unit.IntSize
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.navigation.NavBackStackEntry
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import com.savvasdalkitsis.uhuruphotos.api.navigation.NavigationTarget
 import com.savvasdalkitsis.uhuruphotos.api.navigation.navigationTarget
-import com.savvasdalkitsis.uhuruphotos.implementation.photos.model.PhotoSequenceDataSource
-import com.savvasdalkitsis.uhuruphotos.implementation.photos.model.PhotoSequenceDataSource.Single
+import com.savvasdalkitsis.uhuruphotos.api.photos.navigation.PhotoNavigationTarget
+import com.savvasdalkitsis.uhuruphotos.api.photos.navigation.PhotoNavigationTarget.center
+import com.savvasdalkitsis.uhuruphotos.api.photos.navigation.PhotoNavigationTarget.datasource
+import com.savvasdalkitsis.uhuruphotos.api.photos.navigation.PhotoNavigationTarget.isVideo
+import com.savvasdalkitsis.uhuruphotos.api.photos.navigation.PhotoNavigationTarget.offsetFrom
+import com.savvasdalkitsis.uhuruphotos.api.photos.navigation.PhotoNavigationTarget.photoId
+import com.savvasdalkitsis.uhuruphotos.api.photos.navigation.PhotoNavigationTarget.scale
+import com.savvasdalkitsis.uhuruphotos.api.ui.theme.ThemeMode
 import com.savvasdalkitsis.uhuruphotos.implementation.photos.seam.PhotoAction
 import com.savvasdalkitsis.uhuruphotos.implementation.photos.seam.PhotoAction.LoadPhoto
 import com.savvasdalkitsis.uhuruphotos.implementation.photos.seam.PhotoEffect
@@ -39,7 +41,6 @@ import com.savvasdalkitsis.uhuruphotos.implementation.photos.seam.PhotoEffectsHa
 import com.savvasdalkitsis.uhuruphotos.implementation.photos.view.Photo
 import com.savvasdalkitsis.uhuruphotos.implementation.photos.view.state.PhotoState
 import com.savvasdalkitsis.uhuruphotos.implementation.photos.viewmodel.PhotoViewModel
-import com.savvasdalkitsis.uhuruphotos.api.ui.theme.ThemeMode
 import kotlinx.coroutines.flow.MutableStateFlow
 import javax.inject.Inject
 
@@ -49,7 +50,7 @@ class PhotoNavigationTarget @Inject constructor(
 
     override suspend fun NavGraphBuilder.create(navHostController: NavHostController) {
         navigationTarget<PhotoState, PhotoEffect, PhotoAction, PhotoViewModel>(
-            name = name,
+            name = PhotoNavigationTarget.registrationName,
             effects = effectsHandler,
             themeMode = MutableStateFlow(ThemeMode.DARK_MODE),
             enterTransition = {
@@ -73,47 +74,5 @@ class PhotoNavigationTarget @Inject constructor(
         ) { state, actions ->
             Photo(state, actions)
         }
-    }
-
-    companion object {
-        private const val name = "details/{type}/{id}/{centerX}/{centerY}/{scale}/{dataSource}"
-        fun name(
-            id: String,
-            offset: Offset,
-            scale: Float,
-            isVideo: Boolean,
-            photoSequenceDataSource: PhotoSequenceDataSource = Single,
-        ) = name
-            .replace("{id}", id)
-            .replace("{centerX}", offset.x.toString())
-            .replace("{centerY}", offset.y.toString())
-            .replace("{scale}", scale.toString())
-            .replace(
-                "{type}", when {
-                    isVideo -> "video"
-                    else -> "photo"
-                }
-            )
-            .replace("{dataSource}", photoSequenceDataSource.toArgument)
-
-        private val NavBackStackEntry.datasource: PhotoSequenceDataSource get() =
-            PhotoSequenceDataSource.from(get("dataSource").orEmpty())
-
-        private val NavBackStackEntry.photoId: String get() = get("id")!!
-        private val NavBackStackEntry.isVideo: Boolean get() = get("type") == "video"
-        private val NavBackStackEntry.center: Offset?
-            get() {
-                val x = get("centerX")?.toFloat()
-                val y = get("centerY")?.toFloat()
-                return if (x != null && y != null) Offset(x, y) else null
-            }
-        private val NavBackStackEntry.scale: Float get() = get("scale")?.toFloat() ?: 0.3f
-
-        private fun NavBackStackEntry.get(arg: String) = arguments!!.getString(arg)
-    }
-
-    private fun Offset?.offsetFrom(size: IntSize) = when {
-        this != null -> IntOffset((x - size.width / 2).toInt(), (y - size.height / 2).toInt())
-        else -> IntOffset.Zero
     }
 }

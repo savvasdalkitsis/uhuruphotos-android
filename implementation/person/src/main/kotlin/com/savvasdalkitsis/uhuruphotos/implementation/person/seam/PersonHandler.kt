@@ -29,7 +29,7 @@ import com.savvasdalkitsis.uhuruphotos.implementation.person.seam.PersonMutation
 import com.savvasdalkitsis.uhuruphotos.implementation.person.seam.PersonMutation.ShowPersonDetails
 import com.savvasdalkitsis.uhuruphotos.implementation.person.seam.PersonMutation.ShowPersonPhotos
 import com.savvasdalkitsis.uhuruphotos.implementation.person.view.state.PersonState
-import com.savvasdalkitsis.uhuruphotos.implementation.photos.usecase.PhotosUseCase
+import com.savvasdalkitsis.uhuruphotos.api.photos.usecase.PhotosUseCase
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOf

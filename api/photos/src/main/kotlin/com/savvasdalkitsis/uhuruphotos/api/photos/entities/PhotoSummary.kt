@@ -13,15 +13,21 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
  */
-package com.savvasdalkitsis.uhuruphotos.implementation.people.service.model
+package com.savvasdalkitsis.uhuruphotos.api.photos.entities
 
-import com.savvasdalkitsis.uhuruphotos.api.db.people.People
-import com.savvasdalkitsis.uhuruphotos.api.people.model.PersonResult
+import com.savvasdalkitsis.uhuruphotos.api.db.photos.PhotoSummary
+import com.savvasdalkitsis.uhuruphotos.api.photos.model.PhotoSummaryItem
 
-fun PersonResult.toPerson() = People(
+fun PhotoSummaryItem.toPhotoSummary(albumId: String) = PhotoSummary(
     id = id,
-    name = name,
-    faceCount = faceCount,
-    faceUrl = faceUrl,
-    facePhotoUrl = facePhotoUrl
+    dominantColor = dominantColor,
+    url = url,
+    location = location,
+    date = date,
+    birthTime = birthTime,
+    aspectRatio = aspectRatio,
+    type = type,
+    videoLength = videoLength,
+    rating = rating,
+    containerId = albumId
 )

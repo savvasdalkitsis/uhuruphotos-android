@@ -35,7 +35,7 @@ inline fun logError(t: Throwable) {
     L.e(t)
 }
 
-inline fun <T, R> T.runCatchingWithLog(block: T.() -> R): Result<R> = try {
+inline fun <T, R : Any> T.runCatchingWithLog(block: T.() -> R): Result<R> = try {
     Result.success(block())
 } catch (e: Throwable) {
     log(e)

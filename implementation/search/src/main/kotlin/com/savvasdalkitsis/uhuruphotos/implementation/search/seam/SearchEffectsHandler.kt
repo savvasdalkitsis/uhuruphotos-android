@@ -16,15 +16,18 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.implementation.search.seam
 
 import com.savvasdalkitsis.uhuruphotos.api.heatmap.navigation.HeatMapNavigationTarget
-import com.savvasdalkitsis.uhuruphotos.api.seam.EffectHandler
-import com.savvasdalkitsis.uhuruphotos.api.server.navigation.ServerNavigationTarget
-import com.savvasdalkitsis.uhuruphotos.api.settings.navigation.SettingsNavigationTarget
 import com.savvasdalkitsis.uhuruphotos.api.homenavigation.HomeNavigationRoutes
 import com.savvasdalkitsis.uhuruphotos.api.navigation.Navigator
 import com.savvasdalkitsis.uhuruphotos.api.people.navigation.PeopleNavigationTarget
 import com.savvasdalkitsis.uhuruphotos.api.person.navigation.PersonNavigationTarget
-import com.savvasdalkitsis.uhuruphotos.implementation.photos.model.PhotoSequenceDataSource.SearchResults
-import com.savvasdalkitsis.uhuruphotos.implementation.photos.navigation.PhotoNavigationTarget
+import com.savvasdalkitsis.uhuruphotos.api.photos.model.PhotoSequenceDataSource.SearchResults
+import com.savvasdalkitsis.uhuruphotos.api.photos.navigation.PhotoNavigationTarget
+import com.savvasdalkitsis.uhuruphotos.api.seam.EffectHandler
+import com.savvasdalkitsis.uhuruphotos.api.server.navigation.ServerNavigationTarget
+import com.savvasdalkitsis.uhuruphotos.api.settings.navigation.SettingsNavigationTarget
+import com.savvasdalkitsis.uhuruphotos.api.strings.R
+import com.savvasdalkitsis.uhuruphotos.api.toaster.Toaster
+import com.savvasdalkitsis.uhuruphotos.api.ui.usecase.UiUseCase
 import com.savvasdalkitsis.uhuruphotos.implementation.search.seam.SearchEffect.ErrorRefreshingPeople
 import com.savvasdalkitsis.uhuruphotos.implementation.search.seam.SearchEffect.ErrorSearching
 import com.savvasdalkitsis.uhuruphotos.implementation.search.seam.SearchEffect.HideKeyboard
@@ -35,9 +38,6 @@ import com.savvasdalkitsis.uhuruphotos.implementation.search.seam.SearchEffect.N
 import com.savvasdalkitsis.uhuruphotos.implementation.search.seam.SearchEffect.NavigateToSettings
 import com.savvasdalkitsis.uhuruphotos.implementation.search.seam.SearchEffect.OpenPhotoDetails
 import com.savvasdalkitsis.uhuruphotos.implementation.search.seam.SearchEffect.ReloadApp
-import com.savvasdalkitsis.uhuruphotos.api.strings.R
-import com.savvasdalkitsis.uhuruphotos.api.toaster.Toaster
-import com.savvasdalkitsis.uhuruphotos.api.ui.usecase.UiUseCase
 import javax.inject.Inject
 
 class SearchEffectsHandler @Inject constructor(

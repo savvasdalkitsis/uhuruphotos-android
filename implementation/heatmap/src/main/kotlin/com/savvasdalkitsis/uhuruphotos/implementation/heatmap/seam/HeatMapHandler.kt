@@ -18,6 +18,10 @@ package com.savvasdalkitsis.uhuruphotos.implementation.heatmap.seam
 import com.savvasdalkitsis.uhuruphotos.api.albums.usecase.AlbumsUseCase
 import com.savvasdalkitsis.uhuruphotos.api.coroutines.onErrors
 import com.savvasdalkitsis.uhuruphotos.api.coroutines.safelyOnStart
+import com.savvasdalkitsis.uhuruphotos.api.map.model.LatLon
+import com.savvasdalkitsis.uhuruphotos.api.photos.model.Photo
+import com.savvasdalkitsis.uhuruphotos.api.photos.model.latLng
+import com.savvasdalkitsis.uhuruphotos.api.photos.usecase.PhotosUseCase
 import com.savvasdalkitsis.uhuruphotos.api.seam.ActionHandler
 import com.savvasdalkitsis.uhuruphotos.implementation.heatmap.seam.HeatMapAction.BackPressed
 import com.savvasdalkitsis.uhuruphotos.implementation.heatmap.seam.HeatMapAction.CameraViewPortChanged
@@ -30,10 +34,6 @@ import com.savvasdalkitsis.uhuruphotos.implementation.heatmap.seam.HeatMapMutati
 import com.savvasdalkitsis.uhuruphotos.implementation.heatmap.seam.HeatMapMutation.UpdateAllPhotos
 import com.savvasdalkitsis.uhuruphotos.implementation.heatmap.seam.HeatMapMutation.UpdateDisplay
 import com.savvasdalkitsis.uhuruphotos.implementation.heatmap.view.state.HeatMapState
-import com.savvasdalkitsis.uhuruphotos.api.map.model.LatLon
-import com.savvasdalkitsis.uhuruphotos.api.photos.model.Photo
-import com.savvasdalkitsis.uhuruphotos.implementation.photos.model.latLng
-import com.savvasdalkitsis.uhuruphotos.implementation.photos.usecase.PhotosUseCase
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async

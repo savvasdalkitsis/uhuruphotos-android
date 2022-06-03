@@ -41,9 +41,9 @@ import com.savvasdalkitsis.uhuruphotos.api.db.photos.PhotoDetailsQueries
 import com.savvasdalkitsis.uhuruphotos.api.db.photos.PhotoSummaryQueries
 import com.savvasdalkitsis.uhuruphotos.api.group.model.Group
 import com.savvasdalkitsis.uhuruphotos.api.group.model.groupBy
-import com.savvasdalkitsis.uhuruphotos.implementation.people.service.model.toPerson
-import com.savvasdalkitsis.uhuruphotos.implementation.photos.entities.toPhotoSummary
-import com.savvasdalkitsis.uhuruphotos.implementation.photos.service.model.toPhotoDetails
+import com.savvasdalkitsis.uhuruphotos.api.people.service.model.toPerson
+import com.savvasdalkitsis.uhuruphotos.api.photos.entities.toPhotoSummary
+import com.savvasdalkitsis.uhuruphotos.api.photos.model.toPhotoDetails
 import com.squareup.sqldelight.runtime.coroutines.asFlow
 import com.squareup.sqldelight.runtime.coroutines.mapToList
 import kotlinx.coroutines.flow.Flow
