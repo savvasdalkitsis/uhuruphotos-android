@@ -16,7 +16,7 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.photos.worker
 
 import androidx.work.BackoffPolicy
-import com.savvasdalkitsis.uhuruphotos.worker.WorkScheduler
+import com.savvasdalkitsis.uhuruphotos.api.worker.WorkScheduler
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 

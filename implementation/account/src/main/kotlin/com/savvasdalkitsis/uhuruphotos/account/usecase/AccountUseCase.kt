@@ -23,7 +23,7 @@ import com.savvasdalkitsis.uhuruphotos.api.db.search.SearchQueries
 import com.savvasdalkitsis.uhuruphotos.api.db.user.UserQueries
 import com.savvasdalkitsis.uhuruphotos.api.image.cache.ImageCacheController
 import com.savvasdalkitsis.uhuruphotos.api.video.VideoCache
-import com.savvasdalkitsis.uhuruphotos.worker.WorkScheduler
+import com.savvasdalkitsis.uhuruphotos.api.worker.WorkScheduler
 import okhttp3.Cache
 import javax.inject.Inject
 

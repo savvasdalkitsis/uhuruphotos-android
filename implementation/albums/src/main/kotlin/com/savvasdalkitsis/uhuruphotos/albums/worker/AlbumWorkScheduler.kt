@@ -20,8 +20,8 @@ import androidx.work.WorkInfo
 import com.savvasdalkitsis.uhuruphotos.api.albums.worker.AlbumWorkScheduler
 import com.savvasdalkitsis.uhuruphotos.api.albums.worker.RefreshJobState
 import com.savvasdalkitsis.uhuruphotos.api.settings.usecase.SettingsUseCase
-import com.savvasdalkitsis.uhuruphotos.worker.WorkScheduler
-import com.savvasdalkitsis.uhuruphotos.worker.usecase.WorkerStatusUseCase
+import com.savvasdalkitsis.uhuruphotos.api.worker.WorkScheduler
+import com.savvasdalkitsis.uhuruphotos.api.worker.usecase.WorkerStatusUseCase
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import java.util.concurrent.TimeUnit
