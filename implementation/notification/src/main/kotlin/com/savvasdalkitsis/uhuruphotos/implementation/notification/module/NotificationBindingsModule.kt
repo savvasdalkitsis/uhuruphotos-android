@@ -13,11 +13,11 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
  */
-package com.savvasdalkitsis.uhuruphotos.notification.module
+package com.savvasdalkitsis.uhuruphotos.implementation.notification.module
 
 import com.savvasdalkitsis.uhuruphotos.api.initializer.ApplicationCreated
-import com.savvasdalkitsis.uhuruphotos.notification.ForegroundInfoBuilder
-import com.savvasdalkitsis.uhuruphotos.notification.initializer.NotificationInitializer
+import com.savvasdalkitsis.uhuruphotos.implementation.notification.ForegroundInfoBuilder
+import com.savvasdalkitsis.uhuruphotos.implementation.notification.initializer.NotificationInitializer
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
