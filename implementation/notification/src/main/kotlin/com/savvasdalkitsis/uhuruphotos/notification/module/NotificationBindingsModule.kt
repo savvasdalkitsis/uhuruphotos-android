@@ -15,7 +15,7 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.notification.module
 
-import com.savvasdalkitsis.uhuruphotos.initializer.ApplicationCreated
+import com.savvasdalkitsis.uhuruphotos.api.initializer.ApplicationCreated
 import com.savvasdalkitsis.uhuruphotos.notification.ForegroundInfoBuilder
 import com.savvasdalkitsis.uhuruphotos.notification.initializer.NotificationInitializer
 import dagger.Binds

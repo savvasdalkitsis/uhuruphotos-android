@@ -17,7 +17,7 @@ package com.savvasdalkitsis.uhuruphotos.image.module
 
 import com.savvasdalkitsis.uhuruphotos.image.cache.ImageCacheController
 import com.savvasdalkitsis.uhuruphotos.image.initializer.ImageInitializer
-import com.savvasdalkitsis.uhuruphotos.initializer.ApplicationCreated
+import com.savvasdalkitsis.uhuruphotos.api.initializer.ApplicationCreated
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn

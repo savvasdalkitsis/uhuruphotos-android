@@ -13,18 +13,11 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
  */
-package com.savvasdalkitsis.uhuruphotos.initializer
+package com.savvasdalkitsis.uhuruphotos.api.initializer
 
 import android.app.Application
-import javax.inject.Inject
-import javax.inject.Singleton
 
-@Singleton
-class ApplicationInitializer @Inject constructor(
-    private val listeners: Set<@JvmSuppressWildcards ApplicationCreated>,
-) {
+interface ApplicationCreated {
 
-    fun onCreated(app: Application) {
-        listeners.forEach { it.onAppCreated(app) }
-    }
+    fun onAppCreated(app: Application)
 }

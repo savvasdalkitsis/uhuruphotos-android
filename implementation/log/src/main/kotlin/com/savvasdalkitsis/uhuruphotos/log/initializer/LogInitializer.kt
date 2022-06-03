@@ -22,7 +22,7 @@ import com.michaelflisar.lumberjack.L
 import com.savvasdalkitsis.uhuruphotos.api.log.logError
 import com.savvasdalkitsis.uhuruphotos.api.notification.NotificationChannels
 import com.savvasdalkitsis.uhuruphotos.api.icons.R
-import com.savvasdalkitsis.uhuruphotos.initializer.ApplicationCreated
+import com.savvasdalkitsis.uhuruphotos.api.initializer.ApplicationCreated
 import com.savvasdalkitsis.uhuruphotos.log.FeedbackUseCase
 import com.savvasdalkitsis.uhuruphotos.log.showCrashNotification
 import dagger.hilt.android.qualifiers.ApplicationContext

@@ -18,7 +18,7 @@ package com.savvasdalkitsis.uhuruphotos.app
 import android.app.Application
 import androidx.hilt.work.HiltWorkerFactory
 import androidx.work.Configuration
-import com.savvasdalkitsis.uhuruphotos.initializer.ApplicationInitializer
+import com.savvasdalkitsis.uhuruphotos.api.initializer.ApplicationInitializer
 import dagger.hilt.android.HiltAndroidApp
 import javax.inject.Inject
 

@@ -15,7 +15,7 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.log.module
 
-import com.savvasdalkitsis.uhuruphotos.initializer.ApplicationCreated
+import com.savvasdalkitsis.uhuruphotos.api.initializer.ApplicationCreated
 import com.savvasdalkitsis.uhuruphotos.log.FeedbackUseCase
 import com.savvasdalkitsis.uhuruphotos.log.initializer.LogInitializer
 import dagger.Binds

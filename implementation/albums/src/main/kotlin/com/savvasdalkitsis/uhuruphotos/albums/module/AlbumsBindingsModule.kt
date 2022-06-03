@@ -19,7 +19,7 @@ import com.savvasdalkitsis.uhuruphotos.albums.initializer.AlbumsInitializer
 import com.savvasdalkitsis.uhuruphotos.albums.repository.AlbumsRepository
 import com.savvasdalkitsis.uhuruphotos.albums.usecase.AlbumsUseCase
 import com.savvasdalkitsis.uhuruphotos.albums.worker.AlbumWorkScheduler
-import com.savvasdalkitsis.uhuruphotos.initializer.ApplicationCreated
+import com.savvasdalkitsis.uhuruphotos.api.initializer.ApplicationCreated
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
