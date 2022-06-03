@@ -13,12 +13,12 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
  */
-package com.savvasdalkitsis.uhuruphotos.user.usecase
+package com.savvasdalkitsis.uhuruphotos.implementation.user.usecase
 
 import com.savvasdalkitsis.uhuruphotos.api.coroutines.safelyOnStartIgnoring
 import com.savvasdalkitsis.uhuruphotos.api.user.usecase.UserUseCase
 import com.savvasdalkitsis.uhuruphotos.api.db.user.User
-import com.savvasdalkitsis.uhuruphotos.user.repository.UserRepository
+import com.savvasdalkitsis.uhuruphotos.implementation.user.repository.UserRepository
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 

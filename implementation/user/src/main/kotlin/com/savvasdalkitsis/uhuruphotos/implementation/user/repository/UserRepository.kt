@@ -13,14 +13,14 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
  */
-package com.savvasdalkitsis.uhuruphotos.user.repository
+package com.savvasdalkitsis.uhuruphotos.implementation.user.repository
 
 import com.savvasdalkitsis.uhuruphotos.api.log.log
 import com.savvasdalkitsis.uhuruphotos.api.db.extensions.async
 import com.savvasdalkitsis.uhuruphotos.api.db.extensions.awaitSingleOrNull
 import com.savvasdalkitsis.uhuruphotos.api.db.user.User
 import com.savvasdalkitsis.uhuruphotos.api.db.user.UserQueries
-import com.savvasdalkitsis.uhuruphotos.user.service.UserService
+import com.savvasdalkitsis.uhuruphotos.implementation.user.service.UserService
 import com.squareup.sqldelight.runtime.coroutines.asFlow
 import com.squareup.sqldelight.runtime.coroutines.mapToOneNotNull
 import kotlinx.coroutines.flow.Flow

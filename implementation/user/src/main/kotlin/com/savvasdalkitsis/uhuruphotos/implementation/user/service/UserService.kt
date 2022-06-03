@@ -13,20 +13,13 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
  */
-package com.savvasdalkitsis.uhuruphotos.user.module
+package com.savvasdalkitsis.uhuruphotos.implementation.user.service
 
-import com.savvasdalkitsis.uhuruphotos.user.usecase.UserUseCase
-import dagger.Binds
-import dagger.Module
-import dagger.hilt.InstallIn
-import dagger.hilt.components.SingletonComponent
+import com.savvasdalkitsis.uhuruphotos.implementation.user.service.model.UsersResult
+import retrofit2.http.GET
 
-@InstallIn(SingletonComponent::class)
-@Module
-internal abstract class UserBindingsModule {
+internal interface UserService {
 
-    @Binds
-    abstract fun userUseCase(userUseCase: UserUseCase):
-            com.savvasdalkitsis.uhuruphotos.api.user.usecase.UserUseCase
-
+    @GET("/api/user/")
+    suspend fun getUser(): UsersResult
 }

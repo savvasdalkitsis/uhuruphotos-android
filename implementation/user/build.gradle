@@ -17,5 +17,5 @@ dependencies {
 }
 
 android {
-    namespace 'com.savvasdalkitsis.uhuruphotos.user'
+    namespace 'com.savvasdalkitsis.uhuruphotos.implementation.user'
 }

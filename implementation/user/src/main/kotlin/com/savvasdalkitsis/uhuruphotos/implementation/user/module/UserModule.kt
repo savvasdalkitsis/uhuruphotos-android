@@ -13,11 +13,20 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
  */
-package com.savvasdalkitsis.uhuruphotos.user.service.model
+package com.savvasdalkitsis.uhuruphotos.implementation.user.module
 
-import com.squareup.moshi.JsonClass
+import com.savvasdalkitsis.uhuruphotos.implementation.user.service.UserService
+import dagger.Module
+import dagger.Provides
+import dagger.hilt.InstallIn
+import dagger.hilt.components.SingletonComponent
+import retrofit2.Retrofit
 
-@JsonClass(generateAdapter = true)
-internal data class UsersResult(
-    val results: List<UserResult>
-)
+@Module
+@InstallIn(SingletonComponent::class)
+internal class UserModule {
+
+    @Provides
+    fun userApi(retrofit: Retrofit): UserService = retrofit.create(UserService::class.java)
+
+}

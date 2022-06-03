@@ -1,4 +1,4 @@
-package com.savvasdalkitsis.uhuruphotos.user;
+package com.savvasdalkitsis.uhuruphotos.implementation.user;
 
 import com.savvasdalkitsis.uhuruphotos.api.db.user.User;
 
