@@ -15,11 +15,12 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.auth.usecase
 
+import com.savvasdalkitsis.uhuruphotos.api.auth.model.AuthStatus
+import com.savvasdalkitsis.uhuruphotos.api.auth.model.AuthStatus.Authenticated
+import com.savvasdalkitsis.uhuruphotos.api.auth.model.AuthStatus.Offline
+import com.savvasdalkitsis.uhuruphotos.api.auth.model.AuthStatus.Unauthenticated
+import com.savvasdalkitsis.uhuruphotos.api.auth.usecase.AuthenticationUseCase
 import com.savvasdalkitsis.uhuruphotos.api.log.log
-import com.savvasdalkitsis.uhuruphotos.auth.model.AuthStatus
-import com.savvasdalkitsis.uhuruphotos.auth.model.AuthStatus.Authenticated
-import com.savvasdalkitsis.uhuruphotos.auth.model.AuthStatus.Offline
-import com.savvasdalkitsis.uhuruphotos.auth.model.AuthStatus.Unauthenticated
 import com.savvasdalkitsis.uhuruphotos.auth.network.jwt
 import com.savvasdalkitsis.uhuruphotos.auth.service.AuthenticationService
 import com.savvasdalkitsis.uhuruphotos.auth.service.model.AuthenticationCredentials
@@ -40,11 +41,11 @@ import javax.inject.Singleton
 class AuthenticationUseCase @Inject constructor(
     private val tokenQueries: TokenQueries,
     private val authenticationService: AuthenticationService,
-) {
+) : AuthenticationUseCase {
 
     private val mutex = Mutex()
 
-    suspend fun authenticationStatus(): AuthStatus {
+    override suspend fun authenticationStatus(): AuthStatus {
         val accessToken = tokenQueries.getAccessToken().awaitSingleOrNull()
         return when {
             accessToken.isNullOrEmpty() || accessToken.jwt.isExpired(0) -> refreshToken()
@@ -52,7 +53,7 @@ class AuthenticationUseCase @Inject constructor(
         }
     }
 
-    suspend fun login(username: String, password: String) {
+    override suspend fun login(username: String, password: String) {
         val response = authenticationService.login(AuthenticationCredentials(username, password))
         async {
             tokenQueries.saveToken(
@@ -65,7 +66,7 @@ class AuthenticationUseCase @Inject constructor(
         refreshAccessToken(response.refresh)
     }
 
-    suspend fun refreshToken(): AuthStatus = mutex.withLock {
+    override suspend fun refreshToken(): AuthStatus = mutex.withLock {
         val refreshToken = tokenQueries.getRefreshToken().awaitSingleOrNull()
         return when {
             refreshToken.isNullOrEmpty() || refreshToken.jwt.isExpired(0) -> Unauthenticated

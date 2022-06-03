@@ -17,8 +17,8 @@ package com.savvasdalkitsis.uhuruphotos.home.seam
 
 import com.savvasdalkitsis.uhuruphotos.api.seam.ActionHandler
 import com.savvasdalkitsis.uhuruphotos.api.settings.usecase.SettingsUseCase
-import com.savvasdalkitsis.uhuruphotos.auth.model.AuthStatus.Unauthenticated
-import com.savvasdalkitsis.uhuruphotos.auth.usecase.AuthenticationUseCase
+import com.savvasdalkitsis.uhuruphotos.api.auth.model.AuthStatus.Unauthenticated
+import com.savvasdalkitsis.uhuruphotos.api.auth.usecase.AuthenticationUseCase
 import com.savvasdalkitsis.uhuruphotos.home.seam.HomeAction.Load
 import com.savvasdalkitsis.uhuruphotos.home.seam.HomeEffect.LaunchAuthentication
 import com.savvasdalkitsis.uhuruphotos.home.seam.HomeMutation.Loading

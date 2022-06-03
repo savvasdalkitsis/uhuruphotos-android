@@ -19,11 +19,11 @@ import com.savvasdalkitsis.uhuruphotos.api.http.isHttpUrl
 import com.savvasdalkitsis.uhuruphotos.api.http.isValidUrlOrDomain
 import com.savvasdalkitsis.uhuruphotos.api.log.log
 import com.savvasdalkitsis.uhuruphotos.api.seam.ActionHandler
-import com.savvasdalkitsis.uhuruphotos.auth.model.AuthStatus.Authenticated
-import com.savvasdalkitsis.uhuruphotos.auth.model.AuthStatus.Offline
-import com.savvasdalkitsis.uhuruphotos.auth.model.AuthStatus.Unauthenticated
-import com.savvasdalkitsis.uhuruphotos.auth.usecase.AuthenticationUseCase
-import com.savvasdalkitsis.uhuruphotos.auth.usecase.ServerUseCase
+import com.savvasdalkitsis.uhuruphotos.api.auth.model.AuthStatus.Authenticated
+import com.savvasdalkitsis.uhuruphotos.api.auth.model.AuthStatus.Offline
+import com.savvasdalkitsis.uhuruphotos.api.auth.model.AuthStatus.Unauthenticated
+import com.savvasdalkitsis.uhuruphotos.api.auth.usecase.AuthenticationUseCase
+import com.savvasdalkitsis.uhuruphotos.api.auth.usecase.ServerUseCase
 import com.savvasdalkitsis.uhuruphotos.server.seam.ServerAction.AttemptChangeServerUrlTo
 import com.savvasdalkitsis.uhuruphotos.server.seam.ServerAction.ChangeServerUrlTo
 import com.savvasdalkitsis.uhuruphotos.server.seam.ServerAction.CheckPersistedServer

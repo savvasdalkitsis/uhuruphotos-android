@@ -54,16 +54,15 @@ android {
 }
 
 dependencies {
-    implementation project(":auth")
-    implementation project(":api:navigation")
     implementation project(":api:ui")
     implementation project(":api:initializer")
-    implementation project(':api:userbadge')
+    implementation project(":api:navigation")
     implementation project(":api:homenavigation")
 
     // internal projects
     implementation project(":internal:account")
     implementation project(":internal:albums")
+    implementation project(":internal:auth")
     implementation project(":internal:autoalbum")
     implementation project(":internal:feedpage")
     implementation project(":internal:heatmap")
@@ -86,6 +85,7 @@ dependencies {
     implementation project(":internal:video")
 
     implementation(
+            libs.accompanist.navigation,
             libs.accompanist.systemui,
             libs.androidx.activity,
             libs.androidx.compose.hilt.navigation,

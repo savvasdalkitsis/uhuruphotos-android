@@ -15,6 +15,9 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.auth.module
 
+import com.savvasdalkitsis.uhuruphotos.auth.service.TokenRefreshInterceptor
+import com.savvasdalkitsis.uhuruphotos.auth.usecase.AuthenticationUseCase
+import com.savvasdalkitsis.uhuruphotos.auth.usecase.ServerUseCase
 import com.savvasdalkitsis.uhuruphotos.auth.weblogin.weblogin.navigation.WebLoginNavigationTarget
 import com.savvasdalkitsis.uhuruphotos.navigation.NavigationTarget
 import dagger.Binds
@@ -22,6 +25,7 @@ import dagger.Module
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import dagger.multibindings.IntoSet
+import okhttp3.Interceptor
 
 @Module
 @InstallIn(SingletonComponent::class)
@@ -30,4 +34,17 @@ abstract class AuthBindingsModule {
     @Binds
     @IntoSet
     abstract fun webLoginNavigationTarget(navigationTarget: WebLoginNavigationTarget): NavigationTarget
+
+    @Binds
+    @com.savvasdalkitsis.uhuruphotos.api.auth.TokenRefreshInterceptor
+    abstract fun tokenRefreshInterceptor(tokenRefreshInterceptor: TokenRefreshInterceptor):
+            Interceptor
+
+    @Binds
+    abstract fun authenticationUseCase(authenticationUseCase: AuthenticationUseCase):
+            com.savvasdalkitsis.uhuruphotos.api.auth.usecase.AuthenticationUseCase
+
+    @Binds
+    abstract fun serverUseCase(serverUseCase: ServerUseCase):
+            com.savvasdalkitsis.uhuruphotos.api.auth.usecase.ServerUseCase
 }

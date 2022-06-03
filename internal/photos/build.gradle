@@ -25,7 +25,7 @@ dependencies {
     implementation project(':api:search')
     implementation project(":api:worker")
     implementation project(":api:date")
-    implementation project(":auth")
+    implementation project(":api:auth")
     implementation project(":api:icons")
     implementation project(':api:image')
     implementation project(":api:share")

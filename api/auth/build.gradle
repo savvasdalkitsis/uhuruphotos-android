@@ -1,0 +1,12 @@
+android {
+    namespace 'com.savvasdalkitsis.uhuruphotos.api.auth'
+}
+
+dependencies {
+    api(
+            libs.kotlinx.coroutines,
+    )
+    implementation(
+            libs.hilt,
+    )
+}

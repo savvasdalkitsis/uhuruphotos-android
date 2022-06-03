@@ -15,7 +15,7 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.auth.network
 
-import com.savvasdalkitsis.uhuruphotos.auth.usecase.ServerUseCase
+import com.savvasdalkitsis.uhuruphotos.api.auth.usecase.ServerUseCase
 import kotlinx.coroutines.runBlocking
 import okhttp3.HttpUrl
 import okhttp3.Interceptor

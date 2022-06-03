@@ -10,6 +10,7 @@ android {
 
 dependencies {
 
+    api project(":api:auth")
     implementation project(":api:log")
     implementation project(":api:db")
     implementation project(":api:http")

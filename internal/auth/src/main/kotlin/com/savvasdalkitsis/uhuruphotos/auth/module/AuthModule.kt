@@ -16,6 +16,7 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.auth.module
 
 import android.webkit.CookieManager
+import com.savvasdalkitsis.uhuruphotos.api.auth.AuthenticatedOkHttpClient
 import com.savvasdalkitsis.uhuruphotos.api.network.OkHttpBuilder
 import com.savvasdalkitsis.uhuruphotos.auth.network.DynamicDomainInterceptor
 import com.savvasdalkitsis.uhuruphotos.auth.service.AuthenticationHeaderInterceptor
@@ -40,10 +41,6 @@ class AuthModule {
     @Provides
     @Singleton
     fun cookieManager(): CookieManager = CookieManager.getInstance()
-
-    @Qualifier
-    @Retention(AnnotationRetention.BINARY)
-    annotation class AuthenticatedOkHttpClient
 
     @Provides
     @AuthenticatedOkHttpClient

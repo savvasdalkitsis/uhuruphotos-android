@@ -17,7 +17,7 @@ package com.savvasdalkitsis.uhuruphotos.photos.usecase
 
 import com.savvasdalkitsis.uhuruphotos.api.log.runCatchingWithLog
 import com.savvasdalkitsis.uhuruphotos.api.user.usecase.UserUseCase
-import com.savvasdalkitsis.uhuruphotos.auth.usecase.ServerUseCase
+import com.savvasdalkitsis.uhuruphotos.api.auth.usecase.ServerUseCase
 import com.savvasdalkitsis.uhuruphotos.db.photos.PhotoDetails
 import com.savvasdalkitsis.uhuruphotos.photos.repository.PhotoRepository
 import com.savvasdalkitsis.uhuruphotos.photos.worker.PhotoWorkScheduler

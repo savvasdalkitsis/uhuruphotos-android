@@ -13,12 +13,12 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
  */
-package com.savvasdalkitsis.uhuruphotos.auth.model
+package com.savvasdalkitsis.uhuruphotos.api.auth.usecase
 
-sealed class AuthStatus {
+import kotlinx.coroutines.flow.Flow
 
-    object Unauthenticated: AuthStatus()
-    object Authenticated: AuthStatus()
-    object Offline: AuthStatus()
-
+interface ServerUseCase {
+    fun observeServerUrl(): Flow<String>
+    fun getServerUrl(): String?
+    suspend fun setServerUrl(serverUrl: String)
 }

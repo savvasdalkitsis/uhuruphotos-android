@@ -14,7 +14,7 @@ dependencies {
     implementation project(":api:ui")
     implementation project(":api:navigation")
     implementation project(":api:server")
-    implementation project(":auth")
+    implementation project(":api:auth")
     implementation project(":api:settings")
     implementation project(":api:homenavigation")
     implementation(

@@ -24,7 +24,7 @@ import androidx.work.WorkInfo.State.RUNNING
 import androidx.work.WorkInfo.State.SUCCEEDED
 import com.savvasdalkitsis.uhuruphotos.albums.api.worker.AlbumWorkScheduler
 import com.savvasdalkitsis.uhuruphotos.api.user.usecase.UserUseCase
-import com.savvasdalkitsis.uhuruphotos.auth.usecase.ServerUseCase
+import com.savvasdalkitsis.uhuruphotos.api.auth.usecase.ServerUseCase
 import com.savvasdalkitsis.uhuruphotos.photos.usecase.PhotosUseCase
 import com.savvasdalkitsis.uhuruphotos.userbadge.api.UserBadgeUseCase
 import com.savvasdalkitsis.uhuruphotos.userbadge.api.view.state.SyncState.BAD

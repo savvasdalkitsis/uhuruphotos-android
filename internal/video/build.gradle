@@ -10,7 +10,7 @@ android {
 
 dependencies {
 
-    implementation project(":auth")
+    implementation project(":api:auth")
     implementation project(':api:image')
     implementation project(':api:video')
     implementation project(":api:settings")

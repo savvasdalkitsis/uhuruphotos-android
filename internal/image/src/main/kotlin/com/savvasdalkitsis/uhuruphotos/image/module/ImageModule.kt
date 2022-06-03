@@ -23,14 +23,15 @@ import coil.decode.ImageDecoderDecoder
 import coil.decode.VideoFrameDecoder
 import coil.disk.DiskCache
 import coil.memory.MemoryCache
+import com.savvasdalkitsis.uhuruphotos.api.auth.AuthenticatedOkHttpClient
+import com.savvasdalkitsis.uhuruphotos.api.auth.TokenRefreshInterceptor
 import com.savvasdalkitsis.uhuruphotos.api.settings.usecase.SettingsUseCase
-import com.savvasdalkitsis.uhuruphotos.auth.module.AuthModule
-import com.savvasdalkitsis.uhuruphotos.auth.service.TokenRefreshInterceptor
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
+import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import javax.inject.Singleton
 
@@ -61,9 +62,10 @@ class ImageModule {
     @Singleton
     fun imageLoader(
         @ApplicationContext context: Context,
-        @AuthModule.AuthenticatedOkHttpClient
+        @AuthenticatedOkHttpClient
         okHttpBuilder: OkHttpClient.Builder,
-        tokenRefreshInterceptor: TokenRefreshInterceptor,
+        @TokenRefreshInterceptor
+        tokenRefreshInterceptor: Interceptor,
         memoryCache: MemoryCache,
         diskCache: DiskCache,
     ): ImageLoader = ImageLoader.Builder(context)

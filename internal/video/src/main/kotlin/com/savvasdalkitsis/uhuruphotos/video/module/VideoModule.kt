@@ -19,9 +19,9 @@ import android.content.Context
 import com.google.android.exoplayer2.ExoPlayer
 import com.google.android.exoplayer2.ext.okhttp.OkHttpDataSource
 import com.google.android.exoplayer2.source.DefaultMediaSourceFactory
+import com.savvasdalkitsis.uhuruphotos.api.auth.AuthenticatedOkHttpClient
+import com.savvasdalkitsis.uhuruphotos.api.auth.TokenRefreshInterceptor
 import com.savvasdalkitsis.uhuruphotos.api.settings.usecase.SettingsUseCase
-import com.savvasdalkitsis.uhuruphotos.auth.module.AuthModule
-import com.savvasdalkitsis.uhuruphotos.auth.service.TokenRefreshInterceptor
 import com.savvasdalkitsis.uhuruphotos.video.api.VideoCache
 import dagger.Module
 import dagger.Provides
@@ -29,6 +29,7 @@ import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import okhttp3.Cache
+import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import java.io.File
 import javax.inject.Singleton
@@ -51,8 +52,9 @@ class VideoModule {
     @Provides
     fun exoplayer(
         @ApplicationContext context: Context,
-        tokenRefreshInterceptor: TokenRefreshInterceptor,
-        @AuthModule.AuthenticatedOkHttpClient
+        @TokenRefreshInterceptor
+        tokenRefreshInterceptor: Interceptor,
+        @AuthenticatedOkHttpClient
         okHttpBuilder: OkHttpClient.Builder,
         @VideoCache
         cache: Cache,
