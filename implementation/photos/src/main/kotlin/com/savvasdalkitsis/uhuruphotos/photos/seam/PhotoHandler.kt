@@ -68,7 +68,7 @@ import com.savvasdalkitsis.uhuruphotos.photos.service.model.deserializePeopleNam
 import com.savvasdalkitsis.uhuruphotos.photos.usecase.PhotosUseCase
 import com.savvasdalkitsis.uhuruphotos.photos.view.state.PhotoState
 import com.savvasdalkitsis.uhuruphotos.photos.view.state.SinglePhotoState
-import com.savvasdalkitsis.uhuruphotos.search.api.SearchUseCase
+import com.savvasdalkitsis.uhuruphotos.api.search.SearchUseCase
 import com.savvasdalkitsis.uhuruphotos.strings.R
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.FlowCollector

@@ -24,7 +24,7 @@ import com.savvasdalkitsis.uhuruphotos.api.group.model.Group
 import com.savvasdalkitsis.uhuruphotos.api.photos.model.Photo
 import com.savvasdalkitsis.uhuruphotos.photos.service.model.isVideo
 import com.savvasdalkitsis.uhuruphotos.photos.usecase.PhotosUseCase
-import com.savvasdalkitsis.uhuruphotos.search.api.SearchUseCase
+import com.savvasdalkitsis.uhuruphotos.api.search.SearchUseCase
 import com.savvasdalkitsis.uhuruphotos.search.repository.SearchRepository
 import kotlinx.coroutines.currentCoroutineContext
 import kotlinx.coroutines.delay

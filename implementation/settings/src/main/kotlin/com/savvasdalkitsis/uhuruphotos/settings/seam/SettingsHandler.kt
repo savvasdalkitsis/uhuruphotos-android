@@ -21,7 +21,7 @@ import com.savvasdalkitsis.uhuruphotos.api.log.usecase.FeedbackUseCase
 import com.savvasdalkitsis.uhuruphotos.api.albums.worker.AlbumWorkScheduler
 import com.savvasdalkitsis.uhuruphotos.api.seam.ActionHandler
 import com.savvasdalkitsis.uhuruphotos.api.settings.usecase.SettingsUseCase
-import com.savvasdalkitsis.uhuruphotos.search.api.SearchUseCase
+import com.savvasdalkitsis.uhuruphotos.api.search.SearchUseCase
 import com.savvasdalkitsis.uhuruphotos.settings.seam.SettingsAction.AskForFullFeedSync
 import com.savvasdalkitsis.uhuruphotos.settings.seam.SettingsAction.ChangeFullSyncChargingRequirements
 import com.savvasdalkitsis.uhuruphotos.settings.seam.SettingsAction.ChangeFullSyncNetworkRequirements

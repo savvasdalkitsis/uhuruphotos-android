@@ -34,5 +34,5 @@ abstract class SearchBindingsModule {
 
     @Binds
     abstract fun searchUseCase(useCase: SearchUseCase):
-            com.savvasdalkitsis.uhuruphotos.search.api.SearchUseCase
+            com.savvasdalkitsis.uhuruphotos.api.search.SearchUseCase
 }
