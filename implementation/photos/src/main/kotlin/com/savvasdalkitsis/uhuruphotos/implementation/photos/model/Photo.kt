@@ -13,12 +13,13 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
  */
-package com.savvasdalkitsis.uhuruphotos.implementation.albums
+package com.savvasdalkitsis.uhuruphotos.implementation.photos.model
 
-import com.savvasdalkitsis.uhuruphotos.implementation.photos.TestPhotoSummaries.photoSummary
-import com.savvasdalkitsis.uhuruphotos.implementation.photos.TestPhotos.photoSummaryItem
+import com.savvasdalkitsis.uhuruphotos.api.db.photos.PhotoDetails
+import com.savvasdalkitsis.uhuruphotos.api.map.model.LatLon
 
-fun photoId(id: Int) = "photo$id"
-fun photo(id: Int) = photoSummary.copy(id = photoId(id))
-fun photo(id: Int, inAlbum: Int) = photoSummary.copy(id = photoId(id), containerId = albumId(inAlbum))
-fun photoSummaryItem(id: Int) = photoSummaryItem.copy(id = photoId(id))
+val PhotoDetails.latLng get() = gpsLat?.toDoubleOrNull()?.let { lat ->
+    gpsLon?.toDoubleOrNull()?.let { lon ->
+        LatLon(lat, lon)
+    }
+}

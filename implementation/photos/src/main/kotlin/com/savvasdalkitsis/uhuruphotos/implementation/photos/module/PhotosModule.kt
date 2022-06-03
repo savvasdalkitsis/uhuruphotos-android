@@ -13,12 +13,24 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
  */
-package com.savvasdalkitsis.uhuruphotos.implementation.albums
+package com.savvasdalkitsis.uhuruphotos.implementation.photos.module
 
-import com.savvasdalkitsis.uhuruphotos.implementation.photos.TestPhotoSummaries.photoSummary
-import com.savvasdalkitsis.uhuruphotos.implementation.photos.TestPhotos.photoSummaryItem
+import com.savvasdalkitsis.uhuruphotos.photos.service.PhotosService
+import dagger.Module
+import dagger.Provides
+import dagger.hilt.InstallIn
+import dagger.hilt.components.SingletonComponent
+import retrofit2.Retrofit
+import javax.inject.Singleton
 
-fun photoId(id: Int) = "photo$id"
-fun photo(id: Int) = photoSummary.copy(id = photoId(id))
-fun photo(id: Int, inAlbum: Int) = photoSummary.copy(id = photoId(id), containerId = albumId(inAlbum))
-fun photoSummaryItem(id: Int) = photoSummaryItem.copy(id = photoId(id))
+@InstallIn(SingletonComponent::class)
+@Module
+class PhotosModule {
+
+    @Provides
+    @Singleton
+    fun photosService(
+        retrofit: Retrofit,
+    ): PhotosService = retrofit.create(PhotosService::class.java)
+
+}

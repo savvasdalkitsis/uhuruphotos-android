@@ -13,12 +13,17 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
  */
-package com.savvasdalkitsis.uhuruphotos.implementation.albums
+package com.savvasdalkitsis.uhuruphotos.implementation.photos.view
 
-import com.savvasdalkitsis.uhuruphotos.implementation.photos.TestPhotoSummaries.photoSummary
-import com.savvasdalkitsis.uhuruphotos.implementation.photos.TestPhotos.photoSummaryItem
+import androidx.compose.runtime.Composable
+import com.savvasdalkitsis.uhuruphotos.photos.seam.PhotoAction
+import com.savvasdalkitsis.uhuruphotos.photos.view.state.PhotoState
 
-fun photoId(id: Int) = "photo$id"
-fun photo(id: Int) = photoSummary.copy(id = photoId(id))
-fun photo(id: Int, inAlbum: Int) = photoSummary.copy(id = photoId(id), containerId = albumId(inAlbum))
-fun photoSummaryItem(id: Int) = photoSummaryItem.copy(id = photoId(id))
+@Composable
+fun Photo(
+    state: PhotoState,
+    action: (PhotoAction) -> Unit,
+) {
+    PhotoBackPressHandler(state, action)
+    BottomSheetPhotoDetails(state, action)
+}

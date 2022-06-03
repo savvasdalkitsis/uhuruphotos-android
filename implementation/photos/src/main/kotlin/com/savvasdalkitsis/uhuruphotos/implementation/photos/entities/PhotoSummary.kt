@@ -13,12 +13,21 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
  */
-package com.savvasdalkitsis.uhuruphotos.implementation.albums
+package com.savvasdalkitsis.uhuruphotos.implementation.photos.entities
 
-import com.savvasdalkitsis.uhuruphotos.implementation.photos.TestPhotoSummaries.photoSummary
-import com.savvasdalkitsis.uhuruphotos.implementation.photos.TestPhotos.photoSummaryItem
+import com.savvasdalkitsis.uhuruphotos.api.db.photos.PhotoSummary
+import com.savvasdalkitsis.uhuruphotos.api.photos.model.PhotoSummaryItem
 
-fun photoId(id: Int) = "photo$id"
-fun photo(id: Int) = photoSummary.copy(id = photoId(id))
-fun photo(id: Int, inAlbum: Int) = photoSummary.copy(id = photoId(id), containerId = albumId(inAlbum))
-fun photoSummaryItem(id: Int) = photoSummaryItem.copy(id = photoId(id))
+fun PhotoSummaryItem.toPhotoSummary(albumId: String) = PhotoSummary(
+    id = id,
+    dominantColor = dominantColor,
+    url = url,
+    location = location,
+    date = date,
+    birthTime = birthTime,
+    aspectRatio = aspectRatio,
+    type = type,
+    videoLength = videoLength,
+    rating = rating,
+    containerId = albumId
+)
