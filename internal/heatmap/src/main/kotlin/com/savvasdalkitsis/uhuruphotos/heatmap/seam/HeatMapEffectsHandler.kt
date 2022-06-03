@@ -19,14 +19,14 @@ import com.savvasdalkitsis.uhuruphotos.api.seam.EffectHandler
 import com.savvasdalkitsis.uhuruphotos.heatmap.seam.HeatMapEffect.ErrorLoadingPhotoDetails
 import com.savvasdalkitsis.uhuruphotos.heatmap.seam.HeatMapEffect.NavigateBack
 import com.savvasdalkitsis.uhuruphotos.heatmap.seam.HeatMapEffect.NavigateToPhoto
-import com.savvasdalkitsis.uhuruphotos.navigation.ControllersProvider
+import com.savvasdalkitsis.uhuruphotos.navigation.Navigator
 import com.savvasdalkitsis.uhuruphotos.photos.navigation.PhotoNavigationTarget
 import com.savvasdalkitsis.uhuruphotos.strings.R
 import com.savvasdalkitsis.uhuruphotos.toaster.Toaster
 import javax.inject.Inject
 
 class HeatMapEffectsHandler @Inject constructor(
-    private val controllersProvider: ControllersProvider,
+    private val navigator: Navigator,
     private val toaster: Toaster,
 ): EffectHandler<HeatMapEffect> {
 
@@ -35,8 +35,8 @@ class HeatMapEffectsHandler @Inject constructor(
     ) {
         when (effect) {
             ErrorLoadingPhotoDetails -> toaster.show(R.string.error_loading_photo_details)
-            NavigateBack -> controllersProvider.navController!!.popBackStack()
-            is NavigateToPhoto -> controllersProvider.navController!!.navigate(with(effect) {
+            NavigateBack -> navigator.navigateBack()
+            is NavigateToPhoto -> navigator.navigateTo(with(effect) {
                 PhotoNavigationTarget.name(photo.id, center, scale, photo.isVideo)
             })
         }

@@ -21,6 +21,7 @@ import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavHostController
 import com.google.accompanist.swiperefresh.SwipeRefresh
 import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 import com.savvasdalkitsis.uhuruphotos.api.home.view.HomeScaffold
@@ -28,7 +29,6 @@ import com.savvasdalkitsis.uhuruphotos.feed.view.state.FeedDisplay
 import com.savvasdalkitsis.uhuruphotos.library.seam.LibraryAction
 import com.savvasdalkitsis.uhuruphotos.library.seam.LibraryAction.RefreshAutoAlbums
 import com.savvasdalkitsis.uhuruphotos.library.view.state.LibraryState
-import com.savvasdalkitsis.uhuruphotos.navigation.ControllersProvider
 import com.savvasdalkitsis.uhuruphotos.strings.R
 import com.savvasdalkitsis.uhuruphotos.ui.view.NoContent
 
@@ -37,12 +37,12 @@ fun Library(
     state: LibraryState,
     homeFeedDisplay: FeedDisplay,
     action: (LibraryAction) -> Unit,
-    controllersProvider: ControllersProvider,
+    navHostController: NavHostController,
 ) {
     HomeScaffold(
         modifier = Modifier,
         showLibrary = true,
-        navController = controllersProvider.navController!!,
+        navController = navHostController,
         userInformationState = null,
         homeFeedDisplay = homeFeedDisplay,
     ) { contentPadding ->

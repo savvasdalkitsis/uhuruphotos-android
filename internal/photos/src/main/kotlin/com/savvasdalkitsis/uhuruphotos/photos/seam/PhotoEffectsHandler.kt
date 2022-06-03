@@ -23,7 +23,7 @@ import android.net.Uri
 import com.savvasdalkitsis.uhuruphotos.api.seam.EffectHandler
 import com.savvasdalkitsis.uhuruphotos.api.share.usecase.ShareUseCase
 import com.savvasdalkitsis.uhuruphotos.map.model.LatLon
-import com.savvasdalkitsis.uhuruphotos.navigation.ControllersProvider
+import com.savvasdalkitsis.uhuruphotos.navigation.Navigator
 import com.savvasdalkitsis.uhuruphotos.person.api.navigation.PersonNavigationTarget
 import com.savvasdalkitsis.uhuruphotos.photos.seam.PhotoEffect.CopyToClipboard
 import com.savvasdalkitsis.uhuruphotos.photos.seam.PhotoEffect.ErrorRefreshingPeople
@@ -40,7 +40,7 @@ import dagger.hilt.android.qualifiers.ApplicationContext
 import javax.inject.Inject
 
 class PhotoEffectsHandler @Inject constructor(
-    private val controllersProvider: ControllersProvider,
+    private val navigator: Navigator,
     private val clipboardManager: ClipboardManager,
     private val shareUseCase: ShareUseCase,
     private val toaster: Toaster,
@@ -52,14 +52,14 @@ class PhotoEffectsHandler @Inject constructor(
         when (effect) {
             HideSystemBars -> setBars(false)
             ShowSystemBars -> setBars(true)
-            NavigateBack -> controllersProvider.navController!!.popBackStack()
-            is LaunchMap -> controllersProvider.intentLauncher.launch(geoLocation(effect.gps))
+            NavigateBack -> navigator.navigateBack()
+            is LaunchMap -> navigator.navigateTo(geoLocation(effect.gps))
             is CopyToClipboard -> {
                 clipboardManager.setPrimaryClip(ClipData.newPlainText("", effect.content))
                 toaster.show(R.string.copied_to_clipboard)
             }
             is SharePhoto -> shareUseCase.share(effect.url)
-            is NavigateToPerson -> controllersProvider.navController!!.navigate(
+            is NavigateToPerson -> navigator.navigateTo(
                 PersonNavigationTarget.name(effect.id)
             )
             ErrorRefreshingPeople -> toaster.show(R.string.error_refreshing_people)

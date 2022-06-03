@@ -20,7 +20,7 @@ import com.savvasdalkitsis.uhuruphotos.api.seam.EffectHandler
 import com.savvasdalkitsis.uhuruphotos.api.server.navigation.ServerNavigationTarget
 import com.savvasdalkitsis.uhuruphotos.api.settings.navigation.SettingsNavigationTarget
 import com.savvasdalkitsis.uhuruphotos.homenavigation.HomeNavigationRoutes
-import com.savvasdalkitsis.uhuruphotos.navigation.ControllersProvider
+import com.savvasdalkitsis.uhuruphotos.navigation.Navigator
 import com.savvasdalkitsis.uhuruphotos.people.api.navigation.PeopleNavigationTarget
 import com.savvasdalkitsis.uhuruphotos.person.api.navigation.PersonNavigationTarget
 import com.savvasdalkitsis.uhuruphotos.photos.model.PhotoSequenceDataSource.SearchResults
@@ -41,7 +41,7 @@ import com.savvasdalkitsis.uhuruphotos.ui.usecase.UiUseCase
 import javax.inject.Inject
 
 class SearchEffectsHandler @Inject constructor(
-    private val controllersProvider: ControllersProvider,
+    private val navigator: Navigator,
     private val uiUseCase: UiUseCase,
     private val toaster: Toaster,
 ) : EffectHandler<SearchEffect> {
@@ -51,9 +51,9 @@ class SearchEffectsHandler @Inject constructor(
     ) = when (effect) {
         HideKeyboard -> uiUseCase.hideKeyboard()
         ReloadApp -> {
-            with(controllersProvider.navController!!) {
-                backQueue.clear()
-                navigate(HomeNavigationRoutes.home)
+            with(navigator) {
+                clearBackStack()
+                navigateTo(HomeNavigationRoutes.home)
             }
         }
         NavigateToEditServer -> navigateTo(
@@ -73,6 +73,6 @@ class SearchEffectsHandler @Inject constructor(
     }
 
     private fun navigateTo(target: String) {
-        controllersProvider.navController!!.navigate(target)
+        navigator.navigateTo(target)
     }
 }

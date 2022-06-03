@@ -19,19 +19,19 @@ import com.savvasdalkitsis.uhuruphotos.api.autoalbum.navigation.AutoAlbumNavigat
 import com.savvasdalkitsis.uhuruphotos.api.seam.EffectHandler
 import com.savvasdalkitsis.uhuruphotos.library.seam.LibraryEffect.ErrorLoadingAutoAlbums
 import com.savvasdalkitsis.uhuruphotos.library.seam.LibraryEffect.NavigateToAutoAlbum
-import com.savvasdalkitsis.uhuruphotos.navigation.ControllersProvider
+import com.savvasdalkitsis.uhuruphotos.navigation.Navigator
 import com.savvasdalkitsis.uhuruphotos.strings.R
 import com.savvasdalkitsis.uhuruphotos.toaster.Toaster
 import javax.inject.Inject
 
 class LibraryEffectsHandler @Inject constructor(
-    private val controllersProvider: ControllersProvider,
+    private val navigator: Navigator,
     private val toaster: Toaster,
 ) : EffectHandler<LibraryEffect> {
 
     override suspend fun handleEffect(effect: LibraryEffect) = when (effect) {
         ErrorLoadingAutoAlbums -> toaster.show(R.string.error_loading_auto_albums)
-        is NavigateToAutoAlbum -> controllersProvider.navController!!
-            .navigate(AutoAlbumNavigationTarget.name(effect.album.id))
+        is NavigateToAutoAlbum -> navigator
+            .navigateTo(AutoAlbumNavigationTarget.name(effect.album.id))
     }
 }

@@ -17,7 +17,7 @@ package com.savvasdalkitsis.uhuruphotos.server.seam
 
 import com.savvasdalkitsis.api.log.usecase.FeedbackUseCase
 import com.savvasdalkitsis.uhuruphotos.api.seam.EffectHandler
-import com.savvasdalkitsis.uhuruphotos.navigation.ControllersProvider
+import com.savvasdalkitsis.uhuruphotos.navigation.Navigator
 import com.savvasdalkitsis.uhuruphotos.server.seam.ServerEffect.Close
 import com.savvasdalkitsis.uhuruphotos.server.seam.ServerEffect.ErrorLoggingIn
 import com.savvasdalkitsis.uhuruphotos.server.seam.ServerEffect.SendFeedback
@@ -26,14 +26,14 @@ import com.savvasdalkitsis.uhuruphotos.toaster.Toaster
 import javax.inject.Inject
 
 internal class ServerEffectsHandler @Inject constructor(
-    private val controllersProvider: ControllersProvider,
+    private val navigator: Navigator,
     private val toaster: Toaster,
     private val feedbackUseCase: FeedbackUseCase,
 ) : EffectHandler<ServerEffect> {
 
     override suspend fun handleEffect(effect: ServerEffect) {
         when (effect) {
-            Close -> controllersProvider.navController!!.popBackStack()
+            Close -> navigator.navigateBack()
             is ErrorLoggingIn -> toaster.show(R.string.error_logging_in)
             SendFeedback -> feedbackUseCase.sendFeedback()
         }

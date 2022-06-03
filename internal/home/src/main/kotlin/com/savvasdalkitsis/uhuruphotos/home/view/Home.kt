@@ -16,18 +16,18 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.home.view
 
 import androidx.compose.runtime.Composable
+import androidx.navigation.NavHostController
 import com.savvasdalkitsis.uhuruphotos.api.home.view.HomeScaffold
 import com.savvasdalkitsis.uhuruphotos.home.view.state.HomeState
-import com.savvasdalkitsis.uhuruphotos.navigation.ControllersProvider
 import com.savvasdalkitsis.uhuruphotos.ui.view.FullProgressBar
 
 @Composable
 internal fun Home(
     state: HomeState,
-    controllersProvider: ControllersProvider,
+    navHostController: NavHostController,
 ) {
     HomeScaffold(
-        navController = controllersProvider.navController!!,
+        navController = navHostController,
         showLibrary = state.showLibrary,
     ) {
         if (state.isLoading) {

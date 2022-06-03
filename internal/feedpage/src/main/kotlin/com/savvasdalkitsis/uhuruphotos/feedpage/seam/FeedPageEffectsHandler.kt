@@ -26,7 +26,7 @@ import com.savvasdalkitsis.uhuruphotos.feedpage.seam.FeedPageEffect.ReloadApp
 import com.savvasdalkitsis.uhuruphotos.feedpage.seam.FeedPageEffect.SharePhotos
 import com.savvasdalkitsis.uhuruphotos.feedpage.seam.FeedPageEffect.Vibrate
 import com.savvasdalkitsis.uhuruphotos.homenavigation.HomeNavigationRoutes
-import com.savvasdalkitsis.uhuruphotos.navigation.ControllersProvider
+import com.savvasdalkitsis.uhuruphotos.navigation.Navigator
 import com.savvasdalkitsis.uhuruphotos.photos.model.PhotoSequenceDataSource.AllPhotos
 import com.savvasdalkitsis.uhuruphotos.photos.navigation.PhotoNavigationTarget
 import com.savvasdalkitsis.uhuruphotos.strings.R
@@ -35,16 +35,16 @@ import com.savvasdalkitsis.uhuruphotos.ui.usecase.UiUseCase
 import javax.inject.Inject
 
 internal class FeedPageEffectsHandler @Inject constructor(
-    private val controllersProvider: ControllersProvider,
+    private val navigator: Navigator,
     private val shareUseCase: ShareUseCase,
     private val toaster: Toaster,
     private val uiUseCase: UiUseCase,
 ) : EffectHandler<FeedPageEffect> {
 
     override suspend fun handleEffect(effect: FeedPageEffect) = when (effect) {
-        ReloadApp -> with(controllersProvider.navController!!) {
-            backQueue.clear()
-            navigate(HomeNavigationRoutes.home)
+        ReloadApp -> with(navigator) {
+            clearBackStack()
+            navigateTo(HomeNavigationRoutes.home)
         }
         is OpenPhotoDetails -> with(effect) {
             navigateTo(PhotoNavigationTarget.name(id, center, scale, isVideo, AllPhotos))
@@ -63,6 +63,6 @@ internal class FeedPageEffectsHandler @Inject constructor(
     }
 
     private fun navigateTo(target: String) {
-        controllersProvider.navController!!.navigate(target)
+        navigator.navigateTo(target)
     }
 }

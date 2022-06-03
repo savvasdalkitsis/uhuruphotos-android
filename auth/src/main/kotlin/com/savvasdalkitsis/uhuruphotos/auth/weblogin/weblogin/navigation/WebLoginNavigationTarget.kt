@@ -19,6 +19,7 @@ import android.util.Base64
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavBackStackEntry
 import androidx.navigation.NavGraphBuilder
+import androidx.navigation.NavHostController
 import com.savvasdalkitsis.uhuruphotos.api.settings.usecase.SettingsUseCase
 import com.savvasdalkitsis.uhuruphotos.auth.weblogin.weblogin.seam.WebEffectsHandler
 import com.savvasdalkitsis.uhuruphotos.auth.weblogin.weblogin.seam.WebLoginAction
@@ -35,7 +36,7 @@ class WebLoginNavigationTarget @Inject constructor(
     private val settingsUseCase: SettingsUseCase,
 ) : NavigationTarget {
 
-    override suspend fun NavGraphBuilder.create() {
+    override suspend fun NavGraphBuilder.create(navHostController: NavHostController) {
         navigationTarget<WebLoginState, WebLoginEffect, WebLoginAction, WebLoginViewModel>(
             name = name,
             effects = effectsHandler,

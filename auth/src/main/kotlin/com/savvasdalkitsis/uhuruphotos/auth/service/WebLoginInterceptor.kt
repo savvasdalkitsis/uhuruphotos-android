@@ -18,7 +18,7 @@ package com.savvasdalkitsis.uhuruphotos.auth.service
 import android.webkit.CookieManager
 import com.savvasdalkitsis.uhuruphotos.auth.usecase.ServerUseCase
 import com.savvasdalkitsis.uhuruphotos.auth.weblogin.weblogin.navigation.WebLoginNavigationTarget
-import com.savvasdalkitsis.uhuruphotos.navigation.ControllersProvider
+import com.savvasdalkitsis.uhuruphotos.navigation.Navigator
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -27,7 +27,7 @@ import okhttp3.Response
 import javax.inject.Inject
 
 class WebLoginInterceptor @Inject constructor(
-    private val controllersProvider: ControllersProvider,
+    private val navigator: Navigator,
     private val serverUseCase: ServerUseCase,
     private val cookieManager: CookieManager,
 ) : Interceptor {
@@ -37,7 +37,7 @@ class WebLoginInterceptor @Inject constructor(
         if (response.code == 307) {
             CoroutineScope(Dispatchers.Main).launch {
                 cookieManager.setCookie(serverUseCase.getServerUrl(), "")
-                controllersProvider.navController?.navigate(
+                navigator.navigateTo(
                     WebLoginNavigationTarget.name(response.header("Location")!!)
                 )
             }

@@ -17,6 +17,7 @@ package com.savvasdalkitsis.uhuruphotos.autoalbum.navigation
 
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavGraphBuilder
+import androidx.navigation.NavHostController
 import com.savvasdalkitsis.uhuruphotos.api.autoalbum.navigation.AutoAlbumNavigationTarget
 import com.savvasdalkitsis.uhuruphotos.api.autoalbum.navigation.AutoAlbumNavigationTarget.albumId
 import com.savvasdalkitsis.uhuruphotos.api.settings.usecase.SettingsUseCase
@@ -36,7 +37,7 @@ internal class AutoAlbumNavigationTarget @Inject constructor(
     private val settingsUseCase: SettingsUseCase,
 ) : NavigationTarget {
 
-    override suspend fun NavGraphBuilder.create() =
+    override suspend fun NavGraphBuilder.create(navHostController: NavHostController) =
         navigationTarget<AutoAlbumState, AutoAlbumEffect, AutoAlbumAction, AutoAlbumViewModel>(
             name = AutoAlbumNavigationTarget.registrationName,
             effects = effectsHandler,

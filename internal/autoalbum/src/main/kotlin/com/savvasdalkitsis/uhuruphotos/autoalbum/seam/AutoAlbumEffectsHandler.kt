@@ -19,13 +19,13 @@ import com.savvasdalkitsis.uhuruphotos.api.seam.EffectHandler
 import com.savvasdalkitsis.uhuruphotos.autoalbum.seam.AutoAlbumEffect.NavigateBack
 import com.savvasdalkitsis.uhuruphotos.autoalbum.seam.AutoAlbumEffect.NavigateToPerson
 import com.savvasdalkitsis.uhuruphotos.autoalbum.seam.AutoAlbumEffect.OpenPhotoDetails
-import com.savvasdalkitsis.uhuruphotos.navigation.ControllersProvider
+import com.savvasdalkitsis.uhuruphotos.navigation.Navigator
 import com.savvasdalkitsis.uhuruphotos.person.api.navigation.PersonNavigationTarget
 import com.savvasdalkitsis.uhuruphotos.photos.navigation.PhotoNavigationTarget
 import javax.inject.Inject
 
 internal class AutoAlbumEffectsHandler @Inject constructor(
-    private val controllersProvider: ControllersProvider,
+    private val navigator: Navigator,
 ) : EffectHandler<AutoAlbumEffect> {
 
     override suspend fun handleEffect(effect: AutoAlbumEffect) {
@@ -38,7 +38,7 @@ internal class AutoAlbumEffectsHandler @Inject constructor(
                     effect.video,
                 )
             )
-            NavigateBack -> controllersProvider.navController!!.popBackStack()
+            NavigateBack -> navigator.navigateBack()
             is NavigateToPerson -> navigate(
                 PersonNavigationTarget.name(effect.personId)
             )
@@ -46,6 +46,6 @@ internal class AutoAlbumEffectsHandler @Inject constructor(
     }
 
     private fun navigate(name: String) {
-        controllersProvider.navController!!.navigate(name)
+        navigator.navigateTo(name)
     }
 }

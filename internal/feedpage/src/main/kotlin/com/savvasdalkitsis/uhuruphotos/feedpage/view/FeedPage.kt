@@ -19,6 +19,7 @@ import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
+import androidx.navigation.NavHostController
 import com.google.accompanist.swiperefresh.SwipeRefresh
 import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 import com.savvasdalkitsis.uhuruphotos.accountoverview.view.AccountOverviewPopUp
@@ -43,13 +44,12 @@ import com.savvasdalkitsis.uhuruphotos.feedpage.seam.FeedPageAction.SelectedPhot
 import com.savvasdalkitsis.uhuruphotos.feedpage.seam.FeedPageAction.SettingsClick
 import com.savvasdalkitsis.uhuruphotos.feedpage.seam.FeedPageAction.UserBadgePressed
 import com.savvasdalkitsis.uhuruphotos.feedpage.view.state.FeedPageState
-import com.savvasdalkitsis.uhuruphotos.navigation.ControllersProvider
 import com.savvasdalkitsis.uhuruphotos.photos.view.DeletePermissionDialog
 import kotlinx.coroutines.launch
 
 @Composable
 internal fun FeedPage(
-    controllersProvider: ControllersProvider,
+    navHostController: NavHostController,
     state: FeedPageState,
     action: (FeedPageAction) -> Unit,
 ) {
@@ -67,7 +67,7 @@ internal fun FeedPage(
         title = {
             FeedPageTitle(state, action, ::scrollToTop)
         },
-        navController = controllersProvider.navController!!,
+        navController = navHostController,
         userInformationState = state.userInformationState,
         showLibrary = state.showLibrary,
         homeFeedDisplay = state.feedState.feedDisplay,

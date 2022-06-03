@@ -17,6 +17,7 @@ package com.savvasdalkitsis.uhuruphotos.person.navigation
 
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavGraphBuilder
+import androidx.navigation.NavHostController
 import com.savvasdalkitsis.uhuruphotos.api.settings.usecase.SettingsUseCase
 import com.savvasdalkitsis.uhuruphotos.navigation.NavigationTarget
 import com.savvasdalkitsis.uhuruphotos.navigation.navigationTarget
@@ -36,7 +37,7 @@ class PersonNavigationTarget @Inject constructor(
     private val effectHandler: PersonEffectHandler,
 ) : NavigationTarget {
 
-    override suspend fun NavGraphBuilder.create() {
+    override suspend fun NavGraphBuilder.create(navHostController: NavHostController) {
         navigationTarget<PersonState, PersonEffect, PersonAction, PersonViewModel>(
             name = PersonNavigationTarget.registrationName,
             themeMode = settingsUseCase.observeThemeModeState(),

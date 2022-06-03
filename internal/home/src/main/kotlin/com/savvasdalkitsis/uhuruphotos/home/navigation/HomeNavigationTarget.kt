@@ -17,6 +17,7 @@ package com.savvasdalkitsis.uhuruphotos.home.navigation
 
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavGraphBuilder
+import androidx.navigation.NavHostController
 import com.savvasdalkitsis.uhuruphotos.api.settings.usecase.SettingsUseCase
 import com.savvasdalkitsis.uhuruphotos.home.seam.HomeAction
 import com.savvasdalkitsis.uhuruphotos.home.seam.HomeEffect
@@ -25,18 +26,16 @@ import com.savvasdalkitsis.uhuruphotos.home.view.Home
 import com.savvasdalkitsis.uhuruphotos.home.view.state.HomeState
 import com.savvasdalkitsis.uhuruphotos.home.viewmodel.HomeViewModel
 import com.savvasdalkitsis.uhuruphotos.homenavigation.HomeNavigationRoutes
-import com.savvasdalkitsis.uhuruphotos.navigation.ControllersProvider
 import com.savvasdalkitsis.uhuruphotos.navigation.NavigationTarget
 import com.savvasdalkitsis.uhuruphotos.navigation.navigationTarget
 import javax.inject.Inject
 
 internal class HomeNavigationTarget @Inject constructor(
     private val effectsHandler: HomeEffectsHandler,
-    private val controllersProvider: ControllersProvider,
     private val settingsUseCase: SettingsUseCase,
 ) : NavigationTarget {
 
-    override suspend fun NavGraphBuilder.create() =
+    override suspend fun NavGraphBuilder.create(navHostController: NavHostController) =
         navigationTarget<HomeState, HomeEffect, HomeAction, HomeViewModel>(
             name = HomeNavigationRoutes.home,
             effects = effectsHandler,
@@ -46,7 +45,7 @@ internal class HomeNavigationTarget @Inject constructor(
         ) { state, _ ->
             Home(
                 state,
-                controllersProvider
+                navHostController,
             )
         }
 }

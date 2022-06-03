@@ -17,6 +17,7 @@ package com.savvasdalkitsis.uhuruphotos.server.navigation
 
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavGraphBuilder
+import androidx.navigation.NavHostController
 import com.savvasdalkitsis.uhuruphotos.api.server.navigation.ServerNavigationTarget.auto
 import com.savvasdalkitsis.uhuruphotos.api.server.navigation.ServerNavigationTarget.registrationName
 import com.savvasdalkitsis.uhuruphotos.api.settings.usecase.SettingsUseCase
@@ -37,7 +38,7 @@ internal class ServerNavigationTarget @Inject constructor(
     private val settingsUseCase: SettingsUseCase,
 ) : NavigationTarget {
 
-    override suspend fun NavGraphBuilder.create() =
+    override suspend fun NavGraphBuilder.create(navHostController: NavHostController) =
         navigationTarget<ServerState, ServerEffect, ServerAction, ServerViewModel>(
             name = registrationName,
             effects = effectsHandler,

@@ -17,6 +17,7 @@ package com.savvasdalkitsis.uhuruphotos.heatmap.navigation
 
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavGraphBuilder
+import androidx.navigation.NavHostController
 import com.savvasdalkitsis.uhuruphotos.api.heatmap.navigation.HeatMapNavigationTarget
 import com.savvasdalkitsis.uhuruphotos.api.settings.usecase.SettingsUseCase
 import com.savvasdalkitsis.uhuruphotos.heatmap.seam.HeatMapAction
@@ -34,7 +35,7 @@ class HeatMapNavigationTarget @Inject constructor(
     private val effectsHandler: HeatMapEffectsHandler,
 ) : NavigationTarget {
 
-    override suspend fun NavGraphBuilder.create() =
+    override suspend fun NavGraphBuilder.create(navHostController: NavHostController) =
         navigationTarget<HeatMapState, HeatMapEffect, HeatMapAction, HeatMapViewModel>(
             name = HeatMapNavigationTarget.name,
             effects = effectsHandler,

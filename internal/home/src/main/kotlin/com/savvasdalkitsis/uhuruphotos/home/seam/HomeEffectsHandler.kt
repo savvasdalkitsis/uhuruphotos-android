@@ -20,20 +20,20 @@ import com.savvasdalkitsis.uhuruphotos.api.server.navigation.ServerNavigationTar
 import com.savvasdalkitsis.uhuruphotos.home.seam.HomeEffect.LaunchAuthentication
 import com.savvasdalkitsis.uhuruphotos.home.seam.HomeEffect.LoadFeed
 import com.savvasdalkitsis.uhuruphotos.homenavigation.HomeNavigationRoutes
-import com.savvasdalkitsis.uhuruphotos.navigation.ControllersProvider
+import com.savvasdalkitsis.uhuruphotos.navigation.Navigator
 import javax.inject.Inject
 
 internal class HomeEffectsHandler @Inject constructor(
-    private val controllersProvider: ControllersProvider,
+    private val navigator: Navigator,
 ) : EffectHandler<HomeEffect> {
 
     override suspend fun handleEffect(effect: HomeEffect) {
-        with(controllersProvider.navController!!) {
+        with(navigator) {
             when (effect) {
-                LaunchAuthentication -> navigate(ServerNavigationTarget.name())
+                LaunchAuthentication -> navigateTo(ServerNavigationTarget.name())
                 LoadFeed -> {
-                    popBackStack()
-                    navigate(HomeNavigationRoutes.feed)
+                    navigateBack()
+                    navigateTo(HomeNavigationRoutes.feed)
                 }
             }
         }

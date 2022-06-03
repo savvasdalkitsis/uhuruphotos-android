@@ -1,5 +1,5 @@
 dependencies {
-    implementation project(":navigation")
+    implementation project(":api:navigation")
     implementation project(':api:albums')
     implementation(
             libs.hilt,

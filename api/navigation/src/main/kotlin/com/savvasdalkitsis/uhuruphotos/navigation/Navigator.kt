@@ -15,14 +15,30 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.navigation
 
+import android.content.Intent
 import androidx.navigation.NavHostController
 import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class ControllersProvider @Inject constructor(
-    val intentLauncher: IntentLauncher,
+class Navigator @Inject internal constructor(
+    private val intentLauncher: IntentLauncher,
 ) {
+    lateinit var navController: NavHostController
 
-    var navController: NavHostController? = null
+    fun navigateTo(intent: Intent) {
+        intentLauncher.launch(intent)
+    }
+
+    fun navigateTo(route: String) {
+        navController.navigate(route)
+    }
+
+    fun navigateBack() {
+        navController.popBackStack()
+    }
+
+    fun clearBackStack() {
+        navController.backQueue.clear()
+    }
 }

@@ -16,16 +16,16 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.auth.weblogin.weblogin.seam
 
 import com.savvasdalkitsis.uhuruphotos.api.seam.EffectHandler
-import com.savvasdalkitsis.uhuruphotos.navigation.ControllersProvider
+import com.savvasdalkitsis.uhuruphotos.navigation.Navigator
 import javax.inject.Inject
 
 class WebEffectsHandler @Inject constructor(
-    private val controllersProvider: ControllersProvider,
+    private val navigator: Navigator,
 ): EffectHandler<WebLoginEffect> {
 
     override suspend fun handleEffect(effect: WebLoginEffect) {
         when (effect) {
-            WebLoginEffect.Close -> controllersProvider.navController!!.popBackStack()
+            WebLoginEffect.Close -> navigator.navigateBack()
         }
     }
 }

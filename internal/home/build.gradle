@@ -12,7 +12,7 @@ dependencies {
 
     implementation project(":api:home")
     implementation project(":api:ui")
-    implementation project(":navigation")
+    implementation project(":api:navigation")
     implementation project(":api:server")
     implementation project(":auth")
     implementation project(":api:settings")

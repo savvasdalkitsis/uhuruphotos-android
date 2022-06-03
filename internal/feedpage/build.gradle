@@ -23,7 +23,7 @@ dependencies {
     implementation project(":api:account")
     implementation project(":api:accountoverview")
     implementation project(':api:seam')
-    implementation project(":navigation")
+    implementation project(":api:navigation")
     implementation project(":api:share")
     implementation project(":api:server")
     implementation project(":api:toaster")

@@ -19,7 +19,7 @@ dependencies {
     implementation project(":internal:photos")
     implementation project(':api:people')
     implementation project(':api:coroutines')
-    implementation project(":navigation")
+    implementation project(":api:navigation")
     implementation project(":api:settings")
     implementation project(":api:strings")
     implementation project(':api:person')

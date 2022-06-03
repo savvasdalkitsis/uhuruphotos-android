@@ -1,7 +1,7 @@
 dependencies {
 
     implementation project(":api:share")
-    implementation project(":navigation")
+    implementation project(":api:navigation")
     implementation project(":api:settings")
     implementation(
             libs.coil.base,

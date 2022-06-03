@@ -24,7 +24,7 @@ import coil.disk.DiskCache
 import coil.request.ImageRequest
 import com.savvasdalkitsis.uhuruphotos.api.settings.usecase.SettingsUseCase
 import com.savvasdalkitsis.uhuruphotos.api.share.usecase.ShareUseCase
-import com.savvasdalkitsis.uhuruphotos.navigation.IntentLauncher
+import com.savvasdalkitsis.uhuruphotos.navigation.Navigator
 import com.savvasdalkitsis.uhuruphotos.share.removeGpsData
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.Dispatchers
@@ -35,7 +35,7 @@ import javax.inject.Inject
 
 internal class ShareUseCase @Inject constructor(
     private val diskCache: DiskCache,
-    private val launcher: IntentLauncher,
+    private val navigator: Navigator,
     private val imageLoader: ImageLoader,
     private val settingsUseCase: SettingsUseCase,
     @ApplicationContext private val context: Context,
@@ -84,7 +84,7 @@ internal class ShareUseCase @Inject constructor(
     }
 
     private fun launch(intent: Intent) {
-        launcher.launch(
+        navigator.navigateTo(
             Intent.createChooser(intent, "Share Via").apply {
                 addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
             }

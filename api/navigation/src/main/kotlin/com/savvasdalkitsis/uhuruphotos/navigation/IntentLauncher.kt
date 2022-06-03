@@ -24,7 +24,7 @@ import com.savvasdalkitsis.uhuruphotos.toaster.Toaster
 import dagger.hilt.android.qualifiers.ApplicationContext
 import javax.inject.Inject
 
-class IntentLauncher @Inject constructor(
+internal class IntentLauncher @Inject constructor(
     @ApplicationContext private val context: Context,
     private val toaster: Toaster,
 ) {

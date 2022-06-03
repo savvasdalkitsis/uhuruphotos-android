@@ -28,6 +28,7 @@ import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.lifecycle.ViewModel
 import androidx.navigation.NavBackStackEntry
 import androidx.navigation.NavGraphBuilder
+import androidx.navigation.NavHostController
 import com.google.accompanist.navigation.animation.composable
 import com.savvasdalkitsis.uhuruphotos.api.seam.EffectHandler
 import com.savvasdalkitsis.uhuruphotos.api.seam.Seam
@@ -86,5 +87,5 @@ fun <S : Any, E : Any, A : Any, VM> NavGraphBuilder.navigationTarget(
 }
 
 interface NavigationTarget {
-    suspend fun NavGraphBuilder.create()
+    suspend fun NavGraphBuilder.create(navHostController: NavHostController)
 }

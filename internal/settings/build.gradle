@@ -10,7 +10,7 @@ android {
 
 dependencies {
 
-    implementation project(":navigation")
+    implementation project(":api:navigation")
     implementation project(":api:ui")
     implementation project(":api:initializer")
     implementation project(":api:toaster")

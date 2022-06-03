@@ -27,6 +27,7 @@ import androidx.compose.ui.unit.IntSize
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavBackStackEntry
 import androidx.navigation.NavGraphBuilder
+import androidx.navigation.NavHostController
 import com.savvasdalkitsis.uhuruphotos.navigation.NavigationTarget
 import com.savvasdalkitsis.uhuruphotos.navigation.navigationTarget
 import com.savvasdalkitsis.uhuruphotos.photos.model.PhotoSequenceDataSource
@@ -46,7 +47,7 @@ class PhotoNavigationTarget @Inject constructor(
     private val effectsHandler: PhotoEffectsHandler,
 ) : NavigationTarget {
 
-    override suspend fun NavGraphBuilder.create() {
+    override suspend fun NavGraphBuilder.create(navHostController: NavHostController) {
         navigationTarget<PhotoState, PhotoEffect, PhotoAction, PhotoViewModel>(
             name = name,
             effects = effectsHandler,

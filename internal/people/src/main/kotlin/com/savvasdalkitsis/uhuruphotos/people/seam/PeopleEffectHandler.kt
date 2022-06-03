@@ -16,7 +16,7 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.people.seam
 
 import com.savvasdalkitsis.uhuruphotos.api.seam.EffectHandler
-import com.savvasdalkitsis.uhuruphotos.navigation.ControllersProvider
+import com.savvasdalkitsis.uhuruphotos.navigation.Navigator
 import com.savvasdalkitsis.uhuruphotos.people.seam.PeopleEffect.ErrorLoadingPeople
 import com.savvasdalkitsis.uhuruphotos.people.seam.PeopleEffect.NavigateBack
 import com.savvasdalkitsis.uhuruphotos.people.seam.PeopleEffect.NavigateToPerson
@@ -26,15 +26,15 @@ import com.savvasdalkitsis.uhuruphotos.toaster.Toaster
 import javax.inject.Inject
 
 class PeopleEffectHandler @Inject constructor(
-    private val controllersProvider: ControllersProvider,
+    private val navigator: Navigator,
     private val toaster: Toaster,
 ) : EffectHandler<PeopleEffect> {
 
     override suspend fun handleEffect(effect: PeopleEffect) {
         when (effect) {
             ErrorLoadingPeople -> toaster.show(R.string.error_refreshing_people)
-            NavigateBack -> controllersProvider.navController!!.popBackStack()
-            is NavigateToPerson -> controllersProvider.navController!!.navigate(
+            NavigateBack -> navigator.navigateBack()
+            is NavigateToPerson -> navigator.navigateTo(
                 PersonNavigationTarget.name(effect.person.id)
             )
         }

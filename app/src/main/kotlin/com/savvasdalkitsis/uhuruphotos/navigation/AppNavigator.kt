@@ -28,16 +28,14 @@ import javax.inject.Inject
 
 class AppNavigator @Inject constructor(
     private val navigationTargets: Set<@JvmSuppressWildcards NavigationTarget>,
-    private val controllersProvider: ControllersProvider,
+    private val navigator: Navigator,
     private val uiUseCase: UiUseCase,
 ) {
 
     @Composable
     fun NavigationTargets() {
         val navHostController = rememberAnimatedNavController()
-        with(controllersProvider) {
-            navController = navHostController
-        }
+        navigator.navController = navHostController
         with(uiUseCase) {
             keyboardController = LocalSoftwareKeyboardController.current!!
             systemUiController = LocalSystemUiController.current
@@ -49,7 +47,7 @@ class AppNavigator @Inject constructor(
         ) {
             runBlocking {
                 navigationTargets.forEach { navigationTarget ->
-                    with(navigationTarget) { create() }
+                    with(navigationTarget) { create(navHostController) }
                 }
             }
         }

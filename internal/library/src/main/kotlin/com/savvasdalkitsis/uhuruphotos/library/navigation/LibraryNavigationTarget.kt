@@ -17,6 +17,7 @@ package com.savvasdalkitsis.uhuruphotos.library.navigation
 
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavGraphBuilder
+import androidx.navigation.NavHostController
 import com.savvasdalkitsis.uhuruphotos.api.settings.usecase.SettingsUseCase
 import com.savvasdalkitsis.uhuruphotos.feed.view.state.FeedDisplays
 import com.savvasdalkitsis.uhuruphotos.homenavigation.HomeNavigationRoutes
@@ -26,7 +27,6 @@ import com.savvasdalkitsis.uhuruphotos.library.seam.LibraryEffectsHandler
 import com.savvasdalkitsis.uhuruphotos.library.view.Library
 import com.savvasdalkitsis.uhuruphotos.library.view.state.LibraryState
 import com.savvasdalkitsis.uhuruphotos.library.viewmodel.LibraryViewModel
-import com.savvasdalkitsis.uhuruphotos.navigation.ControllersProvider
 import com.savvasdalkitsis.uhuruphotos.navigation.NavigationTarget
 import com.savvasdalkitsis.uhuruphotos.navigation.navigationTarget
 import javax.inject.Inject
@@ -34,10 +34,9 @@ import javax.inject.Inject
 class LibraryNavigationTarget @Inject constructor(
     private val settingsUseCase: SettingsUseCase,
     private val libraryEffectsHandler: LibraryEffectsHandler,
-    private val controllersProvider: ControllersProvider,
 ) : NavigationTarget {
 
-    override suspend fun NavGraphBuilder.create() {
+    override suspend fun NavGraphBuilder.create(navHostController: NavHostController) {
         navigationTarget<LibraryState, LibraryEffect, LibraryAction, LibraryViewModel>(
             name = HomeNavigationRoutes.library,
             effects = libraryEffectsHandler,
@@ -49,7 +48,7 @@ class LibraryNavigationTarget @Inject constructor(
                 state = state,
                 homeFeedDisplay = FeedDisplays.default,
                 action = actions,
-                controllersProvider = controllersProvider,
+                navHostController = navHostController,
             )
         }
     }

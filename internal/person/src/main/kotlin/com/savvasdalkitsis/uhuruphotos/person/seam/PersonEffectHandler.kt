@@ -16,7 +16,7 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.person.seam
 
 import com.savvasdalkitsis.uhuruphotos.api.seam.EffectHandler
-import com.savvasdalkitsis.uhuruphotos.navigation.ControllersProvider
+import com.savvasdalkitsis.uhuruphotos.navigation.Navigator
 import com.savvasdalkitsis.uhuruphotos.person.seam.PersonEffect.NavigateBack
 import com.savvasdalkitsis.uhuruphotos.person.seam.PersonEffect.OpenPhotoDetails
 import com.savvasdalkitsis.uhuruphotos.photos.model.PhotoSequenceDataSource.PersonResults
@@ -24,13 +24,13 @@ import com.savvasdalkitsis.uhuruphotos.photos.navigation.PhotoNavigationTarget
 import javax.inject.Inject
 
 class PersonEffectHandler @Inject constructor(
-    private val controllersProvider: ControllersProvider,
+    private val navigator: Navigator,
 ) : EffectHandler<PersonEffect> {
 
     override suspend fun handleEffect(effect: PersonEffect) {
         when (effect) {
-            NavigateBack -> controllersProvider.navController!!.popBackStack()
-            is OpenPhotoDetails -> controllersProvider.navController!!.navigate(with(effect) {
+            NavigateBack -> navigator.navigateBack()
+            is OpenPhotoDetails -> navigator.navigateTo(with(effect) {
                 PhotoNavigationTarget.name(id, center, scale, video, PersonResults(person.id))
             })
         }

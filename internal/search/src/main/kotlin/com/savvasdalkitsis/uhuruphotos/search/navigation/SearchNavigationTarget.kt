@@ -17,9 +17,9 @@ package com.savvasdalkitsis.uhuruphotos.search.navigation
 
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavGraphBuilder
+import androidx.navigation.NavHostController
 import com.savvasdalkitsis.uhuruphotos.api.settings.usecase.SettingsUseCase
 import com.savvasdalkitsis.uhuruphotos.homenavigation.HomeNavigationRoutes
-import com.savvasdalkitsis.uhuruphotos.navigation.ControllersProvider
 import com.savvasdalkitsis.uhuruphotos.navigation.NavigationTarget
 import com.savvasdalkitsis.uhuruphotos.navigation.navigationTarget
 import com.savvasdalkitsis.uhuruphotos.search.seam.SearchAction
@@ -32,11 +32,10 @@ import javax.inject.Inject
 
 class SearchNavigationTarget @Inject constructor(
     private val effectsHandler: SearchEffectsHandler,
-    private val controllersProvider: ControllersProvider,
     private val settingsUseCase: SettingsUseCase,
 ) : NavigationTarget {
 
-    override suspend fun NavGraphBuilder.create() {
+    override suspend fun NavGraphBuilder.create(navHostController: NavHostController) {
         navigationTarget<SearchState, SearchEffect, SearchAction, SearchViewModel>(
             name = HomeNavigationRoutes.search,
             effects = effectsHandler,
@@ -47,7 +46,7 @@ class SearchNavigationTarget @Inject constructor(
             SearchPage(
                 state,
                 actions,
-                controllersProvider
+                navHostController,
             )
         }
     }
