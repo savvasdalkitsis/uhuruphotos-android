@@ -29,5 +29,5 @@ abstract class UiBindingsModule {
     @Binds
     @Singleton
     abstract fun uiUseCase(uiUseCase: UiUseCase):
-            com.savvasdalkitsis.uhuruphotos.ui.usecase.UiUseCase
+            com.savvasdalkitsis.uhuruphotos.api.ui.usecase.UiUseCase
 }

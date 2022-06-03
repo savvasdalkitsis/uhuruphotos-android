@@ -25,7 +25,7 @@ import com.google.android.gms.maps.model.MapStyleOptions
 import com.google.maps.android.compose.GoogleMap
 import com.google.maps.android.compose.MapProperties
 import com.google.maps.android.compose.MapUiSettings
-import com.savvasdalkitsis.uhuruphotos.map.R
+import com.savvasdalkitsis.uhuruphotos.api.map.R
 import com.savvasdalkitsis.uhuruphotos.api.map.model.LatLon
 import com.savvasdalkitsis.uhuruphotos.api.map.model.MapOptions
 
