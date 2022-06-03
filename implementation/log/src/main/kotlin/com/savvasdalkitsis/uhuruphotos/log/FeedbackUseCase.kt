@@ -19,7 +19,7 @@ import android.content.Context
 import com.michaelflisar.lumberjack.FileLoggingSetup
 import com.michaelflisar.lumberjack.L
 import com.michaelflisar.lumberjack.sendFeedback
-import com.savvasdalkitsis.api.log.usecase.FeedbackUseCase
+import com.savvasdalkitsis.uhuruphotos.api.log.usecase.FeedbackUseCase
 import dagger.hilt.android.qualifiers.ApplicationContext
 import javax.inject.Inject
 

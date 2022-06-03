@@ -34,5 +34,5 @@ internal abstract class LogBindingsModule {
 
     @Binds
     abstract fun feedbackUseCase(feedbackUseCase: FeedbackUseCase):
-            com.savvasdalkitsis.api.log.usecase.FeedbackUseCase
+            com.savvasdalkitsis.uhuruphotos.api.log.usecase.FeedbackUseCase
 }
