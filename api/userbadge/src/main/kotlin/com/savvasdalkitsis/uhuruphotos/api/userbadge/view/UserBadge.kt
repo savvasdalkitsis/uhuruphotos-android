@@ -13,7 +13,7 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
  */
-package com.savvasdalkitsis.uhuruphotos.userbadge.api.view
+package com.savvasdalkitsis.uhuruphotos.api.userbadge.view
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -36,10 +36,10 @@ import androidx.compose.ui.unit.dp
 import com.savvasdalkitsis.uhuruphotos.api.icons.R
 import com.savvasdalkitsis.uhuruphotos.api.image.view.Image
 import com.savvasdalkitsis.uhuruphotos.api.ui.theme.CustomColors
-import com.savvasdalkitsis.uhuruphotos.userbadge.api.view.state.SyncState.BAD
-import com.savvasdalkitsis.uhuruphotos.userbadge.api.view.state.SyncState.GOOD
-import com.savvasdalkitsis.uhuruphotos.userbadge.api.view.state.SyncState.IN_PROGRESS
-import com.savvasdalkitsis.uhuruphotos.userbadge.api.view.state.UserInformationState
+import com.savvasdalkitsis.uhuruphotos.api.userbadge.view.state.SyncState.BAD
+import com.savvasdalkitsis.uhuruphotos.api.userbadge.view.state.SyncState.GOOD
+import com.savvasdalkitsis.uhuruphotos.api.userbadge.view.state.SyncState.IN_PROGRESS
+import com.savvasdalkitsis.uhuruphotos.api.userbadge.view.state.UserInformationState
 
 @Composable
 fun UserBadge(

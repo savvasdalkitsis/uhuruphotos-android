@@ -20,7 +20,7 @@ import com.savvasdalkitsis.uhuruphotos.api.seam.Mutation
 import com.savvasdalkitsis.uhuruphotos.api.feed.view.state.FeedDisplays
 import com.savvasdalkitsis.uhuruphotos.api.feed.view.state.FeedState
 import com.savvasdalkitsis.uhuruphotos.feedpage.view.state.FeedPageState
-import com.savvasdalkitsis.uhuruphotos.userbadge.api.view.state.UserInformationState
+import com.savvasdalkitsis.uhuruphotos.api.userbadge.view.state.UserInformationState
 
 internal sealed class FeedPageMutation(
     mutation: Mutation<FeedPageState>,

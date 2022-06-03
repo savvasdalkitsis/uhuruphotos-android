@@ -41,8 +41,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.savvasdalkitsis.uhuruphotos.api.icons.R
 import com.savvasdalkitsis.uhuruphotos.api.ui.view.ActionIcon
-import com.savvasdalkitsis.uhuruphotos.userbadge.api.view.UserBadge
-import com.savvasdalkitsis.uhuruphotos.userbadge.api.view.state.UserInformationState
+import com.savvasdalkitsis.uhuruphotos.api.userbadge.view.UserBadge
+import com.savvasdalkitsis.uhuruphotos.api.userbadge.view.state.UserInformationState
 
 @Composable
 internal fun AccountOverview(

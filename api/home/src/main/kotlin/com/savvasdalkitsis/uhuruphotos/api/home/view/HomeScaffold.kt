@@ -30,8 +30,8 @@ import com.savvasdalkitsis.uhuruphotos.api.feed.view.state.FeedDisplay
 import com.savvasdalkitsis.uhuruphotos.api.feed.view.state.FeedDisplays
 import com.savvasdalkitsis.uhuruphotos.api.ui.view.CommonScaffold
 import com.savvasdalkitsis.uhuruphotos.api.ui.view.Logo
-import com.savvasdalkitsis.uhuruphotos.userbadge.api.view.UserBadge
-import com.savvasdalkitsis.uhuruphotos.userbadge.api.view.state.UserInformationState
+import com.savvasdalkitsis.uhuruphotos.api.userbadge.view.UserBadge
+import com.savvasdalkitsis.uhuruphotos.api.userbadge.view.state.UserInformationState
 
 @Composable
 fun HomeScaffold(

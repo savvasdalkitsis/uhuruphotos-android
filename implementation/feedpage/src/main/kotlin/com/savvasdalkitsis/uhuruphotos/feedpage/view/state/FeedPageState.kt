@@ -18,7 +18,7 @@ package com.savvasdalkitsis.uhuruphotos.feedpage.view.state
 import com.savvasdalkitsis.uhuruphotos.api.feed.view.state.FeedState
 import com.savvasdalkitsis.uhuruphotos.api.photos.model.Photo
 import com.savvasdalkitsis.uhuruphotos.api.photos.model.SelectionMode
-import com.savvasdalkitsis.uhuruphotos.userbadge.api.view.state.UserInformationState
+import com.savvasdalkitsis.uhuruphotos.api.userbadge.view.state.UserInformationState
 
 internal data class FeedPageState(
     val feedState: FeedState = FeedState(),

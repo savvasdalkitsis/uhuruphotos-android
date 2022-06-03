@@ -65,8 +65,8 @@ import com.savvasdalkitsis.uhuruphotos.api.photos.model.SelectionMode.SELECTED
 import com.savvasdalkitsis.uhuruphotos.api.photos.model.SelectionMode.UNDEFINED
 import com.savvasdalkitsis.uhuruphotos.api.photos.model.SelectionMode.UNSELECTED
 import com.savvasdalkitsis.uhuruphotos.photos.usecase.PhotosUseCase
-import com.savvasdalkitsis.uhuruphotos.userbadge.api.UserBadgeUseCase
-import com.savvasdalkitsis.uhuruphotos.userbadge.api.view.state.SyncState.IN_PROGRESS
+import com.savvasdalkitsis.uhuruphotos.api.userbadge.usecase.UserBadgeUseCase
+import com.savvasdalkitsis.uhuruphotos.api.userbadge.view.state.SyncState.IN_PROGRESS
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.combine

@@ -26,11 +26,11 @@ import com.savvasdalkitsis.uhuruphotos.api.albums.worker.AlbumWorkScheduler
 import com.savvasdalkitsis.uhuruphotos.api.user.usecase.UserUseCase
 import com.savvasdalkitsis.uhuruphotos.api.auth.usecase.ServerUseCase
 import com.savvasdalkitsis.uhuruphotos.photos.usecase.PhotosUseCase
-import com.savvasdalkitsis.uhuruphotos.userbadge.api.UserBadgeUseCase
-import com.savvasdalkitsis.uhuruphotos.userbadge.api.view.state.SyncState.BAD
-import com.savvasdalkitsis.uhuruphotos.userbadge.api.view.state.SyncState.GOOD
-import com.savvasdalkitsis.uhuruphotos.userbadge.api.view.state.SyncState.IN_PROGRESS
-import com.savvasdalkitsis.uhuruphotos.userbadge.api.view.state.UserInformationState
+import com.savvasdalkitsis.uhuruphotos.api.userbadge.usecase.UserBadgeUseCase
+import com.savvasdalkitsis.uhuruphotos.api.userbadge.view.state.SyncState.BAD
+import com.savvasdalkitsis.uhuruphotos.api.userbadge.view.state.SyncState.GOOD
+import com.savvasdalkitsis.uhuruphotos.api.userbadge.view.state.SyncState.IN_PROGRESS
+import com.savvasdalkitsis.uhuruphotos.api.userbadge.view.state.UserInformationState
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.combine
 import javax.inject.Inject

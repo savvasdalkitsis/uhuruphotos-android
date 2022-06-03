@@ -66,7 +66,7 @@ import com.savvasdalkitsis.uhuruphotos.settings.seam.SettingsMutation.UserBadgeU
 import com.savvasdalkitsis.uhuruphotos.settings.usecase.CacheUseCase
 import com.savvasdalkitsis.uhuruphotos.settings.view.state.SettingsState
 import com.savvasdalkitsis.uhuruphotos.api.strings.R
-import com.savvasdalkitsis.uhuruphotos.userbadge.api.UserBadgeUseCase
+import com.savvasdalkitsis.uhuruphotos.api.userbadge.usecase.UserBadgeUseCase
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flatMapMerge
 import kotlinx.coroutines.flow.flow

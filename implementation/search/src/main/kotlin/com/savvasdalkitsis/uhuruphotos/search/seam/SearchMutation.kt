@@ -21,7 +21,7 @@ import com.savvasdalkitsis.uhuruphotos.api.people.view.state.Person
 import com.savvasdalkitsis.uhuruphotos.search.view.state.SearchResults
 import com.savvasdalkitsis.uhuruphotos.search.view.state.SearchState
 import com.savvasdalkitsis.uhuruphotos.search.view.state.SearchSuggestion
-import com.savvasdalkitsis.uhuruphotos.userbadge.api.view.state.UserInformationState
+import com.savvasdalkitsis.uhuruphotos.api.userbadge.view.state.UserInformationState
 
 sealed class SearchMutation(
     mutation: Mutation<SearchState>,

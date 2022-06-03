@@ -27,5 +27,5 @@ abstract class UserBadgeBindingsModule {
 
     @Binds
     abstract fun userBadgeUseCase(userBadgeUseCase: UserBadgeUseCase):
-            com.savvasdalkitsis.uhuruphotos.userbadge.api.UserBadgeUseCase
+            com.savvasdalkitsis.uhuruphotos.api.userbadge.usecase.UserBadgeUseCase
 }

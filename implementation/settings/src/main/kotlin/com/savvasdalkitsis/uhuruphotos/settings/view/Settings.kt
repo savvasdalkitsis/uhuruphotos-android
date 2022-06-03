@@ -33,7 +33,7 @@ import com.savvasdalkitsis.uhuruphotos.api.ui.view.CommonScaffold
 import com.savvasdalkitsis.uhuruphotos.api.ui.view.FullProgressBar
 import com.savvasdalkitsis.uhuruphotos.api.ui.view.StaggeredGrid
 import com.savvasdalkitsis.uhuruphotos.api.ui.window.LocalWindowSize
-import com.savvasdalkitsis.uhuruphotos.userbadge.api.view.UserBadge
+import com.savvasdalkitsis.uhuruphotos.api.userbadge.view.UserBadge
 import com.savvasdalkitsis.uhuruphotos.api.icons.R as Icons
 
 @Composable
