@@ -25,7 +25,7 @@ import com.savvasdalkitsis.uhuruphotos.home.seam.HomeEffectsHandler
 import com.savvasdalkitsis.uhuruphotos.home.view.Home
 import com.savvasdalkitsis.uhuruphotos.home.view.state.HomeState
 import com.savvasdalkitsis.uhuruphotos.home.viewmodel.HomeViewModel
-import com.savvasdalkitsis.uhuruphotos.homenavigation.HomeNavigationRoutes
+import com.savvasdalkitsis.uhuruphotos.api.homenavigation.HomeNavigationRoutes
 import com.savvasdalkitsis.uhuruphotos.navigation.NavigationTarget
 import com.savvasdalkitsis.uhuruphotos.navigation.navigationTarget
 import javax.inject.Inject

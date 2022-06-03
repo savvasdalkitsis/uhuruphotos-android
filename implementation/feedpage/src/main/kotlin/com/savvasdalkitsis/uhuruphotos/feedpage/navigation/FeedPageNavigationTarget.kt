@@ -25,7 +25,7 @@ import com.savvasdalkitsis.uhuruphotos.feedpage.seam.FeedPageEffectsHandler
 import com.savvasdalkitsis.uhuruphotos.feedpage.view.FeedPage
 import com.savvasdalkitsis.uhuruphotos.feedpage.view.state.FeedPageState
 import com.savvasdalkitsis.uhuruphotos.feedpage.viewmodel.FeedPageViewModel
-import com.savvasdalkitsis.uhuruphotos.homenavigation.HomeNavigationRoutes
+import com.savvasdalkitsis.uhuruphotos.api.homenavigation.HomeNavigationRoutes
 import com.savvasdalkitsis.uhuruphotos.navigation.NavigationTarget
 import com.savvasdalkitsis.uhuruphotos.navigation.navigationTarget
 import javax.inject.Inject

@@ -20,7 +20,7 @@ import androidx.compose.ui.platform.LocalHapticFeedback
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import com.google.accompanist.navigation.animation.AnimatedNavHost
 import com.google.accompanist.navigation.animation.rememberAnimatedNavController
-import com.savvasdalkitsis.uhuruphotos.homenavigation.HomeNavigationRoutes
+import com.savvasdalkitsis.uhuruphotos.api.homenavigation.HomeNavigationRoutes
 import com.savvasdalkitsis.uhuruphotos.internal.ui.usecase.UiUseCase
 import com.savvasdalkitsis.uhuruphotos.ui.window.LocalSystemUiController
 import kotlinx.coroutines.runBlocking
