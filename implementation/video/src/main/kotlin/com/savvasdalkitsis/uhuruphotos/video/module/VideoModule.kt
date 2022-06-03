@@ -22,7 +22,7 @@ import com.google.android.exoplayer2.source.DefaultMediaSourceFactory
 import com.savvasdalkitsis.uhuruphotos.api.auth.AuthenticatedOkHttpClient
 import com.savvasdalkitsis.uhuruphotos.api.auth.TokenRefreshInterceptor
 import com.savvasdalkitsis.uhuruphotos.api.settings.usecase.SettingsUseCase
-import com.savvasdalkitsis.uhuruphotos.video.api.VideoCache
+import com.savvasdalkitsis.uhuruphotos.api.video.VideoCache
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

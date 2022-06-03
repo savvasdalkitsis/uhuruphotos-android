@@ -17,7 +17,7 @@ package com.savvasdalkitsis.uhuruphotos.settings.usecase
 
 import coil.disk.DiskCache
 import coil.memory.MemoryCache
-import com.savvasdalkitsis.uhuruphotos.video.api.VideoCache
+import com.savvasdalkitsis.uhuruphotos.api.video.VideoCache
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableSharedFlow

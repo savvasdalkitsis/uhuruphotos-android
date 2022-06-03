@@ -9,5 +9,5 @@ dependencies {
 }
 
 android {
-    namespace 'com.savvasdalkitsis.uhuruphotos.video.api'
+    namespace 'com.savvasdalkitsis.uhuruphotos.api.video'
 }
