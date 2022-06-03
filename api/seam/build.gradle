@@ -7,5 +7,5 @@ dependencies {
 }
 
 android {
-    namespace 'com.savvasdalkitsis.uhuruphotos.seam'
+    namespace 'com.savvasdalkitsis.uhuruphotos.api.seam'
 }
