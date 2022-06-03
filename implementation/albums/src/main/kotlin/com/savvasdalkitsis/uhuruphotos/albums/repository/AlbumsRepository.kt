@@ -39,8 +39,8 @@ import com.savvasdalkitsis.uhuruphotos.api.db.people.PeopleQueries
 import com.savvasdalkitsis.uhuruphotos.api.db.person.PersonQueries
 import com.savvasdalkitsis.uhuruphotos.api.db.photos.PhotoDetailsQueries
 import com.savvasdalkitsis.uhuruphotos.api.db.photos.PhotoSummaryQueries
-import com.savvasdalkitsis.uhuruphotos.group.model.Group
-import com.savvasdalkitsis.uhuruphotos.group.model.groupBy
+import com.savvasdalkitsis.uhuruphotos.api.group.model.Group
+import com.savvasdalkitsis.uhuruphotos.api.group.model.groupBy
 import com.savvasdalkitsis.uhuruphotos.people.service.model.toPerson
 import com.savvasdalkitsis.uhuruphotos.photos.entities.toPhotoSummary
 import com.savvasdalkitsis.uhuruphotos.photos.service.model.toPhotoDetails

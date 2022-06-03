@@ -20,7 +20,7 @@ import com.savvasdalkitsis.uhuruphotos.api.coroutines.safelyOnStart
 import com.savvasdalkitsis.uhuruphotos.api.coroutines.safelyOnStartIgnoring
 import com.savvasdalkitsis.uhuruphotos.api.date.DateDisplayer
 import com.savvasdalkitsis.uhuruphotos.api.db.search.GetSearchResults
-import com.savvasdalkitsis.uhuruphotos.group.model.Group
+import com.savvasdalkitsis.uhuruphotos.api.group.model.Group
 import com.savvasdalkitsis.uhuruphotos.photos.api.model.Photo
 import com.savvasdalkitsis.uhuruphotos.photos.service.model.isVideo
 import com.savvasdalkitsis.uhuruphotos.photos.usecase.PhotosUseCase

@@ -20,7 +20,7 @@ import com.savvasdalkitsis.uhuruphotos.api.db.albums.GetAlbums
 import com.savvasdalkitsis.uhuruphotos.api.db.albums.GetAutoAlbum
 import com.savvasdalkitsis.uhuruphotos.api.db.albums.GetPeopleForAutoAlbum
 import com.savvasdalkitsis.uhuruphotos.api.db.albums.GetPersonAlbums
-import com.savvasdalkitsis.uhuruphotos.group.model.Group
+import com.savvasdalkitsis.uhuruphotos.api.group.model.Group
 import kotlinx.coroutines.flow.Flow
 
 interface AlbumsRepository {
