@@ -13,18 +13,18 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
  */
-package com.savvasdalkitsis.uhuruphotos.feedpage.navigation
+package com.savvasdalkitsis.uhuruphotos.implementation.feedpage.navigation
 
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import com.savvasdalkitsis.uhuruphotos.api.settings.usecase.SettingsUseCase
-import com.savvasdalkitsis.uhuruphotos.feedpage.seam.FeedPageAction
-import com.savvasdalkitsis.uhuruphotos.feedpage.seam.FeedPageEffect
-import com.savvasdalkitsis.uhuruphotos.feedpage.seam.FeedPageEffectsHandler
-import com.savvasdalkitsis.uhuruphotos.feedpage.view.FeedPage
-import com.savvasdalkitsis.uhuruphotos.feedpage.view.state.FeedPageState
-import com.savvasdalkitsis.uhuruphotos.feedpage.viewmodel.FeedPageViewModel
+import com.savvasdalkitsis.uhuruphotos.implementation.feedpage.seam.FeedPageAction
+import com.savvasdalkitsis.uhuruphotos.implementation.feedpage.seam.FeedPageEffect
+import com.savvasdalkitsis.uhuruphotos.implementation.feedpage.seam.FeedPageEffectsHandler
+import com.savvasdalkitsis.uhuruphotos.implementation.feedpage.view.FeedPage
+import com.savvasdalkitsis.uhuruphotos.implementation.feedpage.view.state.FeedPageState
+import com.savvasdalkitsis.uhuruphotos.implementation.feedpage.viewmodel.FeedPageViewModel
 import com.savvasdalkitsis.uhuruphotos.api.homenavigation.HomeNavigationRoutes
 import com.savvasdalkitsis.uhuruphotos.api.navigation.NavigationTarget
 import com.savvasdalkitsis.uhuruphotos.api.navigation.navigationTarget

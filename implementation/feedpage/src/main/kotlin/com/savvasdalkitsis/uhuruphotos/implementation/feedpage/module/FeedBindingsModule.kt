@@ -13,10 +13,10 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
  */
-package com.savvasdalkitsis.uhuruphotos.feedpage.module
+package com.savvasdalkitsis.uhuruphotos.implementation.feedpage.module
 
-import com.savvasdalkitsis.uhuruphotos.feedpage.navigation.FeedPageNavigationTarget
-import com.savvasdalkitsis.uhuruphotos.feedpage.usecase.FeedPageUseCase
+import com.savvasdalkitsis.uhuruphotos.implementation.feedpage.navigation.FeedPageNavigationTarget
+import com.savvasdalkitsis.uhuruphotos.implementation.feedpage.usecase.FeedPageUseCase
 import com.savvasdalkitsis.uhuruphotos.api.navigation.NavigationTarget
 import dagger.Binds
 import dagger.Module

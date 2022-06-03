@@ -13,7 +13,7 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
  */
-package com.savvasdalkitsis.uhuruphotos.feedpage.view
+package com.savvasdalkitsis.uhuruphotos.implementation.feedpage.view
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.layout.Arrangement
@@ -29,8 +29,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.savvasdalkitsis.uhuruphotos.feedpage.seam.FeedPageAction
-import com.savvasdalkitsis.uhuruphotos.feedpage.view.state.FeedPageState
+import com.savvasdalkitsis.uhuruphotos.implementation.feedpage.seam.FeedPageAction
+import com.savvasdalkitsis.uhuruphotos.implementation.feedpage.view.state.FeedPageState
 import com.savvasdalkitsis.uhuruphotos.api.icons.R
 import com.savvasdalkitsis.uhuruphotos.api.ui.view.ActionIcon
 import com.savvasdalkitsis.uhuruphotos.api.ui.view.Logo

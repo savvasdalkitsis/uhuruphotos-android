@@ -13,18 +13,18 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
  */
-package com.savvasdalkitsis.uhuruphotos.feedpage.seam
+package com.savvasdalkitsis.uhuruphotos.implementation.feedpage.seam
 
 import com.savvasdalkitsis.uhuruphotos.api.seam.EffectHandler
 import com.savvasdalkitsis.uhuruphotos.api.server.navigation.ServerNavigationTarget
 import com.savvasdalkitsis.uhuruphotos.api.settings.navigation.SettingsNavigationTarget
 import com.savvasdalkitsis.uhuruphotos.api.share.usecase.ShareUseCase
-import com.savvasdalkitsis.uhuruphotos.feedpage.seam.FeedPageEffect.NavigateToServerEdit
-import com.savvasdalkitsis.uhuruphotos.feedpage.seam.FeedPageEffect.NavigateToSettings
-import com.savvasdalkitsis.uhuruphotos.feedpage.seam.FeedPageEffect.OpenPhotoDetails
-import com.savvasdalkitsis.uhuruphotos.feedpage.seam.FeedPageEffect.ReloadApp
-import com.savvasdalkitsis.uhuruphotos.feedpage.seam.FeedPageEffect.SharePhotos
-import com.savvasdalkitsis.uhuruphotos.feedpage.seam.FeedPageEffect.Vibrate
+import com.savvasdalkitsis.uhuruphotos.implementation.feedpage.seam.FeedPageEffect.NavigateToServerEdit
+import com.savvasdalkitsis.uhuruphotos.implementation.feedpage.seam.FeedPageEffect.NavigateToSettings
+import com.savvasdalkitsis.uhuruphotos.implementation.feedpage.seam.FeedPageEffect.OpenPhotoDetails
+import com.savvasdalkitsis.uhuruphotos.implementation.feedpage.seam.FeedPageEffect.ReloadApp
+import com.savvasdalkitsis.uhuruphotos.implementation.feedpage.seam.FeedPageEffect.SharePhotos
+import com.savvasdalkitsis.uhuruphotos.implementation.feedpage.seam.FeedPageEffect.Vibrate
 import com.savvasdalkitsis.uhuruphotos.api.homenavigation.HomeNavigationRoutes
 import com.savvasdalkitsis.uhuruphotos.api.navigation.Navigator
 import com.savvasdalkitsis.uhuruphotos.photos.model.PhotoSequenceDataSource.AllPhotos

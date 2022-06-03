@@ -13,13 +13,13 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
  */
-package com.savvasdalkitsis.uhuruphotos.feedpage.seam
+package com.savvasdalkitsis.uhuruphotos.implementation.feedpage.seam
 
 import com.savvasdalkitsis.uhuruphotos.api.albums.model.Album
 import com.savvasdalkitsis.uhuruphotos.api.seam.Mutation
 import com.savvasdalkitsis.uhuruphotos.api.feed.view.state.FeedDisplays
 import com.savvasdalkitsis.uhuruphotos.api.feed.view.state.FeedState
-import com.savvasdalkitsis.uhuruphotos.feedpage.view.state.FeedPageState
+import com.savvasdalkitsis.uhuruphotos.implementation.feedpage.view.state.FeedPageState
 import com.savvasdalkitsis.uhuruphotos.api.userbadge.view.state.UserInformationState
 
 internal sealed class FeedPageMutation(

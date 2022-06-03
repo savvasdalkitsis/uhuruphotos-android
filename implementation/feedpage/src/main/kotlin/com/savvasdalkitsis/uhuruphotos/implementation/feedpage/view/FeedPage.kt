@@ -13,7 +13,7 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
  */
-package com.savvasdalkitsis.uhuruphotos.feedpage.view
+package com.savvasdalkitsis.uhuruphotos.implementation.feedpage.view
 
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.runtime.Composable
@@ -28,22 +28,22 @@ import com.savvasdalkitsis.uhuruphotos.api.compose.blurIf
 import com.savvasdalkitsis.uhuruphotos.api.home.view.HomeScaffold
 import com.savvasdalkitsis.uhuruphotos.api.feed.view.Feed
 import com.savvasdalkitsis.uhuruphotos.api.feed.view.state.FeedDisplays
-import com.savvasdalkitsis.uhuruphotos.feedpage.seam.FeedPageAction
-import com.savvasdalkitsis.uhuruphotos.feedpage.seam.FeedPageAction.AlbumSelectionClicked
-import com.savvasdalkitsis.uhuruphotos.feedpage.seam.FeedPageAction.AskToLogOut
-import com.savvasdalkitsis.uhuruphotos.feedpage.seam.FeedPageAction.ChangeDisplay
-import com.savvasdalkitsis.uhuruphotos.feedpage.seam.FeedPageAction.DeleteSelectedPhotos
-import com.savvasdalkitsis.uhuruphotos.feedpage.seam.FeedPageAction.DismissAccountOverview
-import com.savvasdalkitsis.uhuruphotos.feedpage.seam.FeedPageAction.DismissLogOutDialog
-import com.savvasdalkitsis.uhuruphotos.feedpage.seam.FeedPageAction.DismissSelectedPhotosDeletion
-import com.savvasdalkitsis.uhuruphotos.feedpage.seam.FeedPageAction.EditServer
-import com.savvasdalkitsis.uhuruphotos.feedpage.seam.FeedPageAction.LogOut
-import com.savvasdalkitsis.uhuruphotos.feedpage.seam.FeedPageAction.PhotoLongPressed
-import com.savvasdalkitsis.uhuruphotos.feedpage.seam.FeedPageAction.RefreshAlbums
-import com.savvasdalkitsis.uhuruphotos.feedpage.seam.FeedPageAction.SelectedPhoto
-import com.savvasdalkitsis.uhuruphotos.feedpage.seam.FeedPageAction.SettingsClick
-import com.savvasdalkitsis.uhuruphotos.feedpage.seam.FeedPageAction.UserBadgePressed
-import com.savvasdalkitsis.uhuruphotos.feedpage.view.state.FeedPageState
+import com.savvasdalkitsis.uhuruphotos.implementation.feedpage.seam.FeedPageAction
+import com.savvasdalkitsis.uhuruphotos.implementation.feedpage.seam.FeedPageAction.AlbumSelectionClicked
+import com.savvasdalkitsis.uhuruphotos.implementation.feedpage.seam.FeedPageAction.AskToLogOut
+import com.savvasdalkitsis.uhuruphotos.implementation.feedpage.seam.FeedPageAction.ChangeDisplay
+import com.savvasdalkitsis.uhuruphotos.implementation.feedpage.seam.FeedPageAction.DeleteSelectedPhotos
+import com.savvasdalkitsis.uhuruphotos.implementation.feedpage.seam.FeedPageAction.DismissAccountOverview
+import com.savvasdalkitsis.uhuruphotos.implementation.feedpage.seam.FeedPageAction.DismissLogOutDialog
+import com.savvasdalkitsis.uhuruphotos.implementation.feedpage.seam.FeedPageAction.DismissSelectedPhotosDeletion
+import com.savvasdalkitsis.uhuruphotos.implementation.feedpage.seam.FeedPageAction.EditServer
+import com.savvasdalkitsis.uhuruphotos.implementation.feedpage.seam.FeedPageAction.LogOut
+import com.savvasdalkitsis.uhuruphotos.implementation.feedpage.seam.FeedPageAction.PhotoLongPressed
+import com.savvasdalkitsis.uhuruphotos.implementation.feedpage.seam.FeedPageAction.RefreshAlbums
+import com.savvasdalkitsis.uhuruphotos.implementation.feedpage.seam.FeedPageAction.SelectedPhoto
+import com.savvasdalkitsis.uhuruphotos.implementation.feedpage.seam.FeedPageAction.SettingsClick
+import com.savvasdalkitsis.uhuruphotos.implementation.feedpage.seam.FeedPageAction.UserBadgePressed
+import com.savvasdalkitsis.uhuruphotos.implementation.feedpage.view.state.FeedPageState
 import com.savvasdalkitsis.uhuruphotos.photos.view.DeletePermissionDialog
 import kotlinx.coroutines.launch
 
