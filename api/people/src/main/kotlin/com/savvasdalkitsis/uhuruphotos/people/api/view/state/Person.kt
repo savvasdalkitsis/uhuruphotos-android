@@ -15,8 +15,8 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.people.api.view.state
 
-import com.savvasdalkitsis.uhuruphotos.db.albums.GetPeopleForAutoAlbum
-import com.savvasdalkitsis.uhuruphotos.db.people.People
+import com.savvasdalkitsis.uhuruphotos.api.db.albums.GetPeopleForAutoAlbum
+import com.savvasdalkitsis.uhuruphotos.api.db.people.People
 
 data class Person(
     val name: String,

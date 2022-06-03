@@ -15,7 +15,7 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.people.service.model
 
-import com.savvasdalkitsis.uhuruphotos.db.people.People
+import com.savvasdalkitsis.uhuruphotos.api.db.people.People
 import com.savvasdalkitsis.uhuruphotos.people.api.service.model.PersonResult
 
 fun PersonResult.toPerson() = People(

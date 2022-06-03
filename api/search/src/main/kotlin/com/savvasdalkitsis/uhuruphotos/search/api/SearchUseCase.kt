@@ -15,7 +15,7 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.search.api
 
-import com.savvasdalkitsis.uhuruphotos.albums.api.model.Album
+import com.savvasdalkitsis.uhuruphotos.api.albums.model.Album
 import kotlinx.coroutines.flow.Flow
 
 interface SearchUseCase {

@@ -15,7 +15,7 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.user.service.model
 
-import com.savvasdalkitsis.uhuruphotos.db.user.User
+import com.savvasdalkitsis.uhuruphotos.api.db.user.User
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 

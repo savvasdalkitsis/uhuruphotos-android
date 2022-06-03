@@ -20,7 +20,7 @@ import androidx.compose.foundation.layout.imeNestedScroll
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
-import com.savvasdalkitsis.uhuruphotos.accountoverview.view.AccountOverviewPopUp
+import com.savvasdalkitsis.uhuruphotos.api.accountoverview.view.AccountOverviewPopUp
 import com.savvasdalkitsis.uhuruphotos.api.account.view.LogOutConfirmationDialog
 import com.savvasdalkitsis.uhuruphotos.api.compose.blurIf
 import com.savvasdalkitsis.uhuruphotos.api.home.view.HomeScaffold

@@ -15,10 +15,10 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.albums
 
-import com.savvasdalkitsis.uhuruphotos.albums.api.service.AlbumsService
-import com.savvasdalkitsis.uhuruphotos.albums.api.service.model.Album
-import com.savvasdalkitsis.uhuruphotos.albums.api.service.model.AlbumById
-import com.savvasdalkitsis.uhuruphotos.albums.api.service.model.AlbumsByDate
+import com.savvasdalkitsis.uhuruphotos.api.albums.service.AlbumsService
+import com.savvasdalkitsis.uhuruphotos.api.albums.service.model.Album
+import com.savvasdalkitsis.uhuruphotos.api.albums.service.model.AlbumById
+import com.savvasdalkitsis.uhuruphotos.api.albums.service.model.AlbumsByDate
 import io.mockk.coEvery
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock

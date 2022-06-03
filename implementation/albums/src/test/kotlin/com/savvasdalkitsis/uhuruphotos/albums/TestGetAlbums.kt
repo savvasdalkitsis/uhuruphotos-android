@@ -18,9 +18,9 @@ package com.savvasdalkitsis.uhuruphotos.albums
 import com.savvasdalkitsis.uhuruphotos.albums.TestAlbums.albums
 import com.savvasdalkitsis.uhuruphotos.albums.TestAlbums.completeAlbum
 import com.savvasdalkitsis.uhuruphotos.albums.TestAlbums.incompleteAlbum
-import com.savvasdalkitsis.uhuruphotos.db.albums.GetAlbums
-import com.savvasdalkitsis.uhuruphotos.db.albums.GetPersonAlbums
-import com.savvasdalkitsis.uhuruphotos.db.photos.PhotoSummary
+import com.savvasdalkitsis.uhuruphotos.api.db.albums.GetAlbums
+import com.savvasdalkitsis.uhuruphotos.api.db.albums.GetPersonAlbums
+import com.savvasdalkitsis.uhuruphotos.api.db.photos.PhotoSummary
 
 const val SERVER_ALBUM_LOCATION = "serverAlbumLocation"
 

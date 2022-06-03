@@ -16,10 +16,10 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.people.repository
 
 import com.savvasdalkitsis.uhuruphotos.api.log.log
-import com.savvasdalkitsis.uhuruphotos.db.extensions.async
-import com.savvasdalkitsis.uhuruphotos.db.extensions.await
-import com.savvasdalkitsis.uhuruphotos.db.people.People
-import com.savvasdalkitsis.uhuruphotos.db.people.PeopleQueries
+import com.savvasdalkitsis.uhuruphotos.api.db.extensions.async
+import com.savvasdalkitsis.uhuruphotos.api.db.extensions.await
+import com.savvasdalkitsis.uhuruphotos.api.db.people.People
+import com.savvasdalkitsis.uhuruphotos.api.db.people.PeopleQueries
 import com.savvasdalkitsis.uhuruphotos.people.service.PeopleService
 import com.savvasdalkitsis.uhuruphotos.people.service.model.toPerson
 import com.squareup.sqldelight.runtime.coroutines.asFlow

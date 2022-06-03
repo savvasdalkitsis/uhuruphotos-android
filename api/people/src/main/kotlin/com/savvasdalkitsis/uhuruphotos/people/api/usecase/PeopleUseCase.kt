@@ -15,7 +15,7 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.people.api.usecase
 
-import com.savvasdalkitsis.uhuruphotos.db.people.People
+import com.savvasdalkitsis.uhuruphotos.api.db.people.People
 import kotlinx.coroutines.flow.Flow
 
 interface PeopleUseCase {

@@ -6,9 +6,7 @@ dependencies {
     api(
             libs.androidx.compose.foundation.layout,
             libs.androidx.compose.ui,
-    )
-    implementation project(":api:log")
-    implementation(
             libs.androidx.compose.material,
     )
+    implementation project(":api:log")
 }

@@ -1,6 +1,6 @@
 package com.savvasdalkitsis.uhuruphotos.albums;
 
-import com.savvasdalkitsis.uhuruphotos.db.photos.GetPhotoSummariesForAlbum;
+import com.savvasdalkitsis.uhuruphotos.api.db.photos.GetPhotoSummariesForAlbum;
 
 public class TestGetPhotoSummaries {
 

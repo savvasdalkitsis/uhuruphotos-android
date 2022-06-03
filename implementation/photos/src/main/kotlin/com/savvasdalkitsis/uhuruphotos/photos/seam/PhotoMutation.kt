@@ -17,7 +17,7 @@ package com.savvasdalkitsis.uhuruphotos.photos.seam
 
 import androidx.annotation.StringRes
 import com.savvasdalkitsis.uhuruphotos.api.seam.Mutation
-import com.savvasdalkitsis.uhuruphotos.db.photos.PhotoDetails
+import com.savvasdalkitsis.uhuruphotos.api.db.photos.PhotoDetails
 import com.savvasdalkitsis.uhuruphotos.people.api.view.state.Person
 import com.savvasdalkitsis.uhuruphotos.photos.model.latLng
 import com.savvasdalkitsis.uhuruphotos.photos.view.state.PhotoState

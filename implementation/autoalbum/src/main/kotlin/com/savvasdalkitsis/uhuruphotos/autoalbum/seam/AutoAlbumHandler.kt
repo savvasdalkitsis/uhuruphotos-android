@@ -15,7 +15,7 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.autoalbum.seam
 
-import com.savvasdalkitsis.uhuruphotos.albums.api.model.Album
+import com.savvasdalkitsis.uhuruphotos.api.albums.model.Album
 import com.savvasdalkitsis.uhuruphotos.api.coroutines.safelyOnStartIgnoring
 import com.savvasdalkitsis.uhuruphotos.api.date.DateDisplayer
 import com.savvasdalkitsis.uhuruphotos.api.log.log
@@ -33,8 +33,8 @@ import com.savvasdalkitsis.uhuruphotos.autoalbum.seam.AutoAlbumMutation.ShowAuto
 import com.savvasdalkitsis.uhuruphotos.autoalbum.usecase.AutoAlbumsUseCase
 import com.savvasdalkitsis.uhuruphotos.autoalbum.view.state.AutoAlbum
 import com.savvasdalkitsis.uhuruphotos.autoalbum.view.state.AutoAlbumState
-import com.savvasdalkitsis.uhuruphotos.db.albums.GetAutoAlbum
-import com.savvasdalkitsis.uhuruphotos.db.albums.GetPeopleForAutoAlbum
+import com.savvasdalkitsis.uhuruphotos.api.db.albums.GetAutoAlbum
+import com.savvasdalkitsis.uhuruphotos.api.db.albums.GetPeopleForAutoAlbum
 import com.savvasdalkitsis.uhuruphotos.people.api.view.state.toPerson
 import com.savvasdalkitsis.uhuruphotos.photos.api.model.Photo
 import com.savvasdalkitsis.uhuruphotos.photos.usecase.PhotosUseCase

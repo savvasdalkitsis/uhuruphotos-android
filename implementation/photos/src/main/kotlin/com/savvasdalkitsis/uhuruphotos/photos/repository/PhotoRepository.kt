@@ -15,11 +15,11 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.photos.repository
 
-import com.savvasdalkitsis.uhuruphotos.db.extensions.async
-import com.savvasdalkitsis.uhuruphotos.db.extensions.awaitSingleOrNull
-import com.savvasdalkitsis.uhuruphotos.db.photos.PhotoDetails
-import com.savvasdalkitsis.uhuruphotos.db.photos.PhotoDetailsQueries
-import com.savvasdalkitsis.uhuruphotos.db.photos.PhotoSummaryQueries
+import com.savvasdalkitsis.uhuruphotos.api.db.extensions.async
+import com.savvasdalkitsis.uhuruphotos.api.db.extensions.awaitSingleOrNull
+import com.savvasdalkitsis.uhuruphotos.api.db.photos.PhotoDetails
+import com.savvasdalkitsis.uhuruphotos.api.db.photos.PhotoDetailsQueries
+import com.savvasdalkitsis.uhuruphotos.api.db.photos.PhotoSummaryQueries
 import com.savvasdalkitsis.uhuruphotos.photos.service.PhotosService
 import com.savvasdalkitsis.uhuruphotos.photos.service.model.toPhotoDetails
 import com.savvasdalkitsis.uhuruphotos.photos.worker.PhotoWorkScheduler

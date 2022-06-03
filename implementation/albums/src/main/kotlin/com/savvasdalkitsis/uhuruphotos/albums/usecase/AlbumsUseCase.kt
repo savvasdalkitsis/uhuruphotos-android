@@ -15,15 +15,15 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.albums.usecase
 
-import com.savvasdalkitsis.uhuruphotos.albums.api.model.Album
-import com.savvasdalkitsis.uhuruphotos.albums.api.repository.AlbumsRepository
-import com.savvasdalkitsis.uhuruphotos.albums.api.usecase.AlbumsUseCase
+import com.savvasdalkitsis.uhuruphotos.api.albums.model.Album
+import com.savvasdalkitsis.uhuruphotos.api.albums.repository.AlbumsRepository
+import com.savvasdalkitsis.uhuruphotos.api.albums.usecase.AlbumsUseCase
 import com.savvasdalkitsis.uhuruphotos.albums.worker.AlbumWorkScheduler
 import com.savvasdalkitsis.uhuruphotos.api.coroutines.safelyOnStartIgnoring
 import com.savvasdalkitsis.uhuruphotos.api.date.DateDisplayer
 import com.savvasdalkitsis.uhuruphotos.api.user.usecase.UserUseCase
-import com.savvasdalkitsis.uhuruphotos.db.albums.GetAlbums
-import com.savvasdalkitsis.uhuruphotos.db.albums.GetPersonAlbums
+import com.savvasdalkitsis.uhuruphotos.api.db.albums.GetAlbums
+import com.savvasdalkitsis.uhuruphotos.api.db.albums.GetPersonAlbums
 import com.savvasdalkitsis.uhuruphotos.group.model.Group
 import com.savvasdalkitsis.uhuruphotos.group.model.mapValues
 import com.savvasdalkitsis.uhuruphotos.photos.api.model.Photo

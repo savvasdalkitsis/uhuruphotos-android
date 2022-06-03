@@ -1,6 +1,6 @@
 package com.savvasdalkitsis.uhuruphotos.user;
 
-import com.savvasdalkitsis.uhuruphotos.db.user.User;
+import com.savvasdalkitsis.uhuruphotos.api.db.user.User;
 
 public class TestUsers {
 

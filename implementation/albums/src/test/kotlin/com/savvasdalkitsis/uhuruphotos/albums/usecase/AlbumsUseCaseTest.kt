@@ -19,7 +19,7 @@ import app.cash.turbine.test
 import com.savvasdalkitsis.uhuruphotos.albums.TestAlbums.album
 import com.savvasdalkitsis.uhuruphotos.albums.TestGetAlbums.getAlbum
 import com.savvasdalkitsis.uhuruphotos.albums.TestGetAlbums.getPersonAlbum
-import com.savvasdalkitsis.uhuruphotos.albums.api.model.Album
+import com.savvasdalkitsis.uhuruphotos.api.albums.model.Album
 import com.savvasdalkitsis.uhuruphotos.albums.reportsHavingAlbums
 import com.savvasdalkitsis.uhuruphotos.albums.reportsHavingNoAlbums
 import com.savvasdalkitsis.uhuruphotos.albums.repository.AlbumsRepository
@@ -29,9 +29,9 @@ import com.savvasdalkitsis.uhuruphotos.albums.returnsPersonAlbumWithEntries
 import com.savvasdalkitsis.uhuruphotos.albums.worker.AlbumWorkScheduler
 import com.savvasdalkitsis.uhuruphotos.api.date.DateDisplayer
 import com.savvasdalkitsis.uhuruphotos.api.user.usecase.UserUseCase
-import com.savvasdalkitsis.uhuruphotos.db.albums.GetAlbums
-import com.savvasdalkitsis.uhuruphotos.db.albums.GetPersonAlbums
-import com.savvasdalkitsis.uhuruphotos.db.user.User
+import com.savvasdalkitsis.uhuruphotos.api.db.albums.GetAlbums
+import com.savvasdalkitsis.uhuruphotos.api.db.albums.GetPersonAlbums
+import com.savvasdalkitsis.uhuruphotos.api.db.user.User
 import com.savvasdalkitsis.uhuruphotos.group.model.Group
 import com.savvasdalkitsis.uhuruphotos.photos.TestPhotos.photo
 import com.savvasdalkitsis.uhuruphotos.photos.usecase.PhotosUseCase

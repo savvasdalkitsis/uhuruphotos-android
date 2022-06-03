@@ -35,13 +35,13 @@ internal abstract class AlbumsBindingsModule {
 
     @Binds
     abstract fun albumWorkScheduler(albumWorkScheduler: AlbumWorkScheduler):
-            com.savvasdalkitsis.uhuruphotos.albums.api.worker.AlbumWorkScheduler
+            com.savvasdalkitsis.uhuruphotos.api.albums.worker.AlbumWorkScheduler
 
     @Binds
     abstract fun albumsUseCase(albumsUseCase: AlbumsUseCase):
-            com.savvasdalkitsis.uhuruphotos.albums.api.usecase.AlbumsUseCase
+            com.savvasdalkitsis.uhuruphotos.api.albums.usecase.AlbumsUseCase
 
     @Binds
     abstract fun albumsRepository(albumsRepository: AlbumsRepository):
-            com.savvasdalkitsis.uhuruphotos.albums.api.repository.AlbumsRepository
+            com.savvasdalkitsis.uhuruphotos.api.albums.repository.AlbumsRepository
 }

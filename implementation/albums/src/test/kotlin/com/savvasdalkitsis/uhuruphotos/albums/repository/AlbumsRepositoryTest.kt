@@ -22,7 +22,7 @@ import com.savvasdalkitsis.uhuruphotos.albums.TestAlbums.albums
 import com.savvasdalkitsis.uhuruphotos.albums.TestGetPhotoSummaries.photoSummariesForAlbum
 import com.savvasdalkitsis.uhuruphotos.albums.album
 import com.savvasdalkitsis.uhuruphotos.albums.albumId
-import com.savvasdalkitsis.uhuruphotos.albums.api.service.AlbumsService
+import com.savvasdalkitsis.uhuruphotos.api.albums.service.AlbumsService
 import com.savvasdalkitsis.uhuruphotos.albums.completeAlbum
 import com.savvasdalkitsis.uhuruphotos.albums.completes
 import com.savvasdalkitsis.uhuruphotos.albums.entry
@@ -37,10 +37,10 @@ import com.savvasdalkitsis.uhuruphotos.albums.willRespondForPersonAlbum
 import com.savvasdalkitsis.uhuruphotos.albums.willRespondForPersonWith
 import com.savvasdalkitsis.uhuruphotos.albums.willRespondWith
 import com.savvasdalkitsis.uhuruphotos.albums.withServerResponseData
-import com.savvasdalkitsis.uhuruphotos.db.TestDatabase
-import com.savvasdalkitsis.uhuruphotos.db.albums.Albums
-import com.savvasdalkitsis.uhuruphotos.db.extensions.await
-import com.savvasdalkitsis.uhuruphotos.db.photos.PhotoSummary
+import com.savvasdalkitsis.uhuruphotos.api.db.TestDatabase
+import com.savvasdalkitsis.uhuruphotos.api.db.albums.Albums
+import com.savvasdalkitsis.uhuruphotos.api.db.extensions.await
+import com.savvasdalkitsis.uhuruphotos.api.db.photos.PhotoSummary
 import com.savvasdalkitsis.uhuruphotos.group.model.Group
 import com.shazam.shazamcrest.MatcherAssert.assertThat
 import com.shazam.shazamcrest.matcher.Matchers.sameBeanAs

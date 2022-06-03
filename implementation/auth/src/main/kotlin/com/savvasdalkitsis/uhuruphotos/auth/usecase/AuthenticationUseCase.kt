@@ -26,11 +26,11 @@ import com.savvasdalkitsis.uhuruphotos.auth.service.AuthenticationService
 import com.savvasdalkitsis.uhuruphotos.auth.service.model.AuthenticationCredentials
 import com.savvasdalkitsis.uhuruphotos.auth.service.model.AuthenticationObtainResponse
 import com.savvasdalkitsis.uhuruphotos.auth.service.model.AuthenticationRefreshResponse
-import com.savvasdalkitsis.uhuruphotos.db.auth.Token
-import com.savvasdalkitsis.uhuruphotos.db.auth.TokenQueries
-import com.savvasdalkitsis.uhuruphotos.db.entities.auth.TokenType
-import com.savvasdalkitsis.uhuruphotos.db.extensions.async
-import com.savvasdalkitsis.uhuruphotos.db.extensions.awaitSingleOrNull
+import com.savvasdalkitsis.uhuruphotos.api.db.auth.Token
+import com.savvasdalkitsis.uhuruphotos.api.db.auth.TokenQueries
+import com.savvasdalkitsis.uhuruphotos.api.db.entities.auth.TokenType
+import com.savvasdalkitsis.uhuruphotos.api.db.extensions.async
+import com.savvasdalkitsis.uhuruphotos.api.db.extensions.awaitSingleOrNull
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
 import java.io.IOException

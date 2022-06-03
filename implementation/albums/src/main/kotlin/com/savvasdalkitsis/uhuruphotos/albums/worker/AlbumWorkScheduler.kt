@@ -17,8 +17,8 @@ package com.savvasdalkitsis.uhuruphotos.albums.worker
 
 import androidx.work.ExistingPeriodicWorkPolicy
 import androidx.work.WorkInfo
-import com.savvasdalkitsis.uhuruphotos.albums.api.worker.AlbumWorkScheduler
-import com.savvasdalkitsis.uhuruphotos.albums.api.worker.RefreshJobState
+import com.savvasdalkitsis.uhuruphotos.api.albums.worker.AlbumWorkScheduler
+import com.savvasdalkitsis.uhuruphotos.api.albums.worker.RefreshJobState
 import com.savvasdalkitsis.uhuruphotos.api.settings.usecase.SettingsUseCase
 import com.savvasdalkitsis.uhuruphotos.worker.WorkScheduler
 import com.savvasdalkitsis.uhuruphotos.worker.usecase.WorkerStatusUseCase

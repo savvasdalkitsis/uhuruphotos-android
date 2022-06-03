@@ -15,9 +15,9 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.photos.service.model
 
-import com.savvasdalkitsis.uhuruphotos.db.albums.GetAlbums
-import com.savvasdalkitsis.uhuruphotos.db.albums.GetPersonAlbums
-import com.savvasdalkitsis.uhuruphotos.db.search.GetSearchResults
+import com.savvasdalkitsis.uhuruphotos.api.db.albums.GetAlbums
+import com.savvasdalkitsis.uhuruphotos.api.db.albums.GetPersonAlbums
+import com.savvasdalkitsis.uhuruphotos.api.db.search.GetSearchResults
 
 val GetAlbums.isVideo get() = type.isVideo
 val GetPersonAlbums.isVideo get() = type.isVideo
