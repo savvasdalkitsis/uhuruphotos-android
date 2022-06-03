@@ -13,21 +13,13 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
  */
-package com.savvasdalkitsis.uhuruphotos.network.interceptors
+package com.savvasdalkitsis.uhuruphotos.implementation.network.logging
 
-import com.savvasdalkitsis.uhuruphotos.network.BuildConfig.APP_VERSION_NAME
-import okhttp3.Interceptor
-import okhttp3.Response
+import com.savvasdalkitsis.uhuruphotos.api.log.log
+import okhttp3.logging.HttpLoggingInterceptor
 import javax.inject.Inject
 
-internal class UserAgentInterceptor @Inject constructor(
-): Interceptor {
-    override fun intercept(chain: Interceptor.Chain): Response =
-        chain.proceed(chain.request().newBuilder()
-            .header(
-                name = "User-agent",
-                value = "UhuruPhotos/$APP_VERSION_NAME ${System.getProperty("http.agent")}"
-            )
-            .build()
-        )
+internal class TimberLogger @Inject constructor() : HttpLoggingInterceptor.Logger {
+
+    override fun log(message: String) = log("OkHttp") { message }
 }

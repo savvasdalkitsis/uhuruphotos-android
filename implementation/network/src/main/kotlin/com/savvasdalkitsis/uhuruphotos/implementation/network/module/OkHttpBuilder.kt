@@ -13,10 +13,10 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
  */
-package com.savvasdalkitsis.uhuruphotos.network.module
+package com.savvasdalkitsis.uhuruphotos.implementation.network.module
 
 import com.savvasdalkitsis.uhuruphotos.api.network.OkHttpBuilder
-import com.savvasdalkitsis.uhuruphotos.network.BasicOkHttpClient
+import com.savvasdalkitsis.uhuruphotos.implementation.network.BasicOkHttpClient
 import com.savvasdalkitsis.uhuruphotos.network.BuildConfig.DEBUG
 import okhttp3.OkHttpClient.Builder
 import okhttp3.logging.HttpLoggingInterceptor
