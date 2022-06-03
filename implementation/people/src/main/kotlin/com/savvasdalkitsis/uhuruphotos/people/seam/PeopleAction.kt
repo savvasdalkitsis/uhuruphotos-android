@@ -15,7 +15,7 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.people.seam
 
-import com.savvasdalkitsis.uhuruphotos.people.api.view.state.Person
+import com.savvasdalkitsis.uhuruphotos.api.people.view.state.Person
 
 sealed class PeopleAction {
     data class PersonSelected(val person: Person) : PeopleAction()

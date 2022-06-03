@@ -18,7 +18,7 @@ package com.savvasdalkitsis.uhuruphotos.autoalbum.view.state
 import androidx.annotation.StringRes
 import com.savvasdalkitsis.uhuruphotos.api.feed.view.state.FeedDisplay
 import com.savvasdalkitsis.uhuruphotos.api.feed.view.state.FeedState
-import com.savvasdalkitsis.uhuruphotos.people.api.view.state.Person
+import com.savvasdalkitsis.uhuruphotos.api.people.view.state.Person
 
 internal data class AutoAlbumState(
     val feedState: FeedState = FeedState(feedDisplay = AutoAlbumFeedDisplay),

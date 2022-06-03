@@ -39,7 +39,7 @@ import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.unit.dp
 import com.savvasdalkitsis.uhuruphotos.api.icons.R
 import com.savvasdalkitsis.uhuruphotos.api.map.view.MapView
-import com.savvasdalkitsis.uhuruphotos.people.api.view.PeopleBar
+import com.savvasdalkitsis.uhuruphotos.api.people.view.PeopleBar
 import com.savvasdalkitsis.uhuruphotos.photos.seam.PhotoAction
 import com.savvasdalkitsis.uhuruphotos.photos.seam.PhotoAction.ClickedOnGps
 import com.savvasdalkitsis.uhuruphotos.photos.seam.PhotoAction.ClickedOnMap

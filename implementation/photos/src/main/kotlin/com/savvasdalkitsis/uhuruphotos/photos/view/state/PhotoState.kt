@@ -17,7 +17,7 @@ package com.savvasdalkitsis.uhuruphotos.photos.view.state
 
 import androidx.annotation.StringRes
 import com.savvasdalkitsis.uhuruphotos.api.map.model.LatLon
-import com.savvasdalkitsis.uhuruphotos.people.api.view.state.Person
+import com.savvasdalkitsis.uhuruphotos.api.people.view.state.Person
 
 data class PhotoState(
     val currentIndex: Int = 0,

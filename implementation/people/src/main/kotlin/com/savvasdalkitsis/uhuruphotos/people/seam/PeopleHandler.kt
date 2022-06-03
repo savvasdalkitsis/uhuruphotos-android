@@ -17,7 +17,7 @@ package com.savvasdalkitsis.uhuruphotos.people.seam
 
 import com.savvasdalkitsis.uhuruphotos.api.coroutines.onErrors
 import com.savvasdalkitsis.uhuruphotos.api.seam.ActionHandler
-import com.savvasdalkitsis.uhuruphotos.people.api.view.state.toPerson
+import com.savvasdalkitsis.uhuruphotos.api.people.view.state.toPerson
 import com.savvasdalkitsis.uhuruphotos.people.seam.PeopleAction.LoadPeople
 import com.savvasdalkitsis.uhuruphotos.people.seam.PeopleAction.NavigateBack
 import com.savvasdalkitsis.uhuruphotos.people.seam.PeopleAction.PersonSelected

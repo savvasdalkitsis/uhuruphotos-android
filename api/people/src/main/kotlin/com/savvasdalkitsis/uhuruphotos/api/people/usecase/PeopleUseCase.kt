@@ -13,7 +13,7 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
  */
-package com.savvasdalkitsis.uhuruphotos.people.api.usecase
+package com.savvasdalkitsis.uhuruphotos.api.people.usecase
 
 import com.savvasdalkitsis.uhuruphotos.api.db.people.People
 import kotlinx.coroutines.flow.Flow

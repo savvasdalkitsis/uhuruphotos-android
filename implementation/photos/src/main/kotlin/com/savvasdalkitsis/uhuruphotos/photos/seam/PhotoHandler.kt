@@ -21,8 +21,8 @@ import com.savvasdalkitsis.uhuruphotos.api.date.DateDisplayer
 import com.savvasdalkitsis.uhuruphotos.api.seam.ActionHandler
 import com.savvasdalkitsis.uhuruphotos.api.user.usecase.UserUseCase
 import com.savvasdalkitsis.uhuruphotos.api.db.people.People
-import com.savvasdalkitsis.uhuruphotos.people.api.usecase.PeopleUseCase
-import com.savvasdalkitsis.uhuruphotos.people.api.view.state.toPerson
+import com.savvasdalkitsis.uhuruphotos.api.people.usecase.PeopleUseCase
+import com.savvasdalkitsis.uhuruphotos.api.people.view.state.toPerson
 import com.savvasdalkitsis.uhuruphotos.person.api.usecase.PersonUseCase
 import com.savvasdalkitsis.uhuruphotos.photos.model.PhotoSequenceDataSource.AllPhotos
 import com.savvasdalkitsis.uhuruphotos.photos.model.PhotoSequenceDataSource.PersonResults

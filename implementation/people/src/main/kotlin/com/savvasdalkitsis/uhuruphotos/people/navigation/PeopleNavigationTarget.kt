@@ -21,7 +21,7 @@ import androidx.navigation.NavHostController
 import com.savvasdalkitsis.uhuruphotos.api.settings.usecase.SettingsUseCase
 import com.savvasdalkitsis.uhuruphotos.api.navigation.NavigationTarget
 import com.savvasdalkitsis.uhuruphotos.api.navigation.navigationTarget
-import com.savvasdalkitsis.uhuruphotos.people.api.navigation.PeopleNavigationTarget
+import com.savvasdalkitsis.uhuruphotos.api.people.navigation.PeopleNavigationTarget
 import com.savvasdalkitsis.uhuruphotos.people.seam.PeopleAction
 import com.savvasdalkitsis.uhuruphotos.people.seam.PeopleAction.LoadPeople
 import com.savvasdalkitsis.uhuruphotos.people.seam.PeopleEffect

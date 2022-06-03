@@ -16,8 +16,8 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.person.seam
 
 import com.savvasdalkitsis.uhuruphotos.api.seam.ActionHandler
-import com.savvasdalkitsis.uhuruphotos.people.api.usecase.PeopleUseCase
-import com.savvasdalkitsis.uhuruphotos.people.api.view.state.toPerson
+import com.savvasdalkitsis.uhuruphotos.api.people.usecase.PeopleUseCase
+import com.savvasdalkitsis.uhuruphotos.api.people.view.state.toPerson
 import com.savvasdalkitsis.uhuruphotos.person.api.usecase.PersonUseCase
 import com.savvasdalkitsis.uhuruphotos.person.seam.PersonAction.ChangeDisplay
 import com.savvasdalkitsis.uhuruphotos.person.seam.PersonAction.LoadPerson
