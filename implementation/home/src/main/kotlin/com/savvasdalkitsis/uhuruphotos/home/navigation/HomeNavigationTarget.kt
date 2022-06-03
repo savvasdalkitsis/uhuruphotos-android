@@ -26,8 +26,8 @@ import com.savvasdalkitsis.uhuruphotos.home.view.Home
 import com.savvasdalkitsis.uhuruphotos.home.view.state.HomeState
 import com.savvasdalkitsis.uhuruphotos.home.viewmodel.HomeViewModel
 import com.savvasdalkitsis.uhuruphotos.api.homenavigation.HomeNavigationRoutes
-import com.savvasdalkitsis.uhuruphotos.navigation.NavigationTarget
-import com.savvasdalkitsis.uhuruphotos.navigation.navigationTarget
+import com.savvasdalkitsis.uhuruphotos.api.navigation.NavigationTarget
+import com.savvasdalkitsis.uhuruphotos.api.navigation.navigationTarget
 import javax.inject.Inject
 
 internal class HomeNavigationTarget @Inject constructor(

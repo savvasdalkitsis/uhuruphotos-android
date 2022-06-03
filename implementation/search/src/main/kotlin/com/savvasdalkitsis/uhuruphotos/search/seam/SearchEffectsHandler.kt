@@ -20,7 +20,7 @@ import com.savvasdalkitsis.uhuruphotos.api.seam.EffectHandler
 import com.savvasdalkitsis.uhuruphotos.api.server.navigation.ServerNavigationTarget
 import com.savvasdalkitsis.uhuruphotos.api.settings.navigation.SettingsNavigationTarget
 import com.savvasdalkitsis.uhuruphotos.api.homenavigation.HomeNavigationRoutes
-import com.savvasdalkitsis.uhuruphotos.navigation.Navigator
+import com.savvasdalkitsis.uhuruphotos.api.navigation.Navigator
 import com.savvasdalkitsis.uhuruphotos.people.api.navigation.PeopleNavigationTarget
 import com.savvasdalkitsis.uhuruphotos.person.api.navigation.PersonNavigationTarget
 import com.savvasdalkitsis.uhuruphotos.photos.model.PhotoSequenceDataSource.SearchResults

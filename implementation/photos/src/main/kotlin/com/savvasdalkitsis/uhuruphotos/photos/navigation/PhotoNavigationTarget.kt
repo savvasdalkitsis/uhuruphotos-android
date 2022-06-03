@@ -28,8 +28,8 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavBackStackEntry
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
-import com.savvasdalkitsis.uhuruphotos.navigation.NavigationTarget
-import com.savvasdalkitsis.uhuruphotos.navigation.navigationTarget
+import com.savvasdalkitsis.uhuruphotos.api.navigation.NavigationTarget
+import com.savvasdalkitsis.uhuruphotos.api.navigation.navigationTarget
 import com.savvasdalkitsis.uhuruphotos.photos.model.PhotoSequenceDataSource
 import com.savvasdalkitsis.uhuruphotos.photos.model.PhotoSequenceDataSource.Single
 import com.savvasdalkitsis.uhuruphotos.photos.seam.PhotoAction

@@ -23,7 +23,7 @@ import android.net.Uri
 import com.savvasdalkitsis.uhuruphotos.api.seam.EffectHandler
 import com.savvasdalkitsis.uhuruphotos.api.share.usecase.ShareUseCase
 import com.savvasdalkitsis.uhuruphotos.api.map.model.LatLon
-import com.savvasdalkitsis.uhuruphotos.navigation.Navigator
+import com.savvasdalkitsis.uhuruphotos.api.navigation.Navigator
 import com.savvasdalkitsis.uhuruphotos.person.api.navigation.PersonNavigationTarget
 import com.savvasdalkitsis.uhuruphotos.photos.seam.PhotoEffect.CopyToClipboard
 import com.savvasdalkitsis.uhuruphotos.photos.seam.PhotoEffect.ErrorRefreshingPeople

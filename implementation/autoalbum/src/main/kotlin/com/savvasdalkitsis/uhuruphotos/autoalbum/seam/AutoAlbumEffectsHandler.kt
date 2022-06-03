@@ -19,7 +19,7 @@ import com.savvasdalkitsis.uhuruphotos.api.seam.EffectHandler
 import com.savvasdalkitsis.uhuruphotos.autoalbum.seam.AutoAlbumEffect.NavigateBack
 import com.savvasdalkitsis.uhuruphotos.autoalbum.seam.AutoAlbumEffect.NavigateToPerson
 import com.savvasdalkitsis.uhuruphotos.autoalbum.seam.AutoAlbumEffect.OpenPhotoDetails
-import com.savvasdalkitsis.uhuruphotos.navigation.Navigator
+import com.savvasdalkitsis.uhuruphotos.api.navigation.Navigator
 import com.savvasdalkitsis.uhuruphotos.person.api.navigation.PersonNavigationTarget
 import com.savvasdalkitsis.uhuruphotos.photos.navigation.PhotoNavigationTarget
 import javax.inject.Inject

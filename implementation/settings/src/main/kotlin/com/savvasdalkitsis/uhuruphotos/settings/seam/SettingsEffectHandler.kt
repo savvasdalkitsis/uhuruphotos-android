@@ -16,7 +16,7 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.settings.seam
 
 import com.savvasdalkitsis.uhuruphotos.api.seam.EffectHandler
-import com.savvasdalkitsis.uhuruphotos.navigation.Navigator
+import com.savvasdalkitsis.uhuruphotos.api.navigation.Navigator
 import com.savvasdalkitsis.uhuruphotos.settings.seam.SettingsEffect.NavigateBack
 import com.savvasdalkitsis.uhuruphotos.settings.seam.SettingsEffect.ShowMessage
 import com.savvasdalkitsis.uhuruphotos.toaster.Toaster

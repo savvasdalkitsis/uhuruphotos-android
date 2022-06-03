@@ -17,7 +17,7 @@ package com.savvasdalkitsis.uhuruphotos.server.seam
 
 import com.savvasdalkitsis.uhuruphotos.api.log.usecase.FeedbackUseCase
 import com.savvasdalkitsis.uhuruphotos.api.seam.EffectHandler
-import com.savvasdalkitsis.uhuruphotos.navigation.Navigator
+import com.savvasdalkitsis.uhuruphotos.api.navigation.Navigator
 import com.savvasdalkitsis.uhuruphotos.server.seam.ServerEffect.Close
 import com.savvasdalkitsis.uhuruphotos.server.seam.ServerEffect.ErrorLoggingIn
 import com.savvasdalkitsis.uhuruphotos.server.seam.ServerEffect.SendFeedback

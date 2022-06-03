@@ -20,7 +20,7 @@ import com.savvasdalkitsis.uhuruphotos.api.server.navigation.ServerNavigationTar
 import com.savvasdalkitsis.uhuruphotos.home.seam.HomeEffect.LaunchAuthentication
 import com.savvasdalkitsis.uhuruphotos.home.seam.HomeEffect.LoadFeed
 import com.savvasdalkitsis.uhuruphotos.api.homenavigation.HomeNavigationRoutes
-import com.savvasdalkitsis.uhuruphotos.navigation.Navigator
+import com.savvasdalkitsis.uhuruphotos.api.navigation.Navigator
 import javax.inject.Inject
 
 internal class HomeEffectsHandler @Inject constructor(

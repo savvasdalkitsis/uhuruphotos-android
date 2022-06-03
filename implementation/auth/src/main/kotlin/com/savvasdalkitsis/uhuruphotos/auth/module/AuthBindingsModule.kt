@@ -19,7 +19,7 @@ import com.savvasdalkitsis.uhuruphotos.auth.service.TokenRefreshInterceptor
 import com.savvasdalkitsis.uhuruphotos.auth.usecase.AuthenticationUseCase
 import com.savvasdalkitsis.uhuruphotos.auth.usecase.ServerUseCase
 import com.savvasdalkitsis.uhuruphotos.auth.weblogin.weblogin.navigation.WebLoginNavigationTarget
-import com.savvasdalkitsis.uhuruphotos.navigation.NavigationTarget
+import com.savvasdalkitsis.uhuruphotos.api.navigation.NavigationTarget
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn

@@ -26,8 +26,8 @@ import com.savvasdalkitsis.uhuruphotos.heatmap.seam.HeatMapEffectsHandler
 import com.savvasdalkitsis.uhuruphotos.heatmap.view.HeatMap
 import com.savvasdalkitsis.uhuruphotos.heatmap.view.state.HeatMapState
 import com.savvasdalkitsis.uhuruphotos.heatmap.viewmodel.HeatMapViewModel
-import com.savvasdalkitsis.uhuruphotos.navigation.NavigationTarget
-import com.savvasdalkitsis.uhuruphotos.navigation.navigationTarget
+import com.savvasdalkitsis.uhuruphotos.api.navigation.NavigationTarget
+import com.savvasdalkitsis.uhuruphotos.api.navigation.navigationTarget
 import javax.inject.Inject
 
 class HeatMapNavigationTarget @Inject constructor(

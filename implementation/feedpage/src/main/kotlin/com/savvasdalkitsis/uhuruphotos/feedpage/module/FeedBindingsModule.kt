@@ -17,7 +17,7 @@ package com.savvasdalkitsis.uhuruphotos.feedpage.module
 
 import com.savvasdalkitsis.uhuruphotos.feedpage.navigation.FeedPageNavigationTarget
 import com.savvasdalkitsis.uhuruphotos.feedpage.usecase.FeedPageUseCase
-import com.savvasdalkitsis.uhuruphotos.navigation.NavigationTarget
+import com.savvasdalkitsis.uhuruphotos.api.navigation.NavigationTarget
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn

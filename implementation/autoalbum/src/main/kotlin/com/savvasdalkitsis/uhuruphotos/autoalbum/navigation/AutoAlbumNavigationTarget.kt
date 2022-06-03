@@ -28,8 +28,8 @@ import com.savvasdalkitsis.uhuruphotos.autoalbum.seam.AutoAlbumEffectsHandler
 import com.savvasdalkitsis.uhuruphotos.autoalbum.view.AutoAlbum
 import com.savvasdalkitsis.uhuruphotos.autoalbum.view.state.AutoAlbumState
 import com.savvasdalkitsis.uhuruphotos.autoalbum.viewmodel.AutoAlbumViewModel
-import com.savvasdalkitsis.uhuruphotos.navigation.NavigationTarget
-import com.savvasdalkitsis.uhuruphotos.navigation.navigationTarget
+import com.savvasdalkitsis.uhuruphotos.api.navigation.NavigationTarget
+import com.savvasdalkitsis.uhuruphotos.api.navigation.navigationTarget
 import javax.inject.Inject
 
 internal class AutoAlbumNavigationTarget @Inject constructor(

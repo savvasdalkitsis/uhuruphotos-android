@@ -19,7 +19,7 @@ import com.savvasdalkitsis.uhuruphotos.api.autoalbum.navigation.AutoAlbumNavigat
 import com.savvasdalkitsis.uhuruphotos.api.seam.EffectHandler
 import com.savvasdalkitsis.uhuruphotos.library.seam.LibraryEffect.ErrorLoadingAutoAlbums
 import com.savvasdalkitsis.uhuruphotos.library.seam.LibraryEffect.NavigateToAutoAlbum
-import com.savvasdalkitsis.uhuruphotos.navigation.Navigator
+import com.savvasdalkitsis.uhuruphotos.api.navigation.Navigator
 import com.savvasdalkitsis.uhuruphotos.strings.R
 import com.savvasdalkitsis.uhuruphotos.toaster.Toaster
 import javax.inject.Inject

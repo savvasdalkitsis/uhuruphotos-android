@@ -16,7 +16,7 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.person.seam
 
 import com.savvasdalkitsis.uhuruphotos.api.seam.EffectHandler
-import com.savvasdalkitsis.uhuruphotos.navigation.Navigator
+import com.savvasdalkitsis.uhuruphotos.api.navigation.Navigator
 import com.savvasdalkitsis.uhuruphotos.person.seam.PersonEffect.NavigateBack
 import com.savvasdalkitsis.uhuruphotos.person.seam.PersonEffect.OpenPhotoDetails
 import com.savvasdalkitsis.uhuruphotos.photos.model.PhotoSequenceDataSource.PersonResults

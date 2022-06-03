@@ -13,7 +13,7 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
  */
-package com.savvasdalkitsis.uhuruphotos.navigation
+package com.savvasdalkitsis.uhuruphotos.api.navigation
 
 import androidx.compose.animation.AnimatedContentScope
 import androidx.compose.animation.EnterTransition

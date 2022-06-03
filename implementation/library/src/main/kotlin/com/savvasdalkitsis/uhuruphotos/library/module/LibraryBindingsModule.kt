@@ -16,7 +16,7 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.library.module
 
 import com.savvasdalkitsis.uhuruphotos.library.navigation.LibraryNavigationTarget
-import com.savvasdalkitsis.uhuruphotos.navigation.NavigationTarget
+import com.savvasdalkitsis.uhuruphotos.api.navigation.NavigationTarget
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
