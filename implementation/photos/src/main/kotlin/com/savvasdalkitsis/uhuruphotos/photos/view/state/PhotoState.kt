@@ -16,7 +16,7 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.photos.view.state
 
 import androidx.annotation.StringRes
-import com.savvasdalkitsis.uhuruphotos.map.model.LatLon
+import com.savvasdalkitsis.uhuruphotos.api.map.model.LatLon
 import com.savvasdalkitsis.uhuruphotos.people.api.view.state.Person
 
 data class PhotoState(

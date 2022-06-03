@@ -13,11 +13,16 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
  */
-package com.savvasdalkitsis.uhuruphotos.map.view
+package com.savvasdalkitsis.uhuruphotos.api.map.view
 
-import com.savvasdalkitsis.uhuruphotos.map.model.LatLon
+import androidx.compose.runtime.Composable
+import com.savvasdalkitsis.uhuruphotos.api.map.model.LatLon
 
-interface MapViewState {
-    val isMoving: Boolean
-    fun contains(latLon: LatLon): Boolean
+interface MapViewScope {
+
+    @Composable
+    fun Marker(latLon: LatLon)
+
+    @Composable
+    fun HeatMap(points: Collection<LatLon>)
 }

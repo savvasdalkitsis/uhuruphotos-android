@@ -16,7 +16,7 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.heatmap.seam
 
 import androidx.compose.ui.geometry.Offset
-import com.savvasdalkitsis.uhuruphotos.map.model.LatLon
+import com.savvasdalkitsis.uhuruphotos.api.map.model.LatLon
 import com.savvasdalkitsis.uhuruphotos.photos.api.model.Photo
 
 sealed class HeatMapAction {

@@ -16,7 +16,7 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.photos.model
 
 import com.savvasdalkitsis.uhuruphotos.api.db.photos.PhotoDetails
-import com.savvasdalkitsis.uhuruphotos.map.model.LatLon
+import com.savvasdalkitsis.uhuruphotos.api.map.model.LatLon
 
 val PhotoDetails.latLng get() = gpsLat?.toDoubleOrNull()?.let { lat ->
     gpsLon?.toDoubleOrNull()?.let { lon ->

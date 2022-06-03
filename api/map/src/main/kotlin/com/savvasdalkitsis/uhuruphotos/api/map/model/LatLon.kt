@@ -13,11 +13,13 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
  */
-package com.savvasdalkitsis.uhuruphotos.map
+package com.savvasdalkitsis.uhuruphotos.api.map.model
 
-import com.savvasdalkitsis.uhuruphotos.map.model.LatLon
+import com.google.android.gms.maps.model.LatLng
 
-object Locations {
-    @Suppress("MagicNumber")
-    val TRAFALGAR_SQUARE: LatLon = LatLon(51.50803011165474, -0.12805053251940438)
+data class LatLon(val lat: Double, val lon: Double) {
+
+    internal val toLatLng get() = LatLng(lat, lon)
+
+    override fun toString() = "$lat,$lon"
 }

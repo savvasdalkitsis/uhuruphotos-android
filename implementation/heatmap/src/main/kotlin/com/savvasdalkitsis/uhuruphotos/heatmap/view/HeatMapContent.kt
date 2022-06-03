@@ -28,9 +28,9 @@ import com.google.accompanist.permissions.PermissionState
 import com.google.accompanist.permissions.isGranted
 import com.savvasdalkitsis.uhuruphotos.heatmap.seam.HeatMapAction
 import com.savvasdalkitsis.uhuruphotos.heatmap.view.state.HeatMapState
-import com.savvasdalkitsis.uhuruphotos.map.Locations
-import com.savvasdalkitsis.uhuruphotos.map.view.GoogleMapView
-import com.savvasdalkitsis.uhuruphotos.map.view.rememberGoogleMapViewState
+import com.savvasdalkitsis.uhuruphotos.api.map.Locations
+import com.savvasdalkitsis.uhuruphotos.api.map.view.GoogleMapView
+import com.savvasdalkitsis.uhuruphotos.api.map.view.rememberGoogleMapViewState
 import com.savvasdalkitsis.uhuruphotos.ui.insets.insetsTop
 import kotlinx.coroutines.withContext
 

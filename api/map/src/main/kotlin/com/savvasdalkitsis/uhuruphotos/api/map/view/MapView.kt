@@ -13,13 +13,13 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
  */
-package com.savvasdalkitsis.uhuruphotos.map.view
+package com.savvasdalkitsis.uhuruphotos.api.map.view
 
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import com.savvasdalkitsis.uhuruphotos.map.model.LatLon
-import com.savvasdalkitsis.uhuruphotos.map.model.MapOptions
+import com.savvasdalkitsis.uhuruphotos.api.map.model.LatLon
+import com.savvasdalkitsis.uhuruphotos.api.map.model.MapOptions
 
 @Composable
 fun MapView(

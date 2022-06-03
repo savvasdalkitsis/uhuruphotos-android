@@ -14,7 +14,7 @@ android {
     composeOptions {
         kotlinCompilerExtensionVersion compose_version
     }
-    namespace 'com.savvasdalkitsis.uhuruphotos.map'
+    namespace 'com.savvasdalkitsis.uhuruphotos.api.map'
 }
 
 dependencies {

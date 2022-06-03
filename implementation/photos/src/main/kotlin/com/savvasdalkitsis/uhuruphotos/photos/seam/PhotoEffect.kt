@@ -15,7 +15,7 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.photos.seam
 
-import com.savvasdalkitsis.uhuruphotos.map.model.LatLon
+import com.savvasdalkitsis.uhuruphotos.api.map.model.LatLon
 
 sealed class PhotoEffect {
     data class LaunchMap(val gps: LatLon) : PhotoEffect()

@@ -17,7 +17,7 @@ package com.savvasdalkitsis.uhuruphotos.heatmap.seam
 
 import com.savvasdalkitsis.uhuruphotos.api.seam.Mutation
 import com.savvasdalkitsis.uhuruphotos.heatmap.view.state.HeatMapState
-import com.savvasdalkitsis.uhuruphotos.map.model.LatLon
+import com.savvasdalkitsis.uhuruphotos.api.map.model.LatLon
 import com.savvasdalkitsis.uhuruphotos.photos.api.model.Photo
 
 sealed class HeatMapMutation(

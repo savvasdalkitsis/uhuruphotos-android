@@ -30,7 +30,7 @@ import com.savvasdalkitsis.uhuruphotos.heatmap.seam.HeatMapMutation.ShowLoading
 import com.savvasdalkitsis.uhuruphotos.heatmap.seam.HeatMapMutation.UpdateAllPhotos
 import com.savvasdalkitsis.uhuruphotos.heatmap.seam.HeatMapMutation.UpdateDisplay
 import com.savvasdalkitsis.uhuruphotos.heatmap.view.state.HeatMapState
-import com.savvasdalkitsis.uhuruphotos.map.model.LatLon
+import com.savvasdalkitsis.uhuruphotos.api.map.model.LatLon
 import com.savvasdalkitsis.uhuruphotos.photos.api.model.Photo
 import com.savvasdalkitsis.uhuruphotos.photos.model.latLng
 import com.savvasdalkitsis.uhuruphotos.photos.usecase.PhotosUseCase
