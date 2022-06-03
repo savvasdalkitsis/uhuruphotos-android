@@ -13,7 +13,7 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
  */
-package com.savvasdalkitsis.uhuruphotos.heatmap.view
+package com.savvasdalkitsis.uhuruphotos.implementation.heatmap.view
 
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.material.CircularProgressIndicator
@@ -23,10 +23,10 @@ import androidx.compose.ui.res.stringResource
 import com.savvasdalkitsis.uhuruphotos.api.albums.model.Album
 import com.savvasdalkitsis.uhuruphotos.api.feed.view.Feed
 import com.savvasdalkitsis.uhuruphotos.api.feed.view.state.FeedState
-import com.savvasdalkitsis.uhuruphotos.heatmap.seam.HeatMapAction
-import com.savvasdalkitsis.uhuruphotos.heatmap.seam.HeatMapAction.SelectedPhoto
-import com.savvasdalkitsis.uhuruphotos.heatmap.view.state.HeatMapFeedDisplay
-import com.savvasdalkitsis.uhuruphotos.heatmap.view.state.HeatMapState
+import com.savvasdalkitsis.uhuruphotos.implementation.heatmap.seam.HeatMapAction
+import com.savvasdalkitsis.uhuruphotos.implementation.heatmap.seam.HeatMapAction.SelectedPhoto
+import com.savvasdalkitsis.uhuruphotos.implementation.heatmap.view.state.HeatMapFeedDisplay
+import com.savvasdalkitsis.uhuruphotos.implementation.heatmap.view.state.HeatMapState
 import com.savvasdalkitsis.uhuruphotos.api.strings.R
 
 @Composable

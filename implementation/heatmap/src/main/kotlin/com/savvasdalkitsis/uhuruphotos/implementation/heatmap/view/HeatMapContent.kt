@@ -13,7 +13,7 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
  */
-package com.savvasdalkitsis.uhuruphotos.heatmap.view
+package com.savvasdalkitsis.uhuruphotos.implementation.heatmap.view
 
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.runtime.Composable
@@ -26,8 +26,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.google.accompanist.permissions.PermissionState
 import com.google.accompanist.permissions.isGranted
-import com.savvasdalkitsis.uhuruphotos.heatmap.seam.HeatMapAction
-import com.savvasdalkitsis.uhuruphotos.heatmap.view.state.HeatMapState
+import com.savvasdalkitsis.uhuruphotos.implementation.heatmap.seam.HeatMapAction
+import com.savvasdalkitsis.uhuruphotos.implementation.heatmap.view.state.HeatMapState
 import com.savvasdalkitsis.uhuruphotos.api.map.Locations
 import com.savvasdalkitsis.uhuruphotos.api.map.view.GoogleMapView
 import com.savvasdalkitsis.uhuruphotos.api.map.view.rememberGoogleMapViewState
@@ -53,7 +53,7 @@ fun HeatMapContent(
     if (startedMoving && !mapViewState.isMoving) {
         @Suppress("UNUSED_VALUE")
         startedMoving = false
-        action(HeatMapAction.CameraViewPortChanged {  latLng ->
+        action(HeatMapAction.CameraViewPortChanged { latLng ->
             withContext(scope.coroutineContext) {
                 mapViewState.contains(latLng)
             }

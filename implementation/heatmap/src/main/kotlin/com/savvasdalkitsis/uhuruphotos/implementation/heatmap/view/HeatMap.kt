@@ -13,7 +13,7 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
  */
-package com.savvasdalkitsis.uhuruphotos.heatmap.view
+package com.savvasdalkitsis.uhuruphotos.implementation.heatmap.view
 
 import android.content.res.Configuration.ORIENTATION_LANDSCAPE
 import androidx.compose.runtime.Composable
@@ -22,8 +22,8 @@ import androidx.compose.ui.platform.LocalConfiguration
 import com.google.accompanist.permissions.isGranted
 import com.google.accompanist.permissions.rememberPermissionState
 import com.google.accompanist.permissions.shouldShowRationale
-import com.savvasdalkitsis.uhuruphotos.heatmap.seam.HeatMapAction
-import com.savvasdalkitsis.uhuruphotos.heatmap.view.state.HeatMapState
+import com.savvasdalkitsis.uhuruphotos.implementation.heatmap.seam.HeatMapAction
+import com.savvasdalkitsis.uhuruphotos.implementation.heatmap.view.state.HeatMapState
 
 @Composable
 fun HeatMap(

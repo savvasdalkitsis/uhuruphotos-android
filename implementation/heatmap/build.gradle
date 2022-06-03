@@ -5,7 +5,7 @@ android {
     composeOptions {
         kotlinCompilerExtensionVersion compose_version
     }
-    namespace 'com.savvasdalkitsis.uhuruphotos.heatmap'
+    namespace 'com.savvasdalkitsis.uhuruphotos.implementation.heatmap'
 }
 
 dependencies {

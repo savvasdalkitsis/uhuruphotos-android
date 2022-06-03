@@ -13,14 +13,18 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
  */
-package com.savvasdalkitsis.uhuruphotos.heatmap.view.state
+package com.savvasdalkitsis.uhuruphotos.implementation.heatmap.seam
 
-import com.savvasdalkitsis.uhuruphotos.api.map.model.LatLon
+import androidx.compose.ui.geometry.Offset
 import com.savvasdalkitsis.uhuruphotos.api.photos.model.Photo
 
-data class HeatMapState(
-    val loading: Boolean = false,
-    val pointsToDisplay: List<LatLon> = emptyList(),
-    val allPhotos: List<Photo> = emptyList(),
-    val photosToDisplay: List<Photo> = emptyList(),
-)
+sealed class HeatMapEffect {
+    data class NavigateToPhoto(
+        val photo: Photo,
+        val center: Offset,
+        val scale: Float,
+    ) : HeatMapEffect()
+    object ErrorLoadingPhotoDetails : HeatMapEffect()
+    object NavigateBack : HeatMapEffect()
+
+}

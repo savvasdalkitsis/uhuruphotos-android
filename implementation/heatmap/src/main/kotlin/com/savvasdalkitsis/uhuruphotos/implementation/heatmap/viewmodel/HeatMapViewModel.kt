@@ -13,16 +13,16 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
  */
-package com.savvasdalkitsis.uhuruphotos.heatmap.viewmodel
+package com.savvasdalkitsis.uhuruphotos.implementation.heatmap.viewmodel
 
 import androidx.lifecycle.ViewModel
 import com.savvasdalkitsis.uhuruphotos.api.seam.Seam
 import com.savvasdalkitsis.uhuruphotos.api.seam.SeamViaHandler.Companion.handler
-import com.savvasdalkitsis.uhuruphotos.heatmap.seam.HeatMapAction
-import com.savvasdalkitsis.uhuruphotos.heatmap.seam.HeatMapEffect
-import com.savvasdalkitsis.uhuruphotos.heatmap.seam.HeatMapHandler
-import com.savvasdalkitsis.uhuruphotos.heatmap.seam.HeatMapMutation
-import com.savvasdalkitsis.uhuruphotos.heatmap.view.state.HeatMapState
+import com.savvasdalkitsis.uhuruphotos.implementation.heatmap.seam.HeatMapAction
+import com.savvasdalkitsis.uhuruphotos.implementation.heatmap.seam.HeatMapEffect
+import com.savvasdalkitsis.uhuruphotos.implementation.heatmap.seam.HeatMapHandler
+import com.savvasdalkitsis.uhuruphotos.implementation.heatmap.seam.HeatMapMutation
+import com.savvasdalkitsis.uhuruphotos.implementation.heatmap.view.state.HeatMapState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 

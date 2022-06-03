@@ -13,19 +13,19 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
  */
-package com.savvasdalkitsis.uhuruphotos.heatmap.navigation
+package com.savvasdalkitsis.uhuruphotos.implementation.heatmap.navigation
 
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import com.savvasdalkitsis.uhuruphotos.api.heatmap.navigation.HeatMapNavigationTarget
 import com.savvasdalkitsis.uhuruphotos.api.settings.usecase.SettingsUseCase
-import com.savvasdalkitsis.uhuruphotos.heatmap.seam.HeatMapAction
-import com.savvasdalkitsis.uhuruphotos.heatmap.seam.HeatMapEffect
-import com.savvasdalkitsis.uhuruphotos.heatmap.seam.HeatMapEffectsHandler
-import com.savvasdalkitsis.uhuruphotos.heatmap.view.HeatMap
-import com.savvasdalkitsis.uhuruphotos.heatmap.view.state.HeatMapState
-import com.savvasdalkitsis.uhuruphotos.heatmap.viewmodel.HeatMapViewModel
+import com.savvasdalkitsis.uhuruphotos.implementation.heatmap.seam.HeatMapAction
+import com.savvasdalkitsis.uhuruphotos.implementation.heatmap.seam.HeatMapEffect
+import com.savvasdalkitsis.uhuruphotos.implementation.heatmap.seam.HeatMapEffectsHandler
+import com.savvasdalkitsis.uhuruphotos.implementation.heatmap.view.HeatMap
+import com.savvasdalkitsis.uhuruphotos.implementation.heatmap.view.state.HeatMapState
+import com.savvasdalkitsis.uhuruphotos.implementation.heatmap.viewmodel.HeatMapViewModel
 import com.savvasdalkitsis.uhuruphotos.api.navigation.NavigationTarget
 import com.savvasdalkitsis.uhuruphotos.api.navigation.navigationTarget
 import javax.inject.Inject

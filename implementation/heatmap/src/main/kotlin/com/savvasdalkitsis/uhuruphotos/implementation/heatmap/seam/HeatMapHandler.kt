@@ -13,23 +13,23 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
  */
-package com.savvasdalkitsis.uhuruphotos.heatmap.seam
+package com.savvasdalkitsis.uhuruphotos.implementation.heatmap.seam
 
 import com.savvasdalkitsis.uhuruphotos.api.albums.usecase.AlbumsUseCase
 import com.savvasdalkitsis.uhuruphotos.api.coroutines.onErrors
 import com.savvasdalkitsis.uhuruphotos.api.coroutines.safelyOnStart
 import com.savvasdalkitsis.uhuruphotos.api.seam.ActionHandler
-import com.savvasdalkitsis.uhuruphotos.heatmap.seam.HeatMapAction.BackPressed
-import com.savvasdalkitsis.uhuruphotos.heatmap.seam.HeatMapAction.CameraViewPortChanged
-import com.savvasdalkitsis.uhuruphotos.heatmap.seam.HeatMapAction.Load
-import com.savvasdalkitsis.uhuruphotos.heatmap.seam.HeatMapAction.SelectedPhoto
-import com.savvasdalkitsis.uhuruphotos.heatmap.seam.HeatMapEffect.ErrorLoadingPhotoDetails
-import com.savvasdalkitsis.uhuruphotos.heatmap.seam.HeatMapEffect.NavigateBack
-import com.savvasdalkitsis.uhuruphotos.heatmap.seam.HeatMapEffect.NavigateToPhoto
-import com.savvasdalkitsis.uhuruphotos.heatmap.seam.HeatMapMutation.ShowLoading
-import com.savvasdalkitsis.uhuruphotos.heatmap.seam.HeatMapMutation.UpdateAllPhotos
-import com.savvasdalkitsis.uhuruphotos.heatmap.seam.HeatMapMutation.UpdateDisplay
-import com.savvasdalkitsis.uhuruphotos.heatmap.view.state.HeatMapState
+import com.savvasdalkitsis.uhuruphotos.implementation.heatmap.seam.HeatMapAction.BackPressed
+import com.savvasdalkitsis.uhuruphotos.implementation.heatmap.seam.HeatMapAction.CameraViewPortChanged
+import com.savvasdalkitsis.uhuruphotos.implementation.heatmap.seam.HeatMapAction.Load
+import com.savvasdalkitsis.uhuruphotos.implementation.heatmap.seam.HeatMapAction.SelectedPhoto
+import com.savvasdalkitsis.uhuruphotos.implementation.heatmap.seam.HeatMapEffect.ErrorLoadingPhotoDetails
+import com.savvasdalkitsis.uhuruphotos.implementation.heatmap.seam.HeatMapEffect.NavigateBack
+import com.savvasdalkitsis.uhuruphotos.implementation.heatmap.seam.HeatMapEffect.NavigateToPhoto
+import com.savvasdalkitsis.uhuruphotos.implementation.heatmap.seam.HeatMapMutation.ShowLoading
+import com.savvasdalkitsis.uhuruphotos.implementation.heatmap.seam.HeatMapMutation.UpdateAllPhotos
+import com.savvasdalkitsis.uhuruphotos.implementation.heatmap.seam.HeatMapMutation.UpdateDisplay
+import com.savvasdalkitsis.uhuruphotos.implementation.heatmap.view.state.HeatMapState
 import com.savvasdalkitsis.uhuruphotos.api.map.model.LatLon
 import com.savvasdalkitsis.uhuruphotos.api.photos.model.Photo
 import com.savvasdalkitsis.uhuruphotos.photos.model.latLng
