@@ -13,9 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
  */
-package com.savvasdalkitsis.uhuruphotos.internal.ui.module
+package com.savvasdalkitsis.uhuruphotos.implementation.ui.module
 
-import com.savvasdalkitsis.uhuruphotos.internal.ui.usecase.UiUseCase
+import com.savvasdalkitsis.uhuruphotos.implementation.ui.usecase.UiUseCase
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
