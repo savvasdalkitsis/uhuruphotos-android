@@ -31,7 +31,7 @@ import com.savvasdalkitsis.uhuruphotos.albums.repository.AlbumsRepository
 import com.savvasdalkitsis.uhuruphotos.albums.worker.AlbumDownloadWorker.Companion.Progress
 import com.savvasdalkitsis.uhuruphotos.api.notification.ForegroundInfoBuilder
 import com.savvasdalkitsis.uhuruphotos.api.notification.NotificationChannels.JOBS_CHANNEL_ID
-import com.savvasdalkitsis.uhuruphotos.strings.R
+import com.savvasdalkitsis.uhuruphotos.api.strings.R
 import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.every

@@ -29,7 +29,7 @@ import com.savvasdalkitsis.uhuruphotos.api.feed.view.state.FeedDisplay
 import com.savvasdalkitsis.uhuruphotos.library.seam.LibraryAction
 import com.savvasdalkitsis.uhuruphotos.library.seam.LibraryAction.RefreshAutoAlbums
 import com.savvasdalkitsis.uhuruphotos.library.view.state.LibraryState
-import com.savvasdalkitsis.uhuruphotos.strings.R
+import com.savvasdalkitsis.uhuruphotos.api.strings.R
 import com.savvasdalkitsis.uhuruphotos.ui.view.NoContent
 
 @Composable

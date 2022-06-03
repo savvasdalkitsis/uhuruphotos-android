@@ -24,7 +24,7 @@ import com.savvasdalkitsis.uhuruphotos.api.notification.ForegroundInfoBuilder
 import com.savvasdalkitsis.uhuruphotos.api.notification.NotificationChannels.JOBS_CHANNEL_ID
 import com.savvasdalkitsis.uhuruphotos.photos.repository.PhotoRepository
 import com.savvasdalkitsis.uhuruphotos.photos.service.PhotosService
-import com.savvasdalkitsis.uhuruphotos.strings.R
+import com.savvasdalkitsis.uhuruphotos.api.strings.R
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedInject
 import kotlinx.coroutines.Dispatchers

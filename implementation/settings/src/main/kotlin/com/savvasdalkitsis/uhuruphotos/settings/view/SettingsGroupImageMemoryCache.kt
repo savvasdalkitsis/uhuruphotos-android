@@ -24,7 +24,7 @@ import com.savvasdalkitsis.uhuruphotos.settings.seam.SettingsAction
 import com.savvasdalkitsis.uhuruphotos.settings.seam.SettingsAction.ChangeImageMemCache
 import com.savvasdalkitsis.uhuruphotos.settings.seam.SettingsAction.ClearImageMemCache
 import com.savvasdalkitsis.uhuruphotos.settings.view.state.SettingsState
-import com.savvasdalkitsis.uhuruphotos.strings.R
+import com.savvasdalkitsis.uhuruphotos.api.strings.R
 
 @Composable
 internal fun SettingsGroupImageMemoryCache(

@@ -23,7 +23,7 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.stringResource
 import com.savvasdalkitsis.uhuruphotos.settings.seam.SettingsAction
-import com.savvasdalkitsis.uhuruphotos.strings.R
+import com.savvasdalkitsis.uhuruphotos.api.strings.R
 
 @Composable
 internal fun SettingsFullFeedSyncPermissionDialog(

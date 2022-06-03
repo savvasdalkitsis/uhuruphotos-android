@@ -35,7 +35,7 @@ import com.savvasdalkitsis.uhuruphotos.search.seam.SearchEffect.NavigateToPerson
 import com.savvasdalkitsis.uhuruphotos.search.seam.SearchEffect.NavigateToSettings
 import com.savvasdalkitsis.uhuruphotos.search.seam.SearchEffect.OpenPhotoDetails
 import com.savvasdalkitsis.uhuruphotos.search.seam.SearchEffect.ReloadApp
-import com.savvasdalkitsis.uhuruphotos.strings.R
+import com.savvasdalkitsis.uhuruphotos.api.strings.R
 import com.savvasdalkitsis.uhuruphotos.toaster.Toaster
 import com.savvasdalkitsis.uhuruphotos.ui.usecase.UiUseCase
 import javax.inject.Inject

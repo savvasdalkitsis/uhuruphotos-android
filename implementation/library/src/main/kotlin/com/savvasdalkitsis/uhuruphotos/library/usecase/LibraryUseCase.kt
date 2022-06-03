@@ -26,7 +26,7 @@ import com.savvasdalkitsis.uhuruphotos.library.view.state.AutoAlbumSorting.DATE_
 import com.savvasdalkitsis.uhuruphotos.library.view.state.LibraryAutoAlbum
 import com.savvasdalkitsis.uhuruphotos.api.photos.model.Photo
 import com.savvasdalkitsis.uhuruphotos.photos.usecase.PhotosUseCase
-import com.savvasdalkitsis.uhuruphotos.strings.R
+import com.savvasdalkitsis.uhuruphotos.api.strings.R
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.combine

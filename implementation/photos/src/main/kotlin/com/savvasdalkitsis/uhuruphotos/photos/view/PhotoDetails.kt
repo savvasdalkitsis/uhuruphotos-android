@@ -50,7 +50,7 @@ import com.savvasdalkitsis.uhuruphotos.photos.seam.PhotoAction.NavigateBack
 import com.savvasdalkitsis.uhuruphotos.photos.seam.PhotoAction.ShowInfo
 import com.savvasdalkitsis.uhuruphotos.photos.seam.PhotoAction.ToggleUI
 import com.savvasdalkitsis.uhuruphotos.photos.view.state.PhotoState
-import com.savvasdalkitsis.uhuruphotos.strings.R
+import com.savvasdalkitsis.uhuruphotos.api.strings.R
 import com.savvasdalkitsis.uhuruphotos.video.view.Video
 
 @Composable

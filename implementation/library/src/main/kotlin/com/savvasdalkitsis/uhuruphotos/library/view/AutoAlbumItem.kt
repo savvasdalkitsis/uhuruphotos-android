@@ -32,7 +32,7 @@ import com.savvasdalkitsis.uhuruphotos.api.feed.view.PhotoThumbnail
 import com.savvasdalkitsis.uhuruphotos.library.seam.LibraryAction
 import com.savvasdalkitsis.uhuruphotos.library.seam.LibraryAction.AlbumSelected
 import com.savvasdalkitsis.uhuruphotos.library.view.state.LibraryAutoAlbum
-import com.savvasdalkitsis.uhuruphotos.strings.R
+import com.savvasdalkitsis.uhuruphotos.api.strings.R
 
 @Composable
 internal fun AutoAlbumItem(

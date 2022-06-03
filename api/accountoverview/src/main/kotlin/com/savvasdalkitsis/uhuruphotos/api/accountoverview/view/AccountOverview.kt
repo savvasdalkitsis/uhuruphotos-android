@@ -82,7 +82,7 @@ internal fun AccountOverview(
             ActionIcon(
                 onClick = onEditServerClicked,
                 icon = R.drawable.ic_edit,
-                contentDescription = stringResource(com.savvasdalkitsis.uhuruphotos.strings.R.string.edit_server_url)
+                contentDescription = stringResource(com.savvasdalkitsis.uhuruphotos.api.strings.R.string.edit_server_url)
             )
         }
         Row(
@@ -94,7 +94,7 @@ internal fun AccountOverview(
             ) {
                 Icon(Icons.Default.Settings, contentDescription = null)
                 Spacer(modifier = Modifier.width(8.dp))
-                Text(text = stringResource(com.savvasdalkitsis.uhuruphotos.strings.R.string.settings))
+                Text(text = stringResource(com.savvasdalkitsis.uhuruphotos.api.strings.R.string.settings))
             }
             Spacer(modifier = Modifier.weight(1f))
             OutlinedButton(
@@ -105,7 +105,7 @@ internal fun AccountOverview(
                     contentDescription = null
                 )
                 Spacer(modifier = Modifier.width(8.dp))
-                Text(text = stringResource(com.savvasdalkitsis.uhuruphotos.strings.R.string.log_out))
+                Text(text = stringResource(com.savvasdalkitsis.uhuruphotos.api.strings.R.string.log_out))
             }
         }
     }

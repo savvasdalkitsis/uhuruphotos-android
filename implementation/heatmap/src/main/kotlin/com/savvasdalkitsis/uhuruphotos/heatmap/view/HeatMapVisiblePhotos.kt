@@ -27,7 +27,7 @@ import com.savvasdalkitsis.uhuruphotos.heatmap.seam.HeatMapAction
 import com.savvasdalkitsis.uhuruphotos.heatmap.seam.HeatMapAction.SelectedPhoto
 import com.savvasdalkitsis.uhuruphotos.heatmap.view.state.HeatMapFeedDisplay
 import com.savvasdalkitsis.uhuruphotos.heatmap.view.state.HeatMapState
-import com.savvasdalkitsis.uhuruphotos.strings.R
+import com.savvasdalkitsis.uhuruphotos.api.strings.R
 
 @Composable
 fun HeatMapVisiblePhotos(

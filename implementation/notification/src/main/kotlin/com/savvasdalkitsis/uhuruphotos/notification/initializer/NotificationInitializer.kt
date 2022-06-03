@@ -22,7 +22,7 @@ import androidx.core.app.NotificationManagerCompat.IMPORTANCE_LOW
 import com.savvasdalkitsis.uhuruphotos.api.notification.NotificationChannels.CRASH_CHANNEL_ID
 import com.savvasdalkitsis.uhuruphotos.api.notification.NotificationChannels.JOBS_CHANNEL_ID
 import com.savvasdalkitsis.uhuruphotos.api.initializer.ApplicationCreated
-import com.savvasdalkitsis.uhuruphotos.strings.R
+import com.savvasdalkitsis.uhuruphotos.api.strings.R
 import javax.inject.Inject
 
 internal class NotificationInitializer @Inject constructor(

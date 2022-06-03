@@ -28,7 +28,7 @@ import com.savvasdalkitsis.uhuruphotos.photos.seam.PhotoAction.SharePhoto
 import com.savvasdalkitsis.uhuruphotos.photos.view.state.PhotoState
 import com.savvasdalkitsis.uhuruphotos.ui.view.ActionIconWithText
 import com.savvasdalkitsis.uhuruphotos.api.icons.R as Icons
-import com.savvasdalkitsis.uhuruphotos.strings.R as Strings
+import com.savvasdalkitsis.uhuruphotos.api.strings.R as Strings
 
 @Composable
 fun PhotoDetailsBottomActionBar(

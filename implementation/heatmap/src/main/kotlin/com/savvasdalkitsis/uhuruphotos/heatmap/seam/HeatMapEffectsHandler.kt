@@ -21,7 +21,7 @@ import com.savvasdalkitsis.uhuruphotos.heatmap.seam.HeatMapEffect.NavigateBack
 import com.savvasdalkitsis.uhuruphotos.heatmap.seam.HeatMapEffect.NavigateToPhoto
 import com.savvasdalkitsis.uhuruphotos.api.navigation.Navigator
 import com.savvasdalkitsis.uhuruphotos.photos.navigation.PhotoNavigationTarget
-import com.savvasdalkitsis.uhuruphotos.strings.R
+import com.savvasdalkitsis.uhuruphotos.api.strings.R
 import com.savvasdalkitsis.uhuruphotos.toaster.Toaster
 import javax.inject.Inject
 

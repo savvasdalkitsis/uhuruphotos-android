@@ -39,7 +39,7 @@ import com.savvasdalkitsis.uhuruphotos.ui.view.ActionIcon
 import com.savvasdalkitsis.uhuruphotos.ui.view.BackNavButton
 import com.savvasdalkitsis.uhuruphotos.ui.view.CommonTopBar
 import com.savvasdalkitsis.uhuruphotos.api.icons.R as Icons
-import com.savvasdalkitsis.uhuruphotos.strings.R as Strings
+import com.savvasdalkitsis.uhuruphotos.api.strings.R as Strings
 
 @Composable
 fun HeatMapTopBar(

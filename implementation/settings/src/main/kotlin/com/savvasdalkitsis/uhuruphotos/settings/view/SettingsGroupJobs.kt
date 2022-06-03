@@ -29,7 +29,7 @@ import com.savvasdalkitsis.uhuruphotos.settings.seam.SettingsAction.ChangeFullSy
 import com.savvasdalkitsis.uhuruphotos.settings.seam.SettingsAction.FeedSyncFrequencyChanged
 import com.savvasdalkitsis.uhuruphotos.settings.view.state.SettingsState
 import com.savvasdalkitsis.uhuruphotos.api.icons.R as Icons
-import com.savvasdalkitsis.uhuruphotos.strings.R as Strings
+import com.savvasdalkitsis.uhuruphotos.api.strings.R as Strings
 
 @Composable
 internal fun SettingsGroupJobs(

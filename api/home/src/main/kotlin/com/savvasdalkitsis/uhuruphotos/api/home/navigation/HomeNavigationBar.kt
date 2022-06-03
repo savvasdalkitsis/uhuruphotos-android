@@ -49,7 +49,7 @@ import com.savvasdalkitsis.uhuruphotos.api.feed.view.state.FeedDisplay
 import com.savvasdalkitsis.uhuruphotos.api.homenavigation.HomeNavigationRoutes
 import com.savvasdalkitsis.uhuruphotos.api.icons.R
 import com.savvasdalkitsis.uhuruphotos.ui.window.LocalWindowSize
-import com.savvasdalkitsis.uhuruphotos.strings.R as Strings
+import com.savvasdalkitsis.uhuruphotos.api.strings.R as Strings
 
 @Composable
 fun homeNavigationStyle() = when (LocalWindowSize.current.widthSizeClass) {

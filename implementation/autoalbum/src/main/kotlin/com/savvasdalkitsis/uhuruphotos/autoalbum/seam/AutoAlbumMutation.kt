@@ -19,7 +19,7 @@ import com.savvasdalkitsis.uhuruphotos.api.seam.Mutation
 import com.savvasdalkitsis.uhuruphotos.autoalbum.view.state.AutoAlbum
 import com.savvasdalkitsis.uhuruphotos.autoalbum.view.state.AutoAlbumFeedDisplay
 import com.savvasdalkitsis.uhuruphotos.autoalbum.view.state.AutoAlbumState
-import com.savvasdalkitsis.uhuruphotos.strings.R
+import com.savvasdalkitsis.uhuruphotos.api.strings.R
 
 internal sealed class AutoAlbumMutation(
     mutation: Mutation<AutoAlbumState>,

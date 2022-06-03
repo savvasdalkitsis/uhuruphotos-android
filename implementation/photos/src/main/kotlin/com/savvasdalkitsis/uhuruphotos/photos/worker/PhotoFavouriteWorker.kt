@@ -26,7 +26,7 @@ import com.savvasdalkitsis.uhuruphotos.photos.repository.PhotoRepository
 import com.savvasdalkitsis.uhuruphotos.photos.service.PhotosService
 import com.savvasdalkitsis.uhuruphotos.photos.service.model.PhotoFavouriteRequest
 import com.savvasdalkitsis.uhuruphotos.photos.service.model.toPhotoDetails
-import com.savvasdalkitsis.uhuruphotos.strings.R
+import com.savvasdalkitsis.uhuruphotos.api.strings.R
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedInject
 import kotlinx.coroutines.Dispatchers

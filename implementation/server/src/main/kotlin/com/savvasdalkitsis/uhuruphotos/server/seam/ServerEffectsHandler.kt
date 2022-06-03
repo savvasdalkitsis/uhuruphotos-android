@@ -21,7 +21,7 @@ import com.savvasdalkitsis.uhuruphotos.api.navigation.Navigator
 import com.savvasdalkitsis.uhuruphotos.server.seam.ServerEffect.Close
 import com.savvasdalkitsis.uhuruphotos.server.seam.ServerEffect.ErrorLoggingIn
 import com.savvasdalkitsis.uhuruphotos.server.seam.ServerEffect.SendFeedback
-import com.savvasdalkitsis.uhuruphotos.strings.R
+import com.savvasdalkitsis.uhuruphotos.api.strings.R
 import com.savvasdalkitsis.uhuruphotos.toaster.Toaster
 import javax.inject.Inject
 

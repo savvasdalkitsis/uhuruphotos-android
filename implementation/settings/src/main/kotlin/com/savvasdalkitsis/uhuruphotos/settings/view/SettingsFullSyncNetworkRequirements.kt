@@ -25,7 +25,7 @@ import androidx.work.NetworkType.UNMETERED
 import com.savvasdalkitsis.uhuruphotos.settings.seam.SettingsAction
 import com.savvasdalkitsis.uhuruphotos.settings.seam.SettingsAction.ChangeFullSyncNetworkRequirements
 import com.savvasdalkitsis.uhuruphotos.settings.view.state.SettingsState
-import com.savvasdalkitsis.uhuruphotos.strings.R
+import com.savvasdalkitsis.uhuruphotos.api.strings.R
 
 @Composable
 private fun NetworkType?.friendlyName(): String =  when (this) {
