@@ -13,20 +13,19 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
  */
-package com.savvasdalkitsis.uhuruphotos.image.cache
+package com.savvasdalkitsis.uhuruphotos.implementation.image.initializer
 
-import coil.disk.DiskCache
-import coil.memory.MemoryCache
-import com.savvasdalkitsis.uhuruphotos.api.image.cache.ImageCacheController
+import android.app.Application
+import coil.Coil
+import coil.ImageLoader
+import com.savvasdalkitsis.uhuruphotos.api.initializer.ApplicationCreated
 import javax.inject.Inject
 
-class ImageCacheController @Inject constructor(
-    private val memoryCache: MemoryCache,
-    private val diskCache: DiskCache,
-) : ImageCacheController {
+class ImageInitializer @Inject constructor(
+    private val imageLoader: ImageLoader,
+) : ApplicationCreated {
 
-    override fun clear() {
-        memoryCache.clear()
-        diskCache.clear()
+    override fun onAppCreated(app: Application) {
+        Coil.setImageLoader(imageLoader)
     }
 }

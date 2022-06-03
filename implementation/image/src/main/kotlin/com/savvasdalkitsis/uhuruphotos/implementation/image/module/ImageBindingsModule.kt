@@ -13,10 +13,10 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
  */
-package com.savvasdalkitsis.uhuruphotos.image.module
+package com.savvasdalkitsis.uhuruphotos.implementation.image.module
 
-import com.savvasdalkitsis.uhuruphotos.image.cache.ImageCacheController
-import com.savvasdalkitsis.uhuruphotos.image.initializer.ImageInitializer
+import com.savvasdalkitsis.uhuruphotos.implementation.image.cache.ImageCacheController
+import com.savvasdalkitsis.uhuruphotos.implementation.image.initializer.ImageInitializer
 import com.savvasdalkitsis.uhuruphotos.api.initializer.ApplicationCreated
 import dagger.Binds
 import dagger.Module
