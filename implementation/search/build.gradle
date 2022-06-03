@@ -12,7 +12,7 @@ dependencies {
 
     implementation project(":api:feed")
     implementation project(":api:ui")
-    implementation project(":internal:photos")
+    implementation project(":implementation:photos")
     implementation project(':api:photos')
     implementation project(":api:db")
     implementation project(':api:userbadge')

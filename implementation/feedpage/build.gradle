@@ -12,7 +12,7 @@ dependencies {
 
     implementation project(":api:feedpage")
     implementation project(":api:compose")
-    implementation project(":internal:photos")
+    implementation project(":implementation:photos")
     implementation project(':api:photos')
     implementation project(':api:albums')
     implementation project(":api:feed")

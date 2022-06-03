@@ -29,7 +29,7 @@ dependencies {
     implementation project(":api:icons")
     implementation project(':api:image')
     implementation project(":api:share")
-    implementation project(":internal:video")
+    implementation project(":implementation:video")
     implementation project(":api:toaster")
     implementation project(":api:notification")
     implementation project(":api:strings")

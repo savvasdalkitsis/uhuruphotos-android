@@ -1,0 +1,29 @@
+android {
+    namespace 'com.savvasdalkitsis.uhuruphotos.implementation'
+}
+
+dependencies {
+    implementation project(":implementation:account")
+    implementation project(":implementation:albums")
+    implementation project(":implementation:auth")
+    implementation project(":implementation:autoalbum")
+    implementation project(":implementation:feedpage")
+    implementation project(":implementation:heatmap")
+    implementation project(":implementation:home")
+    implementation project(":implementation:image")
+    implementation project(":implementation:library")
+    implementation project(":implementation:log")
+    implementation project(":implementation:network")
+    implementation project(":implementation:notification")
+    implementation project(":implementation:person")
+    implementation project(":implementation:people")
+    implementation project(":implementation:photos")
+    implementation project(":implementation:search")
+    implementation project(":implementation:server")
+    implementation project(":implementation:settings")
+    implementation project(":implementation:share")
+    implementation project(":implementation:ui")
+    implementation project(":implementation:user")
+    implementation project(":implementation:userbadge")
+    implementation project(":implementation:video")
+}

@@ -17,7 +17,7 @@ dependencies {
 
     implementation project(":api:db")
     implementation project(":api:log")
-    implementation project(":internal:photos")
+    implementation project(":implementation:photos")
     implementation project(":api:icons")
     implementation project(":api:date")
     implementation project(":api:coroutines")
@@ -29,7 +29,7 @@ dependencies {
     implementation project(":api:notification")
     implementation project(":api:strings")
     implementation project(":api:user")
-    implementation project(":internal:people")
+    implementation project(":implementation:people")
     implementation(
             libs.androidx.compose.hilt.navigation,
             libs.androidx.work,
@@ -40,13 +40,13 @@ dependencies {
             libs.sqldelight.coroutines,
     )
     testImplementation testFixtures(project(":api:db"))
-    testImplementation testFixtures(project(":internal:photos"))
-    testImplementation testFixtures(project(":internal:user"))
+    testImplementation testFixtures(project(":implementation:photos"))
+    testImplementation testFixtures(project(":implementation:user"))
     testImplementation(
             libs.bundles.test,
     )
     testFixturesImplementation testFixtures(project(":api:db"))
-    testFixturesImplementation project(":internal:photos")
+    testFixturesImplementation project(":implementation:photos")
     testFixturesImplementation project(':api:photos')
     testFixturesImplementation project(':api:albums')
     kapt libs.moshi.kapt
