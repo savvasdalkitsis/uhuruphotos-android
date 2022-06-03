@@ -34,7 +34,7 @@ import com.savvasdalkitsis.uhuruphotos.photos.seam.PhotoEffect.NavigateToPerson
 import com.savvasdalkitsis.uhuruphotos.photos.seam.PhotoEffect.SharePhoto
 import com.savvasdalkitsis.uhuruphotos.photos.seam.PhotoEffect.ShowSystemBars
 import com.savvasdalkitsis.uhuruphotos.api.strings.R
-import com.savvasdalkitsis.uhuruphotos.toaster.Toaster
+import com.savvasdalkitsis.uhuruphotos.api.toaster.Toaster
 import com.savvasdalkitsis.uhuruphotos.ui.usecase.UiUseCase
 import dagger.hilt.android.qualifiers.ApplicationContext
 import javax.inject.Inject

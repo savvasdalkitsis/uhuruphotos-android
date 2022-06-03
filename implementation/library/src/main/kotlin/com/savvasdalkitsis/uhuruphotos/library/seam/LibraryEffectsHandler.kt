@@ -21,7 +21,7 @@ import com.savvasdalkitsis.uhuruphotos.library.seam.LibraryEffect.ErrorLoadingAu
 import com.savvasdalkitsis.uhuruphotos.library.seam.LibraryEffect.NavigateToAutoAlbum
 import com.savvasdalkitsis.uhuruphotos.api.navigation.Navigator
 import com.savvasdalkitsis.uhuruphotos.api.strings.R
-import com.savvasdalkitsis.uhuruphotos.toaster.Toaster
+import com.savvasdalkitsis.uhuruphotos.api.toaster.Toaster
 import javax.inject.Inject
 
 class LibraryEffectsHandler @Inject constructor(

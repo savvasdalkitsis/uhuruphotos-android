@@ -22,7 +22,7 @@ import com.savvasdalkitsis.uhuruphotos.people.seam.PeopleEffect.NavigateBack
 import com.savvasdalkitsis.uhuruphotos.people.seam.PeopleEffect.NavigateToPerson
 import com.savvasdalkitsis.uhuruphotos.api.person.navigation.PersonNavigationTarget
 import com.savvasdalkitsis.uhuruphotos.api.strings.R
-import com.savvasdalkitsis.uhuruphotos.toaster.Toaster
+import com.savvasdalkitsis.uhuruphotos.api.toaster.Toaster
 import javax.inject.Inject
 
 class PeopleEffectHandler @Inject constructor(

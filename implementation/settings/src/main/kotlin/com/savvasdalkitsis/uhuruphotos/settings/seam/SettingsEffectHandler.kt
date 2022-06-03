@@ -19,7 +19,7 @@ import com.savvasdalkitsis.uhuruphotos.api.seam.EffectHandler
 import com.savvasdalkitsis.uhuruphotos.api.navigation.Navigator
 import com.savvasdalkitsis.uhuruphotos.settings.seam.SettingsEffect.NavigateBack
 import com.savvasdalkitsis.uhuruphotos.settings.seam.SettingsEffect.ShowMessage
-import com.savvasdalkitsis.uhuruphotos.toaster.Toaster
+import com.savvasdalkitsis.uhuruphotos.api.toaster.Toaster
 import javax.inject.Inject
 
 internal class SettingsEffectHandler @Inject constructor(

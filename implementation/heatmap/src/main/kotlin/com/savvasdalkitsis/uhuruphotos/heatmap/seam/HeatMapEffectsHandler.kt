@@ -22,7 +22,7 @@ import com.savvasdalkitsis.uhuruphotos.heatmap.seam.HeatMapEffect.NavigateToPhot
 import com.savvasdalkitsis.uhuruphotos.api.navigation.Navigator
 import com.savvasdalkitsis.uhuruphotos.photos.navigation.PhotoNavigationTarget
 import com.savvasdalkitsis.uhuruphotos.api.strings.R
-import com.savvasdalkitsis.uhuruphotos.toaster.Toaster
+import com.savvasdalkitsis.uhuruphotos.api.toaster.Toaster
 import javax.inject.Inject
 
 class HeatMapEffectsHandler @Inject constructor(

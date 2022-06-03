@@ -20,7 +20,7 @@ import android.content.Context
 import android.content.Intent
 import com.savvasdalkitsis.uhuruphotos.api.log.log
 import com.savvasdalkitsis.uhuruphotos.api.strings.R
-import com.savvasdalkitsis.uhuruphotos.toaster.Toaster
+import com.savvasdalkitsis.uhuruphotos.api.toaster.Toaster
 import dagger.hilt.android.qualifiers.ApplicationContext
 import javax.inject.Inject
 
