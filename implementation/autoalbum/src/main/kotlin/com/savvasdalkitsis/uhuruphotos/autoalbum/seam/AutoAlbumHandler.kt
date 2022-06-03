@@ -36,7 +36,7 @@ import com.savvasdalkitsis.uhuruphotos.autoalbum.view.state.AutoAlbumState
 import com.savvasdalkitsis.uhuruphotos.api.db.albums.GetAutoAlbum
 import com.savvasdalkitsis.uhuruphotos.api.db.albums.GetPeopleForAutoAlbum
 import com.savvasdalkitsis.uhuruphotos.api.people.view.state.toPerson
-import com.savvasdalkitsis.uhuruphotos.photos.api.model.Photo
+import com.savvasdalkitsis.uhuruphotos.api.photos.model.Photo
 import com.savvasdalkitsis.uhuruphotos.photos.usecase.PhotosUseCase
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableSharedFlow

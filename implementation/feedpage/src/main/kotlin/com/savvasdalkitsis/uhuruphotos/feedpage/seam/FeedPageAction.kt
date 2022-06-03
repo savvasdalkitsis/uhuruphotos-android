@@ -18,7 +18,7 @@ package com.savvasdalkitsis.uhuruphotos.feedpage.seam
 import androidx.compose.ui.geometry.Offset
 import com.savvasdalkitsis.uhuruphotos.api.albums.model.Album
 import com.savvasdalkitsis.uhuruphotos.api.feed.view.state.FeedDisplays
-import com.savvasdalkitsis.uhuruphotos.photos.api.model.Photo
+import com.savvasdalkitsis.uhuruphotos.api.photos.model.Photo
 
 internal sealed class FeedPageAction {
     data class SelectedPhoto(

@@ -16,7 +16,7 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.heatmap.seam
 
 import androidx.compose.ui.geometry.Offset
-import com.savvasdalkitsis.uhuruphotos.photos.api.model.Photo
+import com.savvasdalkitsis.uhuruphotos.api.photos.model.Photo
 
 sealed class HeatMapEffect {
     data class NavigateToPhoto(

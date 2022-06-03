@@ -16,7 +16,7 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.heatmap.view.state
 
 import com.savvasdalkitsis.uhuruphotos.api.map.model.LatLon
-import com.savvasdalkitsis.uhuruphotos.photos.api.model.Photo
+import com.savvasdalkitsis.uhuruphotos.api.photos.model.Photo
 
 data class HeatMapState(
     val loading: Boolean = false,

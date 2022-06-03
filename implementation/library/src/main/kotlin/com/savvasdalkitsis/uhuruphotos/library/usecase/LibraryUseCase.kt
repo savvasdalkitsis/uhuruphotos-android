@@ -24,7 +24,7 @@ import com.savvasdalkitsis.uhuruphotos.library.view.state.AutoAlbumSorting.ALPHA
 import com.savvasdalkitsis.uhuruphotos.library.view.state.AutoAlbumSorting.DATE_ASC
 import com.savvasdalkitsis.uhuruphotos.library.view.state.AutoAlbumSorting.DATE_DESC
 import com.savvasdalkitsis.uhuruphotos.library.view.state.LibraryAutoAlbum
-import com.savvasdalkitsis.uhuruphotos.photos.api.model.Photo
+import com.savvasdalkitsis.uhuruphotos.api.photos.model.Photo
 import com.savvasdalkitsis.uhuruphotos.photos.usecase.PhotosUseCase
 import com.savvasdalkitsis.uhuruphotos.strings.R
 import dagger.hilt.android.qualifiers.ApplicationContext

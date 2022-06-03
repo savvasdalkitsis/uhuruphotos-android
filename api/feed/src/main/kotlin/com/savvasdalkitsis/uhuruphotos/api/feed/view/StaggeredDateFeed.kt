@@ -30,7 +30,7 @@ import androidx.compose.ui.unit.dp
 import com.savvasdalkitsis.uhuruphotos.api.albums.model.Album
 import com.savvasdalkitsis.uhuruphotos.api.feed.view.PhotoRowSlot.EmptySlot
 import com.savvasdalkitsis.uhuruphotos.api.feed.view.PhotoRowSlot.PhotoSlot
-import com.savvasdalkitsis.uhuruphotos.photos.api.model.Photo
+import com.savvasdalkitsis.uhuruphotos.api.photos.model.Photo
 import my.nanihadesuka.compose.LazyColumnScrollbar
 
 @Composable

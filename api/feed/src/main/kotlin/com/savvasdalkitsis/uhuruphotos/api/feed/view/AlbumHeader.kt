@@ -31,7 +31,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.savvasdalkitsis.uhuruphotos.api.albums.model.Album
 import com.savvasdalkitsis.uhuruphotos.api.icons.R
-import com.savvasdalkitsis.uhuruphotos.photos.api.model.SelectionMode
+import com.savvasdalkitsis.uhuruphotos.api.photos.model.SelectionMode
 import com.savvasdalkitsis.uhuruphotos.ui.view.ActionIcon
 
 @Composable

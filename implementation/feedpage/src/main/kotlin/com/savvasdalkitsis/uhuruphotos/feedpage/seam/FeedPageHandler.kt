@@ -60,10 +60,10 @@ import com.savvasdalkitsis.uhuruphotos.feedpage.seam.FeedPageMutation.StopRefres
 import com.savvasdalkitsis.uhuruphotos.feedpage.seam.FeedPageMutation.UserBadgeUpdate
 import com.savvasdalkitsis.uhuruphotos.feedpage.usecase.FeedPageUseCase
 import com.savvasdalkitsis.uhuruphotos.feedpage.view.state.FeedPageState
-import com.savvasdalkitsis.uhuruphotos.photos.api.model.Photo
-import com.savvasdalkitsis.uhuruphotos.photos.api.model.SelectionMode.SELECTED
-import com.savvasdalkitsis.uhuruphotos.photos.api.model.SelectionMode.UNDEFINED
-import com.savvasdalkitsis.uhuruphotos.photos.api.model.SelectionMode.UNSELECTED
+import com.savvasdalkitsis.uhuruphotos.api.photos.model.Photo
+import com.savvasdalkitsis.uhuruphotos.api.photos.model.SelectionMode.SELECTED
+import com.savvasdalkitsis.uhuruphotos.api.photos.model.SelectionMode.UNDEFINED
+import com.savvasdalkitsis.uhuruphotos.api.photos.model.SelectionMode.UNSELECTED
 import com.savvasdalkitsis.uhuruphotos.photos.usecase.PhotosUseCase
 import com.savvasdalkitsis.uhuruphotos.userbadge.api.UserBadgeUseCase
 import com.savvasdalkitsis.uhuruphotos.userbadge.api.view.state.SyncState.IN_PROGRESS

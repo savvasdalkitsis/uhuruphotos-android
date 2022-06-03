@@ -16,7 +16,7 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.api.albums.service.model
 
 import com.savvasdalkitsis.uhuruphotos.api.people.model.PersonResult
-import com.savvasdalkitsis.uhuruphotos.photos.api.service.model.PhotoResult
+import com.savvasdalkitsis.uhuruphotos.api.photos.model.PhotoResult
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 

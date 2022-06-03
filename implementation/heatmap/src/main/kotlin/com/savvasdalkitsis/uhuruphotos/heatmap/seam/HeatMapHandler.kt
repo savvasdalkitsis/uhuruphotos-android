@@ -31,7 +31,7 @@ import com.savvasdalkitsis.uhuruphotos.heatmap.seam.HeatMapMutation.UpdateAllPho
 import com.savvasdalkitsis.uhuruphotos.heatmap.seam.HeatMapMutation.UpdateDisplay
 import com.savvasdalkitsis.uhuruphotos.heatmap.view.state.HeatMapState
 import com.savvasdalkitsis.uhuruphotos.api.map.model.LatLon
-import com.savvasdalkitsis.uhuruphotos.photos.api.model.Photo
+import com.savvasdalkitsis.uhuruphotos.api.photos.model.Photo
 import com.savvasdalkitsis.uhuruphotos.photos.model.latLng
 import com.savvasdalkitsis.uhuruphotos.photos.usecase.PhotosUseCase
 import kotlinx.coroutines.CoroutineScope

@@ -17,7 +17,7 @@ package com.savvasdalkitsis.uhuruphotos.person.seam
 
 import androidx.compose.ui.geometry.Offset
 import com.savvasdalkitsis.uhuruphotos.api.feed.view.state.FeedDisplay
-import com.savvasdalkitsis.uhuruphotos.photos.api.model.Photo
+import com.savvasdalkitsis.uhuruphotos.api.photos.model.Photo
 
 sealed class PersonAction {
     data class LoadPerson(val id: Int) : PersonAction()

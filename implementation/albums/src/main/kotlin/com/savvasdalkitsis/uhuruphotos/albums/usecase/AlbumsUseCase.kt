@@ -26,7 +26,7 @@ import com.savvasdalkitsis.uhuruphotos.api.db.albums.GetAlbums
 import com.savvasdalkitsis.uhuruphotos.api.db.albums.GetPersonAlbums
 import com.savvasdalkitsis.uhuruphotos.api.group.model.Group
 import com.savvasdalkitsis.uhuruphotos.api.group.model.mapValues
-import com.savvasdalkitsis.uhuruphotos.photos.api.model.Photo
+import com.savvasdalkitsis.uhuruphotos.api.photos.model.Photo
 import com.savvasdalkitsis.uhuruphotos.photos.service.model.isVideo
 import com.savvasdalkitsis.uhuruphotos.photos.usecase.PhotosUseCase
 import kotlinx.coroutines.flow.Flow

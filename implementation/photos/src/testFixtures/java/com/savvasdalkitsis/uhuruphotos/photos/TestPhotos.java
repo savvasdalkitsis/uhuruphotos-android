@@ -1,8 +1,8 @@
 package com.savvasdalkitsis.uhuruphotos.photos;
 
-import com.savvasdalkitsis.uhuruphotos.photos.api.model.Photo;
-import com.savvasdalkitsis.uhuruphotos.photos.api.model.SelectionMode;
-import com.savvasdalkitsis.uhuruphotos.photos.api.service.model.PhotoSummaryItem;
+import com.savvasdalkitsis.uhuruphotos.api.photos.model.Photo;
+import com.savvasdalkitsis.uhuruphotos.api.photos.model.SelectionMode;
+import com.savvasdalkitsis.uhuruphotos.api.photos.model.PhotoSummaryItem;
 
 public class TestPhotos {
 

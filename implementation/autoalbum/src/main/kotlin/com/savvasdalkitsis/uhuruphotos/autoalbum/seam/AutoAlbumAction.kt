@@ -17,7 +17,7 @@ package com.savvasdalkitsis.uhuruphotos.autoalbum.seam
 
 import androidx.compose.ui.geometry.Offset
 import com.savvasdalkitsis.uhuruphotos.api.people.view.state.Person
-import com.savvasdalkitsis.uhuruphotos.photos.api.model.Photo
+import com.savvasdalkitsis.uhuruphotos.api.photos.model.Photo
 
 internal sealed class AutoAlbumAction {
     object SwipeToRefresh : AutoAlbumAction()

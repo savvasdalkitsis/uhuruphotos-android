@@ -16,7 +16,7 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.photos.service.model
 
 import com.savvasdalkitsis.uhuruphotos.api.db.photos.PhotoDetails
-import com.savvasdalkitsis.uhuruphotos.photos.api.service.model.PhotoResult
+import com.savvasdalkitsis.uhuruphotos.api.photos.model.PhotoResult
 
 private val PhotoResult.serializePeople: String?
     get() = peopleNames?.joinToString(separator = "::")

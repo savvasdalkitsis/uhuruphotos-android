@@ -28,7 +28,7 @@ import androidx.compose.ui.unit.dp
 import com.savvasdalkitsis.uhuruphotos.api.albums.model.Album
 import com.savvasdalkitsis.uhuruphotos.api.feed.view.state.FeedDisplay
 import com.savvasdalkitsis.uhuruphotos.api.feed.view.state.FeedState
-import com.savvasdalkitsis.uhuruphotos.photos.api.model.Photo
+import com.savvasdalkitsis.uhuruphotos.api.photos.model.Photo
 import com.savvasdalkitsis.uhuruphotos.strings.R
 import com.savvasdalkitsis.uhuruphotos.ui.view.FullProgressBar
 import com.savvasdalkitsis.uhuruphotos.ui.view.NoContent

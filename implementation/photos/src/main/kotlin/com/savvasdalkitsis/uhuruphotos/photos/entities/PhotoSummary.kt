@@ -16,7 +16,7 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.photos.entities
 
 import com.savvasdalkitsis.uhuruphotos.api.db.photos.PhotoSummary
-import com.savvasdalkitsis.uhuruphotos.photos.api.service.model.PhotoSummaryItem
+import com.savvasdalkitsis.uhuruphotos.api.photos.model.PhotoSummaryItem
 
 fun PhotoSummaryItem.toPhotoSummary(albumId: String) = PhotoSummary(
     id = id,

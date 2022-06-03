@@ -6,5 +6,5 @@ dependencies {
 }
 
 android {
-    namespace 'com.savvasdalkitsis.uhuruphotos.photo.api'
+    namespace 'com.savvasdalkitsis.uhuruphotos.api.photos'
 }
