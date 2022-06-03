@@ -13,9 +13,20 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
  */
-package com.savvasdalkitsis.uhuruphotos.home.view.state
+package com.savvasdalkitsis.uhuruphotos.implementation.home.seam
 
-internal data class HomeState(
-    val isLoading: Boolean = true,
-    val showLibrary: Boolean = true,
-)
+import com.savvasdalkitsis.uhuruphotos.api.seam.Mutation
+import com.savvasdalkitsis.uhuruphotos.implementation.home.view.state.HomeState
+
+internal sealed class HomeMutation(
+    mutation: Mutation<HomeState>,
+) : Mutation<HomeState> by mutation {
+
+    object Loading : HomeMutation({
+      it.copy(isLoading = true)
+    })
+
+    data class ShowLibrary(val showLibrary: Boolean) : HomeMutation({
+        it.copy(showLibrary = showLibrary)
+    })
+}

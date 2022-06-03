@@ -13,17 +13,17 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
  */
-package com.savvasdalkitsis.uhuruphotos.home.seam
+package com.savvasdalkitsis.uhuruphotos.implementation.home.seam
 
 import com.savvasdalkitsis.uhuruphotos.api.seam.ActionHandler
 import com.savvasdalkitsis.uhuruphotos.api.settings.usecase.SettingsUseCase
 import com.savvasdalkitsis.uhuruphotos.api.auth.model.AuthStatus.Unauthenticated
 import com.savvasdalkitsis.uhuruphotos.api.auth.usecase.AuthenticationUseCase
-import com.savvasdalkitsis.uhuruphotos.home.seam.HomeAction.Load
-import com.savvasdalkitsis.uhuruphotos.home.seam.HomeEffect.LaunchAuthentication
-import com.savvasdalkitsis.uhuruphotos.home.seam.HomeMutation.Loading
-import com.savvasdalkitsis.uhuruphotos.home.seam.HomeMutation.ShowLibrary
-import com.savvasdalkitsis.uhuruphotos.home.view.state.HomeState
+import com.savvasdalkitsis.uhuruphotos.implementation.home.seam.HomeAction.Load
+import com.savvasdalkitsis.uhuruphotos.implementation.home.seam.HomeEffect.LaunchAuthentication
+import com.savvasdalkitsis.uhuruphotos.implementation.home.seam.HomeMutation.Loading
+import com.savvasdalkitsis.uhuruphotos.implementation.home.seam.HomeMutation.ShowLibrary
+import com.savvasdalkitsis.uhuruphotos.implementation.home.view.state.HomeState
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import javax.inject.Inject

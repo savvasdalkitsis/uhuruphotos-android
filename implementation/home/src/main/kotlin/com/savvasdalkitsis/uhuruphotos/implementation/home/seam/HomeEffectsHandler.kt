@@ -13,12 +13,12 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
  */
-package com.savvasdalkitsis.uhuruphotos.home.seam
+package com.savvasdalkitsis.uhuruphotos.implementation.home.seam
 
 import com.savvasdalkitsis.uhuruphotos.api.seam.EffectHandler
 import com.savvasdalkitsis.uhuruphotos.api.server.navigation.ServerNavigationTarget
-import com.savvasdalkitsis.uhuruphotos.home.seam.HomeEffect.LaunchAuthentication
-import com.savvasdalkitsis.uhuruphotos.home.seam.HomeEffect.LoadFeed
+import com.savvasdalkitsis.uhuruphotos.implementation.home.seam.HomeEffect.LaunchAuthentication
+import com.savvasdalkitsis.uhuruphotos.implementation.home.seam.HomeEffect.LoadFeed
 import com.savvasdalkitsis.uhuruphotos.api.homenavigation.HomeNavigationRoutes
 import com.savvasdalkitsis.uhuruphotos.api.navigation.Navigator
 import javax.inject.Inject
