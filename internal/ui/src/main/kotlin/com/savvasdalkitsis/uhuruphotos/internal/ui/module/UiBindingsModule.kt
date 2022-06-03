@@ -20,12 +20,14 @@ import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
+import javax.inject.Singleton
 
 @InstallIn(SingletonComponent::class)
 @Module
 abstract class UiBindingsModule {
 
     @Binds
+    @Singleton
     abstract fun uiUseCase(uiUseCase: UiUseCase):
             com.savvasdalkitsis.uhuruphotos.ui.usecase.UiUseCase
 }

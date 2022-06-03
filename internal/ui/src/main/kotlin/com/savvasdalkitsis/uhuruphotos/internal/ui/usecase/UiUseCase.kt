@@ -23,7 +23,6 @@ import com.savvasdalkitsis.uhuruphotos.ui.usecase.UiUseCase
 import javax.inject.Inject
 import javax.inject.Singleton
 
-@Singleton
 class UiUseCase @Inject constructor(
 ) : UiUseCase {
 

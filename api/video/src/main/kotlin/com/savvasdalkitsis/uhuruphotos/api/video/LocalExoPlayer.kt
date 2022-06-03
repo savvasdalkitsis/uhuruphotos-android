@@ -13,9 +13,10 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
  */
-package com.savvasdalkitsis.uhuruphotos.video
+package com.savvasdalkitsis.uhuruphotos.api.video
 
 import androidx.compose.runtime.compositionLocalOf
 import com.google.android.exoplayer2.ExoPlayer
 
-val LocalExoPlayer = compositionLocalOf<ExoPlayer?> { throw IllegalStateException("not initialized") }
+val LocalExoPlayer =
+    compositionLocalOf<ExoPlayer?> { throw IllegalStateException("not initialized") }

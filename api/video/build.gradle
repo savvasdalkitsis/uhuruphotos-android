@@ -1,4 +1,8 @@
 dependencies {
+    api(
+            libs.androidx.compose.foundation,
+            libs.exoplayer.base,
+    )
     implementation(
             libs.hilt,
     )

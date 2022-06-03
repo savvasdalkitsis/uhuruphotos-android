@@ -58,31 +58,10 @@ dependencies {
     implementation project(":api:initializer")
     implementation project(":api:navigation")
     implementation project(":api:homenavigation")
+    implementation project(":api:video")
 
-    // internal projects
-    implementation project(":internal:account")
-    implementation project(":internal:albums")
-    implementation project(":internal:auth")
-    implementation project(":internal:autoalbum")
-    implementation project(":internal:feedpage")
-    implementation project(":internal:heatmap")
-    implementation project(":internal:home")
-    implementation project(":internal:image")
-    implementation project(":internal:library")
-    implementation project(":internal:log")
-    implementation project(":internal:network")
-    implementation project(":internal:notification")
-    implementation project(":internal:person")
-    implementation project(":internal:people")
-    implementation project(":internal:photos")
-    implementation project(":internal:search")
-    implementation project(":internal:server")
-    implementation project(":internal:settings")
-    implementation project(":internal:share")
+    implementation project(":internal")
     implementation project(":internal:ui")
-    implementation project(":internal:user")
-    implementation project(":internal:userbadge")
-    implementation project(":internal:video")
 
     implementation(
             libs.accompanist.navigation,
@@ -98,6 +77,7 @@ dependencies {
             libs.androidx.preference,
             libs.androidx.work,
             libs.androidx.work.hilt,
+            libs.exoplayer.base,
             libs.flowpreferences,
             libs.hilt,
     )

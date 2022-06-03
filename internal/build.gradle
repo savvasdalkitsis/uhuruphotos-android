@@ -1,3 +1,29 @@
 android {
     namespace 'com.savvasdalkitsis.uhuruphotos.internal'
 }
+
+dependencies {
+    implementation project(":internal:account")
+    implementation project(":internal:albums")
+    implementation project(":internal:auth")
+    implementation project(":internal:autoalbum")
+    implementation project(":internal:feedpage")
+    implementation project(":internal:heatmap")
+    implementation project(":internal:home")
+    implementation project(":internal:image")
+    implementation project(":internal:library")
+    implementation project(":internal:log")
+    implementation project(":internal:network")
+    implementation project(":internal:notification")
+    implementation project(":internal:person")
+    implementation project(":internal:people")
+    implementation project(":internal:photos")
+    implementation project(":internal:search")
+    implementation project(":internal:server")
+    implementation project(":internal:settings")
+    implementation project(":internal:share")
+    implementation project(":internal:ui")
+    implementation project(":internal:user")
+    implementation project(":internal:userbadge")
+    implementation project(":internal:video")
+}

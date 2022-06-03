@@ -20,8 +20,6 @@ dependencies {
             libs.androidx.compose.ui,
             libs.exoplayer.okhttp,
             libs.hilt,
-    )
-    api(
             libs.exoplayer.base,
     )
 }
