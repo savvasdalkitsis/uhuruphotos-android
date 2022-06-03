@@ -13,26 +13,26 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
  */
-package com.savvasdalkitsis.uhuruphotos.autoalbum.seam
+package com.savvasdalkitsis.uhuruphotos.implementation.autoalbum.seam
 
 import com.savvasdalkitsis.uhuruphotos.api.albums.model.Album
 import com.savvasdalkitsis.uhuruphotos.api.coroutines.safelyOnStartIgnoring
 import com.savvasdalkitsis.uhuruphotos.api.date.DateDisplayer
 import com.savvasdalkitsis.uhuruphotos.api.log.log
 import com.savvasdalkitsis.uhuruphotos.api.seam.ActionHandler
-import com.savvasdalkitsis.uhuruphotos.autoalbum.seam.AutoAlbumAction.LoadAlbum
-import com.savvasdalkitsis.uhuruphotos.autoalbum.seam.AutoAlbumAction.NavigateBack
-import com.savvasdalkitsis.uhuruphotos.autoalbum.seam.AutoAlbumAction.PersonSelected
-import com.savvasdalkitsis.uhuruphotos.autoalbum.seam.AutoAlbumAction.SelectedPhoto
-import com.savvasdalkitsis.uhuruphotos.autoalbum.seam.AutoAlbumAction.SwipeToRefresh
-import com.savvasdalkitsis.uhuruphotos.autoalbum.seam.AutoAlbumEffect.NavigateToPerson
-import com.savvasdalkitsis.uhuruphotos.autoalbum.seam.AutoAlbumEffect.OpenPhotoDetails
-import com.savvasdalkitsis.uhuruphotos.autoalbum.seam.AutoAlbumMutation.ErrorLoading
-import com.savvasdalkitsis.uhuruphotos.autoalbum.seam.AutoAlbumMutation.Loading
-import com.savvasdalkitsis.uhuruphotos.autoalbum.seam.AutoAlbumMutation.ShowAutoAlbum
-import com.savvasdalkitsis.uhuruphotos.autoalbum.usecase.AutoAlbumsUseCase
-import com.savvasdalkitsis.uhuruphotos.autoalbum.view.state.AutoAlbum
-import com.savvasdalkitsis.uhuruphotos.autoalbum.view.state.AutoAlbumState
+import com.savvasdalkitsis.uhuruphotos.implementation.autoalbum.seam.AutoAlbumAction.LoadAlbum
+import com.savvasdalkitsis.uhuruphotos.implementation.autoalbum.seam.AutoAlbumAction.NavigateBack
+import com.savvasdalkitsis.uhuruphotos.implementation.autoalbum.seam.AutoAlbumAction.PersonSelected
+import com.savvasdalkitsis.uhuruphotos.implementation.autoalbum.seam.AutoAlbumAction.SelectedPhoto
+import com.savvasdalkitsis.uhuruphotos.implementation.autoalbum.seam.AutoAlbumAction.SwipeToRefresh
+import com.savvasdalkitsis.uhuruphotos.implementation.autoalbum.seam.AutoAlbumEffect.NavigateToPerson
+import com.savvasdalkitsis.uhuruphotos.implementation.autoalbum.seam.AutoAlbumEffect.OpenPhotoDetails
+import com.savvasdalkitsis.uhuruphotos.implementation.autoalbum.seam.AutoAlbumMutation.ErrorLoading
+import com.savvasdalkitsis.uhuruphotos.implementation.autoalbum.seam.AutoAlbumMutation.Loading
+import com.savvasdalkitsis.uhuruphotos.implementation.autoalbum.seam.AutoAlbumMutation.ShowAutoAlbum
+import com.savvasdalkitsis.uhuruphotos.implementation.autoalbum.usecase.AutoAlbumsUseCase
+import com.savvasdalkitsis.uhuruphotos.implementation.autoalbum.view.state.AutoAlbum
+import com.savvasdalkitsis.uhuruphotos.implementation.autoalbum.view.state.AutoAlbumState
 import com.savvasdalkitsis.uhuruphotos.api.db.albums.GetAutoAlbum
 import com.savvasdalkitsis.uhuruphotos.api.db.albums.GetPeopleForAutoAlbum
 import com.savvasdalkitsis.uhuruphotos.api.people.view.state.toPerson

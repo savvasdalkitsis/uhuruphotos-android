@@ -13,12 +13,12 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
  */
-package com.savvasdalkitsis.uhuruphotos.autoalbum.seam
+package com.savvasdalkitsis.uhuruphotos.implementation.autoalbum.seam
 
 import com.savvasdalkitsis.uhuruphotos.api.seam.Mutation
-import com.savvasdalkitsis.uhuruphotos.autoalbum.view.state.AutoAlbum
-import com.savvasdalkitsis.uhuruphotos.autoalbum.view.state.AutoAlbumFeedDisplay
-import com.savvasdalkitsis.uhuruphotos.autoalbum.view.state.AutoAlbumState
+import com.savvasdalkitsis.uhuruphotos.implementation.autoalbum.view.state.AutoAlbum
+import com.savvasdalkitsis.uhuruphotos.implementation.autoalbum.view.state.AutoAlbumFeedDisplay
+import com.savvasdalkitsis.uhuruphotos.implementation.autoalbum.view.state.AutoAlbumState
 import com.savvasdalkitsis.uhuruphotos.api.strings.R
 
 internal sealed class AutoAlbumMutation(

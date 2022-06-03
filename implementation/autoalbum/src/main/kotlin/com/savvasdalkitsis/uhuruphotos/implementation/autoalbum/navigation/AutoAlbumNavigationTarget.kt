@@ -13,7 +13,7 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
  */
-package com.savvasdalkitsis.uhuruphotos.autoalbum.navigation
+package com.savvasdalkitsis.uhuruphotos.implementation.autoalbum.navigation
 
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavGraphBuilder
@@ -21,13 +21,13 @@ import androidx.navigation.NavHostController
 import com.savvasdalkitsis.uhuruphotos.api.autoalbum.navigation.AutoAlbumNavigationTarget
 import com.savvasdalkitsis.uhuruphotos.api.autoalbum.navigation.AutoAlbumNavigationTarget.albumId
 import com.savvasdalkitsis.uhuruphotos.api.settings.usecase.SettingsUseCase
-import com.savvasdalkitsis.uhuruphotos.autoalbum.seam.AutoAlbumAction
-import com.savvasdalkitsis.uhuruphotos.autoalbum.seam.AutoAlbumAction.LoadAlbum
-import com.savvasdalkitsis.uhuruphotos.autoalbum.seam.AutoAlbumEffect
-import com.savvasdalkitsis.uhuruphotos.autoalbum.seam.AutoAlbumEffectsHandler
-import com.savvasdalkitsis.uhuruphotos.autoalbum.view.AutoAlbum
-import com.savvasdalkitsis.uhuruphotos.autoalbum.view.state.AutoAlbumState
-import com.savvasdalkitsis.uhuruphotos.autoalbum.viewmodel.AutoAlbumViewModel
+import com.savvasdalkitsis.uhuruphotos.implementation.autoalbum.seam.AutoAlbumAction
+import com.savvasdalkitsis.uhuruphotos.implementation.autoalbum.seam.AutoAlbumAction.LoadAlbum
+import com.savvasdalkitsis.uhuruphotos.implementation.autoalbum.seam.AutoAlbumEffect
+import com.savvasdalkitsis.uhuruphotos.implementation.autoalbum.seam.AutoAlbumEffectsHandler
+import com.savvasdalkitsis.uhuruphotos.implementation.autoalbum.view.AutoAlbum
+import com.savvasdalkitsis.uhuruphotos.implementation.autoalbum.view.state.AutoAlbumState
+import com.savvasdalkitsis.uhuruphotos.implementation.autoalbum.viewmodel.AutoAlbumViewModel
 import com.savvasdalkitsis.uhuruphotos.api.navigation.NavigationTarget
 import com.savvasdalkitsis.uhuruphotos.api.navigation.navigationTarget
 import javax.inject.Inject
