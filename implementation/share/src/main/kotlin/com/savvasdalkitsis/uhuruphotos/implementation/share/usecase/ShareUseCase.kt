@@ -13,7 +13,7 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
  */
-package com.savvasdalkitsis.uhuruphotos.share.usecase
+package com.savvasdalkitsis.uhuruphotos.implementation.share.usecase
 
 import android.content.Context
 import android.content.Intent
@@ -25,7 +25,7 @@ import coil.request.ImageRequest
 import com.savvasdalkitsis.uhuruphotos.api.settings.usecase.SettingsUseCase
 import com.savvasdalkitsis.uhuruphotos.api.share.usecase.ShareUseCase
 import com.savvasdalkitsis.uhuruphotos.api.navigation.Navigator
-import com.savvasdalkitsis.uhuruphotos.share.removeGpsData
+import com.savvasdalkitsis.uhuruphotos.implementation.share.removeGpsData
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.awaitAll
