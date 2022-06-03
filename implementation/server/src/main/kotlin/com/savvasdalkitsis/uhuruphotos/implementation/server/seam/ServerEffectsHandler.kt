@@ -13,14 +13,14 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
  */
-package com.savvasdalkitsis.uhuruphotos.server.seam
+package com.savvasdalkitsis.uhuruphotos.implementation.server.seam
 
 import com.savvasdalkitsis.uhuruphotos.api.log.usecase.FeedbackUseCase
 import com.savvasdalkitsis.uhuruphotos.api.seam.EffectHandler
 import com.savvasdalkitsis.uhuruphotos.api.navigation.Navigator
-import com.savvasdalkitsis.uhuruphotos.server.seam.ServerEffect.Close
-import com.savvasdalkitsis.uhuruphotos.server.seam.ServerEffect.ErrorLoggingIn
-import com.savvasdalkitsis.uhuruphotos.server.seam.ServerEffect.SendFeedback
+import com.savvasdalkitsis.uhuruphotos.implementation.server.seam.ServerEffect.Close
+import com.savvasdalkitsis.uhuruphotos.implementation.server.seam.ServerEffect.ErrorLoggingIn
+import com.savvasdalkitsis.uhuruphotos.implementation.server.seam.ServerEffect.SendFeedback
 import com.savvasdalkitsis.uhuruphotos.api.strings.R
 import com.savvasdalkitsis.uhuruphotos.api.toaster.Toaster
 import javax.inject.Inject

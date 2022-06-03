@@ -13,10 +13,10 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
  */
-package com.savvasdalkitsis.uhuruphotos.server.module
+package com.savvasdalkitsis.uhuruphotos.implementation.server.module
 
 import com.savvasdalkitsis.uhuruphotos.api.navigation.NavigationTarget
-import com.savvasdalkitsis.uhuruphotos.server.navigation.ServerNavigationTarget
+import com.savvasdalkitsis.uhuruphotos.implementation.server.navigation.ServerNavigationTarget
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn

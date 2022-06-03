@@ -13,7 +13,7 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
  */
-package com.savvasdalkitsis.uhuruphotos.server.view
+package com.savvasdalkitsis.uhuruphotos.implementation.server.view
 
 import androidx.compose.foundation.layout.BoxScope
 import androidx.compose.foundation.layout.Column
@@ -41,10 +41,10 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import com.savvasdalkitsis.uhuruphotos.api.icons.R
-import com.savvasdalkitsis.uhuruphotos.server.seam.ServerAction
-import com.savvasdalkitsis.uhuruphotos.server.seam.ServerAction.AttemptChangeServerUrlTo
-import com.savvasdalkitsis.uhuruphotos.server.seam.ServerAction.SendLogsClick
-import com.savvasdalkitsis.uhuruphotos.server.seam.ServerAction.UrlTyped
+import com.savvasdalkitsis.uhuruphotos.implementation.server.seam.ServerAction
+import com.savvasdalkitsis.uhuruphotos.implementation.server.seam.ServerAction.AttemptChangeServerUrlTo
+import com.savvasdalkitsis.uhuruphotos.implementation.server.seam.ServerAction.SendLogsClick
+import com.savvasdalkitsis.uhuruphotos.implementation.server.seam.ServerAction.UrlTyped
 
 @Composable
 internal fun BoxScope.ServerUrlPage(

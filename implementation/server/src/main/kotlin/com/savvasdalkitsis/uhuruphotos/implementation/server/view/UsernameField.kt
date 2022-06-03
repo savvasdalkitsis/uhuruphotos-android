@@ -13,7 +13,7 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
  */
-package com.savvasdalkitsis.uhuruphotos.server.view
+package com.savvasdalkitsis.uhuruphotos.implementation.server.view
 
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.text.KeyboardOptions
@@ -26,7 +26,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
-import com.savvasdalkitsis.uhuruphotos.server.seam.ServerAction
+import com.savvasdalkitsis.uhuruphotos.implementation.server.seam.ServerAction
 
 @Composable
 internal fun UsernameField(

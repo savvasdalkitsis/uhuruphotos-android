@@ -13,7 +13,7 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
  */
-package com.savvasdalkitsis.uhuruphotos.server.navigation
+package com.savvasdalkitsis.uhuruphotos.implementation.server.navigation
 
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavGraphBuilder
@@ -23,14 +23,14 @@ import com.savvasdalkitsis.uhuruphotos.api.server.navigation.ServerNavigationTar
 import com.savvasdalkitsis.uhuruphotos.api.settings.usecase.SettingsUseCase
 import com.savvasdalkitsis.uhuruphotos.api.navigation.NavigationTarget
 import com.savvasdalkitsis.uhuruphotos.api.navigation.navigationTarget
-import com.savvasdalkitsis.uhuruphotos.server.seam.ServerAction
-import com.savvasdalkitsis.uhuruphotos.server.seam.ServerAction.CheckPersistedServer
-import com.savvasdalkitsis.uhuruphotos.server.seam.ServerAction.RequestServerUrlChange
-import com.savvasdalkitsis.uhuruphotos.server.seam.ServerEffect
-import com.savvasdalkitsis.uhuruphotos.server.seam.ServerEffectsHandler
-import com.savvasdalkitsis.uhuruphotos.server.view.Server
-import com.savvasdalkitsis.uhuruphotos.server.view.ServerState
-import com.savvasdalkitsis.uhuruphotos.server.viewmodel.ServerViewModel
+import com.savvasdalkitsis.uhuruphotos.implementation.server.seam.ServerAction
+import com.savvasdalkitsis.uhuruphotos.implementation.server.seam.ServerAction.CheckPersistedServer
+import com.savvasdalkitsis.uhuruphotos.implementation.server.seam.ServerAction.RequestServerUrlChange
+import com.savvasdalkitsis.uhuruphotos.implementation.server.seam.ServerEffect
+import com.savvasdalkitsis.uhuruphotos.implementation.server.seam.ServerEffectsHandler
+import com.savvasdalkitsis.uhuruphotos.implementation.server.view.Server
+import com.savvasdalkitsis.uhuruphotos.implementation.server.view.ServerState
+import com.savvasdalkitsis.uhuruphotos.implementation.server.viewmodel.ServerViewModel
 import javax.inject.Inject
 
 internal class ServerNavigationTarget @Inject constructor(

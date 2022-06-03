@@ -13,7 +13,7 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
  */
-package com.savvasdalkitsis.uhuruphotos.server.seam
+package com.savvasdalkitsis.uhuruphotos.implementation.server.seam
 
 import com.savvasdalkitsis.uhuruphotos.api.http.isHttpUrl
 import com.savvasdalkitsis.uhuruphotos.api.http.isValidUrlOrDomain
@@ -24,31 +24,31 @@ import com.savvasdalkitsis.uhuruphotos.api.auth.model.AuthStatus.Offline
 import com.savvasdalkitsis.uhuruphotos.api.auth.model.AuthStatus.Unauthenticated
 import com.savvasdalkitsis.uhuruphotos.api.auth.usecase.AuthenticationUseCase
 import com.savvasdalkitsis.uhuruphotos.api.auth.usecase.ServerUseCase
-import com.savvasdalkitsis.uhuruphotos.server.seam.ServerAction.AttemptChangeServerUrlTo
-import com.savvasdalkitsis.uhuruphotos.server.seam.ServerAction.ChangeServerUrlTo
-import com.savvasdalkitsis.uhuruphotos.server.seam.ServerAction.CheckPersistedServer
-import com.savvasdalkitsis.uhuruphotos.server.seam.ServerAction.DismissUnsecuredServerDialog
-import com.savvasdalkitsis.uhuruphotos.server.seam.ServerAction.Login
-import com.savvasdalkitsis.uhuruphotos.server.seam.ServerAction.RequestServerUrlChange
-import com.savvasdalkitsis.uhuruphotos.server.seam.ServerAction.SendLogsClick
-import com.savvasdalkitsis.uhuruphotos.server.seam.ServerAction.TogglePasswordVisibility
-import com.savvasdalkitsis.uhuruphotos.server.seam.ServerAction.UrlTyped
-import com.savvasdalkitsis.uhuruphotos.server.seam.ServerAction.UserPasswordChangedTo
-import com.savvasdalkitsis.uhuruphotos.server.seam.ServerAction.UsernameChangedTo
-import com.savvasdalkitsis.uhuruphotos.server.seam.ServerEffect.Close
-import com.savvasdalkitsis.uhuruphotos.server.seam.ServerEffect.ErrorLoggingIn
-import com.savvasdalkitsis.uhuruphotos.server.seam.ServerEffect.SendFeedback
-import com.savvasdalkitsis.uhuruphotos.server.seam.ServerMutation.AskForServerDetails
-import com.savvasdalkitsis.uhuruphotos.server.seam.ServerMutation.AskForUserCredentials
-import com.savvasdalkitsis.uhuruphotos.server.seam.ServerMutation.ChangePasswordTo
-import com.savvasdalkitsis.uhuruphotos.server.seam.ServerMutation.ChangeUsernameTo
-import com.savvasdalkitsis.uhuruphotos.server.seam.ServerMutation.HideUnsecureServerConfirmation
-import com.savvasdalkitsis.uhuruphotos.server.seam.ServerMutation.PerformingBackgroundJob
-import com.savvasdalkitsis.uhuruphotos.server.seam.ServerMutation.SetPasswordVisibility
-import com.savvasdalkitsis.uhuruphotos.server.seam.ServerMutation.ShowUnsecureServerConfirmation
-import com.savvasdalkitsis.uhuruphotos.server.seam.ServerMutation.ShowUrlValidation
-import com.savvasdalkitsis.uhuruphotos.server.view.ServerState
-import com.savvasdalkitsis.uhuruphotos.server.view.ServerState.UserCredentials
+import com.savvasdalkitsis.uhuruphotos.implementation.server.seam.ServerAction.AttemptChangeServerUrlTo
+import com.savvasdalkitsis.uhuruphotos.implementation.server.seam.ServerAction.ChangeServerUrlTo
+import com.savvasdalkitsis.uhuruphotos.implementation.server.seam.ServerAction.CheckPersistedServer
+import com.savvasdalkitsis.uhuruphotos.implementation.server.seam.ServerAction.DismissUnsecuredServerDialog
+import com.savvasdalkitsis.uhuruphotos.implementation.server.seam.ServerAction.Login
+import com.savvasdalkitsis.uhuruphotos.implementation.server.seam.ServerAction.RequestServerUrlChange
+import com.savvasdalkitsis.uhuruphotos.implementation.server.seam.ServerAction.SendLogsClick
+import com.savvasdalkitsis.uhuruphotos.implementation.server.seam.ServerAction.TogglePasswordVisibility
+import com.savvasdalkitsis.uhuruphotos.implementation.server.seam.ServerAction.UrlTyped
+import com.savvasdalkitsis.uhuruphotos.implementation.server.seam.ServerAction.UserPasswordChangedTo
+import com.savvasdalkitsis.uhuruphotos.implementation.server.seam.ServerAction.UsernameChangedTo
+import com.savvasdalkitsis.uhuruphotos.implementation.server.seam.ServerEffect.Close
+import com.savvasdalkitsis.uhuruphotos.implementation.server.seam.ServerEffect.ErrorLoggingIn
+import com.savvasdalkitsis.uhuruphotos.implementation.server.seam.ServerEffect.SendFeedback
+import com.savvasdalkitsis.uhuruphotos.implementation.server.seam.ServerMutation.AskForServerDetails
+import com.savvasdalkitsis.uhuruphotos.implementation.server.seam.ServerMutation.AskForUserCredentials
+import com.savvasdalkitsis.uhuruphotos.implementation.server.seam.ServerMutation.ChangePasswordTo
+import com.savvasdalkitsis.uhuruphotos.implementation.server.seam.ServerMutation.ChangeUsernameTo
+import com.savvasdalkitsis.uhuruphotos.implementation.server.seam.ServerMutation.HideUnsecureServerConfirmation
+import com.savvasdalkitsis.uhuruphotos.implementation.server.seam.ServerMutation.PerformingBackgroundJob
+import com.savvasdalkitsis.uhuruphotos.implementation.server.seam.ServerMutation.SetPasswordVisibility
+import com.savvasdalkitsis.uhuruphotos.implementation.server.seam.ServerMutation.ShowUnsecureServerConfirmation
+import com.savvasdalkitsis.uhuruphotos.implementation.server.seam.ServerMutation.ShowUrlValidation
+import com.savvasdalkitsis.uhuruphotos.implementation.server.view.ServerState
+import com.savvasdalkitsis.uhuruphotos.implementation.server.view.ServerState.UserCredentials
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOf

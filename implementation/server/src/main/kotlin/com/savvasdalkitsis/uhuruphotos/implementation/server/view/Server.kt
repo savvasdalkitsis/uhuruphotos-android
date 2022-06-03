@@ -13,7 +13,7 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
  */
-package com.savvasdalkitsis.uhuruphotos.server.view
+package com.savvasdalkitsis.uhuruphotos.implementation.server.view
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxHeight
@@ -26,10 +26,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.savvasdalkitsis.uhuruphotos.server.seam.ServerAction
-import com.savvasdalkitsis.uhuruphotos.server.view.ServerState.Loading
-import com.savvasdalkitsis.uhuruphotos.server.view.ServerState.ServerUrl
-import com.savvasdalkitsis.uhuruphotos.server.view.ServerState.UserCredentials
+import com.savvasdalkitsis.uhuruphotos.implementation.server.seam.ServerAction
+import com.savvasdalkitsis.uhuruphotos.implementation.server.view.ServerState.Loading
+import com.savvasdalkitsis.uhuruphotos.implementation.server.view.ServerState.ServerUrl
+import com.savvasdalkitsis.uhuruphotos.implementation.server.view.ServerState.UserCredentials
 import com.savvasdalkitsis.uhuruphotos.api.ui.view.CommonScaffold
 
 @Composable

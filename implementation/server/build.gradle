@@ -10,7 +10,7 @@ android {
     composeOptions {
         kotlinCompilerExtensionVersion compose_version
     }
-    namespace 'com.savvasdalkitsis.uhuruphotos.server'
+    namespace 'com.savvasdalkitsis.uhuruphotos.implementation.server'
 }
 
 dependencies {

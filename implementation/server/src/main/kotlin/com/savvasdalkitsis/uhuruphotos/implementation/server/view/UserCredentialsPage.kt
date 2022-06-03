@@ -13,7 +13,7 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
  */
-package com.savvasdalkitsis.uhuruphotos.server.view
+package com.savvasdalkitsis.uhuruphotos.implementation.server.view
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
@@ -37,10 +37,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import com.savvasdalkitsis.uhuruphotos.api.icons.R
-import com.savvasdalkitsis.uhuruphotos.server.seam.ServerAction
-import com.savvasdalkitsis.uhuruphotos.server.seam.ServerAction.Login
-import com.savvasdalkitsis.uhuruphotos.server.seam.ServerAction.RequestServerUrlChange
-import com.savvasdalkitsis.uhuruphotos.server.seam.ServerAction.SendLogsClick
+import com.savvasdalkitsis.uhuruphotos.implementation.server.seam.ServerAction
+import com.savvasdalkitsis.uhuruphotos.implementation.server.seam.ServerAction.Login
+import com.savvasdalkitsis.uhuruphotos.implementation.server.seam.ServerAction.RequestServerUrlChange
+import com.savvasdalkitsis.uhuruphotos.implementation.server.seam.ServerAction.SendLogsClick
 
 @Composable
 internal fun UserCredentialsPage(

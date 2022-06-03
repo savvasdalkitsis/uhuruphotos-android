@@ -13,13 +13,13 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
  */
-package com.savvasdalkitsis.uhuruphotos.server.seam
+package com.savvasdalkitsis.uhuruphotos.implementation.server.seam
 
 import com.savvasdalkitsis.uhuruphotos.api.seam.Mutation
-import com.savvasdalkitsis.uhuruphotos.server.view.ServerState
-import com.savvasdalkitsis.uhuruphotos.server.view.ServerState.Loading
-import com.savvasdalkitsis.uhuruphotos.server.view.ServerState.ServerUrl
-import com.savvasdalkitsis.uhuruphotos.server.view.ServerState.UserCredentials
+import com.savvasdalkitsis.uhuruphotos.implementation.server.view.ServerState
+import com.savvasdalkitsis.uhuruphotos.implementation.server.view.ServerState.Loading
+import com.savvasdalkitsis.uhuruphotos.implementation.server.view.ServerState.ServerUrl
+import com.savvasdalkitsis.uhuruphotos.implementation.server.view.ServerState.UserCredentials
 import dev.zacsweers.redacted.annotations.Redacted
 
 internal sealed class ServerMutation(
