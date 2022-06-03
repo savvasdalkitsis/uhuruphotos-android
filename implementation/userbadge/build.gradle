@@ -5,7 +5,7 @@ android {
     composeOptions {
         kotlinCompilerExtensionVersion compose_version
     }
-    namespace 'com.savvasdalkitsis.uhuruphotos.userbadge'
+    namespace 'com.savvasdalkitsis.uhuruphotos.implementation.userbadge'
 }
 
 dependencies {

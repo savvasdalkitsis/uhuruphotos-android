@@ -13,9 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
  */
-package com.savvasdalkitsis.uhuruphotos.userbadge
+package com.savvasdalkitsis.uhuruphotos.implementation.userbadge
 
-import com.savvasdalkitsis.uhuruphotos.userbadge.usecase.UserBadgeUseCase
+import com.savvasdalkitsis.uhuruphotos.implementation.userbadge.usecase.UserBadgeUseCase
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
