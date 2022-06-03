@@ -5,7 +5,7 @@ android {
     composeOptions {
         kotlinCompilerExtensionVersion compose_version
     }
-    namespace 'com.savvasdalkitsis.uhuruphotos.search'
+    namespace 'com.savvasdalkitsis.uhuruphotos.implementation.search'
 }
 
 dependencies {
