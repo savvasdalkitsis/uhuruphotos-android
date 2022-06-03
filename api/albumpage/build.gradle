@@ -1,0 +1,27 @@
+android {
+    buildFeatures {
+        compose true
+    }
+    composeOptions {
+        kotlinCompilerExtensionVersion compose_version
+    }
+    namespace 'com.savvasdalkitsis.uhuruphotos.api.albumpage'
+}
+
+dependencies {
+    implementation project(':api:albums')
+    implementation project(':api:coroutines')
+    implementation project(":api:feed")
+    implementation project(":api:log")
+    implementation project(":api:navigation")
+    implementation project(':api:person')
+    implementation project(':api:people')
+    implementation project(":api:photos")
+    implementation project(":api:strings")
+    implementation project(":api:ui")
+    implementation(
+            libs.accompanist.swiperefresh,
+            libs.androidx.compose.foundation,
+            libs.androidx.compose.material,
+    )
+}

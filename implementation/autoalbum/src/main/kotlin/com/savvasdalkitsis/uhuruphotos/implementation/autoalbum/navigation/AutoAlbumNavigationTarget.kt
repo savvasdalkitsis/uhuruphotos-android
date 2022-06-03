@@ -18,27 +18,27 @@ package com.savvasdalkitsis.uhuruphotos.implementation.autoalbum.navigation
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
+import com.savvasdalkitsis.uhuruphotos.api.albumpage.seam.AlbumPageAction
+import com.savvasdalkitsis.uhuruphotos.api.albumpage.seam.AlbumPageAction.LoadAlbum
+import com.savvasdalkitsis.uhuruphotos.api.albumpage.seam.AlbumPageEffect
+import com.savvasdalkitsis.uhuruphotos.api.albumpage.seam.AlbumPageEffectsHandler
+import com.savvasdalkitsis.uhuruphotos.api.albumpage.view.AlbumPage
+import com.savvasdalkitsis.uhuruphotos.api.albumpage.view.state.AlbumPageState
 import com.savvasdalkitsis.uhuruphotos.api.autoalbum.navigation.AutoAlbumNavigationTarget
 import com.savvasdalkitsis.uhuruphotos.api.autoalbum.navigation.AutoAlbumNavigationTarget.albumId
-import com.savvasdalkitsis.uhuruphotos.api.settings.usecase.SettingsUseCase
-import com.savvasdalkitsis.uhuruphotos.implementation.autoalbum.seam.AutoAlbumAction
-import com.savvasdalkitsis.uhuruphotos.implementation.autoalbum.seam.AutoAlbumAction.LoadAlbum
-import com.savvasdalkitsis.uhuruphotos.implementation.autoalbum.seam.AutoAlbumEffect
-import com.savvasdalkitsis.uhuruphotos.implementation.autoalbum.seam.AutoAlbumEffectsHandler
-import com.savvasdalkitsis.uhuruphotos.implementation.autoalbum.view.AutoAlbum
-import com.savvasdalkitsis.uhuruphotos.implementation.autoalbum.view.state.AutoAlbumState
-import com.savvasdalkitsis.uhuruphotos.implementation.autoalbum.viewmodel.AutoAlbumViewModel
 import com.savvasdalkitsis.uhuruphotos.api.navigation.NavigationTarget
 import com.savvasdalkitsis.uhuruphotos.api.navigation.navigationTarget
+import com.savvasdalkitsis.uhuruphotos.api.settings.usecase.SettingsUseCase
+import com.savvasdalkitsis.uhuruphotos.implementation.autoalbum.viewmodel.AutoAlbumViewModel
 import javax.inject.Inject
 
 internal class AutoAlbumNavigationTarget @Inject constructor(
-    private val effectsHandler: AutoAlbumEffectsHandler,
+    private val effectsHandler: AlbumPageEffectsHandler,
     private val settingsUseCase: SettingsUseCase,
 ) : NavigationTarget {
 
     override suspend fun NavGraphBuilder.create(navHostController: NavHostController) =
-        navigationTarget<AutoAlbumState, AutoAlbumEffect, AutoAlbumAction, AutoAlbumViewModel>(
+        navigationTarget<AlbumPageState, AlbumPageEffect, AlbumPageAction, AutoAlbumViewModel>(
             name = AutoAlbumNavigationTarget.registrationName,
             effects = effectsHandler,
             themeMode = settingsUseCase.observeThemeModeState(),
@@ -47,7 +47,7 @@ internal class AutoAlbumNavigationTarget @Inject constructor(
             },
             createModel = { hiltViewModel() }
         ) { state, action ->
-            AutoAlbum(
+            AlbumPage(
                 state,
                 action
             )

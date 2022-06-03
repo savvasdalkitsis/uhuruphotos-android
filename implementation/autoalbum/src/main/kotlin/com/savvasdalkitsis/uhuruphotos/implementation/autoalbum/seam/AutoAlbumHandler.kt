@@ -15,118 +15,58 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.implementation.autoalbum.seam
 
+import com.savvasdalkitsis.uhuruphotos.api.albumpage.seam.AlbumPageAction
+import com.savvasdalkitsis.uhuruphotos.api.albumpage.seam.AlbumPageEffect
+import com.savvasdalkitsis.uhuruphotos.api.albumpage.seam.AlbumPageHandler
+import com.savvasdalkitsis.uhuruphotos.api.albumpage.seam.AlbumPageMutation
+import com.savvasdalkitsis.uhuruphotos.api.albumpage.view.state.AlbumDetails
+import com.savvasdalkitsis.uhuruphotos.api.albumpage.view.state.AlbumPageState
 import com.savvasdalkitsis.uhuruphotos.api.albums.model.Album
-import com.savvasdalkitsis.uhuruphotos.api.coroutines.safelyOnStartIgnoring
 import com.savvasdalkitsis.uhuruphotos.api.date.DateDisplayer
-import com.savvasdalkitsis.uhuruphotos.api.log.log
-import com.savvasdalkitsis.uhuruphotos.api.seam.ActionHandler
-import com.savvasdalkitsis.uhuruphotos.implementation.autoalbum.seam.AutoAlbumAction.LoadAlbum
-import com.savvasdalkitsis.uhuruphotos.implementation.autoalbum.seam.AutoAlbumAction.NavigateBack
-import com.savvasdalkitsis.uhuruphotos.implementation.autoalbum.seam.AutoAlbumAction.PersonSelected
-import com.savvasdalkitsis.uhuruphotos.implementation.autoalbum.seam.AutoAlbumAction.SelectedPhoto
-import com.savvasdalkitsis.uhuruphotos.implementation.autoalbum.seam.AutoAlbumAction.SwipeToRefresh
-import com.savvasdalkitsis.uhuruphotos.implementation.autoalbum.seam.AutoAlbumEffect.NavigateToPerson
-import com.savvasdalkitsis.uhuruphotos.implementation.autoalbum.seam.AutoAlbumEffect.OpenPhotoDetails
-import com.savvasdalkitsis.uhuruphotos.implementation.autoalbum.seam.AutoAlbumMutation.ErrorLoading
-import com.savvasdalkitsis.uhuruphotos.implementation.autoalbum.seam.AutoAlbumMutation.Loading
-import com.savvasdalkitsis.uhuruphotos.implementation.autoalbum.seam.AutoAlbumMutation.ShowAutoAlbum
-import com.savvasdalkitsis.uhuruphotos.implementation.autoalbum.usecase.AutoAlbumsUseCase
-import com.savvasdalkitsis.uhuruphotos.implementation.autoalbum.view.state.AutoAlbum
-import com.savvasdalkitsis.uhuruphotos.implementation.autoalbum.view.state.AutoAlbumState
-import com.savvasdalkitsis.uhuruphotos.api.db.albums.GetAutoAlbum
-import com.savvasdalkitsis.uhuruphotos.api.db.albums.GetPeopleForAutoAlbum
 import com.savvasdalkitsis.uhuruphotos.api.people.view.state.toPerson
 import com.savvasdalkitsis.uhuruphotos.api.photos.model.Photo
 import com.savvasdalkitsis.uhuruphotos.api.photos.usecase.PhotosUseCase
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.MutableSharedFlow
-import kotlinx.coroutines.flow.flow
+import com.savvasdalkitsis.uhuruphotos.api.seam.ActionHandler
+import com.savvasdalkitsis.uhuruphotos.implementation.autoalbum.usecase.AutoAlbumsUseCase
 import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.flow.merge
-import java.io.IOException
 import javax.inject.Inject
 
 internal class AutoAlbumHandler @Inject constructor(
-    private val autoAlbumsUseCase: AutoAlbumsUseCase,
-    private val photosUseCase: PhotosUseCase,
-    private val dateDisplayer: DateDisplayer,
-) : ActionHandler<AutoAlbumState, AutoAlbumEffect, AutoAlbumAction, AutoAlbumMutation> {
-
-    private val loading = MutableSharedFlow<AutoAlbumMutation>()
-    private var albumId: Int? = null
-
-    override fun handleAction(
-        state: AutoAlbumState,
-        action: AutoAlbumAction,
-        effect: suspend (AutoAlbumEffect) -> Unit,
-    ): Flow<AutoAlbumMutation> = when (action) {
-        is LoadAlbum -> merge(
-            autoAlbumsUseCase.observeAutoAlbum(action.albumId)
-                .map { it.toAutoAlbum() }
-                .map(::ShowAutoAlbum),
-            loading
-        ).safelyOnStartIgnoring {
-            albumId = action.albumId
-            refreshAlbum()
-        }
-        SwipeToRefresh -> flow {
-            refreshAlbum()
-        }
-        is SelectedPhoto -> flow {
-            effect(
-                with(action) {
-                    OpenPhotoDetails(photo.id, center, scale, photo.isVideo)
-                }
-            )
-        }
-        NavigateBack -> flow {
-            effect(AutoAlbumEffect.NavigateBack)
-        }
-        is PersonSelected -> flow {
-            effect(NavigateToPerson(action.person.id))
-        }
-    }
-
-    private suspend fun refreshAlbum() {
-        loading.emit(Loading(true))
-        try {
-            autoAlbumsUseCase.refreshAutoAlbum(albumId!!)
-        } catch (e: IOException) {
-            log(e)
-            loading.emit(ErrorLoading)
-        } finally {
-            loading.emit(Loading(false))
-        }
-    }
-
-    private suspend fun Pair<List<GetAutoAlbum>, List<GetPeopleForAutoAlbum>>.toAutoAlbum(): AutoAlbum =
-        let { (photoEntries, people) ->
-            AutoAlbum(
-                title = photoEntries.firstOrNull()?.title ?: "",
-                people = with(photosUseCase) {
-                    people.map { person ->
-                        person.toPerson { it.toAbsoluteUrl() }
-                    }
-                },
-                albums = photoEntries.groupBy { entry ->
-                    dateDisplayer.dateString(entry.timestamp)
-                }.entries.map { (date, photos) ->
-                    Album(
-                        id = date,
-                        date = date,
-                        location = null,
-                        photos = photos.map {
-                            Photo(
-                                id = it.photoId.toString(),
-                                thumbnailUrl = with(photosUseCase) {
-                                    it.photoId.toThumbnailUrlFromIdNullable()
-                                },
-                                isFavourite = it.isFavorite ?: false,
-                                isVideo = it.video ?: false,
-                            )
+    autoAlbumsUseCase: AutoAlbumsUseCase,
+    photosUseCase: PhotosUseCase,
+    dateDisplayer: DateDisplayer,
+) : ActionHandler<AlbumPageState, AlbumPageEffect, AlbumPageAction, AlbumPageMutation>
+by AlbumPageHandler(
+    albumRefresher = { autoAlbumsUseCase.refreshAutoAlbum(it) },
+    albumDetailsFlow = { albumId ->
+        autoAlbumsUseCase.observeAutoAlbum(albumId)
+            .map { (photoEntries, people) ->
+                AlbumDetails(
+                    title = photoEntries.firstOrNull()?.title ?: "",
+                    people = with(photosUseCase) {
+                        people.map { person ->
+                            person.toPerson { it.toAbsoluteUrl() }
                         }
-                    )
-                }
-            )
-        }
-}
+                    },
+                    albums = photoEntries.groupBy { entry ->
+                        dateDisplayer.dateString(entry.timestamp)
+                    }.entries.map { (date, photos) ->
+                        Album(
+                            id = date,
+                            date = date,
+                            location = null,
+                            photos = photos.map {
+                                Photo(
+                                    id = it.photoId.toString(),
+                                    thumbnailUrl = with(photosUseCase) {
+                                        it.photoId.toThumbnailUrlFromIdNullable()
+                                    },
+                                    isFavourite = it.isFavorite ?: false,
+                                    isVideo = it.video ?: false,
+                                )
+                            }
+                        )
+                    }
+                )
+            }
+    })

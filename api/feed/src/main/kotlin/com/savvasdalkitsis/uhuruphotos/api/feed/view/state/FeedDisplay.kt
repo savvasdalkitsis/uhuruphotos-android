@@ -29,4 +29,5 @@ interface FeedDisplay {
     @get:StringRes val friendlyName: Int
     val zoomIn: FeedDisplay
     val zoomOut: FeedDisplay
+    val allowsPinchGestures: Boolean
 }

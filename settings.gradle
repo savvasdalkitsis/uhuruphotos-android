@@ -19,6 +19,7 @@ rootProject.name = "uhuruphotos-android"
 include ':app'
 include ':api:account'
 include ':api:accountoverview'
+include ':api:albumpage'
 include ':api:albums'
 include ':api:auth'
 include ':api:autoalbum'

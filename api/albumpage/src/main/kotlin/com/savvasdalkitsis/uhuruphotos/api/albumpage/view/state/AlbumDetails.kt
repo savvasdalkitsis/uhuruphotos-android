@@ -13,18 +13,13 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
  */
-package com.savvasdalkitsis.uhuruphotos.implementation.autoalbum.seam
+package com.savvasdalkitsis.uhuruphotos.api.albumpage.view.state
 
-import androidx.compose.ui.geometry.Offset
+import com.savvasdalkitsis.uhuruphotos.api.albums.model.Album
+import com.savvasdalkitsis.uhuruphotos.api.people.view.state.Person
 
-internal sealed class AutoAlbumEffect {
-    object NavigateBack : AutoAlbumEffect()
-    data class OpenPhotoDetails(
-        val id: String,
-        val center: Offset,
-        val scale: Float,
-        val video: Boolean
-    ) : AutoAlbumEffect()
-
-    data class NavigateToPerson(val personId: Int) : AutoAlbumEffect()
-}
+data class AlbumDetails(
+    val title: String = "",
+    val albums: List<Album> = emptyList(),
+    val people: List<Person> = emptyList(),
+)

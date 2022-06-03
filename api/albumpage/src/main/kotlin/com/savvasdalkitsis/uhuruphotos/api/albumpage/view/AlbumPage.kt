@@ -13,28 +13,29 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
  */
-package com.savvasdalkitsis.uhuruphotos.implementation.autoalbum.view
+package com.savvasdalkitsis.uhuruphotos.api.albumpage.view
 
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import com.google.accompanist.swiperefresh.SwipeRefresh
 import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
-import com.savvasdalkitsis.uhuruphotos.implementation.autoalbum.seam.AutoAlbumAction
-import com.savvasdalkitsis.uhuruphotos.implementation.autoalbum.seam.AutoAlbumAction.NavigateBack
-import com.savvasdalkitsis.uhuruphotos.implementation.autoalbum.seam.AutoAlbumAction.PersonSelected
-import com.savvasdalkitsis.uhuruphotos.implementation.autoalbum.seam.AutoAlbumAction.SelectedPhoto
-import com.savvasdalkitsis.uhuruphotos.implementation.autoalbum.seam.AutoAlbumAction.SwipeToRefresh
-import com.savvasdalkitsis.uhuruphotos.implementation.autoalbum.view.state.AutoAlbumState
+import com.savvasdalkitsis.uhuruphotos.api.albumpage.seam.AlbumPageAction
+import com.savvasdalkitsis.uhuruphotos.api.albumpage.seam.AlbumPageAction.NavigateBack
+import com.savvasdalkitsis.uhuruphotos.api.albumpage.seam.AlbumPageAction.PersonSelected
+import com.savvasdalkitsis.uhuruphotos.api.albumpage.seam.AlbumPageAction.SelectedPhoto
+import com.savvasdalkitsis.uhuruphotos.api.albumpage.seam.AlbumPageAction.SwipeToRefresh
+import com.savvasdalkitsis.uhuruphotos.api.albumpage.view.state.AlbumPageState
 import com.savvasdalkitsis.uhuruphotos.api.feed.view.Feed
 import com.savvasdalkitsis.uhuruphotos.api.people.view.PeopleBar
 import com.savvasdalkitsis.uhuruphotos.api.ui.view.BackNavButton
 import com.savvasdalkitsis.uhuruphotos.api.ui.view.CommonScaffold
+import com.savvasdalkitsis.uhuruphotos.api.albumpage.seam.AlbumPageAction.ChangeFeedDisplay
 
 @Composable
-internal fun AutoAlbum(
-    state: AutoAlbumState,
-    action: (AutoAlbumAction) -> Unit
+fun AlbumPage(
+    state: AlbumPageState,
+    action: (AlbumPageAction) -> Unit
 ) {
     CommonScaffold(
         title = { Text(state.title) },
@@ -53,6 +54,7 @@ internal fun AutoAlbum(
             Feed(
                 contentPadding = contentPadding,
                 state = state.feedState,
+                onChangeDisplay = { action(ChangeFeedDisplay(it)) },
                 feedHeader = state.people.takeIf { it.isNotEmpty() }?.let {
                     {
                         PeopleBar(

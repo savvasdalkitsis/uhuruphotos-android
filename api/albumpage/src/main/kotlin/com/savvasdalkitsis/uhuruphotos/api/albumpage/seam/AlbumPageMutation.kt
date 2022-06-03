@@ -13,36 +13,41 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
  */
-package com.savvasdalkitsis.uhuruphotos.implementation.autoalbum.seam
+package com.savvasdalkitsis.uhuruphotos.api.albumpage.seam
 
+import com.savvasdalkitsis.uhuruphotos.api.albumpage.view.state.AlbumDetails
+import com.savvasdalkitsis.uhuruphotos.api.albumpage.view.state.AlbumPageState
+import com.savvasdalkitsis.uhuruphotos.api.feed.view.state.FeedDisplay
 import com.savvasdalkitsis.uhuruphotos.api.seam.Mutation
-import com.savvasdalkitsis.uhuruphotos.implementation.autoalbum.view.state.AutoAlbum
-import com.savvasdalkitsis.uhuruphotos.implementation.autoalbum.view.state.AutoAlbumFeedDisplay
-import com.savvasdalkitsis.uhuruphotos.implementation.autoalbum.view.state.AutoAlbumState
 import com.savvasdalkitsis.uhuruphotos.api.strings.R
 
-internal sealed class AutoAlbumMutation(
-    mutation: Mutation<AutoAlbumState>,
-) : Mutation<AutoAlbumState> by mutation {
+sealed class AlbumPageMutation(
+    mutation: Mutation<AlbumPageState>,
+) : Mutation<AlbumPageState> by mutation {
 
-    object ErrorLoading : AutoAlbumMutation({
+    object ErrorLoading : AlbumPageMutation({
         it.copy(error = R.string.error_loading_album)
     })
 
-    data class ShowAutoAlbum(val album: AutoAlbum) : AutoAlbumMutation({
+    data class ShowAlbumPage(val albumPage: AlbumDetails) : AlbumPageMutation({
         it.copy(
-            title = album.title,
-            people = album.people,
+            title = albumPage.title,
+            people = albumPage.people,
             feedState = it.feedState.copy(
-                albums = album.albums,
-                feedDisplay = AutoAlbumFeedDisplay,
+                albums = albumPage.albums,
             )
         )
     })
 
-    data class Loading(val loading: Boolean) : AutoAlbumMutation({
+    data class Loading(val loading: Boolean) : AlbumPageMutation({
         it.copy(feedState = it.feedState.copy(
             isLoading = loading,
+        ))
+    })
+
+    data class ChangeFeedDisplay(val feedDisplay: FeedDisplay) : AlbumPageMutation({
+        it.copy(feedState = it.feedState.copy(
+            feedDisplay = feedDisplay,
         ))
     })
 }

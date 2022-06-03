@@ -86,6 +86,7 @@ enum class FeedDisplays(
 
     override val zoomIn: FeedDisplay get() = values()[min(ordinal + 1, values().size - 1)]
     override val zoomOut: FeedDisplay get() = values()[max(0, ordinal -1)]
+    override val allowsPinchGestures = true
 
     companion object {
         val default = COMFORTABLE

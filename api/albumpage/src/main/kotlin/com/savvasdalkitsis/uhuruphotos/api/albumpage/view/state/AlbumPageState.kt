@@ -13,30 +13,16 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
  */
-package com.savvasdalkitsis.uhuruphotos.implementation.autoalbum.view.state
+package com.savvasdalkitsis.uhuruphotos.api.albumpage.view.state
 
 import androidx.annotation.StringRes
-import com.savvasdalkitsis.uhuruphotos.api.feed.view.state.FeedDisplay
 import com.savvasdalkitsis.uhuruphotos.api.feed.view.state.FeedState
 import com.savvasdalkitsis.uhuruphotos.api.people.view.state.Person
 
-internal data class AutoAlbumState(
-    val feedState: FeedState = FeedState(feedDisplay = AutoAlbumFeedDisplay),
+data class AlbumPageState(
+    val feedState: FeedState = FeedState(),
     @get:StringRes
     val error: Int? = null,
     val title: String = "",
     val people: List<Person> = emptyList(),
 )
-
-object AutoAlbumFeedDisplay: FeedDisplay {
-    override val compactColumnsPortrait = 3
-    override val compactColumnsLandscape = 5
-    override val wideColumnsPortrait = 6
-    override val wideColumnsLandscape = 8
-    override val shouldAddEmptyPhotosInRows = true
-    override val iconResource = 0
-    override val maintainAspectRatio = false
-    override val friendlyName = 0
-    override val zoomIn = this
-    override val zoomOut = this
-}

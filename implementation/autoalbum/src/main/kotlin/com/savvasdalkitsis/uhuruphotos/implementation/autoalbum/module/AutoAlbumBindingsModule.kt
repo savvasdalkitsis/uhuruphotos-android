@@ -15,8 +15,8 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.implementation.autoalbum.module
 
-import com.savvasdalkitsis.uhuruphotos.implementation.autoalbum.navigation.AutoAlbumNavigationTarget
 import com.savvasdalkitsis.uhuruphotos.api.navigation.NavigationTarget
+import com.savvasdalkitsis.uhuruphotos.implementation.autoalbum.navigation.AutoAlbumNavigationTarget
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn

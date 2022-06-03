@@ -29,4 +29,5 @@ object HeatMapFeedDisplay : FeedDisplay {
     override val friendlyName = 0
     override val zoomIn get() = HeatMapFeedDisplay
     override val zoomOut get() = HeatMapFeedDisplay
+    override val allowsPinchGestures = false
 }

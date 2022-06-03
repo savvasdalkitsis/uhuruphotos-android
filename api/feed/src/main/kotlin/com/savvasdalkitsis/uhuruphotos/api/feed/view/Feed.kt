@@ -43,7 +43,7 @@ fun Feed(
     listState: LazyListState = rememberLazyListState(),
     feedHeader: @Composable (LazyItemScope.() -> Unit)? = null,
     onPhotoSelected: PhotoSelected = { _, _, _ -> },
-    onChangeDisplay: ((FeedDisplay) -> Unit)? = null,
+    onChangeDisplay: ((FeedDisplay) -> Unit) = {},
     onPhotoLongPressed: (Photo) -> Unit = {},
     onAlbumSelectionClicked: (Album) -> Unit = {},
 ) = when {
@@ -55,7 +55,7 @@ fun Feed(
             modifier = modifier
                 .let {
                     when {
-                        onChangeDisplay != null -> it.pinchToChange(
+                        feedDisplay.allowsPinchGestures -> it.pinchToChange(
                             feedDisplay,
                             onChangeDisplay,
                         )

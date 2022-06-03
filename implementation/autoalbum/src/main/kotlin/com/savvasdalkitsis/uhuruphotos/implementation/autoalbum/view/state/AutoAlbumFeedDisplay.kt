@@ -15,11 +15,18 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.implementation.autoalbum.view.state
 
-import com.savvasdalkitsis.uhuruphotos.api.albums.model.Album
-import com.savvasdalkitsis.uhuruphotos.api.people.view.state.Person
+import com.savvasdalkitsis.uhuruphotos.api.feed.view.state.FeedDisplay
 
-internal data class AutoAlbum(
-    val title: String = "",
-    val albums: List<Album> = emptyList(),
-    val people: List<Person> = emptyList(),
-)
+object AutoAlbumFeedDisplay: FeedDisplay {
+    override val compactColumnsPortrait = 3
+    override val compactColumnsLandscape = 5
+    override val wideColumnsPortrait = 6
+    override val wideColumnsLandscape = 8
+    override val shouldAddEmptyPhotosInRows = true
+    override val iconResource = 0
+    override val maintainAspectRatio = false
+    override val friendlyName = 0
+    override val zoomIn = this
+    override val zoomOut = this
+    override val allowsPinchGestures = false
+}
