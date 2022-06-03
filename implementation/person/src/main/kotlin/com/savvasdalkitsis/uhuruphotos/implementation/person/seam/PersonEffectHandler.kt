@@ -19,8 +19,8 @@ import com.savvasdalkitsis.uhuruphotos.api.seam.EffectHandler
 import com.savvasdalkitsis.uhuruphotos.api.navigation.Navigator
 import com.savvasdalkitsis.uhuruphotos.implementation.person.seam.PersonEffect.NavigateBack
 import com.savvasdalkitsis.uhuruphotos.implementation.person.seam.PersonEffect.OpenPhotoDetails
-import com.savvasdalkitsis.uhuruphotos.photos.model.PhotoSequenceDataSource.PersonResults
-import com.savvasdalkitsis.uhuruphotos.photos.navigation.PhotoNavigationTarget
+import com.savvasdalkitsis.uhuruphotos.implementation.photos.model.PhotoSequenceDataSource.PersonResults
+import com.savvasdalkitsis.uhuruphotos.implementation.photos.navigation.PhotoNavigationTarget
 import javax.inject.Inject
 
 class PersonEffectHandler @Inject constructor(

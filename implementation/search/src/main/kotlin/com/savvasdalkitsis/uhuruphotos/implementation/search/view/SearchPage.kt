@@ -25,17 +25,17 @@ import com.savvasdalkitsis.uhuruphotos.api.account.view.LogOutConfirmationDialog
 import com.savvasdalkitsis.uhuruphotos.api.compose.blurIf
 import com.savvasdalkitsis.uhuruphotos.api.home.view.HomeScaffold
 import com.savvasdalkitsis.uhuruphotos.api.feed.view.FeedDisplayActionButton
-import com.savvasdalkitsis.uhuruphotos.search.seam.SearchAction
-import com.savvasdalkitsis.uhuruphotos.search.seam.SearchAction.AskToLogOut
-import com.savvasdalkitsis.uhuruphotos.search.seam.SearchAction.ChangeDisplay
-import com.savvasdalkitsis.uhuruphotos.search.seam.SearchAction.DismissAccountOverview
-import com.savvasdalkitsis.uhuruphotos.search.seam.SearchAction.DismissLogOutDialog
-import com.savvasdalkitsis.uhuruphotos.search.seam.SearchAction.EditServer
-import com.savvasdalkitsis.uhuruphotos.search.seam.SearchAction.LogOut
-import com.savvasdalkitsis.uhuruphotos.search.seam.SearchAction.SettingsClick
-import com.savvasdalkitsis.uhuruphotos.search.seam.SearchAction.UserBadgePressed
-import com.savvasdalkitsis.uhuruphotos.search.view.state.SearchResults.Found
-import com.savvasdalkitsis.uhuruphotos.search.view.state.SearchState
+import com.savvasdalkitsis.uhuruphotos.implementation.search.seam.SearchAction
+import com.savvasdalkitsis.uhuruphotos.implementation.search.seam.SearchAction.AskToLogOut
+import com.savvasdalkitsis.uhuruphotos.implementation.search.seam.SearchAction.ChangeDisplay
+import com.savvasdalkitsis.uhuruphotos.implementation.search.seam.SearchAction.DismissAccountOverview
+import com.savvasdalkitsis.uhuruphotos.implementation.search.seam.SearchAction.DismissLogOutDialog
+import com.savvasdalkitsis.uhuruphotos.implementation.search.seam.SearchAction.EditServer
+import com.savvasdalkitsis.uhuruphotos.implementation.search.seam.SearchAction.LogOut
+import com.savvasdalkitsis.uhuruphotos.implementation.search.seam.SearchAction.SettingsClick
+import com.savvasdalkitsis.uhuruphotos.implementation.search.seam.SearchAction.UserBadgePressed
+import com.savvasdalkitsis.uhuruphotos.implementation.search.view.state.SearchResults.Found
+import com.savvasdalkitsis.uhuruphotos.implementation.search.view.state.SearchState
 
 @Composable
 fun SearchPage(

@@ -21,11 +21,11 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import com.savvasdalkitsis.uhuruphotos.search.seam.SearchAction
-import com.savvasdalkitsis.uhuruphotos.search.view.state.SearchResults.Found
-import com.savvasdalkitsis.uhuruphotos.search.view.state.SearchResults.Idle
-import com.savvasdalkitsis.uhuruphotos.search.view.state.SearchResults.Searching
-import com.savvasdalkitsis.uhuruphotos.search.view.state.SearchState
+import com.savvasdalkitsis.uhuruphotos.implementation.search.seam.SearchAction
+import com.savvasdalkitsis.uhuruphotos.implementation.search.view.state.SearchResults.Found
+import com.savvasdalkitsis.uhuruphotos.implementation.search.view.state.SearchResults.Idle
+import com.savvasdalkitsis.uhuruphotos.implementation.search.view.state.SearchResults.Searching
+import com.savvasdalkitsis.uhuruphotos.implementation.search.view.state.SearchState
 import com.savvasdalkitsis.uhuruphotos.api.ui.view.FullProgressBar
 
 @Composable fun Search(

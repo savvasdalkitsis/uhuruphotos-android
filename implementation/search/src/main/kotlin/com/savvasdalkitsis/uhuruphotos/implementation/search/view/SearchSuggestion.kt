@@ -26,7 +26,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
-import com.savvasdalkitsis.uhuruphotos.search.seam.SearchAction
+import com.savvasdalkitsis.uhuruphotos.implementation.search.seam.SearchAction
 
 @Composable
 fun SearchSuggestion(

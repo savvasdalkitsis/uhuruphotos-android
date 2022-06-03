@@ -24,9 +24,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Popup
-import com.savvasdalkitsis.uhuruphotos.search.seam.SearchAction
-import com.savvasdalkitsis.uhuruphotos.search.view.state.SearchState
-import com.savvasdalkitsis.uhuruphotos.search.view.state.SearchSuggestion
+import com.savvasdalkitsis.uhuruphotos.implementation.search.seam.SearchAction
+import com.savvasdalkitsis.uhuruphotos.implementation.search.view.state.SearchState
+import com.savvasdalkitsis.uhuruphotos.implementation.search.view.state.SearchSuggestion
 
 @Composable
 internal fun SearchSuggestions(

@@ -15,7 +15,7 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.implementation.search.module
 
-import com.savvasdalkitsis.uhuruphotos.search.service.SearchService
+import com.savvasdalkitsis.uhuruphotos.implementation.search.service.SearchService
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

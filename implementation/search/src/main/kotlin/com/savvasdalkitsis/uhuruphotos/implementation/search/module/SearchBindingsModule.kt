@@ -16,8 +16,8 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.implementation.search.module
 
 import com.savvasdalkitsis.uhuruphotos.api.navigation.NavigationTarget
-import com.savvasdalkitsis.uhuruphotos.search.navigation.SearchNavigationTarget
-import com.savvasdalkitsis.uhuruphotos.search.usecase.SearchUseCase
+import com.savvasdalkitsis.uhuruphotos.implementation.search.navigation.SearchNavigationTarget
+import com.savvasdalkitsis.uhuruphotos.implementation.search.usecase.SearchUseCase
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn

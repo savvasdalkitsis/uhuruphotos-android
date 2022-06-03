@@ -22,12 +22,12 @@ import com.savvasdalkitsis.uhuruphotos.api.settings.usecase.SettingsUseCase
 import com.savvasdalkitsis.uhuruphotos.api.homenavigation.HomeNavigationRoutes
 import com.savvasdalkitsis.uhuruphotos.api.navigation.NavigationTarget
 import com.savvasdalkitsis.uhuruphotos.api.navigation.navigationTarget
-import com.savvasdalkitsis.uhuruphotos.search.seam.SearchAction
-import com.savvasdalkitsis.uhuruphotos.search.seam.SearchEffect
-import com.savvasdalkitsis.uhuruphotos.search.seam.SearchEffectsHandler
-import com.savvasdalkitsis.uhuruphotos.search.view.SearchPage
-import com.savvasdalkitsis.uhuruphotos.search.view.state.SearchState
-import com.savvasdalkitsis.uhuruphotos.search.viewmodel.SearchViewModel
+import com.savvasdalkitsis.uhuruphotos.implementation.search.seam.SearchAction
+import com.savvasdalkitsis.uhuruphotos.implementation.search.seam.SearchEffect
+import com.savvasdalkitsis.uhuruphotos.implementation.search.seam.SearchEffectsHandler
+import com.savvasdalkitsis.uhuruphotos.implementation.search.view.SearchPage
+import com.savvasdalkitsis.uhuruphotos.implementation.search.view.state.SearchState
+import com.savvasdalkitsis.uhuruphotos.implementation.search.viewmodel.SearchViewModel
 import javax.inject.Inject
 
 class SearchNavigationTarget @Inject constructor(

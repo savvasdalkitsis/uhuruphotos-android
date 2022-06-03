@@ -16,7 +16,7 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.implementation.auth.service
 
 import com.savvasdalkitsis.uhuruphotos.api.auth.model.AuthStatus.Unauthenticated
-import com.savvasdalkitsis.uhuruphotos.auth.usecase.AuthenticationUseCase
+import com.savvasdalkitsis.uhuruphotos.implementation.auth.usecase.AuthenticationUseCase
 import kotlinx.coroutines.runBlocking
 import okhttp3.Interceptor
 import okhttp3.Response

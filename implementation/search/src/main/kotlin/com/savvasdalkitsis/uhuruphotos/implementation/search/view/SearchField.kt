@@ -40,13 +40,13 @@ import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
-import com.savvasdalkitsis.uhuruphotos.search.seam.SearchAction
-import com.savvasdalkitsis.uhuruphotos.search.seam.SearchAction.ChangeFocus
-import com.savvasdalkitsis.uhuruphotos.search.seam.SearchAction.QueryChanged
-import com.savvasdalkitsis.uhuruphotos.search.seam.SearchAction.SearchCleared
-import com.savvasdalkitsis.uhuruphotos.search.seam.SearchAction.SearchFor
-import com.savvasdalkitsis.uhuruphotos.search.view.state.SearchResults.Idle
-import com.savvasdalkitsis.uhuruphotos.search.view.state.SearchState
+import com.savvasdalkitsis.uhuruphotos.implementation.search.seam.SearchAction
+import com.savvasdalkitsis.uhuruphotos.implementation.search.seam.SearchAction.ChangeFocus
+import com.savvasdalkitsis.uhuruphotos.implementation.search.seam.SearchAction.QueryChanged
+import com.savvasdalkitsis.uhuruphotos.implementation.search.seam.SearchAction.SearchCleared
+import com.savvasdalkitsis.uhuruphotos.implementation.search.seam.SearchAction.SearchFor
+import com.savvasdalkitsis.uhuruphotos.implementation.search.view.state.SearchResults.Idle
+import com.savvasdalkitsis.uhuruphotos.implementation.search.view.state.SearchState
 
 @Composable
 fun SearchField(

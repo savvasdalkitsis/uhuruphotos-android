@@ -15,8 +15,8 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.implementation.search.service
 
-import com.savvasdalkitsis.uhuruphotos.search.service.model.SearchResults
-import com.savvasdalkitsis.uhuruphotos.search.service.model.SearchSuggestions
+import com.savvasdalkitsis.uhuruphotos.implementation.search.service.model.SearchResults
+import com.savvasdalkitsis.uhuruphotos.implementation.search.service.model.SearchSuggestions
 import retrofit2.http.GET
 import retrofit2.http.Query
 

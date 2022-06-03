@@ -17,7 +17,7 @@ package com.savvasdalkitsis.uhuruphotos.implementation.settings.seam
 
 import androidx.work.NetworkType
 import com.savvasdalkitsis.uhuruphotos.api.seam.Mutation
-import com.savvasdalkitsis.uhuruphotos.settings.view.state.SettingsState
+import com.savvasdalkitsis.uhuruphotos.implementation.settings.view.state.SettingsState
 import com.savvasdalkitsis.uhuruphotos.api.ui.theme.ThemeMode
 import com.savvasdalkitsis.uhuruphotos.api.userbadge.view.state.UserInformationState
 

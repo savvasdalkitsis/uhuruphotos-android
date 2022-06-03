@@ -22,10 +22,10 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
-import com.savvasdalkitsis.uhuruphotos.photos.seam.PhotoAction
-import com.savvasdalkitsis.uhuruphotos.photos.seam.PhotoAction.AskForPhotoDeletion
-import com.savvasdalkitsis.uhuruphotos.photos.seam.PhotoAction.SharePhoto
-import com.savvasdalkitsis.uhuruphotos.photos.view.state.PhotoState
+import com.savvasdalkitsis.uhuruphotos.implementation.photos.seam.PhotoAction
+import com.savvasdalkitsis.uhuruphotos.implementation.photos.seam.PhotoAction.AskForPhotoDeletion
+import com.savvasdalkitsis.uhuruphotos.implementation.photos.seam.PhotoAction.SharePhoto
+import com.savvasdalkitsis.uhuruphotos.implementation.photos.view.state.PhotoState
 import com.savvasdalkitsis.uhuruphotos.api.ui.view.ActionIconWithText
 import com.savvasdalkitsis.uhuruphotos.api.icons.R as Icons
 import com.savvasdalkitsis.uhuruphotos.api.strings.R as Strings

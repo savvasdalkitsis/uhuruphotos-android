@@ -15,7 +15,7 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.implementation.photos.module
 
-import com.savvasdalkitsis.uhuruphotos.photos.service.PhotosService
+import com.savvasdalkitsis.uhuruphotos.implementation.photos.service.PhotosService
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

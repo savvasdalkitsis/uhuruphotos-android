@@ -19,8 +19,8 @@ import com.savvasdalkitsis.uhuruphotos.api.log.runCatchingWithLog
 import com.savvasdalkitsis.uhuruphotos.api.user.usecase.UserUseCase
 import com.savvasdalkitsis.uhuruphotos.api.auth.usecase.ServerUseCase
 import com.savvasdalkitsis.uhuruphotos.api.db.photos.PhotoDetails
-import com.savvasdalkitsis.uhuruphotos.photos.repository.PhotoRepository
-import com.savvasdalkitsis.uhuruphotos.photos.worker.PhotoWorkScheduler
+import com.savvasdalkitsis.uhuruphotos.implementation.photos.repository.PhotoRepository
+import com.savvasdalkitsis.uhuruphotos.implementation.photos.worker.PhotoWorkScheduler
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 

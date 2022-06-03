@@ -27,8 +27,8 @@ import com.savvasdalkitsis.uhuruphotos.implementation.feedpage.seam.FeedPageEffe
 import com.savvasdalkitsis.uhuruphotos.implementation.feedpage.seam.FeedPageEffect.Vibrate
 import com.savvasdalkitsis.uhuruphotos.api.homenavigation.HomeNavigationRoutes
 import com.savvasdalkitsis.uhuruphotos.api.navigation.Navigator
-import com.savvasdalkitsis.uhuruphotos.photos.model.PhotoSequenceDataSource.AllPhotos
-import com.savvasdalkitsis.uhuruphotos.photos.navigation.PhotoNavigationTarget
+import com.savvasdalkitsis.uhuruphotos.implementation.photos.model.PhotoSequenceDataSource.AllPhotos
+import com.savvasdalkitsis.uhuruphotos.implementation.photos.navigation.PhotoNavigationTarget
 import com.savvasdalkitsis.uhuruphotos.api.strings.R
 import com.savvasdalkitsis.uhuruphotos.api.toaster.Toaster
 import com.savvasdalkitsis.uhuruphotos.api.ui.usecase.UiUseCase

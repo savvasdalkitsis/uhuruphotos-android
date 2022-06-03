@@ -22,10 +22,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.res.stringResource
-import com.savvasdalkitsis.uhuruphotos.settings.seam.SettingsAction
-import com.savvasdalkitsis.uhuruphotos.settings.seam.SettingsAction.DismissFullFeedSyncDialog
-import com.savvasdalkitsis.uhuruphotos.settings.seam.SettingsAction.NavigateBack
-import com.savvasdalkitsis.uhuruphotos.settings.view.state.SettingsState
+import com.savvasdalkitsis.uhuruphotos.implementation.settings.seam.SettingsAction
+import com.savvasdalkitsis.uhuruphotos.implementation.settings.seam.SettingsAction.DismissFullFeedSyncDialog
+import com.savvasdalkitsis.uhuruphotos.implementation.settings.seam.SettingsAction.NavigateBack
+import com.savvasdalkitsis.uhuruphotos.implementation.settings.view.state.SettingsState
 import com.savvasdalkitsis.uhuruphotos.api.strings.R
 import com.savvasdalkitsis.uhuruphotos.api.ui.view.ActionIcon
 import com.savvasdalkitsis.uhuruphotos.api.ui.view.BackNavButton

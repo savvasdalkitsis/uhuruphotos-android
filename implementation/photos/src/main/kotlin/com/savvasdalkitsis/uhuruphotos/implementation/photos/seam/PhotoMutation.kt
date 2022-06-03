@@ -19,9 +19,9 @@ import androidx.annotation.StringRes
 import com.savvasdalkitsis.uhuruphotos.api.seam.Mutation
 import com.savvasdalkitsis.uhuruphotos.api.db.photos.PhotoDetails
 import com.savvasdalkitsis.uhuruphotos.api.people.view.state.Person
-import com.savvasdalkitsis.uhuruphotos.photos.model.latLng
-import com.savvasdalkitsis.uhuruphotos.photos.view.state.PhotoState
-import com.savvasdalkitsis.uhuruphotos.photos.view.state.SinglePhotoState
+import com.savvasdalkitsis.uhuruphotos.implementation.photos.model.latLng
+import com.savvasdalkitsis.uhuruphotos.implementation.photos.view.state.PhotoState
+import com.savvasdalkitsis.uhuruphotos.implementation.photos.view.state.SinglePhotoState
 import kotlin.math.min
 
 sealed class PhotoMutation(

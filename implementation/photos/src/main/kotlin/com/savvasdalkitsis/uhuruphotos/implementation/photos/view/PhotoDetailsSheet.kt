@@ -40,12 +40,12 @@ import androidx.compose.ui.unit.dp
 import com.savvasdalkitsis.uhuruphotos.api.icons.R
 import com.savvasdalkitsis.uhuruphotos.api.map.view.MapView
 import com.savvasdalkitsis.uhuruphotos.api.people.view.PeopleBar
-import com.savvasdalkitsis.uhuruphotos.photos.seam.PhotoAction
-import com.savvasdalkitsis.uhuruphotos.photos.seam.PhotoAction.ClickedOnGps
-import com.savvasdalkitsis.uhuruphotos.photos.seam.PhotoAction.ClickedOnMap
-import com.savvasdalkitsis.uhuruphotos.photos.seam.PhotoAction.HideInfo
-import com.savvasdalkitsis.uhuruphotos.photos.seam.PhotoAction.PersonSelected
-import com.savvasdalkitsis.uhuruphotos.photos.view.state.PhotoState
+import com.savvasdalkitsis.uhuruphotos.implementation.photos.seam.PhotoAction
+import com.savvasdalkitsis.uhuruphotos.implementation.photos.seam.PhotoAction.ClickedOnGps
+import com.savvasdalkitsis.uhuruphotos.implementation.photos.seam.PhotoAction.ClickedOnMap
+import com.savvasdalkitsis.uhuruphotos.implementation.photos.seam.PhotoAction.HideInfo
+import com.savvasdalkitsis.uhuruphotos.implementation.photos.seam.PhotoAction.PersonSelected
+import com.savvasdalkitsis.uhuruphotos.implementation.photos.view.state.PhotoState
 import com.savvasdalkitsis.uhuruphotos.api.ui.view.TextWithIcon
 
 @Composable

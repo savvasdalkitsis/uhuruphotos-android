@@ -17,11 +17,11 @@ package com.savvasdalkitsis.uhuruphotos.implementation.auth.weblogin.weblogin.se
 
 import com.savvasdalkitsis.uhuruphotos.api.launchers.onMain
 import com.savvasdalkitsis.uhuruphotos.api.seam.ActionHandler
-import com.savvasdalkitsis.uhuruphotos.auth.cookies.CookieMonitor
-import com.savvasdalkitsis.uhuruphotos.auth.weblogin.weblogin.seam.WebLoginEffect.Close
-import com.savvasdalkitsis.uhuruphotos.auth.weblogin.weblogin.seam.WebLoginMutation.LoadPage
-import com.savvasdalkitsis.uhuruphotos.auth.weblogin.weblogin.seam.WebLoginMutation.Loading
-import com.savvasdalkitsis.uhuruphotos.auth.weblogin.weblogin.view.WebLoginState
+import com.savvasdalkitsis.uhuruphotos.implementation.auth.cookies.CookieMonitor
+import com.savvasdalkitsis.uhuruphotos.implementation.auth.weblogin.weblogin.seam.WebLoginEffect.Close
+import com.savvasdalkitsis.uhuruphotos.implementation.auth.weblogin.weblogin.seam.WebLoginMutation.LoadPage
+import com.savvasdalkitsis.uhuruphotos.implementation.auth.weblogin.weblogin.seam.WebLoginMutation.Loading
+import com.savvasdalkitsis.uhuruphotos.implementation.auth.weblogin.weblogin.view.WebLoginState
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import javax.inject.Inject

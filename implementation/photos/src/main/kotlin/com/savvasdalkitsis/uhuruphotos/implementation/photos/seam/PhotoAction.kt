@@ -17,7 +17,7 @@ package com.savvasdalkitsis.uhuruphotos.implementation.photos.seam
 
 import com.savvasdalkitsis.uhuruphotos.api.map.model.LatLon
 import com.savvasdalkitsis.uhuruphotos.api.people.view.state.Person
-import com.savvasdalkitsis.uhuruphotos.photos.model.PhotoSequenceDataSource
+import com.savvasdalkitsis.uhuruphotos.implementation.photos.model.PhotoSequenceDataSource
 
 sealed class PhotoAction {
     object ToggleUI : PhotoAction()

@@ -35,8 +35,8 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import com.savvasdalkitsis.uhuruphotos.api.map.Locations
 import com.savvasdalkitsis.uhuruphotos.api.map.view.MapView
-import com.savvasdalkitsis.uhuruphotos.search.seam.SearchAction
-import com.savvasdalkitsis.uhuruphotos.search.seam.SearchAction.LoadHeatMap
+import com.savvasdalkitsis.uhuruphotos.implementation.search.seam.SearchAction
+import com.savvasdalkitsis.uhuruphotos.implementation.search.seam.SearchAction.LoadHeatMap
 
 @Composable
 fun SearchLocations(

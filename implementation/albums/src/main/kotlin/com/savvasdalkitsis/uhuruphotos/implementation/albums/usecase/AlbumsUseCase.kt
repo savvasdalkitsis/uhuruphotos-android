@@ -27,8 +27,8 @@ import com.savvasdalkitsis.uhuruphotos.api.db.albums.GetPersonAlbums
 import com.savvasdalkitsis.uhuruphotos.api.group.model.Group
 import com.savvasdalkitsis.uhuruphotos.api.group.model.mapValues
 import com.savvasdalkitsis.uhuruphotos.api.photos.model.Photo
-import com.savvasdalkitsis.uhuruphotos.photos.service.model.isVideo
-import com.savvasdalkitsis.uhuruphotos.photos.usecase.PhotosUseCase
+import com.savvasdalkitsis.uhuruphotos.implementation.photos.service.model.isVideo
+import com.savvasdalkitsis.uhuruphotos.implementation.photos.usecase.PhotosUseCase
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.map

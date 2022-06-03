@@ -15,9 +15,9 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.implementation.auth.service
 
-import com.savvasdalkitsis.uhuruphotos.auth.service.model.AuthenticationCredentials
-import com.savvasdalkitsis.uhuruphotos.auth.service.model.AuthenticationObtainResponse
-import com.savvasdalkitsis.uhuruphotos.auth.service.model.AuthenticationRefreshResponse
+import com.savvasdalkitsis.uhuruphotos.implementation.auth.service.model.AuthenticationCredentials
+import com.savvasdalkitsis.uhuruphotos.implementation.auth.service.model.AuthenticationObtainResponse
+import com.savvasdalkitsis.uhuruphotos.implementation.auth.service.model.AuthenticationRefreshResponse
 import retrofit2.http.Body
 import retrofit2.http.POST
 

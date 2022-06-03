@@ -41,15 +41,15 @@ import com.mxalbert.zoomable.rememberZoomableState
 import com.radusalagean.infobarcompose.InfoBar
 import com.radusalagean.infobarcompose.InfoBarMessage
 import com.savvasdalkitsis.uhuruphotos.api.image.view.Image
-import com.savvasdalkitsis.uhuruphotos.photos.seam.PhotoAction
-import com.savvasdalkitsis.uhuruphotos.photos.seam.PhotoAction.DeletePhoto
-import com.savvasdalkitsis.uhuruphotos.photos.seam.PhotoAction.DismissErrorMessage
-import com.savvasdalkitsis.uhuruphotos.photos.seam.PhotoAction.DismissPhotoDeletionDialog
-import com.savvasdalkitsis.uhuruphotos.photos.seam.PhotoAction.FullImageLoaded
-import com.savvasdalkitsis.uhuruphotos.photos.seam.PhotoAction.NavigateBack
-import com.savvasdalkitsis.uhuruphotos.photos.seam.PhotoAction.ShowInfo
-import com.savvasdalkitsis.uhuruphotos.photos.seam.PhotoAction.ToggleUI
-import com.savvasdalkitsis.uhuruphotos.photos.view.state.PhotoState
+import com.savvasdalkitsis.uhuruphotos.implementation.photos.seam.PhotoAction
+import com.savvasdalkitsis.uhuruphotos.implementation.photos.seam.PhotoAction.DeletePhoto
+import com.savvasdalkitsis.uhuruphotos.implementation.photos.seam.PhotoAction.DismissErrorMessage
+import com.savvasdalkitsis.uhuruphotos.implementation.photos.seam.PhotoAction.DismissPhotoDeletionDialog
+import com.savvasdalkitsis.uhuruphotos.implementation.photos.seam.PhotoAction.FullImageLoaded
+import com.savvasdalkitsis.uhuruphotos.implementation.photos.seam.PhotoAction.NavigateBack
+import com.savvasdalkitsis.uhuruphotos.implementation.photos.seam.PhotoAction.ShowInfo
+import com.savvasdalkitsis.uhuruphotos.implementation.photos.seam.PhotoAction.ToggleUI
+import com.savvasdalkitsis.uhuruphotos.implementation.photos.view.state.PhotoState
 import com.savvasdalkitsis.uhuruphotos.api.strings.R
 import com.savvasdalkitsis.uhuruphotos.implementation.video.view.Video
 

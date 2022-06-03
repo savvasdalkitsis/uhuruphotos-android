@@ -18,11 +18,11 @@ package com.savvasdalkitsis.uhuruphotos.implementation.settings.viewmodel
 import androidx.lifecycle.ViewModel
 import com.savvasdalkitsis.uhuruphotos.api.seam.Seam
 import com.savvasdalkitsis.uhuruphotos.api.seam.SeamViaHandler.Companion.handler
-import com.savvasdalkitsis.uhuruphotos.settings.seam.SettingsAction
-import com.savvasdalkitsis.uhuruphotos.settings.seam.SettingsEffect
-import com.savvasdalkitsis.uhuruphotos.settings.seam.SettingsHandler
-import com.savvasdalkitsis.uhuruphotos.settings.seam.SettingsMutation
-import com.savvasdalkitsis.uhuruphotos.settings.view.state.SettingsState
+import com.savvasdalkitsis.uhuruphotos.implementation.settings.seam.SettingsAction
+import com.savvasdalkitsis.uhuruphotos.implementation.settings.seam.SettingsEffect
+import com.savvasdalkitsis.uhuruphotos.implementation.settings.seam.SettingsHandler
+import com.savvasdalkitsis.uhuruphotos.implementation.settings.seam.SettingsMutation
+import com.savvasdalkitsis.uhuruphotos.implementation.settings.view.state.SettingsState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 

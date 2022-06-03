@@ -18,7 +18,7 @@ package com.savvasdalkitsis.uhuruphotos.implementation.log.module
 import android.content.Context
 import com.michaelflisar.lumberjack.FileLoggingSetup
 import com.michaelflisar.lumberjack.FileLoggingTree
-import com.savvasdalkitsis.uhuruphotos.log.BuildConfig
+import com.savvasdalkitsis.uhuruphotos.implementation.log.BuildConfig
 import com.savvasdalkitsis.uhuruphotos.implementation.log.NoOpTree
 import dagger.Module
 import dagger.Provides

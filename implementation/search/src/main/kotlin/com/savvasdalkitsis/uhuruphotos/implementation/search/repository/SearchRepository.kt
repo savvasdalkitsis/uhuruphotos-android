@@ -24,7 +24,7 @@ import com.savvasdalkitsis.uhuruphotos.api.db.search.GetSearchResults
 import com.savvasdalkitsis.uhuruphotos.api.db.search.SearchQueries
 import com.savvasdalkitsis.uhuruphotos.api.group.model.Group
 import com.savvasdalkitsis.uhuruphotos.api.group.model.groupBy
-import com.savvasdalkitsis.uhuruphotos.search.service.SearchService
+import com.savvasdalkitsis.uhuruphotos.implementation.search.service.SearchService
 import com.squareup.sqldelight.runtime.coroutines.asFlow
 import com.squareup.sqldelight.runtime.coroutines.mapToList
 import kotlinx.coroutines.flow.Flow

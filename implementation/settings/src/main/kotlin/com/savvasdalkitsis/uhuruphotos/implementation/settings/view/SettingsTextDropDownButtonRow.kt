@@ -33,7 +33,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.savvasdalkitsis.uhuruphotos.settings.seam.SettingsAction
+import com.savvasdalkitsis.uhuruphotos.implementation.settings.seam.SettingsAction
 
 @Composable
 internal fun SettingsTextDropDownButtonRow(

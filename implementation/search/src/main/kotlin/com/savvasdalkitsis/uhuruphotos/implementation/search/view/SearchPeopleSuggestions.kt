@@ -18,9 +18,9 @@ package com.savvasdalkitsis.uhuruphotos.implementation.search.view
 import androidx.compose.runtime.Composable
 import com.savvasdalkitsis.uhuruphotos.api.people.view.PeopleBar
 import com.savvasdalkitsis.uhuruphotos.api.people.view.state.Person
-import com.savvasdalkitsis.uhuruphotos.search.seam.SearchAction
-import com.savvasdalkitsis.uhuruphotos.search.seam.SearchAction.PersonSelected
-import com.savvasdalkitsis.uhuruphotos.search.seam.SearchAction.ViewAllPeopleSelected
+import com.savvasdalkitsis.uhuruphotos.implementation.search.seam.SearchAction
+import com.savvasdalkitsis.uhuruphotos.implementation.search.seam.SearchAction.PersonSelected
+import com.savvasdalkitsis.uhuruphotos.implementation.search.seam.SearchAction.ViewAllPeopleSelected
 
 @Composable
 fun SearchPeopleSuggestions(

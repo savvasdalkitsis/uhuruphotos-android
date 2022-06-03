@@ -20,10 +20,10 @@ import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.res.stringResource
-import com.savvasdalkitsis.uhuruphotos.settings.seam.SettingsAction
-import com.savvasdalkitsis.uhuruphotos.settings.seam.SettingsAction.ChangeImageDiskCache
-import com.savvasdalkitsis.uhuruphotos.settings.seam.SettingsAction.ClearImageDiskCache
-import com.savvasdalkitsis.uhuruphotos.settings.view.state.SettingsState
+import com.savvasdalkitsis.uhuruphotos.implementation.settings.seam.SettingsAction
+import com.savvasdalkitsis.uhuruphotos.implementation.settings.seam.SettingsAction.ChangeImageDiskCache
+import com.savvasdalkitsis.uhuruphotos.implementation.settings.seam.SettingsAction.ClearImageDiskCache
+import com.savvasdalkitsis.uhuruphotos.implementation.settings.view.state.SettingsState
 import com.savvasdalkitsis.uhuruphotos.api.strings.R
 
 @Composable

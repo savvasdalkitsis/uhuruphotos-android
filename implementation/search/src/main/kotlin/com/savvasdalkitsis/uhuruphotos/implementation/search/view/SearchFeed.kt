@@ -21,9 +21,9 @@ import androidx.compose.ui.unit.dp
 import com.savvasdalkitsis.uhuruphotos.api.compose.copy
 import com.savvasdalkitsis.uhuruphotos.api.feed.view.Feed
 import com.savvasdalkitsis.uhuruphotos.api.feed.view.state.FeedState
-import com.savvasdalkitsis.uhuruphotos.search.seam.SearchAction
-import com.savvasdalkitsis.uhuruphotos.search.view.state.SearchResults
-import com.savvasdalkitsis.uhuruphotos.search.view.state.SearchState
+import com.savvasdalkitsis.uhuruphotos.implementation.search.seam.SearchAction
+import com.savvasdalkitsis.uhuruphotos.implementation.search.view.state.SearchResults
+import com.savvasdalkitsis.uhuruphotos.implementation.search.view.state.SearchState
 
 @Composable
 fun SearchFeed(

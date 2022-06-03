@@ -15,7 +15,7 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.implementation.network.interceptors
 
-import com.savvasdalkitsis.uhuruphotos.network.BuildConfig.APP_VERSION_NAME
+import com.savvasdalkitsis.uhuruphotos.implementation.network.BuildConfig.APP_VERSION_NAME
 import okhttp3.Interceptor
 import okhttp3.Response
 import javax.inject.Inject
