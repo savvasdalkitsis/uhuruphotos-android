@@ -34,6 +34,6 @@ abstract class PersonBindingsModule {
 
     @Binds
     abstract fun personUseCase(personUseCase: PersonUseCase):
-            com.savvasdalkitsis.uhuruphotos.person.api.usecase.PersonUseCase
+            com.savvasdalkitsis.uhuruphotos.api.person.usecase.PersonUseCase
 
 }

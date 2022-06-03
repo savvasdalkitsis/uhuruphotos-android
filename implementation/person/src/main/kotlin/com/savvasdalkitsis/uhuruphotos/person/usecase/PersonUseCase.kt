@@ -17,7 +17,7 @@ package com.savvasdalkitsis.uhuruphotos.person.usecase
 
 import com.savvasdalkitsis.uhuruphotos.api.albums.model.Album
 import com.savvasdalkitsis.uhuruphotos.api.albums.usecase.AlbumsUseCase
-import com.savvasdalkitsis.uhuruphotos.person.api.usecase.PersonUseCase
+import com.savvasdalkitsis.uhuruphotos.api.person.usecase.PersonUseCase
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 

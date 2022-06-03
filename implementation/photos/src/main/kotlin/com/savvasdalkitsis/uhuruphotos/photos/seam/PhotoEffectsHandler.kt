@@ -24,7 +24,7 @@ import com.savvasdalkitsis.uhuruphotos.api.seam.EffectHandler
 import com.savvasdalkitsis.uhuruphotos.api.share.usecase.ShareUseCase
 import com.savvasdalkitsis.uhuruphotos.api.map.model.LatLon
 import com.savvasdalkitsis.uhuruphotos.api.navigation.Navigator
-import com.savvasdalkitsis.uhuruphotos.person.api.navigation.PersonNavigationTarget
+import com.savvasdalkitsis.uhuruphotos.api.person.navigation.PersonNavigationTarget
 import com.savvasdalkitsis.uhuruphotos.photos.seam.PhotoEffect.CopyToClipboard
 import com.savvasdalkitsis.uhuruphotos.photos.seam.PhotoEffect.ErrorRefreshingPeople
 import com.savvasdalkitsis.uhuruphotos.photos.seam.PhotoEffect.HideSystemBars

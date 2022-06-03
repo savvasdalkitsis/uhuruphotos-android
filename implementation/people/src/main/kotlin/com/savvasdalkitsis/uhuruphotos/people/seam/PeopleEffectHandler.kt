@@ -20,7 +20,7 @@ import com.savvasdalkitsis.uhuruphotos.api.navigation.Navigator
 import com.savvasdalkitsis.uhuruphotos.people.seam.PeopleEffect.ErrorLoadingPeople
 import com.savvasdalkitsis.uhuruphotos.people.seam.PeopleEffect.NavigateBack
 import com.savvasdalkitsis.uhuruphotos.people.seam.PeopleEffect.NavigateToPerson
-import com.savvasdalkitsis.uhuruphotos.person.api.navigation.PersonNavigationTarget
+import com.savvasdalkitsis.uhuruphotos.api.person.navigation.PersonNavigationTarget
 import com.savvasdalkitsis.uhuruphotos.strings.R
 import com.savvasdalkitsis.uhuruphotos.toaster.Toaster
 import javax.inject.Inject
