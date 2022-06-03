@@ -13,7 +13,7 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
  */
-package com.savvasdalkitsis.uhuruphotos.library.view
+package com.savvasdalkitsis.uhuruphotos.implementation.library.view
 
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.GridItemSpan
@@ -26,9 +26,9 @@ import com.google.accompanist.swiperefresh.SwipeRefresh
 import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 import com.savvasdalkitsis.uhuruphotos.api.home.view.HomeScaffold
 import com.savvasdalkitsis.uhuruphotos.api.feed.view.state.FeedDisplay
-import com.savvasdalkitsis.uhuruphotos.library.seam.LibraryAction
-import com.savvasdalkitsis.uhuruphotos.library.seam.LibraryAction.RefreshAutoAlbums
-import com.savvasdalkitsis.uhuruphotos.library.view.state.LibraryState
+import com.savvasdalkitsis.uhuruphotos.implementation.library.seam.LibraryAction
+import com.savvasdalkitsis.uhuruphotos.implementation.library.seam.LibraryAction.RefreshAutoAlbums
+import com.savvasdalkitsis.uhuruphotos.implementation.library.view.state.LibraryState
 import com.savvasdalkitsis.uhuruphotos.api.strings.R
 import com.savvasdalkitsis.uhuruphotos.api.ui.view.NoContent
 

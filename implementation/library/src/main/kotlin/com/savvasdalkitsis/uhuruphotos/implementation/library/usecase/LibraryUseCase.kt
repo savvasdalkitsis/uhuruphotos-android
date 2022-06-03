@@ -13,17 +13,17 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
  */
-package com.savvasdalkitsis.uhuruphotos.library.usecase
+package com.savvasdalkitsis.uhuruphotos.implementation.library.usecase
 
 import android.content.Context
 import com.fredporciuncula.flow.preferences.FlowSharedPreferences
 import com.savvasdalkitsis.uhuruphotos.api.albums.repository.AlbumsRepository
-import com.savvasdalkitsis.uhuruphotos.library.view.state.AutoAlbumSorting
-import com.savvasdalkitsis.uhuruphotos.library.view.state.AutoAlbumSorting.ALPHABETICAL_ASC
-import com.savvasdalkitsis.uhuruphotos.library.view.state.AutoAlbumSorting.ALPHABETICAL_DESC
-import com.savvasdalkitsis.uhuruphotos.library.view.state.AutoAlbumSorting.DATE_ASC
-import com.savvasdalkitsis.uhuruphotos.library.view.state.AutoAlbumSorting.DATE_DESC
-import com.savvasdalkitsis.uhuruphotos.library.view.state.LibraryAutoAlbum
+import com.savvasdalkitsis.uhuruphotos.implementation.library.view.state.AutoAlbumSorting
+import com.savvasdalkitsis.uhuruphotos.implementation.library.view.state.AutoAlbumSorting.ALPHABETICAL_ASC
+import com.savvasdalkitsis.uhuruphotos.implementation.library.view.state.AutoAlbumSorting.ALPHABETICAL_DESC
+import com.savvasdalkitsis.uhuruphotos.implementation.library.view.state.AutoAlbumSorting.DATE_ASC
+import com.savvasdalkitsis.uhuruphotos.implementation.library.view.state.AutoAlbumSorting.DATE_DESC
+import com.savvasdalkitsis.uhuruphotos.implementation.library.view.state.LibraryAutoAlbum
 import com.savvasdalkitsis.uhuruphotos.api.photos.model.Photo
 import com.savvasdalkitsis.uhuruphotos.photos.usecase.PhotosUseCase
 import com.savvasdalkitsis.uhuruphotos.api.strings.R

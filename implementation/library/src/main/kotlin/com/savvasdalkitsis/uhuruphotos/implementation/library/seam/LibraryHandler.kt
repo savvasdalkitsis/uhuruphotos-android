@@ -13,22 +13,22 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
  */
-package com.savvasdalkitsis.uhuruphotos.library.seam
+package com.savvasdalkitsis.uhuruphotos.implementation.library.seam
 
 import com.savvasdalkitsis.uhuruphotos.api.coroutines.safelyOnStartIgnoring
 import com.savvasdalkitsis.uhuruphotos.api.log.log
 import com.savvasdalkitsis.uhuruphotos.api.seam.ActionHandler
-import com.savvasdalkitsis.uhuruphotos.library.seam.LibraryAction.AlbumSelected
-import com.savvasdalkitsis.uhuruphotos.library.seam.LibraryAction.ChangeSorting
-import com.savvasdalkitsis.uhuruphotos.library.seam.LibraryAction.Load
-import com.savvasdalkitsis.uhuruphotos.library.seam.LibraryAction.RefreshAutoAlbums
-import com.savvasdalkitsis.uhuruphotos.library.seam.LibraryEffect.ErrorLoadingAutoAlbums
-import com.savvasdalkitsis.uhuruphotos.library.seam.LibraryEffect.NavigateToAutoAlbum
-import com.savvasdalkitsis.uhuruphotos.library.seam.LibraryMutation.DisplayAutoAlbums
-import com.savvasdalkitsis.uhuruphotos.library.seam.LibraryMutation.Loading
-import com.savvasdalkitsis.uhuruphotos.library.seam.LibraryMutation.ShowAutoAlbumSorting
-import com.savvasdalkitsis.uhuruphotos.library.usecase.LibraryUseCase
-import com.savvasdalkitsis.uhuruphotos.library.view.state.LibraryState
+import com.savvasdalkitsis.uhuruphotos.implementation.library.seam.LibraryAction.AlbumSelected
+import com.savvasdalkitsis.uhuruphotos.implementation.library.seam.LibraryAction.ChangeSorting
+import com.savvasdalkitsis.uhuruphotos.implementation.library.seam.LibraryAction.Load
+import com.savvasdalkitsis.uhuruphotos.implementation.library.seam.LibraryAction.RefreshAutoAlbums
+import com.savvasdalkitsis.uhuruphotos.implementation.library.seam.LibraryEffect.ErrorLoadingAutoAlbums
+import com.savvasdalkitsis.uhuruphotos.implementation.library.seam.LibraryEffect.NavigateToAutoAlbum
+import com.savvasdalkitsis.uhuruphotos.implementation.library.seam.LibraryMutation.DisplayAutoAlbums
+import com.savvasdalkitsis.uhuruphotos.implementation.library.seam.LibraryMutation.Loading
+import com.savvasdalkitsis.uhuruphotos.implementation.library.seam.LibraryMutation.ShowAutoAlbumSorting
+import com.savvasdalkitsis.uhuruphotos.implementation.library.usecase.LibraryUseCase
+import com.savvasdalkitsis.uhuruphotos.implementation.library.view.state.LibraryState
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableSharedFlow

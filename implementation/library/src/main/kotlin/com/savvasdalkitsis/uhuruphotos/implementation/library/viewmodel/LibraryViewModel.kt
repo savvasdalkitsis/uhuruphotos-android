@@ -13,16 +13,16 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
  */
-package com.savvasdalkitsis.uhuruphotos.library.viewmodel
+package com.savvasdalkitsis.uhuruphotos.implementation.library.viewmodel
 
 import androidx.lifecycle.ViewModel
 import com.savvasdalkitsis.uhuruphotos.api.seam.Seam
 import com.savvasdalkitsis.uhuruphotos.api.seam.SeamViaHandler.Companion.handler
-import com.savvasdalkitsis.uhuruphotos.library.seam.LibraryAction
-import com.savvasdalkitsis.uhuruphotos.library.seam.LibraryEffect
-import com.savvasdalkitsis.uhuruphotos.library.seam.LibraryHandler
-import com.savvasdalkitsis.uhuruphotos.library.seam.LibraryMutation
-import com.savvasdalkitsis.uhuruphotos.library.view.state.LibraryState
+import com.savvasdalkitsis.uhuruphotos.implementation.library.seam.LibraryAction
+import com.savvasdalkitsis.uhuruphotos.implementation.library.seam.LibraryEffect
+import com.savvasdalkitsis.uhuruphotos.implementation.library.seam.LibraryHandler
+import com.savvasdalkitsis.uhuruphotos.implementation.library.seam.LibraryMutation
+import com.savvasdalkitsis.uhuruphotos.implementation.library.view.state.LibraryState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 

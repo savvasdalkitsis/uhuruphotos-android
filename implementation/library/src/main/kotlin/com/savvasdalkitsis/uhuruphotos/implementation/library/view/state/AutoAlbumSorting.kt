@@ -13,13 +13,12 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
  */
-package com.savvasdalkitsis.uhuruphotos.library.view.state
+package com.savvasdalkitsis.uhuruphotos.implementation.library.view.state
 
-import com.savvasdalkitsis.uhuruphotos.api.photos.model.Photo
+enum class AutoAlbumSorting {
+    DATE_DESC, DATE_ASC, ALPHABETICAL_ASC, ALPHABETICAL_DESC;
 
-data class LibraryAutoAlbum(
-    val id: Int,
-    val cover: Photo,
-    val title: String,
-    val photoCount: Int?,
-)
+    companion object {
+        val default = DATE_DESC
+    }
+}

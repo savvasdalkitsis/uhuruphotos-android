@@ -13,7 +13,7 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
  */
-package com.savvasdalkitsis.uhuruphotos.library.view
+package com.savvasdalkitsis.uhuruphotos.implementation.library.view
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
@@ -26,13 +26,13 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import com.savvasdalkitsis.uhuruphotos.library.seam.LibraryAction
-import com.savvasdalkitsis.uhuruphotos.library.seam.LibraryAction.ChangeSorting
-import com.savvasdalkitsis.uhuruphotos.library.view.state.AutoAlbumSorting.ALPHABETICAL_ASC
-import com.savvasdalkitsis.uhuruphotos.library.view.state.AutoAlbumSorting.ALPHABETICAL_DESC
-import com.savvasdalkitsis.uhuruphotos.library.view.state.AutoAlbumSorting.DATE_ASC
-import com.savvasdalkitsis.uhuruphotos.library.view.state.AutoAlbumSorting.DATE_DESC
-import com.savvasdalkitsis.uhuruphotos.library.view.state.LibraryState
+import com.savvasdalkitsis.uhuruphotos.implementation.library.seam.LibraryAction
+import com.savvasdalkitsis.uhuruphotos.implementation.library.seam.LibraryAction.ChangeSorting
+import com.savvasdalkitsis.uhuruphotos.implementation.library.view.state.AutoAlbumSorting.ALPHABETICAL_ASC
+import com.savvasdalkitsis.uhuruphotos.implementation.library.view.state.AutoAlbumSorting.ALPHABETICAL_DESC
+import com.savvasdalkitsis.uhuruphotos.implementation.library.view.state.AutoAlbumSorting.DATE_ASC
+import com.savvasdalkitsis.uhuruphotos.implementation.library.view.state.AutoAlbumSorting.DATE_DESC
+import com.savvasdalkitsis.uhuruphotos.implementation.library.view.state.LibraryState
 import com.savvasdalkitsis.uhuruphotos.api.strings.R
 import com.savvasdalkitsis.uhuruphotos.api.ui.view.DropDownActionIcon
 import com.savvasdalkitsis.uhuruphotos.api.icons.R as Icons

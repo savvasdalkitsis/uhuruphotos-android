@@ -13,12 +13,12 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
  */
-package com.savvasdalkitsis.uhuruphotos.library.seam
+package com.savvasdalkitsis.uhuruphotos.implementation.library.seam
 
 import com.savvasdalkitsis.uhuruphotos.api.autoalbum.navigation.AutoAlbumNavigationTarget
 import com.savvasdalkitsis.uhuruphotos.api.seam.EffectHandler
-import com.savvasdalkitsis.uhuruphotos.library.seam.LibraryEffect.ErrorLoadingAutoAlbums
-import com.savvasdalkitsis.uhuruphotos.library.seam.LibraryEffect.NavigateToAutoAlbum
+import com.savvasdalkitsis.uhuruphotos.implementation.library.seam.LibraryEffect.ErrorLoadingAutoAlbums
+import com.savvasdalkitsis.uhuruphotos.implementation.library.seam.LibraryEffect.NavigateToAutoAlbum
 import com.savvasdalkitsis.uhuruphotos.api.navigation.Navigator
 import com.savvasdalkitsis.uhuruphotos.api.strings.R
 import com.savvasdalkitsis.uhuruphotos.api.toaster.Toaster

@@ -13,7 +13,7 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
  */
-package com.savvasdalkitsis.uhuruphotos.library.navigation
+package com.savvasdalkitsis.uhuruphotos.implementation.library.navigation
 
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavGraphBuilder
@@ -21,12 +21,12 @@ import androidx.navigation.NavHostController
 import com.savvasdalkitsis.uhuruphotos.api.settings.usecase.SettingsUseCase
 import com.savvasdalkitsis.uhuruphotos.api.feed.view.state.FeedDisplays
 import com.savvasdalkitsis.uhuruphotos.api.homenavigation.HomeNavigationRoutes
-import com.savvasdalkitsis.uhuruphotos.library.seam.LibraryAction
-import com.savvasdalkitsis.uhuruphotos.library.seam.LibraryEffect
-import com.savvasdalkitsis.uhuruphotos.library.seam.LibraryEffectsHandler
-import com.savvasdalkitsis.uhuruphotos.library.view.Library
-import com.savvasdalkitsis.uhuruphotos.library.view.state.LibraryState
-import com.savvasdalkitsis.uhuruphotos.library.viewmodel.LibraryViewModel
+import com.savvasdalkitsis.uhuruphotos.implementation.library.seam.LibraryAction
+import com.savvasdalkitsis.uhuruphotos.implementation.library.seam.LibraryEffect
+import com.savvasdalkitsis.uhuruphotos.implementation.library.seam.LibraryEffectsHandler
+import com.savvasdalkitsis.uhuruphotos.implementation.library.view.Library
+import com.savvasdalkitsis.uhuruphotos.implementation.library.view.state.LibraryState
+import com.savvasdalkitsis.uhuruphotos.implementation.library.viewmodel.LibraryViewModel
 import com.savvasdalkitsis.uhuruphotos.api.navigation.NavigationTarget
 import com.savvasdalkitsis.uhuruphotos.api.navigation.navigationTarget
 import javax.inject.Inject

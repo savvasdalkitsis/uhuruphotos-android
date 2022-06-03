@@ -13,9 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
  */
-package com.savvasdalkitsis.uhuruphotos.library.seam
+package com.savvasdalkitsis.uhuruphotos.implementation.library.seam
 
-import com.savvasdalkitsis.uhuruphotos.library.view.state.LibraryAutoAlbum
+import com.savvasdalkitsis.uhuruphotos.implementation.library.view.state.LibraryAutoAlbum
 
 sealed class LibraryEffect {
     data class NavigateToAutoAlbum(val album: LibraryAutoAlbum) : LibraryEffect()

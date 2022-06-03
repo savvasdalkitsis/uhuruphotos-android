@@ -13,10 +13,14 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
  */
-package com.savvasdalkitsis.uhuruphotos.library.view.state
+package com.savvasdalkitsis.uhuruphotos.implementation.library.seam
 
-data class LibraryState(
-    val isLoading: Boolean = true,
-    val sorting: AutoAlbumSorting = AutoAlbumSorting.default,
-    val autoAlbums: List<LibraryAutoAlbum> = emptyList(),
-)
+import com.savvasdalkitsis.uhuruphotos.implementation.library.view.state.AutoAlbumSorting
+import com.savvasdalkitsis.uhuruphotos.implementation.library.view.state.LibraryAutoAlbum
+
+sealed class LibraryAction {
+    data class ChangeSorting(val sorting: AutoAlbumSorting) : LibraryAction()
+    data class AlbumSelected(val album: LibraryAutoAlbum) : LibraryAction()
+    object Load : LibraryAction()
+    object RefreshAutoAlbums : LibraryAction()
+}
