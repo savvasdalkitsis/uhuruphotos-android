@@ -13,7 +13,7 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
  */
-package com.savvasdalkitsis.uhuruphotos.video.view
+package com.savvasdalkitsis.uhuruphotos.implementation.video.view
 
 import android.annotation.SuppressLint
 import android.view.LayoutInflater
@@ -40,7 +40,7 @@ import com.google.android.exoplayer2.Player.STATE_READY
 import com.google.android.exoplayer2.ui.StyledPlayerView
 import com.savvasdalkitsis.uhuruphotos.api.image.view.Image
 import com.savvasdalkitsis.uhuruphotos.api.video.LocalExoPlayer
-import com.savvasdalkitsis.uhuruphotos.video.R
+import com.savvasdalkitsis.uhuruphotos.implementation.video.R
 
 @Composable
 fun Video(
