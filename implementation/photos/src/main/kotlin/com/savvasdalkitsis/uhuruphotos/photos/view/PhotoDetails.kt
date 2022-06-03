@@ -40,7 +40,7 @@ import com.mxalbert.zoomable.Zoomable
 import com.mxalbert.zoomable.rememberZoomableState
 import com.radusalagean.infobarcompose.InfoBar
 import com.radusalagean.infobarcompose.InfoBarMessage
-import com.savvasdalkitsis.uhuruphotos.image.api.view.Image
+import com.savvasdalkitsis.uhuruphotos.api.image.view.Image
 import com.savvasdalkitsis.uhuruphotos.photos.seam.PhotoAction
 import com.savvasdalkitsis.uhuruphotos.photos.seam.PhotoAction.DeletePhoto
 import com.savvasdalkitsis.uhuruphotos.photos.seam.PhotoAction.DismissErrorMessage

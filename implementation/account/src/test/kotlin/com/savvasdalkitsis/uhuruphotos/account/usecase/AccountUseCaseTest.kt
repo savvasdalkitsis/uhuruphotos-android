@@ -19,7 +19,7 @@ import com.savvasdalkitsis.uhuruphotos.api.db.albums.AlbumsQueries
 import com.savvasdalkitsis.uhuruphotos.api.db.auth.TokenQueries
 import com.savvasdalkitsis.uhuruphotos.api.db.search.SearchQueries
 import com.savvasdalkitsis.uhuruphotos.api.db.user.UserQueries
-import com.savvasdalkitsis.uhuruphotos.image.api.cache.ImageCacheController
+import com.savvasdalkitsis.uhuruphotos.api.image.cache.ImageCacheController
 import com.savvasdalkitsis.uhuruphotos.worker.WorkScheduler
 import io.mockk.mockk
 import io.mockk.verify

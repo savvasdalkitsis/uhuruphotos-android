@@ -21,7 +21,7 @@ import com.savvasdalkitsis.uhuruphotos.api.db.auth.TokenQueries
 import com.savvasdalkitsis.uhuruphotos.api.db.extensions.async
 import com.savvasdalkitsis.uhuruphotos.api.db.search.SearchQueries
 import com.savvasdalkitsis.uhuruphotos.api.db.user.UserQueries
-import com.savvasdalkitsis.uhuruphotos.image.api.cache.ImageCacheController
+import com.savvasdalkitsis.uhuruphotos.api.image.cache.ImageCacheController
 import com.savvasdalkitsis.uhuruphotos.video.api.VideoCache
 import com.savvasdalkitsis.uhuruphotos.worker.WorkScheduler
 import okhttp3.Cache

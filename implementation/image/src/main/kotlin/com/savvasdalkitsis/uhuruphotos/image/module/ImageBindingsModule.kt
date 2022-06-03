@@ -34,5 +34,5 @@ abstract class ImageBindingsModule {
 
     @Binds
     abstract fun imageCacheController(imageCacheController: ImageCacheController):
-            com.savvasdalkitsis.uhuruphotos.image.api.cache.ImageCacheController
+            com.savvasdalkitsis.uhuruphotos.api.image.cache.ImageCacheController
 }

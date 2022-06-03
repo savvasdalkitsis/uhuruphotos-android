@@ -21,7 +21,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
-import com.savvasdalkitsis.uhuruphotos.image.api.view.Image
+import com.savvasdalkitsis.uhuruphotos.api.image.view.Image
 import com.savvasdalkitsis.uhuruphotos.people.api.view.state.Person
 
 @Composable

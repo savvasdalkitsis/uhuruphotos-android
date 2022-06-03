@@ -38,7 +38,7 @@ import com.google.android.exoplayer2.MediaItem
 import com.google.android.exoplayer2.Player
 import com.google.android.exoplayer2.Player.STATE_READY
 import com.google.android.exoplayer2.ui.StyledPlayerView
-import com.savvasdalkitsis.uhuruphotos.image.api.view.Image
+import com.savvasdalkitsis.uhuruphotos.api.image.view.Image
 import com.savvasdalkitsis.uhuruphotos.api.video.LocalExoPlayer
 import com.savvasdalkitsis.uhuruphotos.video.R
 
