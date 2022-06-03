@@ -13,22 +13,22 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
  */
-package com.savvasdalkitsis.uhuruphotos.person.seam
+package com.savvasdalkitsis.uhuruphotos.implementation.person.seam
 
 import com.savvasdalkitsis.uhuruphotos.api.seam.ActionHandler
 import com.savvasdalkitsis.uhuruphotos.api.people.usecase.PeopleUseCase
 import com.savvasdalkitsis.uhuruphotos.api.people.view.state.toPerson
 import com.savvasdalkitsis.uhuruphotos.api.person.usecase.PersonUseCase
-import com.savvasdalkitsis.uhuruphotos.person.seam.PersonAction.ChangeDisplay
-import com.savvasdalkitsis.uhuruphotos.person.seam.PersonAction.LoadPerson
-import com.savvasdalkitsis.uhuruphotos.person.seam.PersonAction.NavigateBack
-import com.savvasdalkitsis.uhuruphotos.person.seam.PersonAction.SelectedPhoto
-import com.savvasdalkitsis.uhuruphotos.person.seam.PersonEffect.OpenPhotoDetails
-import com.savvasdalkitsis.uhuruphotos.person.seam.PersonMutation.Loading
-import com.savvasdalkitsis.uhuruphotos.person.seam.PersonMutation.SetFeedDisplay
-import com.savvasdalkitsis.uhuruphotos.person.seam.PersonMutation.ShowPersonDetails
-import com.savvasdalkitsis.uhuruphotos.person.seam.PersonMutation.ShowPersonPhotos
-import com.savvasdalkitsis.uhuruphotos.person.view.state.PersonState
+import com.savvasdalkitsis.uhuruphotos.implementation.person.seam.PersonAction.ChangeDisplay
+import com.savvasdalkitsis.uhuruphotos.implementation.person.seam.PersonAction.LoadPerson
+import com.savvasdalkitsis.uhuruphotos.implementation.person.seam.PersonAction.NavigateBack
+import com.savvasdalkitsis.uhuruphotos.implementation.person.seam.PersonAction.SelectedPhoto
+import com.savvasdalkitsis.uhuruphotos.implementation.person.seam.PersonEffect.OpenPhotoDetails
+import com.savvasdalkitsis.uhuruphotos.implementation.person.seam.PersonMutation.Loading
+import com.savvasdalkitsis.uhuruphotos.implementation.person.seam.PersonMutation.SetFeedDisplay
+import com.savvasdalkitsis.uhuruphotos.implementation.person.seam.PersonMutation.ShowPersonDetails
+import com.savvasdalkitsis.uhuruphotos.implementation.person.seam.PersonMutation.ShowPersonPhotos
+import com.savvasdalkitsis.uhuruphotos.implementation.person.view.state.PersonState
 import com.savvasdalkitsis.uhuruphotos.photos.usecase.PhotosUseCase
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow

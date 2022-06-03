@@ -13,7 +13,7 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
  */
-package com.savvasdalkitsis.uhuruphotos.person.view
+package com.savvasdalkitsis.uhuruphotos.implementation.person.view
 
 import androidx.compose.animation.AnimatedContent
 import androidx.compose.animation.AnimatedVisibility
@@ -30,11 +30,11 @@ import androidx.compose.ui.unit.dp
 import com.savvasdalkitsis.uhuruphotos.api.feed.view.Feed
 import com.savvasdalkitsis.uhuruphotos.api.feed.view.FeedDisplayActionButton
 import com.savvasdalkitsis.uhuruphotos.api.image.view.Image
-import com.savvasdalkitsis.uhuruphotos.person.seam.PersonAction
-import com.savvasdalkitsis.uhuruphotos.person.seam.PersonAction.ChangeDisplay
-import com.savvasdalkitsis.uhuruphotos.person.seam.PersonAction.NavigateBack
-import com.savvasdalkitsis.uhuruphotos.person.seam.PersonAction.SelectedPhoto
-import com.savvasdalkitsis.uhuruphotos.person.view.state.PersonState
+import com.savvasdalkitsis.uhuruphotos.implementation.person.seam.PersonAction
+import com.savvasdalkitsis.uhuruphotos.implementation.person.seam.PersonAction.ChangeDisplay
+import com.savvasdalkitsis.uhuruphotos.implementation.person.seam.PersonAction.NavigateBack
+import com.savvasdalkitsis.uhuruphotos.implementation.person.seam.PersonAction.SelectedPhoto
+import com.savvasdalkitsis.uhuruphotos.implementation.person.view.state.PersonState
 import com.savvasdalkitsis.uhuruphotos.api.ui.view.BackNavButton
 import com.savvasdalkitsis.uhuruphotos.api.ui.view.CommonScaffold
 import com.savvasdalkitsis.uhuruphotos.api.ui.view.FullProgressBar

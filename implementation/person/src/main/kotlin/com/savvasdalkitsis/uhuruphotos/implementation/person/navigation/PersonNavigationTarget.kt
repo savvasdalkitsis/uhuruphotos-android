@@ -13,7 +13,7 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
  */
-package com.savvasdalkitsis.uhuruphotos.person.navigation
+package com.savvasdalkitsis.uhuruphotos.implementation.person.navigation
 
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavGraphBuilder
@@ -23,13 +23,13 @@ import com.savvasdalkitsis.uhuruphotos.api.navigation.NavigationTarget
 import com.savvasdalkitsis.uhuruphotos.api.navigation.navigationTarget
 import com.savvasdalkitsis.uhuruphotos.api.person.navigation.PersonNavigationTarget
 import com.savvasdalkitsis.uhuruphotos.api.person.navigation.PersonNavigationTarget.personId
-import com.savvasdalkitsis.uhuruphotos.person.seam.PersonAction
-import com.savvasdalkitsis.uhuruphotos.person.seam.PersonAction.LoadPerson
-import com.savvasdalkitsis.uhuruphotos.person.seam.PersonEffect
-import com.savvasdalkitsis.uhuruphotos.person.seam.PersonEffectHandler
-import com.savvasdalkitsis.uhuruphotos.person.view.Person
-import com.savvasdalkitsis.uhuruphotos.person.view.state.PersonState
-import com.savvasdalkitsis.uhuruphotos.person.viewmodel.PersonViewModel
+import com.savvasdalkitsis.uhuruphotos.implementation.person.seam.PersonAction
+import com.savvasdalkitsis.uhuruphotos.implementation.person.seam.PersonAction.LoadPerson
+import com.savvasdalkitsis.uhuruphotos.implementation.person.seam.PersonEffect
+import com.savvasdalkitsis.uhuruphotos.implementation.person.seam.PersonEffectHandler
+import com.savvasdalkitsis.uhuruphotos.implementation.person.view.Person
+import com.savvasdalkitsis.uhuruphotos.implementation.person.view.state.PersonState
+import com.savvasdalkitsis.uhuruphotos.implementation.person.viewmodel.PersonViewModel
 import javax.inject.Inject
 
 class PersonNavigationTarget @Inject constructor(

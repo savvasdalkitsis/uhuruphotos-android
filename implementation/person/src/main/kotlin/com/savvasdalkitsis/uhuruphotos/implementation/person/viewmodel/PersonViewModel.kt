@@ -13,16 +13,16 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
  */
-package com.savvasdalkitsis.uhuruphotos.person.viewmodel
+package com.savvasdalkitsis.uhuruphotos.implementation.person.viewmodel
 
 import androidx.lifecycle.ViewModel
 import com.savvasdalkitsis.uhuruphotos.api.seam.Seam
 import com.savvasdalkitsis.uhuruphotos.api.seam.SeamViaHandler.Companion.handler
-import com.savvasdalkitsis.uhuruphotos.person.seam.PersonAction
-import com.savvasdalkitsis.uhuruphotos.person.seam.PersonEffect
-import com.savvasdalkitsis.uhuruphotos.person.seam.PersonHandler
-import com.savvasdalkitsis.uhuruphotos.person.seam.PersonMutation
-import com.savvasdalkitsis.uhuruphotos.person.view.state.PersonState
+import com.savvasdalkitsis.uhuruphotos.implementation.person.seam.PersonAction
+import com.savvasdalkitsis.uhuruphotos.implementation.person.seam.PersonEffect
+import com.savvasdalkitsis.uhuruphotos.implementation.person.seam.PersonHandler
+import com.savvasdalkitsis.uhuruphotos.implementation.person.seam.PersonMutation
+import com.savvasdalkitsis.uhuruphotos.implementation.person.view.state.PersonState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 

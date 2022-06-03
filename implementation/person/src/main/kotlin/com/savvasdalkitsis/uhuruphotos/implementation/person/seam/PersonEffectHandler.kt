@@ -13,12 +13,12 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
  */
-package com.savvasdalkitsis.uhuruphotos.person.seam
+package com.savvasdalkitsis.uhuruphotos.implementation.person.seam
 
 import com.savvasdalkitsis.uhuruphotos.api.seam.EffectHandler
 import com.savvasdalkitsis.uhuruphotos.api.navigation.Navigator
-import com.savvasdalkitsis.uhuruphotos.person.seam.PersonEffect.NavigateBack
-import com.savvasdalkitsis.uhuruphotos.person.seam.PersonEffect.OpenPhotoDetails
+import com.savvasdalkitsis.uhuruphotos.implementation.person.seam.PersonEffect.NavigateBack
+import com.savvasdalkitsis.uhuruphotos.implementation.person.seam.PersonEffect.OpenPhotoDetails
 import com.savvasdalkitsis.uhuruphotos.photos.model.PhotoSequenceDataSource.PersonResults
 import com.savvasdalkitsis.uhuruphotos.photos.navigation.PhotoNavigationTarget
 import javax.inject.Inject

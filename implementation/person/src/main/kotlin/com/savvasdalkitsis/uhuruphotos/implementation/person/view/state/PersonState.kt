@@ -13,19 +13,14 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
  */
-package com.savvasdalkitsis.uhuruphotos.person.seam
+package com.savvasdalkitsis.uhuruphotos.implementation.person.view.state
 
-import androidx.compose.ui.geometry.Offset
+import com.savvasdalkitsis.uhuruphotos.api.feed.view.state.FeedState
 import com.savvasdalkitsis.uhuruphotos.api.people.view.state.Person
 
-sealed class PersonEffect {
-    data class OpenPhotoDetails(
-        val id: String,
-        val center: Offset,
-        val scale: Float,
-        val video: Boolean,
-        val person: Person,
-    ) : PersonEffect()
+data class PersonState(
+    val person: Person? = null,
+    val feedState: FeedState = FeedState(),
+)
 
-    object NavigateBack : PersonEffect()
-}
+
