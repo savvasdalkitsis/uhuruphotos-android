@@ -13,11 +13,11 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
  */
-package com.savvasdalkitsis.uhuruphotos.log.module
+package com.savvasdalkitsis.uhuruphotos.implementation.log.module
 
 import com.savvasdalkitsis.uhuruphotos.api.initializer.ApplicationCreated
-import com.savvasdalkitsis.uhuruphotos.log.FeedbackUseCase
-import com.savvasdalkitsis.uhuruphotos.log.initializer.LogInitializer
+import com.savvasdalkitsis.uhuruphotos.implementation.log.FeedbackUseCase
+import com.savvasdalkitsis.uhuruphotos.implementation.log.initializer.LogInitializer
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn

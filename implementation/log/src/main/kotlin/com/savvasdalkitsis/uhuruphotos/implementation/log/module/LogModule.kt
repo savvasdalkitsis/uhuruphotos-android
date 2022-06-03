@@ -13,13 +13,13 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
  */
-package com.savvasdalkitsis.uhuruphotos.log.module
+package com.savvasdalkitsis.uhuruphotos.implementation.log.module
 
 import android.content.Context
 import com.michaelflisar.lumberjack.FileLoggingSetup
 import com.michaelflisar.lumberjack.FileLoggingTree
 import com.savvasdalkitsis.uhuruphotos.log.BuildConfig
-import com.savvasdalkitsis.uhuruphotos.log.NoOpTree
+import com.savvasdalkitsis.uhuruphotos.implementation.log.NoOpTree
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
