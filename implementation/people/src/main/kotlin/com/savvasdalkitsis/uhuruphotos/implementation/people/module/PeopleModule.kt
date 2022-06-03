@@ -13,19 +13,20 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
  */
-package com.savvasdalkitsis.uhuruphotos.people.service
+package com.savvasdalkitsis.uhuruphotos.implementation.people.module
 
-import com.savvasdalkitsis.uhuruphotos.api.people.model.PersonResult
-import com.savvasdalkitsis.uhuruphotos.people.service.model.PeopleResult
-import retrofit2.http.GET
-import retrofit2.http.Path
+import com.savvasdalkitsis.uhuruphotos.implementation.people.service.PeopleService
+import dagger.Module
+import dagger.Provides
+import dagger.hilt.InstallIn
+import dagger.hilt.components.SingletonComponent
+import retrofit2.Retrofit
 
-interface PeopleService {
+@Module
+@InstallIn(SingletonComponent::class)
+class PeopleModule {
 
-    @GET("/api/persons/")
-    suspend fun getPeople(): PeopleResult
-
-    @GET("/api/persons/{id}/")
-    suspend fun getPerson(@Path("id") id: Int): PersonResult
-
+    @Provides
+    fun peopleService(retrofit: Retrofit): PeopleService =
+        retrofit.create(PeopleService::class.java)
 }

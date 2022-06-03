@@ -13,11 +13,11 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
  */
-package com.savvasdalkitsis.uhuruphotos.people.module
+package com.savvasdalkitsis.uhuruphotos.implementation.people.module
 
 import com.savvasdalkitsis.uhuruphotos.api.navigation.NavigationTarget
-import com.savvasdalkitsis.uhuruphotos.people.navigation.PeopleNavigationTarget
-import com.savvasdalkitsis.uhuruphotos.people.usecase.PeopleUseCase
+import com.savvasdalkitsis.uhuruphotos.implementation.people.navigation.PeopleNavigationTarget
+import com.savvasdalkitsis.uhuruphotos.implementation.people.usecase.PeopleUseCase
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn

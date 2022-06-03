@@ -13,12 +13,13 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
  */
-package com.savvasdalkitsis.uhuruphotos.people.seam
+package com.savvasdalkitsis.uhuruphotos.implementation.people.seam
 
 import com.savvasdalkitsis.uhuruphotos.api.people.view.state.Person
 
-sealed class PeopleEffect {
-    data class NavigateToPerson(val person: Person) : PeopleEffect()
-    object ErrorLoadingPeople : PeopleEffect()
-    object NavigateBack : PeopleEffect()
+sealed class PeopleAction {
+    data class PersonSelected(val person: Person) : PeopleAction()
+    object LoadPeople : PeopleAction()
+    object ToggleSortOrder : PeopleAction()
+    object NavigateBack : PeopleAction()
 }

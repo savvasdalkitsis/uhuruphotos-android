@@ -13,10 +13,15 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
  */
-package com.savvasdalkitsis.uhuruphotos.people.service.model
+package com.savvasdalkitsis.uhuruphotos.implementation.people.service.model
 
+import com.savvasdalkitsis.uhuruphotos.api.db.people.People
 import com.savvasdalkitsis.uhuruphotos.api.people.model.PersonResult
-import com.squareup.moshi.JsonClass
 
-@JsonClass(generateAdapter = true)
-data class PeopleResult(val results: List<PersonResult>)
+fun PersonResult.toPerson() = People(
+    id = id,
+    name = name,
+    faceCount = faceCount,
+    faceUrl = faceUrl,
+    facePhotoUrl = facePhotoUrl
+)

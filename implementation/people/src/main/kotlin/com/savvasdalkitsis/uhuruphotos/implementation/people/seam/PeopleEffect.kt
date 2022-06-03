@@ -13,17 +13,12 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
  */
-package com.savvasdalkitsis.uhuruphotos.people.view.state
+package com.savvasdalkitsis.uhuruphotos.implementation.people.seam
 
-enum class SortOrder {
-    ASCENDING, DESCENDING;
+import com.savvasdalkitsis.uhuruphotos.api.people.view.state.Person
 
-    fun toggle(): SortOrder = when (this) {
-        ASCENDING -> DESCENDING
-        DESCENDING -> ASCENDING
-    }
-
-    companion object {
-        val default = ASCENDING
-    }
+sealed class PeopleEffect {
+    data class NavigateToPerson(val person: Person) : PeopleEffect()
+    object ErrorLoadingPeople : PeopleEffect()
+    object NavigateBack : PeopleEffect()
 }

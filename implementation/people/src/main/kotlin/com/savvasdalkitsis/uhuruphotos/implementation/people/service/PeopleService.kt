@@ -13,13 +13,19 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
  */
-package com.savvasdalkitsis.uhuruphotos.people.view.state
+package com.savvasdalkitsis.uhuruphotos.implementation.people.service
 
-import com.savvasdalkitsis.uhuruphotos.api.people.view.state.Person
+import com.savvasdalkitsis.uhuruphotos.api.people.model.PersonResult
+import com.savvasdalkitsis.uhuruphotos.implementation.people.service.model.PeopleResult
+import retrofit2.http.GET
+import retrofit2.http.Path
 
-data class PeopleState(
-    val people: List<Person> = emptyList(),
-    val sortOrder: SortOrder = SortOrder.default,
-)
+interface PeopleService {
 
+    @GET("/api/persons/")
+    suspend fun getPeople(): PeopleResult
 
+    @GET("/api/persons/{id}/")
+    suspend fun getPerson(@Path("id") id: Int): PersonResult
+
+}

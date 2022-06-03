@@ -13,22 +13,13 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
  */
-package com.savvasdalkitsis.uhuruphotos.people.seam
+package com.savvasdalkitsis.uhuruphotos.implementation.people.view.state
 
-import com.savvasdalkitsis.uhuruphotos.api.seam.Mutation
 import com.savvasdalkitsis.uhuruphotos.api.people.view.state.Person
-import com.savvasdalkitsis.uhuruphotos.people.view.state.PeopleState
-import com.savvasdalkitsis.uhuruphotos.people.view.state.SortOrder
 
-sealed class PeopleMutation(
-    mutation: Mutation<PeopleState>,
-) : Mutation<PeopleState> by mutation {
+data class PeopleState(
+    val people: List<Person> = emptyList(),
+    val sortOrder: SortOrder = SortOrder.default,
+)
 
-    data class DisplayPeople(val people: List<Person>) : PeopleMutation({
-        it.copy(people = people)
-    })
 
-    data class SetSortOrder(val sortOrder: SortOrder) : PeopleMutation({
-        it.copy(sortOrder = sortOrder)
-    })
-}

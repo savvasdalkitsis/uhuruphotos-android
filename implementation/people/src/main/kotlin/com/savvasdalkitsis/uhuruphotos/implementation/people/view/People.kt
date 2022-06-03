@@ -13,7 +13,7 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
  */
-package com.savvasdalkitsis.uhuruphotos.people.view
+package com.savvasdalkitsis.uhuruphotos.implementation.people.view
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.padding
@@ -28,13 +28,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.savvasdalkitsis.uhuruphotos.api.icons.R
 import com.savvasdalkitsis.uhuruphotos.api.people.view.PersonThumbnail
-import com.savvasdalkitsis.uhuruphotos.people.seam.PeopleAction
-import com.savvasdalkitsis.uhuruphotos.people.seam.PeopleAction.NavigateBack
-import com.savvasdalkitsis.uhuruphotos.people.seam.PeopleAction.PersonSelected
-import com.savvasdalkitsis.uhuruphotos.people.seam.PeopleAction.ToggleSortOrder
-import com.savvasdalkitsis.uhuruphotos.people.view.state.PeopleState
-import com.savvasdalkitsis.uhuruphotos.people.view.state.SortOrder.ASCENDING
-import com.savvasdalkitsis.uhuruphotos.people.view.state.SortOrder.DESCENDING
+import com.savvasdalkitsis.uhuruphotos.implementation.people.seam.PeopleAction
+import com.savvasdalkitsis.uhuruphotos.implementation.people.seam.PeopleAction.NavigateBack
+import com.savvasdalkitsis.uhuruphotos.implementation.people.seam.PeopleAction.PersonSelected
+import com.savvasdalkitsis.uhuruphotos.implementation.people.seam.PeopleAction.ToggleSortOrder
+import com.savvasdalkitsis.uhuruphotos.implementation.people.view.state.PeopleState
+import com.savvasdalkitsis.uhuruphotos.implementation.people.view.state.SortOrder.ASCENDING
+import com.savvasdalkitsis.uhuruphotos.implementation.people.view.state.SortOrder.DESCENDING
 import com.savvasdalkitsis.uhuruphotos.api.ui.view.ActionIcon
 import com.savvasdalkitsis.uhuruphotos.api.ui.view.BackNavButton
 import com.savvasdalkitsis.uhuruphotos.api.ui.view.CommonScaffold

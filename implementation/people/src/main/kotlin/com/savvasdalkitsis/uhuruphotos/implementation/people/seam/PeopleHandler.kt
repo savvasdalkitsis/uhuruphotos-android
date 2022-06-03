@@ -13,24 +13,24 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
  */
-package com.savvasdalkitsis.uhuruphotos.people.seam
+package com.savvasdalkitsis.uhuruphotos.implementation.people.seam
 
 import com.savvasdalkitsis.uhuruphotos.api.coroutines.onErrors
 import com.savvasdalkitsis.uhuruphotos.api.seam.ActionHandler
 import com.savvasdalkitsis.uhuruphotos.api.people.view.state.toPerson
-import com.savvasdalkitsis.uhuruphotos.people.seam.PeopleAction.LoadPeople
-import com.savvasdalkitsis.uhuruphotos.people.seam.PeopleAction.NavigateBack
-import com.savvasdalkitsis.uhuruphotos.people.seam.PeopleAction.PersonSelected
-import com.savvasdalkitsis.uhuruphotos.people.seam.PeopleAction.ToggleSortOrder
-import com.savvasdalkitsis.uhuruphotos.people.seam.PeopleEffect.ErrorLoadingPeople
-import com.savvasdalkitsis.uhuruphotos.people.seam.PeopleEffect.NavigateToPerson
-import com.savvasdalkitsis.uhuruphotos.people.seam.PeopleMutation.DisplayPeople
-import com.savvasdalkitsis.uhuruphotos.people.seam.PeopleMutation.SetSortOrder
-import com.savvasdalkitsis.uhuruphotos.people.usecase.PeopleUseCase
-import com.savvasdalkitsis.uhuruphotos.people.view.state.PeopleState
-import com.savvasdalkitsis.uhuruphotos.people.view.state.SortOrder
-import com.savvasdalkitsis.uhuruphotos.people.view.state.SortOrder.ASCENDING
-import com.savvasdalkitsis.uhuruphotos.people.view.state.SortOrder.DESCENDING
+import com.savvasdalkitsis.uhuruphotos.implementation.people.seam.PeopleAction.LoadPeople
+import com.savvasdalkitsis.uhuruphotos.implementation.people.seam.PeopleAction.NavigateBack
+import com.savvasdalkitsis.uhuruphotos.implementation.people.seam.PeopleAction.PersonSelected
+import com.savvasdalkitsis.uhuruphotos.implementation.people.seam.PeopleAction.ToggleSortOrder
+import com.savvasdalkitsis.uhuruphotos.implementation.people.seam.PeopleEffect.ErrorLoadingPeople
+import com.savvasdalkitsis.uhuruphotos.implementation.people.seam.PeopleEffect.NavigateToPerson
+import com.savvasdalkitsis.uhuruphotos.implementation.people.seam.PeopleMutation.DisplayPeople
+import com.savvasdalkitsis.uhuruphotos.implementation.people.seam.PeopleMutation.SetSortOrder
+import com.savvasdalkitsis.uhuruphotos.implementation.people.usecase.PeopleUseCase
+import com.savvasdalkitsis.uhuruphotos.implementation.people.view.state.PeopleState
+import com.savvasdalkitsis.uhuruphotos.implementation.people.view.state.SortOrder
+import com.savvasdalkitsis.uhuruphotos.implementation.people.view.state.SortOrder.ASCENDING
+import com.savvasdalkitsis.uhuruphotos.implementation.people.view.state.SortOrder.DESCENDING
 import com.savvasdalkitsis.uhuruphotos.photos.usecase.PhotosUseCase
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableSharedFlow
