@@ -39,7 +39,7 @@ import com.savvasdalkitsis.uhuruphotos.photos.seam.PhotoEffectsHandler
 import com.savvasdalkitsis.uhuruphotos.photos.view.Photo
 import com.savvasdalkitsis.uhuruphotos.photos.view.state.PhotoState
 import com.savvasdalkitsis.uhuruphotos.photos.viewmodel.PhotoViewModel
-import com.savvasdalkitsis.uhuruphotos.ui.theme.ThemeMode
+import com.savvasdalkitsis.uhuruphotos.api.ui.theme.ThemeMode
 import kotlinx.coroutines.flow.MutableStateFlow
 import javax.inject.Inject
 

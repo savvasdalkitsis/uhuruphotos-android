@@ -32,11 +32,11 @@ import androidx.navigation.NavHostController
 import com.google.accompanist.navigation.animation.composable
 import com.savvasdalkitsis.uhuruphotos.api.seam.EffectHandler
 import com.savvasdalkitsis.uhuruphotos.api.seam.Seam
-import com.savvasdalkitsis.uhuruphotos.ui.theme.AppTheme
-import com.savvasdalkitsis.uhuruphotos.ui.theme.ThemeMode
-import com.savvasdalkitsis.uhuruphotos.ui.theme.ThemeMode.DARK_MODE
-import com.savvasdalkitsis.uhuruphotos.ui.theme.ThemeMode.FOLLOW_SYSTEM
-import com.savvasdalkitsis.uhuruphotos.ui.theme.ThemeMode.LIGHT_MODE
+import com.savvasdalkitsis.uhuruphotos.api.ui.theme.AppTheme
+import com.savvasdalkitsis.uhuruphotos.api.ui.theme.ThemeMode
+import com.savvasdalkitsis.uhuruphotos.api.ui.theme.ThemeMode.DARK_MODE
+import com.savvasdalkitsis.uhuruphotos.api.ui.theme.ThemeMode.FOLLOW_SYSTEM
+import com.savvasdalkitsis.uhuruphotos.api.ui.theme.ThemeMode.LIGHT_MODE
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.cancellable
 import kotlinx.coroutines.launch

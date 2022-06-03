@@ -32,7 +32,7 @@ import androidx.compose.ui.unit.sp
 import com.savvasdalkitsis.uhuruphotos.api.albums.model.Album
 import com.savvasdalkitsis.uhuruphotos.api.icons.R
 import com.savvasdalkitsis.uhuruphotos.api.photos.model.SelectionMode
-import com.savvasdalkitsis.uhuruphotos.ui.view.ActionIcon
+import com.savvasdalkitsis.uhuruphotos.api.ui.view.ActionIcon
 
 @Composable
 fun AlbumHeader(

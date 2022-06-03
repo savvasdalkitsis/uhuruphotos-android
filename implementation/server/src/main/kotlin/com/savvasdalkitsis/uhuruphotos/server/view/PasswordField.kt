@@ -31,7 +31,7 @@ import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import com.savvasdalkitsis.uhuruphotos.api.icons.R
 import com.savvasdalkitsis.uhuruphotos.server.seam.ServerAction
-import com.savvasdalkitsis.uhuruphotos.ui.view.ActionIcon
+import com.savvasdalkitsis.uhuruphotos.api.ui.view.ActionIcon
 
 @Composable
 internal fun PasswordField(

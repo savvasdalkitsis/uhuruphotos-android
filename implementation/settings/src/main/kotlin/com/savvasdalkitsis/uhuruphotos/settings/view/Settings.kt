@@ -27,12 +27,12 @@ import com.savvasdalkitsis.uhuruphotos.settings.seam.SettingsAction.DismissFullF
 import com.savvasdalkitsis.uhuruphotos.settings.seam.SettingsAction.NavigateBack
 import com.savvasdalkitsis.uhuruphotos.settings.view.state.SettingsState
 import com.savvasdalkitsis.uhuruphotos.api.strings.R
-import com.savvasdalkitsis.uhuruphotos.ui.view.ActionIcon
-import com.savvasdalkitsis.uhuruphotos.ui.view.BackNavButton
-import com.savvasdalkitsis.uhuruphotos.ui.view.CommonScaffold
-import com.savvasdalkitsis.uhuruphotos.ui.view.FullProgressBar
-import com.savvasdalkitsis.uhuruphotos.ui.view.StaggeredGrid
-import com.savvasdalkitsis.uhuruphotos.ui.window.LocalWindowSize
+import com.savvasdalkitsis.uhuruphotos.api.ui.view.ActionIcon
+import com.savvasdalkitsis.uhuruphotos.api.ui.view.BackNavButton
+import com.savvasdalkitsis.uhuruphotos.api.ui.view.CommonScaffold
+import com.savvasdalkitsis.uhuruphotos.api.ui.view.FullProgressBar
+import com.savvasdalkitsis.uhuruphotos.api.ui.view.StaggeredGrid
+import com.savvasdalkitsis.uhuruphotos.api.ui.window.LocalWindowSize
 import com.savvasdalkitsis.uhuruphotos.userbadge.api.view.UserBadge
 import com.savvasdalkitsis.uhuruphotos.api.icons.R as Icons
 

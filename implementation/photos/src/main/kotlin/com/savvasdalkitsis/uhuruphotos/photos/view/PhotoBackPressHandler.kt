@@ -18,7 +18,7 @@ package com.savvasdalkitsis.uhuruphotos.photos.view
 import androidx.compose.runtime.Composable
 import com.savvasdalkitsis.uhuruphotos.photos.seam.PhotoAction
 import com.savvasdalkitsis.uhuruphotos.photos.view.state.PhotoState
-import com.savvasdalkitsis.uhuruphotos.ui.view.BackPressHandler
+import com.savvasdalkitsis.uhuruphotos.api.ui.view.BackPressHandler
 
 @Composable
 fun PhotoBackPressHandler(

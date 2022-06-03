@@ -35,9 +35,9 @@ import com.google.accompanist.permissions.PermissionState
 import com.google.accompanist.permissions.isGranted
 import com.savvasdalkitsis.uhuruphotos.heatmap.seam.HeatMapAction
 import com.savvasdalkitsis.uhuruphotos.heatmap.view.state.HeatMapState
-import com.savvasdalkitsis.uhuruphotos.ui.view.ActionIcon
-import com.savvasdalkitsis.uhuruphotos.ui.view.BackNavButton
-import com.savvasdalkitsis.uhuruphotos.ui.view.CommonTopBar
+import com.savvasdalkitsis.uhuruphotos.api.ui.view.ActionIcon
+import com.savvasdalkitsis.uhuruphotos.api.ui.view.BackNavButton
+import com.savvasdalkitsis.uhuruphotos.api.ui.view.CommonTopBar
 import com.savvasdalkitsis.uhuruphotos.api.icons.R as Icons
 import com.savvasdalkitsis.uhuruphotos.api.strings.R as Strings
 

@@ -16,7 +16,7 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.settings.seam
 
 import androidx.work.NetworkType
-import com.savvasdalkitsis.uhuruphotos.ui.theme.ThemeMode
+import com.savvasdalkitsis.uhuruphotos.api.ui.theme.ThemeMode
 
 internal sealed class SettingsAction {
 

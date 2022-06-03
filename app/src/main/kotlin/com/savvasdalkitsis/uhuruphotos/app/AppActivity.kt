@@ -24,8 +24,8 @@ import androidx.core.view.WindowCompat
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import com.google.android.exoplayer2.ExoPlayer
 import com.savvasdalkitsis.uhuruphotos.navigation.AppNavigator
-import com.savvasdalkitsis.uhuruphotos.ui.window.LocalSystemUiController
-import com.savvasdalkitsis.uhuruphotos.ui.window.LocalWindowSize
+import com.savvasdalkitsis.uhuruphotos.api.ui.window.LocalSystemUiController
+import com.savvasdalkitsis.uhuruphotos.api.ui.window.LocalWindowSize
 import com.savvasdalkitsis.uhuruphotos.api.video.LocalExoPlayer
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject

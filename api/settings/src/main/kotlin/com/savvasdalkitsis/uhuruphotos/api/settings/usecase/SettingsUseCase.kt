@@ -16,7 +16,7 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.api.settings.usecase
 
 import androidx.work.NetworkType
-import com.savvasdalkitsis.uhuruphotos.ui.theme.ThemeMode
+import com.savvasdalkitsis.uhuruphotos.api.ui.theme.ThemeMode
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.StateFlow
 

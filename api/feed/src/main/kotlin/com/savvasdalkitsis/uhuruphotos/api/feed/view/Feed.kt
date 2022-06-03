@@ -30,9 +30,9 @@ import com.savvasdalkitsis.uhuruphotos.api.feed.view.state.FeedDisplay
 import com.savvasdalkitsis.uhuruphotos.api.feed.view.state.FeedState
 import com.savvasdalkitsis.uhuruphotos.api.photos.model.Photo
 import com.savvasdalkitsis.uhuruphotos.api.strings.R
-import com.savvasdalkitsis.uhuruphotos.ui.view.FullProgressBar
-import com.savvasdalkitsis.uhuruphotos.ui.view.NoContent
-import com.savvasdalkitsis.uhuruphotos.ui.window.LocalWindowSize
+import com.savvasdalkitsis.uhuruphotos.api.ui.view.FullProgressBar
+import com.savvasdalkitsis.uhuruphotos.api.ui.view.NoContent
+import com.savvasdalkitsis.uhuruphotos.api.ui.window.LocalWindowSize
 
 @Composable
 fun Feed(

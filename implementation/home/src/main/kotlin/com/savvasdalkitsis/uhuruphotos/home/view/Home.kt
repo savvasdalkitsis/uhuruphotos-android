@@ -19,7 +19,7 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import com.savvasdalkitsis.uhuruphotos.api.home.view.HomeScaffold
 import com.savvasdalkitsis.uhuruphotos.home.view.state.HomeState
-import com.savvasdalkitsis.uhuruphotos.ui.view.FullProgressBar
+import com.savvasdalkitsis.uhuruphotos.api.ui.view.FullProgressBar
 
 @Composable
 internal fun Home(

@@ -35,11 +35,11 @@ import com.savvasdalkitsis.uhuruphotos.people.seam.PeopleAction.ToggleSortOrder
 import com.savvasdalkitsis.uhuruphotos.people.view.state.PeopleState
 import com.savvasdalkitsis.uhuruphotos.people.view.state.SortOrder.ASCENDING
 import com.savvasdalkitsis.uhuruphotos.people.view.state.SortOrder.DESCENDING
-import com.savvasdalkitsis.uhuruphotos.ui.view.ActionIcon
-import com.savvasdalkitsis.uhuruphotos.ui.view.BackNavButton
-import com.savvasdalkitsis.uhuruphotos.ui.view.CommonScaffold
-import com.savvasdalkitsis.uhuruphotos.ui.view.FullProgressBar
-import com.savvasdalkitsis.uhuruphotos.ui.window.LocalWindowSize
+import com.savvasdalkitsis.uhuruphotos.api.ui.view.ActionIcon
+import com.savvasdalkitsis.uhuruphotos.api.ui.view.BackNavButton
+import com.savvasdalkitsis.uhuruphotos.api.ui.view.CommonScaffold
+import com.savvasdalkitsis.uhuruphotos.api.ui.view.FullProgressBar
+import com.savvasdalkitsis.uhuruphotos.api.ui.window.LocalWindowSize
 
 @Composable
 fun People(

@@ -35,9 +35,9 @@ import com.savvasdalkitsis.uhuruphotos.person.seam.PersonAction.ChangeDisplay
 import com.savvasdalkitsis.uhuruphotos.person.seam.PersonAction.NavigateBack
 import com.savvasdalkitsis.uhuruphotos.person.seam.PersonAction.SelectedPhoto
 import com.savvasdalkitsis.uhuruphotos.person.view.state.PersonState
-import com.savvasdalkitsis.uhuruphotos.ui.view.BackNavButton
-import com.savvasdalkitsis.uhuruphotos.ui.view.CommonScaffold
-import com.savvasdalkitsis.uhuruphotos.ui.view.FullProgressBar
+import com.savvasdalkitsis.uhuruphotos.api.ui.view.BackNavButton
+import com.savvasdalkitsis.uhuruphotos.api.ui.view.CommonScaffold
+import com.savvasdalkitsis.uhuruphotos.api.ui.view.FullProgressBar
 
 @Composable
 fun Person(

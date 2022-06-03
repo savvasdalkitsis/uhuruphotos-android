@@ -24,7 +24,7 @@ import com.savvasdalkitsis.uhuruphotos.api.homenavigation.HomeNavigationRoutes
 import com.savvasdalkitsis.uhuruphotos.api.navigation.NavigationTarget
 import com.savvasdalkitsis.uhuruphotos.api.navigation.Navigator
 import com.savvasdalkitsis.uhuruphotos.internal.ui.usecase.UiUseCase
-import com.savvasdalkitsis.uhuruphotos.ui.window.LocalSystemUiController
+import com.savvasdalkitsis.uhuruphotos.api.ui.window.LocalSystemUiController
 import kotlinx.coroutines.runBlocking
 import javax.inject.Inject
 

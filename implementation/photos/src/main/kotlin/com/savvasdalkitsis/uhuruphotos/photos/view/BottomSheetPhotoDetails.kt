@@ -41,10 +41,10 @@ import com.google.accompanist.pager.rememberPagerState
 import com.savvasdalkitsis.uhuruphotos.photos.seam.PhotoAction
 import com.savvasdalkitsis.uhuruphotos.photos.seam.PhotoAction.ChangedToPage
 import com.savvasdalkitsis.uhuruphotos.photos.view.state.PhotoState
-import com.savvasdalkitsis.uhuruphotos.ui.insets.insetsTop
-import com.savvasdalkitsis.uhuruphotos.ui.view.SheetHandle
-import com.savvasdalkitsis.uhuruphotos.ui.view.SheetSize
-import com.savvasdalkitsis.uhuruphotos.ui.window.LocalWindowSize
+import com.savvasdalkitsis.uhuruphotos.api.ui.insets.insetsTop
+import com.savvasdalkitsis.uhuruphotos.api.ui.view.SheetHandle
+import com.savvasdalkitsis.uhuruphotos.api.ui.view.SheetSize
+import com.savvasdalkitsis.uhuruphotos.api.ui.window.LocalWindowSize
 import kotlinx.coroutines.flow.collectLatest
 
 @Composable

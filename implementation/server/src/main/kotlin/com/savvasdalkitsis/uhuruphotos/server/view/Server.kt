@@ -30,7 +30,7 @@ import com.savvasdalkitsis.uhuruphotos.server.seam.ServerAction
 import com.savvasdalkitsis.uhuruphotos.server.view.ServerState.Loading
 import com.savvasdalkitsis.uhuruphotos.server.view.ServerState.ServerUrl
 import com.savvasdalkitsis.uhuruphotos.server.view.ServerState.UserCredentials
-import com.savvasdalkitsis.uhuruphotos.ui.view.CommonScaffold
+import com.savvasdalkitsis.uhuruphotos.api.ui.view.CommonScaffold
 
 @Composable
 internal fun Server(

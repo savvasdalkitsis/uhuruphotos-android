@@ -34,7 +34,7 @@ import com.savvasdalkitsis.uhuruphotos.library.view.state.AutoAlbumSorting.DATE_
 import com.savvasdalkitsis.uhuruphotos.library.view.state.AutoAlbumSorting.DATE_DESC
 import com.savvasdalkitsis.uhuruphotos.library.view.state.LibraryState
 import com.savvasdalkitsis.uhuruphotos.api.strings.R
-import com.savvasdalkitsis.uhuruphotos.ui.view.DropDownActionIcon
+import com.savvasdalkitsis.uhuruphotos.api.ui.view.DropDownActionIcon
 import com.savvasdalkitsis.uhuruphotos.api.icons.R as Icons
 
 @Composable

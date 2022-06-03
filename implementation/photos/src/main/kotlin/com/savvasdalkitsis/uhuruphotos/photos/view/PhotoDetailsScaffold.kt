@@ -24,12 +24,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import com.savvasdalkitsis.uhuruphotos.photos.seam.PhotoAction
 import com.savvasdalkitsis.uhuruphotos.photos.view.state.PhotoState
-import com.savvasdalkitsis.uhuruphotos.ui.view.BackNavButton
-import com.savvasdalkitsis.uhuruphotos.ui.view.CommonScaffold
-import com.savvasdalkitsis.uhuruphotos.ui.view.FullProgressBar
-import com.savvasdalkitsis.uhuruphotos.ui.view.SheetSize
-import com.savvasdalkitsis.uhuruphotos.ui.view.adjustingSheetSize
-import com.savvasdalkitsis.uhuruphotos.ui.window.LocalWindowSize
+import com.savvasdalkitsis.uhuruphotos.api.ui.view.BackNavButton
+import com.savvasdalkitsis.uhuruphotos.api.ui.view.CommonScaffold
+import com.savvasdalkitsis.uhuruphotos.api.ui.view.FullProgressBar
+import com.savvasdalkitsis.uhuruphotos.api.ui.view.SheetSize
+import com.savvasdalkitsis.uhuruphotos.api.ui.view.adjustingSheetSize
+import com.savvasdalkitsis.uhuruphotos.api.ui.window.LocalWindowSize
 
 @Composable
 internal fun PhotoDetailsScaffold(

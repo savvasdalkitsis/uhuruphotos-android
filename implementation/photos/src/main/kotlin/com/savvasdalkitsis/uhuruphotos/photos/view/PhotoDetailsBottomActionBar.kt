@@ -26,7 +26,7 @@ import com.savvasdalkitsis.uhuruphotos.photos.seam.PhotoAction
 import com.savvasdalkitsis.uhuruphotos.photos.seam.PhotoAction.AskForPhotoDeletion
 import com.savvasdalkitsis.uhuruphotos.photos.seam.PhotoAction.SharePhoto
 import com.savvasdalkitsis.uhuruphotos.photos.view.state.PhotoState
-import com.savvasdalkitsis.uhuruphotos.ui.view.ActionIconWithText
+import com.savvasdalkitsis.uhuruphotos.api.ui.view.ActionIconWithText
 import com.savvasdalkitsis.uhuruphotos.api.icons.R as Icons
 import com.savvasdalkitsis.uhuruphotos.api.strings.R as Strings
 

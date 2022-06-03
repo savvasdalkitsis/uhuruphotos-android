@@ -30,7 +30,7 @@ import com.savvasdalkitsis.uhuruphotos.library.seam.LibraryAction
 import com.savvasdalkitsis.uhuruphotos.library.seam.LibraryAction.RefreshAutoAlbums
 import com.savvasdalkitsis.uhuruphotos.library.view.state.LibraryState
 import com.savvasdalkitsis.uhuruphotos.api.strings.R
-import com.savvasdalkitsis.uhuruphotos.ui.view.NoContent
+import com.savvasdalkitsis.uhuruphotos.api.ui.view.NoContent
 
 @Composable
 fun Library(

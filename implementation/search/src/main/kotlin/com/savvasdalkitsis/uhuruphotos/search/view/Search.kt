@@ -26,7 +26,7 @@ import com.savvasdalkitsis.uhuruphotos.search.view.state.SearchResults.Found
 import com.savvasdalkitsis.uhuruphotos.search.view.state.SearchResults.Idle
 import com.savvasdalkitsis.uhuruphotos.search.view.state.SearchResults.Searching
 import com.savvasdalkitsis.uhuruphotos.search.view.state.SearchState
-import com.savvasdalkitsis.uhuruphotos.ui.view.FullProgressBar
+import com.savvasdalkitsis.uhuruphotos.api.ui.view.FullProgressBar
 
 @Composable fun Search(
     state: SearchState,

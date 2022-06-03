@@ -28,8 +28,8 @@ import com.savvasdalkitsis.uhuruphotos.autoalbum.seam.AutoAlbumAction.SwipeToRef
 import com.savvasdalkitsis.uhuruphotos.autoalbum.view.state.AutoAlbumState
 import com.savvasdalkitsis.uhuruphotos.api.feed.view.Feed
 import com.savvasdalkitsis.uhuruphotos.api.people.view.PeopleBar
-import com.savvasdalkitsis.uhuruphotos.ui.view.BackNavButton
-import com.savvasdalkitsis.uhuruphotos.ui.view.CommonScaffold
+import com.savvasdalkitsis.uhuruphotos.api.ui.view.BackNavButton
+import com.savvasdalkitsis.uhuruphotos.api.ui.view.CommonScaffold
 
 @Composable
 internal fun AutoAlbum(

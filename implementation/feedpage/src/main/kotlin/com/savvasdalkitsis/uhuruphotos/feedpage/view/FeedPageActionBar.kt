@@ -26,7 +26,7 @@ import com.savvasdalkitsis.uhuruphotos.feedpage.seam.FeedPageAction.ChangeDispla
 import com.savvasdalkitsis.uhuruphotos.feedpage.seam.FeedPageAction.ShareSelectedPhotos
 import com.savvasdalkitsis.uhuruphotos.feedpage.view.state.FeedPageState
 import com.savvasdalkitsis.uhuruphotos.api.icons.R
-import com.savvasdalkitsis.uhuruphotos.ui.view.ActionIcon
+import com.savvasdalkitsis.uhuruphotos.api.ui.view.ActionIcon
 
 @Composable
 internal fun RowScope.FeedPageActionBar(

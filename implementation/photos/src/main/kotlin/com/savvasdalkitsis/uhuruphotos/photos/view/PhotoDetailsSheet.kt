@@ -46,7 +46,7 @@ import com.savvasdalkitsis.uhuruphotos.photos.seam.PhotoAction.ClickedOnMap
 import com.savvasdalkitsis.uhuruphotos.photos.seam.PhotoAction.HideInfo
 import com.savvasdalkitsis.uhuruphotos.photos.seam.PhotoAction.PersonSelected
 import com.savvasdalkitsis.uhuruphotos.photos.view.state.PhotoState
-import com.savvasdalkitsis.uhuruphotos.ui.view.TextWithIcon
+import com.savvasdalkitsis.uhuruphotos.api.ui.view.TextWithIcon
 
 @Composable
 fun PhotoDetailsSheet(

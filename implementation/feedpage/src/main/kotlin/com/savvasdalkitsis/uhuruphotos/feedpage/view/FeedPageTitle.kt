@@ -32,8 +32,8 @@ import androidx.compose.ui.unit.dp
 import com.savvasdalkitsis.uhuruphotos.feedpage.seam.FeedPageAction
 import com.savvasdalkitsis.uhuruphotos.feedpage.view.state.FeedPageState
 import com.savvasdalkitsis.uhuruphotos.api.icons.R
-import com.savvasdalkitsis.uhuruphotos.ui.view.ActionIcon
-import com.savvasdalkitsis.uhuruphotos.ui.view.Logo
+import com.savvasdalkitsis.uhuruphotos.api.ui.view.ActionIcon
+import com.savvasdalkitsis.uhuruphotos.api.ui.view.Logo
 
 @Composable
 internal fun FeedPageTitle(

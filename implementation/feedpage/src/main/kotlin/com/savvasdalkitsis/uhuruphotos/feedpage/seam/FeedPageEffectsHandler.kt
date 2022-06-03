@@ -31,7 +31,7 @@ import com.savvasdalkitsis.uhuruphotos.photos.model.PhotoSequenceDataSource.AllP
 import com.savvasdalkitsis.uhuruphotos.photos.navigation.PhotoNavigationTarget
 import com.savvasdalkitsis.uhuruphotos.api.strings.R
 import com.savvasdalkitsis.uhuruphotos.api.toaster.Toaster
-import com.savvasdalkitsis.uhuruphotos.ui.usecase.UiUseCase
+import com.savvasdalkitsis.uhuruphotos.api.ui.usecase.UiUseCase
 import javax.inject.Inject
 
 internal class FeedPageEffectsHandler @Inject constructor(
