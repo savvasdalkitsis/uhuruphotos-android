@@ -27,8 +27,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
-import com.savvasdalkitsis.uhuruphotos.feed.view.Feed
-import com.savvasdalkitsis.uhuruphotos.feed.view.FeedDisplayActionButton
+import com.savvasdalkitsis.uhuruphotos.api.feed.view.Feed
+import com.savvasdalkitsis.uhuruphotos.api.feed.view.FeedDisplayActionButton
 import com.savvasdalkitsis.uhuruphotos.image.api.view.Image
 import com.savvasdalkitsis.uhuruphotos.person.seam.PersonAction
 import com.savvasdalkitsis.uhuruphotos.person.seam.PersonAction.ChangeDisplay

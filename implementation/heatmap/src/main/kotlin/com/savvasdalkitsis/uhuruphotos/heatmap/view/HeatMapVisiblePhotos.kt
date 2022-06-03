@@ -21,8 +21,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import com.savvasdalkitsis.uhuruphotos.api.albums.model.Album
-import com.savvasdalkitsis.uhuruphotos.feed.view.Feed
-import com.savvasdalkitsis.uhuruphotos.feed.view.state.FeedState
+import com.savvasdalkitsis.uhuruphotos.api.feed.view.Feed
+import com.savvasdalkitsis.uhuruphotos.api.feed.view.state.FeedState
 import com.savvasdalkitsis.uhuruphotos.heatmap.seam.HeatMapAction
 import com.savvasdalkitsis.uhuruphotos.heatmap.seam.HeatMapAction.SelectedPhoto
 import com.savvasdalkitsis.uhuruphotos.heatmap.view.state.HeatMapFeedDisplay

@@ -24,7 +24,7 @@ import com.savvasdalkitsis.uhuruphotos.api.accountoverview.view.AccountOverviewP
 import com.savvasdalkitsis.uhuruphotos.api.account.view.LogOutConfirmationDialog
 import com.savvasdalkitsis.uhuruphotos.api.compose.blurIf
 import com.savvasdalkitsis.uhuruphotos.api.home.view.HomeScaffold
-import com.savvasdalkitsis.uhuruphotos.feed.view.FeedDisplayActionButton
+import com.savvasdalkitsis.uhuruphotos.api.feed.view.FeedDisplayActionButton
 import com.savvasdalkitsis.uhuruphotos.search.seam.SearchAction
 import com.savvasdalkitsis.uhuruphotos.search.seam.SearchAction.AskToLogOut
 import com.savvasdalkitsis.uhuruphotos.search.seam.SearchAction.ChangeDisplay

@@ -13,20 +13,11 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
  */
-package com.savvasdalkitsis.uhuruphotos.feed.view.state
+package com.savvasdalkitsis.uhuruphotos.api.feed.view
 
-import androidx.annotation.DrawableRes
-import androidx.annotation.StringRes
+import com.savvasdalkitsis.uhuruphotos.photos.api.model.Photo
 
-interface FeedDisplay {
-    val compactColumnsPortrait: Int
-    val compactColumnsLandscape: Int
-    val wideColumnsPortrait: Int
-    val wideColumnsLandscape: Int
-    val shouldAddEmptyPhotosInRows: Boolean
-    @get:DrawableRes val iconResource: Int
-    val maintainAspectRatio: Boolean
-    @get:StringRes val friendlyName: Int
-    val zoomIn: FeedDisplay
-    val zoomOut: FeedDisplay
+sealed class PhotoRowSlot {
+    data class PhotoSlot(val photo: Photo): PhotoRowSlot()
+    object EmptySlot : PhotoRowSlot()
 }

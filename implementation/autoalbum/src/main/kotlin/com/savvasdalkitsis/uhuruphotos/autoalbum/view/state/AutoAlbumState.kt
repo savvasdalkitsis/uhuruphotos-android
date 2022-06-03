@@ -16,8 +16,8 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.autoalbum.view.state
 
 import androidx.annotation.StringRes
-import com.savvasdalkitsis.uhuruphotos.feed.view.state.FeedDisplay
-import com.savvasdalkitsis.uhuruphotos.feed.view.state.FeedState
+import com.savvasdalkitsis.uhuruphotos.api.feed.view.state.FeedDisplay
+import com.savvasdalkitsis.uhuruphotos.api.feed.view.state.FeedState
 import com.savvasdalkitsis.uhuruphotos.people.api.view.state.Person
 
 internal data class AutoAlbumState(

@@ -15,7 +15,7 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.heatmap.view.state
 
-import com.savvasdalkitsis.uhuruphotos.feed.view.state.FeedDisplay
+import com.savvasdalkitsis.uhuruphotos.api.feed.view.state.FeedDisplay
 
 object HeatMapFeedDisplay : FeedDisplay {
     override val compactColumnsPortrait = 5

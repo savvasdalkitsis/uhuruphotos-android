@@ -19,7 +19,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import com.savvasdalkitsis.uhuruphotos.api.settings.usecase.SettingsUseCase
-import com.savvasdalkitsis.uhuruphotos.feed.view.state.FeedDisplays
+import com.savvasdalkitsis.uhuruphotos.api.feed.view.state.FeedDisplays
 import com.savvasdalkitsis.uhuruphotos.homenavigation.HomeNavigationRoutes
 import com.savvasdalkitsis.uhuruphotos.library.seam.LibraryAction
 import com.savvasdalkitsis.uhuruphotos.library.seam.LibraryEffect

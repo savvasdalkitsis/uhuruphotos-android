@@ -13,7 +13,7 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
  */
-package com.savvasdalkitsis.uhuruphotos.feed.view
+package com.savvasdalkitsis.uhuruphotos.api.feed.view
 
 import androidx.compose.animation.core.Animatable
 import androidx.compose.foundation.gestures.awaitFirstDown
@@ -28,7 +28,7 @@ import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.input.pointer.positionChanged
 import androidx.compose.ui.util.fastAny
 import androidx.compose.ui.util.fastForEach
-import com.savvasdalkitsis.uhuruphotos.feed.view.state.FeedDisplay
+import com.savvasdalkitsis.uhuruphotos.api.feed.view.state.FeedDisplay
 import kotlinx.coroutines.launch
 import kotlin.math.max
 import kotlin.math.min

@@ -28,7 +28,7 @@ import androidx.compose.ui.res.pluralStringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
-import com.savvasdalkitsis.uhuruphotos.feed.view.PhotoThumbnail
+import com.savvasdalkitsis.uhuruphotos.api.feed.view.PhotoThumbnail
 import com.savvasdalkitsis.uhuruphotos.library.seam.LibraryAction
 import com.savvasdalkitsis.uhuruphotos.library.seam.LibraryAction.AlbumSelected
 import com.savvasdalkitsis.uhuruphotos.library.view.state.LibraryAutoAlbum

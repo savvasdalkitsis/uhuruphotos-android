@@ -13,7 +13,7 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
  */
-package com.savvasdalkitsis.uhuruphotos.feed.view
+package com.savvasdalkitsis.uhuruphotos.api.feed.view
 
 import androidx.compose.foundation.gestures.detectVerticalDragGestures
 import androidx.compose.foundation.layout.Box
@@ -35,8 +35,8 @@ import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import com.savvasdalkitsis.uhuruphotos.feed.view.state.FeedDisplay
-import com.savvasdalkitsis.uhuruphotos.feed.view.state.FeedDisplays
+import com.savvasdalkitsis.uhuruphotos.api.feed.view.state.FeedDisplay
+import com.savvasdalkitsis.uhuruphotos.api.feed.view.state.FeedDisplays
 import com.savvasdalkitsis.uhuruphotos.strings.R
 import com.savvasdalkitsis.uhuruphotos.ui.view.ActionIcon
 

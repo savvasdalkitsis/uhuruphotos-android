@@ -17,8 +17,8 @@ package com.savvasdalkitsis.uhuruphotos.feedpage.seam
 
 import com.savvasdalkitsis.uhuruphotos.api.albums.model.Album
 import com.savvasdalkitsis.uhuruphotos.api.seam.Mutation
-import com.savvasdalkitsis.uhuruphotos.feed.view.state.FeedDisplays
-import com.savvasdalkitsis.uhuruphotos.feed.view.state.FeedState
+import com.savvasdalkitsis.uhuruphotos.api.feed.view.state.FeedDisplays
+import com.savvasdalkitsis.uhuruphotos.api.feed.view.state.FeedState
 import com.savvasdalkitsis.uhuruphotos.feedpage.view.state.FeedPageState
 import com.savvasdalkitsis.uhuruphotos.userbadge.api.view.state.UserInformationState
 

@@ -13,7 +13,7 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
  */
-package com.savvasdalkitsis.uhuruphotos.feed.view
+package com.savvasdalkitsis.uhuruphotos.api.feed.view
 
 import android.content.res.Configuration
 import androidx.compose.foundation.layout.PaddingValues
@@ -26,8 +26,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.unit.dp
 import com.savvasdalkitsis.uhuruphotos.api.albums.model.Album
-import com.savvasdalkitsis.uhuruphotos.feed.view.state.FeedDisplay
-import com.savvasdalkitsis.uhuruphotos.feed.view.state.FeedState
+import com.savvasdalkitsis.uhuruphotos.api.feed.view.state.FeedDisplay
+import com.savvasdalkitsis.uhuruphotos.api.feed.view.state.FeedState
 import com.savvasdalkitsis.uhuruphotos.photos.api.model.Photo
 import com.savvasdalkitsis.uhuruphotos.strings.R
 import com.savvasdalkitsis.uhuruphotos.ui.view.FullProgressBar

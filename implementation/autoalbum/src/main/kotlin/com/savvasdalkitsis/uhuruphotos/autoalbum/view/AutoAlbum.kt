@@ -26,7 +26,7 @@ import com.savvasdalkitsis.uhuruphotos.autoalbum.seam.AutoAlbumAction.PersonSele
 import com.savvasdalkitsis.uhuruphotos.autoalbum.seam.AutoAlbumAction.SelectedPhoto
 import com.savvasdalkitsis.uhuruphotos.autoalbum.seam.AutoAlbumAction.SwipeToRefresh
 import com.savvasdalkitsis.uhuruphotos.autoalbum.view.state.AutoAlbumState
-import com.savvasdalkitsis.uhuruphotos.feed.view.Feed
+import com.savvasdalkitsis.uhuruphotos.api.feed.view.Feed
 import com.savvasdalkitsis.uhuruphotos.people.api.view.PeopleBar
 import com.savvasdalkitsis.uhuruphotos.ui.view.BackNavButton
 import com.savvasdalkitsis.uhuruphotos.ui.view.CommonScaffold

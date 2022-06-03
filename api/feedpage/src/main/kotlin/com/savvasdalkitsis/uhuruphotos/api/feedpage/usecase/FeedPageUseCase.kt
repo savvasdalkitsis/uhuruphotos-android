@@ -15,7 +15,7 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.api.feedpage.usecase
 
-import com.savvasdalkitsis.uhuruphotos.feed.view.state.FeedDisplays
+import com.savvasdalkitsis.uhuruphotos.api.feed.view.state.FeedDisplays
 import kotlinx.coroutines.flow.Flow
 
 interface FeedPageUseCase {

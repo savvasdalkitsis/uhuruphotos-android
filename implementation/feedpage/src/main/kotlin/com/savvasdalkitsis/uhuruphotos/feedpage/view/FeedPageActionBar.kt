@@ -18,8 +18,8 @@ package com.savvasdalkitsis.uhuruphotos.feedpage.view
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.layout.RowScope
 import androidx.compose.runtime.Composable
-import com.savvasdalkitsis.uhuruphotos.feed.view.FeedDisplayActionButton
-import com.savvasdalkitsis.uhuruphotos.feed.view.state.FeedDisplays
+import com.savvasdalkitsis.uhuruphotos.api.feed.view.FeedDisplayActionButton
+import com.savvasdalkitsis.uhuruphotos.api.feed.view.state.FeedDisplays
 import com.savvasdalkitsis.uhuruphotos.feedpage.seam.FeedPageAction
 import com.savvasdalkitsis.uhuruphotos.feedpage.seam.FeedPageAction.AskForSelectedPhotosDeletion
 import com.savvasdalkitsis.uhuruphotos.feedpage.seam.FeedPageAction.ChangeDisplay

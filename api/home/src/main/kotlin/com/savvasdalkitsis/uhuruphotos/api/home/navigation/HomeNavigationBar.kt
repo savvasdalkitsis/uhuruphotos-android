@@ -45,7 +45,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import com.savvasdalkitsis.uhuruphotos.api.home.navigation.NavigationStyle.BOTTOM_BAR
 import com.savvasdalkitsis.uhuruphotos.api.home.navigation.NavigationStyle.NAVIGATION_RAIL
-import com.savvasdalkitsis.uhuruphotos.feed.view.state.FeedDisplay
+import com.savvasdalkitsis.uhuruphotos.api.feed.view.state.FeedDisplay
 import com.savvasdalkitsis.uhuruphotos.homenavigation.HomeNavigationRoutes
 import com.savvasdalkitsis.uhuruphotos.icons.R
 import com.savvasdalkitsis.uhuruphotos.ui.window.LocalWindowSize
