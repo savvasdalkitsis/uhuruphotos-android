@@ -47,4 +47,8 @@
     <string name="error_searching">Bei der Suche ist ein Fehler aufgetreten</string>
     <string name="favourite">Favorit</string>
     <string name="error_refreshing_people">Es gab einen Fehler beim Aktualisieren von Personen</string>
+    <string name="feed_sync_freq">Synchronsynchronisationsfrequenz für vollständige Fotozufuhr</string>
+    <string name="feed_sync_freq_changed">Frequenz der Vorschaltsynchronisation geändert</string>
+    <string name="feed_sync_network_changed">Anforderung an das Feed-Synchronisierungs-Netzwerk geändert</string>
+    <string name="error_changing_photo_favourite">Es ist ein Fehler beim Ändern des Favoritenstatus des Fotos aufgetreten</string>
 </resources>
