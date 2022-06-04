@@ -18,15 +18,22 @@ package com.savvasdalkitsis.uhuruphotos.implementation.library.seam
 import com.savvasdalkitsis.uhuruphotos.api.coroutines.safelyOnStartIgnoring
 import com.savvasdalkitsis.uhuruphotos.api.log.log
 import com.savvasdalkitsis.uhuruphotos.api.seam.ActionHandler
-import com.savvasdalkitsis.uhuruphotos.implementation.library.seam.LibraryAction.AlbumSelected
-import com.savvasdalkitsis.uhuruphotos.implementation.library.seam.LibraryAction.ChangeSorting
+import com.savvasdalkitsis.uhuruphotos.implementation.library.seam.LibraryAction.AutoAlbumSelected
+import com.savvasdalkitsis.uhuruphotos.implementation.library.seam.LibraryAction.ChangeAutoAlbumsSorting
+import com.savvasdalkitsis.uhuruphotos.implementation.library.seam.LibraryAction.ChangeUserAlbumsSorting
 import com.savvasdalkitsis.uhuruphotos.implementation.library.seam.LibraryAction.Load
 import com.savvasdalkitsis.uhuruphotos.implementation.library.seam.LibraryAction.RefreshAutoAlbums
-import com.savvasdalkitsis.uhuruphotos.implementation.library.seam.LibraryEffect.ErrorLoadingAutoAlbums
+import com.savvasdalkitsis.uhuruphotos.implementation.library.seam.LibraryAction.RefreshUserAlbums
+import com.savvasdalkitsis.uhuruphotos.implementation.library.seam.LibraryAction.UserAlbumSelected
+import com.savvasdalkitsis.uhuruphotos.implementation.library.seam.LibraryEffect.ErrorLoadingAlbums
 import com.savvasdalkitsis.uhuruphotos.implementation.library.seam.LibraryEffect.NavigateToAutoAlbum
+import com.savvasdalkitsis.uhuruphotos.implementation.library.seam.LibraryEffect.NavigateToUserAlbum
 import com.savvasdalkitsis.uhuruphotos.implementation.library.seam.LibraryMutation.DisplayAutoAlbums
-import com.savvasdalkitsis.uhuruphotos.implementation.library.seam.LibraryMutation.Loading
+import com.savvasdalkitsis.uhuruphotos.implementation.library.seam.LibraryMutation.AutoAlbumsLoading
+import com.savvasdalkitsis.uhuruphotos.implementation.library.seam.LibraryMutation.DisplayUserAlbums
 import com.savvasdalkitsis.uhuruphotos.implementation.library.seam.LibraryMutation.ShowAutoAlbumSorting
+import com.savvasdalkitsis.uhuruphotos.implementation.library.seam.LibraryMutation.ShowUserAlbumSorting
+import com.savvasdalkitsis.uhuruphotos.implementation.library.seam.LibraryMutation.UserAlbumsLoading
 import com.savvasdalkitsis.uhuruphotos.implementation.library.usecase.LibraryUseCase
 import com.savvasdalkitsis.uhuruphotos.implementation.library.view.state.LibraryState
 import kotlinx.coroutines.delay
@@ -42,7 +49,8 @@ class LibraryActionHandler @Inject constructor(
     private val libraryUseCase: LibraryUseCase,
 ) : ActionHandler<LibraryState, LibraryEffect, LibraryAction, LibraryMutation> {
 
-    private val loading = MutableSharedFlow<Boolean>()
+    private val autoAlbumsLoading = MutableSharedFlow<Boolean>()
+    private val userAlbumsLoading = MutableSharedFlow<Boolean>()
 
     override fun handleAction(
         state: LibraryState,
@@ -54,35 +62,66 @@ class LibraryActionHandler @Inject constructor(
                 .map(::DisplayAutoAlbums),
             libraryUseCase.observeAutoAlbumsSorting()
                 .map(::ShowAutoAlbumSorting),
-            loading
-                .map(::Loading)
+            autoAlbumsLoading
+                .map(::AutoAlbumsLoading),
+            libraryUseCase.observeUserAlbums()
+                .map(::DisplayUserAlbums),
+            libraryUseCase.observeUserAlbumsSorting()
+                .map(::ShowUserAlbumSorting),
+            userAlbumsLoading
+                .map(::UserAlbumsLoading),
         )
             .safelyOnStartIgnoring {
                 refreshAutoAlbums(effect)
+                refreshUserAlbums(effect)
             }
-        is ChangeSorting -> flow {
+        is ChangeAutoAlbumsSorting -> flow {
             libraryUseCase.changeAutoAlbumsSorting(action.sorting)
+        }
+        is ChangeUserAlbumsSorting -> flow {
+            libraryUseCase.changeUserAlbumsSorting(action.sorting)
         }
         RefreshAutoAlbums -> flow {
             refreshAutoAlbums(effect)
         }
-        is AlbumSelected -> flow {
+        RefreshUserAlbums -> flow {
+            refreshUserAlbums(effect)
+        }
+        is AutoAlbumSelected -> flow {
             effect(NavigateToAutoAlbum(action.album))
+        }
+        is UserAlbumSelected -> flow {
+            effect(NavigateToUserAlbum(action.album))
         }
     }
 
     private suspend fun refreshAutoAlbums(effect: suspend (LibraryEffect) -> Unit) {
-        loading.emit(true)
+        autoAlbumsLoading.emit(true)
         try {
             libraryUseCase.refreshAutoAlbums()
         } catch (e: IOException) {
             log(e)
-            effect(ErrorLoadingAutoAlbums)
+            effect(ErrorLoadingAlbums)
         } finally {
             // delaying to give ui time to receive the new albums before
             // dismissing the loading bar since no albums logic relies on that
             delay(500)
-            loading.emit(false)
+            autoAlbumsLoading.emit(false)
+        }
+    }
+
+    private suspend fun refreshUserAlbums(effect: suspend (LibraryEffect) -> Unit) {
+        userAlbumsLoading.emit(true)
+        try {
+            libraryUseCase.refreshUserAlbums()
+        } catch (e: IOException) {
+            log(e)
+            effect(ErrorLoadingAlbums)
+        } finally {
+            // delaying to give ui time to receive the new albums before
+            // dismissing the loading bar since no albums logic relies on that
+            delay(500)
+            userAlbumsLoading.emit(false)
         }
     }
 }

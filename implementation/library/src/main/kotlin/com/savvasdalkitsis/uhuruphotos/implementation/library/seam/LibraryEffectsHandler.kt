@@ -17,7 +17,7 @@ package com.savvasdalkitsis.uhuruphotos.implementation.library.seam
 
 import com.savvasdalkitsis.uhuruphotos.api.autoalbum.navigation.AutoAlbumNavigationTarget
 import com.savvasdalkitsis.uhuruphotos.api.seam.EffectHandler
-import com.savvasdalkitsis.uhuruphotos.implementation.library.seam.LibraryEffect.ErrorLoadingAutoAlbums
+import com.savvasdalkitsis.uhuruphotos.implementation.library.seam.LibraryEffect.ErrorLoadingAlbums
 import com.savvasdalkitsis.uhuruphotos.implementation.library.seam.LibraryEffect.NavigateToAutoAlbum
 import com.savvasdalkitsis.uhuruphotos.api.navigation.Navigator
 import com.savvasdalkitsis.uhuruphotos.api.strings.R
@@ -30,8 +30,9 @@ class LibraryEffectsHandler @Inject constructor(
 ) : EffectHandler<LibraryEffect> {
 
     override suspend fun handleEffect(effect: LibraryEffect) = when (effect) {
-        ErrorLoadingAutoAlbums -> toaster.show(R.string.error_loading_auto_albums)
+        ErrorLoadingAlbums -> toaster.show(R.string.error_loading_auto_albums)
         is NavigateToAutoAlbum -> navigator
             .navigateTo(AutoAlbumNavigationTarget.name(effect.album.id))
+        is LibraryEffect.NavigateToUserAlbum -> {}
     }
 }

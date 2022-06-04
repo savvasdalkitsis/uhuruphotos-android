@@ -26,21 +26,20 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import com.savvasdalkitsis.uhuruphotos.implementation.library.seam.LibraryAction
-import com.savvasdalkitsis.uhuruphotos.implementation.library.seam.LibraryAction.ChangeSorting
-import com.savvasdalkitsis.uhuruphotos.implementation.library.view.state.AutoAlbumSorting.ALPHABETICAL_ASC
-import com.savvasdalkitsis.uhuruphotos.implementation.library.view.state.AutoAlbumSorting.ALPHABETICAL_DESC
-import com.savvasdalkitsis.uhuruphotos.implementation.library.view.state.AutoAlbumSorting.DATE_ASC
-import com.savvasdalkitsis.uhuruphotos.implementation.library.view.state.AutoAlbumSorting.DATE_DESC
-import com.savvasdalkitsis.uhuruphotos.implementation.library.view.state.LibraryState
 import com.savvasdalkitsis.uhuruphotos.api.strings.R
 import com.savvasdalkitsis.uhuruphotos.api.ui.view.DropDownActionIcon
+import com.savvasdalkitsis.uhuruphotos.implementation.library.view.state.AlbumSorting
+import com.savvasdalkitsis.uhuruphotos.implementation.library.view.state.AlbumSorting.ALPHABETICAL_ASC
+import com.savvasdalkitsis.uhuruphotos.implementation.library.view.state.AlbumSorting.ALPHABETICAL_DESC
+import com.savvasdalkitsis.uhuruphotos.implementation.library.view.state.AlbumSorting.DATE_ASC
+import com.savvasdalkitsis.uhuruphotos.implementation.library.view.state.AlbumSorting.DATE_DESC
 import com.savvasdalkitsis.uhuruphotos.api.icons.R as Icons
 
 @Composable
-internal fun AutoAlbumsHeader(
-    state: LibraryState,
-    action: (LibraryAction) -> Unit
+internal fun AlbumsHeader(
+    sorting: AlbumSorting,
+    title: String,
+    sortingChanged: (AlbumSorting) -> Unit,
 ) {
     Row(
         modifier = Modifier
@@ -52,11 +51,11 @@ internal fun AutoAlbumsHeader(
             modifier = Modifier
                 .weight(1f)
                 .padding(8.dp),
-            text = stringResource(R.string.auto_generated_albums),
+            text = title,
             style = MaterialTheme.typography.h6,
         )
         DropDownActionIcon(
-            icon = when (state.sorting) {
+            icon = when (sorting) {
                 DATE_DESC -> Icons.drawable.ic_sort_date_descending
                 DATE_ASC -> Icons.drawable.ic_sort_date_ascending
                 ALPHABETICAL_ASC -> Icons.drawable.ic_sort_az_ascending
@@ -65,16 +64,16 @@ internal fun AutoAlbumsHeader(
             contentDescription = stringResource(R.string.sorting),
         ) {
             item("Date descending") {
-                action(ChangeSorting(DATE_DESC))
+                sortingChanged(DATE_DESC)
             }
             item("Date ascending") {
-                action(ChangeSorting(DATE_ASC))
+                sortingChanged(DATE_ASC)
             }
             item("Title descending") {
-                action(ChangeSorting(ALPHABETICAL_DESC))
+                sortingChanged(ALPHABETICAL_DESC)
             }
             item("Title ascending") {
-                action(ChangeSorting(ALPHABETICAL_ASC))
+                sortingChanged(ALPHABETICAL_ASC)
             }
         }
     }

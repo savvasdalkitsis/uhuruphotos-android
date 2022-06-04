@@ -29,24 +29,24 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import com.savvasdalkitsis.uhuruphotos.api.feed.view.PhotoThumbnail
-import com.savvasdalkitsis.uhuruphotos.implementation.library.seam.LibraryAction
-import com.savvasdalkitsis.uhuruphotos.implementation.library.seam.LibraryAction.AutoAlbumSelected
-import com.savvasdalkitsis.uhuruphotos.implementation.library.view.state.LibraryAutoAlbum
 import com.savvasdalkitsis.uhuruphotos.api.strings.R
+import com.savvasdalkitsis.uhuruphotos.implementation.library.seam.LibraryAction
+import com.savvasdalkitsis.uhuruphotos.implementation.library.seam.LibraryAction.UserAlbumSelected
+import com.savvasdalkitsis.uhuruphotos.implementation.library.view.state.LibraryUserAlbum
 
 @Composable
-internal fun AutoAlbumItem(
-    album: LibraryAutoAlbum,
+internal fun UserAlbumItem(
+    album: LibraryUserAlbum,
     action: (LibraryAction) -> Unit,
 ) {
     Column(
         modifier = Modifier
             .padding(8.dp)
-            .clickable { action(AutoAlbumSelected(album)) }
+            .clickable { action(UserAlbumSelected(album)) }
     ) {
         PhotoThumbnail(
-            photo = album.cover,
-            onPhotoSelected = { _, _, _ -> action(AutoAlbumSelected(album)) },
+            photo = album.mainCover!!,
+            onPhotoSelected = { _, _, _ -> action(UserAlbumSelected(album)) },
             contentScale = ContentScale.Crop,
             shape = RoundedCornerShape(26.dp),
         )

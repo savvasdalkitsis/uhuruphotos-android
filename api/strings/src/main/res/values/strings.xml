@@ -69,10 +69,14 @@
     <string name="library">Library</string>
     <string name="missing_album_title">Missing album title</string>
     <string name="auto_generated_albums">Auto generated albums</string>
+    <string name="auto_albums">Auto albums</string>
+    <string name="user_created_albums">User created albums</string>
+    <string name="user_albums">User albums</string>
     <string name="sorting">Sorting</string>
     <string name="error_loading_auto_albums">There was an error loading automatically generated albums</string>
     <string name="error_loading_album">There was an error loading the album</string>
     <string name="no_auto_albums">There are no auto generated albums for this user</string>
+    <string name="no_user_albums">This user has not created any albums</string>
     <string name="no_photos">There are no photos to display</string>
     <string name="are_you_sure_you_want_to_perform_full_sync">Are you sure you want to start a full feed sync?</string>
     <string name="process_takes_while_consumes_battery">This process takes a while and consumes battery.</string>

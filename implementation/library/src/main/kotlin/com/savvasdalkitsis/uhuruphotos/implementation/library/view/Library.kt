@@ -15,22 +15,27 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.implementation.library.view
 
-import androidx.compose.foundation.lazy.grid.GridCells
-import androidx.compose.foundation.lazy.grid.GridItemSpan
-import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.height
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
-import com.google.accompanist.swiperefresh.SwipeRefresh
-import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
-import com.savvasdalkitsis.uhuruphotos.api.home.view.HomeScaffold
+import com.google.accompanist.pager.HorizontalPager
+import com.google.accompanist.pager.rememberPagerState
+import com.savvasdalkitsis.uhuruphotos.api.compose.copy
 import com.savvasdalkitsis.uhuruphotos.api.feed.view.state.FeedDisplay
-import com.savvasdalkitsis.uhuruphotos.implementation.library.seam.LibraryAction
-import com.savvasdalkitsis.uhuruphotos.implementation.library.seam.LibraryAction.RefreshAutoAlbums
-import com.savvasdalkitsis.uhuruphotos.implementation.library.view.state.LibraryState
+import com.savvasdalkitsis.uhuruphotos.api.home.view.HomeScaffold
 import com.savvasdalkitsis.uhuruphotos.api.strings.R
-import com.savvasdalkitsis.uhuruphotos.api.ui.view.NoContent
+import com.savvasdalkitsis.uhuruphotos.api.ui.view.FullProgressBar
+import com.savvasdalkitsis.uhuruphotos.implementation.library.seam.LibraryAction
+import com.savvasdalkitsis.uhuruphotos.implementation.library.seam.LibraryAction.ChangeAutoAlbumsSorting
+import com.savvasdalkitsis.uhuruphotos.implementation.library.seam.LibraryAction.ChangeUserAlbumsSorting
+import com.savvasdalkitsis.uhuruphotos.implementation.library.seam.LibraryAction.RefreshAutoAlbums
+import com.savvasdalkitsis.uhuruphotos.implementation.library.seam.LibraryAction.RefreshUserAlbums
+import com.savvasdalkitsis.uhuruphotos.implementation.library.view.state.LibraryState
 
 @Composable
 fun Library(
@@ -46,23 +51,76 @@ fun Library(
         userInformationState = null,
         homeFeedDisplay = homeFeedDisplay,
     ) { contentPadding ->
-        SwipeRefresh(
-            indicatorPadding = contentPadding,
-            state = rememberSwipeRefreshState(isRefreshing = state.isLoading),
-            onRefresh = { action(RefreshAutoAlbums) }
-        ) {
-            when {
-                !state.isLoading && state.autoAlbums.isEmpty() -> NoContent(R.string.no_auto_albums)
-                else -> LazyVerticalGrid(
-                    columns = GridCells.Adaptive(160.dp),
-                    contentPadding = contentPadding,
+        when {
+            state.autoAlbumsLoading
+                    && state.userAlbumsLoading
+                    && state.autoAlbums.isEmpty()
+                    && state.userAlbums.isEmpty() -> FullProgressBar()
+            else -> {
+                val pages = 2
+                val pagerState = rememberPagerState()
+
+                Column(
+                    modifier = Modifier.fillMaxSize(),
                 ) {
-                    item("header", span = { GridItemSpan(maxCurrentLineSpan) }) {
-                        AutoAlbumsHeader(state, action)
-                    }
-                    state.autoAlbums.forEach { album ->
-                        item(album.id) {
-                            AutoAlbumItem(album, action)
+                    Spacer(Modifier.height(contentPadding.calculateTopPadding()))
+                    LibraryTabs(pagerState, pages)
+                    HorizontalPager(
+                        modifier = Modifier.fillMaxSize(),
+                        count = pages,
+                        state = pagerState,
+                        key = { it.choose(auto = "auto", user = "user") },
+                        userScrollEnabled = true,
+                    ) { page ->
+                        with(page) {
+                            LibraryPage(
+                                contentPadding = contentPadding.copy(top = 0.dp),
+                                action = action,
+                                isRefreshing = choose(
+                                    auto = state.autoAlbumsLoading,
+                                    user = state.userAlbumsLoading,
+                                ),
+                                isEmpty = choose(
+                                    auto = state.autoAlbums.isEmpty(),
+                                    user = state.userAlbums.isEmpty(),
+                                ),
+                                refreshAction = choose(
+                                    auto = RefreshAutoAlbums,
+                                    user = RefreshUserAlbums,
+                                ),
+                                emptyContentMessage = choose(
+                                    auto = R.string.no_auto_albums,
+                                    user = R.string.no_user_albums,
+                                ),
+                                headerTitle = choose(
+                                    auto = R.string.auto_generated_albums,
+                                    user = R.string.user_created_albums,
+                                ),
+                                sorting = choose(
+                                    auto = state.autoAlbumSorting,
+                                    user = state.userAlbumSorting,
+                                ),
+                                changeSorting = choose(
+                                    auto = { ChangeAutoAlbumsSorting(it) },
+                                    user = { ChangeUserAlbumsSorting(it) },
+                                ),
+                                content = choose(
+                                    auto = {
+                                        state.autoAlbums.forEach { album ->
+                                            item(album.id) {
+                                                AutoAlbumItem(album, action)
+                                            }
+                                        }
+                                    },
+                                    user = {
+                                        state.userAlbums.forEach { album ->
+                                            item(album.id) {
+                                                UserAlbumItem(album, action)
+                                            }
+                                        }
+                                    }
+                                )
+                            )
                         }
                     }
                 }
@@ -70,3 +128,8 @@ fun Library(
         }
     }
 }
+
+internal fun <T> Int.choose(
+    auto: T,
+    user: T,
+): T = if (this == 0) user else auto

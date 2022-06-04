@@ -13,13 +13,12 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
  */
-package com.savvasdalkitsis.uhuruphotos.implementation.library.view.state
+package com.savvasdalkitsis.uhuruphotos.api.albums.service.model
 
-data class LibraryState(
-    val autoAlbumsLoading: Boolean = true,
-    val userAlbumsLoading: Boolean = true,
-    val autoAlbumSorting: AlbumSorting = AlbumSorting.default,
-    val userAlbumSorting: AlbumSorting = AlbumSorting.default,
-    val autoAlbums: List<LibraryAutoAlbum> = emptyList(),
-    val userAlbums: List<LibraryUserAlbum> = emptyList(),
+import com.squareup.moshi.JsonClass
+
+@JsonClass(generateAdapter = true)
+data class UserAlbums(
+    val count: Int,
+    val results: List<UserAlbumSummary>,
 )

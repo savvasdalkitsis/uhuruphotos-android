@@ -11,6 +11,7 @@ android {
 dependencies {
     implementation project(':api:albums')
     implementation project(":api:autoalbum")
+    implementation project(":api:compose")
     implementation project(":api:coroutines")
     implementation project(":api:db")
     implementation project(":api:feed")
@@ -26,6 +27,8 @@ dependencies {
     implementation project(":api:ui")
     implementation project(':api:userbadge')
     implementation(
+            libs.accompanist.pager,
+            libs.accompanist.pager.indicators,
             libs.accompanist.swiperefresh,
             libs.androidx.compose.foundation,
             libs.androidx.compose.material,

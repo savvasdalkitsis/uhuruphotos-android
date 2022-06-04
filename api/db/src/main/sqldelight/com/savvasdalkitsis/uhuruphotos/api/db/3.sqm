@@ -1,0 +1,15 @@
+CREATE TABLE userAlbums (
+    id INTEGER AS Int NOT NULL PRIMARY KEY,
+    isFavorite INTEGER AS Boolean,
+    photoCount INTEGER AS Int,
+    coverPhoto1Hash TEXT,
+    coverPhoto1IsVideo INTEGER AS Boolean,
+    coverPhoto2Hash TEXT,
+    coverPhoto2IsVideo INTEGER AS Boolean,
+    coverPhoto3Hash TEXT,
+    coverPhoto3IsVideo INTEGER AS Boolean,
+    coverPhoto4Hash TEXT,
+    coverPhoto4IsVideo INTEGER AS Boolean,
+    timestamp TEXT,
+    title TEXT
+);

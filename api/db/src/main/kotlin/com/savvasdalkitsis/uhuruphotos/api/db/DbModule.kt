@@ -22,6 +22,7 @@ import com.savvasdalkitsis.uhuruphotos.api.db.albums.AutoAlbumPeopleQueries
 import com.savvasdalkitsis.uhuruphotos.api.db.albums.AutoAlbumPhotosQueries
 import com.savvasdalkitsis.uhuruphotos.api.db.albums.AutoAlbumQueries
 import com.savvasdalkitsis.uhuruphotos.api.db.albums.AutoAlbumsQueries
+import com.savvasdalkitsis.uhuruphotos.api.db.albums.UserAlbumsQueries
 import com.savvasdalkitsis.uhuruphotos.api.db.auth.Token
 import com.savvasdalkitsis.uhuruphotos.api.db.auth.TokenQueries
 import com.savvasdalkitsis.uhuruphotos.api.db.people.PeopleQueries
@@ -82,6 +83,9 @@ class DbModule {
 
     @Provides
     fun autoAlbumsQueries(database: Database): AutoAlbumsQueries = database.autoAlbumsQueries
+
+    @Provides
+    fun userAlbumsQueries(database: Database): UserAlbumsQueries = database.userAlbumsQueries
 
     @Provides
     fun autoAlbumQueries(database: Database): AutoAlbumQueries = database.autoAlbumQueries

@@ -15,11 +15,14 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.implementation.library.view.state
 
-data class LibraryState(
-    val autoAlbumsLoading: Boolean = true,
-    val userAlbumsLoading: Boolean = true,
-    val autoAlbumSorting: AlbumSorting = AlbumSorting.default,
-    val userAlbumSorting: AlbumSorting = AlbumSorting.default,
-    val autoAlbums: List<LibraryAutoAlbum> = emptyList(),
-    val userAlbums: List<LibraryUserAlbum> = emptyList(),
+import com.savvasdalkitsis.uhuruphotos.api.photos.model.Photo
+
+data class LibraryUserAlbum(
+    val id: Int,
+    val mainCover: Photo?,
+    val cover2: Photo?,
+    val cover3: Photo?,
+    val cover4: Photo?,
+    val title: String,
+    val photoCount: Int?,
 )

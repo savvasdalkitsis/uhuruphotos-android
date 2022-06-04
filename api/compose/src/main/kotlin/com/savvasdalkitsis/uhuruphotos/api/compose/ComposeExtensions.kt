@@ -26,6 +26,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.composed
 import androidx.compose.ui.draw.blur
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
@@ -41,8 +42,9 @@ import com.savvasdalkitsis.uhuruphotos.api.log.log
     }
 }
 
+@Composable
 fun PaddingValues.copy(
-    layoutDirection: LayoutDirection = LayoutDirection.Ltr,
+    layoutDirection: LayoutDirection = LocalLayoutDirection.current,
     start: Dp = this.calculateStartPadding(layoutDirection),
     top: Dp = this.calculateTopPadding(),
     end: Dp = this.calculateEndPadding(layoutDirection),

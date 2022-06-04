@@ -15,11 +15,10 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.implementation.library.view.state
 
-data class LibraryState(
-    val autoAlbumsLoading: Boolean = true,
-    val userAlbumsLoading: Boolean = true,
-    val autoAlbumSorting: AlbumSorting = AlbumSorting.default,
-    val userAlbumSorting: AlbumSorting = AlbumSorting.default,
-    val autoAlbums: List<LibraryAutoAlbum> = emptyList(),
-    val userAlbums: List<LibraryUserAlbum> = emptyList(),
-)
+enum class AlbumSorting {
+    DATE_DESC, DATE_ASC, ALPHABETICAL_ASC, ALPHABETICAL_DESC;
+
+    companion object {
+        val default = DATE_DESC
+    }
+}
