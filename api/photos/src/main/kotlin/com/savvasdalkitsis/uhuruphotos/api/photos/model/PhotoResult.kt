@@ -38,11 +38,11 @@ data class PhotoResult(
     @field:Json(name = "image_hash") val imageHash: String,
     @field:Json(name = "video") val video: Boolean,
     @field:Json(name = "rating") val rating: Int,
-    @field:Json(name = "people") val peopleNames: List<String>?,
+    @field:Json(name = "people") val people: List<PhotoPeople>?,
 )
 
 private val PhotoResult.serializePeople: String?
-    get() = peopleNames?.joinToString(separator = "::")
+    get() = people?.joinToString(separator = "::") { it.name }
 
 val String.deserializePeopleNames: List<String>
     get() = split("::")
