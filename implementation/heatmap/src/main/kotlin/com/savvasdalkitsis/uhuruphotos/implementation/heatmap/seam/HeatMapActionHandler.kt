@@ -50,7 +50,7 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.merge
 import javax.inject.Inject
 
-class HeatMapHandler @Inject constructor(
+class HeatMapActionHandler @Inject constructor(
     private val albumsUseCase: AlbumsUseCase,
     private val photosUseCase: PhotosUseCase,
 ): ActionHandler<HeatMapState, HeatMapEffect, HeatMapAction, HeatMapMutation> {

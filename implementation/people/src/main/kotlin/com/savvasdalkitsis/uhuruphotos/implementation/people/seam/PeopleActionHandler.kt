@@ -39,7 +39,7 @@ import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
 
-class PeopleHandler @Inject constructor(
+class PeopleActionHandler @Inject constructor(
     private val peopleUseCase: PeopleUseCase,
     private val photosUseCase: PhotosUseCase,
 ) : ActionHandler<PeopleState, PeopleEffect, PeopleAction, PeopleMutation> {

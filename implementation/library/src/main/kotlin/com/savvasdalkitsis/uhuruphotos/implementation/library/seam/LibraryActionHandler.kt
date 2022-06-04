@@ -38,7 +38,7 @@ import kotlinx.coroutines.flow.merge
 import java.io.IOException
 import javax.inject.Inject
 
-class LibraryHandler @Inject constructor(
+class LibraryActionHandler @Inject constructor(
     private val libraryUseCase: LibraryUseCase,
 ) : ActionHandler<LibraryState, LibraryEffect, LibraryAction, LibraryMutation> {
 

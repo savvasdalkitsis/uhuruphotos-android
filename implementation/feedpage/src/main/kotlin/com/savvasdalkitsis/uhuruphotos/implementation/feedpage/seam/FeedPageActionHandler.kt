@@ -78,7 +78,7 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.merge
 import javax.inject.Inject
 
-internal class FeedPageHandler @Inject constructor(
+internal class FeedPageActionHandler @Inject constructor(
     private val albumsUseCase: AlbumsUseCase,
     private val userBadgeUseCase: UserBadgeUseCase,
     private val accountUseCase: AccountUseCase,

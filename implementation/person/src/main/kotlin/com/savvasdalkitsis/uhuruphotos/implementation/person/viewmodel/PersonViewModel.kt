@@ -20,7 +20,7 @@ import com.savvasdalkitsis.uhuruphotos.api.seam.Seam
 import com.savvasdalkitsis.uhuruphotos.api.seam.SeamViaHandler.Companion.handler
 import com.savvasdalkitsis.uhuruphotos.implementation.person.seam.PersonAction
 import com.savvasdalkitsis.uhuruphotos.implementation.person.seam.PersonEffect
-import com.savvasdalkitsis.uhuruphotos.implementation.person.seam.PersonHandler
+import com.savvasdalkitsis.uhuruphotos.implementation.person.seam.PersonActionHandler
 import com.savvasdalkitsis.uhuruphotos.implementation.person.seam.PersonMutation
 import com.savvasdalkitsis.uhuruphotos.implementation.person.view.state.PersonState
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -28,9 +28,9 @@ import javax.inject.Inject
 
 @HiltViewModel
 class PersonViewModel @Inject constructor(
-    personHandler: PersonHandler,
+    personActionHandler: PersonActionHandler,
 ) : ViewModel(),
     Seam<PersonState, PersonEffect, PersonAction, PersonMutation> by handler(
-        personHandler,
+        personActionHandler,
         PersonState()
     )

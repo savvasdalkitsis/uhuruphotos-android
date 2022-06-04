@@ -37,7 +37,7 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.merge
 import javax.inject.Inject
 
-class PersonHandler @Inject constructor(
+class PersonActionHandler @Inject constructor(
     private val personUseCase: PersonUseCase,
     private val peopleUseCase: PeopleUseCase,
     private val photosUseCase: PhotosUseCase,

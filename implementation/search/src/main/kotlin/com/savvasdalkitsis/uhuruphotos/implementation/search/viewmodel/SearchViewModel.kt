@@ -20,7 +20,7 @@ import com.savvasdalkitsis.uhuruphotos.api.seam.Seam
 import com.savvasdalkitsis.uhuruphotos.api.seam.SeamViaHandler.Companion.handler
 import com.savvasdalkitsis.uhuruphotos.implementation.search.seam.SearchAction
 import com.savvasdalkitsis.uhuruphotos.implementation.search.seam.SearchEffect
-import com.savvasdalkitsis.uhuruphotos.implementation.search.seam.SearchHandler
+import com.savvasdalkitsis.uhuruphotos.implementation.search.seam.SearchActionHandler
 import com.savvasdalkitsis.uhuruphotos.implementation.search.seam.SearchMutation
 import com.savvasdalkitsis.uhuruphotos.implementation.search.view.state.SearchState
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -28,9 +28,9 @@ import javax.inject.Inject
 
 @HiltViewModel
 class SearchViewModel @Inject constructor(
-    searchHandler: SearchHandler,
+    searchActionHandler: SearchActionHandler,
 ) : ViewModel(),
     Seam<SearchState, SearchEffect, SearchAction, SearchMutation> by handler(
-        searchHandler,
+        searchActionHandler,
         SearchState(),
     )

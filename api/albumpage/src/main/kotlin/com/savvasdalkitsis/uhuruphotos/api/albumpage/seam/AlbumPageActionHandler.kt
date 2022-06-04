@@ -39,7 +39,7 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.merge
 import java.io.IOException
 
-class AlbumPageHandler(
+class AlbumPageActionHandler(
     private val albumRefresher: suspend (Int) -> Unit,
     private val albumDetailsFlow: (Int) -> Flow<AlbumDetails>,
 ) : ActionHandler<AlbumPageState, AlbumPageEffect, AlbumPageAction, AlbumPageMutation> {

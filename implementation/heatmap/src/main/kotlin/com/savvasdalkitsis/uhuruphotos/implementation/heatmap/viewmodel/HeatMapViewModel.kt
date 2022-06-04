@@ -20,7 +20,7 @@ import com.savvasdalkitsis.uhuruphotos.api.seam.Seam
 import com.savvasdalkitsis.uhuruphotos.api.seam.SeamViaHandler.Companion.handler
 import com.savvasdalkitsis.uhuruphotos.implementation.heatmap.seam.HeatMapAction
 import com.savvasdalkitsis.uhuruphotos.implementation.heatmap.seam.HeatMapEffect
-import com.savvasdalkitsis.uhuruphotos.implementation.heatmap.seam.HeatMapHandler
+import com.savvasdalkitsis.uhuruphotos.implementation.heatmap.seam.HeatMapActionHandler
 import com.savvasdalkitsis.uhuruphotos.implementation.heatmap.seam.HeatMapMutation
 import com.savvasdalkitsis.uhuruphotos.implementation.heatmap.view.state.HeatMapState
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -28,9 +28,9 @@ import javax.inject.Inject
 
 @HiltViewModel
 class HeatMapViewModel @Inject constructor(
-    heatMapHandler: HeatMapHandler,
+    heatMapActionHandler: HeatMapActionHandler,
 ) : ViewModel(),
     Seam<HeatMapState, HeatMapEffect, HeatMapAction, HeatMapMutation> by handler(
-        heatMapHandler,
+        heatMapActionHandler,
         HeatMapState(),
     )

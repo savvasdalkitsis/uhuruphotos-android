@@ -100,7 +100,7 @@ import javax.inject.Inject
 import kotlin.math.max
 import kotlin.math.min
 
-class SearchHandler @Inject constructor(
+class SearchActionHandler @Inject constructor(
     private val searchUseCase: SearchUseCase,
     private val userBadgeUseCase: UserBadgeUseCase,
     private val accountUseCase: AccountUseCase,

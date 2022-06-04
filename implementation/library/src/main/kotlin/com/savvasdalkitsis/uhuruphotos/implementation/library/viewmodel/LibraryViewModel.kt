@@ -20,7 +20,7 @@ import com.savvasdalkitsis.uhuruphotos.api.seam.Seam
 import com.savvasdalkitsis.uhuruphotos.api.seam.SeamViaHandler.Companion.handler
 import com.savvasdalkitsis.uhuruphotos.implementation.library.seam.LibraryAction
 import com.savvasdalkitsis.uhuruphotos.implementation.library.seam.LibraryEffect
-import com.savvasdalkitsis.uhuruphotos.implementation.library.seam.LibraryHandler
+import com.savvasdalkitsis.uhuruphotos.implementation.library.seam.LibraryActionHandler
 import com.savvasdalkitsis.uhuruphotos.implementation.library.seam.LibraryMutation
 import com.savvasdalkitsis.uhuruphotos.implementation.library.view.state.LibraryState
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -28,9 +28,9 @@ import javax.inject.Inject
 
 @HiltViewModel
 class LibraryViewModel @Inject constructor(
-    libraryHandler: LibraryHandler,
+    libraryActionHandler: LibraryActionHandler,
 ) : ViewModel(),
     Seam<LibraryState, LibraryEffect, LibraryAction, LibraryMutation> by handler(
-        libraryHandler,
+        libraryActionHandler,
         LibraryState(),
     )

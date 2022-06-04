@@ -28,7 +28,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
 
-internal class HomeHandler @Inject constructor(
+internal class HomeActionHandler @Inject constructor(
     private val authenticationUseCase: AuthenticationUseCase,
     private val settingsUseCase: SettingsUseCase,
 ) : ActionHandler<HomeState, HomeEffect, HomeAction, HomeMutation> {

@@ -20,7 +20,7 @@ import com.savvasdalkitsis.uhuruphotos.api.seam.Seam
 import com.savvasdalkitsis.uhuruphotos.api.seam.SeamViaHandler.Companion.handler
 import com.savvasdalkitsis.uhuruphotos.implementation.auth.weblogin.weblogin.seam.WebLoginAction
 import com.savvasdalkitsis.uhuruphotos.implementation.auth.weblogin.weblogin.seam.WebLoginEffect
-import com.savvasdalkitsis.uhuruphotos.implementation.auth.weblogin.weblogin.seam.WebLoginHandler
+import com.savvasdalkitsis.uhuruphotos.implementation.auth.weblogin.weblogin.seam.WebLoginActionHandler
 import com.savvasdalkitsis.uhuruphotos.implementation.auth.weblogin.weblogin.seam.WebLoginMutation
 import com.savvasdalkitsis.uhuruphotos.implementation.auth.weblogin.weblogin.view.WebLoginState
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -28,7 +28,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class WebLoginViewModel @Inject constructor(
-    handler: WebLoginHandler,
+    handler: WebLoginActionHandler,
 ) : ViewModel(),
     Seam<WebLoginState, WebLoginEffect, WebLoginAction, WebLoginMutation> by handler(
         handler,

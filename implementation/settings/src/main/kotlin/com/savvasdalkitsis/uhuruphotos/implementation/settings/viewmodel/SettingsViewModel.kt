@@ -20,7 +20,7 @@ import com.savvasdalkitsis.uhuruphotos.api.seam.Seam
 import com.savvasdalkitsis.uhuruphotos.api.seam.SeamViaHandler.Companion.handler
 import com.savvasdalkitsis.uhuruphotos.implementation.settings.seam.SettingsAction
 import com.savvasdalkitsis.uhuruphotos.implementation.settings.seam.SettingsEffect
-import com.savvasdalkitsis.uhuruphotos.implementation.settings.seam.SettingsHandler
+import com.savvasdalkitsis.uhuruphotos.implementation.settings.seam.SettingsActionHandler
 import com.savvasdalkitsis.uhuruphotos.implementation.settings.seam.SettingsMutation
 import com.savvasdalkitsis.uhuruphotos.implementation.settings.view.state.SettingsState
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -28,7 +28,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 internal class SettingsViewModel @Inject constructor(
-    handler: SettingsHandler,
+    handler: SettingsActionHandler,
 ) : ViewModel(),
     Seam<SettingsState, SettingsEffect, SettingsAction, SettingsMutation> by handler(
         handler,

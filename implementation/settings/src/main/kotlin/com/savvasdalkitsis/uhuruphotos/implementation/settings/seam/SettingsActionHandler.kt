@@ -75,7 +75,7 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.merge
 import javax.inject.Inject
 
-internal class SettingsHandler @Inject constructor(
+internal class SettingsActionHandler @Inject constructor(
     private val settingsUseCase: SettingsUseCase,
     private val albumWorkScheduler: AlbumWorkScheduler,
     private val userBadgeUseCase: UserBadgeUseCase,

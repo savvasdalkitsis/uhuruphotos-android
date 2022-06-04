@@ -23,16 +23,16 @@ import com.savvasdalkitsis.uhuruphotos.api.albumpage.view.state.AlbumPageState
 import com.savvasdalkitsis.uhuruphotos.api.feed.view.state.FeedState
 import com.savvasdalkitsis.uhuruphotos.api.seam.Seam
 import com.savvasdalkitsis.uhuruphotos.api.seam.SeamViaHandler.Companion.handler
-import com.savvasdalkitsis.uhuruphotos.implementation.autoalbum.seam.AutoAlbumHandler
+import com.savvasdalkitsis.uhuruphotos.implementation.autoalbum.seam.AutoAlbumActionHandler
 import com.savvasdalkitsis.uhuruphotos.implementation.autoalbum.view.state.AutoAlbumFeedDisplay
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
 @HiltViewModel
 internal class AutoAlbumViewModel @Inject constructor(
-    autoAlbumHandler: AutoAlbumHandler,
+    autoAlbumActionHandler: AutoAlbumActionHandler,
 ) : ViewModel(),
     Seam<AlbumPageState, AlbumPageEffect, AlbumPageAction, AlbumPageMutation> by handler(
-        autoAlbumHandler,
+        autoAlbumActionHandler,
         AlbumPageState(feedState = FeedState(feedDisplay = AutoAlbumFeedDisplay)),
     )

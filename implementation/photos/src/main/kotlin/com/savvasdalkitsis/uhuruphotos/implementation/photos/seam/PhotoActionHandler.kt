@@ -76,7 +76,7 @@ import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOf
 import javax.inject.Inject
 
-class PhotoHandler @Inject constructor(
+class PhotoActionHandler @Inject constructor(
     private val photosUseCase: PhotosUseCase,
     private val peopleUseCase: PeopleUseCase,
     private val personUseCase: PersonUseCase,

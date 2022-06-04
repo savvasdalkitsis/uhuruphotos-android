@@ -17,7 +17,7 @@ package com.savvasdalkitsis.uhuruphotos.implementation.autoalbum.seam
 
 import com.savvasdalkitsis.uhuruphotos.api.albumpage.seam.AlbumPageAction
 import com.savvasdalkitsis.uhuruphotos.api.albumpage.seam.AlbumPageEffect
-import com.savvasdalkitsis.uhuruphotos.api.albumpage.seam.AlbumPageHandler
+import com.savvasdalkitsis.uhuruphotos.api.albumpage.seam.AlbumPageActionHandler
 import com.savvasdalkitsis.uhuruphotos.api.albumpage.seam.AlbumPageMutation
 import com.savvasdalkitsis.uhuruphotos.api.albumpage.view.state.AlbumDetails
 import com.savvasdalkitsis.uhuruphotos.api.albumpage.view.state.AlbumPageState
@@ -31,12 +31,12 @@ import com.savvasdalkitsis.uhuruphotos.implementation.autoalbum.usecase.AutoAlbu
 import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
-internal class AutoAlbumHandler @Inject constructor(
+internal class AutoAlbumActionHandler @Inject constructor(
     autoAlbumsUseCase: AutoAlbumsUseCase,
     photosUseCase: PhotosUseCase,
     dateDisplayer: DateDisplayer,
 ) : ActionHandler<AlbumPageState, AlbumPageEffect, AlbumPageAction, AlbumPageMutation>
-by AlbumPageHandler(
+by AlbumPageActionHandler(
     albumRefresher = { autoAlbumsUseCase.refreshAutoAlbum(it) },
     albumDetailsFlow = { albumId ->
         autoAlbumsUseCase.observeAutoAlbum(albumId)

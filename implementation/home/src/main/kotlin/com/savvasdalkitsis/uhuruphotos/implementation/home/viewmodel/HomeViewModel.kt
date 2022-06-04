@@ -20,7 +20,7 @@ import com.savvasdalkitsis.uhuruphotos.api.seam.Seam
 import com.savvasdalkitsis.uhuruphotos.api.seam.SeamViaHandler.Companion.handler
 import com.savvasdalkitsis.uhuruphotos.implementation.home.seam.HomeAction
 import com.savvasdalkitsis.uhuruphotos.implementation.home.seam.HomeEffect
-import com.savvasdalkitsis.uhuruphotos.implementation.home.seam.HomeHandler
+import com.savvasdalkitsis.uhuruphotos.implementation.home.seam.HomeActionHandler
 import com.savvasdalkitsis.uhuruphotos.implementation.home.seam.HomeMutation
 import com.savvasdalkitsis.uhuruphotos.implementation.home.view.state.HomeState
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -28,9 +28,9 @@ import javax.inject.Inject
 
 @HiltViewModel
 internal class HomeViewModel @Inject constructor(
-    homeHandler: HomeHandler,
+    homeActionHandler: HomeActionHandler,
 ) : ViewModel(),
     Seam<HomeState, HomeEffect, HomeAction, HomeMutation> by handler(
-        homeHandler,
+        homeActionHandler,
         HomeState(),
     )

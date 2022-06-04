@@ -27,7 +27,7 @@ import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
 import kotlin.coroutines.coroutineContext
 
-class WebLoginHandler @Inject constructor(
+class WebLoginActionHandler @Inject constructor(
     private val cookieMonitor: CookieMonitor,
 ) : ActionHandler<WebLoginState, WebLoginEffect, WebLoginAction, WebLoginMutation> {
 

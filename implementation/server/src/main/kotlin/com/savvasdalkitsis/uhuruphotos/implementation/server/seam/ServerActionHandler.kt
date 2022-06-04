@@ -54,7 +54,7 @@ import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOf
 import javax.inject.Inject
 
-internal class ServerHandler @Inject constructor(
+internal class ServerActionHandler @Inject constructor(
     private val serverUseCase: ServerUseCase,
     private val authenticationUseCase: AuthenticationUseCase,
 ) : ActionHandler<ServerState, ServerEffect, ServerAction, ServerMutation> {
