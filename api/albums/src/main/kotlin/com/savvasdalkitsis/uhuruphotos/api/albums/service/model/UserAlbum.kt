@@ -13,15 +13,19 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
  */
-package com.savvasdalkitsis.uhuruphotos.api.db.extensions
+package com.savvasdalkitsis.uhuruphotos.api.albums.service.model
 
-import com.savvasdalkitsis.uhuruphotos.api.db.albums.GetAlbums
-import com.savvasdalkitsis.uhuruphotos.api.db.albums.GetPersonAlbums
-import com.savvasdalkitsis.uhuruphotos.api.db.albums.GetUserAlbum
-import com.savvasdalkitsis.uhuruphotos.api.db.search.GetSearchResults
+import com.savvasdalkitsis.uhuruphotos.api.people.model.PersonResult
+import com.savvasdalkitsis.uhuruphotos.api.photos.model.PhotoResult
+import com.squareup.moshi.Json
+import com.squareup.moshi.JsonClass
 
-val GetAlbums.isVideo get() = type.isVideo
-val GetPersonAlbums.isVideo get() = type.isVideo
-val GetUserAlbum.isVideo get() = type.isVideo
-val GetSearchResults.isVideo get() = type.isVideo
-private val String?.isVideo get() = this == "video"
+@JsonClass(generateAdapter = true)
+data class UserAlbum(
+    val id: Int,
+    val title: String,
+    val date: String,
+    val location: String,
+    @field:Json(name = "grouped_photos")
+    val groups: List<UserAlbumPhotoGroup>,
+)

@@ -13,3 +13,17 @@ CREATE TABLE userAlbums (
     timestamp TEXT,
     title TEXT
 );
+
+CREATE TABLE userAlbum (
+    id TEXT NOT NULL PRIMARY KEY,
+    title TEXT,
+    date TEXT,
+    location TEXT
+);
+
+CREATE TABLE userAlbumPhotos (
+    imageHash TEXT NOT NULL,
+    albumId TEXT NOT NULL,
+
+    PRIMARY KEY (imageHash, albumId)
+);

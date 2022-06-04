@@ -1,0 +1,12 @@
+CREATE TABLE userAlbumPhotos (
+    imageHash TEXT NOT NULL,
+    albumId TEXT NOT NULL,
+
+    PRIMARY KEY (imageHash, albumId)
+);
+
+insert:
+INSERT OR REPLACE INTO userAlbumPhotos VALUES (?, ?);
+
+removePhotosForAlbum:
+DELETE FROM userAlbumPhotos WHERE albumId == :albumId;

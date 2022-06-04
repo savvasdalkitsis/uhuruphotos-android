@@ -1,0 +1,25 @@
+CREATE TABLE userAlbum (
+    id TEXT NOT NULL PRIMARY KEY,
+    title TEXT,
+    date TEXT,
+    location TEXT
+);
+
+insert:
+INSERT OR REPLACE INTO userAlbum VALUES ?;
+
+getUserAlbum:
+SELECT
+    userAlbum.title,
+    userAlbum.location,
+    photoSummary.id AS photoId,
+    photoSummary.rating,
+    photoSummary.type,
+    photoSummary.date,
+    photoSummary.aspectRatio,
+    photoSummary.dominantColor
+FROM userAlbum
+LEFT JOIN userAlbumPhotos ON userAlbum.id == userAlbumPhotos.albumId
+LEFT JOIN photoSummary ON userAlbumPhotos.imageHash == photoSummary.id
+WHERE userAlbum.id == :albumId
+ORDER BY photoSummary.date DESC;

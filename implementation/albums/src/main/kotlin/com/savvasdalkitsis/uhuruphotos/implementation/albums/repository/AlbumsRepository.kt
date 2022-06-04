@@ -34,6 +34,10 @@ import com.savvasdalkitsis.uhuruphotos.api.db.albums.GetAlbums
 import com.savvasdalkitsis.uhuruphotos.api.db.albums.GetAutoAlbum
 import com.savvasdalkitsis.uhuruphotos.api.db.albums.GetPeopleForAutoAlbum
 import com.savvasdalkitsis.uhuruphotos.api.db.albums.GetPersonAlbums
+import com.savvasdalkitsis.uhuruphotos.api.db.albums.GetUserAlbum
+import com.savvasdalkitsis.uhuruphotos.api.db.albums.UserAlbum
+import com.savvasdalkitsis.uhuruphotos.api.db.albums.UserAlbumPhotosQueries
+import com.savvasdalkitsis.uhuruphotos.api.db.albums.UserAlbumQueries
 import com.savvasdalkitsis.uhuruphotos.api.db.albums.UserAlbums
 import com.savvasdalkitsis.uhuruphotos.api.db.albums.UserAlbumsQueries
 import com.savvasdalkitsis.uhuruphotos.api.db.extensions.await
@@ -58,7 +62,6 @@ internal class AlbumsRepository @Inject constructor(
     private val albumsService: AlbumsService,
     private val albumsQueries: AlbumsQueries,
     private val autoAlbumsQueries: AutoAlbumsQueries,
-    private val userAlbumsQueries: UserAlbumsQueries,
     private val autoAlbumQueries: AutoAlbumQueries,
     private val autoAlbumPhotosQueries: AutoAlbumPhotosQueries,
     private val autoAlbumPeopleQueries: AutoAlbumPeopleQueries,
@@ -66,6 +69,9 @@ internal class AlbumsRepository @Inject constructor(
     private val peopleQueries: PeopleQueries,
     private val photoSummaryQueries: PhotoSummaryQueries,
     private val photoDetailsQueries: PhotoDetailsQueries,
+    private val userAlbumsQueries: UserAlbumsQueries,
+    private val userAlbumQueries: UserAlbumQueries,
+    private val userAlbumPhotosQueries: UserAlbumPhotosQueries,
 ) : AlbumsRepository {
 
     override suspend fun hasAlbums() = albumsQueries.albumsCount().awaitSingle() > 0
@@ -97,6 +103,10 @@ internal class AlbumsRepository @Inject constructor(
 
     override fun observeAutoAlbum(albumId: Int): Flow<List<GetAutoAlbum>> =
         autoAlbumQueries.getAutoAlbum(albumId.toString()).asFlow().mapToList()
+            .distinctUntilChanged()
+
+    override fun observeUserAlbum(albumId: Int): Flow<List<GetUserAlbum>> =
+        userAlbumQueries.getUserAlbum(albumId.toString()).asFlow().mapToList()
             .distinctUntilChanged()
 
     override fun observeAutoAlbumPeople(albumId: Int): Flow<List<GetPeopleForAutoAlbum>> =
@@ -144,6 +154,25 @@ internal class AlbumsRepository @Inject constructor(
             for (photo in album.photos) {
                 photoDetailsQueries.insert(photo.toPhotoDetails())
                 autoAlbumPhotosQueries.insert(photo.imageHash, albumId.toString())
+            }
+        }
+    }
+
+    override suspend fun refreshUserAlbum(albumId: Int) {
+        val album = albumsService.getUserAlbum(albumId.toString())
+        db.transaction {
+            userAlbumQueries.insert(
+                UserAlbum(
+                    id = albumId.toString(),
+                    title = album.title,
+                    date = album.date,
+                    location = album.location,
+                )
+            )
+            userAlbumPhotosQueries.removePhotosForAlbum(albumId.toString())
+            for (photo in album.groups.flatMap { it.photos }) {
+                photoSummaryQueries.insert(photo.toPhotoSummary(albumId.toString()))
+                userAlbumPhotosQueries.insert(photo.id, albumId.toString())
             }
         }
     }

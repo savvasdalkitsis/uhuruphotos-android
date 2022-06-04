@@ -25,6 +25,7 @@ dependencies {
     implementation project(":api:strings")
     implementation project(":api:toaster")
     implementation project(":api:ui")
+    implementation project(":api:useralbum")
     implementation project(':api:userbadge')
     implementation(
             libs.accompanist.pager,

@@ -13,15 +13,23 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
  */
-package com.savvasdalkitsis.uhuruphotos.api.db.extensions
+package com.savvasdalkitsis.uhuruphotos.implementation.useralbum.usecase
 
-import com.savvasdalkitsis.uhuruphotos.api.db.albums.GetAlbums
-import com.savvasdalkitsis.uhuruphotos.api.db.albums.GetPersonAlbums
+import com.savvasdalkitsis.uhuruphotos.api.albums.repository.AlbumsRepository
+import com.savvasdalkitsis.uhuruphotos.api.db.albums.GetAutoAlbum
 import com.savvasdalkitsis.uhuruphotos.api.db.albums.GetUserAlbum
-import com.savvasdalkitsis.uhuruphotos.api.db.search.GetSearchResults
+import kotlinx.coroutines.flow.Flow
+import javax.inject.Inject
 
-val GetAlbums.isVideo get() = type.isVideo
-val GetPersonAlbums.isVideo get() = type.isVideo
-val GetUserAlbum.isVideo get() = type.isVideo
-val GetSearchResults.isVideo get() = type.isVideo
-private val String?.isVideo get() = this == "video"
+internal class UserAlbumsUseCase @Inject constructor(
+    private val albumsRepository: AlbumsRepository,
+) {
+
+    fun observeUserAlbum(albumId: Int): Flow<List<GetUserAlbum>> =
+            albumsRepository.observeUserAlbum(albumId)
+
+    suspend fun refreshUserAlbum(albumId: Int) {
+        albumsRepository.refreshUserAlbum(albumId)
+    }
+
+}

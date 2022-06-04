@@ -22,6 +22,7 @@ import com.savvasdalkitsis.uhuruphotos.implementation.library.seam.LibraryEffect
 import com.savvasdalkitsis.uhuruphotos.api.navigation.Navigator
 import com.savvasdalkitsis.uhuruphotos.api.strings.R
 import com.savvasdalkitsis.uhuruphotos.api.toaster.Toaster
+import com.savvasdalkitsis.uhuruphotos.api.useralbum.navigation.UserAlbumNavigationTarget
 import javax.inject.Inject
 
 class LibraryEffectsHandler @Inject constructor(
@@ -33,6 +34,7 @@ class LibraryEffectsHandler @Inject constructor(
         ErrorLoadingAlbums -> toaster.show(R.string.error_loading_auto_albums)
         is NavigateToAutoAlbum -> navigator
             .navigateTo(AutoAlbumNavigationTarget.name(effect.album.id))
-        is LibraryEffect.NavigateToUserAlbum -> {}
+        is LibraryEffect.NavigateToUserAlbum -> navigator
+            .navigateTo(UserAlbumNavigationTarget.name(effect.album.id))
     }
 }

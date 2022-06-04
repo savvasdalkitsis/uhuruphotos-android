@@ -24,6 +24,7 @@ dependencies {
     implementation project(":implementation:share")
     implementation project(":implementation:ui")
     implementation project(":implementation:user")
+    implementation project(":implementation:useralbum")
     implementation project(":implementation:userbadge")
     implementation project(":implementation:video")
 }

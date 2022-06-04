@@ -20,6 +20,7 @@ import com.savvasdalkitsis.uhuruphotos.api.db.albums.GetAlbums
 import com.savvasdalkitsis.uhuruphotos.api.db.albums.GetAutoAlbum
 import com.savvasdalkitsis.uhuruphotos.api.db.albums.GetPeopleForAutoAlbum
 import com.savvasdalkitsis.uhuruphotos.api.db.albums.GetPersonAlbums
+import com.savvasdalkitsis.uhuruphotos.api.db.albums.GetUserAlbum
 import com.savvasdalkitsis.uhuruphotos.api.db.albums.UserAlbums
 import com.savvasdalkitsis.uhuruphotos.api.group.model.Group
 import kotlinx.coroutines.flow.Flow
@@ -35,8 +36,10 @@ interface AlbumsRepository {
     fun observeUserAlbums(): Flow<List<UserAlbums>>
     fun observeAutoAlbum(albumId: Int): Flow<List<GetAutoAlbum>>
     fun observeAutoAlbumPeople(albumId: Int): Flow<List<GetPeopleForAutoAlbum>>
+    fun observeUserAlbum(albumId: Int): Flow<List<GetUserAlbum>>
     suspend fun refreshAutoAlbums()
     suspend fun refreshUserAlbums()
     suspend fun refreshAutoAlbum(albumId: Int)
+    suspend fun refreshUserAlbum(albumId: Int)
     suspend fun refreshAlbums(shallow: Boolean, onProgressChange: suspend (Int) -> Unit)
 }
