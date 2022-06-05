@@ -68,6 +68,9 @@ class AlbumsRepositoryTest {
         db.peopleQueries,
         db.photoSummaryQueries,
         db.photoDetailsQueries,
+        db.userAlbumsQueries,
+        db.userAlbumQueries,
+        db.userAlbumPhotosQueries,
     )
 
     @Test
