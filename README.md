@@ -25,6 +25,7 @@ While still early days, it already has a lot of features:
 * People view and suggestions for people with most photos.
 * Photo map. See a heatmap of your photos. Navigate around the globe with the interactive map and 
   see photos taken in the location currently viewed.
+* User created and auto generated albums from LibrePhotos
 * Dark/Light mode (manual and auto)
 * Tablet support
 * A lot of settings to help you control the app storage and memory requirements along with how 
@@ -37,8 +38,6 @@ mainly:
   used as your primary camera roll viewer.
 * Backup/Sync local images with LibrePhotos server. Take control of your data by never having to 
   worry about photo backups.
-* Album support. Currently the app only shows the full photo feed. Soon, user created albums will be
-  supported as well.
 * Basic photo editing capabilities.
 * Foldables support.
 * ...and more
