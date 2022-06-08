@@ -99,4 +99,8 @@
     </plurals>
     <string name="image_memory_cache">Cache d\'images en mémoire</string>
     <string name="show_library_on_home">Afficher la Collection sur l\'écran principal</string>
+    <string name="auto_albums">Albums automatiques</string>
+    <string name="user_created_albums">Albums créés par l\'utilisateur</string>
+    <string name="user_albums">Albums utilisateur</string>
+    <string name="no_user_albums">Cet utilisateur n\'a pas créé d\'album</string>
 </resources>
