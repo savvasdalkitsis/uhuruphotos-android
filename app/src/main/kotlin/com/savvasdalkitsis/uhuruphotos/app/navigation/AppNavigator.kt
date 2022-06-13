@@ -17,6 +17,8 @@ package com.savvasdalkitsis.uhuruphotos.app.navigation
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.platform.LocalHapticFeedback
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import com.google.accompanist.navigation.animation.AnimatedNavHost
@@ -24,6 +26,7 @@ import com.google.accompanist.navigation.animation.rememberAnimatedNavController
 import com.google.android.exoplayer2.ExoPlayer
 import com.savvasdalkitsis.uhuruphotos.api.homenavigation.HomeNavigationRoutes
 import com.savvasdalkitsis.uhuruphotos.api.map.model.LocalMapProvider
+import com.savvasdalkitsis.uhuruphotos.api.map.model.MapProvider
 import com.savvasdalkitsis.uhuruphotos.api.navigation.NavigationTarget
 import com.savvasdalkitsis.uhuruphotos.api.navigation.Navigator
 import com.savvasdalkitsis.uhuruphotos.api.settings.usecase.SettingsUseCase
@@ -50,9 +53,10 @@ class AppNavigator @Inject constructor(
             systemUiController = LocalSystemUiController.current
             haptics = LocalHapticFeedback.current
         }
+        val mapProvider by settingsUseCase.observeMapProvider().collectAsState(MapProvider.default)
         CompositionLocalProvider(
             LocalExoPlayer provides exoPlayer,
-            LocalMapProvider provides settingsUseCase.getMapProvider(),
+            LocalMapProvider provides mapProvider,
         ) {
             AnimatedNavHost(
                 navController = navHostController,
