@@ -39,10 +39,8 @@ jobs:
     - name: Copy mock google services
       run: cp mock-google-services.json app/google-services.json
     - name: Decode MapBox download token
-      env:
-        ENCODED_STRING: ${{ secrets.MAPBOX_DOWNLOADS_TOKEN }}
       run: |
-        echo "MAPBOX_DOWNLOADS_TOKEN=$ENCODED_STRING" | base64 -di > gradle.properties
+        echo "MAPBOX_DOWNLOADS_TOKEN=${{ secrets.MAPBOX_DOWNLOADS_TOKEN }}" > gradle.properties
     - name: Build with Gradle
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
