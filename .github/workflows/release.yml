@@ -36,6 +36,11 @@ jobs:
         ENCODED_STRING: ${{ secrets.GOOGLE_SERVICES }}
       run: |
         echo $ENCODED_STRING | base64 -di > app/google-services.json
+    - name: Decode MapBox download token
+      env:
+        ENCODED_STRING: ${{ secrets.MAPBOX_DOWNLOADS_TOKEN }}
+      run: |
+        echo "MAPBOX_DOWNLOADS_TOKEN=$ENCODED_STRING" | base64 -di > gradle.properties
 
     - name: Build with Gradle
       run: ./gradlew app:bundleRelease
