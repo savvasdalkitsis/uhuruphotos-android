@@ -13,15 +13,19 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
  */
-package com.savvasdalkitsis.uhuruphotos.api.map.model
+package com.savvasdalkitsis.uhuruphotos.api.map.initializer
 
-import com.google.android.gms.maps.model.LatLng
-import com.mapbox.geojson.Point
+import android.app.Application
+import androidx.startup.AppInitializer
+import com.mapbox.maps.loader.MapboxMapsInitializer
+import com.savvasdalkitsis.uhuruphotos.api.initializer.ApplicationCreated
+import javax.inject.Inject
 
-data class LatLon(val lat: Double, val lon: Double) {
+internal class MapsInitializer @Inject constructor(
+) : ApplicationCreated {
 
-    internal val toLatLng get() = LatLng(lat, lon)
-    internal val toPoint get() = Point.fromLngLat(lon, lat)
-
-    override fun toString() = "$lat,$lon"
+    override fun onAppCreated(app: Application) {
+        AppInitializer.getInstance(app)
+            .initializeComponent(MapboxMapsInitializer::class.java)
+    }
 }

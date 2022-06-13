@@ -16,6 +16,7 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.implementation.settings.seam
 
 import androidx.work.NetworkType
+import com.savvasdalkitsis.uhuruphotos.api.map.model.MapProvider
 import com.savvasdalkitsis.uhuruphotos.api.ui.theme.ThemeMode
 
 internal sealed class SettingsAction {
@@ -31,6 +32,7 @@ internal sealed class SettingsAction {
 
     data class FeedSyncFrequencyChanged(val frequency: Float, val upperLimit: Float) : SettingsAction()
     data class ChangeThemeMode(val themeMode: ThemeMode) : SettingsAction()
+    data class ChangeMapProvider(val mapProvider: MapProvider) : SettingsAction()
 
     object LoadSettings : SettingsAction()
     object NavigateBack : SettingsAction()

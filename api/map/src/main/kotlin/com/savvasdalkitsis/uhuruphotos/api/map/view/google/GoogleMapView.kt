@@ -13,7 +13,7 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
  */
-package com.savvasdalkitsis.uhuruphotos.api.map.view
+package com.savvasdalkitsis.uhuruphotos.api.map.view.google
 
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.material.MaterialTheme
@@ -25,17 +25,22 @@ import com.google.android.gms.maps.model.MapStyleOptions
 import com.google.maps.android.compose.GoogleMap
 import com.google.maps.android.compose.MapProperties
 import com.google.maps.android.compose.MapUiSettings
+import com.google.maps.android.compose.Marker
+import com.google.maps.android.compose.MarkerState
+import com.google.maps.android.compose.TileOverlay
+import com.google.maps.android.heatmaps.HeatmapTileProvider
 import com.savvasdalkitsis.uhuruphotos.api.map.R
 import com.savvasdalkitsis.uhuruphotos.api.map.model.LatLon
 import com.savvasdalkitsis.uhuruphotos.api.map.model.MapOptions
+import com.savvasdalkitsis.uhuruphotos.api.map.view.MapViewScope
 
 @Composable
-fun GoogleMapView(
+internal fun GoogleMapView(
     modifier: Modifier = Modifier,
     mapViewState: GoogleMapViewState,
     mapOptions: MapOptions.() -> MapOptions = { this },
     contentPadding: PaddingValues = PaddingValues(),
-    onMapClick: (LatLon) -> Unit = {},
+    onMapClick: () -> Unit = {},
     content: @Composable (MapViewScope.() -> Unit)? = null,
 ) {
     val context = LocalContext.current
@@ -44,20 +49,7 @@ fun GoogleMapView(
             context.resources.getString(R.string.dark_mode)
         )
     }
-    val options = mapOptions(
-        MapOptions(
-            compassEnabled = false,
-            indoorLevelPickerEnabled = false,
-            mapToolbarEnabled = false,
-            myLocationButtonEnabled = false,
-            rotationGesturesEnabled = false,
-            scrollGesturesEnabled = false,
-            scrollGesturesEnabledDuringRotateOrZoom = false,
-            tiltGesturesEnabled = false,
-            zoomControlsEnabled = false,
-            zoomGesturesEnabled = false,
-        )
-    )
+    val options = mapOptions(MapOptions())
     val properties = MapProperties(
         isMyLocationEnabled = options.myLocationButtonEnabled
     ).let {
@@ -69,27 +61,38 @@ fun GoogleMapView(
     GoogleMap(
         modifier = modifier,
         contentPadding = contentPadding,
-        onMapClick = {
-            onMapClick(LatLon(it.latitude, it.longitude))
-        },
+        onMapClick = { onMapClick() },
         cameraPositionState = mapViewState.cameraPositionState,
         properties = properties,
         uiSettings = options.let {
             MapUiSettings(
-                compassEnabled = it.compassEnabled,
-                indoorLevelPickerEnabled = it.indoorLevelPickerEnabled,
-                mapToolbarEnabled = it.mapToolbarEnabled,
+                compassEnabled = false,
+                indoorLevelPickerEnabled = false,
+                mapToolbarEnabled = false,
                 myLocationButtonEnabled = it.myLocationButtonEnabled,
-                rotationGesturesEnabled = it.rotationGesturesEnabled,
+                rotationGesturesEnabled = false,
                 scrollGesturesEnabled = it.scrollGesturesEnabled,
-                scrollGesturesEnabledDuringRotateOrZoom = it.scrollGesturesEnabledDuringRotateOrZoom,
-                tiltGesturesEnabled = it.tiltGesturesEnabled,
+                scrollGesturesEnabledDuringRotateOrZoom = false,
+                tiltGesturesEnabled = false,
                 zoomControlsEnabled = it.zoomControlsEnabled,
                 zoomGesturesEnabled = it.zoomGesturesEnabled,
             )
         },
         content = {
-            content?.invoke(GoogleMapsViewScope())
+            content?.invoke(MapViewScope(mapViewState))
+            mapViewState.markers.value.forEach { marker ->
+                Marker(
+                    state = MarkerState(position = marker.toLatLng),
+                )
+            }
+            val points = mapViewState.heatMapPoints.value
+            if (points.isNotEmpty()) {
+                TileOverlay(
+                    tileProvider = HeatmapTileProvider.Builder()
+                        .data(points.map { it.toLatLng })
+                        .build()
+                )
+            }
         },
     )
 }

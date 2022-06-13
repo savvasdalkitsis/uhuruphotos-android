@@ -34,6 +34,7 @@ import com.savvasdalkitsis.uhuruphotos.api.ui.view.FullProgressBar
 import com.savvasdalkitsis.uhuruphotos.api.ui.view.StaggeredGrid
 import com.savvasdalkitsis.uhuruphotos.api.ui.window.LocalWindowSize
 import com.savvasdalkitsis.uhuruphotos.api.userbadge.view.UserBadge
+import com.savvasdalkitsis.uhuruphotos.implementation.settings.view.state.MapProviderState.*
 import com.savvasdalkitsis.uhuruphotos.api.icons.R as Icons
 
 @Composable
@@ -50,6 +51,7 @@ internal fun Settings(
     val collapsedShare = remember { mutableStateOf(false) }
     val collapsedLibrary = remember { mutableStateOf(false) }
     val collapsedFeedback = remember { mutableStateOf(false) }
+    val collapsedMap = remember { mutableStateOf(false) }
     val allCollapse = listOf(
         collapsedTheme,
         collapsedImageDiskCache,
@@ -60,6 +62,7 @@ internal fun Settings(
         collapsedShare,
         collapsedLibrary,
         collapsedFeedback,
+        collapsedMap,
     )
     CommonScaffold(
         title = { Text(stringResource(R.string.settings)) },
@@ -116,6 +119,11 @@ internal fun Settings(
                 }
                 item {
                     SettingsGroupLibrary(state, action, collapsedLibrary)
+                }
+                when (val mapProviderState = state.mapProviderState) {
+                    is Selected -> item {
+                        SettingsGroupMaps(mapProviderState, action)
+                    }
                 }
                 item {
                     SettingsGroupFeedback(action, collapsedFeedback)

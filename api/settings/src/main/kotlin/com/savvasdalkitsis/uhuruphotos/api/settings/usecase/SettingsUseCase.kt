@@ -16,6 +16,7 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.api.settings.usecase
 
 import androidx.work.NetworkType
+import com.savvasdalkitsis.uhuruphotos.api.map.model.MapProvider
 import com.savvasdalkitsis.uhuruphotos.api.ui.theme.ThemeMode
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.StateFlow
@@ -31,6 +32,8 @@ interface SettingsUseCase {
     fun getShouldPerformPeriodicFullSync(): Boolean
     fun getShareRemoveGpsData(): Boolean
     fun getShowLibrary(): Boolean
+    fun getMapProvider(): MapProvider
+    fun getAvailableMapProviders(): Set<MapProvider>
 
     fun observeImageDiskCacheMaxLimit(): Flow<Int>
     fun observeImageMemCacheMaxLimit(): Flow<Int>
@@ -43,6 +46,7 @@ interface SettingsUseCase {
     fun observeShareRemoveGpsData(): Flow<Boolean>
     fun observeShowLibrary(): Flow<Boolean>
     suspend fun observeThemeModeState(): StateFlow<ThemeMode>
+    fun observeMapProvider(): Flow<MapProvider>
 
     suspend fun setImageDiskCacheMaxLimit(sizeInMb: Int)
     suspend fun setImageMemCacheMaxLimit(sizeInMb: Int)
@@ -55,4 +59,5 @@ interface SettingsUseCase {
     suspend fun setSearchSuggestionsEnabled(enabled: Boolean)
     suspend fun setShareRemoveGpsData(enabled: Boolean)
     suspend fun setShowLibrary(show: Boolean)
+    suspend fun setMapProvider(provider: MapProvider)
 }

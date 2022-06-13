@@ -16,10 +16,12 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.implementation.settings.seam
 
 import androidx.work.NetworkType
+import com.savvasdalkitsis.uhuruphotos.api.map.model.MapProvider
 import com.savvasdalkitsis.uhuruphotos.api.seam.Mutation
 import com.savvasdalkitsis.uhuruphotos.implementation.settings.view.state.SettingsState
 import com.savvasdalkitsis.uhuruphotos.api.ui.theme.ThemeMode
 import com.savvasdalkitsis.uhuruphotos.api.userbadge.view.state.UserInformationState
+import com.savvasdalkitsis.uhuruphotos.implementation.settings.view.state.MapProviderState
 
 internal sealed class SettingsMutation(
     mutation: Mutation<SettingsState>,
@@ -118,6 +120,23 @@ internal sealed class SettingsMutation(
         it.copy(
             isLoading = false,
             userInformationState = userInformationState,
+        )
+    })
+
+    data class DisplayMapProviders(
+        val current: MapProvider,
+        val available: Set<MapProvider>,
+    ) : SettingsMutation({
+        it.copy(
+            mapProviderState = MapProviderState.Selected(
+                current, available
+            )
+        )
+    })
+
+    object DisplayNoMapProvidersOptions : SettingsMutation({
+        it.copy(
+            mapProviderState = MapProviderState.NoOptions
         )
     })
 }

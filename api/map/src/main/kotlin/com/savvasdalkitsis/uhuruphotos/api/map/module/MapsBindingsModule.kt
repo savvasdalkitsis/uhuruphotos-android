@@ -13,22 +13,21 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
  */
-package com.savvasdalkitsis.uhuruphotos.api.map.view
+package com.savvasdalkitsis.uhuruphotos.api.map.module
 
-import androidx.compose.runtime.Composable
-import com.savvasdalkitsis.uhuruphotos.api.map.model.LatLon
+import com.savvasdalkitsis.uhuruphotos.api.initializer.ApplicationCreated
+import com.savvasdalkitsis.uhuruphotos.api.map.initializer.MapsInitializer
+import dagger.Binds
+import dagger.Module
+import dagger.hilt.InstallIn
+import dagger.hilt.components.SingletonComponent
+import dagger.multibindings.IntoSet
 
-class MapViewScope(
-    private val mapViewState: MapViewState,
-) {
+@InstallIn(SingletonComponent::class)
+@Module
+internal abstract class MapsBindingsModule {
 
-    @Composable
-    fun Marker(latLon: LatLon) {
-        mapViewState.markers.value = mapViewState.markers.value + latLon
-    }
-
-    @Composable
-    fun HeatMap(points: Collection<LatLon>) {
-        mapViewState.heatMapPoints.value = points.toSet()
-    }
+    @Binds
+    @IntoSet
+    abstract fun mapsInitializer(mapsInitializer: MapsInitializer): ApplicationCreated
 }

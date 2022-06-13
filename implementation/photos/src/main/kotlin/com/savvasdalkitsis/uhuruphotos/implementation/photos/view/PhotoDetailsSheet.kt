@@ -39,6 +39,7 @@ import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.unit.dp
 import com.savvasdalkitsis.uhuruphotos.api.icons.R
 import com.savvasdalkitsis.uhuruphotos.api.map.view.MapView
+import com.savvasdalkitsis.uhuruphotos.api.map.view.rememberMapViewState
 import com.savvasdalkitsis.uhuruphotos.api.people.view.PeopleBar
 import com.savvasdalkitsis.uhuruphotos.implementation.photos.seam.PhotoAction
 import com.savvasdalkitsis.uhuruphotos.implementation.photos.seam.PhotoAction.ClickedOnGps
@@ -82,8 +83,10 @@ fun PhotoDetailsSheet(
                             .fillMaxWidth()
                             .height(240.dp)
                             .clip(RoundedCornerShape(12.dp)),
-                        location = gps,
-                        zoom = 15f,
+                        mapViewState = rememberMapViewState(
+                            initialPosition = gps,
+                            initialZoom = 15f,
+                        ),
                         mapOptions = {
                             copy(
                                 zoomControlsEnabled = true,

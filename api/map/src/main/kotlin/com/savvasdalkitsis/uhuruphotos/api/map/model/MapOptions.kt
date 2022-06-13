@@ -16,15 +16,8 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.api.map.model
 
 data class MapOptions(
-    val zoomEnabled: Boolean = true,
-    val scrollGesturesEnabled: Boolean = true,
-    val zoomControlsEnabled: Boolean = true,
-    val zoomGesturesEnabled: Boolean = true,
-    val myLocationButtonEnabled: Boolean = true,
-    val compassEnabled: Boolean = true,
-    val indoorLevelPickerEnabled: Boolean = true,
-    val mapToolbarEnabled: Boolean = true,
-    val rotationGesturesEnabled: Boolean = true,
-    val scrollGesturesEnabledDuringRotateOrZoom: Boolean = true,
-    val tiltGesturesEnabled: Boolean = true,
+    val zoomControlsEnabled: Boolean = false,
+    val scrollGesturesEnabled: Boolean = false,
+    val zoomGesturesEnabled: Boolean = false,
+    val myLocationButtonEnabled: Boolean = false,
 )

@@ -103,4 +103,6 @@
         <item quantity="one">%d item</item>
         <item quantity="other">%d items</item>
     </plurals>
+    <string name="maps">Maps</string>
+    <string name="map_provider">Map provider</string>
 </resources>

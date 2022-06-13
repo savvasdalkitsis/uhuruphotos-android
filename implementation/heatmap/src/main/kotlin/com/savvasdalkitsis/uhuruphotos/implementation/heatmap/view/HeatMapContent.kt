@@ -29,8 +29,8 @@ import com.google.accompanist.permissions.isGranted
 import com.savvasdalkitsis.uhuruphotos.implementation.heatmap.seam.HeatMapAction
 import com.savvasdalkitsis.uhuruphotos.implementation.heatmap.view.state.HeatMapState
 import com.savvasdalkitsis.uhuruphotos.api.map.Locations
-import com.savvasdalkitsis.uhuruphotos.api.map.view.GoogleMapView
-import com.savvasdalkitsis.uhuruphotos.api.map.view.rememberGoogleMapViewState
+import com.savvasdalkitsis.uhuruphotos.api.map.view.MapView
+import com.savvasdalkitsis.uhuruphotos.api.map.view.rememberMapViewState
 import com.savvasdalkitsis.uhuruphotos.api.ui.insets.insetsTop
 import kotlinx.coroutines.withContext
 
@@ -41,9 +41,9 @@ fun HeatMapContent(
     locationPermissionState: PermissionState,
     state: HeatMapState
 ) {
-    val mapViewState = rememberGoogleMapViewState(
+    val mapViewState = rememberMapViewState(
         initialPosition = Locations.TRAFALGAR_SQUARE,
-        zoom = 2f,
+        initialZoom = 2f,
     )
     var startedMoving by remember { mutableStateOf(false) }
     if (mapViewState.isMoving) {
@@ -62,7 +62,7 @@ fun HeatMapContent(
 
     val showLocationButton = locationPermissionState.status.isGranted
 
-    GoogleMapView(
+    MapView(
         modifier = modifier,
         mapViewState = mapViewState,
         mapOptions = {

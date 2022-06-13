@@ -15,9 +15,36 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.api.map.view
 
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.remember
+import com.google.android.gms.maps.model.CameraPosition
+import com.google.maps.android.compose.rememberCameraPositionState
 import com.savvasdalkitsis.uhuruphotos.api.map.model.LatLon
+import com.savvasdalkitsis.uhuruphotos.api.map.model.LocalMapProvider
+import com.savvasdalkitsis.uhuruphotos.api.map.model.MapProvider.Google
+import com.savvasdalkitsis.uhuruphotos.api.map.model.MapProvider.MapBox
+import com.savvasdalkitsis.uhuruphotos.api.map.view.google.GoogleMapViewState
+import com.savvasdalkitsis.uhuruphotos.api.map.view.mapbox.MapBoxMapViewState
 
 interface MapViewState {
     val isMoving: Boolean
+    val markers: MutableState<Set<LatLon>>
+    val heatMapPoints: MutableState<Set<LatLon>>
+    val initialPosition: LatLon
+    val initialZoom: Float
     fun contains(latLon: LatLon): Boolean
+}
+
+@Composable
+fun rememberMapViewState(
+    initialPosition: LatLon,
+    initialZoom: Float,
+): MapViewState = when (LocalMapProvider.current) {
+    Google -> rememberCameraPositionState {
+        position = CameraPosition.fromLatLngZoom(initialPosition.toLatLng, initialZoom)
+    }.let { GoogleMapViewState(it, initialPosition, initialZoom) }
+    MapBox -> remember {
+        MapBoxMapViewState(initialPosition, initialZoom)
+    }
 }

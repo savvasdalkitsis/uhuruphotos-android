@@ -13,19 +13,24 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
  */
-package com.savvasdalkitsis.uhuruphotos.api.map.view
+package com.savvasdalkitsis.uhuruphotos.api.map.view.google
 
-import androidx.compose.runtime.Composable
-import com.google.android.gms.maps.model.CameraPosition
+import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.mutableStateOf
 import com.google.maps.android.compose.CameraPositionState
-import com.google.maps.android.compose.rememberCameraPositionState
 import com.savvasdalkitsis.uhuruphotos.api.map.model.LatLon
+import com.savvasdalkitsis.uhuruphotos.api.map.view.MapViewState
 
-class GoogleMapViewState(
+internal class GoogleMapViewState(
     internal val cameraPositionState: CameraPositionState,
+    override val initialPosition: LatLon,
+    override val initialZoom: Float,
 ) : MapViewState {
 
     override val isMoving get() = cameraPositionState.isMoving
+    override val markers: MutableState<Set<LatLon>> = mutableStateOf(emptySet())
+    override val heatMapPoints: MutableState<Set<LatLon>> = mutableStateOf(emptySet())
+
     override fun contains(latLon: LatLon) = cameraPositionState
         .projection
         ?.visibleRegion
@@ -33,11 +38,3 @@ class GoogleMapViewState(
         ?.contains(latLon.toLatLng)
         ?: false
 }
-
-@Composable
-fun rememberGoogleMapViewState(
-    initialPosition: LatLon,
-    zoom: Float,
-): GoogleMapViewState = rememberCameraPositionState {
-    position = CameraPosition.fromLatLngZoom(initialPosition.toLatLng, zoom)
-}.let { GoogleMapViewState(it) }

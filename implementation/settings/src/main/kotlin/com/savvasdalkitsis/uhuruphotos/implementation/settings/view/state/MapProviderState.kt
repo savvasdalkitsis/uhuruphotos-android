@@ -13,15 +13,11 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
  */
-package com.savvasdalkitsis.uhuruphotos.api.map.model
+package com.savvasdalkitsis.uhuruphotos.implementation.settings.view.state
 
-import com.google.android.gms.maps.model.LatLng
-import com.mapbox.geojson.Point
+import com.savvasdalkitsis.uhuruphotos.api.map.model.MapProvider
 
-data class LatLon(val lat: Double, val lon: Double) {
-
-    internal val toLatLng get() = LatLng(lat, lon)
-    internal val toPoint get() = Point.fromLngLat(lon, lat)
-
-    override fun toString() = "$lat,$lon"
+sealed class MapProviderState {
+    object NoOptions: MapProviderState()
+    data class Selected(val current: MapProvider, val available: Set<MapProvider>) : MapProviderState()
 }
