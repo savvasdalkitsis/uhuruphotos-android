@@ -51,6 +51,7 @@ internal fun MapBoxMapView(
                         gestures.pinchToZoomEnabled = zoomGesturesEnabled
                         gestures.doubleTapToZoomInEnabled = zoomGesturesEnabled
                         gestures.scrollEnabled = scrollGesturesEnabled
+                        gestures.rotateEnabled = false
                     }
                     loadStyleUri(style)
                     scalebar.enabled = false
