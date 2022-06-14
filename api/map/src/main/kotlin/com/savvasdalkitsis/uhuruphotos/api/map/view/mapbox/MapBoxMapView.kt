@@ -18,18 +18,12 @@ package com.savvasdalkitsis.uhuruphotos.api.map.view.mapbox
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.viewinterop.AndroidView
-import com.mapbox.android.gestures.MoveGestureDetector
 import com.mapbox.maps.CameraOptions
 import com.mapbox.maps.MapView
 import com.mapbox.maps.Style
-import com.mapbox.maps.plugin.annotation.annotations
-import com.mapbox.maps.plugin.annotation.generated.CircleAnnotationOptions
-import com.mapbox.maps.plugin.annotation.generated.createCircleAnnotationManager
-import com.mapbox.maps.plugin.gestures.OnMoveListener
 import com.mapbox.maps.plugin.gestures.addOnMapClickListener
-import com.mapbox.maps.plugin.gestures.addOnMoveListener
 import com.mapbox.maps.plugin.gestures.gestures
-import com.savvasdalkitsis.uhuruphotos.api.map.model.LatLon
+import com.mapbox.maps.plugin.scalebar.scalebar
 import com.savvasdalkitsis.uhuruphotos.api.map.model.MapOptions
 import com.savvasdalkitsis.uhuruphotos.api.map.view.MapViewScope
 
@@ -53,6 +47,7 @@ internal fun MapBoxMapView(
                         gestures.scrollEnabled = scrollGesturesEnabled
                     }
                     loadStyleUri(Style.MAPBOX_STREETS)
+                    scalebar.enabled = false
                     addOnStyleLoadedListener {
                         setCamera(
                             CameraOptions.Builder()

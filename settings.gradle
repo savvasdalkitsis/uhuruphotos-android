@@ -7,6 +7,9 @@ pluginManagement {
 }
 enableFeaturePreview("VERSION_CATALOGS")
 
+def props = new Properties()
+file("local.properties").withInputStream { props.load(it) }
+
 dependencyResolutionManagement {
     repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
     repositories {
@@ -20,7 +23,7 @@ dependencyResolutionManagement {
             }
             credentials {
                 username = "mapbox"
-                password = MAPBOX_DOWNLOADS_TOKEN
+                password = props.getProperty("MAPBOX_DOWNLOADS_TOKEN")
             }
         }
     }
