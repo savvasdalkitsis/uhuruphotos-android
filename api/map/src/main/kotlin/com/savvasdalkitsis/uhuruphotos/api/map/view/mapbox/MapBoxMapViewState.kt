@@ -15,7 +15,9 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.api.map.view.mapbox
 
+import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import com.mapbox.maps.CoordinateBounds
 import com.savvasdalkitsis.uhuruphotos.api.map.model.LatLon
@@ -26,7 +28,8 @@ internal class MapBoxMapViewState(
     override val initialZoom: Float,
 ) : MapViewState {
     lateinit var bounds: CoordinateBounds
-    override var isMoving: Boolean = false
+    var _moving = mutableStateOf(false)
+    override val isMoving: State<Boolean> @Composable get() = _moving
     override val markers: MutableState<Set<LatLon>> = mutableStateOf(emptySet())
     override val heatMapPoints: MutableState<Set<LatLon>> = mutableStateOf(emptySet())
     override fun contains(latLon: LatLon): Boolean = bounds.contains(latLon.toPoint, true)

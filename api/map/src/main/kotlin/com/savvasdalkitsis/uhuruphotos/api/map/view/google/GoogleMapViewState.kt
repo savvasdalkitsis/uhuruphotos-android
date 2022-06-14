@@ -15,8 +15,7 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.api.map.view.google
 
-import androidx.compose.runtime.MutableState
-import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.*
 import com.google.maps.android.compose.CameraPositionState
 import com.savvasdalkitsis.uhuruphotos.api.map.model.LatLon
 import com.savvasdalkitsis.uhuruphotos.api.map.view.MapViewState
@@ -27,7 +26,9 @@ internal class GoogleMapViewState(
     override val initialZoom: Float,
 ) : MapViewState {
 
-    override val isMoving get() = cameraPositionState.isMoving
+    override val isMoving: State<Boolean>
+        @Composable
+        get() = produceState(cameraPositionState.isMoving) { value = cameraPositionState.isMoving }
     override val markers: MutableState<Set<LatLon>> = mutableStateOf(emptySet())
     override val heatMapPoints: MutableState<Set<LatLon>> = mutableStateOf(emptySet())
 

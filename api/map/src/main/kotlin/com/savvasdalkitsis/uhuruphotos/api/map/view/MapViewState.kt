@@ -17,6 +17,7 @@ package com.savvasdalkitsis.uhuruphotos.api.map.view
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.State
 import androidx.compose.runtime.remember
 import com.google.android.gms.maps.model.CameraPosition
 import com.google.maps.android.compose.rememberCameraPositionState
@@ -28,7 +29,8 @@ import com.savvasdalkitsis.uhuruphotos.api.map.view.google.GoogleMapViewState
 import com.savvasdalkitsis.uhuruphotos.api.map.view.mapbox.MapBoxMapViewState
 
 interface MapViewState {
-    val isMoving: Boolean
+    @get:Composable
+    val isMoving: State<Boolean>
     val markers: MutableState<Set<LatLon>>
     val heatMapPoints: MutableState<Set<LatLon>>
     val initialPosition: LatLon

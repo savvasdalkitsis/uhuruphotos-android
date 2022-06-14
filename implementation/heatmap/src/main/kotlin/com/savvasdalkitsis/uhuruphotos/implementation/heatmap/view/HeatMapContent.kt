@@ -16,12 +16,7 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.implementation.heatmap.view
 
 import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
-import androidx.compose.runtime.setValue
+import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.google.accompanist.permissions.PermissionState
@@ -46,11 +41,11 @@ fun HeatMapContent(
         initialZoom = 2f,
     )
     var startedMoving by remember { mutableStateOf(false) }
-    if (mapViewState.isMoving) {
+    if (mapViewState.isMoving.value) {
         startedMoving = true
     }
     val scope = rememberCoroutineScope()
-    if (startedMoving && !mapViewState.isMoving) {
+    if (startedMoving && !mapViewState.isMoving.value) {
         @Suppress("UNUSED_VALUE")
         startedMoving = false
         action(HeatMapAction.CameraViewPortChanged { latLng ->

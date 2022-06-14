@@ -67,21 +67,19 @@ internal fun MapView.showHeatMap(points: Set<LatLon>) {
 
 
 internal fun MapboxMap.bindTo(mapViewState: MapBoxMapViewState) {
-    mapViewState.bounds = getBounds().bounds
-
     addOnMoveListener(object : OnMoveListener {
         override fun onMove(detector: MoveGestureDetector): Boolean {
-            mapViewState.isMoving = true
+            mapViewState._moving.value = true
             return false
         }
 
         override fun onMoveBegin(detector: MoveGestureDetector) {
-            mapViewState.isMoving = true
+            mapViewState._moving.value = true
         }
 
         override fun onMoveEnd(detector: MoveGestureDetector) {
-            mapViewState.isMoving = false
+            mapViewState.bounds = getBounds().bounds
+            mapViewState._moving.value = false
         }
-
     })
 }

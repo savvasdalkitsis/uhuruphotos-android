@@ -21,6 +21,7 @@ import androidx.compose.ui.viewinterop.AndroidView
 import com.mapbox.maps.CameraOptions
 import com.mapbox.maps.MapView
 import com.mapbox.maps.Style
+import com.mapbox.maps.plugin.compass.compass
 import com.mapbox.maps.plugin.gestures.addOnMapClickListener
 import com.mapbox.maps.plugin.gestures.gestures
 import com.mapbox.maps.plugin.scalebar.scalebar
@@ -48,6 +49,7 @@ internal fun MapBoxMapView(
                     }
                     loadStyleUri(Style.MAPBOX_STREETS)
                     scalebar.enabled = false
+                    compass.enabled = false
                     addOnStyleLoadedListener {
                         setCamera(
                             CameraOptions.Builder()
