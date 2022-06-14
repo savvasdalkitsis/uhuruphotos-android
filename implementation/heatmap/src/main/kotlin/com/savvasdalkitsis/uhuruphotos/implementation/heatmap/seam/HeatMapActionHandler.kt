@@ -55,6 +55,7 @@ class HeatMapActionHandler @Inject constructor(
     private val photosUseCase: PhotosUseCase,
 ): ActionHandler<HeatMapState, HeatMapEffect, HeatMapAction, HeatMapMutation> {
 
+    @Volatile
     private var boundsChecker: suspend (LatLon) -> Boolean = { true }
     private val detailsDownloading = MutableStateFlow(false)
 

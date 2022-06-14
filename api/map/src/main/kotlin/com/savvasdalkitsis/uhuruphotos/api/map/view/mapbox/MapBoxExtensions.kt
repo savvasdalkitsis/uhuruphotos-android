@@ -27,6 +27,7 @@ import com.mapbox.maps.plugin.annotation.generated.CircleAnnotationOptions
 import com.mapbox.maps.plugin.annotation.generated.createCircleAnnotationManager
 import com.mapbox.maps.plugin.gestures.OnMoveListener
 import com.mapbox.maps.plugin.gestures.addOnMoveListener
+import com.mapbox.maps.toCameraOptions
 import com.savvasdalkitsis.uhuruphotos.api.map.model.LatLon
 
 internal fun MapView.addMarker(marker: LatLon) {
@@ -78,7 +79,7 @@ internal fun MapboxMap.bindTo(mapViewState: MapBoxMapViewState) {
         }
 
         override fun onMoveEnd(detector: MoveGestureDetector) {
-            mapViewState.bounds = getBounds().bounds
+            mapViewState.bounds = coordinateBoundsForCamera(cameraState.toCameraOptions())
             mapViewState._moving.value = false
         }
     })

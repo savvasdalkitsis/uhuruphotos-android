@@ -27,10 +27,13 @@ internal class MapBoxMapViewState(
     override val initialPosition: LatLon,
     override val initialZoom: Float,
 ) : MapViewState {
-    lateinit var bounds: CoordinateBounds
+    var bounds: CoordinateBounds? = null
     var _moving = mutableStateOf(false)
     override val isMoving: State<Boolean> @Composable get() = _moving
     override val markers: MutableState<Set<LatLon>> = mutableStateOf(emptySet())
     override val heatMapPoints: MutableState<Set<LatLon>> = mutableStateOf(emptySet())
-    override fun contains(latLon: LatLon): Boolean = bounds.contains(latLon.toPoint, true)
+    override fun contains(latLon: LatLon): Boolean {
+        val contains = bounds?.contains(latLon.toPoint, false)
+        return contains == true
+    }
 }
