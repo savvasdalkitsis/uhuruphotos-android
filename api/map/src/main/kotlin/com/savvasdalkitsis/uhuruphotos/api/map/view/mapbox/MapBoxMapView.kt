@@ -15,6 +15,7 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.api.map.view.mapbox
 
+import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.viewinterop.AndroidView
@@ -36,6 +37,10 @@ internal fun MapBoxMapView(
     mapViewState: MapBoxMapViewState,
     content: @Composable (MapViewScope.() -> Unit)?,
 ) {
+    val style = when {
+        MaterialTheme.colors.isLight -> Style.MAPBOX_STREETS
+        else -> Style.DARK
+    }
     AndroidView(
         modifier = modifier,
         factory = { context ->
@@ -47,7 +52,7 @@ internal fun MapBoxMapView(
                         gestures.doubleTapToZoomInEnabled = zoomGesturesEnabled
                         gestures.scrollEnabled = scrollGesturesEnabled
                     }
-                    loadStyleUri(Style.MAPBOX_STREETS)
+                    loadStyleUri(style)
                     scalebar.enabled = false
                     compass.enabled = false
                     addOnStyleLoadedListener {
