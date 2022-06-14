@@ -25,6 +25,7 @@ import com.mapbox.maps.Style
 import com.mapbox.maps.plugin.compass.compass
 import com.mapbox.maps.plugin.gestures.addOnMapClickListener
 import com.mapbox.maps.plugin.gestures.gestures
+import com.mapbox.maps.plugin.locationcomponent.location
 import com.mapbox.maps.plugin.scalebar.scalebar
 import com.savvasdalkitsis.uhuruphotos.api.map.model.MapOptions
 import com.savvasdalkitsis.uhuruphotos.api.map.view.MapViewScope
@@ -63,6 +64,10 @@ internal fun MapBoxMapView(
                                 .zoom(mapViewState.initialZoom.toDouble())
                                 .build()
                         )
+                        location.updateSettings {
+                            enabled = true
+                            pulsingEnabled = true
+                        }
                     }
                     bindTo(mapViewState)
                     addOnMapClickListener {
