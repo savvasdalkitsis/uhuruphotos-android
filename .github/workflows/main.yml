@@ -38,13 +38,11 @@ jobs:
       run: touch local.properties
     - name: Copy mock google services
       run: cp mock-google-services.json app/google-services.json
-    - name: Decode MapBox download token
-      run: |
-        echo "\nMAPBOX_DOWNLOADS_TOKEN=${{ secrets.MAPBOX_DOWNLOADS_TOKEN }}" > gradle.properties
     - name: Build with Gradle
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        MAPBOX_DOWNLOADS_TOKEN: ${{ secrets.MAPBOX_DOWNLOADS_TOKEN }}
       run: ./gradlew assembleDebug sonarqube
 #    - name: run tests
 #      uses: reactivecircus/android-emulator-runner@v2

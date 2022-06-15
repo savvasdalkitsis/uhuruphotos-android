@@ -36,15 +36,12 @@ jobs:
         ENCODED_STRING: ${{ secrets.GOOGLE_SERVICES }}
       run: |
         echo $ENCODED_STRING | base64 -di > app/google-services.json
-    - name: Decode MapBox download token
-      run: |
-        echo "\nMAPBOX_DOWNLOADS_TOKEN=${{ secrets.MAPBOX_DOWNLOADS_TOKEN }}" > gradle.properties
-
     - name: Build with Gradle
       run: ./gradlew app:bundleRelease
       env:
         KEYSTORE_PASS: ${{ secrets.KEYSTORE_PASS }}
         KEYSTORE_ALIAS: ${{ secrets.KEYSTORE_ALIAS }}
+        MAPBOX_DOWNLOADS_TOKEN: ${{ secrets.MAPBOX_DOWNLOADS_TOKEN }}
     - name: Archive release bundle
       uses: actions/upload-artifact@v3
       with:
