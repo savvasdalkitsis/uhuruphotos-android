@@ -20,6 +20,7 @@ android {
 dependencies {
 
     implementation project(":api:initializer")
+    implementation project(":api:launchers")
     implementation(
             libs.androidx.compose.foundation.layout,
             libs.androidx.compose.material,

@@ -15,6 +15,11 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.implementation.heatmap.seam
 
+import android.annotation.SuppressLint
+import android.location.LocationManager
+import android.location.LocationManager.NETWORK_PROVIDER
+import androidx.core.location.LocationManagerCompat.getCurrentLocation
+import com.google.accompanist.permissions.isGranted
 import com.savvasdalkitsis.uhuruphotos.api.albums.usecase.AlbumsUseCase
 import com.savvasdalkitsis.uhuruphotos.api.coroutines.onErrors
 import com.savvasdalkitsis.uhuruphotos.api.coroutines.safelyOnStart
@@ -23,22 +28,15 @@ import com.savvasdalkitsis.uhuruphotos.api.photos.model.Photo
 import com.savvasdalkitsis.uhuruphotos.api.photos.model.latLng
 import com.savvasdalkitsis.uhuruphotos.api.photos.usecase.PhotosUseCase
 import com.savvasdalkitsis.uhuruphotos.api.seam.ActionHandler
-import com.savvasdalkitsis.uhuruphotos.implementation.heatmap.seam.HeatMapAction.BackPressed
-import com.savvasdalkitsis.uhuruphotos.implementation.heatmap.seam.HeatMapAction.CameraViewPortChanged
-import com.savvasdalkitsis.uhuruphotos.implementation.heatmap.seam.HeatMapAction.Load
-import com.savvasdalkitsis.uhuruphotos.implementation.heatmap.seam.HeatMapAction.SelectedPhoto
+import com.savvasdalkitsis.uhuruphotos.implementation.heatmap.seam.HeatMapAction.*
 import com.savvasdalkitsis.uhuruphotos.implementation.heatmap.seam.HeatMapEffect.ErrorLoadingPhotoDetails
 import com.savvasdalkitsis.uhuruphotos.implementation.heatmap.seam.HeatMapEffect.NavigateBack
 import com.savvasdalkitsis.uhuruphotos.implementation.heatmap.seam.HeatMapEffect.NavigateToPhoto
 import com.savvasdalkitsis.uhuruphotos.implementation.heatmap.seam.HeatMapMutation.ShowLoading
 import com.savvasdalkitsis.uhuruphotos.implementation.heatmap.seam.HeatMapMutation.UpdateAllPhotos
-import com.savvasdalkitsis.uhuruphotos.implementation.heatmap.seam.HeatMapMutation.UpdateDisplay
+import com.savvasdalkitsis.uhuruphotos.implementation.heatmap.seam.HeatMapMutation.UpdateVisibleMapContent
 import com.savvasdalkitsis.uhuruphotos.implementation.heatmap.view.state.HeatMapState
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.async
-import kotlinx.coroutines.awaitAll
-import kotlinx.coroutines.currentCoroutineContext
+import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.debounce
@@ -48,17 +46,21 @@ import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.merge
+import java.lang.Runnable
 import javax.inject.Inject
 
 class HeatMapActionHandler @Inject constructor(
     private val albumsUseCase: AlbumsUseCase,
     private val photosUseCase: PhotosUseCase,
+    private val locationManager: LocationManager,
 ): ActionHandler<HeatMapState, HeatMapEffect, HeatMapAction, HeatMapMutation> {
 
     @Volatile
     private var boundsChecker: suspend (LatLon) -> Boolean = { true }
     private val detailsDownloading = MutableStateFlow(false)
+    private var updateVisibleMapContentJob: Deferred<UpdateVisibleMapContent>? = null
 
+    @SuppressLint("MissingPermission")
     override fun handleAction(
         state: HeatMapState,
         action: HeatMapAction,
@@ -109,17 +111,34 @@ class HeatMapActionHandler @Inject constructor(
             effect(NavigateBack)
         }
         is CameraViewPortChanged -> flow {
+            updateVisibleMapContentJob?.cancel()
             boundsChecker = action.boundsChecker
-            emit(updateDisplay(state.allPhotos))
+            updateVisibleMapContentJob = CoroutineScope(currentCoroutineContext()).async { updateDisplay(state.allPhotos) }
+            updateVisibleMapContentJob?.await()?.let {
+                emit(it)
+            }
         }
         is SelectedPhoto -> flow {
             effect(with(action) {
                 NavigateToPhoto(photo, center, scale)
             })
         }
+        is MyLocationPressed -> flow {
+            if (action.locationPermissionState.status.isGranted) {
+                var location: LatLon? = null
+                getCurrentLocation(locationManager, NETWORK_PROVIDER, null, Runnable::run) {
+                    location = LatLon(it.latitude, it.longitude)
+                }
+                location?.let {
+                    action.mapViewState.centerToLocation(it)
+                }
+            } else {
+                action.locationPermissionState.launchPermissionRequest()
+            }
+        }
     }
 
-    private suspend fun updateDisplay(allPhotos: List<Photo>): UpdateDisplay {
+    private suspend fun updateDisplay(allPhotos: List<Photo>): UpdateVisibleMapContent {
         val photosToDisplay = allPhotos
             .filter { photo ->
                 val latLon = photo.latLng.toLatLon()
@@ -127,7 +146,7 @@ class HeatMapActionHandler @Inject constructor(
             }
         val pointsToDisplay = photosToDisplay
             .mapNotNull { it.latLng.toLatLon() }
-        return UpdateDisplay(photosToDisplay, pointsToDisplay)
+        return UpdateVisibleMapContent(photosToDisplay, pointsToDisplay)
     }
 
 }

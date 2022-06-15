@@ -21,13 +21,11 @@ import com.mapbox.maps.MapboxMap
 import com.mapbox.maps.extension.style.layers.addLayerAbove
 import com.mapbox.maps.extension.style.layers.addLayerBelow
 import com.mapbox.maps.extension.style.sources.addSource
-import com.mapbox.maps.extension.style.sources.getSource
 import com.mapbox.maps.plugin.annotation.annotations
 import com.mapbox.maps.plugin.annotation.generated.CircleAnnotationOptions
 import com.mapbox.maps.plugin.annotation.generated.createCircleAnnotationManager
 import com.mapbox.maps.plugin.gestures.OnMoveListener
 import com.mapbox.maps.plugin.gestures.addOnMoveListener
-import com.mapbox.maps.toCameraOptions
 import com.savvasdalkitsis.uhuruphotos.api.map.model.LatLon
 
 internal fun MapView.addMarker(marker: LatLon) {
@@ -67,20 +65,15 @@ internal fun MapView.showHeatMap(points: Set<LatLon>) {
 }
 
 
-internal fun MapboxMap.bindTo(mapViewState: MapBoxMapViewState) {
-    addOnMoveListener(object : OnMoveListener {
-        override fun onMove(detector: MoveGestureDetector): Boolean {
-            mapViewState._moving.value = true
-            return false
-        }
+internal fun MapView.bindTo(mapViewState: MapBoxMapViewState) {
+    mapViewState.mapView = this
+    getMapboxMap().addOnMoveListener(object : OnMoveListener {
+        override fun onMove(detector: MoveGestureDetector) = false
 
-        override fun onMoveBegin(detector: MoveGestureDetector) {
-            mapViewState._moving.value = true
-        }
+        override fun onMoveBegin(detector: MoveGestureDetector) {}
 
         override fun onMoveEnd(detector: MoveGestureDetector) {
-            mapViewState.bounds = coordinateBoundsForCamera(cameraState.toCameraOptions())
-            mapViewState._moving.value = false
+            mapViewState.finishedMoving()
         }
     })
 }

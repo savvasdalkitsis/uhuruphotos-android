@@ -26,6 +26,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import com.google.accompanist.permissions.PermissionState
+import com.savvasdalkitsis.uhuruphotos.api.map.view.MapViewState
 import com.savvasdalkitsis.uhuruphotos.implementation.heatmap.seam.HeatMapAction
 import com.savvasdalkitsis.uhuruphotos.implementation.heatmap.view.state.HeatMapState
 import com.savvasdalkitsis.uhuruphotos.api.ui.insets.systemPadding
@@ -35,8 +36,10 @@ import com.savvasdalkitsis.uhuruphotos.api.ui.view.CommonScaffold
 fun SidePanelHeatMap(
     state: HeatMapState,
     action: (HeatMapAction) -> Unit,
-    locationPermissionState: PermissionState
+    locationPermissionState: PermissionState,
+    mapViewState: MapViewState
 ) {
+
     CommonScaffold(
         topBar = {
             HeatMapTopBar(
@@ -44,6 +47,7 @@ fun SidePanelHeatMap(
                 state = state,
                 locationPermissionState = locationPermissionState,
                 actionsInTitle = true,
+                mapViewState = mapViewState,
             )
         },
         bottomBarDisplayed = false,
@@ -55,7 +59,8 @@ fun SidePanelHeatMap(
                     .weight(2f),
                 action = action,
                 locationPermissionState = locationPermissionState,
-                state = state
+                state = state,
+                mapViewState = mapViewState,
             )
             Box(
                 modifier = Modifier

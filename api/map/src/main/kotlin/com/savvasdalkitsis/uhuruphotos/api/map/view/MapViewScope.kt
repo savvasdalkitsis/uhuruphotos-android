@@ -18,17 +18,14 @@ package com.savvasdalkitsis.uhuruphotos.api.map.view
 import androidx.compose.runtime.Composable
 import com.savvasdalkitsis.uhuruphotos.api.map.model.LatLon
 
-class MapViewScope(
-    private val mapViewState: MapViewState,
-) {
+interface MapViewScope {
 
     @Composable
-    fun Marker(latLon: LatLon) {
-        mapViewState.markers.value = mapViewState.markers.value + latLon
-    }
+    fun Marker(latLon: LatLon)
 
     @Composable
-    fun HeatMap(points: Collection<LatLon>) {
-        mapViewState.heatMapPoints.value = points.toSet()
-    }
+    fun HeatMap(
+        allPoints: Collection<LatLon>,
+        pointsOnVisibleMap: Collection<LatLon>,
+    )
 }

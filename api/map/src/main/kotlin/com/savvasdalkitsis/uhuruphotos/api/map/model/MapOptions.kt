@@ -19,5 +19,4 @@ data class MapOptions(
     val zoomControlsEnabled: Boolean = false,
     val scrollGesturesEnabled: Boolean = false,
     val zoomGesturesEnabled: Boolean = false,
-    val myLocationButtonEnabled: Boolean = false,
 )

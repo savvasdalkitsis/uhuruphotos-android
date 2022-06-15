@@ -16,7 +16,14 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.api.map.view.google
 
 import androidx.compose.runtime.*
+import com.google.android.gms.maps.CameraUpdateFactory
+import com.google.android.gms.maps.model.LatLngBounds
 import com.google.maps.android.compose.CameraPositionState
+import com.google.maps.android.compose.Marker
+import com.google.maps.android.compose.MarkerState
+import com.google.maps.android.compose.TileOverlay
+import com.google.maps.android.heatmaps.HeatmapTileProvider
+import com.savvasdalkitsis.uhuruphotos.api.launchers.onMain
 import com.savvasdalkitsis.uhuruphotos.api.map.model.LatLon
 import com.savvasdalkitsis.uhuruphotos.api.map.view.MapViewState
 
@@ -26,16 +33,52 @@ internal class GoogleMapViewState(
     override val initialZoom: Float,
 ) : MapViewState {
 
-    override val isMoving: State<Boolean>
-        @Composable
-        get() = produceState(cameraPositionState.isMoving) { value = cameraPositionState.isMoving }
-    override val markers: MutableState<Set<LatLon>> = mutableStateOf(emptySet())
-    override val heatMapPoints: MutableState<Set<LatLon>> = mutableStateOf(emptySet())
+    private var bounds: LatLngBounds? = null
 
-    override fun contains(latLon: LatLon) = cameraPositionState
-        .projection
-        ?.visibleRegion
-        ?.latLngBounds
-        ?.contains(latLon.toLatLng)
-        ?: false
+    @Composable
+    override fun Marker(latLon: LatLon) {
+        Marker(
+            state = MarkerState(position = latLon.toLatLng),
+        )
+    }
+
+    @Composable
+    override fun HeatMap(
+        allPoints: Collection<LatLon>,
+        pointsOnVisibleMap: Collection<LatLon>,
+    ) {
+        if (pointsOnVisibleMap.isNotEmpty()) {
+            TileOverlay(
+                tileProvider = HeatmapTileProvider.Builder()
+                    .data(pointsOnVisibleMap.map { it.toLatLng })
+                    .build()
+            )
+        }
+    }
+
+    @Composable
+    override fun Composition(onStoppedMoving: () -> Unit) {
+        var startedMoving by remember { mutableStateOf(false) }
+        if (cameraPositionState.isMoving) {
+            startedMoving = true
+        }
+        if (startedMoving && !cameraPositionState.isMoving) {
+            @Suppress("UNUSED_VALUE")
+            startedMoving = false
+            bounds = cameraPositionState
+                .projection
+                ?.visibleRegion
+                ?.latLngBounds
+            onStoppedMoving()
+        }
+    }
+
+    override fun contains(latLon: LatLon): Boolean =
+        bounds?.contains(latLon.toLatLng) ?: false
+
+    override suspend fun centerToLocation(latLon: LatLon) {
+        onMain {
+            cameraPositionState.animate(CameraUpdateFactory.newLatLng(latLon.toLatLng))
+        }
+    }
 }

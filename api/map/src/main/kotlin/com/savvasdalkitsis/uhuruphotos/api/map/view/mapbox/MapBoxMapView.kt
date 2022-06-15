@@ -77,14 +77,6 @@ internal fun MapBoxMapView(
                 }
             }
         }
-    ) { mapView ->
-        mapViewState.markers.value.forEach { marker ->
-            mapView.addMarker(marker)
-        }
-        val heatMap = mapViewState.heatMapPoints.value
-        if (heatMap.isNotEmpty()) {
-            mapView.showHeatMap(heatMap)
-        }
-    }
-    content?.invoke(MapViewScope(mapViewState))
+    )
+    content?.invoke(mapViewState)
 }

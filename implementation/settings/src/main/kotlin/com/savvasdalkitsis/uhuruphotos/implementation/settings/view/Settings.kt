@@ -122,7 +122,7 @@ internal fun Settings(
                 }
                 when (val mapProviderState = state.mapProviderState) {
                     is Selected -> item {
-                        SettingsGroupMaps(mapProviderState, action)
+                        SettingsGroupMaps(mapProviderState, action, collapsedMap)
                     }
                 }
                 item {

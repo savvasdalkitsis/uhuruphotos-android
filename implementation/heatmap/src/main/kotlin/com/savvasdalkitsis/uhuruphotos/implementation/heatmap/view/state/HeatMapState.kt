@@ -20,7 +20,8 @@ import com.savvasdalkitsis.uhuruphotos.api.photos.model.Photo
 
 data class HeatMapState(
     val loading: Boolean = false,
-    val pointsToDisplay: List<LatLon> = emptyList(),
+    val allPoints: List<LatLon> = emptyList(),
+    val pointsOnVisibleMap: List<LatLon> = emptyList(),
     val allPhotos: List<Photo> = emptyList(),
-    val photosToDisplay: List<Photo> = emptyList(),
+    val photosOnVisibleMap: List<Photo> = emptyList(),
 )

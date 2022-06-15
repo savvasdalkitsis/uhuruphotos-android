@@ -15,6 +15,7 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.api.map.view
 
+import android.annotation.SuppressLint
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.State
@@ -28,14 +29,13 @@ import com.savvasdalkitsis.uhuruphotos.api.map.model.MapProvider.MapBox
 import com.savvasdalkitsis.uhuruphotos.api.map.view.google.GoogleMapViewState
 import com.savvasdalkitsis.uhuruphotos.api.map.view.mapbox.MapBoxMapViewState
 
-interface MapViewState {
-    @get:Composable
-    val isMoving: State<Boolean>
-    val markers: MutableState<Set<LatLon>>
-    val heatMapPoints: MutableState<Set<LatLon>>
+interface MapViewState : MapViewScope {
     val initialPosition: LatLon
     val initialZoom: Float
     fun contains(latLon: LatLon): Boolean
+    suspend fun centerToLocation(latLon: LatLon)
+    @Composable
+    fun Composition(onStoppedMoving: () -> Unit)
 }
 
 @Composable

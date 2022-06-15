@@ -25,21 +25,23 @@ sealed class HeatMapMutation(
 ) : Mutation<HeatMapState> by mutation {
 
     data class UpdateAllPhotos(val photos: List<Photo>) : HeatMapMutation({
+        val points = photos
+            .mapNotNull { photo -> photo.latLng }
+            .map { (lat, lon) -> LatLon(lat, lon) }
         it.copy(
-            pointsToDisplay = photos
-                .mapNotNull { photo -> photo.latLng }
-                .map { (lat, lon) -> LatLon(lat, lon) },
+            allPoints = points,
+            pointsOnVisibleMap = points,
             allPhotos = photos,
         )
     })
 
-    data class UpdateDisplay(
-        val photosToDisplay: List<Photo>,
-        val pointsToDisplay: List<LatLon>,
+    data class UpdateVisibleMapContent(
+        val photosOnVisibleMap: List<Photo>,
+        val pointsOnVisibleMap: List<LatLon>,
     ) : HeatMapMutation({
         it.copy(
-            photosToDisplay = photosToDisplay,
-            pointsToDisplay = pointsToDisplay,
+            photosOnVisibleMap = photosOnVisibleMap,
+            pointsOnVisibleMap = pointsOnVisibleMap,
         )
     })
 

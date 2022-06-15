@@ -49,8 +49,8 @@ fun HeatMapVisiblePhotos(
                 albums = listOf(
                     Album(
                         id = "visiblePhotos",
-                        photos = state.photosToDisplay,
-                        date = stringResource(R.string.photos_on_map, state.photosToDisplay.size, state.allPhotos.size),
+                        photos = state.photosOnVisibleMap,
+                        date = stringResource(R.string.photos_on_map, state.photosOnVisibleMap.size, state.allPhotos.size),
                         location = null,
                     )
                 )

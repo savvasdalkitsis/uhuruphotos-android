@@ -25,12 +25,7 @@ import com.google.android.gms.maps.model.MapStyleOptions
 import com.google.maps.android.compose.GoogleMap
 import com.google.maps.android.compose.MapProperties
 import com.google.maps.android.compose.MapUiSettings
-import com.google.maps.android.compose.Marker
-import com.google.maps.android.compose.MarkerState
-import com.google.maps.android.compose.TileOverlay
-import com.google.maps.android.heatmaps.HeatmapTileProvider
 import com.savvasdalkitsis.uhuruphotos.api.map.R
-import com.savvasdalkitsis.uhuruphotos.api.map.model.LatLon
 import com.savvasdalkitsis.uhuruphotos.api.map.model.MapOptions
 import com.savvasdalkitsis.uhuruphotos.api.map.view.MapViewScope
 
@@ -49,27 +44,24 @@ internal fun GoogleMapView(
             context.resources.getString(R.string.dark_mode)
         )
     }
-    val options = mapOptions(MapOptions())
-    val properties = MapProperties(
-        isMyLocationEnabled = options.myLocationButtonEnabled
-    ).let {
-        when {
-            MaterialTheme.colors.isLight -> it
-            else -> it.copy(mapStyleOptions = darkModeStyle)
-        }
-    }
+    val properties = when {
+        MaterialTheme.colors.isLight -> MapProperties()
+        else -> MapProperties(mapStyleOptions = darkModeStyle)
+    }.copy(
+        isMyLocationEnabled = true
+    )
     GoogleMap(
         modifier = modifier,
         contentPadding = contentPadding,
         onMapClick = { onMapClick() },
         cameraPositionState = mapViewState.cameraPositionState,
         properties = properties,
-        uiSettings = options.let {
+        uiSettings = mapOptions(MapOptions()).let {
             MapUiSettings(
                 compassEnabled = false,
                 indoorLevelPickerEnabled = false,
                 mapToolbarEnabled = false,
-                myLocationButtonEnabled = it.myLocationButtonEnabled,
+                myLocationButtonEnabled = false,
                 rotationGesturesEnabled = false,
                 scrollGesturesEnabled = it.scrollGesturesEnabled,
                 scrollGesturesEnabledDuringRotateOrZoom = false,
@@ -79,20 +71,7 @@ internal fun GoogleMapView(
             )
         },
         content = {
-            content?.invoke(MapViewScope(mapViewState))
-            mapViewState.markers.value.forEach { marker ->
-                Marker(
-                    state = MarkerState(position = marker.toLatLng),
-                )
-            }
-            val points = mapViewState.heatMapPoints.value
-            if (points.isNotEmpty()) {
-                TileOverlay(
-                    tileProvider = HeatmapTileProvider.Builder()
-                        .data(points.map { it.toLatLng })
-                        .build()
-                )
-            }
+            content?.invoke(mapViewState)
         },
     )
 }
