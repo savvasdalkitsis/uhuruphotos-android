@@ -103,4 +103,6 @@
     <string name="user_created_albums">Zelfgemaakte albums</string>
     <string name="user_albums">Eigen albums</string>
     <string name="no_user_albums">Deze gebruiker heeft nog geen albums samengesteld</string>
+    <string name="maps">Kaarten</string>
+    <string name="map_provider">Kaartdienst</string>
 </resources>
