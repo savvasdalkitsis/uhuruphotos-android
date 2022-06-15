@@ -24,5 +24,8 @@ interface MapViewScope {
     fun Marker(latLon: LatLon)
 
     @Composable
-    fun HeatMap(points: Collection<LatLon>)
+    fun HeatMap(
+        allPoints: Collection<LatLon>,
+        pointsOnVisibleMap: Collection<LatLon>,
+    )
 }

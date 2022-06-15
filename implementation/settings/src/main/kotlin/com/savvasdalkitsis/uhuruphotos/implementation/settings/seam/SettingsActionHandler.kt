@@ -24,47 +24,9 @@ import com.savvasdalkitsis.uhuruphotos.api.search.SearchUseCase
 import com.savvasdalkitsis.uhuruphotos.api.settings.usecase.SettingsUseCase
 import com.savvasdalkitsis.uhuruphotos.api.strings.R
 import com.savvasdalkitsis.uhuruphotos.api.userbadge.usecase.UserBadgeUseCase
-import com.savvasdalkitsis.uhuruphotos.implementation.settings.seam.SettingsAction.AskForFullFeedSync
-import com.savvasdalkitsis.uhuruphotos.implementation.settings.seam.SettingsAction.ChangeFullSyncChargingRequirements
-import com.savvasdalkitsis.uhuruphotos.implementation.settings.seam.SettingsAction.ChangeFullSyncNetworkRequirements
-import com.savvasdalkitsis.uhuruphotos.implementation.settings.seam.SettingsAction.ChangeImageDiskCache
-import com.savvasdalkitsis.uhuruphotos.implementation.settings.seam.SettingsAction.ChangeImageMemCache
-import com.savvasdalkitsis.uhuruphotos.implementation.settings.seam.SettingsAction.ChangeSearchSuggestionsEnabled
-import com.savvasdalkitsis.uhuruphotos.implementation.settings.seam.SettingsAction.ChangeShareGpsDataEnabled
-import com.savvasdalkitsis.uhuruphotos.implementation.settings.seam.SettingsAction.ChangeShowLibrary
-import com.savvasdalkitsis.uhuruphotos.implementation.settings.seam.SettingsAction.ChangeThemeMode
-import com.savvasdalkitsis.uhuruphotos.implementation.settings.seam.SettingsAction.ChangeVideoDiskCache
-import com.savvasdalkitsis.uhuruphotos.implementation.settings.seam.SettingsAction.ClearImageDiskCache
-import com.savvasdalkitsis.uhuruphotos.implementation.settings.seam.SettingsAction.ClearImageMemCache
-import com.savvasdalkitsis.uhuruphotos.implementation.settings.seam.SettingsAction.ClearLogFileClicked
-import com.savvasdalkitsis.uhuruphotos.implementation.settings.seam.SettingsAction.ClearRecentSearches
-import com.savvasdalkitsis.uhuruphotos.implementation.settings.seam.SettingsAction.ClearVideoDiskCache
-import com.savvasdalkitsis.uhuruphotos.implementation.settings.seam.SettingsAction.DismissFullFeedSyncDialog
-import com.savvasdalkitsis.uhuruphotos.implementation.settings.seam.SettingsAction.FeedSyncFrequencyChanged
-import com.savvasdalkitsis.uhuruphotos.implementation.settings.seam.SettingsAction.LoadSettings
-import com.savvasdalkitsis.uhuruphotos.implementation.settings.seam.SettingsAction.NavigateBack
-import com.savvasdalkitsis.uhuruphotos.implementation.settings.seam.SettingsAction.PerformFullFeedSync
-import com.savvasdalkitsis.uhuruphotos.implementation.settings.seam.SettingsAction.SendFeedbackClicked
+import com.savvasdalkitsis.uhuruphotos.implementation.settings.seam.SettingsAction.*
 import com.savvasdalkitsis.uhuruphotos.implementation.settings.seam.SettingsEffect.ShowMessage
-import com.savvasdalkitsis.uhuruphotos.implementation.settings.seam.SettingsMutation.DisableFullSyncButton
-import com.savvasdalkitsis.uhuruphotos.implementation.settings.seam.SettingsMutation.DisplayDiskCacheMaxLimit
-import com.savvasdalkitsis.uhuruphotos.implementation.settings.seam.SettingsMutation.DisplayFeedSyncFrequency
-import com.savvasdalkitsis.uhuruphotos.implementation.settings.seam.SettingsMutation.DisplayFullSyncNetworkRequirements
-import com.savvasdalkitsis.uhuruphotos.implementation.settings.seam.SettingsMutation.DisplayFullSyncProgress
-import com.savvasdalkitsis.uhuruphotos.implementation.settings.seam.SettingsMutation.DisplayFullSyncRequiresCharging
-import com.savvasdalkitsis.uhuruphotos.implementation.settings.seam.SettingsMutation.DisplayImageDiskCacheCurrentUse
-import com.savvasdalkitsis.uhuruphotos.implementation.settings.seam.SettingsMutation.DisplayImageMemCacheCurrentUse
-import com.savvasdalkitsis.uhuruphotos.implementation.settings.seam.SettingsMutation.DisplayMemCacheMaxLimit
-import com.savvasdalkitsis.uhuruphotos.implementation.settings.seam.SettingsMutation.DisplaySearchSuggestionsEnabled
-import com.savvasdalkitsis.uhuruphotos.implementation.settings.seam.SettingsMutation.DisplayShareGpsDataEnabled
-import com.savvasdalkitsis.uhuruphotos.implementation.settings.seam.SettingsMutation.DisplayShowLibrary
-import com.savvasdalkitsis.uhuruphotos.implementation.settings.seam.SettingsMutation.DisplayThemeMode
-import com.savvasdalkitsis.uhuruphotos.implementation.settings.seam.SettingsMutation.DisplayVideoDiskCacheCurrentUse
-import com.savvasdalkitsis.uhuruphotos.implementation.settings.seam.SettingsMutation.DisplayVideoDiskCacheMaxLimit
-import com.savvasdalkitsis.uhuruphotos.implementation.settings.seam.SettingsMutation.EnableFullSyncButton
-import com.savvasdalkitsis.uhuruphotos.implementation.settings.seam.SettingsMutation.HideFullFeedSyncDialog
-import com.savvasdalkitsis.uhuruphotos.implementation.settings.seam.SettingsMutation.ShowFullFeedSyncDialog
-import com.savvasdalkitsis.uhuruphotos.implementation.settings.seam.SettingsMutation.UserBadgeUpdate
+import com.savvasdalkitsis.uhuruphotos.implementation.settings.seam.SettingsMutation.*
 import com.savvasdalkitsis.uhuruphotos.implementation.settings.usecase.CacheUseCase
 import com.savvasdalkitsis.uhuruphotos.implementation.settings.view.state.SettingsState
 import kotlinx.coroutines.flow.Flow
@@ -110,6 +72,13 @@ internal class SettingsActionHandler @Inject constructor(
                 .map(::DisplayShareGpsDataEnabled),
             settingsUseCase.observeShowLibrary()
                 .map(::DisplayShowLibrary),
+            settingsUseCase.observeMapProvider().map { current ->
+                val available = settingsUseCase.getAvailableMapProviders()
+                when {
+                    available.size > 1 -> DisplayMapProviders(current, available)
+                    else -> DisplayNoMapProvidersOptions
+                }
+            },
             cacheUseCase.observeImageDiskCacheCurrentUse()
                 .map(::DisplayImageDiskCacheCurrentUse),
             cacheUseCase.observeImageMemCacheCurrentUse()
@@ -194,6 +163,9 @@ internal class SettingsActionHandler @Inject constructor(
         ClearRecentSearches -> flow {
             searchUseCase.clearRecentSearchSuggestions()
             effect(ShowMessage(R.string.recent_searches_cleared))
+        }
+        is ChangeMapProvider -> flow {
+            settingsUseCase.setMapProvider(action.mapProvider)
         }
     }
 

@@ -13,7 +13,7 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
  */
-package com.savvasdalkitsis.uhuruphotos.api.map.view
+package com.savvasdalkitsis.uhuruphotos.api.map.view.google
 
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.material.MaterialTheme
@@ -26,16 +26,16 @@ import com.google.maps.android.compose.GoogleMap
 import com.google.maps.android.compose.MapProperties
 import com.google.maps.android.compose.MapUiSettings
 import com.savvasdalkitsis.uhuruphotos.api.map.R
-import com.savvasdalkitsis.uhuruphotos.api.map.model.LatLon
 import com.savvasdalkitsis.uhuruphotos.api.map.model.MapOptions
+import com.savvasdalkitsis.uhuruphotos.api.map.view.MapViewScope
 
 @Composable
-fun GoogleMapView(
+internal fun GoogleMapView(
     modifier: Modifier = Modifier,
     mapViewState: GoogleMapViewState,
     mapOptions: MapOptions.() -> MapOptions = { this },
     contentPadding: PaddingValues = PaddingValues(),
-    onMapClick: (LatLon) -> Unit = {},
+    onMapClick: () -> Unit = {},
     content: @Composable (MapViewScope.() -> Unit)? = null,
 ) {
     val context = LocalContext.current
@@ -44,52 +44,34 @@ fun GoogleMapView(
             context.resources.getString(R.string.dark_mode)
         )
     }
-    val options = mapOptions(
-        MapOptions(
-            compassEnabled = false,
-            indoorLevelPickerEnabled = false,
-            mapToolbarEnabled = false,
-            myLocationButtonEnabled = false,
-            rotationGesturesEnabled = false,
-            scrollGesturesEnabled = false,
-            scrollGesturesEnabledDuringRotateOrZoom = false,
-            tiltGesturesEnabled = false,
-            zoomControlsEnabled = false,
-            zoomGesturesEnabled = false,
-        )
+    val properties = when {
+        MaterialTheme.colors.isLight -> MapProperties()
+        else -> MapProperties(mapStyleOptions = darkModeStyle)
+    }.copy(
+        isMyLocationEnabled = true
     )
-    val properties = MapProperties(
-        isMyLocationEnabled = options.myLocationButtonEnabled
-    ).let {
-        when {
-            MaterialTheme.colors.isLight -> it
-            else -> it.copy(mapStyleOptions = darkModeStyle)
-        }
-    }
     GoogleMap(
         modifier = modifier,
         contentPadding = contentPadding,
-        onMapClick = {
-            onMapClick(LatLon(it.latitude, it.longitude))
-        },
+        onMapClick = { onMapClick() },
         cameraPositionState = mapViewState.cameraPositionState,
         properties = properties,
-        uiSettings = options.let {
+        uiSettings = mapOptions(MapOptions()).let {
             MapUiSettings(
-                compassEnabled = it.compassEnabled,
-                indoorLevelPickerEnabled = it.indoorLevelPickerEnabled,
-                mapToolbarEnabled = it.mapToolbarEnabled,
-                myLocationButtonEnabled = it.myLocationButtonEnabled,
-                rotationGesturesEnabled = it.rotationGesturesEnabled,
+                compassEnabled = false,
+                indoorLevelPickerEnabled = false,
+                mapToolbarEnabled = false,
+                myLocationButtonEnabled = false,
+                rotationGesturesEnabled = false,
                 scrollGesturesEnabled = it.scrollGesturesEnabled,
-                scrollGesturesEnabledDuringRotateOrZoom = it.scrollGesturesEnabledDuringRotateOrZoom,
-                tiltGesturesEnabled = it.tiltGesturesEnabled,
+                scrollGesturesEnabledDuringRotateOrZoom = false,
+                tiltGesturesEnabled = false,
                 zoomControlsEnabled = it.zoomControlsEnabled,
                 zoomGesturesEnabled = it.zoomGesturesEnabled,
             )
         },
         content = {
-            content?.invoke(GoogleMapsViewScope())
+            content?.invoke(mapViewState)
         },
     )
 }

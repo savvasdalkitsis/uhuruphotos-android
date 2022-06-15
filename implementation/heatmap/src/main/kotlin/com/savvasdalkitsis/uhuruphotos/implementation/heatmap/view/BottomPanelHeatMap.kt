@@ -30,6 +30,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.max
 import com.google.accompanist.permissions.PermissionState
+import com.savvasdalkitsis.uhuruphotos.api.map.view.MapViewState
 import com.savvasdalkitsis.uhuruphotos.implementation.heatmap.seam.HeatMapAction
 import com.savvasdalkitsis.uhuruphotos.implementation.heatmap.view.state.HeatMapState
 import com.savvasdalkitsis.uhuruphotos.api.ui.insets.insetsTop
@@ -41,10 +42,12 @@ import com.savvasdalkitsis.uhuruphotos.api.ui.view.adjustingSheetSize
 fun BottomPanelHeatMap(
     state: HeatMapState,
     action: (HeatMapAction) -> Unit,
-    locationPermissionState: PermissionState
+    locationPermissionState: PermissionState,
+    mapViewState: MapViewState
 ) {
     val sheetSize: SheetSize by SheetSize.rememberSheetSize()
     val sheetPeekHeight = 320.dp
+
     BottomSheetScaffold(
         sheetPeekHeight = sheetPeekHeight,
         sheetShape = RoundedCornerShape(12.dp),
@@ -76,9 +79,10 @@ fun BottomPanelHeatMap(
                     .padding(bottom = sheetPeekHeight - 12.dp),
                 action = action,
                 locationPermissionState = locationPermissionState,
-                state = state
+                state = state,
+                mapViewState = mapViewState,
             )
-            HeatMapTopBar(action, state, locationPermissionState)
+            HeatMapTopBar(action, state, locationPermissionState, mapViewState = mapViewState)
         }
     }
 }

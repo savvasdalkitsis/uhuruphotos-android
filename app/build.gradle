@@ -58,6 +58,8 @@ dependencies {
     implementation project(":api:initializer")
     implementation project(":api:navigation")
     implementation project(":api:homenavigation")
+    implementation project(":api:map")
+    implementation project(":api:settings")
     implementation project(":api:video")
 
     implementation project(':implementation')

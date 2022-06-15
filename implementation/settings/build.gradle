@@ -31,5 +31,6 @@ dependencies {
             libs.androidx.work,
             libs.coil.base,
             libs.flowpreferences,
+            libs.play,
     )
 }

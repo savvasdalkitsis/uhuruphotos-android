@@ -15,19 +15,31 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.implementation.settings.usecase
 
+import android.content.Context
 import androidx.work.NetworkType
 import com.fredporciuncula.flow.preferences.FlowSharedPreferences
+import com.google.android.gms.common.ConnectionResult.SERVICE_UPDATING
+import com.google.android.gms.common.ConnectionResult.SERVICE_VERSION_UPDATE_REQUIRED
+import com.google.android.gms.common.ConnectionResult.SIGN_IN_REQUIRED
+import com.google.android.gms.common.ConnectionResult.SUCCESS
+import com.google.android.gms.common.GoogleApiAvailability
+import com.savvasdalkitsis.uhuruphotos.api.map.model.MapProvider
+import com.savvasdalkitsis.uhuruphotos.api.map.model.MapProvider.Google
+import com.savvasdalkitsis.uhuruphotos.api.map.model.MapProvider.MapBox
 import com.savvasdalkitsis.uhuruphotos.api.settings.usecase.SettingsUseCase
 import com.savvasdalkitsis.uhuruphotos.api.ui.theme.ThemeMode
+import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import javax.inject.Inject
 
 internal class SettingsUseCase @Inject constructor(
     flowSharedPreferences: FlowSharedPreferences,
+    @ApplicationContext private val context: Context,
 ) : SettingsUseCase {
 
     private val imageDiskCacheSize =
@@ -46,6 +58,8 @@ internal class SettingsUseCase @Inject constructor(
         flowSharedPreferences.getBoolean("fullSyncRequiresCharging", false)
     private val themeMode =
         flowSharedPreferences.getEnum("themeMode", ThemeMode.default)
+    private val mapProvider =
+        flowSharedPreferences.getEnum("mapProvider", MapProvider.default)
     private val searchSuggestionsEnabled =
         flowSharedPreferences.getBoolean("searchSuggestionsEnabled", true)
     private val shareRemoveGpsData =
@@ -62,6 +76,9 @@ internal class SettingsUseCase @Inject constructor(
     override fun getShouldPerformPeriodicFullSync(): Boolean = shouldPerformPeriodicFeedSync.get()
     override fun getShareRemoveGpsData(): Boolean = shareRemoveGpsData.get()
     override fun getShowLibrary(): Boolean = showLibrary.get()
+    override fun getMapProvider(): MapProvider = mapProvider.get().mapToAvailable()
+    override fun getAvailableMapProviders(): Set<MapProvider> = MapProvider.values()
+        .map { it.mapToAvailable() }.toSet()
 
     override fun observeImageDiskCacheMaxLimit(): Flow<Int> = imageDiskCacheSize.asFlow()
     override fun observeImageMemCacheMaxLimit(): Flow<Int> = imageMemCacheSize.asFlow()
@@ -76,6 +93,8 @@ internal class SettingsUseCase @Inject constructor(
     override suspend fun observeThemeModeState(): StateFlow<ThemeMode> = observeThemeMode().stateIn(
         CoroutineScope(Dispatchers.IO)
     )
+    override fun observeMapProvider(): Flow<MapProvider> = mapProvider.asFlow()
+        .map { it.mapToAvailable() }
 
     override suspend fun setImageDiskCacheMaxLimit(sizeInMb: Int) {
         imageDiskCacheSize.setAndCommit(sizeInMb)
@@ -120,4 +139,20 @@ internal class SettingsUseCase @Inject constructor(
     override suspend fun setShowLibrary(show: Boolean) {
         showLibrary.setAndCommit(show)
     }
+
+    override suspend fun setMapProvider(provider: MapProvider) {
+        mapProvider.setAndCommit(provider.mapToAvailable())
+    }
+
+    private fun MapProvider.mapToAvailable(): MapProvider =
+        when {
+            this == Google && !googlePlayAvailable() -> MapBox
+            else -> this
+        }
+
+    private fun googlePlayAvailable() =
+        GoogleApiAvailability.getInstance().isGooglePlayServicesAvailable(context) in setOf(
+            SUCCESS, SERVICE_VERSION_UPDATE_REQUIRED, SIGN_IN_REQUIRED, SERVICE_UPDATING
+        )
+
 }

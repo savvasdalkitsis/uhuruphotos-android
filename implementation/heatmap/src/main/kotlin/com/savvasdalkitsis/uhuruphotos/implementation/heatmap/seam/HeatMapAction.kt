@@ -16,7 +16,9 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.implementation.heatmap.seam
 
 import androidx.compose.ui.geometry.Offset
+import com.google.accompanist.permissions.PermissionState
 import com.savvasdalkitsis.uhuruphotos.api.map.model.LatLon
+import com.savvasdalkitsis.uhuruphotos.api.map.view.MapViewState
 import com.savvasdalkitsis.uhuruphotos.api.photos.model.Photo
 
 sealed class HeatMapAction {
@@ -26,6 +28,11 @@ sealed class HeatMapAction {
         val center: Offset,
         val scale: Float,
     ) : HeatMapAction()
+    data class MyLocationPressed(
+        val locationPermissionState: PermissionState,
+        val mapViewState: MapViewState
+    ) : HeatMapAction()
+
     object Load : HeatMapAction()
     object BackPressed : HeatMapAction()
 }

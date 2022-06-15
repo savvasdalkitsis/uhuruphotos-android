@@ -34,7 +34,7 @@ internal fun SettingsGroupSearch(
     collapsed: MutableState<Boolean> = remember { mutableStateOf(false) },
 ) {
     SettingsGroup(
-        title = stringResource(R.string.settings),
+        title = stringResource(R.string.search),
         collapsed = collapsed,
     ) {
         val checked = state.searchSuggestionsEnabled

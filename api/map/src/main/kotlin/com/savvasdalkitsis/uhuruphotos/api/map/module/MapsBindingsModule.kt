@@ -13,15 +13,21 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
  */
-package com.savvasdalkitsis.uhuruphotos.implementation.heatmap.view.state
+package com.savvasdalkitsis.uhuruphotos.api.map.module
 
-import com.savvasdalkitsis.uhuruphotos.api.map.model.LatLon
-import com.savvasdalkitsis.uhuruphotos.api.photos.model.Photo
+import com.savvasdalkitsis.uhuruphotos.api.initializer.ApplicationCreated
+import com.savvasdalkitsis.uhuruphotos.api.map.initializer.MapsInitializer
+import dagger.Binds
+import dagger.Module
+import dagger.hilt.InstallIn
+import dagger.hilt.components.SingletonComponent
+import dagger.multibindings.IntoSet
 
-data class HeatMapState(
-    val loading: Boolean = false,
-    val allPoints: List<LatLon> = emptyList(),
-    val pointsOnVisibleMap: List<LatLon> = emptyList(),
-    val allPhotos: List<Photo> = emptyList(),
-    val photosOnVisibleMap: List<Photo> = emptyList(),
-)
+@InstallIn(SingletonComponent::class)
+@Module
+internal abstract class MapsBindingsModule {
+
+    @Binds
+    @IntoSet
+    abstract fun mapsInitializer(mapsInitializer: MapsInitializer): ApplicationCreated
+}

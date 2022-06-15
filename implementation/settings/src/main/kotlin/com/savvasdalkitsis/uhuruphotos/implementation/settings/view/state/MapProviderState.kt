@@ -13,15 +13,11 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
  */
-package com.savvasdalkitsis.uhuruphotos.implementation.heatmap.view.state
+package com.savvasdalkitsis.uhuruphotos.implementation.settings.view.state
 
-import com.savvasdalkitsis.uhuruphotos.api.map.model.LatLon
-import com.savvasdalkitsis.uhuruphotos.api.photos.model.Photo
+import com.savvasdalkitsis.uhuruphotos.api.map.model.MapProvider
 
-data class HeatMapState(
-    val loading: Boolean = false,
-    val allPoints: List<LatLon> = emptyList(),
-    val pointsOnVisibleMap: List<LatLon> = emptyList(),
-    val allPhotos: List<Photo> = emptyList(),
-    val photosOnVisibleMap: List<Photo> = emptyList(),
-)
+sealed class MapProviderState {
+    object NoOptions: MapProviderState()
+    data class Selected(val current: MapProvider, val available: Set<MapProvider>) : MapProviderState()
+}

@@ -19,10 +19,15 @@ android {
 
 dependencies {
 
+    implementation project(":api:initializer")
+    implementation project(":api:launchers")
     implementation(
             libs.androidx.compose.foundation.layout,
             libs.androidx.compose.material,
             libs.androidx.compose.ui,
+            libs.androidx.startup,
+            libs.hilt,
+            libs.mapbox,
             libs.maps,
             libs.maps.compose,
             libs.maps.utils,

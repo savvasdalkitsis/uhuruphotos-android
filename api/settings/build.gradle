@@ -4,6 +4,7 @@ android {
 
 dependencies {
     api project(":api:ui")
+    api project(":api:map")
     api(
             libs.androidx.work,
             libs.kotlinx.coroutines,

@@ -35,6 +35,8 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import com.savvasdalkitsis.uhuruphotos.api.map.Locations
 import com.savvasdalkitsis.uhuruphotos.api.map.view.MapView
+import com.savvasdalkitsis.uhuruphotos.api.map.view.MapViewScope
+import com.savvasdalkitsis.uhuruphotos.api.map.view.rememberMapViewState
 import com.savvasdalkitsis.uhuruphotos.implementation.search.seam.SearchAction
 import com.savvasdalkitsis.uhuruphotos.implementation.search.seam.SearchAction.LoadHeatMap
 
@@ -65,8 +67,10 @@ fun SearchLocations(
         ) {
             MapView(
                 modifier = Modifier.fillMaxSize(),
-                location = Locations.TRAFALGAR_SQUARE,
-                zoom = 3f,
+                mapViewState = rememberMapViewState(
+                    initialPosition = Locations.TRAFALGAR_SQUARE,
+                    initialZoom = 3f,
+                ),
                 onMapClick = { action(LoadHeatMap) },
             )
             Box(modifier = Modifier

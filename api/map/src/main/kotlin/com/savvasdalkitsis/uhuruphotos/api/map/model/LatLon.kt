@@ -16,10 +16,12 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.api.map.model
 
 import com.google.android.gms.maps.model.LatLng
+import com.mapbox.geojson.Point
 
 data class LatLon(val lat: Double, val lon: Double) {
 
     internal val toLatLng get() = LatLng(lat, lon)
+    internal val toPoint get() = Point.fromLngLat(lon, lat)
 
     override fun toString() = "$lat,$lon"
 }

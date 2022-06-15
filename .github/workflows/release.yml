@@ -16,7 +16,7 @@ jobs:
       uses: actions/setup-java@v3
       with:
         java-version: '11'
-        distribution: 'temurin'
+        distribution: 'adopt'
         cache: gradle
 
     - name: Grant execute permission for gradlew
@@ -36,12 +36,12 @@ jobs:
         ENCODED_STRING: ${{ secrets.GOOGLE_SERVICES }}
       run: |
         echo $ENCODED_STRING | base64 -di > app/google-services.json
-
     - name: Build with Gradle
       run: ./gradlew app:bundleRelease
       env:
         KEYSTORE_PASS: ${{ secrets.KEYSTORE_PASS }}
         KEYSTORE_ALIAS: ${{ secrets.KEYSTORE_ALIAS }}
+        MAPBOX_DOWNLOADS_TOKEN: ${{ secrets.MAPBOX_DOWNLOADS_TOKEN }}
     - name: Archive release bundle
       uses: actions/upload-artifact@v3
       with:

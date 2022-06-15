@@ -22,11 +22,9 @@ import androidx.compose.material3.windowsizeclass.calculateWindowSizeClass
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.core.view.WindowCompat
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
-import com.google.android.exoplayer2.ExoPlayer
-import com.savvasdalkitsis.uhuruphotos.app.navigation.AppNavigator
 import com.savvasdalkitsis.uhuruphotos.api.ui.window.LocalSystemUiController
 import com.savvasdalkitsis.uhuruphotos.api.ui.window.LocalWindowSize
-import com.savvasdalkitsis.uhuruphotos.api.video.LocalExoPlayer
+import com.savvasdalkitsis.uhuruphotos.app.navigation.AppNavigator
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -34,7 +32,6 @@ import javax.inject.Inject
 class AppActivity : ComponentActivity() {
 
     @Inject lateinit var navigator: AppNavigator
-    @Inject lateinit var exoPlayer: ExoPlayer
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -46,7 +43,6 @@ class AppActivity : ComponentActivity() {
             val windowSizeClass = calculateWindowSizeClass(this)
             CompositionLocalProvider(
                 LocalSystemUiController provides systemUiController,
-                LocalExoPlayer provides exoPlayer,
                 LocalWindowSize provides windowSizeClass,
             ) {
                 navigator.NavigationTargets()

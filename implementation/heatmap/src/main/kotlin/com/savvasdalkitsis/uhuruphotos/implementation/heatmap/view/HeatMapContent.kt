@@ -17,52 +17,31 @@ package com.savvasdalkitsis.uhuruphotos.implementation.heatmap.view
 
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.google.accompanist.permissions.PermissionState
-import com.google.accompanist.permissions.isGranted
-import com.savvasdalkitsis.uhuruphotos.implementation.heatmap.seam.HeatMapAction
-import com.savvasdalkitsis.uhuruphotos.implementation.heatmap.view.state.HeatMapState
-import com.savvasdalkitsis.uhuruphotos.api.map.Locations
-import com.savvasdalkitsis.uhuruphotos.api.map.view.GoogleMapView
-import com.savvasdalkitsis.uhuruphotos.api.map.view.rememberGoogleMapViewState
+import com.savvasdalkitsis.uhuruphotos.api.map.view.MapView
+import com.savvasdalkitsis.uhuruphotos.api.map.view.MapViewState
 import com.savvasdalkitsis.uhuruphotos.api.ui.insets.insetsTop
-import kotlinx.coroutines.withContext
+import com.savvasdalkitsis.uhuruphotos.implementation.heatmap.seam.HeatMapAction
+import com.savvasdalkitsis.uhuruphotos.implementation.heatmap.seam.HeatMapAction.CameraViewPortChanged
+import com.savvasdalkitsis.uhuruphotos.implementation.heatmap.view.state.HeatMapState
 
 @Composable
 fun HeatMapContent(
     modifier: Modifier = Modifier,
     action: (HeatMapAction) -> Unit,
     locationPermissionState: PermissionState,
-    state: HeatMapState
+    state: HeatMapState,
+    mapViewState: MapViewState
 ) {
-    val mapViewState = rememberGoogleMapViewState(
-        initialPosition = Locations.TRAFALGAR_SQUARE,
-        zoom = 2f,
-    )
-    var startedMoving by remember { mutableStateOf(false) }
-    if (mapViewState.isMoving) {
-        startedMoving = true
-    }
-    val scope = rememberCoroutineScope()
-    if (startedMoving && !mapViewState.isMoving) {
-        @Suppress("UNUSED_VALUE")
-        startedMoving = false
-        action(HeatMapAction.CameraViewPortChanged { latLng ->
-            withContext(scope.coroutineContext) {
-                mapViewState.contains(latLng)
-            }
-        })
-    }
+    mapViewState.Composition(onStoppedMoving = {
+        action(CameraViewPortChanged(boundsChecker = { latLng ->
+            mapViewState.contains(latLng)
+        }))
+    })
 
-    val showLocationButton = locationPermissionState.status.isGranted
-
-    GoogleMapView(
+    MapView(
         modifier = modifier,
         mapViewState = mapViewState,
         mapOptions = {
@@ -70,11 +49,10 @@ fun HeatMapContent(
                 scrollGesturesEnabled = true,
                 zoomControlsEnabled = true,
                 zoomGesturesEnabled = true,
-                myLocationButtonEnabled = showLocationButton,
             )
         },
         contentPadding = PaddingValues(top = insetsTop() + 56.dp)
     ) {
-        HeatMap(state.pointsToDisplay)
+        HeatMap(state.allPoints, state.pointsOnVisibleMap)
     }
 }

@@ -17,30 +17,39 @@ package com.savvasdalkitsis.uhuruphotos.api.map.view
 
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import com.savvasdalkitsis.uhuruphotos.api.map.model.LatLon
 import com.savvasdalkitsis.uhuruphotos.api.map.model.MapOptions
+import com.savvasdalkitsis.uhuruphotos.api.map.view.google.GoogleMapView
+import com.savvasdalkitsis.uhuruphotos.api.map.view.google.GoogleMapViewState
+import com.savvasdalkitsis.uhuruphotos.api.map.view.mapbox.MapBoxMapView
+import com.savvasdalkitsis.uhuruphotos.api.map.view.mapbox.MapBoxMapViewState
 
 @Composable
 fun MapView(
     modifier: Modifier = Modifier,
-    location: LatLon,
-    zoom: Float = 10f,
     contentPadding: PaddingValues = PaddingValues(),
     mapOptions: MapOptions.() -> MapOptions = { this },
-    onMapClick: (LatLon) -> Unit = {},
+    mapViewState: MapViewState,
+    onMapClick: () -> Unit = {},
     content: @Composable (MapViewScope.() -> Unit)? = null,
 ) {
-    val mapViewState = rememberGoogleMapViewState(
-        initialPosition = location,
-        zoom = zoom,
-    )
-    GoogleMapView(
-        modifier = modifier,
-        mapViewState = mapViewState,
-        mapOptions = mapOptions,
-        contentPadding = contentPadding,
-        onMapClick = onMapClick,
-        content = content,
-    )
+    when (mapViewState) {
+        is GoogleMapViewState -> GoogleMapView(
+            modifier = modifier,
+            mapViewState = mapViewState,
+            mapOptions = mapOptions,
+            contentPadding = contentPadding,
+            onMapClick = onMapClick,
+            content = content,
+        )
+        is MapBoxMapViewState -> MapBoxMapView(
+            modifier = modifier,
+            mapOptions = mapOptions,
+            onMapClick = onMapClick,
+            mapViewState = mapViewState,
+            content = content,
+        )
+    }
 }

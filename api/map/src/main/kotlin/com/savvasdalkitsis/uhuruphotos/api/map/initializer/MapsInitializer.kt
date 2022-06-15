@@ -13,15 +13,19 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
  */
-package com.savvasdalkitsis.uhuruphotos.implementation.heatmap.view.state
+package com.savvasdalkitsis.uhuruphotos.api.map.initializer
 
-import com.savvasdalkitsis.uhuruphotos.api.map.model.LatLon
-import com.savvasdalkitsis.uhuruphotos.api.photos.model.Photo
+import android.app.Application
+import androidx.startup.AppInitializer
+import com.mapbox.maps.loader.MapboxMapsInitializer
+import com.savvasdalkitsis.uhuruphotos.api.initializer.ApplicationCreated
+import javax.inject.Inject
 
-data class HeatMapState(
-    val loading: Boolean = false,
-    val allPoints: List<LatLon> = emptyList(),
-    val pointsOnVisibleMap: List<LatLon> = emptyList(),
-    val allPhotos: List<Photo> = emptyList(),
-    val photosOnVisibleMap: List<Photo> = emptyList(),
-)
+internal class MapsInitializer @Inject constructor(
+) : ApplicationCreated {
+
+    override fun onAppCreated(app: Application) {
+        AppInitializer.getInstance(app)
+            .initializeComponent(MapboxMapsInitializer::class.java)
+    }
+}

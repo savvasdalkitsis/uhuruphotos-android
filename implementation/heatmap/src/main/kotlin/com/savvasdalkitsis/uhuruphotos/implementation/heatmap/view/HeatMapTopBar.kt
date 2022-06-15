@@ -32,12 +32,13 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.google.accompanist.permissions.PermissionState
-import com.google.accompanist.permissions.isGranted
+import com.savvasdalkitsis.uhuruphotos.api.map.view.MapViewState
 import com.savvasdalkitsis.uhuruphotos.implementation.heatmap.seam.HeatMapAction
 import com.savvasdalkitsis.uhuruphotos.implementation.heatmap.view.state.HeatMapState
 import com.savvasdalkitsis.uhuruphotos.api.ui.view.ActionIcon
 import com.savvasdalkitsis.uhuruphotos.api.ui.view.BackNavButton
 import com.savvasdalkitsis.uhuruphotos.api.ui.view.CommonTopBar
+import com.savvasdalkitsis.uhuruphotos.implementation.heatmap.seam.HeatMapAction.MyLocationPressed
 import com.savvasdalkitsis.uhuruphotos.api.icons.R as Icons
 import com.savvasdalkitsis.uhuruphotos.api.strings.R as Strings
 
@@ -47,6 +48,7 @@ fun HeatMapTopBar(
     state: HeatMapState,
     locationPermissionState: PermissionState,
     actionsInTitle: Boolean = false,
+    mapViewState: MapViewState,
 ) {
     CommonTopBar(
         navigationIcon = {
@@ -65,7 +67,7 @@ fun HeatMapTopBar(
             ) {
                 Text(stringResource(Strings.string.photo_map))
                 if (actionsInTitle) {
-                    Actions(state, locationPermissionState)
+                    Actions(state, action, locationPermissionState, mapViewState)
                 }
             }
         },
@@ -73,7 +75,7 @@ fun HeatMapTopBar(
         toolbarColor = { Color.Transparent },
         actionBarContent = {
             if (!actionsInTitle) {
-                Actions(state, locationPermissionState)
+                Actions(state, action, locationPermissionState, mapViewState)
             }
         }
     )
@@ -82,15 +84,15 @@ fun HeatMapTopBar(
 @Composable
 private fun RowScope.Actions(
     state: HeatMapState,
-    locationPermissionState: PermissionState
+    action: (HeatMapAction) -> Unit,
+    locationPermissionState: PermissionState,
+    mapViewState: MapViewState
 ) {
     AnimatedVisibility(visible = state.loading) {
         CircularProgressIndicator()
     }
-    AnimatedVisibility(visible = !locationPermissionState.status.isGranted) {
-        ActionIcon(
-            onClick = { locationPermissionState.launchPermissionRequest() },
-            icon = Icons.drawable.ic_my_location,
-        )
-    }
+    ActionIcon(
+        onClick = { action(MyLocationPressed(locationPermissionState, mapViewState)) },
+        icon = Icons.drawable.ic_my_location,
+    )
 }
