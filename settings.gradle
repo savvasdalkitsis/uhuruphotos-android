@@ -8,7 +8,7 @@ pluginManagement {
 enableFeaturePreview("VERSION_CATALOGS")
 
 def props = new Properties()
-file("local.properties").withInputStream { props.load(it) }
+file("gradle.properties").withInputStream { props.load(it) }
 
 dependencyResolutionManagement {
     repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
