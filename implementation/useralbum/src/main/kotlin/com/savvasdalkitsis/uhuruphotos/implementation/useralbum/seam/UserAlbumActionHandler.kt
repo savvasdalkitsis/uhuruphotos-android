@@ -25,6 +25,8 @@ import com.savvasdalkitsis.uhuruphotos.api.albums.model.Album
 import com.savvasdalkitsis.uhuruphotos.api.date.DateDisplayer
 import com.savvasdalkitsis.uhuruphotos.api.db.extensions.isVideo
 import com.savvasdalkitsis.uhuruphotos.api.photos.model.Photo
+import com.savvasdalkitsis.uhuruphotos.api.photos.model.PhotoSequenceDataSource
+import com.savvasdalkitsis.uhuruphotos.api.photos.model.PhotoSequenceDataSource.Single
 import com.savvasdalkitsis.uhuruphotos.api.photos.usecase.PhotosUseCase
 import com.savvasdalkitsis.uhuruphotos.api.seam.ActionHandler
 import com.savvasdalkitsis.uhuruphotos.api.user.usecase.UserUseCase
@@ -70,4 +72,6 @@ by AlbumPageActionHandler(
                     }
                 )
             }
-    })
+    },
+    photoSequenceDataSource = { Single }
+)

@@ -36,7 +36,8 @@ class AlbumPageEffectsHandler @Inject constructor(
                     effect.center,
                     effect.scale,
                     effect.video,
-                )
+                    effect.photoSequenceDataSource,
+                ),
             )
             NavigateBack -> navigator.navigateBack()
             is NavigateToPerson -> navigate(

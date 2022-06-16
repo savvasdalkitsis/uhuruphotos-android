@@ -21,7 +21,9 @@ INSERT OR REPLACE INTO autoAlbum VALUES (
 
 getAutoAlbum:
 SELECT
+    autoAlbum.id,
     autoAlbum.title,
+    autoAlbum.timestamp AS albumTimestamp,
     autoAlbum.createdOn,
     autoAlbum.isFavorite,
     autoAlbum.gpsLat,

@@ -105,6 +105,9 @@ internal class AlbumsRepository @Inject constructor(
         autoAlbumQueries.getAutoAlbum(albumId.toString()).asFlow().mapToList()
             .distinctUntilChanged()
 
+    override suspend fun getAutoAlbum(albumId: Int): Group<String, GetAutoAlbum> =
+        autoAlbumQueries.getAutoAlbum(albumId.toString()).await().groupBy(GetAutoAlbum::id).let(::Group)
+
     override fun observeUserAlbum(albumId: Int): Flow<List<GetUserAlbum>> =
         userAlbumQueries.getUserAlbum(albumId.toString()).asFlow().mapToList()
             .distinctUntilChanged()

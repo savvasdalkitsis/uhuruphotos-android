@@ -21,6 +21,7 @@ import com.savvasdalkitsis.uhuruphotos.api.albums.usecase.AlbumsUseCase
 import com.savvasdalkitsis.uhuruphotos.api.coroutines.safelyOnStartIgnoring
 import com.savvasdalkitsis.uhuruphotos.api.date.DateDisplayer
 import com.savvasdalkitsis.uhuruphotos.api.db.albums.GetAlbums
+import com.savvasdalkitsis.uhuruphotos.api.db.albums.GetAutoAlbum
 import com.savvasdalkitsis.uhuruphotos.api.db.albums.GetPersonAlbums
 import com.savvasdalkitsis.uhuruphotos.api.db.extensions.isVideo
 import com.savvasdalkitsis.uhuruphotos.api.group.model.Group
@@ -65,6 +66,10 @@ internal class AlbumsUseCase @Inject constructor(
         .mapToAlbums()
 
     override suspend fun getAlbums(): List<Album> = albumsRepository.getAlbumsByDate()
+        .mapValues { it.toDbAlbums() }
+        .mapToAlbums()
+
+    override suspend fun getAutoAlbum(albumId: Int): List<Album> = albumsRepository.getAutoAlbum(albumId)
         .mapValues { it.toDbAlbums() }
         .mapToAlbums()
 
@@ -124,7 +129,6 @@ private data class DbAlbums(
     val dominantColor: String?,
     val rating: Int?,
     val aspectRatio: Float?,
-    val type: String?,
     val isVideo: Boolean,
 )
 
@@ -136,7 +140,6 @@ private fun GetPersonAlbums.toDbAlbums() = DbAlbums(
     dominantColor = dominantColor,
     rating = rating,
     aspectRatio = aspectRatio,
-    type = type,
     isVideo = isVideo,
 )
 private fun GetAlbums.toDbAlbums() = DbAlbums(
@@ -147,6 +150,15 @@ private fun GetAlbums.toDbAlbums() = DbAlbums(
     dominantColor = dominantColor,
     rating = rating,
     aspectRatio = aspectRatio,
-    type = type,
     isVideo = isVideo,
+)
+private fun GetAutoAlbum.toDbAlbums() = DbAlbums(
+    id = id,
+    albumDate = albumTimestamp,
+    albumLocation = null,
+    photoId = photoId,
+    dominantColor = null,
+    rating = rating,
+    aspectRatio = 1f,
+    isVideo = video == true,
 )

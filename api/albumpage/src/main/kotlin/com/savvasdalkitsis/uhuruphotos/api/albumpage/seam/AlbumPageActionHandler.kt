@@ -31,6 +31,7 @@ import com.savvasdalkitsis.uhuruphotos.api.albumpage.seam.AlbumPageMutation.Load
 import com.savvasdalkitsis.uhuruphotos.api.albumpage.seam.AlbumPageMutation.ShowAlbumPage
 import com.savvasdalkitsis.uhuruphotos.api.albumpage.view.state.AlbumDetails
 import com.savvasdalkitsis.uhuruphotos.api.albumpage.view.state.AlbumPageState
+import com.savvasdalkitsis.uhuruphotos.api.photos.model.PhotoSequenceDataSource
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.flow
@@ -38,14 +39,16 @@ import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.merge
 import java.io.IOException
+import kotlin.properties.Delegates
 
 class AlbumPageActionHandler(
     private val albumRefresher: suspend (Int) -> Unit,
-    private val albumDetailsFlow: (Int) -> Flow<AlbumDetails>,
+    private val albumDetailsFlow: (albumId: Int) -> Flow<AlbumDetails>,
+    private val photoSequenceDataSource: (albumId: Int) -> PhotoSequenceDataSource,
 ) : ActionHandler<AlbumPageState, AlbumPageEffect, AlbumPageAction, AlbumPageMutation> {
 
     private val loading = MutableSharedFlow<AlbumPageMutation>()
-    private var albumId: Int? = null
+    private var albumId by Delegates.notNull<Int>()
 
     override fun handleAction(
         state: AlbumPageState,
@@ -68,7 +71,13 @@ class AlbumPageActionHandler(
         is SelectedPhoto -> flow {
             effect(
                 with(action) {
-                    OpenPhotoDetails(photo.id, center, scale, photo.isVideo)
+                    OpenPhotoDetails(
+                        id = photo.id,
+                        center = center,
+                        scale = scale,
+                        video = photo.isVideo,
+                        photoSequenceDataSource = photoSequenceDataSource(albumId)
+                    )
                 }
             )
         }
