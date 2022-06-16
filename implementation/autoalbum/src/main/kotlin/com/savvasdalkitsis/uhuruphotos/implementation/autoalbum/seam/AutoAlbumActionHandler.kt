@@ -30,6 +30,7 @@ import com.savvasdalkitsis.uhuruphotos.api.photos.model.PhotoSequenceDataSource.
 import com.savvasdalkitsis.uhuruphotos.api.photos.usecase.PhotosUseCase
 import com.savvasdalkitsis.uhuruphotos.api.seam.ActionHandler
 import com.savvasdalkitsis.uhuruphotos.implementation.autoalbum.usecase.AutoAlbumsUseCase
+import com.savvasdalkitsis.uhuruphotos.implementation.autoalbum.view.state.AutoAlbumFeedDisplay
 import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
@@ -40,6 +41,8 @@ internal class AutoAlbumActionHandler @Inject constructor(
 ) : ActionHandler<AlbumPageState, AlbumPageEffect, AlbumPageAction, AlbumPageMutation>
 by AlbumPageActionHandler(
     albumRefresher = { autoAlbumsUseCase.refreshAutoAlbum(it) },
+    initialFeedDisplay = { AutoAlbumFeedDisplay },
+    feedDisplayPersistence = { _, _ -> },
     albumDetailsFlow = { albumId ->
         autoAlbumsUseCase.observeAutoAlbum(albumId)
             .map { (photoEntries, people) ->

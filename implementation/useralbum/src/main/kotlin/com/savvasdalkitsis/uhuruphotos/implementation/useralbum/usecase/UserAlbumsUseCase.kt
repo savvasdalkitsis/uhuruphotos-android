@@ -15,14 +15,18 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.implementation.useralbum.usecase
 
+import com.fredporciuncula.flow.preferences.FlowSharedPreferences
 import com.savvasdalkitsis.uhuruphotos.api.albums.repository.AlbumsRepository
 import com.savvasdalkitsis.uhuruphotos.api.db.albums.GetAutoAlbum
 import com.savvasdalkitsis.uhuruphotos.api.db.albums.GetUserAlbum
+import com.savvasdalkitsis.uhuruphotos.api.feed.view.state.FeedDisplay
+import com.savvasdalkitsis.uhuruphotos.api.feed.view.state.FeedDisplays
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
 internal class UserAlbumsUseCase @Inject constructor(
     private val albumsRepository: AlbumsRepository,
+    private val flowSharedPreferences: FlowSharedPreferences,
 ) {
 
     fun observeUserAlbum(albumId: Int): Flow<List<GetUserAlbum>> =
@@ -31,5 +35,15 @@ internal class UserAlbumsUseCase @Inject constructor(
     suspend fun refreshUserAlbum(albumId: Int) {
         albumsRepository.refreshUserAlbum(albumId)
     }
+
+    fun getUserAlbumFeedDisplay(albumId: Int) : FeedDisplay =
+        userAlbumFeedDisplay(albumId).get()
+
+    suspend fun setUserAlbumFeedDisplay(albumId: Int, feedDisplay: FeedDisplays) {
+        userAlbumFeedDisplay(albumId).setAndCommit(feedDisplay)
+    }
+
+    private fun userAlbumFeedDisplay(albumId: Int) =
+        flowSharedPreferences.getEnum("userAlbumFeedDisplay/$albumId", FeedDisplays.default)
 
 }

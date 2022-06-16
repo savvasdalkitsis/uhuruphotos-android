@@ -41,6 +41,10 @@ internal class UserAlbumActionHandler @Inject constructor(
 ) : ActionHandler<AlbumPageState, AlbumPageEffect, AlbumPageAction, AlbumPageMutation>
 by AlbumPageActionHandler(
     albumRefresher = { userAlbumsUseCase.refreshUserAlbum(it) },
+    initialFeedDisplay = { userAlbumsUseCase.getUserAlbumFeedDisplay(it) },
+    feedDisplayPersistence = { albumId, feedDisplay ->
+        userAlbumsUseCase.setUserAlbumFeedDisplay(albumId, feedDisplay)
+    },
     albumDetailsFlow = { albumId ->
         userAlbumsUseCase.observeUserAlbum(albumId)
             .map { photoEntries ->

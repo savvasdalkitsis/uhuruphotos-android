@@ -31,6 +31,8 @@ import com.savvasdalkitsis.uhuruphotos.api.albumpage.seam.AlbumPageMutation.Load
 import com.savvasdalkitsis.uhuruphotos.api.albumpage.seam.AlbumPageMutation.ShowAlbumPage
 import com.savvasdalkitsis.uhuruphotos.api.albumpage.view.state.AlbumDetails
 import com.savvasdalkitsis.uhuruphotos.api.albumpage.view.state.AlbumPageState
+import com.savvasdalkitsis.uhuruphotos.api.feed.view.state.FeedDisplay
+import com.savvasdalkitsis.uhuruphotos.api.feed.view.state.FeedDisplays
 import com.savvasdalkitsis.uhuruphotos.api.photos.model.PhotoSequenceDataSource
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -45,6 +47,8 @@ class AlbumPageActionHandler(
     private val albumRefresher: suspend (Int) -> Unit,
     private val albumDetailsFlow: (albumId: Int) -> Flow<AlbumDetails>,
     private val photoSequenceDataSource: (albumId: Int) -> PhotoSequenceDataSource,
+    private val initialFeedDisplay: (albumId: Int) -> FeedDisplay,
+    private val feedDisplayPersistence: suspend (albumId:Int, FeedDisplays) -> Unit,
 ) : ActionHandler<AlbumPageState, AlbumPageEffect, AlbumPageAction, AlbumPageMutation> {
 
     private val loading = MutableSharedFlow<AlbumPageMutation>()
@@ -57,6 +61,7 @@ class AlbumPageActionHandler(
     ): Flow<AlbumPageMutation> = when (action) {
         is LoadAlbum -> {
             merge(
+                flowOf(AlbumPageMutation.ChangeFeedDisplay(initialFeedDisplay(action.albumId))),
                 albumDetailsFlow(action.albumId)
                     .map(::ShowAlbumPage),
                 loading
@@ -87,7 +92,12 @@ class AlbumPageActionHandler(
         is PersonSelected -> flow {
             effect(NavigateToPerson(action.person.id))
         }
-        is ChangeFeedDisplay -> flowOf(AlbumPageMutation.ChangeFeedDisplay(action.feedDisplay))
+        is ChangeFeedDisplay -> flow {
+            emit(AlbumPageMutation.ChangeFeedDisplay(action.feedDisplay))
+            (action.feedDisplay as? FeedDisplays)?.let {
+                feedDisplayPersistence(albumId, it)
+            }
+        }
     }
 
     private suspend fun refreshAlbum() {
