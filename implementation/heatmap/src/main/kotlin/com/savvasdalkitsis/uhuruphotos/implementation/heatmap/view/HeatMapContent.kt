@@ -20,6 +20,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.google.accompanist.permissions.PermissionState
+import com.google.accompanist.permissions.isGranted
 import com.savvasdalkitsis.uhuruphotos.api.map.view.MapView
 import com.savvasdalkitsis.uhuruphotos.api.map.view.MapViewState
 import com.savvasdalkitsis.uhuruphotos.api.ui.insets.insetsTop
@@ -41,6 +42,8 @@ fun HeatMapContent(
         }))
     })
 
+    val locationPermissionGranted = locationPermissionState.status.isGranted
+
     MapView(
         modifier = modifier,
         mapViewState = mapViewState,
@@ -49,6 +52,7 @@ fun HeatMapContent(
                 scrollGesturesEnabled = true,
                 zoomControlsEnabled = true,
                 zoomGesturesEnabled = true,
+                enableMyLocation = locationPermissionGranted,
             )
         },
         contentPadding = PaddingValues(top = insetsTop() + 56.dp)

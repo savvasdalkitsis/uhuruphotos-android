@@ -44,11 +44,12 @@ internal fun GoogleMapView(
             context.resources.getString(R.string.dark_mode)
         )
     }
+    val options = mapOptions(MapOptions())
     val properties = when {
         MaterialTheme.colors.isLight -> MapProperties()
         else -> MapProperties(mapStyleOptions = darkModeStyle)
     }.copy(
-        isMyLocationEnabled = true
+        isMyLocationEnabled = options.enableMyLocation
     )
     GoogleMap(
         modifier = modifier,
@@ -56,7 +57,7 @@ internal fun GoogleMapView(
         onMapClick = { onMapClick() },
         cameraPositionState = mapViewState.cameraPositionState,
         properties = properties,
-        uiSettings = mapOptions(MapOptions()).let {
+        uiSettings = options.let {
             MapUiSettings(
                 compassEnabled = false,
                 indoorLevelPickerEnabled = false,
