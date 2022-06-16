@@ -15,6 +15,7 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.api.albumpage.view
 
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -31,6 +32,7 @@ import com.savvasdalkitsis.uhuruphotos.api.people.view.PeopleBar
 import com.savvasdalkitsis.uhuruphotos.api.ui.view.BackNavButton
 import com.savvasdalkitsis.uhuruphotos.api.ui.view.CommonScaffold
 import com.savvasdalkitsis.uhuruphotos.api.albumpage.seam.AlbumPageAction.ChangeFeedDisplay
+import com.savvasdalkitsis.uhuruphotos.api.feed.view.FeedDisplayActionButton
 
 @Composable
 fun AlbumPage(
@@ -45,6 +47,15 @@ fun AlbumPage(
                 action(NavigateBack)
             }
         },
+        actionBarContent = {
+            AnimatedVisibility(state.feedState.feedDisplay.iconResource > 0
+                    && state.feedState.albums.isNotEmpty()) {
+                FeedDisplayActionButton(
+                    onChange = { action(ChangeFeedDisplay(it)) },
+                    currentFeedDisplay = state.feedState.feedDisplay
+                )
+            }
+        }
     ) { contentPadding ->
         SwipeRefresh(
             indicatorPadding = contentPadding,
