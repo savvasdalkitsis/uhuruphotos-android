@@ -23,6 +23,7 @@ import com.savvasdalkitsis.uhuruphotos.api.date.DateDisplayer
 import com.savvasdalkitsis.uhuruphotos.api.db.albums.GetAlbums
 import com.savvasdalkitsis.uhuruphotos.api.db.albums.GetAutoAlbum
 import com.savvasdalkitsis.uhuruphotos.api.db.albums.GetPersonAlbums
+import com.savvasdalkitsis.uhuruphotos.api.db.albums.GetUserAlbum
 import com.savvasdalkitsis.uhuruphotos.api.db.extensions.isVideo
 import com.savvasdalkitsis.uhuruphotos.api.group.model.Group
 import com.savvasdalkitsis.uhuruphotos.api.group.model.mapValues
@@ -70,6 +71,10 @@ internal class AlbumsUseCase @Inject constructor(
         .mapToAlbums()
 
     override suspend fun getAutoAlbum(albumId: Int): List<Album> = albumsRepository.getAutoAlbum(albumId)
+        .mapValues { it.toDbAlbums() }
+        .mapToAlbums()
+
+    override suspend fun getUserAlbum(albumId: Int): List<Album> = albumsRepository.getUserAlbum(albumId)
         .mapValues { it.toDbAlbums() }
         .mapToAlbums()
 
@@ -161,4 +166,14 @@ private fun GetAutoAlbum.toDbAlbums() = DbAlbums(
     rating = rating,
     aspectRatio = 1f,
     isVideo = video == true,
+)
+private fun GetUserAlbum.toDbAlbums() = DbAlbums(
+    id = id,
+    albumDate = date,
+    albumLocation = location,
+    photoId = photoId,
+    dominantColor = dominantColor,
+    rating = rating,
+    aspectRatio = aspectRatio,
+    isVideo = isVideo,
 )

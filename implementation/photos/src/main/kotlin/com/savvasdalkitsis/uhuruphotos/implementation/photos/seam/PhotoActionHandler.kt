@@ -84,6 +84,10 @@ class PhotoActionHandler @Inject constructor(
                         albumsUseCase.getAutoAlbum(action.datasource.albumId),
                         action,
                     )
+                    is UserAlbum -> loadAlbums(
+                        albumsUseCase.getUserAlbum(action.datasource.albumId),
+                        action,
+                    )
                 }
             }
         }

@@ -10,6 +10,8 @@ INSERT OR REPLACE INTO userAlbum VALUES ?;
 
 getUserAlbum:
 SELECT
+    userAlbum.id,
+    userAlbum.date,
     userAlbum.title,
     userAlbum.location,
     photoSummary.id AS photoId,

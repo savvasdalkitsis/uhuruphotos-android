@@ -36,6 +36,7 @@ interface AlbumsRepository {
     fun observeUserAlbums(): Flow<List<UserAlbums>>
     fun observeAutoAlbum(albumId: Int): Flow<List<GetAutoAlbum>>
     suspend fun getAutoAlbum(albumId: Int): Group<String, GetAutoAlbum>
+    suspend fun getUserAlbum(albumId: Int): Group<String, GetUserAlbum>
     fun observeAutoAlbumPeople(albumId: Int): Flow<List<GetPeopleForAutoAlbum>>
     fun observeUserAlbum(albumId: Int): Flow<List<GetUserAlbum>>
     suspend fun refreshAutoAlbums()

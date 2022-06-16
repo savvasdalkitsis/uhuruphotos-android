@@ -22,6 +22,7 @@ sealed class PhotoSequenceDataSource {
     data class SearchResults(val query: String) : PhotoSequenceDataSource()
     data class PersonResults(val personId: Int) : PhotoSequenceDataSource()
     data class AutoAlbum(val albumId: Int) : PhotoSequenceDataSource()
+    data class UserAlbum(val albumId: Int) : PhotoSequenceDataSource()
 
     val toArgument : String get() = when(this) {
         Single -> "single"
@@ -29,6 +30,7 @@ sealed class PhotoSequenceDataSource {
         is SearchResults -> "search::${query}"
         is PersonResults -> "person::${personId}"
         is AutoAlbum -> "autoAlbum::${albumId}"
+        is UserAlbum -> "userAlbum::${albumId}"
     }
 
     companion object {
@@ -39,6 +41,8 @@ sealed class PhotoSequenceDataSource {
                 PersonResults(argument.removePrefix("person::").toInt())
             argument.startsWith("autoAlbum::") ->
                 AutoAlbum(argument.removePrefix("autoAlbum::").toInt())
+            argument.startsWith("userAlbum::") ->
+                UserAlbum(argument.removePrefix("userAlbum::").toInt())
             argument == "allPhotos" -> AllPhotos
             else -> Single
         }

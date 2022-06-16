@@ -25,5 +25,6 @@ interface AlbumsUseCase {
     suspend fun getPersonAlbums(personId: Int): List<Album>
     suspend fun getAlbums(): List<Album>
     suspend fun getAutoAlbum(albumId: Int): List<Album>
+    suspend fun getUserAlbum(albumId: Int): List<Album>
     fun startRefreshAlbumsWork(shallow: Boolean)
 }
