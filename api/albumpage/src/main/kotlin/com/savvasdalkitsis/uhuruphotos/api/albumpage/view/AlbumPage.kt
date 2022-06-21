@@ -48,7 +48,7 @@ fun AlbumPage(
             }
         },
         actionBarContent = {
-            AnimatedVisibility(state.feedState.feedDisplay.iconResource > 0
+            AnimatedVisibility(state.feedState.feedDisplay.iconResource != 0
                     && state.feedState.albums.isNotEmpty()) {
                 FeedDisplayActionButton(
                     onChange = { action(ChangeFeedDisplay(it)) },
