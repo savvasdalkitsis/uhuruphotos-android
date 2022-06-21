@@ -106,11 +106,11 @@ internal class FeedPageActionHandler @Inject constructor(
                 selectionList.ids,
                 userBadgeUseCase.getUserBadgeState()
             ) { albums, ids, userBadge ->
-                albums.selectPhotos(ids)
-                if (userBadge.syncState != IN_PROGRESS && albums.photosCount == 0) {
+                val selected = albums.selectPhotos(ids)
+                if (userBadge.syncState != IN_PROGRESS && selected.photosCount == 0) {
                     ShowNoPhotosFound
                 } else {
-                    ShowAlbums(albums)
+                    ShowAlbums(selected)
                 }
             },
             userBadgeUseCase.getUserBadgeState()
