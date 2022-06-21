@@ -89,6 +89,8 @@
     <string name="feedback">Feedback</string>
     <string name="send_feedback_with_logs">Send feedback with logs</string>
     <string name="clear_log_file">Clear log file</string>
+    <string name="enable_logging">Enable Logging</string>
+    <string name="degrades_performance">Degrades performance when enabled</string>
     <string name="image_disk_cache">Image Disk cache</string>
     <string name="image_memory_cache">Image Memory cache</string>
     <string name="show_library_on_home">Show Library on home screen</string>

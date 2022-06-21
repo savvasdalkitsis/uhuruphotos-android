@@ -35,6 +35,14 @@ inline fun logError(t: Throwable) {
     L.e(t)
 }
 
+object Log {
+    var enabled: Boolean
+        get() = L.enabled
+        set(value) {
+            L.enabled = value
+        }
+}
+
 inline fun <T, R : Any> T.runCatchingWithLog(block: T.() -> R): Result<R> = try {
     Result.success(block())
 } catch (e: Throwable) {

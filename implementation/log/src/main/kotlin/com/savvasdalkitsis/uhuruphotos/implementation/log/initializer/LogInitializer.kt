@@ -23,6 +23,8 @@ import com.savvasdalkitsis.uhuruphotos.api.log.logError
 import com.savvasdalkitsis.uhuruphotos.api.notification.NotificationChannels
 import com.savvasdalkitsis.uhuruphotos.api.icons.R
 import com.savvasdalkitsis.uhuruphotos.api.initializer.ApplicationCreated
+import com.savvasdalkitsis.uhuruphotos.api.log.Log
+import com.savvasdalkitsis.uhuruphotos.api.settings.usecase.SettingsUseCase
 import com.savvasdalkitsis.uhuruphotos.implementation.log.FeedbackUseCase
 import com.savvasdalkitsis.uhuruphotos.implementation.log.showCrashNotification
 import dagger.hilt.android.qualifiers.ApplicationContext
@@ -33,12 +35,14 @@ internal class LogInitializer @Inject constructor(
     private val trees: Set<@JvmSuppressWildcards Timber.Tree>,
     @ApplicationContext private val context: Context,
     private val fileLoggingSetup: FileLoggingSetup,
+    private val settingsUseCase: SettingsUseCase,
 ) : ApplicationCreated {
 
     override fun onAppCreated(app: Application) {
         for (tree in trees) {
             L.plant(tree)
         }
+        Log.enabled = settingsUseCase.getLoggingEnabled()
         val default = Thread.getDefaultUncaughtExceptionHandler()
         Thread.setDefaultUncaughtExceptionHandler { t, e ->
             logError(e)

@@ -114,6 +114,10 @@ internal sealed class SettingsMutation(
         it.copy(showLibrary = show)
     })
 
+    data class DisplayLoggingEnabled(val enabled: Boolean): SettingsMutation({
+        it.copy(isLoggingEnabled = enabled)
+    })
+
     data class UserBadgeUpdate(
         val userInformationState: UserInformationState,
     ): SettingsMutation({

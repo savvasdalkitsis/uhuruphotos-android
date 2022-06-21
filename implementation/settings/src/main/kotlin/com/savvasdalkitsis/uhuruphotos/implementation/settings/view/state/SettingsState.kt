@@ -40,4 +40,5 @@ internal data class SettingsState(
     val shareRemoveGpsDataEnabled: Boolean = false,
     val showLibrary: Boolean = true,
     val mapProviderState: MapProviderState = MapProviderState.NoOptions,
+    val isLoggingEnabled: Boolean = false,
 )

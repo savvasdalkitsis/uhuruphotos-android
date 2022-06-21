@@ -34,6 +34,7 @@ interface SettingsUseCase {
     fun getShowLibrary(): Boolean
     fun getMapProvider(): MapProvider
     fun getAvailableMapProviders(): Set<MapProvider>
+    fun getLoggingEnabled(): Boolean
 
     fun observeImageDiskCacheMaxLimit(): Flow<Int>
     fun observeImageMemCacheMaxLimit(): Flow<Int>
@@ -47,6 +48,7 @@ interface SettingsUseCase {
     fun observeShowLibrary(): Flow<Boolean>
     suspend fun observeThemeModeState(): StateFlow<ThemeMode>
     fun observeMapProvider(): Flow<MapProvider>
+    fun observeLoggingEnabled(): Flow<Boolean>
 
     suspend fun setImageDiskCacheMaxLimit(sizeInMb: Int)
     suspend fun setImageMemCacheMaxLimit(sizeInMb: Int)
@@ -60,4 +62,5 @@ interface SettingsUseCase {
     suspend fun setShareRemoveGpsData(enabled: Boolean)
     suspend fun setShowLibrary(show: Boolean)
     suspend fun setMapProvider(provider: MapProvider)
+    suspend fun setLoggingEnabled(enabled: Boolean)
 }

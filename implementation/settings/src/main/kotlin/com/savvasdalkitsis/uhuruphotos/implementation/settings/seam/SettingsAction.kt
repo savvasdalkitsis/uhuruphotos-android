@@ -33,6 +33,7 @@ internal sealed class SettingsAction {
     data class FeedSyncFrequencyChanged(val frequency: Float, val upperLimit: Float) : SettingsAction()
     data class ChangeThemeMode(val themeMode: ThemeMode) : SettingsAction()
     data class ChangeMapProvider(val mapProvider: MapProvider) : SettingsAction()
+    data class ChangeLoggingEnabled(val enabled: Boolean) : SettingsAction()
 
     object LoadSettings : SettingsAction()
     object NavigateBack : SettingsAction()

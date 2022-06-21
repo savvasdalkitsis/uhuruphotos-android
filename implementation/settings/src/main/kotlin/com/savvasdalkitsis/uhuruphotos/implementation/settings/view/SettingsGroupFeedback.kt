@@ -15,19 +15,22 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.implementation.settings.view
 
+import androidx.compose.material.MaterialTheme
+import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.res.stringResource
 import com.savvasdalkitsis.uhuruphotos.implementation.settings.seam.SettingsAction
-import com.savvasdalkitsis.uhuruphotos.implementation.settings.seam.SettingsAction.ClearLogFileClicked
-import com.savvasdalkitsis.uhuruphotos.implementation.settings.seam.SettingsAction.SendFeedbackClicked
 import com.savvasdalkitsis.uhuruphotos.api.strings.R
+import com.savvasdalkitsis.uhuruphotos.implementation.settings.seam.SettingsAction.*
+import com.savvasdalkitsis.uhuruphotos.implementation.settings.view.state.SettingsState
 import com.savvasdalkitsis.uhuruphotos.api.icons.R as Icons
 
 @Composable
 internal fun SettingsGroupFeedback(
+    state: SettingsState,
     action: (SettingsAction) -> Unit,
     collapsed: MutableState<Boolean> = remember { mutableStateOf(false) },
 ) {
@@ -41,6 +44,14 @@ internal fun SettingsGroupFeedback(
         ) {
             action(SendFeedbackClicked)
         }
+        SettingsCheckBox(
+            text = stringResource(R.string.enable_logging),
+            icon = Icons.drawable.ic_logs,
+            isChecked = state.isLoggingEnabled,
+            onCheckedChange = { action(ChangeLoggingEnabled(it)) }
+        )
+        Text(stringResource(R.string.degrades_performance), style = MaterialTheme.typography.subtitle2)
+
         SettingsButtonRow(buttonText = stringResource(R.string.clear_log_file)) {
             action(ClearLogFileClicked)
         }

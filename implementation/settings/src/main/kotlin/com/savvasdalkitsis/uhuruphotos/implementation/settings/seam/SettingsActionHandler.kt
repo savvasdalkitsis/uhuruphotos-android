@@ -79,6 +79,8 @@ internal class SettingsActionHandler @Inject constructor(
                     else -> DisplayNoMapProvidersOptions
                 }
             },
+            settingsUseCase.observeLoggingEnabled()
+                .map(::DisplayLoggingEnabled),
             cacheUseCase.observeImageDiskCacheCurrentUse()
                 .map(::DisplayImageDiskCacheCurrentUse),
             cacheUseCase.observeImageMemCacheCurrentUse()
@@ -166,6 +168,9 @@ internal class SettingsActionHandler @Inject constructor(
         }
         is ChangeMapProvider -> flow {
             settingsUseCase.setMapProvider(action.mapProvider)
+        }
+        is ChangeLoggingEnabled -> flow {
+            settingsUseCase.setLoggingEnabled(action.enabled)
         }
     }
 

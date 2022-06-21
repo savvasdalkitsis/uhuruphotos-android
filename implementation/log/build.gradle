@@ -3,6 +3,7 @@ dependencies {
     implementation project(":api:initializer")
     implementation project(":api:log")
     implementation project(":api:notification")
+    implementation project(":api:settings")
     implementation(
             libs.bundles.lumberjack,
             libs.hilt,

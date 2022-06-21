@@ -17,13 +17,7 @@ package com.savvasdalkitsis.uhuruphotos.api.seam
 
 import com.savvasdalkitsis.uhuruphotos.api.log.log
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.MutableSharedFlow
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.cancellable
-import kotlinx.coroutines.flow.flowOn
-import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.flow.*
 
 class SeamViaHandler<S : Any, E : Any, A : Any, M : Mutation<S>>(
     private val handler: ActionHandler<S, E, A, M>,
@@ -45,6 +39,7 @@ class SeamViaHandler<S : Any, E : Any, A : Any, M : Mutation<S>>(
             _effects.emit(effect)
         }.flowOn(Dispatchers.Default)
             .cancellable()
+            .distinctUntilChanged()
             .collect { mutation ->
                 log("MVI") { "Received mutation $mutation due to action $action" }
                 _state.update { mutation.reduce(_state.value) }

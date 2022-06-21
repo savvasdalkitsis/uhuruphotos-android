@@ -126,7 +126,7 @@ internal fun Settings(
                     }
                 }
                 item {
-                    SettingsGroupFeedback(action, collapsedFeedback)
+                    SettingsGroupFeedback(state, action, collapsedFeedback)
                 }
             }
         }
