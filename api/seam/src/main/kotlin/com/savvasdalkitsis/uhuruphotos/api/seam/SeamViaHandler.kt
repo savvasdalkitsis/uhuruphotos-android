@@ -18,8 +18,6 @@ package com.savvasdalkitsis.uhuruphotos.api.seam
 import com.savvasdalkitsis.uhuruphotos.api.log.log
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.*
-import kotlinx.coroutines.sync.Mutex
-import kotlinx.coroutines.sync.withLock
 
 class SeamViaHandler<S : Any, E : Any, A : Any, M : Mutation<S>>(
     private val handler: ActionHandler<S, E, A, M>,
@@ -30,7 +28,6 @@ class SeamViaHandler<S : Any, E : Any, A : Any, M : Mutation<S>>(
     override val state: StateFlow<S> = _state
     private val _effects = MutableSharedFlow<E>(replay = 0)
     override val effects: Flow<E> = _effects
-    private val mainThreadMutex = Mutex(locked = false)
 
     override suspend fun action(action: A)  {
         log("MVI") { "Starting handling of action $action" }
@@ -41,17 +38,12 @@ class SeamViaHandler<S : Any, E : Any, A : Any, M : Mutation<S>>(
             log("MVI") { "Received side effect to post: $effect from action: $action" }
             _effects.emit(effect)
         }
-            .map { mutation ->
-                mainThreadMutex.withLock {
-                    log("MVI") { "Received mutation $mutation due to action $action" }
-                    mutation.reduce(_state.value)
-                }
-            }
             .cancellable()
             .distinctUntilChanged()
             .flowOn(Dispatchers.Default)
-            .collect { newState ->
-                _state.update { newState }
+            .collect { mutation ->
+                log("MVI") { "Received mutation $mutation due to action $action" }
+                _state.update { mutation.reduce(_state.value) }
                 log("MVI") { "State updated to: ${_state.value}" }
             }
     }
