@@ -27,7 +27,9 @@ import com.squareup.sqldelight.runtime.coroutines.asFlow
 import com.squareup.sqldelight.runtime.coroutines.mapToList
 import com.squareup.sqldelight.runtime.coroutines.mapToOneNotNull
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.emitAll
 import kotlinx.coroutines.flow.onStart
+import kotlinx.coroutines.flow.take
 import javax.inject.Inject
 
 class PhotoRepository @Inject constructor(
@@ -37,8 +39,12 @@ class PhotoRepository @Inject constructor(
     private val photosService: PhotosService,
 ) {
 
-    fun observeAllPhotoDetails(): Flow<List<PhotoDetails>> = photoDetailsQueries.getAll()
-        .asFlow().mapToList()
+    fun observeAllPhotoDetails(): Flow<List<PhotoDetails>> =
+        photoDetailsQueries.getAll(limit = -1).asFlow()
+            .onStart {
+                emitAll(photoDetailsQueries.getAll(limit = 100).asFlow().take(1))
+            }
+            .mapToList()
 
     fun observePhotoDetails(id: String): Flow<PhotoDetails> =
         photoDetailsQueries.getPhoto(id).asFlow().mapToOneNotNull()

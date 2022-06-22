@@ -20,7 +20,8 @@ CREATE TABLE photoDetails (
 );
 
 getAll:
-SELECT * FROM photoDetails;
+SELECT * FROM photoDetails
+LIMIT :limit;
 
 getPhoto:
 SELECT * FROM photoDetails WHERE imageHash = :id LIMIT 1;
