@@ -16,12 +16,15 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.api.map.view.google
 
 import androidx.compose.runtime.*
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.toArgb
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.model.LatLngBounds
 import com.google.maps.android.compose.CameraPositionState
 import com.google.maps.android.compose.Marker
 import com.google.maps.android.compose.MarkerState
 import com.google.maps.android.compose.TileOverlay
+import com.google.maps.android.heatmaps.Gradient
 import com.google.maps.android.heatmaps.HeatmapTileProvider
 import com.savvasdalkitsis.uhuruphotos.api.launchers.onMain
 import com.savvasdalkitsis.uhuruphotos.api.map.model.LatLon
@@ -48,9 +51,27 @@ internal class GoogleMapViewState(
         pointsOnVisibleMap: Collection<LatLon>,
     ) {
         if (pointsOnVisibleMap.isNotEmpty()) {
+            val gradient = listOf(
+                Color(0, 255, 255, 0),
+                Color(0, 255, 255, 255),
+                Color(0, 191, 255, 255),
+                Color(0, 127, 255, 255),
+                Color(0, 63, 255, 255),
+                Color(0, 0, 255, 255),
+                Color(0, 0, 223, 255),
+                Color(0, 0, 191, 255),
+                Color(0, 0, 159, 255),
+                Color(0, 0, 127, 255),
+                Color(63, 0, 91, 255),
+                Color(127, 0, 63, 255),
+                Color(191, 0, 31, 255),
+                Color(255, 0, 0, 255)
+            ).map { it.toArgb() }.toIntArray()
             TileOverlay(
                 tileProvider = HeatmapTileProvider.Builder()
                     .data(pointsOnVisibleMap.map { it.toLatLng })
+                    .gradient(Gradient(gradient, FloatArray(gradient.size) { it / (gradient.size - 1f)}))
+                    .opacity(1.0)
                     .build()
             )
         }
