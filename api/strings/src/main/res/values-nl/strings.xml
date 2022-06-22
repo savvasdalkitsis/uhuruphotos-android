@@ -105,4 +105,6 @@
     <string name="no_user_albums">Deze gebruiker heeft nog geen albums samengesteld</string>
     <string name="maps">Kaarten</string>
     <string name="map_provider">Kaartdienst</string>
+    <string name="enable_logging">Logboek aanleggen</string>
+    <string name="degrades_performance">Let op: dit beïnvloedt de prestaties</string>
 </resources>
