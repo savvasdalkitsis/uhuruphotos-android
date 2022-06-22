@@ -20,7 +20,8 @@ SELECT
 FROM albums
 LEFT JOIN photoSummary AS summary ON albums.id = summary.containerId
 GROUP BY summary.id
-ORDER BY summary.date DESC;
+ORDER BY summary.date DESC
+LIMIT :limit;
 
 getPersonAlbums:
 SELECT

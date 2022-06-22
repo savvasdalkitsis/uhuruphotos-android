@@ -24,22 +24,7 @@ import com.savvasdalkitsis.uhuruphotos.api.albums.service.model.toAutoAlbums
 import com.savvasdalkitsis.uhuruphotos.api.albums.service.model.toUserAlbums
 import com.savvasdalkitsis.uhuruphotos.api.coroutines.safelyOnStartIgnoring
 import com.savvasdalkitsis.uhuruphotos.api.db.Database
-import com.savvasdalkitsis.uhuruphotos.api.db.albums.AlbumsQueries
-import com.savvasdalkitsis.uhuruphotos.api.db.albums.AutoAlbumPeopleQueries
-import com.savvasdalkitsis.uhuruphotos.api.db.albums.AutoAlbumPhotosQueries
-import com.savvasdalkitsis.uhuruphotos.api.db.albums.AutoAlbumQueries
-import com.savvasdalkitsis.uhuruphotos.api.db.albums.AutoAlbums
-import com.savvasdalkitsis.uhuruphotos.api.db.albums.AutoAlbumsQueries
-import com.savvasdalkitsis.uhuruphotos.api.db.albums.GetAlbums
-import com.savvasdalkitsis.uhuruphotos.api.db.albums.GetAutoAlbum
-import com.savvasdalkitsis.uhuruphotos.api.db.albums.GetPeopleForAutoAlbum
-import com.savvasdalkitsis.uhuruphotos.api.db.albums.GetPersonAlbums
-import com.savvasdalkitsis.uhuruphotos.api.db.albums.GetUserAlbum
-import com.savvasdalkitsis.uhuruphotos.api.db.albums.UserAlbum
-import com.savvasdalkitsis.uhuruphotos.api.db.albums.UserAlbumPhotosQueries
-import com.savvasdalkitsis.uhuruphotos.api.db.albums.UserAlbumQueries
-import com.savvasdalkitsis.uhuruphotos.api.db.albums.UserAlbums
-import com.savvasdalkitsis.uhuruphotos.api.db.albums.UserAlbumsQueries
+import com.savvasdalkitsis.uhuruphotos.api.db.albums.*
 import com.savvasdalkitsis.uhuruphotos.api.db.extensions.await
 import com.savvasdalkitsis.uhuruphotos.api.db.extensions.awaitSingle
 import com.savvasdalkitsis.uhuruphotos.api.db.people.PeopleQueries
@@ -53,8 +38,7 @@ import com.savvasdalkitsis.uhuruphotos.api.photos.entities.toPhotoSummary
 import com.savvasdalkitsis.uhuruphotos.api.photos.model.toPhotoDetails
 import com.squareup.sqldelight.runtime.coroutines.asFlow
 import com.squareup.sqldelight.runtime.coroutines.mapToList
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.*
 import javax.inject.Inject
 
 internal class AlbumsRepository @Inject constructor(
@@ -74,14 +58,30 @@ internal class AlbumsRepository @Inject constructor(
     private val userAlbumPhotosQueries: UserAlbumPhotosQueries,
 ) : AlbumsRepository {
 
+    private var allAlbums: Group<String, GetAlbums> = Group(emptyMap())
+
     override suspend fun hasAlbums() = albumsQueries.albumsCount().awaitSingle() > 0
 
     override fun observeAlbumsByDate() : Flow<Group<String, GetAlbums>> =
-        albumsQueries.getAlbums().asFlow().mapToList().groupBy(GetAlbums::id)
+        albumsQueries.getAlbums(limit = -1).asFlow()
+            .onStart {
+                if (allAlbums.items.isEmpty()) {
+                    emitAll(albumsQueries.getAlbums(limit = 100).asFlow().take(1))
+                }
+            }
+            .mapToList().groupBy(GetAlbums::id)
+            .onStart {
+                if (allAlbums.items.isNotEmpty()) {
+                    emit(allAlbums)
+                }
+            }
+            .onEach {
+                allAlbums = it
+            }
             .distinctUntilChanged()
 
     override suspend fun getAlbumsByDate() : Group<String, GetAlbums> =
-        albumsQueries.getAlbums().await().groupBy(GetAlbums::id).let(::Group)
+        albumsQueries.getAlbums(limit = -1).await().groupBy(GetAlbums::id).let(::Group)
 
     override fun observePersonAlbums(personId: Int) : Flow<Group<String, GetPersonAlbums>> =
         albumsQueries.getPersonAlbums(personId).asFlow().mapToList().groupBy(GetPersonAlbums::id)
