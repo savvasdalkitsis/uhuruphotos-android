@@ -40,15 +40,16 @@ class SeamViaHandler<S : Any, E : Any, A : Any, M : Mutation<S>>(
         ) { effect ->
             log("MVI") { "Received side effect to post: $effect from action: $action" }
             _effects.emit(effect)
-        }.flowOn(Dispatchers.Default)
-            .cancellable()
+        }
             .map { mutation ->
                 mainThreadMutex.withLock {
                     log("MVI") { "Received mutation $mutation due to action $action" }
                     mutation.reduce(_state.value)
                 }
             }
+            .cancellable()
             .distinctUntilChanged()
+            .flowOn(Dispatchers.Default)
             .collect { newState ->
                 _state.update { newState }
                 log("MVI") { "State updated to: ${_state.value}" }
