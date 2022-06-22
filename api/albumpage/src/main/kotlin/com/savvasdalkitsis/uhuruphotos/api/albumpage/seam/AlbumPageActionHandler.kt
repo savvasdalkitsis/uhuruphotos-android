@@ -103,7 +103,7 @@ class AlbumPageActionHandler(
     private suspend fun refreshAlbum() {
         loading.emit(Loading(true))
         try {
-            albumRefresher(albumId!!)
+            albumRefresher(albumId)
         } catch (e: IOException) {
             log(e)
             loading.emit(ErrorLoading)

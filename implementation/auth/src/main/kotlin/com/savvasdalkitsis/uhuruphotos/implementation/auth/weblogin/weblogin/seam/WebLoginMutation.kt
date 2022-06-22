@@ -18,13 +18,15 @@ package com.savvasdalkitsis.uhuruphotos.implementation.auth.weblogin.weblogin.se
 import com.savvasdalkitsis.uhuruphotos.api.seam.Mutation
 import com.savvasdalkitsis.uhuruphotos.implementation.auth.weblogin.weblogin.view.WebLoginState
 
-sealed class WebLoginMutation : Mutation<WebLoginState> {
+sealed class WebLoginMutation(
+    mutation: Mutation<WebLoginState>,
+) : Mutation<WebLoginState> by mutation {
 
-    data class LoadPage(val url: String) : WebLoginMutation() {
-        override fun reduce(state: WebLoginState) = state.copy(url = url)
-    }
+    data class LoadPage(val url: String) : WebLoginMutation({
+        it.copy(url = url)
+    })
 
-    object Loading : WebLoginMutation() {
-        override fun reduce(state: WebLoginState) = state.copy(url = null)
-    }
+    object Loading : WebLoginMutation({
+        it.copy(url = null)
+    })
 }
