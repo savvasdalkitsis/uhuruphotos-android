@@ -43,8 +43,8 @@ internal class MapBoxMapViewState(
         allPoints: Collection<LatLon>,
         pointsOnVisibleMap: Collection<LatLon>,
     ) {
-        if (allPoints.isNotEmpty()) {
-            mapView?.showHeatMap(allPoints.toSet())
+        if (pointsOnVisibleMap.isNotEmpty()) {
+            mapView?.showHeatMap(pointsOnVisibleMap.toSet())
         }
     }
 
