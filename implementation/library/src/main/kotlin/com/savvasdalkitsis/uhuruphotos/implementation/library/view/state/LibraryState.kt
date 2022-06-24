@@ -16,8 +16,8 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.implementation.library.view.state
 
 data class LibraryState(
-    val autoAlbumsLoading: Boolean = true,
-    val userAlbumsLoading: Boolean = true,
+    val autoAlbumsLoading: Boolean = false,
+    val userAlbumsLoading: Boolean = false,
     val autoAlbumSorting: AlbumSorting = AlbumSorting.default,
     val userAlbumSorting: AlbumSorting = AlbumSorting.default,
     val autoAlbums: List<LibraryAutoAlbum> = emptyList(),

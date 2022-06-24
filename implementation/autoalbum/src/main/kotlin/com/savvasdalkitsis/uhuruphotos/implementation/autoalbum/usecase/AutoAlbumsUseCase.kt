@@ -18,6 +18,7 @@ package com.savvasdalkitsis.uhuruphotos.implementation.autoalbum.usecase
 import com.savvasdalkitsis.uhuruphotos.api.albums.repository.AlbumsRepository
 import com.savvasdalkitsis.uhuruphotos.api.db.albums.GetAutoAlbum
 import com.savvasdalkitsis.uhuruphotos.api.db.albums.GetPeopleForAutoAlbum
+import com.savvasdalkitsis.uhuruphotos.api.group.model.Group
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.combine
 import javax.inject.Inject
@@ -33,6 +34,9 @@ internal class AutoAlbumsUseCase @Inject constructor(
         ) { album, people ->
             album to people
         }
+
+    suspend fun getAutoAlbum(albumId: Int): Group<String, GetAutoAlbum> =
+        albumsRepository.getAutoAlbum(albumId)
 
     suspend fun refreshAutoAlbum(albumId: Int) {
         albumsRepository.refreshAutoAlbum(albumId)

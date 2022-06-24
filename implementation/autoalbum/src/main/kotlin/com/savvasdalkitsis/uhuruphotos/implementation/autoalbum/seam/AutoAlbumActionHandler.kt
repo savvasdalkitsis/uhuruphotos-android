@@ -43,6 +43,9 @@ by AlbumPageActionHandler(
     albumRefresher = { autoAlbumsUseCase.refreshAutoAlbum(it) },
     initialFeedDisplay = { AutoAlbumFeedDisplay },
     feedDisplayPersistence = { _, _ -> },
+    albumDetailsEmptyCheck = { albumId ->
+        autoAlbumsUseCase.getAutoAlbum(albumId).items.isEmpty()
+    },
     albumDetailsFlow = { albumId ->
         autoAlbumsUseCase.observeAutoAlbum(albumId)
             .map { (photoEntries, people) ->

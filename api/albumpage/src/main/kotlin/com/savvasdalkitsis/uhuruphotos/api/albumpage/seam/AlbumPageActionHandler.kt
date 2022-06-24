@@ -46,6 +46,7 @@ import kotlin.properties.Delegates
 class AlbumPageActionHandler(
     private val albumRefresher: suspend (Int) -> Unit,
     private val albumDetailsFlow: (albumId: Int) -> Flow<AlbumDetails>,
+    private val albumDetailsEmptyCheck: suspend (albumId: Int) -> Boolean,
     private val photoSequenceDataSource: (albumId: Int) -> PhotoSequenceDataSource,
     private val initialFeedDisplay: (albumId: Int) -> FeedDisplay,
     private val feedDisplayPersistence: suspend (albumId:Int, FeedDisplays) -> Unit,
@@ -67,7 +68,9 @@ class AlbumPageActionHandler(
                 loading
             ).safelyOnStartIgnoring {
                 albumId = action.albumId
-                refreshAlbum()
+                if (albumDetailsEmptyCheck(albumId)) {
+                    refreshAlbum()
+                }
             }
         }
         SwipeToRefresh -> flow {

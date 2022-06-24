@@ -72,8 +72,12 @@ class LibraryActionHandler @Inject constructor(
                 .map(::UserAlbumsLoading),
         )
             .safelyOnStartIgnoring {
-                refreshAutoAlbums(effect)
-                refreshUserAlbums(effect)
+                if (libraryUseCase.getAutoAlbums().isEmpty()) {
+                    refreshAutoAlbums(effect)
+                }
+                if (libraryUseCase.getUserAlbums().isEmpty()) {
+                    refreshUserAlbums(effect)
+                }
             }
         is ChangeAutoAlbumsSorting -> flow {
             libraryUseCase.changeAutoAlbumsSorting(action.sorting)

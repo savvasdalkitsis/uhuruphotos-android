@@ -97,9 +97,15 @@ internal class AlbumsRepository @Inject constructor(
         autoAlbumsQueries.getAutoAlbums().asFlow().mapToList()
             .distinctUntilChanged()
 
+    override suspend fun getAutoAlbums(): List<AutoAlbums> =
+        autoAlbumsQueries.getAutoAlbums().await()
+
     override fun observeUserAlbums(): Flow<List<UserAlbums>> =
         userAlbumsQueries.getUserAlbums().asFlow().mapToList()
             .distinctUntilChanged()
+
+    override suspend fun getUserAlbums(): List<UserAlbums> =
+        userAlbumsQueries.getUserAlbums().await()
 
     override fun observeAutoAlbum(albumId: Int): Flow<List<GetAutoAlbum>> =
         autoAlbumQueries.getAutoAlbum(albumId.toString()).asFlow().mapToList()

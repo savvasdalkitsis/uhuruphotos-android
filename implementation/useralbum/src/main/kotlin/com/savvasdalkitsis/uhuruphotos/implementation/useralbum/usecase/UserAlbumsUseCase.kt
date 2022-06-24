@@ -21,6 +21,7 @@ import com.savvasdalkitsis.uhuruphotos.api.db.albums.GetAutoAlbum
 import com.savvasdalkitsis.uhuruphotos.api.db.albums.GetUserAlbum
 import com.savvasdalkitsis.uhuruphotos.api.feed.view.state.FeedDisplay
 import com.savvasdalkitsis.uhuruphotos.api.feed.view.state.FeedDisplays
+import com.savvasdalkitsis.uhuruphotos.api.group.model.Group
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
@@ -31,6 +32,9 @@ internal class UserAlbumsUseCase @Inject constructor(
 
     fun observeUserAlbum(albumId: Int): Flow<List<GetUserAlbum>> =
             albumsRepository.observeUserAlbum(albumId)
+
+    suspend fun getUserAlbum(albumId: Int): Group<String, GetUserAlbum> =
+            albumsRepository.getUserAlbum(albumId)
 
     suspend fun refreshUserAlbum(albumId: Int) {
         albumsRepository.refreshUserAlbum(albumId)

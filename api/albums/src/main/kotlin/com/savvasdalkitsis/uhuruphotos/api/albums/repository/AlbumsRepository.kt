@@ -33,7 +33,9 @@ interface AlbumsRepository {
     fun observePersonAlbums(personId: Int) : Flow<Group<String, GetPersonAlbums>>
     suspend fun getPersonAlbums(personId: Int) : Group<String, GetPersonAlbums>
     fun observeAutoAlbums(): Flow<List<AutoAlbums>>
+    suspend fun getAutoAlbums(): List<AutoAlbums>
     fun observeUserAlbums(): Flow<List<UserAlbums>>
+    suspend fun getUserAlbums(): List<UserAlbums>
     fun observeAutoAlbum(albumId: Int): Flow<List<GetAutoAlbum>>
     suspend fun getAutoAlbum(albumId: Int): Group<String, GetAutoAlbum>
     suspend fun getUserAlbum(albumId: Int): Group<String, GetUserAlbum>

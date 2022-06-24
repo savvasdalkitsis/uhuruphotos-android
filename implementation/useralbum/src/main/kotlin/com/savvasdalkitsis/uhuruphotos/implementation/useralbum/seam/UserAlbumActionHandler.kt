@@ -45,6 +45,9 @@ by AlbumPageActionHandler(
     feedDisplayPersistence = { albumId, feedDisplay ->
         userAlbumsUseCase.setUserAlbumFeedDisplay(albumId, feedDisplay)
     },
+    albumDetailsEmptyCheck = { albumId ->
+        userAlbumsUseCase.getUserAlbum(albumId).items.isEmpty()
+    },
     albumDetailsFlow = { albumId ->
         userAlbumsUseCase.observeUserAlbum(albumId)
             .map { photoEntries ->

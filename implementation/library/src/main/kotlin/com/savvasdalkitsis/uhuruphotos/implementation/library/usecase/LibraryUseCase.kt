@@ -18,6 +18,10 @@ package com.savvasdalkitsis.uhuruphotos.implementation.library.usecase
 import android.content.Context
 import com.fredporciuncula.flow.preferences.FlowSharedPreferences
 import com.savvasdalkitsis.uhuruphotos.api.albums.repository.AlbumsRepository
+import com.savvasdalkitsis.uhuruphotos.api.db.albums.AutoAlbums
+import com.savvasdalkitsis.uhuruphotos.api.db.albums.GetUserAlbum
+import com.savvasdalkitsis.uhuruphotos.api.db.albums.UserAlbums
+import com.savvasdalkitsis.uhuruphotos.api.group.model.Group
 import com.savvasdalkitsis.uhuruphotos.implementation.library.view.state.AlbumSorting
 import com.savvasdalkitsis.uhuruphotos.implementation.library.view.state.AlbumSorting.ALPHABETICAL_ASC
 import com.savvasdalkitsis.uhuruphotos.implementation.library.view.state.AlbumSorting.ALPHABETICAL_DESC
@@ -61,26 +65,7 @@ class LibraryUseCase @Inject constructor(
             albumsRepository.observeAutoAlbums(),
             observeAutoAlbumsSorting(),
         ) { albums, sorting ->
-            albums
-                .sorted(sorting,
-                    timeStamp = { it.timestamp },
-                    title = { it.title },
-                )
-                .map {
-                    with(photosUseCase) {
-                        LibraryAutoAlbum(
-                            id = it.id,
-                            cover = Photo(
-                                id = it.coverPhotoHash,
-                                thumbnailUrl = it.coverPhotoHash.toThumbnailUrlFromId(),
-                                ratio = 1f,
-                                isVideo = it.coverPhotoIsVideo ?: false,
-                            ),
-                            title = it.title ?: context.getString(R.string.missing_album_title),
-                            photoCount = it.photoCount,
-                        )
-                    }
-                }
+            albums.toLibraryAutoAlbums(sorting)
         }
 
     fun observeUserAlbums(): Flow<List<LibraryUserAlbum>> =
@@ -88,43 +73,22 @@ class LibraryUseCase @Inject constructor(
             albumsRepository.observeUserAlbums(),
             observeUserAlbumsSorting(),
         ) { albums, sorting ->
-            albums
-                .sorted(sorting,
-                    timeStamp = { it.timestamp },
-                    title = { it.title },
-                )
-                .map {
-                    LibraryUserAlbum(
-                        id = it.id,
-                        mainCover = photo(
-                            it.coverPhoto1Hash,
-                            it.coverPhoto1IsVideo
-                        ),
-                        cover2 = photo(
-                            it.coverPhoto2Hash,
-                            it.coverPhoto2IsVideo
-                        ),
-                        cover3 = photo(
-                            it.coverPhoto3Hash,
-                            it.coverPhoto3IsVideo
-                        ),
-                        cover4 = photo(
-                            it.coverPhoto4Hash,
-                            it.coverPhoto4IsVideo
-                        ),
-                        title = it.title ?: context.getString(R.string.missing_album_title),
-                        photoCount = it.photoCount,
-                    )
-                }
+            albums.toLibraryUserAlbums(sorting)
         }
 
     suspend fun refreshAutoAlbums() {
         albumsRepository.refreshAutoAlbums()
     }
 
+    suspend fun getAutoAlbums(): List<LibraryAutoAlbum> =
+        albumsRepository.getAutoAlbums().toLibraryAutoAlbums(autoAlbumsSorting.get())
+
     suspend fun refreshUserAlbums() {
         albumsRepository.refreshUserAlbums()
     }
+
+    suspend fun getUserAlbums(): List<LibraryUserAlbum> =
+        albumsRepository.getUserAlbums().toLibraryUserAlbums(userAlbumsSorting.get())
 
     private fun photo(imageHash: String?, coverFavourite: Boolean?): Photo? = with(photosUseCase) {
         imageHash?.let { imageHash ->
@@ -153,4 +117,55 @@ class LibraryUseCase @Inject constructor(
         }
     }
 
+    private fun List<UserAlbums>.toLibraryUserAlbums(sorting: AlbumSorting): List<LibraryUserAlbum> =
+        sorted(
+            sorting,
+            timeStamp = { it.timestamp },
+            title = { it.title },
+        )
+            .map {
+                LibraryUserAlbum(
+                    id = it.id,
+                    mainCover = photo(
+                        it.coverPhoto1Hash,
+                        it.coverPhoto1IsVideo
+                    ),
+                    cover2 = photo(
+                        it.coverPhoto2Hash,
+                        it.coverPhoto2IsVideo
+                    ),
+                    cover3 = photo(
+                        it.coverPhoto3Hash,
+                        it.coverPhoto3IsVideo
+                    ),
+                    cover4 = photo(
+                        it.coverPhoto4Hash,
+                        it.coverPhoto4IsVideo
+                    ),
+                    title = it.title ?: context.getString(R.string.missing_album_title),
+                    photoCount = it.photoCount,
+                )
+            }
+
+    private fun List<AutoAlbums>.toLibraryAutoAlbums(sorting: AlbumSorting): List<LibraryAutoAlbum> =
+        sorted(
+            sorting,
+            timeStamp = { it.timestamp },
+            title = { it.title },
+        )
+            .map {
+                with(photosUseCase) {
+                    LibraryAutoAlbum(
+                        id = it.id,
+                        cover = Photo(
+                            id = it.coverPhotoHash,
+                            thumbnailUrl = it.coverPhotoHash.toThumbnailUrlFromId(),
+                            ratio = 1f,
+                            isVideo = it.coverPhotoIsVideo ?: false,
+                        ),
+                        title = it.title ?: context.getString(R.string.missing_album_title),
+                        photoCount = it.photoCount,
+                    )
+                }
+            }
 }
