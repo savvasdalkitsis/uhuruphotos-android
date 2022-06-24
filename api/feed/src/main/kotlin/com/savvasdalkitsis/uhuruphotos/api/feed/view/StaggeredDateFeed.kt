@@ -32,6 +32,7 @@ import com.savvasdalkitsis.uhuruphotos.api.feed.view.PhotoRowSlot.EmptySlot
 import com.savvasdalkitsis.uhuruphotos.api.feed.view.PhotoRowSlot.PhotoSlot
 import com.savvasdalkitsis.uhuruphotos.api.photos.model.Photo
 import my.nanihadesuka.compose.LazyColumnScrollbar
+import my.nanihadesuka.compose.ScrollbarSelectionMode
 
 @Composable
 fun StaggeredDateFeed(
@@ -104,6 +105,7 @@ fun StaggeredDateFeed(
             LazyColumnScrollbar(
                 listState = listState,
                 thickness = 8.dp,
+                selectionMode = ScrollbarSelectionMode.Thumb,
                 thumbColor = MaterialTheme.colors.primary.copy(alpha = 0.7f),
                 thumbSelectedColor = MaterialTheme.colors.primary,
             )
