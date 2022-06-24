@@ -16,6 +16,7 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.api.map.view.mapbox
 
 import com.mapbox.android.gestures.MoveGestureDetector
+import com.mapbox.android.gestures.StandardScaleGestureDetector
 import com.mapbox.maps.MapView
 import com.mapbox.maps.MapboxMap
 import com.mapbox.maps.extension.style.layers.addLayerAbove
@@ -25,7 +26,9 @@ import com.mapbox.maps.plugin.annotation.annotations
 import com.mapbox.maps.plugin.annotation.generated.CircleAnnotationOptions
 import com.mapbox.maps.plugin.annotation.generated.createCircleAnnotationManager
 import com.mapbox.maps.plugin.gestures.OnMoveListener
+import com.mapbox.maps.plugin.gestures.OnScaleListener
 import com.mapbox.maps.plugin.gestures.addOnMoveListener
+import com.mapbox.maps.plugin.gestures.addOnScaleListener
 import com.savvasdalkitsis.uhuruphotos.api.map.model.LatLon
 
 internal fun MapView.addMarker(marker: LatLon) {
@@ -67,13 +70,25 @@ internal fun MapView.showHeatMap(points: Set<LatLon>) {
 
 internal fun MapView.bindTo(mapViewState: MapBoxMapViewState) {
     mapViewState.mapView = this
-    getMapboxMap().addOnMoveListener(object : OnMoveListener {
-        override fun onMove(detector: MoveGestureDetector) = false
+    getMapboxMap().apply {
+        addOnMoveListener(object : OnMoveListener {
+            override fun onMove(detector: MoveGestureDetector) = false
 
-        override fun onMoveBegin(detector: MoveGestureDetector) {}
+            override fun onMoveBegin(detector: MoveGestureDetector) {}
 
-        override fun onMoveEnd(detector: MoveGestureDetector) {
-            mapViewState.finishedMoving()
-        }
-    })
+            override fun onMoveEnd(detector: MoveGestureDetector) {
+                mapViewState.finishedMoving()
+            }
+        })
+        addOnScaleListener(object: OnScaleListener {
+            override fun onScale(detector: StandardScaleGestureDetector) {}
+
+            override fun onScaleBegin(detector: StandardScaleGestureDetector) {}
+
+            override fun onScaleEnd(detector: StandardScaleGestureDetector) {
+                mapViewState.finishedMoving()
+            }
+
+        })
+    }
 }
