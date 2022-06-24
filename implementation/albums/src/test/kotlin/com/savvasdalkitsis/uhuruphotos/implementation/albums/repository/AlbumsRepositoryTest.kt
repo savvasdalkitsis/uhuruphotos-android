@@ -42,8 +42,10 @@ import com.savvasdalkitsis.uhuruphotos.api.db.albums.Albums
 import com.savvasdalkitsis.uhuruphotos.api.db.extensions.await
 import com.savvasdalkitsis.uhuruphotos.api.db.photos.PhotoSummary
 import com.savvasdalkitsis.uhuruphotos.api.group.model.Group
+import com.savvasdalkitsis.uhuruphotos.api.settings.usecase.SettingsUseCase
 import com.shazam.shazamcrest.MatcherAssert.assertThat
 import com.shazam.shazamcrest.matcher.Matchers.sameBeanAs
+import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.mockk
 import kotlinx.coroutines.CoroutineScope
@@ -56,6 +58,7 @@ class AlbumsRepositoryTest {
 
     private val db = TestDatabase.getDb()
     private val albumsService = mockk<AlbumsService>(relaxed = true)
+    private val settingsUseCase = mockk<SettingsUseCase>(relaxed = true)
     private val underTest = AlbumsRepository(
         db,
         albumsService,
@@ -71,6 +74,7 @@ class AlbumsRepositoryTest {
         db.userAlbumsQueries,
         db.userAlbumQueries,
         db.userAlbumPhotosQueries,
+        settingsUseCase,
     )
 
     @Test
@@ -292,7 +296,7 @@ class AlbumsRepositoryTest {
 
         val album1 = album(1)
 
-        assertThat(db.albumsQueries.getAlbums().await(), sameBeanAs(listOf(
+        assertThat(db.albumsQueries.getAlbums(limit = -1).await(), sameBeanAs(listOf(
             entry(photo(2, inAlbum = 1))
                 .copy(id = album1.id, albumDate = album1.date)
                 .withServerResponseData(),
@@ -332,7 +336,7 @@ class AlbumsRepositoryTest {
         progress.assertReceived(100)
     }
 
-    @Test
+    @Test(timeout = 4000)
     fun `can perform shallow refresh when asked`() = runBlocking {
         val progress = ProgressUpdate()
 
@@ -346,6 +350,8 @@ class AlbumsRepositoryTest {
         val album2Response = albumsService.willRespondForAlbum(2, completeAlbum(2))
         val album3Response = albumsService.willRespondForAlbum(3, completeAlbum(3))
         albumsService.respondsForAlbum(4, completeAlbum(4))
+        coEvery {  settingsUseCase.getFeedDaysToRefresh() } returns 3
+
 
         CoroutineScope(Dispatchers.Default).launch {
             underTest.refreshAlbums(shallow = true, progress)

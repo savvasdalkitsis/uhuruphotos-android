@@ -54,10 +54,10 @@ internal class AlbumsRepository @Inject constructor(
     private val peopleQueries: PeopleQueries,
     private val photoSummaryQueries: PhotoSummaryQueries,
     private val photoDetailsQueries: PhotoDetailsQueries,
-    private val settingsUseCase: SettingsUseCase,
     private val userAlbumsQueries: UserAlbumsQueries,
     private val userAlbumQueries: UserAlbumQueries,
     private val userAlbumPhotosQueries: UserAlbumPhotosQueries,
+    private val settingsUseCase: SettingsUseCase,
 ) : AlbumsRepository {
 
     private var allAlbums: Group<String, GetAlbums> = Group(emptyMap())
