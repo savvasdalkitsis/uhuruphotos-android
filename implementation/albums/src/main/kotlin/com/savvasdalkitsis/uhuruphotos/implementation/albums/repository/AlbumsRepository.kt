@@ -36,6 +36,7 @@ import com.savvasdalkitsis.uhuruphotos.api.group.model.groupBy
 import com.savvasdalkitsis.uhuruphotos.api.people.service.model.toPerson
 import com.savvasdalkitsis.uhuruphotos.api.photos.entities.toPhotoSummary
 import com.savvasdalkitsis.uhuruphotos.api.photos.model.toPhotoDetails
+import com.savvasdalkitsis.uhuruphotos.api.settings.usecase.SettingsUseCase
 import com.squareup.sqldelight.runtime.coroutines.asFlow
 import com.squareup.sqldelight.runtime.coroutines.mapToList
 import kotlinx.coroutines.flow.*
@@ -53,6 +54,7 @@ internal class AlbumsRepository @Inject constructor(
     private val peopleQueries: PeopleQueries,
     private val photoSummaryQueries: PhotoSummaryQueries,
     private val photoDetailsQueries: PhotoDetailsQueries,
+    private val settingsUseCase: SettingsUseCase,
     private val userAlbumsQueries: UserAlbumsQueries,
     private val userAlbumQueries: UserAlbumQueries,
     private val userAlbumPhotosQueries: UserAlbumPhotosQueries,
@@ -242,7 +244,7 @@ internal class AlbumsRepository @Inject constructor(
         val albums = albumsFetcher()
         incompleteAlbumsProcessor(albums.results)
         val albumsToDownloadSummaries = when {
-            shallow -> albums.results.take(3)
+            shallow -> albums.results.take(settingsUseCase.getFeedDaysToRefresh())
             else -> albums.results
         }
         for ((index, incompleteAlbum) in albumsToDownloadSummaries.withIndex()) {

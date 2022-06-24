@@ -51,6 +51,8 @@ internal class SettingsUseCase @Inject constructor(
         flowSharedPreferences.getInt("videoDiskCacheSize", 700)
     private val feedSyncFrequency =
         flowSharedPreferences.getInt("feedSyncFrequency", 12)
+    private val feedDaysToRefresh =
+        flowSharedPreferences.getInt("feedDaysToRefresh", 3)
     private val shouldPerformPeriodicFeedSync =
         flowSharedPreferences.getBoolean("shouldPerformPeriodicFeedSync", true)
     private val fullSyncNetworkRequirements =
@@ -74,6 +76,8 @@ internal class SettingsUseCase @Inject constructor(
     override fun getImageMemCacheMaxLimit(): Int = imageMemCacheSize.get()
     override fun getVideoDiskCacheMaxLimit(): Int = videoDiskCacheSize.get()
     override fun getFeedSyncFrequency(): Int = feedSyncFrequency.get()
+    override fun getFeedDaysToRefresh(): Int = feedDaysToRefresh.get()
+
     override fun getFullSyncNetworkRequirements(): NetworkType = fullSyncNetworkRequirements.get()
     override fun getFullSyncRequiresCharging(): Boolean = fullSyncRequiresCharging.get()
     override fun getShouldPerformPeriodicFullSync(): Boolean = shouldPerformPeriodicFeedSync.get()
@@ -88,6 +92,8 @@ internal class SettingsUseCase @Inject constructor(
     override fun observeImageMemCacheMaxLimit(): Flow<Int> = imageMemCacheSize.asFlow()
     override fun observeVideoDiskCacheMaxLimit(): Flow<Int> = videoDiskCacheSize.asFlow()
     override fun observeFeedSyncFrequency(): Flow<Int> = feedSyncFrequency.asFlow()
+    override fun observeFeedDaysToRefresh(): Flow<Int> = feedDaysToRefresh.asFlow()
+
     override fun observeFullSyncNetworkRequirements(): Flow<NetworkType> = fullSyncNetworkRequirements.asFlow()
     override fun observeFullSyncRequiresCharging(): Flow<Boolean> = fullSyncRequiresCharging.asFlow()
     override fun observeThemeMode(): Flow<ThemeMode> = themeMode.asFlow()
@@ -115,6 +121,10 @@ internal class SettingsUseCase @Inject constructor(
 
     override suspend fun setFeedSyncFrequency(frequency: Int) {
         feedSyncFrequency.setAndCommit(frequency)
+    }
+
+    override suspend fun setFeedFeedDaysToRefresh(days: Int) {
+        feedDaysToRefresh.setAndCommit(days)
     }
 
     override suspend fun setFullSyncNetworkRequirements(networkType: NetworkType) {

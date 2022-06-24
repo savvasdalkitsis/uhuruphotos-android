@@ -27,6 +27,7 @@ interface SettingsUseCase {
     fun getImageMemCacheMaxLimit(): Int
     fun getVideoDiskCacheMaxLimit(): Int
     fun getFeedSyncFrequency(): Int
+    fun getFeedDaysToRefresh(): Int
     fun getFullSyncNetworkRequirements(): NetworkType
     fun getFullSyncRequiresCharging(): Boolean
     fun getShouldPerformPeriodicFullSync(): Boolean
@@ -40,6 +41,7 @@ interface SettingsUseCase {
     fun observeImageMemCacheMaxLimit(): Flow<Int>
     fun observeVideoDiskCacheMaxLimit(): Flow<Int>
     fun observeFeedSyncFrequency(): Flow<Int>
+    fun observeFeedDaysToRefresh(): Flow<Int>
     fun observeFullSyncNetworkRequirements(): Flow<NetworkType>
     fun observeFullSyncRequiresCharging(): Flow<Boolean>
     fun observeThemeMode(): Flow<ThemeMode>
@@ -54,6 +56,7 @@ interface SettingsUseCase {
     suspend fun setImageMemCacheMaxLimit(sizeInMb: Int)
     suspend fun setVideoDiskCacheMaxLimit(sizeInMb: Int)
     suspend fun setFeedSyncFrequency(frequency: Int)
+    suspend fun setFeedFeedDaysToRefresh(days: Int)
     suspend fun setFullSyncNetworkRequirements(networkType: NetworkType)
     suspend fun setFullSyncRequiresCharging(requiresCharging: Boolean)
     suspend fun setShouldPerformPeriodicFullSync(perform: Boolean)

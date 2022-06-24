@@ -60,6 +60,8 @@ internal class SettingsActionHandler @Inject constructor(
                 .map(::DisplayVideoDiskCacheMaxLimit),
             settingsUseCase.observeFeedSyncFrequency()
                 .map(::DisplayFeedSyncFrequency),
+            settingsUseCase.observeFeedDaysToRefresh()
+                .map(::DisplayFeedDaystoRefresh),
             settingsUseCase.observeFullSyncNetworkRequirements()
                 .map(::DisplayFullSyncNetworkRequirements),
             settingsUseCase.observeFullSyncRequiresCharging()
@@ -171,6 +173,9 @@ internal class SettingsActionHandler @Inject constructor(
         }
         is ChangeLoggingEnabled -> flow {
             settingsUseCase.setLoggingEnabled(action.enabled)
+        }
+        is FeedRefreshChanged -> flow {
+            settingsUseCase.setFeedFeedDaysToRefresh(action.days)
         }
     }
 

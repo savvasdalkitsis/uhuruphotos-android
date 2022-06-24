@@ -90,6 +90,12 @@ internal sealed class SettingsMutation(
         )
     })
 
+    data class DisplayFeedDaystoRefresh(val days: Int): SettingsMutation({
+        it.copy(
+            feedDaysToRefresh = days,
+        )
+    })
+
     data class DisplayFullSyncNetworkRequirements(val networkType: NetworkType): SettingsMutation({
         it.copy(fullSyncNetworkRequirement = networkType)
     })

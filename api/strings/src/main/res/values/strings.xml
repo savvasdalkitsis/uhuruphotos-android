@@ -18,6 +18,7 @@
     <string name="feed_sync_freq_changed">Feed sync frequency changed</string>
     <string name="feed_sync_network_changed">Feed sync network requirement changed</string>
     <string name="feed_sync_charging_changed">Feed sync charging requirements changed</string>
+    <string name="feed_refresh_days">Number of feed days to refresh on pull to refresh</string>
     <string name="logs_cleared">Logs cleared</string>
     <string name="recent_searches_cleared">Recent searches cleared</string>
     <string name="downloading_photos_sharing">Downloading photos and will share soon</string>
@@ -42,6 +43,10 @@
     <plurals name="hours">
         <item quantity="one">%d hour</item>
         <item quantity="other">%d hours</item>
+    </plurals>
+    <plurals name="days">
+        <item quantity="one">%d day</item>
+        <item quantity="other">%d days</item>
     </plurals>
     <string name="yes">Yes</string>
     <string name="no">No</string>

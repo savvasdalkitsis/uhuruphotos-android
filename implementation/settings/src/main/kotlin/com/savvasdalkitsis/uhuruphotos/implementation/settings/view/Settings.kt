@@ -43,6 +43,7 @@ internal fun Settings(
     action: (SettingsAction) -> Unit,
 ) {
     val collapsedTheme = remember { mutableStateOf(false) }
+    val collapsedFeed = remember { mutableStateOf(false) }
     val collapsedImageDiskCache = remember { mutableStateOf(false) }
     val collapsedImageMemoryCache = remember { mutableStateOf(false) }
     val collapsedVideoDiskCache = remember { mutableStateOf(false) }
@@ -54,6 +55,7 @@ internal fun Settings(
     val collapsedMap = remember { mutableStateOf(false) }
     val allCollapse = listOf(
         collapsedTheme,
+        collapsedFeed,
         collapsedImageDiskCache,
         collapsedImageMemoryCache,
         collapsedVideoDiskCache,
@@ -98,6 +100,9 @@ internal fun Settings(
             ) {
                 item {
                     SettingsGroupTheme(state, action, collapsedTheme)
+                }
+                item {
+                    SettingsGroupFeed(state, action, collapsedFeed)
                 }
                 item {
                     SettingsGroupImageDiskCache(state, action, collapsedImageDiskCache)

@@ -28,6 +28,7 @@ internal data class SettingsState(
     val videoDiskCacheCurrent: Int = 0,
     val imageMemCacheMax: Int = 0,
     val imageMemCacheCurrent: Int = 0,
+    val feedDaysToRefresh: Int = 0,
     val feedSyncFrequency: Int? = null,
     val userInformationState: UserInformationState = UserInformationState(),
     val showFullFeedSyncDialog: Boolean = false,

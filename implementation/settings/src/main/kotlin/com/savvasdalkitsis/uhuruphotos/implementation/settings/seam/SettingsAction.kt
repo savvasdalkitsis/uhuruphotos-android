@@ -34,7 +34,7 @@ internal sealed class SettingsAction {
     data class ChangeThemeMode(val themeMode: ThemeMode) : SettingsAction()
     data class ChangeMapProvider(val mapProvider: MapProvider) : SettingsAction()
     data class ChangeLoggingEnabled(val enabled: Boolean) : SettingsAction()
-
+    data class FeedRefreshChanged(val days: Int) : SettingsAction()
     object LoadSettings : SettingsAction()
     object NavigateBack : SettingsAction()
     object ClearImageDiskCache : SettingsAction()
