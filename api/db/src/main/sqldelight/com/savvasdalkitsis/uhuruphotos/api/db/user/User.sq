@@ -29,5 +29,5 @@ SELECT * FROM user LIMIT 1;
 addUser:
 INSERT OR REPLACE INTO user VALUES ?;
 
-deleteUser:
+clearAll:
 DELETE FROM user;

@@ -10,3 +10,6 @@ INSERT OR REPLACE INTO userAlbumPhotos VALUES (?, ?);
 
 removePhotosForAlbum:
 DELETE FROM userAlbumPhotos WHERE albumId == :albumId;
+
+clearAll:
+DELETE FROM userAlbumPhotos;

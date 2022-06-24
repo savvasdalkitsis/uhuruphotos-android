@@ -82,7 +82,7 @@ class AlbumsRepositoryTest {
 
     @Test
     fun `reports not having albums if none exists`() = runBlocking {
-        db.albumsQueries.clearAlbums()
+        db.albumsQueries.clearAll()
 
         assert(!underTest.hasAlbums())
     }
@@ -274,7 +274,7 @@ class AlbumsRepositoryTest {
 
     @Test
     fun `refreshes albums on demand`() = runBlocking {
-        db.albumsQueries.clearAlbums()
+        db.albumsQueries.clearAll()
         db.photoSummaryQueries.clearAll()
         albumsService.respondsWith(
             incompleteAlbum(1).copy(location = SERVER_ALBUM_LOCATION),

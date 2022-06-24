@@ -6,3 +6,6 @@ CREATE TABLE personPhotos (
 
 insert:
 INSERT OR REPLACE INTO personPhotos VALUES (?, ?, ?);
+
+clearAll:
+DELETE FROM personPhotos;

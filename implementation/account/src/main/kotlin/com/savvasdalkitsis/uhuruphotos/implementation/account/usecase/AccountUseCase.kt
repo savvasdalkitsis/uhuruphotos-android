@@ -16,11 +16,8 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.implementation.account.usecase
 
 import com.savvasdalkitsis.uhuruphotos.api.account.usecase.AccountUseCase
-import com.savvasdalkitsis.uhuruphotos.api.db.albums.AlbumsQueries
-import com.savvasdalkitsis.uhuruphotos.api.db.auth.TokenQueries
+import com.savvasdalkitsis.uhuruphotos.api.db.Database
 import com.savvasdalkitsis.uhuruphotos.api.db.extensions.async
-import com.savvasdalkitsis.uhuruphotos.api.db.search.SearchQueries
-import com.savvasdalkitsis.uhuruphotos.api.db.user.UserQueries
 import com.savvasdalkitsis.uhuruphotos.api.image.cache.ImageCacheController
 import com.savvasdalkitsis.uhuruphotos.api.video.VideoCache
 import com.savvasdalkitsis.uhuruphotos.api.worker.WorkScheduler
@@ -28,10 +25,7 @@ import okhttp3.Cache
 import javax.inject.Inject
 
 class AccountUseCase @Inject constructor(
-    private val userQueries: UserQueries,
-    private val albumsQueries: AlbumsQueries,
-    private val searchQueries: SearchQueries,
-    private val tokenQueries: TokenQueries,
+    private val db: Database,
     private val imageCacheController: ImageCacheController,
     @VideoCache
     private val videoCache: Cache,
@@ -41,10 +35,23 @@ class AccountUseCase @Inject constructor(
     override suspend fun logOut() {
         async {
             workScheduler.cancelAllScheduledWork()
-            albumsQueries.clearAlbums()
-            searchQueries.clearSearchResults()
-            userQueries.deleteUser()
-            tokenQueries.removeAllTokens()
+            with(db) {
+                albumsQueries.clearAll()
+                autoAlbumQueries.clearAll()
+                autoAlbumPeopleQueries.clearAll()
+                autoAlbumPhotosQueries.clearAll()
+                autoAlbumsQueries.clearAll()
+                peopleQueries.clearAll()
+                personQueries.clearAll()
+                photoDetailsQueries.clearAll()
+                photoSummaryQueries.clearAll()
+                searchQueries.clearAll()
+                tokenQueries.clearAll()
+                userQueries.clearAll()
+                userAlbumQueries.clearAll()
+                userAlbumPhotosQueries.clearAll()
+                userAlbumsQueries.clearAll()
+            }
             imageCacheController.clear()
             videoCache.evictAll()
         }

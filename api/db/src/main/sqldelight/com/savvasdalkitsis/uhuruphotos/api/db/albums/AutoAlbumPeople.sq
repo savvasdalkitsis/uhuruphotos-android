@@ -22,3 +22,6 @@ SELECT
 FROM autoAlbumPeople
 LEFT JOIN people ON personId == people.id
 WHERE albumId == :albumId;
+
+clearAll:
+DELETE FROM autoAlbumPeople;

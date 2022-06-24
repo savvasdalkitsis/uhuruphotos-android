@@ -130,7 +130,7 @@ internal class AlbumsRepository @Inject constructor(
     override suspend fun refreshAutoAlbums() {
         val albums = albumsService.getAutoAlbums()
         autoAlbumsQueries.transaction {
-            autoAlbumsQueries.clear()
+            autoAlbumsQueries.clearAll()
             for (album in albums.results) {
                 autoAlbumsQueries.insert(album.toAutoAlbums())
             }
@@ -140,7 +140,7 @@ internal class AlbumsRepository @Inject constructor(
     override suspend fun refreshUserAlbums() {
         val albums = albumsService.getUserAlbums()
         userAlbumsQueries.transaction {
-            userAlbumsQueries.clear()
+            userAlbumsQueries.clearAll()
             for (album in albums.results) {
                 userAlbumsQueries.insert(album.toUserAlbums())
             }
@@ -223,7 +223,7 @@ internal class AlbumsRepository @Inject constructor(
             onProgressChange = onProgressChange,
             incompleteAlbumsProcessor = { albums ->
                 albumsQueries.transaction {
-                    albumsQueries.clearAlbums()
+                    albumsQueries.clearAll()
                     for (album in albums.map { it.toAlbum() }) {
                         albumsQueries.insert(album)
                     }

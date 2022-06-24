@@ -25,3 +25,6 @@ LEFT JOIN userAlbumPhotos ON userAlbum.id == userAlbumPhotos.albumId
 LEFT JOIN photoSummary ON userAlbumPhotos.imageHash == photoSummary.id
 WHERE userAlbum.id == :albumId
 ORDER BY photoSummary.date DESC;
+
+clearAll:
+DELETE FROM userAlbum;

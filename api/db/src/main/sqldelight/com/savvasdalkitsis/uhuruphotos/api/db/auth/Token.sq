@@ -14,5 +14,5 @@ SELECT token FROM token WHERE type == 'REFRESH' LIMIT 1;
 saveToken:
 INSERT OR REPLACE INTO token VALUES ?;
 
-removeAllTokens:
+clearAll:
 DELETE FROM token;

@@ -28,5 +28,5 @@ DESC;
 addSearchResult:
 INSERT OR REPLACE INTO search VALUES (?, ?, ?, ?, ?);
 
-clearSearchResults:
+clearAll:
 DELETE FROM search;

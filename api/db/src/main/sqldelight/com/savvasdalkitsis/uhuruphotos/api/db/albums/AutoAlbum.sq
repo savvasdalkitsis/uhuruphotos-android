@@ -37,3 +37,6 @@ LEFT JOIN autoAlbumPhotos ON autoAlbum.id == autoAlbumPhotos.albumId
 LEFT JOIN photoDetails ON autoAlbumPhotos.imageHash == photoDetails.imageHash
 WHERE autoAlbum.id == :albumId
 ORDER BY photoDetails.timestamp DESC;
+
+clearAll:
+DELETE FROM autoAlbum;

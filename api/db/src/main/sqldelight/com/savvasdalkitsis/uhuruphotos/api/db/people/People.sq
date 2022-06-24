@@ -18,7 +18,7 @@ SELECT * FROM people WHERE id == :id LIMIT 1;
 getPeople:
 SELECT * FROM people WHERE id IN :ids LIMIT 1;
 
-deleteAll:
+clearAll:
 DELETE FROM people;
 
 insertPerson:

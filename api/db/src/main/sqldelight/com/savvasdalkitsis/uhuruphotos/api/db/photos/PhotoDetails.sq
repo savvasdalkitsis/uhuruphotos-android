@@ -34,3 +34,6 @@ UPDATE photoDetails SET rating = :rating WHERE imageHash = :id;
 
 delete:
 DELETE FROM photoDetails WHERE imageHash = :id;
+
+clearAll:
+DELETE FROM photoDetails;

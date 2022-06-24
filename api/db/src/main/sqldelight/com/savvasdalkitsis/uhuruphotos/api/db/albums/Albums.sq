@@ -41,7 +41,7 @@ WHERE personPhotos.personId == :id
 GROUP BY summary.id
 ORDER BY summary.date DESC;
 
-clearAlbums:
+clearAll:
 DELETE FROM albums;
 
 insert:

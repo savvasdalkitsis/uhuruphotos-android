@@ -10,3 +10,6 @@ INSERT OR REPLACE INTO autoAlbumPhotos VALUES (?, ?);
 
 removePhotosForAlbum:
 DELETE FROM autoAlbumPhotos WHERE albumId == :albumId;
+
+clearAll:
+DELETE FROM autoAlbumPhotos;

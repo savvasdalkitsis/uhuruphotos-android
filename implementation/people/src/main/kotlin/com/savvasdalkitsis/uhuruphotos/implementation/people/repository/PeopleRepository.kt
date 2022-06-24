@@ -59,7 +59,7 @@ class PeopleRepository @Inject constructor(
             val people = peopleService.getPeople().results
             async {
                 peopleQueries.transaction {
-                    peopleQueries.deleteAll()
+                    peopleQueries.clearAll()
                     for (person in people) {
                         peopleQueries.insertPerson(person.toPerson())
                     }
