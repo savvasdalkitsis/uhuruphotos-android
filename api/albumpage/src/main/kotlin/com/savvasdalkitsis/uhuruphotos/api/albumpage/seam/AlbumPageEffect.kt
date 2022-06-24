@@ -20,6 +20,8 @@ import com.savvasdalkitsis.uhuruphotos.api.photos.model.PhotoSequenceDataSource
 
 sealed class AlbumPageEffect {
     object NavigateBack : AlbumPageEffect()
+    object ErrorLoading : AlbumPageEffect()
+
     data class OpenPhotoDetails(
         val id: String,
         val center: Offset,

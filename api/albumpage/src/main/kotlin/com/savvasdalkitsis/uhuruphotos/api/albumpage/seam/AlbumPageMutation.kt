@@ -19,15 +19,10 @@ import com.savvasdalkitsis.uhuruphotos.api.albumpage.view.state.AlbumDetails
 import com.savvasdalkitsis.uhuruphotos.api.albumpage.view.state.AlbumPageState
 import com.savvasdalkitsis.uhuruphotos.api.feed.view.state.FeedDisplay
 import com.savvasdalkitsis.uhuruphotos.api.seam.Mutation
-import com.savvasdalkitsis.uhuruphotos.api.strings.R
 
 sealed class AlbumPageMutation(
     mutation: Mutation<AlbumPageState>,
 ) : Mutation<AlbumPageState> by mutation {
-
-    object ErrorLoading : AlbumPageMutation({
-        it.copy(error = R.string.error_loading_album)
-    })
 
     data class ShowAlbumPage(val albumPage: AlbumDetails) : AlbumPageMutation({
         it.copy(

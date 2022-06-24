@@ -15,17 +15,18 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.api.albumpage.seam
 
+import com.savvasdalkitsis.uhuruphotos.api.albumpage.seam.AlbumPageEffect.*
 import com.savvasdalkitsis.uhuruphotos.api.navigation.Navigator
 import com.savvasdalkitsis.uhuruphotos.api.person.navigation.PersonNavigationTarget
 import com.savvasdalkitsis.uhuruphotos.api.photos.navigation.PhotoNavigationTarget
 import com.savvasdalkitsis.uhuruphotos.api.seam.EffectHandler
-import com.savvasdalkitsis.uhuruphotos.api.albumpage.seam.AlbumPageEffect.NavigateBack
-import com.savvasdalkitsis.uhuruphotos.api.albumpage.seam.AlbumPageEffect.NavigateToPerson
-import com.savvasdalkitsis.uhuruphotos.api.albumpage.seam.AlbumPageEffect.OpenPhotoDetails
+import com.savvasdalkitsis.uhuruphotos.api.strings.R
+import com.savvasdalkitsis.uhuruphotos.api.toaster.Toaster
 import javax.inject.Inject
 
 class AlbumPageEffectsHandler @Inject constructor(
     private val navigator: Navigator,
+    private val toaster: Toaster,
 ) : EffectHandler<AlbumPageEffect> {
 
     override suspend fun handleEffect(effect: AlbumPageEffect) {
@@ -43,6 +44,7 @@ class AlbumPageEffectsHandler @Inject constructor(
             is NavigateToPerson -> navigate(
                 PersonNavigationTarget.name(effect.personId)
             )
+            ErrorLoading -> toaster.show(R.string.error_loading_album)
         }
     }
 

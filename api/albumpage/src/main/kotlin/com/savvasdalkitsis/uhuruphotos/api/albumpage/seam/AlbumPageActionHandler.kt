@@ -15,31 +15,20 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.api.albumpage.seam
 
-import com.savvasdalkitsis.uhuruphotos.api.coroutines.safelyOnStartIgnoring
-import com.savvasdalkitsis.uhuruphotos.api.log.log
-import com.savvasdalkitsis.uhuruphotos.api.seam.ActionHandler
-import com.savvasdalkitsis.uhuruphotos.api.albumpage.seam.AlbumPageAction.ChangeFeedDisplay
-import com.savvasdalkitsis.uhuruphotos.api.albumpage.seam.AlbumPageAction.LoadAlbum
+import com.savvasdalkitsis.uhuruphotos.api.albumpage.seam.AlbumPageAction.*
 import com.savvasdalkitsis.uhuruphotos.api.albumpage.seam.AlbumPageAction.NavigateBack
-import com.savvasdalkitsis.uhuruphotos.api.albumpage.seam.AlbumPageAction.PersonSelected
-import com.savvasdalkitsis.uhuruphotos.api.albumpage.seam.AlbumPageAction.SelectedPhoto
-import com.savvasdalkitsis.uhuruphotos.api.albumpage.seam.AlbumPageAction.SwipeToRefresh
-import com.savvasdalkitsis.uhuruphotos.api.albumpage.seam.AlbumPageEffect.NavigateToPerson
-import com.savvasdalkitsis.uhuruphotos.api.albumpage.seam.AlbumPageEffect.OpenPhotoDetails
-import com.savvasdalkitsis.uhuruphotos.api.albumpage.seam.AlbumPageMutation.ErrorLoading
+import com.savvasdalkitsis.uhuruphotos.api.albumpage.seam.AlbumPageEffect.*
 import com.savvasdalkitsis.uhuruphotos.api.albumpage.seam.AlbumPageMutation.Loading
 import com.savvasdalkitsis.uhuruphotos.api.albumpage.seam.AlbumPageMutation.ShowAlbumPage
 import com.savvasdalkitsis.uhuruphotos.api.albumpage.view.state.AlbumDetails
 import com.savvasdalkitsis.uhuruphotos.api.albumpage.view.state.AlbumPageState
+import com.savvasdalkitsis.uhuruphotos.api.coroutines.safelyOnStartIgnoring
 import com.savvasdalkitsis.uhuruphotos.api.feed.view.state.FeedDisplay
 import com.savvasdalkitsis.uhuruphotos.api.feed.view.state.FeedDisplays
+import com.savvasdalkitsis.uhuruphotos.api.log.log
 import com.savvasdalkitsis.uhuruphotos.api.photos.model.PhotoSequenceDataSource
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.MutableSharedFlow
-import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.flow.flowOf
-import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.flow.merge
+import com.savvasdalkitsis.uhuruphotos.api.seam.ActionHandler
+import kotlinx.coroutines.flow.*
 import java.io.IOException
 import kotlin.properties.Delegates
 
@@ -69,12 +58,12 @@ class AlbumPageActionHandler(
             ).safelyOnStartIgnoring {
                 albumId = action.albumId
                 if (albumDetailsEmptyCheck(albumId)) {
-                    refreshAlbum()
+                    refreshAlbum(effect)
                 }
             }
         }
         SwipeToRefresh -> flow {
-            refreshAlbum()
+            refreshAlbum(effect)
         }
         is SelectedPhoto -> flow {
             effect(
@@ -103,13 +92,13 @@ class AlbumPageActionHandler(
         }
     }
 
-    private suspend fun refreshAlbum() {
+    private suspend fun refreshAlbum(effect: suspend (AlbumPageEffect) -> Unit) {
         loading.emit(Loading(true))
         try {
             albumRefresher(albumId)
         } catch (e: IOException) {
             log(e)
-            loading.emit(ErrorLoading)
+            effect(ErrorLoading)
         } finally {
             loading.emit(Loading(false))
         }

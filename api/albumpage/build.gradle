@@ -18,6 +18,7 @@ dependencies {
     implementation project(':api:people')
     implementation project(":api:photos")
     implementation project(":api:strings")
+    implementation project(":api:toaster")
     implementation project(":api:ui")
     implementation(
             libs.accompanist.swiperefresh,
