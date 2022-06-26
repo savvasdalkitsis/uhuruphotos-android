@@ -107,4 +107,9 @@
     <string name="map_provider">Kaartdienst</string>
     <string name="enable_logging">Logboek aanleggen</string>
     <string name="degrades_performance">Let op: dit beïnvloedt de prestaties</string>
+    <plurals name="days">
+        <item quantity="one">%d dag</item>
+        <item quantity="other">%d dagen</item>
+    </plurals>
+    <string name="feed_refresh_days">Aantal te herladen dagen op fotorol na trekken om te herladen</string>
 </resources>
