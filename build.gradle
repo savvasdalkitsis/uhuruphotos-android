@@ -82,7 +82,7 @@ subprojects {
         compileSdk 33
 
         defaultConfig {
-            minSdk 21
+            minSdk 23
             targetSdk 33
 
             buildConfigField 'int', 'APP_VERSION_CODE', "${project.app_version_code}"
