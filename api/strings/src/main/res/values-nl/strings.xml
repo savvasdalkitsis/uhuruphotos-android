@@ -112,4 +112,12 @@
         <item quantity="other">%d dagen</item>
     </plurals>
     <string name="feed_refresh_days">Aantal te herladen dagen op fotorol na trekken om te herladen</string>
+    <string name="require_biometrics_for_app_access">Biometrische toegang (vingerafdruk, gezicht) vereisen om app te openen</string>
+    <string name="authenticate">Verifiëren</string>
+    <string name="authenticate_to_change_description">Het uitschakelen vereist verificatie omwille van beveilingsredenen</string>
+    <string name="authenticate_for_access">Verifieer je om de app te kunnen openen</string>
+    <string name="authenticate_for_access_description">Je hebt aangegeven dat de app alleen kan worden geopend middels verificatie</string>
+    <string name="biometrics">Biometrie</string>
+    <string name="biometrics_enroll">Schakel biometrie in om deze functie te kunnen gebruiken</string>
+    <string name="authenticate_to_change">Verifieer om deze instelling te kunnen wijzigen</string>
 </resources>
