@@ -15,23 +15,40 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.implementation.home.view
 
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.material.Button
+import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
-import androidx.navigation.NavHostController
-import com.savvasdalkitsis.uhuruphotos.api.home.view.HomeScaffold
-import com.savvasdalkitsis.uhuruphotos.implementation.home.view.state.HomeState
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
+import com.savvasdalkitsis.uhuruphotos.api.strings.R
+import com.savvasdalkitsis.uhuruphotos.api.ui.view.CommonScaffold
 import com.savvasdalkitsis.uhuruphotos.api.ui.view.FullProgressBar
+import com.savvasdalkitsis.uhuruphotos.implementation.home.seam.HomeAction
+import com.savvasdalkitsis.uhuruphotos.implementation.home.seam.HomeAction.Load
+import com.savvasdalkitsis.uhuruphotos.implementation.home.view.state.HomeState
 
 @Composable
 internal fun Home(
     state: HomeState,
-    navHostController: NavHostController,
+    action: (HomeAction) -> Unit,
 ) {
-    HomeScaffold(
-        navController = navHostController,
-        showLibrary = state.showLibrary,
-    ) {
+    CommonScaffold {
         if (state.isLoading) {
             FullProgressBar()
+        } else if (state.needsAuthentication) {
+            Box(
+                modifier = Modifier.fillMaxSize()
+            ) {
+                Button(
+                    modifier = Modifier.align(Alignment.Center),
+                    onClick = { action(Load) },
+                ) {
+                    Text(stringResource(R.string.authenticate))
+                }
+            }
         }
     }
 }

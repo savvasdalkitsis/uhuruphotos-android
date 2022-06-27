@@ -18,10 +18,11 @@ package com.savvasdalkitsis.uhuruphotos.implementation.settings.seam
 import androidx.work.NetworkType
 import com.savvasdalkitsis.uhuruphotos.api.map.model.MapProvider
 import com.savvasdalkitsis.uhuruphotos.api.seam.Mutation
-import com.savvasdalkitsis.uhuruphotos.implementation.settings.view.state.SettingsState
 import com.savvasdalkitsis.uhuruphotos.api.ui.theme.ThemeMode
 import com.savvasdalkitsis.uhuruphotos.api.userbadge.view.state.UserInformationState
+import com.savvasdalkitsis.uhuruphotos.implementation.settings.view.state.BiometricsSetting
 import com.savvasdalkitsis.uhuruphotos.implementation.settings.view.state.MapProviderState
+import com.savvasdalkitsis.uhuruphotos.implementation.settings.view.state.SettingsState
 
 internal sealed class SettingsMutation(
     mutation: Mutation<SettingsState>,
@@ -142,6 +143,10 @@ internal sealed class SettingsMutation(
                 current, available
             )
         )
+    })
+
+    data class DisplayBiometricsAppAccess(val biometrics: BiometricsSetting?) : SettingsMutation({
+        it.copy(biometrics = biometrics)
     })
 
     object DisplayNoMapProvidersOptions : SettingsMutation({

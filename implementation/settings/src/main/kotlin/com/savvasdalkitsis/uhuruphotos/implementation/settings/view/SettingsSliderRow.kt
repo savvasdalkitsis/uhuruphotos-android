@@ -15,35 +15,24 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.implementation.settings.view
 
-import androidx.compose.foundation.layout.Column
+import androidx.annotation.StringRes
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.heightIn
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Slider
 import androidx.compose.material.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
+import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
 
 @Composable
 internal fun SettingsSliderRow(
     text: @Composable (Float) -> String,
-    subtext: String? = null,
+    @StringRes subtext: Int? = null,
     initialValue: Float,
     range: ClosedFloatingPointRange<Float>,
     steps: Int = 0,
     onValueChanged: (Float) -> Unit = {},
 ) {
-    Column(
-        modifier = Modifier
-            .heightIn(min = 64.dp)
-            .fillMaxWidth()
-            .padding(8.dp),
+    SettingsEntryWithSubtext(
+        subtext = subtext,
     ) {
         var sliderValue by remember { mutableStateOf(initialValue) }
         Text(text(sliderValue))
@@ -56,8 +45,5 @@ internal fun SettingsSliderRow(
             onValueChange = { sliderValue = it },
             onValueChangeFinished = { onValueChanged(sliderValue) },
         )
-        if (subtext != null) {
-            Text(subtext, style = MaterialTheme.typography.subtitle2)
-        }
     }
 }

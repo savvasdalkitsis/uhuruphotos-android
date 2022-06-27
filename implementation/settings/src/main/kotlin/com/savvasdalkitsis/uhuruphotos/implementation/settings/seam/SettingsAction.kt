@@ -35,6 +35,8 @@ internal sealed class SettingsAction {
     data class ChangeMapProvider(val mapProvider: MapProvider) : SettingsAction()
     data class ChangeLoggingEnabled(val enabled: Boolean) : SettingsAction()
     data class FeedRefreshChanged(val days: Int) : SettingsAction()
+    data class ChangeBiometricsAppAccessRequirement(val required: Boolean) : SettingsAction()
+
     object LoadSettings : SettingsAction()
     object NavigateBack : SettingsAction()
     object ClearImageDiskCache : SettingsAction()
@@ -46,4 +48,5 @@ internal sealed class SettingsAction {
     object ClearLogFileClicked : SettingsAction()
     object SendFeedbackClicked : SettingsAction()
     object ClearRecentSearches : SettingsAction()
+    object EnrollToBiometrics : SettingsAction()
 }

@@ -21,8 +21,8 @@ import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.res.stringResource
-import com.savvasdalkitsis.uhuruphotos.implementation.settings.seam.SettingsAction
 import com.savvasdalkitsis.uhuruphotos.api.strings.R
+import com.savvasdalkitsis.uhuruphotos.implementation.settings.seam.SettingsAction
 
 @Composable
 internal fun SettingsGroupCache(
@@ -44,7 +44,7 @@ internal fun SettingsGroupCache(
         Divider()
         SettingsSliderRow(
             text = { stringResource(R.string.max_limit, it.toInt()) },
-            subtext = stringResource(R.string.changes_effect_after_restart),
+            subtext = R.string.changes_effect_after_restart,
             initialValue = initialMaxLimit,
             range = range,
             onValueChanged = { action(changeCacheSizeAction(it)) }

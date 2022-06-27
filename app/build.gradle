@@ -54,6 +54,7 @@ android {
 }
 
 dependencies {
+    implementation project(":api:activity")
     implementation project(":api:ui")
     implementation project(":api:initializer")
     implementation project(":api:navigation")

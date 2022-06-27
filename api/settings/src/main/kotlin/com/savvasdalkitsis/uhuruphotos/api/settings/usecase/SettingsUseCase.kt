@@ -36,6 +36,7 @@ interface SettingsUseCase {
     fun getMapProvider(): MapProvider
     fun getAvailableMapProviders(): Set<MapProvider>
     fun getLoggingEnabled(): Boolean
+    fun getBiometricsRequiredForAppAccess(): Boolean
 
     fun observeImageDiskCacheMaxLimit(): Flow<Int>
     fun observeImageMemCacheMaxLimit(): Flow<Int>
@@ -51,6 +52,7 @@ interface SettingsUseCase {
     suspend fun observeThemeModeState(): StateFlow<ThemeMode>
     fun observeMapProvider(): Flow<MapProvider>
     fun observeLoggingEnabled(): Flow<Boolean>
+    fun observeBiometricsRequiredForAppAccess(): Flow<Boolean>
 
     suspend fun setImageDiskCacheMaxLimit(sizeInMb: Int)
     suspend fun setImageMemCacheMaxLimit(sizeInMb: Int)
@@ -66,4 +68,5 @@ interface SettingsUseCase {
     suspend fun setShowLibrary(show: Boolean)
     suspend fun setMapProvider(provider: MapProvider)
     suspend fun setLoggingEnabled(enabled: Boolean)
+    suspend fun setBiometricsRequiredForAppAccess(required: Boolean)
 }

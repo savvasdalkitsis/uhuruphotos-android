@@ -17,8 +17,13 @@ package com.savvasdalkitsis.uhuruphotos.api.launchers
 
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
 
 inline fun onMain(crossinline action: suspend () -> Unit) = CoroutineScope(Dispatchers.Main).launch {
     action()
 }
+
+suspend inline fun awaitOnMain(crossinline action: suspend () -> Unit) = CoroutineScope(Dispatchers.Main).async {
+    action()
+}.await()

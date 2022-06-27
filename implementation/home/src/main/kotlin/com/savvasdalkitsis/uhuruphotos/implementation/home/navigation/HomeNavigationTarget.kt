@@ -18,6 +18,9 @@ package com.savvasdalkitsis.uhuruphotos.implementation.home.navigation
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
+import com.savvasdalkitsis.uhuruphotos.api.homenavigation.HomeNavigationRoutes
+import com.savvasdalkitsis.uhuruphotos.api.navigation.NavigationTarget
+import com.savvasdalkitsis.uhuruphotos.api.navigation.navigationTarget
 import com.savvasdalkitsis.uhuruphotos.api.settings.usecase.SettingsUseCase
 import com.savvasdalkitsis.uhuruphotos.implementation.home.seam.HomeAction
 import com.savvasdalkitsis.uhuruphotos.implementation.home.seam.HomeEffect
@@ -25,9 +28,6 @@ import com.savvasdalkitsis.uhuruphotos.implementation.home.seam.HomeEffectsHandl
 import com.savvasdalkitsis.uhuruphotos.implementation.home.view.Home
 import com.savvasdalkitsis.uhuruphotos.implementation.home.view.state.HomeState
 import com.savvasdalkitsis.uhuruphotos.implementation.home.viewmodel.HomeViewModel
-import com.savvasdalkitsis.uhuruphotos.api.homenavigation.HomeNavigationRoutes
-import com.savvasdalkitsis.uhuruphotos.api.navigation.NavigationTarget
-import com.savvasdalkitsis.uhuruphotos.api.navigation.navigationTarget
 import javax.inject.Inject
 
 internal class HomeNavigationTarget @Inject constructor(
@@ -42,10 +42,7 @@ internal class HomeNavigationTarget @Inject constructor(
             themeMode = settingsUseCase.observeThemeModeState(),
             initializer = { _, actions -> actions(HomeAction.Load) },
             createModel = { hiltViewModel() }
-        ) { state, _ ->
-            Home(
-                state,
-                navHostController,
-            )
+        ) { state, action ->
+            Home(state, action)
         }
 }

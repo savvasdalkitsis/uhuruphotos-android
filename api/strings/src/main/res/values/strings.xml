@@ -112,4 +112,12 @@
     </plurals>
     <string name="maps">Maps</string>
     <string name="map_provider">Map provider</string>
+    <string name="biometrics">Biometrics</string>
+    <string name="biometrics_enroll">Enroll into biometrics to enable feature</string>
+    <string name="require_biometrics_for_app_access">Require biometric authentication for app access</string>
+    <string name="authenticate">Authenticate</string>
+    <string name="authenticate_to_change">Authenticate to change the setting</string>
+    <string name="authenticate_to_change_description">Disabling this setting requires authentication for security purposes</string>
+    <string name="authenticate_for_access">Authenticate to gain access to the app</string>
+    <string name="authenticate_for_access_description">You requested that the app can only be accessed with authentication</string>
 </resources>

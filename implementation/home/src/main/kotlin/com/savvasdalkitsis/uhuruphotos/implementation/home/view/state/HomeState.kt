@@ -17,5 +17,5 @@ package com.savvasdalkitsis.uhuruphotos.implementation.home.view.state
 
 internal data class HomeState(
     val isLoading: Boolean = true,
-    val showLibrary: Boolean = true,
+    val needsAuthentication: Boolean = false,
 )

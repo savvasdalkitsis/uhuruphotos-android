@@ -7,6 +7,7 @@ dependencies {
     implementation project(":implementation:albums")
     implementation project(":implementation:auth")
     implementation project(":implementation:autoalbum")
+    implementation project(":implementation:biometrics")
     implementation project(":implementation:feedpage")
     implementation project(":implementation:heatmap")
     implementation project(":implementation:home")

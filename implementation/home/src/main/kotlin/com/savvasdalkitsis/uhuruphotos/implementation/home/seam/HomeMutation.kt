@@ -26,7 +26,10 @@ internal sealed class HomeMutation(
       it.copy(isLoading = true)
     })
 
-    data class ShowLibrary(val showLibrary: Boolean) : HomeMutation({
-        it.copy(showLibrary = showLibrary)
+    object NeedsBiometricAuthentication : HomeMutation({
+        it.copy(
+            isLoading = false,
+            needsAuthentication = true,
+        )
     })
 }

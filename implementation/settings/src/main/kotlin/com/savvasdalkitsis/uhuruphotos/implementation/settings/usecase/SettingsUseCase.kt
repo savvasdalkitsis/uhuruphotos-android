@@ -18,10 +18,7 @@ package com.savvasdalkitsis.uhuruphotos.implementation.settings.usecase
 import android.content.Context
 import androidx.work.NetworkType
 import com.fredporciuncula.flow.preferences.FlowSharedPreferences
-import com.google.android.gms.common.ConnectionResult.SERVICE_UPDATING
-import com.google.android.gms.common.ConnectionResult.SERVICE_VERSION_UPDATE_REQUIRED
-import com.google.android.gms.common.ConnectionResult.SIGN_IN_REQUIRED
-import com.google.android.gms.common.ConnectionResult.SUCCESS
+import com.google.android.gms.common.ConnectionResult.*
 import com.google.android.gms.common.GoogleApiAvailability
 import com.savvasdalkitsis.uhuruphotos.api.log.Log
 import com.savvasdalkitsis.uhuruphotos.api.map.model.MapProvider
@@ -71,6 +68,8 @@ internal class SettingsUseCase @Inject constructor(
         flowSharedPreferences.getBoolean("showLibrary", true)
     private val loggingEnabled =
         flowSharedPreferences.getBoolean("loggingEnabled", false)
+    private val biometricsRequiredForAppAccess =
+        flowSharedPreferences.getBoolean("biometricsRequiredForAppAccess", false)
 
     override fun getImageDiskCacheMaxLimit(): Int = imageDiskCacheSize.get()
     override fun getImageMemCacheMaxLimit(): Int = imageMemCacheSize.get()
@@ -87,6 +86,7 @@ internal class SettingsUseCase @Inject constructor(
     override fun getAvailableMapProviders(): Set<MapProvider> = MapProvider.values()
         .map { it.mapToAvailable() }.toSet()
     override fun getLoggingEnabled(): Boolean = loggingEnabled.get()
+    override fun getBiometricsRequiredForAppAccess(): Boolean = biometricsRequiredForAppAccess.get()
 
     override fun observeImageDiskCacheMaxLimit(): Flow<Int> = imageDiskCacheSize.asFlow()
     override fun observeImageMemCacheMaxLimit(): Flow<Int> = imageMemCacheSize.asFlow()
@@ -106,6 +106,8 @@ internal class SettingsUseCase @Inject constructor(
     override fun observeMapProvider(): Flow<MapProvider> = mapProvider.asFlow()
         .map { it.mapToAvailable() }
     override fun observeLoggingEnabled(): Flow<Boolean> = loggingEnabled.asFlow()
+    override fun observeBiometricsRequiredForAppAccess(): Flow<Boolean> =
+        biometricsRequiredForAppAccess.asFlow()
 
     override suspend fun setImageDiskCacheMaxLimit(sizeInMb: Int) {
         imageDiskCacheSize.setAndCommit(sizeInMb)
@@ -162,6 +164,10 @@ internal class SettingsUseCase @Inject constructor(
     override suspend fun setLoggingEnabled(enabled: Boolean) {
         loggingEnabled.setAndCommit(enabled)
         Log.enabled = enabled
+    }
+
+    override suspend fun setBiometricsRequiredForAppAccess(required: Boolean) {
+        biometricsRequiredForAppAccess.setAndCommit(required)
     }
 
     private fun MapProvider.mapToAvailable(): MapProvider =

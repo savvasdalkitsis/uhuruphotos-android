@@ -1,0 +1,15 @@
+android {
+    namespace 'com.savvasdalkitsis.uhuruphotos.implementation.biometrics'
+}
+
+dependencies {
+
+    implementation project(":api:activity")
+    implementation project(":api:biometrics")
+    implementation project(":api:launchers")
+    implementation project(":api:log")
+    implementation(
+            libs.assure,
+            libs.hilt,
+    )
+}

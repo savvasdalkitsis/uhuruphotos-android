@@ -15,11 +15,12 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.implementation.settings.seam
 
+import android.content.Intent
+import android.provider.Settings.ACTION_SECURITY_SETTINGS
 import com.savvasdalkitsis.uhuruphotos.api.navigation.Navigator
 import com.savvasdalkitsis.uhuruphotos.api.seam.EffectHandler
 import com.savvasdalkitsis.uhuruphotos.api.toaster.Toaster
-import com.savvasdalkitsis.uhuruphotos.implementation.settings.seam.SettingsEffect.NavigateBack
-import com.savvasdalkitsis.uhuruphotos.implementation.settings.seam.SettingsEffect.ShowMessage
+import com.savvasdalkitsis.uhuruphotos.implementation.settings.seam.SettingsEffect.*
 import javax.inject.Inject
 
 internal class SettingsEffectHandler @Inject constructor(
@@ -30,9 +31,10 @@ internal class SettingsEffectHandler @Inject constructor(
     override suspend fun handleEffect(
         effect: SettingsEffect,
     ) {
-        when(effect) {
+        when (effect) {
             NavigateBack -> navigator.navigateBack()
             is ShowMessage -> toaster.show(effect.message)
+            EnrollToBiometrics -> navigator.navigateTo(Intent(ACTION_SECURITY_SETTINGS))
         }
     }
 

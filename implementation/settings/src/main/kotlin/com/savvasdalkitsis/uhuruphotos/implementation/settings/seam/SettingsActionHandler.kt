@@ -18,6 +18,8 @@ package com.savvasdalkitsis.uhuruphotos.implementation.settings.seam
 import androidx.work.ExistingPeriodicWorkPolicy.REPLACE
 import androidx.work.WorkInfo.State.RUNNING
 import com.savvasdalkitsis.uhuruphotos.api.albums.worker.AlbumWorkScheduler
+import com.savvasdalkitsis.uhuruphotos.api.biometrics.model.Biometrics.*
+import com.savvasdalkitsis.uhuruphotos.api.biometrics.usecase.BiometricsUseCase
 import com.savvasdalkitsis.uhuruphotos.api.log.usecase.FeedbackUseCase
 import com.savvasdalkitsis.uhuruphotos.api.seam.ActionHandler
 import com.savvasdalkitsis.uhuruphotos.api.search.SearchUseCase
@@ -28,13 +30,9 @@ import com.savvasdalkitsis.uhuruphotos.implementation.settings.seam.SettingsActi
 import com.savvasdalkitsis.uhuruphotos.implementation.settings.seam.SettingsEffect.ShowMessage
 import com.savvasdalkitsis.uhuruphotos.implementation.settings.seam.SettingsMutation.*
 import com.savvasdalkitsis.uhuruphotos.implementation.settings.usecase.CacheUseCase
+import com.savvasdalkitsis.uhuruphotos.implementation.settings.view.state.BiometricsSetting
 import com.savvasdalkitsis.uhuruphotos.implementation.settings.view.state.SettingsState
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flatMapMerge
-import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.flow.flowOf
-import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.flow.merge
+import kotlinx.coroutines.flow.*
 import javax.inject.Inject
 
 internal class SettingsActionHandler @Inject constructor(
@@ -44,6 +42,7 @@ internal class SettingsActionHandler @Inject constructor(
     private val cacheUseCase: CacheUseCase,
     private val feedbackUseCase: FeedbackUseCase,
     private val searchUseCase: SearchUseCase,
+    private val biometricsUseCase: BiometricsUseCase,
 ) : ActionHandler<SettingsState, SettingsEffect, SettingsAction, SettingsMutation> {
 
     override fun handleAction(
@@ -83,6 +82,14 @@ internal class SettingsActionHandler @Inject constructor(
             },
             settingsUseCase.observeLoggingEnabled()
                 .map(::DisplayLoggingEnabled),
+            settingsUseCase.observeBiometricsRequiredForAppAccess()
+                .map { required ->
+                     DisplayBiometricsAppAccess(when (biometricsUseCase.getBiometrics()) {
+                         Enrolled -> BiometricsSetting.Enrolled(required)
+                         NotEnrolled -> BiometricsSetting.NotEnrolled
+                         NoHardware -> null
+                     })
+                },
             cacheUseCase.observeImageDiskCacheCurrentUse()
                 .map(::DisplayImageDiskCacheCurrentUse),
             cacheUseCase.observeImageMemCacheCurrentUse()
@@ -176,6 +183,23 @@ internal class SettingsActionHandler @Inject constructor(
         }
         is FeedRefreshChanged -> flow {
             settingsUseCase.setFeedFeedDaysToRefresh(action.days)
+        }
+        is ChangeBiometricsAppAccessRequirement -> flow {
+            val proceed = when {
+                action.required -> Result.success(Unit)
+                else -> biometricsUseCase.authenticate(
+                    R.string.authenticate,
+                    R.string.authenticate_to_change,
+                    R.string.authenticate_to_change_description,
+                    true,
+                )
+            }
+            if (proceed.isSuccess) {
+                settingsUseCase.setBiometricsRequiredForAppAccess(action.required)
+            }
+        }
+        EnrollToBiometrics -> flow {
+            effect(SettingsEffect.EnrollToBiometrics)
         }
     }
 

@@ -20,4 +20,5 @@ import androidx.annotation.StringRes
 internal sealed class SettingsEffect {
     data class ShowMessage(@StringRes val message: Int) : SettingsEffect()
     object NavigateBack : SettingsEffect()
+    object EnrollToBiometrics : SettingsEffect()
 }

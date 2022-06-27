@@ -22,19 +22,15 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.res.stringResource
+import com.savvasdalkitsis.uhuruphotos.api.strings.R
+import com.savvasdalkitsis.uhuruphotos.api.ui.view.*
+import com.savvasdalkitsis.uhuruphotos.api.ui.window.LocalWindowSize
+import com.savvasdalkitsis.uhuruphotos.api.userbadge.view.UserBadge
 import com.savvasdalkitsis.uhuruphotos.implementation.settings.seam.SettingsAction
 import com.savvasdalkitsis.uhuruphotos.implementation.settings.seam.SettingsAction.DismissFullFeedSyncDialog
 import com.savvasdalkitsis.uhuruphotos.implementation.settings.seam.SettingsAction.NavigateBack
+import com.savvasdalkitsis.uhuruphotos.implementation.settings.view.state.MapProviderState.Selected
 import com.savvasdalkitsis.uhuruphotos.implementation.settings.view.state.SettingsState
-import com.savvasdalkitsis.uhuruphotos.api.strings.R
-import com.savvasdalkitsis.uhuruphotos.api.ui.view.ActionIcon
-import com.savvasdalkitsis.uhuruphotos.api.ui.view.BackNavButton
-import com.savvasdalkitsis.uhuruphotos.api.ui.view.CommonScaffold
-import com.savvasdalkitsis.uhuruphotos.api.ui.view.FullProgressBar
-import com.savvasdalkitsis.uhuruphotos.api.ui.view.StaggeredGrid
-import com.savvasdalkitsis.uhuruphotos.api.ui.window.LocalWindowSize
-import com.savvasdalkitsis.uhuruphotos.api.userbadge.view.UserBadge
-import com.savvasdalkitsis.uhuruphotos.implementation.settings.view.state.MapProviderState.*
 import com.savvasdalkitsis.uhuruphotos.api.icons.R as Icons
 
 @Composable
@@ -44,6 +40,7 @@ internal fun Settings(
 ) {
     val collapsedTheme = remember { mutableStateOf(false) }
     val collapsedFeed = remember { mutableStateOf(false) }
+    val collapsedBiometrics = remember { mutableStateOf(false) }
     val collapsedImageDiskCache = remember { mutableStateOf(false) }
     val collapsedImageMemoryCache = remember { mutableStateOf(false) }
     val collapsedVideoDiskCache = remember { mutableStateOf(false) }
@@ -56,6 +53,7 @@ internal fun Settings(
     val allCollapse = listOf(
         collapsedTheme,
         collapsedFeed,
+        collapsedBiometrics,
         collapsedImageDiskCache,
         collapsedImageMemoryCache,
         collapsedVideoDiskCache,
@@ -103,6 +101,9 @@ internal fun Settings(
                 }
                 item {
                     SettingsGroupFeed(state, action, collapsedFeed)
+                }
+                item {
+                    SettingsGroupBiometrics(state, action, collapsedBiometrics)
                 }
                 item {
                     SettingsGroupImageDiskCache(state, action, collapsedImageDiskCache)

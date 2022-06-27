@@ -15,14 +15,16 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.implementation.home.seam
 
-import com.savvasdalkitsis.uhuruphotos.api.seam.ActionHandler
-import com.savvasdalkitsis.uhuruphotos.api.settings.usecase.SettingsUseCase
 import com.savvasdalkitsis.uhuruphotos.api.auth.model.AuthStatus.Unauthenticated
 import com.savvasdalkitsis.uhuruphotos.api.auth.usecase.AuthenticationUseCase
+import com.savvasdalkitsis.uhuruphotos.api.biometrics.usecase.BiometricsUseCase
+import com.savvasdalkitsis.uhuruphotos.api.seam.ActionHandler
+import com.savvasdalkitsis.uhuruphotos.api.settings.usecase.SettingsUseCase
+import com.savvasdalkitsis.uhuruphotos.api.strings.R
 import com.savvasdalkitsis.uhuruphotos.implementation.home.seam.HomeAction.Load
 import com.savvasdalkitsis.uhuruphotos.implementation.home.seam.HomeEffect.LaunchAuthentication
 import com.savvasdalkitsis.uhuruphotos.implementation.home.seam.HomeMutation.Loading
-import com.savvasdalkitsis.uhuruphotos.implementation.home.seam.HomeMutation.ShowLibrary
+import com.savvasdalkitsis.uhuruphotos.implementation.home.seam.HomeMutation.NeedsBiometricAuthentication
 import com.savvasdalkitsis.uhuruphotos.implementation.home.view.state.HomeState
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
@@ -31,6 +33,7 @@ import javax.inject.Inject
 internal class HomeActionHandler @Inject constructor(
     private val authenticationUseCase: AuthenticationUseCase,
     private val settingsUseCase: SettingsUseCase,
+    private val biometricsUseCase: BiometricsUseCase,
 ) : ActionHandler<HomeState, HomeEffect, HomeAction, HomeMutation> {
     override fun handleAction(
         state: HomeState,
@@ -39,10 +42,21 @@ internal class HomeActionHandler @Inject constructor(
     ): Flow<HomeMutation> = when (action) {
         is Load -> flow {
             emit(Loading)
-            emit(ShowLibrary(settingsUseCase.getShowLibrary()))
-            when (authenticationUseCase.authenticationStatus()) {
-                is Unauthenticated -> effect(LaunchAuthentication)
-                else -> effect(HomeEffect.LoadFeed)
+            val proceed = when {
+                settingsUseCase.getBiometricsRequiredForAppAccess() -> biometricsUseCase.authenticate(
+                    R.string.authenticate,
+                    R.string.authenticate_for_access,
+                    R.string.authenticate_for_access_description,
+                    true,
+                )
+                else -> Result.success(Unit)
+            }
+            when {
+                proceed.isFailure -> emit(NeedsBiometricAuthentication)
+                else -> when (authenticationUseCase.authenticationStatus()) {
+                    is Unauthenticated -> effect(LaunchAuthentication)
+                    else -> effect(HomeEffect.LoadFeed)
+                }
             }
         }
     }
