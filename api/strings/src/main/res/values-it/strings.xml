@@ -1,2 +1,57 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources></resources>
+<resources>
+    <plurals name="delete_photos">
+        <item quantity="one">Elimina %d foto</item>
+        <item quantity="other">Elimina %d foto</item>
+    </plurals>
+    <string name="photo">Foto</string>
+    <string name="never">mai</string>
+    <string name="copied_to_clipboard">Copiato negli appunti</string>
+    <string name="error_logging_in">C\'è stato un errore nel log-in</string>
+    <string name="photo_map">Mappa delle foto</string>
+    <string name="feed">Feed</string>
+    <string name="search">Cerca</string>
+    <string name="tiny">Piccolo</string>
+    <string name="compact">Compatto</string>
+    <string name="comfortable">Confortevole</string>
+    <string name="big">Grande</string>
+    <string name="perform_full_sync">Sincronizza tutto adesso</string>
+    <string name="perform_full_feed_sync">Sincronizza tutto il feed</string>
+    <string name="feed_sync_progress">Sincronizzazione dell\'intero feed in corso</string>
+    <string name="jobs">Lavori</string>
+    <plurals name="days">
+        <item quantity="one">%d giorno</item>
+        <item quantity="other">%d giorni</item>
+    </plurals>
+    <string name="currently_used">Attualmente in uso; %dmb</string>
+    <string name="max_limit">Limite massimo: %dmb</string>
+    <string name="changes_effect_after_restart">(i cambiamenti avranno effetto dopo il riavvio)</string>
+    <string name="share">Condividi</string>
+    <string name="delete">Elimina</string>
+    <string name="downloading_photo_details">Scarico i dettagli della foto</string>
+    <string name="deleting_photo">Elimino la foto</string>
+    <string name="refreshing_albums">Aggiornamento degli album in corso</string>
+    <string name="could_not_find_app_to_open">Non trovo un app per aprire</string>
+    <string name="full">Full</string>
+    <plurals name="delete_photos_confirmation">
+        <item quantity="one">Sei sicuro di voler eliminare questa %d foto\?</item>
+        <item quantity="other">Sei sicuro di voler eliminare queste %d foto\?</item>
+    </plurals>
+    <string name="error_refreshing_people">C\'è stato un errore aggiornando le persone</string>
+    <string name="error_loading_photo_details">Errore nel caricamento dei dettagli della foto</string>
+    <string name="error_searching">Errore durante la ricerca</string>
+    <string name="error_changing_photo_favourite">Errore nel modificare lo stato di foto preferita</string>
+    <string name="feed_sync_freq">Frequenza di sincronizzazione del feed di foto</string>
+    <string name="feed_sync_freq_changed">Frequenza di sincronizzazione del feed modificata</string>
+    <string name="logs_cleared">Log cancellati</string>
+    <string name="requires_charging">Richiede ricarica</string>
+    <string name="downloading_photos_sharing">Scaricando la foto e condividendola tra poco</string>
+    <plurals name="hours">
+        <item quantity="one">%d ora</item>
+        <item quantity="other">%d ore</item>
+    </plurals>
+    <string name="settings">Impostazioni</string>
+    <string name="no">No</string>
+    <string name="clear">Pulisci</string>
+    <string name="yes">Si</string>
+</resources>
