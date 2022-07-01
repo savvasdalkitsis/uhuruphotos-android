@@ -23,7 +23,7 @@
         <item quantity="one">%d giorno</item>
         <item quantity="other">%d giorni</item>
     </plurals>
-    <string name="currently_used">Attualmente in uso; %dmb</string>
+    <string name="currently_used">Attualmente in uso: %dmb</string>
     <string name="max_limit">Limite massimo: %dmb</string>
     <string name="changes_effect_after_restart">(i cambiamenti avranno effetto dopo il riavvio)</string>
     <string name="share">Condividi</string>
