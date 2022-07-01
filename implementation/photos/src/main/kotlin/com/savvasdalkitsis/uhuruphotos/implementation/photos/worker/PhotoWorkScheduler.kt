@@ -46,7 +46,7 @@ class PhotoWorkScheduler @Inject constructor(
         workScheduler.scheduleNow<PhotoDeletionWorker>(
             workName = PhotoDeletionWorker.workName(id)
         ) {
-            putString(PhotoFavouriteWorker.KEY_ID, id)
+            putString(PhotoDeletionWorker.KEY_ID, id)
         }
     }
 }

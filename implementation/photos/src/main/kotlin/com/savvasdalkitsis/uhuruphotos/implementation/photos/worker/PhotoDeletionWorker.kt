@@ -44,7 +44,7 @@ class PhotoDeletionWorker @AssistedInject constructor(
             val id = params.inputData.getString(KEY_ID)!!
             val response = photosService.deletePhoto(id)
             val code = response.code()
-            if (code in 200..299) {
+            if (code in 200..299 || code == 404) {
                 photoRepository.deletePhoto(id)
                 Result.success()
             } else {
