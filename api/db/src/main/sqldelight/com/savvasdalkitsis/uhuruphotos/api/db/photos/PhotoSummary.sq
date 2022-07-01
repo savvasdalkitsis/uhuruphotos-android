@@ -17,8 +17,8 @@ CREATE TABLE photoSummary (
 insert:
 INSERT OR REPLACE INTO photoSummary VALUES ?;
 
-getPhotoSummariesCountForAlbum:
-SELECT count(id) FROM photoSummary WHERE id=?;
+deletePhotoSummariesforAlbum:
+DELETE FROM photoSummary WHERE containerId=?;
 
 getPhotoSummariesForAlbum:
 SELECT id, url FROM photoSummary WHERE containerId=?;

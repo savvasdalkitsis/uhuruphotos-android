@@ -25,6 +25,7 @@ import com.savvasdalkitsis.uhuruphotos.api.albums.service.model.toUserAlbums
 import com.savvasdalkitsis.uhuruphotos.api.coroutines.safelyOnStartIgnoring
 import com.savvasdalkitsis.uhuruphotos.api.db.Database
 import com.savvasdalkitsis.uhuruphotos.api.db.albums.*
+import com.savvasdalkitsis.uhuruphotos.api.db.extensions.async
 import com.savvasdalkitsis.uhuruphotos.api.db.extensions.await
 import com.savvasdalkitsis.uhuruphotos.api.db.extensions.awaitSingle
 import com.savvasdalkitsis.uhuruphotos.api.db.people.PeopleQueries
@@ -249,23 +250,26 @@ internal class AlbumsRepository @Inject constructor(
         }
         for ((index, incompleteAlbum) in albumsToDownloadSummaries.withIndex()) {
             val id = incompleteAlbum.id
-            maybeFetchSummaries(id, albumFetcher, completeAlbumProcessor)
+            updateSummaries(id, albumFetcher, completeAlbumProcessor)
             onProgressChange((100 * ((index + 1)/ albumsToDownloadSummaries.size.toFloat())).toInt())
         }
     }
 
-    private suspend fun maybeFetchSummaries(
+    private suspend fun updateSummaries(
         id: String,
         albumFetcher: suspend (String) -> Album.CompleteAlbum,
         completeAlbumProcessor: suspend (Album.CompleteAlbum) -> Unit,
     ) {
         val completeAlbum = albumFetcher(id)
         completeAlbumProcessor(completeAlbum)
-        val summaryCount = photoSummaryQueries.getPhotoSummariesCountForAlbum(id).awaitSingle()
-        if (completeAlbum.items.size.toLong() != summaryCount) {
-            for (albumItem in completeAlbum.items) {
-                val photoSummary = albumItem.toPhotoSummary(id)
-                photoSummaryQueries.insert(photoSummary)
+        async {
+            photoSummaryQueries.transaction {
+                photoSummaryQueries.deletePhotoSummariesforAlbum(id)
+                completeAlbum.items
+                    .map { it.toPhotoSummary(id) }
+                    .forEach {
+                        photoSummaryQueries.insert(it)
+                    }
             }
         }
     }
