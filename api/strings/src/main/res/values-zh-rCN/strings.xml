@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="error_searching">搜索时出现了错误</string>
+    <string name="error_changing_photo_favourite">变更照片收藏状态时出现了错误</string>
+    <string name="downloading_photos_sharing">正在下载照片，很快就会分享</string>
+    <string name="copied_to_clipboard">已复制到剪贴板</string>
+    <string name="could_not_find_app_to_open">找不到可以打开的应用</string>
+    <string name="error_logging_in">登录时出现了一个错误</string>
+    <string name="photo_map">照片地图</string>
+    <string name="search">搜索</string>
+    <string name="tiny">小</string>
+    <string name="comfortable">舒适</string>
+    <string name="logs_cleared">日志已清理</string>
+    <string name="error_refreshing_people">刷新人物时出现了错误</string>
+    <string name="error_loading_photo_details">加载照片详情时出现了错误</string>
+    <string name="recent_searches_cleared">最近搜索已清理</string>
+    <string name="compact">紧凑</string>
+    <string name="big">大</string>
+</resources>
