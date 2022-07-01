@@ -1,3 +1,13 @@
+android {
+    buildFeatures {
+        compose true
+    }
+    composeOptions {
+        kotlinCompilerExtensionVersion compose_version
+    }
+    namespace 'com.savvasdalkitsis.uhuruphotos.api.photos'
+}
+
 dependencies {
     api project(":api:db")
     api project(":api:map")
@@ -11,8 +21,4 @@ dependencies {
             libs.moshi,
     )
     kapt libs.moshi.kapt
-}
-
-android {
-    namespace 'com.savvasdalkitsis.uhuruphotos.api.photos'
 }

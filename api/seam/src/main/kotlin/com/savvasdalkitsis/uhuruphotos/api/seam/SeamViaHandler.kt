@@ -52,6 +52,6 @@ class SeamViaHandler<S : Any, E : Any, A : Any, M : Mutation<S>>(
         fun <S : Any, E : Any, A : Any, M : Mutation<S>> handler(
             handler: ActionHandler<S, E, A, M>,
             initialState: S,
-        ) = SeamViaHandler(handler, initialState)
+        ): Seam<S, E, A, M> = SeamViaHandler(handler, initialState)
     }
 }
