@@ -67,7 +67,7 @@
     <string name="sorting">Tri en cours</string>
     <string name="error_loading_album">Il y a eu une erreur en chargeant l\'album</string>
     <string name="error_loading_auto_albums">Il y a eu une erreur en chargeant les albums générés automatiquement</string>
-    <string name="network_requirements">Configuration réseau requise  : %s</string>
+    <string name="network_requirements">Configuration réseau requise : %s</string>
     <string name="metered">Mobile</string>
     <string name="not_roaming">Pas en itinérance</string>
     <string name="remove_gps_data_when_sharing">Supprimer les données GPS lors du partage</string>
