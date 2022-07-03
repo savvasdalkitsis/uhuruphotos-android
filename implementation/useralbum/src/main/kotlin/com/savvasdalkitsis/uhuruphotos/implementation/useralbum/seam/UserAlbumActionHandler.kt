@@ -21,6 +21,7 @@ import com.savvasdalkitsis.uhuruphotos.api.albumpage.seam.AlbumPageEffect
 import com.savvasdalkitsis.uhuruphotos.api.albumpage.seam.AlbumPageMutation
 import com.savvasdalkitsis.uhuruphotos.api.albumpage.view.state.AlbumDetails
 import com.savvasdalkitsis.uhuruphotos.api.albumpage.view.state.AlbumPageState
+import com.savvasdalkitsis.uhuruphotos.api.albumpage.view.state.Title
 import com.savvasdalkitsis.uhuruphotos.api.albums.model.Album
 import com.savvasdalkitsis.uhuruphotos.api.date.DateDisplayer
 import com.savvasdalkitsis.uhuruphotos.api.db.extensions.isVideo
@@ -51,9 +52,10 @@ by AlbumPageActionHandler(
     albumDetailsFlow = { albumId ->
         userAlbumsUseCase.observeUserAlbum(albumId)
             .map { photoEntries ->
-                val favouriteThreshold = userUseCase.getUserOrRefresh()?.favoriteMinRating
+                val favouriteThreshold = userUseCase.getUserOrRefresh()
+                    .mapCatching { it.favoriteMinRating!! }
                 AlbumDetails(
-                    title = photoEntries.firstOrNull()?.title ?: "",
+                    title = Title.Text(photoEntries.firstOrNull()?.title ?: ""),
                     albums = photoEntries.groupBy { entry ->
                         dateDisplayer.dateString(entry.date)
                     }.entries.map { (date, photos) ->
@@ -61,17 +63,23 @@ by AlbumPageActionHandler(
                             id = date,
                             date = date,
                             location = null,
-                            photos = photos.map {
+                            photos = photos.map { photo ->
                                 Photo(
-                                    id = it.photoId.toString(),
+                                    id = photo.photoId.toString(),
                                     thumbnailUrl = with(photosUseCase) {
-                                        it.photoId.toThumbnailUrlFromIdNullable()
+                                        photo.photoId.toThumbnailUrlFromIdNullable()
                                     },
-                                    fallbackColor = it.dominantColor,
-                                    ratio = it.aspectRatio ?: 1f,
-                                    isFavourite = favouriteThreshold != null
-                                            && (it.rating ?: 0) >= favouriteThreshold,
-                                    isVideo = it.isVideo,
+                                    fullResUrl = with(photosUseCase) {
+                                        photo.photoId.toFullSizeUrlFromIdNullable(photo.isVideo)
+                                    },
+                                    fallbackColor = photo.dominantColor,
+                                    ratio = photo.aspectRatio ?: 1f,
+                                    isFavourite = favouriteThreshold
+                                        .map {
+                                            (photo.rating ?: 0) >= it
+                                        }
+                                        .getOrElse { false },
+                                    isVideo = photo.isVideo,
                                 )
                             }
                         )

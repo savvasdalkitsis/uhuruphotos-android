@@ -34,7 +34,7 @@ import kotlin.properties.Delegates
 
 class AlbumPageActionHandler(
     private val albumRefresher: suspend (Int) -> Unit,
-    private val albumDetailsFlow: (albumId: Int) -> Flow<AlbumDetails>,
+    private val albumDetailsFlow: suspend (albumId: Int) -> Flow<AlbumDetails>,
     private val albumDetailsEmptyCheck: suspend (albumId: Int) -> Boolean,
     private val photoSequenceDataSource: (albumId: Int) -> PhotoSequenceDataSource,
     private val initialFeedDisplay: (albumId: Int) -> FeedDisplay,
@@ -52,7 +52,7 @@ class AlbumPageActionHandler(
         is LoadAlbum -> {
             merge(
                 flowOf(AlbumPageMutation.ChangeFeedDisplay(initialFeedDisplay(action.albumId))),
-                albumDetailsFlow(action.albumId)
+                flow { emitAll(albumDetailsFlow(action.albumId)) }
                     .map(::ShowAlbumPage),
                 loading
             ).safelyOnStartIgnoring {

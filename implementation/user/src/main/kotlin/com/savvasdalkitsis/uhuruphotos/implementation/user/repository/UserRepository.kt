@@ -15,16 +15,15 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.implementation.user.repository
 
-import com.savvasdalkitsis.uhuruphotos.api.log.log
 import com.savvasdalkitsis.uhuruphotos.api.db.extensions.async
 import com.savvasdalkitsis.uhuruphotos.api.db.extensions.awaitSingleOrNull
 import com.savvasdalkitsis.uhuruphotos.api.db.user.User
 import com.savvasdalkitsis.uhuruphotos.api.db.user.UserQueries
+import com.savvasdalkitsis.uhuruphotos.api.log.runCatchingWithLog
 import com.savvasdalkitsis.uhuruphotos.implementation.user.service.UserService
 import com.squareup.sqldelight.runtime.coroutines.asFlow
 import com.squareup.sqldelight.runtime.coroutines.mapToOneNotNull
 import kotlinx.coroutines.flow.Flow
-import java.io.IOException
 import javax.inject.Inject
 
 internal class UserRepository @Inject constructor(
@@ -36,14 +35,11 @@ internal class UserRepository @Inject constructor(
 
     suspend fun getUser(): User? = userQueries.getUser().awaitSingleOrNull()
 
-    suspend fun refreshUser(): User? = try {
+    suspend fun refreshUser(): Result<User> = runCatchingWithLog {
         val userResults = userService.getUser()
         for (userResult in userResults.results) {
             async { userQueries.addUser(userResult.toUser()) }
         }
         userResults.results.last().toUser()
-    } catch (e: IOException) {
-        log(e)
-        null
     }
 }

@@ -21,5 +21,5 @@ import kotlinx.coroutines.flow.Flow
 interface UserUseCase {
 
     fun observeUser(): Flow<User>
-    suspend fun getUserOrRefresh(): User?
+    suspend fun getUserOrRefresh(): Result<User>
 }

@@ -95,13 +95,14 @@ class UserAlbumsUseCase @Inject constructor(
                 )
             }
 
-    private fun photo(imageHash: String?, coverFavourite: Boolean?): Photo? = with(photosUseCase) {
+    private fun photo(imageHash: String?, coverIsVideo: Boolean?): Photo? = with(photosUseCase) {
         imageHash?.let { imageHash ->
             Photo(
                 id = imageHash,
                 thumbnailUrl = imageHash.toThumbnailUrlFromId(),
+                fullResUrl = imageHash.toFullSizeUrlFromId(coverIsVideo ?: false),
                 ratio = 1f,
-                isVideo = coverFavourite ?: false,
+                isVideo = coverIsVideo ?: false,
             )
         }
     }

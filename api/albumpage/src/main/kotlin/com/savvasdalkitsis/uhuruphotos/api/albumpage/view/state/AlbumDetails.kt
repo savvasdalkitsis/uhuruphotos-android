@@ -15,11 +15,29 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.api.albumpage.view.state
 
+import androidx.annotation.StringRes
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.res.stringResource
 import com.savvasdalkitsis.uhuruphotos.api.albums.model.Album
 import com.savvasdalkitsis.uhuruphotos.api.people.view.state.Person
 
 data class AlbumDetails(
-    val title: String = "",
+    val title: Title = Title.Text(""),
     val albums: List<Album> = emptyList(),
     val people: List<Person> = emptyList(),
 )
+
+sealed class Title {
+    @Composable
+    abstract fun toText(): String
+
+    data class Text(val title: String) : Title() {
+        @Composable
+        override fun toText(): String = title
+    }
+
+    data class Resource(@StringRes val title: Int) : Title() {
+        @Composable
+        override fun toText(): String = stringResource(title)
+    }
+}

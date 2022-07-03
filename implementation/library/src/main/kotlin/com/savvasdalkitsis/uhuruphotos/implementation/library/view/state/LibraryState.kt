@@ -21,4 +21,5 @@ data class LibraryState(
     val loading: Boolean = false,
     val autoAlbums: PhotoGrid? = null,
     val userAlbums: PhotoGrid? = null,
+    val favouritePhotos: PhotoGrid? = null,
 )

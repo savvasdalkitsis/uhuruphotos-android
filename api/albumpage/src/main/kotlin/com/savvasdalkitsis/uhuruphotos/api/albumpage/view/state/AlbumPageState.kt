@@ -23,6 +23,6 @@ data class AlbumPageState(
     val feedState: FeedState = FeedState(),
     @get:StringRes
     val error: Int? = null,
-    val title: String = "",
+    val title: Title = Title.Text(""),
     val people: List<Person> = emptyList(),
 )

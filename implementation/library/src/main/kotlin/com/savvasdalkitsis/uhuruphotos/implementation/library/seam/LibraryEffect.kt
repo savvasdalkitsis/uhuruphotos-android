@@ -18,5 +18,6 @@ package com.savvasdalkitsis.uhuruphotos.implementation.library.seam
 sealed class LibraryEffect {
     object NavigateToAutoAlbums : LibraryEffect()
     object NavigateToUserAlbums : LibraryEffect()
+    object NavigateToFavourites : LibraryEffect()
     object ErrorLoadingAlbums : LibraryEffect()
 }

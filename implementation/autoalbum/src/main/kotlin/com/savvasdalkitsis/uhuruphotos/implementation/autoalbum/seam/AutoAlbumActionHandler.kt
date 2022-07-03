@@ -21,6 +21,7 @@ import com.savvasdalkitsis.uhuruphotos.api.albumpage.seam.AlbumPageActionHandler
 import com.savvasdalkitsis.uhuruphotos.api.albumpage.seam.AlbumPageMutation
 import com.savvasdalkitsis.uhuruphotos.api.albumpage.view.state.AlbumDetails
 import com.savvasdalkitsis.uhuruphotos.api.albumpage.view.state.AlbumPageState
+import com.savvasdalkitsis.uhuruphotos.api.albumpage.view.state.Title
 import com.savvasdalkitsis.uhuruphotos.api.albums.model.Album
 import com.savvasdalkitsis.uhuruphotos.api.date.DateDisplayer
 import com.savvasdalkitsis.uhuruphotos.api.people.view.state.toPerson
@@ -50,7 +51,7 @@ by AlbumPageActionHandler(
         autoAlbumsUseCase.observeAutoAlbum(albumId)
             .map { (photoEntries, people) ->
                 AlbumDetails(
-                    title = photoEntries.firstOrNull()?.title ?: "",
+                    title = Title.Text(photoEntries.firstOrNull()?.title ?: ""),
                     people = with(photosUseCase) {
                         people.map { person ->
                             person.toPerson { it.toAbsoluteUrl() }
@@ -68,6 +69,9 @@ by AlbumPageActionHandler(
                                     id = it.photoId.toString(),
                                     thumbnailUrl = with(photosUseCase) {
                                         it.photoId.toThumbnailUrlFromIdNullable()
+                                    },
+                                    fullResUrl = with(photosUseCase) {
+                                        it.photoId.toFullSizeUrlFromIdNullable(it.video ?: false)
                                     },
                                     isFavourite = it.isFavorite ?: false,
                                     isVideo = it.video ?: false,

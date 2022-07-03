@@ -63,6 +63,7 @@
     <string name="photos_on_map">Photos on map (%1$d out of %2$d)</string>
     <string name="refresh">Refresh</string>
     <string name="favourite">Favourite</string>
+    <string name="favourite_photos">Favourite photos</string>
     <string name="remove_favourite">Remove favourite</string>
     <string name="info">Info</string>
     <string name="background_jobs">Background jobs</string>

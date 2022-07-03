@@ -31,6 +31,6 @@ internal class UserUseCase @Inject constructor(
             userRepository.refreshUser()
         }
 
-    override suspend fun getUserOrRefresh(): User? =
-        userRepository.getUser() ?: userRepository.refreshUser()
+    override suspend fun getUserOrRefresh(): Result<User> =
+        userRepository.getUser()?.let { Result.success(it) } ?: userRepository.refreshUser()
 }

@@ -72,6 +72,9 @@ class SearchUseCase @Inject constructor(
                             thumbnailUrl = with(photosUseCase) {
                                 photo.summaryId.toThumbnailUrlFromIdNullable()
                             },
+                            fullResUrl = with(photosUseCase) {
+                                photo.summaryId.toFullSizeUrlFromIdNullable(photo.isVideo)
+                            },
                             fallbackColor = photo.dominantColor,
                             ratio = photo.aspectRatio ?: 1f,
                             isVideo = photo.isVideo,

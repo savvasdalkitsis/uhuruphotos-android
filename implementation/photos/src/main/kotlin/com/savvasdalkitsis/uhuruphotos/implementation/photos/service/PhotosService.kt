@@ -15,6 +15,7 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.implementation.photos.service
 
+import com.savvasdalkitsis.uhuruphotos.implementation.photos.service.model.UserFavourites
 import com.savvasdalkitsis.uhuruphotos.api.photos.model.PhotoResult
 import com.savvasdalkitsis.uhuruphotos.implementation.photos.service.model.PhotoFavouriteRequest
 import com.savvasdalkitsis.uhuruphotos.implementation.photos.service.model.PhotoOperationResponse
@@ -35,4 +36,7 @@ interface PhotosService {
 
     @DELETE("/api/photos/{id}/")
     suspend fun deletePhoto(@Path("id") id: String): Response<Unit>
+
+    @GET("/api/photos/favorites/")
+    suspend fun getFavouritePhotos(): UserFavourites
 }

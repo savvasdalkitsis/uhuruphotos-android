@@ -40,7 +40,7 @@ fun AlbumPage(
     action: (AlbumPageAction) -> Unit
 ) {
     CommonScaffold(
-        title = { Text(state.title) },
+        title = { Text(state.title.toText()) },
         expandableTopBar = true,
         navigationIcon = {
             BackNavButton {

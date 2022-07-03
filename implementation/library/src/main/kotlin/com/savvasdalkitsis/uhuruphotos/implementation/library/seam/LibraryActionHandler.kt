@@ -20,22 +20,28 @@ import com.savvasdalkitsis.uhuruphotos.api.coroutines.safelyOnStartIgnoring
 import com.savvasdalkitsis.uhuruphotos.api.log.log
 import com.savvasdalkitsis.uhuruphotos.api.photos.model.Photo
 import com.savvasdalkitsis.uhuruphotos.api.photos.model.PhotoGrid
+import com.savvasdalkitsis.uhuruphotos.api.photos.usecase.PhotosUseCase
 import com.savvasdalkitsis.uhuruphotos.api.seam.ActionHandler
 import com.savvasdalkitsis.uhuruphotos.api.useralbums.usecase.UserAlbumsUseCase
 import com.savvasdalkitsis.uhuruphotos.implementation.library.seam.LibraryAction.AutoAlbumsSelected
+import com.savvasdalkitsis.uhuruphotos.implementation.library.seam.LibraryAction.FavouritePhotosSelected
 import com.savvasdalkitsis.uhuruphotos.implementation.library.seam.LibraryAction.Load
 import com.savvasdalkitsis.uhuruphotos.implementation.library.seam.LibraryAction.Refresh
 import com.savvasdalkitsis.uhuruphotos.implementation.library.seam.LibraryAction.UserAlbumsSelected
 import com.savvasdalkitsis.uhuruphotos.implementation.library.seam.LibraryEffect.ErrorLoadingAlbums
 import com.savvasdalkitsis.uhuruphotos.implementation.library.seam.LibraryEffect.NavigateToAutoAlbums
+import com.savvasdalkitsis.uhuruphotos.implementation.library.seam.LibraryEffect.NavigateToFavourites
 import com.savvasdalkitsis.uhuruphotos.implementation.library.seam.LibraryEffect.NavigateToUserAlbums
 import com.savvasdalkitsis.uhuruphotos.implementation.library.seam.LibraryMutation.DisplayAutoAlbums
+import com.savvasdalkitsis.uhuruphotos.implementation.library.seam.LibraryMutation.DisplayFavouritePhotos
 import com.savvasdalkitsis.uhuruphotos.implementation.library.seam.LibraryMutation.DisplayUserAlbums
 import com.savvasdalkitsis.uhuruphotos.implementation.library.seam.LibraryMutation.Loading
 import com.savvasdalkitsis.uhuruphotos.implementation.library.view.state.LibraryState
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.emitAll
+import kotlinx.coroutines.flow.emptyFlow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.merge
@@ -45,6 +51,7 @@ import javax.inject.Inject
 class LibraryActionHandler @Inject constructor(
     private val autoAlbumsUseCase: AutoAlbumsUseCase,
     private val userAlbumsUseCase: UserAlbumsUseCase,
+    private val photosUseCase: PhotosUseCase,
 ) : ActionHandler<LibraryState, LibraryEffect, LibraryAction, LibraryMutation> {
 
     private val loading = MutableSharedFlow<Boolean>()
@@ -61,6 +68,9 @@ class LibraryActionHandler @Inject constructor(
             userAlbumsUseCase.observeUserAlbums()
                 .mapToCover { it.cover.photo1 }
                 .map(::DisplayUserAlbums),
+            favouritePhotos()
+                .mapToCover { it }
+                .map(::DisplayFavouritePhotos),
             loading
                 .map(::Loading),
         ).safelyOnStartIgnoring {
@@ -76,6 +86,15 @@ class LibraryActionHandler @Inject constructor(
         is UserAlbumsSelected -> flow {
             effect(NavigateToUserAlbums)
         }
+        FavouritePhotosSelected -> flow {
+            effect(NavigateToFavourites)
+        }
+    }
+
+    private fun favouritePhotos() = flow {
+        emitAll(photosUseCase.observeFavouritePhotos()
+            .getOrElse { emptyFlow() }
+        )
     }
 
     private suspend fun initialRefresh(effect: suspend (LibraryEffect) -> Unit) {

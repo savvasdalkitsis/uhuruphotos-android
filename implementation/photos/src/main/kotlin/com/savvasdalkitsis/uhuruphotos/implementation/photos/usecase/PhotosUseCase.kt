@@ -15,14 +15,18 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.implementation.photos.usecase
 
-import com.savvasdalkitsis.uhuruphotos.api.log.runCatchingWithLog
-import com.savvasdalkitsis.uhuruphotos.api.user.usecase.UserUseCase
 import com.savvasdalkitsis.uhuruphotos.api.auth.usecase.ServerUseCase
+import com.savvasdalkitsis.uhuruphotos.api.db.extensions.isVideo
 import com.savvasdalkitsis.uhuruphotos.api.db.photos.PhotoDetails
+import com.savvasdalkitsis.uhuruphotos.api.db.photos.PhotoSummary
+import com.savvasdalkitsis.uhuruphotos.api.log.runCatchingWithLog
+import com.savvasdalkitsis.uhuruphotos.api.photos.model.Photo
 import com.savvasdalkitsis.uhuruphotos.api.photos.usecase.PhotosUseCase
+import com.savvasdalkitsis.uhuruphotos.api.user.usecase.UserUseCase
 import com.savvasdalkitsis.uhuruphotos.implementation.photos.repository.PhotoRepository
 import com.savvasdalkitsis.uhuruphotos.implementation.photos.worker.PhotoWorkScheduler
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
 class PhotosUseCase @Inject constructor(
@@ -49,6 +53,9 @@ class PhotosUseCase @Inject constructor(
     override fun String.toThumbnailUrlFromId(): String =
         "/media/square_thumbnails/$this".toAbsoluteUrl()
 
+    override fun String?.toFullSizeUrlFromIdNullable(isVideo: Boolean): String? =
+        this?.toFullSizeUrlFromId(isVideo)
+
     override fun String.toFullSizeUrlFromId(isVideo: Boolean): String = when {
         isVideo -> "/media/video/$this".toAbsoluteUrl()
         else -> "/media/photos/$this".toAbsoluteUrl()
@@ -60,15 +67,37 @@ class PhotosUseCase @Inject constructor(
     override fun observePhotoDetails(id: String): Flow<PhotoDetails> =
         photoRepository.observePhotoDetails(id)
 
+    override suspend fun observeFavouritePhotos(): Result<Flow<List<Photo>>> =
+        withFavouriteThreshold { threshold ->
+            photoRepository.observeFavouritePhotoSummaries(threshold)
+                .map { photos ->
+                    photos.map {
+                        Photo(
+                            id = it.id,
+                            thumbnailUrl = it.id.toThumbnailUrlFromIdNullable(),
+                            fullResUrl = it.id.toFullSizeUrlFromId(it.isVideo),
+                            fallbackColor = it.dominantColor,
+                            isFavourite = (it.rating ?: 0) >= threshold,
+                            ratio = it.aspectRatio ?: 1f,
+                            isVideo = it.isVideo,
+                        )
+                    }
+                }
+        }
+
     override suspend fun getPhotoDetails(id: String): PhotoDetails? =
         photoRepository.getPhotoDetails(id)
 
-    override suspend fun setPhotoFavourite(id: String, favourite: Boolean): Result<Unit> = runCatchingWithLog {
-        userUseCase.getUserOrRefresh()?.let { user ->
+    override suspend fun getFavouritePhotoSummaries(): Result<List<PhotoSummary>> =
+        withFavouriteThreshold {
+            photoRepository.getFavouritePhotoSummaries(it)
+        }
+
+    override suspend fun setPhotoFavourite(id: String, favourite: Boolean): Result<Unit> =
+        userUseCase.getUserOrRefresh().mapCatching { user ->
             photoRepository.setPhotoRating(id, user.favoriteMinRating?.takeIf { favourite } ?: 0)
             photoWorkScheduler.schedulePhotoFavourite(id, favourite)
         }
-    }
 
     override fun refreshDetails(id: String): Result<Unit> = runCatchingWithLog {
         photoRepository.refreshDetails(id)
@@ -82,7 +111,18 @@ class PhotosUseCase @Inject constructor(
         photoRepository.refreshDetailsNow(id)
     }
 
+    override suspend fun refreshFavourites() {
+        withFavouriteThreshold {
+            photoRepository.refreshFavourites(it)
+        }
+    }
+
     override fun deletePhoto(id: String) {
         photoWorkScheduler.schedulePhotoDeletion(id)
     }
+
+    private suspend fun <T> withFavouriteThreshold(action: suspend (Int) -> T): Result<T> =
+        userUseCase.getUserOrRefresh().mapCatching {
+            action(it.favoriteMinRating!!)
+        }
 }

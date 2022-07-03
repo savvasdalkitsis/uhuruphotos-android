@@ -77,6 +77,9 @@ class HeatMapActionHandler @Inject constructor(
                                 thumbnailUrl = with(photosUseCase) {
                                     it.imageHash.toThumbnailUrlFromId()
                                 },
+                                fullResUrl = with(photosUseCase) {
+                                    it.imageHash.toFullSizeUrlFromId(it.video ?: false)
+                                },
                                 latLng = it.latLng?.let { latLng ->
                                     latLng.lat to latLng.lon
                                 },

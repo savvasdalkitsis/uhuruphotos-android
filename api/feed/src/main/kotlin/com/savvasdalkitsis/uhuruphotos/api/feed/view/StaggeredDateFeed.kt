@@ -62,13 +62,15 @@ fun StaggeredDateFeed(
                 }
             }
             albums.forEach { album ->
-                item(album.id, "header") {
-                    AlbumHeader(
-                        modifier = Modifier.animateItemPlacement(),
-                        album,
-                        showSelectionHeader
-                    ) {
-                        onAlbumSelectionClicked(album)
+                if ((album.date + album.location.orEmpty()).isNotEmpty()) {
+                    item(album.id, "header") {
+                        AlbumHeader(
+                            modifier = Modifier.animateItemPlacement(),
+                            album,
+                            showSelectionHeader
+                        ) {
+                            onAlbumSelectionClicked(album)
+                        }
                     }
                 }
                 val (slots, rows) = if (shouldAddEmptyPhotosInRows) {

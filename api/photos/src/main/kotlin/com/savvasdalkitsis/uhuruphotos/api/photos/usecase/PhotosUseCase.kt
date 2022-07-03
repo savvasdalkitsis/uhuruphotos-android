@@ -16,19 +16,25 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.api.photos.usecase
 
 import com.savvasdalkitsis.uhuruphotos.api.db.photos.PhotoDetails
+import com.savvasdalkitsis.uhuruphotos.api.db.photos.PhotoSummary
+import com.savvasdalkitsis.uhuruphotos.api.photos.model.Photo
 import kotlinx.coroutines.flow.Flow
 
 interface PhotosUseCase {
     fun String?.toAbsoluteUrl(): String?
     fun String?.toThumbnailUrlFromIdNullable(): String?
     fun String.toThumbnailUrlFromId(): String
+    fun String?.toFullSizeUrlFromIdNullable(isVideo: Boolean = false): String?
     fun String.toFullSizeUrlFromId(isVideo: Boolean = false): String
     fun observeAllPhotoDetails(): Flow<List<PhotoDetails>>
     fun observePhotoDetails(id: String): Flow<PhotoDetails>
+    suspend fun observeFavouritePhotos(): Result<Flow<List<Photo>>>
     suspend fun getPhotoDetails(id: String): PhotoDetails?
+    suspend fun getFavouritePhotoSummaries(): Result<List<PhotoSummary>>
     suspend fun setPhotoFavourite(id: String, favourite: Boolean): Result<Unit>
     fun refreshDetails(id: String): Result<Unit>
     suspend fun refreshDetailsNowIfMissing(id: String) : Result<Unit>
     suspend fun refreshDetailsNow(id: String) : Result<Unit>
+    suspend fun refreshFavourites()
     fun deletePhoto(id: String)
 }

@@ -202,11 +202,11 @@ class PhotoActionHandler @Inject constructor(
                     }
                 }
 
-                val favouriteThreshold = userUseCase.getUserOrRefresh()?.favoriteMinRating
+                val favouriteThreshold = userUseCase.getUserOrRefresh()
                 emit(ReceivedDetails(
                     details = details,
                     peopleInPhoto = peopleInPhoto,
-                    favouriteThreshold = favouriteThreshold,
+                    favouriteThreshold = favouriteThreshold.getOrNull()?.favoriteMinRating,
                     formattedDateAndTime = dateDisplayer.dateTimeString(details.timestamp)
                 ))
             }

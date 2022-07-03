@@ -86,7 +86,8 @@ internal class AlbumsUseCase @Inject constructor(
         }
 
     private suspend fun Group<String, DbAlbums>.mapToAlbums(): List<Album> {
-        val favouriteThreshold = userUseCase.getUserOrRefresh()?.favoriteMinRating
+        val favouriteThreshold = userUseCase.getUserOrRefresh()
+            .mapCatching { it.favoriteMinRating!! }
         return items.map { (id, photos) ->
             val albumDate = photos.firstOrNull()?.albumDate
             val albumLocation = photos.firstOrNull()?.albumLocation
@@ -109,8 +110,11 @@ internal class AlbumsUseCase @Inject constructor(
                                     photoId.toFullSizeUrlFromId(item.isVideo)
                                 },
                                 fallbackColor = item.dominantColor,
-                                isFavourite = favouriteThreshold != null
-                                        && (item.rating ?: 0) >= favouriteThreshold,
+                                isFavourite = favouriteThreshold
+                                    .map {
+                                        (item.rating ?: 0) >= it
+                                    }
+                                    .getOrElse { false },
                                 ratio = item.aspectRatio ?: 1.0f,
                                 isVideo = item.isVideo,
                             )

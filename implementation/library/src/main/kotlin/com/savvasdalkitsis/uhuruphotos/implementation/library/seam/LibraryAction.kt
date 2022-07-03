@@ -18,6 +18,7 @@ package com.savvasdalkitsis.uhuruphotos.implementation.library.seam
 sealed class LibraryAction {
     object AutoAlbumsSelected : LibraryAction()
     object UserAlbumsSelected : LibraryAction()
+    object FavouritePhotosSelected : LibraryAction()
     object Load : LibraryAction()
     object Refresh : LibraryAction()
 }

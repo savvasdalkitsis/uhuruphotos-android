@@ -34,4 +34,8 @@ sealed class LibraryMutation(
     data class Loading(val loading: Boolean) : LibraryMutation({
         it.copy(loading = loading)
     })
+
+    data class DisplayFavouritePhotos(val cover: PhotoGrid) : LibraryMutation({
+        it.copy(favouritePhotos = cover)
+    })
 }

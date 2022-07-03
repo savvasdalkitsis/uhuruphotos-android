@@ -31,10 +31,13 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
-import com.savvasdalkitsis.uhuruphotos.api.photos.view.PhotoGridThumbnail
 import com.savvasdalkitsis.uhuruphotos.api.photos.model.PhotoGrid
+import com.savvasdalkitsis.uhuruphotos.api.photos.view.PhotoGridThumbnail
 import com.savvasdalkitsis.uhuruphotos.api.strings.R
 import com.savvasdalkitsis.uhuruphotos.implementation.library.seam.LibraryAction
+import com.savvasdalkitsis.uhuruphotos.implementation.library.seam.LibraryAction.AutoAlbumsSelected
+import com.savvasdalkitsis.uhuruphotos.implementation.library.seam.LibraryAction.FavouritePhotosSelected
+import com.savvasdalkitsis.uhuruphotos.implementation.library.seam.LibraryAction.UserAlbumsSelected
 import com.savvasdalkitsis.uhuruphotos.implementation.library.view.state.LibraryState
 
 @Composable
@@ -45,16 +48,20 @@ internal fun LibraryGrid(
 ) {
     val auto = stringResource(R.string.auto_albums)
     val user = stringResource(R.string.user_albums)
+    val favourites = stringResource(R.string.favourite_photos)
     LazyVerticalGrid(
         modifier = Modifier.fillMaxSize(),
         contentPadding = contentPadding,
         columns = GridCells.Fixed(2),
     ) {
         libraryItem(state.autoAlbums, auto) {
-            action(LibraryAction.AutoAlbumsSelected)
+            action(AutoAlbumsSelected)
         }
         libraryItem(state.userAlbums, user) {
-            action(LibraryAction.UserAlbumsSelected)
+            action(UserAlbumsSelected)
+        }
+        libraryItem(state.favouritePhotos, favourites) {
+            action(FavouritePhotosSelected)
         }
     }
 }
