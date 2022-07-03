@@ -80,6 +80,8 @@
     <string name="sorting">Sorting</string>
     <string name="error_loading_auto_albums">There was an error loading automatically generated albums</string>
     <string name="error_loading_album">There was an error loading the album</string>
+    <string name="error_loading_albums">There was an error loading albums</string>
+    <string name="error_loading_user_albums">There was an error user created albums</string>
     <string name="no_auto_albums">There are no auto generated albums for this user</string>
     <string name="no_user_albums">This user has not created any albums</string>
     <string name="no_photos">There are no photos to display</string>

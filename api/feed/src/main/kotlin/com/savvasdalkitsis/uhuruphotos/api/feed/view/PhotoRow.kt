@@ -23,6 +23,8 @@ import androidx.compose.ui.layout.ContentScale
 import com.savvasdalkitsis.uhuruphotos.api.feed.view.PhotoRowSlot.EmptySlot
 import com.savvasdalkitsis.uhuruphotos.api.feed.view.PhotoRowSlot.PhotoSlot
 import com.savvasdalkitsis.uhuruphotos.api.photos.model.Photo
+import com.savvasdalkitsis.uhuruphotos.api.photos.view.PhotoSelected
+import com.savvasdalkitsis.uhuruphotos.api.photos.view.PhotoThumbnail
 
 @Composable
 fun PhotoRow(

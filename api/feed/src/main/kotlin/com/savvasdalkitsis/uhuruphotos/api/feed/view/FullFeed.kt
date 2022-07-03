@@ -24,6 +24,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.unit.dp
 import com.savvasdalkitsis.uhuruphotos.api.albums.model.Album
+import com.savvasdalkitsis.uhuruphotos.api.photos.view.PhotoSelected
+import com.savvasdalkitsis.uhuruphotos.api.photos.view.PhotoThumbnail
 import com.savvasdalkitsis.uhuruphotos.api.ui.view.LazyStaggeredGrid
 
 @Composable

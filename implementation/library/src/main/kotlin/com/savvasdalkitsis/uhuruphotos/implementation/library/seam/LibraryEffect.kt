@@ -15,11 +15,8 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.implementation.library.seam
 
-import com.savvasdalkitsis.uhuruphotos.implementation.library.view.state.LibraryAutoAlbum
-import com.savvasdalkitsis.uhuruphotos.implementation.library.view.state.LibraryUserAlbum
-
 sealed class LibraryEffect {
-    data class NavigateToAutoAlbum(val album: LibraryAutoAlbum) : LibraryEffect()
-    data class NavigateToUserAlbum(val album: LibraryUserAlbum) : LibraryEffect()
+    object NavigateToAutoAlbums : LibraryEffect()
+    object NavigateToUserAlbums : LibraryEffect()
     object ErrorLoadingAlbums : LibraryEffect()
 }

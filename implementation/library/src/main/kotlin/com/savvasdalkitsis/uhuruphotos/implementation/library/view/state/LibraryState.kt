@@ -15,11 +15,10 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.implementation.library.view.state
 
+import com.savvasdalkitsis.uhuruphotos.api.photos.model.PhotoGrid
+
 data class LibraryState(
-    val autoAlbumsLoading: Boolean = false,
-    val userAlbumsLoading: Boolean = false,
-    val autoAlbumSorting: AlbumSorting = AlbumSorting.default,
-    val userAlbumSorting: AlbumSorting = AlbumSorting.default,
-    val autoAlbums: List<LibraryAutoAlbum> = emptyList(),
-    val userAlbums: List<LibraryUserAlbum> = emptyList(),
+    val loading: Boolean = false,
+    val autoAlbums: PhotoGrid? = null,
+    val userAlbums: PhotoGrid? = null,
 )

@@ -15,37 +15,23 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.implementation.library.seam
 
+import com.savvasdalkitsis.uhuruphotos.api.photos.model.PhotoGrid
 import com.savvasdalkitsis.uhuruphotos.api.seam.Mutation
-import com.savvasdalkitsis.uhuruphotos.implementation.library.view.state.AlbumSorting
-import com.savvasdalkitsis.uhuruphotos.implementation.library.view.state.LibraryAutoAlbum
 import com.savvasdalkitsis.uhuruphotos.implementation.library.view.state.LibraryState
-import com.savvasdalkitsis.uhuruphotos.implementation.library.view.state.LibraryUserAlbum
 
 sealed class LibraryMutation(
     mutation: Mutation<LibraryState>,
 ) : Mutation<LibraryState> by mutation {
 
-    data class DisplayAutoAlbums(val albums: List<LibraryAutoAlbum>) : LibraryMutation({
-        it.copy(autoAlbums = albums)
+    data class DisplayAutoAlbums(val cover: PhotoGrid) : LibraryMutation({
+        it.copy(autoAlbums = cover)
     })
 
-    data class DisplayUserAlbums(val albums: List<LibraryUserAlbum>) : LibraryMutation({
-        it.copy(userAlbums = albums)
+    data class DisplayUserAlbums(val cover: PhotoGrid) : LibraryMutation({
+        it.copy(userAlbums = cover)
     })
 
-    data class ShowAutoAlbumSorting(val sorting: AlbumSorting) : LibraryMutation({
-        it.copy(autoAlbumSorting = sorting)
-    })
-
-    data class ShowUserAlbumSorting(val sorting: AlbumSorting) : LibraryMutation({
-        it.copy(userAlbumSorting = sorting)
-    })
-
-    data class AutoAlbumsLoading(val loading: Boolean) : LibraryMutation({
-        it.copy(autoAlbumsLoading = loading)
-    })
-
-    data class UserAlbumsLoading(val loading: Boolean) : LibraryMutation({
-        it.copy(userAlbumsLoading = loading)
+    data class Loading(val loading: Boolean) : LibraryMutation({
+        it.copy(loading = loading)
     })
 }

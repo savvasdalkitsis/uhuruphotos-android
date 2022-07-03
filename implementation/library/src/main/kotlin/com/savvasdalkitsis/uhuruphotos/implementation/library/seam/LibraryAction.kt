@@ -15,16 +15,9 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.implementation.library.seam
 
-import com.savvasdalkitsis.uhuruphotos.implementation.library.view.state.AlbumSorting
-import com.savvasdalkitsis.uhuruphotos.implementation.library.view.state.LibraryAutoAlbum
-import com.savvasdalkitsis.uhuruphotos.implementation.library.view.state.LibraryUserAlbum
-
 sealed class LibraryAction {
-    data class ChangeAutoAlbumsSorting(val sorting: AlbumSorting) : LibraryAction()
-    data class ChangeUserAlbumsSorting(val sorting: AlbumSorting) : LibraryAction()
-    data class AutoAlbumSelected(val album: LibraryAutoAlbum) : LibraryAction()
-    data class UserAlbumSelected(val album: LibraryUserAlbum) : LibraryAction()
+    object AutoAlbumsSelected : LibraryAction()
+    object UserAlbumsSelected : LibraryAction()
     object Load : LibraryAction()
-    object RefreshAutoAlbums : LibraryAction()
-    object RefreshUserAlbums : LibraryAction()
+    object Refresh : LibraryAction()
 }

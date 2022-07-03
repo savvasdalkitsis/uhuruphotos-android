@@ -15,7 +15,11 @@ dependencies {
             libs.androidx.compose.navigation,
             libs.kotlinx.coroutines,
     )
+    implementation project(":api:compose")
+    implementation project(":api:icons")
+    implementation project(":api:image")
     implementation project(":api:strings")
+    implementation project(":api:ui")
     implementation(
             libs.androidx.compose.material,
             libs.moshi,

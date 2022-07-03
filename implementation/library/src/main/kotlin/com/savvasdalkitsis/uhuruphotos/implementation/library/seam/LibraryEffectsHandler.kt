@@ -15,14 +15,15 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.implementation.library.seam
 
-import com.savvasdalkitsis.uhuruphotos.api.autoalbum.navigation.AutoAlbumNavigationTarget
-import com.savvasdalkitsis.uhuruphotos.api.seam.EffectHandler
-import com.savvasdalkitsis.uhuruphotos.implementation.library.seam.LibraryEffect.ErrorLoadingAlbums
-import com.savvasdalkitsis.uhuruphotos.implementation.library.seam.LibraryEffect.NavigateToAutoAlbum
+import com.savvasdalkitsis.uhuruphotos.api.autoalbums.navigation.AutoAlbumsNavigationTarget
 import com.savvasdalkitsis.uhuruphotos.api.navigation.Navigator
+import com.savvasdalkitsis.uhuruphotos.api.seam.EffectHandler
 import com.savvasdalkitsis.uhuruphotos.api.strings.R
 import com.savvasdalkitsis.uhuruphotos.api.toaster.Toaster
-import com.savvasdalkitsis.uhuruphotos.api.useralbum.navigation.UserAlbumNavigationTarget
+import com.savvasdalkitsis.uhuruphotos.api.useralbums.navigation.UserAlbumsNavigationTarget
+import com.savvasdalkitsis.uhuruphotos.implementation.library.seam.LibraryEffect.ErrorLoadingAlbums
+import com.savvasdalkitsis.uhuruphotos.implementation.library.seam.LibraryEffect.NavigateToAutoAlbums
+import com.savvasdalkitsis.uhuruphotos.implementation.library.seam.LibraryEffect.NavigateToUserAlbums
 import javax.inject.Inject
 
 class LibraryEffectsHandler @Inject constructor(
@@ -31,10 +32,10 @@ class LibraryEffectsHandler @Inject constructor(
 ) : EffectHandler<LibraryEffect> {
 
     override suspend fun handleEffect(effect: LibraryEffect) = when (effect) {
-        ErrorLoadingAlbums -> toaster.show(R.string.error_loading_auto_albums)
-        is NavigateToAutoAlbum -> navigator
-            .navigateTo(AutoAlbumNavigationTarget.name(effect.album.id))
-        is LibraryEffect.NavigateToUserAlbum -> navigator
-            .navigateTo(UserAlbumNavigationTarget.name(effect.album.id))
+        ErrorLoadingAlbums -> toaster.show(R.string.error_loading_albums)
+        is NavigateToAutoAlbums -> navigator
+            .navigateTo(AutoAlbumsNavigationTarget.registrationName)
+        is NavigateToUserAlbums -> navigator
+            .navigateTo(UserAlbumsNavigationTarget.registrationName)
     }
 }
