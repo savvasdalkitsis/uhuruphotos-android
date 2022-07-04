@@ -12,6 +12,7 @@ dependencies {
     implementation project(":implementation:favourites")
     implementation project(":implementation:feedpage")
     implementation project(":implementation:heatmap")
+    implementation project(":implementation:hidden")
     implementation project(":implementation:home")
     implementation project(":implementation:image")
     implementation project(":implementation:library")

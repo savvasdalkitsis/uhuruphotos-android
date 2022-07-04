@@ -15,8 +15,9 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.implementation.library.seam
 
-import com.savvasdalkitsis.uhuruphotos.api.favourites.navigation.FavouritesNavigationTarget
 import com.savvasdalkitsis.uhuruphotos.api.autoalbums.navigation.AutoAlbumsNavigationTarget
+import com.savvasdalkitsis.uhuruphotos.api.favourites.navigation.FavouritesNavigationTarget
+import com.savvasdalkitsis.uhuruphotos.api.favourites.navigation.HiddenPhotosNavigationTarget
 import com.savvasdalkitsis.uhuruphotos.api.navigation.Navigator
 import com.savvasdalkitsis.uhuruphotos.api.seam.EffectHandler
 import com.savvasdalkitsis.uhuruphotos.api.strings.R
@@ -25,6 +26,7 @@ import com.savvasdalkitsis.uhuruphotos.api.useralbums.navigation.UserAlbumsNavig
 import com.savvasdalkitsis.uhuruphotos.implementation.library.seam.LibraryEffect.ErrorLoadingAlbums
 import com.savvasdalkitsis.uhuruphotos.implementation.library.seam.LibraryEffect.NavigateToAutoAlbums
 import com.savvasdalkitsis.uhuruphotos.implementation.library.seam.LibraryEffect.NavigateToFavourites
+import com.savvasdalkitsis.uhuruphotos.implementation.library.seam.LibraryEffect.NavigateToHidden
 import com.savvasdalkitsis.uhuruphotos.implementation.library.seam.LibraryEffect.NavigateToUserAlbums
 import javax.inject.Inject
 
@@ -41,5 +43,7 @@ class LibraryEffectsHandler @Inject constructor(
             .navigateTo(UserAlbumsNavigationTarget.registrationName)
         NavigateToFavourites -> navigator
             .navigateTo(FavouritesNavigationTarget.registrationName)
+        NavigateToHidden -> navigator
+            .navigateTo(HiddenPhotosNavigationTarget.registrationName)
     }
 }

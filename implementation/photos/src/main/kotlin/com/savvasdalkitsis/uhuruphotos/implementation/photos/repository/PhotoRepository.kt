@@ -18,12 +18,10 @@ package com.savvasdalkitsis.uhuruphotos.implementation.photos.repository
 import com.savvasdalkitsis.uhuruphotos.api.db.extensions.async
 import com.savvasdalkitsis.uhuruphotos.api.db.extensions.await
 import com.savvasdalkitsis.uhuruphotos.api.db.extensions.awaitSingleOrNull
-import com.savvasdalkitsis.uhuruphotos.api.db.extensions.read
 import com.savvasdalkitsis.uhuruphotos.api.db.photos.PhotoDetails
 import com.savvasdalkitsis.uhuruphotos.api.db.photos.PhotoDetailsQueries
 import com.savvasdalkitsis.uhuruphotos.api.db.photos.PhotoSummary
 import com.savvasdalkitsis.uhuruphotos.api.db.photos.PhotoSummaryQueries
-import com.savvasdalkitsis.uhuruphotos.api.photos.entities.toPhotoSummary
 import com.savvasdalkitsis.uhuruphotos.api.photos.model.toPhotoDetails
 import com.savvasdalkitsis.uhuruphotos.implementation.photos.service.PhotosService
 import com.savvasdalkitsis.uhuruphotos.implementation.photos.worker.PhotoWorkScheduler
@@ -50,8 +48,12 @@ class PhotoRepository @Inject constructor(
             }
             .mapToList()
 
-    fun observeFavouritePhotoSummaries(favouriteThreshold: Int): Flow<List<PhotoSummary>> =
+    fun observeFavouritePhotos(favouriteThreshold: Int): Flow<List<PhotoSummary>> =
         photoSummaryQueries.getFavourites(favouriteThreshold).asFlow()
+            .mapToList()
+
+    fun observeHiddenPhotos(): Flow<List<PhotoSummary>> =
+        photoSummaryQueries.getHidden().asFlow()
             .mapToList()
 
     fun observePhotoDetails(id: String): Flow<PhotoDetails> =
@@ -63,8 +65,11 @@ class PhotoRepository @Inject constructor(
     suspend fun getPhotoDetails(id: String): PhotoDetails? =
         photoDetailsQueries.getPhoto(id).awaitSingleOrNull()
 
-    suspend fun getFavouritePhotoSummaries(favouriteThreshold: Int): List<PhotoSummary> =
+    suspend fun getFavouritePhotos(favouriteThreshold: Int): List<PhotoSummary> =
         photoSummaryQueries.getFavourites(favouriteThreshold).await()
+
+    suspend fun getHiddenPhotos(): List<PhotoSummary> =
+        photoSummaryQueries.getHidden().await()
 
     suspend fun refreshDetailsIfMissing(id: String) {
         when (getPhotoDetails(id)) {
@@ -105,6 +110,26 @@ class PhotoRepository @Inject constructor(
         (currentFavouriteIds - newFavouriteIds).forEach {
             val rating = photosService.getPhoto(it).rating
             async { photoSummaryQueries.setRating(rating, it) }
+        }
+    }
+
+    suspend fun refreshHidden() {
+        val hidden = photosService.getHiddenPhotos().results.flatMap { it.items }
+        async {
+            hidden.forEach {
+                photoSummaryQueries.insertHidden(
+                    id = it.id,
+                    dominantColor = it.dominantColor,
+                    aspectRatio = it.aspectRatio,
+                    location = it.location,
+                    rating = it.rating,
+                    url = it.url,
+                    date = it.date,
+                    birthTime = it.birthTime,
+                    type = it.type,
+                    videoLength = it.videoLength,
+                )
+            }
         }
     }
 

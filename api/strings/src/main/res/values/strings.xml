@@ -64,6 +64,7 @@
     <string name="refresh">Refresh</string>
     <string name="favourite">Favourite</string>
     <string name="favourite_photos">Favourite photos</string>
+    <string name="hidden_photos">Hidden photos</string>
     <string name="remove_favourite">Remove favourite</string>
     <string name="info">Info</string>
     <string name="background_jobs">Background jobs</string>

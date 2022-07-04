@@ -69,29 +69,40 @@ class PhotosUseCase @Inject constructor(
 
     override suspend fun observeFavouritePhotos(): Result<Flow<List<Photo>>> =
         withFavouriteThreshold { threshold ->
-            photoRepository.observeFavouritePhotoSummaries(threshold)
-                .map { photos ->
-                    photos.map {
-                        Photo(
-                            id = it.id,
-                            thumbnailUrl = it.id.toThumbnailUrlFromIdNullable(),
-                            fullResUrl = it.id.toFullSizeUrlFromId(it.isVideo),
-                            fallbackColor = it.dominantColor,
-                            isFavourite = (it.rating ?: 0) >= threshold,
-                            ratio = it.aspectRatio ?: 1f,
-                            isVideo = it.isVideo,
-                        )
-                    }
-                }
+            photoRepository.observeFavouritePhotos(threshold)
+                .mapToPhotos(threshold)
         }
+
+    override suspend fun observeHiddenPhotos(): Result<Flow<List<Photo>>> =
+        withFavouriteThreshold { threshold ->
+            photoRepository.observeHiddenPhotos()
+                .mapToPhotos(threshold)
+        }
+
+    private fun Flow<List<PhotoSummary>>.mapToPhotos(threshold: Int) = map { photos ->
+        photos.map {
+            Photo(
+                id = it.id,
+                thumbnailUrl = it.id.toThumbnailUrlFromIdNullable(),
+                fullResUrl = it.id.toFullSizeUrlFromId(it.isVideo),
+                fallbackColor = it.dominantColor,
+                isFavourite = (it.rating ?: 0) >= threshold,
+                ratio = it.aspectRatio ?: 1f,
+                isVideo = it.isVideo,
+            )
+        }
+    }
 
     override suspend fun getPhotoDetails(id: String): PhotoDetails? =
         photoRepository.getPhotoDetails(id)
 
     override suspend fun getFavouritePhotoSummaries(): Result<List<PhotoSummary>> =
         withFavouriteThreshold {
-            photoRepository.getFavouritePhotoSummaries(it)
+            photoRepository.getFavouritePhotos(it)
         }
+
+    override suspend fun getHiddenPhotoSummaries(): List<PhotoSummary> =
+        photoRepository.getHiddenPhotos()
 
     override suspend fun setPhotoFavourite(id: String, favourite: Boolean): Result<Unit> =
         userUseCase.getUserOrRefresh().mapCatching { user ->
@@ -115,6 +126,10 @@ class PhotosUseCase @Inject constructor(
         withFavouriteThreshold {
             photoRepository.refreshFavourites(it)
         }
+    }
+
+    override suspend fun refreshHiddenPhotos() {
+        photoRepository.refreshHidden()
     }
 
     override fun deletePhoto(id: String) {

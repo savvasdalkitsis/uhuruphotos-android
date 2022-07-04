@@ -22,4 +22,5 @@ data class LibraryState(
     val autoAlbums: PhotoGrid? = null,
     val userAlbums: PhotoGrid? = null,
     val favouritePhotos: PhotoGrid? = null,
+    val showHiddenPhotos: Boolean = false,
 )

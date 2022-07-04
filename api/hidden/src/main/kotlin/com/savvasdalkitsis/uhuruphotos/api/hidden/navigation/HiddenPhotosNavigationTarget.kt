@@ -13,13 +13,8 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
  */
-package com.savvasdalkitsis.uhuruphotos.implementation.library.seam
+package com.savvasdalkitsis.uhuruphotos.api.favourites.navigation
 
-sealed class LibraryAction {
-    object AutoAlbumsSelected : LibraryAction()
-    object UserAlbumsSelected : LibraryAction()
-    object FavouritePhotosSelected : LibraryAction()
-    object HiddenPhotosSelected : LibraryAction()
-    object Load : LibraryAction()
-    object Refresh : LibraryAction()
+object HiddenPhotosNavigationTarget {
+    const val registrationName = "hiddenPhotos"
 }

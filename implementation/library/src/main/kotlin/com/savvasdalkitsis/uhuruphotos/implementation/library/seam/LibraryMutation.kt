@@ -38,4 +38,8 @@ sealed class LibraryMutation(
     data class DisplayFavouritePhotos(val cover: PhotoGrid) : LibraryMutation({
         it.copy(favouritePhotos = cover)
     })
+
+    data class DisplayHiddenPhotos(val showHiddenPhotos: Boolean) : LibraryMutation({
+        it.copy(showHiddenPhotos = showHiddenPhotos)
+    })
 }

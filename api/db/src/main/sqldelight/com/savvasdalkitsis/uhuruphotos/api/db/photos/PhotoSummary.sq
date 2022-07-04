@@ -17,6 +17,12 @@ CREATE TABLE photoSummary (
 getFavourites:
 SELECT * FROM photoSummary WHERE rating >= :favouriteThreshold;
 
+getHidden:
+SELECT * FROM photoSummary WHERE containerId == 'hiddenPhoto';
+
+insertHidden:
+INSERT OR REPLACE INTO photoSummary VALUES (?,?,?,?,?,?,?,?,?,?,'hiddenPhoto');
+
 insert:
 INSERT OR REPLACE INTO photoSummary VALUES ?;
 
@@ -34,3 +40,6 @@ DELETE FROM photoSummary WHERE id = :id;
 
 clearAll:
 DELETE FROM photoSummary;
+
+hide:
+UPDATE photoSummary SET containerId = 'hiddenPhoto' WHERE id = :id;

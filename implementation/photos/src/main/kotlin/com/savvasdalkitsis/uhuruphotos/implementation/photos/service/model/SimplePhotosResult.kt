@@ -15,9 +15,12 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.implementation.photos.service.model
 
+import com.savvasdalkitsis.uhuruphotos.api.photos.model.PhotoSummaryItem
 import com.squareup.moshi.JsonClass
 
 @JsonClass(generateAdapter = true)
-data class UserFavourites(
-    val results: List<FavouritesDay>
+data class SimplePhotosResult(
+    val date: String,
+    val location: String,
+    val items: List<PhotoSummaryItem>,
 )

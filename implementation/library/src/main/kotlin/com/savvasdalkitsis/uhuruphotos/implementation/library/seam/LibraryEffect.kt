@@ -19,5 +19,6 @@ sealed class LibraryEffect {
     object NavigateToAutoAlbums : LibraryEffect()
     object NavigateToUserAlbums : LibraryEffect()
     object NavigateToFavourites : LibraryEffect()
+    object NavigateToHidden : LibraryEffect()
     object ErrorLoadingAlbums : LibraryEffect()
 }

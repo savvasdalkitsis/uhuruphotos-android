@@ -29,12 +29,15 @@ interface PhotosUseCase {
     fun observeAllPhotoDetails(): Flow<List<PhotoDetails>>
     fun observePhotoDetails(id: String): Flow<PhotoDetails>
     suspend fun observeFavouritePhotos(): Result<Flow<List<Photo>>>
+    suspend fun observeHiddenPhotos(): Result<Flow<List<Photo>>>
     suspend fun getPhotoDetails(id: String): PhotoDetails?
     suspend fun getFavouritePhotoSummaries(): Result<List<PhotoSummary>>
+    suspend fun getHiddenPhotoSummaries(): List<PhotoSummary>
     suspend fun setPhotoFavourite(id: String, favourite: Boolean): Result<Unit>
     fun refreshDetails(id: String): Result<Unit>
     suspend fun refreshDetailsNowIfMissing(id: String) : Result<Unit>
     suspend fun refreshDetailsNow(id: String) : Result<Unit>
     suspend fun refreshFavourites()
+    suspend fun refreshHiddenPhotos()
     fun deletePhoto(id: String)
 }

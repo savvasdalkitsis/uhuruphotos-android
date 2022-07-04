@@ -16,8 +16,8 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.api.photos.model
 
 data class PhotoGrid(
-    val photo1: Photo?,
-    val photo2: Photo?,
-    val photo3: Photo?,
-    val photo4: Photo?,
+    val photo1: Photo? = null,
+    val photo2: Photo? = null,
+    val photo3: Photo? = null,
+    val photo4: Photo? = null,
 )

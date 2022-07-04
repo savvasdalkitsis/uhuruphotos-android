@@ -25,15 +25,18 @@ import com.savvasdalkitsis.uhuruphotos.api.seam.ActionHandler
 import com.savvasdalkitsis.uhuruphotos.api.useralbums.usecase.UserAlbumsUseCase
 import com.savvasdalkitsis.uhuruphotos.implementation.library.seam.LibraryAction.AutoAlbumsSelected
 import com.savvasdalkitsis.uhuruphotos.implementation.library.seam.LibraryAction.FavouritePhotosSelected
+import com.savvasdalkitsis.uhuruphotos.implementation.library.seam.LibraryAction.HiddenPhotosSelected
 import com.savvasdalkitsis.uhuruphotos.implementation.library.seam.LibraryAction.Load
 import com.savvasdalkitsis.uhuruphotos.implementation.library.seam.LibraryAction.Refresh
 import com.savvasdalkitsis.uhuruphotos.implementation.library.seam.LibraryAction.UserAlbumsSelected
 import com.savvasdalkitsis.uhuruphotos.implementation.library.seam.LibraryEffect.ErrorLoadingAlbums
 import com.savvasdalkitsis.uhuruphotos.implementation.library.seam.LibraryEffect.NavigateToAutoAlbums
 import com.savvasdalkitsis.uhuruphotos.implementation.library.seam.LibraryEffect.NavigateToFavourites
+import com.savvasdalkitsis.uhuruphotos.implementation.library.seam.LibraryEffect.NavigateToHidden
 import com.savvasdalkitsis.uhuruphotos.implementation.library.seam.LibraryEffect.NavigateToUserAlbums
 import com.savvasdalkitsis.uhuruphotos.implementation.library.seam.LibraryMutation.DisplayAutoAlbums
 import com.savvasdalkitsis.uhuruphotos.implementation.library.seam.LibraryMutation.DisplayFavouritePhotos
+import com.savvasdalkitsis.uhuruphotos.implementation.library.seam.LibraryMutation.DisplayHiddenPhotos
 import com.savvasdalkitsis.uhuruphotos.implementation.library.seam.LibraryMutation.DisplayUserAlbums
 import com.savvasdalkitsis.uhuruphotos.implementation.library.seam.LibraryMutation.Loading
 import com.savvasdalkitsis.uhuruphotos.implementation.library.view.state.LibraryState
@@ -62,15 +65,14 @@ class LibraryActionHandler @Inject constructor(
         effect: suspend (LibraryEffect) -> Unit,
     ): Flow<LibraryMutation> = when (action) {
         Load -> merge(
-            autoAlbumsUseCase.observeAutoAlbums()
-                .mapToCover { it.cover }
+            autoAlbumsUseCase.observeAutoAlbums().mapToCover { it.cover }
                 .map(::DisplayAutoAlbums),
-            userAlbumsUseCase.observeUserAlbums()
-                .mapToCover { it.cover.photo1 }
+            userAlbumsUseCase.observeUserAlbums().mapToCover { it.cover.photo1 }
                 .map(::DisplayUserAlbums),
-            favouritePhotos()
-                .mapToCover { it }
+            favouritePhotos().mapToCover { it }
                 .map(::DisplayFavouritePhotos),
+            hiddenPhotos()
+                .map { DisplayHiddenPhotos(it.isNotEmpty()) },
             loading
                 .map(::Loading),
         ).safelyOnStartIgnoring {
@@ -79,6 +81,8 @@ class LibraryActionHandler @Inject constructor(
         Refresh -> flow {
             refreshAutoAlbums(effect)
             refreshUserAlbums(effect)
+            refreshFavouritePhotos(effect)
+            refreshHiddenPhotos(effect)
         }
         is AutoAlbumsSelected -> flow {
             effect(NavigateToAutoAlbums)
@@ -89,10 +93,19 @@ class LibraryActionHandler @Inject constructor(
         FavouritePhotosSelected -> flow {
             effect(NavigateToFavourites)
         }
+        HiddenPhotosSelected -> flow {
+            effect(NavigateToHidden)
+        }
     }
 
     private fun favouritePhotos() = flow {
         emitAll(photosUseCase.observeFavouritePhotos()
+            .getOrElse { emptyFlow() }
+        )
+    }
+
+    private fun hiddenPhotos() = flow {
+        emitAll(photosUseCase.observeHiddenPhotos()
             .getOrElse { emptyFlow() }
         )
     }
@@ -103,6 +116,12 @@ class LibraryActionHandler @Inject constructor(
         }
         if (userAlbumsUseCase.getUserAlbums().isEmpty()) {
             refreshUserAlbums(effect)
+        }
+        if (photosUseCase.getFavouritePhotoSummaries().map { it.size }.getOrDefault(0) == 0) {
+            refreshFavouritePhotos(effect)
+        }
+        if (photosUseCase.getHiddenPhotoSummaries().isEmpty()) {
+            refreshHiddenPhotos(effect)
         }
     }
 
@@ -115,6 +134,20 @@ class LibraryActionHandler @Inject constructor(
     private suspend fun refreshUserAlbums(effect: suspend (LibraryEffect) -> Unit) {
         refresh(effect) {
             userAlbumsUseCase.refreshUserAlbums()
+        }
+    }
+
+
+    private suspend fun refreshFavouritePhotos(effect: suspend (LibraryEffect) -> Unit) {
+        refresh(effect) {
+            photosUseCase.refreshFavourites()
+        }
+    }
+
+
+    private suspend fun refreshHiddenPhotos(effect: suspend (LibraryEffect) -> Unit) {
+        refresh(effect) {
+            photosUseCase.refreshHiddenPhotos()
         }
     }
 
