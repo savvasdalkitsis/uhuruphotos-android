@@ -19,9 +19,11 @@ import com.savvasdalkitsis.uhuruphotos.api.albums.model.Album
 import com.savvasdalkitsis.uhuruphotos.api.albums.usecase.AlbumsUseCase
 import com.savvasdalkitsis.uhuruphotos.api.date.DateDisplayer
 import com.savvasdalkitsis.uhuruphotos.api.db.people.People
+import com.savvasdalkitsis.uhuruphotos.api.db.photos.PhotoSummary
 import com.savvasdalkitsis.uhuruphotos.api.people.usecase.PeopleUseCase
 import com.savvasdalkitsis.uhuruphotos.api.people.view.state.toPerson
 import com.savvasdalkitsis.uhuruphotos.api.person.usecase.PersonUseCase
+import com.savvasdalkitsis.uhuruphotos.api.photos.model.Photo
 import com.savvasdalkitsis.uhuruphotos.api.photos.model.PhotoSequenceDataSource.*
 import com.savvasdalkitsis.uhuruphotos.api.photos.model.deserializePeopleNames
 import com.savvasdalkitsis.uhuruphotos.api.photos.usecase.PhotosUseCase
@@ -86,6 +88,14 @@ class PhotoActionHandler @Inject constructor(
                     )
                     is UserAlbum -> loadAlbums(
                         albumsUseCase.getUserAlbum(action.datasource.albumId),
+                        action,
+                    )
+                    FavouritePhotos -> loadSummaries(
+                        photosUseCase.getFavouritePhotoSummaries(),
+                        action,
+                    )
+                    HiddenPhotos -> loadSummaries(
+                        Result.success(photosUseCase.getHiddenPhotoSummaries()),
                         action,
                     )
                 }
@@ -153,14 +163,32 @@ class PhotoActionHandler @Inject constructor(
         }
     }
 
+    context (PhotosUseCase)
+    private suspend fun FlowCollector<PhotoMutation>.loadSummaries(
+        photoSummaries: Result<List<PhotoSummary>>,
+        action: LoadPhoto,
+    ) =
+        when (val favourites =
+            photoSummaries
+                .mapCatching { it.mapToPhotos().getOrThrow() }
+                .getOrNull()
+        ) {
+            null -> loadPhotoDetails(action.id)
+            else -> loadPhotos(favourites, action)
+        }
+
     context(PhotosUseCase)
     private suspend fun FlowCollector<PhotoMutation>.loadAlbums(
         albums: List<Album>,
         action: LoadPhoto
+    ) = loadPhotos(albums.flatMap { it.photos }, action)
+
+    context(PhotosUseCase)
+    private suspend fun FlowCollector<PhotoMutation>.loadPhotos(
+        photos: List<Photo>,
+        action: LoadPhoto
     ) {
-        val photoStates = albums.flatMap { album ->
-            album.photos
-        }.map { photo ->
+        val photoStates = photos.map {  photo ->
             SinglePhotoState(
                 id = photo.id,
                 lowResUrl = photo.id.toThumbnailUrlFromId(),

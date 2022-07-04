@@ -23,13 +23,13 @@ import com.savvasdalkitsis.uhuruphotos.api.albumpage.view.state.AlbumDetails
 import com.savvasdalkitsis.uhuruphotos.api.albumpage.view.state.AlbumPageState
 import com.savvasdalkitsis.uhuruphotos.api.albumpage.view.state.Title
 import com.savvasdalkitsis.uhuruphotos.api.albums.model.Album
-import com.savvasdalkitsis.uhuruphotos.api.photos.model.PhotoSequenceDataSource.Single
+import com.savvasdalkitsis.uhuruphotos.api.photos.model.PhotoSequenceDataSource.HiddenPhotos
 import com.savvasdalkitsis.uhuruphotos.api.photos.usecase.PhotosUseCase
 import com.savvasdalkitsis.uhuruphotos.api.seam.ActionHandler
 import com.savvasdalkitsis.uhuruphotos.api.strings.R
 import com.savvasdalkitsis.uhuruphotos.implementation.hidden.usecase.HiddenPhotosUseCase
-import kotlinx.coroutines.flow.emptyFlow
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.mapNotNull
 import javax.inject.Inject
 
 internal class HiddenPhotosActionHandler @Inject constructor(
@@ -46,7 +46,8 @@ by AlbumPageActionHandler(
         photosUseCase.getHiddenPhotoSummaries().isEmpty()
     },
     albumDetailsFlow = {
-        photosUseCase.observeHiddenPhotos().getOrElse { emptyFlow() }
+        photosUseCase.observeHiddenPhotos()
+            .mapNotNull { it.getOrNull() }
             .map { photoEntries ->
                 AlbumDetails(
                     title = Title.Resource(R.string.hidden_photos),
@@ -59,5 +60,5 @@ by AlbumPageActionHandler(
                 )
             }
     },
-    photoSequenceDataSource = { Single }
+    photoSequenceDataSource = { HiddenPhotos }
 )

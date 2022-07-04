@@ -26,6 +26,9 @@ import com.savvasdalkitsis.uhuruphotos.api.user.usecase.UserUseCase
 import com.savvasdalkitsis.uhuruphotos.implementation.photos.repository.PhotoRepository
 import com.savvasdalkitsis.uhuruphotos.implementation.photos.worker.PhotoWorkScheduler
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.emitAll
+import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
@@ -67,31 +70,40 @@ class PhotosUseCase @Inject constructor(
     override fun observePhotoDetails(id: String): Flow<PhotoDetails> =
         photoRepository.observePhotoDetails(id)
 
-    override suspend fun observeFavouritePhotos(): Result<Flow<List<Photo>>> =
-        withFavouriteThreshold { threshold ->
-            photoRepository.observeFavouritePhotos(threshold)
-                .mapToPhotos(threshold)
-        }
-
-    override suspend fun observeHiddenPhotos(): Result<Flow<List<Photo>>> =
-        withFavouriteThreshold { threshold ->
-            photoRepository.observeHiddenPhotos()
-                .mapToPhotos(threshold)
-        }
-
-    private fun Flow<List<PhotoSummary>>.mapToPhotos(threshold: Int) = map { photos ->
-        photos.map {
-            Photo(
-                id = it.id,
-                thumbnailUrl = it.id.toThumbnailUrlFromIdNullable(),
-                fullResUrl = it.id.toFullSizeUrlFromId(it.isVideo),
-                fallbackColor = it.dominantColor,
-                isFavourite = (it.rating ?: 0) >= threshold,
-                ratio = it.aspectRatio ?: 1f,
-                isVideo = it.isVideo,
+    override fun observeFavouritePhotos(): Flow<Result<List<Photo>>> =
+        flow {
+            emitAll(
+                withFavouriteThreshold { threshold ->
+                    photoRepository.observeFavouritePhotos(threshold)
+                }.mapCatching { flow ->
+                    flow.map { photoSummaries ->
+                        photoSummaries.mapToPhotos()
+                    }
+                }.getOrElse { flowOf(Result.failure(it)) }
             )
         }
-    }
+
+    override fun observeHiddenPhotos(): Flow<Result<List<Photo>>> =
+            photoRepository.observeHiddenPhotos()
+                .mapToPhotos()
+
+    private fun Flow<List<PhotoSummary>>.mapToPhotos(): Flow<Result<List<Photo>>> =
+        map { it.mapToPhotos() }
+
+    override suspend fun List<PhotoSummary>.mapToPhotos(): Result<List<Photo>> =
+        withFavouriteThreshold { threshold ->
+            map {
+                Photo(
+                    id = it.id,
+                    thumbnailUrl = it.id.toThumbnailUrlFromIdNullable(),
+                    fullResUrl = it.id.toFullSizeUrlFromId(it.isVideo),
+                    fallbackColor = it.dominantColor,
+                    isFavourite = (it.rating ?: 0) >= threshold,
+                    ratio = it.aspectRatio ?: 1f,
+                    isVideo = it.isVideo,
+                )
+            }
+        }
 
     override suspend fun getPhotoDetails(id: String): PhotoDetails? =
         photoRepository.getPhotoDetails(id)

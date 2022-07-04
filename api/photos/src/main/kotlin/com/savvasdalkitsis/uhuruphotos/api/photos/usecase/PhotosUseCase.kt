@@ -28,8 +28,9 @@ interface PhotosUseCase {
     fun String.toFullSizeUrlFromId(isVideo: Boolean = false): String
     fun observeAllPhotoDetails(): Flow<List<PhotoDetails>>
     fun observePhotoDetails(id: String): Flow<PhotoDetails>
-    suspend fun observeFavouritePhotos(): Result<Flow<List<Photo>>>
-    suspend fun observeHiddenPhotos(): Result<Flow<List<Photo>>>
+    fun observeFavouritePhotos(): Flow<Result<List<Photo>>>
+    fun observeHiddenPhotos(): Flow<Result<List<Photo>>>
+    suspend fun List<PhotoSummary>.mapToPhotos(): Result<List<Photo>>
     suspend fun getPhotoDetails(id: String): PhotoDetails?
     suspend fun getFavouritePhotoSummaries(): Result<List<PhotoSummary>>
     suspend fun getHiddenPhotoSummaries(): List<PhotoSummary>

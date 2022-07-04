@@ -23,14 +23,13 @@ import com.savvasdalkitsis.uhuruphotos.api.albumpage.view.state.AlbumDetails
 import com.savvasdalkitsis.uhuruphotos.api.albumpage.view.state.AlbumPageState
 import com.savvasdalkitsis.uhuruphotos.api.albumpage.view.state.Title
 import com.savvasdalkitsis.uhuruphotos.api.albums.model.Album
-import com.savvasdalkitsis.uhuruphotos.api.feed.view.state.FeedDisplays
-import com.savvasdalkitsis.uhuruphotos.api.photos.model.PhotoSequenceDataSource.Single
+import com.savvasdalkitsis.uhuruphotos.api.photos.model.PhotoSequenceDataSource.FavouritePhotos
 import com.savvasdalkitsis.uhuruphotos.api.photos.usecase.PhotosUseCase
 import com.savvasdalkitsis.uhuruphotos.api.seam.ActionHandler
 import com.savvasdalkitsis.uhuruphotos.api.strings.R
 import com.savvasdalkitsis.uhuruphotos.implementation.favourites.usecase.FavouritesUseCase
-import kotlinx.coroutines.flow.emptyFlow
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.mapNotNull
 import javax.inject.Inject
 
 internal class FavouritesActionHandler @Inject constructor(
@@ -47,7 +46,8 @@ by AlbumPageActionHandler(
         photosUseCase.getFavouritePhotoSummaries().map { it.size }.getOrDefault(0) > 0
     },
     albumDetailsFlow = {
-        photosUseCase.observeFavouritePhotos().getOrElse { emptyFlow() }
+        photosUseCase.observeFavouritePhotos()
+            .mapNotNull { it.getOrNull() }
             .map { photoEntries ->
                 AlbumDetails(
                     title = Title.Resource(R.string.favourite_photos),
@@ -60,5 +60,5 @@ by AlbumPageActionHandler(
                 )
             }
     },
-    photoSequenceDataSource = { Single }
+    photoSequenceDataSource = { FavouritePhotos }
 )

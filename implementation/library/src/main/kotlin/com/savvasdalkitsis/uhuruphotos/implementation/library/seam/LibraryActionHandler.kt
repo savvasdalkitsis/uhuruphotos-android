@@ -45,8 +45,10 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.emitAll
 import kotlinx.coroutines.flow.emptyFlow
+import kotlinx.coroutines.flow.filterIsInstance
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.mapNotNull
 import kotlinx.coroutines.flow.merge
 import java.io.IOException
 import javax.inject.Inject
@@ -98,17 +100,11 @@ class LibraryActionHandler @Inject constructor(
         }
     }
 
-    private fun favouritePhotos() = flow {
-        emitAll(photosUseCase.observeFavouritePhotos()
-            .getOrElse { emptyFlow() }
-        )
-    }
+    private fun favouritePhotos() = photosUseCase.observeFavouritePhotos()
+        .mapNotNull { it.getOrNull() }
 
-    private fun hiddenPhotos() = flow {
-        emitAll(photosUseCase.observeHiddenPhotos()
-            .getOrElse { emptyFlow() }
-        )
-    }
+    private fun hiddenPhotos() = photosUseCase.observeHiddenPhotos()
+        .mapNotNull { it.getOrNull() }
 
     private suspend fun initialRefresh(effect: suspend (LibraryEffect) -> Unit) {
         if (autoAlbumsUseCase.getAutoAlbums().isEmpty()) {
