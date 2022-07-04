@@ -363,6 +363,6 @@ class AlbumsUseCaseTest {
     private val List<Album>.firstPhoto get() = first().photos.first()
     private val List<Album>.lastPhoto get() = last().photos.last()
     private fun UserUseCase.returnsUser(user: User) {
-        coEvery { getUserOrRefresh() } returns user
+        coEvery { getUserOrRefresh() } returns Result.success(user)
     }
 }
