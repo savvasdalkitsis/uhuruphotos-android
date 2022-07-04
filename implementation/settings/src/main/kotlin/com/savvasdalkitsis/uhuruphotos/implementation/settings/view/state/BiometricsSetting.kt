@@ -17,5 +17,8 @@ package com.savvasdalkitsis.uhuruphotos.implementation.settings.view.state
 
 sealed class BiometricsSetting {
     object NotEnrolled : BiometricsSetting()
-    data class Enrolled(val requiredForAppAccess: Boolean) : BiometricsSetting()
+    data class Enrolled(
+        val requiredForAppAccess: Boolean,
+        val requiredForHiddenPhotosAccess: Boolean,
+    ) : BiometricsSetting()
 }

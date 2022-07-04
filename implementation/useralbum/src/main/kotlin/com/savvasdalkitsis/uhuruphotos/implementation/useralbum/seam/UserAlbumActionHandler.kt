@@ -49,7 +49,7 @@ by AlbumPageActionHandler(
     albumDetailsEmptyCheck = { albumId ->
         userAlbumsUseCase.getUserAlbum(albumId).items.isEmpty()
     },
-    albumDetailsFlow = { albumId ->
+    albumDetailsFlow = { albumId, _ ->
         userAlbumsUseCase.observeUserAlbum(albumId)
             .map { photoEntries ->
                 val favouriteThreshold = userUseCase.getUserOrRefresh()

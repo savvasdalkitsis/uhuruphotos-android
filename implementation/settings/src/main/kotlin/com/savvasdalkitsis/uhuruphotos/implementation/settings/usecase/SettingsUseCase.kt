@@ -70,6 +70,8 @@ internal class SettingsUseCase @Inject constructor(
         flowSharedPreferences.getBoolean("loggingEnabled", false)
     private val biometricsRequiredForAppAccess =
         flowSharedPreferences.getBoolean("biometricsRequiredForAppAccess", false)
+    private val biometricsRequiredForHiddenPhotosAccess =
+        flowSharedPreferences.getBoolean("biometricsRequiredForHiddenPhotosAccess", false)
 
     override fun getImageDiskCacheMaxLimit(): Int = imageDiskCacheSize.get()
     override fun getImageMemCacheMaxLimit(): Int = imageMemCacheSize.get()
@@ -87,6 +89,8 @@ internal class SettingsUseCase @Inject constructor(
         .map { it.mapToAvailable() }.toSet()
     override fun getLoggingEnabled(): Boolean = loggingEnabled.get()
     override fun getBiometricsRequiredForAppAccess(): Boolean = biometricsRequiredForAppAccess.get()
+    override fun getBiometricsRequiredForHiddenPhotosAccess(): Boolean =
+        biometricsRequiredForHiddenPhotosAccess.get()
 
     override fun observeImageDiskCacheMaxLimit(): Flow<Int> = imageDiskCacheSize.asFlow()
     override fun observeImageMemCacheMaxLimit(): Flow<Int> = imageMemCacheSize.asFlow()
@@ -108,6 +112,8 @@ internal class SettingsUseCase @Inject constructor(
     override fun observeLoggingEnabled(): Flow<Boolean> = loggingEnabled.asFlow()
     override fun observeBiometricsRequiredForAppAccess(): Flow<Boolean> =
         biometricsRequiredForAppAccess.asFlow()
+    override fun observeBiometricsRequiredForHiddenPhotosAccess(): Flow<Boolean> =
+        biometricsRequiredForHiddenPhotosAccess.asFlow()
 
     override suspend fun setImageDiskCacheMaxLimit(sizeInMb: Int) {
         imageDiskCacheSize.setAndCommit(sizeInMb)
@@ -168,6 +174,10 @@ internal class SettingsUseCase @Inject constructor(
 
     override suspend fun setBiometricsRequiredForAppAccess(required: Boolean) {
         biometricsRequiredForAppAccess.setAndCommit(required)
+    }
+
+    override suspend fun setBiometricsRequiredForHiddenPhotosAccess(required: Boolean) {
+        biometricsRequiredForHiddenPhotosAccess.setAndCommit(required)
     }
 
     private fun MapProvider.mapToAvailable(): MapProvider =

@@ -145,7 +145,7 @@ internal sealed class SettingsMutation(
         )
     })
 
-    data class DisplayBiometricsAppAccess(val biometrics: BiometricsSetting?) : SettingsMutation({
+    data class DisplayBiometrics(val biometrics: BiometricsSetting?) : SettingsMutation({
         it.copy(biometrics = biometrics)
     })
 

@@ -45,7 +45,7 @@ by AlbumPageActionHandler(
     albumDetailsEmptyCheck = { _ ->
         photosUseCase.getFavouritePhotoSummaries().map { it.size }.getOrDefault(0) > 0
     },
-    albumDetailsFlow = {
+    albumDetailsFlow = { _, _ ->
         photosUseCase.observeFavouritePhotos()
             .mapNotNull { it.getOrNull() }
             .map { photoEntries ->

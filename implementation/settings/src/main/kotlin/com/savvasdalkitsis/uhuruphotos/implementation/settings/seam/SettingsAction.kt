@@ -36,6 +36,7 @@ internal sealed class SettingsAction {
     data class ChangeLoggingEnabled(val enabled: Boolean) : SettingsAction()
     data class FeedRefreshChanged(val days: Int) : SettingsAction()
     data class ChangeBiometricsAppAccessRequirement(val required: Boolean) : SettingsAction()
+    data class ChangeBiometricsHiddenPhotosAccessRequirement(val required: Boolean) : SettingsAction()
 
     object LoadSettings : SettingsAction()
     object NavigateBack : SettingsAction()

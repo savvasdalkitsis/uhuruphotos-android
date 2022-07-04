@@ -82,14 +82,12 @@ internal class SettingsActionHandler @Inject constructor(
             },
             settingsUseCase.observeLoggingEnabled()
                 .map(::DisplayLoggingEnabled),
-            settingsUseCase.observeBiometricsRequiredForAppAccess()
-                .map { required ->
-                     DisplayBiometricsAppAccess(when (biometricsUseCase.getBiometrics()) {
-                         Enrolled -> BiometricsSetting.Enrolled(required)
-                         NotEnrolled -> BiometricsSetting.NotEnrolled
-                         NoHardware -> null
-                     })
-                },
+            combine(
+                settingsUseCase.observeBiometricsRequiredForAppAccess(),
+                settingsUseCase.observeBiometricsRequiredForHiddenPhotosAccess(),
+            ) { app, hiddenPhotos ->
+                DisplayBiometrics(enrollment(app, hiddenPhotos))
+            },
             cacheUseCase.observeImageDiskCacheCurrentUse()
                 .map(::DisplayImageDiskCacheCurrentUse),
             cacheUseCase.observeImageMemCacheCurrentUse()
@@ -184,22 +182,38 @@ internal class SettingsActionHandler @Inject constructor(
         is FeedRefreshChanged -> flow {
             settingsUseCase.setFeedFeedDaysToRefresh(action.days)
         }
-        is ChangeBiometricsAppAccessRequirement -> flow {
-            val proceed = when {
-                action.required -> Result.success(Unit)
-                else -> biometricsUseCase.authenticate(
-                    R.string.authenticate,
-                    R.string.authenticate_to_change,
-                    R.string.authenticate_to_change_description,
-                    true,
-                )
-            }
-            if (proceed.isSuccess) {
-                settingsUseCase.setBiometricsRequiredForAppAccess(action.required)
-            }
+        is ChangeBiometricsAppAccessRequirement -> authenticateIfNeeded(action.required) {
+            settingsUseCase.setBiometricsRequiredForAppAccess(it)
+        }
+        is ChangeBiometricsHiddenPhotosAccessRequirement -> authenticateIfNeeded(action.required) {
+            settingsUseCase.setBiometricsRequiredForHiddenPhotosAccess(it)
         }
         EnrollToBiometrics -> flow {
             effect(SettingsEffect.EnrollToBiometrics)
+        }
+    }
+
+    private fun enrollment(app: Boolean, hiddenPhotos: Boolean) = when (biometricsUseCase.getBiometrics()) {
+        Enrolled -> BiometricsSetting.Enrolled(app, hiddenPhotos)
+        NotEnrolled -> BiometricsSetting.NotEnrolled
+        NoHardware -> null
+    }
+
+    private fun authenticateIfNeeded(
+        required: Boolean,
+        change: suspend (Boolean) -> Unit,
+    ) = flow<SettingsMutation> {
+        val proceed = when {
+            required -> Result.success(Unit)
+            else -> biometricsUseCase.authenticate(
+                R.string.authenticate,
+                R.string.authenticate_to_change,
+                R.string.authenticate_to_change_description,
+                true,
+            )
+        }
+        if (proceed.isSuccess) {
+            change(required)
         }
     }
 

@@ -22,8 +22,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.res.stringResource
 import com.savvasdalkitsis.uhuruphotos.api.icons.R
 import com.savvasdalkitsis.uhuruphotos.implementation.settings.seam.SettingsAction
-import com.savvasdalkitsis.uhuruphotos.implementation.settings.seam.SettingsAction.ChangeBiometricsAppAccessRequirement
-import com.savvasdalkitsis.uhuruphotos.implementation.settings.seam.SettingsAction.EnrollToBiometrics
+import com.savvasdalkitsis.uhuruphotos.implementation.settings.seam.SettingsAction.*
 import com.savvasdalkitsis.uhuruphotos.implementation.settings.view.state.BiometricsSetting.Enrolled
 import com.savvasdalkitsis.uhuruphotos.implementation.settings.view.state.BiometricsSetting.NotEnrolled
 import com.savvasdalkitsis.uhuruphotos.implementation.settings.view.state.SettingsState
@@ -46,15 +45,25 @@ internal fun SettingsGroupBiometrics(
                 ) {
                     action(EnrollToBiometrics)
                 }
-                is Enrolled -> SettingsEntryWithSubtext(
-                    subtext = Strings.string.changes_effect_after_restart
-                ) {
+                is Enrolled -> {
+                    SettingsEntryWithSubtext(
+                        subtext = Strings.string.changes_effect_after_restart
+                    ) {
+                        SettingsCheckBox(
+                            text = stringResource(Strings.string.require_biometrics_for_app_access),
+                            icon = R.drawable.ic_fingerprint,
+                            isChecked = biometrics.requiredForAppAccess,
+                            onCheckedChange = {
+                                action(ChangeBiometricsAppAccessRequirement(!biometrics.requiredForAppAccess))
+                            }
+                        )
+                    }
                     SettingsCheckBox(
-                        text = stringResource(Strings.string.require_biometrics_for_app_access),
-                        icon = R.drawable.ic_fingerprint,
-                        isChecked = biometrics.requiredForAppAccess,
+                        text = stringResource(Strings.string.require_biometrics_for_hidden_photos_access),
+                        icon = R.drawable.ic_invisible,
+                        isChecked = biometrics.requiredForHiddenPhotosAccess,
                         onCheckedChange = {
-                            action(ChangeBiometricsAppAccessRequirement(!biometrics.requiredForAppAccess))
+                            action(ChangeBiometricsHiddenPhotosAccessRequirement(!biometrics.requiredForHiddenPhotosAccess))
                         }
                     )
                 }

@@ -47,7 +47,7 @@ by AlbumPageActionHandler(
     albumDetailsEmptyCheck = { albumId ->
         autoAlbumsUseCase.getAutoAlbum(albumId).items.isEmpty()
     },
-    albumDetailsFlow = { albumId ->
+    albumDetailsFlow = { albumId, _ ->
         autoAlbumsUseCase.observeAutoAlbum(albumId)
             .map { (photoEntries, people) ->
                 AlbumDetails(
