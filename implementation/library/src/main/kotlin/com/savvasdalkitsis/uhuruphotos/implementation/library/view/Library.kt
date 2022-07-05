@@ -15,14 +15,22 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.implementation.library.view
 
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Row
+import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.google.accompanist.swiperefresh.SwipeRefresh
 import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 import com.savvasdalkitsis.uhuruphotos.api.feed.view.state.FeedDisplay
 import com.savvasdalkitsis.uhuruphotos.api.home.view.HomeScaffold
+import com.savvasdalkitsis.uhuruphotos.api.strings.R
 import com.savvasdalkitsis.uhuruphotos.api.ui.view.FullProgressBar
+import com.savvasdalkitsis.uhuruphotos.api.ui.view.Logo
 import com.savvasdalkitsis.uhuruphotos.implementation.library.seam.LibraryAction
 import com.savvasdalkitsis.uhuruphotos.implementation.library.seam.LibraryAction.Refresh
 import com.savvasdalkitsis.uhuruphotos.implementation.library.view.state.LibraryState
@@ -36,6 +44,15 @@ internal fun Library(
 ) {
     HomeScaffold(
         modifier = Modifier,
+        title = {
+            Row(
+                horizontalArrangement = Arrangement.spacedBy(12.dp),
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Logo()
+                Text(stringResource(R.string.library))
+            }
+        },
         showLibrary = true,
         navController = navHostController,
         userInformationState = null,

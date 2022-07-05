@@ -15,6 +15,7 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.implementation.feedpage.view
 
+import androidx.compose.animation.AnimatedContent
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.PaddingValues
@@ -28,10 +29,12 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.savvasdalkitsis.uhuruphotos.implementation.feedpage.seam.FeedPageAction
 import com.savvasdalkitsis.uhuruphotos.implementation.feedpage.view.state.FeedPageState
 import com.savvasdalkitsis.uhuruphotos.api.icons.R
+import com.savvasdalkitsis.uhuruphotos.api.strings.R.string
 import com.savvasdalkitsis.uhuruphotos.api.ui.view.ActionIcon
 import com.savvasdalkitsis.uhuruphotos.api.ui.view.Logo
 
@@ -48,23 +51,27 @@ internal fun FeedPageTitle(
         Logo(
             onClick = { scrollToTop() }
         )
-        AnimatedVisibility(visible = state.hasSelection) {
-            OutlinedButton(
-                modifier = Modifier
-                    .heightIn(max = 48.dp),
-                contentPadding = PaddingValues(2.dp),
-                onClick = { action(FeedPageAction.ClearSelected) },
-                shape = RoundedCornerShape(12.dp),
-            ) {
-                Text(
-                    modifier = Modifier.padding(end = 8.dp),
-                    text = state.selectedPhotoCount.toString(),
-                )
-                ActionIcon(
-                    modifier = Modifier.size(16.dp),
+        AnimatedContent(targetState = state.hasSelection) { hasSelection ->
+            if (!hasSelection) {
+                Text(stringResource(string.feed))
+            } else {
+                OutlinedButton(
+                    modifier = Modifier
+                        .heightIn(max = 48.dp),
+                    contentPadding = PaddingValues(2.dp),
                     onClick = { action(FeedPageAction.ClearSelected) },
-                    icon = R.drawable.ic_clear
-                )
+                    shape = RoundedCornerShape(12.dp),
+                ) {
+                    Text(
+                        modifier = Modifier.padding(end = 8.dp),
+                        text = state.selectedPhotoCount.toString(),
+                    )
+                    ActionIcon(
+                        modifier = Modifier.size(16.dp),
+                        onClick = { action(FeedPageAction.ClearSelected) },
+                        icon = R.drawable.ic_clear
+                    )
+                }
             }
         }
     }
