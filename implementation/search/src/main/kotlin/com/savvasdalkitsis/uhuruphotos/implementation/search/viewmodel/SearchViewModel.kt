@@ -16,12 +16,18 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.implementation.search.viewmodel
 
 import androidx.lifecycle.ViewModel
+import com.savvasdalkitsis.uhuruphotos.api.accountoverview.seam.AccountOverviewAction
+import com.savvasdalkitsis.uhuruphotos.api.accountoverview.seam.AccountOverviewActionHandler
+import com.savvasdalkitsis.uhuruphotos.api.accountoverview.seam.AccountOverviewEffect
+import com.savvasdalkitsis.uhuruphotos.api.accountoverview.view.state.AccountOverviewState
+import com.savvasdalkitsis.uhuruphotos.api.seam.CompositeActionHandler
+import com.savvasdalkitsis.uhuruphotos.api.seam.Either
+import com.savvasdalkitsis.uhuruphotos.api.seam.Mutation
 import com.savvasdalkitsis.uhuruphotos.api.seam.Seam
 import com.savvasdalkitsis.uhuruphotos.api.seam.SeamViaHandler.Companion.handler
 import com.savvasdalkitsis.uhuruphotos.implementation.search.seam.SearchAction
 import com.savvasdalkitsis.uhuruphotos.implementation.search.seam.SearchActionHandler
 import com.savvasdalkitsis.uhuruphotos.implementation.search.seam.SearchEffect
-import com.savvasdalkitsis.uhuruphotos.implementation.search.seam.SearchMutation
 import com.savvasdalkitsis.uhuruphotos.implementation.search.view.state.SearchState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
@@ -29,8 +35,16 @@ import javax.inject.Inject
 @HiltViewModel
 class SearchViewModel @Inject constructor(
     searchActionHandler: SearchActionHandler,
-) : ViewModel(),
-    Seam<SearchState, SearchEffect, SearchAction, SearchMutation> by handler(
-        searchActionHandler,
-        SearchState(),
+    accountOverviewActionHandler: AccountOverviewActionHandler,
+) : ViewModel(), Seam<
+        Pair<SearchState, AccountOverviewState>,
+        Either<SearchEffect, AccountOverviewEffect>,
+        Either<SearchAction, AccountOverviewAction>,
+        Mutation<Pair<SearchState, AccountOverviewState>>,
+        > by handler(
+            CompositeActionHandler(
+                handler1 = searchActionHandler,
+                handler2 = accountOverviewActionHandler,
+            ),
+        SearchState() to AccountOverviewState(),
     )

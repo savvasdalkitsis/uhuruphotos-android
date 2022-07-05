@@ -19,7 +19,6 @@ import com.savvasdalkitsis.uhuruphotos.api.albums.model.Album
 import com.savvasdalkitsis.uhuruphotos.api.feed.view.state.FeedDisplays
 import com.savvasdalkitsis.uhuruphotos.api.feed.view.state.FeedState
 import com.savvasdalkitsis.uhuruphotos.api.seam.Mutation
-import com.savvasdalkitsis.uhuruphotos.api.userbadge.view.state.UserInformationState
 import com.savvasdalkitsis.uhuruphotos.implementation.feedpage.view.state.FeedPageState
 
 internal sealed class FeedPageMutation(
@@ -28,22 +27,6 @@ internal sealed class FeedPageMutation(
 
     object Loading : FeedPageMutation({
         it.copyFeed { copy(isLoading = true) }
-    })
-
-    object ShowAccountOverview : FeedPageMutation({
-        it.copy(showAccountOverview = true)
-    })
-
-    object HideAccountOverview : FeedPageMutation({
-        it.copy(showAccountOverview = false)
-    })
-
-    object ShowLogOutConfirmation : FeedPageMutation({
-        it.copy(showLogOutConfirmation = true)
-    })
-
-    object HideLogOutConfirmation : FeedPageMutation({
-        it.copy(showLogOutConfirmation = false)
     })
 
     object StartRefreshing : FeedPageMutation({
@@ -71,10 +54,6 @@ internal sealed class FeedPageMutation(
     }) {
         override fun toString() = "Showing ${albums.size} albums"
     }
-
-    data class UserBadgeUpdate(val userInformationState: UserInformationState) : FeedPageMutation({
-        it.copy(userInformationState = userInformationState)
-    })
 
     data class ChangeDisplay(val display: FeedDisplays) : FeedPageMutation({
         it.copyFeed { copy(feedDisplay = display) }

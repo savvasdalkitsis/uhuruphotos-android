@@ -18,7 +18,6 @@ package com.savvasdalkitsis.uhuruphotos.implementation.search.seam
 import com.savvasdalkitsis.uhuruphotos.api.feed.view.state.FeedDisplay
 import com.savvasdalkitsis.uhuruphotos.api.people.view.state.Person
 import com.savvasdalkitsis.uhuruphotos.api.seam.Mutation
-import com.savvasdalkitsis.uhuruphotos.api.userbadge.view.state.UserInformationState
 import com.savvasdalkitsis.uhuruphotos.implementation.search.view.state.SearchResults
 import com.savvasdalkitsis.uhuruphotos.implementation.search.view.state.SearchState
 import com.savvasdalkitsis.uhuruphotos.implementation.search.view.state.SearchSuggestion
@@ -33,22 +32,6 @@ sealed class SearchMutation(
 
     object SwitchStateToIdle : SearchMutation({
         it.copy(searchResults = SearchResults.Idle)
-    })
-
-    object ShowAccountOverview : SearchMutation({
-        it.copy(showAccountOverview = true)
-    })
-
-    object HideAccountOverview : SearchMutation({
-        it.copy(showAccountOverview = false)
-    })
-
-    object ShowLogOutConfirmation : SearchMutation({
-        it.copy(showLogOutConfirmation = true)
-    })
-
-    object HideLogOutConfirmation : SearchMutation({
-        it.copy(showLogOutConfirmation = false)
     })
 
     object HideSuggestions : SearchMutation({
@@ -72,12 +55,6 @@ sealed class SearchMutation(
     }) {
         override fun toString() = "Updating results with ${found.albums.size} albums"
     }
-
-    data class UserBadgeStateChanged(
-        val userInformationState: UserInformationState,
-    ) : SearchMutation({
-        it.copy(userInformationState = userInformationState)
-    })
 
     data class ShowSearchSuggestion(val suggestion: String) : SearchMutation({
         it.copy(suggestion = suggestion)

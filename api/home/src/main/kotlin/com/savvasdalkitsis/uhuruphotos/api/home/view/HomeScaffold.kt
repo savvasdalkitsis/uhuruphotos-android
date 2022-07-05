@@ -30,19 +30,15 @@ import com.savvasdalkitsis.uhuruphotos.api.home.navigation.NavigationStyle.NAVIG
 import com.savvasdalkitsis.uhuruphotos.api.home.navigation.homeNavigationStyle
 import com.savvasdalkitsis.uhuruphotos.api.ui.view.CommonScaffold
 import com.savvasdalkitsis.uhuruphotos.api.ui.view.Logo
-import com.savvasdalkitsis.uhuruphotos.api.userbadge.view.UserBadge
-import com.savvasdalkitsis.uhuruphotos.api.userbadge.view.state.UserInformationState
 
 @Composable
 fun HomeScaffold(
     modifier: Modifier = Modifier,
     title: @Composable () -> Unit = { Logo() },
     navController: NavHostController,
-    userInformationState: UserInformationState? = null,
     homeFeedDisplay: FeedDisplay = FeedDisplays.default,
     selectionMode: Boolean = false,
     showLibrary: Boolean = true,
-    userBadgePressed: () -> Unit = {},
     actionBarContent: @Composable (RowScope.() -> Unit) = {},
     onReselected: () -> Unit = {},
     content: @Composable (PaddingValues) -> Unit,
@@ -63,12 +59,6 @@ fun HomeScaffold(
         },
         actionBarContent = {
             actionBarContent()
-            userInformationState?.let {
-                UserBadge(
-                    state = it,
-                    userBadgePressed = userBadgePressed
-                )
-            }
         }
     ) { contentPadding ->
         when (homeNavigationStyle()) {

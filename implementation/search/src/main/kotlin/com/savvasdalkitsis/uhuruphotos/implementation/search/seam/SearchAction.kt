@@ -24,13 +24,6 @@ sealed class SearchAction {
 
     object Initialise : SearchAction()
     object SearchCleared : SearchAction()
-    object UserBadgePressed : SearchAction()
-    object DismissAccountOverview : SearchAction()
-    object AskToLogOut : SearchAction()
-    object DismissLogOutDialog : SearchAction()
-    object LogOut : SearchAction()
-    object EditServer : SearchAction()
-    object SettingsClick : SearchAction()
     object ViewAllPeopleSelected : SearchAction()
     object LoadHeatMap : SearchAction()
 

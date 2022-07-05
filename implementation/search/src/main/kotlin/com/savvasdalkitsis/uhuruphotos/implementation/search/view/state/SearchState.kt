@@ -18,14 +18,10 @@ package com.savvasdalkitsis.uhuruphotos.implementation.search.view.state
 import com.savvasdalkitsis.uhuruphotos.api.feed.view.state.FeedDisplay
 import com.savvasdalkitsis.uhuruphotos.api.feed.view.state.FeedDisplays
 import com.savvasdalkitsis.uhuruphotos.api.people.view.state.Person
-import com.savvasdalkitsis.uhuruphotos.api.userbadge.view.state.UserInformationState
 
 data class SearchState(
     val showClearButton: Boolean = false,
     val searchResults: SearchResults = SearchResults.Idle,
-    val userInformationState: UserInformationState = UserInformationState(),
-    val showAccountOverview: Boolean = false,
-    val showLogOutConfirmation: Boolean = false,
     val feedDisplay: FeedDisplay = FeedDisplays.default,
     val searchDisplay: FeedDisplay = FeedDisplays.default,
     val showLibrary: Boolean = true,

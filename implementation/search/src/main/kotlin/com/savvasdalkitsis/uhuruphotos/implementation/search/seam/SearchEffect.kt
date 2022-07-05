@@ -19,9 +19,6 @@ import androidx.compose.ui.geometry.Offset
 
 sealed class SearchEffect {
     object HideKeyboard : SearchEffect()
-    object ReloadApp : SearchEffect()
-    object NavigateToEditServer : SearchEffect()
-    object NavigateToSettings : SearchEffect()
     object ErrorSearching : SearchEffect()
     object NavigateToAllPeople : SearchEffect()
     object ErrorRefreshingPeople : SearchEffect()

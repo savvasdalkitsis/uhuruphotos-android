@@ -18,16 +18,12 @@ package com.savvasdalkitsis.uhuruphotos.implementation.feedpage.view.state
 import com.savvasdalkitsis.uhuruphotos.api.feed.view.state.FeedState
 import com.savvasdalkitsis.uhuruphotos.api.photos.model.Photo
 import com.savvasdalkitsis.uhuruphotos.api.photos.model.SelectionMode
-import com.savvasdalkitsis.uhuruphotos.api.userbadge.view.state.UserInformationState
 
 internal data class FeedPageState(
     val feedState: FeedState = FeedState(),
-    val userInformationState: UserInformationState = UserInformationState(),
-    val showAccountOverview: Boolean = false,
     val isRefreshing: Boolean = false,
     val showLibrary: Boolean = true,
     val showPhotoDeletionConfirmationDialog: Boolean = false,
-    val showLogOutConfirmation: Boolean = false,
 ) {
     val selectedPhotoCount: Int = feedState.albums.sumOf { album ->
         album.photos.count { photo ->

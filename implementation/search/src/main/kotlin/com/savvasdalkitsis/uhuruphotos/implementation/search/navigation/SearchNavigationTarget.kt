@@ -18,11 +18,22 @@ package com.savvasdalkitsis.uhuruphotos.implementation.search.navigation
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
+import com.savvasdalkitsis.uhuruphotos.api.accountoverview.seam.AccountOverviewAction
+import com.savvasdalkitsis.uhuruphotos.api.accountoverview.seam.AccountOverviewAction.*
+import com.savvasdalkitsis.uhuruphotos.api.accountoverview.seam.AccountOverviewEffect
+import com.savvasdalkitsis.uhuruphotos.api.accountoverview.seam.AccountOverviewEffectsHandler
+import com.savvasdalkitsis.uhuruphotos.api.accountoverview.view.AccountOverviewActionBar
+import com.savvasdalkitsis.uhuruphotos.api.accountoverview.view.AccountOverviewContent
+import com.savvasdalkitsis.uhuruphotos.api.accountoverview.view.state.AccountOverviewState
 import com.savvasdalkitsis.uhuruphotos.api.homenavigation.HomeNavigationRoutes
 import com.savvasdalkitsis.uhuruphotos.api.navigation.NavigationTarget
 import com.savvasdalkitsis.uhuruphotos.api.navigation.navigationTarget
+import com.savvasdalkitsis.uhuruphotos.api.seam.CompositeEffectHandler
+import com.savvasdalkitsis.uhuruphotos.api.seam.Either
+import com.savvasdalkitsis.uhuruphotos.api.seam.Either.*
 import com.savvasdalkitsis.uhuruphotos.api.settings.usecase.SettingsUseCase
 import com.savvasdalkitsis.uhuruphotos.implementation.search.seam.SearchAction
+import com.savvasdalkitsis.uhuruphotos.implementation.search.seam.SearchAction.*
 import com.savvasdalkitsis.uhuruphotos.implementation.search.seam.SearchEffect
 import com.savvasdalkitsis.uhuruphotos.implementation.search.seam.SearchEffectsHandler
 import com.savvasdalkitsis.uhuruphotos.implementation.search.view.SearchPage
@@ -31,23 +42,47 @@ import com.savvasdalkitsis.uhuruphotos.implementation.search.viewmodel.SearchVie
 import javax.inject.Inject
 
 class SearchNavigationTarget @Inject constructor(
-    private val effectsHandler: SearchEffectsHandler,
+    private val accountOverviewEffectsHandler: AccountOverviewEffectsHandler,
+    private val searchEffectsHandler: SearchEffectsHandler,
     private val settingsUseCase: SettingsUseCase,
 ) : NavigationTarget {
 
     override suspend fun NavGraphBuilder.create(navHostController: NavHostController) {
-        navigationTarget<SearchState, SearchEffect, SearchAction, SearchViewModel>(
+        navigationTarget<
+                Pair<SearchState, AccountOverviewState>,
+                Either<SearchEffect, AccountOverviewEffect>,
+                Either<SearchAction, AccountOverviewAction>,
+                SearchViewModel
+        >(
             name = HomeNavigationRoutes.search,
-            effects = effectsHandler,
+            effects = CompositeEffectHandler(
+                searchEffectsHandler,
+                accountOverviewEffectsHandler,
+            ),
             themeMode = settingsUseCase.observeThemeModeState(),
-            initializer = { _, actions -> actions(SearchAction.Initialise) },
+            initializer = { _, actions ->
+                actions(Left(Initialise))
+                actions(Right(Load))
+            },
             createModel = { hiltViewModel() }
         ) { state, actions ->
             SearchPage(
-                state,
-                actions,
-                navHostController,
-            )
+                state.first,
+                isShowingPopUp = state.second.showAccountOverview,
+                action = {
+                    actions(Left(it))
+                },
+                actionBarContent = {
+                    AccountOverviewActionBar(state.second) {
+                        actions(Right(it))
+                    }
+                },
+                navHostController = navHostController,
+            ) {
+                AccountOverviewContent(state.second) {
+                    actions(Right(it))
+                }
+            }
         }
     }
 }

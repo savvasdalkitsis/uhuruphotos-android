@@ -26,6 +26,7 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.google.accompanist.swiperefresh.SwipeRefresh
 import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
+import com.savvasdalkitsis.uhuruphotos.api.compose.blurIf
 import com.savvasdalkitsis.uhuruphotos.api.feed.view.state.FeedDisplay
 import com.savvasdalkitsis.uhuruphotos.api.home.view.HomeScaffold
 import com.savvasdalkitsis.uhuruphotos.api.strings.R
@@ -39,11 +40,14 @@ import com.savvasdalkitsis.uhuruphotos.implementation.library.view.state.Library
 internal fun Library(
     state: LibraryState,
     homeFeedDisplay: FeedDisplay,
+    isShowingPopUp: Boolean,
     action: (LibraryAction) -> Unit,
     navHostController: NavHostController,
+    actionBarContent: @Composable () -> Unit,
+    additionalContent: @Composable () -> Unit,
 ) {
     HomeScaffold(
-        modifier = Modifier,
+        modifier = Modifier.blurIf(isShowingPopUp),
         title = {
             Row(
                 horizontalArrangement = Arrangement.spacedBy(12.dp),
@@ -53,9 +57,11 @@ internal fun Library(
                 Text(stringResource(R.string.library))
             }
         },
+        actionBarContent = {
+           actionBarContent()
+        },
         showLibrary = true,
         navController = navHostController,
-        userInformationState = null,
         homeFeedDisplay = homeFeedDisplay,
     ) { contentPadding ->
         when {
@@ -70,5 +76,6 @@ internal fun Library(
                 LibraryGrid(contentPadding, state, action)
             }
         }
+        additionalContent()
     }
 }

@@ -9,6 +9,7 @@ android {
 }
 
 dependencies {
+    implementation project(':api:accountoverview')
     implementation project(':api:albums')
     implementation project(":api:autoalbum")
     implementation project(":api:autoalbums")

@@ -16,12 +16,18 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.implementation.library.viewmodel
 
 import androidx.lifecycle.ViewModel
+import com.savvasdalkitsis.uhuruphotos.api.accountoverview.seam.AccountOverviewAction
+import com.savvasdalkitsis.uhuruphotos.api.accountoverview.seam.AccountOverviewActionHandler
+import com.savvasdalkitsis.uhuruphotos.api.accountoverview.seam.AccountOverviewEffect
+import com.savvasdalkitsis.uhuruphotos.api.accountoverview.view.state.AccountOverviewState
+import com.savvasdalkitsis.uhuruphotos.api.seam.CompositeActionHandler
+import com.savvasdalkitsis.uhuruphotos.api.seam.Either
+import com.savvasdalkitsis.uhuruphotos.api.seam.Mutation
 import com.savvasdalkitsis.uhuruphotos.api.seam.Seam
 import com.savvasdalkitsis.uhuruphotos.api.seam.SeamViaHandler.Companion.handler
 import com.savvasdalkitsis.uhuruphotos.implementation.library.seam.LibraryAction
 import com.savvasdalkitsis.uhuruphotos.implementation.library.seam.LibraryActionHandler
 import com.savvasdalkitsis.uhuruphotos.implementation.library.seam.LibraryEffect
-import com.savvasdalkitsis.uhuruphotos.implementation.library.seam.LibraryMutation
 import com.savvasdalkitsis.uhuruphotos.implementation.library.view.state.LibraryState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
@@ -29,8 +35,16 @@ import javax.inject.Inject
 @HiltViewModel
 class LibraryViewModel @Inject constructor(
     libraryActionHandler: LibraryActionHandler,
-) : ViewModel(),
-    Seam<LibraryState, LibraryEffect, LibraryAction, LibraryMutation> by handler(
-        libraryActionHandler,
-        LibraryState(),
+    accountOverviewActionHandler: AccountOverviewActionHandler,
+) : ViewModel(), Seam<
+        Pair<LibraryState, AccountOverviewState>,
+        Either<LibraryEffect, AccountOverviewEffect>,
+        Either<LibraryAction, AccountOverviewAction>,
+        Mutation<Pair<LibraryState, AccountOverviewState>>
+    > by handler(
+        CompositeActionHandler(
+            handler1 = libraryActionHandler,
+            handler2 = accountOverviewActionHandler,
+        ),
+        LibraryState() to AccountOverviewState(),
     )

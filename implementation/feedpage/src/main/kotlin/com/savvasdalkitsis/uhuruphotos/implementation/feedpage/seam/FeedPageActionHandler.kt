@@ -30,41 +30,26 @@ import com.savvasdalkitsis.uhuruphotos.api.userbadge.view.state.SyncState.IN_PRO
 import com.savvasdalkitsis.uhuruphotos.implementation.feedpage.SelectionList
 import com.savvasdalkitsis.uhuruphotos.implementation.feedpage.seam.FeedPageAction.AlbumSelectionClicked
 import com.savvasdalkitsis.uhuruphotos.implementation.feedpage.seam.FeedPageAction.AskForSelectedPhotosDeletion
-import com.savvasdalkitsis.uhuruphotos.implementation.feedpage.seam.FeedPageAction.AskToLogOut
 import com.savvasdalkitsis.uhuruphotos.implementation.feedpage.seam.FeedPageAction.ChangeDisplay
 import com.savvasdalkitsis.uhuruphotos.implementation.feedpage.seam.FeedPageAction.ClearSelected
 import com.savvasdalkitsis.uhuruphotos.implementation.feedpage.seam.FeedPageAction.DeleteSelectedPhotos
-import com.savvasdalkitsis.uhuruphotos.implementation.feedpage.seam.FeedPageAction.DismissAccountOverview
-import com.savvasdalkitsis.uhuruphotos.implementation.feedpage.seam.FeedPageAction.DismissLogOutDialog
 import com.savvasdalkitsis.uhuruphotos.implementation.feedpage.seam.FeedPageAction.DismissSelectedPhotosDeletion
-import com.savvasdalkitsis.uhuruphotos.implementation.feedpage.seam.FeedPageAction.EditServer
 import com.savvasdalkitsis.uhuruphotos.implementation.feedpage.seam.FeedPageAction.LoadFeed
-import com.savvasdalkitsis.uhuruphotos.implementation.feedpage.seam.FeedPageAction.LogOut
 import com.savvasdalkitsis.uhuruphotos.implementation.feedpage.seam.FeedPageAction.PhotoLongPressed
 import com.savvasdalkitsis.uhuruphotos.implementation.feedpage.seam.FeedPageAction.RefreshAlbums
 import com.savvasdalkitsis.uhuruphotos.implementation.feedpage.seam.FeedPageAction.SelectedPhoto
-import com.savvasdalkitsis.uhuruphotos.implementation.feedpage.seam.FeedPageAction.SettingsClick
 import com.savvasdalkitsis.uhuruphotos.implementation.feedpage.seam.FeedPageAction.ShareSelectedPhotos
-import com.savvasdalkitsis.uhuruphotos.implementation.feedpage.seam.FeedPageAction.UserBadgePressed
-import com.savvasdalkitsis.uhuruphotos.implementation.feedpage.seam.FeedPageEffect.NavigateToServerEdit
-import com.savvasdalkitsis.uhuruphotos.implementation.feedpage.seam.FeedPageEffect.NavigateToSettings
 import com.savvasdalkitsis.uhuruphotos.implementation.feedpage.seam.FeedPageEffect.OpenPhotoDetails
-import com.savvasdalkitsis.uhuruphotos.implementation.feedpage.seam.FeedPageEffect.ReloadApp
 import com.savvasdalkitsis.uhuruphotos.implementation.feedpage.seam.FeedPageEffect.SharePhotos
 import com.savvasdalkitsis.uhuruphotos.implementation.feedpage.seam.FeedPageEffect.Vibrate
-import com.savvasdalkitsis.uhuruphotos.implementation.feedpage.seam.FeedPageMutation.HideAccountOverview
 import com.savvasdalkitsis.uhuruphotos.implementation.feedpage.seam.FeedPageMutation.HideDeletionConfirmationDialog
-import com.savvasdalkitsis.uhuruphotos.implementation.feedpage.seam.FeedPageMutation.HideLogOutConfirmation
 import com.savvasdalkitsis.uhuruphotos.implementation.feedpage.seam.FeedPageMutation.Loading
-import com.savvasdalkitsis.uhuruphotos.implementation.feedpage.seam.FeedPageMutation.ShowAccountOverview
 import com.savvasdalkitsis.uhuruphotos.implementation.feedpage.seam.FeedPageMutation.ShowAlbums
 import com.savvasdalkitsis.uhuruphotos.implementation.feedpage.seam.FeedPageMutation.ShowDeletionConfirmationDialog
 import com.savvasdalkitsis.uhuruphotos.implementation.feedpage.seam.FeedPageMutation.ShowLibrary
-import com.savvasdalkitsis.uhuruphotos.implementation.feedpage.seam.FeedPageMutation.ShowLogOutConfirmation
 import com.savvasdalkitsis.uhuruphotos.implementation.feedpage.seam.FeedPageMutation.ShowNoPhotosFound
 import com.savvasdalkitsis.uhuruphotos.implementation.feedpage.seam.FeedPageMutation.StartRefreshing
 import com.savvasdalkitsis.uhuruphotos.implementation.feedpage.seam.FeedPageMutation.StopRefreshing
-import com.savvasdalkitsis.uhuruphotos.implementation.feedpage.seam.FeedPageMutation.UserBadgeUpdate
 import com.savvasdalkitsis.uhuruphotos.implementation.feedpage.usecase.FeedPageUseCase
 import com.savvasdalkitsis.uhuruphotos.implementation.feedpage.view.state.FeedPageState
 import kotlinx.coroutines.delay
@@ -113,17 +98,7 @@ internal class FeedPageActionHandler @Inject constructor(
                     ShowAlbums(selected)
                 }
             },
-            userBadgeUseCase.getUserBadgeState()
-                .map(::UserBadgeUpdate),
         )
-        UserBadgePressed -> flowOf(ShowAccountOverview)
-        DismissAccountOverview -> flowOf(HideAccountOverview)
-        AskToLogOut -> flowOf(ShowLogOutConfirmation)
-        DismissLogOutDialog -> flowOf(HideLogOutConfirmation)
-        LogOut -> flow {
-            accountUseCase.logOut()
-            effect(ReloadApp)
-        }
         RefreshAlbums -> flow {
             emit(StartRefreshing)
             albumsUseCase.startRefreshAlbumsWork(shallow = true)
@@ -178,14 +153,6 @@ internal class FeedPageActionHandler @Inject constructor(
         }
         ShareSelectedPhotos -> flow {
             effect(SharePhotos(state.selectedPhotos))
-        }
-        EditServer -> flow {
-            emit(HideAccountOverview)
-            effect(NavigateToServerEdit)
-        }
-        SettingsClick -> flow {
-            emit(HideAccountOverview)
-            effect(NavigateToSettings)
         }
     }
 

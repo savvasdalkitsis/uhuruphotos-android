@@ -13,19 +13,11 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
  */
-package com.savvasdalkitsis.uhuruphotos.implementation.feedpage.seam
+package com.savvasdalkitsis.uhuruphotos.api.accountoverview.seam
 
-import androidx.compose.ui.geometry.Offset
-import com.savvasdalkitsis.uhuruphotos.api.photos.model.Photo
+sealed class AccountOverviewEffect {
 
-internal sealed class FeedPageEffect {
-    data class OpenPhotoDetails(
-        val id: String,
-        val center: Offset,
-        val scale: Float,
-        val isVideo: Boolean,
-    ) : FeedPageEffect()
-
-    data class SharePhotos(val selectedPhotos: List<Photo>) : FeedPageEffect()
-    object Vibrate : FeedPageEffect()
+    object ReloadApp : AccountOverviewEffect()
+    object NavigateToServerEdit : AccountOverviewEffect()
+    object NavigateToSettings : AccountOverviewEffect()
 }

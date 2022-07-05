@@ -22,8 +22,6 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import com.google.accompanist.swiperefresh.SwipeRefresh
 import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
-import com.savvasdalkitsis.uhuruphotos.api.account.view.LogOutConfirmationDialog
-import com.savvasdalkitsis.uhuruphotos.api.accountoverview.view.AccountOverviewPopUp
 import com.savvasdalkitsis.uhuruphotos.api.compose.blurIf
 import com.savvasdalkitsis.uhuruphotos.api.feed.view.Feed
 import com.savvasdalkitsis.uhuruphotos.api.feed.view.state.FeedDisplays
@@ -31,19 +29,12 @@ import com.savvasdalkitsis.uhuruphotos.api.home.view.HomeScaffold
 import com.savvasdalkitsis.uhuruphotos.api.photos.view.DeletePermissionDialog
 import com.savvasdalkitsis.uhuruphotos.implementation.feedpage.seam.FeedPageAction
 import com.savvasdalkitsis.uhuruphotos.implementation.feedpage.seam.FeedPageAction.AlbumSelectionClicked
-import com.savvasdalkitsis.uhuruphotos.implementation.feedpage.seam.FeedPageAction.AskToLogOut
 import com.savvasdalkitsis.uhuruphotos.implementation.feedpage.seam.FeedPageAction.ChangeDisplay
 import com.savvasdalkitsis.uhuruphotos.implementation.feedpage.seam.FeedPageAction.DeleteSelectedPhotos
-import com.savvasdalkitsis.uhuruphotos.implementation.feedpage.seam.FeedPageAction.DismissAccountOverview
-import com.savvasdalkitsis.uhuruphotos.implementation.feedpage.seam.FeedPageAction.DismissLogOutDialog
 import com.savvasdalkitsis.uhuruphotos.implementation.feedpage.seam.FeedPageAction.DismissSelectedPhotosDeletion
-import com.savvasdalkitsis.uhuruphotos.implementation.feedpage.seam.FeedPageAction.EditServer
-import com.savvasdalkitsis.uhuruphotos.implementation.feedpage.seam.FeedPageAction.LogOut
 import com.savvasdalkitsis.uhuruphotos.implementation.feedpage.seam.FeedPageAction.PhotoLongPressed
 import com.savvasdalkitsis.uhuruphotos.implementation.feedpage.seam.FeedPageAction.RefreshAlbums
 import com.savvasdalkitsis.uhuruphotos.implementation.feedpage.seam.FeedPageAction.SelectedPhoto
-import com.savvasdalkitsis.uhuruphotos.implementation.feedpage.seam.FeedPageAction.SettingsClick
-import com.savvasdalkitsis.uhuruphotos.implementation.feedpage.seam.FeedPageAction.UserBadgePressed
 import com.savvasdalkitsis.uhuruphotos.implementation.feedpage.view.state.FeedPageState
 import kotlinx.coroutines.launch
 
@@ -51,7 +42,10 @@ import kotlinx.coroutines.launch
 internal fun FeedPage(
     navHostController: NavHostController,
     state: FeedPageState,
+    isShowingPopUp: Boolean,
     action: (FeedPageAction) -> Unit,
+    actionBarContent: @Composable () -> Unit,
+    additionalContent: @Composable () -> Unit,
 ) {
     val coroutineScope = rememberCoroutineScope()
     val listState = rememberLazyListState()
@@ -63,18 +57,17 @@ internal fun FeedPage(
     }
 
     HomeScaffold(
-        modifier = Modifier.blurIf(state.showAccountOverview),
+        modifier = Modifier.blurIf(isShowingPopUp),
         title = {
             FeedPageTitle(state, action, ::scrollToTop)
         },
         navController = navHostController,
-        userInformationState = state.userInformationState,
         showLibrary = state.showLibrary,
         homeFeedDisplay = state.feedState.feedDisplay,
         selectionMode = state.hasSelection,
-        userBadgePressed = { action(UserBadgePressed) },
         actionBarContent = {
             FeedPageActionBar(state, action)
+            actionBarContent()
         },
         onReselected = { scrollToTop() },
     ) { contentPadding ->
@@ -99,14 +92,6 @@ internal fun FeedPage(
                 action(AlbumSelectionClicked(it))
             }
         }
-        AccountOverviewPopUp(
-            visible = state.showAccountOverview,
-            userInformationState = state.userInformationState,
-            onDismiss = { action(DismissAccountOverview) },
-            onLogoutClicked = { action(AskToLogOut) },
-            onEditServerClicked = { action(EditServer) },
-            onSettingsClicked = { action(SettingsClick) },
-        )
         if (state.showPhotoDeletionConfirmationDialog) {
             DeletePermissionDialog(
                 photoCount = state.selectedPhotoCount,
@@ -114,11 +99,6 @@ internal fun FeedPage(
                 onDelete = { action(DeleteSelectedPhotos) }
             )
         }
-        if (state.showLogOutConfirmation) {
-            LogOutConfirmationDialog(
-                onDismiss = { action(DismissLogOutDialog) },
-                onLogOut = { action(LogOut) },
-            )
-        }
+        additionalContent()
     }
 }

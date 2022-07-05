@@ -26,34 +26,28 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
-import com.savvasdalkitsis.uhuruphotos.api.account.view.LogOutConfirmationDialog
-import com.savvasdalkitsis.uhuruphotos.api.accountoverview.view.AccountOverviewPopUp
 import com.savvasdalkitsis.uhuruphotos.api.compose.blurIf
 import com.savvasdalkitsis.uhuruphotos.api.feed.view.FeedDisplayActionButton
 import com.savvasdalkitsis.uhuruphotos.api.home.view.HomeScaffold
 import com.savvasdalkitsis.uhuruphotos.api.strings.R
 import com.savvasdalkitsis.uhuruphotos.api.ui.view.Logo
 import com.savvasdalkitsis.uhuruphotos.implementation.search.seam.SearchAction
-import com.savvasdalkitsis.uhuruphotos.implementation.search.seam.SearchAction.AskToLogOut
 import com.savvasdalkitsis.uhuruphotos.implementation.search.seam.SearchAction.ChangeDisplay
-import com.savvasdalkitsis.uhuruphotos.implementation.search.seam.SearchAction.DismissAccountOverview
-import com.savvasdalkitsis.uhuruphotos.implementation.search.seam.SearchAction.DismissLogOutDialog
-import com.savvasdalkitsis.uhuruphotos.implementation.search.seam.SearchAction.EditServer
-import com.savvasdalkitsis.uhuruphotos.implementation.search.seam.SearchAction.LogOut
-import com.savvasdalkitsis.uhuruphotos.implementation.search.seam.SearchAction.SettingsClick
-import com.savvasdalkitsis.uhuruphotos.implementation.search.seam.SearchAction.UserBadgePressed
 import com.savvasdalkitsis.uhuruphotos.implementation.search.view.state.SearchResults.Found
 import com.savvasdalkitsis.uhuruphotos.implementation.search.view.state.SearchState
 
 @Composable
 fun SearchPage(
     state: SearchState,
+    isShowingPopUp: Boolean,
     action: (SearchAction) -> Unit,
+    actionBarContent: @Composable () -> Unit,
     navHostController: NavHostController,
+    additionalContent: @Composable () -> Unit,
 ) {
     HomeScaffold(
         modifier = Modifier
-            .blurIf(state.showAccountOverview)
+            .blurIf(isShowingPopUp)
             .imeNestedScroll(),
         title = {
             Row(
@@ -65,10 +59,8 @@ fun SearchPage(
             }
         },
         navController = navHostController,
-        userInformationState = state.userInformationState,
         homeFeedDisplay = state.feedDisplay,
         showLibrary = state.showLibrary,
-        userBadgePressed = { action(UserBadgePressed) },
         actionBarContent = {
             AnimatedVisibility(state.searchResults is Found) {
                 FeedDisplayActionButton(
@@ -76,6 +68,7 @@ fun SearchPage(
                     currentFeedDisplay = state.searchDisplay
                 )
             }
+            actionBarContent()
         }
     ) { contentPadding ->
         Search(
@@ -83,19 +76,6 @@ fun SearchPage(
             action = action,
             contentPadding = contentPadding
         )
-        AccountOverviewPopUp(
-            visible = state.showAccountOverview,
-            userInformationState = state.userInformationState,
-            onDismiss = { action(DismissAccountOverview) },
-            onLogoutClicked = { action(AskToLogOut) },
-            onEditServerClicked = { action(EditServer) },
-            onSettingsClicked = { action(SettingsClick) },
-        )
-        if (state.showLogOutConfirmation) {
-            LogOutConfirmationDialog(
-                onDismiss = { action(DismissLogOutDialog) },
-                onLogOut = { action(LogOut) },
-            )
-        }
+        additionalContent()
     }
 }

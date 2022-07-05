@@ -15,21 +15,15 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.implementation.feedpage.seam
 
-import com.savvasdalkitsis.uhuruphotos.api.homenavigation.HomeNavigationRoutes
 import com.savvasdalkitsis.uhuruphotos.api.navigation.Navigator
 import com.savvasdalkitsis.uhuruphotos.api.photos.model.PhotoSequenceDataSource.AllPhotos
 import com.savvasdalkitsis.uhuruphotos.api.photos.navigation.PhotoNavigationTarget
 import com.savvasdalkitsis.uhuruphotos.api.seam.EffectHandler
-import com.savvasdalkitsis.uhuruphotos.api.server.navigation.ServerNavigationTarget
-import com.savvasdalkitsis.uhuruphotos.api.settings.navigation.SettingsNavigationTarget
 import com.savvasdalkitsis.uhuruphotos.api.share.usecase.ShareUseCase
 import com.savvasdalkitsis.uhuruphotos.api.strings.R
 import com.savvasdalkitsis.uhuruphotos.api.toaster.Toaster
 import com.savvasdalkitsis.uhuruphotos.api.ui.usecase.UiUseCase
-import com.savvasdalkitsis.uhuruphotos.implementation.feedpage.seam.FeedPageEffect.NavigateToServerEdit
-import com.savvasdalkitsis.uhuruphotos.implementation.feedpage.seam.FeedPageEffect.NavigateToSettings
 import com.savvasdalkitsis.uhuruphotos.implementation.feedpage.seam.FeedPageEffect.OpenPhotoDetails
-import com.savvasdalkitsis.uhuruphotos.implementation.feedpage.seam.FeedPageEffect.ReloadApp
 import com.savvasdalkitsis.uhuruphotos.implementation.feedpage.seam.FeedPageEffect.SharePhotos
 import com.savvasdalkitsis.uhuruphotos.implementation.feedpage.seam.FeedPageEffect.Vibrate
 import javax.inject.Inject
@@ -42,10 +36,6 @@ internal class FeedPageEffectsHandler @Inject constructor(
 ) : EffectHandler<FeedPageEffect> {
 
     override suspend fun handleEffect(effect: FeedPageEffect) = when (effect) {
-        ReloadApp -> with(navigator) {
-            clearBackStack()
-            navigateTo(HomeNavigationRoutes.home)
-        }
         is OpenPhotoDetails -> with(effect) {
             navigateTo(PhotoNavigationTarget.name(id, center, scale, isVideo, AllPhotos))
         }
@@ -55,11 +45,7 @@ internal class FeedPageEffectsHandler @Inject constructor(
                 it.fullResUrl
             })
         }
-        NavigateToServerEdit -> navigateTo(
-            ServerNavigationTarget.name(auto = false)
-        )
         Vibrate -> uiUseCase.performLongPressHaptic()
-        NavigateToSettings -> navigateTo(SettingsNavigationTarget.name)
     }
 
     private fun navigateTo(target: String) {
