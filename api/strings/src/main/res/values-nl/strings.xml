@@ -120,4 +120,8 @@
     <string name="biometrics">Biometrie</string>
     <string name="biometrics_enroll">Schakel biometrie in om deze functie te kunnen gebruiken</string>
     <string name="authenticate_to_change">Verifieer om deze instelling te kunnen wijzigen</string>
+    <string name="hidden_photos">Verborgen foto\'s</string>
+    <string name="error_loading_albums">Er is een fout opgetreden tijdens het laden van de albums</string>
+    <string name="favourite_photos">Favoriete foto\'s</string>
+    <string name="error_loading_user_albums">Er is een fout opgetreden tijdens het laden van de zelfgemaakte albums</string>
 </resources>
