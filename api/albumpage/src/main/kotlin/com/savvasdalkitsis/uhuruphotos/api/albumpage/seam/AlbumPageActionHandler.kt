@@ -15,9 +15,15 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.api.albumpage.seam
 
-import com.savvasdalkitsis.uhuruphotos.api.albumpage.seam.AlbumPageAction.*
+import com.savvasdalkitsis.uhuruphotos.api.albumpage.seam.AlbumPageAction.ChangeFeedDisplay
+import com.savvasdalkitsis.uhuruphotos.api.albumpage.seam.AlbumPageAction.LoadAlbum
 import com.savvasdalkitsis.uhuruphotos.api.albumpage.seam.AlbumPageAction.NavigateBack
-import com.savvasdalkitsis.uhuruphotos.api.albumpage.seam.AlbumPageEffect.*
+import com.savvasdalkitsis.uhuruphotos.api.albumpage.seam.AlbumPageAction.PersonSelected
+import com.savvasdalkitsis.uhuruphotos.api.albumpage.seam.AlbumPageAction.SelectedPhoto
+import com.savvasdalkitsis.uhuruphotos.api.albumpage.seam.AlbumPageAction.SwipeToRefresh
+import com.savvasdalkitsis.uhuruphotos.api.albumpage.seam.AlbumPageEffect.ErrorLoading
+import com.savvasdalkitsis.uhuruphotos.api.albumpage.seam.AlbumPageEffect.NavigateToPerson
+import com.savvasdalkitsis.uhuruphotos.api.albumpage.seam.AlbumPageEffect.OpenPhotoDetails
 import com.savvasdalkitsis.uhuruphotos.api.albumpage.seam.AlbumPageMutation.Loading
 import com.savvasdalkitsis.uhuruphotos.api.albumpage.seam.AlbumPageMutation.ShowAlbumPage
 import com.savvasdalkitsis.uhuruphotos.api.albumpage.view.state.AlbumDetails
@@ -28,7 +34,12 @@ import com.savvasdalkitsis.uhuruphotos.api.feed.view.state.FeedDisplays
 import com.savvasdalkitsis.uhuruphotos.api.log.log
 import com.savvasdalkitsis.uhuruphotos.api.photos.model.PhotoSequenceDataSource
 import com.savvasdalkitsis.uhuruphotos.api.seam.ActionHandler
-import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.flowOf
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.merge
 import java.io.IOException
 import kotlin.properties.Delegates
 
@@ -54,7 +65,7 @@ class AlbumPageActionHandler(
                 flowOf(AlbumPageMutation.ChangeFeedDisplay(initialFeedDisplay(action.albumId))),
                 albumDetailsFlow(action.albumId, effect)
                     .map(::ShowAlbumPage),
-                loading
+                loading,
             ).safelyOnStartIgnoring {
                 albumId = action.albumId
                 if (albumDetailsEmptyCheck(albumId)) {

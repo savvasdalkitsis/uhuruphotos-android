@@ -48,8 +48,8 @@ internal class AutoAlbumNavigationTarget @Inject constructor(
             createModel = { hiltViewModel() }
         ) { state, action ->
             AlbumPage(
-                state,
-                action
+                state = state,
+                action = action,
             )
         }
 }

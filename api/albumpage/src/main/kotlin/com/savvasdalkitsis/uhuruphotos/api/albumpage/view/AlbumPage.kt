@@ -16,6 +16,7 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.api.albumpage.view
 
 import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.foundation.layout.RowScope
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -37,6 +38,7 @@ import com.savvasdalkitsis.uhuruphotos.api.feed.view.FeedDisplayActionButton
 @Composable
 fun AlbumPage(
     state: AlbumPageState,
+    additionalActionBarContent: @Composable RowScope.() -> Unit = {},
     action: (AlbumPageAction) -> Unit
 ) {
     CommonScaffold(
@@ -55,6 +57,7 @@ fun AlbumPage(
                     currentFeedDisplay = state.feedState.feedDisplay
                 )
             }
+            additionalActionBarContent()
         }
     ) { contentPadding ->
         SwipeRefresh(

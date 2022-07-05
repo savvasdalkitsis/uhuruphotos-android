@@ -22,33 +22,46 @@ import com.savvasdalkitsis.uhuruphotos.api.albumpage.seam.AlbumPageAction
 import com.savvasdalkitsis.uhuruphotos.api.albumpage.seam.AlbumPageAction.LoadAlbum
 import com.savvasdalkitsis.uhuruphotos.api.albumpage.seam.AlbumPageEffect
 import com.savvasdalkitsis.uhuruphotos.api.albumpage.seam.AlbumPageEffectsHandler
-import com.savvasdalkitsis.uhuruphotos.api.albumpage.view.AlbumPage
 import com.savvasdalkitsis.uhuruphotos.api.albumpage.view.state.AlbumPageState
 import com.savvasdalkitsis.uhuruphotos.api.favourites.navigation.HiddenPhotosNavigationTarget
 import com.savvasdalkitsis.uhuruphotos.api.navigation.NavigationTarget
 import com.savvasdalkitsis.uhuruphotos.api.navigation.navigationTarget
+import com.savvasdalkitsis.uhuruphotos.api.seam.CompositeEffectHandler
+import com.savvasdalkitsis.uhuruphotos.api.seam.Either
+import com.savvasdalkitsis.uhuruphotos.api.seam.Either.Left
+import com.savvasdalkitsis.uhuruphotos.api.seam.Either.Right
 import com.savvasdalkitsis.uhuruphotos.api.settings.usecase.SettingsUseCase
+import com.savvasdalkitsis.uhuruphotos.implementation.hidden.seam.HiddenPhotosAction
+import com.savvasdalkitsis.uhuruphotos.implementation.hidden.seam.HiddenPhotosAction.Load
+import com.savvasdalkitsis.uhuruphotos.implementation.hidden.seam.HiddenPhotosEffect
+import com.savvasdalkitsis.uhuruphotos.implementation.hidden.seam.HiddenPhotosEffectHandler
+import com.savvasdalkitsis.uhuruphotos.implementation.hidden.seam.HiddenPhotosState
+import com.savvasdalkitsis.uhuruphotos.implementation.hidden.view.HiddenPhotosAlbumPage
 import com.savvasdalkitsis.uhuruphotos.implementation.hidden.viewmodel.HiddenPhotosViewModel
 import javax.inject.Inject
 
 internal class HiddenPhotosNavigationTarget @Inject constructor(
-    private val effectsHandler: AlbumPageEffectsHandler,
+    private val albumPageEffectsHandler: AlbumPageEffectsHandler,
+    private val hiddenPhotosEffectHandler: HiddenPhotosEffectHandler,
     private val settingsUseCase: SettingsUseCase,
 ) : NavigationTarget {
 
     override suspend fun NavGraphBuilder.create(navHostController: NavHostController) =
-        navigationTarget<AlbumPageState, AlbumPageEffect, AlbumPageAction, HiddenPhotosViewModel>(
+        navigationTarget<
+                Pair<AlbumPageState, HiddenPhotosState>,
+                Either<AlbumPageEffect, HiddenPhotosEffect>,
+                Either<AlbumPageAction, HiddenPhotosAction>,
+                HiddenPhotosViewModel
+        >(
             name = HiddenPhotosNavigationTarget.registrationName,
-            effects = effectsHandler,
+            effects = CompositeEffectHandler(albumPageEffectsHandler, hiddenPhotosEffectHandler),
             themeMode = settingsUseCase.observeThemeModeState(),
             initializer = { _, action ->
-                action(LoadAlbum(0))
+                action(Left(LoadAlbum(0)))
+                action(Right(Load))
             },
             createModel = { hiltViewModel() }
         ) { state, action ->
-            AlbumPage(
-                state,
-                action
-            )
+            HiddenPhotosAlbumPage(state, action)
         }
 }
