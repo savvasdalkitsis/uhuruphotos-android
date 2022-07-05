@@ -18,6 +18,9 @@ package com.savvasdalkitsis.uhuruphotos.implementation.feedpage.navigation
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
+import com.savvasdalkitsis.uhuruphotos.api.homenavigation.HomeNavigationRoutes
+import com.savvasdalkitsis.uhuruphotos.api.navigation.NavigationTarget
+import com.savvasdalkitsis.uhuruphotos.api.navigation.navigationTarget
 import com.savvasdalkitsis.uhuruphotos.api.settings.usecase.SettingsUseCase
 import com.savvasdalkitsis.uhuruphotos.implementation.feedpage.seam.FeedPageAction
 import com.savvasdalkitsis.uhuruphotos.implementation.feedpage.seam.FeedPageEffect
@@ -25,9 +28,6 @@ import com.savvasdalkitsis.uhuruphotos.implementation.feedpage.seam.FeedPageEffe
 import com.savvasdalkitsis.uhuruphotos.implementation.feedpage.view.FeedPage
 import com.savvasdalkitsis.uhuruphotos.implementation.feedpage.view.state.FeedPageState
 import com.savvasdalkitsis.uhuruphotos.implementation.feedpage.viewmodel.FeedPageViewModel
-import com.savvasdalkitsis.uhuruphotos.api.homenavigation.HomeNavigationRoutes
-import com.savvasdalkitsis.uhuruphotos.api.navigation.NavigationTarget
-import com.savvasdalkitsis.uhuruphotos.api.navigation.navigationTarget
 import javax.inject.Inject
 
 internal class FeedPageNavigationTarget @Inject constructor(

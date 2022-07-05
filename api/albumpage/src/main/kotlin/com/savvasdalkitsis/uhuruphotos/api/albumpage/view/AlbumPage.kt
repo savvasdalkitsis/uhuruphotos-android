@@ -23,17 +23,17 @@ import androidx.compose.ui.Modifier
 import com.google.accompanist.swiperefresh.SwipeRefresh
 import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 import com.savvasdalkitsis.uhuruphotos.api.albumpage.seam.AlbumPageAction
+import com.savvasdalkitsis.uhuruphotos.api.albumpage.seam.AlbumPageAction.ChangeFeedDisplay
 import com.savvasdalkitsis.uhuruphotos.api.albumpage.seam.AlbumPageAction.NavigateBack
 import com.savvasdalkitsis.uhuruphotos.api.albumpage.seam.AlbumPageAction.PersonSelected
 import com.savvasdalkitsis.uhuruphotos.api.albumpage.seam.AlbumPageAction.SelectedPhoto
 import com.savvasdalkitsis.uhuruphotos.api.albumpage.seam.AlbumPageAction.SwipeToRefresh
 import com.savvasdalkitsis.uhuruphotos.api.albumpage.view.state.AlbumPageState
 import com.savvasdalkitsis.uhuruphotos.api.feed.view.Feed
+import com.savvasdalkitsis.uhuruphotos.api.feed.view.FeedDisplayActionButton
 import com.savvasdalkitsis.uhuruphotos.api.people.view.PeopleBar
 import com.savvasdalkitsis.uhuruphotos.api.ui.view.BackNavButton
 import com.savvasdalkitsis.uhuruphotos.api.ui.view.CommonScaffold
-import com.savvasdalkitsis.uhuruphotos.api.albumpage.seam.AlbumPageAction.ChangeFeedDisplay
-import com.savvasdalkitsis.uhuruphotos.api.feed.view.FeedDisplayActionButton
 
 @Composable
 fun AlbumPage(

@@ -38,13 +38,13 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.max
 import com.google.accompanist.pager.HorizontalPager
 import com.google.accompanist.pager.rememberPagerState
-import com.savvasdalkitsis.uhuruphotos.implementation.photos.seam.PhotoAction
-import com.savvasdalkitsis.uhuruphotos.implementation.photos.seam.PhotoAction.ChangedToPage
-import com.savvasdalkitsis.uhuruphotos.implementation.photos.view.state.PhotoState
 import com.savvasdalkitsis.uhuruphotos.api.ui.insets.insetsTop
 import com.savvasdalkitsis.uhuruphotos.api.ui.view.SheetHandle
 import com.savvasdalkitsis.uhuruphotos.api.ui.view.SheetSize
 import com.savvasdalkitsis.uhuruphotos.api.ui.window.LocalWindowSize
+import com.savvasdalkitsis.uhuruphotos.implementation.photos.seam.PhotoAction
+import com.savvasdalkitsis.uhuruphotos.implementation.photos.seam.PhotoAction.ChangedToPage
+import com.savvasdalkitsis.uhuruphotos.implementation.photos.view.state.PhotoState
 import kotlinx.coroutines.flow.collectLatest
 
 @Composable

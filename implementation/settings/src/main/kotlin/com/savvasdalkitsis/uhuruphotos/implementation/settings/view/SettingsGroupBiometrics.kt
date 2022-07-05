@@ -22,7 +22,9 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.res.stringResource
 import com.savvasdalkitsis.uhuruphotos.api.icons.R
 import com.savvasdalkitsis.uhuruphotos.implementation.settings.seam.SettingsAction
-import com.savvasdalkitsis.uhuruphotos.implementation.settings.seam.SettingsAction.*
+import com.savvasdalkitsis.uhuruphotos.implementation.settings.seam.SettingsAction.ChangeBiometricsAppAccessRequirement
+import com.savvasdalkitsis.uhuruphotos.implementation.settings.seam.SettingsAction.ChangeBiometricsHiddenPhotosAccessRequirement
+import com.savvasdalkitsis.uhuruphotos.implementation.settings.seam.SettingsAction.EnrollToBiometrics
 import com.savvasdalkitsis.uhuruphotos.implementation.settings.view.state.BiometricsSetting.Enrolled
 import com.savvasdalkitsis.uhuruphotos.implementation.settings.view.state.BiometricsSetting.NotEnrolled
 import com.savvasdalkitsis.uhuruphotos.implementation.settings.view.state.SettingsState

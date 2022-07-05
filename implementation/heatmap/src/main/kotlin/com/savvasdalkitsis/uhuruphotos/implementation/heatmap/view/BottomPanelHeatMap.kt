@@ -31,12 +31,12 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.max
 import com.google.accompanist.permissions.PermissionState
 import com.savvasdalkitsis.uhuruphotos.api.map.view.MapViewState
-import com.savvasdalkitsis.uhuruphotos.implementation.heatmap.seam.HeatMapAction
-import com.savvasdalkitsis.uhuruphotos.implementation.heatmap.view.state.HeatMapState
 import com.savvasdalkitsis.uhuruphotos.api.ui.insets.insetsTop
 import com.savvasdalkitsis.uhuruphotos.api.ui.view.SheetHandle
 import com.savvasdalkitsis.uhuruphotos.api.ui.view.SheetSize
 import com.savvasdalkitsis.uhuruphotos.api.ui.view.adjustingSheetSize
+import com.savvasdalkitsis.uhuruphotos.implementation.heatmap.seam.HeatMapAction
+import com.savvasdalkitsis.uhuruphotos.implementation.heatmap.view.state.HeatMapState
 
 @Composable
 fun BottomPanelHeatMap(

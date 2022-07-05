@@ -16,10 +16,17 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.implementation.albums.usecase
 
 import app.cash.turbine.test
+import com.savvasdalkitsis.uhuruphotos.api.albums.model.Album
+import com.savvasdalkitsis.uhuruphotos.api.date.DateDisplayer
+import com.savvasdalkitsis.uhuruphotos.api.db.albums.GetAlbums
+import com.savvasdalkitsis.uhuruphotos.api.db.albums.GetPersonAlbums
+import com.savvasdalkitsis.uhuruphotos.api.db.user.User
+import com.savvasdalkitsis.uhuruphotos.api.group.model.Group
+import com.savvasdalkitsis.uhuruphotos.api.photos.usecase.PhotosUseCase
+import com.savvasdalkitsis.uhuruphotos.api.user.usecase.UserUseCase
 import com.savvasdalkitsis.uhuruphotos.implementation.albums.TestAlbums.album
 import com.savvasdalkitsis.uhuruphotos.implementation.albums.TestGetAlbums.getAlbum
 import com.savvasdalkitsis.uhuruphotos.implementation.albums.TestGetAlbums.getPersonAlbum
-import com.savvasdalkitsis.uhuruphotos.api.albums.model.Album
 import com.savvasdalkitsis.uhuruphotos.implementation.albums.reportsHavingAlbums
 import com.savvasdalkitsis.uhuruphotos.implementation.albums.reportsHavingNoAlbums
 import com.savvasdalkitsis.uhuruphotos.implementation.albums.repository.AlbumsRepository
@@ -27,14 +34,7 @@ import com.savvasdalkitsis.uhuruphotos.implementation.albums.returnsAlbumWithEnt
 import com.savvasdalkitsis.uhuruphotos.implementation.albums.returnsAlbums
 import com.savvasdalkitsis.uhuruphotos.implementation.albums.returnsPersonAlbumWithEntries
 import com.savvasdalkitsis.uhuruphotos.implementation.albums.worker.AlbumWorkScheduler
-import com.savvasdalkitsis.uhuruphotos.api.date.DateDisplayer
-import com.savvasdalkitsis.uhuruphotos.api.user.usecase.UserUseCase
-import com.savvasdalkitsis.uhuruphotos.api.db.albums.GetAlbums
-import com.savvasdalkitsis.uhuruphotos.api.db.albums.GetPersonAlbums
-import com.savvasdalkitsis.uhuruphotos.api.db.user.User
-import com.savvasdalkitsis.uhuruphotos.api.group.model.Group
 import com.savvasdalkitsis.uhuruphotos.implementation.photos.TestPhotos.photo
-import com.savvasdalkitsis.uhuruphotos.api.photos.usecase.PhotosUseCase
 import com.savvasdalkitsis.uhuruphotos.implementation.user.TestUsers.user
 import com.shazam.shazamcrest.MatcherAssert.assertThat
 import com.shazam.shazamcrest.matcher.Matchers.sameBeanAs

@@ -15,14 +15,14 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.implementation.people.seam
 
-import com.savvasdalkitsis.uhuruphotos.api.seam.EffectHandler
 import com.savvasdalkitsis.uhuruphotos.api.navigation.Navigator
+import com.savvasdalkitsis.uhuruphotos.api.person.navigation.PersonNavigationTarget
+import com.savvasdalkitsis.uhuruphotos.api.seam.EffectHandler
+import com.savvasdalkitsis.uhuruphotos.api.strings.R
+import com.savvasdalkitsis.uhuruphotos.api.toaster.Toaster
 import com.savvasdalkitsis.uhuruphotos.implementation.people.seam.PeopleEffect.ErrorLoadingPeople
 import com.savvasdalkitsis.uhuruphotos.implementation.people.seam.PeopleEffect.NavigateBack
 import com.savvasdalkitsis.uhuruphotos.implementation.people.seam.PeopleEffect.NavigateToPerson
-import com.savvasdalkitsis.uhuruphotos.api.person.navigation.PersonNavigationTarget
-import com.savvasdalkitsis.uhuruphotos.api.strings.R
-import com.savvasdalkitsis.uhuruphotos.api.toaster.Toaster
 import javax.inject.Inject
 
 class PeopleEffectHandler @Inject constructor(

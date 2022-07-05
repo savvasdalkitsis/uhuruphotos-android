@@ -25,7 +25,6 @@ import com.savvasdalkitsis.uhuruphotos.implementation.hidden.seam.HiddenPhotosMu
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.flow.mapNotNull
 import javax.inject.Inject
 
 internal class HiddenPhotosActionHandler @Inject constructor(

@@ -17,7 +17,6 @@ package com.savvasdalkitsis.uhuruphotos.implementation.useralbum.usecase
 
 import com.fredporciuncula.flow.preferences.FlowSharedPreferences
 import com.savvasdalkitsis.uhuruphotos.api.albums.repository.AlbumsRepository
-import com.savvasdalkitsis.uhuruphotos.api.db.albums.GetAutoAlbum
 import com.savvasdalkitsis.uhuruphotos.api.db.albums.GetUserAlbum
 import com.savvasdalkitsis.uhuruphotos.api.feed.view.state.FeedDisplay
 import com.savvasdalkitsis.uhuruphotos.api.feed.view.state.FeedDisplays

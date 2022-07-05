@@ -15,8 +15,6 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.api.autoalbums.navigation
 
-import androidx.navigation.NavBackStackEntry
-
 object AutoAlbumsNavigationTarget {
     const val registrationName = "autoAlbums"
 }

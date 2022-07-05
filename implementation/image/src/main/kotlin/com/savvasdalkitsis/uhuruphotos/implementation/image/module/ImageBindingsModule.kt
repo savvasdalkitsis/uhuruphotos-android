@@ -15,9 +15,9 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.implementation.image.module
 
+import com.savvasdalkitsis.uhuruphotos.api.initializer.ApplicationCreated
 import com.savvasdalkitsis.uhuruphotos.implementation.image.cache.ImageCacheController
 import com.savvasdalkitsis.uhuruphotos.implementation.image.initializer.ImageInitializer
-import com.savvasdalkitsis.uhuruphotos.api.initializer.ApplicationCreated
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn

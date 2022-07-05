@@ -20,13 +20,13 @@ import androidx.compose.foundation.layout.RowScope
 import androidx.compose.runtime.Composable
 import com.savvasdalkitsis.uhuruphotos.api.feed.view.FeedDisplayActionButton
 import com.savvasdalkitsis.uhuruphotos.api.feed.view.state.FeedDisplays
+import com.savvasdalkitsis.uhuruphotos.api.icons.R
+import com.savvasdalkitsis.uhuruphotos.api.ui.view.ActionIcon
 import com.savvasdalkitsis.uhuruphotos.implementation.feedpage.seam.FeedPageAction
 import com.savvasdalkitsis.uhuruphotos.implementation.feedpage.seam.FeedPageAction.AskForSelectedPhotosDeletion
 import com.savvasdalkitsis.uhuruphotos.implementation.feedpage.seam.FeedPageAction.ChangeDisplay
 import com.savvasdalkitsis.uhuruphotos.implementation.feedpage.seam.FeedPageAction.ShareSelectedPhotos
 import com.savvasdalkitsis.uhuruphotos.implementation.feedpage.view.state.FeedPageState
-import com.savvasdalkitsis.uhuruphotos.api.icons.R
-import com.savvasdalkitsis.uhuruphotos.api.ui.view.ActionIcon
 
 @Composable
 internal fun RowScope.FeedPageActionBar(

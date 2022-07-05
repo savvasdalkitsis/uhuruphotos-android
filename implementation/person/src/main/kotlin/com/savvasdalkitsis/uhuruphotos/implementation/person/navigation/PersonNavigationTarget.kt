@@ -18,11 +18,11 @@ package com.savvasdalkitsis.uhuruphotos.implementation.person.navigation
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
-import com.savvasdalkitsis.uhuruphotos.api.settings.usecase.SettingsUseCase
 import com.savvasdalkitsis.uhuruphotos.api.navigation.NavigationTarget
 import com.savvasdalkitsis.uhuruphotos.api.navigation.navigationTarget
 import com.savvasdalkitsis.uhuruphotos.api.person.navigation.PersonNavigationTarget
 import com.savvasdalkitsis.uhuruphotos.api.person.navigation.PersonNavigationTarget.personId
+import com.savvasdalkitsis.uhuruphotos.api.settings.usecase.SettingsUseCase
 import com.savvasdalkitsis.uhuruphotos.implementation.person.seam.PersonAction
 import com.savvasdalkitsis.uhuruphotos.implementation.person.seam.PersonAction.LoadPerson
 import com.savvasdalkitsis.uhuruphotos.implementation.person.seam.PersonEffect

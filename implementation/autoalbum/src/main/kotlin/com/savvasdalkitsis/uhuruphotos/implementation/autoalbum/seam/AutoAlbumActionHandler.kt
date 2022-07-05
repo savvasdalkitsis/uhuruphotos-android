@@ -16,8 +16,8 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.implementation.autoalbum.seam
 
 import com.savvasdalkitsis.uhuruphotos.api.albumpage.seam.AlbumPageAction
-import com.savvasdalkitsis.uhuruphotos.api.albumpage.seam.AlbumPageEffect
 import com.savvasdalkitsis.uhuruphotos.api.albumpage.seam.AlbumPageActionHandler
+import com.savvasdalkitsis.uhuruphotos.api.albumpage.seam.AlbumPageEffect
 import com.savvasdalkitsis.uhuruphotos.api.albumpage.seam.AlbumPageMutation
 import com.savvasdalkitsis.uhuruphotos.api.albumpage.view.state.AlbumDetails
 import com.savvasdalkitsis.uhuruphotos.api.albumpage.view.state.AlbumPageState
@@ -26,7 +26,6 @@ import com.savvasdalkitsis.uhuruphotos.api.albums.model.Album
 import com.savvasdalkitsis.uhuruphotos.api.date.DateDisplayer
 import com.savvasdalkitsis.uhuruphotos.api.people.view.state.toPerson
 import com.savvasdalkitsis.uhuruphotos.api.photos.model.Photo
-import com.savvasdalkitsis.uhuruphotos.api.photos.model.PhotoSequenceDataSource
 import com.savvasdalkitsis.uhuruphotos.api.photos.model.PhotoSequenceDataSource.AutoAlbum
 import com.savvasdalkitsis.uhuruphotos.api.photos.usecase.PhotosUseCase
 import com.savvasdalkitsis.uhuruphotos.api.seam.ActionHandler

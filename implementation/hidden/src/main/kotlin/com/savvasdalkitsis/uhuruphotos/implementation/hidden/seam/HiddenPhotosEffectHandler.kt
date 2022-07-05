@@ -18,7 +18,7 @@ package com.savvasdalkitsis.uhuruphotos.implementation.hidden.seam
 import com.savvasdalkitsis.uhuruphotos.api.navigation.Navigator
 import com.savvasdalkitsis.uhuruphotos.api.seam.EffectHandler
 import com.savvasdalkitsis.uhuruphotos.api.settings.navigation.SettingsNavigationTarget
-import com.savvasdalkitsis.uhuruphotos.implementation.hidden.seam.HiddenPhotosEffect.*
+import com.savvasdalkitsis.uhuruphotos.implementation.hidden.seam.HiddenPhotosEffect.NavigateToAppSettings
 import javax.inject.Inject
 
 class HiddenPhotosEffectHandler @Inject constructor(

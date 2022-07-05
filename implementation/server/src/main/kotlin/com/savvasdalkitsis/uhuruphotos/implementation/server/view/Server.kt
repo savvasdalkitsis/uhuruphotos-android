@@ -26,11 +26,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import com.savvasdalkitsis.uhuruphotos.api.ui.view.CommonScaffold
 import com.savvasdalkitsis.uhuruphotos.implementation.server.seam.ServerAction
 import com.savvasdalkitsis.uhuruphotos.implementation.server.view.ServerState.Loading
 import com.savvasdalkitsis.uhuruphotos.implementation.server.view.ServerState.ServerUrl
 import com.savvasdalkitsis.uhuruphotos.implementation.server.view.ServerState.UserCredentials
-import com.savvasdalkitsis.uhuruphotos.api.ui.view.CommonScaffold
 
 @Composable
 internal fun Server(

@@ -16,7 +16,6 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.api.db
 
 import android.content.Context
-import com.savvasdalkitsis.uhuruphotos.api.db.Database
 import com.savvasdalkitsis.uhuruphotos.api.db.albums.AlbumsQueries
 import com.savvasdalkitsis.uhuruphotos.api.db.albums.AutoAlbumPeopleQueries
 import com.savvasdalkitsis.uhuruphotos.api.db.albums.AutoAlbumPhotosQueries

@@ -27,11 +27,11 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import com.savvasdalkitsis.uhuruphotos.api.icons.R as Icons
 import com.savvasdalkitsis.uhuruphotos.api.strings.R
 import com.savvasdalkitsis.uhuruphotos.implementation.settings.seam.SettingsAction
 import com.savvasdalkitsis.uhuruphotos.implementation.settings.seam.SettingsAction.ChangeMapProvider
 import com.savvasdalkitsis.uhuruphotos.implementation.settings.view.state.MapProviderState
+import com.savvasdalkitsis.uhuruphotos.api.icons.R as Icons
 
 @Composable
 internal fun SettingsGroupMaps(

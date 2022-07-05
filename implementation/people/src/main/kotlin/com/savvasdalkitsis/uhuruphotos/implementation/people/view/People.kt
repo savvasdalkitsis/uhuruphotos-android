@@ -28,6 +28,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.savvasdalkitsis.uhuruphotos.api.icons.R
 import com.savvasdalkitsis.uhuruphotos.api.people.view.PersonThumbnail
+import com.savvasdalkitsis.uhuruphotos.api.ui.view.ActionIcon
+import com.savvasdalkitsis.uhuruphotos.api.ui.view.BackNavButton
+import com.savvasdalkitsis.uhuruphotos.api.ui.view.CommonScaffold
+import com.savvasdalkitsis.uhuruphotos.api.ui.view.FullProgressBar
+import com.savvasdalkitsis.uhuruphotos.api.ui.window.LocalWindowSize
 import com.savvasdalkitsis.uhuruphotos.implementation.people.seam.PeopleAction
 import com.savvasdalkitsis.uhuruphotos.implementation.people.seam.PeopleAction.NavigateBack
 import com.savvasdalkitsis.uhuruphotos.implementation.people.seam.PeopleAction.PersonSelected
@@ -35,11 +40,6 @@ import com.savvasdalkitsis.uhuruphotos.implementation.people.seam.PeopleAction.T
 import com.savvasdalkitsis.uhuruphotos.implementation.people.view.state.PeopleState
 import com.savvasdalkitsis.uhuruphotos.implementation.people.view.state.SortOrder.ASCENDING
 import com.savvasdalkitsis.uhuruphotos.implementation.people.view.state.SortOrder.DESCENDING
-import com.savvasdalkitsis.uhuruphotos.api.ui.view.ActionIcon
-import com.savvasdalkitsis.uhuruphotos.api.ui.view.BackNavButton
-import com.savvasdalkitsis.uhuruphotos.api.ui.view.CommonScaffold
-import com.savvasdalkitsis.uhuruphotos.api.ui.view.FullProgressBar
-import com.savvasdalkitsis.uhuruphotos.api.ui.window.LocalWindowSize
 
 @Composable
 fun People(

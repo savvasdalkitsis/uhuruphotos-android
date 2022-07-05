@@ -24,7 +24,22 @@ import com.savvasdalkitsis.uhuruphotos.api.albums.service.model.toAutoAlbums
 import com.savvasdalkitsis.uhuruphotos.api.albums.service.model.toUserAlbums
 import com.savvasdalkitsis.uhuruphotos.api.coroutines.safelyOnStartIgnoring
 import com.savvasdalkitsis.uhuruphotos.api.db.Database
-import com.savvasdalkitsis.uhuruphotos.api.db.albums.*
+import com.savvasdalkitsis.uhuruphotos.api.db.albums.AlbumsQueries
+import com.savvasdalkitsis.uhuruphotos.api.db.albums.AutoAlbumPeopleQueries
+import com.savvasdalkitsis.uhuruphotos.api.db.albums.AutoAlbumPhotosQueries
+import com.savvasdalkitsis.uhuruphotos.api.db.albums.AutoAlbumQueries
+import com.savvasdalkitsis.uhuruphotos.api.db.albums.AutoAlbums
+import com.savvasdalkitsis.uhuruphotos.api.db.albums.AutoAlbumsQueries
+import com.savvasdalkitsis.uhuruphotos.api.db.albums.GetAlbums
+import com.savvasdalkitsis.uhuruphotos.api.db.albums.GetAutoAlbum
+import com.savvasdalkitsis.uhuruphotos.api.db.albums.GetPeopleForAutoAlbum
+import com.savvasdalkitsis.uhuruphotos.api.db.albums.GetPersonAlbums
+import com.savvasdalkitsis.uhuruphotos.api.db.albums.GetUserAlbum
+import com.savvasdalkitsis.uhuruphotos.api.db.albums.UserAlbum
+import com.savvasdalkitsis.uhuruphotos.api.db.albums.UserAlbumPhotosQueries
+import com.savvasdalkitsis.uhuruphotos.api.db.albums.UserAlbumQueries
+import com.savvasdalkitsis.uhuruphotos.api.db.albums.UserAlbums
+import com.savvasdalkitsis.uhuruphotos.api.db.albums.UserAlbumsQueries
 import com.savvasdalkitsis.uhuruphotos.api.db.extensions.async
 import com.savvasdalkitsis.uhuruphotos.api.db.extensions.await
 import com.savvasdalkitsis.uhuruphotos.api.db.extensions.awaitSingle
@@ -40,7 +55,12 @@ import com.savvasdalkitsis.uhuruphotos.api.photos.model.toPhotoDetails
 import com.savvasdalkitsis.uhuruphotos.api.settings.usecase.SettingsUseCase
 import com.squareup.sqldelight.runtime.coroutines.asFlow
 import com.squareup.sqldelight.runtime.coroutines.mapToList
-import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.emitAll
+import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.flow.onStart
+import kotlinx.coroutines.flow.take
 import javax.inject.Inject
 
 internal class AlbumsRepository @Inject constructor(

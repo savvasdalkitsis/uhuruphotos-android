@@ -28,11 +28,11 @@ import androidx.compose.ui.res.pluralStringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import com.savvasdalkitsis.uhuruphotos.api.autoalbums.view.state.AutoAlbum
 import com.savvasdalkitsis.uhuruphotos.api.photos.view.PhotoThumbnail
 import com.savvasdalkitsis.uhuruphotos.api.strings.R
 import com.savvasdalkitsis.uhuruphotos.implementation.autoalbums.seam.AutoAlbumsAction
 import com.savvasdalkitsis.uhuruphotos.implementation.autoalbums.seam.AutoAlbumsAction.AutoAlbumSelected
-import com.savvasdalkitsis.uhuruphotos.api.autoalbums.view.state.AutoAlbum
 
 @Composable
 internal fun AutoAlbumItem(

@@ -18,14 +18,15 @@ package com.savvasdalkitsis.uhuruphotos.implementation.search.seam
 import com.savvasdalkitsis.uhuruphotos.api.account.usecase.AccountUseCase
 import com.savvasdalkitsis.uhuruphotos.api.coroutines.onErrors
 import com.savvasdalkitsis.uhuruphotos.api.coroutines.onErrorsIgnore
+import com.savvasdalkitsis.uhuruphotos.api.db.people.People
 import com.savvasdalkitsis.uhuruphotos.api.feedpage.usecase.FeedPageUseCase
 import com.savvasdalkitsis.uhuruphotos.api.log.log
-import com.savvasdalkitsis.uhuruphotos.api.seam.ActionHandler
-import com.savvasdalkitsis.uhuruphotos.api.settings.usecase.SettingsUseCase
-import com.savvasdalkitsis.uhuruphotos.api.db.people.People
 import com.savvasdalkitsis.uhuruphotos.api.people.usecase.PeopleUseCase
 import com.savvasdalkitsis.uhuruphotos.api.people.view.state.toPerson
 import com.savvasdalkitsis.uhuruphotos.api.photos.usecase.PhotosUseCase
+import com.savvasdalkitsis.uhuruphotos.api.seam.ActionHandler
+import com.savvasdalkitsis.uhuruphotos.api.settings.usecase.SettingsUseCase
+import com.savvasdalkitsis.uhuruphotos.api.userbadge.usecase.UserBadgeUseCase
 import com.savvasdalkitsis.uhuruphotos.implementation.search.seam.SearchAction.AskToLogOut
 import com.savvasdalkitsis.uhuruphotos.implementation.search.seam.SearchAction.ChangeDisplay
 import com.savvasdalkitsis.uhuruphotos.implementation.search.seam.SearchAction.ChangeFocus
@@ -78,7 +79,6 @@ import com.savvasdalkitsis.uhuruphotos.implementation.search.view.state.SearchSu
 import com.savvasdalkitsis.uhuruphotos.implementation.search.view.state.SearchSuggestion.PersonSearchSuggestion
 import com.savvasdalkitsis.uhuruphotos.implementation.search.view.state.SearchSuggestion.RecentSearchSuggestion
 import com.savvasdalkitsis.uhuruphotos.implementation.search.view.state.SearchSuggestion.ServerSearchSuggestion
-import com.savvasdalkitsis.uhuruphotos.api.userbadge.usecase.UserBadgeUseCase
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.Flow

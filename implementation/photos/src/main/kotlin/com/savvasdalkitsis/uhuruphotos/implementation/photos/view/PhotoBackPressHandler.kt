@@ -16,9 +16,9 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.implementation.photos.view
 
 import androidx.compose.runtime.Composable
+import com.savvasdalkitsis.uhuruphotos.api.ui.view.BackPressHandler
 import com.savvasdalkitsis.uhuruphotos.implementation.photos.seam.PhotoAction
 import com.savvasdalkitsis.uhuruphotos.implementation.photos.view.state.PhotoState
-import com.savvasdalkitsis.uhuruphotos.api.ui.view.BackPressHandler
 
 @Composable
 fun PhotoBackPressHandler(

@@ -20,11 +20,14 @@ import android.content.ClipboardManager
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
-import com.savvasdalkitsis.uhuruphotos.api.seam.EffectHandler
-import com.savvasdalkitsis.uhuruphotos.api.share.usecase.ShareUseCase
 import com.savvasdalkitsis.uhuruphotos.api.map.model.LatLon
 import com.savvasdalkitsis.uhuruphotos.api.navigation.Navigator
 import com.savvasdalkitsis.uhuruphotos.api.person.navigation.PersonNavigationTarget
+import com.savvasdalkitsis.uhuruphotos.api.seam.EffectHandler
+import com.savvasdalkitsis.uhuruphotos.api.share.usecase.ShareUseCase
+import com.savvasdalkitsis.uhuruphotos.api.strings.R
+import com.savvasdalkitsis.uhuruphotos.api.toaster.Toaster
+import com.savvasdalkitsis.uhuruphotos.api.ui.usecase.UiUseCase
 import com.savvasdalkitsis.uhuruphotos.implementation.photos.seam.PhotoEffect.CopyToClipboard
 import com.savvasdalkitsis.uhuruphotos.implementation.photos.seam.PhotoEffect.ErrorRefreshingPeople
 import com.savvasdalkitsis.uhuruphotos.implementation.photos.seam.PhotoEffect.HideSystemBars
@@ -33,9 +36,6 @@ import com.savvasdalkitsis.uhuruphotos.implementation.photos.seam.PhotoEffect.Na
 import com.savvasdalkitsis.uhuruphotos.implementation.photos.seam.PhotoEffect.NavigateToPerson
 import com.savvasdalkitsis.uhuruphotos.implementation.photos.seam.PhotoEffect.SharePhoto
 import com.savvasdalkitsis.uhuruphotos.implementation.photos.seam.PhotoEffect.ShowSystemBars
-import com.savvasdalkitsis.uhuruphotos.api.strings.R
-import com.savvasdalkitsis.uhuruphotos.api.toaster.Toaster
-import com.savvasdalkitsis.uhuruphotos.api.ui.usecase.UiUseCase
 import dagger.hilt.android.qualifiers.ApplicationContext
 import javax.inject.Inject
 

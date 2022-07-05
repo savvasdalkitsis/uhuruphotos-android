@@ -19,8 +19,8 @@ import androidx.lifecycle.ViewModel
 import com.savvasdalkitsis.uhuruphotos.api.seam.Seam
 import com.savvasdalkitsis.uhuruphotos.api.seam.SeamViaHandler.Companion.handler
 import com.savvasdalkitsis.uhuruphotos.implementation.people.seam.PeopleAction
-import com.savvasdalkitsis.uhuruphotos.implementation.people.seam.PeopleEffect
 import com.savvasdalkitsis.uhuruphotos.implementation.people.seam.PeopleActionHandler
+import com.savvasdalkitsis.uhuruphotos.implementation.people.seam.PeopleEffect
 import com.savvasdalkitsis.uhuruphotos.implementation.people.seam.PeopleMutation
 import com.savvasdalkitsis.uhuruphotos.implementation.people.view.state.PeopleState
 import dagger.hilt.android.lifecycle.HiltViewModel

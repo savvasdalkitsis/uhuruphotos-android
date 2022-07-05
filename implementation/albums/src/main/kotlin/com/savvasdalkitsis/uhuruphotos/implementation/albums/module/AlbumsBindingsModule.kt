@@ -15,11 +15,11 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.implementation.albums.module
 
+import com.savvasdalkitsis.uhuruphotos.api.initializer.ApplicationCreated
 import com.savvasdalkitsis.uhuruphotos.implementation.albums.initializer.AlbumsInitializer
 import com.savvasdalkitsis.uhuruphotos.implementation.albums.repository.AlbumsRepository
 import com.savvasdalkitsis.uhuruphotos.implementation.albums.usecase.AlbumsUseCase
 import com.savvasdalkitsis.uhuruphotos.implementation.albums.worker.AlbumWorkScheduler
-import com.savvasdalkitsis.uhuruphotos.api.initializer.ApplicationCreated
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn

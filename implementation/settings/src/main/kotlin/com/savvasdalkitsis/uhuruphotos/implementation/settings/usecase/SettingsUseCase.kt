@@ -18,7 +18,10 @@ package com.savvasdalkitsis.uhuruphotos.implementation.settings.usecase
 import android.content.Context
 import androidx.work.NetworkType
 import com.fredporciuncula.flow.preferences.FlowSharedPreferences
-import com.google.android.gms.common.ConnectionResult.*
+import com.google.android.gms.common.ConnectionResult.SERVICE_UPDATING
+import com.google.android.gms.common.ConnectionResult.SERVICE_VERSION_UPDATE_REQUIRED
+import com.google.android.gms.common.ConnectionResult.SIGN_IN_REQUIRED
+import com.google.android.gms.common.ConnectionResult.SUCCESS
 import com.google.android.gms.common.GoogleApiAvailability
 import com.savvasdalkitsis.uhuruphotos.api.log.Log
 import com.savvasdalkitsis.uhuruphotos.api.map.model.MapProvider

@@ -16,7 +16,6 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.implementation.feedpage.view
 
 import androidx.compose.animation.AnimatedContent
-import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
@@ -31,12 +30,12 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import com.savvasdalkitsis.uhuruphotos.implementation.feedpage.seam.FeedPageAction
-import com.savvasdalkitsis.uhuruphotos.implementation.feedpage.view.state.FeedPageState
 import com.savvasdalkitsis.uhuruphotos.api.icons.R
 import com.savvasdalkitsis.uhuruphotos.api.strings.R.string
 import com.savvasdalkitsis.uhuruphotos.api.ui.view.ActionIcon
 import com.savvasdalkitsis.uhuruphotos.api.ui.view.Logo
+import com.savvasdalkitsis.uhuruphotos.implementation.feedpage.seam.FeedPageAction
+import com.savvasdalkitsis.uhuruphotos.implementation.feedpage.view.state.FeedPageState
 
 @Composable
 internal fun FeedPageTitle(

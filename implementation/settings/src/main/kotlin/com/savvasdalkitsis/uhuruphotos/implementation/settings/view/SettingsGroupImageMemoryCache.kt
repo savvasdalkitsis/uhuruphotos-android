@@ -20,11 +20,11 @@ import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.res.stringResource
+import com.savvasdalkitsis.uhuruphotos.api.strings.R
 import com.savvasdalkitsis.uhuruphotos.implementation.settings.seam.SettingsAction
 import com.savvasdalkitsis.uhuruphotos.implementation.settings.seam.SettingsAction.ChangeImageMemCache
 import com.savvasdalkitsis.uhuruphotos.implementation.settings.seam.SettingsAction.ClearImageMemCache
 import com.savvasdalkitsis.uhuruphotos.implementation.settings.view.state.SettingsState
-import com.savvasdalkitsis.uhuruphotos.api.strings.R
 
 @Composable
 internal fun SettingsGroupImageMemoryCache(

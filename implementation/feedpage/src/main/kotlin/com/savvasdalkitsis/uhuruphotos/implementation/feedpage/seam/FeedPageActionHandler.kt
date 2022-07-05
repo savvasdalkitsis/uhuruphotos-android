@@ -15,11 +15,18 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.implementation.feedpage.seam
 
+import com.savvasdalkitsis.uhuruphotos.api.account.usecase.AccountUseCase
 import com.savvasdalkitsis.uhuruphotos.api.albums.model.Album
 import com.savvasdalkitsis.uhuruphotos.api.albums.usecase.AlbumsUseCase
-import com.savvasdalkitsis.uhuruphotos.api.account.usecase.AccountUseCase
+import com.savvasdalkitsis.uhuruphotos.api.photos.model.Photo
+import com.savvasdalkitsis.uhuruphotos.api.photos.model.SelectionMode.SELECTED
+import com.savvasdalkitsis.uhuruphotos.api.photos.model.SelectionMode.UNDEFINED
+import com.savvasdalkitsis.uhuruphotos.api.photos.model.SelectionMode.UNSELECTED
+import com.savvasdalkitsis.uhuruphotos.api.photos.usecase.PhotosUseCase
 import com.savvasdalkitsis.uhuruphotos.api.seam.ActionHandler
 import com.savvasdalkitsis.uhuruphotos.api.settings.usecase.SettingsUseCase
+import com.savvasdalkitsis.uhuruphotos.api.userbadge.usecase.UserBadgeUseCase
+import com.savvasdalkitsis.uhuruphotos.api.userbadge.view.state.SyncState.IN_PROGRESS
 import com.savvasdalkitsis.uhuruphotos.implementation.feedpage.SelectionList
 import com.savvasdalkitsis.uhuruphotos.implementation.feedpage.seam.FeedPageAction.AlbumSelectionClicked
 import com.savvasdalkitsis.uhuruphotos.implementation.feedpage.seam.FeedPageAction.AskForSelectedPhotosDeletion
@@ -60,13 +67,6 @@ import com.savvasdalkitsis.uhuruphotos.implementation.feedpage.seam.FeedPageMuta
 import com.savvasdalkitsis.uhuruphotos.implementation.feedpage.seam.FeedPageMutation.UserBadgeUpdate
 import com.savvasdalkitsis.uhuruphotos.implementation.feedpage.usecase.FeedPageUseCase
 import com.savvasdalkitsis.uhuruphotos.implementation.feedpage.view.state.FeedPageState
-import com.savvasdalkitsis.uhuruphotos.api.photos.model.Photo
-import com.savvasdalkitsis.uhuruphotos.api.photos.model.SelectionMode.SELECTED
-import com.savvasdalkitsis.uhuruphotos.api.photos.model.SelectionMode.UNDEFINED
-import com.savvasdalkitsis.uhuruphotos.api.photos.model.SelectionMode.UNSELECTED
-import com.savvasdalkitsis.uhuruphotos.api.photos.usecase.PhotosUseCase
-import com.savvasdalkitsis.uhuruphotos.api.userbadge.usecase.UserBadgeUseCase
-import com.savvasdalkitsis.uhuruphotos.api.userbadge.view.state.SyncState.IN_PROGRESS
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.combine

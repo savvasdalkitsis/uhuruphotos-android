@@ -23,7 +23,11 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.res.stringResource
 import com.savvasdalkitsis.uhuruphotos.api.strings.R
-import com.savvasdalkitsis.uhuruphotos.api.ui.view.*
+import com.savvasdalkitsis.uhuruphotos.api.ui.view.ActionIcon
+import com.savvasdalkitsis.uhuruphotos.api.ui.view.BackNavButton
+import com.savvasdalkitsis.uhuruphotos.api.ui.view.CommonScaffold
+import com.savvasdalkitsis.uhuruphotos.api.ui.view.FullProgressBar
+import com.savvasdalkitsis.uhuruphotos.api.ui.view.StaggeredGrid
 import com.savvasdalkitsis.uhuruphotos.api.ui.window.LocalWindowSize
 import com.savvasdalkitsis.uhuruphotos.api.userbadge.view.UserBadge
 import com.savvasdalkitsis.uhuruphotos.implementation.settings.seam.SettingsAction

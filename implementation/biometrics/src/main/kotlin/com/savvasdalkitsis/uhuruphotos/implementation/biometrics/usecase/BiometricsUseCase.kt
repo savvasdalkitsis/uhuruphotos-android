@@ -22,7 +22,9 @@ import androidx.biometric.BiometricManager.BIOMETRIC_SUCCESS
 import com.afollestad.assure.Prompt
 import com.savvasdalkitsis.uhuruphotos.activity.CurrentActivityHolder
 import com.savvasdalkitsis.uhuruphotos.api.biometrics.model.Biometrics
-import com.savvasdalkitsis.uhuruphotos.api.biometrics.model.Biometrics.*
+import com.savvasdalkitsis.uhuruphotos.api.biometrics.model.Biometrics.Enrolled
+import com.savvasdalkitsis.uhuruphotos.api.biometrics.model.Biometrics.NoHardware
+import com.savvasdalkitsis.uhuruphotos.api.biometrics.model.Biometrics.NotEnrolled
 import com.savvasdalkitsis.uhuruphotos.api.biometrics.usecase.BiometricsUseCase
 import com.savvasdalkitsis.uhuruphotos.api.launchers.awaitOnMain
 import com.savvasdalkitsis.uhuruphotos.api.log.runCatchingWithLog

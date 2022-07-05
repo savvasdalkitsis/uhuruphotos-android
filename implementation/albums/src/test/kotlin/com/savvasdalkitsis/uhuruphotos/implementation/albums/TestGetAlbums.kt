@@ -15,12 +15,12 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.implementation.albums
 
-import com.savvasdalkitsis.uhuruphotos.implementation.albums.TestAlbums.albums
-import com.savvasdalkitsis.uhuruphotos.implementation.albums.TestAlbums.completeAlbum
-import com.savvasdalkitsis.uhuruphotos.implementation.albums.TestAlbums.incompleteAlbum
 import com.savvasdalkitsis.uhuruphotos.api.db.albums.GetAlbums
 import com.savvasdalkitsis.uhuruphotos.api.db.albums.GetPersonAlbums
 import com.savvasdalkitsis.uhuruphotos.api.db.photos.PhotoSummary
+import com.savvasdalkitsis.uhuruphotos.implementation.albums.TestAlbums.albums
+import com.savvasdalkitsis.uhuruphotos.implementation.albums.TestAlbums.completeAlbum
+import com.savvasdalkitsis.uhuruphotos.implementation.albums.TestAlbums.incompleteAlbum
 
 const val SERVER_ALBUM_LOCATION = "serverAlbumLocation"
 

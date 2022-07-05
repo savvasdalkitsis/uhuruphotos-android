@@ -16,13 +16,19 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.implementation.albums.repository
 
 import app.cash.turbine.test
+import com.savvasdalkitsis.uhuruphotos.api.albums.service.AlbumsService
+import com.savvasdalkitsis.uhuruphotos.api.db.TestDatabase
+import com.savvasdalkitsis.uhuruphotos.api.db.albums.Albums
+import com.savvasdalkitsis.uhuruphotos.api.db.extensions.await
+import com.savvasdalkitsis.uhuruphotos.api.db.photos.PhotoSummary
+import com.savvasdalkitsis.uhuruphotos.api.group.model.Group
+import com.savvasdalkitsis.uhuruphotos.api.settings.usecase.SettingsUseCase
 import com.savvasdalkitsis.uhuruphotos.implementation.albums.ProgressUpdate
 import com.savvasdalkitsis.uhuruphotos.implementation.albums.SERVER_ALBUM_LOCATION
 import com.savvasdalkitsis.uhuruphotos.implementation.albums.TestAlbums.albums
 import com.savvasdalkitsis.uhuruphotos.implementation.albums.TestGetPhotoSummaries.photoSummariesForAlbum
 import com.savvasdalkitsis.uhuruphotos.implementation.albums.album
 import com.savvasdalkitsis.uhuruphotos.implementation.albums.albumId
-import com.savvasdalkitsis.uhuruphotos.api.albums.service.AlbumsService
 import com.savvasdalkitsis.uhuruphotos.implementation.albums.completeAlbum
 import com.savvasdalkitsis.uhuruphotos.implementation.albums.completes
 import com.savvasdalkitsis.uhuruphotos.implementation.albums.entry
@@ -37,12 +43,6 @@ import com.savvasdalkitsis.uhuruphotos.implementation.albums.willRespondForPerso
 import com.savvasdalkitsis.uhuruphotos.implementation.albums.willRespondForPersonWith
 import com.savvasdalkitsis.uhuruphotos.implementation.albums.willRespondWith
 import com.savvasdalkitsis.uhuruphotos.implementation.albums.withServerResponseData
-import com.savvasdalkitsis.uhuruphotos.api.db.TestDatabase
-import com.savvasdalkitsis.uhuruphotos.api.db.albums.Albums
-import com.savvasdalkitsis.uhuruphotos.api.db.extensions.await
-import com.savvasdalkitsis.uhuruphotos.api.db.photos.PhotoSummary
-import com.savvasdalkitsis.uhuruphotos.api.group.model.Group
-import com.savvasdalkitsis.uhuruphotos.api.settings.usecase.SettingsUseCase
 import com.shazam.shazamcrest.MatcherAssert.assertThat
 import com.shazam.shazamcrest.matcher.Matchers.sameBeanAs
 import io.mockk.coEvery

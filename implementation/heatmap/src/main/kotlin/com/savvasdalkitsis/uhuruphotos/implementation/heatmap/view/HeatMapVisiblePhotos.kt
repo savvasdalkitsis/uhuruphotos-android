@@ -23,11 +23,11 @@ import androidx.compose.ui.res.stringResource
 import com.savvasdalkitsis.uhuruphotos.api.albums.model.Album
 import com.savvasdalkitsis.uhuruphotos.api.feed.view.Feed
 import com.savvasdalkitsis.uhuruphotos.api.feed.view.state.FeedState
+import com.savvasdalkitsis.uhuruphotos.api.strings.R
 import com.savvasdalkitsis.uhuruphotos.implementation.heatmap.seam.HeatMapAction
 import com.savvasdalkitsis.uhuruphotos.implementation.heatmap.seam.HeatMapAction.SelectedPhoto
 import com.savvasdalkitsis.uhuruphotos.implementation.heatmap.view.state.HeatMapFeedDisplay
 import com.savvasdalkitsis.uhuruphotos.implementation.heatmap.view.state.HeatMapState
-import com.savvasdalkitsis.uhuruphotos.api.strings.R
 
 @Composable
 fun HeatMapVisiblePhotos(

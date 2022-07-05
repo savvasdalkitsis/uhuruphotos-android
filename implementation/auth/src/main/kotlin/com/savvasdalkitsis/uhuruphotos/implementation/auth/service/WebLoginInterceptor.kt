@@ -17,8 +17,8 @@ package com.savvasdalkitsis.uhuruphotos.implementation.auth.service
 
 import android.webkit.CookieManager
 import com.savvasdalkitsis.uhuruphotos.api.auth.usecase.ServerUseCase
-import com.savvasdalkitsis.uhuruphotos.implementation.auth.weblogin.weblogin.navigation.WebLoginNavigationTarget
 import com.savvasdalkitsis.uhuruphotos.api.navigation.Navigator
+import com.savvasdalkitsis.uhuruphotos.implementation.auth.weblogin.weblogin.navigation.WebLoginNavigationTarget
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch

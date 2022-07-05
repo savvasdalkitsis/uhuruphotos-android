@@ -39,7 +39,6 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import com.savvasdalkitsis.uhuruphotos.api.photos.model.PhotoGrid
 import com.savvasdalkitsis.uhuruphotos.api.photos.view.PhotoGridThumbnail
-import com.savvasdalkitsis.uhuruphotos.api.icons.R as Icons
 import com.savvasdalkitsis.uhuruphotos.api.strings.R
 import com.savvasdalkitsis.uhuruphotos.implementation.library.seam.LibraryAction
 import com.savvasdalkitsis.uhuruphotos.implementation.library.seam.LibraryAction.AutoAlbumsSelected
@@ -47,6 +46,7 @@ import com.savvasdalkitsis.uhuruphotos.implementation.library.seam.LibraryAction
 import com.savvasdalkitsis.uhuruphotos.implementation.library.seam.LibraryAction.HiddenPhotosSelected
 import com.savvasdalkitsis.uhuruphotos.implementation.library.seam.LibraryAction.UserAlbumsSelected
 import com.savvasdalkitsis.uhuruphotos.implementation.library.view.state.LibraryState
+import com.savvasdalkitsis.uhuruphotos.api.icons.R as Icons
 
 @Composable
 internal fun LibraryGrid(

@@ -22,12 +22,13 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import com.google.accompanist.swiperefresh.SwipeRefresh
 import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
-import com.savvasdalkitsis.uhuruphotos.api.accountoverview.view.AccountOverviewPopUp
 import com.savvasdalkitsis.uhuruphotos.api.account.view.LogOutConfirmationDialog
+import com.savvasdalkitsis.uhuruphotos.api.accountoverview.view.AccountOverviewPopUp
 import com.savvasdalkitsis.uhuruphotos.api.compose.blurIf
-import com.savvasdalkitsis.uhuruphotos.api.home.view.HomeScaffold
 import com.savvasdalkitsis.uhuruphotos.api.feed.view.Feed
 import com.savvasdalkitsis.uhuruphotos.api.feed.view.state.FeedDisplays
+import com.savvasdalkitsis.uhuruphotos.api.home.view.HomeScaffold
+import com.savvasdalkitsis.uhuruphotos.api.photos.view.DeletePermissionDialog
 import com.savvasdalkitsis.uhuruphotos.implementation.feedpage.seam.FeedPageAction
 import com.savvasdalkitsis.uhuruphotos.implementation.feedpage.seam.FeedPageAction.AlbumSelectionClicked
 import com.savvasdalkitsis.uhuruphotos.implementation.feedpage.seam.FeedPageAction.AskToLogOut
@@ -44,7 +45,6 @@ import com.savvasdalkitsis.uhuruphotos.implementation.feedpage.seam.FeedPageActi
 import com.savvasdalkitsis.uhuruphotos.implementation.feedpage.seam.FeedPageAction.SettingsClick
 import com.savvasdalkitsis.uhuruphotos.implementation.feedpage.seam.FeedPageAction.UserBadgePressed
 import com.savvasdalkitsis.uhuruphotos.implementation.feedpage.view.state.FeedPageState
-import com.savvasdalkitsis.uhuruphotos.api.photos.view.DeletePermissionDialog
 import kotlinx.coroutines.launch
 
 @Composable

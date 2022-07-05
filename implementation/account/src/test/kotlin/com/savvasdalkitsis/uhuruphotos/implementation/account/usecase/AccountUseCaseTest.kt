@@ -16,7 +16,14 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.implementation.account.usecase
 
 import com.savvasdalkitsis.uhuruphotos.api.db.Database
-import com.savvasdalkitsis.uhuruphotos.api.db.albums.*
+import com.savvasdalkitsis.uhuruphotos.api.db.albums.AlbumsQueries
+import com.savvasdalkitsis.uhuruphotos.api.db.albums.AutoAlbumPeopleQueries
+import com.savvasdalkitsis.uhuruphotos.api.db.albums.AutoAlbumPhotosQueries
+import com.savvasdalkitsis.uhuruphotos.api.db.albums.AutoAlbumQueries
+import com.savvasdalkitsis.uhuruphotos.api.db.albums.AutoAlbumsQueries
+import com.savvasdalkitsis.uhuruphotos.api.db.albums.UserAlbumPhotosQueries
+import com.savvasdalkitsis.uhuruphotos.api.db.albums.UserAlbumQueries
+import com.savvasdalkitsis.uhuruphotos.api.db.albums.UserAlbumsQueries
 import com.savvasdalkitsis.uhuruphotos.api.db.auth.TokenQueries
 import com.savvasdalkitsis.uhuruphotos.api.db.people.PeopleQueries
 import com.savvasdalkitsis.uhuruphotos.api.db.person.PersonQueries

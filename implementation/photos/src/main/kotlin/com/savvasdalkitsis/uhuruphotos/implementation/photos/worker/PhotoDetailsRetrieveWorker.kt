@@ -22,8 +22,8 @@ import androidx.work.WorkerParameters
 import com.savvasdalkitsis.uhuruphotos.api.log.log
 import com.savvasdalkitsis.uhuruphotos.api.notification.ForegroundInfoBuilder
 import com.savvasdalkitsis.uhuruphotos.api.notification.NotificationChannels.JOBS_CHANNEL_ID
-import com.savvasdalkitsis.uhuruphotos.implementation.photos.repository.PhotoRepository
 import com.savvasdalkitsis.uhuruphotos.api.strings.R
+import com.savvasdalkitsis.uhuruphotos.implementation.photos.repository.PhotoRepository
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedInject
 import kotlinx.coroutines.Dispatchers

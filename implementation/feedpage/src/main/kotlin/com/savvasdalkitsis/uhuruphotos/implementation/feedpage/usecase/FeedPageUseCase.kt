@@ -16,8 +16,8 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.implementation.feedpage.usecase
 
 import com.fredporciuncula.flow.preferences.FlowSharedPreferences
-import com.savvasdalkitsis.uhuruphotos.api.feedpage.usecase.FeedPageUseCase
 import com.savvasdalkitsis.uhuruphotos.api.feed.view.state.FeedDisplays
+import com.savvasdalkitsis.uhuruphotos.api.feedpage.usecase.FeedPageUseCase
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 

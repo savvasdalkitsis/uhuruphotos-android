@@ -21,11 +21,11 @@ import com.savvasdalkitsis.uhuruphotos.api.albums.repository.AlbumsRepository
 import com.savvasdalkitsis.uhuruphotos.api.albums.view.state.AlbumSorting
 import com.savvasdalkitsis.uhuruphotos.api.albums.view.state.AlbumSorting.Companion.sorted
 import com.savvasdalkitsis.uhuruphotos.api.autoalbums.usecase.AutoAlbumsUseCase
+import com.savvasdalkitsis.uhuruphotos.api.autoalbums.view.state.AutoAlbum
 import com.savvasdalkitsis.uhuruphotos.api.db.albums.AutoAlbums
 import com.savvasdalkitsis.uhuruphotos.api.photos.model.Photo
 import com.savvasdalkitsis.uhuruphotos.api.photos.usecase.PhotosUseCase
 import com.savvasdalkitsis.uhuruphotos.api.strings.R
-import com.savvasdalkitsis.uhuruphotos.api.autoalbums.view.state.AutoAlbum
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.combine

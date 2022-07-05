@@ -15,7 +15,11 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.api.map.view.google
 
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.toArgb
 import com.google.android.gms.maps.CameraUpdateFactory

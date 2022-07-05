@@ -17,9 +17,7 @@ package com.savvasdalkitsis.uhuruphotos.api.map.view
 
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
-import com.savvasdalkitsis.uhuruphotos.api.map.model.LatLon
 import com.savvasdalkitsis.uhuruphotos.api.map.model.MapOptions
 import com.savvasdalkitsis.uhuruphotos.api.map.view.google.GoogleMapView
 import com.savvasdalkitsis.uhuruphotos.api.map.view.google.GoogleMapViewState

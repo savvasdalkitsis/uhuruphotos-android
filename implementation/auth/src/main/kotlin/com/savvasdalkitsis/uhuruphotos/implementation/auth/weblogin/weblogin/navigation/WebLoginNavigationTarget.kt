@@ -20,6 +20,8 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavBackStackEntry
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
+import com.savvasdalkitsis.uhuruphotos.api.navigation.NavigationTarget
+import com.savvasdalkitsis.uhuruphotos.api.navigation.navigationTarget
 import com.savvasdalkitsis.uhuruphotos.api.settings.usecase.SettingsUseCase
 import com.savvasdalkitsis.uhuruphotos.implementation.auth.weblogin.weblogin.seam.WebEffectsHandler
 import com.savvasdalkitsis.uhuruphotos.implementation.auth.weblogin.weblogin.seam.WebLoginAction
@@ -27,8 +29,6 @@ import com.savvasdalkitsis.uhuruphotos.implementation.auth.weblogin.weblogin.sea
 import com.savvasdalkitsis.uhuruphotos.implementation.auth.weblogin.weblogin.view.WebLogin
 import com.savvasdalkitsis.uhuruphotos.implementation.auth.weblogin.weblogin.view.WebLoginState
 import com.savvasdalkitsis.uhuruphotos.implementation.auth.weblogin.weblogin.viewmodel.WebLoginViewModel
-import com.savvasdalkitsis.uhuruphotos.api.navigation.NavigationTarget
-import com.savvasdalkitsis.uhuruphotos.api.navigation.navigationTarget
 import javax.inject.Inject
 
 class WebLoginNavigationTarget @Inject constructor(

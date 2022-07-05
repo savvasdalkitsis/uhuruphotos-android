@@ -18,7 +18,6 @@ package com.savvasdalkitsis.uhuruphotos.implementation.albums.initializer
 import android.app.Application
 import androidx.work.ExistingPeriodicWorkPolicy
 import com.savvasdalkitsis.uhuruphotos.implementation.albums.worker.AlbumWorkScheduler
-import com.savvasdalkitsis.uhuruphotos.implementation.albums.initializer.AlbumsInitializer
 import io.mockk.mockk
 import io.mockk.verify
 import org.junit.Test

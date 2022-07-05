@@ -16,10 +16,10 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.implementation.person.seam
 
 import com.savvasdalkitsis.uhuruphotos.api.albums.model.Album
-import com.savvasdalkitsis.uhuruphotos.api.seam.Mutation
 import com.savvasdalkitsis.uhuruphotos.api.feed.view.state.FeedDisplay
 import com.savvasdalkitsis.uhuruphotos.api.feed.view.state.FeedState
 import com.savvasdalkitsis.uhuruphotos.api.people.view.state.Person
+import com.savvasdalkitsis.uhuruphotos.api.seam.Mutation
 import com.savvasdalkitsis.uhuruphotos.implementation.person.view.state.PersonState
 
 sealed class PersonMutation(

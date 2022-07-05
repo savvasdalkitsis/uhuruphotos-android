@@ -28,7 +28,11 @@ import com.savvasdalkitsis.uhuruphotos.api.photos.model.Photo
 import com.savvasdalkitsis.uhuruphotos.api.photos.model.latLng
 import com.savvasdalkitsis.uhuruphotos.api.photos.usecase.PhotosUseCase
 import com.savvasdalkitsis.uhuruphotos.api.seam.ActionHandler
-import com.savvasdalkitsis.uhuruphotos.implementation.heatmap.seam.HeatMapAction.*
+import com.savvasdalkitsis.uhuruphotos.implementation.heatmap.seam.HeatMapAction.BackPressed
+import com.savvasdalkitsis.uhuruphotos.implementation.heatmap.seam.HeatMapAction.CameraViewPortChanged
+import com.savvasdalkitsis.uhuruphotos.implementation.heatmap.seam.HeatMapAction.Load
+import com.savvasdalkitsis.uhuruphotos.implementation.heatmap.seam.HeatMapAction.MyLocationPressed
+import com.savvasdalkitsis.uhuruphotos.implementation.heatmap.seam.HeatMapAction.SelectedPhoto
 import com.savvasdalkitsis.uhuruphotos.implementation.heatmap.seam.HeatMapEffect.ErrorLoadingPhotoDetails
 import com.savvasdalkitsis.uhuruphotos.implementation.heatmap.seam.HeatMapEffect.NavigateBack
 import com.savvasdalkitsis.uhuruphotos.implementation.heatmap.seam.HeatMapEffect.NavigateToPhoto
@@ -36,7 +40,12 @@ import com.savvasdalkitsis.uhuruphotos.implementation.heatmap.seam.HeatMapMutati
 import com.savvasdalkitsis.uhuruphotos.implementation.heatmap.seam.HeatMapMutation.UpdateAllPhotos
 import com.savvasdalkitsis.uhuruphotos.implementation.heatmap.seam.HeatMapMutation.UpdateVisibleMapContent
 import com.savvasdalkitsis.uhuruphotos.implementation.heatmap.view.state.HeatMapState
-import kotlinx.coroutines.*
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Deferred
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.async
+import kotlinx.coroutines.awaitAll
+import kotlinx.coroutines.currentCoroutineContext
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.debounce
@@ -46,7 +55,6 @@ import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.merge
-import java.lang.Runnable
 import javax.inject.Inject
 
 class HeatMapActionHandler @Inject constructor(

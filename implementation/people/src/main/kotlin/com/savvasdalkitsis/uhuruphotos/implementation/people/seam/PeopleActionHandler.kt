@@ -16,8 +16,9 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.implementation.people.seam
 
 import com.savvasdalkitsis.uhuruphotos.api.coroutines.onErrors
-import com.savvasdalkitsis.uhuruphotos.api.seam.ActionHandler
 import com.savvasdalkitsis.uhuruphotos.api.people.view.state.toPerson
+import com.savvasdalkitsis.uhuruphotos.api.photos.usecase.PhotosUseCase
+import com.savvasdalkitsis.uhuruphotos.api.seam.ActionHandler
 import com.savvasdalkitsis.uhuruphotos.implementation.people.seam.PeopleAction.LoadPeople
 import com.savvasdalkitsis.uhuruphotos.implementation.people.seam.PeopleAction.NavigateBack
 import com.savvasdalkitsis.uhuruphotos.implementation.people.seam.PeopleAction.PersonSelected
@@ -31,7 +32,6 @@ import com.savvasdalkitsis.uhuruphotos.implementation.people.view.state.PeopleSt
 import com.savvasdalkitsis.uhuruphotos.implementation.people.view.state.SortOrder
 import com.savvasdalkitsis.uhuruphotos.implementation.people.view.state.SortOrder.ASCENDING
 import com.savvasdalkitsis.uhuruphotos.implementation.people.view.state.SortOrder.DESCENDING
-import com.savvasdalkitsis.uhuruphotos.api.photos.usecase.PhotosUseCase
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow

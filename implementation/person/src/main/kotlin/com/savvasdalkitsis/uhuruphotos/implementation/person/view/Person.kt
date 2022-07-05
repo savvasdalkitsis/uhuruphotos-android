@@ -30,14 +30,14 @@ import androidx.compose.ui.unit.dp
 import com.savvasdalkitsis.uhuruphotos.api.feed.view.Feed
 import com.savvasdalkitsis.uhuruphotos.api.feed.view.FeedDisplayActionButton
 import com.savvasdalkitsis.uhuruphotos.api.image.view.Image
+import com.savvasdalkitsis.uhuruphotos.api.ui.view.BackNavButton
+import com.savvasdalkitsis.uhuruphotos.api.ui.view.CommonScaffold
+import com.savvasdalkitsis.uhuruphotos.api.ui.view.FullProgressBar
 import com.savvasdalkitsis.uhuruphotos.implementation.person.seam.PersonAction
 import com.savvasdalkitsis.uhuruphotos.implementation.person.seam.PersonAction.ChangeDisplay
 import com.savvasdalkitsis.uhuruphotos.implementation.person.seam.PersonAction.NavigateBack
 import com.savvasdalkitsis.uhuruphotos.implementation.person.seam.PersonAction.SelectedPhoto
 import com.savvasdalkitsis.uhuruphotos.implementation.person.view.state.PersonState
-import com.savvasdalkitsis.uhuruphotos.api.ui.view.BackNavButton
-import com.savvasdalkitsis.uhuruphotos.api.ui.view.CommonScaffold
-import com.savvasdalkitsis.uhuruphotos.api.ui.view.FullProgressBar
 
 @Composable
 fun Person(

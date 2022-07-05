@@ -18,7 +18,6 @@ package com.savvasdalkitsis.uhuruphotos.api.map.view.mapbox
 import com.mapbox.android.gestures.MoveGestureDetector
 import com.mapbox.android.gestures.StandardScaleGestureDetector
 import com.mapbox.maps.MapView
-import com.mapbox.maps.MapboxMap
 import com.mapbox.maps.extension.style.layers.addLayerAbove
 import com.mapbox.maps.extension.style.layers.addLayerBelow
 import com.mapbox.maps.extension.style.sources.addSource

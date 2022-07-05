@@ -19,8 +19,8 @@ import androidx.lifecycle.ViewModel
 import com.savvasdalkitsis.uhuruphotos.api.seam.Seam
 import com.savvasdalkitsis.uhuruphotos.api.seam.SeamViaHandler.Companion.handler
 import com.savvasdalkitsis.uhuruphotos.implementation.search.seam.SearchAction
-import com.savvasdalkitsis.uhuruphotos.implementation.search.seam.SearchEffect
 import com.savvasdalkitsis.uhuruphotos.implementation.search.seam.SearchActionHandler
+import com.savvasdalkitsis.uhuruphotos.implementation.search.seam.SearchEffect
 import com.savvasdalkitsis.uhuruphotos.implementation.search.seam.SearchMutation
 import com.savvasdalkitsis.uhuruphotos.implementation.search.view.state.SearchState
 import dagger.hilt.android.lifecycle.HiltViewModel

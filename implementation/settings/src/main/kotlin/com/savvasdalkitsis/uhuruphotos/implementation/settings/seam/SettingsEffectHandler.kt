@@ -20,7 +20,9 @@ import android.provider.Settings.ACTION_SECURITY_SETTINGS
 import com.savvasdalkitsis.uhuruphotos.api.navigation.Navigator
 import com.savvasdalkitsis.uhuruphotos.api.seam.EffectHandler
 import com.savvasdalkitsis.uhuruphotos.api.toaster.Toaster
-import com.savvasdalkitsis.uhuruphotos.implementation.settings.seam.SettingsEffect.*
+import com.savvasdalkitsis.uhuruphotos.implementation.settings.seam.SettingsEffect.EnrollToBiometrics
+import com.savvasdalkitsis.uhuruphotos.implementation.settings.seam.SettingsEffect.NavigateBack
+import com.savvasdalkitsis.uhuruphotos.implementation.settings.seam.SettingsEffect.ShowMessage
 import javax.inject.Inject
 
 internal class SettingsEffectHandler @Inject constructor(

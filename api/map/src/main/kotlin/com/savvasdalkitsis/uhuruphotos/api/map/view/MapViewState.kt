@@ -15,10 +15,7 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.api.map.view
 
-import android.annotation.SuppressLint
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.MutableState
-import androidx.compose.runtime.State
 import androidx.compose.runtime.remember
 import com.google.android.gms.maps.model.CameraPosition
 import com.google.maps.android.compose.rememberCameraPositionState

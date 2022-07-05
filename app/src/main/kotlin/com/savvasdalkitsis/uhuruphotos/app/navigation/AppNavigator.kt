@@ -30,9 +30,9 @@ import com.savvasdalkitsis.uhuruphotos.api.map.model.MapProvider
 import com.savvasdalkitsis.uhuruphotos.api.navigation.NavigationTarget
 import com.savvasdalkitsis.uhuruphotos.api.navigation.Navigator
 import com.savvasdalkitsis.uhuruphotos.api.settings.usecase.SettingsUseCase
-import com.savvasdalkitsis.uhuruphotos.implementation.ui.usecase.UiUseCase
 import com.savvasdalkitsis.uhuruphotos.api.ui.window.LocalSystemUiController
 import com.savvasdalkitsis.uhuruphotos.api.video.LocalExoPlayer
+import com.savvasdalkitsis.uhuruphotos.implementation.ui.usecase.UiUseCase
 import kotlinx.coroutines.runBlocking
 import javax.inject.Inject
 

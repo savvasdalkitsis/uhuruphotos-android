@@ -16,8 +16,8 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.implementation.user.usecase
 
 import com.savvasdalkitsis.uhuruphotos.api.coroutines.safelyOnStartIgnoring
-import com.savvasdalkitsis.uhuruphotos.api.user.usecase.UserUseCase
 import com.savvasdalkitsis.uhuruphotos.api.db.user.User
+import com.savvasdalkitsis.uhuruphotos.api.user.usecase.UserUseCase
 import com.savvasdalkitsis.uhuruphotos.implementation.user.repository.UserRepository
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject

@@ -33,12 +33,12 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.google.accompanist.permissions.PermissionState
 import com.savvasdalkitsis.uhuruphotos.api.map.view.MapViewState
-import com.savvasdalkitsis.uhuruphotos.implementation.heatmap.seam.HeatMapAction
-import com.savvasdalkitsis.uhuruphotos.implementation.heatmap.view.state.HeatMapState
 import com.savvasdalkitsis.uhuruphotos.api.ui.view.ActionIcon
 import com.savvasdalkitsis.uhuruphotos.api.ui.view.BackNavButton
 import com.savvasdalkitsis.uhuruphotos.api.ui.view.CommonTopBar
+import com.savvasdalkitsis.uhuruphotos.implementation.heatmap.seam.HeatMapAction
 import com.savvasdalkitsis.uhuruphotos.implementation.heatmap.seam.HeatMapAction.MyLocationPressed
+import com.savvasdalkitsis.uhuruphotos.implementation.heatmap.view.state.HeatMapState
 import com.savvasdalkitsis.uhuruphotos.api.icons.R as Icons
 import com.savvasdalkitsis.uhuruphotos.api.strings.R as Strings
 
