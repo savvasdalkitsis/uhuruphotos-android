@@ -52,7 +52,10 @@ class PhotoEffectsHandler @Inject constructor(
         when (effect) {
             HideSystemBars -> setBars(false)
             ShowSystemBars -> setBars(true)
-            NavigateBack -> navigator.navigateBack()
+            NavigateBack -> {
+                navigator.navigateBack()
+                setBars(true)
+            }
             is LaunchMap -> navigator.navigateTo(geoLocation(effect.gps))
             is CopyToClipboard -> {
                 clipboardManager.setPrimaryClip(ClipData.newPlainText("", effect.content))
