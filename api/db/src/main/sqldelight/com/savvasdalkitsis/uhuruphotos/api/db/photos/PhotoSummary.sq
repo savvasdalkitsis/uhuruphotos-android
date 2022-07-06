@@ -17,6 +17,9 @@ CREATE TABLE photoSummary (
 getFavourites:
 SELECT * FROM photoSummary WHERE rating >= :favouriteThreshold;
 
+countFavourites:
+SELECT count(id) FROM photoSummary WHERE rating >= :favouriteThreshold;
+
 getHidden:
 SELECT * FROM photoSummary WHERE containerId == 'hiddenPhoto';
 

@@ -43,7 +43,7 @@ by AlbumPageActionHandler(
         favouritesUseCase.setFavouritesFeedDisplay(feedDisplay)
     },
     albumDetailsEmptyCheck = { _ ->
-        photosUseCase.getFavouritePhotoSummaries().map { it.size }.getOrDefault(0) > 0
+        photosUseCase.getFavouritePhotoSummariesCount().getOrDefault(0) > 0
     },
     albumDetailsFlow = { _, _ ->
         photosUseCase.observeFavouritePhotos()

@@ -17,6 +17,7 @@ package com.savvasdalkitsis.uhuruphotos.implementation.photos.repository
 
 import com.savvasdalkitsis.uhuruphotos.api.db.extensions.async
 import com.savvasdalkitsis.uhuruphotos.api.db.extensions.await
+import com.savvasdalkitsis.uhuruphotos.api.db.extensions.awaitSingle
 import com.savvasdalkitsis.uhuruphotos.api.db.extensions.awaitSingleOrNull
 import com.savvasdalkitsis.uhuruphotos.api.db.photos.PhotoDetails
 import com.savvasdalkitsis.uhuruphotos.api.db.photos.PhotoDetailsQueries
@@ -67,6 +68,9 @@ class PhotoRepository @Inject constructor(
 
     suspend fun getFavouritePhotos(favouriteThreshold: Int): List<PhotoSummary> =
         photoSummaryQueries.getFavourites(favouriteThreshold).await()
+
+    suspend fun getFavouritePhotosCount(favouriteThreshold: Int): Long =
+        photoSummaryQueries.countFavourites(favouriteThreshold).awaitSingle()
 
     suspend fun getHiddenPhotos(): List<PhotoSummary> =
         photoSummaryQueries.getHidden().await()

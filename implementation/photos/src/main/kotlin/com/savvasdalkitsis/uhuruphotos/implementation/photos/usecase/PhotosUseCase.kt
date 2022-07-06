@@ -113,6 +113,10 @@ class PhotosUseCase @Inject constructor(
             photoRepository.getFavouritePhotos(it)
         }
 
+    override suspend fun getFavouritePhotoSummariesCount(): Result<Long> = withFavouriteThreshold {
+        photoRepository.getFavouritePhotosCount(it)
+    }
+
     override suspend fun getHiddenPhotoSummaries(): List<PhotoSummary> =
         photoRepository.getHiddenPhotos()
 

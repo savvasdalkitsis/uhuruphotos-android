@@ -33,6 +33,7 @@ interface PhotosUseCase {
     suspend fun List<PhotoSummary>.mapToPhotos(): Result<List<Photo>>
     suspend fun getPhotoDetails(id: String): PhotoDetails?
     suspend fun getFavouritePhotoSummaries(): Result<List<PhotoSummary>>
+    suspend fun getFavouritePhotoSummariesCount(): Result<Long>
     suspend fun getHiddenPhotoSummaries(): List<PhotoSummary>
     suspend fun setPhotoFavourite(id: String, favourite: Boolean): Result<Unit>
     fun refreshDetails(id: String): Result<Unit>
