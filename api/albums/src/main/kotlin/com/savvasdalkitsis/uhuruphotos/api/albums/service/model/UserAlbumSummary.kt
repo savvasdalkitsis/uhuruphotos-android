@@ -27,7 +27,9 @@ data class UserAlbumSummary(
     @field:Json(name = "photo_count")
     val photoCount: Int,
     @field:Json(name = "cover_photos")
-    val coverPhotos: List<UserAlbumCoverPhoto>,
+    val coverPhotos: List<UserAlbumCoverPhoto>?,
+    @field:Json(name = "cover_photo")
+    val coverPhoto: UserAlbumCoverPhoto?,
     @field:Json(name = "created_on")
     val createdOn: String,
     val title: String,
@@ -37,8 +39,8 @@ fun UserAlbumSummary.toUserAlbums() = UserAlbums(
     id = id,
     isFavorite = isFavorite,
     photoCount = photoCount,
-    coverPhoto1Hash = coverHash(1),
-    coverPhoto1IsVideo = coverIsVideo(1),
+    coverPhoto1Hash = primaryCoverHash(),
+    coverPhoto1IsVideo = primaryCoverIsVideo(),
     coverPhoto2Hash = coverHash(2),
     coverPhoto2IsVideo = coverIsVideo(2),
     coverPhoto3Hash = coverHash(3),
@@ -49,8 +51,14 @@ fun UserAlbumSummary.toUserAlbums() = UserAlbums(
     title = title,
 )
 
+private fun UserAlbumSummary.primaryCoverHash(): String? =
+    coverHash(1) ?: coverPhoto?.imageHash
+
 private fun UserAlbumSummary.coverHash(index: Int): String? =
-    coverPhotos.getOrNull(index - 1)?.imageHash
+    coverPhotos?.getOrNull(index - 1)?.imageHash
+
+private fun UserAlbumSummary.primaryCoverIsVideo(): Boolean? =
+    coverIsVideo(1) ?: coverPhoto?.video
 
 private fun UserAlbumSummary.coverIsVideo(index: Int): Boolean? =
-    coverPhotos.getOrNull(index - 1)?.video
+    coverPhotos?.getOrNull(index - 1)?.video

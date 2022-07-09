@@ -20,4 +20,6 @@ data class PhotoGrid(
     val photo2: Photo? = null,
     val photo3: Photo? = null,
     val photo4: Photo? = null,
-)
+) {
+    val hasMoreThanOnePhoto = photo2 != null
+}
