@@ -41,6 +41,7 @@ fun StaggeredDateFeed(
     contentPadding: PaddingValues,
     albums: List<Album>,
     showSelectionHeader: Boolean = false,
+    showAlbumRefreshButton: Boolean = false,
     maintainAspectRatio: Boolean = true,
     columnCount: Int,
     shouldAddEmptyPhotosInRows: Boolean,
@@ -48,6 +49,7 @@ fun StaggeredDateFeed(
     feedHeader: @Composable (LazyItemScope.() -> Unit)? = null,
     onPhotoSelected: PhotoSelected,
     onPhotoLongPressed: (Photo) -> Unit,
+    onAlbumRefreshClicked: (Album) -> Unit,
     onAlbumSelectionClicked: (Album) -> Unit,
 ) {
     Box {
@@ -66,11 +68,16 @@ fun StaggeredDateFeed(
                     item(album.id, "header") {
                         AlbumHeader(
                             modifier = Modifier.animateItemPlacement(),
-                            album,
-                            showSelectionHeader
-                        ) {
-                            onAlbumSelectionClicked(album)
-                        }
+                            album = album,
+                            showSelectionHeader = showSelectionHeader,
+                            showRefreshButton = showAlbumRefreshButton,
+                            onSelectionHeaderClicked = {
+                                onAlbumSelectionClicked(album)
+                            },
+                            onAlbumRefreshClicked = {
+                                onAlbumRefreshClicked(album)
+                            }
+                        )
                     }
                 }
                 val (slots, rows) = if (shouldAddEmptyPhotosInRows) {

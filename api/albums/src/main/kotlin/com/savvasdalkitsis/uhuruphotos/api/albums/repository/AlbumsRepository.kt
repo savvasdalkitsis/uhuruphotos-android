@@ -46,4 +46,5 @@ interface AlbumsRepository {
     suspend fun refreshAutoAlbum(albumId: Int)
     suspend fun refreshUserAlbum(albumId: Int)
     suspend fun refreshAlbums(shallow: Boolean, onProgressChange: suspend (Int) -> Unit)
+    suspend fun refreshAlbum(albumId: String)
 }

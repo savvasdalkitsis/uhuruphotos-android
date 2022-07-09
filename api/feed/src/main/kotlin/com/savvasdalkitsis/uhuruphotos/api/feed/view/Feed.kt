@@ -41,11 +41,13 @@ fun Feed(
     contentPadding: PaddingValues = PaddingValues(0.dp),
     state: FeedState,
     showSelectionHeader: Boolean = false,
+    showAlbumRefreshButton: Boolean = false,
     listState: LazyListState = rememberLazyListState(),
     feedHeader: @Composable (LazyItemScope.() -> Unit)? = null,
     onPhotoSelected: PhotoSelected = { _, _, _ -> },
     onChangeDisplay: ((FeedDisplay) -> Unit) = {},
     onPhotoLongPressed: (Photo) -> Unit = {},
+    onAlbumRefreshClicked: (Album) -> Unit = {},
     onAlbumSelectionClicked: (Album) -> Unit = {},
 ) = when {
     state.isLoading || (!state.isEmpty && state.albums.isEmpty()) -> FullProgressBar()
@@ -66,6 +68,7 @@ fun Feed(
             contentPadding = contentPadding,
             albums = state.albums,
             showSelectionHeader = showSelectionHeader,
+            showAlbumRefreshButton = showAlbumRefreshButton,
             maintainAspectRatio = feedDisplay.maintainAspectRatio,
             listState = listState,
             feedHeader = feedHeader,
@@ -77,6 +80,7 @@ fun Feed(
             onPhotoSelected = onPhotoSelected,
             onPhotoLongPressed = onPhotoLongPressed,
             onAlbumSelectionClicked = onAlbumSelectionClicked,
+            onAlbumRefreshClicked = onAlbumRefreshClicked,
         )
     }
 }

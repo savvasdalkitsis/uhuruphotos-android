@@ -15,7 +15,6 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.implementation.feedpage.seam
 
-import com.savvasdalkitsis.uhuruphotos.api.account.usecase.AccountUseCase
 import com.savvasdalkitsis.uhuruphotos.api.albums.model.Album
 import com.savvasdalkitsis.uhuruphotos.api.albums.usecase.AlbumsUseCase
 import com.savvasdalkitsis.uhuruphotos.api.photos.model.Photo
@@ -28,17 +27,7 @@ import com.savvasdalkitsis.uhuruphotos.api.settings.usecase.SettingsUseCase
 import com.savvasdalkitsis.uhuruphotos.api.userbadge.usecase.UserBadgeUseCase
 import com.savvasdalkitsis.uhuruphotos.api.userbadge.view.state.SyncState.IN_PROGRESS
 import com.savvasdalkitsis.uhuruphotos.implementation.feedpage.SelectionList
-import com.savvasdalkitsis.uhuruphotos.implementation.feedpage.seam.FeedPageAction.AlbumSelectionClicked
-import com.savvasdalkitsis.uhuruphotos.implementation.feedpage.seam.FeedPageAction.AskForSelectedPhotosDeletion
-import com.savvasdalkitsis.uhuruphotos.implementation.feedpage.seam.FeedPageAction.ChangeDisplay
-import com.savvasdalkitsis.uhuruphotos.implementation.feedpage.seam.FeedPageAction.ClearSelected
-import com.savvasdalkitsis.uhuruphotos.implementation.feedpage.seam.FeedPageAction.DeleteSelectedPhotos
-import com.savvasdalkitsis.uhuruphotos.implementation.feedpage.seam.FeedPageAction.DismissSelectedPhotosDeletion
-import com.savvasdalkitsis.uhuruphotos.implementation.feedpage.seam.FeedPageAction.LoadFeed
-import com.savvasdalkitsis.uhuruphotos.implementation.feedpage.seam.FeedPageAction.PhotoLongPressed
-import com.savvasdalkitsis.uhuruphotos.implementation.feedpage.seam.FeedPageAction.RefreshAlbums
-import com.savvasdalkitsis.uhuruphotos.implementation.feedpage.seam.FeedPageAction.SelectedPhoto
-import com.savvasdalkitsis.uhuruphotos.implementation.feedpage.seam.FeedPageAction.ShareSelectedPhotos
+import com.savvasdalkitsis.uhuruphotos.implementation.feedpage.seam.FeedPageAction.*
 import com.savvasdalkitsis.uhuruphotos.implementation.feedpage.seam.FeedPageEffect.OpenPhotoDetails
 import com.savvasdalkitsis.uhuruphotos.implementation.feedpage.seam.FeedPageEffect.SharePhotos
 import com.savvasdalkitsis.uhuruphotos.implementation.feedpage.seam.FeedPageEffect.Vibrate
@@ -66,7 +55,6 @@ import javax.inject.Inject
 internal class FeedPageActionHandler @Inject constructor(
     private val albumsUseCase: AlbumsUseCase,
     private val userBadgeUseCase: UserBadgeUseCase,
-    private val accountUseCase: AccountUseCase,
     private val feedPageUseCase: FeedPageUseCase,
     private val photosUseCase: PhotosUseCase,
     private val selectionList: SelectionList,
@@ -142,6 +130,11 @@ internal class FeedPageActionHandler @Inject constructor(
             } else {
                 photos.forEach { it.select() }
             }
+        }
+        is AlbumRefreshClicked -> flow {
+            emit(StartRefreshing)
+            albumsUseCase.refreshAlbum(action.album.id)
+            emit(StopRefreshing)
         }
         DismissSelectedPhotosDeletion -> flowOf(HideDeletionConfirmationDialog)
         DeleteSelectedPhotos -> flow {

@@ -26,6 +26,7 @@ import androidx.compose.ui.res.painterResource
 @Composable
 fun ActionIcon(
     modifier: Modifier = Modifier,
+    iconModifier: Modifier = Modifier,
     onClick: () -> Unit,
     @DrawableRes icon: Int,
     contentDescription: String? = null
@@ -35,6 +36,7 @@ fun ActionIcon(
         onClick = onClick,
     ) {
         Icon(
+            modifier = iconModifier,
             painter = painterResource(id = icon),
             contentDescription = contentDescription,
             tint = MaterialTheme.colors.onBackground

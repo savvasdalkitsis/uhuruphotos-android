@@ -128,6 +128,10 @@ internal class AlbumsUseCase @Inject constructor(
     override fun startRefreshAlbumsWork(shallow: Boolean) {
         albumWorkScheduler.scheduleAlbumsRefreshNow(shallow)
     }
+
+    override suspend fun refreshAlbum(albumId: String) {
+        albumsRepository.refreshAlbum(albumId)
+    }
 }
 
 private data class DbAlbums(

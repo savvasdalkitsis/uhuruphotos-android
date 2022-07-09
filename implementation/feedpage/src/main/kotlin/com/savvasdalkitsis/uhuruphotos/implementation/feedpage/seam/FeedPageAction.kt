@@ -29,6 +29,7 @@ internal sealed class FeedPageAction {
     data class ChangeDisplay(val display: FeedDisplays) : FeedPageAction()
     data class PhotoLongPressed(val photo: Photo) : FeedPageAction()
     data class AlbumSelectionClicked(val album: Album) : FeedPageAction()
+    data class AlbumRefreshClicked(val album: Album) : FeedPageAction()
     object LoadFeed : FeedPageAction()
     object RefreshAlbums : FeedPageAction()
     object ClearSelected : FeedPageAction()

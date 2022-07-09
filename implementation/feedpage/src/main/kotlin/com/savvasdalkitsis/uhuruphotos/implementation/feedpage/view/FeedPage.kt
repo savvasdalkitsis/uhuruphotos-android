@@ -28,6 +28,7 @@ import com.savvasdalkitsis.uhuruphotos.api.feed.view.state.FeedDisplays
 import com.savvasdalkitsis.uhuruphotos.api.home.view.HomeScaffold
 import com.savvasdalkitsis.uhuruphotos.api.photos.view.DeletePermissionDialog
 import com.savvasdalkitsis.uhuruphotos.implementation.feedpage.seam.FeedPageAction
+import com.savvasdalkitsis.uhuruphotos.implementation.feedpage.seam.FeedPageAction.AlbumRefreshClicked
 import com.savvasdalkitsis.uhuruphotos.implementation.feedpage.seam.FeedPageAction.AlbumSelectionClicked
 import com.savvasdalkitsis.uhuruphotos.implementation.feedpage.seam.FeedPageAction.ChangeDisplay
 import com.savvasdalkitsis.uhuruphotos.implementation.feedpage.seam.FeedPageAction.DeleteSelectedPhotos
@@ -80,6 +81,7 @@ internal fun FeedPage(
                 contentPadding = contentPadding,
                 state = state.feedState,
                 showSelectionHeader = state.hasSelection,
+                showAlbumRefreshButton = true,
                 listState = listState,
                 onPhotoSelected = { photo, center, scale ->
                     action(SelectedPhoto(photo, center, scale,))
@@ -87,10 +89,14 @@ internal fun FeedPage(
                 onChangeDisplay = { action(ChangeDisplay(it as FeedDisplays)) },
                 onPhotoLongPressed = {
                     action(PhotoLongPressed(it))
+                },
+                onAlbumSelectionClicked = {
+                    action(AlbumSelectionClicked(it))
+                },
+                onAlbumRefreshClicked = {
+                    action(AlbumRefreshClicked(it))
                 }
-            ) {
-                action(AlbumSelectionClicked(it))
-            }
+            )
         }
         if (state.showPhotoDeletionConfirmationDialog) {
             DeletePermissionDialog(

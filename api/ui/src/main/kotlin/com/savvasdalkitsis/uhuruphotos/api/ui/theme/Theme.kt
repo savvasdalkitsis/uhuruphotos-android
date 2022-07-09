@@ -16,11 +16,15 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.api.ui.theme
 
 import androidx.compose.material.MaterialTheme
+import androidx.compose.material.Surface
 import androidx.compose.material.darkColors
 import androidx.compose.material.lightColors
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.SideEffect
 import androidx.compose.ui.graphics.Color
+import com.google.accompanist.systemuicontroller.SystemUiController
+import com.savvasdalkitsis.uhuruphotos.api.ui.NoOpSystemUiController
 import com.savvasdalkitsis.uhuruphotos.api.ui.window.LocalSystemUiController
 
 private val DarkColorPalette = darkColors(
@@ -85,5 +89,21 @@ fun AppTheme(
             )
         }
         content()
+    }
+}
+
+@Composable
+fun PreviewAppTheme(
+    darkTheme: Boolean = false,
+    content: @Composable () -> Unit,
+) {
+    CompositionLocalProvider(
+        LocalSystemUiController provides NoOpSystemUiController
+    ) {
+        AppTheme(darkTheme = darkTheme) {
+            Surface {
+                content()
+            }
+        }
     }
 }

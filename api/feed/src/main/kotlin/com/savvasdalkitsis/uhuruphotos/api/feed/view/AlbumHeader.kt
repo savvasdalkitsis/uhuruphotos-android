@@ -25,13 +25,18 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.savvasdalkitsis.uhuruphotos.api.albums.model.Album
+import com.savvasdalkitsis.uhuruphotos.api.albums.model.previewAlbumEmpty
 import com.savvasdalkitsis.uhuruphotos.api.icons.R
 import com.savvasdalkitsis.uhuruphotos.api.photos.model.SelectionMode
+import com.savvasdalkitsis.uhuruphotos.api.ui.theme.AppTheme
+import com.savvasdalkitsis.uhuruphotos.api.ui.theme.PreviewAppTheme
 import com.savvasdalkitsis.uhuruphotos.api.ui.view.ActionIcon
 
 @Composable
@@ -39,6 +44,8 @@ fun AlbumHeader(
     modifier: Modifier,
     album: Album,
     showSelectionHeader: Boolean,
+    showRefreshButton: Boolean,
+    onAlbumRefreshClicked: () -> Unit = {},
     onSelectionHeaderClicked: () -> Unit = {},
 ) {
     Row(
@@ -61,7 +68,7 @@ fun AlbumHeader(
                 end = 8.dp,
                 top = 16.dp,
                 bottom = 16.dp,
-            ),
+            ).weight(1f),
         ) {
             Text(
                 text = album.date,
@@ -78,5 +85,38 @@ fun AlbumHeader(
                 )
             }
         }
+        if (showRefreshButton) {
+            ActionIcon(
+                iconModifier = Modifier.alpha(0.6f),
+                onClick = onAlbumRefreshClicked,
+                icon = R.drawable.ic_refresh,
+            )
+        }
+    }
+}
+
+@Preview
+@Composable
+fun AlbumHeaderPreview() {
+    PreviewAppTheme {
+        AlbumHeader(
+            modifier = Modifier,
+            album = previewAlbumEmpty,
+            showSelectionHeader = false,
+            showRefreshButton = true,
+        )
+    }
+}
+
+@Preview
+@Composable
+fun AlbumHeaderPreviewSelection() {
+    PreviewAppTheme {
+        AlbumHeader(
+            modifier = Modifier,
+            album = previewAlbumEmpty,
+            showSelectionHeader = true,
+            showRefreshButton = true,
+        )
     }
 }

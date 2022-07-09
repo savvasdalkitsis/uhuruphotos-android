@@ -253,6 +253,17 @@ internal class AlbumsRepository @Inject constructor(
         )
     }
 
+    override suspend fun refreshAlbum(albumId: String) {
+        process(
+            albumsFetcher = { AlbumsByDate(
+                count = 1,
+                results = listOf(Album.IncompleteAlbum(albumId, null, "", true, 1))
+            ) },
+            albumFetcher = { albumsService.getAlbum(it).results },
+            shallow = false,
+        )
+    }
+
     private suspend fun process(
         albumsFetcher: suspend () -> AlbumsByDate,
         albumFetcher: suspend (String) -> Album.CompleteAlbum,

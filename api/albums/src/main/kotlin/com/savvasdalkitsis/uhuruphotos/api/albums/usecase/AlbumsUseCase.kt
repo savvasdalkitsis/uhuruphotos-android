@@ -27,4 +27,5 @@ interface AlbumsUseCase {
     suspend fun getAutoAlbum(albumId: Int): List<Album>
     suspend fun getUserAlbum(albumId: Int): List<Album>
     fun startRefreshAlbumsWork(shallow: Boolean)
+    suspend fun refreshAlbum(albumId: String)
 }
