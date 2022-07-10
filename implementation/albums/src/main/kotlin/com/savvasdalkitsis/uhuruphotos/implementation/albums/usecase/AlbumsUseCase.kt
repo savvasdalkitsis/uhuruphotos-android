@@ -23,10 +23,12 @@ import com.savvasdalkitsis.uhuruphotos.api.date.DateDisplayer
 import com.savvasdalkitsis.uhuruphotos.api.db.albums.GetAlbums
 import com.savvasdalkitsis.uhuruphotos.api.db.albums.GetAutoAlbum
 import com.savvasdalkitsis.uhuruphotos.api.db.albums.GetPersonAlbums
+import com.savvasdalkitsis.uhuruphotos.api.db.albums.GetTrash
 import com.savvasdalkitsis.uhuruphotos.api.db.albums.GetUserAlbum
 import com.savvasdalkitsis.uhuruphotos.api.db.extensions.isVideo
 import com.savvasdalkitsis.uhuruphotos.api.group.model.Group
 import com.savvasdalkitsis.uhuruphotos.api.group.model.mapValues
+import com.savvasdalkitsis.uhuruphotos.api.log.runCatchingWithLog
 import com.savvasdalkitsis.uhuruphotos.api.photos.model.Photo
 import com.savvasdalkitsis.uhuruphotos.api.photos.usecase.PhotosUseCase
 import com.savvasdalkitsis.uhuruphotos.api.user.usecase.UserUseCase
@@ -62,6 +64,18 @@ internal class AlbumsUseCase @Inject constructor(
         .map { it.mapToAlbums() }
         .initialize()
 
+    override fun observeTrash(): Flow<List<Album>> = albumsRepository.observeTrash()
+        .map {
+            it.mapValues {
+                    getTrash -> getTrash.toDbAlbums()
+            }
+        }
+        .map { it.mapToAlbums() }
+
+    override suspend fun refreshTrash() {
+        albumsRepository.refreshTrash()
+    }
+
     override suspend fun getPersonAlbums(personId: Int): List<Album> = albumsRepository.getPersonAlbums(personId)
         .mapValues { it.toDbAlbums() }
         .mapToAlbums()
@@ -69,6 +83,12 @@ internal class AlbumsUseCase @Inject constructor(
     override suspend fun getAlbums(): List<Album> = albumsRepository.getAlbumsByDate()
         .mapValues { it.toDbAlbums() }
         .mapToAlbums()
+
+    override suspend fun getTrash(): List<Album> = albumsRepository.getTrash()
+        .mapValues { it.toDbAlbums() }
+        .mapToAlbums()
+
+    override suspend fun hasTrash(): Boolean = albumsRepository.hasTrash()
 
     override suspend fun getAutoAlbum(albumId: Int): List<Album> = albumsRepository.getAutoAlbum(albumId)
         .mapValues { it.toDbAlbums() }
@@ -156,6 +176,16 @@ private fun GetPersonAlbums.toDbAlbums() = DbAlbums(
     isVideo = isVideo,
 )
 private fun GetAlbums.toDbAlbums() = DbAlbums(
+    id = id,
+    albumDate = albumDate,
+    albumLocation = albumLocation,
+    photoId = photoId,
+    dominantColor = dominantColor,
+    rating = rating,
+    aspectRatio = aspectRatio,
+    isVideo = isVideo,
+)
+private fun GetTrash.toDbAlbums() = DbAlbums(
     id = id,
     albumDate = albumDate,
     albumLocation = albumLocation,

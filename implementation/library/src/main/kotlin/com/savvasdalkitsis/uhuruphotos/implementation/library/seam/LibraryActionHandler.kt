@@ -33,6 +33,7 @@ import com.savvasdalkitsis.uhuruphotos.implementation.library.seam.LibraryEffect
 import com.savvasdalkitsis.uhuruphotos.implementation.library.seam.LibraryEffect.NavigateToAutoAlbums
 import com.savvasdalkitsis.uhuruphotos.implementation.library.seam.LibraryEffect.NavigateToFavourites
 import com.savvasdalkitsis.uhuruphotos.implementation.library.seam.LibraryEffect.NavigateToHidden
+import com.savvasdalkitsis.uhuruphotos.implementation.library.seam.LibraryEffect.NavigateToTrash
 import com.savvasdalkitsis.uhuruphotos.implementation.library.seam.LibraryEffect.NavigateToUserAlbums
 import com.savvasdalkitsis.uhuruphotos.implementation.library.seam.LibraryMutation.DisplayAutoAlbums
 import com.savvasdalkitsis.uhuruphotos.implementation.library.seam.LibraryMutation.DisplayFavouritePhotos
@@ -94,6 +95,9 @@ class LibraryActionHandler @Inject constructor(
         }
         HiddenPhotosSelected -> flow {
             effect(NavigateToHidden)
+        }
+        LibraryAction.TrashSelected -> flow {
+            effect(NavigateToTrash)
         }
     }
 

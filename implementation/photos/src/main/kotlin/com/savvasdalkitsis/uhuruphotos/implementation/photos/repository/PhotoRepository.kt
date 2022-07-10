@@ -23,6 +23,7 @@ import com.savvasdalkitsis.uhuruphotos.api.db.photos.PhotoDetails
 import com.savvasdalkitsis.uhuruphotos.api.db.photos.PhotoDetailsQueries
 import com.savvasdalkitsis.uhuruphotos.api.db.photos.PhotoSummary
 import com.savvasdalkitsis.uhuruphotos.api.db.photos.PhotoSummaryQueries
+import com.savvasdalkitsis.uhuruphotos.api.db.photos.TrashQueries
 import com.savvasdalkitsis.uhuruphotos.api.photos.model.toPhotoDetails
 import com.savvasdalkitsis.uhuruphotos.implementation.photos.service.PhotosService
 import com.savvasdalkitsis.uhuruphotos.implementation.photos.worker.PhotoWorkScheduler
@@ -40,6 +41,7 @@ class PhotoRepository @Inject constructor(
     private val photoSummaryQueries: PhotoSummaryQueries,
     private val photoWorkScheduler: PhotoWorkScheduler,
     private val photosService: PhotosService,
+    private val trashQueries: TrashQueries,
 ) {
 
     fun observeAllPhotoDetails(): Flow<List<PhotoDetails>> =
@@ -151,10 +153,26 @@ class PhotoRepository @Inject constructor(
         }
     }
 
+    suspend fun trashPhoto(id: String) {
+        async {
+            photoSummaryQueries.transaction {
+                photoSummaryQueries.copyToTrash(id)
+                photoSummaryQueries.delete(id)
+            }
+        }
+    }
+
+    suspend fun restorePhotoFromTrash(id: String) {
+        async {
+            trashQueries.moveToSummaries(id)
+        }
+    }
+
     suspend fun deletePhoto(id: String) {
         async {
             photoDetailsQueries.delete(id)
             photoSummaryQueries.delete(id)
+            trashQueries.delete(id)
         }
     }
 

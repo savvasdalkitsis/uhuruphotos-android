@@ -23,7 +23,7 @@ import com.savvasdalkitsis.uhuruphotos.api.feed.view.state.FeedDisplays
 import com.savvasdalkitsis.uhuruphotos.api.icons.R
 import com.savvasdalkitsis.uhuruphotos.api.ui.view.ActionIcon
 import com.savvasdalkitsis.uhuruphotos.implementation.feedpage.seam.FeedPageAction
-import com.savvasdalkitsis.uhuruphotos.implementation.feedpage.seam.FeedPageAction.AskForSelectedPhotosDeletion
+import com.savvasdalkitsis.uhuruphotos.implementation.feedpage.seam.FeedPageAction.AskForSelectedPhotosTrashing
 import com.savvasdalkitsis.uhuruphotos.implementation.feedpage.seam.FeedPageAction.ChangeDisplay
 import com.savvasdalkitsis.uhuruphotos.implementation.feedpage.seam.FeedPageAction.ShareSelectedPhotos
 import com.savvasdalkitsis.uhuruphotos.implementation.feedpage.view.state.FeedPageState
@@ -41,7 +41,7 @@ internal fun RowScope.FeedPageActionBar(
     }
     AnimatedVisibility(visible = state.hasSelection) {
         ActionIcon(
-            onClick = { action(AskForSelectedPhotosDeletion) },
+            onClick = { action(AskForSelectedPhotosTrashing) },
             icon = R.drawable.ic_delete
         )
     }

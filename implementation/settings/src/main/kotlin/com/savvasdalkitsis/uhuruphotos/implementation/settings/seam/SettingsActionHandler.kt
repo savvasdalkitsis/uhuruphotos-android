@@ -28,33 +28,7 @@ import com.savvasdalkitsis.uhuruphotos.api.search.SearchUseCase
 import com.savvasdalkitsis.uhuruphotos.api.settings.usecase.SettingsUseCase
 import com.savvasdalkitsis.uhuruphotos.api.strings.R
 import com.savvasdalkitsis.uhuruphotos.api.userbadge.usecase.UserBadgeUseCase
-import com.savvasdalkitsis.uhuruphotos.implementation.settings.seam.SettingsAction.AskForFullFeedSync
-import com.savvasdalkitsis.uhuruphotos.implementation.settings.seam.SettingsAction.ChangeBiometricsAppAccessRequirement
-import com.savvasdalkitsis.uhuruphotos.implementation.settings.seam.SettingsAction.ChangeBiometricsHiddenPhotosAccessRequirement
-import com.savvasdalkitsis.uhuruphotos.implementation.settings.seam.SettingsAction.ChangeFullSyncChargingRequirements
-import com.savvasdalkitsis.uhuruphotos.implementation.settings.seam.SettingsAction.ChangeFullSyncNetworkRequirements
-import com.savvasdalkitsis.uhuruphotos.implementation.settings.seam.SettingsAction.ChangeImageDiskCache
-import com.savvasdalkitsis.uhuruphotos.implementation.settings.seam.SettingsAction.ChangeImageMemCache
-import com.savvasdalkitsis.uhuruphotos.implementation.settings.seam.SettingsAction.ChangeLoggingEnabled
-import com.savvasdalkitsis.uhuruphotos.implementation.settings.seam.SettingsAction.ChangeMapProvider
-import com.savvasdalkitsis.uhuruphotos.implementation.settings.seam.SettingsAction.ChangeSearchSuggestionsEnabled
-import com.savvasdalkitsis.uhuruphotos.implementation.settings.seam.SettingsAction.ChangeShareGpsDataEnabled
-import com.savvasdalkitsis.uhuruphotos.implementation.settings.seam.SettingsAction.ChangeShowLibrary
-import com.savvasdalkitsis.uhuruphotos.implementation.settings.seam.SettingsAction.ChangeThemeMode
-import com.savvasdalkitsis.uhuruphotos.implementation.settings.seam.SettingsAction.ChangeVideoDiskCache
-import com.savvasdalkitsis.uhuruphotos.implementation.settings.seam.SettingsAction.ClearImageDiskCache
-import com.savvasdalkitsis.uhuruphotos.implementation.settings.seam.SettingsAction.ClearImageMemCache
-import com.savvasdalkitsis.uhuruphotos.implementation.settings.seam.SettingsAction.ClearLogFileClicked
-import com.savvasdalkitsis.uhuruphotos.implementation.settings.seam.SettingsAction.ClearRecentSearches
-import com.savvasdalkitsis.uhuruphotos.implementation.settings.seam.SettingsAction.ClearVideoDiskCache
-import com.savvasdalkitsis.uhuruphotos.implementation.settings.seam.SettingsAction.DismissFullFeedSyncDialog
-import com.savvasdalkitsis.uhuruphotos.implementation.settings.seam.SettingsAction.EnrollToBiometrics
-import com.savvasdalkitsis.uhuruphotos.implementation.settings.seam.SettingsAction.FeedRefreshChanged
-import com.savvasdalkitsis.uhuruphotos.implementation.settings.seam.SettingsAction.FeedSyncFrequencyChanged
-import com.savvasdalkitsis.uhuruphotos.implementation.settings.seam.SettingsAction.LoadSettings
-import com.savvasdalkitsis.uhuruphotos.implementation.settings.seam.SettingsAction.NavigateBack
-import com.savvasdalkitsis.uhuruphotos.implementation.settings.seam.SettingsAction.PerformFullFeedSync
-import com.savvasdalkitsis.uhuruphotos.implementation.settings.seam.SettingsAction.SendFeedbackClicked
+import com.savvasdalkitsis.uhuruphotos.implementation.settings.seam.SettingsAction.*
 import com.savvasdalkitsis.uhuruphotos.implementation.settings.seam.SettingsEffect.ShowMessage
 import com.savvasdalkitsis.uhuruphotos.implementation.settings.seam.SettingsMutation.DisableFullSyncButton
 import com.savvasdalkitsis.uhuruphotos.implementation.settings.seam.SettingsMutation.DisplayBiometrics
@@ -142,8 +116,9 @@ internal class SettingsActionHandler @Inject constructor(
             combine(
                 settingsUseCase.observeBiometricsRequiredForAppAccess(),
                 settingsUseCase.observeBiometricsRequiredForHiddenPhotosAccess(),
-            ) { app, hiddenPhotos ->
-                DisplayBiometrics(enrollment(app, hiddenPhotos))
+                settingsUseCase.observeBiometricsRequiredForTrashAccess(),
+            ) { app, hiddenPhotos, trash ->
+                DisplayBiometrics(enrollment(app, hiddenPhotos, trash))
             },
             cacheUseCase.observeImageDiskCacheCurrentUse()
                 .map(::DisplayImageDiskCacheCurrentUse),
@@ -245,13 +220,20 @@ internal class SettingsActionHandler @Inject constructor(
         is ChangeBiometricsHiddenPhotosAccessRequirement -> authenticateIfNeeded(action.required) {
             settingsUseCase.setBiometricsRequiredForHiddenPhotosAccess(it)
         }
+        is ChangeBiometricsTrashAccessRequirement -> authenticateIfNeeded(action.required) {
+            settingsUseCase.setBiometricsRequiredForTrashAccess(it)
+        }
         EnrollToBiometrics -> flow {
             effect(SettingsEffect.EnrollToBiometrics)
         }
     }
 
-    private fun enrollment(app: Boolean, hiddenPhotos: Boolean) = when (biometricsUseCase.getBiometrics()) {
-        Enrolled -> BiometricsSetting.Enrolled(app, hiddenPhotos)
+    private fun enrollment(
+        app: Boolean,
+        hiddenPhotos: Boolean,
+        trash: Boolean,
+    ) = when (biometricsUseCase.getBiometrics()) {
+        Enrolled -> BiometricsSetting.Enrolled(app, hiddenPhotos, trash)
         NotEnrolled -> BiometricsSetting.NotEnrolled
         NoHardware -> null
     }

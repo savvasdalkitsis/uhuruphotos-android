@@ -37,6 +37,7 @@ sealed class AlbumPageMutation(
     data class Loading(val loading: Boolean) : AlbumPageMutation({
         it.copy(feedState = it.feedState.copy(
             isLoading = loading,
+            isEmpty = !loading && !it.feedState.hasPhotos
         ))
     })
 

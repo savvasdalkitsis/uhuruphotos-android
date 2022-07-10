@@ -38,6 +38,7 @@ interface SettingsUseCase {
     fun getLoggingEnabled(): Boolean
     fun getBiometricsRequiredForAppAccess(): Boolean
     fun getBiometricsRequiredForHiddenPhotosAccess(): Boolean
+    fun getBiometricsRequiredForTrashAccess(): Boolean
 
     fun observeImageDiskCacheMaxLimit(): Flow<Int>
     fun observeImageMemCacheMaxLimit(): Flow<Int>
@@ -55,6 +56,7 @@ interface SettingsUseCase {
     fun observeLoggingEnabled(): Flow<Boolean>
     fun observeBiometricsRequiredForAppAccess(): Flow<Boolean>
     fun observeBiometricsRequiredForHiddenPhotosAccess(): Flow<Boolean>
+    fun observeBiometricsRequiredForTrashAccess(): Flow<Boolean>
 
     suspend fun setImageDiskCacheMaxLimit(sizeInMb: Int)
     suspend fun setImageMemCacheMaxLimit(sizeInMb: Int)
@@ -72,4 +74,5 @@ interface SettingsUseCase {
     suspend fun setLoggingEnabled(enabled: Boolean)
     suspend fun setBiometricsRequiredForAppAccess(required: Boolean)
     suspend fun setBiometricsRequiredForHiddenPhotosAccess(required: Boolean)
+    suspend fun setBiometricsRequiredForTrashAccess(required: Boolean)
 }

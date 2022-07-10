@@ -15,12 +15,15 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.api.photos.view
 
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
 import androidx.compose.material.AlertDialog
 import androidx.compose.material.Button
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.pluralStringResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.unit.dp
 import com.savvasdalkitsis.uhuruphotos.api.strings.R
 
 @Composable
@@ -41,13 +44,18 @@ fun DeletePermissionDialog(
             )
         },
         text = {
-            Text(
-                pluralStringResource(
-                    R.plurals.delete_photos_confirmation,
-                    count = photoCount,
-                    photoCount
+            Column(
+                verticalArrangement = Arrangement.spacedBy(8.dp)
+            ) {
+                Text(
+                    pluralStringResource(
+                        R.plurals.delete_photos_confirmation,
+                        count = photoCount,
+                        photoCount
+                    )
                 )
-            )
+                Text(stringResource(R.string.operation_irreverisble))
+            }
         },
         confirmButton = {
             Button(onClick = onDelete) {

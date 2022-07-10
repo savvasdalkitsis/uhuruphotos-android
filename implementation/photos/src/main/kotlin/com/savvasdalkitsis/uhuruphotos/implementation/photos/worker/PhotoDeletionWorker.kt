@@ -25,10 +25,14 @@ import com.savvasdalkitsis.uhuruphotos.api.notification.NotificationChannels.JOB
 import com.savvasdalkitsis.uhuruphotos.api.strings.R
 import com.savvasdalkitsis.uhuruphotos.implementation.photos.repository.PhotoRepository
 import com.savvasdalkitsis.uhuruphotos.implementation.photos.service.PhotosService
+import com.savvasdalkitsis.uhuruphotos.implementation.photos.service.model.ImageHashOperationResponse
+import com.savvasdalkitsis.uhuruphotos.implementation.photos.service.model.PhotoDeleteRequest
+import com.savvasdalkitsis.uhuruphotos.implementation.photos.service.model.PhotoOperationResponse
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedInject
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
+import retrofit2.Response
 
 @HiltWorker
 class PhotoDeletionWorker @AssistedInject constructor(
@@ -42,9 +46,12 @@ class PhotoDeletionWorker @AssistedInject constructor(
     override suspend fun doWork() = withContext(Dispatchers.IO) {
         try {
             val id = params.inputData.getString(KEY_ID)!!
-            val response = photosService.deletePhoto(id)
-            val code = response.code()
-            if (code in 200..299 || code == 404) {
+            val response = photosService.deletePhotoPermanently(
+                PhotoDeleteRequest(
+                    imageHashes = listOf(id),
+                )
+            )
+            if (shouldDeleteLocally(response)) {
                 photoRepository.deletePhoto(id)
                 Result.success()
             } else {
@@ -55,6 +62,10 @@ class PhotoDeletionWorker @AssistedInject constructor(
             failOrRetry()
         }
     }
+
+    private fun shouldDeleteLocally(response: Response<ImageHashOperationResponse>) =
+        response.code() == 404 ||
+                (response.code() in 200..299 && response.body()?.status == true)
 
     private fun failOrRetry() = if (params.runAttemptCount < 4) {
         Result.retry()
@@ -72,7 +83,7 @@ class PhotoDeletionWorker @AssistedInject constructor(
 
     companion object {
         const val KEY_ID = "id"
-        fun workName(id: String) = "deletePhoto/$id"
-        private const val NOTIFICATION_ID = 1276
+        fun deletePhotoWorkName(id: String) = "deletePhoto/$id"
+        private const val NOTIFICATION_ID = 1277
     }
 }

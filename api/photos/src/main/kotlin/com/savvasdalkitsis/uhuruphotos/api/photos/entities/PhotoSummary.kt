@@ -16,9 +16,24 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.api.photos.entities
 
 import com.savvasdalkitsis.uhuruphotos.api.db.photos.PhotoSummary
+import com.savvasdalkitsis.uhuruphotos.api.db.photos.Trash
 import com.savvasdalkitsis.uhuruphotos.api.photos.model.PhotoSummaryItem
 
 fun PhotoSummaryItem.toPhotoSummary(albumId: String) = PhotoSummary(
+    id = id,
+    dominantColor = dominantColor,
+    url = url,
+    location = location,
+    date = date,
+    birthTime = birthTime,
+    aspectRatio = aspectRatio,
+    type = type,
+    videoLength = videoLength,
+    rating = rating,
+    containerId = albumId
+)
+
+fun PhotoSummaryItem.toTrash(albumId: String) = Trash(
     id = id,
     dominantColor = dominantColor,
     url = url,

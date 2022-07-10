@@ -27,12 +27,13 @@ import com.savvasdalkitsis.uhuruphotos.api.feed.view.Feed
 import com.savvasdalkitsis.uhuruphotos.api.feed.view.state.FeedDisplays
 import com.savvasdalkitsis.uhuruphotos.api.home.view.HomeScaffold
 import com.savvasdalkitsis.uhuruphotos.api.photos.view.DeletePermissionDialog
+import com.savvasdalkitsis.uhuruphotos.api.photos.view.TrashPermissionDialog
 import com.savvasdalkitsis.uhuruphotos.implementation.feedpage.seam.FeedPageAction
 import com.savvasdalkitsis.uhuruphotos.implementation.feedpage.seam.FeedPageAction.AlbumRefreshClicked
 import com.savvasdalkitsis.uhuruphotos.implementation.feedpage.seam.FeedPageAction.AlbumSelectionClicked
 import com.savvasdalkitsis.uhuruphotos.implementation.feedpage.seam.FeedPageAction.ChangeDisplay
-import com.savvasdalkitsis.uhuruphotos.implementation.feedpage.seam.FeedPageAction.DeleteSelectedPhotos
-import com.savvasdalkitsis.uhuruphotos.implementation.feedpage.seam.FeedPageAction.DismissSelectedPhotosDeletion
+import com.savvasdalkitsis.uhuruphotos.implementation.feedpage.seam.FeedPageAction.TrashSelectedPhotos
+import com.savvasdalkitsis.uhuruphotos.implementation.feedpage.seam.FeedPageAction.DismissSelectedPhotosTrashing
 import com.savvasdalkitsis.uhuruphotos.implementation.feedpage.seam.FeedPageAction.PhotoLongPressed
 import com.savvasdalkitsis.uhuruphotos.implementation.feedpage.seam.FeedPageAction.RefreshAlbums
 import com.savvasdalkitsis.uhuruphotos.implementation.feedpage.seam.FeedPageAction.SelectedPhoto
@@ -98,11 +99,11 @@ internal fun FeedPage(
                 }
             )
         }
-        if (state.showPhotoDeletionConfirmationDialog) {
-            DeletePermissionDialog(
+        if (state.showPhotoTrashingConfirmationDialog) {
+            TrashPermissionDialog(
                 photoCount = state.selectedPhotoCount,
-                onDismiss = { action(DismissSelectedPhotosDeletion) },
-                onDelete = { action(DeleteSelectedPhotos) }
+                onDismiss = { action(DismissSelectedPhotosTrashing) },
+                onDelete = { action(TrashSelectedPhotos) }
             )
         }
         additionalContent()

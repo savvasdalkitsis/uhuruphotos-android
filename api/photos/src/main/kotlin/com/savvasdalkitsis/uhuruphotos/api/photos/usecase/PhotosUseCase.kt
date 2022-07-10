@@ -41,5 +41,6 @@ interface PhotosUseCase {
     suspend fun refreshDetailsNow(id: String) : Result<Unit>
     suspend fun refreshFavourites()
     suspend fun refreshHiddenPhotos()
+    fun trashPhoto(id: String)
     fun deletePhoto(id: String)
 }

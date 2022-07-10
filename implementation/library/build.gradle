@@ -28,6 +28,7 @@ dependencies {
     implementation project(":api:settings")
     implementation project(":api:strings")
     implementation project(":api:toaster")
+    implementation project(":api:trash")
     implementation project(":api:ui")
     implementation project(":api:useralbum")
     implementation project(":api:useralbums")

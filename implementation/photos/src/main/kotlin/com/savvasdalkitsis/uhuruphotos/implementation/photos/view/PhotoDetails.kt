@@ -42,12 +42,13 @@ import com.radusalagean.infobarcompose.InfoBar
 import com.radusalagean.infobarcompose.InfoBarMessage
 import com.savvasdalkitsis.uhuruphotos.api.image.view.Image
 import com.savvasdalkitsis.uhuruphotos.api.photos.view.DeletePermissionDialog
+import com.savvasdalkitsis.uhuruphotos.api.photos.view.TrashPermissionDialog
 import com.savvasdalkitsis.uhuruphotos.api.strings.R
 import com.savvasdalkitsis.uhuruphotos.api.video.view.Video
 import com.savvasdalkitsis.uhuruphotos.implementation.photos.seam.PhotoAction
-import com.savvasdalkitsis.uhuruphotos.implementation.photos.seam.PhotoAction.DeletePhoto
+import com.savvasdalkitsis.uhuruphotos.implementation.photos.seam.PhotoAction.TrashPhoto
 import com.savvasdalkitsis.uhuruphotos.implementation.photos.seam.PhotoAction.DismissErrorMessage
-import com.savvasdalkitsis.uhuruphotos.implementation.photos.seam.PhotoAction.DismissPhotoDeletionDialog
+import com.savvasdalkitsis.uhuruphotos.implementation.photos.seam.PhotoAction.DismissConfirmationDialogs
 import com.savvasdalkitsis.uhuruphotos.implementation.photos.seam.PhotoAction.FullImageLoaded
 import com.savvasdalkitsis.uhuruphotos.implementation.photos.seam.PhotoAction.NavigateBack
 import com.savvasdalkitsis.uhuruphotos.implementation.photos.seam.PhotoAction.ShowInfo
@@ -132,11 +133,17 @@ fun PhotoDetails(
                     action(DismissErrorMessage)
                 }
             }
-            if (state.showPhotoDeletionConfirmationDialog) {
+            if (state.showPhotoTrashingConfirmationDialog) {
+                TrashPermissionDialog(
+                    photoCount = 1,
+                    onDismiss = { action(DismissConfirmationDialogs) }
+                ) { action(TrashPhoto) }
+            }
+            if (state.showPhotoDeleteConfirmationDialog) {
                 DeletePermissionDialog(
                     photoCount = 1,
-                    onDismiss = { action(DismissPhotoDeletionDialog) }
-                ) { action(DeletePhoto) }
+                    onDismiss = { action(DismissConfirmationDialogs) }
+                ) { action(TrashPhoto) }
             }
         }
     }

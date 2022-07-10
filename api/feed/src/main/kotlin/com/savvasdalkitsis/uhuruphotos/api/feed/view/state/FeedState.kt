@@ -23,6 +23,8 @@ data class FeedState(
     val albums: List<Album> = emptyList(),
     val feedDisplay: FeedDisplay = FeedDisplays.default,
 ) {
+    val hasPhotos get() = albums.sumOf { it.photos.size } > 0
+
     override fun toString(): String {
         return "FeedState(isLoading=$isLoading, isEmpty=$isEmpty, albumsSize=${albums.size}, feedDisplay=$feedDisplay)"
     }

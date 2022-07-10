@@ -31,6 +31,7 @@ import com.savvasdalkitsis.uhuruphotos.api.photos.model.PhotoSequenceDataSource.
 import com.savvasdalkitsis.uhuruphotos.api.photos.model.PhotoSequenceDataSource.PersonResults
 import com.savvasdalkitsis.uhuruphotos.api.photos.model.PhotoSequenceDataSource.SearchResults
 import com.savvasdalkitsis.uhuruphotos.api.photos.model.PhotoSequenceDataSource.Single
+import com.savvasdalkitsis.uhuruphotos.api.photos.model.PhotoSequenceDataSource.Trash
 import com.savvasdalkitsis.uhuruphotos.api.photos.model.PhotoSequenceDataSource.UserAlbum
 import com.savvasdalkitsis.uhuruphotos.api.photos.model.deserializePeopleNames
 import com.savvasdalkitsis.uhuruphotos.api.photos.usecase.PhotosUseCase
@@ -38,13 +39,12 @@ import com.savvasdalkitsis.uhuruphotos.api.seam.ActionHandler
 import com.savvasdalkitsis.uhuruphotos.api.search.SearchUseCase
 import com.savvasdalkitsis.uhuruphotos.api.strings.R
 import com.savvasdalkitsis.uhuruphotos.api.user.usecase.UserUseCase
-import com.savvasdalkitsis.uhuruphotos.implementation.photos.seam.PhotoAction.AskForPhotoDeletion
+import com.savvasdalkitsis.uhuruphotos.implementation.photos.seam.PhotoAction.AskForPhotoTrashing
 import com.savvasdalkitsis.uhuruphotos.implementation.photos.seam.PhotoAction.ChangedToPage
 import com.savvasdalkitsis.uhuruphotos.implementation.photos.seam.PhotoAction.ClickedOnGps
 import com.savvasdalkitsis.uhuruphotos.implementation.photos.seam.PhotoAction.ClickedOnMap
-import com.savvasdalkitsis.uhuruphotos.implementation.photos.seam.PhotoAction.DeletePhoto
 import com.savvasdalkitsis.uhuruphotos.implementation.photos.seam.PhotoAction.DismissErrorMessage
-import com.savvasdalkitsis.uhuruphotos.implementation.photos.seam.PhotoAction.DismissPhotoDeletionDialog
+import com.savvasdalkitsis.uhuruphotos.implementation.photos.seam.PhotoAction.DismissConfirmationDialogs
 import com.savvasdalkitsis.uhuruphotos.implementation.photos.seam.PhotoAction.FullImageLoaded
 import com.savvasdalkitsis.uhuruphotos.implementation.photos.seam.PhotoAction.HideInfo
 import com.savvasdalkitsis.uhuruphotos.implementation.photos.seam.PhotoAction.LoadPhoto
@@ -55,6 +55,7 @@ import com.savvasdalkitsis.uhuruphotos.implementation.photos.seam.PhotoAction.Se
 import com.savvasdalkitsis.uhuruphotos.implementation.photos.seam.PhotoAction.SharePhoto
 import com.savvasdalkitsis.uhuruphotos.implementation.photos.seam.PhotoAction.ShowInfo
 import com.savvasdalkitsis.uhuruphotos.implementation.photos.seam.PhotoAction.ToggleUI
+import com.savvasdalkitsis.uhuruphotos.implementation.photos.seam.PhotoAction.TrashPhoto
 import com.savvasdalkitsis.uhuruphotos.implementation.photos.seam.PhotoEffect.CopyToClipboard
 import com.savvasdalkitsis.uhuruphotos.implementation.photos.seam.PhotoEffect.HideSystemBars
 import com.savvasdalkitsis.uhuruphotos.implementation.photos.seam.PhotoEffect.LaunchMap
@@ -62,19 +63,22 @@ import com.savvasdalkitsis.uhuruphotos.implementation.photos.seam.PhotoEffect.Na
 import com.savvasdalkitsis.uhuruphotos.implementation.photos.seam.PhotoEffect.ShowSystemBars
 import com.savvasdalkitsis.uhuruphotos.implementation.photos.seam.PhotoMutation.ChangeCurrentIndex
 import com.savvasdalkitsis.uhuruphotos.implementation.photos.seam.PhotoMutation.FinishedLoading
-import com.savvasdalkitsis.uhuruphotos.implementation.photos.seam.PhotoMutation.HideDeletionConfirmationDialog
+import com.savvasdalkitsis.uhuruphotos.implementation.photos.seam.PhotoMutation.HideAllConfirmationDialogs
 import com.savvasdalkitsis.uhuruphotos.implementation.photos.seam.PhotoMutation.HideUI
 import com.savvasdalkitsis.uhuruphotos.implementation.photos.seam.PhotoMutation.Loading
 import com.savvasdalkitsis.uhuruphotos.implementation.photos.seam.PhotoMutation.ReceivedDetails
 import com.savvasdalkitsis.uhuruphotos.implementation.photos.seam.PhotoMutation.RemovePhotoFromSource
-import com.savvasdalkitsis.uhuruphotos.implementation.photos.seam.PhotoMutation.ShowDeletionConfirmationDialog
+import com.savvasdalkitsis.uhuruphotos.implementation.photos.seam.PhotoMutation.ShowDeleteConfirmationDialog
 import com.savvasdalkitsis.uhuruphotos.implementation.photos.seam.PhotoMutation.ShowErrorMessage
 import com.savvasdalkitsis.uhuruphotos.implementation.photos.seam.PhotoMutation.ShowMultiplePhotos
 import com.savvasdalkitsis.uhuruphotos.implementation.photos.seam.PhotoMutation.ShowPhotoFavourite
 import com.savvasdalkitsis.uhuruphotos.implementation.photos.seam.PhotoMutation.ShowShareIcon
 import com.savvasdalkitsis.uhuruphotos.implementation.photos.seam.PhotoMutation.ShowSinglePhoto
+import com.savvasdalkitsis.uhuruphotos.implementation.photos.seam.PhotoMutation.ShowTrashingConfirmationDialog
 import com.savvasdalkitsis.uhuruphotos.implementation.photos.seam.PhotoMutation.ShowUI
 import com.savvasdalkitsis.uhuruphotos.implementation.photos.view.state.PhotoState
+import com.savvasdalkitsis.uhuruphotos.implementation.photos.view.state.PhotoType
+import com.savvasdalkitsis.uhuruphotos.implementation.photos.view.state.PhotoType.TRASHED
 import com.savvasdalkitsis.uhuruphotos.implementation.photos.view.state.SinglePhotoState
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.FlowCollector
@@ -92,12 +96,17 @@ class PhotoActionHandler @Inject constructor(
     private val dateDisplayer: DateDisplayer,
 ) : ActionHandler<PhotoState, PhotoEffect, PhotoAction, PhotoMutation> {
 
+    private var photoType = PhotoType.default
+
     override fun handleAction(
         state: PhotoState,
         action: PhotoAction,
         effect: suspend (PhotoEffect) -> Unit
     ): Flow<PhotoMutation> = when(action) {
         is LoadPhoto -> flow {
+            if (action.datasource == Trash) {
+                photoType = TRASHED
+            }
             with(photosUseCase) {
                 emit(ShowSinglePhoto(
                     SinglePhotoState(
@@ -131,6 +140,10 @@ class PhotoActionHandler @Inject constructor(
                     )
                     HiddenPhotos -> loadSummaries(
                         Result.success(photosUseCase.getHiddenPhotoSummaries()),
+                        action,
+                    )
+                    Trash -> loadAlbums(
+                        albumsUseCase.getTrash(),
                         action,
                     )
                 }
@@ -177,12 +190,18 @@ class PhotoActionHandler @Inject constructor(
         is ClickedOnGps -> flow {
             effect(CopyToClipboard(action.gps.toString()))
         }
-        AskForPhotoDeletion -> flowOf(ShowDeletionConfirmationDialog)
-        DismissPhotoDeletionDialog -> flowOf(HideDeletionConfirmationDialog)
-        DeletePhoto -> flow {
+        AskForPhotoTrashing -> flowOf(when (photoType) {
+            TRASHED -> ShowDeleteConfirmationDialog
+            else -> ShowTrashingConfirmationDialog
+        })
+        DismissConfirmationDialogs -> flowOf(HideAllConfirmationDialogs)
+        TrashPhoto -> flow {
             emit(Loading)
-            emit(HideDeletionConfirmationDialog)
-            photosUseCase.deletePhoto(state.currentPhoto.id)
+            emit(HideAllConfirmationDialogs)
+            when (photoType) {
+                TRASHED -> photosUseCase.deletePhoto(state.currentPhoto.id)
+                else -> photosUseCase.trashPhoto(state.currentPhoto.id)
+            }
             emit(FinishedLoading)
             emit(RemovePhotoFromSource(state.currentPhoto.id))
             if (state.photos.size == 1) {

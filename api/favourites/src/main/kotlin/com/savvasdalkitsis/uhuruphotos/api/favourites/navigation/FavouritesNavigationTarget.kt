@@ -16,5 +16,5 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.api.favourites.navigation
 
 object FavouritesNavigationTarget {
-    const val registrationName = "favourites"
+    const val name = "favourites"
 }

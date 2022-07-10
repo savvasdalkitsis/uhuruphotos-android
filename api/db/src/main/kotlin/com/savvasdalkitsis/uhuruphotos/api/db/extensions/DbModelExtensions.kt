@@ -17,11 +17,13 @@ package com.savvasdalkitsis.uhuruphotos.api.db.extensions
 
 import com.savvasdalkitsis.uhuruphotos.api.db.albums.GetAlbums
 import com.savvasdalkitsis.uhuruphotos.api.db.albums.GetPersonAlbums
+import com.savvasdalkitsis.uhuruphotos.api.db.albums.GetTrash
 import com.savvasdalkitsis.uhuruphotos.api.db.albums.GetUserAlbum
 import com.savvasdalkitsis.uhuruphotos.api.db.photos.PhotoSummary
 import com.savvasdalkitsis.uhuruphotos.api.db.search.GetSearchResults
 
 val GetAlbums.isVideo get() = type.isVideo
+val GetTrash.isVideo get() = type.isVideo
 val GetPersonAlbums.isVideo get() = type.isVideo
 val GetUserAlbum.isVideo get() = type.isVideo
 val GetSearchResults.isVideo get() = type.isVideo

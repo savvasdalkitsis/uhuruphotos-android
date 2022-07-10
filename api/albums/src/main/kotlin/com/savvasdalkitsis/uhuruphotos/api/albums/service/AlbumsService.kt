@@ -30,6 +30,9 @@ interface AlbumsService {
     @GET("/api/albums/date/list/")
     suspend fun getAlbumsByDate(): AlbumsByDate
 
+    @GET("/api/albums/date/list/?deleted=true")
+    suspend fun getTrash(): AlbumsByDate
+
     @GET("api/albums/auto/list/")
     suspend fun getAutoAlbums(): AutoAlbums
 
@@ -38,6 +41,9 @@ interface AlbumsService {
 
     @GET("/api/albums/date/{id}/")
     suspend fun getAlbum(@Path("id") id: String): AlbumById
+
+    @GET("/api/albums/date/{id}/?deleted=true")
+    suspend fun getTrashAlbum(@Path("id") id: String): AlbumById
 
     @GET("api/albums/auto/{id}/")
     suspend fun getAutoAlbum(@Path("id") id: String): AutoAlbum

@@ -17,17 +17,14 @@ package com.savvasdalkitsis.uhuruphotos.implementation.library.seam
 
 import com.savvasdalkitsis.uhuruphotos.api.autoalbums.navigation.AutoAlbumsNavigationTarget
 import com.savvasdalkitsis.uhuruphotos.api.favourites.navigation.FavouritesNavigationTarget
-import com.savvasdalkitsis.uhuruphotos.api.favourites.navigation.HiddenPhotosNavigationTarget
+import com.savvasdalkitsis.uhuruphotos.api.hidden.navigation.HiddenPhotosNavigationTarget
+import com.savvasdalkitsis.uhuruphotos.api.favourites.navigation.TrashNavigationTarget
 import com.savvasdalkitsis.uhuruphotos.api.navigation.Navigator
 import com.savvasdalkitsis.uhuruphotos.api.seam.EffectHandler
 import com.savvasdalkitsis.uhuruphotos.api.strings.R
 import com.savvasdalkitsis.uhuruphotos.api.toaster.Toaster
 import com.savvasdalkitsis.uhuruphotos.api.useralbums.navigation.UserAlbumsNavigationTarget
-import com.savvasdalkitsis.uhuruphotos.implementation.library.seam.LibraryEffect.ErrorLoadingAlbums
-import com.savvasdalkitsis.uhuruphotos.implementation.library.seam.LibraryEffect.NavigateToAutoAlbums
-import com.savvasdalkitsis.uhuruphotos.implementation.library.seam.LibraryEffect.NavigateToFavourites
-import com.savvasdalkitsis.uhuruphotos.implementation.library.seam.LibraryEffect.NavigateToHidden
-import com.savvasdalkitsis.uhuruphotos.implementation.library.seam.LibraryEffect.NavigateToUserAlbums
+import com.savvasdalkitsis.uhuruphotos.implementation.library.seam.LibraryEffect.*
 import javax.inject.Inject
 
 class LibraryEffectsHandler @Inject constructor(
@@ -38,12 +35,14 @@ class LibraryEffectsHandler @Inject constructor(
     override suspend fun handleEffect(effect: LibraryEffect) = when (effect) {
         ErrorLoadingAlbums -> toaster.show(R.string.error_loading_albums)
         NavigateToAutoAlbums -> navigator
-            .navigateTo(AutoAlbumsNavigationTarget.registrationName)
+            .navigateTo(AutoAlbumsNavigationTarget.name)
         NavigateToUserAlbums -> navigator
-            .navigateTo(UserAlbumsNavigationTarget.registrationName)
+            .navigateTo(UserAlbumsNavigationTarget.name)
         NavigateToFavourites -> navigator
-            .navigateTo(FavouritesNavigationTarget.registrationName)
+            .navigateTo(FavouritesNavigationTarget.name)
         NavigateToHidden -> navigator
-            .navigateTo(HiddenPhotosNavigationTarget.registrationName)
+            .navigateTo(HiddenPhotosNavigationTarget.name)
+        NavigateToTrash -> navigator
+            .navigateTo(TrashNavigationTarget.name)
     }
 }

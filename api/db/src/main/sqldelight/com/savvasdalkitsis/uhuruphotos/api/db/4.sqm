@@ -1,0 +1,15 @@
+CREATE TABLE trash (
+  id TEXT NOT NULL PRIMARY KEY ,
+  dominantColor TEXT,
+  url TEXT NOT NULL,
+  location TEXT,
+  date TEXT,
+  birthTime TEXT,
+  aspectRatio REAL AS Float,
+  type TEXT,
+  videoLength TEXT,
+  rating INTEGER AS Int,
+  containerId TEXT NOT NULL,
+
+  FOREIGN KEY (containerId) REFERENCES albums(id)
+);

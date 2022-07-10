@@ -75,6 +75,8 @@ internal class SettingsUseCase @Inject constructor(
         flowSharedPreferences.getBoolean("biometricsRequiredForAppAccess", false)
     private val biometricsRequiredForHiddenPhotosAccess =
         flowSharedPreferences.getBoolean("biometricsRequiredForHiddenPhotosAccess", false)
+    private val biometricsRequiredForTrashAccess =
+        flowSharedPreferences.getBoolean("biometricsRequiredForTrashAccess", false)
 
     override fun getImageDiskCacheMaxLimit(): Int = imageDiskCacheSize.get()
     override fun getImageMemCacheMaxLimit(): Int = imageMemCacheSize.get()
@@ -94,6 +96,8 @@ internal class SettingsUseCase @Inject constructor(
     override fun getBiometricsRequiredForAppAccess(): Boolean = biometricsRequiredForAppAccess.get()
     override fun getBiometricsRequiredForHiddenPhotosAccess(): Boolean =
         biometricsRequiredForHiddenPhotosAccess.get()
+    override fun getBiometricsRequiredForTrashAccess(): Boolean =
+        biometricsRequiredForTrashAccess.get()
 
     override fun observeImageDiskCacheMaxLimit(): Flow<Int> = imageDiskCacheSize.asFlow()
     override fun observeImageMemCacheMaxLimit(): Flow<Int> = imageMemCacheSize.asFlow()
@@ -117,6 +121,8 @@ internal class SettingsUseCase @Inject constructor(
         biometricsRequiredForAppAccess.asFlow()
     override fun observeBiometricsRequiredForHiddenPhotosAccess(): Flow<Boolean> =
         biometricsRequiredForHiddenPhotosAccess.asFlow()
+    override fun observeBiometricsRequiredForTrashAccess(): Flow<Boolean> =
+        biometricsRequiredForTrashAccess.asFlow()
 
     override suspend fun setImageDiskCacheMaxLimit(sizeInMb: Int) {
         imageDiskCacheSize.setAndCommit(sizeInMb)
@@ -181,6 +187,10 @@ internal class SettingsUseCase @Inject constructor(
 
     override suspend fun setBiometricsRequiredForHiddenPhotosAccess(required: Boolean) {
         biometricsRequiredForHiddenPhotosAccess.setAndCommit(required)
+    }
+
+    override suspend fun setBiometricsRequiredForTrashAccess(required: Boolean) {
+        biometricsRequiredForTrashAccess.setAndCommit(required)
     }
 
     private fun MapProvider.mapToAvailable(): MapProvider =

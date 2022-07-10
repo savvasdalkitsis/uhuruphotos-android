@@ -46,3 +46,6 @@ DELETE FROM photoSummary;
 
 hide:
 UPDATE photoSummary SET containerId = 'hiddenPhoto' WHERE id = :id;
+
+copyToTrash:
+INSERT OR REPLACE INTO trash SELECT * FROM photoSummary WHERE id = :id;

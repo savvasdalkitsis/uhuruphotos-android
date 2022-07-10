@@ -148,6 +148,10 @@ class PhotosUseCase @Inject constructor(
         photoRepository.refreshHidden()
     }
 
+    override fun trashPhoto(id: String) {
+        photoWorkScheduler.schedulePhotoTrashing(id)
+    }
+
     override fun deletePhoto(id: String) {
         photoWorkScheduler.schedulePhotoDeletion(id)
     }

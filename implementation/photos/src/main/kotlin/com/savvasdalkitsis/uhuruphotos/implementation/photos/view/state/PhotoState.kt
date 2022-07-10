@@ -27,7 +27,8 @@ data class PhotoState(
     val showUI: Boolean = true,
     val showRefresh: Boolean = false,
     val showInfoButton: Boolean = false,
-    val showPhotoDeletionConfirmationDialog: Boolean = false,
+    val showPhotoDeleteConfirmationDialog: Boolean = false,
+    val showPhotoTrashingConfirmationDialog: Boolean = false,
     val infoSheetHidden: Boolean = true,
 ) {
     val currentPhoto: SinglePhotoState get() = photos[currentIndex]

@@ -24,7 +24,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import com.savvasdalkitsis.uhuruphotos.api.ui.view.ActionIconWithText
 import com.savvasdalkitsis.uhuruphotos.implementation.photos.seam.PhotoAction
-import com.savvasdalkitsis.uhuruphotos.implementation.photos.seam.PhotoAction.AskForPhotoDeletion
+import com.savvasdalkitsis.uhuruphotos.implementation.photos.seam.PhotoAction.AskForPhotoTrashing
 import com.savvasdalkitsis.uhuruphotos.implementation.photos.seam.PhotoAction.SharePhoto
 import com.savvasdalkitsis.uhuruphotos.implementation.photos.view.state.PhotoState
 import com.savvasdalkitsis.uhuruphotos.api.icons.R as Icons
@@ -51,7 +51,7 @@ fun PhotoDetailsBottomActionBar(
             )
         }
         ActionIconWithText(
-            onClick = { action(AskForPhotoDeletion) },
+            onClick = { action(AskForPhotoTrashing) },
             modifier = Modifier
                 .weight(1f),
             icon = Icons.drawable.ic_delete,

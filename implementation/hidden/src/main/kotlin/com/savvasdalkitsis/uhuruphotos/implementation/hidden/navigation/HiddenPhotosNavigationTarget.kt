@@ -23,7 +23,7 @@ import com.savvasdalkitsis.uhuruphotos.api.albumpage.seam.AlbumPageAction.LoadAl
 import com.savvasdalkitsis.uhuruphotos.api.albumpage.seam.AlbumPageEffect
 import com.savvasdalkitsis.uhuruphotos.api.albumpage.seam.AlbumPageEffectsHandler
 import com.savvasdalkitsis.uhuruphotos.api.albumpage.view.state.AlbumPageState
-import com.savvasdalkitsis.uhuruphotos.api.favourites.navigation.HiddenPhotosNavigationTarget
+import com.savvasdalkitsis.uhuruphotos.api.hidden.navigation.HiddenPhotosNavigationTarget
 import com.savvasdalkitsis.uhuruphotos.api.navigation.NavigationTarget
 import com.savvasdalkitsis.uhuruphotos.api.navigation.navigationTarget
 import com.savvasdalkitsis.uhuruphotos.api.seam.CompositeEffectHandler
@@ -53,7 +53,7 @@ internal class HiddenPhotosNavigationTarget @Inject constructor(
                 Either<AlbumPageAction, HiddenPhotosAction>,
                 HiddenPhotosViewModel
         >(
-            name = HiddenPhotosNavigationTarget.registrationName,
+            name = HiddenPhotosNavigationTarget.name,
             effects = CompositeEffectHandler(albumPageEffectsHandler, hiddenPhotosEffectHandler),
             themeMode = settingsUseCase.observeThemeModeState(),
             initializer = { _, action ->

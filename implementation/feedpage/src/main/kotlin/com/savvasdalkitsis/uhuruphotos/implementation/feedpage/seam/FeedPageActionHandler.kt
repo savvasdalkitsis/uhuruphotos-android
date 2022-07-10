@@ -31,10 +31,10 @@ import com.savvasdalkitsis.uhuruphotos.implementation.feedpage.seam.FeedPageActi
 import com.savvasdalkitsis.uhuruphotos.implementation.feedpage.seam.FeedPageEffect.OpenPhotoDetails
 import com.savvasdalkitsis.uhuruphotos.implementation.feedpage.seam.FeedPageEffect.SharePhotos
 import com.savvasdalkitsis.uhuruphotos.implementation.feedpage.seam.FeedPageEffect.Vibrate
-import com.savvasdalkitsis.uhuruphotos.implementation.feedpage.seam.FeedPageMutation.HideDeletionConfirmationDialog
+import com.savvasdalkitsis.uhuruphotos.implementation.feedpage.seam.FeedPageMutation.HideTrashingConfirmationDialog
 import com.savvasdalkitsis.uhuruphotos.implementation.feedpage.seam.FeedPageMutation.Loading
 import com.savvasdalkitsis.uhuruphotos.implementation.feedpage.seam.FeedPageMutation.ShowAlbums
-import com.savvasdalkitsis.uhuruphotos.implementation.feedpage.seam.FeedPageMutation.ShowDeletionConfirmationDialog
+import com.savvasdalkitsis.uhuruphotos.implementation.feedpage.seam.FeedPageMutation.ShowTrashingConfirmationDialog
 import com.savvasdalkitsis.uhuruphotos.implementation.feedpage.seam.FeedPageMutation.ShowLibrary
 import com.savvasdalkitsis.uhuruphotos.implementation.feedpage.seam.FeedPageMutation.ShowNoPhotosFound
 import com.savvasdalkitsis.uhuruphotos.implementation.feedpage.seam.FeedPageMutation.StartRefreshing
@@ -121,7 +121,7 @@ internal class FeedPageActionHandler @Inject constructor(
             effect(Vibrate)
             selectionList.clear()
         }
-        AskForSelectedPhotosDeletion -> flowOf(ShowDeletionConfirmationDialog)
+        AskForSelectedPhotosTrashing -> flowOf(ShowTrashingConfirmationDialog)
         is AlbumSelectionClicked -> flow {
             val photos = action.album.photos
             effect(Vibrate)
@@ -136,11 +136,11 @@ internal class FeedPageActionHandler @Inject constructor(
             albumsUseCase.refreshAlbum(action.album.id)
             emit(StopRefreshing)
         }
-        DismissSelectedPhotosDeletion -> flowOf(HideDeletionConfirmationDialog)
-        DeleteSelectedPhotos -> flow {
-            emit(HideDeletionConfirmationDialog)
+        DismissSelectedPhotosTrashing -> flowOf(HideTrashingConfirmationDialog)
+        TrashSelectedPhotos -> flow {
+            emit(HideTrashingConfirmationDialog)
             state.selectedPhotos.forEach {
-                photosUseCase.deletePhoto(it.id)
+                photosUseCase.trashPhoto(it.id)
             }
             selectionList.clear()
         }

@@ -37,7 +37,7 @@ class AutoAlbumsNavigationTarget @Inject constructor(
 
     override suspend fun NavGraphBuilder.create(navHostController: NavHostController) {
         navigationTarget<AutoAlbumsState, AutoAlbumsEffect, AutoAlbumsAction, AutoAlbumsViewModel>(
-            name = AutoAlbumsNavigationTarget.registrationName,
+            name = AutoAlbumsNavigationTarget.name,
             effects = autoAlbumsEffectsHandler,
             themeMode = settingsUseCase.observeThemeModeState(),
             initializer = { _, actions -> actions(AutoAlbumsAction.Load) },

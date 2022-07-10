@@ -34,6 +34,7 @@ import com.savvasdalkitsis.uhuruphotos.api.db.albums.GetAlbums
 import com.savvasdalkitsis.uhuruphotos.api.db.albums.GetAutoAlbum
 import com.savvasdalkitsis.uhuruphotos.api.db.albums.GetPeopleForAutoAlbum
 import com.savvasdalkitsis.uhuruphotos.api.db.albums.GetPersonAlbums
+import com.savvasdalkitsis.uhuruphotos.api.db.albums.GetTrash
 import com.savvasdalkitsis.uhuruphotos.api.db.albums.GetUserAlbum
 import com.savvasdalkitsis.uhuruphotos.api.db.albums.UserAlbum
 import com.savvasdalkitsis.uhuruphotos.api.db.albums.UserAlbumPhotosQueries
@@ -47,10 +48,12 @@ import com.savvasdalkitsis.uhuruphotos.api.db.people.PeopleQueries
 import com.savvasdalkitsis.uhuruphotos.api.db.person.PersonQueries
 import com.savvasdalkitsis.uhuruphotos.api.db.photos.PhotoDetailsQueries
 import com.savvasdalkitsis.uhuruphotos.api.db.photos.PhotoSummaryQueries
+import com.savvasdalkitsis.uhuruphotos.api.db.photos.TrashQueries
 import com.savvasdalkitsis.uhuruphotos.api.group.model.Group
 import com.savvasdalkitsis.uhuruphotos.api.group.model.groupBy
 import com.savvasdalkitsis.uhuruphotos.api.people.service.model.toPerson
 import com.savvasdalkitsis.uhuruphotos.api.photos.entities.toPhotoSummary
+import com.savvasdalkitsis.uhuruphotos.api.photos.entities.toTrash
 import com.savvasdalkitsis.uhuruphotos.api.photos.model.toPhotoDetails
 import com.savvasdalkitsis.uhuruphotos.api.settings.usecase.SettingsUseCase
 import com.squareup.sqldelight.runtime.coroutines.asFlow
@@ -78,6 +81,7 @@ internal class AlbumsRepository @Inject constructor(
     private val userAlbumsQueries: UserAlbumsQueries,
     private val userAlbumQueries: UserAlbumQueries,
     private val userAlbumPhotosQueries: UserAlbumPhotosQueries,
+    private val trashQueries: TrashQueries,
     private val settingsUseCase: SettingsUseCase,
 ) : AlbumsRepository {
 
@@ -147,6 +151,16 @@ internal class AlbumsRepository @Inject constructor(
     override fun observeAutoAlbumPeople(albumId: Int): Flow<List<GetPeopleForAutoAlbum>> =
         autoAlbumPeopleQueries.getPeopleForAutoAlbum(albumId.toString())
             .asFlow().mapToList()
+
+    override fun observeTrash(): Flow<Group<String, GetTrash>> =
+        albumsQueries.getTrash().asFlow()
+            .mapToList().groupBy(GetTrash::id)
+            .distinctUntilChanged()
+
+    override suspend fun hasTrash() = trashQueries.count().awaitSingle() > 0
+
+    override suspend fun getTrash(): Group<String, GetTrash> =
+        albumsQueries.getTrash().await().groupBy(GetTrash::id).let(::Group)
 
     override suspend fun refreshAutoAlbums() {
         val albums = albumsService.getAutoAlbums()
@@ -262,6 +276,29 @@ internal class AlbumsRepository @Inject constructor(
             albumFetcher = { albumsService.getAlbum(it).results },
             shallow = false,
         )
+    }
+
+    override suspend fun refreshTrash() {
+        val trash = albumsService.getTrash().results
+        async {
+            albumsQueries.transaction {
+                for (album in trash) {
+                    albumsQueries.insert(album.toAlbum())
+                }
+            }
+        }
+        async { trashQueries.clear() }
+        for (incompleteAlbum in trash) {
+            val id = incompleteAlbum.id
+            val completeAlbum = albumsService.getTrashAlbum(id).results
+            async {
+                completeAlbum.items
+                    .map { it.toTrash(id) }
+                    .forEach {
+                        trashQueries.insert(it)
+                    }
+            }
+        }
     }
 
     private suspend fun process(

@@ -42,9 +42,17 @@ class PhotoWorkScheduler @Inject constructor(
             putString(PhotoDetailsRetrieveWorker.KEY_ID, id)
         }
 
+    fun schedulePhotoTrashing(id: String) {
+        workScheduler.scheduleNow<PhotoTrashWorker>(
+            workName = PhotoTrashWorker.trashPhotoWorkName(id)
+        ) {
+            putString(PhotoTrashWorker.KEY_ID, id)
+        }
+    }
+
     fun schedulePhotoDeletion(id: String) {
         workScheduler.scheduleNow<PhotoDeletionWorker>(
-            workName = PhotoDeletionWorker.workName(id)
+            workName = PhotoDeletionWorker.deletePhotoWorkName(id)
         ) {
             putString(PhotoDeletionWorker.KEY_ID, id)
         }

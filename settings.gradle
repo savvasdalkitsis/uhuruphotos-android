@@ -1,6 +1,7 @@
 pluginManagement {
     repositories {
         gradlePluginPortal()
+        maven { url = "https://oss.sonatype.org/content/repositories/snapshots" }
         google()
         mavenCentral()
     }
@@ -13,6 +14,7 @@ dependencyResolutionManagement {
         google()
         mavenCentral()
         maven { url 'https://jitpack.io' }
+        maven { url "https://oss.sonatype.org/content/repositories/snapshots" }
         maven {
             url 'https://api.mapbox.com/downloads/v2/releases/maven'
             authentication {
@@ -68,6 +70,7 @@ include ':api:settings'
 include ':api:share'
 include ':api:strings'
 include ':api:toaster'
+include ':api:trash'
 include ':api:ui'
 include ':api:user'
 include ':api:useralbum'
@@ -99,6 +102,7 @@ include ':implementation:search'
 include ':implementation:server'
 include ':implementation:settings'
 include ':implementation:share'
+include ':implementation:trash'
 include ':implementation:ui'
 include ':implementation:user'
 include ':implementation:useralbum'

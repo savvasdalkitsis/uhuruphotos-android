@@ -38,7 +38,7 @@ internal class FavouritesNavigationTarget @Inject constructor(
 
     override suspend fun NavGraphBuilder.create(navHostController: NavHostController) =
         navigationTarget<AlbumPageState, AlbumPageEffect, AlbumPageAction, FavouritesViewModel>(
-            name = FavouritesNavigationTarget.registrationName,
+            name = FavouritesNavigationTarget.name,
             effects = effectsHandler,
             themeMode = settingsUseCase.observeThemeModeState(),
             initializer = { _, action ->

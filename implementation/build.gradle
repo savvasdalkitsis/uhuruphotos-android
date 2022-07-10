@@ -26,6 +26,7 @@ dependencies {
     implementation project(":implementation:server")
     implementation project(":implementation:settings")
     implementation project(":implementation:share")
+    implementation project(":implementation:trash")
     implementation project(":implementation:ui")
     implementation project(":implementation:user")
     implementation project(":implementation:useralbum")

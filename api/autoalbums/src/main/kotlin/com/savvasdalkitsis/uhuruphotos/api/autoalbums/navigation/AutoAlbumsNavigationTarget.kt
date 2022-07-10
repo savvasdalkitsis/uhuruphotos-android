@@ -16,5 +16,5 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.api.autoalbums.navigation
 
 object AutoAlbumsNavigationTarget {
-    const val registrationName = "autoAlbums"
+    const val name = "autoAlbums"
 }

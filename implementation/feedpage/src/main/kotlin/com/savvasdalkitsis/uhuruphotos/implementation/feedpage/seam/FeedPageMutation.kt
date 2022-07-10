@@ -37,12 +37,12 @@ internal sealed class FeedPageMutation(
         it.copy(isRefreshing = false)
     })
 
-    object ShowDeletionConfirmationDialog : FeedPageMutation({
-        it.copy(showPhotoDeletionConfirmationDialog = true)
+    object ShowTrashingConfirmationDialog : FeedPageMutation({
+        it.copy(showPhotoTrashingConfirmationDialog = true)
     })
 
-    object HideDeletionConfirmationDialog : FeedPageMutation({
-        it.copy(showPhotoDeletionConfirmationDialog = false)
+    object HideTrashingConfirmationDialog : FeedPageMutation({
+        it.copy(showPhotoTrashingConfirmationDialog = false)
     })
 
     object ShowNoPhotosFound : FeedPageMutation({

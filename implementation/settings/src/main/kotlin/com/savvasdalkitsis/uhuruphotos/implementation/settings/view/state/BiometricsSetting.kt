@@ -20,5 +20,6 @@ sealed class BiometricsSetting {
     data class Enrolled(
         val requiredForAppAccess: Boolean,
         val requiredForHiddenPhotosAccess: Boolean,
+        val requiredForTrashAccess: Boolean,
     ) : BiometricsSetting()
 }

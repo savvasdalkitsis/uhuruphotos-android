@@ -71,12 +71,19 @@ sealed class PhotoMutation(
         it.copy(infoSheetHidden = true)
     })
 
-    object ShowDeletionConfirmationDialog : PhotoMutation({
-        it.copy(showPhotoDeletionConfirmationDialog = true)
+    object ShowDeleteConfirmationDialog : PhotoMutation({
+        it.copy(showPhotoDeleteConfirmationDialog = true)
     })
 
-    object HideDeletionConfirmationDialog : PhotoMutation({
-        it.copy(showPhotoDeletionConfirmationDialog = false)
+    object ShowTrashingConfirmationDialog : PhotoMutation({
+        it.copy(showPhotoTrashingConfirmationDialog = true)
+    })
+
+    object HideAllConfirmationDialogs : PhotoMutation({
+        it.copy(
+            showPhotoDeleteConfirmationDialog = false,
+            showPhotoTrashingConfirmationDialog = false,
+        )
     })
 
     data class ShowShareIcon(val id: String) : PhotoMutation({

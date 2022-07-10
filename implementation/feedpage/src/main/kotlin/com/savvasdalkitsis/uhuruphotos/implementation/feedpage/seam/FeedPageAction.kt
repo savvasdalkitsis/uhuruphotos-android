@@ -33,8 +33,8 @@ internal sealed class FeedPageAction {
     object LoadFeed : FeedPageAction()
     object RefreshAlbums : FeedPageAction()
     object ClearSelected : FeedPageAction()
-    object AskForSelectedPhotosDeletion : FeedPageAction()
-    object DismissSelectedPhotosDeletion : FeedPageAction()
-    object DeleteSelectedPhotos : FeedPageAction()
+    object AskForSelectedPhotosTrashing : FeedPageAction()
+    object DismissSelectedPhotosTrashing : FeedPageAction()
+    object TrashSelectedPhotos : FeedPageAction()
     object ShareSelectedPhotos : FeedPageAction()
 }

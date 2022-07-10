@@ -30,6 +30,7 @@ import com.savvasdalkitsis.uhuruphotos.api.db.people.PeopleQueries
 import com.savvasdalkitsis.uhuruphotos.api.db.person.PersonQueries
 import com.savvasdalkitsis.uhuruphotos.api.db.photos.PhotoDetailsQueries
 import com.savvasdalkitsis.uhuruphotos.api.db.photos.PhotoSummaryQueries
+import com.savvasdalkitsis.uhuruphotos.api.db.photos.TrashQueries
 import com.savvasdalkitsis.uhuruphotos.api.db.search.SearchQueries
 import com.savvasdalkitsis.uhuruphotos.api.db.user.UserQueries
 import com.squareup.sqldelight.EnumColumnAdapter
@@ -78,6 +79,9 @@ class DbModule {
 
     @Provides
     fun photoSummaryQueries(database: Database): PhotoSummaryQueries = database.photoSummaryQueries
+
+    @Provides
+    fun trashQueries(database: Database): TrashQueries = database.trashQueries
 
     @Provides
     fun searchQueries(database: Database): SearchQueries = database.searchQueries

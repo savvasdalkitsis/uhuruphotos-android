@@ -20,6 +20,7 @@ import com.savvasdalkitsis.uhuruphotos.api.db.albums.GetAlbums
 import com.savvasdalkitsis.uhuruphotos.api.db.albums.GetAutoAlbum
 import com.savvasdalkitsis.uhuruphotos.api.db.albums.GetPeopleForAutoAlbum
 import com.savvasdalkitsis.uhuruphotos.api.db.albums.GetPersonAlbums
+import com.savvasdalkitsis.uhuruphotos.api.db.albums.GetTrash
 import com.savvasdalkitsis.uhuruphotos.api.db.albums.GetUserAlbum
 import com.savvasdalkitsis.uhuruphotos.api.db.albums.UserAlbums
 import com.savvasdalkitsis.uhuruphotos.api.group.model.Group
@@ -41,10 +42,14 @@ interface AlbumsRepository {
     suspend fun getUserAlbum(albumId: Int): Group<String, GetUserAlbum>
     fun observeAutoAlbumPeople(albumId: Int): Flow<List<GetPeopleForAutoAlbum>>
     fun observeUserAlbum(albumId: Int): Flow<List<GetUserAlbum>>
+    fun observeTrash(): Flow<Group<String, GetTrash>>
+    suspend fun hasTrash(): Boolean
+    suspend fun getTrash(): Group<String, GetTrash>
     suspend fun refreshAutoAlbums()
     suspend fun refreshUserAlbums()
     suspend fun refreshAutoAlbum(albumId: Int)
     suspend fun refreshUserAlbum(albumId: Int)
     suspend fun refreshAlbums(shallow: Boolean, onProgressChange: suspend (Int) -> Unit)
     suspend fun refreshAlbum(albumId: String)
+    suspend fun refreshTrash()
 }

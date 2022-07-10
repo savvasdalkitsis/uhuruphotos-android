@@ -23,6 +23,21 @@ GROUP BY summary.id
 ORDER BY summary.date DESC
 LIMIT :limit;
 
+getTrash:
+SELECT
+ albums.id,
+ albums.date AS albumDate,
+ albums.location AS albumLocation,
+ trash.id AS photoId,
+ trash.dominantColor,
+ trash.rating,
+ trash.aspectRatio,
+ trash.type
+FROM albums
+LEFT JOIN trash ON albums.id = trash.containerId
+GROUP BY trash.id
+ORDER BY trash.date DESC;
+
 getPersonAlbums:
 SELECT
  albums.id,

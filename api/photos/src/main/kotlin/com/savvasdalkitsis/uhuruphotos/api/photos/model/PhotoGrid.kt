@@ -22,4 +22,8 @@ data class PhotoGrid(
     val photo4: Photo? = null,
 ) {
     val hasMoreThanOnePhoto = photo2 != null
+
+    companion object {
+        val EMPTY = PhotoGrid()
+    }
 }

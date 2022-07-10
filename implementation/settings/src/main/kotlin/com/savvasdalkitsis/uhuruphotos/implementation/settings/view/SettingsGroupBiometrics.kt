@@ -24,6 +24,7 @@ import com.savvasdalkitsis.uhuruphotos.api.icons.R
 import com.savvasdalkitsis.uhuruphotos.implementation.settings.seam.SettingsAction
 import com.savvasdalkitsis.uhuruphotos.implementation.settings.seam.SettingsAction.ChangeBiometricsAppAccessRequirement
 import com.savvasdalkitsis.uhuruphotos.implementation.settings.seam.SettingsAction.ChangeBiometricsHiddenPhotosAccessRequirement
+import com.savvasdalkitsis.uhuruphotos.implementation.settings.seam.SettingsAction.ChangeBiometricsTrashAccessRequirement
 import com.savvasdalkitsis.uhuruphotos.implementation.settings.seam.SettingsAction.EnrollToBiometrics
 import com.savvasdalkitsis.uhuruphotos.implementation.settings.view.state.BiometricsSetting.Enrolled
 import com.savvasdalkitsis.uhuruphotos.implementation.settings.view.state.BiometricsSetting.NotEnrolled
@@ -66,6 +67,14 @@ internal fun SettingsGroupBiometrics(
                         isChecked = biometrics.requiredForHiddenPhotosAccess,
                         onCheckedChange = {
                             action(ChangeBiometricsHiddenPhotosAccessRequirement(!biometrics.requiredForHiddenPhotosAccess))
+                        }
+                    )
+                    SettingsCheckBox(
+                        text = stringResource(Strings.string.require_biometrics_for_trash_access),
+                        icon = R.drawable.ic_delete,
+                        isChecked = biometrics.requiredForTrashAccess,
+                        onCheckedChange = {
+                            action(ChangeBiometricsTrashAccessRequirement(!biometrics.requiredForTrashAccess))
                         }
                     )
                 }

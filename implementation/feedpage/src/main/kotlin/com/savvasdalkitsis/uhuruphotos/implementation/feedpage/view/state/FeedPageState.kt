@@ -23,7 +23,7 @@ internal data class FeedPageState(
     val feedState: FeedState = FeedState(),
     val isRefreshing: Boolean = false,
     val showLibrary: Boolean = true,
-    val showPhotoDeletionConfirmationDialog: Boolean = false,
+    val showPhotoTrashingConfirmationDialog: Boolean = false,
 ) {
     val selectedPhotoCount: Int = feedState.albums.sumOf { album ->
         album.photos.count { photo ->

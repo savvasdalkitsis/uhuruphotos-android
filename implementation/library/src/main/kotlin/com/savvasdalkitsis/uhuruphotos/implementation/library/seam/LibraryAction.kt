@@ -20,6 +20,7 @@ sealed class LibraryAction {
     object UserAlbumsSelected : LibraryAction()
     object FavouritePhotosSelected : LibraryAction()
     object HiddenPhotosSelected : LibraryAction()
+    object TrashSelected : LibraryAction()
     object Load : LibraryAction()
     object Refresh : LibraryAction()
 }
