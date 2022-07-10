@@ -74,17 +74,11 @@ internal fun LibraryGrid(
         contentPadding = contentPadding,
         columns = GridCells.Adaptive(160.dp),
     ) {
-
-        pillItem(trash, Icons.drawable.ic_delete, { GridItemSpan(when {
-            state.showHiddenPhotos -> maxCurrentLineSpan / 2
-            else -> maxCurrentLineSpan
-        }) } ) {
+        pillItem(trash, Icons.drawable.ic_delete, { GridItemSpan(maxCurrentLineSpan / 2) }) {
             action(TrashSelected)
         }
-        if (state.showHiddenPhotos) {
-            pillItem(hidden, Icons.drawable.ic_invisible, { GridItemSpan(maxCurrentLineSpan) }) {
-                action(HiddenPhotosSelected)
-            }
+        pillItem(hidden, Icons.drawable.ic_invisible, { GridItemSpan(maxCurrentLineSpan) }) {
+            action(HiddenPhotosSelected)
         }
 
         libraryItem(state.autoAlbums, auto) {

@@ -37,7 +37,6 @@ import com.savvasdalkitsis.uhuruphotos.implementation.library.seam.LibraryEffect
 import com.savvasdalkitsis.uhuruphotos.implementation.library.seam.LibraryEffect.NavigateToUserAlbums
 import com.savvasdalkitsis.uhuruphotos.implementation.library.seam.LibraryMutation.DisplayAutoAlbums
 import com.savvasdalkitsis.uhuruphotos.implementation.library.seam.LibraryMutation.DisplayFavouritePhotos
-import com.savvasdalkitsis.uhuruphotos.implementation.library.seam.LibraryMutation.DisplayHiddenPhotos
 import com.savvasdalkitsis.uhuruphotos.implementation.library.seam.LibraryMutation.DisplayUserAlbums
 import com.savvasdalkitsis.uhuruphotos.implementation.library.seam.LibraryMutation.Loading
 import com.savvasdalkitsis.uhuruphotos.implementation.library.view.state.LibraryState
@@ -71,8 +70,6 @@ class LibraryActionHandler @Inject constructor(
                 .map(::DisplayUserAlbums),
             favouritePhotos().mapToCover { it }
                 .map(::DisplayFavouritePhotos),
-            hiddenPhotos()
-                .map { DisplayHiddenPhotos(it.isNotEmpty()) },
             loading
                 .map(::Loading),
         ).safelyOnStartIgnoring {
@@ -102,9 +99,6 @@ class LibraryActionHandler @Inject constructor(
     }
 
     private fun favouritePhotos() = photosUseCase.observeFavouritePhotos()
-        .mapNotNull { it.getOrNull() }
-
-    private fun hiddenPhotos() = photosUseCase.observeHiddenPhotos()
         .mapNotNull { it.getOrNull() }
 
     private suspend fun initialRefresh(effect: suspend (LibraryEffect) -> Unit) {
