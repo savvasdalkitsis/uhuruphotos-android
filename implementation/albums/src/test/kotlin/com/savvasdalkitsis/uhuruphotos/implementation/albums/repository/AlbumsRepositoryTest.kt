@@ -74,6 +74,7 @@ class AlbumsRepositoryTest {
         db.userAlbumsQueries,
         db.userAlbumQueries,
         db.userAlbumPhotosQueries,
+        db.trashQueries,
         settingsUseCase,
     )
 
