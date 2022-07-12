@@ -94,10 +94,10 @@ fun AccountOverviewPopUp(
                         }
                     }
                     AccountOverview(
-                        userInformationState,
-                        onLogoutClicked,
-                        onEditServerClicked,
-                        onSettingsClicked,
+                        userInformationState = userInformationState,
+                        onLogoutClicked = onLogoutClicked,
+                        onEditServerClicked = onEditServerClicked,
+                        onSettingsClicked = onSettingsClicked,
                     )
                 }
             }

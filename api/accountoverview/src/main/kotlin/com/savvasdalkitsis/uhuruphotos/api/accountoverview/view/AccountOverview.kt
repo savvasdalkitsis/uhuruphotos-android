@@ -37,22 +37,26 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.savvasdalkitsis.uhuruphotos.api.icons.R
+import com.savvasdalkitsis.uhuruphotos.api.ui.theme.PreviewAppTheme
 import com.savvasdalkitsis.uhuruphotos.api.ui.view.ActionIcon
 import com.savvasdalkitsis.uhuruphotos.api.userbadge.view.UserBadge
 import com.savvasdalkitsis.uhuruphotos.api.userbadge.view.state.UserInformationState
+import com.savvasdalkitsis.uhuruphotos.api.userbadge.view.state.previewUserInformationState
 
 @Composable
 internal fun AccountOverview(
+    modifier: Modifier = Modifier,
     userInformationState: UserInformationState,
-    onLogoutClicked: () -> Unit,
-    onEditServerClicked: () -> Unit,
-    onSettingsClicked: () -> Unit,
+    onLogoutClicked: () -> Unit = {},
+    onEditServerClicked: () -> Unit = {},
+    onSettingsClicked: () -> Unit = {},
 ) {
     Column(
-        modifier = Modifier
+        modifier = modifier
             .defaultMinSize(minHeight = 120.dp)
             .fillMaxWidth()
             .padding(16.dp),
@@ -90,14 +94,6 @@ internal fun AccountOverview(
                 .fillMaxWidth()
         ) {
             OutlinedButton(
-                onClick = onSettingsClicked
-            ) {
-                Icon(Icons.Default.Settings, contentDescription = null)
-                Spacer(modifier = Modifier.width(8.dp))
-                Text(text = stringResource(com.savvasdalkitsis.uhuruphotos.api.strings.R.string.settings))
-            }
-            Spacer(modifier = Modifier.weight(1f))
-            OutlinedButton(
                 onClick = onLogoutClicked,
             ) {
                 Icon(
@@ -107,6 +103,25 @@ internal fun AccountOverview(
                 Spacer(modifier = Modifier.width(8.dp))
                 Text(text = stringResource(com.savvasdalkitsis.uhuruphotos.api.strings.R.string.log_out))
             }
+            Spacer(modifier = Modifier.weight(1f))
+            OutlinedButton(
+                onClick = onSettingsClicked
+            ) {
+                Icon(Icons.Default.Settings, contentDescription = null)
+                Spacer(modifier = Modifier.width(8.dp))
+                Text(text = stringResource(com.savvasdalkitsis.uhuruphotos.api.strings.R.string.settings))
+            }
         }
+    }
+}
+
+@Preview
+@Composable
+fun AccountOverviewPreview() {
+    PreviewAppTheme {
+        AccountOverview(
+            modifier = Modifier.fillMaxWidth(),
+            userInformationState = previewUserInformationState,
+        )
     }
 }
