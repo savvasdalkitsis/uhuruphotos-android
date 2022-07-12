@@ -124,4 +124,21 @@
     <string name="error_loading_albums">Er is een fout opgetreden tijdens het laden van de albums</string>
     <string name="favourite_photos">Favoriete foto\'s</string>
     <string name="error_loading_user_albums">Er is een fout opgetreden tijdens het laden van de zelfgemaakte albums</string>
+    <string name="authenticate_for_access_to_trash_description">U heeft verzocht om de prullenbak te openen die alleen toegankelijk is middels verificatie</string>
+    <string name="trashing_photo">Bezig met verplaatsen naar prullenbak…</string>
+    <string name="require_biometrics_for_hidden_photos_access">Biometrische verificatie vereisen om toegang te krijgen tot verborgen foto\'s</string>
+    <string name="require_biometrics_for_trash_access">Biometrische verificatie vereisen om toegang te krijgen tot de prullenbak</string>
+    <string name="authenticate_for_access_to_trash">Verifieer uzelf om toegang te krijgen tot de prullenbak</string>
+    <string name="authenticate_for_access_to_hidden_description">U heeft verzocht om verborgen foto\'s te bekijken die alleen toegankelijk zijn middels verificatie</string>
+    <string name="trash">Prullenbak</string>
+    <string name="operation_irreverisble">Deze actie is onomkeerbaar</string>
+    <plurals name="trash_photos">
+        <item quantity="one">%d foto verplaatsen naar prullenbak</item>
+        <item quantity="other">%d foto\'s verplaatsen naar prullenbak</item>
+    </plurals>
+    <plurals name="trash_photos_confirmation">
+        <item quantity="one">Weet u zeker dat u %d foto naar de prullenbak wilt verplaatsen\?</item>
+        <item quantity="other">Weet u zeker dat u %d foto\'s naar de prullenbak wilt verplaatsen\?</item>
+    </plurals>
+    <string name="authenticate_for_access_to_hidden">Verifieer uzelf om toegang te krijgen tot verborgen foto\'s</string>
 </resources>
