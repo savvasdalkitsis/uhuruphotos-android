@@ -26,6 +26,6 @@ data class UserInformationState(
 val previewUserInformationState = UserInformationState(
     initials = "SD",
     userFullName = "Savvas Dalkitsis",
-    serverUrl = "https://liibrephotos.server.url",
+    serverUrl = "https://librephotos.server.url",
     syncState = SyncState.GOOD,
 )
