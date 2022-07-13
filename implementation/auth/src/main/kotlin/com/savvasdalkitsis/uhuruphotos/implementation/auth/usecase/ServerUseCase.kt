@@ -37,6 +37,6 @@ class ServerUseCase @Inject constructor(
     override fun getServerUrl(): String? = preference.get()?.trim()
 
     override suspend fun setServerUrl(serverUrl: String) {
-        preference.setAndCommit(serverUrl.prefixedWithHttpsIfNeeded)
+        preference.setAndCommit(serverUrl.prefixedWithHttpsIfNeeded.removeSuffix("/"))
     }
 }
