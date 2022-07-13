@@ -18,32 +18,30 @@ package com.savvasdalkitsis.uhuruphotos.api.photos.view
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.pluralStringResource
-import androidx.compose.ui.res.stringResource
 import com.savvasdalkitsis.uhuruphotos.api.strings.R
 import com.savvasdalkitsis.uhuruphotos.api.ui.view.YesNoDialog
 
 @Composable
-fun DeletePermissionDialog(
+fun RestorePermissionDialog(
     photoCount: Int,
     onDismiss: () -> Unit,
-    onDelete: () -> Unit,
+    onRestore: () -> Unit,
 ) {
     YesNoDialog(
         title = pluralStringResource(
-            R.plurals.delete_photos,
+            R.plurals.restore_photos,
             photoCount,
             photoCount
         ),
         onDismiss = onDismiss,
-        onYes = onDelete,
+        onYes = onRestore,
         body = {
             Text(
                 pluralStringResource(
-                    R.plurals.delete_photos_confirmation,
+                    R.plurals.restore_photos_confirmation,
                     count = photoCount,
                     photoCount
                 )
             )
-            Text(stringResource(R.string.operation_irreverisble))
         })
 }

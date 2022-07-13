@@ -39,6 +39,7 @@ import com.savvasdalkitsis.uhuruphotos.api.seam.ActionHandler
 import com.savvasdalkitsis.uhuruphotos.api.search.SearchUseCase
 import com.savvasdalkitsis.uhuruphotos.api.strings.R
 import com.savvasdalkitsis.uhuruphotos.api.user.usecase.UserUseCase
+import com.savvasdalkitsis.uhuruphotos.implementation.photos.seam.PhotoAction.AskForPhotoRestoration
 import com.savvasdalkitsis.uhuruphotos.implementation.photos.seam.PhotoAction.AskForPhotoTrashing
 import com.savvasdalkitsis.uhuruphotos.implementation.photos.seam.PhotoAction.ChangedToPage
 import com.savvasdalkitsis.uhuruphotos.implementation.photos.seam.PhotoAction.ClickedOnGps
@@ -51,6 +52,7 @@ import com.savvasdalkitsis.uhuruphotos.implementation.photos.seam.PhotoAction.Lo
 import com.savvasdalkitsis.uhuruphotos.implementation.photos.seam.PhotoAction.NavigateBack
 import com.savvasdalkitsis.uhuruphotos.implementation.photos.seam.PhotoAction.PersonSelected
 import com.savvasdalkitsis.uhuruphotos.implementation.photos.seam.PhotoAction.Refresh
+import com.savvasdalkitsis.uhuruphotos.implementation.photos.seam.PhotoAction.RestorePhoto
 import com.savvasdalkitsis.uhuruphotos.implementation.photos.seam.PhotoAction.SetFavourite
 import com.savvasdalkitsis.uhuruphotos.implementation.photos.seam.PhotoAction.SharePhoto
 import com.savvasdalkitsis.uhuruphotos.implementation.photos.seam.PhotoAction.ShowInfo
@@ -72,6 +74,8 @@ import com.savvasdalkitsis.uhuruphotos.implementation.photos.seam.PhotoMutation.
 import com.savvasdalkitsis.uhuruphotos.implementation.photos.seam.PhotoMutation.ShowErrorMessage
 import com.savvasdalkitsis.uhuruphotos.implementation.photos.seam.PhotoMutation.ShowMultiplePhotos
 import com.savvasdalkitsis.uhuruphotos.implementation.photos.seam.PhotoMutation.ShowPhotoFavourite
+import com.savvasdalkitsis.uhuruphotos.implementation.photos.seam.PhotoMutation.ShowRestorationConfirmationDialog
+import com.savvasdalkitsis.uhuruphotos.implementation.photos.seam.PhotoMutation.ShowRestoreButton
 import com.savvasdalkitsis.uhuruphotos.implementation.photos.seam.PhotoMutation.ShowShareIcon
 import com.savvasdalkitsis.uhuruphotos.implementation.photos.seam.PhotoMutation.ShowSinglePhoto
 import com.savvasdalkitsis.uhuruphotos.implementation.photos.seam.PhotoMutation.ShowTrashingConfirmationDialog
@@ -106,6 +110,7 @@ class PhotoActionHandler @Inject constructor(
         is LoadPhoto -> flow {
             if (action.datasource == Trash) {
                 photoType = TRASHED
+                emit(ShowRestoreButton)
             }
             with(photosUseCase) {
                 emit(ShowSinglePhoto(
@@ -194,19 +199,16 @@ class PhotoActionHandler @Inject constructor(
             TRASHED -> ShowDeleteConfirmationDialog
             else -> ShowTrashingConfirmationDialog
         })
+        AskForPhotoRestoration -> flowOf(ShowRestorationConfirmationDialog)
         DismissConfirmationDialogs -> flowOf(HideAllConfirmationDialogs)
-        TrashPhoto -> flow {
-            emit(Loading)
-            emit(HideAllConfirmationDialogs)
+        TrashPhoto -> processAndRemovePhoto(state, effect) {
             when (photoType) {
                 TRASHED -> photosUseCase.deletePhoto(state.currentPhoto.id)
                 else -> photosUseCase.trashPhoto(state.currentPhoto.id)
             }
-            emit(FinishedLoading)
-            emit(RemovePhotoFromSource(state.currentPhoto.id))
-            if (state.photos.size == 1) {
-                effect(PhotoEffect.NavigateBack)
-            }
+        }
+        RestorePhoto -> processAndRemovePhoto(state, effect) {
+            photosUseCase.restorePhoto(state.currentPhoto.id)
         }
         SharePhoto -> flow {
             effect(PhotoEffect.SharePhoto(state.currentPhoto.fullResUrl))
@@ -214,6 +216,21 @@ class PhotoActionHandler @Inject constructor(
         is FullImageLoaded -> flowOf(ShowShareIcon(action.id))
         is PersonSelected -> flow {
             effect(NavigateToPerson(action.person.id))
+        }
+    }
+
+    private fun processAndRemovePhoto(
+        state: PhotoState,
+        effect: suspend (PhotoEffect) -> Unit,
+        process: suspend () -> Unit,
+    ) = flow {
+        emit(Loading)
+        emit(HideAllConfirmationDialogs)
+        process()
+        emit(FinishedLoading)
+        emit(RemovePhotoFromSource(state.currentPhoto.id))
+        if (state.photos.size == 1) {
+            effect(PhotoEffect.NavigateBack)
         }
     }
 

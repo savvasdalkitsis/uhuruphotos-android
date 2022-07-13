@@ -24,6 +24,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import com.savvasdalkitsis.uhuruphotos.api.ui.view.ActionIconWithText
 import com.savvasdalkitsis.uhuruphotos.implementation.photos.seam.PhotoAction
+import com.savvasdalkitsis.uhuruphotos.implementation.photos.seam.PhotoAction.AskForPhotoRestoration
 import com.savvasdalkitsis.uhuruphotos.implementation.photos.seam.PhotoAction.AskForPhotoTrashing
 import com.savvasdalkitsis.uhuruphotos.implementation.photos.seam.PhotoAction.SharePhoto
 import com.savvasdalkitsis.uhuruphotos.implementation.photos.view.state.PhotoState
@@ -48,6 +49,15 @@ fun PhotoDetailsBottomActionBar(
                 onClick = { action(SharePhoto) },
                 icon = Icons.drawable.ic_share,
                 text = stringResource(Strings.string.share),
+            )
+        }
+        if (state.showRestoreButton) {
+            ActionIconWithText(
+                onClick = { action(AskForPhotoRestoration) },
+                modifier = Modifier
+                    .weight(1f),
+                icon = Icons.drawable.ic_restore_from_trash,
+                text = stringResource(Strings.string.restore),
             )
         }
         ActionIconWithText(

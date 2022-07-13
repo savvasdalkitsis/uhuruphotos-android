@@ -79,10 +79,15 @@ sealed class PhotoMutation(
         it.copy(showPhotoTrashingConfirmationDialog = true)
     })
 
+    object ShowRestorationConfirmationDialog : PhotoMutation({
+        it.copy(showPhotoRestorationConfirmationDialog = true)
+    })
+
     object HideAllConfirmationDialogs : PhotoMutation({
         it.copy(
             showPhotoDeleteConfirmationDialog = false,
             showPhotoTrashingConfirmationDialog = false,
+            showPhotoRestorationConfirmationDialog = false,
         )
     })
 
@@ -150,6 +155,10 @@ sealed class PhotoMutation(
         removed.copy(
             currentIndex = min(it.currentIndex, removed.photos.size - 1)
         )
+    })
+
+    object ShowRestoreButton : PhotoMutation({
+        it.copy(showRestoreButton = true)
     })
 }
 

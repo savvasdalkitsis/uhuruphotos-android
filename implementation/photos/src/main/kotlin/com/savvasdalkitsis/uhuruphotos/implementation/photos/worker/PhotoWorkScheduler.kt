@@ -50,6 +50,14 @@ class PhotoWorkScheduler @Inject constructor(
         }
     }
 
+    fun schedulePhotoRestoration(id: String) {
+        workScheduler.scheduleNow<PhotoRestoreWorker>(
+            workName = PhotoRestoreWorker.restorePhotoWorkName(id)
+        ) {
+            putString(PhotoRestoreWorker.KEY_ID, id)
+        }
+    }
+
     fun schedulePhotoDeletion(id: String) {
         workScheduler.scheduleNow<PhotoDeletionWorker>(
             workName = PhotoDeletionWorker.deletePhotoWorkName(id)

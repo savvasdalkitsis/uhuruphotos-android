@@ -156,6 +156,10 @@ class PhotosUseCase @Inject constructor(
         photoWorkScheduler.schedulePhotoDeletion(id)
     }
 
+    override fun restorePhoto(id: String) {
+        photoWorkScheduler.schedulePhotoRestoration(id)
+    }
+
     private suspend fun <T> withFavouriteThreshold(action: suspend (Int) -> T): Result<T> =
         userUseCase.getUserOrRefresh().mapCatching {
             action(it.favoriteMinRating!!)

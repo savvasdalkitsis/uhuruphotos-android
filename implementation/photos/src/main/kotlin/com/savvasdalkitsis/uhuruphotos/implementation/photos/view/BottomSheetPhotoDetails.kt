@@ -56,7 +56,7 @@ internal fun BottomSheetPhotoDetails(
     val sheetSize by SheetSize.rememberSheetSize()
     val pagerState = rememberPagerState()
     LaunchedEffect(state.photos.size, pagerState.pageCount) {
-        if (pagerState.pageCount > state.currentIndex) {
+        if (pagerState.pageCount > state.currentIndex && state.currentIndex >= 0) {
             pagerState.scrollToPage(state.currentIndex)
         }
     }

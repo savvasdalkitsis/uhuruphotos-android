@@ -43,4 +43,5 @@ interface PhotosUseCase {
     suspend fun refreshHiddenPhotos()
     fun trashPhoto(id: String)
     fun deletePhoto(id: String)
+    fun restorePhoto(id: String)
 }
