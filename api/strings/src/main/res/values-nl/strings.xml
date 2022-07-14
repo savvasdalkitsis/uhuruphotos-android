@@ -141,4 +141,14 @@
         <item quantity="other">Weet u zeker dat u %d foto\'s naar de prullenbak wilt verplaatsen\?</item>
     </plurals>
     <string name="authenticate_for_access_to_hidden">Verifieer uzelf om toegang te krijgen tot verborgen foto\'s</string>
+    <plurals name="restore_photos">
+        <item quantity="one">%d foto herstellen</item>
+        <item quantity="other">%d foto\'s herstellen</item>
+    </plurals>
+    <string name="restoring_photo">Bezig met herstellen van foto\'s…</string>
+    <string name="restore">Herstellen</string>
+    <plurals name="restore_photos_confirmation">
+        <item quantity="one">Weet u zeker dat %d foto wilt herstellen\?</item>
+        <item quantity="other">Weet u zeker dat %d foto\'s wilt herstellen\?</item>
+    </plurals>
 </resources>
