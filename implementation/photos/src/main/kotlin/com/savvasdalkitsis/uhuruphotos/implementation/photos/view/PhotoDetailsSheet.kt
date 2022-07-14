@@ -16,15 +16,11 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.implementation.photos.view
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.ModalBottomSheetState
@@ -33,20 +29,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
-import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.unit.dp
-import com.savvasdalkitsis.uhuruphotos.api.icons.R
-import com.savvasdalkitsis.uhuruphotos.api.map.view.MapView
-import com.savvasdalkitsis.uhuruphotos.api.map.view.rememberMapViewState
-import com.savvasdalkitsis.uhuruphotos.api.people.view.PeopleBar
-import com.savvasdalkitsis.uhuruphotos.api.ui.view.TextWithIcon
 import com.savvasdalkitsis.uhuruphotos.implementation.photos.seam.PhotoAction
-import com.savvasdalkitsis.uhuruphotos.implementation.photos.seam.PhotoAction.ClickedOnGps
-import com.savvasdalkitsis.uhuruphotos.implementation.photos.seam.PhotoAction.ClickedOnMap
 import com.savvasdalkitsis.uhuruphotos.implementation.photos.seam.PhotoAction.HideInfo
-import com.savvasdalkitsis.uhuruphotos.implementation.photos.seam.PhotoAction.PersonSelected
 import com.savvasdalkitsis.uhuruphotos.implementation.photos.view.state.PhotoState
 
 @Composable
@@ -68,71 +54,31 @@ fun PhotoDetailsSheet(
                 .verticalScroll(rememberScrollState())
         ) {
             Column(
-                verticalArrangement = Arrangement.spacedBy(16.dp),
+                verticalArrangement = Arrangement.spacedBy(24.dp),
                 modifier = Modifier
                     .padding(16.dp)
             ) {
                 PhotoDetailsBottomActionBar(state, index, action)
-                TextWithIcon(
-                    icon = R.drawable.ic_calendar,
-                    text = photo.dateAndTime,
-                )
-                photo.gps?.let { gps ->
-                    MapView(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .height(240.dp)
-                            .clip(RoundedCornerShape(12.dp)),
-                        mapViewState = rememberMapViewState(
-                            initialPosition = gps,
-                            initialZoom = 15f,
-                        ),
-                        mapOptions = {
-                            copy(
-                                zoomControlsEnabled = true,
-                            )
-                        },
-                        onMapClick = { action(ClickedOnMap(gps)) }
-                    ) {
-                        Marker(gps)
-                    }
-                }
-                if (photo.location.isNotEmpty()) {
-                    TextWithIcon(
-                        icon = R.drawable.ic_location_place,
-                        text = photo.location,
-                    )
-                }
-                photo.gps?.let { gps ->
-                    TextWithIcon(
-                        modifier = Modifier.clickable { action(ClickedOnGps(gps)) },
-                        icon = R.drawable.ic_location_pin,
-                        text = "${gps.lat.round(2)}:${gps.lon.round(2)}",
-                    )
-                }
-            }
-            if (photo.peopleInPhoto.isNotEmpty()) {
-                PeopleBar(
-                    people = photo.peopleInPhoto,
-                    onPersonSelected = { action(PersonSelected(it)) }
-                )
+                PhotoDetailsDateTime(photo)
+                PhotoDetailsPeople(photo, action)
+                PhotoDetailsMap(photo, action)
+                PhotoDetailsLocation(photo)
+                PhotoDetailsGps(photo, action)
+                PhotoDetailsMetadata(photo)
             }
         }
     }
 
-    val density = LocalDensity.current
     val layoutDirection = LocalLayoutDirection.current
     LaunchedEffect(state.infoSheetHidden, layoutDirection) {
         when  {
             state.infoSheetHidden -> {
                 sheetState.hide()
             }
-            else -> with(density) {
-                if (state.showInfoButton) {
-                    sheetState.show()
-                } else {
-                    action(HideInfo)
-                }
+            else -> if (state.showInfoButton) {
+                sheetState.show()
+            } else {
+                action(HideInfo)
             }
         }
     }
@@ -144,4 +90,3 @@ fun PhotoDetailsSheet(
         }
     }
 }
-fun Double.round(decimals: Int = 2): String = "%.${decimals}f".format(this)

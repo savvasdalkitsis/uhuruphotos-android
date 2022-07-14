@@ -11,6 +11,8 @@ android {
 dependencies {
     api project(":api:db")
     implementation project(':api:image')
+    implementation project(':api:strings')
+    implementation project(':api:ui')
     implementation(
             libs.androidx.compose.foundation,
             libs.androidx.compose.material,

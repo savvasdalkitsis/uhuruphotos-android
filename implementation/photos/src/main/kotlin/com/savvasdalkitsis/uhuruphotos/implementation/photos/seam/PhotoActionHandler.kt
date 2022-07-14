@@ -72,6 +72,7 @@ import com.savvasdalkitsis.uhuruphotos.implementation.photos.seam.PhotoMutation.
 import com.savvasdalkitsis.uhuruphotos.implementation.photos.seam.PhotoMutation.RemovePhotoFromSource
 import com.savvasdalkitsis.uhuruphotos.implementation.photos.seam.PhotoMutation.ShowDeleteConfirmationDialog
 import com.savvasdalkitsis.uhuruphotos.implementation.photos.seam.PhotoMutation.ShowErrorMessage
+import com.savvasdalkitsis.uhuruphotos.implementation.photos.seam.PhotoMutation.ShowMetadata
 import com.savvasdalkitsis.uhuruphotos.implementation.photos.seam.PhotoMutation.ShowMultiplePhotos
 import com.savvasdalkitsis.uhuruphotos.implementation.photos.seam.PhotoMutation.ShowPhotoFavourite
 import com.savvasdalkitsis.uhuruphotos.implementation.photos.seam.PhotoMutation.ShowRestorationConfirmationDialog
@@ -80,6 +81,7 @@ import com.savvasdalkitsis.uhuruphotos.implementation.photos.seam.PhotoMutation.
 import com.savvasdalkitsis.uhuruphotos.implementation.photos.seam.PhotoMutation.ShowSinglePhoto
 import com.savvasdalkitsis.uhuruphotos.implementation.photos.seam.PhotoMutation.ShowTrashingConfirmationDialog
 import com.savvasdalkitsis.uhuruphotos.implementation.photos.seam.PhotoMutation.ShowUI
+import com.savvasdalkitsis.uhuruphotos.implementation.photos.usecase.MetadataUseCase
 import com.savvasdalkitsis.uhuruphotos.implementation.photos.view.state.PhotoState
 import com.savvasdalkitsis.uhuruphotos.implementation.photos.view.state.PhotoType
 import com.savvasdalkitsis.uhuruphotos.implementation.photos.view.state.PhotoType.TRASHED
@@ -98,6 +100,7 @@ class PhotoActionHandler @Inject constructor(
     private val albumsUseCase: AlbumsUseCase,
     private val searchUseCase: SearchUseCase,
     private val dateDisplayer: DateDisplayer,
+    private val metadataUseCase: MetadataUseCase,
 ) : ActionHandler<PhotoState, PhotoEffect, PhotoAction, PhotoMutation> {
 
     private var photoType = PhotoType.default
@@ -213,7 +216,13 @@ class PhotoActionHandler @Inject constructor(
         SharePhoto -> flow {
             effect(PhotoEffect.SharePhoto(state.currentPhoto.fullResUrl))
         }
-        is FullImageLoaded -> flowOf(ShowShareIcon(action.id))
+        is FullImageLoaded -> flow {
+            emit(ShowShareIcon(action.photo.id))
+            val metadata = metadataUseCase.extractMetadata(action.photo.fullResUrl)
+            if (metadata != null) {
+                emit(ShowMetadata(action.photo.id, metadata))
+            }
+        }
         is PersonSelected -> flow {
             effect(NavigateToPerson(action.person.id))
         }

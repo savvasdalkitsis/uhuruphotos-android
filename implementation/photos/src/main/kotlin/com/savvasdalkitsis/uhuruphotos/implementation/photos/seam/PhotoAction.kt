@@ -18,6 +18,7 @@ package com.savvasdalkitsis.uhuruphotos.implementation.photos.seam
 import com.savvasdalkitsis.uhuruphotos.api.map.model.LatLon
 import com.savvasdalkitsis.uhuruphotos.api.people.view.state.Person
 import com.savvasdalkitsis.uhuruphotos.api.photos.model.PhotoSequenceDataSource
+import com.savvasdalkitsis.uhuruphotos.implementation.photos.view.state.SinglePhotoState
 
 sealed class PhotoAction {
     object ToggleUI : PhotoAction()
@@ -32,7 +33,7 @@ sealed class PhotoAction {
     object TrashPhoto : PhotoAction()
     object RestorePhoto : PhotoAction()
     object SharePhoto : PhotoAction()
-    data class FullImageLoaded(val id: String) : PhotoAction()
+    data class FullImageLoaded(val photo: SinglePhotoState) : PhotoAction()
     data class ClickedOnMap(val gps: LatLon) : PhotoAction()
     data class LoadPhoto(
         val id: String,

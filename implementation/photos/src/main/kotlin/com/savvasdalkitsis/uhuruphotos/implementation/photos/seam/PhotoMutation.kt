@@ -20,6 +20,7 @@ import com.savvasdalkitsis.uhuruphotos.api.db.photos.PhotoDetails
 import com.savvasdalkitsis.uhuruphotos.api.people.view.state.Person
 import com.savvasdalkitsis.uhuruphotos.api.photos.model.latLng
 import com.savvasdalkitsis.uhuruphotos.api.seam.Mutation
+import com.savvasdalkitsis.uhuruphotos.implementation.photos.usecase.PhotoMetadata
 import com.savvasdalkitsis.uhuruphotos.implementation.photos.view.state.PhotoState
 import com.savvasdalkitsis.uhuruphotos.implementation.photos.view.state.SinglePhotoState
 import kotlin.math.min
@@ -94,6 +95,12 @@ sealed class PhotoMutation(
     data class ShowShareIcon(val id: String) : PhotoMutation({
         it.copyPhoto(id) { photoState ->
             photoState.copy(showShareIcon = true)
+        }
+    })
+
+    data class ShowMetadata(val id: String, val metadata: PhotoMetadata) : PhotoMutation({
+        it.copyPhoto(id) { photoState ->
+            photoState.copy(metadata = metadata)
         }
     })
 

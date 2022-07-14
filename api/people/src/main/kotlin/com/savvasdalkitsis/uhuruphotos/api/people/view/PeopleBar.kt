@@ -29,8 +29,11 @@ import androidx.compose.material.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import com.savvasdalkitsis.uhuruphotos.api.strings.R
 import com.savvasdalkitsis.uhuruphotos.api.people.view.state.Person
+import com.savvasdalkitsis.uhuruphotos.api.ui.view.SectionHeader
 
 @Composable
 fun PeopleBar(
@@ -44,20 +47,10 @@ fun PeopleBar(
             .fillMaxWidth(),
         verticalArrangement = Arrangement.spacedBy(8.dp),
     ) {
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(8.dp, end = 8.dp),
-            horizontalArrangement = Arrangement.spacedBy(8.dp),
-            verticalAlignment = Alignment.CenterVertically,
-        ) {
-            Text(
-                modifier = Modifier.weight(1f),
-                text = "People"
-            )
+        SectionHeader(title = stringResource(R.string.people)) {
             if (onViewAllClicked != null) {
                 TextButton(onClick = onViewAllClicked) {
-                    Text("View all")
+                    Text(stringResource(R.string.view_all))
                 }
             }
         }

@@ -18,6 +18,7 @@ package com.savvasdalkitsis.uhuruphotos.implementation.photos.view.state
 import androidx.annotation.StringRes
 import com.savvasdalkitsis.uhuruphotos.api.map.model.LatLon
 import com.savvasdalkitsis.uhuruphotos.api.people.view.state.Person
+import com.savvasdalkitsis.uhuruphotos.implementation.photos.usecase.PhotoMetadata
 
 data class PhotoState(
     val currentIndex: Int = 0,
@@ -47,4 +48,5 @@ data class SinglePhotoState(
     val isVideo: Boolean = false,
     val showShareIcon: Boolean = false,
     val peopleInPhoto: List<Person> = emptyList(),
+    val metadata: PhotoMetadata? = null,
 )

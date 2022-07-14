@@ -122,7 +122,7 @@ fun PhotoDetails(
                         .align(Alignment.Center),
                     lowResUrl = photo.lowResUrl,
                     fullResUrl = photo.fullResUrl,
-                    onFullResImageLoaded = { action(FullImageLoaded(photo.id)) },
+                    onFullResImageLoaded = { action(FullImageLoaded(photo)) },
                     contentScale = ContentScale.Fit,
                     contentDescription = stringResource(R.string.photo),
                 )

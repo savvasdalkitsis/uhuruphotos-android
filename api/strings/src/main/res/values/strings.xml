@@ -26,6 +26,8 @@
         <item quantity="one">Are you sure you want to send this %d photo to the trash?</item>
         <item quantity="other">Are you sure you want to send these %d photos to the trash?</item>
     </plurals>
+    <string name="people">People</string>
+    <string name="view_all">View all</string>
     <string name="error_refreshing_people">There was an error refreshing people</string>
     <string name="error_loading_photo_details">There was an error loading photo details</string>
     <string name="error_changing_photo_favourite">There was an error changing the photo favourite status</string>
@@ -76,6 +78,9 @@
     <string name="downloading_photo_details">Downloading photo details</string>
     <string name="trashing_photo">Sending photo to trash</string>
     <string name="restoring_photo">Restoring photo from trash</string>
+    <string name="location">Location</string>
+    <string name="open_in_maps">Open in Maps</string>
+    <string name="details">Details</string>
     <string name="deleting_photo">Deleting photo</string>
     <string name="refreshing_albums">Refreshing albums</string>
     <string name="photos_on_map">Photos on map (%1$d out of %2$d)</string>

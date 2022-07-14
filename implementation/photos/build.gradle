@@ -43,6 +43,8 @@ dependencies {
             libs.androidx.compose.material.windowsize,
             libs.androidx.work,
             libs.androidx.work.hilt,
+            libs.coil.base,
+            libs.exif,
             libs.infobar,
             libs.moshi,
             libs.retrofit.core,
