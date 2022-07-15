@@ -139,4 +139,6 @@
     <string name="enable_suggestions">Habilitar sugerencias</string>
     <string name="clear_recent_searches">Borrar búsquedas recientes</string>
     <string name="remove_gps_data_when_sharing">Eliminar datos de GPS al compartir</string>
+    <string name="sorting">Clasificación</string>
+    <string name="feed_refresh_days">Número de días de alimentación para actualizar en tirar para actualizar</string>
 </resources>

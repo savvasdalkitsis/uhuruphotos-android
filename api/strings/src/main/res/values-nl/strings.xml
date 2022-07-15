@@ -151,4 +151,9 @@
         <item quantity="one">Weet u zeker dat %d foto wilt herstellen\?</item>
         <item quantity="other">Weet u zeker dat %d foto\'s wilt herstellen\?</item>
     </plurals>
+    <string name="people">Personen</string>
+    <string name="location">Locatie</string>
+    <string name="open_in_maps">Openen in Maps</string>
+    <string name="details">Details</string>
+    <string name="view_all">Alle personen bekijken</string>
 </resources>
