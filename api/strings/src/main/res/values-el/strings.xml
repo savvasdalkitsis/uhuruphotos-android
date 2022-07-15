@@ -91,7 +91,7 @@
     <string name="expand_all">Επέκταση όλων</string>
     <string name="collapse_all">Σύμπτυξη όλων</string>
     <string name="library">Βιβλιοθήκη</string>
-    <string name="perform_full_feed_sync">Εκτέλεση πλήρους συγχρονισμού</string>
+    <string name="perform_full_feed_sync">Εκτελέστε πλήρη συγχρονισμό</string>
     <string name="auto_generated_albums">Αυτόματα δημιουργημένα άλμπουμ</string>
     <string name="missing_album_title">Λείπει ο τίτλος του άλμπουμ</string>
     <string name="error_loading_album">Υπήρξε σφάλμα κατά τη φόρτωση του άλμπουμ</string>
