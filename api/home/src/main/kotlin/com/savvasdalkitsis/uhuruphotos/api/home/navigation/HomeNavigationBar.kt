@@ -222,7 +222,7 @@ private fun selectNavigationItem(
 ): () -> Unit = {
     if (currentDestination?.route != routeName) {
         navController.navigate(routeName) {
-            popUpTo(navController.graph.findStartDestination().id) {
+            popUpTo(HomeNavigationRoutes.feed) {
                 saveState = true
             }
             launchSingleTop = true
