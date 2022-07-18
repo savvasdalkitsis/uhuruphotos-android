@@ -47,7 +47,7 @@ class PhotoOriginalFileRetrieveWorker @AssistedInject constructor(
     private val foregroundInfoBuilder: ForegroundInfoBuilder,
 ) : CoroutineWorker(context, params) {
 
-    override suspend fun doWork() = withContext(Dispatchers.IO) {
+    override suspend fun doWork() = withContext(Dispatchers.Unconfined) {
         try {
             val id = params.inputData.getString(KEY_ID)!!
             val video = params.inputData.getBoolean(KEY_VIDEO, false)
