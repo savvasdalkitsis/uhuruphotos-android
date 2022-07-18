@@ -15,6 +15,7 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.api.photos.usecase
 
+import androidx.work.WorkInfo
 import com.savvasdalkitsis.uhuruphotos.api.db.photos.PhotoDetails
 import com.savvasdalkitsis.uhuruphotos.api.db.photos.PhotoSummary
 import com.savvasdalkitsis.uhuruphotos.api.photos.model.Photo
@@ -44,4 +45,6 @@ interface PhotosUseCase {
     fun trashPhoto(id: String)
     fun deletePhoto(id: String)
     fun restorePhoto(id: String)
+    fun downloadOriginal(id: String, video: Boolean)
+    fun observeOriginalFileDownloadStatus(id: String): Flow<WorkInfo.State>
 }

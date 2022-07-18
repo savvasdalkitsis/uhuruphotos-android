@@ -13,6 +13,7 @@ dependencies {
     api project(":api:map")
     api(
             libs.androidx.compose.navigation,
+            libs.androidx.work,
             libs.kotlinx.coroutines,
     )
     implementation project(":api:compose")

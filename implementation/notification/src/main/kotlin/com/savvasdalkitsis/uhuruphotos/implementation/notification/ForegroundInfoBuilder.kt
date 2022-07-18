@@ -31,12 +31,14 @@ internal class ForegroundInfoBuilder @Inject constructor(
         context: Context,
         title: Int,
         notificationId: Int,
-        channel: String
+        channel: String,
+        progress: Int?,
     ): ForegroundInfo {
         val notification = NotificationCompat.Builder(context, channel)
             .setContentTitle(context.getString(title))
             .setSmallIcon(R.mipmap.ic_launcher_round)
             .setPriority(NotificationCompat.PRIORITY_LOW)
+            .setProgress(100, progress ?: 0, progress == null)
             .build()
         return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
             ForegroundInfo(

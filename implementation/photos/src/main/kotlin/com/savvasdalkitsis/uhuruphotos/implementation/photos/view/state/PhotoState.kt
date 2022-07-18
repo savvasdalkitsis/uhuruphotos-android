@@ -47,6 +47,11 @@ data class SinglePhotoState(
     val gps: LatLon? = null,
     val isVideo: Boolean = false,
     val showShareIcon: Boolean = false,
+    val originalFileIconState: OriginalFileIconState = OriginalFileIconState.HIDDEN,
     val peopleInPhoto: List<Person> = emptyList(),
     val metadata: PhotoMetadata? = null,
 )
+
+enum class OriginalFileIconState {
+    HIDDEN, IDLE, IN_PROGRESS, ERROR
+}

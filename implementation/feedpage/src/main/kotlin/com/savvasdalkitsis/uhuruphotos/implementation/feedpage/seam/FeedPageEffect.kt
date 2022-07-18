@@ -28,4 +28,5 @@ internal sealed class FeedPageEffect {
 
     data class SharePhotos(val selectedPhotos: List<Photo>) : FeedPageEffect()
     object Vibrate : FeedPageEffect()
+    object DownloadingFiles : FeedPageEffect()
 }

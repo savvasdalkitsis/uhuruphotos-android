@@ -15,6 +15,7 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.implementation.feedpage.navigation
 
+import androidx.compose.animation.AnimatedVisibility
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
@@ -75,8 +76,10 @@ internal class FeedPageNavigationTarget @Inject constructor(
                     actions(Left(it))
                 },
                 actionBarContent = {
-                    AccountOverviewActionBar(state.second) {
-                        actions(Right(it))
+                    AnimatedVisibility(visible = !state.first.hasSelection) {
+                        AccountOverviewActionBar(state.second) {
+                            actions(Right(it))
+                        }
                     }
                 }
             ) {

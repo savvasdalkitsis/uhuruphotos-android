@@ -25,6 +25,7 @@ import com.savvasdalkitsis.uhuruphotos.api.ui.view.ActionIcon
 import com.savvasdalkitsis.uhuruphotos.implementation.feedpage.seam.FeedPageAction
 import com.savvasdalkitsis.uhuruphotos.implementation.feedpage.seam.FeedPageAction.AskForSelectedPhotosTrashing
 import com.savvasdalkitsis.uhuruphotos.implementation.feedpage.seam.FeedPageAction.ChangeDisplay
+import com.savvasdalkitsis.uhuruphotos.implementation.feedpage.seam.FeedPageAction.DownloadSelectedPhotos
 import com.savvasdalkitsis.uhuruphotos.implementation.feedpage.seam.FeedPageAction.ShareSelectedPhotos
 import com.savvasdalkitsis.uhuruphotos.implementation.feedpage.view.state.FeedPageState
 
@@ -45,8 +46,16 @@ internal fun RowScope.FeedPageActionBar(
             icon = R.drawable.ic_delete
         )
     }
-    FeedDisplayActionButton(
-        onChange = { action(ChangeDisplay(it as FeedDisplays)) },
-        currentFeedDisplay = state.feedState.feedDisplay
-    )
+    AnimatedVisibility(visible = state.hasSelection) {
+        ActionIcon(
+            onClick = { action(DownloadSelectedPhotos) },
+            icon = R.drawable.ic_cloud_download
+        )
+    }
+    AnimatedVisibility(visible = !state.hasSelection) {
+        FeedDisplayActionButton(
+            onChange = { action(ChangeDisplay(it as FeedDisplays)) },
+            currentFeedDisplay = state.feedState.feedDisplay
+        )
+    }
 }

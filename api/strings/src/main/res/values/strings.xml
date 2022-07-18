@@ -156,4 +156,9 @@
     <string name="trash">Trash</string>
     <string name="operation_irreverisble">This operation is irreversible</string>
     <string name="restore">Restore</string>
+    <string name="download_original_file">Download original file</string>
+    <string name="downloading_original_file">Downloading original file</string>
+    <string name="downloading_original_files">Downloading original files</string>
+    <string name="downloading_original_file_background">Downloading original file in the background.</string>
+    <string name="you_can_leave">You can leave the screen if you want.</string>
 </resources>

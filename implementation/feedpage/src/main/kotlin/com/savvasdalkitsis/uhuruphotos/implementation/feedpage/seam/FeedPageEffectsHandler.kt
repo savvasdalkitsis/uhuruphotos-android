@@ -23,9 +23,7 @@ import com.savvasdalkitsis.uhuruphotos.api.share.usecase.ShareUseCase
 import com.savvasdalkitsis.uhuruphotos.api.strings.R
 import com.savvasdalkitsis.uhuruphotos.api.toaster.Toaster
 import com.savvasdalkitsis.uhuruphotos.api.ui.usecase.UiUseCase
-import com.savvasdalkitsis.uhuruphotos.implementation.feedpage.seam.FeedPageEffect.OpenPhotoDetails
-import com.savvasdalkitsis.uhuruphotos.implementation.feedpage.seam.FeedPageEffect.SharePhotos
-import com.savvasdalkitsis.uhuruphotos.implementation.feedpage.seam.FeedPageEffect.Vibrate
+import com.savvasdalkitsis.uhuruphotos.implementation.feedpage.seam.FeedPageEffect.*
 import javax.inject.Inject
 
 internal class FeedPageEffectsHandler @Inject constructor(
@@ -46,6 +44,7 @@ internal class FeedPageEffectsHandler @Inject constructor(
             })
         }
         Vibrate -> uiUseCase.performLongPressHaptic()
+        DownloadingFiles -> toaster.show(R.string.downloading_original_files)
     }
 
     private fun navigateTo(target: String) {

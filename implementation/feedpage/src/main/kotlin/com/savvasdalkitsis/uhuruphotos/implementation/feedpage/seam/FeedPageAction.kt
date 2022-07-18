@@ -37,4 +37,5 @@ internal sealed class FeedPageAction {
     object DismissSelectedPhotosTrashing : FeedPageAction()
     object TrashSelectedPhotos : FeedPageAction()
     object ShareSelectedPhotos : FeedPageAction()
+    object DownloadSelectedPhotos : FeedPageAction()
 }

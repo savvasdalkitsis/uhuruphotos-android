@@ -17,20 +17,19 @@ package com.savvasdalkitsis.uhuruphotos.implementation.settings.usecase
 
 import coil.disk.DiskCache
 import coil.memory.MemoryCache
-import com.savvasdalkitsis.uhuruphotos.api.video.VideoCache
+import com.google.android.exoplayer2.upstream.cache.CacheDataSource
+import com.savvasdalkitsis.uhuruphotos.api.video.evictAll
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.withContext
-import okhttp3.Cache
 import javax.inject.Inject
 
 internal class CacheUseCase @Inject constructor(
     private val diskCache: DiskCache,
     private val memoryCache: MemoryCache,
-    @VideoCache
-    private val videoDiskCache: Cache,
+    private val videoCache: CacheDataSource.Factory,
 ) {
 
     private val imageDiskCacheFlow: MutableSharedFlow<Int> = MutableSharedFlow(1)
@@ -66,7 +65,7 @@ internal class CacheUseCase @Inject constructor(
     suspend fun clearVideoDiskCache() {
         withContext(Dispatchers.IO) {
             runCatching {
-                videoDiskCache.evictAll()
+                videoCache.evictAll()
             }
             updateCurrentVideoDiskCacheFlow()
         }
@@ -74,7 +73,9 @@ internal class CacheUseCase @Inject constructor(
 
     private fun updateCurrentImageDiskCacheFlow() = imageDiskCacheFlow.tryEmit(diskCache.size.mb)
     private fun updateCurrentImageMemCacheFlow() = imageMemCacheFlow.tryEmit(memoryCache.size.mb)
-    private fun updateCurrentVideoDiskCacheFlow() = videoDiskCacheFlow.tryEmit(videoDiskCache.size().mb)
+    private fun updateCurrentVideoDiskCacheFlow() = videoDiskCacheFlow.tryEmit(
+        (videoCache.cache?.cacheSpace ?: 0).mb
+    )
 
     private val Number.mb: Int get() = toInt() / 1024 / 1024
 }

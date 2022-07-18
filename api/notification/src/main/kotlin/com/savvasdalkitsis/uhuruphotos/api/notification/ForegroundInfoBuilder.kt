@@ -20,9 +20,11 @@ import androidx.annotation.StringRes
 import androidx.work.ForegroundInfo
 
 interface ForegroundInfoBuilder {
-    fun build(context: Context,
+    fun build(
+        context: Context,
         @StringRes title: Int,
         notificationId: Int,
-        channel: String
+        channel: String,
+        progress: Int? = null,
     ): ForegroundInfo
 }

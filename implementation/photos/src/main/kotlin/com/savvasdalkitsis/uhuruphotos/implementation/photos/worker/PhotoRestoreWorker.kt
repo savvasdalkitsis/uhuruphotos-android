@@ -83,6 +83,6 @@ class PhotoRestoreWorker @AssistedInject constructor(
     companion object {
         const val KEY_ID = "id"
         fun restorePhotoWorkName(id: String) = "restorePhoto/$id"
-        private const val NOTIFICATION_ID = 1277
+        private const val NOTIFICATION_ID = 1278
     }
 }

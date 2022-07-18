@@ -33,6 +33,8 @@ sealed class PhotoAction {
     object TrashPhoto : PhotoAction()
     object RestorePhoto : PhotoAction()
     object SharePhoto : PhotoAction()
+
+    data class DownloadOriginal(val photo: SinglePhotoState) : PhotoAction()
     data class FullImageLoaded(val photo: SinglePhotoState) : PhotoAction()
     data class ClickedOnMap(val gps: LatLon) : PhotoAction()
     data class LoadPhoto(

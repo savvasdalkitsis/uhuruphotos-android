@@ -15,6 +15,7 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.implementation.photos.view
 
+import androidx.compose.animation.AnimatedContent
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.CircularProgressIndicator
@@ -24,6 +25,11 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.savvasdalkitsis.uhuruphotos.api.ui.view.ActionIcon
 import com.savvasdalkitsis.uhuruphotos.implementation.photos.seam.PhotoAction
+import com.savvasdalkitsis.uhuruphotos.implementation.photos.seam.PhotoAction.DownloadOriginal
+import com.savvasdalkitsis.uhuruphotos.implementation.photos.seam.PhotoAction.Refresh
+import com.savvasdalkitsis.uhuruphotos.implementation.photos.seam.PhotoAction.SetFavourite
+import com.savvasdalkitsis.uhuruphotos.implementation.photos.seam.PhotoAction.ShowInfo
+import com.savvasdalkitsis.uhuruphotos.implementation.photos.view.state.OriginalFileIconState.*
 import com.savvasdalkitsis.uhuruphotos.implementation.photos.view.state.PhotoState
 import com.savvasdalkitsis.uhuruphotos.api.icons.R as Icons
 import com.savvasdalkitsis.uhuruphotos.api.strings.R as Strings
@@ -46,16 +52,37 @@ fun PhotoDetailsActionBar(
     AnimatedVisibility(visible = state.showRefresh) {
         if (state.showRefresh) {
             ActionIcon(
-                onClick = { action(PhotoAction.Refresh) },
+                onClick = { action(Refresh) },
                 icon = Icons.drawable.ic_refresh,
                 contentDescription = stringResource(Strings.string.refresh)
             )
         }
     }
+    AnimatedContent(targetState = photo.originalFileIconState) {
+        when (it) {
+            IDLE -> ActionIcon(
+                onClick = { action(DownloadOriginal(photo)) },
+                icon = Icons.drawable.ic_cloud_download,
+                contentDescription = stringResource(Strings.string.download_original_file)
+            )
+            IN_PROGRESS -> ActionIcon(
+                enabled = false,
+                onClick = { },
+                icon = Icons.drawable.ic_cloud_in_progress,
+                contentDescription = stringResource(Strings.string.downloading_original_file)
+            )
+            ERROR -> ActionIcon(
+                onClick = { action(DownloadOriginal(photo)) },
+                icon = Icons.drawable.ic_cloud_alert,
+                contentDescription = stringResource(Strings.string.download_original_file)
+            )
+            HIDDEN -> {}
+        }
+    }
     AnimatedVisibility(visible = photo.isFavourite != null) {
         if (photo.isFavourite != null) {
             ActionIcon(
-                onClick = { action(PhotoAction.SetFavourite(!photo.isFavourite)) },
+                onClick = { action(SetFavourite(!photo.isFavourite)) },
                 icon = if (photo.isFavourite) Icons.drawable.ic_favourite else Icons.drawable.ic_not_favourite,
                 contentDescription = stringResource(
                     when {
@@ -69,7 +96,7 @@ fun PhotoDetailsActionBar(
     AnimatedVisibility(visible = state.showInfoButton) {
         if (state.showInfoButton) {
             ActionIcon(
-                onClick = { action(PhotoAction.ShowInfo) },
+                onClick = { action(ShowInfo) },
                 icon = Icons.drawable.ic_info,
                 contentDescription = stringResource(Strings.string.info),
             )

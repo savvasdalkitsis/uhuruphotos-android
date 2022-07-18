@@ -47,6 +47,7 @@ fun Video(
     videoUrl: String,
     play: Boolean,
     videoThumbnailUrl: String,
+    onFinishedLoading: () -> Unit,
 ) {
     val exoPlayer = LocalExoPlayer.current!!
     val context = LocalContext.current
@@ -93,6 +94,12 @@ fun Video(
                 override fun onPlaybackStateChanged(playbackState: Int) {
                     if (playbackState == Player.STATE_READY) {
                         showPlayer = true
+                    }
+                }
+
+                override fun onIsLoadingChanged(isLoading: Boolean) {
+                    if (!isLoading) {
+                        onFinishedLoading()
                     }
                 }
             })

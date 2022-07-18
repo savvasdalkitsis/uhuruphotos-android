@@ -15,8 +15,12 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.api.video
 
-import javax.inject.Qualifier
+import com.google.android.exoplayer2.upstream.cache.CacheDataSource
 
-@Qualifier
-@Retention(AnnotationRetention.BINARY)
-annotation class VideoCache
+fun CacheDataSource.Factory.evictAll() {
+    cache?.let { cache ->
+        cache.keys.forEach {
+            cache.removeResource(it)
+        }
+    }
+}

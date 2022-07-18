@@ -15,6 +15,11 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.implementation.photos.usecase
 
+import android.net.Uri
+import androidx.work.WorkInfo
+import coil.ImageLoader
+import com.google.android.exoplayer2.upstream.DataSpec
+import com.google.android.exoplayer2.upstream.cache.CacheDataSource
 import com.savvasdalkitsis.uhuruphotos.api.auth.usecase.ServerUseCase
 import com.savvasdalkitsis.uhuruphotos.api.db.extensions.isVideo
 import com.savvasdalkitsis.uhuruphotos.api.db.photos.PhotoDetails
@@ -37,6 +42,8 @@ class PhotosUseCase @Inject constructor(
     private val photoRepository: PhotoRepository,
     private val photoWorkScheduler: PhotoWorkScheduler,
     private val userUseCase: UserUseCase,
+    private val videoCache: CacheDataSource.Factory,
+    private val imageLoader: ImageLoader,
 ) : PhotosUseCase {
 
     override fun String?.toAbsoluteUrl(): String? = this?.toAbsoluteUrl()
@@ -143,6 +150,13 @@ class PhotosUseCase @Inject constructor(
             photoRepository.refreshFavourites(it)
         }
     }
+
+    override fun downloadOriginal(id: String, video: Boolean) {
+        photoWorkScheduler.schedulePhotoOriginalFileRetrieve(id, video)
+    }
+
+    override fun observeOriginalFileDownloadStatus(id: String): Flow<WorkInfo.State> =
+        photoWorkScheduler.observePhotoOriginalFileRetrieveJobStatus(id)
 
     override suspend fun refreshHiddenPhotos() {
         photoRepository.refreshHidden()

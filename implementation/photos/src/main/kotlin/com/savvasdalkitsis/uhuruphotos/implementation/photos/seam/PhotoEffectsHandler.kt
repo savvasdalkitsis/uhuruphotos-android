@@ -28,14 +28,7 @@ import com.savvasdalkitsis.uhuruphotos.api.share.usecase.ShareUseCase
 import com.savvasdalkitsis.uhuruphotos.api.strings.R
 import com.savvasdalkitsis.uhuruphotos.api.toaster.Toaster
 import com.savvasdalkitsis.uhuruphotos.api.ui.usecase.UiUseCase
-import com.savvasdalkitsis.uhuruphotos.implementation.photos.seam.PhotoEffect.CopyToClipboard
-import com.savvasdalkitsis.uhuruphotos.implementation.photos.seam.PhotoEffect.ErrorRefreshingPeople
-import com.savvasdalkitsis.uhuruphotos.implementation.photos.seam.PhotoEffect.HideSystemBars
-import com.savvasdalkitsis.uhuruphotos.implementation.photos.seam.PhotoEffect.LaunchMap
-import com.savvasdalkitsis.uhuruphotos.implementation.photos.seam.PhotoEffect.NavigateBack
-import com.savvasdalkitsis.uhuruphotos.implementation.photos.seam.PhotoEffect.NavigateToPerson
-import com.savvasdalkitsis.uhuruphotos.implementation.photos.seam.PhotoEffect.SharePhoto
-import com.savvasdalkitsis.uhuruphotos.implementation.photos.seam.PhotoEffect.ShowSystemBars
+import com.savvasdalkitsis.uhuruphotos.implementation.photos.seam.PhotoEffect.*
 import dagger.hilt.android.qualifiers.ApplicationContext
 import javax.inject.Inject
 
@@ -66,6 +59,10 @@ class PhotoEffectsHandler @Inject constructor(
                 PersonNavigationTarget.name(effect.id)
             )
             ErrorRefreshingPeople -> toaster.show(R.string.error_refreshing_people)
+            DownloadingOriginal -> {
+                toaster.show(R.string.downloading_original_file_background)
+                toaster.show(R.string.you_can_leave)
+            }
         }
     }
 

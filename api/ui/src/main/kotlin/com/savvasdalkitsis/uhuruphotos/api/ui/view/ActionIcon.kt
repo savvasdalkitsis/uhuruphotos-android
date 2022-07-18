@@ -27,6 +27,7 @@ import androidx.compose.ui.res.painterResource
 fun ActionIcon(
     modifier: Modifier = Modifier,
     iconModifier: Modifier = Modifier,
+    enabled: Boolean = true,
     onClick: () -> Unit,
     @DrawableRes icon: Int,
     contentDescription: String? = null
@@ -34,6 +35,7 @@ fun ActionIcon(
     IconButton(
         modifier = modifier,
         onClick = onClick,
+        enabled = enabled,
     ) {
         Icon(
             modifier = iconModifier,

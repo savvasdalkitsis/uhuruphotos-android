@@ -37,21 +37,21 @@ class SeamViaHandler<S : Any, E : Any, A : Any, M : Mutation<S>>(
     override val effects: Flow<E> = _effects
 
     override suspend fun action(action: A)  {
-        log("MVI") { "Starting handling of action $action" }
+//        log("MVI") { "Starting handling of action $action" }
         handler.handleAction(
             _state.value,
             action
         ) { effect ->
-            log("MVI") { "Received side effect to post: $effect from action: $action" }
+//            log("MVI") { "Received side effect to post: $effect from action: $action" }
             _effects.emit(effect)
         }
             .cancellable()
             .distinctUntilChanged()
             .flowOn(Dispatchers.Default)
             .collect { mutation ->
-                log("MVI") { "Received mutation $mutation due to action $action" }
+//                log("MVI") { "Received mutation $mutation due to action $action" }
                 _state.update { mutation.reduce(_state.value) }
-                log("MVI") { "State updated to: ${_state.value}" }
+//                log("MVI") { "State updated to: ${_state.value}" }
             }
     }
 

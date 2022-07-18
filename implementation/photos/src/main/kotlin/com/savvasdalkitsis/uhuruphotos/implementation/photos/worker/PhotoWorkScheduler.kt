@@ -16,12 +16,16 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.implementation.photos.worker
 
 import androidx.work.BackoffPolicy
+import androidx.work.WorkInfo
 import com.savvasdalkitsis.uhuruphotos.api.worker.WorkScheduler
+import com.savvasdalkitsis.uhuruphotos.api.worker.usecase.WorkerStatusUseCase
+import kotlinx.coroutines.flow.Flow
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
 class PhotoWorkScheduler @Inject constructor(
-    private val workScheduler: WorkScheduler
+    private val workScheduler: WorkScheduler,
+    private val workerStatusUseCase: WorkerStatusUseCase,
 ) {
 
     fun schedulePhotoFavourite(id: String, favourite: Boolean) =
@@ -41,6 +45,20 @@ class PhotoWorkScheduler @Inject constructor(
         ) {
             putString(PhotoDetailsRetrieveWorker.KEY_ID, id)
         }
+
+    fun schedulePhotoOriginalFileRetrieve(id: String, video: Boolean) =
+        workScheduler.scheduleNow<PhotoOriginalFileRetrieveWorker>(
+            workName = PhotoOriginalFileRetrieveWorker.workName(id),
+            backoffPolicy = BackoffPolicy.EXPONENTIAL,
+            backoffDelay = 2,
+            backoffTimeUnit = TimeUnit.SECONDS,
+        ) {
+            putString(PhotoOriginalFileRetrieveWorker.KEY_ID, id)
+            putBoolean(PhotoOriginalFileRetrieveWorker.KEY_VIDEO, video)
+        }
+
+    fun observePhotoOriginalFileRetrieveJobStatus(id: String): Flow<WorkInfo.State> =
+        workerStatusUseCase.monitorUniqueJobStatus(PhotoOriginalFileRetrieveWorker.workName(id))
 
     fun schedulePhotoTrashing(id: String) {
         workScheduler.scheduleNow<PhotoTrashWorker>(

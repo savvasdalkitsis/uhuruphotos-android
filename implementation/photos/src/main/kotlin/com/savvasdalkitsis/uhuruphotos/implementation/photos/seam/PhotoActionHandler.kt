@@ -15,6 +15,8 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.implementation.photos.seam
 
+import androidx.work.WorkInfo
+import androidx.work.WorkInfo.State.*
 import com.savvasdalkitsis.uhuruphotos.api.albums.model.Album
 import com.savvasdalkitsis.uhuruphotos.api.albums.usecase.AlbumsUseCase
 import com.savvasdalkitsis.uhuruphotos.api.date.DateDisplayer
@@ -39,26 +41,9 @@ import com.savvasdalkitsis.uhuruphotos.api.seam.ActionHandler
 import com.savvasdalkitsis.uhuruphotos.api.search.SearchUseCase
 import com.savvasdalkitsis.uhuruphotos.api.strings.R
 import com.savvasdalkitsis.uhuruphotos.api.user.usecase.UserUseCase
-import com.savvasdalkitsis.uhuruphotos.implementation.photos.seam.PhotoAction.AskForPhotoRestoration
-import com.savvasdalkitsis.uhuruphotos.implementation.photos.seam.PhotoAction.AskForPhotoTrashing
-import com.savvasdalkitsis.uhuruphotos.implementation.photos.seam.PhotoAction.ChangedToPage
-import com.savvasdalkitsis.uhuruphotos.implementation.photos.seam.PhotoAction.ClickedOnGps
-import com.savvasdalkitsis.uhuruphotos.implementation.photos.seam.PhotoAction.ClickedOnMap
-import com.savvasdalkitsis.uhuruphotos.implementation.photos.seam.PhotoAction.DismissErrorMessage
-import com.savvasdalkitsis.uhuruphotos.implementation.photos.seam.PhotoAction.DismissConfirmationDialogs
-import com.savvasdalkitsis.uhuruphotos.implementation.photos.seam.PhotoAction.FullImageLoaded
-import com.savvasdalkitsis.uhuruphotos.implementation.photos.seam.PhotoAction.HideInfo
-import com.savvasdalkitsis.uhuruphotos.implementation.photos.seam.PhotoAction.LoadPhoto
-import com.savvasdalkitsis.uhuruphotos.implementation.photos.seam.PhotoAction.NavigateBack
-import com.savvasdalkitsis.uhuruphotos.implementation.photos.seam.PhotoAction.PersonSelected
-import com.savvasdalkitsis.uhuruphotos.implementation.photos.seam.PhotoAction.Refresh
-import com.savvasdalkitsis.uhuruphotos.implementation.photos.seam.PhotoAction.RestorePhoto
-import com.savvasdalkitsis.uhuruphotos.implementation.photos.seam.PhotoAction.SetFavourite
-import com.savvasdalkitsis.uhuruphotos.implementation.photos.seam.PhotoAction.SharePhoto
-import com.savvasdalkitsis.uhuruphotos.implementation.photos.seam.PhotoAction.ShowInfo
-import com.savvasdalkitsis.uhuruphotos.implementation.photos.seam.PhotoAction.ToggleUI
-import com.savvasdalkitsis.uhuruphotos.implementation.photos.seam.PhotoAction.TrashPhoto
+import com.savvasdalkitsis.uhuruphotos.implementation.photos.seam.PhotoAction.*
 import com.savvasdalkitsis.uhuruphotos.implementation.photos.seam.PhotoEffect.CopyToClipboard
+import com.savvasdalkitsis.uhuruphotos.implementation.photos.seam.PhotoEffect.DownloadingOriginal
 import com.savvasdalkitsis.uhuruphotos.implementation.photos.seam.PhotoEffect.HideSystemBars
 import com.savvasdalkitsis.uhuruphotos.implementation.photos.seam.PhotoEffect.LaunchMap
 import com.savvasdalkitsis.uhuruphotos.implementation.photos.seam.PhotoEffect.NavigateToPerson
@@ -66,6 +51,7 @@ import com.savvasdalkitsis.uhuruphotos.implementation.photos.seam.PhotoEffect.Sh
 import com.savvasdalkitsis.uhuruphotos.implementation.photos.seam.PhotoMutation.ChangeCurrentIndex
 import com.savvasdalkitsis.uhuruphotos.implementation.photos.seam.PhotoMutation.FinishedLoading
 import com.savvasdalkitsis.uhuruphotos.implementation.photos.seam.PhotoMutation.HideAllConfirmationDialogs
+import com.savvasdalkitsis.uhuruphotos.implementation.photos.seam.PhotoMutation.SetOriginalFileIconState
 import com.savvasdalkitsis.uhuruphotos.implementation.photos.seam.PhotoMutation.HideUI
 import com.savvasdalkitsis.uhuruphotos.implementation.photos.seam.PhotoMutation.Loading
 import com.savvasdalkitsis.uhuruphotos.implementation.photos.seam.PhotoMutation.ReceivedDetails
@@ -82,14 +68,22 @@ import com.savvasdalkitsis.uhuruphotos.implementation.photos.seam.PhotoMutation.
 import com.savvasdalkitsis.uhuruphotos.implementation.photos.seam.PhotoMutation.ShowTrashingConfirmationDialog
 import com.savvasdalkitsis.uhuruphotos.implementation.photos.seam.PhotoMutation.ShowUI
 import com.savvasdalkitsis.uhuruphotos.implementation.photos.usecase.MetadataUseCase
+import com.savvasdalkitsis.uhuruphotos.implementation.photos.view.state.OriginalFileIconState
+import com.savvasdalkitsis.uhuruphotos.implementation.photos.view.state.OriginalFileIconState.*
 import com.savvasdalkitsis.uhuruphotos.implementation.photos.view.state.PhotoState
 import com.savvasdalkitsis.uhuruphotos.implementation.photos.view.state.PhotoType
 import com.savvasdalkitsis.uhuruphotos.implementation.photos.view.state.PhotoType.TRASHED
 import com.savvasdalkitsis.uhuruphotos.implementation.photos.view.state.SinglePhotoState
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.FlowCollector
+import kotlinx.coroutines.flow.channelFlow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOf
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.merge
+import kotlinx.coroutines.flow.onStart
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 class PhotoActionHandler @Inject constructor(
@@ -104,6 +98,7 @@ class PhotoActionHandler @Inject constructor(
 ) : ActionHandler<PhotoState, PhotoEffect, PhotoAction, PhotoMutation> {
 
     private var photoType = PhotoType.default
+    private var changePageJob: Job? = null
 
     override fun handleAction(
         state: PhotoState,
@@ -157,11 +152,25 @@ class PhotoActionHandler @Inject constructor(
                 }
             }
         }
-        is ChangedToPage -> flow {
-            emit(ChangeCurrentIndex(action.page))
+        is ChangedToPage -> channelFlow {
+            changePageJob?.cancel()
+            changePageJob = null
+            send(ChangeCurrentIndex(action.page))
             if (state.photos.isNotEmpty()) {
                 val photo = state.photos[action.page]
-                loadPhotoDetails(photo.id)
+                changePageJob = launch {
+                    merge<PhotoMutation>(
+                        flow { loadPhotoDetails(photo.id) },
+                        photosUseCase.observeOriginalFileDownloadStatus(photo.id)
+                            .map { when(it) {
+                                ENQUEUED, RUNNING, BLOCKED -> IN_PROGRESS
+                                SUCCEEDED -> IDLE
+                                FAILED, CANCELLED -> ERROR
+                            } }
+                            .onStart { emit(IDLE) }
+                            .map { SetOriginalFileIconState(photo.id, it) }
+                    ).collect { send(it) }
+                }
             }
         }
         ToggleUI -> flow {
@@ -217,14 +226,21 @@ class PhotoActionHandler @Inject constructor(
             effect(PhotoEffect.SharePhoto(state.currentPhoto.fullResUrl))
         }
         is FullImageLoaded -> flow {
-            emit(ShowShareIcon(action.photo.id))
-            val metadata = metadataUseCase.extractMetadata(action.photo.fullResUrl)
-            if (metadata != null) {
-                emit(ShowMetadata(action.photo.id, metadata))
+            emit(SetOriginalFileIconState(action.photo.id, HIDDEN))
+            if (!action.photo.isVideo) {
+                emit(ShowShareIcon(action.photo.id))
+                val metadata = metadataUseCase.extractMetadata(action.photo.fullResUrl)
+                if (metadata != null) {
+                    emit(ShowMetadata(action.photo.id, metadata))
+                }
             }
         }
         is PersonSelected -> flow {
             effect(NavigateToPerson(action.person.id))
+        }
+        is DownloadOriginal -> flow {
+            photosUseCase.downloadOriginal(action.photo.id, action.photo.isVideo)
+            effect(DownloadingOriginal)
         }
     }
 

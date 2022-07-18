@@ -15,20 +15,19 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.implementation.account.usecase
 
+import com.google.android.exoplayer2.upstream.cache.CacheDataSource
 import com.savvasdalkitsis.uhuruphotos.api.account.usecase.AccountUseCase
 import com.savvasdalkitsis.uhuruphotos.api.db.Database
 import com.savvasdalkitsis.uhuruphotos.api.db.extensions.async
 import com.savvasdalkitsis.uhuruphotos.api.image.cache.ImageCacheController
-import com.savvasdalkitsis.uhuruphotos.api.video.VideoCache
 import com.savvasdalkitsis.uhuruphotos.api.worker.WorkScheduler
-import okhttp3.Cache
+import com.savvasdalkitsis.uhuruphotos.api.video.evictAll
 import javax.inject.Inject
 
 class AccountUseCase @Inject constructor(
     private val db: Database,
     private val imageCacheController: ImageCacheController,
-    @VideoCache
-    private val videoCache: Cache,
+    private val videoCache: CacheDataSource.Factory,
     private val workScheduler: WorkScheduler,
 ) : AccountUseCase {
 

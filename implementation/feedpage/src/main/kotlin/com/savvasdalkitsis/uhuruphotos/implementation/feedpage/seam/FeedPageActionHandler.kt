@@ -28,6 +28,7 @@ import com.savvasdalkitsis.uhuruphotos.api.userbadge.usecase.UserBadgeUseCase
 import com.savvasdalkitsis.uhuruphotos.api.userbadge.view.state.SyncState.IN_PROGRESS
 import com.savvasdalkitsis.uhuruphotos.implementation.feedpage.SelectionList
 import com.savvasdalkitsis.uhuruphotos.implementation.feedpage.seam.FeedPageAction.*
+import com.savvasdalkitsis.uhuruphotos.implementation.feedpage.seam.FeedPageEffect.DownloadingFiles
 import com.savvasdalkitsis.uhuruphotos.implementation.feedpage.seam.FeedPageEffect.OpenPhotoDetails
 import com.savvasdalkitsis.uhuruphotos.implementation.feedpage.seam.FeedPageEffect.SharePhotos
 import com.savvasdalkitsis.uhuruphotos.implementation.feedpage.seam.FeedPageEffect.Vibrate
@@ -146,6 +147,12 @@ internal class FeedPageActionHandler @Inject constructor(
         }
         ShareSelectedPhotos -> flow {
             effect(SharePhotos(state.selectedPhotos))
+        }
+        DownloadSelectedPhotos -> flow {
+            effect(DownloadingFiles)
+            state.selectedPhotos.forEach {
+                photosUseCase.downloadOriginal(it.id, it.isVideo)
+            }
         }
     }
 

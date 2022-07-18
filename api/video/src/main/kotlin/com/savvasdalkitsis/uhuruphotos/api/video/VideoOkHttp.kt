@@ -13,19 +13,10 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
  */
-package com.savvasdalkitsis.uhuruphotos.api.toaster
+package com.savvasdalkitsis.uhuruphotos.api.video
 
-import android.content.Context
-import android.widget.Toast
-import androidx.annotation.StringRes
-import dagger.hilt.android.qualifiers.ApplicationContext
-import javax.inject.Inject
+import javax.inject.Qualifier
 
-class Toaster @Inject constructor(
-    @ApplicationContext private val context: Context,
-) {
-
-    fun show(@StringRes message: Int) {
-        Toast.makeText(context, message, Toast.LENGTH_LONG).show()
-    }
-}
+@Qualifier
+@Retention(AnnotationRetention.BINARY)
+annotation class VideoOkHttp

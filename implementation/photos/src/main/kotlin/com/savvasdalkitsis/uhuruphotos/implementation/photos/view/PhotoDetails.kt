@@ -115,6 +115,7 @@ fun PhotoDetails(
                     videoUrl = photo.fullResUrl,
                     videoThumbnailUrl = photo.lowResUrl,
                     play = true,
+                    onFinishedLoading = { action(FullImageLoaded(photo)) },
                 )
                 else -> Image(
                     modifier = Modifier

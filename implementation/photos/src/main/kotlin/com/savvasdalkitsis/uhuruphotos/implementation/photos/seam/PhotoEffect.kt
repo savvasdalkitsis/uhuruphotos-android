@@ -24,6 +24,7 @@ sealed class PhotoEffect {
     object ShowSystemBars : PhotoEffect()
     object NavigateBack : PhotoEffect()
     object ErrorRefreshingPeople : PhotoEffect()
+    object DownloadingOriginal : PhotoEffect()
 
     data class SharePhoto(val url: String) : PhotoEffect()
     data class NavigateToPerson(val id: Int) : PhotoEffect()
