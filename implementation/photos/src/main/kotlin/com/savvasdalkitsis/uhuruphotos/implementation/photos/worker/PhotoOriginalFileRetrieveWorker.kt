@@ -17,7 +17,6 @@ package com.savvasdalkitsis.uhuruphotos.implementation.photos.worker
 
 import android.content.Context
 import android.net.Uri
-import androidx.core.app.NotificationManagerCompat
 import androidx.hilt.work.HiltWorker
 import androidx.work.CoroutineWorker
 import androidx.work.WorkerParameters
@@ -34,7 +33,6 @@ import com.savvasdalkitsis.uhuruphotos.api.photos.usecase.PhotosUseCase
 import com.savvasdalkitsis.uhuruphotos.api.strings.R
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedInject
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
 @HiltWorker
@@ -47,7 +45,7 @@ class PhotoOriginalFileRetrieveWorker @AssistedInject constructor(
     private val foregroundInfoBuilder: ForegroundInfoBuilder,
 ) : CoroutineWorker(context, params) {
 
-    override suspend fun doWork() = withContext(Dispatchers.Unconfined) {
+    override suspend fun doWork() = withContext(DownloadDispatcher) {
         try {
             val id = params.inputData.getString(KEY_ID)!!
             val video = params.inputData.getBoolean(KEY_VIDEO, false)
@@ -79,6 +77,7 @@ class PhotoOriginalFileRetrieveWorker @AssistedInject constructor(
                 createForegroundInfo(((bytesCached / requestLength.toFloat()) * 100).toInt())
             )
         }.cache()
+        setForegroundAsync(createForegroundInfo(null))
         return Result.success()
     }
 
