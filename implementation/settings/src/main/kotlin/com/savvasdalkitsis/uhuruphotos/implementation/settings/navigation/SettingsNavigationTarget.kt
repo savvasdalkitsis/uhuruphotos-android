@@ -27,6 +27,7 @@ import com.savvasdalkitsis.uhuruphotos.implementation.settings.seam.SettingsActi
 import com.savvasdalkitsis.uhuruphotos.implementation.settings.seam.SettingsEffect
 import com.savvasdalkitsis.uhuruphotos.implementation.settings.seam.SettingsEffectHandler
 import com.savvasdalkitsis.uhuruphotos.implementation.settings.view.Settings
+import com.savvasdalkitsis.uhuruphotos.implementation.settings.view.controller.SettingsViewStateController
 import com.savvasdalkitsis.uhuruphotos.implementation.settings.view.state.SettingsState
 import com.savvasdalkitsis.uhuruphotos.implementation.settings.viewmodel.SettingsViewModel
 import javax.inject.Inject
@@ -34,6 +35,7 @@ import javax.inject.Inject
 internal class SettingsNavigationTarget @Inject constructor(
     private val settingsEffectHandler: SettingsEffectHandler,
     private val settingsUseCase: SettingsUseCase,
+    private val settingsViewStateController: SettingsViewStateController,
 ) : NavigationTarget {
 
     override suspend fun NavGraphBuilder.create(navHostController: NavHostController) {
@@ -44,7 +46,7 @@ internal class SettingsNavigationTarget @Inject constructor(
             initializer = { _, actions -> actions(LoadSettings) },
             createModel = { hiltViewModel() }
         ) { state, actions ->
-            Settings(state, actions)
+            Settings(settingsViewStateController, state, actions)
         }
     }
 }

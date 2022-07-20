@@ -31,20 +31,19 @@ import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.MutableState
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.savvasdalkitsis.uhuruphotos.api.icons.R
+import com.savvasdalkitsis.uhuruphotos.implementation.settings.view.controller.SettingsGroupState
 
 @Composable
-internal fun SettingsGroup(
-    title: String,
-    collapsed: MutableState<Boolean> = remember { mutableStateOf(false) },
+internal fun Group(
+    groupState: SettingsGroupState,
     content: @Composable ColumnScope.() -> Unit,
 ) {
     Surface(
@@ -55,7 +54,7 @@ internal fun SettingsGroup(
             val arrowAngle = remember { Animatable(180f) }
             Box(modifier = Modifier
                 .fillMaxWidth()
-                .clickable { collapsed.value = !collapsed.value }
+                .clickable { groupState.toggleCollapsed() }
             ) {
                 Row(
                     modifier = Modifier
@@ -64,7 +63,7 @@ internal fun SettingsGroup(
                     horizontalArrangement = Arrangement.spacedBy(8.dp),
                 ) {
                     Text(
-                        text = title,
+                        text = stringResource(groupState.title),
                         style = MaterialTheme.typography.h6,
                     )
                     Icon(
@@ -74,15 +73,15 @@ internal fun SettingsGroup(
                     )
                 }
             }
-            AnimatedVisibility(visible = !collapsed.value) {
+            AnimatedVisibility(visible = !groupState.isCollapsed) {
                 Column {
                     content()
                 }
             }
-            LaunchedEffect(collapsed.value) {
+            LaunchedEffect(groupState.isCollapsed) {
                 arrowAngle.animateTo(
                     when {
-                        collapsed.value -> 180f
+                        groupState.isCollapsed -> 180f
                         else -> 0f
                     }
                 )

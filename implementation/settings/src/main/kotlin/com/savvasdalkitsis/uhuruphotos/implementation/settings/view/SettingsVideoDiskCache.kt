@@ -15,10 +15,8 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.implementation.settings.view
 
+import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.MutableState
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.ui.res.stringResource
 import com.savvasdalkitsis.uhuruphotos.api.strings.R
 import com.savvasdalkitsis.uhuruphotos.implementation.settings.seam.SettingsAction
@@ -27,10 +25,9 @@ import com.savvasdalkitsis.uhuruphotos.implementation.settings.seam.SettingsActi
 import com.savvasdalkitsis.uhuruphotos.implementation.settings.view.state.SettingsState
 
 @Composable
-internal fun SettingsGroupVideoDiskCache(
+internal fun ColumnScope.SettingsVideoDiskCache(
     state: SettingsState,
     action: (SettingsAction) -> Unit,
-    collapsed: MutableState<Boolean> = remember { mutableStateOf(false) },
 ) {
     SettingsGroupCache(
         title = stringResource(R.string.video_disk_cache),
@@ -39,6 +36,5 @@ internal fun SettingsGroupVideoDiskCache(
         clearAction = ClearVideoDiskCache,
         changeCacheSizeAction = { ChangeVideoDiskCache(it) },
         action = action,
-        collapsed = collapsed,
     )
 }

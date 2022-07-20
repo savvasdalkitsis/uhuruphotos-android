@@ -15,10 +15,8 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.implementation.settings.view
 
+import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.MutableState
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.ui.res.stringResource
 import com.savvasdalkitsis.uhuruphotos.api.strings.R
 import com.savvasdalkitsis.uhuruphotos.implementation.settings.seam.SettingsAction
@@ -29,31 +27,25 @@ import com.savvasdalkitsis.uhuruphotos.implementation.settings.view.state.Settin
 import com.savvasdalkitsis.uhuruphotos.api.icons.R as Icons
 
 @Composable
-internal fun SettingsGroupFeedback(
+internal fun ColumnScope.SettingsFeedback(
     state: SettingsState,
     action: (SettingsAction) -> Unit,
-    collapsed: MutableState<Boolean> = remember { mutableStateOf(false) },
 ) {
-    SettingsGroup(
-        title = stringResource(R.string.feedback),
-        collapsed = collapsed,
+    SettingsOutlineButtonRow(
+        buttonText = stringResource(R.string.send_feedback_with_logs),
+        icon = Icons.drawable.ic_feedback,
     ) {
-        SettingsOutlineButtonRow(
-            buttonText = stringResource(R.string.send_feedback_with_logs),
-            icon = Icons.drawable.ic_feedback,
-        ) {
-            action(SendFeedbackClicked)
-        }
-        SettingsEntryWithSubtext(subtext = R.string.degrades_performance) {
-            SettingsCheckBox(
-                text = stringResource(R.string.enable_logging),
-                icon = Icons.drawable.ic_logs,
-                isChecked = state.isLoggingEnabled,
-                onCheckedChange = { action(ChangeLoggingEnabled(it)) }
-            )
-        }
-        SettingsButtonRow(buttonText = stringResource(R.string.clear_log_file)) {
-            action(ClearLogFileClicked)
-        }
+        action(SendFeedbackClicked)
+    }
+    SettingsEntryWithSubtext(subtext = R.string.degrades_performance) {
+        SettingsCheckBox(
+            text = stringResource(R.string.enable_logging),
+            icon = Icons.drawable.ic_logs,
+            isChecked = state.isLoggingEnabled,
+            onCheckedChange = { action(ChangeLoggingEnabled(it)) }
+        )
+    }
+    SettingsButtonRow(buttonText = stringResource(R.string.clear_log_file)) {
+        action(ClearLogFileClicked)
     }
 }

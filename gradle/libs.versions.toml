@@ -2,7 +2,7 @@
 accompanist = "0.24.12-rc"
 androidx-hilt = "1.0.0"
 coil = "2.1.0"
-compose = "1.2.0-rc02"
+compose = "1.2.0-rc03"
 exoplayer = "2.18.0"
 lumberjack = "5.2.5"
 mockk = "1.12.4"
@@ -21,6 +21,8 @@ accompanist-swiperefresh = { module = "com.google.accompanist:accompanist-swiper
 accompanist-systemui = { module = "com.google.accompanist:accompanist-systemuicontroller", version.ref = "accompanist" }
 accompanist-webview = { module = "com.google.accompanist:accompanist-webview", version.ref = "accompanist" }
 androidx-activity = "androidx.activity:activity-compose:1.6.0-alpha05"
+androidx-compose-animation-base = { module = "androidx.compose.animation:animation", version.ref = "compose" }
+androidx-compose-animation-graphics = { module = "androidx.compose.animation:animation-graphics", version.ref = "compose" }
 androidx-compose-foundation = { module = "androidx.compose.foundation:foundation", version.ref = "compose" }
 androidx-compose-foundation-layout = { module = "androidx.compose.foundation:foundation-layout", version.ref = "compose" }
 androidx-compose-hilt-navigation = { module = "androidx.hilt:hilt-navigation-compose", version.ref = "androidx-hilt" }
@@ -92,6 +94,7 @@ urlvalidator = "commons-validator:commons-validator:1.7"
 zoomable = "com.mxalbert.zoomable:zoomable:1.4.2"
 
 [bundles]
+androidx-compose-animation = ["androidx-compose-animation-base", "androidx-compose-animation-graphics"]
 lumberjack = ["lumberjack-core", "lumberjack-feedback", "lumberjack-feedback-manager", "lumberjack-file", "lumberjack-notification"]
 test = ["junit", "mockk", "shazamcrest", "turbine"]
 test-android = ["androidx-compose-test-junit", "androidx-compose-test-manifest", "androidx-espresso", "androidx-test-core", "androidx-test-runner", "junit", "mockk-android"]

@@ -24,11 +24,13 @@ dependencies {
     implementation project(':api:userbadge')
     implementation project(':api:video')
     implementation(
+            libs.bundles.androidx.compose.animation,
             libs.androidx.compose.foundation,
             libs.androidx.compose.foundation.layout,
             libs.androidx.compose.material,
             libs.androidx.compose.material.windowsize,
             libs.androidx.datastore.preferences,
+            libs.androidx.preference,
             libs.androidx.work,
             libs.coil.base,
             libs.flowpreferences,

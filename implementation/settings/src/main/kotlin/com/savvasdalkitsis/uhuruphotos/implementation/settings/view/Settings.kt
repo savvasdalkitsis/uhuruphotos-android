@@ -19,8 +19,6 @@ import androidx.compose.material.Text
 import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass.Companion.Compact
 import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass.Companion.Medium
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.ui.res.stringResource
 import com.savvasdalkitsis.uhuruphotos.api.strings.R
 import com.savvasdalkitsis.uhuruphotos.api.ui.view.ActionIcon
@@ -33,51 +31,27 @@ import com.savvasdalkitsis.uhuruphotos.api.userbadge.view.UserBadge
 import com.savvasdalkitsis.uhuruphotos.implementation.settings.seam.SettingsAction
 import com.savvasdalkitsis.uhuruphotos.implementation.settings.seam.SettingsAction.DismissFullFeedSyncDialog
 import com.savvasdalkitsis.uhuruphotos.implementation.settings.seam.SettingsAction.NavigateBack
+import com.savvasdalkitsis.uhuruphotos.implementation.settings.view.controller.SettingsViewStateController
 import com.savvasdalkitsis.uhuruphotos.implementation.settings.view.state.MapProviderState.Selected
 import com.savvasdalkitsis.uhuruphotos.implementation.settings.view.state.SettingsState
 import com.savvasdalkitsis.uhuruphotos.api.icons.R as Icons
 
 @Composable
 internal fun Settings(
+    controller: SettingsViewStateController,
     state: SettingsState,
     action: (SettingsAction) -> Unit,
 ) {
-    val collapsedTheme = remember { mutableStateOf(false) }
-    val collapsedFeed = remember { mutableStateOf(false) }
-    val collapsedBiometrics = remember { mutableStateOf(false) }
-    val collapsedImageDiskCache = remember { mutableStateOf(false) }
-    val collapsedImageMemoryCache = remember { mutableStateOf(false) }
-    val collapsedVideoDiskCache = remember { mutableStateOf(false) }
-    val collapsedJobs = remember { mutableStateOf(false) }
-    val collapsedSearch = remember { mutableStateOf(false) }
-    val collapsedShare = remember { mutableStateOf(false) }
-    val collapsedLibrary = remember { mutableStateOf(false) }
-    val collapsedFeedback = remember { mutableStateOf(false) }
-    val collapsedMap = remember { mutableStateOf(false) }
-    val allCollapse = listOf(
-        collapsedTheme,
-        collapsedFeed,
-        collapsedBiometrics,
-        collapsedImageDiskCache,
-        collapsedImageMemoryCache,
-        collapsedVideoDiskCache,
-        collapsedJobs,
-        collapsedSearch,
-        collapsedShare,
-        collapsedLibrary,
-        collapsedFeedback,
-        collapsedMap,
-    )
     CommonScaffold(
         title = { Text(stringResource(R.string.settings)) },
         actionBarContent = {
             ActionIcon(
-                onClick = { allCollapse.forEach { it.value = false } },
+                onClick = { controller.collapseAll() },
                 icon = Icons.drawable.ic_expand_all,
                 contentDescription = stringResource(R.string.expand_all),
             )
             ActionIcon(
-                onClick = { allCollapse.forEach { it.value = true } },
+                onClick = { controller.expandAll() },
                 icon = Icons.drawable.ic_collapse_all,
                 contentDescription = stringResource(R.string.collapse_all),
             )
@@ -100,43 +74,53 @@ internal fun Settings(
                 syncScrolling = false,
                 columnCount = columns,
             ) {
-                item {
-                    SettingsGroupTheme(state, action, collapsedTheme)
-                }
-                item {
-                    SettingsGroupFeed(state, action, collapsedFeed)
-                }
-                item {
-                    SettingsGroupBiometrics(state, action, collapsedBiometrics)
-                }
-                item {
-                    SettingsGroupImageDiskCache(state, action, collapsedImageDiskCache)
-                }
-                item {
-                    SettingsGroupImageMemoryCache(state, action, collapsedImageMemoryCache)
-                }
-                item {
-                    SettingsGroupVideoDiskCache(state, action, collapsedVideoDiskCache)
-                }
-                item {
-                    SettingsGroupJobs(state, action, collapsedJobs)
-                }
-                item {
-                    SettingsGroupSearch(state, action, collapsedSearch)
-                }
-                item {
-                    SettingsGroupShare(state, action, collapsedShare)
-                }
-                item {
-                    SettingsGroupLibrary(state, action, collapsedLibrary)
-                }
-                when (val mapProviderState = state.mapProviderState) {
-                    is Selected -> item {
-                        SettingsGroupMaps(mapProviderState, action, collapsedMap)
+                SuperGroup(controller.ui) {
+                    Group(controller.uiTheme) {
+                        SettingsTheme(state, action)
+                    }
+                    Group(controller.uiSearch) {
+                        SettingsSearch(state, action)
+                    }
+                    Group(controller.uiLibrary) {
+                        SettingsLibrary(state, action)
+                    }
+                    val mapProvider = state.mapProviderState
+                    if (mapProvider is Selected) {
+                        Group(controller.uiMaps) {
+                            SettingsMaps(mapProvider, action)
+                        }
                     }
                 }
-                item {
-                    SettingsGroupFeedback(state, action, collapsedFeedback)
+                SuperGroup(controller.privacy) {
+                    state.biometrics?.let {
+                        Group(controller.privacyBiometrics) {
+                            SettingsBiometrics(it, action)
+                        }
+                    }
+                    Group(controller.privacyShare) {
+                        SettingsShare(state, action)
+                    }
+                }
+                SuperGroup(controller.jobs) {
+                    Group(controller.jobsFeed) {
+                        SettingsFeed(state, action)
+                    }
+                }
+                SuperGroup(controller.advanced) {
+                    Group(controller.advancedImageDiskCache) {
+                        SettingsImageDiskCache(state, action)
+                    }
+                    Group(controller.advancedImageMemoryCache) {
+                        SettingsImageMemoryCache(state, action)
+                    }
+                    Group(controller.advancedVideoDiskCache) {
+                        SettingsVideoDiskCache(state, action)
+                    }
+                }
+                SuperGroup(controller.help) {
+                    Group(controller.helpFeedback) {
+                        SettingsFeedback(state, action)
+                    }
                 }
             }
         }

@@ -16,33 +16,24 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.implementation.settings.view
 
 import androidx.compose.foundation.layout.ColumnScope
-import androidx.compose.material.Divider
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.stringResource
 import com.savvasdalkitsis.uhuruphotos.api.strings.R
 import com.savvasdalkitsis.uhuruphotos.implementation.settings.seam.SettingsAction
+import com.savvasdalkitsis.uhuruphotos.implementation.settings.seam.SettingsAction.ChangeShowLibrary
+import com.savvasdalkitsis.uhuruphotos.implementation.settings.view.state.SettingsState
+import com.savvasdalkitsis.uhuruphotos.api.icons.R as Icons
 
 @Composable
-internal fun ColumnScope.SettingsGroupCache(
-    title: String,
-    current: Int,
-    initialMaxLimit: Float,
-    range: ClosedFloatingPointRange<Float> = 10f..2000f,
-    clearAction: SettingsAction,
-    changeCacheSizeAction: (Float) -> SettingsAction,
+internal fun ColumnScope.SettingsLibrary(
+    state: SettingsState,
     action: (SettingsAction) -> Unit,
 ) {
-    SettingsTextButtonRow(
-        text = stringResource(R.string.currently_used, current),
-        buttonText = stringResource(R.string.clear),
-        onClick = { action(clearAction) }
-    )
-    Divider()
-    SettingsSliderRow(
-        text = { stringResource(R.string.max_limit, it.toInt()) },
-        subtext = R.string.changes_effect_after_restart,
-        initialValue = initialMaxLimit,
-        range = range,
-        onValueChanged = { action(changeCacheSizeAction(it)) }
-    )
+    SettingsCheckBox(
+        text = stringResource(R.string.show_library_on_home),
+        icon = Icons.drawable.ic_photo_album,
+        isChecked = state.showLibrary,
+    ) {
+        action(ChangeShowLibrary(it))
+    }
 }

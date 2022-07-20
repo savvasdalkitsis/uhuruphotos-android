@@ -16,13 +16,11 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.implementation.settings.view
 
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.Row
 import androidx.compose.material.Icon
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.MutableState
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -34,31 +32,25 @@ import com.savvasdalkitsis.uhuruphotos.implementation.settings.view.state.MapPro
 import com.savvasdalkitsis.uhuruphotos.api.icons.R as Icons
 
 @Composable
-internal fun SettingsGroupMaps(
+internal fun ColumnScope.SettingsMaps(
     mapProviderState: MapProviderState.Selected,
     action: (SettingsAction) -> Unit,
-    collapsed: MutableState<Boolean> = remember { mutableStateOf(false) },
 ) {
-    SettingsGroup(
-        title = stringResource(R.string.maps),
-        collapsed = collapsed,
-    ) {
-        SettingsTextDropDownButtonRow(
-            content = {
-                Row(
-                    horizontalArrangement = Arrangement.spacedBy(8.dp),
-                    verticalAlignment = Alignment.CenterVertically,
-                ) {
-                    Icon(painter = painterResource(Icons.drawable.ic_map), contentDescription = null)
-                    Text("${stringResource(R.string.map_provider)}: ${mapProviderState.current.name}",)
-                }
-            },
-            buttonText = stringResource(R.string.change),
-            action = action,
-        ) {
-            mapProviderState.available.forEach { provider ->
-                Item(text = provider.name, action = ChangeMapProvider(provider))
+    SettingsTextDropDownButtonRow(
+        content = {
+            Row(
+                horizontalArrangement = Arrangement.spacedBy(8.dp),
+                verticalAlignment = Alignment.CenterVertically,
+            ) {
+                Icon(painter = painterResource(Icons.drawable.ic_map), contentDescription = null)
+                Text("${stringResource(R.string.map_provider)}: ${mapProviderState.current.name}",)
             }
+        },
+        buttonText = stringResource(R.string.change),
+        action = action,
+    ) {
+        mapProviderState.available.forEach { provider ->
+            Item(text = provider.name, action = ChangeMapProvider(provider))
         }
     }
 }

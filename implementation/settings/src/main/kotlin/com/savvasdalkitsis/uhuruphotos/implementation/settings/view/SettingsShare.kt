@@ -15,30 +15,28 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.implementation.settings.view
 
+import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.MutableState
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.ui.res.stringResource
 import com.savvasdalkitsis.uhuruphotos.api.strings.R
 import com.savvasdalkitsis.uhuruphotos.implementation.settings.seam.SettingsAction
-import com.savvasdalkitsis.uhuruphotos.implementation.settings.seam.SettingsAction.ChangeImageDiskCache
-import com.savvasdalkitsis.uhuruphotos.implementation.settings.seam.SettingsAction.ClearImageDiskCache
+import com.savvasdalkitsis.uhuruphotos.implementation.settings.seam.SettingsAction.ChangeShareGpsDataEnabled
 import com.savvasdalkitsis.uhuruphotos.implementation.settings.view.state.SettingsState
+import com.savvasdalkitsis.uhuruphotos.api.icons.R as Icons
 
 @Composable
-internal fun SettingsGroupImageDiskCache(
+internal fun ColumnScope.SettingsShare(
     state: SettingsState,
     action: (SettingsAction) -> Unit,
-    collapsed: MutableState<Boolean> = remember { mutableStateOf(false) },
 ) {
-    SettingsGroupCache(
-        title = stringResource(R.string.image_disk_cache),
-        current = state.imageDiskCacheCurrent,
-        initialMaxLimit = state.imageDiskCacheMax.toFloat(),
-        clearAction = ClearImageDiskCache,
-        changeCacheSizeAction = { ChangeImageDiskCache(it) },
-        action = action,
-        collapsed = collapsed,
+    val checked = state.shareRemoveGpsDataEnabled
+    SettingsCheckBox(
+        text = stringResource(R.string.remove_gps_data_when_sharing),
+        icon = when {
+            checked -> Icons.drawable.ic_gps_off
+            else -> Icons.drawable.ic_gps_on
+        },
+        isChecked = checked,
+        onCheckedChange = { action(ChangeShareGpsDataEnabled(it)) }
     )
 }
