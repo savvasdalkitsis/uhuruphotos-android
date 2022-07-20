@@ -23,5 +23,6 @@ dependencies {
     implementation(
             libs.androidx.compose.material,
             libs.androidx.compose.material.windowsize,
+            libs.bubble.navigation,
     )
 }

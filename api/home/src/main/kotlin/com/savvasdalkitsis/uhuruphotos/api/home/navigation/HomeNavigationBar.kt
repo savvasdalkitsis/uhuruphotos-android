@@ -23,6 +23,7 @@ import androidx.compose.material.BottomNavigation
 import androidx.compose.material.BottomNavigationItem
 import androidx.compose.material.Icon
 import androidx.compose.material.LocalContentColor
+import androidx.compose.material.MaterialTheme
 import androidx.compose.material.NavigationRail
 import androidx.compose.material.NavigationRailItem
 import androidx.compose.material.Text
@@ -43,11 +44,14 @@ import androidx.navigation.NavDestination.Companion.hierarchy
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
+import com.commandiron.bubble_navigation_bar_compose.BubbleNavigationBar
+import com.commandiron.bubble_navigation_bar_compose.BubbleNavigationBarItem
 import com.savvasdalkitsis.uhuruphotos.api.feed.view.state.FeedDisplay
 import com.savvasdalkitsis.uhuruphotos.api.home.navigation.NavigationStyle.BOTTOM_BAR
 import com.savvasdalkitsis.uhuruphotos.api.home.navigation.NavigationStyle.NAVIGATION_RAIL
 import com.savvasdalkitsis.uhuruphotos.api.homenavigation.HomeNavigationRoutes
 import com.savvasdalkitsis.uhuruphotos.api.icons.R
+import com.savvasdalkitsis.uhuruphotos.api.ui.theme.CustomColors
 import com.savvasdalkitsis.uhuruphotos.api.ui.window.LocalWindowSize
 import com.savvasdalkitsis.uhuruphotos.api.strings.R as Strings
 
@@ -70,9 +74,9 @@ fun HomeNavigationBar(
 
     when (homeNavigationStyle()) {
         BOTTOM_BAR -> {
-            BottomNavigation(
-                elevation = 0.dp,
-                backgroundColor = Color.Transparent
+            BubbleNavigationBar(
+                containerColor = Color.Transparent,
+                contentColor = Color.Transparent,
             ) {
                 Items(
                     currentDestination = currentDestination,
@@ -180,9 +184,12 @@ private fun BottomNavItem(
     onReselected: () -> Unit,
 ) {
     with(rowScope) {
-        BottomNavigationItem(
-            icon = { Icon(icon, contentDescription = null) },
-            label = { Text(stringResource(label)) },
+        BubbleNavigationBarItem(
+            title = stringResource(label),
+            iconPainter = icon,
+            selectedColor = MaterialTheme.colors.primary,
+            unSelectedBackgroundColor = MaterialTheme.colors.background,
+            unSelectedIconColor = CustomColors.emptyItem,
             selected = isSelected(currentDestination, routeName),
             onClick = selectNavigationItem(currentDestination, routeName, navController, onReselected)
         )
