@@ -15,13 +15,15 @@ CREATE TABLE photoSummary (
 );
 
 getFavourites:
-SELECT * FROM photoSummary WHERE rating >= :favouriteThreshold;
+SELECT * FROM photoSummary WHERE rating >= :favouriteThreshold
+ORDER BY date DESC;
 
 countFavourites:
 SELECT count(id) FROM photoSummary WHERE rating >= :favouriteThreshold;
 
 getHidden:
-SELECT * FROM photoSummary WHERE containerId == 'hiddenPhoto';
+SELECT * FROM photoSummary WHERE containerId == 'hiddenPhoto'
+ORDER BY date DESC;
 
 insertHidden:
 INSERT OR REPLACE INTO photoSummary VALUES (?,?,?,?,?,?,?,?,?,?,'hiddenPhoto');
