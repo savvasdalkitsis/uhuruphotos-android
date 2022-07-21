@@ -121,4 +121,47 @@
         <item quantity="one">Êtes-vous sûr de vouloir envoyer cette photo dans la corbeille \?</item>
         <item quantity="other">Êtes-vous sûr de vouloir envoyer ces %d photos dans la corbeille \?</item>
     </plurals>
+    <string name="enable_logging">Activer la journalisation</string>
+    <string name="feed_refresh_days">Nombre de jours du flux à mettre à jour lors de \"Tirer pour rafraîchir\"</string>
+    <string name="restoring_photo">Restauration de la photo depuis la corbeille</string>
+    <string name="trash">Corbeille</string>
+    <string name="people">Personnes</string>
+    <string name="trashing_photo">Envoi de la photo à la corbeille</string>
+    <string name="view_all">Tout voir</string>
+    <plurals name="days">
+        <item quantity="one">%d jour</item>
+        <item quantity="other">%d jours</item>
+    </plurals>
+    <string name="location">Emplacement</string>
+    <string name="favourite_photos">Photos favoris</string>
+    <string name="require_biometrics_for_trash_access">Exiger une authentification biométrique pour accéder à la corbeille</string>
+    <string name="authenticate_to_change">Authentifiez-vous pour changer ce paramètre</string>
+    <string name="authenticate_to_change_description">La désactivation de ce paramètre requiert de vous authentifier pour des raisons de sécurité</string>
+    <string name="authenticate_for_access">Authentifiez-vous pour accéder à l\'application</string>
+    <string name="authenticate_for_access_to_trash">Authentifiez-vous pour accéder à la corbeille</string>
+    <string name="authenticate_for_access_description">Vous avez demandé que l\'application ne soit accessible qu\'avec authentification</string>
+    <string name="authenticate_for_access_to_trash_description">Vous avez demandé que la corbeille ne soit accessible qu\'avec authentification</string>
+    <string name="operation_irreverisble">Cette opération est irréversible</string>
+    <string name="restore">Restaurer</string>
+    <string name="degrades_performance">Dégrade les performances lorsque c\'est activé</string>
+    <string name="error_loading_albums">Une erreur s\'est produite lors du chargement des albums</string>
+    <string name="error_loading_user_albums">Une erreur s\'est produite dans les albums créés par l\'utilisateur</string>
+    <string name="hidden_photos">Photos cachées</string>
+    <string name="authenticate">Authentification</string>
+    <string name="require_biometrics_for_app_access">Exiger une authentification biométrique pour l\'accès à l\'application</string>
+    <string name="biometrics">Authentification biométrique</string>
+    <string name="require_biometrics_for_hidden_photos_access">Exiger une authentification biométrique pour accéder aux photos cachées</string>
+    <string name="authenticate_for_access_to_hidden">Authentifiez-vous pour accéder aux photos cachées</string>
+    <string name="authenticate_for_access_to_hidden_description">Vous avez demandé que les photos masquées ne soient accessibles qu\'avec authentification</string>
+    <string name="download_original_file">Télécharger le fichier original</string>
+    <string name="downloading_original_file">Téléchargement du fichier original en cours</string>
+    <string name="downloading_original_files">Téléchargement des fichiers originaux en cours</string>
+    <string name="downloading_original_file_background">Téléchargement du fichier original en arrière-plan.</string>
+    <string name="you_can_leave">Vous pouvez quitter l\'écran si vous le souhaitez.</string>
+    <string name="ui">Interface utilisateur</string>
+    <string name="privacy_security">Confidentialité &amp; Sécurité</string>
+    <string name="advanced">Avancé</string>
+    <string name="help">Aide</string>
+    <string name="details">Détails</string>
+    <string name="open_in_maps">Ouvrir dans Maps</string>
 </resources>
