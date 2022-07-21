@@ -24,6 +24,7 @@ import com.savvasdalkitsis.uhuruphotos.api.icons.R as Icons
 import com.savvasdalkitsis.uhuruphotos.api.strings.R as Strings
 
 enum class FeedDisplays(
+    override val miniIcons: Boolean,
     override val compactColumnsPortrait: Int,
     override val compactColumnsLandscape: Int,
     override val wideColumnsPortrait: Int,
@@ -33,7 +34,19 @@ enum class FeedDisplays(
     override val maintainAspectRatio: Boolean,
     @StringRes override val friendlyName: Int,
 ) : FeedDisplay {
+    YEARLY(
+        miniIcons = true,
+        compactColumnsPortrait = 10,
+        compactColumnsLandscape = 12,
+        wideColumnsPortrait = 16,
+        wideColumnsLandscape = 18,
+        shouldAddEmptyPhotosInRows = true,
+        iconResource = Icons.drawable.ic_month,
+        maintainAspectRatio = false,
+        friendlyName = Strings.string.yearly,
+    ),
     TINY(
+        miniIcons = false,
         compactColumnsPortrait = 5,
         compactColumnsLandscape = 8,
         wideColumnsPortrait = 8,
@@ -44,6 +57,7 @@ enum class FeedDisplays(
         friendlyName = Strings.string.tiny,
     ),
     COMPACT(
+        miniIcons = false,
         compactColumnsPortrait = 4,
         compactColumnsLandscape = 7,
         wideColumnsPortrait = 7,
@@ -54,6 +68,7 @@ enum class FeedDisplays(
         friendlyName = Strings.string.compact,
     ),
     COMFORTABLE(
+        miniIcons = false,
         compactColumnsPortrait = 3,
         compactColumnsLandscape = 4,
         wideColumnsPortrait = 4,
@@ -64,6 +79,7 @@ enum class FeedDisplays(
         friendlyName = Strings.string.comfortable,
     ),
     BIG(
+        miniIcons = false,
         compactColumnsPortrait = 2,
         compactColumnsLandscape = 3,
         wideColumnsPortrait = 3,
@@ -74,6 +90,7 @@ enum class FeedDisplays(
         friendlyName = Strings.string.big,
     ),
     FULL(
+        miniIcons = false,
         compactColumnsPortrait = 1,
         compactColumnsLandscape = 2,
         wideColumnsPortrait = 2,

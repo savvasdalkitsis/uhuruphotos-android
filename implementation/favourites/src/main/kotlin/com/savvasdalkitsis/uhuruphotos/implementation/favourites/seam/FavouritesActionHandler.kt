@@ -53,7 +53,7 @@ by AlbumPageActionHandler(
                     title = Title.Resource(R.string.favourite_photos),
                     albums = listOf(Album(
                         id = "favourites",
-                        date = "",
+                        displayTitle = "",
                         location = null,
                         photos = photoEntries,
                     )),

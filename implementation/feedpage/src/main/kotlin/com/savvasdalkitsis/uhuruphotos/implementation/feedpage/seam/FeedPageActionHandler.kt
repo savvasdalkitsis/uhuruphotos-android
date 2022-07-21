@@ -17,6 +17,8 @@ package com.savvasdalkitsis.uhuruphotos.implementation.feedpage.seam
 
 import com.savvasdalkitsis.uhuruphotos.api.albums.model.Album
 import com.savvasdalkitsis.uhuruphotos.api.albums.usecase.AlbumsUseCase
+import com.savvasdalkitsis.uhuruphotos.api.feed.view.state.FeedDisplays
+import com.savvasdalkitsis.uhuruphotos.api.feed.view.state.FeedDisplays.*
 import com.savvasdalkitsis.uhuruphotos.api.photos.model.Photo
 import com.savvasdalkitsis.uhuruphotos.api.photos.model.SelectionMode.SELECTED
 import com.savvasdalkitsis.uhuruphotos.api.photos.model.SelectionMode.UNDEFINED
@@ -78,13 +80,20 @@ internal class FeedPageActionHandler @Inject constructor(
             combine(
                 albumsUseCase.observeAlbums().debounce(200),
                 selectionList.ids,
-                userBadgeUseCase.getUserBadgeState()
-            ) { albums, ids, userBadge ->
+                userBadgeUseCase.getUserBadgeState(),
+                feedPageUseCase
+                    .getFeedDisplay()
+                    .distinctUntilChanged()
+            ) { albums, ids, userBadge, feedDisplay ->
                 val selected = albums.selectPhotos(ids)
-                if (userBadge.syncState != IN_PROGRESS && selected.photosCount == 0) {
+                val final = when (feedDisplay) {
+                    YEARLY -> selected.groupByYear()
+                    else -> selected
+                }
+                if (userBadge.syncState != IN_PROGRESS && final.photosCount == 0) {
                     ShowNoPhotosFound
                 } else {
-                    ShowAlbums(selected)
+                    ShowAlbums(final)
                 }
             },
         )
@@ -177,5 +186,16 @@ internal class FeedPageActionHandler @Inject constructor(
                 })
             })
         }
+    }
+
+    private fun List<Album>.groupByYear() = groupBy {
+        it.unformattedDate?.split("-")?.get(0)
+    }.map { (year, albums) ->
+        Album(
+            id = year ?: "-",
+            photos = albums.flatMap { it.photos },
+            displayTitle = year ?: "-",
+            location = null,
+        )
     }
 }

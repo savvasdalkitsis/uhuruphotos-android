@@ -63,7 +63,7 @@ class SearchUseCase @Inject constructor(
             val albumDate = photos.firstOrNull()?.date
             Album(
                 id = id,
-                date = dateDisplayer.dateString(albumDate),
+                displayTitle = dateDisplayer.dateString(albumDate),
                 location = albumLocation,
                 photos = photos.mapNotNull { photo ->
                     photo.summaryId?.let { id ->

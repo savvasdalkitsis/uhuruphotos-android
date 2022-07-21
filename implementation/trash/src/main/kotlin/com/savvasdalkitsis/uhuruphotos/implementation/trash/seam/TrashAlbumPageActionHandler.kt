@@ -18,7 +18,6 @@ package com.savvasdalkitsis.uhuruphotos.implementation.trash.seam
 import com.savvasdalkitsis.uhuruphotos.api.albumpage.seam.AlbumPageAction
 import com.savvasdalkitsis.uhuruphotos.api.albumpage.seam.AlbumPageActionHandler
 import com.savvasdalkitsis.uhuruphotos.api.albumpage.seam.AlbumPageEffect
-import com.savvasdalkitsis.uhuruphotos.api.albumpage.seam.AlbumPageEffect.ErrorLoading
 import com.savvasdalkitsis.uhuruphotos.api.albumpage.seam.AlbumPageEffect.NavigateBack
 import com.savvasdalkitsis.uhuruphotos.api.albumpage.seam.AlbumPageMutation
 import com.savvasdalkitsis.uhuruphotos.api.albumpage.view.state.AlbumDetails
@@ -26,7 +25,6 @@ import com.savvasdalkitsis.uhuruphotos.api.albumpage.view.state.AlbumPageState
 import com.savvasdalkitsis.uhuruphotos.api.albumpage.view.state.Title
 import com.savvasdalkitsis.uhuruphotos.api.albums.model.Album
 import com.savvasdalkitsis.uhuruphotos.api.biometrics.usecase.BiometricsUseCase
-import com.savvasdalkitsis.uhuruphotos.api.coroutines.safelyOnStart
 import com.savvasdalkitsis.uhuruphotos.api.photos.model.PhotoSequenceDataSource.Trash
 import com.savvasdalkitsis.uhuruphotos.api.seam.ActionHandler
 import com.savvasdalkitsis.uhuruphotos.api.settings.usecase.SettingsUseCase
@@ -35,7 +33,6 @@ import com.savvasdalkitsis.uhuruphotos.implementation.trash.usecase.TrashUseCase
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.flow.mapNotNull
 import javax.inject.Inject
 
 internal class TrashAlbumPageActionHandler @Inject constructor(
@@ -75,7 +72,7 @@ internal class TrashAlbumPageActionHandler @Inject constructor(
                                 albums = albums.map { album ->
                                     Album(
                                         id = album.id,
-                                        date = album.date,
+                                        displayTitle = album.displayTitle,
                                         location = album.location,
                                         photos = album.photos,
                                     )

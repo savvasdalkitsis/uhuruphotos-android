@@ -76,7 +76,7 @@ internal class HiddenPhotosAlbumPageActionHandler @Inject constructor(
                                 albums = listOf(
                                     Album(
                                         id = "hidden",
-                                        date = "",
+                                        displayTitle = "",
                                         location = null,
                                         photos = photoEntries,
                                     )

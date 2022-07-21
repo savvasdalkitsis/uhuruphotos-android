@@ -18,6 +18,7 @@ package com.savvasdalkitsis.uhuruphotos.implementation.autoalbum.view.state
 import com.savvasdalkitsis.uhuruphotos.api.feed.view.state.FeedDisplay
 
 object AutoAlbumFeedDisplay: FeedDisplay {
+    override val miniIcons: Boolean = false
     override val compactColumnsPortrait = 3
     override val compactColumnsLandscape = 5
     override val wideColumnsPortrait = 6

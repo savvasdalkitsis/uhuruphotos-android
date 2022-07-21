@@ -139,7 +139,7 @@ class AlbumsUseCaseTest {
             albumDate = "date",
         ))
 
-        assert(underTest.getAlbums().last().date == "formatted")
+        assert(underTest.getAlbums().last().displayTitle == "formatted")
     }
 
     @Test

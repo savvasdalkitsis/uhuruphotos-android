@@ -35,7 +35,6 @@ import com.savvasdalkitsis.uhuruphotos.api.albums.model.Album
 import com.savvasdalkitsis.uhuruphotos.api.albums.model.previewAlbumEmpty
 import com.savvasdalkitsis.uhuruphotos.api.icons.R
 import com.savvasdalkitsis.uhuruphotos.api.photos.model.SelectionMode
-import com.savvasdalkitsis.uhuruphotos.api.ui.theme.AppTheme
 import com.savvasdalkitsis.uhuruphotos.api.ui.theme.PreviewAppTheme
 import com.savvasdalkitsis.uhuruphotos.api.ui.view.ActionIcon
 
@@ -71,7 +70,7 @@ fun AlbumHeader(
             ).weight(1f),
         ) {
             Text(
-                text = album.date,
+                text = album.displayTitle,
                 style = TextStyle.Default.copy(
                     fontWeight = FontWeight.Bold,
                     fontSize = 14.sp

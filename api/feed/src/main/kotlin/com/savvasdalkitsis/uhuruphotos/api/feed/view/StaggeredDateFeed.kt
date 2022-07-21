@@ -43,6 +43,7 @@ fun StaggeredDateFeed(
     showSelectionHeader: Boolean = false,
     showAlbumRefreshButton: Boolean = false,
     maintainAspectRatio: Boolean = true,
+    miniIcons: Boolean = false,
     columnCount: Int,
     shouldAddEmptyPhotosInRows: Boolean,
     listState: LazyListState = rememberLazyListState(),
@@ -64,7 +65,7 @@ fun StaggeredDateFeed(
                 }
             }
             albums.forEach { album ->
-                if ((album.date + album.location.orEmpty()).isNotEmpty()) {
+                if ((album.displayTitle + album.location.orEmpty()).isNotEmpty()) {
                     item(album.id, "header") {
                         AlbumHeader(
                             modifier = Modifier.animateItemPlacement(),
@@ -100,6 +101,7 @@ fun StaggeredDateFeed(
                             modifier = Modifier
                                 .animateContentSize()
                                 .animateItemPlacement(),
+                            miniIcons = miniIcons,
                             maintainAspectRatio = maintainAspectRatio,
                             onPhotoSelected = onPhotoSelected,
                             onPhotoLongPressed = onPhotoLongPressed,

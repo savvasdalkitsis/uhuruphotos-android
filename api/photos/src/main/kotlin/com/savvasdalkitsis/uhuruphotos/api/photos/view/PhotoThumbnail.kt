@@ -33,6 +33,8 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.Alignment.Companion.Center
+import androidx.compose.ui.Alignment.Companion.TopEnd
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.scale
@@ -65,6 +67,7 @@ fun PhotoThumbnail(
     contentScale: ContentScale = ContentScale.FillBounds,
     shape: Shape = RectangleShape,
     photoPadding: Dp = 1.dp,
+    miniIcons: Boolean = false,
     selectable: Boolean = true,
     onLongClick: (Photo) -> Unit = {},
 ) {
@@ -73,6 +76,8 @@ fun PhotoThumbnail(
     val screenDensity = configuration.densityDpi / 160f
     var relativeCenter by remember(photo.id) { mutableStateOf(Offset.Zero) }
     var relativeScale by remember(photo.id) { mutableStateOf(0f) }
+    val iconSize = if (miniIcons) 16.dp else 24.dp
+
     Box(
         modifier = modifier
             .aspectRatio(aspectRatio)
@@ -114,8 +119,8 @@ fun PhotoThumbnail(
             if (photo.isVideo) {
                 Icon(
                     modifier = Modifier
-                        .size(48.dp)
-                        .align(Alignment.Center),
+                        .size(if (miniIcons) 16.dp else 48.dp)
+                        .align(if (miniIcons) TopEnd else Center),
                     painter = painterResource(id = Icons.drawable.ic_play_filled),
                     tint = Color.White,
                     contentDescription = null
@@ -124,8 +129,8 @@ fun PhotoThumbnail(
             if (photo.isFavourite) {
                 Icon(
                     modifier = Modifier
-                        .size(24.dp)
-                        .align(Alignment.TopEnd)
+                        .size(iconSize)
+                        .align(TopEnd)
                         .padding(2.dp),
                     painter = painterResource(id = Icons.drawable.ic_favourite),
                     tint = Color.White,
@@ -136,7 +141,7 @@ fun PhotoThumbnail(
         AnimatedVisibility(visible = photo.selectionMode != SelectionMode.UNDEFINED) {
             Icon(
                 modifier = Modifier
-                    .size(24.dp)
+                    .size(iconSize)
                     .align(Alignment.TopStart)
                     .padding(2.dp)
                     .clip(CircleShape)

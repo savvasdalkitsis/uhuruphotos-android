@@ -28,7 +28,6 @@ import com.savvasdalkitsis.uhuruphotos.api.db.albums.GetUserAlbum
 import com.savvasdalkitsis.uhuruphotos.api.db.extensions.isVideo
 import com.savvasdalkitsis.uhuruphotos.api.group.model.Group
 import com.savvasdalkitsis.uhuruphotos.api.group.model.mapValues
-import com.savvasdalkitsis.uhuruphotos.api.log.runCatchingWithLog
 import com.savvasdalkitsis.uhuruphotos.api.photos.model.Photo
 import com.savvasdalkitsis.uhuruphotos.api.photos.usecase.PhotosUseCase
 import com.savvasdalkitsis.uhuruphotos.api.user.usecase.UserUseCase
@@ -114,7 +113,8 @@ internal class AlbumsUseCase @Inject constructor(
 
             Album(
                 id = id,
-                date = dateDisplayer.dateString(albumDate),
+                displayTitle = dateDisplayer.dateString(albumDate),
+                unformattedDate = albumDate,
                 location = albumLocation ?: "",
                 photos = photos.mapNotNull { item ->
                     when {

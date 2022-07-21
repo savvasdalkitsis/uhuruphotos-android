@@ -61,7 +61,7 @@ by AlbumPageActionHandler(
                     }.entries.map { (date, photos) ->
                         Album(
                             id = date,
-                            date = date,
+                            displayTitle = date,
                             location = null,
                             photos = photos.map { photo ->
                                 Photo(

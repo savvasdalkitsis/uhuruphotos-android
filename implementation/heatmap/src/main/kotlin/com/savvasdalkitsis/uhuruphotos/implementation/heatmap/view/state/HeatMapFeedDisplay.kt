@@ -18,6 +18,7 @@ package com.savvasdalkitsis.uhuruphotos.implementation.heatmap.view.state
 import com.savvasdalkitsis.uhuruphotos.api.feed.view.state.FeedDisplay
 
 object HeatMapFeedDisplay : FeedDisplay {
+    override val miniIcons: Boolean = false
     override val compactColumnsPortrait = 5
     override val compactColumnsLandscape = 3
     override val wideColumnsPortrait = 7

@@ -19,6 +19,7 @@ import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 
 interface FeedDisplay {
+    val miniIcons: Boolean
     val compactColumnsPortrait: Int
     val compactColumnsLandscape: Int
     val wideColumnsPortrait: Int

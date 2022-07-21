@@ -70,6 +70,7 @@ fun Feed(
             showSelectionHeader = showSelectionHeader,
             showAlbumRefreshButton = showAlbumRefreshButton,
             maintainAspectRatio = feedDisplay.maintainAspectRatio,
+            miniIcons = feedDisplay.miniIcons,
             listState = listState,
             feedHeader = feedHeader,
             columnCount = feedDisplay.columnCount(

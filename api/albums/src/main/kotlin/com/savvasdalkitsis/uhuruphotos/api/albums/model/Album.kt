@@ -20,13 +20,15 @@ import com.savvasdalkitsis.uhuruphotos.api.photos.model.Photo
 data class Album(
     val id: String,
     val photos: List<Photo>,
-    val date: String,
+    val displayTitle: String,
+    val unformattedDate: String? = null,
     val location: String?,
 )
 
 val previewAlbumEmpty = Album(
     "id",
     emptyList(),
-    date = "01 January 2022",
+    displayTitle = "01 January 2022",
+    unformattedDate = "2022-01-01",
     location = "London, UK",
 )

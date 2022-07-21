@@ -30,6 +30,7 @@ import com.savvasdalkitsis.uhuruphotos.api.photos.view.PhotoThumbnail
 fun PhotoRow(
     modifier: Modifier = Modifier,
     maintainAspectRatio: Boolean = true,
+    miniIcons: Boolean = false,
     onPhotoSelected: PhotoSelected,
     onPhotoLongPressed: (Photo) -> Unit,
     vararg slots: PhotoRowSlot
@@ -46,6 +47,7 @@ fun PhotoRow(
                         modifier = Modifier
                             .weight(aspectRatio),
                         photo = item.photo,
+                        miniIcons = miniIcons,
                         aspectRatio = aspectRatio,
                         contentScale = when {
                             maintainAspectRatio -> ContentScale.FillBounds
