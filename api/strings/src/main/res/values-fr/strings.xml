@@ -114,11 +114,11 @@
         <item quantity="other">Restaurer %d photos</item>
     </plurals>
     <plurals name="restore_photos_confirmation">
-        <item quantity="one">Êtes-vous sûr de vouloir restaurer cette photo \?</item>
+        <item quantity="one">Êtes-vous sûr de vouloir restaurer cette %d photo \?</item>
         <item quantity="other">Êtes-vous sûr de vouloir restaurer ces %d photos \?</item>
     </plurals>
     <plurals name="trash_photos_confirmation">
-        <item quantity="one">Êtes-vous sûr de vouloir envoyer cette photo dans la corbeille \?</item>
+        <item quantity="one">Êtes-vous sûr de vouloir envoyer cette %d photo dans la corbeille \?</item>
         <item quantity="other">Êtes-vous sûr de vouloir envoyer ces %d photos dans la corbeille \?</item>
     </plurals>
     <string name="enable_logging">Activer la journalisation</string>
