@@ -105,4 +105,20 @@
     <string name="no_user_albums">Cet utilisateur n\'a pas créé d\'album</string>
     <string name="maps">Cartes</string>
     <string name="map_provider">Fournisseur de carte</string>
+    <plurals name="trash_photos">
+        <item quantity="one">Envoyer %d photo dans la corbeille</item>
+        <item quantity="other">Envoyer %d photos dans la corbeille</item>
+    </plurals>
+    <plurals name="restore_photos">
+        <item quantity="one">Restaurer %d photo</item>
+        <item quantity="other">Restaurer %d photos</item>
+    </plurals>
+    <plurals name="restore_photos_confirmation">
+        <item quantity="one">Êtes-vous sûr de vouloir restaurer cette photo \?</item>
+        <item quantity="other">Êtes-vous sûr de vouloir restaurer ces %d photos \?</item>
+    </plurals>
+    <plurals name="trash_photos_confirmation">
+        <item quantity="one">Êtes-vous sûr de vouloir envoyer cette photo dans la corbeille \?</item>
+        <item quantity="other">Êtes-vous sûr de vouloir envoyer ces %d photos dans la corbeille \?</item>
+    </plurals>
 </resources>
