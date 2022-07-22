@@ -18,6 +18,7 @@ public class TestAlbums {
             "id",
             Collections.emptyList(),
             "",
+            null,
             ""
     );
 
