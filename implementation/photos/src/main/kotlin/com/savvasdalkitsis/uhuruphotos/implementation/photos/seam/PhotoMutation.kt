@@ -143,7 +143,8 @@ sealed class PhotoMutation(
                     dateAndTime = formattedDateAndTime,
                     location = location ?: "",
                     gps = latLng,
-                    peopleInPhoto = peopleInPhoto
+                    peopleInPhoto = peopleInPhoto,
+                    path = imagePath,
                 )
             }
         }

@@ -17,6 +17,8 @@ package com.savvasdalkitsis.uhuruphotos.implementation.photos.view
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -77,6 +79,7 @@ internal fun BottomSheetPhotoDetails(
             sheetElevation = 0.dp,
             sheetBackgroundColor = Color.Transparent,
             sheetContent = {
+                Spacer(modifier = Modifier.height(insetsTop()))
                 Surface(
                     modifier = Modifier
                         .align(CenterHorizontally)

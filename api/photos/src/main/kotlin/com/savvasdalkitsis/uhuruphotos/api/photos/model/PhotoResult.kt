@@ -36,6 +36,7 @@ data class PhotoResult(
     @field:Json(name = "small_square_thumbnail_url") val smallSquareThumbnailUrl: String?,
     @field:Json(name = "tiny_square_thumbnail_url") val tinySquareThumbnailUrl: String?,
     @field:Json(name = "image_hash") val imageHash: String,
+    @field:Json(name = "image_path") val imagePath: String,
     @field:Json(name = "video") val video: Boolean,
     @field:Json(name = "rating") val rating: Int,
     @field:Json(name = "people") val people: List<PhotoPeople>?,
@@ -65,5 +66,6 @@ fun PhotoResult.toPhotoDetails() = PhotoDetails(
     tinySquareThumbnailUrl = tinySquareThumbnailUrl,
     video = video,
     rating = rating,
-    peopleNames = serializePeople
+    peopleNames = serializePeople,
+    imagePath = imagePath,
 )

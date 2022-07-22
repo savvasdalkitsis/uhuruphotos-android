@@ -23,7 +23,9 @@ import com.savvasdalkitsis.uhuruphotos.implementation.photos.view.state.SinglePh
 
 @Composable
 internal fun PhotoDetailsDateTime(photo: SinglePhotoState) {
-    PhotoDetailsIconEntry(R.drawable.ic_calendar) {
+    PhotoDetailsIconEntry(
+        icon = R.drawable.ic_calendar,
+    ) {
         Text(photo.dateAndTime)
     }
 }

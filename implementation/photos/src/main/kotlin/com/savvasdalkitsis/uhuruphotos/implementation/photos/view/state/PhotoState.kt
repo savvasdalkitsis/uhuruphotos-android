@@ -50,6 +50,7 @@ data class SinglePhotoState(
     val originalFileIconState: OriginalFileIconState = OriginalFileIconState.HIDDEN,
     val peopleInPhoto: List<Person> = emptyList(),
     val metadata: PhotoMetadata? = null,
+    val path: String? = null,
 )
 
 enum class OriginalFileIconState {

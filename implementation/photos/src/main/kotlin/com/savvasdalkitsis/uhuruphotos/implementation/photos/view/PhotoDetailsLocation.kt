@@ -24,7 +24,9 @@ import com.savvasdalkitsis.uhuruphotos.implementation.photos.view.state.SinglePh
 @Composable
 internal fun PhotoDetailsLocation(photo: SinglePhotoState) {
     if (photo.location.isNotEmpty()) {
-        PhotoDetailsIconEntry(R.drawable.ic_location_place) {
+        PhotoDetailsIconEntry(
+            icon = R.drawable.ic_location_place,
+        ) {
             Text(photo.location)
         }
     }

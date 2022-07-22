@@ -34,7 +34,9 @@ internal fun PhotoDetailsGps(
         Box(
             modifier = Modifier.clickable { action(PhotoAction.ClickedOnGps(gps)) },
         ) {
-            PhotoDetailsIconEntry(icon = R.drawable.ic_location_pin) {
+            PhotoDetailsIconEntry(
+                icon = R.drawable.ic_location_pin,
+            ) {
                 Text("${gps.lat.round(2)}:${gps.lon.round(2)}")
             }
         }

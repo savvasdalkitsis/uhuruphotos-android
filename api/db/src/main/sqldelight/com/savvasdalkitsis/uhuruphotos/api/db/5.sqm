@@ -1,0 +1,1 @@
+ALTER TABLE photoDetails ADD COLUMN imagePath TEXT;

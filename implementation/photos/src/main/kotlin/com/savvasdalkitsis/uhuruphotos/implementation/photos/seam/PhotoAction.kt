@@ -46,4 +46,5 @@ sealed class PhotoAction {
     data class ClickedOnGps(val gps: LatLon) : PhotoAction()
     data class PersonSelected(val person: Person) : PhotoAction()
     data class ChangedToPage(val page: Int) : PhotoAction()
+    data class ClickedOnDetailsEntry(val text: String) : PhotoAction()
 }

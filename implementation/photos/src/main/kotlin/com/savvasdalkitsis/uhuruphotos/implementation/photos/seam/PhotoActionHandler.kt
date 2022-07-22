@@ -15,7 +15,6 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.implementation.photos.seam
 
-import androidx.work.WorkInfo
 import androidx.work.WorkInfo.State.*
 import com.savvasdalkitsis.uhuruphotos.api.albums.model.Album
 import com.savvasdalkitsis.uhuruphotos.api.albums.usecase.AlbumsUseCase
@@ -68,7 +67,6 @@ import com.savvasdalkitsis.uhuruphotos.implementation.photos.seam.PhotoMutation.
 import com.savvasdalkitsis.uhuruphotos.implementation.photos.seam.PhotoMutation.ShowTrashingConfirmationDialog
 import com.savvasdalkitsis.uhuruphotos.implementation.photos.seam.PhotoMutation.ShowUI
 import com.savvasdalkitsis.uhuruphotos.implementation.photos.usecase.MetadataUseCase
-import com.savvasdalkitsis.uhuruphotos.implementation.photos.view.state.OriginalFileIconState
 import com.savvasdalkitsis.uhuruphotos.implementation.photos.view.state.OriginalFileIconState.*
 import com.savvasdalkitsis.uhuruphotos.implementation.photos.view.state.PhotoState
 import com.savvasdalkitsis.uhuruphotos.implementation.photos.view.state.PhotoType
@@ -241,6 +239,9 @@ class PhotoActionHandler @Inject constructor(
         is DownloadOriginal -> flow {
             photosUseCase.downloadOriginal(action.photo.id, action.photo.isVideo)
             effect(DownloadingOriginal)
+        }
+        is ClickedOnDetailsEntry -> flow {
+            effect(CopyToClipboard(action.text))
         }
     }
 

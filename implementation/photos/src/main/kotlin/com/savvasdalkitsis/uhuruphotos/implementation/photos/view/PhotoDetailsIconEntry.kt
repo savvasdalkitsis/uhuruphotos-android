@@ -31,11 +31,12 @@ import androidx.compose.ui.unit.dp
 
 @Composable
 internal fun PhotoDetailsIconEntry(
+    modifier: Modifier = Modifier,
     @DrawableRes icon: Int,
     content: @Composable BoxScope.() -> Unit,
 ) {
     Row(
-        modifier = Modifier.fillMaxWidth(),
+        modifier = modifier.fillMaxWidth(),
         horizontalArrangement = Arrangement.spacedBy(24.dp),
         verticalAlignment = Alignment.CenterVertically,
     ) {
