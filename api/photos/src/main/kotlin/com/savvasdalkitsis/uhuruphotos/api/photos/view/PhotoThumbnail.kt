@@ -33,6 +33,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.Alignment.Companion.BottomStart
 import androidx.compose.ui.Alignment.Companion.Center
 import androidx.compose.ui.Alignment.Companion.TopEnd
 import androidx.compose.ui.Modifier
@@ -120,7 +121,7 @@ fun PhotoThumbnail(
                 Icon(
                     modifier = Modifier
                         .size(if (miniIcons) 16.dp else 48.dp)
-                        .align(if (miniIcons) TopEnd else Center),
+                        .align(if (miniIcons) BottomStart else Center),
                     painter = painterResource(id = Icons.drawable.ic_play_filled),
                     tint = Color.White,
                     contentDescription = null
