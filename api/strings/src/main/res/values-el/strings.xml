@@ -97,4 +97,22 @@
     <string name="error_loading_album">Υπήρξε σφάλμα κατά τη φόρτωση του άλμπουμ</string>
     <string name="no_auto_albums">Δεν υπάρχουν αυτόματα παραγόμενα άλμπουμ για αυτόν τον χρήστη</string>
     <string name="are_you_sure_you_want_to_perform_full_sync">Είστε σίγουροι ότι θέλετε να ξεκινήσετε πλήρη συγχρονισμό;</string>
+    <plurals name="trash_photos_confirmation">
+        <item quantity="one">Είστε σίγουροι ότι θέλετε να στείλετε αυτήν την %d φωτογραφία στον κάδο ανακύκλωσης;</item>
+        <item quantity="other">Είστε σίγουροι ότι θέλετε να στείλετε αυτές τις %d φωτογραφίες στον κάδο ανακύκλωσης;</item>
+    </plurals>
+    <string name="people">Πρόσωπα</string>
+    <string name="view_all">Εμφάνιση όλων</string>
+    <plurals name="restore_photos_confirmation">
+        <item quantity="one">Είστε σίγουροι ότι θέλετε να επαναφέρετε αυτή την %d φωτογραφία;</item>
+        <item quantity="other">Είστε σίγουροι ότι θέλετε να επαναφέρετε αυτές τις %d φωτογραφίες;</item>
+    </plurals>
+    <plurals name="restore_photos">
+        <item quantity="one">Επαναφορά %d φωτογραφίας</item>
+        <item quantity="other">Επαναφορά %d φωτογραφιών</item>
+    </plurals>
+    <plurals name="trash_photos">
+        <item quantity="one">Στείλτε %d φωτογραφία στον κάδο ανακύκλωσης</item>
+        <item quantity="other">Στείλτε %d φωτογραφίες στον κάδο ανακύκλωσης</item>
+    </plurals>
 </resources>
