@@ -108,6 +108,12 @@ sealed class PhotoMutation(
         }
     })
 
+    data class ShowUseAsIcon(val id: String) : PhotoMutation({
+        it.copyPhoto(id) { photoState ->
+            photoState.copy(showUseAsIcon = true)
+        }
+    })
+
     data class SetOriginalFileIconState(val id: String, val state: OriginalFileIconState) : PhotoMutation({
         it.copyPhoto(id) { photoState ->
             photoState.copy(originalFileIconState = state)

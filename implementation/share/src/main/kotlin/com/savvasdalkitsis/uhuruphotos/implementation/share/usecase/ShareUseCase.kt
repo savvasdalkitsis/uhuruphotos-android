@@ -17,6 +17,7 @@ package com.savvasdalkitsis.uhuruphotos.implementation.share.usecase
 
 import android.content.Context
 import android.content.Intent
+import android.net.Uri
 import android.os.Parcelable
 import androidx.core.content.FileProvider
 import coil.ImageLoader
@@ -46,11 +47,20 @@ internal class ShareUseCase @Inject constructor(
     override suspend fun share(url: String) {
         withContext(Dispatchers.IO) {
             download(url).firstOrNull()?.let { uri ->
-                launch(Intent(Intent.ACTION_SEND).apply {
+                launch("Share Photo", Intent(Intent.ACTION_SEND).apply {
+                    setDataAndType(uri, "image/jpeg")
                     putExtra(Intent.EXTRA_STREAM, uri)
-                    putExtra(Intent.EXTRA_TEXT, "Share Photo")
-                    addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
-                    type = "image/jpg"
+                })
+            }
+        }
+    }
+
+    override suspend fun usePhotoAs(url: String) {
+        withContext(Dispatchers.IO) {
+            download(url).firstOrNull()?.let { uri ->
+                launch("Use as", Intent(Intent.ACTION_ATTACH_DATA).apply {
+                    addCategory(Intent.CATEGORY_DEFAULT)
+                    setDataAndType(uri, "image/jpeg")
                 })
             }
         }
@@ -58,19 +68,14 @@ internal class ShareUseCase @Inject constructor(
 
     override suspend fun shareMultiple(urls: List<String>) = withContext(Dispatchers.IO) {
         val uris = download(*urls.toTypedArray())
-        launch(Intent().apply {
+        launch("Share Photos", Intent().apply {
             action = Intent.ACTION_SEND_MULTIPLE
-            addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
-            type = "image/*"
+            type = "image/jpeg"
             putParcelableArrayListExtra(Intent.EXTRA_STREAM, uris)
-            putExtra(
-                Intent.EXTRA_TEXT,
-                ArrayList<CharSequence>(listOf("Share Photos" as CharSequence))
-            )
         })
     }
 
-    private suspend fun download(vararg urls: String): ArrayList<out Parcelable> {
+    private suspend fun download(vararg urls: String): ArrayList<out Uri> {
         urls.map { url ->
             imageLoader.enqueue(
                 ImageRequest.Builder(context)
@@ -83,12 +88,14 @@ internal class ShareUseCase @Inject constructor(
         })
     }
 
-    private fun launch(intent: Intent) {
+    private fun launch(text: String, intent: Intent) {
         navigator.navigateTo(
-            Intent.createChooser(intent, "Share Via").apply {
-                addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
-            }
+            Intent.createChooser(intent.sharable(), text).sharable()
         )
+    }
+
+    private fun Intent.sharable() = apply {
+        addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
     }
 
     private fun uriFor(url: String, postfix: String = "") = diskCache[url]?.let { snapshot ->

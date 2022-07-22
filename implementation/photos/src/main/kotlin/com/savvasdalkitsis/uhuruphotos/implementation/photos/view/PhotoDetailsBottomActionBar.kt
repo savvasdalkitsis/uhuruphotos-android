@@ -27,6 +27,7 @@ import com.savvasdalkitsis.uhuruphotos.implementation.photos.seam.PhotoAction
 import com.savvasdalkitsis.uhuruphotos.implementation.photos.seam.PhotoAction.AskForPhotoRestoration
 import com.savvasdalkitsis.uhuruphotos.implementation.photos.seam.PhotoAction.AskForPhotoTrashing
 import com.savvasdalkitsis.uhuruphotos.implementation.photos.seam.PhotoAction.SharePhoto
+import com.savvasdalkitsis.uhuruphotos.implementation.photos.seam.PhotoAction.UsePhotoAs
 import com.savvasdalkitsis.uhuruphotos.implementation.photos.view.state.PhotoState
 import com.savvasdalkitsis.uhuruphotos.api.icons.R as Icons
 import com.savvasdalkitsis.uhuruphotos.api.strings.R as Strings
@@ -49,6 +50,19 @@ fun PhotoDetailsBottomActionBar(
                 onClick = { action(SharePhoto) },
                 icon = Icons.drawable.ic_share,
                 text = stringResource(Strings.string.share),
+            )
+        }
+        AnimatedVisibility(
+            modifier = Modifier
+                .weight(1f),
+            visible = state.photos[index].showUseAsIcon,
+            enter = slideInVertically(initialOffsetY = { it }),
+            exit = slideOutVertically(targetOffsetY = { it }),
+        ) {
+            ActionIconWithText(
+                onClick = { action(UsePhotoAs) },
+                icon = Icons.drawable.ic_open_in_new,
+                text = stringResource(Strings.string.use_as),
             )
         }
         if (state.showRestoreButton) {

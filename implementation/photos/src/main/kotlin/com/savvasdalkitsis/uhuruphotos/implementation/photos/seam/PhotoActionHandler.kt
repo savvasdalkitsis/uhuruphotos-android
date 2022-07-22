@@ -68,6 +68,7 @@ import com.savvasdalkitsis.uhuruphotos.implementation.photos.seam.PhotoMutation.
 import com.savvasdalkitsis.uhuruphotos.implementation.photos.seam.PhotoMutation.ShowSinglePhoto
 import com.savvasdalkitsis.uhuruphotos.implementation.photos.seam.PhotoMutation.ShowTrashingConfirmationDialog
 import com.savvasdalkitsis.uhuruphotos.implementation.photos.seam.PhotoMutation.ShowUI
+import com.savvasdalkitsis.uhuruphotos.implementation.photos.seam.PhotoMutation.ShowUseAsIcon
 import com.savvasdalkitsis.uhuruphotos.implementation.photos.usecase.MetadataUseCase
 import com.savvasdalkitsis.uhuruphotos.implementation.photos.view.state.OriginalFileIconState.*
 import com.savvasdalkitsis.uhuruphotos.implementation.photos.view.state.PhotoState
@@ -225,10 +226,14 @@ class PhotoActionHandler @Inject constructor(
         SharePhoto -> flow {
             effect(PhotoEffect.SharePhoto(state.currentPhoto.fullResUrl))
         }
+        UsePhotoAs -> flow {
+            effect(PhotoEffect.UsePhotoAs(state.currentPhoto.fullResUrl))
+        }
         is FullImageLoaded -> flow {
             emit(SetOriginalFileIconState(action.photo.id, HIDDEN))
             if (!action.photo.isVideo) {
                 emit(ShowShareIcon(action.photo.id))
+                emit(ShowUseAsIcon(action.photo.id))
                 val metadata = metadataUseCase.extractMetadata(action.photo.fullResUrl)
                 if (metadata != null) {
                     emit(ShowMetadata(action.photo.id, metadata))

@@ -55,6 +55,7 @@ class PhotoEffectsHandler @Inject constructor(
                 toaster.show(R.string.copied_to_clipboard)
             }
             is SharePhoto -> shareUseCase.share(effect.url)
+            is UsePhotoAs -> shareUseCase.usePhotoAs(effect.url)
             is NavigateToPerson -> navigator.navigateTo(
                 PersonNavigationTarget.name(effect.id)
             )

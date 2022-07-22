@@ -19,10 +19,12 @@ import androidx.annotation.DrawableRes
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.unit.dp
 
 @Composable
@@ -33,7 +35,9 @@ fun ActionIconWithText(
     text: String,
 ) {
     Column(
-        modifier = modifier.clickable { onClick() },
+        modifier = modifier
+            .clip(CircleShape)
+            .clickable { onClick() },
     ) {
         ActionIcon(
             modifier = Modifier.align(CenterHorizontally),

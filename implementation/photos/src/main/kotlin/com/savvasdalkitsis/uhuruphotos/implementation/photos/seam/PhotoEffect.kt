@@ -27,5 +27,6 @@ sealed class PhotoEffect {
     object DownloadingOriginal : PhotoEffect()
 
     data class SharePhoto(val url: String) : PhotoEffect()
+    data class UsePhotoAs(val url: String) : PhotoEffect()
     data class NavigateToPerson(val id: Int) : PhotoEffect()
 }

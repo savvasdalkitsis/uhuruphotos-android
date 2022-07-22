@@ -18,5 +18,6 @@ package com.savvasdalkitsis.uhuruphotos.api.share.usecase
 interface ShareUseCase {
 
     suspend fun share(url: String)
+    suspend fun usePhotoAs(url: String)
     suspend fun shareMultiple(urls: List<String>)
 }
