@@ -49,15 +49,6 @@ fun PhotoDetailsActionBar(
             )
         }
     }
-    AnimatedVisibility(visible = state.showRefresh) {
-        if (state.showRefresh) {
-            ActionIcon(
-                onClick = { action(Refresh) },
-                icon = Icons.drawable.ic_refresh,
-                contentDescription = stringResource(Strings.string.refresh)
-            )
-        }
-    }
     AnimatedContent(targetState = photo.originalFileIconState) {
         when (it) {
             IDLE -> ActionIcon(

@@ -26,7 +26,6 @@ data class PhotoState(
     val isLoading: Boolean = false,
     @StringRes val errorMessage: Int? = null,
     val showUI: Boolean = true,
-    val showRefresh: Boolean = false,
     val showInfoButton: Boolean = false,
     val showPhotoDeleteConfirmationDialog: Boolean = false,
     val showPhotoTrashingConfirmationDialog: Boolean = false,
@@ -51,6 +50,7 @@ data class SinglePhotoState(
     val peopleInPhoto: List<Person> = emptyList(),
     val metadata: PhotoMetadata? = null,
     val path: String? = null,
+    val loadingDetails: Boolean = false,
 )
 
 enum class OriginalFileIconState {

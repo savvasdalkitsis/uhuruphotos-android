@@ -49,10 +49,12 @@ import com.savvasdalkitsis.uhuruphotos.implementation.photos.seam.PhotoEffect.Na
 import com.savvasdalkitsis.uhuruphotos.implementation.photos.seam.PhotoEffect.ShowSystemBars
 import com.savvasdalkitsis.uhuruphotos.implementation.photos.seam.PhotoMutation.ChangeCurrentIndex
 import com.savvasdalkitsis.uhuruphotos.implementation.photos.seam.PhotoMutation.FinishedLoading
+import com.savvasdalkitsis.uhuruphotos.implementation.photos.seam.PhotoMutation.FinishedLoadingDetails
 import com.savvasdalkitsis.uhuruphotos.implementation.photos.seam.PhotoMutation.HideAllConfirmationDialogs
 import com.savvasdalkitsis.uhuruphotos.implementation.photos.seam.PhotoMutation.SetOriginalFileIconState
 import com.savvasdalkitsis.uhuruphotos.implementation.photos.seam.PhotoMutation.HideUI
 import com.savvasdalkitsis.uhuruphotos.implementation.photos.seam.PhotoMutation.Loading
+import com.savvasdalkitsis.uhuruphotos.implementation.photos.seam.PhotoMutation.LoadingDetails
 import com.savvasdalkitsis.uhuruphotos.implementation.photos.seam.PhotoMutation.ReceivedDetails
 import com.savvasdalkitsis.uhuruphotos.implementation.photos.seam.PhotoMutation.RemovePhotoFromSource
 import com.savvasdalkitsis.uhuruphotos.implementation.photos.seam.PhotoMutation.ShowDeleteConfirmationDialog
@@ -304,6 +306,7 @@ class PhotoActionHandler @Inject constructor(
         refresh: Boolean = false,
     ) {
         emit(Loading)
+        emit(LoadingDetails(photoId))
         if (refresh) {
             photosUseCase.refreshDetailsNow(photoId)
         } else {
@@ -337,6 +340,7 @@ class PhotoActionHandler @Inject constructor(
             }
         }
         emit(FinishedLoading)
+        emit(FinishedLoadingDetails(photoId))
     }
 
     private suspend fun maybeRefreshPeople(): List<People> =

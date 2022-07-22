@@ -18,18 +18,26 @@ package com.savvasdalkitsis.uhuruphotos.implementation.photos.view
 import androidx.annotation.DrawableRes
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement.spacedBy
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.sizeIn
+import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.savvasdalkitsis.uhuruphotos.api.icons.R.drawable.*
 import com.savvasdalkitsis.uhuruphotos.api.strings.R.string
+import com.savvasdalkitsis.uhuruphotos.api.ui.view.ActionIcon
 import com.savvasdalkitsis.uhuruphotos.api.ui.view.SectionHeader
 import com.savvasdalkitsis.uhuruphotos.implementation.photos.seam.PhotoAction
 import com.savvasdalkitsis.uhuruphotos.implementation.photos.seam.PhotoAction.ClickedOnDetailsEntry
+import com.savvasdalkitsis.uhuruphotos.implementation.photos.seam.PhotoAction.Refresh
 import com.savvasdalkitsis.uhuruphotos.implementation.photos.view.state.SinglePhotoState
 
 @Composable
@@ -37,37 +45,58 @@ internal fun PhotoDetailsMetadata(
     photo: SinglePhotoState,
     action: (PhotoAction) -> Unit
 ) {
-    val metadata = photo.metadata
-    val path = photo.path
-    if (metadata != null || path != null) {
-        Column(
-            verticalArrangement = spacedBy(8.dp)
+    Column(
+        verticalArrangement = spacedBy(8.dp)
+    ) {
+        SectionHeader(
+            title = stringResource(string.details)
         ) {
-            SectionHeader(title = stringResource(string.details))
-            if (metadata != null) {
-                metadata.exifData.wh?.let { (w, h) -> "$w x $h" }
-                    .Entry(ic_image_aspect_ratio, action)
-                metadata.exifData.megapixels
-                    .Entry(ic_aspect_ratio, action)
-                metadata.size
-                    .Entry(ic_save, action)
-                metadata.exifData.camera
-                    .Entry(ic_camera, action)
-                metadata.exifData.fStop
-                    .Entry(ic_lens, action)
-                metadata.exifData.shutterSpeed
-                    .Entry(ic_shutter_speed, action)
-                metadata.exifData.focalLength
-                    .Entry(ic_videocam, action)
-                metadata.exifData.focalLength35Equivalent
-                    .Entry(ic_camera_roll, action)
-                metadata.exifData.isoSpeed
-                    .Entry(ic_iso, action)
+            Box(
+                modifier = Modifier
+                    .sizeIn(minWidth = 48.dp, minHeight = 48.dp)
+            ) {
+                if (photo.loadingDetails) {
+                    CircularProgressIndicator(
+                        modifier = Modifier
+                            .size(26.dp)
+                            .align(Alignment.Center)
+                    )
+                } else {
+                    ActionIcon(
+                        modifier = Modifier
+                            .align(Alignment.Center),
+                        iconModifier = Modifier.alpha(0.6f),
+                        onClick = { action(Refresh) },
+                        icon = ic_refresh,
+                    )
+                }
             }
-            if (path != null) {
-                photo.path
-                    .Entry(ic_file_tree, action)
-            }
+        }
+        photo.metadata?.let {
+            it.exifData.wh?.let { (w, h) -> "$w x $h" }
+                .Entry(ic_image_aspect_ratio, action)
+            it.exifData.megapixels
+                .Entry(ic_aspect_ratio, action)
+            it.size
+                .Entry(ic_save, action)
+            it.exifData.camera
+                .Entry(ic_camera, action)
+            it.exifData.fStop
+                .Entry(ic_lens, action)
+            it.exifData.shutterSpeed
+                .Entry(ic_shutter_speed, action)
+            it.exifData.focalLength
+                .Entry(ic_videocam, action)
+            it.exifData.focalLength35Equivalent
+                .Entry(ic_camera_roll, action)
+            it.exifData.isoSpeed
+                .Entry(ic_iso, action)
+        }
+        photo.path?.let {
+            it.Entry(ic_file_tree, action)
+        }
+        if (photo.metadata == null && photo.path == null) {
+            Text(stringResource(string.nothing_here_yet))
         }
     }
 }

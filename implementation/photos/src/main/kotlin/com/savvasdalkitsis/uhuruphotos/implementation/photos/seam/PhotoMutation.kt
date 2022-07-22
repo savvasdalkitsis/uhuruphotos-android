@@ -45,7 +45,6 @@ sealed class PhotoMutation(
     data class ShowErrorMessage(@StringRes val message: Int) : PhotoMutation({
         it.copy(
             isLoading = false,
-            showRefresh = true,
             errorMessage = message,
         )
     })
@@ -53,7 +52,6 @@ sealed class PhotoMutation(
     object FinishedLoading : PhotoMutation({
         it.copy(
             isLoading = false,
-            showRefresh = true,
             showInfoButton = true,
         )
     })
@@ -61,8 +59,19 @@ sealed class PhotoMutation(
     object Loading : PhotoMutation({
         it.copy(
             isLoading = true,
-            showRefresh = false,
         )
+    })
+
+    data class LoadingDetails(val id: String) : PhotoMutation({
+        it.copyPhoto(id) { photoState ->
+            photoState.copy(loadingDetails = true)
+        }
+    })
+
+    data class FinishedLoadingDetails(val id: String) : PhotoMutation({
+        it.copyPhoto(id) { photoState ->
+            photoState.copy(loadingDetails = false)
+        }
     })
 
     object ShowInfo : PhotoMutation({
