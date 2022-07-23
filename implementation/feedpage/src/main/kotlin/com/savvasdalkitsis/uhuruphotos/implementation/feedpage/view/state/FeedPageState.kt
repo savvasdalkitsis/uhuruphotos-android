@@ -15,6 +15,7 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.implementation.feedpage.view.state
 
+import com.savvasdalkitsis.uhuruphotos.api.feed.view.state.FeedDisplays
 import com.savvasdalkitsis.uhuruphotos.api.feed.view.state.FeedState
 import com.savvasdalkitsis.uhuruphotos.api.photos.model.Photo
 import com.savvasdalkitsis.uhuruphotos.api.photos.model.SelectionMode
@@ -39,4 +40,5 @@ internal data class FeedPageState(
     val shouldShowShareIcon: Boolean = selectedPhotos.let { selected ->
         selected.isNotEmpty() && selected.none(Photo::isVideo)
     }
+    val shouldShowAlbumRefreshButtons: Boolean = feedState.feedDisplay != FeedDisplays.YEARLY
 }

@@ -82,7 +82,7 @@ internal fun FeedPage(
                 contentPadding = contentPadding,
                 state = state.feedState,
                 showSelectionHeader = state.hasSelection,
-                showAlbumRefreshButton = true,
+                showAlbumRefreshButton = state.shouldShowAlbumRefreshButtons,
                 listState = listState,
                 onPhotoSelected = { photo, center, scale ->
                     action(SelectedPhoto(photo, center, scale,))
