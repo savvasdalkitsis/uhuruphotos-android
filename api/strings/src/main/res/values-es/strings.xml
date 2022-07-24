@@ -141,4 +141,31 @@
     <string name="remove_gps_data_when_sharing">Eliminar datos de GPS al compartir</string>
     <string name="sorting">Clasificación</string>
     <string name="feed_refresh_days">Número de días de alimentación para actualizar en tirar para actualizar</string>
+    <plurals name="restore_photos">
+        <item quantity="one">Restaurar %d foto</item>
+        <item quantity="other">Restaurar %d fotos</item>
+    </plurals>
+    <string name="people">Gente</string>
+    <string name="view_all">Ver todo</string>
+    <string name="location">Ubicación</string>
+    <string name="restoring_photo">Restaurando foto de la basura</string>
+    <string name="details">Detalles</string>
+    <string name="open_in_maps">Abrir en Mapas</string>
+    <string name="download_original_file">Descargar el archivo original</string>
+    <string name="downloading_original_file">Descargando archivo original</string>
+    <string name="downloading_original_files">Descargando archivos originales</string>
+    <string name="advanced">Avanzado</string>
+    <string name="ui">Interfaz</string>
+    <string name="yearly">Anual</string>
+    <string name="restore">Restaurar</string>
+    <string name="downloading_original_file_background">Descargando el archivo original en segundo plano.</string>
+    <string name="you_can_leave">Puedes salir de la pantalla si quieres.</string>
+    <string name="privacy_security">Privacidad y seguridad</string>
+    <string name="help">Ayuda</string>
+    <plurals name="restore_photos_confirmation">
+        <item quantity="one">¿Estás seguro de que quieres restaurar %d foto\?</item>
+        <item quantity="other">¿Estás seguro de que quieres restaurar %d fotos\?</item>
+    </plurals>
+    <string name="nothing_here_yet">Todavía no hay nada aquí</string>
+    <string name="use_as">Usar como</string>
 </resources>
