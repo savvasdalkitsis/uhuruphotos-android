@@ -166,4 +166,6 @@
     <string name="advanced">Geavanceerd</string>
     <string name="help">Hulp</string>
     <string name="yearly">Jaarlijks</string>
+    <string name="nothing_here_yet">Er valt hier nog niks te zien</string>
+    <string name="use_as">Instellen als</string>
 </resources>
