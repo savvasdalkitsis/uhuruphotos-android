@@ -18,6 +18,7 @@ package com.savvasdalkitsis.uhuruphotos.implementation.people.view.state
 import com.savvasdalkitsis.uhuruphotos.api.people.view.state.Person
 
 data class PeopleState(
+    val loading: Boolean = false,
     val people: List<Person> = emptyList(),
     val sortOrder: SortOrder = SortOrder.default,
 )

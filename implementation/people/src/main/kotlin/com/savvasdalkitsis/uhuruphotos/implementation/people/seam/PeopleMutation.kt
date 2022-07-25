@@ -24,6 +24,10 @@ sealed class PeopleMutation(
     mutation: Mutation<PeopleState>,
 ) : Mutation<PeopleState> by mutation {
 
+    data class Loading(val loading: Boolean) : PeopleMutation({
+        it.copy(loading = loading)
+    })
+
     data class DisplayPeople(val people: List<Person>) : PeopleMutation({
         it.copy(people = people)
     })

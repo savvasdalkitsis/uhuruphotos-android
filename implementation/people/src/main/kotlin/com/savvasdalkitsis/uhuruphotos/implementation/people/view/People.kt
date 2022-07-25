@@ -26,6 +26,8 @@ import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass.Companion
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import com.google.accompanist.swiperefresh.SwipeRefresh
+import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 import com.savvasdalkitsis.uhuruphotos.api.icons.R
 import com.savvasdalkitsis.uhuruphotos.api.people.view.PersonThumbnail
 import com.savvasdalkitsis.uhuruphotos.api.ui.view.ActionIcon
@@ -36,6 +38,7 @@ import com.savvasdalkitsis.uhuruphotos.api.ui.window.LocalWindowSize
 import com.savvasdalkitsis.uhuruphotos.implementation.people.seam.PeopleAction
 import com.savvasdalkitsis.uhuruphotos.implementation.people.seam.PeopleAction.NavigateBack
 import com.savvasdalkitsis.uhuruphotos.implementation.people.seam.PeopleAction.PersonSelected
+import com.savvasdalkitsis.uhuruphotos.implementation.people.seam.PeopleAction.SwipeToRefresh
 import com.savvasdalkitsis.uhuruphotos.implementation.people.seam.PeopleAction.ToggleSortOrder
 import com.savvasdalkitsis.uhuruphotos.implementation.people.view.state.PeopleState
 import com.savvasdalkitsis.uhuruphotos.implementation.people.view.state.SortOrder.ASCENDING
@@ -66,20 +69,26 @@ fun People(
                 Medium -> 6
                 else -> 9
             }
-            LazyVerticalGrid(
-                modifier = Modifier.padding(start = 8.dp, end = 8.dp),
-                contentPadding = contentPadding,
-                columns = GridCells.Fixed(columns),
-                horizontalArrangement = Arrangement.spacedBy(8.dp),
-                verticalArrangement = Arrangement.spacedBy(8.dp),
+            SwipeRefresh(
+                state = rememberSwipeRefreshState(isRefreshing = state.loading),
+                indicatorPadding = contentPadding,
+                onRefresh = { action(SwipeToRefresh) },
             ) {
-                for (person in state.people) {
-                    item {
-                        PersonThumbnail(
-                            person = person,
-                            shape = RoundedCornerShape(12.dp),
-                            onPersonSelected = { action(PersonSelected(person)) }
-                        )
+                LazyVerticalGrid(
+                    modifier = Modifier.padding(start = 8.dp, end = 8.dp),
+                    contentPadding = contentPadding,
+                    columns = GridCells.Fixed(columns),
+                    horizontalArrangement = Arrangement.spacedBy(8.dp),
+                    verticalArrangement = Arrangement.spacedBy(8.dp),
+                ) {
+                    for (person in state.people) {
+                        item {
+                            PersonThumbnail(
+                                person = person,
+                                shape = RoundedCornerShape(12.dp),
+                                onPersonSelected = { action(PersonSelected(person)) }
+                            )
+                        }
                     }
                 }
             }

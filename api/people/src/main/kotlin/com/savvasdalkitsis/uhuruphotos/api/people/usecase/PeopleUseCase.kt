@@ -19,7 +19,7 @@ import com.savvasdalkitsis.uhuruphotos.api.db.people.People
 import kotlinx.coroutines.flow.Flow
 
 interface PeopleUseCase {
-    fun observePeopleByName(): Flow<Result<List<People>>>
+    fun observePeopleByName(): Flow<List<People>>
     suspend fun getPeopleByName(): List<People>
     fun observePeopleByPhotoCount(): Flow<Result<List<People>>>
     fun observePerson(id: Int): Flow<People>

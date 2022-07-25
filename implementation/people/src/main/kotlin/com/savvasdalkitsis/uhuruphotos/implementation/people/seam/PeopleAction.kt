@@ -22,4 +22,5 @@ sealed class PeopleAction {
     object LoadPeople : PeopleAction()
     object ToggleSortOrder : PeopleAction()
     object NavigateBack : PeopleAction()
+    object SwipeToRefresh : PeopleAction()
 }

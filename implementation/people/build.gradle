@@ -24,6 +24,7 @@ dependencies {
     implementation project(":api:strings")
     implementation project(":api:ui")
     implementation(
+            libs.accompanist.swiperefresh,
             libs.androidx.compose.foundation,
             libs.androidx.compose.material,
             libs.androidx.compose.material.windowsize,

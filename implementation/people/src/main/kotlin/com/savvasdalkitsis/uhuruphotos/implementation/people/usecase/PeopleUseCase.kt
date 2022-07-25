@@ -27,10 +27,7 @@ class PeopleUseCase @Inject constructor(
     private val peopleRepository: PeopleRepository,
 ) : PeopleUseCase {
 
-    override fun observePeopleByName(): Flow<Result<List<People>>> = peopleRepository.observePeopleByName()
-        .safelyOnStart {
-            refreshPeople()
-        }
+    override fun observePeopleByName(): Flow<List<People>> = peopleRepository.observePeopleByName()
 
     override suspend fun getPeopleByName(): List<People> = peopleRepository.getPeopleByName()
 

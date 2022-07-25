@@ -15,17 +15,20 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.implementation.people.seam
 
-import com.savvasdalkitsis.uhuruphotos.api.coroutines.onErrors
+import com.savvasdalkitsis.uhuruphotos.api.coroutines.safelyOnStartIgnoring
+import com.savvasdalkitsis.uhuruphotos.api.log.log
 import com.savvasdalkitsis.uhuruphotos.api.people.view.state.toPerson
 import com.savvasdalkitsis.uhuruphotos.api.photos.usecase.PhotosUseCase
 import com.savvasdalkitsis.uhuruphotos.api.seam.ActionHandler
 import com.savvasdalkitsis.uhuruphotos.implementation.people.seam.PeopleAction.LoadPeople
 import com.savvasdalkitsis.uhuruphotos.implementation.people.seam.PeopleAction.NavigateBack
 import com.savvasdalkitsis.uhuruphotos.implementation.people.seam.PeopleAction.PersonSelected
+import com.savvasdalkitsis.uhuruphotos.implementation.people.seam.PeopleAction.SwipeToRefresh
 import com.savvasdalkitsis.uhuruphotos.implementation.people.seam.PeopleAction.ToggleSortOrder
 import com.savvasdalkitsis.uhuruphotos.implementation.people.seam.PeopleEffect.ErrorLoadingPeople
 import com.savvasdalkitsis.uhuruphotos.implementation.people.seam.PeopleEffect.NavigateToPerson
 import com.savvasdalkitsis.uhuruphotos.implementation.people.seam.PeopleMutation.DisplayPeople
+import com.savvasdalkitsis.uhuruphotos.implementation.people.seam.PeopleMutation.Loading
 import com.savvasdalkitsis.uhuruphotos.implementation.people.seam.PeopleMutation.SetSortOrder
 import com.savvasdalkitsis.uhuruphotos.implementation.people.usecase.PeopleUseCase
 import com.savvasdalkitsis.uhuruphotos.implementation.people.view.state.PeopleState
@@ -37,6 +40,8 @@ import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.merge
 import javax.inject.Inject
 
 class PeopleActionHandler @Inject constructor(
@@ -46,29 +51,39 @@ class PeopleActionHandler @Inject constructor(
 
     private
     val sort: MutableSharedFlow<SortOrder> = MutableStateFlow(SortOrder.default)
+    private
+    val loading: MutableSharedFlow<Boolean> = MutableStateFlow(false)
 
     override fun handleAction(
         state: PeopleState,
         action: PeopleAction,
         effect: suspend (PeopleEffect) -> Unit
     ): Flow<PeopleMutation> = when (action) {
-        LoadPeople -> combine(
-            peopleUseCase.observePeopleByName()
-                .onErrors {
-                    effect(ErrorLoadingPeople)
-                },
-            sort
-        ) { people, sortOrder ->
-            with(photosUseCase) {
-                DisplayPeople(
-                    when (sortOrder) {
-                        ASCENDING -> people
-                        DESCENDING -> people.reversed()
-                    }.map {
-                        it.toPerson { url -> url.toAbsoluteUrl() }
-                    }
-                )
-            }
+        LoadPeople -> merge(
+            loading.map { Loading(it) },
+            combine(
+                sort,
+                peopleUseCase.observePeopleByName()
+                    .safelyOnStartIgnoring {
+                        if (peopleUseCase.getPeopleByName().isEmpty()) {
+                            refresh(effect)
+                        }
+                    },
+            ) { sortOrder, people ->
+                with(photosUseCase) {
+                    DisplayPeople(
+                        when (sortOrder) {
+                            ASCENDING -> people
+                            DESCENDING -> people.reversed()
+                        }.map {
+                            it.toPerson { url -> url.toAbsoluteUrl() }
+                        }
+                    )
+                }
+            },
+        )
+        SwipeToRefresh -> flow {
+            refresh(effect)
         }
         ToggleSortOrder -> flow {
             val sortOrder = state.sortOrder.toggle()
@@ -80,6 +95,18 @@ class PeopleActionHandler @Inject constructor(
         }
         is PersonSelected -> flow {
             effect(NavigateToPerson(action.person))
+        }
+    }
+
+    private suspend fun refresh(effect: suspend (PeopleEffect) -> Unit) {
+        loading.emit(true)
+        try {
+            peopleUseCase.refreshPeople()
+        } catch (e: Exception) {
+            log(e)
+            effect(ErrorLoadingPeople)
+        } finally {
+            loading.emit(false)
         }
     }
 
