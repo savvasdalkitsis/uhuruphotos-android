@@ -159,7 +159,7 @@
     <string name="download_original_file">Oorspronkelijk bestand downloaden</string>
     <string name="downloading_original_file">Bezig met downloaden van oorspronkelijk bestand…</string>
     <string name="downloading_original_files">Oorspronkelijke bestanden downloaden</string>
-    <string name="downloading_original_file_background">Bezig met downloaden van oorspronkelijk bestand…</string>
+    <string name="downloading_original_file_background">Bezig met downloaden van oorspronkelijk bestand.</string>
     <string name="you_can_leave">Je kunt dit scherm verlaten.</string>
     <string name="ui">Vormgeving</string>
     <string name="privacy_security">Privacy en beveiliging</string>

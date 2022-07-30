@@ -164,4 +164,6 @@
     <string name="help">Aide</string>
     <string name="details">Détails</string>
     <string name="open_in_maps">Ouvrir dans Maps</string>
+    <string name="nothing_here_yet">Rien ici pour l\'instant</string>
+    <string name="use_as">Utiliser comme</string>
 </resources>

@@ -51,4 +51,39 @@
     <string name="feed_sync_freq_changed">Frequenz der Vorschaltsynchronisation geändert</string>
     <string name="feed_sync_network_changed">Anforderung an das Feed-Synchronisierungs-Netzwerk geändert</string>
     <string name="error_changing_photo_favourite">Es ist ein Fehler beim Ändern des Favoritenstatus des Fotos aufgetreten</string>
+    <plurals name="trash_photos_confirmation">
+        <item quantity="one">Bist du dir sicher, dass du dieses %d Foto in den Papierkorb schieben willst\?</item>
+        <item quantity="other">Bist du dir sicher, dass du diese %d Fotos in den Papierkorb schieben willst\?</item>
+    </plurals>
+    <string name="perform_full_feed_sync">Führe vollständige Feed Synchronisierung durch</string>
+    <string name="feed_sync_progress">Vollständiger Feed Synchronisierung Fortschritt</string>
+    <string name="setting_photo_favourite">Markiere Bild als Favorit</string>
+    <string name="downloading_photo_details">Lade Fotodetails herunter</string>
+    <plurals name="restore_photos">
+        <item quantity="one">Stelle %d Foto wieder her</item>
+        <item quantity="other">Stelle %d Fotos wieder her</item>
+    </plurals>
+    <string name="people">Personen</string>
+    <string name="view_all">Alle ansehen</string>
+    <string name="feed_refresh_days">Anzahl der Feed-Tage, die beim Pull-to-Refresh aktualisiert werden</string>
+    <string name="downloading_photos_sharing">Fotos werden heruntergeladen und bald geteilt</string>
+    <string name="full">Voll</string>
+    <string name="requires_charging">Aufladen erforderlich</string>
+    <string name="perform_full_sync">Führe vollständige Synchronisierung durch</string>
+    <string name="feed_sync_charging_changed">Ladeanforderungen für Feed-Sync geändert</string>
+    <plurals name="trash_photos">
+        <item quantity="one">Schiebe %d Foto in den Papierkorb</item>
+        <item quantity="other">Schiebe %d Fotos in den Papierkorb</item>
+    </plurals>
+    <plurals name="restore_photos_confirmation">
+        <item quantity="one">Bist du dir sicher, dass du dieses %d Foto wieder herstellen willst\?</item>
+        <item quantity="other">Bist du dir sicher, dass du dieses %d Fotos wieder herstellen willst\?</item>
+    </plurals>
+    <string name="yearly">Jährlich</string>
+    <string name="jobs">Jobs</string>
+    <plurals name="days">
+        <item quantity="one">%d Tag</item>
+        <item quantity="other">%d Tage</item>
+    </plurals>
+    <string name="trashing_photo">Schiebe Foto in den Papierkorb</string>
 </resources>
