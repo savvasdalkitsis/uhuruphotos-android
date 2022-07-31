@@ -24,6 +24,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import okhttp3.Interceptor
 import okhttp3.Response
+import okhttp3.internal.commonIsRedirect
 import javax.inject.Inject
 
 class WebLoginInterceptor @Inject constructor(
@@ -34,7 +35,7 @@ class WebLoginInterceptor @Inject constructor(
 
     override fun intercept(chain: Interceptor.Chain): Response {
         val response = chain.proceed(chain.request())
-        if (response.code == 307) {
+        if (response.isRedirect) {
             CoroutineScope(Dispatchers.Main).launch {
                 cookieManager.setCookie(serverUseCase.getServerUrl(), "")
                 navigator.navigateTo(

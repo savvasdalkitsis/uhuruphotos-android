@@ -40,6 +40,6 @@ class CookieMonitor @Inject constructor(
             cookie = cookies.getCookie(server)
             log { "Cookie was: $cookie" }
             delay(500)
-        } while (cookie?.contains("_forward_auth=") == false)
+        } while (cookie?.contains("_forward_auth=") == false && !cookie.contains("authelia_session="))
     }
 }
