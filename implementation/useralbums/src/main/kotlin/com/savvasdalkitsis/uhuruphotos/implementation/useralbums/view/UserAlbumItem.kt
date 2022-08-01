@@ -57,11 +57,11 @@ internal fun UserAlbumItem(
         } else {
             PhotoThumbnail(
                 photo = album.cover.photo1 ?: Photo(""),
-                aspectRatio = 1f,
-                contentScale = ContentScale.Crop,
                 onPhotoSelected = { _, _, _ ->
                     action(UserAlbumSelected(album))
                 },
+                aspectRatio = 1f,
+                contentScale = ContentScale.Crop,
                 shape = RoundedCornerShape(26.dp),
             )
         }

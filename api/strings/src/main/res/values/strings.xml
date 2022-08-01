@@ -171,4 +171,8 @@
     <string name="help">Help</string>
     <string name="nothing_here_yet">Nothing here yet</string>
     <string name="use_as">Use as</string>
+    <string name="local_albums">Local albums</string>
+    <string name="missing_permissions">Permissions missing</string>
+    <string name="grant_permissions">Grant permissions</string>
+    <string name="sync_local_media">Synchronising local media</string>
 </resources>

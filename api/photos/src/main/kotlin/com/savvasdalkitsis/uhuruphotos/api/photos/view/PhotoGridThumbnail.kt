@@ -54,11 +54,13 @@ private fun RowScope.GridItem(photo: Photo?) {
             modifier = Modifier
                 .weight(1f),
             photo = photo,
-            photoPadding = 0.dp,
-            selectable = false,
+            onPhotoSelected = { _, _, _ -> },
             aspectRatio = 1f,
             contentScale = ContentScale.Crop,
-            onPhotoSelected = { _, _, _ -> })
+            photoPadding = 0.dp,
+            miniIcons = true,
+            selectable = false
+        )
     } else {
         Box(modifier = Modifier
             .fillMaxSize()

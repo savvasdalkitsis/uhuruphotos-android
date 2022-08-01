@@ -1,0 +1,28 @@
+android {
+    namespace 'com.savvasdalkitsis.implementation.mediastore'
+}
+
+dependencies {
+    implementation project(":api:albums")
+    implementation project(":api:coroutines")
+    implementation project(":api:date")
+    implementation project(":api:db")
+    implementation project(":api:exif")
+    implementation project(":api:initializer")
+    implementation project(":api:log")
+    implementation project(":api:mediastore")
+    implementation project(":api:notification")
+    implementation project(":api:strings")
+    implementation project(":api:user")
+    implementation project(":api:worker")
+    implementation(
+            libs.androidx.work,
+            libs.androidx.work.hilt,
+            libs.bundles.permissions,
+            libs.flowpreferences,
+            libs.kotlinx.coroutines,
+            libs.hilt,
+            libs.palette,
+            libs.sqldelight.coroutines,
+    )
+}

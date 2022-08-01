@@ -18,6 +18,7 @@ dependencies {
     implementation project(":api:auth")
     implementation project(":api:date")
     implementation project(":api:db")
+    implementation project(":api:exif")
     implementation project(":api:icons")
     implementation project(':api:image')
     implementation project(":api:log")

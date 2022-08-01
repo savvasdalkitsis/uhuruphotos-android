@@ -34,6 +34,7 @@ class WorkScheduler @Inject constructor(
 ) {
     inline fun <reified W: CoroutineWorker> scheduleNow(
         workName: String,
+        existingWorkPolicy: ExistingWorkPolicy = ExistingWorkPolicy.REPLACE,
         backoffPolicy: BackoffPolicy = BackoffPolicy.EXPONENTIAL,
         backoffDelay: Long = 1,
         backoffTimeUnit: TimeUnit = TimeUnit.MINUTES,
@@ -42,7 +43,7 @@ class WorkScheduler @Inject constructor(
     ) {
         workManager.enqueueUniqueWork(
             workName,
-            ExistingWorkPolicy.REPLACE,
+            existingWorkPolicy,
             OneTimeWorkRequestBuilder<W>()
                 .setInputData(params(Data.Builder()).build())
                 .setBackoffCriteria(backoffPolicy, backoffDelay, backoffTimeUnit)

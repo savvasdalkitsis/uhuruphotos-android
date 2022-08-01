@@ -1,0 +1,11 @@
+android {
+    namespace 'com.savvasdalkitsis.uhuruphotos.api.mediastore'
+}
+
+dependencies {
+    implementation project(":api:albums")
+    implementation project(":api:photos")
+    implementation(
+            libs.kotlinx.coroutines,
+    )
+}

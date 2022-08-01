@@ -1,0 +1,10 @@
+android {
+    namespace 'com.savvasdalkitsis.api.exif'
+}
+
+dependencies {
+    implementation(
+            libs.exif,
+            libs.hilt,
+    )
+}

@@ -1,0 +1,37 @@
+CREATE TABLE mediaStore (
+    id INTEGER AS Long NOT NULL PRIMARY KEY,
+    displayName TEXT,
+    dateTaken TEXT NOT NULL,
+    bucketId INTEGER AS Int NOT NULL,
+    bucketName TEXT NOT NULL,
+    width INTEGER AS Int NOT NULL,
+    height INTEGER AS Int NOT NULL,
+    size INTEGER AS Int NOT NULL,
+    contentUri TEXT NOT NULL,
+    md5 TEXT NOT NULL,
+    video INTEGER AS Boolean NOT NULL,
+    duration INTEGER AS Int,
+    latLon TEXT,
+    fallbackColor TEXT
+);
+
+insert:
+INSERT OR REPLACE INTO mediaStore VALUES ?;
+
+getItems:
+SELECT * FROM mediaStore ORDER BY dateTaken DESC;
+
+getBucketItems:
+SELECT * FROM mediaStore WHERE bucketId = :id ORDER BY dateTaken DESC;
+
+getBuckets:
+SELECT bucketId, bucketName FROM mediaStore;
+
+getExistingIds:
+SELECT id FROM mediaStore;
+
+getExistingBucketIds:
+SELECT id FROM mediaStore WHERE bucketId = :id;
+
+delete:
+DELETE FROM mediaStore WHERE id = :id;

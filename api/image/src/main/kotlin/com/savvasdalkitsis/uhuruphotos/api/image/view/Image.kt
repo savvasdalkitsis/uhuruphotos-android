@@ -25,6 +25,7 @@ import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import coil.compose.AsyncImage
+import coil.request.CachePolicy
 import coil.request.ImageRequest
 import coil.size.Size
 
@@ -38,7 +39,10 @@ fun Image(
 ) {
     AsyncImage(
         modifier = modifier,
-        model = url,
+        model = ImageRequest.Builder(LocalContext.current)
+            .data(url)
+            .diskCachePolicy(url.diskCachePolicy())
+            .build(),
         contentScale = contentScale,
         placeholder = placeholder,
         contentDescription = contentDescription,
@@ -76,6 +80,7 @@ fun Image(
             model = ImageRequest.Builder(LocalContext.current)
                 .data(fullResUrl)
                 .size(Size.ORIGINAL)
+                .diskCachePolicy(fullResUrl.diskCachePolicy())
                 .listener(onSuccess = { _, _ ->
                     showLowRes = false
                     onFullResImageLoaded()
@@ -86,4 +91,10 @@ fun Image(
         )
     }
 
+}
+
+private fun String?.diskCachePolicy(): CachePolicy = if (orEmpty().startsWith("content://")) {
+    CachePolicy.DISABLED
+} else {
+    CachePolicy.ENABLED
 }

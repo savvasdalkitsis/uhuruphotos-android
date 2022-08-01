@@ -15,9 +15,15 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.implementation.library.seam
 
+import com.savvasdalkitsis.uhuruphotos.api.albums.model.Album
 import com.savvasdalkitsis.uhuruphotos.api.autoalbums.usecase.AutoAlbumsUseCase
 import com.savvasdalkitsis.uhuruphotos.api.coroutines.safelyOnStartIgnoring
 import com.savvasdalkitsis.uhuruphotos.api.log.log
+import com.savvasdalkitsis.uhuruphotos.api.mediastore.model.LocalMedia.Error
+import com.savvasdalkitsis.uhuruphotos.api.mediastore.model.LocalMedia.Found
+import com.savvasdalkitsis.uhuruphotos.api.mediastore.model.LocalMedia.RequiresPermissions
+import com.savvasdalkitsis.uhuruphotos.api.mediastore.usecase.MediaStoreUseCase
+import com.savvasdalkitsis.uhuruphotos.api.mediastore.worker.MediaStoreWorkScheduler
 import com.savvasdalkitsis.uhuruphotos.api.photos.model.Photo
 import com.savvasdalkitsis.uhuruphotos.api.photos.model.PhotoGrid
 import com.savvasdalkitsis.uhuruphotos.api.photos.usecase.PhotosUseCase
@@ -27,22 +33,30 @@ import com.savvasdalkitsis.uhuruphotos.implementation.library.seam.LibraryAction
 import com.savvasdalkitsis.uhuruphotos.implementation.library.seam.LibraryAction.FavouritePhotosSelected
 import com.savvasdalkitsis.uhuruphotos.implementation.library.seam.LibraryAction.HiddenPhotosSelected
 import com.savvasdalkitsis.uhuruphotos.implementation.library.seam.LibraryAction.Load
+import com.savvasdalkitsis.uhuruphotos.implementation.library.seam.LibraryAction.LocalBucketSelected
 import com.savvasdalkitsis.uhuruphotos.implementation.library.seam.LibraryAction.Refresh
+import com.savvasdalkitsis.uhuruphotos.implementation.library.seam.LibraryAction.RefreshLocalMedia
+import com.savvasdalkitsis.uhuruphotos.implementation.library.seam.LibraryAction.TrashSelected
 import com.savvasdalkitsis.uhuruphotos.implementation.library.seam.LibraryAction.UserAlbumsSelected
 import com.savvasdalkitsis.uhuruphotos.implementation.library.seam.LibraryEffect.ErrorLoadingAlbums
 import com.savvasdalkitsis.uhuruphotos.implementation.library.seam.LibraryEffect.NavigateToAutoAlbums
 import com.savvasdalkitsis.uhuruphotos.implementation.library.seam.LibraryEffect.NavigateToFavourites
 import com.savvasdalkitsis.uhuruphotos.implementation.library.seam.LibraryEffect.NavigateToHidden
+import com.savvasdalkitsis.uhuruphotos.implementation.library.seam.LibraryEffect.NavigateToLocalBucket
 import com.savvasdalkitsis.uhuruphotos.implementation.library.seam.LibraryEffect.NavigateToTrash
 import com.savvasdalkitsis.uhuruphotos.implementation.library.seam.LibraryEffect.NavigateToUserAlbums
 import com.savvasdalkitsis.uhuruphotos.implementation.library.seam.LibraryMutation.DisplayAutoAlbums
 import com.savvasdalkitsis.uhuruphotos.implementation.library.seam.LibraryMutation.DisplayFavouritePhotos
+import com.savvasdalkitsis.uhuruphotos.implementation.library.seam.LibraryMutation.DisplayLocalAlbums
 import com.savvasdalkitsis.uhuruphotos.implementation.library.seam.LibraryMutation.DisplayUserAlbums
 import com.savvasdalkitsis.uhuruphotos.implementation.library.seam.LibraryMutation.Loading
+import com.savvasdalkitsis.uhuruphotos.implementation.library.view.state.LibraryLocalMedia
 import com.savvasdalkitsis.uhuruphotos.implementation.library.view.state.LibraryState
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.debounce
+import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.mapNotNull
@@ -54,6 +68,8 @@ class LibraryActionHandler @Inject constructor(
     private val autoAlbumsUseCase: AutoAlbumsUseCase,
     private val userAlbumsUseCase: UserAlbumsUseCase,
     private val photosUseCase: PhotosUseCase,
+    private val mediaStoreUseCase: MediaStoreUseCase,
+    private val mediaStoreWorkScheduler: MediaStoreWorkScheduler,
 ) : ActionHandler<LibraryState, LibraryEffect, LibraryAction, LibraryMutation> {
 
     private val loading = MutableSharedFlow<Boolean>()
@@ -72,6 +88,27 @@ class LibraryActionHandler @Inject constructor(
                 .map(::DisplayFavouritePhotos),
             loading
                 .map(::Loading),
+            mediaStoreUseCase.observeMedia()
+                .debounce(200)
+                .map {
+                    val defaultBucket = mediaStoreUseCase.getDefaultBucketId()
+                    when (val media = it) {
+                        is Found -> LibraryLocalMedia.Found(media.buckets.mapValues { (_, albums) ->
+                            PhotoGrid(albums.flatMap(Album::photos).take(4))
+                        }.toSortedMap { bucket, other ->
+                            when (defaultBucket) {
+                                bucket.id -> -1
+                                other.id -> 1
+                                else -> bucket.displayName.compareTo(other.displayName) }
+                            }
+                        )
+                        Error -> LibraryLocalMedia.Error
+                        is RequiresPermissions ->
+                            LibraryLocalMedia.RequiresPermissions(media.deniedPermissions)
+                    }
+                }
+                .distinctUntilChanged()
+                .map(::DisplayLocalAlbums)
         ).safelyOnStartIgnoring {
             initialRefresh(effect)
         }
@@ -80,6 +117,7 @@ class LibraryActionHandler @Inject constructor(
             refreshUserAlbums(effect)
             refreshFavouritePhotos(effect)
             refreshHiddenPhotos(effect)
+            refreshMediaStore()
         }
         is AutoAlbumsSelected -> flow {
             effect(NavigateToAutoAlbums)
@@ -93,8 +131,14 @@ class LibraryActionHandler @Inject constructor(
         HiddenPhotosSelected -> flow {
             effect(NavigateToHidden)
         }
-        LibraryAction.TrashSelected -> flow {
+        TrashSelected -> flow {
             effect(NavigateToTrash)
+        }
+        RefreshLocalMedia -> flow {
+            refreshMediaStore()
+        }
+        is LocalBucketSelected -> flow {
+           effect(NavigateToLocalBucket(action.bucket))
         }
     }
 
@@ -114,6 +158,9 @@ class LibraryActionHandler @Inject constructor(
         if (photosUseCase.getHiddenPhotoSummaries().isEmpty()) {
             refreshHiddenPhotos(effect)
         }
+        if (mediaStoreUseCase.getMedia().map { it.isEmpty() }.getOrNull() == true) {
+            refreshMediaStore()
+        }
     }
 
     private suspend fun refreshAutoAlbums(effect: suspend (LibraryEffect) -> Unit) {
@@ -128,18 +175,20 @@ class LibraryActionHandler @Inject constructor(
         }
     }
 
-
     private suspend fun refreshFavouritePhotos(effect: suspend (LibraryEffect) -> Unit) {
         refresh(effect) {
             photosUseCase.refreshFavourites()
         }
     }
 
-
     private suspend fun refreshHiddenPhotos(effect: suspend (LibraryEffect) -> Unit) {
         refresh(effect) {
             photosUseCase.refreshHiddenPhotos()
         }
+    }
+
+    private fun refreshMediaStore() {
+        mediaStoreWorkScheduler.scheduleMediaStoreSyncNowIfNotRunning()
     }
 
     private suspend fun refresh(effect: suspend (LibraryEffect) -> Unit, refresh: suspend () -> Unit) {
@@ -160,12 +209,7 @@ class LibraryActionHandler @Inject constructor(
     private fun <T> Flow<List<T>>.mapToCover(cover: (T) -> Photo?): Flow<PhotoGrid> =
         map { albums ->
             albums.take(4).map(cover).let {
-                PhotoGrid(
-                    it.getOrNull(0),
-                    it.getOrNull(1),
-                    it.getOrNull(2),
-                    it.getOrNull(3),
-                )
+                PhotoGrid(it)
             }
         }
 }

@@ -16,16 +16,21 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.implementation.library.view
 
 import androidx.annotation.DrawableRes
+import androidx.compose.animation.AnimatedContent
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement.spacedBy
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.GridItemSpan
 import androidx.compose.foundation.lazy.grid.LazyGridItemSpanScope
@@ -36,6 +41,7 @@ import androidx.compose.material.Icon
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Modifier
@@ -49,13 +55,19 @@ import com.savvasdalkitsis.uhuruphotos.api.photos.model.PhotoGrid
 import com.savvasdalkitsis.uhuruphotos.api.photos.view.PhotoGridThumbnail
 import com.savvasdalkitsis.uhuruphotos.api.strings.R
 import com.savvasdalkitsis.uhuruphotos.api.ui.theme.CustomColors
+import com.savvasdalkitsis.uhuruphotos.api.ui.view.SectionHeader
 import com.savvasdalkitsis.uhuruphotos.implementation.library.seam.LibraryAction
 import com.savvasdalkitsis.uhuruphotos.implementation.library.seam.LibraryAction.AutoAlbumsSelected
 import com.savvasdalkitsis.uhuruphotos.implementation.library.seam.LibraryAction.FavouritePhotosSelected
 import com.savvasdalkitsis.uhuruphotos.implementation.library.seam.LibraryAction.HiddenPhotosSelected
+import com.savvasdalkitsis.uhuruphotos.implementation.library.seam.LibraryAction.LocalBucketSelected
+import com.savvasdalkitsis.uhuruphotos.implementation.library.seam.LibraryAction.RefreshLocalMedia
 import com.savvasdalkitsis.uhuruphotos.implementation.library.seam.LibraryAction.TrashSelected
 import com.savvasdalkitsis.uhuruphotos.implementation.library.seam.LibraryAction.UserAlbumsSelected
+import com.savvasdalkitsis.uhuruphotos.implementation.library.view.state.LibraryLocalMedia
+import com.savvasdalkitsis.uhuruphotos.implementation.library.view.state.LibraryLocalMedia.*
 import com.savvasdalkitsis.uhuruphotos.implementation.library.view.state.LibraryState
+import dev.shreyaspatil.permissionflow.compose.rememberPermissionFlowRequestLauncher
 import com.savvasdalkitsis.uhuruphotos.api.icons.R as Icons
 
 @Composable
@@ -69,6 +81,10 @@ internal fun LibraryGrid(
     val favourites = stringResource(R.string.favourite_photos)
     val hidden = stringResource(R.string.hidden_photos)
     val trash = stringResource(R.string.trash)
+    val local = stringResource(R.string.local_albums)
+
+    val permissionLauncher = rememberPermissionFlowRequestLauncher()
+
     LazyVerticalGrid(
         modifier = Modifier.fillMaxSize(),
         contentPadding = contentPadding,
@@ -79,6 +95,18 @@ internal fun LibraryGrid(
         }
         pillItem(hidden, Icons.drawable.ic_invisible, { GridItemSpan(maxCurrentLineSpan) }) {
             action(HiddenPhotosSelected)
+        }
+        item(local, { GridItemSpan(maxLineSpan) }) {
+            when (val media = state.localMedia) {
+                Error -> PillItem(local, Icons.drawable.ic_folder_off) {
+                    action(RefreshLocalMedia)
+                }
+                is Found -> LocalFolders(local, media, action)
+                is RequiresPermissions -> PillItem(local, Icons.drawable.ic_folder) {
+                    permissionLauncher.launch(media.deniedPermissions.toTypedArray())
+                }
+                null -> {}
+            }
         }
 
         libraryItem(state.autoAlbums, auto) {
@@ -93,6 +121,39 @@ internal fun LibraryGrid(
     }
 }
 
+@Composable
+private fun LocalFolders(
+    title: String,
+    media: Found,
+    action: (LibraryAction) -> Unit,
+) {
+    Column(
+        modifier = Modifier.fillMaxWidth(),
+        verticalArrangement = spacedBy(8.dp),
+    ) {
+        SectionHeader(
+            modifier = Modifier.padding(8.dp),
+            title = title,
+        )
+        LazyRow(
+            modifier = Modifier.heightIn(min = 120.dp)
+        ) {
+            for ((bucket, photoGrid) in media.buckets) {
+                item(bucket.id) {
+                    LibraryEntry(
+                        modifier = Modifier.animateItemPlacement(),
+                        photoGrid = photoGrid,
+                        photoGridModifier = Modifier.width(120.dp),
+                        title = bucket.displayName,
+                    ) {
+                        action(LocalBucketSelected(bucket))
+                    }
+                }
+            }
+        }
+    }
+}
+
 internal fun LazyGridScope.pillItem(
     title: String,
     @DrawableRes icon: Int,
@@ -100,28 +161,33 @@ internal fun LazyGridScope.pillItem(
     onSelected: () -> Unit,
 ) {
     item(title, span) {
-        Column(
+        PillItem(title, icon, onSelected)
+    }
+}
+
+@Composable
+private fun PillItem(title: String, icon: Int, onSelected: () -> Unit) {
+    Column(
+        modifier = Modifier
+            .padding(8.dp)
+    ) {
+        Box(
             modifier = Modifier
-                .padding(8.dp)
+                .fillMaxWidth()
+                .clip(RoundedCornerShape(26.dp))
+                .clickable { onSelected() }
+                .background(CustomColors.emptyItem)
+                .padding(16.dp),
         ) {
-            Box(
+            Icon(
                 modifier = Modifier
-                    .fillMaxWidth()
-                    .clip(RoundedCornerShape(26.dp))
-                    .clickable { onSelected() }
-                    .background(CustomColors.emptyItem)
-                    .padding(16.dp),
-            ) {
-                Icon(
-                    modifier = Modifier
-                        .size(24.dp)
-                        .align(Alignment.Center),
-                    painter = painterResource(icon),
-                    contentDescription = null
-                )
-            }
-            Subtitle(title)
+                    .size(24.dp)
+                    .align(Alignment.Center),
+                painter = painterResource(icon),
+                contentDescription = null
+            )
         }
+        Subtitle(title)
     }
 }
 
@@ -133,30 +199,48 @@ internal fun LazyGridScope.libraryItem(
 ) {
     photoGrid?.let {
         item(title) {
-            Column(
-                modifier = Modifier
-                    .padding(8.dp),
-            ) {
-                Box(modifier = Modifier.fillMaxSize()) {
-                    PhotoGridThumbnail(
-                        modifier = Modifier.fillMaxSize(),
-                        photoGrid = photoGrid,
-                        onSelected = onSelected,
-                        shape = RoundedCornerShape(26.dp)
-                    )
-                    if (overlayIcon != null) {
-                        Icon(
-                            modifier = Modifier
-                                .size(24.dp)
-                                .align(Alignment.Center),
-                            painter = painterResource(overlayIcon),
-                            contentDescription = null
-                        )
-                    }
-                }
-                Subtitle(title)
+            LibraryEntry(
+                photoGrid = photoGrid,
+                photoGridModifier = Modifier.fillMaxWidth(),
+                title = title,
+                overlayIcon = overlayIcon,
+                onSelected = onSelected
+            )
+        }
+    }
+}
+
+@Composable
+fun LibraryEntry(
+    modifier: Modifier = Modifier,
+    photoGrid: PhotoGrid,
+    photoGridModifier: Modifier,
+    title: String,
+    @DrawableRes overlayIcon: Int? = null,
+    onSelected: () -> Unit,
+) {
+    Column(
+        modifier = modifier
+            .padding(8.dp),
+    ) {
+        Box(modifier = Modifier.fillMaxSize()) {
+            PhotoGridThumbnail(
+                modifier = photoGridModifier,
+                photoGrid = photoGrid,
+                onSelected = onSelected,
+                shape = RoundedCornerShape(26.dp)
+            )
+            if (overlayIcon != null) {
+                Icon(
+                    modifier = Modifier
+                        .size(24.dp)
+                        .align(Alignment.Center),
+                    painter = painterResource(overlayIcon),
+                    contentDescription = null
+                )
             }
         }
+        Subtitle(title)
     }
 }
 

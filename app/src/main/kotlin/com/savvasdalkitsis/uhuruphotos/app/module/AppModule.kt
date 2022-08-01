@@ -16,6 +16,7 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.app.module
 
 import android.content.ClipboardManager
+import android.content.ContentResolver
 import android.content.Context
 import androidx.core.app.NotificationManagerCompat
 import androidx.preference.PreferenceManager
@@ -25,6 +26,7 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
+import dev.shreyaspatil.permissionFlow.PermissionFlow
 
 @Module
 @InstallIn(SingletonComponent::class)
@@ -41,4 +43,11 @@ class AppModule {
     @Provides
     fun notificationManager(@ApplicationContext context: Context): NotificationManagerCompat =
         NotificationManagerCompat.from(context)
+
+    @Provides
+    fun contentResolver(@ApplicationContext context: Context): ContentResolver =
+        context.contentResolver
+
+    @Provides
+    fun permissionFlow(): PermissionFlow = PermissionFlow.getInstance()
 }

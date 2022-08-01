@@ -24,6 +24,11 @@ data class PhotoGrid(
     val hasMoreThanOnePhoto = photo2 != null
 
     companion object {
-        val EMPTY = PhotoGrid()
+        operator fun invoke(photos: List<Photo?>)= PhotoGrid(
+            photos.getOrNull(0),
+            photos.getOrNull(1),
+            photos.getOrNull(2),
+            photos.getOrNull(3),
+        )
     }
 }

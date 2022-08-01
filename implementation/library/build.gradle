@@ -22,7 +22,9 @@ dependencies {
     implementation project(":api:home")
     implementation project(":api:homenavigation")
     implementation project(":api:icons")
+    implementation project(":api:localalbum")
     implementation project(":api:log")
+    implementation project(":api:mediastore")
     implementation project(":api:navigation")
     implementation project(':api:photos')
     implementation project(":api:settings")
@@ -34,9 +36,11 @@ dependencies {
     implementation project(":api:useralbums")
     implementation project(':api:userbadge')
     implementation(
+            libs.bundles.permissions,
             libs.accompanist.swiperefresh,
             libs.androidx.compose.foundation,
             libs.androidx.compose.material,
             libs.flowpreferences,
     )
+    implementation project(path: ':implementation:localalbum')
 }

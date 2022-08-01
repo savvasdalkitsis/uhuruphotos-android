@@ -26,6 +26,7 @@ import com.savvasdalkitsis.uhuruphotos.api.db.albums.UserAlbumQueries
 import com.savvasdalkitsis.uhuruphotos.api.db.albums.UserAlbumsQueries
 import com.savvasdalkitsis.uhuruphotos.api.db.auth.Token
 import com.savvasdalkitsis.uhuruphotos.api.db.auth.TokenQueries
+import com.savvasdalkitsis.uhuruphotos.api.db.mediastore.MediaStoreQueries
 import com.savvasdalkitsis.uhuruphotos.api.db.people.PeopleQueries
 import com.savvasdalkitsis.uhuruphotos.api.db.person.PersonQueries
 import com.savvasdalkitsis.uhuruphotos.api.db.photos.PhotoDetailsQueries
@@ -106,4 +107,7 @@ class DbModule {
 
     @Provides
     fun autoAlbumPeopleQueries(database: Database): AutoAlbumPeopleQueries = database.autoAlbumPeopleQueries
+
+    @Provides
+    fun mediaStoreQueries(database: Database): MediaStoreQueries = database.mediaStoreQueries
 }

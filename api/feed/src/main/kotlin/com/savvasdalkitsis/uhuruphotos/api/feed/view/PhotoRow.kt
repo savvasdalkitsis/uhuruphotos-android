@@ -47,13 +47,13 @@ fun PhotoRow(
                         modifier = Modifier
                             .weight(aspectRatio),
                         photo = item.photo,
-                        miniIcons = miniIcons,
+                        onPhotoSelected = onPhotoSelected,
                         aspectRatio = aspectRatio,
                         contentScale = when {
                             maintainAspectRatio -> ContentScale.FillBounds
                             else -> ContentScale.Crop
                         },
-                        onPhotoSelected = onPhotoSelected,
+                        miniIcons = miniIcons,
                         onLongClick = onPhotoLongPressed,
                     )
                 }

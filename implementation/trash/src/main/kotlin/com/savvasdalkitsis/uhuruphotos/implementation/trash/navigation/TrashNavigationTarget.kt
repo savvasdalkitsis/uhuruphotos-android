@@ -23,7 +23,7 @@ import com.savvasdalkitsis.uhuruphotos.api.albumpage.seam.AlbumPageAction.LoadAl
 import com.savvasdalkitsis.uhuruphotos.api.albumpage.seam.AlbumPageEffect
 import com.savvasdalkitsis.uhuruphotos.api.albumpage.seam.AlbumPageEffectsHandler
 import com.savvasdalkitsis.uhuruphotos.api.albumpage.view.state.AlbumPageState
-import com.savvasdalkitsis.uhuruphotos.api.favourites.navigation.TrashNavigationTarget
+import com.savvasdalkitsis.uhuruphotos.api.trash.navigation.TrashNavigationTarget
 import com.savvasdalkitsis.uhuruphotos.api.navigation.NavigationTarget
 import com.savvasdalkitsis.uhuruphotos.api.navigation.navigationTarget
 import com.savvasdalkitsis.uhuruphotos.api.seam.CompositeEffectHandler

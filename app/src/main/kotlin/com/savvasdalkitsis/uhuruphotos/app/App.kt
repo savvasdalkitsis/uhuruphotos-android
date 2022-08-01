@@ -20,6 +20,7 @@ import androidx.hilt.work.HiltWorkerFactory
 import androidx.work.Configuration
 import com.savvasdalkitsis.uhuruphotos.api.initializer.ApplicationInitializer
 import dagger.hilt.android.HiltAndroidApp
+import dev.shreyaspatil.permissionFlow.PermissionFlow
 import javax.inject.Inject
 
 @HiltAndroidApp
@@ -34,6 +35,7 @@ class App :
 
     override fun onCreate() {
         super.onCreate()
+        PermissionFlow.init(this)
         applicationInitializer.onCreated(this)
     }
 

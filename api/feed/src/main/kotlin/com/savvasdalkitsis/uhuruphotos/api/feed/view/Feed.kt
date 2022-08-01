@@ -44,6 +44,7 @@ fun Feed(
     showAlbumRefreshButton: Boolean = false,
     listState: LazyListState = rememberLazyListState(),
     feedHeader: @Composable (LazyItemScope.() -> Unit)? = null,
+    emptyContent: @Composable () -> Unit = { NoContent(R.string.no_photos) },
     onPhotoSelected: PhotoSelected = { _, _, _ -> },
     onChangeDisplay: ((FeedDisplay) -> Unit) = {},
     onPhotoLongPressed: (Photo) -> Unit = {},
@@ -51,7 +52,7 @@ fun Feed(
     onAlbumSelectionClicked: (Album) -> Unit = {},
 ) = when {
     state.isLoading || (!state.isEmpty && state.albums.isEmpty()) -> FullProgressBar()
-    state.isEmpty && state.albums.isEmpty() -> NoContent(R.string.no_photos)
+    state.isEmpty && state.albums.isEmpty() -> emptyContent()
     else -> {
         val feedDisplay = state.feedDisplay
         StaggeredDateFeed(

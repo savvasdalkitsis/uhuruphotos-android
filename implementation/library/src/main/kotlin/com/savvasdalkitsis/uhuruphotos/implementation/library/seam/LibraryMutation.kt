@@ -15,8 +15,11 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.implementation.library.seam
 
+import com.savvasdalkitsis.uhuruphotos.api.albums.model.Album
+import com.savvasdalkitsis.uhuruphotos.api.mediastore.model.LocalMedia
 import com.savvasdalkitsis.uhuruphotos.api.photos.model.PhotoGrid
 import com.savvasdalkitsis.uhuruphotos.api.seam.Mutation
+import com.savvasdalkitsis.uhuruphotos.implementation.library.view.state.LibraryLocalMedia
 import com.savvasdalkitsis.uhuruphotos.implementation.library.view.state.LibraryState
 
 sealed class LibraryMutation(
@@ -37,5 +40,9 @@ sealed class LibraryMutation(
 
     data class DisplayFavouritePhotos(val cover: PhotoGrid) : LibraryMutation({
         it.copy(favouritePhotos = cover)
+    })
+
+    data class DisplayLocalAlbums(val localMedia: LibraryLocalMedia) : LibraryMutation({
+        it.copy(localMedia = localMedia)
     })
 }
