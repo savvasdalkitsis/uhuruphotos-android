@@ -19,6 +19,7 @@ dependencies {
     implementation project(":api:compose")
     implementation project(":api:icons")
     implementation project(":api:image")
+    implementation project(":api:people")
     implementation project(":api:strings")
     implementation project(":api:ui")
     implementation(

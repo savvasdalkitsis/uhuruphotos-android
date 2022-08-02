@@ -40,9 +40,8 @@ sealed class MediaStoreServiceItem(
         override val width: Int?,
         override val height: Int?,
         override val size: Int?,
-    ): MediaStoreServiceItem(id, displayName, dateAdded, bucketId, bucketName, width, height, size,
-        ContentUris.withAppendedId(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, id,)
-    )
+        override val contentUri: Uri,
+    ): MediaStoreServiceItem(id, displayName, dateAdded, bucketId, bucketName, width, height, size, contentUri)
 
     data class Video(
         override val id: Long,
@@ -54,8 +53,7 @@ sealed class MediaStoreServiceItem(
         override val height: Int?,
         override val size: Int?,
         val duration: Int?,
-    ): MediaStoreServiceItem(id, displayName, dateAdded, bucketId, bucketName, width, height, size,
-        ContentUris.withAppendedId(MediaStore.Video.Media.EXTERNAL_CONTENT_URI, id,)
-    )
+        override val contentUri: Uri,
+    ): MediaStoreServiceItem(id, displayName, dateAdded, bucketId, bucketName, width, height, size, contentUri)
 
 }

@@ -20,6 +20,7 @@ import com.savvasdalkitsis.uhuruphotos.api.mediastore.model.LocalBucket
 import com.savvasdalkitsis.uhuruphotos.api.mediastore.model.LocalMedia
 import com.savvasdalkitsis.uhuruphotos.api.mediastore.model.LocalPermissions
 import com.savvasdalkitsis.uhuruphotos.api.mediastore.model.MediaBucket
+import com.savvasdalkitsis.uhuruphotos.api.mediastore.model.MediaStoreItem
 import kotlinx.coroutines.flow.Flow
 
 interface MediaStoreUseCase {
@@ -36,7 +37,7 @@ interface MediaStoreUseCase {
 
     fun observeMedia(): Flow<LocalMedia>
 
-    suspend fun getMedia(): Result<List<Album>>
+    suspend fun getMedia(): List<Album>
 
     suspend fun refresh(
         onProgressChange: suspend (Int) -> Unit = {},
@@ -45,4 +46,8 @@ interface MediaStoreUseCase {
     suspend fun refreshBucket(bucketId: Int)
 
     fun observePermissionsState(): Flow<LocalPermissions>
+
+    suspend fun refreshItem(id: Int, video: Boolean)
+
+    suspend fun getItem(id: Int, isVideo: Boolean): MediaStoreItem?
 }

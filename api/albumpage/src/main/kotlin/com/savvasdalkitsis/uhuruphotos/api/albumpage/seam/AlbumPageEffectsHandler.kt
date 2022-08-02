@@ -41,6 +41,7 @@ class AlbumPageEffectsHandler @Inject constructor(
                     effect.scale,
                     effect.video,
                     effect.photoSequenceDataSource,
+                    effect.imageSource,
                 ),
             )
             NavigateBack -> navigator.navigateBack()

@@ -21,6 +21,9 @@ INSERT OR REPLACE INTO mediaStore VALUES ?;
 getItems:
 SELECT * FROM mediaStore ORDER BY dateTaken DESC;
 
+getItem:
+SELECT * FROM mediaStore WHERE id = :id;
+
 getBucketItems:
 SELECT * FROM mediaStore WHERE bucketId = :id ORDER BY dateTaken DESC;
 

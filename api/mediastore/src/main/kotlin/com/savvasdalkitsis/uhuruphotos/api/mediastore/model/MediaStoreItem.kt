@@ -33,8 +33,8 @@ data class MediaStoreItem(
     val fallbackColor: String?,
 ) {
 
-    fun toPhoto(userId: String) = Photo(
-        id = md5 + userId,
+    fun toPhoto() = Photo(
+        id = id.toString(),
         thumbnailUrl = contentUri,
         fullResUrl = contentUri,
         fallbackColor = fallbackColor,

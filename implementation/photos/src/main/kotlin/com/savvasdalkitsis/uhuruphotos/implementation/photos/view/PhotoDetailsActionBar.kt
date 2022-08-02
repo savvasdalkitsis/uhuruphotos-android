@@ -70,8 +70,8 @@ fun PhotoDetailsActionBar(
             HIDDEN -> {}
         }
     }
-    AnimatedVisibility(visible = photo.isFavourite != null) {
-        if (photo.isFavourite != null) {
+    AnimatedVisibility(visible = photo.showFavouriteIcon && photo.isFavourite != null) {
+        if (photo.showFavouriteIcon && photo.isFavourite != null) {
             ActionIcon(
                 onClick = { action(SetFavourite(!photo.isFavourite)) },
                 icon = if (photo.isFavourite) Icons.drawable.ic_favourite else Icons.drawable.ic_not_favourite,

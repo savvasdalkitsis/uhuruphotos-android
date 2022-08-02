@@ -17,12 +17,12 @@ package com.savvasdalkitsis.uhuruphotos.implementation.mediastore.usecase
 
 import android.Manifest.permission.ACCESS_MEDIA_LOCATION
 import android.Manifest.permission.READ_EXTERNAL_STORAGE
-import android.os.Build
+import android.os.Build.VERSION.SDK_INT
+import android.os.Build.VERSION_CODES.Q
 import com.savvasdalkitsis.uhuruphotos.api.albums.model.Album
 import com.savvasdalkitsis.uhuruphotos.api.date.module.DateModule.ParsingDateFormat
 import com.savvasdalkitsis.uhuruphotos.api.db.extensions.async
 import com.savvasdalkitsis.uhuruphotos.api.db.mediastore.MediaStore
-import com.savvasdalkitsis.uhuruphotos.api.db.user.User
 import com.savvasdalkitsis.uhuruphotos.api.mediastore.model.LocalBucket
 import com.savvasdalkitsis.uhuruphotos.api.mediastore.model.LocalMedia
 import com.savvasdalkitsis.uhuruphotos.api.mediastore.model.LocalPermissions
@@ -31,7 +31,6 @@ import com.savvasdalkitsis.uhuruphotos.api.mediastore.model.LocalPermissions.Req
 import com.savvasdalkitsis.uhuruphotos.api.mediastore.model.MediaBucket
 import com.savvasdalkitsis.uhuruphotos.api.mediastore.model.MediaStoreItem
 import com.savvasdalkitsis.uhuruphotos.api.mediastore.usecase.MediaStoreUseCase
-import com.savvasdalkitsis.uhuruphotos.api.user.usecase.UserUseCase
 import com.savvasdalkitsis.uhuruphotos.implementation.mediastore.module.MediaStoreModule.MediaStoreDateTimeFormat
 import com.savvasdalkitsis.uhuruphotos.implementation.mediastore.repository.MediaStoreBucketRepository
 import com.savvasdalkitsis.uhuruphotos.implementation.mediastore.repository.MediaStoreRepository
@@ -51,7 +50,6 @@ class MediaStoreUseCase @Inject constructor(
     private val mediaStoreRepository: MediaStoreRepository,
     private val mediaStoreBucketRepository: MediaStoreBucketRepository,
     private val mediaStoreVersionRepository: MediaStoreVersionRepository,
-    private val userUseCase: UserUseCase,
     @MediaStoreDateTimeFormat
     private val mediaStoreDateTimeFormat: DateFormat,
     @ParsingDateFormat
@@ -59,7 +57,7 @@ class MediaStoreUseCase @Inject constructor(
     private val permissionFlow: PermissionFlow,
 ) : MediaStoreUseCase {
 
-    private val apiPermissions = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+    private val apiPermissions = if (SDK_INT >= Q) {
         arrayOf(ACCESS_MEDIA_LOCATION)
     } else
         emptyArray()
@@ -90,21 +88,16 @@ class MediaStoreUseCase @Inject constructor(
             when (permissions) {
                 is RequiresPermissions -> flowOf(LocalBucket.RequiresPermissions(permissions.deniedPermissions))
                 else -> mediaStoreRepository.observeBucket(bucketId).map { media ->
-                    userUseCase.getUserOrRefresh().fold(
-                        onFailure = { LocalBucket.Error },
-                        onSuccess = { user ->
-                            media.toItems()
-                                .groupBy(MediaStoreItem::bucket)
-                                .mapValues { (_, items) ->
-                                    items.toAlbums(user)
-                                }
-                                .entries
-                                .find { entry -> entry.key.id == bucketId }
-                                ?.toPair()
-                                ?.let(LocalBucket::Found)
-                                ?: LocalBucket.Error
+                    media.toItems()
+                        .groupBy(MediaStoreItem::bucket)
+                        .mapValues { (_, items) ->
+                            items.toAlbums()
                         }
-                    )
+                        .entries
+                        .find { entry -> entry.key.id == bucketId }
+                        ?.toPair()
+                        ?.let(LocalBucket::Found)
+                        ?: LocalBucket.Error
                 }
             }
         }
@@ -115,17 +108,12 @@ class MediaStoreUseCase @Inject constructor(
             when (permissions) {
                 is RequiresPermissions -> flowOf(LocalMedia.RequiresPermissions(permissions.deniedPermissions))
                 Granted -> mediaStoreRepository.observeMedia().map { media ->
-                    userUseCase.getUserOrRefresh().fold(
-                        onFailure = { LocalMedia.Error },
-                        onSuccess = { user ->
-                            LocalMedia.Found(
-                                media.toItems()
-                                    .groupBy(MediaStoreItem::bucket)
-                                    .mapValues { (_, items) ->
-                                        items.toAlbums(user)
-                                    }
-                            )
-                        }
+                    LocalMedia.Found(
+                        media.toItems()
+                            .groupBy(MediaStoreItem::bucket)
+                            .mapValues { (_, items) ->
+                                items.toAlbums()
+                            }
                     )
                 }
             }
@@ -139,11 +127,18 @@ class MediaStoreUseCase @Inject constructor(
             }
         }
 
-    override suspend fun getMedia(): Result<List<Album>> =
-        userUseCase.getUserOrRefresh().map {
-            resetMediaStoreIfNeeded()
-            mediaStoreRepository.getMedia().toItems().toAlbums(it)
-        }
+    override suspend fun refreshItem(id: Int, video: Boolean) {
+        mediaStoreRepository.refreshItem(id, video)
+    }
+
+    override suspend fun getItem(id: Int, isVideo: Boolean): MediaStoreItem? =
+        mediaStoreRepository.getItem(id, isVideo)?.toItem()
+
+
+    override suspend fun getMedia(): List<Album> {
+        resetMediaStoreIfNeeded()
+        return mediaStoreRepository.getMedia().toItems().toAlbums()
+    }
 
     override suspend fun refresh(
         onProgressChange: suspend (Int) -> Unit,
@@ -157,30 +152,30 @@ class MediaStoreUseCase @Inject constructor(
         mediaStoreRepository.refreshBucket(bucketId)
     }
 
-    private fun List<MediaStore>.toItems() = map {
-        MediaStoreItem(
-            id = it.id,
-            displayName = it.displayName,
-            dateTaken = it.dateTaken,
-            bucket = MediaBucket(id = it.bucketId, it.bucketName),
-            width = it.width,
-            height = it.height,
-            size = it.size,
-            contentUri = it.contentUri,
-            md5 = it.md5,
-            video = it.video,
-            duration = it.duration,
-            latLon = it.latLon?.split(",")?.let { value ->
-                when (value.size) {
-                    2 -> value[0].toDoubleOrNull() to value[1].toDoubleOrNull()
-                    else -> null
-                }
-            }?.filterOutNulls(),
-            fallbackColor = it.fallbackColor,
-        )
-    }
+    private fun List<MediaStore>.toItems() = map { it.toItem() }
 
-    private fun List<MediaStoreItem>.toAlbums(user: User): List<Album> =
+    private fun MediaStore.toItem() = MediaStoreItem(
+        id = id,
+        displayName = displayName,
+        dateTaken = dateTaken,
+        bucket = MediaBucket(id = bucketId, bucketName),
+        width = width,
+        height = height,
+        size = size,
+        contentUri = contentUri,
+        md5 = md5,
+        video = video,
+        duration = duration,
+        latLon = latLon?.split(",")?.let { value ->
+            when (value.size) {
+                2 -> value[0].toDoubleOrNull() to value[1].toDoubleOrNull()
+                else -> null
+            }
+        }?.filterOutNulls(),
+        fallbackColor = fallbackColor,
+    )
+
+    private fun List<MediaStoreItem>.toAlbums(): List<Album> =
             groupBy {
                 mediaStoreDateTimeFormat.parse(it.dateTaken)?.let { date ->
                     parsingDateFormat.format(date)
@@ -189,7 +184,7 @@ class MediaStoreUseCase @Inject constructor(
                 Album(
                     id = "local_album_" + albumDate.orEmpty(),
                     displayTitle = albumDate ?: "-",
-                    photos = items.map { it.toPhoto(user.id.toString()) },
+                    photos = items.map { it.toPhoto() },
                     location = null,
                 )
             }

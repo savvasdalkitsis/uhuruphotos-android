@@ -29,6 +29,7 @@ import com.savvasdalkitsis.uhuruphotos.api.navigation.navigationTarget
 import com.savvasdalkitsis.uhuruphotos.api.photos.navigation.PhotoNavigationTarget
 import com.savvasdalkitsis.uhuruphotos.api.photos.navigation.PhotoNavigationTarget.center
 import com.savvasdalkitsis.uhuruphotos.api.photos.navigation.PhotoNavigationTarget.datasource
+import com.savvasdalkitsis.uhuruphotos.api.photos.navigation.PhotoNavigationTarget.imageSource
 import com.savvasdalkitsis.uhuruphotos.api.photos.navigation.PhotoNavigationTarget.isVideo
 import com.savvasdalkitsis.uhuruphotos.api.photos.navigation.PhotoNavigationTarget.offsetFrom
 import com.savvasdalkitsis.uhuruphotos.api.photos.navigation.PhotoNavigationTarget.photoId
@@ -67,7 +68,7 @@ class PhotoNavigationTarget @Inject constructor(
             },
             initializer = { navBackStackEntry, actions ->
                 with(navBackStackEntry) {
-                    actions(LoadPhoto(photoId, isVideo, datasource))
+                    actions(LoadPhoto(photoId, isVideo, datasource, imageSource))
                 }
             },
             createModel = { hiltViewModel() }

@@ -3,6 +3,9 @@ android {
 }
 
 dependencies {
+    api project(":api:albums")
+    api project(":api:feed")
+    api project(":api:mediastore")
     api(
             libs.androidx.compose.navigation,
     )

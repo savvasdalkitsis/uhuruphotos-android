@@ -19,27 +19,33 @@ import androidx.work.WorkInfo
 import com.savvasdalkitsis.uhuruphotos.api.db.photos.PhotoDetails
 import com.savvasdalkitsis.uhuruphotos.api.db.photos.PhotoSummary
 import com.savvasdalkitsis.uhuruphotos.api.photos.model.Photo
+import com.savvasdalkitsis.uhuruphotos.api.photos.model.PhotoImageSource
 import kotlinx.coroutines.flow.Flow
 
 interface PhotosUseCase {
     fun String?.toAbsoluteUrl(): String?
     fun String?.toThumbnailUrlFromIdNullable(): String?
-    fun String.toThumbnailUrlFromId(): String
+    fun String.toThumbnailUrlFromId(isVideo: Boolean = false, imageSource: PhotoImageSource = PhotoImageSource.REMOTE): String
     fun String?.toFullSizeUrlFromIdNullable(isVideo: Boolean = false): String?
-    fun String.toFullSizeUrlFromId(isVideo: Boolean = false): String
+    fun String.toFullSizeUrlFromId(isVideo: Boolean = false, imageSource: PhotoImageSource = PhotoImageSource.REMOTE): String
     fun observeAllPhotoDetails(): Flow<List<PhotoDetails>>
     fun observePhotoDetails(id: String): Flow<PhotoDetails>
     fun observeFavouritePhotos(): Flow<Result<List<Photo>>>
     fun observeHiddenPhotos(): Flow<Result<List<Photo>>>
     suspend fun List<PhotoSummary>.mapToPhotos(): Result<List<Photo>>
-    suspend fun getPhotoDetails(id: String): PhotoDetails?
+    suspend fun getPhotoDetails(id: String, isVideo: Boolean, imageSource: PhotoImageSource):
+            com.savvasdalkitsis.uhuruphotos.api.photos.model.PhotoDetails?
     suspend fun getFavouritePhotoSummaries(): Result<List<PhotoSummary>>
     suspend fun getFavouritePhotoSummariesCount(): Result<Long>
     suspend fun getHiddenPhotoSummaries(): List<PhotoSummary>
     suspend fun setPhotoFavourite(id: String, favourite: Boolean): Result<Unit>
     fun refreshDetails(id: String): Result<Unit>
-    suspend fun refreshDetailsNowIfMissing(id: String) : Result<Unit>
-    suspend fun refreshDetailsNow(id: String) : Result<Unit>
+    suspend fun refreshDetailsNowIfMissing(
+        id: String,
+        isVideo: Boolean = false,
+        imageSource: PhotoImageSource = PhotoImageSource.REMOTE,
+    ) : Result<Unit>
+    suspend fun refreshDetailsNow(id: String, isVideo: Boolean, imageSource: PhotoImageSource) : Result<Unit>
     suspend fun refreshFavourites()
     suspend fun refreshHiddenPhotos()
     fun trashPhoto(id: String)

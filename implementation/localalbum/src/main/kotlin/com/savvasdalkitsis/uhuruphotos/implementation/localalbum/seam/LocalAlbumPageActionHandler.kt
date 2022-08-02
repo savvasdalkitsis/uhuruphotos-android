@@ -51,5 +51,5 @@ by AlbumPageActionHandler(
                 )
             }
     },
-    photoSequenceDataSource = { PhotoSequenceDataSource.Single }
+    photoSequenceDataSource = { PhotoSequenceDataSource.LocalAlbum(it) }
 )

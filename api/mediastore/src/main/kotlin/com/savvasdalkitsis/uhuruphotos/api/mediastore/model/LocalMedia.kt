@@ -24,7 +24,4 @@ sealed class LocalMedia {
     data class Found(
         val buckets: Map<MediaBucket, List<Album>>
     ) : LocalMedia()
-
-    object Error : LocalMedia()
-
 }

@@ -23,6 +23,7 @@ sealed class PhotoSequenceDataSource {
     data class PersonResults(val personId: Int) : PhotoSequenceDataSource()
     data class AutoAlbum(val albumId: Int) : PhotoSequenceDataSource()
     data class UserAlbum(val albumId: Int) : PhotoSequenceDataSource()
+    data class LocalAlbum(val albumId: Int) : PhotoSequenceDataSource()
     object FavouritePhotos : PhotoSequenceDataSource()
     object HiddenPhotos : PhotoSequenceDataSource()
     object Trash : PhotoSequenceDataSource()
@@ -34,6 +35,7 @@ sealed class PhotoSequenceDataSource {
         is PersonResults -> "person::${personId}"
         is AutoAlbum -> "autoAlbum::${albumId}"
         is UserAlbum -> "userAlbum::${albumId}"
+        is LocalAlbum -> "localAlbum::${albumId}"
         FavouritePhotos -> "favouritePhotos"
         HiddenPhotos -> "hiddenPhotos"
         Trash -> "trash"
@@ -41,19 +43,28 @@ sealed class PhotoSequenceDataSource {
 
     companion object {
         fun from(argument: String): PhotoSequenceDataSource = when {
-            argument.startsWith("search::") ->
-                SearchResults(argument.removePrefix("search::"))
-            argument.startsWith("person::") ->
-                PersonResults(argument.removePrefix("person::").toInt())
-            argument.startsWith("autoAlbum::") ->
-                AutoAlbum(argument.removePrefix("autoAlbum::").toInt())
-            argument.startsWith("userAlbum::") ->
-                UserAlbum(argument.removePrefix("userAlbum::").toInt())
+            argument.contains("::") -> argument.prefixed()
             argument == "favouritePhotos" -> FavouritePhotos
             argument == "hiddenPhotos" -> HiddenPhotos
             argument == "trash" -> Trash
             argument == "allPhotos" -> AllPhotos
             else -> Single
         }
+
+        private fun String.prefixed(): PhotoSequenceDataSource =
+            ifPrefixIs("search") { SearchResults(it) } ?:
+            ifPrefixIs("person") { PersonResults(it.toInt()) } ?:
+            ifPrefixIs("autoAlbum") { AutoAlbum(it.toInt()) } ?:
+            ifPrefixIs("userAlbum") { UserAlbum(it.toInt()) } ?:
+            ifPrefixIs("localAlbum") { LocalAlbum(it.toInt()) } ?:
+            throw IllegalArgumentException("Prefixed sequence didn't match any patterns")
+
+        private fun String.ifPrefixIs(
+            prefix: String,
+            generate: (String) -> PhotoSequenceDataSource,
+        ): PhotoSequenceDataSource? = if (startsWith("$prefix::"))
+            generate(removePrefix("$prefix::"))
+        else
+            null
     }
 }

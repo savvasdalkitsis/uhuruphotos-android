@@ -16,7 +16,6 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.implementation.library.view
 
 import androidx.annotation.DrawableRes
-import androidx.compose.animation.AnimatedContent
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement.spacedBy
@@ -41,7 +40,6 @@ import androidx.compose.material.Icon
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Modifier
@@ -61,11 +59,10 @@ import com.savvasdalkitsis.uhuruphotos.implementation.library.seam.LibraryAction
 import com.savvasdalkitsis.uhuruphotos.implementation.library.seam.LibraryAction.FavouritePhotosSelected
 import com.savvasdalkitsis.uhuruphotos.implementation.library.seam.LibraryAction.HiddenPhotosSelected
 import com.savvasdalkitsis.uhuruphotos.implementation.library.seam.LibraryAction.LocalBucketSelected
-import com.savvasdalkitsis.uhuruphotos.implementation.library.seam.LibraryAction.RefreshLocalMedia
 import com.savvasdalkitsis.uhuruphotos.implementation.library.seam.LibraryAction.TrashSelected
 import com.savvasdalkitsis.uhuruphotos.implementation.library.seam.LibraryAction.UserAlbumsSelected
-import com.savvasdalkitsis.uhuruphotos.implementation.library.view.state.LibraryLocalMedia
-import com.savvasdalkitsis.uhuruphotos.implementation.library.view.state.LibraryLocalMedia.*
+import com.savvasdalkitsis.uhuruphotos.implementation.library.view.state.LibraryLocalMedia.Found
+import com.savvasdalkitsis.uhuruphotos.implementation.library.view.state.LibraryLocalMedia.RequiresPermissions
 import com.savvasdalkitsis.uhuruphotos.implementation.library.view.state.LibraryState
 import dev.shreyaspatil.permissionflow.compose.rememberPermissionFlowRequestLauncher
 import com.savvasdalkitsis.uhuruphotos.api.icons.R as Icons
@@ -98,9 +95,6 @@ internal fun LibraryGrid(
         }
         item(local, { GridItemSpan(maxLineSpan) }) {
             when (val media = state.localMedia) {
-                Error -> PillItem(local, Icons.drawable.ic_folder_off) {
-                    action(RefreshLocalMedia)
-                }
                 is Found -> LocalFolders(local, media, action)
                 is RequiresPermissions -> PillItem(local, Icons.drawable.ic_folder) {
                     permissionLauncher.launch(media.deniedPermissions.toTypedArray())

@@ -19,7 +19,6 @@ import com.savvasdalkitsis.uhuruphotos.api.albums.model.Album
 import com.savvasdalkitsis.uhuruphotos.api.autoalbums.usecase.AutoAlbumsUseCase
 import com.savvasdalkitsis.uhuruphotos.api.coroutines.safelyOnStartIgnoring
 import com.savvasdalkitsis.uhuruphotos.api.log.log
-import com.savvasdalkitsis.uhuruphotos.api.mediastore.model.LocalMedia.Error
 import com.savvasdalkitsis.uhuruphotos.api.mediastore.model.LocalMedia.Found
 import com.savvasdalkitsis.uhuruphotos.api.mediastore.model.LocalMedia.RequiresPermissions
 import com.savvasdalkitsis.uhuruphotos.api.mediastore.usecase.MediaStoreUseCase
@@ -102,7 +101,6 @@ class LibraryActionHandler @Inject constructor(
                                 else -> bucket.displayName.compareTo(other.displayName) }
                             }
                         )
-                        Error -> LibraryLocalMedia.Error
                         is RequiresPermissions ->
                             LibraryLocalMedia.RequiresPermissions(media.deniedPermissions)
                     }
@@ -158,7 +156,7 @@ class LibraryActionHandler @Inject constructor(
         if (photosUseCase.getHiddenPhotoSummaries().isEmpty()) {
             refreshHiddenPhotos(effect)
         }
-        if (mediaStoreUseCase.getMedia().map { it.isEmpty() }.getOrNull() == true) {
+        if (mediaStoreUseCase.getMedia().isEmpty()) {
             refreshMediaStore()
         }
     }

@@ -74,12 +74,14 @@ fun PhotoDetailsBottomActionBar(
                 text = stringResource(Strings.string.restore),
             )
         }
-        ActionIconWithText(
-            onClick = { action(AskForPhotoTrashing) },
-            modifier = Modifier
-                .weight(1f),
-            icon = Icons.drawable.ic_delete,
-            text = stringResource(Strings.string.delete),
-        )
+        if (state.photos[index].showDeleteButton) {
+            ActionIconWithText(
+                onClick = { action(AskForPhotoTrashing) },
+                modifier = Modifier
+                    .weight(1f),
+                icon = Icons.drawable.ic_delete,
+                text = stringResource(Strings.string.delete),
+            )
+        }
     }
 }

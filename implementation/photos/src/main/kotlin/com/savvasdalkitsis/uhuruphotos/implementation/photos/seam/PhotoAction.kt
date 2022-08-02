@@ -17,6 +17,7 @@ package com.savvasdalkitsis.uhuruphotos.implementation.photos.seam
 
 import com.savvasdalkitsis.uhuruphotos.api.map.model.LatLon
 import com.savvasdalkitsis.uhuruphotos.api.people.view.state.Person
+import com.savvasdalkitsis.uhuruphotos.api.photos.model.PhotoImageSource
 import com.savvasdalkitsis.uhuruphotos.api.photos.model.PhotoSequenceDataSource
 import com.savvasdalkitsis.uhuruphotos.implementation.photos.view.state.SinglePhotoState
 
@@ -41,7 +42,8 @@ sealed class PhotoAction {
     data class LoadPhoto(
         val id: String,
         val isVideo: Boolean,
-        val datasource: PhotoSequenceDataSource
+        val sequenceDataSource: PhotoSequenceDataSource,
+        val imageSource: PhotoImageSource
     ) : PhotoAction()
     data class SetFavourite(val favourite: Boolean) : PhotoAction()
     data class ClickedOnGps(val gps: LatLon) : PhotoAction()

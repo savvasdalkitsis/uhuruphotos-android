@@ -144,22 +144,19 @@ sealed class PhotoMutation(
     })
 
     data class ReceivedDetails(
-        val details: PhotoDetails,
-        val peopleInPhoto: List<Person>,
-        val favouriteThreshold: Int?,
-        val formattedDateAndTime: String,
+        val id: String,
+        val details: com.savvasdalkitsis.uhuruphotos.api.photos.model.PhotoDetails,
     ) : PhotoMutation({
         with(details) {
-            it.copyPhoto(imageHash) { photoState ->
+            it.copyPhoto(id) { photoState ->
                 photoState.copy(
-                    isFavourite = favouriteThreshold != null
-                            && (rating ?: 0) >= favouriteThreshold,
-                    isVideo = video == true,
+                    isFavourite = isFavourite,
+                    isVideo = isVideo,
                     dateAndTime = formattedDateAndTime,
-                    location = location ?: "",
-                    gps = latLng,
+                    location = location,
+                    gps = latLon,
                     peopleInPhoto = peopleInPhoto,
-                    path = imagePath,
+                    path = path,
                 )
             }
         }
@@ -193,11 +190,11 @@ sealed class PhotoMutation(
 }
 
 private fun PhotoState.copyPhoto(
-    imageHash: String,
+    id: String,
     copy: (SinglePhotoState) -> SinglePhotoState
 ): PhotoState = copy(photos = photos.map { photo ->
     when (photo.id) {
-        imageHash -> copy(photo)
+        id -> copy(photo)
         else -> photo
     }
 })

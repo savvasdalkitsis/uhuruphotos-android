@@ -18,6 +18,7 @@ package com.savvasdalkitsis.uhuruphotos.implementation.photos.view.state
 import androidx.annotation.StringRes
 import com.savvasdalkitsis.uhuruphotos.api.map.model.LatLon
 import com.savvasdalkitsis.uhuruphotos.api.people.view.state.Person
+import com.savvasdalkitsis.uhuruphotos.api.photos.model.PhotoDetails
 import com.savvasdalkitsis.uhuruphotos.implementation.photos.usecase.PhotoMetadata
 
 data class PhotoState(
@@ -45,6 +46,8 @@ data class SinglePhotoState(
     val location: String = "",
     val gps: LatLon? = null,
     val isVideo: Boolean = false,
+    val showFavouriteIcon: Boolean = false,
+    val showDeleteButton: Boolean = true,
     val showShareIcon: Boolean = false,
     val showUseAsIcon: Boolean = false,
     val originalFileIconState: OriginalFileIconState = OriginalFileIconState.HIDDEN,

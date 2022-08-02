@@ -26,6 +26,7 @@ import com.savvasdalkitsis.uhuruphotos.implementation.mediastore.service.model.M
 import com.savvasdalkitsis.uhuruphotos.implementation.mediastore.service.MediaStoreService
 import com.savvasdalkitsis.uhuruphotos.api.db.extensions.async
 import com.savvasdalkitsis.uhuruphotos.api.db.extensions.await
+import com.savvasdalkitsis.uhuruphotos.api.db.extensions.awaitSingleOrNull
 import com.savvasdalkitsis.uhuruphotos.api.db.mediastore.MediaStore
 import com.savvasdalkitsis.uhuruphotos.api.db.mediastore.MediaStoreQueries
 import com.savvasdalkitsis.uhuruphotos.api.log.log
@@ -59,54 +60,44 @@ class MediaStoreRepository @Inject constructor(
 
     suspend fun refreshBucket(bucketId: Int) =
         (mediaStoreService.getPhotosForBucket(bucketId) + mediaStoreService.getVideosForBucket(bucketId))
-            .processItems(bucketId)
+            .processAndInsertItems(bucketId)
 
     suspend fun refresh(
         onProgressChange: suspend (Int) -> Unit = {},
     ) = (mediaStoreService.getPhotos() + mediaStoreService.getVideos())
-        .processItems(onProgressChange = onProgressChange)
+        .processAndInsertItems(onProgressChange = onProgressChange)
 
-    private suspend fun <T : MediaStoreServiceItem> List<T>.processItems(
+    private suspend fun <T : MediaStoreServiceItem> List<T>.processAndInsertItems(
         bucketId: Int? = null,
         onProgressChange: suspend (Int) -> Unit = {},
-    ) = process(bucketId, onProgressChange) { item, dataSize, md5, exif, fallbackColor ->
-            mediaStoreQueries.insert(
-                MediaStore(
-                    id = item.id,
-                    displayName = item.displayName,
-                    dateTaken = exif.dateTime ?: item.dateAdded.toDateString(),
-                    bucketId = item.bucketId,
-                    bucketName = item.bucketName,
-                    width = item.width ?: exif.width ?: 0,
-                    height = item.height ?: exif.height ?: 0,
-                    size = item.size ?: dataSize,
-                    contentUri = item.contentUri.toString(),
-                    md5 = md5,
-                    video = item is MediaStoreServiceItem.Video,
-                    duration = (item as? MediaStoreServiceItem.Video)?.duration,
-                    latLon = exif.latLon?.let { (lat, lon) -> "$lat,$lon" },
-                    fallbackColor = fallbackColor?.let {
-                        "#${it.toUInt().toString(16).padStart(6, '0')}"
-                    }
-                )
-            )
-        }
+        removeMissingItems: Boolean = true,
+        forceProcess: Boolean = false,
+    ) = process(bucketId, onProgressChange, removeMissingItems, forceProcess) { mediaStore ->
+        mediaStoreQueries.insert(mediaStore)
+    }
 
     private suspend fun <T : MediaStoreServiceItem> List<T>.process(
         bucketId: Int? = null,
         onProgressChange: suspend (Int) -> Unit = {},
-        onNewItem: (T, dataSize: Int, md5: String, exif: ExifMetadata, fallbackColor: Int?) -> Unit,
+        removeMissingItems: Boolean = true,
+        forceProcess: Boolean = false,
+        onNewItem: (MediaStore) -> Unit,
     ) {
         onProgressChange(0)
-        val existingIds = if (bucketId != null) {
-            mediaStoreQueries.getExistingBucketIds(bucketId)
-        } else {
-            mediaStoreQueries.getExistingIds()
-        }.await().toSet()
-        val currentIds = map { it.id }.toSet()
-        async {
-            for (id in existingIds - currentIds) {
-                mediaStoreQueries.delete(id)
+        val existingIds = when {
+            forceProcess -> emptySet()
+            else -> if (bucketId != null) {
+                mediaStoreQueries.getExistingBucketIds(bucketId)
+            } else {
+                mediaStoreQueries.getExistingIds()
+            }.await().toSet()
+        }
+        if (removeMissingItems) {
+            val currentIds = map { it.id }.toSet()
+            async {
+                for (id in existingIds - currentIds) {
+                    mediaStoreQueries.delete(id)
+                }
             }
         }
         val newItems = filter { it.id !in existingIds }
@@ -120,7 +111,7 @@ class MediaStoreRepository @Inject constructor(
 
     private fun <T : MediaStoreServiceItem> processNewItem(
         item: T,
-        onNewItem: (T, dataSize: Int, md5: String, exif: ExifMetadata, fallbackColor: Int?) -> Unit
+        onNewItem: (MediaStore) -> Unit
     ) {
         val exif = contentResolver.openInputStream(item.contentUri)!!.use { stream ->
             exifUseCase.extractFrom(stream)
@@ -150,7 +141,26 @@ class MediaStoreRepository @Inject constructor(
                 null
             }
         } else null
-        onNewItem(item, size, md5, exif, fallbackColor)
+        onNewItem(
+            MediaStore(
+                id = item.id,
+                displayName = item.displayName,
+                dateTaken = exif.dateTime ?: item.dateAdded.toDateString(),
+                bucketId = item.bucketId,
+                bucketName = item.bucketName,
+                width = item.width ?: exif.width ?: 0,
+                height = item.height ?: exif.height ?: 0,
+                size = item.size ?: size,
+                contentUri = item.contentUri.toString(),
+                md5 = md5,
+                video = item is MediaStoreServiceItem.Video,
+                duration = (item as? MediaStoreServiceItem.Video)?.duration,
+                latLon = exif.latLon?.let { (lat, lon) -> "$lat,$lon" },
+                fallbackColor = fallbackColor?.let {
+                    "#${it.toUInt().toString(16).padStart(6, '0')}"
+                }
+            )
+        )
     }
 
     private fun Long.toDateString(): String =
@@ -159,4 +169,15 @@ class MediaStoreRepository @Inject constructor(
     fun clearAll() {
         mediaStoreQueries.clearAll()
     }
+
+    suspend fun refreshItem(id: Int, video: Boolean) = when {
+        video -> mediaStoreService.getVideosForId(id)
+        else -> mediaStoreService.getPhotosForId(id)
+    }.processAndInsertItems(
+        removeMissingItems = false,
+        forceProcess = true,
+    )
+
+    suspend fun getItem(id: Int, video: Boolean): MediaStore? =
+        mediaStoreQueries.getItem(id.toLong()).awaitSingleOrNull()
 }

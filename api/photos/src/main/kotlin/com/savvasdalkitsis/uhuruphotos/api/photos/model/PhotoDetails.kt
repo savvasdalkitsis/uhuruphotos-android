@@ -13,17 +13,17 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
  */
-package com.savvasdalkitsis.uhuruphotos.implementation.library.view.state
+package com.savvasdalkitsis.uhuruphotos.api.photos.model
 
-import com.savvasdalkitsis.uhuruphotos.api.mediastore.model.MediaBucket
-import com.savvasdalkitsis.uhuruphotos.api.photos.model.PhotoGrid
-import java.util.SortedMap
+import com.savvasdalkitsis.uhuruphotos.api.map.model.LatLon
+import com.savvasdalkitsis.uhuruphotos.api.people.view.state.Person
 
-sealed class LibraryLocalMedia {
-
-    data class RequiresPermissions(val deniedPermissions: List<String>) : LibraryLocalMedia()
-
-    data class Found(
-        val buckets: SortedMap<MediaBucket, PhotoGrid>
-    ) : LibraryLocalMedia()
-}
+data class PhotoDetails(
+    val formattedDateAndTime: String,
+    val isFavourite: Boolean,
+    val isVideo: Boolean,
+    val location: String,
+    val latLon: LatLon?,
+    val path: String?,
+    val peopleInPhoto: List<Person>
+)

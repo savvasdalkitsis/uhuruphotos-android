@@ -32,6 +32,7 @@ import com.savvasdalkitsis.uhuruphotos.api.mediastore.model.MediaBucket
 import com.savvasdalkitsis.uhuruphotos.implementation.mediastore.service.model.MediaPhotoColumns
 import com.savvasdalkitsis.uhuruphotos.implementation.mediastore.service.model.MediaVideoColumns
 import com.savvasdalkitsis.uhuruphotos.api.log.log
+import com.savvasdalkitsis.uhuruphotos.api.mediastore.usecase.MediaStoreContentUriResolver
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.suspendCancellableCoroutine
 import javax.inject.Inject
@@ -61,9 +62,19 @@ class MediaStoreService @Inject constructor(
             rowHandler = photoRowHandler,
         )
 
+    suspend fun getPhotosForId(photoId: Int): List<MediaStoreServiceItem.Photo> =
+        query(
+            collection = MediaPhotoColumns.collection,
+            projection = MediaPhotoColumns.projection,
+            selection = Images.Media._ID + " = ?",
+            selectionArgs = arrayOf(photoId.toString()),
+            rowHandler = photoRowHandler,
+        )
+
     private val photoRowHandler: Cursor.() -> MediaStoreServiceItem.Photo = {
+        val id = long(Images.Media._ID)
         MediaStoreServiceItem.Photo(
-            id = long(Images.Media._ID),
+            id = id,
             displayName = string(Images.Media.DISPLAY_NAME),
             dateAdded = long(Images.Media.DATE_ADDED),
             bucketId = int(Images.Media.BUCKET_ID),
@@ -71,6 +82,7 @@ class MediaStoreService @Inject constructor(
             width = int(Images.Media.WIDTH),
             height = int(Images.Media.HEIGHT),
             size = int(Images.Media.SIZE),
+            contentUri = MediaStoreContentUriResolver.getContentUriForItem(id, video = false),
         )
     }
 
@@ -90,9 +102,19 @@ class MediaStoreService @Inject constructor(
             rowHandler = videoRowHandler,
         )
 
+    suspend fun getVideosForId(videoId: Int): List<MediaStoreServiceItem.Video> =
+        query(
+            collection = MediaVideoColumns.collection,
+            projection = MediaVideoColumns.projection,
+            selection = Video.Media._ID + " = ?",
+            selectionArgs = arrayOf(videoId.toString()),
+            rowHandler = videoRowHandler,
+        )
+
     private val videoRowHandler: Cursor.() -> MediaStoreServiceItem.Video = {
+        val id = long(Video.Media._ID)
         MediaStoreServiceItem.Video(
-            id = long(Video.Media._ID),
+            id = id,
             displayName = string(Video.Media.DISPLAY_NAME),
             dateAdded = long(Video.Media.DATE_ADDED),
             bucketId = int(Video.Media.BUCKET_ID),
@@ -101,6 +123,7 @@ class MediaStoreService @Inject constructor(
             height = int(Video.Media.HEIGHT),
             size = int(Video.Media.SIZE),
             duration = if (SDK_INT >= R) int(Video.Media.DURATION) else null,
+            contentUri = MediaStoreContentUriResolver.getContentUriForItem(id, video = true),
         )
     }
 
@@ -151,6 +174,7 @@ class MediaStoreService @Inject constructor(
         selectionArgs: Array<out String>? = null,
         rowHandler: Cursor.() -> T,
     ) = suspendCancellableCoroutine<List<T>> { cont ->
+        log("MediaStore") { "Querying uri: $collection for selection $selection" }
         val cancellation = CancellationSignal()
         val result = mutableListOf<T>()
         ContentResolverCompat.query(
@@ -163,13 +187,17 @@ class MediaStoreService @Inject constructor(
             cancellation,
         )?.use {
             while(it.moveToNext()) {
-                result += rowHandler(it)
+                result += rowHandler(it).apply {
+                    log("MediaStore") { "Found item $this" }
+                }
             }
         }
         cont.invokeOnCancellation {
+            it?.let { log(it) }
             cancellation.cancel()
         }
         cont.resume(result) {
+            log(it)
             cancellation.cancel()
         }
     }

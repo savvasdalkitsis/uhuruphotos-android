@@ -17,6 +17,7 @@ package com.savvasdalkitsis.uhuruphotos.implementation.localalbum.module
 
 import com.savvasdalkitsis.uhuruphotos.api.navigation.NavigationTarget
 import com.savvasdalkitsis.uhuruphotos.implementation.localalbum.navigation.LocalAlbumNavigationTarget
+import com.savvasdalkitsis.uhuruphotos.implementation.localalbum.usecase.LocalAlbumUseCase
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -30,4 +31,8 @@ internal abstract class LocalAlbumBindingsModule {
     @Binds
     @IntoSet
     abstract fun navigationTarget(target: LocalAlbumNavigationTarget): NavigationTarget
+
+    @Binds
+    abstract fun localAlbumUseCase(localAlbumUseCase: LocalAlbumUseCase):
+            com.savvasdalkitsis.uhuruphotos.api.localalbum.usecase.LocalAlbumUseCase
 }

@@ -19,12 +19,13 @@ import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.IntSize
 import androidx.navigation.NavBackStackEntry
+import com.savvasdalkitsis.uhuruphotos.api.photos.model.PhotoImageSource
 import com.savvasdalkitsis.uhuruphotos.api.photos.model.PhotoSequenceDataSource
 import com.savvasdalkitsis.uhuruphotos.api.photos.model.PhotoSequenceDataSource.Single
 
 object PhotoNavigationTarget {
 
-    const val registrationName = "details/{type}/{id}/{centerX}/{centerY}/{scale}/{dataSource}"
+    const val registrationName = "details/{type}/{id}/{centerX}/{centerY}/{scale}/{dataSource}/{imageSource}"
 
     fun name(
         id: String,
@@ -32,6 +33,7 @@ object PhotoNavigationTarget {
         scale: Float,
         isVideo: Boolean,
         photoSequenceDataSource: PhotoSequenceDataSource = Single,
+        imageSource: PhotoImageSource = PhotoImageSource.REMOTE,
     ) = registrationName
         .replace("{id}", id)
         .replace("{centerX}", offset.x.toString())
@@ -44,6 +46,7 @@ object PhotoNavigationTarget {
             }
         )
         .replace("{dataSource}", photoSequenceDataSource.toArgument)
+        .replace("{imageSource}", imageSource.toArgument)
 
     val NavBackStackEntry.datasource: PhotoSequenceDataSource get() =
         PhotoSequenceDataSource.from(get("dataSource").orEmpty())
@@ -57,6 +60,8 @@ object PhotoNavigationTarget {
             return if (x != null && y != null) Offset(x, y) else null
         }
     val NavBackStackEntry.scale: Float get() = get("scale")?.toFloat() ?: 0.3f
+    val NavBackStackEntry.imageSource: PhotoImageSource get() =
+        PhotoImageSource.fromArgument(get("imageSource").orEmpty())
 
     private fun NavBackStackEntry.get(arg: String) = arguments!!.getString(arg)
 

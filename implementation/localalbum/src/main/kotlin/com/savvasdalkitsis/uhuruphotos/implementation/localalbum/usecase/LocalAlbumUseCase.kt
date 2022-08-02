@@ -19,6 +19,7 @@ import com.fredporciuncula.flow.preferences.FlowSharedPreferences
 import com.savvasdalkitsis.uhuruphotos.api.albums.model.Album
 import com.savvasdalkitsis.uhuruphotos.api.feed.view.state.FeedDisplay
 import com.savvasdalkitsis.uhuruphotos.api.feed.view.state.FeedDisplays
+import com.savvasdalkitsis.uhuruphotos.api.localalbum.usecase.LocalAlbumUseCase
 import com.savvasdalkitsis.uhuruphotos.api.mediastore.model.LocalBucket
 import com.savvasdalkitsis.uhuruphotos.api.mediastore.model.MediaBucket
 import com.savvasdalkitsis.uhuruphotos.api.mediastore.usecase.MediaStoreUseCase
@@ -30,9 +31,9 @@ import javax.inject.Inject
 internal class LocalAlbumUseCase @Inject constructor(
     private val mediaStoreUseCase: MediaStoreUseCase,
     private val flowSharedPreferences: FlowSharedPreferences,
-) {
+) : LocalAlbumUseCase {
 
-    fun observeLocalAlbum(albumId: Int): Flow<Pair<MediaBucket, List<Album>>> =
+    override fun observeLocalAlbum(albumId: Int): Flow<Pair<MediaBucket, List<Album>>> =
         mediaStoreUseCase.observeBucket(albumId)
             .mapNotNull { localMedia ->
                 when (localMedia) {
@@ -41,21 +42,21 @@ internal class LocalAlbumUseCase @Inject constructor(
                 }
             }
 
-    suspend fun refreshLocalAlbum(albumId: Int) {
+    override suspend fun refreshLocalAlbum(albumId: Int) {
         mediaStoreUseCase.refreshBucket(albumId)
     }
 
-    fun getLocalAlbumFeedDisplay(albumId: Int) : FeedDisplay =
+    override fun getLocalAlbumFeedDisplay(albumId: Int) : FeedDisplays =
         userAlbumFeedDisplay(albumId).get()
 
-    suspend fun setLocalAlbumFeedDisplay(albumId: Int, feedDisplay: FeedDisplays) {
+    override suspend fun setLocalAlbumFeedDisplay(albumId: Int, feedDisplay: FeedDisplays) {
         userAlbumFeedDisplay(albumId).setAndCommit(feedDisplay)
     }
 
+    override suspend fun getLocalAlbum(albumId: Int): List<Album> =
+        observeLocalAlbum(albumId).first().second
+
     private fun userAlbumFeedDisplay(albumId: Int) =
         flowSharedPreferences.getEnum("localAlbumFeedDisplay/$albumId", FeedDisplays.default)
-
-    suspend fun getLocalAlbum(albumId: Int): LocalBucket =
-        mediaStoreUseCase.observeBucket(albumId).first()
 
 }

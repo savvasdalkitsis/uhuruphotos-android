@@ -32,6 +32,7 @@ import com.savvasdalkitsis.uhuruphotos.api.coroutines.safelyOnStartIgnoring
 import com.savvasdalkitsis.uhuruphotos.api.feed.view.state.FeedDisplay
 import com.savvasdalkitsis.uhuruphotos.api.feed.view.state.FeedDisplays
 import com.savvasdalkitsis.uhuruphotos.api.log.log
+import com.savvasdalkitsis.uhuruphotos.api.photos.model.PhotoImageSource
 import com.savvasdalkitsis.uhuruphotos.api.photos.model.PhotoSequenceDataSource
 import com.savvasdalkitsis.uhuruphotos.api.seam.ActionHandler
 import kotlinx.coroutines.flow.Flow
@@ -84,7 +85,8 @@ class AlbumPageActionHandler(
                         center = center,
                         scale = scale,
                         video = photo.isVideo,
-                        photoSequenceDataSource = photoSequenceDataSource(albumId)
+                        photoSequenceDataSource = photoSequenceDataSource(albumId),
+                        imageSource = PhotoImageSource.fromUrl(photo.fullResUrl)
                     )
                 }
             )

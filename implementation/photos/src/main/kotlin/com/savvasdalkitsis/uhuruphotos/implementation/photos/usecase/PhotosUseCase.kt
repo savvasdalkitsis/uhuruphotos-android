@@ -15,17 +15,24 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.implementation.photos.usecase
 
-import android.net.Uri
 import androidx.work.WorkInfo
-import coil.ImageLoader
-import com.google.android.exoplayer2.upstream.DataSpec
-import com.google.android.exoplayer2.upstream.cache.CacheDataSource
 import com.savvasdalkitsis.uhuruphotos.api.auth.usecase.ServerUseCase
+import com.savvasdalkitsis.uhuruphotos.api.date.DateDisplayer
 import com.savvasdalkitsis.uhuruphotos.api.db.extensions.isVideo
 import com.savvasdalkitsis.uhuruphotos.api.db.photos.PhotoDetails
 import com.savvasdalkitsis.uhuruphotos.api.db.photos.PhotoSummary
 import com.savvasdalkitsis.uhuruphotos.api.log.runCatchingWithLog
+import com.savvasdalkitsis.uhuruphotos.api.map.model.LatLon
+import com.savvasdalkitsis.uhuruphotos.api.mediastore.usecase.MediaStoreContentUriResolver
+import com.savvasdalkitsis.uhuruphotos.api.mediastore.usecase.MediaStoreUseCase
+import com.savvasdalkitsis.uhuruphotos.api.people.usecase.PeopleUseCase
+import com.savvasdalkitsis.uhuruphotos.api.people.view.state.toPerson
 import com.savvasdalkitsis.uhuruphotos.api.photos.model.Photo
+import com.savvasdalkitsis.uhuruphotos.api.photos.model.PhotoImageSource
+import com.savvasdalkitsis.uhuruphotos.api.photos.model.PhotoImageSource.LOCAL
+import com.savvasdalkitsis.uhuruphotos.api.photos.model.PhotoImageSource.REMOTE
+import com.savvasdalkitsis.uhuruphotos.api.photos.model.deserializePeopleNames
+import com.savvasdalkitsis.uhuruphotos.api.photos.model.latLng
 import com.savvasdalkitsis.uhuruphotos.api.photos.usecase.PhotosUseCase
 import com.savvasdalkitsis.uhuruphotos.api.user.usecase.UserUseCase
 import com.savvasdalkitsis.uhuruphotos.implementation.photos.repository.PhotoRepository
@@ -42,14 +49,15 @@ class PhotosUseCase @Inject constructor(
     private val photoRepository: PhotoRepository,
     private val photoWorkScheduler: PhotoWorkScheduler,
     private val userUseCase: UserUseCase,
-    private val videoCache: CacheDataSource.Factory,
-    private val imageLoader: ImageLoader,
+    private val mediaStoreUseCase: MediaStoreUseCase,
+    private val dateDisplayer: DateDisplayer,
+    private val peopleUseCase: PeopleUseCase,
 ) : PhotosUseCase {
 
-    override fun String?.toAbsoluteUrl(): String? = this?.toAbsoluteUrl()
+    override fun String?.toAbsoluteUrl(): String? = this?.toAbsoluteRemoteUrl()
 
     @JvmName("toAbsoluteUrlNotNull")
-    private fun String.toAbsoluteUrl(): String {
+    private fun String.toAbsoluteRemoteUrl(): String {
         val serverUrl = serverUseCase.getServerUrl()
         return this
             .removeSuffix(".webp")
@@ -60,15 +68,20 @@ class PhotosUseCase @Inject constructor(
     override fun String?.toThumbnailUrlFromIdNullable(): String? =
         this?.toThumbnailUrlFromId()
 
-    override fun String.toThumbnailUrlFromId(): String =
-        "/media/square_thumbnails/$this".toAbsoluteUrl()
+    override fun String.toThumbnailUrlFromId(isVideo: Boolean, imageSource: PhotoImageSource): String = when (imageSource) {
+        REMOTE -> "/media/square_thumbnails/$this".toAbsoluteRemoteUrl()
+        LOCAL -> contentUri(isVideo)
+    }
 
     override fun String?.toFullSizeUrlFromIdNullable(isVideo: Boolean): String? =
         this?.toFullSizeUrlFromId(isVideo)
 
-    override fun String.toFullSizeUrlFromId(isVideo: Boolean): String = when {
-        isVideo -> "/media/video/$this".toAbsoluteUrl()
-        else -> "/media/photos/$this".toAbsoluteUrl()
+    override fun String.toFullSizeUrlFromId(isVideo: Boolean, imageSource: PhotoImageSource): String = when (imageSource) {
+        REMOTE -> when {
+            isVideo -> "/media/video/$this".toAbsoluteRemoteUrl()
+            else -> "/media/photos/$this".toAbsoluteRemoteUrl()
+        }
+        LOCAL -> contentUri(isVideo)
     }
 
     override fun observeAllPhotoDetails(): Flow<List<PhotoDetails>> =
@@ -112,8 +125,49 @@ class PhotosUseCase @Inject constructor(
             }
         }
 
-    override suspend fun getPhotoDetails(id: String): PhotoDetails? =
-        photoRepository.getPhotoDetails(id)
+    override suspend fun getPhotoDetails(
+        id: String,
+        isVideo: Boolean,
+        imageSource: PhotoImageSource
+    ): com.savvasdalkitsis.uhuruphotos.api.photos.model.PhotoDetails? = when (imageSource) {
+        REMOTE -> photoRepository.getPhotoDetails(id)?.toPhotoDetails()
+        else -> mediaStoreUseCase.getItem(id.toInt(), isVideo)?.let {
+            com.savvasdalkitsis.uhuruphotos.api.photos.model.PhotoDetails(
+                formattedDateAndTime = it.dateTaken,
+                isFavourite = false,
+                isVideo = isVideo,
+                location = "",
+                latLon = it.latLon?.let { (lat, lon) -> LatLon(lat, lon) },
+                path = it.contentUri,
+                peopleInPhoto = emptyList(),
+            )
+        }
+    }
+
+    private suspend fun PhotoDetails.toPhotoDetails(): com.savvasdalkitsis.uhuruphotos.api.photos.model.PhotoDetails {
+        val favouriteThreshold = userUseCase.getUserOrRefresh().getOrNull()?.favoriteMinRating
+        val people = peopleUseCase.getPeopleByName().ifEmpty {
+            peopleUseCase.refreshPeople()
+            peopleUseCase.getPeopleByName()
+        }
+        val peopleNamesList = peopleNames.orEmpty().deserializePeopleNames
+        val peopleInPhoto = people
+            .filter { it.name in peopleNamesList }
+            .map {
+                it.toPerson { person ->
+                    person.toAbsoluteUrl()
+                }
+            }
+        return com.savvasdalkitsis.uhuruphotos.api.photos.model.PhotoDetails(
+            formattedDateAndTime = dateDisplayer.dateTimeString(timestamp),
+            isFavourite = favouriteThreshold != null && (rating ?: 0) >= favouriteThreshold,
+            isVideo = video == true,
+            location = location.orEmpty(),
+            latLon = latLng,
+            path = imagePath,
+            peopleInPhoto = peopleInPhoto,
+        )
+    }
 
     override suspend fun getFavouritePhotoSummaries(): Result<List<PhotoSummary>> =
         withFavouriteThreshold {
@@ -137,12 +191,30 @@ class PhotosUseCase @Inject constructor(
         photoRepository.refreshDetails(id)
     }
 
-    override suspend fun refreshDetailsNowIfMissing(id: String) : Result<Unit> = runCatchingWithLog {
-        photoRepository.refreshDetailsNowIfMissing(id)
+    override suspend fun refreshDetailsNowIfMissing(
+        id: String,
+        isVideo: Boolean,
+        imageSource: PhotoImageSource
+    ) : Result<Unit> = runCatchingWithLog {
+        when (imageSource) {
+            REMOTE -> photoRepository.refreshDetailsNowIfMissing(id)
+            LOCAL -> {
+                if (mediaStoreUseCase.getItem(id.toInt(), isVideo) == null) {
+                    mediaStoreUseCase.refreshItem(id.toInt(), isVideo)
+                }
+            }
+        }
     }
 
-    override suspend fun refreshDetailsNow(id: String) : Result<Unit> = runCatchingWithLog {
-        photoRepository.refreshDetailsNow(id)
+    override suspend fun refreshDetailsNow(
+        id: String,
+        isVideo: Boolean,
+        imageSource: PhotoImageSource
+    ) : Result<Unit> = runCatchingWithLog {
+        when (imageSource) {
+            REMOTE -> photoRepository.refreshDetailsNow(id)
+            LOCAL -> mediaStoreUseCase.refreshItem(id.toInt(), isVideo)
+        }
     }
 
     override suspend fun refreshFavourites() {
@@ -178,4 +250,7 @@ class PhotosUseCase @Inject constructor(
         userUseCase.getUserOrRefresh().mapCatching {
             action(it.favoriteMinRating!!)
         }
+
+    private fun String.contentUri(isVideo: Boolean) =
+        MediaStoreContentUriResolver.getContentUriForItem(toLong(), isVideo).toString()
 }
