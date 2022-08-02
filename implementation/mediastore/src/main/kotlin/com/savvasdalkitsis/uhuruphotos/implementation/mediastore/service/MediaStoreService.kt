@@ -13,7 +13,7 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
  */
-package com.savvasdalkitsis.implementation.mediastore.service
+package com.savvasdalkitsis.uhuruphotos.implementation.mediastore.service
 
 import android.content.ContentResolver
 import android.content.Context
@@ -27,10 +27,10 @@ import android.provider.MediaStore.Images
 import android.provider.MediaStore.Video
 import androidx.core.content.ContentResolverCompat
 import androidx.core.os.CancellationSignal
-import com.savvasdalkitsis.implementation.mediastore.service.model.MediaStoreServiceItem
+import com.savvasdalkitsis.uhuruphotos.implementation.mediastore.service.model.MediaStoreServiceItem
 import com.savvasdalkitsis.uhuruphotos.api.mediastore.model.MediaBucket
-import com.savvasdalkitsis.implementation.mediastore.service.model.MediaPhotoColumns
-import com.savvasdalkitsis.implementation.mediastore.service.model.MediaVideoColumns
+import com.savvasdalkitsis.uhuruphotos.implementation.mediastore.service.model.MediaPhotoColumns
+import com.savvasdalkitsis.uhuruphotos.implementation.mediastore.service.model.MediaVideoColumns
 import com.savvasdalkitsis.uhuruphotos.api.log.log
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.suspendCancellableCoroutine

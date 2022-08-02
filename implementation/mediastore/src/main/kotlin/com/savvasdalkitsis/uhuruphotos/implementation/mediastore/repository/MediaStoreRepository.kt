@@ -13,7 +13,7 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
  */
-package com.savvasdalkitsis.implementation.mediastore.repository
+package com.savvasdalkitsis.uhuruphotos.implementation.mediastore.repository
 
 import android.content.ContentResolver
 import android.graphics.BitmapFactory.Options
@@ -21,9 +21,9 @@ import android.graphics.BitmapFactory.decodeStream
 import androidx.palette.graphics.Palette
 import com.savvasdalkitsis.api.exif.model.ExifMetadata
 import com.savvasdalkitsis.api.exif.usecase.ExifUseCase
-import com.savvasdalkitsis.implementation.mediastore.module.MediaStoreModule.MediaStoreDateTimeFormat
-import com.savvasdalkitsis.implementation.mediastore.service.model.MediaStoreServiceItem
-import com.savvasdalkitsis.implementation.mediastore.service.MediaStoreService
+import com.savvasdalkitsis.uhuruphotos.implementation.mediastore.module.MediaStoreModule.MediaStoreDateTimeFormat
+import com.savvasdalkitsis.uhuruphotos.implementation.mediastore.service.model.MediaStoreServiceItem
+import com.savvasdalkitsis.uhuruphotos.implementation.mediastore.service.MediaStoreService
 import com.savvasdalkitsis.uhuruphotos.api.db.extensions.async
 import com.savvasdalkitsis.uhuruphotos.api.db.extensions.await
 import com.savvasdalkitsis.uhuruphotos.api.db.mediastore.MediaStore

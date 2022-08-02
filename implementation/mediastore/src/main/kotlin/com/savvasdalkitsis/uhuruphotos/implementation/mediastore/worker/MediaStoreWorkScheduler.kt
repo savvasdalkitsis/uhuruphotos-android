@@ -1,4 +1,4 @@
-package com.savvasdalkitsis.implementation.mediastore.worker
+package com.savvasdalkitsis.uhuruphotos.implementation.mediastore.worker
 
 import androidx.work.ExistingWorkPolicy
 import com.savvasdalkitsis.uhuruphotos.api.mediastore.worker.MediaStoreWorkScheduler

@@ -13,10 +13,10 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
  */
-package com.savvasdalkitsis.implementation.mediastore.repository
+package com.savvasdalkitsis.uhuruphotos.implementation.mediastore.repository
 
 import com.fredporciuncula.flow.preferences.FlowSharedPreferences
-import com.savvasdalkitsis.implementation.mediastore.service.MediaStoreService
+import com.savvasdalkitsis.uhuruphotos.implementation.mediastore.service.MediaStoreService
 import javax.inject.Inject
 
 class MediaStoreVersionRepository @Inject constructor(

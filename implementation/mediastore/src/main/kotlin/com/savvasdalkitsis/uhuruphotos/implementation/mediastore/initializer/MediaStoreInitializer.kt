@@ -13,7 +13,7 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
  */
-package com.savvasdalkitsis.implementation.mediastore.initializer
+package com.savvasdalkitsis.uhuruphotos.implementation.mediastore.initializer
 
 import android.app.Application
 import android.content.ContentResolver
@@ -21,8 +21,8 @@ import android.database.ContentObserver
 import android.net.Uri
 import android.os.Handler
 import android.os.Looper
-import com.savvasdalkitsis.implementation.mediastore.service.model.MediaPhotoColumns
-import com.savvasdalkitsis.implementation.mediastore.service.model.MediaVideoColumns
+import com.savvasdalkitsis.uhuruphotos.implementation.mediastore.service.model.MediaPhotoColumns
+import com.savvasdalkitsis.uhuruphotos.implementation.mediastore.service.model.MediaVideoColumns
 import com.savvasdalkitsis.uhuruphotos.api.initializer.ApplicationCreated
 import com.savvasdalkitsis.uhuruphotos.api.mediastore.worker.MediaStoreWorkScheduler
 import javax.inject.Inject

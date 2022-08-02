@@ -13,15 +13,15 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
  */
-package com.savvasdalkitsis.implementation.mediastore.usecase
+package com.savvasdalkitsis.uhuruphotos.implementation.mediastore.usecase
 
 import android.Manifest.permission.ACCESS_MEDIA_LOCATION
 import android.Manifest.permission.READ_EXTERNAL_STORAGE
 import android.os.Build
-import com.savvasdalkitsis.implementation.mediastore.module.MediaStoreModule.MediaStoreDateTimeFormat
-import com.savvasdalkitsis.implementation.mediastore.repository.MediaStoreBucketRepository
-import com.savvasdalkitsis.implementation.mediastore.repository.MediaStoreRepository
-import com.savvasdalkitsis.implementation.mediastore.repository.MediaStoreVersionRepository
+import com.savvasdalkitsis.uhuruphotos.implementation.mediastore.module.MediaStoreModule.MediaStoreDateTimeFormat
+import com.savvasdalkitsis.uhuruphotos.implementation.mediastore.repository.MediaStoreBucketRepository
+import com.savvasdalkitsis.uhuruphotos.implementation.mediastore.repository.MediaStoreRepository
+import com.savvasdalkitsis.uhuruphotos.implementation.mediastore.repository.MediaStoreVersionRepository
 import com.savvasdalkitsis.uhuruphotos.api.albums.model.Album
 import com.savvasdalkitsis.uhuruphotos.api.date.module.DateModule.ParsingDateFormat
 import com.savvasdalkitsis.uhuruphotos.api.mediastore.model.MediaBucket

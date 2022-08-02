@@ -13,11 +13,11 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
  */
-package com.savvasdalkitsis.implementation.mediastore.module
+package com.savvasdalkitsis.uhuruphotos.implementation.mediastore.module
 
-import com.savvasdalkitsis.implementation.mediastore.initializer.MediaStoreInitializer
-import com.savvasdalkitsis.implementation.mediastore.usecase.MediaStoreUseCase
-import com.savvasdalkitsis.implementation.mediastore.worker.MediaStoreWorkScheduler
+import com.savvasdalkitsis.uhuruphotos.implementation.mediastore.initializer.MediaStoreInitializer
+import com.savvasdalkitsis.uhuruphotos.implementation.mediastore.usecase.MediaStoreUseCase
+import com.savvasdalkitsis.uhuruphotos.implementation.mediastore.worker.MediaStoreWorkScheduler
 import com.savvasdalkitsis.uhuruphotos.api.initializer.ApplicationCreated
 import dagger.Binds
 import dagger.Module
