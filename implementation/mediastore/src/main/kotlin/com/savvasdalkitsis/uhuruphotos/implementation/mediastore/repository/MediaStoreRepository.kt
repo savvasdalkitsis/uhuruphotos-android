@@ -155,4 +155,8 @@ class MediaStoreRepository @Inject constructor(
 
     private fun Long.toDateString(): String =
         dateTimeFormat.format(Date(this * 1000))
+
+    fun clearAll() {
+        mediaStoreQueries.clearAll()
+    }
 }

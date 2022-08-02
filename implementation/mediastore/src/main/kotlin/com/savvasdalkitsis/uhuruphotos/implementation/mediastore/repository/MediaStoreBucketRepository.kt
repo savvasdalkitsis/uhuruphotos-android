@@ -17,11 +17,11 @@ package com.savvasdalkitsis.uhuruphotos.implementation.mediastore.repository
 
 import com.fredporciuncula.flow.preferences.FlowSharedPreferences
 import com.fredporciuncula.flow.preferences.NullableSerializer
-import com.savvasdalkitsis.uhuruphotos.implementation.mediastore.service.MediaStoreService
-import com.savvasdalkitsis.uhuruphotos.api.mediastore.model.MediaBucket
 import com.savvasdalkitsis.uhuruphotos.api.db.extensions.await
 import com.savvasdalkitsis.uhuruphotos.api.db.mediastore.GetBuckets
 import com.savvasdalkitsis.uhuruphotos.api.db.mediastore.MediaStoreQueries
+import com.savvasdalkitsis.uhuruphotos.api.mediastore.model.MediaBucket
+import com.savvasdalkitsis.uhuruphotos.implementation.mediastore.service.MediaStoreService
 import com.squareup.sqldelight.runtime.coroutines.asFlow
 import com.squareup.sqldelight.runtime.coroutines.mapToList
 import kotlinx.coroutines.flow.Flow

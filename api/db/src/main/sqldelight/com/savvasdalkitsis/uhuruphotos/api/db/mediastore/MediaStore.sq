@@ -35,3 +35,6 @@ SELECT id FROM mediaStore WHERE bucketId = :id;
 
 delete:
 DELETE FROM mediaStore WHERE id = :id;
+
+clearAll:
+DELETE FROM mediaStore;

@@ -20,14 +20,9 @@ import com.savvasdalkitsis.uhuruphotos.api.mediastore.model.LocalBucket
 import com.savvasdalkitsis.uhuruphotos.api.mediastore.model.LocalMedia
 import com.savvasdalkitsis.uhuruphotos.api.mediastore.model.LocalPermissions
 import com.savvasdalkitsis.uhuruphotos.api.mediastore.model.MediaBucket
-import com.savvasdalkitsis.uhuruphotos.api.mediastore.model.MediaStoreItem
 import kotlinx.coroutines.flow.Flow
 
 interface MediaStoreUseCase {
-
-    fun shouldReSyncMediaStore(): Boolean
-
-    fun persistMediaStoreVersion()
 
     suspend fun getDefaultBucketId(): Int?
 
