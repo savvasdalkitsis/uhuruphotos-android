@@ -26,6 +26,7 @@ import com.google.android.exoplayer2.upstream.cache.SimpleCache
 import com.savvasdalkitsis.uhuruphotos.api.auth.AuthenticatedOkHttpClient
 import com.savvasdalkitsis.uhuruphotos.api.auth.TokenRefreshInterceptor
 import com.savvasdalkitsis.uhuruphotos.api.settings.usecase.SettingsUseCase
+import com.savvasdalkitsis.uhuruphotos.api.video.LocalContentExoplayer
 import com.savvasdalkitsis.uhuruphotos.api.video.VideoOkHttp
 import dagger.Module
 import dagger.Provides
@@ -65,6 +66,12 @@ class VideoModule {
     ): ExoPlayer = ExoPlayer.Builder(context)
         .setMediaSourceFactory(DefaultMediaSourceFactory(cacheDataSourceFactory))
         .build()
+
+    @Provides
+    @LocalContentExoplayer
+    fun localContentExoplayer(
+        @ApplicationContext context: Context,
+    ): ExoPlayer = ExoPlayer.Builder(context).build()
 
     @Provides
     @Singleton

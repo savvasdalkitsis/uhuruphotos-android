@@ -38,6 +38,7 @@ import com.google.android.exoplayer2.MediaItem
 import com.google.android.exoplayer2.Player
 import com.google.android.exoplayer2.ui.StyledPlayerView
 import com.savvasdalkitsis.uhuruphotos.api.image.view.Image
+import com.savvasdalkitsis.uhuruphotos.api.video.LocalContentExoPlayer
 import com.savvasdalkitsis.uhuruphotos.api.video.LocalExoPlayer
 import com.savvasdalkitsis.uhuruphotos.api.video.R
 
@@ -49,7 +50,10 @@ fun Video(
     videoThumbnailUrl: String,
     onFinishedLoading: () -> Unit,
 ) {
-    val exoPlayer = LocalExoPlayer.current!!
+    val exoPlayer = if (videoUrl.startsWith("content://"))
+        LocalContentExoPlayer.current!!
+    else
+        LocalExoPlayer.current!!
     val context = LocalContext.current
     var showPlayer by remember { mutableStateOf(false) }
 

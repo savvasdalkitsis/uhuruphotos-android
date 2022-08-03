@@ -15,10 +15,8 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.api.video
 
-import androidx.compose.runtime.compositionLocalOf
-import com.google.android.exoplayer2.ExoPlayer
+import javax.inject.Qualifier
 
-val LocalExoPlayer =
-    compositionLocalOf<ExoPlayer?> { throw IllegalStateException("not initialized") }
-val LocalContentExoPlayer =
-    compositionLocalOf<ExoPlayer?> { throw IllegalStateException("not initialized") }
+@Qualifier
+@Retention(AnnotationRetention.BINARY)
+annotation class LocalContentExoplayer
