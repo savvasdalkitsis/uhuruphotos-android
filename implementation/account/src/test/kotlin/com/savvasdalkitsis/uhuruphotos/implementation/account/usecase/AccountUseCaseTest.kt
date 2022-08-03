@@ -26,6 +26,7 @@ import com.savvasdalkitsis.uhuruphotos.api.db.albums.UserAlbumPhotosQueries
 import com.savvasdalkitsis.uhuruphotos.api.db.albums.UserAlbumQueries
 import com.savvasdalkitsis.uhuruphotos.api.db.albums.UserAlbumsQueries
 import com.savvasdalkitsis.uhuruphotos.api.db.auth.TokenQueries
+import com.savvasdalkitsis.uhuruphotos.api.db.mediastore.MediaStoreQueries
 import com.savvasdalkitsis.uhuruphotos.api.db.people.PeopleQueries
 import com.savvasdalkitsis.uhuruphotos.api.db.person.PersonQueries
 import com.savvasdalkitsis.uhuruphotos.api.db.photos.PhotoDetailsQueries
@@ -65,6 +66,7 @@ class AccountUseCaseTest {
         override val userAlbumPhotosQueries = mockk<UserAlbumPhotosQueries>(relaxed = true)
         override val userAlbumsQueries = mockk<UserAlbumsQueries>(relaxed = true)
         override val trashQueries = mockk<TrashQueries>(relaxed = true)
+        override val mediaStoreQueries = mockk<MediaStoreQueries>(relaxed = true)
 
         override fun transaction(noEnclosing: Boolean, body: TransactionWithoutReturn.() -> Unit) {}
         override fun <R> transactionWithResult(
