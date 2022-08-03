@@ -29,6 +29,7 @@ sealed class MediaStoreServiceItem(
     open val height: Int?,
     open val size: Int?,
     open val contentUri: Uri,
+    open val path: String,
 ) {
 
     data class Photo(
@@ -41,7 +42,10 @@ sealed class MediaStoreServiceItem(
         override val height: Int?,
         override val size: Int?,
         override val contentUri: Uri,
-    ): MediaStoreServiceItem(id, displayName, dateAdded, bucketId, bucketName, width, height, size, contentUri)
+        override val path: String,
+    ): MediaStoreServiceItem(
+        id, displayName, dateAdded, bucketId, bucketName, width, height, size, contentUri, path
+    )
 
     data class Video(
         override val id: Long,
@@ -54,6 +58,9 @@ sealed class MediaStoreServiceItem(
         override val size: Int?,
         val duration: Int?,
         override val contentUri: Uri,
-    ): MediaStoreServiceItem(id, displayName, dateAdded, bucketId, bucketName, width, height, size, contentUri)
+        override val path: String,
+    ): MediaStoreServiceItem(
+        id, displayName, dateAdded, bucketId, bucketName, width, height, size, contentUri, path
+    )
 
 }

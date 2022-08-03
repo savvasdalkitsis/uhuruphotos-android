@@ -173,6 +173,7 @@ class MediaStoreUseCase @Inject constructor(
             }
         }?.filterOutNulls(),
         fallbackColor = fallbackColor,
+        path = path,
     )
 
     private fun List<MediaStoreItem>.toAlbums(): List<Album> =

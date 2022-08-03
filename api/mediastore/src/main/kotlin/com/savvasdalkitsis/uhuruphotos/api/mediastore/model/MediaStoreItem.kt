@@ -31,6 +31,7 @@ data class MediaStoreItem(
     val duration: Int?,
     val latLon: Pair<Double, Double>?,
     val fallbackColor: String?,
+    val path: String?,
 ) {
 
     fun toPhoto() = Photo(

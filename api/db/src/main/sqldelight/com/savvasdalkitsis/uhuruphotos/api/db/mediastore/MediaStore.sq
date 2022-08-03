@@ -12,7 +12,8 @@ CREATE TABLE mediaStore (
     video INTEGER AS Boolean NOT NULL,
     duration INTEGER AS Int,
     latLon TEXT,
-    fallbackColor TEXT
+    fallbackColor TEXT,
+    path TEXT
 );
 
 insert:

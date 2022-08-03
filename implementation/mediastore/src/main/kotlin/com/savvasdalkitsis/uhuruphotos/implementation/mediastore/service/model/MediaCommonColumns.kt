@@ -15,6 +15,7 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.implementation.mediastore.service.model
 
+import android.provider.MediaStore.MediaColumns.DATA
 import android.provider.MediaStore.MediaColumns.DATE_ADDED
 import android.provider.MediaStore.MediaColumns.DISPLAY_NAME
 import android.provider.MediaStore.MediaColumns.HEIGHT
@@ -31,5 +32,6 @@ internal object MediaCommonColumns {
         HEIGHT,
         SIZE,
         DATE_ADDED,
+        DATA
     )
 }

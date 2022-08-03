@@ -148,8 +148,8 @@ class MediaStoreRepository @Inject constructor(
                 dateTaken = exif.dateTime ?: item.dateAdded.toDateString(),
                 bucketId = item.bucketId,
                 bucketName = item.bucketName,
-                width = item.width ?: exif.width ?: 0,
-                height = item.height ?: exif.height ?: 0,
+                width = exif.width ?: item.width ?: 0,
+                height = exif.height ?: item.height ?: 0,
                 size = item.size ?: size,
                 contentUri = item.contentUri.toString(),
                 md5 = md5,
@@ -158,7 +158,8 @@ class MediaStoreRepository @Inject constructor(
                 latLon = exif.latLon?.let { (lat, lon) -> "$lat,$lon" },
                 fallbackColor = fallbackColor?.let {
                     "#${it.toUInt().toString(16).padStart(6, '0')}"
-                }
+                },
+                path = item.path,
             )
         )
     }

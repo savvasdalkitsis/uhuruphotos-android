@@ -138,7 +138,7 @@ class PhotosUseCase @Inject constructor(
                 isVideo = isVideo,
                 location = "",
                 latLon = it.latLon?.let { (lat, lon) -> LatLon(lat, lon) },
-                path = it.contentUri,
+                path = it.path ?: it.contentUri,
                 peopleInPhoto = emptyList(),
             )
         }

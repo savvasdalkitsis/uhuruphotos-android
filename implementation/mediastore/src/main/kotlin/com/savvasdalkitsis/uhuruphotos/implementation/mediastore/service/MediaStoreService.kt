@@ -83,6 +83,7 @@ class MediaStoreService @Inject constructor(
             height = int(Images.Media.HEIGHT),
             size = int(Images.Media.SIZE),
             contentUri = MediaStoreContentUriResolver.getContentUriForItem(id, video = false),
+            path = string(Images.Media.DATA),
         )
     }
 
@@ -124,6 +125,7 @@ class MediaStoreService @Inject constructor(
             size = int(Video.Media.SIZE),
             duration = if (SDK_INT >= R) int(Video.Media.DURATION) else null,
             contentUri = MediaStoreContentUriResolver.getContentUriForItem(id, video = true),
+            path = string(Video.Media.DATA),
         )
     }
 
