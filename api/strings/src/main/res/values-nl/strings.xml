@@ -168,4 +168,8 @@
     <string name="yearly">Jaarlijks</string>
     <string name="nothing_here_yet">Er valt hier nog niks te zien</string>
     <string name="use_as">Instellen als</string>
+    <string name="missing_permissions">Rechten ontbreken</string>
+    <string name="local_albums">Lokale albums</string>
+    <string name="sync_local_media">Bezig met synchroniseren van lokale media…</string>
+    <string name="grant_permissions">Rechten verlenen</string>
 </resources>
