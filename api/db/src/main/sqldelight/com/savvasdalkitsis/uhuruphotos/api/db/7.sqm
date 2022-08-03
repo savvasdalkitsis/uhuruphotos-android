@@ -1,0 +1,2 @@
+ALTER TABLE mediaStore ADD COLUMN fallbackColor TEXT;
+ALTER TABLE mediaStore ADD COLUMN path TEXT;
