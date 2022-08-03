@@ -39,8 +39,7 @@ by AlbumPageActionHandler(
         localAlbumUseCase.setLocalAlbumFeedDisplay(id, feedDisplay)
     },
     albumDetailsEmptyCheck = { albumId ->
-        (localAlbumUseCase.getLocalAlbum(albumId) as? LocalBucket.Found)
-            ?.bucket?.second?.isEmpty() != false
+        localAlbumUseCase.getLocalAlbum(albumId).isEmpty()
     },
     albumDetailsFlow = { albumId, _ ->
         localAlbumUseCase.observeLocalAlbum(albumId)

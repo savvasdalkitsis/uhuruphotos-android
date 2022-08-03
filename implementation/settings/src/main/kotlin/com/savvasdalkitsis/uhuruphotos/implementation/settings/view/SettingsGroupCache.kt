@@ -24,7 +24,6 @@ import com.savvasdalkitsis.uhuruphotos.implementation.settings.seam.SettingsActi
 
 @Composable
 internal fun ColumnScope.SettingsGroupCache(
-    title: String,
     current: Int,
     initialMaxLimit: Float,
     range: ClosedFloatingPointRange<Float> = 10f..2000f,

@@ -25,6 +25,7 @@ object NoOpSystemUiController : SystemUiController {
     override var isStatusBarVisible = true
     override var navigationBarDarkContentEnabled = false
     override var statusBarDarkContentEnabled = false
+    override var systemBarsBehavior: Int = 0
 
     override fun setNavigationBarColor(
         color: Color,

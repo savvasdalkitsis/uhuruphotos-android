@@ -17,8 +17,6 @@ package com.savvasdalkitsis.uhuruphotos.implementation.settings.view
 
 import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.res.stringResource
-import com.savvasdalkitsis.uhuruphotos.api.strings.R
 import com.savvasdalkitsis.uhuruphotos.implementation.settings.seam.SettingsAction
 import com.savvasdalkitsis.uhuruphotos.implementation.settings.seam.SettingsAction.ChangeImageDiskCache
 import com.savvasdalkitsis.uhuruphotos.implementation.settings.seam.SettingsAction.ClearImageDiskCache
@@ -30,7 +28,6 @@ internal fun ColumnScope.SettingsImageDiskCache(
     action: (SettingsAction) -> Unit,
 ) {
     SettingsGroupCache(
-        title = stringResource(R.string.image_disk_cache),
         current = state.imageDiskCacheCurrent,
         initialMaxLimit = state.imageDiskCacheMax.toFloat(),
         clearAction = ClearImageDiskCache,
