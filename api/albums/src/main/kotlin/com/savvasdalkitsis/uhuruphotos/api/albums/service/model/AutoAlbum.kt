@@ -27,9 +27,9 @@ data class AutoAlbum(
     @field:Json(name = "favorited")
     val isFavorite: Boolean,
     @field:Json(name = "gps_lat")
-    val gpsLat: Double,
+    val gpsLat: Double?,
     @field:Json(name = "gps_lon")
-    val gpsLon: Double,
+    val gpsLon: Double?,
     val id: Int,
     val timestamp: String,
     val title: String,
