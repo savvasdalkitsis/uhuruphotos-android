@@ -175,4 +175,9 @@
     <string name="missing_permissions">Permissions missing</string>
     <string name="grant_permissions">Grant permissions</string>
     <string name="sync_local_media">Synchronising local media</string>
+    <string name="enter_libre_photos_url">Enter LibrePhotos server url</string>
+    <string name="server_url">Server Url</string>
+    <string name="save">Save</string>
+    <string name="login_to_server">Login to server</string>
+    <string name="login">Login</string>
 </resources>

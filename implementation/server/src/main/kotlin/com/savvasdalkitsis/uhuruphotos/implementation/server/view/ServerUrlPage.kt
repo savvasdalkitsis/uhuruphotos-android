@@ -17,15 +17,11 @@ package com.savvasdalkitsis.uhuruphotos.implementation.server.view
 
 import androidx.compose.foundation.layout.BoxScope
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.Button
 import androidx.compose.material.Icon
-import androidx.compose.material.OutlinedButton
 import androidx.compose.material.OutlinedTextField
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
@@ -37,16 +33,13 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
-import com.savvasdalkitsis.uhuruphotos.api.icons.R
 import com.savvasdalkitsis.uhuruphotos.api.strings.R.string
 import com.savvasdalkitsis.uhuruphotos.implementation.server.seam.ServerAction
 import com.savvasdalkitsis.uhuruphotos.implementation.server.seam.ServerAction.AttemptChangeServerUrlTo
-import com.savvasdalkitsis.uhuruphotos.implementation.server.seam.ServerAction.SendLogsClick
 import com.savvasdalkitsis.uhuruphotos.implementation.server.seam.ServerAction.UrlTyped
 
 @Composable
@@ -59,7 +52,7 @@ internal fun BoxScope.ServerUrlPage(
     Column(modifier = Modifier.align(Alignment.Center)) {
         Text(
             modifier = Modifier.padding(bottom = 8.dp),
-            text = "Enter LibrePhotos server url:"
+            text = stringResource(string.enter_libre_photos_url)
         )
         OutlinedTextField(
             maxLines = 1,
@@ -77,7 +70,7 @@ internal fun BoxScope.ServerUrlPage(
                     contentDescription = "serverIcon"
                 )
             },
-            label = { Text("Server Url") },
+            label = { Text(stringResource(string.server_url)) },
             value = serverTextFieldValue,
             isError = !state.isUrlValid,
             onValueChange = {
@@ -89,7 +82,7 @@ internal fun BoxScope.ServerUrlPage(
             enabled = state.allowSaveUrl,
             onClick = { action(AttemptChangeServerUrlTo(serverTextFieldValue)) }
         ) {
-            Text("Save")
+            Text(stringResource(string.save))
         }
     }
     if (state.showUnsecureServerConfirmation) {

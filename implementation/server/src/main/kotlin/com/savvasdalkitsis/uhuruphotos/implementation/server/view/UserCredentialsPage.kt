@@ -33,7 +33,9 @@ import androidx.compose.material.icons.filled.Settings
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import com.savvasdalkitsis.uhuruphotos.api.strings.R.string
 import com.savvasdalkitsis.uhuruphotos.implementation.server.seam.ServerAction
 import com.savvasdalkitsis.uhuruphotos.implementation.server.seam.ServerAction.Login
 import com.savvasdalkitsis.uhuruphotos.implementation.server.seam.ServerAction.RequestServerUrlChange
@@ -57,11 +59,11 @@ internal fun UserCredentialsPage(
             ) {
                 Icon(
                     Icons.Default.Settings,
-                    contentDescription = "Change server url"
+                    contentDescription = stringResource(string.edit_server_url)
                 )
             }
             Text(
-                text = "Change server url",
+                text = stringResource(string.edit_server_url),
                 modifier = Modifier
                     .align(Alignment.CenterVertically)
             )
@@ -73,7 +75,7 @@ internal fun UserCredentialsPage(
         ) {
             Text(
                 modifier = Modifier.padding(bottom = 8.dp),
-                text = "Login to server"
+                text = stringResource(string.login_to_server)
             )
             UsernameField(state, action)
             PasswordField(state, action)
@@ -81,7 +83,7 @@ internal fun UserCredentialsPage(
                 enabled = state.allowLogin,
                 onClick = { action(Login) }
             ) {
-                Text("Login")
+                Text(stringResource(string.login))
             }
         }
     }
