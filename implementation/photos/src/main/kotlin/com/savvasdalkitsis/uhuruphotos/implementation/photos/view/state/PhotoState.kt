@@ -18,7 +18,6 @@ package com.savvasdalkitsis.uhuruphotos.implementation.photos.view.state
 import androidx.annotation.StringRes
 import com.savvasdalkitsis.uhuruphotos.api.map.model.LatLon
 import com.savvasdalkitsis.uhuruphotos.api.people.view.state.Person
-import com.savvasdalkitsis.uhuruphotos.api.photos.model.PhotoDetails
 import com.savvasdalkitsis.uhuruphotos.implementation.photos.usecase.PhotoMetadata
 
 data class PhotoState(
@@ -35,6 +34,21 @@ data class PhotoState(
     val showRestoreButton: Boolean = false,
 ) {
     val currentPhoto: SinglePhotoState get() = photos[currentIndex]
+
+    override fun toString(): String =
+        """PhotoState(currentIndex=$currentIndex,
+            | photosCount=${photos.size},
+            | isLoading=$isLoading,
+            | errorMessage=$errorMessage,
+            | showUI=$showUI,
+            | showInfoButton=$showInfoButton,
+            | showPhotoDeleteConfirmationDialog=$showPhotoDeleteConfirmationDialog,
+            | showPhotoTrashingConfirmationDialog=$showPhotoTrashingConfirmationDialog,
+            | showPhotoRestorationConfirmationDialog=$showPhotoRestorationConfirmationDialog,
+            | infoSheetHidden=$infoSheetHidden,
+            | showRestoreButton=$showRestoreButton)""".trimMargin().replace("\n", "")
+
+
 }
 
 data class SinglePhotoState(

@@ -55,12 +55,13 @@ android {
 
 dependencies {
     implementation project(":api:activity")
-    implementation project(":api:ui")
-    implementation project(":api:initializer")
-    implementation project(":api:navigation")
     implementation project(":api:homenavigation")
+    implementation project(":api:initializer")
+    implementation project(":api:log")
     implementation project(":api:map")
+    implementation project(":api:navigation")
     implementation project(":api:settings")
+    implementation project(":api:ui")
     implementation project(":api:video")
 
     implementation project(':implementation')

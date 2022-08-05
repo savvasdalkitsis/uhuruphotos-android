@@ -19,10 +19,13 @@ import android.os.Bundle
 import androidx.activity.compose.setContent
 import androidx.compose.material3.windowsizeclass.calculateWindowSizeClass
 import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.LaunchedEffect
 import androidx.core.view.WindowCompat
 import androidx.fragment.app.FragmentActivity
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import com.savvasdalkitsis.uhuruphotos.activity.CurrentActivityHolder
+import com.savvasdalkitsis.uhuruphotos.api.log.Log
+import com.savvasdalkitsis.uhuruphotos.api.settings.usecase.SettingsUseCase
 import com.savvasdalkitsis.uhuruphotos.api.ui.window.LocalSystemUiController
 import com.savvasdalkitsis.uhuruphotos.api.ui.window.LocalWindowSize
 import com.savvasdalkitsis.uhuruphotos.app.navigation.AppNavigator
@@ -34,14 +37,19 @@ class AppActivity : FragmentActivity() {
 
     @Inject lateinit var navigator: AppNavigator
     @Inject lateinit var currentActivityHolder: CurrentActivityHolder
+    @Inject lateinit var settingsUseCase: SettingsUseCase
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        Log.enabled = true
         super.onCreate(savedInstanceState)
         currentActivityHolder.onCreated(this)
         try {
             WindowCompat.setDecorFitsSystemWindows(window, false)
         } catch (_: Exception) { /* safe to ignore */ }
         setContent {
+            LaunchedEffect(Unit) {
+                Log.enabled = settingsUseCase.getLoggingEnabled()
+            }
             val systemUiController = rememberSystemUiController()
             val windowSizeClass = calculateWindowSizeClass(this)
             CompositionLocalProvider(

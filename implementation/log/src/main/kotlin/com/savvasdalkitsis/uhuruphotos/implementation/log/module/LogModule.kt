@@ -37,9 +37,14 @@ internal class LogModule {
     @Provides
     @Singleton
     fun loggingSetup(@ApplicationContext context: Context): FileLoggingSetup =
-        FileLoggingSetup.DateFiles(context, setup = FileLoggingSetup.Setup(
-            logsToKeep = 1
-        ))
+        FileLoggingSetup.NumberedFiles(
+            context = context,
+            setup = FileLoggingSetup.Setup(
+                logsToKeep = 1
+            ),
+            logOnBackgroundThread = true,
+            sizeLimit = "2MB"
+        )
 
     @Provides
     @IntoSet

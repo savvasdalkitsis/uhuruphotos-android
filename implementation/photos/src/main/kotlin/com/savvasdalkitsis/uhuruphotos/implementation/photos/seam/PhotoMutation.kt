@@ -16,9 +16,6 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.implementation.photos.seam
 
 import androidx.annotation.StringRes
-import com.savvasdalkitsis.uhuruphotos.api.db.photos.PhotoDetails
-import com.savvasdalkitsis.uhuruphotos.api.people.view.state.Person
-import com.savvasdalkitsis.uhuruphotos.api.photos.model.latLng
 import com.savvasdalkitsis.uhuruphotos.api.seam.Mutation
 import com.savvasdalkitsis.uhuruphotos.implementation.photos.usecase.PhotoMetadata
 import com.savvasdalkitsis.uhuruphotos.implementation.photos.view.state.OriginalFileIconState
@@ -141,7 +138,9 @@ sealed class PhotoMutation(
             currentIndex = index,
             photos = photoStates,
         )
-    })
+    }) {
+        override fun toString() = "ShowMultiplePhotos [index: $index, size:${photoStates.size}]"
+    }
 
     data class ReceivedDetails(
         val id: String,
