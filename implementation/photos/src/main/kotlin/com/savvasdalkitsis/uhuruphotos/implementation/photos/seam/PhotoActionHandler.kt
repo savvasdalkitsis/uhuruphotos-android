@@ -284,9 +284,8 @@ class PhotoActionHandler @Inject constructor(
             emit(SetOriginalFileIconState(action.photo.id, HIDDEN))
             emit(ShowShareIcon(action.photo.id))
             emit(ShowUseAsIcon(action.photo.id))
-            // TODO enable for local photos
-            if (PhotoImageSource.fromUrl(action.photo.fullResUrl) == REMOTE
-                && !action.photo.isVideo
+            if (!(PhotoImageSource.fromUrl(action.photo.fullResUrl) == REMOTE
+                && action.photo.isVideo)
             ) {
                 val metadata = metadataUseCase.extractMetadata(action.photo.fullResUrl)
                 if (metadata != null) {
