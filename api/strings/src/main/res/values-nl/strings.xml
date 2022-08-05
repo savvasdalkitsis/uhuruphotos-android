@@ -172,4 +172,9 @@
     <string name="local_albums">Lokale albums</string>
     <string name="sync_local_media">Bezig met synchroniseren van lokale media…</string>
     <string name="grant_permissions">Rechten verlenen</string>
+    <string name="enter_libre_photos_url">Voer de LibrePhotos-server-url in</string>
+    <string name="save">Opslaan</string>
+    <string name="login">Inloggen</string>
+    <string name="server_url">Server-url</string>
+    <string name="login_to_server">Inloggen op server</string>
 </resources>
