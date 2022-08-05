@@ -23,7 +23,7 @@ import com.savvasdalkitsis.uhuruphotos.api.log.log
 import com.savvasdalkitsis.uhuruphotos.api.notification.ForegroundInfoBuilder
 import com.savvasdalkitsis.uhuruphotos.api.notification.NotificationChannels.JOBS_CHANNEL_ID
 import com.savvasdalkitsis.uhuruphotos.api.photos.model.toPhotoDetails
-import com.savvasdalkitsis.uhuruphotos.api.strings.R
+import com.savvasdalkitsis.uhuruphotos.api.strings.R.string
 import com.savvasdalkitsis.uhuruphotos.implementation.photos.repository.PhotoRepository
 import com.savvasdalkitsis.uhuruphotos.implementation.photos.service.PhotosService
 import com.savvasdalkitsis.uhuruphotos.implementation.photos.service.model.PhotoFavouriteRequest
@@ -70,7 +70,7 @@ class PhotoFavouriteWorker @AssistedInject constructor(
 
     override suspend fun getForegroundInfo() = foregroundInfoBuilder.build(
         applicationContext,
-        R.string.setting_photo_favourite,
+        string.setting_photo_favourite,
         NOTIFICATION_ID,
         JOBS_CHANNEL_ID
     )

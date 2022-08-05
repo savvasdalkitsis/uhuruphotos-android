@@ -25,10 +25,19 @@ import com.savvasdalkitsis.uhuruphotos.api.navigation.Navigator
 import com.savvasdalkitsis.uhuruphotos.api.person.navigation.PersonNavigationTarget
 import com.savvasdalkitsis.uhuruphotos.api.seam.EffectHandler
 import com.savvasdalkitsis.uhuruphotos.api.share.usecase.ShareUseCase
-import com.savvasdalkitsis.uhuruphotos.api.strings.R
+import com.savvasdalkitsis.uhuruphotos.api.strings.R.string
 import com.savvasdalkitsis.uhuruphotos.api.toaster.Toaster
 import com.savvasdalkitsis.uhuruphotos.api.ui.usecase.UiUseCase
-import com.savvasdalkitsis.uhuruphotos.implementation.photos.seam.PhotoEffect.*
+import com.savvasdalkitsis.uhuruphotos.implementation.photos.seam.PhotoEffect.CopyToClipboard
+import com.savvasdalkitsis.uhuruphotos.implementation.photos.seam.PhotoEffect.DownloadingOriginal
+import com.savvasdalkitsis.uhuruphotos.implementation.photos.seam.PhotoEffect.ErrorRefreshingPeople
+import com.savvasdalkitsis.uhuruphotos.implementation.photos.seam.PhotoEffect.HideSystemBars
+import com.savvasdalkitsis.uhuruphotos.implementation.photos.seam.PhotoEffect.LaunchMap
+import com.savvasdalkitsis.uhuruphotos.implementation.photos.seam.PhotoEffect.NavigateBack
+import com.savvasdalkitsis.uhuruphotos.implementation.photos.seam.PhotoEffect.NavigateToPerson
+import com.savvasdalkitsis.uhuruphotos.implementation.photos.seam.PhotoEffect.SharePhoto
+import com.savvasdalkitsis.uhuruphotos.implementation.photos.seam.PhotoEffect.ShowSystemBars
+import com.savvasdalkitsis.uhuruphotos.implementation.photos.seam.PhotoEffect.UsePhotoAs
 import dagger.hilt.android.qualifiers.ApplicationContext
 import javax.inject.Inject
 
@@ -52,23 +61,23 @@ class PhotoEffectsHandler @Inject constructor(
             is LaunchMap -> navigator.navigateTo(geoLocation(effect.gps))
             is CopyToClipboard -> {
                 clipboardManager.setPrimaryClip(ClipData.newPlainText("", effect.content))
-                toaster.show(R.string.copied_to_clipboard)
+                toaster.show(string.copied_to_clipboard)
             }
             is SharePhoto -> shareUseCase.share(effect.url)
             is UsePhotoAs -> shareUseCase.usePhotoAs(effect.url)
             is NavigateToPerson -> navigator.navigateTo(
                 PersonNavigationTarget.name(effect.id)
             )
-            ErrorRefreshingPeople -> toaster.show(R.string.error_refreshing_people)
+            ErrorRefreshingPeople -> toaster.show(string.error_refreshing_people)
             DownloadingOriginal -> {
-                toaster.show(R.string.downloading_original_file_background)
-                toaster.show(R.string.you_can_leave)
+                toaster.show(string.downloading_original_file_background)
+                toaster.show(string.you_can_leave)
             }
         }
     }
 
     private fun geoLocation(gps: LatLon): Intent = Intent(Intent.ACTION_VIEW, with(gps) {
-        "geo:$lat,$lon?q=$lat,$lon(${context.getString(R.string.photo)})".uri
+        "geo:$lat,$lon?q=$lat,$lon(${context.getString(string.photo)})".uri
     })
 
     private val String.uri get () = Uri.parse(this)

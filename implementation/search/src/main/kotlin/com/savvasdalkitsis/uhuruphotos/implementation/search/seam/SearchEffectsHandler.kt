@@ -22,7 +22,7 @@ import com.savvasdalkitsis.uhuruphotos.api.person.navigation.PersonNavigationTar
 import com.savvasdalkitsis.uhuruphotos.api.photos.model.PhotoSequenceDataSource.SearchResults
 import com.savvasdalkitsis.uhuruphotos.api.photos.navigation.PhotoNavigationTarget
 import com.savvasdalkitsis.uhuruphotos.api.seam.EffectHandler
-import com.savvasdalkitsis.uhuruphotos.api.strings.R
+import com.savvasdalkitsis.uhuruphotos.api.strings.R.string
 import com.savvasdalkitsis.uhuruphotos.api.toaster.Toaster
 import com.savvasdalkitsis.uhuruphotos.api.ui.usecase.UiUseCase
 import com.savvasdalkitsis.uhuruphotos.implementation.search.seam.SearchEffect.ErrorRefreshingPeople
@@ -49,9 +49,9 @@ class SearchEffectsHandler @Inject constructor(
                 PhotoNavigationTarget.name(id, center, scale, isVideo, SearchResults(currentQuery))
             }
         )
-        ErrorSearching -> toaster.show(R.string.error_searching)
+        ErrorSearching -> toaster.show(string.error_searching)
         NavigateToAllPeople -> navigateTo(PeopleNavigationTarget.name)
-        ErrorRefreshingPeople -> toaster.show(R.string.error_refreshing_people)
+        ErrorRefreshingPeople -> toaster.show(string.error_refreshing_people)
         is NavigateToPerson -> navigateTo(PersonNavigationTarget.name(effect.personId))
         NavigateToHeatMap -> navigateTo(HeatMapNavigationTarget.name)
     }

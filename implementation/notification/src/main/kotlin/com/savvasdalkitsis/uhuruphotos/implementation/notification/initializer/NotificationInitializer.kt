@@ -22,7 +22,7 @@ import androidx.core.app.NotificationManagerCompat.IMPORTANCE_LOW
 import com.savvasdalkitsis.uhuruphotos.api.initializer.ApplicationCreated
 import com.savvasdalkitsis.uhuruphotos.api.notification.NotificationChannels.CRASH_CHANNEL_ID
 import com.savvasdalkitsis.uhuruphotos.api.notification.NotificationChannels.JOBS_CHANNEL_ID
-import com.savvasdalkitsis.uhuruphotos.api.strings.R
+import com.savvasdalkitsis.uhuruphotos.api.strings.R.string
 import javax.inject.Inject
 
 internal class NotificationInitializer @Inject constructor(
@@ -32,14 +32,14 @@ internal class NotificationInitializer @Inject constructor(
     override fun onAppCreated(app: Application) {
         notificationManager.createNotificationChannel(
             Builder(JOBS_CHANNEL_ID, IMPORTANCE_LOW)
-                .setName(app.getString(R.string.jobs))
-                .setDescription(app.getString(R.string.background_jobs))
+                .setName(app.getString(string.jobs))
+                .setDescription(app.getString(string.background_jobs))
                 .build()
         )
         notificationManager.createNotificationChannel(
             Builder(CRASH_CHANNEL_ID, IMPORTANCE_LOW)
-                .setName(app.getString(R.string.crash_reports))
-                .setDescription(app.getString(R.string.send_crash_logs))
+                .setName(app.getString(string.crash_reports))
+                .setDescription(app.getString(string.send_crash_logs))
                 .build()
         )
     }

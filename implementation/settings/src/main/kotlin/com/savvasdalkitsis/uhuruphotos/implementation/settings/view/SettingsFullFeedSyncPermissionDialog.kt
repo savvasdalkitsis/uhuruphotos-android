@@ -22,7 +22,7 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.stringResource
-import com.savvasdalkitsis.uhuruphotos.api.strings.R
+import com.savvasdalkitsis.uhuruphotos.api.strings.R.string
 import com.savvasdalkitsis.uhuruphotos.implementation.settings.seam.SettingsAction
 
 @Composable
@@ -32,24 +32,24 @@ internal fun SettingsFullFeedSyncPermissionDialog(
 ) {
     AlertDialog(
         onDismissRequest = onDismiss,
-        title = { Text(stringResource(R.string.perform_full_feed_sync)) },
+        title = { Text(stringResource(string.perform_full_feed_sync)) },
         text = {
             Column {
-                Text(stringResource(R.string.are_you_sure_you_want_to_perform_full_sync))
+                Text(stringResource(string.are_you_sure_you_want_to_perform_full_sync))
                 Text(
-                    stringResource(R.string.process_takes_while_consumes_battery),
+                    stringResource(string.process_takes_while_consumes_battery),
                     style = MaterialTheme.typography.caption
                 )
             }
         },
         confirmButton = {
             Button(onClick = { action(SettingsAction.PerformFullFeedSync) }) {
-                Text(stringResource(R.string.yes))
+                Text(stringResource(string.yes))
             }
         },
         dismissButton = {
             Button(onClick = onDismiss) {
-                Text(stringResource(R.string.no))
+                Text(stringResource(string.no))
             }
         },
     )

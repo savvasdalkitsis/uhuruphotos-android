@@ -24,7 +24,7 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import com.savvasdalkitsis.uhuruphotos.api.strings.R
+import com.savvasdalkitsis.uhuruphotos.api.strings.R.string
 
 @Composable
 fun YesNoDialog(
@@ -47,12 +47,12 @@ fun YesNoDialog(
         },
         confirmButton = {
             Button(onClick = onYes) {
-                Text(stringResource(R.string.yes))
+                Text(stringResource(string.yes))
             }
         },
         dismissButton = {
             Button(onClick = onDismiss) {
-                Text(stringResource(R.string.no))
+                Text(stringResource(string.no))
             }
         },
     )

@@ -44,17 +44,17 @@ import com.savvasdalkitsis.uhuruphotos.api.image.view.Image
 import com.savvasdalkitsis.uhuruphotos.api.photos.view.DeletePermissionDialog
 import com.savvasdalkitsis.uhuruphotos.api.photos.view.RestorePermissionDialog
 import com.savvasdalkitsis.uhuruphotos.api.photos.view.TrashPermissionDialog
-import com.savvasdalkitsis.uhuruphotos.api.strings.R
+import com.savvasdalkitsis.uhuruphotos.api.strings.R.string
 import com.savvasdalkitsis.uhuruphotos.api.video.view.Video
 import com.savvasdalkitsis.uhuruphotos.implementation.photos.seam.PhotoAction
-import com.savvasdalkitsis.uhuruphotos.implementation.photos.seam.PhotoAction.TrashPhoto
-import com.savvasdalkitsis.uhuruphotos.implementation.photos.seam.PhotoAction.DismissErrorMessage
 import com.savvasdalkitsis.uhuruphotos.implementation.photos.seam.PhotoAction.DismissConfirmationDialogs
+import com.savvasdalkitsis.uhuruphotos.implementation.photos.seam.PhotoAction.DismissErrorMessage
 import com.savvasdalkitsis.uhuruphotos.implementation.photos.seam.PhotoAction.FullImageLoaded
 import com.savvasdalkitsis.uhuruphotos.implementation.photos.seam.PhotoAction.NavigateBack
 import com.savvasdalkitsis.uhuruphotos.implementation.photos.seam.PhotoAction.RestorePhoto
 import com.savvasdalkitsis.uhuruphotos.implementation.photos.seam.PhotoAction.ShowInfo
 import com.savvasdalkitsis.uhuruphotos.implementation.photos.seam.PhotoAction.ToggleUI
+import com.savvasdalkitsis.uhuruphotos.implementation.photos.seam.PhotoAction.TrashPhoto
 import com.savvasdalkitsis.uhuruphotos.implementation.photos.view.state.PhotoState
 
 @Composable
@@ -125,7 +125,7 @@ fun PhotoDetails(
                     fullResUrl = photo.fullResUrl,
                     onFullResImageLoaded = { action(FullImageLoaded(photo)) },
                     contentScale = ContentScale.Fit,
-                    contentDescription = stringResource(R.string.photo),
+                    contentDescription = stringResource(string.photo),
                 )
             }
             Column {

@@ -22,7 +22,7 @@ import androidx.work.WorkerParameters
 import com.savvasdalkitsis.uhuruphotos.api.log.log
 import com.savvasdalkitsis.uhuruphotos.api.notification.ForegroundInfoBuilder
 import com.savvasdalkitsis.uhuruphotos.api.notification.NotificationChannels.JOBS_CHANNEL_ID
-import com.savvasdalkitsis.uhuruphotos.api.strings.R
+import com.savvasdalkitsis.uhuruphotos.api.strings.R.string
 import com.savvasdalkitsis.uhuruphotos.implementation.photos.repository.PhotoRepository
 import com.savvasdalkitsis.uhuruphotos.implementation.photos.service.PhotosService
 import com.savvasdalkitsis.uhuruphotos.implementation.photos.service.model.PhotoDeletedRequest
@@ -75,7 +75,7 @@ class PhotoRestoreWorker @AssistedInject constructor(
 
     override suspend fun getForegroundInfo() = foregroundInfoBuilder.build(
         applicationContext,
-        R.string.restoring_photo,
+        string.restoring_photo,
         NOTIFICATION_ID,
         JOBS_CHANNEL_ID
     )

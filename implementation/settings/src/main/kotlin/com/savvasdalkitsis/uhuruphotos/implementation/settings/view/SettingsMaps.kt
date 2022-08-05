@@ -25,7 +25,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import com.savvasdalkitsis.uhuruphotos.api.strings.R
+import com.savvasdalkitsis.uhuruphotos.api.strings.R.string
 import com.savvasdalkitsis.uhuruphotos.implementation.settings.seam.SettingsAction
 import com.savvasdalkitsis.uhuruphotos.implementation.settings.seam.SettingsAction.ChangeMapProvider
 import com.savvasdalkitsis.uhuruphotos.implementation.settings.view.state.MapProviderState
@@ -43,10 +43,10 @@ internal fun ColumnScope.SettingsMaps(
                 verticalAlignment = Alignment.CenterVertically,
             ) {
                 Icon(painter = painterResource(Icons.drawable.ic_map), contentDescription = null)
-                Text("${stringResource(R.string.map_provider)}: ${mapProviderState.current.name}",)
+                Text("${stringResource(string.map_provider)}: ${mapProviderState.current.name}",)
             }
         },
-        buttonText = stringResource(R.string.change),
+        buttonText = stringResource(string.change),
         action = action,
     ) {
         mapProviderState.available.forEach { provider ->

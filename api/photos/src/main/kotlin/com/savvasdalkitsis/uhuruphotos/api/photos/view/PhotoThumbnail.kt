@@ -55,7 +55,7 @@ import com.savvasdalkitsis.uhuruphotos.api.compose.toColor
 import com.savvasdalkitsis.uhuruphotos.api.image.view.Image
 import com.savvasdalkitsis.uhuruphotos.api.photos.model.Photo
 import com.savvasdalkitsis.uhuruphotos.api.photos.model.SelectionMode
-import com.savvasdalkitsis.uhuruphotos.api.strings.R
+import com.savvasdalkitsis.uhuruphotos.api.strings.R.string
 import com.savvasdalkitsis.uhuruphotos.api.ui.theme.CustomColors
 import com.savvasdalkitsis.uhuruphotos.api.icons.R as Icons
 
@@ -115,7 +115,7 @@ fun PhotoThumbnail(
                 modifier = Modifier.fillMaxWidth(),
                 url = photo.thumbnailUrl,
                 contentScale = contentScale,
-                contentDescription = stringResource(R.string.photo),
+                contentDescription = stringResource(string.photo),
             )
             if (photo.isVideo) {
                 Icon(

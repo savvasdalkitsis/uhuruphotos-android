@@ -22,7 +22,7 @@ import androidx.work.WorkerParameters
 import com.savvasdalkitsis.uhuruphotos.api.log.log
 import com.savvasdalkitsis.uhuruphotos.api.notification.ForegroundInfoBuilder
 import com.savvasdalkitsis.uhuruphotos.api.notification.NotificationChannels.JOBS_CHANNEL_ID
-import com.savvasdalkitsis.uhuruphotos.api.strings.R
+import com.savvasdalkitsis.uhuruphotos.api.strings.R.string
 import com.savvasdalkitsis.uhuruphotos.implementation.photos.repository.PhotoRepository
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedInject
@@ -53,7 +53,7 @@ class PhotoDetailsRetrieveWorker @AssistedInject constructor(
 
     override suspend fun getForegroundInfo() = foregroundInfoBuilder.build(
         applicationContext,
-        R.string.downloading_photo_details,
+        string.downloading_photo_details,
         NOTIFICATION_ID,
         JOBS_CHANNEL_ID
     )

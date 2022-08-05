@@ -28,7 +28,7 @@ import com.savvasdalkitsis.uhuruphotos.api.biometrics.usecase.BiometricsUseCase
 import com.savvasdalkitsis.uhuruphotos.api.photos.model.PhotoSequenceDataSource.Trash
 import com.savvasdalkitsis.uhuruphotos.api.seam.ActionHandler
 import com.savvasdalkitsis.uhuruphotos.api.settings.usecase.SettingsUseCase
-import com.savvasdalkitsis.uhuruphotos.api.strings.R
+import com.savvasdalkitsis.uhuruphotos.api.strings.R.string
 import com.savvasdalkitsis.uhuruphotos.implementation.trash.usecase.TrashUseCase
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flow
@@ -53,9 +53,9 @@ internal class TrashAlbumPageActionHandler @Inject constructor(
             .flatMapLatest { biometricsRequired ->
                 val proceed = when {
                     biometricsRequired -> biometricsUseCase.authenticate(
-                        R.string.authenticate,
-                        R.string.authenticate_for_access_to_trash,
-                        R.string.authenticate_for_access_to_trash_description,
+                        string.authenticate,
+                        string.authenticate_for_access_to_trash,
+                        string.authenticate_for_access_to_trash_description,
                         true,
                     )
                     else -> Result.success(Unit)
@@ -68,7 +68,7 @@ internal class TrashAlbumPageActionHandler @Inject constructor(
                     trashUseCase.observeTrashAlbums()
                         .map { albums ->
                             AlbumDetails(
-                                title = Title.Resource(R.string.trash),
+                                title = Title.Resource(string.trash),
                                 albums = albums.map { album ->
                                     Album(
                                         id = album.id,

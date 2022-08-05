@@ -18,7 +18,7 @@ package com.savvasdalkitsis.uhuruphotos.implementation.settings.view
 import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.stringResource
-import com.savvasdalkitsis.uhuruphotos.api.strings.R
+import com.savvasdalkitsis.uhuruphotos.api.strings.R.string
 import com.savvasdalkitsis.uhuruphotos.implementation.settings.seam.SettingsAction
 import com.savvasdalkitsis.uhuruphotos.implementation.settings.seam.SettingsAction.ChangeSearchSuggestionsEnabled
 import com.savvasdalkitsis.uhuruphotos.implementation.settings.seam.SettingsAction.ClearRecentSearches
@@ -32,7 +32,7 @@ internal fun ColumnScope.SettingsSearch(
 ) {
     val checked = state.searchSuggestionsEnabled
     SettingsCheckBox(
-        text = stringResource(R.string.enable_suggestions),
+        text = stringResource(string.enable_suggestions),
         icon = when {
             checked -> Icons.drawable.ic_lightbulb
             else -> Icons.drawable.ic_lightbulb_off
@@ -41,7 +41,7 @@ internal fun ColumnScope.SettingsSearch(
         onCheckedChange = { action(ChangeSearchSuggestionsEnabled(it)) }
     )
     SettingsOutlineButtonRow(
-        buttonText = stringResource(R.string.clear_recent_searches),
+        buttonText = stringResource(string.clear_recent_searches),
         icon = Icons.drawable.ic_clear_all,
     ) {
         action(ClearRecentSearches)

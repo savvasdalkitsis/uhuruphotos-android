@@ -15,17 +15,23 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.implementation.library.seam
 
-import com.savvasdalkitsis.uhuruphotos.api.localalbum.navigation.LocalAlbumNavigationTarget
 import com.savvasdalkitsis.uhuruphotos.api.autoalbums.navigation.AutoAlbumsNavigationTarget
 import com.savvasdalkitsis.uhuruphotos.api.favourites.navigation.FavouritesNavigationTarget
 import com.savvasdalkitsis.uhuruphotos.api.hidden.navigation.HiddenPhotosNavigationTarget
-import com.savvasdalkitsis.uhuruphotos.api.trash.navigation.TrashNavigationTarget
+import com.savvasdalkitsis.uhuruphotos.api.localalbum.navigation.LocalAlbumNavigationTarget
 import com.savvasdalkitsis.uhuruphotos.api.navigation.Navigator
 import com.savvasdalkitsis.uhuruphotos.api.seam.EffectHandler
-import com.savvasdalkitsis.uhuruphotos.api.strings.R
+import com.savvasdalkitsis.uhuruphotos.api.strings.R.string
 import com.savvasdalkitsis.uhuruphotos.api.toaster.Toaster
+import com.savvasdalkitsis.uhuruphotos.api.trash.navigation.TrashNavigationTarget
 import com.savvasdalkitsis.uhuruphotos.api.useralbums.navigation.UserAlbumsNavigationTarget
-import com.savvasdalkitsis.uhuruphotos.implementation.library.seam.LibraryEffect.*
+import com.savvasdalkitsis.uhuruphotos.implementation.library.seam.LibraryEffect.ErrorLoadingAlbums
+import com.savvasdalkitsis.uhuruphotos.implementation.library.seam.LibraryEffect.NavigateToAutoAlbums
+import com.savvasdalkitsis.uhuruphotos.implementation.library.seam.LibraryEffect.NavigateToFavourites
+import com.savvasdalkitsis.uhuruphotos.implementation.library.seam.LibraryEffect.NavigateToHidden
+import com.savvasdalkitsis.uhuruphotos.implementation.library.seam.LibraryEffect.NavigateToLocalBucket
+import com.savvasdalkitsis.uhuruphotos.implementation.library.seam.LibraryEffect.NavigateToTrash
+import com.savvasdalkitsis.uhuruphotos.implementation.library.seam.LibraryEffect.NavigateToUserAlbums
 import javax.inject.Inject
 
 class LibraryEffectsHandler @Inject constructor(
@@ -34,7 +40,7 @@ class LibraryEffectsHandler @Inject constructor(
 ) : EffectHandler<LibraryEffect> {
 
     override suspend fun handleEffect(effect: LibraryEffect) = when (effect) {
-        ErrorLoadingAlbums -> toaster.show(R.string.error_loading_albums)
+        ErrorLoadingAlbums -> toaster.show(string.error_loading_albums)
         NavigateToAutoAlbums -> navigator
             .navigateTo(AutoAlbumsNavigationTarget.name)
         NavigateToUserAlbums -> navigator

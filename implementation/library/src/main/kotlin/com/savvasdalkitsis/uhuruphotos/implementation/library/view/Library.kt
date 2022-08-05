@@ -29,7 +29,7 @@ import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 import com.savvasdalkitsis.uhuruphotos.api.compose.blurIf
 import com.savvasdalkitsis.uhuruphotos.api.feed.view.state.FeedDisplay
 import com.savvasdalkitsis.uhuruphotos.api.home.view.HomeScaffold
-import com.savvasdalkitsis.uhuruphotos.api.strings.R
+import com.savvasdalkitsis.uhuruphotos.api.strings.R.string
 import com.savvasdalkitsis.uhuruphotos.api.ui.view.FullProgressBar
 import com.savvasdalkitsis.uhuruphotos.api.ui.view.Logo
 import com.savvasdalkitsis.uhuruphotos.implementation.library.seam.LibraryAction
@@ -54,7 +54,7 @@ internal fun Library(
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Logo()
-                Text(stringResource(R.string.library))
+                Text(stringResource(string.library))
             }
         },
         actionBarContent = {

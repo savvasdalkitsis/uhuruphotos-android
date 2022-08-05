@@ -24,7 +24,7 @@ import com.savvasdalkitsis.uhuruphotos.api.db.albums.UserAlbums
 import com.savvasdalkitsis.uhuruphotos.api.photos.model.Photo
 import com.savvasdalkitsis.uhuruphotos.api.photos.model.PhotoGrid
 import com.savvasdalkitsis.uhuruphotos.api.photos.usecase.PhotosUseCase
-import com.savvasdalkitsis.uhuruphotos.api.strings.R
+import com.savvasdalkitsis.uhuruphotos.api.strings.R.string
 import com.savvasdalkitsis.uhuruphotos.api.useralbums.usecase.UserAlbumsUseCase
 import com.savvasdalkitsis.uhuruphotos.api.useralbums.view.state.UserAlbum
 import dagger.hilt.android.qualifiers.ApplicationContext
@@ -90,7 +90,7 @@ class UserAlbumsUseCase @Inject constructor(
                             it.coverPhoto4IsVideo
                         ),
                     ),
-                    title = it.title ?: context.getString(R.string.missing_album_title),
+                    title = it.title ?: context.getString(string.missing_album_title),
                     photoCount = it.photoCount,
                 )
             }

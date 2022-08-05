@@ -18,7 +18,7 @@ package com.savvasdalkitsis.uhuruphotos.implementation.autoalbums.seam
 import com.savvasdalkitsis.uhuruphotos.api.autoalbum.navigation.AutoAlbumNavigationTarget
 import com.savvasdalkitsis.uhuruphotos.api.navigation.Navigator
 import com.savvasdalkitsis.uhuruphotos.api.seam.EffectHandler
-import com.savvasdalkitsis.uhuruphotos.api.strings.R
+import com.savvasdalkitsis.uhuruphotos.api.strings.R.string
 import com.savvasdalkitsis.uhuruphotos.api.toaster.Toaster
 import com.savvasdalkitsis.uhuruphotos.implementation.autoalbums.seam.AutoAlbumsEffect.ErrorLoadingAlbums
 import com.savvasdalkitsis.uhuruphotos.implementation.autoalbums.seam.AutoAlbumsEffect.NavigateBack
@@ -32,7 +32,7 @@ class AutoAlbumsEffectHandler @Inject constructor(
 
     override suspend fun handleEffect(effect: AutoAlbumsEffect) {
         when (effect) {
-            ErrorLoadingAlbums -> toaster.show(R.string.error_loading_auto_albums)
+            ErrorLoadingAlbums -> toaster.show(string.error_loading_auto_albums)
             NavigateBack -> navigator.navigateBack()
             is NavigateToAutoAlbum ->
                 navigator.navigateTo(AutoAlbumNavigationTarget.name(effect.album.id))

@@ -30,7 +30,7 @@ import com.savvasdalkitsis.uhuruphotos.api.feed.view.state.FeedDisplay
 import com.savvasdalkitsis.uhuruphotos.api.feed.view.state.FeedState
 import com.savvasdalkitsis.uhuruphotos.api.photos.model.Photo
 import com.savvasdalkitsis.uhuruphotos.api.photos.view.PhotoSelected
-import com.savvasdalkitsis.uhuruphotos.api.strings.R
+import com.savvasdalkitsis.uhuruphotos.api.strings.R.string
 import com.savvasdalkitsis.uhuruphotos.api.ui.view.FullProgressBar
 import com.savvasdalkitsis.uhuruphotos.api.ui.view.NoContent
 import com.savvasdalkitsis.uhuruphotos.api.ui.window.LocalWindowSize
@@ -44,7 +44,7 @@ fun Feed(
     showAlbumRefreshButton: Boolean = false,
     listState: LazyListState = rememberLazyListState(),
     feedHeader: @Composable (LazyItemScope.() -> Unit)? = null,
-    emptyContent: @Composable () -> Unit = { NoContent(R.string.no_photos) },
+    emptyContent: @Composable () -> Unit = { NoContent(string.no_photos) },
     onPhotoSelected: PhotoSelected = { _, _, _ -> },
     onChangeDisplay: ((FeedDisplay) -> Unit) = {},
     onPhotoLongPressed: (Photo) -> Unit = {},

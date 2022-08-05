@@ -19,7 +19,7 @@ import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.material.Divider
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.stringResource
-import com.savvasdalkitsis.uhuruphotos.api.strings.R
+import com.savvasdalkitsis.uhuruphotos.api.strings.R.string
 import com.savvasdalkitsis.uhuruphotos.implementation.settings.seam.SettingsAction
 
 @Composable
@@ -32,14 +32,14 @@ internal fun ColumnScope.SettingsGroupCache(
     action: (SettingsAction) -> Unit,
 ) {
     SettingsTextButtonRow(
-        text = stringResource(R.string.currently_used, current),
-        buttonText = stringResource(R.string.clear),
+        text = stringResource(string.currently_used, current),
+        buttonText = stringResource(string.clear),
         onClick = { action(clearAction) }
     )
     Divider()
     SettingsSliderRow(
-        text = { stringResource(R.string.max_limit, it.toInt()) },
-        subtext = R.string.changes_effect_after_restart,
+        text = { stringResource(string.max_limit, it.toInt()) },
+        subtext = string.changes_effect_after_restart,
         initialValue = initialMaxLimit,
         range = range,
         onValueChanged = { action(changeCacheSizeAction(it)) }

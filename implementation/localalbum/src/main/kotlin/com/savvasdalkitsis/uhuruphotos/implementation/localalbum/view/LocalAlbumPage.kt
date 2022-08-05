@@ -19,11 +19,9 @@ import androidx.compose.foundation.layout.Arrangement.spacedBy
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Button
 import androidx.compose.material.Text
-import androidx.compose.material.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -33,7 +31,7 @@ import com.savvasdalkitsis.uhuruphotos.api.albumpage.seam.AlbumPageAction
 import com.savvasdalkitsis.uhuruphotos.api.albumpage.view.AlbumPage
 import com.savvasdalkitsis.uhuruphotos.api.albumpage.view.state.AlbumPageState
 import com.savvasdalkitsis.uhuruphotos.api.seam.Either
-import com.savvasdalkitsis.uhuruphotos.api.strings.R
+import com.savvasdalkitsis.uhuruphotos.api.strings.R.string
 import com.savvasdalkitsis.uhuruphotos.api.ui.view.NoContent
 import com.savvasdalkitsis.uhuruphotos.implementation.localalbum.seam.LocalAlbumAction
 import com.savvasdalkitsis.uhuruphotos.implementation.localalbum.view.state.LocalAlbumState
@@ -61,18 +59,18 @@ fun LocalAlbumPage(
                         verticalArrangement = spacedBy(16.dp),
                         horizontalAlignment = Alignment.CenterHorizontally,
                     ) {
-                        Text(text = stringResource(R.string.missing_permissions))
+                        Text(text = stringResource(string.missing_permissions))
                         Button(
                             onClick = {
                                 permissionLauncher.launch(state.second.deniedPermissions.toTypedArray())
                             },
                         ) {
-                            Text(text = stringResource(R.string.grant_permissions))
+                            Text(text = stringResource(string.grant_permissions))
                         }
                     }
                 }
             } else {
-                NoContent(R.string.no_photos)
+                NoContent(string.no_photos)
             }
         }
     )

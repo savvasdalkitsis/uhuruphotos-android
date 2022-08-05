@@ -26,18 +26,25 @@ import com.savvasdalkitsis.uhuruphotos.api.albums.usecase.AlbumsUseCase
 import com.savvasdalkitsis.uhuruphotos.api.db.photos.PhotoSummary
 import com.savvasdalkitsis.uhuruphotos.api.localalbum.usecase.LocalAlbumUseCase
 import com.savvasdalkitsis.uhuruphotos.api.log.log
-import com.savvasdalkitsis.uhuruphotos.api.mediastore.model.LocalBucket
 import com.savvasdalkitsis.uhuruphotos.api.person.usecase.PersonUseCase
 import com.savvasdalkitsis.uhuruphotos.api.photos.model.Photo
 import com.savvasdalkitsis.uhuruphotos.api.photos.model.PhotoImageSource
 import com.savvasdalkitsis.uhuruphotos.api.photos.model.PhotoImageSource.LOCAL
 import com.savvasdalkitsis.uhuruphotos.api.photos.model.PhotoImageSource.REMOTE
-import com.savvasdalkitsis.uhuruphotos.api.photos.model.PhotoSequenceDataSource
-import com.savvasdalkitsis.uhuruphotos.api.photos.model.PhotoSequenceDataSource.*
+import com.savvasdalkitsis.uhuruphotos.api.photos.model.PhotoSequenceDataSource.AllPhotos
+import com.savvasdalkitsis.uhuruphotos.api.photos.model.PhotoSequenceDataSource.AutoAlbum
+import com.savvasdalkitsis.uhuruphotos.api.photos.model.PhotoSequenceDataSource.FavouritePhotos
+import com.savvasdalkitsis.uhuruphotos.api.photos.model.PhotoSequenceDataSource.HiddenPhotos
+import com.savvasdalkitsis.uhuruphotos.api.photos.model.PhotoSequenceDataSource.LocalAlbum
+import com.savvasdalkitsis.uhuruphotos.api.photos.model.PhotoSequenceDataSource.PersonResults
+import com.savvasdalkitsis.uhuruphotos.api.photos.model.PhotoSequenceDataSource.SearchResults
+import com.savvasdalkitsis.uhuruphotos.api.photos.model.PhotoSequenceDataSource.Single
+import com.savvasdalkitsis.uhuruphotos.api.photos.model.PhotoSequenceDataSource.Trash
+import com.savvasdalkitsis.uhuruphotos.api.photos.model.PhotoSequenceDataSource.UserAlbum
 import com.savvasdalkitsis.uhuruphotos.api.photos.usecase.PhotosUseCase
 import com.savvasdalkitsis.uhuruphotos.api.seam.ActionHandler
 import com.savvasdalkitsis.uhuruphotos.api.search.SearchUseCase
-import com.savvasdalkitsis.uhuruphotos.api.strings.R
+import com.savvasdalkitsis.uhuruphotos.api.strings.R.string
 import com.savvasdalkitsis.uhuruphotos.implementation.photos.seam.PhotoAction.AskForPhotoRestoration
 import com.savvasdalkitsis.uhuruphotos.implementation.photos.seam.PhotoAction.AskForPhotoTrashing
 import com.savvasdalkitsis.uhuruphotos.implementation.photos.seam.PhotoAction.ChangedToPage
@@ -228,7 +235,7 @@ class PhotoActionHandler @Inject constructor(
         is SetFavourite -> flow {
             photosUseCase.setPhotoFavourite(state.currentPhoto.id, action.favourite)
                 .onFailure {
-                    emit(ShowErrorMessage(R.string.error_changing_photo_favourite))
+                    emit(ShowErrorMessage(string.error_changing_photo_favourite))
                 }
                 .onSuccess {
                     emit(ShowPhotoFavourite(state.currentPhoto.id, action.favourite))
@@ -374,10 +381,10 @@ class PhotoActionHandler @Inject constructor(
             photosUseCase.refreshDetailsNowIfMissing(photoId, isVideo, imageSource)
         }.onFailure {
             log(it)
-            emit(ShowErrorMessage(R.string.error_loading_photo_details))
+            emit(ShowErrorMessage(string.error_loading_photo_details))
         }
         when (val details = photosUseCase.getPhotoDetails(photoId, isVideo, imageSource)) {
-            null -> emit(ShowErrorMessage(R.string.error_loading_photo_details))
+            null -> emit(ShowErrorMessage(string.error_loading_photo_details))
             else -> emit(ReceivedDetails(photoId, details))
         }
         emit(FinishedLoading)

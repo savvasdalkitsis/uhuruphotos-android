@@ -29,7 +29,7 @@ import androidx.work.workDataOf
 import com.google.common.util.concurrent.Futures.immediateFuture
 import com.savvasdalkitsis.uhuruphotos.api.notification.ForegroundInfoBuilder
 import com.savvasdalkitsis.uhuruphotos.api.notification.NotificationChannels.JOBS_CHANNEL_ID
-import com.savvasdalkitsis.uhuruphotos.api.strings.R
+import com.savvasdalkitsis.uhuruphotos.api.strings.R.string
 import com.savvasdalkitsis.uhuruphotos.implementation.albums.repository.AlbumsRepository
 import com.savvasdalkitsis.uhuruphotos.implementation.albums.worker.AlbumDownloadWorker.Companion.Progress
 import io.mockk.coEvery
@@ -114,7 +114,7 @@ class AlbumDownloadWorkerTest {
         val underTest = albumDownloadWorker()
         val foregroundInfo = mockk<ForegroundInfo>()
         every {
-            foregroundInfoBuilder.build(context, R.string.refreshing_albums, any(), JOBS_CHANNEL_ID)
+            foregroundInfoBuilder.build(context, string.refreshing_albums, any(), JOBS_CHANNEL_ID)
         } returns foregroundInfo
 
         assert(underTest.getForegroundInfo() === foregroundInfo)

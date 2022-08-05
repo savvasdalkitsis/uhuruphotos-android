@@ -18,7 +18,7 @@ package com.savvasdalkitsis.uhuruphotos.implementation.people.seam
 import com.savvasdalkitsis.uhuruphotos.api.navigation.Navigator
 import com.savvasdalkitsis.uhuruphotos.api.person.navigation.PersonNavigationTarget
 import com.savvasdalkitsis.uhuruphotos.api.seam.EffectHandler
-import com.savvasdalkitsis.uhuruphotos.api.strings.R
+import com.savvasdalkitsis.uhuruphotos.api.strings.R.string
 import com.savvasdalkitsis.uhuruphotos.api.toaster.Toaster
 import com.savvasdalkitsis.uhuruphotos.implementation.people.seam.PeopleEffect.ErrorLoadingPeople
 import com.savvasdalkitsis.uhuruphotos.implementation.people.seam.PeopleEffect.NavigateBack
@@ -32,7 +32,7 @@ class PeopleEffectHandler @Inject constructor(
 
     override suspend fun handleEffect(effect: PeopleEffect) {
         when (effect) {
-            ErrorLoadingPeople -> toaster.show(R.string.error_refreshing_people)
+            ErrorLoadingPeople -> toaster.show(string.error_refreshing_people)
             NavigateBack -> navigator.navigateBack()
             is NavigateToPerson -> navigator.navigateTo(
                 PersonNavigationTarget.name(effect.person.id)

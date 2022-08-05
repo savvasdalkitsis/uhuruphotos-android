@@ -17,7 +17,6 @@ package com.savvasdalkitsis.uhuruphotos.implementation.server.view
 
 import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.material.Icon
 import androidx.compose.material.OutlinedButton
@@ -29,6 +28,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.savvasdalkitsis.uhuruphotos.api.icons.R
+import com.savvasdalkitsis.uhuruphotos.api.strings.R.string
 import com.savvasdalkitsis.uhuruphotos.implementation.server.seam.ServerAction
 
 @Composable
@@ -40,6 +40,6 @@ internal fun ColumnScope.SendFeedbackButton(action: (ServerAction) -> Unit) {
     ) {
         Icon(painter = painterResource(id = R.drawable.ic_feedback), contentDescription = null)
         Spacer(modifier = Modifier.width(8.dp))
-        Text(stringResource(com.savvasdalkitsis.uhuruphotos.api.strings.R.string.send_feedback_with_logs))
+        Text(stringResource(string.send_feedback_with_logs))
     }
 }

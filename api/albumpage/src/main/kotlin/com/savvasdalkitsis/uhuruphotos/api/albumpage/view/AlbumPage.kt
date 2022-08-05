@@ -32,7 +32,7 @@ import com.savvasdalkitsis.uhuruphotos.api.albumpage.view.state.AlbumPageState
 import com.savvasdalkitsis.uhuruphotos.api.feed.view.Feed
 import com.savvasdalkitsis.uhuruphotos.api.feed.view.FeedDisplayActionButton
 import com.savvasdalkitsis.uhuruphotos.api.people.view.PeopleBar
-import com.savvasdalkitsis.uhuruphotos.api.strings.R
+import com.savvasdalkitsis.uhuruphotos.api.strings.R.string
 import com.savvasdalkitsis.uhuruphotos.api.ui.view.BackNavButton
 import com.savvasdalkitsis.uhuruphotos.api.ui.view.CommonScaffold
 import com.savvasdalkitsis.uhuruphotos.api.ui.view.NoContent
@@ -41,7 +41,7 @@ import com.savvasdalkitsis.uhuruphotos.api.ui.view.NoContent
 fun AlbumPage(
     state: AlbumPageState,
     additionalActionBarContent: @Composable RowScope.() -> Unit = {},
-    emptyContent: @Composable () -> Unit = { NoContent(R.string.no_photos) },
+    emptyContent: @Composable () -> Unit = { NoContent(string.no_photos) },
     action: (AlbumPageAction) -> Unit
 ) {
     CommonScaffold(

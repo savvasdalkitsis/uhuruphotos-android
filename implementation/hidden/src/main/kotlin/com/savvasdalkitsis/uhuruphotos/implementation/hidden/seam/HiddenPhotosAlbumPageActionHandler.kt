@@ -29,7 +29,7 @@ import com.savvasdalkitsis.uhuruphotos.api.photos.model.PhotoSequenceDataSource.
 import com.savvasdalkitsis.uhuruphotos.api.photos.usecase.PhotosUseCase
 import com.savvasdalkitsis.uhuruphotos.api.seam.ActionHandler
 import com.savvasdalkitsis.uhuruphotos.api.settings.usecase.SettingsUseCase
-import com.savvasdalkitsis.uhuruphotos.api.strings.R
+import com.savvasdalkitsis.uhuruphotos.api.strings.R.string
 import com.savvasdalkitsis.uhuruphotos.implementation.hidden.usecase.HiddenPhotosUseCase
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flow
@@ -56,9 +56,9 @@ internal class HiddenPhotosAlbumPageActionHandler @Inject constructor(
             .flatMapLatest { biometricsRequired ->
                 val proceed = when {
                     biometricsRequired -> biometricsUseCase.authenticate(
-                        R.string.authenticate,
-                        R.string.authenticate_for_access_to_hidden,
-                        R.string.authenticate_for_access_to_hidden_description,
+                        string.authenticate,
+                        string.authenticate_for_access_to_hidden,
+                        string.authenticate_for_access_to_hidden_description,
                         true,
                     )
                     else -> Result.success(Unit)
@@ -72,7 +72,7 @@ internal class HiddenPhotosAlbumPageActionHandler @Inject constructor(
                         .mapNotNull { it.getOrNull() }
                         .map { photoEntries ->
                             AlbumDetails(
-                                title = Title.Resource(R.string.hidden_photos),
+                                title = Title.Resource(string.hidden_photos),
                                 albums = listOf(
                                     Album(
                                         id = "hidden",

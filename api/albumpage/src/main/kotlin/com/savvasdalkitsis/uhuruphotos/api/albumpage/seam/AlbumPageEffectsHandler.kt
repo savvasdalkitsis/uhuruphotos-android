@@ -23,7 +23,7 @@ import com.savvasdalkitsis.uhuruphotos.api.navigation.Navigator
 import com.savvasdalkitsis.uhuruphotos.api.person.navigation.PersonNavigationTarget
 import com.savvasdalkitsis.uhuruphotos.api.photos.navigation.PhotoNavigationTarget
 import com.savvasdalkitsis.uhuruphotos.api.seam.EffectHandler
-import com.savvasdalkitsis.uhuruphotos.api.strings.R
+import com.savvasdalkitsis.uhuruphotos.api.strings.R.string
 import com.savvasdalkitsis.uhuruphotos.api.toaster.Toaster
 import javax.inject.Inject
 
@@ -48,7 +48,7 @@ class AlbumPageEffectsHandler @Inject constructor(
             is NavigateToPerson -> navigate(
                 PersonNavigationTarget.name(effect.personId)
             )
-            ErrorLoading -> toaster.show(R.string.error_loading_album)
+            ErrorLoading -> toaster.show(string.error_loading_album)
         }
     }
 

@@ -18,7 +18,7 @@ package com.savvasdalkitsis.uhuruphotos.implementation.settings.view
 import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.stringResource
-import com.savvasdalkitsis.uhuruphotos.api.strings.R
+import com.savvasdalkitsis.uhuruphotos.api.strings.R.string
 import com.savvasdalkitsis.uhuruphotos.implementation.settings.seam.SettingsAction
 import com.savvasdalkitsis.uhuruphotos.implementation.settings.seam.SettingsAction.ChangeShowLibrary
 import com.savvasdalkitsis.uhuruphotos.implementation.settings.view.state.SettingsState
@@ -30,7 +30,7 @@ internal fun ColumnScope.SettingsLibrary(
     action: (SettingsAction) -> Unit,
 ) {
     SettingsCheckBox(
-        text = stringResource(R.string.show_library_on_home),
+        text = stringResource(string.show_library_on_home),
         icon = Icons.drawable.ic_photo_album,
         isChecked = state.showLibrary,
     ) {

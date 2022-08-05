@@ -20,7 +20,7 @@ import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass.Companion
 import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass.Companion.Medium
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.stringResource
-import com.savvasdalkitsis.uhuruphotos.api.strings.R
+import com.savvasdalkitsis.uhuruphotos.api.strings.R.string
 import com.savvasdalkitsis.uhuruphotos.api.ui.view.ActionIcon
 import com.savvasdalkitsis.uhuruphotos.api.ui.view.BackNavButton
 import com.savvasdalkitsis.uhuruphotos.api.ui.view.CommonScaffold
@@ -43,17 +43,17 @@ internal fun Settings(
     action: (SettingsAction) -> Unit,
 ) {
     CommonScaffold(
-        title = { Text(stringResource(R.string.settings)) },
+        title = { Text(stringResource(string.settings)) },
         actionBarContent = {
             ActionIcon(
                 onClick = { controller.collapseAll() },
                 icon = Icons.drawable.ic_expand_all,
-                contentDescription = stringResource(R.string.expand_all),
+                contentDescription = stringResource(string.expand_all),
             )
             ActionIcon(
                 onClick = { controller.expandAll() },
                 icon = Icons.drawable.ic_collapse_all,
-                contentDescription = stringResource(R.string.collapse_all),
+                contentDescription = stringResource(string.collapse_all),
             )
             UserBadge(state = state.userInformationState)
         },

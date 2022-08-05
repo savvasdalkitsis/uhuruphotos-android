@@ -29,7 +29,7 @@ import androidx.navigation.NavHostController
 import com.savvasdalkitsis.uhuruphotos.api.compose.blurIf
 import com.savvasdalkitsis.uhuruphotos.api.feed.view.FeedDisplayActionButton
 import com.savvasdalkitsis.uhuruphotos.api.home.view.HomeScaffold
-import com.savvasdalkitsis.uhuruphotos.api.strings.R
+import com.savvasdalkitsis.uhuruphotos.api.strings.R.string
 import com.savvasdalkitsis.uhuruphotos.api.ui.view.Logo
 import com.savvasdalkitsis.uhuruphotos.implementation.search.seam.SearchAction
 import com.savvasdalkitsis.uhuruphotos.implementation.search.seam.SearchAction.ChangeDisplay
@@ -55,7 +55,7 @@ fun SearchPage(
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Logo()
-                Text(stringResource(R.string.search))
+                Text(stringResource(string.search))
             }
         },
         navController = navHostController,

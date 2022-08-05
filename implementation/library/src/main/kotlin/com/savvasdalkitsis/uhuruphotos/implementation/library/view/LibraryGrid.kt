@@ -51,7 +51,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import com.savvasdalkitsis.uhuruphotos.api.photos.model.PhotoGrid
 import com.savvasdalkitsis.uhuruphotos.api.photos.view.PhotoGridThumbnail
-import com.savvasdalkitsis.uhuruphotos.api.strings.R
+import com.savvasdalkitsis.uhuruphotos.api.strings.R.string
 import com.savvasdalkitsis.uhuruphotos.api.ui.theme.CustomColors
 import com.savvasdalkitsis.uhuruphotos.api.ui.view.SectionHeader
 import com.savvasdalkitsis.uhuruphotos.implementation.library.seam.LibraryAction
@@ -73,12 +73,12 @@ internal fun LibraryGrid(
     state: LibraryState,
     action: (LibraryAction) -> Unit
 ) {
-    val auto = stringResource(R.string.auto_albums)
-    val user = stringResource(R.string.user_albums)
-    val favourites = stringResource(R.string.favourite_photos)
-    val hidden = stringResource(R.string.hidden_photos)
-    val trash = stringResource(R.string.trash)
-    val local = stringResource(R.string.local_albums)
+    val auto = stringResource(string.auto_albums)
+    val user = stringResource(string.user_albums)
+    val favourites = stringResource(string.favourite_photos)
+    val hidden = stringResource(string.hidden_photos)
+    val trash = stringResource(string.trash)
+    val local = stringResource(string.local_albums)
 
     val permissionLauncher = rememberPermissionFlowRequestLauncher()
 

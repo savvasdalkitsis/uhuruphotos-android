@@ -23,7 +23,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
-import com.savvasdalkitsis.uhuruphotos.api.strings.R
+import com.savvasdalkitsis.uhuruphotos.api.strings.R.string
 import com.savvasdalkitsis.uhuruphotos.api.ui.view.CommonScaffold
 import com.savvasdalkitsis.uhuruphotos.api.ui.view.FullProgressBar
 import com.savvasdalkitsis.uhuruphotos.implementation.home.seam.HomeAction
@@ -46,7 +46,7 @@ internal fun Home(
                     modifier = Modifier.align(Alignment.Center),
                     onClick = { action(Load) },
                 ) {
-                    Text(stringResource(R.string.authenticate))
+                    Text(stringResource(string.authenticate))
                 }
             }
         }

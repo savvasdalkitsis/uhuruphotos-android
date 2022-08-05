@@ -17,7 +17,7 @@ package com.savvasdalkitsis.uhuruphotos.implementation.autoalbums.view
 
 import androidx.compose.runtime.Composable
 import com.savvasdalkitsis.uhuruphotos.api.albums.view.AlbumsPage
-import com.savvasdalkitsis.uhuruphotos.api.strings.R
+import com.savvasdalkitsis.uhuruphotos.api.strings.R.string
 import com.savvasdalkitsis.uhuruphotos.implementation.autoalbums.seam.AutoAlbumsAction
 import com.savvasdalkitsis.uhuruphotos.implementation.autoalbums.seam.AutoAlbumsAction.ChangeSorting
 import com.savvasdalkitsis.uhuruphotos.implementation.autoalbums.seam.AutoAlbumsAction.NavigateBack
@@ -30,12 +30,12 @@ internal fun AutoAlbums(
     action: (AutoAlbumsAction) -> Unit,
 ) {
     AlbumsPage(
-        title = R.string.auto_generated_albums,
+        title = string.auto_generated_albums,
         onBackPressed = { action(NavigateBack) },
         onRefresh = { action(Refresh) },
         isRefreshing = state.isLoading,
         isEmpty = state.albums.isEmpty(),
-        emptyContentMessage = R.string.no_auto_albums,
+        emptyContentMessage = string.no_auto_albums,
         sorting = state.sorting,
         onChangeSorting = { action(ChangeSorting(it)) },
     ) {

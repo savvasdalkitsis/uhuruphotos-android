@@ -19,7 +19,7 @@ import android.content.ActivityNotFoundException
 import android.content.Context
 import android.content.Intent
 import com.savvasdalkitsis.uhuruphotos.api.log.log
-import com.savvasdalkitsis.uhuruphotos.api.strings.R
+import com.savvasdalkitsis.uhuruphotos.api.strings.R.string.could_not_find_app_to_open
 import com.savvasdalkitsis.uhuruphotos.api.toaster.Toaster
 import dagger.hilt.android.qualifiers.ApplicationContext
 import javax.inject.Inject
@@ -36,7 +36,7 @@ internal class IntentLauncher @Inject constructor(
             })
         } catch (e: ActivityNotFoundException) {
             log(e)
-            toaster.show(R.string.could_not_find_app_to_open)
+            toaster.show(could_not_find_app_to_open)
         }
     }
 

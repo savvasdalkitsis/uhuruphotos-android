@@ -25,7 +25,7 @@ import com.google.android.gms.maps.model.MapStyleOptions
 import com.google.maps.android.compose.GoogleMap
 import com.google.maps.android.compose.MapProperties
 import com.google.maps.android.compose.MapUiSettings
-import com.savvasdalkitsis.uhuruphotos.api.map.R
+import com.savvasdalkitsis.uhuruphotos.api.map.R.string
 import com.savvasdalkitsis.uhuruphotos.api.map.model.MapOptions
 import com.savvasdalkitsis.uhuruphotos.api.map.view.MapViewScope
 
@@ -41,7 +41,7 @@ internal fun GoogleMapView(
     val context = LocalContext.current
     val darkModeStyle = remember {
         MapStyleOptions(
-            context.resources.getString(R.string.dark_mode)
+            context.resources.getString(string.dark_mode)
         )
     }
     val options = mapOptions(MapOptions())

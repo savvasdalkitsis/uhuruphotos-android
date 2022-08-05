@@ -20,6 +20,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.pluralStringResource
 import androidx.compose.ui.res.stringResource
 import com.savvasdalkitsis.uhuruphotos.api.strings.R
+import com.savvasdalkitsis.uhuruphotos.api.strings.R.string
 import com.savvasdalkitsis.uhuruphotos.api.ui.view.YesNoDialog
 
 @Composable
@@ -44,6 +45,6 @@ fun DeletePermissionDialog(
                     photoCount
                 )
             )
-            Text(stringResource(R.string.operation_irreverisble))
+            Text(stringResource(string.operation_irreverisble))
         })
 }

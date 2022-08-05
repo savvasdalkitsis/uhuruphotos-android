@@ -20,10 +20,13 @@ import com.savvasdalkitsis.uhuruphotos.api.photos.model.PhotoSequenceDataSource.
 import com.savvasdalkitsis.uhuruphotos.api.photos.navigation.PhotoNavigationTarget
 import com.savvasdalkitsis.uhuruphotos.api.seam.EffectHandler
 import com.savvasdalkitsis.uhuruphotos.api.share.usecase.ShareUseCase
-import com.savvasdalkitsis.uhuruphotos.api.strings.R
+import com.savvasdalkitsis.uhuruphotos.api.strings.R.string
 import com.savvasdalkitsis.uhuruphotos.api.toaster.Toaster
 import com.savvasdalkitsis.uhuruphotos.api.ui.usecase.UiUseCase
-import com.savvasdalkitsis.uhuruphotos.implementation.feedpage.seam.FeedPageEffect.*
+import com.savvasdalkitsis.uhuruphotos.implementation.feedpage.seam.FeedPageEffect.DownloadingFiles
+import com.savvasdalkitsis.uhuruphotos.implementation.feedpage.seam.FeedPageEffect.OpenPhotoDetails
+import com.savvasdalkitsis.uhuruphotos.implementation.feedpage.seam.FeedPageEffect.SharePhotos
+import com.savvasdalkitsis.uhuruphotos.implementation.feedpage.seam.FeedPageEffect.Vibrate
 import javax.inject.Inject
 
 internal class FeedPageEffectsHandler @Inject constructor(
@@ -38,13 +41,13 @@ internal class FeedPageEffectsHandler @Inject constructor(
             navigateTo(PhotoNavigationTarget.name(id, center, scale, isVideo, AllPhotos))
         }
         is SharePhotos -> {
-            toaster.show(R.string.downloading_photos_sharing)
+            toaster.show(string.downloading_photos_sharing)
             shareUseCase.shareMultiple(effect.selectedPhotos.mapNotNull {
                 it.fullResUrl
             })
         }
         Vibrate -> uiUseCase.performLongPressHaptic()
-        DownloadingFiles -> toaster.show(R.string.downloading_original_files)
+        DownloadingFiles -> toaster.show(string.downloading_original_files)
     }
 
     private fun navigateTo(target: String) {

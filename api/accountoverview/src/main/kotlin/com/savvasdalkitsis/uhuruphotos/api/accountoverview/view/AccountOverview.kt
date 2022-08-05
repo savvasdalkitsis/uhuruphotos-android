@@ -41,6 +41,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.savvasdalkitsis.uhuruphotos.api.icons.R
+import com.savvasdalkitsis.uhuruphotos.api.strings.R.string
 import com.savvasdalkitsis.uhuruphotos.api.ui.theme.PreviewAppTheme
 import com.savvasdalkitsis.uhuruphotos.api.ui.view.ActionIcon
 import com.savvasdalkitsis.uhuruphotos.api.userbadge.view.UserBadge
@@ -86,7 +87,7 @@ internal fun AccountOverview(
             ActionIcon(
                 onClick = onEditServerClicked,
                 icon = R.drawable.ic_edit,
-                contentDescription = stringResource(com.savvasdalkitsis.uhuruphotos.api.strings.R.string.edit_server_url)
+                contentDescription = stringResource(string.edit_server_url)
             )
         }
         Row(
@@ -101,7 +102,7 @@ internal fun AccountOverview(
                     contentDescription = null
                 )
                 Spacer(modifier = Modifier.width(8.dp))
-                Text(text = stringResource(com.savvasdalkitsis.uhuruphotos.api.strings.R.string.log_out))
+                Text(text = stringResource(string.log_out))
             }
             Spacer(modifier = Modifier.weight(1f))
             OutlinedButton(
@@ -109,7 +110,7 @@ internal fun AccountOverview(
             ) {
                 Icon(Icons.Default.Settings, contentDescription = null)
                 Spacer(modifier = Modifier.width(8.dp))
-                Text(text = stringResource(com.savvasdalkitsis.uhuruphotos.api.strings.R.string.settings))
+                Text(text = stringResource(string.settings))
             }
         }
     }

@@ -18,7 +18,7 @@ package com.savvasdalkitsis.uhuruphotos.implementation.settings.view
 import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.stringResource
-import com.savvasdalkitsis.uhuruphotos.api.strings.R
+import com.savvasdalkitsis.uhuruphotos.api.strings.R.string
 import com.savvasdalkitsis.uhuruphotos.implementation.settings.seam.SettingsAction
 import com.savvasdalkitsis.uhuruphotos.implementation.settings.seam.SettingsAction.ChangeLoggingEnabled
 import com.savvasdalkitsis.uhuruphotos.implementation.settings.seam.SettingsAction.ClearLogFileClicked
@@ -32,20 +32,20 @@ internal fun ColumnScope.SettingsFeedback(
     action: (SettingsAction) -> Unit,
 ) {
     SettingsOutlineButtonRow(
-        buttonText = stringResource(R.string.send_feedback_with_logs),
+        buttonText = stringResource(string.send_feedback_with_logs),
         icon = Icons.drawable.ic_feedback,
     ) {
         action(SendFeedbackClicked)
     }
-    SettingsEntryWithSubtext(subtext = R.string.degrades_performance) {
+    SettingsEntryWithSubtext(subtext = string.degrades_performance) {
         SettingsCheckBox(
-            text = stringResource(R.string.enable_logging),
+            text = stringResource(string.enable_logging),
             icon = Icons.drawable.ic_logs,
             isChecked = state.isLoggingEnabled,
             onCheckedChange = { action(ChangeLoggingEnabled(it)) }
         )
     }
-    SettingsButtonRow(buttonText = stringResource(R.string.clear_log_file)) {
+    SettingsButtonRow(buttonText = stringResource(string.clear_log_file)) {
         action(ClearLogFileClicked)
     }
 }

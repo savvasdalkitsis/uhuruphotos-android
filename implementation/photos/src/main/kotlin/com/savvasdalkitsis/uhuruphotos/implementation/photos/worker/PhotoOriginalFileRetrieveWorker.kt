@@ -30,7 +30,7 @@ import com.savvasdalkitsis.uhuruphotos.api.log.log
 import com.savvasdalkitsis.uhuruphotos.api.notification.ForegroundInfoBuilder
 import com.savvasdalkitsis.uhuruphotos.api.notification.NotificationChannels.JOBS_CHANNEL_ID
 import com.savvasdalkitsis.uhuruphotos.api.photos.usecase.PhotosUseCase
-import com.savvasdalkitsis.uhuruphotos.api.strings.R
+import com.savvasdalkitsis.uhuruphotos.api.strings.R.string
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedInject
 import kotlinx.coroutines.withContext
@@ -99,7 +99,7 @@ class PhotoOriginalFileRetrieveWorker @AssistedInject constructor(
 
     private fun createForegroundInfo(progress: Int?) = foregroundInfoBuilder.build(
         applicationContext,
-        R.string.downloading_original_file,
+        string.downloading_original_file,
         NOTIFICATION_ID,
         JOBS_CHANNEL_ID,
         progress

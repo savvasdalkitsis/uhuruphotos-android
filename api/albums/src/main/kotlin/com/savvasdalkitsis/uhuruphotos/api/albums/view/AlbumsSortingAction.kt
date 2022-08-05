@@ -4,6 +4,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.stringResource
 import com.savvasdalkitsis.uhuruphotos.api.albums.view.state.AlbumSorting
 import com.savvasdalkitsis.uhuruphotos.api.icons.R
+import com.savvasdalkitsis.uhuruphotos.api.strings.R.string
 import com.savvasdalkitsis.uhuruphotos.api.ui.view.DropDownActionIcon
 
 @Composable
@@ -18,7 +19,7 @@ internal fun AlbumsSortingAction(
             AlbumSorting.ALPHABETICAL_ASC -> R.drawable.ic_sort_az_ascending
             AlbumSorting.ALPHABETICAL_DESC -> R.drawable.ic_sort_az_descending
         },
-        contentDescription = stringResource(com.savvasdalkitsis.uhuruphotos.api.strings.R.string.sorting),
+        contentDescription = stringResource(string.sorting),
     ) {
         item("Date descending") {
             sortingChanged(AlbumSorting.DATE_DESC)

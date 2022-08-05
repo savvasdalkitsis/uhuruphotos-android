@@ -17,7 +17,7 @@ package com.savvasdalkitsis.uhuruphotos.implementation.useralbums.seam
 
 import com.savvasdalkitsis.uhuruphotos.api.navigation.Navigator
 import com.savvasdalkitsis.uhuruphotos.api.seam.EffectHandler
-import com.savvasdalkitsis.uhuruphotos.api.strings.R
+import com.savvasdalkitsis.uhuruphotos.api.strings.R.string
 import com.savvasdalkitsis.uhuruphotos.api.toaster.Toaster
 import com.savvasdalkitsis.uhuruphotos.api.useralbum.navigation.UserAlbumNavigationTarget
 import com.savvasdalkitsis.uhuruphotos.implementation.useralbums.seam.UserAlbumsEffect.ErrorLoadingAlbums
@@ -32,7 +32,7 @@ class UserAlbumsEffectHandler @Inject constructor(
 
     override suspend fun handleEffect(effect: UserAlbumsEffect) {
         when (effect) {
-            ErrorLoadingAlbums -> toaster.show(R.string.error_loading_user_albums)
+            ErrorLoadingAlbums -> toaster.show(string.error_loading_user_albums)
             NavigateBack -> navigator.navigateBack()
             is NavigateToUserAlbum ->
                 navigator.navigateTo(UserAlbumNavigationTarget.name(effect.album.id))

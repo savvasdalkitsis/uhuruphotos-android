@@ -20,7 +20,7 @@ import com.savvasdalkitsis.uhuruphotos.api.auth.usecase.AuthenticationUseCase
 import com.savvasdalkitsis.uhuruphotos.api.biometrics.usecase.BiometricsUseCase
 import com.savvasdalkitsis.uhuruphotos.api.seam.ActionHandler
 import com.savvasdalkitsis.uhuruphotos.api.settings.usecase.SettingsUseCase
-import com.savvasdalkitsis.uhuruphotos.api.strings.R
+import com.savvasdalkitsis.uhuruphotos.api.strings.R.string
 import com.savvasdalkitsis.uhuruphotos.implementation.home.seam.HomeAction.Load
 import com.savvasdalkitsis.uhuruphotos.implementation.home.seam.HomeEffect.LaunchAuthentication
 import com.savvasdalkitsis.uhuruphotos.implementation.home.seam.HomeMutation.Loading
@@ -44,9 +44,9 @@ internal class HomeActionHandler @Inject constructor(
             emit(Loading)
             val proceed = when {
                 settingsUseCase.getBiometricsRequiredForAppAccess() -> biometricsUseCase.authenticate(
-                    R.string.authenticate,
-                    R.string.authenticate_for_access,
-                    R.string.authenticate_for_access_description,
+                    string.authenticate,
+                    string.authenticate_for_access,
+                    string.authenticate_for_access_description,
                     true,
                 )
                 else -> Result.success(Unit)

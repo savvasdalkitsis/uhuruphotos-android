@@ -22,17 +22,17 @@ import androidx.work.NetworkType.CONNECTED
 import androidx.work.NetworkType.METERED
 import androidx.work.NetworkType.NOT_ROAMING
 import androidx.work.NetworkType.UNMETERED
-import com.savvasdalkitsis.uhuruphotos.api.strings.R
+import com.savvasdalkitsis.uhuruphotos.api.strings.R.string
 import com.savvasdalkitsis.uhuruphotos.implementation.settings.seam.SettingsAction
 import com.savvasdalkitsis.uhuruphotos.implementation.settings.seam.SettingsAction.ChangeFullSyncNetworkRequirements
 import com.savvasdalkitsis.uhuruphotos.implementation.settings.view.state.SettingsState
 
 @Composable
 private fun NetworkType?.friendlyName(): String =  when (this) {
-        CONNECTED -> stringResource(R.string.any_connected)
-        UNMETERED -> stringResource(R.string.unmetered)
-        NOT_ROAMING -> stringResource(R.string.not_roaming)
-        METERED -> stringResource(R.string.metered)
+        CONNECTED -> stringResource(string.any_connected)
+        UNMETERED -> stringResource(string.unmetered)
+        NOT_ROAMING -> stringResource(string.not_roaming)
+        METERED -> stringResource(string.metered)
         else -> "-"
     }
 
@@ -42,10 +42,11 @@ internal fun SettingsFullSyncNetworkRequirements(
     action: (SettingsAction) -> Unit
 ) {
     SettingsTextDropDownButtonRow(
-        text = stringResource(R.string.network_requirements,
+        text = stringResource(
+            string.network_requirements,
             state.fullSyncNetworkRequirement.friendlyName()
         ),
-        buttonText = stringResource(R.string.change),
+        buttonText = stringResource(string.change),
         action = action,
     ) {
         @Composable

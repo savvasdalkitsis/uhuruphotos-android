@@ -17,7 +17,7 @@ package com.savvasdalkitsis.uhuruphotos.implementation.useralbums.view
 
 import androidx.compose.runtime.Composable
 import com.savvasdalkitsis.uhuruphotos.api.albums.view.AlbumsPage
-import com.savvasdalkitsis.uhuruphotos.api.strings.R
+import com.savvasdalkitsis.uhuruphotos.api.strings.R.string
 import com.savvasdalkitsis.uhuruphotos.implementation.useralbums.seam.UserAlbumsAction
 import com.savvasdalkitsis.uhuruphotos.implementation.useralbums.seam.UserAlbumsAction.ChangeSorting
 import com.savvasdalkitsis.uhuruphotos.implementation.useralbums.seam.UserAlbumsAction.NavigateBack
@@ -30,12 +30,12 @@ internal fun UserAlbums(
     action: (UserAlbumsAction) -> Unit,
 ) {
     AlbumsPage(
-        title = R.string.user_albums,
+        title = string.user_albums,
         onBackPressed = { action(NavigateBack) },
         onRefresh = { action(Refresh) },
         isRefreshing = state.isLoading,
         isEmpty = state.albums.isEmpty(),
-        emptyContentMessage = R.string.no_user_albums,
+        emptyContentMessage = string.no_user_albums,
         sorting = state.sorting,
         onChangeSorting = { action(ChangeSorting(it)) },
     ) {

@@ -17,13 +17,11 @@ package com.savvasdalkitsis.uhuruphotos.implementation.photos.view
 
 import androidx.compose.foundation.layout.Arrangement.spacedBy
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.OutlinedButton
 import androidx.compose.material.Text
-import androidx.compose.material.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -31,7 +29,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.savvasdalkitsis.uhuruphotos.api.map.view.MapView
 import com.savvasdalkitsis.uhuruphotos.api.map.view.rememberMapViewState
-import com.savvasdalkitsis.uhuruphotos.api.strings.R
+import com.savvasdalkitsis.uhuruphotos.api.strings.R.string
 import com.savvasdalkitsis.uhuruphotos.api.ui.view.SectionHeader
 import com.savvasdalkitsis.uhuruphotos.implementation.photos.seam.PhotoAction
 import com.savvasdalkitsis.uhuruphotos.implementation.photos.seam.PhotoAction.ClickedOnMap
@@ -46,11 +44,11 @@ internal fun PhotoDetailsMap(
         Column(
             verticalArrangement = spacedBy(8.dp)
         ) {
-            SectionHeader(title = stringResource(R.string.location)) {
+            SectionHeader(title = stringResource(string.location)) {
                 OutlinedButton(
                     onClick = { action(ClickedOnMap(gps)) }
                 ) {
-                    Text(stringResource(R.string.open_in_maps))
+                    Text(stringResource(string.open_in_maps))
                 }
             }
             MapView(

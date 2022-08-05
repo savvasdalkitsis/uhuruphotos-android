@@ -37,7 +37,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.savvasdalkitsis.uhuruphotos.api.feed.view.state.FeedDisplay
 import com.savvasdalkitsis.uhuruphotos.api.feed.view.state.FeedDisplays
-import com.savvasdalkitsis.uhuruphotos.api.strings.R
+import com.savvasdalkitsis.uhuruphotos.api.strings.R.string
 import com.savvasdalkitsis.uhuruphotos.api.ui.view.ActionIcon
 
 @Composable
@@ -61,7 +61,7 @@ fun FeedDisplayActionButton(
                 },
             onClick = { isOpen = true },
             icon = currentFeedDisplay.iconResource,
-            contentDescription = stringResource(R.string.feed_size),
+            contentDescription = stringResource(string.feed_size),
         )
         DropdownMenu(
             expanded = isOpen,

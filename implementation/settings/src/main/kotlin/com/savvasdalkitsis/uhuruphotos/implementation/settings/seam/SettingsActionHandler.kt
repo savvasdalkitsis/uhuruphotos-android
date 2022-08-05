@@ -26,9 +26,36 @@ import com.savvasdalkitsis.uhuruphotos.api.log.usecase.FeedbackUseCase
 import com.savvasdalkitsis.uhuruphotos.api.seam.ActionHandler
 import com.savvasdalkitsis.uhuruphotos.api.search.SearchUseCase
 import com.savvasdalkitsis.uhuruphotos.api.settings.usecase.SettingsUseCase
-import com.savvasdalkitsis.uhuruphotos.api.strings.R
+import com.savvasdalkitsis.uhuruphotos.api.strings.R.string
 import com.savvasdalkitsis.uhuruphotos.api.userbadge.usecase.UserBadgeUseCase
-import com.savvasdalkitsis.uhuruphotos.implementation.settings.seam.SettingsAction.*
+import com.savvasdalkitsis.uhuruphotos.implementation.settings.seam.SettingsAction.AskForFullFeedSync
+import com.savvasdalkitsis.uhuruphotos.implementation.settings.seam.SettingsAction.ChangeBiometricsAppAccessRequirement
+import com.savvasdalkitsis.uhuruphotos.implementation.settings.seam.SettingsAction.ChangeBiometricsHiddenPhotosAccessRequirement
+import com.savvasdalkitsis.uhuruphotos.implementation.settings.seam.SettingsAction.ChangeBiometricsTrashAccessRequirement
+import com.savvasdalkitsis.uhuruphotos.implementation.settings.seam.SettingsAction.ChangeFullSyncChargingRequirements
+import com.savvasdalkitsis.uhuruphotos.implementation.settings.seam.SettingsAction.ChangeFullSyncNetworkRequirements
+import com.savvasdalkitsis.uhuruphotos.implementation.settings.seam.SettingsAction.ChangeImageDiskCache
+import com.savvasdalkitsis.uhuruphotos.implementation.settings.seam.SettingsAction.ChangeImageMemCache
+import com.savvasdalkitsis.uhuruphotos.implementation.settings.seam.SettingsAction.ChangeLoggingEnabled
+import com.savvasdalkitsis.uhuruphotos.implementation.settings.seam.SettingsAction.ChangeMapProvider
+import com.savvasdalkitsis.uhuruphotos.implementation.settings.seam.SettingsAction.ChangeSearchSuggestionsEnabled
+import com.savvasdalkitsis.uhuruphotos.implementation.settings.seam.SettingsAction.ChangeShareGpsDataEnabled
+import com.savvasdalkitsis.uhuruphotos.implementation.settings.seam.SettingsAction.ChangeShowLibrary
+import com.savvasdalkitsis.uhuruphotos.implementation.settings.seam.SettingsAction.ChangeThemeMode
+import com.savvasdalkitsis.uhuruphotos.implementation.settings.seam.SettingsAction.ChangeVideoDiskCache
+import com.savvasdalkitsis.uhuruphotos.implementation.settings.seam.SettingsAction.ClearImageDiskCache
+import com.savvasdalkitsis.uhuruphotos.implementation.settings.seam.SettingsAction.ClearImageMemCache
+import com.savvasdalkitsis.uhuruphotos.implementation.settings.seam.SettingsAction.ClearLogFileClicked
+import com.savvasdalkitsis.uhuruphotos.implementation.settings.seam.SettingsAction.ClearRecentSearches
+import com.savvasdalkitsis.uhuruphotos.implementation.settings.seam.SettingsAction.ClearVideoDiskCache
+import com.savvasdalkitsis.uhuruphotos.implementation.settings.seam.SettingsAction.DismissFullFeedSyncDialog
+import com.savvasdalkitsis.uhuruphotos.implementation.settings.seam.SettingsAction.EnrollToBiometrics
+import com.savvasdalkitsis.uhuruphotos.implementation.settings.seam.SettingsAction.FeedRefreshChanged
+import com.savvasdalkitsis.uhuruphotos.implementation.settings.seam.SettingsAction.FeedSyncFrequencyChanged
+import com.savvasdalkitsis.uhuruphotos.implementation.settings.seam.SettingsAction.LoadSettings
+import com.savvasdalkitsis.uhuruphotos.implementation.settings.seam.SettingsAction.NavigateBack
+import com.savvasdalkitsis.uhuruphotos.implementation.settings.seam.SettingsAction.PerformFullFeedSync
+import com.savvasdalkitsis.uhuruphotos.implementation.settings.seam.SettingsAction.SendFeedbackClicked
 import com.savvasdalkitsis.uhuruphotos.implementation.settings.seam.SettingsEffect.ShowMessage
 import com.savvasdalkitsis.uhuruphotos.implementation.settings.seam.SettingsMutation.DisableFullSyncButton
 import com.savvasdalkitsis.uhuruphotos.implementation.settings.seam.SettingsMutation.DisplayBiometrics
@@ -164,7 +191,7 @@ internal class SettingsActionHandler @Inject constructor(
             settingsUseCase.setFeedSyncFrequency(action.frequency.toInt())
             settingsUseCase.setShouldPerformPeriodicFullSync(action.frequency != action.upperLimit)
             albumWorkScheduler.scheduleAlbumsRefreshPeriodic(REPLACE)
-            effect(ShowMessage(R.string.feed_sync_freq_changed))
+            effect(ShowMessage(string.feed_sync_freq_changed))
         }
         AskForFullFeedSync -> flowOf(ShowFullFeedSyncDialog)
         DismissFullFeedSyncDialog -> flowOf(HideFullFeedSyncDialog)
@@ -175,12 +202,12 @@ internal class SettingsActionHandler @Inject constructor(
         is ChangeFullSyncNetworkRequirements -> flow {
             settingsUseCase.setFullSyncNetworkRequirements(action.networkType)
             albumWorkScheduler.scheduleAlbumsRefreshPeriodic(REPLACE)
-            effect(ShowMessage(R.string.feed_sync_network_changed))
+            effect(ShowMessage(string.feed_sync_network_changed))
         }
         is ChangeFullSyncChargingRequirements -> flow {
             settingsUseCase.setFullSyncRequiresCharging(action.requiredCharging)
             albumWorkScheduler.scheduleAlbumsRefreshPeriodic(REPLACE)
-            effect(ShowMessage(R.string.feed_sync_charging_changed))
+            effect(ShowMessage(string.feed_sync_charging_changed))
         }
         is ChangeThemeMode -> flow {
             settingsUseCase.setThemeMode(action.themeMode)
@@ -196,14 +223,14 @@ internal class SettingsActionHandler @Inject constructor(
         }
         ClearLogFileClicked -> flow {
             feedbackUseCase.clearLogs()
-            effect(ShowMessage(R.string.logs_cleared))
+            effect(ShowMessage(string.logs_cleared))
         }
         SendFeedbackClicked -> flow {
             feedbackUseCase.sendFeedback()
         }
         ClearRecentSearches -> flow {
             searchUseCase.clearRecentSearchSuggestions()
-            effect(ShowMessage(R.string.recent_searches_cleared))
+            effect(ShowMessage(string.recent_searches_cleared))
         }
         is ChangeMapProvider -> flow {
             settingsUseCase.setMapProvider(action.mapProvider)
@@ -245,9 +272,9 @@ internal class SettingsActionHandler @Inject constructor(
         val proceed = when {
             required -> Result.success(Unit)
             else -> biometricsUseCase.authenticate(
-                R.string.authenticate,
-                R.string.authenticate_to_change,
-                R.string.authenticate_to_change_description,
+                string.authenticate,
+                string.authenticate_to_change,
+                string.authenticate_to_change_description,
                 true,
             )
         }

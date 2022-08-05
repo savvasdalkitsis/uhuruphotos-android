@@ -26,7 +26,7 @@ import com.savvasdalkitsis.uhuruphotos.api.albums.model.Album
 import com.savvasdalkitsis.uhuruphotos.api.photos.model.PhotoSequenceDataSource.FavouritePhotos
 import com.savvasdalkitsis.uhuruphotos.api.photos.usecase.PhotosUseCase
 import com.savvasdalkitsis.uhuruphotos.api.seam.ActionHandler
-import com.savvasdalkitsis.uhuruphotos.api.strings.R
+import com.savvasdalkitsis.uhuruphotos.api.strings.R.string
 import com.savvasdalkitsis.uhuruphotos.implementation.favourites.usecase.FavouritesUseCase
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.mapNotNull
@@ -50,7 +50,7 @@ by AlbumPageActionHandler(
             .mapNotNull { it.getOrNull() }
             .map { photoEntries ->
                 AlbumDetails(
-                    title = Title.Resource(R.string.favourite_photos),
+                    title = Title.Resource(string.favourite_photos),
                     albums = listOf(Album(
                         id = "favourites",
                         displayTitle = "",
