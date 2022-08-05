@@ -25,6 +25,7 @@ import com.savvasdalkitsis.uhuruphotos.api.server.navigation.ServerNavigationTar
 import com.savvasdalkitsis.uhuruphotos.api.settings.usecase.SettingsUseCase
 import com.savvasdalkitsis.uhuruphotos.implementation.server.seam.ServerAction
 import com.savvasdalkitsis.uhuruphotos.implementation.server.seam.ServerAction.CheckPersistedServer
+import com.savvasdalkitsis.uhuruphotos.implementation.server.seam.ServerAction.Load
 import com.savvasdalkitsis.uhuruphotos.implementation.server.seam.ServerAction.RequestServerUrlChange
 import com.savvasdalkitsis.uhuruphotos.implementation.server.seam.ServerEffect
 import com.savvasdalkitsis.uhuruphotos.implementation.server.seam.ServerEffectsHandler
@@ -43,8 +44,9 @@ internal class ServerNavigationTarget @Inject constructor(
             name = registrationName,
             effects = effectsHandler,
             themeMode = settingsUseCase.observeThemeModeState(),
-            initializer = { navBackStackEntry, action -> action(
-                when {
+            initializer = { navBackStackEntry, action ->
+                action(Load)
+                action(when {
                     navBackStackEntry.auto -> CheckPersistedServer
                     else -> RequestServerUrlChange
                 })

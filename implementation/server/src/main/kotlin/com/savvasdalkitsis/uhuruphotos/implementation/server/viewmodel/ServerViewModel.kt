@@ -32,5 +32,5 @@ internal class ServerViewModel @Inject constructor(
 ) : ViewModel(),
     Seam<ServerState, ServerEffect, ServerAction, ServerMutation> by handler(
         handler,
-        ServerState.Loading,
+        ServerState.Loading(false),
     )

@@ -48,7 +48,7 @@ internal fun Server(
                 .fillMaxWidth()
         ) {
             when (state) {
-                Loading ->
+                is Loading ->
                     CircularProgressIndicator(
                         modifier = Modifier
                             .size(48.dp)

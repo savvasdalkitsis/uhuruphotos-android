@@ -18,6 +18,7 @@ package com.savvasdalkitsis.uhuruphotos.implementation.server.seam
 import dev.zacsweers.redacted.annotations.Redacted
 
 internal sealed class ServerAction {
+    object Load : ServerAction()
     object CheckPersistedServer : ServerAction()
     object RequestServerUrlChange: ServerAction()
     object DismissUnsecuredServerDialog: ServerAction()
@@ -26,6 +27,8 @@ internal sealed class ServerAction {
     data class UrlTyped(val url: String) : ServerAction()
     data class UsernameChangedTo(val username: String) : ServerAction()
     data class UserPasswordChangedTo(@Redacted val password: String) : ServerAction()
+    data class SetLoggingEnabled(val enabled: Boolean) : ServerAction()
+
     object Login : ServerAction()
     object SendLogsClick : ServerAction()
     object TogglePasswordVisibility : ServerAction()

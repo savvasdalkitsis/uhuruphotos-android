@@ -19,21 +19,27 @@ import android.os.Parcelable
 import dev.zacsweers.redacted.annotations.Redacted
 import kotlinx.parcelize.Parcelize
 
-internal sealed class ServerState : Parcelable {
+internal sealed class ServerState(
+    open val isLoggingEnabled: Boolean = false,
+) : Parcelable {
     @Parcelize
-    object Loading: ServerState()
+    data class Loading(
+        override val isLoggingEnabled: Boolean,
+    ): ServerState(isLoggingEnabled)
     @Parcelize
     data class ServerUrl(
         val prefilledUrl: String,
         val isUrlValid: Boolean,
         val allowSaveUrl: Boolean,
+        override val isLoggingEnabled: Boolean,
         val showUnsecureServerConfirmation: Boolean = false,
-    ): ServerState(), Parcelable
+    ): ServerState(isLoggingEnabled), Parcelable
     @Parcelize
     data class UserCredentials(
         val username: String,
         @Redacted val password: String,
+        override val isLoggingEnabled: Boolean,
         val allowLogin: Boolean,
         val passwordVisible: Boolean,
-    ): ServerState(), Parcelable
+    ): ServerState(isLoggingEnabled), Parcelable
 }

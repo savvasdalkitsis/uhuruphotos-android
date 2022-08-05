@@ -34,6 +34,7 @@ internal sealed class ServerMutation(
             prefilledUrl = previousUrl.orEmpty(),
             isUrlValid = isValid,
             allowSaveUrl = isValid,
+            isLoggingEnabled = it.isLoggingEnabled,
         )
     })
 
@@ -46,6 +47,7 @@ internal sealed class ServerMutation(
             password,
             allowLogin = false,
             passwordVisible = false,
+            isLoggingEnabled = it.isLoggingEnabled,
         ).shouldAllowLogin()
     })
 
@@ -57,11 +59,14 @@ internal sealed class ServerMutation(
             prefilledUrl = prefilledUrl.orEmpty(),
             isUrlValid = isValid,
             allowSaveUrl = isValid,
+            isLoggingEnabled = it.isLoggingEnabled,
         )
     })
 
     object PerformingBackgroundJob : ServerMutation({
-        Loading
+        Loading(
+            isLoggingEnabled = it.isLoggingEnabled,
+        )
     })
 
     object ShowUnsecureServerConfirmation : ServerMutation({
@@ -82,6 +87,14 @@ internal sealed class ServerMutation(
 
     data class SetPasswordVisibility(val visible: Boolean) : ServerMutation({
         (it as UserCredentials).copy(passwordVisible = visible)
+    })
+
+    data class SetLoggingEnabled(val enabled: Boolean) : ServerMutation({
+        when (it) {
+            is Loading -> it.copy(isLoggingEnabled = enabled)
+            is ServerUrl -> it.copy(isLoggingEnabled = enabled)
+            is UserCredentials -> it.copy(isLoggingEnabled = enabled)
+        }
     })
 }
 

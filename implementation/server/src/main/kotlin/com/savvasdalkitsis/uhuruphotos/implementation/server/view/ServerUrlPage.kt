@@ -18,6 +18,7 @@ package com.savvasdalkitsis.uhuruphotos.implementation.server.view
 import androidx.compose.foundation.layout.BoxScope
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.text.KeyboardActions
@@ -37,10 +38,12 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import com.savvasdalkitsis.uhuruphotos.api.icons.R
+import com.savvasdalkitsis.uhuruphotos.api.strings.R.string
 import com.savvasdalkitsis.uhuruphotos.implementation.server.seam.ServerAction
 import com.savvasdalkitsis.uhuruphotos.implementation.server.seam.ServerAction.AttemptChangeServerUrlTo
 import com.savvasdalkitsis.uhuruphotos.implementation.server.seam.ServerAction.SendLogsClick
@@ -52,16 +55,7 @@ internal fun BoxScope.ServerUrlPage(
     action: (ServerAction) -> Unit
 ) {
     var serverTextFieldValue by remember { mutableStateOf(state.prefilledUrl) }
-    OutlinedButton(
-        modifier = Modifier
-            .align(Alignment.TopEnd)
-            .padding(16.dp),
-        onClick = { action(SendLogsClick) }
-    ) {
-        Icon(painter = painterResource(id = R.drawable.ic_feedback), contentDescription = null)
-        Spacer(modifier = Modifier.width(8.dp))
-        Text(text = "Send logs for troubleshooting")
-    }
+    Feedback(state, action)
     Column(modifier = Modifier.align(Alignment.Center)) {
         Text(
             modifier = Modifier.padding(bottom = 8.dp),

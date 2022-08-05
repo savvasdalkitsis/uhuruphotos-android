@@ -24,17 +24,8 @@ import com.savvasdalkitsis.uhuruphotos.api.http.isHttpUrl
 import com.savvasdalkitsis.uhuruphotos.api.http.isValidUrlOrDomain
 import com.savvasdalkitsis.uhuruphotos.api.log.log
 import com.savvasdalkitsis.uhuruphotos.api.seam.ActionHandler
-import com.savvasdalkitsis.uhuruphotos.implementation.server.seam.ServerAction.AttemptChangeServerUrlTo
-import com.savvasdalkitsis.uhuruphotos.implementation.server.seam.ServerAction.ChangeServerUrlTo
-import com.savvasdalkitsis.uhuruphotos.implementation.server.seam.ServerAction.CheckPersistedServer
-import com.savvasdalkitsis.uhuruphotos.implementation.server.seam.ServerAction.DismissUnsecuredServerDialog
-import com.savvasdalkitsis.uhuruphotos.implementation.server.seam.ServerAction.Login
-import com.savvasdalkitsis.uhuruphotos.implementation.server.seam.ServerAction.RequestServerUrlChange
-import com.savvasdalkitsis.uhuruphotos.implementation.server.seam.ServerAction.SendLogsClick
-import com.savvasdalkitsis.uhuruphotos.implementation.server.seam.ServerAction.TogglePasswordVisibility
-import com.savvasdalkitsis.uhuruphotos.implementation.server.seam.ServerAction.UrlTyped
-import com.savvasdalkitsis.uhuruphotos.implementation.server.seam.ServerAction.UserPasswordChangedTo
-import com.savvasdalkitsis.uhuruphotos.implementation.server.seam.ServerAction.UsernameChangedTo
+import com.savvasdalkitsis.uhuruphotos.api.settings.usecase.SettingsUseCase
+import com.savvasdalkitsis.uhuruphotos.implementation.server.seam.ServerAction.*
 import com.savvasdalkitsis.uhuruphotos.implementation.server.seam.ServerEffect.Close
 import com.savvasdalkitsis.uhuruphotos.implementation.server.seam.ServerEffect.ErrorLoggingIn
 import com.savvasdalkitsis.uhuruphotos.implementation.server.seam.ServerEffect.SendFeedback
@@ -50,13 +41,16 @@ import com.savvasdalkitsis.uhuruphotos.implementation.server.seam.ServerMutation
 import com.savvasdalkitsis.uhuruphotos.implementation.server.view.ServerState
 import com.savvasdalkitsis.uhuruphotos.implementation.server.view.ServerState.UserCredentials
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.emitAll
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOf
+import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
 internal class ServerActionHandler @Inject constructor(
     private val serverUseCase: ServerUseCase,
     private val authenticationUseCase: AuthenticationUseCase,
+    private val settingsUseCase: SettingsUseCase,
 ) : ActionHandler<ServerState, ServerEffect, ServerAction, ServerMutation> {
 
     override fun handleAction(
@@ -64,6 +58,8 @@ internal class ServerActionHandler @Inject constructor(
         action: ServerAction,
         effect: suspend (ServerEffect) -> Unit,
     ): Flow<ServerMutation> = when (action) {
+        Load -> settingsUseCase.observeLoggingEnabled()
+            .map(ServerMutation::SetLoggingEnabled)
         CheckPersistedServer -> flow {
             when (serverUseCase.getServerUrl()) {
                 null -> emit(AskForServerDetails(null, isValid = false))
@@ -125,6 +121,9 @@ internal class ServerActionHandler @Inject constructor(
             effect(SendFeedback)
         }
         TogglePasswordVisibility -> flowOf(SetPasswordVisibility(!(state as UserCredentials).passwordVisible))
+        is SetLoggingEnabled -> flow {
+            settingsUseCase.setLoggingEnabled(action.enabled)
+        }
     }
 
 }

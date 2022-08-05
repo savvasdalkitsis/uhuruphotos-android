@@ -27,20 +27,16 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Button
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
-import androidx.compose.material.OutlinedButton
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
-import com.savvasdalkitsis.uhuruphotos.api.icons.R
 import com.savvasdalkitsis.uhuruphotos.implementation.server.seam.ServerAction
 import com.savvasdalkitsis.uhuruphotos.implementation.server.seam.ServerAction.Login
 import com.savvasdalkitsis.uhuruphotos.implementation.server.seam.ServerAction.RequestServerUrlChange
-import com.savvasdalkitsis.uhuruphotos.implementation.server.seam.ServerAction.SendLogsClick
 
 @Composable
 internal fun UserCredentialsPage(
@@ -51,16 +47,7 @@ internal fun UserCredentialsPage(
         modifier = Modifier
             .verticalScroll(rememberScrollState())
     ) {
-        OutlinedButton(
-            modifier = Modifier
-                .align(Alignment.End)
-                .padding(16.dp),
-            onClick = { action(SendLogsClick) }
-        ) {
-            Icon(painter = painterResource(id = R.drawable.ic_feedback), contentDescription = null)
-            Spacer(modifier = Modifier.width(8.dp))
-            Text(text = "Send logs for troubleshooting")
-        }
+        Feedback(state, action)
         Row(
             modifier = Modifier.clickable { action(RequestServerUrlChange) }
         ) {
