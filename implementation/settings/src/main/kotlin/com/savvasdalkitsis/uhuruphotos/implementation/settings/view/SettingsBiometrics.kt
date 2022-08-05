@@ -18,7 +18,8 @@ package com.savvasdalkitsis.uhuruphotos.implementation.settings.view
 import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.stringResource
-import com.savvasdalkitsis.uhuruphotos.api.icons.R
+import com.savvasdalkitsis.uhuruphotos.api.icons.R.drawable
+import com.savvasdalkitsis.uhuruphotos.api.strings.R.string
 import com.savvasdalkitsis.uhuruphotos.implementation.settings.seam.SettingsAction
 import com.savvasdalkitsis.uhuruphotos.implementation.settings.seam.SettingsAction.ChangeBiometricsAppAccessRequirement
 import com.savvasdalkitsis.uhuruphotos.implementation.settings.seam.SettingsAction.ChangeBiometricsHiddenPhotosAccessRequirement
@@ -27,7 +28,6 @@ import com.savvasdalkitsis.uhuruphotos.implementation.settings.seam.SettingsActi
 import com.savvasdalkitsis.uhuruphotos.implementation.settings.view.state.BiometricsSetting
 import com.savvasdalkitsis.uhuruphotos.implementation.settings.view.state.BiometricsSetting.Enrolled
 import com.savvasdalkitsis.uhuruphotos.implementation.settings.view.state.BiometricsSetting.NotEnrolled
-import com.savvasdalkitsis.uhuruphotos.api.strings.R as Strings
 
 @Composable
 internal fun ColumnScope.SettingsBiometrics(
@@ -36,17 +36,17 @@ internal fun ColumnScope.SettingsBiometrics(
 ) {
     when (biometrics) {
         NotEnrolled -> SettingsButtonRow(
-            buttonText = stringResource(Strings.string.biometrics_enroll)
+            buttonText = stringResource(string.biometrics_enroll)
         ) {
             action(EnrollToBiometrics)
         }
         is Enrolled -> {
             SettingsEntryWithSubtext(
-                subtext = Strings.string.changes_effect_after_restart
+                subtext = string.changes_effect_after_restart
             ) {
                 SettingsCheckBox(
-                    text = stringResource(Strings.string.require_biometrics_for_app_access),
-                    icon = R.drawable.ic_fingerprint,
+                    text = stringResource(string.require_biometrics_for_app_access),
+                    icon = drawable.ic_fingerprint,
                     isChecked = biometrics.requiredForAppAccess,
                     onCheckedChange = {
                         action(ChangeBiometricsAppAccessRequirement(!biometrics.requiredForAppAccess))
@@ -54,16 +54,16 @@ internal fun ColumnScope.SettingsBiometrics(
                 )
             }
             SettingsCheckBox(
-                text = stringResource(Strings.string.require_biometrics_for_hidden_photos_access),
-                icon = R.drawable.ic_invisible,
+                text = stringResource(string.require_biometrics_for_hidden_photos_access),
+                icon = drawable.ic_invisible,
                 isChecked = biometrics.requiredForHiddenPhotosAccess,
                 onCheckedChange = {
                     action(ChangeBiometricsHiddenPhotosAccessRequirement(!biometrics.requiredForHiddenPhotosAccess))
                 }
             )
             SettingsCheckBox(
-                text = stringResource(Strings.string.require_biometrics_for_trash_access),
-                icon = R.drawable.ic_delete,
+                text = stringResource(string.require_biometrics_for_trash_access),
+                icon = drawable.ic_delete,
                 isChecked = biometrics.requiredForTrashAccess,
                 onCheckedChange = {
                     action(ChangeBiometricsTrashAccessRequirement(!biometrics.requiredForTrashAccess))

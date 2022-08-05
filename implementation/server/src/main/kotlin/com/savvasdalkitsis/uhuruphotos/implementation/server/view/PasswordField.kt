@@ -29,7 +29,7 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
-import com.savvasdalkitsis.uhuruphotos.api.icons.R
+import com.savvasdalkitsis.uhuruphotos.api.icons.R.drawable
 import com.savvasdalkitsis.uhuruphotos.api.ui.view.ActionIcon
 import com.savvasdalkitsis.uhuruphotos.implementation.server.seam.ServerAction
 
@@ -63,8 +63,8 @@ internal fun PasswordField(
             ActionIcon(
                 onClick = { action(ServerAction.TogglePasswordVisibility) },
                 icon = when {
-                    state.passwordVisible -> R.drawable.ic_visible
-                    else -> R.drawable.ic_invisible
+                    state.passwordVisible -> drawable.ic_visible
+                    else -> drawable.ic_invisible
                 }
             )
         },

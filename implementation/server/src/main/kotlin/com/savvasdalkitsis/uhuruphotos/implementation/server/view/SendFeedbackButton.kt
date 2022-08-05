@@ -27,7 +27,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import com.savvasdalkitsis.uhuruphotos.api.icons.R
+import com.savvasdalkitsis.uhuruphotos.api.icons.R.drawable
 import com.savvasdalkitsis.uhuruphotos.api.strings.R.string
 import com.savvasdalkitsis.uhuruphotos.implementation.server.seam.ServerAction
 
@@ -38,7 +38,7 @@ internal fun ColumnScope.SendFeedbackButton(action: (ServerAction) -> Unit) {
             .align(Alignment.End),
         onClick = { action(ServerAction.SendLogsClick) }
     ) {
-        Icon(painter = painterResource(id = R.drawable.ic_feedback), contentDescription = null)
+        Icon(painter = painterResource(id = drawable.ic_feedback), contentDescription = null)
         Spacer(modifier = Modifier.width(8.dp))
         Text(stringResource(string.send_feedback_with_logs))
     }

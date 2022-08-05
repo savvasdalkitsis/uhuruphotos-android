@@ -52,12 +52,12 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.savvasdalkitsis.uhuruphotos.api.compose.toColor
+import com.savvasdalkitsis.uhuruphotos.api.icons.R.drawable
 import com.savvasdalkitsis.uhuruphotos.api.image.view.Image
 import com.savvasdalkitsis.uhuruphotos.api.photos.model.Photo
 import com.savvasdalkitsis.uhuruphotos.api.photos.model.SelectionMode
 import com.savvasdalkitsis.uhuruphotos.api.strings.R.string
 import com.savvasdalkitsis.uhuruphotos.api.ui.theme.CustomColors
-import com.savvasdalkitsis.uhuruphotos.api.icons.R as Icons
 
 @Composable
 fun PhotoThumbnail(
@@ -122,7 +122,7 @@ fun PhotoThumbnail(
                     modifier = Modifier
                         .size(if (miniIcons) 16.dp else 48.dp)
                         .align(if (miniIcons) BottomStart else Center),
-                    painter = painterResource(id = Icons.drawable.ic_play_filled),
+                    painter = painterResource(id = drawable.ic_play_filled),
                     tint = Color.White,
                     contentDescription = null
                 )
@@ -133,7 +133,7 @@ fun PhotoThumbnail(
                         .size(iconSize)
                         .align(TopEnd)
                         .padding(2.dp),
-                    painter = painterResource(id = Icons.drawable.ic_favourite),
+                    painter = painterResource(id = drawable.ic_favourite),
                     tint = Color.White,
                     contentDescription = null
                 )
@@ -154,9 +154,9 @@ fun PhotoThumbnail(
                     ),
                 painter = painterResource(
                     id = if (photo.selectionMode == SelectionMode.SELECTED)
-                        Icons.drawable.ic_check_circle
+                        drawable.ic_check_circle
                     else
-                        Icons.drawable.ic_outline_unselected
+                        drawable.ic_outline_unselected
                 ),
                 tint = if (photo.selectionMode == SelectionMode.SELECTED)
                     CustomColors.selected

@@ -40,7 +40,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.savvasdalkitsis.uhuruphotos.api.icons.R
+import com.savvasdalkitsis.uhuruphotos.api.icons.R.drawable
 import com.savvasdalkitsis.uhuruphotos.api.strings.R.string
 import com.savvasdalkitsis.uhuruphotos.api.ui.theme.PreviewAppTheme
 import com.savvasdalkitsis.uhuruphotos.api.ui.view.ActionIcon
@@ -86,7 +86,7 @@ internal fun AccountOverview(
             }
             ActionIcon(
                 onClick = onEditServerClicked,
-                icon = R.drawable.ic_edit,
+                icon = drawable.ic_edit,
                 contentDescription = stringResource(string.edit_server_url)
             )
         }
@@ -98,7 +98,7 @@ internal fun AccountOverview(
                 onClick = onLogoutClicked,
             ) {
                 Icon(
-                    painter = painterResource(id = R.drawable.ic_logout),
+                    painter = painterResource(id = drawable.ic_logout),
                     contentDescription = null
                 )
                 Spacer(modifier = Modifier.width(8.dp))

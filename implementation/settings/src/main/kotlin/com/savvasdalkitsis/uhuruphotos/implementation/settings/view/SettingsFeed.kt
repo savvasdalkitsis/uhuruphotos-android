@@ -21,7 +21,8 @@ import androidx.compose.material.Divider
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.pluralStringResource
 import androidx.compose.ui.res.stringResource
-import com.savvasdalkitsis.uhuruphotos.api.icons.R
+import com.savvasdalkitsis.uhuruphotos.api.icons.R.drawable
+import com.savvasdalkitsis.uhuruphotos.api.strings.R.string
 import com.savvasdalkitsis.uhuruphotos.implementation.settings.seam.SettingsAction
 import com.savvasdalkitsis.uhuruphotos.implementation.settings.seam.SettingsAction.FeedRefreshChanged
 import com.savvasdalkitsis.uhuruphotos.implementation.settings.view.state.SettingsState
@@ -36,7 +37,7 @@ internal fun ColumnScope.SettingsFeed(
     SettingsSliderRow(
         text = {
             val days = pluralStringResource(Strings.plurals.days, it.toInt(), it.toInt())
-            "${stringResource(Strings.string.feed_refresh_days)}: $days"
+            "${stringResource(string.feed_refresh_days)}: $days"
         },
         initialValue = state.feedDaysToRefresh.toFloat(),
         range = 1f..daysUpperLimit.toFloat(),
@@ -50,10 +51,10 @@ internal fun ColumnScope.SettingsFeed(
     SettingsSliderRow(
         text = {
             val frequency = when (it) {
-                frequencyUpperLimit -> stringResource(Strings.string.never)
+                frequencyUpperLimit -> stringResource(string.never)
                 else -> pluralStringResource(Strings.plurals.hours, it.toInt(), it.toInt())
             }
-            "${stringResource(Strings.string.feed_sync_freq)}: $frequency"
+            "${stringResource(string.feed_sync_freq)}: $frequency"
         },
         initialValue = initialValue,
         range = 1f..frequencyUpperLimit,
@@ -62,8 +63,8 @@ internal fun ColumnScope.SettingsFeed(
     )
     Divider()
     SettingsCheckBox(
-        text = stringResource(Strings.string.requires_charging),
-        icon = R.drawable.ic_power,
+        text = stringResource(string.requires_charging),
+        icon = drawable.ic_power,
         isChecked = state.fullSyncRequiresCharging,
     ) { selected ->
         action(SettingsAction.ChangeFullSyncChargingRequirements(selected))
@@ -75,12 +76,12 @@ internal fun ColumnScope.SettingsFeed(
     AnimatedContent(targetState = state.fullSyncButtonEnabled) { enabled ->
         when {
             enabled -> SettingsButtonRow(
-                buttonText = stringResource(Strings.string.perform_full_sync)
+                buttonText = stringResource(string.perform_full_sync)
             ) {
                 action(SettingsAction.AskForFullFeedSync)
             }
             else -> SettingsProgressIndicator(
-                text = stringResource(Strings.string.feed_sync_progress),
+                text = stringResource(string.feed_sync_progress),
                 progress = state.fullSyncJobProgress,
             )
         }

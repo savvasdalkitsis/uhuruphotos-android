@@ -4,7 +4,7 @@ import androidx.compose.runtime.Composable
 import com.savvasdalkitsis.uhuruphotos.api.albumpage.seam.AlbumPageAction
 import com.savvasdalkitsis.uhuruphotos.api.albumpage.view.AlbumPage
 import com.savvasdalkitsis.uhuruphotos.api.albumpage.view.state.AlbumPageState
-import com.savvasdalkitsis.uhuruphotos.api.icons.R
+import com.savvasdalkitsis.uhuruphotos.api.icons.R.drawable
 import com.savvasdalkitsis.uhuruphotos.api.seam.Either
 import com.savvasdalkitsis.uhuruphotos.api.seam.Either.Left
 import com.savvasdalkitsis.uhuruphotos.api.seam.Either.Right
@@ -26,7 +26,7 @@ fun HiddenPhotosAlbumPage(
                     onClick = {
                         action(Right(FingerPrintActionPressed))
                     },
-                    icon = R.drawable.ic_fingerprint,
+                    icon = drawable.ic_fingerprint,
                 )
             }
         },

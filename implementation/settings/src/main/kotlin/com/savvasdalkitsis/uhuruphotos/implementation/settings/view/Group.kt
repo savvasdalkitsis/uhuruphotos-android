@@ -38,7 +38,7 @@ import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import com.savvasdalkitsis.uhuruphotos.api.icons.R
+import com.savvasdalkitsis.uhuruphotos.api.icons.R.drawable
 import com.savvasdalkitsis.uhuruphotos.implementation.settings.view.controller.SettingsGroupState
 
 @Composable
@@ -68,7 +68,7 @@ internal fun Group(
                     )
                     Icon(
                         modifier = Modifier.rotate(arrowAngle.value),
-                        painter = painterResource(id = R.drawable.ic_arrow_up),
+                        painter = painterResource(id = drawable.ic_arrow_up),
                         contentDescription = null,
                     )
                 }

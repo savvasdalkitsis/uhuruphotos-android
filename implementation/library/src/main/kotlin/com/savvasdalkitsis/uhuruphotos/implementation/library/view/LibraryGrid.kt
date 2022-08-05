@@ -49,6 +49,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import com.savvasdalkitsis.uhuruphotos.api.icons.R.drawable
 import com.savvasdalkitsis.uhuruphotos.api.photos.model.PhotoGrid
 import com.savvasdalkitsis.uhuruphotos.api.photos.view.PhotoGridThumbnail
 import com.savvasdalkitsis.uhuruphotos.api.strings.R.string
@@ -65,7 +66,6 @@ import com.savvasdalkitsis.uhuruphotos.implementation.library.view.state.Library
 import com.savvasdalkitsis.uhuruphotos.implementation.library.view.state.LibraryLocalMedia.RequiresPermissions
 import com.savvasdalkitsis.uhuruphotos.implementation.library.view.state.LibraryState
 import dev.shreyaspatil.permissionflow.compose.rememberPermissionFlowRequestLauncher
-import com.savvasdalkitsis.uhuruphotos.api.icons.R as Icons
 
 @Composable
 internal fun LibraryGrid(
@@ -87,16 +87,16 @@ internal fun LibraryGrid(
         contentPadding = contentPadding,
         columns = GridCells.Adaptive(160.dp),
     ) {
-        pillItem(trash, Icons.drawable.ic_delete, { GridItemSpan(maxCurrentLineSpan / 2) }) {
+        pillItem(trash, drawable.ic_delete, { GridItemSpan(maxCurrentLineSpan / 2) }) {
             action(TrashSelected)
         }
-        pillItem(hidden, Icons.drawable.ic_invisible, { GridItemSpan(maxCurrentLineSpan) }) {
+        pillItem(hidden, drawable.ic_invisible, { GridItemSpan(maxCurrentLineSpan) }) {
             action(HiddenPhotosSelected)
         }
         item(local, { GridItemSpan(maxLineSpan) }) {
             when (val media = state.localMedia) {
                 is Found -> LocalFolders(local, media, action)
-                is RequiresPermissions -> PillItem(local, Icons.drawable.ic_folder) {
+                is RequiresPermissions -> PillItem(local, drawable.ic_folder) {
                     permissionLauncher.launch(media.deniedPermissions.toTypedArray())
                 }
                 null -> {}

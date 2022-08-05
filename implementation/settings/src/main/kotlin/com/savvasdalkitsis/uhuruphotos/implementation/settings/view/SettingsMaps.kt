@@ -25,11 +25,11 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import com.savvasdalkitsis.uhuruphotos.api.icons.R.drawable
 import com.savvasdalkitsis.uhuruphotos.api.strings.R.string
 import com.savvasdalkitsis.uhuruphotos.implementation.settings.seam.SettingsAction
 import com.savvasdalkitsis.uhuruphotos.implementation.settings.seam.SettingsAction.ChangeMapProvider
 import com.savvasdalkitsis.uhuruphotos.implementation.settings.view.state.MapProviderState
-import com.savvasdalkitsis.uhuruphotos.api.icons.R as Icons
 
 @Composable
 internal fun ColumnScope.SettingsMaps(
@@ -42,7 +42,7 @@ internal fun ColumnScope.SettingsMaps(
                 horizontalArrangement = Arrangement.spacedBy(8.dp),
                 verticalAlignment = Alignment.CenterVertically,
             ) {
-                Icon(painter = painterResource(Icons.drawable.ic_map), contentDescription = null)
+                Icon(painter = painterResource(drawable.ic_map), contentDescription = null)
                 Text("${stringResource(string.map_provider)}: ${mapProviderState.current.name}",)
             }
         },

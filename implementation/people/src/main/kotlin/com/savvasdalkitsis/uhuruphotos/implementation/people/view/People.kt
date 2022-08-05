@@ -28,7 +28,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.google.accompanist.swiperefresh.SwipeRefresh
 import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
-import com.savvasdalkitsis.uhuruphotos.api.icons.R
+import com.savvasdalkitsis.uhuruphotos.api.icons.R.drawable
 import com.savvasdalkitsis.uhuruphotos.api.people.view.PersonThumbnail
 import com.savvasdalkitsis.uhuruphotos.api.ui.view.ActionIcon
 import com.savvasdalkitsis.uhuruphotos.api.ui.view.BackNavButton
@@ -56,8 +56,8 @@ fun People(
         } },
         actionBarContent = {
             ActionIcon(onClick = { action(ToggleSortOrder) }, icon = when (state.sortOrder) {
-                ASCENDING -> R.drawable.ic_sort_az_ascending
-                DESCENDING -> R.drawable.ic_sort_az_descending
+                ASCENDING -> drawable.ic_sort_az_ascending
+                DESCENDING -> drawable.ic_sort_az_descending
             })
         }
     ) { contentPadding ->

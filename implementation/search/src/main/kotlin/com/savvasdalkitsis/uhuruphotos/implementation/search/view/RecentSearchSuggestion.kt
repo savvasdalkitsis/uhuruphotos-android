@@ -22,7 +22,7 @@ import androidx.compose.material.Icon
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
-import com.savvasdalkitsis.uhuruphotos.api.icons.R
+import com.savvasdalkitsis.uhuruphotos.api.icons.R.drawable
 import com.savvasdalkitsis.uhuruphotos.api.ui.view.ActionIcon
 import com.savvasdalkitsis.uhuruphotos.implementation.search.seam.SearchAction
 
@@ -41,14 +41,14 @@ internal fun LazyListScope.recentSearchSuggestion(
                     modifier = Modifier
                         .fillMaxSize()
                         .padding(4.dp),
-                    painter = painterResource(id = R.drawable.ic_history),
+                    painter = painterResource(id = drawable.ic_history),
                     contentDescription = null
                 )
             },
             trailingContent = {
                 ActionIcon(
                     onClick = { action(SearchAction.RemoveFromRecentSearches(suggestion)) },
-                    icon = R.drawable.ic_clear
+                    icon = drawable.ic_clear
                 )
             }
         )

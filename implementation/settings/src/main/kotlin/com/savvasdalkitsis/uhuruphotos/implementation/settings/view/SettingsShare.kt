@@ -18,11 +18,11 @@ package com.savvasdalkitsis.uhuruphotos.implementation.settings.view
 import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.stringResource
+import com.savvasdalkitsis.uhuruphotos.api.icons.R.drawable
 import com.savvasdalkitsis.uhuruphotos.api.strings.R.string
 import com.savvasdalkitsis.uhuruphotos.implementation.settings.seam.SettingsAction
 import com.savvasdalkitsis.uhuruphotos.implementation.settings.seam.SettingsAction.ChangeShareGpsDataEnabled
 import com.savvasdalkitsis.uhuruphotos.implementation.settings.view.state.SettingsState
-import com.savvasdalkitsis.uhuruphotos.api.icons.R as Icons
 
 @Composable
 internal fun ColumnScope.SettingsShare(
@@ -33,8 +33,8 @@ internal fun ColumnScope.SettingsShare(
     SettingsCheckBox(
         text = stringResource(string.remove_gps_data_when_sharing),
         icon = when {
-            checked -> Icons.drawable.ic_gps_off
-            else -> Icons.drawable.ic_gps_on
+            checked -> drawable.ic_gps_off
+            else -> drawable.ic_gps_on
         },
         isChecked = checked,
         onCheckedChange = { action(ChangeShareGpsDataEnabled(it)) }

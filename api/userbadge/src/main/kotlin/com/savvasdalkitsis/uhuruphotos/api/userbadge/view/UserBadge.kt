@@ -33,7 +33,7 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import com.savvasdalkitsis.uhuruphotos.api.icons.R
+import com.savvasdalkitsis.uhuruphotos.api.icons.R.drawable.ic_person
 import com.savvasdalkitsis.uhuruphotos.api.image.view.Image
 import com.savvasdalkitsis.uhuruphotos.api.ui.theme.CustomColors
 import com.savvasdalkitsis.uhuruphotos.api.userbadge.view.state.SyncState.BAD
@@ -86,7 +86,7 @@ fun UserBadge(
             else -> Icon(
                 modifier = Modifier
                     .align(Alignment.Center),
-                painter = painterResource(R.drawable.ic_person),
+                painter = painterResource(ic_person),
                 contentDescription = "profileIcon"
             )
         }

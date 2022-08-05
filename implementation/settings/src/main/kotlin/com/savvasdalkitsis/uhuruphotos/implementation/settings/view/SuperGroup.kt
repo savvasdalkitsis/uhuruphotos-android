@@ -35,7 +35,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import com.savvasdalkitsis.uhuruphotos.api.icons.R
+import com.savvasdalkitsis.uhuruphotos.api.icons.R.drawable
 import com.savvasdalkitsis.uhuruphotos.api.ui.view.StaggeredGridScope
 import com.savvasdalkitsis.uhuruphotos.implementation.settings.view.controller.SettingsGroupState
 
@@ -67,7 +67,8 @@ internal fun StaggeredGridScope.SuperGroup(
                         )
                         Icon(
                             painter = rememberAnimatedVectorPainter(
-                                animatedImageVector = AnimatedImageVector.animatedVectorResource(R.drawable.ic_plus_minus),
+                                animatedImageVector = AnimatedImageVector.animatedVectorResource(
+                                    drawable.ic_plus_minus),
                                 atEnd = !groupState.isCollapsed,
                             ),
                             contentDescription = null,

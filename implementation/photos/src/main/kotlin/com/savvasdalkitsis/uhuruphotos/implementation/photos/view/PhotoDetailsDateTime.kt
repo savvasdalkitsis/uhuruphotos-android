@@ -17,14 +17,13 @@ package com.savvasdalkitsis.uhuruphotos.implementation.photos.view
 
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
-import com.savvasdalkitsis.uhuruphotos.api.icons.R
-import com.savvasdalkitsis.uhuruphotos.api.ui.view.TextWithIcon
+import com.savvasdalkitsis.uhuruphotos.api.icons.R.drawable
 import com.savvasdalkitsis.uhuruphotos.implementation.photos.view.state.SinglePhotoState
 
 @Composable
 internal fun PhotoDetailsDateTime(photo: SinglePhotoState) {
     PhotoDetailsIconEntry(
-        icon = R.drawable.ic_calendar,
+        icon = drawable.ic_calendar,
     ) {
         Text(photo.dateAndTime)
     }

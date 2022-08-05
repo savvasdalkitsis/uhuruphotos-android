@@ -24,7 +24,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
-import com.savvasdalkitsis.uhuruphotos.api.icons.R
+import com.savvasdalkitsis.uhuruphotos.api.icons.R.drawable
 
 @Composable
 fun Logo(
@@ -42,7 +42,7 @@ fun Logo(
                 }
             }
             .padding(2.dp),
-        painter = painterResource(id = R.drawable.ic_logo),
+        painter = painterResource(id = drawable.ic_logo),
         contentDescription = null
     )
 }

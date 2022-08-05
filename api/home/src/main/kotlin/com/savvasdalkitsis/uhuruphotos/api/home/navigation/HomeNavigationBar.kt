@@ -19,8 +19,6 @@ import androidx.annotation.StringRes
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.BottomNavigation
-import androidx.compose.material.BottomNavigationItem
 import androidx.compose.material.Icon
 import androidx.compose.material.LocalContentColor
 import androidx.compose.material.MaterialTheme
@@ -41,7 +39,6 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavDestination
 import androidx.navigation.NavDestination.Companion.hierarchy
-import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import com.commandiron.bubble_navigation_bar_compose.BubbleNavigationBar
@@ -50,10 +47,10 @@ import com.savvasdalkitsis.uhuruphotos.api.feed.view.state.FeedDisplay
 import com.savvasdalkitsis.uhuruphotos.api.home.navigation.NavigationStyle.BOTTOM_BAR
 import com.savvasdalkitsis.uhuruphotos.api.home.navigation.NavigationStyle.NAVIGATION_RAIL
 import com.savvasdalkitsis.uhuruphotos.api.homenavigation.HomeNavigationRoutes
-import com.savvasdalkitsis.uhuruphotos.api.icons.R
+import com.savvasdalkitsis.uhuruphotos.api.icons.R.drawable
+import com.savvasdalkitsis.uhuruphotos.api.strings.R.string
 import com.savvasdalkitsis.uhuruphotos.api.ui.theme.CustomColors
 import com.savvasdalkitsis.uhuruphotos.api.ui.window.LocalWindowSize
-import com.savvasdalkitsis.uhuruphotos.api.strings.R as Strings
 
 @Composable
 fun homeNavigationStyle() = when (LocalWindowSize.current.widthSizeClass) {
@@ -115,7 +112,7 @@ private fun Items(
 ) {
     NavItem(
         currentDestination, navController,
-        label = Strings.string.feed,
+        label = string.feed,
         routeName = HomeNavigationRoutes.feed,
         painterResource(id = homeFeedDisplay.iconResource),
         onReselected,
@@ -123,7 +120,7 @@ private fun Items(
     )
     NavItem(
         currentDestination, navController,
-        label = Strings.string.search,
+        label = string.search,
         routeName = HomeNavigationRoutes.search,
         icon = rememberVectorPainter(Icons.Filled.Search),
         rowScope = rowScope,
@@ -132,9 +129,9 @@ private fun Items(
     if (showLibrary) {
         NavItem(
             currentDestination, navController,
-            label = Strings.string.library,
+            label = string.library,
             routeName = HomeNavigationRoutes.library,
-            icon = painterResource(R.drawable.ic_photo_album),
+            icon = painterResource(drawable.ic_photo_album),
             rowScope = rowScope,
             onReselected = onReselected,
         )

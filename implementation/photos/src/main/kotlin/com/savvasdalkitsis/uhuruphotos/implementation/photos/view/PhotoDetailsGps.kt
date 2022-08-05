@@ -20,8 +20,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import com.savvasdalkitsis.uhuruphotos.api.icons.R
-import com.savvasdalkitsis.uhuruphotos.api.ui.view.TextWithIcon
+import com.savvasdalkitsis.uhuruphotos.api.icons.R.drawable
 import com.savvasdalkitsis.uhuruphotos.implementation.photos.seam.PhotoAction
 import com.savvasdalkitsis.uhuruphotos.implementation.photos.view.state.SinglePhotoState
 
@@ -35,7 +34,7 @@ internal fun PhotoDetailsGps(
             modifier = Modifier.clickable { action(PhotoAction.ClickedOnGps(gps)) },
         ) {
             PhotoDetailsIconEntry(
-                icon = R.drawable.ic_location_pin,
+                icon = drawable.ic_location_pin,
             ) {
                 Text("${gps.lat.round(2)}:${gps.lon.round(2)}")
             }

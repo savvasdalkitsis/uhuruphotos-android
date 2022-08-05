@@ -23,16 +23,18 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import com.savvasdalkitsis.uhuruphotos.api.icons.R.drawable
+import com.savvasdalkitsis.uhuruphotos.api.strings.R.string
 import com.savvasdalkitsis.uhuruphotos.api.ui.view.ActionIcon
 import com.savvasdalkitsis.uhuruphotos.implementation.photos.seam.PhotoAction
 import com.savvasdalkitsis.uhuruphotos.implementation.photos.seam.PhotoAction.DownloadOriginal
-import com.savvasdalkitsis.uhuruphotos.implementation.photos.seam.PhotoAction.Refresh
 import com.savvasdalkitsis.uhuruphotos.implementation.photos.seam.PhotoAction.SetFavourite
 import com.savvasdalkitsis.uhuruphotos.implementation.photos.seam.PhotoAction.ShowInfo
-import com.savvasdalkitsis.uhuruphotos.implementation.photos.view.state.OriginalFileIconState.*
+import com.savvasdalkitsis.uhuruphotos.implementation.photos.view.state.OriginalFileIconState.ERROR
+import com.savvasdalkitsis.uhuruphotos.implementation.photos.view.state.OriginalFileIconState.HIDDEN
+import com.savvasdalkitsis.uhuruphotos.implementation.photos.view.state.OriginalFileIconState.IDLE
+import com.savvasdalkitsis.uhuruphotos.implementation.photos.view.state.OriginalFileIconState.IN_PROGRESS
 import com.savvasdalkitsis.uhuruphotos.implementation.photos.view.state.PhotoState
-import com.savvasdalkitsis.uhuruphotos.api.icons.R as Icons
-import com.savvasdalkitsis.uhuruphotos.api.strings.R as Strings
 
 @Composable
 fun PhotoDetailsActionBar(
@@ -53,19 +55,19 @@ fun PhotoDetailsActionBar(
         when (it) {
             IDLE -> ActionIcon(
                 onClick = { action(DownloadOriginal(photo)) },
-                icon = Icons.drawable.ic_cloud_download,
-                contentDescription = stringResource(Strings.string.download_original_file)
+                icon = drawable.ic_cloud_download,
+                contentDescription = stringResource(string.download_original_file)
             )
             IN_PROGRESS -> ActionIcon(
                 enabled = false,
                 onClick = { },
-                icon = Icons.drawable.ic_cloud_in_progress,
-                contentDescription = stringResource(Strings.string.downloading_original_file)
+                icon = drawable.ic_cloud_in_progress,
+                contentDescription = stringResource(string.downloading_original_file)
             )
             ERROR -> ActionIcon(
                 onClick = { action(DownloadOriginal(photo)) },
-                icon = Icons.drawable.ic_cloud_alert,
-                contentDescription = stringResource(Strings.string.download_original_file)
+                icon = drawable.ic_cloud_alert,
+                contentDescription = stringResource(string.download_original_file)
             )
             HIDDEN -> {}
         }
@@ -74,11 +76,11 @@ fun PhotoDetailsActionBar(
         if (photo.showFavouriteIcon && photo.isFavourite != null) {
             ActionIcon(
                 onClick = { action(SetFavourite(!photo.isFavourite)) },
-                icon = if (photo.isFavourite) Icons.drawable.ic_favourite else Icons.drawable.ic_not_favourite,
+                icon = if (photo.isFavourite) drawable.ic_favourite else drawable.ic_not_favourite,
                 contentDescription = stringResource(
                     when {
-                        photo.isFavourite -> Strings.string.remove_favourite
-                        else -> Strings.string.favourite
+                        photo.isFavourite -> string.remove_favourite
+                        else -> string.favourite
                     }
                 )
             )
@@ -88,8 +90,8 @@ fun PhotoDetailsActionBar(
         if (state.showInfoButton) {
             ActionIcon(
                 onClick = { action(ShowInfo) },
-                icon = Icons.drawable.ic_info,
-                contentDescription = stringResource(Strings.string.info),
+                icon = drawable.ic_info,
+                contentDescription = stringResource(string.info),
             )
         }
     }

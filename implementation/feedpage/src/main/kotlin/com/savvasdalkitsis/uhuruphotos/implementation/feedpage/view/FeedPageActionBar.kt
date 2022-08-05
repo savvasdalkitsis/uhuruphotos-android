@@ -20,7 +20,7 @@ import androidx.compose.foundation.layout.RowScope
 import androidx.compose.runtime.Composable
 import com.savvasdalkitsis.uhuruphotos.api.feed.view.FeedDisplayActionButton
 import com.savvasdalkitsis.uhuruphotos.api.feed.view.state.FeedDisplays
-import com.savvasdalkitsis.uhuruphotos.api.icons.R
+import com.savvasdalkitsis.uhuruphotos.api.icons.R.drawable
 import com.savvasdalkitsis.uhuruphotos.api.ui.view.ActionIcon
 import com.savvasdalkitsis.uhuruphotos.implementation.feedpage.seam.FeedPageAction
 import com.savvasdalkitsis.uhuruphotos.implementation.feedpage.seam.FeedPageAction.AskForSelectedPhotosTrashing
@@ -37,19 +37,19 @@ internal fun RowScope.FeedPageActionBar(
     AnimatedVisibility(visible = state.shouldShowShareIcon) {
         ActionIcon(
             onClick = { action(ShareSelectedPhotos) },
-            icon = R.drawable.ic_share
+            icon = drawable.ic_share
         )
     }
     AnimatedVisibility(visible = state.hasSelection) {
         ActionIcon(
             onClick = { action(AskForSelectedPhotosTrashing) },
-            icon = R.drawable.ic_delete
+            icon = drawable.ic_delete
         )
     }
     AnimatedVisibility(visible = state.hasSelection) {
         ActionIcon(
             onClick = { action(DownloadSelectedPhotos) },
-            icon = R.drawable.ic_cloud_download
+            icon = drawable.ic_cloud_download
         )
     }
     AnimatedVisibility(visible = !state.hasSelection) {

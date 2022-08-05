@@ -30,7 +30,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import com.savvasdalkitsis.uhuruphotos.api.icons.R
+import com.savvasdalkitsis.uhuruphotos.api.icons.R.drawable
 import com.savvasdalkitsis.uhuruphotos.api.strings.R.string
 import com.savvasdalkitsis.uhuruphotos.api.ui.view.ActionIcon
 import com.savvasdalkitsis.uhuruphotos.api.ui.view.Logo
@@ -68,7 +68,7 @@ internal fun FeedPageTitle(
                     ActionIcon(
                         modifier = Modifier.size(16.dp),
                         onClick = { action(FeedPageAction.ClearSelected) },
-                        icon = R.drawable.ic_clear
+                        icon = drawable.ic_clear
                     )
                 }
             }

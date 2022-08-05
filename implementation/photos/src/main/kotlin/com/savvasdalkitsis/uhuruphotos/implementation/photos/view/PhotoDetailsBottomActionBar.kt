@@ -22,6 +22,8 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import com.savvasdalkitsis.uhuruphotos.api.icons.R.drawable
+import com.savvasdalkitsis.uhuruphotos.api.strings.R.string
 import com.savvasdalkitsis.uhuruphotos.api.ui.view.ActionIconWithText
 import com.savvasdalkitsis.uhuruphotos.implementation.photos.seam.PhotoAction
 import com.savvasdalkitsis.uhuruphotos.implementation.photos.seam.PhotoAction.AskForPhotoRestoration
@@ -29,8 +31,6 @@ import com.savvasdalkitsis.uhuruphotos.implementation.photos.seam.PhotoAction.As
 import com.savvasdalkitsis.uhuruphotos.implementation.photos.seam.PhotoAction.SharePhoto
 import com.savvasdalkitsis.uhuruphotos.implementation.photos.seam.PhotoAction.UsePhotoAs
 import com.savvasdalkitsis.uhuruphotos.implementation.photos.view.state.PhotoState
-import com.savvasdalkitsis.uhuruphotos.api.icons.R as Icons
-import com.savvasdalkitsis.uhuruphotos.api.strings.R as Strings
 
 @Composable
 fun PhotoDetailsBottomActionBar(
@@ -48,8 +48,8 @@ fun PhotoDetailsBottomActionBar(
         ) {
             ActionIconWithText(
                 onClick = { action(SharePhoto) },
-                icon = Icons.drawable.ic_share,
-                text = stringResource(Strings.string.share),
+                icon = drawable.ic_share,
+                text = stringResource(string.share),
             )
         }
         AnimatedVisibility(
@@ -61,8 +61,8 @@ fun PhotoDetailsBottomActionBar(
         ) {
             ActionIconWithText(
                 onClick = { action(UsePhotoAs) },
-                icon = Icons.drawable.ic_open_in_new,
-                text = stringResource(Strings.string.use_as),
+                icon = drawable.ic_open_in_new,
+                text = stringResource(string.use_as),
             )
         }
         if (state.showRestoreButton) {
@@ -70,8 +70,8 @@ fun PhotoDetailsBottomActionBar(
                 onClick = { action(AskForPhotoRestoration) },
                 modifier = Modifier
                     .weight(1f),
-                icon = Icons.drawable.ic_restore_from_trash,
-                text = stringResource(Strings.string.restore),
+                icon = drawable.ic_restore_from_trash,
+                text = stringResource(string.restore),
             )
         }
         if (state.photos[index].showDeleteButton) {
@@ -79,8 +79,8 @@ fun PhotoDetailsBottomActionBar(
                 onClick = { action(AskForPhotoTrashing) },
                 modifier = Modifier
                     .weight(1f),
-                icon = Icons.drawable.ic_delete,
-                text = stringResource(Strings.string.delete),
+                icon = drawable.ic_delete,
+                text = stringResource(string.delete),
             )
         }
     }

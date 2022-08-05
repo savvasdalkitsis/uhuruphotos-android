@@ -20,6 +20,7 @@ import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass.Companion
 import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass.Companion.Medium
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.stringResource
+import com.savvasdalkitsis.uhuruphotos.api.icons.R.drawable
 import com.savvasdalkitsis.uhuruphotos.api.strings.R.string
 import com.savvasdalkitsis.uhuruphotos.api.ui.view.ActionIcon
 import com.savvasdalkitsis.uhuruphotos.api.ui.view.BackNavButton
@@ -34,7 +35,6 @@ import com.savvasdalkitsis.uhuruphotos.implementation.settings.seam.SettingsActi
 import com.savvasdalkitsis.uhuruphotos.implementation.settings.view.controller.SettingsViewStateController
 import com.savvasdalkitsis.uhuruphotos.implementation.settings.view.state.MapProviderState.Selected
 import com.savvasdalkitsis.uhuruphotos.implementation.settings.view.state.SettingsState
-import com.savvasdalkitsis.uhuruphotos.api.icons.R as Icons
 
 @Composable
 internal fun Settings(
@@ -47,12 +47,12 @@ internal fun Settings(
         actionBarContent = {
             ActionIcon(
                 onClick = { controller.collapseAll() },
-                icon = Icons.drawable.ic_expand_all,
+                icon = drawable.ic_expand_all,
                 contentDescription = stringResource(string.expand_all),
             )
             ActionIcon(
                 onClick = { controller.expandAll() },
-                icon = Icons.drawable.ic_collapse_all,
+                icon = drawable.ic_collapse_all,
                 contentDescription = stringResource(string.collapse_all),
             )
             UserBadge(state = state.userInformationState)

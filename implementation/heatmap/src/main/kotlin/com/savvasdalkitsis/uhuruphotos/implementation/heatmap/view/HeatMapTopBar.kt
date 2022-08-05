@@ -32,15 +32,15 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.google.accompanist.permissions.PermissionState
+import com.savvasdalkitsis.uhuruphotos.api.icons.R.drawable
 import com.savvasdalkitsis.uhuruphotos.api.map.view.MapViewState
+import com.savvasdalkitsis.uhuruphotos.api.strings.R.string
 import com.savvasdalkitsis.uhuruphotos.api.ui.view.ActionIcon
 import com.savvasdalkitsis.uhuruphotos.api.ui.view.BackNavButton
 import com.savvasdalkitsis.uhuruphotos.api.ui.view.CommonTopBar
 import com.savvasdalkitsis.uhuruphotos.implementation.heatmap.seam.HeatMapAction
 import com.savvasdalkitsis.uhuruphotos.implementation.heatmap.seam.HeatMapAction.MyLocationPressed
 import com.savvasdalkitsis.uhuruphotos.implementation.heatmap.view.state.HeatMapState
-import com.savvasdalkitsis.uhuruphotos.api.icons.R as Icons
-import com.savvasdalkitsis.uhuruphotos.api.strings.R as Strings
 
 @Composable
 fun HeatMapTopBar(
@@ -65,7 +65,7 @@ fun HeatMapTopBar(
                 horizontalArrangement = Arrangement.spacedBy(8.dp),
                 verticalAlignment = Alignment.CenterVertically,
             ) {
-                Text(stringResource(Strings.string.photo_map))
+                Text(stringResource(string.photo_map))
                 if (actionsInTitle) {
                     Actions(state, action, locationPermissionState, mapViewState)
                 }
@@ -93,6 +93,6 @@ private fun RowScope.Actions(
     }
     ActionIcon(
         onClick = { action(MyLocationPressed(locationPermissionState, mapViewState)) },
-        icon = Icons.drawable.ic_my_location,
+        icon = drawable.ic_my_location,
     )
 }
