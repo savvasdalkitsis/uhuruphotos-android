@@ -282,12 +282,12 @@ class PhotoActionHandler @Inject constructor(
         }
         is FullImageLoaded -> flow {
             emit(SetOriginalFileIconState(action.photo.id, HIDDEN))
+            emit(ShowShareIcon(action.photo.id))
+            emit(ShowUseAsIcon(action.photo.id))
             // TODO enable for local photos
             if (PhotoImageSource.fromUrl(action.photo.fullResUrl) == REMOTE
                 && !action.photo.isVideo
             ) {
-                emit(ShowShareIcon(action.photo.id))
-                emit(ShowUseAsIcon(action.photo.id))
                 val metadata = metadataUseCase.extractMetadata(action.photo.fullResUrl)
                 if (metadata != null) {
                     emit(ShowMetadata(action.photo.id, metadata))

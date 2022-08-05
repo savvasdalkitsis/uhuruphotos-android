@@ -18,7 +18,6 @@ package com.savvasdalkitsis.uhuruphotos.implementation.share.usecase
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
-import android.os.Parcelable
 import androidx.core.content.FileProvider
 import coil.ImageLoader
 import coil.disk.DiskCache
@@ -46,7 +45,7 @@ internal class ShareUseCase @Inject constructor(
 
     override suspend fun share(url: String) {
         withContext(Dispatchers.IO) {
-            download(url).firstOrNull()?.let { uri ->
+            url.realize()?.let { uri ->
                 launch("Share Photo", Intent(Intent.ACTION_SEND).apply {
                     setDataAndType(uri, "image/jpeg")
                     putExtra(Intent.EXTRA_STREAM, uri)
@@ -57,7 +56,7 @@ internal class ShareUseCase @Inject constructor(
 
     override suspend fun usePhotoAs(url: String) {
         withContext(Dispatchers.IO) {
-            download(url).firstOrNull()?.let { uri ->
+            url.realize()?.let { uri ->
                 launch("Use as", Intent(Intent.ACTION_ATTACH_DATA).apply {
                     addCategory(Intent.CATEGORY_DEFAULT)
                     setDataAndType(uri, "image/jpeg")
@@ -67,13 +66,25 @@ internal class ShareUseCase @Inject constructor(
     }
 
     override suspend fun shareMultiple(urls: List<String>) = withContext(Dispatchers.IO) {
-        val uris = download(*urls.toTypedArray())
+        val uris = urls.realise()
         launch("Share Photos", Intent().apply {
             action = Intent.ACTION_SEND_MULTIPLE
             type = "image/jpeg"
-            putParcelableArrayListExtra(Intent.EXTRA_STREAM, uris)
+            putParcelableArrayListExtra(Intent.EXTRA_STREAM, ArrayList(uris))
         })
     }
+
+    private suspend fun List<String>.realise(): List<Uri> {
+        val (contentUris, urls) = partition { it.isContentUri }
+        return contentUris.map { it.toUri } + download(*urls.toTypedArray())
+    }
+    private suspend fun String.realize() = when {
+        isContentUri -> toUri
+        else -> download(this).firstOrNull()
+    }
+
+    private val String.toUri get() = Uri.parse(this)
+    private val String.isContentUri get() = startsWith("content://")
 
     private suspend fun download(vararg urls: String): ArrayList<out Uri> {
         urls.map { url ->
