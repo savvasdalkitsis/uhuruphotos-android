@@ -89,4 +89,7 @@
     <string name="authenticate_for_access">访问App前需要进行验证</string>
     <string name="authenticate_for_access_to_hidden">访问隐藏照片前需要验证</string>
     <string name="authenticate_for_access_to_trash">访问回收站前需要验证</string>
+    <string name="setting_photo_favourite">正在建立最爱状态</string>
+    <string name="help">帮助</string>
+    <string name="nothing_here_yet">这里暂时什么都没有</string>
 </resources>
