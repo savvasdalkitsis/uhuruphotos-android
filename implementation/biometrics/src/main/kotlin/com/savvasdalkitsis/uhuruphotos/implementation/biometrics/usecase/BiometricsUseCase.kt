@@ -20,6 +20,7 @@ import androidx.biometric.BiometricManager
 import androidx.biometric.BiometricManager.BIOMETRIC_ERROR_NO_HARDWARE
 import androidx.biometric.BiometricManager.BIOMETRIC_SUCCESS
 import com.afollestad.assure.Prompt
+import com.afollestad.assure.authenticate
 import com.savvasdalkitsis.uhuruphotos.activity.CurrentActivityHolder
 import com.savvasdalkitsis.uhuruphotos.api.biometrics.model.Biometrics
 import com.savvasdalkitsis.uhuruphotos.api.biometrics.model.Biometrics.Enrolled
@@ -27,9 +28,11 @@ import com.savvasdalkitsis.uhuruphotos.api.biometrics.model.Biometrics.NoHardwar
 import com.savvasdalkitsis.uhuruphotos.api.biometrics.model.Biometrics.NotEnrolled
 import com.savvasdalkitsis.uhuruphotos.api.biometrics.usecase.BiometricsUseCase
 import com.savvasdalkitsis.uhuruphotos.api.launchers.awaitOnMain
+import com.savvasdalkitsis.uhuruphotos.api.log.log
 import com.savvasdalkitsis.uhuruphotos.api.log.runCatchingWithLog
 import javax.inject.Inject
-import com.afollestad.assure.coroutines.authenticate as auth
+import kotlin.coroutines.resumeWithException
+import kotlin.coroutines.suspendCoroutine
 
 internal class BiometricsUseCase @Inject constructor(
     private val biometricManager: BiometricManager,
@@ -53,15 +56,24 @@ internal class BiometricsUseCase @Inject constructor(
     ): Result<Unit> = runCatchingWithLog {
         with(currentActivityHolder.currentActivity!!) {
             awaitOnMain {
-                auth(
-                    Prompt(
-                        title = title,
-                        subtitle = subtitle,
-                        description = description,
-                        confirmRequired = confirmRequired,
-                        deviceCredentialsAllowed = true,
-                    )
-                )
+                suspendCoroutine { continuation ->
+                    authenticate(
+                        Prompt(
+                            title = title,
+                            subtitle = subtitle,
+                            description = description,
+                            confirmRequired = confirmRequired,
+                            deviceCredentialsAllowed = true,
+                        )
+                    ) { exception ->
+                        try {
+                            exception?.let { continuation.resumeWithException(it) }
+                                ?: continuation.resumeWith(Result.success(Unit))
+                        } catch (e: Exception) {
+                            log(e)
+                        }
+                    }
+                }
             }
         }
     }
