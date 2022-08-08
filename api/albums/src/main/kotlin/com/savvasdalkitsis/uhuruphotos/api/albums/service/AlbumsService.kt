@@ -40,7 +40,7 @@ interface AlbumsService {
     suspend fun getUserAlbums(): UserAlbums
 
     @GET("/api/albums/date/{id}/")
-    suspend fun getAlbum(@Path("id") id: String): AlbumById
+    suspend fun getAlbum(@Path("id") id: String, @Query("page") page: Int): AlbumById
 
     @GET("/api/albums/date/{id}/?deleted=true")
     suspend fun getTrashAlbum(@Path("id") id: String): AlbumById

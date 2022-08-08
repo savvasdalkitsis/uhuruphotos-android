@@ -252,7 +252,7 @@ internal class AlbumsRepository @Inject constructor(
     override suspend fun refreshAlbums(shallow: Boolean, onProgressChange: suspend (Int) -> Unit) {
         process(
             albumsFetcher = { albumsService.getAlbumsByDate() },
-            albumFetcher = { albumsService.getAlbum(it).results },
+            albumFetcher = getAlbumAllPages(),
             shallow = shallow,
             onProgressChange = onProgressChange,
             incompleteAlbumsProcessor = { albums ->
@@ -272,9 +272,24 @@ internal class AlbumsRepository @Inject constructor(
                 count = 1,
                 results = listOf(Album.IncompleteAlbum(albumId, null, "", true, 1))
             ) },
-            albumFetcher = { albumsService.getAlbum(it).results },
+            albumFetcher = getAlbumAllPages(),
             shallow = false,
         )
+    }
+
+    private fun getAlbumAllPages(): suspend (String) -> Album.CompleteAlbum = { id ->
+        var page = 1
+        val albums = mutableListOf<Album.CompleteAlbum>()
+        do {
+            val album = albumsService.getAlbum(id, page).results
+            albums += album
+            page++
+        } while (albums.sumOf { it.items.size } < album.numberOfItems)
+        albums.reduce { acc, completeAlbum ->
+            acc.copy(
+                items = acc.items + completeAlbum.items
+            )
+        }
     }
 
     override suspend fun refreshTrash() {
