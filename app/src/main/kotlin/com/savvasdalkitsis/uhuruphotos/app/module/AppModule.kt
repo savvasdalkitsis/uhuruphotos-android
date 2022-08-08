@@ -27,6 +27,7 @@ import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import dev.shreyaspatil.permissionFlow.PermissionFlow
+import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
@@ -49,5 +50,9 @@ class AppModule {
         context.contentResolver
 
     @Provides
-    fun permissionFlow(): PermissionFlow = PermissionFlow.getInstance()
+    @Singleton
+    fun permissionFlow(@ApplicationContext context: Context): PermissionFlow {
+        PermissionFlow.init(context)
+        return PermissionFlow.getInstance()
+    }
 }

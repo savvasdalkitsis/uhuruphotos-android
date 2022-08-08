@@ -20,7 +20,6 @@ import androidx.hilt.work.HiltWorkerFactory
 import androidx.work.Configuration
 import com.savvasdalkitsis.uhuruphotos.api.initializer.ApplicationInitializer
 import dagger.hilt.android.HiltAndroidApp
-import dev.shreyaspatil.permissionFlow.PermissionFlow
 import javax.inject.Inject
 
 @HiltAndroidApp
@@ -34,7 +33,6 @@ class App :
     lateinit var applicationInitializer: ApplicationInitializer
 
     override fun onCreate() {
-        PermissionFlow.init(this)
         super.onCreate()
         applicationInitializer.onCreated(this)
     }
