@@ -15,12 +15,12 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.implementation.search.service.model
 
-import com.savvasdalkitsis.uhuruphotos.api.photos.model.PhotoSummaryItem
+import com.savvasdalkitsis.uhuruphotos.api.media.remote.model.RemoteMediaItemSummary
 import com.squareup.moshi.JsonClass
 
 @JsonClass(generateAdapter = true)
 data class SearchResult(
     val date: String,
     val location: String,
-    val items: List<PhotoSummaryItem>
+    val items: List<RemoteMediaItemSummary>
 )

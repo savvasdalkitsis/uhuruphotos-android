@@ -15,7 +15,7 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.implementation.library.seam
 
-import com.savvasdalkitsis.uhuruphotos.api.mediastore.model.MediaBucket
+import com.savvasdalkitsis.uhuruphotos.api.media.local.domain.model.LocalMediaFolder
 
 sealed class LibraryEffect {
     object NavigateToAutoAlbums : LibraryEffect()
@@ -23,6 +23,6 @@ sealed class LibraryEffect {
     object NavigateToFavourites : LibraryEffect()
     object NavigateToHidden : LibraryEffect()
     object NavigateToTrash : LibraryEffect()
-    data class NavigateToLocalBucket(val bucket: MediaBucket) : LibraryEffect()
+    data class NavigateToLocalBucket(val bucket: LocalMediaFolder) : LibraryEffect()
     object ErrorLoadingAlbums : LibraryEffect()
 }

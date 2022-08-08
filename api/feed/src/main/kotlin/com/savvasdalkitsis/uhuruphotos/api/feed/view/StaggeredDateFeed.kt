@@ -30,8 +30,8 @@ import androidx.compose.ui.unit.dp
 import com.savvasdalkitsis.uhuruphotos.api.albums.model.Album
 import com.savvasdalkitsis.uhuruphotos.api.feed.view.PhotoRowSlot.EmptySlot
 import com.savvasdalkitsis.uhuruphotos.api.feed.view.PhotoRowSlot.PhotoSlot
-import com.savvasdalkitsis.uhuruphotos.api.photos.model.Photo
-import com.savvasdalkitsis.uhuruphotos.api.photos.view.PhotoSelected
+import com.savvasdalkitsis.uhuruphotos.api.media.page.domain.model.MediaItem
+import com.savvasdalkitsis.uhuruphotos.api.media.page.view.MediaItemSelected
 import my.nanihadesuka.compose.LazyColumnScrollbar
 import my.nanihadesuka.compose.ScrollbarSelectionMode
 
@@ -48,8 +48,8 @@ fun StaggeredDateFeed(
     shouldAddEmptyPhotosInRows: Boolean,
     listState: LazyListState = rememberLazyListState(),
     feedHeader: @Composable (LazyItemScope.() -> Unit)? = null,
-    onPhotoSelected: PhotoSelected,
-    onPhotoLongPressed: (Photo) -> Unit,
+    onMediaItemSelected: MediaItemSelected,
+    onPhotoLongPressed: (MediaItem) -> Unit,
     onAlbumRefreshClicked: (Album) -> Unit,
     onAlbumSelectionClicked: (Album) -> Unit,
 ) {
@@ -94,7 +94,7 @@ fun StaggeredDateFeed(
                         slots.getOrNull(row * columnCount + column)
                     }.toTypedArray()
                     item(
-                        slotsInRow.firstNotNullOf { it as? PhotoSlot }.photo.id,
+                        slotsInRow.firstNotNullOf { it as? PhotoSlot }.mediaItem.id,
                         "photoRow"
                     ) {
                         PhotoRow(
@@ -103,7 +103,7 @@ fun StaggeredDateFeed(
                                 .animateItemPlacement(),
                             miniIcons = miniIcons,
                             maintainAspectRatio = maintainAspectRatio,
-                            onPhotoSelected = onPhotoSelected,
+                            onMediaItemSelected = onMediaItemSelected,
                             onPhotoLongPressed = onPhotoLongPressed,
                             slots = slotsInRow
                         )

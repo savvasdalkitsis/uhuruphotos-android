@@ -19,12 +19,12 @@ import androidx.compose.ui.geometry.Offset
 import com.google.accompanist.permissions.PermissionState
 import com.savvasdalkitsis.uhuruphotos.api.map.model.LatLon
 import com.savvasdalkitsis.uhuruphotos.api.map.view.MapViewState
-import com.savvasdalkitsis.uhuruphotos.api.photos.model.Photo
+import com.savvasdalkitsis.uhuruphotos.api.media.page.domain.model.MediaItem
 
 sealed class HeatMapAction {
     data class CameraViewPortChanged(val boundsChecker: suspend (LatLon) -> Boolean) : HeatMapAction()
     data class SelectedPhoto(
-        val photo: Photo,
+        val mediaItem: MediaItem,
         val center: Offset,
         val scale: Float,
     ) : HeatMapAction()

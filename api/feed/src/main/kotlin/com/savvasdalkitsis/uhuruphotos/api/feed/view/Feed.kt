@@ -28,8 +28,8 @@ import androidx.compose.ui.unit.dp
 import com.savvasdalkitsis.uhuruphotos.api.albums.model.Album
 import com.savvasdalkitsis.uhuruphotos.api.feed.view.state.FeedDisplay
 import com.savvasdalkitsis.uhuruphotos.api.feed.view.state.FeedState
-import com.savvasdalkitsis.uhuruphotos.api.photos.model.Photo
-import com.savvasdalkitsis.uhuruphotos.api.photos.view.PhotoSelected
+import com.savvasdalkitsis.uhuruphotos.api.media.page.domain.model.MediaItem
+import com.savvasdalkitsis.uhuruphotos.api.media.page.view.MediaItemSelected
 import com.savvasdalkitsis.uhuruphotos.api.strings.R.string
 import com.savvasdalkitsis.uhuruphotos.api.ui.view.FullProgressBar
 import com.savvasdalkitsis.uhuruphotos.api.ui.view.NoContent
@@ -45,9 +45,9 @@ fun Feed(
     listState: LazyListState = rememberLazyListState(),
     feedHeader: @Composable (LazyItemScope.() -> Unit)? = null,
     emptyContent: @Composable () -> Unit = { NoContent(string.no_photos) },
-    onPhotoSelected: PhotoSelected = { _, _, _ -> },
+    onMediaItemSelected: MediaItemSelected = { _, _, _ -> },
     onChangeDisplay: ((FeedDisplay) -> Unit) = {},
-    onPhotoLongPressed: (Photo) -> Unit = {},
+    onPhotoLongPressed: (MediaItem) -> Unit = {},
     onAlbumRefreshClicked: (Album) -> Unit = {},
     onAlbumSelectionClicked: (Album) -> Unit = {},
 ) = when {
@@ -79,7 +79,7 @@ fun Feed(
                 landscape = LocalConfiguration.current.orientation == Configuration.ORIENTATION_LANDSCAPE
             ),
             shouldAddEmptyPhotosInRows = feedDisplay.shouldAddEmptyPhotosInRows,
-            onPhotoSelected = onPhotoSelected,
+            onMediaItemSelected = onMediaItemSelected,
             onPhotoLongPressed = onPhotoLongPressed,
             onAlbumSelectionClicked = onAlbumSelectionClicked,
             onAlbumRefreshClicked = onAlbumRefreshClicked,

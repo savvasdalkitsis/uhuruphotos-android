@@ -1,0 +1,4 @@
+ALTER TABLE photoDetails RENAME TO remoteMediaItemDetails;
+ALTER TABLE photoSummary RENAME TO remoteMediaItemSummary;
+ALTER TABLE trash RENAME TO remoteMediaTrash;
+ALTER TABLE mediaStore RENAME TO localMediaItemDetails;

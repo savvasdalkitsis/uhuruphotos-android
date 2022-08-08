@@ -28,15 +28,15 @@ SELECT
     autoAlbum.isFavorite,
     autoAlbum.gpsLat,
     autoAlbum.gpsLon,
-    photoDetails.imageHash AS photoId,
-    photoDetails.rating,
-    photoDetails.video,
-    photoDetails.timestamp
+    remoteMediaItemDetails.imageHash AS photoId,
+    remoteMediaItemDetails.rating,
+    remoteMediaItemDetails.video,
+    remoteMediaItemDetails.timestamp
 FROM autoAlbum
 LEFT JOIN autoAlbumPhotos ON autoAlbum.id == autoAlbumPhotos.albumId
-LEFT JOIN photoDetails ON autoAlbumPhotos.imageHash == photoDetails.imageHash
+LEFT JOIN remoteMediaItemDetails ON autoAlbumPhotos.imageHash == remoteMediaItemDetails.imageHash
 WHERE autoAlbum.id == :albumId
-ORDER BY photoDetails.timestamp DESC;
+ORDER BY remoteMediaItemDetails.timestamp DESC;
 
 clearAll:
 DELETE FROM autoAlbum;

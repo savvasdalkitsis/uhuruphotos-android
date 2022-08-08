@@ -28,8 +28,8 @@ import com.savvasdalkitsis.uhuruphotos.api.db.albums.GetUserAlbum
 import com.savvasdalkitsis.uhuruphotos.api.db.extensions.isVideo
 import com.savvasdalkitsis.uhuruphotos.api.group.model.Group
 import com.savvasdalkitsis.uhuruphotos.api.group.model.mapValues
-import com.savvasdalkitsis.uhuruphotos.api.photos.model.Photo
-import com.savvasdalkitsis.uhuruphotos.api.photos.usecase.PhotosUseCase
+import com.savvasdalkitsis.uhuruphotos.api.media.page.domain.model.MediaItem
+import com.savvasdalkitsis.uhuruphotos.api.media.remote.domain.usecase.RemoteMediaUseCase
 import com.savvasdalkitsis.uhuruphotos.api.user.usecase.UserUseCase
 import com.savvasdalkitsis.uhuruphotos.implementation.albums.worker.AlbumWorkScheduler
 import kotlinx.coroutines.flow.Flow
@@ -40,7 +40,7 @@ import javax.inject.Inject
 internal class AlbumsUseCase @Inject constructor(
     private val albumsRepository: AlbumsRepository,
     private val dateDisplayer: DateDisplayer,
-    private val photosUseCase: PhotosUseCase,
+    private val remoteMediaUseCase: RemoteMediaUseCase,
     private val albumWorkScheduler: AlbumWorkScheduler,
     private val userUseCase: UserUseCase,
 ) : AlbumsUseCase {
@@ -111,9 +111,10 @@ internal class AlbumsUseCase @Inject constructor(
             val albumDate = photos.firstOrNull()?.albumDate
             val albumLocation = photos.firstOrNull()?.albumLocation
 
+            val date = dateDisplayer.dateString(albumDate)
             Album(
                 id = id,
-                displayTitle = dateDisplayer.dateString(albumDate),
+                displayTitle = date,
                 unformattedDate = albumDate,
                 location = albumLocation ?: "",
                 photos = photos.mapNotNull { item ->
@@ -121,15 +122,16 @@ internal class AlbumsUseCase @Inject constructor(
                         item.photoId.isNullOrBlank() -> null
                         else -> {
                             val photoId = item.photoId
-                            Photo(
+                            MediaItem(
                                 id = photoId,
-                                thumbnailUrl = with(photosUseCase) {
+                                thumbnailUri = with(remoteMediaUseCase) {
                                     photoId.toThumbnailUrlFromId()
                                 },
-                                fullResUrl = with(photosUseCase) {
+                                fullResUri = with(remoteMediaUseCase) {
                                     photoId.toFullSizeUrlFromId(item.isVideo)
                                 },
                                 fallbackColor = item.dominantColor,
+                                displayDayDate = date,
                                 isFavourite = favouriteThreshold
                                     .map {
                                         (item.rating ?: 0) >= it

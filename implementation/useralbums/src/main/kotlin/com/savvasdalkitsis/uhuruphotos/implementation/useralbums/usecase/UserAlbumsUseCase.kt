@@ -21,9 +21,9 @@ import com.savvasdalkitsis.uhuruphotos.api.albums.repository.AlbumsRepository
 import com.savvasdalkitsis.uhuruphotos.api.albums.view.state.AlbumSorting
 import com.savvasdalkitsis.uhuruphotos.api.albums.view.state.AlbumSorting.Companion.sorted
 import com.savvasdalkitsis.uhuruphotos.api.db.albums.UserAlbums
-import com.savvasdalkitsis.uhuruphotos.api.photos.model.Photo
-import com.savvasdalkitsis.uhuruphotos.api.photos.model.PhotoGrid
-import com.savvasdalkitsis.uhuruphotos.api.photos.usecase.PhotosUseCase
+import com.savvasdalkitsis.uhuruphotos.api.media.page.domain.model.MediaGrid
+import com.savvasdalkitsis.uhuruphotos.api.media.page.domain.model.MediaItem
+import com.savvasdalkitsis.uhuruphotos.api.media.remote.domain.usecase.RemoteMediaUseCase
 import com.savvasdalkitsis.uhuruphotos.api.strings.R.string
 import com.savvasdalkitsis.uhuruphotos.api.useralbums.usecase.UserAlbumsUseCase
 import com.savvasdalkitsis.uhuruphotos.api.useralbums.view.state.UserAlbum
@@ -34,7 +34,7 @@ import javax.inject.Inject
 
 class UserAlbumsUseCase @Inject constructor(
     private val albumsRepository: AlbumsRepository,
-    private val photosUseCase: PhotosUseCase,
+    private val remoteMediaUseCase: RemoteMediaUseCase,
     flowSharedPreferences: FlowSharedPreferences,
     @ApplicationContext private val context: Context,
 ) : UserAlbumsUseCase {
@@ -72,20 +72,20 @@ class UserAlbumsUseCase @Inject constructor(
             .map {
                 UserAlbum(
                     id = it.id,
-                    cover = PhotoGrid(
-                        photo1 = photo(
+                    cover = MediaGrid(
+                        mediaItem1 = photo(
                             it.coverPhoto1Hash,
                             it.coverPhoto1IsVideo
                         ),
-                        photo2 = photo(
+                        mediaItem2 = photo(
                             it.coverPhoto2Hash,
                             it.coverPhoto2IsVideo
                         ),
-                        photo3 = photo(
+                        mediaItem3 = photo(
                             it.coverPhoto3Hash,
                             it.coverPhoto3IsVideo
                         ),
-                        photo4 = photo(
+                        mediaItem4 = photo(
                             it.coverPhoto4Hash,
                             it.coverPhoto4IsVideo
                         ),
@@ -95,12 +95,13 @@ class UserAlbumsUseCase @Inject constructor(
                 )
             }
 
-    private fun photo(imageHash: String?, coverIsVideo: Boolean?): Photo? = with(photosUseCase) {
+    private fun photo(imageHash: String?, coverIsVideo: Boolean?): MediaItem? = with(remoteMediaUseCase) {
         imageHash?.let { imageHash ->
-            Photo(
+            MediaItem(
                 id = imageHash,
-                thumbnailUrl = imageHash.toThumbnailUrlFromId(),
-                fullResUrl = imageHash.toFullSizeUrlFromId(coverIsVideo ?: false),
+                thumbnailUri = imageHash.toThumbnailUrlFromId(),
+                fullResUri = imageHash.toFullSizeUrlFromId(coverIsVideo ?: false),
+                displayDayDate = null,
                 ratio = 1f,
                 isVideo = coverIsVideo ?: false,
             )

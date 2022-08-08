@@ -25,7 +25,7 @@ import com.savvasdalkitsis.uhuruphotos.api.albumpage.view.state.AlbumPageState
 import com.savvasdalkitsis.uhuruphotos.api.albumpage.view.state.Title
 import com.savvasdalkitsis.uhuruphotos.api.albums.model.Album
 import com.savvasdalkitsis.uhuruphotos.api.biometrics.usecase.BiometricsUseCase
-import com.savvasdalkitsis.uhuruphotos.api.photos.model.PhotoSequenceDataSource.Trash
+import com.savvasdalkitsis.uhuruphotos.api.media.page.domain.model.MediaSequenceDataSource.Trash
 import com.savvasdalkitsis.uhuruphotos.api.seam.ActionHandler
 import com.savvasdalkitsis.uhuruphotos.api.settings.usecase.SettingsUseCase
 import com.savvasdalkitsis.uhuruphotos.api.strings.R.string
@@ -83,5 +83,5 @@ internal class TrashAlbumPageActionHandler @Inject constructor(
             }
 
     },
-    photoSequenceDataSource = { Trash },
+    mediaSequenceDataSource = { Trash },
 )

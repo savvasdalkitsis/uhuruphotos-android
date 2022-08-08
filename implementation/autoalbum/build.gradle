@@ -17,7 +17,8 @@ dependencies {
     implementation project(":api:feed")
     implementation project(":api:navigation")
     implementation project(':api:people')
-    implementation project(":api:photos")
+    implementation project(':api:media:page')
+    implementation project(':api:media:remote')
     implementation project(":api:settings")
     implementation(
             libs.androidx.compose.hilt.navigation,

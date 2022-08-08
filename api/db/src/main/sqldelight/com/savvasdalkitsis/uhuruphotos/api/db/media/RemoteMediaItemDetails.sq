@@ -1,0 +1,40 @@
+CREATE TABLE remoteMediaItemDetails (
+  imageHash TEXT NOT NULL PRIMARY KEY,
+  gpsLat TEXT,
+  gpsLon TEXT,
+  timestamp TEXT,
+  captions TEXT,
+  location TEXT,
+  thumbnailUrl TEXT,
+  thumbnailHeight TEXT,
+  thumbnailWidth TEXT,
+  bigThumbnailUrl TEXT,
+  smallThumbnailUrl TEXT,
+  squareThumbnailUrl TEXT,
+  bigSquareThumbnailUrl TEXT,
+  smallSquareThumbnailUrl TEXT,
+  tinySquareThumbnailUrl TEXT,
+  video INTEGER AS Boolean,
+  rating INTEGER AS Int,
+  peopleNames TEXT,
+  imagePath TEXT
+);
+
+getAll:
+SELECT * FROM remoteMediaItemDetails
+LIMIT :limit;
+
+getMediaItem:
+SELECT * FROM remoteMediaItemDetails WHERE imageHash = :id LIMIT 1;
+
+insert:
+INSERT OR REPLACE INTO remoteMediaItemDetails VALUES ?;
+
+setRating:
+UPDATE remoteMediaItemDetails SET rating = :rating WHERE imageHash = :id;
+
+delete:
+DELETE FROM remoteMediaItemDetails WHERE imageHash = :id;
+
+clearAll:
+DELETE FROM remoteMediaItemDetails;

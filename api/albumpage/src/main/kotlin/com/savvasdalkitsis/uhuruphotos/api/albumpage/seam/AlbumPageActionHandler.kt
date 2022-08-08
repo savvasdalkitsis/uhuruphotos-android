@@ -32,8 +32,8 @@ import com.savvasdalkitsis.uhuruphotos.api.coroutines.safelyOnStartIgnoring
 import com.savvasdalkitsis.uhuruphotos.api.feed.view.state.FeedDisplay
 import com.savvasdalkitsis.uhuruphotos.api.feed.view.state.FeedDisplays
 import com.savvasdalkitsis.uhuruphotos.api.log.log
-import com.savvasdalkitsis.uhuruphotos.api.photos.model.PhotoImageSource
-import com.savvasdalkitsis.uhuruphotos.api.photos.model.PhotoSequenceDataSource
+import com.savvasdalkitsis.uhuruphotos.api.media.page.domain.model.MediaSequenceDataSource
+import com.savvasdalkitsis.uhuruphotos.api.media.page.domain.model.MediaSource
 import com.savvasdalkitsis.uhuruphotos.api.seam.ActionHandler
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -48,7 +48,7 @@ class AlbumPageActionHandler(
     private val albumRefresher: suspend (Int) -> Unit,
     private val albumDetailsFlow: (albumId: Int, effect: suspend (AlbumPageEffect) -> Unit) -> Flow<AlbumDetails>,
     private val albumDetailsEmptyCheck: suspend (albumId: Int) -> Boolean,
-    private val photoSequenceDataSource: (albumId: Int) -> PhotoSequenceDataSource,
+    private val mediaSequenceDataSource: (albumId: Int) -> MediaSequenceDataSource,
     private val initialFeedDisplay: (albumId: Int) -> FeedDisplay,
     private val feedDisplayPersistence: suspend (albumId:Int, FeedDisplays) -> Unit,
 ) : ActionHandler<AlbumPageState, AlbumPageEffect, AlbumPageAction, AlbumPageMutation> {
@@ -81,12 +81,12 @@ class AlbumPageActionHandler(
             effect(
                 with(action) {
                     OpenPhotoDetails(
-                        id = photo.id,
+                        id = mediaItem.id,
                         center = center,
                         scale = scale,
-                        video = photo.isVideo,
-                        photoSequenceDataSource = photoSequenceDataSource(albumId),
-                        imageSource = PhotoImageSource.fromUrl(photo.fullResUrl)
+                        video = mediaItem.isVideo,
+                        mediaSequenceDataSource = mediaSequenceDataSource(albumId),
+                        imageSource = MediaSource.fromUrl(mediaItem.fullResUri)
                     )
                 }
             )

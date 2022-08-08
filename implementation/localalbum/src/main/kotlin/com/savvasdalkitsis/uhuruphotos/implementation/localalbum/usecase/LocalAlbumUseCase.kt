@@ -17,33 +17,36 @@ package com.savvasdalkitsis.uhuruphotos.implementation.localalbum.usecase
 
 import com.fredporciuncula.flow.preferences.FlowSharedPreferences
 import com.savvasdalkitsis.uhuruphotos.api.albums.model.Album
-import com.savvasdalkitsis.uhuruphotos.api.feed.view.state.FeedDisplay
 import com.savvasdalkitsis.uhuruphotos.api.feed.view.state.FeedDisplays
 import com.savvasdalkitsis.uhuruphotos.api.localalbum.usecase.LocalAlbumUseCase
-import com.savvasdalkitsis.uhuruphotos.api.mediastore.model.LocalBucket
-import com.savvasdalkitsis.uhuruphotos.api.mediastore.model.MediaBucket
-import com.savvasdalkitsis.uhuruphotos.api.mediastore.usecase.MediaStoreUseCase
+import com.savvasdalkitsis.uhuruphotos.api.media.local.domain.model.LocalMediaFolder
+import com.savvasdalkitsis.uhuruphotos.api.media.local.domain.usecase.LocalMediaUseCase
+import com.savvasdalkitsis.uhuruphotos.api.media.page.domain.model.MediaFolderOnDevice
+import com.savvasdalkitsis.uhuruphotos.api.media.page.domain.model.MediaItem
+import com.savvasdalkitsis.uhuruphotos.api.media.page.domain.usecase.MediaUseCase
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.mapNotNull
 import javax.inject.Inject
 
 internal class LocalAlbumUseCase @Inject constructor(
-    private val mediaStoreUseCase: MediaStoreUseCase,
+    private val mediaUseCase: MediaUseCase,
+    private val localMediaUseCase: LocalMediaUseCase,
     private val flowSharedPreferences: FlowSharedPreferences,
 ) : LocalAlbumUseCase {
 
-    override fun observeLocalAlbum(albumId: Int): Flow<Pair<MediaBucket, List<Album>>> =
-        mediaStoreUseCase.observeBucket(albumId)
+    override fun observeLocalAlbum(albumId: Int): Flow<Pair<LocalMediaFolder, List<Album>>> =
+        mediaUseCase.observeLocalAlbum(albumId)
             .mapNotNull { localMedia ->
                 when (localMedia) {
-                    is LocalBucket.Found -> localMedia.bucket
+                    is MediaFolderOnDevice.Found ->
+                        localMedia.folder.first to localMedia.folder.second.toAlbums()
                     else -> null
                 }
             }
 
     override suspend fun refreshLocalAlbum(albumId: Int) {
-        mediaStoreUseCase.refreshBucket(albumId)
+        localMediaUseCase.refreshLocalMediaFolder(albumId)
     }
 
     override fun getLocalAlbumFeedDisplay(albumId: Int) : FeedDisplays =
@@ -59,4 +62,14 @@ internal class LocalAlbumUseCase @Inject constructor(
     private fun userAlbumFeedDisplay(albumId: Int) =
         flowSharedPreferences.getEnum("localAlbumFeedDisplay/$albumId", FeedDisplays.default)
 
+
+    private fun List<MediaItem>.toAlbums(): List<Album> =
+        groupBy { it.displayDayDate }.map { (albumDate, items) ->
+            Album(
+                id = "local_album_$albumDate",
+                displayTitle = albumDate ?: "-",
+                photos = items,
+                location = null,
+            )
+        }
 }

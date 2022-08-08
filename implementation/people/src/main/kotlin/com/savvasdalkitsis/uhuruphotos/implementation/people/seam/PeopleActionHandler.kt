@@ -17,8 +17,8 @@ package com.savvasdalkitsis.uhuruphotos.implementation.people.seam
 
 import com.savvasdalkitsis.uhuruphotos.api.coroutines.safelyOnStartIgnoring
 import com.savvasdalkitsis.uhuruphotos.api.log.log
+import com.savvasdalkitsis.uhuruphotos.api.media.remote.domain.usecase.RemoteMediaUseCase
 import com.savvasdalkitsis.uhuruphotos.api.people.view.state.toPerson
-import com.savvasdalkitsis.uhuruphotos.api.photos.usecase.PhotosUseCase
 import com.savvasdalkitsis.uhuruphotos.api.seam.ActionHandler
 import com.savvasdalkitsis.uhuruphotos.implementation.people.seam.PeopleAction.LoadPeople
 import com.savvasdalkitsis.uhuruphotos.implementation.people.seam.PeopleAction.NavigateBack
@@ -46,7 +46,7 @@ import javax.inject.Inject
 
 class PeopleActionHandler @Inject constructor(
     private val peopleUseCase: PeopleUseCase,
-    private val photosUseCase: PhotosUseCase,
+    private val remoteMediaUseCase: RemoteMediaUseCase,
 ) : ActionHandler<PeopleState, PeopleEffect, PeopleAction, PeopleMutation> {
 
     private
@@ -70,13 +70,13 @@ class PeopleActionHandler @Inject constructor(
                         }
                     },
             ) { sortOrder, people ->
-                with(photosUseCase) {
+                with(remoteMediaUseCase) {
                     DisplayPeople(
                         when (sortOrder) {
                             ASCENDING -> people
                             DESCENDING -> people.reversed()
                         }.map {
-                            it.toPerson { url -> url.toAbsoluteUrl() }
+                            it.toPerson { url -> url.toRemoteUrl() }
                         }
                     )
                 }

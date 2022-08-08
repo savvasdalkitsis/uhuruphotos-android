@@ -25,8 +25,8 @@ import com.savvasdalkitsis.uhuruphotos.api.albumpage.view.state.AlbumPageState
 import com.savvasdalkitsis.uhuruphotos.api.albumpage.view.state.Title
 import com.savvasdalkitsis.uhuruphotos.api.albums.model.Album
 import com.savvasdalkitsis.uhuruphotos.api.biometrics.usecase.BiometricsUseCase
-import com.savvasdalkitsis.uhuruphotos.api.photos.model.PhotoSequenceDataSource.HiddenPhotos
-import com.savvasdalkitsis.uhuruphotos.api.photos.usecase.PhotosUseCase
+import com.savvasdalkitsis.uhuruphotos.api.media.page.domain.model.MediaSequenceDataSource.HiddenMedia
+import com.savvasdalkitsis.uhuruphotos.api.media.page.domain.usecase.MediaUseCase
 import com.savvasdalkitsis.uhuruphotos.api.seam.ActionHandler
 import com.savvasdalkitsis.uhuruphotos.api.settings.usecase.SettingsUseCase
 import com.savvasdalkitsis.uhuruphotos.api.strings.R.string
@@ -38,18 +38,18 @@ import kotlinx.coroutines.flow.mapNotNull
 import javax.inject.Inject
 
 internal class HiddenPhotosAlbumPageActionHandler @Inject constructor(
-    photosUseCase: PhotosUseCase,
+    mediaUseCase: MediaUseCase,
     hiddenPhotosUseCase: HiddenPhotosUseCase,
     settingsUseCase: SettingsUseCase,
     biometricsUseCase: BiometricsUseCase
 ): ActionHandler<AlbumPageState, AlbumPageEffect, AlbumPageAction, AlbumPageMutation> by AlbumPageActionHandler(
-    albumRefresher = { photosUseCase.refreshFavourites() },
+    albumRefresher = { mediaUseCase.refreshFavouriteMedia() },
     initialFeedDisplay = { hiddenPhotosUseCase.getHiddenPhotosFeedDisplay() },
     feedDisplayPersistence = { _, feedDisplay ->
         hiddenPhotosUseCase.setHiddenPhotosFeedDisplay(feedDisplay)
     },
     albumDetailsEmptyCheck = {
-        photosUseCase.getHiddenPhotoSummaries().isEmpty()
+        mediaUseCase.getHiddenMedia().getOrDefault(emptyList()).isEmpty()
     },
     albumDetailsFlow = { _, effect ->
         settingsUseCase.observeBiometricsRequiredForHiddenPhotosAccess()
@@ -68,7 +68,7 @@ internal class HiddenPhotosAlbumPageActionHandler @Inject constructor(
                         effect(NavigateBack)
                     }
                 } else {
-                    photosUseCase.observeHiddenPhotos()
+                    mediaUseCase.observeHiddenMedia()
                         .mapNotNull { it.getOrNull() }
                         .map { photoEntries ->
                             AlbumDetails(
@@ -87,5 +87,5 @@ internal class HiddenPhotosAlbumPageActionHandler @Inject constructor(
             }
 
     },
-    photoSequenceDataSource = { HiddenPhotos },
+    mediaSequenceDataSource = { HiddenMedia },
 )

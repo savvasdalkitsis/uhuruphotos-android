@@ -1,0 +1,53 @@
+CREATE TABLE remoteMediaItemSummary (
+  id TEXT NOT NULL PRIMARY KEY ,
+  dominantColor TEXT,
+  url TEXT NOT NULL,
+  location TEXT,
+  date TEXT,
+  birthTime TEXT,
+  aspectRatio REAL AS Float,
+  type TEXT,
+  videoLength TEXT,
+  rating INTEGER AS Int,
+  containerId TEXT NOT NULL,
+
+  FOREIGN KEY (containerId) REFERENCES albums(id)
+);
+
+getFavourites:
+SELECT * FROM remoteMediaItemSummary WHERE rating >= :favouriteThreshold
+ORDER BY date DESC;
+
+countFavourites:
+SELECT count(id) FROM remoteMediaItemSummary WHERE rating >= :favouriteThreshold;
+
+getHidden:
+SELECT * FROM remoteMediaItemSummary WHERE containerId == 'hiddenPhoto'
+ORDER BY date DESC;
+
+insertHidden:
+INSERT OR REPLACE INTO remoteMediaItemSummary VALUES (?,?,?,?,?,?,?,?,?,?,'hiddenPhoto');
+
+insert:
+INSERT OR REPLACE INTO remoteMediaItemSummary VALUES ?;
+
+deletePhotoSummariesforAlbum:
+DELETE FROM remoteMediaItemSummary WHERE containerId=?;
+
+getPhotoSummariesForAlbum:
+SELECT id, url FROM remoteMediaItemSummary WHERE containerId=?;
+
+setRating:
+UPDATE remoteMediaItemSummary SET rating = :rating WHERE id = :id;
+
+delete:
+DELETE FROM remoteMediaItemSummary WHERE id = :id;
+
+clearAll:
+DELETE FROM remoteMediaItemSummary;
+
+hide:
+UPDATE remoteMediaItemSummary SET containerId = 'hiddenPhoto' WHERE id = :id;
+
+copyToTrash:
+INSERT OR REPLACE INTO remoteMediaTrash SELECT * FROM remoteMediaItemSummary WHERE id = :id;

@@ -22,8 +22,8 @@ import com.savvasdalkitsis.uhuruphotos.api.date.DateDisplayer
 import com.savvasdalkitsis.uhuruphotos.api.db.extensions.isVideo
 import com.savvasdalkitsis.uhuruphotos.api.db.search.GetSearchResults
 import com.savvasdalkitsis.uhuruphotos.api.group.model.Group
-import com.savvasdalkitsis.uhuruphotos.api.photos.model.Photo
-import com.savvasdalkitsis.uhuruphotos.api.photos.usecase.PhotosUseCase
+import com.savvasdalkitsis.uhuruphotos.api.media.page.domain.model.MediaItem
+import com.savvasdalkitsis.uhuruphotos.api.media.remote.domain.usecase.RemoteMediaUseCase
 import com.savvasdalkitsis.uhuruphotos.api.search.SearchUseCase
 import com.savvasdalkitsis.uhuruphotos.implementation.search.repository.SearchRepository
 import kotlinx.coroutines.currentCoroutineContext
@@ -40,7 +40,7 @@ import kotlin.random.Random
 class SearchUseCase @Inject constructor(
     private val searchRepository: SearchRepository,
     private val dateDisplayer: DateDisplayer,
-    private val photosUseCase: PhotosUseCase,
+    private val remoteMediaUseCase: RemoteMediaUseCase,
 ) : SearchUseCase {
 
     override suspend fun searchResultsFor(query: String): List<Album> =
@@ -61,21 +61,23 @@ class SearchUseCase @Inject constructor(
         .map { (id, photos) ->
             val albumLocation = photos.firstOrNull()?.location
             val albumDate = photos.firstOrNull()?.date
+            val date = dateDisplayer.dateString(albumDate)
             Album(
                 id = id,
-                displayTitle = dateDisplayer.dateString(albumDate),
+                displayTitle = date,
                 location = albumLocation,
                 photos = photos.mapNotNull { photo ->
                     photo.summaryId?.let { id ->
-                        Photo(
+                        MediaItem(
                             id = id,
-                            thumbnailUrl = with(photosUseCase) {
+                            thumbnailUri = with(remoteMediaUseCase) {
                                 photo.summaryId.toThumbnailUrlFromIdNullable()
                             },
-                            fullResUrl = with(photosUseCase) {
+                            fullResUri = with(remoteMediaUseCase) {
                                 photo.summaryId.toFullSizeUrlFromIdNullable(photo.isVideo)
                             },
                             fallbackColor = photo.dominantColor,
+                            displayDayDate = date,
                             ratio = photo.aspectRatio ?: 1f,
                             isVideo = photo.isVideo,
                         )
@@ -85,7 +87,7 @@ class SearchUseCase @Inject constructor(
         }
         .map { album ->
             val photos = album.photos.filter { photo ->
-                !photo.thumbnailUrl.isNullOrEmpty()
+                !photo.thumbnailUri.isNullOrEmpty()
             }
             album.copy(photos = photos)
         }

@@ -15,9 +15,9 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.api.feed.view
 
-import com.savvasdalkitsis.uhuruphotos.api.photos.model.Photo
+import com.savvasdalkitsis.uhuruphotos.api.media.page.domain.model.MediaItem
 
 sealed class PhotoRowSlot {
-    data class PhotoSlot(val photo: Photo): PhotoRowSlot()
+    data class PhotoSlot(val mediaItem: MediaItem): PhotoRowSlot()
     object EmptySlot : PhotoRowSlot()
 }

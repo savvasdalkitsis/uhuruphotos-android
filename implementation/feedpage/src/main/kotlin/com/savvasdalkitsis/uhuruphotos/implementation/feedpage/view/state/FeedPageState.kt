@@ -17,8 +17,8 @@ package com.savvasdalkitsis.uhuruphotos.implementation.feedpage.view.state
 
 import com.savvasdalkitsis.uhuruphotos.api.feed.view.state.FeedDisplays
 import com.savvasdalkitsis.uhuruphotos.api.feed.view.state.FeedState
-import com.savvasdalkitsis.uhuruphotos.api.photos.model.Photo
-import com.savvasdalkitsis.uhuruphotos.api.photos.model.SelectionMode
+import com.savvasdalkitsis.uhuruphotos.api.media.page.domain.model.MediaItem
+import com.savvasdalkitsis.uhuruphotos.api.media.page.domain.model.MediaItemSelectionMode
 
 internal data class FeedPageState(
     val feedState: FeedState = FeedState(),
@@ -28,17 +28,17 @@ internal data class FeedPageState(
 ) {
     val selectedPhotoCount: Int = feedState.albums.sumOf { album ->
         album.photos.count { photo ->
-            photo.selectionMode == SelectionMode.SELECTED
+            photo.selectionMode == MediaItemSelectionMode.SELECTED
         }
     }
     val hasSelection = selectedPhotoCount > 0
-    val selectedPhotos: List<Photo> = feedState.albums.flatMap { album ->
+    val selectedMediaItem: List<MediaItem> = feedState.albums.flatMap { album ->
         album.photos.filter { photo ->
-            photo.selectionMode == SelectionMode.SELECTED
+            photo.selectionMode == MediaItemSelectionMode.SELECTED
         }
     }
-    val shouldShowShareIcon: Boolean = selectedPhotos.let { selected ->
-        selected.isNotEmpty() && selected.none(Photo::isVideo)
+    val shouldShowShareIcon: Boolean = selectedMediaItem.let { selected ->
+        selected.isNotEmpty() && selected.none(MediaItem::isVideo)
     }
     val shouldShowAlbumRefreshButtons: Boolean = feedState.feedDisplay != FeedDisplays.YEARLY
 }

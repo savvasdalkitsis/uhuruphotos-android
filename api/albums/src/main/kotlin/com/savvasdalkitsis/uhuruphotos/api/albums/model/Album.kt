@@ -15,11 +15,11 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.api.albums.model
 
-import com.savvasdalkitsis.uhuruphotos.api.photos.model.Photo
+import com.savvasdalkitsis.uhuruphotos.api.media.page.domain.model.MediaItem
 
 data class Album(
     val id: String,
-    val photos: List<Photo>,
+    val photos: List<MediaItem>,
     val displayTitle: String,
     val unformattedDate: String? = null,
     val location: String?,

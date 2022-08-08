@@ -16,7 +16,7 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.api.albums.service.model
 
 import com.savvasdalkitsis.uhuruphotos.api.db.albums.Albums
-import com.savvasdalkitsis.uhuruphotos.api.photos.model.PhotoSummaryItem
+import com.savvasdalkitsis.uhuruphotos.api.media.remote.model.RemoteMediaItemSummary
 import com.squareup.moshi.JsonClass
 
 sealed class Album(
@@ -44,7 +44,7 @@ sealed class Album(
         override val incomplete: Boolean,
         override val numberOfItems: Int,
         val rating: Int?,
-        val items: List<PhotoSummaryItem>,
+        val items: List<RemoteMediaItemSummary>,
     ) : Album(id, date, location, incomplete, numberOfItems)
 }
 

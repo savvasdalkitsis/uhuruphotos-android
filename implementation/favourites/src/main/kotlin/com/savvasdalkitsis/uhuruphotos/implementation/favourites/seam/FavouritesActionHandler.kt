@@ -23,8 +23,8 @@ import com.savvasdalkitsis.uhuruphotos.api.albumpage.view.state.AlbumDetails
 import com.savvasdalkitsis.uhuruphotos.api.albumpage.view.state.AlbumPageState
 import com.savvasdalkitsis.uhuruphotos.api.albumpage.view.state.Title
 import com.savvasdalkitsis.uhuruphotos.api.albums.model.Album
-import com.savvasdalkitsis.uhuruphotos.api.photos.model.PhotoSequenceDataSource.FavouritePhotos
-import com.savvasdalkitsis.uhuruphotos.api.photos.usecase.PhotosUseCase
+import com.savvasdalkitsis.uhuruphotos.api.media.page.domain.model.MediaSequenceDataSource.FavouriteMedia
+import com.savvasdalkitsis.uhuruphotos.api.media.page.domain.usecase.MediaUseCase
 import com.savvasdalkitsis.uhuruphotos.api.seam.ActionHandler
 import com.savvasdalkitsis.uhuruphotos.api.strings.R.string
 import com.savvasdalkitsis.uhuruphotos.implementation.favourites.usecase.FavouritesUseCase
@@ -33,32 +33,32 @@ import kotlinx.coroutines.flow.mapNotNull
 import javax.inject.Inject
 
 internal class FavouritesActionHandler @Inject constructor(
-    photosUseCase: PhotosUseCase,
+    mediaUseCase: MediaUseCase,
     favouritesUseCase: FavouritesUseCase,
 ) : ActionHandler<AlbumPageState, AlbumPageEffect, AlbumPageAction, AlbumPageMutation>
 by AlbumPageActionHandler(
-    albumRefresher = { photosUseCase.refreshFavourites() },
+    albumRefresher = { mediaUseCase.refreshFavouriteMedia() },
     initialFeedDisplay = { favouritesUseCase.getFavouritesFeedDisplay() },
     feedDisplayPersistence = { _, feedDisplay ->
         favouritesUseCase.setFavouritesFeedDisplay(feedDisplay)
     },
     albumDetailsEmptyCheck = { _ ->
-        photosUseCase.getFavouritePhotoSummariesCount().getOrDefault(0) > 0
+        mediaUseCase.getFavouriteMediaCount().getOrDefault(0) > 0
     },
     albumDetailsFlow = { _, _ ->
-        photosUseCase.observeFavouritePhotos()
+        mediaUseCase.observeFavouriteMedia()
             .mapNotNull { it.getOrNull() }
-            .map { photoEntries ->
+            .map { mediaItems ->
                 AlbumDetails(
-                    title = Title.Resource(string.favourite_photos),
+                    title = Title.Resource(string.favourite_media),
                     albums = listOf(Album(
                         id = "favourites",
                         displayTitle = "",
                         location = null,
-                        photos = photoEntries,
+                        photos = mediaItems,
                     )),
                 )
             }
     },
-    photoSequenceDataSource = { FavouritePhotos }
+    mediaSequenceDataSource = { FavouriteMedia }
 )

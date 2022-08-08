@@ -20,9 +20,9 @@ import com.savvasdalkitsis.uhuruphotos.api.coroutines.onErrorsIgnore
 import com.savvasdalkitsis.uhuruphotos.api.db.people.People
 import com.savvasdalkitsis.uhuruphotos.api.feedpage.usecase.FeedPageUseCase
 import com.savvasdalkitsis.uhuruphotos.api.log.log
+import com.savvasdalkitsis.uhuruphotos.api.media.remote.domain.usecase.RemoteMediaUseCase
 import com.savvasdalkitsis.uhuruphotos.api.people.usecase.PeopleUseCase
 import com.savvasdalkitsis.uhuruphotos.api.people.view.state.toPerson
-import com.savvasdalkitsis.uhuruphotos.api.photos.usecase.PhotosUseCase
 import com.savvasdalkitsis.uhuruphotos.api.seam.ActionHandler
 import com.savvasdalkitsis.uhuruphotos.api.settings.usecase.SettingsUseCase
 import com.savvasdalkitsis.uhuruphotos.implementation.search.seam.SearchAction.ChangeDisplay
@@ -88,7 +88,7 @@ class SearchActionHandler @Inject constructor(
     private val feedPageUseCase: FeedPageUseCase,
     private val settingsUseCase: SettingsUseCase,
     private val peopleUseCase: PeopleUseCase,
-    private val photosUseCase: PhotosUseCase,
+    private val remoteMediaUseCase: RemoteMediaUseCase,
 ) : ActionHandler<SearchState, SearchEffect, SearchAction, SearchMutation> {
 
     private var lastSearch: Job? = null
@@ -100,7 +100,7 @@ class SearchActionHandler @Inject constructor(
         action: SearchAction,
         effect: suspend (SearchEffect) -> Unit,
     ): Flow<SearchMutation> = when (action) {
-        Initialise -> with(photosUseCase) {
+        Initialise -> with(remoteMediaUseCase) {
             merge(
                 showLibrary(),
                 showFeedDisplay(),
@@ -122,7 +122,7 @@ class SearchActionHandler @Inject constructor(
         }
         is SelectedPhoto -> flow {
             with(action) {
-                effect(OpenPhotoDetails(photo.id, center, scale, photo.isVideo, state.latestQuery))
+                effect(OpenPhotoDetails(mediaItem.id, center, scale, mediaItem.isVideo, state.latestQuery))
             }
         }
         is ChangeDisplay -> flowOf(ChangeSearchDisplay(action.display))
@@ -176,7 +176,7 @@ class SearchActionHandler @Inject constructor(
         }
     }
 
-    context(PhotosUseCase)
+    context(RemoteMediaUseCase)
     private fun showSearchSuggestions() = combine(
         searchUseCase.getRecentTextSearches()
             .map {
@@ -200,7 +200,7 @@ class SearchActionHandler @Inject constructor(
         }.filterQuery(query)
     }.map(::ShowSearchSuggestions)
 
-    context(PhotosUseCase)
+    context(RemoteMediaUseCase)
     private fun showPeopleSuggestion(effect: suspend (SearchEffect) -> Unit) =
         peopleUseCase.observePeopleByPhotoCount()
             .onErrors {
@@ -227,10 +227,10 @@ class SearchActionHandler @Inject constructor(
         .distinctUntilChanged()
         .map(::ChangeFeedDisplay)
 
-    context(PhotosUseCase)
+    context(RemoteMediaUseCase)
     private fun Flow<List<People>>.toPeople() = map { people ->
         people.map {
-            it.toPerson { url -> url.toAbsoluteUrl() }
+            it.toPerson { url -> url.toRemoteUrl() }
         }
     }
 

@@ -15,11 +15,11 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.api.autoalbums.view.state
 
-import com.savvasdalkitsis.uhuruphotos.api.photos.model.Photo
+import com.savvasdalkitsis.uhuruphotos.api.media.page.domain.model.MediaItem
 
 data class AutoAlbum(
     val id: Int,
-    val cover: Photo,
+    val cover: MediaItem,
     val title: String,
     val photoCount: Int?,
 )

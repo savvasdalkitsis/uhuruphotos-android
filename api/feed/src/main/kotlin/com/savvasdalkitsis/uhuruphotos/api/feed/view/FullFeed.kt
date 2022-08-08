@@ -24,8 +24,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.unit.dp
 import com.savvasdalkitsis.uhuruphotos.api.albums.model.Album
-import com.savvasdalkitsis.uhuruphotos.api.photos.view.PhotoSelected
-import com.savvasdalkitsis.uhuruphotos.api.photos.view.PhotoThumbnail
+import com.savvasdalkitsis.uhuruphotos.api.media.page.view.MediaItemSelected
+import com.savvasdalkitsis.uhuruphotos.api.media.page.view.MediaItemThumbnail
 import com.savvasdalkitsis.uhuruphotos.api.ui.view.LazyStaggeredGrid
 
 @Composable
@@ -33,7 +33,7 @@ fun FullFeed(
     modifier: Modifier = Modifier,
     contentPadding: PaddingValues,
     albums: List<Album>,
-    onPhotoSelected: PhotoSelected,
+    onMediaItemSelected: MediaItemSelected,
 ) {
     LazyStaggeredGrid(
         modifier = modifier
@@ -46,10 +46,10 @@ fun FullFeed(
     ) {
         albums.flatMap { it.photos }.forEach { photo ->
             item(key = photo.id) {
-                PhotoThumbnail(
+                MediaItemThumbnail(
                     modifier = Modifier.fillMaxSize(),
-                    photo = photo,
-                    onPhotoSelected = onPhotoSelected
+                    mediaItem = photo,
+                    onItemSelected = onMediaItemSelected
                 )
             }
         }

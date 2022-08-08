@@ -15,7 +15,7 @@ dependencies {
     implementation project(":api:coroutines")
     implementation project(":api:log")
     implementation project(":api:navigation")
-    implementation project(":api:photos")
+    implementation project(':api:media:page')
     implementation project(":api:settings")
     implementation project(":api:toaster")
     implementation(

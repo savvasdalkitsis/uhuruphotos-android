@@ -34,7 +34,7 @@ import androidx.compose.ui.unit.sp
 import com.savvasdalkitsis.uhuruphotos.api.albums.model.Album
 import com.savvasdalkitsis.uhuruphotos.api.albums.model.previewAlbumEmpty
 import com.savvasdalkitsis.uhuruphotos.api.icons.R.drawable
-import com.savvasdalkitsis.uhuruphotos.api.photos.model.SelectionMode
+import com.savvasdalkitsis.uhuruphotos.api.media.page.domain.model.MediaItemSelectionMode
 import com.savvasdalkitsis.uhuruphotos.api.ui.theme.PreviewAppTheme
 import com.savvasdalkitsis.uhuruphotos.api.ui.view.ActionIcon
 
@@ -55,7 +55,7 @@ fun AlbumHeader(
             ActionIcon(
                 onClick = onSelectionHeaderClicked,
                 icon = when {
-                    album.photos.any { it.selectionMode == SelectionMode.UNSELECTED } ->
+                    album.photos.any { it.selectionMode == MediaItemSelectionMode.UNSELECTED } ->
                         drawable.ic_check_circle
                     else -> drawable.ic_clear
                 }

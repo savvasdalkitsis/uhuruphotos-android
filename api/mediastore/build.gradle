@@ -3,8 +3,9 @@ android {
 }
 
 dependencies {
+    api project(":api:media:local")
     implementation project(":api:albums")
-    implementation project(":api:photos")
+    implementation project(':api:media:page')
     implementation(
             libs.kotlinx.coroutines,
     )

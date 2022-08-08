@@ -25,3 +25,5 @@ data class LatLon(val lat: Double, val lon: Double) {
 
     override fun toString() = "$lat,$lon"
 }
+
+val Pair<Double, Double>.toLatLon get() = LatLon(first, second)

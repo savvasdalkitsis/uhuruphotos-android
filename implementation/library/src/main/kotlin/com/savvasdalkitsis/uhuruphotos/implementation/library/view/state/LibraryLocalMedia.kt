@@ -15,15 +15,14 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.implementation.library.view.state
 
-import com.savvasdalkitsis.uhuruphotos.api.mediastore.model.MediaBucket
-import com.savvasdalkitsis.uhuruphotos.api.photos.model.PhotoGrid
-import java.util.SortedMap
+import com.savvasdalkitsis.uhuruphotos.api.media.local.domain.model.LocalMediaFolder
+import com.savvasdalkitsis.uhuruphotos.api.media.page.domain.model.MediaGrid
 
 sealed class LibraryLocalMedia {
 
     data class RequiresPermissions(val deniedPermissions: List<String>) : LibraryLocalMedia()
 
     data class Found(
-        val buckets: SortedMap<MediaBucket, PhotoGrid>
+        val buckets: List<Pair<LocalMediaFolder, MediaGrid>>
     ) : LibraryLocalMedia()
 }

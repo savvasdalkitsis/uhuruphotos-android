@@ -23,8 +23,8 @@ import com.savvasdalkitsis.uhuruphotos.api.albums.view.state.AlbumSorting.Compan
 import com.savvasdalkitsis.uhuruphotos.api.autoalbums.usecase.AutoAlbumsUseCase
 import com.savvasdalkitsis.uhuruphotos.api.autoalbums.view.state.AutoAlbum
 import com.savvasdalkitsis.uhuruphotos.api.db.albums.AutoAlbums
-import com.savvasdalkitsis.uhuruphotos.api.photos.model.Photo
-import com.savvasdalkitsis.uhuruphotos.api.photos.usecase.PhotosUseCase
+import com.savvasdalkitsis.uhuruphotos.api.media.page.domain.model.MediaItem
+import com.savvasdalkitsis.uhuruphotos.api.media.remote.domain.usecase.RemoteMediaUseCase
 import com.savvasdalkitsis.uhuruphotos.api.strings.R.string
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.flow.Flow
@@ -33,7 +33,7 @@ import javax.inject.Inject
 
 class AutoAlbumsUseCase @Inject constructor(
     private val albumsRepository: AlbumsRepository,
-    private val photosUseCase: PhotosUseCase,
+    private val remoteMediaUseCase: RemoteMediaUseCase,
     flowSharedPreferences: FlowSharedPreferences,
     @ApplicationContext private val context: Context,
 ) : AutoAlbumsUseCase {
@@ -69,15 +69,16 @@ class AutoAlbumsUseCase @Inject constructor(
             title = { it.title },
         )
             .map {
-                with(photosUseCase) {
+                with(remoteMediaUseCase) {
                     AutoAlbum(
                         id = it.id,
-                        cover = Photo(
+                        cover = MediaItem(
                             id = it.coverPhotoHash,
-                            thumbnailUrl = it.coverPhotoHash.toThumbnailUrlFromId(),
-                            fullResUrl = it.coverPhotoHash.toFullSizeUrlFromId(
+                            thumbnailUri = it.coverPhotoHash.toThumbnailUrlFromId(),
+                            fullResUri = it.coverPhotoHash.toFullSizeUrlFromId(
                                 it.coverPhotoIsVideo ?: false
                             ),
+                            displayDayDate = null,
                             ratio = 1f,
                             isVideo = it.coverPhotoIsVideo ?: false,
                         ),

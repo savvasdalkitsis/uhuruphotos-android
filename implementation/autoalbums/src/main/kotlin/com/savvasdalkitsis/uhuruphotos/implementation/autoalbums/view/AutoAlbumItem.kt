@@ -29,7 +29,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import com.savvasdalkitsis.uhuruphotos.api.autoalbums.view.state.AutoAlbum
-import com.savvasdalkitsis.uhuruphotos.api.photos.view.PhotoThumbnail
+import com.savvasdalkitsis.uhuruphotos.api.media.page.view.MediaItemThumbnail
 import com.savvasdalkitsis.uhuruphotos.api.strings.R
 import com.savvasdalkitsis.uhuruphotos.implementation.autoalbums.seam.AutoAlbumsAction
 import com.savvasdalkitsis.uhuruphotos.implementation.autoalbums.seam.AutoAlbumsAction.AutoAlbumSelected
@@ -44,9 +44,9 @@ internal fun AutoAlbumItem(
             .padding(8.dp)
             .clickable { action(AutoAlbumSelected(album)) }
     ) {
-        PhotoThumbnail(
-            photo = album.cover,
-            onPhotoSelected = { _, _, _ ->
+        MediaItemThumbnail(
+            mediaItem = album.cover,
+            onItemSelected = { _, _, _ ->
                 action(AutoAlbumSelected(album))
             },
             contentScale = ContentScale.Crop,

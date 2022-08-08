@@ -16,7 +16,7 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.implementation.feedpage.seam
 
 import androidx.compose.ui.geometry.Offset
-import com.savvasdalkitsis.uhuruphotos.api.photos.model.Photo
+import com.savvasdalkitsis.uhuruphotos.api.media.page.domain.model.MediaItem
 
 internal sealed class FeedPageEffect {
     data class OpenPhotoDetails(
@@ -26,7 +26,7 @@ internal sealed class FeedPageEffect {
         val isVideo: Boolean,
     ) : FeedPageEffect()
 
-    data class SharePhotos(val selectedPhotos: List<Photo>) : FeedPageEffect()
+    data class SharePhotos(val selectedMediaItem: List<MediaItem>) : FeedPageEffect()
     object Vibrate : FeedPageEffect()
     object DownloadingFiles : FeedPageEffect()
 }

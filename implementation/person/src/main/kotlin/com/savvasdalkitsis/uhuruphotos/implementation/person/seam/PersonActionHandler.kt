@@ -15,10 +15,10 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.implementation.person.seam
 
+import com.savvasdalkitsis.uhuruphotos.api.media.remote.domain.usecase.RemoteMediaUseCase
 import com.savvasdalkitsis.uhuruphotos.api.people.usecase.PeopleUseCase
 import com.savvasdalkitsis.uhuruphotos.api.people.view.state.toPerson
 import com.savvasdalkitsis.uhuruphotos.api.person.usecase.PersonUseCase
-import com.savvasdalkitsis.uhuruphotos.api.photos.usecase.PhotosUseCase
 import com.savvasdalkitsis.uhuruphotos.api.seam.ActionHandler
 import com.savvasdalkitsis.uhuruphotos.implementation.person.seam.PersonAction.ChangeDisplay
 import com.savvasdalkitsis.uhuruphotos.implementation.person.seam.PersonAction.LoadPerson
@@ -40,7 +40,7 @@ import javax.inject.Inject
 class PersonActionHandler @Inject constructor(
     private val personUseCase: PersonUseCase,
     private val peopleUseCase: PeopleUseCase,
-    private val photosUseCase: PhotosUseCase,
+    private val remoteMediaUseCase: RemoteMediaUseCase,
 ) : ActionHandler<PersonState, PersonEffect, PersonAction, PersonMutation> {
 
     override fun handleAction(
@@ -51,8 +51,8 @@ class PersonActionHandler @Inject constructor(
         is LoadPerson -> merge(
             flowOf(Loading),
             peopleUseCase.observePerson(action.id)
-                .map { with(photosUseCase) {
-                    it.toPerson { it.toAbsoluteUrl() }
+                .map { with(remoteMediaUseCase) {
+                    it.toPerson { it.toRemoteUrl() }
                 } }
                 .map(::ShowPersonDetails),
             personUseCase.observePersonAlbums(action.id)
@@ -64,7 +64,7 @@ class PersonActionHandler @Inject constructor(
         is ChangeDisplay -> flowOf(SetFeedDisplay(action.display))
         is SelectedPhoto -> flow {
             effect(with(action) {
-                OpenPhotoDetails(photo.id, center, scale, photo.isVideo, state.person!!)
+                OpenPhotoDetails(mediaItem.id, center, scale, mediaItem.isVideo, state.person!!)
             })
         }
     }

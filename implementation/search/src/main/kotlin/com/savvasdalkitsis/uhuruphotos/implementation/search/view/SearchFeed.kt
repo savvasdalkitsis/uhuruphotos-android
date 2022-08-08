@@ -34,7 +34,7 @@ fun SearchFeed(
 ) {
     Feed(
         contentPadding = contentPadding.copy(top = 0.dp),
-        onPhotoSelected = { photo, center, scale ->
+        onMediaItemSelected = { photo, center, scale ->
             action(SearchAction.SelectedPhoto(photo, center, scale))
         },
         onChangeDisplay = { action(SearchAction.ChangeDisplay(it)) },

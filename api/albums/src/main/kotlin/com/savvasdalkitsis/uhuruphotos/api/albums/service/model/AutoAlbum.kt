@@ -15,8 +15,8 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.api.albums.service.model
 
+import com.savvasdalkitsis.uhuruphotos.api.media.remote.model.RemoteMediaItem
 import com.savvasdalkitsis.uhuruphotos.api.people.model.PersonResult
-import com.savvasdalkitsis.uhuruphotos.api.photos.model.PhotoResult
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 
@@ -33,6 +33,6 @@ data class AutoAlbum(
     val id: Int,
     val timestamp: String,
     val title: String,
-    val photos: List<PhotoResult>,
+    val photos: List<RemoteMediaItem>,
     val people: List<PersonResult>,
 )

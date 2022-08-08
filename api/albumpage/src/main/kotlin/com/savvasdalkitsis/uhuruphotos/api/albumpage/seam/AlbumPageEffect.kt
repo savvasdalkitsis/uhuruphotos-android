@@ -16,8 +16,8 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.api.albumpage.seam
 
 import androidx.compose.ui.geometry.Offset
-import com.savvasdalkitsis.uhuruphotos.api.photos.model.PhotoImageSource
-import com.savvasdalkitsis.uhuruphotos.api.photos.model.PhotoSequenceDataSource
+import com.savvasdalkitsis.uhuruphotos.api.media.page.domain.model.MediaSequenceDataSource
+import com.savvasdalkitsis.uhuruphotos.api.media.page.domain.model.MediaSource
 
 sealed class AlbumPageEffect {
     object NavigateBack : AlbumPageEffect()
@@ -28,8 +28,8 @@ sealed class AlbumPageEffect {
         val center: Offset,
         val scale: Float,
         val video: Boolean,
-        val photoSequenceDataSource: PhotoSequenceDataSource,
-        val imageSource: PhotoImageSource,
+        val mediaSequenceDataSource: MediaSequenceDataSource,
+        val imageSource: MediaSource,
     ) : AlbumPageEffect()
 
     data class NavigateToPerson(val personId: Int) : AlbumPageEffect()

@@ -26,17 +26,16 @@ import com.savvasdalkitsis.uhuruphotos.api.compose.blurIf
 import com.savvasdalkitsis.uhuruphotos.api.feed.view.Feed
 import com.savvasdalkitsis.uhuruphotos.api.feed.view.state.FeedDisplays
 import com.savvasdalkitsis.uhuruphotos.api.home.view.HomeScaffold
-import com.savvasdalkitsis.uhuruphotos.api.photos.view.DeletePermissionDialog
-import com.savvasdalkitsis.uhuruphotos.api.photos.view.TrashPermissionDialog
+import com.savvasdalkitsis.uhuruphotos.api.media.page.view.TrashPermissionDialog
 import com.savvasdalkitsis.uhuruphotos.implementation.feedpage.seam.FeedPageAction
 import com.savvasdalkitsis.uhuruphotos.implementation.feedpage.seam.FeedPageAction.AlbumRefreshClicked
 import com.savvasdalkitsis.uhuruphotos.implementation.feedpage.seam.FeedPageAction.AlbumSelectionClicked
 import com.savvasdalkitsis.uhuruphotos.implementation.feedpage.seam.FeedPageAction.ChangeDisplay
-import com.savvasdalkitsis.uhuruphotos.implementation.feedpage.seam.FeedPageAction.TrashSelectedPhotos
 import com.savvasdalkitsis.uhuruphotos.implementation.feedpage.seam.FeedPageAction.DismissSelectedPhotosTrashing
 import com.savvasdalkitsis.uhuruphotos.implementation.feedpage.seam.FeedPageAction.PhotoLongPressed
 import com.savvasdalkitsis.uhuruphotos.implementation.feedpage.seam.FeedPageAction.RefreshAlbums
 import com.savvasdalkitsis.uhuruphotos.implementation.feedpage.seam.FeedPageAction.SelectedPhoto
+import com.savvasdalkitsis.uhuruphotos.implementation.feedpage.seam.FeedPageAction.TrashSelectedPhotos
 import com.savvasdalkitsis.uhuruphotos.implementation.feedpage.view.state.FeedPageState
 import kotlinx.coroutines.launch
 
@@ -84,7 +83,7 @@ internal fun FeedPage(
                 showSelectionHeader = state.hasSelection,
                 showAlbumRefreshButton = state.shouldShowAlbumRefreshButtons,
                 listState = listState,
-                onPhotoSelected = { photo, center, scale ->
+                onMediaItemSelected = { photo, center, scale ->
                     action(SelectedPhoto(photo, center, scale,))
                 },
                 onChangeDisplay = { action(ChangeDisplay(it as FeedDisplays)) },
@@ -101,7 +100,7 @@ internal fun FeedPage(
         }
         if (state.showPhotoTrashingConfirmationDialog) {
             TrashPermissionDialog(
-                photoCount = state.selectedPhotoCount,
+                mediaItemCount = state.selectedPhotoCount,
                 onDismiss = { action(DismissSelectedPhotosTrashing) },
                 onDelete = { action(TrashSelectedPhotos) }
             )

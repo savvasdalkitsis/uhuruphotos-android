@@ -82,7 +82,7 @@ fun AlbumPage(
                     }
                 },
                 emptyContent = emptyContent,
-                onPhotoSelected = { photo, center, scale ->
+                onMediaItemSelected = { photo, center, scale ->
                     action(SelectedPhoto(photo, center, scale,))
                 },
             )

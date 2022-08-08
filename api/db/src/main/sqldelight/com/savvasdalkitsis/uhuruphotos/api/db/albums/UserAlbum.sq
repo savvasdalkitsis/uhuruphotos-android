@@ -14,17 +14,17 @@ SELECT
     userAlbum.date,
     userAlbum.title,
     userAlbum.location,
-    photoSummary.id AS photoId,
-    photoSummary.rating,
-    photoSummary.type,
-    photoSummary.date,
-    photoSummary.aspectRatio,
-    photoSummary.dominantColor
+    remoteMediaItemSummary.id AS photoId,
+    remoteMediaItemSummary.rating,
+    remoteMediaItemSummary.type,
+    remoteMediaItemSummary.date AS photoDate,
+    remoteMediaItemSummary.aspectRatio,
+    remoteMediaItemSummary.dominantColor
 FROM userAlbum
 LEFT JOIN userAlbumPhotos ON userAlbum.id == userAlbumPhotos.albumId
-LEFT JOIN photoSummary ON userAlbumPhotos.imageHash == photoSummary.id
+LEFT JOIN remoteMediaItemSummary ON userAlbumPhotos.imageHash == remoteMediaItemSummary.id
 WHERE userAlbum.id == :albumId
-ORDER BY photoSummary.date DESC;
+ORDER BY remoteMediaItemSummary.date DESC;
 
 clearAll:
 DELETE FROM userAlbum;

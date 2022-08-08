@@ -90,7 +90,7 @@ fun Person(
             Feed(
                 contentPadding = contentPadding,
                 state = state.feedState,
-                onPhotoSelected = { photo, center, scale ->
+                onMediaItemSelected = { photo, center, scale ->
                     action(SelectedPhoto(photo, center, scale))
                 },
                 onChangeDisplay = { action(ChangeDisplay(it)) },

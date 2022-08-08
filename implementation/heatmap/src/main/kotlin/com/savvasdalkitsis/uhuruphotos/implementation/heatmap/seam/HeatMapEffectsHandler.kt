@@ -15,8 +15,8 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.implementation.heatmap.seam
 
+import com.savvasdalkitsis.uhuruphotos.api.media.page.navigation.MediaItemPageNavigationTarget
 import com.savvasdalkitsis.uhuruphotos.api.navigation.Navigator
-import com.savvasdalkitsis.uhuruphotos.api.photos.navigation.PhotoNavigationTarget
 import com.savvasdalkitsis.uhuruphotos.api.seam.EffectHandler
 import com.savvasdalkitsis.uhuruphotos.api.strings.R.string
 import com.savvasdalkitsis.uhuruphotos.api.toaster.Toaster
@@ -37,7 +37,7 @@ class HeatMapEffectsHandler @Inject constructor(
             ErrorLoadingPhotoDetails -> toaster.show(string.error_loading_photo_details)
             NavigateBack -> navigator.navigateBack()
             is NavigateToPhoto -> navigator.navigateTo(with(effect) {
-                PhotoNavigationTarget.name(photo.id, center, scale, photo.isVideo)
+                MediaItemPageNavigationTarget.name(mediaItem.id, center, scale, mediaItem.isVideo)
             })
         }
     }

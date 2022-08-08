@@ -15,17 +15,17 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.implementation.library.seam
 
-import com.savvasdalkitsis.uhuruphotos.api.albums.model.Album
 import com.savvasdalkitsis.uhuruphotos.api.autoalbums.usecase.AutoAlbumsUseCase
 import com.savvasdalkitsis.uhuruphotos.api.coroutines.safelyOnStartIgnoring
 import com.savvasdalkitsis.uhuruphotos.api.log.log
-import com.savvasdalkitsis.uhuruphotos.api.mediastore.model.LocalMedia.Found
-import com.savvasdalkitsis.uhuruphotos.api.mediastore.model.LocalMedia.RequiresPermissions
-import com.savvasdalkitsis.uhuruphotos.api.mediastore.usecase.MediaStoreUseCase
-import com.savvasdalkitsis.uhuruphotos.api.mediastore.worker.MediaStoreWorkScheduler
-import com.savvasdalkitsis.uhuruphotos.api.photos.model.Photo
-import com.savvasdalkitsis.uhuruphotos.api.photos.model.PhotoGrid
-import com.savvasdalkitsis.uhuruphotos.api.photos.usecase.PhotosUseCase
+import com.savvasdalkitsis.uhuruphotos.api.media.local.domain.model.LocalMediaFolder
+import com.savvasdalkitsis.uhuruphotos.api.media.local.domain.usecase.LocalMediaUseCase
+import com.savvasdalkitsis.uhuruphotos.api.media.local.worker.LocalMediaWorkScheduler
+import com.savvasdalkitsis.uhuruphotos.api.media.page.domain.model.MediaGrid
+import com.savvasdalkitsis.uhuruphotos.api.media.page.domain.model.MediaItem
+import com.savvasdalkitsis.uhuruphotos.api.media.page.domain.model.MediaItemsOnDevice.Found
+import com.savvasdalkitsis.uhuruphotos.api.media.page.domain.model.MediaItemsOnDevice.RequiresPermissions
+import com.savvasdalkitsis.uhuruphotos.api.media.page.domain.usecase.MediaUseCase
 import com.savvasdalkitsis.uhuruphotos.api.seam.ActionHandler
 import com.savvasdalkitsis.uhuruphotos.api.useralbums.usecase.UserAlbumsUseCase
 import com.savvasdalkitsis.uhuruphotos.implementation.library.seam.LibraryAction.AutoAlbumsSelected
@@ -66,9 +66,9 @@ import javax.inject.Inject
 class LibraryActionHandler @Inject constructor(
     private val autoAlbumsUseCase: AutoAlbumsUseCase,
     private val userAlbumsUseCase: UserAlbumsUseCase,
-    private val photosUseCase: PhotosUseCase,
-    private val mediaStoreUseCase: MediaStoreUseCase,
-    private val mediaStoreWorkScheduler: MediaStoreWorkScheduler,
+    private val mediaUseCase: MediaUseCase,
+    private val localMediaUseCase: LocalMediaUseCase,
+    private val localMediaWorkScheduler: LocalMediaWorkScheduler,
 ) : ActionHandler<LibraryState, LibraryEffect, LibraryAction, LibraryMutation> {
 
     private val loading = MutableSharedFlow<Boolean>()
@@ -81,25 +81,18 @@ class LibraryActionHandler @Inject constructor(
         Load -> merge(
             autoAlbumsUseCase.observeAutoAlbums().mapToCover { it.cover }
                 .map(::DisplayAutoAlbums),
-            userAlbumsUseCase.observeUserAlbums().mapToCover { it.cover.photo1 }
+            userAlbumsUseCase.observeUserAlbums().mapToCover { it.cover.mediaItem1 }
                 .map(::DisplayUserAlbums),
-            favouritePhotos().mapToCover { it }
+            favouriteMedia().mapToCover { it }
                 .map(::DisplayFavouritePhotos),
             loading
                 .map(::Loading),
-            mediaStoreUseCase.observeMedia()
+            mediaUseCase.observeLocalMedia()
                 .debounce(200)
-                .map {
-                    val defaultBucket = mediaStoreUseCase.getDefaultBucketId()
-                    when (val media = it) {
-                        is Found -> LibraryLocalMedia.Found(media.buckets.mapValues { (_, albums) ->
-                            PhotoGrid(albums.flatMap(Album::photos).take(4))
-                        }.toSortedMap { bucket, other ->
-                            when (defaultBucket) {
-                                bucket.id -> -1
-                                other.id -> 1
-                                else -> bucket.displayName.compareTo(other.displayName) }
-                            }
+                .map { media ->
+                    when (media) {
+                        is Found -> LibraryLocalMedia.Found(
+                            media.mediaFolders.map { it.toMediaGrid() }
                         )
                         is RequiresPermissions ->
                             LibraryLocalMedia.RequiresPermissions(media.deniedPermissions)
@@ -140,7 +133,7 @@ class LibraryActionHandler @Inject constructor(
         }
     }
 
-    private fun favouritePhotos() = photosUseCase.observeFavouritePhotos()
+    private fun favouriteMedia() = mediaUseCase.observeFavouriteMedia()
         .mapNotNull { it.getOrNull() }
 
     private suspend fun initialRefresh(effect: suspend (LibraryEffect) -> Unit) {
@@ -150,13 +143,13 @@ class LibraryActionHandler @Inject constructor(
         if (userAlbumsUseCase.getUserAlbums().isEmpty()) {
             refreshUserAlbums(effect)
         }
-        if (photosUseCase.getFavouritePhotoSummaries().map { it.size }.getOrDefault(0) == 0) {
+        if (mediaUseCase.getFavouriteMediaCount().map { it }.getOrDefault(0) == 0L) {
             refreshFavouritePhotos(effect)
         }
-        if (photosUseCase.getHiddenPhotoSummaries().isEmpty()) {
+        if (mediaUseCase.getHiddenMedia().getOrDefault(emptyList()).isEmpty()) {
             refreshHiddenPhotos(effect)
         }
-        if (mediaStoreUseCase.getMedia().isEmpty()) {
+        if (localMediaUseCase.getLocalMedia().isEmpty()) {
             refreshMediaStore()
         }
     }
@@ -175,18 +168,18 @@ class LibraryActionHandler @Inject constructor(
 
     private suspend fun refreshFavouritePhotos(effect: suspend (LibraryEffect) -> Unit) {
         refresh(effect) {
-            photosUseCase.refreshFavourites()
+            mediaUseCase.refreshFavouriteMedia()
         }
     }
 
     private suspend fun refreshHiddenPhotos(effect: suspend (LibraryEffect) -> Unit) {
         refresh(effect) {
-            photosUseCase.refreshHiddenPhotos()
+            mediaUseCase.refreshHiddenMedia()
         }
     }
 
     private fun refreshMediaStore() {
-        mediaStoreWorkScheduler.scheduleMediaStoreSyncNowIfNotRunning()
+        localMediaWorkScheduler.scheduleLocalMediaSyncNowIfNotRunning()
     }
 
     private suspend fun refresh(effect: suspend (LibraryEffect) -> Unit, refresh: suspend () -> Unit) {
@@ -204,10 +197,13 @@ class LibraryActionHandler @Inject constructor(
         }
     }
 
-    private fun <T> Flow<List<T>>.mapToCover(cover: (T) -> Photo?): Flow<PhotoGrid> =
+    private fun <T> Flow<List<T>>.mapToCover(cover: (T) -> MediaItem?): Flow<MediaGrid> =
         map { albums ->
             albums.take(4).map(cover).let {
-                PhotoGrid(it)
+                MediaGrid(it)
             }
         }
+
+    private fun Pair<LocalMediaFolder, List<MediaItem>>.toMediaGrid(): Pair<LocalMediaFolder, MediaGrid> =
+        first to MediaGrid(second)
 }

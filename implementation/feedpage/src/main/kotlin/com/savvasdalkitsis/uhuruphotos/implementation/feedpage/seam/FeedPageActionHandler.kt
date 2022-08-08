@@ -17,19 +17,30 @@ package com.savvasdalkitsis.uhuruphotos.implementation.feedpage.seam
 
 import com.savvasdalkitsis.uhuruphotos.api.albums.model.Album
 import com.savvasdalkitsis.uhuruphotos.api.albums.usecase.AlbumsUseCase
-import com.savvasdalkitsis.uhuruphotos.api.feed.view.state.FeedDisplays
-import com.savvasdalkitsis.uhuruphotos.api.feed.view.state.FeedDisplays.*
-import com.savvasdalkitsis.uhuruphotos.api.photos.model.Photo
-import com.savvasdalkitsis.uhuruphotos.api.photos.model.SelectionMode.SELECTED
-import com.savvasdalkitsis.uhuruphotos.api.photos.model.SelectionMode.UNDEFINED
-import com.savvasdalkitsis.uhuruphotos.api.photos.model.SelectionMode.UNSELECTED
-import com.savvasdalkitsis.uhuruphotos.api.photos.usecase.PhotosUseCase
+import com.savvasdalkitsis.uhuruphotos.api.feed.view.state.FeedDisplays.YEARLY
+import com.savvasdalkitsis.uhuruphotos.api.media.page.domain.model.MediaItem
+import com.savvasdalkitsis.uhuruphotos.api.media.page.domain.model.MediaItemSelectionMode.SELECTED
+import com.savvasdalkitsis.uhuruphotos.api.media.page.domain.model.MediaItemSelectionMode.UNDEFINED
+import com.savvasdalkitsis.uhuruphotos.api.media.page.domain.model.MediaItemSelectionMode.UNSELECTED
+import com.savvasdalkitsis.uhuruphotos.api.media.page.domain.usecase.MediaUseCase
 import com.savvasdalkitsis.uhuruphotos.api.seam.ActionHandler
 import com.savvasdalkitsis.uhuruphotos.api.settings.usecase.SettingsUseCase
 import com.savvasdalkitsis.uhuruphotos.api.userbadge.usecase.UserBadgeUseCase
 import com.savvasdalkitsis.uhuruphotos.api.userbadge.view.state.SyncState.IN_PROGRESS
 import com.savvasdalkitsis.uhuruphotos.implementation.feedpage.SelectionList
-import com.savvasdalkitsis.uhuruphotos.implementation.feedpage.seam.FeedPageAction.*
+import com.savvasdalkitsis.uhuruphotos.implementation.feedpage.seam.FeedPageAction.AlbumRefreshClicked
+import com.savvasdalkitsis.uhuruphotos.implementation.feedpage.seam.FeedPageAction.AlbumSelectionClicked
+import com.savvasdalkitsis.uhuruphotos.implementation.feedpage.seam.FeedPageAction.AskForSelectedPhotosTrashing
+import com.savvasdalkitsis.uhuruphotos.implementation.feedpage.seam.FeedPageAction.ChangeDisplay
+import com.savvasdalkitsis.uhuruphotos.implementation.feedpage.seam.FeedPageAction.ClearSelected
+import com.savvasdalkitsis.uhuruphotos.implementation.feedpage.seam.FeedPageAction.DismissSelectedPhotosTrashing
+import com.savvasdalkitsis.uhuruphotos.implementation.feedpage.seam.FeedPageAction.DownloadSelectedPhotos
+import com.savvasdalkitsis.uhuruphotos.implementation.feedpage.seam.FeedPageAction.LoadFeed
+import com.savvasdalkitsis.uhuruphotos.implementation.feedpage.seam.FeedPageAction.PhotoLongPressed
+import com.savvasdalkitsis.uhuruphotos.implementation.feedpage.seam.FeedPageAction.RefreshAlbums
+import com.savvasdalkitsis.uhuruphotos.implementation.feedpage.seam.FeedPageAction.SelectedPhoto
+import com.savvasdalkitsis.uhuruphotos.implementation.feedpage.seam.FeedPageAction.ShareSelectedPhotos
+import com.savvasdalkitsis.uhuruphotos.implementation.feedpage.seam.FeedPageAction.TrashSelectedPhotos
 import com.savvasdalkitsis.uhuruphotos.implementation.feedpage.seam.FeedPageEffect.DownloadingFiles
 import com.savvasdalkitsis.uhuruphotos.implementation.feedpage.seam.FeedPageEffect.OpenPhotoDetails
 import com.savvasdalkitsis.uhuruphotos.implementation.feedpage.seam.FeedPageEffect.SharePhotos
@@ -37,9 +48,9 @@ import com.savvasdalkitsis.uhuruphotos.implementation.feedpage.seam.FeedPageEffe
 import com.savvasdalkitsis.uhuruphotos.implementation.feedpage.seam.FeedPageMutation.HideTrashingConfirmationDialog
 import com.savvasdalkitsis.uhuruphotos.implementation.feedpage.seam.FeedPageMutation.Loading
 import com.savvasdalkitsis.uhuruphotos.implementation.feedpage.seam.FeedPageMutation.ShowAlbums
-import com.savvasdalkitsis.uhuruphotos.implementation.feedpage.seam.FeedPageMutation.ShowTrashingConfirmationDialog
 import com.savvasdalkitsis.uhuruphotos.implementation.feedpage.seam.FeedPageMutation.ShowLibrary
 import com.savvasdalkitsis.uhuruphotos.implementation.feedpage.seam.FeedPageMutation.ShowNoPhotosFound
+import com.savvasdalkitsis.uhuruphotos.implementation.feedpage.seam.FeedPageMutation.ShowTrashingConfirmationDialog
 import com.savvasdalkitsis.uhuruphotos.implementation.feedpage.seam.FeedPageMutation.StartRefreshing
 import com.savvasdalkitsis.uhuruphotos.implementation.feedpage.seam.FeedPageMutation.StopRefreshing
 import com.savvasdalkitsis.uhuruphotos.implementation.feedpage.usecase.FeedPageUseCase
@@ -59,7 +70,7 @@ internal class FeedPageActionHandler @Inject constructor(
     private val albumsUseCase: AlbumsUseCase,
     private val userBadgeUseCase: UserBadgeUseCase,
     private val feedPageUseCase: FeedPageUseCase,
-    private val photosUseCase: PhotosUseCase,
+    private val mediaUseCase: MediaUseCase,
     private val selectionList: SelectionList,
     private val settingsUseCase: SettingsUseCase,
 ) : ActionHandler<FeedPageState, FeedPageEffect, FeedPageAction, FeedPageMutation> {
@@ -106,15 +117,15 @@ internal class FeedPageActionHandler @Inject constructor(
         is SelectedPhoto -> flow {
             when {
                 state.selectedPhotoCount == 0 -> effect(with(action) {
-                    OpenPhotoDetails(photo.id, center, scale, photo.isVideo)
+                    OpenPhotoDetails(mediaItem.id, center, scale, mediaItem.isVideo)
                 })
-                action.photo.selectionMode == SELECTED -> {
+                action.mediaItem.selectionMode == SELECTED -> {
                     effect(Vibrate)
-                    action.photo.deselect()
+                    action.mediaItem.deselect()
                 }
                 else -> {
                     effect(Vibrate)
-                    action.photo.select()
+                    action.mediaItem.select()
                 }
             }
         }
@@ -124,7 +135,7 @@ internal class FeedPageActionHandler @Inject constructor(
         is PhotoLongPressed -> flow {
             if (state.selectedPhotoCount == 0) {
                 effect(Vibrate)
-                action.photo.select()
+                action.mediaItem.select()
             }
         }
         ClearSelected -> flow {
@@ -149,27 +160,27 @@ internal class FeedPageActionHandler @Inject constructor(
         DismissSelectedPhotosTrashing -> flowOf(HideTrashingConfirmationDialog)
         TrashSelectedPhotos -> flow {
             emit(HideTrashingConfirmationDialog)
-            state.selectedPhotos.forEach {
-                photosUseCase.trashPhoto(it.id)
+            state.selectedMediaItem.forEach {
+                mediaUseCase.trashMediaItem(it.id)
             }
             selectionList.clear()
         }
         ShareSelectedPhotos -> flow {
-            effect(SharePhotos(state.selectedPhotos))
+            effect(SharePhotos(state.selectedMediaItem))
         }
         DownloadSelectedPhotos -> flow {
             effect(DownloadingFiles)
-            state.selectedPhotos.forEach {
-                photosUseCase.downloadOriginal(it.id, it.isVideo)
+            state.selectedMediaItem.forEach {
+                mediaUseCase.downloadOriginal(it.id, it.isVideo)
             }
         }
     }
 
-    private suspend fun Photo.deselect() {
+    private suspend fun MediaItem.deselect() {
         selectionList.deselect(id)
     }
 
-    private suspend fun Photo.select() {
+    private suspend fun MediaItem.select() {
         selectionList.select(id)
     }
 

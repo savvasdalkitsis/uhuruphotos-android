@@ -16,12 +16,12 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.implementation.heatmap.view.state
 
 import com.savvasdalkitsis.uhuruphotos.api.map.model.LatLon
-import com.savvasdalkitsis.uhuruphotos.api.photos.model.Photo
+import com.savvasdalkitsis.uhuruphotos.api.media.page.domain.model.MediaItem
 
 data class HeatMapState(
     val loading: Boolean = false,
     val allPoints: List<LatLon> = emptyList(),
     val pointsOnVisibleMap: List<LatLon> = emptyList(),
-    val allPhotos: List<Photo> = emptyList(),
-    val photosOnVisibleMap: List<Photo> = emptyList(),
+    val allMedia: List<MediaItem> = emptyList(),
+    val photosOnVisibleMap: List<MediaItem> = emptyList(),
 )

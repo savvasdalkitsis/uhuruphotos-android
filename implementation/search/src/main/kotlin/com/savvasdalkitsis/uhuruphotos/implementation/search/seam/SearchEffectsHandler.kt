@@ -16,11 +16,11 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.implementation.search.seam
 
 import com.savvasdalkitsis.uhuruphotos.api.heatmap.navigation.HeatMapNavigationTarget
+import com.savvasdalkitsis.uhuruphotos.api.media.page.domain.model.MediaSequenceDataSource.SearchResults
+import com.savvasdalkitsis.uhuruphotos.api.media.page.navigation.MediaItemPageNavigationTarget
 import com.savvasdalkitsis.uhuruphotos.api.navigation.Navigator
 import com.savvasdalkitsis.uhuruphotos.api.people.navigation.PeopleNavigationTarget
 import com.savvasdalkitsis.uhuruphotos.api.person.navigation.PersonNavigationTarget
-import com.savvasdalkitsis.uhuruphotos.api.photos.model.PhotoSequenceDataSource.SearchResults
-import com.savvasdalkitsis.uhuruphotos.api.photos.navigation.PhotoNavigationTarget
 import com.savvasdalkitsis.uhuruphotos.api.seam.EffectHandler
 import com.savvasdalkitsis.uhuruphotos.api.strings.R.string
 import com.savvasdalkitsis.uhuruphotos.api.toaster.Toaster
@@ -46,7 +46,7 @@ class SearchEffectsHandler @Inject constructor(
         HideKeyboard -> uiUseCase.hideKeyboard()
         is OpenPhotoDetails -> navigateTo(
             with(effect) {
-                PhotoNavigationTarget.name(id, center, scale, isVideo, SearchResults(currentQuery))
+                MediaItemPageNavigationTarget.name(id, center, scale, isVideo, SearchResults(currentQuery))
             }
         )
         ErrorSearching -> toaster.show(string.error_searching)

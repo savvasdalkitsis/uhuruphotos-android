@@ -23,10 +23,11 @@ import com.google.accompanist.permissions.isGranted
 import com.savvasdalkitsis.uhuruphotos.api.albums.usecase.AlbumsUseCase
 import com.savvasdalkitsis.uhuruphotos.api.coroutines.onErrors
 import com.savvasdalkitsis.uhuruphotos.api.coroutines.safelyOnStart
+import com.savvasdalkitsis.uhuruphotos.api.date.DateDisplayer
+import com.savvasdalkitsis.uhuruphotos.api.db.domain.model.media.latLng
 import com.savvasdalkitsis.uhuruphotos.api.map.model.LatLon
-import com.savvasdalkitsis.uhuruphotos.api.photos.model.Photo
-import com.savvasdalkitsis.uhuruphotos.api.photos.model.latLng
-import com.savvasdalkitsis.uhuruphotos.api.photos.usecase.PhotosUseCase
+import com.savvasdalkitsis.uhuruphotos.api.media.page.domain.model.MediaItem
+import com.savvasdalkitsis.uhuruphotos.api.media.remote.domain.usecase.RemoteMediaUseCase
 import com.savvasdalkitsis.uhuruphotos.api.seam.ActionHandler
 import com.savvasdalkitsis.uhuruphotos.implementation.heatmap.seam.HeatMapAction.BackPressed
 import com.savvasdalkitsis.uhuruphotos.implementation.heatmap.seam.HeatMapAction.CameraViewPortChanged
@@ -59,8 +60,9 @@ import javax.inject.Inject
 
 class HeatMapActionHandler @Inject constructor(
     private val albumsUseCase: AlbumsUseCase,
-    private val photosUseCase: PhotosUseCase,
+    private val remoteMediaUseCase: RemoteMediaUseCase,
     private val locationManager: LocationManager,
+    private val dateDisplayer: DateDisplayer,
 ): ActionHandler<HeatMapState, HeatMapEffect, HeatMapAction, HeatMapMutation> {
 
     @Volatile
@@ -75,22 +77,21 @@ class HeatMapActionHandler @Inject constructor(
         effect: suspend (HeatMapEffect) -> Unit
     ): Flow<HeatMapMutation> = when (action) {
         Load -> merge(
-            photosUseCase.observeAllPhotoDetails()
+            remoteMediaUseCase.observeAllPhotoDetails()
                 .map { photos ->
                     photos
                         .filter { it.latLng != null }
                         .map {
-                            Photo(
+                            MediaItem(
                                 id = it.imageHash,
-                                thumbnailUrl = with(photosUseCase) {
+                                thumbnailUri = with(remoteMediaUseCase) {
                                     it.imageHash.toThumbnailUrlFromId()
                                 },
-                                fullResUrl = with(photosUseCase) {
+                                fullResUri = with(remoteMediaUseCase) {
                                     it.imageHash.toFullSizeUrlFromId(it.video ?: false)
                                 },
-                                latLng = it.latLng?.let { latLng ->
-                                    latLng.lat to latLng.lon
-                                },
+                                displayDayDate = dateDisplayer.dateString(it.timestamp),
+                                latLng = it.latLng,
                                 isVideo = it.video ?: false,
                             )
                         }
@@ -102,7 +103,7 @@ class HeatMapActionHandler @Inject constructor(
                             .flatMap { it.photos }
                             .map { photo ->
                                 CoroutineScope(currentCoroutineContext() + Dispatchers.IO).async {
-                                    photosUseCase.refreshDetailsNowIfMissing(photo.id)
+                                    remoteMediaUseCase.refreshDetailsNowIfMissing(photo.id)
                                 }
                             }
                             .awaitAll()
@@ -124,14 +125,14 @@ class HeatMapActionHandler @Inject constructor(
         is CameraViewPortChanged -> flow {
             updateVisibleMapContentJob?.cancel()
             boundsChecker = action.boundsChecker
-            updateVisibleMapContentJob = CoroutineScope(currentCoroutineContext()).async { updateDisplay(state.allPhotos) }
+            updateVisibleMapContentJob = CoroutineScope(currentCoroutineContext()).async { updateDisplay(state.allMedia) }
             updateVisibleMapContentJob?.await()?.let {
                 emit(it)
             }
         }
         is SelectedPhoto -> flow {
             effect(with(action) {
-                NavigateToPhoto(photo, center, scale)
+                NavigateToPhoto(mediaItem, center, scale)
             })
         }
         is MyLocationPressed -> flow {
@@ -149,8 +150,8 @@ class HeatMapActionHandler @Inject constructor(
         }
     }
 
-    private suspend fun updateDisplay(allPhotos: List<Photo>): UpdateVisibleMapContent {
-        val photosToDisplay = allPhotos
+    private suspend fun updateDisplay(allMedia: List<MediaItem>): UpdateVisibleMapContent {
+        val photosToDisplay = allMedia
             .filter { photo ->
                 val latLon = photo.latLng.toLatLon()
                 latLon != null && boundsChecker(latLon)

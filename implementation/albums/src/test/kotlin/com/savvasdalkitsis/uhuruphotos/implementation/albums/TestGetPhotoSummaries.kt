@@ -15,10 +15,10 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.implementation.albums
 
-import com.savvasdalkitsis.uhuruphotos.implementation.photos.TestPhotoSummaries.photoSummary
-import com.savvasdalkitsis.uhuruphotos.implementation.photos.TestPhotos.photoSummaryItem
+import com.savvasdalkitsis.uhuruphotos.implementation.media.TestMediaItemDbSummaries.photoSummary
+import com.savvasdalkitsis.uhuruphotos.implementation.media.TestMediaItems.remoteMediaItemSummary
 
 fun photoId(id: Int) = "photo$id"
 fun photo(id: Int) = photoSummary.copy(id = photoId(id))
 fun photo(id: Int, inAlbum: Int) = photoSummary.copy(id = photoId(id), containerId = albumId(inAlbum))
-fun photoSummaryItem(id: Int) = photoSummaryItem.copy(id = photoId(id))
+fun photoSummaryItem(id: Int) = remoteMediaItemSummary.copy(id = photoId(id))

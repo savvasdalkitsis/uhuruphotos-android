@@ -5,29 +5,54 @@
 >
     <string name="feed_size">Feed Size</string>
     <string name="photo">Photo</string>
+    <string name="media">Media</string>
     <plurals name="delete_photos">
         <item quantity="one">Delete %d photo</item>
         <item quantity="other">Delete %d photos</item>
+    </plurals>
+    <plurals name="delete_media">
+        <item quantity="one">Delete %d media item</item>
+        <item quantity="other">Delete %d media items</item>
     </plurals>
     <plurals name="restore_photos">
         <item quantity="one">Restore %d photo</item>
         <item quantity="other">Restore %d photos</item>
     </plurals>
+    <plurals name="restore_media">
+        <item quantity="one">Restore %d media item</item>
+        <item quantity="other">Restore %d media items</item>
+    </plurals>
     <plurals name="trash_photos">
         <item quantity="one">Send %d photo to trash</item>
         <item quantity="other">Send %d photos to trash</item>
+    </plurals>
+    <plurals name="trash_media">
+        <item quantity="one">Send %d media item to trash</item>
+        <item quantity="other">Send %d media items to trash</item>
     </plurals>
     <plurals name="delete_photos_confirmation">
         <item quantity="one">Are you sure you want to delete this %d photo?</item>
         <item quantity="other">Are you sure you want to delete these %d photos?</item>
     </plurals>
+    <plurals name="delete_media_confirmation">
+        <item quantity="one">Are you sure you want to delete this %d media item?</item>
+        <item quantity="other">Are you sure you want to delete these %d media items?</item>
+    </plurals>
     <plurals name="restore_photos_confirmation">
         <item quantity="one">Are you sure you want to restore this %d photo?</item>
         <item quantity="other">Are you sure you want to restore these %d photos?</item>
     </plurals>
+    <plurals name="restore_media_confirmation">
+        <item quantity="one">Are you sure you want to restore this %d media item?</item>
+        <item quantity="other">Are you sure you want to restore these %d media item?</item>
+    </plurals>
     <plurals name="trash_photos_confirmation">
         <item quantity="one">Are you sure you want to send this %d photo to the trash?</item>
         <item quantity="other">Are you sure you want to send these %d photos to the trash?</item>
+    </plurals>
+    <plurals name="trash_media_confirmation">
+        <item quantity="one">Are you sure you want to send this %d media item to the trash?</item>
+        <item quantity="other">Are you sure you want to send these %d media items to the trash?</item>
     </plurals>
     <string name="people">People</string>
     <string name="view_all">View all</string>
@@ -79,18 +104,24 @@
     <string name="share">Share</string>
     <string name="delete">Delete</string>
     <string name="setting_photo_favourite">Setting photo favourite state</string>
+    <string name="setting_media_favourite">Setting media favourite state</string>
     <string name="downloading_photo_details">Downloading photo details</string>
+    <string name="downloading_media_details">Downloading media details</string>
     <string name="trashing_photo">Sending photo to trash</string>
+    <string name="trashing_media">Sending media to trash</string>
     <string name="restoring_photo">Restoring photo from trash</string>
+    <string name="restoring_media">Restoring media from trash</string>
     <string name="location">Location</string>
     <string name="open_in_maps">Open in Maps</string>
     <string name="details">Details</string>
     <string name="deleting_photo">Deleting photo</string>
+    <string name="deleting_media">Deleting media</string>
     <string name="refreshing_albums">Refreshing albums</string>
     <string name="photos_on_map">Photos on map (%1$d out of %2$d)</string>
     <string name="refresh">Refresh</string>
     <string name="favourite">Favourite</string>
     <string name="favourite_photos">Favourite photos</string>
+    <string name="favourite_media">Favourite media</string>
     <string name="hidden_photos">Hidden photos</string>
     <string name="remove_favourite">Remove favourite</string>
     <string name="info">Info</string>

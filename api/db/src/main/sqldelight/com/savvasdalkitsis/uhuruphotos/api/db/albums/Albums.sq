@@ -18,7 +18,7 @@ SELECT
  summary.aspectRatio,
  summary.type
 FROM albums
-LEFT JOIN photoSummary AS summary ON albums.id = summary.containerId
+LEFT JOIN remoteMediaItemSummary AS summary ON albums.id = summary.containerId
 GROUP BY summary.id
 ORDER BY summary.date DESC
 LIMIT :limit;
@@ -28,15 +28,15 @@ SELECT
  albums.id,
  albums.date AS albumDate,
  albums.location AS albumLocation,
- trash.id AS photoId,
- trash.dominantColor,
- trash.rating,
- trash.aspectRatio,
- trash.type
+ remoteMediaTrash.id AS photoId,
+ remoteMediaTrash.dominantColor,
+ remoteMediaTrash.rating,
+ remoteMediaTrash.aspectRatio,
+ remoteMediaTrash.type
 FROM albums
-LEFT JOIN trash ON albums.id = trash.containerId
-GROUP BY trash.id
-ORDER BY trash.date DESC;
+LEFT JOIN remoteMediaTrash ON albums.id = remoteMediaTrash.containerId
+GROUP BY remoteMediaTrash.id
+ORDER BY remoteMediaTrash.date DESC;
 
 getPersonAlbums:
 SELECT
@@ -50,7 +50,7 @@ SELECT
  summary.type,
  personPhotos.personId
 FROM albums
-LEFT JOIN photoSummary AS summary ON albums.id = summary.containerId
+LEFT JOIN remoteMediaItemSummary AS summary ON albums.id = summary.containerId
 LEFT JOIN personPhotos ON summary.id = personPhotos.photoId
 WHERE personPhotos.personId == :id
 GROUP BY summary.id

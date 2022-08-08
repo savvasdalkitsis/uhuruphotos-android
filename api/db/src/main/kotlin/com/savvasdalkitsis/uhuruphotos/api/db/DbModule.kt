@@ -26,12 +26,12 @@ import com.savvasdalkitsis.uhuruphotos.api.db.albums.UserAlbumQueries
 import com.savvasdalkitsis.uhuruphotos.api.db.albums.UserAlbumsQueries
 import com.savvasdalkitsis.uhuruphotos.api.db.auth.Token
 import com.savvasdalkitsis.uhuruphotos.api.db.auth.TokenQueries
-import com.savvasdalkitsis.uhuruphotos.api.db.mediastore.MediaStoreQueries
+import com.savvasdalkitsis.uhuruphotos.api.db.media.LocalMediaItemDetailsQueries
+import com.savvasdalkitsis.uhuruphotos.api.db.media.RemoteMediaItemDetailsQueries
+import com.savvasdalkitsis.uhuruphotos.api.db.media.RemoteMediaItemSummaryQueries
+import com.savvasdalkitsis.uhuruphotos.api.db.media.RemoteMediaTrashQueries
 import com.savvasdalkitsis.uhuruphotos.api.db.people.PeopleQueries
 import com.savvasdalkitsis.uhuruphotos.api.db.person.PersonQueries
-import com.savvasdalkitsis.uhuruphotos.api.db.photos.PhotoDetailsQueries
-import com.savvasdalkitsis.uhuruphotos.api.db.photos.PhotoSummaryQueries
-import com.savvasdalkitsis.uhuruphotos.api.db.photos.TrashQueries
 import com.savvasdalkitsis.uhuruphotos.api.db.search.SearchQueries
 import com.savvasdalkitsis.uhuruphotos.api.db.user.UserQueries
 import com.squareup.sqldelight.EnumColumnAdapter
@@ -76,13 +76,13 @@ class DbModule {
     fun userQueries(database: Database): UserQueries = database.userQueries
 
     @Provides
-    fun photoDetailsQueries(database: Database): PhotoDetailsQueries = database.photoDetailsQueries
+    fun photoDetailsQueries(database: Database): RemoteMediaItemDetailsQueries = database.remoteMediaItemDetailsQueries
 
     @Provides
-    fun photoSummaryQueries(database: Database): PhotoSummaryQueries = database.photoSummaryQueries
+    fun photoSummaryQueries(database: Database): RemoteMediaItemSummaryQueries = database.remoteMediaItemSummaryQueries
 
     @Provides
-    fun trashQueries(database: Database): TrashQueries = database.trashQueries
+    fun trashQueries(database: Database): RemoteMediaTrashQueries = database.remoteMediaTrashQueries
 
     @Provides
     fun searchQueries(database: Database): SearchQueries = database.searchQueries
@@ -109,5 +109,5 @@ class DbModule {
     fun autoAlbumPeopleQueries(database: Database): AutoAlbumPeopleQueries = database.autoAlbumPeopleQueries
 
     @Provides
-    fun mediaStoreQueries(database: Database): MediaStoreQueries = database.mediaStoreQueries
+    fun localMediaItemDetailsQueries(database: Database): LocalMediaItemDetailsQueries = database.localMediaItemDetailsQueries
 }

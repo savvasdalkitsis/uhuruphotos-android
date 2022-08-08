@@ -10,7 +10,8 @@ android {
 
 dependencies {
 
-    api project(':api:photos')
+    api project(':api:media:page')
+    api project(':api:media:remote')
     api project(':api:people')
     api project(":api:db")
     api project(':api:group')

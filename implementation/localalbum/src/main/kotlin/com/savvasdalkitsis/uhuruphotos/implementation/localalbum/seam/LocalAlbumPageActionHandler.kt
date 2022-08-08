@@ -22,8 +22,7 @@ import com.savvasdalkitsis.uhuruphotos.api.albumpage.seam.AlbumPageMutation
 import com.savvasdalkitsis.uhuruphotos.api.albumpage.view.state.AlbumDetails
 import com.savvasdalkitsis.uhuruphotos.api.albumpage.view.state.AlbumPageState
 import com.savvasdalkitsis.uhuruphotos.api.albumpage.view.state.Title
-import com.savvasdalkitsis.uhuruphotos.api.mediastore.model.LocalBucket
-import com.savvasdalkitsis.uhuruphotos.api.photos.model.PhotoSequenceDataSource
+import com.savvasdalkitsis.uhuruphotos.api.media.page.domain.model.MediaSequenceDataSource
 import com.savvasdalkitsis.uhuruphotos.api.seam.ActionHandler
 import com.savvasdalkitsis.uhuruphotos.implementation.localalbum.usecase.LocalAlbumUseCase
 import kotlinx.coroutines.flow.map
@@ -50,5 +49,5 @@ by AlbumPageActionHandler(
                 )
             }
     },
-    photoSequenceDataSource = { PhotoSequenceDataSource.LocalAlbum(it) }
+    mediaSequenceDataSource = { MediaSequenceDataSource.LocalAlbum(it) }
 )

@@ -15,7 +15,7 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.api.albums.service.model
 
-import com.savvasdalkitsis.uhuruphotos.api.photos.model.PhotoSummaryItem
+import com.savvasdalkitsis.uhuruphotos.api.media.remote.model.RemoteMediaItemSummary
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 
@@ -23,5 +23,5 @@ import com.squareup.moshi.JsonClass
 data class UserAlbumPhotoGroup(
     val date: String,
     @field:Json(name = "items")
-    val photos: List<PhotoSummaryItem>
+    val photos: List<RemoteMediaItemSummary>
 )

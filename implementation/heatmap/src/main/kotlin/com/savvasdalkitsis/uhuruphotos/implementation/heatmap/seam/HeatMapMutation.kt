@@ -16,7 +16,7 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.implementation.heatmap.seam
 
 import com.savvasdalkitsis.uhuruphotos.api.map.model.LatLon
-import com.savvasdalkitsis.uhuruphotos.api.photos.model.Photo
+import com.savvasdalkitsis.uhuruphotos.api.media.page.domain.model.MediaItem
 import com.savvasdalkitsis.uhuruphotos.api.seam.Mutation
 import com.savvasdalkitsis.uhuruphotos.implementation.heatmap.view.state.HeatMapState
 
@@ -24,19 +24,19 @@ sealed class HeatMapMutation(
     mutation: Mutation<HeatMapState>,
 ) : Mutation<HeatMapState> by mutation {
 
-    data class UpdateAllPhotos(val photos: List<Photo>) : HeatMapMutation({
-        val points = photos
+    data class UpdateAllPhotos(val mediaItems: List<MediaItem>) : HeatMapMutation({
+        val points = mediaItems
             .mapNotNull { photo -> photo.latLng }
             .map { (lat, lon) -> LatLon(lat, lon) }
         it.copy(
             allPoints = points,
             pointsOnVisibleMap = points,
-            allPhotos = photos,
+            allMedia = mediaItems,
         )
     })
 
     data class UpdateVisibleMapContent(
-        val photosOnVisibleMap: List<Photo>,
+        val photosOnVisibleMap: List<MediaItem>,
         val pointsOnVisibleMap: List<LatLon>,
     ) : HeatMapMutation({
         it.copy(

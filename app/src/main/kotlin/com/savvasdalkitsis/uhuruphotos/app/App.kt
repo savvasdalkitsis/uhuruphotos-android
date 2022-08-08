@@ -34,8 +34,8 @@ class App :
     lateinit var applicationInitializer: ApplicationInitializer
 
     override fun onCreate() {
-        super.onCreate()
         PermissionFlow.init(this)
+        super.onCreate()
         applicationInitializer.onCreated(this)
     }
 

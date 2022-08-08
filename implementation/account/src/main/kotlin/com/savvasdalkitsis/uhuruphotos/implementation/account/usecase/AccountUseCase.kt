@@ -20,8 +20,8 @@ import com.savvasdalkitsis.uhuruphotos.api.account.usecase.AccountUseCase
 import com.savvasdalkitsis.uhuruphotos.api.db.Database
 import com.savvasdalkitsis.uhuruphotos.api.db.extensions.async
 import com.savvasdalkitsis.uhuruphotos.api.image.cache.ImageCacheController
-import com.savvasdalkitsis.uhuruphotos.api.worker.WorkScheduler
 import com.savvasdalkitsis.uhuruphotos.api.video.evictAll
+import com.savvasdalkitsis.uhuruphotos.api.worker.WorkScheduler
 import javax.inject.Inject
 
 class AccountUseCase @Inject constructor(
@@ -42,8 +42,8 @@ class AccountUseCase @Inject constructor(
                 autoAlbumsQueries.clearAll()
                 peopleQueries.clearAll()
                 personQueries.clearAll()
-                photoDetailsQueries.clearAll()
-                photoSummaryQueries.clearAll()
+                remoteMediaItemDetailsQueries.clearAll()
+                remoteMediaItemSummaryQueries.clearAll()
                 searchQueries.clearAll()
                 tokenQueries.clearAll()
                 userQueries.clearAll()

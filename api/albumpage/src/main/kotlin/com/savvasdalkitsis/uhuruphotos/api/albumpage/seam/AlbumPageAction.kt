@@ -17,8 +17,8 @@ package com.savvasdalkitsis.uhuruphotos.api.albumpage.seam
 
 import androidx.compose.ui.geometry.Offset
 import com.savvasdalkitsis.uhuruphotos.api.feed.view.state.FeedDisplay
+import com.savvasdalkitsis.uhuruphotos.api.media.page.domain.model.MediaItem
 import com.savvasdalkitsis.uhuruphotos.api.people.view.state.Person
-import com.savvasdalkitsis.uhuruphotos.api.photos.model.Photo
 
 sealed class AlbumPageAction {
     object SwipeToRefresh : AlbumPageAction()
@@ -26,7 +26,7 @@ sealed class AlbumPageAction {
 
     data class LoadAlbum(val albumId: Int) : AlbumPageAction()
     data class SelectedPhoto(
-        val photo: Photo,
+        val mediaItem: MediaItem,
         val center: Offset,
         val scale: Float,
     ) : AlbumPageAction()

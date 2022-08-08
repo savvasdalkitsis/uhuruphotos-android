@@ -22,17 +22,17 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import com.savvasdalkitsis.uhuruphotos.api.feed.view.PhotoRowSlot.EmptySlot
 import com.savvasdalkitsis.uhuruphotos.api.feed.view.PhotoRowSlot.PhotoSlot
-import com.savvasdalkitsis.uhuruphotos.api.photos.model.Photo
-import com.savvasdalkitsis.uhuruphotos.api.photos.view.PhotoSelected
-import com.savvasdalkitsis.uhuruphotos.api.photos.view.PhotoThumbnail
+import com.savvasdalkitsis.uhuruphotos.api.media.page.domain.model.MediaItem
+import com.savvasdalkitsis.uhuruphotos.api.media.page.view.MediaItemSelected
+import com.savvasdalkitsis.uhuruphotos.api.media.page.view.MediaItemThumbnail
 
 @Composable
 fun PhotoRow(
     modifier: Modifier = Modifier,
     maintainAspectRatio: Boolean = true,
     miniIcons: Boolean = false,
-    onPhotoSelected: PhotoSelected,
-    onPhotoLongPressed: (Photo) -> Unit,
+    onMediaItemSelected: MediaItemSelected,
+    onPhotoLongPressed: (MediaItem) -> Unit,
     vararg slots: PhotoRowSlot
 ) {
     Row(modifier = modifier) {
@@ -40,14 +40,14 @@ fun PhotoRow(
             when (item) {
                 is PhotoSlot -> {
                     val aspectRatio = when {
-                        maintainAspectRatio -> item.photo.ratio
+                        maintainAspectRatio -> item.mediaItem.ratio
                         else -> 1f
                     }
-                    PhotoThumbnail(
+                    MediaItemThumbnail(
                         modifier = Modifier
                             .weight(aspectRatio),
-                        photo = item.photo,
-                        onPhotoSelected = onPhotoSelected,
+                        mediaItem = item.mediaItem,
+                        onItemSelected = onMediaItemSelected,
                         aspectRatio = aspectRatio,
                         contentScale = when {
                             maintainAspectRatio -> ContentScale.FillBounds

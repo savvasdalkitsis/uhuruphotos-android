@@ -24,7 +24,7 @@ dependencies {
     implementation project(":api:log")
     implementation project(":api:notification")
     implementation project(":api:people")
-    implementation project(':api:photos')
+    implementation project(':api:media:page')
     implementation project(":api:settings")
     implementation project(":api:strings")
     implementation project(":api:user")
@@ -39,14 +39,14 @@ dependencies {
             libs.sqldelight.coroutines,
     )
     testImplementation testFixtures(project(":api:db"))
-    testImplementation testFixtures(project(":implementation:photos"))
+    testImplementation testFixtures(project(":implementation:media:remote"))
     testImplementation testFixtures(project(":implementation:user"))
     testImplementation(
             libs.bundles.test,
     )
     testFixturesImplementation testFixtures(project(":api:db"))
-    testFixturesImplementation project(":implementation:photos")
-    testFixturesImplementation project(':api:photos')
+    testFixturesImplementation project(':implementation:media:remote')
+    testFixturesImplementation project(':api:media:page')
     testFixturesImplementation project(':api:albums')
     kapt libs.moshi.kapt
 }

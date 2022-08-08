@@ -19,9 +19,9 @@ import com.savvasdalkitsis.uhuruphotos.api.albumpage.seam.AlbumPageEffect.ErrorL
 import com.savvasdalkitsis.uhuruphotos.api.albumpage.seam.AlbumPageEffect.NavigateBack
 import com.savvasdalkitsis.uhuruphotos.api.albumpage.seam.AlbumPageEffect.NavigateToPerson
 import com.savvasdalkitsis.uhuruphotos.api.albumpage.seam.AlbumPageEffect.OpenPhotoDetails
+import com.savvasdalkitsis.uhuruphotos.api.media.page.navigation.MediaItemPageNavigationTarget
 import com.savvasdalkitsis.uhuruphotos.api.navigation.Navigator
 import com.savvasdalkitsis.uhuruphotos.api.person.navigation.PersonNavigationTarget
-import com.savvasdalkitsis.uhuruphotos.api.photos.navigation.PhotoNavigationTarget
 import com.savvasdalkitsis.uhuruphotos.api.seam.EffectHandler
 import com.savvasdalkitsis.uhuruphotos.api.strings.R.string
 import com.savvasdalkitsis.uhuruphotos.api.toaster.Toaster
@@ -35,12 +35,12 @@ class AlbumPageEffectsHandler @Inject constructor(
     override suspend fun handleEffect(effect: AlbumPageEffect) {
         when (effect) {
             is OpenPhotoDetails -> navigate(
-                PhotoNavigationTarget.name(
+                MediaItemPageNavigationTarget.name(
                     effect.id,
                     effect.center,
                     effect.scale,
                     effect.video,
-                    effect.photoSequenceDataSource,
+                    effect.mediaSequenceDataSource,
                     effect.imageSource,
                 ),
             )

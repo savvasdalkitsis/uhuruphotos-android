@@ -50,8 +50,8 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import com.savvasdalkitsis.uhuruphotos.api.icons.R.drawable
-import com.savvasdalkitsis.uhuruphotos.api.photos.model.PhotoGrid
-import com.savvasdalkitsis.uhuruphotos.api.photos.view.PhotoGridThumbnail
+import com.savvasdalkitsis.uhuruphotos.api.media.page.domain.model.MediaGrid
+import com.savvasdalkitsis.uhuruphotos.api.media.page.view.MediaGridThumbnail
 import com.savvasdalkitsis.uhuruphotos.api.strings.R.string
 import com.savvasdalkitsis.uhuruphotos.api.ui.theme.CustomColors
 import com.savvasdalkitsis.uhuruphotos.api.ui.view.SectionHeader
@@ -136,7 +136,7 @@ private fun LocalFolders(
                 item(bucket.id) {
                     LibraryEntry(
                         modifier = Modifier.animateItemPlacement(),
-                        photoGrid = photoGrid,
+                        mediaGrid = photoGrid,
                         photoGridModifier = Modifier.width(120.dp),
                         title = bucket.displayName,
                     ) {
@@ -186,15 +186,15 @@ private fun PillItem(title: String, icon: Int, onSelected: () -> Unit) {
 }
 
 internal fun LazyGridScope.libraryItem(
-    photoGrid: PhotoGrid?,
+    mediaGrid: MediaGrid?,
     title: String,
     @DrawableRes overlayIcon: Int? = null,
     onSelected: () -> Unit,
 ) {
-    photoGrid?.let {
+    mediaGrid?.let {
         item(title) {
             LibraryEntry(
-                photoGrid = photoGrid,
+                mediaGrid = mediaGrid,
                 photoGridModifier = Modifier.fillMaxWidth(),
                 title = title,
                 overlayIcon = overlayIcon,
@@ -207,7 +207,7 @@ internal fun LazyGridScope.libraryItem(
 @Composable
 fun LibraryEntry(
     modifier: Modifier = Modifier,
-    photoGrid: PhotoGrid,
+    mediaGrid: MediaGrid,
     photoGridModifier: Modifier,
     title: String,
     @DrawableRes overlayIcon: Int? = null,
@@ -218,9 +218,9 @@ fun LibraryEntry(
             .padding(8.dp),
     ) {
         Box(modifier = Modifier.fillMaxSize()) {
-            PhotoGridThumbnail(
+            MediaGridThumbnail(
                 modifier = photoGridModifier,
-                photoGrid = photoGrid,
+                mediaGrid = mediaGrid,
                 onSelected = onSelected,
                 shape = RoundedCornerShape(26.dp)
             )

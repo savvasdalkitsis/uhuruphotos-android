@@ -14,7 +14,7 @@ dependencies {
     implementation project(":api:compose")
     implementation project(":api:ui")
     implementation project(':api:albums')
-    implementation project(':api:photos')
+    implementation project(':api:media:page')
     implementation project(':api:image')
     implementation project(":api:strings")
     implementation(

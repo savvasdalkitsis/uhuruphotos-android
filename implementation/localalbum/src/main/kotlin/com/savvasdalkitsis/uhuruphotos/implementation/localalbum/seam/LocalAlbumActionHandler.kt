@@ -15,21 +15,20 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.implementation.localalbum.seam
 
-import com.savvasdalkitsis.uhuruphotos.api.mediastore.model.LocalPermissions
-import com.savvasdalkitsis.uhuruphotos.api.mediastore.model.LocalPermissions.*
-import com.savvasdalkitsis.uhuruphotos.api.mediastore.usecase.MediaStoreUseCase
+import com.savvasdalkitsis.uhuruphotos.api.media.local.domain.model.LocalPermissions.RequiresPermissions
+import com.savvasdalkitsis.uhuruphotos.api.media.local.domain.usecase.LocalMediaUseCase
 import com.savvasdalkitsis.uhuruphotos.api.seam.ActionHandler
-import com.savvasdalkitsis.uhuruphotos.implementation.localalbum.seam.LocalAlbumMutation.*
+import com.savvasdalkitsis.uhuruphotos.implementation.localalbum.seam.LocalAlbumMutation.AskForPermissions
+import com.savvasdalkitsis.uhuruphotos.implementation.localalbum.seam.LocalAlbumMutation.PermissionsGranted
 import com.savvasdalkitsis.uhuruphotos.implementation.localalbum.view.state.LocalAlbumState
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOf
-import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
 class LocalAlbumActionHandler @Inject constructor(
-    private val mediaStoreUseCase: MediaStoreUseCase,
+    private val localMediaUseCase: LocalMediaUseCase,
 ) : ActionHandler<LocalAlbumState, LocalAlbumEffect, LocalAlbumAction, LocalAlbumMutation> {
 
     override fun handleAction(
@@ -38,12 +37,12 @@ class LocalAlbumActionHandler @Inject constructor(
         effect: suspend (LocalAlbumEffect) -> Unit
     ): Flow<LocalAlbumMutation> = when (action) {
         is LocalAlbumAction.Load ->
-            mediaStoreUseCase.observePermissionsState()
+            localMediaUseCase.observePermissionsState()
                 .flatMapLatest { when (it) {
                     is RequiresPermissions -> flowOf(AskForPermissions(it.deniedPermissions))
                     else -> flow {
                         PermissionsGranted
-                        mediaStoreUseCase.refreshBucket(action.albumId)
+                        localMediaUseCase.refreshLocalMediaFolder(action.albumId)
                     }
                 } }
     }

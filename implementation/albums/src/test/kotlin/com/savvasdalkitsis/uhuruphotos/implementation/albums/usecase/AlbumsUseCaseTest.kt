@@ -22,7 +22,7 @@ import com.savvasdalkitsis.uhuruphotos.api.db.albums.GetAlbums
 import com.savvasdalkitsis.uhuruphotos.api.db.albums.GetPersonAlbums
 import com.savvasdalkitsis.uhuruphotos.api.db.user.User
 import com.savvasdalkitsis.uhuruphotos.api.group.model.Group
-import com.savvasdalkitsis.uhuruphotos.api.photos.usecase.PhotosUseCase
+import com.savvasdalkitsis.uhuruphotos.api.media.remote.domain.usecase.RemoteMediaUseCase
 import com.savvasdalkitsis.uhuruphotos.api.user.usecase.UserUseCase
 import com.savvasdalkitsis.uhuruphotos.implementation.albums.TestAlbums.album
 import com.savvasdalkitsis.uhuruphotos.implementation.albums.TestGetAlbums.getAlbum
@@ -34,7 +34,7 @@ import com.savvasdalkitsis.uhuruphotos.implementation.albums.returnsAlbumWithEnt
 import com.savvasdalkitsis.uhuruphotos.implementation.albums.returnsAlbums
 import com.savvasdalkitsis.uhuruphotos.implementation.albums.returnsPersonAlbumWithEntries
 import com.savvasdalkitsis.uhuruphotos.implementation.albums.worker.AlbumWorkScheduler
-import com.savvasdalkitsis.uhuruphotos.implementation.photos.TestPhotos.photo
+import com.savvasdalkitsis.uhuruphotos.implementation.media.TestMediaItems.mediaItem
 import com.savvasdalkitsis.uhuruphotos.implementation.user.TestUsers.user
 import com.shazam.shazamcrest.MatcherAssert.assertThat
 import com.shazam.shazamcrest.matcher.Matchers.sameBeanAs
@@ -55,12 +55,12 @@ class AlbumsUseCaseTest {
     private val albumWorkScheduler = mockk<AlbumWorkScheduler>(relaxed = true)
     private val albumsRepository = mockk<AlbumsRepository>(relaxed = true)
     private val dateDisplayer = mockk<DateDisplayer>(relaxed = true)
-    private val photosUseCase = mockk<PhotosUseCase>(relaxed = true)
+    private val remoteMediaUseCase = mockk<RemoteMediaUseCase>(relaxed = true)
     private val userUseCase = mockk<UserUseCase>(relaxed = true)
     private val underTest = AlbumsUseCase(
         albumsRepository,
         dateDisplayer,
-        photosUseCase,
+        remoteMediaUseCase,
         albumWorkScheduler,
         userUseCase
     )
@@ -93,7 +93,7 @@ class AlbumsUseCaseTest {
 
         assertThat(underTest.getPersonAlbums(1), sameBeanAs(listOf(album.copy(
             id = "albumId",
-            photos = listOf(photo.copy(id = "photoId"))
+            photos = listOf(mediaItem.copy(id = "photoId"))
         ))))
     }
 
@@ -114,7 +114,7 @@ class AlbumsUseCaseTest {
 
             assertThat(awaitItem(), sameBeanAs(listOf(album.copy(
                 id = "albumId",
-                photos = listOf(photo.copy(id = "photoId"))
+                photos = listOf(mediaItem.copy(id = "photoId"))
             ))))
         }
     }
@@ -128,7 +128,7 @@ class AlbumsUseCaseTest {
 
         assertThat(underTest.getAlbums(), sameBeanAs(listOf(album.copy(
             id = "albumId",
-            photos = listOf(photo.copy(id = "photoId"))
+            photos = listOf(mediaItem.copy(id = "photoId"))
         ))))
     }
 
@@ -144,18 +144,18 @@ class AlbumsUseCaseTest {
 
     @Test
     fun `maps thumbnail url for photos`() = runBlocking {
-        every { with(photosUseCase) { "photoId".toThumbnailUrlFromId() } } returns "thumbnail"
+        every { with(remoteMediaUseCase) { "photoId".toThumbnailUrlFromId() } } returns "thumbnail"
         albumsRepository.returnsAlbumWithEntries(getAlbum.copy(
             photoId = "photoId",
         ))
 
-        assert(underTest.getAlbums().lastPhoto.thumbnailUrl == "thumbnail")
+        assert(underTest.getAlbums().lastPhoto.thumbnailUri == "thumbnail")
     }
 
     @Test
     fun `maps full url for photos and videos`() = runBlocking {
-        every { with(photosUseCase) { "photoId".toFullSizeUrlFromId(false) } } returns "photoUrl"
-        every { with(photosUseCase) { "photoId".toFullSizeUrlFromId(true) } } returns "videoUrl"
+        every { with(remoteMediaUseCase) { "photoId".toFullSizeUrlFromId(false) } } returns "photoUrl"
+        every { with(remoteMediaUseCase) { "photoId".toFullSizeUrlFromId(true) } } returns "videoUrl"
         albumsRepository.returnsAlbumWithEntries(
             getAlbum.copy(
                 type = "photo",
@@ -165,8 +165,8 @@ class AlbumsUseCaseTest {
             ),
         )
 
-        assert(underTest.getAlbums().firstPhoto.fullResUrl == "photoUrl")
-        assert(underTest.getAlbums().lastPhoto.fullResUrl == "videoUrl")
+        assert(underTest.getAlbums().firstPhoto.fullResUri == "photoUrl")
+        assert(underTest.getAlbums().lastPhoto.fullResUri == "videoUrl")
     }
 
     @Test
@@ -302,7 +302,7 @@ class AlbumsUseCaseTest {
             )
             assertThat(awaitItem(), sameBeanAs(listOf(album.copy(
                 id = "albumId",
-                photos = listOf(photo.copy(id = "photoId"))
+                photos = listOf(mediaItem.copy(id = "photoId"))
             ))))
         }
     }

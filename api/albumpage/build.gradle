@@ -16,7 +16,7 @@ dependencies {
     implementation project(":api:navigation")
     implementation project(':api:person')
     implementation project(':api:people')
-    implementation project(":api:photos")
+    implementation project(':api:media:page')
     implementation project(":api:strings")
     implementation project(":api:toaster")
     implementation project(":api:ui")

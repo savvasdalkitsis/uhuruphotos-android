@@ -24,7 +24,7 @@ import androidx.work.WorkInfo.State.RUNNING
 import androidx.work.WorkInfo.State.SUCCEEDED
 import com.savvasdalkitsis.uhuruphotos.api.albums.worker.AlbumWorkScheduler
 import com.savvasdalkitsis.uhuruphotos.api.auth.usecase.ServerUseCase
-import com.savvasdalkitsis.uhuruphotos.api.photos.usecase.PhotosUseCase
+import com.savvasdalkitsis.uhuruphotos.api.media.remote.domain.usecase.RemoteMediaUseCase
 import com.savvasdalkitsis.uhuruphotos.api.user.usecase.UserUseCase
 import com.savvasdalkitsis.uhuruphotos.api.userbadge.usecase.UserBadgeUseCase
 import com.savvasdalkitsis.uhuruphotos.api.userbadge.view.state.SyncState.BAD
@@ -38,7 +38,7 @@ import javax.inject.Inject
 class UserBadgeUseCase @Inject constructor(
     private val userUseCase: UserUseCase,
     private val albumWorkScheduler: AlbumWorkScheduler,
-    private val photosUseCase: PhotosUseCase,
+    private val remoteMediaUseCase: RemoteMediaUseCase,
     private val serverUseCase: ServerUseCase,
 ) : UserBadgeUseCase {
 
@@ -48,7 +48,7 @@ class UserBadgeUseCase @Inject constructor(
         serverUseCase.observeServerUrl(),
     ) { user, status, serverUrl ->
         UserInformationState(
-            avatarUrl = with(photosUseCase) { user.avatar?.toAbsoluteUrl() },
+            avatarUrl = with(remoteMediaUseCase) { user.avatar?.toRemoteUrl() },
             syncState = when (status) {
                 BLOCKED, FAILED -> BAD
                 CANCELLED, ENQUEUED, SUCCEEDED -> GOOD

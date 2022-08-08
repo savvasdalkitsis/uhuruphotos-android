@@ -15,9 +15,9 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.implementation.person.seam
 
+import com.savvasdalkitsis.uhuruphotos.api.media.page.domain.model.MediaSequenceDataSource.PersonResults
+import com.savvasdalkitsis.uhuruphotos.api.media.page.navigation.MediaItemPageNavigationTarget
 import com.savvasdalkitsis.uhuruphotos.api.navigation.Navigator
-import com.savvasdalkitsis.uhuruphotos.api.photos.model.PhotoSequenceDataSource.PersonResults
-import com.savvasdalkitsis.uhuruphotos.api.photos.navigation.PhotoNavigationTarget
 import com.savvasdalkitsis.uhuruphotos.api.seam.EffectHandler
 import com.savvasdalkitsis.uhuruphotos.implementation.person.seam.PersonEffect.NavigateBack
 import com.savvasdalkitsis.uhuruphotos.implementation.person.seam.PersonEffect.OpenPhotoDetails
@@ -31,7 +31,7 @@ class PersonEffectHandler @Inject constructor(
         when (effect) {
             NavigateBack -> navigator.navigateBack()
             is OpenPhotoDetails -> navigator.navigateTo(with(effect) {
-                PhotoNavigationTarget.name(id, center, scale, video, PersonResults(person.id) )
+                MediaItemPageNavigationTarget.name(id, center, scale, video, PersonResults(person.id) )
             })
         }
     }

@@ -16,9 +16,9 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.implementation.search.repository
 
 import com.fredporciuncula.flow.preferences.FlowSharedPreferences
+import com.savvasdalkitsis.uhuruphotos.api.db.domain.model.media.DbRemoteMediaItemSummary
 import com.savvasdalkitsis.uhuruphotos.api.db.extensions.await
-import com.savvasdalkitsis.uhuruphotos.api.db.photos.PhotoSummary
-import com.savvasdalkitsis.uhuruphotos.api.db.photos.PhotoSummaryQueries
+import com.savvasdalkitsis.uhuruphotos.api.db.media.RemoteMediaItemSummaryQueries
 import com.savvasdalkitsis.uhuruphotos.api.db.search.GetSearchResults
 import com.savvasdalkitsis.uhuruphotos.api.db.search.SearchQueries
 import com.savvasdalkitsis.uhuruphotos.api.group.model.Group
@@ -36,7 +36,7 @@ import javax.inject.Inject
 class SearchRepository @Inject constructor(
     private val searchService: SearchService,
     private val searchQueries: SearchQueries,
-    private val photoSummaryQueries: PhotoSummaryQueries,
+    private val remoteMediaItemSummaryQueries: RemoteMediaItemSummaryQueries,
     flowSharedPreferences: FlowSharedPreferences,
 ) {
 
@@ -64,8 +64,8 @@ class SearchRepository @Inject constructor(
                     location = searchResult.location,
                     photoId = photoSummary.id
                 )
-                photoSummaryQueries.insert(
-                    PhotoSummary(
+                remoteMediaItemSummaryQueries.insert(
+                    DbRemoteMediaItemSummary(
                         id = photoSummary.id,
                         dominantColor = photoSummary.dominantColor,
                         url = photoSummary.url,

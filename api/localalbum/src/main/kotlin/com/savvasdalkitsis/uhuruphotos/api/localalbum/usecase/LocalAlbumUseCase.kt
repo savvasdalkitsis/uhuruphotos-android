@@ -17,15 +17,12 @@ package com.savvasdalkitsis.uhuruphotos.api.localalbum.usecase
 
 import com.savvasdalkitsis.uhuruphotos.api.albums.model.Album
 import com.savvasdalkitsis.uhuruphotos.api.feed.view.state.FeedDisplays
-import com.savvasdalkitsis.uhuruphotos.api.mediastore.model.LocalBucket
-import com.savvasdalkitsis.uhuruphotos.api.mediastore.model.MediaBucket
+import com.savvasdalkitsis.uhuruphotos.api.media.local.domain.model.LocalMediaFolder
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.flow.mapNotNull
 
 interface LocalAlbumUseCase {
 
-    fun observeLocalAlbum(albumId: Int): Flow<Pair<MediaBucket, List<Album>>>
+    fun observeLocalAlbum(albumId: Int): Flow<Pair<LocalMediaFolder, List<Album>>>
     suspend fun refreshLocalAlbum(albumId: Int)
     fun getLocalAlbumFeedDisplay(albumId: Int): FeedDisplays
     suspend fun setLocalAlbumFeedDisplay(albumId: Int, feedDisplay: FeedDisplays)

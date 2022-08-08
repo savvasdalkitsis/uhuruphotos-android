@@ -24,10 +24,10 @@ import com.savvasdalkitsis.uhuruphotos.api.albumpage.view.state.AlbumPageState
 import com.savvasdalkitsis.uhuruphotos.api.albumpage.view.state.Title
 import com.savvasdalkitsis.uhuruphotos.api.albums.model.Album
 import com.savvasdalkitsis.uhuruphotos.api.date.DateDisplayer
+import com.savvasdalkitsis.uhuruphotos.api.media.page.domain.model.MediaItem
+import com.savvasdalkitsis.uhuruphotos.api.media.page.domain.model.MediaSequenceDataSource.AutoAlbum
+import com.savvasdalkitsis.uhuruphotos.api.media.remote.domain.usecase.RemoteMediaUseCase
 import com.savvasdalkitsis.uhuruphotos.api.people.view.state.toPerson
-import com.savvasdalkitsis.uhuruphotos.api.photos.model.Photo
-import com.savvasdalkitsis.uhuruphotos.api.photos.model.PhotoSequenceDataSource.AutoAlbum
-import com.savvasdalkitsis.uhuruphotos.api.photos.usecase.PhotosUseCase
 import com.savvasdalkitsis.uhuruphotos.api.seam.ActionHandler
 import com.savvasdalkitsis.uhuruphotos.implementation.autoalbum.usecase.AutoAlbumsUseCase
 import com.savvasdalkitsis.uhuruphotos.implementation.autoalbum.view.state.AutoAlbumFeedDisplay
@@ -36,7 +36,7 @@ import javax.inject.Inject
 
 internal class AutoAlbumActionHandler @Inject constructor(
     autoAlbumsUseCase: AutoAlbumsUseCase,
-    photosUseCase: PhotosUseCase,
+    remoteMediaUseCase: RemoteMediaUseCase,
     dateDisplayer: DateDisplayer,
 ) : ActionHandler<AlbumPageState, AlbumPageEffect, AlbumPageAction, AlbumPageMutation>
 by AlbumPageActionHandler(
@@ -51,9 +51,9 @@ by AlbumPageActionHandler(
             .map { (photoEntries, people) ->
                 AlbumDetails(
                     title = Title.Text(photoEntries.firstOrNull()?.title ?: ""),
-                    people = with(photosUseCase) {
+                    people = with(remoteMediaUseCase) {
                         people.map { person ->
-                            person.toPerson { it.toAbsoluteUrl() }
+                            person.toPerson { it.toRemoteUrl() }
                         }
                     },
                     albums = photoEntries.groupBy { entry ->
@@ -64,14 +64,15 @@ by AlbumPageActionHandler(
                             displayTitle = date,
                             location = null,
                             photos = photos.map {
-                                Photo(
+                                MediaItem(
                                     id = it.photoId.toString(),
-                                    thumbnailUrl = with(photosUseCase) {
+                                    thumbnailUri = with(remoteMediaUseCase) {
                                         it.photoId.toThumbnailUrlFromIdNullable()
                                     },
-                                    fullResUrl = with(photosUseCase) {
+                                    fullResUri = with(remoteMediaUseCase) {
                                         it.photoId.toFullSizeUrlFromIdNullable(it.video ?: false)
                                     },
+                                    displayDayDate = date,
                                     isFavourite = it.isFavorite ?: false,
                                     isVideo = it.video ?: false,
                                 )
@@ -81,5 +82,5 @@ by AlbumPageActionHandler(
                 )
             }
     },
-    photoSequenceDataSource = { AutoAlbum(it) }
+    mediaSequenceDataSource = { AutoAlbum(it) }
 )

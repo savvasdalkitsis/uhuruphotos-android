@@ -44,17 +44,16 @@ import com.savvasdalkitsis.uhuruphotos.api.db.albums.UserAlbumsQueries
 import com.savvasdalkitsis.uhuruphotos.api.db.extensions.async
 import com.savvasdalkitsis.uhuruphotos.api.db.extensions.await
 import com.savvasdalkitsis.uhuruphotos.api.db.extensions.awaitSingle
+import com.savvasdalkitsis.uhuruphotos.api.db.media.RemoteMediaItemDetailsQueries
+import com.savvasdalkitsis.uhuruphotos.api.db.media.RemoteMediaItemSummaryQueries
+import com.savvasdalkitsis.uhuruphotos.api.db.media.RemoteMediaTrashQueries
 import com.savvasdalkitsis.uhuruphotos.api.db.people.PeopleQueries
 import com.savvasdalkitsis.uhuruphotos.api.db.person.PersonQueries
-import com.savvasdalkitsis.uhuruphotos.api.db.photos.PhotoDetailsQueries
-import com.savvasdalkitsis.uhuruphotos.api.db.photos.PhotoSummaryQueries
-import com.savvasdalkitsis.uhuruphotos.api.db.photos.TrashQueries
 import com.savvasdalkitsis.uhuruphotos.api.group.model.Group
 import com.savvasdalkitsis.uhuruphotos.api.group.model.groupBy
+import com.savvasdalkitsis.uhuruphotos.api.media.remote.model.toDbModel
+import com.savvasdalkitsis.uhuruphotos.api.media.remote.model.toTrash
 import com.savvasdalkitsis.uhuruphotos.api.people.service.model.toPerson
-import com.savvasdalkitsis.uhuruphotos.api.photos.entities.toPhotoSummary
-import com.savvasdalkitsis.uhuruphotos.api.photos.entities.toTrash
-import com.savvasdalkitsis.uhuruphotos.api.photos.model.toPhotoDetails
 import com.savvasdalkitsis.uhuruphotos.api.settings.usecase.SettingsUseCase
 import com.squareup.sqldelight.runtime.coroutines.asFlow
 import com.squareup.sqldelight.runtime.coroutines.mapToList
@@ -76,12 +75,12 @@ internal class AlbumsRepository @Inject constructor(
     private val autoAlbumPeopleQueries: AutoAlbumPeopleQueries,
     private val personQueries: PersonQueries,
     private val peopleQueries: PeopleQueries,
-    private val photoSummaryQueries: PhotoSummaryQueries,
-    private val photoDetailsQueries: PhotoDetailsQueries,
+    private val remoteMediaItemSummaryQueries: RemoteMediaItemSummaryQueries,
+    private val remoteMediaItemDetailsQueries: RemoteMediaItemDetailsQueries,
     private val userAlbumsQueries: UserAlbumsQueries,
     private val userAlbumQueries: UserAlbumQueries,
     private val userAlbumPhotosQueries: UserAlbumPhotosQueries,
-    private val trashQueries: TrashQueries,
+    private val remoteMediaTrashQueries: RemoteMediaTrashQueries,
     private val settingsUseCase: SettingsUseCase,
 ) : AlbumsRepository {
 
@@ -157,7 +156,7 @@ internal class AlbumsRepository @Inject constructor(
             .mapToList().groupBy(GetTrash::id)
             .distinctUntilChanged()
 
-    override suspend fun hasTrash() = trashQueries.count().awaitSingle() > 0
+    override suspend fun hasTrash() = remoteMediaTrashQueries.count().awaitSingle() > 0
 
     override suspend fun getTrash(): Group<String, GetTrash> =
         albumsQueries.getTrash().await().groupBy(GetTrash::id).let(::Group)
@@ -201,7 +200,7 @@ internal class AlbumsRepository @Inject constructor(
             }
             autoAlbumPhotosQueries.removePhotosForAlbum(albumId.toString())
             for (photo in album.photos) {
-                photoDetailsQueries.insert(photo.toPhotoDetails())
+                remoteMediaItemDetailsQueries.insert(photo.toDbModel())
                 autoAlbumPhotosQueries.insert(photo.imageHash, albumId.toString())
             }
         }
@@ -220,7 +219,7 @@ internal class AlbumsRepository @Inject constructor(
             )
             userAlbumPhotosQueries.removePhotosForAlbum(albumId.toString())
             for (photo in album.groups.flatMap { it.photos }) {
-                photoSummaryQueries.insert(photo.toPhotoSummary(albumId.toString()))
+                remoteMediaItemSummaryQueries.insert(photo.toDbModel(albumId.toString()))
                 userAlbumPhotosQueries.insert(photo.id, albumId.toString())
             }
         }
@@ -287,7 +286,7 @@ internal class AlbumsRepository @Inject constructor(
                 }
             }
         }
-        async { trashQueries.clear() }
+        async { remoteMediaTrashQueries.clear() }
         for (incompleteAlbum in trash) {
             val id = incompleteAlbum.id
             val completeAlbum = albumsService.getTrashAlbum(id).results
@@ -295,7 +294,7 @@ internal class AlbumsRepository @Inject constructor(
                 completeAlbum.items
                     .map { it.toTrash(id) }
                     .forEach {
-                        trashQueries.insert(it)
+                        remoteMediaTrashQueries.insert(it)
                     }
             }
         }
@@ -331,12 +330,12 @@ internal class AlbumsRepository @Inject constructor(
         val completeAlbum = albumFetcher(id)
         completeAlbumProcessor(completeAlbum)
         async {
-            photoSummaryQueries.transaction {
-                photoSummaryQueries.deletePhotoSummariesforAlbum(id)
+            remoteMediaItemSummaryQueries.transaction {
+                remoteMediaItemSummaryQueries.deletePhotoSummariesforAlbum(id)
                 completeAlbum.items
-                    .map { it.toPhotoSummary(id) }
+                    .map { it.toDbModel(id) }
                     .forEach {
-                        photoSummaryQueries.insert(it)
+                        remoteMediaItemSummaryQueries.insert(it)
                     }
             }
         }

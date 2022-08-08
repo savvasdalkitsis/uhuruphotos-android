@@ -15,11 +15,11 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.implementation.library.seam
 
-import com.savvasdalkitsis.uhuruphotos.api.mediastore.model.MediaBucket
+import com.savvasdalkitsis.uhuruphotos.api.media.local.domain.model.LocalMediaFolder
 
 sealed class LibraryAction {
 
-    data class LocalBucketSelected(val bucket: MediaBucket) : LibraryAction()
+    data class LocalBucketSelected(val bucket: LocalMediaFolder) : LibraryAction()
 
     object AutoAlbumsSelected : LibraryAction()
     object UserAlbumsSelected : LibraryAction()

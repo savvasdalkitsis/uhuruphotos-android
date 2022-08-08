@@ -16,11 +16,11 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.implementation.heatmap.seam
 
 import androidx.compose.ui.geometry.Offset
-import com.savvasdalkitsis.uhuruphotos.api.photos.model.Photo
+import com.savvasdalkitsis.uhuruphotos.api.media.page.domain.model.MediaItem
 
 sealed class HeatMapEffect {
     data class NavigateToPhoto(
-        val photo: Photo,
+        val mediaItem: MediaItem,
         val center: Offset,
         val scale: Float,
     ) : HeatMapEffect()

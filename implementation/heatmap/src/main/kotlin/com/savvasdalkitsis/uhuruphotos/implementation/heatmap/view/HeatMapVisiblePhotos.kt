@@ -37,7 +37,7 @@ fun HeatMapVisiblePhotos(
     state: HeatMapState,
     action: (HeatMapAction) -> Unit
 ) {
-    if (state.allPhotos.isEmpty()) {
+    if (state.allMedia.isEmpty()) {
         CircularProgressIndicator(modifier = loadingModifier)
     } else {
         Feed(
@@ -50,12 +50,12 @@ fun HeatMapVisiblePhotos(
                     Album(
                         id = "visiblePhotos",
                         photos = state.photosOnVisibleMap,
-                        displayTitle = stringResource(string.photos_on_map, state.photosOnVisibleMap.size, state.allPhotos.size),
+                        displayTitle = stringResource(string.photos_on_map, state.photosOnVisibleMap.size, state.allMedia.size),
                         location = null,
                     )
                 )
             ),
-            onPhotoSelected = { photo, center, scale ->
+            onMediaItemSelected = { photo, center, scale ->
                 action(SelectedPhoto(photo, center, scale))
             },
         )

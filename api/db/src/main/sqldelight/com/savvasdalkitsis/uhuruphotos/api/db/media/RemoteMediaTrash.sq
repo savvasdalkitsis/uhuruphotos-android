@@ -1,0 +1,34 @@
+CREATE TABLE remoteMediaTrash (
+  id TEXT NOT NULL PRIMARY KEY ,
+  dominantColor TEXT,
+  url TEXT NOT NULL,
+  location TEXT,
+  date TEXT,
+  birthTime TEXT,
+  aspectRatio REAL AS Float,
+  type TEXT,
+  videoLength TEXT,
+  rating INTEGER AS Int,
+  containerId TEXT NOT NULL,
+
+  FOREIGN KEY (containerId) REFERENCES albums(id)
+);
+
+insert:
+INSERT OR REPLACE INTO remoteMediaTrash VALUES ?;
+
+count:
+SELECT count(id) FROM remoteMediaTrash;
+
+clear:
+DELETE FROM remoteMediaTrash;
+
+delete:
+DELETE FROM remoteMediaTrash WHERE id = :id;
+
+moveToSummaries {
+BEGIN TRANSACTION;
+INSERT OR REPLACE INTO remoteMediaItemSummary SELECT * FROM remoteMediaTrash WHERE id = :id;
+DELETE FROM remoteMediaTrash WHERE id = :id;
+COMMIT;
+}

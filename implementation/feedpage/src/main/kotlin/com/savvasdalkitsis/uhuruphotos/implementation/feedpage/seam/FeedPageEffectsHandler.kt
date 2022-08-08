@@ -15,9 +15,9 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.implementation.feedpage.seam
 
+import com.savvasdalkitsis.uhuruphotos.api.media.page.domain.model.MediaSequenceDataSource.AllMedia
+import com.savvasdalkitsis.uhuruphotos.api.media.page.navigation.MediaItemPageNavigationTarget
 import com.savvasdalkitsis.uhuruphotos.api.navigation.Navigator
-import com.savvasdalkitsis.uhuruphotos.api.photos.model.PhotoSequenceDataSource.AllPhotos
-import com.savvasdalkitsis.uhuruphotos.api.photos.navigation.PhotoNavigationTarget
 import com.savvasdalkitsis.uhuruphotos.api.seam.EffectHandler
 import com.savvasdalkitsis.uhuruphotos.api.share.usecase.ShareUseCase
 import com.savvasdalkitsis.uhuruphotos.api.strings.R.string
@@ -38,12 +38,12 @@ internal class FeedPageEffectsHandler @Inject constructor(
 
     override suspend fun handleEffect(effect: FeedPageEffect) = when (effect) {
         is OpenPhotoDetails -> with(effect) {
-            navigateTo(PhotoNavigationTarget.name(id, center, scale, isVideo, AllPhotos))
+            navigateTo(MediaItemPageNavigationTarget.name(id, center, scale, isVideo, AllMedia))
         }
         is SharePhotos -> {
             toaster.show(string.downloading_photos_sharing)
-            shareUseCase.shareMultiple(effect.selectedPhotos.mapNotNull {
-                it.fullResUrl
+            shareUseCase.shareMultiple(effect.selectedMediaItem.mapNotNull {
+                it.fullResUri
             })
         }
         Vibrate -> uiUseCase.performLongPressHaptic()
