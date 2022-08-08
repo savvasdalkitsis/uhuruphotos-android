@@ -44,6 +44,7 @@ internal class AlbumDownloadWorker @AssistedInject constructor(
             val shallow = params.inputData.getBoolean(KEY_SHALLOW, false)
             albumsRepository.refreshAlbums(shallow) { progress ->
                 setProgress(workDataOf(Progress to progress))
+                createForegroundInfo(progress)
             }
             Result.success()
         } catch (e: Exception) {
@@ -52,11 +53,14 @@ internal class AlbumDownloadWorker @AssistedInject constructor(
         }
     }
 
-    override suspend fun getForegroundInfo(): ForegroundInfo = foregroundInfoBuilder.build(
+    override suspend fun getForegroundInfo(): ForegroundInfo = createForegroundInfo(null)
+
+    private fun createForegroundInfo(progress: Int?) = foregroundInfoBuilder.build(
         applicationContext,
         string.refreshing_albums,
         NOTIFICATION_ID,
         JOBS_CHANNEL_ID,
+        progress,
     )
     companion object {
         const val Progress = "Progress"
