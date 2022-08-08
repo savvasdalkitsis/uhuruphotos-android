@@ -19,8 +19,8 @@ import app.cash.turbine.test
 import com.savvasdalkitsis.uhuruphotos.api.albums.service.AlbumsService
 import com.savvasdalkitsis.uhuruphotos.api.db.TestDatabase
 import com.savvasdalkitsis.uhuruphotos.api.db.albums.Albums
+import com.savvasdalkitsis.uhuruphotos.api.db.domain.model.media.DbRemoteMediaItemSummary
 import com.savvasdalkitsis.uhuruphotos.api.db.extensions.await
-import com.savvasdalkitsis.uhuruphotos.api.db.photos.PhotoSummary
 import com.savvasdalkitsis.uhuruphotos.api.group.model.Group
 import com.savvasdalkitsis.uhuruphotos.api.settings.usecase.SettingsUseCase
 import com.savvasdalkitsis.uhuruphotos.implementation.albums.ProgressUpdate
@@ -69,12 +69,12 @@ class AlbumsRepositoryTest {
         db.autoAlbumPeopleQueries,
         db.personQueries,
         db.peopleQueries,
-        db.photoSummaryQueries,
-        db.photoDetailsQueries,
+        db.remoteMediaItemSummaryQueries,
+        db.remoteMediaItemDetailsQueries,
         db.userAlbumsQueries,
         db.userAlbumQueries,
         db.userAlbumPhotosQueries,
-        db.trashQueries,
+        db.remoteMediaTrashQueries,
         settingsUseCase,
     )
 
@@ -280,7 +280,7 @@ class AlbumsRepositoryTest {
     @Test
     fun `refreshes albums on demand`() = runBlocking {
         db.albumsQueries.clearAll()
-        db.photoSummaryQueries.clearAll()
+        db.remoteMediaItemSummaryQueries.clearAll()
         albumsService.respondsWith(
             incompleteAlbum(1).copy(location = SERVER_ALBUM_LOCATION),
         )
@@ -306,7 +306,7 @@ class AlbumsRepositoryTest {
                 .withServerResponseData(),
         )))
 
-        assertThat(db.photoSummaryQueries.getPhotoSummariesForAlbum(album1.id).await(), sameBeanAs(listOf(
+        assertThat(db.remoteMediaItemSummaryQueries.getPhotoSummariesForAlbum(album1.id).await(), sameBeanAs(listOf(
             photoSummariesForAlbum.copy(id = photoId(1)),
             photoSummariesForAlbum.copy(id = photoId(2)),
         )))
@@ -370,17 +370,17 @@ class AlbumsRepositoryTest {
         album3Response.completes()
         progress.assertReceived(100)
 
-        coVerify(exactly = 0) { albumsService.getAlbum(albumId(4)) }
+        coVerify(exactly = 0) { albumsService.getAlbum(albumId(4), 1) }
     }
 
     private fun given(vararg albums: Albums) = insert(*albums)
 
     private fun insert(vararg albums: Albums) = albums.forEach { db.albumsQueries.insert(it) }
 
-    private fun given(vararg photoSummaries: PhotoSummary) = insert(*photoSummaries)
+    private fun given(vararg photoSummaries: DbRemoteMediaItemSummary) = insert(*photoSummaries)
 
-    private fun insert(vararg photoSummaries: PhotoSummary) =
-        photoSummaries.forEach { db.photoSummaryQueries.insert(it) }
+    private fun insert(vararg photoSummaries: DbRemoteMediaItemSummary) =
+        photoSummaries.forEach { db.remoteMediaItemSummaryQueries.insert(it) }
 
     @Suppress("SameParameterValue")
     private fun given(person: Int) = PersonContinuation(person)

@@ -24,14 +24,14 @@ import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
 
 fun AlbumsService.respondsForAlbum(id: Int, album: Album.CompleteAlbum) {
-    coEvery { getAlbum(albumId(id)) } returns AlbumById(
+    coEvery { getAlbum(albumId(id), 1) } returns AlbumById(
         album
     )
 }
 
 fun AlbumsService.willRespondForAlbum(id: Int, album: Album.CompleteAlbum): Mutex {
     val response = Mutex(locked = true)
-    coEvery { getAlbum(albumId(id)) } coAnswers {
+    coEvery { getAlbum(albumId(id), 1) } coAnswers {
         response.withLock {
             AlbumById(album)
         }

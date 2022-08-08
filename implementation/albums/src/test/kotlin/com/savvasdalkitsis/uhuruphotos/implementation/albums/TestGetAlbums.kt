@@ -17,7 +17,7 @@ package com.savvasdalkitsis.uhuruphotos.implementation.albums
 
 import com.savvasdalkitsis.uhuruphotos.api.db.albums.GetAlbums
 import com.savvasdalkitsis.uhuruphotos.api.db.albums.GetPersonAlbums
-import com.savvasdalkitsis.uhuruphotos.api.db.photos.PhotoSummary
+import com.savvasdalkitsis.uhuruphotos.api.db.media.RemoteMediaItemSummary
 import com.savvasdalkitsis.uhuruphotos.implementation.albums.TestAlbums.albums
 import com.savvasdalkitsis.uhuruphotos.implementation.albums.TestAlbums.completeAlbum
 import com.savvasdalkitsis.uhuruphotos.implementation.albums.TestAlbums.incompleteAlbum
@@ -46,9 +46,9 @@ fun album(album: Int, vararg albums: GetAlbums) = albumId(album) to albums.map {
     it.copy(id = albumId(album), albumDate = album(album).date)
 }
 
-fun entry(photoSummary: PhotoSummary) = TestGetAlbums.getAlbum.copy(photoId = photoSummary.id)
+fun entry(photoSummary: RemoteMediaItemSummary) = TestGetAlbums.getAlbum.copy(photoId = photoSummary.id)
 
-fun entry(personId: Int, photoSummary: PhotoSummary) =
+fun entry(personId: Int, photoSummary: RemoteMediaItemSummary) =
     TestGetAlbums.getPersonAlbum.copy(personId = personId, photoId = photoSummary.id)
 
 fun GetPersonAlbums.withServerResponseData() = copy(

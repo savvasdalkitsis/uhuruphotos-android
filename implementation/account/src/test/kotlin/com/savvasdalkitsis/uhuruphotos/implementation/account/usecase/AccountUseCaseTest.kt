@@ -26,17 +26,16 @@ import com.savvasdalkitsis.uhuruphotos.api.db.albums.UserAlbumPhotosQueries
 import com.savvasdalkitsis.uhuruphotos.api.db.albums.UserAlbumQueries
 import com.savvasdalkitsis.uhuruphotos.api.db.albums.UserAlbumsQueries
 import com.savvasdalkitsis.uhuruphotos.api.db.auth.TokenQueries
-import com.savvasdalkitsis.uhuruphotos.api.db.mediastore.MediaStoreQueries
+import com.savvasdalkitsis.uhuruphotos.api.db.media.LocalMediaItemDetailsQueries
+import com.savvasdalkitsis.uhuruphotos.api.db.media.RemoteMediaItemDetailsQueries
+import com.savvasdalkitsis.uhuruphotos.api.db.media.RemoteMediaItemSummaryQueries
+import com.savvasdalkitsis.uhuruphotos.api.db.media.RemoteMediaTrashQueries
 import com.savvasdalkitsis.uhuruphotos.api.db.people.PeopleQueries
 import com.savvasdalkitsis.uhuruphotos.api.db.person.PersonQueries
-import com.savvasdalkitsis.uhuruphotos.api.db.photos.PhotoDetailsQueries
-import com.savvasdalkitsis.uhuruphotos.api.db.photos.PhotoSummaryQueries
-import com.savvasdalkitsis.uhuruphotos.api.db.photos.TrashQueries
 import com.savvasdalkitsis.uhuruphotos.api.db.search.SearchQueries
 import com.savvasdalkitsis.uhuruphotos.api.db.user.UserQueries
 import com.savvasdalkitsis.uhuruphotos.api.image.cache.ImageCacheController
 import com.savvasdalkitsis.uhuruphotos.api.worker.WorkScheduler
-import com.savvasdalkitsis.uhuruphotos.api.video.evictAll
 import com.squareup.sqldelight.TransactionWithReturn
 import com.squareup.sqldelight.TransactionWithoutReturn
 import io.mockk.mockk
@@ -55,18 +54,18 @@ class AccountUseCaseTest {
         override val autoAlbumPeopleQueries = mockk<AutoAlbumPeopleQueries>(relaxed = true)
         override val autoAlbumPhotosQueries = mockk<AutoAlbumPhotosQueries>(relaxed = true)
         override val autoAlbumsQueries = mockk<AutoAlbumsQueries>(relaxed = true)
+        override val localMediaItemDetailsQueries = mockk<LocalMediaItemDetailsQueries>(relaxed = true)
         override val peopleQueries = mockk<PeopleQueries>(relaxed = true)
         override val personQueries = mockk<PersonQueries>(relaxed = true)
-        override val photoDetailsQueries = mockk<PhotoDetailsQueries>(relaxed = true)
-        override val photoSummaryQueries = mockk<PhotoSummaryQueries>(relaxed = true)
+        override val remoteMediaItemDetailsQueries = mockk<RemoteMediaItemDetailsQueries>(relaxed = true)
+        override val remoteMediaItemSummaryQueries = mockk<RemoteMediaItemSummaryQueries>(relaxed = true)
+        override val remoteMediaTrashQueries = mockk<RemoteMediaTrashQueries>(relaxed = true)
         override val searchQueries = mockk<SearchQueries>(relaxed = true)
         override val tokenQueries = mockk<TokenQueries>(relaxed = true)
         override val userQueries = mockk<UserQueries>(relaxed = true)
         override val userAlbumQueries = mockk<UserAlbumQueries>(relaxed = true)
         override val userAlbumPhotosQueries = mockk<UserAlbumPhotosQueries>(relaxed = true)
         override val userAlbumsQueries = mockk<UserAlbumsQueries>(relaxed = true)
-        override val trashQueries = mockk<TrashQueries>(relaxed = true)
-        override val mediaStoreQueries = mockk<MediaStoreQueries>(relaxed = true)
 
         override fun transaction(noEnclosing: Boolean, body: TransactionWithoutReturn.() -> Unit) {}
         override fun <R> transactionWithResult(
@@ -105,8 +104,9 @@ class AccountUseCaseTest {
                 autoAlbumsQueries.clearAll()
                 peopleQueries.clearAll()
                 personQueries.clearAll()
-                photoDetailsQueries.clearAll()
-                photoSummaryQueries.clearAll()
+                remoteMediaItemDetailsQueries.clearAll()
+                remoteMediaItemSummaryQueries.clearAll()
+                remoteMediaTrashQueries.clear()
                 searchQueries.clearAll()
                 tokenQueries.clearAll()
                 userQueries.clearAll()

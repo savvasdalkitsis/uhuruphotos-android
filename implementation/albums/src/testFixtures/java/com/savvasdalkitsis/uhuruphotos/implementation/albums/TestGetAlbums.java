@@ -11,7 +11,7 @@ public class TestGetAlbums {
 
     public static final GetAlbums getAlbum = new GetAlbums(
         "albumId",
-        null,
+        "",
         null,
         "photoId",
         null,

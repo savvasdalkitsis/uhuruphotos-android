@@ -67,6 +67,7 @@ class AlbumsUseCaseTest {
 
     @Before
     fun setUp() {
+        every { dateDisplayer.dateString(any()) } returns ""
         userUseCase.returnsUser(user)
     }
 

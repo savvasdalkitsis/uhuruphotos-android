@@ -1,6 +1,6 @@
 package com.savvasdalkitsis.uhuruphotos.implementation.media;
 
-import com.savvasdalkitsis.uhuruphotos.api.db.media.MediaItemSummary;
+import com.savvasdalkitsis.uhuruphotos.api.db.media.RemoteMediaItemSummary;
 
 public class TestMediaItemDbSummaries {
 
@@ -8,7 +8,7 @@ public class TestMediaItemDbSummaries {
         // not to be instantiated
     }
 
-    public static final MediaItemSummary photoSummary = new MediaItemSummary(
+    public static final RemoteMediaItemSummary dbRemoteMediaItemSummary = new RemoteMediaItemSummary(
             "id",
             null,
             "url",
