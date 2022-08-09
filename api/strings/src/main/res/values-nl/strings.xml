@@ -178,7 +178,7 @@
     <string name="server_url">Server-url</string>
     <string name="login_to_server">Inloggen op server</string>
     <plurals name="delete_media">
-        <item quantity="one">%\t\t\td media-item verwijderen</item>
+        <item quantity="one">%d media-item verwijderen</item>
         <item quantity="other">%d media-items verwijderen</item>
     </plurals>
     <string name="media">Media</string>
