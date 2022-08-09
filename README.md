@@ -1,6 +1,6 @@
 [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=savvasdalkitsis_uhuruphotos-android&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=savvasdalkitsis_uhuruphotos-android)
 [![Translation status](https://hosted.weblate.org/widgets/uhuruphotos/-/app-translations/svg-badge.svg)](https://hosted.weblate.org/engage/uhuruphotos/)
-[![Lines of code](https://tokei.rs/b1/github/savvasdalkitsis/uhuruphotos-android)](https://github.com/savvasdalkitsis/uhuruphotos-android) [![Join the chat at https://gitter.im/uhuruphotos/community](https://badges.gitter.im/uhuruphotos/community.svg)](https://gitter.im/uhuruphotos/community?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+[![Lines of code](https://tokei.rs/b1/github/savvasdalkitsis/uhuruphotos-android)](https://github.com/savvasdalkitsis/uhuruphotos-android) [![Join the chat at https://gitter.im/uhuruphotos/community](https://badges.gitter.im/uhuruphotos/community.svg)](https://gitter.im/uhuruphotos?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
 # <img src="https://github.com/savvasdalkitsis/uhuruphotos-android/raw/main/api/icons/src/main/ic_launcher-playstore.png" alt="logo" width = 60px> UhuruPhotos. A LibrePhotos client
 
