@@ -36,10 +36,10 @@
     <string name="downloading_photo_details">正在下载照片信息</string>
     <string name="trashing_photo">正在将照片移入回收站</string>
     <plurals name="delete_photos">
-        <item quantity="other">删除 &amp;d 张照片</item>
+        <item quantity="other">删除 %d 张照片</item>
     </plurals>
     <plurals name="delete_photos_confirmation">
-        <item quantity="other">您确定要删除这 &amp;d 张照片吗？</item>
+        <item quantity="other">您确定要删除这 %d 张照片吗？</item>
     </plurals>
     <string name="refreshing_albums">正在刷新相册</string>
     <string name="log_out">注销</string>
