@@ -84,6 +84,7 @@ class HeatMapActionHandler @Inject constructor(
                         .map {
                             MediaItem(
                                 id = it.imageHash,
+                                mediaHash = it.imageHash,
                                 thumbnailUri = with(remoteMediaUseCase) {
                                     it.imageHash.toThumbnailUrlFromId()
                                 },

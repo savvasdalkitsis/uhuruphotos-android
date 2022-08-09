@@ -25,8 +25,10 @@ public class TestMediaItems {
 
     public static final MediaItem mediaItem = new MediaItem(
             "id",
+            "mediaHash",
             "",
             "",
+            null,
             null,
             null,
             false,

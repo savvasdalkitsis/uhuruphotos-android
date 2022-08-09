@@ -74,6 +74,7 @@ class AutoAlbumsUseCase @Inject constructor(
                         id = it.id,
                         cover = MediaItem(
                             id = it.coverPhotoHash,
+                            mediaHash = it.coverPhotoHash,
                             thumbnailUri = it.coverPhotoHash.toThumbnailUrlFromId(),
                             fullResUri = it.coverPhotoHash.toFullSizeUrlFromId(
                                 it.coverPhotoIsVideo ?: false

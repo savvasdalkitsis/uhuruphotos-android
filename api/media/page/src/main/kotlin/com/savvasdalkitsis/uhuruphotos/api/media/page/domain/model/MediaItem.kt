@@ -17,10 +17,12 @@ package com.savvasdalkitsis.uhuruphotos.api.media.page.domain.model
 
 data class MediaItem(
     val id: String,
+    val mediaHash: String,
     val thumbnailUri: String? = null,
     val fullResUri: String? = null,
     val fallbackColor: String? = null,
     val displayDayDate: String? = null,
+    val sortableDate: String? = null,
     val isFavourite: Boolean = false,
     val ratio: Float = 1f,
     val isVideo: Boolean = false,

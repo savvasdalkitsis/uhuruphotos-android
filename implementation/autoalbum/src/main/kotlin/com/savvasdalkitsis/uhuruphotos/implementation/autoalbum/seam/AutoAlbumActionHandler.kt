@@ -66,6 +66,7 @@ by AlbumPageActionHandler(
                             photos = photos.map {
                                 MediaItem(
                                     id = it.photoId.toString(),
+                                    mediaHash = it.photoId.toString(),
                                     thumbnailUri = with(remoteMediaUseCase) {
                                         it.photoId.toThumbnailUrlFromIdNullable()
                                     },

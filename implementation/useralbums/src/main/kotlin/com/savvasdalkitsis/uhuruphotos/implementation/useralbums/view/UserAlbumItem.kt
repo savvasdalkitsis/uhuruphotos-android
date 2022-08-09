@@ -56,7 +56,7 @@ internal fun UserAlbumItem(
             )
         } else {
             MediaItemThumbnail(
-                mediaItem = album.cover.mediaItem1 ?: MediaItem(""),
+                mediaItem = album.cover.mediaItem1 ?: MediaItem("", ""),
                 onItemSelected = { _, _, _ ->
                     action(UserAlbumSelected(album))
                 },

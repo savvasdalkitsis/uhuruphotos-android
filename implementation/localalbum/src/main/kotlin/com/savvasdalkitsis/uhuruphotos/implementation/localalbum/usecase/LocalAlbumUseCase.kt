@@ -64,12 +64,15 @@ internal class LocalAlbumUseCase @Inject constructor(
 
 
     private fun List<MediaItem>.toAlbums(): List<Album> =
-        groupBy { it.displayDayDate }.map { (albumDate, items) ->
-            Album(
-                id = "local_album_$albumDate",
-                displayTitle = albumDate ?: "-",
-                photos = items,
-                location = null,
-            )
-        }
+        groupBy { it.sortableDate }
+            .toSortedMap { a, b -> b.orEmpty().compareTo(a.orEmpty()) }
+            .filterValues { it.isNotEmpty() }
+            .map { (sortableDate, items) ->
+                Album(
+                    id = "local_album_$sortableDate",
+                    displayTitle = items.first().displayDayDate ?: "-",
+                    photos = items,
+                    location = null,
+                )
+            }
 }

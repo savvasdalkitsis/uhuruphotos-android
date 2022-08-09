@@ -124,6 +124,7 @@ internal class AlbumsUseCase @Inject constructor(
                             val photoId = item.photoId
                             MediaItem(
                                 id = photoId,
+                                mediaHash = photoId,
                                 thumbnailUri = with(remoteMediaUseCase) {
                                     photoId.toThumbnailUrlFromId()
                                 },

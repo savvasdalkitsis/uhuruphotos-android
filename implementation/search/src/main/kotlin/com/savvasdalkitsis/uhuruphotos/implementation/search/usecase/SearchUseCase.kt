@@ -70,6 +70,7 @@ class SearchUseCase @Inject constructor(
                     photo.summaryId?.let { id ->
                         MediaItem(
                             id = id,
+                            mediaHash = id,
                             thumbnailUri = with(remoteMediaUseCase) {
                                 photo.summaryId.toThumbnailUrlFromIdNullable()
                             },

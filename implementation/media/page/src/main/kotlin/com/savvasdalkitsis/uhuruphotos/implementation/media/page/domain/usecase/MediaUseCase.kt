@@ -44,6 +44,7 @@ import com.savvasdalkitsis.uhuruphotos.api.user.usecase.UserUseCase
 import com.savvasdalkitsis.uhuruphotos.implementation.media.remote.repository.RemoteMediaRepository
 import com.savvasdalkitsis.uhuruphotos.implementation.media.remote.worker.RemoteMediaItemWorkScheduler
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
@@ -78,13 +79,16 @@ class MediaUseCase @Inject constructor(
         }
 
     override fun observeLocalMedia(): Flow<MediaItemsOnDevice> =
-        localMediaUseCase.observeLocalMediaItems().map { mediaItems ->
+        combine(
+            localMediaUseCase.observeLocalMediaItems(),
+            userUseCase.observeUser(),
+        ) { mediaItems, user ->
             when (mediaItems) {
                 is LocalMediaItems.Found -> {
                     val primary = listOfNotNull(mediaItems.primaryLocalMediaFolder)
                     val other = mediaItems.localMediaFolders
                     MediaItemsOnDevice.Found((primary + other).map { (folder, items) ->
-                        folder to items.map { it.toMediaItem() }
+                        folder to items.map { it.toMediaItem(user.id) }
                     })
                 }
                 is LocalMediaItems.RequiresPermissions -> MediaItemsOnDevice.RequiresPermissions(
@@ -94,11 +98,16 @@ class MediaUseCase @Inject constructor(
         }
 
     override fun observeLocalAlbum(albumId: Int): Flow<MediaFolderOnDevice> =
-        localMediaUseCase.observeLocalMediaFolder(albumId).map { mediaItems ->
+        combine(
+            localMediaUseCase.observeLocalMediaFolder(albumId),
+            userUseCase.observeUser(),
+        ) { mediaItems, user ->
             when (mediaItems) {
                 is LocalFolder.Found -> {
                     MediaFolderOnDevice.Found(
-                        mediaItems.bucket.first to mediaItems.bucket.second.map { it.toMediaItem() }
+                        mediaItems.bucket.first to mediaItems.bucket.second.map {
+                            it.toMediaItem(user.id)
+                        }
                     )
                 }
                 is LocalFolder.RequiresPermissions -> MediaFolderOnDevice.RequiresPermissions(
@@ -130,6 +139,7 @@ class MediaUseCase @Inject constructor(
                     val date = dateDisplayer.dateString(it.date)
                     MediaItem(
                         id = it.id,
+                        mediaHash = it.id,
                         thumbnailUri = it.id.toThumbnailUrlFromIdNullable(),
                         fullResUri = it.id.toFullSizeUrlFromId(it.isVideo),
                         fallbackColor = it.dominantColor,
@@ -142,13 +152,15 @@ class MediaUseCase @Inject constructor(
             }
         }
 
-    private fun LocalMediaItem.toMediaItem() = MediaItem(
+    private fun LocalMediaItem.toMediaItem(userId: Int) = MediaItem(
         id = id.toString(),
+        mediaHash = md5 + userId,
         thumbnailUri = contentUri,
         fullResUri = contentUri,
         fallbackColor = fallbackColor,
         isFavourite = false,
         displayDayDate = displayDate,
+        sortableDate = dateTaken,
         ratio = (width / height.toFloat()).takeIf { it > 0 } ?: 1f,
         isVideo = video,
         latLng = latLon,
@@ -166,7 +178,7 @@ class MediaUseCase @Inject constructor(
 
     private fun LocalMediaItem.toMediaItemDetails(): MediaItemDetails =
         MediaItemDetails(
-            formattedDateAndTime = dateTaken,
+            formattedDateAndTime = displayDateTime,
             isFavourite = false,
             isVideo = video,
             location = "",

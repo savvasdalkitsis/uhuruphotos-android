@@ -99,6 +99,7 @@ class UserAlbumsUseCase @Inject constructor(
         imageHash?.let { imageHash ->
             MediaItem(
                 id = imageHash,
+                mediaHash = imageHash,
                 thumbnailUri = imageHash.toThumbnailUrlFromId(),
                 fullResUri = imageHash.toFullSizeUrlFromId(coverIsVideo ?: false),
                 displayDayDate = null,

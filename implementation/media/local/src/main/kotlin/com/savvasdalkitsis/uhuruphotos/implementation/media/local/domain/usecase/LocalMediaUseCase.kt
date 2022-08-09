@@ -17,7 +17,9 @@ package com.savvasdalkitsis.uhuruphotos.implementation.media.local.domain.usecas
 
 import android.Manifest
 import android.os.Build
+import com.savvasdalkitsis.uhuruphotos.api.date.DateDisplayer
 import com.savvasdalkitsis.uhuruphotos.api.date.module.DateModule.ParsingDateFormat
+import com.savvasdalkitsis.uhuruphotos.api.date.module.DateModule.ParsingDateTimeFormat
 import com.savvasdalkitsis.uhuruphotos.api.db.extensions.async
 import com.savvasdalkitsis.uhuruphotos.api.db.media.LocalMediaItemDetails
 import com.savvasdalkitsis.uhuruphotos.api.media.local.domain.model.LocalFolder
@@ -43,8 +45,11 @@ import javax.inject.Inject
 class LocalMediaUseCase @Inject constructor(
     @LocalMediaModule.LocalMediaDateTimeFormat
     private val localMediaDateTimeFormat: DateFormat,
+    @ParsingDateTimeFormat
+    private val parsingDateTimeFormat: DateFormat,
     @ParsingDateFormat
     private val parsingDateFormat: DateFormat,
+    private val dateDisplayer: DateDisplayer,
     private val localMediaRepository: LocalMediaRepository,
     private val permissionFlow: PermissionFlow,
     private val localMediaFolderRepository: LocalMediaFolderRepository,
@@ -82,6 +87,11 @@ class LocalMediaUseCase @Inject constructor(
                         .entries
                         .find { entry -> entry.key.id == folderId }
                         ?.toPair()
+                        ?.let { (folder, items) ->
+                            folder to items.sortedByDescending {
+                                it.dateTimeTaken
+                            }
+                        }
                         ?.let(LocalFolder::Found)
                         ?: LocalFolder.Error
                 }
@@ -138,30 +148,36 @@ class LocalMediaUseCase @Inject constructor(
 
     private fun List<LocalMediaItemDetails>.toItems() = map { it.toItem() }
 
-    private fun LocalMediaItemDetails.toItem() = LocalMediaItem(
-        id = id,
-        displayName = displayName,
-        displayDate = localMediaDateTimeFormat.parse(dateTaken)?.let { date ->
-            parsingDateFormat.format(date)
-        }.orEmpty(),
-        dateTaken = dateTaken,
-        bucket = LocalMediaFolder(id = bucketId, bucketName),
-        width = width,
-        height = height,
-        size = size,
-        contentUri = contentUri,
-        md5 = md5,
-        video = video,
-        duration = duration,
-        latLon = latLon?.split(",")?.let { value ->
-            when (value.size) {
-                2 -> value[0].toDoubleOrNull() to value[1].toDoubleOrNull()
-                else -> null
-            }
-        }?.filterOutNulls(),
-        fallbackColor = fallbackColor,
-        path = path,
-    )
+    private fun LocalMediaItemDetails.toItem(): LocalMediaItem {
+        val date = localMediaDateTimeFormat.parse(dateTaken)
+        val dateTimeString = date!!.let {
+            parsingDateTimeFormat.format(it)
+        }
+        return LocalMediaItem(
+            id = id,
+            displayName = displayName,
+            displayDate = dateDisplayer.dateString(dateTimeString),
+            displayDateTime = dateDisplayer.dateTimeString(dateTimeString),
+            dateTimeTaken = parsingDateTimeFormat.format(date),
+            dateTaken = parsingDateFormat.format(date),
+            bucket = LocalMediaFolder(id = bucketId, bucketName),
+            width = width,
+            height = height,
+            size = size,
+            contentUri = contentUri,
+            md5 = md5,
+            video = video,
+            duration = duration,
+            latLon = latLon?.split(",")?.let { value ->
+                when (value.size) {
+                    2 -> value[0].toDoubleOrNull() to value[1].toDoubleOrNull()
+                    else -> null
+                }
+            }?.filterOutNulls(),
+            fallbackColor = fallbackColor,
+            path = path,
+        )
+    }
 
     private fun <T> Pair<T?, T?>.filterOutNulls(): Pair<T, T>? {
         val (f, s) = this
