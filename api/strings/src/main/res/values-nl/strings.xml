@@ -177,4 +177,29 @@
     <string name="login">Inloggen</string>
     <string name="server_url">Server-url</string>
     <string name="login_to_server">Inloggen op server</string>
+    <plurals name="delete_media">
+        <item quantity="one">%\t\t\td media-item verwijderen</item>
+        <item quantity="other">%d media-items verwijderen</item>
+    </plurals>
+    <string name="media">Media</string>
+    <plurals name="restore_media">
+        <item quantity="one">%d media-item herstellen</item>
+        <item quantity="other">%d media-items herstellen</item>
+    </plurals>
+    <plurals name="trash_media">
+        <item quantity="one">%d media-item verplaatsen naar prullenbak</item>
+        <item quantity="other">%d media-items verplaatsen naar prullenbak</item>
+    </plurals>
+    <plurals name="delete_media_confirmation">
+        <item quantity="one">Weet je zeker dat je %d media-item wilt verwijderen\?</item>
+        <item quantity="other">Weet je zeker dat je %d media-items wilt verwijderen\?</item>
+    </plurals>
+    <plurals name="restore_media_confirmation">
+        <item quantity="one">Weet je zeker dat je %d media-item wilt herstellen\?</item>
+        <item quantity="other">Weet je zeker dat je %d media-items wilt herstellen\?</item>
+    </plurals>
+    <plurals name="trash_media_confirmation">
+        <item quantity="one">Weet je zeker dat je %d media-item raar de prullenbak wil verplaatsen\?</item>
+        <item quantity="other">Weet je zeker dat je %d media-items raar de prullenbak wil verplaatsen\?</item>
+    </plurals>
 </resources>
