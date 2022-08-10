@@ -16,7 +16,7 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.implementation.server.seam
 
 internal sealed class ServerEffect {
-    data class ErrorLoggingIn(val e: Exception) : ServerEffect()
+    data class ErrorLoggingIn(val e: Exception? = null) : ServerEffect()
     object Close : ServerEffect()
     object SendFeedback : ServerEffect()
 }

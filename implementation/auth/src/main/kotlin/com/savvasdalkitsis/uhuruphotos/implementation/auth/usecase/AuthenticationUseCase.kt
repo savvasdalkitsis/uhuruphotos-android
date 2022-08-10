@@ -18,6 +18,7 @@ package com.savvasdalkitsis.uhuruphotos.implementation.auth.usecase
 import com.savvasdalkitsis.uhuruphotos.api.auth.model.AuthStatus
 import com.savvasdalkitsis.uhuruphotos.api.auth.model.AuthStatus.Authenticated
 import com.savvasdalkitsis.uhuruphotos.api.auth.model.AuthStatus.Offline
+import com.savvasdalkitsis.uhuruphotos.api.auth.model.AuthStatus.ServerDown
 import com.savvasdalkitsis.uhuruphotos.api.auth.model.AuthStatus.Unauthenticated
 import com.savvasdalkitsis.uhuruphotos.api.auth.usecase.AuthenticationUseCase
 import com.savvasdalkitsis.uhuruphotos.api.db.auth.Token
@@ -30,7 +31,6 @@ import com.savvasdalkitsis.uhuruphotos.implementation.auth.network.jwt
 import com.savvasdalkitsis.uhuruphotos.implementation.auth.service.AuthenticationService
 import com.savvasdalkitsis.uhuruphotos.implementation.auth.service.model.AuthenticationCredentials
 import com.savvasdalkitsis.uhuruphotos.implementation.auth.service.model.AuthenticationObtainResponse
-import com.savvasdalkitsis.uhuruphotos.implementation.auth.service.model.AuthenticationRefreshResponse
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
 import java.io.IOException
@@ -53,7 +53,7 @@ class AuthenticationUseCase @Inject constructor(
         }
     }
 
-    override suspend fun login(username: String, password: String) {
+    override suspend fun login(username: String, password: String): AuthStatus {
         val response = authenticationService.login(AuthenticationCredentials(username, password))
         async {
             tokenQueries.saveToken(
@@ -63,36 +63,40 @@ class AuthenticationUseCase @Inject constructor(
                 )
             )
         }
-        refreshAccessToken(response.refresh)
+        return refreshAccessToken(response.refresh)
     }
 
     override suspend fun refreshToken(): AuthStatus = mutex.withLock {
         val refreshToken = tokenQueries.getRefreshToken().awaitSingleOrNull()
         return when {
             refreshToken.isNullOrEmpty() || refreshToken.jwt.isExpired(0) -> Unauthenticated
-            else -> try {
-                refreshAccessToken(refreshToken)
-                Authenticated
-            } catch (e: IOException) {
-                log(e)
-                Offline
-            } catch (e: Exception) {
-                log(e)
-                Unauthenticated
-            }
+            else -> refreshAccessToken(refreshToken)
         }
     }
 
-    private suspend fun refreshAccessToken(refreshToken: String): AuthenticationRefreshResponse {
+    private suspend fun refreshAccessToken(refreshToken: String): AuthStatus = try {
         val response = authenticationService.refreshToken(AuthenticationObtainResponse(refreshToken))
-        async {
-            tokenQueries.saveToken(
-                Token(
-                    token = response.access,
-                    type = TokenType.ACCESS
-                )
-            )
+        val refreshResponse = response.body()
+        when {
+            refreshResponse != null -> {
+                async {
+                    tokenQueries.saveToken(
+                        Token(
+                            token = refreshResponse.access,
+                            type = TokenType.ACCESS
+                        )
+                    )
+                }
+                Authenticated
+            }
+            response.code() >= 500 || response.code() == 404 -> ServerDown
+            else -> Unauthenticated
         }
-        return response
+    } catch (e: IOException) {
+        log(e)
+        Offline
+    } catch (e: Exception) {
+        log(e)
+        Unauthenticated
     }
 }

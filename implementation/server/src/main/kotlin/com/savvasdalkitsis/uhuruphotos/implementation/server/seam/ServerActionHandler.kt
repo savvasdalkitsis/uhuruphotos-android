@@ -17,6 +17,7 @@ package com.savvasdalkitsis.uhuruphotos.implementation.server.seam
 
 import com.savvasdalkitsis.uhuruphotos.api.auth.model.AuthStatus.Authenticated
 import com.savvasdalkitsis.uhuruphotos.api.auth.model.AuthStatus.Offline
+import com.savvasdalkitsis.uhuruphotos.api.auth.model.AuthStatus.ServerDown
 import com.savvasdalkitsis.uhuruphotos.api.auth.model.AuthStatus.Unauthenticated
 import com.savvasdalkitsis.uhuruphotos.api.auth.usecase.AuthenticationUseCase
 import com.savvasdalkitsis.uhuruphotos.api.auth.usecase.ServerUseCase
@@ -25,7 +26,19 @@ import com.savvasdalkitsis.uhuruphotos.api.http.isValidUrlOrDomain
 import com.savvasdalkitsis.uhuruphotos.api.log.log
 import com.savvasdalkitsis.uhuruphotos.api.seam.ActionHandler
 import com.savvasdalkitsis.uhuruphotos.api.settings.usecase.SettingsUseCase
-import com.savvasdalkitsis.uhuruphotos.implementation.server.seam.ServerAction.*
+import com.savvasdalkitsis.uhuruphotos.implementation.server.seam.ServerAction.AttemptChangeServerUrlTo
+import com.savvasdalkitsis.uhuruphotos.implementation.server.seam.ServerAction.ChangeServerUrlTo
+import com.savvasdalkitsis.uhuruphotos.implementation.server.seam.ServerAction.CheckPersistedServer
+import com.savvasdalkitsis.uhuruphotos.implementation.server.seam.ServerAction.DismissUnsecuredServerDialog
+import com.savvasdalkitsis.uhuruphotos.implementation.server.seam.ServerAction.Load
+import com.savvasdalkitsis.uhuruphotos.implementation.server.seam.ServerAction.Login
+import com.savvasdalkitsis.uhuruphotos.implementation.server.seam.ServerAction.RequestServerUrlChange
+import com.savvasdalkitsis.uhuruphotos.implementation.server.seam.ServerAction.SendLogsClick
+import com.savvasdalkitsis.uhuruphotos.implementation.server.seam.ServerAction.SetLoggingEnabled
+import com.savvasdalkitsis.uhuruphotos.implementation.server.seam.ServerAction.TogglePasswordVisibility
+import com.savvasdalkitsis.uhuruphotos.implementation.server.seam.ServerAction.UrlTyped
+import com.savvasdalkitsis.uhuruphotos.implementation.server.seam.ServerAction.UserPasswordChangedTo
+import com.savvasdalkitsis.uhuruphotos.implementation.server.seam.ServerAction.UsernameChangedTo
 import com.savvasdalkitsis.uhuruphotos.implementation.server.seam.ServerEffect.Close
 import com.savvasdalkitsis.uhuruphotos.implementation.server.seam.ServerEffect.ErrorLoggingIn
 import com.savvasdalkitsis.uhuruphotos.implementation.server.seam.ServerEffect.SendFeedback
@@ -41,7 +54,6 @@ import com.savvasdalkitsis.uhuruphotos.implementation.server.seam.ServerMutation
 import com.savvasdalkitsis.uhuruphotos.implementation.server.view.ServerState
 import com.savvasdalkitsis.uhuruphotos.implementation.server.view.ServerState.UserCredentials
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.emitAll
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.map
@@ -64,7 +76,7 @@ internal class ServerActionHandler @Inject constructor(
             when (serverUseCase.getServerUrl()) {
                 null -> emit(AskForServerDetails(null, isValid = false))
                 else -> when (authenticationUseCase.authenticationStatus()) {
-                    is Offline, is Authenticated -> effect(Close)
+                    is ServerDown, is Offline, is Authenticated -> effect(Close)
                     is Unauthenticated -> {
                         when (state) {
                             is UserCredentials -> emit(AskForUserCredentials(state.username, state.password))
@@ -107,8 +119,13 @@ internal class ServerActionHandler @Inject constructor(
             emit(PerformingBackgroundJob)
             val credentials = state as UserCredentials
             try {
-                authenticationUseCase.login(credentials.username, credentials.password)
-                effect(Close)
+                val authStatus = authenticationUseCase.login(credentials.username, credentials.password)
+                if (authStatus == Authenticated) {
+                    effect(Close)
+                } else {
+                    effect(ErrorLoggingIn())
+                    emit(AskForUserCredentials(credentials.username, credentials.password))
+                }
             } catch (e: Exception) {
                 log(e)
                 effect(ErrorLoggingIn(e))

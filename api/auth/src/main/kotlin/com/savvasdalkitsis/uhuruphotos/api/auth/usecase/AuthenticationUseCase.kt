@@ -21,7 +21,7 @@ interface AuthenticationUseCase {
 
     suspend fun authenticationStatus(): AuthStatus
 
-    suspend fun login(username: String, password: String)
+    suspend fun login(username: String, password: String): AuthStatus
 
     suspend fun refreshToken(): AuthStatus
 }

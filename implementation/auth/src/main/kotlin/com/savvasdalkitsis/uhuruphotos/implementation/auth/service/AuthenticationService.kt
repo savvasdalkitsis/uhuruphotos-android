@@ -18,6 +18,7 @@ package com.savvasdalkitsis.uhuruphotos.implementation.auth.service
 import com.savvasdalkitsis.uhuruphotos.implementation.auth.service.model.AuthenticationCredentials
 import com.savvasdalkitsis.uhuruphotos.implementation.auth.service.model.AuthenticationObtainResponse
 import com.savvasdalkitsis.uhuruphotos.implementation.auth.service.model.AuthenticationRefreshResponse
+import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.POST
 
@@ -27,6 +28,6 @@ interface AuthenticationService {
     suspend fun login(@Body credentials: AuthenticationCredentials): AuthenticationObtainResponse
 
     @POST("/api/auth/token/refresh/")
-    suspend fun refreshToken(@Body refreshToken: AuthenticationObtainResponse): AuthenticationRefreshResponse
+    suspend fun refreshToken(@Body refreshToken: AuthenticationObtainResponse): Response<AuthenticationRefreshResponse>
 
 }
