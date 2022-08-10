@@ -16,11 +16,12 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.implementation.person.seam
 
 import androidx.compose.ui.geometry.Offset
+import com.savvasdalkitsis.uhuruphotos.api.media.page.domain.model.MediaId
 import com.savvasdalkitsis.uhuruphotos.api.people.view.state.Person
 
 sealed class PersonEffect {
     data class OpenPhotoDetails(
-        val id: String,
+        val id: MediaId<*>,
         val center: Offset,
         val scale: Float,
         val video: Boolean,

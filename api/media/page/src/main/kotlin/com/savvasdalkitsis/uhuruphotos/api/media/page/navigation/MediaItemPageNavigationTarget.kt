@@ -19,23 +19,22 @@ import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.IntSize
 import androidx.navigation.NavBackStackEntry
+import com.savvasdalkitsis.uhuruphotos.api.media.page.domain.model.MediaId
 import com.savvasdalkitsis.uhuruphotos.api.media.page.domain.model.MediaSequenceDataSource
 import com.savvasdalkitsis.uhuruphotos.api.media.page.domain.model.MediaSequenceDataSource.Single
-import com.savvasdalkitsis.uhuruphotos.api.media.page.domain.model.MediaSource
 
 object MediaItemPageNavigationTarget {
 
     const val registrationName = "mediaItemPage/{type}/{id}/{centerX}/{centerY}/{scale}/{dataSource}/{mediaSource}"
 
     fun name(
-        id: String,
+        id: MediaId<*>,
         offset: Offset,
         scale: Float,
         isVideo: Boolean,
         mediaSequenceDataSource: MediaSequenceDataSource = Single,
-        mediaSource: MediaSource = MediaSource.REMOTE,
     ) = registrationName
-        .replace("{id}", id)
+        .replace("{id}", id.value.toString())
         .replace("{centerX}", offset.x.toString())
         .replace("{centerY}", offset.y.toString())
         .replace("{scale}", scale.toString())
@@ -46,13 +45,12 @@ object MediaItemPageNavigationTarget {
             }
         )
         .replace("{dataSource}", mediaSequenceDataSource.toArgument)
-        .replace("{mediaSource}", mediaSource.toArgument)
 
     val NavBackStackEntry.datasource: MediaSequenceDataSource
         get() =
         MediaSequenceDataSource.from(get("dataSource").orEmpty())
 
-    val NavBackStackEntry.mediaItemId: String get() = get("id")!!
+    val NavBackStackEntry.mediaItemId: MediaId<*> get() = MediaId(get("id")!!)
     val NavBackStackEntry.isVideo: Boolean get() = get("type") == "video"
     val NavBackStackEntry.center: Offset?
         get() {
@@ -61,9 +59,6 @@ object MediaItemPageNavigationTarget {
             return if (x != null && y != null) Offset(x, y) else null
         }
     val NavBackStackEntry.scale: Float get() = get("scale")?.toFloat() ?: 0.3f
-    val NavBackStackEntry.mediaSource: MediaSource
-        get() =
-        MediaSource.fromArgument(get("mediaSource").orEmpty())
 
     private fun NavBackStackEntry.get(arg: String) = arguments!!.getString(arg)
 

@@ -16,6 +16,7 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.implementation.media.page.seam
 
 import androidx.annotation.StringRes
+import com.savvasdalkitsis.uhuruphotos.api.media.page.domain.model.MediaId
 import com.savvasdalkitsis.uhuruphotos.api.media.page.domain.model.MediaItemDetails
 import com.savvasdalkitsis.uhuruphotos.api.seam.Mutation
 import com.savvasdalkitsis.uhuruphotos.implementation.media.page.domain.usecase.MediaItemMetadata
@@ -60,13 +61,13 @@ sealed class MediaItemPageMutation(
         )
     })
 
-    data class LoadingDetails(val id: String) : MediaItemPageMutation({
+    data class LoadingDetails(val id: MediaId<*>) : MediaItemPageMutation({
         it.copyItem(id) { photoState ->
             photoState.copy(loadingDetails = true)
         }
     })
 
-    data class FinishedLoadingDetails(val id: String) : MediaItemPageMutation({
+    data class FinishedLoadingDetails(val id: MediaId<*>) : MediaItemPageMutation({
         it.copyItem(id) { photoState ->
             photoState.copy(loadingDetails = false)
         }
@@ -100,25 +101,25 @@ sealed class MediaItemPageMutation(
         )
     })
 
-    data class ShowShareIcon(val id: String) : MediaItemPageMutation({
+    data class ShowShareIcon(val id: MediaId<*>) : MediaItemPageMutation({
         it.copyItem(id) { photoState ->
             photoState.copy(showShareIcon = true)
         }
     })
 
-    data class ShowUseAsIcon(val id: String) : MediaItemPageMutation({
+    data class ShowUseAsIcon(val id: MediaId<*>) : MediaItemPageMutation({
         it.copyItem(id) { photoState ->
             photoState.copy(showUseAsIcon = true)
         }
     })
 
-    data class SetOriginalFileIconState(val id: String, val state: OriginalFileIconState) : MediaItemPageMutation({
+    data class SetOriginalFileIconState(val id: MediaId<*>, val state: OriginalFileIconState) : MediaItemPageMutation({
         it.copyItem(id) { photoState ->
             photoState.copy(originalFileIconState = state)
         }
     })
 
-    data class ShowMetadata(val id: String, val metadata: MediaItemMetadata) : MediaItemPageMutation({
+    data class ShowMetadata(val id: MediaId<*>, val metadata: MediaItemMetadata) : MediaItemPageMutation({
         it.copyItem(id) { photoState ->
             photoState.copy(metadata = metadata)
         }
@@ -144,7 +145,7 @@ sealed class MediaItemPageMutation(
     }
 
     data class ReceivedDetails(
-        val id: String,
+        val id: MediaId<*>,
         val details: MediaItemDetails,
     ) : MediaItemPageMutation({
         with(details) {
@@ -167,7 +168,7 @@ sealed class MediaItemPageMutation(
     })
 
     data class ShowMediaItemFavourite(
-        val id: String,
+        val id: MediaId<*>,
         val favourite: Boolean,
     ) : MediaItemPageMutation({
         it.copyItem(id) { photoState ->
@@ -175,7 +176,7 @@ sealed class MediaItemPageMutation(
         }
     })
 
-    data class RemoveMediaItemFromSource(val id: String) : MediaItemPageMutation({
+    data class RemoveMediaItemFromSource(val id: MediaId<*>) : MediaItemPageMutation({
         val removed = it.copy(
             media = it.media.filter { photoState -> photoState.id != id },
         )
@@ -190,7 +191,7 @@ sealed class MediaItemPageMutation(
 }
 
 private fun MediaItemPageState.copyItem(
-    id: String,
+    id: MediaId<*>,
     copy: (SingleMediaItemState) -> SingleMediaItemState
 ): MediaItemPageState = copy(media = media.map { mediaItem ->
     when (mediaItem.id) {

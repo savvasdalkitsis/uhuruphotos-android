@@ -46,7 +46,13 @@ class SearchEffectsHandler @Inject constructor(
         HideKeyboard -> uiUseCase.hideKeyboard()
         is OpenPhotoDetails -> navigateTo(
             with(effect) {
-                MediaItemPageNavigationTarget.name(id, center, scale, isVideo, SearchResults(currentQuery))
+                MediaItemPageNavigationTarget.name(
+                    id,
+                    center,
+                    scale,
+                    isVideo,
+                    SearchResults(currentQuery)
+                )
             }
         )
         ErrorSearching -> toaster.show(string.error_searching)

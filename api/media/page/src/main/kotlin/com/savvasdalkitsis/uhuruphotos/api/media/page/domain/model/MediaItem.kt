@@ -16,7 +16,7 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.api.media.page.domain.model
 
 data class MediaItem(
-    val id: String,
+    val id: MediaId<*>,
     val mediaHash: String,
     val thumbnailUri: String? = null,
     val fullResUri: String? = null,

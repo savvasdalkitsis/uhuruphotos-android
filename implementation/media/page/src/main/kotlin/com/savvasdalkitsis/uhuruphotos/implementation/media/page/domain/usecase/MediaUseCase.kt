@@ -29,12 +29,10 @@ import com.savvasdalkitsis.uhuruphotos.api.media.local.domain.model.LocalMediaIt
 import com.savvasdalkitsis.uhuruphotos.api.media.local.domain.model.LocalMediaItems
 import com.savvasdalkitsis.uhuruphotos.api.media.local.domain.usecase.LocalMediaUseCase
 import com.savvasdalkitsis.uhuruphotos.api.media.page.domain.model.MediaFolderOnDevice
+import com.savvasdalkitsis.uhuruphotos.api.media.page.domain.model.MediaId
 import com.savvasdalkitsis.uhuruphotos.api.media.page.domain.model.MediaItem
 import com.savvasdalkitsis.uhuruphotos.api.media.page.domain.model.MediaItemDetails
 import com.savvasdalkitsis.uhuruphotos.api.media.page.domain.model.MediaItemsOnDevice
-import com.savvasdalkitsis.uhuruphotos.api.media.page.domain.model.MediaSource
-import com.savvasdalkitsis.uhuruphotos.api.media.page.domain.model.MediaSource.LOCAL
-import com.savvasdalkitsis.uhuruphotos.api.media.page.domain.model.MediaSource.REMOTE
 import com.savvasdalkitsis.uhuruphotos.api.media.page.domain.usecase.MediaUseCase
 import com.savvasdalkitsis.uhuruphotos.api.media.remote.domain.usecase.RemoteMediaUseCase
 import com.savvasdalkitsis.uhuruphotos.api.media.remote.model.deserializePeopleNames
@@ -45,6 +43,7 @@ import com.savvasdalkitsis.uhuruphotos.implementation.media.remote.repository.Re
 import com.savvasdalkitsis.uhuruphotos.implementation.media.remote.worker.RemoteMediaItemWorkScheduler
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
@@ -58,23 +57,23 @@ class MediaUseCase @Inject constructor(
     private val peopleUseCase: PeopleUseCase,
 ) : MediaUseCase {
 
-    override fun String.toThumbnailUriFromId(isVideo: Boolean, mediaSource: MediaSource): String =
-        when (mediaSource) {
-            REMOTE -> with(remoteMediaUseCase) {
-                toThumbnailUrlFromId(isVideo)
+    override fun MediaId<*>.toThumbnailUriFromId(isVideo: Boolean): String =
+        when (this) {
+            is MediaId.Remote -> with(remoteMediaUseCase) {
+                value.toThumbnailUrlFromId(isVideo)
             }
-            LOCAL -> with(localMediaUseCase) {
-                toContentUri(isVideo)
+            is MediaId.Local -> with(localMediaUseCase) {
+                value.toContentUri(isVideo)
             }
         }
 
-    override fun String.toFullSizeUriFromId(isVideo: Boolean, mediaSource: MediaSource): String =
-        when (mediaSource) {
-            REMOTE -> with(remoteMediaUseCase) {
-                toFullSizeUrlFromId(isVideo)
+    override fun MediaId<*>.toFullSizeUriFromId(isVideo: Boolean): String =
+        when (this) {
+            is MediaId.Remote -> with(remoteMediaUseCase) {
+                value.toFullSizeUrlFromId(isVideo)
             }
-            LOCAL -> with(localMediaUseCase) {
-                toContentUri(isVideo)
+            is MediaId.Local -> with(localMediaUseCase) {
+                value.toContentUri(isVideo)
             }
         }
 
@@ -138,7 +137,7 @@ class MediaUseCase @Inject constructor(
                 with(remoteMediaUseCase) {
                     val date = dateDisplayer.dateString(it.date)
                     MediaItem(
-                        id = it.id,
+                        id = MediaId.Remote(it.id),
                         mediaHash = it.id,
                         thumbnailUri = it.id.toThumbnailUrlFromIdNullable(),
                         fullResUri = it.id.toFullSizeUrlFromId(it.isVideo),
@@ -153,7 +152,7 @@ class MediaUseCase @Inject constructor(
         }
 
     private fun LocalMediaItem.toMediaItem(userId: Int) = MediaItem(
-        id = id.toString(),
+        id = MediaId.Local(id),
         mediaHash = md5 + userId,
         thumbnailUri = contentUri,
         fullResUri = contentUri,
@@ -166,13 +165,10 @@ class MediaUseCase @Inject constructor(
         latLng = latLon,
     )
 
-    override suspend fun getMediaItemDetails(
-        id: String,
-        mediaSource: MediaSource
-    ): MediaItemDetails? = when (mediaSource) {
-        REMOTE -> remoteMediaUseCase.getRemoteMediaItemDetails(id)
+    override suspend fun getMediaItemDetails(id: MediaId<*>): MediaItemDetails? = when (id) {
+        is MediaId.Remote -> remoteMediaUseCase.getRemoteMediaItemDetails(id.value)
             ?.toMediaItemDetails()
-        LOCAL -> localMediaUseCase.getLocalMediaItem(id.toInt())
+        is MediaId.Local -> localMediaUseCase.getLocalMediaItem(id.value)
             ?.toMediaItemDetails()
     }
 
@@ -226,61 +222,71 @@ class MediaUseCase @Inject constructor(
     override suspend fun getHiddenMedia(): Result<List<MediaItem>> =
         remoteMediaUseCase.getHiddenMediaSummaries().mapToMediaItems()
 
-    override suspend fun setMediaItemFavourite(id: String, favourite: Boolean): Result<Unit> =
-        userUseCase.getUserOrRefresh().mapCatching { user ->
-            remoteMediaRepository.setMediaItemRating(id, user.favoriteMinRating?.takeIf { favourite } ?: 0)
-            remoteMediaItemWorkScheduler.scheduleMediaItemFavourite(id, favourite)
+    override suspend fun setMediaItemFavourite(id: MediaId<*>, favourite: Boolean): Result<Unit> =
+        when (id) {
+            is MediaId.Remote -> userUseCase.getUserOrRefresh().mapCatching { user ->
+                    remoteMediaRepository.setMediaItemRating(
+                        id.value,
+                        user.favoriteMinRating?.takeIf { favourite } ?: 0)
+                    remoteMediaItemWorkScheduler.scheduleMediaItemFavourite(id.value, favourite)
+                }
+            else -> Result.success(Unit)
         }
 
-    override suspend fun refreshDetailsNowIfMissing(
-        id: String,
-        isVideo: Boolean,
-        mediaSource: MediaSource
-    ) : Result<Unit> = runCatchingWithLog {
-        when (mediaSource) {
-            REMOTE -> remoteMediaUseCase.refreshDetailsNowIfMissing(id)
-            LOCAL -> if (localMediaUseCase.getLocalMediaItem(id.toInt()) == null) {
-                localMediaUseCase.refreshLocalMediaItem(id.toInt(), isVideo)
+    override suspend fun refreshDetailsNowIfMissing(id: MediaId<*>, isVideo: Boolean) : Result<Unit> =
+        runCatchingWithLog {
+            when (id) {
+                is MediaId.Remote -> remoteMediaUseCase.refreshDetailsNowIfMissing(id.value)
+                is MediaId.Local -> if (localMediaUseCase.getLocalMediaItem(id.value) == null) {
+                    localMediaUseCase.refreshLocalMediaItem(id.value, isVideo)
+                }
             }
         }
-    }
 
-    override suspend fun refreshDetailsNow(
-        id: String,
-        isVideo: Boolean,
-        mediaSource: MediaSource
-    ) : Result<Unit> = runCatchingWithLog {
-        when (mediaSource) {
-            REMOTE -> remoteMediaUseCase.refreshDetailsNow(id)
-            LOCAL -> localMediaUseCase.refreshLocalMediaItem(id.toInt(), isVideo)
+    override suspend fun refreshDetailsNow(id: MediaId<*>, isVideo: Boolean) : Result<Unit> =
+        runCatchingWithLog {
+            when (id) {
+                is MediaId.Remote -> remoteMediaUseCase.refreshDetailsNow(id.value)
+                is MediaId.Local -> localMediaUseCase.refreshLocalMediaItem(id.value, isVideo)
+            }
         }
-    }
 
     override suspend fun refreshFavouriteMedia() {
         remoteMediaUseCase.refreshFavouriteMedia()
     }
 
-    override fun downloadOriginal(id: String, video: Boolean) {
-        remoteMediaUseCase.downloadOriginal(id, video)
+    override fun downloadOriginal(id: MediaId<*>, video: Boolean) {
+        if (id is MediaId.Remote) {
+            remoteMediaUseCase.downloadOriginal(id.value, video)
+        }
     }
 
-    override fun observeOriginalFileDownloadStatus(id: String): Flow<WorkInfo.State> =
-        remoteMediaUseCase.observeOriginalFileDownloadStatus(id)
+    override fun observeOriginalFileDownloadStatus(id: MediaId<*>): Flow<WorkInfo.State> =
+        when (id) {
+            is MediaId.Remote -> remoteMediaUseCase.observeOriginalFileDownloadStatus(id.value)
+            else -> flowOf(WorkInfo.State.SUCCEEDED)
+        }
 
     override suspend fun refreshHiddenMedia() {
         remoteMediaUseCase.refreshHiddenMedia()
     }
 
-    override fun trashMediaItem(id: String) {
-        remoteMediaUseCase.trashMediaItem(id)
+    override fun trashMediaItem(id: MediaId<*>) {
+        if (id is MediaId.Remote) {
+            remoteMediaUseCase.trashMediaItem(id.value)
+        }
     }
 
-    override fun deleteMediaItem(id: String) {
-        remoteMediaUseCase.deleteMediaItem(id)
+    override fun deleteMediaItem(id: MediaId<*>) {
+        if (id is MediaId.Remote) {
+            remoteMediaUseCase.deleteMediaItem(id.value)
+        }
     }
 
-    override fun restoreMediaItem(id: String) {
-        remoteMediaUseCase.restoreMediaItem(id)
+    override fun restoreMediaItem(id: MediaId<*>) {
+        if (id is MediaId.Remote) {
+            remoteMediaUseCase.restoreMediaItem(id.value)
+        }
     }
 
     private suspend fun <T> withFavouriteThreshold(action: suspend (Int) -> T): Result<T> =

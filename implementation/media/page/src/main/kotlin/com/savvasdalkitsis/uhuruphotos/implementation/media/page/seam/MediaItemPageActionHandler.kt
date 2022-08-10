@@ -23,9 +23,9 @@ import androidx.work.WorkInfo.State.RUNNING
 import androidx.work.WorkInfo.State.SUCCEEDED
 import com.savvasdalkitsis.uhuruphotos.api.albums.model.Album
 import com.savvasdalkitsis.uhuruphotos.api.albums.usecase.AlbumsUseCase
-import com.savvasdalkitsis.uhuruphotos.api.db.domain.model.media.DbRemoteMediaItemSummary
 import com.savvasdalkitsis.uhuruphotos.api.localalbum.usecase.LocalAlbumUseCase
 import com.savvasdalkitsis.uhuruphotos.api.log.log
+import com.savvasdalkitsis.uhuruphotos.api.media.page.domain.model.MediaId
 import com.savvasdalkitsis.uhuruphotos.api.media.page.domain.model.MediaItem
 import com.savvasdalkitsis.uhuruphotos.api.media.page.domain.model.MediaSequenceDataSource.AllMedia
 import com.savvasdalkitsis.uhuruphotos.api.media.page.domain.model.MediaSequenceDataSource.AutoAlbum
@@ -37,9 +37,6 @@ import com.savvasdalkitsis.uhuruphotos.api.media.page.domain.model.MediaSequence
 import com.savvasdalkitsis.uhuruphotos.api.media.page.domain.model.MediaSequenceDataSource.Single
 import com.savvasdalkitsis.uhuruphotos.api.media.page.domain.model.MediaSequenceDataSource.Trash
 import com.savvasdalkitsis.uhuruphotos.api.media.page.domain.model.MediaSequenceDataSource.UserAlbum
-import com.savvasdalkitsis.uhuruphotos.api.media.page.domain.model.MediaSource
-import com.savvasdalkitsis.uhuruphotos.api.media.page.domain.model.MediaSource.LOCAL
-import com.savvasdalkitsis.uhuruphotos.api.media.page.domain.model.MediaSource.REMOTE
 import com.savvasdalkitsis.uhuruphotos.api.media.page.domain.usecase.MediaUseCase
 import com.savvasdalkitsis.uhuruphotos.api.person.usecase.PersonUseCase
 import com.savvasdalkitsis.uhuruphotos.api.seam.ActionHandler
@@ -142,17 +139,16 @@ class MediaItemPageActionHandler @Inject constructor(
                 emit(ShowSingleMediaItem(
                     SingleMediaItemState(
                         id = action.id,
-                        lowResUrl = action.id.toThumbnailUriFromId(action.isVideo, action.mediaSource),
-                        fullResUrl = action.id.toFullSizeUriFromId(action.isVideo, action.mediaSource),
-                        showFavouriteIcon = action.mediaSource == REMOTE,
-                        showDeleteButton =  action.mediaSource == REMOTE,
+                        lowResUrl = action.id.toThumbnailUriFromId(action.isVideo),
+                        fullResUrl = action.id.toFullSizeUriFromId(action.isVideo),
+                        showFavouriteIcon = action.id is MediaId.Remote,
+                        showDeleteButton =  action.id is MediaId.Remote,
                     )
                 ))
                 when (action.sequenceDataSource) {
                     Single -> loadPhotoDetails(
                         photoId = action.id,
-                        isVideo = action.isVideo,
-                        imageSource = action.mediaSource
+                        isVideo = action.isVideo
                     )
                     AllMedia -> loadAlbums(albumsUseCase.getAlbums(), action)
                     is SearchResults -> loadAlbums(
@@ -197,13 +193,12 @@ class MediaItemPageActionHandler @Inject constructor(
             if (state.media.isNotEmpty()) {
                 val photo = state.media[action.page]
                 changePageJob = launch {
-                    val imageSource = MediaSource.fromUrl(photo.fullResUrl)
                     merge<MediaItemPageMutation>(
                         flow {
-                            loadPhotoDetails(photo.id, photo.isVideo, imageSource)
+                            loadPhotoDetails(photo.id, photo.isVideo)
                         },
-                        when (imageSource) {
-                            REMOTE -> mediaUseCase.observeOriginalFileDownloadStatus(photo.id)
+                        when (photo.id) {
+                            is MediaId.Remote -> mediaUseCase.observeOriginalFileDownloadStatus(photo.id)
                                 .map {
                                     when (it) {
                                         ENQUEUED, RUNNING, BLOCKED -> IN_PROGRESS
@@ -213,7 +208,7 @@ class MediaItemPageActionHandler @Inject constructor(
                                 }
                                 .onStart { emit(IDLE) }
                                 .map { SetOriginalFileIconState(photo.id, it) }
-                            LOCAL -> flowOf(SetOriginalFileIconState(photo.id, HIDDEN))
+                            is MediaId.Local -> flowOf(SetOriginalFileIconState(photo.id, HIDDEN))
                         }
                     ).collect { send(it) }
                 }
@@ -245,9 +240,8 @@ class MediaItemPageActionHandler @Inject constructor(
             val photo = state.currentMediaItem
             loadPhotoDetails(
                 photoId = photo.id,
-                refresh = true,
                 isVideo = photo.isVideo,
-                imageSource = MediaSource.fromUrl(photo.fullResUrl),
+                refresh = true,
             )
         }
         DismissErrorMessage -> flowOf(MediaItemPageMutation.DismissErrorMessage)
@@ -282,9 +276,7 @@ class MediaItemPageActionHandler @Inject constructor(
         }
         is FullMediaDataLoaded -> flow {
             emit(SetOriginalFileIconState(action.photo.id, HIDDEN))
-            if (!(MediaSource.fromUrl(action.photo.fullResUrl) == REMOTE
-                && action.photo.isVideo)
-            ) {
+            if (!(action.photo.id is MediaId.Remote && action.photo.isVideo)) {
                 emit(ShowShareIcon(action.photo.id))
                 emit(ShowUseAsIcon(action.photo.id))
                 val metadata = metadataUseCase.extractMetadata(action.photo.fullResUrl)
@@ -330,20 +322,6 @@ class MediaItemPageActionHandler @Inject constructor(
             else -> loadPhotos(items, action)
         }
 
-    context (MediaUseCase)
-    private suspend fun FlowCollector<MediaItemPageMutation>.loadSummaries(
-        remoteMediaItemSummaries: Result<List<DbRemoteMediaItemSummary>>,
-        action: LoadMediaItem,
-    ) =
-        when (val favourites =
-            remoteMediaItemSummaries
-                .mapCatching { it.mapToMediaItems().getOrThrow() }
-                .getOrNull()
-        ) {
-            null -> loadPhotoDetails(action.id)
-            else -> loadPhotos(favourites, action)
-        }
-
     context(MediaUseCase)
     private suspend fun FlowCollector<MediaItemPageMutation>.loadAlbums(
         albums: List<Album>,
@@ -356,43 +334,40 @@ class MediaItemPageActionHandler @Inject constructor(
         action: LoadMediaItem
     ) {
         val photoStates = mediaItems.map { photo ->
-            val mediaSource = MediaSource.fromUrl(photo.fullResUri)
             SingleMediaItemState(
                 id = photo.id,
-                lowResUrl = photo.thumbnailUri ?: photo.id.toThumbnailUriFromId(action.isVideo, mediaSource),
-                fullResUrl = photo.fullResUri ?: photo.id.toFullSizeUriFromId(action.isVideo, mediaSource),
+                lowResUrl = photo.thumbnailUri ?: photo.id.toThumbnailUriFromId(action.isVideo),
+                fullResUrl = photo.fullResUri ?: photo.id.toFullSizeUriFromId(action.isVideo),
                 isFavourite = photo.isFavourite,
                 isVideo = photo.isVideo,
-                showFavouriteIcon = mediaSource == REMOTE,
-                showDeleteButton = mediaSource == REMOTE,
+                showFavouriteIcon = photo.id is MediaId.Remote,
+                showDeleteButton = photo.id is MediaId.Remote,
             )
         }
         val index = photoStates.indexOfFirst { it.id == action.id }
         emit(ShowMultipleMedia(photoStates, index))
         loadPhotoDetails(
             photoId = action.id,
-            isVideo = action.isVideo,
-            imageSource = action.mediaSource
+            isVideo = action.isVideo
         )
     }
 
     private suspend fun FlowCollector<MediaItemPageMutation>.loadPhotoDetails(
-        photoId: String,
+        photoId: MediaId<*>,
         isVideo: Boolean = false,
-        imageSource: MediaSource = REMOTE,
         refresh: Boolean = false,
     ) {
         emit(Loading)
         emit(LoadingDetails(photoId))
         if (refresh) {
-            mediaUseCase.refreshDetailsNow(photoId, isVideo, imageSource)
+            mediaUseCase.refreshDetailsNow(photoId, isVideo)
         } else {
-            mediaUseCase.refreshDetailsNowIfMissing(photoId, isVideo, imageSource)
+            mediaUseCase.refreshDetailsNowIfMissing(photoId, isVideo)
         }.onFailure {
             log(it)
             emit(ShowErrorMessage(string.error_loading_photo_details))
         }
-        when (val details = mediaUseCase.getMediaItemDetails(photoId, imageSource)) {
+        when (val details = mediaUseCase.getMediaItemDetails(photoId)) {
             null -> emit(ShowErrorMessage(string.error_loading_photo_details))
             else -> emit(ReceivedDetails(photoId, details))
         }

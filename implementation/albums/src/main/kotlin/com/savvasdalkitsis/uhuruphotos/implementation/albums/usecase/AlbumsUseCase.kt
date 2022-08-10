@@ -28,6 +28,7 @@ import com.savvasdalkitsis.uhuruphotos.api.db.albums.GetUserAlbum
 import com.savvasdalkitsis.uhuruphotos.api.db.extensions.isVideo
 import com.savvasdalkitsis.uhuruphotos.api.group.model.Group
 import com.savvasdalkitsis.uhuruphotos.api.group.model.mapValues
+import com.savvasdalkitsis.uhuruphotos.api.media.page.domain.model.MediaId
 import com.savvasdalkitsis.uhuruphotos.api.media.page.domain.model.MediaItem
 import com.savvasdalkitsis.uhuruphotos.api.media.remote.domain.usecase.RemoteMediaUseCase
 import com.savvasdalkitsis.uhuruphotos.api.user.usecase.UserUseCase
@@ -123,7 +124,7 @@ internal class AlbumsUseCase @Inject constructor(
                         else -> {
                             val photoId = item.photoId
                             MediaItem(
-                                id = photoId,
+                                id = MediaId.Remote(photoId),
                                 mediaHash = photoId,
                                 thumbnailUri = with(remoteMediaUseCase) {
                                     photoId.toThumbnailUrlFromId()

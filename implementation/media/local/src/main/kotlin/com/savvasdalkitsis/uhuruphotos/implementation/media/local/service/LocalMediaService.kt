@@ -62,7 +62,7 @@ class LocalMediaService @Inject constructor(
             rowHandler = photoRowHandler,
         )
 
-    suspend fun getPhotosForId(photoId: Int): List<LocalMediaStoreServiceItem.Photo> =
+    suspend fun getPhotosForId(photoId: Long): List<LocalMediaStoreServiceItem.Photo> =
         query(
             collection = LocalMediaPhotoColumns.collection,
             projection = LocalMediaPhotoColumns.projection,
@@ -103,7 +103,7 @@ class LocalMediaService @Inject constructor(
             rowHandler = videoRowHandler,
         )
 
-    suspend fun getVideosForId(videoId: Int): List<LocalMediaStoreServiceItem.Video> =
+    suspend fun getVideosForId(videoId: Long): List<LocalMediaStoreServiceItem.Video> =
         query(
             collection = LocalMediaVideoColumns.collection,
             projection = LocalMediaVideoColumns.projection,

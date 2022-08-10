@@ -25,6 +25,7 @@ import com.savvasdalkitsis.uhuruphotos.api.albumpage.view.state.Title
 import com.savvasdalkitsis.uhuruphotos.api.albums.model.Album
 import com.savvasdalkitsis.uhuruphotos.api.date.DateDisplayer
 import com.savvasdalkitsis.uhuruphotos.api.db.extensions.isVideo
+import com.savvasdalkitsis.uhuruphotos.api.media.page.domain.model.MediaId
 import com.savvasdalkitsis.uhuruphotos.api.media.page.domain.model.MediaItem
 import com.savvasdalkitsis.uhuruphotos.api.media.page.domain.model.MediaSequenceDataSource.UserAlbum
 import com.savvasdalkitsis.uhuruphotos.api.media.remote.domain.usecase.RemoteMediaUseCase
@@ -65,7 +66,7 @@ by AlbumPageActionHandler(
                             location = null,
                             photos = photos.map { photo ->
                                 MediaItem(
-                                    id = photo.photoId.toString(),
+                                    id = MediaId.Remote(photo.photoId.toString()),
                                     mediaHash = photo.photoId.toString(),
                                     thumbnailUri = with(remoteMediaUseCase) {
                                         photo.photoId.toThumbnailUrlFromIdNullable()

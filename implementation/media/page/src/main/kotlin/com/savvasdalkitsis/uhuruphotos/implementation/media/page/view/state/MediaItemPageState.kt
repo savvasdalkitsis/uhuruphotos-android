@@ -17,6 +17,7 @@ package com.savvasdalkitsis.uhuruphotos.implementation.media.page.view.state
 
 import androidx.annotation.StringRes
 import com.savvasdalkitsis.uhuruphotos.api.map.model.LatLon
+import com.savvasdalkitsis.uhuruphotos.api.media.page.domain.model.MediaId
 import com.savvasdalkitsis.uhuruphotos.api.people.view.state.Person
 import com.savvasdalkitsis.uhuruphotos.implementation.media.page.domain.usecase.MediaItemMetadata
 
@@ -52,7 +53,7 @@ data class MediaItemPageState(
 }
 
 data class SingleMediaItemState(
-    val id: String = "",
+    val id: MediaId<*> = MediaId.Remote(""),
     val fullResUrl: String = "",
     val lowResUrl: String = "",
     val isFavourite: Boolean? = null,

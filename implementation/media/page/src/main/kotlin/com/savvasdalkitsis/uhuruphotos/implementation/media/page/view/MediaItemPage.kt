@@ -72,7 +72,7 @@ internal fun MediaItemPage(
         count = state.media.size,
         state = pagerState,
         itemSpacing = 12.dp,
-        key = { page -> state.media.getOrNull(page)?.id ?: page.toString() },
+        key = { page -> state.media.getOrNull(page)?.id?.value ?: page.toString() },
         userScrollEnabled = true,
     ) { index ->
         ModalBottomSheetLayout(

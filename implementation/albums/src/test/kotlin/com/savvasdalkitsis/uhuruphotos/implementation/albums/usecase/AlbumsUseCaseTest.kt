@@ -22,6 +22,7 @@ import com.savvasdalkitsis.uhuruphotos.api.db.albums.GetAlbums
 import com.savvasdalkitsis.uhuruphotos.api.db.albums.GetPersonAlbums
 import com.savvasdalkitsis.uhuruphotos.api.db.user.User
 import com.savvasdalkitsis.uhuruphotos.api.group.model.Group
+import com.savvasdalkitsis.uhuruphotos.api.media.page.domain.model.MediaId
 import com.savvasdalkitsis.uhuruphotos.api.media.remote.domain.usecase.RemoteMediaUseCase
 import com.savvasdalkitsis.uhuruphotos.api.user.usecase.UserUseCase
 import com.savvasdalkitsis.uhuruphotos.implementation.albums.TestAlbums.album
@@ -94,7 +95,7 @@ class AlbumsUseCaseTest {
 
         assertThat(underTest.getPersonAlbums(1), sameBeanAs(listOf(album.copy(
             id = "albumId",
-            photos = listOf(mediaItem.copy(id = "photoId"))
+            photos = listOf(mediaItem.copy(id = MediaId.Remote("photoId")))
         ))))
     }
 
@@ -115,7 +116,7 @@ class AlbumsUseCaseTest {
 
             assertThat(awaitItem(), sameBeanAs(listOf(album.copy(
                 id = "albumId",
-                photos = listOf(mediaItem.copy(id = "photoId"))
+                photos = listOf(mediaItem.copy(id = MediaId.Remote("photoId")))
             ))))
         }
     }
@@ -129,7 +130,7 @@ class AlbumsUseCaseTest {
 
         assertThat(underTest.getAlbums(), sameBeanAs(listOf(album.copy(
             id = "albumId",
-            photos = listOf(mediaItem.copy(id = "photoId"))
+            photos = listOf(mediaItem.copy(id = MediaId.Remote("photoId")))
         ))))
     }
 
@@ -303,7 +304,7 @@ class AlbumsUseCaseTest {
             )
             assertThat(awaitItem(), sameBeanAs(listOf(album.copy(
                 id = "albumId",
-                photos = listOf(mediaItem.copy(id = "photoId"))
+                photos = listOf(mediaItem.copy(id = MediaId.Remote("photoId")))
             ))))
         }
     }

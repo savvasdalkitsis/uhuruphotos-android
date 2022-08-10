@@ -192,7 +192,7 @@ internal class FeedPageActionHandler @Inject constructor(
             album.copy(photos = album.photos.map { photo ->
                 photo.copy(selectionMode = when {
                     empty -> UNDEFINED
-                    photo.id in ids -> SELECTED
+                    photo.id.value.toString() in ids -> SELECTED
                     else -> UNSELECTED
                 })
             })

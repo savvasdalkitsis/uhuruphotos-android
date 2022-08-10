@@ -170,7 +170,7 @@ class LocalMediaRepository @Inject constructor(
         localMediaItemDetailsQueries.clearAll()
     }
 
-    suspend fun refreshItem(id: Int, video: Boolean) = when {
+    suspend fun refreshItem(id: Long, video: Boolean) = when {
         video -> localMediaService.getVideosForId(id)
         else -> localMediaService.getPhotosForId(id)
     }.processAndInsertItems(
@@ -178,6 +178,6 @@ class LocalMediaRepository @Inject constructor(
         forceProcess = true,
     )
 
-    suspend fun getItem(id: Int): LocalMediaItemDetails? =
-        localMediaItemDetailsQueries.getItem(id.toLong()).awaitSingleOrNull()
+    suspend fun getItem(id: Long): LocalMediaItemDetails? =
+        localMediaItemDetailsQueries.getItem(id).awaitSingleOrNull()
 }

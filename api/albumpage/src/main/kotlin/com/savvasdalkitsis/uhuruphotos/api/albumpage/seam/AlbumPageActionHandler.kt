@@ -33,7 +33,6 @@ import com.savvasdalkitsis.uhuruphotos.api.feed.view.state.FeedDisplay
 import com.savvasdalkitsis.uhuruphotos.api.feed.view.state.FeedDisplays
 import com.savvasdalkitsis.uhuruphotos.api.log.log
 import com.savvasdalkitsis.uhuruphotos.api.media.page.domain.model.MediaSequenceDataSource
-import com.savvasdalkitsis.uhuruphotos.api.media.page.domain.model.MediaSource
 import com.savvasdalkitsis.uhuruphotos.api.seam.ActionHandler
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -85,8 +84,7 @@ class AlbumPageActionHandler(
                         center = center,
                         scale = scale,
                         video = mediaItem.isVideo,
-                        mediaSequenceDataSource = mediaSequenceDataSource(albumId),
-                        imageSource = MediaSource.fromUrl(mediaItem.fullResUri)
+                        mediaSequenceDataSource = mediaSequenceDataSource(albumId)
                     )
                 }
             )

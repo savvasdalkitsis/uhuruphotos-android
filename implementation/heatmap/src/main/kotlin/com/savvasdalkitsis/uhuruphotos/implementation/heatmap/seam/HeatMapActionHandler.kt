@@ -26,6 +26,7 @@ import com.savvasdalkitsis.uhuruphotos.api.coroutines.safelyOnStart
 import com.savvasdalkitsis.uhuruphotos.api.date.DateDisplayer
 import com.savvasdalkitsis.uhuruphotos.api.db.domain.model.media.latLng
 import com.savvasdalkitsis.uhuruphotos.api.map.model.LatLon
+import com.savvasdalkitsis.uhuruphotos.api.media.page.domain.model.MediaId
 import com.savvasdalkitsis.uhuruphotos.api.media.page.domain.model.MediaItem
 import com.savvasdalkitsis.uhuruphotos.api.media.remote.domain.usecase.RemoteMediaUseCase
 import com.savvasdalkitsis.uhuruphotos.api.seam.ActionHandler
@@ -83,7 +84,7 @@ class HeatMapActionHandler @Inject constructor(
                         .filter { it.latLng != null }
                         .map {
                             MediaItem(
-                                id = it.imageHash,
+                                id = MediaId.Remote(it.imageHash),
                                 mediaHash = it.imageHash,
                                 thumbnailUri = with(remoteMediaUseCase) {
                                     it.imageHash.toThumbnailUrlFromId()
@@ -104,7 +105,10 @@ class HeatMapActionHandler @Inject constructor(
                             .flatMap { it.photos }
                             .map { photo ->
                                 CoroutineScope(currentCoroutineContext() + Dispatchers.IO).async {
-                                    remoteMediaUseCase.refreshDetailsNowIfMissing(photo.id)
+                                    val mediaId = photo.id
+                                    if (mediaId is MediaId.Remote) {
+                                        remoteMediaUseCase.refreshDetailsNowIfMissing(mediaId.value)
+                                    }
                                 }
                             }
                             .awaitAll()

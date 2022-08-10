@@ -15,22 +15,14 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.api.media.page.domain.model
 
-enum class MediaSource(val toArgument: String) {
+sealed class MediaId<T> private constructor(open val value: T) {
 
-    REMOTE("remote"),
-    LOCAL("local");
+    data class Remote(override val value: String): MediaId<String>(value)
+    data class Local(override val value: Long): MediaId<Long>(value)
 
     companion object {
-        fun fromArgument(argument: String?): MediaSource = when (argument) {
-            "local" -> LOCAL
-            "remote" -> REMOTE
-            else -> throw IllegalArgumentException("Unknown media image source: $argument")
-        }
-
-        fun fromUrl(url: String?): MediaSource = when {
-            url.orEmpty().startsWith("content://") -> LOCAL
-            else -> REMOTE
-        }
+        operator fun invoke(id: String) = id.toLongOrNull()?.let {
+            Local(it)
+        } ?: Remote(id)
     }
-
 }

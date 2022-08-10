@@ -22,6 +22,7 @@ import com.savvasdalkitsis.uhuruphotos.api.albums.view.state.AlbumSorting
 import com.savvasdalkitsis.uhuruphotos.api.albums.view.state.AlbumSorting.Companion.sorted
 import com.savvasdalkitsis.uhuruphotos.api.db.albums.UserAlbums
 import com.savvasdalkitsis.uhuruphotos.api.media.page.domain.model.MediaGrid
+import com.savvasdalkitsis.uhuruphotos.api.media.page.domain.model.MediaId
 import com.savvasdalkitsis.uhuruphotos.api.media.page.domain.model.MediaItem
 import com.savvasdalkitsis.uhuruphotos.api.media.remote.domain.usecase.RemoteMediaUseCase
 import com.savvasdalkitsis.uhuruphotos.api.strings.R.string
@@ -98,7 +99,7 @@ class UserAlbumsUseCase @Inject constructor(
     private fun photo(imageHash: String?, coverIsVideo: Boolean?): MediaItem? = with(remoteMediaUseCase) {
         imageHash?.let { imageHash ->
             MediaItem(
-                id = imageHash,
+                id = MediaId.Remote(imageHash),
                 mediaHash = imageHash,
                 thumbnailUri = imageHash.toThumbnailUrlFromId(),
                 fullResUri = imageHash.toFullSizeUrlFromId(coverIsVideo ?: false),

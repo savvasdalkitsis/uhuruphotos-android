@@ -31,7 +31,13 @@ class PersonEffectHandler @Inject constructor(
         when (effect) {
             NavigateBack -> navigator.navigateBack()
             is OpenPhotoDetails -> navigator.navigateTo(with(effect) {
-                MediaItemPageNavigationTarget.name(id, center, scale, video, PersonResults(person.id) )
+                MediaItemPageNavigationTarget.name(
+                    id,
+                    center,
+                    scale,
+                    video,
+                    PersonResults(person.id)
+                )
             })
         }
     }

@@ -16,6 +16,7 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.implementation.search.seam
 
 import androidx.compose.ui.geometry.Offset
+import com.savvasdalkitsis.uhuruphotos.api.media.page.domain.model.MediaId
 
 sealed class SearchEffect {
     object HideKeyboard : SearchEffect()
@@ -26,7 +27,7 @@ sealed class SearchEffect {
 
     data class NavigateToPerson(val personId: Int) : SearchEffect()
     data class OpenPhotoDetails(
-        val id: String,
+        val id: MediaId<*>,
         val center: Offset,
         val scale: Float,
         val isVideo: Boolean,

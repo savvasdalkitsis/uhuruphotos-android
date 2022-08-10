@@ -62,12 +62,12 @@ class LocalMediaUseCase @Inject constructor(
         emptyArray()
     private val requiredPermissions = apiPermissions + arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE)
 
-    override fun String.toContentUri(isVideo: Boolean): String = contentUri(isVideo)
+    override fun Long.toContentUri(isVideo: Boolean): String = contentUri(isVideo)
 
-    override suspend fun getLocalMediaItem(id: Int): LocalMediaItem? =
+    override suspend fun getLocalMediaItem(id: Long): LocalMediaItem? =
         localMediaRepository.getItem(id)?.toItem()
 
-    override suspend fun refreshLocalMediaItem(id: Int, isVideo: Boolean) {
+    override suspend fun refreshLocalMediaItem(id: Long, isVideo: Boolean) {
         localMediaRepository.refreshItem(id, isVideo)
     }
 
@@ -143,8 +143,8 @@ class LocalMediaUseCase @Inject constructor(
         localMediaRepository.refresh(onProgressChange)
     }
 
-    private fun String.contentUri(isVideo: Boolean) =
-        MediaStoreContentUriResolver.getContentUriForItem(toLong(), isVideo).toString()
+    private fun Long.contentUri(isVideo: Boolean) =
+        MediaStoreContentUriResolver.getContentUriForItem(this, isVideo).toString()
 
     private fun List<LocalMediaItemDetails>.toItems() = map { it.toItem() }
 

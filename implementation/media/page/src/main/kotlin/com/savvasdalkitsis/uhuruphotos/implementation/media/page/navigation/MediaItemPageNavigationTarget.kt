@@ -14,7 +14,6 @@ import com.savvasdalkitsis.uhuruphotos.api.media.page.navigation.MediaItemPageNa
 import com.savvasdalkitsis.uhuruphotos.api.media.page.navigation.MediaItemPageNavigationTarget.datasource
 import com.savvasdalkitsis.uhuruphotos.api.media.page.navigation.MediaItemPageNavigationTarget.isVideo
 import com.savvasdalkitsis.uhuruphotos.api.media.page.navigation.MediaItemPageNavigationTarget.mediaItemId
-import com.savvasdalkitsis.uhuruphotos.api.media.page.navigation.MediaItemPageNavigationTarget.mediaSource
 import com.savvasdalkitsis.uhuruphotos.api.media.page.navigation.MediaItemPageNavigationTarget.offsetFrom
 import com.savvasdalkitsis.uhuruphotos.api.media.page.navigation.MediaItemPageNavigationTarget.scale
 import com.savvasdalkitsis.uhuruphotos.api.navigation.NavigationTarget
@@ -56,8 +55,7 @@ class MediaItemPageNavigationTarget @Inject constructor(
                         MediaItemPageAction.LoadMediaItem(
                             mediaItemId,
                             isVideo,
-                            datasource,
-                            mediaSource
+                            datasource
                         )
                     )
                 }

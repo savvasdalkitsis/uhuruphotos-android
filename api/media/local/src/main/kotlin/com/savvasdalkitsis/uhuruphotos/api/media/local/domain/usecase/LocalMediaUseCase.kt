@@ -23,17 +23,17 @@ import kotlinx.coroutines.flow.Flow
 
 interface LocalMediaUseCase {
 
-    fun String.toContentUri(isVideo: Boolean): String
+    fun Long.toContentUri(isVideo: Boolean): String
 
     suspend fun getLocalMedia(): List<LocalMediaItem>
 
-    suspend fun getLocalMediaItem(id: Int): LocalMediaItem?
+    suspend fun getLocalMediaItem(id: Long): LocalMediaItem?
 
     fun observeLocalMediaItems(): Flow<LocalMediaItems>
 
     fun observeLocalMediaFolder(folderId: Int): Flow<LocalFolder>
 
-    suspend fun refreshLocalMediaItem(id: Int, isVideo: Boolean)
+    suspend fun refreshLocalMediaItem(id: Long, isVideo: Boolean)
 
     suspend fun refreshLocalMediaFolder(folderId: Int)
 

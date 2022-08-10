@@ -16,11 +16,12 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.implementation.feedpage.seam
 
 import androidx.compose.ui.geometry.Offset
+import com.savvasdalkitsis.uhuruphotos.api.media.page.domain.model.MediaId
 import com.savvasdalkitsis.uhuruphotos.api.media.page.domain.model.MediaItem
 
 internal sealed class FeedPageEffect {
     data class OpenPhotoDetails(
-        val id: String,
+        val id: MediaId<*>,
         val center: Offset,
         val scale: Float,
         val isVideo: Boolean,

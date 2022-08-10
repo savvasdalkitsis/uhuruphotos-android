@@ -22,6 +22,7 @@ import com.savvasdalkitsis.uhuruphotos.api.date.DateDisplayer
 import com.savvasdalkitsis.uhuruphotos.api.db.extensions.isVideo
 import com.savvasdalkitsis.uhuruphotos.api.db.search.GetSearchResults
 import com.savvasdalkitsis.uhuruphotos.api.group.model.Group
+import com.savvasdalkitsis.uhuruphotos.api.media.page.domain.model.MediaId
 import com.savvasdalkitsis.uhuruphotos.api.media.page.domain.model.MediaItem
 import com.savvasdalkitsis.uhuruphotos.api.media.remote.domain.usecase.RemoteMediaUseCase
 import com.savvasdalkitsis.uhuruphotos.api.search.SearchUseCase
@@ -69,7 +70,7 @@ class SearchUseCase @Inject constructor(
                 photos = photos.mapNotNull { photo ->
                     photo.summaryId?.let { id ->
                         MediaItem(
-                            id = id,
+                            id = MediaId.Remote(id),
                             mediaHash = id,
                             thumbnailUri = with(remoteMediaUseCase) {
                                 photo.summaryId.toThumbnailUrlFromIdNullable()

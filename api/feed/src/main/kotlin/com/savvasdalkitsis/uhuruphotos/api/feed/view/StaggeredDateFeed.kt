@@ -94,7 +94,7 @@ fun StaggeredDateFeed(
                         slots.getOrNull(row * columnCount + column)
                     }.toTypedArray()
                     item(
-                        slotsInRow.firstNotNullOf { it as? PhotoSlot }.mediaItem.id,
+                        slotsInRow.firstNotNullOf { it as? PhotoSlot }.mediaItem.id.value,
                         "photoRow"
                     ) {
                         PhotoRow(

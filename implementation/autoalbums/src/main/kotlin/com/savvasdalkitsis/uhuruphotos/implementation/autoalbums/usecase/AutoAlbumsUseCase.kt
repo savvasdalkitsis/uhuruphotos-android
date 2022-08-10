@@ -23,6 +23,7 @@ import com.savvasdalkitsis.uhuruphotos.api.albums.view.state.AlbumSorting.Compan
 import com.savvasdalkitsis.uhuruphotos.api.autoalbums.usecase.AutoAlbumsUseCase
 import com.savvasdalkitsis.uhuruphotos.api.autoalbums.view.state.AutoAlbum
 import com.savvasdalkitsis.uhuruphotos.api.db.albums.AutoAlbums
+import com.savvasdalkitsis.uhuruphotos.api.media.page.domain.model.MediaId
 import com.savvasdalkitsis.uhuruphotos.api.media.page.domain.model.MediaItem
 import com.savvasdalkitsis.uhuruphotos.api.media.remote.domain.usecase.RemoteMediaUseCase
 import com.savvasdalkitsis.uhuruphotos.api.strings.R.string
@@ -73,7 +74,7 @@ class AutoAlbumsUseCase @Inject constructor(
                     AutoAlbum(
                         id = it.id,
                         cover = MediaItem(
-                            id = it.coverPhotoHash,
+                            id = MediaId.Remote(it.coverPhotoHash),
                             mediaHash = it.coverPhotoHash,
                             thumbnailUri = it.coverPhotoHash.toThumbnailUrlFromId(),
                             fullResUri = it.coverPhotoHash.toFullSizeUrlFromId(

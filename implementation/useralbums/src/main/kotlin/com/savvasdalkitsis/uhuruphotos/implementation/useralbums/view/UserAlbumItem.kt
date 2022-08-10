@@ -28,6 +28,7 @@ import androidx.compose.ui.res.pluralStringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import com.savvasdalkitsis.uhuruphotos.api.media.page.domain.model.MediaId
 import com.savvasdalkitsis.uhuruphotos.api.media.page.domain.model.MediaItem
 import com.savvasdalkitsis.uhuruphotos.api.media.page.view.MediaGridThumbnail
 import com.savvasdalkitsis.uhuruphotos.api.media.page.view.MediaItemThumbnail
@@ -56,7 +57,7 @@ internal fun UserAlbumItem(
             )
         } else {
             MediaItemThumbnail(
-                mediaItem = album.cover.mediaItem1 ?: MediaItem("", ""),
+                mediaItem = album.cover.mediaItem1 ?: MediaItem(MediaId.Remote(""), ""),
                 onItemSelected = { _, _, _ ->
                     action(UserAlbumSelected(album))
                 },

@@ -16,8 +16,8 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.implementation.media.page.seam
 
 import com.savvasdalkitsis.uhuruphotos.api.map.model.LatLon
+import com.savvasdalkitsis.uhuruphotos.api.media.page.domain.model.MediaId
 import com.savvasdalkitsis.uhuruphotos.api.media.page.domain.model.MediaSequenceDataSource
-import com.savvasdalkitsis.uhuruphotos.api.media.page.domain.model.MediaSource
 import com.savvasdalkitsis.uhuruphotos.api.people.view.state.Person
 import com.savvasdalkitsis.uhuruphotos.implementation.media.page.view.state.SingleMediaItemState
 
@@ -40,10 +40,9 @@ sealed class MediaItemPageAction {
     data class FullMediaDataLoaded(val photo: SingleMediaItemState) : MediaItemPageAction()
     data class ClickedOnMap(val gps: LatLon) : MediaItemPageAction()
     data class LoadMediaItem(
-        val id: String,
+        val id: MediaId<*>,
         val isVideo: Boolean,
-        val sequenceDataSource: MediaSequenceDataSource,
-        val mediaSource: MediaSource
+        val sequenceDataSource: MediaSequenceDataSource
     ) : MediaItemPageAction()
     data class SetFavourite(val favourite: Boolean) : MediaItemPageAction()
     data class ClickedOnGps(val gps: LatLon) : MediaItemPageAction()

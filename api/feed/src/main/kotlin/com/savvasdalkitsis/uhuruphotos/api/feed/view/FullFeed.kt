@@ -45,7 +45,7 @@ fun FullFeed(
         contentPadding = contentPadding,
     ) {
         albums.flatMap { it.photos }.forEach { photo ->
-            item(key = photo.id) {
+            item(key = photo.id.value) {
                 MediaItemThumbnail(
                     modifier = Modifier.fillMaxSize(),
                     mediaItem = photo,
