@@ -202,10 +202,10 @@
         <item quantity="one">Weet je zeker dat je %d media-item raar de prullenbak wil verplaatsen\?</item>
         <item quantity="other">Weet je zeker dat je %d media-items raar de prullenbak wil verplaatsen\?</item>
     </plurals>
-    <string name="trashing_media">Bezig met verplaatsen naar prullenbak…</string>
-    <string name="restoring_media">Bezig met herstellen van media…</string>
-    <string name="deleting_media">Bezig met verwijderen…</string>
+    <string name="trashing_media">Bezig met verplaatsen naar prullenbak</string>
+    <string name="restoring_media">Bezig met herstellen van media</string>
+    <string name="deleting_media">Bezig met verwijderen</string>
     <string name="favourite_media">Favoriete media</string>
-    <string name="setting_media_favourite">Bezig met instellen van favoriet…</string>
-    <string name="downloading_media_details">Bezig met ophalen van media-informatie…</string>
+    <string name="setting_media_favourite">Bezig met instellen van favoriet</string>
+    <string name="downloading_media_details">Bezig met ophalen van media-informatie</string>
 </resources>
