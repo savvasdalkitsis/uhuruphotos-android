@@ -6,7 +6,7 @@ dependencies {
     implementation project(":implementation:account")
     implementation project(":implementation:albums")
     implementation project(":implementation:auth")
-    implementation project(":implementation:autoalbum")
+    implementation project(":implementation:album:auto")
     implementation project(":implementation:autoalbums")
     implementation project(":implementation:biometrics")
     implementation project(":implementation:favourites")

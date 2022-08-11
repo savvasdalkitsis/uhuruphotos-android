@@ -11,7 +11,7 @@ android {
 dependencies {
     implementation project(':api:accountoverview')
     implementation project(':api:albums')
-    implementation project(":api:autoalbum")
+    implementation project(":api:album:auto")
     implementation project(":api:autoalbums")
     implementation project(":api:compose")
     implementation project(":api:coroutines")
