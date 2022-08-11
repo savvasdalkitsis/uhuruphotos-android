@@ -27,9 +27,9 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import com.savvasdalkitsis.uhuruphotos.api.albumpage.seam.AlbumPageAction
-import com.savvasdalkitsis.uhuruphotos.api.albumpage.view.AlbumPage
-import com.savvasdalkitsis.uhuruphotos.api.albumpage.view.state.AlbumPageState
+import com.savvasdalkitsis.uhuruphotos.api.gallery.page.seam.GalleryPageAction
+import com.savvasdalkitsis.uhuruphotos.api.gallery.page.view.GalleryPage
+import com.savvasdalkitsis.uhuruphotos.api.gallery.page.view.state.GalleryPageState
 import com.savvasdalkitsis.uhuruphotos.api.seam.Either
 import com.savvasdalkitsis.uhuruphotos.api.strings.R.string
 import com.savvasdalkitsis.uhuruphotos.api.ui.view.NoContent
@@ -39,12 +39,12 @@ import dev.shreyaspatil.permissionflow.compose.rememberPermissionFlowRequestLaun
 
 @Composable
 fun LocalAlbumPage(
-    state: Pair<AlbumPageState, LocalAlbumState>,
-    action: (Either<AlbumPageAction, LocalAlbumAction>) -> Unit
+    state: Pair<GalleryPageState, LocalAlbumState>,
+    action: (Either<GalleryPageAction, LocalAlbumAction>) -> Unit
 ) {
     val permissionLauncher = rememberPermissionFlowRequestLauncher()
 
-    AlbumPage(
+    GalleryPage(
         state = state.first,
         action = { action(Either.Left(it)) },
         emptyContent = {

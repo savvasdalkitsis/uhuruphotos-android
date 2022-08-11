@@ -18,11 +18,11 @@ package com.savvasdalkitsis.uhuruphotos.implementation.localalbum.navigation
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
-import com.savvasdalkitsis.uhuruphotos.api.albumpage.seam.AlbumPageAction
-import com.savvasdalkitsis.uhuruphotos.api.albumpage.seam.AlbumPageAction.LoadAlbum
-import com.savvasdalkitsis.uhuruphotos.api.albumpage.seam.AlbumPageEffect
-import com.savvasdalkitsis.uhuruphotos.api.albumpage.seam.AlbumPageEffectsHandler
-import com.savvasdalkitsis.uhuruphotos.api.albumpage.view.state.AlbumPageState
+import com.savvasdalkitsis.uhuruphotos.api.gallery.page.seam.GalleryPageAction
+import com.savvasdalkitsis.uhuruphotos.api.gallery.page.seam.GalleryPageAction.LoadGallery
+import com.savvasdalkitsis.uhuruphotos.api.gallery.page.seam.GalleryPageEffect
+import com.savvasdalkitsis.uhuruphotos.api.gallery.page.seam.GalleryPageEffectsHandler
+import com.savvasdalkitsis.uhuruphotos.api.gallery.page.view.state.GalleryPageState
 import com.savvasdalkitsis.uhuruphotos.api.localalbum.navigation.LocalAlbumNavigationTarget
 import com.savvasdalkitsis.uhuruphotos.api.localalbum.navigation.LocalAlbumNavigationTarget.albumId
 import com.savvasdalkitsis.uhuruphotos.api.navigation.NavigationTarget
@@ -39,27 +39,27 @@ import com.savvasdalkitsis.uhuruphotos.implementation.localalbum.viewmodel.Local
 import javax.inject.Inject
 
 internal class LocalAlbumNavigationTarget @Inject constructor(
-    private val albumPageEffectsHandler: AlbumPageEffectsHandler,
+    private val galleryPageEffectsHandler: GalleryPageEffectsHandler,
     private val localAlbumEffectHandler: LocalAlbumEffectHandler,
     private val settingsUseCase: SettingsUseCase,
 ) : NavigationTarget {
 
     override suspend fun NavGraphBuilder.create(navHostController: NavHostController) =
         navigationTarget<
-                Pair<AlbumPageState, LocalAlbumState>,
-                Either<AlbumPageEffect, LocalAlbumEffect>,
-                Either<AlbumPageAction, LocalAlbumAction>,
+                Pair<GalleryPageState, LocalAlbumState>,
+                Either<GalleryPageEffect, LocalAlbumEffect>,
+                Either<GalleryPageAction, LocalAlbumAction>,
                 LocalAlbumViewModel
         >(
             name = LocalAlbumNavigationTarget.registrationName,
             effects = CompositeEffectHandler(
-                albumPageEffectsHandler,
+                galleryPageEffectsHandler,
                 localAlbumEffectHandler,
             ),
             themeMode = settingsUseCase.observeThemeModeState(),
             initializer = { navBackStackEntry, action ->
                 action(Either.Right(LocalAlbumAction.Load(navBackStackEntry.albumId)))
-                action(Either.Left(LoadAlbum(navBackStackEntry.albumId)))
+                action(Either.Left(LoadGallery(navBackStackEntry.albumId)))
             },
             createModel = { hiltViewModel() }
         ) { state, action ->

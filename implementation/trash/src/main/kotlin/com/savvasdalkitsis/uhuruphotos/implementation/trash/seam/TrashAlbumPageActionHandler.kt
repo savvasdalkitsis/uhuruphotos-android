@@ -15,16 +15,16 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.implementation.trash.seam
 
-import com.savvasdalkitsis.uhuruphotos.api.albumpage.seam.AlbumPageAction
-import com.savvasdalkitsis.uhuruphotos.api.albumpage.seam.AlbumPageActionHandler
-import com.savvasdalkitsis.uhuruphotos.api.albumpage.seam.AlbumPageEffect
-import com.savvasdalkitsis.uhuruphotos.api.albumpage.seam.AlbumPageEffect.NavigateBack
-import com.savvasdalkitsis.uhuruphotos.api.albumpage.seam.AlbumPageMutation
-import com.savvasdalkitsis.uhuruphotos.api.albumpage.view.state.AlbumDetails
-import com.savvasdalkitsis.uhuruphotos.api.albumpage.view.state.AlbumPageState
-import com.savvasdalkitsis.uhuruphotos.api.albumpage.view.state.Title
 import com.savvasdalkitsis.uhuruphotos.api.albums.model.Album
 import com.savvasdalkitsis.uhuruphotos.api.biometrics.usecase.BiometricsUseCase
+import com.savvasdalkitsis.uhuruphotos.api.gallery.page.seam.GalleryPageAction
+import com.savvasdalkitsis.uhuruphotos.api.gallery.page.seam.GalleryPageActionHandler
+import com.savvasdalkitsis.uhuruphotos.api.gallery.page.seam.GalleryPageEffect
+import com.savvasdalkitsis.uhuruphotos.api.gallery.page.seam.GalleryPageEffect.NavigateBack
+import com.savvasdalkitsis.uhuruphotos.api.gallery.page.seam.GalleryPageMutation
+import com.savvasdalkitsis.uhuruphotos.api.gallery.page.view.state.GalleryDetails
+import com.savvasdalkitsis.uhuruphotos.api.gallery.page.view.state.GalleryPageState
+import com.savvasdalkitsis.uhuruphotos.api.gallery.page.view.state.Title
 import com.savvasdalkitsis.uhuruphotos.api.media.page.domain.model.MediaSequenceDataSource.Trash
 import com.savvasdalkitsis.uhuruphotos.api.seam.ActionHandler
 import com.savvasdalkitsis.uhuruphotos.api.settings.usecase.SettingsUseCase
@@ -39,16 +39,16 @@ internal class TrashAlbumPageActionHandler @Inject constructor(
     trashUseCase: TrashUseCase,
     settingsUseCase: SettingsUseCase,
     biometricsUseCase: BiometricsUseCase
-): ActionHandler<AlbumPageState, AlbumPageEffect, AlbumPageAction, AlbumPageMutation> by AlbumPageActionHandler(
-    albumRefresher = { trashUseCase.refreshTrash() },
+): ActionHandler<GalleryPageState, GalleryPageEffect, GalleryPageAction, GalleryPageMutation> by GalleryPageActionHandler(
+    galleryRefresher = { trashUseCase.refreshTrash() },
     initialFeedDisplay = { trashUseCase.getTrashFeedDisplay() },
     feedDisplayPersistence = { _, feedDisplay ->
         trashUseCase.setTrashFeedDisplay(feedDisplay)
     },
-    albumDetailsEmptyCheck = {
+    galleryDetailsEmptyCheck = {
         !trashUseCase.hasTrash()
     },
-    albumDetailsFlow = { _, effect ->
+    galleryDetailsFlow = { _, effect ->
         settingsUseCase.observeBiometricsRequiredForTrashAccess()
             .flatMapLatest { biometricsRequired ->
                 val proceed = when {
@@ -67,7 +67,7 @@ internal class TrashAlbumPageActionHandler @Inject constructor(
                 } else {
                     trashUseCase.observeTrashAlbums()
                         .map { albums ->
-                            AlbumDetails(
+                            GalleryDetails(
                                 title = Title.Resource(string.trash),
                                 albums = albums.map { album ->
                                     Album(

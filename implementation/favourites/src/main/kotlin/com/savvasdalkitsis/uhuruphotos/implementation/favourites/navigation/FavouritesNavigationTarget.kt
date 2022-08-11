@@ -18,13 +18,13 @@ package com.savvasdalkitsis.uhuruphotos.implementation.favourites.navigation
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
-import com.savvasdalkitsis.uhuruphotos.api.albumpage.seam.AlbumPageAction
-import com.savvasdalkitsis.uhuruphotos.api.albumpage.seam.AlbumPageAction.LoadAlbum
-import com.savvasdalkitsis.uhuruphotos.api.albumpage.seam.AlbumPageEffect
-import com.savvasdalkitsis.uhuruphotos.api.albumpage.seam.AlbumPageEffectsHandler
-import com.savvasdalkitsis.uhuruphotos.api.albumpage.view.AlbumPage
-import com.savvasdalkitsis.uhuruphotos.api.albumpage.view.state.AlbumPageState
 import com.savvasdalkitsis.uhuruphotos.api.favourites.navigation.FavouritesNavigationTarget
+import com.savvasdalkitsis.uhuruphotos.api.gallery.page.seam.GalleryPageAction
+import com.savvasdalkitsis.uhuruphotos.api.gallery.page.seam.GalleryPageAction.LoadGallery
+import com.savvasdalkitsis.uhuruphotos.api.gallery.page.seam.GalleryPageEffect
+import com.savvasdalkitsis.uhuruphotos.api.gallery.page.seam.GalleryPageEffectsHandler
+import com.savvasdalkitsis.uhuruphotos.api.gallery.page.view.GalleryPage
+import com.savvasdalkitsis.uhuruphotos.api.gallery.page.view.state.GalleryPageState
 import com.savvasdalkitsis.uhuruphotos.api.navigation.NavigationTarget
 import com.savvasdalkitsis.uhuruphotos.api.navigation.navigationTarget
 import com.savvasdalkitsis.uhuruphotos.api.settings.usecase.SettingsUseCase
@@ -32,21 +32,21 @@ import com.savvasdalkitsis.uhuruphotos.implementation.favourites.viewmodel.Favou
 import javax.inject.Inject
 
 internal class FavouritesNavigationTarget @Inject constructor(
-    private val effectsHandler: AlbumPageEffectsHandler,
+    private val effectsHandler: GalleryPageEffectsHandler,
     private val settingsUseCase: SettingsUseCase,
 ) : NavigationTarget {
 
     override suspend fun NavGraphBuilder.create(navHostController: NavHostController) =
-        navigationTarget<AlbumPageState, AlbumPageEffect, AlbumPageAction, FavouritesViewModel>(
+        navigationTarget<GalleryPageState, GalleryPageEffect, GalleryPageAction, FavouritesViewModel>(
             name = FavouritesNavigationTarget.name,
             effects = effectsHandler,
             themeMode = settingsUseCase.observeThemeModeState(),
             initializer = { _, action ->
-                action(LoadAlbum(0))
+                action(LoadGallery(0))
             },
             createModel = { hiltViewModel() }
         ) { state, action ->
-            AlbumPage(
+            GalleryPage(
                 state = state,
                 action = action,
             )

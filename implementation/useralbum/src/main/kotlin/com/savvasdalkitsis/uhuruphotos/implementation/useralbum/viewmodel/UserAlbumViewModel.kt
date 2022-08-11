@@ -16,11 +16,11 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.implementation.useralbum.viewmodel
 
 import androidx.lifecycle.ViewModel
-import com.savvasdalkitsis.uhuruphotos.api.albumpage.seam.AlbumPageAction
-import com.savvasdalkitsis.uhuruphotos.api.albumpage.seam.AlbumPageEffect
-import com.savvasdalkitsis.uhuruphotos.api.albumpage.seam.AlbumPageMutation
-import com.savvasdalkitsis.uhuruphotos.api.albumpage.view.state.AlbumPageState
 import com.savvasdalkitsis.uhuruphotos.api.feed.view.state.FeedState
+import com.savvasdalkitsis.uhuruphotos.api.gallery.page.seam.GalleryPageAction
+import com.savvasdalkitsis.uhuruphotos.api.gallery.page.seam.GalleryPageEffect
+import com.savvasdalkitsis.uhuruphotos.api.gallery.page.seam.GalleryPageMutation
+import com.savvasdalkitsis.uhuruphotos.api.gallery.page.view.state.GalleryPageState
 import com.savvasdalkitsis.uhuruphotos.api.seam.Seam
 import com.savvasdalkitsis.uhuruphotos.api.seam.SeamViaHandler.Companion.handler
 import com.savvasdalkitsis.uhuruphotos.implementation.useralbum.seam.UserAlbumActionHandler
@@ -31,7 +31,7 @@ import javax.inject.Inject
 internal class UserAlbumViewModel @Inject constructor(
     userAlbumActionHandler: UserAlbumActionHandler,
 ) : ViewModel(),
-    Seam<AlbumPageState, AlbumPageEffect, AlbumPageAction, AlbumPageMutation> by handler(
+    Seam<GalleryPageState, GalleryPageEffect, GalleryPageAction, GalleryPageMutation> by handler(
         userAlbumActionHandler,
-        AlbumPageState(feedState = FeedState()),
+        GalleryPageState(feedState = FeedState()),
     )

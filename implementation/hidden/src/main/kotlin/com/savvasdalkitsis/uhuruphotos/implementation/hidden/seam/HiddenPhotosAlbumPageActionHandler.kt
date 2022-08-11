@@ -15,16 +15,16 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.implementation.hidden.seam
 
-import com.savvasdalkitsis.uhuruphotos.api.albumpage.seam.AlbumPageAction
-import com.savvasdalkitsis.uhuruphotos.api.albumpage.seam.AlbumPageActionHandler
-import com.savvasdalkitsis.uhuruphotos.api.albumpage.seam.AlbumPageEffect
-import com.savvasdalkitsis.uhuruphotos.api.albumpage.seam.AlbumPageEffect.NavigateBack
-import com.savvasdalkitsis.uhuruphotos.api.albumpage.seam.AlbumPageMutation
-import com.savvasdalkitsis.uhuruphotos.api.albumpage.view.state.AlbumDetails
-import com.savvasdalkitsis.uhuruphotos.api.albumpage.view.state.AlbumPageState
-import com.savvasdalkitsis.uhuruphotos.api.albumpage.view.state.Title
 import com.savvasdalkitsis.uhuruphotos.api.albums.model.Album
 import com.savvasdalkitsis.uhuruphotos.api.biometrics.usecase.BiometricsUseCase
+import com.savvasdalkitsis.uhuruphotos.api.gallery.page.seam.GalleryPageAction
+import com.savvasdalkitsis.uhuruphotos.api.gallery.page.seam.GalleryPageActionHandler
+import com.savvasdalkitsis.uhuruphotos.api.gallery.page.seam.GalleryPageEffect
+import com.savvasdalkitsis.uhuruphotos.api.gallery.page.seam.GalleryPageEffect.NavigateBack
+import com.savvasdalkitsis.uhuruphotos.api.gallery.page.seam.GalleryPageMutation
+import com.savvasdalkitsis.uhuruphotos.api.gallery.page.view.state.GalleryDetails
+import com.savvasdalkitsis.uhuruphotos.api.gallery.page.view.state.GalleryPageState
+import com.savvasdalkitsis.uhuruphotos.api.gallery.page.view.state.Title
 import com.savvasdalkitsis.uhuruphotos.api.media.page.domain.model.MediaSequenceDataSource.HiddenMedia
 import com.savvasdalkitsis.uhuruphotos.api.media.page.domain.usecase.MediaUseCase
 import com.savvasdalkitsis.uhuruphotos.api.seam.ActionHandler
@@ -42,16 +42,16 @@ internal class HiddenPhotosAlbumPageActionHandler @Inject constructor(
     hiddenPhotosUseCase: HiddenPhotosUseCase,
     settingsUseCase: SettingsUseCase,
     biometricsUseCase: BiometricsUseCase
-): ActionHandler<AlbumPageState, AlbumPageEffect, AlbumPageAction, AlbumPageMutation> by AlbumPageActionHandler(
-    albumRefresher = { mediaUseCase.refreshFavouriteMedia() },
+): ActionHandler<GalleryPageState, GalleryPageEffect, GalleryPageAction, GalleryPageMutation> by GalleryPageActionHandler(
+    galleryRefresher = { mediaUseCase.refreshFavouriteMedia() },
     initialFeedDisplay = { hiddenPhotosUseCase.getHiddenPhotosFeedDisplay() },
     feedDisplayPersistence = { _, feedDisplay ->
         hiddenPhotosUseCase.setHiddenPhotosFeedDisplay(feedDisplay)
     },
-    albumDetailsEmptyCheck = {
+    galleryDetailsEmptyCheck = {
         mediaUseCase.getHiddenMedia().getOrDefault(emptyList()).isEmpty()
     },
-    albumDetailsFlow = { _, effect ->
+    galleryDetailsFlow = { _, effect ->
         settingsUseCase.observeBiometricsRequiredForHiddenPhotosAccess()
             .flatMapLatest { biometricsRequired ->
                 val proceed = when {
@@ -71,7 +71,7 @@ internal class HiddenPhotosAlbumPageActionHandler @Inject constructor(
                     mediaUseCase.observeHiddenMedia()
                         .mapNotNull { it.getOrNull() }
                         .map { photoEntries ->
-                            AlbumDetails(
+                            GalleryDetails(
                                 title = Title.Resource(string.hidden_photos),
                                 albums = listOf(
                                     Album(

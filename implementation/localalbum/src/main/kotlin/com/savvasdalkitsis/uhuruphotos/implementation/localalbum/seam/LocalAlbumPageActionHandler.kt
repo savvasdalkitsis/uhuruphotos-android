@@ -15,13 +15,13 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.implementation.localalbum.seam
 
-import com.savvasdalkitsis.uhuruphotos.api.albumpage.seam.AlbumPageAction
-import com.savvasdalkitsis.uhuruphotos.api.albumpage.seam.AlbumPageActionHandler
-import com.savvasdalkitsis.uhuruphotos.api.albumpage.seam.AlbumPageEffect
-import com.savvasdalkitsis.uhuruphotos.api.albumpage.seam.AlbumPageMutation
-import com.savvasdalkitsis.uhuruphotos.api.albumpage.view.state.AlbumDetails
-import com.savvasdalkitsis.uhuruphotos.api.albumpage.view.state.AlbumPageState
-import com.savvasdalkitsis.uhuruphotos.api.albumpage.view.state.Title
+import com.savvasdalkitsis.uhuruphotos.api.gallery.page.seam.GalleryPageAction
+import com.savvasdalkitsis.uhuruphotos.api.gallery.page.seam.GalleryPageActionHandler
+import com.savvasdalkitsis.uhuruphotos.api.gallery.page.seam.GalleryPageEffect
+import com.savvasdalkitsis.uhuruphotos.api.gallery.page.seam.GalleryPageMutation
+import com.savvasdalkitsis.uhuruphotos.api.gallery.page.view.state.GalleryDetails
+import com.savvasdalkitsis.uhuruphotos.api.gallery.page.view.state.GalleryPageState
+import com.savvasdalkitsis.uhuruphotos.api.gallery.page.view.state.Title
 import com.savvasdalkitsis.uhuruphotos.api.media.page.domain.model.MediaSequenceDataSource
 import com.savvasdalkitsis.uhuruphotos.api.seam.ActionHandler
 import com.savvasdalkitsis.uhuruphotos.implementation.localalbum.usecase.LocalAlbumUseCase
@@ -30,20 +30,20 @@ import javax.inject.Inject
 
 internal class LocalAlbumPageActionHandler @Inject constructor(
     localAlbumUseCase: LocalAlbumUseCase,
-) : ActionHandler<AlbumPageState, AlbumPageEffect, AlbumPageAction, AlbumPageMutation>
-by AlbumPageActionHandler(
-    albumRefresher = { localAlbumUseCase.refreshLocalAlbum(it) },
+) : ActionHandler<GalleryPageState, GalleryPageEffect, GalleryPageAction, GalleryPageMutation>
+by GalleryPageActionHandler(
+    galleryRefresher = { localAlbumUseCase.refreshLocalAlbum(it) },
     initialFeedDisplay = { localAlbumUseCase.getLocalAlbumFeedDisplay(it) },
     feedDisplayPersistence = { id, feedDisplay ->
         localAlbumUseCase.setLocalAlbumFeedDisplay(id, feedDisplay)
     },
-    albumDetailsEmptyCheck = { albumId ->
+    galleryDetailsEmptyCheck = { albumId ->
         localAlbumUseCase.getLocalAlbum(albumId).isEmpty()
     },
-    albumDetailsFlow = { albumId, _ ->
+    galleryDetailsFlow = { albumId, _ ->
         localAlbumUseCase.observeLocalAlbum(albumId)
             .map { (bucket, albums) ->
-                AlbumDetails(
+                GalleryDetails(
                     title = Title.Text(bucket.displayName),
                     albums = albums,
                 )

@@ -1,9 +1,9 @@
 package com.savvasdalkitsis.uhuruphotos.implementation.trash.navigation
 
 import androidx.compose.runtime.Composable
-import com.savvasdalkitsis.uhuruphotos.api.albumpage.seam.AlbumPageAction
-import com.savvasdalkitsis.uhuruphotos.api.albumpage.view.AlbumPage
-import com.savvasdalkitsis.uhuruphotos.api.albumpage.view.state.AlbumPageState
+import com.savvasdalkitsis.uhuruphotos.api.gallery.page.seam.GalleryPageAction
+import com.savvasdalkitsis.uhuruphotos.api.gallery.page.view.GalleryPage
+import com.savvasdalkitsis.uhuruphotos.api.gallery.page.view.state.GalleryPageState
 import com.savvasdalkitsis.uhuruphotos.api.icons.R.drawable
 import com.savvasdalkitsis.uhuruphotos.api.seam.Either
 import com.savvasdalkitsis.uhuruphotos.api.seam.Either.Right
@@ -14,10 +14,10 @@ import com.savvasdalkitsis.uhuruphotos.implementation.trash.view.state.TrashStat
 
 @Composable
 internal fun TrashAlbumPage(
-    state: Pair<AlbumPageState, TrashState>,
-    action: (Either<AlbumPageAction, TrashAction>) -> Unit
+    state: Pair<GalleryPageState, TrashState>,
+    action: (Either<GalleryPageAction, TrashAction>) -> Unit
 ) {
-    AlbumPage(
+    GalleryPage(
         state = state.first,
         additionalActionBarContent = {
             if (state.second.displayFingerPrintAction) {

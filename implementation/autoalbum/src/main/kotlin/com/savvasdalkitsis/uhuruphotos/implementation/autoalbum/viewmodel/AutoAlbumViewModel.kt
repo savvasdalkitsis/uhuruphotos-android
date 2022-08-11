@@ -16,11 +16,11 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.implementation.autoalbum.viewmodel
 
 import androidx.lifecycle.ViewModel
-import com.savvasdalkitsis.uhuruphotos.api.albumpage.seam.AlbumPageAction
-import com.savvasdalkitsis.uhuruphotos.api.albumpage.seam.AlbumPageEffect
-import com.savvasdalkitsis.uhuruphotos.api.albumpage.seam.AlbumPageMutation
-import com.savvasdalkitsis.uhuruphotos.api.albumpage.view.state.AlbumPageState
 import com.savvasdalkitsis.uhuruphotos.api.feed.view.state.FeedState
+import com.savvasdalkitsis.uhuruphotos.api.gallery.page.seam.GalleryPageAction
+import com.savvasdalkitsis.uhuruphotos.api.gallery.page.seam.GalleryPageEffect
+import com.savvasdalkitsis.uhuruphotos.api.gallery.page.seam.GalleryPageMutation
+import com.savvasdalkitsis.uhuruphotos.api.gallery.page.view.state.GalleryPageState
 import com.savvasdalkitsis.uhuruphotos.api.seam.Seam
 import com.savvasdalkitsis.uhuruphotos.api.seam.SeamViaHandler.Companion.handler
 import com.savvasdalkitsis.uhuruphotos.implementation.autoalbum.seam.AutoAlbumActionHandler
@@ -32,7 +32,7 @@ import javax.inject.Inject
 internal class AutoAlbumViewModel @Inject constructor(
     autoAlbumActionHandler: AutoAlbumActionHandler,
 ) : ViewModel(),
-    Seam<AlbumPageState, AlbumPageEffect, AlbumPageAction, AlbumPageMutation> by handler(
+    Seam<GalleryPageState, GalleryPageEffect, GalleryPageAction, GalleryPageMutation> by handler(
         autoAlbumActionHandler,
-        AlbumPageState(feedState = FeedState(feedDisplay = AutoAlbumFeedDisplay)),
+        GalleryPageState(feedState = FeedState(feedDisplay = AutoAlbumFeedDisplay)),
     )

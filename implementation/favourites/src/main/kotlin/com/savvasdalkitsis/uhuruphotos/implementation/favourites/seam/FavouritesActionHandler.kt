@@ -15,14 +15,14 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.implementation.favourites.seam
 
-import com.savvasdalkitsis.uhuruphotos.api.albumpage.seam.AlbumPageAction
-import com.savvasdalkitsis.uhuruphotos.api.albumpage.seam.AlbumPageActionHandler
-import com.savvasdalkitsis.uhuruphotos.api.albumpage.seam.AlbumPageEffect
-import com.savvasdalkitsis.uhuruphotos.api.albumpage.seam.AlbumPageMutation
-import com.savvasdalkitsis.uhuruphotos.api.albumpage.view.state.AlbumDetails
-import com.savvasdalkitsis.uhuruphotos.api.albumpage.view.state.AlbumPageState
-import com.savvasdalkitsis.uhuruphotos.api.albumpage.view.state.Title
 import com.savvasdalkitsis.uhuruphotos.api.albums.model.Album
+import com.savvasdalkitsis.uhuruphotos.api.gallery.page.seam.GalleryPageAction
+import com.savvasdalkitsis.uhuruphotos.api.gallery.page.seam.GalleryPageActionHandler
+import com.savvasdalkitsis.uhuruphotos.api.gallery.page.seam.GalleryPageEffect
+import com.savvasdalkitsis.uhuruphotos.api.gallery.page.seam.GalleryPageMutation
+import com.savvasdalkitsis.uhuruphotos.api.gallery.page.view.state.GalleryDetails
+import com.savvasdalkitsis.uhuruphotos.api.gallery.page.view.state.GalleryPageState
+import com.savvasdalkitsis.uhuruphotos.api.gallery.page.view.state.Title
 import com.savvasdalkitsis.uhuruphotos.api.media.page.domain.model.MediaSequenceDataSource.FavouriteMedia
 import com.savvasdalkitsis.uhuruphotos.api.media.page.domain.usecase.MediaUseCase
 import com.savvasdalkitsis.uhuruphotos.api.seam.ActionHandler
@@ -35,21 +35,21 @@ import javax.inject.Inject
 internal class FavouritesActionHandler @Inject constructor(
     mediaUseCase: MediaUseCase,
     favouritesUseCase: FavouritesUseCase,
-) : ActionHandler<AlbumPageState, AlbumPageEffect, AlbumPageAction, AlbumPageMutation>
-by AlbumPageActionHandler(
-    albumRefresher = { mediaUseCase.refreshFavouriteMedia() },
+) : ActionHandler<GalleryPageState, GalleryPageEffect, GalleryPageAction, GalleryPageMutation>
+by GalleryPageActionHandler(
+    galleryRefresher = { mediaUseCase.refreshFavouriteMedia() },
     initialFeedDisplay = { favouritesUseCase.getFavouritesFeedDisplay() },
     feedDisplayPersistence = { _, feedDisplay ->
         favouritesUseCase.setFavouritesFeedDisplay(feedDisplay)
     },
-    albumDetailsEmptyCheck = { _ ->
+    galleryDetailsEmptyCheck = { _ ->
         mediaUseCase.getFavouriteMediaCount().getOrDefault(0) > 0
     },
-    albumDetailsFlow = { _, _ ->
+    galleryDetailsFlow = { _, _ ->
         mediaUseCase.observeFavouriteMedia()
             .mapNotNull { it.getOrNull() }
             .map { mediaItems ->
-                AlbumDetails(
+                GalleryDetails(
                     title = Title.Resource(string.favourite_media),
                     albums = listOf(Album(
                         id = "favourites",

@@ -10,7 +10,7 @@ android {
 
 dependencies {
     implementation project(":api:albums")
-    implementation project(":api:albumpage")
+    implementation project(":api:gallery:page")
     implementation project(":api:biometrics")
     implementation project(":api:coroutines")
     implementation project(":api:feed")

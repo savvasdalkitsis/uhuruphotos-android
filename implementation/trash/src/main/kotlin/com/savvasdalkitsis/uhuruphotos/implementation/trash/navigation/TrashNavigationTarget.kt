@@ -18,12 +18,11 @@ package com.savvasdalkitsis.uhuruphotos.implementation.trash.navigation
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
-import com.savvasdalkitsis.uhuruphotos.api.albumpage.seam.AlbumPageAction
-import com.savvasdalkitsis.uhuruphotos.api.albumpage.seam.AlbumPageAction.LoadAlbum
-import com.savvasdalkitsis.uhuruphotos.api.albumpage.seam.AlbumPageEffect
-import com.savvasdalkitsis.uhuruphotos.api.albumpage.seam.AlbumPageEffectsHandler
-import com.savvasdalkitsis.uhuruphotos.api.albumpage.view.state.AlbumPageState
-import com.savvasdalkitsis.uhuruphotos.api.trash.navigation.TrashNavigationTarget
+import com.savvasdalkitsis.uhuruphotos.api.gallery.page.seam.GalleryPageAction
+import com.savvasdalkitsis.uhuruphotos.api.gallery.page.seam.GalleryPageAction.LoadGallery
+import com.savvasdalkitsis.uhuruphotos.api.gallery.page.seam.GalleryPageEffect
+import com.savvasdalkitsis.uhuruphotos.api.gallery.page.seam.GalleryPageEffectsHandler
+import com.savvasdalkitsis.uhuruphotos.api.gallery.page.view.state.GalleryPageState
 import com.savvasdalkitsis.uhuruphotos.api.navigation.NavigationTarget
 import com.savvasdalkitsis.uhuruphotos.api.navigation.navigationTarget
 import com.savvasdalkitsis.uhuruphotos.api.seam.CompositeEffectHandler
@@ -31,6 +30,7 @@ import com.savvasdalkitsis.uhuruphotos.api.seam.Either
 import com.savvasdalkitsis.uhuruphotos.api.seam.Either.Left
 import com.savvasdalkitsis.uhuruphotos.api.seam.Either.Right
 import com.savvasdalkitsis.uhuruphotos.api.settings.usecase.SettingsUseCase
+import com.savvasdalkitsis.uhuruphotos.api.trash.navigation.TrashNavigationTarget
 import com.savvasdalkitsis.uhuruphotos.implementation.trash.seam.TrashAction
 import com.savvasdalkitsis.uhuruphotos.implementation.trash.seam.TrashAction.Load
 import com.savvasdalkitsis.uhuruphotos.implementation.trash.seam.TrashEffect
@@ -41,25 +41,25 @@ import javax.inject.Inject
 
 internal class TrashNavigationTarget @Inject constructor(
     private val trashEffectsHandler: TrashEffectsHandler,
-    private val albumPageEffectsHandler: AlbumPageEffectsHandler,
+    private val galleryPageEffectsHandler: GalleryPageEffectsHandler,
     private val settingsUseCase: SettingsUseCase,
 ) : NavigationTarget {
 
     override suspend fun NavGraphBuilder.create(navHostController: NavHostController) =
         navigationTarget<
-                Pair<AlbumPageState, TrashState>,
-                Either<AlbumPageEffect, TrashEffect>,
-                Either<AlbumPageAction, TrashAction>,
+                Pair<GalleryPageState, TrashState>,
+                Either<GalleryPageEffect, TrashEffect>,
+                Either<GalleryPageAction, TrashAction>,
                 TrashViewModel
         >(
             name = TrashNavigationTarget.name,
             effects = CompositeEffectHandler(
-                albumPageEffectsHandler,
+                galleryPageEffectsHandler,
                 trashEffectsHandler,
             ),
             themeMode = settingsUseCase.observeThemeModeState(),
             initializer = { _, action ->
-                action(Left(LoadAlbum(0)))
+                action(Left(LoadGallery(0)))
                 action(Right(Load))
             },
             createModel = { hiltViewModel() }

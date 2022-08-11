@@ -18,11 +18,11 @@ package com.savvasdalkitsis.uhuruphotos.implementation.hidden.navigation
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
-import com.savvasdalkitsis.uhuruphotos.api.albumpage.seam.AlbumPageAction
-import com.savvasdalkitsis.uhuruphotos.api.albumpage.seam.AlbumPageAction.LoadAlbum
-import com.savvasdalkitsis.uhuruphotos.api.albumpage.seam.AlbumPageEffect
-import com.savvasdalkitsis.uhuruphotos.api.albumpage.seam.AlbumPageEffectsHandler
-import com.savvasdalkitsis.uhuruphotos.api.albumpage.view.state.AlbumPageState
+import com.savvasdalkitsis.uhuruphotos.api.gallery.page.seam.GalleryPageAction
+import com.savvasdalkitsis.uhuruphotos.api.gallery.page.seam.GalleryPageAction.LoadGallery
+import com.savvasdalkitsis.uhuruphotos.api.gallery.page.seam.GalleryPageEffect
+import com.savvasdalkitsis.uhuruphotos.api.gallery.page.seam.GalleryPageEffectsHandler
+import com.savvasdalkitsis.uhuruphotos.api.gallery.page.view.state.GalleryPageState
 import com.savvasdalkitsis.uhuruphotos.api.hidden.navigation.HiddenPhotosNavigationTarget
 import com.savvasdalkitsis.uhuruphotos.api.navigation.NavigationTarget
 import com.savvasdalkitsis.uhuruphotos.api.navigation.navigationTarget
@@ -41,23 +41,23 @@ import com.savvasdalkitsis.uhuruphotos.implementation.hidden.viewmodel.HiddenPho
 import javax.inject.Inject
 
 internal class HiddenPhotosNavigationTarget @Inject constructor(
-    private val albumPageEffectsHandler: AlbumPageEffectsHandler,
+    private val galleryPageEffectsHandler: GalleryPageEffectsHandler,
     private val hiddenPhotosEffectHandler: HiddenPhotosEffectHandler,
     private val settingsUseCase: SettingsUseCase,
 ) : NavigationTarget {
 
     override suspend fun NavGraphBuilder.create(navHostController: NavHostController) =
         navigationTarget<
-                Pair<AlbumPageState, HiddenPhotosState>,
-                Either<AlbumPageEffect, HiddenPhotosEffect>,
-                Either<AlbumPageAction, HiddenPhotosAction>,
+                Pair<GalleryPageState, HiddenPhotosState>,
+                Either<GalleryPageEffect, HiddenPhotosEffect>,
+                Either<GalleryPageAction, HiddenPhotosAction>,
                 HiddenPhotosViewModel
         >(
             name = HiddenPhotosNavigationTarget.name,
-            effects = CompositeEffectHandler(albumPageEffectsHandler, hiddenPhotosEffectHandler),
+            effects = CompositeEffectHandler(galleryPageEffectsHandler, hiddenPhotosEffectHandler),
             themeMode = settingsUseCase.observeThemeModeState(),
             initializer = { _, action ->
-                action(Left(LoadAlbum(0)))
+                action(Left(LoadGallery(0)))
                 action(Right(Load))
             },
             createModel = { hiltViewModel() }

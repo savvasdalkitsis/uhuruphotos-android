@@ -13,7 +13,7 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
  */
-package com.savvasdalkitsis.uhuruphotos.api.albumpage.view
+package com.savvasdalkitsis.uhuruphotos.api.gallery.page.view
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.layout.RowScope
@@ -22,15 +22,15 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import com.google.accompanist.swiperefresh.SwipeRefresh
 import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
-import com.savvasdalkitsis.uhuruphotos.api.albumpage.seam.AlbumPageAction
-import com.savvasdalkitsis.uhuruphotos.api.albumpage.seam.AlbumPageAction.ChangeFeedDisplay
-import com.savvasdalkitsis.uhuruphotos.api.albumpage.seam.AlbumPageAction.NavigateBack
-import com.savvasdalkitsis.uhuruphotos.api.albumpage.seam.AlbumPageAction.PersonSelected
-import com.savvasdalkitsis.uhuruphotos.api.albumpage.seam.AlbumPageAction.SelectedPhoto
-import com.savvasdalkitsis.uhuruphotos.api.albumpage.seam.AlbumPageAction.SwipeToRefresh
-import com.savvasdalkitsis.uhuruphotos.api.albumpage.view.state.AlbumPageState
 import com.savvasdalkitsis.uhuruphotos.api.feed.view.Feed
 import com.savvasdalkitsis.uhuruphotos.api.feed.view.FeedDisplayActionButton
+import com.savvasdalkitsis.uhuruphotos.api.gallery.page.seam.GalleryPageAction
+import com.savvasdalkitsis.uhuruphotos.api.gallery.page.seam.GalleryPageAction.ChangeFeedDisplay
+import com.savvasdalkitsis.uhuruphotos.api.gallery.page.seam.GalleryPageAction.NavigateBack
+import com.savvasdalkitsis.uhuruphotos.api.gallery.page.seam.GalleryPageAction.PersonSelected
+import com.savvasdalkitsis.uhuruphotos.api.gallery.page.seam.GalleryPageAction.SelectedPhoto
+import com.savvasdalkitsis.uhuruphotos.api.gallery.page.seam.GalleryPageAction.SwipeToRefresh
+import com.savvasdalkitsis.uhuruphotos.api.gallery.page.view.state.GalleryPageState
 import com.savvasdalkitsis.uhuruphotos.api.people.view.PeopleBar
 import com.savvasdalkitsis.uhuruphotos.api.strings.R.string
 import com.savvasdalkitsis.uhuruphotos.api.ui.view.BackNavButton
@@ -38,11 +38,11 @@ import com.savvasdalkitsis.uhuruphotos.api.ui.view.CommonScaffold
 import com.savvasdalkitsis.uhuruphotos.api.ui.view.NoContent
 
 @Composable
-fun AlbumPage(
-    state: AlbumPageState,
+fun GalleryPage(
+    state: GalleryPageState,
     additionalActionBarContent: @Composable RowScope.() -> Unit = {},
     emptyContent: @Composable () -> Unit = { NoContent(string.no_photos) },
-    action: (AlbumPageAction) -> Unit
+    action: (GalleryPageAction) -> Unit
 ) {
     CommonScaffold(
         title = { Text(state.title.toText()) },

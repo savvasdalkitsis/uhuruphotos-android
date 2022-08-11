@@ -16,11 +16,9 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.implementation.localalbum.viewmodel
 
 import androidx.lifecycle.ViewModel
-import com.savvasdalkitsis.uhuruphotos.api.albumpage.seam.AlbumPageAction
-import com.savvasdalkitsis.uhuruphotos.api.albumpage.seam.AlbumPageEffect
-import com.savvasdalkitsis.uhuruphotos.api.albumpage.seam.AlbumPageMutation
-import com.savvasdalkitsis.uhuruphotos.api.albumpage.view.state.AlbumPageState
-import com.savvasdalkitsis.uhuruphotos.api.feed.view.state.FeedState
+import com.savvasdalkitsis.uhuruphotos.api.gallery.page.seam.GalleryPageAction
+import com.savvasdalkitsis.uhuruphotos.api.gallery.page.seam.GalleryPageEffect
+import com.savvasdalkitsis.uhuruphotos.api.gallery.page.view.state.GalleryPageState
 import com.savvasdalkitsis.uhuruphotos.api.seam.CompositeActionHandler
 import com.savvasdalkitsis.uhuruphotos.api.seam.Either
 import com.savvasdalkitsis.uhuruphotos.api.seam.Mutation
@@ -39,13 +37,13 @@ internal class LocalAlbumViewModel @Inject constructor(
     localAlbumActionHandler: LocalAlbumActionHandler,
     localAlbumPageActionHandler: LocalAlbumPageActionHandler,
 ) : ViewModel(), Seam<
-        Pair<AlbumPageState, LocalAlbumState>,
-        Either<AlbumPageEffect, LocalAlbumEffect>,
-        Either<AlbumPageAction, LocalAlbumAction>,
-        Mutation<Pair<AlbumPageState, LocalAlbumState>>> by handler(
+        Pair<GalleryPageState, LocalAlbumState>,
+        Either<GalleryPageEffect, LocalAlbumEffect>,
+        Either<GalleryPageAction, LocalAlbumAction>,
+        Mutation<Pair<GalleryPageState, LocalAlbumState>>> by handler(
     CompositeActionHandler(
         localAlbumPageActionHandler,
         localAlbumActionHandler,
     ),
-    AlbumPageState() to LocalAlbumState(),
+    GalleryPageState() to LocalAlbumState(),
 )

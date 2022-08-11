@@ -13,24 +13,24 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
  */
-package com.savvasdalkitsis.uhuruphotos.api.albumpage.seam
+package com.savvasdalkitsis.uhuruphotos.api.gallery.page.seam
 
 import androidx.compose.ui.geometry.Offset
 import com.savvasdalkitsis.uhuruphotos.api.feed.view.state.FeedDisplay
 import com.savvasdalkitsis.uhuruphotos.api.media.page.domain.model.MediaItem
 import com.savvasdalkitsis.uhuruphotos.api.people.view.state.Person
 
-sealed class AlbumPageAction {
-    object SwipeToRefresh : AlbumPageAction()
-    object NavigateBack : AlbumPageAction()
+sealed class GalleryPageAction {
+    object SwipeToRefresh : GalleryPageAction()
+    object NavigateBack : GalleryPageAction()
 
-    data class LoadAlbum(val albumId: Int) : AlbumPageAction()
+    data class LoadGallery(val galleryId: Int) : GalleryPageAction()
     data class SelectedPhoto(
         val mediaItem: MediaItem,
         val center: Offset,
         val scale: Float,
-    ) : AlbumPageAction()
+    ) : GalleryPageAction()
 
-    data class PersonSelected(val person: Person) : AlbumPageAction()
-    data class ChangeFeedDisplay(val feedDisplay: FeedDisplay) : AlbumPageAction()
+    data class PersonSelected(val person: Person) : GalleryPageAction()
+    data class ChangeFeedDisplay(val feedDisplay: FeedDisplay) : GalleryPageAction()
 }

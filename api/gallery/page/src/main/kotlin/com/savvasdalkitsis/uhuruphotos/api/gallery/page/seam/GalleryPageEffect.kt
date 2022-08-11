@@ -13,15 +13,15 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
  */
-package com.savvasdalkitsis.uhuruphotos.api.albumpage.seam
+package com.savvasdalkitsis.uhuruphotos.api.gallery.page.seam
 
 import androidx.compose.ui.geometry.Offset
 import com.savvasdalkitsis.uhuruphotos.api.media.page.domain.model.MediaId
 import com.savvasdalkitsis.uhuruphotos.api.media.page.domain.model.MediaSequenceDataSource
 
-sealed class AlbumPageEffect {
-    object NavigateBack : AlbumPageEffect()
-    object ErrorLoading : AlbumPageEffect()
+sealed class GalleryPageEffect {
+    object NavigateBack : GalleryPageEffect()
+    object ErrorLoading : GalleryPageEffect()
 
     data class OpenPhotoDetails(
         val id: MediaId<*>,
@@ -29,7 +29,7 @@ sealed class AlbumPageEffect {
         val scale: Float,
         val video: Boolean,
         val mediaSequenceDataSource: MediaSequenceDataSource,
-    ) : AlbumPageEffect()
+    ) : GalleryPageEffect()
 
-    data class NavigateToPerson(val personId: Int) : AlbumPageEffect()
+    data class NavigateToPerson(val personId: Int) : GalleryPageEffect()
 }

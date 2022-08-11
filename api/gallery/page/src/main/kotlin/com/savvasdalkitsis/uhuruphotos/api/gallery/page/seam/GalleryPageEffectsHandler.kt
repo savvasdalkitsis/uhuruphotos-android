@@ -13,12 +13,12 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
  */
-package com.savvasdalkitsis.uhuruphotos.api.albumpage.seam
+package com.savvasdalkitsis.uhuruphotos.api.gallery.page.seam
 
-import com.savvasdalkitsis.uhuruphotos.api.albumpage.seam.AlbumPageEffect.ErrorLoading
-import com.savvasdalkitsis.uhuruphotos.api.albumpage.seam.AlbumPageEffect.NavigateBack
-import com.savvasdalkitsis.uhuruphotos.api.albumpage.seam.AlbumPageEffect.NavigateToPerson
-import com.savvasdalkitsis.uhuruphotos.api.albumpage.seam.AlbumPageEffect.OpenPhotoDetails
+import com.savvasdalkitsis.uhuruphotos.api.gallery.page.seam.GalleryPageEffect.ErrorLoading
+import com.savvasdalkitsis.uhuruphotos.api.gallery.page.seam.GalleryPageEffect.NavigateBack
+import com.savvasdalkitsis.uhuruphotos.api.gallery.page.seam.GalleryPageEffect.NavigateToPerson
+import com.savvasdalkitsis.uhuruphotos.api.gallery.page.seam.GalleryPageEffect.OpenPhotoDetails
 import com.savvasdalkitsis.uhuruphotos.api.media.page.navigation.MediaItemPageNavigationTarget
 import com.savvasdalkitsis.uhuruphotos.api.navigation.Navigator
 import com.savvasdalkitsis.uhuruphotos.api.person.navigation.PersonNavigationTarget
@@ -27,12 +27,12 @@ import com.savvasdalkitsis.uhuruphotos.api.strings.R.string
 import com.savvasdalkitsis.uhuruphotos.api.toaster.Toaster
 import javax.inject.Inject
 
-class AlbumPageEffectsHandler @Inject constructor(
+class GalleryPageEffectsHandler @Inject constructor(
     private val navigator: Navigator,
     private val toaster: Toaster,
-) : EffectHandler<AlbumPageEffect> {
+) : EffectHandler<GalleryPageEffect> {
 
-    override suspend fun handleEffect(effect: AlbumPageEffect) {
+    override suspend fun handleEffect(effect: GalleryPageEffect) {
         when (effect) {
             is OpenPhotoDetails -> navigate(
                 MediaItemPageNavigationTarget.name(

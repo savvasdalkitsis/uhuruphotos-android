@@ -13,16 +13,31 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
  */
-package com.savvasdalkitsis.uhuruphotos.api.albumpage.view.state
+package com.savvasdalkitsis.uhuruphotos.api.gallery.page.view.state
 
 import androidx.annotation.StringRes
-import com.savvasdalkitsis.uhuruphotos.api.feed.view.state.FeedState
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.res.stringResource
+import com.savvasdalkitsis.uhuruphotos.api.albums.model.Album
 import com.savvasdalkitsis.uhuruphotos.api.people.view.state.Person
 
-data class AlbumPageState(
-    val feedState: FeedState = FeedState(),
-    @get:StringRes
-    val error: Int? = null,
+data class GalleryDetails(
     val title: Title = Title.Text(""),
+    val albums: List<Album> = emptyList(),
     val people: List<Person> = emptyList(),
 )
+
+sealed class Title {
+    @Composable
+    abstract fun toText(): String
+
+    data class Text(val title: String) : Title() {
+        @Composable
+        override fun toText(): String = title
+    }
+
+    data class Resource(@StringRes val title: Int) : Title() {
+        @Composable
+        override fun toText(): String = stringResource(title)
+    }
+}
