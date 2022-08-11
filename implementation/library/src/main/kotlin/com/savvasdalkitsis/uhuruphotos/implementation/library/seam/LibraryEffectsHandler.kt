@@ -17,13 +17,13 @@ package com.savvasdalkitsis.uhuruphotos.implementation.library.seam
 
 import com.savvasdalkitsis.uhuruphotos.api.album.favourites.navigation.FavouritesNavigationTarget
 import com.savvasdalkitsis.uhuruphotos.api.album.local.navigation.LocalAlbumNavigationTarget
+import com.savvasdalkitsis.uhuruphotos.api.album.trash.navigation.TrashNavigationTarget
 import com.savvasdalkitsis.uhuruphotos.api.autoalbums.navigation.AutoAlbumsNavigationTarget
 import com.savvasdalkitsis.uhuruphotos.api.hidden.navigation.HiddenPhotosNavigationTarget
 import com.savvasdalkitsis.uhuruphotos.api.navigation.Navigator
 import com.savvasdalkitsis.uhuruphotos.api.seam.EffectHandler
 import com.savvasdalkitsis.uhuruphotos.api.strings.R.string
 import com.savvasdalkitsis.uhuruphotos.api.toaster.Toaster
-import com.savvasdalkitsis.uhuruphotos.api.trash.navigation.TrashNavigationTarget
 import com.savvasdalkitsis.uhuruphotos.api.useralbums.navigation.UserAlbumsNavigationTarget
 import com.savvasdalkitsis.uhuruphotos.implementation.library.seam.LibraryEffect.ErrorLoadingAlbums
 import com.savvasdalkitsis.uhuruphotos.implementation.library.seam.LibraryEffect.NavigateToAutoAlbums
@@ -50,7 +50,7 @@ class LibraryEffectsHandler @Inject constructor(
         NavigateToHidden -> navigator
             .navigateTo(HiddenPhotosNavigationTarget.name)
         NavigateToTrash -> navigator
-            .navigateTo(TrashNavigationTarget.name)
+            .navigateTo(TrashNavigationTarget.registrationName)
         is NavigateToLocalBucket -> navigator
             .navigateTo(LocalAlbumNavigationTarget.name(effect.bucket.id))
     }
