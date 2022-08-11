@@ -16,4 +16,19 @@ graph TD;
     TrashMedia-->Gallery;
     LocalMedia-->Gallery;
     HiddenMedia-->Gallery;
+    
+    subgraph Local
+        LocalMediaItem;
+        LocalMedia;
+    end
+    
+    subgraph Remote
+        RemoteMediaItem;
+        AutoAlbum;
+        UserAlbum;
+        Album;
+        Favourites;
+        TrashMedia;
+        HiddenMedia;
+    end
 ```
