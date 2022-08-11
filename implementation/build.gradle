@@ -5,6 +5,7 @@ android {
 dependencies {
     implementation project(":implementation:account")
     implementation project(":implementation:album:auto")
+    implementation project(":implementation:album:local")
     implementation project(":implementation:album:user")
     implementation project(":implementation:albums")
     implementation project(":implementation:auth")
@@ -17,7 +18,6 @@ dependencies {
     implementation project(":implementation:home")
     implementation project(":implementation:image")
     implementation project(":implementation:library")
-    implementation project(":implementation:localalbum")
     implementation project(":implementation:log")
     implementation project(":implementation:network")
     implementation project(":implementation:notification")

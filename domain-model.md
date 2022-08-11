@@ -13,5 +13,5 @@ graph TD;
     UserAlbum-->Gallery;
     Favourites-->Gallery;
     Trash-->Gallery;
-    LocalFolder-->Gallery;
+    LocalAlbum-->Gallery;
 ```

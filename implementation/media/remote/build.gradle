@@ -22,7 +22,7 @@ dependencies {
     implementation project(":api:exif")
     implementation project(":api:icons")
     implementation project(':api:image')
-    implementation project(":api:localalbum")
+    implementation project(":api:album:local")
     implementation project(":api:log")
     implementation project(":api:map")
     implementation project(':api:media:local')

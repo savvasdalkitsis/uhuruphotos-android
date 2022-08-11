@@ -1,0 +1,30 @@
+android {
+    buildFeatures {
+        compose true
+    }
+    composeOptions {
+        kotlinCompilerExtensionVersion compose_compiler_version
+    }
+    namespace 'com.savvasdalkitsis.uhuruphotos.implementation.album.local'
+}
+
+dependencies {
+    implementation project(':api:gallery:page')
+    implementation project(':api:albums')
+    implementation project(":api:album:auto")
+    implementation project(':api:date')
+    implementation project(":api:db")
+    implementation project(":api:feed")
+    implementation project(":api:album:local")
+    implementation project(":api:navigation")
+    implementation project(":api:media:local")
+    implementation project(':api:media:page')
+    implementation project(':api:people')
+    implementation project(":api:settings")
+    implementation(
+            libs.androidx.compose.hilt.navigation,
+            libs.androidx.compose.material,
+            libs.bundles.permissions,
+            libs.flowpreferences,
+    )
+}
