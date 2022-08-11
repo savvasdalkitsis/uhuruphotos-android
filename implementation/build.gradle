@@ -4,9 +4,10 @@ android {
 
 dependencies {
     implementation project(":implementation:account")
+    implementation project(":implementation:album:auto")
+    implementation project(":implementation:album:user")
     implementation project(":implementation:albums")
     implementation project(":implementation:auth")
-    implementation project(":implementation:album:auto")
     implementation project(":implementation:autoalbums")
     implementation project(":implementation:biometrics")
     implementation project(":implementation:favourites")
@@ -33,7 +34,6 @@ dependencies {
     implementation project(":implementation:trash")
     implementation project(":implementation:ui")
     implementation project(":implementation:user")
-    implementation project(":implementation:useralbum")
     implementation project(":implementation:useralbums")
     implementation project(":implementation:userbadge")
     implementation project(":implementation:video")

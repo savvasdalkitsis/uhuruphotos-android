@@ -1,0 +1,9 @@
+android {
+    namespace 'com.savvasdalkitsis.uhuruphotos.api.album.user'
+}
+
+dependencies {
+    api(
+            libs.androidx.compose.navigation,
+    )
+}

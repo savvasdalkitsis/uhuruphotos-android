@@ -33,7 +33,7 @@ dependencies {
     implementation project(":api:toaster")
     implementation project(":api:trash")
     implementation project(":api:ui")
-    implementation project(":api:useralbum")
+    implementation project(":api:album:user")
     implementation project(":api:useralbums")
     implementation project(':api:userbadge')
     implementation(

@@ -5,25 +5,24 @@ android {
     composeOptions {
         kotlinCompilerExtensionVersion compose_compiler_version
     }
-    namespace 'com.savvasdalkitsis.uhuruphotos.implementation.useralbums'
+    namespace 'com.savvasdalkitsis.uhuruphotos.implementation.album.user'
 }
 
 dependencies {
-    implementation project(":api:albums")
-    implementation project(":api:coroutines")
-    implementation project(":api:log")
+    implementation project(':api:gallery:page')
+    implementation project(':api:albums')
+    implementation project(':api:date')
+    implementation project(":api:db")
+    implementation project(":api:feed")
     implementation project(":api:navigation")
+    implementation project(':api:people')
     implementation project(':api:media:page')
     implementation project(':api:media:remote')
     implementation project(":api:settings")
-    implementation project(":api:toaster")
+    implementation project(":api:user")
     implementation project(":api:album:user")
-    implementation project(":api:useralbums")
     implementation(
-            libs.accompanist.swiperefresh,
-            libs.androidx.compose.foundation,
-            libs.androidx.compose.material,
-            libs.hilt,
+            libs.androidx.compose.hilt.navigation,
             libs.flowpreferences,
     )
 }

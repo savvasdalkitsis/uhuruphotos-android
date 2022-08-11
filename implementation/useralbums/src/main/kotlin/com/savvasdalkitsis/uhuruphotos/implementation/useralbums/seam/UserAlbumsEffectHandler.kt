@@ -15,11 +15,11 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.implementation.useralbums.seam
 
+import com.savvasdalkitsis.uhuruphotos.api.album.user.navigation.UserAlbumNavigationTarget
 import com.savvasdalkitsis.uhuruphotos.api.navigation.Navigator
 import com.savvasdalkitsis.uhuruphotos.api.seam.EffectHandler
 import com.savvasdalkitsis.uhuruphotos.api.strings.R.string
 import com.savvasdalkitsis.uhuruphotos.api.toaster.Toaster
-import com.savvasdalkitsis.uhuruphotos.api.useralbum.navigation.UserAlbumNavigationTarget
 import com.savvasdalkitsis.uhuruphotos.implementation.useralbums.seam.UserAlbumsEffect.ErrorLoadingAlbums
 import com.savvasdalkitsis.uhuruphotos.implementation.useralbums.seam.UserAlbumsEffect.NavigateBack
 import com.savvasdalkitsis.uhuruphotos.implementation.useralbums.seam.UserAlbumsEffect.NavigateToUserAlbum
