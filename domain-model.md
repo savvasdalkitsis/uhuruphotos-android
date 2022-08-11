@@ -9,9 +9,11 @@ graph TD;
     FeedGroup-->MediaItem;
     MediaItem-->LocalMediaItem;
     MediaItem-->RemoteMediaItem;
-    AutoAlbum-->Gallery;
-    UserAlbum-->Gallery;
+    AutoAlbum-->Album;
+    UserAlbum-->Album;
+    Album-->Gallery;
     Favourites-->Gallery;
-    Trash-->Gallery;
-    LocalAlbum-->Gallery;
+    TrashMedia-->Gallery;
+    LocalMedia-->Gallery;
+    HiddenMedia-->Gallery;
 ```

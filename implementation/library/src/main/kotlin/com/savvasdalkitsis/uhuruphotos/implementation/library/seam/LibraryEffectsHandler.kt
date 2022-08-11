@@ -15,11 +15,11 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.implementation.library.seam
 
-import com.savvasdalkitsis.uhuruphotos.api.album.favourites.navigation.FavouritesNavigationTarget
-import com.savvasdalkitsis.uhuruphotos.api.album.hidden.navigation.HiddenPhotosNavigationTarget
-import com.savvasdalkitsis.uhuruphotos.api.album.local.navigation.LocalAlbumNavigationTarget
-import com.savvasdalkitsis.uhuruphotos.api.album.trash.navigation.TrashNavigationTarget
 import com.savvasdalkitsis.uhuruphotos.api.autoalbums.navigation.AutoAlbumsNavigationTarget
+import com.savvasdalkitsis.uhuruphotos.api.gallery.favourites.navigation.FavouritesNavigationTarget
+import com.savvasdalkitsis.uhuruphotos.api.gallery.hidden.navigation.HiddenPhotosNavigationTarget
+import com.savvasdalkitsis.uhuruphotos.api.gallery.local.navigation.LocalAlbumNavigationTarget
+import com.savvasdalkitsis.uhuruphotos.api.gallery.trash.navigation.TrashNavigationTarget
 import com.savvasdalkitsis.uhuruphotos.api.navigation.Navigator
 import com.savvasdalkitsis.uhuruphotos.api.seam.EffectHandler
 import com.savvasdalkitsis.uhuruphotos.api.strings.R.string
@@ -46,7 +46,7 @@ class LibraryEffectsHandler @Inject constructor(
         NavigateToUserAlbums -> navigator
             .navigateTo(UserAlbumsNavigationTarget.name)
         NavigateToFavourites -> navigator
-            .navigateTo(FavouritesNavigationTarget.name)
+            .navigateTo(FavouritesNavigationTarget.registrationName)
         NavigateToHidden -> navigator
             .navigateTo(HiddenPhotosNavigationTarget.registrationName)
         NavigateToTrash -> navigator

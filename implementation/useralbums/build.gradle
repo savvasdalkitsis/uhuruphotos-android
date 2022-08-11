@@ -17,7 +17,7 @@ dependencies {
     implementation project(':api:media:remote')
     implementation project(":api:settings")
     implementation project(":api:toaster")
-    implementation project(":api:album:user")
+    implementation project(":api:gallery:album:user")
     implementation project(":api:useralbums")
     implementation(
             libs.accompanist.swiperefresh,

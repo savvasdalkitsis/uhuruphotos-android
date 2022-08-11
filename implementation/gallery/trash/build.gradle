@@ -1,0 +1,29 @@
+android {
+    buildFeatures {
+        compose true
+    }
+    composeOptions {
+        kotlinCompilerExtensionVersion compose_compiler_version
+    }
+    namespace 'com.savvasdalkitsis.uhuruphotos.implementation.gallery.trash'
+}
+
+dependencies {
+    implementation project(":api:albums")
+    implementation project(":api:gallery:page")
+    implementation project(":api:biometrics")
+    implementation project(":api:coroutines")
+    implementation project(":api:feed")
+    implementation project(":api:navigation")
+    implementation project(":api:seam")
+    implementation project(":api:settings")
+    implementation project(":api:strings")
+    implementation project(":api:gallery:trash")
+    implementation project(":api:ui")
+    implementation(
+            libs.accompanist.swiperefresh,
+            libs.androidx.compose.material,
+            libs.flowpreferences,
+            libs.sqldelight.coroutines,
+    )
+}

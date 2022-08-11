@@ -15,7 +15,7 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.implementation.autoalbums.seam
 
-import com.savvasdalkitsis.uhuruphotos.api.album.auto.navigation.AutoAlbumNavigationTarget
+import com.savvasdalkitsis.uhuruphotos.api.gallery.album.auto.navigation.AutoAlbumNavigationTarget
 import com.savvasdalkitsis.uhuruphotos.api.navigation.Navigator
 import com.savvasdalkitsis.uhuruphotos.api.seam.EffectHandler
 import com.savvasdalkitsis.uhuruphotos.api.strings.R.string
