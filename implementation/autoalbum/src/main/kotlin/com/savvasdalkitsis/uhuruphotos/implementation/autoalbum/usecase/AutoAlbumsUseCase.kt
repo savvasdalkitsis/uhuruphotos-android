@@ -38,8 +38,7 @@ internal class AutoAlbumsUseCase @Inject constructor(
     suspend fun getAutoAlbum(albumId: Int): Group<String, GetAutoAlbum> =
         albumsRepository.getAutoAlbum(albumId)
 
-    suspend fun refreshAutoAlbum(albumId: Int) {
+    suspend fun refreshAutoAlbum(albumId: Int) =
         albumsRepository.refreshAutoAlbum(albumId)
-    }
 
 }

@@ -31,7 +31,6 @@ import com.savvasdalkitsis.uhuruphotos.api.albumpage.view.state.AlbumPageState
 import com.savvasdalkitsis.uhuruphotos.api.coroutines.safelyOnStartIgnoring
 import com.savvasdalkitsis.uhuruphotos.api.feed.view.state.FeedDisplay
 import com.savvasdalkitsis.uhuruphotos.api.feed.view.state.FeedDisplays
-import com.savvasdalkitsis.uhuruphotos.api.log.log
 import com.savvasdalkitsis.uhuruphotos.api.media.page.domain.model.MediaSequenceDataSource
 import com.savvasdalkitsis.uhuruphotos.api.seam.ActionHandler
 import kotlinx.coroutines.flow.Flow
@@ -40,11 +39,10 @@ import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.merge
-import java.io.IOException
 import kotlin.properties.Delegates
 
 class AlbumPageActionHandler(
-    private val albumRefresher: suspend (Int) -> Unit,
+    private val albumRefresher: suspend (Int) -> Result<Unit>,
     private val albumDetailsFlow: (albumId: Int, effect: suspend (AlbumPageEffect) -> Unit) -> Flow<AlbumDetails>,
     private val albumDetailsEmptyCheck: suspend (albumId: Int) -> Boolean,
     private val mediaSequenceDataSource: (albumId: Int) -> MediaSequenceDataSource,
@@ -105,13 +103,10 @@ class AlbumPageActionHandler(
 
     private suspend fun refreshAlbum(effect: suspend (AlbumPageEffect) -> Unit) {
         loading.emit(Loading(true))
-        try {
-            albumRefresher(albumId)
-        } catch (e: IOException) {
-            log(e)
+        val result = albumRefresher(albumId)
+        if (result.isFailure) {
             effect(ErrorLoading)
-        } finally {
-            loading.emit(Loading(false))
         }
+        loading.emit(Loading(false))
     }
 }

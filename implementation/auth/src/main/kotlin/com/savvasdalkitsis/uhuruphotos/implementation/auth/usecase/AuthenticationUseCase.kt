@@ -27,6 +27,7 @@ import com.savvasdalkitsis.uhuruphotos.api.db.entities.auth.TokenType
 import com.savvasdalkitsis.uhuruphotos.api.db.extensions.async
 import com.savvasdalkitsis.uhuruphotos.api.db.extensions.awaitSingleOrNull
 import com.savvasdalkitsis.uhuruphotos.api.log.log
+import com.savvasdalkitsis.uhuruphotos.api.log.runCatchingWithLog
 import com.savvasdalkitsis.uhuruphotos.implementation.auth.network.jwt
 import com.savvasdalkitsis.uhuruphotos.implementation.auth.service.AuthenticationService
 import com.savvasdalkitsis.uhuruphotos.implementation.auth.service.model.AuthenticationCredentials
@@ -53,18 +54,19 @@ class AuthenticationUseCase @Inject constructor(
         }
     }
 
-    override suspend fun login(username: String, password: String): AuthStatus {
-        val response = authenticationService.login(AuthenticationCredentials(username, password))
-        async {
-            tokenQueries.saveToken(
-                Token(
-                    token = response.refresh,
-                    type = TokenType.REFRESH,
+    override suspend fun login(username: String, password: String): Result<AuthStatus> =
+        runCatchingWithLog {
+            val response = authenticationService.login(AuthenticationCredentials(username, password))
+            async {
+                tokenQueries.saveToken(
+                    Token(
+                        token = response.refresh,
+                        type = TokenType.REFRESH,
+                    )
                 )
-            )
+            }
+            return Result.success(refreshAccessToken(response.refresh))
         }
-        return refreshAccessToken(response.refresh)
-    }
 
     override suspend fun refreshToken(): AuthStatus = mutex.withLock {
         val refreshToken = tokenQueries.getRefreshToken().awaitSingleOrNull()

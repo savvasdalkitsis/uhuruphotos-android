@@ -23,14 +23,13 @@ import com.savvasdalkitsis.uhuruphotos.api.db.search.GetSearchResults
 import com.savvasdalkitsis.uhuruphotos.api.db.search.SearchQueries
 import com.savvasdalkitsis.uhuruphotos.api.group.model.Group
 import com.savvasdalkitsis.uhuruphotos.api.group.model.groupBy
-import com.savvasdalkitsis.uhuruphotos.api.log.log
+import com.savvasdalkitsis.uhuruphotos.api.log.runCatchingWithLog
 import com.savvasdalkitsis.uhuruphotos.implementation.search.service.SearchService
 import com.squareup.sqldelight.runtime.coroutines.asFlow
 import com.squareup.sqldelight.runtime.coroutines.mapToList
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.map
-import java.io.IOException
 import javax.inject.Inject
 
 class SearchRepository @Inject constructor(
@@ -53,7 +52,7 @@ class SearchRepository @Inject constructor(
     suspend fun getSearchResults(query: String): Group<String, GetSearchResults> =
         searchQueries.getSearchResults(query).await().groupBy(GetSearchResults::date).let(::Group)
 
-    suspend fun refreshSearch(query: String) {
+    suspend fun refreshSearch(query: String) = runCatchingWithLog {
         val results = searchService.search(query)
         for (searchResult in results.results) {
             for (photoSummary in searchResult.items) {
@@ -86,16 +85,12 @@ class SearchRepository @Inject constructor(
     fun getSearchSuggestions(): Flow<List<String>> = suggestions.asFlow()
         .map { it.orEmpty().toList() }
 
-    suspend fun refreshSearchSuggestions() {
-        try {
-            suggestions.setAndCommit(
-                searchService.getSearchSuggestions().results
-                    .map(String::trim)
-                    .toSet()
-            )
-        } catch (e: IOException) {
-            log(e)
-        }
+    suspend fun refreshSearchSuggestions() = runCatchingWithLog {
+        suggestions.setAndCommit(
+            searchService.getSearchSuggestions().results
+                .map(String::trim)
+                .toSet()
+        )
     }
 
     fun getRecentSearches(): Flow<List<String>> = recentSearches.asFlow()

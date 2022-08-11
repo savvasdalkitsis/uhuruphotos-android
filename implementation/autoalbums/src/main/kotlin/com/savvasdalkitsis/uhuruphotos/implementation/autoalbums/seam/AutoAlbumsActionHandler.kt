@@ -17,7 +17,6 @@ package com.savvasdalkitsis.uhuruphotos.implementation.autoalbums.seam
 
 import com.savvasdalkitsis.uhuruphotos.api.autoalbums.usecase.AutoAlbumsUseCase
 import com.savvasdalkitsis.uhuruphotos.api.coroutines.safelyOnStartIgnoring
-import com.savvasdalkitsis.uhuruphotos.api.log.log
 import com.savvasdalkitsis.uhuruphotos.api.seam.ActionHandler
 import com.savvasdalkitsis.uhuruphotos.implementation.autoalbums.seam.AutoAlbumsAction.AutoAlbumSelected
 import com.savvasdalkitsis.uhuruphotos.implementation.autoalbums.seam.AutoAlbumsAction.ChangeSorting
@@ -34,7 +33,6 @@ import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.merge
-import java.io.IOException
 import javax.inject.Inject
 
 class AutoAlbumsActionHandler @Inject constructor(
@@ -74,17 +72,13 @@ class AutoAlbumsActionHandler @Inject constructor(
 
     private suspend fun refreshAlbums(effect: suspend (AutoAlbumsEffect) -> Unit) {
         loading.emit(true)
-        try {
-            autoAlbumsUseCase.refreshAutoAlbums()
-        } catch (e: IOException) {
-            log(e)
+        val result = autoAlbumsUseCase.refreshAutoAlbums()
+        if (result.isFailure) {
             effect(ErrorLoadingAlbums)
-        } finally {
-            // delaying to give ui time to receive the new albums before
-            // dismissing the loading bar since no albums logic relies on that
-            delay(500)
-            loading.emit(false)
         }
+        // delaying to give ui time to receive the new albums before
+        // dismissing the loading bar since no albums logic relies on that
+        delay(500)
+        loading.emit(false)
     }
-
 }

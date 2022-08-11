@@ -19,7 +19,6 @@ import androidx.work.WorkInfo
 import com.savvasdalkitsis.uhuruphotos.api.auth.usecase.ServerUseCase
 import com.savvasdalkitsis.uhuruphotos.api.db.domain.model.media.DbRemoteMediaItemDetails
 import com.savvasdalkitsis.uhuruphotos.api.db.domain.model.media.DbRemoteMediaItemSummary
-import com.savvasdalkitsis.uhuruphotos.api.log.runCatchingWithLog
 import com.savvasdalkitsis.uhuruphotos.api.media.remote.domain.usecase.RemoteMediaUseCase
 import com.savvasdalkitsis.uhuruphotos.api.user.usecase.UserUseCase
 import com.savvasdalkitsis.uhuruphotos.implementation.media.remote.repository.RemoteMediaRepository
@@ -103,23 +102,16 @@ class RemoteMediaUseCase @Inject constructor(
             remoteMediaItemWorkScheduler.scheduleMediaItemFavourite(id, favourite)
         }
 
-    override suspend fun refreshDetailsNowIfMissing(
-        id: String,
-    ) : Result<Unit> = runCatchingWithLog {
+    override suspend fun refreshDetailsNowIfMissing(id: String): Result<Unit> =
         remoteMediaRepository.refreshDetailsNowIfMissing(id)
-    }
 
-    override suspend fun refreshDetailsNow(
-        id: String,
-    ) : Result<Unit> = runCatchingWithLog {
+    override suspend fun refreshDetailsNow(id: String): Result<Unit> =
         remoteMediaRepository.refreshDetailsNow(id)
-    }
 
-    override suspend fun refreshFavouriteMedia() {
-        withFavouriteThreshold {
+    override suspend fun refreshFavouriteMedia(): Result<Unit> =
+        resultWithFavouriteThreshold {
             remoteMediaRepository.refreshFavourites(it)
         }
-    }
 
     override fun downloadOriginal(id: String, video: Boolean) {
         remoteMediaItemWorkScheduler.scheduleMediaItemOriginalFileRetrieve(id, video)
@@ -128,9 +120,8 @@ class RemoteMediaUseCase @Inject constructor(
     override fun observeOriginalFileDownloadStatus(id: String): Flow<WorkInfo.State> =
         remoteMediaItemWorkScheduler.observeMediaItemOriginalFileRetrieveJobStatus(id)
 
-    override suspend fun refreshHiddenMedia() {
+    override suspend fun refreshHiddenMedia() =
         remoteMediaRepository.refreshHidden()
-    }
 
     override fun trashMediaItem(id: String) {
         remoteMediaItemWorkScheduler.scheduleMediaItemTrashing(id)
@@ -147,5 +138,10 @@ class RemoteMediaUseCase @Inject constructor(
     private suspend fun <T> withFavouriteThreshold(action: suspend (Int) -> T): Result<T> =
         userUseCase.getUserOrRefresh().mapCatching {
             action(it.favoriteMinRating!!)
+        }
+
+    private suspend fun resultWithFavouriteThreshold(action: suspend (Int) -> Result<Unit>): Result<Unit> =
+        userUseCase.getUserOrRefresh().mapCatching {
+            action(it.favoriteMinRating!!).getOrThrow()
         }
 }

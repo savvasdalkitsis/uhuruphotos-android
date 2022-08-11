@@ -35,9 +35,8 @@ internal class UserAlbumsUseCase @Inject constructor(
     suspend fun getUserAlbum(albumId: Int): Group<String, GetUserAlbum> =
             albumsRepository.getUserAlbum(albumId)
 
-    suspend fun refreshUserAlbum(albumId: Int) {
+    suspend fun refreshUserAlbum(albumId: Int) =
         albumsRepository.refreshUserAlbum(albumId)
-    }
 
     fun getUserAlbumFeedDisplay(albumId: Int) : FeedDisplay =
         userAlbumFeedDisplay(albumId).get()

@@ -24,6 +24,7 @@ import com.savvasdalkitsis.uhuruphotos.api.db.extensions.awaitSingleOrNull
 import com.savvasdalkitsis.uhuruphotos.api.db.media.RemoteMediaItemDetailsQueries
 import com.savvasdalkitsis.uhuruphotos.api.db.media.RemoteMediaItemSummaryQueries
 import com.savvasdalkitsis.uhuruphotos.api.db.media.RemoteMediaTrashQueries
+import com.savvasdalkitsis.uhuruphotos.api.log.runCatchingWithLog
 import com.savvasdalkitsis.uhuruphotos.api.media.remote.model.toDbModel
 import com.savvasdalkitsis.uhuruphotos.implementation.media.remote.service.RemoteMediaService
 import com.savvasdalkitsis.uhuruphotos.implementation.media.remote.worker.RemoteMediaItemWorkScheduler
@@ -78,17 +79,15 @@ class RemoteMediaRepository @Inject constructor(
         }
     }
 
-    suspend fun refreshDetailsNowIfMissing(id: String) {
+    suspend fun refreshDetailsNowIfMissing(id: String) =
         when (getMediaItemDetails(id)) {
-            null -> {
-                refreshDetailsNow(id)
-            }
+            null -> refreshDetailsNow(id)
+            else -> Result.success(Unit)
         }
-    }
 
-    suspend fun refreshDetailsNow(id: String) {
-        remoteMediaService.getMediaItem(id).toDbModel().apply {
-            insertMediaItem(this)
+    suspend fun refreshDetailsNow(id: String) = runCatchingWithLog {
+        remoteMediaService.getMediaItem(id).toDbModel().let {
+            insertMediaItem(it)
         }
     }
 
@@ -96,7 +95,7 @@ class RemoteMediaRepository @Inject constructor(
         remoteMediaItemWorkScheduler.scheduleMediaItemDetailsRetrieve(id)
     }
 
-    suspend fun refreshFavourites(favouriteThreshold: Int) {
+    suspend fun refreshFavourites(favouriteThreshold: Int) = runCatchingWithLog {
         val currentFavouriteIds = remoteMediaItemSummaryQueries.getFavourites(favouriteThreshold)
             .await()
             .map { it.id }
@@ -112,7 +111,7 @@ class RemoteMediaRepository @Inject constructor(
         }
     }
 
-    suspend fun refreshHidden() {
+    suspend fun refreshHidden(): Result<Unit> = runCatchingWithLog {
         val hidden = remoteMediaService.getHiddenMedia().results.flatMap { it.items }
         async {
             hidden.forEach {
@@ -135,7 +134,10 @@ class RemoteMediaRepository @Inject constructor(
     suspend fun insertMediaItem(mediaItemDetails: DbRemoteMediaItemDetails) {
         async {
             remoteMediaItemDetailsQueries.insert(mediaItemDetails)
-            remoteMediaItemSummaryQueries.setRating(mediaItemDetails.rating, mediaItemDetails.imageHash)
+            remoteMediaItemSummaryQueries.setRating(
+                mediaItemDetails.rating,
+                mediaItemDetails.imageHash
+            )
         }
     }
 
@@ -168,5 +170,4 @@ class RemoteMediaRepository @Inject constructor(
             remoteMediaTrashQueries.delete(id)
         }
     }
-
 }

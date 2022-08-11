@@ -42,6 +42,7 @@ dependencies {
             libs.androidx.compose.foundation,
             libs.androidx.compose.material,
             libs.flowpreferences,
+            libs.retrofit.core,
     )
     implementation project(path: ':implementation:localalbum')
 }

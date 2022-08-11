@@ -19,7 +19,7 @@ import com.savvasdalkitsis.uhuruphotos.api.db.extensions.async
 import com.savvasdalkitsis.uhuruphotos.api.db.extensions.await
 import com.savvasdalkitsis.uhuruphotos.api.db.people.People
 import com.savvasdalkitsis.uhuruphotos.api.db.people.PeopleQueries
-import com.savvasdalkitsis.uhuruphotos.api.log.log
+import com.savvasdalkitsis.uhuruphotos.api.log.runCatchingWithLog
 import com.savvasdalkitsis.uhuruphotos.api.people.service.model.toPerson
 import com.savvasdalkitsis.uhuruphotos.implementation.people.service.PeopleService
 import com.squareup.sqldelight.runtime.coroutines.asFlow
@@ -27,7 +27,6 @@ import com.squareup.sqldelight.runtime.coroutines.mapToList
 import com.squareup.sqldelight.runtime.coroutines.mapToOne
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.distinctUntilChanged
-import java.io.IOException
 import javax.inject.Inject
 
 class PeopleRepository @Inject constructor(
@@ -47,26 +46,22 @@ class PeopleRepository @Inject constructor(
     fun observePerson(id: Int): Flow<People> = peopleQueries.getPerson(id)
         .asFlow().mapToOne().distinctUntilChanged()
 
-    suspend fun refreshPerson(id: Int) {
+    suspend fun refreshPerson(id: Int) = runCatchingWithLog {
         val person = peopleService.getPerson(id)
         async {
             peopleQueries.insertPerson(person.toPerson())
         }
     }
 
-    suspend fun refreshPeople() {
-        try {
-            val people = peopleService.getPeople().results
-            async {
-                peopleQueries.transaction {
-                    peopleQueries.clearAll()
-                    for (person in people) {
-                        peopleQueries.insertPerson(person.toPerson())
-                    }
+    suspend fun refreshPeople() = runCatchingWithLog {
+        val people = peopleService.getPeople().results
+        async {
+            peopleQueries.transaction {
+                peopleQueries.clearAll()
+                for (person in people) {
+                    peopleQueries.insertPerson(person.toPerson())
                 }
             }
-        } catch (e: IOException) {
-            log(e)
         }
     }
 }

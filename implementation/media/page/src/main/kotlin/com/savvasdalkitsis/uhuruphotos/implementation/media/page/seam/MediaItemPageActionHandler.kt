@@ -24,7 +24,6 @@ import androidx.work.WorkInfo.State.SUCCEEDED
 import com.savvasdalkitsis.uhuruphotos.api.albums.model.Album
 import com.savvasdalkitsis.uhuruphotos.api.albums.usecase.AlbumsUseCase
 import com.savvasdalkitsis.uhuruphotos.api.localalbum.usecase.LocalAlbumUseCase
-import com.savvasdalkitsis.uhuruphotos.api.log.log
 import com.savvasdalkitsis.uhuruphotos.api.media.page.domain.model.MediaId
 import com.savvasdalkitsis.uhuruphotos.api.media.page.domain.model.MediaItem
 import com.savvasdalkitsis.uhuruphotos.api.media.page.domain.model.MediaSequenceDataSource.AllMedia
@@ -364,7 +363,6 @@ class MediaItemPageActionHandler @Inject constructor(
         } else {
             mediaUseCase.refreshDetailsNowIfMissing(photoId, isVideo)
         }.onFailure {
-            log(it)
             emit(ShowErrorMessage(string.error_loading_photo_details))
         }
         when (val details = mediaUseCase.getMediaItemDetails(photoId)) {

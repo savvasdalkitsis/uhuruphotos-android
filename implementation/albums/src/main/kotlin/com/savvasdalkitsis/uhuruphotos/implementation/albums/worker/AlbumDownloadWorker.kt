@@ -22,7 +22,6 @@ import androidx.work.ForegroundInfo
 import androidx.work.WorkerParameters
 import androidx.work.workDataOf
 import com.savvasdalkitsis.uhuruphotos.api.albums.repository.AlbumsRepository
-import com.savvasdalkitsis.uhuruphotos.api.log.log
 import com.savvasdalkitsis.uhuruphotos.api.notification.ForegroundInfoBuilder
 import com.savvasdalkitsis.uhuruphotos.api.notification.NotificationChannels.JOBS_CHANNEL_ID
 import com.savvasdalkitsis.uhuruphotos.api.strings.R.string
@@ -40,16 +39,14 @@ internal class AlbumDownloadWorker @AssistedInject constructor(
 ) : CoroutineWorker(context, params) {
 
     override suspend fun doWork() = withContext(Dispatchers.IO) {
-        try {
-            val shallow = params.inputData.getBoolean(KEY_SHALLOW, false)
-            albumsRepository.refreshAlbums(shallow) { progress ->
-                setProgress(workDataOf(Progress to progress))
-                createForegroundInfo(progress)
-            }
-            Result.success()
-        } catch (e: Exception) {
-            log(e)
-            Result.retry()
+        val shallow = params.inputData.getBoolean(KEY_SHALLOW, false)
+        val result = albumsRepository.refreshAlbums(shallow) { progress ->
+            setProgress(workDataOf(Progress to progress))
+            createForegroundInfo(progress)
+        }
+        when {
+            result.isSuccess -> Result.success()
+            else -> Result.retry()
         }
     }
 

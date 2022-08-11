@@ -23,6 +23,6 @@ interface UserAlbumsUseCase {
     fun observeUserAlbumsSorting(): Flow<AlbumSorting>
     suspend fun changeUserAlbumsSorting(sorting: AlbumSorting)
     fun observeUserAlbums(): Flow<List<UserAlbum>>
-    suspend fun refreshUserAlbums()
+    suspend fun refreshUserAlbums(): Result<Unit>
     suspend fun getUserAlbums(): List<UserAlbum>
 }

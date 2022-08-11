@@ -23,7 +23,6 @@ import com.savvasdalkitsis.uhuruphotos.api.auth.usecase.AuthenticationUseCase
 import com.savvasdalkitsis.uhuruphotos.api.auth.usecase.ServerUseCase
 import com.savvasdalkitsis.uhuruphotos.api.http.isHttpUrl
 import com.savvasdalkitsis.uhuruphotos.api.http.isValidUrlOrDomain
-import com.savvasdalkitsis.uhuruphotos.api.log.log
 import com.savvasdalkitsis.uhuruphotos.api.seam.ActionHandler
 import com.savvasdalkitsis.uhuruphotos.api.settings.usecase.SettingsUseCase
 import com.savvasdalkitsis.uhuruphotos.implementation.server.seam.ServerAction.AttemptChangeServerUrlTo
@@ -118,19 +117,19 @@ internal class ServerActionHandler @Inject constructor(
             }
             emit(PerformingBackgroundJob)
             val credentials = state as UserCredentials
-            try {
-                val authStatus = authenticationUseCase.login(credentials.username, credentials.password)
-                if (authStatus == Authenticated) {
-                    effect(Close)
-                } else {
-                    effect(ErrorLoggingIn())
+            authenticationUseCase.login(credentials.username, credentials.password)
+                .onSuccess { authStatus ->
+                    if (authStatus == Authenticated) {
+                        effect(Close)
+                    } else {
+                        effect(ErrorLoggingIn())
+                        emit(AskForUserCredentials(credentials.username, credentials.password))
+                    }
+                }
+                .onFailure {
+                    effect(ErrorLoggingIn(it))
                     emit(AskForUserCredentials(credentials.username, credentials.password))
                 }
-            } catch (e: Exception) {
-                log(e)
-                effect(ErrorLoggingIn(e))
-                emit(AskForUserCredentials(credentials.username, credentials.password))
-            }
         }
         is UsernameChangedTo -> flowOf(ChangeUsernameTo(action.username.lowercase()))
         is UserPasswordChangedTo -> flowOf(ChangePasswordTo(action.password))

@@ -23,5 +23,5 @@ interface PeopleUseCase {
     suspend fun getPeopleByName(): List<People>
     fun observePeopleByPhotoCount(): Flow<Result<List<People>>>
     fun observePerson(id: Int): Flow<People>
-    suspend fun refreshPeople()
+    suspend fun refreshPeople(): Result<Unit>
 }

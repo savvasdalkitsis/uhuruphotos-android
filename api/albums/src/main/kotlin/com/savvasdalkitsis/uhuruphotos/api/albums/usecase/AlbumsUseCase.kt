@@ -31,5 +31,5 @@ interface AlbumsUseCase {
     suspend fun getUserAlbum(albumId: Int): List<Album>
     fun startRefreshAlbumsWork(shallow: Boolean)
     suspend fun refreshAlbum(albumId: String)
-    suspend fun refreshTrash()
+    suspend fun refreshTrash(): Result<Unit>
 }

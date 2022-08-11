@@ -53,6 +53,18 @@ fun <T> Flow<T>.safelyOnStart(
         }
     }
 
+fun <T> Flow<T>.onStartWithResult(
+    block: suspend () -> Result<*>
+): Flow<Result<T>> = map(::success)
+    .onStart {
+        CoroutineScope(currentCoroutineContext() + Dispatchers.IO).launch {
+            val result = block()
+            if (result.isFailure) {
+                emit(Result.failure(result.exceptionOrNull()!!))
+            }
+        }
+    }
+
 fun <V> Flow<Result<V>>.onErrors(onError: suspend (Throwable) -> Unit) : Flow<V> =
     mapNotNull {
         it.getOrElse { e ->

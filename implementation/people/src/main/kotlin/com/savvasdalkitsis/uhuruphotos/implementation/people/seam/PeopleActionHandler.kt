@@ -16,7 +16,6 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.implementation.people.seam
 
 import com.savvasdalkitsis.uhuruphotos.api.coroutines.safelyOnStartIgnoring
-import com.savvasdalkitsis.uhuruphotos.api.log.log
 import com.savvasdalkitsis.uhuruphotos.api.media.remote.domain.usecase.RemoteMediaUseCase
 import com.savvasdalkitsis.uhuruphotos.api.people.view.state.toPerson
 import com.savvasdalkitsis.uhuruphotos.api.seam.ActionHandler
@@ -100,14 +99,11 @@ class PeopleActionHandler @Inject constructor(
 
     private suspend fun refresh(effect: suspend (PeopleEffect) -> Unit) {
         loading.emit(true)
-        try {
-            peopleUseCase.refreshPeople()
-        } catch (e: Exception) {
-            log(e)
+        val result = peopleUseCase.refreshPeople()
+        if (result.isFailure) {
             effect(ErrorLoadingPeople)
-        } finally {
-            loading.emit(false)
         }
+        loading.emit(false)
     }
 
 }

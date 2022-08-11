@@ -15,7 +15,7 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.implementation.people.usecase
 
-import com.savvasdalkitsis.uhuruphotos.api.coroutines.safelyOnStart
+import com.savvasdalkitsis.uhuruphotos.api.coroutines.onStartWithResult
 import com.savvasdalkitsis.uhuruphotos.api.coroutines.safelyOnStartIgnoring
 import com.savvasdalkitsis.uhuruphotos.api.db.people.People
 import com.savvasdalkitsis.uhuruphotos.api.people.usecase.PeopleUseCase
@@ -33,7 +33,7 @@ class PeopleUseCase @Inject constructor(
 
     override fun observePeopleByPhotoCount(): Flow<Result<List<People>>> =
         peopleRepository.observePeopleByPhotoCount()
-            .safelyOnStart {
+            .onStartWithResult {
                 refreshPeople()
             }
 

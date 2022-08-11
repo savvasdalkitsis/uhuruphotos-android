@@ -51,6 +51,7 @@ import com.savvasdalkitsis.uhuruphotos.api.db.people.PeopleQueries
 import com.savvasdalkitsis.uhuruphotos.api.db.person.PersonQueries
 import com.savvasdalkitsis.uhuruphotos.api.group.model.Group
 import com.savvasdalkitsis.uhuruphotos.api.group.model.groupBy
+import com.savvasdalkitsis.uhuruphotos.api.log.runCatchingWithLog
 import com.savvasdalkitsis.uhuruphotos.api.media.remote.model.toDbModel
 import com.savvasdalkitsis.uhuruphotos.api.media.remote.model.toTrash
 import com.savvasdalkitsis.uhuruphotos.api.people.service.model.toPerson
@@ -161,7 +162,7 @@ internal class AlbumsRepository @Inject constructor(
     override suspend fun getTrash(): Group<String, GetTrash> =
         albumsQueries.getTrash().await().groupBy(GetTrash::id).let(::Group)
 
-    override suspend fun refreshAutoAlbums() {
+    override suspend fun refreshAutoAlbums() = runCatchingWithLog {
         val albums = albumsService.getAutoAlbums()
         autoAlbumsQueries.transaction {
             autoAlbumsQueries.clearAll()
@@ -171,7 +172,7 @@ internal class AlbumsRepository @Inject constructor(
         }
     }
 
-    override suspend fun refreshUserAlbums() {
+    override suspend fun refreshUserAlbums() = runCatchingWithLog {
         val albums = albumsService.getUserAlbums()
         userAlbumsQueries.transaction {
             userAlbumsQueries.clearAll()
@@ -181,7 +182,7 @@ internal class AlbumsRepository @Inject constructor(
         }
     }
 
-    override suspend fun refreshAutoAlbum(albumId: Int) {
+    override suspend fun refreshAutoAlbum(albumId: Int): Result<Unit> = runCatchingWithLog {
         val album = albumsService.getAutoAlbum(albumId.toString())
         db.transaction {
             autoAlbumQueries.insert(
@@ -206,7 +207,7 @@ internal class AlbumsRepository @Inject constructor(
         }
     }
 
-    override suspend fun refreshUserAlbum(albumId: Int) {
+    override suspend fun refreshUserAlbum(albumId: Int): Result<Unit> = runCatchingWithLog {
         val album = albumsService.getUserAlbum(albumId.toString())
         db.transaction {
             userAlbumQueries.insert(
@@ -249,7 +250,7 @@ internal class AlbumsRepository @Inject constructor(
         )
     }
 
-    override suspend fun refreshAlbums(shallow: Boolean, onProgressChange: suspend (Int) -> Unit) {
+    override suspend fun refreshAlbums(shallow: Boolean, onProgressChange: suspend (Int) -> Unit) =
         process(
             albumsFetcher = { albumsService.getAlbumsByDate() },
             albumFetcher = getAlbumAllPages(),
@@ -264,7 +265,6 @@ internal class AlbumsRepository @Inject constructor(
                 }
             }
         )
-    }
 
     override suspend fun refreshAlbum(albumId: String) {
         process(
@@ -292,7 +292,7 @@ internal class AlbumsRepository @Inject constructor(
         }
     }
 
-    override suspend fun refreshTrash() {
+    override suspend fun refreshTrash() = runCatchingWithLog {
         val trash = albumsService.getTrash().results
         async {
             albumsQueries.transaction {
@@ -322,7 +322,7 @@ internal class AlbumsRepository @Inject constructor(
         onProgressChange: suspend (Int) -> Unit = {},
         incompleteAlbumsProcessor: suspend (List<Album.IncompleteAlbum>) -> Unit = {},
         completeAlbumProcessor: suspend (Album.CompleteAlbum) -> Unit = {},
-    ) {
+    ): Result<Unit> = runCatchingWithLog {
         onProgressChange(0)
         val albums = albumsFetcher()
         incompleteAlbumsProcessor(albums.results)
@@ -333,7 +333,7 @@ internal class AlbumsRepository @Inject constructor(
         for ((index, incompleteAlbum) in albumsToDownloadSummaries.withIndex()) {
             val id = incompleteAlbum.id
             updateSummaries(id, albumFetcher, completeAlbumProcessor)
-            onProgressChange((100 * ((index + 1)/ albumsToDownloadSummaries.size.toFloat())).toInt())
+            onProgressChange((100 * ((index + 1) / albumsToDownloadSummaries.size.toFloat())).toInt())
         }
     }
 

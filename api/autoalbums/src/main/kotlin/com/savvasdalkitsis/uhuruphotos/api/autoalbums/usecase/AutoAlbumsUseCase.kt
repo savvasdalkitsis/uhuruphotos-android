@@ -23,6 +23,6 @@ interface AutoAlbumsUseCase {
     fun observeAutoAlbumsSorting(): Flow<AlbumSorting>
     suspend fun changeAutoAlbumsSorting(sorting: AlbumSorting)
     fun observeAutoAlbums(): Flow<List<AutoAlbum>>
-    suspend fun refreshAutoAlbums()
+    suspend fun refreshAutoAlbums(): Result<Unit>
     suspend fun getAutoAlbums(): List<AutoAlbum>
 }

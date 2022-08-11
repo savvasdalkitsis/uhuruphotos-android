@@ -52,9 +52,9 @@ interface RemoteMediaUseCase {
 
     suspend fun refreshDetailsNow(id: String): Result<Unit>
 
-    suspend fun refreshFavouriteMedia()
+    suspend fun refreshFavouriteMedia(): Result<Unit>
 
-    suspend fun refreshHiddenMedia()
+    suspend fun refreshHiddenMedia(): Result<Unit>
 
     fun trashMediaItem(id: String)
 

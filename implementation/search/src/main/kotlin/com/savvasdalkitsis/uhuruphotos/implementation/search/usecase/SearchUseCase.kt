@@ -16,7 +16,7 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.implementation.search.usecase
 
 import com.savvasdalkitsis.uhuruphotos.api.albums.model.Album
-import com.savvasdalkitsis.uhuruphotos.api.coroutines.safelyOnStart
+import com.savvasdalkitsis.uhuruphotos.api.coroutines.onStartWithResult
 import com.savvasdalkitsis.uhuruphotos.api.coroutines.safelyOnStartIgnoring
 import com.savvasdalkitsis.uhuruphotos.api.date.DateDisplayer
 import com.savvasdalkitsis.uhuruphotos.api.db.extensions.isVideo
@@ -54,7 +54,7 @@ class SearchUseCase @Inject constructor(
                 groups.mapToAlbums()
             }
             .distinctUntilChanged()
-            .safelyOnStart {
+            .onStartWithResult {
                 searchRepository.refreshSearch(query)
             }
 

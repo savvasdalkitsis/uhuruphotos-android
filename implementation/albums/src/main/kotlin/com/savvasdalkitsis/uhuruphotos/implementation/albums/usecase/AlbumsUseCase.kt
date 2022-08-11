@@ -72,9 +72,7 @@ internal class AlbumsUseCase @Inject constructor(
         }
         .map { it.mapToAlbums() }
 
-    override suspend fun refreshTrash() {
-        albumsRepository.refreshTrash()
-    }
+    override suspend fun refreshTrash() = albumsRepository.refreshTrash()
 
     override suspend fun getPersonAlbums(personId: Int): List<Album> = albumsRepository.getPersonAlbums(personId)
         .mapValues { it.toDbAlbums() }

@@ -56,9 +56,8 @@ class AutoAlbumsUseCase @Inject constructor(
             albums.toAutoAlbums(sorting)
         }
 
-    override suspend fun refreshAutoAlbums() {
+    override suspend fun refreshAutoAlbums() =
         albumsRepository.refreshAutoAlbums()
-    }
 
     override suspend fun getAutoAlbums(): List<AutoAlbum> =
         albumsRepository.getAutoAlbums().toAutoAlbums(autoAlbumsSorting.get())

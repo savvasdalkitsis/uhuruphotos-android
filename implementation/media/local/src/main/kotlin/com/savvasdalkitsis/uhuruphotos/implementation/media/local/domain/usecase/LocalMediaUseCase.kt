@@ -22,6 +22,7 @@ import com.savvasdalkitsis.uhuruphotos.api.date.module.DateModule.ParsingDateFor
 import com.savvasdalkitsis.uhuruphotos.api.date.module.DateModule.ParsingDateTimeFormat
 import com.savvasdalkitsis.uhuruphotos.api.db.extensions.async
 import com.savvasdalkitsis.uhuruphotos.api.db.media.LocalMediaItemDetails
+import com.savvasdalkitsis.uhuruphotos.api.log.runCatchingWithLog
 import com.savvasdalkitsis.uhuruphotos.api.media.local.domain.model.LocalFolder
 import com.savvasdalkitsis.uhuruphotos.api.media.local.domain.model.LocalMediaFolder
 import com.savvasdalkitsis.uhuruphotos.api.media.local.domain.model.LocalMediaItem
@@ -67,9 +68,8 @@ class LocalMediaUseCase @Inject constructor(
     override suspend fun getLocalMediaItem(id: Long): LocalMediaItem? =
         localMediaRepository.getItem(id)?.toItem()
 
-    override suspend fun refreshLocalMediaItem(id: Long, isVideo: Boolean) {
+    override suspend fun refreshLocalMediaItem(id: Long, isVideo: Boolean) =
         localMediaRepository.refreshItem(id, isVideo)
-    }
 
     override suspend fun getLocalMedia(): List<LocalMediaItem> {
         resetMediaStoreIfNeeded()
@@ -123,7 +123,7 @@ class LocalMediaUseCase @Inject constructor(
             }
         }
 
-    override suspend fun refreshLocalMediaFolder(folderId: Int) {
+    override suspend fun refreshLocalMediaFolder(folderId: Int) = runCatchingWithLog {
         resetMediaStoreIfNeeded()
         localMediaRepository.refreshFolder(folderId)
     }

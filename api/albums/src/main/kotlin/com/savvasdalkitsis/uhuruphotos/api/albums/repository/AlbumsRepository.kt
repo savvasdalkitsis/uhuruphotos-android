@@ -45,11 +45,11 @@ interface AlbumsRepository {
     fun observeTrash(): Flow<Group<String, GetTrash>>
     suspend fun hasTrash(): Boolean
     suspend fun getTrash(): Group<String, GetTrash>
-    suspend fun refreshAutoAlbums()
-    suspend fun refreshUserAlbums()
-    suspend fun refreshAutoAlbum(albumId: Int)
-    suspend fun refreshUserAlbum(albumId: Int)
-    suspend fun refreshAlbums(shallow: Boolean, onProgressChange: suspend (Int) -> Unit)
+    suspend fun refreshAutoAlbums(): Result<Unit>
+    suspend fun refreshUserAlbums(): Result<Unit>
+    suspend fun refreshAutoAlbum(albumId: Int): Result<Unit>
+    suspend fun refreshUserAlbum(albumId: Int): Result<Unit>
+    suspend fun refreshAlbums(shallow: Boolean, onProgressChange: suspend (Int) -> Unit): Result<Unit>
     suspend fun refreshAlbum(albumId: String)
-    suspend fun refreshTrash()
+    suspend fun refreshTrash(): Result<Unit>
 }

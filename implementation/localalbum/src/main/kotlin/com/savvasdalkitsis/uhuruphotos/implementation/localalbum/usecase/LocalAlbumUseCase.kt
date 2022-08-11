@@ -45,9 +45,8 @@ internal class LocalAlbumUseCase @Inject constructor(
                 }
             }
 
-    override suspend fun refreshLocalAlbum(albumId: Int) {
+    override suspend fun refreshLocalAlbum(albumId: Int) =
         localMediaUseCase.refreshLocalMediaFolder(albumId)
-    }
 
     override fun getLocalAlbumFeedDisplay(albumId: Int) : FeedDisplays =
         userAlbumFeedDisplay(albumId).get()

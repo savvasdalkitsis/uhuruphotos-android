@@ -16,7 +16,6 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.implementation.useralbums.seam
 
 import com.savvasdalkitsis.uhuruphotos.api.coroutines.safelyOnStartIgnoring
-import com.savvasdalkitsis.uhuruphotos.api.log.log
 import com.savvasdalkitsis.uhuruphotos.api.seam.ActionHandler
 import com.savvasdalkitsis.uhuruphotos.api.useralbums.usecase.UserAlbumsUseCase
 import com.savvasdalkitsis.uhuruphotos.implementation.useralbums.seam.UserAlbumsAction.ChangeSorting
@@ -34,7 +33,6 @@ import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.merge
-import java.io.IOException
 import javax.inject.Inject
 
 class UserAlbumsActionHandler @Inject constructor(
@@ -74,17 +72,13 @@ class UserAlbumsActionHandler @Inject constructor(
 
     private suspend fun refreshAlbums(effect: suspend (UserAlbumsEffect) -> Unit) {
         loading.emit(true)
-        try {
-            userAlbumsUseCase.refreshUserAlbums()
-        } catch (e: IOException) {
-            log(e)
+        val result = userAlbumsUseCase.refreshUserAlbums()
+        if (result.isFailure) {
             effect(ErrorLoadingAlbums)
-        } finally {
-            // delaying to give ui time to receive the new albums before
-            // dismissing the loading bar since no albums logic relies on that
-            delay(500)
-            loading.emit(false)
         }
+        // delaying to give ui time to receive the new albums before
+        // dismissing the loading bar since no albums logic relies on that
+        delay(500)
+        loading.emit(false)
     }
-
 }

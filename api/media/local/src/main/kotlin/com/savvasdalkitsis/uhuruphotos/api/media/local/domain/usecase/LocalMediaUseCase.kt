@@ -33,9 +33,9 @@ interface LocalMediaUseCase {
 
     fun observeLocalMediaFolder(folderId: Int): Flow<LocalFolder>
 
-    suspend fun refreshLocalMediaItem(id: Long, isVideo: Boolean)
+    suspend fun refreshLocalMediaItem(id: Long, isVideo: Boolean): Result<Unit>
 
-    suspend fun refreshLocalMediaFolder(folderId: Int)
+    suspend fun refreshLocalMediaFolder(folderId: Int): Result<Unit>
 
     suspend fun refreshAll(
         onProgressChange: suspend (Int) -> Unit,

@@ -24,5 +24,6 @@ dependencies {
             libs.accompanist.swiperefresh,
             libs.androidx.compose.foundation,
             libs.androidx.compose.material,
+            libs.retrofit.core,
     )
 }

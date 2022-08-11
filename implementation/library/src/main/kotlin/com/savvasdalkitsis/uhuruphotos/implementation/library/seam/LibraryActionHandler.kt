@@ -17,7 +17,6 @@ package com.savvasdalkitsis.uhuruphotos.implementation.library.seam
 
 import com.savvasdalkitsis.uhuruphotos.api.autoalbums.usecase.AutoAlbumsUseCase
 import com.savvasdalkitsis.uhuruphotos.api.coroutines.safelyOnStartIgnoring
-import com.savvasdalkitsis.uhuruphotos.api.log.log
 import com.savvasdalkitsis.uhuruphotos.api.media.local.domain.model.LocalMediaFolder
 import com.savvasdalkitsis.uhuruphotos.api.media.local.domain.usecase.LocalMediaUseCase
 import com.savvasdalkitsis.uhuruphotos.api.media.local.worker.LocalMediaWorkScheduler
@@ -60,7 +59,6 @@ import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.mapNotNull
 import kotlinx.coroutines.flow.merge
-import java.io.IOException
 import javax.inject.Inject
 
 class LibraryActionHandler @Inject constructor(
@@ -182,19 +180,19 @@ class LibraryActionHandler @Inject constructor(
         localMediaWorkScheduler.scheduleLocalMediaSyncNowIfNotRunning()
     }
 
-    private suspend fun refresh(effect: suspend (LibraryEffect) -> Unit, refresh: suspend () -> Unit) {
+    private suspend fun refresh(
+        effect: suspend (LibraryEffect) -> Unit,
+        refresh: suspend () -> Result<Unit>,
+    ) {
         loading.emit(true)
-        try {
-            refresh()
-        } catch (e: IOException) {
-            log(e)
+        val result = refresh()
+        if (result.isFailure) {
             effect(ErrorLoadingAlbums)
-        } finally {
-            // delaying to give ui time to receive the new albums before
-            // dismissing the loading bar since no albums logic relies on that
-            delay(500)
-            loading.emit(false)
         }
+        // delaying to give ui time to receive the new albums before
+        // dismissing the loading bar since no albums logic relies on that
+        delay(500)
+        loading.emit(false)
     }
 
     private fun <T> Flow<List<T>>.mapToCover(cover: (T) -> MediaItem?): Flow<MediaGrid> =

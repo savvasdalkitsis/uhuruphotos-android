@@ -21,7 +21,6 @@ import com.savvasdalkitsis.uhuruphotos.api.db.domain.model.media.DbRemoteMediaIt
 import com.savvasdalkitsis.uhuruphotos.api.db.domain.model.media.DbRemoteMediaItemSummary
 import com.savvasdalkitsis.uhuruphotos.api.db.domain.model.media.latLng
 import com.savvasdalkitsis.uhuruphotos.api.db.extensions.isVideo
-import com.savvasdalkitsis.uhuruphotos.api.log.runCatchingWithLog
 import com.savvasdalkitsis.uhuruphotos.api.map.model.LatLon
 import com.savvasdalkitsis.uhuruphotos.api.map.model.toLatLon
 import com.savvasdalkitsis.uhuruphotos.api.media.local.domain.model.LocalFolder
@@ -234,26 +233,23 @@ class MediaUseCase @Inject constructor(
         }
 
     override suspend fun refreshDetailsNowIfMissing(id: MediaId<*>, isVideo: Boolean) : Result<Unit> =
-        runCatchingWithLog {
-            when (id) {
-                is MediaId.Remote -> remoteMediaUseCase.refreshDetailsNowIfMissing(id.value)
-                is MediaId.Local -> if (localMediaUseCase.getLocalMediaItem(id.value) == null) {
-                    localMediaUseCase.refreshLocalMediaItem(id.value, isVideo)
-                }
+        when (id) {
+            is MediaId.Remote -> remoteMediaUseCase.refreshDetailsNowIfMissing(id.value)
+            is MediaId.Local -> if (localMediaUseCase.getLocalMediaItem(id.value) == null) {
+                localMediaUseCase.refreshLocalMediaItem(id.value, isVideo)
+            } else {
+                Result.success(Unit)
             }
         }
 
     override suspend fun refreshDetailsNow(id: MediaId<*>, isVideo: Boolean) : Result<Unit> =
-        runCatchingWithLog {
-            when (id) {
-                is MediaId.Remote -> remoteMediaUseCase.refreshDetailsNow(id.value)
-                is MediaId.Local -> localMediaUseCase.refreshLocalMediaItem(id.value, isVideo)
-            }
+        when (id) {
+            is MediaId.Remote -> remoteMediaUseCase.refreshDetailsNow(id.value)
+            is MediaId.Local -> localMediaUseCase.refreshLocalMediaItem(id.value, isVideo)
         }
 
-    override suspend fun refreshFavouriteMedia() {
+    override suspend fun refreshFavouriteMedia() =
         remoteMediaUseCase.refreshFavouriteMedia()
-    }
 
     override fun downloadOriginal(id: MediaId<*>, video: Boolean) {
         if (id is MediaId.Remote) {
@@ -267,9 +263,8 @@ class MediaUseCase @Inject constructor(
             else -> flowOf(WorkInfo.State.SUCCEEDED)
         }
 
-    override suspend fun refreshHiddenMedia() {
+    override suspend fun refreshHiddenMedia() =
         remoteMediaUseCase.refreshHiddenMedia()
-    }
 
     override fun trashMediaItem(id: MediaId<*>) {
         if (id is MediaId.Remote) {

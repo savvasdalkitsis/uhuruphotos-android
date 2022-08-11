@@ -26,6 +26,7 @@ import com.savvasdalkitsis.uhuruphotos.api.db.extensions.awaitSingleOrNull
 import com.savvasdalkitsis.uhuruphotos.api.db.media.LocalMediaItemDetails
 import com.savvasdalkitsis.uhuruphotos.api.db.media.LocalMediaItemDetailsQueries
 import com.savvasdalkitsis.uhuruphotos.api.log.log
+import com.savvasdalkitsis.uhuruphotos.api.log.runCatchingWithLog
 import com.savvasdalkitsis.uhuruphotos.implementation.media.local.module.LocalMediaModule
 import com.savvasdalkitsis.uhuruphotos.implementation.media.local.service.LocalMediaService
 import com.savvasdalkitsis.uhuruphotos.implementation.media.local.service.model.LocalMediaStoreServiceItem
@@ -170,13 +171,15 @@ class LocalMediaRepository @Inject constructor(
         localMediaItemDetailsQueries.clearAll()
     }
 
-    suspend fun refreshItem(id: Long, video: Boolean) = when {
-        video -> localMediaService.getVideosForId(id)
-        else -> localMediaService.getPhotosForId(id)
-    }.processAndInsertItems(
-        removeMissingItems = false,
-        forceProcess = true,
-    )
+    suspend fun refreshItem(id: Long, video: Boolean) = runCatchingWithLog {
+        when {
+            video -> localMediaService.getVideosForId(id)
+            else -> localMediaService.getPhotosForId(id)
+        }.processAndInsertItems(
+            removeMissingItems = false,
+            forceProcess = true,
+        )
+    }
 
     suspend fun getItem(id: Long): LocalMediaItemDetails? =
         localMediaItemDetailsQueries.getItem(id).awaitSingleOrNull()

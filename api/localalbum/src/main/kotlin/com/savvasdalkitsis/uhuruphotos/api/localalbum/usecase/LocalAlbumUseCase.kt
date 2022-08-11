@@ -23,7 +23,7 @@ import kotlinx.coroutines.flow.Flow
 interface LocalAlbumUseCase {
 
     fun observeLocalAlbum(albumId: Int): Flow<Pair<LocalMediaFolder, List<Album>>>
-    suspend fun refreshLocalAlbum(albumId: Int)
+    suspend fun refreshLocalAlbum(albumId: Int): Result<Unit>
     fun getLocalAlbumFeedDisplay(albumId: Int): FeedDisplays
     suspend fun setLocalAlbumFeedDisplay(albumId: Int, feedDisplay: FeedDisplays)
     suspend fun getLocalAlbum(albumId: Int): List<Album>

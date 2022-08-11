@@ -57,9 +57,8 @@ class UserAlbumsUseCase @Inject constructor(
             albums.toUserAlbums(sorting)
         }
 
-    override suspend fun refreshUserAlbums() {
+    override suspend fun refreshUserAlbums() =
         albumsRepository.refreshUserAlbums()
-    }
 
     override suspend fun getUserAlbums(): List<UserAlbum> =
         albumsRepository.getUserAlbums().toUserAlbums(userAlbumsSorting.get())

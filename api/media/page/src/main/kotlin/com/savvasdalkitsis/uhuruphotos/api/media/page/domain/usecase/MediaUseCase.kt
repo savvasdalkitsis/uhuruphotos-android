@@ -54,9 +54,9 @@ interface MediaUseCase {
 
     suspend fun refreshDetailsNow(id: MediaId<*>, isVideo: Boolean): Result<Unit>
 
-    suspend fun refreshFavouriteMedia()
+    suspend fun refreshFavouriteMedia(): Result<Unit>
 
-    suspend fun refreshHiddenMedia()
+    suspend fun refreshHiddenMedia(): Result<Unit>
 
     fun trashMediaItem(id: MediaId<*>)
 
