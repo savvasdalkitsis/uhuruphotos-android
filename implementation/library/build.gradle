@@ -20,7 +20,7 @@ dependencies {
     implementation project(":api:db")
     implementation project(":api:album:favourites")
     implementation project(":api:feed")
-    implementation project(":api:hidden")
+    implementation project(":api:album:hidden")
     implementation project(":api:home")
     implementation project(":api:homenavigation")
     implementation project(":api:icons")
