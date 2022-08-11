@@ -11,7 +11,7 @@ dependencies {
     implementation project(":implementation:auth")
     implementation project(":implementation:autoalbums")
     implementation project(":implementation:biometrics")
-    implementation project(":implementation:favourites")
+    implementation project(":implementation:album:favourites")
     implementation project(":implementation:feedpage")
     implementation project(":implementation:heatmap")
     implementation project(":implementation:hidden")
