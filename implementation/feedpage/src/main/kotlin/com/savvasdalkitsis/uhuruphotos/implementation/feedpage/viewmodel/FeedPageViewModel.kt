@@ -16,10 +16,10 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.implementation.feedpage.viewmodel
 
 import androidx.lifecycle.ViewModel
-import com.savvasdalkitsis.uhuruphotos.api.accountoverview.seam.AccountOverviewAction
-import com.savvasdalkitsis.uhuruphotos.api.accountoverview.seam.AccountOverviewActionHandler
-import com.savvasdalkitsis.uhuruphotos.api.accountoverview.seam.AccountOverviewEffect
-import com.savvasdalkitsis.uhuruphotos.api.accountoverview.view.state.AccountOverviewState
+import com.savvasdalkitsis.uhuruphotos.feature.account.view.api.seam.AccountOverviewAction
+import com.savvasdalkitsis.uhuruphotos.feature.account.view.api.seam.AccountOverviewActionHandler
+import com.savvasdalkitsis.uhuruphotos.feature.account.view.api.seam.AccountOverviewEffect
+import com.savvasdalkitsis.uhuruphotos.feature.account.view.api.ui.state.AccountOverviewState
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.CompositeActionHandler
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.Either
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.Mutation

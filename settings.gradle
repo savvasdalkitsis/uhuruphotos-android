@@ -29,10 +29,9 @@ dependencyResolutionManagement {
 }
 rootProject.name = "uhuruphotos-android"
 include ':app'
-include ':api:accountoverview'
 include ':feature:account:domain:api'
 include ':feature:account:domain:implementation'
-include ':feature:account:ui:api'
+include ':feature:account:view:api'
 include ':foundation:activity:api'
 include ':foundation:biometrics:api'
 include ':foundation:biometrics:implementation'

@@ -9,7 +9,7 @@ android {
 }
 
 dependencies {
-    implementation project(':api:accountoverview')
+    implementation project(':feature:account:view:api')
     implementation project(":api:gallery:page:album:auto")
     implementation project(":api:gallery:page:album:user")
     implementation project(':api:albums')
