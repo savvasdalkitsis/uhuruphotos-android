@@ -2,7 +2,8 @@ This page demonstrates the domain model of the app
 
 (still WIP)
 
-```mermaidgraph TD;
+```mermaidgraph 
+graph TD;
     Gallery-->Feed;
     Feed-->FeedGroup;
     FeedGroup-->MediaItem;
