@@ -33,13 +33,13 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import com.savvasdalkitsis.uhuruphotos.api.icons.R.drawable.ic_person
-import com.savvasdalkitsis.uhuruphotos.api.image.view.Image
-import com.savvasdalkitsis.uhuruphotos.api.ui.theme.CustomColors
 import com.savvasdalkitsis.uhuruphotos.api.userbadge.view.state.SyncState.BAD
 import com.savvasdalkitsis.uhuruphotos.api.userbadge.view.state.SyncState.GOOD
 import com.savvasdalkitsis.uhuruphotos.api.userbadge.view.state.SyncState.IN_PROGRESS
 import com.savvasdalkitsis.uhuruphotos.api.userbadge.view.state.UserInformationState
+import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.R.drawable.ic_person
+import com.savvasdalkitsis.uhuruphotos.foundation.image.api.view.Image
+import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.theme.CustomColors
 
 @Composable
 fun UserBadge(

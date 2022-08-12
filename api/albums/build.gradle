@@ -14,10 +14,10 @@ dependencies {
     api project(':api:media:remote')
     api project(':api:people')
     api project(":api:db")
-    api project(':api:group')
-    api project(':api:icons')
-    api project(':api:strings')
-    api project(':api:ui')
+    api project(':foundation:group:api')
+    api project(':foundation:icons:api')
+    api project(':foundation:strings:api')
+    api project(':foundation:ui:api')
     implementation(
             libs.accompanist.swiperefresh,
             libs.androidx.compose.foundation,

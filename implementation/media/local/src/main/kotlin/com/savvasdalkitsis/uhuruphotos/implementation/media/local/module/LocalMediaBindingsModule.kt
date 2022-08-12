@@ -15,7 +15,7 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.implementation.media.local.module
 
-import com.savvasdalkitsis.uhuruphotos.api.initializer.ApplicationCreated
+import com.savvasdalkitsis.uhuruphotos.foundation.initializer.api.ApplicationCreated
 import com.savvasdalkitsis.uhuruphotos.implementation.media.local.domain.usecase.LocalMediaUseCase
 import com.savvasdalkitsis.uhuruphotos.implementation.media.local.initializer.LocalMediaInitializer
 import com.savvasdalkitsis.uhuruphotos.implementation.media.local.worker.LocalMediaWorkScheduler

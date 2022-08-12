@@ -10,19 +10,19 @@ android {
 
 dependencies {
     api project(":api:db")
-    api project(":api:map")
+    api project(":foundation:map:api")
     api project(":api:media:local")
     api(
             libs.androidx.compose.navigation,
             libs.androidx.work,
             libs.kotlinx.coroutines,
     )
-    implementation project(":api:compose")
-    implementation project(":api:icons")
-    implementation project(":api:image")
+    implementation project(":foundation:compose:api")
+    implementation project(":foundation:icons:api")
+    implementation project(":foundation:image:api")
     implementation project(":api:people")
-    implementation project(":api:strings")
-    implementation project(":api:ui")
+    implementation project(":foundation:strings:api")
+    implementation project(":foundation:ui:api")
     implementation(
             libs.androidx.compose.material,
             libs.moshi,

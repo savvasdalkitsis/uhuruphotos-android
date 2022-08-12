@@ -17,9 +17,9 @@ dependencies {
             libs.androidx.compose.navigation,
     )
     implementation project(":api:homenavigation")
-    implementation project(":api:icons")
-    implementation project(":api:strings")
-    implementation project(":api:ui")
+    implementation project(":foundation:icons:api")
+    implementation project(":foundation:strings:api")
+    implementation project(":foundation:ui:api")
     implementation(
             libs.androidx.compose.material,
             libs.androidx.compose.material.windowsize,

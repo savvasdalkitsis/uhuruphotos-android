@@ -16,7 +16,7 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.implementation.library.seam
 
 import com.savvasdalkitsis.uhuruphotos.api.media.page.domain.model.MediaGrid
-import com.savvasdalkitsis.uhuruphotos.api.seam.Mutation
+import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.Mutation
 import com.savvasdalkitsis.uhuruphotos.implementation.library.view.state.LibraryLocalMedia
 import com.savvasdalkitsis.uhuruphotos.implementation.library.view.state.LibraryState
 

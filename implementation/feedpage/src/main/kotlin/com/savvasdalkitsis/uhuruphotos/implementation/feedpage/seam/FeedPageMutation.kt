@@ -18,7 +18,7 @@ package com.savvasdalkitsis.uhuruphotos.implementation.feedpage.seam
 import com.savvasdalkitsis.uhuruphotos.api.albums.model.Album
 import com.savvasdalkitsis.uhuruphotos.api.gallery.view.state.GalleryState
 import com.savvasdalkitsis.uhuruphotos.api.gallery.view.state.PredefinedGalleryDisplay
-import com.savvasdalkitsis.uhuruphotos.api.seam.Mutation
+import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.Mutation
 import com.savvasdalkitsis.uhuruphotos.implementation.feedpage.view.state.FeedPageState
 
 internal sealed class FeedPageMutation(

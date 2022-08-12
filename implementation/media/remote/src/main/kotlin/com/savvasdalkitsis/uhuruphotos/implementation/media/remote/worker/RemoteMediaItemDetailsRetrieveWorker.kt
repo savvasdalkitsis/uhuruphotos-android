@@ -19,9 +19,9 @@ import android.content.Context
 import androidx.hilt.work.HiltWorker
 import androidx.work.CoroutineWorker
 import androidx.work.WorkerParameters
-import com.savvasdalkitsis.uhuruphotos.api.notification.ForegroundInfoBuilder
-import com.savvasdalkitsis.uhuruphotos.api.notification.NotificationChannels.JOBS_CHANNEL_ID
-import com.savvasdalkitsis.uhuruphotos.api.strings.R.string
+import com.savvasdalkitsis.uhuruphotos.foundation.notification.api.ForegroundInfoBuilder
+import com.savvasdalkitsis.uhuruphotos.foundation.notification.api.NotificationChannels.JOBS_CHANNEL_ID
+import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
 import com.savvasdalkitsis.uhuruphotos.implementation.media.remote.repository.RemoteMediaRepository
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedInject

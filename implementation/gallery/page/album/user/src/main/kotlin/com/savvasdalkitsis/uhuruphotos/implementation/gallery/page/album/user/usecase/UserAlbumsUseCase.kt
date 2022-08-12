@@ -20,7 +20,7 @@ import com.savvasdalkitsis.uhuruphotos.api.albums.repository.AlbumsRepository
 import com.savvasdalkitsis.uhuruphotos.api.db.albums.GetUserAlbum
 import com.savvasdalkitsis.uhuruphotos.api.gallery.view.state.GalleryDisplay
 import com.savvasdalkitsis.uhuruphotos.api.gallery.view.state.PredefinedGalleryDisplay
-import com.savvasdalkitsis.uhuruphotos.api.group.model.Group
+import com.savvasdalkitsis.uhuruphotos.foundation.group.api.model.Group
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 

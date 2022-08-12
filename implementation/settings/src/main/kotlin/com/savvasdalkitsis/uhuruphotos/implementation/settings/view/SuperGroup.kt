@@ -35,8 +35,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import com.savvasdalkitsis.uhuruphotos.api.icons.R.drawable
-import com.savvasdalkitsis.uhuruphotos.api.ui.view.StaggeredGridScope
+import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.R.drawable
+import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.view.StaggeredGridScope
 import com.savvasdalkitsis.uhuruphotos.implementation.settings.view.controller.SettingsGroupState
 
 @Composable

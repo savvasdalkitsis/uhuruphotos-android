@@ -22,9 +22,9 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
-import com.savvasdalkitsis.uhuruphotos.api.icons.R.drawable
-import com.savvasdalkitsis.uhuruphotos.api.strings.R.string
-import com.savvasdalkitsis.uhuruphotos.api.ui.view.ActionIconWithText
+import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.R.drawable
+import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
+import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.view.ActionIconWithText
 import com.savvasdalkitsis.uhuruphotos.implementation.media.page.seam.MediaItemPageAction.AskForMediaItemRestoration
 import com.savvasdalkitsis.uhuruphotos.implementation.media.page.seam.MediaItemPageAction.AskForMediaItemTrashing
 import com.savvasdalkitsis.uhuruphotos.implementation.media.page.seam.MediaItemPageAction.ShareMediaItem

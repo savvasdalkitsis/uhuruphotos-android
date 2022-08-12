@@ -22,12 +22,13 @@ import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass.Companion
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import com.savvasdalkitsis.uhuruphotos.api.ui.view.BackNavButton
-import com.savvasdalkitsis.uhuruphotos.api.ui.view.CommonScaffold
-import com.savvasdalkitsis.uhuruphotos.api.ui.view.FullProgressBar
-import com.savvasdalkitsis.uhuruphotos.api.ui.view.SheetSize
-import com.savvasdalkitsis.uhuruphotos.api.ui.view.adjustingSheetSize
-import com.savvasdalkitsis.uhuruphotos.api.ui.window.LocalWindowSize
+import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.view.BackNavButton
+import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.view.CommonScaffold
+import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.view.FullProgressBar
+import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.view.SheetSize
+import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.view.adjustingSheetSize
+import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.window.LocalWindowSize
+import com.savvasdalkitsis.uhuruphotos.implementation.media.page.seam.MediaItemPageAction
 import com.savvasdalkitsis.uhuruphotos.implementation.media.page.view.state.MediaItemPageState
 
 @Composable
@@ -58,7 +59,7 @@ internal fun MediaItemPageScaffold(
         topBarDisplayed = state.showUI,
         bottomBarDisplayed = state.showUI,
         navigationIcon = {
-            BackNavButton { action(com.savvasdalkitsis.uhuruphotos.implementation.media.page.seam.MediaItemPageAction.NavigateBack) }
+            BackNavButton { action(MediaItemPageAction.NavigateBack) }
         },
     ) { contentPadding ->
         when {

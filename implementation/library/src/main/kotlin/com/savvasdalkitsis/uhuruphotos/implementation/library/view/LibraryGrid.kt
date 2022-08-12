@@ -49,12 +49,12 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
-import com.savvasdalkitsis.uhuruphotos.api.icons.R.drawable
+import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.R.drawable
 import com.savvasdalkitsis.uhuruphotos.api.media.page.domain.model.MediaGrid
 import com.savvasdalkitsis.uhuruphotos.api.media.page.view.MediaGridThumbnail
-import com.savvasdalkitsis.uhuruphotos.api.strings.R.string
-import com.savvasdalkitsis.uhuruphotos.api.ui.theme.CustomColors
-import com.savvasdalkitsis.uhuruphotos.api.ui.view.SectionHeader
+import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
+import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.theme.CustomColors
+import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.view.SectionHeader
 import com.savvasdalkitsis.uhuruphotos.implementation.library.seam.LibraryAction
 import com.savvasdalkitsis.uhuruphotos.implementation.library.seam.LibraryAction.AutoAlbumsSelected
 import com.savvasdalkitsis.uhuruphotos.implementation.library.seam.LibraryAction.FavouritePhotosSelected

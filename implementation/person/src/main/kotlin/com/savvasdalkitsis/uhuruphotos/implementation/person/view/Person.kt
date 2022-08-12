@@ -29,10 +29,10 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
 import com.savvasdalkitsis.uhuruphotos.api.gallery.view.Gallery
 import com.savvasdalkitsis.uhuruphotos.api.gallery.view.GalleryDisplayActionButton
-import com.savvasdalkitsis.uhuruphotos.api.image.view.Image
-import com.savvasdalkitsis.uhuruphotos.api.ui.view.BackNavButton
-import com.savvasdalkitsis.uhuruphotos.api.ui.view.CommonScaffold
-import com.savvasdalkitsis.uhuruphotos.api.ui.view.FullProgressBar
+import com.savvasdalkitsis.uhuruphotos.foundation.image.api.view.Image
+import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.view.BackNavButton
+import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.view.CommonScaffold
+import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.view.FullProgressBar
 import com.savvasdalkitsis.uhuruphotos.implementation.person.seam.PersonAction
 import com.savvasdalkitsis.uhuruphotos.implementation.person.seam.PersonAction.ChangeDisplay
 import com.savvasdalkitsis.uhuruphotos.implementation.person.seam.PersonAction.NavigateBack

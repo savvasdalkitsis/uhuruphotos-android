@@ -37,8 +37,8 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.savvasdalkitsis.uhuruphotos.api.gallery.view.state.GalleryDisplay
 import com.savvasdalkitsis.uhuruphotos.api.gallery.view.state.PredefinedGalleryDisplay
-import com.savvasdalkitsis.uhuruphotos.api.strings.R.string
-import com.savvasdalkitsis.uhuruphotos.api.ui.view.ActionIcon
+import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
+import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.view.ActionIcon
 
 @Composable
 fun GalleryDisplayActionButton(

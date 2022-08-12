@@ -16,8 +16,8 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.api.accountoverview.seam
 
 import com.savvasdalkitsis.uhuruphotos.api.accountoverview.view.state.AccountOverviewState
-import com.savvasdalkitsis.uhuruphotos.api.seam.Mutation
 import com.savvasdalkitsis.uhuruphotos.api.userbadge.view.state.UserInformationState
+import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.Mutation
 
 sealed class AccountOverviewMutation(
     mutation: Mutation<AccountOverviewState>

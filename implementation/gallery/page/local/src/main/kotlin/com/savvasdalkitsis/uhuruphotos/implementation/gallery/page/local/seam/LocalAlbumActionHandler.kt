@@ -17,7 +17,7 @@ package com.savvasdalkitsis.uhuruphotos.implementation.gallery.page.local.seam
 
 import com.savvasdalkitsis.uhuruphotos.api.media.local.domain.model.LocalPermissions.RequiresPermissions
 import com.savvasdalkitsis.uhuruphotos.api.media.local.domain.usecase.LocalMediaUseCase
-import com.savvasdalkitsis.uhuruphotos.api.seam.ActionHandler
+import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.ActionHandler
 import com.savvasdalkitsis.uhuruphotos.implementation.gallery.page.local.seam.LocalAlbumMutation.AskForPermissions
 import com.savvasdalkitsis.uhuruphotos.implementation.gallery.page.local.seam.LocalAlbumMutation.PermissionsGranted
 import com.savvasdalkitsis.uhuruphotos.implementation.gallery.page.local.view.state.LocalAlbumState

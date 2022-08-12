@@ -19,9 +19,9 @@ import com.google.android.exoplayer2.upstream.cache.CacheDataSource
 import com.savvasdalkitsis.uhuruphotos.api.account.usecase.AccountUseCase
 import com.savvasdalkitsis.uhuruphotos.api.db.Database
 import com.savvasdalkitsis.uhuruphotos.api.db.extensions.async
-import com.savvasdalkitsis.uhuruphotos.api.image.cache.ImageCacheController
-import com.savvasdalkitsis.uhuruphotos.api.video.evictAll
-import com.savvasdalkitsis.uhuruphotos.api.worker.WorkScheduler
+import com.savvasdalkitsis.uhuruphotos.foundation.image.api.cache.ImageCacheController
+import com.savvasdalkitsis.uhuruphotos.foundation.video.api.evictAll
+import com.savvasdalkitsis.uhuruphotos.foundation.worker.api.WorkScheduler
 import javax.inject.Inject
 
 class AccountUseCase @Inject constructor(

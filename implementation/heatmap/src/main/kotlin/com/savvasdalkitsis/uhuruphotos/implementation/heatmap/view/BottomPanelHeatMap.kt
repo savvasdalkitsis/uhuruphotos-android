@@ -30,11 +30,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.max
 import com.google.accompanist.permissions.PermissionState
-import com.savvasdalkitsis.uhuruphotos.api.map.view.MapViewState
-import com.savvasdalkitsis.uhuruphotos.api.ui.insets.insetsTop
-import com.savvasdalkitsis.uhuruphotos.api.ui.view.SheetHandle
-import com.savvasdalkitsis.uhuruphotos.api.ui.view.SheetSize
-import com.savvasdalkitsis.uhuruphotos.api.ui.view.adjustingSheetSize
+import com.savvasdalkitsis.uhuruphotos.foundation.map.api.view.MapViewState
+import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.insets.insetsTop
+import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.view.SheetHandle
+import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.view.SheetSize
+import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.view.adjustingSheetSize
 import com.savvasdalkitsis.uhuruphotos.implementation.heatmap.seam.HeatMapAction
 import com.savvasdalkitsis.uhuruphotos.implementation.heatmap.view.state.HeatMapState
 

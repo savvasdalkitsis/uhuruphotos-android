@@ -17,14 +17,14 @@ package com.savvasdalkitsis.uhuruphotos.implementation.albums.usecase
 
 import app.cash.turbine.test
 import com.savvasdalkitsis.uhuruphotos.api.albums.model.Album
-import com.savvasdalkitsis.uhuruphotos.api.date.DateDisplayer
 import com.savvasdalkitsis.uhuruphotos.api.db.albums.GetAlbums
 import com.savvasdalkitsis.uhuruphotos.api.db.albums.GetPersonAlbums
 import com.savvasdalkitsis.uhuruphotos.api.db.user.User
-import com.savvasdalkitsis.uhuruphotos.api.group.model.Group
 import com.savvasdalkitsis.uhuruphotos.api.media.page.domain.model.MediaId
 import com.savvasdalkitsis.uhuruphotos.api.media.remote.domain.usecase.RemoteMediaUseCase
 import com.savvasdalkitsis.uhuruphotos.api.user.usecase.UserUseCase
+import com.savvasdalkitsis.uhuruphotos.foundation.date.api.DateDisplayer
+import com.savvasdalkitsis.uhuruphotos.foundation.group.api.model.Group
 import com.savvasdalkitsis.uhuruphotos.implementation.albums.TestAlbums.album
 import com.savvasdalkitsis.uhuruphotos.implementation.albums.TestGetAlbums.getAlbum
 import com.savvasdalkitsis.uhuruphotos.implementation.albums.TestGetAlbums.getPersonAlbum

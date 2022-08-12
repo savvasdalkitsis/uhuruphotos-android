@@ -31,5 +31,5 @@ internal abstract class NetworkBindingsModule {
 
     @Binds
     abstract fun okHttpBuilder(okHttpBuilder: OkHttpBuilder):
-            com.savvasdalkitsis.uhuruphotos.api.network.OkHttpBuilder
+            com.savvasdalkitsis.uhuruphotos.foundation.network.api.OkHttpBuilder
 }

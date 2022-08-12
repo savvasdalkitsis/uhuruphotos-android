@@ -15,7 +15,7 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.implementation.server.seam
 
-import com.savvasdalkitsis.uhuruphotos.api.seam.Mutation
+import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.Mutation
 import com.savvasdalkitsis.uhuruphotos.implementation.server.view.ServerState
 import com.savvasdalkitsis.uhuruphotos.implementation.server.view.ServerState.Loading
 import com.savvasdalkitsis.uhuruphotos.implementation.server.view.ServerState.ServerUrl

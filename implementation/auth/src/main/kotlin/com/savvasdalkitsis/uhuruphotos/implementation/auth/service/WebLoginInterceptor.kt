@@ -17,14 +17,13 @@ package com.savvasdalkitsis.uhuruphotos.implementation.auth.service
 
 import android.webkit.CookieManager
 import com.savvasdalkitsis.uhuruphotos.api.auth.usecase.ServerUseCase
-import com.savvasdalkitsis.uhuruphotos.api.navigation.Navigator
+import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.Navigator
 import com.savvasdalkitsis.uhuruphotos.implementation.auth.weblogin.weblogin.navigation.WebLoginNavigationTarget
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import okhttp3.Interceptor
 import okhttp3.Response
-import okhttp3.internal.commonIsRedirect
 import javax.inject.Inject
 
 class WebLoginInterceptor @Inject constructor(

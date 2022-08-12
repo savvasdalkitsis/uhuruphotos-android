@@ -23,12 +23,12 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.core.view.WindowCompat
 import androidx.fragment.app.FragmentActivity
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
-import com.savvasdalkitsis.uhuruphotos.activity.CurrentActivityHolder
-import com.savvasdalkitsis.uhuruphotos.api.log.Log
 import com.savvasdalkitsis.uhuruphotos.api.settings.usecase.SettingsUseCase
-import com.savvasdalkitsis.uhuruphotos.api.ui.window.LocalSystemUiController
-import com.savvasdalkitsis.uhuruphotos.api.ui.window.LocalWindowSize
 import com.savvasdalkitsis.uhuruphotos.app.navigation.AppNavigator
+import com.savvasdalkitsis.uhuruphotos.foundation.activity.api.CurrentActivityHolder
+import com.savvasdalkitsis.uhuruphotos.foundation.log.api.Log
+import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.window.LocalSystemUiController
+import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.window.LocalWindowSize
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 

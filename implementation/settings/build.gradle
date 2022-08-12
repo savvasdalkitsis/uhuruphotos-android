@@ -11,18 +11,18 @@ android {
 dependencies {
 
     implementation project(':api:albums')
-    implementation project(":api:biometrics")
-    implementation project(":api:navigation")
-    implementation project(":api:icons")
-    implementation project(":api:initializer")
-    implementation project(":api:log")
+    implementation project(":foundation:biometrics:api")
+    implementation project(":foundation:navigation:api")
+    implementation project(":foundation:icons:api")
+    implementation project(":foundation:initializer:api")
+    implementation project(":foundation:log:api")
     implementation project(':api:search')
     implementation project(":api:settings")
-    implementation project(":api:strings")
-    implementation project(":api:toaster")
-    implementation project(":api:ui")
+    implementation project(":foundation:strings:api")
+    implementation project(":foundation:toaster:api")
+    implementation project(":foundation:ui:api")
     implementation project(':api:userbadge')
-    implementation project(':api:video')
+    implementation project(':foundation:video:api')
     implementation(
             libs.bundles.androidx.compose.animation,
             libs.androidx.compose.foundation,

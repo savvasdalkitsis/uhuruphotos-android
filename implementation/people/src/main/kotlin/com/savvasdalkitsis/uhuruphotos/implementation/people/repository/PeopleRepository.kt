@@ -19,7 +19,7 @@ import com.savvasdalkitsis.uhuruphotos.api.db.extensions.async
 import com.savvasdalkitsis.uhuruphotos.api.db.extensions.await
 import com.savvasdalkitsis.uhuruphotos.api.db.people.People
 import com.savvasdalkitsis.uhuruphotos.api.db.people.PeopleQueries
-import com.savvasdalkitsis.uhuruphotos.api.log.runCatchingWithLog
+import com.savvasdalkitsis.uhuruphotos.foundation.log.api.runCatchingWithLog
 import com.savvasdalkitsis.uhuruphotos.api.people.service.model.toPerson
 import com.savvasdalkitsis.uhuruphotos.implementation.people.service.PeopleService
 import com.squareup.sqldelight.runtime.coroutines.asFlow

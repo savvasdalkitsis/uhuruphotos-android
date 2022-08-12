@@ -16,8 +16,8 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.implementation.media.page.viewmodel
 
 import androidx.lifecycle.ViewModel
-import com.savvasdalkitsis.uhuruphotos.api.seam.Seam
-import com.savvasdalkitsis.uhuruphotos.api.seam.SeamViaHandler.Companion.handler
+import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.Seam
+import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.handler
 import com.savvasdalkitsis.uhuruphotos.implementation.media.page.seam.MediaItemPageAction
 import com.savvasdalkitsis.uhuruphotos.implementation.media.page.seam.MediaItemPageActionHandler
 import com.savvasdalkitsis.uhuruphotos.implementation.media.page.seam.MediaItemPageEffect
@@ -32,5 +32,5 @@ class MediaItemPageViewModel @Inject constructor(
 ) : ViewModel(),
     Seam<MediaItemPageState, MediaItemPageEffect, MediaItemPageAction, MediaItemPageMutation> by handler(
         handler,
-        MediaItemPageState(),
+        MediaItemPageState()
     )

@@ -50,12 +50,12 @@ import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import com.savvasdalkitsis.uhuruphotos.api.compose.toColor
-import com.savvasdalkitsis.uhuruphotos.api.icons.R.drawable
-import com.savvasdalkitsis.uhuruphotos.api.image.view.Image
 import com.savvasdalkitsis.uhuruphotos.api.media.page.domain.model.MediaItem
 import com.savvasdalkitsis.uhuruphotos.api.media.page.domain.model.MediaItemSelectionMode
-import com.savvasdalkitsis.uhuruphotos.api.ui.theme.CustomColors
+import com.savvasdalkitsis.uhuruphotos.foundation.compose.api.toColor
+import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.R.drawable
+import com.savvasdalkitsis.uhuruphotos.foundation.image.api.view.Image
+import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.theme.CustomColors
 
 @Composable
 fun MediaItemThumbnail(

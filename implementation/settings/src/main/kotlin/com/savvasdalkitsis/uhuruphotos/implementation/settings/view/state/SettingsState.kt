@@ -16,8 +16,8 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.implementation.settings.view.state
 
 import androidx.work.NetworkType
-import com.savvasdalkitsis.uhuruphotos.api.ui.theme.ThemeMode
 import com.savvasdalkitsis.uhuruphotos.api.userbadge.view.state.UserInformationState
+import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.theme.ThemeMode
 
 internal data class SettingsState(
     val isLoading: Boolean = true,

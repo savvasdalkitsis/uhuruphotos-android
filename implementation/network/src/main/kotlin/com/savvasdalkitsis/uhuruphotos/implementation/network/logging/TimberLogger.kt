@@ -15,7 +15,7 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.implementation.network.logging
 
-import com.savvasdalkitsis.uhuruphotos.api.log.log
+import com.savvasdalkitsis.uhuruphotos.foundation.log.api.log
 import okhttp3.logging.HttpLoggingInterceptor
 import javax.inject.Inject
 

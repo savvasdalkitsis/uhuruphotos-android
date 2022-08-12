@@ -20,7 +20,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import com.savvasdalkitsis.uhuruphotos.api.icons.R.drawable
+import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.R.drawable
 import com.savvasdalkitsis.uhuruphotos.implementation.media.page.view.state.SingleMediaItemState
 
 @Composable

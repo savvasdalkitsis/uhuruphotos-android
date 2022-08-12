@@ -24,7 +24,7 @@ import com.savvasdalkitsis.uhuruphotos.api.db.extensions.awaitSingleOrNull
 import com.savvasdalkitsis.uhuruphotos.api.db.media.RemoteMediaItemDetailsQueries
 import com.savvasdalkitsis.uhuruphotos.api.db.media.RemoteMediaItemSummaryQueries
 import com.savvasdalkitsis.uhuruphotos.api.db.media.RemoteMediaTrashQueries
-import com.savvasdalkitsis.uhuruphotos.api.log.runCatchingWithLog
+import com.savvasdalkitsis.uhuruphotos.foundation.log.api.runCatchingWithLog
 import com.savvasdalkitsis.uhuruphotos.api.media.remote.model.toDbModel
 import com.savvasdalkitsis.uhuruphotos.implementation.media.remote.service.RemoteMediaService
 import com.savvasdalkitsis.uhuruphotos.implementation.media.remote.worker.RemoteMediaItemWorkScheduler

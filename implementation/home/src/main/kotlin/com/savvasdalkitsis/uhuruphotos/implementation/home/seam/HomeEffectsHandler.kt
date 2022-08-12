@@ -16,8 +16,8 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.implementation.home.seam
 
 import com.savvasdalkitsis.uhuruphotos.api.homenavigation.HomeNavigationRoutes
-import com.savvasdalkitsis.uhuruphotos.api.navigation.Navigator
-import com.savvasdalkitsis.uhuruphotos.api.seam.EffectHandler
+import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.Navigator
+import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.EffectHandler
 import com.savvasdalkitsis.uhuruphotos.api.server.navigation.ServerNavigationTarget
 import com.savvasdalkitsis.uhuruphotos.implementation.home.seam.HomeEffect.LaunchAuthentication
 import com.savvasdalkitsis.uhuruphotos.implementation.home.seam.HomeEffect.LoadFeed

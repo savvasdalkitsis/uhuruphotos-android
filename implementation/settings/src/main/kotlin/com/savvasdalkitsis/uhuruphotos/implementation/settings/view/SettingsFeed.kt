@@ -21,12 +21,12 @@ import androidx.compose.material.Divider
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.pluralStringResource
 import androidx.compose.ui.res.stringResource
-import com.savvasdalkitsis.uhuruphotos.api.icons.R.drawable
-import com.savvasdalkitsis.uhuruphotos.api.strings.R.string
+import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.R.drawable
+import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
 import com.savvasdalkitsis.uhuruphotos.implementation.settings.seam.SettingsAction
 import com.savvasdalkitsis.uhuruphotos.implementation.settings.seam.SettingsAction.FeedRefreshChanged
 import com.savvasdalkitsis.uhuruphotos.implementation.settings.view.state.SettingsState
-import com.savvasdalkitsis.uhuruphotos.api.strings.R as Strings
+import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R as Strings
 
 @Composable
 internal fun ColumnScope.SettingsFeed(

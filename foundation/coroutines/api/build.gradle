@@ -1,0 +1,10 @@
+android {
+    namespace 'com.savvasdalkitsis.uhuruphotos.foundation.coroutines.api'
+}
+
+dependencies {
+    api(
+            libs.kotlinx.coroutines,
+    )
+    implementation project(":foundation:log:api")
+}

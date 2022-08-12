@@ -1,0 +1,21 @@
+android {
+    buildFeatures {
+        compose true
+    }
+    composeOptions {
+        kotlinCompilerExtensionVersion compose_compiler_version
+    }
+    namespace 'com.savvasdalkitsis.uhuruphotos.foundation.video.api'
+}
+
+dependencies {
+    api(
+            libs.androidx.compose.foundation,
+            libs.exoplayer.base,
+    )
+    implementation project(':foundation:image:api')
+    implementation(
+            libs.androidx.compose.material,
+            libs.hilt,
+    )
+}

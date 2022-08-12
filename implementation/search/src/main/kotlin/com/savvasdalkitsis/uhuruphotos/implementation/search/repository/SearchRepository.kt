@@ -21,9 +21,9 @@ import com.savvasdalkitsis.uhuruphotos.api.db.extensions.await
 import com.savvasdalkitsis.uhuruphotos.api.db.media.RemoteMediaItemSummaryQueries
 import com.savvasdalkitsis.uhuruphotos.api.db.search.GetSearchResults
 import com.savvasdalkitsis.uhuruphotos.api.db.search.SearchQueries
-import com.savvasdalkitsis.uhuruphotos.api.group.model.Group
-import com.savvasdalkitsis.uhuruphotos.api.group.model.groupBy
-import com.savvasdalkitsis.uhuruphotos.api.log.runCatchingWithLog
+import com.savvasdalkitsis.uhuruphotos.foundation.group.api.model.Group
+import com.savvasdalkitsis.uhuruphotos.foundation.group.api.model.groupBy
+import com.savvasdalkitsis.uhuruphotos.foundation.log.api.runCatchingWithLog
 import com.savvasdalkitsis.uhuruphotos.implementation.search.service.SearchService
 import com.squareup.sqldelight.runtime.coroutines.asFlow
 import com.squareup.sqldelight.runtime.coroutines.mapToList

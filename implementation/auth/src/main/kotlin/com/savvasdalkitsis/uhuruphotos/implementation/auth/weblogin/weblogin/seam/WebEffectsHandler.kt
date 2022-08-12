@@ -15,8 +15,8 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.implementation.auth.weblogin.weblogin.seam
 
-import com.savvasdalkitsis.uhuruphotos.api.navigation.Navigator
-import com.savvasdalkitsis.uhuruphotos.api.seam.EffectHandler
+import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.Navigator
+import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.EffectHandler
 import javax.inject.Inject
 
 class WebEffectsHandler @Inject constructor(

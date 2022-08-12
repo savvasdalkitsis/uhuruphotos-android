@@ -20,8 +20,8 @@ import androidx.compose.foundation.layout.RowScope
 import androidx.compose.runtime.Composable
 import com.savvasdalkitsis.uhuruphotos.api.gallery.view.GalleryDisplayActionButton
 import com.savvasdalkitsis.uhuruphotos.api.gallery.view.state.PredefinedGalleryDisplay
-import com.savvasdalkitsis.uhuruphotos.api.icons.R.drawable
-import com.savvasdalkitsis.uhuruphotos.api.ui.view.ActionIcon
+import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.R.drawable
+import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.view.ActionIcon
 import com.savvasdalkitsis.uhuruphotos.implementation.feedpage.seam.FeedPageAction
 import com.savvasdalkitsis.uhuruphotos.implementation.feedpage.seam.FeedPageAction.AskForSelectedPhotosTrashing
 import com.savvasdalkitsis.uhuruphotos.implementation.feedpage.seam.FeedPageAction.ChangeDisplay

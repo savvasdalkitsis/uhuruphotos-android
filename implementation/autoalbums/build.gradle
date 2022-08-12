@@ -12,12 +12,12 @@ dependencies {
     implementation project(":api:albums")
     implementation project(":api:gallery:page:album:auto")
     implementation project(":api:autoalbums")
-    implementation project(":api:coroutines")
-    implementation project(":api:log")
-    implementation project(":api:navigation")
+    implementation project(":foundation:coroutines:api")
+    implementation project(":foundation:log:api")
+    implementation project(":foundation:navigation:api")
     implementation project(':api:media:page')
     implementation project(":api:settings")
-    implementation project(":api:toaster")
+    implementation project(":foundation:toaster:api")
     implementation(
             libs.accompanist.swiperefresh,
             libs.androidx.compose.foundation,

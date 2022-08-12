@@ -1,0 +1,9 @@
+android {
+    namespace 'com.savvasdalkitsis.uhuruphotos.foundation.notification.api'
+}
+
+dependencies {
+    implementation(
+        libs.androidx.work,
+    )
+}

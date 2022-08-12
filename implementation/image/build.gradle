@@ -11,8 +11,8 @@ android {
 dependencies {
 
     implementation project(":api:auth")
-    implementation project(':api:image')
-    implementation project(":api:initializer")
+    implementation project(':foundation:image:api')
+    implementation project(":foundation:initializer:api")
     implementation project(":api:settings")
     implementation(
             libs.coil.compose,

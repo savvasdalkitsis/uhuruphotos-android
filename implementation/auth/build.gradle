@@ -12,12 +12,12 @@ dependencies {
 
     api project(":api:auth")
     implementation project(":api:db")
-    implementation project(":api:http")
-    implementation project(":api:launchers")
-    implementation project(":api:log")
-    implementation project(":api:navigation")
-    implementation project(":api:network")
-    implementation project(":api:ui")
+    implementation project(":foundation:http:api")
+    implementation project(":foundation:launchers:api")
+    implementation project(":foundation:log:api")
+    implementation project(":foundation:navigation:api")
+    implementation project(":foundation:network:api")
+    implementation project(":foundation:ui:api")
     implementation project(":api:settings")
     implementation(
             libs.accompanist.webview,

@@ -15,8 +15,8 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.implementation.auth.weblogin.weblogin.seam
 
-import com.savvasdalkitsis.uhuruphotos.api.launchers.onMain
-import com.savvasdalkitsis.uhuruphotos.api.seam.ActionHandler
+import com.savvasdalkitsis.uhuruphotos.foundation.launchers.api.onMain
+import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.ActionHandler
 import com.savvasdalkitsis.uhuruphotos.implementation.auth.cookies.CookieMonitor
 import com.savvasdalkitsis.uhuruphotos.implementation.auth.weblogin.weblogin.seam.WebLoginEffect.Close
 import com.savvasdalkitsis.uhuruphotos.implementation.auth.weblogin.weblogin.seam.WebLoginMutation.LoadPage

@@ -16,8 +16,8 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.implementation.heatmap.viewmodel
 
 import androidx.lifecycle.ViewModel
-import com.savvasdalkitsis.uhuruphotos.api.seam.Seam
-import com.savvasdalkitsis.uhuruphotos.api.seam.SeamViaHandler.Companion.handler
+import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.Seam
+import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.handler
 import com.savvasdalkitsis.uhuruphotos.implementation.heatmap.seam.HeatMapAction
 import com.savvasdalkitsis.uhuruphotos.implementation.heatmap.seam.HeatMapActionHandler
 import com.savvasdalkitsis.uhuruphotos.implementation.heatmap.seam.HeatMapEffect
@@ -32,5 +32,5 @@ class HeatMapViewModel @Inject constructor(
 ) : ViewModel(),
     Seam<HeatMapState, HeatMapEffect, HeatMapAction, HeatMapMutation> by handler(
         heatMapActionHandler,
-        HeatMapState(),
+        HeatMapState()
     )

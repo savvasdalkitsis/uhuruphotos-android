@@ -30,10 +30,10 @@ import com.savvasdalkitsis.uhuruphotos.api.gallery.view.state.GalleryDisplay
 import com.savvasdalkitsis.uhuruphotos.api.gallery.view.state.GalleryState
 import com.savvasdalkitsis.uhuruphotos.api.media.page.domain.model.MediaItem
 import com.savvasdalkitsis.uhuruphotos.api.media.page.view.MediaItemSelected
-import com.savvasdalkitsis.uhuruphotos.api.strings.R.string
-import com.savvasdalkitsis.uhuruphotos.api.ui.view.FullProgressBar
-import com.savvasdalkitsis.uhuruphotos.api.ui.view.NoContent
-import com.savvasdalkitsis.uhuruphotos.api.ui.window.LocalWindowSize
+import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
+import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.view.FullProgressBar
+import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.view.NoContent
+import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.window.LocalWindowSize
 
 @Composable
 fun Gallery(

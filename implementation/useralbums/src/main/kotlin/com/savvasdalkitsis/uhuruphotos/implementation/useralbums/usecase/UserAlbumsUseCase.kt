@@ -25,9 +25,9 @@ import com.savvasdalkitsis.uhuruphotos.api.media.page.domain.model.MediaGrid
 import com.savvasdalkitsis.uhuruphotos.api.media.page.domain.model.MediaId
 import com.savvasdalkitsis.uhuruphotos.api.media.page.domain.model.MediaItem
 import com.savvasdalkitsis.uhuruphotos.api.media.remote.domain.usecase.RemoteMediaUseCase
-import com.savvasdalkitsis.uhuruphotos.api.strings.R.string
 import com.savvasdalkitsis.uhuruphotos.api.useralbums.usecase.UserAlbumsUseCase
 import com.savvasdalkitsis.uhuruphotos.api.useralbums.view.state.UserAlbum
+import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.combine

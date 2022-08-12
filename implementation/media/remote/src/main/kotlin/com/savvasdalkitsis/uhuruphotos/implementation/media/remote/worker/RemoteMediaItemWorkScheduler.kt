@@ -17,8 +17,8 @@ package com.savvasdalkitsis.uhuruphotos.implementation.media.remote.worker
 
 import androidx.work.BackoffPolicy
 import androidx.work.WorkInfo
-import com.savvasdalkitsis.uhuruphotos.api.worker.WorkScheduler
-import com.savvasdalkitsis.uhuruphotos.api.worker.usecase.WorkerStatusUseCase
+import com.savvasdalkitsis.uhuruphotos.foundation.worker.api.WorkScheduler
+import com.savvasdalkitsis.uhuruphotos.foundation.worker.api.usecase.WorkerStatusUseCase
 import kotlinx.coroutines.flow.Flow
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject

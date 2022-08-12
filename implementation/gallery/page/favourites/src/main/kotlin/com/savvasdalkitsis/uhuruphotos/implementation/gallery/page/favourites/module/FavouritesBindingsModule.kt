@@ -15,7 +15,7 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.implementation.gallery.page.favourites.module
 
-import com.savvasdalkitsis.uhuruphotos.api.navigation.NavigationTarget
+import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.NavigationTarget
 import com.savvasdalkitsis.uhuruphotos.implementation.gallery.page.favourites.navigation.FavouritesNavigationTarget
 import dagger.Binds
 import dagger.Module

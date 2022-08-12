@@ -10,16 +10,16 @@ android {
 
 dependencies {
     implementation project(':api:albums')
-    implementation project(':api:coroutines')
+    implementation project(':foundation:coroutines:api')
     implementation project(":api:gallery")
-    implementation project(":api:log")
-    implementation project(":api:navigation")
+    implementation project(":foundation:log:api")
+    implementation project(":foundation:navigation:api")
     implementation project(':api:person')
     implementation project(':api:people')
     implementation project(':api:media:page')
-    implementation project(":api:strings")
-    implementation project(":api:toaster")
-    implementation project(":api:ui")
+    implementation project(":foundation:strings:api")
+    implementation project(":foundation:toaster:api")
+    implementation project(":foundation:ui:api")
     implementation(
             libs.accompanist.swiperefresh,
             libs.androidx.compose.foundation,

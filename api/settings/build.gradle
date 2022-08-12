@@ -3,8 +3,8 @@ android {
 }
 
 dependencies {
-    api project(":api:ui")
-    api project(":api:map")
+    api project(":foundation:ui:api")
+    api project(":foundation:map:api")
     api(
             libs.androidx.work,
             libs.kotlinx.coroutines,

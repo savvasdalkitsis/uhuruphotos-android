@@ -4,10 +4,10 @@ import androidx.compose.runtime.Composable
 import com.savvasdalkitsis.uhuruphotos.api.gallery.page.seam.GalleryPageAction
 import com.savvasdalkitsis.uhuruphotos.api.gallery.page.view.GalleryPage
 import com.savvasdalkitsis.uhuruphotos.api.gallery.page.view.state.GalleryPageState
-import com.savvasdalkitsis.uhuruphotos.api.icons.R.drawable
-import com.savvasdalkitsis.uhuruphotos.api.seam.Either
-import com.savvasdalkitsis.uhuruphotos.api.seam.Either.Right
-import com.savvasdalkitsis.uhuruphotos.api.ui.view.ActionIcon
+import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.R.drawable
+import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.Either
+import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.Either.Right
+import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.view.ActionIcon
 import com.savvasdalkitsis.uhuruphotos.implementation.gallery.page.trash.seam.TrashAction
 import com.savvasdalkitsis.uhuruphotos.implementation.gallery.page.trash.seam.TrashAction.FingerPrintActionPressed
 import com.savvasdalkitsis.uhuruphotos.implementation.gallery.page.trash.state.TrashState

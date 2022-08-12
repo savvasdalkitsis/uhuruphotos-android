@@ -19,7 +19,7 @@ import androidx.compose.ui.hapticfeedback.HapticFeedback
 import androidx.compose.ui.hapticfeedback.HapticFeedbackType
 import androidx.compose.ui.platform.SoftwareKeyboardController
 import com.google.accompanist.systemuicontroller.SystemUiController
-import com.savvasdalkitsis.uhuruphotos.api.ui.usecase.UiUseCase
+import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.usecase.UiUseCase
 import javax.inject.Inject
 import javax.inject.Singleton
 

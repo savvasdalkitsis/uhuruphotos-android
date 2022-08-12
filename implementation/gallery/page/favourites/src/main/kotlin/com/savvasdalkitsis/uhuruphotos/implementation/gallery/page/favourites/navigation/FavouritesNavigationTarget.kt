@@ -25,8 +25,8 @@ import com.savvasdalkitsis.uhuruphotos.api.gallery.page.seam.GalleryPageEffect
 import com.savvasdalkitsis.uhuruphotos.api.gallery.page.seam.GalleryPageEffectsHandler
 import com.savvasdalkitsis.uhuruphotos.api.gallery.page.view.GalleryPage
 import com.savvasdalkitsis.uhuruphotos.api.gallery.page.view.state.GalleryPageState
-import com.savvasdalkitsis.uhuruphotos.api.navigation.NavigationTarget
-import com.savvasdalkitsis.uhuruphotos.api.navigation.navigationTarget
+import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.NavigationTarget
+import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.navigationTarget
 import com.savvasdalkitsis.uhuruphotos.api.settings.usecase.SettingsUseCase
 import com.savvasdalkitsis.uhuruphotos.implementation.gallery.page.favourites.viewmodel.FavouritesViewModel
 import javax.inject.Inject

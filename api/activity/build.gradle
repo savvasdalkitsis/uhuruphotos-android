@@ -1,9 +1,0 @@
-android {
-    namespace 'com.savvasdalkitsis.uhuruphotos.activity'
-}
-
-dependencies {
-    implementation(
-            libs.hilt,
-    )
-}

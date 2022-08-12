@@ -18,7 +18,7 @@ package com.savvasdalkitsis.uhuruphotos.implementation.gallery.page.album.auto.u
 import com.savvasdalkitsis.uhuruphotos.api.albums.repository.AlbumsRepository
 import com.savvasdalkitsis.uhuruphotos.api.db.albums.GetAutoAlbum
 import com.savvasdalkitsis.uhuruphotos.api.db.albums.GetPeopleForAutoAlbum
-import com.savvasdalkitsis.uhuruphotos.api.group.model.Group
+import com.savvasdalkitsis.uhuruphotos.foundation.group.api.model.Group
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.combine
 import javax.inject.Inject

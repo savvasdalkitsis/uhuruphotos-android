@@ -16,7 +16,7 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.implementation.gallery.page.hidden.seam
 
 import com.savvasdalkitsis.uhuruphotos.api.albums.model.Album
-import com.savvasdalkitsis.uhuruphotos.api.biometrics.usecase.BiometricsUseCase
+import com.savvasdalkitsis.uhuruphotos.foundation.biometrics.api.usecase.BiometricsUseCase
 import com.savvasdalkitsis.uhuruphotos.api.gallery.page.seam.GalleryPageAction
 import com.savvasdalkitsis.uhuruphotos.api.gallery.page.seam.GalleryPageActionHandler
 import com.savvasdalkitsis.uhuruphotos.api.gallery.page.seam.GalleryPageEffect
@@ -27,9 +27,9 @@ import com.savvasdalkitsis.uhuruphotos.api.gallery.page.view.state.GalleryPageSt
 import com.savvasdalkitsis.uhuruphotos.api.gallery.page.view.state.Title
 import com.savvasdalkitsis.uhuruphotos.api.media.page.domain.model.MediaSequenceDataSource.HiddenMedia
 import com.savvasdalkitsis.uhuruphotos.api.media.page.domain.usecase.MediaUseCase
-import com.savvasdalkitsis.uhuruphotos.api.seam.ActionHandler
+import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.ActionHandler
 import com.savvasdalkitsis.uhuruphotos.api.settings.usecase.SettingsUseCase
-import com.savvasdalkitsis.uhuruphotos.api.strings.R.string
+import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
 import com.savvasdalkitsis.uhuruphotos.implementation.gallery.page.hidden.usecase.HiddenPhotosUseCase
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flow

@@ -37,7 +37,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
-import com.savvasdalkitsis.uhuruphotos.api.strings.R.string
+import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
 import com.savvasdalkitsis.uhuruphotos.implementation.server.seam.ServerAction
 import com.savvasdalkitsis.uhuruphotos.implementation.server.seam.ServerAction.AttemptChangeServerUrlTo
 import com.savvasdalkitsis.uhuruphotos.implementation.server.seam.ServerAction.UrlTyped

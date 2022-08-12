@@ -22,9 +22,9 @@ import androidx.compose.ui.platform.LocalConfiguration
 import com.google.accompanist.permissions.isGranted
 import com.google.accompanist.permissions.rememberPermissionState
 import com.google.accompanist.permissions.shouldShowRationale
-import com.savvasdalkitsis.uhuruphotos.api.map.Locations
-import com.savvasdalkitsis.uhuruphotos.api.map.view.MapViewState
-import com.savvasdalkitsis.uhuruphotos.api.map.view.rememberMapViewState
+import com.savvasdalkitsis.uhuruphotos.foundation.map.api.Locations
+import com.savvasdalkitsis.uhuruphotos.foundation.map.api.view.MapViewState
+import com.savvasdalkitsis.uhuruphotos.foundation.map.api.view.rememberMapViewState
 import com.savvasdalkitsis.uhuruphotos.implementation.heatmap.seam.HeatMapAction
 import com.savvasdalkitsis.uhuruphotos.implementation.heatmap.view.state.HeatMapState
 

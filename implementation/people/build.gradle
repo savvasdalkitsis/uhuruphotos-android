@@ -9,20 +9,20 @@ android {
 }
 
 dependencies {
-    implementation project(':api:coroutines')
+    implementation project(':foundation:coroutines:api')
     implementation project(":api:db")
-    implementation project(':api:image')
-    implementation project(":api:icons")
-    implementation project(":api:log")
-    implementation project(":api:navigation")
-    implementation project(":api:network")
+    implementation project(':foundation:image:api')
+    implementation project(":foundation:icons:api")
+    implementation project(":foundation:log:api")
+    implementation project(":foundation:navigation:api")
+    implementation project(":foundation:network:api")
     implementation project(':api:people')
     implementation project(':api:person')
     implementation project(':api:media:remote')
-    implementation project(":api:toaster")
+    implementation project(":foundation:toaster:api")
     implementation project(":api:settings")
-    implementation project(":api:strings")
-    implementation project(":api:ui")
+    implementation project(":foundation:strings:api")
+    implementation project(":foundation:ui:api")
     implementation(
             libs.accompanist.swiperefresh,
             libs.androidx.compose.foundation,

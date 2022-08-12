@@ -16,7 +16,7 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.implementation.autoalbums.seam
 
 import com.savvasdalkitsis.uhuruphotos.api.autoalbums.view.state.AutoAlbum
-import com.savvasdalkitsis.uhuruphotos.api.seam.Mutation
+import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.Mutation
 
 sealed class AutoAlbumsMutation(
     mutation: Mutation<AutoAlbumsState>

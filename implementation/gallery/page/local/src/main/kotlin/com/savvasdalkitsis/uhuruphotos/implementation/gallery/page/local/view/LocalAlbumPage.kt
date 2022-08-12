@@ -30,9 +30,9 @@ import androidx.compose.ui.unit.dp
 import com.savvasdalkitsis.uhuruphotos.api.gallery.page.seam.GalleryPageAction
 import com.savvasdalkitsis.uhuruphotos.api.gallery.page.view.GalleryPage
 import com.savvasdalkitsis.uhuruphotos.api.gallery.page.view.state.GalleryPageState
-import com.savvasdalkitsis.uhuruphotos.api.seam.Either
-import com.savvasdalkitsis.uhuruphotos.api.strings.R.string
-import com.savvasdalkitsis.uhuruphotos.api.ui.view.NoContent
+import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.Either
+import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
+import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.view.NoContent
 import com.savvasdalkitsis.uhuruphotos.implementation.gallery.page.local.seam.LocalAlbumAction
 import com.savvasdalkitsis.uhuruphotos.implementation.gallery.page.local.view.state.LocalAlbumState
 import dev.shreyaspatil.permissionflow.compose.rememberPermissionFlowRequestLauncher

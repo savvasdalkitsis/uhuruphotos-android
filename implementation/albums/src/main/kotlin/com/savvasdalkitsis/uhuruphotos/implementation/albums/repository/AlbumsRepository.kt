@@ -22,7 +22,6 @@ import com.savvasdalkitsis.uhuruphotos.api.albums.service.model.AlbumsByDate
 import com.savvasdalkitsis.uhuruphotos.api.albums.service.model.toAlbum
 import com.savvasdalkitsis.uhuruphotos.api.albums.service.model.toAutoAlbums
 import com.savvasdalkitsis.uhuruphotos.api.albums.service.model.toUserAlbums
-import com.savvasdalkitsis.uhuruphotos.api.coroutines.safelyOnStartIgnoring
 import com.savvasdalkitsis.uhuruphotos.api.db.Database
 import com.savvasdalkitsis.uhuruphotos.api.db.albums.AlbumsQueries
 import com.savvasdalkitsis.uhuruphotos.api.db.albums.AutoAlbumPeopleQueries
@@ -49,13 +48,14 @@ import com.savvasdalkitsis.uhuruphotos.api.db.media.RemoteMediaItemSummaryQuerie
 import com.savvasdalkitsis.uhuruphotos.api.db.media.RemoteMediaTrashQueries
 import com.savvasdalkitsis.uhuruphotos.api.db.people.PeopleQueries
 import com.savvasdalkitsis.uhuruphotos.api.db.person.PersonQueries
-import com.savvasdalkitsis.uhuruphotos.api.group.model.Group
-import com.savvasdalkitsis.uhuruphotos.api.group.model.groupBy
-import com.savvasdalkitsis.uhuruphotos.api.log.runCatchingWithLog
 import com.savvasdalkitsis.uhuruphotos.api.media.remote.model.toDbModel
 import com.savvasdalkitsis.uhuruphotos.api.media.remote.model.toTrash
 import com.savvasdalkitsis.uhuruphotos.api.people.service.model.toPerson
 import com.savvasdalkitsis.uhuruphotos.api.settings.usecase.SettingsUseCase
+import com.savvasdalkitsis.uhuruphotos.foundation.coroutines.api.safelyOnStartIgnoring
+import com.savvasdalkitsis.uhuruphotos.foundation.group.api.model.Group
+import com.savvasdalkitsis.uhuruphotos.foundation.group.api.model.groupBy
+import com.savvasdalkitsis.uhuruphotos.foundation.log.api.runCatchingWithLog
 import com.squareup.sqldelight.runtime.coroutines.asFlow
 import com.squareup.sqldelight.runtime.coroutines.mapToList
 import kotlinx.coroutines.flow.Flow

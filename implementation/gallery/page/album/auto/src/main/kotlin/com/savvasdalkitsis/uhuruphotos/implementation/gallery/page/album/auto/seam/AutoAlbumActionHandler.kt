@@ -16,7 +16,7 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.implementation.gallery.page.album.auto.seam
 
 import com.savvasdalkitsis.uhuruphotos.api.albums.model.Album
-import com.savvasdalkitsis.uhuruphotos.api.date.DateDisplayer
+import com.savvasdalkitsis.uhuruphotos.foundation.date.api.DateDisplayer
 import com.savvasdalkitsis.uhuruphotos.api.gallery.page.seam.GalleryPageAction
 import com.savvasdalkitsis.uhuruphotos.api.gallery.page.seam.GalleryPageActionHandler
 import com.savvasdalkitsis.uhuruphotos.api.gallery.page.seam.GalleryPageEffect
@@ -29,7 +29,7 @@ import com.savvasdalkitsis.uhuruphotos.api.media.page.domain.model.MediaItem
 import com.savvasdalkitsis.uhuruphotos.api.media.page.domain.model.MediaSequenceDataSource.AutoAlbum
 import com.savvasdalkitsis.uhuruphotos.api.media.remote.domain.usecase.RemoteMediaUseCase
 import com.savvasdalkitsis.uhuruphotos.api.people.view.state.toPerson
-import com.savvasdalkitsis.uhuruphotos.api.seam.ActionHandler
+import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.ActionHandler
 import com.savvasdalkitsis.uhuruphotos.implementation.gallery.page.album.auto.state.AutoAlbumGalleryDisplay
 import com.savvasdalkitsis.uhuruphotos.implementation.gallery.page.album.auto.usecase.AutoAlbumsUseCase
 import kotlinx.coroutines.flow.map

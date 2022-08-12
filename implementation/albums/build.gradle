@@ -16,19 +16,19 @@ android {
 dependencies {
 
     implementation project(':api:albums')
-    implementation project(":api:coroutines")
-    implementation project(":api:date")
+    implementation project(":foundation:coroutines:api")
+    implementation project(":foundation:date:api")
     implementation project(":api:db")
-    implementation project(":api:icons")
-    implementation project(":api:initializer")
-    implementation project(":api:log")
-    implementation project(":api:notification")
+    implementation project(":foundation:icons:api")
+    implementation project(":foundation:initializer:api")
+    implementation project(":foundation:log:api")
+    implementation project(":foundation:notification:api")
     implementation project(":api:people")
     implementation project(':api:media:page')
     implementation project(":api:settings")
-    implementation project(":api:strings")
+    implementation project(":foundation:strings:api")
     implementation project(":api:user")
-    implementation project(":api:worker")
+    implementation project(":foundation:worker:api")
     implementation(
             libs.androidx.compose.hilt.navigation,
             libs.androidx.work,

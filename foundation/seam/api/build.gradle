@@ -1,0 +1,11 @@
+dependencies {
+
+    implementation project(":foundation:log:api")
+    implementation(
+            libs.kotlinx.coroutines,
+    )
+}
+
+android {
+    namespace 'com.savvasdalkitsis.uhuruphotos.foundation.seam.api'
+}

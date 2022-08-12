@@ -16,8 +16,8 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.implementation.settings.seam
 
 import androidx.work.NetworkType
-import com.savvasdalkitsis.uhuruphotos.api.map.model.MapProvider
-import com.savvasdalkitsis.uhuruphotos.api.ui.theme.ThemeMode
+import com.savvasdalkitsis.uhuruphotos.foundation.map.api.model.MapProvider
+import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.theme.ThemeMode
 
 internal sealed class SettingsAction {
 

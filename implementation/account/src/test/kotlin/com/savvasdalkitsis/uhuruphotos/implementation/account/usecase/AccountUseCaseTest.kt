@@ -34,8 +34,8 @@ import com.savvasdalkitsis.uhuruphotos.api.db.people.PeopleQueries
 import com.savvasdalkitsis.uhuruphotos.api.db.person.PersonQueries
 import com.savvasdalkitsis.uhuruphotos.api.db.search.SearchQueries
 import com.savvasdalkitsis.uhuruphotos.api.db.user.UserQueries
-import com.savvasdalkitsis.uhuruphotos.api.image.cache.ImageCacheController
-import com.savvasdalkitsis.uhuruphotos.api.worker.WorkScheduler
+import com.savvasdalkitsis.uhuruphotos.foundation.image.api.cache.ImageCacheController
+import com.savvasdalkitsis.uhuruphotos.foundation.worker.api.WorkScheduler
 import com.squareup.sqldelight.TransactionWithReturn
 import com.squareup.sqldelight.TransactionWithoutReturn
 import io.mockk.mockk

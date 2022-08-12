@@ -21,8 +21,8 @@ import com.savvasdalkitsis.uhuruphotos.api.db.TestDatabase
 import com.savvasdalkitsis.uhuruphotos.api.db.albums.Albums
 import com.savvasdalkitsis.uhuruphotos.api.db.domain.model.media.DbRemoteMediaItemSummary
 import com.savvasdalkitsis.uhuruphotos.api.db.extensions.await
-import com.savvasdalkitsis.uhuruphotos.api.group.model.Group
 import com.savvasdalkitsis.uhuruphotos.api.settings.usecase.SettingsUseCase
+import com.savvasdalkitsis.uhuruphotos.foundation.group.api.model.Group
 import com.savvasdalkitsis.uhuruphotos.implementation.albums.ProgressUpdate
 import com.savvasdalkitsis.uhuruphotos.implementation.albums.SERVER_ALBUM_LOCATION
 import com.savvasdalkitsis.uhuruphotos.implementation.albums.TestAlbums.albums

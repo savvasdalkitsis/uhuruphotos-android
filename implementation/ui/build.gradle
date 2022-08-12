@@ -3,7 +3,7 @@ android {
 }
 
 dependencies {
-    implementation project(":api:ui")
+    implementation project(":foundation:ui:api")
     implementation(
             libs.accompanist.systemui,
             libs.androidx.compose.ui,

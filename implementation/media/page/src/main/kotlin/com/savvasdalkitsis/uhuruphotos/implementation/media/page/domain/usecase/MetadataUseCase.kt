@@ -18,8 +18,8 @@ package com.savvasdalkitsis.uhuruphotos.implementation.media.page.domain.usecase
 import android.content.ContentResolver
 import android.net.Uri
 import coil.disk.DiskCache
-import com.savvasdalkitsis.api.exif.model.ExifMetadata
-import com.savvasdalkitsis.api.exif.usecase.ExifUseCase
+import com.savvasdalkitsis.uhuruphotos.foundation.exif.api.model.ExifMetadata
+import com.savvasdalkitsis.uhuruphotos.foundation.exif.api.usecase.ExifUseCase
 import com.savvasdalkitsis.uhuruphotos.api.db.extensions.read
 import javax.inject.Inject
 import kotlin.math.pow

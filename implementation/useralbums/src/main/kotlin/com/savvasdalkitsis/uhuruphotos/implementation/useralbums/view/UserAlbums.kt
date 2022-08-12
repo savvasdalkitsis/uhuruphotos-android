@@ -17,7 +17,7 @@ package com.savvasdalkitsis.uhuruphotos.implementation.useralbums.view
 
 import androidx.compose.runtime.Composable
 import com.savvasdalkitsis.uhuruphotos.api.albums.view.AlbumsPage
-import com.savvasdalkitsis.uhuruphotos.api.strings.R.string
+import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
 import com.savvasdalkitsis.uhuruphotos.implementation.useralbums.seam.UserAlbumsAction
 import com.savvasdalkitsis.uhuruphotos.implementation.useralbums.seam.UserAlbumsAction.ChangeSorting
 import com.savvasdalkitsis.uhuruphotos.implementation.useralbums.seam.UserAlbumsAction.NavigateBack

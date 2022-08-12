@@ -23,9 +23,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import com.savvasdalkitsis.uhuruphotos.api.icons.R.drawable
-import com.savvasdalkitsis.uhuruphotos.api.strings.R.string
-import com.savvasdalkitsis.uhuruphotos.api.ui.view.ActionIcon
+import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.R.drawable
+import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
+import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.view.ActionIcon
 import com.savvasdalkitsis.uhuruphotos.implementation.media.page.seam.MediaItemPageAction.DownloadOriginal
 import com.savvasdalkitsis.uhuruphotos.implementation.media.page.seam.MediaItemPageAction.SetFavourite
 import com.savvasdalkitsis.uhuruphotos.implementation.media.page.seam.MediaItemPageAction.ShowInfo

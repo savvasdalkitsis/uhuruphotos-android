@@ -15,7 +15,7 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.implementation.gallery.page.hidden.seam
 
-import com.savvasdalkitsis.uhuruphotos.api.seam.Mutation
+import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.Mutation
 
 sealed class HiddenPhotosMutation(
     mutation: Mutation<HiddenPhotosState>

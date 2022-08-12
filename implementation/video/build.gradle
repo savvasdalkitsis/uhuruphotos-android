@@ -12,7 +12,7 @@ dependencies {
 
     implementation project(":api:auth")
     implementation project(":api:settings")
-    implementation project(':api:video')
+    implementation project(':foundation:video:api')
     implementation(
             libs.androidx.compose.foundation,
             libs.androidx.compose.material,

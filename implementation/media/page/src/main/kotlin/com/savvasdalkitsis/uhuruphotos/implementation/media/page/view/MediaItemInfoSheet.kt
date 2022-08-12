@@ -33,7 +33,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.unit.dp
-import com.savvasdalkitsis.uhuruphotos.api.ui.insets.insetsBottom
+import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.insets.insetsBottom
 import com.savvasdalkitsis.uhuruphotos.implementation.media.page.seam.MediaItemPageAction.HideInfo
 import com.savvasdalkitsis.uhuruphotos.implementation.media.page.view.info.MediaItemInfoDateTime
 import com.savvasdalkitsis.uhuruphotos.implementation.media.page.view.info.MediaItemInfoGps

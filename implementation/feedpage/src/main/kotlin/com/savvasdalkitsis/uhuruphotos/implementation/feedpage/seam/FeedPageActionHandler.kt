@@ -23,7 +23,7 @@ import com.savvasdalkitsis.uhuruphotos.api.media.page.domain.model.MediaItemSele
 import com.savvasdalkitsis.uhuruphotos.api.media.page.domain.model.MediaItemSelectionMode.UNDEFINED
 import com.savvasdalkitsis.uhuruphotos.api.media.page.domain.model.MediaItemSelectionMode.UNSELECTED
 import com.savvasdalkitsis.uhuruphotos.api.media.page.domain.usecase.MediaUseCase
-import com.savvasdalkitsis.uhuruphotos.api.seam.ActionHandler
+import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.ActionHandler
 import com.savvasdalkitsis.uhuruphotos.api.settings.usecase.SettingsUseCase
 import com.savvasdalkitsis.uhuruphotos.api.userbadge.usecase.UserBadgeUseCase
 import com.savvasdalkitsis.uhuruphotos.api.userbadge.view.state.SyncState.IN_PROGRESS

@@ -3,9 +3,9 @@ package com.savvasdalkitsis.uhuruphotos.api.albums.view
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.stringResource
 import com.savvasdalkitsis.uhuruphotos.api.albums.view.state.AlbumSorting
-import com.savvasdalkitsis.uhuruphotos.api.icons.R.drawable
-import com.savvasdalkitsis.uhuruphotos.api.strings.R.string
-import com.savvasdalkitsis.uhuruphotos.api.ui.view.DropDownActionIcon
+import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.R.drawable
+import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
+import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.view.DropDownActionIcon
 
 @Composable
 internal fun AlbumsSortingAction(

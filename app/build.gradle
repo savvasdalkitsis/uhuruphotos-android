@@ -54,15 +54,15 @@ android {
 }
 
 dependencies {
-    implementation project(":api:activity")
+    implementation project(":foundation:activity:api")
     implementation project(":api:homenavigation")
-    implementation project(":api:initializer")
-    implementation project(":api:log")
-    implementation project(":api:map")
-    implementation project(":api:navigation")
+    implementation project(":foundation:initializer:api")
+    implementation project(":foundation:log:api")
+    implementation project(":foundation:map:api")
+    implementation project(":foundation:navigation:api")
     implementation project(":api:settings")
-    implementation project(":api:ui")
-    implementation project(":api:video")
+    implementation project(":foundation:ui:api")
+    implementation project(":foundation:video:api")
 
     implementation project(':implementation')
     implementation project(":implementation:ui")

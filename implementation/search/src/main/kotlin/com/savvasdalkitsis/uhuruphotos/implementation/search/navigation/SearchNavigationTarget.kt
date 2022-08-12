@@ -26,11 +26,11 @@ import com.savvasdalkitsis.uhuruphotos.api.accountoverview.view.AccountOverviewA
 import com.savvasdalkitsis.uhuruphotos.api.accountoverview.view.AccountOverviewContent
 import com.savvasdalkitsis.uhuruphotos.api.accountoverview.view.state.AccountOverviewState
 import com.savvasdalkitsis.uhuruphotos.api.homenavigation.HomeNavigationRoutes
-import com.savvasdalkitsis.uhuruphotos.api.navigation.NavigationTarget
-import com.savvasdalkitsis.uhuruphotos.api.navigation.navigationTarget
-import com.savvasdalkitsis.uhuruphotos.api.seam.CompositeEffectHandler
-import com.savvasdalkitsis.uhuruphotos.api.seam.Either
-import com.savvasdalkitsis.uhuruphotos.api.seam.Either.*
+import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.NavigationTarget
+import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.navigationTarget
+import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.CompositeEffectHandler
+import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.Either
+import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.Either.*
 import com.savvasdalkitsis.uhuruphotos.api.settings.usecase.SettingsUseCase
 import com.savvasdalkitsis.uhuruphotos.implementation.search.seam.SearchAction
 import com.savvasdalkitsis.uhuruphotos.implementation.search.seam.SearchAction.*

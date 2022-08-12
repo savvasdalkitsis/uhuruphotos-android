@@ -11,14 +11,14 @@ android {
 dependencies {
 
     implementation project(":api:auth")
-    implementation project(":api:biometrics")
+    implementation project(":foundation:biometrics:api")
     implementation project(":api:home")
     implementation project(":api:homenavigation")
-    implementation project(":api:navigation")
+    implementation project(":foundation:navigation:api")
     implementation project(":api:server")
     implementation project(":api:settings")
-    implementation project(":api:strings")
-    implementation project(":api:ui")
+    implementation project(":foundation:strings:api")
+    implementation project(":foundation:ui:api")
     implementation(
             libs.androidx.compose.foundation.layout,
             libs.androidx.compose.hilt.navigation,

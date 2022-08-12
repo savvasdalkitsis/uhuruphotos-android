@@ -17,8 +17,8 @@ package com.savvasdalkitsis.uhuruphotos.implementation.person.seam
 
 import com.savvasdalkitsis.uhuruphotos.api.media.page.domain.model.MediaSequenceDataSource.PersonResults
 import com.savvasdalkitsis.uhuruphotos.api.media.page.navigation.MediaItemPageNavigationTarget
-import com.savvasdalkitsis.uhuruphotos.api.navigation.Navigator
-import com.savvasdalkitsis.uhuruphotos.api.seam.EffectHandler
+import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.Navigator
+import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.EffectHandler
 import com.savvasdalkitsis.uhuruphotos.implementation.person.seam.PersonEffect.NavigateBack
 import com.savvasdalkitsis.uhuruphotos.implementation.person.seam.PersonEffect.OpenPhotoDetails
 import javax.inject.Inject

@@ -40,13 +40,13 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.savvasdalkitsis.uhuruphotos.api.icons.R.drawable
-import com.savvasdalkitsis.uhuruphotos.api.strings.R.string
-import com.savvasdalkitsis.uhuruphotos.api.ui.theme.PreviewAppTheme
-import com.savvasdalkitsis.uhuruphotos.api.ui.view.ActionIcon
 import com.savvasdalkitsis.uhuruphotos.api.userbadge.view.UserBadge
 import com.savvasdalkitsis.uhuruphotos.api.userbadge.view.state.UserInformationState
 import com.savvasdalkitsis.uhuruphotos.api.userbadge.view.state.previewUserInformationState
+import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.R.drawable
+import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
+import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.theme.PreviewAppTheme
+import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.view.ActionIcon
 
 @Composable
 internal fun AccountOverview(

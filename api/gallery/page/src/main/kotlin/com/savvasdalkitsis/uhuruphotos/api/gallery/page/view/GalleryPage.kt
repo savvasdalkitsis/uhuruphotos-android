@@ -32,10 +32,10 @@ import com.savvasdalkitsis.uhuruphotos.api.gallery.page.view.state.GalleryPageSt
 import com.savvasdalkitsis.uhuruphotos.api.gallery.view.Gallery
 import com.savvasdalkitsis.uhuruphotos.api.gallery.view.GalleryDisplayActionButton
 import com.savvasdalkitsis.uhuruphotos.api.people.view.PeopleBar
-import com.savvasdalkitsis.uhuruphotos.api.strings.R.string
-import com.savvasdalkitsis.uhuruphotos.api.ui.view.BackNavButton
-import com.savvasdalkitsis.uhuruphotos.api.ui.view.CommonScaffold
-import com.savvasdalkitsis.uhuruphotos.api.ui.view.NoContent
+import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
+import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.view.BackNavButton
+import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.view.CommonScaffold
+import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.view.NoContent
 
 @Composable
 fun GalleryPage(

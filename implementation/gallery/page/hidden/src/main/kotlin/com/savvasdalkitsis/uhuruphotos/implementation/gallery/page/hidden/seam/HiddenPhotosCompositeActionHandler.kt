@@ -18,10 +18,10 @@ package com.savvasdalkitsis.uhuruphotos.implementation.gallery.page.hidden.seam
 import com.savvasdalkitsis.uhuruphotos.api.gallery.page.seam.GalleryPageAction
 import com.savvasdalkitsis.uhuruphotos.api.gallery.page.seam.GalleryPageEffect
 import com.savvasdalkitsis.uhuruphotos.api.gallery.page.view.state.GalleryPageState
-import com.savvasdalkitsis.uhuruphotos.api.seam.ActionHandler
-import com.savvasdalkitsis.uhuruphotos.api.seam.CompositeActionHandler
-import com.savvasdalkitsis.uhuruphotos.api.seam.Either
-import com.savvasdalkitsis.uhuruphotos.api.seam.Mutation
+import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.ActionHandler
+import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.CompositeActionHandler
+import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.Either
+import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.Mutation
 import javax.inject.Inject
 
 internal class HiddenPhotosCompositeActionHandler @Inject constructor(
@@ -32,7 +32,7 @@ internal class HiddenPhotosCompositeActionHandler @Inject constructor(
         Either<GalleryPageEffect, HiddenPhotosEffect>,
         Either<GalleryPageAction, HiddenPhotosAction>,
         Mutation<Pair<GalleryPageState, HiddenPhotosState>>
-> by CompositeActionHandler(
+        > by CompositeActionHandler(
     handler1 = hiddenPhotosAlbumPageActionHandler,
     handler2 = hiddenPhotosActionHandler
 )

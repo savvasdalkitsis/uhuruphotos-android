@@ -20,10 +20,10 @@ import com.savvasdalkitsis.uhuruphotos.api.gallery.page.seam.GalleryPageAction
 import com.savvasdalkitsis.uhuruphotos.api.gallery.page.seam.GalleryPageEffect
 import com.savvasdalkitsis.uhuruphotos.api.gallery.page.view.state.GalleryPageState
 import com.savvasdalkitsis.uhuruphotos.api.gallery.view.state.GalleryState
-import com.savvasdalkitsis.uhuruphotos.api.seam.Either
-import com.savvasdalkitsis.uhuruphotos.api.seam.Mutation
-import com.savvasdalkitsis.uhuruphotos.api.seam.Seam
-import com.savvasdalkitsis.uhuruphotos.api.seam.SeamViaHandler.Companion.handler
+import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.Either
+import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.Mutation
+import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.Seam
+import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.handler
 import com.savvasdalkitsis.uhuruphotos.implementation.gallery.page.hidden.seam.HiddenPhotosAction
 import com.savvasdalkitsis.uhuruphotos.implementation.gallery.page.hidden.seam.HiddenPhotosCompositeActionHandler
 import com.savvasdalkitsis.uhuruphotos.implementation.gallery.page.hidden.seam.HiddenPhotosEffect
@@ -39,7 +39,7 @@ internal class HiddenPhotosViewModel @Inject constructor(
         Either<GalleryPageEffect, HiddenPhotosEffect>,
         Either<GalleryPageAction, HiddenPhotosAction>,
         Mutation<Pair<GalleryPageState, HiddenPhotosState>>
-> by handler(
+        > by handler(
     hiddenPhotosCompositeActionHandler,
-    GalleryPageState(galleryState = GalleryState()) to HiddenPhotosState(),
+    GalleryPageState(galleryState = GalleryState()) to HiddenPhotosState()
 )

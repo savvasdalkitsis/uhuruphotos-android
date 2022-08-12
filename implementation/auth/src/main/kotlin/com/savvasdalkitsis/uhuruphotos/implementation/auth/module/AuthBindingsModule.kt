@@ -15,7 +15,7 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.implementation.auth.module
 
-import com.savvasdalkitsis.uhuruphotos.api.navigation.NavigationTarget
+import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.NavigationTarget
 import com.savvasdalkitsis.uhuruphotos.implementation.auth.service.TokenRefreshInterceptor
 import com.savvasdalkitsis.uhuruphotos.implementation.auth.usecase.AuthenticationUseCase
 import com.savvasdalkitsis.uhuruphotos.implementation.auth.usecase.ServerUseCase

@@ -40,10 +40,10 @@ import com.mxalbert.zoomable.Zoomable
 import com.mxalbert.zoomable.rememberZoomableState
 import com.radusalagean.infobarcompose.InfoBar
 import com.radusalagean.infobarcompose.InfoBarMessage
-import com.savvasdalkitsis.uhuruphotos.api.image.view.Image
+import com.savvasdalkitsis.uhuruphotos.foundation.image.api.view.Image
 import com.savvasdalkitsis.uhuruphotos.api.media.page.view.TrashPermissionDialog
-import com.savvasdalkitsis.uhuruphotos.api.strings.R.string
-import com.savvasdalkitsis.uhuruphotos.api.video.view.Video
+import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
+import com.savvasdalkitsis.uhuruphotos.foundation.video.api.view.Video
 import com.savvasdalkitsis.uhuruphotos.implementation.media.page.seam.MediaItemPageAction.DismissConfirmationDialogs
 import com.savvasdalkitsis.uhuruphotos.implementation.media.page.seam.MediaItemPageAction.DismissErrorMessage
 import com.savvasdalkitsis.uhuruphotos.implementation.media.page.seam.MediaItemPageAction.FullMediaDataLoaded

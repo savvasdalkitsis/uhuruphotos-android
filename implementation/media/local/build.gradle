@@ -4,15 +4,15 @@ android {
 
 dependencies {
 
-    implementation project(":api:date")
+    implementation project(":foundation:date:api")
     implementation project(":api:db")
-    implementation project(":api:exif")
-    implementation project(":api:initializer")
-    implementation project(":api:log")
+    implementation project(":foundation:exif:api")
+    implementation project(":foundation:initializer:api")
+    implementation project(":foundation:log:api")
     implementation project(":api:media:local")
-    implementation project(":api:notification")
-    implementation project(":api:strings")
-    implementation project(":api:worker")
+    implementation project(":foundation:notification:api")
+    implementation project(":foundation:strings:api")
+    implementation project(":foundation:worker:api")
     implementation(
             libs.androidx.work,
             libs.androidx.work.hilt,

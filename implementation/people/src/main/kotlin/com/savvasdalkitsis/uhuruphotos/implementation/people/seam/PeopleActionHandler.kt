@@ -15,10 +15,10 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.implementation.people.seam
 
-import com.savvasdalkitsis.uhuruphotos.api.coroutines.safelyOnStartIgnoring
+import com.savvasdalkitsis.uhuruphotos.foundation.coroutines.api.safelyOnStartIgnoring
 import com.savvasdalkitsis.uhuruphotos.api.media.remote.domain.usecase.RemoteMediaUseCase
 import com.savvasdalkitsis.uhuruphotos.api.people.view.state.toPerson
-import com.savvasdalkitsis.uhuruphotos.api.seam.ActionHandler
+import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.ActionHandler
 import com.savvasdalkitsis.uhuruphotos.implementation.people.seam.PeopleAction.LoadPeople
 import com.savvasdalkitsis.uhuruphotos.implementation.people.seam.PeopleAction.NavigateBack
 import com.savvasdalkitsis.uhuruphotos.implementation.people.seam.PeopleAction.PersonSelected

@@ -15,7 +15,7 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.implementation.albums.module
 
-import com.savvasdalkitsis.uhuruphotos.api.initializer.ApplicationCreated
+import com.savvasdalkitsis.uhuruphotos.foundation.initializer.api.ApplicationCreated
 import com.savvasdalkitsis.uhuruphotos.implementation.albums.initializer.AlbumsInitializer
 import com.savvasdalkitsis.uhuruphotos.implementation.albums.repository.AlbumsRepository
 import com.savvasdalkitsis.uhuruphotos.implementation.albums.usecase.AlbumsUseCase

@@ -15,7 +15,7 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.implementation.notification.module
 
-import com.savvasdalkitsis.uhuruphotos.api.initializer.ApplicationCreated
+import com.savvasdalkitsis.uhuruphotos.foundation.initializer.api.ApplicationCreated
 import com.savvasdalkitsis.uhuruphotos.implementation.notification.ForegroundInfoBuilder
 import com.savvasdalkitsis.uhuruphotos.implementation.notification.initializer.NotificationInitializer
 import dagger.Binds
@@ -34,5 +34,5 @@ internal abstract class NotificationBindingsModule {
 
     @Binds
     abstract fun foregroundInfoBuilder(foregroundInfoBuilder: ForegroundInfoBuilder):
-            com.savvasdalkitsis.uhuruphotos.api.notification.ForegroundInfoBuilder
+            com.savvasdalkitsis.uhuruphotos.foundation.notification.api.ForegroundInfoBuilder
 }

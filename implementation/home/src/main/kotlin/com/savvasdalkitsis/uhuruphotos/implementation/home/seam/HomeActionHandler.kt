@@ -17,10 +17,10 @@ package com.savvasdalkitsis.uhuruphotos.implementation.home.seam
 
 import com.savvasdalkitsis.uhuruphotos.api.auth.model.AuthStatus.Unauthenticated
 import com.savvasdalkitsis.uhuruphotos.api.auth.usecase.AuthenticationUseCase
-import com.savvasdalkitsis.uhuruphotos.api.biometrics.usecase.BiometricsUseCase
-import com.savvasdalkitsis.uhuruphotos.api.seam.ActionHandler
+import com.savvasdalkitsis.uhuruphotos.foundation.biometrics.api.usecase.BiometricsUseCase
+import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.ActionHandler
 import com.savvasdalkitsis.uhuruphotos.api.settings.usecase.SettingsUseCase
-import com.savvasdalkitsis.uhuruphotos.api.strings.R.string
+import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
 import com.savvasdalkitsis.uhuruphotos.implementation.home.seam.HomeAction.Load
 import com.savvasdalkitsis.uhuruphotos.implementation.home.seam.HomeEffect.LaunchAuthentication
 import com.savvasdalkitsis.uhuruphotos.implementation.home.seam.HomeMutation.Loading

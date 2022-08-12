@@ -1,0 +1,9 @@
+android {
+    namespace 'com.savvasdalkitsis.uhuruphotos.foundation.activity.api'
+}
+
+dependencies {
+    implementation(
+            libs.hilt,
+    )
+}

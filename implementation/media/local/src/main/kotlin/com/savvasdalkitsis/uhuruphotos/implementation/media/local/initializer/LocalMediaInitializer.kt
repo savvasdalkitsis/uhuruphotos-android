@@ -21,7 +21,7 @@ import android.database.ContentObserver
 import android.net.Uri
 import android.os.Handler
 import android.os.Looper
-import com.savvasdalkitsis.uhuruphotos.api.initializer.ApplicationCreated
+import com.savvasdalkitsis.uhuruphotos.foundation.initializer.api.ApplicationCreated
 import com.savvasdalkitsis.uhuruphotos.api.media.local.worker.LocalMediaWorkScheduler
 import com.savvasdalkitsis.uhuruphotos.implementation.media.local.service.model.LocalMediaPhotoColumns
 import com.savvasdalkitsis.uhuruphotos.implementation.media.local.service.model.LocalMediaVideoColumns

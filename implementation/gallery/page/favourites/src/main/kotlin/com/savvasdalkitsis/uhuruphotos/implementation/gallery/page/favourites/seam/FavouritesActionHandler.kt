@@ -25,8 +25,8 @@ import com.savvasdalkitsis.uhuruphotos.api.gallery.page.view.state.GalleryPageSt
 import com.savvasdalkitsis.uhuruphotos.api.gallery.page.view.state.Title
 import com.savvasdalkitsis.uhuruphotos.api.media.page.domain.model.MediaSequenceDataSource.FavouriteMedia
 import com.savvasdalkitsis.uhuruphotos.api.media.page.domain.usecase.MediaUseCase
-import com.savvasdalkitsis.uhuruphotos.api.seam.ActionHandler
-import com.savvasdalkitsis.uhuruphotos.api.strings.R.string
+import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.ActionHandler
+import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
 import com.savvasdalkitsis.uhuruphotos.implementation.gallery.page.favourites.usecase.FavouritesUseCase
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.mapNotNull

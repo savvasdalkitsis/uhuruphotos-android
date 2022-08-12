@@ -14,13 +14,13 @@ dependencies {
     api project(':api:userbadge')
     implementation project(":api:account")
     implementation project(":api:homenavigation")
-    implementation project(":api:icons")
-    implementation project(":api:navigation")
-    implementation project(":api:ui")
-    implementation project(":api:seam")
+    implementation project(":foundation:icons:api")
+    implementation project(":foundation:navigation:api")
+    implementation project(":foundation:ui:api")
+    implementation project(":foundation:seam:api")
     implementation project(":api:server")
     implementation project(":api:settings")
-    implementation project(":api:strings")
+    implementation project(":foundation:strings:api")
     implementation(
             libs.androidx.compose.foundation.layout,
             libs.androidx.compose.material,

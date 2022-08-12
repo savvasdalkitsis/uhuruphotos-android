@@ -17,7 +17,7 @@ package com.savvasdalkitsis.uhuruphotos.implementation.albums.initializer
 
 import android.app.Application
 import androidx.work.ExistingPeriodicWorkPolicy.KEEP
-import com.savvasdalkitsis.uhuruphotos.api.initializer.ApplicationCreated
+import com.savvasdalkitsis.uhuruphotos.foundation.initializer.api.ApplicationCreated
 import com.savvasdalkitsis.uhuruphotos.implementation.albums.worker.AlbumWorkScheduler
 import javax.inject.Inject
 

@@ -16,7 +16,7 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.implementation.media.page.view.state
 
 import androidx.annotation.StringRes
-import com.savvasdalkitsis.uhuruphotos.api.map.model.LatLon
+import com.savvasdalkitsis.uhuruphotos.foundation.map.api.model.LatLon
 import com.savvasdalkitsis.uhuruphotos.api.media.page.domain.model.MediaId
 import com.savvasdalkitsis.uhuruphotos.api.people.view.state.Person
 import com.savvasdalkitsis.uhuruphotos.implementation.media.page.domain.usecase.MediaItemMetadata

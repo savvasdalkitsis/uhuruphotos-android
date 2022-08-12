@@ -1,6 +1,6 @@
 dependencies {
 
-    implementation project(":api:navigation")
+    implementation project(":foundation:navigation:api")
     implementation project(":api:share")
     implementation project(":api:settings")
     implementation(

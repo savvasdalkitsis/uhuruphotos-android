@@ -2,7 +2,7 @@ package com.savvasdalkitsis.uhuruphotos.implementation.media.local.worker
 
 import androidx.work.ExistingWorkPolicy
 import com.savvasdalkitsis.uhuruphotos.api.media.local.worker.LocalMediaWorkScheduler
-import com.savvasdalkitsis.uhuruphotos.api.worker.WorkScheduler
+import com.savvasdalkitsis.uhuruphotos.foundation.worker.api.WorkScheduler
 import javax.inject.Inject
 
 class LocalMediaWorkScheduler @Inject constructor(

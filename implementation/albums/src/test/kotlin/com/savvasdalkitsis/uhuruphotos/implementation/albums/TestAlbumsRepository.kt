@@ -18,7 +18,7 @@ package com.savvasdalkitsis.uhuruphotos.implementation.albums
 import com.savvasdalkitsis.uhuruphotos.api.albums.repository.AlbumsRepository
 import com.savvasdalkitsis.uhuruphotos.api.db.albums.GetAlbums
 import com.savvasdalkitsis.uhuruphotos.api.db.albums.GetPersonAlbums
-import com.savvasdalkitsis.uhuruphotos.api.group.model.Group
+import com.savvasdalkitsis.uhuruphotos.foundation.group.api.model.Group
 import io.mockk.coEvery
 
 fun AlbumsRepository.reportsHavingNoAlbums() {

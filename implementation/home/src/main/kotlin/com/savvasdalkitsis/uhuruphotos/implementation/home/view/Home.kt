@@ -23,9 +23,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
-import com.savvasdalkitsis.uhuruphotos.api.strings.R.string
-import com.savvasdalkitsis.uhuruphotos.api.ui.view.CommonScaffold
-import com.savvasdalkitsis.uhuruphotos.api.ui.view.FullProgressBar
+import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
+import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.view.CommonScaffold
+import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.view.FullProgressBar
 import com.savvasdalkitsis.uhuruphotos.implementation.home.seam.HomeAction
 import com.savvasdalkitsis.uhuruphotos.implementation.home.seam.HomeAction.Load
 import com.savvasdalkitsis.uhuruphotos.implementation.home.view.state.HomeState

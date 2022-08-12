@@ -1,8 +1,8 @@
 dependencies {
 
-    implementation project(":api:coroutines")
+    implementation project(":foundation:coroutines:api")
     implementation project(":api:db")
-    implementation project(":api:log")
+    implementation project(":foundation:log:api")
     implementation project(":api:user")
     implementation(
             libs.hilt,

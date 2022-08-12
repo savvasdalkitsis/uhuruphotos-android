@@ -15,8 +15,8 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.implementation.gallery.page.trash.seam
 
-import com.savvasdalkitsis.uhuruphotos.api.navigation.Navigator
-import com.savvasdalkitsis.uhuruphotos.api.seam.EffectHandler
+import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.Navigator
+import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.EffectHandler
 import com.savvasdalkitsis.uhuruphotos.api.settings.navigation.SettingsNavigationTarget
 import com.savvasdalkitsis.uhuruphotos.implementation.gallery.page.trash.seam.TrashEffect.NavigateToAppSettings
 import javax.inject.Inject

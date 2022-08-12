@@ -27,9 +27,9 @@ import androidx.work.impl.utils.futures.SettableFuture
 import androidx.work.impl.utils.taskexecutor.TaskExecutor
 import androidx.work.workDataOf
 import com.google.common.util.concurrent.Futures.immediateFuture
-import com.savvasdalkitsis.uhuruphotos.api.notification.ForegroundInfoBuilder
-import com.savvasdalkitsis.uhuruphotos.api.notification.NotificationChannels.JOBS_CHANNEL_ID
-import com.savvasdalkitsis.uhuruphotos.api.strings.R.string
+import com.savvasdalkitsis.uhuruphotos.foundation.notification.api.ForegroundInfoBuilder
+import com.savvasdalkitsis.uhuruphotos.foundation.notification.api.NotificationChannels.JOBS_CHANNEL_ID
+import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
 import com.savvasdalkitsis.uhuruphotos.implementation.albums.repository.AlbumsRepository
 import com.savvasdalkitsis.uhuruphotos.implementation.albums.worker.AlbumDownloadWorker.Companion.Progress
 import io.mockk.coEvery

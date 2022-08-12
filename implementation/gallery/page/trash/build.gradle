@@ -11,15 +11,15 @@ android {
 dependencies {
     implementation project(":api:albums")
     implementation project(":api:gallery:page")
-    implementation project(":api:biometrics")
-    implementation project(":api:coroutines")
+    implementation project(":foundation:biometrics:api")
+    implementation project(":foundation:coroutines:api")
     implementation project(":api:gallery")
-    implementation project(":api:navigation")
-    implementation project(":api:seam")
+    implementation project(":foundation:navigation:api")
+    implementation project(":foundation:seam:api")
     implementation project(":api:settings")
-    implementation project(":api:strings")
+    implementation project(":foundation:strings:api")
     implementation project(":api:gallery:page:trash")
-    implementation project(":api:ui")
+    implementation project(":foundation:ui:api")
     implementation(
             libs.accompanist.swiperefresh,
             libs.androidx.compose.material,

@@ -23,12 +23,12 @@ import com.google.android.gms.common.ConnectionResult.SERVICE_VERSION_UPDATE_REQ
 import com.google.android.gms.common.ConnectionResult.SIGN_IN_REQUIRED
 import com.google.android.gms.common.ConnectionResult.SUCCESS
 import com.google.android.gms.common.GoogleApiAvailability
-import com.savvasdalkitsis.uhuruphotos.api.log.Log
-import com.savvasdalkitsis.uhuruphotos.api.map.model.MapProvider
-import com.savvasdalkitsis.uhuruphotos.api.map.model.MapProvider.Google
-import com.savvasdalkitsis.uhuruphotos.api.map.model.MapProvider.MapBox
 import com.savvasdalkitsis.uhuruphotos.api.settings.usecase.SettingsUseCase
-import com.savvasdalkitsis.uhuruphotos.api.ui.theme.ThemeMode
+import com.savvasdalkitsis.uhuruphotos.foundation.log.api.Log
+import com.savvasdalkitsis.uhuruphotos.foundation.map.api.model.MapProvider
+import com.savvasdalkitsis.uhuruphotos.foundation.map.api.model.MapProvider.Google
+import com.savvasdalkitsis.uhuruphotos.foundation.map.api.model.MapProvider.MapBox
+import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.theme.ThemeMode
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers

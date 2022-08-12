@@ -33,10 +33,10 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.savvasdalkitsis.uhuruphotos.api.albums.model.Album
 import com.savvasdalkitsis.uhuruphotos.api.albums.model.previewAlbumEmpty
-import com.savvasdalkitsis.uhuruphotos.api.icons.R.drawable
 import com.savvasdalkitsis.uhuruphotos.api.media.page.domain.model.MediaItemSelectionMode
-import com.savvasdalkitsis.uhuruphotos.api.ui.theme.PreviewAppTheme
-import com.savvasdalkitsis.uhuruphotos.api.ui.view.ActionIcon
+import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.R.drawable
+import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.theme.PreviewAppTheme
+import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.view.ActionIcon
 
 @Composable
 internal fun GalleryGroupHeader(

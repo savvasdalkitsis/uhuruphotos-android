@@ -18,7 +18,7 @@ package com.savvasdalkitsis.uhuruphotos.implementation.settings.usecase
 import coil.disk.DiskCache
 import coil.memory.MemoryCache
 import com.google.android.exoplayer2.upstream.cache.CacheDataSource
-import com.savvasdalkitsis.uhuruphotos.api.video.evictAll
+import com.savvasdalkitsis.uhuruphotos.foundation.video.api.evictAll
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableSharedFlow

@@ -15,7 +15,7 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.implementation.settings.view.state
 
-import com.savvasdalkitsis.uhuruphotos.api.map.model.MapProvider
+import com.savvasdalkitsis.uhuruphotos.foundation.map.api.model.MapProvider
 
 sealed class MapProviderState {
     object NoOptions: MapProviderState()

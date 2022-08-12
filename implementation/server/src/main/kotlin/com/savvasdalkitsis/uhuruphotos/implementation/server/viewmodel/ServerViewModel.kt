@@ -16,8 +16,8 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.implementation.server.viewmodel
 
 import androidx.lifecycle.ViewModel
-import com.savvasdalkitsis.uhuruphotos.api.seam.Seam
-import com.savvasdalkitsis.uhuruphotos.api.seam.SeamViaHandler.Companion.handler
+import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.Seam
+import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.handler
 import com.savvasdalkitsis.uhuruphotos.implementation.server.seam.ServerAction
 import com.savvasdalkitsis.uhuruphotos.implementation.server.seam.ServerActionHandler
 import com.savvasdalkitsis.uhuruphotos.implementation.server.seam.ServerEffect
@@ -32,5 +32,5 @@ internal class ServerViewModel @Inject constructor(
 ) : ViewModel(),
     Seam<ServerState, ServerEffect, ServerAction, ServerMutation> by handler(
         handler,
-        ServerState.Loading(false),
+        ServerState.Loading(false)
     )

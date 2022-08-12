@@ -23,7 +23,7 @@ import com.savvasdalkitsis.uhuruphotos.api.gallery.page.view.state.GalleryDetail
 import com.savvasdalkitsis.uhuruphotos.api.gallery.page.view.state.GalleryPageState
 import com.savvasdalkitsis.uhuruphotos.api.gallery.page.view.state.Title
 import com.savvasdalkitsis.uhuruphotos.api.media.page.domain.model.MediaSequenceDataSource
-import com.savvasdalkitsis.uhuruphotos.api.seam.ActionHandler
+import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.ActionHandler
 import com.savvasdalkitsis.uhuruphotos.implementation.gallery.page.local.usecase.LocalAlbumUseCase
 import kotlinx.coroutines.flow.map
 import javax.inject.Inject

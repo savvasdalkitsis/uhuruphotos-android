@@ -15,7 +15,7 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.implementation.media.page.seam
 
-import com.savvasdalkitsis.uhuruphotos.api.map.model.LatLon
+import com.savvasdalkitsis.uhuruphotos.foundation.map.api.model.LatLon
 
 sealed class MediaItemPageEffect {
     data class LaunchMap(val gps: LatLon) : MediaItemPageEffect()

@@ -16,8 +16,8 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.implementation.settings.viewmodel
 
 import androidx.lifecycle.ViewModel
-import com.savvasdalkitsis.uhuruphotos.api.seam.Seam
-import com.savvasdalkitsis.uhuruphotos.api.seam.SeamViaHandler.Companion.handler
+import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.Seam
+import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.handler
 import com.savvasdalkitsis.uhuruphotos.implementation.settings.seam.SettingsAction
 import com.savvasdalkitsis.uhuruphotos.implementation.settings.seam.SettingsActionHandler
 import com.savvasdalkitsis.uhuruphotos.implementation.settings.seam.SettingsEffect
@@ -32,5 +32,5 @@ internal class SettingsViewModel @Inject constructor(
 ) : ViewModel(),
     Seam<SettingsState, SettingsEffect, SettingsAction, SettingsMutation> by handler(
         handler,
-        SettingsState(),
+        SettingsState()
     )

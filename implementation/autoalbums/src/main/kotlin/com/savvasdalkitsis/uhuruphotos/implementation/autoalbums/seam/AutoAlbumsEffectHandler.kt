@@ -16,10 +16,10 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.implementation.autoalbums.seam
 
 import com.savvasdalkitsis.uhuruphotos.api.gallery.page.album.auto.navigation.AutoAlbumNavigationTarget
-import com.savvasdalkitsis.uhuruphotos.api.navigation.Navigator
-import com.savvasdalkitsis.uhuruphotos.api.seam.EffectHandler
-import com.savvasdalkitsis.uhuruphotos.api.strings.R.string
-import com.savvasdalkitsis.uhuruphotos.api.toaster.Toaster
+import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.Navigator
+import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.EffectHandler
+import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
+import com.savvasdalkitsis.uhuruphotos.foundation.toaster.api.Toaster
 import com.savvasdalkitsis.uhuruphotos.implementation.autoalbums.seam.AutoAlbumsEffect.ErrorLoadingAlbums
 import com.savvasdalkitsis.uhuruphotos.implementation.autoalbums.seam.AutoAlbumsEffect.NavigateBack
 import com.savvasdalkitsis.uhuruphotos.implementation.autoalbums.seam.AutoAlbumsEffect.NavigateToAutoAlbum

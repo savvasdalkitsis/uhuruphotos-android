@@ -27,9 +27,9 @@ import androidx.compose.ui.unit.dp
 import com.google.accompanist.swiperefresh.SwipeRefresh
 import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 import com.savvasdalkitsis.uhuruphotos.api.albums.view.state.AlbumSorting
-import com.savvasdalkitsis.uhuruphotos.api.ui.view.BackNavButton
-import com.savvasdalkitsis.uhuruphotos.api.ui.view.CommonScaffold
-import com.savvasdalkitsis.uhuruphotos.api.ui.view.NoContent
+import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.view.BackNavButton
+import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.view.CommonScaffold
+import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.view.NoContent
 
 @Composable
 fun AlbumsPage(

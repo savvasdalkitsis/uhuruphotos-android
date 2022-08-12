@@ -19,7 +19,7 @@ import com.savvasdalkitsis.uhuruphotos.api.albums.model.Album
 import com.savvasdalkitsis.uhuruphotos.api.gallery.view.state.GalleryDisplay
 import com.savvasdalkitsis.uhuruphotos.api.gallery.view.state.GalleryState
 import com.savvasdalkitsis.uhuruphotos.api.people.view.state.Person
-import com.savvasdalkitsis.uhuruphotos.api.seam.Mutation
+import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.Mutation
 import com.savvasdalkitsis.uhuruphotos.implementation.person.view.state.PersonState
 
 sealed class PersonMutation(

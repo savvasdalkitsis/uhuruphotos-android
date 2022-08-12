@@ -19,11 +19,11 @@ import androidx.lifecycle.ViewModel
 import com.savvasdalkitsis.uhuruphotos.api.gallery.page.seam.GalleryPageAction
 import com.savvasdalkitsis.uhuruphotos.api.gallery.page.seam.GalleryPageEffect
 import com.savvasdalkitsis.uhuruphotos.api.gallery.page.view.state.GalleryPageState
-import com.savvasdalkitsis.uhuruphotos.api.seam.CompositeActionHandler
-import com.savvasdalkitsis.uhuruphotos.api.seam.Either
-import com.savvasdalkitsis.uhuruphotos.api.seam.Mutation
-import com.savvasdalkitsis.uhuruphotos.api.seam.Seam
-import com.savvasdalkitsis.uhuruphotos.api.seam.SeamViaHandler.Companion.handler
+import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.CompositeActionHandler
+import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.Either
+import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.Mutation
+import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.Seam
+import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.handler
 import com.savvasdalkitsis.uhuruphotos.implementation.gallery.page.local.seam.LocalAlbumAction
 import com.savvasdalkitsis.uhuruphotos.implementation.gallery.page.local.seam.LocalAlbumActionHandler
 import com.savvasdalkitsis.uhuruphotos.implementation.gallery.page.local.seam.LocalAlbumEffect
@@ -45,5 +45,5 @@ internal class LocalAlbumViewModel @Inject constructor(
         localAlbumPageActionHandler,
         localAlbumActionHandler,
     ),
-    GalleryPageState() to LocalAlbumState(),
+    GalleryPageState() to LocalAlbumState()
 )

@@ -19,14 +19,14 @@ import android.content.ContentResolver
 import android.graphics.BitmapFactory.Options
 import android.graphics.BitmapFactory.decodeStream
 import androidx.palette.graphics.Palette
-import com.savvasdalkitsis.api.exif.usecase.ExifUseCase
+import com.savvasdalkitsis.uhuruphotos.foundation.exif.api.usecase.ExifUseCase
 import com.savvasdalkitsis.uhuruphotos.api.db.extensions.async
 import com.savvasdalkitsis.uhuruphotos.api.db.extensions.await
 import com.savvasdalkitsis.uhuruphotos.api.db.extensions.awaitSingleOrNull
 import com.savvasdalkitsis.uhuruphotos.api.db.media.LocalMediaItemDetails
 import com.savvasdalkitsis.uhuruphotos.api.db.media.LocalMediaItemDetailsQueries
-import com.savvasdalkitsis.uhuruphotos.api.log.log
-import com.savvasdalkitsis.uhuruphotos.api.log.runCatchingWithLog
+import com.savvasdalkitsis.uhuruphotos.foundation.log.api.log
+import com.savvasdalkitsis.uhuruphotos.foundation.log.api.runCatchingWithLog
 import com.savvasdalkitsis.uhuruphotos.implementation.media.local.module.LocalMediaModule
 import com.savvasdalkitsis.uhuruphotos.implementation.media.local.service.LocalMediaService
 import com.savvasdalkitsis.uhuruphotos.implementation.media.local.service.model.LocalMediaStoreServiceItem

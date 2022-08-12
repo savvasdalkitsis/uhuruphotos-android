@@ -23,7 +23,7 @@ import androidx.compose.ui.res.stringResource
 import com.savvasdalkitsis.uhuruphotos.api.albums.model.Album
 import com.savvasdalkitsis.uhuruphotos.api.gallery.view.Gallery
 import com.savvasdalkitsis.uhuruphotos.api.gallery.view.state.GalleryState
-import com.savvasdalkitsis.uhuruphotos.api.strings.R.string
+import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
 import com.savvasdalkitsis.uhuruphotos.implementation.heatmap.seam.HeatMapAction
 import com.savvasdalkitsis.uhuruphotos.implementation.heatmap.seam.HeatMapAction.SelectedPhoto
 import com.savvasdalkitsis.uhuruphotos.implementation.heatmap.view.state.HeatMapGalleryDisplay

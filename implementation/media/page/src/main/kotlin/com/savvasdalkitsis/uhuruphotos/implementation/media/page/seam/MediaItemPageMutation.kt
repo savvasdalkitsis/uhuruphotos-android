@@ -18,7 +18,7 @@ package com.savvasdalkitsis.uhuruphotos.implementation.media.page.seam
 import androidx.annotation.StringRes
 import com.savvasdalkitsis.uhuruphotos.api.media.page.domain.model.MediaId
 import com.savvasdalkitsis.uhuruphotos.api.media.page.domain.model.MediaItemDetails
-import com.savvasdalkitsis.uhuruphotos.api.seam.Mutation
+import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.Mutation
 import com.savvasdalkitsis.uhuruphotos.implementation.media.page.domain.usecase.MediaItemMetadata
 import com.savvasdalkitsis.uhuruphotos.implementation.media.page.view.state.MediaItemPageState
 import com.savvasdalkitsis.uhuruphotos.implementation.media.page.view.state.OriginalFileIconState

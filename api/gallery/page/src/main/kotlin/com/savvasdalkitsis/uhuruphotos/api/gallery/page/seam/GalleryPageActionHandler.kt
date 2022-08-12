@@ -15,7 +15,6 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.api.gallery.page.seam
 
-import com.savvasdalkitsis.uhuruphotos.api.coroutines.safelyOnStartIgnoring
 import com.savvasdalkitsis.uhuruphotos.api.gallery.page.seam.GalleryPageAction.ChangeGalleryDisplay
 import com.savvasdalkitsis.uhuruphotos.api.gallery.page.seam.GalleryPageAction.LoadGallery
 import com.savvasdalkitsis.uhuruphotos.api.gallery.page.seam.GalleryPageAction.NavigateBack
@@ -32,7 +31,8 @@ import com.savvasdalkitsis.uhuruphotos.api.gallery.page.view.state.GalleryPageSt
 import com.savvasdalkitsis.uhuruphotos.api.gallery.view.state.GalleryDisplay
 import com.savvasdalkitsis.uhuruphotos.api.gallery.view.state.PredefinedGalleryDisplay
 import com.savvasdalkitsis.uhuruphotos.api.media.page.domain.model.MediaSequenceDataSource
-import com.savvasdalkitsis.uhuruphotos.api.seam.ActionHandler
+import com.savvasdalkitsis.uhuruphotos.foundation.coroutines.api.safelyOnStartIgnoring
+import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.ActionHandler
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.flow

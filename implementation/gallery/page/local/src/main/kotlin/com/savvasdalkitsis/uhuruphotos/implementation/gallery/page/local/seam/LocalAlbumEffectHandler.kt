@@ -15,7 +15,7 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.implementation.gallery.page.local.seam
 
-import com.savvasdalkitsis.uhuruphotos.api.seam.EffectHandler
+import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.EffectHandler
 import javax.inject.Inject
 
 class LocalAlbumEffectHandler @Inject constructor(

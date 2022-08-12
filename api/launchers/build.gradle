@@ -1,9 +1,0 @@
-android {
-    namespace 'com.savvasdalkitsis.uhuruphotos.api.launchers'
-}
-
-dependencies {
-    implementation(
-            libs.kotlinx.coroutines,
-    )
-}

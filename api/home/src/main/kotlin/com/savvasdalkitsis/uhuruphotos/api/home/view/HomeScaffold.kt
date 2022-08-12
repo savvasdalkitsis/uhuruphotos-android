@@ -28,8 +28,8 @@ import com.savvasdalkitsis.uhuruphotos.api.home.navigation.HomeNavigationBar
 import com.savvasdalkitsis.uhuruphotos.api.home.navigation.NavigationStyle.BOTTOM_BAR
 import com.savvasdalkitsis.uhuruphotos.api.home.navigation.NavigationStyle.NAVIGATION_RAIL
 import com.savvasdalkitsis.uhuruphotos.api.home.navigation.homeNavigationStyle
-import com.savvasdalkitsis.uhuruphotos.api.ui.view.CommonScaffold
-import com.savvasdalkitsis.uhuruphotos.api.ui.view.Logo
+import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.view.CommonScaffold
+import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.view.Logo
 
 @Composable
 fun HomeScaffold(

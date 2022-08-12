@@ -16,12 +16,12 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.implementation.search.usecase
 
 import com.savvasdalkitsis.uhuruphotos.api.albums.model.Album
-import com.savvasdalkitsis.uhuruphotos.api.coroutines.onStartWithResult
-import com.savvasdalkitsis.uhuruphotos.api.coroutines.safelyOnStartIgnoring
-import com.savvasdalkitsis.uhuruphotos.api.date.DateDisplayer
+import com.savvasdalkitsis.uhuruphotos.foundation.coroutines.api.onStartWithResult
+import com.savvasdalkitsis.uhuruphotos.foundation.coroutines.api.safelyOnStartIgnoring
+import com.savvasdalkitsis.uhuruphotos.foundation.date.api.DateDisplayer
 import com.savvasdalkitsis.uhuruphotos.api.db.extensions.isVideo
 import com.savvasdalkitsis.uhuruphotos.api.db.search.GetSearchResults
-import com.savvasdalkitsis.uhuruphotos.api.group.model.Group
+import com.savvasdalkitsis.uhuruphotos.foundation.group.api.model.Group
 import com.savvasdalkitsis.uhuruphotos.api.media.page.domain.model.MediaId
 import com.savvasdalkitsis.uhuruphotos.api.media.page.domain.model.MediaItem
 import com.savvasdalkitsis.uhuruphotos.api.media.remote.domain.usecase.RemoteMediaUseCase

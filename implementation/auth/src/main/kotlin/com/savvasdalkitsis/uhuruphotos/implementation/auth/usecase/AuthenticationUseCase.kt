@@ -26,8 +26,8 @@ import com.savvasdalkitsis.uhuruphotos.api.db.auth.TokenQueries
 import com.savvasdalkitsis.uhuruphotos.api.db.entities.auth.TokenType
 import com.savvasdalkitsis.uhuruphotos.api.db.extensions.async
 import com.savvasdalkitsis.uhuruphotos.api.db.extensions.awaitSingleOrNull
-import com.savvasdalkitsis.uhuruphotos.api.log.log
-import com.savvasdalkitsis.uhuruphotos.api.log.runCatchingWithLog
+import com.savvasdalkitsis.uhuruphotos.foundation.log.api.log
+import com.savvasdalkitsis.uhuruphotos.foundation.log.api.runCatchingWithLog
 import com.savvasdalkitsis.uhuruphotos.implementation.auth.network.jwt
 import com.savvasdalkitsis.uhuruphotos.implementation.auth.service.AuthenticationService
 import com.savvasdalkitsis.uhuruphotos.implementation.auth.service.model.AuthenticationCredentials

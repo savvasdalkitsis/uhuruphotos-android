@@ -18,8 +18,8 @@ package com.savvasdalkitsis.uhuruphotos.implementation.server.navigation
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
-import com.savvasdalkitsis.uhuruphotos.api.navigation.NavigationTarget
-import com.savvasdalkitsis.uhuruphotos.api.navigation.navigationTarget
+import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.NavigationTarget
+import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.navigationTarget
 import com.savvasdalkitsis.uhuruphotos.api.server.navigation.ServerNavigationTarget.auto
 import com.savvasdalkitsis.uhuruphotos.api.server.navigation.ServerNavigationTarget.registrationName
 import com.savvasdalkitsis.uhuruphotos.api.settings.usecase.SettingsUseCase

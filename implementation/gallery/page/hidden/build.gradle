@@ -11,15 +11,15 @@ android {
 dependencies {
     implementation project(':api:gallery:page')
     implementation project(':api:albums')
-    implementation project(':api:biometrics')
+    implementation project(':foundation:biometrics:api')
     implementation project(':api:gallery:page:hidden')
-    implementation project(':api:date')
+    implementation project(':foundation:date:api')
     implementation project(":api:db")
     implementation project(":api:gallery")
-    implementation project(":api:navigation")
+    implementation project(":foundation:navigation:api")
     implementation project(':api:media:page')
     implementation project(":api:settings")
-    implementation project(":api:strings")
+    implementation project(":foundation:strings:api")
     implementation(
             libs.androidx.compose.hilt.navigation,
             libs.flowpreferences,

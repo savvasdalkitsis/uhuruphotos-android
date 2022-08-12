@@ -17,8 +17,8 @@ package com.savvasdalkitsis.uhuruphotos.implementation.heatmap.seam
 
 import androidx.compose.ui.geometry.Offset
 import com.google.accompanist.permissions.PermissionState
-import com.savvasdalkitsis.uhuruphotos.api.map.model.LatLon
-import com.savvasdalkitsis.uhuruphotos.api.map.view.MapViewState
+import com.savvasdalkitsis.uhuruphotos.foundation.map.api.model.LatLon
+import com.savvasdalkitsis.uhuruphotos.foundation.map.api.view.MapViewState
 import com.savvasdalkitsis.uhuruphotos.api.media.page.domain.model.MediaItem
 
 sealed class HeatMapAction {

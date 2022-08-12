@@ -18,11 +18,11 @@ package com.savvasdalkitsis.uhuruphotos.implementation.settings.view
 import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.stringResource
-import com.savvasdalkitsis.uhuruphotos.api.strings.R.string
-import com.savvasdalkitsis.uhuruphotos.api.ui.theme.ThemeMode
-import com.savvasdalkitsis.uhuruphotos.api.ui.theme.ThemeMode.DARK_MODE
-import com.savvasdalkitsis.uhuruphotos.api.ui.theme.ThemeMode.FOLLOW_SYSTEM
-import com.savvasdalkitsis.uhuruphotos.api.ui.theme.ThemeMode.LIGHT_MODE
+import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
+import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.theme.ThemeMode
+import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.theme.ThemeMode.DARK_MODE
+import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.theme.ThemeMode.FOLLOW_SYSTEM
+import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.theme.ThemeMode.LIGHT_MODE
 import com.savvasdalkitsis.uhuruphotos.implementation.settings.seam.SettingsAction
 import com.savvasdalkitsis.uhuruphotos.implementation.settings.seam.SettingsAction.ChangeThemeMode
 import com.savvasdalkitsis.uhuruphotos.implementation.settings.view.state.SettingsState

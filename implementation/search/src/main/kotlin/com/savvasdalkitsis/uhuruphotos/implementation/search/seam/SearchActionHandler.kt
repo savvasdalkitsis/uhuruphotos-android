@@ -15,15 +15,15 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.implementation.search.seam
 
-import com.savvasdalkitsis.uhuruphotos.api.coroutines.onErrors
-import com.savvasdalkitsis.uhuruphotos.api.coroutines.onErrorsIgnore
+import com.savvasdalkitsis.uhuruphotos.foundation.coroutines.api.onErrors
+import com.savvasdalkitsis.uhuruphotos.foundation.coroutines.api.onErrorsIgnore
 import com.savvasdalkitsis.uhuruphotos.api.db.people.People
 import com.savvasdalkitsis.uhuruphotos.api.feedpage.usecase.FeedPageUseCase
-import com.savvasdalkitsis.uhuruphotos.api.log.log
+import com.savvasdalkitsis.uhuruphotos.foundation.log.api.log
 import com.savvasdalkitsis.uhuruphotos.api.media.remote.domain.usecase.RemoteMediaUseCase
 import com.savvasdalkitsis.uhuruphotos.api.people.usecase.PeopleUseCase
 import com.savvasdalkitsis.uhuruphotos.api.people.view.state.toPerson
-import com.savvasdalkitsis.uhuruphotos.api.seam.ActionHandler
+import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.ActionHandler
 import com.savvasdalkitsis.uhuruphotos.api.settings.usecase.SettingsUseCase
 import com.savvasdalkitsis.uhuruphotos.implementation.search.seam.SearchAction.ChangeDisplay
 import com.savvasdalkitsis.uhuruphotos.implementation.search.seam.SearchAction.ChangeFocus

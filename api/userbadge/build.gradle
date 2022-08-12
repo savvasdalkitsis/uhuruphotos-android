@@ -10,9 +10,9 @@ android {
 
 dependencies {
 
-    implementation project(":api:icons")
-    implementation project(':api:image')
-    implementation project(":api:ui")
+    implementation project(":foundation:icons:api")
+    implementation project(':foundation:image:api')
+    implementation project(":foundation:ui:api")
     implementation(
             libs.androidx.compose.material,
             libs.androidx.work,

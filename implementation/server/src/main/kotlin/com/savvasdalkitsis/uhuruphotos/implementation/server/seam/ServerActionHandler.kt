@@ -21,9 +21,9 @@ import com.savvasdalkitsis.uhuruphotos.api.auth.model.AuthStatus.ServerDown
 import com.savvasdalkitsis.uhuruphotos.api.auth.model.AuthStatus.Unauthenticated
 import com.savvasdalkitsis.uhuruphotos.api.auth.usecase.AuthenticationUseCase
 import com.savvasdalkitsis.uhuruphotos.api.auth.usecase.ServerUseCase
-import com.savvasdalkitsis.uhuruphotos.api.http.isHttpUrl
-import com.savvasdalkitsis.uhuruphotos.api.http.isValidUrlOrDomain
-import com.savvasdalkitsis.uhuruphotos.api.seam.ActionHandler
+import com.savvasdalkitsis.uhuruphotos.foundation.http.api.isHttpUrl
+import com.savvasdalkitsis.uhuruphotos.foundation.http.api.isValidUrlOrDomain
+import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.ActionHandler
 import com.savvasdalkitsis.uhuruphotos.api.settings.usecase.SettingsUseCase
 import com.savvasdalkitsis.uhuruphotos.implementation.server.seam.ServerAction.AttemptChangeServerUrlTo
 import com.savvasdalkitsis.uhuruphotos.implementation.server.seam.ServerAction.ChangeServerUrlTo

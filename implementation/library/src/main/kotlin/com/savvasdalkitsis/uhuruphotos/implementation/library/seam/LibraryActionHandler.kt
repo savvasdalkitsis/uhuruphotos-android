@@ -16,7 +16,7 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.implementation.library.seam
 
 import com.savvasdalkitsis.uhuruphotos.api.autoalbums.usecase.AutoAlbumsUseCase
-import com.savvasdalkitsis.uhuruphotos.api.coroutines.safelyOnStartIgnoring
+import com.savvasdalkitsis.uhuruphotos.foundation.coroutines.api.safelyOnStartIgnoring
 import com.savvasdalkitsis.uhuruphotos.api.media.local.domain.model.LocalMediaFolder
 import com.savvasdalkitsis.uhuruphotos.api.media.local.domain.usecase.LocalMediaUseCase
 import com.savvasdalkitsis.uhuruphotos.api.media.local.worker.LocalMediaWorkScheduler
@@ -25,7 +25,7 @@ import com.savvasdalkitsis.uhuruphotos.api.media.page.domain.model.MediaItem
 import com.savvasdalkitsis.uhuruphotos.api.media.page.domain.model.MediaItemsOnDevice.Found
 import com.savvasdalkitsis.uhuruphotos.api.media.page.domain.model.MediaItemsOnDevice.RequiresPermissions
 import com.savvasdalkitsis.uhuruphotos.api.media.page.domain.usecase.MediaUseCase
-import com.savvasdalkitsis.uhuruphotos.api.seam.ActionHandler
+import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.ActionHandler
 import com.savvasdalkitsis.uhuruphotos.api.useralbums.usecase.UserAlbumsUseCase
 import com.savvasdalkitsis.uhuruphotos.implementation.library.seam.LibraryAction.AutoAlbumsSelected
 import com.savvasdalkitsis.uhuruphotos.implementation.library.seam.LibraryAction.FavouritePhotosSelected

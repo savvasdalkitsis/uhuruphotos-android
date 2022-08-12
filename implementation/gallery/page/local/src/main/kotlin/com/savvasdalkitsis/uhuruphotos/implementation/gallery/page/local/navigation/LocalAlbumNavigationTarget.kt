@@ -25,10 +25,10 @@ import com.savvasdalkitsis.uhuruphotos.api.gallery.page.seam.GalleryPageAction.L
 import com.savvasdalkitsis.uhuruphotos.api.gallery.page.seam.GalleryPageEffect
 import com.savvasdalkitsis.uhuruphotos.api.gallery.page.seam.GalleryPageEffectsHandler
 import com.savvasdalkitsis.uhuruphotos.api.gallery.page.view.state.GalleryPageState
-import com.savvasdalkitsis.uhuruphotos.api.navigation.NavigationTarget
-import com.savvasdalkitsis.uhuruphotos.api.navigation.navigationTarget
-import com.savvasdalkitsis.uhuruphotos.api.seam.CompositeEffectHandler
-import com.savvasdalkitsis.uhuruphotos.api.seam.Either
+import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.NavigationTarget
+import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.navigationTarget
+import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.CompositeEffectHandler
+import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.Either
 import com.savvasdalkitsis.uhuruphotos.api.settings.usecase.SettingsUseCase
 import com.savvasdalkitsis.uhuruphotos.implementation.gallery.page.local.seam.LocalAlbumAction
 import com.savvasdalkitsis.uhuruphotos.implementation.gallery.page.local.seam.LocalAlbumEffect

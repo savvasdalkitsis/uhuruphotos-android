@@ -21,9 +21,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.google.accompanist.permissions.PermissionState
 import com.google.accompanist.permissions.isGranted
-import com.savvasdalkitsis.uhuruphotos.api.map.view.MapView
-import com.savvasdalkitsis.uhuruphotos.api.map.view.MapViewState
-import com.savvasdalkitsis.uhuruphotos.api.ui.insets.insetsTop
+import com.savvasdalkitsis.uhuruphotos.foundation.map.api.view.MapView
+import com.savvasdalkitsis.uhuruphotos.foundation.map.api.view.MapViewState
+import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.insets.insetsTop
 import com.savvasdalkitsis.uhuruphotos.implementation.heatmap.seam.HeatMapAction
 import com.savvasdalkitsis.uhuruphotos.implementation.heatmap.seam.HeatMapAction.CameraViewPortChanged
 import com.savvasdalkitsis.uhuruphotos.implementation.heatmap.view.state.HeatMapState

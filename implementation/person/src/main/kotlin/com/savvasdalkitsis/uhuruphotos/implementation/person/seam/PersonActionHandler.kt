@@ -19,7 +19,7 @@ import com.savvasdalkitsis.uhuruphotos.api.media.remote.domain.usecase.RemoteMed
 import com.savvasdalkitsis.uhuruphotos.api.people.usecase.PeopleUseCase
 import com.savvasdalkitsis.uhuruphotos.api.people.view.state.toPerson
 import com.savvasdalkitsis.uhuruphotos.api.person.usecase.PersonUseCase
-import com.savvasdalkitsis.uhuruphotos.api.seam.ActionHandler
+import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.ActionHandler
 import com.savvasdalkitsis.uhuruphotos.implementation.person.seam.PersonAction.ChangeDisplay
 import com.savvasdalkitsis.uhuruphotos.implementation.person.seam.PersonAction.LoadPerson
 import com.savvasdalkitsis.uhuruphotos.implementation.person.seam.PersonAction.NavigateBack

@@ -20,11 +20,11 @@ import com.savvasdalkitsis.uhuruphotos.api.accountoverview.seam.AccountOverviewA
 import com.savvasdalkitsis.uhuruphotos.api.accountoverview.seam.AccountOverviewActionHandler
 import com.savvasdalkitsis.uhuruphotos.api.accountoverview.seam.AccountOverviewEffect
 import com.savvasdalkitsis.uhuruphotos.api.accountoverview.view.state.AccountOverviewState
-import com.savvasdalkitsis.uhuruphotos.api.seam.CompositeActionHandler
-import com.savvasdalkitsis.uhuruphotos.api.seam.Either
-import com.savvasdalkitsis.uhuruphotos.api.seam.Mutation
-import com.savvasdalkitsis.uhuruphotos.api.seam.Seam
-import com.savvasdalkitsis.uhuruphotos.api.seam.SeamViaHandler.Companion.handler
+import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.CompositeActionHandler
+import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.Either
+import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.Mutation
+import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.Seam
+import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.handler
 import com.savvasdalkitsis.uhuruphotos.implementation.search.seam.SearchAction
 import com.savvasdalkitsis.uhuruphotos.implementation.search.seam.SearchActionHandler
 import com.savvasdalkitsis.uhuruphotos.implementation.search.seam.SearchEffect
@@ -42,9 +42,9 @@ class SearchViewModel @Inject constructor(
         Either<SearchAction, AccountOverviewAction>,
         Mutation<Pair<SearchState, AccountOverviewState>>,
         > by handler(
-            CompositeActionHandler(
-                handler1 = searchActionHandler,
-                handler2 = accountOverviewActionHandler,
-            ),
-        SearchState() to AccountOverviewState(),
-    )
+    CompositeActionHandler(
+        handler1 = searchActionHandler,
+        handler2 = accountOverviewActionHandler,
+    ),
+    SearchState() to AccountOverviewState()
+)

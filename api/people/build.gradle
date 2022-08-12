@@ -10,9 +10,9 @@ android {
 
 dependencies {
     api project(":api:db")
-    implementation project(':api:image')
-    implementation project(':api:strings')
-    implementation project(':api:ui')
+    implementation project(':foundation:image:api')
+    implementation project(':foundation:strings:api')
+    implementation project(':foundation:ui:api')
     implementation(
             libs.androidx.compose.foundation,
             libs.androidx.compose.material,

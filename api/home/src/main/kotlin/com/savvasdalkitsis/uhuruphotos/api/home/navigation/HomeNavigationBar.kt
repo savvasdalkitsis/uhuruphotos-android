@@ -47,10 +47,10 @@ import com.savvasdalkitsis.uhuruphotos.api.gallery.view.state.GalleryDisplay
 import com.savvasdalkitsis.uhuruphotos.api.home.navigation.NavigationStyle.BOTTOM_BAR
 import com.savvasdalkitsis.uhuruphotos.api.home.navigation.NavigationStyle.NAVIGATION_RAIL
 import com.savvasdalkitsis.uhuruphotos.api.homenavigation.HomeNavigationRoutes
-import com.savvasdalkitsis.uhuruphotos.api.icons.R.drawable
-import com.savvasdalkitsis.uhuruphotos.api.strings.R.string
-import com.savvasdalkitsis.uhuruphotos.api.ui.theme.CustomColors
-import com.savvasdalkitsis.uhuruphotos.api.ui.window.LocalWindowSize
+import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.R.drawable
+import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
+import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.theme.CustomColors
+import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.window.LocalWindowSize
 
 @Composable
 fun homeNavigationStyle() = when (LocalWindowSize.current.widthSizeClass) {

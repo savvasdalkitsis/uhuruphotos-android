@@ -16,9 +16,9 @@ import com.savvasdalkitsis.uhuruphotos.api.media.page.navigation.MediaItemPageNa
 import com.savvasdalkitsis.uhuruphotos.api.media.page.navigation.MediaItemPageNavigationTarget.mediaItemId
 import com.savvasdalkitsis.uhuruphotos.api.media.page.navigation.MediaItemPageNavigationTarget.offsetFrom
 import com.savvasdalkitsis.uhuruphotos.api.media.page.navigation.MediaItemPageNavigationTarget.scale
-import com.savvasdalkitsis.uhuruphotos.api.navigation.NavigationTarget
-import com.savvasdalkitsis.uhuruphotos.api.navigation.navigationTarget
-import com.savvasdalkitsis.uhuruphotos.api.ui.theme.ThemeMode
+import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.NavigationTarget
+import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.navigationTarget
+import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.theme.ThemeMode
 import com.savvasdalkitsis.uhuruphotos.implementation.media.page.seam.MediaItemPageAction
 import com.savvasdalkitsis.uhuruphotos.implementation.media.page.seam.MediaItemPageEffect
 import com.savvasdalkitsis.uhuruphotos.implementation.media.page.seam.MediaItemPageEffectsHandler

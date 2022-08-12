@@ -16,8 +16,8 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.implementation.autoalbums.seam
 
 import com.savvasdalkitsis.uhuruphotos.api.autoalbums.usecase.AutoAlbumsUseCase
-import com.savvasdalkitsis.uhuruphotos.api.coroutines.safelyOnStartIgnoring
-import com.savvasdalkitsis.uhuruphotos.api.seam.ActionHandler
+import com.savvasdalkitsis.uhuruphotos.foundation.coroutines.api.safelyOnStartIgnoring
+import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.ActionHandler
 import com.savvasdalkitsis.uhuruphotos.implementation.autoalbums.seam.AutoAlbumsAction.AutoAlbumSelected
 import com.savvasdalkitsis.uhuruphotos.implementation.autoalbums.seam.AutoAlbumsAction.ChangeSorting
 import com.savvasdalkitsis.uhuruphotos.implementation.autoalbums.seam.AutoAlbumsAction.Load

@@ -19,12 +19,12 @@ import android.app.Application
 import android.content.Context
 import com.michaelflisar.lumberjack.FileLoggingSetup
 import com.michaelflisar.lumberjack.L
-import com.savvasdalkitsis.uhuruphotos.api.icons.R
-import com.savvasdalkitsis.uhuruphotos.api.initializer.ApplicationCreated
-import com.savvasdalkitsis.uhuruphotos.api.log.Log
-import com.savvasdalkitsis.uhuruphotos.api.log.logError
-import com.savvasdalkitsis.uhuruphotos.api.notification.NotificationChannels
 import com.savvasdalkitsis.uhuruphotos.api.settings.usecase.SettingsUseCase
+import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.R
+import com.savvasdalkitsis.uhuruphotos.foundation.initializer.api.ApplicationCreated
+import com.savvasdalkitsis.uhuruphotos.foundation.log.api.Log
+import com.savvasdalkitsis.uhuruphotos.foundation.log.api.logError
+import com.savvasdalkitsis.uhuruphotos.foundation.notification.api.NotificationChannels
 import com.savvasdalkitsis.uhuruphotos.implementation.log.FeedbackUseCase
 import com.savvasdalkitsis.uhuruphotos.implementation.log.showCrashNotification
 import dagger.hilt.android.qualifiers.ApplicationContext

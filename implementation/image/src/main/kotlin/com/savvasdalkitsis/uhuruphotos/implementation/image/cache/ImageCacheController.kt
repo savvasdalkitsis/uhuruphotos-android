@@ -17,7 +17,7 @@ package com.savvasdalkitsis.uhuruphotos.implementation.image.cache
 
 import coil.disk.DiskCache
 import coil.memory.MemoryCache
-import com.savvasdalkitsis.uhuruphotos.api.image.cache.ImageCacheController
+import com.savvasdalkitsis.uhuruphotos.foundation.image.api.cache.ImageCacheController
 import javax.inject.Inject
 
 class ImageCacheController @Inject constructor(

@@ -15,7 +15,7 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.implementation.feedpage.module
 
-import com.savvasdalkitsis.uhuruphotos.api.navigation.NavigationTarget
+import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.NavigationTarget
 import com.savvasdalkitsis.uhuruphotos.implementation.feedpage.navigation.FeedPageNavigationTarget
 import com.savvasdalkitsis.uhuruphotos.implementation.feedpage.usecase.FeedPageUseCase
 import dagger.Binds

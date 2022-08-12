@@ -15,7 +15,7 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.implementation.network.module
 
-import com.savvasdalkitsis.uhuruphotos.api.network.OkHttpBuilder
+import com.savvasdalkitsis.uhuruphotos.foundation.network.api.OkHttpBuilder
 import com.savvasdalkitsis.uhuruphotos.implementation.network.BasicOkHttpClient
 import com.savvasdalkitsis.uhuruphotos.implementation.network.BuildConfig.DEBUG
 import okhttp3.OkHttpClient.Builder

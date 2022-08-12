@@ -17,7 +17,7 @@ package com.savvasdalkitsis.uhuruphotos.implementation.media.page.view.info
 
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
-import com.savvasdalkitsis.uhuruphotos.api.icons.R.drawable
+import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.R.drawable
 import com.savvasdalkitsis.uhuruphotos.implementation.media.page.view.state.SingleMediaItemState
 
 @Composable

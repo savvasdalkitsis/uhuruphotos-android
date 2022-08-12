@@ -17,7 +17,7 @@ package com.savvasdalkitsis.uhuruphotos.implementation.auth.usecase
 
 import com.fredporciuncula.flow.preferences.FlowSharedPreferences
 import com.savvasdalkitsis.uhuruphotos.api.auth.usecase.ServerUseCase
-import com.savvasdalkitsis.uhuruphotos.api.http.prefixedWithHttpsIfNeeded
+import com.savvasdalkitsis.uhuruphotos.foundation.http.api.prefixedWithHttpsIfNeeded
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.filterNot
 import kotlinx.coroutines.flow.filterNotNull

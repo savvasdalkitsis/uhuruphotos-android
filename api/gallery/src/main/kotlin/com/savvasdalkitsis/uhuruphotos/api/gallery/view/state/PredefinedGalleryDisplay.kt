@@ -18,8 +18,8 @@ package com.savvasdalkitsis.uhuruphotos.api.gallery.view.state
 
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
-import com.savvasdalkitsis.uhuruphotos.api.icons.R.drawable
-import com.savvasdalkitsis.uhuruphotos.api.strings.R.string
+import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.R.drawable
+import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
 import kotlin.math.max
 import kotlin.math.min
 

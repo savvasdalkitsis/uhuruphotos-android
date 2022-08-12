@@ -15,8 +15,8 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.implementation.gallery.page.trash.seam
 
-import com.savvasdalkitsis.uhuruphotos.api.biometrics.usecase.BiometricsUseCase
-import com.savvasdalkitsis.uhuruphotos.api.seam.ActionHandler
+import com.savvasdalkitsis.uhuruphotos.foundation.biometrics.api.usecase.BiometricsUseCase
+import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.ActionHandler
 import com.savvasdalkitsis.uhuruphotos.api.settings.usecase.SettingsUseCase
 import com.savvasdalkitsis.uhuruphotos.implementation.gallery.page.trash.seam.TrashAction.FingerPrintActionPressed
 import com.savvasdalkitsis.uhuruphotos.implementation.gallery.page.trash.seam.TrashAction.Load

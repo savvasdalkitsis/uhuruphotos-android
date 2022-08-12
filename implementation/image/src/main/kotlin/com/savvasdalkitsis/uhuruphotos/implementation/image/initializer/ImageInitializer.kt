@@ -18,7 +18,7 @@ package com.savvasdalkitsis.uhuruphotos.implementation.image.initializer
 import android.app.Application
 import coil.Coil
 import coil.ImageLoader
-import com.savvasdalkitsis.uhuruphotos.api.initializer.ApplicationCreated
+import com.savvasdalkitsis.uhuruphotos.foundation.initializer.api.ApplicationCreated
 import javax.inject.Inject
 
 class ImageInitializer @Inject constructor(

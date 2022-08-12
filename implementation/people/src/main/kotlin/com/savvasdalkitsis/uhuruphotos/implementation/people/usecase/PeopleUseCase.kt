@@ -15,8 +15,8 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.implementation.people.usecase
 
-import com.savvasdalkitsis.uhuruphotos.api.coroutines.onStartWithResult
-import com.savvasdalkitsis.uhuruphotos.api.coroutines.safelyOnStartIgnoring
+import com.savvasdalkitsis.uhuruphotos.foundation.coroutines.api.onStartWithResult
+import com.savvasdalkitsis.uhuruphotos.foundation.coroutines.api.safelyOnStartIgnoring
 import com.savvasdalkitsis.uhuruphotos.api.db.people.People
 import com.savvasdalkitsis.uhuruphotos.api.people.usecase.PeopleUseCase
 import com.savvasdalkitsis.uhuruphotos.implementation.people.repository.PeopleRepository

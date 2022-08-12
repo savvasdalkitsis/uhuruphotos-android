@@ -16,7 +16,8 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.implementation.media.page.view
 
 import androidx.compose.runtime.Composable
-import com.savvasdalkitsis.uhuruphotos.api.ui.view.BackPressHandler
+import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.view.BackPressHandler
+import com.savvasdalkitsis.uhuruphotos.implementation.media.page.seam.MediaItemPageAction
 import com.savvasdalkitsis.uhuruphotos.implementation.media.page.view.state.MediaItemPageState
 
 @Composable
@@ -26,9 +27,9 @@ fun MediaItemPageBackPressHandler(
 ) {
     BackPressHandler {
         if (state.infoSheetHidden) {
-            action(com.savvasdalkitsis.uhuruphotos.implementation.media.page.seam.MediaItemPageAction.NavigateBack)
+            action(MediaItemPageAction.NavigateBack)
         } else {
-            action(com.savvasdalkitsis.uhuruphotos.implementation.media.page.seam.MediaItemPageAction.HideInfo)
+            action(MediaItemPageAction.HideInfo)
         }
     }
 }

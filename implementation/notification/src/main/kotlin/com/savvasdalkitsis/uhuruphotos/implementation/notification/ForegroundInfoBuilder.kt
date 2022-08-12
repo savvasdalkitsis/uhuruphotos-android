@@ -20,12 +20,12 @@ import android.content.pm.ServiceInfo
 import android.os.Build
 import androidx.core.app.NotificationCompat
 import androidx.work.ForegroundInfo
-import com.savvasdalkitsis.uhuruphotos.api.icons.R
-import com.savvasdalkitsis.uhuruphotos.api.notification.ForegroundInfoBuilder
+import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.R
+import com.savvasdalkitsis.uhuruphotos.foundation.notification.api.ForegroundInfoBuilder
 import javax.inject.Inject
 
 internal class ForegroundInfoBuilder @Inject constructor(
-) : ForegroundInfoBuilder{
+) : ForegroundInfoBuilder {
 
     override fun build(
         context: Context,

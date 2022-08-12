@@ -18,7 +18,7 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
 import com.savvasdalkitsis.uhuruphotos.api.media.page.domain.model.MediaGrid
 import com.savvasdalkitsis.uhuruphotos.api.media.page.domain.model.MediaItem
-import com.savvasdalkitsis.uhuruphotos.api.ui.theme.CustomColors
+import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.theme.CustomColors
 
 @Composable
 fun MediaGridThumbnail(

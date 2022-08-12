@@ -32,8 +32,8 @@ import com.savvasdalkitsis.uhuruphotos.api.media.page.domain.model.MediaId
 import com.savvasdalkitsis.uhuruphotos.api.media.page.domain.model.MediaItem
 import com.savvasdalkitsis.uhuruphotos.api.media.page.view.MediaGridThumbnail
 import com.savvasdalkitsis.uhuruphotos.api.media.page.view.MediaItemThumbnail
-import com.savvasdalkitsis.uhuruphotos.api.strings.R
 import com.savvasdalkitsis.uhuruphotos.api.useralbums.view.state.UserAlbum
+import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R
 import com.savvasdalkitsis.uhuruphotos.implementation.useralbums.seam.UserAlbumsAction
 import com.savvasdalkitsis.uhuruphotos.implementation.useralbums.seam.UserAlbumsAction.UserAlbumSelected
 

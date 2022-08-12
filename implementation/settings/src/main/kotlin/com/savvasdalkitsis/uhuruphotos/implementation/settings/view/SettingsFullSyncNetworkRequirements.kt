@@ -22,7 +22,7 @@ import androidx.work.NetworkType.CONNECTED
 import androidx.work.NetworkType.METERED
 import androidx.work.NetworkType.NOT_ROAMING
 import androidx.work.NetworkType.UNMETERED
-import com.savvasdalkitsis.uhuruphotos.api.strings.R.string
+import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
 import com.savvasdalkitsis.uhuruphotos.implementation.settings.seam.SettingsAction
 import com.savvasdalkitsis.uhuruphotos.implementation.settings.seam.SettingsAction.ChangeFullSyncNetworkRequirements
 import com.savvasdalkitsis.uhuruphotos.implementation.settings.view.state.SettingsState

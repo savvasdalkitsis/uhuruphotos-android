@@ -19,7 +19,7 @@ import com.savvasdalkitsis.uhuruphotos.api.db.extensions.async
 import com.savvasdalkitsis.uhuruphotos.api.db.extensions.awaitSingleOrNull
 import com.savvasdalkitsis.uhuruphotos.api.db.user.User
 import com.savvasdalkitsis.uhuruphotos.api.db.user.UserQueries
-import com.savvasdalkitsis.uhuruphotos.api.log.runCatchingWithLog
+import com.savvasdalkitsis.uhuruphotos.foundation.log.api.runCatchingWithLog
 import com.savvasdalkitsis.uhuruphotos.implementation.user.service.UserService
 import com.squareup.sqldelight.runtime.coroutines.asFlow
 import com.squareup.sqldelight.runtime.coroutines.mapToOneNotNull

@@ -22,9 +22,9 @@ import androidx.work.ForegroundInfo
 import androidx.work.WorkerParameters
 import androidx.work.workDataOf
 import com.savvasdalkitsis.uhuruphotos.api.albums.repository.AlbumsRepository
-import com.savvasdalkitsis.uhuruphotos.api.notification.ForegroundInfoBuilder
-import com.savvasdalkitsis.uhuruphotos.api.notification.NotificationChannels.JOBS_CHANNEL_ID
-import com.savvasdalkitsis.uhuruphotos.api.strings.R.string
+import com.savvasdalkitsis.uhuruphotos.foundation.notification.api.ForegroundInfoBuilder
+import com.savvasdalkitsis.uhuruphotos.foundation.notification.api.NotificationChannels.JOBS_CHANNEL_ID
+import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedInject
 import kotlinx.coroutines.Dispatchers

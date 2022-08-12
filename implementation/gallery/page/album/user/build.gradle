@@ -11,10 +11,10 @@ android {
 dependencies {
     implementation project(':api:gallery:page')
     implementation project(':api:albums')
-    implementation project(':api:date')
+    implementation project(':foundation:date:api')
     implementation project(":api:db")
     implementation project(":api:gallery")
-    implementation project(":api:navigation")
+    implementation project(":foundation:navigation:api")
     implementation project(':api:people')
     implementation project(':api:media:page')
     implementation project(':api:media:remote')

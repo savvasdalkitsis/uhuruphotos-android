@@ -27,10 +27,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import com.savvasdalkitsis.uhuruphotos.api.map.view.MapView
-import com.savvasdalkitsis.uhuruphotos.api.map.view.rememberMapViewState
-import com.savvasdalkitsis.uhuruphotos.api.strings.R.string
-import com.savvasdalkitsis.uhuruphotos.api.ui.view.SectionHeader
+import com.savvasdalkitsis.uhuruphotos.foundation.map.api.view.MapView
+import com.savvasdalkitsis.uhuruphotos.foundation.map.api.view.rememberMapViewState
+import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
+import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.view.SectionHeader
 import com.savvasdalkitsis.uhuruphotos.implementation.media.page.seam.MediaItemPageAction.ClickedOnMap
 import com.savvasdalkitsis.uhuruphotos.implementation.media.page.view.state.SingleMediaItemState
 
@@ -45,7 +45,7 @@ internal fun MediaItemInfoMap(
         ) {
             SectionHeader(title = stringResource(string.location)) {
                 OutlinedButton(
-                    onClick = { action(com.savvasdalkitsis.uhuruphotos.implementation.media.page.seam.MediaItemPageAction.ClickedOnMap(gps)) }
+                    onClick = { action(ClickedOnMap(gps)) }
                 ) {
                     Text(stringResource(string.open_in_maps))
                 }

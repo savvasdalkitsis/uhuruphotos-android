@@ -1,8 +1,8 @@
 dependencies {
-    implementation project(":api:icons")
-    implementation project(":api:initializer")
-    implementation project(":api:notification")
-    implementation project(":api:strings")
+    implementation project(":foundation:icons:api")
+    implementation project(":foundation:initializer:api")
+    implementation project(":foundation:notification:api")
+    implementation project(":foundation:strings:api")
     implementation(
             libs.androidx.core,
             libs.androidx.work,

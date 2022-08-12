@@ -16,8 +16,8 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.implementation.home.viewmodel
 
 import androidx.lifecycle.ViewModel
-import com.savvasdalkitsis.uhuruphotos.api.seam.Seam
-import com.savvasdalkitsis.uhuruphotos.api.seam.SeamViaHandler.Companion.handler
+import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.Seam
+import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.handler
 import com.savvasdalkitsis.uhuruphotos.implementation.home.seam.HomeAction
 import com.savvasdalkitsis.uhuruphotos.implementation.home.seam.HomeActionHandler
 import com.savvasdalkitsis.uhuruphotos.implementation.home.seam.HomeEffect
@@ -32,5 +32,5 @@ internal class HomeViewModel @Inject constructor(
 ) : ViewModel(),
     Seam<HomeState, HomeEffect, HomeAction, HomeMutation> by handler(
         homeActionHandler,
-        HomeState(),
+        HomeState()
     )

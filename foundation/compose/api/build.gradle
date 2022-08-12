@@ -1,0 +1,20 @@
+android {
+    buildFeatures {
+        compose true
+    }
+    composeOptions {
+        kotlinCompilerExtensionVersion compose_compiler_version
+    }
+    namespace 'com.savvasdalkitsis.uhuruphotos.foundation.compose.api'
+}
+
+dependencies {
+    api(
+            libs.androidx.compose.foundation.layout,
+            libs.androidx.compose.ui,
+    )
+    implementation project(":foundation:log:api")
+    implementation(
+            libs.androidx.compose.material,
+    )
+}

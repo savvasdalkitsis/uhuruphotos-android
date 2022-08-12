@@ -1,8 +1,8 @@
 dependencies {
-    implementation project(":api:icons")
-    implementation project(":api:initializer")
-    implementation project(":api:log")
-    implementation project(":api:notification")
+    implementation project(":foundation:icons:api")
+    implementation project(":foundation:initializer:api")
+    implementation project(":foundation:log:api")
+    implementation project(":foundation:notification:api")
     implementation project(":api:settings")
     implementation(
             libs.bundles.lumberjack,

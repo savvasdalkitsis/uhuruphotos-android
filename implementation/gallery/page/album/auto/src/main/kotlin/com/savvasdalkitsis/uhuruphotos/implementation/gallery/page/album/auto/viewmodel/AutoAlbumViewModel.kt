@@ -21,8 +21,8 @@ import com.savvasdalkitsis.uhuruphotos.api.gallery.page.seam.GalleryPageEffect
 import com.savvasdalkitsis.uhuruphotos.api.gallery.page.seam.GalleryPageMutation
 import com.savvasdalkitsis.uhuruphotos.api.gallery.page.view.state.GalleryPageState
 import com.savvasdalkitsis.uhuruphotos.api.gallery.view.state.GalleryState
-import com.savvasdalkitsis.uhuruphotos.api.seam.Seam
-import com.savvasdalkitsis.uhuruphotos.api.seam.SeamViaHandler.Companion.handler
+import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.Seam
+import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.handler
 import com.savvasdalkitsis.uhuruphotos.implementation.gallery.page.album.auto.seam.AutoAlbumActionHandler
 import com.savvasdalkitsis.uhuruphotos.implementation.gallery.page.album.auto.state.AutoAlbumGalleryDisplay
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -34,5 +34,5 @@ internal class AutoAlbumViewModel @Inject constructor(
 ) : ViewModel(),
     Seam<GalleryPageState, GalleryPageEffect, GalleryPageAction, GalleryPageMutation> by handler(
         autoAlbumActionHandler,
-        GalleryPageState(galleryState = GalleryState(galleryDisplay = AutoAlbumGalleryDisplay)),
+        GalleryPageState(galleryState = GalleryState(galleryDisplay = AutoAlbumGalleryDisplay))
     )

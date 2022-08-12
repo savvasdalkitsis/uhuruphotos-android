@@ -15,7 +15,7 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.implementation.log.module
 
-import com.savvasdalkitsis.uhuruphotos.api.initializer.ApplicationCreated
+import com.savvasdalkitsis.uhuruphotos.foundation.initializer.api.ApplicationCreated
 import com.savvasdalkitsis.uhuruphotos.implementation.log.FeedbackUseCase
 import com.savvasdalkitsis.uhuruphotos.implementation.log.initializer.LogInitializer
 import dagger.Binds
@@ -34,5 +34,5 @@ internal abstract class LogBindingsModule {
 
     @Binds
     abstract fun feedbackUseCase(feedbackUseCase: FeedbackUseCase):
-            com.savvasdalkitsis.uhuruphotos.api.log.usecase.FeedbackUseCase
+            com.savvasdalkitsis.uhuruphotos.foundation.log.api.usecase.FeedbackUseCase
 }

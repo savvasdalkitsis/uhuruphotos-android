@@ -16,13 +16,13 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.implementation.media.page.domain.usecase
 
 import androidx.work.WorkInfo
-import com.savvasdalkitsis.uhuruphotos.api.date.DateDisplayer
+import com.savvasdalkitsis.uhuruphotos.foundation.date.api.DateDisplayer
 import com.savvasdalkitsis.uhuruphotos.api.db.domain.model.media.DbRemoteMediaItemDetails
 import com.savvasdalkitsis.uhuruphotos.api.db.domain.model.media.DbRemoteMediaItemSummary
 import com.savvasdalkitsis.uhuruphotos.api.db.domain.model.media.latLng
 import com.savvasdalkitsis.uhuruphotos.api.db.extensions.isVideo
-import com.savvasdalkitsis.uhuruphotos.api.map.model.LatLon
-import com.savvasdalkitsis.uhuruphotos.api.map.model.toLatLon
+import com.savvasdalkitsis.uhuruphotos.foundation.map.api.model.LatLon
+import com.savvasdalkitsis.uhuruphotos.foundation.map.api.model.toLatLon
 import com.savvasdalkitsis.uhuruphotos.api.media.local.domain.model.LocalFolder
 import com.savvasdalkitsis.uhuruphotos.api.media.local.domain.model.LocalMediaItem
 import com.savvasdalkitsis.uhuruphotos.api.media.local.domain.model.LocalMediaItems

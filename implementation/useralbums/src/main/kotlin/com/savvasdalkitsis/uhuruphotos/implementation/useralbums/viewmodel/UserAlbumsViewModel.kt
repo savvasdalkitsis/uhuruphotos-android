@@ -16,8 +16,8 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.implementation.useralbums.viewmodel
 
 import androidx.lifecycle.ViewModel
-import com.savvasdalkitsis.uhuruphotos.api.seam.Seam
-import com.savvasdalkitsis.uhuruphotos.api.seam.SeamViaHandler.Companion.handler
+import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.Seam
+import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.handler
 import com.savvasdalkitsis.uhuruphotos.implementation.useralbums.seam.UserAlbumsAction
 import com.savvasdalkitsis.uhuruphotos.implementation.useralbums.seam.UserAlbumsActionHandler
 import com.savvasdalkitsis.uhuruphotos.implementation.useralbums.seam.UserAlbumsEffect

@@ -15,8 +15,8 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.api.media.page.domain.model
 
-import com.savvasdalkitsis.uhuruphotos.api.map.model.LatLon
 import com.savvasdalkitsis.uhuruphotos.api.people.view.state.Person
+import com.savvasdalkitsis.uhuruphotos.foundation.map.api.model.LatLon
 
 data class MediaItemDetails(
     val formattedDateAndTime: String,

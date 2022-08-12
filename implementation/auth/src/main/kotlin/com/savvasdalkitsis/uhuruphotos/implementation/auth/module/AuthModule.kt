@@ -17,7 +17,7 @@ package com.savvasdalkitsis.uhuruphotos.implementation.auth.module
 
 import android.webkit.CookieManager
 import com.savvasdalkitsis.uhuruphotos.api.auth.AuthenticatedOkHttpClient
-import com.savvasdalkitsis.uhuruphotos.api.network.OkHttpBuilder
+import com.savvasdalkitsis.uhuruphotos.foundation.network.api.OkHttpBuilder
 import com.savvasdalkitsis.uhuruphotos.implementation.auth.network.DynamicDomainInterceptor
 import com.savvasdalkitsis.uhuruphotos.implementation.auth.service.AuthenticationHeaderInterceptor
 import com.savvasdalkitsis.uhuruphotos.implementation.auth.service.AuthenticationService

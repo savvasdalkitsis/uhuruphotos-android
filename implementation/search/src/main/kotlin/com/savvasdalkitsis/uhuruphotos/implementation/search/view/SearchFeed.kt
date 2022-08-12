@@ -18,7 +18,7 @@ package com.savvasdalkitsis.uhuruphotos.implementation.search.view
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.unit.dp
-import com.savvasdalkitsis.uhuruphotos.api.compose.copy
+import com.savvasdalkitsis.uhuruphotos.foundation.compose.api.copy
 import com.savvasdalkitsis.uhuruphotos.api.gallery.view.Gallery
 import com.savvasdalkitsis.uhuruphotos.api.gallery.view.state.GalleryState
 import com.savvasdalkitsis.uhuruphotos.implementation.search.seam.SearchAction

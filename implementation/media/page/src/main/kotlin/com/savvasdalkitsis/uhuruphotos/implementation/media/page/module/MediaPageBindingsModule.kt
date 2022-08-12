@@ -15,7 +15,7 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.implementation.media.page.module
 
-import com.savvasdalkitsis.uhuruphotos.api.navigation.NavigationTarget
+import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.NavigationTarget
 import com.savvasdalkitsis.uhuruphotos.implementation.media.page.domain.usecase.MediaUseCase
 import com.savvasdalkitsis.uhuruphotos.implementation.media.page.navigation.MediaItemPageNavigationTarget
 import dagger.Binds

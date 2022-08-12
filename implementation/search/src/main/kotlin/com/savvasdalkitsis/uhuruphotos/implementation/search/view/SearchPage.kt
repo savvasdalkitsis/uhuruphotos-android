@@ -26,11 +26,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
-import com.savvasdalkitsis.uhuruphotos.api.compose.blurIf
+import com.savvasdalkitsis.uhuruphotos.foundation.compose.api.blurIf
 import com.savvasdalkitsis.uhuruphotos.api.gallery.view.GalleryDisplayActionButton
 import com.savvasdalkitsis.uhuruphotos.api.home.view.HomeScaffold
-import com.savvasdalkitsis.uhuruphotos.api.strings.R.string
-import com.savvasdalkitsis.uhuruphotos.api.ui.view.Logo
+import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
+import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.view.Logo
 import com.savvasdalkitsis.uhuruphotos.implementation.search.seam.SearchAction
 import com.savvasdalkitsis.uhuruphotos.implementation.search.seam.SearchAction.ChangeDisplay
 import com.savvasdalkitsis.uhuruphotos.implementation.search.view.state.SearchResults.Found

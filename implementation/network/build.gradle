@@ -1,7 +1,7 @@
 dependencies {
 
-    api project(":api:network")
-    implementation project(":api:log")
+    api project(":foundation:network:api")
+    implementation project(":foundation:log:api")
 
     implementation(
             libs.hilt,

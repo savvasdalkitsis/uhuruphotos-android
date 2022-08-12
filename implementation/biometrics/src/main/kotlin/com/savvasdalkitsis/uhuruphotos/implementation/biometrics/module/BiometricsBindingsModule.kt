@@ -29,5 +29,5 @@ internal abstract class BiometricsBindingsModule {
     @Binds
     @ActivityRetainedScoped
     abstract fun biometricsUseCase(useCase: BiometricsUseCase):
-            com.savvasdalkitsis.uhuruphotos.api.biometrics.usecase.BiometricsUseCase
+            com.savvasdalkitsis.uhuruphotos.foundation.biometrics.api.usecase.BiometricsUseCase
 }
