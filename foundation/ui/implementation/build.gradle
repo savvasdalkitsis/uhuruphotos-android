@@ -1,0 +1,12 @@
+android {
+    namespace 'com.savvasdalkitsis.uhuruphotos.foundation.ui.implementation'
+}
+
+dependencies {
+    implementation project(":foundation:ui:api")
+    implementation(
+            libs.accompanist.systemui,
+            libs.androidx.compose.ui,
+            libs.hilt,
+    )
+}

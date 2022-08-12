@@ -65,7 +65,7 @@ dependencies {
     implementation project(":foundation:video:api")
 
     implementation project(':implementation')
-    implementation project(":implementation:ui")
+    implementation project(":foundation:ui:implementation")
 
     implementation(
             libs.accompanist.navigation,

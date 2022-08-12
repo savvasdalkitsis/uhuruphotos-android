@@ -31,10 +31,10 @@ import com.savvasdalkitsis.uhuruphotos.foundation.map.api.model.MapProvider
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.NavigationTarget
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.Navigator
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.window.LocalSystemUiController
+import com.savvasdalkitsis.uhuruphotos.foundation.ui.implementation.usecase.UiUseCase
 import com.savvasdalkitsis.uhuruphotos.foundation.video.api.LocalContentExoPlayer
 import com.savvasdalkitsis.uhuruphotos.foundation.video.api.LocalContentExoplayer
 import com.savvasdalkitsis.uhuruphotos.foundation.video.api.LocalExoPlayer
-import com.savvasdalkitsis.uhuruphotos.implementation.ui.usecase.UiUseCase
 import kotlinx.coroutines.runBlocking
 import javax.inject.Inject
 

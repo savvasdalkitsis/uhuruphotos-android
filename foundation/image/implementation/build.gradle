@@ -1,0 +1,23 @@
+android {
+    buildFeatures {
+        compose true
+    }
+    composeOptions {
+        kotlinCompilerExtensionVersion compose_compiler_version
+    }
+    namespace 'com.savvasdalkitsis.uhuruphotos.foundation.image.implementation'
+}
+
+dependencies {
+
+    implementation project(":api:auth")
+    implementation project(':foundation:image:api')
+    implementation project(":foundation:initializer:api")
+    implementation project(":api:settings")
+    implementation(
+            libs.coil.compose,
+            libs.coil.gif,
+            libs.coil.video,
+            libs.hilt,
+    )
+}
