@@ -2,20 +2,19 @@ This page demonstrates the domain model of the app
 
 (still WIP)
 
-```mermaid
-graph TD;
+```mermaidgraph TD;
     Gallery-->Feed;
     Feed-->FeedGroup;
     FeedGroup-->MediaItem;
+    MediaPage-->MediaItem;
     MediaItem-->LocalMediaItem;
     MediaItem-->RemoteMediaItem;
     LocalMediaItem-->Image;
     LocalMediaItem-->Video;
     RemoteMediaItem-->Image;
     RemoteMediaItem-->Video;
-    AutoAlbum-->Album;
-    UserAlbum-->Album;
-    Album-->Gallery;
+    AutoAlbum-->Gallery;
+    UserAlbum-->Gallery;
     Favourites-->Gallery;
     TrashMedia-->Gallery;
     LocalMedia-->Gallery;
@@ -25,12 +24,14 @@ graph TD;
         LocalMediaItem;
         LocalMedia;
     end
+    subgraph Albums
+        AutoAlbum;
+        UserAlbum;
+    end
     
     subgraph Remote
         RemoteMediaItem;
-        AutoAlbum;
-        UserAlbum;
-        Album;
+        Albums;
         Favourites;
         TrashMedia;
         HiddenMedia;
