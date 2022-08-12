@@ -208,4 +208,5 @@
     <string name="favourite_media">Favoriete media</string>
     <string name="setting_media_favourite">Bezig met instellen van favoriet</string>
     <string name="downloading_media_details">Bezig met ophalen van media-informatie</string>
+    <string name="gallery_size">Galerij-omvang</string>
 </resources>
