@@ -15,12 +15,12 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.implementation.person.view.state
 
-import com.savvasdalkitsis.uhuruphotos.api.feed.view.state.FeedState
+import com.savvasdalkitsis.uhuruphotos.api.gallery.view.state.GalleryState
 import com.savvasdalkitsis.uhuruphotos.api.people.view.state.Person
 
 data class PersonState(
     val person: Person? = null,
-    val feedState: FeedState = FeedState(),
+    val galleryState: GalleryState = GalleryState(),
 )
 
 

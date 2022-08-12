@@ -16,7 +16,7 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.api.gallery.page.seam
 
 import androidx.compose.ui.geometry.Offset
-import com.savvasdalkitsis.uhuruphotos.api.feed.view.state.FeedDisplay
+import com.savvasdalkitsis.uhuruphotos.api.gallery.view.state.GalleryDisplay
 import com.savvasdalkitsis.uhuruphotos.api.media.page.domain.model.MediaItem
 import com.savvasdalkitsis.uhuruphotos.api.people.view.state.Person
 
@@ -32,5 +32,5 @@ sealed class GalleryPageAction {
     ) : GalleryPageAction()
 
     data class PersonSelected(val person: Person) : GalleryPageAction()
-    data class ChangeFeedDisplay(val feedDisplay: FeedDisplay) : GalleryPageAction()
+    data class ChangeGalleryDisplay(val galleryDisplay: GalleryDisplay) : GalleryPageAction()
 }

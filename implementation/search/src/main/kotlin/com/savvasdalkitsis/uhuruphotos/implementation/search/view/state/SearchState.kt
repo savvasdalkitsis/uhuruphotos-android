@@ -15,15 +15,15 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.implementation.search.view.state
 
-import com.savvasdalkitsis.uhuruphotos.api.feed.view.state.FeedDisplay
-import com.savvasdalkitsis.uhuruphotos.api.feed.view.state.FeedDisplays
+import com.savvasdalkitsis.uhuruphotos.api.gallery.view.state.GalleryDisplay
+import com.savvasdalkitsis.uhuruphotos.api.gallery.view.state.PredefinedGalleryDisplay
 import com.savvasdalkitsis.uhuruphotos.api.people.view.state.Person
 
 data class SearchState(
     val showClearButton: Boolean = false,
     val searchResults: SearchResults = SearchResults.Idle,
-    val feedDisplay: FeedDisplay = FeedDisplays.default,
-    val searchDisplay: FeedDisplay = FeedDisplays.default,
+    val galleryDisplay: GalleryDisplay = PredefinedGalleryDisplay.default,
+    val searchDisplay: GalleryDisplay = PredefinedGalleryDisplay.default,
     val showLibrary: Boolean = true,
     val suggestion: String? = null,
     val people: List<Person> = emptyList(),

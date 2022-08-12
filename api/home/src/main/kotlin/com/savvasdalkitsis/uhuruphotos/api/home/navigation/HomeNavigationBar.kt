@@ -43,7 +43,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import com.commandiron.bubble_navigation_bar_compose.BubbleNavigationBar
 import com.commandiron.bubble_navigation_bar_compose.BubbleNavigationBarItem
-import com.savvasdalkitsis.uhuruphotos.api.feed.view.state.FeedDisplay
+import com.savvasdalkitsis.uhuruphotos.api.gallery.view.state.GalleryDisplay
 import com.savvasdalkitsis.uhuruphotos.api.home.navigation.NavigationStyle.BOTTOM_BAR
 import com.savvasdalkitsis.uhuruphotos.api.home.navigation.NavigationStyle.NAVIGATION_RAIL
 import com.savvasdalkitsis.uhuruphotos.api.homenavigation.HomeNavigationRoutes
@@ -61,7 +61,7 @@ fun homeNavigationStyle() = when (LocalWindowSize.current.widthSizeClass) {
 @Composable
 fun HomeNavigationBar(
     contentPadding: PaddingValues = PaddingValues(0.dp),
-    homeFeedDisplay: FeedDisplay,
+    homeFeedDisplay: GalleryDisplay,
     showLibrary: Boolean,
     navController: NavHostController,
     onReselected: () -> Unit = {},
@@ -105,7 +105,7 @@ fun HomeNavigationBar(
 private fun Items(
     currentDestination: NavDestination?,
     navController: NavHostController,
-    homeFeedDisplay: FeedDisplay,
+    homeFeedDisplay: GalleryDisplay,
     showLibrary: Boolean,
     onReselected: () -> Unit,
     rowScope: RowScope? = null,

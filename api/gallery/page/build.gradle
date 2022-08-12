@@ -11,7 +11,7 @@ android {
 dependencies {
     implementation project(':api:albums')
     implementation project(':api:coroutines')
-    implementation project(":api:feed")
+    implementation project(":api:gallery")
     implementation project(":api:log")
     implementation project(":api:navigation")
     implementation project(':api:person')

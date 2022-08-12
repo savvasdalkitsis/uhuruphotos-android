@@ -3,7 +3,7 @@ android {
 }
 
 dependencies {
-    api project(":api:feed")
+    api project(":api:gallery")
     api(
             libs.kotlinx.coroutines,
     )

@@ -27,8 +27,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
-import com.savvasdalkitsis.uhuruphotos.api.feed.view.Feed
-import com.savvasdalkitsis.uhuruphotos.api.feed.view.FeedDisplayActionButton
+import com.savvasdalkitsis.uhuruphotos.api.gallery.view.Gallery
+import com.savvasdalkitsis.uhuruphotos.api.gallery.view.GalleryDisplayActionButton
 import com.savvasdalkitsis.uhuruphotos.api.image.view.Image
 import com.savvasdalkitsis.uhuruphotos.api.ui.view.BackNavButton
 import com.savvasdalkitsis.uhuruphotos.api.ui.view.CommonScaffold
@@ -72,24 +72,24 @@ fun Person(
         },
         actionBarContent = {
             AnimatedVisibility(
-                visible = state.feedState.albums.isNotEmpty() && state.feedState.isLoading
+                visible = state.galleryState.albums.isNotEmpty() && state.galleryState.isLoading
             ) {
                 CircularProgressIndicator()
             }
-            AnimatedVisibility(state.feedState.albums.isNotEmpty()) {
-                FeedDisplayActionButton(
+            AnimatedVisibility(state.galleryState.albums.isNotEmpty()) {
+                GalleryDisplayActionButton(
                     onChange = { action(ChangeDisplay(it)) },
-                    currentFeedDisplay = state.feedState.feedDisplay
+                    currentGalleryDisplay = state.galleryState.galleryDisplay
                 )
             }
         }
     ) { contentPadding ->
-        if (state.feedState.albums.isEmpty()) {
+        if (state.galleryState.albums.isEmpty()) {
             FullProgressBar()
         } else {
-            Feed(
+            Gallery(
                 contentPadding = contentPadding,
-                state = state.feedState,
+                state = state.galleryState,
                 onMediaItemSelected = { photo, center, scale ->
                     action(SelectedPhoto(photo, center, scale))
                 },

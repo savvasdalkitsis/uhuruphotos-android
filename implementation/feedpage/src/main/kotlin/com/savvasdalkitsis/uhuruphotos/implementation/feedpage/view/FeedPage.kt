@@ -23,8 +23,8 @@ import androidx.navigation.NavHostController
 import com.google.accompanist.swiperefresh.SwipeRefresh
 import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 import com.savvasdalkitsis.uhuruphotos.api.compose.blurIf
-import com.savvasdalkitsis.uhuruphotos.api.feed.view.Feed
-import com.savvasdalkitsis.uhuruphotos.api.feed.view.state.FeedDisplays
+import com.savvasdalkitsis.uhuruphotos.api.gallery.view.Gallery
+import com.savvasdalkitsis.uhuruphotos.api.gallery.view.state.PredefinedGalleryDisplay
 import com.savvasdalkitsis.uhuruphotos.api.home.view.HomeScaffold
 import com.savvasdalkitsis.uhuruphotos.api.media.page.view.TrashPermissionDialog
 import com.savvasdalkitsis.uhuruphotos.implementation.feedpage.seam.FeedPageAction
@@ -64,7 +64,7 @@ internal fun FeedPage(
         },
         navController = navHostController,
         showLibrary = state.showLibrary,
-        homeFeedDisplay = state.feedState.feedDisplay,
+        homeFeedDisplay = state.galleryState.galleryDisplay,
         selectionMode = state.hasSelection,
         actionBarContent = {
             FeedPageActionBar(state, action)
@@ -77,23 +77,23 @@ internal fun FeedPage(
             state = rememberSwipeRefreshState(isRefreshing = state.isRefreshing),
             onRefresh = { action(RefreshAlbums) }
         ) {
-            Feed(
+            Gallery(
                 contentPadding = contentPadding,
-                state = state.feedState,
+                state = state.galleryState,
                 showSelectionHeader = state.hasSelection,
-                showAlbumRefreshButton = state.shouldShowAlbumRefreshButtons,
+                showGroupRefreshButton = state.shouldShowAlbumRefreshButtons,
                 listState = listState,
                 onMediaItemSelected = { photo, center, scale ->
                     action(SelectedPhoto(photo, center, scale,))
                 },
-                onChangeDisplay = { action(ChangeDisplay(it as FeedDisplays)) },
+                onChangeDisplay = { action(ChangeDisplay(it as PredefinedGalleryDisplay)) },
                 onPhotoLongPressed = {
                     action(PhotoLongPressed(it))
                 },
-                onAlbumSelectionClicked = {
+                onGroupSelectionClicked = {
                     action(AlbumSelectionClicked(it))
                 },
-                onAlbumRefreshClicked = {
+                onGroupRefreshClicked = {
                     action(AlbumRefreshClicked(it))
                 }
             )

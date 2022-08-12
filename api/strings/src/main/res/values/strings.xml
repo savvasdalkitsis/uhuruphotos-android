@@ -4,6 +4,7 @@
     tools:ignore="MissingTranslation"
 >
     <string name="feed_size">Feed Size</string>
+    <string name="gallery_size">Gallery Size</string>
     <string name="photo">Photo</string>
     <string name="media">Media</string>
     <plurals name="delete_photos">

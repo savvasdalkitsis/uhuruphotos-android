@@ -27,7 +27,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.savvasdalkitsis.uhuruphotos.api.compose.blurIf
-import com.savvasdalkitsis.uhuruphotos.api.feed.view.FeedDisplayActionButton
+import com.savvasdalkitsis.uhuruphotos.api.gallery.view.GalleryDisplayActionButton
 import com.savvasdalkitsis.uhuruphotos.api.home.view.HomeScaffold
 import com.savvasdalkitsis.uhuruphotos.api.strings.R.string
 import com.savvasdalkitsis.uhuruphotos.api.ui.view.Logo
@@ -59,13 +59,13 @@ fun SearchPage(
             }
         },
         navController = navHostController,
-        homeFeedDisplay = state.feedDisplay,
+        homeFeedDisplay = state.galleryDisplay,
         showLibrary = state.showLibrary,
         actionBarContent = {
             AnimatedVisibility(state.searchResults is Found) {
-                FeedDisplayActionButton(
+                GalleryDisplayActionButton(
                     onChange = { action(ChangeDisplay(it)) },
-                    currentFeedDisplay = state.searchDisplay
+                    currentGalleryDisplay = state.searchDisplay
                 )
             }
             actionBarContent()

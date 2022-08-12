@@ -19,8 +19,8 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.unit.dp
 import com.savvasdalkitsis.uhuruphotos.api.compose.copy
-import com.savvasdalkitsis.uhuruphotos.api.feed.view.Feed
-import com.savvasdalkitsis.uhuruphotos.api.feed.view.state.FeedState
+import com.savvasdalkitsis.uhuruphotos.api.gallery.view.Gallery
+import com.savvasdalkitsis.uhuruphotos.api.gallery.view.state.GalleryState
 import com.savvasdalkitsis.uhuruphotos.implementation.search.seam.SearchAction
 import com.savvasdalkitsis.uhuruphotos.implementation.search.view.state.SearchResults
 import com.savvasdalkitsis.uhuruphotos.implementation.search.view.state.SearchState
@@ -32,16 +32,16 @@ fun SearchFeed(
     searchResults: SearchResults.Found,
     action: (SearchAction) -> Unit
 ) {
-    Feed(
+    Gallery(
         contentPadding = contentPadding.copy(top = 0.dp),
         onMediaItemSelected = { photo, center, scale ->
             action(SearchAction.SelectedPhoto(photo, center, scale))
         },
         onChangeDisplay = { action(SearchAction.ChangeDisplay(it)) },
-        state = FeedState(
+        state = GalleryState(
             isLoading = false,
             albums = searchResults.albums,
-            feedDisplay = state.searchDisplay,
+            galleryDisplay = state.searchDisplay,
         ),
     )
 }

@@ -16,12 +16,12 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.implementation.person.seam
 
 import androidx.compose.ui.geometry.Offset
-import com.savvasdalkitsis.uhuruphotos.api.feed.view.state.FeedDisplay
+import com.savvasdalkitsis.uhuruphotos.api.gallery.view.state.GalleryDisplay
 import com.savvasdalkitsis.uhuruphotos.api.media.page.domain.model.MediaItem
 
 sealed class PersonAction {
     data class LoadPerson(val id: Int) : PersonAction()
     data class SelectedPhoto(val mediaItem: MediaItem, val center: Offset, val scale: Float) : PersonAction()
-    data class ChangeDisplay(val display: FeedDisplay) : PersonAction()
+    data class ChangeDisplay(val display: GalleryDisplay) : PersonAction()
     object NavigateBack : PersonAction()
 }

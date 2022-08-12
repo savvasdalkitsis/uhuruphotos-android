@@ -14,7 +14,7 @@ dependencies {
     implementation project(":api:accountoverview")
     implementation project(':api:albums')
     implementation project(":api:compose")
-    implementation project(":api:feed")
+    implementation project(":api:gallery")
     implementation project(":api:feedpage")
     implementation project(":api:home")
     implementation project(":api:homenavigation")

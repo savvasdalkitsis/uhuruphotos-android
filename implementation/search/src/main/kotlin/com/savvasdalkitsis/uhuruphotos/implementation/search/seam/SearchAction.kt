@@ -16,7 +16,7 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.implementation.search.seam
 
 import androidx.compose.ui.geometry.Offset
-import com.savvasdalkitsis.uhuruphotos.api.feed.view.state.FeedDisplay
+import com.savvasdalkitsis.uhuruphotos.api.gallery.view.state.GalleryDisplay
 import com.savvasdalkitsis.uhuruphotos.api.media.page.domain.model.MediaItem
 import com.savvasdalkitsis.uhuruphotos.api.people.view.state.Person
 
@@ -31,7 +31,7 @@ sealed class SearchAction {
     data class SearchFor(val query: String) : SearchAction()
     data class ChangeFocus(val focused: Boolean) : SearchAction()
     data class SelectedPhoto(val mediaItem: MediaItem, val center: Offset, val scale: Float) : SearchAction()
-    data class ChangeDisplay(val display: FeedDisplay) : SearchAction()
+    data class ChangeDisplay(val display: GalleryDisplay) : SearchAction()
     data class PersonSelected(val person: Person) : SearchAction()
     data class RemoveFromRecentSearches(val query: String) : SearchAction()
 }

@@ -16,8 +16,8 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.implementation.feedpage.usecase
 
 import com.fredporciuncula.flow.preferences.FlowSharedPreferences
-import com.savvasdalkitsis.uhuruphotos.api.feed.view.state.FeedDisplays
 import com.savvasdalkitsis.uhuruphotos.api.feedpage.usecase.FeedPageUseCase
+import com.savvasdalkitsis.uhuruphotos.api.gallery.view.state.PredefinedGalleryDisplay
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
@@ -25,11 +25,11 @@ internal class FeedPageUseCase @Inject constructor(
     preferences: FlowSharedPreferences,
 ) : FeedPageUseCase {
 
-    private val preference = preferences.getEnum("feedDisplay", defaultValue = FeedDisplays.default)
+    private val preference = preferences.getEnum("feedDisplay", defaultValue = PredefinedGalleryDisplay.default)
 
-    override fun getFeedDisplay(): Flow<FeedDisplays> = preference.asFlow()
+    override fun getFeedDisplay(): Flow<PredefinedGalleryDisplay> = preference.asFlow()
 
-    override suspend fun setFeedDisplay(feedDisplay: FeedDisplays) {
+    override suspend fun setFeedDisplay(feedDisplay: PredefinedGalleryDisplay) {
         preference.setAndCommit(feedDisplay)
     }
 }

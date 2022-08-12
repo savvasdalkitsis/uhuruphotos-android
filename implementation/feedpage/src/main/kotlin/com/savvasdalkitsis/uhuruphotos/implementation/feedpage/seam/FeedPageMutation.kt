@@ -16,8 +16,8 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.implementation.feedpage.seam
 
 import com.savvasdalkitsis.uhuruphotos.api.albums.model.Album
-import com.savvasdalkitsis.uhuruphotos.api.feed.view.state.FeedDisplays
-import com.savvasdalkitsis.uhuruphotos.api.feed.view.state.FeedState
+import com.savvasdalkitsis.uhuruphotos.api.gallery.view.state.GalleryState
+import com.savvasdalkitsis.uhuruphotos.api.gallery.view.state.PredefinedGalleryDisplay
 import com.savvasdalkitsis.uhuruphotos.api.seam.Mutation
 import com.savvasdalkitsis.uhuruphotos.implementation.feedpage.view.state.FeedPageState
 
@@ -55,8 +55,8 @@ internal sealed class FeedPageMutation(
         override fun toString() = "Showing ${albums.size} albums"
     }
 
-    data class ChangeDisplay(val display: FeedDisplays) : FeedPageMutation({
-        it.copyFeed { copy(feedDisplay = display) }
+    data class ChangeDisplay(val display: PredefinedGalleryDisplay) : FeedPageMutation({
+        it.copyFeed { copy(galleryDisplay = display) }
     })
 
     data class ShowLibrary(val showLibrary: Boolean) : FeedPageMutation({
@@ -64,5 +64,5 @@ internal sealed class FeedPageMutation(
     })
 }
 
-private fun FeedPageState.copyFeed(feedStateMutation: FeedState.() -> FeedState) =
-    copy(feedState = feedStateMutation(feedState))
+private fun FeedPageState.copyFeed(galleryStateMutation: GalleryState.() -> GalleryState) =
+    copy(galleryState = galleryStateMutation(galleryState))

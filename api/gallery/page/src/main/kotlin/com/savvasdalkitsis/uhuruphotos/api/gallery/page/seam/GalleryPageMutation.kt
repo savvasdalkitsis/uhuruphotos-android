@@ -15,9 +15,9 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.api.gallery.page.seam
 
-import com.savvasdalkitsis.uhuruphotos.api.feed.view.state.FeedDisplay
 import com.savvasdalkitsis.uhuruphotos.api.gallery.page.view.state.GalleryDetails
 import com.savvasdalkitsis.uhuruphotos.api.gallery.page.view.state.GalleryPageState
+import com.savvasdalkitsis.uhuruphotos.api.gallery.view.state.GalleryDisplay
 import com.savvasdalkitsis.uhuruphotos.api.seam.Mutation
 
 sealed class GalleryPageMutation(
@@ -28,22 +28,22 @@ sealed class GalleryPageMutation(
         it.copy(
             title = galleryPage.title,
             people = galleryPage.people,
-            feedState = it.feedState.copy(
+            galleryState = it.galleryState.copy(
                 albums = galleryPage.albums,
             )
         )
     })
 
     data class Loading(val loading: Boolean) : GalleryPageMutation({
-        it.copy(feedState = it.feedState.copy(
+        it.copy(galleryState = it.galleryState.copy(
             isLoading = loading,
-            isEmpty = !loading && !it.feedState.hasPhotos
+            isEmpty = !loading && !it.galleryState.hasMedia
         ))
     })
 
-    data class ChangeFeedDisplay(val feedDisplay: FeedDisplay) : GalleryPageMutation({
-        it.copy(feedState = it.feedState.copy(
-            feedDisplay = feedDisplay,
+    data class ChangeGalleryDisplay(val galleryDisplay: GalleryDisplay) : GalleryPageMutation({
+        it.copy(galleryState = it.galleryState.copy(
+            galleryDisplay = galleryDisplay,
         ))
     })
 }

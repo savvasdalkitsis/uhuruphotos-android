@@ -16,11 +16,11 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.api.gallery.page.view.state
 
 import androidx.annotation.StringRes
-import com.savvasdalkitsis.uhuruphotos.api.feed.view.state.FeedState
+import com.savvasdalkitsis.uhuruphotos.api.gallery.view.state.GalleryState
 import com.savvasdalkitsis.uhuruphotos.api.people.view.state.Person
 
 data class GalleryPageState(
-    val feedState: FeedState = FeedState(),
+    val galleryState: GalleryState = GalleryState(),
     @get:StringRes
     val error: Int? = null,
     val title: Title = Title.Text(""),

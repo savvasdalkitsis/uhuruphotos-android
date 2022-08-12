@@ -16,9 +16,7 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.api.gallery.page.seam
 
 import com.savvasdalkitsis.uhuruphotos.api.coroutines.safelyOnStartIgnoring
-import com.savvasdalkitsis.uhuruphotos.api.feed.view.state.FeedDisplay
-import com.savvasdalkitsis.uhuruphotos.api.feed.view.state.FeedDisplays
-import com.savvasdalkitsis.uhuruphotos.api.gallery.page.seam.GalleryPageAction.ChangeFeedDisplay
+import com.savvasdalkitsis.uhuruphotos.api.gallery.page.seam.GalleryPageAction.ChangeGalleryDisplay
 import com.savvasdalkitsis.uhuruphotos.api.gallery.page.seam.GalleryPageAction.LoadGallery
 import com.savvasdalkitsis.uhuruphotos.api.gallery.page.seam.GalleryPageAction.NavigateBack
 import com.savvasdalkitsis.uhuruphotos.api.gallery.page.seam.GalleryPageAction.PersonSelected
@@ -31,6 +29,8 @@ import com.savvasdalkitsis.uhuruphotos.api.gallery.page.seam.GalleryPageMutation
 import com.savvasdalkitsis.uhuruphotos.api.gallery.page.seam.GalleryPageMutation.ShowGalleryPage
 import com.savvasdalkitsis.uhuruphotos.api.gallery.page.view.state.GalleryDetails
 import com.savvasdalkitsis.uhuruphotos.api.gallery.page.view.state.GalleryPageState
+import com.savvasdalkitsis.uhuruphotos.api.gallery.view.state.GalleryDisplay
+import com.savvasdalkitsis.uhuruphotos.api.gallery.view.state.PredefinedGalleryDisplay
 import com.savvasdalkitsis.uhuruphotos.api.media.page.domain.model.MediaSequenceDataSource
 import com.savvasdalkitsis.uhuruphotos.api.seam.ActionHandler
 import kotlinx.coroutines.flow.Flow
@@ -46,8 +46,8 @@ class GalleryPageActionHandler(
     private val galleryDetailsFlow: (galleryId: Int, effect: suspend (GalleryPageEffect) -> Unit) -> Flow<GalleryDetails>,
     private val galleryDetailsEmptyCheck: suspend (galleryId: Int) -> Boolean,
     private val mediaSequenceDataSource: (galleryId: Int) -> MediaSequenceDataSource,
-    private val initialFeedDisplay: (galleryId: Int) -> FeedDisplay,
-    private val feedDisplayPersistence: suspend (galleryId:Int, FeedDisplays) -> Unit,
+    private val initialGalleryDisplay: (galleryId: Int) -> GalleryDisplay,
+    private val galleryDisplayPersistence: suspend (galleryId:Int, PredefinedGalleryDisplay) -> Unit,
 ) : ActionHandler<GalleryPageState, GalleryPageEffect, GalleryPageAction, GalleryPageMutation> {
 
     private val loading = MutableSharedFlow<GalleryPageMutation>()
@@ -60,7 +60,7 @@ class GalleryPageActionHandler(
     ): Flow<GalleryPageMutation> = when (action) {
         is LoadGallery -> {
             merge(
-                flowOf(GalleryPageMutation.ChangeFeedDisplay(initialFeedDisplay(action.galleryId))),
+                flowOf(GalleryPageMutation.ChangeGalleryDisplay(initialGalleryDisplay(action.galleryId))),
                 galleryDetailsFlow(action.galleryId, effect)
                     .map(::ShowGalleryPage),
                 loading,
@@ -93,10 +93,10 @@ class GalleryPageActionHandler(
         is PersonSelected -> flow {
             effect(NavigateToPerson(action.person.id))
         }
-        is ChangeFeedDisplay -> flow {
-            emit(GalleryPageMutation.ChangeFeedDisplay(action.feedDisplay))
-            (action.feedDisplay as? FeedDisplays)?.let {
-                feedDisplayPersistence(galleryId, it)
+        is ChangeGalleryDisplay -> flow {
+            emit(GalleryPageMutation.ChangeGalleryDisplay(action.galleryDisplay))
+            (action.galleryDisplay as? PredefinedGalleryDisplay)?.let {
+                galleryDisplayPersistence(galleryId, it)
             }
         }
     }

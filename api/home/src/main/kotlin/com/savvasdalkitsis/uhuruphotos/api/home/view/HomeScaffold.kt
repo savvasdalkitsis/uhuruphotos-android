@@ -22,8 +22,8 @@ import androidx.compose.foundation.layout.RowScope
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
-import com.savvasdalkitsis.uhuruphotos.api.feed.view.state.FeedDisplay
-import com.savvasdalkitsis.uhuruphotos.api.feed.view.state.FeedDisplays
+import com.savvasdalkitsis.uhuruphotos.api.gallery.view.state.GalleryDisplay
+import com.savvasdalkitsis.uhuruphotos.api.gallery.view.state.PredefinedGalleryDisplay
 import com.savvasdalkitsis.uhuruphotos.api.home.navigation.HomeNavigationBar
 import com.savvasdalkitsis.uhuruphotos.api.home.navigation.NavigationStyle.BOTTOM_BAR
 import com.savvasdalkitsis.uhuruphotos.api.home.navigation.NavigationStyle.NAVIGATION_RAIL
@@ -36,7 +36,7 @@ fun HomeScaffold(
     modifier: Modifier = Modifier,
     title: @Composable () -> Unit = { Logo() },
     navController: NavHostController,
-    homeFeedDisplay: FeedDisplay = FeedDisplays.default,
+    homeFeedDisplay: GalleryDisplay = PredefinedGalleryDisplay.default,
     selectionMode: Boolean = false,
     showLibrary: Boolean = true,
     actionBarContent: @Composable (RowScope.() -> Unit) = {},

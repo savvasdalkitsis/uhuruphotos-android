@@ -10,7 +10,7 @@ android {
 
 dependencies {
     implementation project(":api:albums")
-    implementation project(":api:gallery:album:auto")
+    implementation project(":api:gallery:page:album:auto")
     implementation project(":api:autoalbums")
     implementation project(":api:coroutines")
     implementation project(":api:log")

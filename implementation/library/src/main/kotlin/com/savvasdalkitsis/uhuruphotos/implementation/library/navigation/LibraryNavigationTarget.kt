@@ -24,7 +24,7 @@ import com.savvasdalkitsis.uhuruphotos.api.accountoverview.seam.AccountOverviewE
 import com.savvasdalkitsis.uhuruphotos.api.accountoverview.view.AccountOverviewActionBar
 import com.savvasdalkitsis.uhuruphotos.api.accountoverview.view.AccountOverviewContent
 import com.savvasdalkitsis.uhuruphotos.api.accountoverview.view.state.AccountOverviewState
-import com.savvasdalkitsis.uhuruphotos.api.feed.view.state.FeedDisplays
+import com.savvasdalkitsis.uhuruphotos.api.gallery.view.state.PredefinedGalleryDisplay
 import com.savvasdalkitsis.uhuruphotos.api.homenavigation.HomeNavigationRoutes
 import com.savvasdalkitsis.uhuruphotos.api.navigation.NavigationTarget
 import com.savvasdalkitsis.uhuruphotos.api.navigation.navigationTarget
@@ -69,7 +69,7 @@ class LibraryNavigationTarget @Inject constructor(
         ) { state, actions ->
             Library(
                 state = state.first,
-                homeFeedDisplay = FeedDisplays.default,
+                homeFeedDisplay = PredefinedGalleryDisplay.default,
                 isShowingPopUp = state.second.showAccountOverview,
                 action = { actions(Left(it)) },
                 navHostController = navHostController,

@@ -27,7 +27,7 @@ import androidx.navigation.NavHostController
 import com.google.accompanist.swiperefresh.SwipeRefresh
 import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 import com.savvasdalkitsis.uhuruphotos.api.compose.blurIf
-import com.savvasdalkitsis.uhuruphotos.api.feed.view.state.FeedDisplay
+import com.savvasdalkitsis.uhuruphotos.api.gallery.view.state.GalleryDisplay
 import com.savvasdalkitsis.uhuruphotos.api.home.view.HomeScaffold
 import com.savvasdalkitsis.uhuruphotos.api.strings.R.string
 import com.savvasdalkitsis.uhuruphotos.api.ui.view.FullProgressBar
@@ -39,7 +39,7 @@ import com.savvasdalkitsis.uhuruphotos.implementation.library.view.state.Library
 @Composable
 internal fun Library(
     state: LibraryState,
-    homeFeedDisplay: FeedDisplay,
+    homeFeedDisplay: GalleryDisplay,
     isShowingPopUp: Boolean,
     action: (LibraryAction) -> Unit,
     navHostController: NavHostController,

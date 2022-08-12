@@ -18,8 +18,8 @@ package com.savvasdalkitsis.uhuruphotos.implementation.feedpage.view
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.layout.RowScope
 import androidx.compose.runtime.Composable
-import com.savvasdalkitsis.uhuruphotos.api.feed.view.FeedDisplayActionButton
-import com.savvasdalkitsis.uhuruphotos.api.feed.view.state.FeedDisplays
+import com.savvasdalkitsis.uhuruphotos.api.gallery.view.GalleryDisplayActionButton
+import com.savvasdalkitsis.uhuruphotos.api.gallery.view.state.PredefinedGalleryDisplay
 import com.savvasdalkitsis.uhuruphotos.api.icons.R.drawable
 import com.savvasdalkitsis.uhuruphotos.api.ui.view.ActionIcon
 import com.savvasdalkitsis.uhuruphotos.implementation.feedpage.seam.FeedPageAction
@@ -53,9 +53,9 @@ internal fun RowScope.FeedPageActionBar(
         )
     }
     AnimatedVisibility(visible = !state.hasSelection) {
-        FeedDisplayActionButton(
-            onChange = { action(ChangeDisplay(it as FeedDisplays)) },
-            currentFeedDisplay = state.feedState.feedDisplay
+        GalleryDisplayActionButton(
+            onChange = { action(ChangeDisplay(it as PredefinedGalleryDisplay)) },
+            currentGalleryDisplay = state.galleryState.galleryDisplay
         )
     }
 }

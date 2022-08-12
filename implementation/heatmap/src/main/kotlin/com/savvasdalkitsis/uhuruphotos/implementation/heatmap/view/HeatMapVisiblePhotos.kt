@@ -21,12 +21,12 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import com.savvasdalkitsis.uhuruphotos.api.albums.model.Album
-import com.savvasdalkitsis.uhuruphotos.api.feed.view.Feed
-import com.savvasdalkitsis.uhuruphotos.api.feed.view.state.FeedState
+import com.savvasdalkitsis.uhuruphotos.api.gallery.view.Gallery
+import com.savvasdalkitsis.uhuruphotos.api.gallery.view.state.GalleryState
 import com.savvasdalkitsis.uhuruphotos.api.strings.R.string
 import com.savvasdalkitsis.uhuruphotos.implementation.heatmap.seam.HeatMapAction
 import com.savvasdalkitsis.uhuruphotos.implementation.heatmap.seam.HeatMapAction.SelectedPhoto
-import com.savvasdalkitsis.uhuruphotos.implementation.heatmap.view.state.HeatMapFeedDisplay
+import com.savvasdalkitsis.uhuruphotos.implementation.heatmap.view.state.HeatMapGalleryDisplay
 import com.savvasdalkitsis.uhuruphotos.implementation.heatmap.view.state.HeatMapState
 
 @Composable
@@ -40,12 +40,12 @@ fun HeatMapVisiblePhotos(
     if (state.allMedia.isEmpty()) {
         CircularProgressIndicator(modifier = loadingModifier)
     } else {
-        Feed(
+        Gallery(
             modifier = modifier,
             contentPadding = contentPadding,
-            state = FeedState(
+            state = GalleryState(
                 isLoading = false,
-                feedDisplay = HeatMapFeedDisplay,
+                galleryDisplay = HeatMapGalleryDisplay,
                 albums = listOf(
                     Album(
                         id = "visiblePhotos",

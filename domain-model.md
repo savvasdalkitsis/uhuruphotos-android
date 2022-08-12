@@ -4,37 +4,59 @@ This page demonstrates the domain model of the app
 
 ```mermaid 
 graph TD;
-    Gallery-->Feed;
-    Feed-->FeedGroup;
-    FeedGroup-->MediaItem;
-    MediaPage-->MediaItem;
-    MediaItem-->LocalMediaItem;
-    MediaItem-->RemoteMediaItem;
-    LocalMediaItem-->Image;
-    LocalMediaItem-->Video;
-    RemoteMediaItem-->Image;
-    RemoteMediaItem-->Video;
-    AutoAlbum-->Gallery;
-    UserAlbum-->Gallery;
-    Favourites-->Gallery;
-    TrashMedia-->Gallery;
-    LocalMedia-->Gallery;
-    HiddenMedia-->Gallery;
-    
-    subgraph Local
-        LocalMediaItem;
-        LocalMedia;
+
+    GalleryPage-->Gallery
+    Gallery-->GalleryGroup
+    GalleryGroup-->MediaItem
+    MediaPage-->MediaItem
+    MediaItem-->LocalMediaItem
+    MediaItem-->RemoteMediaItem
+    LocalMediaItem-->Image
+    LocalMediaItem-->Video
+    RemoteMediaItem-->Image
+    RemoteMediaItem-->Video
+    AutoAlbum-->GalleryPage
+    UserAlbum-->GalleryPage
+    Favourites-->GalleryPage
+    TrashMedia-->GalleryPage
+    LocalMedia-->LocalGallery
+    LocalGallery-->GalleryPage
+    HiddenMedia-->GalleryPage
+    Person-->Gallery
+    SearchResults-->Gallery
+    Feed-->Gallery
+    People-->PeopleList
+    PeopleList-->Person
+    MediaPage-->PeopleList
+    AutoAlbum-->PeopleList
+
+    subgraph Pages
+        Person
+        LocalGallery
+        MediaPage
     end
+
+    subgraph Search
+        SearchResults
+        People
+    end
+
     subgraph Albums
-        AutoAlbum;
-        UserAlbum;
+        AutoAlbum
+        UserAlbum
     end
-    
-    subgraph Remote
-        RemoteMediaItem;
-        Albums;
-        Favourites;
-        TrashMedia;
-        HiddenMedia;
+
+    subgraph Library
+        TrashMedia
+        HiddenMedia
+        Albums
+        Favourites
+        LocalMedia
+    end
+
+    subgraph Home
+        Feed
+        Search
+        Library
     end
 ```

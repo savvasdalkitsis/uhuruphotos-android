@@ -22,15 +22,15 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import com.google.accompanist.swiperefresh.SwipeRefresh
 import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
-import com.savvasdalkitsis.uhuruphotos.api.feed.view.Feed
-import com.savvasdalkitsis.uhuruphotos.api.feed.view.FeedDisplayActionButton
 import com.savvasdalkitsis.uhuruphotos.api.gallery.page.seam.GalleryPageAction
-import com.savvasdalkitsis.uhuruphotos.api.gallery.page.seam.GalleryPageAction.ChangeFeedDisplay
+import com.savvasdalkitsis.uhuruphotos.api.gallery.page.seam.GalleryPageAction.ChangeGalleryDisplay
 import com.savvasdalkitsis.uhuruphotos.api.gallery.page.seam.GalleryPageAction.NavigateBack
 import com.savvasdalkitsis.uhuruphotos.api.gallery.page.seam.GalleryPageAction.PersonSelected
 import com.savvasdalkitsis.uhuruphotos.api.gallery.page.seam.GalleryPageAction.SelectedPhoto
 import com.savvasdalkitsis.uhuruphotos.api.gallery.page.seam.GalleryPageAction.SwipeToRefresh
 import com.savvasdalkitsis.uhuruphotos.api.gallery.page.view.state.GalleryPageState
+import com.savvasdalkitsis.uhuruphotos.api.gallery.view.Gallery
+import com.savvasdalkitsis.uhuruphotos.api.gallery.view.GalleryDisplayActionButton
 import com.savvasdalkitsis.uhuruphotos.api.people.view.PeopleBar
 import com.savvasdalkitsis.uhuruphotos.api.strings.R.string
 import com.savvasdalkitsis.uhuruphotos.api.ui.view.BackNavButton
@@ -53,11 +53,11 @@ fun GalleryPage(
             }
         },
         actionBarContent = {
-            AnimatedVisibility(state.feedState.feedDisplay.iconResource != 0
-                    && state.feedState.albums.isNotEmpty()) {
-                FeedDisplayActionButton(
-                    onChange = { action(ChangeFeedDisplay(it)) },
-                    currentFeedDisplay = state.feedState.feedDisplay
+            AnimatedVisibility(state.galleryState.galleryDisplay.iconResource != 0
+                    && state.galleryState.albums.isNotEmpty()) {
+                GalleryDisplayActionButton(
+                    onChange = { action(ChangeGalleryDisplay(it)) },
+                    currentGalleryDisplay = state.galleryState.galleryDisplay
                 )
             }
             additionalActionBarContent()
@@ -65,14 +65,14 @@ fun GalleryPage(
     ) { contentPadding ->
         SwipeRefresh(
             indicatorPadding = contentPadding,
-            state = rememberSwipeRefreshState(isRefreshing = state.feedState.isLoading),
+            state = rememberSwipeRefreshState(isRefreshing = state.galleryState.isLoading),
             onRefresh = { action(SwipeToRefresh) }
         ) {
-            Feed(
+            Gallery(
                 contentPadding = contentPadding,
-                state = state.feedState,
-                onChangeDisplay = { action(ChangeFeedDisplay(it)) },
-                feedHeader = state.people.takeIf { it.isNotEmpty() }?.let {
+                state = state.galleryState,
+                onChangeDisplay = { action(ChangeGalleryDisplay(it)) },
+                galleryHeader = state.people.takeIf { it.isNotEmpty() }?.let {
                     {
                         PeopleBar(
                             modifier = Modifier.animateItemPlacement(),

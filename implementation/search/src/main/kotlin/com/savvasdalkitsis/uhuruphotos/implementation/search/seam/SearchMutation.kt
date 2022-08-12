@@ -15,7 +15,7 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.implementation.search.seam
 
-import com.savvasdalkitsis.uhuruphotos.api.feed.view.state.FeedDisplay
+import com.savvasdalkitsis.uhuruphotos.api.gallery.view.state.GalleryDisplay
 import com.savvasdalkitsis.uhuruphotos.api.people.view.state.Person
 import com.savvasdalkitsis.uhuruphotos.api.seam.Mutation
 import com.savvasdalkitsis.uhuruphotos.implementation.search.view.state.SearchResults
@@ -38,11 +38,11 @@ sealed class SearchMutation(
         it.copy(suggestion = null)
     })
 
-    data class ChangeFeedDisplay(val display: FeedDisplay) : SearchMutation({
-        it.copy(feedDisplay = display)
+    data class ChangeFeedDisplay(val display: GalleryDisplay) : SearchMutation({
+        it.copy(galleryDisplay = display)
     })
 
-    data class ChangeSearchDisplay(val display: FeedDisplay) : SearchMutation({
+    data class ChangeSearchDisplay(val display: GalleryDisplay) : SearchMutation({
         it.copy(searchDisplay = display)
     })
 

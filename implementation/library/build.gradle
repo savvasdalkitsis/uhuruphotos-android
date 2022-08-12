@@ -10,18 +10,18 @@ android {
 
 dependencies {
     implementation project(':api:accountoverview')
-    implementation project(":api:gallery:album:auto")
-    implementation project(":api:gallery:album:user")
+    implementation project(":api:gallery:page:album:auto")
+    implementation project(":api:gallery:page:album:user")
     implementation project(':api:albums')
     implementation project(":api:autoalbums")
     implementation project(":api:compose")
     implementation project(":api:coroutines")
     implementation project(":api:db")
-    implementation project(":api:gallery:favourites")
-    implementation project(":api:feed")
-    implementation project(":api:gallery:hidden")
-    implementation project(":api:gallery:local")
-    implementation project(":api:gallery:trash")
+    implementation project(":api:gallery:page:favourites")
+    implementation project(":api:gallery")
+    implementation project(":api:gallery:page:hidden")
+    implementation project(":api:gallery:page:local")
+    implementation project(":api:gallery:page:trash")
     implementation project(":api:home")
     implementation project(":api:homenavigation")
     implementation project(":api:icons")
@@ -44,5 +44,5 @@ dependencies {
             libs.flowpreferences,
             libs.retrofit.core,
     )
-    implementation project(path: ':implementation:gallery:local')
+    implementation project(path: ':implementation:gallery:page:local')
 }
