@@ -3,7 +3,7 @@
 [![Lines of code](https://tokei.rs/b1/github/savvasdalkitsis/uhuruphotos-android)](https://github.com/savvasdalkitsis/uhuruphotos-android)
 [![Join the chat at https://gitter.im/uhuruphotos/community](https://badges.gitter.im/uhuruphotos/community.svg)](https://gitter.im/uhuruphotos?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
-# <img src="https://github.com/savvasdalkitsis/uhuruphotos-android/raw/main/api/icons/src/main/ic_launcher-playstore.png" alt="logo" width = 60px> UhuruPhotos. A LibrePhotos client
+# <img src="https://github.com/savvasdalkitsis/uhuruphotos-android/raw/main/foundation/icons/api/src/main/ic_launcher-playstore.png" alt="logo" width = 60px> UhuruPhotos. A LibrePhotos client
 
 UhuruPhotos is an Android client for [LibrePhotos](https://github.com/LibrePhotos/librephotos) 
 written using the latest Android technologies, like Jetpack Compose, SQLDelight, Coroutines etc 
