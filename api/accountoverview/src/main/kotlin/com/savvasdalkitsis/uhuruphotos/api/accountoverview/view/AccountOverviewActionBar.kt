@@ -16,14 +16,7 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.api.accountoverview.view
 
 import androidx.compose.runtime.Composable
-import com.savvasdalkitsis.uhuruphotos.api.account.view.LogOutConfirmationDialog
 import com.savvasdalkitsis.uhuruphotos.api.accountoverview.seam.AccountOverviewAction
-import com.savvasdalkitsis.uhuruphotos.api.accountoverview.seam.AccountOverviewAction.AskToLogOut
-import com.savvasdalkitsis.uhuruphotos.api.accountoverview.seam.AccountOverviewAction.DismissAccountOverview
-import com.savvasdalkitsis.uhuruphotos.api.accountoverview.seam.AccountOverviewAction.DismissLogOutDialog
-import com.savvasdalkitsis.uhuruphotos.api.accountoverview.seam.AccountOverviewAction.EditServer
-import com.savvasdalkitsis.uhuruphotos.api.accountoverview.seam.AccountOverviewAction.LogOut
-import com.savvasdalkitsis.uhuruphotos.api.accountoverview.seam.AccountOverviewAction.SettingsClick
 import com.savvasdalkitsis.uhuruphotos.api.accountoverview.view.state.AccountOverviewState
 import com.savvasdalkitsis.uhuruphotos.api.userbadge.view.UserBadge
 

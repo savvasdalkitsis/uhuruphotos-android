@@ -3,7 +3,7 @@ android {
 }
 
 dependencies {
-    implementation project(":implementation:account")
+    implementation project(":feature:account:domain:implementation")
     implementation project(":implementation:albums")
     implementation project(":implementation:auth")
     implementation project(":implementation:autoalbums")

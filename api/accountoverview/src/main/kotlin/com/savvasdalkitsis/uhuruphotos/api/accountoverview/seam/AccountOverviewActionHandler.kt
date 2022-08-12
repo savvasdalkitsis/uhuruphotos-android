@@ -15,7 +15,6 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.api.accountoverview.seam
 
-import com.savvasdalkitsis.uhuruphotos.api.account.usecase.AccountUseCase
 import com.savvasdalkitsis.uhuruphotos.api.accountoverview.seam.AccountOverviewAction.AskToLogOut
 import com.savvasdalkitsis.uhuruphotos.api.accountoverview.seam.AccountOverviewAction.DismissAccountOverview
 import com.savvasdalkitsis.uhuruphotos.api.accountoverview.seam.AccountOverviewAction.DismissLogOutDialog
@@ -34,6 +33,7 @@ import com.savvasdalkitsis.uhuruphotos.api.accountoverview.seam.AccountOverviewM
 import com.savvasdalkitsis.uhuruphotos.api.accountoverview.seam.AccountOverviewMutation.UserBadgeUpdate
 import com.savvasdalkitsis.uhuruphotos.api.accountoverview.view.state.AccountOverviewState
 import com.savvasdalkitsis.uhuruphotos.api.userbadge.usecase.UserBadgeUseCase
+import com.savvasdalkitsis.uhuruphotos.feature.account.domain.api.usecase.AccountUseCase
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.ActionHandler
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow

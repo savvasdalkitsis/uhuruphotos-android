@@ -10,7 +10,6 @@ android {
 
 dependencies {
 
-    implementation project(":api:account")
     implementation project(":api:accountoverview")
     implementation project(':api:albums')
     implementation project(":foundation:compose:api")
