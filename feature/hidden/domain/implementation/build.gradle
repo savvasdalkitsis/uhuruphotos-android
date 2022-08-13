@@ -1,0 +1,11 @@
+android {
+    namespace 'com.savvasdalkitsis.uhuruphotos.feature.hidden.domain.implementation'
+}
+
+dependencies {
+    implementation project(":feature:hidden:domain:api")
+    implementation(
+            libs.hilt,
+            libs.flowpreferences,
+    )
+}

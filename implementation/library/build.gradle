@@ -19,7 +19,7 @@ dependencies {
     implementation project(":api:db")
     implementation project(":feature:favourites:view:api")
     implementation project(":api:gallery")
-    implementation project(":api:gallery:page:hidden")
+    implementation project(":feature:hidden:view:api")
     implementation project(":api:gallery:page:local")
     implementation project(":api:gallery:page:trash")
     implementation project(":api:home")
