@@ -22,7 +22,7 @@ dependencies {
     implementation project(":feature:hidden:view:api")
     implementation project(":feature:local:domain:api")
     implementation project(":feature:local:view:api")
-    implementation project(":api:gallery:page:trash")
+    implementation project(":feature:trash:view:api")
     implementation project(":api:home")
     implementation project(":api:homenavigation")
     implementation project(":foundation:icons:api")

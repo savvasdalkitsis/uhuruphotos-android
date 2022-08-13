@@ -1,0 +1,8 @@
+android {
+    namespace 'com.savvasdalkitsis.uhuruphotos.feature.trash.domain.api'
+}
+
+dependencies {
+    api project(":api:albums")
+    api project(":api:gallery")
+}

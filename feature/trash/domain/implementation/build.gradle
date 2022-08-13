@@ -1,0 +1,13 @@
+android {
+    namespace 'com.savvasdalkitsis.uhuruphotos.feature.trash.domain.implementation'
+}
+
+dependencies {
+    implementation project(":api:albums")
+    implementation project(":api:gallery")
+    implementation project(":feature:trash:domain:api")
+    implementation(
+            libs.hilt,
+            libs.flowpreferences,
+    )
+}
