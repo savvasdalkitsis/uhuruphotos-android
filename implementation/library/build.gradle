@@ -20,7 +20,8 @@ dependencies {
     implementation project(":feature:favourites:view:api")
     implementation project(":api:gallery")
     implementation project(":feature:hidden:view:api")
-    implementation project(":api:gallery:page:local")
+    implementation project(":feature:local:domain:api")
+    implementation project(":feature:local:view:api")
     implementation project(":api:gallery:page:trash")
     implementation project(":api:home")
     implementation project(":api:homenavigation")
@@ -44,5 +45,5 @@ dependencies {
             libs.flowpreferences,
             libs.retrofit.core,
     )
-    implementation project(path: ':implementation:gallery:page:local')
+    implementation project(path: ':feature:local:view:implementation')
 }

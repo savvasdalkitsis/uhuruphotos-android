@@ -1,0 +1,31 @@
+android {
+    buildFeatures {
+        compose true
+    }
+    composeOptions {
+        kotlinCompilerExtensionVersion compose_compiler_version
+    }
+    namespace 'com.savvasdalkitsis.uhuruphotos.feature.local.view.implementation'
+}
+
+dependencies {
+    implementation project(':api:albums')
+    implementation project(":api:gallery:page:album:auto")
+    implementation project(':foundation:date:api')
+    implementation project(":api:db")
+    implementation project(":api:gallery")
+    implementation project(":feature:local:domain:api")
+    implementation project(":feature:local:view:api")
+    implementation project(':api:gallery:page')
+    implementation project(":foundation:navigation:api")
+    implementation project(":api:media:local")
+    implementation project(':api:media:page')
+    implementation project(':api:people')
+    implementation project(":api:settings")
+    implementation(
+            libs.androidx.compose.hilt.navigation,
+            libs.androidx.compose.material,
+            libs.bundles.permissions,
+            libs.flowpreferences,
+    )
+}

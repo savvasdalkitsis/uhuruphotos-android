@@ -22,7 +22,7 @@ dependencies {
     implementation project(":foundation:exif:api")
     implementation project(":foundation:icons:api")
     implementation project(':foundation:image:api')
-    implementation project(":api:gallery:page:local")
+    implementation project(":feature:local:domain:api")
     implementation project(":foundation:log:api")
     implementation project(":foundation:map:api")
     implementation project(':api:media:local')
