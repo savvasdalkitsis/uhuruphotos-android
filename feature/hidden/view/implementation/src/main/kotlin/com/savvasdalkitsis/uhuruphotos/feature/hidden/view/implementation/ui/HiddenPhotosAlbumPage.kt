@@ -1,4 +1,4 @@
-package com.savvasdalkitsis.uhuruphotos.feature.hidden.view.implementation.view
+package com.savvasdalkitsis.uhuruphotos.feature.hidden.view.implementation.ui
 
 import androidx.compose.runtime.Composable
 import com.savvasdalkitsis.uhuruphotos.api.gallery.page.seam.GalleryPageAction
