@@ -17,7 +17,7 @@ dependencies {
     implementation project(":foundation:compose:api")
     implementation project(":foundation:coroutines:api")
     implementation project(":api:db")
-    implementation project(":api:gallery:page:favourites")
+    implementation project(":feature:favourites:view:api")
     implementation project(":api:gallery")
     implementation project(":api:gallery:page:hidden")
     implementation project(":api:gallery:page:local")

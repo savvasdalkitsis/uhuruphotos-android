@@ -1,0 +1,11 @@
+android {
+    namespace 'com.savvasdalkitsis.uhuruphotos.feature.favourites.domain.implementation'
+}
+
+dependencies {
+    api project(":feature:favourites:domain:api")
+    implementation(
+            libs.flowpreferences,
+            libs.hilt,
+    )
+}

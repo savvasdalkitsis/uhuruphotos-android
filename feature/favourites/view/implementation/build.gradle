@@ -1,0 +1,28 @@
+android {
+    buildFeatures {
+        compose true
+    }
+    composeOptions {
+        kotlinCompilerExtensionVersion compose_compiler_version
+    }
+    namespace 'com.savvasdalkitsis.uhuruphotos.feature.favourites.view.implementation'
+}
+
+dependencies {
+    implementation project(':api:gallery:page')
+    implementation project(':api:albums')
+    implementation project(':feature:favourites:view:api')
+    implementation project(':feature:favourites:domain:api')
+    implementation project(':foundation:date:api')
+    implementation project(":api:db")
+    implementation project(":api:gallery")
+    implementation project(":foundation:navigation:api")
+    implementation project(':api:media:page')
+    implementation project(':api:media:remote')
+    implementation project(":api:settings")
+    implementation project(":foundation:strings:api")
+    implementation(
+            libs.androidx.compose.hilt.navigation,
+            libs.flowpreferences,
+    )
+}
