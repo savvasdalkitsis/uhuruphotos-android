@@ -1,0 +1,10 @@
+android {
+    namespace 'com.savvasdalkitsis.uhuruphotos.feature.person.domain.implementation'
+}
+
+dependencies {
+    implementation project(":feature:person:domain:api")
+    implementation(
+            libs.hilt,
+    )
+}

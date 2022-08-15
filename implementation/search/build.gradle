@@ -25,7 +25,7 @@ dependencies {
     implementation project(":foundation:map:api")
     implementation project(":foundation:navigation:api")
     implementation project(':api:people')
-    implementation project(':api:person')
+    implementation project(':feature:person:view:api')
     implementation project(':api:media:remote')
     implementation project(':api:search')
     implementation project(":api:server")

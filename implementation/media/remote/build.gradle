@@ -31,7 +31,7 @@ dependencies {
     implementation project(":foundation:navigation:api")
     implementation project(":foundation:notification:api")
     implementation project(':api:people')
-    implementation project(':api:person')
+    implementation project(':feature:person:view:api')
     implementation project(':api:search')
     implementation project(":api:share")
     implementation project(":foundation:strings:api")
