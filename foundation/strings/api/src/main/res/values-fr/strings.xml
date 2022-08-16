@@ -166,4 +166,47 @@
     <string name="open_in_maps">Ouvrir dans Maps</string>
     <string name="nothing_here_yet">Rien ici pour l\'instant</string>
     <string name="use_as">Utiliser comme</string>
+    <string name="local_albums">Albums locaux</string>
+    <string name="missing_permissions">Permissions manquantes</string>
+    <string name="grant_permissions">Accorder les permissions</string>
+    <string name="sync_local_media">Synchronisation des médias locaux</string>
+    <string name="media">Média</string>
+    <plurals name="trash_media">
+        <item quantity="one">Envoyer %d média dans la corbeille</item>
+        <item quantity="other">Envoyer %d médias dans la corbeille</item>
+    </plurals>
+    <string name="enter_libre_photos_url">Entrez l\'URL du serveur LibrePhotos</string>
+    <string name="server_url">URL du serveur</string>
+    <string name="save">Enregistrer</string>
+    <string name="login">Se connecter</string>
+    <string name="biometrics_enroll">Activez les options biométriques pour activer cette fonctionalité</string>
+    <plurals name="delete_media_confirmation">
+        <item quantity="one">Voulez-vous vraiment supprimer %d média \?</item>
+        <item quantity="other">Voulez-vous vraiment supprimer %d médias \?</item>
+    </plurals>
+    <plurals name="trash_media_confirmation">
+        <item quantity="one">Êtes-vous sûr de vouloir envoyer %d média dans la corbeille \?</item>
+        <item quantity="other">Êtes-vous sûr de vouloir envoyer %d médias dans la corbeille \?</item>
+    </plurals>
+    <plurals name="restore_media_confirmation">
+        <item quantity="one">Êtes-vous sûr de vouloir restaurer %d média \?</item>
+        <item quantity="other">Êtes-vous sûr de vouloir restaurer %d médias \?</item>
+    </plurals>
+    <string name="gallery_size">Taille de la galerie</string>
+    <plurals name="delete_media">
+        <item quantity="one">Supprimer %d média</item>
+        <item quantity="other">Supprimer %d médias</item>
+    </plurals>
+    <plurals name="restore_media">
+        <item quantity="one">Restaurer %d média</item>
+        <item quantity="other">Restaurer %d médias</item>
+    </plurals>
+    <string name="login_to_server">Se connecter au serveur</string>
+    <string name="setting_media_favourite">Changement de l\'état favori du média</string>
+    <string name="downloading_media_details">Téléchargement des détails du média</string>
+    <string name="trashing_media">Envoi du média à la corbeille</string>
+    <string name="restoring_media">Restauration du média depuis la corbeille</string>
+    <string name="deleting_media">Suppression du média</string>
+    <string name="favourite_media">Médias favoris</string>
+    <string name="yearly">Années</string>
 </resources>
