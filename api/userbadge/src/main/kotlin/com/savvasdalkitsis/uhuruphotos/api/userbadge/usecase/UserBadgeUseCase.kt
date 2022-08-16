@@ -15,7 +15,7 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.api.userbadge.usecase
 
-import com.savvasdalkitsis.uhuruphotos.api.userbadge.view.state.UserInformationState
+import com.savvasdalkitsis.uhuruphotos.api.userbadge.ui.state.UserInformationState
 import kotlinx.coroutines.flow.Flow
 
 interface UserBadgeUseCase {

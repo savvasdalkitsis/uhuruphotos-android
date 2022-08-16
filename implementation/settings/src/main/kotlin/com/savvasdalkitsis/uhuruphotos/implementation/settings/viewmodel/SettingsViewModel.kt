@@ -22,7 +22,7 @@ import com.savvasdalkitsis.uhuruphotos.implementation.settings.seam.SettingsActi
 import com.savvasdalkitsis.uhuruphotos.implementation.settings.seam.SettingsActionHandler
 import com.savvasdalkitsis.uhuruphotos.implementation.settings.seam.SettingsEffect
 import com.savvasdalkitsis.uhuruphotos.implementation.settings.seam.SettingsMutation
-import com.savvasdalkitsis.uhuruphotos.implementation.settings.view.state.SettingsState
+import com.savvasdalkitsis.uhuruphotos.implementation.settings.ui.state.SettingsState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 

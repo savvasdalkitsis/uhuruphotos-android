@@ -22,7 +22,7 @@ import com.savvasdalkitsis.uhuruphotos.implementation.heatmap.seam.HeatMapAction
 import com.savvasdalkitsis.uhuruphotos.implementation.heatmap.seam.HeatMapActionHandler
 import com.savvasdalkitsis.uhuruphotos.implementation.heatmap.seam.HeatMapEffect
 import com.savvasdalkitsis.uhuruphotos.implementation.heatmap.seam.HeatMapMutation
-import com.savvasdalkitsis.uhuruphotos.implementation.heatmap.view.state.HeatMapState
+import com.savvasdalkitsis.uhuruphotos.implementation.heatmap.ui.state.HeatMapState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 

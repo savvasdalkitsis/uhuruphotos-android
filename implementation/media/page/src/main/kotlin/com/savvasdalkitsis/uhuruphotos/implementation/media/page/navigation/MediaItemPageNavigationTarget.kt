@@ -22,8 +22,8 @@ import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.theme.ThemeMode
 import com.savvasdalkitsis.uhuruphotos.implementation.media.page.seam.MediaItemPageAction
 import com.savvasdalkitsis.uhuruphotos.implementation.media.page.seam.MediaItemPageEffect
 import com.savvasdalkitsis.uhuruphotos.implementation.media.page.seam.MediaItemPageEffectsHandler
-import com.savvasdalkitsis.uhuruphotos.implementation.media.page.view.MediaItemPage
-import com.savvasdalkitsis.uhuruphotos.implementation.media.page.view.state.MediaItemPageState
+import com.savvasdalkitsis.uhuruphotos.implementation.media.page.ui.MediaItemPage
+import com.savvasdalkitsis.uhuruphotos.implementation.media.page.ui.state.MediaItemPageState
 import com.savvasdalkitsis.uhuruphotos.implementation.media.page.viewmodel.MediaItemPageViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import javax.inject.Inject

@@ -25,8 +25,8 @@ import com.savvasdalkitsis.uhuruphotos.api.settings.usecase.SettingsUseCase
 import com.savvasdalkitsis.uhuruphotos.implementation.home.seam.HomeAction
 import com.savvasdalkitsis.uhuruphotos.implementation.home.seam.HomeEffect
 import com.savvasdalkitsis.uhuruphotos.implementation.home.seam.HomeEffectsHandler
-import com.savvasdalkitsis.uhuruphotos.implementation.home.view.Home
-import com.savvasdalkitsis.uhuruphotos.implementation.home.view.state.HomeState
+import com.savvasdalkitsis.uhuruphotos.implementation.home.ui.Home
+import com.savvasdalkitsis.uhuruphotos.implementation.home.ui.state.HomeState
 import com.savvasdalkitsis.uhuruphotos.implementation.home.viewmodel.HomeViewModel
 import javax.inject.Inject
 

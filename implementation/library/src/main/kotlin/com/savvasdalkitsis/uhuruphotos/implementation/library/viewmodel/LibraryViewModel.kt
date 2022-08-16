@@ -28,7 +28,7 @@ import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.handler
 import com.savvasdalkitsis.uhuruphotos.implementation.library.seam.LibraryAction
 import com.savvasdalkitsis.uhuruphotos.implementation.library.seam.LibraryActionHandler
 import com.savvasdalkitsis.uhuruphotos.implementation.library.seam.LibraryEffect
-import com.savvasdalkitsis.uhuruphotos.implementation.library.view.state.LibraryState
+import com.savvasdalkitsis.uhuruphotos.implementation.library.ui.state.LibraryState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 

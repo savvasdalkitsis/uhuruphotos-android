@@ -26,10 +26,10 @@ import com.savvasdalkitsis.uhuruphotos.api.gallery.page.seam.GalleryPageEffect.N
 import com.savvasdalkitsis.uhuruphotos.api.gallery.page.seam.GalleryPageEffect.OpenPhotoDetails
 import com.savvasdalkitsis.uhuruphotos.api.gallery.page.seam.GalleryPageMutation.Loading
 import com.savvasdalkitsis.uhuruphotos.api.gallery.page.seam.GalleryPageMutation.ShowGalleryPage
-import com.savvasdalkitsis.uhuruphotos.api.gallery.page.view.state.GalleryDetails
-import com.savvasdalkitsis.uhuruphotos.api.gallery.page.view.state.GalleryPageState
-import com.savvasdalkitsis.uhuruphotos.api.gallery.view.state.GalleryDisplay
-import com.savvasdalkitsis.uhuruphotos.api.gallery.view.state.PredefinedGalleryDisplay
+import com.savvasdalkitsis.uhuruphotos.api.gallery.page.ui.state.GalleryDetails
+import com.savvasdalkitsis.uhuruphotos.api.gallery.page.ui.state.GalleryPageState
+import com.savvasdalkitsis.uhuruphotos.api.gallery.ui.state.GalleryDisplay
+import com.savvasdalkitsis.uhuruphotos.api.gallery.ui.state.PredefinedGalleryDisplay
 import com.savvasdalkitsis.uhuruphotos.api.media.page.domain.model.MediaSequenceDataSource
 import com.savvasdalkitsis.uhuruphotos.foundation.coroutines.api.safelyOnStartIgnoring
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.ActionHandler

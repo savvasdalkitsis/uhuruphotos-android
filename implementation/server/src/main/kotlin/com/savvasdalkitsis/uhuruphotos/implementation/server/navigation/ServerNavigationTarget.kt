@@ -29,8 +29,8 @@ import com.savvasdalkitsis.uhuruphotos.implementation.server.seam.ServerAction.L
 import com.savvasdalkitsis.uhuruphotos.implementation.server.seam.ServerAction.RequestServerUrlChange
 import com.savvasdalkitsis.uhuruphotos.implementation.server.seam.ServerEffect
 import com.savvasdalkitsis.uhuruphotos.implementation.server.seam.ServerEffectsHandler
-import com.savvasdalkitsis.uhuruphotos.implementation.server.view.Server
-import com.savvasdalkitsis.uhuruphotos.implementation.server.view.ServerState
+import com.savvasdalkitsis.uhuruphotos.implementation.server.ui.Server
+import com.savvasdalkitsis.uhuruphotos.implementation.server.ui.ServerState
 import com.savvasdalkitsis.uhuruphotos.implementation.server.viewmodel.ServerViewModel
 import javax.inject.Inject
 

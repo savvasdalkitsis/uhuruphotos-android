@@ -28,7 +28,7 @@ import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.handler
 import com.savvasdalkitsis.uhuruphotos.implementation.search.seam.SearchAction
 import com.savvasdalkitsis.uhuruphotos.implementation.search.seam.SearchActionHandler
 import com.savvasdalkitsis.uhuruphotos.implementation.search.seam.SearchEffect
-import com.savvasdalkitsis.uhuruphotos.implementation.search.view.state.SearchState
+import com.savvasdalkitsis.uhuruphotos.implementation.search.ui.state.SearchState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 

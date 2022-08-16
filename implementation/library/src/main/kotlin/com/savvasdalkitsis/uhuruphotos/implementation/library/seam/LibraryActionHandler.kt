@@ -48,8 +48,8 @@ import com.savvasdalkitsis.uhuruphotos.implementation.library.seam.LibraryMutati
 import com.savvasdalkitsis.uhuruphotos.implementation.library.seam.LibraryMutation.DisplayLocalAlbums
 import com.savvasdalkitsis.uhuruphotos.implementation.library.seam.LibraryMutation.DisplayUserAlbums
 import com.savvasdalkitsis.uhuruphotos.implementation.library.seam.LibraryMutation.Loading
-import com.savvasdalkitsis.uhuruphotos.implementation.library.view.state.LibraryLocalMedia
-import com.savvasdalkitsis.uhuruphotos.implementation.library.view.state.LibraryState
+import com.savvasdalkitsis.uhuruphotos.implementation.library.ui.state.LibraryLocalMedia
+import com.savvasdalkitsis.uhuruphotos.implementation.library.ui.state.LibraryState
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableSharedFlow

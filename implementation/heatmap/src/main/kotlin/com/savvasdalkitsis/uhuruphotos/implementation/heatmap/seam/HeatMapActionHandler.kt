@@ -41,7 +41,7 @@ import com.savvasdalkitsis.uhuruphotos.implementation.heatmap.seam.HeatMapEffect
 import com.savvasdalkitsis.uhuruphotos.implementation.heatmap.seam.HeatMapMutation.ShowLoading
 import com.savvasdalkitsis.uhuruphotos.implementation.heatmap.seam.HeatMapMutation.UpdateAllPhotos
 import com.savvasdalkitsis.uhuruphotos.implementation.heatmap.seam.HeatMapMutation.UpdateVisibleMapContent
-import com.savvasdalkitsis.uhuruphotos.implementation.heatmap.view.state.HeatMapState
+import com.savvasdalkitsis.uhuruphotos.implementation.heatmap.ui.state.HeatMapState
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Deferred
 import kotlinx.coroutines.Dispatchers

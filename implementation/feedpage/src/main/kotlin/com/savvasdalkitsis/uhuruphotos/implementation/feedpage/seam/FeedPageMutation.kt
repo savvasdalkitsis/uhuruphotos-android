@@ -16,10 +16,10 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.implementation.feedpage.seam
 
 import com.savvasdalkitsis.uhuruphotos.api.albums.model.Album
-import com.savvasdalkitsis.uhuruphotos.api.gallery.view.state.GalleryState
-import com.savvasdalkitsis.uhuruphotos.api.gallery.view.state.PredefinedGalleryDisplay
+import com.savvasdalkitsis.uhuruphotos.api.gallery.ui.state.GalleryState
+import com.savvasdalkitsis.uhuruphotos.api.gallery.ui.state.PredefinedGalleryDisplay
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.Mutation
-import com.savvasdalkitsis.uhuruphotos.implementation.feedpage.view.state.FeedPageState
+import com.savvasdalkitsis.uhuruphotos.implementation.feedpage.ui.state.FeedPageState
 
 internal sealed class FeedPageMutation(
     mutation: Mutation<FeedPageState>,

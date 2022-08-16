@@ -15,8 +15,8 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.hidden.domain.api.usecase
 
-import com.savvasdalkitsis.uhuruphotos.api.gallery.view.state.GalleryDisplay
-import com.savvasdalkitsis.uhuruphotos.api.gallery.view.state.PredefinedGalleryDisplay
+import com.savvasdalkitsis.uhuruphotos.api.gallery.ui.state.GalleryDisplay
+import com.savvasdalkitsis.uhuruphotos.api.gallery.ui.state.PredefinedGalleryDisplay
 
 interface HiddenMediaUseCase {
 

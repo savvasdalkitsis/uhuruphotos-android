@@ -16,7 +16,7 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.implementation.auth.weblogin.weblogin.seam
 
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.Mutation
-import com.savvasdalkitsis.uhuruphotos.implementation.auth.weblogin.weblogin.view.WebLoginState
+import com.savvasdalkitsis.uhuruphotos.implementation.auth.weblogin.weblogin.ui.WebLoginState
 
 sealed class WebLoginMutation(
     mutation: Mutation<WebLoginState>,

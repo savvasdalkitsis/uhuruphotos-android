@@ -22,7 +22,7 @@ import com.savvasdalkitsis.uhuruphotos.implementation.auth.weblogin.weblogin.sea
 import com.savvasdalkitsis.uhuruphotos.implementation.auth.weblogin.weblogin.seam.WebLoginActionHandler
 import com.savvasdalkitsis.uhuruphotos.implementation.auth.weblogin.weblogin.seam.WebLoginEffect
 import com.savvasdalkitsis.uhuruphotos.implementation.auth.weblogin.weblogin.seam.WebLoginMutation
-import com.savvasdalkitsis.uhuruphotos.implementation.auth.weblogin.weblogin.view.WebLoginState
+import com.savvasdalkitsis.uhuruphotos.implementation.auth.weblogin.weblogin.ui.WebLoginState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 

@@ -16,7 +16,7 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.implementation.autoalbums.view
 
 import androidx.compose.runtime.Composable
-import com.savvasdalkitsis.uhuruphotos.api.albums.view.AlbumsPage
+import com.savvasdalkitsis.uhuruphotos.api.albums.ui.AlbumsPage
 import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
 import com.savvasdalkitsis.uhuruphotos.implementation.autoalbums.seam.AutoAlbumsAction
 import com.savvasdalkitsis.uhuruphotos.implementation.autoalbums.seam.AutoAlbumsAction.ChangeSorting

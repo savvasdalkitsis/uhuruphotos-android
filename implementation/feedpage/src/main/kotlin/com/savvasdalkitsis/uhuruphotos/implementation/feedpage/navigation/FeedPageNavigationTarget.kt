@@ -38,8 +38,8 @@ import com.savvasdalkitsis.uhuruphotos.implementation.feedpage.seam.FeedPageActi
 import com.savvasdalkitsis.uhuruphotos.implementation.feedpage.seam.FeedPageAction.LoadFeed
 import com.savvasdalkitsis.uhuruphotos.implementation.feedpage.seam.FeedPageEffect
 import com.savvasdalkitsis.uhuruphotos.implementation.feedpage.seam.FeedPageEffectsHandler
-import com.savvasdalkitsis.uhuruphotos.implementation.feedpage.view.FeedPage
-import com.savvasdalkitsis.uhuruphotos.implementation.feedpage.view.state.FeedPageState
+import com.savvasdalkitsis.uhuruphotos.implementation.feedpage.ui.FeedPage
+import com.savvasdalkitsis.uhuruphotos.implementation.feedpage.ui.state.FeedPageState
 import com.savvasdalkitsis.uhuruphotos.implementation.feedpage.viewmodel.FeedPageViewModel
 import javax.inject.Inject
 

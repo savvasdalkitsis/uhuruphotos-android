@@ -37,8 +37,8 @@ import com.savvasdalkitsis.uhuruphotos.implementation.search.seam.SearchAction
 import com.savvasdalkitsis.uhuruphotos.implementation.search.seam.SearchAction.Initialise
 import com.savvasdalkitsis.uhuruphotos.implementation.search.seam.SearchEffect
 import com.savvasdalkitsis.uhuruphotos.implementation.search.seam.SearchEffectsHandler
-import com.savvasdalkitsis.uhuruphotos.implementation.search.view.SearchPage
-import com.savvasdalkitsis.uhuruphotos.implementation.search.view.state.SearchState
+import com.savvasdalkitsis.uhuruphotos.implementation.search.ui.SearchPage
+import com.savvasdalkitsis.uhuruphotos.implementation.search.ui.state.SearchState
 import com.savvasdalkitsis.uhuruphotos.implementation.search.viewmodel.SearchViewModel
 import javax.inject.Inject
 

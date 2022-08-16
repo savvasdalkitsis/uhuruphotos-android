@@ -15,8 +15,8 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.api.autoalbums.usecase
 
-import com.savvasdalkitsis.uhuruphotos.api.albums.view.state.AlbumSorting
-import com.savvasdalkitsis.uhuruphotos.api.autoalbums.view.state.AutoAlbum
+import com.savvasdalkitsis.uhuruphotos.api.albums.ui.state.AlbumSorting
+import com.savvasdalkitsis.uhuruphotos.api.autoalbums.ui.state.AutoAlbum
 import kotlinx.coroutines.flow.Flow
 
 interface AutoAlbumsUseCase {

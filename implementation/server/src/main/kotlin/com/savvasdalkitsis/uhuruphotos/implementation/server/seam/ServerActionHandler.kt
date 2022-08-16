@@ -50,8 +50,8 @@ import com.savvasdalkitsis.uhuruphotos.implementation.server.seam.ServerMutation
 import com.savvasdalkitsis.uhuruphotos.implementation.server.seam.ServerMutation.SetPasswordVisibility
 import com.savvasdalkitsis.uhuruphotos.implementation.server.seam.ServerMutation.ShowUnsecureServerConfirmation
 import com.savvasdalkitsis.uhuruphotos.implementation.server.seam.ServerMutation.ShowUrlValidation
-import com.savvasdalkitsis.uhuruphotos.implementation.server.view.ServerState
-import com.savvasdalkitsis.uhuruphotos.implementation.server.view.ServerState.UserCredentials
+import com.savvasdalkitsis.uhuruphotos.implementation.server.ui.ServerState
+import com.savvasdalkitsis.uhuruphotos.implementation.server.ui.ServerState.UserCredentials
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOf

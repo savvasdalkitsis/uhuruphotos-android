@@ -25,7 +25,7 @@ import com.savvasdalkitsis.uhuruphotos.implementation.home.seam.HomeAction.Load
 import com.savvasdalkitsis.uhuruphotos.implementation.home.seam.HomeEffect.LaunchAuthentication
 import com.savvasdalkitsis.uhuruphotos.implementation.home.seam.HomeMutation.Loading
 import com.savvasdalkitsis.uhuruphotos.implementation.home.seam.HomeMutation.NeedsBiometricAuthentication
-import com.savvasdalkitsis.uhuruphotos.implementation.home.view.state.HomeState
+import com.savvasdalkitsis.uhuruphotos.implementation.home.ui.state.HomeState
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import javax.inject.Inject

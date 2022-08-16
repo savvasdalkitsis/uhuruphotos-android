@@ -26,7 +26,7 @@ import com.savvasdalkitsis.uhuruphotos.implementation.useralbums.seam.UserAlbums
 import com.savvasdalkitsis.uhuruphotos.implementation.useralbums.seam.UserAlbumsEffect
 import com.savvasdalkitsis.uhuruphotos.implementation.useralbums.seam.UserAlbumsEffectHandler
 import com.savvasdalkitsis.uhuruphotos.implementation.useralbums.seam.UserAlbumsState
-import com.savvasdalkitsis.uhuruphotos.implementation.useralbums.view.UserAlbums
+import com.savvasdalkitsis.uhuruphotos.implementation.useralbums.ui.UserAlbums
 import com.savvasdalkitsis.uhuruphotos.implementation.useralbums.viewmodel.UserAlbumsViewModel
 import javax.inject.Inject
 

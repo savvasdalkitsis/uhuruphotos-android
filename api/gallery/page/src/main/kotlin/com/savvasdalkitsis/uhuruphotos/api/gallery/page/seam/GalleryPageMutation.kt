@@ -15,9 +15,9 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.api.gallery.page.seam
 
-import com.savvasdalkitsis.uhuruphotos.api.gallery.page.view.state.GalleryDetails
-import com.savvasdalkitsis.uhuruphotos.api.gallery.page.view.state.GalleryPageState
-import com.savvasdalkitsis.uhuruphotos.api.gallery.view.state.GalleryDisplay
+import com.savvasdalkitsis.uhuruphotos.api.gallery.page.ui.state.GalleryDetails
+import com.savvasdalkitsis.uhuruphotos.api.gallery.page.ui.state.GalleryPageState
+import com.savvasdalkitsis.uhuruphotos.api.gallery.ui.state.GalleryDisplay
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.Mutation
 
 sealed class GalleryPageMutation(

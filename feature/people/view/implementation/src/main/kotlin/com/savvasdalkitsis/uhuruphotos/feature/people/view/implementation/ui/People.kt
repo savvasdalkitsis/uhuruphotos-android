@@ -30,10 +30,10 @@ import com.google.accompanist.swiperefresh.SwipeRefresh
 import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.R.drawable
 import com.savvasdalkitsis.uhuruphotos.feature.people.view.api.ui.PersonThumbnail
-import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.view.ActionIcon
-import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.view.BackNavButton
-import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.view.CommonScaffold
-import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.view.FullProgressBar
+import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.ActionIcon
+import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.BackNavButton
+import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.CommonScaffold
+import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.FullProgressBar
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.window.LocalWindowSize
 import com.savvasdalkitsis.uhuruphotos.feature.people.view.implementation.seam.PeopleAction
 import com.savvasdalkitsis.uhuruphotos.feature.people.view.implementation.seam.PeopleAction.NavigateBack

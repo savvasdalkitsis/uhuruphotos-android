@@ -82,8 +82,8 @@ import com.savvasdalkitsis.uhuruphotos.implementation.settings.seam.SettingsMuta
 import com.savvasdalkitsis.uhuruphotos.implementation.settings.seam.SettingsMutation.ShowFullFeedSyncDialog
 import com.savvasdalkitsis.uhuruphotos.implementation.settings.seam.SettingsMutation.UserBadgeUpdate
 import com.savvasdalkitsis.uhuruphotos.implementation.settings.usecase.CacheUseCase
-import com.savvasdalkitsis.uhuruphotos.implementation.settings.view.state.BiometricsSetting
-import com.savvasdalkitsis.uhuruphotos.implementation.settings.view.state.SettingsState
+import com.savvasdalkitsis.uhuruphotos.implementation.settings.ui.state.BiometricsSetting
+import com.savvasdalkitsis.uhuruphotos.implementation.settings.ui.state.SettingsState
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.flatMapMerge

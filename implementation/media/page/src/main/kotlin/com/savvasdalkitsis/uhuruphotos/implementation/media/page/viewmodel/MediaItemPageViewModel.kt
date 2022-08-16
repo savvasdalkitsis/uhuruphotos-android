@@ -22,7 +22,7 @@ import com.savvasdalkitsis.uhuruphotos.implementation.media.page.seam.MediaItemP
 import com.savvasdalkitsis.uhuruphotos.implementation.media.page.seam.MediaItemPageActionHandler
 import com.savvasdalkitsis.uhuruphotos.implementation.media.page.seam.MediaItemPageEffect
 import com.savvasdalkitsis.uhuruphotos.implementation.media.page.seam.MediaItemPageMutation
-import com.savvasdalkitsis.uhuruphotos.implementation.media.page.view.state.MediaItemPageState
+import com.savvasdalkitsis.uhuruphotos.implementation.media.page.ui.state.MediaItemPageState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 

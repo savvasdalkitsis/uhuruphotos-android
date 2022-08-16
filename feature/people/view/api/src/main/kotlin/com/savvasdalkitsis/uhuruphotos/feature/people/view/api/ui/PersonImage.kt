@@ -22,7 +22,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
 import com.savvasdalkitsis.uhuruphotos.feature.people.view.api.ui.state.Person
-import com.savvasdalkitsis.uhuruphotos.foundation.image.api.view.Image
+import com.savvasdalkitsis.uhuruphotos.foundation.image.api.ui.Image
 
 @Composable
 fun PersonImage(

@@ -15,7 +15,7 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.implementation.useralbums.seam
 
-import com.savvasdalkitsis.uhuruphotos.api.useralbums.view.state.UserAlbum
+import com.savvasdalkitsis.uhuruphotos.api.useralbums.ui.state.UserAlbum
 
 sealed class UserAlbumsEffect {
     data class NavigateToUserAlbum(val album: UserAlbum) : UserAlbumsEffect()

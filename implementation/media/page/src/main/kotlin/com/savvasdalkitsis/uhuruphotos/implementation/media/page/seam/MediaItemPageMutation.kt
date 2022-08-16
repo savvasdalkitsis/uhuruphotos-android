@@ -20,9 +20,9 @@ import com.savvasdalkitsis.uhuruphotos.api.media.page.domain.model.MediaId
 import com.savvasdalkitsis.uhuruphotos.api.media.page.domain.model.MediaItemDetails
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.Mutation
 import com.savvasdalkitsis.uhuruphotos.implementation.media.page.domain.usecase.MediaItemMetadata
-import com.savvasdalkitsis.uhuruphotos.implementation.media.page.view.state.MediaItemPageState
-import com.savvasdalkitsis.uhuruphotos.implementation.media.page.view.state.OriginalFileIconState
-import com.savvasdalkitsis.uhuruphotos.implementation.media.page.view.state.SingleMediaItemState
+import com.savvasdalkitsis.uhuruphotos.implementation.media.page.ui.state.MediaItemPageState
+import com.savvasdalkitsis.uhuruphotos.implementation.media.page.ui.state.OriginalFileIconState
+import com.savvasdalkitsis.uhuruphotos.implementation.media.page.ui.state.SingleMediaItemState
 import kotlin.math.min
 
 sealed class MediaItemPageMutation(

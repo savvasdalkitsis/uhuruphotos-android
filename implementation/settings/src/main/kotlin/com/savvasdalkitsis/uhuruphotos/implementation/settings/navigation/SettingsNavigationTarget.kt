@@ -26,9 +26,9 @@ import com.savvasdalkitsis.uhuruphotos.implementation.settings.seam.SettingsActi
 import com.savvasdalkitsis.uhuruphotos.implementation.settings.seam.SettingsAction.LoadSettings
 import com.savvasdalkitsis.uhuruphotos.implementation.settings.seam.SettingsEffect
 import com.savvasdalkitsis.uhuruphotos.implementation.settings.seam.SettingsEffectHandler
-import com.savvasdalkitsis.uhuruphotos.implementation.settings.view.Settings
-import com.savvasdalkitsis.uhuruphotos.implementation.settings.view.controller.SettingsViewStateController
-import com.savvasdalkitsis.uhuruphotos.implementation.settings.view.state.SettingsState
+import com.savvasdalkitsis.uhuruphotos.implementation.settings.ui.Settings
+import com.savvasdalkitsis.uhuruphotos.implementation.settings.ui.controller.SettingsViewStateController
+import com.savvasdalkitsis.uhuruphotos.implementation.settings.ui.state.SettingsState
 import com.savvasdalkitsis.uhuruphotos.implementation.settings.viewmodel.SettingsViewModel
 import javax.inject.Inject
 

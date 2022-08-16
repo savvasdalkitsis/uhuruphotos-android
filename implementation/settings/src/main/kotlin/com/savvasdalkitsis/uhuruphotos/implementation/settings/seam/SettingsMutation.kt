@@ -16,13 +16,13 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.implementation.settings.seam
 
 import androidx.work.NetworkType
-import com.savvasdalkitsis.uhuruphotos.api.userbadge.view.state.UserInformationState
+import com.savvasdalkitsis.uhuruphotos.api.userbadge.ui.state.UserInformationState
 import com.savvasdalkitsis.uhuruphotos.foundation.map.api.model.MapProvider
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.Mutation
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.theme.ThemeMode
-import com.savvasdalkitsis.uhuruphotos.implementation.settings.view.state.BiometricsSetting
-import com.savvasdalkitsis.uhuruphotos.implementation.settings.view.state.MapProviderState
-import com.savvasdalkitsis.uhuruphotos.implementation.settings.view.state.SettingsState
+import com.savvasdalkitsis.uhuruphotos.implementation.settings.ui.state.BiometricsSetting
+import com.savvasdalkitsis.uhuruphotos.implementation.settings.ui.state.MapProviderState
+import com.savvasdalkitsis.uhuruphotos.implementation.settings.ui.state.SettingsState
 
 internal sealed class SettingsMutation(
     mutation: Mutation<SettingsState>,

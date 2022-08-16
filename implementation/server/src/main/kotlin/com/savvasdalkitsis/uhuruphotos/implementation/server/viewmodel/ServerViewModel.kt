@@ -22,7 +22,7 @@ import com.savvasdalkitsis.uhuruphotos.implementation.server.seam.ServerAction
 import com.savvasdalkitsis.uhuruphotos.implementation.server.seam.ServerActionHandler
 import com.savvasdalkitsis.uhuruphotos.implementation.server.seam.ServerEffect
 import com.savvasdalkitsis.uhuruphotos.implementation.server.seam.ServerMutation
-import com.savvasdalkitsis.uhuruphotos.implementation.server.view.ServerState
+import com.savvasdalkitsis.uhuruphotos.implementation.server.ui.ServerState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 

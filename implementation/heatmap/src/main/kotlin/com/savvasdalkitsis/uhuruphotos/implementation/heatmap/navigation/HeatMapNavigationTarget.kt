@@ -25,8 +25,8 @@ import com.savvasdalkitsis.uhuruphotos.api.settings.usecase.SettingsUseCase
 import com.savvasdalkitsis.uhuruphotos.implementation.heatmap.seam.HeatMapAction
 import com.savvasdalkitsis.uhuruphotos.implementation.heatmap.seam.HeatMapEffect
 import com.savvasdalkitsis.uhuruphotos.implementation.heatmap.seam.HeatMapEffectsHandler
-import com.savvasdalkitsis.uhuruphotos.implementation.heatmap.view.HeatMap
-import com.savvasdalkitsis.uhuruphotos.implementation.heatmap.view.state.HeatMapState
+import com.savvasdalkitsis.uhuruphotos.implementation.heatmap.ui.HeatMap
+import com.savvasdalkitsis.uhuruphotos.implementation.heatmap.ui.state.HeatMapState
 import com.savvasdalkitsis.uhuruphotos.implementation.heatmap.viewmodel.HeatMapViewModel
 import javax.inject.Inject
 

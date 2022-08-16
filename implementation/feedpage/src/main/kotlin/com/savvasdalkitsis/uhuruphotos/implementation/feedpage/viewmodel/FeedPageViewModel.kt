@@ -28,7 +28,7 @@ import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.handler
 import com.savvasdalkitsis.uhuruphotos.implementation.feedpage.seam.FeedPageAction
 import com.savvasdalkitsis.uhuruphotos.implementation.feedpage.seam.FeedPageActionHandler
 import com.savvasdalkitsis.uhuruphotos.implementation.feedpage.seam.FeedPageEffect
-import com.savvasdalkitsis.uhuruphotos.implementation.feedpage.view.state.FeedPageState
+import com.savvasdalkitsis.uhuruphotos.implementation.feedpage.ui.state.FeedPageState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 

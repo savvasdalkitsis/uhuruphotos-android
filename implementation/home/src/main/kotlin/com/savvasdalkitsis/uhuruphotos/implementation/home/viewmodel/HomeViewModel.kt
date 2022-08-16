@@ -22,7 +22,7 @@ import com.savvasdalkitsis.uhuruphotos.implementation.home.seam.HomeAction
 import com.savvasdalkitsis.uhuruphotos.implementation.home.seam.HomeActionHandler
 import com.savvasdalkitsis.uhuruphotos.implementation.home.seam.HomeEffect
 import com.savvasdalkitsis.uhuruphotos.implementation.home.seam.HomeMutation
-import com.savvasdalkitsis.uhuruphotos.implementation.home.view.state.HomeState
+import com.savvasdalkitsis.uhuruphotos.implementation.home.ui.state.HomeState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 

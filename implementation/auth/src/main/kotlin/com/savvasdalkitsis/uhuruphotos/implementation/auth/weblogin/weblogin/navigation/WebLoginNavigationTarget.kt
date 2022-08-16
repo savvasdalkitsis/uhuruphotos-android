@@ -26,8 +26,8 @@ import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.navigationTarge
 import com.savvasdalkitsis.uhuruphotos.implementation.auth.weblogin.weblogin.seam.WebEffectsHandler
 import com.savvasdalkitsis.uhuruphotos.implementation.auth.weblogin.weblogin.seam.WebLoginAction
 import com.savvasdalkitsis.uhuruphotos.implementation.auth.weblogin.weblogin.seam.WebLoginEffect
-import com.savvasdalkitsis.uhuruphotos.implementation.auth.weblogin.weblogin.view.WebLogin
-import com.savvasdalkitsis.uhuruphotos.implementation.auth.weblogin.weblogin.view.WebLoginState
+import com.savvasdalkitsis.uhuruphotos.implementation.auth.weblogin.weblogin.ui.WebLogin
+import com.savvasdalkitsis.uhuruphotos.implementation.auth.weblogin.weblogin.ui.WebLoginState
 import com.savvasdalkitsis.uhuruphotos.implementation.auth.weblogin.weblogin.viewmodel.WebLoginViewModel
 import javax.inject.Inject
 

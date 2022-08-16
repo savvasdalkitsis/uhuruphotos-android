@@ -18,7 +18,7 @@ package com.savvasdalkitsis.uhuruphotos.implementation.library.navigation
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
-import com.savvasdalkitsis.uhuruphotos.api.gallery.view.state.PredefinedGalleryDisplay
+import com.savvasdalkitsis.uhuruphotos.api.gallery.ui.state.PredefinedGalleryDisplay
 import com.savvasdalkitsis.uhuruphotos.api.homenavigation.HomeNavigationRoutes
 import com.savvasdalkitsis.uhuruphotos.api.settings.usecase.SettingsUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.account.view.api.seam.AccountOverviewAction
@@ -37,8 +37,8 @@ import com.savvasdalkitsis.uhuruphotos.implementation.library.seam.LibraryAction
 import com.savvasdalkitsis.uhuruphotos.implementation.library.seam.LibraryAction.Load
 import com.savvasdalkitsis.uhuruphotos.implementation.library.seam.LibraryEffect
 import com.savvasdalkitsis.uhuruphotos.implementation.library.seam.LibraryEffectsHandler
-import com.savvasdalkitsis.uhuruphotos.implementation.library.view.Library
-import com.savvasdalkitsis.uhuruphotos.implementation.library.view.state.LibraryState
+import com.savvasdalkitsis.uhuruphotos.implementation.library.ui.Library
+import com.savvasdalkitsis.uhuruphotos.implementation.library.ui.state.LibraryState
 import com.savvasdalkitsis.uhuruphotos.implementation.library.viewmodel.LibraryViewModel
 import javax.inject.Inject
 

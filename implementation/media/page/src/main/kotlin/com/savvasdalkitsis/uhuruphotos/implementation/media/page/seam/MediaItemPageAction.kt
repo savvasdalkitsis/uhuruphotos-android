@@ -19,7 +19,7 @@ import com.savvasdalkitsis.uhuruphotos.foundation.map.api.model.LatLon
 import com.savvasdalkitsis.uhuruphotos.api.media.page.domain.model.MediaId
 import com.savvasdalkitsis.uhuruphotos.api.media.page.domain.model.MediaSequenceDataSource
 import com.savvasdalkitsis.uhuruphotos.feature.people.view.api.ui.state.Person
-import com.savvasdalkitsis.uhuruphotos.implementation.media.page.view.state.SingleMediaItemState
+import com.savvasdalkitsis.uhuruphotos.implementation.media.page.ui.state.SingleMediaItemState
 
 sealed class MediaItemPageAction {
     object ToggleUI : MediaItemPageAction()

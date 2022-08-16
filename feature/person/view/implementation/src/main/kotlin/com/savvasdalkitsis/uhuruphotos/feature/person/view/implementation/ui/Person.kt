@@ -27,17 +27,17 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
-import com.savvasdalkitsis.uhuruphotos.api.gallery.view.Gallery
-import com.savvasdalkitsis.uhuruphotos.api.gallery.view.GalleryDisplayActionButton
+import com.savvasdalkitsis.uhuruphotos.api.gallery.ui.Gallery
+import com.savvasdalkitsis.uhuruphotos.api.gallery.ui.GalleryDisplayActionButton
 import com.savvasdalkitsis.uhuruphotos.feature.person.view.implementation.seam.PersonAction
 import com.savvasdalkitsis.uhuruphotos.feature.person.view.implementation.seam.PersonAction.ChangeDisplay
 import com.savvasdalkitsis.uhuruphotos.feature.person.view.implementation.seam.PersonAction.NavigateBack
 import com.savvasdalkitsis.uhuruphotos.feature.person.view.implementation.seam.PersonAction.SelectedPhoto
 import com.savvasdalkitsis.uhuruphotos.feature.person.view.implementation.ui.state.PersonState
-import com.savvasdalkitsis.uhuruphotos.foundation.image.api.view.Image
-import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.view.BackNavButton
-import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.view.CommonScaffold
-import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.view.FullProgressBar
+import com.savvasdalkitsis.uhuruphotos.foundation.image.api.ui.Image
+import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.BackNavButton
+import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.CommonScaffold
+import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.FullProgressBar
 
 @Composable
 fun Person(
