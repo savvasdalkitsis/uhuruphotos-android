@@ -16,7 +16,7 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.feature.person.view.implementation.ui.state
 
 import com.savvasdalkitsis.uhuruphotos.api.gallery.view.state.GalleryState
-import com.savvasdalkitsis.uhuruphotos.api.people.view.state.Person
+import com.savvasdalkitsis.uhuruphotos.feature.people.view.api.ui.state.Person
 
 data class PersonState(
     val person: Person? = null,

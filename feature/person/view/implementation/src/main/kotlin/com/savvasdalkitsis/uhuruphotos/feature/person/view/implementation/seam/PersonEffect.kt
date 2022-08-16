@@ -17,7 +17,7 @@ package com.savvasdalkitsis.uhuruphotos.feature.person.view.implementation.seam
 
 import androidx.compose.ui.geometry.Offset
 import com.savvasdalkitsis.uhuruphotos.api.media.page.domain.model.MediaId
-import com.savvasdalkitsis.uhuruphotos.api.people.view.state.Person
+import com.savvasdalkitsis.uhuruphotos.feature.people.view.api.ui.state.Person
 
 sealed class PersonEffect {
     data class OpenPhotoDetails(

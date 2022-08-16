@@ -30,7 +30,7 @@ dependencies {
     implementation project(':api:media:remote')
     implementation project(":foundation:navigation:api")
     implementation project(":foundation:notification:api")
-    implementation project(':api:people')
+    implementation project(':feature:people:domain:api')
     implementation project(':feature:person:domain:api')
     implementation project(':feature:person:view:api')
     implementation project(':api:search')

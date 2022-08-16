@@ -16,8 +16,8 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.implementation.search.view
 
 import androidx.compose.runtime.Composable
-import com.savvasdalkitsis.uhuruphotos.api.people.view.PeopleBar
-import com.savvasdalkitsis.uhuruphotos.api.people.view.state.Person
+import com.savvasdalkitsis.uhuruphotos.feature.people.view.api.ui.PeopleBar
+import com.savvasdalkitsis.uhuruphotos.feature.people.view.api.ui.state.Person
 import com.savvasdalkitsis.uhuruphotos.implementation.search.seam.SearchAction
 import com.savvasdalkitsis.uhuruphotos.implementation.search.seam.SearchAction.PersonSelected
 import com.savvasdalkitsis.uhuruphotos.implementation.search.seam.SearchAction.ViewAllPeopleSelected

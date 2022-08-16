@@ -50,7 +50,7 @@ import com.savvasdalkitsis.uhuruphotos.api.db.people.PeopleQueries
 import com.savvasdalkitsis.uhuruphotos.api.db.person.PersonQueries
 import com.savvasdalkitsis.uhuruphotos.api.media.remote.model.toDbModel
 import com.savvasdalkitsis.uhuruphotos.api.media.remote.model.toTrash
-import com.savvasdalkitsis.uhuruphotos.api.people.service.model.toPerson
+import com.savvasdalkitsis.uhuruphotos.feature.people.domain.api.service.model.toDbModel
 import com.savvasdalkitsis.uhuruphotos.api.settings.usecase.SettingsUseCase
 import com.savvasdalkitsis.uhuruphotos.foundation.coroutines.api.safelyOnStartIgnoring
 import com.savvasdalkitsis.uhuruphotos.foundation.group.api.model.Group
@@ -196,7 +196,7 @@ internal class AlbumsRepository @Inject constructor(
             )
             autoAlbumPeopleQueries.removePeopleForAlbum(albumId.toString())
             for (person in album.people) {
-                peopleQueries.insertPerson(person.toPerson())
+                peopleQueries.insertPerson(person.toDbModel())
                 autoAlbumPeopleQueries.insert(person.id, albumId.toString())
             }
             autoAlbumPhotosQueries.removePhotosForAlbum(albumId.toString())

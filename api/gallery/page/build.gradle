@@ -15,7 +15,7 @@ dependencies {
     implementation project(":foundation:log:api")
     implementation project(":foundation:navigation:api")
     implementation project(':feature:person:view:api')
-    implementation project(':api:people')
+    implementation project(':feature:people:view:api')
     implementation project(':api:media:page')
     implementation project(":foundation:strings:api")
     implementation project(":foundation:toaster:api")

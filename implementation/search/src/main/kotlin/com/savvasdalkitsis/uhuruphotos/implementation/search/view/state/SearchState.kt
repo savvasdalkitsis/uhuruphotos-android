@@ -17,7 +17,7 @@ package com.savvasdalkitsis.uhuruphotos.implementation.search.view.state
 
 import com.savvasdalkitsis.uhuruphotos.api.gallery.view.state.GalleryDisplay
 import com.savvasdalkitsis.uhuruphotos.api.gallery.view.state.PredefinedGalleryDisplay
-import com.savvasdalkitsis.uhuruphotos.api.people.view.state.Person
+import com.savvasdalkitsis.uhuruphotos.feature.people.view.api.ui.state.Person
 
 data class SearchState(
     val showClearButton: Boolean = false,

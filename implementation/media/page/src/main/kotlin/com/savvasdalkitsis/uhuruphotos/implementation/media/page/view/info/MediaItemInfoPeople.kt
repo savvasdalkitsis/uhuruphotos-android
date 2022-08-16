@@ -16,7 +16,8 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.implementation.media.page.view.info
 
 import androidx.compose.runtime.Composable
-import com.savvasdalkitsis.uhuruphotos.api.people.view.PeopleBar
+import com.savvasdalkitsis.uhuruphotos.feature.people.view.api.ui.PeopleBar
+import com.savvasdalkitsis.uhuruphotos.implementation.media.page.seam.MediaItemPageAction
 import com.savvasdalkitsis.uhuruphotos.implementation.media.page.view.state.SingleMediaItemState
 
 @Composable
@@ -27,7 +28,7 @@ internal fun MediaItemInfoPeople(
     if (mediaItem.peopleInMediaItem.isNotEmpty()) {
         PeopleBar(
             people = mediaItem.peopleInMediaItem,
-            onPersonSelected = { action(com.savvasdalkitsis.uhuruphotos.implementation.media.page.seam.MediaItemPageAction.PersonSelected(it)) }
+            onPersonSelected = { action(MediaItemPageAction.PersonSelected(it)) }
         )
     }
 }

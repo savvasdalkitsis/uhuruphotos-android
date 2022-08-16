@@ -1,0 +1,20 @@
+android {
+    namespace 'com.savvasdalkitsis.uhuruphotos.feature.people.domain.implementation'
+}
+
+dependencies {
+    implementation project(':foundation:coroutines:api')
+    implementation project(":api:db")
+    implementation project(":foundation:log:api")
+    implementation project(":foundation:network:api")
+    implementation project(':feature:people:domain:api')
+    implementation project(':api:media:remote')
+    implementation(
+            libs.kotlinx.coroutines,
+            libs.hilt,
+            libs.moshi,
+            libs.retrofit.core,
+            libs.sqldelight.coroutines,
+    )
+    kapt libs.moshi.kapt
+}

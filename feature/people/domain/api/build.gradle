@@ -1,0 +1,12 @@
+android {
+    namespace 'com.savvasdalkitsis.uhuruphotos.feature.people.domain.api'
+}
+
+dependencies {
+    api project(":api:db")
+    implementation(
+            libs.kotlinx.coroutines,
+            libs.moshi,
+    )
+    kapt libs.moshi.kapt
+}

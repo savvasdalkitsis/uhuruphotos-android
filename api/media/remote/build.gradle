@@ -19,7 +19,7 @@ dependencies {
     implementation project(":foundation:compose:api")
     implementation project(":foundation:icons:api")
     implementation project(":foundation:image:api")
-    implementation project(":api:people")
+    implementation project(":feature:people:view:api")
     implementation project(":foundation:strings:api")
     implementation project(":foundation:ui:api")
     implementation(

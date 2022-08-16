@@ -17,7 +17,7 @@ package com.savvasdalkitsis.uhuruphotos.api.gallery.page.view.state
 
 import androidx.annotation.StringRes
 import com.savvasdalkitsis.uhuruphotos.api.gallery.view.state.GalleryState
-import com.savvasdalkitsis.uhuruphotos.api.people.view.state.Person
+import com.savvasdalkitsis.uhuruphotos.feature.people.view.api.ui.state.Person
 
 data class GalleryPageState(
     val galleryState: GalleryState = GalleryState(),

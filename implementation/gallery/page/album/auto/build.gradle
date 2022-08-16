@@ -16,7 +16,7 @@ dependencies {
     implementation project(":api:db")
     implementation project(":api:gallery")
     implementation project(":foundation:navigation:api")
-    implementation project(':api:people')
+    implementation project(':feature:people:view:api')
     implementation project(':api:media:page')
     implementation project(':api:media:remote')
     implementation project(":api:settings")

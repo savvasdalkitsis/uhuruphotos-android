@@ -23,7 +23,7 @@ dependencies {
     implementation project(":foundation:initializer:api")
     implementation project(":foundation:log:api")
     implementation project(":foundation:notification:api")
-    implementation project(":api:people")
+    implementation project(":feature:people:view:api")
     implementation project(':api:media:page')
     implementation project(":api:settings")
     implementation project(":foundation:strings:api")

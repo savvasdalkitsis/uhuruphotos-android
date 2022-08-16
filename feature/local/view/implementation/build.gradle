@@ -20,7 +20,7 @@ dependencies {
     implementation project(":foundation:navigation:api")
     implementation project(":api:media:local")
     implementation project(':api:media:page')
-    implementation project(':api:people')
+    implementation project(':feature:people:view:api')
     implementation project(":api:settings")
     implementation(
             libs.androidx.compose.hilt.navigation,

@@ -1,0 +1,25 @@
+android {
+    buildFeatures {
+        compose true
+    }
+    composeOptions {
+        kotlinCompilerExtensionVersion compose_compiler_version
+    }
+    namespace 'com.savvasdalkitsis.uhuruphotos.feature.people.view.api'
+}
+
+dependencies {
+    api project(":api:db")
+    implementation project(':foundation:image:api')
+    implementation project(':foundation:strings:api')
+    implementation project(':foundation:ui:api')
+    implementation(
+            libs.androidx.compose.foundation,
+            libs.androidx.compose.material,
+            libs.kotlinx.coroutines,
+            libs.hilt,
+            libs.moshi,
+            libs.sqldelight.coroutines,
+    )
+    kapt libs.moshi.kapt
+}

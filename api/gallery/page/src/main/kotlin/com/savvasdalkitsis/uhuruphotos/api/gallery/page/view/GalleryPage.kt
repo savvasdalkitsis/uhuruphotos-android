@@ -31,7 +31,7 @@ import com.savvasdalkitsis.uhuruphotos.api.gallery.page.seam.GalleryPageAction.S
 import com.savvasdalkitsis.uhuruphotos.api.gallery.page.view.state.GalleryPageState
 import com.savvasdalkitsis.uhuruphotos.api.gallery.view.Gallery
 import com.savvasdalkitsis.uhuruphotos.api.gallery.view.GalleryDisplayActionButton
-import com.savvasdalkitsis.uhuruphotos.api.people.view.PeopleBar
+import com.savvasdalkitsis.uhuruphotos.feature.people.view.api.ui.PeopleBar
 import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.view.BackNavButton
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.view.CommonScaffold

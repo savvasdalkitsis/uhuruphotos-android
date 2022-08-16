@@ -35,8 +35,8 @@ import com.savvasdalkitsis.uhuruphotos.api.media.page.domain.model.MediaItemsOnD
 import com.savvasdalkitsis.uhuruphotos.api.media.page.domain.usecase.MediaUseCase
 import com.savvasdalkitsis.uhuruphotos.api.media.remote.domain.usecase.RemoteMediaUseCase
 import com.savvasdalkitsis.uhuruphotos.api.media.remote.model.deserializePeopleNames
-import com.savvasdalkitsis.uhuruphotos.api.people.usecase.PeopleUseCase
-import com.savvasdalkitsis.uhuruphotos.api.people.view.state.toPerson
+import com.savvasdalkitsis.uhuruphotos.feature.people.domain.api.usecase.PeopleUseCase
+import com.savvasdalkitsis.uhuruphotos.feature.people.view.api.ui.state.toPerson
 import com.savvasdalkitsis.uhuruphotos.api.user.usecase.UserUseCase
 import com.savvasdalkitsis.uhuruphotos.implementation.media.remote.repository.RemoteMediaRepository
 import com.savvasdalkitsis.uhuruphotos.implementation.media.remote.worker.RemoteMediaItemWorkScheduler
