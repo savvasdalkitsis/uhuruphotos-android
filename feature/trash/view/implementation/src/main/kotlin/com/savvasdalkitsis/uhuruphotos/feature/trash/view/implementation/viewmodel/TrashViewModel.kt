@@ -16,9 +16,9 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.feature.trash.view.implementation.viewmodel
 
 import androidx.lifecycle.ViewModel
-import com.savvasdalkitsis.uhuruphotos.api.gallery.page.seam.GalleryPageAction
-import com.savvasdalkitsis.uhuruphotos.api.gallery.page.seam.GalleryPageEffect
-import com.savvasdalkitsis.uhuruphotos.api.gallery.page.ui.state.GalleryPageState
+import com.savvasdalkitsis.uhuruphotos.feature.showroom.view.api.seam.ShowroomAction
+import com.savvasdalkitsis.uhuruphotos.feature.showroom.view.api.seam.ShowroomEffect
+import com.savvasdalkitsis.uhuruphotos.feature.showroom.view.api.ui.state.ShowroomState
 import com.savvasdalkitsis.uhuruphotos.feature.trash.view.implementation.seam.TrashAction
 import com.savvasdalkitsis.uhuruphotos.feature.trash.view.implementation.seam.TrashActionHandler
 import com.savvasdalkitsis.uhuruphotos.feature.trash.view.implementation.seam.TrashAlbumPageActionHandler
@@ -37,13 +37,13 @@ internal class TrashViewModel @Inject constructor(
     trashActionHandler: TrashActionHandler,
     trashAlbumPageActionHandler: TrashAlbumPageActionHandler,
 ) : ViewModel(), Seam<
-        Pair<GalleryPageState, TrashState>,
-        Either<GalleryPageEffect, TrashEffect>,
-        Either<GalleryPageAction, TrashAction>,
-        Mutation<Pair<GalleryPageState, TrashState>>> by handler(
+        Pair<ShowroomState, TrashState>,
+        Either<ShowroomEffect, TrashEffect>,
+        Either<ShowroomAction, TrashAction>,
+        Mutation<Pair<ShowroomState, TrashState>>> by handler(
     CompositeActionHandler(
         trashAlbumPageActionHandler,
         trashActionHandler,
     ),
-    GalleryPageState() to TrashState()
+    ShowroomState() to TrashState()
 )

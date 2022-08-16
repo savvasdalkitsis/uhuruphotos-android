@@ -9,13 +9,13 @@ android {
 }
 
 dependencies {
-    implementation project(':api:gallery:page')
+    implementation project(":feature:showroom:view:api")
     implementation project(':api:albums')
     implementation project(':feature:favourites:view:api')
     implementation project(':feature:favourites:domain:api')
     implementation project(':foundation:date:api')
     implementation project(":api:db")
-    implementation project(":api:gallery")
+    implementation project(":feature:gallery:view:api")
     implementation project(":foundation:navigation:api")
     implementation project(':api:media:page')
     implementation project(':api:media:remote')

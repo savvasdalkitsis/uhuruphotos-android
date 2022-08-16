@@ -16,9 +16,9 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.feature.local.view.implementation.viewmodel
 
 import androidx.lifecycle.ViewModel
-import com.savvasdalkitsis.uhuruphotos.api.gallery.page.seam.GalleryPageAction
-import com.savvasdalkitsis.uhuruphotos.api.gallery.page.seam.GalleryPageEffect
-import com.savvasdalkitsis.uhuruphotos.api.gallery.page.ui.state.GalleryPageState
+import com.savvasdalkitsis.uhuruphotos.feature.showroom.view.api.seam.ShowroomAction
+import com.savvasdalkitsis.uhuruphotos.feature.showroom.view.api.seam.ShowroomEffect
+import com.savvasdalkitsis.uhuruphotos.feature.showroom.view.api.ui.state.ShowroomState
 import com.savvasdalkitsis.uhuruphotos.feature.local.view.implementation.seam.LocalAlbumAction
 import com.savvasdalkitsis.uhuruphotos.feature.local.view.implementation.seam.LocalAlbumActionHandler
 import com.savvasdalkitsis.uhuruphotos.feature.local.view.implementation.seam.LocalAlbumEffect
@@ -37,13 +37,13 @@ internal class LocalAlbumViewModel @Inject constructor(
     localAlbumActionHandler: LocalAlbumActionHandler,
     localAlbumPageActionHandler: LocalAlbumPageActionHandler,
 ) : ViewModel(), Seam<
-        Pair<GalleryPageState, LocalAlbumState>,
-        Either<GalleryPageEffect, LocalAlbumEffect>,
-        Either<GalleryPageAction, LocalAlbumAction>,
-        Mutation<Pair<GalleryPageState, LocalAlbumState>>> by handler(
+        Pair<ShowroomState, LocalAlbumState>,
+        Either<ShowroomEffect, LocalAlbumEffect>,
+        Either<ShowroomAction, LocalAlbumAction>,
+        Mutation<Pair<ShowroomState, LocalAlbumState>>> by handler(
     CompositeActionHandler(
         localAlbumPageActionHandler,
         localAlbumActionHandler,
     ),
-    GalleryPageState() to LocalAlbumState()
+    ShowroomState() to LocalAlbumState()
 )

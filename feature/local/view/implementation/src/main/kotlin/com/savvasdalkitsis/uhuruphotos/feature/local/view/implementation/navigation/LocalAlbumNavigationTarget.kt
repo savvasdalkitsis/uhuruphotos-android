@@ -18,11 +18,11 @@ package com.savvasdalkitsis.uhuruphotos.feature.local.view.implementation.naviga
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
-import com.savvasdalkitsis.uhuruphotos.api.gallery.page.seam.GalleryPageAction
-import com.savvasdalkitsis.uhuruphotos.api.gallery.page.seam.GalleryPageAction.LoadGallery
-import com.savvasdalkitsis.uhuruphotos.api.gallery.page.seam.GalleryPageEffect
-import com.savvasdalkitsis.uhuruphotos.api.gallery.page.seam.GalleryPageEffectsHandler
-import com.savvasdalkitsis.uhuruphotos.api.gallery.page.ui.state.GalleryPageState
+import com.savvasdalkitsis.uhuruphotos.feature.showroom.view.api.seam.ShowroomAction
+import com.savvasdalkitsis.uhuruphotos.feature.showroom.view.api.seam.ShowroomAction.LoadGallery
+import com.savvasdalkitsis.uhuruphotos.feature.showroom.view.api.seam.ShowroomEffect
+import com.savvasdalkitsis.uhuruphotos.feature.showroom.view.api.seam.ShowroomEffectsHandler
+import com.savvasdalkitsis.uhuruphotos.feature.showroom.view.api.ui.state.ShowroomState
 import com.savvasdalkitsis.uhuruphotos.api.settings.usecase.SettingsUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.local.view.api.navigation.LocalAlbumNavigationTarget
 import com.savvasdalkitsis.uhuruphotos.feature.local.view.api.navigation.LocalAlbumNavigationTarget.albumId
@@ -39,21 +39,21 @@ import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.Either
 import javax.inject.Inject
 
 internal class LocalAlbumNavigationTarget @Inject constructor(
-    private val galleryPageEffectsHandler: GalleryPageEffectsHandler,
+    private val showroomEffectsHandler: ShowroomEffectsHandler,
     private val localAlbumEffectHandler: LocalAlbumEffectHandler,
     private val settingsUseCase: SettingsUseCase,
 ) : NavigationTarget {
 
     override suspend fun NavGraphBuilder.create(navHostController: NavHostController) =
         navigationTarget<
-                Pair<GalleryPageState, LocalAlbumState>,
-                Either<GalleryPageEffect, LocalAlbumEffect>,
-                Either<GalleryPageAction, LocalAlbumAction>,
+                Pair<ShowroomState, LocalAlbumState>,
+                Either<ShowroomEffect, LocalAlbumEffect>,
+                Either<ShowroomAction, LocalAlbumAction>,
                 LocalAlbumViewModel
         >(
             name = LocalAlbumNavigationTarget.registrationName,
             effects = CompositeEffectHandler(
-                galleryPageEffectsHandler,
+                showroomEffectsHandler,
                 localAlbumEffectHandler,
             ),
             themeMode = settingsUseCase.observeThemeModeState(),

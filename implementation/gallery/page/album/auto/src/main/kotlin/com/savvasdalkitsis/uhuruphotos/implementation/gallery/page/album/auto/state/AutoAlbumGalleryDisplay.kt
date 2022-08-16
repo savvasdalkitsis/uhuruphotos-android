@@ -15,7 +15,7 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.implementation.gallery.page.album.auto.state
 
-import com.savvasdalkitsis.uhuruphotos.api.gallery.ui.state.GalleryDisplay
+import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.ui.state.GalleryDisplay
 
 object AutoAlbumGalleryDisplay: GalleryDisplay {
     override val miniIcons: Boolean = false

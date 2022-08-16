@@ -18,8 +18,8 @@ package com.savvasdalkitsis.uhuruphotos.implementation.feedpage.ui
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.layout.RowScope
 import androidx.compose.runtime.Composable
-import com.savvasdalkitsis.uhuruphotos.api.gallery.ui.GalleryDisplayActionButton
-import com.savvasdalkitsis.uhuruphotos.api.gallery.ui.state.PredefinedGalleryDisplay
+import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.ui.GalleryDisplayActionButton
+import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.ui.state.PredefinedGalleryDisplay
 import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.R.drawable
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.ActionIcon
 import com.savvasdalkitsis.uhuruphotos.implementation.feedpage.seam.FeedPageAction

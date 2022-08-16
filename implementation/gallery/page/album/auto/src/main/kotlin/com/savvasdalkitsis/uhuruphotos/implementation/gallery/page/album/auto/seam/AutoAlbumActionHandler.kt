@@ -17,13 +17,13 @@ package com.savvasdalkitsis.uhuruphotos.implementation.gallery.page.album.auto.s
 
 import com.savvasdalkitsis.uhuruphotos.api.albums.model.Album
 import com.savvasdalkitsis.uhuruphotos.foundation.date.api.DateDisplayer
-import com.savvasdalkitsis.uhuruphotos.api.gallery.page.seam.GalleryPageAction
-import com.savvasdalkitsis.uhuruphotos.api.gallery.page.seam.GalleryPageActionHandler
-import com.savvasdalkitsis.uhuruphotos.api.gallery.page.seam.GalleryPageEffect
-import com.savvasdalkitsis.uhuruphotos.api.gallery.page.seam.GalleryPageMutation
-import com.savvasdalkitsis.uhuruphotos.api.gallery.page.ui.state.GalleryDetails
-import com.savvasdalkitsis.uhuruphotos.api.gallery.page.ui.state.GalleryPageState
-import com.savvasdalkitsis.uhuruphotos.api.gallery.page.ui.state.Title
+import com.savvasdalkitsis.uhuruphotos.feature.showroom.view.api.seam.ShowroomAction
+import com.savvasdalkitsis.uhuruphotos.feature.showroom.view.api.seam.ShowroomActionHandler
+import com.savvasdalkitsis.uhuruphotos.feature.showroom.view.api.seam.ShowroomEffect
+import com.savvasdalkitsis.uhuruphotos.feature.showroom.view.api.seam.ShowroomMutation
+import com.savvasdalkitsis.uhuruphotos.feature.showroom.view.api.ui.state.ShowroomDetails
+import com.savvasdalkitsis.uhuruphotos.feature.showroom.view.api.ui.state.ShowroomState
+import com.savvasdalkitsis.uhuruphotos.feature.showroom.view.api.ui.state.Title
 import com.savvasdalkitsis.uhuruphotos.api.media.page.domain.model.MediaId
 import com.savvasdalkitsis.uhuruphotos.api.media.page.domain.model.MediaItem
 import com.savvasdalkitsis.uhuruphotos.api.media.page.domain.model.MediaSequenceDataSource.AutoAlbum
@@ -39,18 +39,18 @@ internal class AutoAlbumActionHandler @Inject constructor(
     autoAlbumsUseCase: AutoAlbumsUseCase,
     remoteMediaUseCase: RemoteMediaUseCase,
     dateDisplayer: DateDisplayer,
-) : ActionHandler<GalleryPageState, GalleryPageEffect, GalleryPageAction, GalleryPageMutation>
-by GalleryPageActionHandler(
+) : ActionHandler<ShowroomState, ShowroomEffect, ShowroomAction, ShowroomMutation>
+by ShowroomActionHandler(
     galleryRefresher = { autoAlbumsUseCase.refreshAutoAlbum(it) },
     initialGalleryDisplay = { AutoAlbumGalleryDisplay },
     galleryDisplayPersistence = { _, _ -> },
     galleryDetailsEmptyCheck = { albumId ->
         autoAlbumsUseCase.getAutoAlbum(albumId).items.isEmpty()
     },
-    galleryDetailsFlow = { albumId, _ ->
+    showroomDetailsFlow = { albumId, _ ->
         autoAlbumsUseCase.observeAutoAlbum(albumId)
             .map { (photoEntries, people) ->
-                GalleryDetails(
+                ShowroomDetails(
                     title = Title.Text(photoEntries.firstOrNull()?.title ?: ""),
                     people = with(remoteMediaUseCase) {
                         people.map { person ->

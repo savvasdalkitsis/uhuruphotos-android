@@ -5,7 +5,7 @@ This page demonstrates the domain model of the app
 ```mermaid 
 graph TD;
 
-    GalleryPage-->Gallery
+    Showroom-->Gallery
     Gallery-->GalleryGroup
     GalleryGroup-->MediaItem
     MediaPage-->MediaItem
@@ -15,13 +15,13 @@ graph TD;
     LocalMediaItem-->Video
     RemoteMediaItem-->Image
     RemoteMediaItem-->Video
-    AutoAlbum-->GalleryPage
-    UserAlbum-->GalleryPage
-    Favourites-->GalleryPage
-    TrashMedia-->GalleryPage
+    AutoAlbum-->Showroom
+    UserAlbum-->Showroom
+    Favourites-->Showroom
+    TrashMedia-->Showroom
     LocalMedia-->LocalGallery
-    LocalGallery-->GalleryPage
-    HiddenMedia-->GalleryPage
+    LocalGallery-->Showroom
+    HiddenMedia-->Showroom
     Person-->Gallery
     SearchResults-->Gallery
     Feed-->Gallery

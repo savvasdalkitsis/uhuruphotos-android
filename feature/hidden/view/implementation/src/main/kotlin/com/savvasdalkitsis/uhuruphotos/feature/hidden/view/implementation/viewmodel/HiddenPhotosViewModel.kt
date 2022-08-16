@@ -16,10 +16,10 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.feature.hidden.view.implementation.viewmodel
 
 import androidx.lifecycle.ViewModel
-import com.savvasdalkitsis.uhuruphotos.api.gallery.page.seam.GalleryPageAction
-import com.savvasdalkitsis.uhuruphotos.api.gallery.page.seam.GalleryPageEffect
-import com.savvasdalkitsis.uhuruphotos.api.gallery.page.ui.state.GalleryPageState
-import com.savvasdalkitsis.uhuruphotos.api.gallery.ui.state.GalleryState
+import com.savvasdalkitsis.uhuruphotos.feature.showroom.view.api.seam.ShowroomAction
+import com.savvasdalkitsis.uhuruphotos.feature.showroom.view.api.seam.ShowroomEffect
+import com.savvasdalkitsis.uhuruphotos.feature.showroom.view.api.ui.state.ShowroomState
+import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.ui.state.GalleryState
 import com.savvasdalkitsis.uhuruphotos.feature.hidden.view.implementation.seam.HiddenPhotosAction
 import com.savvasdalkitsis.uhuruphotos.feature.hidden.view.implementation.seam.HiddenPhotosCompositeActionHandler
 import com.savvasdalkitsis.uhuruphotos.feature.hidden.view.implementation.seam.HiddenPhotosEffect
@@ -35,11 +35,11 @@ import javax.inject.Inject
 internal class HiddenPhotosViewModel @Inject constructor(
     hiddenPhotosCompositeActionHandler: HiddenPhotosCompositeActionHandler,
 ) : ViewModel(), Seam<
-        Pair<GalleryPageState, HiddenPhotosState>,
-        Either<GalleryPageEffect, HiddenPhotosEffect>,
-        Either<GalleryPageAction, HiddenPhotosAction>,
-        Mutation<Pair<GalleryPageState, HiddenPhotosState>>
+        Pair<ShowroomState, HiddenPhotosState>,
+        Either<ShowroomEffect, HiddenPhotosEffect>,
+        Either<ShowroomAction, HiddenPhotosAction>,
+        Mutation<Pair<ShowroomState, HiddenPhotosState>>
         > by handler(
     hiddenPhotosCompositeActionHandler,
-    GalleryPageState(galleryState = GalleryState()) to HiddenPhotosState()
+    ShowroomState(galleryState = GalleryState()) to HiddenPhotosState()
 )

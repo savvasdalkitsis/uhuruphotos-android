@@ -22,8 +22,8 @@ import androidx.compose.foundation.layout.RowScope
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
-import com.savvasdalkitsis.uhuruphotos.api.gallery.ui.state.GalleryDisplay
-import com.savvasdalkitsis.uhuruphotos.api.gallery.ui.state.PredefinedGalleryDisplay
+import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.ui.state.GalleryDisplay
+import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.ui.state.PredefinedGalleryDisplay
 import com.savvasdalkitsis.uhuruphotos.api.home.navigation.HomeNavigationBar
 import com.savvasdalkitsis.uhuruphotos.api.home.navigation.NavigationStyle.BOTTOM_BAR
 import com.savvasdalkitsis.uhuruphotos.api.home.navigation.NavigationStyle.NAVIGATION_RAIL

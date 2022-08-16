@@ -15,13 +15,13 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.local.view.implementation.seam
 
-import com.savvasdalkitsis.uhuruphotos.api.gallery.page.seam.GalleryPageAction
-import com.savvasdalkitsis.uhuruphotos.api.gallery.page.seam.GalleryPageActionHandler
-import com.savvasdalkitsis.uhuruphotos.api.gallery.page.seam.GalleryPageEffect
-import com.savvasdalkitsis.uhuruphotos.api.gallery.page.seam.GalleryPageMutation
-import com.savvasdalkitsis.uhuruphotos.api.gallery.page.ui.state.GalleryDetails
-import com.savvasdalkitsis.uhuruphotos.api.gallery.page.ui.state.GalleryPageState
-import com.savvasdalkitsis.uhuruphotos.api.gallery.page.ui.state.Title
+import com.savvasdalkitsis.uhuruphotos.feature.showroom.view.api.seam.ShowroomAction
+import com.savvasdalkitsis.uhuruphotos.feature.showroom.view.api.seam.ShowroomActionHandler
+import com.savvasdalkitsis.uhuruphotos.feature.showroom.view.api.seam.ShowroomEffect
+import com.savvasdalkitsis.uhuruphotos.feature.showroom.view.api.seam.ShowroomMutation
+import com.savvasdalkitsis.uhuruphotos.feature.showroom.view.api.ui.state.ShowroomDetails
+import com.savvasdalkitsis.uhuruphotos.feature.showroom.view.api.ui.state.ShowroomState
+import com.savvasdalkitsis.uhuruphotos.feature.showroom.view.api.ui.state.Title
 import com.savvasdalkitsis.uhuruphotos.api.media.page.domain.model.MediaSequenceDataSource
 import com.savvasdalkitsis.uhuruphotos.feature.local.domain.api.usecase.LocalAlbumUseCase
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.ActionHandler
@@ -30,8 +30,8 @@ import javax.inject.Inject
 
 internal class LocalAlbumPageActionHandler @Inject constructor(
     localAlbumUseCase: LocalAlbumUseCase,
-) : ActionHandler<GalleryPageState, GalleryPageEffect, GalleryPageAction, GalleryPageMutation>
-by GalleryPageActionHandler(
+) : ActionHandler<ShowroomState, ShowroomEffect, ShowroomAction, ShowroomMutation>
+by ShowroomActionHandler(
     galleryRefresher = { localAlbumUseCase.refreshLocalAlbum(it) },
     initialGalleryDisplay = { localAlbumUseCase.getLocalAlbumGalleryDisplay(it) },
     galleryDisplayPersistence = { id, galleryDisplay ->
@@ -40,10 +40,10 @@ by GalleryPageActionHandler(
     galleryDetailsEmptyCheck = { albumId ->
         localAlbumUseCase.getLocalAlbum(albumId).isEmpty()
     },
-    galleryDetailsFlow = { albumId, _ ->
+    showroomDetailsFlow = { albumId, _ ->
         localAlbumUseCase.observeLocalAlbum(albumId)
             .map { (bucket, albums) ->
-                GalleryDetails(
+                ShowroomDetails(
                     title = Title.Text(bucket.displayName),
                     albums = albums,
                 )

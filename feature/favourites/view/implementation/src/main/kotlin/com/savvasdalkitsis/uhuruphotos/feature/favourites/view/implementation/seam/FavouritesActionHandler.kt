@@ -16,13 +16,13 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.feature.favourites.view.implementation.seam
 
 import com.savvasdalkitsis.uhuruphotos.api.albums.model.Album
-import com.savvasdalkitsis.uhuruphotos.api.gallery.page.seam.GalleryPageAction
-import com.savvasdalkitsis.uhuruphotos.api.gallery.page.seam.GalleryPageActionHandler
-import com.savvasdalkitsis.uhuruphotos.api.gallery.page.seam.GalleryPageEffect
-import com.savvasdalkitsis.uhuruphotos.api.gallery.page.seam.GalleryPageMutation
-import com.savvasdalkitsis.uhuruphotos.api.gallery.page.ui.state.GalleryDetails
-import com.savvasdalkitsis.uhuruphotos.api.gallery.page.ui.state.GalleryPageState
-import com.savvasdalkitsis.uhuruphotos.api.gallery.page.ui.state.Title
+import com.savvasdalkitsis.uhuruphotos.feature.showroom.view.api.seam.ShowroomAction
+import com.savvasdalkitsis.uhuruphotos.feature.showroom.view.api.seam.ShowroomActionHandler
+import com.savvasdalkitsis.uhuruphotos.feature.showroom.view.api.seam.ShowroomEffect
+import com.savvasdalkitsis.uhuruphotos.feature.showroom.view.api.seam.ShowroomMutation
+import com.savvasdalkitsis.uhuruphotos.feature.showroom.view.api.ui.state.ShowroomDetails
+import com.savvasdalkitsis.uhuruphotos.feature.showroom.view.api.ui.state.ShowroomState
+import com.savvasdalkitsis.uhuruphotos.feature.showroom.view.api.ui.state.Title
 import com.savvasdalkitsis.uhuruphotos.api.media.page.domain.model.MediaSequenceDataSource.FavouriteMedia
 import com.savvasdalkitsis.uhuruphotos.api.media.page.domain.usecase.MediaUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.favourites.domain.api.usecase.FavouritesUseCase
@@ -35,8 +35,8 @@ import javax.inject.Inject
 internal class FavouritesActionHandler @Inject constructor(
     mediaUseCase: MediaUseCase,
     favouritesUseCase: FavouritesUseCase,
-) : ActionHandler<GalleryPageState, GalleryPageEffect, GalleryPageAction, GalleryPageMutation>
-by GalleryPageActionHandler(
+) : ActionHandler<ShowroomState, ShowroomEffect, ShowroomAction, ShowroomMutation>
+by ShowroomActionHandler(
     galleryRefresher = { mediaUseCase.refreshFavouriteMedia() },
     initialGalleryDisplay = { favouritesUseCase.getFavouriteMediaGalleryDisplay() },
     galleryDisplayPersistence = { _, galleryDisplay ->
@@ -45,11 +45,11 @@ by GalleryPageActionHandler(
     galleryDetailsEmptyCheck = { _ ->
         mediaUseCase.getFavouriteMediaCount().getOrDefault(0) > 0
     },
-    galleryDetailsFlow = { _, _ ->
+    showroomDetailsFlow = { _, _ ->
         mediaUseCase.observeFavouriteMedia()
             .mapNotNull { it.getOrNull() }
             .map { mediaItems ->
-                GalleryDetails(
+                ShowroomDetails(
                     title = Title.Resource(string.favourite_media),
                     albums = listOf(Album(
                         id = "favourites",

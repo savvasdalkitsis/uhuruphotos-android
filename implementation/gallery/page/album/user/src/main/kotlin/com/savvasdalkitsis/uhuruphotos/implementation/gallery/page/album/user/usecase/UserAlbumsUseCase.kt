@@ -18,8 +18,8 @@ package com.savvasdalkitsis.uhuruphotos.implementation.gallery.page.album.user.u
 import com.fredporciuncula.flow.preferences.FlowSharedPreferences
 import com.savvasdalkitsis.uhuruphotos.api.albums.repository.AlbumsRepository
 import com.savvasdalkitsis.uhuruphotos.api.db.albums.GetUserAlbum
-import com.savvasdalkitsis.uhuruphotos.api.gallery.ui.state.GalleryDisplay
-import com.savvasdalkitsis.uhuruphotos.api.gallery.ui.state.PredefinedGalleryDisplay
+import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.ui.state.GalleryDisplay
+import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.ui.state.PredefinedGalleryDisplay
 import com.savvasdalkitsis.uhuruphotos.foundation.group.api.model.Group
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject

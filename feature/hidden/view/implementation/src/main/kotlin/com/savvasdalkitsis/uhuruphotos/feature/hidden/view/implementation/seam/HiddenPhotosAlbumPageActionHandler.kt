@@ -16,14 +16,14 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.feature.hidden.view.implementation.seam
 
 import com.savvasdalkitsis.uhuruphotos.api.albums.model.Album
-import com.savvasdalkitsis.uhuruphotos.api.gallery.page.seam.GalleryPageAction
-import com.savvasdalkitsis.uhuruphotos.api.gallery.page.seam.GalleryPageActionHandler
-import com.savvasdalkitsis.uhuruphotos.api.gallery.page.seam.GalleryPageEffect
-import com.savvasdalkitsis.uhuruphotos.api.gallery.page.seam.GalleryPageEffect.NavigateBack
-import com.savvasdalkitsis.uhuruphotos.api.gallery.page.seam.GalleryPageMutation
-import com.savvasdalkitsis.uhuruphotos.api.gallery.page.ui.state.GalleryDetails
-import com.savvasdalkitsis.uhuruphotos.api.gallery.page.ui.state.GalleryPageState
-import com.savvasdalkitsis.uhuruphotos.api.gallery.page.ui.state.Title
+import com.savvasdalkitsis.uhuruphotos.feature.showroom.view.api.seam.ShowroomAction
+import com.savvasdalkitsis.uhuruphotos.feature.showroom.view.api.seam.ShowroomActionHandler
+import com.savvasdalkitsis.uhuruphotos.feature.showroom.view.api.seam.ShowroomEffect
+import com.savvasdalkitsis.uhuruphotos.feature.showroom.view.api.seam.ShowroomEffect.NavigateBack
+import com.savvasdalkitsis.uhuruphotos.feature.showroom.view.api.seam.ShowroomMutation
+import com.savvasdalkitsis.uhuruphotos.feature.showroom.view.api.ui.state.ShowroomDetails
+import com.savvasdalkitsis.uhuruphotos.feature.showroom.view.api.ui.state.ShowroomState
+import com.savvasdalkitsis.uhuruphotos.feature.showroom.view.api.ui.state.Title
 import com.savvasdalkitsis.uhuruphotos.api.media.page.domain.model.MediaSequenceDataSource.HiddenMedia
 import com.savvasdalkitsis.uhuruphotos.api.media.page.domain.usecase.MediaUseCase
 import com.savvasdalkitsis.uhuruphotos.api.settings.usecase.SettingsUseCase
@@ -42,7 +42,7 @@ internal class HiddenPhotosAlbumPageActionHandler @Inject constructor(
     hiddenMediaUseCase: HiddenMediaUseCase,
     settingsUseCase: SettingsUseCase,
     biometricsUseCase: BiometricsUseCase
-): ActionHandler<GalleryPageState, GalleryPageEffect, GalleryPageAction, GalleryPageMutation> by GalleryPageActionHandler(
+): ActionHandler<ShowroomState, ShowroomEffect, ShowroomAction, ShowroomMutation> by ShowroomActionHandler(
     galleryRefresher = { mediaUseCase.refreshFavouriteMedia() },
     initialGalleryDisplay = { hiddenMediaUseCase.getHiddenMediaGalleryDisplay() },
     galleryDisplayPersistence = { _, galleryDisplay ->
@@ -51,7 +51,7 @@ internal class HiddenPhotosAlbumPageActionHandler @Inject constructor(
     galleryDetailsEmptyCheck = {
         mediaUseCase.getHiddenMedia().getOrDefault(emptyList()).isEmpty()
     },
-    galleryDetailsFlow = { _, effect ->
+    showroomDetailsFlow = { _, effect ->
         settingsUseCase.observeBiometricsRequiredForHiddenPhotosAccess()
             .flatMapLatest { biometricsRequired ->
                 val proceed = when {
@@ -71,7 +71,7 @@ internal class HiddenPhotosAlbumPageActionHandler @Inject constructor(
                     mediaUseCase.observeHiddenMedia()
                         .mapNotNull { it.getOrNull() }
                         .map { photoEntries ->
-                            GalleryDetails(
+                            ShowroomDetails(
                                 title = Title.Resource(string.hidden_photos),
                                 albums = listOf(
                                     Album(

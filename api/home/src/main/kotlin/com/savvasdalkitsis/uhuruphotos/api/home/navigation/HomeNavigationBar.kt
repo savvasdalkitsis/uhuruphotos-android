@@ -43,7 +43,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import com.commandiron.bubble_navigation_bar_compose.BubbleNavigationBar
 import com.commandiron.bubble_navigation_bar_compose.BubbleNavigationBarItem
-import com.savvasdalkitsis.uhuruphotos.api.gallery.ui.state.GalleryDisplay
+import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.ui.state.GalleryDisplay
 import com.savvasdalkitsis.uhuruphotos.api.home.navigation.NavigationStyle.BOTTOM_BAR
 import com.savvasdalkitsis.uhuruphotos.api.home.navigation.NavigationStyle.NAVIGATION_RAIL
 import com.savvasdalkitsis.uhuruphotos.api.homenavigation.HomeNavigationRoutes

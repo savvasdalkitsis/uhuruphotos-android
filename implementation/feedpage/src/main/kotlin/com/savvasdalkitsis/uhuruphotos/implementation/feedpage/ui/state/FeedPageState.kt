@@ -15,8 +15,8 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.implementation.feedpage.ui.state
 
-import com.savvasdalkitsis.uhuruphotos.api.gallery.ui.state.GalleryState
-import com.savvasdalkitsis.uhuruphotos.api.gallery.ui.state.PredefinedGalleryDisplay
+import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.ui.state.GalleryState
+import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.ui.state.PredefinedGalleryDisplay
 import com.savvasdalkitsis.uhuruphotos.api.media.page.domain.model.MediaItem
 import com.savvasdalkitsis.uhuruphotos.api.media.page.domain.model.MediaItemSelectionMode
 

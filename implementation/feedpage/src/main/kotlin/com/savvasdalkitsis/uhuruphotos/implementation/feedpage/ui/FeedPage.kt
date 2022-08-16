@@ -23,8 +23,8 @@ import androidx.navigation.NavHostController
 import com.google.accompanist.swiperefresh.SwipeRefresh
 import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 import com.savvasdalkitsis.uhuruphotos.foundation.compose.api.blurIf
-import com.savvasdalkitsis.uhuruphotos.api.gallery.ui.Gallery
-import com.savvasdalkitsis.uhuruphotos.api.gallery.ui.state.PredefinedGalleryDisplay
+import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.ui.Gallery
+import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.ui.state.PredefinedGalleryDisplay
 import com.savvasdalkitsis.uhuruphotos.api.home.ui.HomeScaffold
 import com.savvasdalkitsis.uhuruphotos.api.media.page.ui.TrashPermissionDialog
 import com.savvasdalkitsis.uhuruphotos.implementation.feedpage.seam.FeedPageAction

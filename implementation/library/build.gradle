@@ -18,7 +18,7 @@ dependencies {
     implementation project(":foundation:coroutines:api")
     implementation project(":api:db")
     implementation project(":feature:favourites:view:api")
-    implementation project(":api:gallery")
+    implementation project(":feature:gallery:view:api")
     implementation project(":feature:hidden:view:api")
     implementation project(":feature:local:domain:api")
     implementation project(":feature:local:view:api")

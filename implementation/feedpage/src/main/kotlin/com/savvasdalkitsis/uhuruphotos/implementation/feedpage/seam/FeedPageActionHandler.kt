@@ -17,7 +17,7 @@ package com.savvasdalkitsis.uhuruphotos.implementation.feedpage.seam
 
 import com.savvasdalkitsis.uhuruphotos.api.albums.model.Album
 import com.savvasdalkitsis.uhuruphotos.api.albums.usecase.AlbumsUseCase
-import com.savvasdalkitsis.uhuruphotos.api.gallery.ui.state.PredefinedGalleryDisplay.YEARLY
+import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.ui.state.PredefinedGalleryDisplay.YEARLY
 import com.savvasdalkitsis.uhuruphotos.api.media.page.domain.model.MediaItem
 import com.savvasdalkitsis.uhuruphotos.api.media.page.domain.model.MediaItemSelectionMode.SELECTED
 import com.savvasdalkitsis.uhuruphotos.api.media.page.domain.model.MediaItemSelectionMode.UNDEFINED

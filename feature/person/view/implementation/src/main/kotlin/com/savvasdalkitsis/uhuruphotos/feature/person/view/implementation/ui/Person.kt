@@ -27,8 +27,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
-import com.savvasdalkitsis.uhuruphotos.api.gallery.ui.Gallery
-import com.savvasdalkitsis.uhuruphotos.api.gallery.ui.GalleryDisplayActionButton
+import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.ui.Gallery
+import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.ui.GalleryDisplayActionButton
 import com.savvasdalkitsis.uhuruphotos.feature.person.view.implementation.seam.PersonAction
 import com.savvasdalkitsis.uhuruphotos.feature.person.view.implementation.seam.PersonAction.ChangeDisplay
 import com.savvasdalkitsis.uhuruphotos.feature.person.view.implementation.seam.PersonAction.NavigateBack

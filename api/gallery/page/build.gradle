@@ -10,13 +10,13 @@ android {
 
 dependencies {
     implementation project(':api:albums')
-    implementation project(':foundation:coroutines:api')
-    implementation project(":api:gallery")
-    implementation project(":foundation:log:api")
-    implementation project(":foundation:navigation:api")
+    implementation project(':api:media:page')
+    implementation project(":feature:gallery:view:api")
     implementation project(':feature:person:view:api')
     implementation project(':feature:people:view:api')
-    implementation project(':api:media:page')
+    implementation project(':foundation:coroutines:api')
+    implementation project(":foundation:log:api")
+    implementation project(":foundation:navigation:api")
     implementation project(":foundation:strings:api")
     implementation project(":foundation:toaster:api")
     implementation project(":foundation:ui:api")

@@ -17,7 +17,7 @@ package com.savvasdalkitsis.uhuruphotos.implementation.feedpage.usecase
 
 import com.fredporciuncula.flow.preferences.FlowSharedPreferences
 import com.savvasdalkitsis.uhuruphotos.api.feedpage.usecase.FeedPageUseCase
-import com.savvasdalkitsis.uhuruphotos.api.gallery.ui.state.PredefinedGalleryDisplay
+import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.ui.state.PredefinedGalleryDisplay
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 

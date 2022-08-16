@@ -15,7 +15,7 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.implementation.search.seam
 
-import com.savvasdalkitsis.uhuruphotos.api.gallery.ui.state.GalleryDisplay
+import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.ui.state.GalleryDisplay
 import com.savvasdalkitsis.uhuruphotos.feature.people.view.api.ui.state.Person
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.Mutation
 import com.savvasdalkitsis.uhuruphotos.implementation.search.ui.state.SearchResults

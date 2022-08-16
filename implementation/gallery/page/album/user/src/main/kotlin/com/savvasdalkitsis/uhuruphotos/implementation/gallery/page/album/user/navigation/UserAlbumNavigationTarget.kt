@@ -20,12 +20,12 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import com.savvasdalkitsis.uhuruphotos.api.gallery.page.album.user.navigation.UserAlbumNavigationTarget
 import com.savvasdalkitsis.uhuruphotos.api.gallery.page.album.user.navigation.UserAlbumNavigationTarget.albumId
-import com.savvasdalkitsis.uhuruphotos.api.gallery.page.seam.GalleryPageAction
-import com.savvasdalkitsis.uhuruphotos.api.gallery.page.seam.GalleryPageAction.LoadGallery
-import com.savvasdalkitsis.uhuruphotos.api.gallery.page.seam.GalleryPageEffect
-import com.savvasdalkitsis.uhuruphotos.api.gallery.page.seam.GalleryPageEffectsHandler
-import com.savvasdalkitsis.uhuruphotos.api.gallery.page.ui.GalleryPage
-import com.savvasdalkitsis.uhuruphotos.api.gallery.page.ui.state.GalleryPageState
+import com.savvasdalkitsis.uhuruphotos.feature.showroom.view.api.seam.ShowroomAction
+import com.savvasdalkitsis.uhuruphotos.feature.showroom.view.api.seam.ShowroomAction.LoadGallery
+import com.savvasdalkitsis.uhuruphotos.feature.showroom.view.api.seam.ShowroomEffect
+import com.savvasdalkitsis.uhuruphotos.feature.showroom.view.api.seam.ShowroomEffectsHandler
+import com.savvasdalkitsis.uhuruphotos.feature.showroom.view.api.ui.ShowroomPage
+import com.savvasdalkitsis.uhuruphotos.feature.showroom.view.api.ui.state.ShowroomState
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.NavigationTarget
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.navigationTarget
 import com.savvasdalkitsis.uhuruphotos.api.settings.usecase.SettingsUseCase
@@ -33,12 +33,12 @@ import com.savvasdalkitsis.uhuruphotos.implementation.gallery.page.album.user.vi
 import javax.inject.Inject
 
 internal class UserAlbumNavigationTarget @Inject constructor(
-    private val effectsHandler: GalleryPageEffectsHandler,
+    private val effectsHandler: ShowroomEffectsHandler,
     private val settingsUseCase: SettingsUseCase,
 ) : NavigationTarget {
 
     override suspend fun NavGraphBuilder.create(navHostController: NavHostController) =
-        navigationTarget<GalleryPageState, GalleryPageEffect, GalleryPageAction, UserAlbumViewModel>(
+        navigationTarget<ShowroomState, ShowroomEffect, ShowroomAction, UserAlbumViewModel>(
             name = UserAlbumNavigationTarget.registrationName,
             effects = effectsHandler,
             themeMode = settingsUseCase.observeThemeModeState(),
@@ -47,7 +47,7 @@ internal class UserAlbumNavigationTarget @Inject constructor(
             },
             createModel = { hiltViewModel() }
         ) { state, action ->
-            GalleryPage(
+            ShowroomPage(
                 state = state,
                 action = action,
             )

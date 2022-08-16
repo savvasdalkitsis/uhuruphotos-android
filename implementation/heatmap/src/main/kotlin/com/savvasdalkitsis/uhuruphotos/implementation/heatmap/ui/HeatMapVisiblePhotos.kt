@@ -21,8 +21,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import com.savvasdalkitsis.uhuruphotos.api.albums.model.Album
-import com.savvasdalkitsis.uhuruphotos.api.gallery.ui.Gallery
-import com.savvasdalkitsis.uhuruphotos.api.gallery.ui.state.GalleryState
+import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.ui.Gallery
+import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.ui.state.GalleryState
 import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
 import com.savvasdalkitsis.uhuruphotos.implementation.heatmap.seam.HeatMapAction
 import com.savvasdalkitsis.uhuruphotos.implementation.heatmap.seam.HeatMapAction.SelectedPhoto

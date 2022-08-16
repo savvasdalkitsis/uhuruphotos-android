@@ -10,10 +10,10 @@ android {
 
 dependencies {
     implementation project(":api:albums")
-    implementation project(":api:gallery:page")
+    implementation project(":feature:showroom:view:api")
     implementation project(":foundation:biometrics:api")
     implementation project(":foundation:coroutines:api")
-    implementation project(":api:gallery")
+    implementation project(":feature:gallery:view:api")
     implementation project(":foundation:navigation:api")
     implementation project(":foundation:seam:api")
     implementation project(":api:settings")

@@ -1,0 +1,34 @@
+android {
+    buildFeatures {
+        compose true
+    }
+    composeOptions {
+        kotlinCompilerExtensionVersion compose_compiler_version
+    }
+    namespace 'com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api'
+}
+
+dependencies {
+
+    implementation project(':api:albums')
+    implementation project(':api:media:page')
+    implementation project(":foundation:compose:api")
+    implementation project(":foundation:icons:api")
+    implementation project(':foundation:image:api')
+    implementation project(":foundation:strings:api")
+    implementation project(":foundation:ui:api")
+    implementation(
+            libs.androidx.compose.foundation,
+            libs.androidx.compose.foundation.layout,
+            libs.androidx.compose.material,
+            libs.androidx.compose.material.windowsize,
+            libs.androidx.compose.ui,
+            libs.androidx.compose.ui.tooling.preview,
+            libs.androidx.compose.ui.util,
+            libs.androidx.core,
+            libs.scrollbar,
+    )
+    debugImplementation(
+            libs.androidx.compose.ui.tooling,
+    )
+}
