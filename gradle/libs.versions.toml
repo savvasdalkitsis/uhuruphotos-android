@@ -2,7 +2,7 @@
 accompanist = "0.26.0-alpha"
 androidx-hilt = "1.0.0"
 coil = "2.1.0"
-compose = "1.3.0-alpha02"
+compose = "1.3.0-alpha03"
 exoplayer = "2.18.0"
 lumberjack = "5.2.5"
 mockk = "1.12.4"
