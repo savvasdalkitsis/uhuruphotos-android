@@ -86,4 +86,54 @@
         <item quantity="other">%d Tage</item>
     </plurals>
     <string name="trashing_photo">Schiebe Foto in den Papierkorb</string>
+    <string name="sorting">Sortierung</string>
+    <string name="hidden_photos">Versteckte Fotos</string>
+    <plurals name="restore_media_confirmation">
+        <item quantity="one">Sind Sie sicher, dass Sie den %d Medieninhalt wiederherstellen möchten\?</item>
+        <item quantity="other">Sind Sie sicher, dass Sie die %d Medieninhalte wiederherstellen möchten\?</item>
+    </plurals>
+    <string name="setting_media_favourite">Medium als Favorit markieren</string>
+    <string name="downloading_media_details">Lade Mediendetails herunter</string>
+    <string name="trashing_media">Sende Medium in den Papierkorb</string>
+    <string name="favourite_media">Favorisierte Medien</string>
+    <string name="background_jobs">Hintergrundjobs</string>
+    <string name="remove_favourite">Favorit entfernen</string>
+    <string name="auto_generated_albums">Automatisch erstellte Alben</string>
+    <string name="gallery_size">Galeriegröße</string>
+    <string name="media">Medien</string>
+    <plurals name="delete_media">
+        <item quantity="one">%d Medieninhalt löschen</item>
+        <item quantity="other">%d Medieninhalte löschen</item>
+    </plurals>
+    <plurals name="restore_media">
+        <item quantity="one">%d Medieninhalt wiederherstellen</item>
+        <item quantity="other">%d Medieninhalte wiederherstellen</item>
+    </plurals>
+    <plurals name="trash_media">
+        <item quantity="one">%d Medieninhalt in den Papierkorb senden</item>
+        <item quantity="other">%d Medieninhalte in den Papierkorb senden</item>
+    </plurals>
+    <plurals name="delete_media_confirmation">
+        <item quantity="one">Sind Sie sicher, dass Sie den %d Medieninhalt löschen möchten\?</item>
+        <item quantity="other">Sind Sie sicher, dass Sie die %d Medieninhalte löschen möchten\?</item>
+    </plurals>
+    <plurals name="trash_media_confirmation">
+        <item quantity="one">Sind Sie sicher, dass Sie den %d Medieninhalt in den Papierkorb senden möchten\?</item>
+        <item quantity="other">Sind Sie sicher, dass Sie die %d Medieninhalte in den Papierkorb senden möchten\?</item>
+    </plurals>
+    <string name="restoring_photo">Foto wird aus dem Papierkorb wiederhergestellt</string>
+    <string name="restoring_media">Medium wird aus dem Papierkorb wiederhergestellt</string>
+    <string name="location">Standort</string>
+    <string name="open_in_maps">In der Kartenansicht öffnen</string>
+    <string name="details">Details</string>
+    <string name="deleting_media">Medium wird gelöscht</string>
+    <string name="favourite_photos">Favorisierte Fotos</string>
+    <string name="edit_server_url">Server URL bearbeiten</string>
+    <string name="log_out">Ausloggen</string>
+    <string name="albums">Alben</string>
+    <string name="library">Bibliothek</string>
+    <string name="missing_album_title">Fehlender Albumtitel</string>
+    <string name="auto_albums">Auto Alben</string>
+    <string name="user_created_albums">Benutzererstellte Alben</string>
+    <string name="user_albums">Benutzeralben</string>
 </resources>
