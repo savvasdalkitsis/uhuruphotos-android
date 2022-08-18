@@ -13,20 +13,19 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
  */
-package com.savvasdalkitsis.uhuruphotos.implementation.log.initializer
+package com.savvasdalkitsis.uhuruphotos.foundation.log.implementation.initializer
 
 import android.app.Application
 import android.content.Context
 import com.michaelflisar.lumberjack.FileLoggingSetup
 import com.michaelflisar.lumberjack.L
-import com.savvasdalkitsis.uhuruphotos.feature.settings.domain.api.usecase.SettingsUseCase
 import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.R
 import com.savvasdalkitsis.uhuruphotos.foundation.initializer.api.ApplicationCreated
 import com.savvasdalkitsis.uhuruphotos.foundation.log.api.Log
 import com.savvasdalkitsis.uhuruphotos.foundation.log.api.logError
 import com.savvasdalkitsis.uhuruphotos.foundation.notification.api.NotificationChannels
-import com.savvasdalkitsis.uhuruphotos.implementation.log.FeedbackUseCase
-import com.savvasdalkitsis.uhuruphotos.implementation.log.showCrashNotification
+import com.savvasdalkitsis.uhuruphotos.foundation.log.implementation.FeedbackUseCase
+import com.savvasdalkitsis.uhuruphotos.foundation.log.implementation.showCrashNotification
 import dagger.hilt.android.qualifiers.ApplicationContext
 import timber.log.Timber
 import javax.inject.Inject

@@ -12,5 +12,5 @@ dependencies {
 }
 
 android {
-    namespace 'com.savvasdalkitsis.uhuruphotos.implementation.log'
+    namespace 'com.savvasdalkitsis.uhuruphotos.foundation.log.implementation'
 }
