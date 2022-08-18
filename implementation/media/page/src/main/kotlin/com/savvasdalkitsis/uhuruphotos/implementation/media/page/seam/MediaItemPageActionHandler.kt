@@ -36,7 +36,7 @@ import com.savvasdalkitsis.uhuruphotos.api.media.page.domain.model.MediaSequence
 import com.savvasdalkitsis.uhuruphotos.api.media.page.domain.model.MediaSequenceDataSource.Trash
 import com.savvasdalkitsis.uhuruphotos.api.media.page.domain.model.MediaSequenceDataSource.UserAlbum
 import com.savvasdalkitsis.uhuruphotos.api.media.page.domain.usecase.MediaUseCase
-import com.savvasdalkitsis.uhuruphotos.api.search.SearchUseCase
+import com.savvasdalkitsis.uhuruphotos.feature.search.domain.api.usecase.SearchUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.local.domain.api.usecase.LocalAlbumUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.person.domain.api.usecase.PersonUseCase
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.ActionHandler

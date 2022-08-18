@@ -18,7 +18,7 @@ package com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.sea
 import androidx.work.ExistingPeriodicWorkPolicy.REPLACE
 import androidx.work.WorkInfo.State.RUNNING
 import com.savvasdalkitsis.uhuruphotos.api.albums.worker.AlbumWorkScheduler
-import com.savvasdalkitsis.uhuruphotos.api.search.SearchUseCase
+import com.savvasdalkitsis.uhuruphotos.feature.search.domain.api.usecase.SearchUseCase
 import com.savvasdalkitsis.uhuruphotos.api.userbadge.usecase.UserBadgeUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.settings.domain.api.usecase.CacheSettingsUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.SettingsAction.*

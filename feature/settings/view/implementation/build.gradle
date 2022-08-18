@@ -16,7 +16,7 @@ dependencies {
     implementation project(":foundation:icons:api")
     implementation project(":foundation:initializer:api")
     implementation project(":foundation:log:api")
-    implementation project(':api:search')
+    implementation project(':feature:search:domain:api')
     implementation project(":feature:settings:domain:api")
     implementation project(":feature:settings:view:api")
     implementation project(":foundation:strings:api")

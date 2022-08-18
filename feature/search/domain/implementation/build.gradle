@@ -1,0 +1,21 @@
+android {
+    namespace 'com.savvasdalkitsis.uhuruphotos.feature.search.domain.implementation'
+}
+
+dependencies {
+    implementation project(":api:db")
+    implementation project(":feature:search:domain:api")
+    implementation project(":foundation:coroutines:api")
+    implementation project(":foundation:date:api")
+    implementation project(":foundation:group:api")
+    implementation project(":foundation:log:api")
+    implementation(
+            libs.hilt,
+            libs.flowpreferences,
+            libs.moshi,
+            libs.retrofit.core,
+            libs.retrofit.moshi,
+            libs.sqldelight.coroutines,
+    )
+    kapt libs.moshi.kapt
+}

@@ -32,7 +32,7 @@ dependencies {
     implementation project(":foundation:notification:api")
     implementation project(':feature:people:view:api')
     implementation project(':feature:person:view:api')
-    implementation project(':api:search')
+    implementation project(':feature:search:domain:api')
     implementation project(":foundation:share:api")
     implementation project(":foundation:strings:api")
     implementation project(":foundation:toaster:api")

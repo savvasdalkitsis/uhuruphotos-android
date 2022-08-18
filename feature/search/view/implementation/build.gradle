@@ -1,0 +1,49 @@
+android {
+    buildFeatures {
+        compose true
+    }
+    composeOptions {
+        kotlinCompilerExtensionVersion compose_compiler_version
+    }
+    namespace 'com.savvasdalkitsis.uhuruphotos.feature.search.view.implementation'
+}
+
+dependencies {
+
+    implementation project(":feature:account:view:api")
+    implementation project(":foundation:compose:api")
+    implementation project(":foundation:coroutines:api")
+    implementation project(":foundation:date:api")
+    implementation project(":api:db")
+    implementation project(":feature:gallery:view:api")
+    implementation project(":api:feedpage")
+    implementation project(":feature:heatmap:view:api")
+    implementation project(":api:home")
+    implementation project(":api:homenavigation")
+    implementation project(":foundation:icons:api")
+    implementation project(":foundation:log:api")
+    implementation project(":foundation:map:api")
+    implementation project(":foundation:navigation:api")
+    implementation project(':feature:people:domain:api')
+    implementation project(':feature:people:view:api')
+    implementation project(':feature:person:view:api')
+    implementation project(':api:media:remote')
+    implementation project(':feature:search:domain:api')
+    implementation project(":api:server")
+    implementation project(":feature:settings:domain:api")
+    implementation project(":foundation:strings:api")
+    implementation project(":foundation:toaster:api")
+    implementation project(":foundation:ui:api")
+
+    implementation(
+            libs.androidx.compose.hilt.navigation,
+            libs.androidx.compose.material,
+            libs.androidx.lifecycle,
+            libs.flowpreferences,
+            libs.moshi,
+            libs.retrofit.core,
+            libs.retrofit.moshi,
+            libs.sqldelight.coroutines,
+    )
+    kapt libs.moshi.kapt
+}
