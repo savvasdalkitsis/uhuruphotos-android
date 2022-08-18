@@ -22,7 +22,7 @@ dependencies {
     implementation project(":feature:trash:domain:implementation")
     implementation project(":feature:trash:view:implementation")
     implementation project(":feature:heatmap:view:implementation")
-    implementation project(":implementation:home")
+    implementation project(":feature:home:view:implementation")
     implementation project(":foundation:image:implementation")
     implementation project(":feature:library:view:implementation")
     implementation project(":foundation:log:implementation")

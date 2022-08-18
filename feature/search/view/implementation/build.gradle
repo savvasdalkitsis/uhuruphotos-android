@@ -18,7 +18,7 @@ dependencies {
     implementation project(":feature:gallery:view:api")
     implementation project(":feature:feed:domain:api")
     implementation project(":feature:heatmap:view:api")
-    implementation project(":api:home")
+    implementation project(":feature:home:view:api")
     implementation project(":api:homenavigation")
     implementation project(":foundation:icons:api")
     implementation project(":foundation:log:api")
