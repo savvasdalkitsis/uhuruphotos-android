@@ -4,6 +4,6 @@
     <style name="Theme.UhuruPhotos" parent="android:Theme.Material.Light.NoActionBar">
         <item name="android:statusBarColor">@color/transparent</item>
         <item name="android:windowBackground">@color/transparent</item>
-        <item name="android:windowLayoutInDisplayCutoutMode" tools:targetApi="o_mr1">always</item>
+        <item name="android:windowLayoutInDisplayCutoutMode" tools:targetApi="o_mr1">shortEdges</item>
     </style>
 </resources>

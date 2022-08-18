@@ -42,15 +42,8 @@ class AppActivity : FragmentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         Log.enabled = true
         super.onCreate(savedInstanceState)
-        actionBar?.let {
-            // Attempt to initialize activity internals on devices that might be doing something
-            // odd causing an NPE when using setContent further down (suggested by ASG group)
-        }
-
         currentActivityHolder.onCreated(this)
-        try {
-            WindowCompat.setDecorFitsSystemWindows(window, false)
-        } catch (_: Exception) { /* safe to ignore */ }
+        WindowCompat.setDecorFitsSystemWindows(window, false)
         setContent {
             LaunchedEffect(Unit) {
                 Log.enabled = settingsUseCase.getLoggingEnabled()
