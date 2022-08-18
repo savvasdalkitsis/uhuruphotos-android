@@ -1,0 +1,49 @@
+android {
+    buildFeatures {
+        compose true
+    }
+    composeOptions {
+        kotlinCompilerExtensionVersion compose_compiler_version
+    }
+    namespace 'com.savvasdalkitsis.uhuruphotos.feature.library.view.implementation'
+}
+
+dependencies {
+    implementation project(':feature:account:view:api')
+    implementation project(":feature:album:auto:view:api")
+    implementation project(":feature:album:user:view:api")
+    implementation project(':api:albums')
+    implementation project(":api:autoalbums")
+    implementation project(":foundation:compose:api")
+    implementation project(":foundation:coroutines:api")
+    implementation project(":api:db")
+    implementation project(":feature:favourites:view:api")
+    implementation project(":feature:gallery:view:api")
+    implementation project(":feature:hidden:view:api")
+    implementation project(":feature:local:domain:api")
+    implementation project(":feature:local:view:api")
+    implementation project(":feature:trash:view:api")
+    implementation project(":api:home")
+    implementation project(":api:homenavigation")
+    implementation project(":foundation:icons:api")
+    implementation project(":foundation:log:api")
+    implementation project(":foundation:navigation:api")
+    implementation project(":api:media:local")
+    implementation project(':api:media:page')
+    implementation project(':api:media:remote')
+    implementation project(":feature:settings:domain:api")
+    implementation project(":foundation:strings:api")
+    implementation project(":foundation:toaster:api")
+    implementation project(":foundation:ui:api")
+    implementation project(":api:useralbums")
+    implementation project(':api:userbadge')
+    implementation(
+            libs.bundles.permissions,
+            libs.accompanist.swiperefresh,
+            libs.androidx.compose.foundation,
+            libs.androidx.compose.material,
+            libs.flowpreferences,
+            libs.retrofit.core,
+    )
+    implementation project(path: ':feature:local:view:implementation')
+}
