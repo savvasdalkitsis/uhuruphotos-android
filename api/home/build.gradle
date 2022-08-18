@@ -9,7 +9,7 @@ android {
 }
 
 dependencies {
-    api project(":api:feedpage")
+    api project(":feature:feed:domain:api")
     api project(":api:userbadge")
     api(
             libs.androidx.compose.foundation,

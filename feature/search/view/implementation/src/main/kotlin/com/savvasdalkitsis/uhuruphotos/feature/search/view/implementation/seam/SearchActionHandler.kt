@@ -18,7 +18,7 @@ package com.savvasdalkitsis.uhuruphotos.feature.search.view.implementation.seam
 import com.savvasdalkitsis.uhuruphotos.foundation.coroutines.api.onErrors
 import com.savvasdalkitsis.uhuruphotos.foundation.coroutines.api.onErrorsIgnore
 import com.savvasdalkitsis.uhuruphotos.api.db.people.People
-import com.savvasdalkitsis.uhuruphotos.api.feedpage.usecase.FeedPageUseCase
+import com.savvasdalkitsis.uhuruphotos.feature.feed.domain.api.usecase.FeedUseCase
 import com.savvasdalkitsis.uhuruphotos.foundation.log.api.log
 import com.savvasdalkitsis.uhuruphotos.api.media.remote.domain.usecase.RemoteMediaUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.people.domain.api.usecase.PeopleUseCase
@@ -85,7 +85,7 @@ import kotlin.math.min
 
 class SearchActionHandler @Inject constructor(
     private val searchUseCase: SearchUseCase,
-    private val feedPageUseCase: FeedPageUseCase,
+    private val feedUseCase: FeedUseCase,
     private val settingsUseCase: SettingsUseCase,
     private val peopleUseCase: PeopleUseCase,
     private val remoteMediaUseCase: RemoteMediaUseCase,
@@ -222,7 +222,7 @@ class SearchActionHandler @Inject constructor(
     private fun showLibrary() = settingsUseCase.observeShowLibrary()
         .map(::ShowLibrary)
 
-    private fun showFeedDisplay() = feedPageUseCase
+    private fun showFeedDisplay() = feedUseCase
         .getFeedDisplay()
         .distinctUntilChanged()
         .map(::ChangeFeedDisplay)

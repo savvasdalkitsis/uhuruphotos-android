@@ -1,0 +1,12 @@
+android {
+    namespace 'com.savvasdalkitsis.uhuruphotos.feature.feed.domain.implementation'
+}
+
+dependencies {
+    implementation project(":feature:feed:domain:api")
+    implementation project(":feature:gallery:view:api")
+    implementation(
+            libs.flowpreferences,
+            libs.hilt,
+    )
+}
