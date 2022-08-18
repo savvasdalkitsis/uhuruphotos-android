@@ -19,7 +19,7 @@ import android.app.Application
 import android.content.Context
 import com.michaelflisar.lumberjack.FileLoggingSetup
 import com.michaelflisar.lumberjack.L
-import com.savvasdalkitsis.uhuruphotos.api.settings.usecase.SettingsUseCase
+import com.savvasdalkitsis.uhuruphotos.feature.settings.domain.api.usecase.SettingsUseCase
 import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.R
 import com.savvasdalkitsis.uhuruphotos.foundation.initializer.api.ApplicationCreated
 import com.savvasdalkitsis.uhuruphotos.foundation.log.api.Log
@@ -35,7 +35,7 @@ internal class LogInitializer @Inject constructor(
     private val trees: Set<@JvmSuppressWildcards Timber.Tree>,
     @ApplicationContext private val context: Context,
     private val fileLoggingSetup: FileLoggingSetup,
-    private val settingsUseCase: SettingsUseCase,
+    private val settingsUseCase: com.savvasdalkitsis.uhuruphotos.feature.settings.domain.api.usecase.SettingsUseCase,
 ) : ApplicationCreated {
 
     override fun onAppCreated(app: Application) {

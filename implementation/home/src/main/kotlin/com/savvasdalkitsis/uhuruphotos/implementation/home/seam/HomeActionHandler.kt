@@ -19,7 +19,7 @@ import com.savvasdalkitsis.uhuruphotos.api.auth.model.AuthStatus.Unauthenticated
 import com.savvasdalkitsis.uhuruphotos.api.auth.usecase.AuthenticationUseCase
 import com.savvasdalkitsis.uhuruphotos.foundation.biometrics.api.usecase.BiometricsUseCase
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.ActionHandler
-import com.savvasdalkitsis.uhuruphotos.api.settings.usecase.SettingsUseCase
+import com.savvasdalkitsis.uhuruphotos.feature.settings.domain.api.usecase.SettingsUseCase
 import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
 import com.savvasdalkitsis.uhuruphotos.implementation.home.seam.HomeAction.Load
 import com.savvasdalkitsis.uhuruphotos.implementation.home.seam.HomeEffect.LaunchAuthentication
@@ -32,7 +32,7 @@ import javax.inject.Inject
 
 internal class HomeActionHandler @Inject constructor(
     private val authenticationUseCase: AuthenticationUseCase,
-    private val settingsUseCase: SettingsUseCase,
+    private val settingsUseCase: com.savvasdalkitsis.uhuruphotos.feature.settings.domain.api.usecase.SettingsUseCase,
     private val biometricsUseCase: BiometricsUseCase,
 ) : ActionHandler<HomeState, HomeEffect, HomeAction, HomeMutation> {
     override fun handleAction(

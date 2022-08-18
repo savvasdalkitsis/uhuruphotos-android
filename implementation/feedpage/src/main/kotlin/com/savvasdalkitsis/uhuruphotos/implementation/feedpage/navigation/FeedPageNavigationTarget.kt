@@ -20,7 +20,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import com.savvasdalkitsis.uhuruphotos.api.homenavigation.HomeNavigationRoutes
-import com.savvasdalkitsis.uhuruphotos.api.settings.usecase.SettingsUseCase
+import com.savvasdalkitsis.uhuruphotos.feature.settings.domain.api.usecase.SettingsUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.account.view.api.seam.AccountOverviewAction
 import com.savvasdalkitsis.uhuruphotos.feature.account.view.api.seam.AccountOverviewAction.Load
 import com.savvasdalkitsis.uhuruphotos.feature.account.view.api.seam.AccountOverviewEffect
@@ -46,7 +46,7 @@ import javax.inject.Inject
 internal class FeedPageNavigationTarget @Inject constructor(
     private val accountOverviewEffectsHandler: AccountOverviewEffectsHandler,
     private val feedPageEffectsHandler: FeedPageEffectsHandler,
-    private val settingsUseCase: SettingsUseCase,
+    private val settingsUseCase: com.savvasdalkitsis.uhuruphotos.feature.settings.domain.api.usecase.SettingsUseCase,
 ) : NavigationTarget {
 
     override suspend fun NavGraphBuilder.create(navHostController: NavHostController) {

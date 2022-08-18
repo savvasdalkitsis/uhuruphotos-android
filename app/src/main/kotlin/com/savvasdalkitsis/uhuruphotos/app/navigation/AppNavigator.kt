@@ -25,7 +25,6 @@ import com.google.accompanist.navigation.animation.AnimatedNavHost
 import com.google.accompanist.navigation.animation.rememberAnimatedNavController
 import com.google.android.exoplayer2.ExoPlayer
 import com.savvasdalkitsis.uhuruphotos.api.homenavigation.HomeNavigationRoutes
-import com.savvasdalkitsis.uhuruphotos.api.settings.usecase.SettingsUseCase
 import com.savvasdalkitsis.uhuruphotos.foundation.map.api.model.LocalMapProvider
 import com.savvasdalkitsis.uhuruphotos.foundation.map.api.model.MapProvider
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.NavigationTarget
@@ -45,7 +44,7 @@ class AppNavigator @Inject constructor(
     private val exoPlayer: ExoPlayer,
     @LocalContentExoplayer
     private val localContentExoPlayer: ExoPlayer,
-    private val settingsUseCase: SettingsUseCase,
+    private val settingsUseCase: com.savvasdalkitsis.uhuruphotos.feature.settings.domain.api.usecase.SettingsUseCase,
 ) {
 
     @Composable

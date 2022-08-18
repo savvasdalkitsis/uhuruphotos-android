@@ -25,7 +25,7 @@ import com.google.android.exoplayer2.upstream.cache.LeastRecentlyUsedCacheEvicto
 import com.google.android.exoplayer2.upstream.cache.SimpleCache
 import com.savvasdalkitsis.uhuruphotos.api.auth.AuthenticatedOkHttpClient
 import com.savvasdalkitsis.uhuruphotos.api.auth.TokenRefreshInterceptor
-import com.savvasdalkitsis.uhuruphotos.api.settings.usecase.SettingsUseCase
+import com.savvasdalkitsis.uhuruphotos.feature.settings.domain.api.usecase.SettingsUseCase
 import com.savvasdalkitsis.uhuruphotos.foundation.video.api.LocalContentExoplayer
 import com.savvasdalkitsis.uhuruphotos.foundation.video.api.VideoOkHttp
 import dagger.Module
@@ -78,7 +78,7 @@ class VideoModule {
     fun cacheDataSourceFactory(
         @ApplicationContext context: Context,
         @VideoOkHttp okHttpClient: OkHttpClient,
-        settingsUseCase: SettingsUseCase,
+        settingsUseCase: com.savvasdalkitsis.uhuruphotos.feature.settings.domain.api.usecase.SettingsUseCase,
     ): CacheDataSource.Factory = CacheDataSource.Factory()
         .setCache(
             SimpleCache(

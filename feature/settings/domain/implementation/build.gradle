@@ -1,0 +1,15 @@
+android {
+    namespace 'com.savvasdalkitsis.uhuruphotos.feature.settings.domain.implementation'
+}
+
+dependencies {
+    implementation project(":feature:settings:domain:api")
+    implementation project(':foundation:log:api')
+    implementation project(':foundation:video:api')
+    implementation(
+            libs.coil.base,
+            libs.flowpreferences,
+            libs.hilt,
+            libs.play,
+    )
+}

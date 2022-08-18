@@ -60,7 +60,7 @@ dependencies {
     implementation project(":foundation:log:api")
     implementation project(":foundation:map:api")
     implementation project(":foundation:navigation:api")
-    implementation project(":api:settings")
+    implementation project(":feature:settings:domain:api")
     implementation project(":foundation:ui:api")
     implementation project(":foundation:video:api")
 

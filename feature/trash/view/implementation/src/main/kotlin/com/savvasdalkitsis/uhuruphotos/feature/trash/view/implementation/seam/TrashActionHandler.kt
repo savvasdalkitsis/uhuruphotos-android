@@ -15,7 +15,7 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.trash.view.implementation.seam
 
-import com.savvasdalkitsis.uhuruphotos.api.settings.usecase.SettingsUseCase
+import com.savvasdalkitsis.uhuruphotos.feature.settings.domain.api.usecase.SettingsUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.trash.view.implementation.seam.TrashAction.FingerPrintActionPressed
 import com.savvasdalkitsis.uhuruphotos.feature.trash.view.implementation.seam.TrashAction.Load
 import com.savvasdalkitsis.uhuruphotos.feature.trash.view.implementation.seam.TrashEffect.NavigateToAppSettings
@@ -29,7 +29,7 @@ import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
 class TrashActionHandler @Inject constructor(
-    private val settingsUseCase: SettingsUseCase,
+    private val settingsUseCase: com.savvasdalkitsis.uhuruphotos.feature.settings.domain.api.usecase.SettingsUseCase,
     private val biometricsUseCase: BiometricsUseCase,
 ): ActionHandler<TrashState, TrashEffect, TrashAction, TrashMutation> {
 

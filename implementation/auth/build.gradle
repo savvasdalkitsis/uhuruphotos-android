@@ -18,7 +18,7 @@ dependencies {
     implementation project(":foundation:navigation:api")
     implementation project(":foundation:network:api")
     implementation project(":foundation:ui:api")
-    implementation project(":api:settings")
+    implementation project(":feature:settings:domain:api")
     implementation(
             libs.accompanist.webview,
             libs.androidx.compose.hilt.navigation,

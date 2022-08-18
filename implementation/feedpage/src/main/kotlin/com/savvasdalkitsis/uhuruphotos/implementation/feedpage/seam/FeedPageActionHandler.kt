@@ -24,7 +24,6 @@ import com.savvasdalkitsis.uhuruphotos.api.media.page.domain.model.MediaItemSele
 import com.savvasdalkitsis.uhuruphotos.api.media.page.domain.model.MediaItemSelectionMode.UNSELECTED
 import com.savvasdalkitsis.uhuruphotos.api.media.page.domain.usecase.MediaUseCase
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.ActionHandler
-import com.savvasdalkitsis.uhuruphotos.api.settings.usecase.SettingsUseCase
 import com.savvasdalkitsis.uhuruphotos.api.userbadge.usecase.UserBadgeUseCase
 import com.savvasdalkitsis.uhuruphotos.api.userbadge.ui.state.SyncState.IN_PROGRESS
 import com.savvasdalkitsis.uhuruphotos.implementation.feedpage.SelectionList
@@ -72,7 +71,7 @@ internal class FeedPageActionHandler @Inject constructor(
     private val feedPageUseCase: FeedPageUseCase,
     private val mediaUseCase: MediaUseCase,
     private val selectionList: SelectionList,
-    private val settingsUseCase: SettingsUseCase,
+    private val settingsUseCase: com.savvasdalkitsis.uhuruphotos.feature.settings.domain.api.usecase.SettingsUseCase,
 ) : ActionHandler<FeedPageState, FeedPageEffect, FeedPageAction, FeedPageMutation> {
 
     override fun handleAction(

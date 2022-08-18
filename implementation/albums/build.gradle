@@ -25,7 +25,7 @@ dependencies {
     implementation project(":foundation:notification:api")
     implementation project(":feature:people:view:api")
     implementation project(':api:media:page')
-    implementation project(":api:settings")
+    implementation project(":feature:settings:domain:api")
     implementation project(":foundation:strings:api")
     implementation project(":api:user")
     implementation project(":foundation:worker:api")

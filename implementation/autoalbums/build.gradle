@@ -16,7 +16,7 @@ dependencies {
     implementation project(":foundation:log:api")
     implementation project(":foundation:navigation:api")
     implementation project(':api:media:page')
-    implementation project(":api:settings")
+    implementation project(":feature:settings:domain:api")
     implementation project(":foundation:toaster:api")
     implementation(
             libs.accompanist.swiperefresh,

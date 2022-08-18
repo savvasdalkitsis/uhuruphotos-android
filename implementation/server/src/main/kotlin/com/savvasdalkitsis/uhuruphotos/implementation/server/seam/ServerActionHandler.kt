@@ -24,7 +24,6 @@ import com.savvasdalkitsis.uhuruphotos.api.auth.usecase.ServerUseCase
 import com.savvasdalkitsis.uhuruphotos.foundation.http.api.isHttpUrl
 import com.savvasdalkitsis.uhuruphotos.foundation.http.api.isValidUrlOrDomain
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.ActionHandler
-import com.savvasdalkitsis.uhuruphotos.api.settings.usecase.SettingsUseCase
 import com.savvasdalkitsis.uhuruphotos.implementation.server.seam.ServerAction.AttemptChangeServerUrlTo
 import com.savvasdalkitsis.uhuruphotos.implementation.server.seam.ServerAction.ChangeServerUrlTo
 import com.savvasdalkitsis.uhuruphotos.implementation.server.seam.ServerAction.CheckPersistedServer
@@ -61,7 +60,7 @@ import javax.inject.Inject
 internal class ServerActionHandler @Inject constructor(
     private val serverUseCase: ServerUseCase,
     private val authenticationUseCase: AuthenticationUseCase,
-    private val settingsUseCase: SettingsUseCase,
+    private val settingsUseCase: com.savvasdalkitsis.uhuruphotos.feature.settings.domain.api.usecase.SettingsUseCase,
 ) : ActionHandler<ServerState, ServerEffect, ServerAction, ServerMutation> {
 
     override fun handleAction(

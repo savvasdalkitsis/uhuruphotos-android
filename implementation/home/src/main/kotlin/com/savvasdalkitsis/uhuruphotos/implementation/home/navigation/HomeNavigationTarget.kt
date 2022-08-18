@@ -21,7 +21,6 @@ import androidx.navigation.NavHostController
 import com.savvasdalkitsis.uhuruphotos.api.homenavigation.HomeNavigationRoutes
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.NavigationTarget
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.navigationTarget
-import com.savvasdalkitsis.uhuruphotos.api.settings.usecase.SettingsUseCase
 import com.savvasdalkitsis.uhuruphotos.implementation.home.seam.HomeAction
 import com.savvasdalkitsis.uhuruphotos.implementation.home.seam.HomeEffect
 import com.savvasdalkitsis.uhuruphotos.implementation.home.seam.HomeEffectsHandler
@@ -32,7 +31,7 @@ import javax.inject.Inject
 
 internal class HomeNavigationTarget @Inject constructor(
     private val effectsHandler: HomeEffectsHandler,
-    private val settingsUseCase: SettingsUseCase,
+    private val settingsUseCase: com.savvasdalkitsis.uhuruphotos.feature.settings.domain.api.usecase.SettingsUseCase,
 ) : NavigationTarget {
 
     override suspend fun NavGraphBuilder.create(navHostController: NavHostController) =

@@ -2,7 +2,7 @@ dependencies {
 
     implementation project(":foundation:navigation:api")
     implementation project(":foundation:share:api")
-    implementation project(":api:settings")
+    implementation project(":feature:settings:domain:api")
     implementation(
             libs.coil.base,
             libs.exif,

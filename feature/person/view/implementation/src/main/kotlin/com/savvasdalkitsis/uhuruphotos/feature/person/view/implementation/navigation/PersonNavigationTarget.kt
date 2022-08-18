@@ -18,7 +18,6 @@ package com.savvasdalkitsis.uhuruphotos.feature.person.view.implementation.navig
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
-import com.savvasdalkitsis.uhuruphotos.api.settings.usecase.SettingsUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.person.view.api.navigation.PersonNavigationTarget
 import com.savvasdalkitsis.uhuruphotos.feature.person.view.api.navigation.PersonNavigationTarget.personId
 import com.savvasdalkitsis.uhuruphotos.feature.person.view.implementation.seam.PersonAction
@@ -33,7 +32,7 @@ import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.navigationTarge
 import javax.inject.Inject
 
 class PersonNavigationTarget @Inject constructor(
-    private val settingsUseCase: SettingsUseCase,
+    private val settingsUseCase: com.savvasdalkitsis.uhuruphotos.feature.settings.domain.api.usecase.SettingsUseCase,
     private val effectHandler: PersonEffectHandler,
 ) : NavigationTarget {
 

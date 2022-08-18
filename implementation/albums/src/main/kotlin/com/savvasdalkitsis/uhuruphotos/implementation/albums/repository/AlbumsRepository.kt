@@ -51,7 +51,6 @@ import com.savvasdalkitsis.uhuruphotos.api.db.person.PersonQueries
 import com.savvasdalkitsis.uhuruphotos.api.media.remote.model.toDbModel
 import com.savvasdalkitsis.uhuruphotos.api.media.remote.model.toTrash
 import com.savvasdalkitsis.uhuruphotos.feature.people.domain.api.service.model.toDbModel
-import com.savvasdalkitsis.uhuruphotos.api.settings.usecase.SettingsUseCase
 import com.savvasdalkitsis.uhuruphotos.foundation.coroutines.api.safelyOnStartIgnoring
 import com.savvasdalkitsis.uhuruphotos.foundation.group.api.model.Group
 import com.savvasdalkitsis.uhuruphotos.foundation.group.api.model.groupBy
@@ -82,7 +81,7 @@ internal class AlbumsRepository @Inject constructor(
     private val userAlbumQueries: UserAlbumQueries,
     private val userAlbumPhotosQueries: UserAlbumPhotosQueries,
     private val remoteMediaTrashQueries: RemoteMediaTrashQueries,
-    private val settingsUseCase: SettingsUseCase,
+    private val settingsUseCase: com.savvasdalkitsis.uhuruphotos.feature.settings.domain.api.usecase.SettingsUseCase,
 ) : AlbumsRepository {
 
     private var allAlbums: Group<String, GetAlbums> = Group(emptyMap())

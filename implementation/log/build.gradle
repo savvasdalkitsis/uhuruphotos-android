@@ -3,7 +3,7 @@ dependencies {
     implementation project(":foundation:initializer:api")
     implementation project(":foundation:log:api")
     implementation project(":foundation:notification:api")
-    implementation project(":api:settings")
+    implementation project(":feature:settings:domain:api")
     implementation(
             libs.bundles.lumberjack,
             libs.hilt,

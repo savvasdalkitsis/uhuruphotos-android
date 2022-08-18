@@ -21,7 +21,6 @@ import androidx.navigation.NavHostController
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.NavigationTarget
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.navigationTarget
 import com.savvasdalkitsis.uhuruphotos.feature.people.view.api.navigation.PeopleNavigationTarget
-import com.savvasdalkitsis.uhuruphotos.api.settings.usecase.SettingsUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.people.view.implementation.seam.PeopleAction
 import com.savvasdalkitsis.uhuruphotos.feature.people.view.implementation.seam.PeopleAction.LoadPeople
 import com.savvasdalkitsis.uhuruphotos.feature.people.view.implementation.seam.PeopleEffect
@@ -32,7 +31,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.people.view.implementation.viewmo
 import javax.inject.Inject
 
 class PeopleNavigationTarget @Inject constructor(
-    private val settingsUseCase: SettingsUseCase,
+    private val settingsUseCase: com.savvasdalkitsis.uhuruphotos.feature.settings.domain.api.usecase.SettingsUseCase,
     private val effectHandler: PeopleEffectHandler,
 ) : NavigationTarget {
 

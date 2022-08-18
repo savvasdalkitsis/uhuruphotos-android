@@ -13,7 +13,7 @@ dependencies {
     implementation project(":api:auth")
     implementation project(':foundation:image:api')
     implementation project(":foundation:initializer:api")
-    implementation project(":api:settings")
+    implementation project(":feature:settings:domain:api")
     implementation(
             libs.coil.compose,
             libs.coil.gif,

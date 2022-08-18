@@ -20,7 +20,6 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.ui.state.PredefinedGalleryDisplay
 import com.savvasdalkitsis.uhuruphotos.api.homenavigation.HomeNavigationRoutes
-import com.savvasdalkitsis.uhuruphotos.api.settings.usecase.SettingsUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.account.view.api.seam.AccountOverviewAction
 import com.savvasdalkitsis.uhuruphotos.feature.account.view.api.seam.AccountOverviewEffect
 import com.savvasdalkitsis.uhuruphotos.feature.account.view.api.seam.AccountOverviewEffectsHandler
@@ -43,7 +42,7 @@ import com.savvasdalkitsis.uhuruphotos.implementation.library.viewmodel.LibraryV
 import javax.inject.Inject
 
 class LibraryNavigationTarget @Inject constructor(
-    private val settingsUseCase: SettingsUseCase,
+    private val settingsUseCase: com.savvasdalkitsis.uhuruphotos.feature.settings.domain.api.usecase.SettingsUseCase,
     private val accountOverviewEffectsHandler: AccountOverviewEffectsHandler,
     private val libraryEffectsHandler: LibraryEffectsHandler,
 ) : NavigationTarget {

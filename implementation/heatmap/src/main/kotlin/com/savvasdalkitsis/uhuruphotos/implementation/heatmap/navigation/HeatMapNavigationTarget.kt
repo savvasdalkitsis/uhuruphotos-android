@@ -21,7 +21,6 @@ import androidx.navigation.NavHostController
 import com.savvasdalkitsis.uhuruphotos.api.heatmap.navigation.HeatMapNavigationTarget
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.NavigationTarget
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.navigationTarget
-import com.savvasdalkitsis.uhuruphotos.api.settings.usecase.SettingsUseCase
 import com.savvasdalkitsis.uhuruphotos.implementation.heatmap.seam.HeatMapAction
 import com.savvasdalkitsis.uhuruphotos.implementation.heatmap.seam.HeatMapEffect
 import com.savvasdalkitsis.uhuruphotos.implementation.heatmap.seam.HeatMapEffectsHandler
@@ -31,7 +30,7 @@ import com.savvasdalkitsis.uhuruphotos.implementation.heatmap.viewmodel.HeatMapV
 import javax.inject.Inject
 
 class HeatMapNavigationTarget @Inject constructor(
-    private val settingsUseCase: SettingsUseCase,
+    private val settingsUseCase: com.savvasdalkitsis.uhuruphotos.feature.settings.domain.api.usecase.SettingsUseCase,
     private val effectsHandler: HeatMapEffectsHandler,
 ) : NavigationTarget {
 

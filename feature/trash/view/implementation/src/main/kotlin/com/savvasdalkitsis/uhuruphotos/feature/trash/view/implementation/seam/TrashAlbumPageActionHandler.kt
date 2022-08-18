@@ -25,7 +25,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.showroom.view.api.ui.state.Showro
 import com.savvasdalkitsis.uhuruphotos.feature.showroom.view.api.ui.state.ShowroomState
 import com.savvasdalkitsis.uhuruphotos.feature.showroom.view.api.ui.state.Title
 import com.savvasdalkitsis.uhuruphotos.api.media.page.domain.model.MediaSequenceDataSource.Trash
-import com.savvasdalkitsis.uhuruphotos.api.settings.usecase.SettingsUseCase
+import com.savvasdalkitsis.uhuruphotos.feature.settings.domain.api.usecase.SettingsUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.trash.domain.api.usecase.TrashUseCase
 import com.savvasdalkitsis.uhuruphotos.foundation.biometrics.api.usecase.BiometricsUseCase
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.ActionHandler
@@ -37,7 +37,7 @@ import javax.inject.Inject
 
 internal class TrashAlbumPageActionHandler @Inject constructor(
     trashUseCase: TrashUseCase,
-    settingsUseCase: SettingsUseCase,
+    settingsUseCase: com.savvasdalkitsis.uhuruphotos.feature.settings.domain.api.usecase.SettingsUseCase,
     biometricsUseCase: BiometricsUseCase
 ): ActionHandler<ShowroomState, ShowroomEffect, ShowroomAction, ShowroomMutation> by ShowroomActionHandler(
     galleryRefresher = { trashUseCase.refreshTrash() },

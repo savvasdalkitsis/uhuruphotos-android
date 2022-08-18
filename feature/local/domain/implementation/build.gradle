@@ -21,7 +21,7 @@ dependencies {
     implementation project(":api:media:local")
     implementation project(':api:media:page')
     implementation project(':feature:people:view:api')
-    implementation project(":api:settings")
+    implementation project(":feature:settings:domain:api")
     implementation(
             libs.androidx.compose.hilt.navigation,
             libs.androidx.compose.material,

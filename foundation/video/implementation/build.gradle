@@ -11,7 +11,7 @@ android {
 dependencies {
 
     implementation project(":api:auth")
-    implementation project(":api:settings")
+    implementation project(":feature:settings:domain:api")
     implementation project(':foundation:video:api')
     implementation(
             libs.androidx.compose.foundation,

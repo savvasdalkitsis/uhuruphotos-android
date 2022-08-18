@@ -21,7 +21,6 @@ import com.savvasdalkitsis.uhuruphotos.api.db.TestDatabase
 import com.savvasdalkitsis.uhuruphotos.api.db.albums.Albums
 import com.savvasdalkitsis.uhuruphotos.api.db.domain.model.media.DbRemoteMediaItemSummary
 import com.savvasdalkitsis.uhuruphotos.api.db.extensions.await
-import com.savvasdalkitsis.uhuruphotos.api.settings.usecase.SettingsUseCase
 import com.savvasdalkitsis.uhuruphotos.foundation.group.api.model.Group
 import com.savvasdalkitsis.uhuruphotos.implementation.albums.ProgressUpdate
 import com.savvasdalkitsis.uhuruphotos.implementation.albums.SERVER_ALBUM_LOCATION
@@ -58,7 +57,7 @@ class AlbumsRepositoryTest {
 
     private val db = TestDatabase.getDb()
     private val albumsService = mockk<AlbumsService>(relaxed = true)
-    private val settingsUseCase = mockk<SettingsUseCase>(relaxed = true)
+    private val settingsUseCase = mockk<com.savvasdalkitsis.uhuruphotos.feature.settings.domain.api.usecase.SettingsUseCase>(relaxed = true)
     private val underTest = AlbumsRepository(
         db,
         albumsService,

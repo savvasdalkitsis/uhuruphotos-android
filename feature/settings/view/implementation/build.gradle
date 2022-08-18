@@ -1,0 +1,37 @@
+android {
+    buildFeatures {
+        compose true
+    }
+    composeOptions {
+        kotlinCompilerExtensionVersion compose_compiler_version
+    }
+    namespace 'com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation'
+}
+
+dependencies {
+
+    implementation project(':api:albums')
+    implementation project(":foundation:biometrics:api")
+    implementation project(":foundation:navigation:api")
+    implementation project(":foundation:icons:api")
+    implementation project(":foundation:initializer:api")
+    implementation project(":foundation:log:api")
+    implementation project(':api:search')
+    implementation project(":feature:settings:domain:api")
+    implementation project(":feature:settings:view:api")
+    implementation project(":foundation:strings:api")
+    implementation project(":foundation:toaster:api")
+    implementation project(":foundation:ui:api")
+    implementation project(':api:userbadge')
+    implementation(
+            libs.bundles.androidx.compose.animation,
+            libs.androidx.compose.foundation,
+            libs.androidx.compose.foundation.layout,
+            libs.androidx.compose.material,
+            libs.androidx.compose.material.windowsize,
+            libs.androidx.datastore.preferences,
+            libs.androidx.preference,
+            libs.androidx.work,
+            libs.flowpreferences,
+    )
+}

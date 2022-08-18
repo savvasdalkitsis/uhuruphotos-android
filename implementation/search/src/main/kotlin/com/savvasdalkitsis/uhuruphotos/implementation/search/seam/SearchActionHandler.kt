@@ -24,7 +24,7 @@ import com.savvasdalkitsis.uhuruphotos.api.media.remote.domain.usecase.RemoteMed
 import com.savvasdalkitsis.uhuruphotos.feature.people.domain.api.usecase.PeopleUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.people.view.api.ui.state.toPerson
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.ActionHandler
-import com.savvasdalkitsis.uhuruphotos.api.settings.usecase.SettingsUseCase
+import com.savvasdalkitsis.uhuruphotos.feature.settings.domain.api.usecase.SettingsUseCase
 import com.savvasdalkitsis.uhuruphotos.implementation.search.seam.SearchAction.ChangeDisplay
 import com.savvasdalkitsis.uhuruphotos.implementation.search.seam.SearchAction.ChangeFocus
 import com.savvasdalkitsis.uhuruphotos.implementation.search.seam.SearchAction.Initialise
@@ -86,7 +86,7 @@ import kotlin.math.min
 class SearchActionHandler @Inject constructor(
     private val searchUseCase: SearchUseCase,
     private val feedPageUseCase: FeedPageUseCase,
-    private val settingsUseCase: SettingsUseCase,
+    private val settingsUseCase: com.savvasdalkitsis.uhuruphotos.feature.settings.domain.api.usecase.SettingsUseCase,
     private val peopleUseCase: PeopleUseCase,
     private val remoteMediaUseCase: RemoteMediaUseCase,
 ) : ActionHandler<SearchState, SearchEffect, SearchAction, SearchMutation> {

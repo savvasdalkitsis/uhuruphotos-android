@@ -7,7 +7,7 @@ import androidx.core.content.FileProvider
 import coil.ImageLoader
 import coil.disk.DiskCache
 import coil.request.ImageRequest
-import com.savvasdalkitsis.uhuruphotos.api.settings.usecase.SettingsUseCase
+import com.savvasdalkitsis.uhuruphotos.feature.settings.domain.api.usecase.SettingsUseCase
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.Navigator
 import com.savvasdalkitsis.uhuruphotos.foundation.share.api.usecase.ShareUseCase
 import com.savvasdalkitsis.uhuruphotos.foundation.share.implementation.removeGpsData
@@ -22,7 +22,7 @@ internal class ShareUseCase @Inject constructor(
     private val diskCache: DiskCache,
     private val navigator: Navigator,
     private val imageLoader: ImageLoader,
-    private val settingsUseCase: SettingsUseCase,
+    private val settingsUseCase: com.savvasdalkitsis.uhuruphotos.feature.settings.domain.api.usecase.SettingsUseCase,
     @ApplicationContext private val context: Context,
 ) : ShareUseCase {
     private val shareDir = File(context.cacheDir, "share_cache")

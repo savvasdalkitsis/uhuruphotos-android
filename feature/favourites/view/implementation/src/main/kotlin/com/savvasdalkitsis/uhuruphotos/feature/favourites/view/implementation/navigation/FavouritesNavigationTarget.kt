@@ -24,7 +24,6 @@ import com.savvasdalkitsis.uhuruphotos.feature.showroom.view.api.seam.ShowroomEf
 import com.savvasdalkitsis.uhuruphotos.feature.showroom.view.api.seam.ShowroomEffectsHandler
 import com.savvasdalkitsis.uhuruphotos.feature.showroom.view.api.ui.ShowroomPage
 import com.savvasdalkitsis.uhuruphotos.feature.showroom.view.api.ui.state.ShowroomState
-import com.savvasdalkitsis.uhuruphotos.api.settings.usecase.SettingsUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.favourites.view.api.navigation.FavouritesNavigationTarget
 import com.savvasdalkitsis.uhuruphotos.feature.favourites.view.implementation.viewmodel.FavouritesViewModel
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.NavigationTarget
@@ -33,7 +32,7 @@ import javax.inject.Inject
 
 internal class FavouritesNavigationTarget @Inject constructor(
     private val effectsHandler: ShowroomEffectsHandler,
-    private val settingsUseCase: SettingsUseCase,
+    private val settingsUseCase: com.savvasdalkitsis.uhuruphotos.feature.settings.domain.api.usecase.SettingsUseCase,
 ) : NavigationTarget {
 
     override suspend fun NavGraphBuilder.create(navHostController: NavHostController) =

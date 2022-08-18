@@ -22,7 +22,7 @@ import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.NavigationTarge
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.navigationTarget
 import com.savvasdalkitsis.uhuruphotos.api.server.navigation.ServerNavigationTarget.auto
 import com.savvasdalkitsis.uhuruphotos.api.server.navigation.ServerNavigationTarget.registrationName
-import com.savvasdalkitsis.uhuruphotos.api.settings.usecase.SettingsUseCase
+import com.savvasdalkitsis.uhuruphotos.feature.settings.domain.api.usecase.SettingsUseCase
 import com.savvasdalkitsis.uhuruphotos.implementation.server.seam.ServerAction
 import com.savvasdalkitsis.uhuruphotos.implementation.server.seam.ServerAction.CheckPersistedServer
 import com.savvasdalkitsis.uhuruphotos.implementation.server.seam.ServerAction.Load
@@ -36,7 +36,7 @@ import javax.inject.Inject
 
 internal class ServerNavigationTarget @Inject constructor(
     private val effectsHandler: ServerEffectsHandler,
-    private val settingsUseCase: SettingsUseCase,
+    private val settingsUseCase: com.savvasdalkitsis.uhuruphotos.feature.settings.domain.api.usecase.SettingsUseCase,
 ) : NavigationTarget {
 
     override suspend fun NavGraphBuilder.create(navHostController: NavHostController) =

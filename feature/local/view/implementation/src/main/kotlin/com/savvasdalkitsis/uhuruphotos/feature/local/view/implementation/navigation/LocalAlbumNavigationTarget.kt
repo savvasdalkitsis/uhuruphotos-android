@@ -23,7 +23,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.showroom.view.api.seam.ShowroomAc
 import com.savvasdalkitsis.uhuruphotos.feature.showroom.view.api.seam.ShowroomEffect
 import com.savvasdalkitsis.uhuruphotos.feature.showroom.view.api.seam.ShowroomEffectsHandler
 import com.savvasdalkitsis.uhuruphotos.feature.showroom.view.api.ui.state.ShowroomState
-import com.savvasdalkitsis.uhuruphotos.api.settings.usecase.SettingsUseCase
+import com.savvasdalkitsis.uhuruphotos.feature.settings.domain.api.usecase.SettingsUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.local.view.api.navigation.LocalAlbumNavigationTarget
 import com.savvasdalkitsis.uhuruphotos.feature.local.view.api.navigation.LocalAlbumNavigationTarget.albumId
 import com.savvasdalkitsis.uhuruphotos.feature.local.view.implementation.seam.LocalAlbumAction
@@ -41,7 +41,7 @@ import javax.inject.Inject
 internal class LocalAlbumNavigationTarget @Inject constructor(
     private val showroomEffectsHandler: ShowroomEffectsHandler,
     private val localAlbumEffectHandler: LocalAlbumEffectHandler,
-    private val settingsUseCase: SettingsUseCase,
+    private val settingsUseCase: com.savvasdalkitsis.uhuruphotos.feature.settings.domain.api.usecase.SettingsUseCase,
 ) : NavigationTarget {
 
     override suspend fun NavGraphBuilder.create(navHostController: NavHostController) =

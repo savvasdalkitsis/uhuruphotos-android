@@ -31,7 +31,7 @@ dependencies {
     implementation project(":api:media:local")
     implementation project(':api:media:page')
     implementation project(':api:media:remote')
-    implementation project(":api:settings")
+    implementation project(":feature:settings:domain:api")
     implementation project(":foundation:strings:api")
     implementation project(":foundation:toaster:api")
     implementation project(":foundation:ui:api")
