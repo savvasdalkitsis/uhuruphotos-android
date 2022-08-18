@@ -26,7 +26,7 @@ dependencies {
     implementation project(":implementation:library")
     implementation project(":foundation:log:implementation")
     implementation project(":foundation:network:implementation")
-    implementation project(":implementation:notification")
+    implementation project(":foundation:notification:implementation")
     implementation project(":feature:person:domain:implementation")
     implementation project(":feature:person:view:implementation")
     implementation project(":feature:people:view:implementation")

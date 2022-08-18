@@ -11,5 +11,5 @@ dependencies {
 }
 
 android {
-    namespace 'com.savvasdalkitsis.uhuruphotos.implementation.notification'
+    namespace 'com.savvasdalkitsis.uhuruphotos.foundation.notification.implementation'
 }
