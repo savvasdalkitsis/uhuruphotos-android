@@ -38,7 +38,7 @@ dependencies {
     implementation project(":implementation:search")
     implementation project(":implementation:server")
     implementation project(":implementation:settings")
-    implementation project(":implementation:share")
+    implementation project(":foundation:share:implementation")
     implementation project(":foundation:ui:implementation")
     implementation project(":implementation:user")
     implementation project(":implementation:useralbums")

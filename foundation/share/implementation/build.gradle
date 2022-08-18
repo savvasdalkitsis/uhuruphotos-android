@@ -1,7 +1,7 @@
 dependencies {
 
     implementation project(":foundation:navigation:api")
-    implementation project(":api:share")
+    implementation project(":foundation:share:api")
     implementation project(":api:settings")
     implementation(
             libs.coil.base,
@@ -10,5 +10,5 @@ dependencies {
 }
 
 android {
-    namespace 'com.savvasdalkitsis.uhuruphotos.implementation.share'
+    namespace 'com.savvasdalkitsis.uhuruphotos.foundation.share.implementation'
 }

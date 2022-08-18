@@ -1,19 +1,4 @@
-/*
-Copyright 2022 Savvas Dalkitsis
-
-Licensed under the Apache License, Version 2.0 (the "License");
-you may not use this file except in compliance with the License.
-You may obtain a copy of the License at
-
-    http://www.apache.org/licenses/LICENSE-2.0
-
-Unless required by applicable law or agreed to in writing, software
-distributed under the License is distributed on an "AS IS" BASIS,
-WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-See the License for the specific language governing permissions and
-limitations under the License.
- */
-package com.savvasdalkitsis.uhuruphotos.implementation.share.usecase
+package com.savvasdalkitsis.uhuruphotos.foundation.share.implementation.usecase
 
 import android.content.Context
 import android.content.Intent
@@ -23,9 +8,9 @@ import coil.ImageLoader
 import coil.disk.DiskCache
 import coil.request.ImageRequest
 import com.savvasdalkitsis.uhuruphotos.api.settings.usecase.SettingsUseCase
-import com.savvasdalkitsis.uhuruphotos.api.share.usecase.ShareUseCase
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.Navigator
-import com.savvasdalkitsis.uhuruphotos.implementation.share.removeGpsData
+import com.savvasdalkitsis.uhuruphotos.foundation.share.api.usecase.ShareUseCase
+import com.savvasdalkitsis.uhuruphotos.foundation.share.implementation.removeGpsData
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.awaitAll
@@ -45,7 +30,7 @@ internal class ShareUseCase @Inject constructor(
 
     override suspend fun share(url: String) {
         withContext(Dispatchers.IO) {
-            url.realize()?.let { uri ->
+            url.actualize()?.let { uri ->
                 launch("Share Photo", Intent(Intent.ACTION_SEND).apply {
                     setDataAndType(uri, "image/jpeg")
                     putExtra(Intent.EXTRA_STREAM, uri)
@@ -56,7 +41,7 @@ internal class ShareUseCase @Inject constructor(
 
     override suspend fun usePhotoAs(url: String) {
         withContext(Dispatchers.IO) {
-            url.realize()?.let { uri ->
+            url.actualize()?.let { uri ->
                 launch("Use as", Intent(Intent.ACTION_ATTACH_DATA).apply {
                     addCategory(Intent.CATEGORY_DEFAULT)
                     setDataAndType(uri, "image/jpeg")
@@ -78,7 +63,7 @@ internal class ShareUseCase @Inject constructor(
         val (contentUris, urls) = partition { it.isContentUri }
         return contentUris.map { it.toUri } + download(*urls.toTypedArray())
     }
-    private suspend fun String.realize() = when {
+    private suspend fun String.actualize() = when {
         isContentUri -> toUri
         else -> download(this).firstOrNull()
     }

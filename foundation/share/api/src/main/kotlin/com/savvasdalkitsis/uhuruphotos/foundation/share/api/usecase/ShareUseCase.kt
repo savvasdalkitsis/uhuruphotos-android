@@ -13,20 +13,12 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
  */
-package com.savvasdalkitsis.uhuruphotos.implementation.share.module
 
-import com.savvasdalkitsis.uhuruphotos.implementation.share.usecase.ShareUseCase
-import dagger.Binds
-import dagger.Module
-import dagger.hilt.InstallIn
-import dagger.hilt.components.SingletonComponent
+package com.savvasdalkitsis.uhuruphotos.foundation.share.api.usecase
 
-@InstallIn(SingletonComponent::class)
-@Module
-internal abstract class ShareModule {
+interface ShareUseCase {
 
-    @Binds
-    abstract fun shareUseCase(shareUseCase: ShareUseCase):
-            com.savvasdalkitsis.uhuruphotos.api.share.usecase.ShareUseCase
-
+    suspend fun share(url: String)
+    suspend fun usePhotoAs(url: String)
+    suspend fun shareMultiple(urls: List<String>)
 }

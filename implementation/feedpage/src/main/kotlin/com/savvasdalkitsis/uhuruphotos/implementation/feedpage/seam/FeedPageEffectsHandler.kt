@@ -19,7 +19,7 @@ import com.savvasdalkitsis.uhuruphotos.api.media.page.domain.model.MediaSequence
 import com.savvasdalkitsis.uhuruphotos.api.media.page.navigation.MediaItemPageNavigationTarget
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.Navigator
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.EffectHandler
-import com.savvasdalkitsis.uhuruphotos.api.share.usecase.ShareUseCase
+import com.savvasdalkitsis.uhuruphotos.foundation.share.api.usecase.ShareUseCase
 import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
 import com.savvasdalkitsis.uhuruphotos.foundation.toaster.api.Toaster
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.usecase.UiUseCase

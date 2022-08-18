@@ -20,7 +20,7 @@ import android.content.ClipboardManager
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
-import com.savvasdalkitsis.uhuruphotos.api.share.usecase.ShareUseCase
+import com.savvasdalkitsis.uhuruphotos.foundation.share.api.usecase.ShareUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.person.view.api.navigation.PersonNavigationTarget
 import com.savvasdalkitsis.uhuruphotos.foundation.map.api.model.LatLon
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.Navigator
