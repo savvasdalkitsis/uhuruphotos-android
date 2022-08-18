@@ -1,9 +1,0 @@
-android {
-    namespace 'com.savvasdalkitsis.uhuruphotos.api.gallery.album.user'
-}
-
-dependencies {
-    api(
-            libs.androidx.compose.navigation,
-    )
-}

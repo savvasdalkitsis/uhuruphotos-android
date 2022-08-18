@@ -10,8 +10,8 @@ android {
 
 dependencies {
     implementation project(':feature:account:view:api')
-    implementation project(":api:gallery:page:album:auto")
-    implementation project(":api:gallery:page:album:user")
+    implementation project(":feature:album:auto:view:api")
+    implementation project(":feature:album:user:view:api")
     implementation project(':api:albums')
     implementation project(":api:autoalbums")
     implementation project(":foundation:compose:api")
