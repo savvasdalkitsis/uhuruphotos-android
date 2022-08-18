@@ -17,7 +17,7 @@ dependencies {
     implementation project(":api:db")
     implementation project(":feature:gallery:view:api")
     implementation project(":api:feedpage")
-    implementation project(":api:heatmap")
+    implementation project(":feature:heatmap:view:api")
     implementation project(":api:home")
     implementation project(":api:homenavigation")
     implementation project(":foundation:icons:api")
