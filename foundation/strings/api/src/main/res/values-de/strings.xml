@@ -136,4 +136,10 @@
     <string name="auto_albums">Auto Alben</string>
     <string name="user_created_albums">Benutzererstellte Alben</string>
     <string name="user_albums">Benutzeralben</string>
+    <string name="change">Ändern</string>
+    <string name="error_loading_auto_albums">Es gab einen Fehler beim Laden der automatisch generierten Alben</string>
+    <string name="server_url">Server URL</string>
+    <string name="login">Anmelden</string>
+    <string name="login_to_server">Am Server anmelden</string>
+    <string name="save">Speichern</string>
 </resources>
