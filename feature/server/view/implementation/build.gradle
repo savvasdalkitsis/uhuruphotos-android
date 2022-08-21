@@ -1,3 +1,8 @@
+plugins {
+    id "dev.zacsweers.redacted" version "1.1.0"
+    id 'kotlin-parcelize'
+}
+
 android {
     buildFeatures {
         compose true
@@ -5,26 +10,26 @@ android {
     composeOptions {
         kotlinCompilerExtensionVersion compose_compiler_version
     }
-    namespace 'com.savvasdalkitsis.uhuruphotos.feature.home.view.implementation'
+    namespace 'com.savvasdalkitsis.uhuruphotos.feature.server.view.implementation'
 }
 
 dependencies {
 
     implementation project(":api:auth")
-    implementation project(":foundation:biometrics:api")
-    implementation project(":feature:home:view:api")
-    implementation project(":api:homenavigation")
+    implementation project(":api:db")
+    implementation project(":foundation:http:api")
+    implementation project(":foundation:icons:api")
+    implementation project(":foundation:log:api")
     implementation project(":foundation:navigation:api")
     implementation project(":feature:server:view:api")
     implementation project(":feature:settings:domain:api")
     implementation project(":foundation:strings:api")
+    implementation project(":foundation:toaster:api")
     implementation project(":foundation:ui:api")
     implementation(
-            libs.androidx.compose.foundation.layout,
             libs.androidx.compose.hilt.navigation,
             libs.androidx.compose.material,
-            libs.androidx.compose.material.windowsize,
-            libs.androidx.compose.ui,
-            libs.androidx.lifecycle,
+            libs.okhttp,
+            libs.urlvalidator,
     )
 }

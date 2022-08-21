@@ -16,7 +16,7 @@ dependencies {
     implementation project(":foundation:navigation:api")
     implementation project(":foundation:ui:api")
     implementation project(":foundation:seam:api")
-    implementation project(":api:server")
+    implementation project(":feature:server:view:api")
     implementation project(":feature:settings:view:api")
     implementation project(":foundation:strings:api")
 

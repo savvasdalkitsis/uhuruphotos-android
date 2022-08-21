@@ -29,7 +29,7 @@ dependencies {
     implementation project(':feature:person:view:api')
     implementation project(':api:media:remote')
     implementation project(':feature:search:domain:api')
-    implementation project(":api:server")
+    implementation project(":feature:server:view:api")
     implementation project(":feature:settings:domain:api")
     implementation project(":foundation:strings:api")
     implementation project(":foundation:toaster:api")

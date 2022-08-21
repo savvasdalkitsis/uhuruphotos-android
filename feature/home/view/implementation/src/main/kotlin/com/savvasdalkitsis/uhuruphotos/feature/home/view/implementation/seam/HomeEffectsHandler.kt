@@ -16,11 +16,11 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.feature.home.view.implementation.seam
 
 import com.savvasdalkitsis.uhuruphotos.api.homenavigation.HomeNavigationRoutes
-import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.Navigator
-import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.EffectHandler
-import com.savvasdalkitsis.uhuruphotos.api.server.navigation.ServerNavigationTarget
 import com.savvasdalkitsis.uhuruphotos.feature.home.view.implementation.seam.HomeEffect.LaunchAuthentication
 import com.savvasdalkitsis.uhuruphotos.feature.home.view.implementation.seam.HomeEffect.LoadFeed
+import com.savvasdalkitsis.uhuruphotos.feature.server.view.api.navigation.ServerNavigationTarget
+import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.Navigator
+import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.EffectHandler
 import javax.inject.Inject
 
 internal class HomeEffectsHandler @Inject constructor(

@@ -38,7 +38,7 @@ dependencies {
     implementation project(':implementation:media:remote')
     implementation project(":feature:search:domain:implementation")
     implementation project(":feature:search:view:implementation")
-    implementation project(":implementation:server")
+    implementation project(":feature:server:view:implementation")
     implementation project(":feature:settings:domain:implementation")
     implementation project(":feature:settings:view:implementation")
     implementation project(":foundation:share:implementation")

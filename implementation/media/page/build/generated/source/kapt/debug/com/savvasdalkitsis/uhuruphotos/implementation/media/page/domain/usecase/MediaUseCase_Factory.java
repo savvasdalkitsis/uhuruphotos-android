@@ -3,7 +3,7 @@ package com.savvasdalkitsis.uhuruphotos.implementation.media.page.domain.usecase
 
 import com.savvasdalkitsis.uhuruphotos.api.media.local.domain.usecase.LocalMediaUseCase;
 import com.savvasdalkitsis.uhuruphotos.api.media.remote.domain.usecase.RemoteMediaUseCase;
-import com.savvasdalkitsis.uhuruphotos.api.people.usecase.PeopleUseCase;
+import com.savvasdalkitsis.uhuruphotos.feature.people.domain.api.usecase.PeopleUseCase;
 import com.savvasdalkitsis.uhuruphotos.feature.user.domain.api.usecase.UserUseCase;
 import com.savvasdalkitsis.uhuruphotos.foundation.date.api.DateDisplayer;
 import com.savvasdalkitsis.uhuruphotos.implementation.media.remote.repository.RemoteMediaRepository;

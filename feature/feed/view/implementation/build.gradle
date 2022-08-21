@@ -22,7 +22,7 @@ dependencies {
     implementation project(":foundation:navigation:api")
     implementation project(':api:media:page')
     implementation project(':foundation:seam:api')
-    implementation project(":api:server")
+    implementation project(":feature:server:view:api")
     implementation project(":feature:settings:domain:api")
     implementation project(":foundation:share:api")
     implementation project(":foundation:strings:api")
