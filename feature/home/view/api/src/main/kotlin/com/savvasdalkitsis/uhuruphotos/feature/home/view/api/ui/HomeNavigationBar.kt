@@ -13,7 +13,7 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
  */
-package com.savvasdalkitsis.uhuruphotos.feature.home.view.api.navigation
+package com.savvasdalkitsis.uhuruphotos.feature.home.view.api.ui
 
 import androidx.annotation.StringRes
 import androidx.compose.foundation.layout.PaddingValues
@@ -43,10 +43,12 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import com.commandiron.bubble_navigation_bar_compose.BubbleNavigationBar
 import com.commandiron.bubble_navigation_bar_compose.BubbleNavigationBarItem
+import com.savvasdalkitsis.uhuruphotos.feature.feed.view.api.navigation.FeedNavigationTarget
 import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.ui.state.GalleryDisplay
-import com.savvasdalkitsis.uhuruphotos.feature.home.view.api.navigation.NavigationStyle.BOTTOM_BAR
-import com.savvasdalkitsis.uhuruphotos.feature.home.view.api.navigation.NavigationStyle.NAVIGATION_RAIL
-import com.savvasdalkitsis.uhuruphotos.api.homenavigation.HomeNavigationRoutes
+import com.savvasdalkitsis.uhuruphotos.feature.home.view.api.ui.NavigationStyle.BOTTOM_BAR
+import com.savvasdalkitsis.uhuruphotos.feature.home.view.api.ui.NavigationStyle.NAVIGATION_RAIL
+import com.savvasdalkitsis.uhuruphotos.feature.library.view.api.navigation.LibraryNavigationTarget
+import com.savvasdalkitsis.uhuruphotos.feature.search.view.api.navigation.SearchNavigationTarget
 import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.R.drawable
 import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.theme.CustomColors
@@ -113,7 +115,7 @@ private fun Items(
     NavItem(
         currentDestination, navController,
         label = string.feed,
-        routeName = HomeNavigationRoutes.feed,
+        routeName = FeedNavigationTarget.name,
         painterResource(id = homeFeedDisplay.iconResource),
         onReselected,
         rowScope,
@@ -121,7 +123,7 @@ private fun Items(
     NavItem(
         currentDestination, navController,
         label = string.search,
-        routeName = HomeNavigationRoutes.search,
+        routeName = SearchNavigationTarget.name,
         icon = rememberVectorPainter(Icons.Filled.Search),
         rowScope = rowScope,
         onReselected = onReselected,
@@ -130,7 +132,7 @@ private fun Items(
         NavItem(
             currentDestination, navController,
             label = string.library,
-            routeName = HomeNavigationRoutes.library,
+            routeName = LibraryNavigationTarget.name,
             icon = painterResource(drawable.ic_photo_album),
             rowScope = rowScope,
             onReselected = onReselected,
@@ -226,7 +228,7 @@ private fun selectNavigationItem(
 ): () -> Unit = {
     if (currentDestination?.route != routeName) {
         navController.navigate(routeName) {
-            popUpTo(HomeNavigationRoutes.feed) {
+            popUpTo(FeedNavigationTarget.name) {
                 saveState = true
             }
             launchSingleTop = true

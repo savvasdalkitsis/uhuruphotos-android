@@ -15,7 +15,7 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.home.view.implementation.seam
 
-import com.savvasdalkitsis.uhuruphotos.api.homenavigation.HomeNavigationRoutes
+import com.savvasdalkitsis.uhuruphotos.feature.feed.view.api.navigation.FeedNavigationTarget
 import com.savvasdalkitsis.uhuruphotos.feature.home.view.implementation.seam.HomeEffect.LaunchAuthentication
 import com.savvasdalkitsis.uhuruphotos.feature.home.view.implementation.seam.HomeEffect.LoadFeed
 import com.savvasdalkitsis.uhuruphotos.feature.server.view.api.navigation.ServerNavigationTarget
@@ -33,7 +33,7 @@ internal class HomeEffectsHandler @Inject constructor(
                 LaunchAuthentication -> navigateTo(ServerNavigationTarget.name())
                 LoadFeed -> {
                     navigateBack()
-                    navigateTo(HomeNavigationRoutes.feed)
+                    navigateTo(FeedNavigationTarget.name)
                 }
             }
         }

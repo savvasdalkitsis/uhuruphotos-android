@@ -18,7 +18,6 @@ package com.savvasdalkitsis.uhuruphotos.feature.search.view.implementation.navig
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
-import com.savvasdalkitsis.uhuruphotos.api.homenavigation.HomeNavigationRoutes
 import com.savvasdalkitsis.uhuruphotos.feature.account.view.api.seam.AccountOverviewAction
 import com.savvasdalkitsis.uhuruphotos.feature.account.view.api.seam.AccountOverviewAction.Load
 import com.savvasdalkitsis.uhuruphotos.feature.account.view.api.seam.AccountOverviewEffect
@@ -26,12 +25,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.account.view.api.seam.AccountOver
 import com.savvasdalkitsis.uhuruphotos.feature.account.view.api.ui.AccountOverviewActionBar
 import com.savvasdalkitsis.uhuruphotos.feature.account.view.api.ui.AccountOverviewContent
 import com.savvasdalkitsis.uhuruphotos.feature.account.view.api.ui.state.AccountOverviewState
-import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.NavigationTarget
-import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.navigationTarget
-import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.CompositeEffectHandler
-import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.Either
-import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.Either.Left
-import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.Either.Right
+import com.savvasdalkitsis.uhuruphotos.feature.search.view.api.navigation.SearchNavigationTarget
 import com.savvasdalkitsis.uhuruphotos.feature.search.view.implementation.seam.SearchAction
 import com.savvasdalkitsis.uhuruphotos.feature.search.view.implementation.seam.SearchAction.Initialise
 import com.savvasdalkitsis.uhuruphotos.feature.search.view.implementation.seam.SearchEffect
@@ -39,6 +33,12 @@ import com.savvasdalkitsis.uhuruphotos.feature.search.view.implementation.seam.S
 import com.savvasdalkitsis.uhuruphotos.feature.search.view.implementation.ui.SearchPage
 import com.savvasdalkitsis.uhuruphotos.feature.search.view.implementation.ui.state.SearchState
 import com.savvasdalkitsis.uhuruphotos.feature.search.view.implementation.viewmodel.SearchViewModel
+import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.NavigationTarget
+import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.navigationTarget
+import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.CompositeEffectHandler
+import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.Either
+import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.Either.Left
+import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.Either.Right
 import javax.inject.Inject
 
 class SearchNavigationTarget @Inject constructor(
@@ -54,7 +54,7 @@ class SearchNavigationTarget @Inject constructor(
                 Either<SearchAction, AccountOverviewAction>,
                 SearchViewModel
         >(
-            name = HomeNavigationRoutes.search,
+            name = SearchNavigationTarget.registrationName,
             effects = CompositeEffectHandler(
                 searchEffectsHandler,
                 accountOverviewEffectsHandler,

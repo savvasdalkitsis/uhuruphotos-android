@@ -24,10 +24,8 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.ui.state.GalleryDisplay
 import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.ui.state.PredefinedGalleryDisplay
-import com.savvasdalkitsis.uhuruphotos.feature.home.view.api.navigation.HomeNavigationBar
-import com.savvasdalkitsis.uhuruphotos.feature.home.view.api.navigation.NavigationStyle.BOTTOM_BAR
-import com.savvasdalkitsis.uhuruphotos.feature.home.view.api.navigation.NavigationStyle.NAVIGATION_RAIL
-import com.savvasdalkitsis.uhuruphotos.feature.home.view.api.navigation.homeNavigationStyle
+import com.savvasdalkitsis.uhuruphotos.feature.home.view.api.ui.NavigationStyle.BOTTOM_BAR
+import com.savvasdalkitsis.uhuruphotos.feature.home.view.api.ui.NavigationStyle.NAVIGATION_RAIL
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.CommonScaffold
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.Logo
 

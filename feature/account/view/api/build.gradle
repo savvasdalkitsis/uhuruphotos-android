@@ -11,7 +11,7 @@ android {
 dependencies {
     api project(':api:userbadge')
     implementation project(":feature:account:domain:api")
-    implementation project(":api:homenavigation")
+    implementation project(":feature:home:view:api")
     implementation project(":foundation:icons:api")
     implementation project(":foundation:navigation:api")
     implementation project(":foundation:ui:api")

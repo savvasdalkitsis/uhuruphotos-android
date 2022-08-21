@@ -24,7 +24,7 @@ import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import com.google.accompanist.navigation.animation.AnimatedNavHost
 import com.google.accompanist.navigation.animation.rememberAnimatedNavController
 import com.google.android.exoplayer2.ExoPlayer
-import com.savvasdalkitsis.uhuruphotos.api.homenavigation.HomeNavigationRoutes
+import com.savvasdalkitsis.uhuruphotos.feature.home.view.api.navigation.HomeNavigationTarget
 import com.savvasdalkitsis.uhuruphotos.foundation.map.api.model.LocalMapProvider
 import com.savvasdalkitsis.uhuruphotos.foundation.map.api.model.MapProvider
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.NavigationTarget
@@ -64,7 +64,7 @@ class AppNavigator @Inject constructor(
         ) {
             AnimatedNavHost(
                 navController = navHostController,
-                startDestination = HomeNavigationRoutes.home
+                startDestination = HomeNavigationTarget.name
             ) {
                 runBlocking {
                     navigationTargets.forEach { navigationTarget ->

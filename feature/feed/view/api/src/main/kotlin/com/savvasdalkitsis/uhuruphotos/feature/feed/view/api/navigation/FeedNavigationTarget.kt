@@ -13,13 +13,10 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
  */
-package com.savvasdalkitsis.uhuruphotos.api.homenavigation
+package com.savvasdalkitsis.uhuruphotos.feature.feed.view.api.navigation
 
-object HomeNavigationRoutes {
+object FeedNavigationTarget {
 
-    const val home = "home"
-    const val feed = "feed"
-    const val search = "search"
-    const val library = "library"
-
+    const val registrationName = "feed"
+    const val name = registrationName
 }

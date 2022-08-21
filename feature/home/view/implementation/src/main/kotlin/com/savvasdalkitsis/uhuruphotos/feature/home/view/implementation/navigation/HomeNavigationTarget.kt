@@ -18,15 +18,15 @@ package com.savvasdalkitsis.uhuruphotos.feature.home.view.implementation.navigat
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
-import com.savvasdalkitsis.uhuruphotos.api.homenavigation.HomeNavigationRoutes
-import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.NavigationTarget
-import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.navigationTarget
+import com.savvasdalkitsis.uhuruphotos.feature.home.view.api.navigation.HomeNavigationTarget
 import com.savvasdalkitsis.uhuruphotos.feature.home.view.implementation.seam.HomeAction
 import com.savvasdalkitsis.uhuruphotos.feature.home.view.implementation.seam.HomeEffect
 import com.savvasdalkitsis.uhuruphotos.feature.home.view.implementation.seam.HomeEffectsHandler
 import com.savvasdalkitsis.uhuruphotos.feature.home.view.implementation.ui.Home
 import com.savvasdalkitsis.uhuruphotos.feature.home.view.implementation.ui.state.HomeState
 import com.savvasdalkitsis.uhuruphotos.feature.home.view.implementation.viewmodel.HomeViewModel
+import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.NavigationTarget
+import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.navigationTarget
 import javax.inject.Inject
 
 internal class HomeNavigationTarget @Inject constructor(
@@ -36,7 +36,7 @@ internal class HomeNavigationTarget @Inject constructor(
 
     override suspend fun NavGraphBuilder.create(navHostController: NavHostController) =
         navigationTarget<HomeState, HomeEffect, HomeAction, HomeViewModel>(
-            name = HomeNavigationRoutes.home,
+            name = HomeNavigationTarget.registrationName,
             effects = effectsHandler,
             themeMode = settingsUseCase.observeThemeModeState(),
             initializer = { _, actions -> actions(HomeAction.Load) },

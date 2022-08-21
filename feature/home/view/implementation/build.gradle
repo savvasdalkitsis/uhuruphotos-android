@@ -13,7 +13,7 @@ dependencies {
     implementation project(":api:auth")
     implementation project(":foundation:biometrics:api")
     implementation project(":feature:home:view:api")
-    implementation project(":api:homenavigation")
+    implementation project(":feature:feed:view:api")
     implementation project(":foundation:navigation:api")
     implementation project(":feature:server:view:api")
     implementation project(":feature:settings:domain:api")
