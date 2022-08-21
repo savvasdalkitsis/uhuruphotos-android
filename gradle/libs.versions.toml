@@ -1,5 +1,5 @@
 [versions]
-accompanist = "0.26.0-alpha"
+accompanist = "0.26.1-alpha"
 androidx-hilt = "1.0.0"
 coil = "2.1.0"
 compose = "1.3.0-alpha03"
@@ -98,8 +98,33 @@ urlvalidator = "commons-validator:commons-validator:1.7"
 zoomable = "com.mxalbert.zoomable:zoomable:1.4.2"
 
 [bundles]
-androidx-compose-animation = ["androidx-compose-animation-base", "androidx-compose-animation-graphics"]
-lumberjack = ["lumberjack-core", "lumberjack-feedback", "lumberjack-feedback-manager", "lumberjack-file", "lumberjack-notification"]
-permissions = ["permissions-base", "permissions-compose"]
-test = ["junit", "mockk", "shazamcrest", "turbine"]
-test-android = ["androidx-compose-test-junit", "androidx-compose-test-manifest", "androidx-espresso", "androidx-test-core", "androidx-test-runner", "junit", "mockk-android"]
+androidx-compose-animation = [
+    "androidx-compose-animation-base",
+    "androidx-compose-animation-graphics",
+]
+lumberjack = [
+    "lumberjack-core",
+    "lumberjack-feedback",
+    "lumberjack-feedback-manager",
+    "lumberjack-file",
+    "lumberjack-notification",
+]
+permissions = [
+    "permissions-base",
+    "permissions-compose",
+]
+test = [
+    "junit",
+    "mockk",
+    "shazamcrest",
+    "turbine",
+]
+test-android = [
+    "androidx-compose-test-junit",
+    "androidx-compose-test-manifest",
+    "androidx-espresso",
+    "androidx-test-core",
+    "androidx-test-runner",
+    "junit",
+    "mockk-android",
+]
