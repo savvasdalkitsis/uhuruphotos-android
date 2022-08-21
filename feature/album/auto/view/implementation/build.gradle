@@ -14,7 +14,7 @@ dependencies {
     implementation project(':api:media:page')
     implementation project(':api:media:remote')
     implementation project(":feature:settings:domain:api")
-    implementation project(":feature:showroom:view:api")
+    implementation project(":feature:galleria:view:api")
     implementation project(":feature:album:auto:domain:api")
     implementation project(":feature:album:auto:view:api")
     implementation project(":feature:gallery:view:api")

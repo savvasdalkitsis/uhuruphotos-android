@@ -16,16 +16,15 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.feature.trash.view.implementation.seam
 
 import com.savvasdalkitsis.uhuruphotos.api.albums.model.Album
-import com.savvasdalkitsis.uhuruphotos.feature.showroom.view.api.seam.ShowroomAction
-import com.savvasdalkitsis.uhuruphotos.feature.showroom.view.api.seam.ShowroomActionHandler
-import com.savvasdalkitsis.uhuruphotos.feature.showroom.view.api.seam.ShowroomEffect
-import com.savvasdalkitsis.uhuruphotos.feature.showroom.view.api.seam.ShowroomEffect.NavigateBack
-import com.savvasdalkitsis.uhuruphotos.feature.showroom.view.api.seam.ShowroomMutation
-import com.savvasdalkitsis.uhuruphotos.feature.showroom.view.api.ui.state.ShowroomDetails
-import com.savvasdalkitsis.uhuruphotos.feature.showroom.view.api.ui.state.ShowroomState
-import com.savvasdalkitsis.uhuruphotos.feature.showroom.view.api.ui.state.Title
 import com.savvasdalkitsis.uhuruphotos.api.media.page.domain.model.MediaSequenceDataSource.Trash
-import com.savvasdalkitsis.uhuruphotos.feature.settings.domain.api.usecase.SettingsUseCase
+import com.savvasdalkitsis.uhuruphotos.feature.galleria.view.api.seam.GalleriaAction
+import com.savvasdalkitsis.uhuruphotos.feature.galleria.view.api.seam.GalleriaActionHandler
+import com.savvasdalkitsis.uhuruphotos.feature.galleria.view.api.seam.GalleriaEffect
+import com.savvasdalkitsis.uhuruphotos.feature.galleria.view.api.seam.GalleriaEffect.NavigateBack
+import com.savvasdalkitsis.uhuruphotos.feature.galleria.view.api.seam.GalleriaMutation
+import com.savvasdalkitsis.uhuruphotos.feature.galleria.view.api.ui.state.GalleriaDetails
+import com.savvasdalkitsis.uhuruphotos.feature.galleria.view.api.ui.state.GalleriaState
+import com.savvasdalkitsis.uhuruphotos.feature.galleria.view.api.ui.state.Title
 import com.savvasdalkitsis.uhuruphotos.feature.trash.domain.api.usecase.TrashUseCase
 import com.savvasdalkitsis.uhuruphotos.foundation.biometrics.api.usecase.BiometricsUseCase
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.ActionHandler
@@ -39,7 +38,7 @@ internal class TrashAlbumPageActionHandler @Inject constructor(
     trashUseCase: TrashUseCase,
     settingsUseCase: com.savvasdalkitsis.uhuruphotos.feature.settings.domain.api.usecase.SettingsUseCase,
     biometricsUseCase: BiometricsUseCase
-): ActionHandler<ShowroomState, ShowroomEffect, ShowroomAction, ShowroomMutation> by ShowroomActionHandler(
+): ActionHandler<GalleriaState, GalleriaEffect, GalleriaAction, GalleriaMutation> by GalleriaActionHandler(
     galleryRefresher = { trashUseCase.refreshTrash() },
     initialGalleryDisplay = { trashUseCase.getTrashGalleryDisplay() },
     galleryDisplayPersistence = { _, galleryDisplay ->
@@ -48,7 +47,7 @@ internal class TrashAlbumPageActionHandler @Inject constructor(
     galleryDetailsEmptyCheck = {
         !trashUseCase.hasTrash()
     },
-    showroomDetailsFlow = { _, effect ->
+    galleriaDetailsFlow = { _, effect ->
         settingsUseCase.observeBiometricsRequiredForTrashAccess()
             .flatMapLatest { biometricsRequired ->
                 val proceed = when {
@@ -67,7 +66,7 @@ internal class TrashAlbumPageActionHandler @Inject constructor(
                 } else {
                     trashUseCase.observeTrashAlbums()
                         .map { albums ->
-                            ShowroomDetails(
+                            GalleriaDetails(
                                 title = Title.Resource(string.trash),
                                 albums = albums.map { album ->
                                     Album(

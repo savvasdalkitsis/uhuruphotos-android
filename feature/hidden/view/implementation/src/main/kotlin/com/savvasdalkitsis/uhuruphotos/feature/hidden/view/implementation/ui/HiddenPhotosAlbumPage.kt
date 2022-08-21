@@ -1,9 +1,9 @@
 package com.savvasdalkitsis.uhuruphotos.feature.hidden.view.implementation.ui
 
 import androidx.compose.runtime.Composable
-import com.savvasdalkitsis.uhuruphotos.feature.showroom.view.api.seam.ShowroomAction
-import com.savvasdalkitsis.uhuruphotos.feature.showroom.view.api.ui.ShowroomPage
-import com.savvasdalkitsis.uhuruphotos.feature.showroom.view.api.ui.state.ShowroomState
+import com.savvasdalkitsis.uhuruphotos.feature.galleria.view.api.seam.GalleriaAction
+import com.savvasdalkitsis.uhuruphotos.feature.galleria.view.api.ui.GalleriaPage
+import com.savvasdalkitsis.uhuruphotos.feature.galleria.view.api.ui.state.GalleriaState
 import com.savvasdalkitsis.uhuruphotos.feature.hidden.view.implementation.seam.HiddenPhotosAction
 import com.savvasdalkitsis.uhuruphotos.feature.hidden.view.implementation.seam.HiddenPhotosAction.FingerPrintActionPressed
 import com.savvasdalkitsis.uhuruphotos.feature.hidden.view.implementation.seam.HiddenPhotosState
@@ -15,10 +15,10 @@ import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.ActionIcon
 
 @Composable
 fun HiddenPhotosAlbumPage(
-    state: Pair<ShowroomState, HiddenPhotosState>,
-    action: (Either<ShowroomAction, HiddenPhotosAction>) -> Unit
+    state: Pair<GalleriaState, HiddenPhotosState>,
+    action: (Either<GalleriaAction, HiddenPhotosAction>) -> Unit
 ) {
-    ShowroomPage(
+    GalleriaPage(
         state = state.first,
         additionalActionBarContent = {
             if (state.second.displayFingerPrintAction) {

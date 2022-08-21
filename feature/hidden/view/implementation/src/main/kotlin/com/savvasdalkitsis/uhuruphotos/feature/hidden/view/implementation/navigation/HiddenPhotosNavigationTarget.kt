@@ -18,12 +18,11 @@ package com.savvasdalkitsis.uhuruphotos.feature.hidden.view.implementation.navig
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
-import com.savvasdalkitsis.uhuruphotos.feature.showroom.view.api.seam.ShowroomAction
-import com.savvasdalkitsis.uhuruphotos.feature.showroom.view.api.seam.ShowroomAction.LoadGallery
-import com.savvasdalkitsis.uhuruphotos.feature.showroom.view.api.seam.ShowroomEffect
-import com.savvasdalkitsis.uhuruphotos.feature.showroom.view.api.seam.ShowroomEffectsHandler
-import com.savvasdalkitsis.uhuruphotos.feature.showroom.view.api.ui.state.ShowroomState
-import com.savvasdalkitsis.uhuruphotos.feature.settings.domain.api.usecase.SettingsUseCase
+import com.savvasdalkitsis.uhuruphotos.feature.galleria.view.api.seam.GalleriaAction
+import com.savvasdalkitsis.uhuruphotos.feature.galleria.view.api.seam.GalleriaAction.LoadGallery
+import com.savvasdalkitsis.uhuruphotos.feature.galleria.view.api.seam.GalleriaEffect
+import com.savvasdalkitsis.uhuruphotos.feature.galleria.view.api.seam.GalleriaEffectsHandler
+import com.savvasdalkitsis.uhuruphotos.feature.galleria.view.api.ui.state.GalleriaState
 import com.savvasdalkitsis.uhuruphotos.feature.hidden.view.api.HiddenPhotosNavigationTarget
 import com.savvasdalkitsis.uhuruphotos.feature.hidden.view.implementation.seam.HiddenPhotosAction
 import com.savvasdalkitsis.uhuruphotos.feature.hidden.view.implementation.seam.HiddenPhotosAction.Load
@@ -32,6 +31,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.hidden.view.implementation.seam.H
 import com.savvasdalkitsis.uhuruphotos.feature.hidden.view.implementation.seam.HiddenPhotosState
 import com.savvasdalkitsis.uhuruphotos.feature.hidden.view.implementation.ui.HiddenPhotosAlbumPage
 import com.savvasdalkitsis.uhuruphotos.feature.hidden.view.implementation.viewmodel.HiddenPhotosViewModel
+import com.savvasdalkitsis.uhuruphotos.feature.settings.domain.api.usecase.SettingsUseCase
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.NavigationTarget
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.navigationTarget
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.CompositeEffectHandler
@@ -41,20 +41,20 @@ import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.Either.Right
 import javax.inject.Inject
 
 internal class HiddenPhotosNavigationTarget @Inject constructor(
-    private val showroomEffectsHandler: ShowroomEffectsHandler,
+    private val galleriaEffectsHandler: GalleriaEffectsHandler,
     private val hiddenPhotosEffectHandler: HiddenPhotosEffectHandler,
     private val settingsUseCase: SettingsUseCase,
 ) : NavigationTarget {
 
     override suspend fun NavGraphBuilder.create(navHostController: NavHostController) =
         navigationTarget<
-                Pair<ShowroomState, HiddenPhotosState>,
-                Either<ShowroomEffect, HiddenPhotosEffect>,
-                Either<ShowroomAction, HiddenPhotosAction>,
+                Pair<GalleriaState, HiddenPhotosState>,
+                Either<GalleriaEffect, HiddenPhotosEffect>,
+                Either<GalleriaAction, HiddenPhotosAction>,
                 HiddenPhotosViewModel
         >(
             name = HiddenPhotosNavigationTarget.registrationName,
-            effects = CompositeEffectHandler(showroomEffectsHandler, hiddenPhotosEffectHandler),
+            effects = CompositeEffectHandler(galleriaEffectsHandler, hiddenPhotosEffectHandler),
             themeMode = settingsUseCase.observeThemeModeState(),
             initializer = { _, action ->
                 action(Left(LoadGallery(0)))

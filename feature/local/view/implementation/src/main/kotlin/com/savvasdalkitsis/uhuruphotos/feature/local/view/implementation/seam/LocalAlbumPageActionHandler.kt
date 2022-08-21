@@ -15,14 +15,14 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.local.view.implementation.seam
 
-import com.savvasdalkitsis.uhuruphotos.feature.showroom.view.api.seam.ShowroomAction
-import com.savvasdalkitsis.uhuruphotos.feature.showroom.view.api.seam.ShowroomActionHandler
-import com.savvasdalkitsis.uhuruphotos.feature.showroom.view.api.seam.ShowroomEffect
-import com.savvasdalkitsis.uhuruphotos.feature.showroom.view.api.seam.ShowroomMutation
-import com.savvasdalkitsis.uhuruphotos.feature.showroom.view.api.ui.state.ShowroomDetails
-import com.savvasdalkitsis.uhuruphotos.feature.showroom.view.api.ui.state.ShowroomState
-import com.savvasdalkitsis.uhuruphotos.feature.showroom.view.api.ui.state.Title
 import com.savvasdalkitsis.uhuruphotos.api.media.page.domain.model.MediaSequenceDataSource
+import com.savvasdalkitsis.uhuruphotos.feature.galleria.view.api.seam.GalleriaAction
+import com.savvasdalkitsis.uhuruphotos.feature.galleria.view.api.seam.GalleriaActionHandler
+import com.savvasdalkitsis.uhuruphotos.feature.galleria.view.api.seam.GalleriaEffect
+import com.savvasdalkitsis.uhuruphotos.feature.galleria.view.api.seam.GalleriaMutation
+import com.savvasdalkitsis.uhuruphotos.feature.galleria.view.api.ui.state.GalleriaDetails
+import com.savvasdalkitsis.uhuruphotos.feature.galleria.view.api.ui.state.GalleriaState
+import com.savvasdalkitsis.uhuruphotos.feature.galleria.view.api.ui.state.Title
 import com.savvasdalkitsis.uhuruphotos.feature.local.domain.api.usecase.LocalAlbumUseCase
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.ActionHandler
 import kotlinx.coroutines.flow.map
@@ -30,8 +30,8 @@ import javax.inject.Inject
 
 internal class LocalAlbumPageActionHandler @Inject constructor(
     localAlbumUseCase: LocalAlbumUseCase,
-) : ActionHandler<ShowroomState, ShowroomEffect, ShowroomAction, ShowroomMutation>
-by ShowroomActionHandler(
+) : ActionHandler<GalleriaState, GalleriaEffect, GalleriaAction, GalleriaMutation>
+by GalleriaActionHandler(
     galleryRefresher = { localAlbumUseCase.refreshLocalAlbum(it) },
     initialGalleryDisplay = { localAlbumUseCase.getLocalAlbumGalleryDisplay(it) },
     galleryDisplayPersistence = { id, galleryDisplay ->
@@ -40,10 +40,10 @@ by ShowroomActionHandler(
     galleryDetailsEmptyCheck = { albumId ->
         localAlbumUseCase.getLocalAlbum(albumId).isEmpty()
     },
-    showroomDetailsFlow = { albumId, _ ->
+    galleriaDetailsFlow = { albumId, _ ->
         localAlbumUseCase.observeLocalAlbum(albumId)
             .map { (bucket, albums) ->
-                ShowroomDetails(
+                GalleriaDetails(
                     title = Title.Text(bucket.displayName),
                     albums = albums,
                 )

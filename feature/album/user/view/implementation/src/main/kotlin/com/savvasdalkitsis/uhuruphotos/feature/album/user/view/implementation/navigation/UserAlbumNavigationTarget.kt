@@ -20,25 +20,24 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import com.savvasdalkitsis.uhuruphotos.feature.album.user.view.api.navigation.UserAlbumNavigationTarget
 import com.savvasdalkitsis.uhuruphotos.feature.album.user.view.api.navigation.UserAlbumNavigationTarget.albumId
-import com.savvasdalkitsis.uhuruphotos.feature.showroom.view.api.seam.ShowroomAction
-import com.savvasdalkitsis.uhuruphotos.feature.showroom.view.api.seam.ShowroomAction.LoadGallery
-import com.savvasdalkitsis.uhuruphotos.feature.showroom.view.api.seam.ShowroomEffect
-import com.savvasdalkitsis.uhuruphotos.feature.showroom.view.api.seam.ShowroomEffectsHandler
-import com.savvasdalkitsis.uhuruphotos.feature.showroom.view.api.ui.ShowroomPage
-import com.savvasdalkitsis.uhuruphotos.feature.showroom.view.api.ui.state.ShowroomState
+import com.savvasdalkitsis.uhuruphotos.feature.album.user.view.implementation.viewmodel.UserAlbumViewModel
+import com.savvasdalkitsis.uhuruphotos.feature.galleria.view.api.seam.GalleriaAction
+import com.savvasdalkitsis.uhuruphotos.feature.galleria.view.api.seam.GalleriaAction.LoadGallery
+import com.savvasdalkitsis.uhuruphotos.feature.galleria.view.api.seam.GalleriaEffect
+import com.savvasdalkitsis.uhuruphotos.feature.galleria.view.api.seam.GalleriaEffectsHandler
+import com.savvasdalkitsis.uhuruphotos.feature.galleria.view.api.ui.GalleriaPage
+import com.savvasdalkitsis.uhuruphotos.feature.galleria.view.api.ui.state.GalleriaState
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.NavigationTarget
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.navigationTarget
-import com.savvasdalkitsis.uhuruphotos.feature.settings.domain.api.usecase.SettingsUseCase
-import com.savvasdalkitsis.uhuruphotos.feature.album.user.view.implementation.viewmodel.UserAlbumViewModel
 import javax.inject.Inject
 
 internal class UserAlbumNavigationTarget @Inject constructor(
-    private val effectsHandler: ShowroomEffectsHandler,
+    private val effectsHandler: GalleriaEffectsHandler,
     private val settingsUseCase: com.savvasdalkitsis.uhuruphotos.feature.settings.domain.api.usecase.SettingsUseCase,
 ) : NavigationTarget {
 
     override suspend fun NavGraphBuilder.create(navHostController: NavHostController) =
-        navigationTarget<ShowroomState, ShowroomEffect, ShowroomAction, UserAlbumViewModel>(
+        navigationTarget<GalleriaState, GalleriaEffect, GalleriaAction, UserAlbumViewModel>(
             name = UserAlbumNavigationTarget.registrationName,
             effects = effectsHandler,
             themeMode = settingsUseCase.observeThemeModeState(),
@@ -47,7 +46,7 @@ internal class UserAlbumNavigationTarget @Inject constructor(
             },
             createModel = { hiltViewModel() }
         ) { state, action ->
-            ShowroomPage(
+            GalleriaPage(
                 state = state,
                 action = action,
             )

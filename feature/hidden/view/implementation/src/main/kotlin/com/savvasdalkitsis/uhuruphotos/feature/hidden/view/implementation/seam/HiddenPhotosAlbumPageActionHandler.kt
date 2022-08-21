@@ -18,16 +18,16 @@ package com.savvasdalkitsis.uhuruphotos.feature.hidden.view.implementation.seam
 import com.savvasdalkitsis.uhuruphotos.api.albums.model.Album
 import com.savvasdalkitsis.uhuruphotos.api.media.page.domain.model.MediaSequenceDataSource.HiddenMedia
 import com.savvasdalkitsis.uhuruphotos.api.media.page.domain.usecase.MediaUseCase
+import com.savvasdalkitsis.uhuruphotos.feature.galleria.view.api.seam.GalleriaAction
+import com.savvasdalkitsis.uhuruphotos.feature.galleria.view.api.seam.GalleriaActionHandler
+import com.savvasdalkitsis.uhuruphotos.feature.galleria.view.api.seam.GalleriaEffect
+import com.savvasdalkitsis.uhuruphotos.feature.galleria.view.api.seam.GalleriaEffect.NavigateBack
+import com.savvasdalkitsis.uhuruphotos.feature.galleria.view.api.seam.GalleriaMutation
+import com.savvasdalkitsis.uhuruphotos.feature.galleria.view.api.ui.state.GalleriaDetails
+import com.savvasdalkitsis.uhuruphotos.feature.galleria.view.api.ui.state.GalleriaState
+import com.savvasdalkitsis.uhuruphotos.feature.galleria.view.api.ui.state.Title
 import com.savvasdalkitsis.uhuruphotos.feature.hidden.domain.api.usecase.HiddenMediaUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.settings.domain.api.usecase.SettingsUseCase
-import com.savvasdalkitsis.uhuruphotos.feature.showroom.view.api.seam.ShowroomAction
-import com.savvasdalkitsis.uhuruphotos.feature.showroom.view.api.seam.ShowroomActionHandler
-import com.savvasdalkitsis.uhuruphotos.feature.showroom.view.api.seam.ShowroomEffect
-import com.savvasdalkitsis.uhuruphotos.feature.showroom.view.api.seam.ShowroomEffect.NavigateBack
-import com.savvasdalkitsis.uhuruphotos.feature.showroom.view.api.seam.ShowroomMutation
-import com.savvasdalkitsis.uhuruphotos.feature.showroom.view.api.ui.state.ShowroomDetails
-import com.savvasdalkitsis.uhuruphotos.feature.showroom.view.api.ui.state.ShowroomState
-import com.savvasdalkitsis.uhuruphotos.feature.showroom.view.api.ui.state.Title
 import com.savvasdalkitsis.uhuruphotos.foundation.biometrics.api.usecase.BiometricsUseCase
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.ActionHandler
 import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
@@ -42,7 +42,7 @@ internal class HiddenPhotosAlbumPageActionHandler @Inject constructor(
     hiddenMediaUseCase: HiddenMediaUseCase,
     settingsUseCase: SettingsUseCase,
     biometricsUseCase: BiometricsUseCase
-): ActionHandler<ShowroomState, ShowroomEffect, ShowroomAction, ShowroomMutation> by ShowroomActionHandler(
+): ActionHandler<GalleriaState, GalleriaEffect, GalleriaAction, GalleriaMutation> by GalleriaActionHandler(
     galleryRefresher = { mediaUseCase.refreshFavouriteMedia() },
     initialGalleryDisplay = { hiddenMediaUseCase.getHiddenMediaGalleryDisplay() },
     galleryDisplayPersistence = { _, galleryDisplay ->
@@ -51,7 +51,7 @@ internal class HiddenPhotosAlbumPageActionHandler @Inject constructor(
     galleryDetailsEmptyCheck = {
         mediaUseCase.getHiddenMedia().getOrDefault(emptyList()).isEmpty()
     },
-    showroomDetailsFlow = { _, effect ->
+    galleriaDetailsFlow = { _, effect ->
         settingsUseCase.observeBiometricsRequiredForHiddenPhotosAccess()
             .flatMapLatest { biometricsRequired ->
                 val proceed = when {
@@ -71,7 +71,7 @@ internal class HiddenPhotosAlbumPageActionHandler @Inject constructor(
                     mediaUseCase.observeHiddenMedia()
                         .mapNotNull { it.getOrNull() }
                         .map { photoEntries ->
-                            ShowroomDetails(
+                            GalleriaDetails(
                                 title = Title.Resource(string.hidden_photos),
                                 albums = listOf(
                                     Album(

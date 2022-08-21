@@ -16,15 +16,15 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.feature.album.auto.view.implementation.viewmodel
 
 import androidx.lifecycle.ViewModel
-import com.savvasdalkitsis.uhuruphotos.feature.showroom.view.api.seam.ShowroomAction
-import com.savvasdalkitsis.uhuruphotos.feature.showroom.view.api.seam.ShowroomEffect
-import com.savvasdalkitsis.uhuruphotos.feature.showroom.view.api.seam.ShowroomMutation
-import com.savvasdalkitsis.uhuruphotos.feature.showroom.view.api.ui.state.ShowroomState
+import com.savvasdalkitsis.uhuruphotos.feature.album.auto.view.implementation.seam.AutoAlbumActionHandler
+import com.savvasdalkitsis.uhuruphotos.feature.album.auto.view.implementation.state.AutoAlbumGalleryDisplay
+import com.savvasdalkitsis.uhuruphotos.feature.galleria.view.api.seam.GalleriaAction
+import com.savvasdalkitsis.uhuruphotos.feature.galleria.view.api.seam.GalleriaEffect
+import com.savvasdalkitsis.uhuruphotos.feature.galleria.view.api.seam.GalleriaMutation
+import com.savvasdalkitsis.uhuruphotos.feature.galleria.view.api.ui.state.GalleriaState
 import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.ui.state.GalleryState
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.Seam
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.handler
-import com.savvasdalkitsis.uhuruphotos.feature.album.auto.view.implementation.seam.AutoAlbumActionHandler
-import com.savvasdalkitsis.uhuruphotos.feature.album.auto.view.implementation.state.AutoAlbumGalleryDisplay
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
@@ -32,7 +32,7 @@ import javax.inject.Inject
 internal class AutoAlbumViewModel @Inject constructor(
     autoAlbumActionHandler: AutoAlbumActionHandler,
 ) : ViewModel(),
-    Seam<ShowroomState, ShowroomEffect, ShowroomAction, ShowroomMutation> by handler(
+    Seam<GalleriaState, GalleriaEffect, GalleriaAction, GalleriaMutation> by handler(
         autoAlbumActionHandler,
-        ShowroomState(galleryState = GalleryState(galleryDisplay = AutoAlbumGalleryDisplay))
+        GalleriaState(galleryState = GalleryState(galleryDisplay = AutoAlbumGalleryDisplay))
     )

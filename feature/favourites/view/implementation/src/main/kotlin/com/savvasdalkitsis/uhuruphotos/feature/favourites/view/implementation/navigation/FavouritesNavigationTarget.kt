@@ -18,25 +18,25 @@ package com.savvasdalkitsis.uhuruphotos.feature.favourites.view.implementation.n
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
-import com.savvasdalkitsis.uhuruphotos.feature.showroom.view.api.seam.ShowroomAction
-import com.savvasdalkitsis.uhuruphotos.feature.showroom.view.api.seam.ShowroomAction.LoadGallery
-import com.savvasdalkitsis.uhuruphotos.feature.showroom.view.api.seam.ShowroomEffect
-import com.savvasdalkitsis.uhuruphotos.feature.showroom.view.api.seam.ShowroomEffectsHandler
-import com.savvasdalkitsis.uhuruphotos.feature.showroom.view.api.ui.ShowroomPage
-import com.savvasdalkitsis.uhuruphotos.feature.showroom.view.api.ui.state.ShowroomState
 import com.savvasdalkitsis.uhuruphotos.feature.favourites.view.api.navigation.FavouritesNavigationTarget
 import com.savvasdalkitsis.uhuruphotos.feature.favourites.view.implementation.viewmodel.FavouritesViewModel
+import com.savvasdalkitsis.uhuruphotos.feature.galleria.view.api.seam.GalleriaAction
+import com.savvasdalkitsis.uhuruphotos.feature.galleria.view.api.seam.GalleriaAction.LoadGallery
+import com.savvasdalkitsis.uhuruphotos.feature.galleria.view.api.seam.GalleriaEffect
+import com.savvasdalkitsis.uhuruphotos.feature.galleria.view.api.seam.GalleriaEffectsHandler
+import com.savvasdalkitsis.uhuruphotos.feature.galleria.view.api.ui.GalleriaPage
+import com.savvasdalkitsis.uhuruphotos.feature.galleria.view.api.ui.state.GalleriaState
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.NavigationTarget
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.navigationTarget
 import javax.inject.Inject
 
 internal class FavouritesNavigationTarget @Inject constructor(
-    private val effectsHandler: ShowroomEffectsHandler,
+    private val effectsHandler: GalleriaEffectsHandler,
     private val settingsUseCase: com.savvasdalkitsis.uhuruphotos.feature.settings.domain.api.usecase.SettingsUseCase,
 ) : NavigationTarget {
 
     override suspend fun NavGraphBuilder.create(navHostController: NavHostController) =
-        navigationTarget<ShowroomState, ShowroomEffect, ShowroomAction, FavouritesViewModel>(
+        navigationTarget<GalleriaState, GalleriaEffect, GalleriaAction, FavouritesViewModel>(
             name = FavouritesNavigationTarget.registrationName,
             effects = effectsHandler,
             themeMode = settingsUseCase.observeThemeModeState(),
@@ -45,7 +45,7 @@ internal class FavouritesNavigationTarget @Inject constructor(
             },
             createModel = { hiltViewModel() }
         ) { state, action ->
-            ShowroomPage(
+            GalleriaPage(
                 state = state,
                 action = action,
             )

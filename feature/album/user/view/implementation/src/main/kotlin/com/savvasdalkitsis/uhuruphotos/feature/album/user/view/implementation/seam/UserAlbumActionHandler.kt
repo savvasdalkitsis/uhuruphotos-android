@@ -22,13 +22,13 @@ import com.savvasdalkitsis.uhuruphotos.api.media.page.domain.model.MediaItem
 import com.savvasdalkitsis.uhuruphotos.api.media.page.domain.model.MediaSequenceDataSource.UserAlbum
 import com.savvasdalkitsis.uhuruphotos.api.media.remote.domain.usecase.RemoteMediaUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.album.user.domain.implementation.usecase.UserAlbumsUseCase
-import com.savvasdalkitsis.uhuruphotos.feature.showroom.view.api.seam.ShowroomAction
-import com.savvasdalkitsis.uhuruphotos.feature.showroom.view.api.seam.ShowroomActionHandler
-import com.savvasdalkitsis.uhuruphotos.feature.showroom.view.api.seam.ShowroomEffect
-import com.savvasdalkitsis.uhuruphotos.feature.showroom.view.api.seam.ShowroomMutation
-import com.savvasdalkitsis.uhuruphotos.feature.showroom.view.api.ui.state.ShowroomDetails
-import com.savvasdalkitsis.uhuruphotos.feature.showroom.view.api.ui.state.ShowroomState
-import com.savvasdalkitsis.uhuruphotos.feature.showroom.view.api.ui.state.Title
+import com.savvasdalkitsis.uhuruphotos.feature.galleria.view.api.seam.GalleriaAction
+import com.savvasdalkitsis.uhuruphotos.feature.galleria.view.api.seam.GalleriaActionHandler
+import com.savvasdalkitsis.uhuruphotos.feature.galleria.view.api.seam.GalleriaEffect
+import com.savvasdalkitsis.uhuruphotos.feature.galleria.view.api.seam.GalleriaMutation
+import com.savvasdalkitsis.uhuruphotos.feature.galleria.view.api.ui.state.GalleriaDetails
+import com.savvasdalkitsis.uhuruphotos.feature.galleria.view.api.ui.state.GalleriaState
+import com.savvasdalkitsis.uhuruphotos.feature.galleria.view.api.ui.state.Title
 import com.savvasdalkitsis.uhuruphotos.feature.user.domain.api.usecase.UserUseCase
 import com.savvasdalkitsis.uhuruphotos.foundation.date.api.DateDisplayer
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.ActionHandler
@@ -40,8 +40,8 @@ internal class UserAlbumActionHandler @Inject constructor(
     userAlbumsUseCase: UserAlbumsUseCase,
     remoteMediaUseCase: RemoteMediaUseCase,
     dateDisplayer: DateDisplayer,
-) : ActionHandler<ShowroomState, ShowroomEffect, ShowroomAction, ShowroomMutation>
-by ShowroomActionHandler(
+) : ActionHandler<GalleriaState, GalleriaEffect, GalleriaAction, GalleriaMutation>
+by GalleriaActionHandler(
     galleryRefresher = { userAlbumsUseCase.refreshUserAlbum(it) },
     initialGalleryDisplay = { userAlbumsUseCase.getUserAlbumGalleryDisplay(it) },
     galleryDisplayPersistence = { albumId, galleryDisplay ->
@@ -50,12 +50,12 @@ by ShowroomActionHandler(
     galleryDetailsEmptyCheck = { albumId ->
         userAlbumsUseCase.getUserAlbum(albumId).items.isEmpty()
     },
-    showroomDetailsFlow = { albumId, _ ->
+    galleriaDetailsFlow = { albumId, _ ->
         userAlbumsUseCase.observeUserAlbum(albumId)
             .map { photoEntries ->
                 val favouriteThreshold = userUseCase.getUserOrRefresh()
                     .mapCatching { it.favoriteMinRating!! }
-                ShowroomDetails(
+                GalleriaDetails(
                     title = Title.Text(photoEntries.firstOrNull()?.title ?: ""),
                     albums = photoEntries.groupBy { entry ->
                         dateDisplayer.dateString(entry.date)

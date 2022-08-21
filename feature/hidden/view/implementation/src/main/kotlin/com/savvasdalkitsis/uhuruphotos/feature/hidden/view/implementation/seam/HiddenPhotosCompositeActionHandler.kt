@@ -15,9 +15,9 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.hidden.view.implementation.seam
 
-import com.savvasdalkitsis.uhuruphotos.feature.showroom.view.api.seam.ShowroomAction
-import com.savvasdalkitsis.uhuruphotos.feature.showroom.view.api.seam.ShowroomEffect
-import com.savvasdalkitsis.uhuruphotos.feature.showroom.view.api.ui.state.ShowroomState
+import com.savvasdalkitsis.uhuruphotos.feature.galleria.view.api.seam.GalleriaAction
+import com.savvasdalkitsis.uhuruphotos.feature.galleria.view.api.seam.GalleriaEffect
+import com.savvasdalkitsis.uhuruphotos.feature.galleria.view.api.ui.state.GalleriaState
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.ActionHandler
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.CompositeActionHandler
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.Either
@@ -28,10 +28,10 @@ internal class HiddenPhotosCompositeActionHandler @Inject constructor(
     hiddenPhotosAlbumPageActionHandler: HiddenPhotosAlbumPageActionHandler,
     hiddenPhotosActionHandler: HiddenPhotosActionHandler,
 ) : ActionHandler<
-        Pair<ShowroomState, HiddenPhotosState>,
-        Either<ShowroomEffect, HiddenPhotosEffect>,
-        Either<ShowroomAction, HiddenPhotosAction>,
-        Mutation<Pair<ShowroomState, HiddenPhotosState>>
+        Pair<GalleriaState, HiddenPhotosState>,
+        Either<GalleriaEffect, HiddenPhotosEffect>,
+        Either<GalleriaAction, HiddenPhotosAction>,
+        Mutation<Pair<GalleriaState, HiddenPhotosState>>
         > by CompositeActionHandler(
     handler1 = hiddenPhotosAlbumPageActionHandler,
     handler2 = hiddenPhotosActionHandler

@@ -22,14 +22,14 @@ import com.savvasdalkitsis.uhuruphotos.api.media.page.domain.model.MediaSequence
 import com.savvasdalkitsis.uhuruphotos.api.media.remote.domain.usecase.RemoteMediaUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.album.auto.domain.api.usecase.AutoAlbumsUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.album.auto.view.implementation.state.AutoAlbumGalleryDisplay
+import com.savvasdalkitsis.uhuruphotos.feature.galleria.view.api.seam.GalleriaAction
+import com.savvasdalkitsis.uhuruphotos.feature.galleria.view.api.seam.GalleriaActionHandler
+import com.savvasdalkitsis.uhuruphotos.feature.galleria.view.api.seam.GalleriaEffect
+import com.savvasdalkitsis.uhuruphotos.feature.galleria.view.api.seam.GalleriaMutation
+import com.savvasdalkitsis.uhuruphotos.feature.galleria.view.api.ui.state.GalleriaDetails
+import com.savvasdalkitsis.uhuruphotos.feature.galleria.view.api.ui.state.GalleriaState
+import com.savvasdalkitsis.uhuruphotos.feature.galleria.view.api.ui.state.Title
 import com.savvasdalkitsis.uhuruphotos.feature.people.view.api.ui.state.toPerson
-import com.savvasdalkitsis.uhuruphotos.feature.showroom.view.api.seam.ShowroomAction
-import com.savvasdalkitsis.uhuruphotos.feature.showroom.view.api.seam.ShowroomActionHandler
-import com.savvasdalkitsis.uhuruphotos.feature.showroom.view.api.seam.ShowroomEffect
-import com.savvasdalkitsis.uhuruphotos.feature.showroom.view.api.seam.ShowroomMutation
-import com.savvasdalkitsis.uhuruphotos.feature.showroom.view.api.ui.state.ShowroomDetails
-import com.savvasdalkitsis.uhuruphotos.feature.showroom.view.api.ui.state.ShowroomState
-import com.savvasdalkitsis.uhuruphotos.feature.showroom.view.api.ui.state.Title
 import com.savvasdalkitsis.uhuruphotos.foundation.date.api.DateDisplayer
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.ActionHandler
 import kotlinx.coroutines.flow.map
@@ -39,18 +39,18 @@ internal class AutoAlbumActionHandler @Inject constructor(
     autoAlbumsUseCase: AutoAlbumsUseCase,
     remoteMediaUseCase: RemoteMediaUseCase,
     dateDisplayer: DateDisplayer,
-) : ActionHandler<ShowroomState, ShowroomEffect, ShowroomAction, ShowroomMutation>
-by ShowroomActionHandler(
+) : ActionHandler<GalleriaState, GalleriaEffect, GalleriaAction, GalleriaMutation>
+by GalleriaActionHandler(
     galleryRefresher = { autoAlbumsUseCase.refreshAutoAlbum(it) },
     initialGalleryDisplay = { AutoAlbumGalleryDisplay },
     galleryDisplayPersistence = { _, _ -> },
     galleryDetailsEmptyCheck = { albumId ->
         autoAlbumsUseCase.getAutoAlbum(albumId).items.isEmpty()
     },
-    showroomDetailsFlow = { albumId, _ ->
+    galleriaDetailsFlow = { albumId, _ ->
         autoAlbumsUseCase.observeAutoAlbum(albumId)
             .map { (photoEntries, people) ->
-                ShowroomDetails(
+                GalleriaDetails(
                     title = Title.Text(photoEntries.firstOrNull()?.title ?: ""),
                     people = with(remoteMediaUseCase) {
                         people.map { person ->

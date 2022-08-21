@@ -16,14 +16,14 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.feature.album.user.view.implementation.viewmodel
 
 import androidx.lifecycle.ViewModel
-import com.savvasdalkitsis.uhuruphotos.feature.showroom.view.api.seam.ShowroomAction
-import com.savvasdalkitsis.uhuruphotos.feature.showroom.view.api.seam.ShowroomEffect
-import com.savvasdalkitsis.uhuruphotos.feature.showroom.view.api.seam.ShowroomMutation
-import com.savvasdalkitsis.uhuruphotos.feature.showroom.view.api.ui.state.ShowroomState
+import com.savvasdalkitsis.uhuruphotos.feature.album.user.view.implementation.seam.UserAlbumActionHandler
+import com.savvasdalkitsis.uhuruphotos.feature.galleria.view.api.seam.GalleriaAction
+import com.savvasdalkitsis.uhuruphotos.feature.galleria.view.api.seam.GalleriaEffect
+import com.savvasdalkitsis.uhuruphotos.feature.galleria.view.api.seam.GalleriaMutation
+import com.savvasdalkitsis.uhuruphotos.feature.galleria.view.api.ui.state.GalleriaState
 import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.ui.state.GalleryState
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.Seam
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.handler
-import com.savvasdalkitsis.uhuruphotos.feature.album.user.view.implementation.seam.UserAlbumActionHandler
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
@@ -31,7 +31,7 @@ import javax.inject.Inject
 internal class UserAlbumViewModel @Inject constructor(
     userAlbumActionHandler: UserAlbumActionHandler,
 ) : ViewModel(),
-    Seam<ShowroomState, ShowroomEffect, ShowroomAction, ShowroomMutation> by handler(
+    Seam<GalleriaState, GalleriaEffect, GalleriaAction, GalleriaMutation> by handler(
         userAlbumActionHandler,
-        ShowroomState(galleryState = GalleryState())
+        GalleriaState(galleryState = GalleryState())
     )
