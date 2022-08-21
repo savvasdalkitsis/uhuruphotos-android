@@ -37,7 +37,7 @@ dependencies {
     implementation project(":foundation:strings:api")
     implementation project(":foundation:toaster:api")
     implementation project(":foundation:ui:api")
-    implementation project(":api:user")
+    implementation project(":feature:user:domain:api")
     implementation project(":foundation:video:api")
     implementation project(":foundation:worker:api")
     implementation(

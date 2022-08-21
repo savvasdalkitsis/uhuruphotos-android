@@ -1,0 +1,10 @@
+android {
+    namespace 'com.savvasdalkitsis.uhuruphotos.feature.user.domain.api'
+}
+
+dependencies {
+    api project(":api:db")
+    api(
+            libs.kotlinx.coroutines,
+    )
+}

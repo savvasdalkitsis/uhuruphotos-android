@@ -22,7 +22,8 @@ import com.savvasdalkitsis.uhuruphotos.api.db.albums.GetPersonAlbums
 import com.savvasdalkitsis.uhuruphotos.api.db.user.User
 import com.savvasdalkitsis.uhuruphotos.api.media.page.domain.model.MediaId
 import com.savvasdalkitsis.uhuruphotos.api.media.remote.domain.usecase.RemoteMediaUseCase
-import com.savvasdalkitsis.uhuruphotos.api.user.usecase.UserUseCase
+import com.savvasdalkitsis.uhuruphotos.feature.user.domain.TestUsers.user
+import com.savvasdalkitsis.uhuruphotos.feature.user.domain.api.usecase.UserUseCase
 import com.savvasdalkitsis.uhuruphotos.foundation.date.api.DateDisplayer
 import com.savvasdalkitsis.uhuruphotos.foundation.group.api.model.Group
 import com.savvasdalkitsis.uhuruphotos.implementation.albums.TestAlbums.album
@@ -36,7 +37,6 @@ import com.savvasdalkitsis.uhuruphotos.implementation.albums.returnsAlbums
 import com.savvasdalkitsis.uhuruphotos.implementation.albums.returnsPersonAlbumWithEntries
 import com.savvasdalkitsis.uhuruphotos.implementation.albums.worker.AlbumWorkScheduler
 import com.savvasdalkitsis.uhuruphotos.implementation.media.TestMediaItems.mediaItem
-import com.savvasdalkitsis.uhuruphotos.implementation.user.TestUsers.user
 import com.shazam.shazamcrest.MatcherAssert.assertThat
 import com.shazam.shazamcrest.matcher.Matchers.sameBeanAs
 import io.mockk.Called

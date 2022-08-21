@@ -17,7 +17,7 @@ dependencies {
     implementation project(':foundation:image:api')
     implementation project(':api:media:remote')
     implementation project(":foundation:ui:api")
-    implementation project(":api:user")
+    implementation project(":feature:user:domain:api")
     implementation project(':api:userbadge')
     implementation(
             libs.androidx.compose.material,

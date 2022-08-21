@@ -16,13 +16,10 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.implementation.media.page.domain.usecase
 
 import androidx.work.WorkInfo
-import com.savvasdalkitsis.uhuruphotos.foundation.date.api.DateDisplayer
 import com.savvasdalkitsis.uhuruphotos.api.db.domain.model.media.DbRemoteMediaItemDetails
 import com.savvasdalkitsis.uhuruphotos.api.db.domain.model.media.DbRemoteMediaItemSummary
 import com.savvasdalkitsis.uhuruphotos.api.db.domain.model.media.latLng
 import com.savvasdalkitsis.uhuruphotos.api.db.extensions.isVideo
-import com.savvasdalkitsis.uhuruphotos.foundation.map.api.model.LatLon
-import com.savvasdalkitsis.uhuruphotos.foundation.map.api.model.toLatLon
 import com.savvasdalkitsis.uhuruphotos.api.media.local.domain.model.LocalFolder
 import com.savvasdalkitsis.uhuruphotos.api.media.local.domain.model.LocalMediaItem
 import com.savvasdalkitsis.uhuruphotos.api.media.local.domain.model.LocalMediaItems
@@ -37,7 +34,10 @@ import com.savvasdalkitsis.uhuruphotos.api.media.remote.domain.usecase.RemoteMed
 import com.savvasdalkitsis.uhuruphotos.api.media.remote.model.deserializePeopleNames
 import com.savvasdalkitsis.uhuruphotos.feature.people.domain.api.usecase.PeopleUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.people.view.api.ui.state.toPerson
-import com.savvasdalkitsis.uhuruphotos.api.user.usecase.UserUseCase
+import com.savvasdalkitsis.uhuruphotos.feature.user.domain.api.usecase.UserUseCase
+import com.savvasdalkitsis.uhuruphotos.foundation.date.api.DateDisplayer
+import com.savvasdalkitsis.uhuruphotos.foundation.map.api.model.LatLon
+import com.savvasdalkitsis.uhuruphotos.foundation.map.api.model.toLatLon
 import com.savvasdalkitsis.uhuruphotos.implementation.media.remote.repository.RemoteMediaRepository
 import com.savvasdalkitsis.uhuruphotos.implementation.media.remote.worker.RemoteMediaItemWorkScheduler
 import kotlinx.coroutines.flow.Flow

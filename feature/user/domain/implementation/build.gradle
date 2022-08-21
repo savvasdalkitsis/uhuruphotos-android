@@ -1,0 +1,21 @@
+dependencies {
+
+    implementation project(":foundation:coroutines:api")
+    implementation project(":api:db")
+    implementation project(":foundation:log:api")
+    implementation project(":feature:user:domain:api")
+    implementation(
+            libs.hilt,
+            libs.kotlinx.coroutines,
+            libs.moshi,
+            libs.retrofit.core,
+            libs.retrofit.moshi,
+            libs.sqldelight.coroutines,
+    )
+    testFixturesImplementation project(":api:db")
+    kapt libs.moshi.kapt
+}
+
+android {
+    namespace 'com.savvasdalkitsis.uhuruphotos.feature.user.domain.implementation'
+}

@@ -16,8 +16,12 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.feature.album.user.view.implementation.seam
 
 import com.savvasdalkitsis.uhuruphotos.api.albums.model.Album
-import com.savvasdalkitsis.uhuruphotos.foundation.date.api.DateDisplayer
 import com.savvasdalkitsis.uhuruphotos.api.db.extensions.isVideo
+import com.savvasdalkitsis.uhuruphotos.api.media.page.domain.model.MediaId
+import com.savvasdalkitsis.uhuruphotos.api.media.page.domain.model.MediaItem
+import com.savvasdalkitsis.uhuruphotos.api.media.page.domain.model.MediaSequenceDataSource.UserAlbum
+import com.savvasdalkitsis.uhuruphotos.api.media.remote.domain.usecase.RemoteMediaUseCase
+import com.savvasdalkitsis.uhuruphotos.feature.album.user.domain.implementation.usecase.UserAlbumsUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.showroom.view.api.seam.ShowroomAction
 import com.savvasdalkitsis.uhuruphotos.feature.showroom.view.api.seam.ShowroomActionHandler
 import com.savvasdalkitsis.uhuruphotos.feature.showroom.view.api.seam.ShowroomEffect
@@ -25,13 +29,9 @@ import com.savvasdalkitsis.uhuruphotos.feature.showroom.view.api.seam.ShowroomMu
 import com.savvasdalkitsis.uhuruphotos.feature.showroom.view.api.ui.state.ShowroomDetails
 import com.savvasdalkitsis.uhuruphotos.feature.showroom.view.api.ui.state.ShowroomState
 import com.savvasdalkitsis.uhuruphotos.feature.showroom.view.api.ui.state.Title
-import com.savvasdalkitsis.uhuruphotos.api.media.page.domain.model.MediaId
-import com.savvasdalkitsis.uhuruphotos.api.media.page.domain.model.MediaItem
-import com.savvasdalkitsis.uhuruphotos.api.media.page.domain.model.MediaSequenceDataSource.UserAlbum
-import com.savvasdalkitsis.uhuruphotos.api.media.remote.domain.usecase.RemoteMediaUseCase
+import com.savvasdalkitsis.uhuruphotos.feature.user.domain.api.usecase.UserUseCase
+import com.savvasdalkitsis.uhuruphotos.foundation.date.api.DateDisplayer
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.ActionHandler
-import com.savvasdalkitsis.uhuruphotos.api.user.usecase.UserUseCase
-import com.savvasdalkitsis.uhuruphotos.feature.album.user.domain.implementation.usecase.UserAlbumsUseCase
 import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 

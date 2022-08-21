@@ -27,7 +27,7 @@ dependencies {
     implementation project(':api:media:page')
     implementation project(":feature:settings:domain:api")
     implementation project(":foundation:strings:api")
-    implementation project(":api:user")
+    implementation project(":feature:user:domain:api")
     implementation project(":foundation:worker:api")
     implementation(
             libs.androidx.compose.hilt.navigation,
@@ -40,7 +40,7 @@ dependencies {
     )
     testImplementation testFixtures(project(":api:db"))
     testImplementation testFixtures(project(":implementation:media:remote"))
-    testImplementation testFixtures(project(":implementation:user"))
+    testImplementation testFixtures(project(":feature:user:domain:implementation"))
     testImplementation(
             libs.bundles.test,
     )

@@ -43,7 +43,7 @@ dependencies {
     implementation project(":feature:settings:view:implementation")
     implementation project(":foundation:share:implementation")
     implementation project(":foundation:ui:implementation")
-    implementation project(":implementation:user")
+    implementation project(":feature:user:domain:implementation")
     implementation project(":implementation:useralbums")
     implementation project(":implementation:userbadge")
     implementation project(":foundation:video:implementation")
