@@ -44,9 +44,6 @@ dependencies {
     testImplementation(
             libs.bundles.test,
     )
-    androidTestImplementation(
-            libs.bundles.test.android,
-    )
     testFixturesImplementation testFixtures(project(":api:db"))
     testFixturesImplementation project(':implementation:media:remote')
     testFixturesImplementation project(':api:media:page')
