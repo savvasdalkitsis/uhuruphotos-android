@@ -15,7 +15,7 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam
 
-import androidx.work.ExistingPeriodicWorkPolicy.REPLACE
+import androidx.work.ExistingPeriodicWorkPolicy.CANCEL_AND_REENQUEUE
 import androidx.work.WorkInfo.State.RUNNING
 import com.savvasdalkitsis.uhuruphotos.api.albums.worker.AlbumWorkScheduler
 import com.savvasdalkitsis.uhuruphotos.api.userbadge.usecase.UserBadgeUseCase
@@ -189,7 +189,7 @@ internal class SettingsActionHandler @Inject constructor(
         is FeedSyncFrequencyChanged -> flow {
             settingsUseCase.setFeedSyncFrequency(action.frequency.toInt())
             settingsUseCase.setShouldPerformPeriodicFullSync(action.frequency != action.upperLimit)
-            albumWorkScheduler.scheduleAlbumsRefreshPeriodic(REPLACE)
+            albumWorkScheduler.scheduleAlbumsRefreshPeriodic(CANCEL_AND_REENQUEUE)
             effect(ShowMessage(string.feed_sync_freq_changed))
         }
         AskForFullFeedSync -> flowOf(ShowFullFeedSyncDialog)
@@ -200,12 +200,12 @@ internal class SettingsActionHandler @Inject constructor(
         }
         is ChangeFullSyncNetworkRequirements -> flow {
             settingsUseCase.setFullSyncNetworkRequirements(action.networkType)
-            albumWorkScheduler.scheduleAlbumsRefreshPeriodic(REPLACE)
+            albumWorkScheduler.scheduleAlbumsRefreshPeriodic(CANCEL_AND_REENQUEUE)
             effect(ShowMessage(string.feed_sync_network_changed))
         }
         is ChangeFullSyncChargingRequirements -> flow {
             settingsUseCase.setFullSyncRequiresCharging(action.requiredCharging)
-            albumWorkScheduler.scheduleAlbumsRefreshPeriodic(REPLACE)
+            albumWorkScheduler.scheduleAlbumsRefreshPeriodic(CANCEL_AND_REENQUEUE)
             effect(ShowMessage(string.feed_sync_charging_changed))
         }
         is ChangeThemeMode -> flow {

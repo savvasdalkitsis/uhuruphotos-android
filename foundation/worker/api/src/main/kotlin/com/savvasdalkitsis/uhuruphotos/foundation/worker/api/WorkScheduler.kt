@@ -66,7 +66,7 @@ class WorkScheduler @Inject constructor(
         backoffTimeUnit: TimeUnit = TimeUnit.MINUTES,
         networkRequirement: NetworkType = NetworkType.CONNECTED,
         requiresCharging: Boolean = false,
-        existingPeriodicWorkPolicy: ExistingPeriodicWorkPolicy = ExistingPeriodicWorkPolicy.REPLACE,
+        existingPeriodicWorkPolicy: ExistingPeriodicWorkPolicy = ExistingPeriodicWorkPolicy.CANCEL_AND_REENQUEUE,
     ) {
         workManager.enqueueUniquePeriodicWork(
             workName,
