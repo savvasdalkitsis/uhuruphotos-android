@@ -15,12 +15,12 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.implementation.useralbums.seam
 
-import com.savvasdalkitsis.uhuruphotos.api.albums.ui.state.AlbumSorting
 import com.savvasdalkitsis.uhuruphotos.api.useralbums.ui.state.UserAlbum
+import com.savvasdalkitsis.uhuruphotos.feature.catalogue.view.api.ui.state.CatalogueSorting
 
 sealed class UserAlbumsAction {
     data class UserAlbumSelected(val album: UserAlbum) : UserAlbumsAction()
-    data class ChangeSorting(val sorting: AlbumSorting) : UserAlbumsAction()
+    data class ChangeSorting(val sorting: CatalogueSorting) : UserAlbumsAction()
 
     object Load : UserAlbumsAction()
     object NavigateBack : UserAlbumsAction()

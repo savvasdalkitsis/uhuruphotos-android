@@ -15,11 +15,11 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.implementation.useralbums.seam
 
-import com.savvasdalkitsis.uhuruphotos.api.albums.ui.state.AlbumSorting
 import com.savvasdalkitsis.uhuruphotos.api.useralbums.ui.state.UserAlbum
+import com.savvasdalkitsis.uhuruphotos.feature.catalogue.view.api.ui.state.CatalogueSorting
 
 data class UserAlbumsState(
     val isLoading: Boolean = false,
     val albums: List<UserAlbum> = emptyList(),
-    val sorting: AlbumSorting = AlbumSorting.default,
+    val sorting: CatalogueSorting = CatalogueSorting.default,
 )

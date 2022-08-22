@@ -42,7 +42,7 @@ graph TD;
         People
     end
 
-    subgraph Albums
+    subgraph Catalogue
         AutoAlbum
         UserAlbum
     end
@@ -50,7 +50,7 @@ graph TD;
     subgraph Library
         TrashMedia
         HiddenMedia
-        Albums
+        Catalogue
         Favourites
         LocalMedia
     end

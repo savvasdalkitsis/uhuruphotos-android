@@ -1,0 +1,12 @@
+android {
+    namespace 'com.savvasdalkitsis.uhuruphotos.feature.catalogue.auto.domain.implementation'
+}
+
+dependencies {
+    implementation project(":feature:catalogue:auto:domain:api")
+    implementation project(":api:albums")
+    implementation(
+            libs.flowpreferences,
+            libs.hilt,
+    )
+}

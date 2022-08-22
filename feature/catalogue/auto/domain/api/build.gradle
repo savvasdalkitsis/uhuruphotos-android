@@ -1,0 +1,11 @@
+android {
+    namespace 'com.savvasdalkitsis.uhuruphotos.feature.catalogue.auto.domain.api'
+}
+
+dependencies {
+    api project(":feature:catalogue:view:api")
+    api project(":feature:catalogue:auto:view:api")
+    api(
+            libs.kotlinx.coroutines,
+    )
+}

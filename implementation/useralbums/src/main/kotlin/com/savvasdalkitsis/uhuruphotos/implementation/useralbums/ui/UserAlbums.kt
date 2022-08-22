@@ -16,7 +16,7 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.implementation.useralbums.ui
 
 import androidx.compose.runtime.Composable
-import com.savvasdalkitsis.uhuruphotos.api.albums.ui.AlbumsPage
+import com.savvasdalkitsis.uhuruphotos.feature.catalogue.view.api.ui.Catalogue
 import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
 import com.savvasdalkitsis.uhuruphotos.implementation.useralbums.seam.UserAlbumsAction
 import com.savvasdalkitsis.uhuruphotos.implementation.useralbums.seam.UserAlbumsAction.ChangeSorting
@@ -29,7 +29,7 @@ internal fun UserAlbums(
     state: UserAlbumsState,
     action: (UserAlbumsAction) -> Unit,
 ) {
-    AlbumsPage(
+    Catalogue(
         title = string.user_albums,
         onBackPressed = { action(NavigateBack) },
         onRefresh = { action(Refresh) },

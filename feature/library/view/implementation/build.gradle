@@ -14,7 +14,7 @@ dependencies {
     implementation project(":feature:album:user:view:api")
     implementation project(":feature:library:view:api")
     implementation project(':api:albums')
-    implementation project(":api:autoalbums")
+    implementation project(":feature:catalogue:auto:domain:api")
     implementation project(":foundation:compose:api")
     implementation project(":foundation:coroutines:api")
     implementation project(":api:db")

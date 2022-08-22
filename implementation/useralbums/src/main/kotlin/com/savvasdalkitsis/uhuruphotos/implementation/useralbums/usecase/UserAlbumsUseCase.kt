@@ -18,12 +18,12 @@ package com.savvasdalkitsis.uhuruphotos.implementation.useralbums.usecase
 import android.content.Context
 import com.fredporciuncula.flow.preferences.FlowSharedPreferences
 import com.savvasdalkitsis.uhuruphotos.api.albums.repository.AlbumsRepository
-import com.savvasdalkitsis.uhuruphotos.api.albums.ui.state.AlbumSorting
-import com.savvasdalkitsis.uhuruphotos.api.albums.ui.state.AlbumSorting.Companion.sorted
 import com.savvasdalkitsis.uhuruphotos.api.db.albums.UserAlbums
 import com.savvasdalkitsis.uhuruphotos.api.media.remote.domain.usecase.RemoteMediaUseCase
 import com.savvasdalkitsis.uhuruphotos.api.useralbums.ui.state.UserAlbum
 import com.savvasdalkitsis.uhuruphotos.api.useralbums.usecase.UserAlbumsUseCase
+import com.savvasdalkitsis.uhuruphotos.feature.catalogue.view.api.ui.state.CatalogueSorting
+import com.savvasdalkitsis.uhuruphotos.feature.catalogue.view.api.ui.state.CatalogueSorting.Companion.sorted
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaId
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItem
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.state.VitrineState
@@ -41,11 +41,11 @@ class UserAlbumsUseCase @Inject constructor(
 ) : UserAlbumsUseCase {
 
     private val userAlbumsSorting =
-        flowSharedPreferences.getEnum("userAlbumsSorting", AlbumSorting.default)
+        flowSharedPreferences.getEnum("userAlbumsSorting", CatalogueSorting.default)
 
-    override fun observeUserAlbumsSorting(): Flow<AlbumSorting> = userAlbumsSorting.asFlow()
+    override fun observeUserAlbumsSorting(): Flow<CatalogueSorting> = userAlbumsSorting.asFlow()
 
-    override suspend fun changeUserAlbumsSorting(sorting: AlbumSorting) {
+    override suspend fun changeUserAlbumsSorting(sorting: CatalogueSorting) {
         userAlbumsSorting.setAndCommit(sorting)
     }
 
@@ -63,7 +63,7 @@ class UserAlbumsUseCase @Inject constructor(
     override suspend fun getUserAlbums(): List<UserAlbum> =
         albumsRepository.getUserAlbums().toUserAlbums(userAlbumsSorting.get())
 
-    private fun List<UserAlbums>.toUserAlbums(sorting: AlbumSorting): List<UserAlbum> =
+    private fun List<UserAlbums>.toUserAlbums(sorting: CatalogueSorting): List<UserAlbum> =
         sorted(
             sorting,
             timeStamp = { it.timestamp },
