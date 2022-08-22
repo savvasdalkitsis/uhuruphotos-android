@@ -36,7 +36,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.Fee
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.FeedAction.ShareSelectedPhotos
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.FeedAction.TrashSelectedPhotos
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.FeedEffect.DownloadingFiles
-import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.FeedEffect.OpenExhibit
+import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.FeedEffect.OpenLightbox
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.FeedEffect.SharePhotos
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.FeedEffect.Vibrate
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.FeedMutation.HideTrashingConfirmationDialog
@@ -117,7 +117,7 @@ internal class FeedActionHandler @Inject constructor(
         is SelectedPhoto -> flow {
             when {
                 state.selectedPhotoCount == 0 -> effect(with(action) {
-                    OpenExhibit(mediaItem.id, center, scale, mediaItem.isVideo)
+                    OpenLightbox(mediaItem.id, center, scale, mediaItem.isVideo)
                 })
                 action.mediaItem.selectionMode == SELECTED -> {
                     effect(Vibrate)

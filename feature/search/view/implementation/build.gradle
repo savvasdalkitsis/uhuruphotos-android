@@ -28,7 +28,7 @@ dependencies {
     implementation project(':feature:person:view:api')
     implementation project(':api:media:remote')
     implementation project(':feature:search:domain:api')
-    implementation project(":feature:exhibit:view:api")
+    implementation project(":feature:lightbox:view:api")
     implementation project(':feature:search:view:api')
     implementation project(":feature:server:view:api")
     implementation project(":feature:settings:domain:api")

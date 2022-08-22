@@ -13,7 +13,7 @@ dependencies {
     implementation project(":feature:account:view:api")
     implementation project(':api:albums')
     implementation project(":foundation:compose:api")
-    implementation project(":feature:exhibit:view:api")
+    implementation project(":feature:lightbox:view:api")
     implementation project(":feature:collage:view:api")
     implementation project(":feature:feed:view:api")
     implementation project(":feature:feed:domain:api")

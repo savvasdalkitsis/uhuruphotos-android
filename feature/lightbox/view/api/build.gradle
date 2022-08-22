@@ -1,0 +1,7 @@
+android {
+    namespace 'com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.api'
+}
+
+dependencies {
+    implementation project(":feature:media:common:domain:api")
+}

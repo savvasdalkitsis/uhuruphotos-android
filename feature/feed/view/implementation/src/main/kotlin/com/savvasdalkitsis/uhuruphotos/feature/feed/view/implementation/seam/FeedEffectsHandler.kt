@@ -15,12 +15,12 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam
 
-import com.savvasdalkitsis.uhuruphotos.feature.exhibit.view.api.model.ExhibitSequenceDataSource.Feed
-import com.savvasdalkitsis.uhuruphotos.feature.exhibit.view.api.navigation.ExhibitNavigationTarget
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.FeedEffect.DownloadingFiles
-import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.FeedEffect.OpenExhibit
+import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.FeedEffect.OpenLightbox
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.FeedEffect.SharePhotos
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.FeedEffect.Vibrate
+import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.api.model.LightboxSequenceDataSource.Feed
+import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.api.navigation.LightboxNavigationTarget
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.Navigator
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.EffectHandler
 import com.savvasdalkitsis.uhuruphotos.foundation.share.api.usecase.ShareUseCase
@@ -37,8 +37,8 @@ internal class FeedEffectsHandler @Inject constructor(
 ) : EffectHandler<FeedEffect> {
 
     override suspend fun handleEffect(effect: FeedEffect) = when (effect) {
-        is OpenExhibit -> with(effect) {
-            navigateTo(ExhibitNavigationTarget.name(id, center, scale, isVideo, Feed))
+        is OpenLightbox -> with(effect) {
+            navigateTo(LightboxNavigationTarget.name(id, center, scale, isVideo, Feed))
         }
         is SharePhotos -> {
             toaster.show(string.downloading_photos_sharing)

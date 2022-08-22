@@ -11,7 +11,7 @@ android {
 dependencies {
 
     implementation project(':api:albums')
-    implementation project(":feature:exhibit:view:api")
+    implementation project(":feature:lightbox:view:api")
     implementation project(":foundation:coroutines:api")
     implementation project(":foundation:date:api")
     implementation project(":api:db")

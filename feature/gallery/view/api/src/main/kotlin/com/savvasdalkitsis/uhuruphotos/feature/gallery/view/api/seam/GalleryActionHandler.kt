@@ -17,7 +17,6 @@ package com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam
 
 import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.CollageDisplay
 import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.PredefinedCollageDisplay
-import com.savvasdalkitsis.uhuruphotos.feature.exhibit.view.api.model.ExhibitSequenceDataSource
 import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.GalleryAction.ChangeCollageDisplay
 import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.GalleryAction.LoadCollage
 import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.GalleryAction.NavigateBack
@@ -26,11 +25,12 @@ import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.GalleryActi
 import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.GalleryAction.SwipeToRefresh
 import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.GalleryEffect.ErrorLoading
 import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.GalleryEffect.NavigateToPerson
-import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.GalleryEffect.OpenExhibit
+import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.GalleryEffect.OpenLightbox
 import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.GalleryMutation.Loading
 import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.GalleryMutation.ShowGallery
 import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.ui.state.GalleryDetails
 import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.ui.state.GalleryState
+import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.api.model.LightboxSequenceDataSource
 import com.savvasdalkitsis.uhuruphotos.foundation.coroutines.api.safelyOnStartIgnoring
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.ActionHandler
 import kotlinx.coroutines.flow.Flow
@@ -45,7 +45,7 @@ class GalleryActionHandler(
     private val galleryRefresher: suspend (Int) -> Result<Unit>,
     private val galleryDetailsFlow: (galleryId: Int, effect: suspend (GalleryEffect) -> Unit) -> Flow<GalleryDetails>,
     private val galleryDetailsEmptyCheck: suspend (galleryId: Int) -> Boolean,
-    private val exhibitSequenceDataSource: (galleryId: Int) -> ExhibitSequenceDataSource,
+    private val lightboxSequenceDataSource: (galleryId: Int) -> LightboxSequenceDataSource,
     private val initialCollageDisplay: (galleryId: Int) -> CollageDisplay,
     private val collageDisplayPersistence: suspend (galleryId:Int, PredefinedCollageDisplay) -> Unit,
 ) : ActionHandler<GalleryState, GalleryEffect, GalleryAction, GalleryMutation> {
@@ -77,12 +77,12 @@ class GalleryActionHandler(
         is SelectedMediaItem -> flow {
             effect(
                 with(action) {
-                    OpenExhibit(
+                    OpenLightbox(
                         id = mediaItem.id,
                         center = center,
                         scale = scale,
                         video = mediaItem.isVideo,
-                        exhibitSequenceDataSource = exhibitSequenceDataSource(galleryId)
+                        lightboxSequenceDataSource = lightboxSequenceDataSource(galleryId)
                     )
                 }
             )

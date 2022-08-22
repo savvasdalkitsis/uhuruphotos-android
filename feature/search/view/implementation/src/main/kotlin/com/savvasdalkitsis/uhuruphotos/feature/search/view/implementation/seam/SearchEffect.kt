@@ -26,7 +26,7 @@ sealed class SearchEffect {
     object NavigateToHeatMap : SearchEffect()
 
     data class NavigateToPerson(val personId: Int) : SearchEffect()
-    data class OpenExhibit(
+    data class OpenLightbox(
         val id: MediaId<*>,
         val center: Offset,
         val scale: Float,

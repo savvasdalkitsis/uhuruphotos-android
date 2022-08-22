@@ -16,8 +16,8 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.feature.search.view.implementation.seam
 
 import com.savvasdalkitsis.uhuruphotos.api.heatmap.navigation.HeatMapNavigationTarget
-import com.savvasdalkitsis.uhuruphotos.feature.exhibit.view.api.model.ExhibitSequenceDataSource.SearchResults
-import com.savvasdalkitsis.uhuruphotos.feature.exhibit.view.api.navigation.ExhibitNavigationTarget
+import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.api.model.LightboxSequenceDataSource.SearchResults
+import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.api.navigation.LightboxNavigationTarget
 import com.savvasdalkitsis.uhuruphotos.feature.people.view.api.navigation.PeopleNavigationTarget
 import com.savvasdalkitsis.uhuruphotos.feature.person.view.api.navigation.PersonNavigationTarget
 import com.savvasdalkitsis.uhuruphotos.feature.search.view.implementation.seam.SearchEffect.ErrorRefreshingPeople
@@ -26,7 +26,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.search.view.implementation.seam.S
 import com.savvasdalkitsis.uhuruphotos.feature.search.view.implementation.seam.SearchEffect.NavigateToAllPeople
 import com.savvasdalkitsis.uhuruphotos.feature.search.view.implementation.seam.SearchEffect.NavigateToHeatMap
 import com.savvasdalkitsis.uhuruphotos.feature.search.view.implementation.seam.SearchEffect.NavigateToPerson
-import com.savvasdalkitsis.uhuruphotos.feature.search.view.implementation.seam.SearchEffect.OpenExhibit
+import com.savvasdalkitsis.uhuruphotos.feature.search.view.implementation.seam.SearchEffect.OpenLightbox
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.Navigator
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.EffectHandler
 import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
@@ -44,9 +44,9 @@ class SearchEffectsHandler @Inject constructor(
         effect: SearchEffect,
     ) = when (effect) {
         HideKeyboard -> uiUseCase.hideKeyboard()
-        is OpenExhibit -> navigateTo(
+        is OpenLightbox -> navigateTo(
             with(effect) {
-                ExhibitNavigationTarget.name(
+                LightboxNavigationTarget.name(
                     id,
                     center,
                     scale,

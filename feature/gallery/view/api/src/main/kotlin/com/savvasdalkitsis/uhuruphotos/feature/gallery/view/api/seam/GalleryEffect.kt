@@ -16,19 +16,19 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam
 
 import androidx.compose.ui.geometry.Offset
-import com.savvasdalkitsis.uhuruphotos.feature.exhibit.view.api.model.ExhibitSequenceDataSource
+import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.api.model.LightboxSequenceDataSource
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaId
 
 sealed class GalleryEffect {
     object NavigateBack : GalleryEffect()
     object ErrorLoading : GalleryEffect()
 
-    data class OpenExhibit(
+    data class OpenLightbox(
         val id: MediaId<*>,
         val center: Offset,
         val scale: Float,
         val video: Boolean,
-        val exhibitSequenceDataSource: ExhibitSequenceDataSource,
+        val lightboxSequenceDataSource: LightboxSequenceDataSource,
     ) : GalleryEffect()
 
     data class NavigateToPerson(val personId: Int) : GalleryEffect()

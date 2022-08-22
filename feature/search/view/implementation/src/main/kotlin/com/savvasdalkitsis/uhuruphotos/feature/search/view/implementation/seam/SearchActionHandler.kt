@@ -38,7 +38,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.search.view.implementation.seam.S
 import com.savvasdalkitsis.uhuruphotos.feature.search.view.implementation.seam.SearchEffect.NavigateToAllPeople
 import com.savvasdalkitsis.uhuruphotos.feature.search.view.implementation.seam.SearchEffect.NavigateToHeatMap
 import com.savvasdalkitsis.uhuruphotos.feature.search.view.implementation.seam.SearchEffect.NavigateToPerson
-import com.savvasdalkitsis.uhuruphotos.feature.search.view.implementation.seam.SearchEffect.OpenExhibit
+import com.savvasdalkitsis.uhuruphotos.feature.search.view.implementation.seam.SearchEffect.OpenLightbox
 import com.savvasdalkitsis.uhuruphotos.feature.search.view.implementation.seam.SearchMutation.ChangeFeedDisplay
 import com.savvasdalkitsis.uhuruphotos.feature.search.view.implementation.seam.SearchMutation.ChangeSearchDisplay
 import com.savvasdalkitsis.uhuruphotos.feature.search.view.implementation.seam.SearchMutation.FocusChanged
@@ -122,7 +122,7 @@ class SearchActionHandler @Inject constructor(
         }
         is SelectedPhoto -> flow {
             with(action) {
-                effect(OpenExhibit(mediaItem.id, center, scale, mediaItem.isVideo, state.latestQuery))
+                effect(OpenLightbox(mediaItem.id, center, scale, mediaItem.isVideo, state.latestQuery))
             }
         }
         is ChangeDisplay -> flowOf(ChangeSearchDisplay(action.display))

@@ -15,11 +15,11 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam
 
-import com.savvasdalkitsis.uhuruphotos.feature.exhibit.view.api.navigation.ExhibitNavigationTarget
 import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.GalleryEffect.ErrorLoading
 import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.GalleryEffect.NavigateBack
 import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.GalleryEffect.NavigateToPerson
-import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.GalleryEffect.OpenExhibit
+import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.GalleryEffect.OpenLightbox
+import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.api.navigation.LightboxNavigationTarget
 import com.savvasdalkitsis.uhuruphotos.feature.person.view.api.navigation.PersonNavigationTarget
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.Navigator
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.EffectHandler
@@ -34,13 +34,13 @@ class GalleryEffectsHandler @Inject constructor(
 
     override suspend fun handleEffect(effect: GalleryEffect) {
         when (effect) {
-            is OpenExhibit -> navigate(
-                ExhibitNavigationTarget.name(
+            is OpenLightbox -> navigate(
+                LightboxNavigationTarget.name(
                     effect.id,
                     effect.center,
                     effect.scale,
                     effect.video,
-                    effect.exhibitSequenceDataSource,
+                    effect.lightboxSequenceDataSource,
                 ),
             )
             NavigateBack -> navigator.navigateBack()

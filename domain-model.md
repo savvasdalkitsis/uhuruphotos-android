@@ -8,7 +8,7 @@ graph TD;
     Gallery-->Collage
     Collage-->CollageGroup
     CollageGroup-->MediaItem
-    Exhibit-->MediaItem
+    Lightbox-->MediaItem
     MediaItem-->LocalMediaItem
     MediaItem-->RemoteMediaItem
     LocalMediaItem-->Image
@@ -28,13 +28,13 @@ graph TD;
     Feed-->Collage
     People-->PeopleBanner
     PeopleBanner-->Person
-    Exhibit-->PeopleBanner
+    Lightbox-->PeopleBanner
     AutoAlbum-->PeopleBanner
 
     subgraph Pages
         Person
         LocalGallery
-        Exhibit
+        Lightbox
     end
 
     subgraph Search

@@ -20,7 +20,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.Med
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItem
 
 internal sealed class FeedEffect {
-    data class OpenExhibit(
+    data class OpenLightbox(
         val id: MediaId<*>,
         val center: Offset,
         val scale: Float,
