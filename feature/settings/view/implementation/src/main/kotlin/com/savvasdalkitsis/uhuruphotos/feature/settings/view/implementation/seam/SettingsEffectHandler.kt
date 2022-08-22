@@ -17,12 +17,12 @@ package com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.sea
 
 import android.content.Intent
 import android.provider.Settings.ACTION_SECURITY_SETTINGS
-import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.Navigator
-import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.EffectHandler
-import com.savvasdalkitsis.uhuruphotos.foundation.toaster.api.Toaster
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.SettingsEffect.EnrollToBiometrics
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.SettingsEffect.NavigateBack
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.SettingsEffect.ShowMessage
+import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.Navigator
+import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.EffectHandler
+import com.savvasdalkitsis.uhuruphotos.foundation.toaster.api.Toaster
 import javax.inject.Inject
 
 internal class SettingsEffectHandler @Inject constructor(

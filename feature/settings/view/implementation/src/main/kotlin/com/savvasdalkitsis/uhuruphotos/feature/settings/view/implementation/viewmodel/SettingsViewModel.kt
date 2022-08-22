@@ -16,13 +16,13 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.viewmodel
 
 import androidx.lifecycle.ViewModel
-import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.Seam
-import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.handler
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.SettingsAction
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.SettingsActionHandler
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.SettingsEffect
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.SettingsMutation
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.ui.state.SettingsState
+import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.Seam
+import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.handler
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 

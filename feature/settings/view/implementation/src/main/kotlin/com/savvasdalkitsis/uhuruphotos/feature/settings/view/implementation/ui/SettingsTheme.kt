@@ -18,14 +18,14 @@ package com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.ui
 import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.stringResource
+import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.SettingsAction
+import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.SettingsAction.ChangeThemeMode
+import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.ui.state.SettingsState
 import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.theme.ThemeMode
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.theme.ThemeMode.DARK_MODE
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.theme.ThemeMode.FOLLOW_SYSTEM
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.theme.ThemeMode.LIGHT_MODE
-import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.SettingsAction
-import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.SettingsAction.ChangeThemeMode
-import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.ui.state.SettingsState
 
 @Composable
 internal fun ColumnScope.SettingsTheme(

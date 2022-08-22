@@ -16,13 +16,13 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.feature.home.view.implementation.viewmodel
 
 import androidx.lifecycle.ViewModel
-import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.Seam
-import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.handler
 import com.savvasdalkitsis.uhuruphotos.feature.home.view.implementation.seam.HomeAction
 import com.savvasdalkitsis.uhuruphotos.feature.home.view.implementation.seam.HomeActionHandler
 import com.savvasdalkitsis.uhuruphotos.feature.home.view.implementation.seam.HomeEffect
 import com.savvasdalkitsis.uhuruphotos.feature.home.view.implementation.seam.HomeMutation
 import com.savvasdalkitsis.uhuruphotos.feature.home.view.implementation.ui.state.HomeState
+import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.Seam
+import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.handler
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 

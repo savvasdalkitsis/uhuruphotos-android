@@ -25,7 +25,6 @@ import com.google.android.exoplayer2.upstream.cache.LeastRecentlyUsedCacheEvicto
 import com.google.android.exoplayer2.upstream.cache.SimpleCache
 import com.savvasdalkitsis.uhuruphotos.api.auth.AuthenticatedOkHttpClient
 import com.savvasdalkitsis.uhuruphotos.api.auth.TokenRefreshInterceptor
-import com.savvasdalkitsis.uhuruphotos.feature.settings.domain.api.usecase.SettingsUseCase
 import com.savvasdalkitsis.uhuruphotos.foundation.video.api.LocalContentExoplayer
 import com.savvasdalkitsis.uhuruphotos.foundation.video.api.VideoOkHttp
 import dagger.Module

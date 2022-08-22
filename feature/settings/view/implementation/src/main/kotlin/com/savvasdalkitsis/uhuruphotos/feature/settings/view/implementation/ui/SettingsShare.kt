@@ -18,11 +18,11 @@ package com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.ui
 import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.stringResource
-import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.R.drawable
-import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.SettingsAction
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.SettingsAction.ChangeShareGpsDataEnabled
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.ui.state.SettingsState
+import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.R.drawable
+import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
 
 @Composable
 internal fun ColumnScope.SettingsShare(

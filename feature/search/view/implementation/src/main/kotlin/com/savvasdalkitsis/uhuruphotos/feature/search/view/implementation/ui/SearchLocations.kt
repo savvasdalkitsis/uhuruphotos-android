@@ -33,11 +33,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import com.savvasdalkitsis.uhuruphotos.feature.search.view.implementation.seam.SearchAction
+import com.savvasdalkitsis.uhuruphotos.feature.search.view.implementation.seam.SearchAction.LoadHeatMap
 import com.savvasdalkitsis.uhuruphotos.foundation.map.api.Locations
 import com.savvasdalkitsis.uhuruphotos.foundation.map.api.ui.MapView
 import com.savvasdalkitsis.uhuruphotos.foundation.map.api.ui.rememberMapViewState
-import com.savvasdalkitsis.uhuruphotos.feature.search.view.implementation.seam.SearchAction
-import com.savvasdalkitsis.uhuruphotos.feature.search.view.implementation.seam.SearchAction.LoadHeatMap
 
 @Composable
 fun SearchLocations(

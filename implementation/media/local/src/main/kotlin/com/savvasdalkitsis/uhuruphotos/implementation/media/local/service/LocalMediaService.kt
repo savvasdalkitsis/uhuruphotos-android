@@ -27,8 +27,8 @@ import android.provider.MediaStore.Images
 import android.provider.MediaStore.Video
 import androidx.core.content.ContentResolverCompat
 import androidx.core.os.CancellationSignal
-import com.savvasdalkitsis.uhuruphotos.foundation.log.api.log
 import com.savvasdalkitsis.uhuruphotos.api.media.local.domain.model.LocalMediaFolder
+import com.savvasdalkitsis.uhuruphotos.foundation.log.api.log
 import com.savvasdalkitsis.uhuruphotos.implementation.media.local.domain.MediaStoreContentUriResolver
 import com.savvasdalkitsis.uhuruphotos.implementation.media.local.service.model.LocalMediaPhotoColumns
 import com.savvasdalkitsis.uhuruphotos.implementation.media.local.service.model.LocalMediaStoreServiceItem

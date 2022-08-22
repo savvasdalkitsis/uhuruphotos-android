@@ -18,8 +18,6 @@ package com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.ui
 import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.stringResource
-import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.R.drawable
-import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.SettingsAction
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.SettingsAction.ChangeBiometricsAppAccessRequirement
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.SettingsAction.ChangeBiometricsHiddenPhotosAccessRequirement
@@ -28,6 +26,8 @@ import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.ui.state.BiometricsSetting
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.ui.state.BiometricsSetting.Enrolled
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.ui.state.BiometricsSetting.NotEnrolled
+import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.R.drawable
+import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
 
 @Composable
 internal fun ColumnScope.SettingsBiometrics(

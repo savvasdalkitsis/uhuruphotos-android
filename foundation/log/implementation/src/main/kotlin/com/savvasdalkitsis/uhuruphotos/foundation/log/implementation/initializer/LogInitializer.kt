@@ -23,9 +23,9 @@ import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.R
 import com.savvasdalkitsis.uhuruphotos.foundation.initializer.api.ApplicationCreated
 import com.savvasdalkitsis.uhuruphotos.foundation.log.api.Log
 import com.savvasdalkitsis.uhuruphotos.foundation.log.api.logError
-import com.savvasdalkitsis.uhuruphotos.foundation.notification.api.NotificationChannels
 import com.savvasdalkitsis.uhuruphotos.foundation.log.implementation.FeedbackUseCase
 import com.savvasdalkitsis.uhuruphotos.foundation.log.implementation.showCrashNotification
+import com.savvasdalkitsis.uhuruphotos.foundation.notification.api.NotificationChannels
 import dagger.hilt.android.qualifiers.ApplicationContext
 import timber.log.Timber
 import javax.inject.Inject

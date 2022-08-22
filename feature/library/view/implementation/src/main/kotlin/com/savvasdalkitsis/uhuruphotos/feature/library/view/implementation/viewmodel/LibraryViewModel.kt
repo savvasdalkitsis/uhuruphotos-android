@@ -20,15 +20,15 @@ import com.savvasdalkitsis.uhuruphotos.feature.account.view.api.seam.AccountOver
 import com.savvasdalkitsis.uhuruphotos.feature.account.view.api.seam.AccountOverviewActionHandler
 import com.savvasdalkitsis.uhuruphotos.feature.account.view.api.seam.AccountOverviewEffect
 import com.savvasdalkitsis.uhuruphotos.feature.account.view.api.ui.state.AccountOverviewState
+import com.savvasdalkitsis.uhuruphotos.feature.library.view.implementation.seam.LibraryAction
+import com.savvasdalkitsis.uhuruphotos.feature.library.view.implementation.seam.LibraryActionHandler
+import com.savvasdalkitsis.uhuruphotos.feature.library.view.implementation.seam.LibraryEffect
+import com.savvasdalkitsis.uhuruphotos.feature.library.view.implementation.ui.state.LibraryState
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.CompositeActionHandler
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.Either
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.Mutation
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.Seam
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.handler
-import com.savvasdalkitsis.uhuruphotos.feature.library.view.implementation.seam.LibraryAction
-import com.savvasdalkitsis.uhuruphotos.feature.library.view.implementation.seam.LibraryActionHandler
-import com.savvasdalkitsis.uhuruphotos.feature.library.view.implementation.seam.LibraryEffect
-import com.savvasdalkitsis.uhuruphotos.feature.library.view.implementation.ui.state.LibraryState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 

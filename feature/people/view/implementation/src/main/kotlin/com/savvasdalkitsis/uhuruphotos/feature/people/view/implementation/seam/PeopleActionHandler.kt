@@ -18,18 +18,29 @@ package com.savvasdalkitsis.uhuruphotos.feature.people.view.implementation.seam
 import com.savvasdalkitsis.uhuruphotos.api.media.remote.domain.usecase.RemoteMediaUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.people.domain.api.usecase.PeopleUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.people.view.api.ui.state.toPerson
-import com.savvasdalkitsis.uhuruphotos.feature.people.view.implementation.seam.PeopleAction.*
+import com.savvasdalkitsis.uhuruphotos.feature.people.view.implementation.seam.PeopleAction.LoadPeople
+import com.savvasdalkitsis.uhuruphotos.feature.people.view.implementation.seam.PeopleAction.NavigateBack
+import com.savvasdalkitsis.uhuruphotos.feature.people.view.implementation.seam.PeopleAction.PersonSelected
+import com.savvasdalkitsis.uhuruphotos.feature.people.view.implementation.seam.PeopleAction.SwipeToRefresh
+import com.savvasdalkitsis.uhuruphotos.feature.people.view.implementation.seam.PeopleAction.ToggleSortOrder
 import com.savvasdalkitsis.uhuruphotos.feature.people.view.implementation.seam.PeopleEffect.ErrorLoadingPeople
 import com.savvasdalkitsis.uhuruphotos.feature.people.view.implementation.seam.PeopleEffect.NavigateToPerson
-import com.savvasdalkitsis.uhuruphotos.feature.people.view.implementation.seam.PeopleMutation.*
+import com.savvasdalkitsis.uhuruphotos.feature.people.view.implementation.seam.PeopleMutation.DisplayPeople
+import com.savvasdalkitsis.uhuruphotos.feature.people.view.implementation.seam.PeopleMutation.Loading
+import com.savvasdalkitsis.uhuruphotos.feature.people.view.implementation.seam.PeopleMutation.SetSortOrder
 import com.savvasdalkitsis.uhuruphotos.feature.people.view.implementation.ui.state.PeopleState
 import com.savvasdalkitsis.uhuruphotos.feature.people.view.implementation.ui.state.SortOrder
 import com.savvasdalkitsis.uhuruphotos.feature.people.view.implementation.ui.state.SortOrder.ASCENDING
 import com.savvasdalkitsis.uhuruphotos.feature.people.view.implementation.ui.state.SortOrder.DESCENDING
 import com.savvasdalkitsis.uhuruphotos.foundation.coroutines.api.safelyOnStartIgnoring
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.ActionHandler
-import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.merge
 import javax.inject.Inject
 
 class PeopleActionHandler @Inject constructor(

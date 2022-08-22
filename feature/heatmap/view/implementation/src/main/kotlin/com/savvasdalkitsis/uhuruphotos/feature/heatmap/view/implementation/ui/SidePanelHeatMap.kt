@@ -26,11 +26,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import com.google.accompanist.permissions.PermissionState
+import com.savvasdalkitsis.uhuruphotos.feature.heatmap.view.implementation.seam.HeatMapAction
+import com.savvasdalkitsis.uhuruphotos.feature.heatmap.view.implementation.ui.state.HeatMapState
 import com.savvasdalkitsis.uhuruphotos.foundation.map.api.ui.MapViewState
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.insets.systemPadding
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.CommonScaffold
-import com.savvasdalkitsis.uhuruphotos.feature.heatmap.view.implementation.seam.HeatMapAction
-import com.savvasdalkitsis.uhuruphotos.feature.heatmap.view.implementation.ui.state.HeatMapState
 
 @Composable
 fun SidePanelHeatMap(

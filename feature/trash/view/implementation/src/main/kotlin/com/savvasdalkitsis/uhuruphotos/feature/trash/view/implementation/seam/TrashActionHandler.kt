@@ -15,7 +15,6 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.trash.view.implementation.seam
 
-import com.savvasdalkitsis.uhuruphotos.feature.settings.domain.api.usecase.SettingsUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.trash.view.implementation.seam.TrashAction.FingerPrintActionPressed
 import com.savvasdalkitsis.uhuruphotos.feature.trash.view.implementation.seam.TrashAction.Load
 import com.savvasdalkitsis.uhuruphotos.feature.trash.view.implementation.seam.TrashEffect.NavigateToAppSettings

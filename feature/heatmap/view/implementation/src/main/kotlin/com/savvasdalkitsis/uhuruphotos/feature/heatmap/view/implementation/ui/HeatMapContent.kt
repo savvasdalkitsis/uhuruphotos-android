@@ -21,12 +21,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.google.accompanist.permissions.PermissionState
 import com.google.accompanist.permissions.isGranted
-import com.savvasdalkitsis.uhuruphotos.foundation.map.api.ui.MapView
-import com.savvasdalkitsis.uhuruphotos.foundation.map.api.ui.MapViewState
-import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.insets.insetsTop
 import com.savvasdalkitsis.uhuruphotos.feature.heatmap.view.implementation.seam.HeatMapAction
 import com.savvasdalkitsis.uhuruphotos.feature.heatmap.view.implementation.seam.HeatMapAction.CameraViewPortChanged
 import com.savvasdalkitsis.uhuruphotos.feature.heatmap.view.implementation.ui.state.HeatMapState
+import com.savvasdalkitsis.uhuruphotos.foundation.map.api.ui.MapView
+import com.savvasdalkitsis.uhuruphotos.foundation.map.api.ui.MapViewState
+import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.insets.insetsTop
 
 @Composable
 fun HeatMapContent(

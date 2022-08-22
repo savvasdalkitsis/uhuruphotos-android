@@ -17,12 +17,12 @@ package com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.sea
 
 import androidx.work.NetworkType
 import com.savvasdalkitsis.uhuruphotos.api.userbadge.ui.state.UserInformationState
-import com.savvasdalkitsis.uhuruphotos.foundation.map.api.model.MapProvider
-import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.Mutation
-import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.theme.ThemeMode
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.ui.state.BiometricsSetting
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.ui.state.MapProviderState
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.ui.state.SettingsState
+import com.savvasdalkitsis.uhuruphotos.foundation.map.api.model.MapProvider
+import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.Mutation
+import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.theme.ThemeMode
 
 internal sealed class SettingsMutation(
     mutation: Mutation<SettingsState>,

@@ -17,14 +17,14 @@ package com.savvasdalkitsis.uhuruphotos.feature.home.view.implementation.seam
 
 import com.savvasdalkitsis.uhuruphotos.api.auth.model.AuthStatus.Unauthenticated
 import com.savvasdalkitsis.uhuruphotos.api.auth.usecase.AuthenticationUseCase
-import com.savvasdalkitsis.uhuruphotos.foundation.biometrics.api.usecase.BiometricsUseCase
-import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.ActionHandler
-import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
 import com.savvasdalkitsis.uhuruphotos.feature.home.view.implementation.seam.HomeAction.Load
 import com.savvasdalkitsis.uhuruphotos.feature.home.view.implementation.seam.HomeEffect.LaunchAuthentication
 import com.savvasdalkitsis.uhuruphotos.feature.home.view.implementation.seam.HomeMutation.Loading
 import com.savvasdalkitsis.uhuruphotos.feature.home.view.implementation.seam.HomeMutation.NeedsBiometricAuthentication
 import com.savvasdalkitsis.uhuruphotos.feature.home.view.implementation.ui.state.HomeState
+import com.savvasdalkitsis.uhuruphotos.foundation.biometrics.api.usecase.BiometricsUseCase
+import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.ActionHandler
+import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import javax.inject.Inject

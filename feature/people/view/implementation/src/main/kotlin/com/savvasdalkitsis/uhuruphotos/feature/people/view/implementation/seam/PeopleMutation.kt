@@ -16,9 +16,9 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.feature.people.view.implementation.seam
 
 import com.savvasdalkitsis.uhuruphotos.feature.people.view.api.ui.state.Person
-import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.Mutation
 import com.savvasdalkitsis.uhuruphotos.feature.people.view.implementation.ui.state.PeopleState
 import com.savvasdalkitsis.uhuruphotos.feature.people.view.implementation.ui.state.SortOrder
+import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.Mutation
 
 sealed class PeopleMutation(
     mutation: Mutation<PeopleState>,

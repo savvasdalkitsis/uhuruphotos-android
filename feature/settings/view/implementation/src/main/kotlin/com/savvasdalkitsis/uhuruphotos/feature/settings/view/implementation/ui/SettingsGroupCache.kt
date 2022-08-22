@@ -19,8 +19,8 @@ import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.material.Divider
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.stringResource
-import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.SettingsAction
+import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
 
 @Composable
 internal fun ColumnScope.SettingsGroupCache(

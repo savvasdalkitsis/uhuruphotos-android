@@ -19,8 +19,6 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.api.navigation.SettingsNavigationTarget
-import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.NavigationTarget
-import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.navigationTarget
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.SettingsAction
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.SettingsAction.LoadSettings
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.SettingsEffect
@@ -29,6 +27,8 @@ import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.ui.S
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.ui.controller.SettingsViewStateController
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.ui.state.SettingsState
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.viewmodel.SettingsViewModel
+import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.NavigationTarget
+import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.navigationTarget
 import javax.inject.Inject
 
 internal class SettingsNavigationTarget @Inject constructor(

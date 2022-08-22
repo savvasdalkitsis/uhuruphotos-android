@@ -15,8 +15,8 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.album.user.view.implementation.module
 
-import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.NavigationTarget
 import com.savvasdalkitsis.uhuruphotos.feature.album.user.view.implementation.navigation.UserAlbumNavigationTarget
+import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.NavigationTarget
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn

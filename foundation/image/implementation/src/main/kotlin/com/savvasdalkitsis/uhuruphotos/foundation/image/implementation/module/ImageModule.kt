@@ -25,7 +25,6 @@ import coil.disk.DiskCache
 import coil.memory.MemoryCache
 import com.savvasdalkitsis.uhuruphotos.api.auth.AuthenticatedOkHttpClient
 import com.savvasdalkitsis.uhuruphotos.api.auth.TokenRefreshInterceptor
-import com.savvasdalkitsis.uhuruphotos.feature.settings.domain.api.usecase.SettingsUseCase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

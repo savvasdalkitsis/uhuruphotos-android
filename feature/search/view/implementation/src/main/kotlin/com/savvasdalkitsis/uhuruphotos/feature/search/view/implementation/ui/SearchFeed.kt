@@ -18,12 +18,12 @@ package com.savvasdalkitsis.uhuruphotos.feature.search.view.implementation.ui
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.unit.dp
-import com.savvasdalkitsis.uhuruphotos.foundation.compose.api.copy
 import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.ui.Gallery
 import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.ui.state.GalleryState
 import com.savvasdalkitsis.uhuruphotos.feature.search.view.implementation.seam.SearchAction
 import com.savvasdalkitsis.uhuruphotos.feature.search.view.implementation.ui.state.SearchResults
 import com.savvasdalkitsis.uhuruphotos.feature.search.view.implementation.ui.state.SearchState
+import com.savvasdalkitsis.uhuruphotos.foundation.compose.api.copy
 
 @Composable
 fun SearchFeed(

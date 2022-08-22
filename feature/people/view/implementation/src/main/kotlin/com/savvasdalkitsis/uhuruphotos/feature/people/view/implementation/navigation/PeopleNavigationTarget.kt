@@ -18,8 +18,6 @@ package com.savvasdalkitsis.uhuruphotos.feature.people.view.implementation.navig
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
-import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.NavigationTarget
-import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.navigationTarget
 import com.savvasdalkitsis.uhuruphotos.feature.people.view.api.navigation.PeopleNavigationTarget
 import com.savvasdalkitsis.uhuruphotos.feature.people.view.implementation.seam.PeopleAction
 import com.savvasdalkitsis.uhuruphotos.feature.people.view.implementation.seam.PeopleAction.LoadPeople
@@ -28,6 +26,8 @@ import com.savvasdalkitsis.uhuruphotos.feature.people.view.implementation.seam.P
 import com.savvasdalkitsis.uhuruphotos.feature.people.view.implementation.ui.People
 import com.savvasdalkitsis.uhuruphotos.feature.people.view.implementation.ui.state.PeopleState
 import com.savvasdalkitsis.uhuruphotos.feature.people.view.implementation.viewmodel.PeopleViewModel
+import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.NavigationTarget
+import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.navigationTarget
 import javax.inject.Inject
 
 class PeopleNavigationTarget @Inject constructor(

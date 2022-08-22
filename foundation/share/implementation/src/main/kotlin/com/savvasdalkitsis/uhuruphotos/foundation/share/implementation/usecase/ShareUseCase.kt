@@ -7,7 +7,6 @@ import androidx.core.content.FileProvider
 import coil.ImageLoader
 import coil.disk.DiskCache
 import coil.request.ImageRequest
-import com.savvasdalkitsis.uhuruphotos.feature.settings.domain.api.usecase.SettingsUseCase
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.Navigator
 import com.savvasdalkitsis.uhuruphotos.foundation.share.api.usecase.ShareUseCase
 import com.savvasdalkitsis.uhuruphotos.foundation.share.implementation.removeGpsData

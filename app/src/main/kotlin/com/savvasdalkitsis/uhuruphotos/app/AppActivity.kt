@@ -23,7 +23,6 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.core.view.WindowCompat
 import androidx.fragment.app.FragmentActivity
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
-import com.savvasdalkitsis.uhuruphotos.feature.settings.domain.api.usecase.SettingsUseCase
 import com.savvasdalkitsis.uhuruphotos.app.navigation.AppNavigator
 import com.savvasdalkitsis.uhuruphotos.foundation.activity.api.CurrentActivityHolder
 import com.savvasdalkitsis.uhuruphotos.foundation.log.api.Log
