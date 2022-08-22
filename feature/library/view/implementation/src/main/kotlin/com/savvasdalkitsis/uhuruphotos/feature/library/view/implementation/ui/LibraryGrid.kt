@@ -59,8 +59,8 @@ import com.savvasdalkitsis.uhuruphotos.feature.library.view.implementation.seam.
 import com.savvasdalkitsis.uhuruphotos.feature.library.view.implementation.ui.state.LibraryLocalMedia.Found
 import com.savvasdalkitsis.uhuruphotos.feature.library.view.implementation.ui.state.LibraryLocalMedia.RequiresPermissions
 import com.savvasdalkitsis.uhuruphotos.feature.library.view.implementation.ui.state.LibraryState
-import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.MediaGrid
-import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.state.MediaGridState
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.Vitrine
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.state.VitrineState
 import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.R.drawable
 import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.theme.CustomColors
@@ -132,11 +132,11 @@ private fun LocalFolders(
         LazyRow(
             modifier = Modifier.heightIn(min = 120.dp)
         ) {
-            for ((bucket, photoGrid) in media.buckets) {
+            for ((bucket, vitrineState) in media.buckets) {
                 item(bucket.id) {
                     LibraryEntry(
                         modifier = Modifier.animateItemPlacement(),
-                        mediaGrid = photoGrid,
+                        state = vitrineState,
                         photoGridModifier = Modifier.width(120.dp),
                         title = bucket.displayName,
                     ) {
@@ -186,15 +186,15 @@ private fun PillItem(title: String, icon: Int, onSelected: () -> Unit) {
 }
 
 internal fun LazyGridScope.libraryItem(
-    mediaGrid: MediaGridState?,
+    vitrineState: VitrineState?,
     title: String,
     @DrawableRes overlayIcon: Int? = null,
     onSelected: () -> Unit,
 ) {
-    mediaGrid?.let {
+    vitrineState?.let {
         item(title) {
             LibraryEntry(
-                mediaGrid = mediaGrid,
+                state = vitrineState,
                 photoGridModifier = Modifier.fillMaxWidth(),
                 title = title,
                 overlayIcon = overlayIcon,
@@ -207,7 +207,7 @@ internal fun LazyGridScope.libraryItem(
 @Composable
 fun LibraryEntry(
     modifier: Modifier = Modifier,
-    mediaGrid: MediaGridState,
+    state: VitrineState,
     photoGridModifier: Modifier,
     title: String,
     @DrawableRes overlayIcon: Int? = null,
@@ -218,9 +218,9 @@ fun LibraryEntry(
             .padding(8.dp),
     ) {
         Box(modifier = Modifier.fillMaxSize()) {
-            MediaGrid(
+            Vitrine(
                 modifier = photoGridModifier,
-                state = mediaGrid,
+                state = state,
                 onSelected = onSelected,
                 shape = RoundedCornerShape(26.dp)
             )

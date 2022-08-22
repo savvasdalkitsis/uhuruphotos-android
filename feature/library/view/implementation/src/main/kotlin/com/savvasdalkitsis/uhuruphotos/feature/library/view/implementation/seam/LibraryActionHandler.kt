@@ -47,7 +47,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.Med
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemsOnDevice.Found
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemsOnDevice.RequiresPermissions
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.usecase.MediaUseCase
-import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.state.MediaGridState
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.state.VitrineState
 import com.savvasdalkitsis.uhuruphotos.foundation.coroutines.api.safelyOnStartIgnoring
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.ActionHandler
 import kotlinx.coroutines.delay
@@ -90,7 +90,7 @@ class LibraryActionHandler @Inject constructor(
                 .map { media ->
                     when (media) {
                         is Found -> LibraryLocalMedia.Found(
-                            media.mediaFolders.map { it.toMediaGrid() }
+                            media.mediaFolders.map { it.toVitrine() }
                         )
                         is RequiresPermissions ->
                             LibraryLocalMedia.RequiresPermissions(media.deniedPermissions)
@@ -195,13 +195,13 @@ class LibraryActionHandler @Inject constructor(
         loading.emit(false)
     }
 
-    private fun <T> Flow<List<T>>.mapToCover(cover: (T) -> MediaItem?): Flow<MediaGridState> =
+    private fun <T> Flow<List<T>>.mapToCover(cover: (T) -> MediaItem?): Flow<VitrineState> =
         map { albums ->
             albums.take(4).map(cover).let {
-                MediaGridState(it)
+                VitrineState(it)
             }
         }
 
-    private fun Pair<LocalMediaFolder, List<MediaItem>>.toMediaGrid(): Pair<LocalMediaFolder, MediaGridState> =
-        first to MediaGridState(second)
+    private fun Pair<LocalMediaFolder, List<MediaItem>>.toVitrine(): Pair<LocalMediaFolder, VitrineState> =
+        first to VitrineState(second)
 }

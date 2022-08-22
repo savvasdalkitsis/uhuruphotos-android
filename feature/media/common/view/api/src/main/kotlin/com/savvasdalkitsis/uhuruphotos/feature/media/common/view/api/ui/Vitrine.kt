@@ -32,13 +32,13 @@ import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItem
-import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.state.MediaGridState
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.state.VitrineState
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.theme.CustomColors
 
 @Composable
-fun MediaGrid(
+fun Vitrine(
     modifier: Modifier = Modifier,
-    state: MediaGridState,
+    state: VitrineState,
     onSelected: () -> Unit,
     shape: Shape = RectangleShape,
 ) {

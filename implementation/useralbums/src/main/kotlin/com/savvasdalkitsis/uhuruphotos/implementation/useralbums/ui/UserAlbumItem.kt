@@ -31,8 +31,8 @@ import androidx.compose.ui.unit.dp
 import com.savvasdalkitsis.uhuruphotos.api.useralbums.ui.state.UserAlbum
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaId
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItem
-import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.MediaGrid
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.MediaItemThumbnail
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.Vitrine
 import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R
 import com.savvasdalkitsis.uhuruphotos.implementation.useralbums.seam.UserAlbumsAction
 import com.savvasdalkitsis.uhuruphotos.implementation.useralbums.seam.UserAlbumsAction.UserAlbumSelected
@@ -48,7 +48,7 @@ internal fun UserAlbumItem(
             .clickable { action(UserAlbumSelected(album)) }
     ) {
         if (album.cover.hasMoreThanOneItem) {
-            MediaGrid(
+            Vitrine(
                 state = album.cover,
                 onSelected = {
                     action(UserAlbumSelected(album))

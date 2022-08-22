@@ -26,7 +26,7 @@ import com.savvasdalkitsis.uhuruphotos.api.useralbums.ui.state.UserAlbum
 import com.savvasdalkitsis.uhuruphotos.api.useralbums.usecase.UserAlbumsUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaId
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItem
-import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.state.MediaGridState
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.state.VitrineState
 import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.flow.Flow
@@ -72,7 +72,7 @@ class UserAlbumsUseCase @Inject constructor(
             .map {
                 UserAlbum(
                     id = it.id,
-                    cover = MediaGridState(
+                    cover = VitrineState(
                         mediaItem1 = photo(
                             it.coverPhoto1Hash,
                             it.coverPhoto1IsVideo

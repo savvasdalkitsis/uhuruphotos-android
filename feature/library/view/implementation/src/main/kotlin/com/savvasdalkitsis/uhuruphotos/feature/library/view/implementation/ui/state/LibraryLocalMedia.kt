@@ -16,13 +16,13 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.feature.library.view.implementation.ui.state
 
 import com.savvasdalkitsis.uhuruphotos.api.media.local.domain.model.LocalMediaFolder
-import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.state.MediaGridState
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.state.VitrineState
 
 sealed class LibraryLocalMedia {
 
     data class RequiresPermissions(val deniedPermissions: List<String>) : LibraryLocalMedia()
 
     data class Found(
-        val buckets: List<Pair<LocalMediaFolder, MediaGridState>>
+        val buckets: List<Pair<LocalMediaFolder, VitrineState>>
     ) : LibraryLocalMedia()
 }

@@ -17,7 +17,7 @@ package com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.state
 
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItem
 
-data class MediaGridState(
+data class VitrineState(
     val mediaItem1: MediaItem? = null,
     val mediaItem2: MediaItem? = null,
     val mediaItem3: MediaItem? = null,
@@ -26,7 +26,7 @@ data class MediaGridState(
     val hasMoreThanOneItem = mediaItem2 != null
 
     companion object {
-        operator fun invoke(mediaItems: List<MediaItem?>)= MediaGridState(
+        operator fun invoke(mediaItems: List<MediaItem?>)= VitrineState(
             mediaItems.getOrNull(0),
             mediaItems.getOrNull(1),
             mediaItems.getOrNull(2),

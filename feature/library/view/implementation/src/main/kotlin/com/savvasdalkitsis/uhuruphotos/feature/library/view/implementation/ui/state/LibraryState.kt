@@ -15,12 +15,12 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.library.view.implementation.ui.state
 
-import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.state.MediaGridState
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.state.VitrineState
 
 data class LibraryState(
     val loading: Boolean = false,
-    val autoAlbums: MediaGridState? = null,
-    val userAlbums: MediaGridState? = null,
-    val favouritePhotos: MediaGridState? = null,
+    val autoAlbums: VitrineState? = null,
+    val userAlbums: VitrineState? = null,
+    val favouritePhotos: VitrineState? = null,
     val localMedia: LibraryLocalMedia? = null,
 )
