@@ -17,9 +17,13 @@ graph TD;
     RemoteMediaItem-->Video
     AutoAlbum-->Gallery
     UserAlbum-->Gallery
+    AutoAlbum-->Vitrine
+    UserAlbum-->Vitrine
     Favourites-->Gallery
+    Favourites-->Vitrine
     TrashMedia-->Gallery
     LocalMedia-->LocalGallery
+    LocalMedia-->Vitrine
     LocalGallery-->Gallery
     HiddenMedia-->Gallery
     Person-->Collage
