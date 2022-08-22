@@ -43,7 +43,7 @@ internal class UserAlbumActionHandler @Inject constructor(
 ) : ActionHandler<GalleriaState, GalleriaEffect, GalleriaAction, GalleriaMutation>
 by GalleriaActionHandler(
     galleryRefresher = { userAlbumsUseCase.refreshUserAlbum(it) },
-    initialGalleryDisplay = { userAlbumsUseCase.getUserAlbumGalleryDisplay(it) },
+    initialCollageDisplay = { userAlbumsUseCase.getUserAlbumGalleryDisplay(it) },
     galleryDisplayPersistence = { albumId, galleryDisplay ->
         userAlbumsUseCase.setUserAlbumGalleryDisplay(albumId, galleryDisplay)
     },

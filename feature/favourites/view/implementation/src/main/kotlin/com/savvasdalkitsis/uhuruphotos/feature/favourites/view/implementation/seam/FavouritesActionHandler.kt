@@ -38,7 +38,7 @@ internal class FavouritesActionHandler @Inject constructor(
 ) : ActionHandler<GalleriaState, GalleriaEffect, GalleriaAction, GalleriaMutation>
 by GalleriaActionHandler(
     galleryRefresher = { mediaUseCase.refreshFavouriteMedia() },
-    initialGalleryDisplay = { favouritesUseCase.getFavouriteMediaGalleryDisplay() },
+    initialCollageDisplay = { favouritesUseCase.getFavouriteMediaGalleryDisplay() },
     galleryDisplayPersistence = { _, galleryDisplay ->
         favouritesUseCase.setFavouriteMediaGalleryDisplay(galleryDisplay)
     },

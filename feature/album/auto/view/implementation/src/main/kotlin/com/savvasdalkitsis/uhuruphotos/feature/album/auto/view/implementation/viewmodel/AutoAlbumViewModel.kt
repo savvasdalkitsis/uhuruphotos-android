@@ -17,12 +17,12 @@ package com.savvasdalkitsis.uhuruphotos.feature.album.auto.view.implementation.v
 
 import androidx.lifecycle.ViewModel
 import com.savvasdalkitsis.uhuruphotos.feature.album.auto.view.implementation.seam.AutoAlbumActionHandler
-import com.savvasdalkitsis.uhuruphotos.feature.album.auto.view.implementation.state.AutoAlbumGalleryDisplay
+import com.savvasdalkitsis.uhuruphotos.feature.album.auto.view.implementation.state.AutoAlbumCollageDisplay
+import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.CollageState
 import com.savvasdalkitsis.uhuruphotos.feature.galleria.view.api.seam.GalleriaAction
 import com.savvasdalkitsis.uhuruphotos.feature.galleria.view.api.seam.GalleriaEffect
 import com.savvasdalkitsis.uhuruphotos.feature.galleria.view.api.seam.GalleriaMutation
 import com.savvasdalkitsis.uhuruphotos.feature.galleria.view.api.ui.state.GalleriaState
-import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.ui.state.GalleryState
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.Seam
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.handler
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -34,5 +34,5 @@ internal class AutoAlbumViewModel @Inject constructor(
 ) : ViewModel(),
     Seam<GalleriaState, GalleriaEffect, GalleriaAction, GalleriaMutation> by handler(
         autoAlbumActionHandler,
-        GalleriaState(galleryState = GalleryState(galleryDisplay = AutoAlbumGalleryDisplay))
+        GalleriaState(collageState = CollageState(collageDisplay = AutoAlbumCollageDisplay))
     )

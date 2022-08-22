@@ -13,15 +13,15 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
  */
-package com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.ui
+package com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui
 
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
-import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.ui.MediaRowSlot.EmptySlot
-import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.ui.MediaRowSlot.MediaSlot
+import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.MediaRowSlot.EmptySlot
+import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.MediaRowSlot.MediaSlot
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItem
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.MediaItemSelected
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.MediaItemThumbnail

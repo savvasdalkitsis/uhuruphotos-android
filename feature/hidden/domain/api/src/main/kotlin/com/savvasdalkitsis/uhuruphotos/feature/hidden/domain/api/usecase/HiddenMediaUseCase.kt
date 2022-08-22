@@ -15,12 +15,12 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.hidden.domain.api.usecase
 
-import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.ui.state.GalleryDisplay
-import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.ui.state.PredefinedGalleryDisplay
+import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.CollageDisplay
+import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.PredefinedCollageDisplay
 
 interface HiddenMediaUseCase {
 
-    fun getHiddenMediaGalleryDisplay(): GalleryDisplay
+    fun getHiddenMediaGalleryDisplay(): CollageDisplay
 
-    suspend fun setHiddenMediaGalleryDisplay(galleryDisplay: PredefinedGalleryDisplay)
+    suspend fun setHiddenMediaGalleryDisplay(galleryDisplay: PredefinedCollageDisplay)
 }

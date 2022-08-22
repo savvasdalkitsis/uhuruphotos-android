@@ -19,7 +19,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import com.savvasdalkitsis.uhuruphotos.feature.galleria.view.api.seam.GalleriaAction
-import com.savvasdalkitsis.uhuruphotos.feature.galleria.view.api.seam.GalleriaAction.LoadGallery
+import com.savvasdalkitsis.uhuruphotos.feature.galleria.view.api.seam.GalleriaAction.LoadCollage
 import com.savvasdalkitsis.uhuruphotos.feature.galleria.view.api.seam.GalleriaEffect
 import com.savvasdalkitsis.uhuruphotos.feature.galleria.view.api.seam.GalleriaEffectsHandler
 import com.savvasdalkitsis.uhuruphotos.feature.galleria.view.api.ui.state.GalleriaState
@@ -59,7 +59,7 @@ internal class TrashNavigationTarget @Inject constructor(
             ),
             themeMode = settingsUseCase.observeThemeModeState(),
             initializer = { _, action ->
-                action(Left(LoadGallery(0)))
+                action(Left(LoadCollage(0)))
                 action(Right(Load))
             },
             createModel = { hiltViewModel() }

@@ -13,7 +13,7 @@ dependencies {
     implementation project(':api:albums')
     implementation project(':foundation:date:api')
     implementation project(":api:db")
-    implementation project(":feature:gallery:view:api")
+    implementation project(":feature:collage:view:api")
     implementation project(":foundation:navigation:api")
     implementation project(':feature:people:view:api')
     implementation project(':feature:media:common:domain:api')

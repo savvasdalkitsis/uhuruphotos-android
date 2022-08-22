@@ -44,7 +44,7 @@ internal class HiddenPhotosAlbumPageActionHandler @Inject constructor(
     biometricsUseCase: BiometricsUseCase
 ): ActionHandler<GalleriaState, GalleriaEffect, GalleriaAction, GalleriaMutation> by GalleriaActionHandler(
     galleryRefresher = { mediaUseCase.refreshFavouriteMedia() },
-    initialGalleryDisplay = { hiddenMediaUseCase.getHiddenMediaGalleryDisplay() },
+    initialCollageDisplay = { hiddenMediaUseCase.getHiddenMediaGalleryDisplay() },
     galleryDisplayPersistence = { _, galleryDisplay ->
         hiddenMediaUseCase.setHiddenMediaGalleryDisplay(galleryDisplay)
     },

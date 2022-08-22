@@ -15,9 +15,11 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.galleria.view.api.seam
 
+import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.CollageDisplay
+import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.PredefinedCollageDisplay
 import com.savvasdalkitsis.uhuruphotos.feature.exhibit.view.api.model.ExhibitSequenceDataSource
-import com.savvasdalkitsis.uhuruphotos.feature.galleria.view.api.seam.GalleriaAction.ChangeGalleryDisplay
-import com.savvasdalkitsis.uhuruphotos.feature.galleria.view.api.seam.GalleriaAction.LoadGallery
+import com.savvasdalkitsis.uhuruphotos.feature.galleria.view.api.seam.GalleriaAction.ChangeCollageDisplay
+import com.savvasdalkitsis.uhuruphotos.feature.galleria.view.api.seam.GalleriaAction.LoadCollage
 import com.savvasdalkitsis.uhuruphotos.feature.galleria.view.api.seam.GalleriaAction.NavigateBack
 import com.savvasdalkitsis.uhuruphotos.feature.galleria.view.api.seam.GalleriaAction.PersonSelected
 import com.savvasdalkitsis.uhuruphotos.feature.galleria.view.api.seam.GalleriaAction.SelectedMediaItem
@@ -29,8 +31,6 @@ import com.savvasdalkitsis.uhuruphotos.feature.galleria.view.api.seam.GalleriaMu
 import com.savvasdalkitsis.uhuruphotos.feature.galleria.view.api.seam.GalleriaMutation.ShowGalleria
 import com.savvasdalkitsis.uhuruphotos.feature.galleria.view.api.ui.state.GalleriaDetails
 import com.savvasdalkitsis.uhuruphotos.feature.galleria.view.api.ui.state.GalleriaState
-import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.ui.state.GalleryDisplay
-import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.ui.state.PredefinedGalleryDisplay
 import com.savvasdalkitsis.uhuruphotos.foundation.coroutines.api.safelyOnStartIgnoring
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.ActionHandler
 import kotlinx.coroutines.flow.Flow
@@ -46,8 +46,8 @@ class GalleriaActionHandler(
     private val galleriaDetailsFlow: (galleryId: Int, effect: suspend (GalleriaEffect) -> Unit) -> Flow<GalleriaDetails>,
     private val galleryDetailsEmptyCheck: suspend (galleryId: Int) -> Boolean,
     private val exhibitSequenceDataSource: (galleryId: Int) -> ExhibitSequenceDataSource,
-    private val initialGalleryDisplay: (galleryId: Int) -> GalleryDisplay,
-    private val galleryDisplayPersistence: suspend (galleryId:Int, PredefinedGalleryDisplay) -> Unit,
+    private val initialCollageDisplay: (galleryId: Int) -> CollageDisplay,
+    private val galleryDisplayPersistence: suspend (galleryId:Int, PredefinedCollageDisplay) -> Unit,
 ) : ActionHandler<GalleriaState, GalleriaEffect, GalleriaAction, GalleriaMutation> {
 
     private val loading = MutableSharedFlow<GalleriaMutation>()
@@ -58,14 +58,14 @@ class GalleriaActionHandler(
         action: GalleriaAction,
         effect: suspend (GalleriaEffect) -> Unit,
     ): Flow<GalleriaMutation> = when (action) {
-        is LoadGallery -> {
+        is LoadCollage -> {
             merge(
-                flowOf(GalleriaMutation.ChangeGalleryDisplay(initialGalleryDisplay(action.galleryId))),
-                galleriaDetailsFlow(action.galleryId, effect)
+                flowOf(GalleriaMutation.ChangeCollageDisplay(initialCollageDisplay(action.collageId))),
+                galleriaDetailsFlow(action.collageId, effect)
                     .map(::ShowGalleria),
                 loading,
             ).safelyOnStartIgnoring {
-                galleryId = action.galleryId
+                galleryId = action.collageId
                 if (galleryDetailsEmptyCheck(galleryId)) {
                     refreshGallery(effect)
                 }
@@ -93,9 +93,9 @@ class GalleriaActionHandler(
         is PersonSelected -> flow {
             effect(NavigateToPerson(action.person.id))
         }
-        is ChangeGalleryDisplay -> flow {
-            emit(GalleriaMutation.ChangeGalleryDisplay(action.galleryDisplay))
-            (action.galleryDisplay as? PredefinedGalleryDisplay)?.let {
+        is ChangeCollageDisplay -> flow {
+            emit(GalleriaMutation.ChangeCollageDisplay(action.collageDisplay))
+            (action.collageDisplay as? PredefinedCollageDisplay)?.let {
                 galleryDisplayPersistence(galleryId, it)
             }
         }

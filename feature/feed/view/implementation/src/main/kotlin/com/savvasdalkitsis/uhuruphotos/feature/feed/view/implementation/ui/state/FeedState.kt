@@ -15,24 +15,24 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.ui.state
 
-import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.ui.state.GalleryState
-import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.ui.state.PredefinedGalleryDisplay
+import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.CollageState
+import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.PredefinedCollageDisplay
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItem
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemSelectionMode
 
 internal data class FeedState(
-    val galleryState: GalleryState = GalleryState(),
+    val collageState: CollageState = CollageState(),
     val isRefreshing: Boolean = false,
     val showLibrary: Boolean = true,
     val showPhotoTrashingConfirmationDialog: Boolean = false,
 ) {
-    val selectedPhotoCount: Int = galleryState.albums.sumOf { album ->
+    val selectedPhotoCount: Int = collageState.albums.sumOf { album ->
         album.photos.count { photo ->
             photo.selectionMode == MediaItemSelectionMode.SELECTED
         }
     }
     val hasSelection = selectedPhotoCount > 0
-    val selectedMediaItem: List<MediaItem> = galleryState.albums.flatMap { album ->
+    val selectedMediaItem: List<MediaItem> = collageState.albums.flatMap { album ->
         album.photos.filter { photo ->
             photo.selectionMode == MediaItemSelectionMode.SELECTED
         }
@@ -40,5 +40,5 @@ internal data class FeedState(
     val shouldShowShareIcon: Boolean = selectedMediaItem.let { selected ->
         selected.isNotEmpty() && selected.none(MediaItem::isVideo)
     }
-    val shouldShowAlbumRefreshButtons: Boolean = galleryState.galleryDisplay != PredefinedGalleryDisplay.YEARLY
+    val shouldShowAlbumRefreshButtons: Boolean = collageState.collageDisplay != PredefinedCollageDisplay.YEARLY
 }

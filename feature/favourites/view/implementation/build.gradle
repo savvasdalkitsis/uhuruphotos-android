@@ -15,7 +15,7 @@ dependencies {
     implementation project(':feature:favourites:domain:api')
     implementation project(':foundation:date:api')
     implementation project(":api:db")
-    implementation project(":feature:gallery:view:api")
+    implementation project(":feature:collage:view:api")
     implementation project(":foundation:navigation:api")
     implementation project(":feature:exhibit:view:api")
     implementation project(':feature:media:common:domain:api')

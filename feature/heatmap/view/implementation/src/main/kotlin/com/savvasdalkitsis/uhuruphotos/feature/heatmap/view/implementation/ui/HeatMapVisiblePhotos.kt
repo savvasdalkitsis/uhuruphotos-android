@@ -21,11 +21,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import com.savvasdalkitsis.uhuruphotos.api.albums.model.Album
-import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.ui.Gallery
-import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.ui.state.GalleryState
+import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.Collage
+import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.CollageState
 import com.savvasdalkitsis.uhuruphotos.feature.heatmap.view.implementation.seam.HeatMapAction
 import com.savvasdalkitsis.uhuruphotos.feature.heatmap.view.implementation.seam.HeatMapAction.SelectedPhoto
-import com.savvasdalkitsis.uhuruphotos.feature.heatmap.view.implementation.ui.state.HeatMapGalleryDisplay
+import com.savvasdalkitsis.uhuruphotos.feature.heatmap.view.implementation.ui.state.HeatMapCollageDisplay
 import com.savvasdalkitsis.uhuruphotos.feature.heatmap.view.implementation.ui.state.HeatMapState
 import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
 
@@ -40,12 +40,12 @@ fun HeatMapVisiblePhotos(
     if (state.allMedia.isEmpty()) {
         CircularProgressIndicator(modifier = loadingModifier)
     } else {
-        Gallery(
+        Collage(
             modifier = modifier,
             contentPadding = contentPadding,
-            state = GalleryState(
+            state = CollageState(
                 isLoading = false,
-                galleryDisplay = HeatMapGalleryDisplay,
+                collageDisplay = HeatMapCollageDisplay,
                 albums = listOf(
                     Album(
                         id = "visiblePhotos",

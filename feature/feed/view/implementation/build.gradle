@@ -14,7 +14,7 @@ dependencies {
     implementation project(':api:albums')
     implementation project(":foundation:compose:api")
     implementation project(":feature:exhibit:view:api")
-    implementation project(":feature:gallery:view:api")
+    implementation project(":feature:collage:view:api")
     implementation project(":feature:feed:view:api")
     implementation project(":feature:feed:domain:api")
     implementation project(":feature:home:view:api")

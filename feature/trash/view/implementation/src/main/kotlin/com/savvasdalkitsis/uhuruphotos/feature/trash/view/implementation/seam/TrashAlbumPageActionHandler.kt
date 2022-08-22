@@ -40,7 +40,7 @@ internal class TrashAlbumPageActionHandler @Inject constructor(
     biometricsUseCase: BiometricsUseCase
 ): ActionHandler<GalleriaState, GalleriaEffect, GalleriaAction, GalleriaMutation> by GalleriaActionHandler(
     galleryRefresher = { trashUseCase.refreshTrash() },
-    initialGalleryDisplay = { trashUseCase.getTrashGalleryDisplay() },
+    initialCollageDisplay = { trashUseCase.getTrashGalleryDisplay() },
     galleryDisplayPersistence = { _, galleryDisplay ->
         trashUseCase.setTrashGalleryDisplay(galleryDisplay)
     },

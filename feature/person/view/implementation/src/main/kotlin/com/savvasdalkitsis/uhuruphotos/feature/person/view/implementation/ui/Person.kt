@@ -27,8 +27,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
-import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.ui.Gallery
-import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.ui.GalleryDisplayActionButton
+import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.Collage
+import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.CollageDisplayActionButton
 import com.savvasdalkitsis.uhuruphotos.feature.person.view.implementation.seam.PersonAction
 import com.savvasdalkitsis.uhuruphotos.feature.person.view.implementation.seam.PersonAction.ChangeDisplay
 import com.savvasdalkitsis.uhuruphotos.feature.person.view.implementation.seam.PersonAction.NavigateBack
@@ -72,24 +72,24 @@ fun Person(
         },
         actionBarContent = {
             AnimatedVisibility(
-                visible = state.galleryState.albums.isNotEmpty() && state.galleryState.isLoading
+                visible = state.collageState.albums.isNotEmpty() && state.collageState.isLoading
             ) {
                 CircularProgressIndicator()
             }
-            AnimatedVisibility(state.galleryState.albums.isNotEmpty()) {
-                GalleryDisplayActionButton(
+            AnimatedVisibility(state.collageState.albums.isNotEmpty()) {
+                CollageDisplayActionButton(
                     onChange = { action(ChangeDisplay(it)) },
-                    currentGalleryDisplay = state.galleryState.galleryDisplay
+                    currentCollageDisplay = state.collageState.collageDisplay
                 )
             }
         }
     ) { contentPadding ->
-        if (state.galleryState.albums.isEmpty()) {
+        if (state.collageState.albums.isEmpty()) {
             FullProgressBar()
         } else {
-            Gallery(
+            Collage(
                 contentPadding = contentPadding,
-                state = state.galleryState,
+                state = state.collageState,
                 onMediaItemSelected = { photo, center, scale ->
                     action(SelectedPhoto(photo, center, scale))
                 },

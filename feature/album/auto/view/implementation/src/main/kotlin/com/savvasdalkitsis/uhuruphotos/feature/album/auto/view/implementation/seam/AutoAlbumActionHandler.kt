@@ -18,7 +18,7 @@ package com.savvasdalkitsis.uhuruphotos.feature.album.auto.view.implementation.s
 import com.savvasdalkitsis.uhuruphotos.api.albums.model.Album
 import com.savvasdalkitsis.uhuruphotos.api.media.remote.domain.usecase.RemoteMediaUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.album.auto.domain.api.usecase.AutoAlbumsUseCase
-import com.savvasdalkitsis.uhuruphotos.feature.album.auto.view.implementation.state.AutoAlbumGalleryDisplay
+import com.savvasdalkitsis.uhuruphotos.feature.album.auto.view.implementation.state.AutoAlbumCollageDisplay
 import com.savvasdalkitsis.uhuruphotos.feature.exhibit.view.api.model.ExhibitSequenceDataSource.AutoAlbum
 import com.savvasdalkitsis.uhuruphotos.feature.galleria.view.api.seam.GalleriaAction
 import com.savvasdalkitsis.uhuruphotos.feature.galleria.view.api.seam.GalleriaActionHandler
@@ -42,7 +42,7 @@ internal class AutoAlbumActionHandler @Inject constructor(
 ) : ActionHandler<GalleriaState, GalleriaEffect, GalleriaAction, GalleriaMutation>
 by GalleriaActionHandler(
     galleryRefresher = { autoAlbumsUseCase.refreshAutoAlbum(it) },
-    initialGalleryDisplay = { AutoAlbumGalleryDisplay },
+    initialCollageDisplay = { AutoAlbumCollageDisplay },
     galleryDisplayPersistence = { _, _ -> },
     galleryDetailsEmptyCheck = { albumId ->
         autoAlbumsUseCase.getAutoAlbum(albumId).items.isEmpty()

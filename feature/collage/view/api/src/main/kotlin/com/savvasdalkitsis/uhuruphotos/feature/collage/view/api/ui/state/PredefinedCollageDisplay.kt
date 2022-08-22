@@ -13,7 +13,7 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
  */
-package com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.ui.state
+package com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state
 
 
 import androidx.annotation.DrawableRes
@@ -23,7 +23,7 @@ import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
 import kotlin.math.max
 import kotlin.math.min
 
-enum class PredefinedGalleryDisplay(
+enum class PredefinedCollageDisplay(
     override val miniIcons: Boolean,
     override val compactColumnsPortrait: Int,
     override val compactColumnsLandscape: Int,
@@ -33,7 +33,7 @@ enum class PredefinedGalleryDisplay(
     @DrawableRes override val iconResource: Int,
     override val maintainAspectRatio: Boolean,
     @StringRes override val friendlyName: Int,
-) : GalleryDisplay {
+) : CollageDisplay {
     YEARLY(
         miniIcons = true,
         compactColumnsPortrait = 10,
@@ -52,7 +52,7 @@ enum class PredefinedGalleryDisplay(
         wideColumnsPortrait = 8,
         wideColumnsLandscape = 9,
         shouldAddEmptyPhotosInRows = true,
-        iconResource = drawable.ic_gallery_tiny,
+        iconResource = drawable.ic_collage_tiny,
         maintainAspectRatio = false,
         friendlyName = string.tiny,
     ),
@@ -63,7 +63,7 @@ enum class PredefinedGalleryDisplay(
         wideColumnsPortrait = 7,
         wideColumnsLandscape = 8,
         shouldAddEmptyPhotosInRows = true,
-        iconResource = drawable.ic_gallery_compact,
+        iconResource = drawable.ic_collage_compact,
         maintainAspectRatio = true,
         friendlyName = string.compact,
     ),
@@ -74,7 +74,7 @@ enum class PredefinedGalleryDisplay(
         wideColumnsPortrait = 4,
         wideColumnsLandscape = 6,
         shouldAddEmptyPhotosInRows = true,
-        iconResource = drawable.ic_gallery_comfortable,
+        iconResource = drawable.ic_collage_comfortable,
         maintainAspectRatio = true,
         friendlyName = string.comfortable,
     ),
@@ -85,7 +85,7 @@ enum class PredefinedGalleryDisplay(
         wideColumnsPortrait = 3,
         wideColumnsLandscape = 5,
         shouldAddEmptyPhotosInRows = false,
-        iconResource = drawable.ic_gallery_big,
+        iconResource = drawable.ic_collage_big,
         maintainAspectRatio = true,
         friendlyName = string.big,
     ),
@@ -96,13 +96,13 @@ enum class PredefinedGalleryDisplay(
         wideColumnsPortrait = 2,
         wideColumnsLandscape = 4,
         shouldAddEmptyPhotosInRows = false,
-        iconResource = drawable.ic_gallery_full,
+        iconResource = drawable.ic_collage_full,
         maintainAspectRatio = true,
         friendlyName = string.full,
     );
 
-    override val zoomIn: GalleryDisplay get() = values()[min(ordinal + 1, values().size - 1)]
-    override val zoomOut: GalleryDisplay get() = values()[max(0, ordinal -1)]
+    override val zoomIn: CollageDisplay get() = values()[min(ordinal + 1, values().size - 1)]
+    override val zoomOut: CollageDisplay get() = values()[max(0, ordinal -1)]
     override val allowsPinchGestures = true
 
     companion object {

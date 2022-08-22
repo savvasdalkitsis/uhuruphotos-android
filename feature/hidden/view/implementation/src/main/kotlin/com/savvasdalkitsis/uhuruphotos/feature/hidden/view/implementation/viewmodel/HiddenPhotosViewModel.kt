@@ -16,10 +16,10 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.feature.hidden.view.implementation.viewmodel
 
 import androidx.lifecycle.ViewModel
+import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.CollageState
 import com.savvasdalkitsis.uhuruphotos.feature.galleria.view.api.seam.GalleriaAction
 import com.savvasdalkitsis.uhuruphotos.feature.galleria.view.api.seam.GalleriaEffect
 import com.savvasdalkitsis.uhuruphotos.feature.galleria.view.api.ui.state.GalleriaState
-import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.ui.state.GalleryState
 import com.savvasdalkitsis.uhuruphotos.feature.hidden.view.implementation.seam.HiddenPhotosAction
 import com.savvasdalkitsis.uhuruphotos.feature.hidden.view.implementation.seam.HiddenPhotosCompositeActionHandler
 import com.savvasdalkitsis.uhuruphotos.feature.hidden.view.implementation.seam.HiddenPhotosEffect
@@ -41,5 +41,5 @@ internal class HiddenPhotosViewModel @Inject constructor(
         Mutation<Pair<GalleriaState, HiddenPhotosState>>
         > by handler(
     hiddenPhotosCompositeActionHandler,
-    GalleriaState(galleryState = GalleryState()) to HiddenPhotosState()
+    GalleriaState(collageState = CollageState()) to HiddenPhotosState()
 )

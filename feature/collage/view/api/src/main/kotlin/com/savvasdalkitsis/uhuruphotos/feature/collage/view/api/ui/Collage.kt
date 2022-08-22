@@ -13,7 +13,7 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
  */
-package com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.ui
+package com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui
 
 import android.content.res.Configuration
 import androidx.compose.foundation.layout.PaddingValues
@@ -26,8 +26,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.unit.dp
 import com.savvasdalkitsis.uhuruphotos.api.albums.model.Album
-import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.ui.state.GalleryDisplay
-import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.ui.state.GalleryState
+import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.CollageDisplay
+import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.CollageState
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItem
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.MediaItemSelected
 import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
@@ -36,17 +36,17 @@ import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.NoContent
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.window.LocalWindowSize
 
 @Composable
-fun Gallery(
+fun Collage(
     modifier: Modifier = Modifier,
     contentPadding: PaddingValues = PaddingValues(0.dp),
-    state: GalleryState,
+    state: CollageState,
     showSelectionHeader: Boolean = false,
     showGroupRefreshButton: Boolean = false,
     listState: LazyListState = rememberLazyListState(),
-    galleryHeader: @Composable (LazyItemScope.() -> Unit)? = null,
+    collageHeader: @Composable (LazyItemScope.() -> Unit)? = null,
     emptyContent: @Composable () -> Unit = { NoContent(string.no_photos) },
     onMediaItemSelected: MediaItemSelected = { _, _, _ -> },
-    onChangeDisplay: ((GalleryDisplay) -> Unit) = {},
+    onChangeDisplay: ((CollageDisplay) -> Unit) = {},
     onPhotoLongPressed: (MediaItem) -> Unit = {},
     onGroupRefreshClicked: (Album) -> Unit = {},
     onGroupSelectionClicked: (Album) -> Unit = {},
@@ -54,13 +54,13 @@ fun Gallery(
     state.isLoading || (!state.isEmpty && state.albums.isEmpty()) -> FullProgressBar()
     state.isEmpty && state.albums.isEmpty() -> emptyContent()
     else -> {
-        val galleryDisplay = state.galleryDisplay
-        StaggeredGallery(
+        val collageDisplay = state.collageDisplay
+        StaggeredCollage(
             modifier = modifier
                 .let {
                     when {
-                        galleryDisplay.allowsPinchGestures -> it.pinchToChange(
-                            galleryDisplay,
+                        collageDisplay.allowsPinchGestures -> it.pinchToChange(
+                            collageDisplay,
                             onChangeDisplay,
                         )
                         else -> it
@@ -70,15 +70,15 @@ fun Gallery(
             albums = state.albums,
             showSelectionHeader = showSelectionHeader,
             showAlbumRefreshButton = showGroupRefreshButton,
-            maintainAspectRatio = galleryDisplay.maintainAspectRatio,
-            miniIcons = galleryDisplay.miniIcons,
+            maintainAspectRatio = collageDisplay.maintainAspectRatio,
+            miniIcons = collageDisplay.miniIcons,
             listState = listState,
-            galleryHeader = galleryHeader,
-            columnCount = galleryDisplay.columnCount(
+            collageHeader = collageHeader,
+            columnCount = collageDisplay.columnCount(
                 widthSizeClass = LocalWindowSize.current.widthSizeClass,
                 landscape = LocalConfiguration.current.orientation == Configuration.ORIENTATION_LANDSCAPE
             ),
-            shouldAddEmptyPhotosInRows = galleryDisplay.shouldAddEmptyPhotosInRows,
+            shouldAddEmptyPhotosInRows = collageDisplay.shouldAddEmptyPhotosInRows,
             onMediaItemSelected = onMediaItemSelected,
             onMediaItemLongPressed = onPhotoLongPressed,
             onAlbumSelectionClicked = onGroupSelectionClicked,
@@ -87,7 +87,7 @@ fun Gallery(
     }
 }
 
-private fun GalleryDisplay.columnCount(
+private fun CollageDisplay.columnCount(
     widthSizeClass: WindowWidthSizeClass,
     landscape: Boolean,
 ) = when {

@@ -18,8 +18,8 @@ package com.savvasdalkitsis.uhuruphotos.feature.album.user.domain.implementation
 import com.fredporciuncula.flow.preferences.FlowSharedPreferences
 import com.savvasdalkitsis.uhuruphotos.api.albums.repository.AlbumsRepository
 import com.savvasdalkitsis.uhuruphotos.api.db.albums.GetUserAlbum
-import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.ui.state.GalleryDisplay
-import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.ui.state.PredefinedGalleryDisplay
+import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.CollageDisplay
+import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.PredefinedCollageDisplay
 import com.savvasdalkitsis.uhuruphotos.foundation.group.api.model.Group
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
@@ -38,14 +38,14 @@ internal class UserAlbumsUseCase @Inject constructor(
     suspend fun refreshUserAlbum(albumId: Int) =
         albumsRepository.refreshUserAlbum(albumId)
 
-    fun getUserAlbumGalleryDisplay(albumId: Int) : GalleryDisplay =
+    fun getUserAlbumGalleryDisplay(albumId: Int) : CollageDisplay =
         userAlbumGalleryDisplay(albumId).get()
 
-    suspend fun setUserAlbumGalleryDisplay(albumId: Int, galleryDisplay: PredefinedGalleryDisplay) {
+    suspend fun setUserAlbumGalleryDisplay(albumId: Int, galleryDisplay: PredefinedCollageDisplay) {
         userAlbumGalleryDisplay(albumId).setAndCommit(galleryDisplay)
     }
 
     private fun userAlbumGalleryDisplay(albumId: Int) =
-        flowSharedPreferences.getEnum("userAlbumGalleryDisplay/$albumId", PredefinedGalleryDisplay.default)
+        flowSharedPreferences.getEnum("userAlbumGalleryDisplay/$albumId", PredefinedCollageDisplay.default)
 
 }

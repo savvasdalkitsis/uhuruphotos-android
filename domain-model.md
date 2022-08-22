@@ -5,9 +5,9 @@ This page demonstrates the domain model of the app
 ```mermaid 
 graph TD;
 
-    Galleria-->Gallery
-    Gallery-->GalleryGroup
-    GalleryGroup-->MediaItem
+    Galleria-->Collage
+    Collage-->CollageGroup
+    CollageGroup-->MediaItem
     Exhibit-->MediaItem
     MediaItem-->LocalMediaItem
     MediaItem-->RemoteMediaItem
@@ -22,9 +22,9 @@ graph TD;
     LocalMedia-->LocalGallery
     LocalGallery-->Galleria
     HiddenMedia-->Galleria
-    Person-->Gallery
-    SearchResults-->Gallery
-    Feed-->Gallery
+    Person-->Collage
+    SearchResults-->Collage
+    Feed-->Collage
     People-->PeopleList
     PeopleList-->Person
     Exhibit-->PeopleList

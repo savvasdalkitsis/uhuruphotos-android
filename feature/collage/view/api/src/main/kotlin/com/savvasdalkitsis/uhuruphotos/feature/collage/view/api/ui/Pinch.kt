@@ -13,7 +13,7 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
  */
-package com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.ui
+package com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui
 
 import androidx.compose.animation.core.Animatable
 import androidx.compose.foundation.gestures.awaitFirstDown
@@ -28,7 +28,7 @@ import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.input.pointer.positionChanged
 import androidx.compose.ui.util.fastAny
 import androidx.compose.ui.util.fastForEach
-import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.ui.state.GalleryDisplay
+import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.CollageDisplay
 import kotlinx.coroutines.launch
 import kotlin.math.max
 import kotlin.math.min
@@ -39,13 +39,13 @@ private const val ZOOM_LOW_TRIGGER = 0.9f
 private const val ZOOM_HIGH_TRIGGER = 1.1f
 
 internal fun Modifier.pinchToChange(
-    galleryDisplay: GalleryDisplay,
-    onChangeDisplay: (GalleryDisplay) -> Unit,
+    collageDisplay: CollageDisplay,
+    onChangeDisplay: (CollageDisplay) -> Unit,
 ) = composed {
     val coroutineScope = rememberCoroutineScope()
     val zoom = remember { Animatable(1f) }
 
-    pointerInput(galleryDisplay) {
+    pointerInput(collageDisplay) {
         forEachGesture {
             awaitPointerEventScope {
                 awaitFirstDown(requireUnconsumed = false)
@@ -70,10 +70,10 @@ internal fun Modifier.pinchToChange(
                     }
                 } while (event.changes.fastAny { it.pressed })
                 if (zoom.value < ZOOM_LOW_TRIGGER) {
-                    onChangeDisplay(galleryDisplay.zoomOut)
+                    onChangeDisplay(collageDisplay.zoomOut)
                 }
                 if (zoom.value > ZOOM_HIGH_TRIGGER) {
-                    onChangeDisplay(galleryDisplay.zoomIn)
+                    onChangeDisplay(collageDisplay.zoomIn)
                 }
                 coroutineScope.launch {
                     zoom.animateTo(1f)

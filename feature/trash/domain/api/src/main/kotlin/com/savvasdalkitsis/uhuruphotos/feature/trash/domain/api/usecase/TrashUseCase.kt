@@ -16,14 +16,14 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.feature.trash.domain.api.usecase
 
 import com.savvasdalkitsis.uhuruphotos.api.albums.model.Album
-import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.ui.state.PredefinedGalleryDisplay
+import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.PredefinedCollageDisplay
 import kotlinx.coroutines.flow.Flow
 
 interface TrashUseCase {
 
     suspend fun refreshTrash(): Result<Unit>
-    fun getTrashGalleryDisplay() : PredefinedGalleryDisplay
-    suspend fun setTrashGalleryDisplay(galleryDisplay: PredefinedGalleryDisplay)
+    fun getTrashGalleryDisplay() : PredefinedCollageDisplay
+    suspend fun setTrashGalleryDisplay(galleryDisplay: PredefinedCollageDisplay)
     suspend fun hasTrash(): Boolean
     fun observeTrashAlbums(): Flow<List<Album>>
 }

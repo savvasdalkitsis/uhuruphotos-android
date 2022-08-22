@@ -14,7 +14,7 @@ dependencies {
     implementation project(":foundation:biometrics:api")
     implementation project(":foundation:coroutines:api")
     implementation project(":feature:exhibit:view:api")
-    implementation project(":feature:gallery:view:api")
+    implementation project(":feature:collage:view:api")
     implementation project(":foundation:navigation:api")
     implementation project(":foundation:seam:api")
     implementation project(":feature:settings:domain:api")

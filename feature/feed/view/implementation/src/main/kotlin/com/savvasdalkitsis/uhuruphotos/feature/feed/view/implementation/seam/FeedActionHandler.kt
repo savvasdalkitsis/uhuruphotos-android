@@ -19,6 +19,7 @@ import com.savvasdalkitsis.uhuruphotos.api.albums.model.Album
 import com.savvasdalkitsis.uhuruphotos.api.albums.usecase.AlbumsUseCase
 import com.savvasdalkitsis.uhuruphotos.api.userbadge.ui.state.SyncState.IN_PROGRESS
 import com.savvasdalkitsis.uhuruphotos.api.userbadge.usecase.UserBadgeUseCase
+import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.PredefinedCollageDisplay.YEARLY
 import com.savvasdalkitsis.uhuruphotos.feature.feed.domain.api.usecase.FeedUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.SelectionList
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.FeedAction.AlbumRefreshClicked
@@ -47,7 +48,6 @@ import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.Fee
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.FeedMutation.StartRefreshing
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.FeedMutation.StopRefreshing
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.ui.state.FeedState
-import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.ui.state.PredefinedGalleryDisplay.YEARLY
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItem
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemSelectionMode.SELECTED
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemSelectionMode.UNDEFINED

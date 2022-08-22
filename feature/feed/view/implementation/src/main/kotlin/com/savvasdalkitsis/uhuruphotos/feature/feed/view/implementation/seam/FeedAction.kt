@@ -17,7 +17,7 @@ package com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam
 
 import androidx.compose.ui.geometry.Offset
 import com.savvasdalkitsis.uhuruphotos.api.albums.model.Album
-import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.ui.state.PredefinedGalleryDisplay
+import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.PredefinedCollageDisplay
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItem
 
 internal sealed class FeedAction {
@@ -26,7 +26,7 @@ internal sealed class FeedAction {
         val center: Offset,
         val scale: Float,
     ) : FeedAction()
-    data class ChangeDisplay(val display: PredefinedGalleryDisplay) : FeedAction()
+    data class ChangeDisplay(val display: PredefinedCollageDisplay) : FeedAction()
     data class PhotoLongPressed(val mediaItem: MediaItem) : FeedAction()
     data class AlbumSelectionClicked(val album: Album) : FeedAction()
     data class AlbumRefreshClicked(val album: Album) : FeedAction()

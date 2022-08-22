@@ -4,7 +4,7 @@ android {
 
 dependencies {
     implementation project(":api:albums")
-    implementation project(":feature:gallery:view:api")
+    implementation project(":feature:collage:view:api")
     implementation project(":feature:trash:domain:api")
     implementation(
             libs.hilt,

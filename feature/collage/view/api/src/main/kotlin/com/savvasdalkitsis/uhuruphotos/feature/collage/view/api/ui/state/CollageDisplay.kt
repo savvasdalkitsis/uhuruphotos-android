@@ -13,12 +13,12 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
  */
-package com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.ui.state
+package com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state
 
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 
-interface GalleryDisplay {
+interface CollageDisplay {
     val miniIcons: Boolean
     val compactColumnsPortrait: Int
     val compactColumnsLandscape: Int
@@ -28,7 +28,7 @@ interface GalleryDisplay {
     @get:DrawableRes val iconResource: Int
     val maintainAspectRatio: Boolean
     @get:StringRes val friendlyName: Int
-    val zoomIn: GalleryDisplay
-    val zoomOut: GalleryDisplay
+    val zoomIn: CollageDisplay
+    val zoomOut: CollageDisplay
     val allowsPinchGestures: Boolean
 }

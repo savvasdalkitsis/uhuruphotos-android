@@ -13,7 +13,7 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
  */
-package com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.ui
+package com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui
 
 import androidx.compose.animation.animateContentSize
 import androidx.compose.foundation.layout.Box
@@ -28,15 +28,15 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.savvasdalkitsis.uhuruphotos.api.albums.model.Album
-import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.ui.MediaRowSlot.EmptySlot
-import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.ui.MediaRowSlot.MediaSlot
+import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.MediaRowSlot.EmptySlot
+import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.MediaRowSlot.MediaSlot
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItem
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.MediaItemSelected
 import my.nanihadesuka.compose.LazyColumnScrollbar
 import my.nanihadesuka.compose.ScrollbarSelectionMode
 
 @Composable
-internal fun StaggeredGallery(
+internal fun StaggeredCollage(
     modifier: Modifier = Modifier,
     contentPadding: PaddingValues,
     albums: List<Album>,
@@ -47,7 +47,7 @@ internal fun StaggeredGallery(
     columnCount: Int,
     shouldAddEmptyPhotosInRows: Boolean,
     listState: LazyListState = rememberLazyListState(),
-    galleryHeader: @Composable (LazyItemScope.() -> Unit)? = null,
+    collageHeader: @Composable (LazyItemScope.() -> Unit)? = null,
     onMediaItemSelected: MediaItemSelected,
     onMediaItemLongPressed: (MediaItem) -> Unit,
     onAlbumRefreshClicked: (Album) -> Unit,
@@ -59,15 +59,15 @@ internal fun StaggeredGallery(
             state = listState,
             contentPadding = contentPadding,
         ) {
-            galleryHeader?.let { header ->
-                item("galleryHeader", "galleryHeader") {
+            collageHeader?.let { header ->
+                item("collageHeader", "collageHeader") {
                     header(this)
                 }
             }
             albums.forEach { album ->
                 if ((album.displayTitle + album.location.orEmpty()).isNotEmpty()) {
                     item(album.id, "header") {
-                        GalleryGroupHeader(
+                        CollageGroupHeader(
                             modifier = Modifier.animateItemPlacement(),
                             album = album,
                             showSelectionHeader = showSelectionHeader,
@@ -75,7 +75,7 @@ internal fun StaggeredGallery(
                             onSelectionHeaderClicked = {
                                 onAlbumSelectionClicked(album)
                             },
-                            onAlbumRefreshClicked = {
+                            onRefreshClicked = {
                                 onAlbumRefreshClicked(album)
                             }
                         )

@@ -19,7 +19,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import com.savvasdalkitsis.uhuruphotos.feature.galleria.view.api.seam.GalleriaAction
-import com.savvasdalkitsis.uhuruphotos.feature.galleria.view.api.seam.GalleriaAction.LoadGallery
+import com.savvasdalkitsis.uhuruphotos.feature.galleria.view.api.seam.GalleriaAction.LoadCollage
 import com.savvasdalkitsis.uhuruphotos.feature.galleria.view.api.seam.GalleriaEffect
 import com.savvasdalkitsis.uhuruphotos.feature.galleria.view.api.seam.GalleriaEffectsHandler
 import com.savvasdalkitsis.uhuruphotos.feature.galleria.view.api.ui.state.GalleriaState
@@ -58,7 +58,7 @@ internal class LocalAlbumNavigationTarget @Inject constructor(
             themeMode = settingsUseCase.observeThemeModeState(),
             initializer = { navBackStackEntry, action ->
                 action(Either.Right(LocalAlbumAction.Load(navBackStackEntry.albumId)))
-                action(Either.Left(LoadGallery(navBackStackEntry.albumId)))
+                action(Either.Left(LoadCollage(navBackStackEntry.albumId)))
             },
             createModel = { hiltViewModel() }
         ) { state, action ->

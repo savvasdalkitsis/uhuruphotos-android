@@ -26,7 +26,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
-import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.ui.GalleryDisplayActionButton
+import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.CollageDisplayActionButton
 import com.savvasdalkitsis.uhuruphotos.feature.home.view.api.ui.HomeScaffold
 import com.savvasdalkitsis.uhuruphotos.feature.search.view.implementation.seam.SearchAction
 import com.savvasdalkitsis.uhuruphotos.feature.search.view.implementation.seam.SearchAction.ChangeDisplay
@@ -59,13 +59,13 @@ fun SearchPage(
             }
         },
         navController = navHostController,
-        homeFeedDisplay = state.galleryDisplay,
+        homeFeedDisplay = state.collageDisplay,
         showLibrary = state.showLibrary,
         actionBarContent = {
             AnimatedVisibility(state.searchResults is Found) {
-                GalleryDisplayActionButton(
+                CollageDisplayActionButton(
                     onChange = { action(ChangeDisplay(it)) },
-                    currentGalleryDisplay = state.searchDisplay
+                    currentCollageDisplay = state.searchDisplay
                 )
             }
             actionBarContent()

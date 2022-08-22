@@ -24,7 +24,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.account.view.api.seam.AccountOver
 import com.savvasdalkitsis.uhuruphotos.feature.account.view.api.ui.AccountOverviewActionBar
 import com.savvasdalkitsis.uhuruphotos.feature.account.view.api.ui.AccountOverviewContent
 import com.savvasdalkitsis.uhuruphotos.feature.account.view.api.ui.state.AccountOverviewState
-import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.ui.state.PredefinedGalleryDisplay
+import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.PredefinedCollageDisplay
 import com.savvasdalkitsis.uhuruphotos.feature.library.view.api.navigation.LibraryNavigationTarget
 import com.savvasdalkitsis.uhuruphotos.feature.library.view.implementation.seam.LibraryAction
 import com.savvasdalkitsis.uhuruphotos.feature.library.view.implementation.seam.LibraryAction.Load
@@ -68,7 +68,7 @@ class LibraryNavigationTarget @Inject constructor(
         ) { state, actions ->
             Library(
                 state = state.first,
-                homeFeedDisplay = PredefinedGalleryDisplay.default,
+                homeFeedDisplay = PredefinedCollageDisplay.default,
                 isShowingPopUp = state.second.showAccountOverview,
                 action = { actions(Left(it)) },
                 navHostController = navHostController,

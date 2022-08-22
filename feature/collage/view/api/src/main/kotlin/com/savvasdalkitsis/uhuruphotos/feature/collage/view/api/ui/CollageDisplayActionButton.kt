@@ -13,7 +13,7 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
  */
-package com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.ui
+package com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui
 
 import androidx.compose.foundation.gestures.detectVerticalDragGestures
 import androidx.compose.foundation.layout.Box
@@ -35,40 +35,40 @@ import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.ui.state.GalleryDisplay
-import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.ui.state.PredefinedGalleryDisplay
+import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.CollageDisplay
+import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.PredefinedCollageDisplay
 import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.ActionIcon
 
 @Composable
-fun GalleryDisplayActionButton(
-    onChange: (GalleryDisplay) -> Unit,
-    currentGalleryDisplay: GalleryDisplay,
+fun CollageDisplayActionButton(
+    onChange: (CollageDisplay) -> Unit,
+    currentCollageDisplay: CollageDisplay,
 ) {
     var isOpen by remember { mutableStateOf(false) }
     Box {
         ActionIcon(
             modifier = Modifier
-                .pointerInput(currentGalleryDisplay) {
+                .pointerInput(currentCollageDisplay) {
                     detectVerticalDragGestures { _, dragAmount ->
                         onChange(
                             when {
-                                dragAmount > 0 -> currentGalleryDisplay.zoomIn
-                                else -> currentGalleryDisplay.zoomOut
+                                dragAmount > 0 -> currentCollageDisplay.zoomIn
+                                else -> currentCollageDisplay.zoomOut
                             }
                         )
                     }
                 },
             onClick = { isOpen = true },
-            icon = currentGalleryDisplay.iconResource,
+            icon = currentCollageDisplay.iconResource,
             contentDescription = stringResource(string.gallery_size),
         )
         DropdownMenu(
             expanded = isOpen,
             onDismissRequest = { isOpen = false },
         ) {
-            PredefinedGalleryDisplay.values().reversedArray().forEach { display ->
-                GalleryDisplayDropDownItem(display, currentGalleryDisplay) {
+            PredefinedCollageDisplay.values().reversedArray().forEach { display ->
+                CollageDisplayDropDownItem(display, currentCollageDisplay) {
                     isOpen = false
                     onChange(it)
                 }
@@ -78,17 +78,17 @@ fun GalleryDisplayActionButton(
 }
 
 @Composable
-private fun GalleryDisplayDropDownItem(
-    display: PredefinedGalleryDisplay,
-    currentGalleryDisplay: GalleryDisplay,
-    onChange: (PredefinedGalleryDisplay) -> Unit
+private fun CollageDisplayDropDownItem(
+    display: PredefinedCollageDisplay,
+    currentCollageDisplay: CollageDisplay,
+    onChange: (PredefinedCollageDisplay) -> Unit
 ) {
     DropdownMenuItem(
         onClick = { onChange(display) }
     ) {
         Row {
             RadioButton(
-                selected = currentGalleryDisplay == display,
+                selected = currentCollageDisplay == display,
                 onClick = { onChange(display) }
             )
             Text(

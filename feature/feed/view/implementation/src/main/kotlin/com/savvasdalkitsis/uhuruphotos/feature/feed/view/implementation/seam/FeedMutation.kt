@@ -16,9 +16,9 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam
 
 import com.savvasdalkitsis.uhuruphotos.api.albums.model.Album
+import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.CollageState
+import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.PredefinedCollageDisplay
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.ui.state.FeedState
-import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.ui.state.GalleryState
-import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.ui.state.PredefinedGalleryDisplay
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.Mutation
 
 internal sealed class FeedMutation(
@@ -55,8 +55,8 @@ internal sealed class FeedMutation(
         override fun toString() = "Showing ${albums.size} albums"
     }
 
-    data class ChangeDisplay(val display: PredefinedGalleryDisplay) : FeedMutation({
-        it.copyFeed { copy(galleryDisplay = display) }
+    data class ChangeDisplay(val display: PredefinedCollageDisplay) : FeedMutation({
+        it.copyFeed { copy(collageDisplay = display) }
     })
 
     data class ShowLibrary(val showLibrary: Boolean) : FeedMutation({
@@ -64,5 +64,5 @@ internal sealed class FeedMutation(
     })
 }
 
-private fun FeedState.copyFeed(galleryStateMutation: GalleryState.() -> GalleryState) =
-    copy(galleryState = galleryStateMutation(galleryState))
+private fun FeedState.copyFeed(collageStateMutation: CollageState.() -> CollageState) =
+    copy(collageState = collageStateMutation(collageState))

@@ -17,14 +17,14 @@ package com.savvasdalkitsis.uhuruphotos.feature.local.domain.api.usecase
 
 import com.savvasdalkitsis.uhuruphotos.api.albums.model.Album
 import com.savvasdalkitsis.uhuruphotos.api.media.local.domain.model.LocalMediaFolder
-import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.ui.state.PredefinedGalleryDisplay
+import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.PredefinedCollageDisplay
 import kotlinx.coroutines.flow.Flow
 
 interface LocalAlbumUseCase {
 
     fun observeLocalAlbum(albumId: Int): Flow<Pair<LocalMediaFolder, List<Album>>>
     suspend fun refreshLocalAlbum(albumId: Int): Result<Unit>
-    fun getLocalAlbumGalleryDisplay(albumId: Int): PredefinedGalleryDisplay
-    suspend fun setLocalAlbumGalleryDisplay(albumId: Int, galleryDisplay: PredefinedGalleryDisplay)
+    fun getLocalAlbumGalleryDisplay(albumId: Int): PredefinedCollageDisplay
+    suspend fun setLocalAlbumGalleryDisplay(albumId: Int, galleryDisplay: PredefinedCollageDisplay)
     suspend fun getLocalAlbum(albumId: Int): List<Album>
 }

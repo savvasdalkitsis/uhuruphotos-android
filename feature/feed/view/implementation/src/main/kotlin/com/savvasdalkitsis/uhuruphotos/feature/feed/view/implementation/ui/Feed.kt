@@ -22,6 +22,8 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import com.google.accompanist.swiperefresh.SwipeRefresh
 import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
+import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.Collage
+import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.PredefinedCollageDisplay
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.FeedAction
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.FeedAction.AlbumRefreshClicked
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.FeedAction.AlbumSelectionClicked
@@ -32,8 +34,6 @@ import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.Fee
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.FeedAction.SelectedPhoto
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.FeedAction.TrashSelectedPhotos
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.ui.state.FeedState
-import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.ui.Gallery
-import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.ui.state.PredefinedGalleryDisplay
 import com.savvasdalkitsis.uhuruphotos.feature.home.view.api.ui.HomeScaffold
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.TrashPermissionDialog
 import com.savvasdalkitsis.uhuruphotos.foundation.compose.api.blurIf
@@ -64,7 +64,7 @@ internal fun Feed(
         },
         navController = navHostController,
         showLibrary = state.showLibrary,
-        homeFeedDisplay = state.galleryState.galleryDisplay,
+        homeFeedDisplay = state.collageState.collageDisplay,
         selectionMode = state.hasSelection,
         actionBarContent = {
             FeedActionBar(state, action)
@@ -77,16 +77,16 @@ internal fun Feed(
             state = rememberSwipeRefreshState(isRefreshing = state.isRefreshing),
             onRefresh = { action(RefreshAlbums) }
         ) {
-            Gallery(
+            Collage(
                 contentPadding = contentPadding,
-                state = state.galleryState,
+                state = state.collageState,
                 showSelectionHeader = state.hasSelection,
                 showGroupRefreshButton = state.shouldShowAlbumRefreshButtons,
                 listState = listState,
                 onMediaItemSelected = { photo, center, scale ->
                     action(SelectedPhoto(photo, center, scale,))
                 },
-                onChangeDisplay = { action(ChangeDisplay(it as PredefinedGalleryDisplay)) },
+                onChangeDisplay = { action(ChangeDisplay(it as PredefinedCollageDisplay)) },
                 onPhotoLongPressed = {
                     action(PhotoLongPressed(it))
                 },

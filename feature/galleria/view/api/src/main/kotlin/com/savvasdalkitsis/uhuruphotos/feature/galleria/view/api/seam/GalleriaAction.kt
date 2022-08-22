@@ -16,7 +16,7 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.feature.galleria.view.api.seam
 
 import androidx.compose.ui.geometry.Offset
-import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.ui.state.GalleryDisplay
+import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.CollageDisplay
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItem
 import com.savvasdalkitsis.uhuruphotos.feature.people.view.api.ui.state.Person
 
@@ -24,7 +24,7 @@ sealed class GalleriaAction {
     object SwipeToRefresh : GalleriaAction()
     object NavigateBack : GalleriaAction()
 
-    data class LoadGallery(val galleryId: Int) : GalleriaAction()
+    data class LoadCollage(val collageId: Int) : GalleriaAction()
     data class SelectedMediaItem(
         val mediaItem: MediaItem,
         val center: Offset,
@@ -32,5 +32,5 @@ sealed class GalleriaAction {
     ) : GalleriaAction()
 
     data class PersonSelected(val person: Person) : GalleriaAction()
-    data class ChangeGalleryDisplay(val galleryDisplay: GalleryDisplay) : GalleriaAction()
+    data class ChangeCollageDisplay(val collageDisplay: CollageDisplay) : GalleriaAction()
 }

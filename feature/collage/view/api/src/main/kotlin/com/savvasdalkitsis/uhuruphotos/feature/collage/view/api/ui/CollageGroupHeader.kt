@@ -13,7 +13,7 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
  */
-package com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.ui
+package com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.layout.Column
@@ -39,12 +39,12 @@ import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.theme.PreviewAppTheme
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.ActionIcon
 
 @Composable
-internal fun GalleryGroupHeader(
+internal fun CollageGroupHeader(
     modifier: Modifier,
     album: Album,
     showSelectionHeader: Boolean,
     showRefreshButton: Boolean,
-    onAlbumRefreshClicked: () -> Unit = {},
+    onRefreshClicked: () -> Unit = {},
     onSelectionHeaderClicked: () -> Unit = {},
 ) {
     Row(
@@ -87,7 +87,7 @@ internal fun GalleryGroupHeader(
         if (showRefreshButton) {
             ActionIcon(
                 iconModifier = Modifier.alpha(0.6f),
-                onClick = onAlbumRefreshClicked,
+                onClick = onRefreshClicked,
                 icon = drawable.ic_refresh,
             )
         }
@@ -96,9 +96,9 @@ internal fun GalleryGroupHeader(
 
 @Preview
 @Composable
-internal fun GalleryGroupHeaderPreview() {
+internal fun CollageGroupHeaderPreview() {
     PreviewAppTheme {
-        GalleryGroupHeader(
+        CollageGroupHeader(
             modifier = Modifier,
             album = previewAlbumEmpty,
             showSelectionHeader = false,
@@ -109,9 +109,9 @@ internal fun GalleryGroupHeaderPreview() {
 
 @Preview
 @Composable
-internal fun GalleryGroupPreviewSelection() {
+internal fun CollageGroupPreviewSelection() {
     PreviewAppTheme {
-        GalleryGroupHeader(
+        CollageGroupHeader(
             modifier = Modifier,
             album = previewAlbumEmpty,
             showSelectionHeader = true,

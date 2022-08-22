@@ -33,7 +33,7 @@ internal class LocalAlbumPageActionHandler @Inject constructor(
 ) : ActionHandler<GalleriaState, GalleriaEffect, GalleriaAction, GalleriaMutation>
 by GalleriaActionHandler(
     galleryRefresher = { localAlbumUseCase.refreshLocalAlbum(it) },
-    initialGalleryDisplay = { localAlbumUseCase.getLocalAlbumGalleryDisplay(it) },
+    initialCollageDisplay = { localAlbumUseCase.getLocalAlbumGalleryDisplay(it) },
     galleryDisplayPersistence = { id, galleryDisplay ->
         localAlbumUseCase.setLocalAlbumGalleryDisplay(id, galleryDisplay)
     },

@@ -16,8 +16,8 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.feature.person.view.implementation.seam
 
 import com.savvasdalkitsis.uhuruphotos.api.albums.model.Album
-import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.ui.state.GalleryDisplay
-import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.ui.state.GalleryState
+import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.CollageDisplay
+import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.CollageState
 import com.savvasdalkitsis.uhuruphotos.feature.people.view.api.ui.state.Person
 import com.savvasdalkitsis.uhuruphotos.feature.person.view.implementation.ui.state.PersonState
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.Mutation
@@ -41,10 +41,10 @@ sealed class PersonMutation(
         it.copy(person = person)
     })
 
-    data class SetFeedDisplay(val display: GalleryDisplay) : PersonMutation({
-        it.copyFeed { copy(galleryDisplay = display) }
+    data class SetFeedDisplay(val display: CollageDisplay) : PersonMutation({
+        it.copyFeed { copy(collageDisplay = display) }
     })
 }
 
-private fun PersonState.copyFeed(feedCopy: GalleryState.() -> GalleryState): PersonState =
-    copy(galleryState = galleryState.feedCopy())
+private fun PersonState.copyFeed(feedCopy: CollageState.() -> CollageState): PersonState =
+    copy(collageState = collageState.feedCopy())

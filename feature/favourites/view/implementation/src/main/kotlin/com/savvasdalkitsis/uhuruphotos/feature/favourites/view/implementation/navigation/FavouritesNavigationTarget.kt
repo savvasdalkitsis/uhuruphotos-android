@@ -21,7 +21,7 @@ import androidx.navigation.NavHostController
 import com.savvasdalkitsis.uhuruphotos.feature.favourites.view.api.navigation.FavouritesNavigationTarget
 import com.savvasdalkitsis.uhuruphotos.feature.favourites.view.implementation.viewmodel.FavouritesViewModel
 import com.savvasdalkitsis.uhuruphotos.feature.galleria.view.api.seam.GalleriaAction
-import com.savvasdalkitsis.uhuruphotos.feature.galleria.view.api.seam.GalleriaAction.LoadGallery
+import com.savvasdalkitsis.uhuruphotos.feature.galleria.view.api.seam.GalleriaAction.LoadCollage
 import com.savvasdalkitsis.uhuruphotos.feature.galleria.view.api.seam.GalleriaEffect
 import com.savvasdalkitsis.uhuruphotos.feature.galleria.view.api.seam.GalleriaEffectsHandler
 import com.savvasdalkitsis.uhuruphotos.feature.galleria.view.api.ui.GalleriaPage
@@ -41,7 +41,7 @@ internal class FavouritesNavigationTarget @Inject constructor(
             effects = effectsHandler,
             themeMode = settingsUseCase.observeThemeModeState(),
             initializer = { _, action ->
-                action(LoadGallery(0))
+                action(LoadCollage(0))
             },
             createModel = { hiltViewModel() }
         ) { state, action ->

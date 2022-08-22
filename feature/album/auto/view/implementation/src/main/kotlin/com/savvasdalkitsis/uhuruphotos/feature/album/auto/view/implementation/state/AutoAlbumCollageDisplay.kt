@@ -13,22 +13,21 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
  */
-package com.savvasdalkitsis.uhuruphotos.feature.heatmap.view.implementation.ui.state
+package com.savvasdalkitsis.uhuruphotos.feature.album.auto.view.implementation.state
 
-import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.ui.state.GalleryDisplay
+import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.CollageDisplay
 
-object HeatMapGalleryDisplay : GalleryDisplay {
+object AutoAlbumCollageDisplay: CollageDisplay {
     override val miniIcons: Boolean = false
-    override val compactColumnsPortrait = 5
-    override val compactColumnsLandscape = 3
-    override val wideColumnsPortrait = 7
-    override val wideColumnsLandscape = 3
+    override val compactColumnsPortrait = 3
+    override val compactColumnsLandscape = 5
+    override val wideColumnsPortrait = 6
+    override val wideColumnsLandscape = 8
     override val shouldAddEmptyPhotosInRows = true
-    override val iconResource: Int
-        get() = throw IllegalStateException("This is not used")
+    override val iconResource = 0
     override val maintainAspectRatio = false
     override val friendlyName = 0
-    override val zoomIn get() = HeatMapGalleryDisplay
-    override val zoomOut get() = HeatMapGalleryDisplay
+    override val zoomIn = this
+    override val zoomOut = this
     override val allowsPinchGestures = false
 }

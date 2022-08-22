@@ -19,7 +19,7 @@ import com.fredporciuncula.flow.preferences.FlowSharedPreferences
 import com.savvasdalkitsis.uhuruphotos.api.albums.model.Album
 import com.savvasdalkitsis.uhuruphotos.api.media.local.domain.model.LocalMediaFolder
 import com.savvasdalkitsis.uhuruphotos.api.media.local.domain.usecase.LocalMediaUseCase
-import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.ui.state.PredefinedGalleryDisplay
+import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.PredefinedCollageDisplay
 import com.savvasdalkitsis.uhuruphotos.feature.local.domain.api.usecase.LocalAlbumUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaFolderOnDevice
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItem
@@ -48,10 +48,10 @@ internal class LocalAlbumUseCase @Inject constructor(
     override suspend fun refreshLocalAlbum(albumId: Int) =
         localMediaUseCase.refreshLocalMediaFolder(albumId)
 
-    override fun getLocalAlbumGalleryDisplay(albumId: Int) : PredefinedGalleryDisplay =
+    override fun getLocalAlbumGalleryDisplay(albumId: Int) : PredefinedCollageDisplay =
         localFolderGalleryDisplay(albumId).get()
 
-    override suspend fun setLocalAlbumGalleryDisplay(albumId: Int, galleryDisplay: PredefinedGalleryDisplay) {
+    override suspend fun setLocalAlbumGalleryDisplay(albumId: Int, galleryDisplay: PredefinedCollageDisplay) {
         localFolderGalleryDisplay(albumId).setAndCommit(galleryDisplay)
     }
 
@@ -59,7 +59,7 @@ internal class LocalAlbumUseCase @Inject constructor(
         observeLocalAlbum(albumId).first().second
 
     private fun localFolderGalleryDisplay(albumId: Int) =
-        flowSharedPreferences.getEnum("localFolderGalleryDisplay/$albumId", PredefinedGalleryDisplay.default)
+        flowSharedPreferences.getEnum("localFolderGalleryDisplay/$albumId", PredefinedCollageDisplay.default)
 
     private fun List<MediaItem>.toAlbums(): List<Album> =
         groupBy { it.sortableDate }

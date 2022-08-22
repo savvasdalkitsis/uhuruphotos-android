@@ -16,8 +16,8 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.feature.feed.domain.implementation.usecase
 
 import com.fredporciuncula.flow.preferences.FlowSharedPreferences
+import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.PredefinedCollageDisplay
 import com.savvasdalkitsis.uhuruphotos.feature.feed.domain.api.usecase.FeedUseCase
-import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.ui.state.PredefinedGalleryDisplay
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
@@ -25,11 +25,11 @@ internal class FeedUseCase @Inject constructor(
     preferences: FlowSharedPreferences,
 ) : FeedUseCase {
 
-    private val preference = preferences.getEnum("feedDisplay", defaultValue = PredefinedGalleryDisplay.default)
+    private val preference = preferences.getEnum("feedDisplay", defaultValue = PredefinedCollageDisplay.default)
 
-    override fun getFeedDisplay(): Flow<PredefinedGalleryDisplay> = preference.asFlow()
+    override fun getFeedDisplay(): Flow<PredefinedCollageDisplay> = preference.asFlow()
 
-    override suspend fun setFeedDisplay(feedDisplay: PredefinedGalleryDisplay) {
+    override suspend fun setFeedDisplay(feedDisplay: PredefinedCollageDisplay) {
         preference.setAndCommit(feedDisplay)
     }
 }

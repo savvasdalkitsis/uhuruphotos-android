@@ -15,11 +15,11 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.feed.domain.api.usecase
 
-import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.ui.state.PredefinedGalleryDisplay
+import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.PredefinedCollageDisplay
 import kotlinx.coroutines.flow.Flow
 
 interface FeedUseCase {
 
-    fun getFeedDisplay(): Flow<PredefinedGalleryDisplay>
-    suspend fun setFeedDisplay(feedDisplay: PredefinedGalleryDisplay)
+    fun getFeedDisplay(): Flow<PredefinedCollageDisplay>
+    suspend fun setFeedDisplay(feedDisplay: PredefinedCollageDisplay)
 }

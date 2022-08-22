@@ -18,8 +18,8 @@ package com.savvasdalkitsis.uhuruphotos.feature.search.view.implementation.ui
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.unit.dp
-import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.ui.Gallery
-import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.ui.state.GalleryState
+import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.Collage
+import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.CollageState
 import com.savvasdalkitsis.uhuruphotos.feature.search.view.implementation.seam.SearchAction
 import com.savvasdalkitsis.uhuruphotos.feature.search.view.implementation.ui.state.SearchResults
 import com.savvasdalkitsis.uhuruphotos.feature.search.view.implementation.ui.state.SearchState
@@ -32,16 +32,16 @@ fun SearchFeed(
     searchResults: SearchResults.Found,
     action: (SearchAction) -> Unit
 ) {
-    Gallery(
+    Collage(
         contentPadding = contentPadding.copy(top = 0.dp),
         onMediaItemSelected = { photo, center, scale ->
             action(SearchAction.SelectedPhoto(photo, center, scale))
         },
         onChangeDisplay = { action(SearchAction.ChangeDisplay(it)) },
-        state = GalleryState(
+        state = CollageState(
             isLoading = false,
             albums = searchResults.albums,
-            galleryDisplay = state.searchDisplay,
+            collageDisplay = state.searchDisplay,
         ),
     )
 }

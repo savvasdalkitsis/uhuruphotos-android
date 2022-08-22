@@ -15,9 +15,9 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.galleria.view.api.seam
 
+import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.CollageDisplay
 import com.savvasdalkitsis.uhuruphotos.feature.galleria.view.api.ui.state.GalleriaDetails
 import com.savvasdalkitsis.uhuruphotos.feature.galleria.view.api.ui.state.GalleriaState
-import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.ui.state.GalleryDisplay
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.Mutation
 
 sealed class GalleriaMutation(
@@ -28,22 +28,22 @@ sealed class GalleriaMutation(
         it.copy(
             title = galleriaDetails.title,
             people = galleriaDetails.people,
-            galleryState = it.galleryState.copy(
+            collageState = it.collageState.copy(
                 albums = galleriaDetails.albums,
             )
         )
     })
 
     data class Loading(val loading: Boolean) : GalleriaMutation({
-        it.copy(galleryState = it.galleryState.copy(
+        it.copy(collageState = it.collageState.copy(
             isLoading = loading,
-            isEmpty = !loading && !it.galleryState.hasMedia
+            isEmpty = !loading && !it.collageState.hasMedia
         ))
     })
 
-    data class ChangeGalleryDisplay(val galleryDisplay: GalleryDisplay) : GalleriaMutation({
-        it.copy(galleryState = it.galleryState.copy(
-            galleryDisplay = galleryDisplay,
+    data class ChangeCollageDisplay(val collageDisplay: CollageDisplay) : GalleriaMutation({
+        it.copy(collageState = it.collageState.copy(
+            collageDisplay = collageDisplay,
         ))
     })
 }

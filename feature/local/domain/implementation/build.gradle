@@ -13,7 +13,7 @@ dependencies {
     implementation project(":feature:album:auto:view:api")
     implementation project(':foundation:date:api')
     implementation project(":api:db")
-    implementation project(":feature:gallery:view:api")
+    implementation project(":feature:collage:view:api")
     implementation project(":feature:local:domain:api")
     implementation project(":feature:local:view:api")
     implementation project(":feature:galleria:view:api")

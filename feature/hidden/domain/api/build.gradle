@@ -3,5 +3,5 @@ android {
 }
 
 dependencies {
-    api project(":feature:gallery:view:api")
+    api project(":feature:collage:view:api")
 }

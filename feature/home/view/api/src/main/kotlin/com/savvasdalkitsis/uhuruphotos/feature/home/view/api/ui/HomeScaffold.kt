@@ -22,8 +22,8 @@ import androidx.compose.foundation.layout.RowScope
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
-import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.ui.state.GalleryDisplay
-import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.ui.state.PredefinedGalleryDisplay
+import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.CollageDisplay
+import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.PredefinedCollageDisplay
 import com.savvasdalkitsis.uhuruphotos.feature.home.view.api.ui.NavigationStyle.BOTTOM_BAR
 import com.savvasdalkitsis.uhuruphotos.feature.home.view.api.ui.NavigationStyle.NAVIGATION_RAIL
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.CommonScaffold
@@ -34,7 +34,7 @@ fun HomeScaffold(
     modifier: Modifier = Modifier,
     title: @Composable () -> Unit = { Logo() },
     navController: NavHostController,
-    homeFeedDisplay: GalleryDisplay = PredefinedGalleryDisplay.default,
+    homeFeedDisplay: CollageDisplay = PredefinedCollageDisplay.default,
     selectionMode: Boolean = false,
     showLibrary: Boolean = true,
     actionBarContent: @Composable (RowScope.() -> Unit) = {},

@@ -18,7 +18,7 @@ package com.savvasdalkitsis.uhuruphotos.feature.trash.domain.implementation.usec
 import com.fredporciuncula.flow.preferences.FlowSharedPreferences
 import com.savvasdalkitsis.uhuruphotos.api.albums.model.Album
 import com.savvasdalkitsis.uhuruphotos.api.albums.usecase.AlbumsUseCase
-import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.ui.state.PredefinedGalleryDisplay
+import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.PredefinedCollageDisplay
 import com.savvasdalkitsis.uhuruphotos.feature.trash.domain.api.usecase.TrashUseCase
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
@@ -29,14 +29,14 @@ internal class TrashUseCase @Inject constructor(
 ) : TrashUseCase {
 
     private val trashGalleryDisplay =
-        flowSharedPreferences.getEnum("trashGalleryDisplay", PredefinedGalleryDisplay.default)
+        flowSharedPreferences.getEnum("trashGalleryDisplay", PredefinedCollageDisplay.default)
 
     override suspend fun refreshTrash(): Result<Unit> =
         albumsUseCase.refreshTrash()
 
-    override fun getTrashGalleryDisplay() : PredefinedGalleryDisplay = trashGalleryDisplay.get()
+    override fun getTrashGalleryDisplay() : PredefinedCollageDisplay = trashGalleryDisplay.get()
 
-    override suspend fun setTrashGalleryDisplay(galleryDisplay: PredefinedGalleryDisplay) {
+    override suspend fun setTrashGalleryDisplay(galleryDisplay: PredefinedCollageDisplay) {
         trashGalleryDisplay.setAndCommit(galleryDisplay)
     }
 

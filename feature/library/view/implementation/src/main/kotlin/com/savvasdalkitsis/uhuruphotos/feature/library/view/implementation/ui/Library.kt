@@ -26,7 +26,7 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.google.accompanist.swiperefresh.SwipeRefresh
 import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
-import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.ui.state.GalleryDisplay
+import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.CollageDisplay
 import com.savvasdalkitsis.uhuruphotos.feature.home.view.api.ui.HomeScaffold
 import com.savvasdalkitsis.uhuruphotos.feature.library.view.implementation.seam.LibraryAction
 import com.savvasdalkitsis.uhuruphotos.feature.library.view.implementation.seam.LibraryAction.Refresh
@@ -39,7 +39,7 @@ import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.Logo
 @Composable
 internal fun Library(
     state: LibraryState,
-    homeFeedDisplay: GalleryDisplay,
+    homeFeedDisplay: CollageDisplay,
     isShowingPopUp: Boolean,
     action: (LibraryAction) -> Unit,
     navHostController: NavHostController,

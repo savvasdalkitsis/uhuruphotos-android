@@ -22,15 +22,15 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import com.google.accompanist.swiperefresh.SwipeRefresh
 import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
+import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.Collage
+import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.CollageDisplayActionButton
 import com.savvasdalkitsis.uhuruphotos.feature.galleria.view.api.seam.GalleriaAction
-import com.savvasdalkitsis.uhuruphotos.feature.galleria.view.api.seam.GalleriaAction.ChangeGalleryDisplay
+import com.savvasdalkitsis.uhuruphotos.feature.galleria.view.api.seam.GalleriaAction.ChangeCollageDisplay
 import com.savvasdalkitsis.uhuruphotos.feature.galleria.view.api.seam.GalleriaAction.NavigateBack
 import com.savvasdalkitsis.uhuruphotos.feature.galleria.view.api.seam.GalleriaAction.PersonSelected
 import com.savvasdalkitsis.uhuruphotos.feature.galleria.view.api.seam.GalleriaAction.SelectedMediaItem
 import com.savvasdalkitsis.uhuruphotos.feature.galleria.view.api.seam.GalleriaAction.SwipeToRefresh
 import com.savvasdalkitsis.uhuruphotos.feature.galleria.view.api.ui.state.GalleriaState
-import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.ui.Gallery
-import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.ui.GalleryDisplayActionButton
 import com.savvasdalkitsis.uhuruphotos.feature.people.view.api.ui.PeopleBar
 import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.BackNavButton
@@ -53,11 +53,11 @@ fun GalleriaPage(
             }
         },
         actionBarContent = {
-            AnimatedVisibility(state.galleryState.galleryDisplay.iconResource != 0
-                    && state.galleryState.albums.isNotEmpty()) {
-                GalleryDisplayActionButton(
-                    onChange = { action(ChangeGalleryDisplay(it)) },
-                    currentGalleryDisplay = state.galleryState.galleryDisplay
+            AnimatedVisibility(state.collageState.collageDisplay.iconResource != 0
+                    && state.collageState.albums.isNotEmpty()) {
+                CollageDisplayActionButton(
+                    onChange = { action(ChangeCollageDisplay(it)) },
+                    currentCollageDisplay = state.collageState.collageDisplay
                 )
             }
             additionalActionBarContent()
@@ -65,14 +65,14 @@ fun GalleriaPage(
     ) { contentPadding ->
         SwipeRefresh(
             indicatorPadding = contentPadding,
-            state = rememberSwipeRefreshState(isRefreshing = state.galleryState.isLoading),
+            state = rememberSwipeRefreshState(isRefreshing = state.collageState.isLoading),
             onRefresh = { action(SwipeToRefresh) }
         ) {
-            Gallery(
+            Collage(
                 contentPadding = contentPadding,
-                state = state.galleryState,
-                onChangeDisplay = { action(ChangeGalleryDisplay(it)) },
-                galleryHeader = state.people.takeIf { it.isNotEmpty() }?.let {
+                state = state.collageState,
+                onChangeDisplay = { action(ChangeCollageDisplay(it)) },
+                collageHeader = state.people.takeIf { it.isNotEmpty() }?.let {
                     {
                         PeopleBar(
                             modifier = Modifier.animateItemPlacement(),
