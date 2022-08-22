@@ -15,14 +15,11 @@ graph TD;
     LocalMediaItem-->Video
     RemoteMediaItem-->Image
     RemoteMediaItem-->Video
-    AutoAlbum-->Gallery
-    UserAlbum-->Gallery
     AutoAlbum-->Vitrine
     UserAlbum-->Vitrine
-    Favourites-->Gallery
     Favourites-->Vitrine
+    Vitrine-->Gallery
     TrashMedia-->Gallery
-    LocalMedia-->LocalGallery
     LocalMedia-->Vitrine
     LocalGallery-->Gallery
     HiddenMedia-->Gallery
