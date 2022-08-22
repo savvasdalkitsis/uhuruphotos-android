@@ -15,8 +15,8 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.library.view.implementation.seam
 
-import com.savvasdalkitsis.uhuruphotos.api.useralbums.navigation.UserAlbumsNavigationTarget
 import com.savvasdalkitsis.uhuruphotos.feature.catalogue.auto.view.api.navigation.AutoAlbumsNavigationTarget
+import com.savvasdalkitsis.uhuruphotos.feature.catalogue.user.view.api.navigation.UserAlbumsNavigationTarget
 import com.savvasdalkitsis.uhuruphotos.feature.favourites.view.api.navigation.FavouritesNavigationTarget
 import com.savvasdalkitsis.uhuruphotos.feature.hidden.view.api.HiddenPhotosNavigationTarget
 import com.savvasdalkitsis.uhuruphotos.feature.library.view.implementation.seam.LibraryEffect.ErrorLoadingAlbums

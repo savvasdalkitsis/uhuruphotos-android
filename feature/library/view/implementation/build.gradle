@@ -14,6 +14,7 @@ dependencies {
     implementation project(":feature:album:user:view:api")
     implementation project(":feature:library:view:api")
     implementation project(':api:albums')
+    implementation project(":feature:catalogue:user:domain:api")
     implementation project(":feature:catalogue:auto:domain:api")
     implementation project(":foundation:compose:api")
     implementation project(":foundation:coroutines:api")
@@ -36,7 +37,7 @@ dependencies {
     implementation project(":foundation:strings:api")
     implementation project(":foundation:toaster:api")
     implementation project(":foundation:ui:api")
-    implementation project(":api:useralbums")
+    implementation project(":feature:catalogue:user:view:api")
     implementation project(':api:userbadge')
     implementation(
             libs.bundles.permissions,

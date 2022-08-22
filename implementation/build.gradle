@@ -45,7 +45,8 @@ dependencies {
     implementation project(":foundation:share:implementation")
     implementation project(":foundation:ui:implementation")
     implementation project(":feature:user:domain:implementation")
-    implementation project(":implementation:useralbums")
+    implementation project(":feature:catalogue:user:domain:implementation")
+    implementation project(":feature:catalogue:user:view:implementation")
     implementation project(":implementation:userbadge")
     implementation project(":foundation:video:implementation")
 }
