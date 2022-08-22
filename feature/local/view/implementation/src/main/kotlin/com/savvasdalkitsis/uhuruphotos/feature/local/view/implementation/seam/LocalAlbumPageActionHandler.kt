@@ -16,13 +16,13 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.feature.local.view.implementation.seam
 
 import com.savvasdalkitsis.uhuruphotos.feature.exhibit.view.api.model.ExhibitSequenceDataSource.LocalAlbum
-import com.savvasdalkitsis.uhuruphotos.feature.galleria.view.api.seam.GalleriaAction
-import com.savvasdalkitsis.uhuruphotos.feature.galleria.view.api.seam.GalleriaActionHandler
-import com.savvasdalkitsis.uhuruphotos.feature.galleria.view.api.seam.GalleriaEffect
-import com.savvasdalkitsis.uhuruphotos.feature.galleria.view.api.seam.GalleriaMutation
-import com.savvasdalkitsis.uhuruphotos.feature.galleria.view.api.ui.state.GalleriaDetails
-import com.savvasdalkitsis.uhuruphotos.feature.galleria.view.api.ui.state.GalleriaState
-import com.savvasdalkitsis.uhuruphotos.feature.galleria.view.api.ui.state.Title
+import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.GalleryAction
+import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.GalleryActionHandler
+import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.GalleryEffect
+import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.GalleryMutation
+import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.ui.state.GalleryDetails
+import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.ui.state.GalleryState
+import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.ui.state.Title
 import com.savvasdalkitsis.uhuruphotos.feature.local.domain.api.usecase.LocalAlbumUseCase
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.ActionHandler
 import kotlinx.coroutines.flow.map
@@ -30,20 +30,20 @@ import javax.inject.Inject
 
 internal class LocalAlbumPageActionHandler @Inject constructor(
     localAlbumUseCase: LocalAlbumUseCase,
-) : ActionHandler<GalleriaState, GalleriaEffect, GalleriaAction, GalleriaMutation>
-by GalleriaActionHandler(
+) : ActionHandler<GalleryState, GalleryEffect, GalleryAction, GalleryMutation>
+by GalleryActionHandler(
     galleryRefresher = { localAlbumUseCase.refreshLocalAlbum(it) },
     initialCollageDisplay = { localAlbumUseCase.getLocalAlbumGalleryDisplay(it) },
-    galleryDisplayPersistence = { id, galleryDisplay ->
+    collageDisplayPersistence = { id, galleryDisplay ->
         localAlbumUseCase.setLocalAlbumGalleryDisplay(id, galleryDisplay)
     },
     galleryDetailsEmptyCheck = { albumId ->
         localAlbumUseCase.getLocalAlbum(albumId).isEmpty()
     },
-    galleriaDetailsFlow = { albumId, _ ->
+    galleryDetailsFlow = { albumId, _ ->
         localAlbumUseCase.observeLocalAlbum(albumId)
             .map { (bucket, albums) ->
-                GalleriaDetails(
+                GalleryDetails(
                     title = Title.Text(bucket.displayName),
                     albums = albums,
                 )

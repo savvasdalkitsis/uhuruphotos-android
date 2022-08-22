@@ -16,7 +16,7 @@ dependencies {
     implementation project(":feature:collage:view:api")
     implementation project(":feature:local:domain:api")
     implementation project(":feature:local:view:api")
-    implementation project(":feature:galleria:view:api")
+    implementation project(":feature:gallery:view:api")
     implementation project(":foundation:navigation:api")
     implementation project(":api:media:local")
     implementation project(':feature:media:common:domain:api')

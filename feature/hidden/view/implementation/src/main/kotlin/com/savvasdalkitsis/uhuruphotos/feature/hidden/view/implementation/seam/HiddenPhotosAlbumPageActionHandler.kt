@@ -17,14 +17,14 @@ package com.savvasdalkitsis.uhuruphotos.feature.hidden.view.implementation.seam
 
 import com.savvasdalkitsis.uhuruphotos.api.albums.model.Album
 import com.savvasdalkitsis.uhuruphotos.feature.exhibit.view.api.model.ExhibitSequenceDataSource.HiddenMedia
-import com.savvasdalkitsis.uhuruphotos.feature.galleria.view.api.seam.GalleriaAction
-import com.savvasdalkitsis.uhuruphotos.feature.galleria.view.api.seam.GalleriaActionHandler
-import com.savvasdalkitsis.uhuruphotos.feature.galleria.view.api.seam.GalleriaEffect
-import com.savvasdalkitsis.uhuruphotos.feature.galleria.view.api.seam.GalleriaEffect.NavigateBack
-import com.savvasdalkitsis.uhuruphotos.feature.galleria.view.api.seam.GalleriaMutation
-import com.savvasdalkitsis.uhuruphotos.feature.galleria.view.api.ui.state.GalleriaDetails
-import com.savvasdalkitsis.uhuruphotos.feature.galleria.view.api.ui.state.GalleriaState
-import com.savvasdalkitsis.uhuruphotos.feature.galleria.view.api.ui.state.Title
+import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.GalleryAction
+import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.GalleryActionHandler
+import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.GalleryEffect
+import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.GalleryEffect.NavigateBack
+import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.GalleryMutation
+import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.ui.state.GalleryDetails
+import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.ui.state.GalleryState
+import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.ui.state.Title
 import com.savvasdalkitsis.uhuruphotos.feature.hidden.domain.api.usecase.HiddenMediaUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.usecase.MediaUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.settings.domain.api.usecase.SettingsUseCase
@@ -42,16 +42,16 @@ internal class HiddenPhotosAlbumPageActionHandler @Inject constructor(
     hiddenMediaUseCase: HiddenMediaUseCase,
     settingsUseCase: SettingsUseCase,
     biometricsUseCase: BiometricsUseCase
-): ActionHandler<GalleriaState, GalleriaEffect, GalleriaAction, GalleriaMutation> by GalleriaActionHandler(
+): ActionHandler<GalleryState, GalleryEffect, GalleryAction, GalleryMutation> by GalleryActionHandler(
     galleryRefresher = { mediaUseCase.refreshFavouriteMedia() },
     initialCollageDisplay = { hiddenMediaUseCase.getHiddenMediaGalleryDisplay() },
-    galleryDisplayPersistence = { _, galleryDisplay ->
+    collageDisplayPersistence = { _, galleryDisplay ->
         hiddenMediaUseCase.setHiddenMediaGalleryDisplay(galleryDisplay)
     },
     galleryDetailsEmptyCheck = {
         mediaUseCase.getHiddenMedia().getOrDefault(emptyList()).isEmpty()
     },
-    galleriaDetailsFlow = { _, effect ->
+    galleryDetailsFlow = { _, effect ->
         settingsUseCase.observeBiometricsRequiredForHiddenPhotosAccess()
             .flatMapLatest { biometricsRequired ->
                 val proceed = when {
@@ -71,7 +71,7 @@ internal class HiddenPhotosAlbumPageActionHandler @Inject constructor(
                     mediaUseCase.observeHiddenMedia()
                         .mapNotNull { it.getOrNull() }
                         .map { photoEntries ->
-                            GalleriaDetails(
+                            GalleryDetails(
                                 title = Title.Resource(string.hidden_photos),
                                 albums = listOf(
                                     Album(

@@ -17,14 +17,14 @@ package com.savvasdalkitsis.uhuruphotos.feature.trash.view.implementation.seam
 
 import com.savvasdalkitsis.uhuruphotos.api.albums.model.Album
 import com.savvasdalkitsis.uhuruphotos.feature.exhibit.view.api.model.ExhibitSequenceDataSource.Trash
-import com.savvasdalkitsis.uhuruphotos.feature.galleria.view.api.seam.GalleriaAction
-import com.savvasdalkitsis.uhuruphotos.feature.galleria.view.api.seam.GalleriaActionHandler
-import com.savvasdalkitsis.uhuruphotos.feature.galleria.view.api.seam.GalleriaEffect
-import com.savvasdalkitsis.uhuruphotos.feature.galleria.view.api.seam.GalleriaEffect.NavigateBack
-import com.savvasdalkitsis.uhuruphotos.feature.galleria.view.api.seam.GalleriaMutation
-import com.savvasdalkitsis.uhuruphotos.feature.galleria.view.api.ui.state.GalleriaDetails
-import com.savvasdalkitsis.uhuruphotos.feature.galleria.view.api.ui.state.GalleriaState
-import com.savvasdalkitsis.uhuruphotos.feature.galleria.view.api.ui.state.Title
+import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.GalleryAction
+import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.GalleryActionHandler
+import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.GalleryEffect
+import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.GalleryEffect.NavigateBack
+import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.GalleryMutation
+import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.ui.state.GalleryDetails
+import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.ui.state.GalleryState
+import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.ui.state.Title
 import com.savvasdalkitsis.uhuruphotos.feature.trash.domain.api.usecase.TrashUseCase
 import com.savvasdalkitsis.uhuruphotos.foundation.biometrics.api.usecase.BiometricsUseCase
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.ActionHandler
@@ -38,16 +38,16 @@ internal class TrashAlbumPageActionHandler @Inject constructor(
     trashUseCase: TrashUseCase,
     settingsUseCase: com.savvasdalkitsis.uhuruphotos.feature.settings.domain.api.usecase.SettingsUseCase,
     biometricsUseCase: BiometricsUseCase
-): ActionHandler<GalleriaState, GalleriaEffect, GalleriaAction, GalleriaMutation> by GalleriaActionHandler(
+): ActionHandler<GalleryState, GalleryEffect, GalleryAction, GalleryMutation> by GalleryActionHandler(
     galleryRefresher = { trashUseCase.refreshTrash() },
     initialCollageDisplay = { trashUseCase.getTrashGalleryDisplay() },
-    galleryDisplayPersistence = { _, galleryDisplay ->
+    collageDisplayPersistence = { _, galleryDisplay ->
         trashUseCase.setTrashGalleryDisplay(galleryDisplay)
     },
     galleryDetailsEmptyCheck = {
         !trashUseCase.hasTrash()
     },
-    galleriaDetailsFlow = { _, effect ->
+    galleryDetailsFlow = { _, effect ->
         settingsUseCase.observeBiometricsRequiredForTrashAccess()
             .flatMapLatest { biometricsRequired ->
                 val proceed = when {
@@ -66,7 +66,7 @@ internal class TrashAlbumPageActionHandler @Inject constructor(
                 } else {
                     trashUseCase.observeTrashAlbums()
                         .map { albums ->
-                            GalleriaDetails(
+                            GalleryDetails(
                                 title = Title.Resource(string.trash),
                                 albums = albums.map { album ->
                                     Album(

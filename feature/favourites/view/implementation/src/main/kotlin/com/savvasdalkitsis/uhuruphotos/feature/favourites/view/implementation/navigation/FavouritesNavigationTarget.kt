@@ -20,23 +20,23 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import com.savvasdalkitsis.uhuruphotos.feature.favourites.view.api.navigation.FavouritesNavigationTarget
 import com.savvasdalkitsis.uhuruphotos.feature.favourites.view.implementation.viewmodel.FavouritesViewModel
-import com.savvasdalkitsis.uhuruphotos.feature.galleria.view.api.seam.GalleriaAction
-import com.savvasdalkitsis.uhuruphotos.feature.galleria.view.api.seam.GalleriaAction.LoadCollage
-import com.savvasdalkitsis.uhuruphotos.feature.galleria.view.api.seam.GalleriaEffect
-import com.savvasdalkitsis.uhuruphotos.feature.galleria.view.api.seam.GalleriaEffectsHandler
-import com.savvasdalkitsis.uhuruphotos.feature.galleria.view.api.ui.GalleriaPage
-import com.savvasdalkitsis.uhuruphotos.feature.galleria.view.api.ui.state.GalleriaState
+import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.GalleryAction
+import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.GalleryAction.LoadCollage
+import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.GalleryEffect
+import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.GalleryEffectsHandler
+import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.ui.Gallery
+import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.ui.state.GalleryState
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.NavigationTarget
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.navigationTarget
 import javax.inject.Inject
 
 internal class FavouritesNavigationTarget @Inject constructor(
-    private val effectsHandler: GalleriaEffectsHandler,
+    private val effectsHandler: GalleryEffectsHandler,
     private val settingsUseCase: com.savvasdalkitsis.uhuruphotos.feature.settings.domain.api.usecase.SettingsUseCase,
 ) : NavigationTarget {
 
     override suspend fun NavGraphBuilder.create(navHostController: NavHostController) =
-        navigationTarget<GalleriaState, GalleriaEffect, GalleriaAction, FavouritesViewModel>(
+        navigationTarget<GalleryState, GalleryEffect, GalleryAction, FavouritesViewModel>(
             name = FavouritesNavigationTarget.registrationName,
             effects = effectsHandler,
             themeMode = settingsUseCase.observeThemeModeState(),
@@ -45,7 +45,7 @@ internal class FavouritesNavigationTarget @Inject constructor(
             },
             createModel = { hiltViewModel() }
         ) { state, action ->
-            GalleriaPage(
+            Gallery(
                 state = state,
                 action = action,
             )

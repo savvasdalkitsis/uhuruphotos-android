@@ -20,13 +20,13 @@ import com.savvasdalkitsis.uhuruphotos.api.media.remote.domain.usecase.RemoteMed
 import com.savvasdalkitsis.uhuruphotos.feature.album.auto.domain.api.usecase.AutoAlbumsUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.album.auto.view.implementation.state.AutoAlbumCollageDisplay
 import com.savvasdalkitsis.uhuruphotos.feature.exhibit.view.api.model.ExhibitSequenceDataSource.AutoAlbum
-import com.savvasdalkitsis.uhuruphotos.feature.galleria.view.api.seam.GalleriaAction
-import com.savvasdalkitsis.uhuruphotos.feature.galleria.view.api.seam.GalleriaActionHandler
-import com.savvasdalkitsis.uhuruphotos.feature.galleria.view.api.seam.GalleriaEffect
-import com.savvasdalkitsis.uhuruphotos.feature.galleria.view.api.seam.GalleriaMutation
-import com.savvasdalkitsis.uhuruphotos.feature.galleria.view.api.ui.state.GalleriaDetails
-import com.savvasdalkitsis.uhuruphotos.feature.galleria.view.api.ui.state.GalleriaState
-import com.savvasdalkitsis.uhuruphotos.feature.galleria.view.api.ui.state.Title
+import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.GalleryAction
+import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.GalleryActionHandler
+import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.GalleryEffect
+import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.GalleryMutation
+import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.ui.state.GalleryDetails
+import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.ui.state.GalleryState
+import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.ui.state.Title
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaId
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItem
 import com.savvasdalkitsis.uhuruphotos.feature.people.view.api.ui.state.toPerson
@@ -39,18 +39,18 @@ internal class AutoAlbumActionHandler @Inject constructor(
     autoAlbumsUseCase: AutoAlbumsUseCase,
     remoteMediaUseCase: RemoteMediaUseCase,
     dateDisplayer: DateDisplayer,
-) : ActionHandler<GalleriaState, GalleriaEffect, GalleriaAction, GalleriaMutation>
-by GalleriaActionHandler(
+) : ActionHandler<GalleryState, GalleryEffect, GalleryAction, GalleryMutation>
+by GalleryActionHandler(
     galleryRefresher = { autoAlbumsUseCase.refreshAutoAlbum(it) },
     initialCollageDisplay = { AutoAlbumCollageDisplay },
-    galleryDisplayPersistence = { _, _ -> },
+    collageDisplayPersistence = { _, _ -> },
     galleryDetailsEmptyCheck = { albumId ->
         autoAlbumsUseCase.getAutoAlbum(albumId).items.isEmpty()
     },
-    galleriaDetailsFlow = { albumId, _ ->
+    galleryDetailsFlow = { albumId, _ ->
         autoAlbumsUseCase.observeAutoAlbum(albumId)
             .map { (photoEntries, people) ->
-                GalleriaDetails(
+                GalleryDetails(
                     title = Title.Text(photoEntries.firstOrNull()?.title ?: ""),
                     people = with(remoteMediaUseCase) {
                         people.map { person ->

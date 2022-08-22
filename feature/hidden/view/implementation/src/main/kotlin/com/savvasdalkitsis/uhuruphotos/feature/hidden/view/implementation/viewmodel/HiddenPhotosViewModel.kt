@@ -17,9 +17,9 @@ package com.savvasdalkitsis.uhuruphotos.feature.hidden.view.implementation.viewm
 
 import androidx.lifecycle.ViewModel
 import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.CollageState
-import com.savvasdalkitsis.uhuruphotos.feature.galleria.view.api.seam.GalleriaAction
-import com.savvasdalkitsis.uhuruphotos.feature.galleria.view.api.seam.GalleriaEffect
-import com.savvasdalkitsis.uhuruphotos.feature.galleria.view.api.ui.state.GalleriaState
+import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.GalleryAction
+import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.GalleryEffect
+import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.ui.state.GalleryState
 import com.savvasdalkitsis.uhuruphotos.feature.hidden.view.implementation.seam.HiddenPhotosAction
 import com.savvasdalkitsis.uhuruphotos.feature.hidden.view.implementation.seam.HiddenPhotosCompositeActionHandler
 import com.savvasdalkitsis.uhuruphotos.feature.hidden.view.implementation.seam.HiddenPhotosEffect
@@ -35,11 +35,11 @@ import javax.inject.Inject
 internal class HiddenPhotosViewModel @Inject constructor(
     hiddenPhotosCompositeActionHandler: HiddenPhotosCompositeActionHandler,
 ) : ViewModel(), Seam<
-        Pair<GalleriaState, HiddenPhotosState>,
-        Either<GalleriaEffect, HiddenPhotosEffect>,
-        Either<GalleriaAction, HiddenPhotosAction>,
-        Mutation<Pair<GalleriaState, HiddenPhotosState>>
+        Pair<GalleryState, HiddenPhotosState>,
+        Either<GalleryEffect, HiddenPhotosEffect>,
+        Either<GalleryAction, HiddenPhotosAction>,
+        Mutation<Pair<GalleryState, HiddenPhotosState>>
         > by handler(
     hiddenPhotosCompositeActionHandler,
-    GalleriaState(collageState = CollageState()) to HiddenPhotosState()
+    GalleryState(collageState = CollageState()) to HiddenPhotosState()
 )

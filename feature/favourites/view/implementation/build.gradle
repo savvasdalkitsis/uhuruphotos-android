@@ -9,7 +9,7 @@ android {
 }
 
 dependencies {
-    implementation project(":feature:galleria:view:api")
+    implementation project(":feature:gallery:view:api")
     implementation project(':api:albums')
     implementation project(':feature:favourites:view:api')
     implementation project(':feature:favourites:domain:api')

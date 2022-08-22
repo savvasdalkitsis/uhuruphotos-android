@@ -18,13 +18,13 @@ package com.savvasdalkitsis.uhuruphotos.feature.favourites.view.implementation.s
 import com.savvasdalkitsis.uhuruphotos.api.albums.model.Album
 import com.savvasdalkitsis.uhuruphotos.feature.exhibit.view.api.model.ExhibitSequenceDataSource.FavouriteMedia
 import com.savvasdalkitsis.uhuruphotos.feature.favourites.domain.api.usecase.FavouritesUseCase
-import com.savvasdalkitsis.uhuruphotos.feature.galleria.view.api.seam.GalleriaAction
-import com.savvasdalkitsis.uhuruphotos.feature.galleria.view.api.seam.GalleriaActionHandler
-import com.savvasdalkitsis.uhuruphotos.feature.galleria.view.api.seam.GalleriaEffect
-import com.savvasdalkitsis.uhuruphotos.feature.galleria.view.api.seam.GalleriaMutation
-import com.savvasdalkitsis.uhuruphotos.feature.galleria.view.api.ui.state.GalleriaDetails
-import com.savvasdalkitsis.uhuruphotos.feature.galleria.view.api.ui.state.GalleriaState
-import com.savvasdalkitsis.uhuruphotos.feature.galleria.view.api.ui.state.Title
+import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.GalleryAction
+import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.GalleryActionHandler
+import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.GalleryEffect
+import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.GalleryMutation
+import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.ui.state.GalleryDetails
+import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.ui.state.GalleryState
+import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.ui.state.Title
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.usecase.MediaUseCase
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.ActionHandler
 import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
@@ -35,21 +35,21 @@ import javax.inject.Inject
 internal class FavouritesActionHandler @Inject constructor(
     mediaUseCase: MediaUseCase,
     favouritesUseCase: FavouritesUseCase,
-) : ActionHandler<GalleriaState, GalleriaEffect, GalleriaAction, GalleriaMutation>
-by GalleriaActionHandler(
+) : ActionHandler<GalleryState, GalleryEffect, GalleryAction, GalleryMutation>
+by GalleryActionHandler(
     galleryRefresher = { mediaUseCase.refreshFavouriteMedia() },
     initialCollageDisplay = { favouritesUseCase.getFavouriteMediaGalleryDisplay() },
-    galleryDisplayPersistence = { _, galleryDisplay ->
+    collageDisplayPersistence = { _, galleryDisplay ->
         favouritesUseCase.setFavouriteMediaGalleryDisplay(galleryDisplay)
     },
     galleryDetailsEmptyCheck = { _ ->
         mediaUseCase.getFavouriteMediaCount().getOrDefault(0) > 0
     },
-    galleriaDetailsFlow = { _, _ ->
+    galleryDetailsFlow = { _, _ ->
         mediaUseCase.observeFavouriteMedia()
             .mapNotNull { it.getOrNull() }
             .map { mediaItems ->
-                GalleriaDetails(
+                GalleryDetails(
                     title = Title.Resource(string.favourite_media),
                     albums = listOf(Album(
                         id = "favourites",

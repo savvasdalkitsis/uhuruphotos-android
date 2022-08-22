@@ -18,11 +18,11 @@ package com.savvasdalkitsis.uhuruphotos.feature.hidden.view.implementation.navig
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
-import com.savvasdalkitsis.uhuruphotos.feature.galleria.view.api.seam.GalleriaAction
-import com.savvasdalkitsis.uhuruphotos.feature.galleria.view.api.seam.GalleriaAction.LoadCollage
-import com.savvasdalkitsis.uhuruphotos.feature.galleria.view.api.seam.GalleriaEffect
-import com.savvasdalkitsis.uhuruphotos.feature.galleria.view.api.seam.GalleriaEffectsHandler
-import com.savvasdalkitsis.uhuruphotos.feature.galleria.view.api.ui.state.GalleriaState
+import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.GalleryAction
+import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.GalleryAction.LoadCollage
+import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.GalleryEffect
+import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.GalleryEffectsHandler
+import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.ui.state.GalleryState
 import com.savvasdalkitsis.uhuruphotos.feature.hidden.view.api.HiddenPhotosNavigationTarget
 import com.savvasdalkitsis.uhuruphotos.feature.hidden.view.implementation.seam.HiddenPhotosAction
 import com.savvasdalkitsis.uhuruphotos.feature.hidden.view.implementation.seam.HiddenPhotosAction.Load
@@ -41,20 +41,20 @@ import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.Either.Right
 import javax.inject.Inject
 
 internal class HiddenPhotosNavigationTarget @Inject constructor(
-    private val galleriaEffectsHandler: GalleriaEffectsHandler,
+    private val galleryEffectsHandler: GalleryEffectsHandler,
     private val hiddenPhotosEffectHandler: HiddenPhotosEffectHandler,
     private val settingsUseCase: SettingsUseCase,
 ) : NavigationTarget {
 
     override suspend fun NavGraphBuilder.create(navHostController: NavHostController) =
         navigationTarget<
-                Pair<GalleriaState, HiddenPhotosState>,
-                Either<GalleriaEffect, HiddenPhotosEffect>,
-                Either<GalleriaAction, HiddenPhotosAction>,
+                Pair<GalleryState, HiddenPhotosState>,
+                Either<GalleryEffect, HiddenPhotosEffect>,
+                Either<GalleryAction, HiddenPhotosAction>,
                 HiddenPhotosViewModel
         >(
             name = HiddenPhotosNavigationTarget.registrationName,
-            effects = CompositeEffectHandler(galleriaEffectsHandler, hiddenPhotosEffectHandler),
+            effects = CompositeEffectHandler(galleryEffectsHandler, hiddenPhotosEffectHandler),
             themeMode = settingsUseCase.observeThemeModeState(),
             initializer = { _, action ->
                 action(Left(LoadCollage(0)))

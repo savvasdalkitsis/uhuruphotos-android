@@ -18,11 +18,11 @@ package com.savvasdalkitsis.uhuruphotos.feature.trash.view.implementation.naviga
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
-import com.savvasdalkitsis.uhuruphotos.feature.galleria.view.api.seam.GalleriaAction
-import com.savvasdalkitsis.uhuruphotos.feature.galleria.view.api.seam.GalleriaAction.LoadCollage
-import com.savvasdalkitsis.uhuruphotos.feature.galleria.view.api.seam.GalleriaEffect
-import com.savvasdalkitsis.uhuruphotos.feature.galleria.view.api.seam.GalleriaEffectsHandler
-import com.savvasdalkitsis.uhuruphotos.feature.galleria.view.api.ui.state.GalleriaState
+import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.GalleryAction
+import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.GalleryAction.LoadCollage
+import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.GalleryEffect
+import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.GalleryEffectsHandler
+import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.ui.state.GalleryState
 import com.savvasdalkitsis.uhuruphotos.feature.settings.domain.api.usecase.SettingsUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.trash.view.api.navigation.TrashNavigationTarget
 import com.savvasdalkitsis.uhuruphotos.feature.trash.view.implementation.seam.TrashAction
@@ -41,20 +41,20 @@ import javax.inject.Inject
 
 internal class TrashNavigationTarget @Inject constructor(
     private val trashEffectsHandler: TrashEffectsHandler,
-    private val galleriaEffectsHandler: GalleriaEffectsHandler,
+    private val galleryEffectsHandler: GalleryEffectsHandler,
     private val settingsUseCase: SettingsUseCase,
 ) : NavigationTarget {
 
     override suspend fun NavGraphBuilder.create(navHostController: NavHostController) =
         navigationTarget<
-                Pair<GalleriaState, TrashState>,
-                Either<GalleriaEffect, TrashEffect>,
-                Either<GalleriaAction, TrashAction>,
+                Pair<GalleryState, TrashState>,
+                Either<GalleryEffect, TrashEffect>,
+                Either<GalleryAction, TrashAction>,
                 TrashViewModel
         >(
             name = TrashNavigationTarget.registrationName,
             effects = CompositeEffectHandler(
-                galleriaEffectsHandler,
+                galleryEffectsHandler,
                 trashEffectsHandler,
             ),
             themeMode = settingsUseCase.observeThemeModeState(),
