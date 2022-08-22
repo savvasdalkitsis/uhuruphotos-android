@@ -34,7 +34,7 @@ import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.SectionHeader
 
 @Composable
-fun PeopleBar(
+fun PeopleBanner(
     modifier: Modifier = Modifier,
     people: List<Person>,
     onViewAllClicked: (() -> Unit)? = null,

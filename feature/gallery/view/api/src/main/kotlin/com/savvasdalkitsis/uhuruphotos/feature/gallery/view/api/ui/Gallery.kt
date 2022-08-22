@@ -31,7 +31,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.GalleryActi
 import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.GalleryAction.SelectedMediaItem
 import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.GalleryAction.SwipeToRefresh
 import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.ui.state.GalleryState
-import com.savvasdalkitsis.uhuruphotos.feature.people.view.api.ui.PeopleBar
+import com.savvasdalkitsis.uhuruphotos.feature.people.view.api.ui.PeopleBanner
 import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.BackNavButton
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.CommonScaffold
@@ -74,7 +74,7 @@ fun Gallery(
                 onChangeDisplay = { action(ChangeCollageDisplay(it)) },
                 collageHeader = state.people.takeIf { it.isNotEmpty() }?.let {
                     {
-                        PeopleBar(
+                        PeopleBanner(
                             modifier = Modifier.animateItemPlacement(),
                             people = state.people,
                             onPersonSelected = { action(PersonSelected(it)) }

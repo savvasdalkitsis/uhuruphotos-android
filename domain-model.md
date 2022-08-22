@@ -25,10 +25,10 @@ graph TD;
     Person-->Collage
     SearchResults-->Collage
     Feed-->Collage
-    People-->PeopleList
-    PeopleList-->Person
-    Exhibit-->PeopleList
-    AutoAlbum-->PeopleList
+    People-->PeopleBanner
+    PeopleBanner-->Person
+    Exhibit-->PeopleBanner
+    AutoAlbum-->PeopleBanner
 
     subgraph Pages
         Person

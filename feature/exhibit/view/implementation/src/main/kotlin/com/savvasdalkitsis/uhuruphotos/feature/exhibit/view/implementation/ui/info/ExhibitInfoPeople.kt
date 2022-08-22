@@ -19,7 +19,7 @@ import androidx.compose.runtime.Composable
 import com.savvasdalkitsis.uhuruphotos.feature.exhibit.view.implementation.seam.ExhibitAction
 import com.savvasdalkitsis.uhuruphotos.feature.exhibit.view.implementation.seam.ExhibitAction.PersonSelected
 import com.savvasdalkitsis.uhuruphotos.feature.exhibit.view.implementation.ui.state.SingleMediaItemState
-import com.savvasdalkitsis.uhuruphotos.feature.people.view.api.ui.PeopleBar
+import com.savvasdalkitsis.uhuruphotos.feature.people.view.api.ui.PeopleBanner
 
 @Composable
 internal fun ExhibitInfoPeople(
@@ -27,7 +27,7 @@ internal fun ExhibitInfoPeople(
     action: (ExhibitAction) -> Unit
 ) {
     if (mediaItem.peopleInMediaItem.isNotEmpty()) {
-        PeopleBar(
+        PeopleBanner(
             people = mediaItem.peopleInMediaItem,
             onPersonSelected = { action(PersonSelected(it)) }
         )

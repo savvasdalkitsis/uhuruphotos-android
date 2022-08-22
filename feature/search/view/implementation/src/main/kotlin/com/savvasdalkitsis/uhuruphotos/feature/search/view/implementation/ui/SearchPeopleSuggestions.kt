@@ -16,7 +16,7 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.feature.search.view.implementation.ui
 
 import androidx.compose.runtime.Composable
-import com.savvasdalkitsis.uhuruphotos.feature.people.view.api.ui.PeopleBar
+import com.savvasdalkitsis.uhuruphotos.feature.people.view.api.ui.PeopleBanner
 import com.savvasdalkitsis.uhuruphotos.feature.people.view.api.ui.state.Person
 import com.savvasdalkitsis.uhuruphotos.feature.search.view.implementation.seam.SearchAction
 import com.savvasdalkitsis.uhuruphotos.feature.search.view.implementation.seam.SearchAction.PersonSelected
@@ -27,7 +27,7 @@ fun SearchPeopleSuggestions(
     people: List<Person>,
     action: (SearchAction) -> Unit,
 ) {
-    PeopleBar(
+    PeopleBanner(
         people = people,
         onViewAllClicked = { action(ViewAllPeopleSelected) },
         onPersonSelected = { action(PersonSelected(it)) }
