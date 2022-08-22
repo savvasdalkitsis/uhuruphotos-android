@@ -15,10 +15,10 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.heatmap.view.implementation.seam
 
-import com.savvasdalkitsis.uhuruphotos.foundation.map.api.model.LatLon
-import com.savvasdalkitsis.uhuruphotos.api.media.page.domain.model.MediaItem
-import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.Mutation
 import com.savvasdalkitsis.uhuruphotos.feature.heatmap.view.implementation.ui.state.HeatMapState
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItem
+import com.savvasdalkitsis.uhuruphotos.foundation.map.api.model.LatLon
+import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.Mutation
 
 sealed class HeatMapMutation(
     mutation: Mutation<HeatMapState>,

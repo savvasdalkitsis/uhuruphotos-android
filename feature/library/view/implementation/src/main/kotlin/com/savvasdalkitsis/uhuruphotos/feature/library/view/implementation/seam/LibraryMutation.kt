@@ -15,20 +15,20 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.library.view.implementation.seam
 
-import com.savvasdalkitsis.uhuruphotos.api.media.page.domain.model.MediaGrid
-import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.Mutation
 import com.savvasdalkitsis.uhuruphotos.feature.library.view.implementation.ui.state.LibraryLocalMedia
 import com.savvasdalkitsis.uhuruphotos.feature.library.view.implementation.ui.state.LibraryState
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.state.MediaGridState
+import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.Mutation
 
 sealed class LibraryMutation(
     mutation: Mutation<LibraryState>,
 ) : Mutation<LibraryState> by mutation {
 
-    data class DisplayAutoAlbums(val cover: MediaGrid) : LibraryMutation({
+    data class DisplayAutoAlbums(val cover: MediaGridState) : LibraryMutation({
         it.copy(autoAlbums = cover)
     })
 
-    data class DisplayUserAlbums(val cover: MediaGrid) : LibraryMutation({
+    data class DisplayUserAlbums(val cover: MediaGridState) : LibraryMutation({
         it.copy(userAlbums = cover)
     })
 
@@ -36,7 +36,7 @@ sealed class LibraryMutation(
         it.copy(loading = loading)
     })
 
-    data class DisplayFavouritePhotos(val cover: MediaGrid) : LibraryMutation({
+    data class DisplayFavouritePhotos(val cover: MediaGridState) : LibraryMutation({
         it.copy(favouritePhotos = cover)
     })
 

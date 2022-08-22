@@ -15,10 +15,10 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.person.view.implementation.seam
 
-import com.savvasdalkitsis.uhuruphotos.api.media.page.domain.model.MediaSequenceDataSource.PersonResults
-import com.savvasdalkitsis.uhuruphotos.api.media.page.navigation.MediaItemPageNavigationTarget
+import com.savvasdalkitsis.uhuruphotos.feature.exhibit.view.api.model.ExhibitSequenceDataSource.PersonResults
+import com.savvasdalkitsis.uhuruphotos.feature.exhibit.view.api.navigation.ExhibitNavigationTarget
 import com.savvasdalkitsis.uhuruphotos.feature.person.view.implementation.seam.PersonEffect.NavigateBack
-import com.savvasdalkitsis.uhuruphotos.feature.person.view.implementation.seam.PersonEffect.OpenPhotoDetails
+import com.savvasdalkitsis.uhuruphotos.feature.person.view.implementation.seam.PersonEffect.OpenExhibit
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.Navigator
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.EffectHandler
 import javax.inject.Inject
@@ -30,8 +30,8 @@ class PersonEffectHandler @Inject constructor(
     override suspend fun handleEffect(effect: PersonEffect) {
         when (effect) {
             NavigateBack -> navigator.navigateBack()
-            is OpenPhotoDetails -> navigator.navigateTo(with(effect) {
-                MediaItemPageNavigationTarget.name(
+            is OpenExhibit -> navigator.navigateTo(with(effect) {
+                ExhibitNavigationTarget.name(
                     id,
                     center,
                     scale,

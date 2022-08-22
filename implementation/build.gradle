@@ -34,7 +34,7 @@ dependencies {
     implementation project(":feature:people:domain:implementation")
     implementation project(':implementation:media')
     implementation project(':implementation:media:local')
-    implementation project(':implementation:media:page')
+    implementation project(':feature:media:common:domain:implementation')
     implementation project(':implementation:media:remote')
     implementation project(":feature:search:domain:implementation")
     implementation project(":feature:search:view:implementation")

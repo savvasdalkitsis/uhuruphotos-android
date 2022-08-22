@@ -17,11 +17,9 @@ package com.savvasdalkitsis.uhuruphotos.feature.album.user.view.implementation.s
 
 import com.savvasdalkitsis.uhuruphotos.api.albums.model.Album
 import com.savvasdalkitsis.uhuruphotos.api.db.extensions.isVideo
-import com.savvasdalkitsis.uhuruphotos.api.media.page.domain.model.MediaId
-import com.savvasdalkitsis.uhuruphotos.api.media.page.domain.model.MediaItem
-import com.savvasdalkitsis.uhuruphotos.api.media.page.domain.model.MediaSequenceDataSource.UserAlbum
 import com.savvasdalkitsis.uhuruphotos.api.media.remote.domain.usecase.RemoteMediaUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.album.user.domain.implementation.usecase.UserAlbumsUseCase
+import com.savvasdalkitsis.uhuruphotos.feature.exhibit.view.api.model.ExhibitSequenceDataSource.UserAlbum
 import com.savvasdalkitsis.uhuruphotos.feature.galleria.view.api.seam.GalleriaAction
 import com.savvasdalkitsis.uhuruphotos.feature.galleria.view.api.seam.GalleriaActionHandler
 import com.savvasdalkitsis.uhuruphotos.feature.galleria.view.api.seam.GalleriaEffect
@@ -29,6 +27,8 @@ import com.savvasdalkitsis.uhuruphotos.feature.galleria.view.api.seam.GalleriaMu
 import com.savvasdalkitsis.uhuruphotos.feature.galleria.view.api.ui.state.GalleriaDetails
 import com.savvasdalkitsis.uhuruphotos.feature.galleria.view.api.ui.state.GalleriaState
 import com.savvasdalkitsis.uhuruphotos.feature.galleria.view.api.ui.state.Title
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaId
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItem
 import com.savvasdalkitsis.uhuruphotos.feature.user.domain.api.usecase.UserUseCase
 import com.savvasdalkitsis.uhuruphotos.foundation.date.api.DateDisplayer
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.ActionHandler
@@ -90,5 +90,5 @@ by GalleriaActionHandler(
                 )
             }
     },
-    mediaSequenceDataSource = { UserAlbum(it) }
+    exhibitSequenceDataSource = { UserAlbum(it) }
 )

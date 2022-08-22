@@ -17,8 +17,8 @@ package com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.ui.stat
 
 import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.ui.state.GalleryState
 import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.ui.state.PredefinedGalleryDisplay
-import com.savvasdalkitsis.uhuruphotos.api.media.page.domain.model.MediaItem
-import com.savvasdalkitsis.uhuruphotos.api.media.page.domain.model.MediaItemSelectionMode
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItem
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemSelectionMode
 
 internal data class FeedState(
     val galleryState: GalleryState = GalleryState(),

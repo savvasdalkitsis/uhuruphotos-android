@@ -17,9 +17,9 @@ package com.savvasdalkitsis.uhuruphotos.feature.heatmap.view.implementation.seam
 
 import androidx.compose.ui.geometry.Offset
 import com.google.accompanist.permissions.PermissionState
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItem
 import com.savvasdalkitsis.uhuruphotos.foundation.map.api.model.LatLon
 import com.savvasdalkitsis.uhuruphotos.foundation.map.api.ui.MapViewState
-import com.savvasdalkitsis.uhuruphotos.api.media.page.domain.model.MediaItem
 
 sealed class HeatMapAction {
     data class CameraViewPortChanged(val boundsChecker: suspend (LatLon) -> Boolean) : HeatMapAction()

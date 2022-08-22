@@ -1,11 +1,12 @@
 [versions]
 accompanist = "0.26.1-alpha"
 androidx-hilt = "1.0.0"
-coil = "2.1.0"
+coil = "2.2.0"
+com-google-android-gms = "18.1.0"
 compose = "1.3.0-alpha03"
-exoplayer = "2.18.0"
+exoplayer = "2.18.1"
 lumberjack = "5.2.5"
-mockk = "1.12.4"
+mockk = "1.12.5"
 moshi = "1.13.0"
 okhttp = "5.0.0-alpha.9"
 permissions = "1.0.0"
@@ -16,36 +17,35 @@ sqldelight = "1.5.3"
 accompanist-insets = { module = "com.google.accompanist:accompanist-insets-ui", version.ref = "accompanist" }
 accompanist-navigation = { module = "com.google.accompanist:accompanist-navigation-animation", version.ref = "accompanist" }
 accompanist-pager = { module = "com.google.accompanist:accompanist-pager", version.ref = "accompanist" }
-accompanist-pager-indicators = { module = "com.google.accompanist:accompanist-pager-indicators", version.ref = "accompanist" }
 accompanist-permissions = { module = "com.google.accompanist:accompanist-permissions", version.ref = "accompanist" }
 accompanist-swiperefresh = { module = "com.google.accompanist:accompanist-swiperefresh", version.ref = "accompanist" }
 accompanist-systemui = { module = "com.google.accompanist:accompanist-systemuicontroller", version.ref = "accompanist" }
 accompanist-webview = { module = "com.google.accompanist:accompanist-webview", version.ref = "accompanist" }
-androidx-activity = "androidx.activity:activity-compose:1.6.0-alpha05"
+androidx-activity = "androidx.activity:activity-compose:1.6.0-beta01"
 androidx-compose-animation-base = { module = "androidx.compose.animation:animation", version.ref = "compose" }
 androidx-compose-animation-graphics = { module = "androidx.compose.animation:animation-graphics", version.ref = "compose" }
 androidx-compose-foundation = { module = "androidx.compose.foundation:foundation", version.ref = "compose" }
 androidx-compose-foundation-layout = { module = "androidx.compose.foundation:foundation-layout", version.ref = "compose" }
 androidx-compose-hilt-navigation = { module = "androidx.hilt:hilt-navigation-compose", version.ref = "androidx-hilt" }
 androidx-compose-material = { module = "androidx.compose.material:material", version.ref = "compose" }
-androidx-compose-material-windowsize = "androidx.compose.material3:material3-window-size-class:1.0.0-alpha13"
-androidx-compose-navigation = "androidx.navigation:navigation-compose:2.5.0-rc02"
+androidx-compose-material-windowsize = "androidx.compose.material3:material3-window-size-class:1.0.0-alpha16"
+androidx-compose-navigation = "androidx.navigation:navigation-compose:2.5.1"
 androidx-compose-test-junit = { module = "androidx.compose.ui:ui-test-junit4", version.ref = "compose" }
 androidx-compose-test-manifest = { module = "androidx.compose.ui:ui-test-manifest", version.ref = "compose" }
 androidx-compose-ui = { module = "androidx.compose.ui:ui", version.ref = "compose" }
-androidx-compose-ui-tooling = "androidx.compose.ui:ui-tooling:1.1.1"
-androidx-compose-ui-tooling-preview = "androidx.compose.ui:ui-tooling-preview:1.1.1"
+androidx-compose-ui-tooling = { module = "androidx.compose.ui:ui-tooling", version.ref = "compose" }
+androidx-compose-ui-tooling-preview = { module = "androidx.compose.ui:ui-tooling-preview", version.ref = "compose" }
 androidx-compose-ui-util = { module = "androidx.compose.ui:ui-util", version.ref = "compose" }
-androidx-core = "androidx.core:core-ktx:1.9.0-alpha05"
+androidx-core = "androidx.core:core-ktx:1.9.0-beta01"
 androidx-datastore-preferences = "androidx.datastore:datastore-preferences:1.0.0"
 androidx-espresso = "androidx.test.espresso:espresso-core:3.5.0-alpha07"
-androidx-lifecycle = "androidx.lifecycle:lifecycle-runtime-ktx:2.5.0-rc02"
+androidx-lifecycle = "androidx.lifecycle:lifecycle-runtime-ktx:2.6.0-alpha01"
 androidx-preference = "androidx.preference:preference-ktx:1.2.0"
 androidx-startup = "androidx.startup:startup-runtime:1.2.0-alpha01"
 androidx-test-core = "androidx.test:core:1.5.0-alpha01"
 androidx-test-runner = "androidx.test:runner:1.5.0-alpha04"
-androidx-window = "androidx.window:window:1.1.0-alpha02"
-androidx-work = "androidx.work:work-runtime-ktx:2.8.0-alpha02"
+androidx-window = "androidx.window:window:1.1.0-alpha03"
+androidx-work = "androidx.work:work-runtime-ktx:2.8.0-alpha03"
 androidx-work-hilt = { module = "androidx.hilt:hilt-work", version.ref = "androidx-hilt" }
 assure = "com.afollestad.assure:coroutines:0.2.0"
 bubble-navigation = "com.github.savvasdalkitsis:BubbleNavigationBarCompose:1.0.2"
@@ -56,24 +56,24 @@ coil-video = { module = "io.coil-kt:coil-video", version.ref = "coil" }
 exif = "androidx.exifinterface:exifinterface:1.3.3"
 exoplayer-base = { module = "com.google.android.exoplayer:exoplayer", version.ref = "exoplayer" }
 exoplayer-okhttp = { module = "com.google.android.exoplayer:extension-okhttp", version.ref = "exoplayer" }
-firebase-bom = "com.google.firebase:firebase-bom:30.2.0"
-flowpreferences = "com.fredporciuncula:flow-preferences:1.7.0"
-hilt = "com.google.dagger:hilt-android:2.42"
+firebase-bom = "com.google.firebase:firebase-bom:30.3.2"
+flowpreferences = "com.fredporciuncula:flow-preferences:1.8.0"
+hilt = "com.google.dagger:hilt-android:2.43.2"
 infobar = "com.radusalagean:info-bar-compose:1.0.0"
 junit = "junit:junit:4.13.2"
 jwt = "com.auth0.android:jwtdecode:2.0.1"
-kotlinx-coroutines = "org.jetbrains.kotlinx:kotlinx-coroutines-core-jvm:1.6.3"
+kotlinx-coroutines = "org.jetbrains.kotlinx:kotlinx-coroutines-core-jvm:1.6.4"
 # @pin cannot update until lumbejack supports timber 5
 logger = "com.jakewharton.timber:timber:4.7.1"
 lumberjack-core = { module = "com.github.MFlisar.Lumberjack:lumberjack-library", version.ref = "lumberjack" }
 lumberjack-feedback = { module = "com.github.MFlisar.Lumberjack:lumberjack-feedback", version.ref = "lumberjack" }
-lumberjack-feedback-manager = "com.github.MFlisar:FeedbackManager:2.0.2"
+lumberjack-feedback-manager = "com.github.MFlisar:FeedbackManager:2.0.3"
 lumberjack-file = { module = "com.github.MFlisar.Lumberjack:lumberjack-filelogger", version.ref = "lumberjack" }
 lumberjack-notification = { module = "com.github.MFlisar.Lumberjack:lumberjack-notification", version.ref = "lumberjack" }
 mapbox = "com.mapbox.maps:android:10.6.0-rc.1"
-maps = "com.google.android.gms:play-services-maps:18.0.2"
-maps-compose = "com.google.maps.android:maps-compose:2.4.0"
-maps-utils = "com.google.maps.android:android-maps-utils:2.3.0"
+maps = { module = "com.google.android.gms:play-services-maps", version.ref = "com-google-android-gms" }
+maps-compose = "com.google.maps.android:maps-compose:2.5.3"
+maps-utils = "com.google.maps.android:android-maps-utils:2.4.0"
 maps-utils-ktx = "com.google.maps.android:maps-utils-ktx:3.4.0"
 mockk = { module = "io.mockk:mockk", version.ref = "mockk" }
 mockk-android = { module = "io.mockk:mockk-android", version.ref = "mockk" }
@@ -85,7 +85,7 @@ okhttp-url = { module = "com.squareup.okhttp3:okhttp-urlconnection", version.ref
 palette = "androidx.palette:palette-ktx:1.0.0"
 permissions-base = { module = "dev.shreyaspatil.permission-flow:permission-flow-android", version.ref = "permissions" }
 permissions-compose = { module = "dev.shreyaspatil.permission-flow:permission-flow-compose", version.ref = "permissions" }
-play = "com.google.android.gms:play-services-base:18.0.1"
+play = { module = "com.google.android.gms:play-services-base", version.ref = "com-google-android-gms" }
 retrofit-core = { module = "com.squareup.retrofit2:retrofit", version.ref = "retrofit" }
 retrofit-moshi = { module = "com.squareup.retrofit2:converter-moshi", version.ref = "retrofit" }
 scrollbar = "com.github.nanihadesuka:LazyColumnScrollbar:1.5.1"
@@ -93,9 +93,9 @@ shazamcrest = "com.shazam:shazamcrest:0.11"
 sqldelight-android = { module = "com.squareup.sqldelight:android-driver", version.ref = "sqldelight" }
 sqldelight-coroutines = { module = "com.squareup.sqldelight:coroutines-extensions", version.ref = "sqldelight" }
 sqldelight-jvm = { module = "com.squareup.sqldelight:sqlite-driver", version.ref = "sqldelight" }
-turbine = "app.cash.turbine:turbine:0.8.0"
+turbine = "app.cash.turbine:turbine:0.9.0"
 urlvalidator = "commons-validator:commons-validator:1.7"
-zoomable = "com.mxalbert.zoomable:zoomable:1.4.2"
+zoomable = "com.mxalbert.zoomable:zoomable:1.5.1"
 
 [bundles]
 androidx-compose-animation = [

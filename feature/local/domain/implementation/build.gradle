@@ -19,7 +19,7 @@ dependencies {
     implementation project(":feature:galleria:view:api")
     implementation project(":foundation:navigation:api")
     implementation project(":api:media:local")
-    implementation project(':api:media:page')
+    implementation project(':feature:media:common:domain:api')
     implementation project(':feature:people:view:api')
     implementation project(":feature:settings:domain:api")
     implementation(

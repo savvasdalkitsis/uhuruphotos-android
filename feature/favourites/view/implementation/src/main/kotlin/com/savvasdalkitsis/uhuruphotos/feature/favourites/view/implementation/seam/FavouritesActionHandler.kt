@@ -16,8 +16,7 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.feature.favourites.view.implementation.seam
 
 import com.savvasdalkitsis.uhuruphotos.api.albums.model.Album
-import com.savvasdalkitsis.uhuruphotos.api.media.page.domain.model.MediaSequenceDataSource.FavouriteMedia
-import com.savvasdalkitsis.uhuruphotos.api.media.page.domain.usecase.MediaUseCase
+import com.savvasdalkitsis.uhuruphotos.feature.exhibit.view.api.model.ExhibitSequenceDataSource.FavouriteMedia
 import com.savvasdalkitsis.uhuruphotos.feature.favourites.domain.api.usecase.FavouritesUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.galleria.view.api.seam.GalleriaAction
 import com.savvasdalkitsis.uhuruphotos.feature.galleria.view.api.seam.GalleriaActionHandler
@@ -26,6 +25,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.galleria.view.api.seam.GalleriaMu
 import com.savvasdalkitsis.uhuruphotos.feature.galleria.view.api.ui.state.GalleriaDetails
 import com.savvasdalkitsis.uhuruphotos.feature.galleria.view.api.ui.state.GalleriaState
 import com.savvasdalkitsis.uhuruphotos.feature.galleria.view.api.ui.state.Title
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.usecase.MediaUseCase
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.ActionHandler
 import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
 import kotlinx.coroutines.flow.map
@@ -60,5 +60,5 @@ by GalleriaActionHandler(
                 )
             }
     },
-    mediaSequenceDataSource = { FavouriteMedia }
+    exhibitSequenceDataSource = { FavouriteMedia }
 )

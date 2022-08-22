@@ -15,7 +15,7 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.ui
 
-import com.savvasdalkitsis.uhuruphotos.api.media.page.domain.model.MediaItem
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItem
 
 internal sealed class MediaRowSlot {
     data class MediaSlot(val mediaItem: MediaItem): MediaRowSlot()

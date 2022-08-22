@@ -20,12 +20,12 @@ import com.fredporciuncula.flow.preferences.FlowSharedPreferences
 import com.savvasdalkitsis.uhuruphotos.api.albums.repository.AlbumsRepository
 import com.savvasdalkitsis.uhuruphotos.api.albums.ui.state.AlbumSorting
 import com.savvasdalkitsis.uhuruphotos.api.albums.ui.state.AlbumSorting.Companion.sorted
-import com.savvasdalkitsis.uhuruphotos.api.autoalbums.usecase.AutoAlbumsUseCase
 import com.savvasdalkitsis.uhuruphotos.api.autoalbums.ui.state.AutoAlbum
+import com.savvasdalkitsis.uhuruphotos.api.autoalbums.usecase.AutoAlbumsUseCase
 import com.savvasdalkitsis.uhuruphotos.api.db.albums.AutoAlbums
-import com.savvasdalkitsis.uhuruphotos.api.media.page.domain.model.MediaId
-import com.savvasdalkitsis.uhuruphotos.api.media.page.domain.model.MediaItem
 import com.savvasdalkitsis.uhuruphotos.api.media.remote.domain.usecase.RemoteMediaUseCase
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaId
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItem
 import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.flow.Flow

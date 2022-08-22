@@ -22,9 +22,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.ui.MediaRowSlot.EmptySlot
 import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.ui.MediaRowSlot.MediaSlot
-import com.savvasdalkitsis.uhuruphotos.api.media.page.domain.model.MediaItem
-import com.savvasdalkitsis.uhuruphotos.api.media.page.ui.MediaItemSelected
-import com.savvasdalkitsis.uhuruphotos.api.media.page.ui.MediaItemThumbnail
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItem
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.MediaItemSelected
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.MediaItemThumbnail
 
 @Composable
 internal fun MediaRow(

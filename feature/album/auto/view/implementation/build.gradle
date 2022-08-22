@@ -11,7 +11,8 @@ android {
 dependencies {
     implementation project(':api:albums')
     implementation project(":api:db")
-    implementation project(':api:media:page')
+    implementation project(':feature:media:common:domain:api')
+    implementation project(":feature:exhibit:view:api")
     implementation project(':api:media:remote')
     implementation project(":feature:settings:domain:api")
     implementation project(":feature:galleria:view:api")

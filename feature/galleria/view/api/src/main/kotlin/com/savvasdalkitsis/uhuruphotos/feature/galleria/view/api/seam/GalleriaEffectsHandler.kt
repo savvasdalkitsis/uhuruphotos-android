@@ -15,7 +15,7 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.galleria.view.api.seam
 
-import com.savvasdalkitsis.uhuruphotos.api.media.page.navigation.MediaItemPageNavigationTarget
+import com.savvasdalkitsis.uhuruphotos.feature.exhibit.view.api.navigation.ExhibitNavigationTarget
 import com.savvasdalkitsis.uhuruphotos.feature.galleria.view.api.seam.GalleriaEffect.ErrorLoading
 import com.savvasdalkitsis.uhuruphotos.feature.galleria.view.api.seam.GalleriaEffect.NavigateBack
 import com.savvasdalkitsis.uhuruphotos.feature.galleria.view.api.seam.GalleriaEffect.NavigateToPerson
@@ -35,12 +35,12 @@ class GalleriaEffectsHandler @Inject constructor(
     override suspend fun handleEffect(effect: GalleriaEffect) {
         when (effect) {
             is OpenMedia -> navigate(
-                MediaItemPageNavigationTarget.name(
+                ExhibitNavigationTarget.name(
                     effect.id,
                     effect.center,
                     effect.scale,
                     effect.video,
-                    effect.mediaSequenceDataSource,
+                    effect.exhibitSequenceDataSource,
                 ),
             )
             NavigateBack -> navigator.navigateBack()

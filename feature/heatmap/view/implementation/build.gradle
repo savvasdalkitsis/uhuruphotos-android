@@ -11,6 +11,7 @@ android {
 dependencies {
 
     implementation project(':api:albums')
+    implementation project(":feature:exhibit:view:api")
     implementation project(":foundation:coroutines:api")
     implementation project(":foundation:date:api")
     implementation project(":api:db")
@@ -19,7 +20,7 @@ dependencies {
     implementation project(":foundation:icons:api")
     implementation project(":foundation:navigation:api")
     implementation project(":foundation:map:api")
-    implementation project(':api:media:page')
+    implementation project(':feature:media:common:domain:api')
     implementation project(':api:media:remote')
     implementation project(":feature:settings:domain:api")
     implementation project(":foundation:strings:api")

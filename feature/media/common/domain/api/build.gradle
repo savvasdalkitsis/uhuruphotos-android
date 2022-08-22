@@ -1,0 +1,25 @@
+android {
+    namespace 'com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api'
+}
+
+dependencies {
+    api project(":api:db")
+    api project(":foundation:map:api")
+    api project(":api:media:local")
+    api(
+            libs.androidx.compose.navigation,
+            libs.androidx.work,
+            libs.kotlinx.coroutines,
+    )
+    implementation project(":foundation:compose:api")
+    implementation project(":foundation:icons:api")
+    implementation project(":foundation:image:api")
+    implementation project(":feature:people:view:api")
+    implementation project(":foundation:strings:api")
+    implementation project(":foundation:ui:api")
+    implementation(
+            libs.androidx.compose.material,
+            libs.moshi,
+    )
+    kapt libs.moshi.kapt
+}

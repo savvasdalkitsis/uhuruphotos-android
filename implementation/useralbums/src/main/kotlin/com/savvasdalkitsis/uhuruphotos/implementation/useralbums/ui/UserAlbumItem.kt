@@ -28,11 +28,11 @@ import androidx.compose.ui.res.pluralStringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
-import com.savvasdalkitsis.uhuruphotos.api.media.page.domain.model.MediaId
-import com.savvasdalkitsis.uhuruphotos.api.media.page.domain.model.MediaItem
-import com.savvasdalkitsis.uhuruphotos.api.media.page.ui.MediaGridThumbnail
-import com.savvasdalkitsis.uhuruphotos.api.media.page.ui.MediaItemThumbnail
 import com.savvasdalkitsis.uhuruphotos.api.useralbums.ui.state.UserAlbum
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaId
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItem
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.MediaGrid
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.MediaItemThumbnail
 import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R
 import com.savvasdalkitsis.uhuruphotos.implementation.useralbums.seam.UserAlbumsAction
 import com.savvasdalkitsis.uhuruphotos.implementation.useralbums.seam.UserAlbumsAction.UserAlbumSelected
@@ -48,8 +48,8 @@ internal fun UserAlbumItem(
             .clickable { action(UserAlbumSelected(album)) }
     ) {
         if (album.cover.hasMoreThanOneItem) {
-            MediaGridThumbnail(
-                mediaGrid = album.cover,
+            MediaGrid(
+                state = album.cover,
                 onSelected = {
                     action(UserAlbumSelected(album))
                 },

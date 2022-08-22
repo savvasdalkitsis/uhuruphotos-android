@@ -1,0 +1,66 @@
+plugins {
+    id 'java-test-fixtures'
+}
+
+android {
+    buildFeatures {
+        compose true
+    }
+    composeOptions {
+        kotlinCompilerExtensionVersion compose_compiler_version
+    }
+    namespace 'com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.implementation'
+}
+
+dependencies {
+
+    implementation project(':api:albums')
+    implementation project(":api:auth")
+    implementation project(":foundation:compose:api")
+    implementation project(":foundation:date:api")
+    implementation project(":api:db")
+    implementation project(":foundation:exif:api")
+    implementation project(":foundation:icons:api")
+    implementation project(':foundation:image:api')
+    implementation project(":feature:exhibit:view:api")
+    implementation project(":feature:local:domain:api")
+    implementation project(":foundation:log:api")
+    implementation project(":foundation:map:api")
+    implementation project(':api:media:local')
+    implementation project(':feature:media:common:domain:api')
+    implementation project(':api:media:remote')
+    implementation project(":foundation:navigation:api")
+    implementation project(":foundation:notification:api")
+    implementation project(':feature:people:domain:api')
+    implementation project(':feature:person:domain:api')
+    implementation project(':feature:person:view:api')
+    implementation project(':feature:search:domain:api')
+    implementation project(":foundation:share:api")
+    implementation project(":foundation:strings:api")
+    implementation project(":foundation:toaster:api")
+    implementation project(":foundation:ui:api")
+    implementation project(":feature:user:domain:api")
+    implementation project(":foundation:video:api")
+    implementation project(":foundation:worker:api")
+    implementation project(":implementation:media:remote")
+    implementation(
+            libs.accompanist.pager,
+            libs.accompanist.systemui,
+            libs.androidx.compose.hilt.navigation,
+            libs.androidx.compose.material,
+            libs.androidx.compose.material.windowsize,
+            libs.androidx.work,
+            libs.androidx.work.hilt,
+            libs.coil.base,
+            libs.exif,
+            libs.infobar,
+            libs.moshi,
+            libs.retrofit.core,
+            libs.retrofit.moshi,
+            libs.sqldelight.coroutines,
+            libs.zoomable,
+    )
+    testFixturesImplementation project(":api:db")
+    testFixturesImplementation project(':api:media:remote')
+    kapt libs.moshi.kapt
+}

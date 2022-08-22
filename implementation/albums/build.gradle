@@ -24,7 +24,7 @@ dependencies {
     implementation project(":foundation:log:api")
     implementation project(":foundation:notification:api")
     implementation project(":feature:people:view:api")
-    implementation project(':api:media:page')
+    implementation project(':feature:media:common:domain:api')
     implementation project(":feature:settings:domain:api")
     implementation project(":foundation:strings:api")
     implementation project(":feature:user:domain:api")
@@ -46,7 +46,7 @@ dependencies {
     )
     testFixturesImplementation testFixtures(project(":api:db"))
     testFixturesImplementation project(':implementation:media:remote')
-    testFixturesImplementation project(':api:media:page')
+    testFixturesImplementation project(':feature:media:common:domain:api')
     testFixturesImplementation project(':api:albums')
     kapt libs.moshi.kapt
 }

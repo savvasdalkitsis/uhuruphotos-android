@@ -15,8 +15,8 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.heatmap.view.implementation.ui.state
 
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItem
 import com.savvasdalkitsis.uhuruphotos.foundation.map.api.model.LatLon
-import com.savvasdalkitsis.uhuruphotos.api.media.page.domain.model.MediaItem
 
 data class HeatMapState(
     val loading: Boolean = false,

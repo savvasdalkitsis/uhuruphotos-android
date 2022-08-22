@@ -15,12 +15,12 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.library.view.implementation.ui.state
 
-import com.savvasdalkitsis.uhuruphotos.api.media.page.domain.model.MediaGrid
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.state.MediaGridState
 
 data class LibraryState(
     val loading: Boolean = false,
-    val autoAlbums: MediaGrid? = null,
-    val userAlbums: MediaGrid? = null,
-    val favouritePhotos: MediaGrid? = null,
+    val autoAlbums: MediaGridState? = null,
+    val userAlbums: MediaGridState? = null,
+    val favouritePhotos: MediaGridState? = null,
     val localMedia: LibraryLocalMedia? = null,
 )

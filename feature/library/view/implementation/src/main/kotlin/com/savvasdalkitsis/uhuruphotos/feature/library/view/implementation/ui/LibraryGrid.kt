@@ -49,12 +49,6 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
-import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.R.drawable
-import com.savvasdalkitsis.uhuruphotos.api.media.page.domain.model.MediaGrid
-import com.savvasdalkitsis.uhuruphotos.api.media.page.ui.MediaGridThumbnail
-import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
-import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.theme.CustomColors
-import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.SectionHeader
 import com.savvasdalkitsis.uhuruphotos.feature.library.view.implementation.seam.LibraryAction
 import com.savvasdalkitsis.uhuruphotos.feature.library.view.implementation.seam.LibraryAction.AutoAlbumsSelected
 import com.savvasdalkitsis.uhuruphotos.feature.library.view.implementation.seam.LibraryAction.FavouritePhotosSelected
@@ -65,6 +59,12 @@ import com.savvasdalkitsis.uhuruphotos.feature.library.view.implementation.seam.
 import com.savvasdalkitsis.uhuruphotos.feature.library.view.implementation.ui.state.LibraryLocalMedia.Found
 import com.savvasdalkitsis.uhuruphotos.feature.library.view.implementation.ui.state.LibraryLocalMedia.RequiresPermissions
 import com.savvasdalkitsis.uhuruphotos.feature.library.view.implementation.ui.state.LibraryState
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.MediaGrid
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.state.MediaGridState
+import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.R.drawable
+import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
+import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.theme.CustomColors
+import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.SectionHeader
 import dev.shreyaspatil.permissionflow.compose.rememberPermissionFlowRequestLauncher
 
 @Composable
@@ -186,7 +186,7 @@ private fun PillItem(title: String, icon: Int, onSelected: () -> Unit) {
 }
 
 internal fun LazyGridScope.libraryItem(
-    mediaGrid: MediaGrid?,
+    mediaGrid: MediaGridState?,
     title: String,
     @DrawableRes overlayIcon: Int? = null,
     onSelected: () -> Unit,
@@ -207,7 +207,7 @@ internal fun LazyGridScope.libraryItem(
 @Composable
 fun LibraryEntry(
     modifier: Modifier = Modifier,
-    mediaGrid: MediaGrid,
+    mediaGrid: MediaGridState,
     photoGridModifier: Modifier,
     title: String,
     @DrawableRes overlayIcon: Int? = null,
@@ -218,9 +218,9 @@ fun LibraryEntry(
             .padding(8.dp),
     ) {
         Box(modifier = Modifier.fillMaxSize()) {
-            MediaGridThumbnail(
+            MediaGrid(
                 modifier = photoGridModifier,
-                mediaGrid = mediaGrid,
+                state = mediaGrid,
                 onSelected = onSelected,
                 shape = RoundedCornerShape(26.dp)
             )

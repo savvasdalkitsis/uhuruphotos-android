@@ -16,8 +16,8 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.feature.galleria.view.api.seam
 
 import androidx.compose.ui.geometry.Offset
-import com.savvasdalkitsis.uhuruphotos.api.media.page.domain.model.MediaId
-import com.savvasdalkitsis.uhuruphotos.api.media.page.domain.model.MediaSequenceDataSource
+import com.savvasdalkitsis.uhuruphotos.feature.exhibit.view.api.model.ExhibitSequenceDataSource
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaId
 
 sealed class GalleriaEffect {
     object NavigateBack : GalleriaEffect()
@@ -28,7 +28,7 @@ sealed class GalleriaEffect {
         val center: Offset,
         val scale: Float,
         val video: Boolean,
-        val mediaSequenceDataSource: MediaSequenceDataSource,
+        val exhibitSequenceDataSource: ExhibitSequenceDataSource,
     ) : GalleriaEffect()
 
     data class NavigateToPerson(val personId: Int) : GalleriaEffect()

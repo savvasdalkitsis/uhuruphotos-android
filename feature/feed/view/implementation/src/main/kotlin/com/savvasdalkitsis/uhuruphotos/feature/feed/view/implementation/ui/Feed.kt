@@ -22,11 +22,6 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import com.google.accompanist.swiperefresh.SwipeRefresh
 import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
-import com.savvasdalkitsis.uhuruphotos.foundation.compose.api.blurIf
-import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.ui.Gallery
-import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.ui.state.PredefinedGalleryDisplay
-import com.savvasdalkitsis.uhuruphotos.feature.home.view.api.ui.HomeScaffold
-import com.savvasdalkitsis.uhuruphotos.api.media.page.ui.TrashPermissionDialog
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.FeedAction
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.FeedAction.AlbumRefreshClicked
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.FeedAction.AlbumSelectionClicked
@@ -37,6 +32,11 @@ import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.Fee
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.FeedAction.SelectedPhoto
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.FeedAction.TrashSelectedPhotos
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.ui.state.FeedState
+import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.ui.Gallery
+import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.ui.state.PredefinedGalleryDisplay
+import com.savvasdalkitsis.uhuruphotos.feature.home.view.api.ui.HomeScaffold
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.TrashPermissionDialog
+import com.savvasdalkitsis.uhuruphotos.foundation.compose.api.blurIf
 import kotlinx.coroutines.launch
 
 @Composable

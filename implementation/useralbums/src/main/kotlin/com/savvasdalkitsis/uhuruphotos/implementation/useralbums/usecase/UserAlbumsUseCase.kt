@@ -21,12 +21,12 @@ import com.savvasdalkitsis.uhuruphotos.api.albums.repository.AlbumsRepository
 import com.savvasdalkitsis.uhuruphotos.api.albums.ui.state.AlbumSorting
 import com.savvasdalkitsis.uhuruphotos.api.albums.ui.state.AlbumSorting.Companion.sorted
 import com.savvasdalkitsis.uhuruphotos.api.db.albums.UserAlbums
-import com.savvasdalkitsis.uhuruphotos.api.media.page.domain.model.MediaGrid
-import com.savvasdalkitsis.uhuruphotos.api.media.page.domain.model.MediaId
-import com.savvasdalkitsis.uhuruphotos.api.media.page.domain.model.MediaItem
 import com.savvasdalkitsis.uhuruphotos.api.media.remote.domain.usecase.RemoteMediaUseCase
-import com.savvasdalkitsis.uhuruphotos.api.useralbums.usecase.UserAlbumsUseCase
 import com.savvasdalkitsis.uhuruphotos.api.useralbums.ui.state.UserAlbum
+import com.savvasdalkitsis.uhuruphotos.api.useralbums.usecase.UserAlbumsUseCase
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaId
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItem
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.state.MediaGridState
 import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.flow.Flow
@@ -72,7 +72,7 @@ class UserAlbumsUseCase @Inject constructor(
             .map {
                 UserAlbum(
                     id = it.id,
-                    cover = MediaGrid(
+                    cover = MediaGridState(
                         mediaItem1 = photo(
                             it.coverPhoto1Hash,
                             it.coverPhoto1IsVideo

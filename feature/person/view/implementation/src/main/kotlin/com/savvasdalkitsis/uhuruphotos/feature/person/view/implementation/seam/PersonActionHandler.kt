@@ -23,7 +23,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.person.view.implementation.seam.P
 import com.savvasdalkitsis.uhuruphotos.feature.person.view.implementation.seam.PersonAction.LoadPerson
 import com.savvasdalkitsis.uhuruphotos.feature.person.view.implementation.seam.PersonAction.NavigateBack
 import com.savvasdalkitsis.uhuruphotos.feature.person.view.implementation.seam.PersonAction.SelectedPhoto
-import com.savvasdalkitsis.uhuruphotos.feature.person.view.implementation.seam.PersonEffect.OpenPhotoDetails
+import com.savvasdalkitsis.uhuruphotos.feature.person.view.implementation.seam.PersonEffect.OpenExhibit
 import com.savvasdalkitsis.uhuruphotos.feature.person.view.implementation.seam.PersonMutation.Loading
 import com.savvasdalkitsis.uhuruphotos.feature.person.view.implementation.seam.PersonMutation.SetFeedDisplay
 import com.savvasdalkitsis.uhuruphotos.feature.person.view.implementation.seam.PersonMutation.ShowPersonDetails
@@ -64,7 +64,7 @@ class PersonActionHandler @Inject constructor(
         is ChangeDisplay -> flowOf(SetFeedDisplay(action.display))
         is SelectedPhoto -> flow {
             effect(with(action) {
-                OpenPhotoDetails(mediaItem.id, center, scale, mediaItem.isVideo, state.person!!)
+                OpenExhibit(mediaItem.id, center, scale, mediaItem.isVideo, state.person!!)
             })
         }
     }

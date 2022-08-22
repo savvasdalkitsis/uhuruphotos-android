@@ -16,16 +16,9 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.feature.library.view.implementation.seam
 
 import com.savvasdalkitsis.uhuruphotos.api.autoalbums.usecase.AutoAlbumsUseCase
-import com.savvasdalkitsis.uhuruphotos.foundation.coroutines.api.safelyOnStartIgnoring
 import com.savvasdalkitsis.uhuruphotos.api.media.local.domain.model.LocalMediaFolder
 import com.savvasdalkitsis.uhuruphotos.api.media.local.domain.usecase.LocalMediaUseCase
 import com.savvasdalkitsis.uhuruphotos.api.media.local.worker.LocalMediaWorkScheduler
-import com.savvasdalkitsis.uhuruphotos.api.media.page.domain.model.MediaGrid
-import com.savvasdalkitsis.uhuruphotos.api.media.page.domain.model.MediaItem
-import com.savvasdalkitsis.uhuruphotos.api.media.page.domain.model.MediaItemsOnDevice.Found
-import com.savvasdalkitsis.uhuruphotos.api.media.page.domain.model.MediaItemsOnDevice.RequiresPermissions
-import com.savvasdalkitsis.uhuruphotos.api.media.page.domain.usecase.MediaUseCase
-import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.ActionHandler
 import com.savvasdalkitsis.uhuruphotos.api.useralbums.usecase.UserAlbumsUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.library.view.implementation.seam.LibraryAction.AutoAlbumsSelected
 import com.savvasdalkitsis.uhuruphotos.feature.library.view.implementation.seam.LibraryAction.FavouritePhotosSelected
@@ -50,6 +43,13 @@ import com.savvasdalkitsis.uhuruphotos.feature.library.view.implementation.seam.
 import com.savvasdalkitsis.uhuruphotos.feature.library.view.implementation.seam.LibraryMutation.Loading
 import com.savvasdalkitsis.uhuruphotos.feature.library.view.implementation.ui.state.LibraryLocalMedia
 import com.savvasdalkitsis.uhuruphotos.feature.library.view.implementation.ui.state.LibraryState
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItem
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemsOnDevice.Found
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemsOnDevice.RequiresPermissions
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.usecase.MediaUseCase
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.state.MediaGridState
+import com.savvasdalkitsis.uhuruphotos.foundation.coroutines.api.safelyOnStartIgnoring
+import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.ActionHandler
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -195,13 +195,13 @@ class LibraryActionHandler @Inject constructor(
         loading.emit(false)
     }
 
-    private fun <T> Flow<List<T>>.mapToCover(cover: (T) -> MediaItem?): Flow<MediaGrid> =
+    private fun <T> Flow<List<T>>.mapToCover(cover: (T) -> MediaItem?): Flow<MediaGridState> =
         map { albums ->
             albums.take(4).map(cover).let {
-                MediaGrid(it)
+                MediaGridState(it)
             }
         }
 
-    private fun Pair<LocalMediaFolder, List<MediaItem>>.toMediaGrid(): Pair<LocalMediaFolder, MediaGrid> =
-        first to MediaGrid(second)
+    private fun Pair<LocalMediaFolder, List<MediaItem>>.toMediaGrid(): Pair<LocalMediaFolder, MediaGridState> =
+        first to MediaGridState(second)
 }

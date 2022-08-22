@@ -26,7 +26,7 @@ dependencies {
     implementation project(":foundation:log:api")
     implementation project(":foundation:map:api")
     implementation project(':api:media:local')
-    implementation project(':api:media:page')
+    implementation project(':feature:media:common:domain:api')
     implementation project(':api:media:remote')
     implementation project(":foundation:navigation:api")
     implementation project(":foundation:notification:api")
@@ -58,7 +58,7 @@ dependencies {
             libs.zoomable,
     )
     testFixturesImplementation project(":api:db")
-    testFixturesImplementation project(':api:media:page')
+    testFixturesImplementation project(':feature:media:common:domain:api')
     testFixturesImplementation project(':api:media:remote')
     kapt libs.moshi.kapt
 }

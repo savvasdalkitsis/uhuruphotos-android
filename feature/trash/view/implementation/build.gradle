@@ -13,6 +13,7 @@ dependencies {
     implementation project(":feature:galleria:view:api")
     implementation project(":foundation:biometrics:api")
     implementation project(":foundation:coroutines:api")
+    implementation project(":feature:exhibit:view:api")
     implementation project(":feature:gallery:view:api")
     implementation project(":foundation:navigation:api")
     implementation project(":foundation:seam:api")

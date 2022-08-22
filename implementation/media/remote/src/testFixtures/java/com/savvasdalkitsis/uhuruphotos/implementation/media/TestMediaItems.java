@@ -1,9 +1,9 @@
 package com.savvasdalkitsis.uhuruphotos.implementation.media;
 
-import com.savvasdalkitsis.uhuruphotos.api.media.page.domain.model.MediaId;
-import com.savvasdalkitsis.uhuruphotos.api.media.page.domain.model.MediaItem;
-import com.savvasdalkitsis.uhuruphotos.api.media.page.domain.model.MediaItemSelectionMode;
 import com.savvasdalkitsis.uhuruphotos.api.media.remote.model.RemoteMediaItemSummary;
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaId;
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItem;
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemSelectionMode;
 
 public class TestMediaItems {
 

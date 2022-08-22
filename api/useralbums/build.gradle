@@ -4,6 +4,7 @@ android {
 
 dependencies {
     api project(":api:albums")
+    api project(":feature:media:common:view:api")
     api(
             libs.androidx.compose.navigation,
     )

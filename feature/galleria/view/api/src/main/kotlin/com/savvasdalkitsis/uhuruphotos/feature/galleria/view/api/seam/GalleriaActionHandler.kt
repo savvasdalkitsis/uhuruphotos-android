@@ -15,7 +15,7 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.galleria.view.api.seam
 
-import com.savvasdalkitsis.uhuruphotos.api.media.page.domain.model.MediaSequenceDataSource
+import com.savvasdalkitsis.uhuruphotos.feature.exhibit.view.api.model.ExhibitSequenceDataSource
 import com.savvasdalkitsis.uhuruphotos.feature.galleria.view.api.seam.GalleriaAction.ChangeGalleryDisplay
 import com.savvasdalkitsis.uhuruphotos.feature.galleria.view.api.seam.GalleriaAction.LoadGallery
 import com.savvasdalkitsis.uhuruphotos.feature.galleria.view.api.seam.GalleriaAction.NavigateBack
@@ -45,7 +45,7 @@ class GalleriaActionHandler(
     private val galleryRefresher: suspend (Int) -> Result<Unit>,
     private val galleriaDetailsFlow: (galleryId: Int, effect: suspend (GalleriaEffect) -> Unit) -> Flow<GalleriaDetails>,
     private val galleryDetailsEmptyCheck: suspend (galleryId: Int) -> Boolean,
-    private val mediaSequenceDataSource: (galleryId: Int) -> MediaSequenceDataSource,
+    private val exhibitSequenceDataSource: (galleryId: Int) -> ExhibitSequenceDataSource,
     private val initialGalleryDisplay: (galleryId: Int) -> GalleryDisplay,
     private val galleryDisplayPersistence: suspend (galleryId:Int, PredefinedGalleryDisplay) -> Unit,
 ) : ActionHandler<GalleriaState, GalleriaEffect, GalleriaAction, GalleriaMutation> {
@@ -82,7 +82,7 @@ class GalleriaActionHandler(
                         center = center,
                         scale = scale,
                         video = mediaItem.isVideo,
-                        mediaSequenceDataSource = mediaSequenceDataSource(galleryId)
+                        exhibitSequenceDataSource = exhibitSequenceDataSource(galleryId)
                     )
                 }
             )

@@ -15,11 +15,11 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.api.useralbums.ui.state
 
-import com.savvasdalkitsis.uhuruphotos.api.media.page.domain.model.MediaGrid
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.state.MediaGridState
 
 data class UserAlbum(
     val id: Int,
-    val cover: MediaGrid,
+    val cover: MediaGridState,
     val title: String,
     val photoCount: Int?,
 )

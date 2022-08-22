@@ -15,15 +15,12 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.search.view.implementation.seam
 
-import com.savvasdalkitsis.uhuruphotos.foundation.coroutines.api.onErrors
-import com.savvasdalkitsis.uhuruphotos.foundation.coroutines.api.onErrorsIgnore
 import com.savvasdalkitsis.uhuruphotos.api.db.people.People
-import com.savvasdalkitsis.uhuruphotos.feature.feed.domain.api.usecase.FeedUseCase
-import com.savvasdalkitsis.uhuruphotos.foundation.log.api.log
 import com.savvasdalkitsis.uhuruphotos.api.media.remote.domain.usecase.RemoteMediaUseCase
+import com.savvasdalkitsis.uhuruphotos.feature.feed.domain.api.usecase.FeedUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.people.domain.api.usecase.PeopleUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.people.view.api.ui.state.toPerson
-import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.ActionHandler
+import com.savvasdalkitsis.uhuruphotos.feature.search.domain.api.usecase.SearchUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.search.view.implementation.seam.SearchAction.ChangeDisplay
 import com.savvasdalkitsis.uhuruphotos.feature.search.view.implementation.seam.SearchAction.ChangeFocus
 import com.savvasdalkitsis.uhuruphotos.feature.search.view.implementation.seam.SearchAction.Initialise
@@ -41,7 +38,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.search.view.implementation.seam.S
 import com.savvasdalkitsis.uhuruphotos.feature.search.view.implementation.seam.SearchEffect.NavigateToAllPeople
 import com.savvasdalkitsis.uhuruphotos.feature.search.view.implementation.seam.SearchEffect.NavigateToHeatMap
 import com.savvasdalkitsis.uhuruphotos.feature.search.view.implementation.seam.SearchEffect.NavigateToPerson
-import com.savvasdalkitsis.uhuruphotos.feature.search.view.implementation.seam.SearchEffect.OpenPhotoDetails
+import com.savvasdalkitsis.uhuruphotos.feature.search.view.implementation.seam.SearchEffect.OpenExhibit
 import com.savvasdalkitsis.uhuruphotos.feature.search.view.implementation.seam.SearchMutation.ChangeFeedDisplay
 import com.savvasdalkitsis.uhuruphotos.feature.search.view.implementation.seam.SearchMutation.ChangeSearchDisplay
 import com.savvasdalkitsis.uhuruphotos.feature.search.view.implementation.seam.SearchMutation.FocusChanged
@@ -54,7 +51,6 @@ import com.savvasdalkitsis.uhuruphotos.feature.search.view.implementation.seam.S
 import com.savvasdalkitsis.uhuruphotos.feature.search.view.implementation.seam.SearchMutation.SwitchStateToIdle
 import com.savvasdalkitsis.uhuruphotos.feature.search.view.implementation.seam.SearchMutation.SwitchStateToSearching
 import com.savvasdalkitsis.uhuruphotos.feature.search.view.implementation.seam.SearchMutation.UpdateLatestQuery
-import com.savvasdalkitsis.uhuruphotos.feature.search.domain.api.usecase.SearchUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.search.view.implementation.ui.state.SearchResults.Found
 import com.savvasdalkitsis.uhuruphotos.feature.search.view.implementation.ui.state.SearchState
 import com.savvasdalkitsis.uhuruphotos.feature.search.view.implementation.ui.state.SearchSuggestion
@@ -62,6 +58,10 @@ import com.savvasdalkitsis.uhuruphotos.feature.search.view.implementation.ui.sta
 import com.savvasdalkitsis.uhuruphotos.feature.search.view.implementation.ui.state.SearchSuggestion.RecentSearchSuggestion
 import com.savvasdalkitsis.uhuruphotos.feature.search.view.implementation.ui.state.SearchSuggestion.ServerSearchSuggestion
 import com.savvasdalkitsis.uhuruphotos.feature.settings.domain.api.usecase.SettingsUseCase
+import com.savvasdalkitsis.uhuruphotos.foundation.coroutines.api.onErrors
+import com.savvasdalkitsis.uhuruphotos.foundation.coroutines.api.onErrorsIgnore
+import com.savvasdalkitsis.uhuruphotos.foundation.log.api.log
+import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.ActionHandler
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.Flow
@@ -122,7 +122,7 @@ class SearchActionHandler @Inject constructor(
         }
         is SelectedPhoto -> flow {
             with(action) {
-                effect(OpenPhotoDetails(mediaItem.id, center, scale, mediaItem.isVideo, state.latestQuery))
+                effect(OpenExhibit(mediaItem.id, center, scale, mediaItem.isVideo, state.latestQuery))
             }
         }
         is ChangeDisplay -> flowOf(ChangeSearchDisplay(action.display))
