@@ -25,14 +25,16 @@ inline fun log(tag: String = "", msg: () -> String) {
     }
 }
 
-@Suppress("NOTHING_TO_INLINE")
-inline fun log(t: Throwable) {
-    L.w(t)
+fun log(t: Throwable) {
+    tempEnable {
+        L.w(t)
+    }
 }
 
-@Suppress("NOTHING_TO_INLINE")
-inline fun logError(t: Throwable) {
-    L.e(t)
+fun logError(t: Throwable) {
+    tempEnable {
+        L.e(t)
+    }
 }
 
 object Log {
@@ -48,4 +50,11 @@ inline fun <T, R : Any> T.runCatchingWithLog(block: T.() -> R): Result<R> = try 
 } catch (e: Throwable) {
     log(e)
     Result.failure(e)
+}
+
+private inline fun tempEnable(log: () -> Unit) {
+    val old = Log.enabled
+    Log.enabled = true
+    log()
+    Log.enabled = old
 }
