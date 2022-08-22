@@ -8,7 +8,7 @@ graph TD;
     Galleria-->Gallery
     Gallery-->GalleryGroup
     GalleryGroup-->MediaItem
-    MediaPage-->MediaItem
+    Exhibit-->MediaItem
     MediaItem-->LocalMediaItem
     MediaItem-->RemoteMediaItem
     LocalMediaItem-->Image
@@ -27,13 +27,13 @@ graph TD;
     Feed-->Gallery
     People-->PeopleList
     PeopleList-->Person
-    MediaPage-->PeopleList
+    Exhibit-->PeopleList
     AutoAlbum-->PeopleList
 
     subgraph Pages
         Person
         LocalGallery
-        MediaPage
+        Exhibit
     end
 
     subgraph Search
