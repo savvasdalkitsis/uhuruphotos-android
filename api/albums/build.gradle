@@ -11,7 +11,7 @@ android {
 dependencies {
 
     api project(':feature:media:common:domain:api')
-    api project(':api:media:remote')
+    api project(':feature:media:remote:domain:api')
     api project(':feature:people:domain:api')
     api project(':feature:people:view:api')
     api project(":api:db")

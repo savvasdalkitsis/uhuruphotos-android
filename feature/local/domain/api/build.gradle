@@ -5,7 +5,7 @@ android {
 dependencies {
     api project(":api:albums")
     api project(":feature:collage:view:api")
-    api project(":api:media:local")
+    api project(":feature:media:local:domain:api")
     api(
             libs.androidx.compose.navigation,
     )

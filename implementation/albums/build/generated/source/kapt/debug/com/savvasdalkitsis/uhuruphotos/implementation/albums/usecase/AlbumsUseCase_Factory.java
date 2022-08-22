@@ -2,7 +2,7 @@
 package com.savvasdalkitsis.uhuruphotos.implementation.albums.usecase;
 
 import com.savvasdalkitsis.uhuruphotos.api.albums.repository.AlbumsRepository;
-import com.savvasdalkitsis.uhuruphotos.api.media.remote.domain.usecase.RemoteMediaUseCase;
+import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.api.usecase.RemoteMediaUseCase;
 import com.savvasdalkitsis.uhuruphotos.feature.user.domain.api.usecase.UserUseCase;
 import com.savvasdalkitsis.uhuruphotos.foundation.date.api.DateDisplayer;
 import com.savvasdalkitsis.uhuruphotos.implementation.albums.worker.AlbumWorkScheduler;

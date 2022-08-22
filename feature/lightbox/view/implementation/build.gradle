@@ -26,10 +26,10 @@ dependencies {
     implementation project(":feature:local:domain:api")
     implementation project(":foundation:log:api")
     implementation project(":foundation:map:api")
-    implementation project(':api:media:local')
+    implementation project(':feature:media:local:domain:api')
     implementation project(':feature:media:common:domain:api')
     implementation project(':feature:media:common:view:api')
-    implementation project(':api:media:remote')
+    implementation project(':feature:media:remote:domain:api')
     implementation project(":foundation:navigation:api")
     implementation project(":foundation:notification:api")
     implementation project(':feature:people:domain:api')
@@ -43,7 +43,7 @@ dependencies {
     implementation project(":feature:user:domain:api")
     implementation project(":foundation:video:api")
     implementation project(":foundation:worker:api")
-    implementation project(":implementation:media:remote")
+    implementation project(":feature:media:remote:domain:implementation")
     implementation(
             libs.accompanist.pager,
             libs.accompanist.systemui,
@@ -62,6 +62,6 @@ dependencies {
             libs.zoomable,
     )
     testFixturesImplementation project(":api:db")
-    testFixturesImplementation project(':api:media:remote')
+    testFixturesImplementation project(':feature:media:remote:domain:api')
     kapt libs.moshi.kapt
 }

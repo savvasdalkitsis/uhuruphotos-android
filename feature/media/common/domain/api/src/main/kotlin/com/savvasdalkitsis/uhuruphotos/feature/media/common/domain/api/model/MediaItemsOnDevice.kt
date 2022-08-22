@@ -15,7 +15,7 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model
 
-import com.savvasdalkitsis.uhuruphotos.api.media.local.domain.model.LocalMediaFolder
+import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.model.LocalMediaFolder
 
 sealed class MediaItemsOnDevice {
 

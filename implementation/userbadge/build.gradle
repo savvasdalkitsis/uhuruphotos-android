@@ -15,7 +15,7 @@ dependencies {
     implementation project(":api:db")
     implementation project(":foundation:icons:api")
     implementation project(':foundation:image:api')
-    implementation project(':api:media:remote')
+    implementation project(':feature:media:remote:domain:api')
     implementation project(":foundation:ui:api")
     implementation project(":feature:user:domain:api")
     implementation project(':api:userbadge')

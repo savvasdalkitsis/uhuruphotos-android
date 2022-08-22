@@ -1,9 +1,0 @@
-android {
-    namespace 'com.savvasdalkitsis.uhuruphotos.api.media.local'
-}
-
-dependencies {
-    api(
-            libs.kotlinx.coroutines,
-    )
-}

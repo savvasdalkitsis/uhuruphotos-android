@@ -8,7 +8,7 @@ dependencies {
     implementation project(":foundation:log:api")
     implementation project(":foundation:network:api")
     implementation project(':feature:people:domain:api')
-    implementation project(':api:media:remote')
+    implementation project(':feature:media:remote:domain:api')
     implementation(
             libs.kotlinx.coroutines,
             libs.hilt,

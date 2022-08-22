@@ -39,13 +39,13 @@ dependencies {
             libs.sqldelight.coroutines,
     )
     testImplementation testFixtures(project(":api:db"))
-    testImplementation testFixtures(project(":implementation:media:remote"))
+    testImplementation testFixtures(project(":feature:media:remote:domain:implementation"))
     testImplementation testFixtures(project(":feature:user:domain:implementation"))
     testImplementation(
             libs.bundles.test,
     )
     testFixturesImplementation testFixtures(project(":api:db"))
-    testFixturesImplementation project(':implementation:media:remote')
+    testFixturesImplementation project(':feature:media:remote:domain:implementation')
     testFixturesImplementation project(':feature:media:common:domain:api')
     testFixturesImplementation project(':api:albums')
     kapt libs.moshi.kapt

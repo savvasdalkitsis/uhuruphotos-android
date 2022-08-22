@@ -3,7 +3,7 @@ package com.savvasdalkitsis.uhuruphotos.implementation.userbadge.usecase;
 
 import com.savvasdalkitsis.uhuruphotos.api.albums.worker.AlbumWorkScheduler;
 import com.savvasdalkitsis.uhuruphotos.api.auth.usecase.ServerUseCase;
-import com.savvasdalkitsis.uhuruphotos.api.media.remote.domain.usecase.RemoteMediaUseCase;
+import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.api.usecase.RemoteMediaUseCase;
 import com.savvasdalkitsis.uhuruphotos.feature.user.domain.api.usecase.UserUseCase;
 import dagger.internal.DaggerGenerated;
 import dagger.internal.Factory;

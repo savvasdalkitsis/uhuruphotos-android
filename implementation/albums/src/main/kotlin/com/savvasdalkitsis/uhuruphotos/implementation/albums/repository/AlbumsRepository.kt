@@ -48,8 +48,8 @@ import com.savvasdalkitsis.uhuruphotos.api.db.media.RemoteMediaItemSummaryQuerie
 import com.savvasdalkitsis.uhuruphotos.api.db.media.RemoteMediaTrashQueries
 import com.savvasdalkitsis.uhuruphotos.api.db.people.PeopleQueries
 import com.savvasdalkitsis.uhuruphotos.api.db.person.PersonQueries
-import com.savvasdalkitsis.uhuruphotos.api.media.remote.model.toDbModel
-import com.savvasdalkitsis.uhuruphotos.api.media.remote.model.toTrash
+import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.api.model.toDbModel
+import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.api.model.toTrash
 import com.savvasdalkitsis.uhuruphotos.feature.people.domain.api.service.model.toDbModel
 import com.savvasdalkitsis.uhuruphotos.foundation.coroutines.api.safelyOnStartIgnoring
 import com.savvasdalkitsis.uhuruphotos.foundation.group.api.model.Group

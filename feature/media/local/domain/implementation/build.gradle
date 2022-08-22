@@ -1,0 +1,25 @@
+android {
+    namespace 'com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.implementation'
+}
+
+dependencies {
+
+    implementation project(":foundation:date:api")
+    implementation project(":api:db")
+    implementation project(":foundation:exif:api")
+    implementation project(":foundation:initializer:api")
+    implementation project(":foundation:log:api")
+    implementation project(":feature:media:local:domain:api")
+    implementation project(":foundation:notification:api")
+    implementation project(":foundation:strings:api")
+    implementation project(":foundation:worker:api")
+    implementation(
+            libs.androidx.work,
+            libs.androidx.work.hilt,
+            libs.bundles.permissions,
+            libs.flowpreferences,
+            libs.hilt,
+            libs.palette,
+            libs.sqldelight.coroutines,
+    )
+}
