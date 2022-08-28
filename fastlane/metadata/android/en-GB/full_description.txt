@@ -1,0 +1,3 @@
+UhuruPhotos is an Android client for LibrePhotos written using the latest Android technologies
+
+It aims to become a full featured photo album replacement, including features like offline support, backup and sync etc.
