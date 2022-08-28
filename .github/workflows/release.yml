@@ -19,12 +19,28 @@ jobs:
         distribution: 'adopt'
         cache: gradle
 
+    - name: Set up ruby env
+      uses: ruby/setup-ruby@v1
+      with:
+        ruby-version: 2.7.2
+        bundler-cache: true
+
+    - name: Decode Service Account Key JSON File
+      uses: timheuer/base64-to-file@v1
+      id: service_account_json_file
+      with:
+        fileName: "serviceAccount.json"
+        encodedString: ${{ secrets.GOOGLE_JSON }}
+
     - name: Grant execute permission for gradlew
       run: chmod +x gradlew
+
     - name: Create local properties
       run: touch local.properties
+
     - name: Create maps api key
       run: echo "MAPS_API_KEY=${{ secrets.MAPS_API_KEY }}" > secrets.properties
+
     - name: Decode Keystore
       env:
         ENCODED_STRING: ${{ secrets.KEYSTORE }}
@@ -36,15 +52,26 @@ jobs:
         ENCODED_STRING: ${{ secrets.GOOGLE_SERVICES }}
       run: |
         echo $ENCODED_STRING | base64 -di > app/google-services.json
-    - name: Build with Gradle
-      run: ./gradlew app:bundleRelease
+        
+
+    - name: Build & deploy Android release
+      run: bundle exec fastlane android deploy
       env:
         KEYSTORE_PASS: ${{ secrets.KEYSTORE_PASS }}
         KEYSTORE_ALIAS: ${{ secrets.KEYSTORE_ALIAS }}
         MAPBOX_DOWNLOADS_TOKEN: ${{ secrets.MAPBOX_DOWNLOADS_TOKEN }}
-    - name: Archive release bundle
-      uses: actions/upload-artifact@v3
-      with:
-        name: bundle
-        path: |
-          app/build/outputs/bundle/release
+        ANDROID_JSON_KEY_FILE: ${{ steps.service_account_json_file.outputs.filePath }}
+
+#    - name: Build with Gradle
+#      run: ./gradlew app:bundleRelease
+#      env:
+#        KEYSTORE_PASS: ${{ secrets.KEYSTORE_PASS }}
+#        KEYSTORE_ALIAS: ${{ secrets.KEYSTORE_ALIAS }}
+#        MAPBOX_DOWNLOADS_TOKEN: ${{ secrets.MAPBOX_DOWNLOADS_TOKEN }}
+#
+#    - name: Archive release bundle
+#      uses: actions/upload-artifact@v3
+#      with:
+#        name: bundle
+#        path: |
+#          app/build/outputs/bundle/release

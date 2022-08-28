@@ -1,18 +1,3 @@
-# This file contains the fastlane.tools configuration
-# You can find the documentation at https://docs.fastlane.tools
-#
-# For a list of all available actions, check out
-#
-#     https://docs.fastlane.tools/actions
-#
-# For a list of all available plugins, check out
-#
-#     https://docs.fastlane.tools/plugins/available-plugins
-#
-
-# Uncomment the line if you want fastlane to automatically update itself
-# update_fastlane
-
 default_platform(:android)
 
 platform :android do
@@ -21,18 +6,30 @@ platform :android do
     gradle(task: "test")
   end
 
-  desc "Submit a new Beta Build to Crashlytics Beta"
-  lane :beta do
-    gradle(task: "clean assembleRelease")
-    crashlytics
-  
-    # sh "your_script.sh"
-    # You can also use other beta testing services here
-  end
-
-  desc "Deploy a new version to the Google Play"
+  desc "Tag and deploy a new internal release"
   lane :deploy do
-    gradle(task: "clean assembleRelease")
-    upload_to_play_store
+    gradle(
+        task: "bundle",
+        build_type: "release"
+    )
+
+    upload_to_play_store(
+        json_key: ENV["ANDROID_JSON_KEY_FILE"],
+        track: "internal",
+        skip_upload_metadata: true,
+        skip_upload_changelogs: true,
+        skip_upload_images: true,
+        skip_upload_screenshots: true
+    )
+
+    set_github_release(
+        repository_name: "savvasdalkitsis/uhuruphotos",
+        api_token: ENV["GITHUB_TOKEN"],
+        name: "Release " + last_git_tag,
+        tag_name: last_git_tag,
+        description: (File.read("changelog") rescue "No changelog provided"),
+        commitish: "main",
+        upload_assets: ["./app/build/outputs/bundle/release/*.aab"]
+    )
   end
 end
