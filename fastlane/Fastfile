@@ -9,7 +9,7 @@ platform :android do
   desc "Tag and deploy a new internal release"
   lane :deploy do
     gradle(
-        task: "bundle",
+        tasks: ["bundle", "assemble"],
         build_type: "release"
     )
 
@@ -19,7 +19,8 @@ platform :android do
         skip_upload_metadata: true,
         skip_upload_changelogs: false,
         skip_upload_images: true,
-        skip_upload_screenshots: true
+        skip_upload_screenshots: true,
+        skip_upload_apk: true,
     )
 
     set_github_release(
@@ -29,7 +30,10 @@ platform :android do
         tag_name: last_git_tag,
         description: (File.read("fastlane/metadata/android/en-GB/changelogs/" + android_get_version_code + ".txt") rescue "No changelog provided"),
         commitish: "main",
-        upload_assets: ["app/build/outputs/bundle/release/app-release.aab"]
+        upload_assets: [
+            "app/build/outputs/bundle/release/app-release.aab",
+            "app/build/outputs/apk/release/app-release.apk",
+        ]
     )
   end
 end
