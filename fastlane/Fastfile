@@ -9,7 +9,7 @@ platform :android do
   desc "Tag and deploy a new internal release"
   lane :deploy do
     gradle(
-        tasks: ["bundle", "assemble"],
+        task: "bundle",
         build_type: "release"
     )
 
@@ -19,10 +19,12 @@ platform :android do
         skip_upload_metadata: true,
         skip_upload_changelogs: false,
         skip_upload_images: true,
-        skip_upload_screenshots: true,
-        skip_upload_aab: false,
-        skip_upload_apk: true,
-        version_code: android_get_version_code
+        skip_upload_screenshots: true
+    )
+
+    gradle(
+        task: "assemble",
+        build_type: "release"
     )
 
     set_github_release(
