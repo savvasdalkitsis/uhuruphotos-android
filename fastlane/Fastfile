@@ -23,7 +23,7 @@ platform :android do
     )
 
     set_github_release(
-        repository_name: "savvasdalkitsis/uhuruphotos",
+        repository_name: "savvasdalkitsis/uhuruphotos-android",
         api_token: ENV["GITHUB_TOKEN"],
         name: "Release " + last_git_tag,
         tag_name: last_git_tag,
