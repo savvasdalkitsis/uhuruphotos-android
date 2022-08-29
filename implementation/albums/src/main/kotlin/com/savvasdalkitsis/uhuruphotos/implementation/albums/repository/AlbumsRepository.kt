@@ -268,7 +268,6 @@ internal class AlbumsRepository @Inject constructor(
     override suspend fun refreshAlbum(albumId: String) {
         process(
             albumsFetcher = { AlbumsByDate(
-                count = 1,
                 results = listOf(Album.IncompleteAlbum(albumId, null, "", true, 1))
             ) },
             albumFetcher = getAlbumAllPages(),
