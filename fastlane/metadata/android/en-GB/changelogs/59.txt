@@ -1,0 +1,3 @@
+* Always logging exceptions regardless of user settings to help with troubleshooting
+* Translations
+* Updating dependencies

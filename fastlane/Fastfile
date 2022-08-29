@@ -17,7 +17,7 @@ platform :android do
         json_key: ENV["ANDROID_JSON_KEY_FILE"],
         track: "internal",
         skip_upload_metadata: true,
-        skip_upload_changelogs: true,
+        skip_upload_changelogs: false,
         skip_upload_images: true,
         skip_upload_screenshots: true
     )
@@ -27,9 +27,9 @@ platform :android do
         api_token: ENV["GITHUB_TOKEN"],
         name: "Release " + last_git_tag,
         tag_name: last_git_tag,
-        description: (File.read("changelog") rescue "No changelog provided"),
+        description: (File.read("fastlane/metadata/android/en-GB/changelogs/" + android_get_version_code.txt) rescue "No changelog provided"),
         commitish: "main",
-        upload_assets: ["./app/build/outputs/bundle/release/*.aab"]
+        upload_assets: ["./app/build/outputs/bundle/release/app-release.aab"]
     )
   end
 end
