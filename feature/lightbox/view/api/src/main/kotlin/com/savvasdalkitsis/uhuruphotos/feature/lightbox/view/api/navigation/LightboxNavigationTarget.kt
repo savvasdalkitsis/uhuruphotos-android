@@ -25,7 +25,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.Med
 
 object LightboxNavigationTarget {
 
-    const val registrationName = "lightbox/{type}/{id}/{centerX}/{centerY}/{scale}/{dataSource}/{dataSource}"
+    const val registrationName = "lightbox/{type}/{id}/{centerX}/{centerY}/{scale}/{dataSource}"
 
     fun name(
         id: MediaId<*>,
