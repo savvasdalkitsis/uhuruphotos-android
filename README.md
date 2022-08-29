@@ -53,7 +53,7 @@ The app is currently in closed beta on the Google Play store. Contact me on
 
 ## Manual
 
-Both the apk and aab binaries can be found on the [latest release](https://github.com/savvasdalkitsis/uhuruphotos-android/releases/tag/v0.0.74) page
+Both the apk and aab binaries can be found on the [latest release](https://github.com/savvasdalkitsis/uhuruphotos-android/releases/latest) page
 
 # Feedback
 
