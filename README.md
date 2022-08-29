@@ -44,10 +44,16 @@ mainly:
 * Foldables support.
 * ...and more
 
-# Play Store
+# Installation
+
+## Play store
 
 The app is currently in closed beta on the Google Play store. Contact me on 
 [gitter](https://gitter.im/uhuruphotos/) for access.
+
+## Manual
+
+Both the apk and aab binaries can be found on the [latest release](https://github.com/savvasdalkitsis/uhuruphotos-android/releases/tag/v0.0.74) page
 
 # Feedback
 
