@@ -1,0 +1,4 @@
+* Always logging exceptions regardless of user settings to help with troubleshooting
+* Fixing crash with server model changes
+* Translations
+* Updating dependencies
