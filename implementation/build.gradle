@@ -26,6 +26,7 @@ dependencies {
     implementation project(":feature:home:view:implementation")
     implementation project(":foundation:image:implementation")
     implementation project(":feature:library:view:implementation")
+    implementation project(":feature:lightbox:view:implementation")
     implementation project(":foundation:log:implementation")
     implementation project(":foundation:network:implementation")
     implementation project(":foundation:notification:implementation")
