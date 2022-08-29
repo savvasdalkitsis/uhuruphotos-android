@@ -20,6 +20,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.currentCoroutineContext
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.channelFlow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.mapNotNull
 import kotlinx.coroutines.flow.onStart
@@ -41,29 +42,35 @@ fun <T> Flow<T>.safelyOnStartIgnoring(
 
 fun <T> Flow<T>.safelyOnStart(
     block: suspend () -> Unit
-): Flow<Result<T>> = map(::success)
-    .onStart {
-        CoroutineScope(currentCoroutineContext() + Dispatchers.IO).launch {
-            try {
-                block()
-            } catch (e: IOException) {
-                log(e)
-                emit(Result.failure(e))
+): Flow<Result<T>> = channelFlow {
+    map(::success)
+        .onStart {
+            CoroutineScope(currentCoroutineContext() + Dispatchers.IO).launch {
+                try {
+                    block()
+                } catch (e: IOException) {
+                    log(e)
+                    emit(Result.failure(e))
+                }
             }
         }
-    }
+        .collect { send(it) }
+}
 
 fun <T> Flow<T>.onStartWithResult(
     block: suspend () -> Result<*>
-): Flow<Result<T>> = map(::success)
-    .onStart {
-        CoroutineScope(currentCoroutineContext() + Dispatchers.IO).launch {
-            val result = block()
-            if (result.isFailure) {
-                emit(Result.failure(result.exceptionOrNull()!!))
+): Flow<Result<T>> = channelFlow {
+    map(::success)
+        .onStart {
+            CoroutineScope(currentCoroutineContext() + Dispatchers.IO).launch {
+                val result = block()
+                if (result.isFailure) {
+                    send(Result.failure(result.exceptionOrNull()!!))
+                }
             }
         }
-    }
+        .collect { send(it) }
+}
 
 fun <V> Flow<Result<V>>.onErrors(onError: suspend (Throwable) -> Unit) : Flow<V> =
     mapNotNull {
