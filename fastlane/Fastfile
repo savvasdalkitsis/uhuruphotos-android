@@ -21,7 +21,8 @@ platform :android do
         skip_upload_images: true,
         skip_upload_screenshots: true,
         skip_upload_aab: false,
-        skip_upload_apk: true
+        skip_upload_apk: true,
+        version_code: android_get_version_code
     )
 
     set_github_release(
