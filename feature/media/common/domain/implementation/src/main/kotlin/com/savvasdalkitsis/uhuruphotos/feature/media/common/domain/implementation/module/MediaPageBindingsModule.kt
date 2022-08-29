@@ -16,6 +16,7 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.implementation.module
 
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.implementation.usecase.MediaUseCase
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.implementation.usecase.MetadataUseCase
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -28,4 +29,7 @@ abstract class MediaPageBindingsModule {
     @Binds
     abstract fun mediaUseCase(mediaUseCase: MediaUseCase):
             com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.usecase.MediaUseCase
+    @Binds
+    abstract fun metadataUseCase(metadataUseCase: MetadataUseCase):
+            com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.usecase.MetadataUseCase
 }
