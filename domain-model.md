@@ -7,7 +7,8 @@ graph TD;
 
     Gallery-->Collage
     Collage-->CollageGroup
-    CollageGroup-->MediaItem
+    CollageGroup-->Cel
+    Cel-->MediaItem
     Lightbox-->MediaItem
     MediaItem-->LocalMediaItem
     MediaItem-->RemoteMediaItem

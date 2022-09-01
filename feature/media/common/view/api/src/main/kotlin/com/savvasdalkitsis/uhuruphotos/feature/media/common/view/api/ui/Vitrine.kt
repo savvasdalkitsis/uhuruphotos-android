@@ -33,6 +33,7 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItem
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.state.VitrineState
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.state.toCel
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.theme.CustomColors
 
 @Composable
@@ -65,10 +66,10 @@ fun Vitrine(
 @Composable
 private fun RowScope.GridItem(mediaItem: MediaItem?) {
     if (mediaItem != null) {
-        MediaItemThumbnail(
+        Cel(
             modifier = Modifier
                 .weight(1f),
-            mediaItem = mediaItem,
+            state = mediaItem.toCel(),
             onItemSelected = { _, _, _ -> },
             aspectRatio = 1f,
             contentScale = ContentScale.Crop,

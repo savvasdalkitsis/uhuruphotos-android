@@ -31,7 +31,8 @@ import androidx.compose.ui.unit.dp
 import com.savvasdalkitsis.uhuruphotos.feature.catalogue.auto.view.api.state.AutoAlbum
 import com.savvasdalkitsis.uhuruphotos.feature.catalogue.auto.view.implementation.seam.AutoAlbumsAction
 import com.savvasdalkitsis.uhuruphotos.feature.catalogue.auto.view.implementation.seam.AutoAlbumsAction.AutoAlbumSelected
-import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.MediaItemThumbnail
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.Cel
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.state.toCel
 import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R
 
 @Composable
@@ -44,8 +45,8 @@ internal fun AutoAlbumItem(
             .padding(8.dp)
             .clickable { action(AutoAlbumSelected(album)) }
     ) {
-        MediaItemThumbnail(
-            mediaItem = album.cover,
+        Cel(
+            state = album.cover.toCel(),
             onItemSelected = { _, _, _ ->
                 action(AutoAlbumSelected(album))
             },

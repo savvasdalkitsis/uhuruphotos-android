@@ -52,17 +52,18 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItem
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemSelectionMode
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.state.CelState
 import com.savvasdalkitsis.uhuruphotos.foundation.compose.api.toColor
 import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.R.drawable
 import com.savvasdalkitsis.uhuruphotos.foundation.image.api.ui.Image
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.theme.CustomColors
 
 @Composable
-fun MediaItemThumbnail(
+fun Cel(
     modifier: Modifier = Modifier,
-    mediaItem: MediaItem,
+    state: CelState,
     onItemSelected: MediaItemSelected,
-    aspectRatio: Float = mediaItem.ratio,
+    aspectRatio: Float = state.mediaItem.ratio,
     contentScale: ContentScale = ContentScale.FillBounds,
     shape: Shape = RectangleShape,
     itemPadding: Dp = 1.dp,
@@ -70,11 +71,11 @@ fun MediaItemThumbnail(
     selectable: Boolean = true,
     onLongClick: (MediaItem) -> Unit = {},
 ) {
-    val scale = remember(mediaItem.id) { Animatable(1f) }
+    val scale = remember(state.mediaItem.id) { Animatable(1f) }
     val configuration = LocalConfiguration.current
     val screenDensity = configuration.densityDpi / 160f
-    var relativeCenter by remember(mediaItem.id) { mutableStateOf(Offset.Zero) }
-    var relativeScale by remember(mediaItem.id) { mutableStateOf(0f) }
+    var relativeCenter by remember(state.mediaItem.id) { mutableStateOf(Offset.Zero) }
+    var relativeScale by remember(state.mediaItem.id) { mutableStateOf(0f) }
     val iconSize = if (miniIcons) 16.dp else 24.dp
 
     Box(
@@ -82,17 +83,17 @@ fun MediaItemThumbnail(
             .aspectRatio(aspectRatio)
             .padding(itemPadding)
             .background(
-                if (mediaItem.selectionMode == MediaItemSelectionMode.SELECTED)
+                if (state.selectionMode == MediaItemSelectionMode.SELECTED)
                     Color.LightGray
                 else
-                    mediaItem.fallbackColor.toColor()
+                    state.mediaItem.fallbackColor.toColor()
             )
             .clip(shape)
             .let {
                 if (selectable) {
                     it.combinedClickable(
-                        onClick = { onItemSelected(mediaItem, relativeCenter, relativeScale) },
-                        onLongClick = { onLongClick(mediaItem) }
+                        onClick = { onItemSelected(state.mediaItem, relativeCenter, relativeScale) },
+                        onLongClick = { onLongClick(state.mediaItem) }
                     )
                 } else {
                     it
@@ -111,11 +112,11 @@ fun MediaItemThumbnail(
         ) {
             Image(
                 modifier = Modifier.fillMaxWidth(),
-                url = mediaItem.thumbnailUri,
+                url = state.mediaItem.thumbnailUri,
                 contentScale = contentScale,
                 contentDescription = null,
             )
-            if (mediaItem.isVideo) {
+            if (state.mediaItem.isVideo) {
                 Icon(
                     modifier = Modifier
                         .size(if (miniIcons) 16.dp else 48.dp)
@@ -125,7 +126,7 @@ fun MediaItemThumbnail(
                     contentDescription = null
                 )
             }
-            if (mediaItem.isFavourite) {
+            if (state.mediaItem.isFavourite) {
                 Icon(
                     modifier = Modifier
                         .size(iconSize)
@@ -137,7 +138,7 @@ fun MediaItemThumbnail(
                 )
             }
         }
-        AnimatedVisibility(visible = mediaItem.selectionMode != MediaItemSelectionMode.UNDEFINED) {
+        AnimatedVisibility(visible = state.selectionMode != MediaItemSelectionMode.UNDEFINED) {
             Icon(
                 modifier = Modifier
                     .size(iconSize)
@@ -145,18 +146,18 @@ fun MediaItemThumbnail(
                     .padding(2.dp)
                     .clip(CircleShape)
                     .background(
-                        if (mediaItem.selectionMode == MediaItemSelectionMode.SELECTED)
+                        if (state.selectionMode == MediaItemSelectionMode.SELECTED)
                             Color.White
                         else
                             Color.Transparent
                     ),
                 painter = painterResource(
-                    id = if (mediaItem.selectionMode == MediaItemSelectionMode.SELECTED)
+                    id = if (state.selectionMode == MediaItemSelectionMode.SELECTED)
                         drawable.ic_check_circle
                     else
                         drawable.ic_outline_unselected
                 ),
-                tint = if (mediaItem.selectionMode == MediaItemSelectionMode.SELECTED)
+                tint = if (state.selectionMode == MediaItemSelectionMode.SELECTED)
                     CustomColors.selected
                 else
                     Color.White,
@@ -165,8 +166,8 @@ fun MediaItemThumbnail(
         }
     }
 
-    LaunchedEffect(mediaItem.id, mediaItem.selectionMode) {
-        if (mediaItem.selectionMode == MediaItemSelectionMode.SELECTED) {
+    LaunchedEffect(state.mediaItem.id, state.selectionMode) {
+        if (state.selectionMode == MediaItemSelectionMode.SELECTED) {
             scale.animateTo(0.85f)
         } else {
             scale.animateTo(1f)

@@ -23,8 +23,9 @@ import androidx.compose.ui.layout.ContentScale
 import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.MediaRowSlot.EmptySlot
 import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.MediaRowSlot.MediaSlot
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItem
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.Cel
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.MediaItemSelected
-import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.MediaItemThumbnail
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.state.toCel
 
 @Composable
 internal fun MediaRow(
@@ -43,10 +44,10 @@ internal fun MediaRow(
                         maintainAspectRatio -> item.mediaItem.ratio
                         else -> 1f
                     }
-                    MediaItemThumbnail(
+                    Cel(
                         modifier = Modifier
                             .weight(aspectRatio),
-                        mediaItem = item.mediaItem,
+                        state = item.mediaItem.toCel(),
                         onItemSelected = onMediaItemSelected,
                         aspectRatio = aspectRatio,
                         contentScale = when {

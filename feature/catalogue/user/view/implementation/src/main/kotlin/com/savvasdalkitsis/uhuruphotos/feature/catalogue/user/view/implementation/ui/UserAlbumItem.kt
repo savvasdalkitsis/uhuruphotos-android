@@ -33,8 +33,9 @@ import com.savvasdalkitsis.uhuruphotos.feature.catalogue.user.view.implementatio
 import com.savvasdalkitsis.uhuruphotos.feature.catalogue.user.view.implementation.seam.UserAlbumsAction.UserAlbumSelected
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaId
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItem
-import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.MediaItemThumbnail
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.Cel
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.Vitrine
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.state.toCel
 import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R
 
 @Composable
@@ -56,8 +57,8 @@ internal fun UserAlbumItem(
                 shape = RoundedCornerShape(26.dp),
             )
         } else {
-            MediaItemThumbnail(
-                mediaItem = album.cover.mediaItem1 ?: MediaItem(MediaId.Remote(""), ""),
+            Cel(
+                state = album.cover.mediaItem1?.toCel() ?: MediaItem(MediaId.Remote(""), "").toCel(),
                 onItemSelected = { _, _, _ ->
                     action(UserAlbumSelected(album))
                 },
