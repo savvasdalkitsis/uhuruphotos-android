@@ -20,6 +20,8 @@ import com.savvasdalkitsis.uhuruphotos.api.db.domain.model.media.DbRemoteMediaIt
 import com.savvasdalkitsis.uhuruphotos.api.db.domain.model.media.DbRemoteMediaItemSummary
 import com.savvasdalkitsis.uhuruphotos.api.db.domain.model.media.latLng
 import com.savvasdalkitsis.uhuruphotos.api.db.extensions.isVideo
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaCollection
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaCollectionSource
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaFolderOnDevice
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaId
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItem
@@ -38,6 +40,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.people.domain.api.usecase.PeopleU
 import com.savvasdalkitsis.uhuruphotos.feature.people.view.api.ui.state.toPerson
 import com.savvasdalkitsis.uhuruphotos.feature.user.domain.api.usecase.UserUseCase
 import com.savvasdalkitsis.uhuruphotos.foundation.date.api.DateDisplayer
+import com.savvasdalkitsis.uhuruphotos.foundation.group.api.model.Group
 import com.savvasdalkitsis.uhuruphotos.foundation.map.api.model.LatLon
 import com.savvasdalkitsis.uhuruphotos.foundation.map.api.model.toLatLon
 import kotlinx.coroutines.flow.Flow
@@ -262,6 +265,50 @@ class MediaUseCase @Inject constructor(
             is MediaId.Remote -> remoteMediaUseCase.observeOriginalFileDownloadStatus(id.value)
             else -> flowOf(WorkInfo.State.SUCCEEDED)
         }
+
+    override suspend fun Group<String, MediaCollectionSource>.toMediaCollection(): List<MediaCollection> {
+        val favouriteThreshold = userUseCase.getUserOrRefresh()
+            .mapCatching { it.favoriteMinRating!! }
+        return items.map { (id, source) ->
+            val albumDate = source.firstOrNull()?.date
+            val albumLocation = source.firstOrNull()?.location
+
+            val date = dateDisplayer.dateString(albumDate)
+            MediaCollection(
+                id = id,
+                displayTitle = date,
+                unformattedDate = albumDate,
+                location = albumLocation ?: "",
+                mediaItems = source.mapNotNull { item ->
+                    val photoId = item.mediaItemId
+                    when {
+                        photoId.isNullOrBlank() -> null
+                        else -> {
+                            MediaItem(
+                                id = MediaId.Remote(photoId),
+                                mediaHash = photoId,
+                                thumbnailUri = with(remoteMediaUseCase) {
+                                    photoId.toThumbnailUrlFromId()
+                                },
+                                fullResUri = with(remoteMediaUseCase) {
+                                    photoId.toFullSizeUrlFromId(item.isVideo)
+                                },
+                                fallbackColor = item.dominantColor,
+                                displayDayDate = date,
+                                isFavourite = favouriteThreshold
+                                    .map {
+                                        (item.rating ?: 0) >= it
+                                    }
+                                    .getOrElse { false },
+                                ratio = item.aspectRatio ?: 1.0f,
+                                isVideo = item.isVideo,
+                            )
+                        }
+                    }
+                }
+            )
+        }.filter { it.mediaItems.isNotEmpty() }
+    }
 
     override suspend fun refreshHiddenMedia() =
         remoteMediaUseCase.refreshHiddenMedia()

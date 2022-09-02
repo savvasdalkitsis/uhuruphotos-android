@@ -25,14 +25,14 @@ import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.Collage
 import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.PredefinedCollageDisplay
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.FeedAction
-import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.FeedAction.AlbumRefreshClicked
-import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.FeedAction.AlbumSelectionClicked
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.FeedAction.CelLongPressed
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.FeedAction.ChangeDisplay
+import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.FeedAction.ClusterRefreshClicked
+import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.FeedAction.ClusterSelectionClicked
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.FeedAction.DismissSelectedPhotosTrashing
-import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.FeedAction.RefreshAlbums
+import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.FeedAction.RefreshFeed
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.FeedAction.SelectedCel
-import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.FeedAction.TrashSelectedPhotos
+import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.FeedAction.TrashSelectedCels
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.ui.state.FeedState
 import com.savvasdalkitsis.uhuruphotos.feature.home.view.api.ui.HomeScaffold
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.TrashPermissionDialog
@@ -75,7 +75,7 @@ internal fun Feed(
         SwipeRefresh(
             indicatorPadding = contentPadding,
             state = rememberSwipeRefreshState(isRefreshing = state.isRefreshing),
-            onRefresh = { action(RefreshAlbums) }
+            onRefresh = { action(RefreshFeed) }
         ) {
             Collage(
                 contentPadding = contentPadding,
@@ -91,10 +91,10 @@ internal fun Feed(
                     action(CelLongPressed(it))
                 },
                 onClusterSelectionClicked = {
-                    action(AlbumSelectionClicked(it))
+                    action(ClusterSelectionClicked(it))
                 },
                 onClusterRefreshClicked = {
-                    action(AlbumRefreshClicked(it))
+                    action(ClusterRefreshClicked(it))
                 }
             )
         }
@@ -102,7 +102,7 @@ internal fun Feed(
             TrashPermissionDialog(
                 mediaItemCount = state.selectedCelCount,
                 onDismiss = { action(DismissSelectedPhotosTrashing) },
-                onDelete = { action(TrashSelectedPhotos) }
+                onDelete = { action(TrashSelectedCels) }
             )
         }
         additionalContent()

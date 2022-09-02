@@ -1,3 +1,7 @@
+plugins {
+    id 'java-test-fixtures'
+}
+
 android {
     namespace 'com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api'
 }
@@ -6,6 +10,7 @@ dependencies {
     api project(":api:db")
     api project(":foundation:map:api")
     api project(":feature:media:local:domain:api")
+    api project(":foundation:group:api")
     api(
             libs.androidx.compose.navigation,
             libs.androidx.work,

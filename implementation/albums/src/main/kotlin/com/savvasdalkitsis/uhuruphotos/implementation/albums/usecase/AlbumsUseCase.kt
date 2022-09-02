@@ -55,15 +55,6 @@ internal class AlbumsUseCase @Inject constructor(
         .map { it.mapToAlbums() }
         .initialize()
 
-    override fun observeAlbums(): Flow<List<Album>> = albumsRepository.observeAlbumsByDate()
-        .map {
-            it.mapValues {
-                    getAlbums -> getAlbums.toDbAlbums()
-            }
-        }
-        .map { it.mapToAlbums() }
-        .initialize()
-
     override fun observeTrash(): Flow<List<Album>> = albumsRepository.observeTrash()
         .map {
             it.mapValues {
@@ -75,10 +66,6 @@ internal class AlbumsUseCase @Inject constructor(
     override suspend fun refreshTrash() = albumsRepository.refreshTrash()
 
     override suspend fun getPersonAlbums(personId: Int): List<Album> = albumsRepository.getPersonAlbums(personId)
-        .mapValues { it.toDbAlbums() }
-        .mapToAlbums()
-
-    override suspend fun getAlbums(): List<Album> = albumsRepository.getAlbumsByDate()
         .mapValues { it.toDbAlbums() }
         .mapToAlbums()
 
@@ -151,9 +138,6 @@ internal class AlbumsUseCase @Inject constructor(
         albumWorkScheduler.scheduleAlbumsRefreshNow(shallow)
     }
 
-    override suspend fun refreshAlbum(albumId: String) {
-        albumsRepository.refreshAlbum(albumId)
-    }
 }
 
 private data class DbAlbums(

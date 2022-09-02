@@ -16,7 +16,6 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.implementation.albums
 
 import com.savvasdalkitsis.uhuruphotos.api.albums.repository.AlbumsRepository
-import com.savvasdalkitsis.uhuruphotos.api.db.albums.GetAlbums
 import com.savvasdalkitsis.uhuruphotos.api.db.albums.GetPersonAlbums
 import com.savvasdalkitsis.uhuruphotos.foundation.group.api.model.Group
 import io.mockk.coEvery
@@ -27,14 +26,6 @@ fun AlbumsRepository.reportsHavingNoAlbums() {
 
 fun AlbumsRepository.reportsHavingAlbums() {
     coEvery { hasAlbums() } returns true
-}
-
-fun AlbumsRepository.returnsAlbums(vararg albums: Pair<String, List<GetAlbums>>) {
-    coEvery { getAlbumsByDate() } returns Group(albums.toMap())
-}
-
-fun AlbumsRepository.returnsAlbumWithEntries(vararg albums: GetAlbums) {
-    coEvery { getAlbumsByDate() } returns Group(mapOf("albumId" to albums.toList()))
 }
 
 fun AlbumsRepository.returnsPersonAlbumWithEntries(personId: Int, vararg albums: GetPersonAlbums) {

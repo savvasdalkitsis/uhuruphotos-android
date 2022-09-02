@@ -20,8 +20,8 @@ import android.location.LocationManager
 import android.location.LocationManager.NETWORK_PROVIDER
 import androidx.core.location.LocationManagerCompat.getCurrentLocation
 import com.google.accompanist.permissions.isGranted
-import com.savvasdalkitsis.uhuruphotos.api.albums.usecase.AlbumsUseCase
 import com.savvasdalkitsis.uhuruphotos.api.db.domain.model.media.latLng
+import com.savvasdalkitsis.uhuruphotos.feature.feed.domain.api.usecase.FeedUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.heatmap.view.implementation.seam.HeatMapAction.BackPressed
 import com.savvasdalkitsis.uhuruphotos.feature.heatmap.view.implementation.seam.HeatMapAction.CameraViewPortChanged
 import com.savvasdalkitsis.uhuruphotos.feature.heatmap.view.implementation.seam.HeatMapAction.Load
@@ -60,7 +60,7 @@ import kotlinx.coroutines.flow.merge
 import javax.inject.Inject
 
 class HeatMapActionHandler @Inject constructor(
-    private val albumsUseCase: AlbumsUseCase,
+    private val feedUseCase: FeedUseCase,
     private val remoteMediaUseCase: RemoteMediaUseCase,
     private val locationManager: LocationManager,
     private val dateDisplayer: DateDisplayer,
@@ -99,13 +99,13 @@ class HeatMapActionHandler @Inject constructor(
                         }
                 }
                 .safelyOnStart {
-                    albumsUseCase.observeAlbums().collect { albums ->
+                    feedUseCase.observeFeed().collect { mediaCollections ->
                         detailsDownloading.emit(true)
-                        albums
-                            .flatMap { it.photos }
-                            .map { photo ->
+                        mediaCollections
+                            .flatMap { it.mediaItems }
+                            .map { mediaItem ->
                                 CoroutineScope(currentCoroutineContext() + Dispatchers.IO).async {
-                                    val mediaId = photo.id
+                                    val mediaId = mediaItem.id
                                     if (mediaId is MediaId.Remote) {
                                         remoteMediaUseCase.refreshDetailsNowIfMissing(mediaId.value)
                                     }

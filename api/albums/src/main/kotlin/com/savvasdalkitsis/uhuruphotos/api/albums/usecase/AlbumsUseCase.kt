@@ -21,15 +21,12 @@ import kotlinx.coroutines.flow.Flow
 interface AlbumsUseCase {
 
     fun observePersonAlbums(personId: Int): Flow<List<Album>>
-    fun observeAlbums(): Flow<List<Album>>
     fun observeTrash(): Flow<List<Album>>
     suspend fun getPersonAlbums(personId: Int): List<Album>
-    suspend fun getAlbums(): List<Album>
     suspend fun getTrash(): List<Album>
     suspend fun hasTrash(): Boolean
     suspend fun getAutoAlbum(albumId: Int): List<Album>
     suspend fun getUserAlbum(albumId: Int): List<Album>
     fun startRefreshAlbumsWork(shallow: Boolean)
-    suspend fun refreshAlbum(albumId: String)
     suspend fun refreshTrash(): Result<Unit>
 }

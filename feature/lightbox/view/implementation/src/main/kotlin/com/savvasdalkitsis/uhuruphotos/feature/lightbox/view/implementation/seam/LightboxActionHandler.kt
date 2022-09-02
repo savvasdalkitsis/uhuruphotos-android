@@ -23,6 +23,7 @@ import androidx.work.WorkInfo.State.RUNNING
 import androidx.work.WorkInfo.State.SUCCEEDED
 import com.savvasdalkitsis.uhuruphotos.api.albums.model.Album
 import com.savvasdalkitsis.uhuruphotos.api.albums.usecase.AlbumsUseCase
+import com.savvasdalkitsis.uhuruphotos.feature.feed.domain.api.usecase.FeedUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.api.model.LightboxSequenceDataSource.AutoAlbum
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.api.model.LightboxSequenceDataSource.FavouriteMedia
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.api.model.LightboxSequenceDataSource.Feed
@@ -92,6 +93,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.ui.s
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.ui.state.OriginalFileIconState.IN_PROGRESS
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.ui.state.SingleMediaItemState
 import com.savvasdalkitsis.uhuruphotos.feature.local.domain.api.usecase.LocalAlbumUseCase
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaCollection
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaId
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItem
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.usecase.MediaUseCase
@@ -116,6 +118,7 @@ class LightboxActionHandler @Inject constructor(
     private val mediaUseCase: MediaUseCase,
     private val personUseCase: PersonUseCase,
     private val albumsUseCase: AlbumsUseCase,
+    private val feedUseCase: FeedUseCase,
     private val searchUseCase: SearchUseCase,
     private val localAlbumUseCase: LocalAlbumUseCase,
     private val metadataUseCase: MetadataUseCase,
@@ -149,7 +152,7 @@ class LightboxActionHandler @Inject constructor(
                         photoId = action.id,
                         isVideo = action.isVideo
                     )
-                    Feed -> loadAlbums(albumsUseCase.getAlbums(), action)
+                    Feed -> loadCollections(feedUseCase.getFeed(), action)
                     is SearchResults -> loadAlbums(
                         searchUseCase.searchResultsFor(action.sequenceDataSource.query),
                         action,
@@ -326,6 +329,12 @@ class LightboxActionHandler @Inject constructor(
         albums: List<Album>,
         action: LoadMediaItem
     ) = loadPhotos(albums.flatMap { it.photos }, action)
+
+    context(MediaUseCase)
+    private suspend fun FlowCollector<LightboxMutation>.loadCollections(
+        collections: List<MediaCollection>,
+        action: LoadMediaItem
+    ) = loadPhotos(collections.flatMap { it.mediaItems }, action)
 
     context(MediaUseCase)
     private suspend fun FlowCollector<LightboxMutation>.loadPhotos(

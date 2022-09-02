@@ -17,11 +17,14 @@ package com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.usecase
 
 import androidx.work.WorkInfo
 import com.savvasdalkitsis.uhuruphotos.api.db.domain.model.media.DbRemoteMediaItemSummary
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaCollection
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaCollectionSource
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaFolderOnDevice
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaId
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItem
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemDetails
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemsOnDevice
+import com.savvasdalkitsis.uhuruphotos.foundation.group.api.model.Group
 import kotlinx.coroutines.flow.Flow
 
 interface MediaUseCase {
@@ -67,4 +70,6 @@ interface MediaUseCase {
     fun downloadOriginal(id: MediaId<*>, video: Boolean)
 
     fun observeOriginalFileDownloadStatus(id: MediaId<*>): Flow<WorkInfo.State>
+
+    suspend fun Group<String, MediaCollectionSource>.toMediaCollection(): List<MediaCollection>
 }

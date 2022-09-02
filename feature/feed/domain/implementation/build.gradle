@@ -3,10 +3,18 @@ android {
 }
 
 dependencies {
+    implementation project(":api:albums")
     implementation project(":feature:feed:domain:api")
     implementation project(":feature:collage:view:api")
+    implementation project(":foundation:coroutines:api")
     implementation(
             libs.flowpreferences,
             libs.hilt,
+    )
+    testImplementation testFixtures(project(":api:db"))
+    testImplementation testFixtures(project(":implementation:albums"))
+    testImplementation testFixtures(project(":feature:media:common:domain:api"))
+    testImplementation(
+            libs.bundles.test,
     )
 }

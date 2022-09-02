@@ -15,33 +15,33 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam
 
-import com.savvasdalkitsis.uhuruphotos.api.albums.model.Album
-import com.savvasdalkitsis.uhuruphotos.api.albums.usecase.AlbumsUseCase
 import com.savvasdalkitsis.uhuruphotos.api.userbadge.ui.state.SyncState.IN_PROGRESS
 import com.savvasdalkitsis.uhuruphotos.api.userbadge.usecase.UserBadgeUseCase
+import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.Cluster
 import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.PredefinedCollageDisplay.YEARLY
+import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.toCluster
 import com.savvasdalkitsis.uhuruphotos.feature.feed.domain.api.usecase.FeedUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.SelectionList
-import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.FeedAction.AlbumRefreshClicked
-import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.FeedAction.AlbumSelectionClicked
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.FeedAction.AskForSelectedPhotosTrashing
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.FeedAction.CelLongPressed
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.FeedAction.ChangeDisplay
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.FeedAction.ClearSelected
+import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.FeedAction.ClusterRefreshClicked
+import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.FeedAction.ClusterSelectionClicked
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.FeedAction.DismissSelectedPhotosTrashing
-import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.FeedAction.DownloadSelectedPhotos
+import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.FeedAction.DownloadSelectedCels
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.FeedAction.LoadFeed
-import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.FeedAction.RefreshAlbums
+import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.FeedAction.RefreshFeed
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.FeedAction.SelectedCel
-import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.FeedAction.ShareSelectedPhotos
-import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.FeedAction.TrashSelectedPhotos
+import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.FeedAction.ShareSelectedCels
+import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.FeedAction.TrashSelectedCels
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.FeedEffect.DownloadingFiles
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.FeedEffect.OpenLightbox
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.FeedEffect.Share
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.FeedEffect.Vibrate
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.FeedMutation.HideTrashingConfirmationDialog
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.FeedMutation.Loading
-import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.FeedMutation.ShowAlbums
+import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.FeedMutation.ShowClusters
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.FeedMutation.ShowLibrary
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.FeedMutation.ShowNoPhotosFound
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.FeedMutation.ShowTrashingConfirmationDialog
@@ -67,7 +67,6 @@ import kotlinx.coroutines.flow.merge
 import javax.inject.Inject
 
 internal class FeedActionHandler @Inject constructor(
-    private val albumsUseCase: AlbumsUseCase,
     private val userBadgeUseCase: UserBadgeUseCase,
     private val feedUseCase: FeedUseCase,
     private val mediaUseCase: MediaUseCase,
@@ -89,28 +88,30 @@ internal class FeedActionHandler @Inject constructor(
                 .map(FeedMutation::ChangeDisplay),
             flowOf(Loading),
             combine(
-                albumsUseCase.observeAlbums().debounce(200),
+                feedUseCase.observeFeed().debounce(200),
                 selectionList.ids,
                 userBadgeUseCase.getUserBadgeState(),
                 feedUseCase
                     .getFeedDisplay()
                     .distinctUntilChanged()
-            ) { albums, ids, userBadge, feedDisplay ->
-                val selected = albums.selectPhotos(ids)
+            ) { mediaCollections, ids, userBadge, feedDisplay ->
+                val selected = mediaCollections
+                    .map { it.toCluster() }
+                    .selectCels(ids)
                 val final = when (feedDisplay) {
                     YEARLY -> selected.groupByYear()
                     else -> selected
                 }
-                if (userBadge.syncState != IN_PROGRESS && final.photosCount == 0) {
+                if (userBadge.syncState != IN_PROGRESS && final.celCount == 0) {
                     ShowNoPhotosFound
                 } else {
-                    ShowAlbums(final)
+                    ShowClusters(final)
                 }
             },
         )
-        RefreshAlbums -> flow {
+        RefreshFeed -> flow {
             emit(StartRefreshing)
-            albumsUseCase.startRefreshAlbumsWork(shallow = true)
+            feedUseCase.startRefreshFeedWork(shallow = true)
             delay(200)
             emit(StopRefreshing)
         }
@@ -143,7 +144,7 @@ internal class FeedActionHandler @Inject constructor(
             selectionList.clear()
         }
         AskForSelectedPhotosTrashing -> flowOf(ShowTrashingConfirmationDialog)
-        is AlbumSelectionClicked -> flow {
+        is ClusterSelectionClicked -> flow {
             val cels = action.cluster.cels
             effect(Vibrate)
             if (cels.all { it.selectionMode == SELECTED }) {
@@ -152,23 +153,23 @@ internal class FeedActionHandler @Inject constructor(
                 cels.forEach { it.select() }
             }
         }
-        is AlbumRefreshClicked -> flow {
+        is ClusterRefreshClicked -> flow {
             emit(StartRefreshing)
-            albumsUseCase.refreshAlbum(action.cluster.id)
+            feedUseCase.refreshCluster(action.cluster.id)
             emit(StopRefreshing)
         }
         DismissSelectedPhotosTrashing -> flowOf(HideTrashingConfirmationDialog)
-        TrashSelectedPhotos -> flow {
+        TrashSelectedCels -> flow {
             emit(HideTrashingConfirmationDialog)
             state.selectedCels.forEach {
                 mediaUseCase.trashMediaItem(it.mediaItem.id)
             }
             selectionList.clear()
         }
-        ShareSelectedPhotos -> flow {
+        ShareSelectedCels -> flow {
             effect(Share(state.selectedCels))
         }
-        DownloadSelectedPhotos -> flow {
+        DownloadSelectedCels -> flow {
             effect(DownloadingFiles)
             state.selectedCels.forEach {
                 mediaUseCase.downloadOriginal(it.mediaItem.id, it.mediaItem.isVideo)
@@ -184,27 +185,27 @@ internal class FeedActionHandler @Inject constructor(
         selectionList.select(mediaItem.id)
     }
 
-    private val List<Album>.photosCount get() = sumOf { it.photos.size }
+    private val List<Cluster>.celCount get() = sumOf { it.cels.size }
 
-    private fun List<Album>.selectPhotos(ids: Set<String>): List<Album> {
+    private fun List<Cluster>.selectCels(ids: Set<String>): List<Cluster> {
         val empty = ids.isEmpty()
-        return map { album ->
-            album.copy(photos = album.photos.map { photo ->
-                photo.copy(selectionMode = when {
+        return map { cluster ->
+            cluster.copy(cels = cluster.cels.map { cel ->
+                cel.copy(selectionMode = when {
                     empty -> UNDEFINED
-                    photo.id.value.toString() in ids -> SELECTED
+                    cel.mediaItem.id.value.toString() in ids -> SELECTED
                     else -> UNSELECTED
                 })
             })
         }
     }
 
-    private fun List<Album>.groupByYear() = groupBy {
+    private fun List<Cluster>.groupByYear() = groupBy {
         it.unformattedDate?.split("-")?.get(0)
-    }.map { (year, albums) ->
-        Album(
+    }.map { (year, clusters) ->
+        Cluster(
             id = year ?: "-",
-            photos = albums.flatMap { it.photos },
+            cels = clusters.flatMap { it.cels },
             displayTitle = year ?: "-",
             location = null,
         )

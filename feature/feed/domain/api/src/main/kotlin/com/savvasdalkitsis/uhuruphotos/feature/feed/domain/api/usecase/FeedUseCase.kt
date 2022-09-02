@@ -16,10 +16,15 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.feature.feed.domain.api.usecase
 
 import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.PredefinedCollageDisplay
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaCollection
 import kotlinx.coroutines.flow.Flow
 
 interface FeedUseCase {
 
+    fun observeFeed(): Flow<List<MediaCollection>>
+    suspend fun getFeed(): List<MediaCollection>
     fun getFeedDisplay(): Flow<PredefinedCollageDisplay>
     suspend fun setFeedDisplay(feedDisplay: PredefinedCollageDisplay)
+    fun startRefreshFeedWork(shallow: Boolean)
+    suspend fun refreshCluster(clusterId: String)
 }

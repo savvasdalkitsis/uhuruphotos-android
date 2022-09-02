@@ -23,8 +23,8 @@ import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.Predefi
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.FeedAction
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.FeedAction.AskForSelectedPhotosTrashing
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.FeedAction.ChangeDisplay
-import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.FeedAction.DownloadSelectedPhotos
-import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.FeedAction.ShareSelectedPhotos
+import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.FeedAction.DownloadSelectedCels
+import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.FeedAction.ShareSelectedCels
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.ui.state.FeedState
 import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.R.drawable
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.ActionIcon
@@ -36,7 +36,7 @@ internal fun RowScope.FeedActionBar(
 ) {
     AnimatedVisibility(visible = state.shouldShowShareIcon) {
         ActionIcon(
-            onClick = { action(ShareSelectedPhotos) },
+            onClick = { action(ShareSelectedCels) },
             icon = drawable.ic_share
         )
     }
@@ -48,7 +48,7 @@ internal fun RowScope.FeedActionBar(
     }
     AnimatedVisibility(visible = state.hasSelection) {
         ActionIcon(
-            onClick = { action(DownloadSelectedPhotos) },
+            onClick = { action(DownloadSelectedCels) },
             icon = drawable.ic_cloud_download
         )
     }
