@@ -17,7 +17,7 @@ package com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam
 
 import androidx.compose.ui.geometry.Offset
 import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.CollageDisplay
-import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItem
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.state.CelState
 import com.savvasdalkitsis.uhuruphotos.feature.people.view.api.ui.state.Person
 
 sealed class GalleryAction {
@@ -25,8 +25,8 @@ sealed class GalleryAction {
     object NavigateBack : GalleryAction()
 
     data class LoadCollage(val collageId: Int) : GalleryAction()
-    data class SelectedMediaItem(
-        val mediaItem: MediaItem,
+    data class SelectedCel(
+        val cel: CelState,
         val center: Offset,
         val scale: Float,
     ) : GalleryAction()

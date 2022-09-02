@@ -17,7 +17,7 @@ package com.savvasdalkitsis.uhuruphotos.feature.search.view.implementation.seam
 
 import androidx.compose.ui.geometry.Offset
 import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.CollageDisplay
-import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItem
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.state.CelState
 import com.savvasdalkitsis.uhuruphotos.feature.people.view.api.ui.state.Person
 
 sealed class SearchAction {
@@ -30,7 +30,7 @@ sealed class SearchAction {
     data class QueryChanged(val query: String) : SearchAction()
     data class SearchFor(val query: String) : SearchAction()
     data class ChangeFocus(val focused: Boolean) : SearchAction()
-    data class SelectedPhoto(val mediaItem: MediaItem, val center: Offset, val scale: Float) : SearchAction()
+    data class SelectedCel(val celState: CelState, val center: Offset, val scale: Float) : SearchAction()
     data class ChangeDisplay(val display: CollageDisplay) : SearchAction()
     data class PersonSelected(val person: Person) : SearchAction()
     data class RemoveFromRecentSearches(val query: String) : SearchAction()

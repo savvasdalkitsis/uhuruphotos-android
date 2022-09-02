@@ -15,18 +15,15 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state
 
-import com.savvasdalkitsis.uhuruphotos.api.albums.model.Album
-
 data class CollageState(
     val isLoading: Boolean = false,
     val isEmpty: Boolean = false,
-    val albums: List<Album> = emptyList(),
+    val clusters: List<Cluster> = emptyList(),
     val collageDisplay: CollageDisplay = PredefinedCollageDisplay.default,
 ) {
-    val hasMedia get() = albums.sumOf { it.photos.size } > 0
+    val hasMedia get() = clusters.sumOf { it.cels.size } > 0
 
     override fun toString(): String {
-        return "CollageState(isLoading=$isLoading, isEmpty=$isEmpty, albumsSize=${albums.size}, collageDisplay=$collageDisplay)"
+        return "CollageState(isLoading=$isLoading, isEmpty=$isEmpty, clustersSize=${clusters.size}, collageDisplay=$collageDisplay)"
     }
-
 }

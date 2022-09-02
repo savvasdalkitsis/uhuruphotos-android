@@ -21,7 +21,6 @@ import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.Med
 data class CelState(
     val mediaItem: MediaItem,
     val selectionMode: MediaItemSelectionMode = MediaItemSelectionMode.UNDEFINED,
-    val latLng: (Pair<Double, Double>)? = null,
 )
 
 fun MediaItem.toCel() = CelState(

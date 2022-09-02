@@ -13,13 +13,11 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
  */
-package com.savvasdalkitsis.uhuruphotos.feature.catalogue.user.view.api.state
+package com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui
 
-import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.state.VitrineState
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.state.CelState
 
-data class UserAlbum(
-    val id: Int,
-    val cover: VitrineState,
-    val title: String,
-    val photoCount: Int?,
-)
+internal sealed class CelRowSlot {
+    data class CelSlot(val cel: CelState): CelRowSlot()
+    object EmptySlot : CelRowSlot()
+}

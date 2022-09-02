@@ -17,7 +17,7 @@ package com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam
 
 import androidx.compose.ui.geometry.Offset
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaId
-import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItem
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.state.CelState
 
 internal sealed class FeedEffect {
     data class OpenLightbox(
@@ -27,7 +27,7 @@ internal sealed class FeedEffect {
         val isVideo: Boolean,
     ) : FeedEffect()
 
-    data class SharePhotos(val selectedMediaItem: List<MediaItem>) : FeedEffect()
+    data class Share(val selectedCels: List<CelState>) : FeedEffect()
     object Vibrate : FeedEffect()
     object DownloadingFiles : FeedEffect()
 }

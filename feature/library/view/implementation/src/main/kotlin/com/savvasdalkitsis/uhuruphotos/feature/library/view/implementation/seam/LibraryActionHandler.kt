@@ -17,6 +17,7 @@ package com.savvasdalkitsis.uhuruphotos.feature.library.view.implementation.seam
 
 import com.savvasdalkitsis.uhuruphotos.feature.catalogue.auto.domain.api.usecase.AutoAlbumsUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.catalogue.user.domain.api.usecase.UserAlbumsUseCase
+import com.savvasdalkitsis.uhuruphotos.feature.catalogue.user.view.api.state.toUserAlbumState
 import com.savvasdalkitsis.uhuruphotos.feature.library.view.implementation.seam.LibraryAction.AutoAlbumsSelected
 import com.savvasdalkitsis.uhuruphotos.feature.library.view.implementation.seam.LibraryAction.FavouritePhotosSelected
 import com.savvasdalkitsis.uhuruphotos.feature.library.view.implementation.seam.LibraryAction.HiddenPhotosSelected
@@ -44,10 +45,13 @@ import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.Med
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemsOnDevice.Found
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemsOnDevice.RequiresPermissions
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.usecase.MediaUseCase
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.state.CelState
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.state.VitrineState
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.state.toCel
 import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.model.LocalMediaFolder
 import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.usecase.LocalMediaUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.worker.LocalMediaWorkScheduler
+import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.api.usecase.RemoteMediaUseCase
 import com.savvasdalkitsis.uhuruphotos.foundation.coroutines.api.safelyOnStartIgnoring
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.ActionHandler
 import kotlinx.coroutines.delay
@@ -65,6 +69,7 @@ class LibraryActionHandler @Inject constructor(
     private val autoAlbumsUseCase: AutoAlbumsUseCase,
     private val userAlbumsUseCase: UserAlbumsUseCase,
     private val mediaUseCase: MediaUseCase,
+    private val remoteMediaUseCase: RemoteMediaUseCase,
     private val localMediaUseCase: LocalMediaUseCase,
     private val localMediaWorkScheduler: LocalMediaWorkScheduler,
 ) : ActionHandler<LibraryState, LibraryEffect, LibraryAction, LibraryMutation> {
@@ -77,11 +82,18 @@ class LibraryActionHandler @Inject constructor(
         effect: suspend (LibraryEffect) -> Unit,
     ): Flow<LibraryMutation> = when (action) {
         Load -> merge(
-            autoAlbumsUseCase.observeAutoAlbums().mapToCover { it.cover }
+            autoAlbumsUseCase.observeAutoAlbums()
+                .mapToCover { it.cover.toCel() }
                 .map(::DisplayAutoAlbums),
-            userAlbumsUseCase.observeUserAlbums().mapToCover { it.cover.mediaItem1 }
+            userAlbumsUseCase.observeUserAlbums()
+                .map { albums ->
+                    with(remoteMediaUseCase) {
+                        albums.map { it.toUserAlbumState() }
+                    }
+                }
+                .mapToCover { it.cover.cel1 }
                 .map(::DisplayUserAlbums),
-            favouriteMedia().mapToCover { it }
+            favouriteMedia().mapToCover { it.toCel() }
                 .map(::DisplayFavouritePhotos),
             loading
                 .map(::Loading),
@@ -195,7 +207,7 @@ class LibraryActionHandler @Inject constructor(
         loading.emit(false)
     }
 
-    private fun <T> Flow<List<T>>.mapToCover(cover: (T) -> MediaItem?): Flow<VitrineState> =
+    private fun <T> Flow<List<T>>.mapToCover(cover: (T) -> CelState?): Flow<VitrineState> =
         map { albums ->
             albums.take(4).map(cover).let {
                 VitrineState(it)
@@ -203,5 +215,5 @@ class LibraryActionHandler @Inject constructor(
         }
 
     private fun Pair<LocalMediaFolder, List<MediaItem>>.toVitrine(): Pair<LocalMediaFolder, VitrineState> =
-        first to VitrineState(second)
+        first to VitrineState(second.map { it.toCel() })
 }

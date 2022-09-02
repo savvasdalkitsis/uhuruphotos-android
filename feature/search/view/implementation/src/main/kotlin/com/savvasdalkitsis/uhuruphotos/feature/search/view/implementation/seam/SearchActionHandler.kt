@@ -16,6 +16,7 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.feature.search.view.implementation.seam
 
 import com.savvasdalkitsis.uhuruphotos.api.db.people.People
+import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.toCluster
 import com.savvasdalkitsis.uhuruphotos.feature.feed.domain.api.usecase.FeedUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.api.usecase.RemoteMediaUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.people.domain.api.usecase.PeopleUseCase
@@ -30,7 +31,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.search.view.implementation.seam.S
 import com.savvasdalkitsis.uhuruphotos.feature.search.view.implementation.seam.SearchAction.RemoveFromRecentSearches
 import com.savvasdalkitsis.uhuruphotos.feature.search.view.implementation.seam.SearchAction.SearchCleared
 import com.savvasdalkitsis.uhuruphotos.feature.search.view.implementation.seam.SearchAction.SearchFor
-import com.savvasdalkitsis.uhuruphotos.feature.search.view.implementation.seam.SearchAction.SelectedPhoto
+import com.savvasdalkitsis.uhuruphotos.feature.search.view.implementation.seam.SearchAction.SelectedCel
 import com.savvasdalkitsis.uhuruphotos.feature.search.view.implementation.seam.SearchAction.ViewAllPeopleSelected
 import com.savvasdalkitsis.uhuruphotos.feature.search.view.implementation.seam.SearchEffect.ErrorRefreshingPeople
 import com.savvasdalkitsis.uhuruphotos.feature.search.view.implementation.seam.SearchEffect.ErrorSearching
@@ -120,9 +121,9 @@ class SearchActionHandler @Inject constructor(
             lastSuggestions?.cancel()
             emit(SwitchStateToIdle)
         }
-        is SelectedPhoto -> flow {
+        is SelectedCel -> flow {
             with(action) {
-                effect(OpenLightbox(mediaItem.id, center, scale, mediaItem.isVideo, state.latestQuery))
+                effect(OpenLightbox(celState.mediaItem.id, center, scale, celState.mediaItem.isVideo, state.latestQuery))
             }
         }
         is ChangeDisplay -> flowOf(ChangeSearchDisplay(action.display))
@@ -153,11 +154,11 @@ class SearchActionHandler @Inject constructor(
             searchUseCase.searchFor(action.query)
                 .debounce(200)
                 .mapNotNull { result ->
-                    val albums = result.getOrNull()
-                    if (albums != null)
+                    val clusters = result.getOrNull()?.map { it.toCluster() }
+                    if (clusters != null)
                         when {
-                            albums.isEmpty() -> SwitchStateToSearching
-                            else -> SwitchStateToFound(Found(albums))
+                            clusters.isEmpty() -> SwitchStateToSearching
+                            else -> SwitchStateToFound(Found(clusters))
                         }
                     else {
                         effect(ErrorSearching)

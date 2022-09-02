@@ -20,42 +20,41 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
-import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.MediaRowSlot.EmptySlot
-import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.MediaRowSlot.MediaSlot
-import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItem
+import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.CelRowSlot.CelSlot
+import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.CelRowSlot.EmptySlot
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.Cel
-import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.MediaItemSelected
-import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.state.toCel
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.CelSelected
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.state.CelState
 
 @Composable
-internal fun MediaRow(
+internal fun CelRow(
     modifier: Modifier = Modifier,
     maintainAspectRatio: Boolean = true,
     miniIcons: Boolean = false,
-    onMediaItemSelected: MediaItemSelected,
-    onMediaItemLongPressed: (MediaItem) -> Unit,
-    vararg slots: MediaRowSlot
+    onCelSelected: CelSelected,
+    onCelLongPressed: (CelState) -> Unit,
+    vararg slots: CelRowSlot
 ) {
     Row(modifier = modifier) {
         for (item in slots) {
             when (item) {
-                is MediaSlot -> {
+                is CelSlot -> {
                     val aspectRatio = when {
-                        maintainAspectRatio -> item.mediaItem.ratio
+                        maintainAspectRatio -> item.cel.mediaItem.ratio
                         else -> 1f
                     }
                     Cel(
                         modifier = Modifier
                             .weight(aspectRatio),
-                        state = item.mediaItem.toCel(),
-                        onItemSelected = onMediaItemSelected,
+                        state = item.cel,
+                        onSelected = onCelSelected,
+                        onLongClick = onCelLongPressed,
                         aspectRatio = aspectRatio,
                         contentScale = when {
                             maintainAspectRatio -> ContentScale.FillBounds
                             else -> ContentScale.Crop
                         },
                         miniIcons = miniIcons,
-                        onLongClick = onMediaItemLongPressed,
                     )
                 }
                 EmptySlot -> Spacer(modifier = Modifier.weight(1f))

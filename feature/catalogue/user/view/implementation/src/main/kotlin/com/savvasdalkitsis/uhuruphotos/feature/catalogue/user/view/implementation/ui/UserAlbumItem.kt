@@ -28,7 +28,7 @@ import androidx.compose.ui.res.pluralStringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
-import com.savvasdalkitsis.uhuruphotos.feature.catalogue.user.view.api.state.UserAlbum
+import com.savvasdalkitsis.uhuruphotos.feature.catalogue.user.view.api.state.UserAlbumState
 import com.savvasdalkitsis.uhuruphotos.feature.catalogue.user.view.implementation.seam.UserAlbumsAction
 import com.savvasdalkitsis.uhuruphotos.feature.catalogue.user.view.implementation.seam.UserAlbumsAction.UserAlbumSelected
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaId
@@ -40,7 +40,7 @@ import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R
 
 @Composable
 internal fun UserAlbumItem(
-    album: UserAlbum,
+    album: UserAlbumState,
     action: (UserAlbumsAction) -> Unit,
 ) {
     Column(
@@ -58,8 +58,8 @@ internal fun UserAlbumItem(
             )
         } else {
             Cel(
-                state = album.cover.mediaItem1?.toCel() ?: MediaItem(MediaId.Remote(""), "").toCel(),
-                onItemSelected = { _, _, _ ->
+                state = album.cover.cel1 ?: MediaItem(MediaId.Remote(""), "").toCel(),
+                onSelected = { _, _, _ ->
                     action(UserAlbumSelected(album))
                 },
                 aspectRatio = 1f,
@@ -68,7 +68,7 @@ internal fun UserAlbumItem(
             )
         }
         Text(
-            text = album.title,
+            text = album.title.toText(),
             maxLines = 2,
             overflow = TextOverflow.Ellipsis,
             style = MaterialTheme.typography.subtitle1

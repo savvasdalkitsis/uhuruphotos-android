@@ -15,14 +15,14 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.catalogue.user.view.implementation.seam
 
-import com.savvasdalkitsis.uhuruphotos.feature.catalogue.user.view.api.state.UserAlbum
+import com.savvasdalkitsis.uhuruphotos.feature.catalogue.user.view.api.state.UserAlbumState
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.Mutation
 
 sealed class UserAlbumsMutation(
     mutation: Mutation<UserAlbumsState>
 ) : Mutation<UserAlbumsState> by mutation {
 
-    data class DisplayAlbums(val albums: List<UserAlbum>) : UserAlbumsMutation({
+    data class DisplayAlbums(val albums: List<UserAlbumState>) : UserAlbumsMutation({
         it.copy(albums = albums)
     })
 

@@ -31,9 +31,8 @@ import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
-import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItem
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.state.CelState
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.state.VitrineState
-import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.state.toCel
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.theme.CustomColors
 
 @Composable
@@ -53,24 +52,24 @@ fun Vitrine(
             ),
     ) {
         Row {
-            GridItem(state.mediaItem1)
-            GridItem(state.mediaItem2)
+            GridItem(state.cel1)
+            GridItem(state.cel2)
         }
         Row {
-            GridItem(state.mediaItem3)
-            GridItem(state.mediaItem4)
+            GridItem(state.cel3)
+            GridItem(state.cel4)
         }
     }
 }
 
 @Composable
-private fun RowScope.GridItem(mediaItem: MediaItem?) {
-    if (mediaItem != null) {
+private fun RowScope.GridItem(celState: CelState?) {
+    if (celState != null) {
         Cel(
             modifier = Modifier
                 .weight(1f),
-            state = mediaItem.toCel(),
-            onItemSelected = { _, _, _ -> },
+            state = celState,
+            onSelected = { _, _, _ -> },
             aspectRatio = 1f,
             contentScale = ContentScale.Crop,
             itemPadding = 0.dp,

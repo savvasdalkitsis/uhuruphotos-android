@@ -31,17 +31,17 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.savvasdalkitsis.uhuruphotos.api.albums.model.Album
-import com.savvasdalkitsis.uhuruphotos.api.albums.model.previewAlbumEmpty
+import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.Cluster
+import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.previewClusterEmpty
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemSelectionMode
 import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.R.drawable
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.theme.PreviewAppTheme
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.ActionIcon
 
 @Composable
-internal fun CollageGroupHeader(
+internal fun ClusterHeader(
     modifier: Modifier,
-    album: Album,
+    state: Cluster,
     showSelectionHeader: Boolean,
     showRefreshButton: Boolean,
     onRefreshClicked: () -> Unit = {},
@@ -55,7 +55,7 @@ internal fun CollageGroupHeader(
             ActionIcon(
                 onClick = onSelectionHeaderClicked,
                 icon = when {
-                    album.photos.any { it.selectionMode == MediaItemSelectionMode.UNSELECTED } ->
+                    state.cels.any { it.selectionMode == MediaItemSelectionMode.UNSELECTED } ->
                         drawable.ic_check_circle
                     else -> drawable.ic_clear
                 }
@@ -70,13 +70,13 @@ internal fun CollageGroupHeader(
             ).weight(1f),
         ) {
             Text(
-                text = album.displayTitle,
+                text = state.displayTitle,
                 style = TextStyle.Default.copy(
                     fontWeight = FontWeight.Bold,
                     fontSize = 14.sp
                 )
             )
-            album.location.takeIf { !it.isNullOrEmpty() }?.let {
+            state.location.takeIf { !it.isNullOrEmpty() }?.let {
                 Spacer(modifier = Modifier.height(8.dp))
                 Text(
                     text = it,
@@ -98,9 +98,9 @@ internal fun CollageGroupHeader(
 @Composable
 internal fun CollageGroupHeaderPreview() {
     PreviewAppTheme {
-        CollageGroupHeader(
+        ClusterHeader(
             modifier = Modifier,
-            album = previewAlbumEmpty,
+            state = previewClusterEmpty,
             showSelectionHeader = false,
             showRefreshButton = true,
         )
@@ -111,9 +111,9 @@ internal fun CollageGroupHeaderPreview() {
 @Composable
 internal fun CollageGroupPreviewSelection() {
     PreviewAppTheme {
-        CollageGroupHeader(
+        ClusterHeader(
             modifier = Modifier,
-            album = previewAlbumEmpty,
+            state = previewClusterEmpty,
             showSelectionHeader = true,
             showRefreshButton = true,
         )

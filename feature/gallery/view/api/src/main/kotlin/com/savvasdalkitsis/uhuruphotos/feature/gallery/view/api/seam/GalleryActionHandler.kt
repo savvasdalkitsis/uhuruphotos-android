@@ -21,7 +21,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.GalleryActi
 import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.GalleryAction.LoadCollage
 import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.GalleryAction.NavigateBack
 import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.GalleryAction.PersonSelected
-import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.GalleryAction.SelectedMediaItem
+import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.GalleryAction.SelectedCel
 import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.GalleryAction.SwipeToRefresh
 import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.GalleryEffect.ErrorLoading
 import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.GalleryEffect.NavigateToPerson
@@ -74,14 +74,14 @@ class GalleryActionHandler(
         SwipeToRefresh -> flow {
             refreshGallery(effect)
         }
-        is SelectedMediaItem -> flow {
+        is SelectedCel -> flow {
             effect(
                 with(action) {
                     OpenLightbox(
-                        id = mediaItem.id,
+                        id = cel.mediaItem.id,
                         center = center,
                         scale = scale,
-                        video = mediaItem.isVideo,
+                        video = cel.mediaItem.isVideo,
                         lightboxSequenceDataSource = lightboxSequenceDataSource(galleryId)
                     )
                 }

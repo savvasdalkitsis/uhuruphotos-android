@@ -25,11 +25,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.unit.dp
-import com.savvasdalkitsis.uhuruphotos.api.albums.model.Album
+import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.Cluster
 import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.CollageDisplay
 import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.CollageState
-import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItem
-import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.MediaItemSelected
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.CelSelected
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.state.CelState
 import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.FullProgressBar
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.NoContent
@@ -45,14 +45,14 @@ fun Collage(
     listState: LazyListState = rememberLazyListState(),
     collageHeader: @Composable (LazyItemScope.() -> Unit)? = null,
     emptyContent: @Composable () -> Unit = { NoContent(string.no_photos) },
-    onMediaItemSelected: MediaItemSelected = { _, _, _ -> },
+    onCelSelected: CelSelected = { _, _, _ -> },
     onChangeDisplay: ((CollageDisplay) -> Unit) = {},
-    onPhotoLongPressed: (MediaItem) -> Unit = {},
-    onGroupRefreshClicked: (Album) -> Unit = {},
-    onGroupSelectionClicked: (Album) -> Unit = {},
+    onCelLongPressed: (CelState) -> Unit = {},
+    onClusterRefreshClicked: (Cluster) -> Unit = {},
+    onClusterSelectionClicked: (Cluster) -> Unit = {},
 ) = when {
-    state.isLoading || (!state.isEmpty && state.albums.isEmpty()) -> FullProgressBar()
-    state.isEmpty && state.albums.isEmpty() -> emptyContent()
+    state.isLoading || (!state.isEmpty && state.clusters.isEmpty()) -> FullProgressBar()
+    state.isEmpty && state.clusters.isEmpty() -> emptyContent()
     else -> {
         val collageDisplay = state.collageDisplay
         StaggeredCollage(
@@ -67,7 +67,7 @@ fun Collage(
                     }
                 },
             contentPadding = contentPadding,
-            albums = state.albums,
+            state = state.clusters,
             showSelectionHeader = showSelectionHeader,
             showAlbumRefreshButton = showGroupRefreshButton,
             maintainAspectRatio = collageDisplay.maintainAspectRatio,
@@ -79,10 +79,10 @@ fun Collage(
                 landscape = LocalConfiguration.current.orientation == Configuration.ORIENTATION_LANDSCAPE
             ),
             shouldAddEmptyPhotosInRows = collageDisplay.shouldAddEmptyPhotosInRows,
-            onMediaItemSelected = onMediaItemSelected,
-            onMediaItemLongPressed = onPhotoLongPressed,
-            onAlbumSelectionClicked = onGroupSelectionClicked,
-            onAlbumRefreshClicked = onGroupRefreshClicked,
+            onCelSelected = onCelSelected,
+            onCelLongPressed = onCelLongPressed,
+            onClusterSelectionClicked = onClusterSelectionClicked,
+            onClusterRefreshClicked = onClusterRefreshClicked,
         )
     }
 }

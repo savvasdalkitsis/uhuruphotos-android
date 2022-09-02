@@ -25,19 +25,19 @@ import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.Selectio
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.FeedAction.AlbumRefreshClicked
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.FeedAction.AlbumSelectionClicked
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.FeedAction.AskForSelectedPhotosTrashing
+import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.FeedAction.CelLongPressed
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.FeedAction.ChangeDisplay
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.FeedAction.ClearSelected
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.FeedAction.DismissSelectedPhotosTrashing
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.FeedAction.DownloadSelectedPhotos
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.FeedAction.LoadFeed
-import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.FeedAction.PhotoLongPressed
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.FeedAction.RefreshAlbums
-import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.FeedAction.SelectedPhoto
+import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.FeedAction.SelectedCel
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.FeedAction.ShareSelectedPhotos
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.FeedAction.TrashSelectedPhotos
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.FeedEffect.DownloadingFiles
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.FeedEffect.OpenLightbox
-import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.FeedEffect.SharePhotos
+import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.FeedEffect.Share
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.FeedEffect.Vibrate
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.FeedMutation.HideTrashingConfirmationDialog
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.FeedMutation.Loading
@@ -48,11 +48,11 @@ import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.Fee
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.FeedMutation.StartRefreshing
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.FeedMutation.StopRefreshing
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.ui.state.FeedState
-import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItem
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemSelectionMode.SELECTED
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemSelectionMode.UNDEFINED
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemSelectionMode.UNSELECTED
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.usecase.MediaUseCase
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.state.CelState
 import com.savvasdalkitsis.uhuruphotos.feature.settings.domain.api.usecase.SettingsUseCase
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.ActionHandler
 import kotlinx.coroutines.delay
@@ -114,28 +114,28 @@ internal class FeedActionHandler @Inject constructor(
             delay(200)
             emit(StopRefreshing)
         }
-        is SelectedPhoto -> flow {
+        is SelectedCel -> flow {
             when {
-                state.selectedPhotoCount == 0 -> effect(with(action) {
-                    OpenLightbox(mediaItem.id, center, scale, mediaItem.isVideo)
+                state.selectedCelCount == 0 -> effect(with(action) {
+                    OpenLightbox(celState.mediaItem.id, center, scale, celState.mediaItem.isVideo)
                 })
-                action.mediaItem.selectionMode == SELECTED -> {
+                action.celState.selectionMode == SELECTED -> {
                     effect(Vibrate)
-                    action.mediaItem.deselect()
+                    action.celState.deselect()
                 }
                 else -> {
                     effect(Vibrate)
-                    action.mediaItem.select()
+                    action.celState.select()
                 }
             }
         }
         is ChangeDisplay -> flow {
             feedUseCase.setFeedDisplay(action.display)
         }
-        is PhotoLongPressed -> flow {
-            if (state.selectedPhotoCount == 0) {
+        is CelLongPressed -> flow {
+            if (state.selectedCelCount == 0) {
                 effect(Vibrate)
-                action.mediaItem.select()
+                action.celState.select()
             }
         }
         ClearSelected -> flow {
@@ -144,44 +144,44 @@ internal class FeedActionHandler @Inject constructor(
         }
         AskForSelectedPhotosTrashing -> flowOf(ShowTrashingConfirmationDialog)
         is AlbumSelectionClicked -> flow {
-            val photos = action.album.photos
+            val cels = action.cluster.cels
             effect(Vibrate)
-            if (photos.all { it.selectionMode == SELECTED }) {
-                photos.forEach { it.deselect() }
+            if (cels.all { it.selectionMode == SELECTED }) {
+                cels.forEach { it.deselect() }
             } else {
-                photos.forEach { it.select() }
+                cels.forEach { it.select() }
             }
         }
         is AlbumRefreshClicked -> flow {
             emit(StartRefreshing)
-            albumsUseCase.refreshAlbum(action.album.id)
+            albumsUseCase.refreshAlbum(action.cluster.id)
             emit(StopRefreshing)
         }
         DismissSelectedPhotosTrashing -> flowOf(HideTrashingConfirmationDialog)
         TrashSelectedPhotos -> flow {
             emit(HideTrashingConfirmationDialog)
-            state.selectedMediaItem.forEach {
-                mediaUseCase.trashMediaItem(it.id)
+            state.selectedCels.forEach {
+                mediaUseCase.trashMediaItem(it.mediaItem.id)
             }
             selectionList.clear()
         }
         ShareSelectedPhotos -> flow {
-            effect(SharePhotos(state.selectedMediaItem))
+            effect(Share(state.selectedCels))
         }
         DownloadSelectedPhotos -> flow {
             effect(DownloadingFiles)
-            state.selectedMediaItem.forEach {
-                mediaUseCase.downloadOriginal(it.id, it.isVideo)
+            state.selectedCels.forEach {
+                mediaUseCase.downloadOriginal(it.mediaItem.id, it.mediaItem.isVideo)
             }
         }
     }
 
-    private suspend fun MediaItem.deselect() {
-        selectionList.deselect(id)
+    private suspend fun CelState.deselect() {
+        selectionList.deselect(mediaItem.id)
     }
 
-    private suspend fun MediaItem.select() {
-        selectionList.select(id)
+    private suspend fun CelState.select() {
+        selectionList.select(mediaItem.id)
     }
 
     private val List<Album>.photosCount get() = sumOf { it.photos.size }

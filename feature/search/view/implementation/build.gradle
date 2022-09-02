@@ -26,6 +26,7 @@ dependencies {
     implementation project(':feature:people:domain:api')
     implementation project(':feature:people:view:api')
     implementation project(':feature:person:view:api')
+    implementation project(':feature:media:common:view:api')
     implementation project(':feature:media:remote:domain:api')
     implementation project(':feature:search:domain:api')
     implementation project(":feature:lightbox:view:api")

@@ -15,14 +15,14 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.search.view.implementation.ui.state
 
-import com.savvasdalkitsis.uhuruphotos.api.albums.model.Album
+import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.Cluster
 
 sealed class SearchResults {
 
     object Idle : SearchResults()
     object Searching : SearchResults()
-    data class Found(val albums: List<Album>) : SearchResults() {
-        override fun toString() = "Found ${albums.size} albums in search."
+    data class Found(val clusters: List<Cluster>) : SearchResults() {
+        override fun toString() = "Found ${clusters.size} albums in search."
     }
 
 }

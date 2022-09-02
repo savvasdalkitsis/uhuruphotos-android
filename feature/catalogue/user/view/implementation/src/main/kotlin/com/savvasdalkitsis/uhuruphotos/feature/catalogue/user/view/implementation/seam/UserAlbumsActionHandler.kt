@@ -16,6 +16,7 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.feature.catalogue.user.view.implementation.seam
 
 import com.savvasdalkitsis.uhuruphotos.feature.catalogue.user.domain.api.usecase.UserAlbumsUseCase
+import com.savvasdalkitsis.uhuruphotos.feature.catalogue.user.view.api.state.toUserAlbumState
 import com.savvasdalkitsis.uhuruphotos.feature.catalogue.user.view.implementation.seam.UserAlbumsAction.ChangeSorting
 import com.savvasdalkitsis.uhuruphotos.feature.catalogue.user.view.implementation.seam.UserAlbumsAction.Load
 import com.savvasdalkitsis.uhuruphotos.feature.catalogue.user.view.implementation.seam.UserAlbumsAction.NavigateBack
@@ -25,6 +26,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.catalogue.user.view.implementatio
 import com.savvasdalkitsis.uhuruphotos.feature.catalogue.user.view.implementation.seam.UserAlbumsEffect.NavigateToUserAlbum
 import com.savvasdalkitsis.uhuruphotos.feature.catalogue.user.view.implementation.seam.UserAlbumsMutation.DisplayAlbums
 import com.savvasdalkitsis.uhuruphotos.feature.catalogue.user.view.implementation.seam.UserAlbumsMutation.Loading
+import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.api.usecase.RemoteMediaUseCase
 import com.savvasdalkitsis.uhuruphotos.foundation.coroutines.api.safelyOnStartIgnoring
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.ActionHandler
 import kotlinx.coroutines.delay
@@ -37,6 +39,7 @@ import javax.inject.Inject
 
 class UserAlbumsActionHandler @Inject constructor(
     private val userAlbumsUseCase: UserAlbumsUseCase,
+    private val remoteMediaUseCase: RemoteMediaUseCase,
 ): ActionHandler<UserAlbumsState, UserAlbumsEffect, UserAlbumsAction, UserAlbumsMutation> {
 
     private val loading = MutableSharedFlow<Boolean>()
@@ -48,6 +51,11 @@ class UserAlbumsActionHandler @Inject constructor(
     ): Flow<UserAlbumsMutation> = when (action) {
         Load -> merge(
             userAlbumsUseCase.observeUserAlbums()
+                .map { albums ->
+                    with(remoteMediaUseCase) {
+                        albums.map { it.toUserAlbumState() }
+                    }
+                }
                 .map(::DisplayAlbums),
             loading
                 .map(::Loading)

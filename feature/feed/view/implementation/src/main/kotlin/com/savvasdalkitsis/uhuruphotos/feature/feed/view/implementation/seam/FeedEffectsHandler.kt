@@ -17,7 +17,7 @@ package com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam
 
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.FeedEffect.DownloadingFiles
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.FeedEffect.OpenLightbox
-import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.FeedEffect.SharePhotos
+import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.FeedEffect.Share
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.FeedEffect.Vibrate
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.api.model.LightboxSequenceDataSource.Feed
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.api.navigation.LightboxNavigationTarget
@@ -40,10 +40,10 @@ internal class FeedEffectsHandler @Inject constructor(
         is OpenLightbox -> with(effect) {
             navigateTo(LightboxNavigationTarget.name(id, center, scale, isVideo, Feed))
         }
-        is SharePhotos -> {
+        is Share -> {
             toaster.show(string.downloading_photos_sharing)
-            shareUseCase.shareMultiple(effect.selectedMediaItem.mapNotNull {
-                it.fullResUri
+            shareUseCase.shareMultiple(effect.selectedCels.mapNotNull {
+                it.mediaItem.fullResUri
             })
         }
         Vibrate -> uiUseCase.performLongPressHaptic()

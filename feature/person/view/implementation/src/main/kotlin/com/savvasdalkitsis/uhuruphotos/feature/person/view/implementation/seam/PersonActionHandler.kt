@@ -22,7 +22,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.person.domain.api.usecase.PersonU
 import com.savvasdalkitsis.uhuruphotos.feature.person.view.implementation.seam.PersonAction.ChangeDisplay
 import com.savvasdalkitsis.uhuruphotos.feature.person.view.implementation.seam.PersonAction.LoadPerson
 import com.savvasdalkitsis.uhuruphotos.feature.person.view.implementation.seam.PersonAction.NavigateBack
-import com.savvasdalkitsis.uhuruphotos.feature.person.view.implementation.seam.PersonAction.SelectedPhoto
+import com.savvasdalkitsis.uhuruphotos.feature.person.view.implementation.seam.PersonAction.SelectedCel
 import com.savvasdalkitsis.uhuruphotos.feature.person.view.implementation.seam.PersonEffect.OpenLightbox
 import com.savvasdalkitsis.uhuruphotos.feature.person.view.implementation.seam.PersonMutation.Loading
 import com.savvasdalkitsis.uhuruphotos.feature.person.view.implementation.seam.PersonMutation.SetFeedDisplay
@@ -62,9 +62,9 @@ class PersonActionHandler @Inject constructor(
             effect(PersonEffect.NavigateBack)
         }
         is ChangeDisplay -> flowOf(SetFeedDisplay(action.display))
-        is SelectedPhoto -> flow {
+        is SelectedCel -> flow {
             effect(with(action) {
-                OpenLightbox(mediaItem.id, center, scale, mediaItem.isVideo, state.person!!)
+                OpenLightbox(cel.mediaItem.id, center, scale, cel.mediaItem.isVideo, state.person!!)
             })
         }
     }

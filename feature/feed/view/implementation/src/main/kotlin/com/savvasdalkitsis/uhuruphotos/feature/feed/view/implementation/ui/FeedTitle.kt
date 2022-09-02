@@ -63,7 +63,7 @@ internal fun FeedTitle(
                 ) {
                     Text(
                         modifier = Modifier.padding(end = 8.dp),
-                        text = state.selectedPhotoCount.toString(),
+                        text = state.selectedCelCount.toString(),
                     )
                     ActionIcon(
                         modifier = Modifier.size(16.dp),

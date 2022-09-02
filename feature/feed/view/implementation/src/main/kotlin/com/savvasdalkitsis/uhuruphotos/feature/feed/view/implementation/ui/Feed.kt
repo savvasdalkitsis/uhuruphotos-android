@@ -27,11 +27,11 @@ import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.Predefi
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.FeedAction
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.FeedAction.AlbumRefreshClicked
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.FeedAction.AlbumSelectionClicked
+import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.FeedAction.CelLongPressed
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.FeedAction.ChangeDisplay
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.FeedAction.DismissSelectedPhotosTrashing
-import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.FeedAction.PhotoLongPressed
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.FeedAction.RefreshAlbums
-import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.FeedAction.SelectedPhoto
+import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.FeedAction.SelectedCel
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.FeedAction.TrashSelectedPhotos
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.ui.state.FeedState
 import com.savvasdalkitsis.uhuruphotos.feature.home.view.api.ui.HomeScaffold
@@ -81,26 +81,26 @@ internal fun Feed(
                 contentPadding = contentPadding,
                 state = state.collageState,
                 showSelectionHeader = state.hasSelection,
-                showGroupRefreshButton = state.shouldShowAlbumRefreshButtons,
+                showGroupRefreshButton = state.shouldShowClusterRefreshButtons,
                 listState = listState,
-                onMediaItemSelected = { photo, center, scale ->
-                    action(SelectedPhoto(photo, center, scale,))
+                onCelSelected = { cel, center, scale ->
+                    action(SelectedCel(cel, center, scale,))
                 },
                 onChangeDisplay = { action(ChangeDisplay(it as PredefinedCollageDisplay)) },
-                onPhotoLongPressed = {
-                    action(PhotoLongPressed(it))
+                onCelLongPressed = {
+                    action(CelLongPressed(it))
                 },
-                onGroupSelectionClicked = {
+                onClusterSelectionClicked = {
                     action(AlbumSelectionClicked(it))
                 },
-                onGroupRefreshClicked = {
+                onClusterRefreshClicked = {
                     action(AlbumRefreshClicked(it))
                 }
             )
         }
-        if (state.showPhotoTrashingConfirmationDialog) {
+        if (state.showTrashingConfirmationDialog) {
             TrashPermissionDialog(
-                mediaItemCount = state.selectedPhotoCount,
+                mediaItemCount = state.selectedCelCount,
                 onDismiss = { action(DismissSelectedPhotosTrashing) },
                 onDelete = { action(TrashSelectedPhotos) }
             )

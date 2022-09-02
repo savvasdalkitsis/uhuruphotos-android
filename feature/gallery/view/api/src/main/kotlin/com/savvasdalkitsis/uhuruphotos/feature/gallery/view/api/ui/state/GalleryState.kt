@@ -18,6 +18,7 @@ package com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.ui.state
 import androidx.annotation.StringRes
 import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.CollageState
 import com.savvasdalkitsis.uhuruphotos.feature.people.view.api.ui.state.Person
+import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.state.Title
 
 data class GalleryState(
     val collageState: CollageState = CollageState(),

@@ -50,7 +50,6 @@ import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItem
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemSelectionMode
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.state.CelState
 import com.savvasdalkitsis.uhuruphotos.foundation.compose.api.toColor
@@ -62,14 +61,14 @@ import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.theme.CustomColors
 fun Cel(
     modifier: Modifier = Modifier,
     state: CelState,
-    onItemSelected: MediaItemSelected,
+    onSelected: CelSelected,
     aspectRatio: Float = state.mediaItem.ratio,
     contentScale: ContentScale = ContentScale.FillBounds,
     shape: Shape = RectangleShape,
     itemPadding: Dp = 1.dp,
     miniIcons: Boolean = false,
     selectable: Boolean = true,
-    onLongClick: (MediaItem) -> Unit = {},
+    onLongClick: (CelState) -> Unit = {},
 ) {
     val scale = remember(state.mediaItem.id) { Animatable(1f) }
     val configuration = LocalConfiguration.current
@@ -92,8 +91,8 @@ fun Cel(
             .let {
                 if (selectable) {
                     it.combinedClickable(
-                        onClick = { onItemSelected(state.mediaItem, relativeCenter, relativeScale) },
-                        onLongClick = { onLongClick(state.mediaItem) }
+                        onClick = { onSelected(state, relativeCenter, relativeScale) },
+                        onLongClick = { onLongClick(state) }
                     )
                 } else {
                     it
@@ -175,4 +174,4 @@ fun Cel(
     }
 }
 
-typealias MediaItemSelected = (mediaItem: MediaItem, center: Offset, scale: Float) -> Unit
+typealias CelSelected = (cel: CelState, center: Offset, scale: Float) -> Unit

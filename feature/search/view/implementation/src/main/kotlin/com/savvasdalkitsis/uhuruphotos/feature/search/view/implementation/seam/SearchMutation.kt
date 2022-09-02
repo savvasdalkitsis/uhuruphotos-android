@@ -53,7 +53,7 @@ sealed class SearchMutation(
     data class SwitchStateToFound(val found: SearchResults.Found) : SearchMutation({
         it.copy(searchResults = found)
     }) {
-        override fun toString() = "Updating results with ${found.albums.size} albums"
+        override fun toString() = "Updating results with ${found.clusters.size} albums"
     }
 
     data class ShowSearchSuggestion(val suggestion: String) : SearchMutation({

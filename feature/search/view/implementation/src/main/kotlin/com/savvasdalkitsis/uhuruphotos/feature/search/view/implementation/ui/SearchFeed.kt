@@ -21,6 +21,7 @@ import androidx.compose.ui.unit.dp
 import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.Collage
 import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.CollageState
 import com.savvasdalkitsis.uhuruphotos.feature.search.view.implementation.seam.SearchAction
+import com.savvasdalkitsis.uhuruphotos.feature.search.view.implementation.seam.SearchAction.SelectedCel
 import com.savvasdalkitsis.uhuruphotos.feature.search.view.implementation.ui.state.SearchResults
 import com.savvasdalkitsis.uhuruphotos.feature.search.view.implementation.ui.state.SearchState
 import com.savvasdalkitsis.uhuruphotos.foundation.compose.api.copy
@@ -34,13 +35,13 @@ fun SearchFeed(
 ) {
     Collage(
         contentPadding = contentPadding.copy(top = 0.dp),
-        onMediaItemSelected = { photo, center, scale ->
-            action(SearchAction.SelectedPhoto(photo, center, scale))
+        onCelSelected = { cel, center, scale ->
+            action(SelectedCel(cel, center, scale))
         },
         onChangeDisplay = { action(SearchAction.ChangeDisplay(it)) },
         state = CollageState(
             isLoading = false,
-            albums = searchResults.albums,
+            clusters = searchResults.clusters,
             collageDisplay = state.searchDisplay,
         ),
     )

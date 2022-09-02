@@ -21,6 +21,7 @@ dependencies {
     implementation project(":foundation:navigation:api")
     implementation project(":foundation:map:api")
     implementation project(':feature:media:common:domain:api')
+    implementation project(':feature:media:common:view:api')
     implementation project(':feature:media:remote:domain:api')
     implementation project(":feature:settings:domain:api")
     implementation project(":foundation:strings:api")

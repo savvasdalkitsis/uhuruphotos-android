@@ -15,10 +15,10 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.catalogue.user.view.implementation.seam
 
-import com.savvasdalkitsis.uhuruphotos.feature.catalogue.user.view.api.state.UserAlbum
+import com.savvasdalkitsis.uhuruphotos.feature.catalogue.user.view.api.state.UserAlbumState
 
 sealed class UserAlbumsEffect {
-    data class NavigateToUserAlbum(val album: UserAlbum) : UserAlbumsEffect()
+    data class NavigateToUserAlbum(val album: UserAlbumState) : UserAlbumsEffect()
     object ErrorLoadingAlbums : UserAlbumsEffect()
     object NavigateBack : UserAlbumsEffect()
 }

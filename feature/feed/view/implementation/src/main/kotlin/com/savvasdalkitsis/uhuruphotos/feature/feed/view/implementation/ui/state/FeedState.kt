@@ -17,28 +17,28 @@ package com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.ui.stat
 
 import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.CollageState
 import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.PredefinedCollageDisplay
-import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItem
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemSelectionMode
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.state.CelState
 
 internal data class FeedState(
     val collageState: CollageState = CollageState(),
     val isRefreshing: Boolean = false,
     val showLibrary: Boolean = true,
-    val showPhotoTrashingConfirmationDialog: Boolean = false,
+    val showTrashingConfirmationDialog: Boolean = false,
 ) {
-    val selectedPhotoCount: Int = collageState.albums.sumOf { album ->
-        album.photos.count { photo ->
-            photo.selectionMode == MediaItemSelectionMode.SELECTED
+    val selectedCelCount: Int = collageState.clusters.sumOf { cluster ->
+        cluster.cels.count { cel ->
+            cel.selectionMode == MediaItemSelectionMode.SELECTED
         }
     }
-    val hasSelection = selectedPhotoCount > 0
-    val selectedMediaItem: List<MediaItem> = collageState.albums.flatMap { album ->
-        album.photos.filter { photo ->
-            photo.selectionMode == MediaItemSelectionMode.SELECTED
+    val hasSelection = selectedCelCount > 0
+    val selectedCels: List<CelState> = collageState.clusters.flatMap { cluster ->
+        cluster.cels.filter { cel ->
+            cel.selectionMode == MediaItemSelectionMode.SELECTED
         }
     }
-    val shouldShowShareIcon: Boolean = selectedMediaItem.let { selected ->
-        selected.isNotEmpty() && selected.none(MediaItem::isVideo)
+    val shouldShowShareIcon: Boolean = selectedCels.let { selected ->
+        selected.isNotEmpty() && selected.none{ it.mediaItem.isVideo }
     }
-    val shouldShowAlbumRefreshButtons: Boolean = collageState.collageDisplay != PredefinedCollageDisplay.YEARLY
+    val shouldShowClusterRefreshButtons: Boolean = collageState.collageDisplay != PredefinedCollageDisplay.YEARLY
 }

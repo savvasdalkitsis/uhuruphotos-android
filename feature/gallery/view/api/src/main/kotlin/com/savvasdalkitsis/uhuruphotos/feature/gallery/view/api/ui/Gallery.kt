@@ -28,7 +28,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.GalleryActi
 import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.GalleryAction.ChangeCollageDisplay
 import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.GalleryAction.NavigateBack
 import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.GalleryAction.PersonSelected
-import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.GalleryAction.SelectedMediaItem
+import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.GalleryAction.SelectedCel
 import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.GalleryAction.SwipeToRefresh
 import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.ui.state.GalleryState
 import com.savvasdalkitsis.uhuruphotos.feature.people.view.api.ui.PeopleBanner
@@ -54,7 +54,7 @@ fun Gallery(
         },
         actionBarContent = {
             AnimatedVisibility(state.collageState.collageDisplay.iconResource != 0
-                    && state.collageState.albums.isNotEmpty()) {
+                    && state.collageState.clusters.isNotEmpty()) {
                 CollageDisplayActionButton(
                     onChange = { action(ChangeCollageDisplay(it)) },
                     currentCollageDisplay = state.collageState.collageDisplay
@@ -82,8 +82,8 @@ fun Gallery(
                     }
                 },
                 emptyContent = emptyContent,
-                onMediaItemSelected = { photo, center, scale ->
-                    action(SelectedMediaItem(photo, center, scale,))
+                onCelSelected = { cel, center, scale ->
+                    action(SelectedCel(cel, center, scale,))
                 },
             )
         }

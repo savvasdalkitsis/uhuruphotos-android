@@ -18,6 +18,7 @@ package com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam
 import com.savvasdalkitsis.uhuruphotos.api.albums.model.Album
 import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.CollageState
 import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.PredefinedCollageDisplay
+import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.toCluster
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.ui.state.FeedState
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.Mutation
 
@@ -38,19 +39,19 @@ internal sealed class FeedMutation(
     })
 
     object ShowTrashingConfirmationDialog : FeedMutation({
-        it.copy(showPhotoTrashingConfirmationDialog = true)
+        it.copy(showTrashingConfirmationDialog = true)
     })
 
     object HideTrashingConfirmationDialog : FeedMutation({
-        it.copy(showPhotoTrashingConfirmationDialog = false)
+        it.copy(showTrashingConfirmationDialog = false)
     })
 
     object ShowNoPhotosFound : FeedMutation({
-        it.copyFeed { copy(isLoading = false, isEmpty = true, albums = emptyList()) }
+        it.copyFeed { copy(isLoading = false, isEmpty = true, clusters = emptyList()) }
     })
 
     data class ShowAlbums(val albums: List<Album>) : FeedMutation({
-        it.copyFeed { copy(isLoading = false, isEmpty = false, albums = albums) }
+        it.copyFeed { copy(isLoading = false, isEmpty = false, clusters = albums.map(Album::toCluster)) }
     }) {
         override fun toString() = "Showing ${albums.size} albums"
     }

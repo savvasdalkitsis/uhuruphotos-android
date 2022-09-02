@@ -15,22 +15,20 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.state
 
-import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItem
-
 data class VitrineState(
-    val mediaItem1: MediaItem? = null,
-    val mediaItem2: MediaItem? = null,
-    val mediaItem3: MediaItem? = null,
-    val mediaItem4: MediaItem? = null,
+    val cel1: CelState? = null,
+    val cel2: CelState? = null,
+    val cel3: CelState? = null,
+    val cel4: CelState? = null,
 ) {
-    val hasMoreThanOneItem = mediaItem2 != null
+    val hasMoreThanOneItem = cel2 != null
 
     companion object {
-        operator fun invoke(mediaItems: List<MediaItem?>)= VitrineState(
-            mediaItems.getOrNull(0),
-            mediaItems.getOrNull(1),
-            mediaItems.getOrNull(2),
-            mediaItems.getOrNull(3),
+        operator fun invoke(celStates: List<CelState?>)= VitrineState(
+            celStates.getOrNull(0),
+            celStates.getOrNull(1),
+            celStates.getOrNull(2),
+            celStates.getOrNull(3),
         )
     }
 }

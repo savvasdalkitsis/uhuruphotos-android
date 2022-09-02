@@ -18,6 +18,7 @@ package com.savvasdalkitsis.uhuruphotos.feature.person.view.implementation.seam
 import com.savvasdalkitsis.uhuruphotos.api.albums.model.Album
 import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.CollageDisplay
 import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.CollageState
+import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.toCluster
 import com.savvasdalkitsis.uhuruphotos.feature.people.view.api.ui.state.Person
 import com.savvasdalkitsis.uhuruphotos.feature.person.view.implementation.ui.state.PersonState
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.Mutation
@@ -33,7 +34,7 @@ sealed class PersonMutation(
     data class ShowPersonPhotos(val albums: List<Album>) : PersonMutation({
         it.copyFeed { copy(
             isLoading = false,
-            albums = albums,
+            clusters = albums.map(Album::toCluster),
         ) }
     })
 

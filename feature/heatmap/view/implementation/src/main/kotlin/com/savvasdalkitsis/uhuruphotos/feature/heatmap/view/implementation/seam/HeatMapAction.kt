@@ -17,14 +17,14 @@ package com.savvasdalkitsis.uhuruphotos.feature.heatmap.view.implementation.seam
 
 import androidx.compose.ui.geometry.Offset
 import com.google.accompanist.permissions.PermissionState
-import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItem
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.state.CelState
 import com.savvasdalkitsis.uhuruphotos.foundation.map.api.model.LatLon
 import com.savvasdalkitsis.uhuruphotos.foundation.map.api.ui.MapViewState
 
 sealed class HeatMapAction {
     data class CameraViewPortChanged(val boundsChecker: suspend (LatLon) -> Boolean) : HeatMapAction()
-    data class SelectedPhoto(
-        val mediaItem: MediaItem,
+    data class SelectedCel(
+        val celState: CelState,
         val center: Offset,
         val scale: Float,
     ) : HeatMapAction()

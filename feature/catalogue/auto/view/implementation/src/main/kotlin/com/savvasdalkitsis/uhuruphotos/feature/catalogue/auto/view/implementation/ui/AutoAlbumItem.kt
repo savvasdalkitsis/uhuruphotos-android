@@ -47,7 +47,7 @@ internal fun AutoAlbumItem(
     ) {
         Cel(
             state = album.cover.toCel(),
-            onItemSelected = { _, _, _ ->
+            onSelected = { _, _, _ ->
                 action(AutoAlbumSelected(album))
             },
             contentScale = ContentScale.Crop,

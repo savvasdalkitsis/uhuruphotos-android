@@ -32,7 +32,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.CollageDispla
 import com.savvasdalkitsis.uhuruphotos.feature.person.view.implementation.seam.PersonAction
 import com.savvasdalkitsis.uhuruphotos.feature.person.view.implementation.seam.PersonAction.ChangeDisplay
 import com.savvasdalkitsis.uhuruphotos.feature.person.view.implementation.seam.PersonAction.NavigateBack
-import com.savvasdalkitsis.uhuruphotos.feature.person.view.implementation.seam.PersonAction.SelectedPhoto
+import com.savvasdalkitsis.uhuruphotos.feature.person.view.implementation.seam.PersonAction.SelectedCel
 import com.savvasdalkitsis.uhuruphotos.feature.person.view.implementation.ui.state.PersonState
 import com.savvasdalkitsis.uhuruphotos.foundation.image.api.ui.Image
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.BackNavButton
@@ -72,11 +72,11 @@ fun Person(
         },
         actionBarContent = {
             AnimatedVisibility(
-                visible = state.collageState.albums.isNotEmpty() && state.collageState.isLoading
+                visible = state.collageState.clusters.isNotEmpty() && state.collageState.isLoading
             ) {
                 CircularProgressIndicator()
             }
-            AnimatedVisibility(state.collageState.albums.isNotEmpty()) {
+            AnimatedVisibility(state.collageState.clusters.isNotEmpty()) {
                 CollageDisplayActionButton(
                     onChange = { action(ChangeDisplay(it)) },
                     currentCollageDisplay = state.collageState.collageDisplay
@@ -84,14 +84,14 @@ fun Person(
             }
         }
     ) { contentPadding ->
-        if (state.collageState.albums.isEmpty()) {
+        if (state.collageState.clusters.isEmpty()) {
             FullProgressBar()
         } else {
             Collage(
                 contentPadding = contentPadding,
                 state = state.collageState,
-                onMediaItemSelected = { photo, center, scale ->
-                    action(SelectedPhoto(photo, center, scale))
+                onCelSelected = { cel, center, scale ->
+                    action(SelectedCel(cel, center, scale))
                 },
                 onChangeDisplay = { action(ChangeDisplay(it)) },
             )

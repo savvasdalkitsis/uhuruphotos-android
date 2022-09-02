@@ -20,13 +20,14 @@ import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
-import com.savvasdalkitsis.uhuruphotos.api.albums.model.Album
 import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.Collage
+import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.Cluster
 import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.CollageState
 import com.savvasdalkitsis.uhuruphotos.feature.heatmap.view.implementation.seam.HeatMapAction
-import com.savvasdalkitsis.uhuruphotos.feature.heatmap.view.implementation.seam.HeatMapAction.SelectedPhoto
+import com.savvasdalkitsis.uhuruphotos.feature.heatmap.view.implementation.seam.HeatMapAction.SelectedCel
 import com.savvasdalkitsis.uhuruphotos.feature.heatmap.view.implementation.ui.state.HeatMapCollageDisplay
 import com.savvasdalkitsis.uhuruphotos.feature.heatmap.view.implementation.ui.state.HeatMapState
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.state.toCel
 import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
 
 @Composable
@@ -46,17 +47,17 @@ fun HeatMapVisiblePhotos(
             state = CollageState(
                 isLoading = false,
                 collageDisplay = HeatMapCollageDisplay,
-                albums = listOf(
-                    Album(
-                        id = "visiblePhotos",
-                        photos = state.photosOnVisibleMap,
+                clusters = listOf(
+                    Cluster(
+                        id = "visibleItems",
+                        cels = state.photosOnVisibleMap.map { it.toCel() },
                         displayTitle = stringResource(string.photos_on_map, state.photosOnVisibleMap.size, state.allMedia.size),
                         location = null,
                     )
-                )
+                ),
             ),
-            onMediaItemSelected = { photo, center, scale ->
-                action(SelectedPhoto(photo, center, scale))
+            onCelSelected = { cel, center, scale ->
+                action(SelectedCel(cel, center, scale))
             },
         )
     }

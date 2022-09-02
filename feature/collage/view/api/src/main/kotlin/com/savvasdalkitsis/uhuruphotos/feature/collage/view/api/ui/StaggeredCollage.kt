@@ -27,11 +27,11 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.savvasdalkitsis.uhuruphotos.api.albums.model.Album
-import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.MediaRowSlot.EmptySlot
-import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.MediaRowSlot.MediaSlot
-import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItem
-import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.MediaItemSelected
+import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.CelRowSlot.CelSlot
+import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.CelRowSlot.EmptySlot
+import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.Cluster
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.CelSelected
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.state.CelState
 import my.nanihadesuka.compose.LazyColumnScrollbar
 import my.nanihadesuka.compose.ScrollbarSelectionMode
 
@@ -39,7 +39,7 @@ import my.nanihadesuka.compose.ScrollbarSelectionMode
 internal fun StaggeredCollage(
     modifier: Modifier = Modifier,
     contentPadding: PaddingValues,
-    albums: List<Album>,
+    state: List<Cluster>,
     showSelectionHeader: Boolean = false,
     showAlbumRefreshButton: Boolean = false,
     maintainAspectRatio: Boolean = true,
@@ -48,10 +48,10 @@ internal fun StaggeredCollage(
     shouldAddEmptyPhotosInRows: Boolean,
     listState: LazyListState = rememberLazyListState(),
     collageHeader: @Composable (LazyItemScope.() -> Unit)? = null,
-    onMediaItemSelected: MediaItemSelected,
-    onMediaItemLongPressed: (MediaItem) -> Unit,
-    onAlbumRefreshClicked: (Album) -> Unit,
-    onAlbumSelectionClicked: (Album) -> Unit,
+    onCelSelected: CelSelected,
+    onCelLongPressed: (CelState) -> Unit,
+    onClusterRefreshClicked: (Cluster) -> Unit,
+    onClusterSelectionClicked: (Cluster) -> Unit,
 ) {
     Box {
         LazyColumn(
@@ -64,47 +64,47 @@ internal fun StaggeredCollage(
                     header(this)
                 }
             }
-            albums.forEach { album ->
-                if ((album.displayTitle + album.location.orEmpty()).isNotEmpty()) {
-                    item(album.id, "header") {
-                        CollageGroupHeader(
+            state.forEach { cluster ->
+                if ((cluster.displayTitle + cluster.location.orEmpty()).isNotEmpty()) {
+                    item(cluster.id, "header") {
+                        ClusterHeader(
                             modifier = Modifier.animateItemPlacement(),
-                            album = album,
+                            state = cluster,
                             showSelectionHeader = showSelectionHeader,
                             showRefreshButton = showAlbumRefreshButton,
                             onSelectionHeaderClicked = {
-                                onAlbumSelectionClicked(album)
+                                onClusterSelectionClicked(cluster)
                             },
                             onRefreshClicked = {
-                                onAlbumRefreshClicked(album)
+                                onClusterRefreshClicked(cluster)
                             }
                         )
                     }
                 }
                 val (slots, rows) = if (shouldAddEmptyPhotosInRows) {
-                    val emptyPhotos = (columnCount - album.photos.size % columnCount) % columnCount
-                    val paddedSlots = album.photos.map(::MediaSlot) + List(emptyPhotos) { EmptySlot }
+                    val emptyPhotos = (columnCount - cluster.cels.size % columnCount) % columnCount
+                    val paddedSlots = cluster.cels.map(::CelSlot) + List(emptyPhotos) { EmptySlot }
                     paddedSlots to paddedSlots.size / columnCount
                 } else {
-                    val evenRows = album.photos.size / columnCount
-                    album.photos.map(::MediaSlot) to evenRows + if (album.photos.size % columnCount == 0) 0 else 1
+                    val evenRows = cluster.cels.size / columnCount
+                    cluster.cels.map(::CelSlot) to evenRows + if (cluster.cels.size % columnCount == 0) 0 else 1
                 }
                 for (row in 0 until rows) {
                     val slotsInRow = (0 until columnCount).mapNotNull { column ->
                         slots.getOrNull(row * columnCount + column)
                     }.toTypedArray()
                     item(
-                        slotsInRow.firstNotNullOf { it as? MediaSlot }.mediaItem.id.value,
+                        slotsInRow.firstNotNullOf { it as? CelSlot }.cel.mediaItem.id.value,
                         "photoRow"
                     ) {
-                        MediaRow(
+                        CelRow(
                             modifier = Modifier
                                 .animateContentSize()
                                 .animateItemPlacement(),
                             miniIcons = miniIcons,
                             maintainAspectRatio = maintainAspectRatio,
-                            onMediaItemSelected = onMediaItemSelected,
-                            onMediaItemLongPressed = onMediaItemLongPressed,
+                            onCelSelected = onCelSelected,
+                            onCelLongPressed = onCelLongPressed,
                             slots = slotsInRow
                         )
                     }

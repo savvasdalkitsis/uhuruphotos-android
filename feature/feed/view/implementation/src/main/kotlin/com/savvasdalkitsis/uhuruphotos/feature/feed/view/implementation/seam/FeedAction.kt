@@ -16,20 +16,20 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam
 
 import androidx.compose.ui.geometry.Offset
-import com.savvasdalkitsis.uhuruphotos.api.albums.model.Album
+import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.Cluster
 import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.PredefinedCollageDisplay
-import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItem
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.state.CelState
 
 internal sealed class FeedAction {
-    data class SelectedPhoto(
-        val mediaItem: MediaItem,
+    data class SelectedCel(
+        val celState: CelState,
         val center: Offset,
         val scale: Float,
     ) : FeedAction()
     data class ChangeDisplay(val display: PredefinedCollageDisplay) : FeedAction()
-    data class PhotoLongPressed(val mediaItem: MediaItem) : FeedAction()
-    data class AlbumSelectionClicked(val album: Album) : FeedAction()
-    data class AlbumRefreshClicked(val album: Album) : FeedAction()
+    data class CelLongPressed(val celState: CelState) : FeedAction()
+    data class AlbumSelectionClicked(val cluster: Cluster) : FeedAction()
+    data class AlbumRefreshClicked(val cluster: Cluster) : FeedAction()
     object LoadFeed : FeedAction()
     object RefreshAlbums : FeedAction()
     object ClearSelected : FeedAction()
