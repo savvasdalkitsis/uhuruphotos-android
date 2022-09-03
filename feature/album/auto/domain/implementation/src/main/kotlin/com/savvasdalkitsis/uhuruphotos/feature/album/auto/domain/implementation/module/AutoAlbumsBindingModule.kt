@@ -15,7 +15,7 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.album.auto.domain.implementation.module
 
-import com.savvasdalkitsis.uhuruphotos.feature.album.auto.domain.implementation.usecase.AutoAlbumsUseCase
+import com.savvasdalkitsis.uhuruphotos.feature.album.auto.domain.implementation.usecase.AutoAlbumUseCase
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -26,7 +26,7 @@ import dagger.hilt.components.SingletonComponent
 internal abstract class AutoAlbumsBindingModule {
 
     @Binds
-    abstract fun autoAlbumsUseCase(autoAlbumsUseCase: AutoAlbumsUseCase):
-            com.savvasdalkitsis.uhuruphotos.feature.album.auto.domain.api.usecase.AutoAlbumsUseCase
+    abstract fun autoAlbumsUseCase(autoAlbumsUseCase: AutoAlbumUseCase):
+            com.savvasdalkitsis.uhuruphotos.feature.album.auto.domain.api.usecase.AutoAlbumUseCase
 
 }

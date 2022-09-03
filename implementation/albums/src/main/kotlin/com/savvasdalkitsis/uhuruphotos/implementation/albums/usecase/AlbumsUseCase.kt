@@ -18,7 +18,6 @@ package com.savvasdalkitsis.uhuruphotos.implementation.albums.usecase
 import com.savvasdalkitsis.uhuruphotos.api.albums.model.Album
 import com.savvasdalkitsis.uhuruphotos.api.albums.repository.AlbumsRepository
 import com.savvasdalkitsis.uhuruphotos.api.albums.usecase.AlbumsUseCase
-import com.savvasdalkitsis.uhuruphotos.api.db.albums.GetAutoAlbum
 import com.savvasdalkitsis.uhuruphotos.api.db.albums.GetTrash
 import com.savvasdalkitsis.uhuruphotos.api.db.extensions.isVideo
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaId
@@ -54,10 +53,6 @@ internal class AlbumsUseCase @Inject constructor(
         .mapToAlbums()
 
     override suspend fun hasTrash(): Boolean = albumsRepository.hasTrash()
-
-    override suspend fun getAutoAlbum(albumId: Int): List<Album> = albumsRepository.getAutoAlbum(albumId)
-        .mapValues { it.toDbAlbums() }
-        .mapToAlbums()
 
     private suspend fun Group<String, DbAlbums>.mapToAlbums(): List<Album> {
         val favouriteThreshold = userUseCase.getUserOrRefresh()
@@ -125,14 +120,4 @@ private fun GetTrash.toDbAlbums() = DbAlbums(
     rating = rating,
     aspectRatio = aspectRatio,
     isVideo = isVideo,
-)
-private fun GetAutoAlbum.toDbAlbums() = DbAlbums(
-    id = id,
-    albumDate = albumTimestamp,
-    albumLocation = null,
-    photoId = photoId,
-    dominantColor = null,
-    rating = rating,
-    aspectRatio = 1f,
-    isVideo = video == true,
 )

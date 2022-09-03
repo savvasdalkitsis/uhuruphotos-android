@@ -16,7 +16,7 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.feature.album.auto.view.implementation.seam
 
 import com.savvasdalkitsis.uhuruphotos.api.albums.model.Album
-import com.savvasdalkitsis.uhuruphotos.feature.album.auto.domain.api.usecase.AutoAlbumsUseCase
+import com.savvasdalkitsis.uhuruphotos.feature.album.auto.domain.api.usecase.AutoAlbumUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.album.auto.view.implementation.state.AutoAlbumCollageDisplay
 import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.GalleryAction
 import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.GalleryActionHandler
@@ -36,19 +36,19 @@ import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
 internal class AutoAlbumActionHandler @Inject constructor(
-    autoAlbumsUseCase: AutoAlbumsUseCase,
+    autoAlbumUseCase: AutoAlbumUseCase,
     remoteMediaUseCase: RemoteMediaUseCase,
     dateDisplayer: DateDisplayer,
 ) : ActionHandler<GalleryState, GalleryEffect, GalleryAction, GalleryMutation>
 by GalleryActionHandler(
-    galleryRefresher = { autoAlbumsUseCase.refreshAutoAlbum(it) },
+    galleryRefresher = { autoAlbumUseCase.refreshAutoAlbum(it) },
     initialCollageDisplay = { AutoAlbumCollageDisplay },
     collageDisplayPersistence = { _, _ -> },
     galleryDetailsEmptyCheck = { albumId ->
-        autoAlbumsUseCase.getAutoAlbum(albumId).items.isEmpty()
+        autoAlbumUseCase.getAutoAlbum(albumId).isEmpty()
     },
     galleryDetailsFlow = { albumId, _ ->
-        autoAlbumsUseCase.observeAutoAlbum(albumId)
+        autoAlbumUseCase.observeAutoAlbum(albumId)
             .map { (photoEntries, people) ->
                 GalleryDetails(
                     title = Title.Text(photoEntries.firstOrNull()?.title ?: ""),

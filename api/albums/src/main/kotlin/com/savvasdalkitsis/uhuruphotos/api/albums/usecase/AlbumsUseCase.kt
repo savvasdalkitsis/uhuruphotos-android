@@ -24,6 +24,4 @@ interface AlbumsUseCase {
     suspend fun getTrash(): List<Album>
     suspend fun hasTrash(): Boolean
     suspend fun refreshTrash(): Result<Unit>
-
-    suspend fun getAutoAlbum(albumId: Int): List<Album>
 }

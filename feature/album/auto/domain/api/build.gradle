@@ -4,6 +4,7 @@ android {
 
 dependencies {
     api project(":api:db")
+    api project(":feature:media:common:domain:api")
     api project(":foundation:group:api")
     api(
             libs.kotlinx.coroutines,

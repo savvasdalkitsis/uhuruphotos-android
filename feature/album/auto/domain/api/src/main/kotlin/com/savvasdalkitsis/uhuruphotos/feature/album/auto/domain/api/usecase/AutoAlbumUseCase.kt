@@ -17,14 +17,14 @@ package com.savvasdalkitsis.uhuruphotos.feature.album.auto.domain.api.usecase
 
 import com.savvasdalkitsis.uhuruphotos.api.db.albums.GetAutoAlbum
 import com.savvasdalkitsis.uhuruphotos.api.db.albums.GetPeopleForAutoAlbum
-import com.savvasdalkitsis.uhuruphotos.foundation.group.api.model.Group
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaCollection
 import kotlinx.coroutines.flow.Flow
 
-interface AutoAlbumsUseCase {
+interface AutoAlbumUseCase {
 
     fun observeAutoAlbum(albumId: Int): Flow<Pair<List<GetAutoAlbum>, List<GetPeopleForAutoAlbum>>>
 
-    suspend fun getAutoAlbum(albumId: Int): Group<String, GetAutoAlbum>
+    suspend fun getAutoAlbum(albumId: Int): List<MediaCollection>
 
     suspend fun refreshAutoAlbum(albumId: Int): Result<Unit>
 
