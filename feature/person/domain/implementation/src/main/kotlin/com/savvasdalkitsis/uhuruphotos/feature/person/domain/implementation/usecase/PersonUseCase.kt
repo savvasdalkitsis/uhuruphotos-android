@@ -1,18 +1,58 @@
 package com.savvasdalkitsis.uhuruphotos.feature.person.domain.implementation.usecase
 
-import com.savvasdalkitsis.uhuruphotos.api.albums.model.Album
+import com.savvasdalkitsis.uhuruphotos.api.albums.repository.AlbumsRepository
 import com.savvasdalkitsis.uhuruphotos.api.albums.usecase.AlbumsUseCase
+import com.savvasdalkitsis.uhuruphotos.api.db.albums.GetPersonAlbums
+import com.savvasdalkitsis.uhuruphotos.api.db.extensions.isVideo
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaCollection
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaCollectionSource
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.usecase.MediaUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.person.domain.api.usecase.PersonUseCase
+import com.savvasdalkitsis.uhuruphotos.foundation.coroutines.api.safelyOnStartIgnoring
+import com.savvasdalkitsis.uhuruphotos.foundation.group.api.model.mapValues
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
 class PersonUseCase @Inject constructor(
+    private val albumsRepository: AlbumsRepository,
     private val albumsUseCase: AlbumsUseCase,
+    private val mediaUseCase: MediaUseCase,
 ) : PersonUseCase {
 
-    override fun observePersonAlbums(id: Int): Flow<List<Album>> =
-        albumsUseCase.observePersonAlbums(id)
+    override fun observePersonMedia(id: Int): Flow<List<MediaCollection>> =
+        albumsRepository.observePersonAlbums(id)
+            .map {
+                with(mediaUseCase) {
+                    it.mapValues { getPersonAlbums ->
+                        getPersonAlbums.toMediaCollectionSource()
+                    }.toMediaCollection()
+                }
+            }
+            .initialize()
 
-    override suspend fun getPersonAlbums(id: Int): List<Album> =
-        albumsUseCase.getPersonAlbums(id)
+    private fun Flow<List<MediaCollection>>.initialize(): Flow<List<MediaCollection>> = distinctUntilChanged()
+        .safelyOnStartIgnoring {
+            if (!albumsRepository.hasAlbums()) {
+                mediaUseCase.refreshMediaSummaries(shallow = false)
+            }
+        }
+
+    override suspend fun getPersonMedia(id: Int): List<MediaCollection> = with(mediaUseCase) {
+        albumsRepository.getPersonAlbums(id)
+            .mapValues { it.toMediaCollectionSource() }
+            .toMediaCollection()
+    }
+
+    private fun GetPersonAlbums.toMediaCollectionSource() = MediaCollectionSource(
+        id = id,
+        date = albumDate,
+        location = albumLocation,
+        mediaItemId = photoId,
+        dominantColor = dominantColor,
+        rating = rating,
+        aspectRatio = aspectRatio,
+        isVideo = isVideo,
+    )
 }

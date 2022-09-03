@@ -111,7 +111,7 @@ internal class FeedActionHandler @Inject constructor(
         )
         RefreshFeed -> flow {
             emit(StartRefreshing)
-            feedUseCase.startRefreshFeedWork(shallow = true)
+            mediaUseCase.refreshMediaSummaries(shallow = true)
             delay(200)
             emit(StopRefreshing)
         }

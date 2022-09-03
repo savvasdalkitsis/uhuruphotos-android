@@ -17,7 +17,6 @@ package com.savvasdalkitsis.uhuruphotos.feature.feed.domain.implementation.useca
 
 import com.fredporciuncula.flow.preferences.FlowSharedPreferences
 import com.savvasdalkitsis.uhuruphotos.api.albums.repository.AlbumsRepository
-import com.savvasdalkitsis.uhuruphotos.api.albums.worker.AlbumWorkScheduler
 import com.savvasdalkitsis.uhuruphotos.api.db.albums.GetAlbums
 import com.savvasdalkitsis.uhuruphotos.api.db.extensions.isVideo
 import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.PredefinedCollageDisplay
@@ -35,7 +34,6 @@ import javax.inject.Inject
 
 internal class FeedUseCase @Inject constructor(
     private val albumsRepository: AlbumsRepository,
-    private val albumWorkScheduler: AlbumWorkScheduler,
     private val mediaUseCase: MediaUseCase,
     preferences: FlowSharedPreferences,
 ) : FeedUseCase {
@@ -55,10 +53,6 @@ internal class FeedUseCase @Inject constructor(
         .mapValues { it.toMediaCollectionSource() }
         .toCollection()
 
-    override fun startRefreshFeedWork(shallow: Boolean) {
-        albumWorkScheduler.scheduleAlbumsRefreshNow(shallow)
-    }
-
     override suspend fun refreshCluster(clusterId: String) {
         albumsRepository.refreshAlbum(clusterId)
     }
@@ -66,7 +60,7 @@ internal class FeedUseCase @Inject constructor(
     private fun Flow<List<MediaCollection>>.initialize() = distinctUntilChanged()
         .safelyOnStartIgnoring {
             if (!albumsRepository.hasAlbums()) {
-                startRefreshFeedWork(shallow = false)
+                mediaUseCase.refreshMediaSummaries(shallow = false)
             }
         }
 

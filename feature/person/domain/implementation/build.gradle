@@ -4,7 +4,13 @@ android {
 
 dependencies {
     implementation project(":feature:person:domain:api")
+    implementation project(":foundation:coroutines:api")
     implementation(
             libs.hilt,
+    )
+    testImplementation testFixtures(project(":implementation:albums"))
+    testImplementation testFixtures(project(":feature:media:common:domain:api"))
+    testImplementation(
+            libs.bundles.test,
     )
 }

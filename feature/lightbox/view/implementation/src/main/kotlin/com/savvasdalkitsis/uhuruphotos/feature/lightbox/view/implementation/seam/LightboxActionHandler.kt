@@ -157,8 +157,8 @@ class LightboxActionHandler @Inject constructor(
                         searchUseCase.searchResultsFor(action.sequenceDataSource.query),
                         action,
                     )
-                    is PersonResults -> loadAlbums(
-                        personUseCase.getPersonAlbums(action.sequenceDataSource.personId),
+                    is PersonResults -> loadCollections(
+                        personUseCase.getPersonMedia(action.sequenceDataSource.personId),
                         action,
                     )
                     is AutoAlbum -> loadAlbums(

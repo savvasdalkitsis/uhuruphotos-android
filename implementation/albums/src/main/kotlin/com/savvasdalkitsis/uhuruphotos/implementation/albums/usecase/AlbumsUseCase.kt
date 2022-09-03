@@ -18,9 +18,7 @@ package com.savvasdalkitsis.uhuruphotos.implementation.albums.usecase
 import com.savvasdalkitsis.uhuruphotos.api.albums.model.Album
 import com.savvasdalkitsis.uhuruphotos.api.albums.repository.AlbumsRepository
 import com.savvasdalkitsis.uhuruphotos.api.albums.usecase.AlbumsUseCase
-import com.savvasdalkitsis.uhuruphotos.api.db.albums.GetAlbums
 import com.savvasdalkitsis.uhuruphotos.api.db.albums.GetAutoAlbum
-import com.savvasdalkitsis.uhuruphotos.api.db.albums.GetPersonAlbums
 import com.savvasdalkitsis.uhuruphotos.api.db.albums.GetTrash
 import com.savvasdalkitsis.uhuruphotos.api.db.albums.GetUserAlbum
 import com.savvasdalkitsis.uhuruphotos.api.db.extensions.isVideo
@@ -28,13 +26,10 @@ import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.Med
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItem
 import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.api.usecase.RemoteMediaUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.user.domain.api.usecase.UserUseCase
-import com.savvasdalkitsis.uhuruphotos.foundation.coroutines.api.safelyOnStartIgnoring
 import com.savvasdalkitsis.uhuruphotos.foundation.date.api.DateDisplayer
 import com.savvasdalkitsis.uhuruphotos.foundation.group.api.model.Group
 import com.savvasdalkitsis.uhuruphotos.foundation.group.api.model.mapValues
-import com.savvasdalkitsis.uhuruphotos.implementation.albums.worker.AlbumWorkScheduler
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
@@ -42,18 +37,8 @@ internal class AlbumsUseCase @Inject constructor(
     private val albumsRepository: AlbumsRepository,
     private val dateDisplayer: DateDisplayer,
     private val remoteMediaUseCase: RemoteMediaUseCase,
-    private val albumWorkScheduler: AlbumWorkScheduler,
     private val userUseCase: UserUseCase,
 ) : AlbumsUseCase {
-
-    override fun observePersonAlbums(personId: Int): Flow<List<Album>> = albumsRepository.observePersonAlbums(personId)
-        .map {
-            it.mapValues {
-                getPersonAlbums -> getPersonAlbums.toDbAlbums()
-            }
-        }
-        .map { it.mapToAlbums() }
-        .initialize()
 
     override fun observeTrash(): Flow<List<Album>> = albumsRepository.observeTrash()
         .map {
@@ -64,10 +49,6 @@ internal class AlbumsUseCase @Inject constructor(
         .map { it.mapToAlbums() }
 
     override suspend fun refreshTrash() = albumsRepository.refreshTrash()
-
-    override suspend fun getPersonAlbums(personId: Int): List<Album> = albumsRepository.getPersonAlbums(personId)
-        .mapValues { it.toDbAlbums() }
-        .mapToAlbums()
 
     override suspend fun getTrash(): List<Album> = albumsRepository.getTrash()
         .mapValues { it.toDbAlbums() }
@@ -82,13 +63,6 @@ internal class AlbumsUseCase @Inject constructor(
     override suspend fun getUserAlbum(albumId: Int): List<Album> = albumsRepository.getUserAlbum(albumId)
         .mapValues { it.toDbAlbums() }
         .mapToAlbums()
-
-    private fun Flow<List<Album>>.initialize(): Flow<List<Album>> = distinctUntilChanged()
-        .safelyOnStartIgnoring {
-            if (!albumsRepository.hasAlbums()) {
-                startRefreshAlbumsWork(shallow = false)
-            }
-        }
 
     private suspend fun Group<String, DbAlbums>.mapToAlbums(): List<Album> {
         val favouriteThreshold = userUseCase.getUserOrRefresh()
@@ -134,10 +108,6 @@ internal class AlbumsUseCase @Inject constructor(
         }.filter { it.photos.isNotEmpty() }
     }
 
-    override fun startRefreshAlbumsWork(shallow: Boolean) {
-        albumWorkScheduler.scheduleAlbumsRefreshNow(shallow)
-    }
-
 }
 
 private data class DbAlbums(
@@ -151,26 +121,6 @@ private data class DbAlbums(
     val isVideo: Boolean,
 )
 
-private fun GetPersonAlbums.toDbAlbums() = DbAlbums(
-    id = id,
-    albumDate = albumDate,
-    albumLocation = albumLocation,
-    photoId = photoId,
-    dominantColor = dominantColor,
-    rating = rating,
-    aspectRatio = aspectRatio,
-    isVideo = isVideo,
-)
-private fun GetAlbums.toDbAlbums() = DbAlbums(
-    id = id,
-    albumDate = albumDate,
-    albumLocation = albumLocation,
-    photoId = photoId,
-    dominantColor = dominantColor,
-    rating = rating,
-    aspectRatio = aspectRatio,
-    isVideo = isVideo,
-)
 private fun GetTrash.toDbAlbums() = DbAlbums(
     id = id,
     albumDate = albumDate,

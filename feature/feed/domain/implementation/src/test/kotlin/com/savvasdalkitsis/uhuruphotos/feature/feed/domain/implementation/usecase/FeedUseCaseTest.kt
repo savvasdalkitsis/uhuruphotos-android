@@ -48,7 +48,6 @@ class FeedUseCaseTest {
     private val preferences = mockk<FlowSharedPreferences>(relaxed = true)
     private val underTest = FeedUseCase(
         albumsRepository,
-        albumWorkScheduler,
         mediaUseCase,
         preferences,
     )
@@ -99,21 +98,6 @@ class FeedUseCaseTest {
 
         verify { albumWorkScheduler wasNot Called }
     }
-
-    @Test
-    fun `starts shallow refresh album work`() {
-        underTest.startRefreshFeedWork(true)
-
-        verify { albumWorkScheduler.scheduleAlbumsRefreshNow(true) }
-    }
-
-    @Test
-    fun `starts non shallow refresh album work`() {
-        underTest.startRefreshFeedWork(false)
-
-        verify { albumWorkScheduler.scheduleAlbumsRefreshNow(false) }
-    }
-
 
     @Test
     fun `gets feed from repository`() = runBlocking {

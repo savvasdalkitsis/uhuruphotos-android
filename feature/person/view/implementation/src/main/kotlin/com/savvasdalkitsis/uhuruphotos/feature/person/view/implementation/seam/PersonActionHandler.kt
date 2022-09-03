@@ -15,6 +15,8 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.person.view.implementation.seam
 
+import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.toCluster
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaCollection
 import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.api.usecase.RemoteMediaUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.people.domain.api.usecase.PeopleUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.people.view.api.ui.state.toPerson
@@ -27,7 +29,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.person.view.implementation.seam.P
 import com.savvasdalkitsis.uhuruphotos.feature.person.view.implementation.seam.PersonMutation.Loading
 import com.savvasdalkitsis.uhuruphotos.feature.person.view.implementation.seam.PersonMutation.SetFeedDisplay
 import com.savvasdalkitsis.uhuruphotos.feature.person.view.implementation.seam.PersonMutation.ShowPersonDetails
-import com.savvasdalkitsis.uhuruphotos.feature.person.view.implementation.seam.PersonMutation.ShowPersonPhotos
+import com.savvasdalkitsis.uhuruphotos.feature.person.view.implementation.seam.PersonMutation.ShowPersonMedia
 import com.savvasdalkitsis.uhuruphotos.feature.person.view.implementation.ui.state.PersonState
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.ActionHandler
 import kotlinx.coroutines.flow.Flow
@@ -55,8 +57,9 @@ class PersonActionHandler @Inject constructor(
                     it.toPerson { it.toRemoteUrl() }
                 } }
                 .map(::ShowPersonDetails),
-            personUseCase.observePersonAlbums(action.id)
-                .map(::ShowPersonPhotos)
+            personUseCase.observePersonMedia(action.id)
+                .map { it.map(MediaCollection::toCluster) }
+                .map(::ShowPersonMedia)
         )
         NavigateBack -> flow {
             effect(PersonEffect.NavigateBack)

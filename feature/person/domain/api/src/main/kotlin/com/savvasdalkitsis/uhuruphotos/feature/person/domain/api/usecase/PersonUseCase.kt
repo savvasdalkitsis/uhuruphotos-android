@@ -15,10 +15,10 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.person.domain.api.usecase
 
-import com.savvasdalkitsis.uhuruphotos.api.albums.model.Album
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaCollection
 import kotlinx.coroutines.flow.Flow
 
 interface PersonUseCase {
-    fun observePersonAlbums(id: Int): Flow<List<Album>>
-    suspend fun getPersonAlbums(id: Int): List<Album>
+    fun observePersonMedia(id: Int): Flow<List<MediaCollection>>
+    suspend fun getPersonMedia(id: Int): List<MediaCollection>
 }
