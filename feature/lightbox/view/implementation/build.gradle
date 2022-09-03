@@ -24,6 +24,7 @@ dependencies {
     implementation project(':foundation:image:api')
     implementation project(":feature:lightbox:view:api")
     implementation project(":feature:local:domain:api")
+    implementation project(":feature:album:user:domain:api")
     implementation project(":feature:feed:domain:api")
     implementation project(":foundation:log:api")
     implementation project(":foundation:map:api")

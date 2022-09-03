@@ -20,7 +20,6 @@ import com.savvasdalkitsis.uhuruphotos.api.albums.repository.AlbumsRepository
 import com.savvasdalkitsis.uhuruphotos.api.albums.usecase.AlbumsUseCase
 import com.savvasdalkitsis.uhuruphotos.api.db.albums.GetAutoAlbum
 import com.savvasdalkitsis.uhuruphotos.api.db.albums.GetTrash
-import com.savvasdalkitsis.uhuruphotos.api.db.albums.GetUserAlbum
 import com.savvasdalkitsis.uhuruphotos.api.db.extensions.isVideo
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaId
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItem
@@ -57,10 +56,6 @@ internal class AlbumsUseCase @Inject constructor(
     override suspend fun hasTrash(): Boolean = albumsRepository.hasTrash()
 
     override suspend fun getAutoAlbum(albumId: Int): List<Album> = albumsRepository.getAutoAlbum(albumId)
-        .mapValues { it.toDbAlbums() }
-        .mapToAlbums()
-
-    override suspend fun getUserAlbum(albumId: Int): List<Album> = albumsRepository.getUserAlbum(albumId)
         .mapValues { it.toDbAlbums() }
         .mapToAlbums()
 
@@ -140,14 +135,4 @@ private fun GetAutoAlbum.toDbAlbums() = DbAlbums(
     rating = rating,
     aspectRatio = 1f,
     isVideo = video == true,
-)
-private fun GetUserAlbum.toDbAlbums() = DbAlbums(
-    id = id,
-    albumDate = date,
-    albumLocation = location,
-    photoId = photoId,
-    dominantColor = dominantColor,
-    rating = rating,
-    aspectRatio = aspectRatio,
-    isVideo = isVideo,
 )

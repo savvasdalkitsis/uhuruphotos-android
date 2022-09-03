@@ -13,6 +13,7 @@ dependencies {
     implementation project(":feature:feed:view:implementation")
     implementation project(":feature:album:auto:domain:implementation")
     implementation project(":feature:album:auto:view:implementation")
+    implementation project(":feature:album:user:domain:implementation")
     implementation project(":feature:album:user:view:implementation")
     implementation project(":feature:favourites:domain:implementation")
     implementation project(":feature:favourites:view:implementation")

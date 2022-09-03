@@ -13,17 +13,11 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
  */
-package com.savvasdalkitsis.uhuruphotos.api.albums.usecase
+package com.savvasdalkitsis.uhuruphotos.feature.album.user.domain.api.usecase
 
-import com.savvasdalkitsis.uhuruphotos.api.albums.model.Album
-import kotlinx.coroutines.flow.Flow
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaCollection
 
-interface AlbumsUseCase {
+interface UserAlbumUseCase {
 
-    fun observeTrash(): Flow<List<Album>>
-    suspend fun getTrash(): List<Album>
-    suspend fun hasTrash(): Boolean
-    suspend fun refreshTrash(): Result<Unit>
-
-    suspend fun getAutoAlbum(albumId: Int): List<Album>
+    suspend fun getUserAlbum(albumId: Int): List<MediaCollection>
 }

@@ -23,6 +23,7 @@ import androidx.work.WorkInfo.State.RUNNING
 import androidx.work.WorkInfo.State.SUCCEEDED
 import com.savvasdalkitsis.uhuruphotos.api.albums.model.Album
 import com.savvasdalkitsis.uhuruphotos.api.albums.usecase.AlbumsUseCase
+import com.savvasdalkitsis.uhuruphotos.feature.album.user.domain.api.usecase.UserAlbumUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.feed.domain.api.usecase.FeedUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.api.model.LightboxSequenceDataSource.AutoAlbum
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.api.model.LightboxSequenceDataSource.FavouriteMedia
@@ -122,6 +123,7 @@ class LightboxActionHandler @Inject constructor(
     private val searchUseCase: SearchUseCase,
     private val localAlbumUseCase: LocalAlbumUseCase,
     private val metadataUseCase: MetadataUseCase,
+    private val userAlbumUseCase: UserAlbumUseCase,
 ) : ActionHandler<LightboxState, LightboxEffect, LightboxAction, LightboxMutation> {
 
     private var mediaItemType = MediaItemType.default
@@ -165,8 +167,8 @@ class LightboxActionHandler @Inject constructor(
                         albumsUseCase.getAutoAlbum(action.sequenceDataSource.albumId),
                         action,
                     )
-                    is UserAlbum -> loadAlbums(
-                        albumsUseCase.getUserAlbum(action.sequenceDataSource.albumId),
+                    is UserAlbum -> loadCollections(
+                        userAlbumUseCase.getUserAlbum(action.sequenceDataSource.albumId),
                         action,
                     )
                     is LocalAlbum -> loadAlbums(
