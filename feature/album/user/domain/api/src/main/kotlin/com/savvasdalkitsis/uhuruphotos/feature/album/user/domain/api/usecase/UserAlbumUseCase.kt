@@ -16,8 +16,11 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.feature.album.user.domain.api.usecase
 
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaCollection
+import kotlinx.coroutines.flow.Flow
 
 interface UserAlbumUseCase {
 
     suspend fun getUserAlbum(albumId: Int): List<MediaCollection>
+    fun observeUserAlbum(albumId: Int): Flow<List<MediaCollection>>
+    suspend fun refreshUserAlbum(albumId: Int): Result<Unit>
 }

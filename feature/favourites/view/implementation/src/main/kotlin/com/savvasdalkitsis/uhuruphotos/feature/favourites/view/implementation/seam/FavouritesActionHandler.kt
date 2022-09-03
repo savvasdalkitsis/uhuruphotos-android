@@ -15,7 +15,7 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.favourites.view.implementation.seam
 
-import com.savvasdalkitsis.uhuruphotos.api.albums.model.Album
+import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.Cluster
 import com.savvasdalkitsis.uhuruphotos.feature.favourites.domain.api.usecase.FavouritesUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.GalleryAction
 import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.GalleryActionHandler
@@ -25,6 +25,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.ui.state.Gallery
 import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.ui.state.GalleryState
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.api.model.LightboxSequenceDataSource.FavouriteMedia
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.usecase.MediaUseCase
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.state.toCel
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.ActionHandler
 import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.state.Title
@@ -51,12 +52,16 @@ by GalleryActionHandler(
             .map { mediaItems ->
                 GalleryDetails(
                     title = Title.Resource(string.favourite_media),
-                    albums = listOf(Album(
-                        id = "favourites",
-                        displayTitle = "",
-                        location = null,
-                        photos = mediaItems,
-                    )),
+                    clusters = listOf(
+                        Cluster(
+                            id = "favourites",
+                            displayTitle = "",
+                            location = null,
+                            cels = mediaItems.map {
+                                it.toCel()
+                            },
+                        )
+                    ),
                 )
             }
     },

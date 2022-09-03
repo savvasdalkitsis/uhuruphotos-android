@@ -23,6 +23,8 @@ import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.Med
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaCollectionSource
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.usecase.MediaUseCase
 import com.savvasdalkitsis.uhuruphotos.foundation.group.api.model.mapValues
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
 class UserAlbumUseCase @Inject constructor(
@@ -30,11 +32,23 @@ class UserAlbumUseCase @Inject constructor(
     private val mediaUseCase: MediaUseCase,
 ) : UserAlbumUseCase {
 
+    override fun observeUserAlbum(albumId: Int): Flow<List<MediaCollection>> = with(mediaUseCase) {
+        albumsRepository.observeUserAlbum(albumId)
+            .map {
+                it.mapValues { getUserAlbum ->
+                    getUserAlbum.toMediaCollectionSource()
+                }.toMediaCollection()
+            }
+        }
+
     override suspend fun getUserAlbum(albumId: Int): List<MediaCollection> = with(mediaUseCase) {
         albumsRepository.getUserAlbum(albumId)
             .mapValues { it.toMediaCollectionSource() }
             .toMediaCollection()
     }
+
+    override suspend fun refreshUserAlbum(albumId: Int) =
+        albumsRepository.refreshUserAlbum(albumId)
 
     private fun GetUserAlbum.toMediaCollectionSource() = MediaCollectionSource(
         id = id,

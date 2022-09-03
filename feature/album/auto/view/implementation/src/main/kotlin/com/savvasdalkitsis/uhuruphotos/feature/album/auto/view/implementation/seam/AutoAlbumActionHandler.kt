@@ -15,9 +15,9 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.album.auto.view.implementation.seam
 
-import com.savvasdalkitsis.uhuruphotos.api.albums.model.Album
 import com.savvasdalkitsis.uhuruphotos.feature.album.auto.domain.api.usecase.AutoAlbumUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.album.auto.view.implementation.state.AutoAlbumCollageDisplay
+import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.Cluster
 import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.GalleryAction
 import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.GalleryActionHandler
 import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.GalleryEffect
@@ -27,6 +27,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.ui.state.Gallery
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.api.model.LightboxSequenceDataSource.AutoAlbum
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaId
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItem
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.state.toCel
 import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.api.usecase.RemoteMediaUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.people.view.api.ui.state.toPerson
 import com.savvasdalkitsis.uhuruphotos.foundation.date.api.DateDisplayer
@@ -57,14 +58,14 @@ by GalleryActionHandler(
                             person.toPerson { it.toRemoteUrl() }
                         }
                     },
-                    albums = photoEntries.groupBy { entry ->
+                    clusters = photoEntries.groupBy { entry ->
                         dateDisplayer.dateString(entry.timestamp)
                     }.entries.map { (date, photos) ->
-                        Album(
+                        Cluster(
                             id = date,
                             displayTitle = date,
                             location = null,
-                            photos = photos.map {
+                            cels = photos.map {
                                 MediaItem(
                                     id = MediaId.Remote(it.photoId.toString()),
                                     mediaHash = it.photoId.toString(),
@@ -77,7 +78,7 @@ by GalleryActionHandler(
                                     displayDayDate = date,
                                     isFavourite = it.isFavorite ?: false,
                                     isVideo = it.video ?: false,
-                                )
+                                ).toCel()
                             }
                         )
                     }

@@ -15,6 +15,7 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.local.view.implementation.seam
 
+import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.toCluster
 import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.GalleryAction
 import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.GalleryActionHandler
 import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.GalleryEffect
@@ -45,7 +46,7 @@ by GalleryActionHandler(
             .map { (bucket, albums) ->
                 GalleryDetails(
                     title = Title.Text(bucket.displayName),
-                    albums = albums,
+                    clusters = albums.map { it.toCluster() },
                 )
             }
     },

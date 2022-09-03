@@ -15,9 +15,8 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.album.user.view.implementation.seam
 
-import com.savvasdalkitsis.uhuruphotos.api.albums.model.Album
-import com.savvasdalkitsis.uhuruphotos.api.db.extensions.isVideo
-import com.savvasdalkitsis.uhuruphotos.feature.album.user.domain.implementation.usecase.UserAlbumsUseCase
+import com.savvasdalkitsis.uhuruphotos.feature.album.user.domain.api.usecase.UserAlbumUseCase
+import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.toCluster
 import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.GalleryAction
 import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.GalleryActionHandler
 import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.GalleryEffect
@@ -25,67 +24,31 @@ import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.GalleryMuta
 import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.ui.state.GalleryDetails
 import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.ui.state.GalleryState
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.api.model.LightboxSequenceDataSource.UserAlbum
-import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaId
-import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItem
-import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.api.usecase.RemoteMediaUseCase
-import com.savvasdalkitsis.uhuruphotos.feature.user.domain.api.usecase.UserUseCase
-import com.savvasdalkitsis.uhuruphotos.foundation.date.api.DateDisplayer
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.ActionHandler
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.state.Title
 import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
 internal class UserAlbumActionHandler @Inject constructor(
-    userUseCase: UserUseCase,
-    userAlbumsUseCase: UserAlbumsUseCase,
-    remoteMediaUseCase: RemoteMediaUseCase,
-    dateDisplayer: DateDisplayer,
+    userAlbumDisplay: UserAlbumDisplay,
+    userAlbumUseCase: UserAlbumUseCase,
 ) : ActionHandler<GalleryState, GalleryEffect, GalleryAction, GalleryMutation>
 by GalleryActionHandler(
-    galleryRefresher = { userAlbumsUseCase.refreshUserAlbum(it) },
-    initialCollageDisplay = { userAlbumsUseCase.getUserAlbumGalleryDisplay(it) },
+    galleryRefresher = { userAlbumUseCase.refreshUserAlbum(it) },
+    initialCollageDisplay = { userAlbumDisplay.getUserAlbumGalleryDisplay(it) },
     collageDisplayPersistence = { albumId, galleryDisplay ->
-        userAlbumsUseCase.setUserAlbumGalleryDisplay(albumId, galleryDisplay)
+        userAlbumDisplay.setUserAlbumGalleryDisplay(albumId, galleryDisplay)
     },
     galleryDetailsEmptyCheck = { albumId ->
-        userAlbumsUseCase.getUserAlbum(albumId).items.isEmpty()
+        userAlbumUseCase.getUserAlbum(albumId).isEmpty()
     },
     galleryDetailsFlow = { albumId, _ ->
-        userAlbumsUseCase.observeUserAlbum(albumId)
-            .map { photoEntries ->
-                val favouriteThreshold = userUseCase.getUserOrRefresh()
-                    .mapCatching { it.favoriteMinRating!! }
+        userAlbumUseCase.observeUserAlbum(albumId)
+            .map { mediaCollections ->
                 GalleryDetails(
-                    title = Title.Text(photoEntries.firstOrNull()?.title ?: ""),
-                    albums = photoEntries.groupBy { entry ->
-                        dateDisplayer.dateString(entry.date)
-                    }.entries.map { (date, photos) ->
-                        Album(
-                            id = date,
-                            displayTitle = date,
-                            location = null,
-                            photos = photos.map { photo ->
-                                MediaItem(
-                                    id = MediaId.Remote(photo.photoId.toString()),
-                                    mediaHash = photo.photoId.toString(),
-                                    thumbnailUri = with(remoteMediaUseCase) {
-                                        photo.photoId.toThumbnailUrlFromIdNullable()
-                                    },
-                                    fullResUri = with(remoteMediaUseCase) {
-                                        photo.photoId.toFullSizeUrlFromIdNullable(photo.isVideo)
-                                    },
-                                    fallbackColor = photo.dominantColor,
-                                    ratio = photo.aspectRatio ?: 1f,
-                                    isFavourite = favouriteThreshold
-                                        .map {
-                                            (photo.rating ?: 0) >= it
-                                        }
-                                        .getOrElse { false },
-                                    isVideo = photo.isVideo,
-                                    displayDayDate = date,
-                                )
-                            }
-                        )
+                    title = Title.Text(mediaCollections.firstOrNull()?.displayTitle ?: ""),
+                    clusters = mediaCollections.map { mediaCollection ->
+                        mediaCollection.toCluster()
                     }
                 )
             }

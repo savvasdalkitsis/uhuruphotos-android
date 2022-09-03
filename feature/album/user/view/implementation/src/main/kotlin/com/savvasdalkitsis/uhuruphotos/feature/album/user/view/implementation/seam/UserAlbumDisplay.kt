@@ -13,30 +13,16 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
  */
-package com.savvasdalkitsis.uhuruphotos.feature.album.user.domain.implementation.usecase
+package com.savvasdalkitsis.uhuruphotos.feature.album.user.view.implementation.seam
 
 import com.fredporciuncula.flow.preferences.FlowSharedPreferences
-import com.savvasdalkitsis.uhuruphotos.api.albums.repository.AlbumsRepository
-import com.savvasdalkitsis.uhuruphotos.api.db.albums.GetUserAlbum
 import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.CollageDisplay
 import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.PredefinedCollageDisplay
-import com.savvasdalkitsis.uhuruphotos.foundation.group.api.model.Group
-import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
-internal class UserAlbumsUseCase @Inject constructor(
-    private val albumsRepository: AlbumsRepository,
+internal class UserAlbumDisplay @Inject constructor(
     private val flowSharedPreferences: FlowSharedPreferences,
 ) {
-
-    fun observeUserAlbum(albumId: Int): Flow<List<GetUserAlbum>> =
-            albumsRepository.observeUserAlbum(albumId)
-
-    suspend fun getUserAlbum(albumId: Int): Group<String, GetUserAlbum> =
-            albumsRepository.getUserAlbum(albumId)
-
-    suspend fun refreshUserAlbum(albumId: Int) =
-        albumsRepository.refreshUserAlbum(albumId)
 
     fun getUserAlbumGalleryDisplay(albumId: Int) : CollageDisplay =
         userAlbumGalleryDisplay(albumId).get()

@@ -271,45 +271,55 @@ class MediaUseCase @Inject constructor(
     override suspend fun Group<String, MediaCollectionSource>.toMediaCollection(): List<MediaCollection> {
         val favouriteThreshold = userUseCase.getUserOrRefresh()
             .mapCatching { it.favoriteMinRating!! }
-        return items.map { (id, source) ->
-            val albumDate = source.firstOrNull()?.date
-            val albumLocation = source.firstOrNull()?.location
+        return items
+            .map { (id, source) ->
+                mediaCollection(id, source, favouriteThreshold)
+            }
+            .filter { it.mediaItems.isNotEmpty() }
+    }
 
-            val date = dateDisplayer.dateString(albumDate)
-            MediaCollection(
-                id = id,
-                displayTitle = date,
-                unformattedDate = albumDate,
-                location = albumLocation ?: "",
-                mediaItems = source.mapNotNull { item ->
-                    val photoId = item.mediaItemId
-                    when {
-                        photoId.isNullOrBlank() -> null
-                        else -> {
-                            MediaItem(
-                                id = MediaId.Remote(photoId),
-                                mediaHash = photoId,
-                                thumbnailUri = with(remoteMediaUseCase) {
-                                    photoId.toThumbnailUrlFromId()
-                                },
-                                fullResUri = with(remoteMediaUseCase) {
-                                    photoId.toFullSizeUrlFromId(item.isVideo)
-                                },
-                                fallbackColor = item.dominantColor,
-                                displayDayDate = date,
-                                isFavourite = favouriteThreshold
-                                    .map {
-                                        (item.rating ?: 0) >= it
-                                    }
-                                    .getOrElse { false },
-                                ratio = item.aspectRatio ?: 1.0f,
-                                isVideo = item.isVideo,
-                            )
-                        }
+    private fun mediaCollection(
+        id: String,
+        source: List<MediaCollectionSource>,
+        favouriteThreshold: Result<Int>
+    ): MediaCollection {
+        val albumDate = source.firstOrNull()?.date
+        val albumLocation = source.firstOrNull()?.location
+
+        val date = dateDisplayer.dateString(albumDate)
+        return MediaCollection(
+            id = id,
+            displayTitle = date,
+            unformattedDate = albumDate,
+            location = albumLocation ?: "",
+            mediaItems = source.mapNotNull { item ->
+                val photoId = item.mediaItemId
+                when {
+                    photoId.isNullOrBlank() -> null
+                    else -> {
+                        MediaItem(
+                            id = MediaId.Remote(photoId),
+                            mediaHash = photoId,
+                            thumbnailUri = with(remoteMediaUseCase) {
+                                photoId.toThumbnailUrlFromId()
+                            },
+                            fullResUri = with(remoteMediaUseCase) {
+                                photoId.toFullSizeUrlFromId(item.isVideo)
+                            },
+                            fallbackColor = item.dominantColor,
+                            displayDayDate = date,
+                            isFavourite = favouriteThreshold
+                                .map {
+                                    (item.rating ?: 0) >= it
+                                }
+                                .getOrElse { false },
+                            ratio = item.aspectRatio ?: 1.0f,
+                            isVideo = item.isVideo,
+                        )
                     }
                 }
-            )
-        }.filter { it.mediaItems.isNotEmpty() }
+            }
+        )
     }
 
     override fun refreshMediaSummaries(shallow: Boolean) {
