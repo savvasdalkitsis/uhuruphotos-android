@@ -22,7 +22,6 @@ import androidx.work.WorkInfo.State.FAILED
 import androidx.work.WorkInfo.State.RUNNING
 import androidx.work.WorkInfo.State.SUCCEEDED
 import com.savvasdalkitsis.uhuruphotos.api.albums.model.Album
-import com.savvasdalkitsis.uhuruphotos.api.albums.usecase.AlbumsUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.album.auto.domain.api.usecase.AutoAlbumUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.album.user.domain.api.usecase.UserAlbumUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.feed.domain.api.usecase.FeedUseCase
@@ -102,6 +101,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.usecase.M
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.usecase.MetadataUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.person.domain.api.usecase.PersonUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.search.domain.api.usecase.SearchUseCase
+import com.savvasdalkitsis.uhuruphotos.feature.trash.domain.api.usecase.TrashUseCase
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.ActionHandler
 import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
 import kotlinx.coroutines.Job
@@ -119,13 +119,13 @@ import javax.inject.Inject
 class LightboxActionHandler @Inject constructor(
     private val mediaUseCase: MediaUseCase,
     private val personUseCase: PersonUseCase,
-    private val albumsUseCase: AlbumsUseCase,
     private val feedUseCase: FeedUseCase,
     private val searchUseCase: SearchUseCase,
     private val localAlbumUseCase: LocalAlbumUseCase,
     private val metadataUseCase: MetadataUseCase,
     private val userAlbumUseCase: UserAlbumUseCase,
     private val autoAlbumUseCase: AutoAlbumUseCase,
+    private val trashUseCase: TrashUseCase,
 ) : ActionHandler<LightboxState, LightboxEffect, LightboxAction, LightboxMutation> {
 
     private var mediaItemType = MediaItemType.default
@@ -185,8 +185,8 @@ class LightboxActionHandler @Inject constructor(
                         mediaUseCase.getHiddenMedia(),
                         action,
                     )
-                    Trash -> loadAlbums(
-                        albumsUseCase.getTrash(),
+                    Trash -> loadCollections(
+                        trashUseCase.getTrash(),
                         action,
                     )
                 }

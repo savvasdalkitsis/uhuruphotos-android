@@ -24,6 +24,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.GalleryMuta
 import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.ui.state.GalleryDetails
 import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.ui.state.GalleryState
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.api.model.LightboxSequenceDataSource.Trash
+import com.savvasdalkitsis.uhuruphotos.feature.settings.domain.api.usecase.SettingsUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.trash.domain.api.usecase.TrashUseCase
 import com.savvasdalkitsis.uhuruphotos.foundation.biometrics.api.usecase.BiometricsUseCase
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.ActionHandler
@@ -36,7 +37,7 @@ import javax.inject.Inject
 
 internal class TrashAlbumPageActionHandler @Inject constructor(
     trashUseCase: TrashUseCase,
-    settingsUseCase: com.savvasdalkitsis.uhuruphotos.feature.settings.domain.api.usecase.SettingsUseCase,
+    settingsUseCase: SettingsUseCase,
     biometricsUseCase: BiometricsUseCase
 ): ActionHandler<GalleryState, GalleryEffect, GalleryAction, GalleryMutation> by GalleryActionHandler(
     galleryRefresher = { trashUseCase.refreshTrash() },
@@ -65,15 +66,15 @@ internal class TrashAlbumPageActionHandler @Inject constructor(
                     }
                 } else {
                     trashUseCase.observeTrashAlbums()
-                        .map { albums ->
+                        .map { mediaCollections ->
                             GalleryDetails(
                                 title = Title.Resource(string.trash),
-                                albums = albums.map { album ->
+                                albums = mediaCollections.map { mediaCollection ->
                                     Album(
-                                        id = album.id,
-                                        displayTitle = album.displayTitle,
-                                        location = album.location,
-                                        photos = album.photos,
+                                        id = mediaCollection.id,
+                                        displayTitle = mediaCollection.displayTitle,
+                                        location = mediaCollection.location,
+                                        photos = mediaCollection.mediaItems,
                                     )
                                 }
                             )

@@ -1,7 +1,6 @@
 package com.savvasdalkitsis.uhuruphotos.feature.person.domain.implementation.usecase
 
 import com.savvasdalkitsis.uhuruphotos.api.albums.repository.AlbumsRepository
-import com.savvasdalkitsis.uhuruphotos.api.albums.usecase.AlbumsUseCase
 import com.savvasdalkitsis.uhuruphotos.api.db.albums.GetPersonAlbums
 import com.savvasdalkitsis.uhuruphotos.api.db.extensions.isVideo
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaCollection
@@ -17,7 +16,6 @@ import javax.inject.Inject
 
 class PersonUseCase @Inject constructor(
     private val albumsRepository: AlbumsRepository,
-    private val albumsUseCase: AlbumsUseCase,
     private val mediaUseCase: MediaUseCase,
 ) : PersonUseCase {
 

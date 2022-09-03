@@ -24,11 +24,3 @@ data class Album(
     val unformattedDate: String? = null,
     val location: String?,
 )
-
-val previewAlbumEmpty = Album(
-    "id",
-    emptyList(),
-    displayTitle = "01 January 2022",
-    unformattedDate = "2022-01-01",
-    location = "London, UK",
-)

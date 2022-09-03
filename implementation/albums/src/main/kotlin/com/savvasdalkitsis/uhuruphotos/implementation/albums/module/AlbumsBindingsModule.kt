@@ -18,7 +18,6 @@ package com.savvasdalkitsis.uhuruphotos.implementation.albums.module
 import com.savvasdalkitsis.uhuruphotos.foundation.initializer.api.ApplicationCreated
 import com.savvasdalkitsis.uhuruphotos.implementation.albums.initializer.AlbumsInitializer
 import com.savvasdalkitsis.uhuruphotos.implementation.albums.repository.AlbumsRepository
-import com.savvasdalkitsis.uhuruphotos.implementation.albums.usecase.AlbumsUseCase
 import com.savvasdalkitsis.uhuruphotos.implementation.albums.worker.AlbumWorkScheduler
 import dagger.Binds
 import dagger.Module
@@ -36,10 +35,6 @@ internal abstract class AlbumsBindingsModule {
     @Binds
     abstract fun albumWorkScheduler(albumWorkScheduler: AlbumWorkScheduler):
             com.savvasdalkitsis.uhuruphotos.api.albums.worker.AlbumWorkScheduler
-
-    @Binds
-    abstract fun albumsUseCase(albumsUseCase: AlbumsUseCase):
-            com.savvasdalkitsis.uhuruphotos.api.albums.usecase.AlbumsUseCase
 
     @Binds
     abstract fun albumsRepository(albumsRepository: AlbumsRepository):

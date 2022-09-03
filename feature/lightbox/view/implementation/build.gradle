@@ -27,6 +27,7 @@ dependencies {
     implementation project(":feature:album:user:domain:api")
     implementation project(":feature:album:auto:domain:api")
     implementation project(":feature:feed:domain:api")
+    implementation project(":feature:trash:domain:api")
     implementation project(":foundation:log:api")
     implementation project(":foundation:map:api")
     implementation project(':feature:media:local:domain:api')

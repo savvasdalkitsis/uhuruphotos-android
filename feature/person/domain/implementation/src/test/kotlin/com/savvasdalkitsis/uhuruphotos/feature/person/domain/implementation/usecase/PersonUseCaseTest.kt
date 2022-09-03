@@ -2,7 +2,6 @@ package com.savvasdalkitsis.uhuruphotos.feature.person.domain.implementation.use
 
 import app.cash.turbine.test
 import com.savvasdalkitsis.uhuruphotos.api.albums.repository.AlbumsRepository
-import com.savvasdalkitsis.uhuruphotos.api.albums.usecase.AlbumsUseCase
 import com.savvasdalkitsis.uhuruphotos.api.db.albums.GetPersonAlbums
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.TestMedia.mediaItem
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaId
@@ -26,11 +25,9 @@ import org.junit.Test
 class PersonUseCaseTest {
 
     private val albumsRepository = mockk<AlbumsRepository>(relaxed = true)
-    private val albumsUseCase = mockk<AlbumsUseCase>(relaxed = true)
     private val mediaUseCase = mockk<MediaUseCase>(relaxed = true)
     private val underTest = PersonUseCase(
         albumsRepository,
-        albumsUseCase,
         mediaUseCase,
     )
 
