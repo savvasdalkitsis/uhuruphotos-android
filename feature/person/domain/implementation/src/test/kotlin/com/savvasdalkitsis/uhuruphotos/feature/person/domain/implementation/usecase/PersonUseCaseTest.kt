@@ -3,11 +3,11 @@ package com.savvasdalkitsis.uhuruphotos.feature.person.domain.implementation.use
 import app.cash.turbine.test
 import com.savvasdalkitsis.uhuruphotos.api.albums.repository.AlbumsRepository
 import com.savvasdalkitsis.uhuruphotos.api.db.albums.GetPersonAlbums
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.TestMedia.mediaCollection
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.TestMedia.mediaItem
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaId
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.usecase.MediaUseCase
 import com.savvasdalkitsis.uhuruphotos.foundation.group.api.model.Group
-import com.savvasdalkitsis.uhuruphotos.implementation.albums.TestAlbums.album
 import com.savvasdalkitsis.uhuruphotos.implementation.albums.TestGetAlbums.getPersonAlbum
 import com.shazam.shazamcrest.MatcherAssert.assertThat
 import com.shazam.shazamcrest.matcher.Matchers.sameBeanAs
@@ -39,16 +39,16 @@ class PersonUseCaseTest {
         underTest.observePersonMedia(1).test {
             personAlbums.send(
                 Group(mapOf(
-                    "albumId" to listOf(getPersonAlbum.copy(
-                        id = "albumId",
-                        photoId = "photoId",
+                    "collectionId" to listOf(getPersonAlbum.copy(
+                        id = "collectionId",
+                        photoId = "mediaItemId",
                     ))
                 ))
             )
 
-            assertThat(awaitItem(), sameBeanAs(listOf(album.copy(
-                id = "albumId",
-                photos = listOf(mediaItem.copy(id = MediaId.Remote("photoId")))
+            assertThat(awaitItem(), sameBeanAs(listOf(mediaCollection.copy(
+                id = "collectionId",
+                mediaItems = listOf(mediaItem.copy(id = MediaId.Remote("mediaItemId")))
             ))))
         }
     }
@@ -83,13 +83,13 @@ class PersonUseCaseTest {
     @Test
     fun `gets person albums from repository`() = runBlocking {
         albumsRepository.returnsPersonAlbumWithEntries(personId = 1, getPersonAlbum.copy(
-            id = "albumId",
-            photoId = "photoId",
+            id = "collectionId",
+            photoId = "mediaItemId",
         ))
 
-        assertThat(underTest.getPersonMedia(1), sameBeanAs(listOf(album.copy(
-            id = "albumId",
-            photos = listOf(mediaItem.copy(id = MediaId.Remote("photoId")))
+        assertThat(underTest.getPersonMedia(1), sameBeanAs(listOf(mediaCollection.copy(
+            id = "collectionId",
+            mediaItems = listOf(mediaItem.copy(id = MediaId.Remote("mediaItemId")))
         ))))
     }
 

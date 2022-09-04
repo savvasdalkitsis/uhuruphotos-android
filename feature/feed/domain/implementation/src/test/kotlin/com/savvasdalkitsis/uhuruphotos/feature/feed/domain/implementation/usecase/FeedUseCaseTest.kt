@@ -20,12 +20,12 @@ import com.fredporciuncula.flow.preferences.FlowSharedPreferences
 import com.savvasdalkitsis.uhuruphotos.api.albums.repository.AlbumsRepository
 import com.savvasdalkitsis.uhuruphotos.api.albums.worker.AlbumWorkScheduler
 import com.savvasdalkitsis.uhuruphotos.api.db.albums.GetAlbums
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.TestMedia
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.TestMedia.mediaCollection
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.TestMedia.mediaItem
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaId
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.usecase.MediaUseCase
 import com.savvasdalkitsis.uhuruphotos.foundation.group.api.model.Group
-import com.savvasdalkitsis.uhuruphotos.implementation.albums.TestAlbums
 import com.savvasdalkitsis.uhuruphotos.implementation.albums.TestGetAlbums.getAlbum
 import com.shazam.shazamcrest.MatcherAssert.assertThat
 import com.shazam.shazamcrest.matcher.Matchers.sameBeanAs
@@ -102,14 +102,14 @@ class FeedUseCaseTest {
     @Test
     fun `gets feed from repository`() = runBlocking {
         albumsRepository.returnsAlbumWithEntries(getAlbum.copy(
-            id = "albumId",
+            id = "collectionId",
             photoId = "photoId",
         ))
 
         assertThat(underTest.getFeed(), sameBeanAs(listOf(
-            TestAlbums.album.copy(
-            id = "albumId",
-            photos = listOf(mediaItem.copy(id = MediaId.Remote("photoId")))
+            TestMedia.mediaCollection.copy(
+            id = "collectionId",
+            mediaItems = listOf(mediaItem.copy(id = MediaId.Remote("photoId")))
         ))))
     }
 

@@ -15,7 +15,6 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state
 
-import com.savvasdalkitsis.uhuruphotos.api.albums.model.Album
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaCollection
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.state.CelState
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.state.toCel
@@ -34,14 +33,6 @@ val previewClusterEmpty = Cluster(
     displayTitle = "01 January 2022",
     unformattedDate = "2022-01-01",
     location = "London, UK",
-)
-
-fun Album.toCluster() = Cluster(
-    id = id,
-    cels = photos.map { it.toCel() },
-    displayTitle = displayTitle,
-    unformattedDate = unformattedDate,
-    location = location,
 )
 
 fun MediaCollection.toCluster() = Cluster(
