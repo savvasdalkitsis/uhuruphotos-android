@@ -1,0 +1,11 @@
+android {
+    namespace 'com.savvasdalkitsis.uhuruphotos.feature.db.domain.implementation'
+}
+
+dependencies {
+    implementation project(":feature:db:domain:api")
+    implementation (
+            libs.hilt,
+            libs.sqldelight.android,
+    )
+}

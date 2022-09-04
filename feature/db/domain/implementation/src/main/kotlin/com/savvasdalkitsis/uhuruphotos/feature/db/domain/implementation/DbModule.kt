@@ -13,9 +13,10 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
  */
-package com.savvasdalkitsis.uhuruphotos.feature.db.domain.api
+package com.savvasdalkitsis.uhuruphotos.feature.db.domain.implementation
 
 import android.content.Context
+import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.Database
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.albums.AlbumsQueries
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.albums.AutoAlbumPeopleQueries
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.albums.AutoAlbumPhotosQueries
