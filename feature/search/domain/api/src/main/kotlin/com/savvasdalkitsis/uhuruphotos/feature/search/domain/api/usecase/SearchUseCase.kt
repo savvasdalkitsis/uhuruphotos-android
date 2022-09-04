@@ -16,12 +16,12 @@ limitations under the License.
 
 package com.savvasdalkitsis.uhuruphotos.feature.search.domain.api.usecase
 
-import com.savvasdalkitsis.uhuruphotos.api.albums.model.Album
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaCollection
 import kotlinx.coroutines.flow.Flow
 
 interface SearchUseCase {
-    fun searchFor(query: String): Flow<Result<List<Album>>>
-    suspend fun searchResultsFor(query: String): List<Album>
+    fun searchFor(query: String): Flow<Result<List<MediaCollection>>>
+    suspend fun searchResultsFor(query: String): List<MediaCollection>
     fun getRandomSearchSuggestion(): Flow<String>
     fun getSearchSuggestions(): Flow<List<String>>
     fun getRecentTextSearches(): Flow<List<String>>

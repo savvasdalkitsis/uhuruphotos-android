@@ -157,7 +157,7 @@ class LightboxActionHandler @Inject constructor(
                         isVideo = action.isVideo
                     )
                     Feed -> loadCollections(feedUseCase.getFeed(), action)
-                    is SearchResults -> loadAlbums(
+                    is SearchResults -> loadCollections(
                         searchUseCase.searchResultsFor(action.sequenceDataSource.query),
                         action,
                     )

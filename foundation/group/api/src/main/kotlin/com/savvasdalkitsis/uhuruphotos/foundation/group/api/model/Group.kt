@@ -24,6 +24,10 @@ fun <K, T, N> Group<K, T>.mapValues(mapper: (T) -> N): Group<K, N> = Group(
     items.mapValues { (_, v) -> v.map(mapper) }
 )
 
+fun <K, T, N> Group<K, T>.mapNotNullValues(mapper: (T) -> N?): Group<K, N> = Group(
+    items.mapValues { (_, v) -> v.mapNotNull(mapper) }
+)
+
 inline fun <K, T> Flow<List<T>>.groupBy(
     crossinline id: (T) -> K,
 ): Flow<Group<K, T>> = map { it.groupBy(id) }.map(::Group)
