@@ -109,6 +109,33 @@ internal class AlbumsRepository @Inject constructor(
     override suspend fun getAlbumsByDate() : Group<String, GetAlbums> =
         albumsQueries.getAlbums(limit = -1).await().groupBy(GetAlbums::id).let(::Group)
 
+    override suspend fun refreshAlbums(shallow: Boolean, onProgressChange: suspend (Int) -> Unit) =
+        process(
+            albumsFetcher = { albumsService.getAlbumsByDate() },
+            albumFetcher = getAlbumAllPages(),
+            shallow = shallow,
+            onProgressChange = onProgressChange,
+            incompleteAlbumsProcessor = { albums ->
+                albumsQueries.transaction {
+                    albumsQueries.clearAll()
+                    for (album in albums.map { it.toAlbum() }) {
+                        albumsQueries.insert(album)
+                    }
+                }
+            }
+        )
+
+    override suspend fun refreshAlbum(albumId: String) {
+        process(
+            albumsFetcher = { AlbumsByDate(
+                results = listOf(Album.IncompleteAlbum(albumId, null, "", true, 1))
+            ) },
+            albumFetcher = getAlbumAllPages(),
+            shallow = false,
+        )
+    }
+
+
     override fun observePersonAlbums(personId: Int) : Flow<Group<String, GetPersonAlbums>> =
         albumsQueries.getPersonAlbums(personId).asFlow().mapToList().groupBy(GetPersonAlbums::id)
             .distinctUntilChanged()
@@ -119,19 +146,13 @@ internal class AlbumsRepository @Inject constructor(
     override suspend fun getPersonAlbums(personId: Int) : Group<String, GetPersonAlbums> =
         albumsQueries.getPersonAlbums(personId).await().groupBy(GetPersonAlbums::id).let(::Group)
 
+
     override fun observeAutoAlbums(): Flow<List<AutoAlbums>> =
         autoAlbumsQueries.getAutoAlbums().asFlow().mapToList()
             .distinctUntilChanged()
 
     override suspend fun getAutoAlbums(): List<AutoAlbums> =
         autoAlbumsQueries.getAutoAlbums().await()
-
-    override fun observeUserAlbums(): Flow<List<UserAlbums>> =
-        userAlbumsQueries.getUserAlbums().asFlow().mapToList()
-            .distinctUntilChanged()
-
-    override suspend fun getUserAlbums(): List<UserAlbums> =
-        userAlbumsQueries.getUserAlbums().await()
 
     override fun observeAutoAlbum(albumId: Int): Flow<List<GetAutoAlbum>> =
         autoAlbumQueries.getAutoAlbum(albumId.toString()).asFlow().mapToList()
@@ -140,27 +161,9 @@ internal class AlbumsRepository @Inject constructor(
     override suspend fun getAutoAlbum(albumId: Int): Group<String, GetAutoAlbum> =
         autoAlbumQueries.getAutoAlbum(albumId.toString()).await().groupBy(GetAutoAlbum::id).let(::Group)
 
-    override suspend fun getUserAlbum(albumId: Int): Group<String, GetUserAlbum> =
-        userAlbumQueries.getUserAlbum(albumId.toString()).await().groupBy(GetUserAlbum::id).let(::Group)
-
-    override fun observeUserAlbum(albumId: Int): Flow<Group<String, GetUserAlbum>> =
-        userAlbumQueries.getUserAlbum(albumId.toString())
-            .asFlow().mapToList().groupBy(GetUserAlbum::id)
-            .distinctUntilChanged()
-
     override fun observeAutoAlbumPeople(albumId: Int): Flow<List<GetPeopleForAutoAlbum>> =
         autoAlbumPeopleQueries.getPeopleForAutoAlbum(albumId.toString())
             .asFlow().mapToList()
-
-    override fun observeTrash(): Flow<Group<String, GetTrash>> =
-        albumsQueries.getTrash().asFlow()
-            .mapToList().groupBy(GetTrash::id)
-            .distinctUntilChanged()
-
-    override suspend fun hasTrash() = remoteMediaTrashQueries.count().awaitSingle() > 0
-
-    override suspend fun getTrash(): Group<String, GetTrash> =
-        albumsQueries.getTrash().await().groupBy(GetTrash::id).let(::Group)
 
     override suspend fun refreshAutoAlbums() = runCatchingWithLog {
         val albums = albumsService.getAutoAlbums()
@@ -168,16 +171,6 @@ internal class AlbumsRepository @Inject constructor(
             autoAlbumsQueries.clearAll()
             for (album in albums.results) {
                 autoAlbumsQueries.insert(album.toAutoAlbums())
-            }
-        }
-    }
-
-    override suspend fun refreshUserAlbums() = runCatchingWithLog {
-        val albums = albumsService.getUserAlbums()
-        userAlbumsQueries.transaction {
-            userAlbumsQueries.clearAll()
-            for (album in albums.results) {
-                userAlbumsQueries.insert(album.toUserAlbums())
             }
         }
     }
@@ -207,6 +200,32 @@ internal class AlbumsRepository @Inject constructor(
         }
     }
 
+
+    override fun observeUserAlbums(): Flow<List<UserAlbums>> =
+        userAlbumsQueries.getUserAlbums().asFlow().mapToList()
+            .distinctUntilChanged()
+
+    override suspend fun getUserAlbums(): List<UserAlbums> =
+        userAlbumsQueries.getUserAlbums().await()
+
+    override suspend fun getUserAlbum(albumId: Int): Group<String, GetUserAlbum> =
+        userAlbumQueries.getUserAlbum(albumId.toString()).await().groupBy(GetUserAlbum::id).let(::Group)
+
+    override fun observeUserAlbum(albumId: Int): Flow<Group<String, GetUserAlbum>> =
+        userAlbumQueries.getUserAlbum(albumId.toString())
+            .asFlow().mapToList().groupBy(GetUserAlbum::id)
+            .distinctUntilChanged()
+
+    override suspend fun refreshUserAlbums() = runCatchingWithLog {
+        val albums = albumsService.getUserAlbums()
+        userAlbumsQueries.transaction {
+            userAlbumsQueries.clearAll()
+            for (album in albums.results) {
+                userAlbumsQueries.insert(album.toUserAlbums())
+            }
+        }
+    }
+
     override suspend fun refreshUserAlbum(albumId: Int): Result<Unit> = runCatchingWithLog {
         val album = albumsService.getUserAlbum(albumId.toString())
         db.transaction {
@@ -225,6 +244,41 @@ internal class AlbumsRepository @Inject constructor(
             }
         }
     }
+
+
+    override fun observeTrash(): Flow<Group<String, GetTrash>> =
+        albumsQueries.getTrash().asFlow()
+            .mapToList().groupBy(GetTrash::id)
+            .distinctUntilChanged()
+
+    override suspend fun hasTrash() = remoteMediaTrashQueries.count().awaitSingle() > 0
+
+    override suspend fun getTrash(): Group<String, GetTrash> =
+        albumsQueries.getTrash().await().groupBy(GetTrash::id).let(::Group)
+
+    override suspend fun refreshTrash() = runCatchingWithLog {
+        val trash = albumsService.getTrash().results
+        async {
+            albumsQueries.transaction {
+                for (album in trash) {
+                    albumsQueries.insert(album.toAlbum())
+                }
+            }
+        }
+        async { remoteMediaTrashQueries.clear() }
+        for (incompleteAlbum in trash) {
+            val id = incompleteAlbum.id
+            val completeAlbum = albumsService.getTrashAlbum(id).results
+            async {
+                completeAlbum.items
+                    .map { it.toTrash(id) }
+                    .forEach {
+                        remoteMediaTrashQueries.insert(it)
+                    }
+            }
+        }
+    }
+
 
     private suspend fun downloadPersonAlbums(personId: Int) {
         process(
@@ -250,32 +304,6 @@ internal class AlbumsRepository @Inject constructor(
         )
     }
 
-    override suspend fun refreshAlbums(shallow: Boolean, onProgressChange: suspend (Int) -> Unit) =
-        process(
-            albumsFetcher = { albumsService.getAlbumsByDate() },
-            albumFetcher = getAlbumAllPages(),
-            shallow = shallow,
-            onProgressChange = onProgressChange,
-            incompleteAlbumsProcessor = { albums ->
-                albumsQueries.transaction {
-                    albumsQueries.clearAll()
-                    for (album in albums.map { it.toAlbum() }) {
-                        albumsQueries.insert(album)
-                    }
-                }
-            }
-        )
-
-    override suspend fun refreshAlbum(albumId: String) {
-        process(
-            albumsFetcher = { AlbumsByDate(
-                results = listOf(Album.IncompleteAlbum(albumId, null, "", true, 1))
-            ) },
-            albumFetcher = getAlbumAllPages(),
-            shallow = false,
-        )
-    }
-
     private fun getAlbumAllPages(): suspend (String) -> Album.CompleteAlbum = { id ->
         var page = 1
         val albums = mutableListOf<Album.CompleteAlbum>()
@@ -288,29 +316,6 @@ internal class AlbumsRepository @Inject constructor(
             acc.copy(
                 items = acc.items + completeAlbum.items
             )
-        }
-    }
-
-    override suspend fun refreshTrash() = runCatchingWithLog {
-        val trash = albumsService.getTrash().results
-        async {
-            albumsQueries.transaction {
-                for (album in trash) {
-                    albumsQueries.insert(album.toAlbum())
-                }
-            }
-        }
-        async { remoteMediaTrashQueries.clear() }
-        for (incompleteAlbum in trash) {
-            val id = incompleteAlbum.id
-            val completeAlbum = albumsService.getTrashAlbum(id).results
-            async {
-                completeAlbum.items
-                    .map { it.toTrash(id) }
-                    .forEach {
-                        remoteMediaTrashQueries.insert(it)
-                    }
-            }
         }
     }
 

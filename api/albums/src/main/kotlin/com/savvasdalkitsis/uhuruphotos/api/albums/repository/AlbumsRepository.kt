@@ -31,25 +31,29 @@ interface AlbumsRepository {
     suspend fun hasAlbums(): Boolean
     fun observeAlbumsByDate() : Flow<Group<String, GetAlbums>>
     suspend fun getAlbumsByDate() : Group<String, GetAlbums>
+    suspend fun refreshAlbums(shallow: Boolean, onProgressChange: suspend (Int) -> Unit): Result<Unit>
+    suspend fun refreshAlbum(albumId: String)
+
     fun observePersonAlbums(personId: Int) : Flow<Group<String, GetPersonAlbums>>
     suspend fun getPersonAlbums(personId: Int) : Group<String, GetPersonAlbums>
+
     fun observeAutoAlbums(): Flow<List<AutoAlbums>>
     suspend fun getAutoAlbums(): List<AutoAlbums>
-    fun observeUserAlbums(): Flow<List<UserAlbums>>
-    suspend fun getUserAlbums(): List<UserAlbums>
     fun observeAutoAlbum(albumId: Int): Flow<List<GetAutoAlbum>>
     suspend fun getAutoAlbum(albumId: Int): Group<String, GetAutoAlbum>
-    suspend fun getUserAlbum(albumId: Int): Group<String, GetUserAlbum>
     fun observeAutoAlbumPeople(albumId: Int): Flow<List<GetPeopleForAutoAlbum>>
+    suspend fun refreshAutoAlbums(): Result<Unit>
+    suspend fun refreshAutoAlbum(albumId: Int): Result<Unit>
+
+    fun observeUserAlbums(): Flow<List<UserAlbums>>
+    suspend fun getUserAlbums(): List<UserAlbums>
+    suspend fun getUserAlbum(albumId: Int): Group<String, GetUserAlbum>
     fun observeUserAlbum(albumId: Int): Flow<Group<String, GetUserAlbum>>
+    suspend fun refreshUserAlbums(): Result<Unit>
+    suspend fun refreshUserAlbum(albumId: Int): Result<Unit>
+
     fun observeTrash(): Flow<Group<String, GetTrash>>
     suspend fun hasTrash(): Boolean
     suspend fun getTrash(): Group<String, GetTrash>
-    suspend fun refreshAutoAlbums(): Result<Unit>
-    suspend fun refreshUserAlbums(): Result<Unit>
-    suspend fun refreshAutoAlbum(albumId: Int): Result<Unit>
-    suspend fun refreshUserAlbum(albumId: Int): Result<Unit>
-    suspend fun refreshAlbums(shallow: Boolean, onProgressChange: suspend (Int) -> Unit): Result<Unit>
-    suspend fun refreshAlbum(albumId: String)
     suspend fun refreshTrash(): Result<Unit>
 }
