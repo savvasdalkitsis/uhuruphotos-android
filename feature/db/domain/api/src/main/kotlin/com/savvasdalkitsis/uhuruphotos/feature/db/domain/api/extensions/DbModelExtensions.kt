@@ -15,10 +15,10 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.extensions
 
+import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.album.user.GetUserAlbum
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.albums.GetAlbums
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.albums.GetPersonAlbums
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.albums.GetTrash
-import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.albums.GetUserAlbum
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.domain.model.media.DbRemoteMediaItemSummary
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.search.GetSearchResults
 

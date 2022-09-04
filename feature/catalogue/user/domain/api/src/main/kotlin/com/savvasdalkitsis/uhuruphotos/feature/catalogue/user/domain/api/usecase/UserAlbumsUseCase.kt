@@ -16,7 +16,7 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.feature.catalogue.user.domain.api.usecase
 
 import com.savvasdalkitsis.uhuruphotos.feature.catalogue.view.api.ui.state.CatalogueSorting
-import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.albums.UserAlbums
+import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.album.user.UserAlbums
 import kotlinx.coroutines.flow.Flow
 
 interface UserAlbumsUseCase {

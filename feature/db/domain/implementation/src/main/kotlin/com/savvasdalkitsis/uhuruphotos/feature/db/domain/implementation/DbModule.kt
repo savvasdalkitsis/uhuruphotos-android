@@ -17,14 +17,14 @@ package com.savvasdalkitsis.uhuruphotos.feature.db.domain.implementation
 
 import android.content.Context
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.Database
+import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.album.auto.AutoAlbumPeopleQueries
+import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.album.auto.AutoAlbumPhotosQueries
+import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.album.auto.AutoAlbumQueries
+import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.album.auto.AutoAlbumsQueries
+import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.album.user.UserAlbumPhotosQueries
+import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.album.user.UserAlbumQueries
+import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.album.user.UserAlbumsQueries
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.albums.AlbumsQueries
-import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.albums.AutoAlbumPeopleQueries
-import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.albums.AutoAlbumPhotosQueries
-import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.albums.AutoAlbumQueries
-import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.albums.AutoAlbumsQueries
-import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.albums.UserAlbumPhotosQueries
-import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.albums.UserAlbumQueries
-import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.albums.UserAlbumsQueries
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.auth.Token
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.auth.TokenQueries
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.media.LocalMediaItemDetailsQueries

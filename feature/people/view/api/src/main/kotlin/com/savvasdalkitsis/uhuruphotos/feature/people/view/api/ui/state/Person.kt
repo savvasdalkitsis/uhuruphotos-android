@@ -15,7 +15,7 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.people.view.api.ui.state
 
-import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.albums.GetPeopleForAutoAlbum
+import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.album.auto.GetPeopleForAutoAlbum
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.people.People
 
 data class Person(

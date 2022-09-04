@@ -17,8 +17,8 @@ package com.savvasdalkitsis.uhuruphotos.feature.album.auto.domain.implementation
 
 import com.savvasdalkitsis.uhuruphotos.api.albums.repository.AlbumsRepository
 import com.savvasdalkitsis.uhuruphotos.feature.album.auto.domain.api.usecase.AutoAlbumUseCase
-import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.albums.GetAutoAlbum
-import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.albums.GetPeopleForAutoAlbum
+import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.album.auto.GetAutoAlbum
+import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.album.auto.GetPeopleForAutoAlbum
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaCollection
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaCollectionSource
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.usecase.MediaUseCase

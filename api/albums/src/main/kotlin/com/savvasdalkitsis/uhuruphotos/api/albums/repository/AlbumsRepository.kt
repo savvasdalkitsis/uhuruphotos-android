@@ -15,14 +15,14 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.api.albums.repository
 
-import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.albums.AutoAlbums
+import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.album.auto.AutoAlbums
+import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.album.auto.GetAutoAlbum
+import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.album.auto.GetPeopleForAutoAlbum
+import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.album.user.GetUserAlbum
+import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.album.user.UserAlbums
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.albums.GetAlbums
-import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.albums.GetAutoAlbum
-import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.albums.GetPeopleForAutoAlbum
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.albums.GetPersonAlbums
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.albums.GetTrash
-import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.albums.GetUserAlbum
-import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.albums.UserAlbums
 import com.savvasdalkitsis.uhuruphotos.foundation.group.api.model.Group
 import kotlinx.coroutines.flow.Flow
 
