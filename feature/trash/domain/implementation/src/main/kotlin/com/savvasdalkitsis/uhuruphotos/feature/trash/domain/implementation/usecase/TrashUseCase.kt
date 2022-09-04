@@ -16,7 +16,6 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.feature.trash.domain.implementation.usecase
 
 import com.fredporciuncula.flow.preferences.FlowSharedPreferences
-import com.savvasdalkitsis.uhuruphotos.api.albums.repository.AlbumsRepository
 import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.PredefinedCollageDisplay
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.extensions.isVideo
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.media.remote.GetTrash
@@ -24,14 +23,15 @@ import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.Med
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaCollectionSource
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.usecase.MediaUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.trash.domain.api.usecase.TrashUseCase
+import com.savvasdalkitsis.uhuruphotos.feature.trash.domain.implementation.repository.TrashRepository
 import com.savvasdalkitsis.uhuruphotos.foundation.group.api.model.mapValues
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
 internal class TrashUseCase @Inject constructor(
-    private val albumsRepository: AlbumsRepository,
     private val mediaUseCase: MediaUseCase,
+    private val trashRepository: TrashRepository,
     flowSharedPreferences: FlowSharedPreferences,
 ) : TrashUseCase {
 
@@ -39,7 +39,7 @@ internal class TrashUseCase @Inject constructor(
         flowSharedPreferences.getEnum("trashGalleryDisplay", PredefinedCollageDisplay.default)
 
     override suspend fun refreshTrash(): Result<Unit> =
-        albumsRepository.refreshTrash()
+        trashRepository.refreshTrash()
 
     override fun getTrashGalleryDisplay() : PredefinedCollageDisplay = trashGalleryDisplay.get()
 
@@ -47,9 +47,9 @@ internal class TrashUseCase @Inject constructor(
         trashGalleryDisplay.setAndCommit(galleryDisplay)
     }
 
-    override suspend fun hasTrash(): Boolean = albumsRepository.hasTrash()
+    override suspend fun hasTrash(): Boolean = trashRepository.hasTrash()
 
-    override fun observeTrashAlbums(): Flow<List<MediaCollection>> = albumsRepository.observeTrash()
+    override fun observeTrashAlbums(): Flow<List<MediaCollection>> = trashRepository.observeTrash()
         .map {
             it.mapValues {
                     getTrash -> getTrash.toMediaCollectionSource()
@@ -62,7 +62,7 @@ internal class TrashUseCase @Inject constructor(
         }
 
     override suspend fun getTrash() = with(mediaUseCase) {
-        albumsRepository.getTrash()
+        trashRepository.getTrash()
             .mapValues { it.toMediaCollectionSource() }
             .toMediaCollection()
     }

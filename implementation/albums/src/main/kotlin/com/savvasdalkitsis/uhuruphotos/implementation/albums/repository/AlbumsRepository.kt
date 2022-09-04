@@ -40,17 +40,15 @@ import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.extensions.async
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.extensions.await
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.extensions.awaitSingle
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.media.remote.GetRemoteMediaCollections
-import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.media.remote.GetTrash
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.media.remote.RemoteMediaCollectionsQueries
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.media.remote.RemoteMediaItemDetailsQueries
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.media.remote.RemoteMediaItemSummaryQueries
-import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.media.remote.RemoteMediaTrashQueries
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.people.PeopleQueries
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.person.GetPersonAlbums
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.person.PersonQueries
 import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.api.model.toDbModel
-import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.api.model.toTrash
 import com.savvasdalkitsis.uhuruphotos.feature.people.domain.api.service.model.toDbModel
+import com.savvasdalkitsis.uhuruphotos.feature.settings.domain.api.usecase.SettingsUseCase
 import com.savvasdalkitsis.uhuruphotos.foundation.coroutines.api.safelyOnStartIgnoring
 import com.savvasdalkitsis.uhuruphotos.foundation.group.api.model.Group
 import com.savvasdalkitsis.uhuruphotos.foundation.group.api.model.groupBy
@@ -80,8 +78,7 @@ internal class AlbumsRepository @Inject constructor(
     private val userAlbumsQueries: UserAlbumsQueries,
     private val userAlbumQueries: UserAlbumQueries,
     private val userAlbumPhotosQueries: UserAlbumPhotosQueries,
-    private val remoteMediaTrashQueries: RemoteMediaTrashQueries,
-    private val settingsUseCase: com.savvasdalkitsis.uhuruphotos.feature.settings.domain.api.usecase.SettingsUseCase,
+    private val settingsUseCase: SettingsUseCase,
 ) : AlbumsRepository {
 
     private var allAlbums: Group<String, GetRemoteMediaCollections> = Group(emptyMap())
@@ -245,41 +242,6 @@ internal class AlbumsRepository @Inject constructor(
             }
         }
     }
-
-
-    override fun observeTrash(): Flow<Group<String, GetTrash>> =
-        remoteMediaTrashQueries.getTrash().asFlow()
-            .mapToList().groupBy(GetTrash::id)
-            .distinctUntilChanged()
-
-    override suspend fun hasTrash() = remoteMediaTrashQueries.count().awaitSingle() > 0
-
-    override suspend fun getTrash(): Group<String, GetTrash> =
-        remoteMediaTrashQueries.getTrash().await().groupBy(GetTrash::id).let(::Group)
-
-    override suspend fun refreshTrash() = runCatchingWithLog {
-        val trash = albumsService.getTrash().results
-        async {
-            remoteMediaCollectionsQueries.transaction {
-                for (album in trash) {
-                    remoteMediaCollectionsQueries.insert(album.toDbModel())
-                }
-            }
-        }
-        async { remoteMediaTrashQueries.clear() }
-        for (incompleteAlbum in trash) {
-            val id = incompleteAlbum.id
-            val completeAlbum = albumsService.getTrashAlbum(id).results
-            async {
-                completeAlbum.items
-                    .map { it.toTrash(id) }
-                    .forEach {
-                        remoteMediaTrashQueries.insert(it)
-                    }
-            }
-        }
-    }
-
 
     private suspend fun downloadPersonAlbums(personId: Int) {
         process(
