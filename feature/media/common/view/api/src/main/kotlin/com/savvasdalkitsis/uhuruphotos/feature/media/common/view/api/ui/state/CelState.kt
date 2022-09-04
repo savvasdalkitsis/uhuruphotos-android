@@ -25,5 +25,4 @@ data class CelState(
 
 fun MediaItem.toCel() = CelState(
     mediaItem = this,
-    selectionMode = selectionMode,
 )

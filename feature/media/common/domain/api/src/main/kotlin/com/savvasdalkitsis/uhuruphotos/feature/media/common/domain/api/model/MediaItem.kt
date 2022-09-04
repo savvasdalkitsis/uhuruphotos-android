@@ -26,7 +26,5 @@ data class MediaItem(
     val isFavourite: Boolean = false,
     val ratio: Float = 1f,
     val isVideo: Boolean = false,
-    @Deprecated("get rid of this for Cel")
-    val selectionMode: MediaItemSelectionMode = MediaItemSelectionMode.UNDEFINED,
     val latLng: (Pair<Double, Double>)? = null,
 )
