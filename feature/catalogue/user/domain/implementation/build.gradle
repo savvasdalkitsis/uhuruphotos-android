@@ -4,8 +4,10 @@ android {
 
 dependencies {
     implementation project(":feature:catalogue:user:domain:api")
+    implementation project(":foundation:log:api")
     implementation(
             libs.flowpreferences,
             libs.hilt,
+            libs.sqldelight.coroutines,
     )
 }

@@ -1,0 +1,70 @@
+/*
+Copyright 2022 Savvas Dalkitsis
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+ */
+package com.savvasdalkitsis.uhuruphotos.feature.album.user.domain.implementation.repository
+
+import com.savvasdalkitsis.uhuruphotos.api.albums.service.AlbumsService
+import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.Database
+import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.album.user.GetUserAlbum
+import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.album.user.UserAlbum
+import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.album.user.UserAlbumPhotosQueries
+import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.album.user.UserAlbumQueries
+import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.extensions.await
+import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.media.remote.RemoteMediaItemSummaryQueries
+import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.api.model.toDbModel
+import com.savvasdalkitsis.uhuruphotos.foundation.group.api.model.Group
+import com.savvasdalkitsis.uhuruphotos.foundation.group.api.model.groupBy
+import com.savvasdalkitsis.uhuruphotos.foundation.log.api.runCatchingWithLog
+import com.squareup.sqldelight.runtime.coroutines.asFlow
+import com.squareup.sqldelight.runtime.coroutines.mapToList
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.distinctUntilChanged
+import javax.inject.Inject
+
+class UserAlbumRepository @Inject constructor(
+    private val db: Database,
+    private val userAlbumQueries: UserAlbumQueries,
+    private val userAlbumPhotosQueries: UserAlbumPhotosQueries,
+    private val albumsService: AlbumsService,
+    private val remoteMediaItemSummaryQueries: RemoteMediaItemSummaryQueries,
+) {
+
+    suspend fun getUserAlbum(albumId: Int): Group<String, GetUserAlbum> =
+        userAlbumQueries.getUserAlbum(albumId.toString()).await().groupBy(GetUserAlbum::id).let(::Group)
+
+    fun observeUserAlbum(albumId: Int): Flow<Group<String, GetUserAlbum>> =
+        userAlbumQueries.getUserAlbum(albumId.toString())
+            .asFlow().mapToList().groupBy(GetUserAlbum::id)
+            .distinctUntilChanged()
+
+    suspend fun refreshUserAlbum(albumId: Int): Result<Unit> = runCatchingWithLog {
+        val album = albumsService.getUserAlbum(albumId.toString())
+        db.transaction {
+            userAlbumQueries.insert(
+                UserAlbum(
+                    id = albumId.toString(),
+                    title = album.title,
+                    date = album.date,
+                    location = album.location,
+                )
+            )
+            userAlbumPhotosQueries.removePhotosForAlbum(albumId.toString())
+            for (photo in album.groups.flatMap { it.photos }) {
+                remoteMediaItemSummaryQueries.insert(photo.toDbModel(albumId.toString()))
+                userAlbumPhotosQueries.insert(photo.id, albumId.toString())
+            }
+        }
+    }
+}

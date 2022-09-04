@@ -5,7 +5,9 @@ android {
 dependencies {
     implementation project(":api:albums")
     implementation project(":feature:album:user:domain:api")
+    implementation project(":foundation:log:api")
     implementation(
             libs.hilt,
+            libs.sqldelight.coroutines,
     )
 }

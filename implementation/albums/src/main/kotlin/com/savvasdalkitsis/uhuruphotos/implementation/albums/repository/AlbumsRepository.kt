@@ -21,7 +21,6 @@ import com.savvasdalkitsis.uhuruphotos.api.albums.service.model.Album
 import com.savvasdalkitsis.uhuruphotos.api.albums.service.model.AlbumsByDate
 import com.savvasdalkitsis.uhuruphotos.api.albums.service.model.toAutoAlbums
 import com.savvasdalkitsis.uhuruphotos.api.albums.service.model.toDbModel
-import com.savvasdalkitsis.uhuruphotos.api.albums.service.model.toUserAlbums
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.Database
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.album.auto.AutoAlbumPeopleQueries
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.album.auto.AutoAlbumPhotosQueries
@@ -30,12 +29,6 @@ import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.album.auto.AutoAlbu
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.album.auto.AutoAlbumsQueries
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.album.auto.GetAutoAlbum
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.album.auto.GetPeopleForAutoAlbum
-import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.album.user.GetUserAlbum
-import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.album.user.UserAlbum
-import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.album.user.UserAlbumPhotosQueries
-import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.album.user.UserAlbumQueries
-import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.album.user.UserAlbums
-import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.album.user.UserAlbumsQueries
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.extensions.async
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.extensions.await
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.extensions.awaitSingle
@@ -71,9 +64,6 @@ internal class AlbumsRepository @Inject constructor(
     private val peopleQueries: PeopleQueries,
     private val remoteMediaItemSummaryQueries: RemoteMediaItemSummaryQueries,
     private val remoteMediaItemDetailsQueries: RemoteMediaItemDetailsQueries,
-    private val userAlbumsQueries: UserAlbumsQueries,
-    private val userAlbumQueries: UserAlbumQueries,
-    private val userAlbumPhotosQueries: UserAlbumPhotosQueries,
     private val settingsUseCase: SettingsUseCase,
 ) : AlbumsRepository {
 
@@ -178,51 +168,6 @@ internal class AlbumsRepository @Inject constructor(
             for (photo in album.photos) {
                 remoteMediaItemDetailsQueries.insert(photo.toDbModel())
                 autoAlbumPhotosQueries.insert(photo.imageHash, albumId.toString())
-            }
-        }
-    }
-
-
-    override fun observeUserAlbums(): Flow<List<UserAlbums>> =
-        userAlbumsQueries.getUserAlbums().asFlow().mapToList()
-            .distinctUntilChanged()
-
-    override suspend fun getUserAlbums(): List<UserAlbums> =
-        userAlbumsQueries.getUserAlbums().await()
-
-    override suspend fun getUserAlbum(albumId: Int): Group<String, GetUserAlbum> =
-        userAlbumQueries.getUserAlbum(albumId.toString()).await().groupBy(GetUserAlbum::id).let(::Group)
-
-    override fun observeUserAlbum(albumId: Int): Flow<Group<String, GetUserAlbum>> =
-        userAlbumQueries.getUserAlbum(albumId.toString())
-            .asFlow().mapToList().groupBy(GetUserAlbum::id)
-            .distinctUntilChanged()
-
-    override suspend fun refreshUserAlbums() = runCatchingWithLog {
-        val albums = albumsService.getUserAlbums()
-        userAlbumsQueries.transaction {
-            userAlbumsQueries.clearAll()
-            for (album in albums.results) {
-                userAlbumsQueries.insert(album.toUserAlbums())
-            }
-        }
-    }
-
-    override suspend fun refreshUserAlbum(albumId: Int): Result<Unit> = runCatchingWithLog {
-        val album = albumsService.getUserAlbum(albumId.toString())
-        db.transaction {
-            userAlbumQueries.insert(
-                UserAlbum(
-                    id = albumId.toString(),
-                    title = album.title,
-                    date = album.date,
-                    location = album.location,
-                )
-            )
-            userAlbumPhotosQueries.removePhotosForAlbum(albumId.toString())
-            for (photo in album.groups.flatMap { it.photos }) {
-                remoteMediaItemSummaryQueries.insert(photo.toDbModel(albumId.toString()))
-                userAlbumPhotosQueries.insert(photo.id, albumId.toString())
             }
         }
     }

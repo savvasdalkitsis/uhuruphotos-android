@@ -15,8 +15,8 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.album.user.domain.implementation.usecase
 
-import com.savvasdalkitsis.uhuruphotos.api.albums.repository.AlbumsRepository
 import com.savvasdalkitsis.uhuruphotos.feature.album.user.domain.api.usecase.UserAlbumUseCase
+import com.savvasdalkitsis.uhuruphotos.feature.album.user.domain.implementation.repository.UserAlbumRepository
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.album.user.GetUserAlbum
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.extensions.isVideo
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaCollection
@@ -28,12 +28,12 @@ import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
 class UserAlbumUseCase @Inject constructor(
-    private val albumsRepository: AlbumsRepository,
+    private val userAlbumRepository: UserAlbumRepository,
     private val mediaUseCase: MediaUseCase,
 ) : UserAlbumUseCase {
 
     override fun observeUserAlbum(albumId: Int): Flow<List<MediaCollection>> = with(mediaUseCase) {
-        albumsRepository.observeUserAlbum(albumId)
+        userAlbumRepository.observeUserAlbum(albumId)
             .map {
                 it.mapValues { getUserAlbum ->
                     getUserAlbum.toMediaCollectionSource()
@@ -42,13 +42,13 @@ class UserAlbumUseCase @Inject constructor(
         }
 
     override suspend fun getUserAlbum(albumId: Int): List<MediaCollection> = with(mediaUseCase) {
-        albumsRepository.getUserAlbum(albumId)
+        userAlbumRepository.getUserAlbum(albumId)
             .mapValues { it.toMediaCollectionSource() }
             .toMediaCollection()
     }
 
     override suspend fun refreshUserAlbum(albumId: Int) =
-        albumsRepository.refreshUserAlbum(albumId)
+        userAlbumRepository.refreshUserAlbum(albumId)
 
     private fun GetUserAlbum.toMediaCollectionSource() = MediaCollectionSource(
         id = id,

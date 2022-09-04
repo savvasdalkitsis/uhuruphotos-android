@@ -16,8 +16,8 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.feature.catalogue.user.domain.implementation.usecase
 
 import com.fredporciuncula.flow.preferences.FlowSharedPreferences
-import com.savvasdalkitsis.uhuruphotos.api.albums.repository.AlbumsRepository
 import com.savvasdalkitsis.uhuruphotos.feature.catalogue.user.domain.api.usecase.UserAlbumsUseCase
+import com.savvasdalkitsis.uhuruphotos.feature.catalogue.user.domain.implementation.repository.UserAlbumsRepository
 import com.savvasdalkitsis.uhuruphotos.feature.catalogue.view.api.ui.state.CatalogueSorting
 import com.savvasdalkitsis.uhuruphotos.feature.catalogue.view.api.ui.state.CatalogueSorting.Companion.sorted
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.album.user.UserAlbums
@@ -26,7 +26,7 @@ import kotlinx.coroutines.flow.combine
 import javax.inject.Inject
 
 class UserAlbumsUseCase @Inject constructor(
-    private val albumsRepository: AlbumsRepository,
+    private val userAlbumsRepository: UserAlbumsRepository,
     flowSharedPreferences: FlowSharedPreferences,
 ) : UserAlbumsUseCase {
 
@@ -41,17 +41,17 @@ class UserAlbumsUseCase @Inject constructor(
 
     override fun observeUserAlbums(): Flow<List<UserAlbums>> =
         combine(
-            albumsRepository.observeUserAlbums(),
+            userAlbumsRepository.observeUserAlbums(),
             observeUserAlbumsSorting(),
         ) { albums, sorting ->
             albums.sorted(sorting)
         }
 
     override suspend fun refreshUserAlbums() =
-        albumsRepository.refreshUserAlbums()
+        userAlbumsRepository.refreshUserAlbums()
 
     override suspend fun getUserAlbums(): List<UserAlbums> =
-        albumsRepository.getUserAlbums().sorted(userAlbumsSorting.get())
+        userAlbumsRepository.getUserAlbums().sorted(userAlbumsSorting.get())
 
     private fun List<UserAlbums>.sorted(sorting: CatalogueSorting): List<UserAlbums> =
         sorted(
