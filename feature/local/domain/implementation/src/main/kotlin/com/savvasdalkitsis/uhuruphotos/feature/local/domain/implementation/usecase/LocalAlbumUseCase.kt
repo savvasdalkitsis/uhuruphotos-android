@@ -16,9 +16,9 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.feature.local.domain.implementation.usecase
 
 import com.fredporciuncula.flow.preferences.FlowSharedPreferences
-import com.savvasdalkitsis.uhuruphotos.api.albums.model.Album
 import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.PredefinedCollageDisplay
 import com.savvasdalkitsis.uhuruphotos.feature.local.domain.api.usecase.LocalAlbumUseCase
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaCollection
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaFolderOnDevice
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItem
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.usecase.MediaUseCase
@@ -35,12 +35,12 @@ internal class LocalAlbumUseCase @Inject constructor(
     private val flowSharedPreferences: FlowSharedPreferences,
 ) : LocalAlbumUseCase {
 
-    override fun observeLocalAlbum(albumId: Int): Flow<Pair<LocalMediaFolder, List<Album>>> =
+    override fun observeLocalAlbum(albumId: Int): Flow<Pair<LocalMediaFolder, List<MediaCollection>>> =
         mediaUseCase.observeLocalAlbum(albumId)
             .mapNotNull { localMedia ->
                 when (localMedia) {
                     is MediaFolderOnDevice.Found ->
-                        localMedia.folder.first to localMedia.folder.second.toAlbums()
+                        localMedia.folder.first to localMedia.folder.second.toMediaCollections()
                     else -> null
                 }
             }
@@ -55,21 +55,21 @@ internal class LocalAlbumUseCase @Inject constructor(
         localFolderGalleryDisplay(albumId).setAndCommit(galleryDisplay)
     }
 
-    override suspend fun getLocalAlbum(albumId: Int): List<Album> =
+    override suspend fun getLocalAlbum(albumId: Int): List<MediaCollection> =
         observeLocalAlbum(albumId).first().second
 
     private fun localFolderGalleryDisplay(albumId: Int) =
         flowSharedPreferences.getEnum("localFolderGalleryDisplay/$albumId", PredefinedCollageDisplay.default)
 
-    private fun List<MediaItem>.toAlbums(): List<Album> =
+    private fun List<MediaItem>.toMediaCollections(): List<MediaCollection> =
         groupBy { it.sortableDate }
             .toSortedMap { a, b -> b.orEmpty().compareTo(a.orEmpty()) }
             .filterValues { it.isNotEmpty() }
             .map { (sortableDate, items) ->
-                Album(
+                MediaCollection(
                     id = "local_album_$sortableDate",
                     displayTitle = items.first().displayDayDate ?: "-",
-                    photos = items,
+                    mediaItems = items,
                     location = null,
                 )
             }

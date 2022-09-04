@@ -21,7 +21,6 @@ import androidx.work.WorkInfo.State.ENQUEUED
 import androidx.work.WorkInfo.State.FAILED
 import androidx.work.WorkInfo.State.RUNNING
 import androidx.work.WorkInfo.State.SUCCEEDED
-import com.savvasdalkitsis.uhuruphotos.api.albums.model.Album
 import com.savvasdalkitsis.uhuruphotos.feature.album.auto.domain.api.usecase.AutoAlbumUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.album.user.domain.api.usecase.UserAlbumUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.feed.domain.api.usecase.FeedUseCase
@@ -173,7 +172,7 @@ class LightboxActionHandler @Inject constructor(
                         userAlbumUseCase.getUserAlbum(action.sequenceDataSource.albumId),
                         action,
                     )
-                    is LocalAlbum -> loadAlbums(
+                    is LocalAlbum -> loadCollections(
                         localAlbumUseCase.getLocalAlbum(action.sequenceDataSource.albumId),
                         action,
                     )
@@ -327,12 +326,6 @@ class LightboxActionHandler @Inject constructor(
             null -> loadPhotoDetails(action.id)
             else -> loadPhotos(items, action)
         }
-
-    context(MediaUseCase)
-    private suspend fun FlowCollector<LightboxMutation>.loadAlbums(
-        albums: List<Album>,
-        action: LoadMediaItem
-    ) = loadPhotos(albums.flatMap { it.photos }, action)
 
     context(MediaUseCase)
     private suspend fun FlowCollector<LightboxMutation>.loadCollections(
