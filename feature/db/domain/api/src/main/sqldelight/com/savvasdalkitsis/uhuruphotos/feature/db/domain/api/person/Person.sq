@@ -9,3 +9,21 @@ INSERT OR REPLACE INTO personPhotos VALUES (?, ?, ?);
 
 clearAll:
 DELETE FROM personPhotos;
+
+getPersonAlbums:
+SELECT
+ remoteMediaCollections.id,
+ remoteMediaCollections.date AS albumDate,
+ remoteMediaCollections.location AS albumLocation,
+ summary.id AS photoId,
+ summary.dominantColor,
+ summary.rating,
+ summary.aspectRatio,
+ summary.type,
+ personPhotos.personId
+FROM remoteMediaCollections
+LEFT JOIN remoteMediaItemSummary AS summary ON remoteMediaCollections.id = summary.containerId
+LEFT JOIN personPhotos ON summary.id = personPhotos.photoId
+WHERE personPhotos.personId == :id
+GROUP BY summary.id
+ORDER BY summary.date DESC;

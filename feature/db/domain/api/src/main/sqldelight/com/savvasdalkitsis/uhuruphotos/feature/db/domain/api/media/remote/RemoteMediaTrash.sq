@@ -32,3 +32,18 @@ INSERT OR REPLACE INTO remoteMediaItemSummary SELECT * FROM remoteMediaTrash WHE
 DELETE FROM remoteMediaTrash WHERE id = :id;
 COMMIT;
 }
+
+getTrash:
+SELECT
+ remoteMediaCollections.id,
+ remoteMediaCollections.date AS albumDate,
+ remoteMediaCollections.location AS albumLocation,
+ remoteMediaTrash.id AS photoId,
+ remoteMediaTrash.dominantColor,
+ remoteMediaTrash.rating,
+ remoteMediaTrash.aspectRatio,
+ remoteMediaTrash.type
+FROM remoteMediaCollections
+LEFT JOIN remoteMediaTrash ON remoteMediaCollections.id = remoteMediaTrash.containerId
+GROUP BY remoteMediaTrash.id
+ORDER BY remoteMediaTrash.date DESC;

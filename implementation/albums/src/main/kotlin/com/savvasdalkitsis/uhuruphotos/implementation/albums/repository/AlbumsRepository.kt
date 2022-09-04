@@ -39,7 +39,6 @@ import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.album.user.UserAlbu
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.extensions.async
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.extensions.await
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.extensions.awaitSingle
-import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.media.remote.GetPersonAlbums
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.media.remote.GetRemoteMediaCollections
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.media.remote.GetTrash
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.media.remote.RemoteMediaCollectionsQueries
@@ -47,6 +46,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.media.remote.Remote
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.media.remote.RemoteMediaItemSummaryQueries
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.media.remote.RemoteMediaTrashQueries
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.people.PeopleQueries
+import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.person.GetPersonAlbums
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.person.PersonQueries
 import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.api.model.toDbModel
 import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.api.model.toTrash
@@ -138,14 +138,14 @@ internal class AlbumsRepository @Inject constructor(
 
 
     override fun observePersonAlbums(personId: Int) : Flow<Group<String, GetPersonAlbums>> =
-        remoteMediaCollectionsQueries.getPersonAlbums(personId).asFlow().mapToList().groupBy(GetPersonAlbums::id)
+        personQueries.getPersonAlbums(personId).asFlow().mapToList().groupBy(GetPersonAlbums::id)
             .distinctUntilChanged()
             .safelyOnStartIgnoring {
                 downloadPersonAlbums(personId)
             }
 
     override suspend fun getPersonAlbums(personId: Int) : Group<String, GetPersonAlbums> =
-        remoteMediaCollectionsQueries.getPersonAlbums(personId).await().groupBy(GetPersonAlbums::id).let(::Group)
+        personQueries.getPersonAlbums(personId).await().groupBy(GetPersonAlbums::id).let(::Group)
 
 
     override fun observeAutoAlbums(): Flow<List<AutoAlbums>> =
@@ -248,14 +248,14 @@ internal class AlbumsRepository @Inject constructor(
 
 
     override fun observeTrash(): Flow<Group<String, GetTrash>> =
-        remoteMediaCollectionsQueries.getTrash().asFlow()
+        remoteMediaTrashQueries.getTrash().asFlow()
             .mapToList().groupBy(GetTrash::id)
             .distinctUntilChanged()
 
     override suspend fun hasTrash() = remoteMediaTrashQueries.count().awaitSingle() > 0
 
     override suspend fun getTrash(): Group<String, GetTrash> =
-        remoteMediaCollectionsQueries.getTrash().await().groupBy(GetTrash::id).let(::Group)
+        remoteMediaTrashQueries.getTrash().await().groupBy(GetTrash::id).let(::Group)
 
     override suspend fun refreshTrash() = runCatchingWithLog {
         val trash = albumsService.getTrash().results

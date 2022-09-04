@@ -2,7 +2,7 @@ package com.savvasdalkitsis.uhuruphotos.feature.person.domain.implementation.use
 
 import com.savvasdalkitsis.uhuruphotos.api.albums.repository.AlbumsRepository
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.extensions.isVideo
-import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.media.remote.GetPersonAlbums
+import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.person.GetPersonAlbums
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaCollection
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaCollectionSource
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.usecase.MediaUseCase
