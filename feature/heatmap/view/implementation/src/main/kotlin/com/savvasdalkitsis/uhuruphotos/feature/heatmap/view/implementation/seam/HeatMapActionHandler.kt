@@ -20,7 +20,7 @@ import android.location.LocationManager
 import android.location.LocationManager.NETWORK_PROVIDER
 import androidx.core.location.LocationManagerCompat.getCurrentLocation
 import com.google.accompanist.permissions.isGranted
-import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.domain.model.media.latLng
+import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.entities.media.latLng
 import com.savvasdalkitsis.uhuruphotos.feature.feed.domain.api.usecase.FeedUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.heatmap.view.implementation.seam.HeatMapAction.BackPressed
 import com.savvasdalkitsis.uhuruphotos.feature.heatmap.view.implementation.seam.HeatMapAction.CameraViewPortChanged

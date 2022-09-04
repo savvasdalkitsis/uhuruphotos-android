@@ -17,8 +17,8 @@ package com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.implementati
 
 import androidx.work.WorkInfo
 import com.savvasdalkitsis.uhuruphotos.api.auth.usecase.ServerUseCase
-import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.domain.model.media.DbRemoteMediaItemDetails
-import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.domain.model.media.DbRemoteMediaItemSummary
+import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.entities.media.DbRemoteMediaItemDetails
+import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.entities.media.DbRemoteMediaItemSummary
 import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.api.usecase.RemoteMediaUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.implementation.repository.RemoteMediaRepository
 import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.implementation.worker.RemoteMediaItemWorkScheduler

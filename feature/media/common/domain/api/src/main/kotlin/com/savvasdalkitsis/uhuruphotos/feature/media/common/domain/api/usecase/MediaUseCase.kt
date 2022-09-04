@@ -16,7 +16,7 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.usecase
 
 import androidx.work.WorkInfo
-import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.domain.model.media.DbRemoteMediaItemSummary
+import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.entities.media.DbRemoteMediaItemSummary
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaCollection
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaCollectionSource
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaFolderOnDevice

@@ -15,7 +15,7 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.api.albums.service.model
 
-import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.albums.Albums
+import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.entities.media.DbRemoteMediaCollections
 import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.api.model.RemoteMediaItemSummary
 import com.squareup.moshi.JsonClass
 
@@ -48,7 +48,7 @@ sealed class Album(
     ) : Album(id, date, location, incomplete, numberOfItems)
 }
 
-fun Album.IncompleteAlbum.toAlbum() = Albums(
+fun Album.IncompleteAlbum.toDbModel() = DbRemoteMediaCollections(
     id,
     date,
     location,

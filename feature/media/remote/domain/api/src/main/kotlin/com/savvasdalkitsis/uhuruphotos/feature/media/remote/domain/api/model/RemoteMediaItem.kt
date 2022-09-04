@@ -15,7 +15,7 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.api.model
 
-import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.domain.model.media.DbRemoteMediaItemDetails
+import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.entities.media.DbRemoteMediaItemDetails
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 

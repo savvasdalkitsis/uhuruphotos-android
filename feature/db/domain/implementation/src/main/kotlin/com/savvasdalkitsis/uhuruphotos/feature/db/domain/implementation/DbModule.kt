@@ -24,13 +24,13 @@ import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.album.auto.AutoAlbu
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.album.user.UserAlbumPhotosQueries
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.album.user.UserAlbumQueries
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.album.user.UserAlbumsQueries
-import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.albums.AlbumsQueries
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.auth.Token
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.auth.TokenQueries
-import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.media.LocalMediaItemDetailsQueries
-import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.media.RemoteMediaItemDetailsQueries
-import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.media.RemoteMediaItemSummaryQueries
-import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.media.RemoteMediaTrashQueries
+import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.media.local.LocalMediaItemDetailsQueries
+import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.media.remote.RemoteMediaCollectionsQueries
+import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.media.remote.RemoteMediaItemDetailsQueries
+import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.media.remote.RemoteMediaItemSummaryQueries
+import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.media.remote.RemoteMediaTrashQueries
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.people.PeopleQueries
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.person.PersonQueries
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.search.SearchQueries
@@ -65,7 +65,7 @@ class DbModule {
     fun personQueries(database: Database): PersonQueries = database.personQueries
 
     @Provides
-    fun albumsQueries(database: Database): AlbumsQueries = database.albumsQueries
+    fun remoteMediaCollectionsQueries(database: Database): RemoteMediaCollectionsQueries = database.remoteMediaCollectionsQueries
 
     @Provides
     fun tokenQueries(database: Database): TokenQueries = database.tokenQueries

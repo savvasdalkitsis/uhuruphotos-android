@@ -1,0 +1,66 @@
+CREATE TABLE remoteMediaCollections (
+    id TEXT NOT NULL PRIMARY KEY,
+    date TEXT,
+    location TEXT,
+    rating INTEGER AS Int,
+    incomplete INTEGER AS Boolean NOT NULL,
+    numberOfItems INTEGER AS Int NOT NULL
+);
+
+getRemoteMediaCollections:
+SELECT
+ remoteMediaCollections.id,
+ remoteMediaCollections.date AS albumDate,
+ remoteMediaCollections.location AS albumLocation,
+ summary.id AS photoId,
+ summary.dominantColor,
+ summary.rating,
+ summary.aspectRatio,
+ summary.type
+FROM remoteMediaCollections
+LEFT JOIN remoteMediaItemSummary AS summary ON remoteMediaCollections.id = summary.containerId
+GROUP BY summary.id
+ORDER BY summary.date DESC
+LIMIT :limit;
+
+getTrash:
+SELECT
+ remoteMediaCollections.id,
+ remoteMediaCollections.date AS albumDate,
+ remoteMediaCollections.location AS albumLocation,
+ remoteMediaTrash.id AS photoId,
+ remoteMediaTrash.dominantColor,
+ remoteMediaTrash.rating,
+ remoteMediaTrash.aspectRatio,
+ remoteMediaTrash.type
+FROM remoteMediaCollections
+LEFT JOIN remoteMediaTrash ON remoteMediaCollections.id = remoteMediaTrash.containerId
+GROUP BY remoteMediaTrash.id
+ORDER BY remoteMediaTrash.date DESC;
+
+getPersonAlbums:
+SELECT
+ remoteMediaCollections.id,
+ remoteMediaCollections.date AS albumDate,
+ remoteMediaCollections.location AS albumLocation,
+ summary.id AS photoId,
+ summary.dominantColor,
+ summary.rating,
+ summary.aspectRatio,
+ summary.type,
+ personPhotos.personId
+FROM remoteMediaCollections
+LEFT JOIN remoteMediaItemSummary AS summary ON remoteMediaCollections.id = summary.containerId
+LEFT JOIN personPhotos ON summary.id = personPhotos.photoId
+WHERE personPhotos.personId == :id
+GROUP BY summary.id
+ORDER BY summary.date DESC;
+
+clearAll:
+DELETE FROM remoteMediaCollections;
+
+insert:
+INSERT OR REPLACE INTO remoteMediaCollections VALUES ?;
+
+remoteMediaCollectionCount:
+SELECT count(id) FROM remoteMediaCollections;

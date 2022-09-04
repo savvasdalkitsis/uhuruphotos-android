@@ -19,7 +19,7 @@ import app.cash.turbine.test
 import com.savvasdalkitsis.uhuruphotos.api.albums.service.AlbumsService
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.TestDatabase
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.albums.Albums
-import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.domain.model.media.DbRemoteMediaItemSummary
+import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.entities.media.DbRemoteMediaItemSummary
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.extensions.await
 import com.savvasdalkitsis.uhuruphotos.foundation.group.api.model.Group
 import com.savvasdalkitsis.uhuruphotos.implementation.albums.ProgressUpdate

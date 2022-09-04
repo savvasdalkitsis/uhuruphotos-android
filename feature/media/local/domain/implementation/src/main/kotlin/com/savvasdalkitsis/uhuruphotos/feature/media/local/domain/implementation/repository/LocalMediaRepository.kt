@@ -22,8 +22,8 @@ import androidx.palette.graphics.Palette
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.extensions.async
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.extensions.await
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.extensions.awaitSingleOrNull
-import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.media.LocalMediaItemDetails
-import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.media.LocalMediaItemDetailsQueries
+import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.media.local.LocalMediaItemDetails
+import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.media.local.LocalMediaItemDetailsQueries
 import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.implementation.module.LocalMediaModule
 import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.implementation.service.LocalMediaService
 import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.implementation.service.model.LocalMediaStoreServiceItem

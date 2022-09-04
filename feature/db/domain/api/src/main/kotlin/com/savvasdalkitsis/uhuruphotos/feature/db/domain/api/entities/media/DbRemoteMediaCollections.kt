@@ -15,6 +15,6 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.entities.media
 
-import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.media.remote.RemoteMediaTrash
+import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.media.remote.RemoteMediaCollections
 
-typealias DbTrash = RemoteMediaTrash
+typealias DbRemoteMediaCollections = RemoteMediaCollections

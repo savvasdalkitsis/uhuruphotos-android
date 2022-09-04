@@ -16,9 +16,9 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.feature.search.domain.implementation.repository
 
 import com.fredporciuncula.flow.preferences.FlowSharedPreferences
-import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.domain.model.media.DbRemoteMediaItemSummary
+import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.entities.media.DbRemoteMediaItemSummary
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.extensions.await
-import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.media.RemoteMediaItemSummaryQueries
+import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.media.remote.RemoteMediaItemSummaryQueries
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.search.GetSearchResults
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.search.SearchQueries
 import com.savvasdalkitsis.uhuruphotos.feature.search.domain.implementation.service.SearchService

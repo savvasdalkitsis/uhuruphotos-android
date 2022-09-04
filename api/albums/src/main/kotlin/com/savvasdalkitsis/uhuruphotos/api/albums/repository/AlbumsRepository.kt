@@ -20,17 +20,17 @@ import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.album.auto.GetAutoA
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.album.auto.GetPeopleForAutoAlbum
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.album.user.GetUserAlbum
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.album.user.UserAlbums
-import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.albums.GetAlbums
-import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.albums.GetPersonAlbums
-import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.albums.GetTrash
+import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.media.remote.GetPersonAlbums
+import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.media.remote.GetRemoteMediaCollections
+import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.media.remote.GetTrash
 import com.savvasdalkitsis.uhuruphotos.foundation.group.api.model.Group
 import kotlinx.coroutines.flow.Flow
 
 interface AlbumsRepository {
 
     suspend fun hasAlbums(): Boolean
-    fun observeAlbumsByDate() : Flow<Group<String, GetAlbums>>
-    suspend fun getAlbumsByDate() : Group<String, GetAlbums>
+    fun observeAlbumsByDate() : Flow<Group<String, GetRemoteMediaCollections>>
+    suspend fun getAlbumsByDate() : Group<String, GetRemoteMediaCollections>
     suspend fun refreshAlbums(shallow: Boolean, onProgressChange: suspend (Int) -> Unit): Result<Unit>
     suspend fun refreshAlbum(albumId: String)
 

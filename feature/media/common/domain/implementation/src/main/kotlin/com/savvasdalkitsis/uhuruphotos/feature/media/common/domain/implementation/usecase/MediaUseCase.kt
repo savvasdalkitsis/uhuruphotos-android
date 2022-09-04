@@ -17,9 +17,9 @@ package com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.implementati
 
 import androidx.work.WorkInfo
 import com.savvasdalkitsis.uhuruphotos.api.albums.worker.AlbumWorkScheduler
-import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.domain.model.media.DbRemoteMediaItemDetails
-import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.domain.model.media.DbRemoteMediaItemSummary
-import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.domain.model.media.latLng
+import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.entities.media.DbRemoteMediaItemDetails
+import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.entities.media.DbRemoteMediaItemSummary
+import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.entities.media.latLng
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.extensions.isVideo
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaCollection
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaCollectionSource

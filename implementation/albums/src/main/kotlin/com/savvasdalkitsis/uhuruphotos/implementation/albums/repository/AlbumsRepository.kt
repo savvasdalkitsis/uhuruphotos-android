@@ -19,8 +19,8 @@ import com.savvasdalkitsis.uhuruphotos.api.albums.repository.AlbumsRepository
 import com.savvasdalkitsis.uhuruphotos.api.albums.service.AlbumsService
 import com.savvasdalkitsis.uhuruphotos.api.albums.service.model.Album
 import com.savvasdalkitsis.uhuruphotos.api.albums.service.model.AlbumsByDate
-import com.savvasdalkitsis.uhuruphotos.api.albums.service.model.toAlbum
 import com.savvasdalkitsis.uhuruphotos.api.albums.service.model.toAutoAlbums
+import com.savvasdalkitsis.uhuruphotos.api.albums.service.model.toDbModel
 import com.savvasdalkitsis.uhuruphotos.api.albums.service.model.toUserAlbums
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.Database
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.album.auto.AutoAlbumPeopleQueries
@@ -36,16 +36,16 @@ import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.album.user.UserAlbu
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.album.user.UserAlbumQueries
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.album.user.UserAlbums
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.album.user.UserAlbumsQueries
-import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.albums.AlbumsQueries
-import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.albums.GetAlbums
-import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.albums.GetPersonAlbums
-import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.albums.GetTrash
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.extensions.async
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.extensions.await
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.extensions.awaitSingle
-import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.media.RemoteMediaItemDetailsQueries
-import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.media.RemoteMediaItemSummaryQueries
-import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.media.RemoteMediaTrashQueries
+import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.media.remote.GetPersonAlbums
+import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.media.remote.GetRemoteMediaCollections
+import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.media.remote.GetTrash
+import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.media.remote.RemoteMediaCollectionsQueries
+import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.media.remote.RemoteMediaItemDetailsQueries
+import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.media.remote.RemoteMediaItemSummaryQueries
+import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.media.remote.RemoteMediaTrashQueries
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.people.PeopleQueries
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.person.PersonQueries
 import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.api.model.toDbModel
@@ -68,7 +68,7 @@ import javax.inject.Inject
 internal class AlbumsRepository @Inject constructor(
     private val db: Database,
     private val albumsService: AlbumsService,
-    private val albumsQueries: AlbumsQueries,
+    private val remoteMediaCollectionsQueries: RemoteMediaCollectionsQueries,
     private val autoAlbumsQueries: AutoAlbumsQueries,
     private val autoAlbumQueries: AutoAlbumQueries,
     private val autoAlbumPhotosQueries: AutoAlbumPhotosQueries,
@@ -84,18 +84,19 @@ internal class AlbumsRepository @Inject constructor(
     private val settingsUseCase: com.savvasdalkitsis.uhuruphotos.feature.settings.domain.api.usecase.SettingsUseCase,
 ) : AlbumsRepository {
 
-    private var allAlbums: Group<String, GetAlbums> = Group(emptyMap())
+    private var allAlbums: Group<String, GetRemoteMediaCollections> = Group(emptyMap())
 
-    override suspend fun hasAlbums() = albumsQueries.albumsCount().awaitSingle() > 0
+    override suspend fun hasAlbums() =
+        remoteMediaCollectionsQueries.remoteMediaCollectionCount().awaitSingle() > 0
 
-    override fun observeAlbumsByDate() : Flow<Group<String, GetAlbums>> =
-        albumsQueries.getAlbums(limit = -1).asFlow()
+    override fun observeAlbumsByDate() : Flow<Group<String, GetRemoteMediaCollections>> =
+        remoteMediaCollectionsQueries.getRemoteMediaCollections(limit = -1).asFlow()
             .onStart {
                 if (allAlbums.items.isEmpty()) {
-                    emitAll(albumsQueries.getAlbums(limit = 100).asFlow().take(1))
+                    emitAll(remoteMediaCollectionsQueries.getRemoteMediaCollections(limit = 100).asFlow().take(1))
                 }
             }
-            .mapToList().groupBy(GetAlbums::id)
+            .mapToList().groupBy(GetRemoteMediaCollections::id)
             .onStart {
                 if (allAlbums.items.isNotEmpty()) {
                     emit(allAlbums)
@@ -106,8 +107,8 @@ internal class AlbumsRepository @Inject constructor(
             }
             .distinctUntilChanged()
 
-    override suspend fun getAlbumsByDate() : Group<String, GetAlbums> =
-        albumsQueries.getAlbums(limit = -1).await().groupBy(GetAlbums::id).let(::Group)
+    override suspend fun getAlbumsByDate() : Group<String, GetRemoteMediaCollections> =
+        remoteMediaCollectionsQueries.getRemoteMediaCollections(limit = -1).await().groupBy(GetRemoteMediaCollections::id).let(::Group)
 
     override suspend fun refreshAlbums(shallow: Boolean, onProgressChange: suspend (Int) -> Unit) =
         process(
@@ -116,10 +117,10 @@ internal class AlbumsRepository @Inject constructor(
             shallow = shallow,
             onProgressChange = onProgressChange,
             incompleteAlbumsProcessor = { albums ->
-                albumsQueries.transaction {
-                    albumsQueries.clearAll()
-                    for (album in albums.map { it.toAlbum() }) {
-                        albumsQueries.insert(album)
+                remoteMediaCollectionsQueries.transaction {
+                    remoteMediaCollectionsQueries.clearAll()
+                    for (album in albums.map { it.toDbModel() }) {
+                        remoteMediaCollectionsQueries.insert(album)
                     }
                 }
             }
@@ -137,14 +138,14 @@ internal class AlbumsRepository @Inject constructor(
 
 
     override fun observePersonAlbums(personId: Int) : Flow<Group<String, GetPersonAlbums>> =
-        albumsQueries.getPersonAlbums(personId).asFlow().mapToList().groupBy(GetPersonAlbums::id)
+        remoteMediaCollectionsQueries.getPersonAlbums(personId).asFlow().mapToList().groupBy(GetPersonAlbums::id)
             .distinctUntilChanged()
             .safelyOnStartIgnoring {
                 downloadPersonAlbums(personId)
             }
 
     override suspend fun getPersonAlbums(personId: Int) : Group<String, GetPersonAlbums> =
-        albumsQueries.getPersonAlbums(personId).await().groupBy(GetPersonAlbums::id).let(::Group)
+        remoteMediaCollectionsQueries.getPersonAlbums(personId).await().groupBy(GetPersonAlbums::id).let(::Group)
 
 
     override fun observeAutoAlbums(): Flow<List<AutoAlbums>> =
@@ -247,21 +248,21 @@ internal class AlbumsRepository @Inject constructor(
 
 
     override fun observeTrash(): Flow<Group<String, GetTrash>> =
-        albumsQueries.getTrash().asFlow()
+        remoteMediaCollectionsQueries.getTrash().asFlow()
             .mapToList().groupBy(GetTrash::id)
             .distinctUntilChanged()
 
     override suspend fun hasTrash() = remoteMediaTrashQueries.count().awaitSingle() > 0
 
     override suspend fun getTrash(): Group<String, GetTrash> =
-        albumsQueries.getTrash().await().groupBy(GetTrash::id).let(::Group)
+        remoteMediaCollectionsQueries.getTrash().await().groupBy(GetTrash::id).let(::Group)
 
     override suspend fun refreshTrash() = runCatchingWithLog {
         val trash = albumsService.getTrash().results
         async {
-            albumsQueries.transaction {
+            remoteMediaCollectionsQueries.transaction {
                 for (album in trash) {
-                    albumsQueries.insert(album.toAlbum())
+                    remoteMediaCollectionsQueries.insert(album.toDbModel())
                 }
             }
         }
@@ -286,9 +287,9 @@ internal class AlbumsRepository @Inject constructor(
             albumFetcher = { albumsService.getAlbumForPerson(it, personId).results },
             shallow = false,
             incompleteAlbumsProcessor = { albums ->
-                albumsQueries.transaction {
-                    for (album in albums.map { it.toAlbum() }) {
-                        albumsQueries.insert(album)
+                remoteMediaCollectionsQueries.transaction {
+                    for (album in albums.map { it.toDbModel() }) {
+                        remoteMediaCollectionsQueries.insert(album)
                     }
                 }
             },

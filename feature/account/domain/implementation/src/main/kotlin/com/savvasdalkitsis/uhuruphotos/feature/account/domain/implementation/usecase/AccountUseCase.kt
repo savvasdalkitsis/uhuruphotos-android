@@ -35,7 +35,7 @@ class AccountUseCase @Inject constructor(
         async {
             workScheduler.cancelAllScheduledWork()
             with(db) {
-                albumsQueries.clearAll()
+                remoteMediaCollectionsQueries.clearAll()
                 autoAlbumQueries.clearAll()
                 autoAlbumPeopleQueries.clearAll()
                 autoAlbumPhotosQueries.clearAll()

@@ -15,15 +15,15 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.implementation.repository
 
-import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.domain.model.media.DbRemoteMediaItemDetails
-import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.domain.model.media.DbRemoteMediaItemSummary
+import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.entities.media.DbRemoteMediaItemDetails
+import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.entities.media.DbRemoteMediaItemSummary
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.extensions.async
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.extensions.await
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.extensions.awaitSingle
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.extensions.awaitSingleOrNull
-import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.media.RemoteMediaItemDetailsQueries
-import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.media.RemoteMediaItemSummaryQueries
-import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.media.RemoteMediaTrashQueries
+import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.media.remote.RemoteMediaItemDetailsQueries
+import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.media.remote.RemoteMediaItemSummaryQueries
+import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.media.remote.RemoteMediaTrashQueries
 import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.api.model.toDbModel
 import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.implementation.service.RemoteMediaService
 import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.implementation.worker.RemoteMediaItemWorkScheduler

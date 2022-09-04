@@ -11,7 +11,7 @@ CREATE TABLE remoteMediaTrash (
   rating INTEGER AS Int,
   containerId TEXT NOT NULL,
 
-  FOREIGN KEY (containerId) REFERENCES albums(id)
+  FOREIGN KEY (containerId) REFERENCES remoteMediaCollections(id)
 );
 
 insert:

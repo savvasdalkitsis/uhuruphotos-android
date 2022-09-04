@@ -18,7 +18,7 @@ package com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.implementatio
 import android.Manifest
 import android.os.Build
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.extensions.async
-import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.media.LocalMediaItemDetails
+import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.media.local.LocalMediaItemDetails
 import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.model.LocalFolder
 import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.model.LocalMediaFolder
 import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.model.LocalMediaItem

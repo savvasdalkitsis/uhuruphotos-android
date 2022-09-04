@@ -13,9 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
  */
-package com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.domain.model.media
+package com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.entities.media
 
-import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.media.RemoteMediaItemDetails
+import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.media.remote.RemoteMediaItemDetails
 
 typealias DbRemoteMediaItemDetails = RemoteMediaItemDetails
 
