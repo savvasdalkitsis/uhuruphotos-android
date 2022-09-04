@@ -16,7 +16,7 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.implementation.auth.service
 
 import android.webkit.CookieManager
-import com.savvasdalkitsis.uhuruphotos.api.db.auth.TokenQueries
+import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.auth.TokenQueries
 import okhttp3.Interceptor
 import okhttp3.Request
 import javax.inject.Inject

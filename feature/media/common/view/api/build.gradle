@@ -8,7 +8,7 @@ android {
     namespace 'com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api'
 }
 dependencies {
-    api project(":api:db")
+    api project(":feature:db:domain:api")
     api project(":foundation:map:api")
     api project(":feature:media:local:domain:api")
     api(

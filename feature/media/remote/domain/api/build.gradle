@@ -9,7 +9,7 @@ android {
 }
 
 dependencies {
-    api project(":api:db")
+    api project(":feature:db:domain:api")
     api project(":foundation:map:api")
     api(
             libs.androidx.compose.navigation,

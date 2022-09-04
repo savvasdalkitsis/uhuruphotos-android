@@ -9,7 +9,7 @@ android {
 }
 
 dependencies {
-    api project(":api:db")
+    api project(":feature:db:domain:api")
     implementation project(':foundation:image:api')
     implementation project(':foundation:strings:api')
     implementation project(':foundation:ui:api')

@@ -17,9 +17,9 @@ package com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.implementatio
 
 import com.fredporciuncula.flow.preferences.FlowSharedPreferences
 import com.fredporciuncula.flow.preferences.NullableSerializer
-import com.savvasdalkitsis.uhuruphotos.api.db.extensions.await
-import com.savvasdalkitsis.uhuruphotos.api.db.media.GetBuckets
-import com.savvasdalkitsis.uhuruphotos.api.db.media.LocalMediaItemDetailsQueries
+import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.extensions.await
+import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.media.GetBuckets
+import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.media.LocalMediaItemDetailsQueries
 import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.model.LocalMediaFolder
 import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.implementation.service.LocalMediaService
 import com.squareup.sqldelight.runtime.coroutines.asFlow

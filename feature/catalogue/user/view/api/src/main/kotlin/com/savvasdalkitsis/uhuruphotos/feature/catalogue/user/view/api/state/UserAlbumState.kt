@@ -15,7 +15,7 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.catalogue.user.view.api.state
 
-import com.savvasdalkitsis.uhuruphotos.api.db.albums.UserAlbums
+import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.albums.UserAlbums
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaId
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItem
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.state.CelState

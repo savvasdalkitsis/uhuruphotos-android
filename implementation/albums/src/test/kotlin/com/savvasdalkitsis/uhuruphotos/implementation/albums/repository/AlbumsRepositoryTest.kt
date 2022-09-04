@@ -17,10 +17,10 @@ package com.savvasdalkitsis.uhuruphotos.implementation.albums.repository
 
 import app.cash.turbine.test
 import com.savvasdalkitsis.uhuruphotos.api.albums.service.AlbumsService
-import com.savvasdalkitsis.uhuruphotos.api.db.TestDatabase
-import com.savvasdalkitsis.uhuruphotos.api.db.albums.Albums
-import com.savvasdalkitsis.uhuruphotos.api.db.domain.model.media.DbRemoteMediaItemSummary
-import com.savvasdalkitsis.uhuruphotos.api.db.extensions.await
+import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.TestDatabase
+import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.albums.Albums
+import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.domain.model.media.DbRemoteMediaItemSummary
+import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.extensions.await
 import com.savvasdalkitsis.uhuruphotos.foundation.group.api.model.Group
 import com.savvasdalkitsis.uhuruphotos.implementation.albums.ProgressUpdate
 import com.savvasdalkitsis.uhuruphotos.implementation.albums.SERVER_ALBUM_LOCATION

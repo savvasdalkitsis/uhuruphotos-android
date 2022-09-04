@@ -1,0 +1,20 @@
+plugins {
+    id 'com.squareup.sqldelight'
+    id 'java-test-fixtures'
+}
+
+android {
+    namespace 'com.savvasdalkitsis.uhuruphotos.feature.db.domain.api'
+}
+
+dependencies {
+
+    implementation(
+            libs.hilt,
+            libs.sqldelight.android,
+            libs.sqldelight.coroutines,
+    )
+    testFixturesImplementation(
+            libs.sqldelight.jvm,
+    )
+}

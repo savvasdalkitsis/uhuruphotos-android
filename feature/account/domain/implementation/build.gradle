@@ -11,7 +11,7 @@ android {
 dependencies {
 
     implementation project(":feature:account:domain:api")
-    implementation project(":api:db")
+    implementation project(":feature:db:domain:api")
     implementation project(":foundation:image:api")
     implementation project(':foundation:video:api')
     implementation project(":foundation:worker:api")

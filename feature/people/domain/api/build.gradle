@@ -3,7 +3,7 @@ android {
 }
 
 dependencies {
-    api project(":api:db")
+    api project(":feature:db:domain:api")
     implementation(
             libs.kotlinx.coroutines,
             libs.moshi,

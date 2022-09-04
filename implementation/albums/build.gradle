@@ -18,7 +18,7 @@ dependencies {
     implementation project(':api:albums')
     implementation project(":foundation:coroutines:api")
     implementation project(":foundation:date:api")
-    implementation project(":api:db")
+    implementation project(":feature:db:domain:api")
     implementation project(":foundation:icons:api")
     implementation project(":foundation:initializer:api")
     implementation project(":foundation:log:api")
@@ -38,13 +38,13 @@ dependencies {
             libs.retrofit.moshi,
             libs.sqldelight.coroutines,
     )
-    testImplementation testFixtures(project(":api:db"))
+    testImplementation testFixtures(project(":feature:db:domain:api"))
     testImplementation testFixtures(project(":feature:media:remote:domain:implementation"))
     testImplementation testFixtures(project(":feature:user:domain:implementation"))
     testImplementation(
             libs.bundles.test,
     )
-    testFixturesImplementation testFixtures(project(":api:db"))
+    testFixturesImplementation testFixtures(project(":feature:db:domain:api"))
     testFixturesImplementation project(':feature:media:remote:domain:implementation')
     testFixturesImplementation project(':feature:media:common:domain:api')
     testFixturesImplementation project(':api:albums')

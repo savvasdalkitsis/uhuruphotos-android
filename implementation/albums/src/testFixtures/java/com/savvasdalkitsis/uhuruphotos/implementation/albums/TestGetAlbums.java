@@ -1,7 +1,7 @@
 package com.savvasdalkitsis.uhuruphotos.implementation.albums;
 
-import com.savvasdalkitsis.uhuruphotos.api.db.albums.GetAlbums;
-import com.savvasdalkitsis.uhuruphotos.api.db.albums.GetPersonAlbums;
+import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.albums.GetAlbums;
+import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.albums.GetPersonAlbums;
 
 public class TestGetAlbums {
 

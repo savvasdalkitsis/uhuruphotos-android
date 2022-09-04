@@ -10,7 +10,7 @@ android {
 
 dependencies {
     implementation project(':api:albums')
-    implementation project(":api:db")
+    implementation project(":feature:db:domain:api")
     implementation project(':feature:media:common:domain:api')
     implementation project(':feature:media:common:view:api')
     implementation project(":feature:lightbox:view:api")

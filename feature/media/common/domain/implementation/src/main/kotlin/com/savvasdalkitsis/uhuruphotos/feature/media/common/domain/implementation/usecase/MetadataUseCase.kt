@@ -18,7 +18,7 @@ package com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.implementati
 import android.content.ContentResolver
 import android.net.Uri
 import coil.disk.DiskCache
-import com.savvasdalkitsis.uhuruphotos.api.db.extensions.read
+import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.extensions.read
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.ExifData
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemMetadata
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.usecase.MetadataUseCase

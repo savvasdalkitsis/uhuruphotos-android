@@ -15,9 +15,9 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.implementation.albums
 
-import com.savvasdalkitsis.uhuruphotos.api.db.albums.GetAlbums
-import com.savvasdalkitsis.uhuruphotos.api.db.albums.GetPersonAlbums
-import com.savvasdalkitsis.uhuruphotos.api.db.media.RemoteMediaItemSummary
+import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.albums.GetAlbums
+import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.albums.GetPersonAlbums
+import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.media.RemoteMediaItemSummary
 import com.savvasdalkitsis.uhuruphotos.implementation.albums.TestAlbums.albums
 import com.savvasdalkitsis.uhuruphotos.implementation.albums.TestAlbums.completeAlbum
 import com.savvasdalkitsis.uhuruphotos.implementation.albums.TestAlbums.incompleteAlbum

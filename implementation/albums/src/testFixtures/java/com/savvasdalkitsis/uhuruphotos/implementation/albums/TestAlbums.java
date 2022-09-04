@@ -2,7 +2,7 @@ package com.savvasdalkitsis.uhuruphotos.implementation.albums;
 
 import com.savvasdalkitsis.uhuruphotos.api.albums.service.model.Album.CompleteAlbum;
 import com.savvasdalkitsis.uhuruphotos.api.albums.service.model.Album.IncompleteAlbum;
-import com.savvasdalkitsis.uhuruphotos.api.db.albums.Albums;
+import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.albums.Albums;
 
 import java.util.ArrayList;
 

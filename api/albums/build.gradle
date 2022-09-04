@@ -14,7 +14,7 @@ dependencies {
     api project(':feature:media:remote:domain:api')
     api project(':feature:people:domain:api')
     api project(':feature:people:view:api')
-    api project(":api:db")
+    api project(":feature:db:domain:api")
     api project(':foundation:group:api')
     api project(':foundation:icons:api')
     api project(':foundation:strings:api')

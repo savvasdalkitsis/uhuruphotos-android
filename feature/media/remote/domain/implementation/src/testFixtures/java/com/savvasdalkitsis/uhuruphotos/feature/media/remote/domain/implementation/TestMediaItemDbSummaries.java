@@ -15,7 +15,7 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.implementation;
 
-import com.savvasdalkitsis.uhuruphotos.api.db.media.RemoteMediaItemSummary;
+import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.media.RemoteMediaItemSummary;
 
 public class TestMediaItemDbSummaries {
 

@@ -21,11 +21,11 @@ import com.savvasdalkitsis.uhuruphotos.api.auth.model.AuthStatus.Offline
 import com.savvasdalkitsis.uhuruphotos.api.auth.model.AuthStatus.ServerDown
 import com.savvasdalkitsis.uhuruphotos.api.auth.model.AuthStatus.Unauthenticated
 import com.savvasdalkitsis.uhuruphotos.api.auth.usecase.AuthenticationUseCase
-import com.savvasdalkitsis.uhuruphotos.api.db.auth.Token
-import com.savvasdalkitsis.uhuruphotos.api.db.auth.TokenQueries
-import com.savvasdalkitsis.uhuruphotos.api.db.entities.auth.TokenType
-import com.savvasdalkitsis.uhuruphotos.api.db.extensions.async
-import com.savvasdalkitsis.uhuruphotos.api.db.extensions.awaitSingleOrNull
+import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.auth.Token
+import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.auth.TokenQueries
+import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.entities.auth.TokenType
+import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.extensions.async
+import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.extensions.awaitSingleOrNull
 import com.savvasdalkitsis.uhuruphotos.foundation.log.api.log
 import com.savvasdalkitsis.uhuruphotos.foundation.log.api.runCatchingWithLog
 import com.savvasdalkitsis.uhuruphotos.implementation.auth.network.jwt

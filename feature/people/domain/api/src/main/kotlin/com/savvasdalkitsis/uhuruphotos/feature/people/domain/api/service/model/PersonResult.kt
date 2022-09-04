@@ -15,7 +15,7 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.people.domain.api.service.model
 
-import com.savvasdalkitsis.uhuruphotos.api.db.people.People
+import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.people.People
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 

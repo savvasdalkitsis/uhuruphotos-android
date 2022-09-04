@@ -18,7 +18,7 @@ dependencies {
     implementation project(":feature:catalogue:auto:domain:api")
     implementation project(":foundation:compose:api")
     implementation project(":foundation:coroutines:api")
-    implementation project(":api:db")
+    implementation project(":feature:db:domain:api")
     implementation project(":feature:favourites:view:api")
     implementation project(":feature:collage:view:api")
     implementation project(":feature:hidden:view:api")

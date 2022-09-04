@@ -16,7 +16,7 @@ android {
 dependencies {
 
     implementation project(":api:auth")
-    implementation project(":api:db")
+    implementation project(":feature:db:domain:api")
     implementation project(":foundation:http:api")
     implementation project(":foundation:icons:api")
     implementation project(":foundation:log:api")

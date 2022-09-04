@@ -18,7 +18,7 @@ dependencies {
     implementation project(":api:auth")
     implementation project(":foundation:compose:api")
     implementation project(":foundation:date:api")
-    implementation project(":api:db")
+    implementation project(":feature:db:domain:api")
     implementation project(":foundation:exif:api")
     implementation project(":foundation:icons:api")
     implementation project(':foundation:image:api')
@@ -57,7 +57,7 @@ dependencies {
             libs.sqldelight.coroutines,
             libs.zoomable,
     )
-    testFixturesImplementation project(":api:db")
+    testFixturesImplementation project(":feature:db:domain:api")
     testFixturesImplementation project(':feature:media:common:domain:api')
     testFixturesImplementation project(':feature:media:remote:domain:api')
     kapt libs.moshi.kapt
