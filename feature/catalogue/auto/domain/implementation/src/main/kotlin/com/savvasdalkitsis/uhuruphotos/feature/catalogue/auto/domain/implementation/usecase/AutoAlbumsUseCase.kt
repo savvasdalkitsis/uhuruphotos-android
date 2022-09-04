@@ -17,8 +17,8 @@ package com.savvasdalkitsis.uhuruphotos.feature.catalogue.auto.domain.implementa
 
 import android.content.Context
 import com.fredporciuncula.flow.preferences.FlowSharedPreferences
-import com.savvasdalkitsis.uhuruphotos.api.albums.repository.AlbumsRepository
 import com.savvasdalkitsis.uhuruphotos.feature.catalogue.auto.domain.api.usecase.AutoAlbumsUseCase
+import com.savvasdalkitsis.uhuruphotos.feature.catalogue.auto.domain.implementation.repository.AutoAlbumsRepository
 import com.savvasdalkitsis.uhuruphotos.feature.catalogue.auto.view.api.state.AutoAlbum
 import com.savvasdalkitsis.uhuruphotos.feature.catalogue.view.api.ui.state.CatalogueSorting
 import com.savvasdalkitsis.uhuruphotos.feature.catalogue.view.api.ui.state.CatalogueSorting.Companion.sorted
@@ -33,7 +33,7 @@ import kotlinx.coroutines.flow.combine
 import javax.inject.Inject
 
 class AutoAlbumsUseCase @Inject constructor(
-    private val albumsRepository: AlbumsRepository,
+    private val autoAlbumsRepository: AutoAlbumsRepository,
     private val remoteMediaUseCase: RemoteMediaUseCase,
     flowSharedPreferences: FlowSharedPreferences,
     @ApplicationContext private val context: Context,
@@ -50,17 +50,17 @@ class AutoAlbumsUseCase @Inject constructor(
 
     override fun observeAutoAlbums(): Flow<List<AutoAlbum>> =
         combine(
-            albumsRepository.observeAutoAlbums(),
+            autoAlbumsRepository.observeAutoAlbums(),
             observeAutoAlbumsSorting(),
         ) { albums, sorting ->
             albums.toAutoAlbums(sorting)
         }
 
     override suspend fun refreshAutoAlbums() =
-        albumsRepository.refreshAutoAlbums()
+        autoAlbumsRepository.refreshAutoAlbums()
 
     override suspend fun getAutoAlbums(): List<AutoAlbum> =
-        albumsRepository.getAutoAlbums().toAutoAlbums(autoAlbumsSorting.get())
+        autoAlbumsRepository.getAutoAlbums().toAutoAlbums(autoAlbumsSorting.get())
 
     private fun List<AutoAlbums>.toAutoAlbums(sorting: CatalogueSorting): List<AutoAlbum> =
         sorted(

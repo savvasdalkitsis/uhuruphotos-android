@@ -15,9 +15,6 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.api.albums.repository
 
-import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.album.auto.AutoAlbums
-import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.album.auto.GetAutoAlbum
-import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.album.auto.GetPeopleForAutoAlbum
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.media.remote.GetRemoteMediaCollections
 import com.savvasdalkitsis.uhuruphotos.foundation.group.api.model.Group
 import kotlinx.coroutines.flow.Flow
@@ -33,12 +30,4 @@ interface AlbumsRepository {
     ): Result<Unit>
 
     suspend fun refreshAlbum(albumId: String)
-
-    fun observeAutoAlbums(): Flow<List<AutoAlbums>>
-    suspend fun getAutoAlbums(): List<AutoAlbums>
-    fun observeAutoAlbum(albumId: Int): Flow<List<GetAutoAlbum>>
-    suspend fun getAutoAlbum(albumId: Int): Group<String, GetAutoAlbum>
-    fun observeAutoAlbumPeople(albumId: Int): Flow<List<GetPeopleForAutoAlbum>>
-    suspend fun refreshAutoAlbums(): Result<Unit>
-    suspend fun refreshAutoAlbum(albumId: Int): Result<Unit>
 }
