@@ -17,16 +17,15 @@ package com.savvasdalkitsis.uhuruphotos.feature.feed.domain.implementation.useca
 
 import app.cash.turbine.test
 import com.fredporciuncula.flow.preferences.FlowSharedPreferences
-import com.savvasdalkitsis.uhuruphotos.api.albums.repository.AlbumsRepository
-import com.savvasdalkitsis.uhuruphotos.api.albums.worker.AlbumWorkScheduler
-import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.albums.GetAlbums
-import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.TestMedia
+import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.media.remote.GetRemoteMediaCollections
+import com.savvasdalkitsis.uhuruphotos.feature.feed.domain.api.worker.FeedWorkScheduler
+import com.savvasdalkitsis.uhuruphotos.feature.feed.domain.implementation.repository.FeedRepository
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.TestMedia.mediaCollection
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.TestMedia.mediaItem
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaId
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.usecase.MediaUseCase
 import com.savvasdalkitsis.uhuruphotos.foundation.group.api.model.Group
-import com.savvasdalkitsis.uhuruphotos.implementation.albums.TestGetAlbums.getAlbum
+import com.savvasdalkitsis.uhuruphotos.implementation.albums.TestGetAlbums.getRemoteMediaCollections
 import com.shazam.shazamcrest.MatcherAssert.assertThat
 import com.shazam.shazamcrest.matcher.Matchers.sameBeanAs
 import io.mockk.Called
@@ -42,25 +41,26 @@ import org.junit.Test
 
 class FeedUseCaseTest {
 
-    private val albumsRepository = mockk<AlbumsRepository>(relaxed = true)
-    private val albumWorkScheduler = mockk<AlbumWorkScheduler>(relaxed = true)
+    private val feedRepository = mockk<FeedRepository>(relaxed = true)
+    private val feedWorkScheduler = mockk<FeedWorkScheduler>(relaxed = true)
     private val mediaUseCase = mockk<MediaUseCase>(relaxed = true)
     private val preferences = mockk<FlowSharedPreferences>(relaxed = true)
     private val underTest = FeedUseCase(
-        albumsRepository,
+        feedRepository,
         mediaUseCase,
+        feedWorkScheduler,
         preferences,
     )
 
     @Test
     fun `observes feed from repository and updates`() = runBlocking {
-        val albums = Channel<Group<String, GetAlbums>> {}
-        coEvery { albumsRepository.observeAlbumsByDate() } returns albums.receiveAsFlow()
+        val albums = Channel<Group<String, GetRemoteMediaCollections>> {}
+        coEvery { feedRepository.observeRemoteMediaCollectionsByDate() } returns albums.receiveAsFlow()
 
         underTest.observeFeed().test {
             albums.send(
                 Group(mapOf(
-                    "albumId" to listOf(getAlbum.copy(
+                    "albumId" to listOf(getRemoteMediaCollections.copy(
                         id = "albumId",
                         photoId = "photoId",
                     ))
@@ -75,53 +75,53 @@ class FeedUseCaseTest {
 
     @Test
     fun `ignores errors when refreshing feed after observing`() = runBlocking {
-        albumsRepository.reportsHavingNoAlbums()
-        every { albumWorkScheduler.scheduleAlbumsRefreshNow(false) } throws IllegalStateException()
+        feedRepository.reportsHavingNoAlbums()
+        every { feedWorkScheduler.scheduleFeedRefreshNow(false) } throws IllegalStateException()
 
         underTest.observeFeed().collect()
     }
 
     @Test
     fun `refreshes feed when observing if missing from repo`() = runBlocking {
-        albumsRepository.reportsHavingNoAlbums()
+        feedRepository.reportsHavingNoAlbums()
 
         underTest.observeFeed().collect()
 
-        verify { albumWorkScheduler.scheduleAlbumsRefreshNow(false) }
+        verify { feedWorkScheduler.scheduleFeedRefreshNow(false) }
     }
 
     @Test
     fun `does not refresh feed when observing if not missing from repo`() = runBlocking {
-        albumsRepository.reportsHavingAlbums()
+        feedRepository.reportsHavingAlbums()
 
         underTest.observeFeed().collect()
 
-        verify { albumWorkScheduler wasNot Called }
+        verify { feedWorkScheduler wasNot Called }
     }
 
     @Test
     fun `gets feed from repository`() = runBlocking {
-        albumsRepository.returnsAlbumWithEntries(getAlbum.copy(
+        feedRepository.returnsAlbumWithEntries(getRemoteMediaCollections.copy(
             id = "collectionId",
             photoId = "photoId",
         ))
 
         assertThat(underTest.getFeed(), sameBeanAs(listOf(
-            TestMedia.mediaCollection.copy(
+            mediaCollection.copy(
             id = "collectionId",
             mediaItems = listOf(mediaItem.copy(id = MediaId.Remote("photoId")))
         ))))
     }
 
-    private fun AlbumsRepository.reportsHavingNoAlbums() {
-        coEvery { hasAlbums() } returns false
+    private fun FeedRepository.reportsHavingNoAlbums() {
+        coEvery { hasRemoteMediaCollections() } returns false
     }
 
-    private fun AlbumsRepository.reportsHavingAlbums() {
-        coEvery { hasAlbums() } returns true
+    private fun FeedRepository.reportsHavingAlbums() {
+        coEvery { hasRemoteMediaCollections() } returns true
     }
 
-    private fun AlbumsRepository.returnsAlbumWithEntries(vararg albums: GetAlbums) {
-        coEvery { getAlbumsByDate() } returns Group(mapOf("albumId" to albums.toList()))
+    private fun FeedRepository.returnsAlbumWithEntries(vararg albums: GetRemoteMediaCollections) {
+        coEvery { getRemoteMediaCollectionsByDate() } returns Group(mapOf("albumId" to albums.toList()))
     }
 }

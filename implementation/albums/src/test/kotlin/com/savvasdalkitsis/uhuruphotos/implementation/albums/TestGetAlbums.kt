@@ -46,7 +46,7 @@ fun album(album: Int, vararg albums: GetAlbums) = albumId(album) to albums.map {
     it.copy(id = albumId(album), albumDate = album(album).date)
 }
 
-fun entry(photoSummary: RemoteMediaItemSummary) = TestGetAlbums.getAlbum.copy(photoId = photoSummary.id)
+fun entry(photoSummary: RemoteMediaItemSummary) = TestGetAlbums.getRemoteMediaCollections.copy(photoId = photoSummary.id)
 
 fun entry(personId: Int, photoSummary: RemoteMediaItemSummary) =
     TestGetAlbums.getPersonAlbum.copy(personId = personId, photoId = photoSummary.id)

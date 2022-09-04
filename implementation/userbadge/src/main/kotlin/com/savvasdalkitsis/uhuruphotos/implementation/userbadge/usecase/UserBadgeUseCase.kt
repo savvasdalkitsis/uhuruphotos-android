@@ -22,13 +22,13 @@ import androidx.work.WorkInfo.State.ENQUEUED
 import androidx.work.WorkInfo.State.FAILED
 import androidx.work.WorkInfo.State.RUNNING
 import androidx.work.WorkInfo.State.SUCCEEDED
-import com.savvasdalkitsis.uhuruphotos.api.albums.worker.AlbumWorkScheduler
 import com.savvasdalkitsis.uhuruphotos.api.auth.usecase.ServerUseCase
 import com.savvasdalkitsis.uhuruphotos.api.userbadge.ui.state.SyncState.BAD
 import com.savvasdalkitsis.uhuruphotos.api.userbadge.ui.state.SyncState.GOOD
 import com.savvasdalkitsis.uhuruphotos.api.userbadge.ui.state.SyncState.IN_PROGRESS
 import com.savvasdalkitsis.uhuruphotos.api.userbadge.ui.state.UserInformationState
 import com.savvasdalkitsis.uhuruphotos.api.userbadge.usecase.UserBadgeUseCase
+import com.savvasdalkitsis.uhuruphotos.feature.feed.domain.api.worker.FeedWorkScheduler
 import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.api.usecase.RemoteMediaUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.user.domain.api.usecase.UserUseCase
 import kotlinx.coroutines.flow.Flow
@@ -37,14 +37,14 @@ import javax.inject.Inject
 
 class UserBadgeUseCase @Inject constructor(
     private val userUseCase: UserUseCase,
-    private val albumWorkScheduler: AlbumWorkScheduler,
+    private val feedWorkScheduler: FeedWorkScheduler,
     private val remoteMediaUseCase: RemoteMediaUseCase,
     private val serverUseCase: ServerUseCase,
 ) : UserBadgeUseCase {
 
     override fun getUserBadgeState(): Flow<UserInformationState> = combine(
         userUseCase.observeUser(),
-        albumWorkScheduler.observeAlbumRefreshJobStatus(),
+        feedWorkScheduler.observeFeedRefreshJobStatus(),
         serverUseCase.observeServerUrl(),
     ) { user, status, serverUrl ->
         UserInformationState(

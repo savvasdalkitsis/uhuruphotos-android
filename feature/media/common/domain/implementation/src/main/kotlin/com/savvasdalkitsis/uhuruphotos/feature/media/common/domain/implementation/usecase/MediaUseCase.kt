@@ -16,7 +16,6 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.implementation.usecase
 
 import androidx.work.WorkInfo
-import com.savvasdalkitsis.uhuruphotos.api.albums.worker.AlbumWorkScheduler
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.entities.media.DbRemoteMediaItemDetails
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.entities.media.DbRemoteMediaItemSummary
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.entities.media.latLng
@@ -58,7 +57,6 @@ class MediaUseCase @Inject constructor(
     private val userUseCase: UserUseCase,
     private val dateDisplayer: DateDisplayer,
     private val peopleUseCase: PeopleUseCase,
-    private val albumWorkScheduler: AlbumWorkScheduler,
 ) : MediaUseCase {
 
     override fun MediaId<*>.toThumbnailUriFromId(isVideo: Boolean): String =
@@ -320,10 +318,6 @@ class MediaUseCase @Inject constructor(
                 }
             }
         )
-    }
-
-    override fun refreshMediaSummaries(shallow: Boolean) {
-        albumWorkScheduler.scheduleAlbumsRefreshNow(shallow)
     }
 
     override suspend fun refreshHiddenMedia() =

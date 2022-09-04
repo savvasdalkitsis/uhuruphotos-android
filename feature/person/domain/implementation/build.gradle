@@ -4,6 +4,7 @@ android {
 
 dependencies {
     implementation project(":feature:person:domain:api")
+    implementation project(":feature:feed:domain:api")
     implementation project(":foundation:coroutines:api")
     implementation project(":foundation:log:api")
     implementation(

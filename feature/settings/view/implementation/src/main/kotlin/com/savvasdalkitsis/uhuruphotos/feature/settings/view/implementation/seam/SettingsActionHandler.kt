@@ -17,8 +17,8 @@ package com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.sea
 
 import androidx.work.ExistingPeriodicWorkPolicy.CANCEL_AND_REENQUEUE
 import androidx.work.WorkInfo.State.RUNNING
-import com.savvasdalkitsis.uhuruphotos.api.albums.worker.AlbumWorkScheduler
 import com.savvasdalkitsis.uhuruphotos.api.userbadge.usecase.UserBadgeUseCase
+import com.savvasdalkitsis.uhuruphotos.feature.feed.domain.api.worker.FeedWorkScheduler
 import com.savvasdalkitsis.uhuruphotos.feature.search.domain.api.usecase.SearchUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.settings.domain.api.usecase.CacheSettingsUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.SettingsAction.AskForFullFeedSync
@@ -94,7 +94,7 @@ import javax.inject.Inject
 
 internal class SettingsActionHandler @Inject constructor(
     private val settingsUseCase: com.savvasdalkitsis.uhuruphotos.feature.settings.domain.api.usecase.SettingsUseCase,
-    private val albumWorkScheduler: AlbumWorkScheduler,
+    private val feedWorkScheduler: FeedWorkScheduler,
     private val userBadgeUseCase: UserBadgeUseCase,
     private val cacheUseCase: CacheSettingsUseCase,
     private val feedbackUseCase: FeedbackUseCase,
@@ -154,7 +154,7 @@ internal class SettingsActionHandler @Inject constructor(
                 .map(::DisplayVideoDiskCacheCurrentUse),
             userBadgeUseCase.getUserBadgeState()
                 .map(::UserBadgeUpdate),
-            albumWorkScheduler.observeAlbumRefreshJob()
+            feedWorkScheduler.observeFeedRefreshJob()
                 .flatMapMerge {
                     flowOf(
                         when (it.status) {
@@ -189,23 +189,23 @@ internal class SettingsActionHandler @Inject constructor(
         is FeedSyncFrequencyChanged -> flow {
             settingsUseCase.setFeedSyncFrequency(action.frequency.toInt())
             settingsUseCase.setShouldPerformPeriodicFullSync(action.frequency != action.upperLimit)
-            albumWorkScheduler.scheduleAlbumsRefreshPeriodic(CANCEL_AND_REENQUEUE)
+            feedWorkScheduler.scheduleFeedRefreshPeriodic(CANCEL_AND_REENQUEUE)
             effect(ShowMessage(string.feed_sync_freq_changed))
         }
         AskForFullFeedSync -> flowOf(ShowFullFeedSyncDialog)
         DismissFullFeedSyncDialog -> flowOf(HideFullFeedSyncDialog)
         PerformFullFeedSync -> flow {
-            albumWorkScheduler.scheduleAlbumsRefreshNow(shallow = false)
+            feedWorkScheduler.scheduleFeedRefreshNow(shallow = false)
             emit(HideFullFeedSyncDialog)
         }
         is ChangeFullSyncNetworkRequirements -> flow {
             settingsUseCase.setFullSyncNetworkRequirements(action.networkType)
-            albumWorkScheduler.scheduleAlbumsRefreshPeriodic(CANCEL_AND_REENQUEUE)
+            feedWorkScheduler.scheduleFeedRefreshPeriodic(CANCEL_AND_REENQUEUE)
             effect(ShowMessage(string.feed_sync_network_changed))
         }
         is ChangeFullSyncChargingRequirements -> flow {
             settingsUseCase.setFullSyncRequiresCharging(action.requiredCharging)
-            albumWorkScheduler.scheduleAlbumsRefreshPeriodic(CANCEL_AND_REENQUEUE)
+            feedWorkScheduler.scheduleFeedRefreshPeriodic(CANCEL_AND_REENQUEUE)
             effect(ShowMessage(string.feed_sync_charging_changed))
         }
         is ChangeThemeMode -> flow {

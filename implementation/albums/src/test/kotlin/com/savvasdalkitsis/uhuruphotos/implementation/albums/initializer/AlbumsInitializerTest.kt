@@ -17,7 +17,7 @@ package com.savvasdalkitsis.uhuruphotos.implementation.albums.initializer
 
 import android.app.Application
 import androidx.work.ExistingPeriodicWorkPolicy
-import com.savvasdalkitsis.uhuruphotos.implementation.albums.worker.AlbumWorkScheduler
+import com.savvasdalkitsis.uhuruphotos.feature.feed.domain.implementation.AlbumWorkScheduler
 import io.mockk.mockk
 import io.mockk.verify
 import org.junit.Test
@@ -26,8 +26,11 @@ class AlbumsInitializerTest {
 
     @Test
     fun `schedules periodic album sync on app startup`() {
-        val albumWorkScheduler = mockk<AlbumWorkScheduler>(relaxed = true)
-        val underTest = AlbumsInitializer(albumWorkScheduler)
+        val albumWorkScheduler = mockk<com.savvasdalkitsis.uhuruphotos.feature.feed.domain.implementation.AlbumWorkScheduler>(relaxed = true)
+        val underTest =
+            com.savvasdalkitsis.uhuruphotos.feature.feed.domain.implementation.initializer.AlbumsInitializer(
+                albumWorkScheduler
+            )
 
         underTest.onAppCreated(Application())
 

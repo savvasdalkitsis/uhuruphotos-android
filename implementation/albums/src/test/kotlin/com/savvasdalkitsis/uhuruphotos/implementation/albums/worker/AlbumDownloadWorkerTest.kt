@@ -27,11 +27,10 @@ import androidx.work.impl.utils.futures.SettableFuture
 import androidx.work.impl.utils.taskexecutor.TaskExecutor
 import androidx.work.workDataOf
 import com.google.common.util.concurrent.Futures.immediateFuture
+import com.savvasdalkitsis.uhuruphotos.feature.feed.domain.implementation.worker.AlbumDownloadWorker.Companion.Progress
 import com.savvasdalkitsis.uhuruphotos.foundation.notification.api.ForegroundInfoBuilder
 import com.savvasdalkitsis.uhuruphotos.foundation.notification.api.NotificationChannels.JOBS_CHANNEL_ID
 import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
-import com.savvasdalkitsis.uhuruphotos.implementation.albums.repository.AlbumsRepository
-import com.savvasdalkitsis.uhuruphotos.implementation.albums.worker.AlbumDownloadWorker.Companion.Progress
 import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.every
@@ -49,14 +48,19 @@ class AlbumDownloadWorkerTest {
     private val foregroundInfoBuilder = mockk<ForegroundInfoBuilder>(relaxed = true)
     private val context = mockk<Context>(relaxed = true)
 
-    private fun albumDownloadWorker(params: WorkerParameters = params()): AlbumDownloadWorker {
-        return AlbumDownloadWorker(context, params, albumsRepository, foregroundInfoBuilder)
+    private fun albumDownloadWorker(params: WorkerParameters = params()): com.savvasdalkitsis.uhuruphotos.feature.feed.domain.implementation.worker.AlbumDownloadWorker {
+        return com.savvasdalkitsis.uhuruphotos.feature.feed.domain.implementation.worker.AlbumDownloadWorker(
+            context,
+            params,
+            albumsRepository,
+            foregroundInfoBuilder
+        )
     }
 
     @Test
     fun `starts a shallow refresh`() = runBlocking {
         val underTest = albumDownloadWorker(params {
-            put(AlbumDownloadWorker.KEY_SHALLOW, true)
+            put(com.savvasdalkitsis.uhuruphotos.feature.feed.domain.implementation.worker.AlbumDownloadWorker.KEY_SHALLOW, true)
         })
 
         underTest.doWork()
@@ -67,7 +71,7 @@ class AlbumDownloadWorkerTest {
     @Test
     fun `starts a deep refresh`() = runBlocking {
         val underTest = albumDownloadWorker(params {
-            put(AlbumDownloadWorker.KEY_SHALLOW, false)
+            put(com.savvasdalkitsis.uhuruphotos.feature.feed.domain.implementation.worker.AlbumDownloadWorker.KEY_SHALLOW, false)
         })
 
         underTest.doWork()

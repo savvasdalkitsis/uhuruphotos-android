@@ -13,18 +13,11 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
  */
-package com.savvasdalkitsis.uhuruphotos.api.albums.worker
+package com.savvasdalkitsis.uhuruphotos.feature.feed.domain.api.worker
 
-import androidx.work.ExistingPeriodicWorkPolicy
 import androidx.work.WorkInfo
-import kotlinx.coroutines.flow.Flow
 
-interface AlbumWorkScheduler {
-
-    fun scheduleAlbumsRefreshNow(shallow: Boolean)
-    fun scheduleAlbumsRefreshPeriodic(
-        existingPeriodicWorkPolicy: ExistingPeriodicWorkPolicy
-    )
-    fun observeAlbumRefreshJob(): Flow<RefreshJobState>
-    fun observeAlbumRefreshJobStatus(): Flow<WorkInfo.State>
-}
+data class RefreshJobState(
+    val status: WorkInfo.State,
+    val progress: Int,
+)

@@ -15,31 +15,15 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.implementation.albums.module
 
-import com.savvasdalkitsis.uhuruphotos.foundation.initializer.api.ApplicationCreated
 import com.savvasdalkitsis.uhuruphotos.implementation.albums.TempRemoteMediaUseCase
-import com.savvasdalkitsis.uhuruphotos.implementation.albums.initializer.AlbumsInitializer
-import com.savvasdalkitsis.uhuruphotos.implementation.albums.repository.AlbumsRepository
-import com.savvasdalkitsis.uhuruphotos.implementation.albums.worker.AlbumWorkScheduler
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
-import dagger.multibindings.IntoSet
 
 @Module
 @InstallIn(SingletonComponent::class)
 internal abstract class AlbumsBindingsModule {
-
-    @Binds @IntoSet
-    abstract fun albumInitializer(albumsInitializer: AlbumsInitializer): ApplicationCreated
-
-    @Binds
-    abstract fun albumWorkScheduler(albumWorkScheduler: AlbumWorkScheduler):
-            com.savvasdalkitsis.uhuruphotos.api.albums.worker.AlbumWorkScheduler
-
-    @Binds
-    abstract fun albumsRepository(albumsRepository: AlbumsRepository):
-            com.savvasdalkitsis.uhuruphotos.api.albums.repository.AlbumsRepository
 
     @Binds
     abstract fun tempRemoteMediaCollectionsUseCase(tempRemoteMediaUseCase: TempRemoteMediaUseCase):

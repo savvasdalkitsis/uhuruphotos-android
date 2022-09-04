@@ -1,7 +1,7 @@
 package com.savvasdalkitsis.uhuruphotos.implementation.albums;
 
-import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.albums.GetAlbums;
-import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.albums.GetPersonAlbums;
+import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.media.remote.GetRemoteMediaCollections;
+import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.person.GetPersonAlbums;
 
 public class TestGetAlbums {
 
@@ -9,7 +9,7 @@ public class TestGetAlbums {
         // not to be instantiated
     }
 
-    public static final GetAlbums getAlbum = new GetAlbums(
+    public static final GetRemoteMediaCollections getRemoteMediaCollections = new GetRemoteMediaCollections(
         "albumId",
         "",
         null,

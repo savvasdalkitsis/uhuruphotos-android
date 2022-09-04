@@ -1,8 +1,8 @@
 package com.savvasdalkitsis.uhuruphotos.feature.person.domain.implementation.usecase
 
-import com.savvasdalkitsis.uhuruphotos.api.albums.repository.AlbumsRepository
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.extensions.isVideo
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.person.GetPersonAlbums
+import com.savvasdalkitsis.uhuruphotos.feature.feed.domain.api.usecase.FeedUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaCollection
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaCollectionSource
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.usecase.MediaUseCase
@@ -16,9 +16,9 @@ import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
 class PersonUseCase @Inject constructor(
-    private val albumsRepository: AlbumsRepository,
     private val personRepository: PersonRepository,
     private val mediaUseCase: MediaUseCase,
+    private val feedUseCase: FeedUseCase,
 ) : PersonUseCase {
 
     override fun observePersonMedia(id: Int): Flow<List<MediaCollection>> =
@@ -34,8 +34,8 @@ class PersonUseCase @Inject constructor(
 
     private fun Flow<List<MediaCollection>>.initialize(): Flow<List<MediaCollection>> = distinctUntilChanged()
         .safelyOnStartIgnoring {
-            if (!albumsRepository.hasAlbums()) {
-                mediaUseCase.refreshMediaSummaries(shallow = false)
+            if (!feedUseCase.hasFeed()) {
+                feedUseCase.refreshFeed(shallow = false)
             }
         }
 

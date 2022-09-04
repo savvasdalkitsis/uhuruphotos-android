@@ -6,10 +6,18 @@ dependencies {
     implementation project(":api:albums")
     implementation project(":feature:feed:domain:api")
     implementation project(":feature:collage:view:api")
+    implementation project(":feature:settings:domain:api")
     implementation project(":foundation:coroutines:api")
+    implementation project(":foundation:notification:api")
+    implementation project(":foundation:initializer:api")
+    implementation project(":foundation:log:api")
+    implementation project(":foundation:worker:api")
     implementation(
+            libs.androidx.work,
+            libs.androidx.work.hilt,
             libs.flowpreferences,
             libs.hilt,
+            libs.sqldelight.coroutines,
     )
     testImplementation testFixtures(project(":feature:db:domain:api"))
     testImplementation testFixtures(project(":implementation:albums"))

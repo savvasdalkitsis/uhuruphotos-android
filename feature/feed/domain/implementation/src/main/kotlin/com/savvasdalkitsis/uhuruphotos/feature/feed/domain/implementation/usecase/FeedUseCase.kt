@@ -16,11 +16,12 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.feature.feed.domain.implementation.usecase
 
 import com.fredporciuncula.flow.preferences.FlowSharedPreferences
-import com.savvasdalkitsis.uhuruphotos.api.albums.repository.AlbumsRepository
 import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.PredefinedCollageDisplay
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.extensions.isVideo
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.media.remote.GetRemoteMediaCollections
 import com.savvasdalkitsis.uhuruphotos.feature.feed.domain.api.usecase.FeedUseCase
+import com.savvasdalkitsis.uhuruphotos.feature.feed.domain.api.worker.FeedWorkScheduler
+import com.savvasdalkitsis.uhuruphotos.feature.feed.domain.implementation.repository.FeedRepository
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaCollection
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaCollectionSource
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.usecase.MediaUseCase
@@ -33,14 +34,15 @@ import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
 internal class FeedUseCase @Inject constructor(
-    private val albumsRepository: AlbumsRepository,
+    private val feedRepository: FeedRepository,
     private val mediaUseCase: MediaUseCase,
+    private val feedWorkScheduler: FeedWorkScheduler,
     preferences: FlowSharedPreferences,
 ) : FeedUseCase {
 
     private val preference = preferences.getEnum("feedDisplay", defaultValue = PredefinedCollageDisplay.default)
 
-    override fun observeFeed(): Flow<List<MediaCollection>> = albumsRepository.observeAlbumsByDate()
+    override fun observeFeed(): Flow<List<MediaCollection>> = feedRepository.observeRemoteMediaCollectionsByDate()
         .map {
             it.mapValues { albums ->
                 albums.toMediaCollectionSource()
@@ -49,25 +51,32 @@ internal class FeedUseCase @Inject constructor(
             it.toCollection()
         }.initialize()
 
-    override suspend fun getFeed(): List<MediaCollection> = albumsRepository.getAlbumsByDate()
+    override suspend fun getFeed(): List<MediaCollection> = feedRepository.getRemoteMediaCollectionsByDate()
         .mapValues { it.toMediaCollectionSource() }
         .toCollection()
 
     override suspend fun refreshCluster(clusterId: String) {
-        albumsRepository.refreshAlbum(clusterId)
+        feedRepository.refreshRemoteMediaCollection(clusterId)
     }
 
     private fun Flow<List<MediaCollection>>.initialize() = distinctUntilChanged()
         .safelyOnStartIgnoring {
-            if (!albumsRepository.hasAlbums()) {
-                mediaUseCase.refreshMediaSummaries(shallow = false)
+            if (!feedRepository.hasRemoteMediaCollections()) {
+                refreshFeed(shallow = false)
             }
         }
+
+    override suspend fun hasFeed(): Boolean =
+        feedRepository.hasRemoteMediaCollections()
 
     override fun getFeedDisplay(): Flow<PredefinedCollageDisplay> = preference.asFlow()
 
     override suspend fun setFeedDisplay(feedDisplay: PredefinedCollageDisplay) {
         preference.setAndCommit(feedDisplay)
+    }
+
+    override fun refreshFeed(shallow: Boolean) {
+        feedWorkScheduler.scheduleFeedRefreshNow(shallow)
     }
 
     private fun GetRemoteMediaCollections.toMediaCollectionSource() = MediaCollectionSource(

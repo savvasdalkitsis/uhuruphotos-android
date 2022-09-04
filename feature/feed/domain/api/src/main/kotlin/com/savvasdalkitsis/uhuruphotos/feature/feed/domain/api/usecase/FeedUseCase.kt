@@ -26,4 +26,6 @@ interface FeedUseCase {
     fun getFeedDisplay(): Flow<PredefinedCollageDisplay>
     suspend fun setFeedDisplay(feedDisplay: PredefinedCollageDisplay)
     suspend fun refreshCluster(clusterId: String)
+    fun refreshFeed(shallow: Boolean)
+    suspend fun hasFeed(): Boolean
 }

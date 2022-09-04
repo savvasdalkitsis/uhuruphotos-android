@@ -72,6 +72,4 @@ interface MediaUseCase {
     fun observeOriginalFileDownloadStatus(id: MediaId<*>): Flow<WorkInfo.State>
 
     suspend fun Group<String, MediaCollectionSource>.toMediaCollection(): List<MediaCollection>
-
-    fun refreshMediaSummaries(shallow: Boolean)
 }

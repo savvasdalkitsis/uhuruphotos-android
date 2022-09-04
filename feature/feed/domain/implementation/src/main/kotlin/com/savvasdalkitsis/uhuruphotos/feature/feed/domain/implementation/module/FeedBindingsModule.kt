@@ -15,17 +15,29 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.feed.domain.implementation.module
 
+import com.savvasdalkitsis.uhuruphotos.feature.feed.domain.implementation.FeedWorkScheduler
+import com.savvasdalkitsis.uhuruphotos.feature.feed.domain.implementation.initializer.FeedInitializer
 import com.savvasdalkitsis.uhuruphotos.feature.feed.domain.implementation.usecase.FeedUseCase
+import com.savvasdalkitsis.uhuruphotos.foundation.initializer.api.ApplicationCreated
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
+import dagger.multibindings.IntoSet
 
 @Module
 @InstallIn(SingletonComponent::class)
 internal abstract class FeedBindingsModule {
 
+    @Binds @IntoSet
+    abstract fun feedInitializer(feedInitializer: FeedInitializer): ApplicationCreated
+
     @Binds
     abstract fun feedUseCase(feedUseCase: FeedUseCase):
             com.savvasdalkitsis.uhuruphotos.feature.feed.domain.api.usecase.FeedUseCase
+
+    @Binds
+    abstract fun feedWorkScheduler(feedWorkScheduler: FeedWorkScheduler):
+            com.savvasdalkitsis.uhuruphotos.feature.feed.domain.api.worker.FeedWorkScheduler
+
 }

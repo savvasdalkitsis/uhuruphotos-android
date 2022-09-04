@@ -13,12 +13,14 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
  */
-package com.savvasdalkitsis.uhuruphotos.implementation.albums.worker
+package com.savvasdalkitsis.uhuruphotos.feature.feed.domain.implementation
 
 import androidx.work.ExistingPeriodicWorkPolicy
 import androidx.work.WorkInfo
-import com.savvasdalkitsis.uhuruphotos.api.albums.worker.AlbumWorkScheduler
-import com.savvasdalkitsis.uhuruphotos.api.albums.worker.RefreshJobState
+import com.savvasdalkitsis.uhuruphotos.feature.feed.domain.api.worker.FeedWorkScheduler
+import com.savvasdalkitsis.uhuruphotos.feature.feed.domain.api.worker.RefreshJobState
+import com.savvasdalkitsis.uhuruphotos.feature.feed.domain.implementation.worker.FeedDownloadWorker
+import com.savvasdalkitsis.uhuruphotos.feature.settings.domain.api.usecase.SettingsUseCase
 import com.savvasdalkitsis.uhuruphotos.foundation.worker.api.WorkScheduler
 import com.savvasdalkitsis.uhuruphotos.foundation.worker.api.usecase.WorkerStatusUseCase
 import kotlinx.coroutines.flow.Flow
@@ -26,23 +28,23 @@ import kotlinx.coroutines.flow.map
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
-internal class AlbumWorkScheduler @Inject constructor(
+internal class FeedWorkScheduler @Inject constructor(
     private val workScheduler: WorkScheduler,
     private val workerStatusUseCase: WorkerStatusUseCase,
-    private val settingsUseCase: com.savvasdalkitsis.uhuruphotos.feature.settings.domain.api.usecase.SettingsUseCase,
-) : AlbumWorkScheduler {
+    private val settingsUseCase: SettingsUseCase
+) : FeedWorkScheduler {
 
-    override fun scheduleAlbumsRefreshNow(shallow: Boolean) =
-        workScheduler.scheduleNow<AlbumDownloadWorker>(AlbumDownloadWorker.WORK_NAME) {
-            putBoolean(AlbumDownloadWorker.KEY_SHALLOW, shallow)
+    override fun scheduleFeedRefreshNow(shallow: Boolean) =
+        workScheduler.scheduleNow<FeedDownloadWorker>(FeedDownloadWorker.WORK_NAME) {
+            putBoolean(FeedDownloadWorker.KEY_SHALLOW, shallow)
         }
 
-    override fun scheduleAlbumsRefreshPeriodic(
+    override fun scheduleFeedRefreshPeriodic(
         existingPeriodicWorkPolicy: ExistingPeriodicWorkPolicy
     ) {
         if (settingsUseCase.getShouldPerformPeriodicFullSync()) {
-            workScheduler.schedulePeriodic<AlbumDownloadWorker>(
-                AlbumDownloadWorker.WORK_NAME,
+            workScheduler.schedulePeriodic<FeedDownloadWorker>(
+                FeedDownloadWorker.WORK_NAME,
                 repeatInterval = settingsUseCase.getFeedSyncFrequency().toLong(),
                 repeatIntervalTimeUnit = TimeUnit.HOURS,
                 initialDelayDuration = 1,
@@ -52,18 +54,18 @@ internal class AlbumWorkScheduler @Inject constructor(
                 requiresCharging = settingsUseCase.getFullSyncRequiresCharging(),
             )
         } else {
-            workScheduler.workManager.cancelUniqueWork(AlbumDownloadWorker.WORK_NAME)
+            workScheduler.workManager.cancelUniqueWork(FeedDownloadWorker.WORK_NAME)
         }
     }
 
-    override fun observeAlbumRefreshJob(): Flow<RefreshJobState> =
-        workerStatusUseCase.monitorUniqueJob(AlbumDownloadWorker.WORK_NAME).map {
+    override fun observeFeedRefreshJob(): Flow<RefreshJobState> =
+        workerStatusUseCase.monitorUniqueJob(FeedDownloadWorker.WORK_NAME).map {
             RefreshJobState(
                 status = it.state,
-                progress = it.progress.getInt(AlbumDownloadWorker.Progress, 0)
+                progress = it.progress.getInt(FeedDownloadWorker.Progress, 0)
             )
         }
 
-    override fun observeAlbumRefreshJobStatus(): Flow<WorkInfo.State> =
-        workerStatusUseCase.monitorUniqueJobStatus(AlbumDownloadWorker.WORK_NAME)
+    override fun observeFeedRefreshJobStatus(): Flow<WorkInfo.State> =
+        workerStatusUseCase.monitorUniqueJobStatus(FeedDownloadWorker.WORK_NAME)
 }
