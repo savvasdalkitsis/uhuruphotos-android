@@ -44,12 +44,9 @@ import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.media.remote.Remote
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.media.remote.RemoteMediaItemDetailsQueries
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.media.remote.RemoteMediaItemSummaryQueries
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.people.PeopleQueries
-import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.person.GetPersonAlbums
-import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.person.PersonQueries
 import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.api.model.toDbModel
 import com.savvasdalkitsis.uhuruphotos.feature.people.domain.api.service.model.toDbModel
 import com.savvasdalkitsis.uhuruphotos.feature.settings.domain.api.usecase.SettingsUseCase
-import com.savvasdalkitsis.uhuruphotos.foundation.coroutines.api.safelyOnStartIgnoring
 import com.savvasdalkitsis.uhuruphotos.foundation.group.api.model.Group
 import com.savvasdalkitsis.uhuruphotos.foundation.group.api.model.groupBy
 import com.savvasdalkitsis.uhuruphotos.foundation.log.api.runCatchingWithLog
@@ -71,7 +68,6 @@ internal class AlbumsRepository @Inject constructor(
     private val autoAlbumQueries: AutoAlbumQueries,
     private val autoAlbumPhotosQueries: AutoAlbumPhotosQueries,
     private val autoAlbumPeopleQueries: AutoAlbumPeopleQueries,
-    private val personQueries: PersonQueries,
     private val peopleQueries: PeopleQueries,
     private val remoteMediaItemSummaryQueries: RemoteMediaItemSummaryQueries,
     private val remoteMediaItemDetailsQueries: RemoteMediaItemDetailsQueries,
@@ -132,18 +128,6 @@ internal class AlbumsRepository @Inject constructor(
             shallow = false,
         )
     }
-
-
-    override fun observePersonAlbums(personId: Int) : Flow<Group<String, GetPersonAlbums>> =
-        personQueries.getPersonAlbums(personId).asFlow().mapToList().groupBy(GetPersonAlbums::id)
-            .distinctUntilChanged()
-            .safelyOnStartIgnoring {
-                downloadPersonAlbums(personId)
-            }
-
-    override suspend fun getPersonAlbums(personId: Int) : Group<String, GetPersonAlbums> =
-        personQueries.getPersonAlbums(personId).await().groupBy(GetPersonAlbums::id).let(::Group)
-
 
     override fun observeAutoAlbums(): Flow<List<AutoAlbums>> =
         autoAlbumsQueries.getAutoAlbums().asFlow().mapToList()
@@ -241,30 +225,6 @@ internal class AlbumsRepository @Inject constructor(
                 userAlbumPhotosQueries.insert(photo.id, albumId.toString())
             }
         }
-    }
-
-    private suspend fun downloadPersonAlbums(personId: Int) {
-        process(
-            albumsFetcher = { albumsService.getAlbumsForPerson(personId) },
-            albumFetcher = { albumsService.getAlbumForPerson(it, personId).results },
-            shallow = false,
-            incompleteAlbumsProcessor = { albums ->
-                remoteMediaCollectionsQueries.transaction {
-                    for (album in albums.map { it.toDbModel() }) {
-                        remoteMediaCollectionsQueries.insert(album)
-                    }
-                }
-            },
-            completeAlbumProcessor = { album ->
-                for (photo in album.items) {
-                    personQueries.insert(
-                        id = null,
-                        personId = personId,
-                        photoId = photo.id
-                    )
-                }
-            }
-        )
     }
 
     private fun getAlbumAllPages(): suspend (String) -> Album.CompleteAlbum = { id ->

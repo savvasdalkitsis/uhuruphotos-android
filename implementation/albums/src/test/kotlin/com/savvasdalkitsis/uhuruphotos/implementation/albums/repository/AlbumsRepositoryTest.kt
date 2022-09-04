@@ -66,7 +66,6 @@ class AlbumsRepositoryTest {
         db.autoAlbumQueries,
         db.autoAlbumPhotosQueries,
         db.autoAlbumPeopleQueries,
-        db.personQueries,
         db.peopleQueries,
         db.remoteMediaItemSummaryQueries,
         db.remoteMediaItemDetailsQueries,

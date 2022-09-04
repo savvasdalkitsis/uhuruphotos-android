@@ -16,6 +16,7 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.implementation.albums.module
 
 import com.savvasdalkitsis.uhuruphotos.foundation.initializer.api.ApplicationCreated
+import com.savvasdalkitsis.uhuruphotos.implementation.albums.TempRemoteMediaUseCase
 import com.savvasdalkitsis.uhuruphotos.implementation.albums.initializer.AlbumsInitializer
 import com.savvasdalkitsis.uhuruphotos.implementation.albums.repository.AlbumsRepository
 import com.savvasdalkitsis.uhuruphotos.implementation.albums.worker.AlbumWorkScheduler
@@ -39,4 +40,8 @@ internal abstract class AlbumsBindingsModule {
     @Binds
     abstract fun albumsRepository(albumsRepository: AlbumsRepository):
             com.savvasdalkitsis.uhuruphotos.api.albums.repository.AlbumsRepository
+
+    @Binds
+    abstract fun tempRemoteMediaCollectionsUseCase(tempRemoteMediaUseCase: TempRemoteMediaUseCase):
+            com.savvasdalkitsis.uhuruphotos.api.albums.TempRemoteMediaUseCase
 }

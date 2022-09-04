@@ -7,6 +7,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.Med
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaCollectionSource
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.usecase.MediaUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.person.domain.api.usecase.PersonUseCase
+import com.savvasdalkitsis.uhuruphotos.feature.person.domain.implementation.repository.PersonRepository
 import com.savvasdalkitsis.uhuruphotos.foundation.coroutines.api.safelyOnStartIgnoring
 import com.savvasdalkitsis.uhuruphotos.foundation.group.api.model.mapValues
 import kotlinx.coroutines.flow.Flow
@@ -16,11 +17,12 @@ import javax.inject.Inject
 
 class PersonUseCase @Inject constructor(
     private val albumsRepository: AlbumsRepository,
+    private val personRepository: PersonRepository,
     private val mediaUseCase: MediaUseCase,
 ) : PersonUseCase {
 
     override fun observePersonMedia(id: Int): Flow<List<MediaCollection>> =
-        albumsRepository.observePersonAlbums(id)
+        personRepository.observePersonAlbums(id)
             .map {
                 with(mediaUseCase) {
                     it.mapValues { getPersonAlbums ->
@@ -38,7 +40,7 @@ class PersonUseCase @Inject constructor(
         }
 
     override suspend fun getPersonMedia(id: Int): List<MediaCollection> = with(mediaUseCase) {
-        albumsRepository.getPersonAlbums(id)
+        personRepository.getPersonAlbums(id)
             .mapValues { it.toMediaCollectionSource() }
             .toMediaCollection()
     }

@@ -21,7 +21,6 @@ import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.album.auto.GetPeopl
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.album.user.GetUserAlbum
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.album.user.UserAlbums
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.media.remote.GetRemoteMediaCollections
-import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.person.GetPersonAlbums
 import com.savvasdalkitsis.uhuruphotos.foundation.group.api.model.Group
 import kotlinx.coroutines.flow.Flow
 
@@ -32,9 +31,6 @@ interface AlbumsRepository {
     suspend fun getAlbumsByDate() : Group<String, GetRemoteMediaCollections>
     suspend fun refreshAlbums(shallow: Boolean, onProgressChange: suspend (Int) -> Unit): Result<Unit>
     suspend fun refreshAlbum(albumId: String)
-
-    fun observePersonAlbums(personId: Int) : Flow<Group<String, GetPersonAlbums>>
-    suspend fun getPersonAlbums(personId: Int) : Group<String, GetPersonAlbums>
 
     fun observeAutoAlbums(): Flow<List<AutoAlbums>>
     suspend fun getAutoAlbums(): List<AutoAlbums>
