@@ -22,7 +22,7 @@ import androidx.work.ForegroundInfo
 import androidx.work.ListenableWorker.Result
 import androidx.work.ProgressUpdater
 import androidx.work.WorkerParameters
-import androidx.work.impl.utils.SerialExecutor
+import androidx.work.impl.utils.SerialExecutorImpl
 import androidx.work.impl.utils.futures.SettableFuture
 import androidx.work.impl.utils.taskexecutor.TaskExecutor
 import androidx.work.workDataOf
@@ -136,7 +136,7 @@ private fun params(
         object : TaskExecutor {
             override fun getMainThreadExecutor() = executor
 
-            override fun getSerialTaskExecutor() = SerialExecutor(executor)
+            override fun getSerialTaskExecutor() = SerialExecutorImpl(executor)
         },
         DelegatingWorkerFactory(),
         progressUpdater

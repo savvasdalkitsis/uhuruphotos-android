@@ -39,13 +39,13 @@ fun AlbumsService.willRespondForAlbum(id: Int, album: Album.CompleteAlbum): Mute
     return response
 }
 fun AlbumsService.respondsWith(vararg albums: Album.IncompleteAlbum) {
-    coEvery { getAlbumsByDate() } returns AlbumsByDate(albums.size, listOf(*albums))
+    coEvery { getAlbumsByDate() } returns AlbumsByDate(listOf(*albums))
 }
 fun AlbumsService.willRespondWith(vararg albums: Album.IncompleteAlbum): Mutex {
     val response = Mutex(locked = true)
     coEvery { getAlbumsByDate() } coAnswers {
         response.withLock {
-            AlbumsByDate(albums.size, listOf(*albums))
+            AlbumsByDate(listOf(*albums))
         }
     }
     return response
@@ -55,7 +55,7 @@ fun AlbumsService.willRespondForPersonWith(personId: Int, vararg albums: Album.I
     val response = Mutex(locked = true)
     coEvery { getAlbumsForPerson(personId) } coAnswers {
         response.withLock {
-            AlbumsByDate(albums.size, listOf(*albums))
+            AlbumsByDate(listOf(*albums))
         }
     }
     return response
