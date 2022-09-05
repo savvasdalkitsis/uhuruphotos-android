@@ -18,6 +18,8 @@ package com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.api.usecase
 import androidx.work.WorkInfo
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.entities.media.DbRemoteMediaItemDetails
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.entities.media.DbRemoteMediaItemSummary
+import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.api.service.model.RemoteMediaCollection
+import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.api.service.model.RemoteMediaCollectionsByDate
 import kotlinx.coroutines.flow.Flow
 
 interface RemoteMediaUseCase {
@@ -65,4 +67,13 @@ interface RemoteMediaUseCase {
     fun downloadOriginal(id: String, video: Boolean)
 
     fun observeOriginalFileDownloadStatus(id: String): Flow<WorkInfo.State>
+
+    suspend fun processRemoteMediaCollections(
+        albumsFetcher: suspend () -> RemoteMediaCollectionsByDate,
+        remoteMediaCollectionFetcher: suspend (String) -> RemoteMediaCollection.Complete,
+        shallow: Boolean,
+        onProgressChange: suspend (Int) -> Unit = {},
+        incompleteAlbumsProcessor: suspend (List<RemoteMediaCollection.Incomplete>) -> Unit = {},
+        completeAlbumProcessor: suspend (RemoteMediaCollection.Complete) -> Unit = {},
+    ): Result<Unit>
 }

@@ -1,6 +1,5 @@
 dependencies {
     implementation project(":foundation:navigation:api")
-    implementation project(':api:albums')
     implementation(
             libs.hilt,
     )

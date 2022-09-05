@@ -1,8 +1,8 @@
 package com.savvasdalkitsis.uhuruphotos.implementation.albums;
 
-import com.savvasdalkitsis.uhuruphotos.api.albums.service.model.Album.CompleteAlbum;
-import com.savvasdalkitsis.uhuruphotos.api.albums.service.model.Album.IncompleteAlbum;
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.albums.Albums;
+import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.api.service.model.RemoteMediaCollection.Complete;
+import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.api.service.model.RemoteMediaCollection.Incomplete;
 
 import java.util.ArrayList;
 
@@ -21,7 +21,7 @@ public class TestAlbums {
             0
     );
 
-    public static final IncompleteAlbum incompleteAlbum = new IncompleteAlbum(
+    public static final Incomplete incompleteAlbum = new Incomplete(
             "id",
             "",
             "",
@@ -29,7 +29,7 @@ public class TestAlbums {
             0
     );
 
-    public static final CompleteAlbum completeAlbum = new CompleteAlbum(
+    public static final Complete completeAlbum = new Complete(
             "id",
             "",
             "",

@@ -14,7 +14,6 @@ android {
 
 dependencies {
 
-    implementation project(':api:albums')
     implementation project(":api:auth")
     implementation project(":foundation:compose:api")
     implementation project(":foundation:date:api")
@@ -32,6 +31,7 @@ dependencies {
     implementation project(":foundation:navigation:api")
     implementation project(":foundation:notification:api")
     implementation project(':feature:people:domain:api')
+    implementation project(':feature:people:view:api')
     implementation project(':feature:person:domain:api')
     implementation project(':feature:person:view:api')
     implementation project(':feature:search:domain:api')

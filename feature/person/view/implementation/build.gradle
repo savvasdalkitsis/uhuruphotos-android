@@ -9,7 +9,6 @@ android {
 }
 
 dependencies {
-    implementation project(':api:albums')
     implementation project(":feature:db:domain:api")
     implementation project(":feature:lightbox:view:api")
     implementation project(":feature:collage:view:api")

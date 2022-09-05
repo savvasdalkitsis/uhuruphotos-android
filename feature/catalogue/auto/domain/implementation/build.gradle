@@ -4,11 +4,16 @@ android {
 
 dependencies {
     implementation project(":feature:catalogue:auto:domain:api")
+    implementation project(":feature:media:common:domain:api")
+    implementation project(":feature:media:remote:domain:api")
     implementation project(":foundation:log:api")
-    implementation project(":api:albums")
+    implementation project(":foundation:strings:api")
     implementation(
             libs.flowpreferences,
             libs.hilt,
             libs.sqldelight.coroutines,
+            libs.retrofit.core,
+            libs.moshi,
     )
+    kapt libs.moshi.kapt
 }

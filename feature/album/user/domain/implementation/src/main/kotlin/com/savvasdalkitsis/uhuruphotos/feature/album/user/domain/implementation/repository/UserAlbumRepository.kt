@@ -15,7 +15,7 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.album.user.domain.implementation.repository
 
-import com.savvasdalkitsis.uhuruphotos.api.albums.service.AlbumsService
+import com.savvasdalkitsis.uhuruphotos.feature.album.user.domain.implementation.service.UserAlbumService
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.Database
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.album.user.GetUserAlbum
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.album.user.UserAlbum
@@ -37,7 +37,7 @@ class UserAlbumRepository @Inject constructor(
     private val db: Database,
     private val userAlbumQueries: UserAlbumQueries,
     private val userAlbumPhotosQueries: UserAlbumPhotosQueries,
-    private val albumsService: AlbumsService,
+    private val userAlbumService: UserAlbumService,
     private val remoteMediaItemSummaryQueries: RemoteMediaItemSummaryQueries,
 ) {
 
@@ -50,7 +50,7 @@ class UserAlbumRepository @Inject constructor(
             .distinctUntilChanged()
 
     suspend fun refreshUserAlbum(albumId: Int): Result<Unit> = runCatchingWithLog {
-        val album = albumsService.getUserAlbum(albumId.toString())
+        val album = userAlbumService.getUserAlbum(albumId.toString())
         db.transaction {
             userAlbumQueries.insert(
                 UserAlbum(

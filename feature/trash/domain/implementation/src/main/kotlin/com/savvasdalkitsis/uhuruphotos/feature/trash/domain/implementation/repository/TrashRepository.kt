@@ -15,8 +15,6 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.trash.domain.implementation.repository
 
-import com.savvasdalkitsis.uhuruphotos.api.albums.service.AlbumsService
-import com.savvasdalkitsis.uhuruphotos.api.albums.service.model.toDbModel
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.extensions.async
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.extensions.await
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.extensions.awaitSingle
@@ -24,6 +22,8 @@ import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.media.remote.GetTra
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.media.remote.RemoteMediaCollectionsQueries
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.media.remote.RemoteMediaTrashQueries
 import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.api.model.toTrash
+import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.api.service.model.toDbModel
+import com.savvasdalkitsis.uhuruphotos.feature.trash.domain.implementation.service.TrashService
 import com.savvasdalkitsis.uhuruphotos.foundation.group.api.model.Group
 import com.savvasdalkitsis.uhuruphotos.foundation.group.api.model.groupBy
 import com.savvasdalkitsis.uhuruphotos.foundation.log.api.runCatchingWithLog
@@ -36,7 +36,7 @@ import javax.inject.Inject
 class TrashRepository @Inject constructor(
     private val remoteMediaTrashQueries: RemoteMediaTrashQueries,
     private val remoteMediaCollectionsQueries: RemoteMediaCollectionsQueries,
-    private val albumsService: AlbumsService,
+    private val trashService: TrashService,
 ) {
 
     fun observeTrash(): Flow<Group<String, GetTrash>> =
@@ -51,7 +51,7 @@ class TrashRepository @Inject constructor(
         remoteMediaTrashQueries.getTrash().await().groupBy(GetTrash::id).let(::Group)
 
     suspend fun refreshTrash(): Result<Unit> = runCatchingWithLog {
-        val trash = albumsService.getTrash().results
+        val trash = trashService.getTrash().results
         async {
             remoteMediaCollectionsQueries.transaction {
                 for (album in trash) {
@@ -62,7 +62,7 @@ class TrashRepository @Inject constructor(
         async { remoteMediaTrashQueries.clear() }
         for (incompleteAlbum in trash) {
             val id = incompleteAlbum.id
-            val completeAlbum = albumsService.getTrashAlbum(id).results
+            val completeAlbum = trashService.getTrashMediaCollection(id).results
             async {
                 completeAlbum.items
                     .map { it.toTrash(id) }

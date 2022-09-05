@@ -14,11 +14,11 @@ android {
 
 dependencies {
 
-    implementation project(':api:albums')
     implementation project(":api:auth")
     implementation project(":foundation:compose:api")
     implementation project(":foundation:date:api")
     implementation project(":feature:db:domain:api")
+    implementation project(":feature:settings:domain:api")
     implementation project(":foundation:exif:api")
     implementation project(":foundation:icons:api")
     implementation project(':foundation:image:api')

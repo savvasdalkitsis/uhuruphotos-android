@@ -15,8 +15,8 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.catalogue.user.domain.implementation.repository
 
-import com.savvasdalkitsis.uhuruphotos.api.albums.service.AlbumsService
-import com.savvasdalkitsis.uhuruphotos.api.albums.service.model.toUserAlbums
+import com.savvasdalkitsis.uhuruphotos.feature.catalogue.user.domain.implementation.service.UserAlbumsService
+import com.savvasdalkitsis.uhuruphotos.feature.catalogue.user.domain.implementation.service.model.toUserAlbums
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.album.user.UserAlbums
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.album.user.UserAlbumsQueries
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.extensions.await
@@ -29,7 +29,7 @@ import javax.inject.Inject
 
 class UserAlbumsRepository @Inject constructor(
     private val userAlbumsQueries: UserAlbumsQueries,
-    private val albumsService: AlbumsService,
+    private val userAlbumsService: UserAlbumsService,
 ) {
 
     fun observeUserAlbums(): Flow<List<UserAlbums>> =
@@ -40,7 +40,7 @@ class UserAlbumsRepository @Inject constructor(
         userAlbumsQueries.getUserAlbums().await()
 
     suspend fun refreshUserAlbums(): Result<Unit> = runCatchingWithLog {
-        val albums = albumsService.getUserAlbums()
+        val albums = userAlbumsService.getUserAlbums()
         userAlbumsQueries.transaction {
             userAlbumsQueries.clearAll()
             for (album in albums.results) {

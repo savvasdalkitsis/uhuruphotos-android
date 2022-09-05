@@ -10,7 +10,6 @@ android {
 
 dependencies {
 
-    implementation project(':api:albums')
     implementation project(":api:auth")
     implementation project(":feature:db:domain:api")
     implementation project(":feature:feed:domain:api")

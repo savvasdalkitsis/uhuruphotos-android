@@ -3,7 +3,6 @@ android {
 }
 
 dependencies {
-    api project(":api:albums")
     api project(":feature:catalogue:view:api")
     api project(":feature:media:common:view:api")
     api(

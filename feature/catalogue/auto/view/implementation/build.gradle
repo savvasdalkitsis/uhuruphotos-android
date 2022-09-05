@@ -9,7 +9,6 @@ android {
 }
 
 dependencies {
-    implementation project(":api:albums")
     implementation project(":feature:catalogue:auto:domain:api")
     implementation project(":feature:catalogue:view:api")
     implementation project(":feature:album:auto:view:api")
@@ -21,6 +20,7 @@ dependencies {
     implementation project(':feature:media:common:view:api')
     implementation project(":feature:settings:domain:api")
     implementation project(":foundation:toaster:api")
+    implementation project(":foundation:strings:api")
     implementation(
             libs.accompanist.swiperefresh,
             libs.androidx.compose.foundation,

@@ -15,7 +15,6 @@ android {
 
 dependencies {
 
-    implementation project(':api:albums')
     implementation project(":foundation:coroutines:api")
     implementation project(":foundation:date:api")
     implementation project(":feature:db:domain:api")
@@ -47,6 +46,5 @@ dependencies {
     testFixturesImplementation testFixtures(project(":feature:db:domain:api"))
     testFixturesImplementation project(':feature:media:remote:domain:implementation')
     testFixturesImplementation project(':feature:media:common:domain:api')
-    testFixturesImplementation project(':api:albums')
     kapt libs.moshi.kapt
 }

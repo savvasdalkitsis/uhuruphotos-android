@@ -9,7 +9,6 @@ android {
 }
 
 dependencies {
-    implementation project(":api:albums")
     implementation project(":foundation:coroutines:api")
     implementation project(":feature:catalogue:view:api")
     implementation project(":foundation:log:api")
@@ -19,6 +18,7 @@ dependencies {
     implementation project(':feature:media:remote:domain:api')
     implementation project(":feature:settings:domain:api")
     implementation project(":foundation:toaster:api")
+    implementation project(":foundation:strings:api")
     implementation project(":feature:album:user:view:api")
     implementation project(":feature:catalogue:user:domain:api")
     implementation project(":feature:catalogue:user:view:api")

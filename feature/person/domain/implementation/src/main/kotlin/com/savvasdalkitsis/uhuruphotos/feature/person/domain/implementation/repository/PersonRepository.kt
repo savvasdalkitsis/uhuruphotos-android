@@ -15,13 +15,13 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.person.domain.implementation.repository
 
-import com.savvasdalkitsis.uhuruphotos.api.albums.TempRemoteMediaUseCase
-import com.savvasdalkitsis.uhuruphotos.api.albums.service.AlbumsService
-import com.savvasdalkitsis.uhuruphotos.api.albums.service.model.toDbModel
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.extensions.await
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.media.remote.RemoteMediaCollectionsQueries
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.person.GetPersonAlbums
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.person.PersonQueries
+import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.api.service.model.toDbModel
+import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.api.usecase.RemoteMediaUseCase
+import com.savvasdalkitsis.uhuruphotos.feature.person.domain.implementation.service.PersonService
 import com.savvasdalkitsis.uhuruphotos.foundation.coroutines.api.safelyOnStartIgnoring
 import com.savvasdalkitsis.uhuruphotos.foundation.group.api.model.Group
 import com.savvasdalkitsis.uhuruphotos.foundation.group.api.model.groupBy
@@ -33,9 +33,9 @@ import javax.inject.Inject
 
 class PersonRepository @Inject constructor(
     private val personQueries: PersonQueries,
-    private val albumsService: AlbumsService,
+    private val personService: PersonService,
     private val remoteMediaCollectionsQueries: RemoteMediaCollectionsQueries,
-    private val tempRemoteMediaUseCase: TempRemoteMediaUseCase,
+    private val remoteMediaUseCase: RemoteMediaUseCase,
 ) {
 
     fun observePersonAlbums(personId: Int) : Flow<Group<String, GetPersonAlbums>> =
@@ -49,9 +49,9 @@ class PersonRepository @Inject constructor(
         personQueries.getPersonAlbums(personId).await().groupBy(GetPersonAlbums::id).let(::Group)
 
     private suspend fun downloadPersonAlbums(personId: Int) {
-        tempRemoteMediaUseCase.processRemoteMediaCollections(
-            albumsFetcher = { albumsService.getAlbumsForPerson(personId) },
-            albumFetcher = { albumsService.getAlbumForPerson(it, personId).results },
+        remoteMediaUseCase.processRemoteMediaCollections(
+            albumsFetcher = { personService.getMediaCollectionsForPerson(personId) },
+            remoteMediaCollectionFetcher = { personService.getMediaCollectionForPerson(it, personId).results },
             shallow = false,
             incompleteAlbumsProcessor = { albums ->
                 remoteMediaCollectionsQueries.transaction {

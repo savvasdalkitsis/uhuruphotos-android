@@ -19,10 +19,17 @@ import androidx.work.WorkInfo
 import com.savvasdalkitsis.uhuruphotos.api.auth.usecase.ServerUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.entities.media.DbRemoteMediaItemDetails
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.entities.media.DbRemoteMediaItemSummary
+import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.extensions.async
+import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.media.remote.RemoteMediaItemSummaryQueries
+import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.api.model.toDbModel
+import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.api.service.model.RemoteMediaCollection
+import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.api.service.model.RemoteMediaCollectionsByDate
 import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.api.usecase.RemoteMediaUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.implementation.repository.RemoteMediaRepository
 import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.implementation.worker.RemoteMediaItemWorkScheduler
+import com.savvasdalkitsis.uhuruphotos.feature.settings.domain.api.usecase.SettingsUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.user.domain.api.usecase.UserUseCase
+import com.savvasdalkitsis.uhuruphotos.foundation.log.api.runCatchingWithLog
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.emitAll
 import kotlinx.coroutines.flow.flow
@@ -32,9 +39,11 @@ import javax.inject.Inject
 
 class RemoteMediaUseCase @Inject constructor(
     private val serverUseCase: ServerUseCase,
+    private val settingsUseCase: SettingsUseCase,
     private val remoteMediaRepository: RemoteMediaRepository,
     private val remoteMediaItemWorkScheduler: RemoteMediaItemWorkScheduler,
     private val userUseCase: UserUseCase,
+    private val remoteMediaItemSummaryQueries: RemoteMediaItemSummaryQueries,
 ) : RemoteMediaUseCase {
 
     override fun String?.toRemoteUrl(): String? = this?.toAbsoluteRemoteUrl()
@@ -133,6 +142,47 @@ class RemoteMediaUseCase @Inject constructor(
 
     override fun restoreMediaItem(id: String) {
         remoteMediaItemWorkScheduler.scheduleMediaItemRestoration(id)
+    }
+
+    override suspend fun processRemoteMediaCollections(
+        albumsFetcher: suspend () -> RemoteMediaCollectionsByDate,
+        remoteMediaCollectionFetcher: suspend (String) -> RemoteMediaCollection.Complete,
+        shallow: Boolean,
+        onProgressChange: suspend (Int) -> Unit,
+        incompleteAlbumsProcessor: suspend (List<RemoteMediaCollection.Incomplete>) -> Unit,
+        completeAlbumProcessor: suspend (RemoteMediaCollection.Complete) -> Unit
+    ): Result<Unit> = runCatchingWithLog {
+        onProgressChange(0)
+        val albums = albumsFetcher()
+        incompleteAlbumsProcessor(albums.results)
+        val albumsToDownloadSummaries = when {
+            shallow -> albums.results.take(settingsUseCase.getFeedDaysToRefresh())
+            else -> albums.results
+        }
+        for ((index, incompleteAlbum) in albumsToDownloadSummaries.withIndex()) {
+            val id = incompleteAlbum.id
+            updateSummaries(id, remoteMediaCollectionFetcher, completeAlbumProcessor)
+            onProgressChange((100 * ((index + 1) / albumsToDownloadSummaries.size.toFloat())).toInt())
+        }
+    }
+
+    private suspend fun updateSummaries(
+        id: String,
+        remoteMediaCollectionFetcher: suspend (String) -> RemoteMediaCollection.Complete,
+        completeAlbumProcessor: suspend (RemoteMediaCollection.Complete) -> Unit,
+    ) {
+        val completeAlbum = remoteMediaCollectionFetcher(id)
+        completeAlbumProcessor(completeAlbum)
+        async {
+            remoteMediaItemSummaryQueries.transaction {
+                remoteMediaItemSummaryQueries.deletePhotoSummariesforAlbum(id)
+                completeAlbum.items
+                    .map { it.toDbModel(id) }
+                    .forEach {
+                        remoteMediaItemSummaryQueries.insert(it)
+                    }
+            }
+        }
     }
 
     private suspend fun <T> withFavouriteThreshold(action: suspend (Int) -> T): Result<T> =

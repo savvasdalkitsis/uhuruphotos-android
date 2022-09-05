@@ -10,7 +10,6 @@ android {
 
 dependencies {
 
-    implementation project(':api:albums')
     implementation project(":feature:feed:domain:api")
     implementation project(":foundation:biometrics:api")
     implementation project(":foundation:navigation:api")

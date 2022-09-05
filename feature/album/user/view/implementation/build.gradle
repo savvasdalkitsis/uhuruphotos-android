@@ -10,7 +10,6 @@ android {
 
 dependencies {
     implementation project(":feature:gallery:view:api")
-    implementation project(':api:albums')
     implementation project(':foundation:date:api')
     implementation project(":feature:db:domain:api")
     implementation project(":feature:collage:view:api")

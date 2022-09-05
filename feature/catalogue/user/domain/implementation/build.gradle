@@ -9,5 +9,8 @@ dependencies {
             libs.flowpreferences,
             libs.hilt,
             libs.sqldelight.coroutines,
+            libs.retrofit.core,
+            libs.moshi,
     )
+    kapt libs.moshi.kapt
 }

@@ -15,57 +15,56 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.implementation.albums
 
-import com.savvasdalkitsis.uhuruphotos.api.albums.service.AlbumsService
-import com.savvasdalkitsis.uhuruphotos.api.albums.service.model.Album
-import com.savvasdalkitsis.uhuruphotos.api.albums.service.model.AlbumById
-import com.savvasdalkitsis.uhuruphotos.api.albums.service.model.AlbumsByDate
+import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.api.service.model.RemoteMediaCollection
+import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.api.service.model.RemoteMediaCollectionById
+import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.api.service.model.RemoteMediaCollectionsByDate
 import io.mockk.coEvery
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
 
-fun AlbumsService.respondsForAlbum(id: Int, album: Album.CompleteAlbum) {
-    coEvery { getAlbum(albumId(id), 1) } returns AlbumById(
-        album
+fun AlbumsService.respondsForAlbum(id: Int, remoteMediaCollection: RemoteMediaCollection.Complete) {
+    coEvery { getRemoteMediaCollection(albumId(id), 1) } returns RemoteMediaCollectionById(
+        remoteMediaCollection
     )
 }
 
-fun AlbumsService.willRespondForAlbum(id: Int, album: Album.CompleteAlbum): Mutex {
+fun AlbumsService.willRespondForAlbum(id: Int, remoteMediaCollection: RemoteMediaCollection.Complete): Mutex {
     val response = Mutex(locked = true)
-    coEvery { getAlbum(albumId(id), 1) } coAnswers {
+    coEvery { getRemoteMediaCollection(albumId(id), 1) } coAnswers {
         response.withLock {
-            AlbumById(album)
+            RemoteMediaCollectionById(remoteMediaCollection)
         }
     }
     return response
 }
-fun AlbumsService.respondsWith(vararg albums: Album.IncompleteAlbum) {
-    coEvery { getAlbumsByDate() } returns AlbumsByDate(listOf(*albums))
+fun AlbumsService.respondsWith(vararg albums: RemoteMediaCollection.Incomplete) {
+    coEvery { getRemoteMediaCollectionsByDate() } returns RemoteMediaCollectionsByDate(listOf(*albums))
 }
-fun AlbumsService.willRespondWith(vararg albums: Album.IncompleteAlbum): Mutex {
+fun AlbumsService.willRespondWith(vararg albums: RemoteMediaCollection.Incomplete): Mutex {
     val response = Mutex(locked = true)
-    coEvery { getAlbumsByDate() } coAnswers {
+    coEvery { getRemoteMediaCollectionsByDate() } coAnswers {
         response.withLock {
-            AlbumsByDate(listOf(*albums))
-        }
-    }
-    return response
-}
-
-fun AlbumsService.willRespondForPersonWith(personId: Int, vararg albums: Album.IncompleteAlbum): Mutex {
-    val response = Mutex(locked = true)
-    coEvery { getAlbumsForPerson(personId) } coAnswers {
-        response.withLock {
-            AlbumsByDate(listOf(*albums))
+            RemoteMediaCollectionsByDate(listOf(*albums))
         }
     }
     return response
 }
 
-fun AlbumsService.willRespondForPersonAlbum(personId: Int, albumId: Int, album: Album.CompleteAlbum): Mutex {
+fun AlbumsService.willRespondForPersonWith(personId: Int, vararg albums: RemoteMediaCollection.Incomplete): Mutex {
     val response = Mutex(locked = true)
-    coEvery { getAlbumForPerson(albumId(albumId), personId) } coAnswers {
+    coEvery { getMediaCollectionsForPerson(personId) } coAnswers {
         response.withLock {
-            AlbumById(album)
+            RemoteMediaCollectionsByDate(listOf(*albums))
+        }
+    }
+    return response
+}
+
+fun AlbumsService.willRespondForPersonAlbum(personId: Int, albumId: Int, remoteMediaCollection: RemoteMediaCollection.Complete): Mutex {
+    val response = Mutex(locked = true)
+    coEvery { getMediaCollectionForPerson(albumId(albumId), personId) } coAnswers {
+        response.withLock {
+            RemoteMediaCollectionById(remoteMediaCollection)
         }
     }
     return response

@@ -15,7 +15,7 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.album.auto.domain.implementation.repository
 
-import com.savvasdalkitsis.uhuruphotos.api.albums.service.AlbumsService
+import com.savvasdalkitsis.uhuruphotos.feature.album.auto.domain.implementation.service.AutoAlbumService
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.Database
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.album.auto.AutoAlbumPeopleQueries
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.album.auto.AutoAlbumPhotosQueries
@@ -42,7 +42,7 @@ class AutoAlbumRepository @Inject constructor(
     private val peopleQueries: PeopleQueries,
     private val autoAlbumPhotosQueries: AutoAlbumPhotosQueries,
     private val remoteMediaItemDetailsQueries: RemoteMediaItemDetailsQueries,
-    private val albumsService: AlbumsService,
+    private val autoAlbumService: AutoAlbumService,
 ) {
 
     fun observeAutoAlbum(albumId: Int): Flow<List<GetAutoAlbum>> =
@@ -57,7 +57,7 @@ class AutoAlbumRepository @Inject constructor(
             .asFlow().mapToList()
 
     suspend fun refreshAutoAlbum(albumId: Int): Result<Unit> = runCatchingWithLog {
-        val album = albumsService.getAutoAlbum(albumId.toString())
+        val album = autoAlbumService.getAutoAlbum(albumId.toString())
         db.transaction {
             autoAlbumQueries.insert(
                 id = albumId.toString(),

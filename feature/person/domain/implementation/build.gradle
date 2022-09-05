@@ -5,12 +5,16 @@ android {
 dependencies {
     implementation project(":feature:person:domain:api")
     implementation project(":feature:feed:domain:api")
+    implementation project(":feature:media:remote:domain:api")
     implementation project(":foundation:coroutines:api")
     implementation project(":foundation:log:api")
     implementation(
             libs.hilt,
             libs.sqldelight.coroutines,
+            libs.retrofit.core,
+            libs.moshi,
     )
+    kapt libs.moshi.kapt
     testImplementation testFixtures(project(":implementation:albums"))
     testImplementation testFixtures(project(":feature:media:common:domain:api"))
     testImplementation(

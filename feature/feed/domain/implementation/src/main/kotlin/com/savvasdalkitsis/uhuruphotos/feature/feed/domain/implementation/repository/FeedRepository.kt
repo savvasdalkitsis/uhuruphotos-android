@@ -15,15 +15,15 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.feed.domain.implementation.repository
 
-import com.savvasdalkitsis.uhuruphotos.api.albums.TempRemoteMediaUseCase
-import com.savvasdalkitsis.uhuruphotos.api.albums.service.AlbumsService
-import com.savvasdalkitsis.uhuruphotos.api.albums.service.model.Album
-import com.savvasdalkitsis.uhuruphotos.api.albums.service.model.AlbumsByDate
-import com.savvasdalkitsis.uhuruphotos.api.albums.service.model.toDbModel
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.extensions.await
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.extensions.awaitSingle
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.media.remote.GetRemoteMediaCollections
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.media.remote.RemoteMediaCollectionsQueries
+import com.savvasdalkitsis.uhuruphotos.feature.feed.domain.implementation.service.FeedService
+import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.api.service.model.RemoteMediaCollection
+import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.api.service.model.RemoteMediaCollectionsByDate
+import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.api.service.model.toDbModel
+import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.api.usecase.RemoteMediaUseCase
 import com.savvasdalkitsis.uhuruphotos.foundation.group.api.model.Group
 import com.savvasdalkitsis.uhuruphotos.foundation.group.api.model.groupBy
 import com.squareup.sqldelight.runtime.coroutines.asFlow
@@ -38,8 +38,8 @@ import javax.inject.Inject
 
 class FeedRepository @Inject constructor(
     private val remoteMediaCollectionsQueries: RemoteMediaCollectionsQueries,
-    private val tempRemoteMediaUseCase: TempRemoteMediaUseCase,
-    private val albumsService: AlbumsService,
+    private val remoteMediaUseCase: RemoteMediaUseCase,
+    private val feedService: FeedService,
 ) {
 
     private var allRemoteMediaCollections: Group<String, GetRemoteMediaCollections> = Group(emptyMap())
@@ -73,9 +73,9 @@ class FeedRepository @Inject constructor(
         shallow: Boolean,
         onProgressChange: suspend (Int) -> Unit
     ): Result<Unit> =
-        tempRemoteMediaUseCase.processRemoteMediaCollections(
-            albumsFetcher = { albumsService.getAlbumsByDate() },
-            albumFetcher = getCollectionAllPages(),
+        remoteMediaUseCase.processRemoteMediaCollections(
+            albumsFetcher = { feedService.getRemoteMediaCollectionsByDate() },
+            remoteMediaCollectionFetcher = getCollectionAllPages(),
             shallow = shallow,
             onProgressChange = onProgressChange,
             incompleteAlbumsProcessor = { albums ->
@@ -89,20 +89,20 @@ class FeedRepository @Inject constructor(
         )
 
     suspend fun refreshRemoteMediaCollection(collectionId: String) {
-        tempRemoteMediaUseCase.processRemoteMediaCollections(
-            albumsFetcher = { AlbumsByDate(
-                results = listOf(Album.IncompleteAlbum(collectionId, null, "", true, 1))
+        remoteMediaUseCase.processRemoteMediaCollections(
+            albumsFetcher = { RemoteMediaCollectionsByDate(
+                results = listOf(RemoteMediaCollection.Incomplete(collectionId, null, "", true, 1))
             ) },
-            albumFetcher = getCollectionAllPages(),
+            remoteMediaCollectionFetcher = getCollectionAllPages(),
             shallow = false,
         )
     }
 
-    private fun getCollectionAllPages(): suspend (String) -> Album.CompleteAlbum = { id ->
+    private fun getCollectionAllPages(): suspend (String) -> RemoteMediaCollection.Complete = { id ->
         var page = 1
-        val albums = mutableListOf<Album.CompleteAlbum>()
+        val albums = mutableListOf<RemoteMediaCollection.Complete>()
         do {
-            val album = albumsService.getAlbum(id, page).results
+            val album = feedService.getRemoteMediaCollection(id, page).results
             albums += album
             page++
         } while (albums.sumOf { it.items.size } < album.numberOfItems)

@@ -9,7 +9,6 @@ android {
 }
 
 dependencies {
-    implementation project(':api:albums')
     implementation project(":feature:album:auto:view:api")
     implementation project(':foundation:date:api')
     implementation project(":feature:db:domain:api")

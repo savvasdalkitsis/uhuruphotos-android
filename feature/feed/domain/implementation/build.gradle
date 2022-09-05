@@ -3,8 +3,8 @@ android {
 }
 
 dependencies {
-    implementation project(":api:albums")
     implementation project(":feature:feed:domain:api")
+    implementation project(":feature:media:remote:domain:api")
     implementation project(":feature:collage:view:api")
     implementation project(":feature:settings:domain:api")
     implementation project(":foundation:coroutines:api")
@@ -12,13 +12,17 @@ dependencies {
     implementation project(":foundation:initializer:api")
     implementation project(":foundation:log:api")
     implementation project(":foundation:worker:api")
+    implementation project(":foundation:strings:api")
     implementation(
             libs.androidx.work,
             libs.androidx.work.hilt,
             libs.flowpreferences,
             libs.hilt,
             libs.sqldelight.coroutines,
+            libs.retrofit.core,
+            libs.moshi,
     )
+    kapt libs.moshi.kapt
     testImplementation testFixtures(project(":feature:db:domain:api"))
     testImplementation testFixtures(project(":implementation:albums"))
     testImplementation testFixtures(project(":feature:media:common:domain:api"))
