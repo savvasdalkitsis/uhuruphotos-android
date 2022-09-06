@@ -13,7 +13,7 @@ dependencies {
     api project(":feature:feed:view:api")
     api project(":feature:search:view:api")
     api project(":feature:library:view:api")
-    api project(":api:userbadge")
+    api project(":feature:avatar:view:api")
     api(
             libs.androidx.compose.foundation,
             libs.androidx.compose.ui,

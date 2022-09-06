@@ -43,12 +43,12 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.TransformOrigin
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Popup
-import com.savvasdalkitsis.uhuruphotos.api.userbadge.ui.state.UserInformationState
+import com.savvasdalkitsis.uhuruphotos.feature.avatar.view.api.ui.state.AvatarState
 
 @Composable
 fun AccountOverviewPopUp(
     visible: Boolean,
-    userInformationState: UserInformationState,
+    avatarState: AvatarState,
     onDismiss: () -> Unit,
     onLogoutClicked: () -> Unit,
     onEditServerClicked: () -> Unit,
@@ -94,7 +94,7 @@ fun AccountOverviewPopUp(
                         }
                     }
                     AccountOverview(
-                        userInformationState = userInformationState,
+                        avatarState = avatarState,
                         onLogoutClicked = onLogoutClicked,
                         onEditServerClicked = onEditServerClicked,
                         onSettingsClicked = onSettingsClicked,

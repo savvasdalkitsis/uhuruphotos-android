@@ -16,7 +16,7 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam
 
 import androidx.work.NetworkType
-import com.savvasdalkitsis.uhuruphotos.api.userbadge.ui.state.UserInformationState
+import com.savvasdalkitsis.uhuruphotos.feature.avatar.view.api.ui.state.AvatarState
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.ui.state.BiometricsSetting
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.ui.state.MapProviderState
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.ui.state.SettingsState
@@ -125,12 +125,12 @@ internal sealed class SettingsMutation(
         it.copy(isLoggingEnabled = enabled)
     })
 
-    data class UserBadgeUpdate(
-        val userInformationState: UserInformationState,
+    data class AvatarUpdate(
+        val avatarState: AvatarState,
     ): SettingsMutation({
         it.copy(
             isLoading = false,
-            userInformationState = userInformationState,
+            avatarState = avatarState,
         )
     })
 

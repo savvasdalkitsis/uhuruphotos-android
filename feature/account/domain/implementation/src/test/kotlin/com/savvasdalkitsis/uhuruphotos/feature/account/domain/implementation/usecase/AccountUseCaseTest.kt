@@ -17,19 +17,19 @@ package com.savvasdalkitsis.uhuruphotos.feature.account.domain.implementation.us
 
 import com.google.android.exoplayer2.upstream.cache.CacheDataSource
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.Database
-import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.albums.AlbumsQueries
-import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.albums.AutoAlbumPeopleQueries
-import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.albums.AutoAlbumPhotosQueries
-import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.albums.AutoAlbumQueries
-import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.albums.AutoAlbumsQueries
-import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.albums.UserAlbumPhotosQueries
-import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.albums.UserAlbumQueries
-import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.albums.UserAlbumsQueries
+import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.album.auto.AutoAlbumPeopleQueries
+import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.album.auto.AutoAlbumPhotosQueries
+import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.album.auto.AutoAlbumQueries
+import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.album.auto.AutoAlbumsQueries
+import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.album.user.UserAlbumPhotosQueries
+import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.album.user.UserAlbumQueries
+import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.album.user.UserAlbumsQueries
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.auth.TokenQueries
-import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.media.LocalMediaItemDetailsQueries
-import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.media.RemoteMediaItemDetailsQueries
-import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.media.RemoteMediaItemSummaryQueries
-import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.media.RemoteMediaTrashQueries
+import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.media.local.LocalMediaItemDetailsQueries
+import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.media.remote.RemoteMediaCollectionsQueries
+import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.media.remote.RemoteMediaItemDetailsQueries
+import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.media.remote.RemoteMediaItemSummaryQueries
+import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.media.remote.RemoteMediaTrashQueries
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.people.PeopleQueries
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.person.PersonQueries
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.search.SearchQueries
@@ -49,7 +49,7 @@ class AccountUseCaseTest {
     private val videoCache = mockk<CacheDataSource.Factory>(relaxed = true)
     private val workScheduler = mockk<WorkScheduler>(relaxed = true)
     private val db = object: Database {
-        override val albumsQueries = mockk<AlbumsQueries>(relaxed = true)
+        override val remoteMediaCollectionsQueries= mockk<RemoteMediaCollectionsQueries>(relaxed = true)
         override val autoAlbumQueries = mockk<AutoAlbumQueries>(relaxed = true)
         override val autoAlbumPeopleQueries = mockk<AutoAlbumPeopleQueries>(relaxed = true)
         override val autoAlbumPhotosQueries = mockk<AutoAlbumPhotosQueries>(relaxed = true)
@@ -97,7 +97,7 @@ class AccountUseCaseTest {
 
         verify {
             with (db) {
-                albumsQueries.clearAll()
+                remoteMediaCollectionsQueries.clearAll()
                 autoAlbumQueries.clearAll()
                 autoAlbumPeopleQueries.clearAll()
                 autoAlbumPhotosQueries.clearAll()

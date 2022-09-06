@@ -16,7 +16,7 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.ui.state
 
 import androidx.work.NetworkType
-import com.savvasdalkitsis.uhuruphotos.api.userbadge.ui.state.UserInformationState
+import com.savvasdalkitsis.uhuruphotos.feature.avatar.view.api.ui.state.AvatarState
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.theme.ThemeMode
 
 internal data class SettingsState(
@@ -29,7 +29,7 @@ internal data class SettingsState(
     val imageMemCacheCurrent: Int = 0,
     val feedDaysToRefresh: Int = 0,
     val feedSyncFrequency: Int? = null,
-    val userInformationState: UserInformationState = UserInformationState(),
+    val avatarState: AvatarState = AvatarState(),
     val showFullFeedSyncDialog: Boolean = false,
     val fullSyncButtonEnabled: Boolean = false,
     val fullSyncNetworkRequirement: NetworkType? = null,

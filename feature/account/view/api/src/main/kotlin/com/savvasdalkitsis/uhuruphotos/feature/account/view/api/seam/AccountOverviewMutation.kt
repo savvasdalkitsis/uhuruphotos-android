@@ -15,16 +15,16 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.account.view.api.seam
 
-import com.savvasdalkitsis.uhuruphotos.api.userbadge.ui.state.UserInformationState
 import com.savvasdalkitsis.uhuruphotos.feature.account.view.api.ui.state.AccountOverviewState
+import com.savvasdalkitsis.uhuruphotos.feature.avatar.view.api.ui.state.AvatarState
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.Mutation
 
 sealed class AccountOverviewMutation(
     mutation: Mutation<AccountOverviewState>
 ) : Mutation<AccountOverviewState> by mutation {
 
-    data class UserBadgeUpdate(val userInformationState: UserInformationState) : AccountOverviewMutation({
-        it.copy(userInformationState = userInformationState)
+    data class AvatarUpdate(val avatarState: AvatarState) : AccountOverviewMutation({
+        it.copy(avatarState = avatarState)
     })
 
     object ShowAccountOverview : AccountOverviewMutation({

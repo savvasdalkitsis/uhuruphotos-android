@@ -9,7 +9,8 @@ android {
 }
 
 dependencies {
-    api project(':api:userbadge')
+    api project(':feature:avatar:view:api')
+    implementation project(':feature:avatar:domain:api')
     implementation project(":feature:account:domain:api")
     implementation project(":feature:home:view:api")
     implementation project(":foundation:icons:api")

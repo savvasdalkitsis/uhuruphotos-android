@@ -17,7 +17,7 @@ package com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.sea
 
 import androidx.work.ExistingPeriodicWorkPolicy.CANCEL_AND_REENQUEUE
 import androidx.work.WorkInfo.State.RUNNING
-import com.savvasdalkitsis.uhuruphotos.api.userbadge.usecase.UserBadgeUseCase
+import com.savvasdalkitsis.uhuruphotos.feature.avatar.domain.api.usecase.AvatarUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.feed.domain.api.worker.FeedWorkScheduler
 import com.savvasdalkitsis.uhuruphotos.feature.search.domain.api.usecase.SearchUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.settings.domain.api.usecase.CacheSettingsUseCase
@@ -50,6 +50,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.SettingsAction.PerformFullFeedSync
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.SettingsAction.SendFeedbackClicked
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.SettingsEffect.ShowMessage
+import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.SettingsMutation.AvatarUpdate
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.SettingsMutation.DisableFullSyncButton
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.SettingsMutation.DisplayBiometrics
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.SettingsMutation.DisplayDiskCacheMaxLimit
@@ -73,7 +74,6 @@ import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.SettingsMutation.EnableFullSyncButton
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.SettingsMutation.HideFullFeedSyncDialog
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.SettingsMutation.ShowFullFeedSyncDialog
-import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.SettingsMutation.UserBadgeUpdate
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.ui.state.BiometricsSetting
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.ui.state.SettingsState
 import com.savvasdalkitsis.uhuruphotos.foundation.biometrics.api.model.Biometrics.Enrolled
@@ -95,7 +95,7 @@ import javax.inject.Inject
 internal class SettingsActionHandler @Inject constructor(
     private val settingsUseCase: com.savvasdalkitsis.uhuruphotos.feature.settings.domain.api.usecase.SettingsUseCase,
     private val feedWorkScheduler: FeedWorkScheduler,
-    private val userBadgeUseCase: UserBadgeUseCase,
+    private val avatarUseCase: AvatarUseCase,
     private val cacheUseCase: CacheSettingsUseCase,
     private val feedbackUseCase: FeedbackUseCase,
     private val searchUseCase: SearchUseCase,
@@ -152,8 +152,8 @@ internal class SettingsActionHandler @Inject constructor(
                 .map(::DisplayImageMemCacheCurrentUse),
             cacheUseCase.observeVideoDiskCacheCurrentUse()
                 .map(::DisplayVideoDiskCacheCurrentUse),
-            userBadgeUseCase.getUserBadgeState()
-                .map(::UserBadgeUpdate),
+            avatarUseCase.getAvatarState()
+                .map(::AvatarUpdate),
             feedWorkScheduler.observeFeedRefreshJob()
                 .flatMapMerge {
                     flowOf(

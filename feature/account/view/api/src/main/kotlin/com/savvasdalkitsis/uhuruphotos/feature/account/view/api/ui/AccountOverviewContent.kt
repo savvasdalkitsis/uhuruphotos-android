@@ -32,7 +32,7 @@ fun AccountOverviewContent(
 ) {
     AccountOverviewPopUp(
         visible = state.showAccountOverview,
-        userInformationState = state.userInformationState,
+        avatarState = state.avatarState,
         onDismiss = { action(DismissAccountOverview) },
         onLogoutClicked = { action(AskToLogOut) },
         onEditServerClicked = { action(EditServer) },

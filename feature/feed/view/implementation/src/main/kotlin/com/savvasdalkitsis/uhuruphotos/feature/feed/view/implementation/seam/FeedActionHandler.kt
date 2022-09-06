@@ -15,8 +15,8 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam
 
-import com.savvasdalkitsis.uhuruphotos.api.userbadge.ui.state.SyncState.IN_PROGRESS
-import com.savvasdalkitsis.uhuruphotos.api.userbadge.usecase.UserBadgeUseCase
+import com.savvasdalkitsis.uhuruphotos.feature.avatar.domain.api.usecase.AvatarUseCase
+import com.savvasdalkitsis.uhuruphotos.feature.avatar.view.api.ui.state.SyncState.IN_PROGRESS
 import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.Cluster
 import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.PredefinedCollageDisplay.YEARLY
 import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.toCluster
@@ -67,7 +67,7 @@ import kotlinx.coroutines.flow.merge
 import javax.inject.Inject
 
 internal class FeedActionHandler @Inject constructor(
-    private val userBadgeUseCase: UserBadgeUseCase,
+    private val avatarUseCase: AvatarUseCase,
     private val feedUseCase: FeedUseCase,
     private val mediaUseCase: MediaUseCase,
     private val selectionList: SelectionList,
@@ -90,11 +90,11 @@ internal class FeedActionHandler @Inject constructor(
             combine(
                 feedUseCase.observeFeed().debounce(200),
                 selectionList.ids,
-                userBadgeUseCase.getUserBadgeState(),
+                avatarUseCase.getAvatarState(),
                 feedUseCase
                     .getFeedDisplay()
                     .distinctUntilChanged()
-            ) { mediaCollections, ids, userBadge, feedDisplay ->
+            ) { mediaCollections, ids, avatar, feedDisplay ->
                 val selected = mediaCollections
                     .map { it.toCluster() }
                     .selectCels(ids)
@@ -102,7 +102,7 @@ internal class FeedActionHandler @Inject constructor(
                     YEARLY -> selected.groupByYear()
                     else -> selected
                 }
-                if (userBadge.syncState != IN_PROGRESS && final.celCount == 0) {
+                if (avatar.syncState != IN_PROGRESS && final.celCount == 0) {
                     ShowNoPhotosFound
                 } else {
                     ShowClusters(final)

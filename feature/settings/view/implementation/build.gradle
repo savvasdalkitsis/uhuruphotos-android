@@ -22,7 +22,8 @@ dependencies {
     implementation project(":foundation:strings:api")
     implementation project(":foundation:toaster:api")
     implementation project(":foundation:ui:api")
-    implementation project(':api:userbadge')
+    implementation project(':feature:avatar:domain:api')
+    implementation project(':feature:avatar:view:api')
     implementation(
             libs.bundles.androidx.compose.animation,
             libs.androidx.compose.foundation,

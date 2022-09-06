@@ -20,7 +20,7 @@ import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass.Companion
 import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass.Companion.Medium
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.stringResource
-import com.savvasdalkitsis.uhuruphotos.api.userbadge.ui.UserBadge
+import com.savvasdalkitsis.uhuruphotos.feature.avatar.view.api.ui.Avatar
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.SettingsAction
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.SettingsAction.DismissFullFeedSyncDialog
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.SettingsAction.NavigateBack
@@ -55,7 +55,7 @@ internal fun Settings(
                 icon = drawable.ic_collapse_all,
                 contentDescription = stringResource(string.collapse_all),
             )
-            UserBadge(state = state.userInformationState)
+            Avatar(state = state.avatarState)
         },
         navigationIcon = { BackNavButton {
             action(NavigateBack)

@@ -37,7 +37,7 @@ dependencies {
     implementation project(":foundation:toaster:api")
     implementation project(":foundation:ui:api")
     implementation project(":feature:catalogue:user:view:api")
-    implementation project(':api:userbadge')
+    implementation project(':feature:avatar:view:api')
     implementation(
             libs.bundles.permissions,
             libs.accompanist.swiperefresh,

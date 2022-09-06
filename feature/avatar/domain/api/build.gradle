@@ -1,0 +1,9 @@
+android {
+    namespace 'com.savvasdalkitsis.uhuruphotos.feature.avatar.domain.api'
+}
+dependencies {
+    api project(":feature:avatar:view:api")
+    api(
+            libs.kotlinx.coroutines,
+    )
+}

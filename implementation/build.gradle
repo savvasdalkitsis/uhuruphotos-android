@@ -48,6 +48,6 @@ dependencies {
     implementation project(":feature:user:domain:implementation")
     implementation project(":feature:catalogue:user:domain:implementation")
     implementation project(":feature:catalogue:user:view:implementation")
-    implementation project(":implementation:userbadge")
+    implementation project(":feature:avatar:domain:implementation")
     implementation project(":foundation:video:implementation")
 }

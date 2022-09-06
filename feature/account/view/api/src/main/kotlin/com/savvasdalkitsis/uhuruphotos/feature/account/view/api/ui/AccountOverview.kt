@@ -40,9 +40,9 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.savvasdalkitsis.uhuruphotos.api.userbadge.ui.UserBadge
-import com.savvasdalkitsis.uhuruphotos.api.userbadge.ui.state.UserInformationState
-import com.savvasdalkitsis.uhuruphotos.api.userbadge.ui.state.previewUserInformationState
+import com.savvasdalkitsis.uhuruphotos.feature.avatar.view.api.ui.Avatar
+import com.savvasdalkitsis.uhuruphotos.feature.avatar.view.api.ui.state.AvatarState
+import com.savvasdalkitsis.uhuruphotos.feature.avatar.view.api.ui.state.previewAvatarState
 import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.R.drawable
 import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.theme.PreviewAppTheme
@@ -51,7 +51,7 @@ import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.ActionIcon
 @Composable
 internal fun AccountOverview(
     modifier: Modifier = Modifier,
-    userInformationState: UserInformationState,
+    avatarState: AvatarState,
     onLogoutClicked: () -> Unit = {},
     onEditServerClicked: () -> Unit = {},
     onSettingsClicked: () -> Unit = {},
@@ -67,20 +67,20 @@ internal fun AccountOverview(
             horizontalArrangement = Arrangement.spacedBy(8.dp),
             verticalAlignment = Alignment.CenterVertically,
         ) {
-            UserBadge(
-                state = userInformationState,
+            Avatar(
+                state = avatarState,
                 size = 48.dp
             )
             Column {
                 Text(
-                    text = userInformationState.userFullName,
+                    text = avatarState.userFullName,
                     style = TextStyle.Default.copy(
                         fontWeight = FontWeight.Bold,
                         fontSize = 14.sp
                     )
                 )
                 Text(
-                    text = userInformationState.serverUrl,
+                    text = avatarState.serverUrl,
                     style = MaterialTheme.typography.caption.copy(color = Color.Gray),
                 )
             }
@@ -122,7 +122,7 @@ fun AccountOverviewPreview() {
     PreviewAppTheme {
         AccountOverview(
             modifier = Modifier.fillMaxWidth(),
-            userInformationState = previewUserInformationState,
+            avatarState = previewAvatarState,
         )
     }
 }

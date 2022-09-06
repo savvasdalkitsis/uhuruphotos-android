@@ -16,10 +16,10 @@ limitations under the License.
 
 package com.savvasdalkitsis.uhuruphotos.feature.account.view.api.ui.state
 
-import com.savvasdalkitsis.uhuruphotos.api.userbadge.ui.state.UserInformationState
+import com.savvasdalkitsis.uhuruphotos.feature.avatar.view.api.ui.state.AvatarState
 
 data class AccountOverviewState(
     val showAccountOverview: Boolean = false,
-    val userInformationState: UserInformationState = UserInformationState(),
+    val avatarState: AvatarState = AvatarState(),
     val showLogOutConfirmation: Boolean = false,
 )

@@ -16,19 +16,19 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.feature.account.view.api.ui
 
 import androidx.compose.runtime.Composable
-import com.savvasdalkitsis.uhuruphotos.api.userbadge.ui.UserBadge
 import com.savvasdalkitsis.uhuruphotos.feature.account.view.api.seam.AccountOverviewAction
 import com.savvasdalkitsis.uhuruphotos.feature.account.view.api.ui.state.AccountOverviewState
+import com.savvasdalkitsis.uhuruphotos.feature.avatar.view.api.ui.Avatar
 
 @Composable
 fun AccountOverviewActionBar(
     state: AccountOverviewState,
     action: (AccountOverviewAction) -> Unit,
 ) {
-    UserBadge(
-        state = state.userInformationState,
-        userBadgePressed = {
-            action(AccountOverviewAction.UserBadgePressed)
+    Avatar(
+        state = state.avatarState,
+        avatarPressed = {
+            action(AccountOverviewAction.AvatarPressed)
         }
     )
 }

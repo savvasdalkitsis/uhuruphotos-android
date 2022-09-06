@@ -1,0 +1,28 @@
+android {
+    buildFeatures {
+        compose true
+    }
+    composeOptions {
+        kotlinCompilerExtensionVersion compose_compiler_version
+    }
+    namespace 'com.savvasdalkitsis.uhuruphotos.feature.avatar.domain.implementation'
+}
+
+dependencies {
+
+    implementation project(":api:auth")
+    implementation project(":feature:db:domain:api")
+    implementation project(":feature:feed:domain:api")
+    implementation project(":foundation:icons:api")
+    implementation project(':foundation:image:api')
+    implementation project(':feature:media:remote:domain:api')
+    implementation project(":foundation:ui:api")
+    implementation project(":feature:user:domain:api")
+    implementation project(':feature:avatar:domain:api')
+    implementation project(':feature:avatar:view:api')
+    implementation(
+            libs.androidx.compose.material,
+            libs.androidx.work,
+            libs.hilt,
+    )
+}

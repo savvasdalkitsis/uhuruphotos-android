@@ -18,7 +18,7 @@ package com.savvasdalkitsis.uhuruphotos.feature.account.view.api.seam
 sealed class AccountOverviewAction {
 
     object Load : AccountOverviewAction()
-    object UserBadgePressed : AccountOverviewAction()
+    object AvatarPressed : AccountOverviewAction()
     object DismissAccountOverview : AccountOverviewAction()
     object AskToLogOut : AccountOverviewAction()
     object DismissLogOutDialog : AccountOverviewAction()
