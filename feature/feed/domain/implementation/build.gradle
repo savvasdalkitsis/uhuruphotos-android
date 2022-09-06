@@ -24,8 +24,8 @@ dependencies {
     )
     kapt libs.moshi.kapt
     testImplementation testFixtures(project(":feature:db:domain:api"))
-    testImplementation testFixtures(project(":implementation:albums"))
     testImplementation testFixtures(project(":feature:media:common:domain:api"))
+    testImplementation testFixtures(project(":feature:media:remote:domain:api"))
     testImplementation(
             libs.bundles.test,
     )
