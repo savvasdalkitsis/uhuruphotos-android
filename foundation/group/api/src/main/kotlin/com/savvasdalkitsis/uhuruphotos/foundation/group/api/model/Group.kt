@@ -18,7 +18,11 @@ package com.savvasdalkitsis.uhuruphotos.foundation.group.api.model
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 
-data class Group<K, T>(val items: Map<K, List<T>>)
+data class Group<K, T>(val items: Map<K, List<T>>) {
+    companion object {
+        operator fun <K, T> invoke(vararg items: Pair<K, List<T>>) = Group(items.toMap())
+    }
+}
 
 fun <K, T, N> Group<K, T>.mapValues(mapper: (T) -> N): Group<K, N> = Group(
     items.mapValues { (_, v) -> v.map(mapper) }

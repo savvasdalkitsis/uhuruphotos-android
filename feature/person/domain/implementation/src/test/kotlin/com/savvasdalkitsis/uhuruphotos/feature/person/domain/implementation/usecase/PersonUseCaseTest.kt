@@ -17,10 +17,10 @@ import io.mockk.coEvery
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify
-import kotlinx.coroutines.channels.Channel
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.test.runTest
 import org.junit.Test
 
 class PersonUseCaseTest {
@@ -35,24 +35,26 @@ class PersonUseCaseTest {
     )
 
     @Test
-    fun `observes person albums from repository and updates`() = runBlocking {
-        val personAlbums = Channel<Group<String, GetPersonAlbums>> {  }
-        coEvery { personRepository.observePersonAlbums(1) } returns personAlbums.receiveAsFlow()
+    fun `observes person albums from repository and updates`() = runTest {
+        val element = getPersonAlbum.copy(
+            id = "collectionId",
+            photoId = "mediaItemId",
+        )
+        coEvery { personRepository.observePersonAlbums(1) } returns MutableStateFlow(
+            Group("collectionId" to listOf(element))
+        )
 
         underTest.observePersonMedia(1).test {
-            personAlbums.send(
-                Group(mapOf(
-                    "collectionId" to listOf(getPersonAlbum.copy(
-                        id = "collectionId",
-                        photoId = "mediaItemId",
-                    ))
-                ))
+            assertThat(
+                awaitItem(), sameBeanAs(
+                    listOf(
+                        mediaCollection.copy(
+                            id = "collectionId",
+                            mediaItems = listOf(mediaItem.copy(id = MediaId.Remote("mediaItemId")))
+                        )
+                    )
+                )
             )
-
-            assertThat(awaitItem(), sameBeanAs(listOf(mediaCollection.copy(
-                id = "collectionId",
-                mediaItems = listOf(mediaItem.copy(id = MediaId.Remote("mediaItemId")))
-            ))))
         }
     }
 

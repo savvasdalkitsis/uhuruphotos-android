@@ -63,6 +63,7 @@ infobar = "com.radusalagean:info-bar-compose:1.0.0"
 junit = "junit:junit:4.13.2"
 jwt = "com.auth0.android:jwtdecode:2.0.1"
 kotlinx-coroutines = "org.jetbrains.kotlinx:kotlinx-coroutines-core-jvm:1.6.4"
+kotlinx-coroutines-test = "org.jetbrains.kotlinx:kotlinx-coroutines-test:1.6.4"
 # @pin cannot update until lumbejack supports timber 5
 logger = "com.jakewharton.timber:timber:4.7.1"
 lumberjack-core = { module = "com.github.MFlisar.Lumberjack:lumberjack-library", version.ref = "lumberjack" }
@@ -118,6 +119,7 @@ test = [
     "mockk",
     "shazamcrest",
     "turbine",
+    "kotlinx-coroutines-test"
 ]
 test-android = [
     "androidx-compose-test-junit",

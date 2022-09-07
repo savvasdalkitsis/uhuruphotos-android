@@ -111,7 +111,8 @@ class FeedDownloadWorkerTest {
     @Test
     fun `returns retry result when refreshing errors`() = runBlocking {
         val underTest = feedDownloadWorker()
-        coEvery { feedRepository.refreshRemoteMediaCollections(any(), any()) } throws IllegalStateException()
+        coEvery { feedRepository.refreshRemoteMediaCollections(any(), any()) } returns
+                Result.failure(IllegalStateException())
 
         assert(underTest.doWork() == ListenableWorker.Result.retry())
     }
@@ -123,7 +124,7 @@ class FeedDownloadWorkerTest {
         every {
             foregroundInfoBuilder.build(
                 context,
-                R.string.refreshing_albums,
+                R.string.refreshing_feed,
                 any(),
                 NotificationChannels.JOBS_CHANNEL_ID
             )

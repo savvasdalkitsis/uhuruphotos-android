@@ -45,7 +45,7 @@ class PersonUseCase @Inject constructor(
             .toMediaCollection()
     }
 
-    private fun GetPersonAlbums.toMediaCollectionSource() = MediaCollectionSource(
+    fun GetPersonAlbums.toMediaCollectionSource() = MediaCollectionSource(
         id = id,
         date = albumDate,
         location = albumLocation,

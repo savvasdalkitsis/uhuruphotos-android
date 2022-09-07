@@ -166,7 +166,7 @@ class FeedRepositoryTest {
         )))
     }
 
-    @Test
+    @Test(timeout = 4000)
     fun `reports refresh progress`() = runBlocking {
         val progress = ProgressUpdate()
 

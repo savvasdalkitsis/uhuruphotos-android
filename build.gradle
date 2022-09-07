@@ -24,7 +24,7 @@ plugins {
     id 'org.jetbrains.kotlin.android' version "$kotlin_version" apply false
     id 'com.squareup.sqldelight' version '1.5.3' apply false
     id 'com.google.android.libraries.mapsplatform.secrets-gradle-plugin' version '2.0.1' apply false
-    id "com.bnorm.power.kotlin-power-assert" version "0.12.0"
+    id "com.bnorm.power.kotlin-power-assert" version "0.12.0" apply false
     id "org.sonarqube" version "3.4.0.2513"
     id "io.gitlab.arturbosch.detekt" version "1.21.0-RC1" apply true
     id "com.github.ben-manes.versions" version "0.42.0" apply true
@@ -76,6 +76,7 @@ subprojects {
         apply plugin: "com.android.library"
     }
 
+    apply plugin: "com.bnorm.power.kotlin-power-assert"
     apply plugin: 'org.jetbrains.kotlin.android'
     apply plugin: 'kotlin-kapt'
 
