@@ -5,6 +5,7 @@ android {
 dependencies {
     implementation project(":feature:db:domain:api")
     implementation project(":feature:search:domain:api")
+    implementation project(":feature:media:remote:domain:api")
     implementation project(":foundation:coroutines:api")
     implementation project(":foundation:date:api")
     implementation project(":foundation:group:api")

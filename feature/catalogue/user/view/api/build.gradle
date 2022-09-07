@@ -4,8 +4,13 @@ android {
 
 dependencies {
     api project(":feature:catalogue:view:api")
+    api project(":feature:media:remote:domain:api")
+    api project(":feature:media:common:domain:api")
     api project(":feature:media:common:view:api")
+    api project(":foundation:ui:api")
     api(
             libs.androidx.compose.navigation,
     )
+
+    implementation project(":foundation:strings:api")
 }
