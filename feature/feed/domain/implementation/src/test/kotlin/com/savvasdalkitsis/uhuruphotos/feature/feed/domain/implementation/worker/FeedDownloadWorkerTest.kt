@@ -79,7 +79,8 @@ class FeedDownloadWorkerTest {
             )
         )
         val progress = slot<suspend (Int) -> Unit>()
-        coEvery { feedRepository.refreshRemoteMediaCollections(any(), capture(progress)) }
+        coEvery { feedRepository.refreshRemoteMediaCollections(any(), capture(progress)) } returns
+                Result.success(Unit)
         every {
             progressUpdater.updateProgress(
                 any(),
