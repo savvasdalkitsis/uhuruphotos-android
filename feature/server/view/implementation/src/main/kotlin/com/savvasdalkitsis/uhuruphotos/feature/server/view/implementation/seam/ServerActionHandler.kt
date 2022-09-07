@@ -15,12 +15,12 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.server.view.implementation.seam
 
-import com.savvasdalkitsis.uhuruphotos.api.auth.model.AuthStatus.Authenticated
-import com.savvasdalkitsis.uhuruphotos.api.auth.model.AuthStatus.Offline
-import com.savvasdalkitsis.uhuruphotos.api.auth.model.AuthStatus.ServerDown
-import com.savvasdalkitsis.uhuruphotos.api.auth.model.AuthStatus.Unauthenticated
-import com.savvasdalkitsis.uhuruphotos.api.auth.usecase.AuthenticationUseCase
-import com.savvasdalkitsis.uhuruphotos.api.auth.usecase.ServerUseCase
+import com.savvasdalkitsis.uhuruphotos.feature.auth.domain.api.model.AuthStatus.Authenticated
+import com.savvasdalkitsis.uhuruphotos.feature.auth.domain.api.model.AuthStatus.Offline
+import com.savvasdalkitsis.uhuruphotos.feature.auth.domain.api.model.AuthStatus.ServerDown
+import com.savvasdalkitsis.uhuruphotos.feature.auth.domain.api.model.AuthStatus.Unauthenticated
+import com.savvasdalkitsis.uhuruphotos.feature.auth.domain.api.usecase.AuthenticationUseCase
+import com.savvasdalkitsis.uhuruphotos.feature.auth.domain.api.usecase.ServerUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.server.view.implementation.seam.ServerAction.AttemptChangeServerUrlTo
 import com.savvasdalkitsis.uhuruphotos.feature.server.view.implementation.seam.ServerAction.ChangeServerUrlTo
 import com.savvasdalkitsis.uhuruphotos.feature.server.view.implementation.seam.ServerAction.CheckPersistedServer

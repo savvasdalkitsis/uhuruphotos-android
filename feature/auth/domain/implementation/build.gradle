@@ -1,0 +1,33 @@
+android {
+    buildFeatures {
+        compose true
+    }
+    composeOptions {
+        kotlinCompilerExtensionVersion compose_compiler_version
+    }
+    namespace 'com.savvasdalkitsis.uhuruphotos.feature.auth.domain.implementation'
+}
+
+dependencies {
+
+    api project(":feature:auth:domain:api")
+    api project(":feature:auth:view:api")
+    implementation project(":feature:db:domain:api")
+    implementation project(":foundation:http:api")
+    implementation project(":foundation:launchers:api")
+    implementation project(":foundation:log:api")
+    implementation project(":foundation:navigation:api")
+    implementation project(":foundation:network:api")
+    implementation project(":foundation:ui:api")
+    implementation project(":feature:settings:domain:api")
+    implementation(
+            libs.androidx.compose.hilt.navigation,
+            libs.androidx.compose.ui,
+            libs.flowpreferences,
+            libs.jwt,
+            libs.hilt,
+            libs.moshi,
+            libs.retrofit.moshi,
+    )
+    kapt libs.moshi.kapt
+}

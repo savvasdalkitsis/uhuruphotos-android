@@ -1,0 +1,21 @@
+android {
+    buildFeatures {
+        compose true
+    }
+    composeOptions {
+        kotlinCompilerExtensionVersion compose_compiler_version
+    }
+    namespace 'com.savvasdalkitsis.uhuruphotos.feature.auth.view.implementation'
+}
+
+dependencies {
+    implementation project(":feature:settings:domain:api")
+    implementation project(":feature:auth:domain:api")
+    implementation project(":feature:auth:view:api")
+    implementation project(":foundation:navigation:api")
+    implementation project(":foundation:launchers:api")
+    implementation(
+            libs.accompanist.webview,
+            libs.androidx.compose.navigation,
+    )
+}

@@ -15,8 +15,8 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.home.view.implementation.seam
 
-import com.savvasdalkitsis.uhuruphotos.api.auth.model.AuthStatus.Unauthenticated
-import com.savvasdalkitsis.uhuruphotos.api.auth.usecase.AuthenticationUseCase
+import com.savvasdalkitsis.uhuruphotos.feature.auth.domain.api.model.AuthStatus.Unauthenticated
+import com.savvasdalkitsis.uhuruphotos.feature.auth.domain.api.usecase.AuthenticationUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.home.view.implementation.seam.HomeAction.Load
 import com.savvasdalkitsis.uhuruphotos.feature.home.view.implementation.seam.HomeEffect.LaunchAuthentication
 import com.savvasdalkitsis.uhuruphotos.feature.home.view.implementation.seam.HomeMutation.Loading

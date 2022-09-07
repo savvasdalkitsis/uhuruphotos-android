@@ -64,7 +64,7 @@ dependencies {
     implementation project(":foundation:ui:api")
     implementation project(":foundation:video:api")
 
-    implementation project(':implementation')
+    implementation project(':app:implementation')
     implementation project(":foundation:ui:implementation")
 
     implementation(

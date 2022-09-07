@@ -23,8 +23,8 @@ import com.google.android.exoplayer2.source.DefaultMediaSourceFactory
 import com.google.android.exoplayer2.upstream.cache.CacheDataSource
 import com.google.android.exoplayer2.upstream.cache.LeastRecentlyUsedCacheEvictor
 import com.google.android.exoplayer2.upstream.cache.SimpleCache
-import com.savvasdalkitsis.uhuruphotos.api.auth.AuthenticatedOkHttpClient
-import com.savvasdalkitsis.uhuruphotos.api.auth.TokenRefreshInterceptor
+import com.savvasdalkitsis.uhuruphotos.feature.auth.domain.api.AuthenticatedOkHttpClient
+import com.savvasdalkitsis.uhuruphotos.feature.auth.domain.api.TokenRefreshInterceptor
 import com.savvasdalkitsis.uhuruphotos.foundation.video.api.LocalContentExoplayer
 import com.savvasdalkitsis.uhuruphotos.foundation.video.api.VideoOkHttp
 import dagger.Module

@@ -1,0 +1,11 @@
+android {
+    namespace 'com.savvasdalkitsis.uhuruphotos.app.implementation'
+}
+
+dependencies {
+    for (p in rootProject.subprojects) {
+        if (p.path.endsWith(":implementation") && p != project) {
+            implementation p
+        }
+    }
+}
