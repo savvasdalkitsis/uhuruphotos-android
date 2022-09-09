@@ -101,9 +101,13 @@ class LibraryActionHandler @Inject constructor(
                 .debounce(200)
                 .map { media ->
                     when (media) {
-                        is Found -> LibraryLocalMedia.Found(
-                            media.mediaFolders.map { it.toVitrine() }
-                        )
+                        is Found -> {
+                            val vitrines = media.mediaFolders.map { it.toVitrine() }
+                            if (vitrines.isEmpty()) {
+                                refreshLocalMedia()
+                            }
+                            LibraryLocalMedia.Found(vitrines)
+                        }
                         is RequiresPermissions ->
                             LibraryLocalMedia.RequiresPermissions(media.deniedPermissions)
                     }
@@ -116,9 +120,9 @@ class LibraryActionHandler @Inject constructor(
         Refresh -> flow {
             refreshAutoAlbums(effect)
             refreshUserAlbums(effect)
-            refreshFavouritePhotos(effect)
-            refreshHiddenPhotos(effect)
-            refreshMediaStore()
+            refreshFavouriteMedia(effect)
+            refreshHiddenMedia(effect)
+            refreshLocalMedia()
         }
         is AutoAlbumsSelected -> flow {
             effect(NavigateToAutoAlbums)
@@ -136,7 +140,7 @@ class LibraryActionHandler @Inject constructor(
             effect(NavigateToTrash)
         }
         RefreshLocalMedia -> flow {
-            refreshMediaStore()
+            refreshLocalMedia()
         }
         is LocalBucketSelected -> flow {
            effect(NavigateToLocalBucket(action.bucket))
@@ -154,13 +158,13 @@ class LibraryActionHandler @Inject constructor(
             refreshUserAlbums(effect)
         }
         if (mediaUseCase.getFavouriteMediaCount().map { it }.getOrDefault(0) == 0L) {
-            refreshFavouritePhotos(effect)
+            refreshFavouriteMedia(effect)
         }
         if (mediaUseCase.getHiddenMedia().getOrDefault(emptyList()).isEmpty()) {
-            refreshHiddenPhotos(effect)
+            refreshHiddenMedia(effect)
         }
         if (localMediaUseCase.getLocalMedia().isEmpty()) {
-            refreshMediaStore()
+            refreshLocalMedia()
         }
     }
 
@@ -176,19 +180,19 @@ class LibraryActionHandler @Inject constructor(
         }
     }
 
-    private suspend fun refreshFavouritePhotos(effect: suspend (LibraryEffect) -> Unit) {
+    private suspend fun refreshFavouriteMedia(effect: suspend (LibraryEffect) -> Unit) {
         refresh(effect) {
             mediaUseCase.refreshFavouriteMedia()
         }
     }
 
-    private suspend fun refreshHiddenPhotos(effect: suspend (LibraryEffect) -> Unit) {
+    private suspend fun refreshHiddenMedia(effect: suspend (LibraryEffect) -> Unit) {
         refresh(effect) {
             mediaUseCase.refreshHiddenMedia()
         }
     }
 
-    private fun refreshMediaStore() {
+    private fun refreshLocalMedia() {
         localMediaWorkScheduler.scheduleLocalMediaSyncNowIfNotRunning()
     }
 
