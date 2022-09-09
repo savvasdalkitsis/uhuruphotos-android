@@ -32,4 +32,8 @@ dependencies {
             libs.okhttp,
             libs.urlvalidator,
     )
+
+    testImplementation(
+            libs.bundles.test,
+    )
 }

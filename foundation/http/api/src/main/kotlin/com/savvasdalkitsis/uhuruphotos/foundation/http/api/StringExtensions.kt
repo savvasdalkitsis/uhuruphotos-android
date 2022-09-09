@@ -15,10 +15,12 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.foundation.http.api
 
+import org.apache.commons.validator.routines.RegexValidator
 import org.apache.commons.validator.routines.UrlValidator
+import org.apache.commons.validator.routines.UrlValidator.ALLOW_LOCAL_URLS
 
-private val httpValidator = UrlValidator(arrayOf("http"))
-private val httpsValidator = UrlValidator(arrayOf("https"))
+private val httpValidator = UrlValidator(arrayOf("http"), RegexValidator(".*"), ALLOW_LOCAL_URLS)
+private val httpsValidator = UrlValidator(arrayOf("https"), RegexValidator(".*"), ALLOW_LOCAL_URLS)
 
 val String.isValidUrlOrDomain get() = isValidUrl || "https://$this".isValidUrl
 
