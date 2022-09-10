@@ -15,6 +15,7 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.trash.view.implementation.seam
 
+import com.fredporciuncula.flow.preferences.FlowSharedPreferences
 import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.Cluster
 import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.GalleryAction
 import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.GalleryActionHandler
@@ -39,7 +40,8 @@ import javax.inject.Inject
 internal class TrashAlbumPageActionHandler @Inject constructor(
     trashUseCase: TrashUseCase,
     settingsUseCase: SettingsUseCase,
-    biometricsUseCase: BiometricsUseCase
+    biometricsUseCase: BiometricsUseCase,
+    flowSharedPreferences: FlowSharedPreferences,
 ): ActionHandler<GalleryState, GalleryEffect, GalleryAction, GalleryMutation> by GalleryActionHandler(
     galleryRefresher = { trashUseCase.refreshTrash() },
     initialCollageDisplay = { trashUseCase.getTrashGalleryDisplay() },
@@ -73,6 +75,7 @@ internal class TrashAlbumPageActionHandler @Inject constructor(
                                 clusters = mediaCollections.map { mediaCollection ->
                                     Cluster(
                                         id = mediaCollection.id,
+                                        unformattedDate = mediaCollection.unformattedDate,
                                         displayTitle = mediaCollection.displayTitle,
                                         location = mediaCollection.location,
                                         cels = mediaCollection.mediaItems.map {
@@ -87,4 +90,5 @@ internal class TrashAlbumPageActionHandler @Inject constructor(
 
     },
     lightboxSequenceDataSource = { Trash },
+    flowSharedPreferences = flowSharedPreferences,
 )

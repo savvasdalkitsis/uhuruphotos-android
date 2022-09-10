@@ -23,8 +23,9 @@ import com.savvasdalkitsis.uhuruphotos.feature.people.view.api.ui.state.Person
 sealed class GalleryAction {
     object SwipeToRefresh : GalleryAction()
     object NavigateBack : GalleryAction()
+    object ChangeGallerySorting : GalleryAction()
 
-    data class LoadCollage(val collageId: Int) : GalleryAction()
+    data class LoadCollage(val galleryId: GalleryId) : GalleryAction()
     data class SelectedCel(
         val cel: CelState,
         val center: Offset,

@@ -146,6 +146,7 @@ class MediaUseCase @Inject constructor(
                         fallbackColor = it.dominantColor,
                         isFavourite = (it.rating ?: 0) >= threshold,
                         displayDayDate = date,
+                        sortableDate = it.date,
                         ratio = it.aspectRatio ?: 1f,
                         isVideo = it.isVideo,
                     )
@@ -161,7 +162,7 @@ class MediaUseCase @Inject constructor(
         fallbackColor = fallbackColor,
         isFavourite = false,
         displayDayDate = displayDate,
-        sortableDate = dateTaken,
+        sortableDate = sortableDate.toString(),
         ratio = (width / height.toFloat()).takeIf { it > 0 } ?: 1f,
         isVideo = video,
         latLng = latLon,
@@ -276,6 +277,15 @@ class MediaUseCase @Inject constructor(
             .filter { it.mediaItems.isNotEmpty() }
     }
 
+    override suspend fun List<MediaCollectionSource>.toMediaCollections(): List<MediaCollection> {
+        val favouriteThreshold = userUseCase.getUserOrRefresh()
+            .mapCatching { it.favoriteMinRating!! }
+        return groupBy { dateDisplayer.dateString(it.date) }
+            .map { (date, items) ->
+                mediaCollection(date, items, favouriteThreshold)
+            }
+    }
+
     private fun mediaCollection(
         id: String,
         source: List<MediaCollectionSource>,
@@ -306,6 +316,7 @@ class MediaUseCase @Inject constructor(
                             },
                             fallbackColor = item.dominantColor,
                             displayDayDate = date,
+                            sortableDate = item.date,
                             isFavourite = favouriteThreshold
                                 .map {
                                     (item.rating ?: 0) >= it

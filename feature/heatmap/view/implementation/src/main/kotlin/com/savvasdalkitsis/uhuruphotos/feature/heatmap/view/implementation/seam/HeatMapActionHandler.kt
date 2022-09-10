@@ -93,6 +93,7 @@ class HeatMapActionHandler @Inject constructor(
                                     it.imageHash.toFullSizeUrlFromId(it.video ?: false)
                                 },
                                 displayDayDate = dateDisplayer.dateString(it.timestamp),
+                                sortableDate = it.timestamp,
                                 latLng = it.latLng,
                                 isVideo = it.video ?: false,
                             )

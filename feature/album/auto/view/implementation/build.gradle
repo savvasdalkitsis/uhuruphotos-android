@@ -24,5 +24,6 @@ dependencies {
     implementation project(":foundation:navigation:api")
     implementation(
             libs.androidx.compose.hilt.navigation,
+            libs.flowpreferences,
     )
 }

@@ -26,4 +26,5 @@ data class GalleryState(
     val error: Int? = null,
     val title: Title = Title.Text(""),
     val people: List<Person> = emptyList(),
+    val sorting: GallerySorting = GallerySorting.DATE_DESC,
 )

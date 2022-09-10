@@ -15,6 +15,7 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.local.view.implementation.seam
 
+import com.fredporciuncula.flow.preferences.FlowSharedPreferences
 import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.toCluster
 import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.GalleryAction
 import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.GalleryActionHandler
@@ -31,6 +32,7 @@ import javax.inject.Inject
 
 internal class LocalAlbumPageActionHandler @Inject constructor(
     localAlbumUseCase: LocalAlbumUseCase,
+    flowSharedPreferences: FlowSharedPreferences,
 ) : ActionHandler<GalleryState, GalleryEffect, GalleryAction, GalleryMutation>
 by GalleryActionHandler(
     galleryRefresher = { localAlbumUseCase.refreshLocalAlbum(it) },
@@ -50,5 +52,6 @@ by GalleryActionHandler(
                 )
             }
     },
-    lightboxSequenceDataSource = { LocalAlbum(it) }
+    lightboxSequenceDataSource = { LocalAlbum(it) },
+    flowSharedPreferences = flowSharedPreferences,
 )

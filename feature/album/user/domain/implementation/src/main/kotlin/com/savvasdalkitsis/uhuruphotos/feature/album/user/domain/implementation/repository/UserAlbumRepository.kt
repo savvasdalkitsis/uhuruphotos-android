@@ -24,8 +24,6 @@ import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.album.user.UserAlbu
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.extensions.await
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.media.remote.RemoteMediaItemSummaryQueries
 import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.api.model.toDbModel
-import com.savvasdalkitsis.uhuruphotos.foundation.group.api.model.Group
-import com.savvasdalkitsis.uhuruphotos.foundation.group.api.model.groupBy
 import com.savvasdalkitsis.uhuruphotos.foundation.log.api.runCatchingWithLog
 import com.squareup.sqldelight.runtime.coroutines.asFlow
 import com.squareup.sqldelight.runtime.coroutines.mapToList
@@ -41,12 +39,12 @@ class UserAlbumRepository @Inject constructor(
     private val remoteMediaItemSummaryQueries: RemoteMediaItemSummaryQueries,
 ) {
 
-    suspend fun getUserAlbum(albumId: Int): Group<String, GetUserAlbum> =
-        userAlbumQueries.getUserAlbum(albumId.toString()).await().groupBy(GetUserAlbum::id).let(::Group)
+    suspend fun getUserAlbum(albumId: Int): List<GetUserAlbum> =
+        userAlbumQueries.getUserAlbum(albumId.toString()).await()
 
-    fun observeUserAlbum(albumId: Int): Flow<Group<String, GetUserAlbum>> =
+    fun observeUserAlbum(albumId: Int): Flow<List<GetUserAlbum>> =
         userAlbumQueries.getUserAlbum(albumId.toString())
-            .asFlow().mapToList().groupBy(GetUserAlbum::id)
+            .asFlow().mapToList()
             .distinctUntilChanged()
 
     suspend fun refreshUserAlbum(albumId: Int): Result<Unit> = runCatchingWithLog {

@@ -62,13 +62,14 @@ internal class LocalAlbumUseCase @Inject constructor(
         flowSharedPreferences.getEnum("localFolderGalleryDisplay/$albumId", PredefinedCollageDisplay.default)
 
     private fun List<MediaItem>.toMediaCollections(): List<MediaCollection> =
-        groupBy { it.sortableDate }
+        groupBy { it.displayDayDate }
             .toSortedMap { a, b -> b.orEmpty().compareTo(a.orEmpty()) }
             .filterValues { it.isNotEmpty() }
-            .map { (sortableDate, items) ->
+            .map { (date, items) ->
                 MediaCollection(
-                    id = "local_album_$sortableDate",
-                    displayTitle = items.first().displayDayDate ?: "-",
+                    id = "local_album_$date",
+                    unformattedDate = items.first().sortableDate,
+                    displayTitle = date ?: "-",
                     mediaItems = items,
                     location = null,
                 )

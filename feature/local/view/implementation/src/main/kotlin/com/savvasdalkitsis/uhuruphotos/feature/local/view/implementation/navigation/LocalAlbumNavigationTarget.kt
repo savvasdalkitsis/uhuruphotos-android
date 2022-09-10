@@ -22,6 +22,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.GalleryActi
 import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.GalleryAction.LoadCollage
 import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.GalleryEffect
 import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.GalleryEffectsHandler
+import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.GalleryId
 import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.ui.state.GalleryState
 import com.savvasdalkitsis.uhuruphotos.feature.local.view.api.navigation.LocalAlbumNavigationTarget
 import com.savvasdalkitsis.uhuruphotos.feature.local.view.api.navigation.LocalAlbumNavigationTarget.albumId
@@ -57,8 +58,9 @@ internal class LocalAlbumNavigationTarget @Inject constructor(
             ),
             themeMode = settingsUseCase.observeThemeModeState(),
             initializer = { navBackStackEntry, action ->
-                action(Either.Right(LocalAlbumAction.Load(navBackStackEntry.albumId)))
-                action(Either.Left(LoadCollage(navBackStackEntry.albumId)))
+                val albumId = navBackStackEntry.albumId
+                action(Either.Right(LocalAlbumAction.Load(albumId)))
+                action(Either.Left(LoadCollage(GalleryId(albumId, "local:$albumId"))))
             },
             createModel = { hiltViewModel() }
         ) { state, action ->

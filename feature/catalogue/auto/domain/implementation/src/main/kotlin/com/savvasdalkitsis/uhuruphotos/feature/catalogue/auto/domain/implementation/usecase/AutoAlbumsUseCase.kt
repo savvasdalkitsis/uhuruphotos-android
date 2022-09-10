@@ -80,6 +80,7 @@ class AutoAlbumsUseCase @Inject constructor(
                                 it.coverPhotoIsVideo ?: false
                             ),
                             displayDayDate = null,
+                            sortableDate = it.timestamp,
                             ratio = 1f,
                             isVideo = it.coverPhotoIsVideo ?: false,
                         ),

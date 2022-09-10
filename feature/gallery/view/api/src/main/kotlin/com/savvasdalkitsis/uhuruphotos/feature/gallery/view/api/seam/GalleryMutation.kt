@@ -17,6 +17,7 @@ package com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam
 
 import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.CollageDisplay
 import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.ui.state.GalleryDetails
+import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.ui.state.GallerySorting
 import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.ui.state.GalleryState
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.Mutation
 
@@ -45,5 +46,9 @@ sealed class GalleryMutation(
         it.copy(collageState = it.collageState.copy(
             collageDisplay = collageDisplay,
         ))
+    })
+
+    data class ShowGallerySorting(val sorting: GallerySorting) : GalleryMutation({
+        it.copy(sorting = sorting)
     })
 }

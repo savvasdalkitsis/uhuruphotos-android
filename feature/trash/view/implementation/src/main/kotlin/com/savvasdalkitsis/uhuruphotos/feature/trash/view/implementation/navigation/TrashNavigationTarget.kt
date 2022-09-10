@@ -22,6 +22,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.GalleryActi
 import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.GalleryAction.LoadCollage
 import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.GalleryEffect
 import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.GalleryEffectsHandler
+import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.GalleryId
 import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.ui.state.GalleryState
 import com.savvasdalkitsis.uhuruphotos.feature.settings.domain.api.usecase.SettingsUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.trash.view.api.navigation.TrashNavigationTarget
@@ -59,7 +60,7 @@ internal class TrashNavigationTarget @Inject constructor(
             ),
             themeMode = settingsUseCase.observeThemeModeState(),
             initializer = { _, action ->
-                action(Left(LoadCollage(0)))
+                action(Left(LoadCollage(GalleryId(0, "trash"))))
                 action(Right(Load))
             },
             createModel = { hiltViewModel() }

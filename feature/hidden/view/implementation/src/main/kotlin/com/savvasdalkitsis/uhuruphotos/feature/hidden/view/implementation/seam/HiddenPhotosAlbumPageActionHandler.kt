@@ -15,6 +15,7 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.hidden.view.implementation.seam
 
+import com.fredporciuncula.flow.preferences.FlowSharedPreferences
 import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.Cluster
 import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.GalleryAction
 import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.GalleryActionHandler
@@ -42,7 +43,8 @@ internal class HiddenPhotosAlbumPageActionHandler @Inject constructor(
     mediaUseCase: MediaUseCase,
     hiddenMediaUseCase: HiddenMediaUseCase,
     settingsUseCase: SettingsUseCase,
-    biometricsUseCase: BiometricsUseCase
+    biometricsUseCase: BiometricsUseCase,
+    flowSharedPreferences: FlowSharedPreferences,
 ): ActionHandler<GalleryState, GalleryEffect, GalleryAction, GalleryMutation> by GalleryActionHandler(
     galleryRefresher = { mediaUseCase.refreshFavouriteMedia() },
     initialCollageDisplay = { hiddenMediaUseCase.getHiddenMediaGalleryDisplay() },
@@ -91,4 +93,5 @@ internal class HiddenPhotosAlbumPageActionHandler @Inject constructor(
 
     },
     lightboxSequenceDataSource = { HiddenMedia },
+    flowSharedPreferences = flowSharedPreferences,
 )

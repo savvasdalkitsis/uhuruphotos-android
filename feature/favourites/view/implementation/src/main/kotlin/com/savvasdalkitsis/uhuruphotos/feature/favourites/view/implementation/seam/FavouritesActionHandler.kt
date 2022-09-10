@@ -15,6 +15,7 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.favourites.view.implementation.seam
 
+import com.fredporciuncula.flow.preferences.FlowSharedPreferences
 import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.Cluster
 import com.savvasdalkitsis.uhuruphotos.feature.favourites.domain.api.usecase.FavouritesUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.GalleryAction
@@ -36,6 +37,7 @@ import javax.inject.Inject
 internal class FavouritesActionHandler @Inject constructor(
     mediaUseCase: MediaUseCase,
     favouritesUseCase: FavouritesUseCase,
+    flowSharedPreferences: FlowSharedPreferences,
 ) : ActionHandler<GalleryState, GalleryEffect, GalleryAction, GalleryMutation>
 by GalleryActionHandler(
     galleryRefresher = { mediaUseCase.refreshFavouriteMedia() },
@@ -65,5 +67,6 @@ by GalleryActionHandler(
                 )
             }
     },
-    lightboxSequenceDataSource = { FavouriteMedia }
+    lightboxSequenceDataSource = { FavouriteMedia },
+    flowSharedPreferences = flowSharedPreferences,
 )

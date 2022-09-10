@@ -22,6 +22,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.GalleryActi
 import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.GalleryAction.LoadCollage
 import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.GalleryEffect
 import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.GalleryEffectsHandler
+import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.GalleryId
 import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.ui.state.GalleryState
 import com.savvasdalkitsis.uhuruphotos.feature.hidden.view.api.HiddenPhotosNavigationTarget
 import com.savvasdalkitsis.uhuruphotos.feature.hidden.view.implementation.seam.HiddenPhotosAction
@@ -57,7 +58,7 @@ internal class HiddenPhotosNavigationTarget @Inject constructor(
             effects = CompositeEffectHandler(galleryEffectsHandler, hiddenPhotosEffectHandler),
             themeMode = settingsUseCase.observeThemeModeState(),
             initializer = { _, action ->
-                action(Left(LoadCollage(0)))
+                action(Left(LoadCollage(GalleryId(0, "hidden"))))
                 action(Right(Load))
             },
             createModel = { hiltViewModel() }

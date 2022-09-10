@@ -169,7 +169,7 @@ class LightboxActionHandler @Inject constructor(
                         action,
                     )
                     is UserAlbum -> loadCollections(
-                        userAlbumUseCase.getUserAlbum(action.sequenceDataSource.albumId),
+                        userAlbumUseCase.getUserAlbum(action.sequenceDataSource.albumId).mediaCollections,
                         action,
                     )
                     is LocalAlbum -> loadCollections(

@@ -13,14 +13,22 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
  */
-package com.savvasdalkitsis.uhuruphotos.feature.album.user.domain.api.usecase
+package com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.ui.state
 
-import com.savvasdalkitsis.uhuruphotos.feature.album.user.domain.api.model.UserAlbum
-import kotlinx.coroutines.flow.Flow
+import androidx.annotation.DrawableRes
+import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.R.drawable
 
-interface UserAlbumUseCase {
+enum class GallerySorting(@DrawableRes val icon: Int) {
 
-    suspend fun getUserAlbum(albumId: Int): UserAlbum
-    fun observeUserAlbum(albumId: Int): Flow<UserAlbum>
-    suspend fun refreshUserAlbum(albumId: Int): Result<Unit>
+    DATE_DESC(drawable.ic_sort_date_descending),
+    DATE_ASC(drawable.ic_sort_date_ascending);
+
+    fun toggle() = when (this) {
+        DATE_DESC -> DATE_ASC
+        else -> DATE_DESC
+    }
+
+    companion object {
+        val default = DATE_DESC
+    }
 }

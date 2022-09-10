@@ -24,6 +24,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.GalleryActi
 import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.GalleryAction.LoadCollage
 import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.GalleryEffect
 import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.GalleryEffectsHandler
+import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.GalleryId
 import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.ui.Gallery
 import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.ui.state.GalleryState
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.NavigationTarget
@@ -41,7 +42,7 @@ internal class FavouritesNavigationTarget @Inject constructor(
             effects = effectsHandler,
             themeMode = settingsUseCase.observeThemeModeState(),
             initializer = { _, action ->
-                action(LoadCollage(0))
+                action(LoadCollage(GalleryId(0, "favourites")))
             },
             createModel = { hiltViewModel() }
         ) { state, action ->

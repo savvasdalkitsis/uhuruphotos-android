@@ -160,6 +160,7 @@ class LocalMediaUseCase @Inject constructor(
             displayDateTime = dateDisplayer.dateTimeString(dateTimeString),
             dateTimeTaken = parsingDateTimeFormat.format(date),
             dateTaken = parsingDateFormat.format(date),
+            sortableDate = date.time,
             bucket = LocalMediaFolder(id = bucketId, bucketName),
             width = width,
             height = height,

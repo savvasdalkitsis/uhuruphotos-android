@@ -15,6 +15,7 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.album.auto.view.implementation.seam
 
+import com.fredporciuncula.flow.preferences.FlowSharedPreferences
 import com.savvasdalkitsis.uhuruphotos.feature.album.auto.domain.api.usecase.AutoAlbumUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.album.auto.view.implementation.state.AutoAlbumCollageDisplay
 import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.Cluster
@@ -40,6 +41,7 @@ internal class AutoAlbumActionHandler @Inject constructor(
     autoAlbumUseCase: AutoAlbumUseCase,
     remoteMediaUseCase: RemoteMediaUseCase,
     dateDisplayer: DateDisplayer,
+    flowSharedPreferences: FlowSharedPreferences,
 ) : ActionHandler<GalleryState, GalleryEffect, GalleryAction, GalleryMutation>
 by GalleryActionHandler(
     galleryRefresher = { autoAlbumUseCase.refreshAutoAlbum(it) },
@@ -63,6 +65,7 @@ by GalleryActionHandler(
                     }.entries.map { (date, photos) ->
                         Cluster(
                             id = date,
+                            unformattedDate = photos.firstOrNull()?.timestamp,
                             displayTitle = date,
                             location = null,
                             cels = photos.map {
@@ -76,6 +79,7 @@ by GalleryActionHandler(
                                         it.photoId.toFullSizeUrlFromIdNullable(it.video ?: false)
                                     },
                                     displayDayDate = date,
+                                    sortableDate = it.timestamp,
                                     isFavourite = it.isFavorite ?: false,
                                     isVideo = it.video ?: false,
                                 ).toCel()
@@ -85,5 +89,6 @@ by GalleryActionHandler(
                 )
             }
     },
-    lightboxSequenceDataSource = { AutoAlbum(it) }
+    lightboxSequenceDataSource = { AutoAlbum(it) },
+    flowSharedPreferences = flowSharedPreferences,
 )

@@ -15,9 +15,13 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam
 
+import com.fredporciuncula.flow.preferences.FlowSharedPreferences
+import com.fredporciuncula.flow.preferences.Preference
+import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.Cluster
 import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.CollageDisplay
 import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.PredefinedCollageDisplay
 import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.GalleryAction.ChangeCollageDisplay
+import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.GalleryAction.ChangeGallerySorting
 import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.GalleryAction.LoadCollage
 import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.GalleryAction.NavigateBack
 import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.GalleryAction.PersonSelected
@@ -28,13 +32,18 @@ import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.GalleryEffe
 import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.GalleryEffect.OpenLightbox
 import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.GalleryMutation.Loading
 import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.GalleryMutation.ShowGallery
+import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.GalleryMutation.ShowGallerySorting
 import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.ui.state.GalleryDetails
+import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.ui.state.GallerySorting
+import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.ui.state.GallerySorting.DATE_ASC
+import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.ui.state.GallerySorting.DATE_DESC
 import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.ui.state.GalleryState
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.api.model.LightboxSequenceDataSource
 import com.savvasdalkitsis.uhuruphotos.foundation.coroutines.api.safelyOnStartIgnoring
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.ActionHandler
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.map
@@ -47,11 +56,14 @@ class GalleryActionHandler(
     private val galleryDetailsEmptyCheck: suspend (galleryId: Int) -> Boolean,
     private val lightboxSequenceDataSource: (galleryId: Int) -> LightboxSequenceDataSource,
     private val initialCollageDisplay: (galleryId: Int) -> CollageDisplay,
-    private val collageDisplayPersistence: suspend (galleryId:Int, PredefinedCollageDisplay) -> Unit,
+    private val collageDisplayPersistence: suspend (galleryId: Int, PredefinedCollageDisplay) -> Unit,
+    private val flowSharedPreferences: FlowSharedPreferences,
 ) : ActionHandler<GalleryState, GalleryEffect, GalleryAction, GalleryMutation> {
 
     private val loading = MutableSharedFlow<GalleryMutation>()
     private var galleryId by Delegates.notNull<Int>()
+
+    private lateinit var sorting: Preference<GallerySorting>
 
     override fun handleAction(
         state: GalleryState,
@@ -59,13 +71,28 @@ class GalleryActionHandler(
         effect: suspend (GalleryEffect) -> Unit,
     ): Flow<GalleryMutation> = when (action) {
         is LoadCollage -> {
+            sorting = flowSharedPreferences.getEnum(
+                "gallerySorting::${action.galleryId.serializationUniqueId}",
+                GallerySorting.default,
+            )
             merge(
-                flowOf(GalleryMutation.ChangeCollageDisplay(initialCollageDisplay(action.collageId))),
-                galleryDetailsFlow(action.collageId, effect)
-                    .map(::ShowGallery),
+                flowOf(GalleryMutation.ChangeCollageDisplay(initialCollageDisplay(action.galleryId.id))),
+                combine(
+                    galleryDetailsFlow(action.galleryId.id, effect),
+                    sorting.asFlow(),
+                ) { galleryDetails, sorting ->
+                    galleryDetails.copy(
+                        clusters = when (sorting) {
+                            DATE_DESC -> galleryDetails.clusters.descending()
+                            DATE_ASC -> galleryDetails.clusters.ascending()
+                        }
+                    )
+                }.map(::ShowGallery),
+                sorting.asFlow()
+                    .map { ShowGallerySorting(it) },
                 loading,
             ).safelyOnStartIgnoring {
-                galleryId = action.collageId
+                galleryId = action.galleryId.id
                 if (galleryDetailsEmptyCheck(galleryId)) {
                     refreshGallery(effect)
                 }
@@ -99,6 +126,9 @@ class GalleryActionHandler(
                 collageDisplayPersistence(galleryId, it)
             }
         }
+        ChangeGallerySorting -> flow {
+            sorting.set(state.sorting.toggle())
+        }
     }
 
     private suspend fun refreshGallery(effect: suspend (GalleryEffect) -> Unit) {
@@ -108,5 +138,27 @@ class GalleryActionHandler(
             effect(ErrorLoading)
         }
         loading.emit(Loading(false))
+    }
+
+    private fun List<Cluster>.descending() = map { cluster ->
+        cluster.copy(cels = cluster.cels
+            .sortedByDescending {
+                it.mediaItem.sortableDate
+            }
+        )
+    }
+    .sortedByDescending {
+        it.unformattedDate
+    }
+
+    private fun List<Cluster>.ascending() = map { cluster ->
+        cluster.copy(cels = cluster.cels
+            .sortedBy {
+                it.mediaItem.sortableDate
+            }
+        )
+    }
+    .sortedBy {
+        it.unformattedDate
     }
 }

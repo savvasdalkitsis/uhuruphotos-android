@@ -25,6 +25,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.GalleryActi
 import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.GalleryAction.LoadCollage
 import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.GalleryEffect
 import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.GalleryEffectsHandler
+import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.GalleryId
 import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.ui.Gallery
 import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.ui.state.GalleryState
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.NavigationTarget
@@ -42,7 +43,8 @@ internal class UserAlbumNavigationTarget @Inject constructor(
             effects = effectsHandler,
             themeMode = settingsUseCase.observeThemeModeState(),
             initializer = { navBackStackEntry, action ->
-                action(LoadCollage(navBackStackEntry.albumId))
+                val albumId = navBackStackEntry.albumId
+                action(LoadCollage(GalleryId(albumId, "user:$albumId")))
             },
             createModel = { hiltViewModel() }
         ) { state, action ->

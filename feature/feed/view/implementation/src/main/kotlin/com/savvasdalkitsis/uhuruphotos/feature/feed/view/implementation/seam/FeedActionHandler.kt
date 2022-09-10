@@ -205,6 +205,7 @@ internal class FeedActionHandler @Inject constructor(
     }.map { (year, clusters) ->
         Cluster(
             id = year ?: "-",
+            unformattedDate = year ?: "-",
             cels = clusters.flatMap { it.cels },
             displayTitle = year ?: "-",
             location = null,

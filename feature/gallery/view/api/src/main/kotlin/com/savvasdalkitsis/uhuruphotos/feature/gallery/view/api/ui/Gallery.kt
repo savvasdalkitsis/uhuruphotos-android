@@ -20,12 +20,14 @@ import androidx.compose.foundation.layout.RowScope
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import com.google.accompanist.swiperefresh.SwipeRefresh
 import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.Collage
 import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.CollageDisplayActionButton
 import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.GalleryAction
 import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.GalleryAction.ChangeCollageDisplay
+import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.GalleryAction.ChangeGallerySorting
 import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.GalleryAction.NavigateBack
 import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.GalleryAction.PersonSelected
 import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.GalleryAction.SelectedCel
@@ -33,6 +35,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.GalleryActi
 import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.ui.state.GalleryState
 import com.savvasdalkitsis.uhuruphotos.feature.people.view.api.ui.PeopleBanner
 import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
+import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.ActionIcon
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.BackNavButton
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.CommonScaffold
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.NoContent
@@ -53,6 +56,11 @@ fun Gallery(
             }
         },
         actionBarContent = {
+            ActionIcon(
+                onClick = { action(ChangeGallerySorting) },
+                icon = state.sorting.icon,
+                contentDescription = stringResource(string.sorting)
+            )
             AnimatedVisibility(state.collageState.collageDisplay.iconResource != 0
                     && state.collageState.clusters.isNotEmpty()) {
                 CollageDisplayActionButton(

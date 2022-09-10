@@ -15,6 +15,7 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.album.user.view.implementation.seam
 
+import com.fredporciuncula.flow.preferences.FlowSharedPreferences
 import com.savvasdalkitsis.uhuruphotos.feature.album.user.domain.api.usecase.UserAlbumUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.toCluster
 import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.GalleryAction
@@ -32,6 +33,7 @@ import javax.inject.Inject
 internal class UserAlbumActionHandler @Inject constructor(
     userAlbumDisplay: UserAlbumDisplay,
     userAlbumUseCase: UserAlbumUseCase,
+    flowSharedPreferences: FlowSharedPreferences,
 ) : ActionHandler<GalleryState, GalleryEffect, GalleryAction, GalleryMutation>
 by GalleryActionHandler(
     galleryRefresher = { userAlbumUseCase.refreshUserAlbum(it) },
@@ -40,18 +42,17 @@ by GalleryActionHandler(
         userAlbumDisplay.setUserAlbumGalleryDisplay(albumId, galleryDisplay)
     },
     galleryDetailsEmptyCheck = { albumId ->
-        userAlbumUseCase.getUserAlbum(albumId).isEmpty()
+        userAlbumUseCase.getUserAlbum(albumId).mediaCollections.isEmpty()
     },
     galleryDetailsFlow = { albumId, _ ->
         userAlbumUseCase.observeUserAlbum(albumId)
-            .map { mediaCollections ->
+            .map { album ->
                 GalleryDetails(
-                    title = Title.Text(mediaCollections.firstOrNull()?.displayTitle ?: ""),
-                    clusters = mediaCollections.map { mediaCollection ->
-                        mediaCollection.toCluster()
-                    }
+                    title = Title.Text(album.title),
+                    clusters = album.mediaCollections.map { it.toCluster() }
                 )
             }
     },
-    lightboxSequenceDataSource = { UserAlbum(it) }
+    lightboxSequenceDataSource = { UserAlbum(it) },
+    flowSharedPreferences = flowSharedPreferences,
 )
