@@ -1,0 +1,4 @@
+* Adding sorting to gallery pages. Affects user albums, auto albums, favourites, local folders, hidden and trash
+* Fixed user album day groupings
+* Allowing local urls with non standard domains in server url field
+* Fixing bug where local media weren't refreshed when giving permission
