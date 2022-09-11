@@ -15,10 +15,7 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam
 
-import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.FeedEffect.DownloadingFiles
-import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.FeedEffect.OpenLightbox
-import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.FeedEffect.Share
-import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.FeedEffect.Vibrate
+import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.FeedEffect.*
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.api.model.LightboxSequenceDataSource.Feed
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.api.navigation.LightboxNavigationTarget
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.Navigator
@@ -48,6 +45,9 @@ internal class FeedEffectsHandler @Inject constructor(
         }
         Vibrate -> uiUseCase.performLongPressHaptic()
         DownloadingFiles -> toaster.show(string.downloading_original_files)
+        is FeedEffect.OpenMemoryLightbox -> with(effect) {
+            navigateTo(LightboxNavigationTarget.name(id, center, scale, isVideo, Feed))
+        }
     }
 
     private fun navigateTo(target: String) {

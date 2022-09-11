@@ -28,6 +28,7 @@ class SettingsViewStateController @Inject constructor(
     private val allGroups = mutableSetOf<SettingsGroupState>()
 
     val ui = group(string.ui, "settings:group:ui")
+    val uiFeed = group(string.feed, "settings:group:ui:feed")
     val uiTheme = group(string.theme, "settings:group:ui:theme")
     val uiSearch = group(string.search, "settings:group:ui:search")
     val uiLibrary = group(string.library, "settings:group:ui:library")

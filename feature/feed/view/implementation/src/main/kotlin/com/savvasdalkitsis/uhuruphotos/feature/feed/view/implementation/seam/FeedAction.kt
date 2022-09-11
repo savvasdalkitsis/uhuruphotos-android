@@ -30,6 +30,8 @@ internal sealed class FeedAction {
     data class CelLongPressed(val celState: CelState) : FeedAction()
     data class ClusterSelectionClicked(val cluster: Cluster) : FeedAction()
     data class ClusterRefreshClicked(val cluster: Cluster) : FeedAction()
+    data class MemorySelected(val memoryCel: CelState, val center: Offset, val scale: Float) : FeedAction()
+
     object LoadFeed : FeedAction()
     object RefreshFeed : FeedAction()
     object ClearSelected : FeedAction()

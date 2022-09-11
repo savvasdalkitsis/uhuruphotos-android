@@ -42,4 +42,5 @@ internal data class SettingsState(
     val mapProviderState: MapProviderState = MapProviderState.NoOptions,
     val isLoggingEnabled: Boolean = false,
     val biometrics: BiometricsSetting? = null,
+    val showMemories: Boolean = true,
 )

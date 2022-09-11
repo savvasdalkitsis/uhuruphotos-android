@@ -77,6 +77,8 @@ internal class SettingsUseCase @Inject constructor(
         flowSharedPreferences.getBoolean("biometricsRequiredForHiddenPhotosAccess", false)
     private val biometricsRequiredForTrashAccess =
         flowSharedPreferences.getBoolean("biometricsRequiredForTrashAccess", false)
+    private val memoriesEnabled =
+        flowSharedPreferences.getBoolean("memoriesEnabled", true)
 
     override fun getImageDiskCacheMaxLimit(): Int = imageDiskCacheSize.get()
     override fun getImageMemCacheMaxLimit(): Int = imageMemCacheSize.get()
@@ -98,6 +100,8 @@ internal class SettingsUseCase @Inject constructor(
         biometricsRequiredForHiddenPhotosAccess.get()
     override fun getBiometricsRequiredForTrashAccess(): Boolean =
         biometricsRequiredForTrashAccess.get()
+    override fun getMemoriesEnabled(): Boolean =
+        memoriesEnabled.get()
 
     override fun observeImageDiskCacheMaxLimit(): Flow<Int> = imageDiskCacheSize.asFlow()
     override fun observeImageMemCacheMaxLimit(): Flow<Int> = imageMemCacheSize.asFlow()
@@ -123,6 +127,9 @@ internal class SettingsUseCase @Inject constructor(
         biometricsRequiredForHiddenPhotosAccess.asFlow()
     override fun observeBiometricsRequiredForTrashAccess(): Flow<Boolean> =
         biometricsRequiredForTrashAccess.asFlow()
+    override fun observeMemoriesEnabled(): Flow<Boolean> =
+        memoriesEnabled.asFlow()
+
 
     override suspend fun setImageDiskCacheMaxLimit(sizeInMb: Int) {
         imageDiskCacheSize.setAndCommit(sizeInMb)
@@ -191,6 +198,10 @@ internal class SettingsUseCase @Inject constructor(
 
     override suspend fun setBiometricsRequiredForTrashAccess(required: Boolean) {
         biometricsRequiredForTrashAccess.setAndCommit(required)
+    }
+
+    override suspend fun setMemoriesEnabled(enabled: Boolean) {
+        memoriesEnabled.setAndCommit(enabled)
     }
 
     private fun MapProvider.mapToAvailable(): MapProvider =

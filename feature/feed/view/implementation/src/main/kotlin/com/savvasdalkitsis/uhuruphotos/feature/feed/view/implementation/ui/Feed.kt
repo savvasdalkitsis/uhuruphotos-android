@@ -26,14 +26,7 @@ import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.Collage
 import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.PredefinedCollageDisplay
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.FeedAction
-import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.FeedAction.CelLongPressed
-import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.FeedAction.ChangeDisplay
-import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.FeedAction.ClusterRefreshClicked
-import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.FeedAction.ClusterSelectionClicked
-import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.FeedAction.DismissSelectedPhotosTrashing
-import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.FeedAction.RefreshFeed
-import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.FeedAction.SelectedCel
-import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.FeedAction.TrashSelectedCels
+import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.FeedAction.*
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.ui.state.FeedState
 import com.savvasdalkitsis.uhuruphotos.feature.home.view.api.ui.HomeScaffold
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.TrashPermissionDialog
@@ -99,7 +92,9 @@ internal fun Feed(
                 },
                 collageHeader = {
                     AnimatedVisibility(visible = state.memories.isNotEmpty()) {
-                        FeedMemories(state.memories)
+                        FeedMemories(state.memories) { cel, center, scale ->
+                            action(MemorySelected(cel, center, scale))
+                        }
                     }
                 }
             )

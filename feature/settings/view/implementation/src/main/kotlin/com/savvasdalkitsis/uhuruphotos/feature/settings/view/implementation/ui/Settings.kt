@@ -75,6 +75,9 @@ internal fun Settings(
                 columnCount = columns,
             ) {
                 SuperGroup(controller.ui) {
+                    Group(controller.uiFeed) {
+                        SettingsFeedUI(state, action)
+                    }
                     Group(controller.uiTheme) {
                         SettingsTheme(state, action)
                     }
@@ -103,7 +106,7 @@ internal fun Settings(
                 }
                 SuperGroup(controller.jobs) {
                     Group(controller.jobsFeed) {
-                        SettingsFeed(state, action)
+                        SettingsFeedJobs(state, action)
                     }
                 }
                 SuperGroup(controller.advanced) {

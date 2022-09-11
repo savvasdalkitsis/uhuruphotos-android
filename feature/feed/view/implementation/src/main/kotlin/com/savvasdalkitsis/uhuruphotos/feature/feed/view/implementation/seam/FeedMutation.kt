@@ -67,6 +67,10 @@ internal sealed class FeedMutation(
     data class ShowMemories(val memories: List<MemoryCel>) : FeedMutation({
         it.copy(memories = memories)
     })
+
+    object HideMemories : FeedMutation({
+        it.copy(memories = emptyList())
+    })
 }
 
 private fun FeedState.copyFeed(collageStateMutation: CollageState.() -> CollageState) =

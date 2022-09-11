@@ -26,6 +26,12 @@ internal sealed class FeedEffect {
         val scale: Float,
         val isVideo: Boolean,
     ) : FeedEffect()
+    data class OpenMemoryLightbox(
+        val id: MediaId<*>,
+        val center: Offset,
+        val scale: Float,
+        val isVideo: Boolean,
+    ) : FeedEffect()
 
     data class Share(val selectedCels: List<CelState>) : FeedEffect()
     object Vibrate : FeedEffect()

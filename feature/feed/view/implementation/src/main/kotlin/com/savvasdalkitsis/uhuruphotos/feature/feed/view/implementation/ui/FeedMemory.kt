@@ -16,17 +16,18 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.ui
 
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.Surface
+import androidx.compose.material.Card
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.drawWithCache
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.TileMode
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -34,26 +35,48 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.ui.state.MemoryCel
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.Cel
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.CelSelected
 import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
 
 @Composable
-internal fun FeedMemory(memory: MemoryCel) {
-    Surface(
+internal fun FeedMemory(
+    memory: MemoryCel,
+    onSelected: CelSelected,
+) {
+    Card(
         modifier = Modifier
-            .clip(RoundedCornerShape(12.dp)),
+            .padding(0.dp),
+        shape = RoundedCornerShape(12.dp),
         elevation = 4.dp,
     ) {
         Box(
             modifier = Modifier
-                .aspectRatio(0.6f)
-                .width(140.dp)
+                .width(130.dp)
         ) {
             Cel(
+                modifier = Modifier
+                    .drawWithCache {
+                        onDrawWithContent {
+                            drawContent()
+                            drawRect(
+                                brush = Brush.verticalGradient(
+                                    0f to Color.Transparent,
+                                    0.5f to Color.Transparent,
+                                    1f to Color.Black.copy(alpha = 0.8f),
+                                    startY = 0f,
+                                    endY = Float.POSITIVE_INFINITY,
+                                    tileMode = TileMode.Clamp,
+                                )
+                            )
+                        }
+                    },
                 state = memory.cel,
-                onSelected = { _, _, _ -> },
-                aspectRatio = 0.6f,
+                onSelected = { cel, center, scale ->
+                    onSelected(cel, center, scale)
+                },
+                aspectRatio = 0.7f,
                 contentScale = ContentScale.Crop,
-                selectable = false,
+                selectable = true,
             )
             Text(
                 modifier = Modifier

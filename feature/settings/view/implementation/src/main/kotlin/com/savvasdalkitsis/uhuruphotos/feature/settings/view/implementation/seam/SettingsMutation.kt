@@ -121,6 +121,10 @@ internal sealed class SettingsMutation(
         it.copy(showLibrary = show)
     })
 
+    data class DisplayShowMemories(val show: Boolean): SettingsMutation({
+        it.copy(showMemories = show)
+    })
+
     data class DisplayLoggingEnabled(val enabled: Boolean): SettingsMutation({
         it.copy(isLoggingEnabled = enabled)
     })

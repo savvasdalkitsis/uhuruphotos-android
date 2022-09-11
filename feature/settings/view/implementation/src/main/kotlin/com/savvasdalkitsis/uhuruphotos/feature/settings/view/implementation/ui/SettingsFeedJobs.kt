@@ -29,7 +29,7 @@ import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
 import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R as Strings
 
 @Composable
-internal fun ColumnScope.SettingsFeed(
+internal fun ColumnScope.SettingsFeedJobs(
     state: SettingsState,
     action: (SettingsAction) -> Unit,
 ) {

@@ -38,6 +38,7 @@ internal sealed class SettingsAction {
     data class ChangeBiometricsAppAccessRequirement(val required: Boolean) : SettingsAction()
     data class ChangeBiometricsHiddenPhotosAccessRequirement(val required: Boolean) : SettingsAction()
     data class ChangeBiometricsTrashAccessRequirement(val required: Boolean) : SettingsAction()
+    data class ChangeMemoriesEnabled(val enabled: Boolean) : SettingsAction()
 
     object LoadSettings : SettingsAction()
     object NavigateBack : SettingsAction()

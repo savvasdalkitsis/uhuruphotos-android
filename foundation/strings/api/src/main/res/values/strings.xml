@@ -215,4 +215,5 @@
     <string name="login">Login</string>
     <string name="years_ago">%d years ago</string>
     <string name="on_this_day">On this day</string>
+    <string name="enable_memories">Enable memories</string>
 </resources>

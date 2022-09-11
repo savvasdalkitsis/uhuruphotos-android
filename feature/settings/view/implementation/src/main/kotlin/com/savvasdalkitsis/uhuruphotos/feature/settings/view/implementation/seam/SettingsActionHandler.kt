@@ -50,30 +50,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.SettingsAction.PerformFullFeedSync
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.SettingsAction.SendFeedbackClicked
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.SettingsEffect.ShowMessage
-import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.SettingsMutation.AvatarUpdate
-import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.SettingsMutation.DisableFullSyncButton
-import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.SettingsMutation.DisplayBiometrics
-import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.SettingsMutation.DisplayDiskCacheMaxLimit
-import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.SettingsMutation.DisplayFeedDaystoRefresh
-import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.SettingsMutation.DisplayFeedSyncFrequency
-import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.SettingsMutation.DisplayFullSyncNetworkRequirements
-import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.SettingsMutation.DisplayFullSyncProgress
-import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.SettingsMutation.DisplayFullSyncRequiresCharging
-import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.SettingsMutation.DisplayImageDiskCacheCurrentUse
-import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.SettingsMutation.DisplayImageMemCacheCurrentUse
-import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.SettingsMutation.DisplayLoggingEnabled
-import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.SettingsMutation.DisplayMapProviders
-import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.SettingsMutation.DisplayMemCacheMaxLimit
-import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.SettingsMutation.DisplayNoMapProvidersOptions
-import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.SettingsMutation.DisplaySearchSuggestionsEnabled
-import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.SettingsMutation.DisplayShareGpsDataEnabled
-import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.SettingsMutation.DisplayShowLibrary
-import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.SettingsMutation.DisplayThemeMode
-import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.SettingsMutation.DisplayVideoDiskCacheCurrentUse
-import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.SettingsMutation.DisplayVideoDiskCacheMaxLimit
-import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.SettingsMutation.EnableFullSyncButton
-import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.SettingsMutation.HideFullFeedSyncDialog
-import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.SettingsMutation.ShowFullFeedSyncDialog
+import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.SettingsMutation.*
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.ui.state.BiometricsSetting
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.ui.state.SettingsState
 import com.savvasdalkitsis.uhuruphotos.foundation.biometrics.api.model.Biometrics.Enrolled
@@ -130,6 +107,8 @@ internal class SettingsActionHandler @Inject constructor(
                 .map(::DisplayShareGpsDataEnabled),
             settingsUseCase.observeShowLibrary()
                 .map(::DisplayShowLibrary),
+            settingsUseCase.observeMemoriesEnabled()
+                .map(::DisplayShowMemories),
             settingsUseCase.observeMapProvider().map { current ->
                 val available = settingsUseCase.getAvailableMapProviders()
                 when {
@@ -251,6 +230,9 @@ internal class SettingsActionHandler @Inject constructor(
         }
         EnrollToBiometrics -> flow {
             effect(SettingsEffect.EnrollToBiometrics)
+        }
+        is SettingsAction.ChangeMemoriesEnabled -> flow {
+            settingsUseCase.setMemoriesEnabled(action.enabled)
         }
     }
 

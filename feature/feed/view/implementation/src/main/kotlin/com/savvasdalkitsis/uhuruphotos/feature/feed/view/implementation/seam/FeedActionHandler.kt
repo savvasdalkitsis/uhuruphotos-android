@@ -35,19 +35,8 @@ import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.Fee
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.FeedAction.SelectedCel
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.FeedAction.ShareSelectedCels
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.FeedAction.TrashSelectedCels
-import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.FeedEffect.DownloadingFiles
-import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.FeedEffect.OpenLightbox
-import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.FeedEffect.Share
-import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.FeedEffect.Vibrate
-import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.FeedMutation.HideTrashingConfirmationDialog
-import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.FeedMutation.Loading
-import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.FeedMutation.ShowClusters
-import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.FeedMutation.ShowLibrary
-import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.FeedMutation.ShowMemories
-import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.FeedMutation.ShowNoPhotosFound
-import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.FeedMutation.ShowTrashingConfirmationDialog
-import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.FeedMutation.StartRefreshing
-import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.FeedMutation.StopRefreshing
+import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.FeedEffect.*
+import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.FeedMutation.*
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.ui.state.FeedState
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.ui.state.MemoryCel
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemSelectionMode.SELECTED
@@ -60,14 +49,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.memories.domain.api.usecase.Memor
 import com.savvasdalkitsis.uhuruphotos.feature.settings.domain.api.usecase.SettingsUseCase
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.ActionHandler
 import kotlinx.coroutines.delay
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.combine
-import kotlinx.coroutines.flow.debounce
-import kotlinx.coroutines.flow.distinctUntilChanged
-import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.flow.flowOf
-import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.flow.merge
+import kotlinx.coroutines.flow.*
 import javax.inject.Inject
 
 internal class FeedActionHandler @Inject constructor(
@@ -113,12 +95,18 @@ internal class FeedActionHandler @Inject constructor(
                     ShowClusters(final)
                 }
             },
-            memoriesUseCase.observeMemorySummaries().map { memories ->
-                memories.map { MemoryCel(
-                    yearsAgo = it.yearsAgo,
-                    cel = it.mediaItem.toCel(),
-                ) }
-            }.map(::ShowMemories)
+            settingsUseCase.observeMemoriesEnabled().flatMapLatest { enabled ->
+                if (enabled) {
+                    memoriesUseCase.observeMemorySummaries().map { memories ->
+                        memories.map { MemoryCel(
+                            yearsAgo = it.yearsAgo,
+                            cel = it.mediaItem.toCel(),
+                        ) }
+                    }.map(::ShowMemories)
+                } else {
+                    flowOf(HideMemories)
+                }
+            },
         )
         RefreshFeed -> flow {
             emit(StartRefreshing)
@@ -185,6 +173,14 @@ internal class FeedActionHandler @Inject constructor(
             state.selectedCels.forEach {
                 mediaUseCase.downloadOriginal(it.mediaItem.id, it.mediaItem.isVideo)
             }
+        }
+        is FeedAction.MemorySelected -> flow {
+            effect(OpenMemoryLightbox(
+                id = action.memoryCel.mediaItem.id,
+                center = action.center,
+                scale = action.scale,
+                isVideo = action.memoryCel.mediaItem.isVideo,
+            ))
         }
     }
 
