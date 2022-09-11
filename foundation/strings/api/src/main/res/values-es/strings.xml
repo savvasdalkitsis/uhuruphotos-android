@@ -43,6 +43,7 @@
     <string name="refresh">Refrescar</string>
     <plurals name="hours">
         <item quantity="one">%d hora</item>
+        <item quantity="many">%d horas</item>
         <item quantity="other">%d horas</item>
     </plurals>
     <string name="remove_favourite">Eliminar favorita</string>
@@ -77,6 +78,7 @@
     <string name="operation_irreverisble">Esta operación es irreversible</string>
     <plurals name="days">
         <item quantity="one">%d día</item>
+        <item quantity="many">%d días</item>
         <item quantity="other">%d días</item>
     </plurals>
     <string name="biometrics">Biometría</string>
@@ -173,7 +175,7 @@
     <plurals name="delete_media_confirmation">
         <item quantity="one">¿Estás seguro de que quieres eliminar este %d elemento multimedia\?</item>
         <item quantity="many">¿Estás seguro de que quieres eliminar estos %d elementos multimedia\?</item>
-        <item quantity="other"></item>
+        <item quantity="other"/>
     </plurals>
     <string name="favourite_media">Multimedia favorito</string>
     <string name="missing_permissions">Faltan permisos</string>
@@ -183,18 +185,18 @@
     <plurals name="restore_media">
         <item quantity="one">Restaurar %d elemento multimedia</item>
         <item quantity="many">Restaurar %d elementos multimedia</item>
-        <item quantity="other"></item>
+        <item quantity="other"/>
     </plurals>
     <plurals name="trash_media">
         <item quantity="one">Enviar %d elemento multimedia</item>
         <item quantity="many">Enviar %d elementos multimedia</item>
-        <item quantity="other"></item>
+        <item quantity="other"/>
     </plurals>
     <string name="gallery_size">Tamaño de la galería</string>
     <plurals name="delete_media">
         <item quantity="one">Borrar %d elemento multimedia</item>
         <item quantity="many">Borrar %d elementos multimedia</item>
-        <item quantity="other"></item>
+        <item quantity="other"/>
     </plurals>
     <string name="grant_permissions">Conceder permisos</string>
     <string name="server_url">Url del servidor</string>
@@ -202,11 +204,16 @@
     <plurals name="restore_media_confirmation">
         <item quantity="one">¿Estás seguro de que quieres restaurar este %d elemento multimedia\?</item>
         <item quantity="many">¿Estás seguro de que quieres restaurar estos %d elementos multimedia\?</item>
-        <item quantity="other"></item>
+        <item quantity="other"/>
     </plurals>
     <plurals name="trash_media_confirmation">
         <item quantity="one">¿Estás seguro de que quieres enviar este %d elemento multimedia\?</item>
         <item quantity="many">¿Estás seguro de que quieres enviar estos %d elementos multimedia\?</item>
-        <item quantity="other"></item>
+        <item quantity="other"/>
     </plurals>
+    <string name="media">Medios</string>
+    <string name="restoring_media">Restaurar medios de la papelera</string>
+    <string name="trashing_media">Enviando el medio a la basura</string>
+    <string name="enable_memories">Habilitar recuerdos</string>
+    <string name="setting_media_favourite">Configurando el medio como favorito</string>
 </resources>
