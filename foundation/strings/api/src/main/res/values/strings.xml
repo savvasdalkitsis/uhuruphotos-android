@@ -213,4 +213,6 @@
     <string name="save">Save</string>
     <string name="login_to_server">Login to server</string>
     <string name="login">Login</string>
+    <string name="years_ago">%d years ago</string>
+    <string name="on_this_day">On this day</string>
 </resources>

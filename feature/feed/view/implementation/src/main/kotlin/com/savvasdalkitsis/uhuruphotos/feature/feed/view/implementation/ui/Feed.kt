@@ -15,6 +15,7 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.ui
 
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
@@ -95,6 +96,11 @@ internal fun Feed(
                 },
                 onClusterRefreshClicked = {
                     action(ClusterRefreshClicked(it))
+                },
+                collageHeader = {
+                    AnimatedVisibility(visible = state.memories.isNotEmpty()) {
+                        FeedMemories(state.memories)
+                    }
                 }
             )
         }

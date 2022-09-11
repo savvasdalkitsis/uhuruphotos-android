@@ -1,0 +1,12 @@
+android {
+    namespace 'com.savvasdalkitsis.uhuruphotos.feature.memories.domain.implementation'
+}
+
+dependencies {
+    implementation project(":feature:memories:domain:api")
+    implementation project(":feature:feed:domain:api")
+    implementation project(":foundation:date:api")
+    implementation(
+            libs.hilt,
+    )
+}

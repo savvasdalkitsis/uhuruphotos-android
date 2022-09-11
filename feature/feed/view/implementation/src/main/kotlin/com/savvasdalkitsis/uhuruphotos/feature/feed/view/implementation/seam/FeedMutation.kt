@@ -19,6 +19,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.Cluster
 import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.CollageState
 import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.PredefinedCollageDisplay
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.ui.state.FeedState
+import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.ui.state.MemoryCel
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.Mutation
 
 internal sealed class FeedMutation(
@@ -61,6 +62,10 @@ internal sealed class FeedMutation(
 
     data class ShowLibrary(val showLibrary: Boolean) : FeedMutation({
         it.copy(showLibrary = showLibrary)
+    })
+
+    data class ShowMemories(val memories: List<MemoryCel>) : FeedMutation({
+        it.copy(memories = memories)
     })
 }
 

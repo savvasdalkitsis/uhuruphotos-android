@@ -25,6 +25,7 @@ internal data class FeedState(
     val isRefreshing: Boolean = false,
     val showLibrary: Boolean = true,
     val showTrashingConfirmationDialog: Boolean = false,
+    val memories: List<MemoryCel> = emptyList(),
 ) {
     val selectedCelCount: Int = collageState.clusters.sumOf { cluster ->
         cluster.cels.count { cel ->
