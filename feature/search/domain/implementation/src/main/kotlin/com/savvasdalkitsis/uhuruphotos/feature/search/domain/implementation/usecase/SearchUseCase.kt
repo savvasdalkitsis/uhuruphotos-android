@@ -79,11 +79,13 @@ class SearchUseCase @Inject constructor(
         .flatMapLatest { suggestions ->
             val r = Random(System.currentTimeMillis())
             flow {
-                if (suggestions.isNotEmpty()) {
+                if (suggestions.size > 1) {
                     while (currentCoroutineContext().isActive) {
                         emit(suggestions[r.nextInt(suggestions.size - 1)])
                         delay(3000)
                     }
+                } else if (suggestions.size == 1) {
+                    emit(suggestions[0])
                 }
             }
         }
