@@ -194,9 +194,10 @@ class LightboxActionHandler @Inject constructor(
         is ChangedToPage -> channelFlow {
             changePageJob?.cancel()
             changePageJob = null
-            send(ChangeCurrentIndex(action.page))
+            val page = action.page.coerceAtMost(state.media.size - 1)
+            send(ChangeCurrentIndex(page))
             if (state.media.isNotEmpty()) {
-                val photo = state.media[action.page]
+                val photo = state.media[page]
                 changePageJob = launch {
                     merge<LightboxMutation>(
                         flow {
