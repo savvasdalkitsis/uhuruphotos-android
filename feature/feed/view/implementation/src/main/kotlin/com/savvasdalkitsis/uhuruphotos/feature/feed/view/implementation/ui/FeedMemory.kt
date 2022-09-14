@@ -70,6 +70,7 @@ internal fun FeedMemory(
                             )
                         }
                     },
+                itemPadding = 0.dp,
                 state = memory.cel,
                 onSelected = { cel, center, scale ->
                     onSelected(cel, center, scale)
