@@ -15,6 +15,7 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui
 
+import android.support.v4.media.session.PlaybackStateCompat
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.Animatable
 import androidx.compose.foundation.background
@@ -56,6 +57,7 @@ import com.savvasdalkitsis.uhuruphotos.foundation.compose.api.toColor
 import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.R.drawable
 import com.savvasdalkitsis.uhuruphotos.foundation.image.api.ui.Image
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.theme.CustomColors
+import com.savvasdalkitsis.uhuruphotos.foundation.video.api.ui.Video
 
 @Composable
 fun Cel(
@@ -109,12 +111,27 @@ fun Cel(
                     relativeScale = boundsInWindow.width / screenWidth
                 }
         ) {
-            Image(
-                modifier = Modifier.fillMaxWidth(),
-                url = state.mediaItem.thumbnailUri,
-                contentScale = contentScale,
-                contentDescription = null,
-            )
+            val thumbnailUri = state.mediaItem.thumbnailUri
+            if (!state.mediaItem.isVideo || thumbnailUri == null) {
+                Image(
+                    modifier = Modifier.fillMaxWidth(),
+                    url = thumbnailUri,
+                    contentScale = contentScale,
+                    contentDescription = null,
+                )
+            } else {
+                Video(
+                    modifier = Modifier.fillMaxWidth(),
+                    videoUrl = thumbnailUri,
+                    videoThumbnailUrl = thumbnailUri,
+                    play = true,
+                    repeatMode = PlaybackStateCompat.REPEAT_MODE_ONE,
+                    showControls = false,
+                    showProgress = false,
+                ) {
+
+                }
+            }
             if (state.mediaItem.isVideo) {
                 Icon(
                     modifier = Modifier

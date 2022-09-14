@@ -48,12 +48,16 @@ fun Video(
     videoUrl: String,
     play: Boolean,
     videoThumbnailUrl: String,
+    repeatMode: Int = Player.REPEAT_MODE_OFF,
+    showControls: Boolean = true,
+    showProgress: Boolean = true,
     onFinishedLoading: () -> Unit,
 ) {
     val exoPlayer = if (videoUrl.startsWith("content://"))
         LocalContentExoPlayer.current!!
     else
         LocalExoPlayer.current!!
+    exoPlayer.repeatMode = repeatMode
     val context = LocalContext.current
     var showPlayer by remember { mutableStateOf(false) }
 
@@ -68,6 +72,7 @@ fun Video(
             layout.findViewById(R.id.playerView) as StyledPlayerView
         playerView.apply {
             player = exoPlayer
+            playerView.useController = showControls
         }
     }
 
@@ -85,7 +90,9 @@ fun Video(
                 contentScale = ContentScale.Fit,
                 contentDescription = null,
             )
-            CircularProgressIndicator(modifier = Modifier.size(48.dp))
+            if (showProgress) {
+                CircularProgressIndicator(modifier = Modifier.size(48.dp))
+            }
         }
     }
 
