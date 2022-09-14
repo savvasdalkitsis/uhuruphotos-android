@@ -4,10 +4,12 @@
     <string name="photo">Foto</string>
     <plurals name="delete_photos">
         <item quantity="one">Eliminar %d foto</item>
+        <item quantity="many"></item>
         <item quantity="other">Eliminar %d fotos</item>
     </plurals>
     <plurals name="delete_photos_confirmation">
         <item quantity="one">¿Está seguro de que desea eliminar esta %d foto\?</item>
+        <item quantity="many"></item>
         <item quantity="other">¿Está seguro de que desea eliminar estas %d fotos\?</item>
     </plurals>
     <string name="error_refreshing_people">Hubo un error al actualizar a las personas</string>
@@ -108,10 +110,12 @@
     <string name="auto_generated_albums">Álbumes generados automáticamente</string>
     <plurals name="trash_photos">
         <item quantity="one">Enviar %d foto a la basura</item>
+        <item quantity="many"></item>
         <item quantity="other">Enviar %d fotos a la basura</item>
     </plurals>
     <plurals name="trash_photos_confirmation">
         <item quantity="one">¿Estás seguro que quieres enviar esta %d foto a la basura\?</item>
+        <item quantity="many"></item>
         <item quantity="other">¿Estás seguro que quieres enviar estas %d fotos a la basura\?</item>
     </plurals>
     <string name="hidden_photos">Fotos escondidas</string>
@@ -123,6 +127,7 @@
     <string name="send_feedback_with_logs">Envía feedback con registros</string>
     <plurals name="item_count">
         <item quantity="one">%d objeto</item>
+        <item quantity="many"></item>
         <item quantity="other">%d objetos</item>
     </plurals>
     <string name="albums">Álbumes</string>
@@ -145,6 +150,7 @@
     <string name="feed_refresh_days">Número de días de alimentación para actualizar en tirar para actualizar</string>
     <plurals name="restore_photos">
         <item quantity="one">Restaurar %d foto</item>
+        <item quantity="many"></item>
         <item quantity="other">Restaurar %d fotos</item>
     </plurals>
     <string name="people">Gente</string>
@@ -166,6 +172,7 @@
     <string name="help">Ayuda</string>
     <plurals name="restore_photos_confirmation">
         <item quantity="one">¿Estás seguro de que quieres restaurar %d foto\?</item>
+        <item quantity="many"></item>
         <item quantity="other">¿Estás seguro de que quieres restaurar %d fotos\?</item>
     </plurals>
     <string name="nothing_here_yet">Todavía no hay nada aquí</string>
@@ -174,8 +181,8 @@
     <string name="sync_local_media">Sincronización de medios locales</string>
     <plurals name="delete_media_confirmation">
         <item quantity="one">¿Estás seguro de que quieres eliminar este %d elemento multimedia\?</item>
-        <item quantity="many">¿Estás seguro de que quieres eliminar estos %d elementos multimedia\?</item>
-        <item quantity="other"/>
+        <item quantity="many"></item>
+        <item quantity="other">¿Estás seguro de que quieres eliminar estos %d elementos multimedia\?</item>
     </plurals>
     <string name="favourite_media">Multimedia favorito</string>
     <string name="missing_permissions">Faltan permisos</string>
@@ -184,32 +191,32 @@
     <string name="login">Iniciar sesión</string>
     <plurals name="restore_media">
         <item quantity="one">Restaurar %d elemento multimedia</item>
-        <item quantity="many">Restaurar %d elementos multimedia</item>
-        <item quantity="other"/>
+        <item quantity="many"></item>
+        <item quantity="other">Restaurar %d elementos multimedia</item>
     </plurals>
     <plurals name="trash_media">
         <item quantity="one">Enviar %d elemento multimedia</item>
-        <item quantity="many">Enviar %d elementos multimedia</item>
-        <item quantity="other"/>
+        <item quantity="many"></item>
+        <item quantity="other">Enviar %d elementos multimedia</item>
     </plurals>
     <string name="gallery_size">Tamaño de la galería</string>
     <plurals name="delete_media">
         <item quantity="one">Borrar %d elemento multimedia</item>
-        <item quantity="many">Borrar %d elementos multimedia</item>
-        <item quantity="other"/>
+        <item quantity="many"></item>
+        <item quantity="other">Borrar %d elementos multimedia</item>
     </plurals>
     <string name="grant_permissions">Conceder permisos</string>
     <string name="server_url">Url del servidor</string>
     <string name="enter_libre_photos_url">Introduzca la url del servidor de LibrePhotos</string>
     <plurals name="restore_media_confirmation">
         <item quantity="one">¿Estás seguro de que quieres restaurar este %d elemento multimedia\?</item>
-        <item quantity="many">¿Estás seguro de que quieres restaurar estos %d elementos multimedia\?</item>
-        <item quantity="other"/>
+        <item quantity="many"></item>
+        <item quantity="other">¿Estás seguro de que quieres restaurar estos %d elementos multimedia\?</item>
     </plurals>
     <plurals name="trash_media_confirmation">
         <item quantity="one">¿Estás seguro de que quieres enviar este %d elemento multimedia\?</item>
-        <item quantity="many">¿Estás seguro de que quieres enviar estos %d elementos multimedia\?</item>
-        <item quantity="other"/>
+        <item quantity="many"></item>
+        <item quantity="other">¿Estás seguro de que quieres enviar estos %d elementos multimedia\?</item>
     </plurals>
     <string name="media">Medios</string>
     <string name="restoring_media">Restaurar medios de la papelera</string>
