@@ -48,8 +48,10 @@ import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.state.to
 import com.savvasdalkitsis.uhuruphotos.feature.memories.domain.api.usecase.MemoriesUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.settings.domain.api.usecase.SettingsUseCase
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.ActionHandler
+import kotlinx.coroutines.currentCoroutineContext
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.isActive
 import javax.inject.Inject
 
 internal class FeedActionHandler @Inject constructor(
@@ -97,11 +99,20 @@ internal class FeedActionHandler @Inject constructor(
             },
             settingsUseCase.observeMemoriesEnabled().flatMapLatest { enabled ->
                 if (enabled) {
-                    memoriesUseCase.observeMemorySummaries().map { memories ->
-                        memories.map { MemoryCel(
-                            yearsAgo = it.yearsAgo,
-                            cel = it.mediaItem.toCel(),
-                        ) }
+                    memoriesUseCase.observeMemories().flatMapLatest { memoryCollections ->
+                        flow {
+                            var index = 0
+                            while (currentCoroutineContext().isActive) {
+                                index++
+                                emit(memoryCollections.map { (collection, yearsAgo) ->
+                                    MemoryCel(
+                                        yearsAgo = yearsAgo,
+                                        cel = collection.mediaItems[index % collection.mediaItems.size].toCel()
+                                    )
+                                })
+                                delay(6000)
+                            }
+                        }
                     }.map(::ShowMemories)
                 } else {
                     flowOf(HideMemories)
@@ -175,12 +186,14 @@ internal class FeedActionHandler @Inject constructor(
             }
         }
         is FeedAction.MemorySelected -> flow {
-            effect(OpenMemoryLightbox(
-                id = action.memoryCel.mediaItem.id,
-                center = action.center,
-                scale = action.scale,
-                isVideo = action.memoryCel.mediaItem.isVideo,
-            ))
+            effect(
+                OpenMemoryLightbox(
+                    id = action.memoryCel.mediaItem.id,
+                    center = action.center,
+                    scale = action.scale,
+                    isVideo = action.memoryCel.mediaItem.isVideo,
+                )
+            )
         }
     }
 
@@ -198,11 +211,13 @@ internal class FeedActionHandler @Inject constructor(
         val empty = ids.isEmpty()
         return map { cluster ->
             cluster.copy(cels = cluster.cels.map { cel ->
-                cel.copy(selectionMode = when {
-                    empty -> UNDEFINED
-                    cel.mediaItem.id.value.toString() in ids -> SELECTED
-                    else -> UNSELECTED
-                })
+                cel.copy(
+                    selectionMode = when {
+                        empty -> UNDEFINED
+                        cel.mediaItem.id.value.toString() in ids -> SELECTED
+                        else -> UNSELECTED
+                    }
+                )
             })
         }
     }

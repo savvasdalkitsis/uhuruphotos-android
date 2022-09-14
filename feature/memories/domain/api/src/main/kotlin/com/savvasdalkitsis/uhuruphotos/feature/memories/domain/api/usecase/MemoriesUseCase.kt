@@ -15,12 +15,10 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.memories.domain.api.usecase
 
-import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaCollection
-import com.savvasdalkitsis.uhuruphotos.feature.memories.domain.api.model.MemorySummary
+import com.savvasdalkitsis.uhuruphotos.feature.memories.domain.api.model.MemoryCollection
 import kotlinx.coroutines.flow.Flow
 
 interface MemoriesUseCase {
 
-    fun observeMemories(): Flow<List<MediaCollection>>
-    fun observeMemorySummaries(): Flow<List<MemorySummary>>
+    fun observeMemories(): Flow<List<MemoryCollection>>
 }

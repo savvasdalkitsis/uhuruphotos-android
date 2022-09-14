@@ -17,11 +17,10 @@ package com.savvasdalkitsis.uhuruphotos.feature.memories.domain.implementation.u
 
 import com.savvasdalkitsis.uhuruphotos.feature.feed.domain.api.usecase.FeedUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaCollection
-import com.savvasdalkitsis.uhuruphotos.feature.memories.domain.api.model.MemorySummary
 import com.savvasdalkitsis.uhuruphotos.feature.memories.domain.api.usecase.MemoriesUseCase
+import com.savvasdalkitsis.uhuruphotos.feature.memories.domain.api.model.MemoryCollection
 import com.savvasdalkitsis.uhuruphotos.foundation.date.api.module.DateModule.ParsingDateFormat
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.*
 import java.text.DateFormat
 import java.util.*
 import javax.inject.Inject
@@ -32,27 +31,20 @@ class MemoriesUseCase @Inject constructor(
     private val dateFormat: DateFormat,
 ) : MemoriesUseCase {
 
-    override fun observeMemories(): Flow<List<MediaCollection>> =
+    override fun observeMemories(): Flow<List<MemoryCollection>> =
         feedUseCase.observeFeed().map { feed ->
             val today = Calendar.getInstance()
             feed.filter { mediaCollection ->
                 mediaCollection.calendar?.let { c ->
                     c.day == today.day && c.month == today.month && c.year != today.year
                 } == true
-            }
-        }
-
-    override fun observeMemorySummaries(): Flow<List<MemorySummary>> =
-        observeMemories().map { mediaCollections ->
-            val today = Calendar.getInstance()
-            mediaCollections.mapNotNull { mediaCollection ->
-                mediaCollection.calendar?.year?.let { mediaCollection to today.year - it }
-            }.map { (mediaCollection, diff) ->
-                MemorySummary(
-                    yearsAgo = diff,
-                    mediaItem = mediaCollection.mediaItems.find { it.isFavourite }
-                        ?: mediaCollection.mediaItems.first()
-                )
+            }.mapNotNull { mediaCollection ->
+                mediaCollection.calendar?.year?.let { memoryYear ->
+                    MemoryCollection(
+                        yearsAgo = today.year - memoryYear,
+                        mediaCollection = mediaCollection,
+                    )
+                }
             }
         }
 

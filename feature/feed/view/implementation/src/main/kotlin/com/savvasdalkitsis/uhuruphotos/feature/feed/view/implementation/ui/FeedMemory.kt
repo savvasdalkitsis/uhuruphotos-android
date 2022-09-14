@@ -15,6 +15,8 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.ui
 
+import androidx.compose.animation.Crossfade
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
@@ -53,32 +55,34 @@ internal fun FeedMemory(
             modifier = Modifier
                 .width(130.dp)
         ) {
-            Cel(
-                modifier = Modifier
-                    .drawWithCache {
-                        onDrawWithContent {
-                            drawContent()
-                            drawRect(
-                                brush = Brush.verticalGradient(
-                                    0f to Color.Transparent,
-                                    0.5f to Color.Transparent,
-                                    1f to Color.Black.copy(alpha = 0.8f),
-                                    startY = 0f,
-                                    endY = Float.POSITIVE_INFINITY,
-                                    tileMode = TileMode.Clamp,
+            Crossfade(targetState = memory.cel, animationSpec = tween(1000)) { celState ->
+                Cel(
+                    modifier = Modifier
+                        .drawWithCache {
+                            onDrawWithContent {
+                                drawContent()
+                                drawRect(
+                                    brush = Brush.verticalGradient(
+                                        0f to Color.Transparent,
+                                        0.5f to Color.Transparent,
+                                        1f to Color.Black.copy(alpha = 0.8f),
+                                        startY = 0f,
+                                        endY = Float.POSITIVE_INFINITY,
+                                        tileMode = TileMode.Clamp,
+                                    )
                                 )
-                            )
-                        }
+                            }
+                        },
+                    itemPadding = 0.dp,
+                    state = celState,
+                    onSelected = { cel, center, scale ->
+                        onSelected(cel, center, scale)
                     },
-                itemPadding = 0.dp,
-                state = memory.cel,
-                onSelected = { cel, center, scale ->
-                    onSelected(cel, center, scale)
-                },
-                aspectRatio = 0.7f,
-                contentScale = ContentScale.Crop,
-                selectable = true,
-            )
+                    aspectRatio = 0.7f,
+                    contentScale = ContentScale.Crop,
+                    selectable = true,
+                )
+            }
             Text(
                 modifier = Modifier
                     .align(Alignment.BottomCenter)
