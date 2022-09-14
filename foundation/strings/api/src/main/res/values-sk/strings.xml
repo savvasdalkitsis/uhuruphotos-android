@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <plurals name="delete_media_confirmation">
+        <item quantity="one">Naozaj chcete odstrániť túto %d mediálnu položku\?</item>
+        <item quantity="few">Naozaj chcete odstrániť tieto %d mediálne položky\?</item>
+        <item quantity="other">Naozaj chcete odstrániť týchto %d mediálnych položiek\?</item>
+    </plurals>
+    <plurals name="delete_photos">
+        <item quantity="one">Odstrániť %d fotku</item>
+        <item quantity="few">Odstrániť %d fotky</item>
+        <item quantity="other">Odstrániť %d fotiek</item>
+    </plurals>
+    <plurals name="delete_media">
+        <item quantity="one">Odstrániť %d mediálnu položku</item>
+        <item quantity="few">Odstrániť %d mediálne položky</item>
+        <item quantity="other">Odstrániť %d mediálnych položiek</item>
+    </plurals>
+    <plurals name="restore_photos">
+        <item quantity="one">Obnoviť %d fotku</item>
+        <item quantity="few">Obnoviť %d fotky</item>
+        <item quantity="other">Obnoviť %d fotiek</item>
+    </plurals>
+    <plurals name="restore_media">
+        <item quantity="one">Obnoviť %d mediálnu položku</item>
+        <item quantity="few">Obnoviť %d mediálne položky</item>
+        <item quantity="other">Obnoviť %d mediálnych položiek</item>
+    </plurals>
+    <plurals name="trash_photos">
+        <item quantity="one">Presunúť %d fotku do koša</item>
+        <item quantity="few">Presunúť %d fotky do koša</item>
+        <item quantity="other">Presunúť %d fotiek do koša</item>
+    </plurals>
+    <plurals name="restore_photos_confirmation">
+        <item quantity="one">Naozaj chcete obnoviť túto %d fotku\?</item>
+        <item quantity="few">Naozaj chcete obnoviť tieto %d fotky\?</item>
+        <item quantity="other">Naozaj chcete obnoviť týchto %d fotiek\?</item>
+    </plurals>
+    <plurals name="trash_media_confirmation">
+        <item quantity="one">Naozaj chcete poslať túto %d mediálnu položku do koša\?</item>
+        <item quantity="few">Naozaj chcete poslať tieto %d mediálne položky do koša\?</item>
+        <item quantity="other">Naozaj chcete poslať týchto %d mediálnych položiek do koša\?</item>
+    </plurals>
+    <string name="people">Ľudia</string>
+    <string name="view_all">Zobraziť všetky</string>
+    <string name="error_changing_photo_favourite">Pri zmene stavu obľúbenej fotografie sa vyskytla chyba</string>
+    <string name="error_searching">Pri vyhľadávaní sa vyskytla chyba</string>
+    <string name="logs_cleared">Záznamy vymazané</string>
+    <string name="recent_searches_cleared">Nedávne vyhľadávania boli vymazané</string>
+    <string name="downloading_photos_sharing">Sťahujú sa fotografie a čoskoro sa budú zdieľať</string>
+    <string name="copied_to_clipboard">Skopírované do schránky</string>
+    <string name="could_not_find_app_to_open">Nepodarilo sa nájsť aplikáciu na otvorenie</string>
+    <string name="feed_sync_freq">Frekvencia úplnej synchronizácie kanálu fotiek</string>
+    <string name="error_logging_in">Pri prihlasovaní sa vyskytla chyba</string>
+    <string name="photo_map">Mapa fotografií</string>
+    <string name="search">Vyhľadávanie</string>
+    <string name="big">Veľký</string>
+    <string name="requires_charging">Vyžaduje nabíjanie</string>
+    <string name="perform_full_feed_sync">Vykonaj úplnú synchronizáciu kanála</string>
+    <string name="jobs">Úlohy</string>
+    <string name="never">nikdy</string>
+    <string name="yes">Áno</string>
+    <string name="no">Nie</string>
+    <string name="clear">Vyčisti</string>
+    <string name="currently_used">Aktuálne využité: %dMB</string>
+    <plurals name="delete_photos_confirmation">
+        <item quantity="one">Naozaj chcete odstrániť túto %d fotku\?</item>
+        <item quantity="few">Naozaj chcete odstrániť tieto %d fotky\?</item>
+        <item quantity="other">Naozaj chcete odstrániť týchto %d fotiek\?</item>
+    </plurals>
+    <string name="error_refreshing_people">Pri obnovovaní ľudí sa vyskytla chyba</string>
+    <plurals name="restore_media_confirmation">
+        <item quantity="one">Naozaj chcete obnoviť túto %d mediálnu položku\?</item>
+        <item quantity="few">Naozaj chcete obnoviť tieto %d mediálne položky\?</item>
+        <item quantity="other">Naozaj chcete obnoviť týchto %d mediálnych položiek\?</item>
+    </plurals>
+    <plurals name="trash_photos_confirmation">
+        <item quantity="one">Naozaj chcete poslať túto %d fotku do koša\?</item>
+        <item quantity="few">Naozaj chcete poslať tieto %d fotky do koša\?</item>
+        <item quantity="other">Naozaj chcete poslať týchto %d fotiek do koša\?</item>
+    </plurals>
+    <string name="error_loading_photo_details">Pri načítavaní podrobností fotografie sa vyskytla chyba</string>
+    <string name="gallery_size">Veľkosť galérie</string>
+    <string name="photo">Fotka</string>
+    <string name="tiny">Maličký</string>
+    <string name="changes_effect_after_restart">(zmeny sa prejavia po reštarte)</string>
+    <string name="media">Média</string>
+    <plurals name="trash_media">
+        <item quantity="one">Presunúť %d mediálnu položku do koša</item>
+        <item quantity="few">Presunúť %d mediálne položky do koša</item>
+        <item quantity="other">Presunúť %d mediálnych položiek do koša</item>
+    </plurals>
+    <string name="yearly">Ročne</string>
+    <string name="compact">Kompaktný</string>
+    <string name="comfortable">Pohodlný</string>
+    <string name="max_limit">Maximálny limit: %dMB</string>
+    <string name="full">Plný</string>
+    <string name="perform_full_sync">Vykonaj úplnú synchronizáciu</string>
+    <string name="settings">Nastavenia</string>
+    <plurals name="hours">
+        <item quantity="one">%d hodina</item>
+        <item quantity="few">%d hodiny</item>
+        <item quantity="other">%d hodín</item>
+    </plurals>
+    <plurals name="days">
+        <item quantity="one">%d deň</item>
+        <item quantity="few">%d dni</item>
+        <item quantity="other">%d dní</item>
+    </plurals>
+</resources>

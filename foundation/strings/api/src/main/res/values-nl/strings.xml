@@ -209,4 +209,8 @@
     <string name="setting_media_favourite">Bezig met instellen van favoriet</string>
     <string name="downloading_media_details">Bezig met ophalen van media-informatie</string>
     <string name="gallery_size">Galerij-omvang</string>
+    <string name="refreshing_feed">Bezig met herladen…</string>
+    <string name="on_this_day">Op deze dag</string>
+    <string name="years_ago">%d jaar geleden</string>
+    <string name="enable_memories">Herinneringen tonen</string>
 </resources>
