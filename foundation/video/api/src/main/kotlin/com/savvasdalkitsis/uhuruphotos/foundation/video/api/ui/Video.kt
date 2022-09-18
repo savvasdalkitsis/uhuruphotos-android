@@ -53,7 +53,7 @@ fun Video(
 ) {
     val provider = LocalExoPlayerProvider.current
     val exoPlayer = remember {
-        provider!!.getExoplayer(ExoplayerType.fromUrl(videoUrl))
+        provider.getExoplayer(ExoplayerType.fromUrl(videoUrl))
     }
     exoPlayer.repeatMode = repeatMode
     val context = LocalContext.current

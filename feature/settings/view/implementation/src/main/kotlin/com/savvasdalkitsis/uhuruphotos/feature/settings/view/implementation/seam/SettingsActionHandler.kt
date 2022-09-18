@@ -21,34 +21,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.avatar.domain.api.usecase.AvatarU
 import com.savvasdalkitsis.uhuruphotos.feature.feed.domain.api.worker.FeedWorkScheduler
 import com.savvasdalkitsis.uhuruphotos.feature.search.domain.api.usecase.SearchUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.settings.domain.api.usecase.CacheSettingsUseCase
-import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.SettingsAction.AskForFullFeedSync
-import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.SettingsAction.ChangeBiometricsAppAccessRequirement
-import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.SettingsAction.ChangeBiometricsHiddenPhotosAccessRequirement
-import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.SettingsAction.ChangeBiometricsTrashAccessRequirement
-import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.SettingsAction.ChangeFullSyncChargingRequirements
-import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.SettingsAction.ChangeFullSyncNetworkRequirements
-import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.SettingsAction.ChangeImageDiskCache
-import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.SettingsAction.ChangeImageMemCache
-import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.SettingsAction.ChangeLoggingEnabled
-import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.SettingsAction.ChangeMapProvider
-import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.SettingsAction.ChangeSearchSuggestionsEnabled
-import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.SettingsAction.ChangeShareGpsDataEnabled
-import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.SettingsAction.ChangeShowLibrary
-import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.SettingsAction.ChangeThemeMode
-import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.SettingsAction.ChangeVideoDiskCache
-import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.SettingsAction.ClearImageDiskCache
-import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.SettingsAction.ClearImageMemCache
-import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.SettingsAction.ClearLogFileClicked
-import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.SettingsAction.ClearRecentSearches
-import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.SettingsAction.ClearVideoDiskCache
-import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.SettingsAction.DismissFullFeedSyncDialog
-import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.SettingsAction.EnrollToBiometrics
-import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.SettingsAction.FeedRefreshChanged
-import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.SettingsAction.FeedSyncFrequencyChanged
-import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.SettingsAction.LoadSettings
-import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.SettingsAction.NavigateBack
-import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.SettingsAction.PerformFullFeedSync
-import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.SettingsAction.SendFeedbackClicked
+import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.SettingsAction.*
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.SettingsEffect.ShowMessage
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.SettingsMutation.*
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.ui.state.BiometricsSetting
@@ -109,6 +82,8 @@ internal class SettingsActionHandler @Inject constructor(
                 .map(::DisplayShowLibrary),
             settingsUseCase.observeMemoriesEnabled()
                 .map(::DisplayShowMemories),
+            settingsUseCase.observeAnimateVideoThumbnails()
+                .map(::DisplayAnimateVideoThumbnailsEnabled),
             settingsUseCase.observeMapProvider().map { current ->
                 val available = settingsUseCase.getAvailableMapProviders()
                 when {
@@ -231,8 +206,11 @@ internal class SettingsActionHandler @Inject constructor(
         EnrollToBiometrics -> flow {
             effect(SettingsEffect.EnrollToBiometrics)
         }
-        is SettingsAction.ChangeMemoriesEnabled -> flow {
+        is ChangeMemoriesEnabled -> flow {
             settingsUseCase.setMemoriesEnabled(action.enabled)
+        }
+        is ChangeAnimateVideoThumbnails -> flow {
+            settingsUseCase.setAnimateVideoThumbnails(action.animate)
         }
     }
 

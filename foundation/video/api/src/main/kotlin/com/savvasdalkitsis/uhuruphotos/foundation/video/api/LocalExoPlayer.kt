@@ -18,4 +18,6 @@ package com.savvasdalkitsis.uhuruphotos.foundation.video.api
 import androidx.compose.runtime.compositionLocalOf
 
 val LocalExoPlayerProvider =
-    compositionLocalOf<ExoplayerProvider?> { throw IllegalStateException("not initialized") }
+    compositionLocalOf<ExoplayerProvider> { throw IllegalStateException("not initialized") }
+val LocalAnimatedVideoThumbnails =
+    compositionLocalOf<Boolean> { throw IllegalStateException("not initialized") }

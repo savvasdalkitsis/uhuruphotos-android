@@ -29,6 +29,7 @@ internal sealed class SettingsAction {
     data class ChangeSearchSuggestionsEnabled(val enabled: Boolean) : SettingsAction()
     data class ChangeShareGpsDataEnabled(val enabled: Boolean) : SettingsAction()
     data class ChangeShowLibrary(val show: Boolean) : SettingsAction()
+    data class ChangeAnimateVideoThumbnails(val animate: Boolean) : SettingsAction()
 
     data class FeedSyncFrequencyChanged(val frequency: Float, val upperLimit: Float) : SettingsAction()
     data class ChangeThemeMode(val themeMode: ThemeMode) : SettingsAction()

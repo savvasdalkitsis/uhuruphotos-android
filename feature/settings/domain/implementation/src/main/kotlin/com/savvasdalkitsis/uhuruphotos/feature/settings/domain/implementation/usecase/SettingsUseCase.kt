@@ -79,6 +79,8 @@ internal class SettingsUseCase @Inject constructor(
         flowSharedPreferences.getBoolean("biometricsRequiredForTrashAccess", false)
     private val memoriesEnabled =
         flowSharedPreferences.getBoolean("memoriesEnabled", true)
+    private val animateVideoThumbnails =
+        flowSharedPreferences.getBoolean("animateVideoThumbnails", true)
 
     override fun getImageDiskCacheMaxLimit(): Int = imageDiskCacheSize.get()
     override fun getImageMemCacheMaxLimit(): Int = imageMemCacheSize.get()
@@ -102,6 +104,8 @@ internal class SettingsUseCase @Inject constructor(
         biometricsRequiredForTrashAccess.get()
     override fun getMemoriesEnabled(): Boolean =
         memoriesEnabled.get()
+    override fun getAnimateVideoThumbnails(): Boolean =
+        animateVideoThumbnails.get()
 
     override fun observeImageDiskCacheMaxLimit(): Flow<Int> = imageDiskCacheSize.asFlow()
     override fun observeImageMemCacheMaxLimit(): Flow<Int> = imageMemCacheSize.asFlow()
@@ -129,7 +133,8 @@ internal class SettingsUseCase @Inject constructor(
         biometricsRequiredForTrashAccess.asFlow()
     override fun observeMemoriesEnabled(): Flow<Boolean> =
         memoriesEnabled.asFlow()
-
+    override fun observeAnimateVideoThumbnails(): Flow<Boolean> =
+        animateVideoThumbnails.asFlow()
 
     override suspend fun setImageDiskCacheMaxLimit(sizeInMb: Int) {
         imageDiskCacheSize.setAndCommit(sizeInMb)
@@ -202,6 +207,10 @@ internal class SettingsUseCase @Inject constructor(
 
     override suspend fun setMemoriesEnabled(enabled: Boolean) {
         memoriesEnabled.setAndCommit(enabled)
+    }
+
+    override suspend fun setAnimateVideoThumbnails(animate: Boolean) {
+        animateVideoThumbnails.setAndCommit(animate)
     }
 
     private fun MapProvider.mapToAvailable(): MapProvider =

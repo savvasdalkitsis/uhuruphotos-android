@@ -129,6 +129,10 @@ internal sealed class SettingsMutation(
         it.copy(isLoggingEnabled = enabled)
     })
 
+    data class DisplayAnimateVideoThumbnailsEnabled(val enabled: Boolean): SettingsMutation({
+        it.copy(animateVideoThumbnails = enabled)
+    })
+
     data class AvatarUpdate(
         val avatarState: AvatarState,
     ): SettingsMutation({

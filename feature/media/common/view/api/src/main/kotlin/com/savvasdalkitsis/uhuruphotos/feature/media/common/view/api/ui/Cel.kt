@@ -53,6 +53,7 @@ import com.savvasdalkitsis.uhuruphotos.foundation.compose.api.toColor
 import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.R.drawable
 import com.savvasdalkitsis.uhuruphotos.foundation.image.api.ui.Image
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.theme.CustomColors
+import com.savvasdalkitsis.uhuruphotos.foundation.video.api.LocalAnimatedVideoThumbnails
 import com.savvasdalkitsis.uhuruphotos.foundation.video.api.ui.Video
 
 @Composable
@@ -108,7 +109,7 @@ fun Cel(
                 }
         ) {
             val thumbnailUri = state.mediaItem.thumbnailUri
-            if (!state.mediaItem.isVideo || thumbnailUri == null) {
+            if (!LocalAnimatedVideoThumbnails.current || !state.mediaItem.isVideo || thumbnailUri == null) {
                 Image(
                     modifier = Modifier.fillMaxWidth(),
                     url = thumbnailUri,

@@ -33,6 +33,7 @@ class SettingsViewStateController @Inject constructor(
     val uiSearch = group(string.search, "settings:group:ui:search")
     val uiLibrary = group(string.library, "settings:group:ui:library")
     val uiMaps = group(string.maps, "settings:group:ui:maps")
+    val uiVideo = group(string.video, "settings:group:ui:video")
     val privacy = group(string.privacy_security, "settings:group:privacy")
     val privacyBiometrics = group(string.biometrics, "settings:group:privacy:biometrics")
     val privacyShare = group(string.share, "settings:group:privacy:share")

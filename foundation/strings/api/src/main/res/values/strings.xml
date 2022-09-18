@@ -216,4 +216,6 @@
     <string name="years_ago">%d years ago</string>
     <string name="on_this_day">On this day</string>
     <string name="enable_memories">Enable memories</string>
+    <string name="video">Video</string>
+    <string name="animate_video_thumbnails">Animate video thumbnails</string>
 </resources>
