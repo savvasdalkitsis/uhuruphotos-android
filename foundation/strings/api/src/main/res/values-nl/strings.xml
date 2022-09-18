@@ -213,4 +213,6 @@
     <string name="on_this_day">Op deze dag</string>
     <string name="years_ago">%d jaar geleden</string>
     <string name="enable_memories">Herinneringen tonen</string>
+    <string name="video">Video</string>
+    <string name="animate_video_thumbnails">Bewegende videominiaturen tonen</string>
 </resources>
