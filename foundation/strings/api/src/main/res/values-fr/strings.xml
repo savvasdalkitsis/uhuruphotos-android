@@ -3,6 +3,7 @@
     <string name="feed_sync_freq_changed">Fréquence de synchronisation du flux changé</string>
     <plurals name="delete_photos_confirmation">
         <item quantity="one">Voulez-vous vraiment supprimer %d photo \?</item>
+        <item quantity="many">Voulez-vous vraiment supprimer %d photos \?</item>
         <item quantity="other">Voulez-vous vraiment supprimer %d photos \?</item>
     </plurals>
     <string name="error_loading_photo_details">Une erreur s\'est produite lors du chargement des détails de la photo</string>
@@ -20,6 +21,7 @@
     <string name="feed_size">Taille du flux</string>
     <plurals name="delete_photos">
         <item quantity="one">Supprimer %d photo</item>
+        <item quantity="many">Supprimer %d photos</item>
         <item quantity="other">Supprimer %d photos</item>
     </plurals>
     <string name="recent_searches_cleared">Recherches récentes effacées</string>
@@ -48,6 +50,7 @@
     <string name="favourite">Favori</string>
     <plurals name="hours">
         <item quantity="one">%d heure</item>
+        <item quantity="many">%d heures</item>
         <item quantity="other">%d heures</item>
     </plurals>
     <string name="setting_photo_favourite">Régler l\'état favori de la photo</string>
@@ -95,6 +98,7 @@
     <string name="collapse_all">Tout réduire</string>
     <plurals name="item_count">
         <item quantity="one">%d élément</item>
+        <item quantity="many">%d éléments</item>
         <item quantity="other">%d éléments</item>
     </plurals>
     <string name="image_memory_cache">Cache d\'images en mémoire</string>
@@ -107,18 +111,22 @@
     <string name="map_provider">Fournisseur de carte</string>
     <plurals name="trash_photos">
         <item quantity="one">Envoyer %d photo dans la corbeille</item>
+        <item quantity="many">Envoyer %d photos dans la corbeille</item>
         <item quantity="other">Envoyer %d photos dans la corbeille</item>
     </plurals>
     <plurals name="restore_photos">
         <item quantity="one">Restaurer %d photo</item>
+        <item quantity="many">Restaurer %d photos</item>
         <item quantity="other">Restaurer %d photos</item>
     </plurals>
     <plurals name="restore_photos_confirmation">
         <item quantity="one">Êtes-vous sûr de vouloir restaurer cette %d photo \?</item>
+        <item quantity="many">Êtes-vous sûr de vouloir restaurer ces %d photos \?</item>
         <item quantity="other">Êtes-vous sûr de vouloir restaurer ces %d photos \?</item>
     </plurals>
     <plurals name="trash_photos_confirmation">
         <item quantity="one">Êtes-vous sûr de vouloir envoyer cette %d photo dans la corbeille \?</item>
+        <item quantity="many">Êtes-vous sûr de vouloir envoyer ces %d photos dans la corbeille \?</item>
         <item quantity="other">Êtes-vous sûr de vouloir envoyer ces %d photos dans la corbeille \?</item>
     </plurals>
     <string name="enable_logging">Activer la journalisation</string>
@@ -130,6 +138,7 @@
     <string name="view_all">Tout voir</string>
     <plurals name="days">
         <item quantity="one">%d jour</item>
+        <item quantity="many">%d jours</item>
         <item quantity="other">%d jours</item>
     </plurals>
     <string name="location">Emplacement</string>
@@ -173,6 +182,7 @@
     <string name="media">Média</string>
     <plurals name="trash_media">
         <item quantity="one">Envoyer %d média dans la corbeille</item>
+        <item quantity="many">Envoyer %d médias dans la corbeille</item>
         <item quantity="other">Envoyer %d médias dans la corbeille</item>
     </plurals>
     <string name="enter_libre_photos_url">Entrez l\'URL du serveur LibrePhotos</string>
@@ -182,23 +192,28 @@
     <string name="biometrics_enroll">Activez les options biométriques pour activer cette fonctionalité</string>
     <plurals name="delete_media_confirmation">
         <item quantity="one">Voulez-vous vraiment supprimer %d média \?</item>
+        <item quantity="many">Voulez-vous vraiment supprimer %d médias \?</item>
         <item quantity="other">Voulez-vous vraiment supprimer %d médias \?</item>
     </plurals>
     <plurals name="trash_media_confirmation">
         <item quantity="one">Êtes-vous sûr de vouloir envoyer %d média dans la corbeille \?</item>
+        <item quantity="many">Êtes-vous sûr de vouloir envoyer %d médias dans la corbeille \?</item>
         <item quantity="other">Êtes-vous sûr de vouloir envoyer %d médias dans la corbeille \?</item>
     </plurals>
     <plurals name="restore_media_confirmation">
         <item quantity="one">Êtes-vous sûr de vouloir restaurer %d média \?</item>
+        <item quantity="many">Êtes-vous sûr de vouloir restaurer %d médias \?</item>
         <item quantity="other">Êtes-vous sûr de vouloir restaurer %d médias \?</item>
     </plurals>
     <string name="gallery_size">Taille de la galerie</string>
     <plurals name="delete_media">
         <item quantity="one">Supprimer %d média</item>
+        <item quantity="many">Supprimer %d médias</item>
         <item quantity="other">Supprimer %d médias</item>
     </plurals>
     <plurals name="restore_media">
         <item quantity="one">Restaurer %d média</item>
+        <item quantity="many">Restaurer %d médias</item>
         <item quantity="other">Restaurer %d médias</item>
     </plurals>
     <string name="login_to_server">Se connecter au serveur</string>
@@ -209,4 +224,8 @@
     <string name="deleting_media">Suppression du média</string>
     <string name="favourite_media">Médias favoris</string>
     <string name="yearly">Années</string>
+    <string name="refreshing_feed">Mise à jour du flux</string>
+    <string name="years_ago">Il y a %d ans</string>
+    <string name="on_this_day">Aujourd\'hui</string>
+    <string name="enable_memories">Activer les souvenirs</string>
 </resources>
