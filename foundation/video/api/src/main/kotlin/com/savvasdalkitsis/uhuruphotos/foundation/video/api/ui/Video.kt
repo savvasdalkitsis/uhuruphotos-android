@@ -21,24 +21,22 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.CircularProgressIndicator
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.DisposableEffect
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
+import com.google.android.exoplayer2.C
 import com.google.android.exoplayer2.MediaItem
 import com.google.android.exoplayer2.Player
+import com.google.android.exoplayer2.ui.AspectRatioFrameLayout
 import com.google.android.exoplayer2.ui.StyledPlayerView
 import com.savvasdalkitsis.uhuruphotos.foundation.image.api.ui.Image
-import com.savvasdalkitsis.uhuruphotos.foundation.video.api.*
+import com.savvasdalkitsis.uhuruphotos.foundation.video.api.ExoplayerType
+import com.savvasdalkitsis.uhuruphotos.foundation.video.api.LocalExoPlayerProvider
+import com.savvasdalkitsis.uhuruphotos.foundation.video.api.R
 
 @Composable
 fun Video(
@@ -50,6 +48,7 @@ fun Video(
     showControls: Boolean = true,
     showProgress: Boolean = true,
     mute: Boolean = false,
+    crop: Boolean = false,
     onFinishedLoading: () -> Unit,
 ) {
     val provider = LocalExoPlayerProvider.current
@@ -60,7 +59,7 @@ fun Video(
     val context = LocalContext.current
     var showPlayer by remember { mutableStateOf(false) }
 
-    val playerView = remember(showControls, mute) {
+    val playerView = remember(showControls, mute, crop) {
         @SuppressLint("InflateParams")
         val layout = LayoutInflater.from(context).inflate(
             R.layout.video_player,
@@ -73,6 +72,9 @@ fun Video(
             player = exoPlayer
             if (mute) {
                 exoPlayer.volume = 0f
+            }
+            if (crop) {
+                playerView.resizeMode = AspectRatioFrameLayout.RESIZE_MODE_ZOOM
             }
             playerView.useController = showControls
         }

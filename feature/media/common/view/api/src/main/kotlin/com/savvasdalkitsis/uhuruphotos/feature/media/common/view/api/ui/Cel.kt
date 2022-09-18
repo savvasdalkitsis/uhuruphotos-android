@@ -20,11 +20,7 @@ import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.Animatable
 import androidx.compose.foundation.background
 import androidx.compose.foundation.combinedClickable
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.aspectRatio
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.Icon
 import androidx.compose.runtime.Composable
@@ -121,7 +117,7 @@ fun Cel(
                 )
             } else {
                 Video(
-                    modifier = Modifier.fillMaxWidth(),
+                    modifier = Modifier.fillMaxSize(),
                     videoUrl = thumbnailUri,
                     videoThumbnailUrl = thumbnailUri,
                     play = true,
@@ -129,6 +125,7 @@ fun Cel(
                     showControls = false,
                     showProgress = false,
                     mute = true,
+                    crop = true,
                 ) {
 
                 }
