@@ -1,0 +1,6 @@
+* Adding animated video thumbnails across the app
+* Memories cards now loop between all the photos of the day
+* Fixing memories cards padding
+* Fix crash relating to lightbox page being our of bounds
+* Fix crash relating to search suggestions with only 1 item
+* Translations
