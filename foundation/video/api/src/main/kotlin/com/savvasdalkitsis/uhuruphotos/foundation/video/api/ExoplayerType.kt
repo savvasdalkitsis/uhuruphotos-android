@@ -15,7 +15,14 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.foundation.video.api
 
-import androidx.compose.runtime.compositionLocalOf
+enum class ExoplayerType {
+    Remote, Local;
 
-val LocalExoPlayerProvider =
-    compositionLocalOf<ExoplayerProvider?> { throw IllegalStateException("not initialized") }
+    companion object {
+        fun fromUrl(videoUrl: String): ExoplayerType =
+            if (videoUrl.startsWith("content://"))
+                Local
+            else
+                Remote
+    }
+}

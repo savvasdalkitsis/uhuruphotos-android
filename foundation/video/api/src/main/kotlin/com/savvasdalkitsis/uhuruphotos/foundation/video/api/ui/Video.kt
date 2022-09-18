@@ -38,9 +38,7 @@ import com.google.android.exoplayer2.MediaItem
 import com.google.android.exoplayer2.Player
 import com.google.android.exoplayer2.ui.StyledPlayerView
 import com.savvasdalkitsis.uhuruphotos.foundation.image.api.ui.Image
-import com.savvasdalkitsis.uhuruphotos.foundation.video.api.LocalContentExoPlayer
-import com.savvasdalkitsis.uhuruphotos.foundation.video.api.LocalExoPlayer
-import com.savvasdalkitsis.uhuruphotos.foundation.video.api.R
+import com.savvasdalkitsis.uhuruphotos.foundation.video.api.*
 
 @Composable
 fun Video(
@@ -51,17 +49,18 @@ fun Video(
     repeatMode: Int = Player.REPEAT_MODE_OFF,
     showControls: Boolean = true,
     showProgress: Boolean = true,
+    mute: Boolean = false,
     onFinishedLoading: () -> Unit,
 ) {
-    val exoPlayer = if (videoUrl.startsWith("content://"))
-        LocalContentExoPlayer.current!!
-    else
-        LocalExoPlayer.current!!
+    val provider = LocalExoPlayerProvider.current
+    val exoPlayer = remember {
+        provider!!.getExoplayer(ExoplayerType.fromUrl(videoUrl))
+    }
     exoPlayer.repeatMode = repeatMode
     val context = LocalContext.current
     var showPlayer by remember { mutableStateOf(false) }
 
-    val playerView = remember {
+    val playerView = remember(showControls, mute) {
         @SuppressLint("InflateParams")
         val layout = LayoutInflater.from(context).inflate(
             R.layout.video_player,
@@ -72,6 +71,9 @@ fun Video(
             layout.findViewById(R.id.playerView) as StyledPlayerView
         playerView.apply {
             player = exoPlayer
+            if (mute) {
+                exoPlayer.volume = 0f
+            }
             playerView.useController = showControls
         }
     }
@@ -122,6 +124,7 @@ fun Video(
     DisposableEffect(Unit) {
         onDispose {
             exoPlayer.pause()
+            exoPlayer.release()
         }
     }
 }

@@ -16,16 +16,13 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.foundation.video.implementation.module
 
 import android.content.Context
-import com.google.android.exoplayer2.ExoPlayer
 import com.google.android.exoplayer2.database.StandaloneDatabaseProvider
 import com.google.android.exoplayer2.ext.okhttp.OkHttpDataSource
-import com.google.android.exoplayer2.source.DefaultMediaSourceFactory
 import com.google.android.exoplayer2.upstream.cache.CacheDataSource
 import com.google.android.exoplayer2.upstream.cache.LeastRecentlyUsedCacheEvictor
 import com.google.android.exoplayer2.upstream.cache.SimpleCache
 import com.savvasdalkitsis.uhuruphotos.feature.auth.domain.api.AuthenticatedOkHttpClient
 import com.savvasdalkitsis.uhuruphotos.feature.auth.domain.api.TokenRefreshInterceptor
-import com.savvasdalkitsis.uhuruphotos.foundation.video.api.LocalContentExoplayer
 import com.savvasdalkitsis.uhuruphotos.foundation.video.api.VideoOkHttp
 import dagger.Module
 import dagger.Provides
@@ -57,20 +54,6 @@ class VideoModule {
         .writeTimeout(0, TimeUnit.MILLISECONDS)
         .addInterceptor(tokenRefreshInterceptor)
         .build()
-
-    @Provides
-    fun exoplayer(
-        @ApplicationContext context: Context,
-        cacheDataSourceFactory: CacheDataSource.Factory,
-    ): ExoPlayer = ExoPlayer.Builder(context)
-        .setMediaSourceFactory(DefaultMediaSourceFactory(cacheDataSourceFactory))
-        .build()
-
-    @Provides
-    @LocalContentExoplayer
-    fun localContentExoplayer(
-        @ApplicationContext context: Context,
-    ): ExoPlayer = ExoPlayer.Builder(context).build()
 
     @Provides
     @Singleton

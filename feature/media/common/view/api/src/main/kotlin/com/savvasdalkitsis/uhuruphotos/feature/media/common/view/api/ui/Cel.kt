@@ -128,6 +128,7 @@ fun Cel(
                     repeatMode = PlaybackStateCompat.REPEAT_MODE_ONE,
                     showControls = false,
                     showProgress = false,
+                    mute = true,
                 ) {
 
                 }

@@ -13,10 +13,19 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
  */
-package com.savvasdalkitsis.uhuruphotos.foundation.video.api
+package com.savvasdalkitsis.uhuruphotos.foundation.video.implementation.module
 
-import javax.inject.Qualifier
+import com.savvasdalkitsis.uhuruphotos.foundation.video.implementation.ExoplayerProvider
+import dagger.Binds
+import dagger.Module
+import dagger.hilt.InstallIn
+import dagger.hilt.components.SingletonComponent
 
-@Qualifier
-@Retention(AnnotationRetention.BINARY)
-annotation class LocalContentExoplayer
+@Module
+@InstallIn(SingletonComponent::class)
+abstract class VideoBindingsModule {
+
+    @Binds
+    abstract fun exoplayerProvider(exoplayerProvider: ExoplayerProvider):
+            com.savvasdalkitsis.uhuruphotos.foundation.video.api.ExoplayerProvider
+}

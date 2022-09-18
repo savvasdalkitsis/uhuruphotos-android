@@ -23,7 +23,6 @@ import androidx.compose.ui.platform.LocalHapticFeedback
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import com.google.accompanist.navigation.animation.AnimatedNavHost
 import com.google.accompanist.navigation.animation.rememberAnimatedNavController
-import com.google.android.exoplayer2.ExoPlayer
 import com.savvasdalkitsis.uhuruphotos.feature.home.view.api.navigation.HomeNavigationTarget
 import com.savvasdalkitsis.uhuruphotos.foundation.map.api.model.LocalMapProvider
 import com.savvasdalkitsis.uhuruphotos.foundation.map.api.model.MapProvider
@@ -31,9 +30,8 @@ import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.NavigationTarge
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.Navigator
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.window.LocalSystemUiController
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.implementation.usecase.UiUseCase
-import com.savvasdalkitsis.uhuruphotos.foundation.video.api.LocalContentExoPlayer
-import com.savvasdalkitsis.uhuruphotos.foundation.video.api.LocalContentExoplayer
-import com.savvasdalkitsis.uhuruphotos.foundation.video.api.LocalExoPlayer
+import com.savvasdalkitsis.uhuruphotos.foundation.video.api.ExoplayerProvider
+import com.savvasdalkitsis.uhuruphotos.foundation.video.api.LocalExoPlayerProvider
 import kotlinx.coroutines.runBlocking
 import javax.inject.Inject
 
@@ -41,9 +39,7 @@ class AppNavigator @Inject constructor(
     private val navigationTargets: Set<@JvmSuppressWildcards NavigationTarget>,
     private val navigator: Navigator,
     private val uiUseCase: UiUseCase,
-    private val exoPlayer: ExoPlayer,
-    @LocalContentExoplayer
-    private val localContentExoPlayer: ExoPlayer,
+    private val exoplayerProvider: ExoplayerProvider,
     private val settingsUseCase: com.savvasdalkitsis.uhuruphotos.feature.settings.domain.api.usecase.SettingsUseCase,
 ) {
 
@@ -58,8 +54,7 @@ class AppNavigator @Inject constructor(
         }
         val mapProvider by settingsUseCase.observeMapProvider().collectAsState(MapProvider.default)
         CompositionLocalProvider(
-            LocalExoPlayer provides exoPlayer,
-            LocalContentExoPlayer provides localContentExoPlayer,
+            LocalExoPlayerProvider provides exoplayerProvider,
             LocalMapProvider provides mapProvider,
         ) {
             AnimatedNavHost(

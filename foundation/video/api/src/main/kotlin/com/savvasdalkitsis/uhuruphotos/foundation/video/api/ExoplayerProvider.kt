@@ -15,7 +15,9 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.foundation.video.api
 
-import androidx.compose.runtime.compositionLocalOf
+import com.google.android.exoplayer2.ExoPlayer
 
-val LocalExoPlayerProvider =
-    compositionLocalOf<ExoplayerProvider?> { throw IllegalStateException("not initialized") }
+interface ExoplayerProvider {
+
+    fun getExoplayer(type: ExoplayerType): ExoPlayer
+}
