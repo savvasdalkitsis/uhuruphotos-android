@@ -209,4 +209,7 @@
     <string name="biometrics_enroll">Καταχώρηση βιομετρικων στοιχείων για ενεργοποίηση της λειτουργίας</string>
     <string name="nothing_here_yet">Ακόμα τίποτα εδώ</string>
     <string name="use_as">Χρήση ώς</string>
+    <string name="enable_memories">Ενεργοποίηση αναμνήσεων</string>
+    <string name="years_ago">Πριν %d χρόνια</string>
+    <string name="on_this_day">Σαν σήμερα</string>
 </resources>
