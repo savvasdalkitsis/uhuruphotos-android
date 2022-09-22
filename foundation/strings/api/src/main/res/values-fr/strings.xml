@@ -228,4 +228,6 @@
     <string name="years_ago">Il y a %d ans</string>
     <string name="on_this_day">Aujourd\'hui</string>
     <string name="enable_memories">Activer les souvenirs</string>
+    <string name="video">Vidéo</string>
+    <string name="animate_video_thumbnails">Animer les miniatures des vidéos</string>
 </resources>
