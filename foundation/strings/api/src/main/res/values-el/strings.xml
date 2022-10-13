@@ -212,4 +212,7 @@
     <string name="enable_memories">Ενεργοποίηση αναμνήσεων</string>
     <string name="years_ago">Πριν %d χρόνια</string>
     <string name="on_this_day">Σαν σήμερα</string>
+    <string name="video">Βίντεο</string>
+    <string name="animate_video_thumbnails">Κινούμενη μικρογραφία βίντεο</string>
+    <string name="refreshing_feed">Ανανέωση τοίχους φωτογραφιών</string>
 </resources>
