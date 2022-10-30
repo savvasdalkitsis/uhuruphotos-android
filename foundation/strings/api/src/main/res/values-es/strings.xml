@@ -228,4 +228,6 @@
     <string name="refreshing_feed">Refrescando el feed</string>
     <string name="years_ago">hace %d años</string>
     <string name="on_this_day">En este día</string>
+    <string name="downloading_media_details">Descargando los detalles multimedia</string>
+    <string name="deleting_media">Eliminanando medios</string>
 </resources>
