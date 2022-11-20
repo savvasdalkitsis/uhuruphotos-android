@@ -33,7 +33,6 @@ dependencies {
     implementation project(':feature:media:common:view:api')
     implementation project(':foundation:seam:api')
     implementation(
-            libs.accompanist.swiperefresh,
             libs.androidx.compose.foundation.layout,
             libs.androidx.compose.hilt.navigation,
             libs.androidx.compose.material,

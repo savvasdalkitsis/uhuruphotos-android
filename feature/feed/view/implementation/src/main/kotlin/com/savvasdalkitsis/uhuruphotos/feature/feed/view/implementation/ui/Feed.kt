@@ -21,8 +21,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
-import com.google.accompanist.swiperefresh.SwipeRefresh
-import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.Collage
 import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.PredefinedCollageDisplay
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.FeedAction
@@ -31,6 +29,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.ui.state
 import com.savvasdalkitsis.uhuruphotos.feature.home.view.api.ui.HomeScaffold
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.TrashPermissionDialog
 import com.savvasdalkitsis.uhuruphotos.foundation.compose.api.blurIf
+import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.SwipeRefresh
 import kotlinx.coroutines.launch
 
 @Composable
@@ -68,7 +67,7 @@ internal fun Feed(
     ) { contentPadding ->
         SwipeRefresh(
             indicatorPadding = contentPadding,
-            state = rememberSwipeRefreshState(isRefreshing = state.isRefreshing),
+            isRefreshing = state.isRefreshing,
             onRefresh = { action(RefreshFeed) }
         ) {
             Collage(

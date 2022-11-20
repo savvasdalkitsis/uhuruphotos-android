@@ -23,7 +23,6 @@ dependencies {
     implementation project(":foundation:toaster:api")
     implementation project(":foundation:ui:api")
     implementation(
-            libs.accompanist.swiperefresh,
             libs.androidx.compose.foundation,
             libs.androidx.compose.material,
             libs.flowpreferences,

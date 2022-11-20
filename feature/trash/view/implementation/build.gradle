@@ -26,7 +26,6 @@ dependencies {
     implementation project(":feature:trash:view:api")
     implementation project(":foundation:ui:api")
     implementation(
-            libs.accompanist.swiperefresh,
             libs.androidx.compose.material,
             libs.flowpreferences,
             libs.sqldelight.coroutines,

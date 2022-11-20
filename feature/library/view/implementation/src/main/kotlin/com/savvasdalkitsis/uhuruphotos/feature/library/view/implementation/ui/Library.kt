@@ -24,8 +24,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
-import com.google.accompanist.swiperefresh.SwipeRefresh
-import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.CollageDisplay
 import com.savvasdalkitsis.uhuruphotos.feature.home.view.api.ui.HomeScaffold
 import com.savvasdalkitsis.uhuruphotos.feature.library.view.implementation.seam.LibraryAction
@@ -35,6 +33,7 @@ import com.savvasdalkitsis.uhuruphotos.foundation.compose.api.blurIf
 import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.FullProgressBar
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.Logo
+import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.SwipeRefresh
 
 @Composable
 internal fun Library(
@@ -70,7 +69,7 @@ internal fun Library(
                     && state.userAlbums == null -> FullProgressBar()
             else -> SwipeRefresh(
                 indicatorPadding = contentPadding,
-                state = rememberSwipeRefreshState(isRefreshing = state.loading),
+                isRefreshing = state.loading,
                 onRefresh = { action(Refresh) }
             ) {
                 LibraryGrid(contentPadding, state, action)

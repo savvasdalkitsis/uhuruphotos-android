@@ -26,8 +26,6 @@ import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass.Companion
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.google.accompanist.swiperefresh.SwipeRefresh
-import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 import com.savvasdalkitsis.uhuruphotos.feature.people.view.api.ui.PersonThumbnail
 import com.savvasdalkitsis.uhuruphotos.feature.people.view.implementation.seam.PeopleAction
 import com.savvasdalkitsis.uhuruphotos.feature.people.view.implementation.seam.PeopleAction.NavigateBack
@@ -42,6 +40,7 @@ import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.ActionIcon
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.BackNavButton
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.CommonScaffold
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.FullProgressBar
+import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.SwipeRefresh
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.window.LocalWindowSize
 
 @Composable
@@ -70,8 +69,8 @@ fun People(
                 else -> 9
             }
             SwipeRefresh(
-                state = rememberSwipeRefreshState(isRefreshing = state.loading),
                 indicatorPadding = contentPadding,
+                isRefreshing = state.loading,
                 onRefresh = { action(SwipeToRefresh) },
             ) {
                 LazyVerticalGrid(

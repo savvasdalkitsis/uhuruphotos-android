@@ -21,6 +21,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.avatar.domain.api.usecase.AvatarU
 import com.savvasdalkitsis.uhuruphotos.feature.feed.domain.api.worker.FeedWorkScheduler
 import com.savvasdalkitsis.uhuruphotos.feature.search.domain.api.usecase.SearchUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.settings.domain.api.usecase.CacheSettingsUseCase
+import com.savvasdalkitsis.uhuruphotos.feature.settings.domain.api.usecase.SettingsUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.SettingsAction.*
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.SettingsEffect.ShowMessage
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.SettingsMutation.*
@@ -43,7 +44,7 @@ import kotlinx.coroutines.flow.merge
 import javax.inject.Inject
 
 internal class SettingsActionHandler @Inject constructor(
-    private val settingsUseCase: com.savvasdalkitsis.uhuruphotos.feature.settings.domain.api.usecase.SettingsUseCase,
+    private val settingsUseCase: SettingsUseCase,
     private val feedWorkScheduler: FeedWorkScheduler,
     private val avatarUseCase: AvatarUseCase,
     private val cacheUseCase: CacheSettingsUseCase,

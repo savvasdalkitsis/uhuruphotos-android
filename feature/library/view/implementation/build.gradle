@@ -40,7 +40,6 @@ dependencies {
     implementation project(':feature:avatar:view:api')
     implementation(
             libs.bundles.permissions,
-            libs.accompanist.swiperefresh,
             libs.androidx.compose.foundation,
             libs.androidx.compose.material,
             libs.flowpreferences,

@@ -23,7 +23,6 @@ dependencies {
     implementation project(":feature:catalogue:user:domain:api")
     implementation project(":feature:catalogue:user:view:api")
     implementation(
-            libs.accompanist.swiperefresh,
             libs.androidx.compose.foundation,
             libs.androidx.compose.material,
             libs.hilt,

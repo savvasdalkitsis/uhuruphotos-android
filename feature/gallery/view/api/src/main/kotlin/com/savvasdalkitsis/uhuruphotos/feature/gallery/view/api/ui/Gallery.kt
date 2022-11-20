@@ -21,8 +21,6 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
-import com.google.accompanist.swiperefresh.SwipeRefresh
-import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.Collage
 import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.CollageDisplayActionButton
 import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.GalleryAction
@@ -39,6 +37,7 @@ import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.ActionIcon
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.BackNavButton
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.CommonScaffold
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.NoContent
+import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.SwipeRefresh
 
 @Composable
 fun Gallery(
@@ -73,7 +72,7 @@ fun Gallery(
     ) { contentPadding ->
         SwipeRefresh(
             indicatorPadding = contentPadding,
-            state = rememberSwipeRefreshState(isRefreshing = state.collageState.isLoading),
+            isRefreshing = state.collageState.isLoading,
             onRefresh = { action(SwipeToRefresh) }
         ) {
             Collage(

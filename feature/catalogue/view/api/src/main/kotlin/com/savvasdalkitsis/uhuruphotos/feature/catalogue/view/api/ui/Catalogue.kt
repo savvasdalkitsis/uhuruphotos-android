@@ -25,12 +25,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import com.google.accompanist.swiperefresh.SwipeRefresh
-import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 import com.savvasdalkitsis.uhuruphotos.feature.catalogue.view.api.ui.state.CatalogueSorting
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.BackNavButton
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.CommonScaffold
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.NoContent
+import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.SwipeRefresh
 
 @Composable
 fun Catalogue(
@@ -57,7 +56,7 @@ fun Catalogue(
     ) { contentPadding ->
         SwipeRefresh(
             indicatorPadding = contentPadding,
-            state = rememberSwipeRefreshState(isRefreshing = isRefreshing),
+            isRefreshing = isRefreshing,
             onRefresh = onRefresh,
         ) {
             when {

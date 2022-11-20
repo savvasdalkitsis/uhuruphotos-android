@@ -22,7 +22,6 @@ dependencies {
     implementation project(":foundation:toaster:api")
     implementation project(":foundation:strings:api")
     implementation(
-            libs.accompanist.swiperefresh,
             libs.androidx.compose.foundation,
             libs.androidx.compose.material,
             libs.hilt,
