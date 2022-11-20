@@ -17,7 +17,7 @@ package com.savvasdalkitsis.uhuruphotos.foundation.log.api
 
 import com.michaelflisar.lumberjack.L
 
-inline fun log(tag: String = "", msg: () -> String) {
+fun log(tag: String = "", msg: () -> String) {
     if (tag.isNotEmpty()) {
         L.tag(tag).v(msg)
     } else {
