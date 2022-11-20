@@ -36,7 +36,7 @@ data class RemoteMediaItem(
     @field:Json(name = "small_square_thumbnail_url") val smallSquareThumbnailUrl: String?,
     @field:Json(name = "tiny_square_thumbnail_url") val tinySquareThumbnailUrl: String?,
     @field:Json(name = "image_hash") val imageHash: String,
-    @field:Json(name = "image_path") val imagePath: String?,
+    @field:Json(name = "image_path") val imagePath: List<String>?,
     @field:Json(name = "video") val video: Boolean,
     @field:Json(name = "rating") val rating: Int,
     @field:Json(name = "people") val people: List<RemoteMediaItemPeople>?,
@@ -67,5 +67,5 @@ fun RemoteMediaItem.toDbModel() = DbRemoteMediaItemDetails(
     video = video,
     rating = rating,
     peopleNames = serializePeople,
-    imagePath = imagePath,
+    imagePath = imagePath?.firstOrNull(),
 )
