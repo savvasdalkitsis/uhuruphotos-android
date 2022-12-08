@@ -1,2 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources></resources>
+<resources>
+    <plurals name="delete_photos">
+        <item quantity="one">Удалить%dфото</item>
+        <item quantity="few">Удалить%dфотографии</item>
+        <item quantity="many"></item>
+        <item quantity="other"></item>
+    </plurals>
+    <string name="people">Люди</string>
+</resources>
