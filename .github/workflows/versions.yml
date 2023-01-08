@@ -1,0 +1,13 @@
+name: Snyk scan
+on:
+  schedule:
+      - cron: '0 0 * * *'
+jobs:
+  security:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@master
+      - name: Grant execute permission for gradlew
+        run: chmod +x gradlew
+      - name: Run version check
+        run: ./gradlew versionCatalogUpdate
