@@ -1,4 +1,4 @@
-name: Snyk scan
+name: Versions check
 on:
   schedule:
       - cron: '0 0 * * *'
