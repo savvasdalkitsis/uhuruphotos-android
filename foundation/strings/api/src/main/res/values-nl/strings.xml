@@ -215,4 +215,5 @@
     <string name="enable_memories">Herinneringen tonen</string>
     <string name="video">Video</string>
     <string name="animate_video_thumbnails">Bewegende videominiaturen tonen</string>
+    <string name="max_animated_video_thumbnails">Maximumaantal bewegende videominiaturen (%s)</string>
 </resources>
