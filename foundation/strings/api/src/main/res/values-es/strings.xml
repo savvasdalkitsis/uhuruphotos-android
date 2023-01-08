@@ -230,4 +230,6 @@
     <string name="on_this_day">En este día</string>
     <string name="downloading_media_details">Descargando los detalles multimedia</string>
     <string name="deleting_media">Eliminanando medios</string>
+    <string name="max_animated_video_thumbnails">Número máximo de miniaturas de vídeo animadas (%s)</string>
+    <string name="max_animated_video_thumbnails_description">Un número alto puede causar inestabilidad en la aplicación. Bájelo si tiene problemas</string>
 </resources>
