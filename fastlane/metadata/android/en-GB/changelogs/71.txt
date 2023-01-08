@@ -1,0 +1,3 @@
+* Fix bug where photo details would not load
+* Attempt to set the amount of concurrent videos playing on screen to a configurable value from settings to reduce OOM crashes (needs some more work)
+* Translations
