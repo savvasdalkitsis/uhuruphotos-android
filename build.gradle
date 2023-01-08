@@ -11,7 +11,7 @@ buildscript {
         classpath 'com.squareup.sqldelight:gradle-plugin:1.5.4'
         classpath 'com.google.gms:google-services:4.3.14'
         classpath 'com.google.firebase:firebase-crashlytics-gradle:2.9.2'
-        classpath "io.gitlab.arturbosch.detekt:detekt-gradle-plugin:1.22.0-RC3"
+        classpath "io.gitlab.arturbosch.detekt:detekt-gradle-plugin:1.22.0"
     }
 
     project.ext.set("app_version_code", 70)
@@ -27,8 +27,8 @@ plugins {
     id "com.bnorm.power.kotlin-power-assert" version "0.12.0" apply false
     id "org.sonarqube" version "3.4.0.2513"
     id "io.gitlab.arturbosch.detekt" version "1.22.0-RC3" apply true
-    id "com.github.ben-manes.versions" version "0.42.0" apply true
-    id "nl.littlerobots.version-catalog-update" version "0.5.3" apply true
+    id "com.github.ben-manes.versions" version "0.44.0" apply true
+    id "nl.littlerobots.version-catalog-update" version "0.7.0" apply true
 }
 
 
