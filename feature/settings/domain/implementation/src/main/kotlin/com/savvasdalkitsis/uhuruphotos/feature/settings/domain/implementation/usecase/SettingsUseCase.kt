@@ -81,6 +81,8 @@ internal class SettingsUseCase @Inject constructor(
         flowSharedPreferences.getBoolean("memoriesEnabled", true)
     private val animateVideoThumbnails =
         flowSharedPreferences.getBoolean("animateVideoThumbnails", true)
+    private val maxAnimatedVideoThumbnails =
+        flowSharedPreferences.getInt("maxAnimatedVideoThumbnails", 3)
 
     override fun getImageDiskCacheMaxLimit(): Int = imageDiskCacheSize.get()
     override fun getImageMemCacheMaxLimit(): Int = imageMemCacheSize.get()
@@ -106,6 +108,8 @@ internal class SettingsUseCase @Inject constructor(
         memoriesEnabled.get()
     override fun getAnimateVideoThumbnails(): Boolean =
         animateVideoThumbnails.get()
+    override fun getMaxAnimatedVideoThumbnails(): Int =
+        maxAnimatedVideoThumbnails.get()
 
     override fun observeImageDiskCacheMaxLimit(): Flow<Int> = imageDiskCacheSize.asFlow()
     override fun observeImageMemCacheMaxLimit(): Flow<Int> = imageMemCacheSize.asFlow()
@@ -135,6 +139,8 @@ internal class SettingsUseCase @Inject constructor(
         memoriesEnabled.asFlow()
     override fun observeAnimateVideoThumbnails(): Flow<Boolean> =
         animateVideoThumbnails.asFlow()
+    override fun observeMaxAnimatedVideoThumbnails(): Flow<Int> =
+        maxAnimatedVideoThumbnails.asFlow()
 
     override suspend fun setImageDiskCacheMaxLimit(sizeInMb: Int) {
         imageDiskCacheSize.setAndCommit(sizeInMb)
@@ -211,6 +217,10 @@ internal class SettingsUseCase @Inject constructor(
 
     override suspend fun setAnimateVideoThumbnails(animate: Boolean) {
         animateVideoThumbnails.setAndCommit(animate)
+    }
+
+    override suspend fun setMaxAnimatedVideoThumbnails(max: Int) {
+        maxAnimatedVideoThumbnails.setAndCommit(max)
     }
 
     private fun MapProvider.mapToAvailable(): MapProvider =

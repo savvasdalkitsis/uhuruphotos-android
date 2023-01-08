@@ -15,9 +15,13 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.foundation.video.api
 
+import androidx.compose.runtime.Composable
 import com.google.android.exoplayer2.ExoPlayer
 
 interface ExoplayerProvider {
 
-    fun getExoplayer(type: ExoplayerType): ExoPlayer
+    @Composable
+    fun maybeCreateExoplayer(url: String?): ExoPlayer?
+    @Composable
+    fun createExoplayer(url: String): ExoPlayer
 }

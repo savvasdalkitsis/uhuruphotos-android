@@ -54,6 +54,7 @@ import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.R.drawable
 import com.savvasdalkitsis.uhuruphotos.foundation.image.api.ui.Image
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.theme.CustomColors
 import com.savvasdalkitsis.uhuruphotos.foundation.video.api.LocalAnimatedVideoThumbnails
+import com.savvasdalkitsis.uhuruphotos.foundation.video.api.LocalExoPlayerProvider
 import com.savvasdalkitsis.uhuruphotos.foundation.video.api.ui.Video
 
 @Composable
@@ -109,7 +110,11 @@ fun Cel(
                 }
         ) {
             val thumbnailUri = state.mediaItem.thumbnailUri
-            if (!LocalAnimatedVideoThumbnails.current || !state.mediaItem.isVideo || thumbnailUri == null) {
+            val exoPlayer = if (thumbnailUri == null)
+                null
+            else
+                LocalExoPlayerProvider.current.maybeCreateExoplayer(thumbnailUri)
+            if (!LocalAnimatedVideoThumbnails.current || !state.mediaItem.isVideo || thumbnailUri == null || exoPlayer == null) {
                 Image(
                     modifier = Modifier.fillMaxWidth(),
                     url = thumbnailUri,
@@ -119,6 +124,7 @@ fun Cel(
             } else {
                 Video(
                     modifier = Modifier.fillMaxSize(),
+                    exoPlayer = exoPlayer,
                     videoUrl = thumbnailUri,
                     videoThumbnailUrl = thumbnailUri,
                     play = true,

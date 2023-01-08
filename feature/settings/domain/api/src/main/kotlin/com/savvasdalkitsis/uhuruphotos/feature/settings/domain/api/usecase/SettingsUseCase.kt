@@ -41,6 +41,7 @@ interface SettingsUseCase {
     fun getBiometricsRequiredForTrashAccess(): Boolean
     fun getMemoriesEnabled(): Boolean
     fun getAnimateVideoThumbnails(): Boolean
+    fun getMaxAnimatedVideoThumbnails(): Int
 
     fun observeImageDiskCacheMaxLimit(): Flow<Int>
     fun observeImageMemCacheMaxLimit(): Flow<Int>
@@ -61,6 +62,7 @@ interface SettingsUseCase {
     fun observeBiometricsRequiredForTrashAccess(): Flow<Boolean>
     fun observeMemoriesEnabled(): Flow<Boolean>
     fun observeAnimateVideoThumbnails(): Flow<Boolean>
+    fun observeMaxAnimatedVideoThumbnails(): Flow<Int>
 
     suspend fun setImageDiskCacheMaxLimit(sizeInMb: Int)
     suspend fun setImageMemCacheMaxLimit(sizeInMb: Int)
@@ -81,4 +83,5 @@ interface SettingsUseCase {
     suspend fun setBiometricsRequiredForTrashAccess(required: Boolean)
     suspend fun setMemoriesEnabled(enabled: Boolean)
     suspend fun setAnimateVideoThumbnails(animate: Boolean)
+    suspend fun setMaxAnimatedVideoThumbnails(max: Int)
 }

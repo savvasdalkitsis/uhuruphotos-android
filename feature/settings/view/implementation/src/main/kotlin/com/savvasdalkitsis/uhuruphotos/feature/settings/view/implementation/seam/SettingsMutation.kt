@@ -133,6 +133,10 @@ internal sealed class SettingsMutation(
         it.copy(animateVideoThumbnails = enabled)
     })
 
+    data class DisplayMaxAnimatedVideoThumbnails(val max: Int): SettingsMutation({
+        it.copy(maxAnimatedVideoThumbnails = max)
+    })
+
     data class AvatarUpdate(
         val avatarState: AvatarState,
     ): SettingsMutation({

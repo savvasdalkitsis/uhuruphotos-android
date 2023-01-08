@@ -19,6 +19,7 @@ enum class ExoplayerType {
     Remote, Local;
 
     companion object {
+
         fun fromUrl(videoUrl: String): ExoplayerType =
             if (videoUrl.startsWith("content://"))
                 Local

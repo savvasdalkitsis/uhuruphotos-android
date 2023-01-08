@@ -40,6 +40,7 @@ internal data class SettingsState(
     val shareRemoveGpsDataEnabled: Boolean = false,
     val showLibrary: Boolean = true,
     val animateVideoThumbnails: Boolean = true,
+    val maxAnimatedVideoThumbnails: Int = 3,
     val mapProviderState: MapProviderState = MapProviderState.NoOptions,
     val isLoggingEnabled: Boolean = false,
     val biometrics: BiometricsSetting? = null,

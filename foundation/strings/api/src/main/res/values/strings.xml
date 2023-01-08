@@ -218,4 +218,6 @@
     <string name="enable_memories">Enable memories</string>
     <string name="video">Video</string>
     <string name="animate_video_thumbnails">Animate video thumbnails</string>
+    <string name="max_animated_video_thumbnails">Maximum number of animated video thumbnails (%s)</string>
+    <string name="max_animated_video_thumbnails_description">A high number can cause app instability. Lower it if you are having issues</string>
 </resources>

@@ -22,7 +22,7 @@ dependencyResolutionManagement {
             }
             credentials {
                 username = "mapbox"
-                password = System.env.MAPBOX_DOWNLOADS_TOKEN
+                password = "sk.eyJ1Ijoia3Vyb3NhdnZhcyIsImEiOiJjbDNqNGRlNGUwMjFsM2lxdzcwZXQweDJzIn0.M0DOKkTJhnjiSyA6zSVSvw"
             }
         }
     }

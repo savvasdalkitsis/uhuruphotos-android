@@ -28,13 +28,12 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
-import com.google.android.exoplayer2.C
+import com.google.android.exoplayer2.ExoPlayer
 import com.google.android.exoplayer2.MediaItem
 import com.google.android.exoplayer2.Player
 import com.google.android.exoplayer2.ui.AspectRatioFrameLayout
 import com.google.android.exoplayer2.ui.StyledPlayerView
 import com.savvasdalkitsis.uhuruphotos.foundation.image.api.ui.Image
-import com.savvasdalkitsis.uhuruphotos.foundation.video.api.ExoplayerType
 import com.savvasdalkitsis.uhuruphotos.foundation.video.api.LocalExoPlayerProvider
 import com.savvasdalkitsis.uhuruphotos.foundation.video.api.R
 
@@ -51,10 +50,36 @@ fun Video(
     crop: Boolean = false,
     onFinishedLoading: () -> Unit,
 ) {
-    val provider = LocalExoPlayerProvider.current
-    val exoPlayer = remember {
-        provider.getExoplayer(ExoplayerType.fromUrl(videoUrl))
-    }
+    val exoPlayer = LocalExoPlayerProvider.current.createExoplayer(videoUrl)
+    Video(
+        modifier = modifier,
+        exoPlayer = exoPlayer,
+        videoUrl = videoUrl,
+        play = play,
+        videoThumbnailUrl = videoThumbnailUrl,
+        repeatMode = repeatMode,
+        showControls = showControls,
+        showProgress = showProgress,
+        mute = mute,
+        crop = crop,
+        onFinishedLoading = onFinishedLoading
+    )
+}
+
+@Composable
+fun Video(
+    modifier: Modifier,
+    exoPlayer: ExoPlayer,
+    videoUrl: String,
+    play: Boolean,
+    videoThumbnailUrl: String,
+    repeatMode: Int = Player.REPEAT_MODE_OFF,
+    showControls: Boolean = true,
+    showProgress: Boolean = true,
+    mute: Boolean = false,
+    crop: Boolean = false,
+    onFinishedLoading: () -> Unit,
+) {
     exoPlayer.repeatMode = repeatMode
     val context = LocalContext.current
     var showPlayer by remember { mutableStateOf(false) }
@@ -120,13 +145,6 @@ fun Video(
             })
             exoPlayer.prepare()
             exoPlayer.playWhenReady = true
-        }
-    }
-
-    DisposableEffect(Unit) {
-        onDispose {
-            exoPlayer.pause()
-            exoPlayer.release()
         }
     }
 }
