@@ -75,5 +75,6 @@ interface RemoteMediaUseCase {
         onProgressChange: suspend (Int) -> Unit = {},
         incompleteAlbumsProcessor: suspend (List<RemoteMediaCollection.Incomplete>) -> Unit = {},
         completeAlbumProcessor: suspend (RemoteMediaCollection.Complete) -> Unit = {},
+        clearSummariesBeforeInserting: Boolean = true,
     ): Result<Unit>
 }

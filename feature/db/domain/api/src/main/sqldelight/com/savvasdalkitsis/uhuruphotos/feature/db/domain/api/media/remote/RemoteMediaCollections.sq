@@ -29,5 +29,8 @@ DELETE FROM remoteMediaCollections;
 insert:
 INSERT OR REPLACE INTO remoteMediaCollections VALUES ?;
 
+insertIfMissing:
+INSERT OR IGNORE INTO remoteMediaCollections VALUES ?;
+
 remoteMediaCollectionCount:
 SELECT count(id) FROM remoteMediaCollections;

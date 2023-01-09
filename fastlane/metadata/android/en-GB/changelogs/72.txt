@@ -1,0 +1,1 @@
+* Fix bug where day on feed would only show photos of one person after navigating to that person photos (thanks @nagarrido for spotting this)

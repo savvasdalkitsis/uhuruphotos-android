@@ -53,10 +53,11 @@ class PersonRepository @Inject constructor(
             albumsFetcher = { personService.getMediaCollectionsForPerson(personId) },
             remoteMediaCollectionFetcher = { personService.getMediaCollectionForPerson(it, personId).results },
             shallow = false,
+            clearSummariesBeforeInserting = false,
             incompleteAlbumsProcessor = { albums ->
                 remoteMediaCollectionsQueries.transaction {
                     for (album in albums.map { it.toDbModel() }) {
-                        remoteMediaCollectionsQueries.insert(album)
+                        remoteMediaCollectionsQueries.insertIfMissing(album)
                     }
                 }
             },

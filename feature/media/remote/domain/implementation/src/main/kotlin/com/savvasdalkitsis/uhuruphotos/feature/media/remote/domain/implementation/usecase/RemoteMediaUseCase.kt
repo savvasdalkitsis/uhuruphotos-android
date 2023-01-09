@@ -150,7 +150,8 @@ class RemoteMediaUseCase @Inject constructor(
         shallow: Boolean,
         onProgressChange: suspend (Int) -> Unit,
         incompleteAlbumsProcessor: suspend (List<RemoteMediaCollection.Incomplete>) -> Unit,
-        completeAlbumProcessor: suspend (RemoteMediaCollection.Complete) -> Unit
+        completeAlbumProcessor: suspend (RemoteMediaCollection.Complete) -> Unit,
+        clearSummariesBeforeInserting: Boolean,
     ): Result<Unit> = runCatchingWithLog {
         onProgressChange(0)
         val albums = albumsFetcher()
@@ -161,7 +162,7 @@ class RemoteMediaUseCase @Inject constructor(
         }
         for ((index, incompleteAlbum) in albumsToDownloadSummaries.withIndex()) {
             val id = incompleteAlbum.id
-            updateSummaries(id, remoteMediaCollectionFetcher, completeAlbumProcessor)
+            updateSummaries(id, remoteMediaCollectionFetcher, completeAlbumProcessor, clearSummariesBeforeInserting)
             onProgressChange((100 * ((index + 1) / albumsToDownloadSummaries.size.toFloat())).toInt())
         }
     }
@@ -170,12 +171,15 @@ class RemoteMediaUseCase @Inject constructor(
         id: String,
         remoteMediaCollectionFetcher: suspend (String) -> RemoteMediaCollection.Complete,
         completeAlbumProcessor: suspend (RemoteMediaCollection.Complete) -> Unit,
+        clearSummariesBeforeInserting: Boolean = true,
     ) {
         val completeAlbum = remoteMediaCollectionFetcher(id)
         completeAlbumProcessor(completeAlbum)
         async {
             remoteMediaItemSummaryQueries.transaction {
-                remoteMediaItemSummaryQueries.deletePhotoSummariesforAlbum(id)
+                if (clearSummariesBeforeInserting) {
+                    remoteMediaItemSummaryQueries.deletePhotoSummariesforAlbum(id)
+                }
                 completeAlbum.items
                     .map { it.toDbModel(id) }
                     .forEach {
