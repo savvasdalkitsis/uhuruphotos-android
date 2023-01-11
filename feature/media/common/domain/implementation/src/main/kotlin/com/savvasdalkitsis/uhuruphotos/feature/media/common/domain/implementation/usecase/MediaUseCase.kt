@@ -261,7 +261,7 @@ class MediaUseCase @Inject constructor(
         }
     }
 
-    override fun observeOriginalFileDownloadStatus(id: MediaId<*>): Flow<WorkInfo.State> =
+    override fun observeOriginalFileDownloadStatus(id: MediaId<*>): Flow<WorkInfo.State?> =
         when (id) {
             is MediaId.Remote -> remoteMediaUseCase.observeOriginalFileDownloadStatus(id.value)
             else -> flowOf(WorkInfo.State.SUCCEEDED)

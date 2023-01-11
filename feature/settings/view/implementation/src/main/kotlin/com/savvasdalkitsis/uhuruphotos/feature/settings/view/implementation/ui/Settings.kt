@@ -23,6 +23,7 @@ import androidx.compose.ui.res.stringResource
 import com.savvasdalkitsis.uhuruphotos.feature.avatar.view.api.ui.Avatar
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.SettingsAction
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.SettingsAction.DismissFullFeedSyncDialog
+import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.SettingsAction.DismissPrecacheThumbnailsDialog
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.SettingsAction.NavigateBack
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.ui.controller.SettingsViewStateController
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.ui.state.MapProviderState.Selected
@@ -108,8 +109,11 @@ internal fun Settings(
                     }
                 }
                 SuperGroup(controller.jobs) {
-                    Group(controller.jobsFeed) {
-                        SettingsFeedJobs(state, action)
+                    Group(controller.jobsFeedConfiguration) {
+                        SettingsJobsFeedConfiguration(state, action)
+                    }
+                    Group(controller.jobsStatus) {
+                        SettingsJobsStatus(state, action)
                     }
                 }
                 SuperGroup(controller.advanced) {
@@ -134,6 +138,13 @@ internal fun Settings(
             SettingsFullFeedSyncPermissionDialog(action,
                 onDismiss = {
                     action(DismissFullFeedSyncDialog)
+                }
+            )
+        }
+        if (state.showPrecacheThumbnailsDialog) {
+            SettingsPrecacheThumbnailsPermissionDialog(action,
+                onDismiss = {
+                    action(DismissPrecacheThumbnailsDialog)
                 }
             )
         }

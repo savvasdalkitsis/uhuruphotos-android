@@ -30,6 +30,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.implementation
 import com.savvasdalkitsis.uhuruphotos.foundation.exif.api.usecase.ExifUseCase
 import com.savvasdalkitsis.uhuruphotos.foundation.log.api.log
 import com.savvasdalkitsis.uhuruphotos.foundation.log.api.runCatchingWithLog
+import com.savvasdalkitsis.uhuruphotos.math.toProgressPercent
 import com.squareup.sqldelight.runtime.coroutines.asFlow
 import com.squareup.sqldelight.runtime.coroutines.mapToList
 import kotlinx.coroutines.flow.Flow
@@ -102,7 +103,7 @@ class LocalMediaRepository @Inject constructor(
         }
         val newItems = filter { it.id !in existingIds }
         for ((index, item) in newItems.withIndex()) {
-            onProgressChange((100 * ((index + 1)/ newItems.size.toFloat())).toInt())
+            onProgressChange(index.toProgressPercent(newItems.size))
             async {
                 processNewItem(item, onNewItem)
             }

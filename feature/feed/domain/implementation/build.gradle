@@ -11,6 +11,7 @@ dependencies {
     implementation project(":foundation:notification:api")
     implementation project(":foundation:initializer:api")
     implementation project(":foundation:log:api")
+    implementation project(":foundation:math:api")
     implementation project(":foundation:worker:api")
     implementation project(":foundation:strings:api")
     implementation(

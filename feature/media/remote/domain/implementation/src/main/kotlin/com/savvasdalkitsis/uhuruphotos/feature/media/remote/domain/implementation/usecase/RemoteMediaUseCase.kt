@@ -30,6 +30,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.implementatio
 import com.savvasdalkitsis.uhuruphotos.feature.settings.domain.api.usecase.SettingsUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.user.domain.api.usecase.UserUseCase
 import com.savvasdalkitsis.uhuruphotos.foundation.log.api.runCatchingWithLog
+import com.savvasdalkitsis.uhuruphotos.math.toProgressPercent
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.emitAll
 import kotlinx.coroutines.flow.flow
@@ -44,6 +45,7 @@ class RemoteMediaUseCase @Inject constructor(
     private val remoteMediaItemWorkScheduler: RemoteMediaItemWorkScheduler,
     private val userUseCase: UserUseCase,
     private val remoteMediaItemSummaryQueries: RemoteMediaItemSummaryQueries,
+    private val remoteMediaPrecacher: RemoteMediaPrecacher,
 ) : RemoteMediaUseCase {
 
     override fun String?.toRemoteUrl(): String? = this?.toAbsoluteRemoteUrl()
@@ -126,7 +128,11 @@ class RemoteMediaUseCase @Inject constructor(
         remoteMediaItemWorkScheduler.scheduleMediaItemOriginalFileRetrieve(id, video)
     }
 
-    override fun observeOriginalFileDownloadStatus(id: String): Flow<WorkInfo.State> =
+    override suspend fun downloadThumbnail(id: String, video: Boolean) {
+        remoteMediaPrecacher.precacheMedia(id.toThumbnailUrlFromId(video), video)
+    }
+
+    override fun observeOriginalFileDownloadStatus(id: String): Flow<WorkInfo.State?> =
         remoteMediaItemWorkScheduler.observeMediaItemOriginalFileRetrieveJobStatus(id)
 
     override suspend fun refreshHiddenMedia() =
@@ -163,7 +169,7 @@ class RemoteMediaUseCase @Inject constructor(
         for ((index, incompleteAlbum) in albumsToDownloadSummaries.withIndex()) {
             val id = incompleteAlbum.id
             updateSummaries(id, remoteMediaCollectionFetcher, completeAlbumProcessor, clearSummariesBeforeInserting)
-            onProgressChange((100 * ((index + 1) / albumsToDownloadSummaries.size.toFloat())).toInt())
+            onProgressChange(index.toProgressPercent(albumsToDownloadSummaries.size))
         }
     }
 

@@ -16,18 +16,11 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.implementation.worker
 
 import android.content.Context
-import android.net.Uri
 import androidx.hilt.work.HiltWorker
 import androidx.work.CoroutineWorker
 import androidx.work.WorkerParameters
-import coil.ImageLoader
-import coil.request.ImageRequest
-import coil.request.SuccessResult
-import com.google.android.exoplayer2.upstream.DataSpec
-import com.google.android.exoplayer2.upstream.cache.CacheDataSource
-import com.google.android.exoplayer2.upstream.cache.CacheWriter
 import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.api.usecase.RemoteMediaUseCase
-import com.savvasdalkitsis.uhuruphotos.foundation.log.api.log
+import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.implementation.usecase.RemoteMediaPrecacher
 import com.savvasdalkitsis.uhuruphotos.foundation.notification.api.ForegroundInfoBuilder
 import com.savvasdalkitsis.uhuruphotos.foundation.notification.api.NotificationChannels.JOBS_CHANNEL_ID
 import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
@@ -39,57 +32,27 @@ import kotlinx.coroutines.withContext
 class RemoteMediaItemOriginalFileRetrieveWorker @AssistedInject constructor(
     @Assisted val context: Context,
     @Assisted val params: WorkerParameters,
-    private val imageLoader: ImageLoader,
     private val remoteMediaUseCase: RemoteMediaUseCase,
-    private val videoCache: CacheDataSource.Factory,
+    private val remoteMediaPrecacher: RemoteMediaPrecacher,
     private val foregroundInfoBuilder: ForegroundInfoBuilder,
 ) : CoroutineWorker(context, params) {
 
     override suspend fun doWork() = withContext(RemoteMediaDownloadDispatcher) {
-        try {
-            val id = params.inputData.getString(KEY_ID)!!
-            val video = params.inputData.getBoolean(KEY_VIDEO, false)
-            val url = with(remoteMediaUseCase) {
-                id.toFullSizeUrlFromId(video)
-            }
-            if (video) {
-                cacheVideo(url)
-            } else {
-                cachePhoto(url)
-            }
-        } catch (e: Exception) {
-            log(e)
-            if (params.runAttemptCount < 4) {
-                Result.retry()
-            } else {
-                Result.failure()
-            }
+        val id = params.inputData.getString(KEY_ID)!!
+        val video = params.inputData.getBoolean(KEY_VIDEO, false)
+        val url = with(remoteMediaUseCase) {
+            id.toFullSizeUrlFromId(video)
         }
-    }
-
-    private fun cacheVideo(url: String): Result {
-        CacheWriter(
-            videoCache.createDataSourceForDownloading(),
-            DataSpec(Uri.parse(url)),
-            ByteArray(8 * 1024 * 1024)
-        ) { requestLength, bytesCached, _ ->
+        val success = remoteMediaPrecacher.precacheMedia(url, video) { progress ->
             setForegroundAsync(
-                createForegroundInfo(((bytesCached / requestLength.toFloat()) * 100).toInt())
+                createForegroundInfo(progress)
             )
-        }.cache()
-        setForegroundAsync(createForegroundInfo(null))
-        return Result.success()
-    }
-
-    private suspend fun cachePhoto(url: String): Result {
-        val result = imageLoader.execute(
-            ImageRequest.Builder(context)
-                .data(url)
-                .build()
-        )
-
-        return if (result is SuccessResult) {
+        }
+        createForegroundInfo(null)
+        if (success) {
             Result.success()
+        } else if (params.runAttemptCount < 4) {
+            Result.retry()
         } else {
             Result.failure()
         }

@@ -83,6 +83,7 @@
     <string name="full">Full</string>
     <string name="requires_charging">Requires charging</string>
     <string name="perform_full_sync">Perform full sync now</string>
+    <string name="cannot_perform_full_sync">Cannot perform full sync at the moment</string>
     <string name="perform_full_feed_sync">Perform full feed sync</string>
     <string name="feed_sync_progress">Full photo feed sync progress</string>
     <string name="jobs">Jobs</string>
@@ -220,4 +221,13 @@
     <string name="animate_video_thumbnails">Animate video thumbnails</string>
     <string name="max_animated_video_thumbnails">Maximum number of animated video thumbnails (%s)</string>
     <string name="max_animated_video_thumbnails_description">A high number can cause app instability. Lower it if you are having issues</string>
+    <string name="precache_thumbnails">Precache all thumbnails</string>
+    <string name="precaching_thumbnails">Precaching thumbnails</string>
+    <string name="cannot_perform_precaching">Cannot perform precaching at the moment</string>
+    <string name="precaching_thumbnails_progress">Precaching thumbnails progress</string>
+    <string name="are_you_sure_you_want_to_perform_precache">Are you sure you want to start precaching all thumbnails?</string>
+    <string name="process_takes_significant_time_consumes_battery">This process takes a significant amount of time and will consume a lot of battery.</string>
+    <string name="cancel">Cancel</string>
+    <string name="feed_sync_job_configuration">Feed sync job configuration</string>
+    <string name="status">Status</string>
 </resources>

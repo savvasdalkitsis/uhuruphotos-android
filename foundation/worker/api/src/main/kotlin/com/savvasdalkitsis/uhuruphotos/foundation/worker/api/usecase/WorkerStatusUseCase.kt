@@ -33,19 +33,17 @@ class WorkerStatusUseCase @Inject constructor(
     private val workManager: WorkManager,
 ) {
 
-    fun monitorUniqueJobStatus(jobName: String): Flow<WorkInfo.State> =
-        monitorUniqueJob(jobName).map { it.state }
+    fun monitorUniqueJobStatus(jobName: String): Flow<WorkInfo.State?> =
+        monitorUniqueJob(jobName).map { it?.state }
 
-    fun monitorUniqueJob(jobName: String): Flow<WorkInfo> {
-        var observer: ((MutableList<WorkInfo>) -> Unit)?
-        var liveData: LiveData<MutableList<WorkInfo>>?
+    fun monitorUniqueJob(jobName: String): Flow<WorkInfo?> {
+        var observer: ((MutableList<WorkInfo?>) -> Unit)?
+        var liveData: LiveData<MutableList<WorkInfo?>>?
         return channelFlow {
             observer = {
                 val workInfo = it.getOrNull(0)
-                workInfo?.let {
-                    CoroutineScope(Dispatchers.Default).launch {
-                        send(it)
-                    }
+                CoroutineScope(Dispatchers.Default).launch {
+                    send(workInfo)
                 }
             }
             liveData = workManager.getWorkInfosForUniqueWorkLiveData(jobName)

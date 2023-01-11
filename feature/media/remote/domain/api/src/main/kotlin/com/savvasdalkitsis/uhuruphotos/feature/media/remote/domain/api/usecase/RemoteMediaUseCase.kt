@@ -66,7 +66,9 @@ interface RemoteMediaUseCase {
 
     fun downloadOriginal(id: String, video: Boolean)
 
-    fun observeOriginalFileDownloadStatus(id: String): Flow<WorkInfo.State>
+    suspend fun downloadThumbnail(id: String, video: Boolean)
+
+    fun observeOriginalFileDownloadStatus(id: String): Flow<WorkInfo.State?>
 
     suspend fun processRemoteMediaCollections(
         albumsFetcher: suspend () -> RemoteMediaCollectionsByDate,

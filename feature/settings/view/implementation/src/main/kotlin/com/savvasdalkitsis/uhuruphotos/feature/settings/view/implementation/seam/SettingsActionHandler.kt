@@ -22,40 +22,11 @@ import com.savvasdalkitsis.uhuruphotos.feature.feed.domain.api.worker.FeedWorkSc
 import com.savvasdalkitsis.uhuruphotos.feature.search.domain.api.usecase.SearchUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.settings.domain.api.usecase.CacheSettingsUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.settings.domain.api.usecase.SettingsUseCase
-import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.SettingsAction.AskForFullFeedSync
-import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.SettingsAction.ChangeAnimateVideoThumbnails
-import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.SettingsAction.ChangeBiometricsAppAccessRequirement
-import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.SettingsAction.ChangeBiometricsHiddenPhotosAccessRequirement
-import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.SettingsAction.ChangeBiometricsTrashAccessRequirement
-import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.SettingsAction.ChangeFullSyncChargingRequirements
-import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.SettingsAction.ChangeFullSyncNetworkRequirements
-import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.SettingsAction.ChangeImageDiskCache
-import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.SettingsAction.ChangeImageMemCache
-import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.SettingsAction.ChangeLoggingEnabled
-import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.SettingsAction.ChangeMapProvider
-import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.SettingsAction.ChangeMaxAnimatedVideoThumbnails
-import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.SettingsAction.ChangeMemoriesEnabled
-import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.SettingsAction.ChangeSearchSuggestionsEnabled
-import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.SettingsAction.ChangeShareGpsDataEnabled
-import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.SettingsAction.ChangeShowLibrary
-import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.SettingsAction.ChangeThemeMode
-import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.SettingsAction.ChangeVideoDiskCache
-import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.SettingsAction.ClearImageDiskCache
-import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.SettingsAction.ClearImageMemCache
-import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.SettingsAction.ClearLogFileClicked
-import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.SettingsAction.ClearRecentSearches
-import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.SettingsAction.ClearVideoDiskCache
-import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.SettingsAction.DismissFullFeedSyncDialog
-import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.SettingsAction.EnrollToBiometrics
-import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.SettingsAction.FeedRefreshChanged
-import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.SettingsAction.FeedSyncFrequencyChanged
-import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.SettingsAction.LoadSettings
-import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.SettingsAction.NavigateBack
-import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.SettingsAction.PerformFullFeedSync
-import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.SettingsAction.SendFeedbackClicked
+import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.SettingsAction.*
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.SettingsEffect.ShowMessage
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.SettingsMutation.AvatarUpdate
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.SettingsMutation.DisableFullSyncButton
+import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.SettingsMutation.DisablePrecacheThumbnailsButton
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.SettingsMutation.DisplayAnimateVideoThumbnailsEnabled
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.SettingsMutation.DisplayBiometrics
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.SettingsMutation.DisplayDiskCacheMaxLimit
@@ -71,6 +42,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.SettingsMutation.DisplayMaxAnimatedVideoThumbnails
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.SettingsMutation.DisplayMemCacheMaxLimit
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.SettingsMutation.DisplayNoMapProvidersOptions
+import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.SettingsMutation.DisplayPrecacheThumbnailsProgress
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.SettingsMutation.DisplaySearchSuggestionsEnabled
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.SettingsMutation.DisplayShareGpsDataEnabled
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.SettingsMutation.DisplayShowLibrary
@@ -79,8 +51,13 @@ import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.SettingsMutation.DisplayVideoDiskCacheCurrentUse
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.SettingsMutation.DisplayVideoDiskCacheMaxLimit
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.SettingsMutation.EnableFullSyncButton
+import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.SettingsMutation.EnablePrecacheThumbnailsButton
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.SettingsMutation.HideFullFeedSyncDialog
+import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.SettingsMutation.HideFullSyncProgress
+import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.SettingsMutation.HidePrecacheThumbnailsDialog
+import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.SettingsMutation.HidePrecacheThumbnailsProgress
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.SettingsMutation.ShowFullFeedSyncDialog
+import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.SettingsMutation.ShowPrecacheThumbnailsDialog
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.ui.state.BiometricsSetting
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.ui.state.SettingsState
 import com.savvasdalkitsis.uhuruphotos.foundation.biometrics.api.model.Biometrics.Enrolled
@@ -167,17 +144,34 @@ internal class SettingsActionHandler @Inject constructor(
                 .map(::DisplayVideoDiskCacheCurrentUse),
             avatarUseCase.getAvatarState()
                 .map(::AvatarUpdate),
-            feedWorkScheduler.observeFeedRefreshJob()
-                .flatMapMerge {
-                    flowOf(
-                        when (it.status) {
-                            RUNNING -> DisableFullSyncButton
-                            else -> EnableFullSyncButton
-                        },
-                        DisplayFullSyncProgress(it.progress)
-                    )
+            combine(
+                feedWorkScheduler.observeFeedRefreshJob(),
+                feedWorkScheduler.observePrecacheThumbnailsJob(),
+            ) { feedRefresh, precacheThumbnails ->
+                feedRefresh to precacheThumbnails
+            }.flatMapMerge { (feedRefresh, precacheThumbnails) ->
+                flow {
+                    when  {
+                        feedRefresh?.status == RUNNING -> {
+                            emit(DisableFullSyncButton)
+                            emit(DisablePrecacheThumbnailsButton)
+                            emit(DisplayFullSyncProgress(feedRefresh.progress))
+                            emit(HidePrecacheThumbnailsProgress)
+                        }
+                        precacheThumbnails?.status == RUNNING -> {
+                            emit(DisableFullSyncButton)
+                            emit(DisablePrecacheThumbnailsButton)
+                            emit(DisplayPrecacheThumbnailsProgress(precacheThumbnails.progress))
+                            emit(HideFullSyncProgress)
+                        }
+                        else -> {
+                            emit(EnableFullSyncButton)
+                            emit(EnablePrecacheThumbnailsButton)
+                        }
+                    }
                 }
-            )
+            }
+        )
         NavigateBack -> flow {
             effect(SettingsEffect.NavigateBack)
         }
@@ -210,6 +204,9 @@ internal class SettingsActionHandler @Inject constructor(
         PerformFullFeedSync -> flow {
             feedWorkScheduler.scheduleFeedRefreshNow(shallow = false)
             emit(HideFullFeedSyncDialog)
+        }
+        CancelFullFeedSync -> flow {
+            feedWorkScheduler.cancelFullFeedSync()
         }
         is ChangeFullSyncNetworkRequirements -> flow {
             settingsUseCase.setFullSyncNetworkRequirements(action.networkType)
@@ -273,6 +270,15 @@ internal class SettingsActionHandler @Inject constructor(
         }
         is ChangeMaxAnimatedVideoThumbnails -> flow {
             settingsUseCase.setMaxAnimatedVideoThumbnails(action.max)
+        }
+        AskForPrecacheThumbnails -> flowOf(ShowPrecacheThumbnailsDialog)
+        DismissPrecacheThumbnailsDialog -> flowOf(HidePrecacheThumbnailsDialog)
+        PrecacheThumbnails -> flow {
+            feedWorkScheduler.schedulePrecacheThumbnailsNow()
+            emit(HidePrecacheThumbnailsDialog)
+        }
+        CancelPrecacheThumbnails -> flow {
+            feedWorkScheduler.cancelPrecacheThumbnails()
         }
     }
 

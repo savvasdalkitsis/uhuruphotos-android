@@ -15,21 +15,20 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.ui
 
-import androidx.compose.animation.AnimatedContent
 import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.material.Divider
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.pluralStringResource
 import androidx.compose.ui.res.stringResource
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.SettingsAction
-import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.SettingsAction.FeedRefreshChanged
+import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.SettingsAction.*
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.ui.state.SettingsState
 import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.R.drawable
 import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
 import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R as Strings
 
 @Composable
-internal fun ColumnScope.SettingsFeedJobs(
+internal fun ColumnScope.SettingsJobsFeedConfiguration(
     state: SettingsState,
     action: (SettingsAction) -> Unit,
 ) {
@@ -59,7 +58,7 @@ internal fun ColumnScope.SettingsFeedJobs(
         initialValue = initialValue,
         range = 1f..frequencyUpperLimit,
         steps = frequencyUpperLimit.toInt(),
-        onValueChanged = { action(SettingsAction.FeedSyncFrequencyChanged(it, frequencyUpperLimit)) }
+        onValueChanged = { action(FeedSyncFrequencyChanged(it, frequencyUpperLimit)) }
     )
     Divider()
     SettingsCheckBox(
@@ -67,23 +66,8 @@ internal fun ColumnScope.SettingsFeedJobs(
         icon = drawable.ic_power,
         isChecked = state.fullSyncRequiresCharging,
     ) { selected ->
-        action(SettingsAction.ChangeFullSyncChargingRequirements(selected))
+        action(ChangeFullSyncChargingRequirements(selected))
     }
     Divider()
     SettingsFullSyncNetworkRequirements(state, action)
-    Divider()
-
-    AnimatedContent(targetState = state.fullSyncButtonEnabled) { enabled ->
-        when {
-            enabled -> SettingsButtonRow(
-                buttonText = stringResource(string.perform_full_sync)
-            ) {
-                action(SettingsAction.AskForFullFeedSync)
-            }
-            else -> SettingsProgressIndicator(
-                text = stringResource(string.feed_sync_progress),
-                progress = state.fullSyncJobProgress,
-            )
-        }
-    }
 }

@@ -69,7 +69,7 @@ interface MediaUseCase {
 
     fun downloadOriginal(id: MediaId<*>, video: Boolean)
 
-    fun observeOriginalFileDownloadStatus(id: MediaId<*>): Flow<WorkInfo.State>
+    fun observeOriginalFileDownloadStatus(id: MediaId<*>): Flow<WorkInfo.State?>
 
     suspend fun List<MediaCollectionSource>.toMediaCollections(): List<MediaCollection>
 

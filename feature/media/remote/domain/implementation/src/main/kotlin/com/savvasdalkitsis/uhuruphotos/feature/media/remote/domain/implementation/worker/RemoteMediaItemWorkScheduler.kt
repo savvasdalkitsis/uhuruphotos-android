@@ -57,7 +57,7 @@ class RemoteMediaItemWorkScheduler @Inject constructor(
             putBoolean(RemoteMediaItemOriginalFileRetrieveWorker.KEY_VIDEO, video)
         }
 
-    fun observeMediaItemOriginalFileRetrieveJobStatus(id: String): Flow<WorkInfo.State> =
+    fun observeMediaItemOriginalFileRetrieveJobStatus(id: String): Flow<WorkInfo.State?> =
         workerStatusUseCase.monitorUniqueJobStatus(RemoteMediaItemOriginalFileRetrieveWorker.workName(id))
 
     fun scheduleMediaItemTrashing(id: String) {

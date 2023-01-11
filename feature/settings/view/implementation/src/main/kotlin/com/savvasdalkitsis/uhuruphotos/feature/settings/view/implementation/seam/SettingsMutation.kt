@@ -36,6 +36,14 @@ internal sealed class SettingsMutation(
         it.copy(showFullFeedSyncDialog = false)
     })
 
+    object ShowPrecacheThumbnailsDialog : SettingsMutation({
+        it.copy(showPrecacheThumbnailsDialog = true)
+    })
+
+    object HidePrecacheThumbnailsDialog : SettingsMutation({
+        it.copy(showPrecacheThumbnailsDialog = false)
+    })
+
     object EnableFullSyncButton : SettingsMutation({
         it.copy(fullSyncButtonEnabled = true)
     })
@@ -44,8 +52,28 @@ internal sealed class SettingsMutation(
         it.copy(fullSyncButtonEnabled = false)
     })
 
+    object EnablePrecacheThumbnailsButton : SettingsMutation({
+        it.copy(precacheThumbnailsButtonEnabled = true)
+    })
+
+    object DisablePrecacheThumbnailsButton : SettingsMutation({
+        it.copy(precacheThumbnailsButtonEnabled = false)
+    })
+
+    object HidePrecacheThumbnailsProgress : SettingsMutation({
+        it.copy(precacheThumbnailsProgress = null)
+    })
+
+    object HideFullSyncProgress : SettingsMutation({
+        it.copy(fullSyncJobProgress = null)
+    })
+
     data class DisplayFullSyncProgress(val progress: Int) : SettingsMutation({
         it.copy(fullSyncJobProgress = progress)
+    })
+
+    data class DisplayPrecacheThumbnailsProgress(val progress: Int) : SettingsMutation({
+        it.copy(precacheThumbnailsProgress = progress)
     })
 
     data class DisplayDiskCacheMaxLimit(val limit: Int) : SettingsMutation({

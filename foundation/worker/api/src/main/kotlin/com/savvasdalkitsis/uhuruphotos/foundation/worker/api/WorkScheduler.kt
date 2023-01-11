@@ -85,4 +85,8 @@ class WorkScheduler @Inject constructor(
     fun cancelAllScheduledWork() {
         workManager.cancelAllWork()
     }
+
+    fun cancelWork(workName: String) {
+        workManager.cancelUniqueWork(workName)
+    }
 }

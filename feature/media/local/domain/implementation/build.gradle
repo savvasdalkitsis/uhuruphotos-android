@@ -4,12 +4,13 @@ android {
 
 dependencies {
 
-    implementation project(":foundation:date:api")
     implementation project(":feature:db:domain:api")
+    implementation project(":feature:media:local:domain:api")
+    implementation project(":foundation:date:api")
     implementation project(":foundation:exif:api")
     implementation project(":foundation:initializer:api")
     implementation project(":foundation:log:api")
-    implementation project(":feature:media:local:domain:api")
+    implementation project(":foundation:math:api")
     implementation project(":foundation:notification:api")
     implementation project(":foundation:strings:api")
     implementation project(":foundation:worker:api")

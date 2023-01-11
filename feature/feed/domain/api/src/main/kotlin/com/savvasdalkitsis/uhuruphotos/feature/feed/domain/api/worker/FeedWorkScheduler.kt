@@ -10,6 +10,11 @@ interface FeedWorkScheduler {
     fun scheduleFeedRefreshPeriodic(
         existingPeriodicWorkPolicy: ExistingPeriodicWorkPolicy
     )
-    fun observeFeedRefreshJob(): Flow<RefreshJobState>
-    fun observeFeedRefreshJobStatus(): Flow<WorkInfo.State>
+    fun schedulePrecacheThumbnailsNow()
+    fun observeFeedRefreshJob(): Flow<RefreshJobState?>
+    fun observeFeedRefreshJobStatus(): Flow<WorkInfo.State?>
+    fun cancelFullFeedSync()
+    fun observePrecacheThumbnailsJob(): Flow<RefreshJobState?>
+    fun observePrecacheThumbnailsJobStatus(): Flow<WorkInfo.State?>
+    fun cancelPrecacheThumbnails()
 }

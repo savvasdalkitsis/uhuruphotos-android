@@ -20,6 +20,7 @@ import androidx.work.WorkInfo
 import com.savvasdalkitsis.uhuruphotos.feature.feed.domain.api.worker.FeedWorkScheduler
 import com.savvasdalkitsis.uhuruphotos.feature.feed.domain.api.worker.RefreshJobState
 import com.savvasdalkitsis.uhuruphotos.feature.feed.domain.implementation.worker.FeedDownloadWorker
+import com.savvasdalkitsis.uhuruphotos.feature.feed.domain.implementation.worker.PrecacheFeedThumbnailsWorker
 import com.savvasdalkitsis.uhuruphotos.feature.settings.domain.api.usecase.SettingsUseCase
 import com.savvasdalkitsis.uhuruphotos.foundation.worker.api.WorkScheduler
 import com.savvasdalkitsis.uhuruphotos.foundation.worker.api.usecase.WorkerStatusUseCase
@@ -58,14 +59,41 @@ internal class FeedWorkScheduler @Inject constructor(
         }
     }
 
-    override fun observeFeedRefreshJob(): Flow<RefreshJobState> =
+    override fun schedulePrecacheThumbnailsNow() {
+        workScheduler.scheduleNow<PrecacheFeedThumbnailsWorker>(PrecacheFeedThumbnailsWorker.WORK_NAME)
+    }
+
+    override fun observeFeedRefreshJob(): Flow<RefreshJobState?> =
         workerStatusUseCase.monitorUniqueJob(FeedDownloadWorker.WORK_NAME).map {
-            RefreshJobState(
-                status = it.state,
-                progress = it.progress.getInt(FeedDownloadWorker.Progress, 0)
-            )
+            it?.let { work ->
+                RefreshJobState(
+                    status = work.state,
+                    progress = work.progress.getInt(FeedDownloadWorker.Progress, 0)
+                )
+            }
         }
 
-    override fun observeFeedRefreshJobStatus(): Flow<WorkInfo.State> =
+    override fun cancelFullFeedSync() {
+        workScheduler.cancelWork(FeedDownloadWorker.WORK_NAME)
+    }
+
+    override fun observeFeedRefreshJobStatus(): Flow<WorkInfo.State?> =
         workerStatusUseCase.monitorUniqueJobStatus(FeedDownloadWorker.WORK_NAME)
+
+    override fun observePrecacheThumbnailsJob(): Flow<RefreshJobState?> =
+        workerStatusUseCase.monitorUniqueJob(PrecacheFeedThumbnailsWorker.WORK_NAME).map {
+            it?.let { work ->
+                RefreshJobState(
+                    status = work.state,
+                    progress = work.progress.getInt(PrecacheFeedThumbnailsWorker.Progress, 0)
+                )
+            }
+        }
+
+    override fun cancelPrecacheThumbnails() {
+        workScheduler.cancelWork(PrecacheFeedThumbnailsWorker.WORK_NAME)
+    }
+
+    override fun observePrecacheThumbnailsJobStatus(): Flow<WorkInfo.State?> =
+        workerStatusUseCase.monitorUniqueJobStatus(PrecacheFeedThumbnailsWorker.WORK_NAME)
 }

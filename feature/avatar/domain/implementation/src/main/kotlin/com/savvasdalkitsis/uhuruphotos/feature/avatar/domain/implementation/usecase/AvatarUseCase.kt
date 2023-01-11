@@ -15,13 +15,9 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.avatar.domain.implementation.usecase
 
-import androidx.work.WorkInfo
 import androidx.work.WorkInfo.State.BLOCKED
-import androidx.work.WorkInfo.State.CANCELLED
-import androidx.work.WorkInfo.State.ENQUEUED
 import androidx.work.WorkInfo.State.FAILED
 import androidx.work.WorkInfo.State.RUNNING
-import androidx.work.WorkInfo.State.SUCCEEDED
 import com.savvasdalkitsis.uhuruphotos.feature.auth.domain.api.usecase.ServerUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.avatar.domain.api.usecase.AvatarUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.avatar.view.api.ui.state.AvatarState
@@ -45,14 +41,16 @@ class AvatarUseCase @Inject constructor(
     override fun getAvatarState(): Flow<AvatarState> = combine(
         userUseCase.observeUser(),
         feedWorkScheduler.observeFeedRefreshJobStatus(),
+        feedWorkScheduler.observePrecacheThumbnailsJobStatus(),
         serverUseCase.observeServerUrl(),
-    ) { user, status, serverUrl ->
+    ) { user, feedSyncStatus, precacheStatus, serverUrl ->
+        val statuses = listOf(feedSyncStatus, precacheStatus)
         AvatarState(
             avatarUrl = with(remoteMediaUseCase) { user.avatar?.toRemoteUrl() },
-            syncState = when (status) {
-                BLOCKED, FAILED -> BAD
-                CANCELLED, ENQUEUED, SUCCEEDED -> GOOD
-                RUNNING -> IN_PROGRESS
+            syncState = when {
+                BLOCKED in statuses || FAILED in statuses -> BAD
+                RUNNING in statuses -> IN_PROGRESS
+                else -> GOOD
             },
             initials = user.firstName.initial() + user.lastName.initial(),
             userFullName = "${user.firstName} ${user.lastName}",
@@ -62,11 +60,4 @@ class AvatarUseCase @Inject constructor(
 
     private fun String?.initial() =
         orEmpty().firstOrNull()?.toString()?.uppercase() ?: ""
-}
-
-private operator fun WorkInfo.State.plus(other: WorkInfo.State): WorkInfo.State = when {
-    this == RUNNING || other == RUNNING -> RUNNING
-    this == FAILED || other == FAILED -> FAILED
-    this == SUCCEEDED && other == SUCCEEDED -> SUCCEEDED
-    else -> this
 }

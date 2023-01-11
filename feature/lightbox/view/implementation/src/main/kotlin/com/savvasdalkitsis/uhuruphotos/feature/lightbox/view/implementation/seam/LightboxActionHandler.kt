@@ -208,7 +208,7 @@ class LightboxActionHandler @Inject constructor(
                                 .map {
                                     when (it) {
                                         ENQUEUED, RUNNING, BLOCKED -> IN_PROGRESS
-                                        SUCCEEDED -> IDLE
+                                        null, SUCCEEDED -> IDLE
                                         FAILED, CANCELLED -> ERROR
                                     }
                                 }
