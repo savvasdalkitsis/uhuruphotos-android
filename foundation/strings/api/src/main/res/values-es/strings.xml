@@ -232,4 +232,14 @@
     <string name="deleting_media">Eliminanando medios</string>
     <string name="max_animated_video_thumbnails">Número máximo de miniaturas de vídeo animadas (%s)</string>
     <string name="max_animated_video_thumbnails_description">Un número alto puede causar inestabilidad en la aplicación. Bájelo si tiene problemas</string>
+    <string name="precaching_thumbnails">Precarga de las miniaturas</string>
+    <string name="cannot_perform_precaching">No se puede realizar la precarcarga por el momento</string>
+    <string name="are_you_sure_you_want_to_perform_precache">¿Está seguro de que desea comenzar a almacenar previamente en caché todas las miniaturas\?</string>
+    <string name="cancel">Cancelar</string>
+    <string name="feed_sync_job_configuration">Configurar la sincronización de los feeds</string>
+    <string name="status">Estado</string>
+    <string name="process_takes_significant_time_consumes_battery">Esta operación requiere mucho tiempo y aumenta el consumo de batería.</string>
+    <string name="precache_thumbnails">Almacenar en caché todas las miniaturas por adelantado</string>
+    <string name="cannot_perform_full_sync">No se puede realizar una sincronización completa en este momento</string>
+    <string name="precaching_thumbnails_progress">Progreso de carga de miniaturas</string>
 </resources>

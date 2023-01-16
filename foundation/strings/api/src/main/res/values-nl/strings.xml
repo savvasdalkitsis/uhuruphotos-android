@@ -217,4 +217,14 @@
     <string name="animate_video_thumbnails">Bewegende videominiaturen tonen</string>
     <string name="max_animated_video_thumbnails">Maximumaantal bewegende videominiaturen (%s)</string>
     <string name="max_animated_video_thumbnails_description">Let op: een hoog aantal kan instabiliteit veroorzaken. Verlaag het aantal als je problemen ervaart.</string>
+    <string name="cannot_perform_full_sync">Er kan geen volledige synchronisatie worden uitgevoerd</string>
+    <string name="precaching_thumbnails">Bezig met inladen van miniaturen…</string>
+    <string name="precaching_thumbnails_progress">Voortgang omtrent inladen van miniaturen</string>
+    <string name="process_takes_significant_time_consumes_battery">Deze handeling vergt veel tijd en verhoogt het accuverbruik.</string>
+    <string name="cancel">Annuleren</string>
+    <string name="precache_thumbnails">Alle miniaturen vooraf inladen</string>
+    <string name="are_you_sure_you_want_to_perform_precache">Weet je zeker dat je alle miniaturen vooraf wilt inladen\?</string>
+    <string name="feed_sync_job_configuration">Feedsynchronisatie instellen</string>
+    <string name="cannot_perform_precaching">De miniaturen kunnen niet worden ingeladen</string>
+    <string name="status">Status</string>
 </resources>

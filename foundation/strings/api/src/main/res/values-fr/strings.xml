@@ -230,4 +230,16 @@
     <string name="enable_memories">Activer les souvenirs</string>
     <string name="video">Vidéo</string>
     <string name="animate_video_thumbnails">Animer les miniatures des vidéos</string>
+    <string name="max_animated_video_thumbnails">Nombre maximum de miniatures de vidéos (%s)</string>
+    <string name="max_animated_video_thumbnails_description">Un grand nombre peut causer des ralentissements de l\'application. Diminuez-le si vous avez des problèmes</string>
+    <string name="precache_thumbnails">Mettre en cache toutes les miniatures en avance</string>
+    <string name="cannot_perform_precaching">Impossible de mettre en cache pour le moment</string>
+    <string name="process_takes_significant_time_consumes_battery">Le processus prend beaucoup de temps et consomme beaucoup de batterie.</string>
+    <string name="feed_sync_job_configuration">Configuration de la synchronisation du flux</string>
+    <string name="status">Statut</string>
+    <string name="are_you_sure_you_want_to_perform_precache">Êtes-vous sûr de vouloir démarrer la mise en cache des miniatures \?</string>
+    <string name="precaching_thumbnails_progress">État de la mise en cache des miniatures</string>
+    <string name="cancel">Annuler</string>
+    <string name="precaching_thumbnails">Mise en cache des miniatures</string>
+    <string name="cannot_perform_full_sync">Impossible de synchroniser entièrement pour le moment</string>
 </resources>
