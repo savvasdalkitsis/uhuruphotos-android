@@ -215,4 +215,16 @@
     <string name="video">Βίντεο</string>
     <string name="animate_video_thumbnails">Κινούμενη μικρογραφία βίντεο</string>
     <string name="refreshing_feed">Ανανέωση τοίχους φωτογραφιών</string>
+    <string name="max_animated_video_thumbnails_description">Ένας υψηλός αριθμός μπορεί να προκαλέσει αστάθεια της εφαρμογής. Χαμηλώστε τον εάν αντιμετωπίζετε προβλήματα</string>
+    <string name="max_animated_video_thumbnails">Μέγιστος αριθμός μικρογραφιών κινούμενων βίντεο (%s)</string>
+    <string name="precaching_thumbnails">Προκαταρκτική αποθήκευση μικρογραφιών</string>
+    <string name="cannot_perform_precaching">Δεν είναι δυνατή η εκτέλεση προκαταρκτικής αποθήκευσης προς το παρόν</string>
+    <string name="process_takes_significant_time_consumes_battery">Αυτή η διαδικασία απαιτεί σημαντικό χρόνο και θα καταναλώσει πολύ μπαταρία.</string>
+    <string name="cancel">Ακύρωση</string>
+    <string name="feed_sync_job_configuration">Διαμόρφωση εργασίας συγχρονισμού ροών</string>
+    <string name="status">Κατάσταση</string>
+    <string name="are_you_sure_you_want_to_perform_precache">Είστε βέβαιοι ότι θέλετε να ξεκινήσετε την προκαταρκτική αποθήκευση όλων των μικρογραφιών;</string>
+    <string name="cannot_perform_full_sync">Δεν είναι δυνατή η εκτέλεση πλήρους συγχρονισμού αυτήν τη στιγμή</string>
+    <string name="precache_thumbnails">Αποθηκεύστε εκ των προτέρων όλες τις μικρογραφίες</string>
+    <string name="precaching_thumbnails_progress">Πρόοδος προκαταρκτικής αποθήκευσης μικρογραφιών</string>
 </resources>
