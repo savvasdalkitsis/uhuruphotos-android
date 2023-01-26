@@ -18,6 +18,7 @@ dependencies {
     implementation project(":foundation:strings:api")
     implementation project(":foundation:ui:api")
     implementation(
+            libs.androidx.compose.constraintlayout,
             libs.androidx.compose.foundation,
             libs.androidx.compose.foundation.layout,
             libs.androidx.compose.material,
