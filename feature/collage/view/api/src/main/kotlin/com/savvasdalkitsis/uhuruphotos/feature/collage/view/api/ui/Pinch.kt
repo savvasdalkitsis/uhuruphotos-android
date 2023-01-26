@@ -16,9 +16,9 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui
 
 import androidx.compose.animation.core.Animatable
+import androidx.compose.foundation.gestures.awaitEachGesture
 import androidx.compose.foundation.gestures.awaitFirstDown
 import androidx.compose.foundation.gestures.calculateZoom
-import androidx.compose.foundation.gestures.forEachGesture
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
@@ -46,38 +46,36 @@ internal fun Modifier.pinchToChange(
     val zoom = remember { Animatable(1f) }
 
     pointerInput(collageDisplay) {
-        forEachGesture {
-            awaitPointerEventScope {
-                awaitFirstDown(requireUnconsumed = false)
-                do {
-                    val event = awaitPointerEvent()
-                    if (event.changes.size > 1) {
-                        val zoomChange = event.calculateZoom()
-                        coroutineScope.launch {
-                            zoom.snapTo(
-                                max(
-                                    ZOOM_MIN,
-                                    min(zoom.value * zoomChange, ZOOM_MAX)
-                                )
+        awaitEachGesture {
+            awaitFirstDown(requireUnconsumed = false)
+            do {
+                val event = awaitPointerEvent()
+                if (event.changes.size > 1) {
+                    val zoomChange = event.calculateZoom()
+                    coroutineScope.launch {
+                        zoom.snapTo(
+                            max(
+                                ZOOM_MIN,
+                                min(zoom.value * zoomChange, ZOOM_MAX)
                             )
-                        }
+                        )
+                    }
 
-                        event.changes.fastForEach {
-                            if (it.positionChanged()) {
-                                it.consume()
-                            }
+                    event.changes.fastForEach {
+                        if (it.positionChanged()) {
+                            it.consume()
                         }
                     }
-                } while (event.changes.fastAny { it.pressed })
-                if (zoom.value < ZOOM_LOW_TRIGGER) {
-                    onChangeDisplay(collageDisplay.zoomOut)
                 }
-                if (zoom.value > ZOOM_HIGH_TRIGGER) {
-                    onChangeDisplay(collageDisplay.zoomIn)
-                }
-                coroutineScope.launch {
-                    zoom.animateTo(1f)
-                }
+            } while (event.changes.fastAny { it.pressed })
+            if (zoom.value < ZOOM_LOW_TRIGGER) {
+                onChangeDisplay(collageDisplay.zoomOut)
+            }
+            if (zoom.value > ZOOM_HIGH_TRIGGER) {
+                onChangeDisplay(collageDisplay.zoomIn)
+            }
+            coroutineScope.launch {
+                zoom.animateTo(1f)
             }
         }
     }
