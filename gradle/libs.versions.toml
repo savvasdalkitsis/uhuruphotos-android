@@ -58,6 +58,7 @@ exoplayer-okhttp = { module = "com.google.android.exoplayer:extension-okhttp", v
 firebase-bom = "com.google.firebase:firebase-bom:31.1.1"
 flowpreferences = "com.fredporciuncula:flow-preferences:1.8.0"
 hilt = "com.google.dagger:hilt-android:2.44.2"
+guava = "com.google.guava:guava:31.1-android"
 infobar = "com.radusalagean:info-bar-compose:1.0.0"
 junit = "junit:junit:4.13.2"
 jwt = "com.auth0.android:jwtdecode:2.0.1"

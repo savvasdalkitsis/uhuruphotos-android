@@ -25,6 +25,7 @@ import com.google.android.exoplayer2.upstream.DataSpec
 import com.google.android.exoplayer2.upstream.cache.CacheDataSource
 import com.google.android.exoplayer2.upstream.cache.CacheWriter
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.extensions.async
+import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.extensions.asyncReturn
 import com.savvasdalkitsis.uhuruphotos.foundation.log.api.log
 import dagger.hilt.android.qualifiers.ApplicationContext
 import javax.inject.Inject
@@ -50,18 +51,22 @@ class RemoteMediaPrecacher @Inject constructor(
         false
     }
 
-    private suspend fun cacheVideo(url: String, progressListener: (Int) -> Unit): Boolean {
-        async {
-            CacheWriter(
-                videoCache.createDataSourceForDownloading(),
-                DataSpec(Uri.parse(url)),
-                ByteArray(8 * 1024 * 1024)
-            ) { requestLength, bytesCached, _ ->
-                progressListener(((bytesCached / requestLength.toFloat()) * 100).toInt())
-            }.cache()
+    private suspend fun cacheVideo(url: String, progressListener: (Int) -> Unit): Boolean =
+        asyncReturn {
+            try {
+                CacheWriter(
+                    videoCache.createDataSourceForDownloading(),
+                    DataSpec(Uri.parse(url)),
+                    ByteArray(8 * 1024 * 1024)
+                ) { requestLength, bytesCached, _ ->
+                    progressListener(((bytesCached / requestLength.toFloat()) * 100).toInt())
+                }.cache()
+                true
+            } catch (e: Exception) {
+                log(e)
+                false
+            }
         }
-        return true
-    }
 
     private suspend fun cachePhoto(url: String): Boolean {
         val result = imageLoader.execute(

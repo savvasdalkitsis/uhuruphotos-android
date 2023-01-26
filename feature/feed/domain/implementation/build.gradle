@@ -19,6 +19,7 @@ dependencies {
             libs.androidx.work.hilt,
             libs.flowpreferences,
             libs.hilt,
+            libs.guava,
             libs.sqldelight.coroutines,
             libs.retrofit.core,
             libs.moshi,

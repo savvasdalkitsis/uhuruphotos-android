@@ -35,6 +35,10 @@ suspend fun async(action: () -> Unit) = withContext(Dispatchers.IO) {
     action()
 }
 
+suspend fun <T> asyncReturn(action: () -> T) = withContext(Dispatchers.IO) {
+    action()
+}
+
 suspend fun <T> read(action: () -> T) = withContext(Dispatchers.IO) {
     action()
 }

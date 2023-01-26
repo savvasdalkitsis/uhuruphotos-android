@@ -51,7 +51,7 @@ internal class PrecacheFeedThumbnailsWorker @AssistedInject constructor(
             mediaUseCase.downloadThumbnail(entry.id, entry.isVideo)
             val progress = index.toProgressPercent(mediaCollections.size)
             setProgress(workDataOf(Progress to progress))
-            createForegroundInfo(progress)
+            setForegroundAsync(createForegroundInfo(progress))
         }
         Result.success()
     }
