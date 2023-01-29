@@ -131,28 +131,34 @@ class LocalMediaService @Inject constructor(
 
     suspend fun getDefaultBucketId(): Int? {
         val dcim = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM)
+        val buckets = queryBucket(dcim.absolutePath.trim())
 
+        return if (buckets.size == 1) {
+            buckets.firstOrNull()
+        } else {
+            queryBucket(dcim.absolutePath.trim() + "/Camera").firstOrNull()
+        }
+    }
+
+    private suspend fun queryBucket(
+        path: String
+    ): Set<Int> {
         val buckets = query(
             collection = LocalMediaPhotoColumns.collection,
             projection = arrayOf(Images.Media.BUCKET_ID, Images.Media.DATA),
-            selection = Images.Media.DATA + " LIKE '${dcim.absolutePath.trim()}%'",
+            selection = Images.Media.DATA + " LIKE '$path%'",
             selectionArgs = null,
         ) {
             int(Images.Media.BUCKET_ID)
         }.toSet() + query(
             collection = LocalMediaVideoColumns.collection,
             projection = arrayOf(Video.Media.BUCKET_ID, Video.Media.DATA),
-            selection = Video.Media.DATA + " LIKE '${dcim.absolutePath.trim()}%'",
+            selection = Video.Media.DATA + " LIKE '$path%'",
             selectionArgs = null,
         ) {
             int(Video.Media.BUCKET_ID)
         }.toSet()
-
-        return if (buckets.size == 1) {
-            buckets.firstOrNull()
-        } else {
-            null
-        }
+        return buckets
     }
 
     suspend fun getBuckets(): Set<LocalMediaFolder> =
