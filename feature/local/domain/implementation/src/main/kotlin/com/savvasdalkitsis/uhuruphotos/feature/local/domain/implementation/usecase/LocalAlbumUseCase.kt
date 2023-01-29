@@ -63,8 +63,6 @@ internal class LocalAlbumUseCase @Inject constructor(
 
     private fun List<MediaItem>.toMediaCollections(): List<MediaCollection> =
         groupBy { it.displayDayDate }
-            .toSortedMap { a, b -> b.orEmpty().compareTo(a.orEmpty()) }
-            .filterValues { it.isNotEmpty() }
             .map { (date, items) ->
                 MediaCollection(
                     id = "local_album_$date",

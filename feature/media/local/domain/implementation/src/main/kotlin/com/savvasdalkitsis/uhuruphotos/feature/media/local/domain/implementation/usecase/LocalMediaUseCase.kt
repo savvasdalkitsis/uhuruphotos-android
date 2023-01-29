@@ -40,6 +40,8 @@ import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.mapLatest
+import kotlinx.coroutines.sync.Mutex
+import kotlinx.coroutines.sync.withLock
 import java.text.DateFormat
 import javax.inject.Inject
 
@@ -56,6 +58,8 @@ class LocalMediaUseCase @Inject constructor(
     private val localMediaFolderRepository: LocalMediaFolderRepository,
     private val mediaStoreVersionRepository: MediaStoreVersionRepository,
 ) : LocalMediaUseCase {
+
+    private val mutex = Mutex()
 
     private val apiPermissions = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
         arrayOf(Manifest.permission.ACCESS_MEDIA_LOCATION)
@@ -146,9 +150,9 @@ class LocalMediaUseCase @Inject constructor(
     private fun Long.contentUri(isVideo: Boolean) =
         MediaStoreContentUriResolver.getContentUriForItem(this, isVideo).toString()
 
-    private fun List<LocalMediaItemDetails>.toItems() = map { it.toItem() }
+    private suspend fun List<LocalMediaItemDetails>.toItems() = map { it.toItem() }
 
-    private fun LocalMediaItemDetails.toItem(): LocalMediaItem {
+    private suspend fun LocalMediaItemDetails.toItem(): LocalMediaItem = mutex.withLock {
         val date = localMediaDateTimeFormat.parse(dateTaken)
         val dateTimeString = date!!.let {
             parsingDateTimeFormat.format(it)

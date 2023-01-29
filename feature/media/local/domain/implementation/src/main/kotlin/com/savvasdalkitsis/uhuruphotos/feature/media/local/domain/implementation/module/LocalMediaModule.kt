@@ -33,6 +33,6 @@ class LocalMediaModule {
     @Provides
     @LocalMediaDateTimeFormat
     fun localMediaDateTimeFormat(): DateFormat =
-        SimpleDateFormat("yyy:MM:dd kk:mm:ss")
+        SimpleDateFormat("yyyy:MM:dd HH:mm:ss")
 
 }
