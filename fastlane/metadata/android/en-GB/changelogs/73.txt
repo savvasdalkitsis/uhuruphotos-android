@@ -1,0 +1,4 @@
+* Local photos now show up in main Feed. Also showing sync state (local/remote/synced) in preparation of full photo sync
+* Fixing bug with precaching thumbnails constantly restarting
+* Fixed bug where local photo albums would have photos jump around showing up in wrong dates
+* Choosing Camera folder if more than one folder exists inside DCIM folder
