@@ -36,6 +36,7 @@ import com.savvasdalkitsis.uhuruphotos.foundation.date.api.module.DateModule.Par
 import com.savvasdalkitsis.uhuruphotos.foundation.log.api.runCatchingWithLog
 import dev.shreyaspatil.permissionFlow.PermissionFlow
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.map
@@ -75,11 +76,6 @@ class LocalMediaUseCase @Inject constructor(
     override suspend fun refreshLocalMediaItem(id: Long, isVideo: Boolean) =
         localMediaRepository.refreshItem(id, isVideo)
 
-    override suspend fun getLocalMedia(): List<LocalMediaItem> {
-        resetMediaStoreIfNeeded()
-        return localMediaRepository.getMedia().toItems()
-    }
-
     override fun observeLocalMediaFolder(folderId: Int): Flow<LocalFolder> =
         observePermissionsState().flatMapLatest { permissions ->
             resetMediaStoreIfNeeded()
@@ -112,20 +108,36 @@ class LocalMediaUseCase @Inject constructor(
                     )
                 )
                 LocalPermissions.Granted -> localMediaRepository.observeMedia().map { itemDetails ->
-                    val defaultBucket = getDefaultBucketId()
-                    val media = itemDetails.toItems()
-                            .groupBy(LocalMediaItem::bucket)
-                    LocalMediaItems.Found(
-                        primaryLocalMediaFolder = media.entries.firstOrNull { (folder, _) ->
-                            folder.id == defaultBucket
-                        }?.toPair(),
-                        localMediaFolders = media.filter { (folder, _) ->
-                            folder.id != defaultBucket
-                        }.toList().sortedBy { (folder, _) -> folder.displayName },
-                    )
+                    foundLocalMediaItems(itemDetails)
                 }
             }
         }
+
+    override suspend fun getLocalMediaItems(): LocalMediaItems {
+        resetMediaStoreIfNeeded()
+        return when (val permissions = observePermissionsState().first()) {
+            is LocalPermissions.RequiresPermissions -> LocalMediaItems.RequiresPermissions(
+                permissions.deniedPermissions
+            )
+            LocalPermissions.Granted -> foundLocalMediaItems(localMediaRepository.getMedia())
+        }
+    }
+
+    private suspend fun foundLocalMediaItems(
+        itemDetails: List<LocalMediaItemDetails>
+    ): LocalMediaItems.Found {
+        val defaultBucket = getDefaultBucketId()
+        val media = itemDetails.toItems()
+            .groupBy(LocalMediaItem::bucket)
+        return LocalMediaItems.Found(
+            primaryLocalMediaFolder = media.entries.firstOrNull { (folder, _) ->
+                folder.id == defaultBucket
+            }?.toPair(),
+            localMediaFolders = media.filter { (folder, _) ->
+                folder.id != defaultBucket
+            }.toList().sortedBy { (folder, _) -> folder.displayName },
+        )
+    }
 
     override suspend fun refreshLocalMediaFolder(folderId: Int) = runCatchingWithLog {
         resetMediaStoreIfNeeded()
@@ -164,7 +176,7 @@ class LocalMediaUseCase @Inject constructor(
             displayDateTime = dateDisplayer.dateTimeString(dateTimeString),
             dateTimeTaken = parsingDateTimeFormat.format(date),
             dateTaken = parsingDateFormat.format(date),
-            sortableDate = date.time,
+            sortableDate = parsingDateTimeFormat.format(date),
             bucket = LocalMediaFolder(id = bucketId, bucketName),
             width = width,
             height = height,

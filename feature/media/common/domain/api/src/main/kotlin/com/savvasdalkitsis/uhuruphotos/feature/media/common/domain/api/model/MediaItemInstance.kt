@@ -15,16 +15,17 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model
 
-import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.model.LocalMediaFolder
-
-sealed class MediaItemsOnDevice {
-
-    data class Found(
-        val primaryFolder: Pair<LocalMediaFolder, List<MediaItem>>?,
-        val mediaFolders: List<Pair<LocalMediaFolder, List<MediaItem>>>,
-    ) : MediaItemsOnDevice()
-
-    data class RequiresPermissions(val deniedPermissions: List<String>) : MediaItemsOnDevice()
-
-    object Error: MediaItemsOnDevice()
-}
+data class MediaItemInstance(
+    override val id: MediaId<*>,
+    override val mediaHash: String,
+    override val thumbnailUri: String? = null,
+    override val fullResUri: String? = null,
+    override val fallbackColor: String? = null,
+    override val displayDayDate: String? = null,
+    override val sortableDate: String? = null,
+    override val isFavourite: Boolean = false,
+    override val ratio: Float = 1f,
+    override val isVideo: Boolean = false,
+    override val latLng: (Pair<Double, Double>)? = null,
+    override val syncState: MediaItemSyncState
+) : MediaItem

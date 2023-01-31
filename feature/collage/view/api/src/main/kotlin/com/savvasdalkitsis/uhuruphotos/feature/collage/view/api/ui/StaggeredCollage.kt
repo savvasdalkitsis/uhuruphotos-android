@@ -44,6 +44,7 @@ internal fun StaggeredCollage(
     showAlbumRefreshButton: Boolean = false,
     maintainAspectRatio: Boolean = true,
     miniIcons: Boolean = false,
+    showSyncState: Boolean = false,
     columnCount: Int,
     shouldAddEmptyPhotosInRows: Boolean,
     listState: LazyListState = rememberLazyListState(),
@@ -101,6 +102,7 @@ internal fun StaggeredCollage(
                             modifier = Modifier
                                 .animateContentSize()
                                 .animateItemPlacement(),
+                            showSyncState = showSyncState,
                             miniIcons = miniIcons,
                             maintainAspectRatio = maintainAspectRatio,
                             onCelSelected = onCelSelected,

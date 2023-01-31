@@ -31,6 +31,7 @@ internal fun CelRow(
     modifier: Modifier = Modifier,
     maintainAspectRatio: Boolean = true,
     miniIcons: Boolean = false,
+    showSyncState: Boolean = false,
     onCelSelected: CelSelected,
     onCelLongPressed: (CelState) -> Unit,
     vararg slots: CelRowSlot
@@ -47,6 +48,7 @@ internal fun CelRow(
                         modifier = Modifier
                             .weight(aspectRatio),
                         state = item.cel,
+                        showSyncState = showSyncState,
                         onSelected = onCelSelected,
                         onLongClick = onCelLongPressed,
                         aspectRatio = aspectRatio,

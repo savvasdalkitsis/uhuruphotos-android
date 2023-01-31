@@ -24,7 +24,8 @@ import com.savvasdalkitsis.uhuruphotos.feature.catalogue.view.api.ui.state.Catal
 import com.savvasdalkitsis.uhuruphotos.feature.catalogue.view.api.ui.state.CatalogueSorting.Companion.sorted
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.album.auto.AutoAlbums
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaId
-import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItem
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemInstance
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemSyncState.REMOTE_ONLY
 import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.api.usecase.RemoteMediaUseCase
 import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
 import dagger.hilt.android.qualifiers.ApplicationContext
@@ -72,7 +73,7 @@ class AutoAlbumsUseCase @Inject constructor(
                 with(remoteMediaUseCase) {
                     AutoAlbum(
                         id = it.id,
-                        cover = MediaItem(
+                        cover = MediaItemInstance(
                             id = MediaId.Remote(it.coverPhotoHash),
                             mediaHash = it.coverPhotoHash,
                             thumbnailUri = it.coverPhotoHash.toThumbnailUrlFromId(),
@@ -83,6 +84,7 @@ class AutoAlbumsUseCase @Inject constructor(
                             sortableDate = it.timestamp,
                             ratio = 1f,
                             isVideo = it.coverPhotoIsVideo ?: false,
+                            syncState = REMOTE_ONLY,
                         ),
                         title = it.title ?: context.getString(string.missing_album_title),
                         photoCount = it.photoCount,

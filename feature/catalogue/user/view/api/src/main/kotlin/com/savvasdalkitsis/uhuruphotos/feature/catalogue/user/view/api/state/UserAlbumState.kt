@@ -17,7 +17,8 @@ package com.savvasdalkitsis.uhuruphotos.feature.catalogue.user.view.api.state
 
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.album.user.UserAlbums
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaId
-import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItem
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemInstance
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemSyncState.REMOTE_ONLY
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.state.CelState
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.state.VitrineState
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.state.toCel
@@ -61,7 +62,7 @@ fun UserAlbums.toUserAlbumState() = UserAlbumState(
 context(RemoteMediaUseCase)
 private fun celState(imageHash: String?, coverIsVideo: Boolean?): CelState? =
     imageHash?.let {
-        MediaItem(
+        MediaItemInstance(
             id = MediaId.Remote(it),
             mediaHash = it,
             thumbnailUri = it.toThumbnailUrlFromId(),
@@ -69,5 +70,6 @@ private fun celState(imageHash: String?, coverIsVideo: Boolean?): CelState? =
             displayDayDate = null,
             ratio = 1f,
             isVideo = coverIsVideo ?: false,
+            syncState = REMOTE_ONLY,
         ).toCel()
     }

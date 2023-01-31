@@ -27,7 +27,8 @@ import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.ui.state.Gallery
 import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.ui.state.GalleryState
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.api.model.LightboxSequenceDataSource.AutoAlbum
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaId
-import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItem
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemInstance
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemSyncState
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.state.toCel
 import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.api.usecase.RemoteMediaUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.people.view.api.ui.state.toPerson
@@ -69,7 +70,7 @@ by GalleryActionHandler(
                             displayTitle = date,
                             location = null,
                             cels = photos.map {
-                                MediaItem(
+                                MediaItemInstance(
                                     id = MediaId.Remote(it.photoId.toString()),
                                     mediaHash = it.photoId.toString(),
                                     thumbnailUri = with(remoteMediaUseCase) {
@@ -82,6 +83,7 @@ by GalleryActionHandler(
                                     sortableDate = it.timestamp,
                                     isFavourite = it.isFavorite ?: false,
                                     isVideo = it.video ?: false,
+                                    syncState = MediaItemSyncState.REMOTE_ONLY,
                                 ).toCel()
                             }
                         )

@@ -49,7 +49,11 @@ class MemoriesUseCase @Inject constructor(
         }
 
     private val MediaCollection.calendar get() = unformattedDate?.let {
-        dateFormat.parse(it)
+        try {
+            dateFormat.parse(it)
+        } catch (e: Exception) {
+            null
+        }
     }?.let {
         Calendar.getInstance().apply { time = it }
     }

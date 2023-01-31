@@ -32,7 +32,8 @@ import com.savvasdalkitsis.uhuruphotos.feature.catalogue.user.view.api.state.Use
 import com.savvasdalkitsis.uhuruphotos.feature.catalogue.user.view.implementation.seam.UserAlbumsAction
 import com.savvasdalkitsis.uhuruphotos.feature.catalogue.user.view.implementation.seam.UserAlbumsAction.UserAlbumSelected
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaId
-import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItem
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemInstance
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemSyncState.REMOTE_ONLY
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.Cel
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.Vitrine
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.state.toCel
@@ -58,7 +59,11 @@ internal fun UserAlbumItem(
             )
         } else {
             Cel(
-                state = album.cover.cel1 ?: MediaItem(MediaId.Remote(""), "").toCel(),
+                state = album.cover.cel1 ?: MediaItemInstance(
+                    id = MediaId.Remote(""),
+                    mediaHash = "",
+                    syncState = REMOTE_ONLY,
+                ).toCel(),
                 onSelected = { _, _, _ ->
                     action(UserAlbumSelected(album))
                 },

@@ -18,6 +18,9 @@ package com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.ui
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.derivedStateOf
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
@@ -49,6 +52,11 @@ internal fun Feed(
             listState.animateScrollToItem(0, 0)
         }
     }
+    val isScrolling by remember {
+        derivedStateOf {
+            listState.isScrollInProgress
+        }
+    }
 
     HomeScaffold(
         modifier = Modifier.blurIf(isShowingPopUp),
@@ -67,12 +75,13 @@ internal fun Feed(
     ) { contentPadding ->
         SwipeRefresh(
             indicatorPadding = contentPadding,
-            isRefreshing = state.isRefreshing,
+            isRefreshing = state.isRefreshing || state.collageState.isLoading,
             onRefresh = { action(RefreshFeed) }
         ) {
             Collage(
                 contentPadding = contentPadding,
                 state = state.collageState,
+                showSyncState = isScrolling,
                 showSelectionHeader = state.hasSelection,
                 showGroupRefreshButton = state.shouldShowClusterRefreshButtons,
                 listState = listState,

@@ -25,7 +25,7 @@ interface LocalMediaUseCase {
 
     fun Long.toContentUri(isVideo: Boolean): String
 
-    suspend fun getLocalMedia(): List<LocalMediaItem>
+    suspend fun getLocalMediaItems(): LocalMediaItems
 
     suspend fun getLocalMediaItem(id: Long): LocalMediaItem?
 

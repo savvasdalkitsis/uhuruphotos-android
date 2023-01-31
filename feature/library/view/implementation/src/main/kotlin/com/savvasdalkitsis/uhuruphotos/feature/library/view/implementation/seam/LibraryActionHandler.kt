@@ -42,13 +42,13 @@ import com.savvasdalkitsis.uhuruphotos.feature.library.view.implementation.seam.
 import com.savvasdalkitsis.uhuruphotos.feature.library.view.implementation.ui.state.LibraryLocalMedia
 import com.savvasdalkitsis.uhuruphotos.feature.library.view.implementation.ui.state.LibraryState
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItem
-import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemsOnDevice.Found
-import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemsOnDevice.RequiresPermissions
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemsOnDevice.*
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.usecase.MediaUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.state.CelState
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.state.VitrineState
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.state.toCel
 import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.model.LocalMediaFolder
+import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.model.LocalMediaItems
 import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.usecase.LocalMediaUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.worker.LocalMediaWorkScheduler
 import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.api.usecase.RemoteMediaUseCase
@@ -102,7 +102,8 @@ class LibraryActionHandler @Inject constructor(
                 .map { media ->
                     when (media) {
                         is Found -> {
-                            val vitrines = media.mediaFolders.map { it.toVitrine() }
+                            val primary = listOfNotNull(media.primaryFolder)
+                            val vitrines = (primary + media.mediaFolders).map { it.toVitrine() }
                             if (vitrines.isEmpty()) {
                                 refreshLocalMedia()
                             }
@@ -110,6 +111,7 @@ class LibraryActionHandler @Inject constructor(
                         }
                         is RequiresPermissions ->
                             LibraryLocalMedia.RequiresPermissions(media.deniedPermissions)
+                        is Error -> LibraryLocalMedia.Found(emptyList())
                     }
                 }
                 .distinctUntilChanged()
@@ -163,7 +165,8 @@ class LibraryActionHandler @Inject constructor(
         if (mediaUseCase.getHiddenMedia().getOrDefault(emptyList()).isEmpty()) {
             refreshHiddenMedia(effect)
         }
-        if (localMediaUseCase.getLocalMedia().isEmpty()) {
+        val localItems = localMediaUseCase.getLocalMediaItems()
+        if (localItems is LocalMediaItems.Found && localItems.allFolders.isEmpty()) {
             refreshLocalMedia()
         }
     }

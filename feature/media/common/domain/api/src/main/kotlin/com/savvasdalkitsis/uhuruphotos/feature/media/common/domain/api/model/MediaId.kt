@@ -17,12 +17,45 @@ package com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model
 
 sealed class MediaId<T> private constructor(open val value: T) {
 
-    data class Remote(override val value: String): MediaId<String>(value)
-    data class Local(override val value: Long): MediaId<Long>(value)
+    abstract val preferRemote: MediaId<*>
+    abstract val findRemote: Remote?
+    abstract val preferLocal: MediaId<*>
+    abstract val findLocal: Local?
+    abstract val serialize: String
+
+    data class Remote(override val value: String): MediaId<String>(value) {
+        override val preferRemote = this
+        override val preferLocal = this
+        override val findRemote = this
+        override val findLocal = null
+        override val serialize = "remote:$value"
+    }
+
+    data class Local(override val value: Long): MediaId<Long>(value) {
+        override val preferRemote = this
+        override val preferLocal = this
+        override val findRemote = null
+        override val findLocal = this
+        override val serialize = "local:$value"
+    }
+
+    data class Group(override val value: Set<MediaId<*>>): MediaId<Set<MediaId<*>>>(value) {
+        override val findRemote: Remote? = value.firstNotNullOfOrNull { it as? Remote }
+        override val findLocal: Local? = value.firstNotNullOfOrNull { it as? Local }
+        override val preferRemote: MediaId<*> = findRemote ?: value.first()
+        override val preferLocal: MediaId<*> = findLocal ?: value.first()
+        override val serialize = "group:" + value.joinToString(separator = "::") { it.serialize }
+    }
 
     companion object {
-        operator fun invoke(id: String) = id.toLongOrNull()?.let {
-            Local(it)
-        } ?: Remote(id)
+        operator fun invoke(id: String) = deserialize(id)
+
+        private fun deserialize(id: String): MediaId<*> = when {
+            id.startsWith("local:") -> Local(id.removePrefix("local:").toLong())
+            id.startsWith("remote:") -> Remote(id.removePrefix("remote:"))
+            else -> Group(id.removePrefix("group:").split("::").map {
+                deserialize(it)
+            }.toSet())
+        }
     }
 }

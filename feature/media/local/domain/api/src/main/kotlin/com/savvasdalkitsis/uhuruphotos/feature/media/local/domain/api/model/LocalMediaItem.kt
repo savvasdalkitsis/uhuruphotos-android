@@ -22,7 +22,7 @@ data class LocalMediaItem(
     val displayDateTime: String,
     val dateTaken: String,
     val dateTimeTaken: String,
-    val sortableDate: Long,
+    val sortableDate: String,
     val bucket: LocalMediaFolder,
     val width: Int,
     val height: Int,

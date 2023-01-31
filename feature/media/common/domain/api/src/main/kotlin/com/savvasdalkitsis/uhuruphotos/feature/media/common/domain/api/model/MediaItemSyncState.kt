@@ -15,16 +15,6 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model
 
-import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.model.LocalMediaFolder
-
-sealed class MediaItemsOnDevice {
-
-    data class Found(
-        val primaryFolder: Pair<LocalMediaFolder, List<MediaItem>>?,
-        val mediaFolders: List<Pair<LocalMediaFolder, List<MediaItem>>>,
-    ) : MediaItemsOnDevice()
-
-    data class RequiresPermissions(val deniedPermissions: List<String>) : MediaItemsOnDevice()
-
-    object Error: MediaItemsOnDevice()
+enum class MediaItemSyncState {
+    LOCAL_ONLY, REMOTE_ONLY, SYNCED
 }

@@ -35,6 +35,8 @@ interface MediaUseCase {
 
     fun observeLocalMedia(): Flow<MediaItemsOnDevice>
 
+    suspend fun getLocalMedia(): MediaItemsOnDevice
+
     fun observeLocalAlbum(albumId: Int): Flow<MediaFolderOnDevice>
 
     fun observeFavouriteMedia(): Flow<Result<List<MediaItem>>>

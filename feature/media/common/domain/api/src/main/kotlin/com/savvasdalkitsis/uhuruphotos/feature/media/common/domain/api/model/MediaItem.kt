@@ -15,16 +15,17 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model
 
-data class MediaItem(
-    val id: MediaId<*>,
-    val mediaHash: String,
-    val thumbnailUri: String? = null,
-    val fullResUri: String? = null,
-    val fallbackColor: String? = null,
-    val displayDayDate: String? = null,
-    val sortableDate: String? = null,
-    val isFavourite: Boolean = false,
-    val ratio: Float = 1f,
-    val isVideo: Boolean = false,
-    val latLng: (Pair<Double, Double>)? = null,
-)
+interface MediaItem {
+    val id: MediaId<*>
+    val mediaHash: String
+    val thumbnailUri: String?
+    val fullResUri: String?
+    val fallbackColor: String?
+    val displayDayDate: String?
+    val sortableDate: String?
+    val isFavourite: Boolean
+    val ratio: Float
+    val isVideo: Boolean
+    val latLng: (Pair<Double, Double>)?
+    val syncState: MediaItemSyncState
+}

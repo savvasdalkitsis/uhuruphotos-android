@@ -18,6 +18,9 @@ package com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui
 import android.support.v4.media.session.PlaybackStateCompat
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.Animatable
+import androidx.compose.animation.core.tween
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.background
 import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.Box
@@ -35,10 +38,12 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.Alignment.Companion.BottomEnd
 import androidx.compose.ui.Alignment.Companion.BottomStart
 import androidx.compose.ui.Alignment.Companion.Center
 import androidx.compose.ui.Alignment.Companion.TopEnd
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.scale
 import androidx.compose.ui.geometry.Offset
@@ -53,6 +58,9 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemSelectionMode
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemSyncState.LOCAL_ONLY
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemSyncState.REMOTE_ONLY
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemSyncState.SYNCED
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.state.CelState
 import com.savvasdalkitsis.uhuruphotos.foundation.compose.api.toColor
 import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.R.drawable
@@ -73,13 +81,15 @@ fun Cel(
     itemPadding: Dp = 1.dp,
     miniIcons: Boolean = false,
     selectable: Boolean = true,
+    showSyncState: Boolean = false,
     onLongClick: (CelState) -> Unit = {},
 ) {
-    val scale = remember(state.mediaItem.id) { Animatable(1f) }
+    val mediaItem = state.mediaItem
+    val scale = remember(mediaItem.id) { Animatable(1f) }
     val configuration = LocalConfiguration.current
     val screenDensity = configuration.densityDpi / 160f
-    var relativeCenter by remember(state.mediaItem.id) { mutableStateOf(Offset.Zero) }
-    var relativeScale by remember(state.mediaItem.id) { mutableStateOf(0f) }
+    var relativeCenter by remember(mediaItem.id) { mutableStateOf(Offset.Zero) }
+    var relativeScale by remember(mediaItem.id) { mutableStateOf(0f) }
     val iconSize = if (miniIcons) 16.dp else 24.dp
 
     Box(
@@ -90,7 +100,7 @@ fun Cel(
                 if (state.selectionMode == MediaItemSelectionMode.SELECTED)
                     Color.LightGray
                 else
-                    state.mediaItem.fallbackColor.toColor()
+                    mediaItem.fallbackColor.toColor()
             )
             .clip(shape)
             .let {
@@ -114,12 +124,12 @@ fun Cel(
                     relativeScale = boundsInWindow.width / screenWidth
                 }
         ) {
-            val thumbnailUri = state.mediaItem.thumbnailUri
+            val thumbnailUri = mediaItem.thumbnailUri
             val exoPlayer = if (thumbnailUri == null)
                 null
             else
                 LocalExoPlayerProvider.current.maybeCreateExoplayer(thumbnailUri)
-            if (!LocalAnimatedVideoThumbnails.current || !state.mediaItem.isVideo || thumbnailUri == null || exoPlayer == null) {
+            if (!LocalAnimatedVideoThumbnails.current || !mediaItem.isVideo || thumbnailUri == null || exoPlayer == null) {
                 Image(
                     modifier = Modifier.fillMaxWidth(),
                     url = thumbnailUri,
@@ -142,7 +152,7 @@ fun Cel(
 
                 }
             }
-            if (state.mediaItem.isVideo) {
+            if (mediaItem.isVideo) {
                 Icon(
                     modifier = Modifier
                         .size(if (miniIcons) 16.dp else 48.dp)
@@ -152,13 +162,36 @@ fun Cel(
                     contentDescription = null
                 )
             }
-            if (state.mediaItem.isFavourite) {
+            if (mediaItem.isFavourite) {
                 Icon(
                     modifier = Modifier
                         .size(iconSize)
                         .align(TopEnd)
                         .padding(2.dp),
                     painter = painterResource(id = drawable.ic_favourite),
+                    tint = Color.White,
+                    contentDescription = null
+                )
+            }
+            AnimatedVisibility(
+                modifier = Modifier
+                    .align(BottomEnd),
+                visible = showSyncState,
+                enter = fadeIn(animationSpec = tween(durationMillis = 400)),
+                exit = fadeOut(animationSpec = tween(delayMillis = 1200, durationMillis = 400))
+            ) {
+                Icon(
+                    modifier = Modifier
+                        .size(iconSize)
+                        .padding(2.dp)
+                        .alpha(0.7f),
+                    painter = painterResource(
+                        id = when (mediaItem.syncState) {
+                            LOCAL_ONLY -> drawable.ic_cloud_off
+                            REMOTE_ONLY -> drawable.ic_cloud
+                            SYNCED -> drawable.ic_cloud_done
+                        }
+                    ),
                     tint = Color.White,
                     contentDescription = null
                 )
@@ -192,7 +225,7 @@ fun Cel(
         }
     }
 
-    LaunchedEffect(state.mediaItem.id, state.selectionMode) {
+    LaunchedEffect(mediaItem.id, state.selectionMode) {
         if (state.selectionMode == MediaItemSelectionMode.SELECTED) {
             scale.animateTo(0.85f)
         } else {

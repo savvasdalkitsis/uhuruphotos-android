@@ -36,6 +36,8 @@ import com.savvasdalkitsis.uhuruphotos.feature.heatmap.view.implementation.seam.
 import com.savvasdalkitsis.uhuruphotos.feature.heatmap.view.implementation.ui.state.HeatMapState
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaId
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItem
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemInstance
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemSyncState.*
 import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.api.usecase.RemoteMediaUseCase
 import com.savvasdalkitsis.uhuruphotos.foundation.coroutines.api.onErrors
 import com.savvasdalkitsis.uhuruphotos.foundation.coroutines.api.safelyOnStart
@@ -83,7 +85,7 @@ class HeatMapActionHandler @Inject constructor(
                     photos
                         .filter { it.latLng != null }
                         .map {
-                            MediaItem(
+                            MediaItemInstance(
                                 id = MediaId.Remote(it.imageHash),
                                 mediaHash = it.imageHash,
                                 thumbnailUri = with(remoteMediaUseCase) {
@@ -96,6 +98,7 @@ class HeatMapActionHandler @Inject constructor(
                                 sortableDate = it.timestamp,
                                 latLng = it.latLng,
                                 isVideo = it.video ?: false,
+                                syncState = REMOTE_ONLY,
                             )
                         }
                 }

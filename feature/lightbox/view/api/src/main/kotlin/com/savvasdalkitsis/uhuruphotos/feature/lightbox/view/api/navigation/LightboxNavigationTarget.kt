@@ -34,7 +34,7 @@ object LightboxNavigationTarget {
         isVideo: Boolean,
         lightboxSequenceDataSource: LightboxSequenceDataSource = Single,
     ) = registrationName
-        .replace("{id}", id.value.toString())
+        .replace("{id}", id.serialize)
         .replace("{centerX}", offset.x.toString())
         .replace("{centerY}", offset.y.toString())
         .replace("{scale}", scale.toString())

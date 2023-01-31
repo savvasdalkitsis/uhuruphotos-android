@@ -95,6 +95,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.ui.s
 import com.savvasdalkitsis.uhuruphotos.feature.local.domain.api.usecase.LocalAlbumUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaCollection
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaId
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaId.*
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItem
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.usecase.MediaUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.usecase.MetadataUseCase
@@ -146,8 +147,8 @@ class LightboxActionHandler @Inject constructor(
                         id = action.id,
                         lowResUrl = action.id.toThumbnailUriFromId(action.isVideo),
                         fullResUrl = action.id.toFullSizeUriFromId(action.isVideo),
-                        showFavouriteIcon = action.id is MediaId.Remote,
-                        showDeleteButton =  action.id is MediaId.Remote,
+                        showFavouriteIcon = action.id.preferRemote is Remote,
+                        showDeleteButton =  action.id.preferRemote is Remote,
                     )
                 ))
                 when (action.sequenceDataSource) {
@@ -204,17 +205,12 @@ class LightboxActionHandler @Inject constructor(
                             loadPhotoDetails(photo.id, photo.isVideo)
                         },
                         when (photo.id) {
-                            is MediaId.Remote -> mediaUseCase.observeOriginalFileDownloadStatus(photo.id)
-                                .map {
-                                    when (it) {
-                                        ENQUEUED, RUNNING, BLOCKED -> IN_PROGRESS
-                                        null, SUCCEEDED -> IDLE
-                                        FAILED, CANCELLED -> ERROR
-                                    }
-                                }
-                                .onStart { emit(IDLE) }
-                                .map { SetOriginalFileIconState(photo.id, it) }
-                            is MediaId.Local -> flowOf(SetOriginalFileIconState(photo.id, HIDDEN))
+                            is Remote -> remoteMediaFileIconState(photo.id)
+                            is Local -> localMediaFileIconState(photo.id)
+                            is Group -> when (val id = photo.id.preferRemote) {
+                                is Remote -> remoteMediaFileIconState(id)
+                                else -> localMediaFileIconState(id)
+                            }
                         }
                     ).collect { send(it) }
                 }
@@ -267,12 +263,12 @@ class LightboxActionHandler @Inject constructor(
         DismissConfirmationDialogs -> flowOf(HideAllConfirmationDialogs)
         TrashMediaItem -> processAndRemovePhoto(state, effect) {
             when (mediaItemType) {
-                TRASHED -> mediaUseCase.deleteMediaItem(state.currentMediaItem.id)
-                else -> mediaUseCase.trashMediaItem(state.currentMediaItem.id)
+                TRASHED -> mediaUseCase.deleteMediaItem(state.currentMediaItem.id.preferRemote)
+                else -> mediaUseCase.trashMediaItem(state.currentMediaItem.id.preferRemote)
             }
         }
         RestoreMediaItem -> processAndRemovePhoto(state, effect) {
-            mediaUseCase.restoreMediaItem(state.currentMediaItem.id)
+            mediaUseCase.restoreMediaItem(state.currentMediaItem.id.preferRemote)
         }
         ShareMediaItem -> flow {
             effect(LightboxEffect.ShareMedia(state.currentMediaItem.fullResUrl))
@@ -282,7 +278,7 @@ class LightboxActionHandler @Inject constructor(
         }
         is FullMediaDataLoaded -> flow {
             emit(SetOriginalFileIconState(action.photo.id, HIDDEN))
-            if (!(action.photo.id is MediaId.Remote && action.photo.isVideo)) {
+            if (!(action.photo.id is Remote && action.photo.isVideo)) {
                 emit(ShowShareIcon(action.photo.id))
                 emit(ShowUseAsIcon(action.photo.id))
                 val metadata = metadataUseCase.extractMetadata(action.photo.fullResUrl)
@@ -302,6 +298,21 @@ class LightboxActionHandler @Inject constructor(
             effect(CopyToClipboard(action.text))
         }
     }
+
+    private fun localMediaFileIconState(mediaId: MediaId<*>) =
+        flowOf(SetOriginalFileIconState(mediaId, HIDDEN))
+
+    private fun remoteMediaFileIconState(mediaId: MediaId<*>): Flow<SetOriginalFileIconState> =
+        mediaUseCase.observeOriginalFileDownloadStatus(mediaId)
+            .map {
+                when (it) {
+                    ENQUEUED, RUNNING, BLOCKED -> IN_PROGRESS
+                    null, SUCCEEDED -> IDLE
+                    FAILED, CANCELLED -> ERROR
+                }
+            }
+            .onStart { emit(IDLE) }
+            .map { SetOriginalFileIconState(mediaId, it) }
 
     private fun processAndRemovePhoto(
         state: LightboxState,
@@ -346,8 +357,8 @@ class LightboxActionHandler @Inject constructor(
                 fullResUrl = photo.fullResUri ?: photo.id.toFullSizeUriFromId(action.isVideo),
                 isFavourite = photo.isFavourite,
                 isVideo = photo.isVideo,
-                showFavouriteIcon = photo.id is MediaId.Remote,
-                showDeleteButton = photo.id is MediaId.Remote,
+                showFavouriteIcon = photo.id.preferRemote is Remote,
+                showDeleteButton = photo.id.preferRemote is Remote,
             )
         }
         val index = photoStates.indexOfFirst { it.id == action.id }

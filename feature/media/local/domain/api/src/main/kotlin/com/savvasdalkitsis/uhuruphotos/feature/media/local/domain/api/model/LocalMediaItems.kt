@@ -20,7 +20,9 @@ sealed class LocalMediaItems {
     data class Found(
         val primaryLocalMediaFolder: Pair<LocalMediaFolder, List<LocalMediaItem>>?,
         val localMediaFolders: List<Pair<LocalMediaFolder, List<LocalMediaItem>>>,
-    ) : LocalMediaItems()
+    ) : LocalMediaItems() {
+        val allFolders = localMediaFolders + listOfNotNull(primaryLocalMediaFolder)
+    }
 
     data class RequiresPermissions(val deniedPermissions: List<String>) : LocalMediaItems()
 

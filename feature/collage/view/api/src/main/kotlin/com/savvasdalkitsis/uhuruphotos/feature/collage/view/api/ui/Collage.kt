@@ -42,6 +42,7 @@ fun Collage(
     state: CollageState,
     showSelectionHeader: Boolean = false,
     showGroupRefreshButton: Boolean = false,
+    showSyncState: Boolean = false,
     listState: LazyListState = rememberLazyListState(),
     collageHeader: @Composable (LazyItemScope.() -> Unit)? = null,
     emptyContent: @Composable () -> Unit = { NoContent(string.no_photos) },
@@ -51,8 +52,8 @@ fun Collage(
     onClusterRefreshClicked: (Cluster) -> Unit = {},
     onClusterSelectionClicked: (Cluster) -> Unit = {},
 ) = when {
-    state.isLoading || (!state.isEmpty && state.clusters.isEmpty()) -> FullProgressBar()
-    state.isEmpty && state.clusters.isEmpty() -> emptyContent()
+    (state.isLoading && state.clusters.isEmpty()) || (!state.isEmpty && state.clusters.isEmpty()) -> FullProgressBar()
+    !state.isLoading && state.isEmpty && state.clusters.isEmpty() -> emptyContent()
     else -> {
         val collageDisplay = state.collageDisplay
         StaggeredCollage(
@@ -68,6 +69,7 @@ fun Collage(
                 },
             contentPadding = contentPadding,
             state = state.clusters,
+            showSyncState = showSyncState,
             showSelectionHeader = showSelectionHeader,
             showAlbumRefreshButton = showGroupRefreshButton,
             maintainAspectRatio = collageDisplay.maintainAspectRatio,

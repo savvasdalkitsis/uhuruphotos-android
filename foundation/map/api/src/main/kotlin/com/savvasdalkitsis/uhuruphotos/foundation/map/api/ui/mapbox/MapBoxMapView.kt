@@ -38,10 +38,7 @@ internal fun MapBoxMapView(
     mapViewState: MapBoxMapViewState,
     content: @Composable (MapViewScope.() -> Unit)?,
 ) {
-    val style = when {
-        MaterialTheme.colors.isLight -> Style.MAPBOX_STREETS
-        else -> Style.DARK
-    }
+    val colors = MaterialTheme.colors
     AndroidView(
         modifier = modifier,
         factory = { context ->
@@ -53,6 +50,10 @@ internal fun MapBoxMapView(
                         gestures.doubleTapToZoomInEnabled = zoomGesturesEnabled
                         gestures.scrollEnabled = scrollGesturesEnabled
                         gestures.rotateEnabled = false
+                    }
+                    val style = when {
+                        colors.isLight -> Style.MAPBOX_STREETS
+                        else -> Style.DARK
                     }
                     loadStyleUri(style)
                     scalebar.enabled = false

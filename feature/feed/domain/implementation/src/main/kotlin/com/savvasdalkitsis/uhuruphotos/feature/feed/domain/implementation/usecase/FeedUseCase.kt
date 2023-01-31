@@ -24,11 +24,15 @@ import com.savvasdalkitsis.uhuruphotos.feature.feed.domain.api.worker.FeedWorkSc
 import com.savvasdalkitsis.uhuruphotos.feature.feed.domain.implementation.repository.FeedRepository
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaCollection
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaCollectionSource
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItem
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemGroup
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemsOnDevice.*
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.usecase.MediaUseCase
 import com.savvasdalkitsis.uhuruphotos.foundation.coroutines.api.safelyOnStartIgnoring
 import com.savvasdalkitsis.uhuruphotos.foundation.group.api.model.Group
 import com.savvasdalkitsis.uhuruphotos.foundation.group.api.model.mapValues
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.map
 import javax.inject.Inject
@@ -42,18 +46,22 @@ internal class FeedUseCase @Inject constructor(
 
     private val preference = preferences.getEnum("feedDisplay", defaultValue = PredefinedCollageDisplay.default)
 
-    override fun observeFeed(): Flow<List<MediaCollection>> = feedRepository.observeRemoteMediaCollectionsByDate()
-        .map {
-            it.mapValues { albums ->
-                albums.toMediaCollectionSource()
-            }
-        }.map {
-            it.toCollection()
-        }.initialize()
+    override fun observeFeed(): Flow<List<MediaCollection>> =
+        combine(observeRemoteMediaFeed(), observeLocalMediaFeed(), ::mergeRemoteWithLocalMedia)
 
-    override suspend fun getFeed(): List<MediaCollection> = feedRepository.getRemoteMediaCollectionsByDate()
-        .mapValues { it.toMediaCollectionSource() }
-        .toCollection()
+    override suspend fun getFeed(): List<MediaCollection> = mergeRemoteWithLocalMedia(
+        getRemoteMediaFeed(), getLocalMediaFeed()
+    )
+
+    private fun mergeRemoteWithLocalMedia(
+        allRemoteDays: List<MediaCollection>,
+        allLocalMedia: List<MediaItem>
+    ): List<MediaCollection> {
+        val allLocalDays = allLocalMedia.groupBy { it.displayDayDate }
+        val combined = mergeLocalMediaIntoExistingRemoteDays(allRemoteDays, allLocalDays) +
+                remainingLocalDays(allRemoteDays, allLocalDays)
+        return combined.sortedByDescending { it.unformattedDate }
+    }
 
     override suspend fun refreshCluster(clusterId: String) {
         feedRepository.refreshRemoteMediaCollection(clusterId)
@@ -94,4 +102,81 @@ internal class FeedUseCase @Inject constructor(
         with(mediaUseCase) {
             toMediaCollection()
         }
+
+    private fun mergeLocalMediaIntoExistingRemoteDays(
+        remoteDays: List<MediaCollection>,
+        localDays: Map<String?, List<MediaItem>>
+    ) = remoteDays.map { remoteDay ->
+        val localMediaOnDay = localDays[remoteDay.displayTitle] ?: emptyList()
+        val existingRemoteMediaHashes = remoteDay.mediaItems.map { it.mediaHash }
+        val localMediaNotPresentRemotely = localMediaOnDay.filter {
+            it.mediaHash !in existingRemoteMediaHashes
+        }
+        val combinedMediaItems = remoteDay.mediaItems.map { remoteMediaItem ->
+            mergeLocalDuplicates(localMediaOnDay, remoteMediaItem)
+        } + localMediaNotPresentRemotely
+        remoteDay.copy(
+            mediaItems = combinedMediaItems.sortedByDescending { it.sortableDate }
+        )
+    }
+
+    private fun mergeLocalDuplicates(
+        localMediaOnDay: List<MediaItem>,
+        remoteMediaItem: MediaItem
+    ): MediaItem {
+        val localCopies =
+            localMediaOnDay.filter { it.mediaHash == remoteMediaItem.mediaHash }.toSet()
+        return when {
+            localCopies.isNotEmpty() ->
+                MediaItemGroup(
+                    remoteInstance = remoteMediaItem,
+                    localInstances = localCopies,
+                )
+            else -> remoteMediaItem
+        }
+    }
+
+    private fun remainingLocalDays(
+        allRemoteDays: List<MediaCollection>,
+        allLocalDays: Map<String?, List<MediaItem>>
+    ) = allLocalDays
+        .filter { (day, _) -> day !in allRemoteDays.map { it.displayTitle } }
+        .map { (day, items) ->
+            MediaCollection(
+                id = "local_media_collection_$day",
+                mediaItems = items,
+                displayTitle = day ?: "-",
+                location = null,
+                unformattedDate = items.firstOrNull()?.sortableDate
+            )
+        }
+
+    private fun observeLocalMediaFeed() = mediaUseCase.observeLocalMedia()
+        .map {
+            when (it) {
+                is Found -> it.primaryFolder?.second ?: emptyList()
+                else -> emptyList()
+            }
+        }
+
+    private fun observeRemoteMediaFeed() = feedRepository.observeRemoteMediaCollectionsByDate()
+        .map {
+            it.mapValues { albums ->
+                albums.toMediaCollectionSource()
+            }
+        }.map {
+            it.toCollection()
+        }.initialize()
+
+
+    private suspend fun getRemoteMediaFeed() = feedRepository.getRemoteMediaCollectionsByDate()
+        .mapValues { it.toMediaCollectionSource() }
+        .toCollection()
+
+    private suspend fun getLocalMediaFeed(): List<MediaItem> = when (val mediaOnDevice = mediaUseCase.getLocalMedia()) {
+        Error -> emptyList()
+        is Found -> mediaOnDevice.primaryFolder?.second ?: emptyList()
+        is RequiresPermissions -> emptyList()
+    }
+
 }
