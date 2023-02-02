@@ -19,12 +19,12 @@ package com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.implementati
 import android.content.Context
 import android.net.Uri
 import coil.ImageLoader
+import coil.request.CachePolicy
 import coil.request.ImageRequest
 import coil.request.SuccessResult
 import com.google.android.exoplayer2.upstream.DataSpec
 import com.google.android.exoplayer2.upstream.cache.CacheDataSource
 import com.google.android.exoplayer2.upstream.cache.CacheWriter
-import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.extensions.async
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.extensions.asyncReturn
 import com.savvasdalkitsis.uhuruphotos.foundation.log.api.log
 import dagger.hilt.android.qualifiers.ApplicationContext
@@ -72,6 +72,9 @@ class RemoteMediaPrecacher @Inject constructor(
         val result = imageLoader.execute(
             ImageRequest.Builder(context)
                 .data(url)
+                .memoryCachePolicy(CachePolicy.DISABLED)
+                .diskCachePolicy(CachePolicy.ENABLED)
+                .target()
                 .build()
         )
 

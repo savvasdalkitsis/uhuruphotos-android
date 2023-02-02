@@ -43,13 +43,15 @@ internal class PrecacheFeedThumbnailsWorker @AssistedInject constructor(
 ) : CoroutineWorker(context, params) {
 
     override suspend fun doWork() = withContext(Dispatchers.IO) {
-        val mediaCollections = feedRepository.getRemoteMediaCollectionsByDate()
+        val mediaItems = feedRepository.getRemoteMediaCollectionsByDate()
             .items.entries.flatMap { it.value }
-        for ((index, entry) in mediaCollections.withIndex()) {
+        for ((index, entry) in mediaItems.withIndex()) {
             if (isStopped)
                 break
-            mediaUseCase.downloadThumbnail(entry.id, entry.isVideo)
-            val progress = index.toProgressPercent(mediaCollections.size)
+            entry.photoId?.let { mediaId ->
+                mediaUseCase.downloadThumbnail(mediaId, entry.isVideo)
+            }
+            val progress = index.toProgressPercent(mediaItems.size)
             setProgress(workDataOf(Progress to progress))
             setForegroundAsync(createForegroundInfo(progress))
         }
