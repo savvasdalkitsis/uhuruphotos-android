@@ -3,6 +3,9 @@ android {
 }
 
 dependencies {
+    api(
+        libs.androidx.work.hilt,
+    )
     implementation(
         libs.androidx.work,
     )

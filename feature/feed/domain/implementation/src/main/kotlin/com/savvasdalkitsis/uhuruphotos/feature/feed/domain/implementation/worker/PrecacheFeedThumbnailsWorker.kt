@@ -17,15 +17,12 @@ package com.savvasdalkitsis.uhuruphotos.feature.feed.domain.implementation.worke
 
 import android.content.Context
 import androidx.hilt.work.HiltWorker
-import androidx.work.CoroutineWorker
-import androidx.work.ForegroundInfo
 import androidx.work.WorkerParameters
-import androidx.work.workDataOf
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.extensions.isVideo
 import com.savvasdalkitsis.uhuruphotos.feature.feed.domain.implementation.repository.FeedRepository
 import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.api.usecase.RemoteMediaUseCase
 import com.savvasdalkitsis.uhuruphotos.foundation.notification.api.ForegroundInfoBuilder
-import com.savvasdalkitsis.uhuruphotos.foundation.notification.api.NotificationChannels
+import com.savvasdalkitsis.uhuruphotos.foundation.notification.api.ForegroundNotificationWorker
 import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R
 import com.savvasdalkitsis.uhuruphotos.math.toProgressPercent
 import dagger.assisted.Assisted
@@ -39,10 +36,17 @@ internal class PrecacheFeedThumbnailsWorker @AssistedInject constructor(
     @Assisted private val params: WorkerParameters,
     private val feedRepository: FeedRepository,
     private val mediaUseCase: RemoteMediaUseCase,
-    private val foregroundInfoBuilder: ForegroundInfoBuilder,
-) : CoroutineWorker(context, params) {
+    foregroundInfoBuilder: ForegroundInfoBuilder,
+) : ForegroundNotificationWorker(
+    context,
+    params,
+    foregroundInfoBuilder,
+    notificationTitle = R.string.precaching_thumbnails,
+    notificationId = NOTIFICATION_ID,
+) {
 
     override suspend fun doWork() = withContext(Dispatchers.IO) {
+        updateProgress(0)
         val mediaItems = feedRepository.getRemoteMediaCollectionsByDate()
             .items.entries.flatMap { it.value }
         for ((index, entry) in mediaItems.withIndex()) {
@@ -52,23 +56,12 @@ internal class PrecacheFeedThumbnailsWorker @AssistedInject constructor(
                 mediaUseCase.downloadThumbnail(mediaId, entry.isVideo)
             }
             val progress = index.toProgressPercent(mediaItems.size)
-            setProgress(workDataOf(Progress to progress))
-            setForegroundAsync(createForegroundInfo(progress))
+            updateProgress(progress)
         }
         Result.success()
     }
 
-    override suspend fun getForegroundInfo(): ForegroundInfo = createForegroundInfo(null)
-
-    private fun createForegroundInfo(progress: Int?) = foregroundInfoBuilder.build(
-        applicationContext,
-        R.string.precaching_thumbnails,
-        NOTIFICATION_ID,
-        NotificationChannels.JOBS_CHANNEL_ID,
-        progress,
-    )
     companion object {
-        const val Progress = "Progress"
         const val WORK_NAME = "precacheThumbnails"
         private const val NOTIFICATION_ID = 1281
     }

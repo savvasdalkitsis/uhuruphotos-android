@@ -44,7 +44,7 @@ class ImageModule {
         settingsUseCase: com.savvasdalkitsis.uhuruphotos.feature.settings.domain.api.usecase.SettingsUseCase,
         @ApplicationContext context: Context,
     ): MemoryCache = MemoryCache.Builder(context)
-        .maxSizeBytes(settingsUseCase.getImageMemCacheMaxLimit() * 1024 * 1024)
+        .maxSizeBytes((settingsUseCase.getImageMemCacheMaxLimit() * 1024 * 1024).coerceAtLeast(0))
         .build()
 
     @Provides
@@ -54,7 +54,7 @@ class ImageModule {
         settingsUseCase: com.savvasdalkitsis.uhuruphotos.feature.settings.domain.api.usecase.SettingsUseCase,
     ): DiskCache = DiskCache.Builder()
         .directory(context.cacheDir.resolve("image_cache"))
-        .maxSizeBytes(settingsUseCase.getImageDiskCacheMaxLimit() * 1024L * 1024L)
+        .maxSizeBytes(settingsUseCase.getImageDiskCacheMaxLimit().coerceAtLeast(0) * 1024L * 1024L)
         .build()
 
     @Provides

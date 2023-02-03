@@ -97,7 +97,7 @@ class FeedDownloadWorkerTest {
             progressUpdater.updateProgress(
                 any(),
                 any(),
-                workDataOf(FeedDownloadWorker.Progress to 5)
+                workDataOf("Progress" to 5)
             )
         }
     }
@@ -145,6 +145,7 @@ private fun params(
         args(Data.Builder()).build(),
         emptyList(),
         WorkerParameters.RuntimeExtras(),
+        0,
         0,
         executor,
         object : TaskExecutor {

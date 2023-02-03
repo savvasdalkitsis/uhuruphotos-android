@@ -36,7 +36,7 @@ internal class ForegroundInfoBuilder @Inject constructor(
     ): ForegroundInfo {
         val notification = NotificationCompat.Builder(context, channel)
             .setContentTitle(context.getString(title))
-            .setSmallIcon(R.mipmap.ic_launcher_round)
+            .setSmallIcon(R.drawable.ic_notification)
             .setPriority(NotificationCompat.PRIORITY_LOW)
             .setProgress(100, progress ?: 0, progress == null)
             .build()
