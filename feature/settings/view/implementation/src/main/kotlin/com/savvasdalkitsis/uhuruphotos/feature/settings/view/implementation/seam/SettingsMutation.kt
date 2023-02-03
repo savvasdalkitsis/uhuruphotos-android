@@ -174,6 +174,23 @@ internal sealed class SettingsMutation(
         )
     })
 
+    data class SetMemoryCacheUpperLimit(
+        val limit: Int,
+    ): SettingsMutation({
+        it.copy(
+            imageMemCacheLimit = limit,
+        )
+    })
+
+    data class SetDiskCacheUpperLimit(
+        val limit: Int,
+    ): SettingsMutation({
+        it.copy(
+            imageDiskCacheLimit = limit,
+            videoDiskCacheLimit = limit,
+        )
+    })
+
     data class DisplayMapProviders(
         val current: MapProvider,
         val available: Set<MapProvider>,

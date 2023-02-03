@@ -30,6 +30,7 @@ internal fun ColumnScope.SettingsVideoDiskCache(
     SettingsGroupCache(
         current = state.videoDiskCacheCurrent,
         initialMaxLimit = state.videoDiskCacheMax.toFloat(),
+        range = 10f.. state.videoDiskCacheLimit.toFloat(),
         clearAction = ClearVideoDiskCache,
         changeCacheSizeAction = { ChangeVideoDiskCache(it) },
         action = action,

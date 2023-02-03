@@ -56,6 +56,8 @@ import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.SettingsMutation.HideFullSyncProgress
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.SettingsMutation.HidePrecacheThumbnailsDialog
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.SettingsMutation.HidePrecacheThumbnailsProgress
+import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.SettingsMutation.SetMemoryCacheUpperLimit
+import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.SettingsMutation.SetDiskCacheUpperLimit
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.SettingsMutation.ShowFullFeedSyncDialog
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.SettingsMutation.ShowPrecacheThumbnailsDialog
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.ui.state.BiometricsSetting
@@ -67,6 +69,7 @@ import com.savvasdalkitsis.uhuruphotos.foundation.biometrics.api.usecase.Biometr
 import com.savvasdalkitsis.uhuruphotos.foundation.log.api.usecase.FeedbackUseCase
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.ActionHandler
 import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
+import com.savvasdalkitsis.uhuruphotos.foundation.system.api.usecase.SystemUseCase
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.flatMapMerge
@@ -84,6 +87,7 @@ internal class SettingsActionHandler @Inject constructor(
     private val feedbackUseCase: FeedbackUseCase,
     private val searchUseCase: SearchUseCase,
     private val biometricsUseCase: BiometricsUseCase,
+    private val systemUseCase: SystemUseCase,
 ) : ActionHandler<SettingsState, SettingsEffect, SettingsAction, SettingsMutation> {
 
     override fun handleAction(
@@ -144,6 +148,10 @@ internal class SettingsActionHandler @Inject constructor(
                 .map(::DisplayVideoDiskCacheCurrentUse),
             avatarUseCase.getAvatarState()
                 .map(::AvatarUpdate),
+            flowOf(systemUseCase.getAvailableSystemMemoryInMb())
+                .map(::SetMemoryCacheUpperLimit),
+            flowOf(systemUseCase.getAvailableStorageInMb())
+                .map(::SetDiskCacheUpperLimit),
             combine(
                 feedWorkScheduler.observeFeedRefreshJob(),
                 feedWorkScheduler.observePrecacheThumbnailsJob(),

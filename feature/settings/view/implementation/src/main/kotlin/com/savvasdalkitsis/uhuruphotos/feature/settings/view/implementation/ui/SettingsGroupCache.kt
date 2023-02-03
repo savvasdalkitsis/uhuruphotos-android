@@ -21,6 +21,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.stringResource
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.SettingsAction
 import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
+import kotlin.math.max
 
 @Composable
 internal fun ColumnScope.SettingsGroupCache(
@@ -41,7 +42,10 @@ internal fun ColumnScope.SettingsGroupCache(
         text = { stringResource(string.max_limit, it.toInt()) },
         subtext = string.changes_effect_after_restart,
         initialValue = initialMaxLimit,
-        range = range,
+        range = range.maybeExpandTo(initialMaxLimit),
         onValueChanged = { action(changeCacheSizeAction(it)) }
     )
 }
+
+private fun ClosedFloatingPointRange<Float>.maybeExpandTo(end: Float) =
+    start..max(endInclusive, end)

@@ -30,6 +30,7 @@ internal fun ColumnScope.SettingsImageDiskCache(
     SettingsGroupCache(
         current = state.imageDiskCacheCurrent,
         initialMaxLimit = state.imageDiskCacheMax.toFloat(),
+        range = 10f.. state.imageDiskCacheLimit.toFloat(),
         clearAction = ClearImageDiskCache,
         changeCacheSizeAction = { ChangeImageDiskCache(it) },
         action = action,

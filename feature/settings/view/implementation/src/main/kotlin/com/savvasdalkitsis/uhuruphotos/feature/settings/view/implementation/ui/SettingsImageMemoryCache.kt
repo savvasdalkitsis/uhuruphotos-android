@@ -22,6 +22,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.SettingsAction.ClearImageMemCache
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.ui.state.SettingsState
 
+
 @Composable
 internal fun ColumnScope.SettingsImageMemoryCache(
     state: SettingsState,
@@ -30,6 +31,7 @@ internal fun ColumnScope.SettingsImageMemoryCache(
     SettingsGroupCache(
         current = state.imageMemCacheCurrent,
         initialMaxLimit = state.imageMemCacheMax.toFloat(),
+        range = 10f.. state.imageMemCacheLimit.toFloat(),
         clearAction = ClearImageMemCache,
         changeCacheSizeAction = { ChangeImageMemCache(it) },
         action = action,

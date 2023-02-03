@@ -22,10 +22,13 @@ import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.theme.ThemeMode
 internal data class SettingsState(
     val isLoading: Boolean = true,
     val imageDiskCacheMax: Int = 0,
+    val imageDiskCacheLimit: Int = 2000,
     val imageDiskCacheCurrent: Int = 0,
     val videoDiskCacheMax: Int = 0,
+    val videoDiskCacheLimit: Int = 2000,
     val videoDiskCacheCurrent: Int = 0,
     val imageMemCacheMax: Int = 0,
+    val imageMemCacheLimit: Int = 2000,
     val imageMemCacheCurrent: Int = 0,
     val feedDaysToRefresh: Int = 0,
     val feedSyncFrequency: Int? = null,
