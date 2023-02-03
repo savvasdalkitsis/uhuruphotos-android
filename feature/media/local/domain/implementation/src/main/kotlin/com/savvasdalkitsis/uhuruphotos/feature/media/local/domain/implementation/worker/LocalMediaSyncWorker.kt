@@ -42,7 +42,7 @@ internal class LocalMediaSyncWorker @AssistedInject constructor(
     notificationId = NOTIFICATION_ID,
 ) {
 
-    override suspend fun doWork() = withContext(Dispatchers.IO) {
+    override suspend fun work() = withContext(Dispatchers.IO) {
         try {
             updateProgress(0)
             localMediaUseCase.refreshAll { progress ->

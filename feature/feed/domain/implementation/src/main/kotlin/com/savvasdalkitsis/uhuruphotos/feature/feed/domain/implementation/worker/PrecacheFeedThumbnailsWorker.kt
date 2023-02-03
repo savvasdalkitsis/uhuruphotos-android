@@ -45,7 +45,7 @@ internal class PrecacheFeedThumbnailsWorker @AssistedInject constructor(
     notificationId = NOTIFICATION_ID,
 ) {
 
-    override suspend fun doWork() = withContext(Dispatchers.IO) {
+    override suspend fun work() = withContext(Dispatchers.IO) {
         updateProgress(0)
         val mediaItems = feedRepository.getRemoteMediaCollectionsByDate()
             .items.entries.flatMap { it.value }

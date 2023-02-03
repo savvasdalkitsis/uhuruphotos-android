@@ -15,6 +15,7 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.foundation.notification.api
 
+import android.app.Notification
 import android.content.Context
 import androidx.annotation.StringRes
 import androidx.work.ForegroundInfo
@@ -27,4 +28,11 @@ interface ForegroundInfoBuilder {
         channel: String,
         progress: Int? = null,
     ): ForegroundInfo
+
+    fun buildNotification(
+        context: Context,
+        title: Int,
+        channel: String,
+        progress: Int?
+    ): Notification
 }

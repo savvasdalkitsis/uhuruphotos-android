@@ -34,12 +34,7 @@ internal class ForegroundInfoBuilder @Inject constructor(
         channel: String,
         progress: Int?,
     ): ForegroundInfo {
-        val notification = NotificationCompat.Builder(context, channel)
-            .setContentTitle(context.getString(title))
-            .setSmallIcon(R.drawable.ic_notification)
-            .setPriority(NotificationCompat.PRIORITY_LOW)
-            .setProgress(100, progress ?: 0, progress == null)
-            .build()
+        val notification = buildNotification(context, title, channel, progress)
         return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
             ForegroundInfo(
                 notificationId,
@@ -53,4 +48,16 @@ internal class ForegroundInfoBuilder @Inject constructor(
             )
         }
     }
+
+    override fun buildNotification(
+        context: Context,
+        title: Int,
+        channel: String,
+        progress: Int?
+    ) = NotificationCompat.Builder(context, channel)
+        .setContentTitle(context.getString(title))
+        .setSmallIcon(R.drawable.ic_notification)
+        .setPriority(NotificationCompat.PRIORITY_LOW)
+        .setProgress(100, progress ?: 0, progress == null)
+        .build()
 }

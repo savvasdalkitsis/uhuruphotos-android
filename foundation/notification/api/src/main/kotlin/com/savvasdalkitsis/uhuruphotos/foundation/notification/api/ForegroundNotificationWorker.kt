@@ -16,7 +16,9 @@ limitations under the License.
 
 package com.savvasdalkitsis.uhuruphotos.foundation.notification.api
 
+import android.app.NotificationManager
 import android.content.Context
+import android.content.Context.NOTIFICATION_SERVICE
 import androidx.annotation.StringRes
 import androidx.work.CoroutineWorker
 import androidx.work.ForegroundInfo
@@ -33,9 +35,25 @@ abstract class ForegroundNotificationWorker constructor(
     private val notificationChannelId: String = NotificationChannels.JOBS_CHANNEL_ID,
 ) : CoroutineWorker(context, params) {
 
+    private val notificationManager = applicationContext.getSystemService(NOTIFICATION_SERVICE) as NotificationManager
+
+    final override suspend fun doWork(): Result {
+        setForeground(createForegroundInfo(0))
+        updateProgress(0)
+        return work()
+    }
+
+    abstract suspend fun work(): Result
+
     suspend fun updateProgress(progress: Int) {
         setProgress(workDataOf(Progress to progress))
-        setForegroundAsync(createForegroundInfo(progress))
+
+        notificationManager.notify(notificationId, foregroundInfoBuilder.buildNotification(
+            applicationContext,
+            notificationTitle,
+            notificationChannelId,
+            progress,
+        ))
     }
 
     override suspend fun getForegroundInfo(): ForegroundInfo = createForegroundInfo(null)
