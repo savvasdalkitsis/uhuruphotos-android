@@ -63,6 +63,12 @@ internal class ForegroundInfoBuilder @Inject constructor(
     ) = NotificationCompat.Builder(context, channel)
         .setContentTitle(context.getString(title))
         .setContentText(text)
+        .setContentIntent(PendingIntent.getActivity(
+            context,
+            0,
+            context.packageManager.getLaunchIntentForPackage(context.packageName),
+            PendingIntent.FLAG_IMMUTABLE,
+        ))
         .setSmallIcon(drawable.ic_notification)
         .setPriority(NotificationCompat.PRIORITY_LOW)
         .setProgress(100, progress ?: 0, progress == null)
