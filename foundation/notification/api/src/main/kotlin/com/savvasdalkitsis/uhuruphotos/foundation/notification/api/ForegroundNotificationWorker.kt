@@ -16,10 +16,8 @@ limitations under the License.
 
 package com.savvasdalkitsis.uhuruphotos.foundation.notification.api
 
-import android.app.NotificationManager
 import android.content.BroadcastReceiver
 import android.content.Context
-import android.content.Context.NOTIFICATION_SERVICE
 import androidx.annotation.StringRes
 import androidx.core.app.NotificationManagerCompat
 import androidx.work.CoroutineWorker
