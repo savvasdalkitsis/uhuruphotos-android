@@ -38,7 +38,7 @@ interface LocalMediaUseCase {
     suspend fun refreshLocalMediaFolder(folderId: Int): Result<Unit>
 
     suspend fun refreshAll(
-        onProgressChange: suspend (Int) -> Unit,
+        onProgressChange: suspend (current: Int, total: Int) -> Unit = { _, _ -> },
     )
 
     fun observePermissionsState(): Flow<LocalPermissions>

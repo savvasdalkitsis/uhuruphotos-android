@@ -153,7 +153,7 @@ class LocalMediaUseCase @Inject constructor(
         }
 
     override suspend fun refreshAll(
-        onProgressChange: suspend (Int) -> Unit,
+        onProgressChange: suspend (current: Int, total: Int) -> Unit,
     ) {
         resetMediaStoreIfNeeded()
         localMediaRepository.refresh(onProgressChange)

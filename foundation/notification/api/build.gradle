@@ -6,6 +6,7 @@ dependencies {
     api(
         libs.androidx.work.hilt,
     )
+    implementation project(":foundation:math:api")
     implementation(
         libs.androidx.work,
     )

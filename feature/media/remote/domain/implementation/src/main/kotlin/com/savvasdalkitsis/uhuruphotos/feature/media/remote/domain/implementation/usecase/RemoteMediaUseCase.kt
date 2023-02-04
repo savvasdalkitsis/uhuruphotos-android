@@ -30,7 +30,6 @@ import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.implementatio
 import com.savvasdalkitsis.uhuruphotos.feature.settings.domain.api.usecase.SettingsUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.user.domain.api.usecase.UserUseCase
 import com.savvasdalkitsis.uhuruphotos.foundation.log.api.runCatchingWithLog
-import com.savvasdalkitsis.uhuruphotos.math.toProgressPercent
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.emitAll
 import kotlinx.coroutines.flow.flow
@@ -154,12 +153,12 @@ class RemoteMediaUseCase @Inject constructor(
         albumsFetcher: suspend () -> RemoteMediaCollectionsByDate,
         remoteMediaCollectionFetcher: suspend (String) -> RemoteMediaCollection.Complete,
         shallow: Boolean,
-        onProgressChange: suspend (Int) -> Unit,
+        onProgressChange: suspend (current: Int, total: Int) -> Unit,
         incompleteAlbumsProcessor: suspend (List<RemoteMediaCollection.Incomplete>) -> Unit,
         completeAlbumProcessor: suspend (RemoteMediaCollection.Complete) -> Unit,
         clearSummariesBeforeInserting: Boolean,
     ): Result<Unit> = runCatchingWithLog {
-        onProgressChange(0)
+        onProgressChange(0, 0)
         val albums = albumsFetcher()
         incompleteAlbumsProcessor(albums.results)
         val albumsToDownloadSummaries = when {
@@ -169,7 +168,7 @@ class RemoteMediaUseCase @Inject constructor(
         for ((index, incompleteAlbum) in albumsToDownloadSummaries.withIndex()) {
             val id = incompleteAlbum.id
             updateSummaries(id, remoteMediaCollectionFetcher, completeAlbumProcessor, clearSummariesBeforeInserting)
-            onProgressChange(index.toProgressPercent(albumsToDownloadSummaries.size))
+            onProgressChange(index, albumsToDownloadSummaries.size)
         }
     }
 

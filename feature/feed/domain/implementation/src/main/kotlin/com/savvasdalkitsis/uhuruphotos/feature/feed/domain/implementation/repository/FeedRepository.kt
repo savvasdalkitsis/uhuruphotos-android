@@ -71,7 +71,7 @@ class FeedRepository @Inject constructor(
 
     suspend fun refreshRemoteMediaCollections(
         shallow: Boolean,
-        onProgressChange: suspend (Int) -> Unit
+        onProgressChange: suspend (current: Int, total: Int) -> Unit = { _, _ -> },
     ): Result<Unit> =
         remoteMediaUseCase.processRemoteMediaCollections(
             albumsFetcher = { feedService.getRemoteMediaCollectionsByDate() },

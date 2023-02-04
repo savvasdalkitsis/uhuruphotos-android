@@ -19,12 +19,12 @@ import android.content.Context
 import androidx.hilt.work.HiltWorker
 import androidx.work.WorkerParameters
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.extensions.isVideo
+import com.savvasdalkitsis.uhuruphotos.feature.feed.domain.implementation.broadcast.CancelPrecacheWorkBroadcastReceiver
 import com.savvasdalkitsis.uhuruphotos.feature.feed.domain.implementation.repository.FeedRepository
 import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.api.usecase.RemoteMediaUseCase
 import com.savvasdalkitsis.uhuruphotos.foundation.notification.api.ForegroundInfoBuilder
 import com.savvasdalkitsis.uhuruphotos.foundation.notification.api.ForegroundNotificationWorker
 import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R
-import com.savvasdalkitsis.uhuruphotos.math.toProgressPercent
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedInject
 import kotlinx.coroutines.Dispatchers
@@ -37,12 +37,13 @@ internal class PrecacheFeedThumbnailsWorker @AssistedInject constructor(
     private val feedRepository: FeedRepository,
     private val mediaUseCase: RemoteMediaUseCase,
     foregroundInfoBuilder: ForegroundInfoBuilder,
-) : ForegroundNotificationWorker(
+) : ForegroundNotificationWorker<CancelPrecacheWorkBroadcastReceiver>(
     context,
     params,
     foregroundInfoBuilder,
     notificationTitle = R.string.precaching_thumbnails,
     notificationId = NOTIFICATION_ID,
+    cancelBroadcastReceiver = CancelPrecacheWorkBroadcastReceiver::class.java,
 ) {
 
     override suspend fun work() = withContext(Dispatchers.IO) {
@@ -55,8 +56,7 @@ internal class PrecacheFeedThumbnailsWorker @AssistedInject constructor(
             entry.photoId?.let { mediaId ->
                 mediaUseCase.downloadThumbnail(mediaId, entry.isVideo)
             }
-            val progress = index.toProgressPercent(mediaItems.size)
-            updateProgress(progress)
+            updateProgress(index, mediaItems.size)
         }
         Result.success()
     }

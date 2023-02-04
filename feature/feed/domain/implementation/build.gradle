@@ -1,3 +1,7 @@
+plugins {
+    id 'dagger.hilt.android.plugin'
+}
+
 android {
     namespace 'com.savvasdalkitsis.uhuruphotos.feature.feed.domain.implementation'
 }

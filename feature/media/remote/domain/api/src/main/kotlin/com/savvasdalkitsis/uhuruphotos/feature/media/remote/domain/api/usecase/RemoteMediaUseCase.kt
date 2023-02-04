@@ -74,7 +74,7 @@ interface RemoteMediaUseCase {
         albumsFetcher: suspend () -> RemoteMediaCollectionsByDate,
         remoteMediaCollectionFetcher: suspend (String) -> RemoteMediaCollection.Complete,
         shallow: Boolean,
-        onProgressChange: suspend (Int) -> Unit = {},
+        onProgressChange: suspend (current: Int, total: Int) -> Unit = { _, _ -> },
         incompleteAlbumsProcessor: suspend (List<RemoteMediaCollection.Incomplete>) -> Unit = {},
         completeAlbumProcessor: suspend (RemoteMediaCollection.Complete) -> Unit = {},
         clearSummariesBeforeInserting: Boolean = true,

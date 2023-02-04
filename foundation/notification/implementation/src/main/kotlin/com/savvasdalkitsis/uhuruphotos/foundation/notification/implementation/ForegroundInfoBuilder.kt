@@ -15,13 +15,17 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.foundation.notification.implementation
 
+import android.app.PendingIntent
+import android.content.BroadcastReceiver
 import android.content.Context
+import android.content.Intent
 import android.content.pm.ServiceInfo
 import android.os.Build
 import androidx.core.app.NotificationCompat
 import androidx.work.ForegroundInfo
-import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.R
+import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.R.drawable
 import com.savvasdalkitsis.uhuruphotos.foundation.notification.api.ForegroundInfoBuilder
+import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
 import javax.inject.Inject
 
 internal class ForegroundInfoBuilder @Inject constructor(
@@ -34,7 +38,7 @@ internal class ForegroundInfoBuilder @Inject constructor(
         channel: String,
         progress: Int?,
     ): ForegroundInfo {
-        val notification = buildNotification(context, title, channel, progress)
+        val notification = buildNotification<BroadcastReceiver>(context, title, channel, progress)
         return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
             ForegroundInfo(
                 notificationId,
@@ -49,15 +53,31 @@ internal class ForegroundInfoBuilder @Inject constructor(
         }
     }
 
-    override fun buildNotification(
+    override fun <BR: BroadcastReceiver> buildNotification(
         context: Context,
         title: Int,
         channel: String,
-        progress: Int?
+        progress: Int?,
+        text: String?,
+        cancelBroadcastReceiver: Class<BR>?,
     ) = NotificationCompat.Builder(context, channel)
         .setContentTitle(context.getString(title))
-        .setSmallIcon(R.drawable.ic_notification)
+        .setContentText(text)
+        .setSmallIcon(drawable.ic_notification)
         .setPriority(NotificationCompat.PRIORITY_LOW)
         .setProgress(100, progress ?: 0, progress == null)
+        .run {
+            if (cancelBroadcastReceiver != null) {
+                addAction(drawable.ic_cancel, context.getString(string.cancel),
+                    PendingIntent.getBroadcast(
+                        context,
+                        1,
+                        Intent(context, cancelBroadcastReceiver),
+                        PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE,
+                    ))
+            } else {
+                this
+            }
+        }
         .build()
 }

@@ -15,6 +15,7 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.implementation.worker
 
+import android.content.BroadcastReceiver
 import android.content.Context
 import androidx.hilt.work.HiltWorker
 import androidx.work.WorkerParameters
@@ -34,7 +35,7 @@ internal class LocalMediaSyncWorker @AssistedInject constructor(
     @Assisted private val params: WorkerParameters,
     private val localMediaUseCase: LocalMediaUseCase,
     foregroundInfoBuilder: ForegroundInfoBuilder,
-) : ForegroundNotificationWorker(
+) : ForegroundNotificationWorker<BroadcastReceiver>(
     context,
     params,
     foregroundInfoBuilder,
@@ -45,8 +46,8 @@ internal class LocalMediaSyncWorker @AssistedInject constructor(
     override suspend fun work() = withContext(Dispatchers.IO) {
         try {
             updateProgress(0)
-            localMediaUseCase.refreshAll { progress ->
-                updateProgress(progress)
+            localMediaUseCase.refreshAll { current, total ->
+                updateProgress(current, total)
             }
             Result.success()
         } catch (e: Exception) {

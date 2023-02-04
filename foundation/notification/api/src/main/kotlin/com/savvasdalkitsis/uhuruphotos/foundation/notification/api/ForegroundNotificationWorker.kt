@@ -17,25 +17,29 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.foundation.notification.api
 
 import android.app.NotificationManager
+import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Context.NOTIFICATION_SERVICE
 import androidx.annotation.StringRes
+import androidx.core.app.NotificationManagerCompat
 import androidx.work.CoroutineWorker
 import androidx.work.ForegroundInfo
 import androidx.work.WorkInfo
 import androidx.work.WorkerParameters
 import androidx.work.workDataOf
+import com.savvasdalkitsis.uhuruphotos.math.toProgressPercent
 
-abstract class ForegroundNotificationWorker constructor(
+abstract class ForegroundNotificationWorker<BR> constructor(
     context: Context,
     params: WorkerParameters,
     private val foregroundInfoBuilder: ForegroundInfoBuilder,
     @StringRes private val notificationTitle: Int,
     private val notificationId: Int,
     private val notificationChannelId: String = NotificationChannels.JOBS_CHANNEL_ID,
-) : CoroutineWorker(context, params) {
+    private val cancelBroadcastReceiver: Class<BR>? = null,
+) : CoroutineWorker(context, params) where BR: BroadcastReceiver {
 
-    private val notificationManager = applicationContext.getSystemService(NOTIFICATION_SERVICE) as NotificationManager
+    private val notificationManager = NotificationManagerCompat.from(applicationContext)
 
     final override suspend fun doWork(): Result {
         setForeground(createForegroundInfo(0))
@@ -45,7 +49,11 @@ abstract class ForegroundNotificationWorker constructor(
 
     abstract suspend fun work(): Result
 
-    suspend fun updateProgress(progress: Int) {
+    suspend fun updateProgress(current: Int, max: Int) {
+        updateProgress(current.toProgressPercent(max), "$current/$max")
+    }
+
+    suspend fun updateProgress(progress: Int, text: String? = null) {
         setProgress(workDataOf(Progress to progress))
 
         notificationManager.notify(notificationId, foregroundInfoBuilder.buildNotification(
@@ -53,6 +61,8 @@ abstract class ForegroundNotificationWorker constructor(
             notificationTitle,
             notificationChannelId,
             progress,
+            text,
+            cancelBroadcastReceiver,
         ))
     }
 

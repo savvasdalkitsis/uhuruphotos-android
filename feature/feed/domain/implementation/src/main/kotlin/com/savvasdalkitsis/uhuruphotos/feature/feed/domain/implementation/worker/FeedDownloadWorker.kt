@@ -3,6 +3,7 @@ package com.savvasdalkitsis.uhuruphotos.feature.feed.domain.implementation.worke
 import android.content.Context
 import androidx.hilt.work.HiltWorker
 import androidx.work.WorkerParameters
+import com.savvasdalkitsis.uhuruphotos.feature.feed.domain.implementation.broadcast.CancelFeedDownloadWorkBroadcastReceiver
 import com.savvasdalkitsis.uhuruphotos.feature.feed.domain.implementation.repository.FeedRepository
 import com.savvasdalkitsis.uhuruphotos.foundation.notification.api.ForegroundInfoBuilder
 import com.savvasdalkitsis.uhuruphotos.foundation.notification.api.ForegroundNotificationWorker
@@ -18,19 +19,20 @@ internal class FeedDownloadWorker @AssistedInject constructor(
     @Assisted private val params: WorkerParameters,
     private val feedRepository: FeedRepository,
     foregroundInfoBuilder: ForegroundInfoBuilder,
-) : ForegroundNotificationWorker(
+) : ForegroundNotificationWorker<CancelFeedDownloadWorkBroadcastReceiver>(
     context,
     params,
     foregroundInfoBuilder,
     notificationTitle = R.string.refreshing_feed,
     notificationId = NOTIFICATION_ID,
+    cancelBroadcastReceiver = CancelFeedDownloadWorkBroadcastReceiver::class.java,
 ) {
 
     override suspend fun work() = withContext(Dispatchers.IO) {
         val shallow = params.inputData.getBoolean(KEY_SHALLOW, false)
         updateProgress(0)
-        val result = feedRepository.refreshRemoteMediaCollections(shallow) { progress ->
-            updateProgress(progress)
+        val result = feedRepository.refreshRemoteMediaCollections(shallow) { current, total ->
+            updateProgress(current, total)
         }
         when {
             result.isSuccess -> Result.success()

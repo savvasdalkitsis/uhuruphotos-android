@@ -30,14 +30,13 @@ import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.implementation
 import com.savvasdalkitsis.uhuruphotos.foundation.exif.api.usecase.ExifUseCase
 import com.savvasdalkitsis.uhuruphotos.foundation.log.api.log
 import com.savvasdalkitsis.uhuruphotos.foundation.log.api.runCatchingWithLog
-import com.savvasdalkitsis.uhuruphotos.math.toProgressPercent
 import com.squareup.sqldelight.runtime.coroutines.asFlow
 import com.squareup.sqldelight.runtime.coroutines.mapToList
 import kotlinx.coroutines.flow.Flow
 import java.math.BigInteger
 import java.security.MessageDigest
 import java.text.DateFormat
-import java.util.*
+import java.util.Date
 import javax.inject.Inject
 
 class LocalMediaRepository @Inject constructor(
@@ -64,13 +63,13 @@ class LocalMediaRepository @Inject constructor(
             .processAndInsertItems(folderId)
 
     suspend fun refresh(
-        onProgressChange: suspend (Int) -> Unit = {},
+        onProgressChange: suspend (current: Int, total: Int) -> Unit = { _, _ -> },
     ) = (localMediaService.getPhotos() + localMediaService.getVideos())
         .processAndInsertItems(onProgressChange = onProgressChange)
 
     private suspend fun <T : LocalMediaStoreServiceItem> List<T>.processAndInsertItems(
         bucketId: Int? = null,
-        onProgressChange: suspend (Int) -> Unit = {},
+        onProgressChange: suspend (current: Int, total: Int) -> Unit = { _, _ -> },
         removeMissingItems: Boolean = true,
         forceProcess: Boolean = false,
     ) = process(bucketId, onProgressChange, removeMissingItems, forceProcess) { itemDetails ->
@@ -79,12 +78,12 @@ class LocalMediaRepository @Inject constructor(
 
     private suspend fun <T : LocalMediaStoreServiceItem> List<T>.process(
         bucketId: Int? = null,
-        onProgressChange: suspend (Int) -> Unit = {},
+        onProgressChange: suspend (current: Int, total: Int) -> Unit = { _, _ -> },
         removeMissingItems: Boolean = true,
         forceProcess: Boolean = false,
         onNewItem: (LocalMediaItemDetails) -> Unit,
     ) {
-        onProgressChange(0)
+        onProgressChange(0, 0)
         val existingIds = when {
             forceProcess -> emptySet()
             else -> if (bucketId != null) {
@@ -103,7 +102,7 @@ class LocalMediaRepository @Inject constructor(
         }
         val newItems = filter { it.id !in existingIds }
         for ((index, item) in newItems.withIndex()) {
-            onProgressChange(index.toProgressPercent(newItems.size))
+            onProgressChange(index, newItems.size)
             async {
                 processNewItem(item, onNewItem)
             }
