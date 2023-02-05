@@ -1,0 +1,7 @@
+* Allowing user to set max memory and disk caches up to their device maximums
+* Fixing notification icon
+* Showing progress notification for full feed sync
+* Showing current/total progress in notification for jobs
+* Allowing user to cancel jobs from the notification
+* Opening app when tapping notification
+* Showing local media status (permissions and sync) on the main feed
