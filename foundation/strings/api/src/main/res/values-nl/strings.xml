@@ -227,4 +227,6 @@
     <string name="feed_sync_job_configuration">Feedsynchronisatie instellen</string>
     <string name="cannot_perform_precaching">De miniaturen kunnen niet worden ingeladen</string>
     <string name="status">Status</string>
+    <string name="missing_local_media_permissions">Wil je lokale media in je feed zien\?</string>
+    <string name="do_not_ask_again">Niet meer vragen</string>
 </resources>
