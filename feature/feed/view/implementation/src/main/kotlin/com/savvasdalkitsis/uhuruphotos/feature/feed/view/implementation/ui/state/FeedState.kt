@@ -18,6 +18,7 @@ package com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.ui.stat
 import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.CollageState
 import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.PredefinedCollageDisplay
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemSelectionMode
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemsOnDevice
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.state.CelState
 
 internal data class FeedState(
@@ -25,6 +26,8 @@ internal data class FeedState(
     val isRefreshing: Boolean = false,
     val showLibrary: Boolean = true,
     val showTrashingConfirmationDialog: Boolean = false,
+    val showRequestPermissionForLocalMediaAccess: MediaItemsOnDevice.RequiresPermissions? = null,
+    val localMediaSyncRunning: Boolean = false,
     val memories: List<MemoryCel> = emptyList(),
 ) {
     val selectedCelCount: Int = collageState.clusters.sumOf { cluster ->

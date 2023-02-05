@@ -230,4 +230,6 @@
     <string name="cancel">Cancel</string>
     <string name="feed_sync_job_configuration">Feed sync job configuration</string>
     <string name="status">Status</string>
+    <string name="missing_local_media_permissions">Would you like to view local media in your feed?</string>
+    <string name="do_not_ask_again">Don\'t ask again</string>
 </resources>

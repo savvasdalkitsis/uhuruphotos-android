@@ -17,6 +17,7 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui
 
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.BoxScope
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -32,7 +33,7 @@ fun SwipeRefresh(
     indicatorPadding: PaddingValues,
     isRefreshing: Boolean,
     onRefresh: () -> Unit,
-    content: @Composable () -> Unit,
+    content: @Composable BoxScope.() -> Unit,
 ) {
     val refreshState = rememberPullRefreshState(refreshing = isRefreshing, onRefresh = onRefresh)
     Box(modifier = Modifier

@@ -15,6 +15,7 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.usecase
 
+import androidx.work.WorkInfo
 import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.model.LocalFolder
 import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.model.LocalMediaItem
 import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.model.LocalMediaItems
@@ -42,4 +43,6 @@ interface LocalMediaUseCase {
     )
 
     fun observePermissionsState(): Flow<LocalPermissions>
+
+    fun observeLocalMediaSyncJobStatus(): Flow<WorkInfo.State?>
 }

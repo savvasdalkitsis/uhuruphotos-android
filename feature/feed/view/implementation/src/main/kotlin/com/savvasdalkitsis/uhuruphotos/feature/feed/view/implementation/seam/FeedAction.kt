@@ -40,4 +40,5 @@ internal sealed class FeedAction {
     object TrashSelectedCels : FeedAction()
     object ShareSelectedCels : FeedAction()
     object DownloadSelectedCels : FeedAction()
+    object DismissLocalMediaAccessPermissionRequest : FeedAction()
 }

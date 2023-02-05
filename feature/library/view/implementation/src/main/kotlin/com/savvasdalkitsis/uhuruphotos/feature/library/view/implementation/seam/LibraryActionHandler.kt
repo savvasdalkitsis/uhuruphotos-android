@@ -102,11 +102,9 @@ class LibraryActionHandler @Inject constructor(
                 .map { media ->
                     when (media) {
                         is Found -> {
+                            refreshLocalMedia()
                             val primary = listOfNotNull(media.primaryFolder)
                             val vitrines = (primary + media.mediaFolders).map { it.toVitrine() }
-                            if (vitrines.isEmpty()) {
-                                refreshLocalMedia()
-                            }
                             LibraryLocalMedia.Found(vitrines)
                         }
                         is RequiresPermissions ->

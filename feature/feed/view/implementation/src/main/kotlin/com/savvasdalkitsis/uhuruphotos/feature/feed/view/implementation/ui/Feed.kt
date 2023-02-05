@@ -16,6 +16,8 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.ui
 
 import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.foundation.layout.Arrangement.spacedBy
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.derivedStateOf
@@ -23,11 +25,20 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.Collage
 import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.PredefinedCollageDisplay
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.FeedAction
-import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.FeedAction.*
+import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.FeedAction.CelLongPressed
+import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.FeedAction.ChangeDisplay
+import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.FeedAction.ClusterRefreshClicked
+import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.FeedAction.ClusterSelectionClicked
+import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.FeedAction.DismissSelectedPhotosTrashing
+import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.FeedAction.MemorySelected
+import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.FeedAction.RefreshFeed
+import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.FeedAction.SelectedCel
+import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.FeedAction.TrashSelectedCels
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.ui.state.FeedState
 import com.savvasdalkitsis.uhuruphotos.feature.home.view.api.ui.HomeScaffold
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.TrashPermissionDialog
@@ -99,9 +110,27 @@ internal fun Feed(
                     action(ClusterRefreshClicked(it))
                 },
                 collageHeader = {
-                    AnimatedVisibility(visible = state.memories.isNotEmpty()) {
-                        FeedMemories(state.memories) { cel, center, scale ->
-                            action(MemorySelected(cel, center, scale))
+                    AnimatedVisibility(
+                        visible =
+                        state.memories.isNotEmpty()
+                                || state.showRequestPermissionForLocalMediaAccess != null
+                                || state.localMediaSyncRunning,
+                    ) {
+                        Column(
+                            verticalArrangement = spacedBy(8.dp),
+                        ) {
+                            if (state.memories.isNotEmpty()) {
+                                FeedMemories(state.memories) { cel, center, scale ->
+                                    action(MemorySelected(cel, center, scale))
+                                }
+                            }
+                            val missingPermissions = state.showRequestPermissionForLocalMediaAccess
+                            if (missingPermissions != null) {
+                                FeedLocalMediaAccessRequest(missingPermissions, action)
+                            }
+                            if (state.localMediaSyncRunning) {
+                                FeedLocalMediaSyncRunning()
+                            }
                         }
                     }
                 }

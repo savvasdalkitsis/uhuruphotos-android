@@ -76,4 +76,5 @@ interface MediaUseCase {
     suspend fun List<MediaCollectionSource>.toMediaCollections(): List<MediaCollection>
 
     suspend fun Group<String, MediaCollectionSource>.toMediaCollection(): List<MediaCollection>
+    fun observeLocalMediaSyncJobStatus(): Flow<WorkInfo.State?>
 }

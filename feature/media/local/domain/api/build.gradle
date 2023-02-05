@@ -4,6 +4,7 @@ android {
 
 dependencies {
     api(
+            libs.androidx.work,
             libs.kotlinx.coroutines,
     )
 }

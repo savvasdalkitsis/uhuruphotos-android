@@ -361,6 +361,9 @@ class MediaUseCase @Inject constructor(
             else -> flowOf(WorkInfo.State.SUCCEEDED)
         }
 
+    override fun observeLocalMediaSyncJobStatus(): Flow<WorkInfo.State?> =
+        localMediaUseCase.observeLocalMediaSyncJobStatus()
+
     override suspend fun Group<String, MediaCollectionSource>.toMediaCollection(): List<MediaCollection> {
         val favouriteThreshold = userUseCase.getUserOrRefresh()
             .mapCatching { it.favoriteMinRating!! }

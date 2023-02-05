@@ -20,6 +20,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.Collage
 import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.PredefinedCollageDisplay
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.ui.state.FeedState
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.ui.state.MemoryCel
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemsOnDevice
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.Mutation
 
 internal sealed class FeedMutation(
@@ -70,6 +71,18 @@ internal sealed class FeedMutation(
 
     object HideMemories : FeedMutation({
         it.copy(memories = emptyList())
+    })
+
+    data class ShowLocalMediaSyncRunning(val running: Boolean) : FeedMutation({
+        it.copy(localMediaSyncRunning = running)
+    })
+
+    data class ShowLocalStoragePermissionRequest(val permissions: MediaItemsOnDevice.RequiresPermissions) : FeedMutation({
+        it.copy(showRequestPermissionForLocalMediaAccess = permissions)
+    })
+
+    object HideLocalStoragePermissionRequest : FeedMutation({
+        it.copy(showRequestPermissionForLocalMediaAccess = null)
     })
 }
 

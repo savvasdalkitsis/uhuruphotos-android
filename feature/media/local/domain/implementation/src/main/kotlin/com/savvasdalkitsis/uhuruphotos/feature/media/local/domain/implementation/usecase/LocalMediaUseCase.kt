@@ -17,6 +17,7 @@ package com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.implementatio
 
 import android.Manifest
 import android.os.Build
+import androidx.work.WorkInfo
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.extensions.async
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.media.local.LocalMediaItemDetails
 import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.model.LocalFolder
@@ -30,10 +31,12 @@ import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.implementation
 import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.implementation.repository.LocalMediaFolderRepository
 import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.implementation.repository.LocalMediaRepository
 import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.implementation.repository.MediaStoreVersionRepository
+import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.implementation.worker.LocalMediaSyncWorker
 import com.savvasdalkitsis.uhuruphotos.foundation.date.api.DateDisplayer
 import com.savvasdalkitsis.uhuruphotos.foundation.date.api.module.DateModule.ParsingDateFormat
 import com.savvasdalkitsis.uhuruphotos.foundation.date.api.module.DateModule.ParsingDateTimeFormat
 import com.savvasdalkitsis.uhuruphotos.foundation.log.api.runCatchingWithLog
+import com.savvasdalkitsis.uhuruphotos.foundation.worker.api.usecase.WorkerStatusUseCase
 import dev.shreyaspatil.permissionFlow.PermissionFlow
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
@@ -58,6 +61,7 @@ class LocalMediaUseCase @Inject constructor(
     private val permissionFlow: PermissionFlow,
     private val localMediaFolderRepository: LocalMediaFolderRepository,
     private val mediaStoreVersionRepository: MediaStoreVersionRepository,
+    private val workerStatusUseCase: WorkerStatusUseCase,
 ) : LocalMediaUseCase {
 
     private val mutex = Mutex()
@@ -151,6 +155,9 @@ class LocalMediaUseCase @Inject constructor(
                 else -> LocalPermissions.Granted
             }
         }
+
+    override fun observeLocalMediaSyncJobStatus(): Flow<WorkInfo.State?> =
+        workerStatusUseCase.monitorUniqueJobStatus(LocalMediaSyncWorker.WORK_NAME)
 
     override suspend fun refreshAll(
         onProgressChange: suspend (current: Int, total: Int) -> Unit,

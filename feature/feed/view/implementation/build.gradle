@@ -40,7 +40,9 @@ dependencies {
             libs.androidx.compose.ui,
             libs.androidx.lifecycle,
             libs.androidx.preference,
+            libs.bundles.permissions,
             libs.flowpreferences,
             libs.hilt,
+            libs.infobar,
     )
 }
