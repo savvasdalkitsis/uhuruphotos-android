@@ -242,4 +242,6 @@
     <string name="precache_thumbnails">Almacenar en caché todas las miniaturas por adelantado</string>
     <string name="cannot_perform_full_sync">No se puede realizar una sincronización completa en este momento</string>
     <string name="precaching_thumbnails_progress">Progreso de carga de miniaturas</string>
+    <string name="missing_local_media_permissions">¿Quieres ver los medios locales en tu feed\?</string>
+    <string name="do_not_ask_again">No preguntar de nuevo</string>
 </resources>
