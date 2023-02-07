@@ -242,4 +242,6 @@
     <string name="cancel">Annuler</string>
     <string name="precaching_thumbnails">Mise en cache des miniatures</string>
     <string name="cannot_perform_full_sync">Impossible de synchroniser entièrement pour le moment</string>
+    <string name="missing_local_media_permissions">Voulez-vous voir les médias locaux dans votre flux \?</string>
+    <string name="do_not_ask_again">Ne plus demander</string>
 </resources>
