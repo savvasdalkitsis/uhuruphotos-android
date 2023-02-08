@@ -72,7 +72,7 @@ internal fun FeedLocalMediaAccessRequest(
                     modifier = Modifier
                         .fillMaxWidth()
                         .weight(1f),
-                    onClick = { action(FeedAction.DismissLocalMediaAccessPermissionRequest) }
+                    onClick = { action(FeedAction.NeverAskForLocalMediaAccessPermissionRequest) }
                 ) {
                     Text(stringResource(R.string.do_not_ask_again))
                 }

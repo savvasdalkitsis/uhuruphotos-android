@@ -30,7 +30,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.Fee
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.FeedAction.ClearSelected
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.FeedAction.ClusterRefreshClicked
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.FeedAction.ClusterSelectionClicked
-import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.FeedAction.DismissLocalMediaAccessPermissionRequest
+import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.FeedAction.NeverAskForLocalMediaAccessPermissionRequest
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.FeedAction.DismissSelectedPhotosTrashing
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.FeedAction.DownloadSelectedCels
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.FeedAction.LoadFeed
@@ -80,6 +80,7 @@ import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.mapNotNull
 import kotlinx.coroutines.flow.merge
 import kotlinx.coroutines.isActive
 import javax.inject.Inject
@@ -129,9 +130,11 @@ internal class FeedActionHandler @Inject constructor(
                 }
             },
             mediaUseCase.observeLocalMedia()
-                .map {
+                .mapNotNull {
                     when (it) {
-                        is MediaItemsOnDevice.RequiresPermissions -> ShowLocalStoragePermissionRequest(it)
+                        is MediaItemsOnDevice.RequiresPermissions -> ShowLocalStoragePermissionRequest(it).takeIf {
+                            settingsUseCase.getShowBannerAskingForLocalMediaPermissionsOnFeed()
+                        }
                         else -> {
                             localMediaWorkScheduler.scheduleLocalMediaSyncNowIfNotRunning()
                             HideLocalStoragePermissionRequest
@@ -239,8 +242,9 @@ internal class FeedActionHandler @Inject constructor(
                 )
             )
         }
-        DismissLocalMediaAccessPermissionRequest -> flow {
+        NeverAskForLocalMediaAccessPermissionRequest -> flow {
             emit(HideLocalStoragePermissionRequest)
+            settingsUseCase.setShowBannerAskingForLocalMediaPermissionsOnFeed(false)
         }
     }
 
