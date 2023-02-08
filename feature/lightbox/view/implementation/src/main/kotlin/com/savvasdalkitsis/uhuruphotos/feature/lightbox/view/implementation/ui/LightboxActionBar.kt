@@ -21,6 +21,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.LightboxAction
@@ -50,6 +51,15 @@ fun LightboxActionBar(
                     .size(26.dp)
             )
         }
+    }
+    state.currentMediaItem.mediaItemSyncState?.let { syncState ->
+        ActionIcon(
+            modifier = Modifier.alpha(0.7f),
+            onClick = { },
+            enabled = false,
+            icon = syncState.icon,
+            contentDescription = stringResource(syncState.contentDescription)
+        )
     }
     AnimatedContent(targetState = mediaItem.originalFileIconState) {
         when (it) {

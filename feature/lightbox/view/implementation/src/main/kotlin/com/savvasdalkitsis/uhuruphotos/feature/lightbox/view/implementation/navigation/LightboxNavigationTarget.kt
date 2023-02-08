@@ -16,6 +16,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.api.navigation.Ligh
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.api.navigation.LightboxNavigationTarget.mediaItemId
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.api.navigation.LightboxNavigationTarget.offsetFrom
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.api.navigation.LightboxNavigationTarget.scale
+import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.api.navigation.LightboxNavigationTarget.showMediaSyncState
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.LightboxAction
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.LightboxEffect
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.LightboxEffectsHandler
@@ -55,7 +56,8 @@ class LightboxNavigationTarget @Inject constructor(
                         LightboxAction.LoadMediaItem(
                             mediaItemId,
                             isVideo,
-                            datasource
+                            datasource,
+                            showMediaSyncState,
                         )
                     )
                 }

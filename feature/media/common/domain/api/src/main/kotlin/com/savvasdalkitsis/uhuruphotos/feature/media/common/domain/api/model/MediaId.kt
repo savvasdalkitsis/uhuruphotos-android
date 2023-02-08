@@ -15,6 +15,8 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model
 
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemSyncState.*
+
 sealed class MediaId<T> private constructor(open val value: T) {
 
     abstract val preferRemote: MediaId<*>
@@ -22,6 +24,7 @@ sealed class MediaId<T> private constructor(open val value: T) {
     abstract val preferLocal: MediaId<*>
     abstract val findLocal: Local?
     abstract val serialize: String
+    abstract val syncState: MediaItemSyncState
 
     data class Remote(override val value: String): MediaId<String>(value) {
         override val preferRemote = this
@@ -29,6 +32,7 @@ sealed class MediaId<T> private constructor(open val value: T) {
         override val findRemote = this
         override val findLocal = null
         override val serialize = "remote:$value"
+        override val syncState: MediaItemSyncState = REMOTE_ONLY
     }
 
     data class Local(override val value: Long): MediaId<Long>(value) {
@@ -37,6 +41,7 @@ sealed class MediaId<T> private constructor(open val value: T) {
         override val findRemote = null
         override val findLocal = this
         override val serialize = "local:$value"
+        override val syncState: MediaItemSyncState = LOCAL_ONLY
     }
 
     data class Group(override val value: Set<MediaId<*>>): MediaId<Set<MediaId<*>>>(value) {
@@ -45,6 +50,11 @@ sealed class MediaId<T> private constructor(open val value: T) {
         override val preferRemote: MediaId<*> = findRemote ?: value.first()
         override val preferLocal: MediaId<*> = findLocal ?: value.first()
         override val serialize = "group:" + value.joinToString(separator = "::") { it.serialize }
+        override val syncState: MediaItemSyncState = when {
+            findRemote == null -> LOCAL_ONLY
+            findLocal == null -> REMOTE_ONLY
+            else -> SYNCED
+        }
     }
 
     companion object {

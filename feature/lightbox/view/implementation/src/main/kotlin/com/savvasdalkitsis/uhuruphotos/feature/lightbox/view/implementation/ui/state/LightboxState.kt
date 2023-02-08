@@ -18,6 +18,7 @@ package com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.ui.
 import androidx.annotation.StringRes
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaId
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemMetadata
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemSyncState
 import com.savvasdalkitsis.uhuruphotos.feature.people.view.api.ui.state.Person
 import com.savvasdalkitsis.uhuruphotos.foundation.map.api.model.LatLon
 
@@ -70,6 +71,7 @@ data class SingleMediaItemState(
     val metadata: MediaItemMetadata? = null,
     val path: String? = null,
     val loadingDetails: Boolean = false,
+    val mediaItemSyncState: MediaItemSyncState? = null,
 )
 
 enum class OriginalFileIconState {

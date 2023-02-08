@@ -25,7 +25,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.Med
 
 object LightboxNavigationTarget {
 
-    const val registrationName = "lightbox/{type}/{id}/{centerX}/{centerY}/{scale}/{dataSource}"
+    const val registrationName = "lightbox/{type}/{id}/{centerX}/{centerY}/{scale}/{dataSource}/{showMediaSyncState}"
 
     fun name(
         id: MediaId<*>,
@@ -33,11 +33,13 @@ object LightboxNavigationTarget {
         scale: Float,
         isVideo: Boolean,
         lightboxSequenceDataSource: LightboxSequenceDataSource = Single,
+        showMediaSyncState: Boolean = false,
     ) = registrationName
         .replace("{id}", id.serialize)
         .replace("{centerX}", offset.x.toString())
         .replace("{centerY}", offset.y.toString())
         .replace("{scale}", scale.toString())
+        .replace("{showMediaSyncState}", showMediaSyncState.toString())
         .replace(
             "{type}", when {
                 isVideo -> "video"
@@ -52,6 +54,7 @@ object LightboxNavigationTarget {
 
     val NavBackStackEntry.mediaItemId: MediaId<*> get() = MediaId(get("id")!!)
     val NavBackStackEntry.isVideo: Boolean get() = get("type") == "video"
+    val NavBackStackEntry.showMediaSyncState: Boolean get() = get("showMediaSyncState").toBoolean()
     val NavBackStackEntry.center: Offset?
         get() {
             val x = get("centerX")?.toFloat()

@@ -15,6 +15,18 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model
 
-enum class MediaItemSyncState {
-    LOCAL_ONLY, REMOTE_ONLY, SYNCED
+import androidx.annotation.DrawableRes
+import androidx.annotation.StringRes
+import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.R.drawable
+import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
+
+enum class MediaItemSyncState(
+    @DrawableRes
+    val icon: Int,
+    @StringRes
+    val contentDescription: Int,
+) {
+    LOCAL_ONLY(drawable.ic_cloud_off, string.media_sync_status_local_only),
+    REMOTE_ONLY(drawable.ic_cloud, string.media_sync_status_remote_only),
+    SYNCED(drawable.ic_cloud_done, string.media_sync_status_fully_synced);
 }

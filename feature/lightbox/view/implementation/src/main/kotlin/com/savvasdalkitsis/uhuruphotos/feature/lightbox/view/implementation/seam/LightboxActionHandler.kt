@@ -149,6 +149,7 @@ class LightboxActionHandler @Inject constructor(
                         fullResUrl = action.id.toFullSizeUriFromId(action.isVideo),
                         showFavouriteIcon = action.id.preferRemote is Remote,
                         showDeleteButton =  action.id.preferRemote is Remote,
+                        mediaItemSyncState = action.id.syncState.takeIf { action.showMediaSyncState }
                     )
                 ))
                 when (action.sequenceDataSource) {
@@ -195,9 +196,9 @@ class LightboxActionHandler @Inject constructor(
         is ChangedToPage -> channelFlow {
             changePageJob?.cancel()
             changePageJob = null
-            val page = action.page.coerceAtMost(state.media.size - 1)
-            send(ChangeCurrentIndex(page))
             if (state.media.isNotEmpty()) {
+                val page = action.page.coerceAtMost(state.media.size - 1)
+                send(ChangeCurrentIndex(page))
                 val photo = state.media[page]
                 changePageJob = launch {
                     merge<LightboxMutation>(
@@ -359,6 +360,7 @@ class LightboxActionHandler @Inject constructor(
                 isVideo = photo.isVideo,
                 showFavouriteIcon = photo.id.preferRemote is Remote,
                 showDeleteButton = photo.id.preferRemote is Remote,
+                mediaItemSyncState = photo.syncState.takeIf { action.showMediaSyncState }
             )
         }
         val index = photoStates.indexOfFirst { it.id == action.id }

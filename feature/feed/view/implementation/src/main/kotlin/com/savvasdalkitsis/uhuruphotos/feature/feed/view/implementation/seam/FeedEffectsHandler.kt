@@ -35,7 +35,7 @@ internal class FeedEffectsHandler @Inject constructor(
 
     override suspend fun handleEffect(effect: FeedEffect) = when (effect) {
         is OpenLightbox -> with(effect) {
-            navigateTo(LightboxNavigationTarget.name(id, center, scale, isVideo, Feed))
+            navigateTo(LightboxNavigationTarget.name(id, center, scale, isVideo, Feed, showMediaSyncState = true))
         }
         is Share -> {
             toaster.show(string.downloading_photos_sharing)
@@ -45,8 +45,8 @@ internal class FeedEffectsHandler @Inject constructor(
         }
         Vibrate -> uiUseCase.performLongPressHaptic()
         DownloadingFiles -> toaster.show(string.downloading_original_files)
-        is FeedEffect.OpenMemoryLightbox -> with(effect) {
-            navigateTo(LightboxNavigationTarget.name(id, center, scale, isVideo, Feed))
+        is OpenMemoryLightbox -> with(effect) {
+            navigateTo(LightboxNavigationTarget.name(id, center, scale, isVideo, Feed, showMediaSyncState = true))
         }
     }
 

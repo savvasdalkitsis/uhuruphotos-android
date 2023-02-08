@@ -58,9 +58,6 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemSelectionMode
-import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemSyncState.LOCAL_ONLY
-import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemSyncState.REMOTE_ONLY
-import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemSyncState.SYNCED
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.state.CelState
 import com.savvasdalkitsis.uhuruphotos.foundation.compose.api.toColor
 import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.R.drawable
@@ -185,13 +182,7 @@ fun Cel(
                         .size(iconSize)
                         .padding(2.dp)
                         .alpha(0.7f),
-                    painter = painterResource(
-                        id = when (mediaItem.syncState) {
-                            LOCAL_ONLY -> drawable.ic_cloud_off
-                            REMOTE_ONLY -> drawable.ic_cloud
-                            SYNCED -> drawable.ic_cloud_done
-                        }
-                    ),
+                    painter = painterResource(mediaItem.syncState.icon),
                     tint = Color.White,
                     contentDescription = null
                 )

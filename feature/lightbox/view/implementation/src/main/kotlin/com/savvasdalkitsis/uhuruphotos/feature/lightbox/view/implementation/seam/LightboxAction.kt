@@ -42,7 +42,8 @@ sealed class LightboxAction {
     data class LoadMediaItem(
         val id: MediaId<*>,
         val isVideo: Boolean,
-        val sequenceDataSource: LightboxSequenceDataSource
+        val sequenceDataSource: LightboxSequenceDataSource,
+        val showMediaSyncState: Boolean,
     ) : LightboxAction()
     data class SetFavourite(val favourite: Boolean) : LightboxAction()
     data class ClickedOnGps(val gps: LatLon) : LightboxAction()
