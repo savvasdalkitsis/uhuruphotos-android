@@ -229,4 +229,7 @@
     <string name="status">Status</string>
     <string name="missing_local_media_permissions">Wil je lokale media in je feed zien\?</string>
     <string name="do_not_ask_again">Niet meer vragen</string>
+    <string name="media_sync_status_fully_synced">De media is volledig gesynchroniseerd</string>
+    <string name="media_sync_status_remote_only">De media is alleen beschikbaar op de server</string>
+    <string name="media_sync_status_local_only">De media is alleen beschikbaar op dit apparaat</string>
 </resources>
