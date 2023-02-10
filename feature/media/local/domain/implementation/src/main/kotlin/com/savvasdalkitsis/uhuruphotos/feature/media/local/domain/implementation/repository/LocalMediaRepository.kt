@@ -27,6 +27,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.media.local.LocalMe
 import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.implementation.module.LocalMediaModule
 import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.implementation.service.LocalMediaService
 import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.implementation.service.model.LocalMediaStoreServiceItem
+import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.implementation.service.model.LocalMediaStoreServiceItem.Photo
 import com.savvasdalkitsis.uhuruphotos.foundation.exif.api.usecase.ExifUseCase
 import com.savvasdalkitsis.uhuruphotos.foundation.log.api.log
 import com.savvasdalkitsis.uhuruphotos.foundation.log.api.runCatchingWithLog
@@ -64,8 +65,17 @@ class LocalMediaRepository @Inject constructor(
 
     suspend fun refresh(
         onProgressChange: suspend (current: Int, total: Int) -> Unit = { _, _ -> },
-    ) = (localMediaService.getPhotos() + localMediaService.getVideos())
-        .processAndInsertItems(onProgressChange = onProgressChange)
+    ) {
+        val camera = localMediaService.getDefaultBucketId()
+        val cameraPhotos = (camera?.let { localMediaService.getPhotosForBucket(it) } ?: emptyList())
+            .sortedByDescending { it.dateAdded }
+        val cameraVideos = (camera?.let { localMediaService.getVideosForBucket(it) } ?: emptyList())
+            .sortedByDescending { it.dateAdded }
+        val photos = localMediaService.getPhotos() - cameraPhotos.toSet()
+        val videos = localMediaService.getVideos() - cameraVideos.toSet()
+        (cameraPhotos + cameraVideos + photos + videos)
+            .processAndInsertItems(onProgressChange = onProgressChange)
+    }
 
     private suspend fun <T : LocalMediaStoreServiceItem> List<T>.processAndInsertItems(
         bucketId: Int? = null,
@@ -129,7 +139,7 @@ class LocalMediaRepository @Inject constructor(
             } while (read > 0)
             totalRead to BigInteger(1, digest.digest()).toString(16).padStart(32, '0')
         }
-        val fallbackColor = if (item is LocalMediaStoreServiceItem.Photo) {
+        val fallbackColor = if (item is Photo) {
             try {
                 contentResolver.openInputStream(item.contentUri)!!.use { stream ->
                     decodeStream(stream, null, Options().apply {
