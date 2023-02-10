@@ -1,0 +1,5 @@
+* "Do Not Ask Again" button in Feed actually remembers preference
+* Lightbox displays media sync status (synced/local/remote) when navigating from feed
+* Camera media are prioritised when scanning local media so they appear faster in the UI and in the feed
+* Showing both local and remote paths for media in Lightbox details
+* Translations
