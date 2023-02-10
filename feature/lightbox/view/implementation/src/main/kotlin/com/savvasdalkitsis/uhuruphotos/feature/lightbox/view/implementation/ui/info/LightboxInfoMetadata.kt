@@ -39,6 +39,7 @@ import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.R.drawable.ic_aspect
 import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.R.drawable.ic_camera
 import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.R.drawable.ic_camera_roll
 import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.R.drawable.ic_file_tree
+import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.R.drawable.ic_folder_network
 import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.R.drawable.ic_image_aspect_ratio
 import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.R.drawable.ic_iso
 import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.R.drawable.ic_lens
@@ -102,10 +103,17 @@ internal fun LightboxInfoMetadata(
             it.exifData.isoSpeed
                 .Entry(ic_iso, action)
         }
-        mediaItem.path?.let {
+        mediaItem.remotePath?.let {
+            it.Entry(ic_folder_network, action)
+        }
+        mediaItem.localPath?.let {
             it.Entry(ic_file_tree, action)
         }
-        if (mediaItem.metadata == null && mediaItem.path == null) {
+        if (listOf(
+                mediaItem.metadata,
+                mediaItem.remotePath,
+                mediaItem.localPath,
+            ).all { it == null }) {
             Text(stringResource(string.nothing_here_yet))
         }
     }

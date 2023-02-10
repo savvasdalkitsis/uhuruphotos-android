@@ -24,6 +24,14 @@ data class MediaItemDetails(
     val isVideo: Boolean,
     val location: String,
     val latLon: LatLon?,
-    val path: String?,
+    val remotePath: String? = null,
+    val localPath: String? = null,
     val peopleInMediaItem: List<Person>
-)
+) {
+    fun mergeWith(mediaItemDetails: MediaItemDetails?): MediaItemDetails = copy(
+        location = location.ifBlank { mediaItemDetails?.location.orEmpty() },
+        latLon = latLon ?: mediaItemDetails?.latLon,
+        remotePath = remotePath ?: mediaItemDetails?.remotePath,
+        localPath = localPath ?: mediaItemDetails?.localPath,
+    )
+}

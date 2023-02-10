@@ -217,12 +217,14 @@ class MediaUseCase @Inject constructor(
             ?.toMediaItemDetails()
         is Local -> localMediaUseCase.getLocalMediaItem(id.value)
             ?.toMediaItemDetails()
-        is MediaId.Group -> when (val preferred = id.preferRemote) {
-            is Remote -> remoteMediaUseCase.getRemoteMediaItemDetails(preferred.value)
-                ?.toMediaItemDetails()
-            is Local -> localMediaUseCase.getLocalMediaItem(preferred.value)
-                ?.toMediaItemDetails()
-            else -> null
+        is MediaId.Group -> {
+            val remoteDetails = id.findRemote?.let {
+                remoteMediaUseCase.getRemoteMediaItemDetails(it.value)?.toMediaItemDetails()
+            }
+            val localDetails = id.findLocal?.let {
+                localMediaUseCase.getLocalMediaItem(it.value)?.toMediaItemDetails()
+            }
+            remoteDetails?.mergeWith(localDetails) ?: localDetails
         }
     }
 
@@ -233,7 +235,7 @@ class MediaUseCase @Inject constructor(
             isVideo = video,
             location = "",
             latLon = latLon?.let { (lat, lon) -> LatLon(lat, lon) },
-            path = path ?: contentUri,
+            localPath = path ?: contentUri,
             peopleInMediaItem = emptyList(),
         )
 
@@ -259,7 +261,7 @@ class MediaUseCase @Inject constructor(
             isVideo = video == true,
             location = location.orEmpty(),
             latLon = latLng?.toLatLon,
-            path = imagePath,
+            remotePath = imagePath,
             peopleInMediaItem = peopleInPhoto,
         )
     }

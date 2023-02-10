@@ -69,7 +69,8 @@ data class SingleMediaItemState(
     val originalFileIconState: OriginalFileIconState = OriginalFileIconState.HIDDEN,
     val peopleInMediaItem: List<Person> = emptyList(),
     val metadata: MediaItemMetadata? = null,
-    val path: String? = null,
+    val remotePath: String? = null,
+    val localPath: String? = null,
     val loadingDetails: Boolean = false,
     val mediaItemSyncState: MediaItemSyncState? = null,
 )

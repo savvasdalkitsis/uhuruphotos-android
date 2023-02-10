@@ -157,7 +157,8 @@ sealed class LightboxMutation(
                     location = location,
                     gps = latLon,
                     peopleInMediaItem = peopleInMediaItem,
-                    path = path,
+                    remotePath = remotePath,
+                    localPath = localPath,
                 )
             }
         }
