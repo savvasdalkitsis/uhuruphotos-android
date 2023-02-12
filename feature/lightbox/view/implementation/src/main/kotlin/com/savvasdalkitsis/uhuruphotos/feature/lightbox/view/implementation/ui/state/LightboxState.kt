@@ -23,7 +23,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.people.view.api.ui.state.Person
 import com.savvasdalkitsis.uhuruphotos.foundation.map.api.model.LatLon
 
 data class LightboxState(
-    val currentIndex: Int = 0,
+    private val _currentIndex: Int = 0,
     val media: List<SingleMediaItemState> = emptyList(),
     val isLoading: Boolean = false,
     @StringRes val errorMessage: Int? = null,
@@ -35,7 +35,8 @@ data class LightboxState(
     val infoSheetHidden: Boolean = true,
     val showRestoreButton: Boolean = false,
 ) {
-    val currentMediaItem: SingleMediaItemState get() = media[currentIndex.coerceAtLeast(0)]
+    val currentIndex: Int = _currentIndex.coerceAtLeast(0)
+    val currentMediaItem: SingleMediaItemState get() = media[currentIndex]
 
     override fun toString(): String =
         """LightboxState(currentIndex=$currentIndex,
@@ -50,7 +51,9 @@ data class LightboxState(
             | infoSheetHidden=$infoSheetHidden,
             | showRestoreButton=$showRestoreButton)""".trimMargin().replace("\n", "")
 
-
+    fun copyWithIndex(index: Int) = copy(
+        _currentIndex = index.coerceAtLeast(0)
+    )
 }
 
 data class SingleMediaItemState(

@@ -59,7 +59,7 @@ internal fun Lightbox(
     val sheetSize by SheetSize.rememberSheetSize()
     val pagerState = rememberPagerState()
     LaunchedEffect(state.media.size, pagerState.pageCount) {
-        if (pagerState.pageCount > state.currentIndex && state.currentIndex >= 0) {
+        if (pagerState.pageCount > state.currentIndex) {
             pagerState.scrollToPage(state.currentIndex)
         }
     }

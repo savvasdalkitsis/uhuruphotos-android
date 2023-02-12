@@ -126,8 +126,9 @@ sealed class LightboxMutation(
     })
 
     data class ShowSingleMediaItem(val mediaItemState: SingleMediaItemState) : LightboxMutation({
-        it.copy(
-            currentIndex = 0,
+        it.copyWithIndex(
+            index = 0,
+        ).copy(
             media = listOf(mediaItemState)
         )
     })
@@ -136,8 +137,9 @@ sealed class LightboxMutation(
         val mediaItemStates: List<SingleMediaItemState>,
         val index: Int,
     ) : LightboxMutation({
-        it.copy(
-            currentIndex = index,
+        it.copyWithIndex(
+            index = index,
+        ).copy(
             media = mediaItemStates,
         )
     }) {
@@ -165,7 +167,7 @@ sealed class LightboxMutation(
     })
 
     data class ChangeCurrentIndex(val index: Int) : LightboxMutation({
-        it.copy(currentIndex = index)
+        it.copyWithIndex(index = index)
     })
 
     data class ShowMediaItemFavourite(
@@ -181,8 +183,8 @@ sealed class LightboxMutation(
         val removed = it.copy(
             media = it.media.filter { photoState -> photoState.id != id },
         )
-        removed.copy(
-            currentIndex = min(it.currentIndex, removed.media.size - 1)
+        removed.copyWithIndex(
+            index = min(it.currentIndex, removed.media.size - 1)
         )
     })
 
