@@ -1,5 +1,6 @@
 plugins {
     id 'java-test-fixtures'
+    id 'kotlin-parcelize'
 }
 
 android {

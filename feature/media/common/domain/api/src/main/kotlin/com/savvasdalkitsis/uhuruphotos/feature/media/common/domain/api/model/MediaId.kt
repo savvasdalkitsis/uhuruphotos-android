@@ -15,9 +15,15 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model
 
+import android.os.Parcelable
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemSyncState.*
+import kotlinx.parcelize.IgnoredOnParcel
+import kotlinx.parcelize.Parcelize
+import java.io.Serializable
 
-sealed class MediaId<T> private constructor(open val value: T) {
+sealed class MediaId<T : Serializable> private constructor(
+    open val value: T,
+) : Parcelable {
 
     abstract val preferRemote: MediaId<*>
     abstract val findRemote: Remote?
@@ -26,30 +32,51 @@ sealed class MediaId<T> private constructor(open val value: T) {
     abstract val serialize: String
     abstract val syncState: MediaItemSyncState
 
+    @Parcelize
     data class Remote(override val value: String): MediaId<String>(value) {
+        @IgnoredOnParcel
         override val preferRemote = this
+        @IgnoredOnParcel
         override val preferLocal = this
+        @IgnoredOnParcel
         override val findRemote = this
+        @IgnoredOnParcel
         override val findLocal = null
+        @IgnoredOnParcel
         override val serialize = "remote:$value"
+        @IgnoredOnParcel
         override val syncState: MediaItemSyncState = REMOTE_ONLY
     }
 
+    @Parcelize
     data class Local(override val value: Long): MediaId<Long>(value) {
+        @IgnoredOnParcel
         override val preferRemote = this
+        @IgnoredOnParcel
         override val preferLocal = this
+        @IgnoredOnParcel
         override val findRemote = null
+        @IgnoredOnParcel
         override val findLocal = this
+        @IgnoredOnParcel
         override val serialize = "local:$value"
+        @IgnoredOnParcel
         override val syncState: MediaItemSyncState = LOCAL_ONLY
     }
 
-    data class Group(override val value: Set<MediaId<*>>): MediaId<Set<MediaId<*>>>(value) {
+    @Parcelize
+    data class Group(override val value: HashSet<MediaId<*>>): MediaId<HashSet<MediaId<*>>>(value) {
+        @IgnoredOnParcel
         override val findRemote: Remote? = value.firstNotNullOfOrNull { it as? Remote }
+        @IgnoredOnParcel
         override val findLocal: Local? = value.firstNotNullOfOrNull { it as? Local }
+        @IgnoredOnParcel
         override val preferRemote: MediaId<*> = findRemote ?: value.first()
+        @IgnoredOnParcel
         override val preferLocal: MediaId<*> = findLocal ?: value.first()
+        @IgnoredOnParcel
         override val serialize = "group:" + value.joinToString(separator = "::") { it.serialize }
+        @IgnoredOnParcel
         override val syncState: MediaItemSyncState = when {
             findRemote == null -> LOCAL_ONLY
             findLocal == null -> REMOTE_ONLY
@@ -65,7 +92,7 @@ sealed class MediaId<T> private constructor(open val value: T) {
             id.startsWith("remote:") -> Remote(id.removePrefix("remote:"))
             else -> Group(id.removePrefix("group:").split("::").map {
                 deserialize(it)
-            }.toSet())
+            }.toHashSet())
         }
     }
 }
