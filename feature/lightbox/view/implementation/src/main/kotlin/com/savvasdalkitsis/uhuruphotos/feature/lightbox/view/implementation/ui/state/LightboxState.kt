@@ -35,7 +35,7 @@ data class LightboxState(
     val infoSheetHidden: Boolean = true,
     val showRestoreButton: Boolean = false,
 ) {
-    val currentMediaItem: SingleMediaItemState get() = media[currentIndex]
+    val currentMediaItem: SingleMediaItemState get() = media[currentIndex.coerceAtLeast(0)]
 
     override fun toString(): String =
         """LightboxState(currentIndex=$currentIndex,
