@@ -13,14 +13,10 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
  */
+package com.savvasdalkitsis.uhuruphotos.feature.media.local.view.api.ui
 
-package com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.ui
-
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
+import androidx.annotation.StringRes
+import androidx.compose.foundation.layout.*
 import androidx.compose.material.Button
 import androidx.compose.material.Card
 import androidx.compose.material.Text
@@ -29,19 +25,22 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.FeedAction
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemsOnDevice
-import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R
+import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
 import dev.shreyaspatil.permissionflow.compose.rememberPermissionFlowRequestLauncher
 
 @Composable
-internal fun FeedLocalMediaAccessRequest(
+fun LocalMediaAccessRequestBanner(
+    modifier: Modifier = Modifier,
     missingPermissions: MediaItemsOnDevice.RequiresPermissions,
-    action: (FeedAction) -> Unit,
+    @StringRes description: Int,
+    onNeverRemindMeAgain: () -> Unit,
 ) {
     val permissionLauncher = rememberPermissionFlowRequestLauncher()
 
-    Card {
+    Card(
+        modifier = modifier,
+    ) {
         Column(
             modifier = Modifier
                 .fillMaxWidth(),
@@ -50,7 +49,7 @@ internal fun FeedLocalMediaAccessRequest(
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(8.dp),
-                text = stringResource(R.string.missing_local_media_permissions),
+                text = stringResource(description),
                 textAlign = TextAlign.Center,
             )
             Row(
@@ -66,15 +65,15 @@ internal fun FeedLocalMediaAccessRequest(
                         permissionLauncher.launch(missingPermissions.deniedPermissions.toTypedArray())
                     }
                 ) {
-                    Text(stringResource(R.string.grant_permissions))
+                    Text(stringResource(string.grant_permissions))
                 }
                 Button(
                     modifier = Modifier
                         .fillMaxWidth()
                         .weight(1f),
-                    onClick = { action(FeedAction.NeverAskForLocalMediaAccessPermissionRequest) }
+                    onClick = onNeverRemindMeAgain
                 ) {
-                    Text(stringResource(R.string.do_not_ask_again))
+                    Text(stringResource(string.do_not_ask_again))
                 }
             }
         }

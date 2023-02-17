@@ -35,4 +35,5 @@ sealed class HeatMapAction {
 
     object Load : HeatMapAction()
     object BackPressed : HeatMapAction()
+    object NeverAskForLocalMediaAccessPermissionRequest : HeatMapAction()
 }

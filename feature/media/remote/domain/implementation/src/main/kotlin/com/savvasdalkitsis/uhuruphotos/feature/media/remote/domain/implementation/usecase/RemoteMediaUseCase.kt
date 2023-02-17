@@ -72,7 +72,7 @@ class RemoteMediaUseCase @Inject constructor(
         else -> "/media/photos/$this".toAbsoluteRemoteUrl()
     }
 
-    override fun observeAllPhotoDetails(): Flow<List<DbRemoteMediaItemDetails>> =
+    override fun observeAllRemoteMediaDetails(): Flow<List<DbRemoteMediaItemDetails>> =
         remoteMediaRepository.observeAllMediaItemDetails()
 
     override fun observeFavouriteRemoteMedia(): Flow<Result<List<DbRemoteMediaItemSummary>>> =

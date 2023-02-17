@@ -43,6 +43,7 @@ interface SettingsUseCase {
     fun getAnimateVideoThumbnails(): Boolean
     fun getMaxAnimatedVideoThumbnails(): Int
     fun getShowBannerAskingForLocalMediaPermissionsOnFeed(): Boolean
+    fun getShowBannerAskingForLocalMediaPermissionsOnHeatmap(): Boolean
 
     fun observeImageDiskCacheMaxLimit(): Flow<Int>
     fun observeImageMemCacheMaxLimit(): Flow<Int>
@@ -86,4 +87,5 @@ interface SettingsUseCase {
     suspend fun setAnimateVideoThumbnails(animate: Boolean)
     suspend fun setMaxAnimatedVideoThumbnails(max: Int)
     suspend fun setShowBannerAskingForLocalMediaPermissionsOnFeed(show: Boolean)
+    suspend fun setShowBannerAskingForLocalMediaPermissionsOnHeatmap(show: Boolean)
 }

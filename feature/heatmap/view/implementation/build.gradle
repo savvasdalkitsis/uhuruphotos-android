@@ -10,23 +10,24 @@ android {
 
 dependencies {
 
-    implementation project(":feature:lightbox:view:api")
-    implementation project(":foundation:coroutines:api")
-    implementation project(":foundation:date:api")
+    implementation project(":feature:collage:view:api")
     implementation project(":feature:db:domain:api")
     implementation project(":feature:feed:domain:api")
-    implementation project(":feature:collage:view:api")
     implementation project(":feature:heatmap:view:api")
-    implementation project(":foundation:icons:api")
-    implementation project(":foundation:navigation:api")
-    implementation project(":foundation:map:api")
-    implementation project(':feature:media:common:domain:api')
-    implementation project(':feature:media:common:view:api')
-    implementation project(':feature:media:remote:domain:api')
+    implementation project(":feature:lightbox:view:api")
     implementation project(":feature:settings:domain:api")
+    implementation project(":foundation:coroutines:api")
+    implementation project(":foundation:date:api")
+    implementation project(":foundation:icons:api")
+    implementation project(":foundation:map:api")
+    implementation project(":foundation:navigation:api")
     implementation project(":foundation:strings:api")
     implementation project(":foundation:toaster:api")
     implementation project(":foundation:ui:api")
+    implementation project(':feature:media:common:domain:api')
+    implementation project(':feature:media:common:view:api')
+    implementation project(':feature:media:local:view:api')
+    implementation project(':feature:media:remote:domain:api')
 
     implementation(
             libs.accompanist.permissions,

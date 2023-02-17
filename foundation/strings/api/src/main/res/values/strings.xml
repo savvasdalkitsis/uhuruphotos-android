@@ -231,6 +231,7 @@
     <string name="feed_sync_job_configuration">Feed sync job configuration</string>
     <string name="status">Status</string>
     <string name="missing_local_media_permissions">Would you like to view local media in your feed?</string>
+    <string name="missing_local_media_permissions_photo_map">Would you like to view local media on the photo map?</string>
     <string name="do_not_ask_again">Don\'t ask again</string>
     <string name="media_sync_status_fully_synced">Media is fully synced</string>
     <string name="media_sync_status_remote_only">Media is only available on the server</string>

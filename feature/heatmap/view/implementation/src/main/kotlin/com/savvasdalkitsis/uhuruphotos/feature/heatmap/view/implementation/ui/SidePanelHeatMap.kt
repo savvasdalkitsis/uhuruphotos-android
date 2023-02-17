@@ -67,7 +67,7 @@ fun SidePanelHeatMap(
                     .fillMaxSize()
                     .weight(1f),
             ) {
-                HeatMapVisiblePhotos(
+                HeatMapVisibleMedia(
                     loadingModifier = Modifier
                         .align(Alignment.Center),
                     contentPadding = systemPadding(Top + Bottom + End),

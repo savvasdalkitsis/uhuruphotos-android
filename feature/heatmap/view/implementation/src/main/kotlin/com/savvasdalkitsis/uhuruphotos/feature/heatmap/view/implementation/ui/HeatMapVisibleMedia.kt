@@ -31,7 +31,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.state.to
 import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
 
 @Composable
-fun HeatMapVisiblePhotos(
+fun HeatMapVisibleMedia(
     modifier: Modifier = Modifier,
     loadingModifier: Modifier = Modifier,
     contentPadding: PaddingValues = PaddingValues(),

@@ -85,6 +85,8 @@ internal class SettingsUseCase @Inject constructor(
         flowSharedPreferences.getInt("maxAnimatedVideoThumbnails", 3)
     private val showBannerAskingForLocalMediaPermissionsOnFeed =
         flowSharedPreferences.getBoolean("showBannerAskingForLocalMediaPermissionsOnFeed", true)
+    private val showBannerAskingForLocalMediaPermissionsOnHeatmap =
+        flowSharedPreferences.getBoolean("showBannerAskingForLocalMediaPermissionsOnHeatmap", true)
 
     override fun getImageDiskCacheMaxLimit(): Int = imageDiskCacheSize.get()
     override fun getImageMemCacheMaxLimit(): Int = imageMemCacheSize.get()
@@ -114,6 +116,8 @@ internal class SettingsUseCase @Inject constructor(
         maxAnimatedVideoThumbnails.get()
     override fun getShowBannerAskingForLocalMediaPermissionsOnFeed(): Boolean =
         showBannerAskingForLocalMediaPermissionsOnFeed.get()
+    override fun getShowBannerAskingForLocalMediaPermissionsOnHeatmap(): Boolean =
+        showBannerAskingForLocalMediaPermissionsOnHeatmap.get()
 
     override fun observeImageDiskCacheMaxLimit(): Flow<Int> = imageDiskCacheSize.asFlow()
     override fun observeImageMemCacheMaxLimit(): Flow<Int> = imageMemCacheSize.asFlow()
@@ -229,6 +233,10 @@ internal class SettingsUseCase @Inject constructor(
 
     override suspend fun setShowBannerAskingForLocalMediaPermissionsOnFeed(show: Boolean) {
         showBannerAskingForLocalMediaPermissionsOnFeed.setAndCommit(show)
+    }
+
+    override suspend fun setShowBannerAskingForLocalMediaPermissionsOnHeatmap(show: Boolean) {
+        showBannerAskingForLocalMediaPermissionsOnHeatmap.setAndCommit(show)
     }
 
     private fun MapProvider.mapToAvailable(): MapProvider =

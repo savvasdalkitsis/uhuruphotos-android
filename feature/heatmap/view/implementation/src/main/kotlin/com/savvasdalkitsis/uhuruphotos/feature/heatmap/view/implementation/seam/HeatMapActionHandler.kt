@@ -20,28 +20,19 @@ import android.location.LocationManager
 import android.location.LocationManager.NETWORK_PROVIDER
 import androidx.core.location.LocationManagerCompat.getCurrentLocation
 import com.google.accompanist.permissions.isGranted
-import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.entities.media.latLng
 import com.savvasdalkitsis.uhuruphotos.feature.feed.domain.api.usecase.FeedUseCase
-import com.savvasdalkitsis.uhuruphotos.feature.heatmap.view.implementation.seam.HeatMapAction.BackPressed
-import com.savvasdalkitsis.uhuruphotos.feature.heatmap.view.implementation.seam.HeatMapAction.CameraViewPortChanged
-import com.savvasdalkitsis.uhuruphotos.feature.heatmap.view.implementation.seam.HeatMapAction.Load
-import com.savvasdalkitsis.uhuruphotos.feature.heatmap.view.implementation.seam.HeatMapAction.MyLocationPressed
-import com.savvasdalkitsis.uhuruphotos.feature.heatmap.view.implementation.seam.HeatMapAction.SelectedCel
-import com.savvasdalkitsis.uhuruphotos.feature.heatmap.view.implementation.seam.HeatMapEffect.ErrorLoadingPhotoDetails
-import com.savvasdalkitsis.uhuruphotos.feature.heatmap.view.implementation.seam.HeatMapEffect.NavigateBack
-import com.savvasdalkitsis.uhuruphotos.feature.heatmap.view.implementation.seam.HeatMapEffect.NavigateToLightbox
-import com.savvasdalkitsis.uhuruphotos.feature.heatmap.view.implementation.seam.HeatMapMutation.ShowLoading
-import com.savvasdalkitsis.uhuruphotos.feature.heatmap.view.implementation.seam.HeatMapMutation.UpdateAllPhotos
-import com.savvasdalkitsis.uhuruphotos.feature.heatmap.view.implementation.seam.HeatMapMutation.UpdateVisibleMapContent
+import com.savvasdalkitsis.uhuruphotos.feature.heatmap.view.implementation.seam.HeatMapAction.*
+import com.savvasdalkitsis.uhuruphotos.feature.heatmap.view.implementation.seam.HeatMapEffect.*
+import com.savvasdalkitsis.uhuruphotos.feature.heatmap.view.implementation.seam.HeatMapMutation.*
 import com.savvasdalkitsis.uhuruphotos.feature.heatmap.view.implementation.ui.state.HeatMapState
-import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaId
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItem
-import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemInstance
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemSyncState.*
-import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.api.usecase.RemoteMediaUseCase
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemsOnDevice
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.usecase.MediaUseCase
+import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.worker.LocalMediaWorkScheduler
+import com.savvasdalkitsis.uhuruphotos.feature.settings.domain.api.usecase.SettingsUseCase
 import com.savvasdalkitsis.uhuruphotos.foundation.coroutines.api.onErrors
 import com.savvasdalkitsis.uhuruphotos.foundation.coroutines.api.safelyOnStart
-import com.savvasdalkitsis.uhuruphotos.foundation.date.api.DateDisplayer
 import com.savvasdalkitsis.uhuruphotos.foundation.map.api.model.LatLon
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.ActionHandler
 import kotlinx.coroutines.CoroutineScope
@@ -50,22 +41,16 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.currentCoroutineContext
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.debounce
-import kotlinx.coroutines.flow.distinctUntilChanged
-import kotlinx.coroutines.flow.flatMapLatest
-import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.flow.flowOf
-import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.flow.merge
+import kotlinx.coroutines.flow.*
+import java.lang.Runnable
 import javax.inject.Inject
 
 class HeatMapActionHandler @Inject constructor(
     private val feedUseCase: FeedUseCase,
-    private val remoteMediaUseCase: RemoteMediaUseCase,
+    private val mediaUseCase: MediaUseCase,
+    private val settingsUseCase: SettingsUseCase,
+    private val localMediaWorkScheduler: LocalMediaWorkScheduler,
     private val locationManager: LocationManager,
-    private val dateDisplayer: DateDisplayer,
 ): ActionHandler<HeatMapState, HeatMapEffect, HeatMapAction, HeatMapMutation> {
 
     @Volatile
@@ -80,27 +65,11 @@ class HeatMapActionHandler @Inject constructor(
         effect: suspend (HeatMapEffect) -> Unit
     ): Flow<HeatMapMutation> = when (action) {
         Load -> merge(
-            remoteMediaUseCase.observeAllPhotoDetails()
-                .map { photos ->
-                    photos
+            feedUseCase.observeFeed()
+                .map { mediaCollections ->
+                    mediaCollections
+                        .flatMap { it.mediaItems }
                         .filter { it.latLng != null }
-                        .map {
-                            MediaItemInstance(
-                                id = MediaId.Remote(it.imageHash),
-                                mediaHash = it.imageHash,
-                                thumbnailUri = with(remoteMediaUseCase) {
-                                    it.imageHash.toThumbnailUrlFromId()
-                                },
-                                fullResUri = with(remoteMediaUseCase) {
-                                    it.imageHash.toFullSizeUrlFromId(it.video ?: false)
-                                },
-                                displayDayDate = dateDisplayer.dateString(it.timestamp),
-                                sortableDate = it.timestamp,
-                                latLng = it.latLng,
-                                isVideo = it.video ?: false,
-                                syncState = REMOTE_ONLY,
-                            )
-                        }
                 }
                 .safelyOnStart {
                     feedUseCase.observeFeed().collect { mediaCollections ->
@@ -109,10 +78,7 @@ class HeatMapActionHandler @Inject constructor(
                             .flatMap { it.mediaItems }
                             .map { mediaItem ->
                                 CoroutineScope(currentCoroutineContext() + Dispatchers.IO).async {
-                                    val mediaId = mediaItem.id
-                                    if (mediaId is MediaId.Remote) {
-                                        remoteMediaUseCase.refreshDetailsNowIfMissing(mediaId.value)
-                                    }
+                                    mediaUseCase.refreshDetailsNowIfMissing(mediaItem.id, mediaItem.isVideo)
                                 }
                             }
                             .awaitAll()
@@ -122,12 +88,28 @@ class HeatMapActionHandler @Inject constructor(
                 .debounce(500)
                 .distinctUntilChanged()
                 .onErrors { effect(ErrorLoadingPhotoDetails) }
-                .flatMapLatest { photos ->
-                    flowOf(UpdateAllPhotos(photos), updateDisplay(photos))
+                .flatMapLatest { media ->
+                    flowOf(UpdateAllMedia(media), updateDisplay(media))
                 },
             detailsDownloading
-                .map(::ShowLoading)
+                .map(::ShowLoading),
+            mediaUseCase.observeLocalMedia()
+                .mapNotNull {
+                    when (it) {
+                        is MediaItemsOnDevice.RequiresPermissions -> ShowLocalStoragePermissionRequest(it).takeIf {
+                            settingsUseCase.getShowBannerAskingForLocalMediaPermissionsOnHeatmap()
+                        }
+                        else -> {
+                            localMediaWorkScheduler.scheduleLocalMediaSyncNowIfNotRunning()
+                            HideLocalStoragePermissionRequest
+                        }
+                    }
+                },
         )
+        NeverAskForLocalMediaAccessPermissionRequest -> flow {
+            emit(HideLocalStoragePermissionRequest)
+            settingsUseCase.setShowBannerAskingForLocalMediaPermissionsOnHeatmap(false)
+        }
         BackPressed -> flow {
             effect(NavigateBack)
         }

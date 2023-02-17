@@ -15,12 +15,7 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.heatmap.view.implementation.ui
 
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.heightIn
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.BottomSheetScaffold
 import androidx.compose.runtime.Composable
@@ -31,8 +26,11 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.max
 import com.google.accompanist.permissions.PermissionState
 import com.savvasdalkitsis.uhuruphotos.feature.heatmap.view.implementation.seam.HeatMapAction
+import com.savvasdalkitsis.uhuruphotos.feature.heatmap.view.implementation.seam.HeatMapAction.NeverAskForLocalMediaAccessPermissionRequest
 import com.savvasdalkitsis.uhuruphotos.feature.heatmap.view.implementation.ui.state.HeatMapState
+import com.savvasdalkitsis.uhuruphotos.feature.media.local.view.api.ui.LocalMediaAccessRequestBanner
 import com.savvasdalkitsis.uhuruphotos.foundation.map.api.ui.MapViewState
+import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.insets.insetsTop
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.SheetHandle
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.SheetSize
@@ -59,7 +57,7 @@ fun BottomPanelHeatMap(
                     .heightIn(min = height, max = height)
             ) {
                 SheetHandle()
-                HeatMapVisiblePhotos(
+                HeatMapVisibleMedia(
                     loadingModifier = Modifier
                         .align(Alignment.CenterHorizontally)
                         .padding(top = (sheetPeekHeight / 2) - 48.dp),
@@ -82,7 +80,18 @@ fun BottomPanelHeatMap(
                 state = state,
                 mapViewState = mapViewState,
             )
-            HeatMapTopBar(action, state, locationPermissionState, mapViewState = mapViewState)
+            Column {
+                HeatMapTopBar(action, state, locationPermissionState, mapViewState = mapViewState)
+                if (state.showRequestPermissionForLocalMediaAccess != null) {
+                    LocalMediaAccessRequestBanner(
+                        modifier = Modifier.padding(16.dp),
+                        missingPermissions = state.showRequestPermissionForLocalMediaAccess,
+                        description = string.missing_local_media_permissions_photo_map,
+                    ) {
+                        action(NeverAskForLocalMediaAccessPermissionRequest)
+                    }
+                }
+            }
         }
     }
 }

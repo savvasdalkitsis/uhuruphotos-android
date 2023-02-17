@@ -34,7 +34,7 @@ interface RemoteMediaUseCase {
 
     fun String.toFullSizeUrlFromId(isVideo: Boolean = false): String
 
-    fun observeAllPhotoDetails(): Flow<List<DbRemoteMediaItemDetails>>
+    fun observeAllRemoteMediaDetails(): Flow<List<DbRemoteMediaItemDetails>>
 
     fun observeFavouriteRemoteMedia(): Flow<Result<List<DbRemoteMediaItemSummary>>>
 

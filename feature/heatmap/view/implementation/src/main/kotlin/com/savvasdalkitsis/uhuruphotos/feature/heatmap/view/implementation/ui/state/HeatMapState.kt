@@ -16,6 +16,7 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.feature.heatmap.view.implementation.ui.state
 
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItem
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemsOnDevice
 import com.savvasdalkitsis.uhuruphotos.foundation.map.api.model.LatLon
 
 data class HeatMapState(
@@ -24,4 +25,5 @@ data class HeatMapState(
     val pointsOnVisibleMap: List<LatLon> = emptyList(),
     val allMedia: List<MediaItem> = emptyList(),
     val photosOnVisibleMap: List<MediaItem> = emptyList(),
+    val showRequestPermissionForLocalMediaAccess: MediaItemsOnDevice.RequiresPermissions? = null,
 )
