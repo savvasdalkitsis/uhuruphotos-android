@@ -1,0 +1,3 @@
+* Hiding the refresh day button on feed for days with only local media
+* Showing local media in the photo map
+* Fixing crashes
