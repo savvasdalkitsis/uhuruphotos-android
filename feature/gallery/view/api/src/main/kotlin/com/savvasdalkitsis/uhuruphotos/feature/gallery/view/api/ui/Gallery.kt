@@ -78,7 +78,6 @@ fun Gallery(
             Collage(
                 contentPadding = contentPadding,
                 state = state.collageState,
-                onChangeDisplay = { action(ChangeCollageDisplay(it)) },
                 collageHeader = state.people.takeIf { it.isNotEmpty() }?.let {
                     {
                         PeopleBanner(
@@ -92,6 +91,7 @@ fun Gallery(
                 onCelSelected = { cel, center, scale ->
                     action(SelectedCel(cel, center, scale,))
                 },
+                onChangeDisplay = { action(ChangeCollageDisplay(it)) },
             )
         }
     }

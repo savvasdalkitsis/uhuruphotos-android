@@ -121,7 +121,9 @@ internal class FeedActionHandler @Inject constructor(
                     .selectCels(ids)
                 val final = when (feedDisplay) {
                     YEARLY -> selected.groupByYear()
+                        .map { it.copy(showRefreshIcon = false) }
                     else -> selected
+                        .map { it.copy(showRefreshIcon = it.hasAnyCelsWithRemoteMedia) }
                 }
                 if (avatar.syncState != IN_PROGRESS && final.celCount == 0) {
                     ShowNoPhotosFound

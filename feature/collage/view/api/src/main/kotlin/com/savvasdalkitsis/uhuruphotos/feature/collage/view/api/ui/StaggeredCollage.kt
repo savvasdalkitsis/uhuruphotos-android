@@ -41,14 +41,13 @@ internal fun StaggeredCollage(
     contentPadding: PaddingValues,
     state: List<Cluster>,
     showSelectionHeader: Boolean = false,
-    showAlbumRefreshButton: Boolean = false,
     maintainAspectRatio: Boolean = true,
     miniIcons: Boolean = false,
     showSyncState: Boolean = false,
     columnCount: Int,
     shouldAddEmptyPhotosInRows: Boolean,
     listState: LazyListState = rememberLazyListState(),
-    collageHeader: @Composable (LazyItemScope.() -> Unit)? = null,
+    collageHeader: @Composable() (LazyItemScope.() -> Unit)? = null,
     onCelSelected: CelSelected,
     onCelLongPressed: (CelState) -> Unit,
     onClusterRefreshClicked: (Cluster) -> Unit,
@@ -72,14 +71,12 @@ internal fun StaggeredCollage(
                             modifier = Modifier.animateItemPlacement(),
                             state = cluster,
                             showSelectionHeader = showSelectionHeader,
-                            showRefreshButton = showAlbumRefreshButton,
-                            onSelectionHeaderClicked = {
-                                onClusterSelectionClicked(cluster)
-                            },
                             onRefreshClicked = {
                                 onClusterRefreshClicked(cluster)
                             }
-                        )
+                        ) {
+                            onClusterSelectionClicked(cluster)
+                        }
                     }
                 }
                 val (slots, rows) = if (shouldAddEmptyPhotosInRows) {

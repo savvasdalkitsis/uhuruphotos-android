@@ -16,6 +16,7 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state
 
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaCollection
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaId
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.state.CelState
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.state.toCel
 
@@ -25,7 +26,10 @@ data class Cluster(
     val displayTitle: String,
     val unformattedDate: String? = null,
     val location: String?,
-)
+    val showRefreshIcon: Boolean = false,
+) {
+    val hasAnyCelsWithRemoteMedia = cels.any { it.mediaItem.id.preferRemote is MediaId.Remote }
+}
 
 val previewClusterEmpty = Cluster(
     "id",
@@ -33,6 +37,7 @@ val previewClusterEmpty = Cluster(
     displayTitle = "01 January 2022",
     unformattedDate = "2022-01-01",
     location = "London, UK",
+    showRefreshIcon = true,
 )
 
 fun MediaCollection.toCluster() = Cluster(

@@ -35,14 +35,14 @@ fun SearchFeed(
 ) {
     Collage(
         contentPadding = contentPadding.copy(top = 0.dp),
-        onCelSelected = { cel, center, scale ->
-            action(SelectedCel(cel, center, scale))
-        },
-        onChangeDisplay = { action(SearchAction.ChangeDisplay(it)) },
         state = CollageState(
             isLoading = false,
             clusters = searchResults.clusters,
             collageDisplay = state.searchDisplay,
         ),
+        onCelSelected = { cel, center, scale ->
+            action(SelectedCel(cel, center, scale))
+        },
+        onChangeDisplay = { action(SearchAction.ChangeDisplay(it)) },
     )
 }

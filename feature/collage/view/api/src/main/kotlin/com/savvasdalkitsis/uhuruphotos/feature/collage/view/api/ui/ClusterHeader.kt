@@ -43,7 +43,6 @@ internal fun ClusterHeader(
     modifier: Modifier,
     state: Cluster,
     showSelectionHeader: Boolean,
-    showRefreshButton: Boolean,
     onRefreshClicked: () -> Unit = {},
     onSelectionHeaderClicked: () -> Unit = {},
 ) {
@@ -84,7 +83,7 @@ internal fun ClusterHeader(
                 )
             }
         }
-        if (showRefreshButton) {
+        if (state.showRefreshIcon) {
             ActionIcon(
                 iconModifier = Modifier.alpha(0.6f),
                 onClick = onRefreshClicked,
@@ -102,7 +101,6 @@ internal fun CollageGroupHeaderPreview() {
             modifier = Modifier,
             state = previewClusterEmpty,
             showSelectionHeader = false,
-            showRefreshButton = true,
         )
     }
 }
@@ -115,7 +113,6 @@ internal fun CollageGroupPreviewSelection() {
             modifier = Modifier,
             state = previewClusterEmpty,
             showSelectionHeader = true,
-            showRefreshButton = true,
         )
     }
 }

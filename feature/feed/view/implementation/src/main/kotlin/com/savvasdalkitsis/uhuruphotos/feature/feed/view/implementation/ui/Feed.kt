@@ -92,23 +92,9 @@ internal fun Feed(
             Collage(
                 contentPadding = contentPadding,
                 state = state.collageState,
-                showSyncState = isScrolling,
                 showSelectionHeader = state.hasSelection,
-                showGroupRefreshButton = state.shouldShowClusterRefreshButtons,
+                showSyncState = isScrolling,
                 listState = listState,
-                onCelSelected = { cel, center, scale ->
-                    action(SelectedCel(cel, center, scale,))
-                },
-                onChangeDisplay = { action(ChangeDisplay(it as PredefinedCollageDisplay)) },
-                onCelLongPressed = {
-                    action(CelLongPressed(it))
-                },
-                onClusterSelectionClicked = {
-                    action(ClusterSelectionClicked(it))
-                },
-                onClusterRefreshClicked = {
-                    action(ClusterRefreshClicked(it))
-                },
                 collageHeader = {
                     AnimatedVisibility(
                         visible =
@@ -133,8 +119,20 @@ internal fun Feed(
                             }
                         }
                     }
+                },
+                onCelSelected = { cel, center, scale ->
+                    action(SelectedCel(cel, center, scale,))
+                },
+                onChangeDisplay = { action(ChangeDisplay(it as PredefinedCollageDisplay)) },
+                onCelLongPressed = {
+                    action(CelLongPressed(it))
+                },
+                onClusterRefreshClicked = {
+                    action(ClusterRefreshClicked(it))
                 }
-            )
+            ) {
+                action(ClusterSelectionClicked(it))
+            }
         }
         if (state.showTrashingConfirmationDialog) {
             TrashPermissionDialog(

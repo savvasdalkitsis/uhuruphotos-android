@@ -16,7 +16,6 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.ui.state
 
 import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.CollageState
-import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.PredefinedCollageDisplay
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemSelectionMode
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemsOnDevice
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.state.CelState
@@ -44,5 +43,4 @@ internal data class FeedState(
     val shouldShowShareIcon: Boolean = selectedCels.let { selected ->
         selected.isNotEmpty() && selected.none{ it.mediaItem.isVideo }
     }
-    val shouldShowClusterRefreshButtons: Boolean = collageState.collageDisplay != PredefinedCollageDisplay.YEARLY
 }
