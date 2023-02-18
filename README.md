@@ -6,9 +6,14 @@
 
 # <img src="https://github.com/savvasdalkitsis/uhuruphotos-android/raw/main/foundation/icons/api/src/main/ic_launcher-playstore.png" alt="logo" width = 60px> UhuruPhotos. A LibrePhotos client
 
-UhuruPhotos is an Android client for [LibrePhotos](https://github.com/LibrePhotos/librephotos) 
-written using the latest Android technologies, like Jetpack Compose, SQLDelight, Coroutines etc 
+UhuruPhotos is a full featured gallery app built using the latest Android technologies, like Jetpack Compose, SQLDelight, Coroutines etc 
 using an MVI architecture.
+
+- View and backup/sync* your memories.
+- Find the right memory using keywords, faces or location*
+- See your memories on the world map
+
+(* advanced features require a [LibrePhotos](https://github.com/LibrePhotos/librephotos) server)
 
 It borrows a lot of ideas from Google Photos and aims to become a full featured photo album 
 replacement, including features like offline support, backup and sync etc.
