@@ -37,6 +37,6 @@ internal class FeedbackUseCase @Inject constructor(
     }
 
     companion object {
-        const val EMAIL = "kurosavvas@gmail.com"
+        const val EMAIL = "feedback@uhuru.photos"
     }
 }
