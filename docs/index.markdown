@@ -10,7 +10,8 @@
 
 ![tablet1](assets/tablet-1.png)
 ![tablet2](assets/tablet-2.png)
-![tablet3](assets/tablet-3.png)
+![tablet3](assets/tablet-3.png)[^2]
 
 
 [^1]: advanced features require a [LibrePhotos](https://docs.librephotos.com/) server
+[^2]: images created using [https://screenshots.pro/](https://screenshots.pro/)
