@@ -18,7 +18,7 @@ using an MVI architecture.
 It borrows a lot of ideas from Google Photos and aims to become a full featured photo album 
 replacement, including features like offline support, backup and sync etc.
 
-|<img src="https://github.com/savvasdalkitsis/uhuruphotos-android/raw/main/assets/screen-1.png" alt="screen 1" width = 180px>|<img src="https://github.com/savvasdalkitsis/uhuruphotos-android/raw/main/assets/screen-2.png" alt="screen 2" width = 180px>|<img src="https://github.com/savvasdalkitsis/uhuruphotos-android/raw/main/assets/screen-3.png" alt="screen 3" width = 180px>|<img src="https://github.com/savvasdalkitsis/uhuruphotos-android/raw/main/assets/screen-4.png" alt="screen 4" width = 180px>|
+|<img src="https://github.com/savvasdalkitsis/uhuruphotos-android/raw/main/docs/assets/phone-1.png" alt="screen 1" width = 180px>|<img src="https://github.com/savvasdalkitsis/uhuruphotos-android/raw/main/docs/assets/phone-2.png" alt="screen 2" width = 180px>|<img src="https://github.com/savvasdalkitsis/uhuruphotos-android/raw/main/docs/assets/phone-3.png" alt="screen 3" width = 180px>|
 
 While still early days, it already has a lot of features:
 

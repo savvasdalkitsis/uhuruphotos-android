@@ -1,0 +1,13 @@
+title: UhuruPhotos
+email: feedback@uhuru.photos
+description: |
+  UhuruPhotos is a full featured gallery app built using the latest Android technologies, like Jetpack Compose, SQLDelight, Coroutines etc using an MVI architecture.
+
+  - View and backup/sync* your memories.
+  - Find the right memory using keywords, faces or location*
+  - See your memories on the world map
+  (* advanced features require a LibrePhotos server)
+baseurl: ""
+url: "https://uhuru.photos" # the base hostname & protocol for your site, e.g. http://example.com
+github_username: savvasdalkitsis
+markdown: kramdown
