@@ -12,6 +12,7 @@
 ![tablet2](assets/tablet-2.png)
 ![tablet3](assets/tablet-3.png)[^2]
 
+### By <a rel="me" href="https://androiddev.social/@geeky_android">Savvas Dalkitsis</a>
 
 [^1]: advanced features require a [LibrePhotos](https://docs.librephotos.com/) server
 [^2]: images created using [https://screenshots.pro/](https://screenshots.pro/)
