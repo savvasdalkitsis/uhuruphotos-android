@@ -244,4 +244,8 @@
     <string name="cannot_perform_full_sync">Impossible de synchroniser entièrement pour le moment</string>
     <string name="missing_local_media_permissions">Voulez-vous voir les médias locaux dans votre flux \?</string>
     <string name="do_not_ask_again">Ne plus demander</string>
+    <string name="media_sync_status_fully_synced">Les images et vidéos sont entièrement synchronisées</string>
+    <string name="media_sync_status_remote_only">Uniquement disponible sur le serveur</string>
+    <string name="media_sync_status_local_only">Uniquement disponible sur l\'appareil actuel</string>
+    <string name="missing_local_media_permissions_photo_map">Souhaitez-vous voir vos fichiers locaux sur la carte \?</string>
 </resources>
