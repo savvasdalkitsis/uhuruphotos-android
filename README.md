@@ -34,6 +34,8 @@ While still early days, it already has a lot of features:
   see photos taken in the location currently viewed.
 * User created and auto generated albums from LibrePhotos
 * Dark/Light mode (manual and auto)
+* Local photo support. This makes UhuruPhotos a viable Google Photos alternative which can be 
+  used as your primary camera roll viewer.
 * Tablet support
 * A lot of settings to help you control the app storage and memory requirements along with how 
   frequently to perform synchronization with the LibrePhotos server.
@@ -41,8 +43,6 @@ While still early days, it already has a lot of features:
 As mentioned above, a lot of features will soon be implemented before the full public release, 
 mainly:
 
-* Local photo support. This will make UhuruPhotos a viable Google Photos alternative which can be 
-  used as your primary camera roll viewer.
 * Backup/Sync local images with LibrePhotos server. Take control of your data by never having to 
   worry about photo backups.
 * Basic photo editing capabilities.
