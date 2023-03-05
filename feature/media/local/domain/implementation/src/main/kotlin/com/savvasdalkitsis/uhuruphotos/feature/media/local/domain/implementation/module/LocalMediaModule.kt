@@ -28,11 +28,19 @@ class LocalMediaModule {
 
     @Retention(AnnotationRetention.BINARY)
     annotation class LocalMediaDateTimeFormat
+    @Retention(AnnotationRetention.BINARY)
+    annotation class AlternativeLocalMediaDateTimeFormat
 
     @SuppressLint("SimpleDateFormat")
     @Provides
     @LocalMediaDateTimeFormat
     fun localMediaDateTimeFormat(): DateFormat =
         SimpleDateFormat("yyyy:MM:dd HH:mm:ss")
+
+    @SuppressLint("SimpleDateFormat")
+    @Provides
+    @LocalMediaDateTimeFormat
+    fun alternativeLocalMediaDateTimeFormat(): DateFormat =
+        SimpleDateFormat("yyyy/MM/dd HH:mm:ss")
 
 }

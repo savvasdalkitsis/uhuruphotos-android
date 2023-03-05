@@ -52,6 +52,8 @@ import javax.inject.Inject
 class LocalMediaUseCase @Inject constructor(
     @LocalMediaModule.LocalMediaDateTimeFormat
     private val localMediaDateTimeFormat: DateFormat,
+    @LocalMediaModule.AlternativeLocalMediaDateTimeFormat
+    private val alternativeLocalMediaDateTimeFormat: DateFormat,
     @ParsingDateTimeFormat
     private val parsingDateTimeFormat: DateFormat,
     @ParsingDateFormat
@@ -172,7 +174,11 @@ class LocalMediaUseCase @Inject constructor(
     private suspend fun List<LocalMediaItemDetails>.toItems() = map { it.toItem() }
 
     private suspend fun LocalMediaItemDetails.toItem(): LocalMediaItem = mutex.withLock {
-        val date = localMediaDateTimeFormat.parse(dateTaken)
+        val date = try {
+            localMediaDateTimeFormat.parse(dateTaken)
+        } catch (e: Exception) {
+            alternativeLocalMediaDateTimeFormat.parse(dateTaken)
+        }
         val dateTimeString = date!!.let {
             parsingDateTimeFormat.format(it)
         }
