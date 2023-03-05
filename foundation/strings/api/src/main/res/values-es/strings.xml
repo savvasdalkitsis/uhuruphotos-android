@@ -247,4 +247,5 @@
     <string name="media_sync_status_fully_synced">Los medios están completamente sincronizados</string>
     <string name="media_sync_status_remote_only">Los medios sólo están disponibles en el servidor</string>
     <string name="media_sync_status_local_only">Los medios sólo son locales a este dispositivo</string>
+    <string name="missing_local_media_permissions_photo_map">¿Quieres ver los medios locales en el mapa de fotos\?</string>
 </resources>
