@@ -15,7 +15,7 @@ android {
     defaultConfig {
         applicationId "com.savvasdalkitsis.uhuruphotos"
         minSdk 23
-        targetSdk 32
+        targetSdk 33
         versionCode project.app_version_code
         versionName "${project.app_version_name}"
 
