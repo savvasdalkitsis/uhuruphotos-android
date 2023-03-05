@@ -2,7 +2,7 @@ import io.gitlab.arturbosch.detekt.Detekt
 
 buildscript {
     ext {
-        kotlin_version = '1.8.0'
+        kotlin_version = '1.8.10'
         compose_version = '1.4.0-beta01'
         compose_compiler_version = '1.4.3'
     }

@@ -32,7 +32,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.CelRowSlot.Em
 import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.Cluster
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.CelSelected
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.state.CelState
-import my.nanihadesuka.compose.LazyColumnScrollbar
+import my.nanihadesuka.compose.InternalLazyColumnScrollbar
 import my.nanihadesuka.compose.ScrollbarSelectionMode
 
 @Composable
@@ -113,7 +113,7 @@ internal fun StaggeredCollage(
         Box(modifier = Modifier
             .padding(contentPadding)
         ) {
-            LazyColumnScrollbar(
+            InternalLazyColumnScrollbar(
                 listState = listState,
                 thickness = 8.dp,
                 selectionMode = ScrollbarSelectionMode.Thumb,
