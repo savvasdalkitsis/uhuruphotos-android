@@ -1,0 +1,3 @@
+* Fixing various crashes from Firebase and from direct feedback
+* Using new feedback email: feedback@uhuru.photos
+* Translations
