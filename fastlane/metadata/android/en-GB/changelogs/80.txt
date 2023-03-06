@@ -1,0 +1,4 @@
+* Fixing various crashes from Firebase and from direct feedback
+* Using new feedback email: feedback@uhuru.photos
+* Removing firebase analytics which brought in Play AD ID which we don't want in the app
+* Translations
