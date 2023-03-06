@@ -17,7 +17,6 @@ package com.savvasdalkitsis.uhuruphotos.foundation.exif.api.usecase
 
 import androidx.exifinterface.media.ExifInterface
 import androidx.exifinterface.media.ExifInterface.TAG_APERTURE_VALUE
-import androidx.exifinterface.media.ExifInterface.TAG_DATETIME_ORIGINAL
 import androidx.exifinterface.media.ExifInterface.TAG_DIGITAL_ZOOM_RATIO
 import androidx.exifinterface.media.ExifInterface.TAG_FOCAL_LENGTH
 import androidx.exifinterface.media.ExifInterface.TAG_FOCAL_LENGTH_IN_35MM_FILM
@@ -25,7 +24,6 @@ import androidx.exifinterface.media.ExifInterface.TAG_F_NUMBER
 import androidx.exifinterface.media.ExifInterface.TAG_IMAGE_LENGTH
 import androidx.exifinterface.media.ExifInterface.TAG_IMAGE_WIDTH
 import androidx.exifinterface.media.ExifInterface.TAG_MODEL
-import androidx.exifinterface.media.ExifInterface.TAG_OFFSET_TIME_ORIGINAL
 import androidx.exifinterface.media.ExifInterface.TAG_PHOTOGRAPHIC_SENSITIVITY
 import androidx.exifinterface.media.ExifInterface.TAG_PIXEL_X_DIMENSION
 import androidx.exifinterface.media.ExifInterface.TAG_PIXEL_Y_DIMENSION
@@ -44,7 +42,6 @@ class ExifUseCase @Inject constructor(
 
     fun extractFrom(file: File) = ExifInterface(file).metadata()
     fun extractFrom(stream: InputStream) = ExifInterface(stream).metadata()
-    fun extractFrom(bytes: ByteArray) = extractFrom(bytes.inputStream())
 
     private fun ExifInterface.metadata() = ExifMetadata(
         fStop = double(TAG_F_NUMBER)
@@ -52,8 +49,6 @@ class ExifUseCase @Inject constructor(
         shutterSpeed = ratio(TAG_SHUTTER_SPEED_VALUE)?.let {
             2.0.pow(it)
         },
-        dateTime = string(TAG_DATETIME_ORIGINAL),
-        dateTimeOffset = string(TAG_OFFSET_TIME_ORIGINAL),
         isoSpeed = int(TAG_PHOTOGRAPHIC_SENSITIVITY),
         camera = string(TAG_MODEL),
         focalLength = ratio(TAG_FOCAL_LENGTH),

@@ -1,12 +1,11 @@
 package com.savvasdalkitsis.uhuruphotos.foundation.date.api.module
 
-import android.annotation.SuppressLint
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
-import java.text.DateFormat
-import java.text.SimpleDateFormat
+import org.joda.time.format.DateTimeFormat
+import org.joda.time.format.DateTimeFormatter
 import javax.inject.Qualifier
 
 @Module
@@ -26,25 +25,20 @@ class DateModule {
     @Retention(AnnotationRetention.BINARY)
     annotation class DisplayingDateTimeFormat
 
-    @SuppressLint("SimpleDateFormat")
     @Provides
     @ParsingDateFormat
-    fun parsingDateFormat(): DateFormat = SimpleDateFormat("yyy-MM-dd")
+    fun parsingDateFormat(): DateTimeFormatter = DateTimeFormat.forPattern("yyy-MM-dd")
 
-    @SuppressLint("SimpleDateFormat")
     @Provides
     @ParsingDateTimeFormat
-    fun parsingDateTimeFormat(): DateFormat = SimpleDateFormat("yyy-MM-dd'T'kk:mm:ss'Z'")
+    fun parsingDateTimeFormat(): DateTimeFormatter = DateTimeFormat.forPattern("yyy-MM-dd'T'kk:mm:ss'Z'")
 
     @Provides
     @DisplayingDateFormat
-    fun displayingDateFormat(): DateFormat = DateFormat.getDateInstance(DateFormat.FULL)
+    fun displayingDateFormat(): DateTimeFormatter = DateTimeFormat.fullDate()
 
     @Provides
     @DisplayingDateTimeFormat
-    fun displayingDateTimeFormat(): DateFormat = DateFormat.getDateTimeInstance(
-        DateFormat.FULL,
-        DateFormat.FULL
-    )
+    fun displayingDateTimeFormat(): DateTimeFormatter = DateTimeFormat.fullDateTime()
 
 }

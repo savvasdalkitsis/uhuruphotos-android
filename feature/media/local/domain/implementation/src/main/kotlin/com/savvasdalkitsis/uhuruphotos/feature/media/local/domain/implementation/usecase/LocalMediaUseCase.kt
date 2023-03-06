@@ -46,18 +46,16 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.mapLatest
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
-import java.text.DateFormat
+import org.joda.time.format.DateTimeFormatter
 import javax.inject.Inject
 
 class LocalMediaUseCase @Inject constructor(
     @LocalMediaModule.LocalMediaDateTimeFormat
-    private val localMediaDateTimeFormat: DateFormat,
-    @LocalMediaModule.AlternativeLocalMediaDateTimeFormat
-    private val alternativeLocalMediaDateTimeFormat: DateFormat,
+    private val localMediaDateTimeFormat: DateTimeFormatter,
     @ParsingDateTimeFormat
-    private val parsingDateTimeFormat: DateFormat,
+    private val parsingDateTimeFormat: DateTimeFormatter,
     @ParsingDateFormat
-    private val parsingDateFormat: DateFormat,
+    private val parsingDateFormat: DateTimeFormatter,
     private val dateDisplayer: DateDisplayer,
     private val localMediaRepository: LocalMediaRepository,
     private val permissionFlow: PermissionFlow,
@@ -68,11 +66,20 @@ class LocalMediaUseCase @Inject constructor(
 
     private val mutex = Mutex()
 
-    private val apiPermissions = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+    private val apiQPermissions = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
         arrayOf(Manifest.permission.ACCESS_MEDIA_LOCATION)
     } else
         emptyArray()
-    private val requiredPermissions = apiPermissions + arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE)
+    private val apiTPermissions = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+        arrayOf(
+            Manifest.permission.READ_MEDIA_IMAGES,
+            Manifest.permission.READ_MEDIA_VIDEO,
+        )
+    } else
+        arrayOf(
+            Manifest.permission.READ_EXTERNAL_STORAGE,
+        )
+    private val requiredPermissions = apiQPermissions + apiTPermissions
 
     override fun Long.toContentUri(isVideo: Boolean): String = contentUri(isVideo)
 
@@ -174,22 +181,18 @@ class LocalMediaUseCase @Inject constructor(
     private suspend fun List<LocalMediaItemDetails>.toItems() = map { it.toItem() }
 
     private suspend fun LocalMediaItemDetails.toItem(): LocalMediaItem = mutex.withLock {
-        val date = try {
-            localMediaDateTimeFormat.parse(dateTaken)
-        } catch (e: Exception) {
-            alternativeLocalMediaDateTimeFormat.parse(dateTaken)
-        }
+        val date = localMediaDateTimeFormat.parseDateTime(dateTaken)
         val dateTimeString = date!!.let {
-            parsingDateTimeFormat.format(it)
+            parsingDateTimeFormat.print(it)
         }
         return LocalMediaItem(
             id = id,
             displayName = displayName,
             displayDate = dateDisplayer.dateString(dateTimeString),
             displayDateTime = dateDisplayer.dateTimeString(dateTimeString),
-            dateTimeTaken = parsingDateTimeFormat.format(date),
-            dateTaken = parsingDateFormat.format(date),
-            sortableDate = parsingDateTimeFormat.format(date),
+            dateTimeTaken = parsingDateTimeFormat.print(date),
+            dateTaken = parsingDateFormat.print(date),
+            sortableDate = parsingDateTimeFormat.print(date),
             bucket = LocalMediaFolder(id = bucketId, bucketName),
             width = width,
             height = height,

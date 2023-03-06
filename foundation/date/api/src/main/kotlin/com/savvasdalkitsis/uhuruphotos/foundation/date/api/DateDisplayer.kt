@@ -15,47 +15,56 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.foundation.date.api
 
-import android.text.format.DateUtils
+import android.content.Context
 import com.savvasdalkitsis.uhuruphotos.foundation.date.api.module.DateModule.DisplayingDateFormat
 import com.savvasdalkitsis.uhuruphotos.foundation.date.api.module.DateModule.DisplayingDateTimeFormat
 import com.savvasdalkitsis.uhuruphotos.foundation.date.api.module.DateModule.ParsingDateFormat
 import com.savvasdalkitsis.uhuruphotos.foundation.date.api.module.DateModule.ParsingDateTimeFormat
 import com.savvasdalkitsis.uhuruphotos.foundation.log.api.log
-import java.text.DateFormat
-import java.util.*
+import dagger.hilt.android.qualifiers.ApplicationContext
+import net.danlew.android.joda.DateUtils
+import org.joda.time.DateTime
+import org.joda.time.format.DateTimeFormatter
 import javax.inject.Inject
+import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
 
 class DateDisplayer @Inject constructor(
     @ParsingDateFormat
-    private val parsingDateFormat: DateFormat,
+    private val parsingDateFormat: DateTimeFormatter,
     @ParsingDateTimeFormat
-    private val parsingDateTimeFormat: DateFormat,
+    private val parsingDateTimeFormat: DateTimeFormatter,
     @DisplayingDateFormat
-    private val displayingDateFormat: DateFormat,
+    private val displayingDateFormat: DateTimeFormatter,
     @DisplayingDateTimeFormat
-    private val displayingDateTimeFormat: DateFormat,
+    private val displayingDateTimeFormat: DateTimeFormatter,
+    @ApplicationContext
+    private val context: Context,
 ) {
 
-    fun dateString(date: String?): String = formatString(date, parsingDateFormat, displayingDateFormat)
+    fun dateString(date: String?): String =
+        formatString(date, parsingDateFormat, displayingDateFormat)
+            .ifEmpty {
+                formatString(date, parsingDateTimeFormat, displayingDateFormat)
+            }
 
     fun dateTimeString(date: String?): String = formatString(date, parsingDateTimeFormat, displayingDateTimeFormat)
 
-    private fun formatString(dateString: String?, parse: DateFormat, display: DateFormat): String = when (dateString) {
+    private fun formatString(dateString: String?, parse: DateTimeFormatter, display: DateTimeFormatter): String = when (dateString) {
         null -> ""
         else -> try {
-            when (val date = parse.parse(dateString)) {
+            when (val date = parse.parseDateTime(dateString)) {
                 null -> ""
                 else -> format(date, display)
             }
         } catch (e: Exception) {
             log(e)
-            dateString
+            ""
         }
     }
 
-    private fun format(date: Date, formatter: DateFormat): String = if (DateUtils.isToday(date.time)) {
-        "Today"
+    private fun format(date: DateTime, formatter: DateTimeFormatter): String = if (DateUtils.isToday(date)) {
+        context.getString(string.today)
     } else {
-        formatter.format(date)
+        formatter.print(date.toLocalDateTime())
     }
 }

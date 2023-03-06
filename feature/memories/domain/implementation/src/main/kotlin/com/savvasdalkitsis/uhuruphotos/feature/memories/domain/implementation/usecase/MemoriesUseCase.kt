@@ -17,29 +17,29 @@ package com.savvasdalkitsis.uhuruphotos.feature.memories.domain.implementation.u
 
 import com.savvasdalkitsis.uhuruphotos.feature.feed.domain.api.usecase.FeedUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaCollection
-import com.savvasdalkitsis.uhuruphotos.feature.memories.domain.api.usecase.MemoriesUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.memories.domain.api.model.MemoryCollection
+import com.savvasdalkitsis.uhuruphotos.feature.memories.domain.api.usecase.MemoriesUseCase
 import com.savvasdalkitsis.uhuruphotos.foundation.date.api.module.DateModule.ParsingDateFormat
-import kotlinx.coroutines.flow.*
-import java.text.DateFormat
-import java.util.*
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.map
+import net.danlew.android.joda.DateUtils
+import org.joda.time.DateTime
+import org.joda.time.format.DateTimeFormatter
 import javax.inject.Inject
 
 class MemoriesUseCase @Inject constructor(
     private val feedUseCase: FeedUseCase,
     @ParsingDateFormat
-    private val dateFormat: DateFormat,
+    private val dateFormat: DateTimeFormatter,
 ) : MemoriesUseCase {
 
     override fun observeMemories(): Flow<List<MemoryCollection>> =
         feedUseCase.observeFeed().map { feed ->
-            val today = Calendar.getInstance()
+            val today = DateTime.now()
             feed.filter { mediaCollection ->
-                mediaCollection.calendar?.let { c ->
-                    c.day == today.day && c.month == today.month && c.year != today.year
-                } == true
+                mediaCollection.dateTime?.let { DateUtils.isToday(it) } == true
             }.mapNotNull { mediaCollection ->
-                mediaCollection.calendar?.year?.let { memoryYear ->
+                mediaCollection.dateTime?.year?.let { memoryYear ->
                     MemoryCollection(
                         yearsAgo = today.year - memoryYear,
                         mediaCollection = mediaCollection,
@@ -48,18 +48,12 @@ class MemoriesUseCase @Inject constructor(
             }
         }
 
-    private val MediaCollection.calendar get() = unformattedDate?.let {
+    private val MediaCollection.dateTime get() = unformattedDate?.let {
         try {
-            dateFormat.parse(it)
+            dateFormat.parseDateTime(it)
         } catch (e: Exception) {
             null
         }
-    }?.let {
-        Calendar.getInstance().apply { time = it }
     }
-
-    private val Calendar.day get() = get(Calendar.DAY_OF_MONTH)
-    private val Calendar.month get() = get(Calendar.MONTH)
-    private val Calendar.year get() = get(Calendar.YEAR)
 
 }

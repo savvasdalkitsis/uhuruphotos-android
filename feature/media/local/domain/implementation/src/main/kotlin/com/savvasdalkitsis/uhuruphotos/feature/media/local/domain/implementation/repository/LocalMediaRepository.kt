@@ -34,10 +34,9 @@ import com.savvasdalkitsis.uhuruphotos.foundation.log.api.runCatchingWithLog
 import com.squareup.sqldelight.runtime.coroutines.asFlow
 import com.squareup.sqldelight.runtime.coroutines.mapToList
 import kotlinx.coroutines.flow.Flow
+import org.joda.time.format.DateTimeFormatter
 import java.math.BigInteger
 import java.security.MessageDigest
-import java.text.DateFormat
-import java.util.Date
 import javax.inject.Inject
 
 class LocalMediaRepository @Inject constructor(
@@ -46,7 +45,7 @@ class LocalMediaRepository @Inject constructor(
     private val contentResolver: ContentResolver,
     private val exifUseCase: ExifUseCase,
     @LocalMediaModule.LocalMediaDateTimeFormat
-    private val dateTimeFormat: DateFormat,
+    private val dateTimeFormat: DateTimeFormatter,
 ) {
 
     fun observeMedia(): Flow<List<LocalMediaItemDetails>> = localMediaItemDetailsQueries.getItems().asFlow().mapToList()
@@ -55,9 +54,6 @@ class LocalMediaRepository @Inject constructor(
         localMediaItemDetailsQueries.getBucketItems(folderId).asFlow().mapToList()
 
     suspend fun getMedia(): List<LocalMediaItemDetails> = localMediaItemDetailsQueries.getItems().await()
-
-    suspend fun getFolder(folderId: Int): List<LocalMediaItemDetails> =
-        localMediaItemDetailsQueries.getBucketItems(folderId).await()
 
     suspend fun refreshFolder(folderId: Int) =
         (localMediaService.getPhotosForBucket(folderId) + localMediaService.getVideosForBucket(folderId))
@@ -155,7 +151,7 @@ class LocalMediaRepository @Inject constructor(
             LocalMediaItemDetails(
                 id = item.id,
                 displayName = item.displayName,
-                dateTaken = exif.dateTime ?: item.dateAdded.toDateString(),
+                dateTaken = item.dateAdded.toDateString(),
                 bucketId = item.bucketId,
                 bucketName = item.bucketName,
                 width = exif.width ?: item.width ?: 0,
@@ -175,7 +171,7 @@ class LocalMediaRepository @Inject constructor(
     }
 
     private fun Long.toDateString(): String =
-        dateTimeFormat.format(Date(this * 1000))
+        dateTimeFormat.print(this * 1000)
 
     fun clearAll() {
         localMediaItemDetailsQueries.clearAll()

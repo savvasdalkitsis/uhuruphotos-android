@@ -15,12 +15,11 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.implementation.module
 
-import android.annotation.SuppressLint
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
-import java.text.DateFormat
-import java.text.SimpleDateFormat
+import org.joda.time.format.DateTimeFormat
+import org.joda.time.format.DateTimeFormatter
 
 @dagger.Module
 @InstallIn(SingletonComponent::class)
@@ -28,19 +27,10 @@ class LocalMediaModule {
 
     @Retention(AnnotationRetention.BINARY)
     annotation class LocalMediaDateTimeFormat
-    @Retention(AnnotationRetention.BINARY)
-    annotation class AlternativeLocalMediaDateTimeFormat
 
-    @SuppressLint("SimpleDateFormat")
     @Provides
     @LocalMediaDateTimeFormat
-    fun localMediaDateTimeFormat(): DateFormat =
-        SimpleDateFormat("yyyy:MM:dd HH:mm:ss")
-
-    @SuppressLint("SimpleDateFormat")
-    @Provides
-    @LocalMediaDateTimeFormat
-    fun alternativeLocalMediaDateTimeFormat(): DateFormat =
-        SimpleDateFormat("yyyy/MM/dd HH:mm:ss")
+    fun localMediaDateTimeFormat(): DateTimeFormatter =
+        DateTimeFormat.forPattern("yyyy/MM/dd HH:mm:ss")
 
 }

@@ -63,6 +63,7 @@ flowpreferences = "com.fredporciuncula:flow-preferences:1.9.0"
 guava = "com.google.guava:guava:31.1-android"
 hilt = "com.google.dagger:hilt-android:2.45"
 infobar = "com.radusalagean:info-bar-compose:1.0.0"
+joda-time = "net.danlew:android.joda:2.12.1.1"
 junit = "junit:junit:4.13.2"
 jwt = "com.auth0.android:jwtdecode:2.0.2"
 kotlinx-coroutines = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core-jvm", version.ref = "org-jetbrains-kotlinx" }
