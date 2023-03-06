@@ -11,6 +11,7 @@ android {
 dependencies {
 
     api project(':foundation:seam:api')
+    implementation project(":feature:home:view:api")
     implementation project(":foundation:activity:api")
     implementation project(":foundation:log:api")
     implementation project(":foundation:toaster:api")

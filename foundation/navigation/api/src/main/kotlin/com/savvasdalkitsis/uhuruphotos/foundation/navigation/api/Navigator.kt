@@ -17,6 +17,7 @@ package com.savvasdalkitsis.uhuruphotos.foundation.navigation.api
 
 import android.content.Intent
 import androidx.navigation.NavHostController
+import com.savvasdalkitsis.uhuruphotos.feature.home.view.api.navigation.HomeNavigationTarget
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -39,6 +40,6 @@ class Navigator @Inject internal constructor(
     }
 
     fun clearBackStack() {
-        navController.backQueue.clear()
+        navController.clearBackStack(HomeNavigationTarget.name)
     }
 }
