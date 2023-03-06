@@ -37,7 +37,7 @@ data class MediaItemGroup(
     }
     private val preferLocal: MediaItem = (localInstances.firstOrNull() ?: remoteInstance)!!
 
-    override val id: MediaId<*> = MediaId.Group(all.map { it.id }.toHashSet())
+    override val id: MediaId<*> = MediaId.Group(all.map { it.id })
     override val mediaHash: String = any.mediaHash
     override val thumbnailUri: String? = preferLocal.thumbnailUri
     override val fullResUri: String? = preferLocal.fullResUri

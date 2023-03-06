@@ -20,7 +20,7 @@ import android.net.Uri
 sealed class LocalMediaStoreServiceItem(
     open val id: Long,
     open val displayName: String,
-    open val dateAdded: Long,
+    open val dateTaken: Long,
     open val bucketId: Int,
     open val bucketName: String,
     open val width: Int?,
@@ -33,7 +33,7 @@ sealed class LocalMediaStoreServiceItem(
     data class Photo(
         override val id: Long,
         override val displayName: String,
-        override val dateAdded: Long,
+        override val dateTaken: Long,
         override val bucketId: Int,
         override val bucketName: String,
         override val width: Int?,
@@ -42,13 +42,13 @@ sealed class LocalMediaStoreServiceItem(
         override val contentUri: Uri,
         override val path: String,
     ): LocalMediaStoreServiceItem(
-        id, displayName, dateAdded, bucketId, bucketName, width, height, size, contentUri, path
+        id, displayName, dateTaken, bucketId, bucketName, width, height, size, contentUri, path
     )
 
     data class Video(
         override val id: Long,
         override val displayName: String,
-        override val dateAdded: Long,
+        override val dateTaken: Long,
         override val bucketId: Int,
         override val bucketName: String,
         override val width: Int?,
@@ -58,7 +58,7 @@ sealed class LocalMediaStoreServiceItem(
         override val contentUri: Uri,
         override val path: String,
     ): LocalMediaStoreServiceItem(
-        id, displayName, dateAdded, bucketId, bucketName, width, height, size, contentUri, path
+        id, displayName, dateTaken, bucketId, bucketName, width, height, size, contentUri, path
     )
 
 }

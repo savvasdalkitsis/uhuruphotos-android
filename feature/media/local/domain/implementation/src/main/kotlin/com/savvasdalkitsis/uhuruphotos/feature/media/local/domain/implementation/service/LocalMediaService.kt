@@ -76,7 +76,7 @@ class LocalMediaService @Inject constructor(
         LocalMediaStoreServiceItem.Photo(
             id = id,
             displayName = string(Images.Media.DISPLAY_NAME),
-            dateAdded = long(Images.Media.DATE_ADDED),
+            dateTaken = long(Images.Media.DATE_TAKEN),
             bucketId = int(Images.Media.BUCKET_ID),
             bucketName = string(Images.Media.BUCKET_DISPLAY_NAME),
             width = int(Images.Media.WIDTH),
@@ -117,7 +117,7 @@ class LocalMediaService @Inject constructor(
         LocalMediaStoreServiceItem.Video(
             id = id,
             displayName = string(Video.Media.DISPLAY_NAME),
-            dateAdded = long(Video.Media.DATE_ADDED),
+            dateTaken = long(Video.Media.DATE_TAKEN),
             bucketId = int(Video.Media.BUCKET_ID),
             bucketName = string(Video.Media.BUCKET_DISPLAY_NAME),
             width = int(Video.Media.WIDTH),

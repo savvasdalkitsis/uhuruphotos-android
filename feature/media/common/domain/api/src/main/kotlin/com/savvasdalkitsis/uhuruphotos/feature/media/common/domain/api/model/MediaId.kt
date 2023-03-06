@@ -64,8 +64,9 @@ sealed class MediaId<T : Serializable> private constructor(
         override val syncState: MediaItemSyncState = LOCAL_ONLY
     }
 
+    @Suppress("DataClassPrivateConstructor")
     @Parcelize
-    data class Group(override val value: HashSet<MediaId<*>>): MediaId<HashSet<MediaId<*>>>(value) {
+    data class Group private constructor(override val value: ArrayList<MediaId<*>>): MediaId<ArrayList<MediaId<*>>>(value) {
         @IgnoredOnParcel
         override val findRemote: Remote? = value.firstNotNullOfOrNull { it as? Remote }
         @IgnoredOnParcel
@@ -82,6 +83,11 @@ sealed class MediaId<T : Serializable> private constructor(
             findLocal == null -> REMOTE_ONLY
             else -> SYNCED
         }
+
+        companion object {
+            operator fun invoke(value: Collection<MediaId<*>>) =
+                Group(ArrayList(value.distinct()))
+        }
     }
 
     companion object {
@@ -92,7 +98,7 @@ sealed class MediaId<T : Serializable> private constructor(
             id.startsWith("remote:") -> Remote(id.removePrefix("remote:"))
             else -> Group(id.removePrefix("group:").split("::").map {
                 deserialize(it)
-            }.toHashSet())
+            })
         }
     }
 }

@@ -52,7 +52,7 @@ internal class LocalMediaSyncWorker @AssistedInject constructor(
             Result.success()
         } catch (e: Exception) {
             log(e)
-            Result.retry()
+            Result.failure()
         }
     }
 

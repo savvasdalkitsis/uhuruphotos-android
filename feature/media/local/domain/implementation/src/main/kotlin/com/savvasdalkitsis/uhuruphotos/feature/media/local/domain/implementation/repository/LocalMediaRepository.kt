@@ -64,9 +64,9 @@ class LocalMediaRepository @Inject constructor(
     ) {
         val camera = localMediaService.getDefaultBucketId()
         val cameraPhotos = (camera?.let { localMediaService.getPhotosForBucket(it) } ?: emptyList())
-            .sortedByDescending { it.dateAdded }
+            .sortedByDescending { it.dateTaken }
         val cameraVideos = (camera?.let { localMediaService.getVideosForBucket(it) } ?: emptyList())
-            .sortedByDescending { it.dateAdded }
+            .sortedByDescending { it.dateTaken }
         val photos = localMediaService.getPhotos() - cameraPhotos.toSet()
         val videos = localMediaService.getVideos() - cameraVideos.toSet()
         (cameraPhotos + cameraVideos + photos + videos)
@@ -151,7 +151,7 @@ class LocalMediaRepository @Inject constructor(
             LocalMediaItemDetails(
                 id = item.id,
                 displayName = item.displayName,
-                dateTaken = item.dateAdded.toDateString(),
+                dateTaken = item.dateTaken.toDateString(),
                 bucketId = item.bucketId,
                 bucketName = item.bucketName,
                 width = exif.width ?: item.width ?: 0,
@@ -171,7 +171,7 @@ class LocalMediaRepository @Inject constructor(
     }
 
     private fun Long.toDateString(): String =
-        dateTimeFormat.print(this * 1000)
+        dateTimeFormat.print(this)
 
     fun clearAll() {
         localMediaItemDetailsQueries.clearAll()

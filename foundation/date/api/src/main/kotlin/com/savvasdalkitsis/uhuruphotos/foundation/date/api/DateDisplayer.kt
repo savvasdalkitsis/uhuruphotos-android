@@ -20,13 +20,12 @@ import com.savvasdalkitsis.uhuruphotos.foundation.date.api.module.DateModule.Dis
 import com.savvasdalkitsis.uhuruphotos.foundation.date.api.module.DateModule.DisplayingDateTimeFormat
 import com.savvasdalkitsis.uhuruphotos.foundation.date.api.module.DateModule.ParsingDateFormat
 import com.savvasdalkitsis.uhuruphotos.foundation.date.api.module.DateModule.ParsingDateTimeFormat
-import com.savvasdalkitsis.uhuruphotos.foundation.log.api.log
+import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
 import dagger.hilt.android.qualifiers.ApplicationContext
 import net.danlew.android.joda.DateUtils
 import org.joda.time.DateTime
 import org.joda.time.format.DateTimeFormatter
 import javax.inject.Inject
-import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
 
 class DateDisplayer @Inject constructor(
     @ParsingDateFormat
@@ -57,7 +56,6 @@ class DateDisplayer @Inject constructor(
                 else -> format(date, display)
             }
         } catch (e: Exception) {
-            log(e)
             ""
         }
     }
