@@ -88,5 +88,4 @@ dependencies {
     )
     implementation platform(libs.firebase.bom)
     implementation 'com.google.firebase:firebase-crashlytics-ktx'
-    implementation 'com.google.firebase:firebase-analytics-ktx'
 }
