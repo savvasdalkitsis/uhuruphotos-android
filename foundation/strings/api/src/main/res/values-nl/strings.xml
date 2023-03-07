@@ -233,4 +233,5 @@
     <string name="media_sync_status_remote_only">De media is alleen beschikbaar op de server</string>
     <string name="media_sync_status_local_only">De media is alleen beschikbaar op dit apparaat</string>
     <string name="missing_local_media_permissions_photo_map">Wil je de lokale media in de fotomap bekijken\?</string>
+    <string name="today">Vandaag</string>
 </resources>
