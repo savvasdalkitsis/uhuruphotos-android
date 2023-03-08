@@ -74,12 +74,12 @@ class MetadataUseCase @Inject constructor(
         }
     }
 
-    private fun fromUri(url: String): Pair<Long, ExifMetadata> {
+    private fun fromUri(url: String): Pair<Long, ExifMetadata>? {
         val uri = url.toUri
-        val exif = uri.inputStream.use {
+        val exif = uri.inputStream?.use {
             exifUseCase.extractFrom(it)
         }
-        val size = uri.inputStream.use {
+        val size = uri.inputStream?.use {
             val buffer = ByteArray(DEFAULT_BUFFER_SIZE)
             var totalRead = 0L
             do {
@@ -90,11 +90,15 @@ class MetadataUseCase @Inject constructor(
             } while (read > 0)
             totalRead
         }
-        return size to exif
+        return if (size != null && exif != null) size to exif else null
     }
 
     private val String.toUri get() = Uri.parse(this)
-    private val Uri.inputStream get() = contentResolver.openInputStream(this)!!
+    private val Uri.inputStream get() = try {
+        contentResolver.openInputStream(this)
+    } catch (e: Exception) {
+        null
+    }
 }
 
 private val Long.mb get() = this / 1024 / 1024f
