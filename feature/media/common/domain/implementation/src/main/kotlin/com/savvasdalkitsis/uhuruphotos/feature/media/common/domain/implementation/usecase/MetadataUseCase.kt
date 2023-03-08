@@ -25,7 +25,6 @@ import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.usecase.M
 import com.savvasdalkitsis.uhuruphotos.foundation.exif.api.model.ExifMetadata
 import com.savvasdalkitsis.uhuruphotos.foundation.exif.api.usecase.ExifUseCase
 import javax.inject.Inject
-import kotlin.math.pow
 
 class MetadataUseCase @Inject constructor(
     private val diskCache: DiskCache,
@@ -43,7 +42,7 @@ class MetadataUseCase @Inject constructor(
                 exifData = ExifData(
                     fStop = exif.fStop?.let { "ƒ/${it.round(2)}" },
                     shutterSpeed = exif.shutterSpeed?.let {
-                        "1/${2.0.pow(it).round(2)}"
+                        "1/${it.round(2)}"
                     },
                     isoSpeed = exif.isoSpeed?.let {
                         "ISO$it"
