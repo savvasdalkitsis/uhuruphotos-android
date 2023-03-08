@@ -18,8 +18,6 @@ package com.savvasdalkitsis.uhuruphotos.foundation.date.api
 import android.content.Context
 import com.savvasdalkitsis.uhuruphotos.foundation.date.api.module.DateModule.DisplayingDateFormat
 import com.savvasdalkitsis.uhuruphotos.foundation.date.api.module.DateModule.DisplayingDateTimeFormat
-import com.savvasdalkitsis.uhuruphotos.foundation.date.api.module.DateModule.ParsingDateFormat
-import com.savvasdalkitsis.uhuruphotos.foundation.date.api.module.DateModule.ParsingDateTimeFormat
 import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
 import dagger.hilt.android.qualifiers.ApplicationContext
 import net.danlew.android.joda.DateUtils
@@ -28,10 +26,7 @@ import org.joda.time.format.DateTimeFormatter
 import javax.inject.Inject
 
 class DateDisplayer @Inject constructor(
-    @ParsingDateFormat
-    private val parsingDateFormat: DateTimeFormatter,
-    @ParsingDateTimeFormat
-    private val parsingDateTimeFormat: DateTimeFormatter,
+    private val dateParser: DateParser,
     @DisplayingDateFormat
     private val displayingDateFormat: DateTimeFormatter,
     @DisplayingDateTimeFormat
@@ -40,25 +35,15 @@ class DateDisplayer @Inject constructor(
     private val context: Context,
 ) {
 
-    fun dateString(date: String?): String =
-        formatString(date, parsingDateFormat, displayingDateFormat)
-            .ifEmpty {
-                formatString(date, parsingDateTimeFormat, displayingDateFormat)
-            }
+    fun dateString(date: String?): String = format(date, displayingDateFormat)
 
-    fun dateTimeString(date: String?): String = formatString(date, parsingDateTimeFormat, displayingDateTimeFormat)
+    fun dateTimeString(date: String?): String = format(date, displayingDateTimeFormat)
 
-    private fun formatString(dateString: String?, parse: DateTimeFormatter, display: DateTimeFormatter): String = when (dateString) {
-        null -> ""
-        else -> try {
-            when (val date = parse.parseDateTime(dateString)) {
-                null -> ""
-                else -> format(date, display)
-            }
-        } catch (e: Exception) {
-            ""
-        }
-    }
+    private fun format(date: String?, formatter: DateTimeFormatter) =
+        (dateParser.parseDateString(date) ?: dateParser.parseDateTimeString(date))
+            ?.let {
+                format(it, formatter)
+            } ?: ""
 
     private fun format(date: DateTime, formatter: DateTimeFormatter): String = if (DateUtils.isToday(date)) {
         context.getString(string.today)

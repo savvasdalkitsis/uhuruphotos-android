@@ -178,9 +178,7 @@ class LocalMediaUseCase @Inject constructor(
 
     private fun LocalMediaItemDetails.toItem(): LocalMediaItem {
         val date = localMediaDateTimeFormat.parseDateTime(dateTaken)
-        val dateTimeString = date!!.let {
-            parsingDateTimeFormat.print(it)
-        }
+        val dateTimeString = parsingDateTimeFormat.print(date)
         return LocalMediaItem(
             id = id,
             displayName = displayName,

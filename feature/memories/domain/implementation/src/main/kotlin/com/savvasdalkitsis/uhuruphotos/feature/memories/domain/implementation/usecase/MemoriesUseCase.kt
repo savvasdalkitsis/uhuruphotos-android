@@ -19,41 +19,36 @@ import com.savvasdalkitsis.uhuruphotos.feature.feed.domain.api.usecase.FeedUseCa
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaCollection
 import com.savvasdalkitsis.uhuruphotos.feature.memories.domain.api.model.MemoryCollection
 import com.savvasdalkitsis.uhuruphotos.feature.memories.domain.api.usecase.MemoriesUseCase
-import com.savvasdalkitsis.uhuruphotos.foundation.date.api.module.DateModule.ParsingDateFormat
+import com.savvasdalkitsis.uhuruphotos.foundation.date.api.DateParser
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
-import net.danlew.android.joda.DateUtils
 import org.joda.time.DateTime
-import org.joda.time.format.DateTimeFormatter
 import javax.inject.Inject
 
 class MemoriesUseCase @Inject constructor(
     private val feedUseCase: FeedUseCase,
-    @ParsingDateFormat
-    private val dateFormat: DateTimeFormatter,
+    private val dateParser: DateParser,
 ) : MemoriesUseCase {
 
     override fun observeMemories(): Flow<List<MemoryCollection>> =
         feedUseCase.observeFeed().map { feed ->
-            val today = DateTime.now()
-            feed.filter { mediaCollection ->
-                mediaCollection.dateTime?.let { DateUtils.isToday(it) } == true
+            feed.filter {
+                with(it.dateTime) {
+                    sameAsNow { dayOfMonth } && sameAsNow { monthOfYear } && !sameAsNow { year }
+                }
             }.mapNotNull { mediaCollection ->
                 mediaCollection.dateTime?.year?.let { memoryYear ->
                     MemoryCollection(
-                        yearsAgo = today.year - memoryYear,
+                        yearsAgo = DateTime.now().year - memoryYear,
                         mediaCollection = mediaCollection,
                     )
                 }
             }
         }
 
-    private val MediaCollection.dateTime get() = unformattedDate?.let {
-        try {
-            dateFormat.parseDateTime(it)
-        } catch (e: Exception) {
-            null
-        }
-    }
+    private fun DateTime?.sameAsNow(field: DateTime.() -> Int) =
+        this != null && field(this) == field(DateTime.now())
+
+    private val MediaCollection.dateTime get() = dateParser.parseDateTimeString(unformattedDate)
 
 }
