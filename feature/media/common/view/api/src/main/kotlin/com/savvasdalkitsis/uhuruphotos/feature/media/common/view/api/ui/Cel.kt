@@ -33,6 +33,7 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.Icon
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -88,17 +89,26 @@ fun Cel(
     var relativeCenter by remember(mediaItem.id) { mutableStateOf(Offset.Zero) }
     var relativeScale by remember(mediaItem.id) { mutableStateOf(0f) }
     val iconSize = if (miniIcons) 16.dp else 24.dp
+    val fallbackColor = mediaItem.fallbackColor.toColor()
+    var loaded by remember {
+        mutableStateOf(false)
+    }
+
+    val backgroundColor by remember {
+        derivedStateOf {
+            when {
+                state.selectionMode == MediaItemSelectionMode.SELECTED -> Color.LightGray
+                loaded -> Color.Transparent
+                else -> fallbackColor
+            }
+        }
+    }
 
     Box(
         modifier = modifier
             .aspectRatio(aspectRatio)
             .padding(itemPadding)
-            .background(
-                if (state.selectionMode == MediaItemSelectionMode.SELECTED)
-                    Color.LightGray
-                else
-                    mediaItem.fallbackColor.toColor()
-            )
+            .background(backgroundColor)
             .clip(shape)
             .let {
                 if (selectable) {
@@ -132,6 +142,7 @@ fun Cel(
                     url = thumbnailUri,
                     contentScale = contentScale,
                     contentDescription = null,
+                    onSuccess = { loaded = true }
                 )
             } else {
                 Video(

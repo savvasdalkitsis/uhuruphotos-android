@@ -29,7 +29,6 @@ import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -97,14 +96,13 @@ fun CommonScaffold(
         },
         topBar = topBar
     ) { contentPadding ->
-        Surface(
+        Box(
             modifier = Modifier
                 .padding(
                     start = insetsStart(),
                     end = insetsEnd(),
                 )
                 .fillMaxSize(),
-            color = MaterialTheme.colors.background
         ) {
             content(contentPadding)
         }

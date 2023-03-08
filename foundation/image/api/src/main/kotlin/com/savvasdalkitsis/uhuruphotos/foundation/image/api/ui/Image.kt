@@ -36,12 +36,14 @@ fun Image(
     contentScale: ContentScale,
     placeholder: Painter? = null,
     contentDescription: String?,
+    onSuccess: () -> Unit = {},
 ) {
     AsyncImage(
         modifier = modifier,
         model = ImageRequest.Builder(LocalContext.current)
             .data(url)
             .diskCachePolicy(url.diskCachePolicy())
+            .listener(onSuccess = { _, _ -> onSuccess() })
             .build(),
         contentScale = contentScale,
         placeholder = placeholder,
