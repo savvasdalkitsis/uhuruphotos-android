@@ -248,4 +248,5 @@
     <string name="media_sync_status_remote_only">Uniquement disponible sur le serveur</string>
     <string name="media_sync_status_local_only">Uniquement disponible sur l\'appareil actuel</string>
     <string name="missing_local_media_permissions_photo_map">Souhaitez-vous voir vos fichiers locaux sur la carte \?</string>
+    <string name="today">Aujourd\'hui</string>
 </resources>
