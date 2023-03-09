@@ -33,10 +33,10 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.Icon
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Alignment.Companion.BottomEnd
@@ -67,6 +67,8 @@ import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.theme.CustomColors
 import com.savvasdalkitsis.uhuruphotos.foundation.video.api.LocalAnimatedVideoThumbnails
 import com.savvasdalkitsis.uhuruphotos.foundation.video.api.LocalExoPlayerProvider
 import com.savvasdalkitsis.uhuruphotos.foundation.video.api.ui.Video
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 @Composable
 fun Cel(
@@ -94,14 +96,10 @@ fun Cel(
         mutableStateOf(false)
     }
 
-    val backgroundColor by remember {
-        derivedStateOf {
-            when {
-                state.selectionMode == MediaItemSelectionMode.SELECTED -> Color.LightGray
-                loaded -> Color.Transparent
-                else -> fallbackColor
-            }
-        }
+    val backgroundColor = when {
+        state.selectionMode == MediaItemSelectionMode.SELECTED -> Color.LightGray
+        loaded -> Color.Transparent
+        else -> fallbackColor
     }
 
     Box(
@@ -132,6 +130,7 @@ fun Cel(
                 }
         ) {
             val thumbnailUri = mediaItem.thumbnailUri
+            val scope = rememberCoroutineScope()
             val exoPlayer = if (thumbnailUri == null)
                 null
             else
@@ -142,7 +141,12 @@ fun Cel(
                     url = thumbnailUri,
                     contentScale = contentScale,
                     contentDescription = null,
-                    onSuccess = { loaded = true }
+                    onSuccess = {
+                        scope.launch {
+                            delay(100)
+                            loaded = true
+                        }
+                    }
                 )
             } else {
                 Video(
