@@ -54,7 +54,7 @@ mainly:
 ## Play store
 
 The app is currently in closed beta on the Google Play store. Contact me on 
-[gitter](https://gitter.im/uhuruphotos/) for access.
+[gitter](https://app.gitter.im/#/room/#uhuruphotos:gitter.im) for access.
 
 ## Manual
 
