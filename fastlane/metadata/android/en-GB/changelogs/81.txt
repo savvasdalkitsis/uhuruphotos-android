@@ -1,0 +1,4 @@
+* Fixing memories not working since last update
+* Improving app performance by removing overdraw in most areas
+* Fixing shutter speed display in media details view
+* Translations
