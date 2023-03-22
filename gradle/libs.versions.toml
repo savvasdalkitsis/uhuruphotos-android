@@ -40,7 +40,7 @@ androidx-compose-ui-util = { module = "androidx.compose.ui:ui-util", version.ref
 androidx-core = "androidx.core:core-ktx:1.9.0"
 androidx-datastore-preferences = "androidx.datastore:datastore-preferences:1.1.0-alpha01"
 androidx-espresso = "androidx.test.espresso:espresso-core:3.5.1"
-androidx-lifecycle = "androidx.lifecycle:lifecycle-runtime-ktx:2.6.0-rc01"
+androidx-lifecycle = "androidx.lifecycle:lifecycle-runtime-ktx:2.6.1"
 androidx-preference = "androidx.preference:preference-ktx:1.2.0"
 androidx-startup = "androidx.startup:startup-runtime:1.2.0-alpha02"
 androidx-test-core = "androidx.test:core:1.5.0"
