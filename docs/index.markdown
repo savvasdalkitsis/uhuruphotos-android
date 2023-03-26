@@ -14,5 +14,17 @@
 
 ### By <a rel="me" href="https://androiddev.social/@geeky_android">Savvas Dalkitsis</a>
 
+# Installation
+
+## Play store
+
+The app is currently in closed beta on the Google Play store. Contact me on 
+[gitter](https://app.gitter.im/#/room/#uhuruphotos:gitter.im) for access.
+
+## Manual
+
+Both the apk and aab binaries can be found on the [latest release](https://github.com/savvasdalkitsis/uhuruphotos-android/releases/latest) page
+
+
 [^1]: advanced features require a [LibrePhotos](https://docs.librephotos.com/) server
 [^2]: images created using [https://screenshots.pro/](https://screenshots.pro/)
