@@ -17,6 +17,7 @@ package com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.sea
 
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.api.model.LightboxSequenceDataSource
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.ui.state.SingleMediaItemState
+import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.model.StoragePermissionRequest
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaId
 import com.savvasdalkitsis.uhuruphotos.feature.people.view.api.ui.state.Person
 import com.savvasdalkitsis.uhuruphotos.foundation.map.api.model.LatLon
@@ -33,11 +34,12 @@ sealed class LightboxAction {
     object DismissConfirmationDialogs : LightboxAction()
     object TrashMediaItem : LightboxAction()
     object RestoreMediaItem : LightboxAction()
+    object DeleteLocalKeepRemoteMediaItem : LightboxAction()
     object ShareMediaItem : LightboxAction()
     object UseMediaItemAs : LightboxAction()
 
-    data class DownloadOriginal(val photo: SingleMediaItemState) : LightboxAction()
-    data class FullMediaDataLoaded(val photo: SingleMediaItemState) : LightboxAction()
+    data class DownloadOriginal(val mediaItemState: SingleMediaItemState) : LightboxAction()
+    data class FullMediaDataLoaded(val mediaItemState: SingleMediaItemState) : LightboxAction()
     data class ClickedOnMap(val gps: LatLon) : LightboxAction()
     data class LoadMediaItem(
         val id: MediaId<*>,
@@ -50,4 +52,5 @@ sealed class LightboxAction {
     data class PersonSelected(val person: Person) : LightboxAction()
     data class ChangedToPage(val page: Int) : LightboxAction()
     data class ClickedOnDetailsEntry(val text: String) : LightboxAction()
+    data class AllowStorageManagement(val request: StoragePermissionRequest) : LightboxAction()
 }

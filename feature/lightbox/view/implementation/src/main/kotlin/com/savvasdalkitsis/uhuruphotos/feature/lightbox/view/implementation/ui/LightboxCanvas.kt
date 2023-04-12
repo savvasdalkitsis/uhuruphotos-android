@@ -41,6 +41,7 @@ import com.mxalbert.zoomable.rememberZoomableState
 import com.radusalagean.infobarcompose.InfoBar
 import com.radusalagean.infobarcompose.InfoBarMessage
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.LightboxAction
+import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.LightboxAction.DeleteLocalKeepRemoteMediaItem
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.LightboxAction.DismissConfirmationDialogs
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.LightboxAction.DismissErrorMessage
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.LightboxAction.FullMediaDataLoaded
@@ -54,6 +55,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.TrashPer
 import com.savvasdalkitsis.uhuruphotos.foundation.image.api.ui.Image
 import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
 import com.savvasdalkitsis.uhuruphotos.foundation.video.api.ui.Video
+import dev.shreyaspatil.permissionflow.compose.rememberPermissionFlowRequestLauncher
 
 @Composable
 fun LightboxCanvas(
@@ -62,6 +64,7 @@ fun LightboxCanvas(
     index: Int,
     contentPadding: PaddingValues
 ) {
+    val permissionLauncher = rememberPermissionFlowRequestLauncher()
     val zoomState = rememberZoomableState(
         minScale = 0.6f,
         maxScale = 6f,
@@ -69,19 +72,27 @@ fun LightboxCanvas(
     )
     // reflection call until, hopefully, this is implemented:
     // https://github.com/mxalbert1996/Zoomable/issues/17
-    val dismissDragOffsetY = remember {
-        zoomState.javaClass.declaredMethods.find { it.name == "getDismissDragOffsetY\$zoomable_release" }!!
+    val dismissDragOffsetY by remember {
+        derivedStateOf {
+            zoomState.javaClass.declaredMethods.find { it.name == "getDismissDragOffsetY\$zoomable_release" }!!
+        }
     }
 
-    val offset by derivedStateOf {
-        dismissDragOffsetY.invoke(zoomState) as Float
+    val offset by remember {
+        derivedStateOf {
+            dismissDragOffsetY.invoke(zoomState) as Float
+        }
     }
     val density = LocalDensity.current
-    val showInfo by derivedStateOf {
-        with(density) { offset.toDp() < (-64).dp }
+    val showInfo by remember {
+        derivedStateOf {
+            with(density) { offset.toDp() < (-64).dp }
+        }
     }
-    val navigateBack by derivedStateOf {
-        with(density) { offset.toDp() > 64.dp }
+    val navigateBack by remember {
+        derivedStateOf {
+            with(density) { offset.toDp() > 64.dp }
+        }
     }
 
     LaunchedEffect(showInfo) {
@@ -146,11 +157,29 @@ fun LightboxCanvas(
                     onDismiss = { action(DismissConfirmationDialogs) }
                 ) { action(TrashMediaItem) }
             }
+            if (state.showFullySyncedDeleteConfirmationDialog) {
+                DeleteFullySyncedPermissionDialog(
+                    onDismiss = { action(DismissConfirmationDialogs) },
+                    onDeleteLocalTrashRemote =  { action(TrashMediaItem) },
+                    onDeleteLocal =  { action(DeleteLocalKeepRemoteMediaItem) },
+                )
+            }
             if (state.showRestorationConfirmationDialog) {
                 RestorePermissionDialog(
                     mediaItemCount = 1,
                     onDismiss = { action(DismissConfirmationDialogs) }
                 ) { action(RestoreMediaItem) }
+            }
+            state.showStorageManagementConfirmationDialog?.let { request ->
+                AllowStorageManagementDialog(
+                    onDismiss = { action(DismissConfirmationDialogs) }
+                ) {
+                    action(DismissConfirmationDialogs)
+                    action(LightboxAction.AllowStorageManagement(request))
+                }
+            }
+            if (state.missingPermissions.isNotEmpty()) {
+                permissionLauncher.launch(state.missingPermissions.toTypedArray())
             }
         }
     }

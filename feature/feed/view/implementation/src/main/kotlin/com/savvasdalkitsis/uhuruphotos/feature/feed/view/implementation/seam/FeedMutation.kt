@@ -54,7 +54,7 @@ internal sealed class FeedMutation(
     data class ShowClusters(val clusters: List<Cluster>) : FeedMutation({
         it.copyFeed { copy(isLoading = false, isEmpty = false, clusters = clusters) }
     }) {
-        override fun toString() = "Showing ${clusters.size} clusters"
+        override fun toString() = "ShowClusters(${clusters.size})"
     }
 
     data class ChangeDisplay(val display: PredefinedCollageDisplay) : FeedMutation({

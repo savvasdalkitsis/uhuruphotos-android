@@ -34,12 +34,14 @@ import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.api.model.LightboxS
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.api.model.LightboxSequenceDataSource.Single
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.api.model.LightboxSequenceDataSource.Trash
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.api.model.LightboxSequenceDataSource.UserAlbum
+import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.LightboxAction.AllowStorageManagement
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.LightboxAction.AskForMediaItemRestoration
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.LightboxAction.AskForMediaItemTrashing
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.LightboxAction.ChangedToPage
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.LightboxAction.ClickedOnDetailsEntry
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.LightboxAction.ClickedOnGps
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.LightboxAction.ClickedOnMap
+import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.LightboxAction.DeleteLocalKeepRemoteMediaItem
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.LightboxAction.DismissConfirmationDialogs
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.LightboxAction.DismissErrorMessage
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.LightboxAction.DownloadOriginal
@@ -56,12 +58,8 @@ import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.LightboxAction.ToggleUI
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.LightboxAction.TrashMediaItem
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.LightboxAction.UseMediaItemAs
-import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.LightboxEffect.CopyToClipboard
-import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.LightboxEffect.DownloadingOriginal
-import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.LightboxEffect.HideSystemBars
-import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.LightboxEffect.LaunchMap
-import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.LightboxEffect.NavigateToPerson
-import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.LightboxEffect.ShowSystemBars
+import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.LightboxDeletionCategory.*
+import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.LightboxEffect.*
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.LightboxMutation.ChangeCurrentIndex
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.LightboxMutation.FinishedLoading
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.LightboxMutation.FinishedLoadingDetails
@@ -74,6 +72,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.LightboxMutation.SetOriginalFileIconState
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.LightboxMutation.ShowDeleteConfirmationDialog
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.LightboxMutation.ShowErrorMessage
+import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.LightboxMutation.ShowFullySyncedDeleteConfirmationDialog
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.LightboxMutation.ShowMediaItemFavourite
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.LightboxMutation.ShowMetadata
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.LightboxMutation.ShowMultipleMedia
@@ -81,7 +80,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.LightboxMutation.ShowRestoreButton
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.LightboxMutation.ShowShareIcon
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.LightboxMutation.ShowSingleMediaItem
-import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.LightboxMutation.ShowTrashingConfirmationDialog
+import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.LightboxMutation.ShowRemoteTrashingConfirmationDialog
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.LightboxMutation.ShowUI
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.LightboxMutation.ShowUseAsIcon
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.ui.state.LightboxState
@@ -99,9 +98,13 @@ import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.Med
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItem
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.usecase.MediaUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.usecase.MetadataUseCase
+import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.model.LocalMediaItemDeletion
+import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.model.MissingPermissionsException
+import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.usecase.LocalMediaUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.person.domain.api.usecase.PersonUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.search.domain.api.usecase.SearchUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.trash.domain.api.usecase.TrashUseCase
+import com.savvasdalkitsis.uhuruphotos.foundation.log.api.log
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.ActionHandler
 import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
 import kotlinx.coroutines.Job
@@ -126,10 +129,17 @@ class LightboxActionHandler @Inject constructor(
     private val userAlbumUseCase: UserAlbumUseCase,
     private val autoAlbumUseCase: AutoAlbumUseCase,
     private val trashUseCase: TrashUseCase,
+    private val localMediaUseCase: LocalMediaUseCase,
 ) : ActionHandler<LightboxState, LightboxEffect, LightboxAction, LightboxMutation> {
 
     private var mediaItemType = MediaItemType.default
     private var changePageJob: Job? = null
+    private fun deletionCategory(item: SingleMediaItemState) = when {
+        mediaItemType == TRASHED -> REMOTE_TRASHED
+        item.id.isBothRemoteAndLocal -> FULLY_SYNCED
+        item.id.findLocal != null -> LOCAL_ONLY
+        else -> REMOTE_ONLY
+    }
 
     override fun handleAction(
         state: LightboxState,
@@ -148,7 +158,7 @@ class LightboxActionHandler @Inject constructor(
                         lowResUrl = action.id.toThumbnailUriFromId(action.isVideo),
                         fullResUrl = action.id.toFullSizeUriFromId(action.isVideo),
                         showFavouriteIcon = action.id.preferRemote is Remote,
-                        showDeleteButton =  action.id.preferRemote is Remote,
+                        showDeleteButton = true,
                         mediaItemSyncState = action.id.syncState.takeIf { action.showMediaSyncState }
                     )
                 ))
@@ -256,35 +266,62 @@ class LightboxActionHandler @Inject constructor(
         is ClickedOnGps -> flow {
             effect(CopyToClipboard(action.gps.toString()))
         }
-        AskForMediaItemTrashing -> flowOf(when (mediaItemType) {
-            TRASHED -> ShowDeleteConfirmationDialog
-            else -> ShowTrashingConfirmationDialog
+        AskForMediaItemTrashing -> flowOf(when (deletionCategory(state.currentMediaItem)) {
+            REMOTE_TRASHED -> ShowDeleteConfirmationDialog
+            FULLY_SYNCED -> ShowFullySyncedDeleteConfirmationDialog
+            LOCAL_ONLY -> ShowDeleteConfirmationDialog
+            REMOTE_ONLY -> ShowRemoteTrashingConfirmationDialog
         })
         AskForMediaItemRestoration -> flowOf(ShowRestorationConfirmationDialog)
         DismissConfirmationDialogs -> flowOf(HideAllConfirmationDialogs)
         TrashMediaItem -> processAndRemovePhoto(state, effect) {
-            when (mediaItemType) {
-                TRASHED -> mediaUseCase.deleteMediaItem(state.currentMediaItem.id.preferRemote)
-                else -> mediaUseCase.trashMediaItem(state.currentMediaItem.id.preferRemote)
+            val mediaItem = state.currentMediaItem
+            when (deletionCategory(mediaItem)) {
+                REMOTE_TRASHED -> {
+                    // this just schedules deletion so no need to check result
+                    mediaUseCase.deleteMediaItem(mediaItem.id)
+                    Result.success(Unit)
+                }
+                LOCAL_ONLY -> deleteLocal(mediaItem)
+                FULLY_SYNCED ->
+                    deleteLocal(mediaItem).map {
+                        // this just schedules deletion so no need to check result
+                        trashRemote(mediaItem)
+                    }
+                REMOTE_ONLY -> {
+                    // this just schedules deletion so no need to check result
+                    trashRemote(mediaItem)
+                    Result.success(Unit)
+                    TODO("Need to replace item with new local only version")
+                }
             }
         }
+        DeleteLocalKeepRemoteMediaItem -> processAndRemovePhoto(state, effect) {
+            deleteLocal(state.currentMediaItem)
+            TODO("Need to replace item with new remote only version")
+        }
+        is AllowStorageManagement -> flow {
+            effect(AskForStorageManagementPermission(action.request))
+        }
         RestoreMediaItem -> processAndRemovePhoto(state, effect) {
+            // this just schedules deletion so no need to check result
             mediaUseCase.restoreMediaItem(state.currentMediaItem.id.preferRemote)
+            Result.success(Unit)
         }
         ShareMediaItem -> flow {
-            effect(LightboxEffect.ShareMedia(state.currentMediaItem.fullResUrl))
+            effect(ShareMedia(state.currentMediaItem.fullResUrl))
         }
         UseMediaItemAs -> flow {
-            effect(LightboxEffect.UseMediaAs(state.currentMediaItem.fullResUrl))
+            effect(UseMediaAs(state.currentMediaItem.fullResUrl))
         }
         is FullMediaDataLoaded -> flow {
-            emit(SetOriginalFileIconState(action.photo.id, HIDDEN))
-            if (!(action.photo.id is Remote && action.photo.isVideo)) {
-                emit(ShowShareIcon(action.photo.id))
-                emit(ShowUseAsIcon(action.photo.id))
-                val metadata = metadataUseCase.extractMetadata(action.photo.fullResUrl)
+            emit(SetOriginalFileIconState(action.mediaItemState.id, HIDDEN))
+            if (!(action.mediaItemState.id is Remote && action.mediaItemState.isVideo)) {
+                emit(ShowShareIcon(action.mediaItemState.id))
+                emit(ShowUseAsIcon(action.mediaItemState.id))
+                val metadata = metadataUseCase.extractMetadata(action.mediaItemState.fullResUrl)
                 if (metadata != null) {
-                    emit(ShowMetadata(action.photo.id, metadata))
+                    emit(ShowMetadata(action.mediaItemState.id, metadata))
                 }
             }
         }
@@ -292,11 +329,44 @@ class LightboxActionHandler @Inject constructor(
             effect(NavigateToPerson(action.person.id))
         }
         is DownloadOriginal -> flow {
-            mediaUseCase.downloadOriginal(action.photo.id, action.photo.isVideo)
+            mediaUseCase.downloadOriginal(action.mediaItemState.id, action.mediaItemState.isVideo)
             effect(DownloadingOriginal)
         }
         is ClickedOnDetailsEntry -> flow {
             effect(CopyToClipboard(action.text))
+        }
+    }
+
+    private fun trashRemote(mediaItem: SingleMediaItemState) {
+        mediaUseCase.trashMediaItem(mediaItem.id)
+    }
+
+    private suspend fun FlowCollector<LightboxMutation>.deleteLocal(
+        mediaItem: SingleMediaItemState
+    ): Result<Unit> {
+        val result = localMediaUseCase.deleteLocalMediaItem(
+            mediaItem.id.findLocal!!.value,
+            mediaItem.isVideo
+        )
+        return when (result) {
+            is LocalMediaItemDeletion.Error -> Result.failure(result.e)
+            is LocalMediaItemDeletion.RequiresPermissions -> {
+                emit(LightboxMutation.AskForPermissions(result.deniedPermissions))
+                Result.failure(MissingPermissionsException(result.deniedPermissions))
+            }
+
+            LocalMediaItemDeletion.Success -> Result.success(Unit)
+            is LocalMediaItemDeletion.RequiresManageFilesAccess -> {
+                emit(LightboxMutation.ShowStorageManagementConfirmationDialog(result.request))
+                Result.failure(
+                    MissingPermissionsException(
+                        listOf(
+                            "ACTION_MANAGE_APP_ALL_FILES_ACCESS_PERMISSION",
+                            "ACTION_MANAGE_ALL_FILES_ACCESS_PERMISSION",
+                        )
+                    )
+                )
+            }
         }
     }
 
@@ -318,16 +388,22 @@ class LightboxActionHandler @Inject constructor(
     private fun processAndRemovePhoto(
         state: LightboxState,
         effect: suspend (LightboxEffect) -> Unit,
-        process: suspend () -> Unit,
+        process: suspend FlowCollector<LightboxMutation>.() -> Result<Unit>,
     ) = flow {
         emit(Loading)
         emit(HideAllConfirmationDialogs)
-        process()
+        val result = process()
         emit(FinishedLoading)
-        emit(RemoveMediaItemFromSource(state.currentMediaItem.id))
-        if (state.media.size == 1) {
-            effect(LightboxEffect.NavigateBack)
-        }
+        result
+            .onFailure {
+                log(it)
+            }
+            .onSuccess {
+                emit(RemoveMediaItemFromSource(state.currentMediaItem.id))
+                if (state.media.size == 1) {
+                    effect(LightboxEffect.NavigateBack)
+                }
+            }
     }
 
     context (MediaUseCase)
@@ -359,7 +435,7 @@ class LightboxActionHandler @Inject constructor(
                 isFavourite = photo.isFavourite,
                 isVideo = photo.isVideo,
                 showFavouriteIcon = photo.id.preferRemote is Remote,
-                showDeleteButton = photo.id.preferRemote is Remote,
+                showDeleteButton = true,
                 mediaItemSyncState = photo.syncState.takeIf { action.showMediaSyncState }
             )
         }

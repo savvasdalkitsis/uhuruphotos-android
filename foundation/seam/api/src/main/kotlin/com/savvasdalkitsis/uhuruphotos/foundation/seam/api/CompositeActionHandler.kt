@@ -38,13 +38,19 @@ class CompositeActionHandler<
             handler2.handleAction(state.second, it) { e -> effect(Right(e)) }
         }) {
             is Left -> flows.value.map { m ->
-                Mutation { state ->
-                    m.reduce(state.first) to state.second
+                object : Mutation<Pair<S1, S2>> {
+                    override fun reduce(state: Pair<S1, S2>): Pair<S1, S2> {
+                        return m.reduce(state.first) to state.second
+                    }
+                    override fun toString() = m.toString()
                 }
             }
             is Right -> flows.value.map { m ->
-                Mutation { state ->
-                    state.first to m.reduce(state.second)
+                object : Mutation<Pair<S1, S2>> {
+                    override fun reduce(state: Pair<S1, S2>): Pair<S1, S2> {
+                        return state.first to m.reduce(state.second)
+                    }
+                    override fun toString() = m.toString()
                 }
             }
         }

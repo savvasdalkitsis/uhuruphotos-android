@@ -19,6 +19,7 @@ import androidx.annotation.StringRes
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.ui.state.LightboxState
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.ui.state.OriginalFileIconState
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.ui.state.SingleMediaItemState
+import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.model.StoragePermissionRequest
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaId
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemDetails
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemMetadata
@@ -85,7 +86,15 @@ sealed class LightboxMutation(
         it.copy(showDeleteConfirmationDialog = true)
     })
 
-    object ShowTrashingConfirmationDialog : LightboxMutation({
+    object ShowFullySyncedDeleteConfirmationDialog : LightboxMutation({
+        it.copy(showFullySyncedDeleteConfirmationDialog = true)
+    })
+
+    data class ShowStorageManagementConfirmationDialog(val request: StoragePermissionRequest) : LightboxMutation({
+        it.copy(showStorageManagementConfirmationDialog = request)
+    })
+
+    object ShowRemoteTrashingConfirmationDialog : LightboxMutation({
         it.copy(showTrashingConfirmationDialog = true)
     })
 
@@ -98,6 +107,8 @@ sealed class LightboxMutation(
             showDeleteConfirmationDialog = false,
             showTrashingConfirmationDialog = false,
             showRestorationConfirmationDialog = false,
+            showFullySyncedDeleteConfirmationDialog = false,
+            showStorageManagementConfirmationDialog = null,
         )
     })
 
@@ -186,6 +197,10 @@ sealed class LightboxMutation(
         removed.copyWithIndex(
             index = min(it.currentIndex, removed.media.size - 1)
         )
+    })
+
+    data class AskForPermissions(val deniedPermissions: List<String>) : LightboxMutation({
+        it.copy(missingPermissions = deniedPermissions)
     })
 
     object ShowRestoreButton : LightboxMutation({

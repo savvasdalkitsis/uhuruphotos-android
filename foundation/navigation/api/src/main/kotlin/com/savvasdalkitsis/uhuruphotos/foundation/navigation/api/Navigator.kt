@@ -31,6 +31,10 @@ class Navigator @Inject internal constructor(
         intentLauncher.launch(intent)
     }
 
+    fun navigateTo(intent: Intent, fallbackIntent: Intent) {
+        intentLauncher.launch(intent, fallbackIntent)
+    }
+
     fun navigateTo(route: String) {
         navController.navigate(route)
     }

@@ -32,6 +32,8 @@ sealed class MediaId<T : Serializable> private constructor(
     abstract val serialize: String
     abstract val syncState: MediaItemSyncState
 
+    val isBothRemoteAndLocal: Boolean get() = findLocal != null && findRemote != null
+
     @Parcelize
     data class Remote(override val value: String): MediaId<String>(value) {
         @IgnoredOnParcel

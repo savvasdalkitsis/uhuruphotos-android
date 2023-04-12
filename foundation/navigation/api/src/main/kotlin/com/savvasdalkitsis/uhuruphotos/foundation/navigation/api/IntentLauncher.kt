@@ -39,5 +39,15 @@ internal class IntentLauncher @Inject constructor(
             toaster.show(could_not_find_app_to_open)
         }
     }
+    fun launch(intent: Intent, fallbackIntent: Intent) {
+        try {
+            context.startActivity(intent.apply {
+                addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+            })
+        } catch (e: ActivityNotFoundException) {
+            log(e)
+            launch(fallbackIntent)
+        }
+    }
 
 }

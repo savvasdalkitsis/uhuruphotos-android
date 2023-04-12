@@ -16,15 +16,23 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.implementation.usecase
 
 import android.Manifest
+import android.content.Context
+import android.content.Intent
+import android.net.Uri
 import android.os.Build
+import android.os.Environment
+import android.provider.Settings.ACTION_MANAGE_ALL_FILES_ACCESS_PERMISSION
+import android.provider.Settings.ACTION_MANAGE_APP_ALL_FILES_ACCESS_PERMISSION
 import androidx.work.WorkInfo
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.extensions.async
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.media.local.LocalMediaItemDetails
 import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.model.LocalFolder
 import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.model.LocalMediaFolder
 import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.model.LocalMediaItem
+import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.model.LocalMediaItemDeletion
 import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.model.LocalMediaItems
 import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.model.LocalPermissions
+import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.model.StoragePermissionRequest
 import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.usecase.LocalMediaUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.implementation.model.MediaStoreContentUriResolver
 import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.implementation.module.LocalMediaModule
@@ -37,6 +45,7 @@ import com.savvasdalkitsis.uhuruphotos.foundation.date.api.module.DateModule.Par
 import com.savvasdalkitsis.uhuruphotos.foundation.date.api.module.DateModule.ParsingDateTimeFormat
 import com.savvasdalkitsis.uhuruphotos.foundation.log.api.runCatchingWithLog
 import com.savvasdalkitsis.uhuruphotos.foundation.worker.api.usecase.WorkerStatusUseCase
+import dagger.hilt.android.qualifiers.ApplicationContext
 import dev.shreyaspatil.permissionFlow.PermissionFlow
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
@@ -48,6 +57,8 @@ import org.joda.time.format.DateTimeFormatter
 import javax.inject.Inject
 
 class LocalMediaUseCase @Inject constructor(
+    @ApplicationContext
+    private val context: Context,
     @LocalMediaModule.LocalMediaDateTimeFormat
     private val localMediaDateTimeFormat: DateTimeFormatter,
     @ParsingDateTimeFormat
@@ -76,6 +87,13 @@ class LocalMediaUseCase @Inject constructor(
             Manifest.permission.READ_EXTERNAL_STORAGE,
         )
     private val requiredPermissions = apiQPermissions + apiTPermissions
+    private val requiredDeletePermissions = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+        emptyArray()
+    } else {
+        arrayOf(
+            Manifest.permission.WRITE_EXTERNAL_STORAGE,
+        )
+    }
 
     override fun Long.toContentUri(isVideo: Boolean): String = contentUri(isVideo)
 
@@ -154,7 +172,10 @@ class LocalMediaUseCase @Inject constructor(
     }
 
     override fun observePermissionsState(): Flow<LocalPermissions>  =
-        permissionFlow.getMultiplePermissionState(*requiredPermissions).mapLatest {
+        observePermissionsState(*requiredPermissions)
+
+    private fun observePermissionsState(vararg permissions: String): Flow<LocalPermissions>  =
+        permissionFlow.getMultiplePermissionState(*permissions).mapLatest {
             when {
                 !it.allGranted -> LocalPermissions.RequiresPermissions(it.deniedPermissions)
                 else -> LocalPermissions.Granted
@@ -169,6 +190,44 @@ class LocalMediaUseCase @Inject constructor(
     ) {
         resetMediaStoreIfNeeded()
         localMediaRepository.refresh(onProgressChange)
+    }
+
+    override suspend fun deleteLocalMediaItem(id: Long, video: Boolean): LocalMediaItemDeletion =
+        when {
+            Build.VERSION.SDK_INT >= Build.VERSION_CODES.R ->
+                when {
+                    Environment.isExternalStorageManager() -> attemptDeletion(id, video)
+                    else -> LocalMediaItemDeletion.RequiresManageFilesAccess(
+                        StoragePermissionRequest(
+                            intent = Intent(
+                                ACTION_MANAGE_APP_ALL_FILES_ACCESS_PERMISSION,
+                                Uri.parse("package:${context.packageName}")
+                            ),
+                            fallbackIntent = Intent(
+                                ACTION_MANAGE_ALL_FILES_ACCESS_PERMISSION,
+                            )
+                        )
+                    )
+                }
+            else -> when (val permissions = observePermissionsState(*requiredDeletePermissions).first()) {
+                is LocalPermissions.RequiresPermissions -> LocalMediaItemDeletion.RequiresPermissions(
+                    permissions.deniedPermissions
+                )
+                LocalPermissions.Granted -> attemptDeletion(id, video)
+            }
+        }
+
+    private fun attemptDeletion(
+        id: Long,
+        video: Boolean
+    ): LocalMediaItemDeletion {
+        val result = localMediaRepository.deleteItem(id, video)
+        return when {
+            result.isSuccess -> LocalMediaItemDeletion.Success
+            else -> LocalMediaItemDeletion.Error(
+                result.exceptionOrNull() ?: UnknownError()
+            )
+        }
     }
 
     private fun Long.contentUri(isVideo: Boolean) =
