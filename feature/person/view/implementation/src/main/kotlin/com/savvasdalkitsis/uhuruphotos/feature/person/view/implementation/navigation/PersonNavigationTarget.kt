@@ -15,34 +15,29 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.person.view.implementation.navigation
 
-import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import com.savvasdalkitsis.uhuruphotos.feature.person.view.api.navigation.PersonNavigationTarget
 import com.savvasdalkitsis.uhuruphotos.feature.person.view.api.navigation.PersonNavigationTarget.personId
-import com.savvasdalkitsis.uhuruphotos.feature.person.view.implementation.seam.PersonAction
-import com.savvasdalkitsis.uhuruphotos.feature.person.view.implementation.seam.PersonAction.LoadPerson
-import com.savvasdalkitsis.uhuruphotos.feature.person.view.implementation.seam.PersonEffect
-import com.savvasdalkitsis.uhuruphotos.feature.person.view.implementation.seam.PersonEffectHandler
+import com.savvasdalkitsis.uhuruphotos.feature.person.view.implementation.seam.actions.PersonAction
+import com.savvasdalkitsis.uhuruphotos.feature.person.view.implementation.seam.actions.LoadPerson
 import com.savvasdalkitsis.uhuruphotos.feature.person.view.implementation.ui.Person
 import com.savvasdalkitsis.uhuruphotos.feature.person.view.implementation.ui.state.PersonState
 import com.savvasdalkitsis.uhuruphotos.feature.person.view.implementation.viewmodel.PersonViewModel
+import com.savvasdalkitsis.uhuruphotos.feature.settings.domain.api.usecase.SettingsUseCase
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.NavigationTarget
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.navigationTarget
 import javax.inject.Inject
 
 class PersonNavigationTarget @Inject constructor(
-    private val settingsUseCase: com.savvasdalkitsis.uhuruphotos.feature.settings.domain.api.usecase.SettingsUseCase,
-    private val effectHandler: PersonEffectHandler,
+    private val settingsUseCase: SettingsUseCase,
 ) : NavigationTarget {
 
     override suspend fun NavGraphBuilder.create(navHostController: NavHostController) {
-        navigationTarget<PersonState, PersonEffect, PersonAction, PersonViewModel>(
-            name = PersonNavigationTarget.registrationName,
+        navigationTarget<PersonState, PersonAction, PersonViewModel>(
+            route = PersonNavigationTarget.registrationName,
             themeMode = settingsUseCase.observeThemeModeState(),
-            effects = effectHandler,
             initializer = { navBackStackEntry, action -> action(LoadPerson(navBackStackEntry.personId)) },
-            createModel = { hiltViewModel() },
         ) { state, actions ->
             Person(state, actions)
         }

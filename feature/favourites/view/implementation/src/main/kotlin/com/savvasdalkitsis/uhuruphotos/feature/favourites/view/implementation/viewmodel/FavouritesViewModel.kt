@@ -17,21 +17,22 @@ package com.savvasdalkitsis.uhuruphotos.feature.favourites.view.implementation.v
 
 import androidx.lifecycle.ViewModel
 import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.CollageState
-import com.savvasdalkitsis.uhuruphotos.feature.favourites.view.implementation.seam.FavouritesActionHandler
-import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.GalleryAction
-import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.GalleryEffect
-import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.GalleryMutation
+import com.savvasdalkitsis.uhuruphotos.feature.favourites.view.implementation.seam.FavouritesActionsContext
+import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.GalleryEffectHandler
+import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.action.GalleryAction
 import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.ui.state.GalleryState
+import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.ActionHandlerWithContext
+import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.HasActionableState
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.Seam
-import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.handler
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
 @HiltViewModel
 internal class FavouritesViewModel @Inject constructor(
-    autoAlbumActionHandler: FavouritesActionHandler,
-) : ViewModel(),
-    Seam<GalleryState, GalleryEffect, GalleryAction, GalleryMutation> by handler(
-        autoAlbumActionHandler,
-        GalleryState(collageState = CollageState())
-    )
+    favouritesActionsContext: FavouritesActionsContext,
+    effectHandler: GalleryEffectHandler,
+) : ViewModel(), HasActionableState<GalleryState, GalleryAction> by Seam(
+    ActionHandlerWithContext(favouritesActionsContext),
+    effectHandler,
+    GalleryState(collageState = CollageState())
+)

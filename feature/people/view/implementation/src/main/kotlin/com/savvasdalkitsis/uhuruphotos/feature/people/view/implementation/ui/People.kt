@@ -27,11 +27,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.savvasdalkitsis.uhuruphotos.feature.people.view.api.ui.PersonThumbnail
-import com.savvasdalkitsis.uhuruphotos.feature.people.view.implementation.seam.PeopleAction
-import com.savvasdalkitsis.uhuruphotos.feature.people.view.implementation.seam.PeopleAction.NavigateBack
-import com.savvasdalkitsis.uhuruphotos.feature.people.view.implementation.seam.PeopleAction.PersonSelected
-import com.savvasdalkitsis.uhuruphotos.feature.people.view.implementation.seam.PeopleAction.SwipeToRefresh
-import com.savvasdalkitsis.uhuruphotos.feature.people.view.implementation.seam.PeopleAction.ToggleSortOrder
+import com.savvasdalkitsis.uhuruphotos.feature.people.view.implementation.seam.actions.PeopleAction
+import com.savvasdalkitsis.uhuruphotos.feature.people.view.implementation.seam.actions.NavigateBack
+import com.savvasdalkitsis.uhuruphotos.feature.people.view.implementation.seam.actions.PersonSelected
+import com.savvasdalkitsis.uhuruphotos.feature.people.view.implementation.seam.actions.SwipeToRefresh
+import com.savvasdalkitsis.uhuruphotos.feature.people.view.implementation.seam.actions.ToggleSortOrder
 import com.savvasdalkitsis.uhuruphotos.feature.people.view.implementation.ui.state.PeopleState
 import com.savvasdalkitsis.uhuruphotos.feature.people.view.implementation.ui.state.SortOrder.ASCENDING
 import com.savvasdalkitsis.uhuruphotos.feature.people.view.implementation.ui.state.SortOrder.DESCENDING

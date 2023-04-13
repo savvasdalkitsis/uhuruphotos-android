@@ -16,21 +16,22 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.viewmodel
 
 import androidx.lifecycle.ViewModel
-import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.SettingsAction
-import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.SettingsActionHandler
-import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.SettingsEffect
-import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.SettingsMutation
+import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.SettingsActionsContext
+import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.SettingsEffectHandler
+import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.actions.SettingsAction
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.ui.state.SettingsState
+import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.ActionHandlerWithContext
+import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.HasActionableState
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.Seam
-import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.handler
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
 @HiltViewModel
 internal class SettingsViewModel @Inject constructor(
-    handler: SettingsActionHandler,
-) : ViewModel(),
-    Seam<SettingsState, SettingsEffect, SettingsAction, SettingsMutation> by handler(
-        handler,
-        SettingsState()
-    )
+    settingsActionsContext: SettingsActionsContext,
+    effectHandler: SettingsEffectHandler,
+) : ViewModel(), HasActionableState<SettingsState, SettingsAction> by Seam(
+    ActionHandlerWithContext(settingsActionsContext),
+    effectHandler,
+    SettingsState()
+)

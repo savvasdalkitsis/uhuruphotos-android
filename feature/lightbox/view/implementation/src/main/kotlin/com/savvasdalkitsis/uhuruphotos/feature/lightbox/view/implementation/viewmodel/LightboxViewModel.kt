@@ -16,21 +16,22 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.viewmodel
 
 import androidx.lifecycle.ViewModel
-import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.LightboxAction
-import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.LightboxActionHandler
-import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.LightboxEffect
-import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.LightboxMutation
+import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.LightboxActionsContext
+import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.LightboxEffectHandler
+import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.actions.LightboxAction
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.ui.state.LightboxState
+import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.ActionHandlerWithContext
+import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.HasActionableState
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.Seam
-import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.handler
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
 @HiltViewModel
-class LightboxViewModel @Inject constructor(
-    handler: LightboxActionHandler,
-) : ViewModel(),
-    Seam<LightboxState, LightboxEffect, LightboxAction, LightboxMutation> by handler(
-        handler,
-        LightboxState()
-    )
+internal class LightboxViewModel @Inject constructor(
+    lightboxActionsContext: LightboxActionsContext,
+    effectHandler: LightboxEffectHandler,
+) : ViewModel(), HasActionableState<LightboxState, LightboxAction> by Seam(
+    ActionHandlerWithContext(lightboxActionsContext),
+    effectHandler,
+    LightboxState()
+)

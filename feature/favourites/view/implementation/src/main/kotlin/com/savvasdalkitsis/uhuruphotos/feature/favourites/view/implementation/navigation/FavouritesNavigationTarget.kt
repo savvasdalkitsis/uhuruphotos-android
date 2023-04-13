@@ -15,36 +15,31 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.favourites.view.implementation.navigation
 
-import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import com.savvasdalkitsis.uhuruphotos.feature.favourites.view.api.navigation.FavouritesNavigationTarget
 import com.savvasdalkitsis.uhuruphotos.feature.favourites.view.implementation.viewmodel.FavouritesViewModel
-import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.GalleryAction
-import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.GalleryAction.LoadCollage
-import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.GalleryEffect
-import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.GalleryEffectsHandler
+import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.action.GalleryAction
+import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.action.LoadCollage
 import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.GalleryId
 import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.ui.Gallery
 import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.ui.state.GalleryState
+import com.savvasdalkitsis.uhuruphotos.feature.settings.domain.api.usecase.SettingsUseCase
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.NavigationTarget
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.navigationTarget
 import javax.inject.Inject
 
 internal class FavouritesNavigationTarget @Inject constructor(
-    private val effectsHandler: GalleryEffectsHandler,
-    private val settingsUseCase: com.savvasdalkitsis.uhuruphotos.feature.settings.domain.api.usecase.SettingsUseCase,
+    private val settingsUseCase: SettingsUseCase,
 ) : NavigationTarget {
 
     override suspend fun NavGraphBuilder.create(navHostController: NavHostController) =
-        navigationTarget<GalleryState, GalleryEffect, GalleryAction, FavouritesViewModel>(
-            name = FavouritesNavigationTarget.registrationName,
-            effects = effectsHandler,
+        navigationTarget<GalleryState, GalleryAction, FavouritesViewModel>(
+            route = FavouritesNavigationTarget.registrationName,
             themeMode = settingsUseCase.observeThemeModeState(),
             initializer = { _, action ->
                 action(LoadCollage(GalleryId(0, "favourites")))
-            },
-            createModel = { hiltViewModel() }
+            }
         ) { state, action ->
             Gallery(
                 state = state,

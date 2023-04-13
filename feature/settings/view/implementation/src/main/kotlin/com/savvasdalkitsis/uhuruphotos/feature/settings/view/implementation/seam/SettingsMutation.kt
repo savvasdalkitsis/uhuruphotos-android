@@ -24,7 +24,7 @@ import com.savvasdalkitsis.uhuruphotos.foundation.map.api.model.MapProvider
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.Mutation
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.theme.ThemeMode
 
-internal sealed class SettingsMutation(
+sealed class SettingsMutation(
     mutation: Mutation<SettingsState>,
 ) : Mutation<SettingsState> by mutation {
 

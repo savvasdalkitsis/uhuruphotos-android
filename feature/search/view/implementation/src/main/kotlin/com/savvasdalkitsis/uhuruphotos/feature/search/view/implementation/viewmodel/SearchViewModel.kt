@@ -16,35 +16,40 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.feature.search.view.implementation.viewmodel
 
 import androidx.lifecycle.ViewModel
-import com.savvasdalkitsis.uhuruphotos.feature.account.view.api.seam.AccountOverviewAction
-import com.savvasdalkitsis.uhuruphotos.feature.account.view.api.seam.AccountOverviewActionHandler
-import com.savvasdalkitsis.uhuruphotos.feature.account.view.api.seam.AccountOverviewEffect
+import com.savvasdalkitsis.uhuruphotos.feature.account.view.api.seam.AccountOverviewActionsContext
+import com.savvasdalkitsis.uhuruphotos.feature.account.view.api.seam.AccountOverviewEffectHandler
+import com.savvasdalkitsis.uhuruphotos.feature.account.view.api.seam.actions.AccountOverviewAction
 import com.savvasdalkitsis.uhuruphotos.feature.account.view.api.ui.state.AccountOverviewState
-import com.savvasdalkitsis.uhuruphotos.feature.search.view.implementation.seam.SearchAction
-import com.savvasdalkitsis.uhuruphotos.feature.search.view.implementation.seam.SearchActionHandler
-import com.savvasdalkitsis.uhuruphotos.feature.search.view.implementation.seam.SearchEffect
+import com.savvasdalkitsis.uhuruphotos.feature.search.view.implementation.seam.SearchActionsContext
+import com.savvasdalkitsis.uhuruphotos.feature.search.view.implementation.seam.SearchEffectHandler
+import com.savvasdalkitsis.uhuruphotos.feature.search.view.implementation.seam.actions.SearchAction
 import com.savvasdalkitsis.uhuruphotos.feature.search.view.implementation.ui.state.SearchState
+import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.ActionHandlerWithContext
+import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.HasActionableState
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.CompositeActionHandler
+import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.CompositeEffectHandler
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.Either
-import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.Mutation
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.Seam
-import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.handler
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
 @HiltViewModel
 class SearchViewModel @Inject constructor(
-    searchActionHandler: SearchActionHandler,
-    accountOverviewActionHandler: AccountOverviewActionHandler,
-) : ViewModel(), Seam<
+    searchActionsContext: SearchActionsContext,
+    accountOverviewActionsContext: AccountOverviewActionsContext,
+    searchEffectHandler: SearchEffectHandler,
+    accountOverviewEffectHandler: AccountOverviewEffectHandler,
+) : ViewModel(), HasActionableState<
         Pair<SearchState, AccountOverviewState>,
-        Either<SearchEffect, AccountOverviewEffect>,
         Either<SearchAction, AccountOverviewAction>,
-        Mutation<Pair<SearchState, AccountOverviewState>>,
-        > by handler(
+> by Seam(
     CompositeActionHandler(
-        handler1 = searchActionHandler,
-        handler2 = accountOverviewActionHandler,
+        ActionHandlerWithContext(searchActionsContext),
+        ActionHandlerWithContext(accountOverviewActionsContext),
+    ),
+    CompositeEffectHandler(
+        searchEffectHandler,
+        accountOverviewEffectHandler,
     ),
     SearchState() to AccountOverviewState()
 )

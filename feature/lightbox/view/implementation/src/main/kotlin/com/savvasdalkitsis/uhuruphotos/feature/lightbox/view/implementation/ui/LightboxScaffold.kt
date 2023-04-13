@@ -22,7 +22,8 @@ import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass.Companion
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.LightboxAction
+import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.actions.LightboxAction
+import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.actions.NavigateBack
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.ui.state.LightboxState
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.BackNavButton
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.CommonScaffold
@@ -59,7 +60,7 @@ internal fun LightboxScaffold(
         topBarDisplayed = state.showUI,
         bottomBarDisplayed = state.showUI,
         navigationIcon = {
-            BackNavButton { action(LightboxAction.NavigateBack) }
+            BackNavButton { action(NavigateBack) }
         },
     ) { contentPadding ->
         when {

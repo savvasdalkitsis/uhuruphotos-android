@@ -16,21 +16,22 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.feature.catalogue.auto.view.implementation.viewmodel
 
 import androidx.lifecycle.ViewModel
-import com.savvasdalkitsis.uhuruphotos.feature.catalogue.auto.view.implementation.seam.AutoAlbumsAction
-import com.savvasdalkitsis.uhuruphotos.feature.catalogue.auto.view.implementation.seam.AutoAlbumsActionHandler
-import com.savvasdalkitsis.uhuruphotos.feature.catalogue.auto.view.implementation.seam.AutoAlbumsEffect
-import com.savvasdalkitsis.uhuruphotos.feature.catalogue.auto.view.implementation.seam.AutoAlbumsMutation
+import com.savvasdalkitsis.uhuruphotos.feature.catalogue.auto.view.implementation.seam.AutoAlbumsActionsContext
+import com.savvasdalkitsis.uhuruphotos.feature.catalogue.auto.view.implementation.seam.AutoAlbumsEffectHandler
 import com.savvasdalkitsis.uhuruphotos.feature.catalogue.auto.view.implementation.seam.AutoAlbumsState
+import com.savvasdalkitsis.uhuruphotos.feature.catalogue.auto.view.implementation.seam.actions.AutoAlbumsAction
+import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.ActionHandlerWithContext
+import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.HasActionableState
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.Seam
-import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.handler
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
 @HiltViewModel
-class AutoAlbumsViewModel @Inject constructor(
-    handler: AutoAlbumsActionHandler,
-) : ViewModel(),
-    Seam<AutoAlbumsState, AutoAlbumsEffect, AutoAlbumsAction, AutoAlbumsMutation> by handler(
-        handler,
-        AutoAlbumsState()
-    )
+internal class AutoAlbumsViewModel @Inject constructor(
+    autoAlbumsActionsContext: AutoAlbumsActionsContext,
+    effectHandler: AutoAlbumsEffectHandler,
+) : ViewModel(), HasActionableState<AutoAlbumsState, AutoAlbumsAction> by Seam(
+    ActionHandlerWithContext(autoAlbumsActionsContext),
+    effectHandler,
+    AutoAlbumsState()
+)

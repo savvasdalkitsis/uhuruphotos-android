@@ -6,7 +6,6 @@ import androidx.compose.animation.scaleIn
 import androidx.compose.animation.scaleOut
 import androidx.compose.animation.slideIn
 import androidx.compose.animation.slideOut
-import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.api.navigation.LightboxNavigationTarget
@@ -17,9 +16,8 @@ import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.api.navigation.Ligh
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.api.navigation.LightboxNavigationTarget.offsetFrom
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.api.navigation.LightboxNavigationTarget.scale
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.api.navigation.LightboxNavigationTarget.showMediaSyncState
-import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.LightboxAction
-import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.LightboxEffect
-import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.LightboxEffectsHandler
+import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.actions.LightboxAction
+import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.actions.LoadMediaItem
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.ui.Lightbox
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.ui.state.LightboxState
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.viewmodel.LightboxViewModel
@@ -30,14 +28,11 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import javax.inject.Inject
 
 class LightboxNavigationTarget @Inject constructor(
-    private val effectsHandler: LightboxEffectsHandler,
 ) : NavigationTarget {
 
     override suspend fun NavGraphBuilder.create(navHostController: NavHostController) {
-        navigationTarget<LightboxState, LightboxEffect, LightboxAction, LightboxViewModel>(
-            name = LightboxNavigationTarget.registrationName,
-            effects = effectsHandler,
-            themeMode = MutableStateFlow(ThemeMode.DARK_MODE),
+        navigationTarget<LightboxState, LightboxAction, LightboxViewModel>(
+            route = LightboxNavigationTarget.registrationName,
             enterTransition = {
                 slideIn(initialOffset = { fullSize ->
                     targetState.center.offsetFrom(fullSize)
@@ -50,10 +45,11 @@ class LightboxNavigationTarget @Inject constructor(
                 }) +
                         scaleOut(targetScale = initialState.scale) + fadeOut()
             },
+            themeMode = MutableStateFlow(ThemeMode.DARK_MODE),
             initializer = { navBackStackEntry, actions ->
                 with(navBackStackEntry) {
                     actions(
-                        LightboxAction.LoadMediaItem(
+                        LoadMediaItem(
                             mediaItemId,
                             isVideo,
                             datasource,
@@ -61,8 +57,7 @@ class LightboxNavigationTarget @Inject constructor(
                         )
                     )
                 }
-            },
-            createModel = { hiltViewModel() }
+            }
         ) { state, actions ->
             Lightbox(state, actions)
         }

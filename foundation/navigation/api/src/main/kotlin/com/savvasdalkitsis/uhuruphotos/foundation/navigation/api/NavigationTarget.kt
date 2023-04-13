@@ -25,38 +25,35 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.ViewModel
 import androidx.navigation.NavBackStackEntry
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import com.google.accompanist.navigation.animation.composable
-import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.EffectHandler
-import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.Seam
+import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.HasActionableState
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.theme.AppTheme
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.theme.ThemeMode
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.theme.ThemeMode.DARK_MODE
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.theme.ThemeMode.FOLLOW_SYSTEM
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.theme.ThemeMode.LIGHT_MODE
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.cancellable
 import kotlinx.coroutines.launch
 
-fun <S : Any, E : Any, A : Any, VM> NavGraphBuilder.navigationTarget(
-    name: String,
-    enterTransition: (AnimatedContentScope<NavBackStackEntry>.() -> EnterTransition?)? = null,
-    exitTransition: (AnimatedContentScope<NavBackStackEntry>.() -> ExitTransition?)? = null,
+inline fun <S : Any, A : Any, reified VM> NavGraphBuilder.navigationTarget(
+    route: String,
+    noinline enterTransition: (AnimatedContentScope<NavBackStackEntry>.() -> EnterTransition?)? = null,
+    noinline exitTransition: (AnimatedContentScope<NavBackStackEntry>.() -> ExitTransition?)? = null,
     themeMode: StateFlow<ThemeMode>,
-    effects: EffectHandler<E>,
-    initializer: (NavBackStackEntry, (A) -> Unit) -> Unit = { _, _ -> },
-    createModel: @Composable () -> VM,
-    content: @Composable (state: S, actions: (A) -> Unit) -> Unit,
-) where VM : ViewModel, VM : Seam<S, E, A, *> {
+    crossinline initializer: (NavBackStackEntry, (A) -> Unit) -> Unit = { _, _ -> },
+    crossinline content: @Composable (state: S, actions: (A) -> Unit) -> Unit,
+) where VM : ViewModel, VM : HasActionableState<S, A> {
     composable(
-        name,
+        route,
         enterTransition = enterTransition,
         exitTransition = exitTransition,
     ) { navBackStackEntry ->
-        val model = createModel()
+        val model = hiltViewModel<VM>()
         val scope = rememberCoroutineScope()
         val action: (A) -> Unit = {
             scope.launch {
@@ -79,9 +76,6 @@ fun <S : Any, E : Any, A : Any, VM> NavGraphBuilder.navigationTarget(
         LaunchedEffect(Unit) {
             keyboard?.hide()
             initializer(navBackStackEntry, action)
-            model.effects.cancellable().collect {
-                effects.handleEffect(it)
-            }
         }
     }
 }

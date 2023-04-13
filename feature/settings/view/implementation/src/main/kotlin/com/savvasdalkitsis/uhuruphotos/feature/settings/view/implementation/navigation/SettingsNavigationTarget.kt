@@ -15,14 +15,12 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.navigation
 
-import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
+import com.savvasdalkitsis.uhuruphotos.feature.settings.domain.api.usecase.SettingsUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.api.navigation.SettingsNavigationTarget
-import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.SettingsAction
-import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.SettingsAction.LoadSettings
-import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.SettingsEffect
-import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.SettingsEffectHandler
+import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.actions.SettingsAction
+import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.actions.LoadSettings
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.ui.Settings
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.ui.controller.SettingsViewStateController
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.ui.state.SettingsState
@@ -32,18 +30,15 @@ import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.navigationTarge
 import javax.inject.Inject
 
 internal class SettingsNavigationTarget @Inject constructor(
-    private val settingsEffectHandler: SettingsEffectHandler,
-    private val settingsUseCase: com.savvasdalkitsis.uhuruphotos.feature.settings.domain.api.usecase.SettingsUseCase,
+    private val settingsUseCase: SettingsUseCase,
     private val settingsViewStateController: SettingsViewStateController,
 ) : NavigationTarget {
 
     override suspend fun NavGraphBuilder.create(navHostController: NavHostController) {
-        navigationTarget<SettingsState, SettingsEffect, SettingsAction, SettingsViewModel>(
-            name = SettingsNavigationTarget.registrationName,
-            effects = settingsEffectHandler,
+        navigationTarget<SettingsState, SettingsAction, SettingsViewModel>(
+            route = SettingsNavigationTarget.registrationName,
             themeMode = settingsUseCase.observeThemeModeState(),
-            initializer = { _, actions -> actions(LoadSettings) },
-            createModel = { hiltViewModel() }
+            initializer = { _, actions -> actions(LoadSettings) }
         ) { state, actions ->
             Settings(settingsViewStateController, state, actions)
         }

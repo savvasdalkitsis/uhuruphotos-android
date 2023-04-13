@@ -16,21 +16,22 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.feature.person.view.implementation.viewmodel
 
 import androidx.lifecycle.ViewModel
-import com.savvasdalkitsis.uhuruphotos.feature.person.view.implementation.seam.PersonAction
-import com.savvasdalkitsis.uhuruphotos.feature.person.view.implementation.seam.PersonActionHandler
-import com.savvasdalkitsis.uhuruphotos.feature.person.view.implementation.seam.PersonEffect
-import com.savvasdalkitsis.uhuruphotos.feature.person.view.implementation.seam.PersonMutation
+import com.savvasdalkitsis.uhuruphotos.feature.person.view.implementation.seam.PersonActionsContext
+import com.savvasdalkitsis.uhuruphotos.feature.person.view.implementation.seam.PersonEffectHandler
+import com.savvasdalkitsis.uhuruphotos.feature.person.view.implementation.seam.actions.PersonAction
 import com.savvasdalkitsis.uhuruphotos.feature.person.view.implementation.ui.state.PersonState
+import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.ActionHandlerWithContext
+import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.HasActionableState
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.Seam
-import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.handler
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
 @HiltViewModel
 class PersonViewModel @Inject constructor(
-    personActionHandler: PersonActionHandler,
-) : ViewModel(),
-    Seam<PersonState, PersonEffect, PersonAction, PersonMutation> by handler(
-        personActionHandler,
-        PersonState()
-    )
+    personActionsContext: PersonActionsContext,
+    effectHandler: PersonEffectHandler,
+) : ViewModel(), HasActionableState<PersonState, PersonAction> by Seam(
+    ActionHandlerWithContext(personActionsContext),
+    effectHandler,
+    PersonState()
+)

@@ -19,7 +19,7 @@ import android.os.Parcelable
 import dev.zacsweers.redacted.annotations.Redacted
 import kotlinx.parcelize.Parcelize
 
-internal sealed class ServerState(
+sealed class ServerState(
     open val isLoggingEnabled: Boolean = false,
 ) : Parcelable {
     @Parcelize

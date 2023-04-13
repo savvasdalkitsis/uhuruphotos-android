@@ -17,29 +17,40 @@ package com.savvasdalkitsis.uhuruphotos.feature.hidden.view.implementation.viewm
 
 import androidx.lifecycle.ViewModel
 import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.CollageState
-import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.GalleryAction
-import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.GalleryEffect
+import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.GalleryEffectHandler
+import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.action.GalleryAction
 import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.ui.state.GalleryState
-import com.savvasdalkitsis.uhuruphotos.feature.hidden.view.implementation.seam.HiddenPhotosAction
-import com.savvasdalkitsis.uhuruphotos.feature.hidden.view.implementation.seam.HiddenPhotosCompositeActionHandler
-import com.savvasdalkitsis.uhuruphotos.feature.hidden.view.implementation.seam.HiddenPhotosEffect
+import com.savvasdalkitsis.uhuruphotos.feature.hidden.view.implementation.seam.HiddenPhotosActionsContext
+import com.savvasdalkitsis.uhuruphotos.feature.hidden.view.implementation.seam.HiddenPhotosAlbumPageActionsContext
+import com.savvasdalkitsis.uhuruphotos.feature.hidden.view.implementation.seam.HiddenPhotosEffectHandler
 import com.savvasdalkitsis.uhuruphotos.feature.hidden.view.implementation.seam.HiddenPhotosState
+import com.savvasdalkitsis.uhuruphotos.feature.hidden.view.implementation.seam.actions.HiddenPhotosAction
+import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.ActionHandlerWithContext
+import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.HasActionableState
+import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.CompositeActionHandler
+import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.CompositeEffectHandler
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.Either
-import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.Mutation
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.Seam
-import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.handler
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
 @HiltViewModel
 internal class HiddenPhotosViewModel @Inject constructor(
-    hiddenPhotosCompositeActionHandler: HiddenPhotosCompositeActionHandler,
-) : ViewModel(), Seam<
+    hiddenPhotosAlbumPageActionsContext: HiddenPhotosAlbumPageActionsContext,
+    hiddenPhotosActionsContext: HiddenPhotosActionsContext,
+    effectHandler: HiddenPhotosEffectHandler,
+    galleryEffectHandler: GalleryEffectHandler,
+) : ViewModel(), HasActionableState<
         Pair<GalleryState, HiddenPhotosState>,
-        Either<GalleryEffect, HiddenPhotosEffect>,
         Either<GalleryAction, HiddenPhotosAction>,
-        Mutation<Pair<GalleryState, HiddenPhotosState>>
-        > by handler(
-    hiddenPhotosCompositeActionHandler,
+> by Seam(
+    CompositeActionHandler(
+        ActionHandlerWithContext(hiddenPhotosAlbumPageActionsContext),
+        ActionHandlerWithContext(hiddenPhotosActionsContext),
+    ),
+    CompositeEffectHandler(
+        galleryEffectHandler,
+        effectHandler,
+    ),
     GalleryState(collageState = CollageState()) to HiddenPhotosState()
 )

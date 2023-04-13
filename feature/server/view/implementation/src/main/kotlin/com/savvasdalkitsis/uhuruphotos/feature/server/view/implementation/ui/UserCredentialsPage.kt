@@ -35,9 +35,9 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import com.savvasdalkitsis.uhuruphotos.feature.server.view.implementation.seam.ServerAction
-import com.savvasdalkitsis.uhuruphotos.feature.server.view.implementation.seam.ServerAction.Login
-import com.savvasdalkitsis.uhuruphotos.feature.server.view.implementation.seam.ServerAction.RequestServerUrlChange
+import com.savvasdalkitsis.uhuruphotos.feature.server.view.implementation.seam.actions.ServerAction
+import com.savvasdalkitsis.uhuruphotos.feature.server.view.implementation.seam.actions.Login
+import com.savvasdalkitsis.uhuruphotos.feature.server.view.implementation.seam.actions.RequestServerUrlChange
 import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
 
 @Composable

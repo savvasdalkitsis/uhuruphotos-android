@@ -16,22 +16,23 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.feature.album.user.view.implementation.viewmodel
 
 import androidx.lifecycle.ViewModel
-import com.savvasdalkitsis.uhuruphotos.feature.album.user.view.implementation.seam.UserAlbumActionHandler
+import com.savvasdalkitsis.uhuruphotos.feature.album.user.view.implementation.seam.UserAlbumActionsContext
 import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.CollageState
-import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.GalleryAction
-import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.GalleryEffect
-import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.GalleryMutation
+import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.GalleryEffectHandler
+import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.action.GalleryAction
 import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.ui.state.GalleryState
+import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.ActionHandlerWithContext
+import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.HasActionableState
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.Seam
-import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.handler
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
 @HiltViewModel
 internal class UserAlbumViewModel @Inject constructor(
-    userAlbumActionHandler: UserAlbumActionHandler,
-) : ViewModel(),
-    Seam<GalleryState, GalleryEffect, GalleryAction, GalleryMutation> by handler(
-        userAlbumActionHandler,
-        GalleryState(collageState = CollageState())
-    )
+    userAlbumActionsContext: UserAlbumActionsContext,
+    effectHandler: GalleryEffectHandler,
+) : ViewModel(), HasActionableState<GalleryState, GalleryAction> by Seam(
+    ActionHandlerWithContext(userAlbumActionsContext),
+    effectHandler,
+    GalleryState(collageState = CollageState())
+)

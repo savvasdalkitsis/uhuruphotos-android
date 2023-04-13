@@ -17,20 +17,21 @@ package com.savvasdalkitsis.uhuruphotos.feature.catalogue.user.view.implementati
 
 import androidx.lifecycle.ViewModel
 import com.savvasdalkitsis.uhuruphotos.feature.catalogue.user.view.implementation.seam.UserAlbumsAction
-import com.savvasdalkitsis.uhuruphotos.feature.catalogue.user.view.implementation.seam.UserAlbumsActionHandler
-import com.savvasdalkitsis.uhuruphotos.feature.catalogue.user.view.implementation.seam.UserAlbumsEffect
-import com.savvasdalkitsis.uhuruphotos.feature.catalogue.user.view.implementation.seam.UserAlbumsMutation
+import com.savvasdalkitsis.uhuruphotos.feature.catalogue.user.view.implementation.seam.UserAlbumsActionsContext
+import com.savvasdalkitsis.uhuruphotos.feature.catalogue.user.view.implementation.seam.UserAlbumsEffectHandler
 import com.savvasdalkitsis.uhuruphotos.feature.catalogue.user.view.implementation.seam.UserAlbumsState
+import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.ActionHandlerWithContext
+import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.HasActionableState
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.Seam
-import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.handler
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
 @HiltViewModel
 class UserAlbumsViewModel @Inject constructor(
-    handler: UserAlbumsActionHandler,
-) : ViewModel(),
-    Seam<UserAlbumsState, UserAlbumsEffect, UserAlbumsAction, UserAlbumsMutation> by handler(
-        handler,
-        UserAlbumsState()
-    )
+    userAlbumsActionsContext: UserAlbumsActionsContext,
+    effectHandler: UserAlbumsEffectHandler,
+) : ViewModel(), HasActionableState<UserAlbumsState, UserAlbumsAction> by Seam(
+    ActionHandlerWithContext(userAlbumsActionsContext),
+    effectHandler,
+    UserAlbumsState()
+)

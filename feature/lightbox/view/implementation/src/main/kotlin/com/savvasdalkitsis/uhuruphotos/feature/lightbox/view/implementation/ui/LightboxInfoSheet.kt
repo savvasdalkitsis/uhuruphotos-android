@@ -33,8 +33,8 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.unit.dp
-import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.LightboxAction
-import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.LightboxAction.HideInfo
+import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.actions.LightboxAction
+import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.actions.HideInfo
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.ui.info.LightboxInfoDateTime
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.ui.info.LightboxInfoGps
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.ui.info.LightboxInfoLocation

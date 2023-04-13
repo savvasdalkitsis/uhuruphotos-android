@@ -19,7 +19,7 @@ import androidx.compose.ui.geometry.Offset
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaId
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.state.CelState
 
-internal sealed class FeedEffect {
+sealed class FeedEffect {
     data class OpenLightbox(
         val id: MediaId<*>,
         val center: Offset,

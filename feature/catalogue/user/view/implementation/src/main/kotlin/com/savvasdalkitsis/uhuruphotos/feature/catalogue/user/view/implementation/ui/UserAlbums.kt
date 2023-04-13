@@ -17,9 +17,9 @@ package com.savvasdalkitsis.uhuruphotos.feature.catalogue.user.view.implementati
 
 import androidx.compose.runtime.Composable
 import com.savvasdalkitsis.uhuruphotos.feature.catalogue.user.view.implementation.seam.UserAlbumsAction
-import com.savvasdalkitsis.uhuruphotos.feature.catalogue.user.view.implementation.seam.UserAlbumsAction.ChangeSorting
-import com.savvasdalkitsis.uhuruphotos.feature.catalogue.user.view.implementation.seam.UserAlbumsAction.NavigateBack
-import com.savvasdalkitsis.uhuruphotos.feature.catalogue.user.view.implementation.seam.UserAlbumsAction.Refresh
+import com.savvasdalkitsis.uhuruphotos.feature.catalogue.user.view.implementation.seam.ChangeSorting
+import com.savvasdalkitsis.uhuruphotos.feature.catalogue.user.view.implementation.seam.NavigateBack
+import com.savvasdalkitsis.uhuruphotos.feature.catalogue.user.view.implementation.seam.Refresh
 import com.savvasdalkitsis.uhuruphotos.feature.catalogue.user.view.implementation.seam.UserAlbumsState
 import com.savvasdalkitsis.uhuruphotos.feature.catalogue.view.api.ui.Catalogue
 import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string

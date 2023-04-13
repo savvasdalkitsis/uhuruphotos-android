@@ -19,7 +19,7 @@ import androidx.work.NetworkType
 import com.savvasdalkitsis.uhuruphotos.feature.avatar.view.api.ui.state.AvatarState
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.theme.ThemeMode
 
-internal data class SettingsState(
+data class SettingsState(
     val isLoading: Boolean = true,
     val imageDiskCacheMax: Int = 0,
     val imageDiskCacheLimit: Int = 2000,

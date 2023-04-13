@@ -20,8 +20,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.unit.dp
 import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.Collage
 import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.CollageState
-import com.savvasdalkitsis.uhuruphotos.feature.search.view.implementation.seam.SearchAction
-import com.savvasdalkitsis.uhuruphotos.feature.search.view.implementation.seam.SearchAction.SelectedCel
+import com.savvasdalkitsis.uhuruphotos.feature.search.view.implementation.seam.actions.ChangeDisplay
+import com.savvasdalkitsis.uhuruphotos.feature.search.view.implementation.seam.actions.SearchAction
+import com.savvasdalkitsis.uhuruphotos.feature.search.view.implementation.seam.actions.SelectedCel
 import com.savvasdalkitsis.uhuruphotos.feature.search.view.implementation.ui.state.SearchResults
 import com.savvasdalkitsis.uhuruphotos.feature.search.view.implementation.ui.state.SearchState
 import com.savvasdalkitsis.uhuruphotos.foundation.compose.api.copy
@@ -43,6 +44,6 @@ fun SearchFeed(
         onCelSelected = { cel, center, scale ->
             action(SelectedCel(cel, center, scale))
         },
-        onChangeDisplay = { action(SearchAction.ChangeDisplay(it)) },
+        onChangeDisplay = { action(ChangeDisplay(it)) },
     )
 }

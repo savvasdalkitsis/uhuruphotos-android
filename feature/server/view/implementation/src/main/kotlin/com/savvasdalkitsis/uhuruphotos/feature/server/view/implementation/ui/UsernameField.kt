@@ -26,7 +26,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
-import com.savvasdalkitsis.uhuruphotos.feature.server.view.implementation.seam.ServerAction
+import com.savvasdalkitsis.uhuruphotos.feature.server.view.implementation.seam.actions.ServerAction
+import com.savvasdalkitsis.uhuruphotos.feature.server.view.implementation.seam.actions.UsernameChangedTo
 
 @Composable
 internal fun UsernameField(
@@ -50,7 +51,7 @@ internal fun UsernameField(
         label = { Text("Username") },
         value = state.username,
         onValueChange = {
-            action(ServerAction.UsernameChangedTo(it))
+            action(UsernameChangedTo(it))
         },
     )
 }

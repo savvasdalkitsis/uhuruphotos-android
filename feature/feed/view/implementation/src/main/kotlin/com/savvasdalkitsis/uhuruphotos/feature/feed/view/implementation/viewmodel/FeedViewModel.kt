@@ -16,35 +16,40 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.viewmodel
 
 import androidx.lifecycle.ViewModel
-import com.savvasdalkitsis.uhuruphotos.feature.account.view.api.seam.AccountOverviewAction
-import com.savvasdalkitsis.uhuruphotos.feature.account.view.api.seam.AccountOverviewActionHandler
-import com.savvasdalkitsis.uhuruphotos.feature.account.view.api.seam.AccountOverviewEffect
+import com.savvasdalkitsis.uhuruphotos.feature.account.view.api.seam.AccountOverviewActionsContext
+import com.savvasdalkitsis.uhuruphotos.feature.account.view.api.seam.AccountOverviewEffectHandler
+import com.savvasdalkitsis.uhuruphotos.feature.account.view.api.seam.actions.AccountOverviewAction
 import com.savvasdalkitsis.uhuruphotos.feature.account.view.api.ui.state.AccountOverviewState
-import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.FeedAction
-import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.FeedActionHandler
-import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.FeedEffect
+import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.FeedActionsContext
+import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.FeedEffectHandler
+import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.actions.FeedAction
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.ui.state.FeedState
+import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.ActionHandlerWithContext
+import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.HasActionableState
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.CompositeActionHandler
+import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.CompositeEffectHandler
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.Either
-import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.Mutation
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.Seam
-import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.handler
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
 @HiltViewModel
 internal class FeedViewModel @Inject constructor(
-    feedActionHandler: FeedActionHandler,
-    accountOverviewActionHandler: AccountOverviewActionHandler,
-) : ViewModel(), Seam<
+    feedActionsContext: FeedActionsContext,
+    accountOverviewActionsContext: AccountOverviewActionsContext,
+    feedEffectHandler: FeedEffectHandler,
+    accountOverviewEffectHandler: AccountOverviewEffectHandler,
+) : ViewModel(), HasActionableState<
         Pair<FeedState, AccountOverviewState>,
-        Either<FeedEffect, AccountOverviewEffect>,
         Either<FeedAction, AccountOverviewAction>,
-        Mutation<Pair<FeedState, AccountOverviewState>>,
-        > by handler(
+> by Seam(
     CompositeActionHandler(
-        handler1 = feedActionHandler,
-        handler2 = accountOverviewActionHandler,
+        ActionHandlerWithContext(feedActionsContext),
+        ActionHandlerWithContext(accountOverviewActionsContext),
+    ),
+    CompositeEffectHandler(
+        feedEffectHandler,
+        accountOverviewEffectHandler,
     ),
     FeedState() to AccountOverviewState()
 )

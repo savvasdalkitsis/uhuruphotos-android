@@ -15,16 +15,43 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.foundation.seam.api
 
-import kotlinx.coroutines.flow.Flow
+import com.savvasdalkitsis.uhuruphotos.foundation.launchers.api.onMain
+import com.savvasdalkitsis.uhuruphotos.foundation.log.api.log
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.cancellable
+import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.flowOn
+import kotlinx.coroutines.flow.update
 
-interface Seam<S : Any, E : Any, A : Any, M : Mutation<S>> {
-    val state: StateFlow<S>
-    val effects: Flow<E>
-    suspend fun action(action: A)
-}
-
-fun <S : Any, E : Any, A : Any, M : Mutation<S>> handler(
-    handler: ActionHandler<S, E, A, M>,
+class Seam<S : Any, E : Any, A : Any, M : Mutation<S>>(
+    private val actionHandler: ActionHandler<S, E, A, M>,
+    private val effectsHandler: EffectHandler<E>,
     initialState: S,
-): Seam<S, E, A, M> = SeamViaHandler(handler, initialState)
+) : HasActionableState<S, A> {
+
+    private val _state = MutableStateFlow(initialState)
+    override val state: StateFlow<S> = _state
+
+    override suspend fun action(action: A)  {
+        log("MVI") { "Starting handling of action $action" }
+        actionHandler.handleAction(
+            _state.value,
+            action,
+        ) { effect ->
+            onMain {
+                log("MVI") { "Received side effect to post: $effect from action: $action" }
+                effectsHandler.handleEffect(effect)
+            }
+        }
+            .cancellable()
+            .distinctUntilChanged()
+            .flowOn(Dispatchers.Default)
+            .collect { mutation ->
+                log("MVI") { "Received mutation $mutation due to action $action" }
+                _state.update { mutation.reduce(_state.value) }
+                log("MVI") { "State updated to: ${_state.value}" }
+            }
+    }
+}

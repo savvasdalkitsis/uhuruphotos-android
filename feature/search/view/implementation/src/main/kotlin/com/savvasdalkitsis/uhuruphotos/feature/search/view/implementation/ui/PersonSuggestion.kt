@@ -21,7 +21,8 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.ui.Modifier
 import com.savvasdalkitsis.uhuruphotos.feature.people.view.api.ui.PersonImage
 import com.savvasdalkitsis.uhuruphotos.feature.people.view.api.ui.state.Person
-import com.savvasdalkitsis.uhuruphotos.feature.search.view.implementation.seam.SearchAction
+import com.savvasdalkitsis.uhuruphotos.feature.search.view.implementation.seam.actions.PersonSelected
+import com.savvasdalkitsis.uhuruphotos.feature.search.view.implementation.seam.actions.SearchAction
 
 internal fun LazyListScope.personSuggestion(
     person: Person,
@@ -32,7 +33,7 @@ internal fun LazyListScope.personSuggestion(
             modifier = Modifier.animateItemPlacement(),
             text = person.name,
             onClick = {
-                action(SearchAction.PersonSelected(person))
+                action(PersonSelected(person))
             },
             leadingContent = {
                 PersonImage(
