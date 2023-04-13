@@ -205,6 +205,7 @@ class LocalMediaService @Inject constructor(
             null,
             cancellation,
         )?.use {
+            log("MediaStore") { "Found ${it.count} items for $collection" }
             while(it.moveToNext()) {
                 result += rowHandler(it).apply {
                     log("MediaStore") { "Found item $this" }

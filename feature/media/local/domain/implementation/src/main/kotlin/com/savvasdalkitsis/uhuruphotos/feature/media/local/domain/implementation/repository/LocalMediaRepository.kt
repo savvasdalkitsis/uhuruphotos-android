@@ -193,6 +193,7 @@ class LocalMediaRepository @Inject constructor(
 
     fun deleteItem(id: Long, video: Boolean) = runCatchingWithLog {
         if (localMediaService.delete(id, video) > 0) {
+            localMediaItemDetailsQueries.delete(id)
             Result.success(Unit)
         } else {
             Result.failure(LocalMediaDeletionException(id))
