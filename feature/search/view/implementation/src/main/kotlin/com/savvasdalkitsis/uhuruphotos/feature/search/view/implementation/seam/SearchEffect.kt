@@ -15,7 +15,6 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.search.view.implementation.seam
 
-import androidx.compose.ui.geometry.Offset
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaId
 
 sealed class SearchEffect {
@@ -28,8 +27,6 @@ sealed class SearchEffect {
     data class NavigateToPerson(val personId: Int) : SearchEffect()
     data class OpenLightbox(
         val id: MediaId<*>,
-        val center: Offset,
-        val scale: Float,
         val isVideo: Boolean,
         val currentQuery: String,
     ) : SearchEffect()

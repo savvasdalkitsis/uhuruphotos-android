@@ -18,9 +18,9 @@ package com.savvasdalkitsis.uhuruphotos.feature.account.view.api.seam
 import com.savvasdalkitsis.uhuruphotos.feature.account.view.api.seam.AccountOverviewEffect.NavigateToServerEdit
 import com.savvasdalkitsis.uhuruphotos.feature.account.view.api.seam.AccountOverviewEffect.NavigateToSettings
 import com.savvasdalkitsis.uhuruphotos.feature.account.view.api.seam.AccountOverviewEffect.ReloadApp
-import com.savvasdalkitsis.uhuruphotos.feature.home.view.api.navigation.HomeNavigationTarget
-import com.savvasdalkitsis.uhuruphotos.feature.server.view.api.navigation.ServerNavigationTarget
-import com.savvasdalkitsis.uhuruphotos.feature.settings.view.api.navigation.SettingsNavigationTarget
+import com.savvasdalkitsis.uhuruphotos.feature.home.view.api.navigation.HomeNavigationRoute
+import com.savvasdalkitsis.uhuruphotos.feature.server.view.api.navigation.ServerNavigationRoute
+import com.savvasdalkitsis.uhuruphotos.feature.settings.view.api.navigation.SettingsNavigationRoute
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.Navigator
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.EffectHandler
 import javax.inject.Inject
@@ -29,18 +29,19 @@ class AccountOverviewEffectHandler @Inject constructor(
     private val navigator: Navigator,
 ) : EffectHandler<AccountOverviewEffect> {
 
-    override suspend fun handleEffect(effect: AccountOverviewEffect) = when(effect) {
-        NavigateToServerEdit -> navigateTo(
-            ServerNavigationTarget.name(auto = false)
-        )
-        NavigateToSettings -> navigateTo(SettingsNavigationTarget.name)
+    override suspend fun handleEffect(effect: AccountOverviewEffect) = when (effect) {
+        NavigateToServerEdit -> {
+            navigator.navigateTo(
+                ServerNavigationRoute(auto = false)
+            )
+        }
+        NavigateToSettings -> {
+            navigator.navigateTo(SettingsNavigationRoute)
+        }
         ReloadApp -> with(navigator) {
             clearBackStack()
-            navigateTo(HomeNavigationTarget.name)
+            navigateTo(HomeNavigationRoute)
         }
     }
 
-    private fun navigateTo(target: String) {
-        navigator.navigateTo(target)
-    }
 }

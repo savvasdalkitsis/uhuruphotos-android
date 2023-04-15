@@ -17,41 +17,29 @@ package com.savvasdalkitsis.uhuruphotos.feature.library.view.implementation.navi
 
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
-import com.savvasdalkitsis.uhuruphotos.feature.account.view.api.seam.actions.AccountOverviewAction
 import com.savvasdalkitsis.uhuruphotos.feature.account.view.api.ui.AccountOverviewActionBar
 import com.savvasdalkitsis.uhuruphotos.feature.account.view.api.ui.AccountOverviewContent
-import com.savvasdalkitsis.uhuruphotos.feature.account.view.api.ui.state.AccountOverviewState
 import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.PredefinedCollageDisplay
-import com.savvasdalkitsis.uhuruphotos.feature.library.view.api.navigation.LibraryNavigationTarget
-import com.savvasdalkitsis.uhuruphotos.feature.library.view.implementation.seam.actions.LibraryAction
-import com.savvasdalkitsis.uhuruphotos.feature.library.view.implementation.seam.actions.Load
+import com.savvasdalkitsis.uhuruphotos.feature.library.view.api.navigation.LibraryNavigationRoute
 import com.savvasdalkitsis.uhuruphotos.feature.library.view.implementation.ui.Library
-import com.savvasdalkitsis.uhuruphotos.feature.library.view.implementation.ui.state.LibraryState
 import com.savvasdalkitsis.uhuruphotos.feature.library.view.implementation.viewmodel.LibraryViewModel
 import com.savvasdalkitsis.uhuruphotos.feature.settings.domain.api.usecase.SettingsUseCase
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.NavigationTarget
-import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.navigationTarget
-import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.Either
+import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.NavigationTargetBuilder
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.Either.Left
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.Either.Right
 import javax.inject.Inject
 
 class LibraryNavigationTarget @Inject constructor(
     private val settingsUseCase: SettingsUseCase,
+    private val navigationTargetBuilder: NavigationTargetBuilder,
 ) : NavigationTarget {
 
-    override suspend fun NavGraphBuilder.create(navHostController: NavHostController) {
-        navigationTarget<
-                Pair<LibraryState, AccountOverviewState>,
-                Either<LibraryAction, AccountOverviewAction>,
-                LibraryViewModel
-        >(
-            route = LibraryNavigationTarget.registrationName,
+    override suspend fun NavGraphBuilder.create(navHostController: NavHostController) = with(navigationTargetBuilder) {
+        navigationTarget(
             themeMode = settingsUseCase.observeThemeModeState(),
-            initializer = { _, actions ->
-                actions(Left(Load))
-                actions(Right(com.savvasdalkitsis.uhuruphotos.feature.account.view.api.seam.actions.Load))
-            }
+            route = LibraryNavigationRoute::class,
+            viewModel = LibraryViewModel::class,
         ) { state, actions ->
             Library(
                 state = state.first,

@@ -17,41 +17,28 @@ package com.savvasdalkitsis.uhuruphotos.feature.search.view.implementation.navig
 
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
-import com.savvasdalkitsis.uhuruphotos.feature.account.view.api.seam.actions.AccountOverviewAction
-import com.savvasdalkitsis.uhuruphotos.feature.account.view.api.seam.actions.Load
 import com.savvasdalkitsis.uhuruphotos.feature.account.view.api.ui.AccountOverviewActionBar
 import com.savvasdalkitsis.uhuruphotos.feature.account.view.api.ui.AccountOverviewContent
-import com.savvasdalkitsis.uhuruphotos.feature.account.view.api.ui.state.AccountOverviewState
-import com.savvasdalkitsis.uhuruphotos.feature.search.view.api.navigation.SearchNavigationTarget
-import com.savvasdalkitsis.uhuruphotos.feature.search.view.implementation.seam.actions.SearchAction
-import com.savvasdalkitsis.uhuruphotos.feature.search.view.implementation.seam.actions.Initialise
+import com.savvasdalkitsis.uhuruphotos.feature.search.view.api.navigation.SearchNavigationRoute
 import com.savvasdalkitsis.uhuruphotos.feature.search.view.implementation.ui.SearchPage
-import com.savvasdalkitsis.uhuruphotos.feature.search.view.implementation.ui.state.SearchState
 import com.savvasdalkitsis.uhuruphotos.feature.search.view.implementation.viewmodel.SearchViewModel
 import com.savvasdalkitsis.uhuruphotos.feature.settings.domain.api.usecase.SettingsUseCase
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.NavigationTarget
-import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.navigationTarget
-import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.Either
+import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.NavigationTargetBuilder
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.Either.Left
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.Either.Right
 import javax.inject.Inject
 
 class SearchNavigationTarget @Inject constructor(
     private val settingsUseCase: SettingsUseCase,
+    private val navigationTargetBuilder: NavigationTargetBuilder,
 ) : NavigationTarget {
 
-    override suspend fun NavGraphBuilder.create(navHostController: NavHostController) {
-        navigationTarget<
-                Pair<SearchState, AccountOverviewState>,
-                Either<SearchAction, AccountOverviewAction>,
-                SearchViewModel
-        >(
-            route = SearchNavigationTarget.registrationName,
+    override suspend fun NavGraphBuilder.create(navHostController: NavHostController) = with(navigationTargetBuilder) {
+        navigationTarget(
             themeMode = settingsUseCase.observeThemeModeState(),
-            initializer = { _, actions ->
-                actions(Left(Initialise))
-                actions(Right(Load))
-            }
+            route = SearchNavigationRoute::class,
+            viewModel = SearchViewModel::class,
         ) { state, actions ->
             SearchPage(
                 state.first,

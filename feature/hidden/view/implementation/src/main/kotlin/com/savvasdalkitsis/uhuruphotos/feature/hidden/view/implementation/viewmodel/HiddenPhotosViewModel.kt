@@ -18,18 +18,23 @@ package com.savvasdalkitsis.uhuruphotos.feature.hidden.view.implementation.viewm
 import androidx.lifecycle.ViewModel
 import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.CollageState
 import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.GalleryEffectHandler
+import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.GalleryId
 import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.action.GalleryAction
+import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.action.LoadCollage
 import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.ui.state.GalleryState
+import com.savvasdalkitsis.uhuruphotos.feature.hidden.view.api.HiddenPhotosNavigationRoute
 import com.savvasdalkitsis.uhuruphotos.feature.hidden.view.implementation.seam.HiddenPhotosActionsContext
 import com.savvasdalkitsis.uhuruphotos.feature.hidden.view.implementation.seam.HiddenPhotosAlbumPageActionsContext
 import com.savvasdalkitsis.uhuruphotos.feature.hidden.view.implementation.seam.HiddenPhotosEffectHandler
 import com.savvasdalkitsis.uhuruphotos.feature.hidden.view.implementation.seam.HiddenPhotosState
 import com.savvasdalkitsis.uhuruphotos.feature.hidden.view.implementation.seam.actions.HiddenPhotosAction
+import com.savvasdalkitsis.uhuruphotos.feature.hidden.view.implementation.seam.actions.Load
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.ActionHandlerWithContext
-import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.HasActionableState
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.CompositeActionHandler
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.CompositeEffectHandler
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.Either
+import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.HasActionableState
+import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.HasInitializer
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.Seam
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
@@ -53,4 +58,9 @@ internal class HiddenPhotosViewModel @Inject constructor(
         effectHandler,
     ),
     GalleryState(collageState = CollageState()) to HiddenPhotosState()
-)
+), HasInitializer<HiddenPhotosNavigationRoute> {
+    override suspend fun initialize(initializerData: HiddenPhotosNavigationRoute) {
+        action(Either.Left(LoadCollage(GalleryId(0, "hidden"))))
+        action(Either.Right(Load))
+    }
+}

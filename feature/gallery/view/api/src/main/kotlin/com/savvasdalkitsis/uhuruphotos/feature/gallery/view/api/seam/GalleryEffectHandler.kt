@@ -19,8 +19,8 @@ import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.GalleryEffe
 import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.GalleryEffect.NavigateBack
 import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.GalleryEffect.NavigateToPerson
 import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.GalleryEffect.OpenLightbox
-import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.api.navigation.LightboxNavigationTarget
-import com.savvasdalkitsis.uhuruphotos.feature.person.view.api.navigation.PersonNavigationTarget
+import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.api.navigation.LightboxNavigationRoute
+import com.savvasdalkitsis.uhuruphotos.feature.person.view.api.navigation.PersonNavigationRoute
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.Navigator
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.EffectHandler
 import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
@@ -34,24 +34,23 @@ class GalleryEffectHandler @Inject constructor(
 
     override suspend fun handleEffect(effect: GalleryEffect) {
         when (effect) {
-            is OpenLightbox -> navigate(
-                LightboxNavigationTarget.name(
-                    effect.id,
-                    effect.center,
-                    effect.scale,
-                    effect.video,
-                    effect.lightboxSequenceDataSource,
-                ),
-            )
+            is OpenLightbox -> {
+                navigator.navigateTo(
+                    LightboxNavigationRoute(
+                        id = effect.id,
+                        isVideo = effect.video,
+                        lightboxSequenceDataSource = effect.lightboxSequenceDataSource,
+                    )
+                )
+            }
             NavigateBack -> navigator.navigateBack()
-            is NavigateToPerson -> navigate(
-                PersonNavigationTarget.name(effect.personId)
-            )
+            is NavigateToPerson -> {
+                navigator.navigateTo(
+                    PersonNavigationRoute(effect.personId)
+                )
+            }
             ErrorLoading -> toaster.show(string.error_loading_album)
         }
     }
 
-    private fun navigate(name: String) {
-        navigator.navigateTo(name)
-    }
 }

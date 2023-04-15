@@ -17,27 +17,24 @@ package com.savvasdalkitsis.uhuruphotos.feature.person.view.implementation.navig
 
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
-import com.savvasdalkitsis.uhuruphotos.feature.person.view.api.navigation.PersonNavigationTarget
-import com.savvasdalkitsis.uhuruphotos.feature.person.view.api.navigation.PersonNavigationTarget.personId
-import com.savvasdalkitsis.uhuruphotos.feature.person.view.implementation.seam.actions.PersonAction
-import com.savvasdalkitsis.uhuruphotos.feature.person.view.implementation.seam.actions.LoadPerson
+import com.savvasdalkitsis.uhuruphotos.feature.person.view.api.navigation.PersonNavigationRoute
 import com.savvasdalkitsis.uhuruphotos.feature.person.view.implementation.ui.Person
-import com.savvasdalkitsis.uhuruphotos.feature.person.view.implementation.ui.state.PersonState
 import com.savvasdalkitsis.uhuruphotos.feature.person.view.implementation.viewmodel.PersonViewModel
 import com.savvasdalkitsis.uhuruphotos.feature.settings.domain.api.usecase.SettingsUseCase
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.NavigationTarget
-import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.navigationTarget
+import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.NavigationTargetBuilder
 import javax.inject.Inject
 
 class PersonNavigationTarget @Inject constructor(
     private val settingsUseCase: SettingsUseCase,
+    private val navigationTargetBuilder: NavigationTargetBuilder,
 ) : NavigationTarget {
 
-    override suspend fun NavGraphBuilder.create(navHostController: NavHostController) {
-        navigationTarget<PersonState, PersonAction, PersonViewModel>(
-            route = PersonNavigationTarget.registrationName,
+    override suspend fun NavGraphBuilder.create(navHostController: NavHostController) = with(navigationTargetBuilder) {
+        navigationTarget(
             themeMode = settingsUseCase.observeThemeModeState(),
-            initializer = { navBackStackEntry, action -> action(LoadPerson(navBackStackEntry.personId)) },
+            route = PersonNavigationRoute::class,
+            viewModel = PersonViewModel::class,
         ) { state, actions ->
             Person(state, actions)
         }

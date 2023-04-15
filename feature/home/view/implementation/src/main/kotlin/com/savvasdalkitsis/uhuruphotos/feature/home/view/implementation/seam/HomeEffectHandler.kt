@@ -15,10 +15,10 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.home.view.implementation.seam
 
-import com.savvasdalkitsis.uhuruphotos.feature.feed.view.api.navigation.FeedNavigationTarget
+import com.savvasdalkitsis.uhuruphotos.feature.feed.view.api.navigation.FeedNavigationRoute
 import com.savvasdalkitsis.uhuruphotos.feature.home.view.implementation.seam.HomeEffect.LaunchAuthentication
 import com.savvasdalkitsis.uhuruphotos.feature.home.view.implementation.seam.HomeEffect.LoadFeed
-import com.savvasdalkitsis.uhuruphotos.feature.server.view.api.navigation.ServerNavigationTarget
+import com.savvasdalkitsis.uhuruphotos.feature.server.view.api.navigation.ServerNavigationRoute
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.Navigator
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.EffectHandler
 import javax.inject.Inject
@@ -30,10 +30,10 @@ internal class HomeEffectHandler @Inject constructor(
     override suspend fun handleEffect(effect: HomeEffect) {
         with(navigator) {
             when (effect) {
-                LaunchAuthentication -> navigateTo(ServerNavigationTarget.name())
+                LaunchAuthentication -> navigateTo(ServerNavigationRoute(auto = true))
                 LoadFeed -> {
                     navigateBack()
-                    navigateTo(FeedNavigationTarget.name)
+                    navigateTo(FeedNavigationRoute)
                 }
             }
         }

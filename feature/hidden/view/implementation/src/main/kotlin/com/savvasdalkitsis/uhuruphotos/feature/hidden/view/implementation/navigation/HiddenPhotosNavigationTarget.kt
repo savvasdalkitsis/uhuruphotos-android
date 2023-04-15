@@ -17,41 +17,26 @@ package com.savvasdalkitsis.uhuruphotos.feature.hidden.view.implementation.navig
 
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
-import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.action.GalleryAction
-import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.action.LoadCollage
-import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.GalleryId
-import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.ui.state.GalleryState
-import com.savvasdalkitsis.uhuruphotos.feature.hidden.view.api.HiddenPhotosNavigationTarget
-import com.savvasdalkitsis.uhuruphotos.feature.hidden.view.implementation.seam.actions.HiddenPhotosAction
-import com.savvasdalkitsis.uhuruphotos.feature.hidden.view.implementation.seam.actions.Load
-import com.savvasdalkitsis.uhuruphotos.feature.hidden.view.implementation.seam.HiddenPhotosState
+import com.savvasdalkitsis.uhuruphotos.feature.hidden.view.api.HiddenPhotosNavigationRoute
 import com.savvasdalkitsis.uhuruphotos.feature.hidden.view.implementation.ui.HiddenPhotosAlbumPage
 import com.savvasdalkitsis.uhuruphotos.feature.hidden.view.implementation.viewmodel.HiddenPhotosViewModel
 import com.savvasdalkitsis.uhuruphotos.feature.settings.domain.api.usecase.SettingsUseCase
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.NavigationTarget
-import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.navigationTarget
-import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.Either
-import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.Either.Left
-import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.Either.Right
+import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.NavigationTargetBuilder
 import javax.inject.Inject
 
 internal class HiddenPhotosNavigationTarget @Inject constructor(
     private val settingsUseCase: SettingsUseCase,
+    private val navigationTargetBuilder: NavigationTargetBuilder,
 ) : NavigationTarget {
 
-    override suspend fun NavGraphBuilder.create(navHostController: NavHostController) =
-        navigationTarget<
-                Pair<GalleryState, HiddenPhotosState>,
-                Either<GalleryAction, HiddenPhotosAction>,
-                HiddenPhotosViewModel
-        >(
-            route = HiddenPhotosNavigationTarget.registrationName,
+    override suspend fun NavGraphBuilder.create(navHostController: NavHostController) = with(navigationTargetBuilder) {
+        navigationTarget(
             themeMode = settingsUseCase.observeThemeModeState(),
-            initializer = { _, action ->
-                action(Left(LoadCollage(GalleryId(0, "hidden"))))
-                action(Right(Load))
-            }
+            route = HiddenPhotosNavigationRoute::class,
+            viewModel = HiddenPhotosViewModel::class,
         ) { state, action ->
             HiddenPhotosAlbumPage(state, action)
         }
+    }
 }

@@ -15,7 +15,6 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam
 
-import androidx.compose.ui.geometry.Offset
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.api.model.LightboxSequenceDataSource
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaId
 
@@ -25,8 +24,6 @@ sealed class GalleryEffect {
 
     data class OpenLightbox(
         val id: MediaId<*>,
-        val center: Offset,
-        val scale: Float,
         val video: Boolean,
         val lightboxSequenceDataSource: LightboxSequenceDataSource,
     ) : GalleryEffect()

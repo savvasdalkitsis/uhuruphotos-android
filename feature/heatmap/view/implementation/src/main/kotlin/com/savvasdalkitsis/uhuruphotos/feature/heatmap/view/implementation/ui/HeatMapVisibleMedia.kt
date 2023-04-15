@@ -56,8 +56,8 @@ fun HeatMapVisibleMedia(
                     )
                 ),
             ),
-            onCelSelected = { cel, center, scale ->
-                action(SelectedCel(cel, center, scale))
+            onCelSelected = { cel ->
+                action(SelectedCel(cel))
             },
         )
     }

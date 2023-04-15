@@ -16,12 +16,15 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.feature.people.view.implementation.viewmodel
 
 import androidx.lifecycle.ViewModel
+import com.savvasdalkitsis.uhuruphotos.feature.people.view.api.navigation.PeopleNavigationRoute
 import com.savvasdalkitsis.uhuruphotos.feature.people.view.implementation.seam.PeopleActionsContext
 import com.savvasdalkitsis.uhuruphotos.feature.people.view.implementation.seam.PeopleEffectHandler
+import com.savvasdalkitsis.uhuruphotos.feature.people.view.implementation.seam.actions.LoadPeople
 import com.savvasdalkitsis.uhuruphotos.feature.people.view.implementation.seam.actions.PeopleAction
 import com.savvasdalkitsis.uhuruphotos.feature.people.view.implementation.ui.state.PeopleState
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.ActionHandlerWithContext
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.HasActionableState
+import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.HasInitializer
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.Seam
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
@@ -34,4 +37,8 @@ class PeopleViewModel @Inject constructor(
     ActionHandlerWithContext(peopleActionsContext),
     effectHandler,
     PeopleState()
-)
+), HasInitializer<PeopleNavigationRoute> {
+    override suspend fun initialize(initializerData: PeopleNavigationRoute) {
+        action(LoadPeople)
+    }
+}

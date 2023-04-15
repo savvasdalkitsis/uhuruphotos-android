@@ -16,12 +16,17 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.feature.server.view.implementation.viewmodel
 
 import androidx.lifecycle.ViewModel
+import com.savvasdalkitsis.uhuruphotos.feature.server.view.api.navigation.ServerNavigationRoute
 import com.savvasdalkitsis.uhuruphotos.feature.server.view.implementation.seam.ServerActionsContext
 import com.savvasdalkitsis.uhuruphotos.feature.server.view.implementation.seam.ServerEffectHandler
+import com.savvasdalkitsis.uhuruphotos.feature.server.view.implementation.seam.actions.CheckPersistedServer
+import com.savvasdalkitsis.uhuruphotos.feature.server.view.implementation.seam.actions.Load
+import com.savvasdalkitsis.uhuruphotos.feature.server.view.implementation.seam.actions.RequestServerUrlChange
 import com.savvasdalkitsis.uhuruphotos.feature.server.view.implementation.seam.actions.ServerAction
 import com.savvasdalkitsis.uhuruphotos.feature.server.view.implementation.ui.ServerState
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.ActionHandlerWithContext
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.HasActionableState
+import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.HasInitializer
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.Seam
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
@@ -34,4 +39,12 @@ internal class ServerViewModel @Inject constructor(
     ActionHandlerWithContext(serverActionsContext),
     effectHandler,
     ServerState.Loading(false)
-)
+), HasInitializer<ServerNavigationRoute> {
+    override suspend fun initialize(initializerData: ServerNavigationRoute) {
+        action(Load)
+        action(when {
+            initializerData.auto -> CheckPersistedServer
+            else -> RequestServerUrlChange
+        })
+    }
+}

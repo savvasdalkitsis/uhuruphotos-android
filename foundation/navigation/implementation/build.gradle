@@ -1,0 +1,36 @@
+android {
+    buildFeatures {
+        compose true
+    }
+    composeOptions {
+        kotlinCompilerExtensionVersion compose_compiler_version
+    }
+    namespace 'com.savvasdalkitsis.uhuruphotos.foundation.navigation.implementation'
+}
+
+dependencies {
+
+    api project(':foundation:navigation:api')
+    implementation project(':foundation:seam:api')
+    implementation project(":feature:home:view:api")
+    implementation project(":foundation:activity:api")
+    implementation project(":foundation:log:api")
+    implementation project(":foundation:toaster:api")
+    implementation project(":foundation:ui:api")
+    implementation project(":foundation:strings:api")
+    implementation(
+            libs.accompanist.systemui,
+            libs.androidx.compose.foundation,
+            libs.gson,
+    )
+    api(
+            libs.accompanist.navigation,
+            libs.androidx.compose.hilt.navigation,
+            libs.hilt,
+            libs.kotlin.reflect,
+    )
+
+    testImplementation(
+            libs.bundles.test,
+    )
+}

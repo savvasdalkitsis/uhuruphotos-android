@@ -1,6 +1,5 @@
 package com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.actions
 
-import androidx.compose.ui.geometry.Offset
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.FeedActionsContext
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.FeedEffect
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.FeedEffect.OpenLightbox
@@ -13,8 +12,6 @@ import kotlinx.coroutines.flow.flow
 
 data class SelectedCel(
     val celState: CelState,
-    val center: Offset,
-    val scale: Float,
 ) : FeedAction() {
     context(FeedActionsContext) override fun handle(
         state: FeedState,
@@ -22,7 +19,7 @@ data class SelectedCel(
     ) = flow<FeedMutation> {
         when {
             state.selectedCelCount == 0 -> effect.handleEffect(
-                OpenLightbox(celState.mediaItem.id, center, scale, celState.mediaItem.isVideo)
+                OpenLightbox(celState.mediaItem.id, celState.mediaItem.isVideo)
             )
             celState.selectionMode == MediaItemSelectionMode.SELECTED -> {
                 effect.handleEffect(FeedEffect.Vibrate)

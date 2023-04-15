@@ -16,12 +16,15 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.feature.home.view.implementation.viewmodel
 
 import androidx.lifecycle.ViewModel
-import com.savvasdalkitsis.uhuruphotos.feature.home.view.implementation.seam.actions.HomeAction
+import com.savvasdalkitsis.uhuruphotos.feature.home.view.api.navigation.HomeNavigationRoute
 import com.savvasdalkitsis.uhuruphotos.feature.home.view.implementation.seam.HomeActionsContext
 import com.savvasdalkitsis.uhuruphotos.feature.home.view.implementation.seam.HomeEffectHandler
+import com.savvasdalkitsis.uhuruphotos.feature.home.view.implementation.seam.actions.HomeAction
+import com.savvasdalkitsis.uhuruphotos.feature.home.view.implementation.seam.actions.Load
 import com.savvasdalkitsis.uhuruphotos.feature.home.view.implementation.ui.state.HomeState
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.ActionHandlerWithContext
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.HasActionableState
+import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.HasInitializer
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.Seam
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
@@ -34,4 +37,8 @@ internal class HomeViewModel @Inject constructor(
     ActionHandlerWithContext(homeActionsContext),
     effectHandler,
     HomeState()
-)
+), HasInitializer<HomeNavigationRoute> {
+    override suspend fun initialize(initializerData: HomeNavigationRoute) {
+        action(Load)
+    }
+}

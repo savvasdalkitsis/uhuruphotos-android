@@ -16,12 +16,15 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.feature.auth.view.implementation.viewmodel
 
 import androidx.lifecycle.ViewModel
+import com.savvasdalkitsis.uhuruphotos.feature.auth.view.api.navigation.WebLoginNavigationRoute
 import com.savvasdalkitsis.uhuruphotos.feature.auth.view.implementation.seam.WebEffectHandler
 import com.savvasdalkitsis.uhuruphotos.feature.auth.view.implementation.seam.WebLoginActionsContext
+import com.savvasdalkitsis.uhuruphotos.feature.auth.view.implementation.seam.actions.LoadPage
 import com.savvasdalkitsis.uhuruphotos.feature.auth.view.implementation.seam.actions.WebLoginAction
 import com.savvasdalkitsis.uhuruphotos.feature.auth.view.implementation.ui.WebLoginState
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.ActionHandlerWithContext
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.HasActionableState
+import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.HasInitializer
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.Seam
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
@@ -34,4 +37,8 @@ class WebLoginViewModel @Inject constructor(
     ActionHandlerWithContext(webLoginActionsContext),
     effectHandler,
     WebLoginState("")
-)
+), HasInitializer<WebLoginNavigationRoute> {
+    override suspend fun initialize(initializerData: WebLoginNavigationRoute) {
+        action(LoadPage(initializerData.url))
+    }
+}

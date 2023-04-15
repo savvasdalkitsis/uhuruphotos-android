@@ -41,8 +41,8 @@ fun SearchFeed(
             clusters = searchResults.clusters,
             collageDisplay = state.searchDisplay,
         ),
-        onCelSelected = { cel, center, scale ->
-            action(SelectedCel(cel, center, scale))
+        onCelSelected = { cel ->
+            action(SelectedCel(cel))
         },
         onChangeDisplay = { action(ChangeDisplay(it)) },
     )

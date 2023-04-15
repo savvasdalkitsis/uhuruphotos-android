@@ -69,7 +69,7 @@ private fun RowScope.GridItem(celState: CelState?) {
             modifier = Modifier
                 .weight(1f),
             state = celState,
-            onSelected = { _, _, _ -> },
+            onSelected = { _, -> },
             aspectRatio = 1f,
             contentScale = ContentScale.Crop,
             itemPadding = 0.dp,

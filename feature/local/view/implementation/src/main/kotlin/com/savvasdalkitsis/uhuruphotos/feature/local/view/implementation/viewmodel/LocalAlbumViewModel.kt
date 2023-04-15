@@ -17,11 +17,15 @@ package com.savvasdalkitsis.uhuruphotos.feature.local.view.implementation.viewmo
 
 import androidx.lifecycle.ViewModel
 import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.GalleryEffectHandler
+import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.GalleryId
 import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.action.GalleryAction
+import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.action.LoadCollage
 import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.ui.state.GalleryState
+import com.savvasdalkitsis.uhuruphotos.feature.local.view.api.navigation.LocalAlbumNavigationRoute
 import com.savvasdalkitsis.uhuruphotos.feature.local.view.implementation.seam.LocalAlbumActionsContext
 import com.savvasdalkitsis.uhuruphotos.feature.local.view.implementation.seam.LocalAlbumEffectHandler
 import com.savvasdalkitsis.uhuruphotos.feature.local.view.implementation.seam.LocalAlbumPageActionsContext
+import com.savvasdalkitsis.uhuruphotos.feature.local.view.implementation.seam.actions.Load
 import com.savvasdalkitsis.uhuruphotos.feature.local.view.implementation.seam.actions.LocalAlbumAction
 import com.savvasdalkitsis.uhuruphotos.feature.local.view.implementation.ui.state.LocalAlbumState
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.ActionHandlerWithContext
@@ -29,6 +33,7 @@ import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.HasActionableState
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.CompositeActionHandler
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.CompositeEffectHandler
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.Either
+import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.HasInitializer
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.Seam
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
@@ -52,4 +57,10 @@ internal class LocalAlbumViewModel @Inject constructor(
         localAlbumEffectHandler,
     ),
     GalleryState() to LocalAlbumState()
-)
+), HasInitializer<LocalAlbumNavigationRoute> {
+    override suspend fun initialize(initializerData: LocalAlbumNavigationRoute) {
+        val albumId = initializerData.albumId
+        action(Either.Right(Load(albumId)))
+        action(Either.Left(LoadCollage(GalleryId(albumId, "local:$albumId"))))
+    }
+}

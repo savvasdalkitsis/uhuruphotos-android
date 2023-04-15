@@ -15,10 +15,10 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.library.view.implementation.seam
 
-import com.savvasdalkitsis.uhuruphotos.feature.catalogue.auto.view.api.navigation.AutoAlbumsNavigationTarget
-import com.savvasdalkitsis.uhuruphotos.feature.catalogue.user.view.api.navigation.UserAlbumsNavigationTarget
-import com.savvasdalkitsis.uhuruphotos.feature.favourites.view.api.navigation.FavouritesNavigationTarget
-import com.savvasdalkitsis.uhuruphotos.feature.hidden.view.api.HiddenPhotosNavigationTarget
+import com.savvasdalkitsis.uhuruphotos.feature.catalogue.auto.view.api.navigation.AutoAlbumsNavigationRoute
+import com.savvasdalkitsis.uhuruphotos.feature.catalogue.user.view.api.navigation.UserAlbumsNavigationRoute
+import com.savvasdalkitsis.uhuruphotos.feature.favourites.view.api.navigation.FavouritesNavigationRoute
+import com.savvasdalkitsis.uhuruphotos.feature.hidden.view.api.HiddenPhotosNavigationRoute
 import com.savvasdalkitsis.uhuruphotos.feature.library.view.implementation.seam.LibraryEffect.ErrorLoadingAlbums
 import com.savvasdalkitsis.uhuruphotos.feature.library.view.implementation.seam.LibraryEffect.NavigateToAutoAlbums
 import com.savvasdalkitsis.uhuruphotos.feature.library.view.implementation.seam.LibraryEffect.NavigateToFavourites
@@ -26,8 +26,8 @@ import com.savvasdalkitsis.uhuruphotos.feature.library.view.implementation.seam.
 import com.savvasdalkitsis.uhuruphotos.feature.library.view.implementation.seam.LibraryEffect.NavigateToLocalBucket
 import com.savvasdalkitsis.uhuruphotos.feature.library.view.implementation.seam.LibraryEffect.NavigateToTrash
 import com.savvasdalkitsis.uhuruphotos.feature.library.view.implementation.seam.LibraryEffect.NavigateToUserAlbums
-import com.savvasdalkitsis.uhuruphotos.feature.local.view.api.navigation.LocalAlbumNavigationTarget
-import com.savvasdalkitsis.uhuruphotos.feature.trash.view.api.navigation.TrashNavigationTarget
+import com.savvasdalkitsis.uhuruphotos.feature.local.view.api.navigation.LocalAlbumNavigationRoute
+import com.savvasdalkitsis.uhuruphotos.feature.trash.view.api.navigation.TrashNavigationRoute
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.Navigator
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.EffectHandler
 import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
@@ -42,16 +42,16 @@ class LibraryEffectHandler @Inject constructor(
     override suspend fun handleEffect(effect: LibraryEffect) = when (effect) {
         ErrorLoadingAlbums -> toaster.show(string.error_loading_albums)
         NavigateToAutoAlbums -> navigator
-            .navigateTo(AutoAlbumsNavigationTarget.name)
+            .navigateTo(AutoAlbumsNavigationRoute)
         NavigateToUserAlbums -> navigator
-            .navigateTo(UserAlbumsNavigationTarget.name)
+            .navigateTo(UserAlbumsNavigationRoute)
         NavigateToFavourites -> navigator
-            .navigateTo(FavouritesNavigationTarget.registrationName)
+            .navigateTo(FavouritesNavigationRoute)
         NavigateToHidden -> navigator
-            .navigateTo(HiddenPhotosNavigationTarget.registrationName)
+            .navigateTo(HiddenPhotosNavigationRoute)
         NavigateToTrash -> navigator
-            .navigateTo(TrashNavigationTarget.registrationName)
+            .navigateTo(TrashNavigationRoute)
         is NavigateToLocalBucket -> navigator
-            .navigateTo(LocalAlbumNavigationTarget.name(effect.bucket.id))
+            .navigateTo(LocalAlbumNavigationRoute(effect.bucket.id))
     }
 }

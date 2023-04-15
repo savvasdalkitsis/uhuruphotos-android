@@ -15,14 +15,11 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.heatmap.view.implementation.seam
 
-import androidx.compose.ui.geometry.Offset
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.state.CelState
 
 sealed class HeatMapEffect {
     data class NavigateToLightbox(
         val celState: CelState,
-        val center: Offset,
-        val scale: Float,
     ) : HeatMapEffect()
     object ErrorLoadingPhotoDetails : HeatMapEffect()
     object NavigateBack : HeatMapEffect()

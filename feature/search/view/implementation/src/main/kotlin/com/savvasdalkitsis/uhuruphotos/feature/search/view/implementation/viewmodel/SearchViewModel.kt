@@ -19,16 +19,20 @@ import androidx.lifecycle.ViewModel
 import com.savvasdalkitsis.uhuruphotos.feature.account.view.api.seam.AccountOverviewActionsContext
 import com.savvasdalkitsis.uhuruphotos.feature.account.view.api.seam.AccountOverviewEffectHandler
 import com.savvasdalkitsis.uhuruphotos.feature.account.view.api.seam.actions.AccountOverviewAction
+import com.savvasdalkitsis.uhuruphotos.feature.account.view.api.seam.actions.Load
 import com.savvasdalkitsis.uhuruphotos.feature.account.view.api.ui.state.AccountOverviewState
+import com.savvasdalkitsis.uhuruphotos.feature.search.view.api.navigation.SearchNavigationRoute
 import com.savvasdalkitsis.uhuruphotos.feature.search.view.implementation.seam.SearchActionsContext
 import com.savvasdalkitsis.uhuruphotos.feature.search.view.implementation.seam.SearchEffectHandler
+import com.savvasdalkitsis.uhuruphotos.feature.search.view.implementation.seam.actions.Initialise
 import com.savvasdalkitsis.uhuruphotos.feature.search.view.implementation.seam.actions.SearchAction
 import com.savvasdalkitsis.uhuruphotos.feature.search.view.implementation.ui.state.SearchState
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.ActionHandlerWithContext
-import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.HasActionableState
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.CompositeActionHandler
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.CompositeEffectHandler
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.Either
+import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.HasActionableState
+import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.HasInitializer
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.Seam
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
@@ -52,4 +56,9 @@ class SearchViewModel @Inject constructor(
         accountOverviewEffectHandler,
     ),
     SearchState() to AccountOverviewState()
-)
+), HasInitializer<SearchNavigationRoute> {
+    override suspend fun initialize(initializerData: SearchNavigationRoute) {
+        action(Either.Left(Initialise))
+        action(Either.Right(Load))
+    }
+}

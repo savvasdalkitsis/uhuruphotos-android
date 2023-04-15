@@ -3,11 +3,7 @@ android {
 }
 
 dependencies {
-    api(
-            libs.kotlinx.coroutines,
-    )
     implementation(
-            libs.kotlinx.coroutines,
             libs.hilt,
     )
 }

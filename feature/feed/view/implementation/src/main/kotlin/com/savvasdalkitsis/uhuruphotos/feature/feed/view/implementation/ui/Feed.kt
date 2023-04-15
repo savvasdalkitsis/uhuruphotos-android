@@ -105,8 +105,8 @@ internal fun Feed(
                             verticalArrangement = spacedBy(8.dp),
                         ) {
                             if (state.memories.isNotEmpty()) {
-                                FeedMemories(state.memories) { cel, center, scale ->
-                                    action(MemorySelected(cel, center, scale))
+                                FeedMemories(state.memories) { cel ->
+                                    action(MemorySelected(cel))
                                 }
                             }
                             val missingPermissions = state.showRequestPermissionForLocalMediaAccess
@@ -124,8 +124,8 @@ internal fun Feed(
                         }
                     }
                 },
-                onCelSelected = { cel, center, scale ->
-                    action(SelectedCel(cel, center, scale,))
+                onCelSelected = { cel ->
+                    action(SelectedCel(cel))
                 },
                 onChangeDisplay = { action(ChangeDisplay(it as PredefinedCollageDisplay)) },
                 onCelLongPressed = {

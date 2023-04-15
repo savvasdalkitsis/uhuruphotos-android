@@ -17,40 +17,25 @@ package com.savvasdalkitsis.uhuruphotos.feature.trash.view.implementation.naviga
 
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
-import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.action.GalleryAction
-import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.action.LoadCollage
-import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.GalleryId
-import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.ui.state.GalleryState
 import com.savvasdalkitsis.uhuruphotos.feature.settings.domain.api.usecase.SettingsUseCase
-import com.savvasdalkitsis.uhuruphotos.feature.trash.view.api.navigation.TrashNavigationTarget
-import com.savvasdalkitsis.uhuruphotos.feature.trash.view.implementation.seam.actions.TrashAction
-import com.savvasdalkitsis.uhuruphotos.feature.trash.view.implementation.seam.actions.Load
-import com.savvasdalkitsis.uhuruphotos.feature.trash.view.implementation.state.TrashState
+import com.savvasdalkitsis.uhuruphotos.feature.trash.view.api.navigation.TrashNavigationRoute
 import com.savvasdalkitsis.uhuruphotos.feature.trash.view.implementation.viewmodel.TrashViewModel
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.NavigationTarget
-import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.navigationTarget
-import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.Either
-import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.Either.Left
-import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.Either.Right
+import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.NavigationTargetBuilder
 import javax.inject.Inject
 
 internal class TrashNavigationTarget @Inject constructor(
     private val settingsUseCase: SettingsUseCase,
+    private val navigationTargetBuilder: NavigationTargetBuilder,
 ) : NavigationTarget {
 
-    override suspend fun NavGraphBuilder.create(navHostController: NavHostController) =
-        navigationTarget<
-                Pair<GalleryState, TrashState>,
-                Either<GalleryAction, TrashAction>,
-                TrashViewModel
-        >(
-            route = TrashNavigationTarget.registrationName,
+    override suspend fun NavGraphBuilder.create(navHostController: NavHostController) = with(navigationTargetBuilder) {
+        navigationTarget(
             themeMode = settingsUseCase.observeThemeModeState(),
-            initializer = { _, action ->
-                action(Left(LoadCollage(GalleryId(0, "trash"))))
-                action(Right(Load))
-            }
+            route = TrashNavigationRoute::class,
+            viewModel = TrashViewModel::class,
         ) { state, action ->
             TrashAlbumPage(state, action)
         }
+    }
 }

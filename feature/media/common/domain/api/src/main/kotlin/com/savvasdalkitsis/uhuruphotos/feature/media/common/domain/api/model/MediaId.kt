@@ -22,6 +22,7 @@ import kotlinx.parcelize.Parcelize
 import java.io.Serializable
 
 sealed class MediaId<T : Serializable> private constructor(
+    @Transient
     open val value: T,
 ) : Parcelable {
 

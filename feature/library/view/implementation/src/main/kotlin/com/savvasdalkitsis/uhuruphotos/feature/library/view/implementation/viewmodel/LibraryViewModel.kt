@@ -20,18 +20,22 @@ import com.savvasdalkitsis.uhuruphotos.feature.account.view.api.seam.AccountOver
 import com.savvasdalkitsis.uhuruphotos.feature.account.view.api.seam.AccountOverviewEffectHandler
 import com.savvasdalkitsis.uhuruphotos.feature.account.view.api.seam.actions.AccountOverviewAction
 import com.savvasdalkitsis.uhuruphotos.feature.account.view.api.ui.state.AccountOverviewState
+import com.savvasdalkitsis.uhuruphotos.feature.library.view.api.navigation.LibraryNavigationRoute
 import com.savvasdalkitsis.uhuruphotos.feature.library.view.implementation.seam.LibraryActionsContext
 import com.savvasdalkitsis.uhuruphotos.feature.library.view.implementation.seam.LibraryEffectHandler
 import com.savvasdalkitsis.uhuruphotos.feature.library.view.implementation.seam.actions.LibraryAction
 import com.savvasdalkitsis.uhuruphotos.feature.library.view.implementation.ui.state.LibraryState
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.ActionHandlerWithContext
-import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.HasActionableState
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.CompositeActionHandler
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.CompositeEffectHandler
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.Either
+import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.HasActionableState
+import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.HasInitializer
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.Seam
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
+import com.savvasdalkitsis.uhuruphotos.feature.library.view.implementation.seam.actions.Load as LoadLibrary
+import com.savvasdalkitsis.uhuruphotos.feature.account.view.api.seam.actions.Load as LoadAccount
 
 @HiltViewModel
 internal class LibraryViewModel @Inject constructor(
@@ -52,4 +56,9 @@ internal class LibraryViewModel @Inject constructor(
         accountOverviewEffectHandler,
     ),
     LibraryState() to AccountOverviewState()
-)
+), HasInitializer<LibraryNavigationRoute> {
+    override suspend fun initialize(initializerData: LibraryNavigationRoute) {
+        action(Either.Left(LoadLibrary))
+        action(Either.Right(LoadAccount))
+    }
+}

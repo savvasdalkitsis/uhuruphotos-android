@@ -17,29 +17,24 @@ package com.savvasdalkitsis.uhuruphotos.feature.auth.view.implementation.navigat
 
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
-import com.savvasdalkitsis.uhuruphotos.feature.auth.view.api.navigation.WebLoginNavigationTarget
-import com.savvasdalkitsis.uhuruphotos.feature.auth.view.api.navigation.WebLoginNavigationTarget.Companion.url
-import com.savvasdalkitsis.uhuruphotos.feature.auth.view.implementation.seam.actions.LoadPage
-import com.savvasdalkitsis.uhuruphotos.feature.auth.view.implementation.seam.actions.WebLoginAction
+import com.savvasdalkitsis.uhuruphotos.feature.auth.view.api.navigation.WebLoginNavigationRoute
 import com.savvasdalkitsis.uhuruphotos.feature.auth.view.implementation.ui.WebLogin
-import com.savvasdalkitsis.uhuruphotos.feature.auth.view.implementation.ui.WebLoginState
 import com.savvasdalkitsis.uhuruphotos.feature.auth.view.implementation.viewmodel.WebLoginViewModel
 import com.savvasdalkitsis.uhuruphotos.feature.settings.domain.api.usecase.SettingsUseCase
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.NavigationTarget
-import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.navigationTarget
+import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.NavigationTargetBuilder
 import javax.inject.Inject
 
 class WebLoginNavigationTarget @Inject constructor(
     private val settingsUseCase: SettingsUseCase,
+    private val navigationTargetBuilder: NavigationTargetBuilder,
 ) : NavigationTarget {
 
-    override suspend fun NavGraphBuilder.create(navHostController: NavHostController) {
-        navigationTarget<WebLoginState, WebLoginAction, WebLoginViewModel>(
-            route = WebLoginNavigationTarget.registrationName,
+    override suspend fun NavGraphBuilder.create(navHostController: NavHostController) = with(navigationTargetBuilder) {
+        navigationTarget(
             themeMode = settingsUseCase.observeThemeModeState(),
-            initializer = { navBackStackEntry, actions ->
-                actions(LoadPage(navBackStackEntry.url))
-            }
+            route = WebLoginNavigationRoute::class,
+            viewModel = WebLoginViewModel::class,
         ) { state, _ ->
             WebLogin(state)
         }

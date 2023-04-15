@@ -21,7 +21,7 @@ import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.LightboxEffect.*
-import com.savvasdalkitsis.uhuruphotos.feature.person.view.api.navigation.PersonNavigationTarget
+import com.savvasdalkitsis.uhuruphotos.feature.person.view.api.navigation.PersonNavigationRoute
 import com.savvasdalkitsis.uhuruphotos.foundation.map.api.model.LatLon
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.Navigator
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.EffectHandler
@@ -57,7 +57,7 @@ class LightboxEffectHandler @Inject constructor(
             is ShareMedia -> shareUseCase.share(effect.url)
             is UseMediaAs -> shareUseCase.usePhotoAs(effect.url)
             is NavigateToPerson -> navigator.navigateTo(
-                PersonNavigationTarget.name(effect.id)
+                PersonNavigationRoute(effect.id)
             )
             ErrorRefreshingPeople -> toaster.show(string.error_refreshing_people)
             DownloadingOriginal -> {

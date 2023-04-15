@@ -16,14 +16,18 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.feature.album.auto.view.implementation.viewmodel
 
 import androidx.lifecycle.ViewModel
+import com.savvasdalkitsis.uhuruphotos.feature.album.auto.view.api.navigation.AutoAlbumNavigationRoute
 import com.savvasdalkitsis.uhuruphotos.feature.album.auto.view.implementation.seam.AutoAlbumActionsContext
 import com.savvasdalkitsis.uhuruphotos.feature.album.auto.view.implementation.state.AutoAlbumCollageDisplay
 import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.CollageState
 import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.GalleryEffectHandler
+import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.GalleryId
 import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.action.GalleryAction
+import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.action.LoadCollage
 import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.ui.state.GalleryState
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.ActionHandlerWithContext
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.HasActionableState
+import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.HasInitializer
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.Seam
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
@@ -36,4 +40,9 @@ internal class AutoAlbumViewModel @Inject constructor(
     ActionHandlerWithContext(autoAlbumActionsContext),
     effectHandler,
     GalleryState(collageState = CollageState(collageDisplay = AutoAlbumCollageDisplay))
-)
+), HasInitializer<AutoAlbumNavigationRoute> {
+    override suspend fun initialize(initializerData: AutoAlbumNavigationRoute) {
+        val id = initializerData.albumId
+        action(LoadCollage(GalleryId(id, "auto:$id")))
+    }
+}

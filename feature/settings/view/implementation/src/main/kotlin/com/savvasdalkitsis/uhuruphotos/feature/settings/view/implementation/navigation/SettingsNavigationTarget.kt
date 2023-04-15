@@ -18,27 +18,25 @@ package com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.nav
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import com.savvasdalkitsis.uhuruphotos.feature.settings.domain.api.usecase.SettingsUseCase
-import com.savvasdalkitsis.uhuruphotos.feature.settings.view.api.navigation.SettingsNavigationTarget
-import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.actions.SettingsAction
-import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.actions.LoadSettings
+import com.savvasdalkitsis.uhuruphotos.feature.settings.view.api.navigation.SettingsNavigationRoute
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.ui.Settings
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.ui.controller.SettingsViewStateController
-import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.ui.state.SettingsState
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.viewmodel.SettingsViewModel
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.NavigationTarget
-import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.navigationTarget
+import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.NavigationTargetBuilder
 import javax.inject.Inject
 
 internal class SettingsNavigationTarget @Inject constructor(
     private val settingsUseCase: SettingsUseCase,
     private val settingsViewStateController: SettingsViewStateController,
+    private val navigationTargetBuilder: NavigationTargetBuilder,
 ) : NavigationTarget {
 
-    override suspend fun NavGraphBuilder.create(navHostController: NavHostController) {
-        navigationTarget<SettingsState, SettingsAction, SettingsViewModel>(
-            route = SettingsNavigationTarget.registrationName,
+    override suspend fun NavGraphBuilder.create(navHostController: NavHostController) = with(navigationTargetBuilder) {
+        navigationTarget(
             themeMode = settingsUseCase.observeThemeModeState(),
-            initializer = { _, actions -> actions(LoadSettings) }
+            route = SettingsNavigationRoute::class,
+            viewModel = SettingsViewModel::class,
         ) { state, actions ->
             Settings(settingsViewStateController, state, actions)
         }

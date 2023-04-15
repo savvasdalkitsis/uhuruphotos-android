@@ -1,0 +1,3 @@
+package com.savvasdalkitsis.uhuruphotos.foundation.navigation.api
+
+interface NavigationRoute

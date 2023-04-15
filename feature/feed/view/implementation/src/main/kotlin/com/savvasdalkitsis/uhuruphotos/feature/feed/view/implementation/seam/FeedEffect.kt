@@ -15,21 +15,16 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam
 
-import androidx.compose.ui.geometry.Offset
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaId
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.state.CelState
 
 sealed class FeedEffect {
     data class OpenLightbox(
         val id: MediaId<*>,
-        val center: Offset,
-        val scale: Float,
         val isVideo: Boolean,
     ) : FeedEffect()
     data class OpenMemoryLightbox(
         val id: MediaId<*>,
-        val center: Offset,
-        val scale: Float,
         val isVideo: Boolean,
     ) : FeedEffect()
 

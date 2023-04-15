@@ -15,7 +15,7 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.trash.view.implementation.seam
 
-import com.savvasdalkitsis.uhuruphotos.feature.settings.view.api.navigation.SettingsNavigationTarget
+import com.savvasdalkitsis.uhuruphotos.feature.settings.view.api.navigation.SettingsNavigationRoute
 import com.savvasdalkitsis.uhuruphotos.feature.trash.view.implementation.seam.TrashEffect.NavigateToAppSettings
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.Navigator
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.EffectHandler
@@ -27,7 +27,7 @@ class TrashEffectHandler @Inject constructor(
 
     override suspend fun handleEffect(effect: TrashEffect) {
         when (effect) {
-            NavigateToAppSettings -> navigator.navigateTo(SettingsNavigationTarget.name)
+            NavigateToAppSettings -> navigator.navigateTo(SettingsNavigationRoute)
         }
     }
 

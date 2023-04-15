@@ -18,7 +18,7 @@ package com.savvasdalkitsis.uhuruphotos.feature.heatmap.view.implementation.seam
 import com.savvasdalkitsis.uhuruphotos.feature.heatmap.view.implementation.seam.HeatMapEffect.ErrorLoadingPhotoDetails
 import com.savvasdalkitsis.uhuruphotos.feature.heatmap.view.implementation.seam.HeatMapEffect.NavigateBack
 import com.savvasdalkitsis.uhuruphotos.feature.heatmap.view.implementation.seam.HeatMapEffect.NavigateToLightbox
-import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.api.navigation.LightboxNavigationTarget
+import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.api.navigation.LightboxNavigationRoute
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.Navigator
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.EffectHandler
 import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
@@ -37,7 +37,10 @@ class HeatMapEffectHandler @Inject constructor(
             ErrorLoadingPhotoDetails -> toaster.show(string.error_loading_photo_details)
             NavigateBack -> navigator.navigateBack()
             is NavigateToLightbox -> navigator.navigateTo(with(effect) {
-                LightboxNavigationTarget.name(celState.mediaItem.id, center, scale, celState.mediaItem.isVideo)
+                LightboxNavigationRoute(
+                    celState.mediaItem.id,
+                    celState.mediaItem.isVideo
+                )
             })
         }
     }

@@ -1,6 +1,5 @@
 package com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.action
 
-import androidx.compose.ui.geometry.Offset
 import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.GalleryActionsContext
 import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.GalleryEffect
 import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.GalleryEffect.OpenLightbox
@@ -12,8 +11,6 @@ import kotlinx.coroutines.flow.flow
 
 data class SelectedCel(
     val cel: CelState,
-    val center: Offset,
-    val scale: Float,
 ) : GalleryAction() {
     context(GalleryActionsContext) override fun handle(
         state: GalleryState,
@@ -22,8 +19,6 @@ data class SelectedCel(
         effect.handleEffect(
             OpenLightbox(
                 id = cel.mediaItem.id,
-                center = center,
-                scale = scale,
                 video = cel.mediaItem.isVideo,
                 lightboxSequenceDataSource = lightboxSequenceDataSource(galleryId)
             )

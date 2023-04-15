@@ -15,11 +15,11 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.search.view.implementation.seam
 
-import com.savvasdalkitsis.uhuruphotos.api.heatmap.navigation.HeatMapNavigationTarget
+import com.savvasdalkitsis.uhuruphotos.api.heatmap.navigation.HeatMapNavigationRoute
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.api.model.LightboxSequenceDataSource.SearchResults
-import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.api.navigation.LightboxNavigationTarget
-import com.savvasdalkitsis.uhuruphotos.feature.people.view.api.navigation.PeopleNavigationTarget
-import com.savvasdalkitsis.uhuruphotos.feature.person.view.api.navigation.PersonNavigationTarget
+import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.api.navigation.LightboxNavigationRoute
+import com.savvasdalkitsis.uhuruphotos.feature.people.view.api.navigation.PeopleNavigationRoute
+import com.savvasdalkitsis.uhuruphotos.feature.person.view.api.navigation.PersonNavigationRoute
 import com.savvasdalkitsis.uhuruphotos.feature.search.view.implementation.seam.SearchEffect.ErrorRefreshingPeople
 import com.savvasdalkitsis.uhuruphotos.feature.search.view.implementation.seam.SearchEffect.ErrorSearching
 import com.savvasdalkitsis.uhuruphotos.feature.search.view.implementation.seam.SearchEffect.HideKeyboard
@@ -44,25 +44,26 @@ class SearchEffectHandler @Inject constructor(
         effect: SearchEffect,
     ) = when (effect) {
         HideKeyboard -> uiUseCase.hideKeyboard()
-        is OpenLightbox -> navigateTo(
-            with(effect) {
-                LightboxNavigationTarget.name(
+        is OpenLightbox -> {
+            navigator.navigateTo(with(effect) {
+                LightboxNavigationRoute(
                     id,
-                    center,
-                    scale,
                     isVideo,
                     SearchResults(currentQuery)
                 )
-            }
-        )
+            })
+        }
         ErrorSearching -> toaster.show(string.error_searching)
-        NavigateToAllPeople -> navigateTo(PeopleNavigationTarget.name)
+        NavigateToAllPeople -> {
+            navigator.navigateTo(PeopleNavigationRoute)
+        }
         ErrorRefreshingPeople -> toaster.show(string.error_refreshing_people)
-        is NavigateToPerson -> navigateTo(PersonNavigationTarget.name(effect.personId))
-        NavigateToHeatMap -> navigateTo(HeatMapNavigationTarget.name)
+        is NavigateToPerson -> {
+            navigator.navigateTo(PersonNavigationRoute(effect.personId))
+        }
+        NavigateToHeatMap -> {
+            navigator.navigateTo(HeatMapNavigationRoute)
+        }
     }
 
-    private fun navigateTo(target: String) {
-        navigator.navigateTo(target)
-    }
 }

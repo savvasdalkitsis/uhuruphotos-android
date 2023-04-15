@@ -16,7 +16,7 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.feature.person.view.implementation.seam
 
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.api.model.LightboxSequenceDataSource.PersonResults
-import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.api.navigation.LightboxNavigationTarget
+import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.api.navigation.LightboxNavigationRoute
 import com.savvasdalkitsis.uhuruphotos.feature.person.view.implementation.seam.PersonEffect.NavigateBack
 import com.savvasdalkitsis.uhuruphotos.feature.person.view.implementation.seam.PersonEffect.OpenLightbox
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.Navigator
@@ -31,10 +31,8 @@ class PersonEffectHandler @Inject constructor(
         when (effect) {
             NavigateBack -> navigator.navigateBack()
             is OpenLightbox -> navigator.navigateTo(with(effect) {
-                LightboxNavigationTarget.name(
+                LightboxNavigationRoute(
                     id,
-                    center,
-                    scale,
                     video,
                     PersonResults(person.id)
                 )

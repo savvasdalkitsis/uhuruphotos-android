@@ -5,7 +5,4 @@ android {
 dependencies {
     api project(":feature:collage:view:api")
     api project(":feature:media:common:domain:api")
-    api(
-            libs.kotlinx.coroutines,
-    )
 }

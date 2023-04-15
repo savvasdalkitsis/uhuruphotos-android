@@ -17,28 +17,26 @@ package com.savvasdalkitsis.uhuruphotos.feature.heatmap.view.implementation.navi
 
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
-import com.savvasdalkitsis.uhuruphotos.api.heatmap.navigation.HeatMapNavigationTarget
-import com.savvasdalkitsis.uhuruphotos.feature.heatmap.view.implementation.seam.actions.HeatMapAction
-import com.savvasdalkitsis.uhuruphotos.feature.heatmap.view.implementation.seam.actions.Load
+import com.savvasdalkitsis.uhuruphotos.api.heatmap.navigation.HeatMapNavigationRoute
 import com.savvasdalkitsis.uhuruphotos.feature.heatmap.view.implementation.ui.HeatMap
-import com.savvasdalkitsis.uhuruphotos.feature.heatmap.view.implementation.ui.state.HeatMapState
 import com.savvasdalkitsis.uhuruphotos.feature.heatmap.view.implementation.viewmodel.HeatMapViewModel
 import com.savvasdalkitsis.uhuruphotos.feature.settings.domain.api.usecase.SettingsUseCase
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.NavigationTarget
-import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.navigationTarget
+import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.NavigationTargetBuilder
 import javax.inject.Inject
 
 class HeatMapNavigationTarget @Inject constructor(
     private val settingsUseCase: SettingsUseCase,
+    private val navigationTargetBuilder: NavigationTargetBuilder,
 ) : NavigationTarget {
 
-    override suspend fun NavGraphBuilder.create(navHostController: NavHostController) =
-        navigationTarget<HeatMapState, HeatMapAction, HeatMapViewModel>(
-            route = HeatMapNavigationTarget.registrationName,
+    override suspend fun NavGraphBuilder.create(navHostController: NavHostController) = with(navigationTargetBuilder) {
+        navigationTarget(
             themeMode = settingsUseCase.observeThemeModeState(),
-            initializer = { _, actions -> actions(Load) }
+            route = HeatMapNavigationRoute::class,
+            viewModel = HeatMapViewModel::class,
         ) { state, action ->
             HeatMap(state, action)
         }
-
+    }
 }

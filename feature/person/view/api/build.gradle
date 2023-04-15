@@ -1,10 +1,13 @@
+android {
+    namespace 'com.savvasdalkitsis.uhuruphotos.feature.person.view.api'
+}
+
+
 dependencies {
+    api project(":foundation:navigation:api")
     implementation project(":foundation:navigation:api")
     implementation(
             libs.hilt,
     )
 }
 
-android {
-    namespace 'com.savvasdalkitsis.uhuruphotos.feature.person.view.api'
-}

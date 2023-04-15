@@ -21,12 +21,14 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.platform.LocalHapticFeedback
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
-import com.google.accompanist.navigation.animation.AnimatedNavHost
-import com.google.accompanist.navigation.animation.rememberAnimatedNavController
-import com.savvasdalkitsis.uhuruphotos.feature.home.view.api.navigation.HomeNavigationTarget
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.rememberNavController
+import com.savvasdalkitsis.uhuruphotos.feature.home.view.api.navigation.HomeNavigationRoute
 import com.savvasdalkitsis.uhuruphotos.feature.settings.domain.api.usecase.SettingsUseCase
 import com.savvasdalkitsis.uhuruphotos.foundation.map.api.model.LocalMapProvider
 import com.savvasdalkitsis.uhuruphotos.foundation.map.api.model.MapProvider
+import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.LocalNavigationRouteSerializerProvider
+import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.NavigationRouteSerializer
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.NavigationTarget
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.Navigator
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.window.LocalSystemUiController
@@ -43,11 +45,12 @@ class AppNavigator @Inject constructor(
     private val uiUseCase: UiUseCase,
     private val exoplayerProvider: ExoplayerProvider,
     private val settingsUseCase: SettingsUseCase,
+    private val navigationRouteSerializer: NavigationRouteSerializer,
 ) {
 
     @Composable
     fun NavigationTargets() {
-        val navHostController = rememberAnimatedNavController()
+        val navHostController = rememberNavController()
         navigator.navController = navHostController
         with(uiUseCase) {
             keyboardController = LocalSoftwareKeyboardController.current!!
@@ -62,10 +65,11 @@ class AppNavigator @Inject constructor(
             LocalExoPlayerProvider provides exoplayerProvider,
             LocalAnimatedVideoThumbnails provides animateVideoThumbnails.value,
             LocalMapProvider provides mapProvider,
+            LocalNavigationRouteSerializerProvider provides navigationRouteSerializer,
         ) {
-            AnimatedNavHost(
+            NavHost(
                 navController = navHostController,
-                startDestination = HomeNavigationTarget.name
+                startDestination = navigationRouteSerializer.createRouteTemplateFor(HomeNavigationRoute::class),
             ) {
                 runBlocking {
                     navigationTargets.forEach { navigationTarget ->

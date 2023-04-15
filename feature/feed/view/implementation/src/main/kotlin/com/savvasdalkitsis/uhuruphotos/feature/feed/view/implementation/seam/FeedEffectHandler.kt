@@ -15,9 +15,13 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam
 
-import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.FeedEffect.*
+import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.FeedEffect.DownloadingFiles
+import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.FeedEffect.OpenLightbox
+import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.FeedEffect.OpenMemoryLightbox
+import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.FeedEffect.Share
+import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.FeedEffect.Vibrate
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.api.model.LightboxSequenceDataSource.Feed
-import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.api.navigation.LightboxNavigationTarget
+import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.api.navigation.LightboxNavigationRoute
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.Navigator
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.EffectHandler
 import com.savvasdalkitsis.uhuruphotos.foundation.share.api.usecase.ShareUseCase
@@ -35,7 +39,14 @@ internal class FeedEffectHandler @Inject constructor(
 
     override suspend fun handleEffect(effect: FeedEffect) = when (effect) {
         is OpenLightbox -> with(effect) {
-            navigateTo(LightboxNavigationTarget.name(id, center, scale, isVideo, Feed, showMediaSyncState = true))
+            navigator.navigateTo(
+                LightboxNavigationRoute(
+                    id,
+                    isVideo,
+                    Feed,
+                    showMediaSyncState = true
+                )
+            )
         }
         is Share -> {
             toaster.show(string.downloading_photos_sharing)
@@ -46,11 +57,15 @@ internal class FeedEffectHandler @Inject constructor(
         Vibrate -> uiUseCase.performLongPressHaptic()
         DownloadingFiles -> toaster.show(string.downloading_original_files)
         is OpenMemoryLightbox -> with(effect) {
-            navigateTo(LightboxNavigationTarget.name(id, center, scale, isVideo, Feed, showMediaSyncState = true))
+            navigator.navigateTo(
+                LightboxNavigationRoute(
+                    id,
+                    isVideo,
+                    Feed,
+                    showMediaSyncState = true
+                )
+            )
         }
     }
 
-    private fun navigateTo(target: String) {
-        navigator.navigateTo(target)
-    }
 }
