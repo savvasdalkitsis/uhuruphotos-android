@@ -1,0 +1,2 @@
+* Properly fixing memories this time
+* Implemented deletion of local media in Lightbox (or fully synced with options to delete both or just local)
