@@ -95,10 +95,10 @@ object LoadFeed : FeedAction() {
             feedUseCase
                 .getFeedDisplay()
                 .distinctUntilChanged()
-        ) { mediaCollections, ids, avatar, feedDisplay ->
+        ) { mediaCollections, selectedIds, avatar, feedDisplay ->
             val selected = mediaCollections
                 .map { it.toCluster() }
-                .selectCels(ids)
+                .selectCels(selectedIds)
             val final = when (feedDisplay) {
                 PredefinedCollageDisplay.YEARLY -> selected.groupByYear()
                     .map { it.copy(showRefreshIcon = false) }

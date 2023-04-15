@@ -40,13 +40,13 @@ internal fun RowScope.FeedActionBar(
             icon = drawable.ic_share
         )
     }
-    AnimatedVisibility(visible = state.hasSelection) {
+    AnimatedVisibility(visible = state.shouldShowDeleteIcon) {
         ActionIcon(
             onClick = { action(AskForSelectedPhotosTrashing) },
             icon = drawable.ic_delete
         )
     }
-    AnimatedVisibility(visible = state.hasSelection) {
+    AnimatedVisibility(visible = state.shouldShowDownloadIcon) {
         ActionIcon(
             onClick = { action(DownloadSelectedCels) },
             icon = drawable.ic_cloud_download

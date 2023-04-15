@@ -41,6 +41,12 @@ data class FeedState(
         }
     }
     val shouldShowShareIcon: Boolean = selectedCels.let { selected ->
-        selected.isNotEmpty() && selected.none{ it.mediaItem.isVideo }
+        selected.isNotEmpty() && selected.none { it.mediaItem.isVideo }
+    }
+    val shouldShowDeleteIcon: Boolean = selectedCels.let { selected ->
+        selected.isNotEmpty() && selected.none { it.mediaItem.id.findLocal != null }
+    }
+    val shouldShowDownloadIcon: Boolean = selectedCels.let { selected ->
+        selected.isNotEmpty() && selected.none { it.mediaItem.id.findLocal != null }
     }
 }
