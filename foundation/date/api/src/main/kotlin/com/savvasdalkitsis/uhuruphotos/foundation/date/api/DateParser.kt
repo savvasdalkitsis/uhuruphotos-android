@@ -28,6 +28,9 @@ class DateParser @Inject constructor(
     private val parsingDateTimeFormat: DateTimeFormatter,
 ) {
 
+    fun parseDateOrTimeString(dateOrTime: String?) =
+        parseDateString(dateOrTime) ?: parseDateTimeString(dateOrTime)
+
     fun parseDateString(date: String?) =  parseString(date, parsingDateFormat)
 
     fun parseDateTimeString(date: String?) =  parseString(date, parsingDateTimeFormat)

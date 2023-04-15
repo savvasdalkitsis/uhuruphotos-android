@@ -49,6 +49,6 @@ class MemoriesUseCase @Inject constructor(
     private fun DateTime?.sameAsNow(field: DateTime.() -> Int) =
         this != null && field(this) == field(DateTime.now())
 
-    private val MediaCollection.dateTime get() = dateParser.parseDateTimeString(unformattedDate)
+    private val MediaCollection.dateTime get() = dateParser.parseDateOrTimeString(unformattedDate)
 
 }

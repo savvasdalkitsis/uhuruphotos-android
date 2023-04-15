@@ -40,10 +40,9 @@ class DateDisplayer @Inject constructor(
     fun dateTimeString(date: String?): String = format(date, displayingDateTimeFormat)
 
     private fun format(date: String?, formatter: DateTimeFormatter) =
-        (dateParser.parseDateString(date) ?: dateParser.parseDateTimeString(date))
-            ?.let {
-                format(it, formatter)
-            } ?: ""
+        dateParser.parseDateOrTimeString(date)?.let {
+            format(it, formatter)
+        } ?: ""
 
     private fun format(date: DateTime, formatter: DateTimeFormatter): String = if (DateUtils.isToday(date)) {
         context.getString(string.today)
