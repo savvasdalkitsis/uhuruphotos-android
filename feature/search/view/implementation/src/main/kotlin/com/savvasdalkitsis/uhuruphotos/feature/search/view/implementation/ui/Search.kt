@@ -21,7 +21,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import com.savvasdalkitsis.uhuruphotos.feature.search.view.implementation.seam.SearchAction
+import com.savvasdalkitsis.uhuruphotos.feature.search.view.implementation.seam.actions.SearchAction
 import com.savvasdalkitsis.uhuruphotos.feature.search.view.implementation.ui.state.SearchResults.Found
 import com.savvasdalkitsis.uhuruphotos.feature.search.view.implementation.ui.state.SearchResults.Idle
 import com.savvasdalkitsis.uhuruphotos.feature.search.view.implementation.ui.state.SearchResults.Searching

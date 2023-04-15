@@ -26,7 +26,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import com.savvasdalkitsis.uhuruphotos.feature.server.view.implementation.seam.ServerAction
+import com.savvasdalkitsis.uhuruphotos.feature.server.view.implementation.seam.actions.ServerAction
+import com.savvasdalkitsis.uhuruphotos.feature.server.view.implementation.seam.actions.SetLoggingEnabled
 import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
 
 @Composable
@@ -37,13 +38,13 @@ internal fun ColumnScope.EnableLoggingCheckbox(
     Row(
         modifier = Modifier
             .align(Alignment.End)
-            .clickable { action(ServerAction.SetLoggingEnabled(!state.isLoggingEnabled)) },
+            .clickable { action(SetLoggingEnabled(!state.isLoggingEnabled)) },
         horizontalArrangement = Arrangement.spacedBy(8.dp),
         verticalAlignment = Alignment.CenterVertically,
     ) {
         Checkbox(
             checked = state.isLoggingEnabled,
-            onCheckedChange = { action(ServerAction.SetLoggingEnabled(it)) },
+            onCheckedChange = { action(SetLoggingEnabled(it)) },
         )
         Text(stringResource(string.enable_logging))
     }

@@ -10,7 +10,6 @@ dependencies {
     implementation project(':feature:people:domain:api')
     implementation project(':feature:media:remote:domain:api')
     implementation(
-            libs.kotlinx.coroutines,
             libs.hilt,
             libs.moshi,
             libs.retrofit.core,

@@ -15,7 +15,7 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.foundation.seam.api
 
-interface EffectHandler<E> {
+fun interface EffectHandler<E> {
     suspend fun handleEffect(effect: E)
 }
 

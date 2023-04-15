@@ -15,56 +15,31 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.library.view.implementation.navigation
 
-import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
-import com.savvasdalkitsis.uhuruphotos.feature.account.view.api.seam.AccountOverviewAction
-import com.savvasdalkitsis.uhuruphotos.feature.account.view.api.seam.AccountOverviewEffect
-import com.savvasdalkitsis.uhuruphotos.feature.account.view.api.seam.AccountOverviewEffectsHandler
 import com.savvasdalkitsis.uhuruphotos.feature.account.view.api.ui.AccountOverviewActionBar
 import com.savvasdalkitsis.uhuruphotos.feature.account.view.api.ui.AccountOverviewContent
-import com.savvasdalkitsis.uhuruphotos.feature.account.view.api.ui.state.AccountOverviewState
 import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.PredefinedCollageDisplay
-import com.savvasdalkitsis.uhuruphotos.feature.library.view.api.navigation.LibraryNavigationTarget
-import com.savvasdalkitsis.uhuruphotos.feature.library.view.implementation.seam.LibraryAction
-import com.savvasdalkitsis.uhuruphotos.feature.library.view.implementation.seam.LibraryAction.Load
-import com.savvasdalkitsis.uhuruphotos.feature.library.view.implementation.seam.LibraryEffect
-import com.savvasdalkitsis.uhuruphotos.feature.library.view.implementation.seam.LibraryEffectsHandler
+import com.savvasdalkitsis.uhuruphotos.feature.library.view.api.navigation.LibraryNavigationRoute
 import com.savvasdalkitsis.uhuruphotos.feature.library.view.implementation.ui.Library
-import com.savvasdalkitsis.uhuruphotos.feature.library.view.implementation.ui.state.LibraryState
 import com.savvasdalkitsis.uhuruphotos.feature.library.view.implementation.viewmodel.LibraryViewModel
+import com.savvasdalkitsis.uhuruphotos.feature.settings.domain.api.usecase.SettingsUseCase
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.NavigationTarget
-import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.navigationTarget
-import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.CompositeEffectHandler
-import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.Either
+import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.NavigationTargetBuilder
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.Either.Left
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.Either.Right
 import javax.inject.Inject
 
 class LibraryNavigationTarget @Inject constructor(
-    private val settingsUseCase: com.savvasdalkitsis.uhuruphotos.feature.settings.domain.api.usecase.SettingsUseCase,
-    private val accountOverviewEffectsHandler: AccountOverviewEffectsHandler,
-    private val libraryEffectsHandler: LibraryEffectsHandler,
+    private val settingsUseCase: SettingsUseCase,
+    private val navigationTargetBuilder: NavigationTargetBuilder,
 ) : NavigationTarget {
 
-    override suspend fun NavGraphBuilder.create(navHostController: NavHostController) {
-        navigationTarget<
-                Pair<LibraryState, AccountOverviewState>,
-                Either<LibraryEffect, AccountOverviewEffect>,
-                Either<LibraryAction, AccountOverviewAction>,
-                LibraryViewModel
-        >(
-            name = LibraryNavigationTarget.registrationName,
-            effects = CompositeEffectHandler(
-                libraryEffectsHandler,
-                accountOverviewEffectsHandler,
-            ),
+    override suspend fun NavGraphBuilder.create(navHostController: NavHostController) = with(navigationTargetBuilder) {
+        navigationTarget(
             themeMode = settingsUseCase.observeThemeModeState(),
-            initializer = { _, actions ->
-                actions(Left(Load))
-                actions(Right(AccountOverviewAction.Load))
-            },
-            createModel = { hiltViewModel() }
+            route = LibraryNavigationRoute::class,
+            viewModel = LibraryViewModel::class,
         ) { state, actions ->
             Library(
                 state = state.first,

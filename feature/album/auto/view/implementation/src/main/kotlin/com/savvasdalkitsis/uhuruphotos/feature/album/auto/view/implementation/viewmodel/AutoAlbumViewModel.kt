@@ -16,23 +16,33 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.feature.album.auto.view.implementation.viewmodel
 
 import androidx.lifecycle.ViewModel
-import com.savvasdalkitsis.uhuruphotos.feature.album.auto.view.implementation.seam.AutoAlbumActionHandler
+import com.savvasdalkitsis.uhuruphotos.feature.album.auto.view.api.navigation.AutoAlbumNavigationRoute
+import com.savvasdalkitsis.uhuruphotos.feature.album.auto.view.implementation.seam.AutoAlbumActionsContext
 import com.savvasdalkitsis.uhuruphotos.feature.album.auto.view.implementation.state.AutoAlbumCollageDisplay
 import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.CollageState
-import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.GalleryAction
-import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.GalleryEffect
-import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.GalleryMutation
+import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.GalleryEffectHandler
+import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.GalleryId
+import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.action.GalleryAction
+import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.action.LoadCollage
 import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.ui.state.GalleryState
+import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.ActionHandlerWithContext
+import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.HasActionableState
+import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.HasInitializer
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.Seam
-import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.handler
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
 @HiltViewModel
 internal class AutoAlbumViewModel @Inject constructor(
-    autoAlbumActionHandler: AutoAlbumActionHandler,
-) : ViewModel(),
-    Seam<GalleryState, GalleryEffect, GalleryAction, GalleryMutation> by handler(
-        autoAlbumActionHandler,
-        GalleryState(collageState = CollageState(collageDisplay = AutoAlbumCollageDisplay))
-    )
+    autoAlbumActionsContext: AutoAlbumActionsContext,
+    effectHandler: GalleryEffectHandler,
+) : ViewModel(), HasActionableState<GalleryState, GalleryAction> by Seam(
+    ActionHandlerWithContext(autoAlbumActionsContext),
+    effectHandler,
+    GalleryState(collageState = CollageState(collageDisplay = AutoAlbumCollageDisplay))
+), HasInitializer<AutoAlbumNavigationRoute> {
+    override suspend fun initialize(initializerData: AutoAlbumNavigationRoute) {
+        val id = initializerData.albumId
+        action(LoadCollage(GalleryId(id, "auto:$id")))
+    }
+}

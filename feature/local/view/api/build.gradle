@@ -2,7 +2,10 @@ android {
     namespace 'com.savvasdalkitsis.uhuruphotos.feature.local.view.api'
 }
 
+
+
 dependencies {
+    api project(":foundation:navigation:api")
     api project(":feature:collage:view:api")
     api project(":feature:media:local:domain:api")
     api(

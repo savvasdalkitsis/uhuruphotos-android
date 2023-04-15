@@ -18,15 +18,12 @@ package com.savvasdalkitsis.uhuruphotos.foundation.log.implementation.module
 import android.content.Context
 import com.michaelflisar.lumberjack.FileLoggingSetup
 import com.michaelflisar.lumberjack.FileLoggingTree
-import com.savvasdalkitsis.uhuruphotos.foundation.log.implementation.BuildConfig
-import com.savvasdalkitsis.uhuruphotos.foundation.log.implementation.NoOpTree
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import dagger.multibindings.IntoSet
-import timber.log.ConsoleTree
 import timber.log.Timber
 import javax.inject.Singleton
 
@@ -45,13 +42,6 @@ internal class LogModule {
             logOnBackgroundThread = true,
             sizeLimit = "2MB"
         )
-
-    @Provides
-    @IntoSet
-    fun consoleTree(): Timber.Tree = when  {
-        BuildConfig.DEBUG -> ConsoleTree()
-        else -> NoOpTree()
-    }
 
     @Provides
     @IntoSet

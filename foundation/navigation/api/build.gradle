@@ -11,19 +11,9 @@ android {
 dependencies {
 
     api project(':foundation:seam:api')
-    implementation project(":feature:home:view:api")
-    implementation project(":foundation:activity:api")
-    implementation project(":foundation:log:api")
-    implementation project(":foundation:toaster:api")
-    implementation project(":foundation:ui:api")
-    implementation project(":foundation:strings:api")
-    implementation(
-            libs.accompanist.systemui,
-            libs.androidx.compose.foundation,
-    )
+    api project(':foundation:ui:api')
     api(
-            libs.accompanist.navigation,
-            libs.androidx.compose.hilt.navigation,
+            libs.androidx.compose.navigation,
             libs.hilt,
     )
 }

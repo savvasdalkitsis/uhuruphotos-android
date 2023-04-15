@@ -30,7 +30,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.FeedAction
+import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.actions.ClearSelected
+import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.actions.FeedAction
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.ui.state.FeedState
 import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.R.drawable
 import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
@@ -58,7 +59,7 @@ internal fun FeedTitle(
                     modifier = Modifier
                         .heightIn(max = 48.dp),
                     contentPadding = PaddingValues(2.dp),
-                    onClick = { action(FeedAction.ClearSelected) },
+                    onClick = { action(ClearSelected) },
                     shape = RoundedCornerShape(12.dp),
                 ) {
                     Text(
@@ -67,7 +68,7 @@ internal fun FeedTitle(
                     )
                     ActionIcon(
                         modifier = Modifier.size(16.dp),
-                        onClick = { action(FeedAction.ClearSelected) },
+                        onClick = { action(ClearSelected) },
                         icon = drawable.ic_clear
                     )
                 }

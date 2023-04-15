@@ -20,11 +20,11 @@ import androidx.compose.foundation.layout.RowScope
 import androidx.compose.runtime.Composable
 import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.CollageDisplayActionButton
 import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.PredefinedCollageDisplay
-import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.FeedAction
-import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.FeedAction.AskForSelectedPhotosTrashing
-import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.FeedAction.ChangeDisplay
-import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.FeedAction.DownloadSelectedCels
-import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.FeedAction.ShareSelectedCels
+import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.actions.FeedAction
+import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.actions.AskForSelectedPhotosTrashing
+import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.actions.ChangeDisplay
+import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.actions.DownloadSelectedCels
+import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.actions.ShareSelectedCels
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.ui.state.FeedState
 import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.R.drawable
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.ActionIcon
@@ -40,13 +40,13 @@ internal fun RowScope.FeedActionBar(
             icon = drawable.ic_share
         )
     }
-    AnimatedVisibility(visible = state.hasSelection) {
+    AnimatedVisibility(visible = state.shouldShowDeleteIcon) {
         ActionIcon(
             onClick = { action(AskForSelectedPhotosTrashing) },
             icon = drawable.ic_delete
         )
     }
-    AnimatedVisibility(visible = state.hasSelection) {
+    AnimatedVisibility(visible = state.shouldShowDownloadIcon) {
         ActionIcon(
             onClick = { action(DownloadSelectedCels) },
             icon = drawable.ic_cloud_download

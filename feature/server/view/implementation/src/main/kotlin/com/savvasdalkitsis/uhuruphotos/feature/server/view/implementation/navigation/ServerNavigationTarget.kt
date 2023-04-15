@@ -15,42 +15,28 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.server.view.implementation.navigation
 
-import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
-import com.savvasdalkitsis.uhuruphotos.feature.server.view.api.navigation.ServerNavigationTarget.auto
-import com.savvasdalkitsis.uhuruphotos.feature.server.view.api.navigation.ServerNavigationTarget.registrationName
-import com.savvasdalkitsis.uhuruphotos.feature.server.view.implementation.seam.ServerAction
-import com.savvasdalkitsis.uhuruphotos.feature.server.view.implementation.seam.ServerAction.CheckPersistedServer
-import com.savvasdalkitsis.uhuruphotos.feature.server.view.implementation.seam.ServerAction.Load
-import com.savvasdalkitsis.uhuruphotos.feature.server.view.implementation.seam.ServerAction.RequestServerUrlChange
-import com.savvasdalkitsis.uhuruphotos.feature.server.view.implementation.seam.ServerEffect
-import com.savvasdalkitsis.uhuruphotos.feature.server.view.implementation.seam.ServerEffectsHandler
+import com.savvasdalkitsis.uhuruphotos.feature.server.view.api.navigation.ServerNavigationRoute
 import com.savvasdalkitsis.uhuruphotos.feature.server.view.implementation.ui.Server
-import com.savvasdalkitsis.uhuruphotos.feature.server.view.implementation.ui.ServerState
 import com.savvasdalkitsis.uhuruphotos.feature.server.view.implementation.viewmodel.ServerViewModel
+import com.savvasdalkitsis.uhuruphotos.feature.settings.domain.api.usecase.SettingsUseCase
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.NavigationTarget
-import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.navigationTarget
+import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.NavigationTargetBuilder
 import javax.inject.Inject
 
 internal class ServerNavigationTarget @Inject constructor(
-    private val effectsHandler: ServerEffectsHandler,
-    private val settingsUseCase: com.savvasdalkitsis.uhuruphotos.feature.settings.domain.api.usecase.SettingsUseCase,
+    private val settingsUseCase: SettingsUseCase,
+    private val navigationTargetBuilder: NavigationTargetBuilder,
 ) : NavigationTarget {
 
-    override suspend fun NavGraphBuilder.create(navHostController: NavHostController) =
-        navigationTarget<ServerState, ServerEffect, ServerAction, ServerViewModel>(
-            name = registrationName,
-            effects = effectsHandler,
+    override suspend fun NavGraphBuilder.create(navHostController: NavHostController) = with(navigationTargetBuilder) {
+        navigationTarget(
             themeMode = settingsUseCase.observeThemeModeState(),
-            initializer = { navBackStackEntry, action ->
-                action(Load)
-                action(when {
-                    navBackStackEntry.auto -> CheckPersistedServer
-                    else -> RequestServerUrlChange
-                })
-            },
-            content = { state, actions -> Server(state, actions) },
-            createModel = { hiltViewModel() }
-        )
+            route = ServerNavigationRoute::class,
+            viewModel = ServerViewModel::class,
+        ) { state, actions ->
+            Server(state, actions)
+        }
+    }
 }

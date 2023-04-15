@@ -16,35 +16,49 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.feature.library.view.implementation.viewmodel
 
 import androidx.lifecycle.ViewModel
-import com.savvasdalkitsis.uhuruphotos.feature.account.view.api.seam.AccountOverviewAction
-import com.savvasdalkitsis.uhuruphotos.feature.account.view.api.seam.AccountOverviewActionHandler
-import com.savvasdalkitsis.uhuruphotos.feature.account.view.api.seam.AccountOverviewEffect
+import com.savvasdalkitsis.uhuruphotos.feature.account.view.api.seam.AccountOverviewActionsContext
+import com.savvasdalkitsis.uhuruphotos.feature.account.view.api.seam.AccountOverviewEffectHandler
+import com.savvasdalkitsis.uhuruphotos.feature.account.view.api.seam.actions.AccountOverviewAction
 import com.savvasdalkitsis.uhuruphotos.feature.account.view.api.ui.state.AccountOverviewState
-import com.savvasdalkitsis.uhuruphotos.feature.library.view.implementation.seam.LibraryAction
-import com.savvasdalkitsis.uhuruphotos.feature.library.view.implementation.seam.LibraryActionHandler
-import com.savvasdalkitsis.uhuruphotos.feature.library.view.implementation.seam.LibraryEffect
+import com.savvasdalkitsis.uhuruphotos.feature.library.view.api.navigation.LibraryNavigationRoute
+import com.savvasdalkitsis.uhuruphotos.feature.library.view.implementation.seam.LibraryActionsContext
+import com.savvasdalkitsis.uhuruphotos.feature.library.view.implementation.seam.LibraryEffectHandler
+import com.savvasdalkitsis.uhuruphotos.feature.library.view.implementation.seam.actions.LibraryAction
 import com.savvasdalkitsis.uhuruphotos.feature.library.view.implementation.ui.state.LibraryState
+import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.ActionHandlerWithContext
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.CompositeActionHandler
+import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.CompositeEffectHandler
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.Either
-import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.Mutation
+import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.HasActionableState
+import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.HasInitializer
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.Seam
-import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.handler
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
+import com.savvasdalkitsis.uhuruphotos.feature.library.view.implementation.seam.actions.Load as LoadLibrary
+import com.savvasdalkitsis.uhuruphotos.feature.account.view.api.seam.actions.Load as LoadAccount
 
 @HiltViewModel
-class LibraryViewModel @Inject constructor(
-    libraryActionHandler: LibraryActionHandler,
-    accountOverviewActionHandler: AccountOverviewActionHandler,
-) : ViewModel(), Seam<
+internal class LibraryViewModel @Inject constructor(
+    libraryActionsContext: LibraryActionsContext,
+    accountOverviewActionsContext: AccountOverviewActionsContext,
+    accountOverviewEffectHandler: AccountOverviewEffectHandler,
+    libraryEffectHandler: LibraryEffectHandler,
+) : ViewModel(), HasActionableState<
         Pair<LibraryState, AccountOverviewState>,
-        Either<LibraryEffect, AccountOverviewEffect>,
         Either<LibraryAction, AccountOverviewAction>,
-        Mutation<Pair<LibraryState, AccountOverviewState>>
-        > by handler(
+> by Seam(
     CompositeActionHandler(
-        handler1 = libraryActionHandler,
-        handler2 = accountOverviewActionHandler,
+        ActionHandlerWithContext(libraryActionsContext),
+        ActionHandlerWithContext(accountOverviewActionsContext),
+    ),
+    CompositeEffectHandler(
+        libraryEffectHandler,
+        accountOverviewEffectHandler,
     ),
     LibraryState() to AccountOverviewState()
-)
+), HasInitializer<LibraryNavigationRoute> {
+    override suspend fun initialize(initializerData: LibraryNavigationRoute) {
+        action(Either.Left(LoadLibrary))
+        action(Either.Right(LoadAccount))
+    }
+}

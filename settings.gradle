@@ -6,7 +6,6 @@ pluginManagement {
         mavenCentral()
     }
 }
-enableFeaturePreview("VERSION_CATALOGS")
 
 dependencyResolutionManagement {
     repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
@@ -139,6 +138,7 @@ include ':foundation:log:implementation'
 include ':foundation:math:api'
 include ':foundation:map:api'
 include ':foundation:navigation:api'
+include ':foundation:navigation:implementation'
 include ':foundation:network:api'
 include ':foundation:network:implementation'
 include ':foundation:notification:api'

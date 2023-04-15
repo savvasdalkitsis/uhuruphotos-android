@@ -21,6 +21,8 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.widthIn
+import androidx.compose.foundation.pager.HorizontalPager
+import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.ModalBottomSheetLayout
@@ -38,10 +40,8 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.max
-import com.google.accompanist.pager.HorizontalPager
-import com.google.accompanist.pager.rememberPagerState
-import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.LightboxAction
-import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.LightboxAction.ChangedToPage
+import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.actions.ChangedToPage
+import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.actions.LightboxAction
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.ui.state.LightboxState
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.insets.insetsTop
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.SheetHandle
@@ -58,10 +58,8 @@ internal fun Lightbox(
     val infoSheetState = rememberModalBottomSheetState(initialValue = ModalBottomSheetValue.Hidden)
     val sheetSize by SheetSize.rememberSheetSize()
     val pagerState = rememberPagerState()
-    LaunchedEffect(state.media.size, pagerState.pageCount) {
-        if (pagerState.pageCount > state.currentIndex) {
-            pagerState.scrollToPage(state.currentIndex)
-        }
+    LaunchedEffect(state.media.size, pagerState.canScrollBackward, pagerState.canScrollBackward) {
+        pagerState.scrollToPage(state.currentIndex)
     }
     LaunchedEffect(pagerState) {
         snapshotFlow { pagerState.currentPage }.collectLatest { page ->
@@ -70,9 +68,9 @@ internal fun Lightbox(
     }
 
     HorizontalPager(
-        count = state.media.size,
+        pageCount = state.media.size,
         state = pagerState,
-        itemSpacing = 12.dp,
+        pageSpacing = 12.dp,
         key = { page -> state.media.getOrNull(page)?.id?.value ?: page.toString() },
         userScrollEnabled = true,
     ) { index ->

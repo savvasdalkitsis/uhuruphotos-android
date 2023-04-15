@@ -23,7 +23,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.ui.state
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemsOnDevice
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.Mutation
 
-internal sealed class FeedMutation(
+sealed class FeedMutation(
     mutation: Mutation<FeedState>,
 ) : Mutation<FeedState> by mutation {
 
@@ -54,7 +54,7 @@ internal sealed class FeedMutation(
     data class ShowClusters(val clusters: List<Cluster>) : FeedMutation({
         it.copyFeed { copy(isLoading = false, isEmpty = false, clusters = clusters) }
     }) {
-        override fun toString() = "Showing ${clusters.size} clusters"
+        override fun toString() = "ShowClusters(${clusters.size})"
     }
 
     data class ChangeDisplay(val display: PredefinedCollageDisplay) : FeedMutation({

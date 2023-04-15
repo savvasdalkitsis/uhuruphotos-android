@@ -18,7 +18,7 @@ package com.savvasdalkitsis.uhuruphotos.feature.home.view.implementation.seam
 import com.savvasdalkitsis.uhuruphotos.feature.home.view.implementation.ui.state.HomeState
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.Mutation
 
-internal sealed class HomeMutation(
+sealed class HomeMutation(
     mutation: Mutation<HomeState>,
 ) : Mutation<HomeState> by mutation {
 

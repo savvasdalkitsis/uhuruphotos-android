@@ -15,35 +15,26 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.auth.view.implementation.navigation
 
-import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
-import com.savvasdalkitsis.uhuruphotos.feature.auth.view.api.navigation.WebLoginNavigationTarget
-import com.savvasdalkitsis.uhuruphotos.feature.auth.view.api.navigation.WebLoginNavigationTarget.Companion.url
-import com.savvasdalkitsis.uhuruphotos.feature.auth.view.implementation.seam.WebEffectsHandler
-import com.savvasdalkitsis.uhuruphotos.feature.auth.view.implementation.seam.WebLoginAction
-import com.savvasdalkitsis.uhuruphotos.feature.auth.view.implementation.seam.WebLoginEffect
+import com.savvasdalkitsis.uhuruphotos.feature.auth.view.api.navigation.WebLoginNavigationRoute
 import com.savvasdalkitsis.uhuruphotos.feature.auth.view.implementation.ui.WebLogin
-import com.savvasdalkitsis.uhuruphotos.feature.auth.view.implementation.ui.WebLoginState
 import com.savvasdalkitsis.uhuruphotos.feature.auth.view.implementation.viewmodel.WebLoginViewModel
+import com.savvasdalkitsis.uhuruphotos.feature.settings.domain.api.usecase.SettingsUseCase
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.NavigationTarget
-import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.navigationTarget
+import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.NavigationTargetBuilder
 import javax.inject.Inject
 
 class WebLoginNavigationTarget @Inject constructor(
-    private val effectsHandler: WebEffectsHandler,
-    private val settingsUseCase: com.savvasdalkitsis.uhuruphotos.feature.settings.domain.api.usecase.SettingsUseCase,
+    private val settingsUseCase: SettingsUseCase,
+    private val navigationTargetBuilder: NavigationTargetBuilder,
 ) : NavigationTarget {
 
-    override suspend fun NavGraphBuilder.create(navHostController: NavHostController) {
-        navigationTarget<WebLoginState, WebLoginEffect, WebLoginAction, WebLoginViewModel>(
-            name = WebLoginNavigationTarget.registrationName,
-            effects = effectsHandler,
+    override suspend fun NavGraphBuilder.create(navHostController: NavHostController) = with(navigationTargetBuilder) {
+        navigationTarget(
             themeMode = settingsUseCase.observeThemeModeState(),
-            initializer = { navBackStackEntry, actions ->
-                actions(WebLoginAction.LoadPage(navBackStackEntry.url))
-            },
-            createModel = { hiltViewModel() }
+            route = WebLoginNavigationRoute::class,
+            viewModel = WebLoginViewModel::class,
         ) { state, _ ->
             WebLogin(state)
         }

@@ -2,15 +2,15 @@ import io.gitlab.arturbosch.detekt.Detekt
 
 buildscript {
     ext {
-        kotlin_version = '1.8.10'
-        compose_version = '1.4.0-beta01'
-        compose_compiler_version = '1.4.3'
+        kotlin_version = '1.8.20'
+        compose_version = '1.5.0-alpha02'
+        compose_compiler_version = '1.4.5'
     }
     dependencies {
         classpath 'com.google.dagger:hilt-android-gradle-plugin:2.44.2'
         classpath 'com.squareup.sqldelight:gradle-plugin:1.5.4'
         classpath 'com.google.gms:google-services:4.3.15'
-        classpath 'com.google.firebase:firebase-crashlytics-gradle:2.9.4'
+        classpath 'com.google.firebase:firebase-crashlytics-gradle:2.9.5'
         classpath "io.gitlab.arturbosch.detekt:detekt-gradle-plugin:1.22.0"
     }
 
@@ -19,12 +19,12 @@ buildscript {
 
 }// Top-level build file where you can add configuration options common to all sub-projects/modules.
 plugins {
-    id 'com.android.application' version '7.4.2' apply false
-    id 'com.android.library' version '7.4.2' apply false
+    id 'com.android.application' version '8.0.0' apply false
+    id 'com.android.library' version '8.0.0' apply false
     id 'org.jetbrains.kotlin.android' version "$kotlin_version" apply false
     id 'com.squareup.sqldelight' version '1.5.4' apply false
     id 'com.google.android.libraries.mapsplatform.secrets-gradle-plugin' version '2.0.1' apply false
-    id "com.bnorm.power.kotlin-power-assert" version "0.12.0" apply false
+//    id "com.bnorm.power.kotlin-power-assert" version "0.12.2" apply false
     id "org.sonarqube" version "3.4.0.2513"
     id "io.gitlab.arturbosch.detekt" version "1.22.0-RC3" apply true
     id "com.github.ben-manes.versions" version "0.44.0" apply true
@@ -76,7 +76,7 @@ subprojects {
         apply plugin: "com.android.library"
     }
 
-    apply plugin: "com.bnorm.power.kotlin-power-assert"
+//    apply plugin: "com.bnorm.power.kotlin-power-assert"
     apply plugin: 'org.jetbrains.kotlin.android'
     apply plugin: 'kotlin-kapt'
 
@@ -87,8 +87,6 @@ subprojects {
             minSdk 23
             targetSdk 33
 
-            buildConfigField 'int', 'APP_VERSION_CODE', "${project.app_version_code}"
-            buildConfigField 'String', 'APP_VERSION_NAME', "\"${project.app_version_name}\""
             testInstrumentationRunner 'androidx.test.runner.AndroidJUnitRunner'
         }
         testFixtures {
@@ -100,23 +98,22 @@ subprojects {
             }
         }
         compileOptions {
-            sourceCompatibility JavaVersion.VERSION_1_8
-            targetCompatibility JavaVersion.VERSION_1_8
+            sourceCompatibility JavaVersion.VERSION_17
+            targetCompatibility JavaVersion.VERSION_17
         }
         kotlinOptions {
-            jvmTarget = '1.8'
+            jvmTarget = '17'
         }
     }
 
     dependencies {
-        kapt "com.google.dagger:hilt-compiler:2.44.2"
+        kapt "com.google.dagger:hilt-compiler:2.45"
         kapt "androidx.hilt:hilt-compiler:1.0.0"
     }
 
     tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).configureEach {
         kotlinOptions {
             freeCompilerArgs += "-opt-in=com.google.accompanist.permissions.ExperimentalPermissionsApi"
-            freeCompilerArgs += "-opt-in=com.google.accompanist.pager.ExperimentalPagerApi"
             freeCompilerArgs += "-opt-in=androidx.compose.animation.ExperimentalAnimationApi"
             freeCompilerArgs += "-opt-in=androidx.compose.animation.graphics.ExperimentalAnimationGraphicsApi"
             freeCompilerArgs += "-opt-in=androidx.compose.foundation.ExperimentalFoundationApi"

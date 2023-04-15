@@ -10,7 +10,7 @@ lumberjack = "5.3.0"
 mockk = "1.13.5"
 moshi = "1.14.0"
 okhttp = "5.0.0-alpha.11"
-org-jetbrains-kotlinx = "1.7.0-Beta"
+org-jetbrains-kotlinx = "1.6.4"
 permissions = "1.1.0"
 retrofit = "2.9.0"
 sqldelight = "1.5.5"
@@ -18,7 +18,6 @@ sqldelight = "1.5.5"
 [libraries]
 accompanist-insets = { module = "com.google.accompanist:accompanist-insets-ui", version.ref = "accompanist" }
 accompanist-navigation = { module = "com.google.accompanist:accompanist-navigation-animation", version.ref = "accompanist" }
-accompanist-pager = { module = "com.google.accompanist:accompanist-pager", version.ref = "accompanist" }
 accompanist-permissions = { module = "com.google.accompanist:accompanist-permissions", version.ref = "accompanist" }
 accompanist-systemui = { module = "com.google.accompanist:accompanist-systemuicontroller", version.ref = "accompanist" }
 accompanist-webview = { module = "com.google.accompanist:accompanist-webview", version.ref = "accompanist" }
@@ -61,14 +60,16 @@ exoplayer-okhttp = { module = "com.google.android.exoplayer:extension-okhttp", v
 firebase-bom = "com.google.firebase:firebase-bom:31.5.0"
 flowpreferences = "com.fredporciuncula:flow-preferences:1.9.1"
 # @pin pinning so the version tool doesn't recommend -jvm variant
+gson = "com.google.code.gson:gson:2.10.1"
 guava = "com.google.guava:guava:31.1-android"
 hilt = "com.google.dagger:hilt-android:2.45"
 infobar = "com.radusalagean:info-bar-compose:1.0.0"
 joda-time = "net.danlew:android.joda:2.12.5"
 junit = "junit:junit:4.13.2"
 jwt = "com.auth0.android:jwtdecode:2.0.2"
-kotlinx-coroutines = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core-jvm", version.ref = "org-jetbrains-kotlinx" }
+kotlinx-coroutines = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-android", version.ref = "org-jetbrains-kotlinx" }
 kotlinx-coroutines-test = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test", version.ref = "org-jetbrains-kotlinx" }
+kotlin-reflect = "org.jetbrains.kotlin:kotlin-reflect:1.8.20"
 # @pin cannot update until lumbejack supports timber 5
 logger = "com.jakewharton.timber:timber:4.7.1"
 lumberjack-core = { module = "com.github.MFlisar.Lumberjack:lumberjack-library", version.ref = "lumberjack" }

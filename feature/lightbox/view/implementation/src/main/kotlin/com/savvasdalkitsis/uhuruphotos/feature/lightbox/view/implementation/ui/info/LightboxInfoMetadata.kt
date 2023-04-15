@@ -31,9 +31,9 @@ import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.LightboxAction
-import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.LightboxAction.ClickedOnDetailsEntry
-import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.LightboxAction.Refresh
+import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.actions.LightboxAction
+import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.actions.ClickedOnDetailsEntry
+import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.actions.Refresh
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.ui.state.SingleMediaItemState
 import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.R.drawable.ic_aspect_ratio
 import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.R.drawable.ic_camera

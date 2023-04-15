@@ -15,7 +15,7 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.home.view.implementation.ui.state
 
-internal data class HomeState(
+data class HomeState(
     val isLoading: Boolean = true,
     val needsAuthentication: Boolean = false,
 )

@@ -15,17 +15,16 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.ui
 
-import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.stringResource
-import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.SettingsAction
-import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.SettingsAction.ChangeShowLibrary
+import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.actions.ChangeShowLibrary
+import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.actions.SettingsAction
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.ui.state.SettingsState
 import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.R.drawable
 import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
 
 @Composable
-internal fun ColumnScope.SettingsLibrary(
+internal fun SettingsLibrary(
     state: SettingsState,
     action: (SettingsAction) -> Unit,
 ) {

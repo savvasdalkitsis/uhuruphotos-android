@@ -45,7 +45,7 @@ fun Collage(
     listState: LazyListState = rememberLazyListState(),
     collageHeader: @Composable() (LazyItemScope.() -> Unit)? = null,
     emptyContent: @Composable () -> Unit = { NoContent(string.no_photos) },
-    onCelSelected: CelSelected = { _, _, _ -> },
+    onCelSelected: CelSelected = { _ -> },
     onChangeDisplay: (CollageDisplay) -> Unit = {},
     onCelLongPressed: (CelState) -> Unit = {},
     onClusterRefreshClicked: (Cluster) -> Unit = {},

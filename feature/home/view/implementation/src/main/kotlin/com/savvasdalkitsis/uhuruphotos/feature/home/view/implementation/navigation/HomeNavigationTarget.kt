@@ -15,33 +15,28 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.home.view.implementation.navigation
 
-import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
-import com.savvasdalkitsis.uhuruphotos.feature.home.view.api.navigation.HomeNavigationTarget
-import com.savvasdalkitsis.uhuruphotos.feature.home.view.implementation.seam.HomeAction
-import com.savvasdalkitsis.uhuruphotos.feature.home.view.implementation.seam.HomeEffect
-import com.savvasdalkitsis.uhuruphotos.feature.home.view.implementation.seam.HomeEffectsHandler
+import com.savvasdalkitsis.uhuruphotos.feature.home.view.api.navigation.HomeNavigationRoute
 import com.savvasdalkitsis.uhuruphotos.feature.home.view.implementation.ui.Home
-import com.savvasdalkitsis.uhuruphotos.feature.home.view.implementation.ui.state.HomeState
 import com.savvasdalkitsis.uhuruphotos.feature.home.view.implementation.viewmodel.HomeViewModel
+import com.savvasdalkitsis.uhuruphotos.feature.settings.domain.api.usecase.SettingsUseCase
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.NavigationTarget
-import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.navigationTarget
+import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.NavigationTargetBuilder
 import javax.inject.Inject
 
 internal class HomeNavigationTarget @Inject constructor(
-    private val effectsHandler: HomeEffectsHandler,
-    private val settingsUseCase: com.savvasdalkitsis.uhuruphotos.feature.settings.domain.api.usecase.SettingsUseCase,
+    private val settingsUseCase: SettingsUseCase,
+    private val navigationTargetBuilder: NavigationTargetBuilder,
 ) : NavigationTarget {
 
-    override suspend fun NavGraphBuilder.create(navHostController: NavHostController) =
-        navigationTarget<HomeState, HomeEffect, HomeAction, HomeViewModel>(
-            name = HomeNavigationTarget.registrationName,
-            effects = effectsHandler,
+    override suspend fun NavGraphBuilder.create(navHostController: NavHostController) = with(navigationTargetBuilder) {
+        navigationTarget(
             themeMode = settingsUseCase.observeThemeModeState(),
-            initializer = { _, actions -> actions(HomeAction.Load) },
-            createModel = { hiltViewModel() }
+            route = HomeNavigationRoute::class,
+            viewModel = HomeViewModel::class,
         ) { state, action ->
             Home(state, action)
         }
+    }
 }

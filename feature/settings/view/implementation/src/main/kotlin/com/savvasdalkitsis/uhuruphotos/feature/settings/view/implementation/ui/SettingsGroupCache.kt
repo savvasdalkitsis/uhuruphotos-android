@@ -15,16 +15,15 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.ui
 
-import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.material.Divider
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.stringResource
-import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.SettingsAction
+import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.actions.SettingsAction
 import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
 import kotlin.math.max
 
 @Composable
-internal fun ColumnScope.SettingsGroupCache(
+internal fun SettingsGroupCache(
     current: Int,
     initialMaxLimit: Float,
     range: ClosedFloatingPointRange<Float> = 10f..2000f,

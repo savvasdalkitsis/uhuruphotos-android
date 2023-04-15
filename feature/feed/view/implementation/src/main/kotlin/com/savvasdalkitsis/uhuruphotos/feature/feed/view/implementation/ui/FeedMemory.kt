@@ -75,9 +75,7 @@ internal fun FeedMemory(
                         },
                     itemPadding = 0.dp,
                     state = celState,
-                    onSelected = { cel, center, scale ->
-                        onSelected(cel, center, scale)
-                    },
+                    onSelected = onSelected,
                     aspectRatio = 0.7f,
                     contentScale = ContentScale.Crop,
                     selectable = true,

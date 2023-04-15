@@ -21,7 +21,7 @@ public class TestMedia {
     );
 
     public static final MediaItem mediaItem = new MediaItemInstance(
-            MediaId.Companion.invoke("id"),
+            new MediaId.Remote("id"),
             "mediaHash",
             "",
             "",

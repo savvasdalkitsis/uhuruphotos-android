@@ -27,7 +27,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import com.savvasdalkitsis.uhuruphotos.feature.server.view.implementation.seam.ServerAction
+import com.savvasdalkitsis.uhuruphotos.feature.server.view.implementation.seam.actions.SendLogsClick
+import com.savvasdalkitsis.uhuruphotos.feature.server.view.implementation.seam.actions.ServerAction
 import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.R.drawable
 import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
 
@@ -36,7 +37,7 @@ internal fun ColumnScope.SendFeedbackButton(action: (ServerAction) -> Unit) {
     OutlinedButton(
         modifier = Modifier
             .align(Alignment.End),
-        onClick = { action(ServerAction.SendLogsClick) }
+        onClick = { action(SendLogsClick) }
     ) {
         Icon(painter = painterResource(id = drawable.ic_feedback), contentDescription = null)
         Spacer(modifier = Modifier.width(8.dp))

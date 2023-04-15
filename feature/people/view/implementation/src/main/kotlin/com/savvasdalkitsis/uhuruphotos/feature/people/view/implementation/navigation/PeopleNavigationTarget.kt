@@ -15,33 +15,26 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.people.view.implementation.navigation
 
-import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
-import com.savvasdalkitsis.uhuruphotos.feature.people.view.api.navigation.PeopleNavigationTarget
-import com.savvasdalkitsis.uhuruphotos.feature.people.view.implementation.seam.PeopleAction
-import com.savvasdalkitsis.uhuruphotos.feature.people.view.implementation.seam.PeopleAction.LoadPeople
-import com.savvasdalkitsis.uhuruphotos.feature.people.view.implementation.seam.PeopleEffect
-import com.savvasdalkitsis.uhuruphotos.feature.people.view.implementation.seam.PeopleEffectHandler
+import com.savvasdalkitsis.uhuruphotos.feature.people.view.api.navigation.PeopleNavigationRoute
 import com.savvasdalkitsis.uhuruphotos.feature.people.view.implementation.ui.People
-import com.savvasdalkitsis.uhuruphotos.feature.people.view.implementation.ui.state.PeopleState
 import com.savvasdalkitsis.uhuruphotos.feature.people.view.implementation.viewmodel.PeopleViewModel
+import com.savvasdalkitsis.uhuruphotos.feature.settings.domain.api.usecase.SettingsUseCase
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.NavigationTarget
-import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.navigationTarget
+import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.NavigationTargetBuilder
 import javax.inject.Inject
 
 class PeopleNavigationTarget @Inject constructor(
-    private val settingsUseCase: com.savvasdalkitsis.uhuruphotos.feature.settings.domain.api.usecase.SettingsUseCase,
-    private val effectHandler: PeopleEffectHandler,
+    private val settingsUseCase: SettingsUseCase,
+    private val navigationTargetBuilder: NavigationTargetBuilder,
 ) : NavigationTarget {
 
-    override suspend fun NavGraphBuilder.create(navHostController: NavHostController) {
-        navigationTarget<PeopleState, PeopleEffect, PeopleAction, PeopleViewModel>(
-            name = PeopleNavigationTarget.name,
+    override suspend fun NavGraphBuilder.create(navHostController: NavHostController) = with(navigationTargetBuilder) {
+        navigationTarget(
             themeMode = settingsUseCase.observeThemeModeState(),
-            effects = effectHandler,
-            initializer = { _, action -> action(LoadPeople) },
-            createModel = { hiltViewModel() },
+            route = PeopleNavigationRoute::class,
+            viewModel = PeopleViewModel::class,
         ) { state, actions ->
             People(state, actions)
         }

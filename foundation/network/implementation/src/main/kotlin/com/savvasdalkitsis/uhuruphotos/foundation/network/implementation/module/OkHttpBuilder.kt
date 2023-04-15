@@ -17,11 +17,8 @@ package com.savvasdalkitsis.uhuruphotos.foundation.network.implementation.module
 
 import com.savvasdalkitsis.uhuruphotos.foundation.network.api.OkHttpBuilder
 import com.savvasdalkitsis.uhuruphotos.foundation.network.implementation.BasicOkHttpClient
-import com.savvasdalkitsis.uhuruphotos.foundation.network.implementation.BuildConfig.DEBUG
 import okhttp3.OkHttpClient.Builder
 import okhttp3.logging.HttpLoggingInterceptor
-import okhttp3.logging.HttpLoggingInterceptor.Level.BASIC
-import okhttp3.logging.HttpLoggingInterceptor.Level.BODY
 import javax.inject.Inject
 
 internal class OkHttpBuilder @Inject constructor(
@@ -31,9 +28,6 @@ internal class OkHttpBuilder @Inject constructor(
 
     override fun build(builder: Builder.() -> Builder): Builder =
         builder(okHttpBuilder).addInterceptor(
-            HttpLoggingInterceptor(logger).setLevel(when {
-                DEBUG -> BODY
-                else -> BASIC
-            })
+            HttpLoggingInterceptor(logger).setLevel(OkHttpLogLevel.LEVEL)
         )
 }

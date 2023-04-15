@@ -24,6 +24,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.extensions.await
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.extensions.awaitSingleOrNull
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.media.local.LocalMediaItemDetails
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.media.local.LocalMediaItemDetailsQueries
+import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.model.LocalMediaDeletionException
 import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.implementation.module.LocalMediaModule
 import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.implementation.service.LocalMediaService
 import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.implementation.service.model.LocalMediaStoreServiceItem
@@ -189,4 +190,13 @@ class LocalMediaRepository @Inject constructor(
 
     suspend fun getItem(id: Long): LocalMediaItemDetails? =
         localMediaItemDetailsQueries.getItem(id).awaitSingleOrNull()
+
+    fun deleteItem(id: Long, video: Boolean) = runCatchingWithLog {
+        if (localMediaService.delete(id, video) > 0) {
+            localMediaItemDetailsQueries.delete(id)
+            Result.success(Unit)
+        } else {
+            Result.failure(LocalMediaDeletionException(id))
+        }
+    }
 }

@@ -27,44 +27,4 @@ sealed class LightboxSequenceDataSource {
     object FavouriteMedia : LightboxSequenceDataSource()
     object HiddenMedia : LightboxSequenceDataSource()
     object Trash : LightboxSequenceDataSource()
-
-    val toArgument : String get() = when(this) {
-        Single -> "single"
-        Feed -> "feed"
-        is SearchResults -> "search::${query}"
-        is PersonResults -> "person::${personId}"
-        is AutoAlbum -> "autoAlbum::${albumId}"
-        is UserAlbum -> "userAlbum::${albumId}"
-        is LocalAlbum -> "localAlbum::${albumId}"
-        FavouriteMedia -> "favouriteMedia"
-        HiddenMedia -> "hiddenMedia"
-        Trash -> "trash"
-    }
-
-    companion object {
-        fun from(argument: String): LightboxSequenceDataSource = when {
-            argument.contains("::") -> argument.prefixed()
-            argument == "favouriteMedia" -> FavouriteMedia
-            argument == "hiddenMedia" -> HiddenMedia
-            argument == "trash" -> Trash
-            argument == "feed" -> Feed
-            else -> Single
-        }
-
-        private fun String.prefixed(): LightboxSequenceDataSource =
-            ifPrefixIs("search") { SearchResults(it) } ?:
-            ifPrefixIs("person") { PersonResults(it.toInt()) } ?:
-            ifPrefixIs("autoAlbum") { AutoAlbum(it.toInt()) } ?:
-            ifPrefixIs("userAlbum") { UserAlbum(it.toInt()) } ?:
-            ifPrefixIs("localAlbum") { LocalAlbum(it.toInt()) } ?:
-            throw IllegalArgumentException("Prefixed sequence didn't match any patterns")
-
-        private fun String.ifPrefixIs(
-            prefix: String,
-            generate: (String) -> LightboxSequenceDataSource,
-        ): LightboxSequenceDataSource? = if (startsWith("$prefix::"))
-            generate(removePrefix("$prefix::"))
-        else
-            null
-    }
 }
