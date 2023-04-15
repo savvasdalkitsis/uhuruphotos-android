@@ -61,7 +61,7 @@ firebase-bom = "com.google.firebase:firebase-bom:31.5.0"
 flowpreferences = "com.fredporciuncula:flow-preferences:1.9.1"
 # @pin pinning so the version tool doesn't recommend -jvm variant
 gson = "com.google.code.gson:gson:2.10.1"
-guava = "com.google.guava:guava:31.1-android"
+guava = "com.google.guava:guava:31.1-jre"
 hilt = "com.google.dagger:hilt-android:2.45"
 infobar = "com.radusalagean:info-bar-compose:1.0.0"
 joda-time = "net.danlew:android.joda:2.12.5"
