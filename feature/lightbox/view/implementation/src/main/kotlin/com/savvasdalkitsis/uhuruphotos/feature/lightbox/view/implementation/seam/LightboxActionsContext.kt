@@ -18,10 +18,10 @@ package com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.sea
 import com.savvasdalkitsis.uhuruphotos.feature.album.auto.domain.api.usecase.AutoAlbumUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.album.user.domain.api.usecase.UserAlbumUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.feed.domain.api.usecase.FeedUseCase
-import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.LightboxDeletionCategory.FULLY_SYNCED
-import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.LightboxDeletionCategory.LOCAL_ONLY
-import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.LightboxDeletionCategory.REMOTE_ONLY
-import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.LightboxDeletionCategory.REMOTE_TRASHED
+import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.LightboxDeletionCategory.FULLY_SYNCED_ITEM
+import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.LightboxDeletionCategory.LOCAL_ONLY_ITEM
+import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.LightboxDeletionCategory.REMOTE_ITEM
+import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.LightboxDeletionCategory.REMOTE_ITEM_TRASHED
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.LightboxMutation.FinishedLoading
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.LightboxMutation.FinishedLoadingDetails
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.LightboxMutation.HideAllConfirmationDialogs
@@ -67,10 +67,10 @@ internal class LightboxActionsContext @Inject constructor(
     var mediaItemType = MediaItemType.default
 
     fun deletionCategory(item: SingleMediaItemState) = when {
-        mediaItemType == TRASHED -> REMOTE_TRASHED
-        item.id.isBothRemoteAndLocal -> FULLY_SYNCED
-        item.id.findLocal != null -> LOCAL_ONLY
-        else -> REMOTE_ONLY
+        mediaItemType == TRASHED -> REMOTE_ITEM_TRASHED
+        item.id.isBothRemoteAndLocal -> FULLY_SYNCED_ITEM
+        item.id.findLocal != null -> LOCAL_ONLY_ITEM
+        else -> REMOTE_ITEM
     }
 
     suspend fun FlowCollector<LightboxMutation>.deleteLocal(
@@ -106,6 +106,15 @@ internal class LightboxActionsContext @Inject constructor(
         state: LightboxState,
         effect: EffectHandler<LightboxEffect>,
         process: suspend FlowCollector<LightboxMutation>.() -> Result<Unit>,
+    ) = processPhoto(state, effect, process) {
+        emit(RemoveMediaItemFromSource(state.currentMediaItem.id))
+    }
+
+    fun processPhoto(
+        state: LightboxState,
+        effect: EffectHandler<LightboxEffect>,
+        process: suspend FlowCollector<LightboxMutation>.() -> Result<Unit>,
+        postProcessAction: suspend FlowCollector<LightboxMutation>.() -> Unit,
     ) = flow {
         emit(Loading)
         emit(HideAllConfirmationDialogs)
@@ -116,7 +125,7 @@ internal class LightboxActionsContext @Inject constructor(
                 log(it)
             }
             .onSuccess {
-                emit(RemoveMediaItemFromSource(state.currentMediaItem.id))
+                postProcessAction()
                 if (state.media.size == 1) {
                     effect.handleEffect(LightboxEffect.NavigateBack)
                 }

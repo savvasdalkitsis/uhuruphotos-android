@@ -17,8 +17,8 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam
 
 enum class LightboxDeletionCategory {
-    REMOTE_TRASHED,
-    FULLY_SYNCED,
-    LOCAL_ONLY,
-    REMOTE_ONLY,
+    REMOTE_ITEM_TRASHED,
+    FULLY_SYNCED_ITEM,
+    LOCAL_ONLY_ITEM,
+    REMOTE_ITEM,
 }

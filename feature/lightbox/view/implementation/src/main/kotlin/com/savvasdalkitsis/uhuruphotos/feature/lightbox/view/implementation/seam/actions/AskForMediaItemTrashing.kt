@@ -14,10 +14,10 @@ object AskForMediaItemTrashing : LightboxAction() {
         state: LightboxState,
         effect: EffectHandler<LightboxEffect>
     ) = flowOf(when (deletionCategory(state.currentMediaItem)) {
-        REMOTE_TRASHED -> ShowDeleteConfirmationDialog
-        FULLY_SYNCED -> ShowFullySyncedDeleteConfirmationDialog
-        LOCAL_ONLY -> ShowDeleteConfirmationDialog
-        REMOTE_ONLY -> ShowRemoteTrashingConfirmationDialog
+        REMOTE_ITEM_TRASHED -> ShowDeleteConfirmationDialog
+        FULLY_SYNCED_ITEM -> ShowFullySyncedDeleteConfirmationDialog
+        LOCAL_ONLY_ITEM -> ShowDeleteConfirmationDialog
+        REMOTE_ITEM -> ShowRemoteTrashingConfirmationDialog
     })
 
 }

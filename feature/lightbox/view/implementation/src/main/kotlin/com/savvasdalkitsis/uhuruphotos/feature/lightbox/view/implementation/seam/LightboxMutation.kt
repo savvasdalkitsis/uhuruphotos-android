@@ -199,6 +199,12 @@ sealed class LightboxMutation(
         )
     })
 
+    data class ReplaceMediaItemInSource(val id: MediaId<*>, val newItem: SingleMediaItemState) : LightboxMutation({
+        it.copyItem(id) {
+            newItem
+        }
+    })
+
     data class AskForPermissions(val deniedPermissions: List<String>) : LightboxMutation({
         it.copy(missingPermissions = deniedPermissions)
     })

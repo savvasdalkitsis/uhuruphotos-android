@@ -27,7 +27,6 @@ data class LoadMediaItem(
         state: LightboxState,
         effect: EffectHandler<LightboxEffect>,
     ) = flow {
-        val action = this@LoadMediaItem
         val dataSource = sequenceDataSource
         if (dataSource == Trash) {
             mediaItemType = MediaItemType.TRASHED
@@ -50,40 +49,31 @@ data class LoadMediaItem(
                     isVideo = isVideo
                 )
                 Feed -> loadCollections(
-                    feedUseCase.getFeed(),
-                    action
+                    feedUseCase.getFeed()
                 )
                 is SearchResults -> loadCollections(
                     searchUseCase.searchResultsFor(dataSource.query),
-                    action,
                 )
                 is PersonResults -> loadCollections(
                     personUseCase.getPersonMedia(dataSource.personId),
-                    action,
                 )
                 is AutoAlbum -> loadCollections(
                     autoAlbumUseCase.getAutoAlbum(dataSource.albumId),
-                    action,
                 )
                 is UserAlbum -> loadCollections(
                     userAlbumUseCase.getUserAlbum(dataSource.albumId).mediaCollections,
-                    action,
                 )
                 is LocalAlbum -> loadCollections(
                     localAlbumUseCase.getLocalAlbum(dataSource.albumId),
-                    action,
                 )
                 FavouriteMedia -> loadResult(
                     mediaUseCase.getFavouriteMedia(),
-                    action,
                 )
                 HiddenMedia -> loadResult(
                     mediaUseCase.getHiddenMedia(),
-                    action,
                 )
                 Trash -> loadCollections(
                     trashUseCase.getTrash(),
-                    action,
                 )
             }
         }
@@ -92,41 +82,38 @@ data class LoadMediaItem(
 
     context(MediaUseCase, LightboxActionsContext)
     private suspend fun FlowCollector<LightboxMutation>.loadCollections(
-        collections: List<MediaCollection>,
-        action: LoadMediaItem
-    ) = loadPhotos(collections.flatMap { it.mediaItems }, action)
+        collections: List<MediaCollection>
+    ) = loadPhotos(collections.flatMap { it.mediaItems })
 
     context(MediaUseCase, LightboxActionsContext)
     private suspend fun FlowCollector<LightboxMutation>.loadResult(
         mediaItem: Result<List<MediaItem>>,
-        action: LoadMediaItem,
     ) = when (val items = mediaItem.getOrNull()) {
-        null -> loadPhotoDetails(action.id)
-        else -> loadPhotos(items, action)
+        null -> loadPhotoDetails(id)
+        else -> loadPhotos(items)
     }
 
     context(MediaUseCase, LightboxActionsContext)
     private suspend fun FlowCollector<LightboxMutation>.loadPhotos(
-        mediaItems: List<MediaItem>,
-        action: LoadMediaItem
+        mediaItems: List<MediaItem>
     ) {
         val photoStates = mediaItems.map { photo ->
             SingleMediaItemState(
                 id = photo.id,
-                lowResUrl = photo.thumbnailUri ?: photo.id.toThumbnailUriFromId(action.isVideo),
-                fullResUrl = photo.fullResUri ?: photo.id.toFullSizeUriFromId(action.isVideo),
+                lowResUrl = photo.thumbnailUri ?: photo.id.toThumbnailUriFromId(isVideo),
+                fullResUrl = photo.fullResUri ?: photo.id.toFullSizeUriFromId(isVideo),
                 isFavourite = photo.isFavourite,
                 isVideo = photo.isVideo,
                 showFavouriteIcon = photo.id.preferRemote is MediaId.Remote,
                 showDeleteButton = true,
-                mediaItemSyncState = photo.syncState.takeIf { action.showMediaSyncState }
+                mediaItemSyncState = photo.syncState.takeIf { showMediaSyncState }
             )
         }
-        val index = photoStates.indexOfFirst { it.id == action.id }
+        val index = photoStates.indexOfFirst { it.id == id }
         emit(LightboxMutation.ShowMultipleMedia(photoStates, index))
         loadPhotoDetails(
-            photoId = action.id,
-            isVideo = action.isVideo
+            photoId = id,
+            isVideo = isVideo
         )
     }
 }

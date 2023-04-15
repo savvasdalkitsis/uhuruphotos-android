@@ -15,11 +15,11 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui
 
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Arrangement.spacedBy
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.FlowRow
+import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.AlertDialog
@@ -37,7 +37,8 @@ fun MultiButtonDialog(
     title: String,
     onDismiss: () -> Unit,
     confirmButton: @Composable () -> Unit,
-    extraButtons: List<@Composable ()-> Unit> = emptyList(),
+    extraButtons: List<@Composable RowScope.()-> Unit> = emptyList(),
+    negativeButtonText: String = stringResource(string.no),
     body: @Composable ColumnScope.() -> Unit,
 ) {
     AlertDialog(
@@ -47,22 +48,29 @@ fun MultiButtonDialog(
         },
         text = {
             Column(
-                verticalArrangement = Arrangement.spacedBy(8.dp)
+                verticalArrangement = spacedBy(8.dp)
             ) {
                 body()
             }
         },
         buttons = {
-            Box(Modifier.fillMaxWidth().padding(horizontal = 8.dp, vertical = 2.dp)) {
-                FlowRow {
-                    for (button in extraButtons) {
-                        button()
-                    }
-                    Button(onClick = onDismiss) {
-                        Text(stringResource(string.no))
-                    }
-                    confirmButton()
+            FlowRow(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 8.dp, vertical = 2.dp),
+                horizontalArrangement = spacedBy(8.dp),
+                verticalArrangement = spacedBy(4.dp),
+            ) {
+                for (button in extraButtons) {
+                    button()
                 }
+                Button(
+                    modifier = Modifier.weight(1f),
+                    onClick = onDismiss,
+                ) {
+                    Text(negativeButtonText)
+                }
+                confirmButton()
             }
         },
     )

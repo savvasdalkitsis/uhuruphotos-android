@@ -18,6 +18,7 @@ package com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.ui
 import androidx.compose.material.Button
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.MultiButtonDialog
@@ -37,10 +38,14 @@ internal fun DeleteFullySyncedPermissionDialog(
             }
         },
         extraButtons = listOf {
-            Button(onClick = onDeleteLocal) {
+            Button(
+                modifier = Modifier.weight(1f),
+                onClick = onDeleteLocal,
+            ) {
                 Text(stringResource(string.delete_fully_synced_media_local))
             }
         },
+        negativeButtonText = stringResource(string.cancel),
         body = {
             Text(
                 stringResource(string.what_would_like_to_do)
