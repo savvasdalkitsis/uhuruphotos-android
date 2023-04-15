@@ -49,7 +49,6 @@ dependencies {
     implementation project(":foundation:worker:api")
     implementation project(":feature:media:remote:domain:implementation")
     implementation(
-            libs.accompanist.pager,
             libs.accompanist.systemui,
             libs.androidx.compose.hilt.navigation,
             libs.androidx.compose.material,

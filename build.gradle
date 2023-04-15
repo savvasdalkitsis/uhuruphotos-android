@@ -114,7 +114,6 @@ subprojects {
     tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).configureEach {
         kotlinOptions {
             freeCompilerArgs += "-opt-in=com.google.accompanist.permissions.ExperimentalPermissionsApi"
-            freeCompilerArgs += "-opt-in=com.google.accompanist.pager.ExperimentalPagerApi"
             freeCompilerArgs += "-opt-in=androidx.compose.animation.ExperimentalAnimationApi"
             freeCompilerArgs += "-opt-in=androidx.compose.animation.graphics.ExperimentalAnimationGraphicsApi"
             freeCompilerArgs += "-opt-in=androidx.compose.foundation.ExperimentalFoundationApi"

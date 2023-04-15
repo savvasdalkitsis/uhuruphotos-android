@@ -42,7 +42,6 @@ dependencies {
     implementation project(':feature:search:domain:api')
     implementation project(':foundation:image:api')
     implementation(
-            libs.accompanist.pager,
             libs.accompanist.systemui,
             libs.androidx.compose.hilt.navigation,
             libs.androidx.compose.material,
