@@ -1,5 +1,6 @@
 dependencies {
 
+    implementation project(":foundation:launchers:api")
     implementation project(":foundation:log:api")
     implementation(
             libs.kotlinx.coroutines,

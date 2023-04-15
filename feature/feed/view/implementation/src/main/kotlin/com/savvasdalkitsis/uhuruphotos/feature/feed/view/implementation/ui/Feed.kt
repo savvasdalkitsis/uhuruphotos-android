@@ -25,8 +25,17 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.Collage
 import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.PredefinedCollageDisplay
-import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.FeedAction
-import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.FeedAction.*
+import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.actions.CelLongPressed
+import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.actions.ChangeDisplay
+import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.actions.ClusterRefreshClicked
+import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.actions.ClusterSelectionClicked
+import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.actions.DismissSelectedPhotosTrashing
+import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.actions.FeedAction
+import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.actions.MemorySelected
+import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.actions.NeverAskForLocalMediaAccessPermissionRequest
+import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.actions.RefreshFeed
+import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.actions.SelectedCel
+import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.actions.TrashSelectedCels
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.ui.state.FeedState
 import com.savvasdalkitsis.uhuruphotos.feature.home.view.api.ui.HomeScaffold
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.TrashPermissionDialog
@@ -96,8 +105,8 @@ internal fun Feed(
                             verticalArrangement = spacedBy(8.dp),
                         ) {
                             if (state.memories.isNotEmpty()) {
-                                FeedMemories(state.memories) { cel, center, scale ->
-                                    action(MemorySelected(cel, center, scale))
+                                FeedMemories(state.memories) { cel ->
+                                    action(MemorySelected(cel))
                                 }
                             }
                             val missingPermissions = state.showRequestPermissionForLocalMediaAccess
@@ -115,8 +124,8 @@ internal fun Feed(
                         }
                     }
                 },
-                onCelSelected = { cel, center, scale ->
-                    action(SelectedCel(cel, center, scale,))
+                onCelSelected = { cel ->
+                    action(SelectedCel(cel))
                 },
                 onChangeDisplay = { action(ChangeDisplay(it as PredefinedCollageDisplay)) },
                 onCelLongPressed = {

@@ -25,8 +25,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.max
 import com.google.accompanist.permissions.PermissionState
-import com.savvasdalkitsis.uhuruphotos.feature.heatmap.view.implementation.seam.HeatMapAction
-import com.savvasdalkitsis.uhuruphotos.feature.heatmap.view.implementation.seam.HeatMapAction.NeverAskForLocalMediaAccessPermissionRequest
+import com.savvasdalkitsis.uhuruphotos.feature.heatmap.view.implementation.seam.actions.HeatMapAction
+import com.savvasdalkitsis.uhuruphotos.feature.heatmap.view.implementation.seam.actions.NeverAskForLocalMediaAccessPermissionRequest
 import com.savvasdalkitsis.uhuruphotos.feature.heatmap.view.implementation.ui.state.HeatMapState
 import com.savvasdalkitsis.uhuruphotos.feature.media.local.view.api.ui.LocalMediaAccessRequestBanner
 import com.savvasdalkitsis.uhuruphotos.foundation.map.api.ui.MapViewState

@@ -16,7 +16,8 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.feature.account.view.api.ui
 
 import androidx.compose.runtime.Composable
-import com.savvasdalkitsis.uhuruphotos.feature.account.view.api.seam.AccountOverviewAction
+import com.savvasdalkitsis.uhuruphotos.feature.account.view.api.seam.actions.AccountOverviewAction
+import com.savvasdalkitsis.uhuruphotos.feature.account.view.api.seam.actions.AvatarPressed
 import com.savvasdalkitsis.uhuruphotos.feature.account.view.api.ui.state.AccountOverviewState
 import com.savvasdalkitsis.uhuruphotos.feature.avatar.view.api.ui.Avatar
 
@@ -28,7 +29,7 @@ fun AccountOverviewActionBar(
     Avatar(
         state = state.avatarState,
         avatarPressed = {
-            action(AccountOverviewAction.AvatarPressed)
+            action(AvatarPressed)
         }
     )
 }

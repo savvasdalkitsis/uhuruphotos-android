@@ -21,10 +21,10 @@ import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass.Companion
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.stringResource
 import com.savvasdalkitsis.uhuruphotos.feature.avatar.view.api.ui.Avatar
-import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.SettingsAction
-import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.SettingsAction.DismissFullFeedSyncDialog
-import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.SettingsAction.DismissPrecacheThumbnailsDialog
-import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.SettingsAction.NavigateBack
+import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.actions.SettingsAction
+import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.actions.DismissFullFeedSyncDialog
+import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.actions.DismissPrecacheThumbnailsDialog
+import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.actions.NavigateBack
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.ui.controller.SettingsViewStateController
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.ui.state.MapProviderState.Selected
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.ui.state.SettingsState

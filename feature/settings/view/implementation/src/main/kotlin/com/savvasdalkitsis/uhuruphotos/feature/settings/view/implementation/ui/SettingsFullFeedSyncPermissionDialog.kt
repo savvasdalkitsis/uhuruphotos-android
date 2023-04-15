@@ -22,7 +22,8 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.stringResource
-import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.SettingsAction
+import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.actions.PerformFullFeedSync
+import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.actions.SettingsAction
 import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
 
 @Composable
@@ -43,7 +44,7 @@ internal fun SettingsFullFeedSyncPermissionDialog(
             }
         },
         confirmButton = {
-            Button(onClick = { action(SettingsAction.PerformFullFeedSync) }) {
+            Button(onClick = { action(PerformFullFeedSync) }) {
                 Text(stringResource(string.yes))
             }
         },

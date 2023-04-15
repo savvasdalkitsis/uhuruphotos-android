@@ -27,24 +27,31 @@ class CompositeActionHandler<
     private val handler1: ActionHandler<S1, E1, A1, M1>,
     private val handler2: ActionHandler<S2, E2, A2, M2>,
 ) : ActionHandler<Pair<S1, S2>, Either<E1, E2>, Either<A1, A2>, Mutation<Pair<S1, S2>>> {
+
     override fun handleAction(
         state: Pair<S1, S2>,
         action: Either<A1, A2>,
-        effect: suspend (Either<E1, E2>) -> Unit
+        effect: EffectHandler<Either<E1, E2>>
     ): Flow<Mutation<Pair<S1, S2>>> = when(val flows = action
         .mapLeft {
-            handler1.handleAction(state.first, it) { e -> effect(Left(e)) }
+            handler1.handleAction(state.first, it) { e -> effect.handleEffect(Left(e)) }
         }.mapRight {
-            handler2.handleAction(state.second, it) { e -> effect(Right(e)) }
+            handler2.handleAction(state.second, it) { e -> effect.handleEffect(Right(e)) }
         }) {
             is Left -> flows.value.map { m ->
-                Mutation { state ->
-                    m.reduce(state.first) to state.second
+                object : Mutation<Pair<S1, S2>> {
+                    override fun reduce(state: Pair<S1, S2>): Pair<S1, S2> {
+                        return m.reduce(state.first) to state.second
+                    }
+                    override fun toString() = m.toString()
                 }
             }
             is Right -> flows.value.map { m ->
-                Mutation { state ->
-                    state.first to m.reduce(state.second)
+                object : Mutation<Pair<S1, S2>> {
+                    override fun reduce(state: Pair<S1, S2>): Pair<S1, S2> {
+                        return state.first to m.reduce(state.second)
+                    }
+                    override fun toString() = m.toString()
                 }
             }
         }

@@ -16,13 +16,13 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.feature.account.view.api.ui
 
 import androidx.compose.runtime.Composable
-import com.savvasdalkitsis.uhuruphotos.feature.account.view.api.seam.AccountOverviewAction
-import com.savvasdalkitsis.uhuruphotos.feature.account.view.api.seam.AccountOverviewAction.AskToLogOut
-import com.savvasdalkitsis.uhuruphotos.feature.account.view.api.seam.AccountOverviewAction.DismissAccountOverview
-import com.savvasdalkitsis.uhuruphotos.feature.account.view.api.seam.AccountOverviewAction.DismissLogOutDialog
-import com.savvasdalkitsis.uhuruphotos.feature.account.view.api.seam.AccountOverviewAction.EditServer
-import com.savvasdalkitsis.uhuruphotos.feature.account.view.api.seam.AccountOverviewAction.LogOut
-import com.savvasdalkitsis.uhuruphotos.feature.account.view.api.seam.AccountOverviewAction.SettingsClick
+import com.savvasdalkitsis.uhuruphotos.feature.account.view.api.seam.actions.AccountOverviewAction
+import com.savvasdalkitsis.uhuruphotos.feature.account.view.api.seam.actions.AskToLogOut
+import com.savvasdalkitsis.uhuruphotos.feature.account.view.api.seam.actions.DismissAccountOverview
+import com.savvasdalkitsis.uhuruphotos.feature.account.view.api.seam.actions.DismissLogOutDialog
+import com.savvasdalkitsis.uhuruphotos.feature.account.view.api.seam.actions.EditServer
+import com.savvasdalkitsis.uhuruphotos.feature.account.view.api.seam.actions.LogOut
+import com.savvasdalkitsis.uhuruphotos.feature.account.view.api.seam.actions.SettingsClick
 import com.savvasdalkitsis.uhuruphotos.feature.account.view.api.ui.state.AccountOverviewState
 
 @Composable

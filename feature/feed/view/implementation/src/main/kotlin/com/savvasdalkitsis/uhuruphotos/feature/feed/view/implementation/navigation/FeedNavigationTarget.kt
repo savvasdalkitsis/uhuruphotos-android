@@ -16,57 +16,30 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.navigation
 
 import androidx.compose.animation.AnimatedVisibility
-import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
-import com.savvasdalkitsis.uhuruphotos.feature.account.view.api.seam.AccountOverviewAction
-import com.savvasdalkitsis.uhuruphotos.feature.account.view.api.seam.AccountOverviewAction.Load
-import com.savvasdalkitsis.uhuruphotos.feature.account.view.api.seam.AccountOverviewEffect
-import com.savvasdalkitsis.uhuruphotos.feature.account.view.api.seam.AccountOverviewEffectsHandler
 import com.savvasdalkitsis.uhuruphotos.feature.account.view.api.ui.AccountOverviewActionBar
 import com.savvasdalkitsis.uhuruphotos.feature.account.view.api.ui.AccountOverviewContent
-import com.savvasdalkitsis.uhuruphotos.feature.account.view.api.ui.state.AccountOverviewState
-import com.savvasdalkitsis.uhuruphotos.feature.feed.view.api.navigation.FeedNavigationTarget
-import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.FeedAction
-import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.FeedAction.LoadFeed
-import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.FeedEffect
-import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.FeedEffectsHandler
+import com.savvasdalkitsis.uhuruphotos.feature.feed.view.api.navigation.FeedNavigationRoute
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.ui.Feed
-import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.ui.state.FeedState
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.viewmodel.FeedViewModel
 import com.savvasdalkitsis.uhuruphotos.feature.settings.domain.api.usecase.SettingsUseCase
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.NavigationTarget
-import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.navigationTarget
-import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.CompositeEffectHandler
-import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.Either
+import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.NavigationTargetBuilder
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.Either.Left
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.Either.Right
 import javax.inject.Inject
 
 internal class FeedNavigationTarget @Inject constructor(
-    private val accountOverviewEffectsHandler: AccountOverviewEffectsHandler,
-    private val feedEffectsHandler: FeedEffectsHandler,
     private val settingsUseCase: SettingsUseCase,
+    private val navigationTargetBuilder: NavigationTargetBuilder,
 ) : NavigationTarget {
 
-    override suspend fun NavGraphBuilder.create(navHostController: NavHostController) {
-        navigationTarget<
-                Pair<FeedState, AccountOverviewState>,
-                Either<FeedEffect, AccountOverviewEffect>,
-                Either<FeedAction, AccountOverviewAction>,
-                FeedViewModel
-        >(
-            name = FeedNavigationTarget.registrationName,
-            effects = CompositeEffectHandler(
-                feedEffectsHandler,
-                accountOverviewEffectsHandler,
-            ),
+    override suspend fun NavGraphBuilder.create(navHostController: NavHostController) = with(navigationTargetBuilder) {
+        navigationTarget(
             themeMode = settingsUseCase.observeThemeModeState(),
-            initializer = { _, actions ->
-                actions(Left(LoadFeed))
-                actions(Right(Load))
-            },
-            createModel = { hiltViewModel() }
+            route = FeedNavigationRoute::class,
+            viewModel = FeedViewModel::class,
         ) { state, actions ->
             Feed(
                 navHostController,

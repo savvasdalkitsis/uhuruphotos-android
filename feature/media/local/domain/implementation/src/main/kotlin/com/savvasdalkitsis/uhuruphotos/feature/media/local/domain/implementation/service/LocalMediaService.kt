@@ -22,6 +22,7 @@ import android.net.Uri
 import android.os.Build.VERSION.SDK_INT
 import android.os.Build.VERSION_CODES.R
 import android.os.Environment
+import android.provider.BaseColumns
 import android.provider.MediaStore
 import android.provider.MediaStore.Images
 import android.provider.MediaStore.Video
@@ -112,6 +113,16 @@ class LocalMediaService @Inject constructor(
             rowHandler = videoRowHandler,
         )
 
+    fun delete(id: Long, video: Boolean) =
+        contentResolver.delete(
+            if (video)
+                LocalMediaVideoColumns.collection
+            else
+                LocalMediaPhotoColumns.collection,
+            BaseColumns._ID + " = ?",
+            arrayOf(id.toString()),
+        )
+
     private val videoRowHandler: Cursor.() -> LocalMediaStoreServiceItem.Video = {
         val id = long(Video.Media._ID)
         LocalMediaStoreServiceItem.Video(
@@ -194,6 +205,7 @@ class LocalMediaService @Inject constructor(
             null,
             cancellation,
         )?.use {
+            log("MediaStore") { "Found ${it.count} items for $collection" }
             while(it.moveToNext()) {
                 result += rowHandler(it).apply {
                     log("MediaStore") { "Found item $this" }

@@ -15,32 +15,26 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.catalogue.user.view.implementation.navigation
 
-import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
-import com.savvasdalkitsis.uhuruphotos.feature.catalogue.user.view.api.navigation.UserAlbumsNavigationTarget
-import com.savvasdalkitsis.uhuruphotos.feature.catalogue.user.view.implementation.seam.UserAlbumsAction
-import com.savvasdalkitsis.uhuruphotos.feature.catalogue.user.view.implementation.seam.UserAlbumsEffect
-import com.savvasdalkitsis.uhuruphotos.feature.catalogue.user.view.implementation.seam.UserAlbumsEffectHandler
-import com.savvasdalkitsis.uhuruphotos.feature.catalogue.user.view.implementation.seam.UserAlbumsState
+import com.savvasdalkitsis.uhuruphotos.feature.catalogue.user.view.api.navigation.UserAlbumsNavigationRoute
 import com.savvasdalkitsis.uhuruphotos.feature.catalogue.user.view.implementation.ui.UserAlbums
 import com.savvasdalkitsis.uhuruphotos.feature.catalogue.user.view.implementation.viewmodel.UserAlbumsViewModel
+import com.savvasdalkitsis.uhuruphotos.feature.settings.domain.api.usecase.SettingsUseCase
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.NavigationTarget
-import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.navigationTarget
+import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.NavigationTargetBuilder
 import javax.inject.Inject
 
 class UserAlbumsNavigationTarget @Inject constructor(
-    private val settingsUseCase: com.savvasdalkitsis.uhuruphotos.feature.settings.domain.api.usecase.SettingsUseCase,
-    private val userAlbumsEffectHandler: UserAlbumsEffectHandler,
+    private val settingsUseCase: SettingsUseCase,
+    private val navigationTargetBuilder: NavigationTargetBuilder,
 ) : NavigationTarget {
 
-    override suspend fun NavGraphBuilder.create(navHostController: NavHostController) {
-        navigationTarget<UserAlbumsState, UserAlbumsEffect, UserAlbumsAction, UserAlbumsViewModel>(
-            name = UserAlbumsNavigationTarget.registrationName,
-            effects = userAlbumsEffectHandler,
+    override suspend fun NavGraphBuilder.create(navHostController: NavHostController) = with(navigationTargetBuilder) {
+        navigationTarget(
             themeMode = settingsUseCase.observeThemeModeState(),
-            initializer = { _, actions -> actions(UserAlbumsAction.Load) },
-            createModel = { hiltViewModel() }
+            route = UserAlbumsNavigationRoute::class,
+            viewModel = UserAlbumsViewModel::class,
         ) { state, actions ->
             UserAlbums(
                 state = state,

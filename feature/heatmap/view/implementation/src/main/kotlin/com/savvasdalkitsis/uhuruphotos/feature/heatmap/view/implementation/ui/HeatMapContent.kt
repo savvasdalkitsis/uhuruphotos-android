@@ -21,8 +21,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.google.accompanist.permissions.PermissionState
 import com.google.accompanist.permissions.isGranted
-import com.savvasdalkitsis.uhuruphotos.feature.heatmap.view.implementation.seam.HeatMapAction
-import com.savvasdalkitsis.uhuruphotos.feature.heatmap.view.implementation.seam.HeatMapAction.CameraViewPortChanged
+import com.savvasdalkitsis.uhuruphotos.feature.heatmap.view.implementation.seam.actions.HeatMapAction
+import com.savvasdalkitsis.uhuruphotos.feature.heatmap.view.implementation.seam.actions.CameraViewPortChanged
 import com.savvasdalkitsis.uhuruphotos.feature.heatmap.view.implementation.ui.state.HeatMapState
 import com.savvasdalkitsis.uhuruphotos.foundation.map.api.ui.MapView
 import com.savvasdalkitsis.uhuruphotos.foundation.map.api.ui.MapViewState
@@ -37,7 +37,7 @@ fun HeatMapContent(
     mapViewState: MapViewState
 ) {
     mapViewState.Composition(onStoppedMoving = {
-        action(CameraViewPortChanged(boundsChecker = { latLng ->
+        action(CameraViewPortChanged(newBoundsChecker = { latLng ->
             mapViewState.contains(latLng)
         }))
     })

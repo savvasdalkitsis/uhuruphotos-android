@@ -17,7 +17,7 @@ package com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.sea
 
 import androidx.annotation.StringRes
 
-internal sealed class SettingsEffect {
+sealed class SettingsEffect {
     data class ShowMessage(@StringRes val message: Int) : SettingsEffect()
     object NavigateBack : SettingsEffect()
     object EnrollToBiometrics : SettingsEffect()

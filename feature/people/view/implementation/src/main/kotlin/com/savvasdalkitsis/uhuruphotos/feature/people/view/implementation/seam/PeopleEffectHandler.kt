@@ -18,7 +18,7 @@ package com.savvasdalkitsis.uhuruphotos.feature.people.view.implementation.seam
 import com.savvasdalkitsis.uhuruphotos.feature.people.view.implementation.seam.PeopleEffect.ErrorLoadingPeople
 import com.savvasdalkitsis.uhuruphotos.feature.people.view.implementation.seam.PeopleEffect.NavigateBack
 import com.savvasdalkitsis.uhuruphotos.feature.people.view.implementation.seam.PeopleEffect.NavigateToPerson
-import com.savvasdalkitsis.uhuruphotos.feature.person.view.api.navigation.PersonNavigationTarget
+import com.savvasdalkitsis.uhuruphotos.feature.person.view.api.navigation.PersonNavigationRoute
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.Navigator
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.EffectHandler
 import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
@@ -35,7 +35,7 @@ class PeopleEffectHandler @Inject constructor(
             ErrorLoadingPeople -> toaster.show(string.error_refreshing_people)
             NavigateBack -> navigator.navigateBack()
             is NavigateToPerson -> navigator.navigateTo(
-                PersonNavigationTarget.name(effect.person.id)
+                PersonNavigationRoute(effect.person.id)
             )
         }
     }

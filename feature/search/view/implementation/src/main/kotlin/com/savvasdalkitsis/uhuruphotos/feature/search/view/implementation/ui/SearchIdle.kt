@@ -29,7 +29,7 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.savvasdalkitsis.uhuruphotos.feature.search.view.implementation.seam.SearchAction
+import com.savvasdalkitsis.uhuruphotos.feature.search.view.implementation.seam.actions.SearchAction
 import com.savvasdalkitsis.uhuruphotos.feature.search.view.implementation.ui.state.SearchState
 
 @Composable

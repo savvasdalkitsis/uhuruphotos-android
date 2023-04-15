@@ -16,21 +16,35 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.feature.server.view.implementation.viewmodel
 
 import androidx.lifecycle.ViewModel
-import com.savvasdalkitsis.uhuruphotos.feature.server.view.implementation.seam.ServerAction
-import com.savvasdalkitsis.uhuruphotos.feature.server.view.implementation.seam.ServerActionHandler
-import com.savvasdalkitsis.uhuruphotos.feature.server.view.implementation.seam.ServerEffect
-import com.savvasdalkitsis.uhuruphotos.feature.server.view.implementation.seam.ServerMutation
+import com.savvasdalkitsis.uhuruphotos.feature.server.view.api.navigation.ServerNavigationRoute
+import com.savvasdalkitsis.uhuruphotos.feature.server.view.implementation.seam.ServerActionsContext
+import com.savvasdalkitsis.uhuruphotos.feature.server.view.implementation.seam.ServerEffectHandler
+import com.savvasdalkitsis.uhuruphotos.feature.server.view.implementation.seam.actions.CheckPersistedServer
+import com.savvasdalkitsis.uhuruphotos.feature.server.view.implementation.seam.actions.Load
+import com.savvasdalkitsis.uhuruphotos.feature.server.view.implementation.seam.actions.RequestServerUrlChange
+import com.savvasdalkitsis.uhuruphotos.feature.server.view.implementation.seam.actions.ServerAction
 import com.savvasdalkitsis.uhuruphotos.feature.server.view.implementation.ui.ServerState
+import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.ActionHandlerWithContext
+import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.HasActionableState
+import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.HasInitializer
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.Seam
-import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.handler
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
 @HiltViewModel
 internal class ServerViewModel @Inject constructor(
-    handler: ServerActionHandler,
-) : ViewModel(),
-    Seam<ServerState, ServerEffect, ServerAction, ServerMutation> by handler(
-        handler,
-        ServerState.Loading(false)
-    )
+    serverActionsContext: ServerActionsContext,
+    effectHandler: ServerEffectHandler,
+) : ViewModel(), HasActionableState<ServerState, ServerAction> by Seam(
+    ActionHandlerWithContext(serverActionsContext),
+    effectHandler,
+    ServerState.Loading(false)
+), HasInitializer<ServerNavigationRoute> {
+    override suspend fun initialize(initializerData: ServerNavigationRoute) {
+        action(Load)
+        action(when {
+            initializerData.auto -> CheckPersistedServer
+            else -> RequestServerUrlChange
+        })
+    }
+}

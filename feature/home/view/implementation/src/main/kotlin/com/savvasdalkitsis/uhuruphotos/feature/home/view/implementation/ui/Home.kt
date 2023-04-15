@@ -23,8 +23,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
-import com.savvasdalkitsis.uhuruphotos.feature.home.view.implementation.seam.HomeAction
-import com.savvasdalkitsis.uhuruphotos.feature.home.view.implementation.seam.HomeAction.Load
+import com.savvasdalkitsis.uhuruphotos.feature.home.view.implementation.seam.actions.HomeAction
+import com.savvasdalkitsis.uhuruphotos.feature.home.view.implementation.seam.actions.Load
 import com.savvasdalkitsis.uhuruphotos.feature.home.view.implementation.ui.state.HomeState
 import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.CommonScaffold

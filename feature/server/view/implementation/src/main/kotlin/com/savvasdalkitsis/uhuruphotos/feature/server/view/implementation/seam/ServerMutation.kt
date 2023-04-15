@@ -22,7 +22,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.server.view.implementation.ui.Ser
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.Mutation
 import dev.zacsweers.redacted.annotations.Redacted
 
-internal sealed class ServerMutation(
+sealed class ServerMutation(
     mutation: Mutation<ServerState>,
 ) : Mutation<ServerState> by mutation {
 

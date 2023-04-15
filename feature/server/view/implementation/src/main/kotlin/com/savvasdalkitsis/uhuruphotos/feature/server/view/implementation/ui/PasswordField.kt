@@ -29,7 +29,10 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
-import com.savvasdalkitsis.uhuruphotos.feature.server.view.implementation.seam.ServerAction
+import com.savvasdalkitsis.uhuruphotos.feature.server.view.implementation.seam.actions.Login
+import com.savvasdalkitsis.uhuruphotos.feature.server.view.implementation.seam.actions.ServerAction
+import com.savvasdalkitsis.uhuruphotos.feature.server.view.implementation.seam.actions.TogglePasswordVisibility
+import com.savvasdalkitsis.uhuruphotos.feature.server.view.implementation.seam.actions.UserPasswordChangedTo
 import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.R.drawable
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.ActionIcon
 
@@ -51,7 +54,7 @@ internal fun PasswordField(
             imeAction = ImeAction.Done,
         ),
         keyboardActions = KeyboardActions(
-            onDone = { action(ServerAction.Login) }
+            onDone = { action(Login) }
         ),
         leadingIcon = {
             Icon(
@@ -61,7 +64,7 @@ internal fun PasswordField(
         },
         trailingIcon = {
             ActionIcon(
-                onClick = { action(ServerAction.TogglePasswordVisibility) },
+                onClick = { action(TogglePasswordVisibility) },
                 icon = when {
                     state.passwordVisible -> drawable.ic_visible
                     else -> drawable.ic_invisible
@@ -71,7 +74,7 @@ internal fun PasswordField(
         label = { Text("User password") },
         value = state.password,
         onValueChange = {
-            action(ServerAction.UserPasswordChangedTo(it))
+            action(UserPasswordChangedTo(it))
         },
     )
 }

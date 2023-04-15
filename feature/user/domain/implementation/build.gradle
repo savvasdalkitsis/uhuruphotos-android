@@ -6,7 +6,6 @@ dependencies {
     implementation project(":feature:user:domain:api")
     implementation(
             libs.hilt,
-            libs.kotlinx.coroutines,
             libs.moshi,
             libs.retrofit.core,
             libs.retrofit.moshi,

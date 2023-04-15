@@ -26,8 +26,8 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.CollageDisplay
 import com.savvasdalkitsis.uhuruphotos.feature.home.view.api.ui.HomeScaffold
-import com.savvasdalkitsis.uhuruphotos.feature.library.view.implementation.seam.LibraryAction
-import com.savvasdalkitsis.uhuruphotos.feature.library.view.implementation.seam.LibraryAction.Refresh
+import com.savvasdalkitsis.uhuruphotos.feature.library.view.implementation.seam.actions.LibraryAction
+import com.savvasdalkitsis.uhuruphotos.feature.library.view.implementation.seam.actions.Refresh
 import com.savvasdalkitsis.uhuruphotos.feature.library.view.implementation.ui.state.LibraryState
 import com.savvasdalkitsis.uhuruphotos.foundation.compose.api.blurIf
 import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string

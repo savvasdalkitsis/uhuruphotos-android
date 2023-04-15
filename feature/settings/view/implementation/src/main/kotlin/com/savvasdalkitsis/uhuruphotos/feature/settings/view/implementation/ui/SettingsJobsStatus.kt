@@ -16,19 +16,18 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.ui
 
 import androidx.compose.animation.AnimatedContent
-import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.stringResource
-import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.SettingsAction
-import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.SettingsAction.AskForFullFeedSync
-import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.SettingsAction.AskForPrecacheThumbnails
-import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.SettingsAction.CancelFullFeedSync
-import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.SettingsAction.CancelPrecacheThumbnails
+import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.actions.AskForFullFeedSync
+import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.actions.AskForPrecacheThumbnails
+import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.actions.CancelFullFeedSync
+import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.actions.CancelPrecacheThumbnails
+import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.actions.SettingsAction
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.ui.state.SettingsState
 import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
 
 @Composable
-internal fun ColumnScope.SettingsJobsStatus(
+internal fun SettingsJobsStatus(
     state: SettingsState,
     action: (SettingsAction) -> Unit,
 ) {

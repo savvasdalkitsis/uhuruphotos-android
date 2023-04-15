@@ -20,7 +20,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.Med
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemsOnDevice
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.state.CelState
 
-internal data class FeedState(
+data class FeedState(
     val collageState: CollageState = CollageState(),
     val isRefreshing: Boolean = false,
     val showLibrary: Boolean = true,
@@ -41,6 +41,12 @@ internal data class FeedState(
         }
     }
     val shouldShowShareIcon: Boolean = selectedCels.let { selected ->
-        selected.isNotEmpty() && selected.none{ it.mediaItem.isVideo }
+        selected.isNotEmpty() && selected.none { it.mediaItem.isVideo }
+    }
+    val shouldShowDeleteIcon: Boolean = selectedCels.let { selected ->
+        selected.isNotEmpty() && selected.none { it.mediaItem.id.findLocal != null }
+    }
+    val shouldShowDownloadIcon: Boolean = selectedCels.let { selected ->
+        selected.isNotEmpty() && selected.none { it.mediaItem.id.findLocal != null }
     }
 }

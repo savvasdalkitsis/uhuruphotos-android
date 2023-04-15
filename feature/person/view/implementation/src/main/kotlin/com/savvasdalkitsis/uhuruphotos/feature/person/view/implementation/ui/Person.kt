@@ -29,10 +29,10 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
 import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.Collage
 import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.CollageDisplayActionButton
-import com.savvasdalkitsis.uhuruphotos.feature.person.view.implementation.seam.PersonAction
-import com.savvasdalkitsis.uhuruphotos.feature.person.view.implementation.seam.PersonAction.ChangeDisplay
-import com.savvasdalkitsis.uhuruphotos.feature.person.view.implementation.seam.PersonAction.NavigateBack
-import com.savvasdalkitsis.uhuruphotos.feature.person.view.implementation.seam.PersonAction.SelectedCel
+import com.savvasdalkitsis.uhuruphotos.feature.person.view.implementation.seam.actions.PersonAction
+import com.savvasdalkitsis.uhuruphotos.feature.person.view.implementation.seam.actions.ChangeDisplay
+import com.savvasdalkitsis.uhuruphotos.feature.person.view.implementation.seam.actions.NavigateBack
+import com.savvasdalkitsis.uhuruphotos.feature.person.view.implementation.seam.actions.SelectedCel
 import com.savvasdalkitsis.uhuruphotos.feature.person.view.implementation.ui.state.PersonState
 import com.savvasdalkitsis.uhuruphotos.foundation.image.api.ui.Image
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.BackNavButton
@@ -90,8 +90,8 @@ fun Person(
             Collage(
                 contentPadding = contentPadding,
                 state = state.collageState,
-                onCelSelected = { cel, center, scale ->
-                    action(SelectedCel(cel, center, scale))
+                onCelSelected = { cel ->
+                    action(SelectedCel(cel))
                 },
                 onChangeDisplay = { action(ChangeDisplay(it)) },
             )

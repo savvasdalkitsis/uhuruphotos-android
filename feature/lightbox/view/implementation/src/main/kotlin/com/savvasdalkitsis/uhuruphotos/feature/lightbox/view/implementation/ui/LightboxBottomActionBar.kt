@@ -22,11 +22,11 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
-import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.LightboxAction
-import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.LightboxAction.AskForMediaItemRestoration
-import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.LightboxAction.AskForMediaItemTrashing
-import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.LightboxAction.ShareMediaItem
-import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.LightboxAction.UseMediaItemAs
+import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.actions.LightboxAction
+import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.actions.AskForMediaItemRestoration
+import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.actions.AskForMediaItemTrashing
+import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.actions.ShareMediaItem
+import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.actions.UseMediaItemAs
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.ui.state.LightboxState
 import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.R.drawable
 import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string

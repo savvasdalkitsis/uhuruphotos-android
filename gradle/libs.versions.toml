@@ -1,16 +1,17 @@
 [versions]
-accompanist = "0.29.1-alpha"
+accompanist = "0.31.0-alpha"
 androidx-hilt = "1.1.0-alpha01"
-coil = "2.2.2"
+androidx-test = "1.6.0-alpha01"
+coil = "2.3.0"
 com-google-android-gms = "18.1.0"
-compose = "1.4.0-beta01"
-exoplayer = "2.18.4"
+compose = "1.5.0-alpha02"
+exoplayer = "2.18.5"
 lumberjack = "5.3.0"
-mockk = "1.13.4"
+mockk = "1.13.5"
 moshi = "1.14.0"
 okhttp = "5.0.0-alpha.11"
 org-jetbrains-kotlinx = "1.6.4"
-permissions = "1.0.0"
+permissions = "1.1.0"
 retrofit = "2.9.0"
 sqldelight = "1.5.5"
 
@@ -29,8 +30,8 @@ androidx-compose-foundation = { module = "androidx.compose.foundation:foundation
 androidx-compose-foundation-layout = { module = "androidx.compose.foundation:foundation-layout", version.ref = "compose" }
 androidx-compose-hilt-navigation = { module = "androidx.hilt:hilt-navigation-compose", version.ref = "androidx-hilt" }
 androidx-compose-material = { module = "androidx.compose.material:material", version.ref = "compose" }
-androidx-compose-material-windowsize = "androidx.compose.material3:material3-window-size-class:1.1.0-alpha07"
-androidx-compose-navigation = "androidx.navigation:navigation-compose:2.6.0-alpha06"
+androidx-compose-material-windowsize = "androidx.compose.material3:material3-window-size-class:1.1.0-beta02"
+androidx-compose-navigation = "androidx.navigation:navigation-compose:2.6.0-alpha09"
 androidx-compose-test-junit = { module = "androidx.compose.ui:ui-test-junit4", version.ref = "compose" }
 androidx-compose-test-manifest = { module = "androidx.compose.ui:ui-test-manifest", version.ref = "compose" }
 androidx-compose-ui = { module = "androidx.compose.ui:ui", version.ref = "compose" }
@@ -38,15 +39,15 @@ androidx-compose-ui-tooling = { module = "androidx.compose.ui:ui-tooling", versi
 androidx-compose-ui-tooling-preview = { module = "androidx.compose.ui:ui-tooling-preview", version.ref = "compose" }
 androidx-compose-ui-util = { module = "androidx.compose.ui:ui-util", version.ref = "compose" }
 androidx-core = "androidx.core:core-ktx:1.9.0"
-androidx-datastore-preferences = "androidx.datastore:datastore-preferences:1.1.0-alpha01"
-androidx-espresso = "androidx.test.espresso:espresso-core:3.5.1"
-androidx-lifecycle = "androidx.lifecycle:lifecycle-runtime-ktx:2.6.0-rc01"
+androidx-datastore-preferences = "androidx.datastore:datastore-preferences:1.1.0-alpha04"
+androidx-espresso = "androidx.test.espresso:espresso-core:3.6.0-alpha01"
+androidx-lifecycle = "androidx.lifecycle:lifecycle-runtime-ktx:2.6.1"
 androidx-preference = "androidx.preference:preference-ktx:1.2.0"
 androidx-startup = "androidx.startup:startup-runtime:1.2.0-alpha02"
-androidx-test-core = "androidx.test:core:1.5.0"
-androidx-test-runner = "androidx.test:runner:1.5.3-alpha01"
-androidx-window = "androidx.window:window:1.1.0-alpha06"
-androidx-work = "androidx.work:work-runtime-ktx:2.8.0-rc01"
+androidx-test-core = { module = "androidx.test:core", version.ref = "androidx-test" }
+androidx-test-runner = { module = "androidx.test:runner", version.ref = "androidx-test" }
+androidx-window = "androidx.window:window:1.1.0-beta02"
+androidx-work = "androidx.work:work-runtime-ktx:2.8.1"
 androidx-work-hilt = "androidx.hilt:hilt-work:1.0.0"
 assure = "com.afollestad.assure:coroutines:0.2.0"
 bubble-navigation = "com.github.savvasdalkitsis:BubbleNavigationBarCompose:1.0.2"
@@ -57,17 +58,19 @@ coil-video = { module = "io.coil-kt:coil-video", version.ref = "coil" }
 exif = "androidx.exifinterface:exifinterface:1.3.6"
 exoplayer-base = { module = "com.google.android.exoplayer:exoplayer", version.ref = "exoplayer" }
 exoplayer-okhttp = { module = "com.google.android.exoplayer:extension-okhttp", version.ref = "exoplayer" }
-firebase-bom = "com.google.firebase:firebase-bom:31.2.3"
-flowpreferences = "com.fredporciuncula:flow-preferences:1.9.0"
+firebase-bom = "com.google.firebase:firebase-bom:31.5.0"
+flowpreferences = "com.fredporciuncula:flow-preferences:1.9.1"
 # @pin pinning so the version tool doesn't recommend -jvm variant
+gson = "com.google.code.gson:gson:2.10.1"
 guava = "com.google.guava:guava:31.1-android"
 hilt = "com.google.dagger:hilt-android:2.45"
 infobar = "com.radusalagean:info-bar-compose:1.0.0"
-joda-time = "net.danlew:android.joda:2.12.1.1"
+joda-time = "net.danlew:android.joda:2.12.5"
 junit = "junit:junit:4.13.2"
 jwt = "com.auth0.android:jwtdecode:2.0.2"
-kotlinx-coroutines = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core-jvm", version.ref = "org-jetbrains-kotlinx" }
+kotlinx-coroutines = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-android", version.ref = "org-jetbrains-kotlinx" }
 kotlinx-coroutines-test = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test", version.ref = "org-jetbrains-kotlinx" }
+kotlin-reflect = "org.jetbrains.kotlin:kotlin-reflect:1.8.20"
 # @pin cannot update until lumbejack supports timber 5
 logger = "com.jakewharton.timber:timber:4.7.1"
 lumberjack-core = { module = "com.github.MFlisar.Lumberjack:lumberjack-library", version.ref = "lumberjack" }
@@ -93,12 +96,12 @@ permissions-compose = { module = "dev.shreyaspatil.permission-flow:permission-fl
 play = "com.google.android.gms:play-services-base:18.2.0"
 retrofit-core = { module = "com.squareup.retrofit2:retrofit", version.ref = "retrofit" }
 retrofit-moshi = { module = "com.squareup.retrofit2:converter-moshi", version.ref = "retrofit" }
-scrollbar = "com.github.nanihadesuka:LazyColumnScrollbar:1.6.0"
+scrollbar = "com.github.nanihadesuka:LazyColumnScrollbar:1.6.3"
 shazamcrest = "com.shazam:shazamcrest:0.11"
 sqldelight-android = { module = "com.squareup.sqldelight:android-driver", version.ref = "sqldelight" }
 sqldelight-coroutines = { module = "com.squareup.sqldelight:coroutines-extensions", version.ref = "sqldelight" }
 sqldelight-jvm = { module = "com.squareup.sqldelight:sqlite-driver", version.ref = "sqldelight" }
-turbine = "app.cash.turbine:turbine:0.12.1"
+turbine = "app.cash.turbine:turbine:0.12.3"
 urlvalidator = "commons-validator:commons-validator:1.7"
 zoomable = "com.mxalbert.zoomable:zoomable:1.5.1"
 

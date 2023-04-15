@@ -28,8 +28,8 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.CollageDisplayActionButton
 import com.savvasdalkitsis.uhuruphotos.feature.home.view.api.ui.HomeScaffold
-import com.savvasdalkitsis.uhuruphotos.feature.search.view.implementation.seam.SearchAction
-import com.savvasdalkitsis.uhuruphotos.feature.search.view.implementation.seam.SearchAction.ChangeDisplay
+import com.savvasdalkitsis.uhuruphotos.feature.search.view.implementation.seam.actions.SearchAction
+import com.savvasdalkitsis.uhuruphotos.feature.search.view.implementation.seam.actions.ChangeDisplay
 import com.savvasdalkitsis.uhuruphotos.feature.search.view.implementation.ui.state.SearchResults.Found
 import com.savvasdalkitsis.uhuruphotos.feature.search.view.implementation.ui.state.SearchState
 import com.savvasdalkitsis.uhuruphotos.foundation.compose.api.blurIf

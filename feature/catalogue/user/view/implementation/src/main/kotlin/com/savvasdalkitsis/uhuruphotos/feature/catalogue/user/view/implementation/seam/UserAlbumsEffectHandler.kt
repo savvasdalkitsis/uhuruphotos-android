@@ -15,7 +15,7 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.catalogue.user.view.implementation.seam
 
-import com.savvasdalkitsis.uhuruphotos.feature.album.user.view.api.navigation.UserAlbumNavigationTarget
+import com.savvasdalkitsis.uhuruphotos.feature.album.user.view.api.navigation.UserAlbumNavigationRoute
 import com.savvasdalkitsis.uhuruphotos.feature.catalogue.user.view.implementation.seam.UserAlbumsEffect.ErrorLoadingAlbums
 import com.savvasdalkitsis.uhuruphotos.feature.catalogue.user.view.implementation.seam.UserAlbumsEffect.NavigateBack
 import com.savvasdalkitsis.uhuruphotos.feature.catalogue.user.view.implementation.seam.UserAlbumsEffect.NavigateToUserAlbum
@@ -35,7 +35,7 @@ class UserAlbumsEffectHandler @Inject constructor(
             ErrorLoadingAlbums -> toaster.show(string.error_loading_user_albums)
             NavigateBack -> navigator.navigateBack()
             is NavigateToUserAlbum ->
-                navigator.navigateTo(UserAlbumNavigationTarget.name(effect.album.id))
+                navigator.navigateTo(UserAlbumNavigationRoute(effect.album.id))
         }
     }
 }

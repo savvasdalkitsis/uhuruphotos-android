@@ -17,29 +17,13 @@ package com.savvasdalkitsis.uhuruphotos.foundation.navigation.api
 
 import android.content.Intent
 import androidx.navigation.NavHostController
-import com.savvasdalkitsis.uhuruphotos.feature.home.view.api.navigation.HomeNavigationTarget
-import javax.inject.Inject
-import javax.inject.Singleton
 
-@Singleton
-class Navigator @Inject internal constructor(
-    private val intentLauncher: IntentLauncher,
-) {
-    lateinit var navController: NavHostController
+interface Navigator {
+    var navController: NavHostController
 
-    fun navigateTo(intent: Intent) {
-        intentLauncher.launch(intent)
-    }
-
-    fun navigateTo(route: String) {
-        navController.navigate(route)
-    }
-
-    fun navigateBack() {
-        navController.popBackStack()
-    }
-
-    fun clearBackStack() {
-        navController.clearBackStack(HomeNavigationTarget.name)
-    }
+    fun navigateTo(intent: Intent)
+    fun navigateTo(intent: Intent, fallbackIntent: Intent)
+    fun <R : NavigationRoute> navigateTo(route: R)
+    fun navigateBack()
+    fun clearBackStack()
 }

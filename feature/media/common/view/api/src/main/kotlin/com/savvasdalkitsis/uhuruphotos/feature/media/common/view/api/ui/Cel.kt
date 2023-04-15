@@ -47,14 +47,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.scale
-import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.layout.boundsInWindow
-import androidx.compose.ui.layout.onGloballyPositioned
-import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
@@ -86,10 +82,6 @@ fun Cel(
 ) {
     val mediaItem = state.mediaItem
     val scale = remember(mediaItem.id) { Animatable(1f) }
-    val configuration = LocalConfiguration.current
-    val screenDensity = configuration.densityDpi / 160f
-    var relativeCenter by remember(mediaItem.id) { mutableStateOf(Offset.Zero) }
-    var relativeScale by remember(mediaItem.id) { mutableStateOf(0f) }
     val iconSize = if (miniIcons) 16.dp else 24.dp
     val fallbackColor = mediaItem.fallbackColor.toColor()
     var loaded by remember {
@@ -111,7 +103,7 @@ fun Cel(
             .let {
                 if (selectable) {
                     it.combinedClickable(
-                        onClick = { onSelected(state, relativeCenter, relativeScale) },
+                        onClick = { onSelected(state) },
                         onLongClick = { onLongClick(state) }
                     )
                 } else {
@@ -122,12 +114,6 @@ fun Cel(
         Box(
             modifier = Modifier
                 .scale(scale.value)
-                .onGloballyPositioned { coordinates ->
-                    val screenWidth = configuration.screenWidthDp.toFloat() * screenDensity
-                    val boundsInWindow = coordinates.boundsInWindow()
-                    relativeCenter = boundsInWindow.center
-                    relativeScale = boundsInWindow.width / screenWidth
-                }
         ) {
             val thumbnailUri = mediaItem.thumbnailUri
             val scope = rememberCoroutineScope()
@@ -240,4 +226,4 @@ fun Cel(
     }
 }
 
-typealias CelSelected = (cel: CelState, center: Offset, scale: Float) -> Unit
+typealias CelSelected = (cel: CelState) -> Unit

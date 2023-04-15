@@ -15,15 +15,12 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.person.view.implementation.seam
 
-import androidx.compose.ui.geometry.Offset
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaId
 import com.savvasdalkitsis.uhuruphotos.feature.people.view.api.ui.state.Person
 
 sealed class PersonEffect {
     data class OpenLightbox(
         val id: MediaId<*>,
-        val center: Offset,
-        val scale: Float,
         val video: Boolean,
         val person: Person,
     ) : PersonEffect()

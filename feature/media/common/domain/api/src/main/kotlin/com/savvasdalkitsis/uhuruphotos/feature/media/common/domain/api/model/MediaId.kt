@@ -22,6 +22,7 @@ import kotlinx.parcelize.Parcelize
 import java.io.Serializable
 
 sealed class MediaId<T : Serializable> private constructor(
+    @Transient
     open val value: T,
 ) : Parcelable {
 
@@ -29,8 +30,9 @@ sealed class MediaId<T : Serializable> private constructor(
     abstract val findRemote: Remote?
     abstract val preferLocal: MediaId<*>
     abstract val findLocal: Local?
-    abstract val serialize: String
     abstract val syncState: MediaItemSyncState
+
+    val isBothRemoteAndLocal: Boolean get() = findLocal != null && findRemote != null
 
     @Parcelize
     data class Remote(override val value: String): MediaId<String>(value) {
@@ -42,8 +44,6 @@ sealed class MediaId<T : Serializable> private constructor(
         override val findRemote = this
         @IgnoredOnParcel
         override val findLocal = null
-        @IgnoredOnParcel
-        override val serialize = "remote:$value"
         @IgnoredOnParcel
         override val syncState: MediaItemSyncState = REMOTE_ONLY
     }
@@ -58,8 +58,6 @@ sealed class MediaId<T : Serializable> private constructor(
         override val findRemote = null
         @IgnoredOnParcel
         override val findLocal = this
-        @IgnoredOnParcel
-        override val serialize = "local:$value"
         @IgnoredOnParcel
         override val syncState: MediaItemSyncState = LOCAL_ONLY
     }
@@ -76,8 +74,6 @@ sealed class MediaId<T : Serializable> private constructor(
         @IgnoredOnParcel
         override val preferLocal: MediaId<*> = findLocal ?: value.first()
         @IgnoredOnParcel
-        override val serialize = "group:" + value.joinToString(separator = "::") { it.serialize }
-        @IgnoredOnParcel
         override val syncState: MediaItemSyncState = when {
             findRemote == null -> LOCAL_ONLY
             findLocal == null -> REMOTE_ONLY
@@ -87,18 +83,6 @@ sealed class MediaId<T : Serializable> private constructor(
         companion object {
             operator fun invoke(value: Collection<MediaId<*>>) =
                 Group(ArrayList(value.distinct()))
-        }
-    }
-
-    companion object {
-        operator fun invoke(id: String) = deserialize(id)
-
-        private fun deserialize(id: String): MediaId<*> = when {
-            id.startsWith("local:") -> Local(id.removePrefix("local:").toLong())
-            id.startsWith("remote:") -> Remote(id.removePrefix("remote:"))
-            else -> Group(id.removePrefix("group:").split("::").map {
-                deserialize(it)
-            })
         }
     }
 }
