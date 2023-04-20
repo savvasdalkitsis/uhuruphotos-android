@@ -249,4 +249,10 @@
     <string name="media_sync_status_local_only">Los medios sólo son locales a este dispositivo</string>
     <string name="missing_local_media_permissions_photo_map">¿Quieres ver los medios locales en el mapa de fotos\?</string>
     <string name="today">Hoy</string>
+    <string name="what_would_like_to_do">¿Qué te gustaría hacer\?</string>
+    <string name="delete_fully_synced_media_both">Eliminar localmente/remoto a la papelera de reciclaje</string>
+    <string name="delete_fully_synced_media_local">Eliminar localmente</string>
+    <string name="allow_storage_management_title">Administración del almacenamiento</string>
+    <string name="allow_storage_management_description">UhuruPhotos necesita permisos para administrar el almacenamiento de tu dispositivo para realizar esta acción</string>
+    <string name="allow_storage_management_details">Se te redirigirá a la configuración del sistema para conceder este permiso. ¿Continuar\?</string>
 </resources>
