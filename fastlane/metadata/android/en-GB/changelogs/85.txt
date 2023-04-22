@@ -1,0 +1,1 @@
+* Replacing Firebase crashlytics for AppCenter since Firebase requires Advertising ID
