@@ -1,0 +1,1 @@
+* Fixing bug with screens with multiple initializing actions
