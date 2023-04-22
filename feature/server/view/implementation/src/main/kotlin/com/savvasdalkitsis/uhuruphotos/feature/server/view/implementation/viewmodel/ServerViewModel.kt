@@ -39,8 +39,8 @@ internal class ServerViewModel @Inject constructor(
     ActionHandlerWithContext(serverActionsContext),
     effectHandler,
     ServerState.Loading(false)
-), HasInitializer<ServerNavigationRoute> {
-    override suspend fun initialize(initializerData: ServerNavigationRoute) {
+), HasInitializer<ServerAction, ServerNavigationRoute> {
+    override suspend fun initialize(initializerData: ServerNavigationRoute, action: (ServerAction) -> Unit) {
         action(Load)
         action(when {
             initializerData.auto -> CheckPersistedServer

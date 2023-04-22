@@ -37,8 +37,11 @@ internal class AutoAlbumsViewModel @Inject constructor(
     ActionHandlerWithContext(autoAlbumsActionsContext),
     effectHandler,
     AutoAlbumsState()
-), HasInitializer<AutoAlbumsNavigationRoute> {
-    override suspend fun initialize(initializerData: AutoAlbumsNavigationRoute) {
+), HasInitializer<AutoAlbumsAction, AutoAlbumsNavigationRoute> {
+    override suspend fun initialize(
+        initializerData: AutoAlbumsNavigationRoute,
+        action: (AutoAlbumsAction) -> Unit
+    ) {
         action(Load)
     }
 }

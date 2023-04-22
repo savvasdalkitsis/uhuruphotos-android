@@ -37,8 +37,8 @@ internal class HomeViewModel @Inject constructor(
     ActionHandlerWithContext(homeActionsContext),
     effectHandler,
     HomeState()
-), HasInitializer<HomeNavigationRoute> {
-    override suspend fun initialize(initializerData: HomeNavigationRoute) {
+), HasInitializer<HomeAction, HomeNavigationRoute> {
+    override suspend fun initialize(initializerData: HomeNavigationRoute, action: (HomeAction) -> Unit) {
         action(Load)
     }
 }

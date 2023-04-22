@@ -39,8 +39,11 @@ internal class UserAlbumViewModel @Inject constructor(
     ActionHandlerWithContext(userAlbumActionsContext),
     effectHandler,
     GalleryState(collageState = CollageState())
-), HasInitializer<UserAlbumNavigationRoute> {
-    override suspend fun initialize(initializerData: UserAlbumNavigationRoute) {
+), HasInitializer<GalleryAction, UserAlbumNavigationRoute> {
+    override suspend fun initialize(
+        initializerData: UserAlbumNavigationRoute,
+        action: (GalleryAction) -> Unit
+    ) {
         val id = initializerData.albumId
         action(LoadCollage(GalleryId(id, "user:$id")))
     }

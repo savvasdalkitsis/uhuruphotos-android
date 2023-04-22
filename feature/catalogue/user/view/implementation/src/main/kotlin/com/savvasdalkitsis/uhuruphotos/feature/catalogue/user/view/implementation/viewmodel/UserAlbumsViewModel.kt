@@ -37,8 +37,11 @@ class UserAlbumsViewModel @Inject constructor(
     ActionHandlerWithContext(userAlbumsActionsContext),
     effectHandler,
     UserAlbumsState()
-), HasInitializer<UserAlbumsNavigationRoute> {
-    override suspend fun initialize(initializerData: UserAlbumsNavigationRoute) {
+), HasInitializer<UserAlbumsAction, UserAlbumsNavigationRoute> {
+    override suspend fun initialize(
+        initializerData: UserAlbumsNavigationRoute,
+        action: (UserAlbumsAction) -> Unit
+    ) {
         action(Load)
     }
 }

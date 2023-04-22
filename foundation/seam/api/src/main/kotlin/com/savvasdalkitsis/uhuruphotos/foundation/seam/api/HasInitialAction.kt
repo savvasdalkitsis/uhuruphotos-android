@@ -15,6 +15,6 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.foundation.seam.api
 
-interface HasInitializer<D> {
-    suspend fun initialize(initializerData: D)
+interface HasInitializer<A, D> {
+    suspend fun initialize(initializerData: D, action: (A) -> Unit)
 }

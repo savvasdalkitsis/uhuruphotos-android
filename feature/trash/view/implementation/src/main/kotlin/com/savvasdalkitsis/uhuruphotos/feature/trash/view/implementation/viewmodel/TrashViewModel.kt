@@ -57,8 +57,8 @@ internal class TrashViewModel @Inject constructor(
         trashEffectHandler,
     ),
     GalleryState() to TrashState()
-), HasInitializer<TrashNavigationRoute> {
-    override suspend fun initialize(initializerData: TrashNavigationRoute) {
+), HasInitializer<Either<GalleryAction, TrashAction>, TrashNavigationRoute> {
+    override suspend fun initialize(initializerData: TrashNavigationRoute, action: (Either<GalleryAction, TrashAction>) -> Unit) {
         action(Either.Left(LoadCollage(GalleryId(0, "trash"))))
         action(Either.Right(Load))
     }

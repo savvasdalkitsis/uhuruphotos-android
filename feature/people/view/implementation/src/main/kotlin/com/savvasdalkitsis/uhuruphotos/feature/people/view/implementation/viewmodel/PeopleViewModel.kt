@@ -37,8 +37,8 @@ class PeopleViewModel @Inject constructor(
     ActionHandlerWithContext(peopleActionsContext),
     effectHandler,
     PeopleState()
-), HasInitializer<PeopleNavigationRoute> {
-    override suspend fun initialize(initializerData: PeopleNavigationRoute) {
+), HasInitializer<PeopleAction, PeopleNavigationRoute> {
+    override suspend fun initialize(initializerData: PeopleNavigationRoute, action: (PeopleAction) -> Unit) {
         action(LoadPeople)
     }
 }

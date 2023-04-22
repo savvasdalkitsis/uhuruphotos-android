@@ -57,8 +57,11 @@ internal class LocalAlbumViewModel @Inject constructor(
         localAlbumEffectHandler,
     ),
     GalleryState() to LocalAlbumState()
-), HasInitializer<LocalAlbumNavigationRoute> {
-    override suspend fun initialize(initializerData: LocalAlbumNavigationRoute) {
+), HasInitializer<Either<GalleryAction, LocalAlbumAction>, LocalAlbumNavigationRoute> {
+    override suspend fun initialize(
+        initializerData: LocalAlbumNavigationRoute,
+        action: (Either<GalleryAction, LocalAlbumAction>) -> Unit
+    ) {
         val albumId = initializerData.albumId
         action(Either.Right(Load(albumId)))
         action(Either.Left(LoadCollage(GalleryId(albumId, "local:$albumId"))))

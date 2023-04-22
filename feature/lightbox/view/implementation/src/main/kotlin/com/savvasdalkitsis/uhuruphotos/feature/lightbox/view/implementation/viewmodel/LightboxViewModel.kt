@@ -37,9 +37,9 @@ internal class LightboxViewModel @Inject constructor(
     ActionHandlerWithContext(lightboxActionsContext),
     effectHandler,
     LightboxState()
-), HasInitializer<LightboxNavigationRoute> {
+), HasInitializer<LightboxAction, LightboxNavigationRoute> {
 
-    override suspend fun initialize(initializerData: LightboxNavigationRoute) {
+    override suspend fun initialize(initializerData: LightboxNavigationRoute, action: (LightboxAction) -> Unit) {
         action(LoadMediaItem(
             initializerData.id,
             initializerData.isVideo,

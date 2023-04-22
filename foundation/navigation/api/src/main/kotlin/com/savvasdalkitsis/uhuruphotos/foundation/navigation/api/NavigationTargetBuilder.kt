@@ -16,5 +16,5 @@ interface NavigationTargetBuilder {
         route: KClass<R>,
         viewModel: KClass<VM>,
         content: @Composable (state: S, actions: (A) -> Unit) -> Unit,
-    ) where VM : ViewModel, VM : HasActionableState<S, A>, VM : HasInitializer<R>
+    ) where VM : ViewModel, VM : HasActionableState<S, A>, VM : HasInitializer<A, R>
 }

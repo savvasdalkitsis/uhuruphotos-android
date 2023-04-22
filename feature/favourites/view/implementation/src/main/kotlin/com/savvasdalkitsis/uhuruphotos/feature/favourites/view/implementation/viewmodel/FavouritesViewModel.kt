@@ -39,8 +39,11 @@ internal class FavouritesViewModel @Inject constructor(
     ActionHandlerWithContext(favouritesActionsContext),
     effectHandler,
     GalleryState(collageState = CollageState())
-), HasInitializer<FavouritesNavigationRoute> {
-    override suspend fun initialize(initializerData: FavouritesNavigationRoute) {
+), HasInitializer<GalleryAction, FavouritesNavigationRoute> {
+    override suspend fun initialize(
+        initializerData: FavouritesNavigationRoute,
+        action: (GalleryAction) -> Unit
+    ) {
         action(LoadCollage(GalleryId(0, "favourites")))
     }
 }

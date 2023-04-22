@@ -56,8 +56,8 @@ internal class FeedViewModel @Inject constructor(
         accountOverviewEffectHandler,
     ),
     FeedState() to AccountOverviewState()
-), HasInitializer<FeedNavigationRoute> {
-    override suspend fun initialize(initializerData: FeedNavigationRoute) {
+), HasInitializer<Either<FeedAction, AccountOverviewAction>, FeedNavigationRoute> {
+    override suspend fun initialize(initializerData: FeedNavigationRoute, action: (Either<FeedAction, AccountOverviewAction>) -> Unit) {
         action(Either.Left(LoadFeed))
         action(Either.Right(Load))
     }

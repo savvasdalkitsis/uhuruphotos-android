@@ -56,8 +56,8 @@ class SearchViewModel @Inject constructor(
         accountOverviewEffectHandler,
     ),
     SearchState() to AccountOverviewState()
-), HasInitializer<SearchNavigationRoute> {
-    override suspend fun initialize(initializerData: SearchNavigationRoute) {
+), HasInitializer<Either<SearchAction, AccountOverviewAction>, SearchNavigationRoute> {
+    override suspend fun initialize(initializerData: SearchNavigationRoute, action: (Either<SearchAction, AccountOverviewAction>) -> Unit) {
         action(Either.Left(Initialise))
         action(Either.Right(Load))
     }

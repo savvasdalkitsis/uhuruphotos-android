@@ -39,7 +39,7 @@ class NavigationTargetBuilder @Inject constructor(
         route: KClass<R>,
         viewModel: KClass<VM>,
         content: @Composable (state: S, actions: (A) -> Unit) -> Unit,
-    ) where VM : ViewModel, VM : HasActionableState<S, A>, VM : HasInitializer<R> {
+    ) where VM : ViewModel, VM : HasActionableState<S, A>, VM : HasInitializer<A, R> {
         val routePath = serializer.createRouteTemplateFor(route)
         composable(
             routePath,
@@ -70,7 +70,8 @@ class NavigationTargetBuilder @Inject constructor(
                     serializer.deserialize(
                         route,
                         navBackStackEntry.arguments
-                    )
+                    ),
+                    action,
                 )
             }
         }

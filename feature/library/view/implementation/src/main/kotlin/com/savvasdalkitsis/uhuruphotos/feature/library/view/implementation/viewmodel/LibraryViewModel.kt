@@ -56,8 +56,8 @@ internal class LibraryViewModel @Inject constructor(
         accountOverviewEffectHandler,
     ),
     LibraryState() to AccountOverviewState()
-), HasInitializer<LibraryNavigationRoute> {
-    override suspend fun initialize(initializerData: LibraryNavigationRoute) {
+), HasInitializer<Either<LibraryAction, AccountOverviewAction>, LibraryNavigationRoute> {
+    override suspend fun initialize(initializerData: LibraryNavigationRoute, action: (Either<LibraryAction, AccountOverviewAction>) -> Unit) {
         action(Either.Left(LoadLibrary))
         action(Either.Right(LoadAccount))
     }

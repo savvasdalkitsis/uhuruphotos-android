@@ -37,8 +37,8 @@ internal class HeatMapViewModel @Inject constructor(
     ActionHandlerWithContext(heatMapActionsContext),
     effectHandler,
     HeatMapState()
-), HasInitializer<HeatMapNavigationRoute> {
-    override suspend fun initialize(initializerData: HeatMapNavigationRoute) {
+), HasInitializer<HeatMapAction, HeatMapNavigationRoute> {
+    override suspend fun initialize(initializerData: HeatMapNavigationRoute, action: (HeatMapAction) -> Unit) {
         action(Load)
     }
 }

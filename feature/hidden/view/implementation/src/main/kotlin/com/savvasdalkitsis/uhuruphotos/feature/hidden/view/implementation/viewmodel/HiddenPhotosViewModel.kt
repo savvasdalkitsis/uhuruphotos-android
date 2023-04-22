@@ -58,8 +58,11 @@ internal class HiddenPhotosViewModel @Inject constructor(
         effectHandler,
     ),
     GalleryState(collageState = CollageState()) to HiddenPhotosState()
-), HasInitializer<HiddenPhotosNavigationRoute> {
-    override suspend fun initialize(initializerData: HiddenPhotosNavigationRoute) {
+), HasInitializer<Either<GalleryAction, HiddenPhotosAction>, HiddenPhotosNavigationRoute> {
+    override suspend fun initialize(
+        initializerData: HiddenPhotosNavigationRoute,
+        action: (Either<GalleryAction, HiddenPhotosAction>) -> Unit
+    ) {
         action(Either.Left(LoadCollage(GalleryId(0, "hidden"))))
         action(Either.Right(Load))
     }

@@ -37,8 +37,8 @@ internal class SettingsViewModel @Inject constructor(
     ActionHandlerWithContext(settingsActionsContext),
     effectHandler,
     SettingsState()
-), HasInitializer<SettingsNavigationRoute> {
-    override suspend fun initialize(initializerData: SettingsNavigationRoute) {
+), HasInitializer<SettingsAction, SettingsNavigationRoute> {
+    override suspend fun initialize(initializerData: SettingsNavigationRoute, action: (SettingsAction) -> Unit) {
         action(LoadSettings)
     }
 }

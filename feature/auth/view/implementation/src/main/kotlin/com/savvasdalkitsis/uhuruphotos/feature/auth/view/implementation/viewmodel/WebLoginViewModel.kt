@@ -37,8 +37,8 @@ class WebLoginViewModel @Inject constructor(
     ActionHandlerWithContext(webLoginActionsContext),
     effectHandler,
     WebLoginState("")
-), HasInitializer<WebLoginNavigationRoute> {
-    override suspend fun initialize(initializerData: WebLoginNavigationRoute) {
+), HasInitializer<WebLoginAction, WebLoginNavigationRoute> {
+    override suspend fun initialize(initializerData: WebLoginNavigationRoute, action: (WebLoginAction) -> Unit) {
         action(LoadPage(initializerData.url))
     }
 }

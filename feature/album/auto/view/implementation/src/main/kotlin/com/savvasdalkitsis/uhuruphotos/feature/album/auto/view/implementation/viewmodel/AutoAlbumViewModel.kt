@@ -40,8 +40,11 @@ internal class AutoAlbumViewModel @Inject constructor(
     ActionHandlerWithContext(autoAlbumActionsContext),
     effectHandler,
     GalleryState(collageState = CollageState(collageDisplay = AutoAlbumCollageDisplay))
-), HasInitializer<AutoAlbumNavigationRoute> {
-    override suspend fun initialize(initializerData: AutoAlbumNavigationRoute) {
+), HasInitializer<GalleryAction, AutoAlbumNavigationRoute> {
+    override suspend fun initialize(
+        initializerData: AutoAlbumNavigationRoute,
+        action: (GalleryAction) -> Unit
+    ) {
         val id = initializerData.albumId
         action(LoadCollage(GalleryId(id, "auto:$id")))
     }
