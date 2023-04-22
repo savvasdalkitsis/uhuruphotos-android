@@ -29,7 +29,7 @@ androidx-compose-foundation = { module = "androidx.compose.foundation:foundation
 androidx-compose-foundation-layout = { module = "androidx.compose.foundation:foundation-layout", version.ref = "compose" }
 androidx-compose-hilt-navigation = { module = "androidx.hilt:hilt-navigation-compose", version.ref = "androidx-hilt" }
 androidx-compose-material = { module = "androidx.compose.material:material", version.ref = "compose" }
-androidx-compose-material-windowsize = "androidx.compose.material3:material3-window-size-class:1.1.0-beta02"
+androidx-compose-material-windowsize = "androidx.compose.material3:material3-window-size-class:1.1.0-rc01"
 androidx-compose-navigation = "androidx.navigation:navigation-compose:2.6.0-beta01"
 androidx-compose-test-junit = { module = "androidx.compose.ui:ui-test-junit4", version.ref = "compose" }
 androidx-compose-test-manifest = { module = "androidx.compose.ui:ui-test-manifest", version.ref = "compose" }
