@@ -23,6 +23,9 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.core.view.WindowCompat
 import androidx.fragment.app.FragmentActivity
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
+import com.microsoft.appcenter.AppCenter
+import com.microsoft.appcenter.crashes.Crashes
+import com.savvasdalkitsis.uhuruphotos.app.config.AppCenterConfig
 import com.savvasdalkitsis.uhuruphotos.app.navigation.AppNavigator
 import com.savvasdalkitsis.uhuruphotos.feature.settings.domain.api.usecase.SettingsUseCase
 import com.savvasdalkitsis.uhuruphotos.foundation.activity.api.CurrentActivityHolder
@@ -41,6 +44,7 @@ class AppActivity : FragmentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         Log.enabled = true
+        AppCenter.start(application, AppCenterConfig.KEY, Crashes::class.java)
         super.onCreate(savedInstanceState)
         currentActivityHolder.onCreated(this)
         WindowCompat.setDecorFitsSystemWindows(window, false)

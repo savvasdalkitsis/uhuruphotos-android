@@ -1,7 +1,6 @@
 plugins {
     id 'dagger.hilt.android.plugin'
     id 'com.google.gms.google-services'
-    id 'com.google.firebase.crashlytics'
 }
 
 android {
@@ -83,11 +82,10 @@ dependencies {
             libs.androidx.preference,
             libs.androidx.work,
             libs.androidx.work.hilt,
+            libs.appcenter.crashes,
             libs.exoplayer.base,
             libs.flowpreferences,
             libs.hilt,
             libs.permissions.base,
     )
-    implementation platform(libs.firebase.bom)
-    implementation 'com.google.firebase:firebase-crashlytics-ktx'
 }
