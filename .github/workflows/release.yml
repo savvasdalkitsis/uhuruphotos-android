@@ -52,27 +52,26 @@ jobs:
         ENCODED_STRING: ${{ secrets.GOOGLE_SERVICES }}
       run: |
         echo $ENCODED_STRING | base64 -di > app/google-services.json
-        
-#
-#    - name: Build & deploy Android release
-#      run: bundle exec fastlane android deploy
-#      env:
-#        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-#        KEYSTORE_PASS: ${{ secrets.KEYSTORE_PASS }}
-#        KEYSTORE_ALIAS: ${{ secrets.KEYSTORE_ALIAS }}
-#        MAPBOX_DOWNLOADS_TOKEN: ${{ secrets.MAPBOX_DOWNLOADS_TOKEN }}
-#        ANDROID_JSON_KEY_FILE: ${{ steps.service_account_json_file.outputs.filePath }}
 
-    - name: Build with Gradle
-      run: ./gradlew app:bundleRelease
+    - name: Build & deploy Android release
+      run: bundle exec fastlane android deploy
       env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         KEYSTORE_PASS: ${{ secrets.KEYSTORE_PASS }}
         KEYSTORE_ALIAS: ${{ secrets.KEYSTORE_ALIAS }}
         MAPBOX_DOWNLOADS_TOKEN: ${{ secrets.MAPBOX_DOWNLOADS_TOKEN }}
+        ANDROID_JSON_KEY_FILE: ${{ steps.service_account_json_file.outputs.filePath }}
 
-    - name: Archive release bundle
-      uses: actions/upload-artifact@v3
-      with:
-        name: bundle
-        path: |
-          app/build/outputs/bundle/release
+#    - name: Build with Gradle
+#      run: ./gradlew app:bundleRelease
+#      env:
+#        KEYSTORE_PASS: ${{ secrets.KEYSTORE_PASS }}
+#        KEYSTORE_ALIAS: ${{ secrets.KEYSTORE_ALIAS }}
+#        MAPBOX_DOWNLOADS_TOKEN: ${{ secrets.MAPBOX_DOWNLOADS_TOKEN }}
+#
+#    - name: Archive release bundle
+#      uses: actions/upload-artifact@v3
+#      with:
+#        name: bundle
+#        path: |
+#          app/build/outputs/bundle/release
