@@ -79,7 +79,7 @@ lumberjack-file = { module = "com.github.MFlisar.Lumberjack:lumberjack-filelogge
 lumberjack-notification = { module = "com.github.MFlisar.Lumberjack:lumberjack-notification", version.ref = "lumberjack" }
 mapbox = "com.mapbox.maps:android:10.9.1"
 maps = { module = "com.google.android.gms:play-services-maps", version.ref = "com-google-android-gms" }
-maps-compose = "com.google.maps.android:maps-compose:2.9.1"
+maps-compose = "com.google.maps.android:maps-compose:2.11.4"
 maps-utils = "com.google.maps.android:android-maps-utils:3.4.0"
 maps-utils-ktx = "com.google.maps.android:maps-utils-ktx:3.4.0"
 mockk = { module = "io.mockk:mockk", version.ref = "mockk" }
