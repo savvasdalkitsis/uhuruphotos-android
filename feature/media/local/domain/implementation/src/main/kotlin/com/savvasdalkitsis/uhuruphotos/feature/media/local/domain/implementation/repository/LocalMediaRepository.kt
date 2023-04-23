@@ -198,5 +198,5 @@ class LocalMediaRepository @Inject constructor(
         } else {
             Result.failure(LocalMediaDeletionException(id))
         }
-    }
+     }
 }

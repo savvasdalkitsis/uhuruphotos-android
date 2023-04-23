@@ -1,5 +1,5 @@
 /*
-Copyright 2022 Savvas Dalkitsis
+Copyright 2023 Savvas Dalkitsis
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -13,12 +13,6 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
  */
-package com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.model
+package com.savvasdalkitsis.uhuruphotos.foundation.activity.api.request
 
-sealed class LocalMediaItemDeletion {
-
-    object Success : LocalMediaItemDeletion()
-    data class Error(val e: Throwable?) : LocalMediaItemDeletion()
-    data class RequiresPermissions(val deniedPermissions: List<String>) : LocalMediaItemDeletion()
-    data class NeedsSystemApproval(val request: androidx.activity.result.IntentSenderRequest) : LocalMediaItemDeletion()
-}
+class ActivityRequestFailed(msg: String) : Exception(msg)

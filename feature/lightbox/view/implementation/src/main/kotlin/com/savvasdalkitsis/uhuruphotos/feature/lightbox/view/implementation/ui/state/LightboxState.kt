@@ -19,7 +19,6 @@ import androidx.annotation.StringRes
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaId
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemMetadata
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemSyncState
-import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.model.StoragePermissionRequest
 import com.savvasdalkitsis.uhuruphotos.feature.people.view.api.ui.state.Person
 import com.savvasdalkitsis.uhuruphotos.foundation.map.api.model.LatLon
 
@@ -31,7 +30,6 @@ data class LightboxState(
     val showUI: Boolean = true,
     val showInfoButton: Boolean = false,
     val showDeleteConfirmationDialog: Boolean = false,
-    val showStorageManagementConfirmationDialog: StoragePermissionRequest? = null,
     val showTrashingConfirmationDialog: Boolean = false,
     val showFullySyncedDeleteConfirmationDialog: Boolean = false,
     val showRestorationConfirmationDialog: Boolean = false,
@@ -51,7 +49,6 @@ data class LightboxState(
             | showUI=$showUI,
             | showInfoButton=$showInfoButton,
             | showDeleteConfirmationDialog=$showDeleteConfirmationDialog,
-            | showStorageManagementConfirmationDialog=$showStorageManagementConfirmationDialog,
             | showTrashingConfirmationDialog=$showTrashingConfirmationDialog,
             | showFullySyncedDeleteConfirmationDialog=$showFullySyncedDeleteConfirmationDialog,
             | showRestorationConfirmationDialog=$showRestorationConfirmationDialog,

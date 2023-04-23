@@ -13,25 +13,27 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
  */
-package com.savvasdalkitsis.uhuruphotos.foundation.activity.api
+package com.savvasdalkitsis.uhuruphotos.foundation.activity.implementation.holder
 
 import androidx.fragment.app.FragmentActivity
+import com.savvasdalkitsis.uhuruphotos.foundation.activity.api.holder.CurrentActivityHolder
 import dagger.hilt.android.scopes.ActivityRetainedScoped
 import java.lang.ref.WeakReference
 import javax.inject.Inject
 
 @ActivityRetainedScoped
-class CurrentActivityHolder @Inject constructor() {
+class CurrentActivityHolder @Inject constructor() : CurrentActivityHolder {
 
     private var activity: WeakReference<FragmentActivity> = WeakReference(null)
-    val currentActivity: FragmentActivity?
+
+    override val currentActivity: FragmentActivity?
         get() = activity.get()
 
-    fun onCreated(activity: FragmentActivity) {
+    override fun onCreated(activity: FragmentActivity) {
         this.activity = WeakReference(activity)
     }
 
-    fun onDestroy() {
+    override fun onDestroy() {
         activity.clear()
     }
 }

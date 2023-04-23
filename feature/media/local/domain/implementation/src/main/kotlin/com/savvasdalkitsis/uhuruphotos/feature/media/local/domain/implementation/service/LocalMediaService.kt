@@ -16,6 +16,7 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.implementation.service
 
 import android.content.ContentResolver
+import android.content.ContentUris
 import android.content.Context
 import android.database.Cursor
 import android.net.Uri
@@ -114,14 +115,21 @@ class LocalMediaService @Inject constructor(
         )
 
     fun delete(id: Long, video: Boolean) =
-        contentResolver.delete(
-            if (video)
-                LocalMediaVideoColumns.collection
-            else
-                LocalMediaPhotoColumns.collection,
+        contentResolver.delete(createMediaUri(video),
             BaseColumns._ID + " = ?",
             arrayOf(id.toString()),
         )
+
+    fun createMediaItemUri(id: Long, video: Boolean): Uri = ContentUris.withAppendedId(
+        when {
+            video -> LocalMediaVideoColumns.collection
+            else -> LocalMediaPhotoColumns.collection
+        }, id)
+
+    fun createMediaUri(video: Boolean): Uri = when {
+            video -> LocalMediaVideoColumns.collection
+            else -> LocalMediaPhotoColumns.collection
+        }
 
     private val videoRowHandler: Cursor.() -> LocalMediaStoreServiceItem.Video = {
         val id = long(Video.Media._ID)

@@ -21,7 +21,7 @@ import androidx.biometric.BiometricManager.BIOMETRIC_ERROR_NO_HARDWARE
 import androidx.biometric.BiometricManager.BIOMETRIC_SUCCESS
 import com.afollestad.assure.Prompt
 import com.afollestad.assure.authenticate
-import com.savvasdalkitsis.uhuruphotos.foundation.activity.api.CurrentActivityHolder
+import com.savvasdalkitsis.uhuruphotos.foundation.activity.api.holder.CurrentActivityHolder
 import com.savvasdalkitsis.uhuruphotos.foundation.biometrics.api.model.Biometrics
 import com.savvasdalkitsis.uhuruphotos.foundation.biometrics.api.model.Biometrics.Enrolled
 import com.savvasdalkitsis.uhuruphotos.foundation.biometrics.api.model.Biometrics.NoHardware

@@ -3,6 +3,9 @@ android {
 }
 
 dependencies {
+    api(
+            libs.androidx.activity,
+    )
     implementation(
             libs.hilt,
     )

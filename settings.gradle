@@ -120,6 +120,7 @@ include ':feature:user:domain:api'
 include ':feature:user:domain:implementation'
 
 include ':foundation:activity:api'
+include ':foundation:activity:implementation'
 include ':foundation:biometrics:api'
 include ':foundation:biometrics:implementation'
 include ':foundation:compose:api'

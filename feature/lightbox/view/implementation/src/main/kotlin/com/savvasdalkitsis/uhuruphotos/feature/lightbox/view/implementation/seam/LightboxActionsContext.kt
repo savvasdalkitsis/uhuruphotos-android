@@ -44,13 +44,16 @@ import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.usecase.Lo
 import com.savvasdalkitsis.uhuruphotos.feature.person.domain.api.usecase.PersonUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.search.domain.api.usecase.SearchUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.trash.domain.api.usecase.TrashUseCase
+import com.savvasdalkitsis.uhuruphotos.foundation.activity.api.request.ActivityRequestLauncher
 import com.savvasdalkitsis.uhuruphotos.foundation.log.api.log
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.EffectHandler
 import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
+import dagger.hilt.android.scopes.ActivityRetainedScoped
 import kotlinx.coroutines.flow.FlowCollector
 import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
 
+@ActivityRetainedScoped
 internal class LightboxActionsContext @Inject constructor(
     val mediaUseCase: MediaUseCase,
     val personUseCase: PersonUseCase,
@@ -62,6 +65,7 @@ internal class LightboxActionsContext @Inject constructor(
     val autoAlbumUseCase: AutoAlbumUseCase,
     val trashUseCase: TrashUseCase,
     private val localMediaUseCase: LocalMediaUseCase,
+    private val activityRequestLauncher: ActivityRequestLauncher,
 ) {
 
     var mediaItemType = MediaItemType.default
@@ -81,24 +85,15 @@ internal class LightboxActionsContext @Inject constructor(
             mediaItem.isVideo
         )
         return when (result) {
-            is LocalMediaItemDeletion.Error -> Result.failure(result.e)
+            is LocalMediaItemDeletion.Error -> Result.failure(result.e ?: UnknownError())
             is LocalMediaItemDeletion.RequiresPermissions -> {
                 emit(LightboxMutation.AskForPermissions(result.deniedPermissions))
                 Result.failure(MissingPermissionsException(result.deniedPermissions))
             }
 
+            is LocalMediaItemDeletion.NeedsSystemApproval ->
+                activityRequestLauncher.performRequest("deleteImage${mediaItem.id}", result.request)
             LocalMediaItemDeletion.Success -> Result.success(Unit)
-            is LocalMediaItemDeletion.RequiresManageFilesAccess -> {
-                emit(LightboxMutation.ShowStorageManagementConfirmationDialog(result.request))
-                Result.failure(
-                    MissingPermissionsException(
-                        listOf(
-                            "ACTION_MANAGE_APP_ALL_FILES_ACCESS_PERMISSION",
-                            "ACTION_MANAGE_ALL_FILES_ACCESS_PERMISSION",
-                        )
-                    )
-                )
-            }
         }
     }
 

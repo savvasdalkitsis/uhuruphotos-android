@@ -15,7 +15,6 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam
 
-import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.model.StoragePermissionRequest
 import com.savvasdalkitsis.uhuruphotos.foundation.map.api.model.LatLon
 
 sealed class LightboxEffect {
@@ -30,5 +29,4 @@ sealed class LightboxEffect {
     data class ShareMedia(val url: String) : LightboxEffect()
     data class UseMediaAs(val url: String) : LightboxEffect()
     data class NavigateToPerson(val id: Int) : LightboxEffect()
-    data class AskForStorageManagementPermission(val request: StoragePermissionRequest) : LightboxEffect()
 }

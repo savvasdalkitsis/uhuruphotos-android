@@ -40,12 +40,11 @@ import com.mxalbert.zoomable.Zoomable
 import com.mxalbert.zoomable.rememberZoomableState
 import com.radusalagean.infobarcompose.InfoBar
 import com.radusalagean.infobarcompose.InfoBarMessage
-import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.actions.AllowStorageManagement
-import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.actions.LightboxAction
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.actions.DeleteLocalKeepRemoteMediaItem
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.actions.DismissConfirmationDialogs
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.actions.DismissErrorMessage
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.actions.FullMediaDataLoaded
+import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.actions.LightboxAction
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.actions.NavigateBack
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.actions.RestoreMediaItem
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.actions.ShowInfo
@@ -170,14 +169,6 @@ fun LightboxCanvas(
                     mediaItemCount = 1,
                     onDismiss = { action(DismissConfirmationDialogs) }
                 ) { action(RestoreMediaItem) }
-            }
-            state.showStorageManagementConfirmationDialog?.let { request ->
-                AllowStorageManagementDialog(
-                    onDismiss = { action(DismissConfirmationDialogs) }
-                ) {
-                    action(DismissConfirmationDialogs)
-                    action(AllowStorageManagement(request))
-                }
             }
             if (state.missingPermissions.isNotEmpty()) {
                 permissionLauncher.launch(state.missingPermissions.toTypedArray())

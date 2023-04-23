@@ -6,6 +6,7 @@ dependencies {
 
     implementation project(":feature:db:domain:api")
     implementation project(":feature:media:local:domain:api")
+    implementation project(":foundation:activity:api")
     implementation project(":foundation:date:api")
     implementation project(":foundation:exif:api")
     implementation project(":foundation:initializer:api")

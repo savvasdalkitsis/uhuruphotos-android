@@ -13,12 +13,10 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
  */
+package com.savvasdalkitsis.uhuruphotos.foundation.activity.api.request
 
-package com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.model
+import androidx.activity.result.IntentSenderRequest
 
-import android.content.Intent
-
-data class StoragePermissionRequest(
-    val intent: Intent,
-    val fallbackIntent: Intent,
-)
+interface ActivityRequestLauncher {
+    suspend fun performRequest(requestId: String, request: IntentSenderRequest): Result<Unit>
+}
