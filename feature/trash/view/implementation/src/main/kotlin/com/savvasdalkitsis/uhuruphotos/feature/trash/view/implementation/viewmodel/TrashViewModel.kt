@@ -38,27 +38,33 @@ import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.Seam
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
+private typealias TrashCompositeState = Pair<GalleryState, TrashState>
+private typealias TrashCompositeAction = Either<GalleryAction, TrashAction>
+
 @HiltViewModel
 internal class TrashViewModel @Inject constructor(
     trashActionsContext: TrashActionsContext,
     trashAlbumPageActionsContext: TrashAlbumPageActionsContext,
     trashEffectHandler: TrashEffectHandler,
     galleryEffectHandler: GalleryEffectHandler,
-) : ViewModel(), HasActionableState<
-        Pair<GalleryState, TrashState>,
-        Either<GalleryAction, TrashAction>,
-> by Seam(
-    CompositeActionHandler(
-        ActionHandlerWithContext(trashAlbumPageActionsContext),
-        ActionHandlerWithContext(trashActionsContext),
+) : ViewModel(),
+    HasActionableState<TrashCompositeState, TrashCompositeAction> by Seam(
+        CompositeActionHandler(
+            ActionHandlerWithContext(trashAlbumPageActionsContext),
+            ActionHandlerWithContext(trashActionsContext),
+        ),
+        CompositeEffectHandler(
+            galleryEffectHandler,
+            trashEffectHandler,
+        ),
+        GalleryState() to TrashState()
     ),
-    CompositeEffectHandler(
-        galleryEffectHandler,
-        trashEffectHandler,
-    ),
-    GalleryState() to TrashState()
-), HasInitializer<Either<GalleryAction, TrashAction>, TrashNavigationRoute> {
-    override suspend fun initialize(initializerData: TrashNavigationRoute, action: (Either<GalleryAction, TrashAction>) -> Unit) {
+    HasInitializer<TrashCompositeAction, TrashNavigationRoute> {
+
+    override suspend fun initialize(
+        initializerData: TrashNavigationRoute,
+        action: (TrashCompositeAction) -> Unit,
+    ) {
         action(Either.Left(LoadCollage(GalleryId(0, "trash"))))
         action(Either.Right(Load))
     }

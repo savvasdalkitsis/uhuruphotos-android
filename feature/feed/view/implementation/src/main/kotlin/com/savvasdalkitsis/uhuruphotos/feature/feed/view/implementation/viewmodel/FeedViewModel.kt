@@ -37,27 +37,33 @@ import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.Seam
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
+private typealias FeedCompositeState = Pair<FeedState, AccountOverviewState>
+private typealias FeedCompositeAction = Either<FeedAction, AccountOverviewAction>
+
 @HiltViewModel
 internal class FeedViewModel @Inject constructor(
     feedActionsContext: FeedActionsContext,
     accountOverviewActionsContext: AccountOverviewActionsContext,
     feedEffectHandler: FeedEffectHandler,
     accountOverviewEffectHandler: AccountOverviewEffectHandler,
-) : ViewModel(), HasActionableState<
-        Pair<FeedState, AccountOverviewState>,
-        Either<FeedAction, AccountOverviewAction>,
-> by Seam(
-    CompositeActionHandler(
-        ActionHandlerWithContext(feedActionsContext),
-        ActionHandlerWithContext(accountOverviewActionsContext),
+) : ViewModel(),
+    HasActionableState<FeedCompositeState, FeedCompositeAction> by Seam(
+        CompositeActionHandler(
+            ActionHandlerWithContext(feedActionsContext),
+            ActionHandlerWithContext(accountOverviewActionsContext),
+        ),
+        CompositeEffectHandler(
+            feedEffectHandler,
+            accountOverviewEffectHandler,
+        ),
+        FeedState() to AccountOverviewState()
     ),
-    CompositeEffectHandler(
-        feedEffectHandler,
-        accountOverviewEffectHandler,
-    ),
-    FeedState() to AccountOverviewState()
-), HasInitializer<Either<FeedAction, AccountOverviewAction>, FeedNavigationRoute> {
-    override suspend fun initialize(initializerData: FeedNavigationRoute, action: (Either<FeedAction, AccountOverviewAction>) -> Unit) {
+    HasInitializer<FeedCompositeAction, FeedNavigationRoute> {
+
+    override suspend fun initialize(
+        initializerData: FeedNavigationRoute,
+        action: (FeedCompositeAction) -> Unit
+    ) {
         action(Either.Left(LoadFeed))
         action(Either.Right(Load))
     }

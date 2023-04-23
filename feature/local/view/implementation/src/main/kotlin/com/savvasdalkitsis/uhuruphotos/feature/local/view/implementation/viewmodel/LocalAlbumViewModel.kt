@@ -29,14 +29,17 @@ import com.savvasdalkitsis.uhuruphotos.feature.local.view.implementation.seam.ac
 import com.savvasdalkitsis.uhuruphotos.feature.local.view.implementation.seam.actions.LocalAlbumAction
 import com.savvasdalkitsis.uhuruphotos.feature.local.view.implementation.ui.state.LocalAlbumState
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.ActionHandlerWithContext
-import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.HasActionableState
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.CompositeActionHandler
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.CompositeEffectHandler
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.Either
+import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.HasActionableState
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.HasInitializer
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.Seam
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
+
+private typealias LocalAlbumCompositeState = Pair<GalleryState, LocalAlbumState>
+private typealias LocalAlbumCompositeAction = Either<GalleryAction, LocalAlbumAction>
 
 @HiltViewModel
 internal class LocalAlbumViewModel @Inject constructor(
@@ -44,23 +47,23 @@ internal class LocalAlbumViewModel @Inject constructor(
     localAlbumPageActionsContext: LocalAlbumPageActionsContext,
     galleryEffectHandler: GalleryEffectHandler,
     localAlbumEffectHandler: LocalAlbumEffectHandler,
-) : ViewModel(), HasActionableState<
-        Pair<GalleryState, LocalAlbumState>,
-        Either<GalleryAction, LocalAlbumAction>,
-> by Seam(
-    CompositeActionHandler(
-        ActionHandlerWithContext(localAlbumPageActionsContext),
-        ActionHandlerWithContext(localAlbumActionsContext),
+) : ViewModel(),
+    HasActionableState<LocalAlbumCompositeState, LocalAlbumCompositeAction> by Seam(
+        CompositeActionHandler(
+            ActionHandlerWithContext(localAlbumPageActionsContext),
+            ActionHandlerWithContext(localAlbumActionsContext),
+        ),
+        CompositeEffectHandler(
+            galleryEffectHandler,
+            localAlbumEffectHandler,
+        ),
+        GalleryState() to LocalAlbumState()
     ),
-    CompositeEffectHandler(
-        galleryEffectHandler,
-        localAlbumEffectHandler,
-    ),
-    GalleryState() to LocalAlbumState()
-), HasInitializer<Either<GalleryAction, LocalAlbumAction>, LocalAlbumNavigationRoute> {
+    HasInitializer<LocalAlbumCompositeAction, LocalAlbumNavigationRoute> {
+
     override suspend fun initialize(
         initializerData: LocalAlbumNavigationRoute,
-        action: (Either<GalleryAction, LocalAlbumAction>) -> Unit
+        action: (LocalAlbumCompositeAction) -> Unit
     ) {
         val albumId = initializerData.albumId
         action(Either.Right(Load(albumId)))

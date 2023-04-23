@@ -39,29 +39,32 @@ import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.Seam
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
+private typealias HiddenPhotosCompositeState = Pair<GalleryState, HiddenPhotosState>
+private typealias HiddenPhotosCompositeAction = Either<GalleryAction, HiddenPhotosAction>
+
 @HiltViewModel
 internal class HiddenPhotosViewModel @Inject constructor(
     hiddenPhotosAlbumPageActionsContext: HiddenPhotosAlbumPageActionsContext,
     hiddenPhotosActionsContext: HiddenPhotosActionsContext,
     effectHandler: HiddenPhotosEffectHandler,
     galleryEffectHandler: GalleryEffectHandler,
-) : ViewModel(), HasActionableState<
-        Pair<GalleryState, HiddenPhotosState>,
-        Either<GalleryAction, HiddenPhotosAction>,
-> by Seam(
-    CompositeActionHandler(
-        ActionHandlerWithContext(hiddenPhotosAlbumPageActionsContext),
-        ActionHandlerWithContext(hiddenPhotosActionsContext),
+) : ViewModel(),
+    HasActionableState<HiddenPhotosCompositeState, HiddenPhotosCompositeAction> by Seam(
+        CompositeActionHandler(
+            ActionHandlerWithContext(hiddenPhotosAlbumPageActionsContext),
+            ActionHandlerWithContext(hiddenPhotosActionsContext),
+        ),
+        CompositeEffectHandler(
+            galleryEffectHandler,
+            effectHandler,
+        ),
+        GalleryState(collageState = CollageState()) to HiddenPhotosState()
     ),
-    CompositeEffectHandler(
-        galleryEffectHandler,
-        effectHandler,
-    ),
-    GalleryState(collageState = CollageState()) to HiddenPhotosState()
-), HasInitializer<Either<GalleryAction, HiddenPhotosAction>, HiddenPhotosNavigationRoute> {
+    HasInitializer<HiddenPhotosCompositeAction, HiddenPhotosNavigationRoute> {
+
     override suspend fun initialize(
         initializerData: HiddenPhotosNavigationRoute,
-        action: (Either<GalleryAction, HiddenPhotosAction>) -> Unit
+        action: (HiddenPhotosCompositeAction) -> Unit
     ) {
         action(Either.Left(LoadCollage(GalleryId(0, "hidden"))))
         action(Either.Right(Load))

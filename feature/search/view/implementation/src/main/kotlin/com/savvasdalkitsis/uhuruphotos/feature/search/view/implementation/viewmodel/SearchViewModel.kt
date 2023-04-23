@@ -37,27 +37,33 @@ import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.Seam
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
+private typealias SearchCompositeState = Pair<SearchState, AccountOverviewState>
+private typealias SearchCompositeAction = Either<SearchAction, AccountOverviewAction>
+
 @HiltViewModel
 class SearchViewModel @Inject constructor(
     searchActionsContext: SearchActionsContext,
     accountOverviewActionsContext: AccountOverviewActionsContext,
     searchEffectHandler: SearchEffectHandler,
     accountOverviewEffectHandler: AccountOverviewEffectHandler,
-) : ViewModel(), HasActionableState<
-        Pair<SearchState, AccountOverviewState>,
-        Either<SearchAction, AccountOverviewAction>,
-> by Seam(
-    CompositeActionHandler(
-        ActionHandlerWithContext(searchActionsContext),
-        ActionHandlerWithContext(accountOverviewActionsContext),
+) : ViewModel(),
+    HasActionableState<SearchCompositeState, SearchCompositeAction> by Seam(
+        CompositeActionHandler(
+            ActionHandlerWithContext(searchActionsContext),
+            ActionHandlerWithContext(accountOverviewActionsContext),
+        ),
+        CompositeEffectHandler(
+            searchEffectHandler,
+            accountOverviewEffectHandler,
+        ),
+        SearchState() to AccountOverviewState()
     ),
-    CompositeEffectHandler(
-        searchEffectHandler,
-        accountOverviewEffectHandler,
-    ),
-    SearchState() to AccountOverviewState()
-), HasInitializer<Either<SearchAction, AccountOverviewAction>, SearchNavigationRoute> {
-    override suspend fun initialize(initializerData: SearchNavigationRoute, action: (Either<SearchAction, AccountOverviewAction>) -> Unit) {
+    HasInitializer<SearchCompositeAction, SearchNavigationRoute> {
+
+    override suspend fun initialize(
+        initializerData: SearchNavigationRoute,
+        action: (SearchCompositeAction) -> Unit,
+    ) {
         action(Either.Left(Initialise))
         action(Either.Right(Load))
     }

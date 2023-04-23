@@ -37,27 +37,33 @@ import javax.inject.Inject
 import com.savvasdalkitsis.uhuruphotos.feature.library.view.implementation.seam.actions.Load as LoadLibrary
 import com.savvasdalkitsis.uhuruphotos.feature.account.view.api.seam.actions.Load as LoadAccount
 
+private typealias LibraryCompositeState = Pair<LibraryState, AccountOverviewState>
+private typealias LibraryCompositeAction = Either<LibraryAction, AccountOverviewAction>
+
 @HiltViewModel
 internal class LibraryViewModel @Inject constructor(
     libraryActionsContext: LibraryActionsContext,
     accountOverviewActionsContext: AccountOverviewActionsContext,
     accountOverviewEffectHandler: AccountOverviewEffectHandler,
     libraryEffectHandler: LibraryEffectHandler,
-) : ViewModel(), HasActionableState<
-        Pair<LibraryState, AccountOverviewState>,
-        Either<LibraryAction, AccountOverviewAction>,
-> by Seam(
-    CompositeActionHandler(
-        ActionHandlerWithContext(libraryActionsContext),
-        ActionHandlerWithContext(accountOverviewActionsContext),
+) : ViewModel(),
+    HasActionableState<LibraryCompositeState, LibraryCompositeAction> by Seam(
+        CompositeActionHandler(
+            ActionHandlerWithContext(libraryActionsContext),
+            ActionHandlerWithContext(accountOverviewActionsContext),
+        ),
+        CompositeEffectHandler(
+            libraryEffectHandler,
+            accountOverviewEffectHandler,
+        ),
+        LibraryState() to AccountOverviewState()
     ),
-    CompositeEffectHandler(
-        libraryEffectHandler,
-        accountOverviewEffectHandler,
-    ),
-    LibraryState() to AccountOverviewState()
-), HasInitializer<Either<LibraryAction, AccountOverviewAction>, LibraryNavigationRoute> {
-    override suspend fun initialize(initializerData: LibraryNavigationRoute, action: (Either<LibraryAction, AccountOverviewAction>) -> Unit) {
+    HasInitializer<LibraryCompositeAction, LibraryNavigationRoute> {
+
+    override suspend fun initialize(
+        initializerData: LibraryNavigationRoute,
+        action: (LibraryCompositeAction) -> Unit,
+    ) {
         action(Either.Left(LoadLibrary))
         action(Either.Right(LoadAccount))
     }
