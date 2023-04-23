@@ -1,0 +1,1 @@
+* Reverting to older accompanist version to fix release crash

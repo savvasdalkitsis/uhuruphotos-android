@@ -13,8 +13,8 @@ buildscript {
         classpath "io.gitlab.arturbosch.detekt:detekt-gradle-plugin:1.22.0"
     }
 
-    project.ext.set("app_version_code", 85)
-    project.ext.set("app_version_name", "0.0.92")
+    project.ext.set("app_version_code", 86)
+    project.ext.set("app_version_name", "0.0.93")
 
 }// Top-level build file where you can add configuration options common to all sub-projects/modules.
 plugins {
