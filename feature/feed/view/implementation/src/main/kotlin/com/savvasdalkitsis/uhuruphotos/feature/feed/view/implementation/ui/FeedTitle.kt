@@ -15,7 +15,6 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.ui
 
-import androidx.compose.animation.AnimatedContent
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
@@ -51,27 +50,25 @@ internal fun FeedTitle(
         Logo(
             onClick = { scrollToTop() }
         )
-        AnimatedContent(targetState = state.hasSelection) { hasSelection ->
-            if (!hasSelection) {
-                Text(stringResource(string.feed))
-            } else {
-                OutlinedButton(
-                    modifier = Modifier
-                        .heightIn(max = 48.dp),
-                    contentPadding = PaddingValues(2.dp),
+        if (!state.hasSelection) {
+            Text(stringResource(string.feed))
+        } else {
+            OutlinedButton(
+                modifier = Modifier
+                    .heightIn(max = 48.dp),
+                contentPadding = PaddingValues(2.dp),
+                onClick = { action(ClearSelected) },
+                shape = RoundedCornerShape(12.dp),
+            ) {
+                Text(
+                    modifier = Modifier.padding(end = 8.dp),
+                    text = state.selectedCelCount.toString(),
+                )
+                ActionIcon(
+                    modifier = Modifier.size(16.dp),
                     onClick = { action(ClearSelected) },
-                    shape = RoundedCornerShape(12.dp),
-                ) {
-                    Text(
-                        modifier = Modifier.padding(end = 8.dp),
-                        text = state.selectedCelCount.toString(),
-                    )
-                    ActionIcon(
-                        modifier = Modifier.size(16.dp),
-                        onClick = { action(ClearSelected) },
-                        icon = drawable.ic_clear
-                    )
-                }
+                    icon = drawable.ic_clear
+                )
             }
         }
     }

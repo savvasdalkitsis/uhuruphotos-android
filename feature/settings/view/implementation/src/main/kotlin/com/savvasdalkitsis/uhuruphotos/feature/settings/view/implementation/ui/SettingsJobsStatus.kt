@@ -15,7 +15,6 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.ui
 
-import androidx.compose.animation.AnimatedContent
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.stringResource
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.actions.AskForFullFeedSync
@@ -31,52 +30,48 @@ internal fun SettingsJobsStatus(
     state: SettingsState,
     action: (SettingsAction) -> Unit,
 ) {
-    AnimatedContent(targetState = state.fullSyncButtonEnabled) { enabled ->
-        when {
-            enabled -> SettingsButtonRow(
-                buttonText = stringResource(string.perform_full_sync)
-            ) {
-                action(AskForFullFeedSync)
-            }
-            state.fullSyncJobProgress != null -> SettingsContentButtonRow(
-                content = {
-                    SettingsProgressIndicator(
-                        text = stringResource(string.feed_sync_progress),
-                        progress = state.fullSyncJobProgress,
-                    )
-                },
-                buttonText = stringResource(string.cancel),
-            ) {
-                action(CancelFullFeedSync)
-            }
-            else -> SettingsButtonRow(
-                enabled = false,
-                buttonText = stringResource(string.cannot_perform_full_sync)
-            ) {}
+    when {
+        state.fullSyncButtonEnabled -> SettingsButtonRow(
+            buttonText = stringResource(string.perform_full_sync)
+        ) {
+            action(AskForFullFeedSync)
         }
+        state.fullSyncJobProgress != null -> SettingsContentButtonRow(
+            content = {
+                SettingsProgressIndicator(
+                    text = stringResource(string.feed_sync_progress),
+                    progress = state.fullSyncJobProgress,
+                )
+            },
+            buttonText = stringResource(string.cancel),
+        ) {
+            action(CancelFullFeedSync)
+        }
+        else -> SettingsButtonRow(
+            enabled = false,
+            buttonText = stringResource(string.cannot_perform_full_sync)
+        ) {}
     }
-    AnimatedContent(targetState = state.precacheThumbnailsButtonEnabled) { enabled ->
-        when {
-            enabled -> SettingsButtonRow(
-                buttonText = stringResource(string.precache_thumbnails),
-                ) {
-                    action(AskForPrecacheThumbnails)
-                }
-            state.precacheThumbnailsProgress != null -> SettingsContentButtonRow(
-                content = {
-                    SettingsProgressIndicator(
-                        text = stringResource(string.precaching_thumbnails_progress),
-                        progress = state.precacheThumbnailsProgress,
-                    )
-                },
-                buttonText = stringResource(string.cancel),
+    when {
+        state.precacheThumbnailsButtonEnabled -> SettingsButtonRow(
+            buttonText = stringResource(string.precache_thumbnails),
             ) {
-                action(CancelPrecacheThumbnails)
+                action(AskForPrecacheThumbnails)
             }
-            else -> SettingsButtonRow(
-                enabled = false,
-                buttonText = stringResource(string.cannot_perform_precaching),
-            ) {}
+        state.precacheThumbnailsProgress != null -> SettingsContentButtonRow(
+            content = {
+                SettingsProgressIndicator(
+                    text = stringResource(string.precaching_thumbnails_progress),
+                    progress = state.precacheThumbnailsProgress,
+                )
+            },
+            buttonText = stringResource(string.cancel),
+        ) {
+            action(CancelPrecacheThumbnails)
         }
+        else -> SettingsButtonRow(
+            enabled = false,
+            buttonText = stringResource(string.cannot_perform_precaching),
+        ) {}
     }
 }

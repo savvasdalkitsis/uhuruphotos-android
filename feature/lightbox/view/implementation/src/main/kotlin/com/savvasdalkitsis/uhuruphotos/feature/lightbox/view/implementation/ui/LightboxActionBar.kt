@@ -15,7 +15,6 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.ui
 
-import androidx.compose.animation.AnimatedContent
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.CircularProgressIndicator
@@ -24,8 +23,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.actions.LightboxAction
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.actions.DownloadOriginal
+import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.actions.LightboxAction
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.actions.SetFavourite
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.actions.ShowInfo
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.ui.state.LightboxState
@@ -61,26 +60,24 @@ fun LightboxActionBar(
             contentDescription = stringResource(syncState.contentDescription)
         )
     }
-    AnimatedContent(targetState = mediaItem.originalFileIconState) {
-        when (it) {
-            IDLE -> ActionIcon(
-                onClick = { action(DownloadOriginal(mediaItem)) },
-                icon = drawable.ic_cloud_download,
-                contentDescription = stringResource(string.download_original_file)
-            )
-            IN_PROGRESS -> ActionIcon(
-                enabled = false,
-                onClick = { },
-                icon = drawable.ic_cloud_in_progress,
-                contentDescription = stringResource(string.downloading_original_file)
-            )
-            ERROR -> ActionIcon(
-                onClick = { action(DownloadOriginal(mediaItem)) },
-                icon = drawable.ic_cloud_alert,
-                contentDescription = stringResource(string.download_original_file)
-            )
-            HIDDEN -> {}
-        }
+    when (mediaItem.originalFileIconState) {
+        IDLE -> ActionIcon(
+            onClick = { action(DownloadOriginal(mediaItem)) },
+            icon = drawable.ic_cloud_download,
+            contentDescription = stringResource(string.download_original_file)
+        )
+        IN_PROGRESS -> ActionIcon(
+            enabled = false,
+            onClick = { },
+            icon = drawable.ic_cloud_in_progress,
+            contentDescription = stringResource(string.downloading_original_file)
+        )
+        ERROR -> ActionIcon(
+            onClick = { action(DownloadOriginal(mediaItem)) },
+            icon = drawable.ic_cloud_alert,
+            contentDescription = stringResource(string.download_original_file)
+        )
+        HIDDEN -> {}
     }
     AnimatedVisibility(visible = mediaItem.showFavouriteIcon && mediaItem.isFavourite != null) {
         if (mediaItem.showFavouriteIcon && mediaItem.isFavourite != null) {

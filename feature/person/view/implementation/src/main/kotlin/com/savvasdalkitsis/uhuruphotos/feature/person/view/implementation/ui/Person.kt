@@ -15,7 +15,6 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.person.view.implementation.ui
 
-import androidx.compose.animation.AnimatedContent
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.width
@@ -29,9 +28,9 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
 import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.Collage
 import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.CollageDisplayActionButton
-import com.savvasdalkitsis.uhuruphotos.feature.person.view.implementation.seam.actions.PersonAction
 import com.savvasdalkitsis.uhuruphotos.feature.person.view.implementation.seam.actions.ChangeDisplay
 import com.savvasdalkitsis.uhuruphotos.feature.person.view.implementation.seam.actions.NavigateBack
+import com.savvasdalkitsis.uhuruphotos.feature.person.view.implementation.seam.actions.PersonAction
 import com.savvasdalkitsis.uhuruphotos.feature.person.view.implementation.seam.actions.SelectedCel
 import com.savvasdalkitsis.uhuruphotos.feature.person.view.implementation.ui.state.PersonState
 import com.savvasdalkitsis.uhuruphotos.foundation.image.api.ui.Image
@@ -46,11 +45,10 @@ fun Person(
 ) {
     CommonScaffold(
         title = {
-            AnimatedContent(targetState = state.person) { person ->
-                when {
-                    person != null -> Text(text = person.name)
-                    else -> Text("Loading person")
-                }
+            val person = state.person
+            when {
+                person != null -> Text(text = person.name)
+                else -> Text("Loading person")
             }
         },
         navigationIcon = {
