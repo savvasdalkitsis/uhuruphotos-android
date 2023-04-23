@@ -1,5 +1,5 @@
 [versions]
-accompanist = "0.29.1-alpha"
+accompanist = "0.31.0-alpha"
 androidx-hilt = "1.1.0-alpha01"
 androidx-test = "1.6.0-alpha01"
 coil = "2.3.0"
