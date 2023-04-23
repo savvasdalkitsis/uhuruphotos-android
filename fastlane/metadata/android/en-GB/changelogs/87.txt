@@ -1,0 +1,1 @@
+* Removing AnimatedContent calls from parts of the app since that caused crashes
