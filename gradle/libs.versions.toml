@@ -71,7 +71,7 @@ kotlinx-coroutines = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-androi
 kotlinx-coroutines-test = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test", version.ref = "org-jetbrains-kotlinx" }
 kotlin-reflect = "org.jetbrains.kotlin:kotlin-reflect:1.8.20"
 # @pin cannot update until lumbejack supports timber 5
-logger = "com.jakewharton.timber:timber:4.7.1"
+logger = "com.jakewharton.timber:timber:5.0.1"
 lumberjack-core = { module = "com.github.MFlisar.Lumberjack:lumberjack-library", version.ref = "lumberjack" }
 lumberjack-feedback = { module = "com.github.MFlisar.Lumberjack:lumberjack-feedback", version.ref = "lumberjack" }
 lumberjack-feedback-manager = "com.github.MFlisar:FeedbackManager:2.0.3"
