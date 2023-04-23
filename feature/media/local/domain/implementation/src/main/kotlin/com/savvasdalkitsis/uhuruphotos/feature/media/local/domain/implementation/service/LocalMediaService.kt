@@ -23,7 +23,6 @@ import android.net.Uri
 import android.os.Build.VERSION.SDK_INT
 import android.os.Build.VERSION_CODES.R
 import android.os.Environment
-import android.provider.BaseColumns
 import android.provider.MediaStore
 import android.provider.MediaStore.Images
 import android.provider.MediaStore.Video
@@ -115,9 +114,9 @@ class LocalMediaService @Inject constructor(
         )
 
     fun delete(id: Long, video: Boolean) =
-        contentResolver.delete(createMediaUri(video),
-            BaseColumns._ID + " = ?",
-            arrayOf(id.toString()),
+        contentResolver.delete(createMediaItemUri(id, video),
+            null,
+            null,
         )
 
     fun createMediaItemUri(id: Long, video: Boolean): Uri = ContentUris.withAppendedId(

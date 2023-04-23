@@ -18,11 +18,14 @@ package com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.implementatio
 import android.Manifest
 import android.app.RecoverableSecurityException
 import android.content.ContentResolver
+import android.content.Context
 import android.content.Intent
+import android.content.pm.PackageManager.*
 import android.os.Build
-import android.provider.MediaStore.createWriteRequest
+import android.provider.MediaStore.createDeleteRequest
 import androidx.activity.result.IntentSenderRequest
 import androidx.annotation.RequiresApi
+import androidx.core.content.ContextCompat
 import androidx.work.WorkInfo
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.extensions.async
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.media.local.LocalMediaItemDetails
@@ -45,9 +48,9 @@ import com.savvasdalkitsis.uhuruphotos.foundation.date.api.module.DateModule.Par
 import com.savvasdalkitsis.uhuruphotos.foundation.date.api.module.DateModule.ParsingDateTimeFormat
 import com.savvasdalkitsis.uhuruphotos.foundation.log.api.runCatchingWithLog
 import com.savvasdalkitsis.uhuruphotos.foundation.worker.api.usecase.WorkerStatusUseCase
+import dagger.hilt.android.qualifiers.ApplicationContext
 import dev.shreyaspatil.permissionFlow.PermissionFlow
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.map
@@ -56,6 +59,8 @@ import org.joda.time.format.DateTimeFormatter
 import javax.inject.Inject
 
 class LocalMediaUseCase @Inject constructor(
+    @ApplicationContext
+    private val context: Context,
     @LocalMediaModule.LocalMediaDateTimeFormat
     private val localMediaDateTimeFormat: DateTimeFormatter,
     @ParsingDateTimeFormat
@@ -141,7 +146,7 @@ class LocalMediaUseCase @Inject constructor(
 
     override suspend fun getLocalMediaItems(): LocalMediaItems {
         resetMediaStoreIfNeeded()
-        return when (val permissions = observePermissionsState().first()) {
+        return when (val permissions = checkPermissions(*requiredPermissions)) {
             is LocalPermissions.RequiresPermissions -> LocalMediaItems.RequiresPermissions(
                 permissions.deniedPermissions
             )
@@ -191,20 +196,31 @@ class LocalMediaUseCase @Inject constructor(
         localMediaRepository.refresh(onProgressChange)
     }
 
-    override suspend fun deleteLocalMediaItem(id: Long, video: Boolean): LocalMediaItemDeletion =
+    override fun deleteLocalMediaItem(id: Long, video: Boolean): LocalMediaItemDeletion =
         when {
             Build.VERSION.SDK_INT == Build.VERSION_CODES.Q -> qDeletion(id, video)
             Build.VERSION.SDK_INT >= Build.VERSION_CODES.R -> postRDeletion(id, video)
             else -> preQDeletion(id, video)
         }
 
-    private suspend fun preQDeletion(id: Long, video: Boolean): LocalMediaItemDeletion =
-        when (val permissions = observePermissionsState(*requiredDeletePermissions).first()) {
+    private fun preQDeletion(id: Long, video: Boolean): LocalMediaItemDeletion =
+        when (val permissions = checkPermissions(*requiredDeletePermissions)) {
             is LocalPermissions.RequiresPermissions -> LocalMediaItemDeletion.RequiresPermissions(
                 permissions.deniedPermissions
             )
             LocalPermissions.Granted -> attemptDeletion(id, video)
         }
+
+    private fun checkPermissions(vararg permissions: String): LocalPermissions {
+        val missing = permissions.filter {
+            ContextCompat.checkSelfPermission(context, it) != PERMISSION_GRANTED
+        }
+        return if (missing.isEmpty()) {
+            LocalPermissions.Granted
+        } else {
+            LocalPermissions.RequiresPermissions(missing)
+        }
+    }
 
     @RequiresApi(Build.VERSION_CODES.Q)
     private fun qDeletion(id: Long, video: Boolean): LocalMediaItemDeletion {
@@ -218,7 +234,7 @@ class LocalMediaUseCase @Inject constructor(
             } else {
                 LocalMediaItemDeletion.NeedsSystemApproval(
                     IntentSenderRequest.Builder(
-                        error.userAction.actionIntent.intentSender
+                        error.userAction.actionIntent
                     ).build()
                 )
             }
@@ -229,7 +245,7 @@ class LocalMediaUseCase @Inject constructor(
     private fun postRDeletion(id: Long, video: Boolean): LocalMediaItemDeletion =
         LocalMediaItemDeletion.NeedsSystemApproval(
             IntentSenderRequest.Builder(
-                createWriteRequest(contentResolver,
+                createDeleteRequest(contentResolver,
                     listOf(localMediaService.createMediaItemUri(id, video))
                 )
             ).setFillInIntent(null)
@@ -248,6 +264,10 @@ class LocalMediaUseCase @Inject constructor(
                 result.exceptionOrNull() ?: UnknownError()
             )
         }
+    }
+
+    override fun removeLocalMediaItemFromDb(id: Long) {
+        localMediaRepository.removeItemFromDb(id)
     }
 
     private fun Long.contentUri(isVideo: Boolean) =

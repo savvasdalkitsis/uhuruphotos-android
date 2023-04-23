@@ -103,7 +103,7 @@ class LocalMediaRepository @Inject constructor(
             val currentIds = map { it.id }.toSet()
             async {
                 for (id in existingIds - currentIds) {
-                    localMediaItemDetailsQueries.delete(id)
+                    removeItemFromDb(id)
                 }
             }
         }
@@ -193,10 +193,12 @@ class LocalMediaRepository @Inject constructor(
 
     fun deleteItem(id: Long, video: Boolean) = runCatchingWithLog {
         if (localMediaService.delete(id, video) > 0) {
-            localMediaItemDetailsQueries.delete(id)
-            Result.success(Unit)
+            removeItemFromDb(id)
         } else {
-            Result.failure(LocalMediaDeletionException(id))
+            throw LocalMediaDeletionException(id)
         }
      }
+
+    fun removeItemFromDb(id: Long) =
+        localMediaItemDetailsQueries.delete(id)
 }

@@ -18,5 +18,9 @@ package com.savvasdalkitsis.uhuruphotos.foundation.activity.api.request
 import androidx.activity.result.IntentSenderRequest
 
 interface ActivityRequestLauncher {
-    suspend fun performRequest(requestId: String, request: IntentSenderRequest): Result<Unit>
+    suspend fun performRequest(
+        requestId: String,
+        request: IntentSenderRequest,
+        onSuccess: () -> Unit = {},
+    ): Result<Unit>
 }

@@ -42,7 +42,11 @@ class ActivityRequestLauncher @Inject constructor(
     private val requestKey = "REQUEST_KEY"
     private val lastIncrementKey = "LAST_INCREMENT_KEY"
 
-    override suspend fun performRequest(requestId: String, request: IntentSenderRequest): Result<Unit> {
+    override suspend fun performRequest(
+        requestId: String,
+        request: IntentSenderRequest,
+        onSuccess: () -> Unit
+    ): Result<Unit> {
         var isLaunched = false
 
         val key = activity?.let { activity ->
@@ -72,6 +76,7 @@ class ActivityRequestLauncher @Inject constructor(
                     clearSavedStateData(activity)
                     continuation.resume(
                         if (result.resultCode == Activity.RESULT_OK) {
+                            onSuccess()
                             Result.success(Unit)
                         } else {
                             Result.failure(ActivityRequestFailed(result.resultCode.toString()))

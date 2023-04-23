@@ -47,5 +47,7 @@ interface LocalMediaUseCase {
 
     fun observeLocalMediaSyncJobStatus(): Flow<WorkInfo.State?>
 
-    suspend fun deleteLocalMediaItem(id: Long, video: Boolean): LocalMediaItemDeletion
+    fun deleteLocalMediaItem(id: Long, video: Boolean): LocalMediaItemDeletion
+
+    fun removeLocalMediaItemFromDb(id: Long)
 }

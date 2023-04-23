@@ -80,8 +80,9 @@ internal class LightboxActionsContext @Inject constructor(
     suspend fun FlowCollector<LightboxMutation>.deleteLocal(
         mediaItem: SingleMediaItemState
     ): Result<Unit> {
+        val id = mediaItem.id.findLocal!!.value
         val result = localMediaUseCase.deleteLocalMediaItem(
-            mediaItem.id.findLocal!!.value,
+            id,
             mediaItem.isVideo
         )
         return when (result) {
@@ -92,7 +93,17 @@ internal class LightboxActionsContext @Inject constructor(
             }
 
             is LocalMediaItemDeletion.NeedsSystemApproval ->
-                activityRequestLauncher.performRequest("deleteImage${mediaItem.id}", result.request)
+                activityRequestLauncher.performRequest(
+                    "deleteLocalMedia:${id}",
+                    result.request,
+                ) {
+                    // deleting again cause on R sometimes the file is not deleted at the same flow
+                    // we give permission in
+                    localMediaUseCase.deleteLocalMediaItem(
+                        id,
+                        mediaItem.isVideo
+                    )
+                }
             LocalMediaItemDeletion.Success -> Result.success(Unit)
         }
     }

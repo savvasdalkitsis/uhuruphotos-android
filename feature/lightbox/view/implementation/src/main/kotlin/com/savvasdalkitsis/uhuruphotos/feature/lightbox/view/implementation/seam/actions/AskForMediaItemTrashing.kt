@@ -15,24 +15,41 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.actions
 
+import android.os.Build
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.LightboxActionsContext
-import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.LightboxDeletionCategory.*
+import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.LightboxDeletionCategory.FULLY_SYNCED_ITEM
+import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.LightboxDeletionCategory.LOCAL_ONLY_ITEM
+import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.LightboxDeletionCategory.REMOTE_ITEM
+import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.LightboxDeletionCategory.REMOTE_ITEM_TRASHED
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.LightboxEffect
-import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.LightboxMutation.*
+import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.LightboxMutation.ShowDeleteConfirmationDialog
+import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.LightboxMutation.ShowFullySyncedDeleteConfirmationDialog
+import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.LightboxMutation.ShowRemoteTrashingConfirmationDialog
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.ui.state.LightboxState
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.EffectHandler
-import kotlinx.coroutines.flow.flowOf
+import kotlinx.coroutines.flow.emitAll
+import kotlinx.coroutines.flow.flow
 
 object AskForMediaItemTrashing : LightboxAction() {
 
     context(LightboxActionsContext) override fun handle(
         state: LightboxState,
         effect: EffectHandler<LightboxEffect>
-    ) = flowOf(when (deletionCategory(state.currentMediaItem)) {
-        REMOTE_ITEM_TRASHED -> ShowDeleteConfirmationDialog
-        FULLY_SYNCED_ITEM -> ShowFullySyncedDeleteConfirmationDialog
-        LOCAL_ONLY_ITEM -> ShowDeleteConfirmationDialog
-        REMOTE_ITEM -> ShowRemoteTrashingConfirmationDialog
-    })
+    ) = flow {
+        when (deletionCategory(state.currentMediaItem)) {
+            REMOTE_ITEM_TRASHED -> emit(ShowDeleteConfirmationDialog)
+            FULLY_SYNCED_ITEM -> emit(ShowFullySyncedDeleteConfirmationDialog)
+            LOCAL_ONLY_ITEM -> if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+                // On R and later, we have to present the user with a native dialog so no need to show
+                // ours for local only items
+                emitAll(processAndRemovePhoto(state, effect) {
+                    deleteLocal(state.currentMediaItem)
+                })
+            } else {
+                emit(ShowDeleteConfirmationDialog)
+            }
 
+            REMOTE_ITEM -> emit(ShowRemoteTrashingConfirmationDialog)
+        }
+    }
 }

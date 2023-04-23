@@ -15,10 +15,12 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.model
 
+import androidx.activity.result.IntentSenderRequest
+
 sealed class LocalMediaItemDeletion {
 
     object Success : LocalMediaItemDeletion()
     data class Error(val e: Throwable?) : LocalMediaItemDeletion()
     data class RequiresPermissions(val deniedPermissions: List<String>) : LocalMediaItemDeletion()
-    data class NeedsSystemApproval(val request: androidx.activity.result.IntentSenderRequest) : LocalMediaItemDeletion()
+    data class NeedsSystemApproval(val request: IntentSenderRequest) : LocalMediaItemDeletion()
 }
