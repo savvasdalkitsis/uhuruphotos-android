@@ -1,0 +1,1 @@
+* Removing MANAGE_EXTERNAL_STORAGE permission requirement to allow Google to approve the app
