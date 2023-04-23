@@ -19,7 +19,6 @@ import androidx.compose.runtime.Composable
 import androidx.lifecycle.ViewModel
 import androidx.navigation.NavGraphBuilder
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.HasActionableState
-import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.HasInitializer
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.theme.ThemeMode
 import kotlinx.coroutines.flow.StateFlow
 import kotlin.reflect.KClass

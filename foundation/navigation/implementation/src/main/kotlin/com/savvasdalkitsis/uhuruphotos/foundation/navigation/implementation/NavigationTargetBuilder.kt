@@ -37,7 +37,7 @@ import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.NavigationRoute
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.NavigationRoute
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.NavigationTargetBuilder
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.HasActionableState
-import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.HasInitializer
+import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.HasInitializer
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.theme.AppTheme
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.theme.ThemeMode
 import kotlinx.coroutines.flow.StateFlow
