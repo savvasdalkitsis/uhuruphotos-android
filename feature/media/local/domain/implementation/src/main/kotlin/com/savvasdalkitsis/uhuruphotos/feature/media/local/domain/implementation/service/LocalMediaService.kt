@@ -85,6 +85,7 @@ class LocalMediaService @Inject constructor(
             size = int(Images.Media.SIZE),
             contentUri = MediaStoreContentUriResolver.getContentUriForItem(id, video = false),
             path = string(Images.Media.DATA),
+            orientation = string(Images.Media.ORIENTATION),
         )
     }
 
@@ -144,6 +145,7 @@ class LocalMediaService @Inject constructor(
             duration = if (SDK_INT >= R) int(Video.Media.DURATION) else null,
             contentUri = MediaStoreContentUriResolver.getContentUriForItem(id, video = true),
             path = string(Video.Media.DATA),
+            orientation = string(Video.Media.ORIENTATION),
         )
     }
 

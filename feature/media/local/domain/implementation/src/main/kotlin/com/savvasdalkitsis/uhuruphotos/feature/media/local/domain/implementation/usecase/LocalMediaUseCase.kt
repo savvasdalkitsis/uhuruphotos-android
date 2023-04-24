@@ -29,6 +29,7 @@ import androidx.core.content.ContextCompat
 import androidx.work.WorkInfo
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.extensions.async
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.media.local.LocalMediaItemDetails
+import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.model.MediaOrientation
 import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.model.LocalFolder
 import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.model.LocalMediaFolder
 import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.model.LocalMediaItem
@@ -302,6 +303,13 @@ class LocalMediaUseCase @Inject constructor(
             }?.filterOutNulls(),
             fallbackColor = fallbackColor,
             path = path,
+            orientation = when (orientation) {
+                "0" -> MediaOrientation.ORIENTATION_0
+                "90" -> MediaOrientation.ORIENTATION_90
+                "180" -> MediaOrientation.ORIENTATION_180
+                "270" -> MediaOrientation.ORIENTATION_180
+                else -> MediaOrientation.ORIENTATION_UNKNOWN
+            },
         )
     }
 

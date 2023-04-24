@@ -15,24 +15,10 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.model
 
-data class LocalMediaItem(
-    val id: Long,
-    val displayName: String?,
-    val displayDate: String,
-    val displayDateTime: String,
-    val dateTaken: String,
-    val dateTimeTaken: String,
-    val sortableDate: String,
-    val bucket: LocalMediaFolder,
-    val width: Int,
-    val height: Int,
-    val size: Int,
-    val contentUri: String,
-    val md5: String,
-    val video: Boolean,
-    val duration: Int?,
-    val latLon: Pair<Double, Double>?,
-    val fallbackColor: String?,
-    val path: String?,
-    val orientation: MediaOrientation,
-)
+enum class MediaOrientation {
+    ORIENTATION_0,
+    ORIENTATION_90,
+    ORIENTATION_180,
+    ORIENTATION_270,
+    ORIENTATION_UNKNOWN,
+}

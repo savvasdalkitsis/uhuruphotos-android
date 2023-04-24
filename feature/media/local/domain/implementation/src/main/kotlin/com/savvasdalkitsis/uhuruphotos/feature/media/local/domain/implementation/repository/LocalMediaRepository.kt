@@ -70,7 +70,8 @@ class LocalMediaRepository @Inject constructor(
             .sortedByDescending { it.dateTaken }
         val photos = localMediaService.getPhotos() - cameraPhotos.toSet()
         val videos = localMediaService.getVideos() - cameraVideos.toSet()
-        (cameraPhotos + cameraVideos + photos + videos)
+        val cameraItems = (cameraPhotos + cameraVideos).sortedByDescending { it.dateTaken }
+        (cameraItems + photos + videos)
             .processAndInsertItems(onProgressChange = onProgressChange)
     }
 
@@ -125,7 +126,7 @@ class LocalMediaRepository @Inject constructor(
         }
         val (size, md5) = contentResolver.openInputStream(item.contentUri)!!.use { stream ->
             val digest = MessageDigest.getInstance("MD5")
-            val buffer = ByteArray(DEFAULT_BUFFER_SIZE)
+            val buffer = ByteArray(64 * 1024)
             var totalRead = 0
             do {
                 val read = stream.read(buffer)
@@ -167,6 +168,7 @@ class LocalMediaRepository @Inject constructor(
                     "#${it.toUInt().toString(16).padStart(6, '0')}"
                 },
                 path = item.path,
+                orientation = item.orientation,
             )
         )
     }

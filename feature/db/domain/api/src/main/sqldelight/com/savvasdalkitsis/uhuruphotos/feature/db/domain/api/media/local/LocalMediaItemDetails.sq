@@ -13,7 +13,8 @@ CREATE TABLE localMediaItemDetails (
     duration INTEGER AS Int,
     latLon TEXT,
     fallbackColor TEXT,
-    path TEXT
+    path TEXT,
+    orientation TEXT
 );
 
 insert:
@@ -32,7 +33,7 @@ getBuckets:
 SELECT bucketId, bucketName FROM localMediaItemDetails;
 
 getExistingIds:
-SELECT id FROM localMediaItemDetails WHERE width != 0 AND height != 0;
+SELECT id FROM localMediaItemDetails WHERE width > 0 AND height > 0 AND orientation IS NOT NULL;
 
 getExistingBucketIds:
 SELECT id FROM localMediaItemDetails WHERE bucketId = :id;

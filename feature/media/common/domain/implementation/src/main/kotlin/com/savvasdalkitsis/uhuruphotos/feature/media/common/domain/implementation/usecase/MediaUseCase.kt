@@ -32,6 +32,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.Med
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemSyncState.LOCAL_ONLY
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemSyncState.REMOTE_ONLY
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemsOnDevice
+import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.model.MediaOrientation.*
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.usecase.MediaUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.model.LocalFolder
 import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.model.LocalMediaItem
@@ -206,11 +207,22 @@ class MediaUseCase @Inject constructor(
         isFavourite = false,
         displayDayDate = displayDate,
         sortableDate = sortableDate,
-        ratio = (width / height.toFloat()).takeIf { it > 0 } ?: 1f,
+        ratio = ratio,
         isVideo = video,
         latLng = latLon,
         syncState = LOCAL_ONLY,
     )
+
+    private val LocalMediaItem.ratio: Float get() {
+        val (w, h) = when (orientation) {
+            ORIENTATION_0, ORIENTATION_180 ->
+                width to height
+            ORIENTATION_90, ORIENTATION_270 ->
+                height to width
+            ORIENTATION_UNKNOWN -> 0 to 1
+        }
+        return (w / h.toFloat()).takeIf { it > 0 } ?: 1f
+    }
 
     override suspend fun getMediaItemDetails(id: MediaId<*>): MediaItemDetails? = when (id) {
         is Remote -> remoteMediaUseCase.getRemoteMediaItemDetails(id.value)

@@ -28,6 +28,7 @@ sealed class LocalMediaStoreServiceItem(
     open val size: Int?,
     open val contentUri: Uri,
     open val path: String,
+    open val orientation: String?,
 ) {
 
     data class Photo(
@@ -41,8 +42,9 @@ sealed class LocalMediaStoreServiceItem(
         override val size: Int?,
         override val contentUri: Uri,
         override val path: String,
+        override val orientation: String?,
     ): LocalMediaStoreServiceItem(
-        id, displayName, dateTaken, bucketId, bucketName, width, height, size, contentUri, path
+        id, displayName, dateTaken, bucketId, bucketName, width, height, size, contentUri, path, orientation
     )
 
     data class Video(
@@ -57,8 +59,9 @@ sealed class LocalMediaStoreServiceItem(
         val duration: Int?,
         override val contentUri: Uri,
         override val path: String,
+        override val orientation: String?,
     ): LocalMediaStoreServiceItem(
-        id, displayName, dateTaken, bucketId, bucketName, width, height, size, contentUri, path
+        id, displayName, dateTaken, bucketId, bucketName, width, height, size, contentUri, path, orientation
     )
 
 }
