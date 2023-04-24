@@ -307,7 +307,7 @@ class LocalMediaUseCase @Inject constructor(
                 "0" -> MediaOrientation.ORIENTATION_0
                 "90" -> MediaOrientation.ORIENTATION_90
                 "180" -> MediaOrientation.ORIENTATION_180
-                "270" -> MediaOrientation.ORIENTATION_180
+                "270" -> MediaOrientation.ORIENTATION_270
                 else -> MediaOrientation.ORIENTATION_UNKNOWN
             },
         )
