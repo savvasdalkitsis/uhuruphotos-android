@@ -1,0 +1,1 @@
+* Fixing bug where media rotated by 270 degrees were wrongly treated as 180
