@@ -58,7 +58,7 @@ internal fun Lightbox(
     val infoSheetState = rememberModalBottomSheetState(initialValue = ModalBottomSheetValue.Hidden)
     val sheetSize by SheetSize.rememberSheetSize()
     val pagerState = rememberPagerState()
-    LaunchedEffect(state.media.size, pagerState.canScrollBackward, pagerState.canScrollBackward) {
+    LaunchedEffect(state.media.size, pagerState.canScrollBackward, pagerState.canScrollForward) {
         pagerState.scrollToPage(state.currentIndex)
     }
     LaunchedEffect(pagerState) {
