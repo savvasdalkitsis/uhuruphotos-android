@@ -30,7 +30,7 @@ object DeleteLocalKeepRemoteMediaItem : LightboxAction() {
         state: LightboxState,
         effect: EffectHandler<LightboxEffect>
     ): Flow<LightboxMutation> {
-        return processPhoto(state, effect,
+        return processMediaItem(state, effect,
             process = { deleteLocal(state.currentMediaItem) },
             postProcessAction = {
                 val current = state.currentMediaItem

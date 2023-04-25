@@ -130,15 +130,7 @@ sealed class LightboxMutation(
         }
     })
 
-    data class ShowSingleMediaItem(val mediaItemState: SingleMediaItemState) : LightboxMutation({
-        it.copyWithIndex(
-            index = 0,
-        ).copy(
-            media = listOf(mediaItemState)
-        )
-    })
-
-    data class ShowMultipleMedia(
+    data class ShowMedia(
         val mediaItemStates: List<SingleMediaItemState>,
         val index: Int,
     ) : LightboxMutation({
@@ -148,7 +140,7 @@ sealed class LightboxMutation(
             media = mediaItemStates,
         )
     }) {
-        override fun toString() = "ShowMultipleMedia [index: $index, size:${mediaItemStates.size}]"
+        override fun toString() = "ShowMedia [index: $index, size:${mediaItemStates.size}]"
     }
 
     data class ReceivedDetails(

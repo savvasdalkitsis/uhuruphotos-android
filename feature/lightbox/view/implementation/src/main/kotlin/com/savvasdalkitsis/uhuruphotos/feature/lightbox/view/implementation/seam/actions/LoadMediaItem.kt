@@ -20,119 +20,97 @@ import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.api.model.LightboxS
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.LightboxActionsContext
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.LightboxEffect
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.LightboxMutation
+import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.LightboxMutation.*
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.ui.state.LightboxState
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.ui.state.MediaItemType
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.ui.state.SingleMediaItemState
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaCollection
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaId
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItem
-import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.usecase.MediaUseCase
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.EffectHandler
 import kotlinx.coroutines.flow.FlowCollector
 import kotlinx.coroutines.flow.flow
 
 data class LoadMediaItem(
-    val id: MediaId<*>,
-    val isVideo: Boolean,
+    val actionMediaId: MediaId<*>,
+    val actionMediaIsVideo: Boolean,
     val sequenceDataSource: LightboxSequenceDataSource,
     val showMediaSyncState: Boolean,
 ) : LightboxAction() {
-
-    private val shouldShowDeleteButton =
-        sequenceDataSource is Feed ||
-        sequenceDataSource is LocalAlbum
 
     context(LightboxActionsContext) override fun handle(
         state: LightboxState,
         effect: EffectHandler<LightboxEffect>,
     ) = flow {
-        val dataSource = sequenceDataSource
-        if (dataSource == Trash) {
+        if (sequenceDataSource == Trash) {
             mediaItemType = MediaItemType.TRASHED
-            emit(LightboxMutation.ShowRestoreButton)
+            emit(ShowRestoreButton)
         }
-        with(mediaUseCase) {
-            emit(LightboxMutation.ShowSingleMediaItem(
-                SingleMediaItemState(
-                    id = id,
-                    lowResUrl = id.toThumbnailUriFromId(isVideo),
-                    fullResUrl = id.toFullSizeUriFromId(isVideo),
-                    showFavouriteIcon = id.preferRemote is MediaId.Remote,
-                    showDeleteButton = shouldShowDeleteButton,
-                    mediaItemSyncState = id.syncState.takeIf { showMediaSyncState }
-                )
-            ))
-            when (dataSource) {
-                Single -> loadPhotoDetails(
-                    photoId = id,
-                    isVideo = isVideo
-                )
-                Feed -> loadCollections(
-                    feedUseCase.getFeed()
-                )
-                is SearchResults -> loadCollections(
-                    searchUseCase.searchResultsFor(dataSource.query),
-                )
-                is PersonResults -> loadCollections(
-                    personUseCase.getPersonMedia(dataSource.personId),
-                )
-                is AutoAlbum -> loadCollections(
-                    autoAlbumUseCase.getAutoAlbum(dataSource.albumId),
-                )
-                is UserAlbum -> loadCollections(
-                    userAlbumUseCase.getUserAlbum(dataSource.albumId).mediaCollections,
-                )
-                is LocalAlbum -> loadCollections(
-                    localAlbumUseCase.getLocalAlbum(dataSource.albumId),
-                )
-                FavouriteMedia -> loadResult(
-                    mediaUseCase.getFavouriteMedia(),
-                )
-                HiddenMedia -> loadResult(
-                    mediaUseCase.getHiddenMedia(),
-                )
-                Trash -> loadCollections(
-                    trashUseCase.getTrash(),
-                )
-            }
-        }
+
+        showMedia(listOf(actionMediaId.toSingleMediaItemState()))
+
+        showMedia(loadMediaToShow())
+
+        loadMediaDetails(
+            mediaId = actionMediaId,
+            isVideo = actionMediaIsVideo
+        )
     }
 
-
-    context(MediaUseCase, LightboxActionsContext)
-    private suspend fun FlowCollector<LightboxMutation>.loadCollections(
-        collections: List<MediaCollection>
-    ) = loadPhotos(collections.flatMap { it.mediaItems })
-
-    context(MediaUseCase, LightboxActionsContext)
-    private suspend fun FlowCollector<LightboxMutation>.loadResult(
-        mediaItem: Result<List<MediaItem>>,
-    ) = when (val items = mediaItem.getOrNull()) {
-        null -> loadPhotoDetails(id)
-        else -> loadPhotos(items)
+    context(LightboxActionsContext)
+    private suspend fun loadMediaToShow() = when (sequenceDataSource) {
+        Single -> emptyList()
+        Feed -> feedUseCase.getFeed().toMediaItems
+        is SearchResults -> searchUseCase.searchResultsFor(sequenceDataSource.query).toMediaItems
+        is PersonResults -> personUseCase.getPersonMedia(sequenceDataSource.personId).toMediaItems
+        is AutoAlbum -> autoAlbumUseCase.getAutoAlbum(sequenceDataSource.albumId).toMediaItems
+        is UserAlbum -> userAlbumUseCase.getUserAlbum(sequenceDataSource.albumId).mediaCollections.toMediaItems
+        is LocalAlbum -> localAlbumUseCase.getLocalAlbum(sequenceDataSource.albumId).toMediaItems
+        FavouriteMedia -> mediaUseCase.getFavouriteMedia().getOrDefault(emptyList())
+        HiddenMedia -> mediaUseCase.getHiddenMedia().getOrDefault(emptyList())
+        Trash -> trashUseCase.getTrash().toMediaItems
+    }.map {
+        it.toSingleMediaItemState()
     }
 
-    context(MediaUseCase, LightboxActionsContext)
-    private suspend fun FlowCollector<LightboxMutation>.loadPhotos(
-        mediaItems: List<MediaItem>
+    private val List<MediaCollection>.toMediaItems get() = flatMap { it.mediaItems }
+
+    context(LightboxActionsContext)
+    private suspend fun FlowCollector<LightboxMutation>.showMedia(
+        mediaItemStates: List<SingleMediaItemState>,
     ) {
-        val photoStates = mediaItems.map { photo ->
-            SingleMediaItemState(
-                id = photo.id,
-                lowResUrl = photo.thumbnailUri ?: photo.id.toThumbnailUriFromId(isVideo),
-                fullResUrl = photo.fullResUri ?: photo.id.toFullSizeUriFromId(isVideo),
-                isFavourite = photo.isFavourite,
-                isVideo = photo.isVideo,
-                showFavouriteIcon = photo.id.preferRemote is MediaId.Remote,
-                showDeleteButton = shouldShowDeleteButton,
-                mediaItemSyncState = photo.syncState.takeIf { showMediaSyncState }
-            )
+        if (mediaItemStates.isNotEmpty()) {
+            val index = mediaItemStates.indexOfFirst { it.id == actionMediaId }
+            emit(ShowMedia(mediaItemStates, index))
         }
-        val index = photoStates.indexOfFirst { it.id == id }
-        emit(LightboxMutation.ShowMultipleMedia(photoStates, index))
-        loadPhotoDetails(
-            photoId = id,
-            isVideo = isVideo
+    }
+
+    private val shouldShowDeleteButton =
+        sequenceDataSource is Feed ||
+        sequenceDataSource is LocalAlbum
+
+    context(LightboxActionsContext)
+    private fun MediaItem.toSingleMediaItemState() = with(mediaUseCase) {
+        SingleMediaItemState(
+            id = id,
+            lowResUrl = thumbnailUri ?: id.toThumbnailUriFromId(isVideo),
+            fullResUrl = fullResUri ?: id.toFullSizeUriFromId(isVideo),
+            isFavourite = isFavourite,
+            isVideo = isVideo,
+            showFavouriteIcon = id.preferRemote is MediaId.Remote,
+            showDeleteButton = shouldShowDeleteButton,
+            mediaItemSyncState = syncState.takeIf { showMediaSyncState }
+        )
+    }
+    context(LightboxActionsContext)
+    private fun MediaId<*>.toSingleMediaItemState() = with(mediaUseCase) {
+        SingleMediaItemState(
+            id = this@toSingleMediaItemState,
+            lowResUrl = toThumbnailUriFromId(actionMediaIsVideo),
+            fullResUrl = toFullSizeUriFromId(actionMediaIsVideo),
+            showFavouriteIcon = false,
+            showDeleteButton = shouldShowDeleteButton,
+            mediaItemSyncState = syncState.takeIf { showMediaSyncState }
         )
     }
 }

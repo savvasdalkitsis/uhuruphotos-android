@@ -30,7 +30,7 @@ object TrashMediaItem : LightboxAction() {
     context(LightboxActionsContext) override fun handle(
         state: LightboxState,
         effect: EffectHandler<LightboxEffect>
-    ) = processAndRemovePhoto(state, effect) {
+    ) = processAndRemoveMediaItem(state, effect) {
         val mediaItem = state.currentMediaItem
         when (deletionCategory(mediaItem)) {
             REMOTE_ITEM_TRASHED -> {

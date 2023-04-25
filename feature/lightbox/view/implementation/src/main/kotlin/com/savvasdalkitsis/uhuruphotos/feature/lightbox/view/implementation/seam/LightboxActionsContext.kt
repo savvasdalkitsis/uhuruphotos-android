@@ -108,15 +108,15 @@ internal class LightboxActionsContext @Inject constructor(
         }
     }
 
-    fun processAndRemovePhoto(
+    fun processAndRemoveMediaItem(
         state: LightboxState,
         effect: EffectHandler<LightboxEffect>,
         process: suspend FlowCollector<LightboxMutation>.() -> Result<Unit>,
-    ) = processPhoto(state, effect, process) {
+    ) = processMediaItem(state, effect, process) {
         emit(RemoveMediaItemFromSource(state.currentMediaItem.id))
     }
 
-    fun processPhoto(
+    fun processMediaItem(
         state: LightboxState,
         effect: EffectHandler<LightboxEffect>,
         process: suspend FlowCollector<LightboxMutation>.() -> Result<Unit>,
@@ -138,25 +138,25 @@ internal class LightboxActionsContext @Inject constructor(
             }
     }
 
-    suspend fun FlowCollector<LightboxMutation>.loadPhotoDetails(
-        photoId: MediaId<*>,
+    suspend fun FlowCollector<LightboxMutation>.loadMediaDetails(
+        mediaId: MediaId<*>,
         isVideo: Boolean = false,
         refresh: Boolean = false,
     ) {
         emit(Loading)
-        emit(LoadingDetails(photoId))
+        emit(LoadingDetails(mediaId))
         if (refresh) {
-            mediaUseCase.refreshDetailsNow(photoId, isVideo)
+            mediaUseCase.refreshDetailsNow(mediaId, isVideo)
         } else {
-            mediaUseCase.refreshDetailsNowIfMissing(photoId, isVideo)
+            mediaUseCase.refreshDetailsNowIfMissing(mediaId, isVideo)
         }.onFailure {
             emit(ShowErrorMessage(string.error_loading_photo_details))
         }
-        when (val details = mediaUseCase.getMediaItemDetails(photoId)) {
+        when (val details = mediaUseCase.getMediaItemDetails(mediaId)) {
             null -> emit(ShowErrorMessage(string.error_loading_photo_details))
-            else -> emit(ReceivedDetails(photoId, details))
+            else -> emit(ReceivedDetails(mediaId, details))
         }
         emit(FinishedLoading)
-        emit(FinishedLoadingDetails(photoId))
+        emit(FinishedLoadingDetails(mediaId))
     }
 }

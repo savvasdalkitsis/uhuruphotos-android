@@ -28,8 +28,8 @@ object Refresh : LightboxAction() {
         effect: EffectHandler<LightboxEffect>
     ) = flow {
         val photo = state.currentMediaItem
-        loadPhotoDetails(
-            photoId = photo.id,
+        loadMediaDetails(
+            mediaId = photo.id,
             isVideo = photo.isVideo,
             refresh = true,
         )

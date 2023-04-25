@@ -52,7 +52,7 @@ data class ChangedToPage(val page: Int) : LightboxAction() {
             changePageJob = launch {
                 merge<LightboxMutation>(
                     flow {
-                        loadPhotoDetails(photo.id, photo.isVideo)
+                        loadMediaDetails(photo.id, photo.isVideo)
                     },
                     when (photo.id) {
                         is MediaId.Remote -> remoteMediaFileIconState(photo.id)

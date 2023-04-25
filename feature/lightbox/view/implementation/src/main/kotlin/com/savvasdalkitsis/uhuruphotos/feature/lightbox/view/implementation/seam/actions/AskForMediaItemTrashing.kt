@@ -42,7 +42,7 @@ object AskForMediaItemTrashing : LightboxAction() {
             LOCAL_ONLY_ITEM -> if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
                 // On R and later, we have to present the user with a native dialog so no need to show
                 // ours for local only items
-                emitAll(processAndRemovePhoto(state, effect) {
+                emitAll(processAndRemoveMediaItem(state, effect) {
                     deleteLocal(state.currentMediaItem)
                 })
             } else {
