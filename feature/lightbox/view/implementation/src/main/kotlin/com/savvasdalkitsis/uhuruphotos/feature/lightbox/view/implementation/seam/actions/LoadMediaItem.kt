@@ -38,6 +38,10 @@ data class LoadMediaItem(
     val showMediaSyncState: Boolean,
 ) : LightboxAction() {
 
+    private val shouldShowDeleteButton =
+        sequenceDataSource is Feed ||
+        sequenceDataSource is LocalAlbum
+
     context(LightboxActionsContext) override fun handle(
         state: LightboxState,
         effect: EffectHandler<LightboxEffect>,
@@ -54,7 +58,7 @@ data class LoadMediaItem(
                     lowResUrl = id.toThumbnailUriFromId(isVideo),
                     fullResUrl = id.toFullSizeUriFromId(isVideo),
                     showFavouriteIcon = id.preferRemote is MediaId.Remote,
-                    showDeleteButton = true,
+                    showDeleteButton = shouldShowDeleteButton,
                     mediaItemSyncState = id.syncState.takeIf { showMediaSyncState }
                 )
             ))
@@ -120,7 +124,7 @@ data class LoadMediaItem(
                 isFavourite = photo.isFavourite,
                 isVideo = photo.isVideo,
                 showFavouriteIcon = photo.id.preferRemote is MediaId.Remote,
-                showDeleteButton = true,
+                showDeleteButton = shouldShowDeleteButton,
                 mediaItemSyncState = photo.syncState.takeIf { showMediaSyncState }
             )
         }
