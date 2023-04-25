@@ -49,7 +49,7 @@ data class LoadMediaItem(
 
         showMedia(listOf(actionMediaId.toSingleMediaItemState()))
 
-        showMedia(loadMediaToShow())
+        showMedia(loadMediaFromSequenceToShow())
 
         loadMediaDetails(
             mediaId = actionMediaId,
@@ -58,7 +58,7 @@ data class LoadMediaItem(
     }
 
     context(LightboxActionsContext)
-    private suspend fun loadMediaToShow() = when (sequenceDataSource) {
+    private suspend fun loadMediaFromSequenceToShow() = when (sequenceDataSource) {
         Single -> emptyList()
         Feed -> feedUseCase.getFeed().toMediaItems
         is SearchResults -> searchUseCase.searchResultsFor(sequenceDataSource.query).toMediaItems
