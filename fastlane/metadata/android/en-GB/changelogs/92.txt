@@ -1,0 +1,2 @@
+* Implementing media deletion in the Feed
+* Only allowing media deletion in Lightbox when viewing feed or local album items
