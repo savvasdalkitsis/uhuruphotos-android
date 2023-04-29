@@ -19,8 +19,8 @@ import android.content.Intent
 import androidx.navigation.NavHostController
 import com.savvasdalkitsis.uhuruphotos.feature.home.view.api.navigation.HomeNavigationRoute
 import com.savvasdalkitsis.uhuruphotos.foundation.log.api.log
-import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.NavigationRouteSerializer
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.NavigationRoute
+import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.NavigationRouteSerializer
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.Navigator
 import javax.inject.Inject
 import javax.inject.Singleton

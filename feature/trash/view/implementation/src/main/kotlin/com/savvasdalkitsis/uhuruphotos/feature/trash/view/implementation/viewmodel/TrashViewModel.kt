@@ -28,12 +28,12 @@ import com.savvasdalkitsis.uhuruphotos.feature.trash.view.implementation.seam.Tr
 import com.savvasdalkitsis.uhuruphotos.feature.trash.view.implementation.seam.actions.Load
 import com.savvasdalkitsis.uhuruphotos.feature.trash.view.implementation.seam.actions.TrashAction
 import com.savvasdalkitsis.uhuruphotos.feature.trash.view.implementation.state.TrashState
+import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.HasInitializer
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.ActionHandlerWithContext
-import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.HasActionableState
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.CompositeActionHandler
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.CompositeEffectHandler
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.Either
-import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.HasInitializer
+import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.HasActionableState
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.Seam
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject

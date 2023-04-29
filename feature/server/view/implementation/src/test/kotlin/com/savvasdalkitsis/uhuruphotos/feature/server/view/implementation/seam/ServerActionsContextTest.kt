@@ -18,13 +18,13 @@ package com.savvasdalkitsis.uhuruphotos.feature.server.view.implementation.seam
 import app.cash.turbine.test
 import com.savvasdalkitsis.uhuruphotos.feature.auth.domain.api.usecase.AuthenticationUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.auth.domain.api.usecase.ServerUseCase
-import com.savvasdalkitsis.uhuruphotos.feature.server.view.implementation.seam.actions.AttemptChangeServerUrlTo
-import com.savvasdalkitsis.uhuruphotos.feature.server.view.implementation.seam.actions.ChangeServerUrlTo
-import com.savvasdalkitsis.uhuruphotos.feature.server.view.implementation.seam.actions.UrlTyped
 import com.savvasdalkitsis.uhuruphotos.feature.server.view.implementation.seam.ServerMutation.HideUnsecureServerConfirmation
 import com.savvasdalkitsis.uhuruphotos.feature.server.view.implementation.seam.ServerMutation.ShowUnsecureServerConfirmation
 import com.savvasdalkitsis.uhuruphotos.feature.server.view.implementation.seam.ServerMutation.ShowUrlValidation
+import com.savvasdalkitsis.uhuruphotos.feature.server.view.implementation.seam.actions.AttemptChangeServerUrlTo
+import com.savvasdalkitsis.uhuruphotos.feature.server.view.implementation.seam.actions.ChangeServerUrlTo
 import com.savvasdalkitsis.uhuruphotos.feature.server.view.implementation.seam.actions.ServerAction
+import com.savvasdalkitsis.uhuruphotos.feature.server.view.implementation.seam.actions.UrlTyped
 import com.savvasdalkitsis.uhuruphotos.feature.server.view.implementation.ui.ServerState.ServerUrl
 import com.savvasdalkitsis.uhuruphotos.feature.settings.domain.api.usecase.SettingsUseCase
 import io.mockk.Called

@@ -23,9 +23,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.Collage
 import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.CollageDisplayActionButton
-import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.action.GalleryAction
 import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.action.ChangeCollageDisplay
 import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.action.ChangeGallerySorting
+import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.action.GalleryAction
 import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.action.NavigateBack
 import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.action.PersonSelected
 import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.action.SelectedCel

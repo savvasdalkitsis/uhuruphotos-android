@@ -18,8 +18,8 @@ package com.savvasdalkitsis.uhuruphotos.feature.search.view.implementation.ui
 import androidx.compose.runtime.Composable
 import com.savvasdalkitsis.uhuruphotos.feature.people.view.api.ui.PeopleBanner
 import com.savvasdalkitsis.uhuruphotos.feature.people.view.api.ui.state.Person
-import com.savvasdalkitsis.uhuruphotos.feature.search.view.implementation.seam.actions.SearchAction
 import com.savvasdalkitsis.uhuruphotos.feature.search.view.implementation.seam.actions.PersonSelected
+import com.savvasdalkitsis.uhuruphotos.feature.search.view.implementation.seam.actions.SearchAction
 import com.savvasdalkitsis.uhuruphotos.feature.search.view.implementation.seam.actions.ViewAllPeopleSelected
 
 @Composable

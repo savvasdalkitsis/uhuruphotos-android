@@ -17,7 +17,7 @@ package com.savvasdalkitsis.uhuruphotos.feature.server.view.implementation.seam.
 
 import com.savvasdalkitsis.uhuruphotos.feature.server.view.implementation.seam.ServerActionsContext
 import com.savvasdalkitsis.uhuruphotos.feature.server.view.implementation.seam.ServerEffect
-import com.savvasdalkitsis.uhuruphotos.feature.server.view.implementation.seam.ServerEffect.*
+import com.savvasdalkitsis.uhuruphotos.feature.server.view.implementation.seam.ServerEffect.Close
 import com.savvasdalkitsis.uhuruphotos.feature.server.view.implementation.seam.ServerMutation.HideUnsecureServerConfirmation
 import com.savvasdalkitsis.uhuruphotos.feature.server.view.implementation.ui.ServerState
 import com.savvasdalkitsis.uhuruphotos.foundation.http.api.isValidUrlOrDomain
