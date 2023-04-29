@@ -30,10 +30,7 @@ data class MemorySelected(val memoryCel: CelState) : FeedAction() {
         effect: EffectHandler<FeedEffect>
     ) = flow<FeedMutation> {
         effect.handleEffect(
-            OpenMemoryLightbox(
-                id = memoryCel.mediaItem.id,
-                isVideo = memoryCel.mediaItem.isVideo,
-            )
+            OpenMemoryLightbox(memoryCel.mediaItem.id)
         )
     }
 }

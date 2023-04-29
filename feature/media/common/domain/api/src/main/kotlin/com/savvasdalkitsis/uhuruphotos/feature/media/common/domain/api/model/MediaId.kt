@@ -24,6 +24,8 @@ import java.io.Serializable
 sealed class MediaId<T : Serializable> private constructor(
     @Transient
     open val value: T,
+    @Transient
+    open val isVideo: Boolean,
 ) : Parcelable {
 
     abstract val preferRemote: MediaId<*>
@@ -35,7 +37,10 @@ sealed class MediaId<T : Serializable> private constructor(
     val isBothRemoteAndLocal: Boolean get() = findLocal != null && findRemote != null
 
     @Parcelize
-    data class Remote(override val value: String): MediaId<String>(value) {
+    data class Remote(
+        override val value: String,
+        override val isVideo: Boolean,
+    ): MediaId<String>(value, isVideo) {
         @IgnoredOnParcel
         override val preferRemote = this
         @IgnoredOnParcel
@@ -49,7 +54,10 @@ sealed class MediaId<T : Serializable> private constructor(
     }
 
     @Parcelize
-    data class Local(override val value: Long): MediaId<Long>(value) {
+    data class Local(
+        override val value: Long,
+        override val isVideo: Boolean,
+    ): MediaId<Long>(value, isVideo) {
         @IgnoredOnParcel
         override val preferRemote = this
         @IgnoredOnParcel
@@ -64,7 +72,10 @@ sealed class MediaId<T : Serializable> private constructor(
 
     @Suppress("DataClassPrivateConstructor")
     @Parcelize
-    data class Group private constructor(override val value: ArrayList<MediaId<*>>): MediaId<ArrayList<MediaId<*>>>(value) {
+    data class Group private constructor(
+        override val value: ArrayList<MediaId<*>>,
+        override val isVideo: Boolean,
+    ): MediaId<ArrayList<MediaId<*>>>(value, isVideo) {
         @IgnoredOnParcel
         override val findRemote: Remote? = value.firstNotNullOfOrNull { it as? Remote }
         @IgnoredOnParcel
@@ -81,8 +92,11 @@ sealed class MediaId<T : Serializable> private constructor(
         }
 
         companion object {
-            operator fun invoke(value: Collection<MediaId<*>>) =
-                Group(ArrayList(value.distinct()))
+            operator fun invoke(
+                value: Collection<MediaId<*>>,
+                isVideo: Boolean,
+            ) =
+                Group(ArrayList(value.distinct()), isVideo)
         }
     }
 }

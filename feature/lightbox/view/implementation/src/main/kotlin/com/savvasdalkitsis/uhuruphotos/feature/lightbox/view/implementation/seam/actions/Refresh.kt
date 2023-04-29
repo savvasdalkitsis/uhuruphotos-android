@@ -30,7 +30,6 @@ object Refresh : LightboxAction() {
         val photo = state.currentMediaItem
         loadMediaDetails(
             mediaId = photo.id,
-            isVideo = photo.isVideo,
             refresh = true,
         )
     }

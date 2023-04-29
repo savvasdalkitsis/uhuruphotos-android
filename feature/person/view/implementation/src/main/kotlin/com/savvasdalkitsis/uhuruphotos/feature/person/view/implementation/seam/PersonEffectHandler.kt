@@ -33,7 +33,6 @@ class PersonEffectHandler @Inject constructor(
             is OpenLightbox -> navigator.navigateTo(with(effect) {
                 LightboxNavigationRoute(
                     id,
-                    video,
                     PersonResults(person.id)
                 )
             })

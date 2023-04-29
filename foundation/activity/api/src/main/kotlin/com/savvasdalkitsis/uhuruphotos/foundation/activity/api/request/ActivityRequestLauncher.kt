@@ -21,6 +21,5 @@ interface ActivityRequestLauncher {
     suspend fun performRequest(
         requestId: String,
         request: IntentSenderRequest,
-        onSuccess: () -> Unit = {},
     ): Result<Unit>
 }

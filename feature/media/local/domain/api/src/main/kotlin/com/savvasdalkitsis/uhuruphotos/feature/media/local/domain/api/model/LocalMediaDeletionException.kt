@@ -16,5 +16,5 @@ limitations under the License.
 
 package com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.model
 
-class LocalMediaDeletionException(id: Long) :
-    Exception("Could not delete local media item with id: $id")
+class LocalMediaDeletionException(vararg id: Long) :
+    Exception("Could not delete local media item with ids: $id")

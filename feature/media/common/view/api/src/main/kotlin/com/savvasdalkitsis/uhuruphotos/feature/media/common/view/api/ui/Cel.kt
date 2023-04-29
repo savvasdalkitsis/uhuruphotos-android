@@ -121,7 +121,7 @@ fun Cel(
                 null
             else
                 LocalExoPlayerProvider.current.maybeCreateExoplayer(thumbnailUri)
-            if (!LocalAnimatedVideoThumbnails.current || !mediaItem.isVideo || thumbnailUri == null || exoPlayer == null) {
+            if (!LocalAnimatedVideoThumbnails.current || !mediaItem.id.isVideo || thumbnailUri == null || exoPlayer == null) {
                 Image(
                     modifier = Modifier.fillMaxWidth(),
                     url = thumbnailUri,
@@ -150,7 +150,7 @@ fun Cel(
 
                 }
             }
-            if (mediaItem.isVideo) {
+            if (mediaItem.id.isVideo) {
                 Icon(
                     modifier = Modifier
                         .size(if (miniIcons) 16.dp else 48.dp)

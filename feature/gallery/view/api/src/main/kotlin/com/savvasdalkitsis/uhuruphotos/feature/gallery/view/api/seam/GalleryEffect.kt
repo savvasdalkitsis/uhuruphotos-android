@@ -24,7 +24,6 @@ sealed class GalleryEffect {
 
     data class OpenLightbox(
         val id: MediaId<*>,
-        val video: Boolean,
         val lightboxSequenceDataSource: LightboxSequenceDataSource,
     ) : GalleryEffect()
 

@@ -35,7 +35,9 @@ object TrashMediaItem : LightboxAction() {
         when (deletionCategory(mediaItem)) {
             REMOTE_ITEM_TRASHED -> {
                 // this just schedules deletion so no need to check result
-                mediaUseCase.deleteMediaItem(mediaItem.id)
+                mediaItem.id.findRemote?.value?.let {
+                    remoteMediaUseCase.deleteMediaItems(it)
+                }
                 Result.success(Unit)
             }
             LOCAL_ONLY_ITEM -> deleteLocal(mediaItem)

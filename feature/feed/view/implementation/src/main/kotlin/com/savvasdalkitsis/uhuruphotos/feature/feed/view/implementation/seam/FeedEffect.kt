@@ -19,16 +19,11 @@ import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.Med
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.state.CelState
 
 sealed class FeedEffect {
-    data class OpenLightbox(
-        val id: MediaId<*>,
-        val isVideo: Boolean,
-    ) : FeedEffect()
-    data class OpenMemoryLightbox(
-        val id: MediaId<*>,
-        val isVideo: Boolean,
-    ) : FeedEffect()
+    data class OpenLightbox(val id: MediaId<*>) : FeedEffect()
+    data class OpenMemoryLightbox(val id: MediaId<*>) : FeedEffect()
 
     data class Share(val selectedCels: List<CelState>) : FeedEffect()
     object Vibrate : FeedEffect()
     object DownloadingFiles : FeedEffect()
+    object ShowErrorDeletingMedia : FeedEffect()
 }

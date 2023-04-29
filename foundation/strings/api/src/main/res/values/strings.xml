@@ -243,4 +243,5 @@
     <string name="allow_storage_management_title">Storage management</string>
     <string name="allow_storage_management_description">UhuruPhotos needs permission to manage your device storage to perform this action</string>
     <string name="allow_storage_management_details">You will be redirected to the system settings to allow this permission. Continue?</string>
+    <string name="error_deleting_media">There was an error deleting media</string>
 </resources>

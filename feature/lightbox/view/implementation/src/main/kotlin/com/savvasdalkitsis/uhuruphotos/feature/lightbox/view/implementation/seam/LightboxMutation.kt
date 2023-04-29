@@ -151,7 +151,6 @@ sealed class LightboxMutation(
             it.copyItem(id) { photoState ->
                 photoState.copy(
                     isFavourite = isFavourite,
-                    isVideo = isVideo,
                     dateAndTime = formattedDateAndTime,
                     location = location,
                     gps = latLon,

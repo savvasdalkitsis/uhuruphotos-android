@@ -120,6 +120,18 @@ class LocalMediaService @Inject constructor(
             null,
         )
 
+    fun deletePhotos(vararg ids: Long) =
+        contentResolver.delete(LocalMediaPhotoColumns.collection,
+            Images.Media._ID + " in (${ids.joinToString(",") { "?" }})",
+            ids.map { it.toString() }.toTypedArray(),
+        )
+
+    fun deleteVideos(vararg ids: Long) =
+        contentResolver.delete(LocalMediaVideoColumns.collection,
+            Video.Media._ID + " in (${ids.joinToString(",") { "?" }})",
+            ids.map { it.toString() }.toTypedArray(),
+        )
+
     fun createMediaItemUri(id: Long, video: Boolean): Uri = ContentUris.withAppendedId(
         when {
             video -> LocalMediaVideoColumns.collection

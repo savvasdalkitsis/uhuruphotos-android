@@ -62,14 +62,14 @@ fun UserAlbums.toUserAlbumState() = UserAlbumState(
 context(RemoteMediaUseCase)
 private fun celState(imageHash: String?, coverIsVideo: Boolean?): CelState? =
     imageHash?.let {
+        val isVideo = coverIsVideo ?: false
         MediaItemInstance(
-            id = MediaId.Remote(it),
+            id = MediaId.Remote(it, isVideo),
             mediaHash = it,
             thumbnailUri = it.toThumbnailUrlFromId(),
-            fullResUri = it.toFullSizeUrlFromId(coverIsVideo ?: false),
+            fullResUri = it.toFullSizeUrlFromId(isVideo),
             displayDayDate = null,
             ratio = 1f,
-            isVideo = coverIsVideo ?: false,
             syncState = REMOTE_ONLY,
         ).toCel()
     }

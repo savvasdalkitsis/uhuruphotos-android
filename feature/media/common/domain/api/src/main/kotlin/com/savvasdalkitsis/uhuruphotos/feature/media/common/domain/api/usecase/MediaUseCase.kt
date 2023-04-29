@@ -29,9 +29,9 @@ import kotlinx.coroutines.flow.Flow
 
 interface MediaUseCase {
 
-    fun MediaId<*>.toThumbnailUriFromId(isVideo: Boolean = false): String
+    fun MediaId<*>.toThumbnailUriFromId(): String
 
-    fun MediaId<*>.toFullSizeUriFromId(isVideo: Boolean = false): String
+    fun MediaId<*>.toFullSizeUriFromId(): String
 
     fun observeLocalMedia(): Flow<MediaItemsOnDevice>
 
@@ -55,9 +55,9 @@ interface MediaUseCase {
 
     suspend fun setMediaItemFavourite(id: MediaId<*>, favourite: Boolean): Result<Unit>
 
-    suspend fun refreshDetailsNowIfMissing(id: MediaId<*>, isVideo: Boolean = false): Result<Unit>
+    suspend fun refreshDetailsNowIfMissing(id: MediaId<*>): Result<Unit>
 
-    suspend fun refreshDetailsNow(id: MediaId<*>, isVideo: Boolean): Result<Unit>
+    suspend fun refreshDetailsNow(id: MediaId<*>): Result<Unit>
 
     suspend fun refreshFavouriteMedia(): Result<Unit>
 
@@ -65,11 +65,9 @@ interface MediaUseCase {
 
     fun trashMediaItem(id: MediaId<*>)
 
-    fun deleteMediaItem(id: MediaId<*>)
-
     fun restoreMediaItem(id: MediaId<*>)
 
-    fun downloadOriginal(id: MediaId<*>, video: Boolean)
+    fun downloadOriginal(id: MediaId<*>)
 
     fun observeOriginalFileDownloadStatus(id: MediaId<*>): Flow<WorkInfo.State?>
 

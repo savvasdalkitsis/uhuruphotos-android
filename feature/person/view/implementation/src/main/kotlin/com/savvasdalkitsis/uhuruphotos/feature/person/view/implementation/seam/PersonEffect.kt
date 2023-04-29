@@ -21,7 +21,6 @@ import com.savvasdalkitsis.uhuruphotos.feature.people.view.api.ui.state.Person
 sealed class PersonEffect {
     data class OpenLightbox(
         val id: MediaId<*>,
-        val video: Boolean,
         val person: Person,
     ) : PersonEffect()
 

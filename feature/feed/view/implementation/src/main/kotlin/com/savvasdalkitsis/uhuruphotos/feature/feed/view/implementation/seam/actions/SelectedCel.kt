@@ -34,7 +34,7 @@ data class SelectedCel(
     ) = flow<FeedMutation> {
         when {
             state.selectedCelCount == 0 -> effect.handleEffect(
-                OpenLightbox(celState.mediaItem.id, celState.mediaItem.isVideo)
+                OpenLightbox(celState.mediaItem.id)
             )
             celState.selectionMode == MediaItemSelectionMode.SELECTED -> {
                 effect.handleEffect(FeedEffect.Vibrate)

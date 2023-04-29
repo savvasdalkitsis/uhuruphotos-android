@@ -32,7 +32,7 @@ data class FullMediaDataLoaded(val mediaItemState: SingleMediaItemState) : Light
         effect: EffectHandler<LightboxEffect>
     ) = flow {
         emit(SetOriginalFileIconState(mediaItemState.id, OriginalFileIconState.HIDDEN))
-        if (!(mediaItemState.id is MediaId.Remote && mediaItemState.isVideo)) {
+        if (!(mediaItemState.id is MediaId.Remote && mediaItemState.id.isVideo)) {
             emit(ShowShareIcon(mediaItemState.id))
             emit(ShowUseAsIcon(mediaItemState.id))
             val metadata = metadataUseCase.extractMetadata(mediaItemState.fullResUrl)

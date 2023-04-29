@@ -38,7 +38,6 @@ class GalleryEffectHandler @Inject constructor(
                 navigator.navigateTo(
                     LightboxNavigationRoute(
                         id = effect.id,
-                        isVideo = effect.video,
                         lightboxSequenceDataSource = effect.lightboxSequenceDataSource,
                     )
                 )

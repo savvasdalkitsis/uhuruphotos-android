@@ -30,7 +30,7 @@ data class SelectedCel(val cel: CelState) : PersonAction() {
         effect: EffectHandler<PersonEffect>
     ) = flow<PersonMutation> {
         effect.handleEffect(
-            OpenLightbox(cel.mediaItem.id, cel.mediaItem.isVideo, state.person!!)
+            OpenLightbox(cel.mediaItem.id, state.person!!)
         )
     }
 }

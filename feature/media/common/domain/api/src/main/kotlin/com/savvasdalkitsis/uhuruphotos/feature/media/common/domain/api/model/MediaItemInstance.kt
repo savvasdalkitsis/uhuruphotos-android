@@ -25,7 +25,6 @@ data class MediaItemInstance(
     override val sortableDate: String? = null,
     override val isFavourite: Boolean = false,
     override val ratio: Float = 1f,
-    override val isVideo: Boolean = false,
-    override val latLng: (Pair<Double, Double>)? = null,
+    override val latLng: Pair<Double, Double>? = null,
     override val syncState: MediaItemSyncState
 ) : MediaItem

@@ -27,7 +27,6 @@ sealed class SearchEffect {
     data class NavigateToPerson(val personId: Int) : SearchEffect()
     data class OpenLightbox(
         val id: MediaId<*>,
-        val isVideo: Boolean,
         val currentQuery: String,
     ) : SearchEffect()
 }

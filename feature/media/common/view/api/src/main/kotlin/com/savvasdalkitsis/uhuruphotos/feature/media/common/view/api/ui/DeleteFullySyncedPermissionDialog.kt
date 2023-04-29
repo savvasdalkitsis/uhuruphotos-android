@@ -13,7 +13,7 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
  */
-package com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.ui
+package com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui
 
 import androidx.compose.material.Button
 import androidx.compose.material.Text
@@ -24,7 +24,7 @@ import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.MultiButtonDialog
 
 @Composable
-internal fun DeleteFullySyncedPermissionDialog(
+fun DeleteFullySyncedPermissionDialog(
     onDismiss: () -> Unit,
     onDeleteLocalTrashRemote: () -> Unit,
     onDeleteLocal: () -> Unit,

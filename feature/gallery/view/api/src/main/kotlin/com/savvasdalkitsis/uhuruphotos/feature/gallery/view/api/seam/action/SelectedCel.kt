@@ -34,7 +34,6 @@ data class SelectedCel(
         effect.handleEffect(
             OpenLightbox(
                 id = cel.mediaItem.id,
-                video = cel.mediaItem.isVideo,
                 lightboxSequenceDataSource = lightboxSequenceDataSource(galleryId)
             )
         )

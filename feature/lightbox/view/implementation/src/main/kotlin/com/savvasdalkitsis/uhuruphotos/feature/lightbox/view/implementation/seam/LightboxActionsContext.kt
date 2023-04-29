@@ -38,22 +38,23 @@ import com.savvasdalkitsis.uhuruphotos.feature.local.domain.api.usecase.LocalAlb
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaId
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.usecase.MediaUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.usecase.MetadataUseCase
-import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.model.LocalMediaItemDeletion
+import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.model.LocalMediaItemDeletion.Error
+import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.model.LocalMediaItemDeletion.RequiresPermissions
+import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.model.LocalMediaItemDeletion.Success
 import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.model.MissingPermissionsException
-import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.usecase.LocalMediaUseCase
+import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.model.LocalMediaDeletionRequest
+import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.usecase.LocalMediaDeletionUseCase
+import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.api.usecase.RemoteMediaUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.person.domain.api.usecase.PersonUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.search.domain.api.usecase.SearchUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.trash.domain.api.usecase.TrashUseCase
-import com.savvasdalkitsis.uhuruphotos.foundation.activity.api.request.ActivityRequestLauncher
 import com.savvasdalkitsis.uhuruphotos.foundation.log.api.log
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.EffectHandler
 import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
-import dagger.hilt.android.scopes.ActivityRetainedScoped
 import kotlinx.coroutines.flow.FlowCollector
 import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
 
-@ActivityRetainedScoped
 internal class LightboxActionsContext @Inject constructor(
     val mediaUseCase: MediaUseCase,
     val personUseCase: PersonUseCase,
@@ -64,8 +65,8 @@ internal class LightboxActionsContext @Inject constructor(
     val userAlbumUseCase: UserAlbumUseCase,
     val autoAlbumUseCase: AutoAlbumUseCase,
     val trashUseCase: TrashUseCase,
-    private val localMediaUseCase: LocalMediaUseCase,
-    private val activityRequestLauncher: ActivityRequestLauncher,
+    val remoteMediaUseCase: RemoteMediaUseCase,
+    private val localMediaDeletionUseCase: LocalMediaDeletionUseCase,
 ) {
 
     var mediaItemType = MediaItemType.default
@@ -80,31 +81,19 @@ internal class LightboxActionsContext @Inject constructor(
     suspend fun FlowCollector<LightboxMutation>.deleteLocal(
         mediaItem: SingleMediaItemState
     ): Result<Unit> {
-        val id = mediaItem.id.findLocal!!.value
-        val result = localMediaUseCase.deleteLocalMediaItem(
-            id,
-            mediaItem.isVideo
+        val id = mediaItem.id.findLocal!!
+        val result = localMediaDeletionUseCase.deleteLocalMediaItems(
+            listOf(
+                LocalMediaDeletionRequest(id.value, id.isVideo)
+            )
         )
-        return when (result) {
-            is LocalMediaItemDeletion.Error -> Result.failure(result.e ?: UnknownError())
-            is LocalMediaItemDeletion.RequiresPermissions -> {
+        return when(result) {
+            is Error -> Result.failure(result.e)
+            is RequiresPermissions -> {
                 emit(LightboxMutation.AskForPermissions(result.deniedPermissions))
                 Result.failure(MissingPermissionsException(result.deniedPermissions))
             }
-
-            is LocalMediaItemDeletion.NeedsSystemApproval ->
-                activityRequestLauncher.performRequest(
-                    "deleteLocalMedia:${id}",
-                    result.request,
-                ) {
-                    // deleting again cause on R sometimes the file is not deleted at the same flow
-                    // we give permission in
-                    localMediaUseCase.deleteLocalMediaItem(
-                        id,
-                        mediaItem.isVideo
-                    )
-                }
-            LocalMediaItemDeletion.Success -> Result.success(Unit)
+            Success -> Result.success(Unit)
         }
     }
 
@@ -140,15 +129,14 @@ internal class LightboxActionsContext @Inject constructor(
 
     suspend fun FlowCollector<LightboxMutation>.loadMediaDetails(
         mediaId: MediaId<*>,
-        isVideo: Boolean = false,
         refresh: Boolean = false,
     ) {
         emit(Loading)
         emit(LoadingDetails(mediaId))
         if (refresh) {
-            mediaUseCase.refreshDetailsNow(mediaId, isVideo)
+            mediaUseCase.refreshDetailsNow(mediaId)
         } else {
-            mediaUseCase.refreshDetailsNowIfMissing(mediaId, isVideo)
+            mediaUseCase.refreshDetailsNowIfMissing(mediaId)
         }.onFailure {
             emit(ShowErrorMessage(string.error_loading_photo_details))
         }

@@ -58,7 +58,7 @@ object Load : HeatMapAction() {
                         .flatMap { it.mediaItems }
                         .map { mediaItem ->
                             CoroutineScope(currentCoroutineContext() + Dispatchers.IO).async {
-                                mediaUseCase.refreshDetailsNowIfMissing(mediaItem.id, mediaItem.isVideo)
+                                mediaUseCase.refreshDetailsNowIfMissing(mediaItem.id)
                             }
                         }
                         .awaitAll()

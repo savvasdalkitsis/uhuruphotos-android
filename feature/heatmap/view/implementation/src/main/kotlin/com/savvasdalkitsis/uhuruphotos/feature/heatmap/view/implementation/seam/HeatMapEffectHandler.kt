@@ -37,10 +37,7 @@ class HeatMapEffectHandler @Inject constructor(
             ErrorLoadingPhotoDetails -> toaster.show(string.error_loading_photo_details)
             NavigateBack -> navigator.navigateBack()
             is NavigateToLightbox -> navigator.navigateTo(with(effect) {
-                LightboxNavigationRoute(
-                    celState.mediaItem.id,
-                    celState.mediaItem.isVideo
-                )
+                LightboxNavigationRoute(celState.mediaItem.id)
             })
         }
     }

@@ -48,7 +48,6 @@ class SearchEffectHandler @Inject constructor(
             navigator.navigateTo(with(effect) {
                 LightboxNavigationRoute(
                     id,
-                    isVideo,
                     SearchResults(currentQuery)
                 )
             })

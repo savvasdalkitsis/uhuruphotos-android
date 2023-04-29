@@ -19,9 +19,11 @@ import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.Fee
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.FeedEffect.OpenLightbox
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.FeedEffect.OpenMemoryLightbox
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.FeedEffect.Share
+import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.FeedEffect.ShowErrorDeletingMedia
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.FeedEffect.Vibrate
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.api.model.LightboxSequenceDataSource.Feed
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.api.navigation.LightboxNavigationRoute
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaId
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.Navigator
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.EffectHandler
 import com.savvasdalkitsis.uhuruphotos.foundation.share.api.usecase.ShareUseCase
@@ -38,16 +40,7 @@ internal class FeedEffectHandler @Inject constructor(
 ) : EffectHandler<FeedEffect> {
 
     override suspend fun handleEffect(effect: FeedEffect) = when (effect) {
-        is OpenLightbox -> with(effect) {
-            navigator.navigateTo(
-                LightboxNavigationRoute(
-                    id,
-                    isVideo,
-                    Feed,
-                    showMediaSyncState = true
-                )
-            )
-        }
+        is OpenLightbox -> openLightBox(effect.id)
         is Share -> {
             toaster.show(string.downloading_photos_sharing)
             shareUseCase.shareMultiple(effect.selectedCels.mapNotNull {
@@ -56,16 +49,12 @@ internal class FeedEffectHandler @Inject constructor(
         }
         Vibrate -> uiUseCase.performLongPressHaptic()
         DownloadingFiles -> toaster.show(string.downloading_original_files)
-        is OpenMemoryLightbox -> with(effect) {
-            navigator.navigateTo(
-                LightboxNavigationRoute(
-                    id,
-                    isVideo,
-                    Feed,
-                    showMediaSyncState = true
-                )
-            )
-        }
+        is OpenMemoryLightbox -> openLightBox(effect.id)
+        ShowErrorDeletingMedia -> toaster.show(string.error_deleting_media)
+    }
+
+    private fun openLightBox(id: MediaId<*>) {
+        navigator.navigateTo(LightboxNavigationRoute(id, Feed, showMediaSyncState = true))
     }
 
 }

@@ -43,8 +43,20 @@ sealed class FeedMutation(
         it.copy(showTrashingConfirmationDialog = true)
     })
 
-    object HideTrashingConfirmationDialog : FeedMutation({
-        it.copy(showTrashingConfirmationDialog = false)
+    object ShowDeleteConfirmationDialog : FeedMutation({
+        it.copy(showDeleteConfirmationDialog = true)
+    })
+
+    object ShowFullySyncedDeleteConfirmationDialog : FeedMutation({
+        it.copy(showFullySyncedDeleteConfirmationDialog = true)
+    })
+
+    object HideAllConfirmationDialogs : FeedMutation({
+        it.copy(
+            showTrashingConfirmationDialog = false,
+            showDeleteConfirmationDialog = false,
+            showFullySyncedDeleteConfirmationDialog = false,
+        )
     })
 
     object ShowNoPhotosFound : FeedMutation({
@@ -79,6 +91,10 @@ sealed class FeedMutation(
 
     data class ShowLocalStoragePermissionRequest(val permissions: MediaItemsOnDevice.RequiresPermissions) : FeedMutation({
         it.copy(showRequestPermissionForLocalMediaAccess = permissions)
+    })
+
+    data class AskForPermissions(val deniedPermissions: List<String>) : FeedMutation({
+        it.copy(missingPermissions = deniedPermissions)
     })
 
     object HideLocalStoragePermissionRequest : FeedMutation({

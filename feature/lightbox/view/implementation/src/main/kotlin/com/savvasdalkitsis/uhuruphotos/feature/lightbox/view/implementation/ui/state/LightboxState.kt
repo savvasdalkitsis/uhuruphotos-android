@@ -61,14 +61,13 @@ data class LightboxState(
 }
 
 data class SingleMediaItemState(
-    val id: MediaId<*> = MediaId.Remote(""),
+    val id: MediaId<*> = MediaId.Remote("", false),
     val fullResUrl: String = "",
     val lowResUrl: String = "",
     val isFavourite: Boolean? = null,
     val dateAndTime: String = "",
     val location: String = "",
     val gps: LatLon? = null,
-    val isVideo: Boolean = false,
     val showFavouriteIcon: Boolean = false,
     val showDeleteButton: Boolean = true,
     val showShareIcon: Boolean = false,

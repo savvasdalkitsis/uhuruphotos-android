@@ -60,7 +60,7 @@ internal fun UserAlbumItem(
         } else {
             Cel(
                 state = album.cover.cel1 ?: MediaItemInstance(
-                    id = MediaId.Remote(""),
+                    id = MediaId.Remote("", false),
                     mediaHash = "",
                     syncState = REMOTE_ONLY,
                 ).toCel(),

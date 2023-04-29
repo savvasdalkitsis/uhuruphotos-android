@@ -60,7 +60,7 @@ interface RemoteMediaUseCase {
 
     fun trashMediaItem(id: String)
 
-    fun deleteMediaItem(id: String)
+    fun deleteMediaItems(vararg ids: String)
 
     fun restoreMediaItem(id: String)
 

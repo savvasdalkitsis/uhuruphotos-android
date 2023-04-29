@@ -17,14 +17,20 @@ package com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.ac
 
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.FeedActionsContext
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.FeedEffect
-import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.FeedMutation.HideTrashingConfirmationDialog
+import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.FeedMutation.HideAllConfirmationDialogs
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.ui.state.FeedState
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.EffectHandler
-import kotlinx.coroutines.flow.flowOf
+import kotlinx.coroutines.flow.flow
 
-object DismissSelectedPhotosTrashing : FeedAction() {
+object TrashRemoteAndDeleteLocalSelectedCels : FeedAction() {
     context(FeedActionsContext) override fun handle(
         state: FeedState,
         effect: EffectHandler<FeedEffect>
-    ) = flowOf(HideTrashingConfirmationDialog)
+    ) = flow {
+        emit(HideAllConfirmationDialogs)
+        deleteLocalSelectedCels(state, effect) {
+            trashRemoteSelectedCels(state)
+        }
+        selectionList.clear()
+    }
 }

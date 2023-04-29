@@ -45,7 +45,6 @@ class ActivityRequestLauncher @Inject constructor(
     override suspend fun performRequest(
         requestId: String,
         request: IntentSenderRequest,
-        onSuccess: () -> Unit
     ): Result<Unit> {
         var isLaunched = false
 
@@ -68,7 +67,7 @@ class ActivityRequestLauncher @Inject constructor(
         var launcher: ActivityResultLauncher<IntentSenderRequest>? = null
         return try {
             val activity = activity ?: return noActivityResult
-            suspendCancellableCoroutine<Result<Unit>> { continuation ->
+            suspendCancellableCoroutine { continuation ->
                 launcher = activity.activityResultRegistry.register(
                     key,
                     ActivityResultContracts.StartIntentSenderForResult()
@@ -76,7 +75,6 @@ class ActivityRequestLauncher @Inject constructor(
                     clearSavedStateData(activity)
                     continuation.resume(
                         if (result.resultCode == Activity.RESULT_OK) {
-                            onSuccess()
                             Result.success(Unit)
                         } else {
                             Result.failure(ActivityRequestFailed(result.resultCode.toString()))

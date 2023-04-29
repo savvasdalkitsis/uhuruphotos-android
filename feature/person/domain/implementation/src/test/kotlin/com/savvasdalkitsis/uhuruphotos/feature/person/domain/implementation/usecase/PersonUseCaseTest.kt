@@ -65,7 +65,7 @@ class PersonUseCaseTest {
                     listOf(
                         mediaCollection.copy(
                             id = "collectionId",
-                            mediaItems = listOf(mediaItem.copy(id = MediaId.Remote("mediaItemId")))
+                            mediaItems = listOf(mediaItem.copy(id = MediaId.Remote("mediaItemId", false)))
                         )
                     )
                 )
@@ -109,7 +109,7 @@ class PersonUseCaseTest {
 
         assertThat(underTest.getPersonMedia(1), sameBeanAs(listOf(mediaCollection.copy(
             id = "collectionId",
-            mediaItems = listOf(mediaItem.copy(id = MediaId.Remote("mediaItemId")))
+            mediaItems = listOf(mediaItem.copy(id = MediaId.Remote("mediaItemId", false)))
         ))))
     }
 

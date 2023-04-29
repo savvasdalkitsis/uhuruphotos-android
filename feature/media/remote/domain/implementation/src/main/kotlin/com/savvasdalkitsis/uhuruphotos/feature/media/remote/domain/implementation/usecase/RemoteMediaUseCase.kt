@@ -141,8 +141,10 @@ class RemoteMediaUseCase @Inject constructor(
         remoteMediaItemWorkScheduler.scheduleMediaItemTrashing(id)
     }
 
-    override fun deleteMediaItem(id: String) {
-        remoteMediaItemWorkScheduler.scheduleMediaItemDeletion(id)
+    override fun deleteMediaItems(vararg ids: String) {
+        for (id in ids) {
+            remoteMediaItemWorkScheduler.scheduleMediaItemDeletion(id)
+        }
     }
 
     override fun restoreMediaItem(id: String) {

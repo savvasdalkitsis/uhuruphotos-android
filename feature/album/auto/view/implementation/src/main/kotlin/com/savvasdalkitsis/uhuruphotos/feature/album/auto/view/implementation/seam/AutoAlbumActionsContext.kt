@@ -65,7 +65,7 @@ internal class AutoAlbumActionsContext @Inject constructor(
                             location = null,
                             cels = photos.map {
                                 MediaItemInstance(
-                                    id = MediaId.Remote(it.photoId.toString()),
+                                    id = MediaId.Remote(it.photoId.toString(), it.video ?: false),
                                     mediaHash = it.photoId.toString(),
                                     thumbnailUri = with(remoteMediaUseCase) {
                                         it.photoId.toThumbnailUrlFromIdNullable()
@@ -76,7 +76,6 @@ internal class AutoAlbumActionsContext @Inject constructor(
                                     displayDayDate = date,
                                     sortableDate = it.timestamp,
                                     isFavourite = it.isFavorite ?: false,
-                                    isVideo = it.video ?: false,
                                     syncState = MediaItemSyncState.REMOTE_ONLY,
                                 ).toCel()
                             }

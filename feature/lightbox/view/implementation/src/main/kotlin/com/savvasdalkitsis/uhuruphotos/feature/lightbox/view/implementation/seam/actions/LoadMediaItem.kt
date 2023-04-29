@@ -33,7 +33,6 @@ import kotlinx.coroutines.flow.flow
 
 data class LoadMediaItem(
     val actionMediaId: MediaId<*>,
-    val actionMediaIsVideo: Boolean,
     val sequenceDataSource: LightboxSequenceDataSource,
     val showMediaSyncState: Boolean,
 ) : LightboxAction() {
@@ -51,10 +50,7 @@ data class LoadMediaItem(
 
         showMedia(loadMediaFromSequenceToShow())
 
-        loadMediaDetails(
-            mediaId = actionMediaId,
-            isVideo = actionMediaIsVideo
-        )
+        loadMediaDetails(actionMediaId)
     }
 
     context(LightboxActionsContext)
@@ -93,10 +89,9 @@ data class LoadMediaItem(
     private fun MediaItem.toSingleMediaItemState() = with(mediaUseCase) {
         SingleMediaItemState(
             id = id,
-            lowResUrl = thumbnailUri ?: id.toThumbnailUriFromId(isVideo),
-            fullResUrl = fullResUri ?: id.toFullSizeUriFromId(isVideo),
+            fullResUrl = fullResUri ?: id.toFullSizeUriFromId(),
+            lowResUrl = thumbnailUri ?: id.toThumbnailUriFromId(),
             isFavourite = isFavourite,
-            isVideo = isVideo,
             showFavouriteIcon = id.preferRemote is MediaId.Remote,
             showDeleteButton = shouldShowDeleteButton,
             mediaItemSyncState = syncState.takeIf { showMediaSyncState }
@@ -106,8 +101,8 @@ data class LoadMediaItem(
     private fun MediaId<*>.toSingleMediaItemState() = with(mediaUseCase) {
         SingleMediaItemState(
             id = this@toSingleMediaItemState,
-            lowResUrl = toThumbnailUriFromId(actionMediaIsVideo),
-            fullResUrl = toFullSizeUriFromId(actionMediaIsVideo),
+            fullResUrl = toFullSizeUriFromId(),
+            lowResUrl = toThumbnailUriFromId(),
             showFavouriteIcon = false,
             showDeleteButton = shouldShowDeleteButton,
             mediaItemSyncState = syncState.takeIf { showMediaSyncState }

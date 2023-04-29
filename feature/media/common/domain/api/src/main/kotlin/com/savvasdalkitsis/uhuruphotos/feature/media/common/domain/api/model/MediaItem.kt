@@ -25,7 +25,6 @@ interface MediaItem {
     val sortableDate: String?
     val isFavourite: Boolean
     val ratio: Float
-    val isVideo: Boolean
     val latLng: (Pair<Double, Double>)?
     val syncState: MediaItemSyncState
 }

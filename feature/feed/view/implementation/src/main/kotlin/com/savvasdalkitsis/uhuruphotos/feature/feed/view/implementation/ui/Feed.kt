@@ -29,20 +29,25 @@ import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.act
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.actions.ChangeDisplay
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.actions.ClusterRefreshClicked
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.actions.ClusterSelectionClicked
-import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.actions.DismissSelectedPhotosTrashing
+import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.actions.DeleteLocalSelectedCels
+import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.actions.DismissSelectedMediaTrashing
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.actions.FeedAction
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.actions.MemorySelected
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.actions.NeverAskForLocalMediaAccessPermissionRequest
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.actions.RefreshFeed
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.actions.SelectedCel
-import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.actions.TrashSelectedCels
+import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.actions.TrashRemoteAndDeleteLocalSelectedCels
+import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.actions.TrashRemoteSelectedCels
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.ui.state.FeedState
 import com.savvasdalkitsis.uhuruphotos.feature.home.view.api.ui.HomeScaffold
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.DeleteFullySyncedPermissionDialog
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.DeletePermissionDialog
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.TrashPermissionDialog
 import com.savvasdalkitsis.uhuruphotos.feature.media.local.view.api.ui.LocalMediaAccessRequestBanner
 import com.savvasdalkitsis.uhuruphotos.foundation.compose.api.blurIf
 import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.SwipeRefresh
+import dev.shreyaspatil.permissionflow.compose.rememberPermissionFlowRequestLauncher
 import kotlinx.coroutines.launch
 
 @Composable
@@ -67,6 +72,7 @@ internal fun Feed(
             listState.isScrollInProgress
         }
     }
+    val permissionLauncher = rememberPermissionFlowRequestLauncher()
 
     HomeScaffold(
         modifier = Modifier.blurIf(isShowingPopUp),
@@ -141,9 +147,26 @@ internal fun Feed(
         if (state.showTrashingConfirmationDialog) {
             TrashPermissionDialog(
                 mediaItemCount = state.selectedCelCount,
-                onDismiss = { action(DismissSelectedPhotosTrashing) },
-                onDelete = { action(TrashSelectedCels) }
+                onDismiss = { action(DismissSelectedMediaTrashing) },
+                onDelete = { action(TrashRemoteSelectedCels) },
             )
+        }
+        if (state.showDeleteConfirmationDialog) {
+            DeletePermissionDialog(
+                mediaItemCount = state.selectedCelCount,
+                onDismiss = { action(DismissSelectedMediaTrashing) },
+                onDelete = { action(DeleteLocalSelectedCels) },
+            )
+        }
+        if (state.showFullySyncedDeleteConfirmationDialog) {
+            DeleteFullySyncedPermissionDialog(
+                onDismiss = { action(DismissSelectedMediaTrashing) },
+                onDeleteLocalTrashRemote =  { action(TrashRemoteAndDeleteLocalSelectedCels) },
+                onDeleteLocal =  { action(DeleteLocalSelectedCels) },
+            )
+        }
+        if (state.missingPermissions.isNotEmpty()) {
+            permissionLauncher.launch(state.missingPermissions.toTypedArray())
         }
         additionalContent()
     }

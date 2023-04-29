@@ -36,7 +36,6 @@ internal abstract class LocalMediaBindingsModule {
     @Binds
     abstract fun localMediaWorkScheduler(localMediaWorkScheduler: LocalMediaWorkScheduler):
             com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.worker.LocalMediaWorkScheduler
-
     @Binds
     @IntoSet
     abstract fun localMediaInitializer(localMediaInitializer: LocalMediaInitializer):

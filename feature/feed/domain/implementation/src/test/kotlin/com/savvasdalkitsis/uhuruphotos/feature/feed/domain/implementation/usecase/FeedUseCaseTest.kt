@@ -68,7 +68,7 @@ class FeedUseCaseTest {
             )
             assertThat(awaitItem(), sameBeanAs(listOf(mediaCollection.copy(
                 id = "albumId",
-                mediaItems = listOf(mediaItem.copy(id = MediaId.Remote("photoId")))
+                mediaItems = listOf(mediaItem.copy(id = MediaId.Remote("photoId", false)))
             ))))
         }
     }
@@ -109,7 +109,7 @@ class FeedUseCaseTest {
         assertThat(underTest.getFeed(), sameBeanAs(listOf(
             mediaCollection.copy(
             id = "collectionId",
-            mediaItems = listOf(mediaItem.copy(id = MediaId.Remote("photoId")))
+            mediaItems = listOf(mediaItem.copy(id = MediaId.Remote("photoId", false)))
         ))))
     }
 

@@ -21,7 +21,7 @@ public class TestMedia {
     );
 
     public static final MediaItem mediaItem = new MediaItemInstance(
-            new MediaId.Remote("id"),
+            new MediaId.Remote("id", false),
             "mediaHash",
             "",
             "",
@@ -30,7 +30,6 @@ public class TestMedia {
             null,
             false,
             1f,
-            false,
             null,
             MediaItemSyncState.REMOTE_ONLY
         );

@@ -18,7 +18,6 @@ package com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.usecase
 import androidx.work.WorkInfo
 import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.model.LocalFolder
 import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.model.LocalMediaItem
-import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.model.LocalMediaItemDeletion
 import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.model.LocalMediaItems
 import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.model.LocalPermissions
 import kotlinx.coroutines.flow.Flow
@@ -46,8 +45,4 @@ interface LocalMediaUseCase {
     fun observePermissionsState(): Flow<LocalPermissions>
 
     fun observeLocalMediaSyncJobStatus(): Flow<WorkInfo.State?>
-
-    fun deleteLocalMediaItem(id: Long, video: Boolean): LocalMediaItemDeletion
-
-    fun removeLocalMediaItemFromDb(id: Long)
 }

@@ -74,7 +74,7 @@ class AutoAlbumsUseCase @Inject constructor(
                     AutoAlbum(
                         id = it.id,
                         cover = MediaItemInstance(
-                            id = MediaId.Remote(it.coverPhotoHash),
+                            id = MediaId.Remote(it.coverPhotoHash, it.coverPhotoIsVideo ?: false),
                             mediaHash = it.coverPhotoHash,
                             thumbnailUri = it.coverPhotoHash.toThumbnailUrlFromId(),
                             fullResUri = it.coverPhotoHash.toFullSizeUrlFromId(
@@ -83,7 +83,6 @@ class AutoAlbumsUseCase @Inject constructor(
                             displayDayDate = null,
                             sortableDate = it.timestamp,
                             ratio = 1f,
-                            isVideo = it.coverPhotoIsVideo ?: false,
                             syncState = REMOTE_ONLY,
                         ),
                         title = it.title ?: context.getString(string.missing_album_title),

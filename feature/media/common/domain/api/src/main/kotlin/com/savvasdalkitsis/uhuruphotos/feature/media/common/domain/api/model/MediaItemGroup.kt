@@ -15,7 +15,9 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model
 
-import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemSyncState.*
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemSyncState.LOCAL_ONLY
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemSyncState.REMOTE_ONLY
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemSyncState.SYNCED
 
 data class MediaItemGroup(
     val remoteInstance: MediaItem? = null,
@@ -31,13 +33,13 @@ data class MediaItemGroup(
         if (all.map { it.mediaHash }.toSet().size != 1) {
             throw IllegalArgumentException("Media item group must contain instances with the same media hash. $this")
         }
-        if (all.map { it.isVideo }.toSet().size != 1) {
+        if (all.map { it.id.isVideo }.toSet().size != 1) {
             throw IllegalArgumentException("Media item group must contain instances with the same media type (video/photo). $this")
         }
     }
     private val preferLocal: MediaItem = (localInstances.firstOrNull() ?: remoteInstance)!!
 
-    override val id: MediaId<*> = MediaId.Group(all.map { it.id })
+    override val id: MediaId<*> = MediaId.Group(all.map { it.id }, any.id.isVideo)
     override val mediaHash: String = any.mediaHash
     override val thumbnailUri: String? = preferLocal.thumbnailUri
     override val fullResUri: String? = preferLocal.fullResUri
@@ -46,7 +48,6 @@ data class MediaItemGroup(
     override val sortableDate: String? = all.prop { sortableDate }
     override val isFavourite: Boolean = all.any { it.isFavourite }
     override val ratio: Float = all.firstOrNull { it.ratio != 1f }?.ratio ?: 1f
-    override val isVideo: Boolean = any.isVideo
     override val latLng: (Pair<Double, Double>)? = all.prop { latLng }
     override val syncState: MediaItemSyncState = when {
         localInstances.isEmpty() -> REMOTE_ONLY

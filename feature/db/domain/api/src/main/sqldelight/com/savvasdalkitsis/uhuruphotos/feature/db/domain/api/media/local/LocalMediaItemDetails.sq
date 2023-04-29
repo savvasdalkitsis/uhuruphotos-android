@@ -39,7 +39,7 @@ getExistingBucketIds:
 SELECT id FROM localMediaItemDetails WHERE bucketId = :id;
 
 delete:
-DELETE FROM localMediaItemDetails WHERE id = :id;
+DELETE FROM localMediaItemDetails WHERE id IN :ids;
 
 clearAll:
 DELETE FROM localMediaItemDetails;

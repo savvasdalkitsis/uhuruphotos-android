@@ -25,9 +25,12 @@ data class FeedState(
     val isRefreshing: Boolean = false,
     val showLibrary: Boolean = true,
     val showTrashingConfirmationDialog: Boolean = false,
+    val showDeleteConfirmationDialog: Boolean = false,
+    val showFullySyncedDeleteConfirmationDialog: Boolean = false,
     val showRequestPermissionForLocalMediaAccess: MediaItemsOnDevice.RequiresPermissions? = null,
     val localMediaSyncRunning: Boolean = false,
     val memories: List<MemoryCel> = emptyList(),
+    val missingPermissions: List<String> = emptyList(),
 ) {
     val selectedCelCount: Int = collageState.clusters.sumOf { cluster ->
         cluster.cels.count { cel ->
@@ -41,12 +44,14 @@ data class FeedState(
         }
     }
     val shouldShowShareIcon: Boolean = selectedCels.let { selected ->
-        selected.isNotEmpty() && selected.none { it.mediaItem.isVideo }
+        selected.isNotEmpty() && selected.none { it.mediaItem.id.isVideo }
     }
-    val shouldShowDeleteIcon: Boolean = selectedCels.let { selected ->
-        selected.isNotEmpty() && selected.none { it.mediaItem.id.findLocal != null }
-    }
+    val shouldShowDeleteIcon: Boolean = selectedCels.syncStates.size == 1
+
     val shouldShowDownloadIcon: Boolean = selectedCels.let { selected ->
         selected.isNotEmpty() && selected.none { it.mediaItem.id.findLocal != null }
     }
+
 }
+
+val List<CelState>.syncStates get() = map { it.mediaItem.id.syncState }.toSet()

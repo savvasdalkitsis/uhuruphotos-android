@@ -21,7 +21,6 @@ import com.savvasdalkitsis.uhuruphotos.foundation.map.api.model.LatLon
 data class MediaItemDetails(
     val formattedDateAndTime: String,
     val isFavourite: Boolean,
-    val isVideo: Boolean,
     val location: String,
     val latLon: LatLon?,
     val remotePath: String? = null,

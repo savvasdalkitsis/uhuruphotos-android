@@ -29,7 +29,7 @@ data class DownloadOriginal(val mediaItemState: SingleMediaItemState) : Lightbox
         state: LightboxState,
         effect: EffectHandler<LightboxEffect>
     ) = flow<LightboxMutation> {
-        mediaUseCase.downloadOriginal(mediaItemState.id, mediaItemState.isVideo)
+        mediaUseCase.downloadOriginal(mediaItemState.id)
         effect.handleEffect(LightboxEffect.DownloadingOriginal)
     }
 }
