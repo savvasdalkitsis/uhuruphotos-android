@@ -1,5 +1,5 @@
 /*
-Copyright 2023 Savvas Dalkitsis
+Copyright 2022 Savvas Dalkitsis
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -13,19 +13,11 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
  */
-package com.savvasdalkitsis.uhuruphotos.foundation.toaster.api
+package com.savvasdalkitsis.uhuruphotos.foundation.toaster.api.usecase
 
-import android.content.Context
-import android.widget.Toast
 import androidx.annotation.StringRes
-import dagger.hilt.android.qualifiers.ApplicationContext
-import javax.inject.Inject
 
-class Toaster @Inject constructor(
-    @ApplicationContext private val context: Context,
-) {
+interface ToasterUseCase {
 
-    fun show(@StringRes message: Int) {
-        Toast.makeText(context, message, Toast.LENGTH_LONG).show()
-    }
+    fun show(@StringRes message: Int)
 }

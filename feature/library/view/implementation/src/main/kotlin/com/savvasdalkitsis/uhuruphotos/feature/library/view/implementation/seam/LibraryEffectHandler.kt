@@ -31,16 +31,16 @@ import com.savvasdalkitsis.uhuruphotos.feature.trash.view.api.navigation.TrashNa
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.Navigator
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.EffectHandler
 import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
-import com.savvasdalkitsis.uhuruphotos.foundation.toaster.api.Toaster
+import com.savvasdalkitsis.uhuruphotos.foundation.toaster.api.usecase.ToasterUseCase
 import javax.inject.Inject
 
 class LibraryEffectHandler @Inject constructor(
     private val navigator: Navigator,
-    private val toaster: Toaster,
+    private val toasterUseCase: ToasterUseCase,
 ) : EffectHandler<LibraryEffect> {
 
     override suspend fun handleEffect(effect: LibraryEffect) = when (effect) {
-        ErrorLoadingAlbums -> toaster.show(string.error_loading_albums)
+        ErrorLoadingAlbums -> toasterUseCase.show(string.error_loading_albums)
         NavigateToAutoAlbums -> navigator
             .navigateTo(AutoAlbumsNavigationRoute)
         NavigateToUserAlbums -> navigator

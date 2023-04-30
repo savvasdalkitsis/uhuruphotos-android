@@ -22,17 +22,17 @@ import com.savvasdalkitsis.uhuruphotos.feature.catalogue.auto.view.implementatio
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.Navigator
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.EffectHandler
 import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
-import com.savvasdalkitsis.uhuruphotos.foundation.toaster.api.Toaster
+import com.savvasdalkitsis.uhuruphotos.foundation.toaster.api.usecase.ToasterUseCase
 import javax.inject.Inject
 
 class AutoAlbumsEffectHandler @Inject constructor(
     private val navigator: Navigator,
-    private val toaster: Toaster,
+    private val toasterUseCase: ToasterUseCase,
 ): EffectHandler<AutoAlbumsEffect> {
 
     override suspend fun handleEffect(effect: AutoAlbumsEffect) {
         when (effect) {
-            ErrorLoadingAlbums -> toaster.show(string.error_loading_auto_albums)
+            ErrorLoadingAlbums -> toasterUseCase.show(string.error_loading_auto_albums)
             NavigateBack -> navigator.navigateBack()
             is NavigateToAutoAlbum ->
                 navigator.navigateTo(AutoAlbumNavigationRoute(effect.album.id))

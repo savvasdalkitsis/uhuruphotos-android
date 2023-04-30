@@ -36,7 +36,7 @@ import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.Navigator
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.EffectHandler
 import com.savvasdalkitsis.uhuruphotos.foundation.share.api.usecase.ShareUseCase
 import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
-import com.savvasdalkitsis.uhuruphotos.foundation.toaster.api.Toaster
+import com.savvasdalkitsis.uhuruphotos.foundation.toaster.api.usecase.ToasterUseCase
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.usecase.UiUseCase
 import dagger.hilt.android.qualifiers.ApplicationContext
 import javax.inject.Inject
@@ -45,7 +45,7 @@ class LightboxEffectHandler @Inject constructor(
     private val navigator: Navigator,
     private val clipboardManager: ClipboardManager,
     private val shareUseCase: ShareUseCase,
-    private val toaster: Toaster,
+    private val toasterUseCase: ToasterUseCase,
     private val uiUseCase: UiUseCase,
     @ApplicationContext private val context: Context,
 ) : EffectHandler<LightboxEffect> {
@@ -61,17 +61,17 @@ class LightboxEffectHandler @Inject constructor(
             is LaunchMap -> navigator.navigateTo(geoLocation(effect.gps))
             is CopyToClipboard -> {
                 clipboardManager.setPrimaryClip(ClipData.newPlainText("", effect.content))
-                toaster.show(string.copied_to_clipboard)
+                toasterUseCase.show(string.copied_to_clipboard)
             }
             is ShareMedia -> shareUseCase.share(effect.url)
             is UseMediaAs -> shareUseCase.usePhotoAs(effect.url)
             is NavigateToPerson -> navigator.navigateTo(
                 PersonNavigationRoute(effect.id)
             )
-            ErrorRefreshingPeople -> toaster.show(string.error_refreshing_people)
+            ErrorRefreshingPeople -> toasterUseCase.show(string.error_refreshing_people)
             DownloadingOriginal -> {
-                toaster.show(string.downloading_original_file_background)
-                toaster.show(string.you_can_leave)
+                toasterUseCase.show(string.downloading_original_file_background)
+                toasterUseCase.show(string.you_can_leave)
             }
         }
     }

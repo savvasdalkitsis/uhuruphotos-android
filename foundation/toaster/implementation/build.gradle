@@ -1,0 +1,10 @@
+android {
+    namespace 'com.savvasdalkitsis.uhuruphotos.foundation.toaster.implementation'
+}
+
+dependencies {
+    api project(":foundation:toaster:api")
+    implementation(
+            libs.hilt,
+    )
+}

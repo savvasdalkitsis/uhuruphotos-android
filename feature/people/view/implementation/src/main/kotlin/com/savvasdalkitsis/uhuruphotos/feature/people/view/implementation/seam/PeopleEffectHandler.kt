@@ -22,17 +22,17 @@ import com.savvasdalkitsis.uhuruphotos.feature.person.view.api.navigation.Person
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.Navigator
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.EffectHandler
 import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
-import com.savvasdalkitsis.uhuruphotos.foundation.toaster.api.Toaster
+import com.savvasdalkitsis.uhuruphotos.foundation.toaster.api.usecase.ToasterUseCase
 import javax.inject.Inject
 
 class PeopleEffectHandler @Inject constructor(
     private val navigator: Navigator,
-    private val toaster: Toaster,
+    private val toasterUseCase: ToasterUseCase,
 ) : EffectHandler<PeopleEffect> {
 
     override suspend fun handleEffect(effect: PeopleEffect) {
         when (effect) {
-            ErrorLoadingPeople -> toaster.show(string.error_refreshing_people)
+            ErrorLoadingPeople -> toasterUseCase.show(string.error_refreshing_people)
             NavigateBack -> navigator.navigateBack()
             is NavigateToPerson -> navigator.navigateTo(
                 PersonNavigationRoute(effect.person.id)

@@ -24,12 +24,12 @@ import com.savvasdalkitsis.uhuruphotos.feature.person.view.api.navigation.Person
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.Navigator
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.EffectHandler
 import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
-import com.savvasdalkitsis.uhuruphotos.foundation.toaster.api.Toaster
+import com.savvasdalkitsis.uhuruphotos.foundation.toaster.api.usecase.ToasterUseCase
 import javax.inject.Inject
 
 class GalleryEffectHandler @Inject constructor(
     private val navigator: Navigator,
-    private val toaster: Toaster,
+    private val toaster: ToasterUseCase,
 ) : EffectHandler<GalleryEffect> {
 
     override suspend fun handleEffect(effect: GalleryEffect) {

@@ -28,29 +28,29 @@ import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.Navigator
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.EffectHandler
 import com.savvasdalkitsis.uhuruphotos.foundation.share.api.usecase.ShareUseCase
 import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
-import com.savvasdalkitsis.uhuruphotos.foundation.toaster.api.Toaster
+import com.savvasdalkitsis.uhuruphotos.foundation.toaster.api.usecase.ToasterUseCase
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.usecase.UiUseCase
 import javax.inject.Inject
 
 internal class FeedEffectHandler @Inject constructor(
     private val navigator: Navigator,
     private val shareUseCase: ShareUseCase,
-    private val toaster: Toaster,
+    private val toasterUseCase: ToasterUseCase,
     private val uiUseCase: UiUseCase,
 ) : EffectHandler<FeedEffect> {
 
     override suspend fun handleEffect(effect: FeedEffect) = when (effect) {
         is OpenLightbox -> openLightBox(effect.id)
         is Share -> {
-            toaster.show(string.downloading_photos_sharing)
+            toasterUseCase.show(string.downloading_photos_sharing)
             shareUseCase.shareMultiple(effect.selectedCels.mapNotNull {
                 it.mediaItem.fullResUri
             })
         }
         Vibrate -> uiUseCase.performLongPressHaptic()
-        DownloadingFiles -> toaster.show(string.downloading_original_files)
+        DownloadingFiles -> toasterUseCase.show(string.downloading_original_files)
         is OpenMemoryLightbox -> openLightBox(effect.id)
-        ShowErrorDeletingMedia -> toaster.show(string.error_deleting_media)
+        ShowErrorDeletingMedia -> toasterUseCase.show(string.error_deleting_media)
     }
 
     private fun openLightBox(id: MediaId<*>) {

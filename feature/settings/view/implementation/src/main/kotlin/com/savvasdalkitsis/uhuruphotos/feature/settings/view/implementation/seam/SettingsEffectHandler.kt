@@ -22,12 +22,12 @@ import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.SettingsEffect.ShowMessage
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.Navigator
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.EffectHandler
-import com.savvasdalkitsis.uhuruphotos.foundation.toaster.api.Toaster
+import com.savvasdalkitsis.uhuruphotos.foundation.toaster.api.usecase.ToasterUseCase
 import javax.inject.Inject
 
 internal class SettingsEffectHandler @Inject constructor(
     private val navigator: Navigator,
-    private val toaster: Toaster,
+    private val toaster: ToasterUseCase,
 ) : EffectHandler<SettingsEffect> {
 
     override suspend fun handleEffect(
