@@ -70,6 +70,7 @@ class LocalMediaDeletionUseCase @Inject constructor(
                 ).onSuccess {
                     // deleting again cause on R sometimes the file is not deleted at the same flow
                     // we give permission in
+                    localMediaRepository.removeItemsFromDb(*(items.map { it.id }.toLongArray()))
                     deleteMediaItems(items)
                 }
                 when {
