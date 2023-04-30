@@ -17,28 +17,30 @@ package com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.implementati
 
 import androidx.work.BackoffPolicy
 import androidx.work.WorkInfo
-import com.savvasdalkitsis.uhuruphotos.foundation.worker.api.WorkScheduler
+import com.savvasdalkitsis.uhuruphotos.foundation.worker.api.usecase.WorkScheduleUseCase
 import com.savvasdalkitsis.uhuruphotos.foundation.worker.api.usecase.WorkerStatusUseCase
 import kotlinx.coroutines.flow.Flow
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
 class RemoteMediaItemWorkScheduler @Inject constructor(
-    private val workScheduler: WorkScheduler,
+    private val workScheduleUseCase: WorkScheduleUseCase,
     private val workerStatusUseCase: WorkerStatusUseCase,
 ) {
 
     fun scheduleMediaItemFavourite(id: String, favourite: Boolean) =
-        workScheduler.scheduleNow<RemoteMediaItemFavouriteWorker>(
-            workName = RemoteMediaItemFavouriteWorker.workName(id)
+        workScheduleUseCase.scheduleNow(
+            workName = RemoteMediaItemFavouriteWorker.workName(id),
+            RemoteMediaItemFavouriteWorker::class,
         ) {
             putString(RemoteMediaItemFavouriteWorker.KEY_ID, id)
             putBoolean(RemoteMediaItemFavouriteWorker.KEY_FAVOURITE, favourite)
         }
 
     fun scheduleMediaItemDetailsRetrieve(id: String) =
-        workScheduler.scheduleNow<RemoteMediaItemDetailsRetrieveWorker>(
+        workScheduleUseCase.scheduleNow(
             workName = RemoteMediaItemDetailsRetrieveWorker.workName(id),
+            klass = RemoteMediaItemDetailsRetrieveWorker::class,
             backoffPolicy = BackoffPolicy.LINEAR,
             backoffDelay = 2,
             backoffTimeUnit = TimeUnit.SECONDS,
@@ -47,8 +49,9 @@ class RemoteMediaItemWorkScheduler @Inject constructor(
         }
 
     fun scheduleMediaItemOriginalFileRetrieve(id: String, video: Boolean) =
-        workScheduler.scheduleNow<RemoteMediaItemOriginalFileRetrieveWorker>(
+        workScheduleUseCase.scheduleNow(
             workName = RemoteMediaItemOriginalFileRetrieveWorker.workName(id),
+            klass = RemoteMediaItemOriginalFileRetrieveWorker::class,
             backoffPolicy = BackoffPolicy.EXPONENTIAL,
             backoffDelay = 2,
             backoffTimeUnit = TimeUnit.SECONDS,
@@ -61,24 +64,27 @@ class RemoteMediaItemWorkScheduler @Inject constructor(
         workerStatusUseCase.monitorUniqueJobStatus(RemoteMediaItemOriginalFileRetrieveWorker.workName(id))
 
     fun scheduleMediaItemTrashing(id: String) {
-        workScheduler.scheduleNow<RemoteMediaItemTrashWorker>(
-            workName = RemoteMediaItemTrashWorker.workName(id)
+        workScheduleUseCase.scheduleNow(
+            workName = RemoteMediaItemTrashWorker.workName(id),
+            klass = RemoteMediaItemTrashWorker::class,
         ) {
             putString(RemoteMediaItemTrashWorker.KEY_ID, id)
         }
     }
 
     fun scheduleMediaItemRestoration(id: String) {
-        workScheduler.scheduleNow<RemoteMediaItemRestoreWorker>(
-            workName = RemoteMediaItemRestoreWorker.workName(id)
+        workScheduleUseCase.scheduleNow(
+            workName = RemoteMediaItemRestoreWorker.workName(id),
+            klass = RemoteMediaItemRestoreWorker::class,
         ) {
             putString(RemoteMediaItemRestoreWorker.KEY_ID, id)
         }
     }
 
     fun scheduleMediaItemDeletion(id: String) {
-        workScheduler.scheduleNow<RemoteMediaItemDeletionWorker>(
-            workName = RemoteMediaItemDeletionWorker.workName(id)
+        workScheduleUseCase.scheduleNow(
+            workName = RemoteMediaItemDeletionWorker.workName(id),
+            klass = RemoteMediaItemDeletionWorker::class,
         ) {
             putString(RemoteMediaItemDeletionWorker.KEY_ID, id)
         }

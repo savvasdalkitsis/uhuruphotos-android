@@ -13,7 +13,7 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
  */
-package com.savvasdalkitsis.uhuruphotos.foundation.worker.api
+package com.savvasdalkitsis.uhuruphotos.foundation.worker.implementation.module
 
 import android.content.Context
 import androidx.work.WorkManager

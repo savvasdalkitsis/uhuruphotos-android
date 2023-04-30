@@ -17,16 +17,17 @@ package com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.implementatio
 
 import androidx.work.ExistingWorkPolicy
 import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.worker.LocalMediaWorkScheduler
-import com.savvasdalkitsis.uhuruphotos.foundation.worker.api.WorkScheduler
+import com.savvasdalkitsis.uhuruphotos.foundation.worker.api.usecase.WorkScheduleUseCase
 import javax.inject.Inject
 
 class LocalMediaWorkScheduler @Inject constructor(
-    private val workScheduler: WorkScheduler,
+    private val workScheduleUseCase: WorkScheduleUseCase,
 ): LocalMediaWorkScheduler {
 
     override fun scheduleLocalMediaSyncNowIfNotRunning() {
-        workScheduler.scheduleNow<LocalMediaSyncWorker>(
+        workScheduleUseCase.scheduleNow(
             workName = LocalMediaSyncWorker.WORK_NAME,
+            klass = LocalMediaSyncWorker::class,
             existingWorkPolicy = ExistingWorkPolicy.KEEP,
         )
     }

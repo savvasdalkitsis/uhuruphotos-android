@@ -3,12 +3,8 @@ android {
 }
 
 dependencies {
-
-    implementation project(":foundation:launchers:api")
-    implementation(
+    api(
             libs.androidx.work,
-            libs.androidx.work.hilt,
-            libs.hilt,
     )
 }
 

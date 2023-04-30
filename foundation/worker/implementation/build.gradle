@@ -1,0 +1,15 @@
+android {
+    namespace 'com.savvasdalkitsis.uhuruphotos.foundation.worker.implementation'
+}
+
+dependencies {
+
+    api project(":foundation:worker:api")
+    implementation project(":foundation:launchers:api")
+    implementation(
+            libs.androidx.work,
+            libs.androidx.work.hilt,
+            libs.hilt,
+    )
+}
+

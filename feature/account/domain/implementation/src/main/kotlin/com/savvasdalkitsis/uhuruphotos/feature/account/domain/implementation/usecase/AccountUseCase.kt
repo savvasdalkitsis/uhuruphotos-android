@@ -21,19 +21,19 @@ import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.Database
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.extensions.async
 import com.savvasdalkitsis.uhuruphotos.foundation.image.api.cache.ImageCacheController
 import com.savvasdalkitsis.uhuruphotos.foundation.video.api.evictAll
-import com.savvasdalkitsis.uhuruphotos.foundation.worker.api.WorkScheduler
+import com.savvasdalkitsis.uhuruphotos.foundation.worker.api.usecase.WorkScheduleUseCase
 import javax.inject.Inject
 
 class AccountUseCase @Inject constructor(
     private val db: Database,
     private val imageCacheController: ImageCacheController,
     private val videoCache: CacheDataSource.Factory,
-    private val workScheduler: WorkScheduler,
+    private val workScheduleUseCase: WorkScheduleUseCase,
 ) : AccountUseCase {
 
     override suspend fun logOut() {
         async {
-            workScheduler.cancelAllScheduledWork()
+            workScheduleUseCase.cancelAllScheduledWork()
             with(db) {
                 remoteMediaCollectionsQueries.clearAll()
                 autoAlbumQueries.clearAll()

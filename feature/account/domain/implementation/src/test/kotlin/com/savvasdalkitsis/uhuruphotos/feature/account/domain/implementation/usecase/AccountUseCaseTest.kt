@@ -35,7 +35,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.person.PersonQuerie
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.search.SearchQueries
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.user.UserQueries
 import com.savvasdalkitsis.uhuruphotos.foundation.image.api.cache.ImageCacheController
-import com.savvasdalkitsis.uhuruphotos.foundation.worker.api.WorkScheduler
+import com.savvasdalkitsis.uhuruphotos.foundation.worker.api.usecase.WorkScheduleUseCase
 import com.squareup.sqldelight.TransactionWithReturn
 import com.squareup.sqldelight.TransactionWithoutReturn
 import io.mockk.mockk
@@ -47,7 +47,7 @@ class AccountUseCaseTest {
 
     private val imageCacheController = mockk<ImageCacheController>(relaxed = true)
     private val videoCache = mockk<CacheDataSource.Factory>(relaxed = true)
-    private val workScheduler = mockk<WorkScheduler>(relaxed = true)
+    private val workScheduleUseCase = mockk<WorkScheduleUseCase>(relaxed = true)
     private val db = object: Database {
         override val remoteMediaCollectionsQueries= mockk<RemoteMediaCollectionsQueries>(relaxed = true)
         override val autoAlbumQueries = mockk<AutoAlbumQueries>(relaxed = true)
@@ -81,14 +81,14 @@ class AccountUseCaseTest {
         db,
         imageCacheController,
         videoCache,
-        workScheduler,
+        workScheduleUseCase,
     )
 
     @Test
     fun `cancels all scheduled work when logging out`() = runBlocking {
         underTest.logOut()
 
-        verify { workScheduler.cancelAllScheduledWork() }
+        verify { workScheduleUseCase.cancelAllScheduledWork() }
     }
 
     @Test

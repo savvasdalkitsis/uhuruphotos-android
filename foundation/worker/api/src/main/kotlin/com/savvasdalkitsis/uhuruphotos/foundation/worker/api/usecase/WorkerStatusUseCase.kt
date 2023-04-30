@@ -15,46 +15,12 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.foundation.worker.api.usecase
 
-import androidx.lifecycle.LiveData
 import androidx.work.WorkInfo
-import androidx.work.WorkManager
-import com.savvasdalkitsis.uhuruphotos.foundation.launchers.api.onMain
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.cancellable
-import kotlinx.coroutines.flow.channelFlow
-import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.launch
-import javax.inject.Inject
 
-class WorkerStatusUseCase @Inject constructor(
-    private val workManager: WorkManager,
-) {
+interface WorkerStatusUseCase {
 
-    fun monitorUniqueJobStatus(jobName: String): Flow<WorkInfo.State?> =
-        monitorUniqueJob(jobName).map { it?.state }
+    fun monitorUniqueJobStatus(jobName: String): Flow<WorkInfo.State?>
 
-    fun monitorUniqueJob(jobName: String): Flow<WorkInfo?> {
-        var observer: ((MutableList<WorkInfo?>) -> Unit)?
-        var liveData: LiveData<MutableList<WorkInfo?>>?
-        return channelFlow {
-            observer = {
-                val workInfo = it.getOrNull(0)
-                CoroutineScope(Dispatchers.Default).launch {
-                    send(workInfo)
-                }
-            }
-            liveData = workManager.getWorkInfosForUniqueWorkLiveData(jobName)
-            onMain {
-                liveData!!.observeForever(observer!!)
-            }
-            awaitClose {
-                onMain {
-                    liveData!!.removeObserver(observer!!)
-                }
-            }
-        }.cancellable()
-    }
+    fun monitorUniqueJob(jobName: String): Flow<WorkInfo?>
 }

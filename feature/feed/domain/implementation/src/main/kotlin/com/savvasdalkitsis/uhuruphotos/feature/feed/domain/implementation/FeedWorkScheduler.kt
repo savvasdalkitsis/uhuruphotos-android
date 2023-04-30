@@ -23,7 +23,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.feed.domain.implementation.worker
 import com.savvasdalkitsis.uhuruphotos.feature.feed.domain.implementation.worker.PrecacheFeedThumbnailsWorker
 import com.savvasdalkitsis.uhuruphotos.feature.settings.domain.api.usecase.SettingsUseCase
 import com.savvasdalkitsis.uhuruphotos.foundation.notification.api.ForegroundNotificationWorker
-import com.savvasdalkitsis.uhuruphotos.foundation.worker.api.WorkScheduler
+import com.savvasdalkitsis.uhuruphotos.foundation.worker.api.usecase.WorkScheduleUseCase
 import com.savvasdalkitsis.uhuruphotos.foundation.worker.api.usecase.WorkerStatusUseCase
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
@@ -31,13 +31,16 @@ import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
 internal class FeedWorkScheduler @Inject constructor(
-    private val workScheduler: WorkScheduler,
+    private val workScheduleUseCase: WorkScheduleUseCase,
     private val workerStatusUseCase: WorkerStatusUseCase,
     private val settingsUseCase: SettingsUseCase
 ) : FeedWorkScheduler {
 
     override fun scheduleFeedRefreshNow(shallow: Boolean) =
-        workScheduler.scheduleNow<FeedDownloadWorker>(FeedDownloadWorker.WORK_NAME) {
+        workScheduleUseCase.scheduleNow(
+            FeedDownloadWorker.WORK_NAME,
+            FeedDownloadWorker::class,
+        ) {
             putBoolean(FeedDownloadWorker.KEY_SHALLOW, shallow)
         }
 
@@ -45,8 +48,9 @@ internal class FeedWorkScheduler @Inject constructor(
         existingPeriodicWorkPolicy: ExistingPeriodicWorkPolicy
     ) {
         if (settingsUseCase.getShouldPerformPeriodicFullSync()) {
-            workScheduler.schedulePeriodic<FeedDownloadWorker>(
+            workScheduleUseCase.schedulePeriodic(
                 FeedDownloadWorker.WORK_NAME,
+                FeedDownloadWorker::class,
                 repeatInterval = settingsUseCase.getFeedSyncFrequency().toLong(),
                 repeatIntervalTimeUnit = TimeUnit.HOURS,
                 initialDelayDuration = 1,
@@ -56,12 +60,15 @@ internal class FeedWorkScheduler @Inject constructor(
                 requiresCharging = settingsUseCase.getFullSyncRequiresCharging(),
             )
         } else {
-            workScheduler.workManager.cancelUniqueWork(FeedDownloadWorker.WORK_NAME)
+            workScheduleUseCase.cancelUniqueWork(FeedDownloadWorker.WORK_NAME)
         }
     }
 
     override fun schedulePrecacheThumbnailsNow() {
-        workScheduler.scheduleNow<PrecacheFeedThumbnailsWorker>(PrecacheFeedThumbnailsWorker.WORK_NAME)
+        workScheduleUseCase.scheduleNow(
+            PrecacheFeedThumbnailsWorker.WORK_NAME,
+            PrecacheFeedThumbnailsWorker::class,
+        )
     }
 
     override fun observeFeedRefreshJob(): Flow<RefreshJobState?> =
@@ -75,7 +82,7 @@ internal class FeedWorkScheduler @Inject constructor(
         }
 
     override fun cancelFullFeedSync() {
-        workScheduler.cancelWork(FeedDownloadWorker.WORK_NAME)
+        workScheduleUseCase.cancelUniqueWork(FeedDownloadWorker.WORK_NAME)
     }
 
     override fun observeFeedRefreshJobStatus(): Flow<WorkInfo.State?> =
@@ -92,7 +99,7 @@ internal class FeedWorkScheduler @Inject constructor(
         }
 
     override fun cancelPrecacheThumbnails() {
-        workScheduler.cancelWork(PrecacheFeedThumbnailsWorker.WORK_NAME)
+        workScheduleUseCase.cancelUniqueWork(PrecacheFeedThumbnailsWorker.WORK_NAME)
     }
 
     override fun observePrecacheThumbnailsJobStatus(): Flow<WorkInfo.State?> =
