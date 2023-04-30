@@ -1,0 +1,11 @@
+android {
+    namespace 'com.savvasdalkitsis.uhuruphotos.foundation.exif.api.implementation'
+}
+
+dependencies {
+    api project(":foundation:exif:api")
+    implementation(
+            libs.exif,
+            libs.hilt,
+    )
+}

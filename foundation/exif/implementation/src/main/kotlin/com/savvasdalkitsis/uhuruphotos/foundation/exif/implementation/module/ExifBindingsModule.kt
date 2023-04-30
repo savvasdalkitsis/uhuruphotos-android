@@ -13,14 +13,19 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
  */
-package com.savvasdalkitsis.uhuruphotos.foundation.exif.api.usecase
+package com.savvasdalkitsis.uhuruphotos.foundation.exif.implementation.module
 
-import com.savvasdalkitsis.uhuruphotos.foundation.exif.api.model.ExifMetadata
-import java.io.File
-import java.io.InputStream
+import com.savvasdalkitsis.uhuruphotos.foundation.exif.implementation.usecase.ExifUseCase
+import dagger.Binds
+import dagger.Module
+import dagger.hilt.InstallIn
+import dagger.hilt.components.SingletonComponent
 
-interface ExifUseCase {
+@Module
+@InstallIn(SingletonComponent::class)
+abstract class ExifBindingsModule {
 
-    fun extractFrom(file: File): ExifMetadata
-    fun extractFrom(stream: InputStream): ExifMetadata
+    @Binds
+    abstract fun exifUseCase(exifUseCase: ExifUseCase):
+            com.savvasdalkitsis.uhuruphotos.foundation.exif.api.usecase.ExifUseCase
 }
