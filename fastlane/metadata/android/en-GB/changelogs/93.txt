@@ -1,0 +1,1 @@
+* Removing local media items from local db after deletion in Android R
