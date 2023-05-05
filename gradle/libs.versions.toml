@@ -10,7 +10,7 @@ lumberjack = "5.3.0"
 mockk = "1.13.5"
 moshi = "1.14.0"
 okhttp = "5.0.0-alpha.11"
-org-jetbrains-kotlinx = "1.6.4"
+org-jetbrains-kotlinx = "1.7.0"
 permissions = "1.1.0"
 retrofit = "2.9.0"
 sqldelight = "1.5.5"
@@ -70,7 +70,7 @@ junit = "junit:junit:4.13.2"
 jwt = "com.auth0.android:jwtdecode:2.0.2"
 kotlinx-coroutines = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-android", version.ref = "org-jetbrains-kotlinx" }
 kotlinx-coroutines-test = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test", version.ref = "org-jetbrains-kotlinx" }
-kotlin-reflect = "org.jetbrains.kotlin:kotlin-reflect:1.8.20"
+kotlin-reflect = "org.jetbrains.kotlin:kotlin-reflect:1.8.21"
 # @pin cannot update until lumbejack supports timber 5
 logger = "com.jakewharton.timber:timber:4.7.1"
 lumberjack-core = { module = "com.github.MFlisar.Lumberjack:lumberjack-library", version.ref = "lumberjack" }
