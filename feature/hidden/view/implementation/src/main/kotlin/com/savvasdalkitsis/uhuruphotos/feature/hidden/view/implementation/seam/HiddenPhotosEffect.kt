@@ -16,5 +16,5 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.feature.hidden.view.implementation.seam
 
 sealed class HiddenPhotosEffect {
-    object NavigateToAppSettings : HiddenPhotosEffect()
+    data object NavigateToAppSettings : HiddenPhotosEffect()
 }

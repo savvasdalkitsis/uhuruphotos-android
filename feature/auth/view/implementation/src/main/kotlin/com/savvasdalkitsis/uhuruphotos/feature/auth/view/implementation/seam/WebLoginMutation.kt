@@ -26,7 +26,7 @@ sealed class WebLoginMutation(
         it.copy(url = url)
     })
 
-    object Loading : WebLoginMutation({
+    data object Loading : WebLoginMutation({
         it.copy(url = null)
     })
 }

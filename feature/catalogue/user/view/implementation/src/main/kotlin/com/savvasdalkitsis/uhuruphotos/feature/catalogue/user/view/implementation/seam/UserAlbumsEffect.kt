@@ -19,6 +19,6 @@ import com.savvasdalkitsis.uhuruphotos.feature.catalogue.user.view.api.state.Use
 
 sealed class UserAlbumsEffect {
     data class NavigateToUserAlbum(val album: UserAlbumState) : UserAlbumsEffect()
-    object ErrorLoadingAlbums : UserAlbumsEffect()
-    object NavigateBack : UserAlbumsEffect()
+    data object ErrorLoadingAlbums : UserAlbumsEffect()
+    data object NavigateBack : UserAlbumsEffect()
 }

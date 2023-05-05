@@ -20,7 +20,7 @@ import android.net.Uri
 import android.os.Build
 import android.provider.MediaStore
 
-object MediaStoreContentUriResolver {
+data object MediaStoreContentUriResolver {
 
     fun getContentUriForItem(id: Long, video: Boolean): Uri {
         val baseUri = when {

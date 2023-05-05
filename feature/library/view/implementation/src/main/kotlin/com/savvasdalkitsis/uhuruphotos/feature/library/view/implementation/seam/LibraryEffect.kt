@@ -18,11 +18,11 @@ package com.savvasdalkitsis.uhuruphotos.feature.library.view.implementation.seam
 import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.model.LocalMediaFolder
 
 sealed class LibraryEffect {
-    object NavigateToAutoAlbums : LibraryEffect()
-    object NavigateToUserAlbums : LibraryEffect()
-    object NavigateToFavourites : LibraryEffect()
-    object NavigateToHidden : LibraryEffect()
-    object NavigateToTrash : LibraryEffect()
+    data object NavigateToAutoAlbums : LibraryEffect()
+    data object NavigateToUserAlbums : LibraryEffect()
+    data object NavigateToFavourites : LibraryEffect()
+    data object NavigateToHidden : LibraryEffect()
+    data object NavigateToTrash : LibraryEffect()
     data class NavigateToLocalBucket(val bucket: LocalMediaFolder) : LibraryEffect()
-    object ErrorLoadingAlbums : LibraryEffect()
+    data object ErrorLoadingAlbums : LibraryEffect()
 }

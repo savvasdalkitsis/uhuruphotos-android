@@ -29,15 +29,15 @@ sealed class LightboxMutation(
     mutation: Mutation<LightboxState>,
 ) : Mutation<LightboxState> by mutation {
 
-    object HideUI : LightboxMutation({
+    data object HideUI : LightboxMutation({
         it.copy(showUI = false)
     })
 
-    object ShowUI : LightboxMutation({
+    data object ShowUI : LightboxMutation({
         it.copy(showUI = true)
     })
 
-    object DismissErrorMessage : LightboxMutation({
+    data object DismissErrorMessage : LightboxMutation({
         it.copy(errorMessage = null)
     })
 
@@ -48,14 +48,14 @@ sealed class LightboxMutation(
         )
     })
 
-    object FinishedLoading : LightboxMutation({
+    data object FinishedLoading : LightboxMutation({
         it.copy(
             isLoading = false,
             showInfoButton = true,
         )
     })
 
-    object Loading : LightboxMutation({
+    data object Loading : LightboxMutation({
         it.copy(
             isLoading = true,
         )
@@ -73,31 +73,31 @@ sealed class LightboxMutation(
         }
     })
 
-    object ShowInfo : LightboxMutation({
+    data object ShowInfo : LightboxMutation({
         it.copy(infoSheetHidden = false)
     })
 
-    object HideInfo : LightboxMutation({
+    data object HideInfo : LightboxMutation({
         it.copy(infoSheetHidden = true)
     })
 
-    object ShowDeleteConfirmationDialog : LightboxMutation({
+    data object ShowDeleteConfirmationDialog : LightboxMutation({
         it.copy(showDeleteConfirmationDialog = true)
     })
 
-    object ShowFullySyncedDeleteConfirmationDialog : LightboxMutation({
+    data object ShowFullySyncedDeleteConfirmationDialog : LightboxMutation({
         it.copy(showFullySyncedDeleteConfirmationDialog = true)
     })
 
-    object ShowRemoteTrashingConfirmationDialog : LightboxMutation({
+    data object ShowRemoteTrashingConfirmationDialog : LightboxMutation({
         it.copy(showTrashingConfirmationDialog = true)
     })
 
-    object ShowRestorationConfirmationDialog : LightboxMutation({
+    data object ShowRestorationConfirmationDialog : LightboxMutation({
         it.copy(showRestorationConfirmationDialog = true)
     })
 
-    object HideAllConfirmationDialogs : LightboxMutation({
+    data object HideAllConfirmationDialogs : LightboxMutation({
         it.copy(
             showDeleteConfirmationDialog = false,
             showTrashingConfirmationDialog = false,
@@ -194,7 +194,7 @@ sealed class LightboxMutation(
         it.copy(missingPermissions = deniedPermissions)
     })
 
-    object ShowRestoreButton : LightboxMutation({
+    data object ShowRestoreButton : LightboxMutation({
         it.copy(showRestoreButton = true)
     })
 }

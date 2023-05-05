@@ -18,7 +18,7 @@ package com.savvasdalkitsis.uhuruphotos.foundation.ui.api
 import androidx.compose.ui.graphics.Color
 import com.google.accompanist.systemuicontroller.SystemUiController
 
-object NoOpSystemUiController : SystemUiController {
+data object NoOpSystemUiController : SystemUiController {
 
     override var isNavigationBarContrastEnforced = false
     override var isNavigationBarVisible = true

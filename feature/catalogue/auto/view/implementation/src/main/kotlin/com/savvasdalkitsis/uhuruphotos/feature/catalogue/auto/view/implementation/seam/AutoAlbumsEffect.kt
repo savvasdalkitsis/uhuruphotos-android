@@ -19,6 +19,6 @@ import com.savvasdalkitsis.uhuruphotos.feature.catalogue.auto.view.api.state.Aut
 
 sealed class AutoAlbumsEffect {
     data class NavigateToAutoAlbum(val album: AutoAlbum) : AutoAlbumsEffect()
-    object ErrorLoadingAlbums : AutoAlbumsEffect()
-    object NavigateBack : AutoAlbumsEffect()
+    data object ErrorLoadingAlbums : AutoAlbumsEffect()
+    data object NavigateBack : AutoAlbumsEffect()
 }

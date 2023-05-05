@@ -18,11 +18,11 @@ package com.savvasdalkitsis.uhuruphotos.feature.search.view.implementation.seam
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaId
 
 sealed class SearchEffect {
-    object HideKeyboard : SearchEffect()
-    object ErrorSearching : SearchEffect()
-    object NavigateToAllPeople : SearchEffect()
-    object ErrorRefreshingPeople : SearchEffect()
-    object NavigateToHeatMap : SearchEffect()
+    data object HideKeyboard : SearchEffect()
+    data object ErrorSearching : SearchEffect()
+    data object NavigateToAllPeople : SearchEffect()
+    data object ErrorRefreshingPeople : SearchEffect()
+    data object NavigateToHeatMap : SearchEffect()
 
     data class NavigateToPerson(val personId: Int) : SearchEffect()
     data class OpenLightbox(

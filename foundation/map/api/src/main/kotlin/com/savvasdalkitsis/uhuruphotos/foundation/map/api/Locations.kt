@@ -17,7 +17,7 @@ package com.savvasdalkitsis.uhuruphotos.foundation.map.api
 
 import com.savvasdalkitsis.uhuruphotos.foundation.map.api.model.LatLon
 
-object Locations {
+data object Locations {
     @Suppress("MagicNumber")
     val TRAFALGAR_SQUARE: LatLon = LatLon(51.50803011165474, -0.12805053251940438)
 }

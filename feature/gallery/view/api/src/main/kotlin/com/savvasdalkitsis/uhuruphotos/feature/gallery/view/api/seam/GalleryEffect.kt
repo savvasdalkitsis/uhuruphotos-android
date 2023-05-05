@@ -19,8 +19,8 @@ import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.api.model.LightboxS
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaId
 
 sealed class GalleryEffect {
-    object NavigateBack : GalleryEffect()
-    object ErrorLoading : GalleryEffect()
+    data object NavigateBack : GalleryEffect()
+    data object ErrorLoading : GalleryEffect()
 
     data class OpenLightbox(
         val id: MediaId<*>,

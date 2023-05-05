@@ -21,7 +21,7 @@ sealed class HeatMapEffect {
     data class NavigateToLightbox(
         val celState: CelState,
     ) : HeatMapEffect()
-    object ErrorLoadingPhotoDetails : HeatMapEffect()
-    object NavigateBack : HeatMapEffect()
+    data object ErrorLoadingPhotoDetails : HeatMapEffect()
+    data object NavigateBack : HeatMapEffect()
 
 }

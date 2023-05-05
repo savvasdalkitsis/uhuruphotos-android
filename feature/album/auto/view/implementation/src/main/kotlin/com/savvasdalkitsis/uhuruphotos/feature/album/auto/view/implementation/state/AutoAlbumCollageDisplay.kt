@@ -17,7 +17,7 @@ package com.savvasdalkitsis.uhuruphotos.feature.album.auto.view.implementation.s
 
 import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.CollageDisplay
 
-object AutoAlbumCollageDisplay: CollageDisplay {
+data object AutoAlbumCollageDisplay: CollageDisplay {
     override val miniIcons: Boolean = false
     override val compactColumnsPortrait = 3
     override val compactColumnsLandscape = 5

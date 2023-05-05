@@ -17,7 +17,7 @@ package com.savvasdalkitsis.uhuruphotos.feature.account.view.api.seam
 
 sealed class AccountOverviewEffect {
 
-    object ReloadApp : AccountOverviewEffect()
-    object NavigateToServerEdit : AccountOverviewEffect()
-    object NavigateToSettings : AccountOverviewEffect()
+    data object ReloadApp : AccountOverviewEffect()
+    data object NavigateToServerEdit : AccountOverviewEffect()
+    data object NavigateToSettings : AccountOverviewEffect()
 }

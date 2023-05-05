@@ -54,7 +54,7 @@ sealed class HeatMapMutation(
         it.copy(showRequestPermissionForLocalMediaAccess = permissions)
     })
 
-    object HideLocalStoragePermissionRequest : HeatMapMutation({
+    data object HideLocalStoragePermissionRequest : HeatMapMutation({
         it.copy(showRequestPermissionForLocalMediaAccess = null)
     })
 }

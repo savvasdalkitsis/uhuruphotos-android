@@ -22,11 +22,11 @@ sealed class HomeMutation(
     mutation: Mutation<HomeState>,
 ) : Mutation<HomeState> by mutation {
 
-    object Loading : HomeMutation({
+    data object Loading : HomeMutation({
       it.copy(isLoading = true)
     })
 
-    object NeedsBiometricAuthentication : HomeMutation({
+    data object NeedsBiometricAuthentication : HomeMutation({
         it.copy(
             isLoading = false,
             needsAuthentication = true,

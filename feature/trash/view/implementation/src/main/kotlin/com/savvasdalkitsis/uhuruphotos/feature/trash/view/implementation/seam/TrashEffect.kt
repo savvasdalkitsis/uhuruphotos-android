@@ -17,6 +17,6 @@ package com.savvasdalkitsis.uhuruphotos.feature.trash.view.implementation.seam
 
 sealed class TrashEffect {
 
-    object NavigateToAppSettings: TrashEffect()
+    data object NavigateToAppSettings: TrashEffect()
 
 }

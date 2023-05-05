@@ -20,11 +20,11 @@ import com.savvasdalkitsis.uhuruphotos.foundation.map.api.model.LatLon
 sealed class LightboxEffect {
     data class LaunchMap(val gps: LatLon) : LightboxEffect()
     data class CopyToClipboard(val content: String) : LightboxEffect()
-    object HideSystemBars : LightboxEffect()
-    object ShowSystemBars : LightboxEffect()
-    object NavigateBack : LightboxEffect()
-    object ErrorRefreshingPeople : LightboxEffect()
-    object DownloadingOriginal : LightboxEffect()
+    data object HideSystemBars : LightboxEffect()
+    data object ShowSystemBars : LightboxEffect()
+    data object NavigateBack : LightboxEffect()
+    data object ErrorRefreshingPeople : LightboxEffect()
+    data object DownloadingOriginal : LightboxEffect()
 
     data class ShareMedia(val url: String) : LightboxEffect()
     data class UseMediaAs(val url: String) : LightboxEffect()

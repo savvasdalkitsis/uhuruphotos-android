@@ -16,6 +16,6 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.feature.home.view.implementation.seam
 
 sealed class HomeEffect {
-    object LaunchAuthentication : HomeEffect()
-    object LoadFeed : HomeEffect()
+    data object LaunchAuthentication : HomeEffect()
+    data object LoadFeed : HomeEffect()
 }
