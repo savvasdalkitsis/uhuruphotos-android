@@ -62,11 +62,9 @@ class ServerActionsContextTest {
 
     @Test
     fun `allows valid server url`() = runTest {
-        handle(
-            AttemptChangeServerUrlTo(
+        AttemptChangeServerUrlTo(
             validHttpsUrl
-        )
-        ).test {
+        ).handle().test {
             awaitComplete()
         }
 
@@ -75,11 +73,9 @@ class ServerActionsContextTest {
 
     @Test
     fun `verifies the user wants to use a valid but unsecured server url`() = runTest {
-        handle(
-            AttemptChangeServerUrlTo(
+        AttemptChangeServerUrlTo(
             validHttpUrl
-        )
-        ).test {
+        ).handle().test {
             assert(awaitItem() == ShowUnsecureServerConfirmation)
             awaitComplete()
         }
@@ -89,11 +85,9 @@ class ServerActionsContextTest {
 
     @Test
     fun `allows use of insecure but valid password when the user accepts it`() = runTest {
-        handle(
-            ChangeServerUrlTo(
+        ChangeServerUrlTo(
             validHttpUrl
-        )
-        ).test {
+        ).handle().test {
             assert(awaitItem() == HideUnsecureServerConfirmation)
             awaitComplete()
         }
@@ -103,7 +97,7 @@ class ServerActionsContextTest {
 
     @Test
     fun `shows that https url is valid`() = runTest {
-        handle(UrlTyped(validHttpsUrl)).test {
+        UrlTyped(validHttpsUrl).handle().test {
             assert(awaitItem() == ShowUrlValidation(oldServerUrl, true))
             awaitComplete()
         }
@@ -111,7 +105,7 @@ class ServerActionsContextTest {
 
     @Test
     fun `shows that http url is valid`() = runTest {
-        handle(UrlTyped(validHttpUrl)).test {
+        UrlTyped(validHttpUrl).handle().test {
             assert(awaitItem() == ShowUrlValidation(oldServerUrl, true))
             awaitComplete()
         }
@@ -119,7 +113,7 @@ class ServerActionsContextTest {
 
     @Test
     fun `shows that invalid url is invalid`() = runTest {
-        handle(UrlTyped("invalid url")).test {
+        UrlTyped("invalid url").handle().test {
             assert(awaitItem() == ShowUrlValidation(oldServerUrl, false))
             awaitComplete()
         }
@@ -127,7 +121,7 @@ class ServerActionsContextTest {
 
     @Test
     fun `shows that ip address is valid`() = runTest {
-        handle(UrlTyped("127.0.0.1")).test {
+        UrlTyped("127.0.0.1").handle().test {
             assert(awaitItem() == ShowUrlValidation(oldServerUrl, true))
             awaitComplete()
         }
@@ -135,7 +129,7 @@ class ServerActionsContextTest {
 
     @Test
     fun `shows that local dns url is valid`() = runTest {
-        handle(UrlTyped("serverlocal")).test {
+        UrlTyped("serverlocal").handle().test {
             assert(awaitItem() == ShowUrlValidation(oldServerUrl, true))
             awaitComplete()
         }
@@ -143,16 +137,19 @@ class ServerActionsContextTest {
 
     @Test
     fun `shows that local dns url with non standard TLD is valid`() = runTest {
-        handle(UrlTyped("server.local")).test {
+        UrlTyped("server.local").handle().test {
             assert(awaitItem() == ShowUrlValidation(oldServerUrl, true))
             awaitComplete()
         }
     }
 
-    private fun handle(action: ServerAction) =
-        underTest.handleAction(serverUrl.copy(
-            prefilledUrl = "",
-            isUrlValid = false,
-        ), action) {}
+    private fun ServerAction.handle() = with(underTest) {
+        handle(
+            serverUrl.copy(
+                prefilledUrl = "",
+                isUrlValid = false,
+            )
+        ) {}
+    }
 
 }

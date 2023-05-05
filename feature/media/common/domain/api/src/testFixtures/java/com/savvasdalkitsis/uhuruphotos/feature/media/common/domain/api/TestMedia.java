@@ -2,7 +2,6 @@ package com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api;
 
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaCollection;
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaId;
-import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItem;
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemInstance;
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemSyncState;
 
@@ -20,7 +19,7 @@ public class TestMedia {
             ""
     );
 
-    public static final MediaItem mediaItem = new MediaItemInstance(
+    public static final MediaItemInstance mediaItem = new MediaItemInstance(
             new MediaId.Remote("id", false),
             "mediaHash",
             "",

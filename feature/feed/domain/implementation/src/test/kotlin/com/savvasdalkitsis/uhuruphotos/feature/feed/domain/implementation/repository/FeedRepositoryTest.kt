@@ -147,7 +147,7 @@ class FeedRepositoryTest {
             )
         )
 
-        underTest.refreshRemoteMediaCollections(shallow = false) {}
+        underTest.refreshRemoteMediaCollections(shallow = false) { _,_ ->}
 
         val album1 = collection(1)
 
@@ -181,14 +181,14 @@ class FeedRepositoryTest {
             underTest.refreshRemoteMediaCollections(shallow = false, progress)
         }
 
-        progress.assertReceived(0)
+        progress.assertReceived(0 to 2)
         albumsResponse.completes()
 
         album1Response.completes()
-        progress.assertReceived(50)
+        progress.assertReceived(1 to 2)
 
         album2Response.completes()
-        progress.assertReceived(100)
+        progress.assertReceived(2 to 2)
     }
 
     @Test(timeout = 4000)
@@ -211,17 +211,17 @@ class FeedRepositoryTest {
             underTest.refreshRemoteMediaCollections(shallow = true, progress)
         }
 
-        progress.assertReceived(0)
+        progress.assertReceived(0 to 3)
         albumsResponse.completes()
 
         album1Response.completes()
-        progress.assertReceived(33)
+        progress.assertReceived(1 to 3)
 
         album2Response.completes()
-        progress.assertReceived(66)
+        progress.assertReceived(2 to 3)
 
         album3Response.completes()
-        progress.assertReceived(100)
+        progress.assertReceived(3 to 3)
 
         coVerify(exactly = 0) { feedService.getRemoteMediaCollection(collectionId(4), 1) }
     }

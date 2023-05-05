@@ -19,14 +19,14 @@ import app.cash.turbine.test
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.receiveAsFlow
 
-class ProgressUpdate : suspend (Int) -> Unit {
-    private val progress = Channel<Int> {  }
+class ProgressUpdate : suspend (Int, Int) -> Unit {
+    private val progress = Channel<Pair<Int, Int>> {  }
 
-    override suspend fun invoke(value: Int) {
-        progress.send(value)
+    override suspend fun invoke(current: Int, total: Int) {
+        progress.send(current to total)
     }
 
-    suspend fun assertReceived(value: Int) {
+    suspend fun assertReceived(value: Pair<Int, Int>) {
         progress.receiveAsFlow().test {
             assert(awaitItem() == value)
         }
