@@ -37,7 +37,7 @@ fun logError(t: Throwable) {
     }
 }
 
-data object Log {
+object Log {
     var enabled: Boolean
         get() = L.enabled
         set(value) {

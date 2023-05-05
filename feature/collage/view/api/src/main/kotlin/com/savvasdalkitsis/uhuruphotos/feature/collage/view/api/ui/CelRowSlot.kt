@@ -19,5 +19,5 @@ import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.state.Ce
 
 internal sealed class CelRowSlot {
     data class CelSlot(val cel: CelState): CelRowSlot()
-    data object EmptySlot : CelRowSlot()
+    object EmptySlot : CelRowSlot()
 }

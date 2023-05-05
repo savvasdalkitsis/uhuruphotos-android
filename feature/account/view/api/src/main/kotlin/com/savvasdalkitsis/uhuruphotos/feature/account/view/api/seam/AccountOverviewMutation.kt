@@ -27,19 +27,19 @@ sealed class AccountOverviewMutation(
         it.copy(avatarState = avatarState)
     })
 
-    data object ShowAccountOverview : AccountOverviewMutation({
+    object ShowAccountOverview : AccountOverviewMutation({
         it.copy(showAccountOverview = true)
     })
 
-    data object HideAccountOverview : AccountOverviewMutation({
+    object HideAccountOverview : AccountOverviewMutation({
         it.copy(showAccountOverview = false)
     })
 
-    data object ShowLogOutConfirmation : AccountOverviewMutation({
+    object ShowLogOutConfirmation : AccountOverviewMutation({
         it.copy(showLogOutConfirmation = true)
     })
 
-    data object HideLogOutConfirmation : AccountOverviewMutation({
+    object HideLogOutConfirmation : AccountOverviewMutation({
         it.copy(showLogOutConfirmation = false)
     })
 

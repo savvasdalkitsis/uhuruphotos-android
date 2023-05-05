@@ -23,7 +23,7 @@ sealed class FeedEffect {
     data class OpenMemoryLightbox(val id: MediaId<*>) : FeedEffect()
 
     data class Share(val selectedCels: List<CelState>) : FeedEffect()
-    data object Vibrate : FeedEffect()
-    data object DownloadingFiles : FeedEffect()
-    data object ShowErrorDeletingMedia : FeedEffect()
+    object Vibrate : FeedEffect()
+    object DownloadingFiles : FeedEffect()
+    object ShowErrorDeletingMedia : FeedEffect()
 }

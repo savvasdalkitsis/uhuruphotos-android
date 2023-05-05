@@ -19,8 +19,8 @@ import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.Cluster
 
 sealed class SearchResults {
 
-    data object Idle : SearchResults()
-    data object Searching : SearchResults()
+    object Idle : SearchResults()
+    object Searching : SearchResults()
     data class Found(val clusters: List<Cluster>) : SearchResults() {
         override fun toString() = "Found ${clusters.size} albums in search."
     }

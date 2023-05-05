@@ -19,6 +19,6 @@ import com.savvasdalkitsis.uhuruphotos.feature.people.view.api.ui.state.Person
 
 sealed class PeopleEffect {
     data class NavigateToPerson(val person: Person) : PeopleEffect()
-    data object ErrorLoadingPeople : PeopleEffect()
-    data object NavigateBack : PeopleEffect()
+    object ErrorLoadingPeople : PeopleEffect()
+    object NavigateBack : PeopleEffect()
 }

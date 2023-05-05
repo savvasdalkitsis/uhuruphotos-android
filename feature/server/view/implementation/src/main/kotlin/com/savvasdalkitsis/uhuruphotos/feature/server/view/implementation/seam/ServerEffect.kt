@@ -17,6 +17,6 @@ package com.savvasdalkitsis.uhuruphotos.feature.server.view.implementation.seam
 
 sealed class ServerEffect {
     data class ErrorLoggingIn(val e: Throwable? = null) : ServerEffect()
-    data object Close : ServerEffect()
-    data object SendFeedback : ServerEffect()
+    object Close : ServerEffect()
+    object SendFeedback : ServerEffect()
 }

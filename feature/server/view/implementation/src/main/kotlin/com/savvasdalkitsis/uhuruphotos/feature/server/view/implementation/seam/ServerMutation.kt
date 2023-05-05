@@ -63,17 +63,17 @@ sealed class ServerMutation(
         )
     })
 
-    data object PerformingBackgroundJob : ServerMutation({
+    object PerformingBackgroundJob : ServerMutation({
         Loading(
             isLoggingEnabled = it.isLoggingEnabled,
         )
     })
 
-    data object ShowUnsecureServerConfirmation : ServerMutation({
+    object ShowUnsecureServerConfirmation : ServerMutation({
         (it as ServerUrl).copy(showUnsecureServerConfirmation = true)
     })
 
-    data object HideUnsecureServerConfirmation : ServerMutation({
+    object HideUnsecureServerConfirmation : ServerMutation({
         (it as ServerUrl).copy(showUnsecureServerConfirmation = false)
     })
 

@@ -16,5 +16,5 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.feature.auth.view.implementation.seam
 
 sealed class WebLoginEffect {
-    data object Close : WebLoginEffect()
+    object Close : WebLoginEffect()
 }

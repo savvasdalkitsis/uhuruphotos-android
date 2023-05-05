@@ -22,7 +22,7 @@ sealed class LocalAlbumMutation(
     mutation: Mutation<LocalAlbumState>
 ) : Mutation<LocalAlbumState> by mutation {
 
-    data object PermissionsGranted : LocalAlbumMutation({
+    object PermissionsGranted : LocalAlbumMutation({
         it.copy(deniedPermissions = emptyList())
     })
 

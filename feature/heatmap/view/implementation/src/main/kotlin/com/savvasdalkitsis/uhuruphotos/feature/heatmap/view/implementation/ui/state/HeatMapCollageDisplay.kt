@@ -17,7 +17,7 @@ package com.savvasdalkitsis.uhuruphotos.feature.heatmap.view.implementation.ui.s
 
 import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.CollageDisplay
 
-data object HeatMapCollageDisplay : CollageDisplay {
+object HeatMapCollageDisplay : CollageDisplay {
     override val miniIcons: Boolean = false
     override val compactColumnsPortrait = 5
     override val compactColumnsLandscape = 3

@@ -23,6 +23,6 @@ sealed class LocalFolder {
         val bucket: Pair<LocalMediaFolder, List<LocalMediaItem>>
     ) : LocalFolder()
 
-    data object Error : LocalFolder()
+    object Error : LocalFolder()
 
 }

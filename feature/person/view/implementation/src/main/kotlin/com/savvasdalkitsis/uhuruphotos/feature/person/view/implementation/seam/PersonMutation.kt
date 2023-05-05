@@ -26,7 +26,7 @@ sealed class PersonMutation(
     mutation: Mutation<PersonState>,
 ) : Mutation<PersonState> by mutation {
 
-    data object Loading : PersonMutation({
+    object Loading : PersonMutation({
         it.copyFeed { copy(isLoading = true) }
     })
 

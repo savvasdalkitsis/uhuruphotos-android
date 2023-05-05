@@ -27,31 +27,31 @@ sealed class FeedMutation(
     mutation: Mutation<FeedState>,
 ) : Mutation<FeedState> by mutation {
 
-    data object Loading : FeedMutation({
+    object Loading : FeedMutation({
         it.copyFeed { copy(isLoading = true) }
     })
 
-    data object StartRefreshing : FeedMutation({
+    object StartRefreshing : FeedMutation({
         it.copy(isRefreshing = true)
     })
 
-    data object StopRefreshing : FeedMutation({
+    object StopRefreshing : FeedMutation({
         it.copy(isRefreshing = false)
     })
 
-    data object ShowTrashingConfirmationDialog : FeedMutation({
+    object ShowTrashingConfirmationDialog : FeedMutation({
         it.copy(showTrashingConfirmationDialog = true)
     })
 
-    data object ShowDeleteConfirmationDialog : FeedMutation({
+    object ShowDeleteConfirmationDialog : FeedMutation({
         it.copy(showDeleteConfirmationDialog = true)
     })
 
-    data object ShowFullySyncedDeleteConfirmationDialog : FeedMutation({
+    object ShowFullySyncedDeleteConfirmationDialog : FeedMutation({
         it.copy(showFullySyncedDeleteConfirmationDialog = true)
     })
 
-    data object HideAllConfirmationDialogs : FeedMutation({
+    object HideAllConfirmationDialogs : FeedMutation({
         it.copy(
             showTrashingConfirmationDialog = false,
             showDeleteConfirmationDialog = false,
@@ -59,7 +59,7 @@ sealed class FeedMutation(
         )
     })
 
-    data object ShowNoPhotosFound : FeedMutation({
+    object ShowNoPhotosFound : FeedMutation({
         it.copyFeed { copy(isLoading = false, isEmpty = true, clusters = emptyList()) }
     })
 
@@ -81,7 +81,7 @@ sealed class FeedMutation(
         it.copy(memories = memories)
     })
 
-    data object HideMemories : FeedMutation({
+    object HideMemories : FeedMutation({
         it.copy(memories = emptyList())
     })
 
@@ -97,7 +97,7 @@ sealed class FeedMutation(
         it.copy(missingPermissions = deniedPermissions)
     })
 
-    data object HideLocalStoragePermissionRequest : FeedMutation({
+    object HideLocalStoragePermissionRequest : FeedMutation({
         it.copy(showRequestPermissionForLocalMediaAccess = null)
     })
 }

@@ -24,5 +24,5 @@ sealed class PersonEffect {
         val person: Person,
     ) : PersonEffect()
 
-    data object NavigateBack : PersonEffect()
+    object NavigateBack : PersonEffect()
 }

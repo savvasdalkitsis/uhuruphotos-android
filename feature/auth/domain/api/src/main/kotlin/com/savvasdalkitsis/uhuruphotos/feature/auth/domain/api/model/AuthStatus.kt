@@ -17,9 +17,9 @@ package com.savvasdalkitsis.uhuruphotos.feature.auth.domain.api.model
 
 sealed class AuthStatus {
 
-    data object Unauthenticated: AuthStatus()
-    data object Authenticated: AuthStatus()
-    data object Offline: AuthStatus()
-    data object ServerDown: AuthStatus()
+    object Unauthenticated: AuthStatus()
+    object Authenticated: AuthStatus()
+    object Offline: AuthStatus()
+    object ServerDown: AuthStatus()
 
 }

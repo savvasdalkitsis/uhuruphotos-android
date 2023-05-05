@@ -26,11 +26,11 @@ sealed class SearchMutation(
     mutation: Mutation<SearchState>,
 ) : Mutation<SearchState> by mutation {
 
-    data object SwitchStateToSearching : SearchMutation({
+    object SwitchStateToSearching : SearchMutation({
         it.copy(searchResults = SearchResults.Searching)
     })
 
-    data object SwitchStateToIdle : SearchMutation({
+    object SwitchStateToIdle : SearchMutation({
         it.copy(searchResults = SearchResults.Idle)
     })
 
