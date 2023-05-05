@@ -240,4 +240,5 @@
     <string name="allow_storage_management_description">UruhuPhotos heeft toegang tot je apparaatopslag nodig om deze actie uit te kunnen voeren</string>
     <string name="allow_storage_management_title">Opslagbeheer</string>
     <string name="allow_storage_management_details">De systeeminstellingen worden geopend zodat je het recht kan verlenen. Wil je dat nu doen\?</string>
+    <string name="error_deleting_media">Er is een fout opgetreden tijdens het verwijderen</string>
 </resources>
