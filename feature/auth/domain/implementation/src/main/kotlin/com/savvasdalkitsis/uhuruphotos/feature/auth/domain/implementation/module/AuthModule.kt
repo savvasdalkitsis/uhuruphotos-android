@@ -15,7 +15,9 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.auth.domain.implementation.module
 
+import android.content.Context
 import android.webkit.CookieManager
+import androidx.credentials.CredentialManager
 import com.savvasdalkitsis.uhuruphotos.feature.auth.domain.api.AuthenticatedOkHttpClient
 import com.savvasdalkitsis.uhuruphotos.feature.auth.domain.implementation.cookies.WebkitCookieManager
 import com.savvasdalkitsis.uhuruphotos.feature.auth.domain.implementation.network.DynamicDomainInterceptor
@@ -27,6 +29,7 @@ import com.savvasdalkitsis.uhuruphotos.foundation.network.api.OkHttpBuilder
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
+import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import okhttp3.Cache
 import okhttp3.OkHttpClient
@@ -73,7 +76,6 @@ class AuthModule {
         )
         .build()
 
-
     @Provides
     @Singleton
     fun authenticationService(
@@ -97,4 +99,9 @@ class AuthModule {
             .cache(httpCache)
             .build())
         .build()
+
+    @Provides
+    fun credentialManager(
+        @ApplicationContext context: Context,
+    ): CredentialManager = CredentialManager.create(context)
 }

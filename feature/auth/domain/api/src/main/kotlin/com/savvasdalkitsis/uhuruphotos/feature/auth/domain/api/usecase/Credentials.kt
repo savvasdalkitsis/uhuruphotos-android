@@ -15,13 +15,9 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.auth.domain.api.usecase
 
-import com.savvasdalkitsis.uhuruphotos.feature.auth.domain.api.model.AuthStatus
-
-interface AuthenticationUseCase {
-
-    suspend fun authenticationStatus(): AuthStatus
-
-    suspend fun refreshToken(): AuthStatus
-
-    suspend fun refreshAccessToken(refreshToken: String): AuthStatus
+data class Credentials(
+    val username: String,
+    val password: String,
+) {
+    val isEmpty: Boolean get() = username.isEmpty() || password.isEmpty()
 }

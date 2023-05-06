@@ -23,7 +23,6 @@ import com.savvasdalkitsis.uhuruphotos.feature.auth.domain.api.model.AuthStatus.
 import com.savvasdalkitsis.uhuruphotos.feature.auth.domain.api.usecase.AuthenticationUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.auth.domain.implementation.network.jwt
 import com.savvasdalkitsis.uhuruphotos.feature.auth.domain.implementation.service.AuthenticationService
-import com.savvasdalkitsis.uhuruphotos.feature.auth.domain.implementation.service.model.AuthenticationCredentials
 import com.savvasdalkitsis.uhuruphotos.feature.auth.domain.implementation.service.model.AuthenticationObtainResponse
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.auth.Token
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.auth.TokenQueries
@@ -31,14 +30,11 @@ import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.entities.auth.Token
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.extensions.async
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.extensions.awaitSingleOrNull
 import com.savvasdalkitsis.uhuruphotos.foundation.log.api.log
-import com.savvasdalkitsis.uhuruphotos.foundation.log.api.runCatchingWithLog
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
 import java.io.IOException
 import javax.inject.Inject
-import javax.inject.Singleton
 
-@Singleton
 class AuthenticationUseCase @Inject constructor(
     private val tokenQueries: TokenQueries,
     private val authenticationService: AuthenticationService,
@@ -54,20 +50,6 @@ class AuthenticationUseCase @Inject constructor(
         }
     }
 
-    override suspend fun login(username: String, password: String): Result<AuthStatus> =
-        runCatchingWithLog {
-            val response = authenticationService.login(AuthenticationCredentials(username, password))
-            async {
-                tokenQueries.saveToken(
-                    Token(
-                        token = response.refresh,
-                        type = TokenType.REFRESH,
-                    )
-                )
-            }
-            return Result.success(refreshAccessToken(response.refresh))
-        }
-
     override suspend fun refreshToken(): AuthStatus = mutex.withLock {
         val refreshToken = tokenQueries.getRefreshToken().awaitSingleOrNull()
         return when {
@@ -76,7 +58,7 @@ class AuthenticationUseCase @Inject constructor(
         }
     }
 
-    private suspend fun refreshAccessToken(refreshToken: String): AuthStatus = try {
+    override suspend fun refreshAccessToken(refreshToken: String): AuthStatus = try {
         val response = authenticationService.refreshToken(AuthenticationObtainResponse(refreshToken))
         val refreshResponse = response.body()
         when {

@@ -17,11 +17,9 @@ package com.savvasdalkitsis.uhuruphotos.feature.auth.domain.api.usecase
 
 import com.savvasdalkitsis.uhuruphotos.feature.auth.domain.api.model.AuthStatus
 
-interface AuthenticationUseCase {
+interface AuthenticationLoginUseCase {
 
-    suspend fun authenticationStatus(): AuthStatus
+    suspend fun login(credentials: Credentials): Result<AuthStatus>
 
-    suspend fun refreshToken(): AuthStatus
-
-    suspend fun refreshAccessToken(refreshToken: String): AuthStatus
+    suspend fun loadSavedCredentials(): Credentials?
 }

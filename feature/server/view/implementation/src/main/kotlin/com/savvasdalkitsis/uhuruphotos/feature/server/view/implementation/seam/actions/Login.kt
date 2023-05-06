@@ -16,6 +16,7 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.feature.server.view.implementation.seam.actions
 
 import com.savvasdalkitsis.uhuruphotos.feature.auth.domain.api.model.AuthStatus
+import com.savvasdalkitsis.uhuruphotos.feature.auth.domain.api.usecase.Credentials
 import com.savvasdalkitsis.uhuruphotos.feature.server.view.implementation.seam.ServerActionsContext
 import com.savvasdalkitsis.uhuruphotos.feature.server.view.implementation.seam.ServerEffect
 import com.savvasdalkitsis.uhuruphotos.feature.server.view.implementation.seam.ServerEffect.Close
@@ -36,7 +37,7 @@ object Login : ServerAction() {
         }
         emit(PerformingBackgroundJob)
         val credentials = state as ServerState.UserCredentials
-        authenticationUseCase.login(credentials.username, credentials.password)
+        authenticationLoginUseCase.login(Credentials(credentials.username, credentials.password))
             .onSuccess { authStatus ->
                 if (authStatus == AuthStatus.Authenticated) {
                     effect.handleEffect(Close)

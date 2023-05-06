@@ -1,5 +1,6 @@
 [versions]
 accompanist = "0.31.0-alpha"
+androidx-credentials = "1.0.0-alpha03"
 androidx-hilt = "1.1.0-alpha01"
 androidx-test = "1.6.0-alpha02"
 coil = "2.3.0"
@@ -39,6 +40,8 @@ androidx-compose-ui-tooling = { module = "androidx.compose.ui:ui-tooling", versi
 androidx-compose-ui-tooling-preview = { module = "androidx.compose.ui:ui-tooling-preview", version.ref = "compose" }
 androidx-compose-ui-util = { module = "androidx.compose.ui:ui-util", version.ref = "compose" }
 androidx-core = "androidx.core:core-ktx:1.10.0"
+androidx-credentials-core = { module = "androidx.credentials:credentials", version.ref = "androidx-credentials" }
+androidx-credentials-play = { module = "androidx.credentials:credentials-play-services-auth", version.ref = "androidx-credentials" }
 androidx-datastore-preferences = "androidx.datastore:datastore-preferences:1.1.0-alpha04"
 androidx-espresso = "androidx.test.espresso:espresso-core:3.6.0-alpha01"
 androidx-lifecycle = "androidx.lifecycle:lifecycle-runtime-ktx:2.6.1"
@@ -110,6 +113,10 @@ zoomable = "com.mxalbert.zoomable:zoomable:1.6.0"
 androidx-compose-animation = [
     "androidx-compose-animation-base",
     "androidx-compose-animation-graphics",
+]
+androidx-credentials = [
+    "androidx-credentials-core",
+    "androidx-credentials-play",
 ]
 lumberjack = [
     "lumberjack-core",
