@@ -1,0 +1,2 @@
+* Using official Splash API to show splash screen
+* Opening a memory will limit the lightbox to that day
