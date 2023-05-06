@@ -16,7 +16,7 @@ jobs:
           cache: gradle
       - name: Grant execute permission for gradlew
         run: chmod +x gradlew
-      - name: Run version check
+      - name: Run build health
         run: ./gradlew buildHealth
       - name: Archive report
         uses: actions/upload-artifact@v3
