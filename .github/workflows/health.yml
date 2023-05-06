@@ -22,4 +22,4 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: analysis
-          path: build/reports/dependency-analysis/
+          path: "**/build/reports/dependency-analysis/"
