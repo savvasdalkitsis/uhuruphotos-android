@@ -1,0 +1,2 @@
+* Slight improvement lightbox navigating back performance
+* Option to save user credentials using CredentialManager
