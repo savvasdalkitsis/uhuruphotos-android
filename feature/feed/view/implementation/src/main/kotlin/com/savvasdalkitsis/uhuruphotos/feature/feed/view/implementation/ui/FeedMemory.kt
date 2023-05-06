@@ -37,13 +37,12 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.ui.state.MemoryCel
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.Cel
-import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.CelSelected
 import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
 
 @Composable
 internal fun FeedMemory(
     memory: MemoryCel,
-    onSelected: CelSelected,
+    onMemorySelected: (memory: MemoryCel) -> Unit,
 ) {
     Card(
         modifier = Modifier
@@ -75,7 +74,9 @@ internal fun FeedMemory(
                         },
                     itemPadding = 0.dp,
                     state = celState,
-                    onSelected = onSelected,
+                    onSelected = {
+                        onMemorySelected(memory)
+                    },
                     aspectRatio = 0.7f,
                     contentScale = ContentScale.Crop,
                     selectable = true,

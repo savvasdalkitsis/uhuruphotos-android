@@ -45,6 +45,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.model.Loca
 import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.model.MissingPermissionsException
 import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.usecase.LocalMediaDeletionUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.api.usecase.RemoteMediaUseCase
+import com.savvasdalkitsis.uhuruphotos.feature.memories.domain.api.usecase.MemoriesUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.person.domain.api.usecase.PersonUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.search.domain.api.usecase.SearchUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.trash.domain.api.usecase.TrashUseCase
@@ -59,6 +60,7 @@ internal class LightboxActionsContext @Inject constructor(
     val mediaUseCase: MediaUseCase,
     val personUseCase: PersonUseCase,
     val feedUseCase: FeedUseCase,
+    val memoriesUseCase: MemoriesUseCase,
     val searchUseCase: SearchUseCase,
     val localAlbumUseCase: LocalAlbumUseCase,
     val metadataUseCase: MetadataUseCase,

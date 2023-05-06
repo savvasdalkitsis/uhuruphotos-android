@@ -21,6 +21,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.api.model.LightboxS
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.api.model.LightboxSequenceDataSource.Feed
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.api.model.LightboxSequenceDataSource.HiddenMedia
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.api.model.LightboxSequenceDataSource.LocalAlbum
+import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.api.model.LightboxSequenceDataSource.Memory
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.api.model.LightboxSequenceDataSource.PersonResults
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.api.model.LightboxSequenceDataSource.SearchResults
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.api.model.LightboxSequenceDataSource.Single
@@ -67,6 +68,9 @@ data class LoadMediaItem(
     private suspend fun loadMediaFromSequenceToShow() = when (sequenceDataSource) {
         Single -> emptyList()
         Feed -> feedUseCase.getFeed().toMediaItems
+        is Memory -> memoriesUseCase.getMemories()
+            .find { it.yearsAgo == sequenceDataSource.yearsAgo }?.mediaCollection?.mediaItems
+            ?: emptyList()
         is SearchResults -> searchUseCase.searchResultsFor(sequenceDataSource.query).toMediaItems
         is PersonResults -> personUseCase.getPersonMedia(sequenceDataSource.personId).toMediaItems
         is AutoAlbum -> autoAlbumUseCase.getAutoAlbum(sequenceDataSource.albumId).toMediaItems
@@ -93,6 +97,7 @@ data class LoadMediaItem(
 
     private val shouldShowDeleteButton =
         sequenceDataSource is Feed ||
+        sequenceDataSource is Memory ||
         sequenceDataSource is LocalAlbum
 
     context(LightboxActionsContext)

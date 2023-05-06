@@ -21,4 +21,5 @@ import kotlinx.coroutines.flow.Flow
 interface MemoriesUseCase {
 
     fun observeMemories(): Flow<List<MemoryCollection>>
+    suspend fun getMemories(): List<MemoryCollection>
 }

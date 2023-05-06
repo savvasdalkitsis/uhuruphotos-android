@@ -20,7 +20,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.state.Ce
 
 sealed class FeedEffect {
     data class OpenLightbox(val id: MediaId<*>) : FeedEffect()
-    data class OpenMemoryLightbox(val id: MediaId<*>) : FeedEffect()
+    data class OpenMemoryLightbox(val id: MediaId<*>, val yearsAgo: Int) : FeedEffect()
 
     data class Share(val selectedCels: List<CelState>) : FeedEffect()
     object Vibrate : FeedEffect()

@@ -19,6 +19,7 @@ sealed class LightboxSequenceDataSource {
 
     object Single : LightboxSequenceDataSource()
     object Feed : LightboxSequenceDataSource()
+    data class Memory(val yearsAgo: Int) : LightboxSequenceDataSource()
     data class SearchResults(val query: String) : LightboxSequenceDataSource()
     data class PersonResults(val personId: Int) : LightboxSequenceDataSource()
     data class AutoAlbum(val albumId: Int) : LightboxSequenceDataSource()

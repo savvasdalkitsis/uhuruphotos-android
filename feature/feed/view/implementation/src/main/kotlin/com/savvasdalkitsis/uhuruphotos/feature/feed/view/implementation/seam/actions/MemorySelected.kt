@@ -20,17 +20,17 @@ import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.Fee
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.FeedEffect.OpenMemoryLightbox
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.FeedMutation
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.ui.state.FeedState
-import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.state.CelState
+import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.ui.state.MemoryCel
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.EffectHandler
 import kotlinx.coroutines.flow.flow
 
-data class MemorySelected(val memoryCel: CelState) : FeedAction() {
+data class MemorySelected(val memoryCel: MemoryCel) : FeedAction() {
     context(FeedActionsContext) override fun handle(
         state: FeedState,
         effect: EffectHandler<FeedEffect>
     ) = flow<FeedMutation> {
         effect.handleEffect(
-            OpenMemoryLightbox(memoryCel.mediaItem.id)
+            OpenMemoryLightbox(memoryCel.cel.mediaItem.id, memoryCel.yearsAgo)
         )
     }
 }

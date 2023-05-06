@@ -21,7 +21,9 @@ import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.Fee
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.FeedEffect.Share
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.FeedEffect.ShowErrorDeletingMedia
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.FeedEffect.Vibrate
+import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.api.model.LightboxSequenceDataSource
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.api.model.LightboxSequenceDataSource.Feed
+import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.api.model.LightboxSequenceDataSource.Memory
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.api.navigation.LightboxNavigationRoute
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaId
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.Navigator
@@ -40,7 +42,7 @@ internal class FeedEffectHandler @Inject constructor(
 ) : EffectHandler<FeedEffect> {
 
     override suspend fun handleEffect(effect: FeedEffect) = when (effect) {
-        is OpenLightbox -> openLightBox(effect.id)
+        is OpenLightbox -> openLightBox(effect.id, Feed)
         is Share -> {
             toasterUseCase.show(string.downloading_photos_sharing)
             shareUseCase.shareMultiple(effect.selectedCels.mapNotNull {
@@ -49,12 +51,12 @@ internal class FeedEffectHandler @Inject constructor(
         }
         Vibrate -> uiUseCase.performLongPressHaptic()
         DownloadingFiles -> toasterUseCase.show(string.downloading_original_files)
-        is OpenMemoryLightbox -> openLightBox(effect.id)
+        is OpenMemoryLightbox -> openLightBox(effect.id, Memory(effect.yearsAgo))
         ShowErrorDeletingMedia -> toasterUseCase.show(string.error_deleting_media)
     }
 
-    private fun openLightBox(id: MediaId<*>) {
-        navigator.navigateTo(LightboxNavigationRoute(id, Feed, showMediaSyncState = true))
+    private fun openLightBox(id: MediaId<*>, sequenceDataSource: LightboxSequenceDataSource) {
+        navigator.navigateTo(LightboxNavigationRoute(id, sequenceDataSource, showMediaSyncState = true))
     }
 
 }

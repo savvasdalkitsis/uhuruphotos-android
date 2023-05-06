@@ -33,13 +33,12 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.ui.state.MemoryCel
-import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.CelSelected
 import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
 
 @Composable
 internal fun FeedMemories(
     memories: List<MemoryCel>,
-    onMemorySelected: CelSelected,
+    onMemorySelected: (memory: MemoryCel) -> Unit,
 ) {
     Column(
         verticalArrangement = spacedBy(8.dp),

@@ -31,24 +31,29 @@ class MemoriesUseCase @Inject constructor(
 ) : MemoriesUseCase {
 
     override fun observeMemories(): Flow<List<MemoryCollection>> =
-        feedUseCase.observeFeed().map { feed ->
-            feed.filter {
-                with(it.dateTime) {
-                    sameAsNow { dayOfMonth } && sameAsNow { monthOfYear } && !sameAsNow { year }
-                }
-            }.mapNotNull { mediaCollection ->
-                mediaCollection.dateTime?.year?.let { memoryYear ->
-                    MemoryCollection(
-                        yearsAgo = DateTime.now().year - memoryYear,
-                        mediaCollection = mediaCollection,
-                    )
-                }
-            }
+        feedUseCase.observeFeed().map {
+            it.findMemories()
         }
+
+    override suspend fun getMemories(): List<MemoryCollection> =
+        feedUseCase.getFeed().findMemories()
 
     private fun DateTime?.sameAsNow(field: DateTime.() -> Int) =
         this != null && field(this) == field(DateTime.now())
 
     private val MediaCollection.dateTime get() = dateParser.parseDateOrTimeString(unformattedDate)
 
+    private fun List<MediaCollection>.findMemories(): List<MemoryCollection> =
+        filter {
+            with(it.dateTime) {
+                sameAsNow { dayOfMonth } && sameAsNow { monthOfYear } && !sameAsNow { year }
+            }
+        }.mapNotNull { mediaCollection ->
+            mediaCollection.dateTime?.year?.let { memoryYear ->
+                MemoryCollection(
+                    yearsAgo = DateTime.now().year - memoryYear,
+                    mediaCollection = mediaCollection,
+                )
+            }
+        }
 }
