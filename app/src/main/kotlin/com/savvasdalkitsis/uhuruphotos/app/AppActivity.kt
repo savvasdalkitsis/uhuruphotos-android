@@ -20,6 +20,7 @@ import androidx.activity.compose.setContent
 import androidx.compose.material3.windowsizeclass.calculateWindowSizeClass
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.LaunchedEffect
+import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.core.view.WindowCompat
 import androidx.fragment.app.FragmentActivity
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
@@ -46,6 +47,7 @@ class AppActivity : FragmentActivity() {
         Log.enabled = true
         AppCenter.start(application, AppCenterConfig.KEY, Crashes::class.java)
         super.onCreate(savedInstanceState)
+        installSplashScreen()
         currentActivityHolder.onCreated(this)
         WindowCompat.setDecorFitsSystemWindows(window, false)
         setContent {

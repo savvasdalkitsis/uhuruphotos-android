@@ -43,6 +43,7 @@ androidx-datastore-preferences = "androidx.datastore:datastore-preferences:1.1.0
 androidx-espresso = "androidx.test.espresso:espresso-core:3.6.0-alpha01"
 androidx-lifecycle = "androidx.lifecycle:lifecycle-runtime-ktx:2.6.1"
 androidx-preference = "androidx.preference:preference-ktx:1.2.0"
+androidx-splash = "androidx.core:core-splashscreen:1.0.1"
 androidx-startup = "androidx.startup:startup-runtime:1.2.0-alpha02"
 androidx-test-core = { module = "androidx.test:core", version.ref = "androidx-test" }
 androidx-test-runner = { module = "androidx.test:runner", version.ref = "androidx-test" }

@@ -80,6 +80,7 @@ dependencies {
             libs.androidx.datastore.preferences,
             libs.androidx.lifecycle,
             libs.androidx.preference,
+            libs.androidx.splash,
             libs.androidx.work,
             libs.androidx.work.hilt,
             libs.appcenter.crashes,

@@ -21,6 +21,7 @@ dependencies {
             libs.androidx.compose.material.windowsize,
             libs.androidx.compose.ui,
             libs.androidx.compose.ui.util,
+            libs.androidx.splash,
             libs.androidx.window,
     )
 }
