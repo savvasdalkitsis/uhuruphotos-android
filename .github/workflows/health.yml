@@ -1,4 +1,4 @@
-name: Versions check
+name: Build health
 on:
   schedule:
       - cron: '0 0 * * *'
