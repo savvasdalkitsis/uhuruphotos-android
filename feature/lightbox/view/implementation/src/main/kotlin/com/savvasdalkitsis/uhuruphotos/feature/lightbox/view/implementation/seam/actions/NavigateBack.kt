@@ -27,8 +27,7 @@ object NavigateBack : LightboxAction() {
     context(LightboxActionsContext) override fun handle(
         state: LightboxState,
         effect: EffectHandler<LightboxEffect>
-    ) = flow {
-        emit(LightboxMutation.HideUI)
+    ) = flow<LightboxMutation> {
         effect.handleEffect(LightboxEffect.NavigateBack)
     }
 }

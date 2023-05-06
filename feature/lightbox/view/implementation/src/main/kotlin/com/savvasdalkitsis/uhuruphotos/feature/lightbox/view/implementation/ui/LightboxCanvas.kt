@@ -33,6 +33,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.platform.LocalView
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.mxalbert.zoomable.OverZoomConfig
@@ -72,15 +73,11 @@ fun LightboxCanvas(
         maxScale = 6f,
         overZoomConfig = OverZoomConfig(1f, 4f)
     )
-    // reflection call until, hopefully, this is implemented:
-    // https://github.com/mxalbert1996/Zoomable/issues/17
-    val dismissDragOffsetY by remember {
-        derivedStateOf {
-            zoomState.javaClass.declaredMethods.find { it.name == "getDismissDragOffsetY\$zoomable_release" }!!
-        }
-    }
-
     val offset by remember {
+        // reflection call until, hopefully, this is implemented:
+        // https://github.com/mxalbert1996/Zoomable/issues/17
+        val dismissDragOffsetY = zoomState.javaClass.declaredMethods
+            .find { it.name == "getDismissDragOffsetY\$zoomable_release" }!!
         derivedStateOf {
             dismissDragOffsetY.invoke(zoomState) as Float
         }
@@ -102,9 +99,12 @@ fun LightboxCanvas(
             action(ShowInfo)
         }
     }
+    val view = LocalView.current
     LaunchedEffect(navigateBack) {
         if (navigateBack) {
-            action(NavigateBack)
+            view.post {
+                action(NavigateBack)
+            }
         }
     }
     Zoomable(

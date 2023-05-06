@@ -55,8 +55,8 @@ class LightboxEffectHandler @Inject constructor(
             HideSystemBars -> setBars(false)
             ShowSystemBars -> setBars(true)
             NavigateBack -> {
-                navigator.navigateBack()
                 setBars(true)
+                navigator.navigateBack()
             }
             is LaunchMap -> navigator.navigateTo(geoLocation(effect.gps))
             is CopyToClipboard -> {
