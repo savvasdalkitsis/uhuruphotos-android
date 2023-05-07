@@ -16,8 +16,9 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.feature.auth.view.implementation.seam.actions
 
 import com.savvasdalkitsis.uhuruphotos.feature.auth.view.implementation.seam.WebLoginActionsContext
-import com.savvasdalkitsis.uhuruphotos.feature.auth.view.implementation.seam.WebLoginEffect
+import com.savvasdalkitsis.uhuruphotos.feature.auth.view.implementation.seam.effects.WebLoginEffect
 import com.savvasdalkitsis.uhuruphotos.feature.auth.view.implementation.seam.WebLoginMutation
+import com.savvasdalkitsis.uhuruphotos.feature.auth.view.implementation.seam.effects.Close
 import com.savvasdalkitsis.uhuruphotos.feature.auth.view.implementation.ui.WebLoginState
 import com.savvasdalkitsis.uhuruphotos.foundation.launchers.api.onMain
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.EffectHandler
@@ -32,7 +33,7 @@ data class LoadPage(val url: String): WebLoginAction() {
         emit(WebLoginMutation.Loading)
         cookieMonitor.monitor(coroutineContext).invokeOnCompletion {
             onMain {
-                effect.handleEffect(WebLoginEffect.Close)
+                effect.handleEffect(Close)
             }
         }
 

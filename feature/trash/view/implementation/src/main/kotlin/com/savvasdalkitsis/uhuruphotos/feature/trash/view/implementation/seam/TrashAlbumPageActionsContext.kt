@@ -18,7 +18,7 @@ package com.savvasdalkitsis.uhuruphotos.feature.trash.view.implementation.seam
 import com.fredporciuncula.flow.preferences.FlowSharedPreferences
 import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.Cluster
 import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.GalleryActionsContext
-import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.GalleryEffect.NavigateBack
+import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.effects.NavigateBack
 import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.ui.state.GalleryDetails
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.api.model.LightboxSequenceDataSource.Trash
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.state.toCel

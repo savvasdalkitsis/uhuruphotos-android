@@ -17,8 +17,10 @@ package com.savvasdalkitsis.uhuruphotos.feature.search.view.implementation.seam.
 
 import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.toCluster
 import com.savvasdalkitsis.uhuruphotos.feature.search.view.implementation.seam.SearchActionsContext
-import com.savvasdalkitsis.uhuruphotos.feature.search.view.implementation.seam.SearchEffect
+import com.savvasdalkitsis.uhuruphotos.feature.search.view.implementation.seam.effects.SearchEffect
 import com.savvasdalkitsis.uhuruphotos.feature.search.view.implementation.seam.SearchMutation
+import com.savvasdalkitsis.uhuruphotos.feature.search.view.implementation.seam.effects.ErrorSearching
+import com.savvasdalkitsis.uhuruphotos.feature.search.view.implementation.seam.effects.HideKeyboard
 import com.savvasdalkitsis.uhuruphotos.feature.search.view.implementation.ui.state.SearchResults
 import com.savvasdalkitsis.uhuruphotos.feature.search.view.implementation.ui.state.SearchState
 import com.savvasdalkitsis.uhuruphotos.foundation.log.api.log
@@ -39,7 +41,7 @@ data class SearchFor(val query: String) : SearchAction() {
         lastSearch?.cancel()
         send(SearchMutation.UpdateLatestQuery(query))
         send(SearchMutation.SwitchStateToSearching)
-        effect.handleEffect(SearchEffect.HideKeyboard)
+        effect.handleEffect(HideKeyboard)
         lastSearch = launch {
             searchUseCase.addSearchToRecentSearches(query)
             searchUseCase.searchFor(query)
@@ -52,7 +54,7 @@ data class SearchFor(val query: String) : SearchAction() {
                             else -> SearchMutation.SwitchStateToFound(SearchResults.Found(clusters))
                         }
                     else {
-                        effect.handleEffect(SearchEffect.ErrorSearching)
+                        effect.handleEffect(ErrorSearching)
                         null
                     }
                 }
@@ -60,7 +62,7 @@ data class SearchFor(val query: String) : SearchAction() {
                 .catch {
                     if (it !is CancellationException) {
                         log(it)
-                        effect.handleEffect(SearchEffect.ErrorSearching)
+                        effect.handleEffect(ErrorSearching)
                     }
                     send(SearchMutation.SwitchStateToIdle)
                 }

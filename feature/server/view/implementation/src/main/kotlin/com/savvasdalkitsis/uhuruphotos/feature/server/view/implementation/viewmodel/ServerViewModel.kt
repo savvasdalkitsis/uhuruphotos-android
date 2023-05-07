@@ -18,7 +18,7 @@ package com.savvasdalkitsis.uhuruphotos.feature.server.view.implementation.viewm
 import androidx.lifecycle.ViewModel
 import com.savvasdalkitsis.uhuruphotos.feature.server.view.api.navigation.ServerNavigationRoute
 import com.savvasdalkitsis.uhuruphotos.feature.server.view.implementation.seam.ServerActionsContext
-import com.savvasdalkitsis.uhuruphotos.feature.server.view.implementation.seam.ServerEffectHandler
+import com.savvasdalkitsis.uhuruphotos.feature.server.view.implementation.seam.ServerEffectsContext
 import com.savvasdalkitsis.uhuruphotos.feature.server.view.implementation.seam.actions.CheckPersistedServer
 import com.savvasdalkitsis.uhuruphotos.feature.server.view.implementation.seam.actions.Load
 import com.savvasdalkitsis.uhuruphotos.feature.server.view.implementation.seam.actions.RequestServerUrlChange
@@ -26,6 +26,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.server.view.implementation.seam.a
 import com.savvasdalkitsis.uhuruphotos.feature.server.view.implementation.ui.ServerState
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.HasInitializer
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.ActionHandlerWithContext
+import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.EffectHandlerWithContext
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.HasActionableState
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.Seam
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -34,10 +35,10 @@ import javax.inject.Inject
 @HiltViewModel
 internal class ServerViewModel @Inject constructor(
     serverActionsContext: ServerActionsContext,
-    effectHandler: ServerEffectHandler,
+    effectsContext: ServerEffectsContext,
 ) : ViewModel(), HasActionableState<ServerState, ServerAction> by Seam(
     ActionHandlerWithContext(serverActionsContext),
-    effectHandler,
+    EffectHandlerWithContext(effectsContext),
     ServerState.Loading(false)
 ), HasInitializer<ServerAction, ServerNavigationRoute> {
     override suspend fun initialize(initializerData: ServerNavigationRoute, action: (ServerAction) -> Unit) {

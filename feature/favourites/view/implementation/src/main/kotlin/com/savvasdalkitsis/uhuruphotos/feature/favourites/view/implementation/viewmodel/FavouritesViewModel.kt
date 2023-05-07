@@ -19,13 +19,14 @@ import androidx.lifecycle.ViewModel
 import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.CollageState
 import com.savvasdalkitsis.uhuruphotos.feature.favourites.view.api.navigation.FavouritesNavigationRoute
 import com.savvasdalkitsis.uhuruphotos.feature.favourites.view.implementation.seam.FavouritesActionsContext
-import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.GalleryEffectHandler
+import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.GalleryEffectsContext
 import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.GalleryId
 import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.action.GalleryAction
 import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.action.LoadCollage
 import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.ui.state.GalleryState
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.HasInitializer
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.ActionHandlerWithContext
+import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.EffectHandlerWithContext
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.HasActionableState
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.Seam
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -34,10 +35,10 @@ import javax.inject.Inject
 @HiltViewModel
 internal class FavouritesViewModel @Inject constructor(
     favouritesActionsContext: FavouritesActionsContext,
-    effectHandler: GalleryEffectHandler,
+    effectsContext: GalleryEffectsContext,
 ) : ViewModel(), HasActionableState<GalleryState, GalleryAction> by Seam(
     ActionHandlerWithContext(favouritesActionsContext),
-    effectHandler,
+    EffectHandlerWithContext(effectsContext),
     GalleryState(collageState = CollageState())
 ), HasInitializer<GalleryAction, FavouritesNavigationRoute> {
     override suspend fun initialize(

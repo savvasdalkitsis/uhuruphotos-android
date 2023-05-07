@@ -16,14 +16,13 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.feature.local.view.implementation.viewmodel
 
 import androidx.lifecycle.ViewModel
-import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.GalleryEffectHandler
+import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.GalleryEffectsContext
 import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.GalleryId
 import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.action.GalleryAction
 import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.action.LoadCollage
 import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.ui.state.GalleryState
 import com.savvasdalkitsis.uhuruphotos.feature.local.view.api.navigation.LocalAlbumNavigationRoute
 import com.savvasdalkitsis.uhuruphotos.feature.local.view.implementation.seam.LocalAlbumActionsContext
-import com.savvasdalkitsis.uhuruphotos.feature.local.view.implementation.seam.LocalAlbumEffectHandler
 import com.savvasdalkitsis.uhuruphotos.feature.local.view.implementation.seam.LocalAlbumPageActionsContext
 import com.savvasdalkitsis.uhuruphotos.feature.local.view.implementation.seam.actions.Load
 import com.savvasdalkitsis.uhuruphotos.feature.local.view.implementation.seam.actions.LocalAlbumAction
@@ -32,8 +31,10 @@ import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.HasInitializer
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.ActionHandlerWithContext
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.CompositeActionHandler
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.CompositeEffectHandler
+import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.EffectHandlerWithContext
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.Either
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.HasActionableState
+import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.NoOpEffectHandler
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.Seam
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
@@ -45,8 +46,7 @@ private typealias LocalAlbumCompositeAction = Either<GalleryAction, LocalAlbumAc
 internal class LocalAlbumViewModel @Inject constructor(
     localAlbumActionsContext: LocalAlbumActionsContext,
     localAlbumPageActionsContext: LocalAlbumPageActionsContext,
-    galleryEffectHandler: GalleryEffectHandler,
-    localAlbumEffectHandler: LocalAlbumEffectHandler,
+    galleryEffectsContext: GalleryEffectsContext,
 ) : ViewModel(),
     HasActionableState<LocalAlbumCompositeState, LocalAlbumCompositeAction> by Seam(
         CompositeActionHandler(
@@ -54,8 +54,8 @@ internal class LocalAlbumViewModel @Inject constructor(
             ActionHandlerWithContext(localAlbumActionsContext),
         ),
         CompositeEffectHandler(
-            galleryEffectHandler,
-            localAlbumEffectHandler,
+            EffectHandlerWithContext(galleryEffectsContext),
+            NoOpEffectHandler(),
         ),
         GalleryState() to LocalAlbumState()
     ),

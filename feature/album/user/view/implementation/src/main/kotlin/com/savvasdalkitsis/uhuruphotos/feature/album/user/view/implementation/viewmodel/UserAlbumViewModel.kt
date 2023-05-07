@@ -19,13 +19,14 @@ import androidx.lifecycle.ViewModel
 import com.savvasdalkitsis.uhuruphotos.feature.album.user.view.api.navigation.UserAlbumNavigationRoute
 import com.savvasdalkitsis.uhuruphotos.feature.album.user.view.implementation.seam.UserAlbumActionsContext
 import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.CollageState
-import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.GalleryEffectHandler
+import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.GalleryEffectsContext
 import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.GalleryId
 import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.action.GalleryAction
 import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.action.LoadCollage
 import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.ui.state.GalleryState
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.HasInitializer
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.ActionHandlerWithContext
+import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.EffectHandlerWithContext
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.HasActionableState
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.Seam
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -34,10 +35,10 @@ import javax.inject.Inject
 @HiltViewModel
 internal class UserAlbumViewModel @Inject constructor(
     userAlbumActionsContext: UserAlbumActionsContext,
-    effectHandler: GalleryEffectHandler,
+    effectsContext: GalleryEffectsContext,
 ) : ViewModel(), HasActionableState<GalleryState, GalleryAction> by Seam(
     ActionHandlerWithContext(userAlbumActionsContext),
-    effectHandler,
+    EffectHandlerWithContext(effectsContext),
     GalleryState(collageState = CollageState())
 ), HasInitializer<GalleryAction, UserAlbumNavigationRoute> {
     override suspend fun initialize(

@@ -15,6 +15,8 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.catalogue.user.view.implementation.seam
 
+import com.savvasdalkitsis.uhuruphotos.feature.catalogue.user.view.implementation.seam.effects.NavigateBack
+import com.savvasdalkitsis.uhuruphotos.feature.catalogue.user.view.implementation.seam.effects.UserAlbumsEffect
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.EffectHandler
 import kotlinx.coroutines.flow.flow
 
@@ -23,6 +25,6 @@ object NavigateBack : UserAlbumsAction() {
         state: UserAlbumsState,
         effect: EffectHandler<UserAlbumsEffect>
     ) = flow<UserAlbumsMutation> {
-        effect.handleEffect(UserAlbumsEffect.NavigateBack)
+        effect.handleEffect(NavigateBack)
     }
 }

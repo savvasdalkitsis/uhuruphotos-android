@@ -17,13 +17,13 @@ package com.savvasdalkitsis.uhuruphotos.feature.search.view.implementation.viewm
 
 import androidx.lifecycle.ViewModel
 import com.savvasdalkitsis.uhuruphotos.feature.account.view.api.seam.AccountOverviewActionsContext
-import com.savvasdalkitsis.uhuruphotos.feature.account.view.api.seam.AccountOverviewEffectHandler
+import com.savvasdalkitsis.uhuruphotos.feature.account.view.api.seam.AccountOverviewEffectsContext
 import com.savvasdalkitsis.uhuruphotos.feature.account.view.api.seam.actions.AccountOverviewAction
 import com.savvasdalkitsis.uhuruphotos.feature.account.view.api.seam.actions.Load
 import com.savvasdalkitsis.uhuruphotos.feature.account.view.api.ui.state.AccountOverviewState
 import com.savvasdalkitsis.uhuruphotos.feature.search.view.api.navigation.SearchNavigationRoute
 import com.savvasdalkitsis.uhuruphotos.feature.search.view.implementation.seam.SearchActionsContext
-import com.savvasdalkitsis.uhuruphotos.feature.search.view.implementation.seam.SearchEffectHandler
+import com.savvasdalkitsis.uhuruphotos.feature.search.view.implementation.seam.SearchEffectsContext
 import com.savvasdalkitsis.uhuruphotos.feature.search.view.implementation.seam.actions.Initialise
 import com.savvasdalkitsis.uhuruphotos.feature.search.view.implementation.seam.actions.SearchAction
 import com.savvasdalkitsis.uhuruphotos.feature.search.view.implementation.ui.state.SearchState
@@ -31,6 +31,7 @@ import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.HasInitializer
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.ActionHandlerWithContext
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.CompositeActionHandler
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.CompositeEffectHandler
+import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.EffectHandlerWithContext
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.Either
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.HasActionableState
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.Seam
@@ -44,8 +45,8 @@ private typealias SearchCompositeAction = Either<SearchAction, AccountOverviewAc
 class SearchViewModel @Inject constructor(
     searchActionsContext: SearchActionsContext,
     accountOverviewActionsContext: AccountOverviewActionsContext,
-    searchEffectHandler: SearchEffectHandler,
-    accountOverviewEffectHandler: AccountOverviewEffectHandler,
+    searchEffectsContext: SearchEffectsContext,
+    accountOverviewEffectsContext: AccountOverviewEffectsContext,
 ) : ViewModel(),
     HasActionableState<SearchCompositeState, SearchCompositeAction> by Seam(
         CompositeActionHandler(
@@ -53,8 +54,8 @@ class SearchViewModel @Inject constructor(
             ActionHandlerWithContext(accountOverviewActionsContext),
         ),
         CompositeEffectHandler(
-            searchEffectHandler,
-            accountOverviewEffectHandler,
+            EffectHandlerWithContext(searchEffectsContext),
+            EffectHandlerWithContext(accountOverviewEffectsContext),
         ),
         SearchState() to AccountOverviewState()
     ),

@@ -17,13 +17,14 @@ package com.savvasdalkitsis.uhuruphotos.feature.auth.view.implementation.viewmod
 
 import androidx.lifecycle.ViewModel
 import com.savvasdalkitsis.uhuruphotos.feature.auth.view.api.navigation.WebLoginNavigationRoute
-import com.savvasdalkitsis.uhuruphotos.feature.auth.view.implementation.seam.WebEffectHandler
+import com.savvasdalkitsis.uhuruphotos.feature.auth.view.implementation.seam.WebEffectsContext
 import com.savvasdalkitsis.uhuruphotos.feature.auth.view.implementation.seam.WebLoginActionsContext
 import com.savvasdalkitsis.uhuruphotos.feature.auth.view.implementation.seam.actions.LoadPage
 import com.savvasdalkitsis.uhuruphotos.feature.auth.view.implementation.seam.actions.WebLoginAction
 import com.savvasdalkitsis.uhuruphotos.feature.auth.view.implementation.ui.WebLoginState
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.HasInitializer
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.ActionHandlerWithContext
+import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.EffectHandlerWithContext
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.HasActionableState
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.Seam
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -32,10 +33,10 @@ import javax.inject.Inject
 @HiltViewModel
 class WebLoginViewModel @Inject constructor(
     webLoginActionsContext: WebLoginActionsContext,
-    effectHandler: WebEffectHandler,
+    webEffectsContext: WebEffectsContext,
 ) : ViewModel(), HasActionableState<WebLoginState, WebLoginAction> by Seam(
     ActionHandlerWithContext(webLoginActionsContext),
-    effectHandler,
+    EffectHandlerWithContext(webEffectsContext),
     WebLoginState("")
 ), HasInitializer<WebLoginAction, WebLoginNavigationRoute> {
     override suspend fun initialize(initializerData: WebLoginNavigationRoute, action: (WebLoginAction) -> Unit) {

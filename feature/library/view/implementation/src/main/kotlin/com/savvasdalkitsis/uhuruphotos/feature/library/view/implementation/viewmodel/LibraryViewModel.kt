@@ -17,18 +17,19 @@ package com.savvasdalkitsis.uhuruphotos.feature.library.view.implementation.view
 
 import androidx.lifecycle.ViewModel
 import com.savvasdalkitsis.uhuruphotos.feature.account.view.api.seam.AccountOverviewActionsContext
-import com.savvasdalkitsis.uhuruphotos.feature.account.view.api.seam.AccountOverviewEffectHandler
+import com.savvasdalkitsis.uhuruphotos.feature.account.view.api.seam.AccountOverviewEffectsContext
 import com.savvasdalkitsis.uhuruphotos.feature.account.view.api.seam.actions.AccountOverviewAction
 import com.savvasdalkitsis.uhuruphotos.feature.account.view.api.ui.state.AccountOverviewState
 import com.savvasdalkitsis.uhuruphotos.feature.library.view.api.navigation.LibraryNavigationRoute
 import com.savvasdalkitsis.uhuruphotos.feature.library.view.implementation.seam.LibraryActionsContext
-import com.savvasdalkitsis.uhuruphotos.feature.library.view.implementation.seam.LibraryEffectHandler
+import com.savvasdalkitsis.uhuruphotos.feature.library.view.implementation.seam.LibraryEffectsContext
 import com.savvasdalkitsis.uhuruphotos.feature.library.view.implementation.seam.actions.LibraryAction
 import com.savvasdalkitsis.uhuruphotos.feature.library.view.implementation.ui.state.LibraryState
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.HasInitializer
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.ActionHandlerWithContext
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.CompositeActionHandler
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.CompositeEffectHandler
+import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.EffectHandlerWithContext
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.Either
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.HasActionableState
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.Seam
@@ -44,8 +45,8 @@ private typealias LibraryCompositeAction = Either<LibraryAction, AccountOverview
 internal class LibraryViewModel @Inject constructor(
     libraryActionsContext: LibraryActionsContext,
     accountOverviewActionsContext: AccountOverviewActionsContext,
-    accountOverviewEffectHandler: AccountOverviewEffectHandler,
-    libraryEffectHandler: LibraryEffectHandler,
+    accountOverviewEffectsContext: AccountOverviewEffectsContext,
+    libraryEffectsContext: LibraryEffectsContext,
 ) : ViewModel(),
     HasActionableState<LibraryCompositeState, LibraryCompositeAction> by Seam(
         CompositeActionHandler(
@@ -53,8 +54,8 @@ internal class LibraryViewModel @Inject constructor(
             ActionHandlerWithContext(accountOverviewActionsContext),
         ),
         CompositeEffectHandler(
-            libraryEffectHandler,
-            accountOverviewEffectHandler,
+            EffectHandlerWithContext(libraryEffectsContext),
+            EffectHandlerWithContext(accountOverviewEffectsContext),
         ),
         LibraryState() to AccountOverviewState()
     ),

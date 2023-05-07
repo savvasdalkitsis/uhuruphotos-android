@@ -17,9 +17,9 @@ package com.savvasdalkitsis.uhuruphotos.foundation.seam.api
 
 import kotlinx.coroutines.flow.Flow
 
-fun interface Action<S, E, M, C> {
+fun interface Action<S, E, M, ActionsContext> {
 
-    context(C) fun handle(
+    context(ActionsContext) fun handle(
         state: S,
         effect: EffectHandler<E>
     ): Flow<M>

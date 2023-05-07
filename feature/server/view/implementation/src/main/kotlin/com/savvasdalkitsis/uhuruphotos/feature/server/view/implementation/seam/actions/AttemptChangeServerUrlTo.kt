@@ -16,9 +16,9 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.feature.server.view.implementation.seam.actions
 
 import com.savvasdalkitsis.uhuruphotos.feature.server.view.implementation.seam.ServerActionsContext
-import com.savvasdalkitsis.uhuruphotos.feature.server.view.implementation.seam.ServerEffect
-import com.savvasdalkitsis.uhuruphotos.feature.server.view.implementation.seam.ServerEffect.Close
 import com.savvasdalkitsis.uhuruphotos.feature.server.view.implementation.seam.ServerMutation.ShowUnsecureServerConfirmation
+import com.savvasdalkitsis.uhuruphotos.feature.server.view.implementation.seam.effects.Close
+import com.savvasdalkitsis.uhuruphotos.feature.server.view.implementation.seam.effects.ServerEffect
 import com.savvasdalkitsis.uhuruphotos.feature.server.view.implementation.ui.ServerState
 import com.savvasdalkitsis.uhuruphotos.foundation.http.api.isHttpUrl
 import com.savvasdalkitsis.uhuruphotos.foundation.http.api.isValidUrlOrDomain

@@ -17,13 +17,13 @@ package com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.viewmod
 
 import androidx.lifecycle.ViewModel
 import com.savvasdalkitsis.uhuruphotos.feature.account.view.api.seam.AccountOverviewActionsContext
-import com.savvasdalkitsis.uhuruphotos.feature.account.view.api.seam.AccountOverviewEffectHandler
+import com.savvasdalkitsis.uhuruphotos.feature.account.view.api.seam.AccountOverviewEffectsContext
 import com.savvasdalkitsis.uhuruphotos.feature.account.view.api.seam.actions.AccountOverviewAction
 import com.savvasdalkitsis.uhuruphotos.feature.account.view.api.seam.actions.Load
 import com.savvasdalkitsis.uhuruphotos.feature.account.view.api.ui.state.AccountOverviewState
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.api.navigation.FeedNavigationRoute
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.FeedActionsContext
-import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.FeedEffectHandler
+import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.FeedEffectsContext
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.actions.FeedAction
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.actions.LoadFeed
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.ui.state.FeedState
@@ -31,6 +31,7 @@ import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.HasInitializer
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.ActionHandlerWithContext
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.CompositeActionHandler
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.CompositeEffectHandler
+import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.EffectHandlerWithContext
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.Either
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.HasActionableState
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.Seam
@@ -44,8 +45,8 @@ private typealias FeedCompositeAction = Either<FeedAction, AccountOverviewAction
 internal class FeedViewModel @Inject constructor(
     feedActionsContext: FeedActionsContext,
     accountOverviewActionsContext: AccountOverviewActionsContext,
-    feedEffectHandler: FeedEffectHandler,
-    accountOverviewEffectHandler: AccountOverviewEffectHandler,
+    feedEffectsContext: FeedEffectsContext,
+    accountOverviewEffectsContext: AccountOverviewEffectsContext,
 ) : ViewModel(),
     HasActionableState<FeedCompositeState, FeedCompositeAction> by Seam(
         CompositeActionHandler(
@@ -53,8 +54,8 @@ internal class FeedViewModel @Inject constructor(
             ActionHandlerWithContext(accountOverviewActionsContext),
         ),
         CompositeEffectHandler(
-            feedEffectHandler,
-            accountOverviewEffectHandler,
+            EffectHandlerWithContext(feedEffectsContext),
+            EffectHandlerWithContext(accountOverviewEffectsContext),
         ),
         FeedState() to AccountOverviewState()
     ),

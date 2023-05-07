@@ -19,8 +19,9 @@ import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.people.People
 import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.api.usecase.RemoteMediaUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.people.view.api.ui.state.toPerson
 import com.savvasdalkitsis.uhuruphotos.feature.search.view.implementation.seam.SearchActionsContext
-import com.savvasdalkitsis.uhuruphotos.feature.search.view.implementation.seam.SearchEffect
+import com.savvasdalkitsis.uhuruphotos.feature.search.view.implementation.seam.effects.SearchEffect
 import com.savvasdalkitsis.uhuruphotos.feature.search.view.implementation.seam.SearchMutation
+import com.savvasdalkitsis.uhuruphotos.feature.search.view.implementation.seam.effects.ErrorRefreshingPeople
 import com.savvasdalkitsis.uhuruphotos.feature.search.view.implementation.ui.state.SearchState
 import com.savvasdalkitsis.uhuruphotos.feature.search.view.implementation.ui.state.SearchSuggestion
 import com.savvasdalkitsis.uhuruphotos.foundation.coroutines.api.onErrors
@@ -78,7 +79,7 @@ object Initialise : SearchAction() {
     private fun showPeopleSuggestion(effect: EffectHandler<SearchEffect>) =
         peopleUseCase.observePeopleByPhotoCount()
             .onErrors {
-                effect.handleEffect(SearchEffect.ErrorRefreshingPeople)
+                effect.handleEffect(ErrorRefreshingPeople)
             }
             .toPeople()
             .map { it.subList(0, max(0, min(10, it.size - 1))) }

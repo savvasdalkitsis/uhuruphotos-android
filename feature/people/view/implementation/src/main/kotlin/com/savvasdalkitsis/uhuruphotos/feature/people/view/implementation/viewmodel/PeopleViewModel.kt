@@ -18,12 +18,13 @@ package com.savvasdalkitsis.uhuruphotos.feature.people.view.implementation.viewm
 import androidx.lifecycle.ViewModel
 import com.savvasdalkitsis.uhuruphotos.feature.people.view.api.navigation.PeopleNavigationRoute
 import com.savvasdalkitsis.uhuruphotos.feature.people.view.implementation.seam.PeopleActionsContext
-import com.savvasdalkitsis.uhuruphotos.feature.people.view.implementation.seam.PeopleEffectHandler
+import com.savvasdalkitsis.uhuruphotos.feature.people.view.implementation.seam.PeopleEffectsContext
 import com.savvasdalkitsis.uhuruphotos.feature.people.view.implementation.seam.actions.LoadPeople
 import com.savvasdalkitsis.uhuruphotos.feature.people.view.implementation.seam.actions.PeopleAction
 import com.savvasdalkitsis.uhuruphotos.feature.people.view.implementation.ui.state.PeopleState
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.HasInitializer
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.ActionHandlerWithContext
+import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.EffectHandlerWithContext
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.HasActionableState
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.Seam
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -32,10 +33,10 @@ import javax.inject.Inject
 @HiltViewModel
 class PeopleViewModel @Inject constructor(
     peopleActionsContext: PeopleActionsContext,
-    effectHandler: PeopleEffectHandler,
+    peopleEffectsContext: PeopleEffectsContext,
 ) : ViewModel(), HasActionableState<PeopleState, PeopleAction> by Seam(
     ActionHandlerWithContext(peopleActionsContext),
-    effectHandler,
+    EffectHandlerWithContext(peopleEffectsContext),
     PeopleState()
 ), HasInitializer<PeopleAction, PeopleNavigationRoute> {
     override suspend fun initialize(initializerData: PeopleNavigationRoute, action: (PeopleAction) -> Unit) {

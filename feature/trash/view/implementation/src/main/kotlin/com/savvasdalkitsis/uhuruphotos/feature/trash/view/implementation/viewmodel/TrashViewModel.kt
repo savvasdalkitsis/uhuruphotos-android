@@ -16,7 +16,7 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.feature.trash.view.implementation.viewmodel
 
 import androidx.lifecycle.ViewModel
-import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.GalleryEffectHandler
+import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.GalleryEffectsContext
 import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.GalleryId
 import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.action.GalleryAction
 import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.action.LoadCollage
@@ -24,7 +24,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.ui.state.Gallery
 import com.savvasdalkitsis.uhuruphotos.feature.trash.view.api.navigation.TrashNavigationRoute
 import com.savvasdalkitsis.uhuruphotos.feature.trash.view.implementation.seam.TrashActionsContext
 import com.savvasdalkitsis.uhuruphotos.feature.trash.view.implementation.seam.TrashAlbumPageActionsContext
-import com.savvasdalkitsis.uhuruphotos.feature.trash.view.implementation.seam.TrashEffectHandler
+import com.savvasdalkitsis.uhuruphotos.feature.trash.view.implementation.seam.TrashEffectsContext
 import com.savvasdalkitsis.uhuruphotos.feature.trash.view.implementation.seam.actions.Load
 import com.savvasdalkitsis.uhuruphotos.feature.trash.view.implementation.seam.actions.TrashAction
 import com.savvasdalkitsis.uhuruphotos.feature.trash.view.implementation.state.TrashState
@@ -32,6 +32,7 @@ import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.HasInitializer
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.ActionHandlerWithContext
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.CompositeActionHandler
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.CompositeEffectHandler
+import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.EffectHandlerWithContext
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.Either
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.HasActionableState
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.Seam
@@ -45,8 +46,8 @@ private typealias TrashCompositeAction = Either<GalleryAction, TrashAction>
 internal class TrashViewModel @Inject constructor(
     trashActionsContext: TrashActionsContext,
     trashAlbumPageActionsContext: TrashAlbumPageActionsContext,
-    trashEffectHandler: TrashEffectHandler,
-    galleryEffectHandler: GalleryEffectHandler,
+    trashEffectsContext: TrashEffectsContext,
+    galleryEffectsContext: GalleryEffectsContext,
 ) : ViewModel(),
     HasActionableState<TrashCompositeState, TrashCompositeAction> by Seam(
         CompositeActionHandler(
@@ -54,8 +55,8 @@ internal class TrashViewModel @Inject constructor(
             ActionHandlerWithContext(trashActionsContext),
         ),
         CompositeEffectHandler(
-            galleryEffectHandler,
-            trashEffectHandler,
+            EffectHandlerWithContext(galleryEffectsContext),
+            EffectHandlerWithContext(trashEffectsContext),
         ),
         GalleryState() to TrashState()
     ),

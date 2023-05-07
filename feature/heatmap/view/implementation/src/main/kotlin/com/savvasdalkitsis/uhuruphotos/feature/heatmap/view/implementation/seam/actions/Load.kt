@@ -16,8 +16,9 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.feature.heatmap.view.implementation.seam.actions
 
 import com.savvasdalkitsis.uhuruphotos.feature.heatmap.view.implementation.seam.HeatMapActionsContext
-import com.savvasdalkitsis.uhuruphotos.feature.heatmap.view.implementation.seam.HeatMapEffect
+import com.savvasdalkitsis.uhuruphotos.feature.heatmap.view.implementation.seam.effects.HeatMapEffect
 import com.savvasdalkitsis.uhuruphotos.feature.heatmap.view.implementation.seam.HeatMapMutation
+import com.savvasdalkitsis.uhuruphotos.feature.heatmap.view.implementation.seam.effects.ErrorLoadingPhotoDetails
 import com.savvasdalkitsis.uhuruphotos.feature.heatmap.view.implementation.ui.state.HeatMapState
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemsOnDevice
 import com.savvasdalkitsis.uhuruphotos.foundation.coroutines.api.onErrors
@@ -67,7 +68,7 @@ object Load : HeatMapAction() {
             }
             .debounce(500)
             .distinctUntilChanged()
-            .onErrors { effect.handleEffect(HeatMapEffect.ErrorLoadingPhotoDetails) }
+            .onErrors { effect.handleEffect(ErrorLoadingPhotoDetails) }
             .flatMapLatest { media ->
                 flowOf(HeatMapMutation.UpdateAllMedia(media), updateDisplay(media))
             },

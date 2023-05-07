@@ -20,10 +20,10 @@ import com.savvasdalkitsis.uhuruphotos.feature.auth.domain.api.model.AuthStatus.
 import com.savvasdalkitsis.uhuruphotos.feature.auth.domain.api.model.AuthStatus.ServerDown
 import com.savvasdalkitsis.uhuruphotos.feature.auth.domain.api.model.AuthStatus.Unauthenticated
 import com.savvasdalkitsis.uhuruphotos.feature.server.view.implementation.seam.ServerActionsContext
-import com.savvasdalkitsis.uhuruphotos.feature.server.view.implementation.seam.ServerEffect
-import com.savvasdalkitsis.uhuruphotos.feature.server.view.implementation.seam.ServerEffect.Close
 import com.savvasdalkitsis.uhuruphotos.feature.server.view.implementation.seam.ServerMutation.AskForServerDetails
 import com.savvasdalkitsis.uhuruphotos.feature.server.view.implementation.seam.ServerMutation.AskForUserCredentials
+import com.savvasdalkitsis.uhuruphotos.feature.server.view.implementation.seam.effects.Close
+import com.savvasdalkitsis.uhuruphotos.feature.server.view.implementation.seam.effects.ServerEffect
 import com.savvasdalkitsis.uhuruphotos.feature.server.view.implementation.ui.ServerState
 import com.savvasdalkitsis.uhuruphotos.feature.server.view.implementation.ui.ServerState.UserCredentials
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.EffectHandler

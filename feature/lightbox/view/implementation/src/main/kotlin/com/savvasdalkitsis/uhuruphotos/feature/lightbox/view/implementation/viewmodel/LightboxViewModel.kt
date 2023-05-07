@@ -18,12 +18,13 @@ package com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.vie
 import androidx.lifecycle.ViewModel
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.api.navigation.LightboxNavigationRoute
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.LightboxActionsContext
-import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.LightboxEffectHandler
+import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.LightboxEffectsContext
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.actions.LightboxAction
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.actions.LoadMediaItem
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.ui.state.LightboxState
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.HasInitializer
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.ActionHandlerWithContext
+import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.EffectHandlerWithContext
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.HasActionableState
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.Seam
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -32,10 +33,10 @@ import javax.inject.Inject
 @HiltViewModel
 internal class LightboxViewModel @Inject constructor(
     lightboxActionsContext: LightboxActionsContext,
-    effectHandler: LightboxEffectHandler,
+    lightboxEffectsContext: LightboxEffectsContext,
 ) : ViewModel(), HasActionableState<LightboxState, LightboxAction> by Seam(
     ActionHandlerWithContext(lightboxActionsContext),
-    effectHandler,
+    EffectHandlerWithContext(lightboxEffectsContext),
     LightboxState()
 ), HasInitializer<LightboxAction, LightboxNavigationRoute> {
 

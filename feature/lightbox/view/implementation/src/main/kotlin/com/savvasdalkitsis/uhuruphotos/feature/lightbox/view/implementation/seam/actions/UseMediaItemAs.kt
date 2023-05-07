@@ -16,8 +16,9 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.actions
 
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.LightboxActionsContext
-import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.LightboxEffect
+import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.effects.LightboxEffect
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.LightboxMutation
+import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.effects.UseMediaAs
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.ui.state.LightboxState
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.EffectHandler
 import kotlinx.coroutines.flow.flow
@@ -28,7 +29,7 @@ object UseMediaItemAs : LightboxAction() {
         state: LightboxState,
         effect: EffectHandler<LightboxEffect>
     ) = flow<LightboxMutation> {
-        effect.handleEffect(LightboxEffect.UseMediaAs(state.currentMediaItem.fullResUrl))
+        effect.handleEffect(UseMediaAs(state.currentMediaItem.fullResUrl))
     }
 
 }

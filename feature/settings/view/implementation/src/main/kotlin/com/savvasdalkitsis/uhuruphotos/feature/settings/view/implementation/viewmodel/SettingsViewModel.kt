@@ -18,12 +18,13 @@ package com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.vie
 import androidx.lifecycle.ViewModel
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.api.navigation.SettingsNavigationRoute
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.SettingsActionsContext
-import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.SettingsEffectHandler
+import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.SettingsEffectsContext
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.actions.LoadSettings
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.actions.SettingsAction
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.ui.state.SettingsState
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.HasInitializer
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.ActionHandlerWithContext
+import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.EffectHandlerWithContext
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.HasActionableState
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.Seam
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -32,10 +33,10 @@ import javax.inject.Inject
 @HiltViewModel
 internal class SettingsViewModel @Inject constructor(
     settingsActionsContext: SettingsActionsContext,
-    effectHandler: SettingsEffectHandler,
+    settingsEffectsContext: SettingsEffectsContext,
 ) : ViewModel(), HasActionableState<SettingsState, SettingsAction> by Seam(
     ActionHandlerWithContext(settingsActionsContext),
-    effectHandler,
+    EffectHandlerWithContext(settingsEffectsContext),
     SettingsState()
 ), HasInitializer<SettingsAction, SettingsNavigationRoute> {
     override suspend fun initialize(initializerData: SettingsNavigationRoute, action: (SettingsAction) -> Unit) {

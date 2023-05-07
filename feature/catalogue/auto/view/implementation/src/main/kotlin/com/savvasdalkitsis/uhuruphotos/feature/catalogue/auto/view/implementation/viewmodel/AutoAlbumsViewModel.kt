@@ -18,12 +18,13 @@ package com.savvasdalkitsis.uhuruphotos.feature.catalogue.auto.view.implementati
 import androidx.lifecycle.ViewModel
 import com.savvasdalkitsis.uhuruphotos.feature.catalogue.auto.view.api.navigation.AutoAlbumsNavigationRoute
 import com.savvasdalkitsis.uhuruphotos.feature.catalogue.auto.view.implementation.seam.AutoAlbumsActionsContext
-import com.savvasdalkitsis.uhuruphotos.feature.catalogue.auto.view.implementation.seam.AutoAlbumsEffectHandler
+import com.savvasdalkitsis.uhuruphotos.feature.catalogue.auto.view.implementation.seam.AutoAlbumsEffectsContext
 import com.savvasdalkitsis.uhuruphotos.feature.catalogue.auto.view.implementation.seam.AutoAlbumsState
 import com.savvasdalkitsis.uhuruphotos.feature.catalogue.auto.view.implementation.seam.actions.AutoAlbumsAction
 import com.savvasdalkitsis.uhuruphotos.feature.catalogue.auto.view.implementation.seam.actions.Load
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.HasInitializer
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.ActionHandlerWithContext
+import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.EffectHandlerWithContext
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.HasActionableState
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.Seam
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -32,10 +33,10 @@ import javax.inject.Inject
 @HiltViewModel
 internal class AutoAlbumsViewModel @Inject constructor(
     autoAlbumsActionsContext: AutoAlbumsActionsContext,
-    effectHandler: AutoAlbumsEffectHandler,
+    effectsContext: AutoAlbumsEffectsContext,
 ) : ViewModel(), HasActionableState<AutoAlbumsState, AutoAlbumsAction> by Seam(
     ActionHandlerWithContext(autoAlbumsActionsContext),
-    effectHandler,
+    EffectHandlerWithContext(effectsContext),
     AutoAlbumsState()
 ), HasInitializer<AutoAlbumsAction, AutoAlbumsNavigationRoute> {
     override suspend fun initialize(
