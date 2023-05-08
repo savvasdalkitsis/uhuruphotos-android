@@ -54,7 +54,7 @@ mainly:
 ## Play store
 
 The app is currently in public beta on the Google Play store. You can join and try out the app: 
-![https://play.google.com/apps/testing/com.savvasdalkitsis.uhuruphotos](https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png)
+[![Play Store Link](https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png)](https://play.google.com/apps/testing/com.savvasdalkitsis.uhuruphotos)
 
 ## Manual
 
