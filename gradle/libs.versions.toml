@@ -105,7 +105,7 @@ shazamcrest = "com.shazam:shazamcrest:0.11"
 sqldelight-android = { module = "com.squareup.sqldelight:android-driver", version.ref = "sqldelight" }
 sqldelight-coroutines = { module = "com.squareup.sqldelight:coroutines-extensions", version.ref = "sqldelight" }
 sqldelight-jvm = { module = "com.squareup.sqldelight:sqlite-driver", version.ref = "sqldelight" }
-turbine = "app.cash.turbine:turbine:0.12.3"
+turbine = "app.cash.turbine:turbine:0.13.0"
 urlvalidator = "commons-validator:commons-validator:1.7"
 zoomable = "com.mxalbert.zoomable:zoomable:1.6.0"
 
