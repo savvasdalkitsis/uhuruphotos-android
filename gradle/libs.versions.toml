@@ -107,7 +107,7 @@ sqldelight-coroutines = { module = "com.squareup.sqldelight:coroutines-extension
 sqldelight-jvm = { module = "com.squareup.sqldelight:sqlite-driver", version.ref = "sqldelight" }
 turbine = "app.cash.turbine:turbine:0.12.3"
 urlvalidator = "commons-validator:commons-validator:1.7"
-zoomable = "com.mxalbert.zoomable:zoomable:1.6.0"
+zoomable = "com.mxalbert.zoomable:zoomable:1.6.1"
 
 [bundles]
 androidx-compose-animation = [
