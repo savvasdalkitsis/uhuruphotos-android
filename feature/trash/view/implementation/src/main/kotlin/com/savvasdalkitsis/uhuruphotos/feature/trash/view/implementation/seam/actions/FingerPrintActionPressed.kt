@@ -23,7 +23,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.trash.view.implementation.state.T
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.EffectHandler
 import kotlinx.coroutines.flow.flow
 
-object FingerPrintActionPressed : TrashAction() {
+data object FingerPrintActionPressed : TrashAction() {
     context(TrashActionsContext) override fun handle(
         state: TrashState,
         effect: EffectHandler<TrashEffect>

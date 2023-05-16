@@ -22,7 +22,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.heatmap.view.implementation.ui.st
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.EffectHandler
 import kotlinx.coroutines.flow.flow
 
-object NeverAskForLocalMediaAccessPermissionRequest : HeatMapAction() {
+data object NeverAskForLocalMediaAccessPermissionRequest : HeatMapAction() {
     context(HeatMapActionsContext) override fun handle(
         state: HeatMapState,
         effect: EffectHandler<HeatMapEffect>

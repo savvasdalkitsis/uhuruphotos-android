@@ -23,7 +23,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.hidden.view.implementation.seam.H
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.EffectHandler
 import kotlinx.coroutines.flow.flow
 
-object FingerPrintActionPressed : HiddenPhotosAction() {
+data object FingerPrintActionPressed : HiddenPhotosAction() {
     context(HiddenPhotosActionsContext) override fun handle(
         state: HiddenPhotosState,
         effect: EffectHandler<HiddenPhotosEffect>

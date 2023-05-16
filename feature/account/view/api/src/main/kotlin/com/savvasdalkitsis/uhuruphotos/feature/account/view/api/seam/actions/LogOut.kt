@@ -23,7 +23,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.account.view.api.ui.state.Account
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.EffectHandler
 import kotlinx.coroutines.flow.flow
 
-object LogOut : AccountOverviewAction() {
+data object LogOut : AccountOverviewAction() {
     context(AccountOverviewActionsContext) override fun handle(
         state: AccountOverviewState,
         effect: EffectHandler<AccountOverviewEffect>

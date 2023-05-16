@@ -22,7 +22,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.catalogue.auto.view.implementatio
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.EffectHandler
 import kotlinx.coroutines.flow.flow
 
-object Refresh : AutoAlbumsAction() {
+data object Refresh : AutoAlbumsAction() {
     context(AutoAlbumsActionsContext) override fun handle(
         state: AutoAlbumsState,
         effect: EffectHandler<AutoAlbumsEffect>

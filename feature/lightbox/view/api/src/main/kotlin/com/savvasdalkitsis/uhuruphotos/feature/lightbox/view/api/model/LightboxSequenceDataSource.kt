@@ -17,15 +17,15 @@ package com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.api.model
 
 sealed class LightboxSequenceDataSource {
 
-    object Single : LightboxSequenceDataSource()
-    object Feed : LightboxSequenceDataSource()
+    data object Single : LightboxSequenceDataSource()
+    data object Feed : LightboxSequenceDataSource()
     data class Memory(val yearsAgo: Int) : LightboxSequenceDataSource()
     data class SearchResults(val query: String) : LightboxSequenceDataSource()
     data class PersonResults(val personId: Int) : LightboxSequenceDataSource()
     data class AutoAlbum(val albumId: Int) : LightboxSequenceDataSource()
     data class UserAlbum(val albumId: Int) : LightboxSequenceDataSource()
     data class LocalAlbum(val albumId: Int) : LightboxSequenceDataSource()
-    object FavouriteMedia : LightboxSequenceDataSource()
-    object HiddenMedia : LightboxSequenceDataSource()
-    object Trash : LightboxSequenceDataSource()
+    data object FavouriteMedia : LightboxSequenceDataSource()
+    data object HiddenMedia : LightboxSequenceDataSource()
+    data object Trash : LightboxSequenceDataSource()
 }

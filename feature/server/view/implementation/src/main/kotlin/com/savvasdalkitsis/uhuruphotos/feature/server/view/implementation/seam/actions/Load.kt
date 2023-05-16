@@ -26,7 +26,7 @@ import kotlinx.coroutines.flow.emitAll
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.map
 
-object Load : ServerAction() {
+data object Load : ServerAction() {
     context(ServerActionsContext) override fun handle(
         state: ServerState,
         effect: EffectHandler<ServerEffect>

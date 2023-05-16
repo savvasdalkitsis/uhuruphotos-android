@@ -23,7 +23,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.ui.s
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.EffectHandler
 import kotlinx.coroutines.flow.flow
 
-object NavigateBack : SettingsAction() {
+data object NavigateBack : SettingsAction() {
     context(SettingsActionsContext) override fun handle(
         state: SettingsState,
         effect: EffectHandler<SettingsEffect>

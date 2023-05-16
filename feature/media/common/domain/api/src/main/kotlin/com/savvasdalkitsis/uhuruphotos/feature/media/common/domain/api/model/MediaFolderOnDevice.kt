@@ -25,5 +25,5 @@ sealed class MediaFolderOnDevice {
 
     data class RequiresPermissions(val deniedPermissions: List<String>) : MediaFolderOnDevice()
 
-    object Error : MediaFolderOnDevice()
+    data object Error : MediaFolderOnDevice()
 }

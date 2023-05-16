@@ -23,7 +23,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.library.view.implementation.ui.st
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.EffectHandler
 import kotlinx.coroutines.flow.flow
 
-object HiddenPhotosSelected : LibraryAction() {
+data object HiddenPhotosSelected : LibraryAction() {
     context(LibraryActionsContext) override fun handle(
         state: LibraryState,
         effect: EffectHandler<LibraryEffect>

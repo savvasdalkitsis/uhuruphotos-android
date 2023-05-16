@@ -22,7 +22,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.people.view.implementation.ui.sta
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.EffectHandler
 import kotlinx.coroutines.flow.flow
 
-object ToggleSortOrder : PeopleAction() {
+data object ToggleSortOrder : PeopleAction() {
 
     context(PeopleActionsContext) override fun handle(
         state: PeopleState,

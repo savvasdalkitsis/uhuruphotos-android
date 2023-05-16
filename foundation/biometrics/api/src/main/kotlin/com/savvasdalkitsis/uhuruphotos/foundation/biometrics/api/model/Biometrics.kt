@@ -17,15 +17,15 @@ package com.savvasdalkitsis.uhuruphotos.foundation.biometrics.api.model
 
 sealed class Biometrics {
 
-    object NoHardware : Biometrics() {
+    data object NoHardware : Biometrics() {
         override val isSupported = false
     }
 
-    object NotEnrolled : Biometrics() {
+    data object NotEnrolled : Biometrics() {
         override val isSupported = true
     }
 
-    object Enrolled : Biometrics() {
+    data object Enrolled : Biometrics() {
         override val isSupported = true
     }
 

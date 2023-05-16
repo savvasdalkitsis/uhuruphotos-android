@@ -42,7 +42,7 @@ import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.merge
 
-object LoadSettings : SettingsAction() {
+data object LoadSettings : SettingsAction() {
     context(SettingsActionsContext) override fun handle(
         state: SettingsState,
         effect: EffectHandler<SettingsEffect>

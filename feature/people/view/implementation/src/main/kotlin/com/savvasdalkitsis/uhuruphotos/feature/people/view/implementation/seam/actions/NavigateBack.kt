@@ -23,7 +23,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.people.view.implementation.ui.sta
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.EffectHandler
 import kotlinx.coroutines.flow.flow
 
-object NavigateBack : PeopleAction() {
+data object NavigateBack : PeopleAction() {
     context(PeopleActionsContext) override fun handle(
         state: PeopleState,
         effect: EffectHandler<PeopleEffect>

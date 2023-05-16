@@ -22,7 +22,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.account.view.api.ui.state.Account
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.EffectHandler
 import kotlinx.coroutines.flow.flowOf
 
-object AvatarPressed : AccountOverviewAction() {
+data object AvatarPressed : AccountOverviewAction() {
     context(AccountOverviewActionsContext) override fun handle(
         state: AccountOverviewState,
         effect: EffectHandler<AccountOverviewEffect>

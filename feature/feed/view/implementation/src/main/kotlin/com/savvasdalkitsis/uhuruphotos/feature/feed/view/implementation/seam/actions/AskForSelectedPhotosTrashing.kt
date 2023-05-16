@@ -30,7 +30,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.model.Loca
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.EffectHandler
 import kotlinx.coroutines.flow.flow
 
-object AskForSelectedPhotosTrashing : FeedAction() {
+data object AskForSelectedPhotosTrashing : FeedAction() {
 
     context(FeedActionsContext) override fun handle(
         state: FeedState,

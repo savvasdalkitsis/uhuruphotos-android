@@ -19,6 +19,6 @@ sealed class LocalPermissions {
 
     data class RequiresPermissions(val deniedPermissions: List<String>) : LocalPermissions()
 
-    object Granted : LocalPermissions()
+    data object Granted : LocalPermissions()
 
 }

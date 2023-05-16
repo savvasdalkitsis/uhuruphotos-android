@@ -22,7 +22,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.ui.s
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.EffectHandler
 import kotlinx.coroutines.flow.flowOf
 
-object AskForPrecacheThumbnails : SettingsAction() {
+data object AskForPrecacheThumbnails : SettingsAction() {
     context(SettingsActionsContext) override fun handle(
         state: SettingsState,
         effect: EffectHandler<SettingsEffect>

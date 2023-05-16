@@ -36,7 +36,7 @@ import kotlinx.coroutines.flow.merge
 import kotlin.math.max
 import kotlin.math.min
 
-object Initialise : SearchAction() {
+data object Initialise : SearchAction() {
     context(SearchActionsContext) override fun handle(
         state: SearchState,
         effect: EffectHandler<SearchEffect>

@@ -24,7 +24,7 @@ import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.EffectHandler
 import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R
 import kotlinx.coroutines.flow.flow
 
-object ClearRecentSearches : SettingsAction() {
+data object ClearRecentSearches : SettingsAction() {
     context(SettingsActionsContext) override fun handle(
         state: SettingsState,
         effect: EffectHandler<SettingsEffect>

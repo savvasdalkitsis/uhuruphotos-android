@@ -23,7 +23,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.ui.state.Gallery
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.EffectHandler
 import kotlinx.coroutines.flow.flow
 
-object NavigateBack : GalleryAction() {
+data object NavigateBack : GalleryAction() {
     context(GalleryActionsContext) override fun handle(
         state: GalleryState,
         effect: EffectHandler<GalleryEffect>

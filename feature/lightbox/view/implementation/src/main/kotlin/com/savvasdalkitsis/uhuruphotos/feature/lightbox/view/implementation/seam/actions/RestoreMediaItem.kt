@@ -20,7 +20,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.ui.state.LightboxState
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.EffectHandler
 
-object RestoreMediaItem : LightboxAction() {
+data object RestoreMediaItem : LightboxAction() {
 
     context(LightboxActionsContext) override fun handle(
         state: LightboxState,

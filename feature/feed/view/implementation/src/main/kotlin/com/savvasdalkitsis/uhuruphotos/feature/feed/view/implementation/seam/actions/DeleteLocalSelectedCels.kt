@@ -22,7 +22,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.ui.state
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.EffectHandler
 import kotlinx.coroutines.flow.flow
 
-object DeleteLocalSelectedCels : FeedAction() {
+data object DeleteLocalSelectedCels : FeedAction() {
     context(FeedActionsContext) override fun handle(
         state: FeedState,
         effect: EffectHandler<FeedEffect>

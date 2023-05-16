@@ -23,7 +23,7 @@ import com.savvasdalkitsis.uhuruphotos.foundation.http.api.isValidUrlOrDomain
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.EffectHandler
 import kotlinx.coroutines.flow.flow
 
-object RequestServerUrlChange: ServerAction() {
+data object RequestServerUrlChange: ServerAction() {
     context(ServerActionsContext) override fun handle(
         state: ServerState,
         effect: EffectHandler<ServerEffect>

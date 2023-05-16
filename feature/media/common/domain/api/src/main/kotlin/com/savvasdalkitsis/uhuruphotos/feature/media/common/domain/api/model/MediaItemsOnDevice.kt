@@ -26,5 +26,5 @@ sealed class MediaItemsOnDevice {
 
     data class RequiresPermissions(val deniedPermissions: List<String>) : MediaItemsOnDevice()
 
-    object Error: MediaItemsOnDevice()
+    data object Error: MediaItemsOnDevice()
 }

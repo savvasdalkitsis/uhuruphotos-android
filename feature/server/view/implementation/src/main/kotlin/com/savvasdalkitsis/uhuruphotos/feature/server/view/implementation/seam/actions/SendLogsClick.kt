@@ -23,7 +23,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.server.view.implementation.ui.Ser
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.EffectHandler
 import kotlinx.coroutines.flow.flow
 
-object SendLogsClick : ServerAction() {
+data object SendLogsClick : ServerAction() {
     context(ServerActionsContext) override fun handle(
         state: ServerState,
         effect: EffectHandler<ServerEffect>

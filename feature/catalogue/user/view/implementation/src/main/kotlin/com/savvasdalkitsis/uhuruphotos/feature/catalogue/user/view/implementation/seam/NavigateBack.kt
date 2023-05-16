@@ -20,7 +20,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.catalogue.user.view.implementatio
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.EffectHandler
 import kotlinx.coroutines.flow.flow
 
-object NavigateBack : UserAlbumsAction() {
+data object NavigateBack : UserAlbumsAction() {
     context(UserAlbumsActionsContext) override fun handle(
         state: UserAlbumsState,
         effect: EffectHandler<UserAlbumsEffect>

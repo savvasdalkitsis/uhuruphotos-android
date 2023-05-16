@@ -30,7 +30,7 @@ import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.EffectHandler
 import kotlinx.coroutines.flow.emitAll
 import kotlinx.coroutines.flow.flow
 
-object AskForMediaItemTrashing : LightboxAction() {
+data object AskForMediaItemTrashing : LightboxAction() {
 
     context(LightboxActionsContext) override fun handle(
         state: LightboxState,

@@ -24,7 +24,7 @@ import android.provider.MediaStore.Video.Media.DURATION
 import android.provider.MediaStore.Video.Media.EXTERNAL_CONTENT_URI
 import android.provider.MediaStore.Video.Media.getContentUri
 
-internal object LocalMediaVideoColumns {
+internal data object LocalMediaVideoColumns {
 
     val collection: Uri = if (SDK_INT >= Q) {
         getContentUri(MediaStore.VOLUME_EXTERNAL)

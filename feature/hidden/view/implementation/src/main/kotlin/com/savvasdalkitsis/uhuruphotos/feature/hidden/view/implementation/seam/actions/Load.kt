@@ -22,7 +22,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.hidden.view.implementation.seam.H
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.EffectHandler
 import kotlinx.coroutines.flow.map
 
-object Load : HiddenPhotosAction() {
+data object Load : HiddenPhotosAction() {
     context(HiddenPhotosActionsContext) override fun handle(
         state: HiddenPhotosState,
         effect: EffectHandler<HiddenPhotosEffect>

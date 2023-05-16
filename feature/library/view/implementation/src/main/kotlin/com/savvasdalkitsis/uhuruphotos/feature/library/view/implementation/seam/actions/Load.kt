@@ -37,7 +37,7 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.mapNotNull
 import kotlinx.coroutines.flow.merge
 
-object Load : LibraryAction() {
+data object Load : LibraryAction() {
 
     context(LibraryActionsContext) override fun handle(
         state: LibraryState,

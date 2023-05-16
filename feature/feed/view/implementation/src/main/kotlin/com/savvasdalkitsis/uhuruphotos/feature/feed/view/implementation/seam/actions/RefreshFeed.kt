@@ -24,7 +24,7 @@ import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.EffectHandler
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.flow
 
-object RefreshFeed : FeedAction() {
+data object RefreshFeed : FeedAction() {
     context(FeedActionsContext) override fun handle(
         state: FeedState,
         effect: EffectHandler<FeedEffect>

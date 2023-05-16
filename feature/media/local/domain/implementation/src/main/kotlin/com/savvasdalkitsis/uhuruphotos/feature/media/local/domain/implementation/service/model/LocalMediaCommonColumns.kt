@@ -24,7 +24,7 @@ import android.provider.MediaStore.MediaColumns.SIZE
 import android.provider.MediaStore.MediaColumns.WIDTH
 import android.provider.MediaStore.MediaColumns._ID
 
-internal object LocalMediaCommonColumns {
+internal data object LocalMediaCommonColumns {
 
     val projection = arrayOf(
         _ID,

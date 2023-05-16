@@ -23,7 +23,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.search.view.implementation.ui.sta
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.EffectHandler
 import kotlinx.coroutines.flow.flow
 
-object ViewAllPeopleSelected : SearchAction() {
+data object ViewAllPeopleSelected : SearchAction() {
     context(SearchActionsContext) override fun handle(
         state: SearchState,
         effect: EffectHandler<SearchEffect>

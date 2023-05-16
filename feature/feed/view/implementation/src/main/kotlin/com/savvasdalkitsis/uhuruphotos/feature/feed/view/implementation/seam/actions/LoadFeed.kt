@@ -42,7 +42,7 @@ import kotlinx.coroutines.flow.mapNotNull
 import kotlinx.coroutines.flow.merge
 import kotlinx.coroutines.isActive
 
-object LoadFeed : FeedAction() {
+data object LoadFeed : FeedAction() {
 
     context(FeedActionsContext) override fun handle(
         state: FeedState,

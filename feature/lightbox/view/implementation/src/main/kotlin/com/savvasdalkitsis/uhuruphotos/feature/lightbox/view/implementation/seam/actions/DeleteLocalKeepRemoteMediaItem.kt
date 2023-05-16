@@ -24,7 +24,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.Med
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.EffectHandler
 import kotlinx.coroutines.flow.Flow
 
-object DeleteLocalKeepRemoteMediaItem : LightboxAction() {
+data object DeleteLocalKeepRemoteMediaItem : LightboxAction() {
 
     context(LightboxActionsContext) override fun handle(
         state: LightboxState,

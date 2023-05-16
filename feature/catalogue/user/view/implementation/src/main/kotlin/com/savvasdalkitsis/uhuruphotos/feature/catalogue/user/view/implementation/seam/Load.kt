@@ -22,7 +22,7 @@ import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.EffectHandler
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.merge
 
-object Load : UserAlbumsAction() {
+data object Load : UserAlbumsAction() {
     context(UserAlbumsActionsContext) override fun handle(
         state: UserAlbumsState,
         effect: EffectHandler<UserAlbumsEffect>

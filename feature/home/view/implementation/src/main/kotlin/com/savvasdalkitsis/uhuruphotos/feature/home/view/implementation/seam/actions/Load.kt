@@ -26,7 +26,7 @@ import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.EffectHandler
 import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R
 import kotlinx.coroutines.flow.flow
 
-object Load : HomeAction() {
+data object Load : HomeAction() {
 
     context(HomeActionsContext) override fun handle(
         state: HomeState,

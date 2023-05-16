@@ -23,7 +23,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.ui.s
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.EffectHandler
 import kotlinx.coroutines.flow.flow
 
-object UseMediaItemAs : LightboxAction() {
+data object UseMediaItemAs : LightboxAction() {
 
     context(LightboxActionsContext) override fun handle(
         state: LightboxState,

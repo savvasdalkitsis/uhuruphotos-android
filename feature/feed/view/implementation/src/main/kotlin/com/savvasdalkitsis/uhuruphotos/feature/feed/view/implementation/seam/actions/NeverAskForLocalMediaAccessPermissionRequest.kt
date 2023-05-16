@@ -22,7 +22,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.ui.state
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.EffectHandler
 import kotlinx.coroutines.flow.flow
 
-object NeverAskForLocalMediaAccessPermissionRequest : FeedAction() {
+data object NeverAskForLocalMediaAccessPermissionRequest : FeedAction() {
     context(FeedActionsContext) override fun handle(
         state: FeedState,
         effect: EffectHandler<FeedEffect>

@@ -22,7 +22,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.ui.s
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.EffectHandler
 import kotlinx.coroutines.flow.flowOf
 
-object DismissErrorMessage : LightboxAction() {
+data object DismissErrorMessage : LightboxAction() {
 
     context(LightboxActionsContext) override fun handle(
         state: LightboxState,

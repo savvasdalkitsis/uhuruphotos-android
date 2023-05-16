@@ -22,7 +22,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.library.view.implementation.ui.st
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.EffectHandler
 import kotlinx.coroutines.flow.flow
 
-object Refresh : LibraryAction() {
+data object Refresh : LibraryAction() {
 
     context(LibraryActionsContext) override fun handle(
         state: LibraryState,

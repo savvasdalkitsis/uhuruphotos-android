@@ -23,7 +23,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.heatmap.view.implementation.ui.st
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.EffectHandler
 import kotlinx.coroutines.flow.flow
 
-object BackPressed : HeatMapAction() {
+data object BackPressed : HeatMapAction() {
     context(HeatMapActionsContext) override fun handle(
         state: HeatMapState,
         effect: EffectHandler<HeatMapEffect>

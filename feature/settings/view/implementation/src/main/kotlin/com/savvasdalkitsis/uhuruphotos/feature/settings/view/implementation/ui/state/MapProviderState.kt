@@ -18,6 +18,6 @@ package com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.ui.
 import com.savvasdalkitsis.uhuruphotos.foundation.map.api.model.MapProvider
 
 sealed class MapProviderState {
-    object NoOptions: MapProviderState()
+    data object NoOptions: MapProviderState()
     data class Selected(val current: MapProvider, val available: Set<MapProvider>) : MapProviderState()
 }

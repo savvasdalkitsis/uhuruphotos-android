@@ -22,7 +22,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.search.view.implementation.ui.sta
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.EffectHandler
 import kotlinx.coroutines.flow.flow
 
-object SearchCleared : SearchAction() {
+data object SearchCleared : SearchAction() {
 
     context(SearchActionsContext) override fun handle(
         state: SearchState,

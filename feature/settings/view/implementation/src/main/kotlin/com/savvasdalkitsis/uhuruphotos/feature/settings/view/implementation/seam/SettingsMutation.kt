@@ -29,43 +29,43 @@ sealed class SettingsMutation(
     mutation: Mutation<SettingsState>,
 ) : Mutation<SettingsState> by mutation {
 
-    object ShowFullFeedSyncDialog : SettingsMutation({
+    data object ShowFullFeedSyncDialog : SettingsMutation({
         it.copy(showFullFeedSyncDialog = true)
     })
 
-    object HideFullFeedSyncDialog : SettingsMutation({
+    data object HideFullFeedSyncDialog : SettingsMutation({
         it.copy(showFullFeedSyncDialog = false)
     })
 
-    object ShowPrecacheThumbnailsDialog : SettingsMutation({
+    data object ShowPrecacheThumbnailsDialog : SettingsMutation({
         it.copy(showPrecacheThumbnailsDialog = true)
     })
 
-    object HidePrecacheThumbnailsDialog : SettingsMutation({
+    data object HidePrecacheThumbnailsDialog : SettingsMutation({
         it.copy(showPrecacheThumbnailsDialog = false)
     })
 
-    object EnableFullSyncButton : SettingsMutation({
+    data object EnableFullSyncButton : SettingsMutation({
         it.copy(fullSyncButtonEnabled = true)
     })
 
-    object DisableFullSyncButton : SettingsMutation({
+    data object DisableFullSyncButton : SettingsMutation({
         it.copy(fullSyncButtonEnabled = false)
     })
 
-    object EnablePrecacheThumbnailsButton : SettingsMutation({
+    data object EnablePrecacheThumbnailsButton : SettingsMutation({
         it.copy(precacheThumbnailsButtonEnabled = true)
     })
 
-    object DisablePrecacheThumbnailsButton : SettingsMutation({
+    data object DisablePrecacheThumbnailsButton : SettingsMutation({
         it.copy(precacheThumbnailsButtonEnabled = false)
     })
 
-    object HidePrecacheThumbnailsProgress : SettingsMutation({
+    data object HidePrecacheThumbnailsProgress : SettingsMutation({
         it.copy(precacheThumbnailsProgress = null)
     })
 
-    object HideFullSyncProgress : SettingsMutation({
+    data object HideFullSyncProgress : SettingsMutation({
         it.copy(fullSyncJobProgress = null)
     })
 

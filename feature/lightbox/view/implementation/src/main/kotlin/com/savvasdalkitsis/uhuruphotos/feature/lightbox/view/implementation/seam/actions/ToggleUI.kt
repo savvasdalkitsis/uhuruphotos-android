@@ -24,7 +24,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.ui.s
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.EffectHandler
 import kotlinx.coroutines.flow.flow
 
-object ToggleUI : LightboxAction() {
+data object ToggleUI : LightboxAction() {
 
     context(LightboxActionsContext) override fun handle(
         state: LightboxState,

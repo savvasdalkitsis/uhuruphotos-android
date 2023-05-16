@@ -22,7 +22,7 @@ import android.provider.MediaStore
 import android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI
 import android.provider.MediaStore.Images.Media.getContentUri
 
-internal object LocalMediaPhotoColumns {
+internal data object LocalMediaPhotoColumns {
 
     val collection: Uri = if (SDK_INT >= Q) {
         getContentUri(MediaStore.VOLUME_EXTERNAL)

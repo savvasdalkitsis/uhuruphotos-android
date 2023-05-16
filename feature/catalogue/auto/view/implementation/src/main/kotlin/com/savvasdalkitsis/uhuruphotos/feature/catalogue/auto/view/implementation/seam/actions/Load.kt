@@ -24,7 +24,7 @@ import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.EffectHandler
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.merge
 
-object Load : AutoAlbumsAction() {
+data object Load : AutoAlbumsAction() {
     context(AutoAlbumsActionsContext) override fun handle(
         state: AutoAlbumsState,
         effect: EffectHandler<AutoAlbumsEffect>

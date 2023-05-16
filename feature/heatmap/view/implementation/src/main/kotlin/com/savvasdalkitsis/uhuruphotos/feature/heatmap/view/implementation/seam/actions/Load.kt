@@ -38,7 +38,7 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.mapNotNull
 import kotlinx.coroutines.flow.merge
 
-object Load : HeatMapAction() {
+data object Load : HeatMapAction() {
 
     private val detailsDownloading = MutableStateFlow(false)
 

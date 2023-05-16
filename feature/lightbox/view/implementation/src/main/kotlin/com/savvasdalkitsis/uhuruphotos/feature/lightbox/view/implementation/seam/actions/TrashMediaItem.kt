@@ -25,7 +25,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.ui.s
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.ui.state.SingleMediaItemState
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.EffectHandler
 
-object TrashMediaItem : LightboxAction() {
+data object TrashMediaItem : LightboxAction() {
 
     context(LightboxActionsContext) override fun handle(
         state: LightboxState,

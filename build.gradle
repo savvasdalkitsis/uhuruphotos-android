@@ -107,11 +107,12 @@ subprojects {
     }
 
     dependencies {
-        kapt "com.google.dagger:hilt-compiler:2.46"
+        kapt "com.google.dagger:hilt-compiler:2.46.1"
         kapt "androidx.hilt:hilt-compiler:1.0.0"
     }
 
     tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).configureEach {
+        compilerOptions.languageVersion = org.jetbrains.kotlin.gradle.dsl.KotlinVersion.KOTLIN_1_9
         kotlinOptions {
             freeCompilerArgs += "-opt-in=com.google.accompanist.permissions.ExperimentalPermissionsApi"
             freeCompilerArgs += "-opt-in=androidx.compose.animation.ExperimentalAnimationApi"
@@ -124,6 +125,7 @@ subprojects {
             freeCompilerArgs += "-opt-in=coil.annotation.ExperimentalCoilApi"
             freeCompilerArgs += "-opt-in=kotlinx.coroutines.ExperimentalCoroutinesApi"
             freeCompilerArgs += "-opt-in=kotlinx.coroutines.FlowPreview"
+            freeCompilerArgs += "-opt-in=kotlinx.ExperimentalStdlibApi"
             freeCompilerArgs += "-Xcontext-receivers"
         }
     }

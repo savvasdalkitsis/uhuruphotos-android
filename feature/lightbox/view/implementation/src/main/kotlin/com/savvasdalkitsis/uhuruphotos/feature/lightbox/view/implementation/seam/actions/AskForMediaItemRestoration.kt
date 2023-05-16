@@ -22,7 +22,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.ui.s
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.EffectHandler
 import kotlinx.coroutines.flow.flowOf
 
-object AskForMediaItemRestoration : LightboxAction() {
+data object AskForMediaItemRestoration : LightboxAction() {
 
     context(LightboxActionsContext) override fun handle(
         state: LightboxState,
