@@ -57,13 +57,15 @@ internal fun Lightbox(
     LightboxBackPressHandler(state, action)
     val infoSheetState = rememberModalBottomSheetState(initialValue = ModalBottomSheetValue.Hidden)
     val sheetSize by SheetSize.rememberSheetSize()
-    val pagerState = rememberPagerState()
+    val pagerState = rememberPagerState(
+        initialPage = state.currentIndex,
+        pageCount = { state.media.size },
+    )
 
     LaunchedEffect(state.currentIndex) {
         pagerState.scrollToPage(state.currentIndex)
     }
     HorizontalPager(
-        pageCount = state.media.size,
         state = pagerState,
         pageSpacing = 12.dp,
         key = { page -> state.media.getOrNull(page)?.id?.value ?: page.toString() },
