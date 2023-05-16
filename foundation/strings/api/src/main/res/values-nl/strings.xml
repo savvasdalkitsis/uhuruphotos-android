@@ -241,4 +241,9 @@
     <string name="allow_storage_management_title">Opslagbeheer</string>
     <string name="allow_storage_management_details">De systeeminstellingen worden geopend zodat je het recht kan verlenen. Wil je dat nu doen\?</string>
     <string name="error_deleting_media">Er is een fout opgetreden tijdens het verwijderen</string>
+    <string name="media_sync_status_downloading">De media wordt gedownload naar dit apparaat</string>
+    <string name="show_media_sync_status">Mediasynchronisatiestatus tonen</string>
+    <string name="show_always">Altijd tonen</string>
+    <string name="show_on_scroll">Tonen tijdens scrollen</string>
+    <string name="show_never">Nooit tonen</string>
 </resources>
