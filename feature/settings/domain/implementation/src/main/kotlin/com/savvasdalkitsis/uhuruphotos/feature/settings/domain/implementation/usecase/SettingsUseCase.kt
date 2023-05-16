@@ -17,17 +17,21 @@ package com.savvasdalkitsis.uhuruphotos.feature.settings.domain.implementation.u
 
 import android.content.Context
 import androidx.work.NetworkType
-import com.fredporciuncula.flow.preferences.FlowSharedPreferences
 import com.google.android.gms.common.ConnectionResult.SERVICE_UPDATING
 import com.google.android.gms.common.ConnectionResult.SERVICE_VERSION_UPDATE_REQUIRED
 import com.google.android.gms.common.ConnectionResult.SIGN_IN_REQUIRED
 import com.google.android.gms.common.ConnectionResult.SUCCESS
 import com.google.android.gms.common.GoogleApiAvailability
+import com.savvasdalkitsis.uhuruphotos.feature.feed.view.api.ui.state.FeedMediaItemSyncDisplay
 import com.savvasdalkitsis.uhuruphotos.feature.settings.domain.api.usecase.SettingsUseCase
 import com.savvasdalkitsis.uhuruphotos.foundation.log.api.Log
 import com.savvasdalkitsis.uhuruphotos.foundation.map.api.model.MapProvider
 import com.savvasdalkitsis.uhuruphotos.foundation.map.api.model.MapProvider.Google
 import com.savvasdalkitsis.uhuruphotos.foundation.map.api.model.MapProvider.MapBox
+import com.savvasdalkitsis.uhuruphotos.foundation.preferences.api.Preferences
+import com.savvasdalkitsis.uhuruphotos.foundation.preferences.api.get
+import com.savvasdalkitsis.uhuruphotos.foundation.preferences.api.observe
+import com.savvasdalkitsis.uhuruphotos.foundation.preferences.api.set
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.theme.ThemeMode
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.CoroutineScope
@@ -39,204 +43,238 @@ import kotlinx.coroutines.flow.stateIn
 import javax.inject.Inject
 
 internal class SettingsUseCase @Inject constructor(
-    flowSharedPreferences: FlowSharedPreferences,
+    private val preferences: Preferences,
     @ApplicationContext private val context: Context,
 ) : SettingsUseCase {
 
-    private val imageDiskCacheSize =
-        flowSharedPreferences.getInt("imageDiskCacheSize", 500)
-    private val imageMemCacheSize =
-        flowSharedPreferences.getInt("imageDiskCacheSize", 200)
-    private val videoDiskCacheSize =
-        flowSharedPreferences.getInt("videoDiskCacheSize", 700)
-    private val feedSyncFrequency =
-        flowSharedPreferences.getInt("feedSyncFrequency", 12)
-    private val feedDaysToRefresh =
-        flowSharedPreferences.getInt("feedDaysToRefresh", 3)
-    private val shouldPerformPeriodicFeedSync =
-        flowSharedPreferences.getBoolean("shouldPerformPeriodicFeedSync", true)
-    private val fullSyncNetworkRequirements =
-        flowSharedPreferences.getEnum("fullSyncNetworkRequirements", NetworkType.NOT_ROAMING)
-    private val fullSyncRequiresCharging =
-        flowSharedPreferences.getBoolean("fullSyncRequiresCharging", false)
-    private val themeMode =
-        flowSharedPreferences.getEnum("themeMode", ThemeMode.default)
-    private val mapProvider =
-        flowSharedPreferences.getEnum("mapProvider", MapProvider.default)
-    private val searchSuggestionsEnabled =
-        flowSharedPreferences.getBoolean("searchSuggestionsEnabled", true)
-    private val shareRemoveGpsData =
-        flowSharedPreferences.getBoolean("shareRemoveGpsData", false)
-    private val showLibrary =
-        flowSharedPreferences.getBoolean("showLibrary", true)
-    private val loggingEnabled =
-        flowSharedPreferences.getBoolean("loggingEnabled", false)
-    private val biometricsRequiredForAppAccess =
-        flowSharedPreferences.getBoolean("biometricsRequiredForAppAccess", false)
-    private val biometricsRequiredForHiddenPhotosAccess =
-        flowSharedPreferences.getBoolean("biometricsRequiredForHiddenPhotosAccess", false)
-    private val biometricsRequiredForTrashAccess =
-        flowSharedPreferences.getBoolean("biometricsRequiredForTrashAccess", false)
-    private val memoriesEnabled =
-        flowSharedPreferences.getBoolean("memoriesEnabled", true)
-    private val animateVideoThumbnails =
-        flowSharedPreferences.getBoolean("animateVideoThumbnails", true)
-    private val maxAnimatedVideoThumbnails =
-        flowSharedPreferences.getInt("maxAnimatedVideoThumbnails", 3)
-    private val showBannerAskingForLocalMediaPermissionsOnFeed =
-        flowSharedPreferences.getBoolean("showBannerAskingForLocalMediaPermissionsOnFeed", true)
-    private val showBannerAskingForLocalMediaPermissionsOnHeatmap =
-        flowSharedPreferences.getBoolean("showBannerAskingForLocalMediaPermissionsOnHeatmap", true)
+    private val imageDiskCacheSize = "imageDiskCacheSize"
+    private val imageDiskCacheSizeDefault = 500
+    private val imageMemCacheSize = "imageDiskCacheSize"
+    private val imageMemCacheSizeDefault = 200
+    private val videoDiskCacheSize = "videoDiskCacheSize"
+    private val videoDiskCacheSizeDefault = 700
+    private val feedSyncFrequency = "feedSyncFrequency"
+    private val feedSyncFrequencyDefault = 12
+    private val feedDaysToRefresh = "feedDaysToRefresh"
+    private val feedDaysToRefreshDefault = 3
+    private val shouldPerformPeriodicFeedSync = "shouldPerformPeriodicFeedSync"
+    private val shouldPerformPeriodicFeedSyncDefault = true
+    private val fullSyncNetworkRequirements = "fullSyncNetworkRequirements"
+    private val fullSyncNetworkRequirementsDefault = NetworkType.NOT_ROAMING
+    private val fullSyncRequiresCharging = "fullSyncRequiresCharging"
+    private val fullSyncRequiresChargingDefault = false
+    private val themeMode = "themeMode"
+    private val themeModeDefault = ThemeMode.default
+    private val mapProvider = "mapProvider"
+    private val mapProviderDefault = MapProvider.default
+    private val searchSuggestionsEnabled = "searchSuggestionsEnabled"
+    private val searchSuggestionsEnabledDefault = true
+    private val shareRemoveGpsData = "shareRemoveGpsData"
+    private val shareRemoveGpsDataDefault = false
+    private val showLibrary = "showLibrary"
+    private val showLibraryDefault = true
+    private val loggingEnabled = "loggingEnabled"
+    private val loggingEnabledDefault = false
+    private val biometricsRequiredForAppAccess = "biometricsRequiredForAppAccess"
+    private val biometricsRequiredForAppAccessDefault = false
+    private val biometricsRequiredForHiddenPhotosAccess = "biometricsRequiredForHiddenPhotosAccess"
+    private val biometricsRequiredForHiddenPhotosAccessDefault = false
+    private val biometricsRequiredForTrashAccess = "biometricsRequiredForTrashAccess"
+    private val biometricsRequiredForTrashAccessDefault = false
+    private val memoriesEnabled = "memoriesEnabled"
+    private val memoriesEnabledDefault = true
+    private val animateVideoThumbnails = "animateVideoThumbnails"
+    private val animateVideoThumbnailsDefault = true
+    private val maxAnimatedVideoThumbnails = "maxAnimatedVideoThumbnails"
+    private val maxAnimatedVideoThumbnailsDefault = 3
+    private val showBannerAskingForLocalMediaPermissionsOnFeed = "showBannerAskingForLocalMediaPermissionsOnFeed"
+    private val showBannerAskingForLocalMediaPermissionsOnFeedDefault = true
+    private val showBannerAskingForLocalMediaPermissionsOnHeatmap = "showBannerAskingForLocalMediaPermissionsOnHeatmap"
+    private val showBannerAskingForLocalMediaPermissionsOnHeatmapDefault = true
+    private val feedMediaItemSyncDisplay = "feedMediaItemSyncDisplay"
+    private val feedMediaItemSyncDisplayDefault = FeedMediaItemSyncDisplay.default
 
-    override fun getImageDiskCacheMaxLimit(): Int = imageDiskCacheSize.get()
-    override fun getImageMemCacheMaxLimit(): Int = imageMemCacheSize.get()
-    override fun getVideoDiskCacheMaxLimit(): Int = videoDiskCacheSize.get()
-    override fun getFeedSyncFrequency(): Int = feedSyncFrequency.get()
-    override fun getFeedDaysToRefresh(): Int = feedDaysToRefresh.get()
-
-    override fun getFullSyncNetworkRequirements(): NetworkType = fullSyncNetworkRequirements.get()
-    override fun getFullSyncRequiresCharging(): Boolean = fullSyncRequiresCharging.get()
-    override fun getShouldPerformPeriodicFullSync(): Boolean = shouldPerformPeriodicFeedSync.get()
-    override fun getShareRemoveGpsData(): Boolean = shareRemoveGpsData.get()
-    override fun getShowLibrary(): Boolean = showLibrary.get()
-    override fun getMapProvider(): MapProvider = mapProvider.get().mapToAvailable()
+    override fun getImageDiskCacheMaxLimit(): Int =
+        get(imageDiskCacheSize, imageDiskCacheSizeDefault)
+    override fun getImageMemCacheMaxLimit(): Int =
+        get(imageMemCacheSize, imageMemCacheSizeDefault)
+    override fun getVideoDiskCacheMaxLimit(): Int =
+        get(videoDiskCacheSize, videoDiskCacheSizeDefault)
+    override fun getFeedSyncFrequency(): Int =
+        get(feedSyncFrequency, feedSyncFrequencyDefault)
+    override fun getFeedDaysToRefresh(): Int =
+        get(feedDaysToRefresh, feedDaysToRefreshDefault)
+    override fun getFullSyncNetworkRequirements(): NetworkType =
+        get(fullSyncNetworkRequirements, fullSyncNetworkRequirementsDefault)
+    override fun getFullSyncRequiresCharging(): Boolean =
+        get(fullSyncRequiresCharging, fullSyncRequiresChargingDefault)
+    override fun getShouldPerformPeriodicFullSync(): Boolean =
+        get(shouldPerformPeriodicFeedSync, shouldPerformPeriodicFeedSyncDefault)
+    override fun getShareRemoveGpsData(): Boolean =
+        get(shareRemoveGpsData, shareRemoveGpsDataDefault)
+    override fun getShowLibrary(): Boolean =
+        get(showLibrary, showLibraryDefault)
+    override fun getMapProvider(): MapProvider =
+        get(mapProvider, mapProviderDefault).mapToAvailable()
     override fun getAvailableMapProviders(): Set<MapProvider> = MapProvider.values()
         .map { it.mapToAvailable() }.toSet()
-    override fun getLoggingEnabled(): Boolean = loggingEnabled.get()
-    override fun getBiometricsRequiredForAppAccess(): Boolean = biometricsRequiredForAppAccess.get()
+    override fun getLoggingEnabled(): Boolean =
+        get(loggingEnabled, loggingEnabledDefault)
+    override fun getBiometricsRequiredForAppAccess(): Boolean =
+        get(biometricsRequiredForAppAccess, biometricsRequiredForAppAccessDefault)
     override fun getBiometricsRequiredForHiddenPhotosAccess(): Boolean =
-        biometricsRequiredForHiddenPhotosAccess.get()
+        get(biometricsRequiredForHiddenPhotosAccess, biometricsRequiredForHiddenPhotosAccessDefault)
     override fun getBiometricsRequiredForTrashAccess(): Boolean =
-        biometricsRequiredForTrashAccess.get()
+        get(biometricsRequiredForTrashAccess, biometricsRequiredForTrashAccessDefault)
     override fun getMemoriesEnabled(): Boolean =
-        memoriesEnabled.get()
+        get(memoriesEnabled, memoriesEnabledDefault)
     override fun getAnimateVideoThumbnails(): Boolean =
-        animateVideoThumbnails.get()
+        get(animateVideoThumbnails, animateVideoThumbnailsDefault)
     override fun getMaxAnimatedVideoThumbnails(): Int =
-        maxAnimatedVideoThumbnails.get()
+        get(maxAnimatedVideoThumbnails, maxAnimatedVideoThumbnailsDefault)
     override fun getShowBannerAskingForLocalMediaPermissionsOnFeed(): Boolean =
-        showBannerAskingForLocalMediaPermissionsOnFeed.get()
+        get(showBannerAskingForLocalMediaPermissionsOnFeed, showBannerAskingForLocalMediaPermissionsOnFeedDefault)
     override fun getShowBannerAskingForLocalMediaPermissionsOnHeatmap(): Boolean =
-        showBannerAskingForLocalMediaPermissionsOnHeatmap.get()
+        get(showBannerAskingForLocalMediaPermissionsOnHeatmap, showBannerAskingForLocalMediaPermissionsOnHeatmapDefault)
+    override fun getFeedMediaItemSyncDisplay(): FeedMediaItemSyncDisplay =
+        get(feedMediaItemSyncDisplay, feedMediaItemSyncDisplayDefault)
 
-    override fun observeImageDiskCacheMaxLimit(): Flow<Int> = imageDiskCacheSize.asFlow()
-    override fun observeImageMemCacheMaxLimit(): Flow<Int> = imageMemCacheSize.asFlow()
-    override fun observeVideoDiskCacheMaxLimit(): Flow<Int> = videoDiskCacheSize.asFlow()
-    override fun observeFeedSyncFrequency(): Flow<Int> = feedSyncFrequency.asFlow()
-    override fun observeFeedDaysToRefresh(): Flow<Int> = feedDaysToRefresh.asFlow()
-
-    override fun observeFullSyncNetworkRequirements(): Flow<NetworkType> = fullSyncNetworkRequirements.asFlow()
-    override fun observeFullSyncRequiresCharging(): Flow<Boolean> = fullSyncRequiresCharging.asFlow()
-    override fun observeThemeMode(): Flow<ThemeMode> = themeMode.asFlow()
-    override fun observeSearchSuggestionsEnabledMode(): Flow<Boolean> = searchSuggestionsEnabled.asFlow()
-    override fun observeShareRemoveGpsData(): Flow<Boolean> = shareRemoveGpsData.asFlow()
-    override fun observeShowLibrary(): Flow<Boolean> = showLibrary.asFlow()
+    override fun observeImageDiskCacheMaxLimit(): Flow<Int> =
+        observe(imageDiskCacheSize, imageDiskCacheSizeDefault)
+    override fun observeImageMemCacheMaxLimit(): Flow<Int> =
+        observe(imageMemCacheSize, imageMemCacheSizeDefault)
+    override fun observeVideoDiskCacheMaxLimit(): Flow<Int> =
+        observe(videoDiskCacheSize, videoDiskCacheSizeDefault)
+    override fun observeFeedSyncFrequency(): Flow<Int> =
+        observe(feedSyncFrequency, feedSyncFrequencyDefault)
+    override fun observeFeedDaysToRefresh(): Flow<Int> =
+        observe(feedDaysToRefresh, feedDaysToRefreshDefault)
+    override fun observeFullSyncNetworkRequirements(): Flow<NetworkType> =
+        observe(fullSyncNetworkRequirements, fullSyncNetworkRequirementsDefault)
+    override fun observeFullSyncRequiresCharging(): Flow<Boolean> =
+        observe(fullSyncRequiresCharging, fullSyncRequiresChargingDefault)
+    override fun observeThemeMode(): Flow<ThemeMode> =
+        observe(themeMode, themeModeDefault)
+    override fun observeSearchSuggestionsEnabledMode(): Flow<Boolean> =
+        observe(searchSuggestionsEnabled, searchSuggestionsEnabledDefault)
+    override fun observeShareRemoveGpsData(): Flow<Boolean> =
+        observe(shareRemoveGpsData, shareRemoveGpsDataDefault)
+    override fun observeShowLibrary(): Flow<Boolean> =
+        observe(showLibrary, showLibraryDefault)
     override suspend fun observeThemeModeState(): StateFlow<ThemeMode> = observeThemeMode().stateIn(
         CoroutineScope(Dispatchers.IO)
     )
-    override fun observeMapProvider(): Flow<MapProvider> = mapProvider.asFlow()
-        .map { it.mapToAvailable() }
-    override fun observeLoggingEnabled(): Flow<Boolean> = loggingEnabled.asFlow()
+    override fun observeMapProvider(): Flow<MapProvider> =
+        observe(mapProvider, mapProviderDefault)
+            .map { it.mapToAvailable() }
+    override fun observeLoggingEnabled(): Flow<Boolean> =
+        observe(loggingEnabled, loggingEnabledDefault)
     override fun observeBiometricsRequiredForAppAccess(): Flow<Boolean> =
-        biometricsRequiredForAppAccess.asFlow()
+        observe(biometricsRequiredForAppAccess, biometricsRequiredForAppAccessDefault)
     override fun observeBiometricsRequiredForHiddenPhotosAccess(): Flow<Boolean> =
-        biometricsRequiredForHiddenPhotosAccess.asFlow()
+        observe(biometricsRequiredForHiddenPhotosAccess, biometricsRequiredForHiddenPhotosAccessDefault)
     override fun observeBiometricsRequiredForTrashAccess(): Flow<Boolean> =
-        biometricsRequiredForTrashAccess.asFlow()
+        observe(biometricsRequiredForTrashAccess, biometricsRequiredForTrashAccessDefault)
     override fun observeMemoriesEnabled(): Flow<Boolean> =
-        memoriesEnabled.asFlow()
+        observe(memoriesEnabled, memoriesEnabledDefault)
     override fun observeAnimateVideoThumbnails(): Flow<Boolean> =
-        animateVideoThumbnails.asFlow()
+        observe(animateVideoThumbnails, animateVideoThumbnailsDefault)
     override fun observeMaxAnimatedVideoThumbnails(): Flow<Int> =
-        maxAnimatedVideoThumbnails.asFlow()
+        observe(maxAnimatedVideoThumbnails, maxAnimatedVideoThumbnailsDefault)
+    override fun observeFeedMediaItemSyncDisplay(): Flow<FeedMediaItemSyncDisplay> =
+        observe(feedMediaItemSyncDisplay, feedMediaItemSyncDisplayDefault)
 
-    override suspend fun setImageDiskCacheMaxLimit(sizeInMb: Int) {
-        imageDiskCacheSize.setAndCommit(sizeInMb)
+    override fun setImageDiskCacheMaxLimit(sizeInMb: Int) {
+        set(imageDiskCacheSize, sizeInMb)
     }
 
-    override suspend fun setImageMemCacheMaxLimit(sizeInMb: Int) {
-        imageMemCacheSize.setAndCommit(sizeInMb)
+    override fun setImageMemCacheMaxLimit(sizeInMb: Int) {
+        set(imageMemCacheSize, sizeInMb)
     }
 
-    override suspend fun setVideoDiskCacheMaxLimit(sizeInMb: Int) {
-        videoDiskCacheSize.setAndCommit(sizeInMb)
+    override fun setVideoDiskCacheMaxLimit(sizeInMb: Int) {
+        set(videoDiskCacheSize, sizeInMb)
     }
 
-    override suspend fun setFeedSyncFrequency(frequency: Int) {
-        feedSyncFrequency.setAndCommit(frequency)
+    override fun setFeedSyncFrequency(frequency: Int) {
+        set(feedSyncFrequency, frequency)
     }
 
-    override suspend fun setFeedFeedDaysToRefresh(days: Int) {
-        feedDaysToRefresh.setAndCommit(days)
+    override fun setFeedFeedDaysToRefresh(days: Int) {
+        set(feedDaysToRefresh, days)
     }
 
-    override suspend fun setFullSyncNetworkRequirements(networkType: NetworkType) {
-        fullSyncNetworkRequirements.setAndCommit(networkType)
+    override fun setFullSyncNetworkRequirements(networkType: NetworkType) {
+        set(fullSyncNetworkRequirements, networkType)
     }
 
-    override suspend fun setFullSyncRequiresCharging(requiresCharging: Boolean) {
-        fullSyncRequiresCharging.setAndCommit(requiresCharging)
+    override fun setFullSyncRequiresCharging(requiresCharging: Boolean) {
+        set(fullSyncRequiresCharging, requiresCharging)
     }
 
-    override suspend fun setShouldPerformPeriodicFullSync(perform: Boolean) {
-        shouldPerformPeriodicFeedSync.setAndCommit(perform)
+    override fun setShouldPerformPeriodicFullSync(perform: Boolean) {
+        set(shouldPerformPeriodicFeedSync, perform)
     }
 
-    override suspend fun setThemeMode(mode: ThemeMode) {
-        themeMode.setAndCommit(mode)
+    override fun setThemeMode(mode: ThemeMode) {
+        set(themeMode, mode)
     }
 
-    override suspend fun setSearchSuggestionsEnabled(enabled: Boolean) {
-        searchSuggestionsEnabled.setAndCommit(enabled)
+    override fun setSearchSuggestionsEnabled(enabled: Boolean) {
+        set(searchSuggestionsEnabled, enabled)
     }
 
-    override suspend fun setShareRemoveGpsData(enabled: Boolean) {
-        shareRemoveGpsData.setAndCommit(enabled)
+    override fun setShareRemoveGpsData(enabled: Boolean) {
+        set(shareRemoveGpsData, enabled)
     }
 
-    override suspend fun setShowLibrary(show: Boolean) {
-        showLibrary.setAndCommit(show)
+    override fun setShowLibrary(show: Boolean) {
+        set(showLibrary, show)
     }
 
-    override suspend fun setMapProvider(provider: MapProvider) {
-        mapProvider.setAndCommit(provider.mapToAvailable())
+    override fun setMapProvider(provider: MapProvider) {
+        set(mapProvider, provider.mapToAvailable())
     }
 
-    override suspend fun setLoggingEnabled(enabled: Boolean) {
-        loggingEnabled.setAndCommit(enabled)
+    override fun setLoggingEnabled(enabled: Boolean) {
+        set(loggingEnabled, enabled)
         Log.enabled = enabled
     }
 
-    override suspend fun setBiometricsRequiredForAppAccess(required: Boolean) {
-        biometricsRequiredForAppAccess.setAndCommit(required)
+    override fun setBiometricsRequiredForAppAccess(required: Boolean) {
+        set(biometricsRequiredForAppAccess, required)
     }
 
-    override suspend fun setBiometricsRequiredForHiddenPhotosAccess(required: Boolean) {
-        biometricsRequiredForHiddenPhotosAccess.setAndCommit(required)
+    override fun setBiometricsRequiredForHiddenPhotosAccess(required: Boolean) {
+        set(biometricsRequiredForHiddenPhotosAccess, required)
     }
 
-    override suspend fun setBiometricsRequiredForTrashAccess(required: Boolean) {
-        biometricsRequiredForTrashAccess.setAndCommit(required)
+    override fun setBiometricsRequiredForTrashAccess(required: Boolean) {
+        set(biometricsRequiredForTrashAccess, required)
     }
 
-    override suspend fun setMemoriesEnabled(enabled: Boolean) {
-        memoriesEnabled.setAndCommit(enabled)
+    override fun setMemoriesEnabled(enabled: Boolean) {
+        set(memoriesEnabled, enabled)
     }
 
-    override suspend fun setAnimateVideoThumbnails(animate: Boolean) {
-        animateVideoThumbnails.setAndCommit(animate)
+    override fun setAnimateVideoThumbnails(animate: Boolean) {
+        set(animateVideoThumbnails, animate)
     }
 
-    override suspend fun setMaxAnimatedVideoThumbnails(max: Int) {
-        maxAnimatedVideoThumbnails.setAndCommit(max)
+    override fun setMaxAnimatedVideoThumbnails(max: Int) {
+        set(maxAnimatedVideoThumbnails, max)
     }
 
-    override suspend fun setShowBannerAskingForLocalMediaPermissionsOnFeed(show: Boolean) {
-        showBannerAskingForLocalMediaPermissionsOnFeed.setAndCommit(show)
+    override fun setShowBannerAskingForLocalMediaPermissionsOnFeed(show: Boolean) {
+        set(showBannerAskingForLocalMediaPermissionsOnFeed, show)
     }
 
-    override suspend fun setShowBannerAskingForLocalMediaPermissionsOnHeatmap(show: Boolean) {
-        showBannerAskingForLocalMediaPermissionsOnHeatmap.setAndCommit(show)
+    override fun setShowBannerAskingForLocalMediaPermissionsOnHeatmap(show: Boolean) {
+        set(showBannerAskingForLocalMediaPermissionsOnHeatmap, show)
+    }
+
+    override fun setFeedMediaItemSyncDisplay(display: FeedMediaItemSyncDisplay) {
+        set(feedMediaItemSyncDisplay, display)
     }
 
     private fun MapProvider.mapToAvailable(): MapProvider =
@@ -250,4 +288,18 @@ internal class SettingsUseCase @Inject constructor(
             SUCCESS, SERVICE_VERSION_UPDATE_REQUIRED, SIGN_IN_REQUIRED, SERVICE_UPDATING
         )
 
+    private inline fun <reified T: Enum<T>> get(key: String, defaultValue: T): T =
+        preferences.get(key, defaultValue)
+    private inline fun <reified T> get(key: String, defaultValue: T): T =
+        preferences.get(key, defaultValue)
+    private inline fun <reified T: Enum<T>> observe(key: String, defaultValue: T): Flow<T> =
+        preferences.observe(key, defaultValue)
+    private inline fun <reified T> observe(key: String, defaultValue: T): Flow<T> =
+        preferences.observe(key, defaultValue)
+    private inline fun <reified T: Enum<T>> set(key: String, value: T) {
+        preferences.set(key, value)
+    }
+    private inline fun <reified T> set(key: String, value: T) {
+        preferences.set(key, value)
+    }
 }

@@ -15,22 +15,25 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.favourites.domain.implementation.usecase
 
-import com.fredporciuncula.flow.preferences.FlowSharedPreferences
 import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.CollageDisplay
 import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.PredefinedCollageDisplay
 import com.savvasdalkitsis.uhuruphotos.feature.favourites.domain.api.usecase.FavouritesUseCase
+import com.savvasdalkitsis.uhuruphotos.foundation.preferences.api.Preferences
+import com.savvasdalkitsis.uhuruphotos.foundation.preferences.api.get
+import com.savvasdalkitsis.uhuruphotos.foundation.preferences.api.set
 import javax.inject.Inject
 
 internal class FavouritesUseCase @Inject constructor(
-    flowSharedPreferences: FlowSharedPreferences,
+    private val preferences: Preferences,
 ) : FavouritesUseCase {
-    private val favouriteMediaGalleryDisplay =
-        flowSharedPreferences.getEnum("favouriteMediaGalleryDisplay", PredefinedCollageDisplay.default)
 
-    override fun getFavouriteMediaGalleryDisplay(): CollageDisplay = favouriteMediaGalleryDisplay.get()
+    private val key = "favouriteMediaGalleryDisplay"
+
+    override fun getFavouriteMediaGalleryDisplay(): CollageDisplay =
+        preferences.get(key, defaultValue = PredefinedCollageDisplay.default)
 
     override suspend fun setFavouriteMediaGalleryDisplay(galleryDisplay: PredefinedCollageDisplay) {
-        favouriteMediaGalleryDisplay.setAndCommit(galleryDisplay)
+        preferences.set(key, galleryDisplay)
     }
 
 

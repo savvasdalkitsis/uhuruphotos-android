@@ -11,24 +11,26 @@ android {
 dependencies {
 
     implementation project(":feature:account:view:api")
-    implementation project(':feature:avatar:domain:api')
-    implementation project(':feature:avatar:view:api')
+    implementation project(":feature:avatar:domain:api")
+    implementation project(":feature:avatar:view:api")
     implementation project(":feature:collage:view:api")
     implementation project(":feature:feed:domain:api")
     implementation project(":feature:feed:view:api")
     implementation project(":feature:home:view:api")
     implementation project(":feature:lightbox:view:api")
+    implementation project(":feature:media:common:domain:api")
+    implementation project(":feature:media:common:view:api")
+    implementation project(":feature:media:local:view:api")
     implementation project(":feature:memories:domain:api")
-    implementation project(':feature:media:common:domain:api')
-    implementation project(':feature:media:common:view:api')
-    implementation project(':feature:media:local:view:api')
     implementation project(":feature:server:view:api")
     implementation project(":feature:settings:domain:api")
     implementation project(":foundation:compose:api")
+    implementation project(":foundation:download:api")
     implementation project(":foundation:icons:api")
     implementation project(":foundation:log:api")
     implementation project(":foundation:navigation:api")
-    implementation project(':foundation:seam:api')
+    implementation project(":foundation:preferences:api")
+    implementation project(":foundation:seam:api")
     implementation project(":foundation:share:api")
     implementation project(":foundation:strings:api")
     implementation project(":foundation:toaster:api")
@@ -40,9 +42,7 @@ dependencies {
             libs.androidx.compose.navigation,
             libs.androidx.compose.ui,
             libs.androidx.lifecycle,
-            libs.androidx.preference,
             libs.bundles.permissions,
-            libs.flowpreferences,
             libs.hilt,
             libs.infobar,
     )

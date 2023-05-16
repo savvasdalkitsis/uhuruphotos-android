@@ -29,10 +29,6 @@ import kotlinx.coroutines.flow.Flow
 
 interface MediaUseCase {
 
-    fun MediaId<*>.toThumbnailUriFromId(): String
-
-    fun MediaId<*>.toFullSizeUriFromId(): String
-
     fun observeLocalMedia(): Flow<MediaItemsOnDevice>
 
     suspend fun getLocalMedia(): MediaItemsOnDevice
@@ -44,6 +40,8 @@ interface MediaUseCase {
     fun observeHiddenMedia(): Flow<Result<List<MediaItem>>>
 
     suspend fun List<DbRemoteMediaItemSummary>.mapToMediaItems(): Result<List<MediaItem>>
+
+    suspend fun observeMediaItemDetails(id: MediaId<*>): Flow<MediaItemDetails>
 
     suspend fun getMediaItemDetails(id: MediaId<*>): MediaItemDetails?
 
@@ -67,12 +65,9 @@ interface MediaUseCase {
 
     fun restoreMediaItem(id: MediaId<*>)
 
-    fun downloadOriginal(id: MediaId<*>)
-
-    fun observeOriginalFileDownloadStatus(id: MediaId<*>): Flow<WorkInfo.State?>
-
     suspend fun List<MediaCollectionSource>.toMediaCollections(): List<MediaCollection>
 
     suspend fun Group<String, MediaCollectionSource>.toMediaCollection(): List<MediaCollection>
+
     fun observeLocalMediaSyncJobStatus(): Flow<WorkInfo.State?>
 }

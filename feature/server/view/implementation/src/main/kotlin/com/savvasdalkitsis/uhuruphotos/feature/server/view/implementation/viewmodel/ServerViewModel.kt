@@ -15,7 +15,7 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.server.view.implementation.viewmodel
 
-import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.savvasdalkitsis.uhuruphotos.feature.server.view.api.navigation.ServerNavigationRoute
 import com.savvasdalkitsis.uhuruphotos.feature.server.view.implementation.seam.ServerActionsContext
 import com.savvasdalkitsis.uhuruphotos.feature.server.view.implementation.seam.ServerEffectsContext
@@ -23,29 +23,36 @@ import com.savvasdalkitsis.uhuruphotos.feature.server.view.implementation.seam.a
 import com.savvasdalkitsis.uhuruphotos.feature.server.view.implementation.seam.actions.Load
 import com.savvasdalkitsis.uhuruphotos.feature.server.view.implementation.seam.actions.RequestServerUrlChange
 import com.savvasdalkitsis.uhuruphotos.feature.server.view.implementation.seam.actions.ServerAction
+import com.savvasdalkitsis.uhuruphotos.feature.server.view.implementation.seam.effects.ServerEffect
 import com.savvasdalkitsis.uhuruphotos.feature.server.view.implementation.ui.ServerState
-import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.HasInitializer
+import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.viewmodel.NavigationViewModel
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.ActionHandlerWithContext
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.EffectHandlerWithContext
-import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.HasActionableState
-import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.Seam
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 internal class ServerViewModel @Inject constructor(
     serverActionsContext: ServerActionsContext,
     effectsContext: ServerEffectsContext,
-) : ViewModel(), HasActionableState<ServerState, ServerAction> by Seam(
+) : NavigationViewModel<ServerState, ServerEffect, ServerAction, ServerNavigationRoute>(
     ActionHandlerWithContext(serverActionsContext),
     EffectHandlerWithContext(effectsContext),
     ServerState.Loading(false)
-), HasInitializer<ServerAction, ServerNavigationRoute> {
-    override suspend fun initialize(initializerData: ServerNavigationRoute, action: (ServerAction) -> Unit) {
-        action(Load)
-        action(when {
-            initializerData.auto -> CheckPersistedServer
-            else -> RequestServerUrlChange
-        })
+) {
+
+    init {
+        viewModelScope.launch {
+            action(Load)
+        }
+        viewModelScope.launch {
+            action(
+                when {
+                    getRoute().auto -> CheckPersistedServer
+                    else -> RequestServerUrlChange
+                }
+            )
+        }
     }
 }

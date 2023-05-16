@@ -58,15 +58,10 @@ internal fun Lightbox(
     val infoSheetState = rememberModalBottomSheetState(initialValue = ModalBottomSheetValue.Hidden)
     val sheetSize by SheetSize.rememberSheetSize()
     val pagerState = rememberPagerState()
-    LaunchedEffect(state.media.size, pagerState.canScrollBackward, pagerState.canScrollForward) {
+
+    LaunchedEffect(state.currentIndex) {
         pagerState.scrollToPage(state.currentIndex)
     }
-    LaunchedEffect(pagerState) {
-        snapshotFlow { pagerState.currentPage }.collectLatest { page ->
-            action(ChangedToPage(page))
-        }
-    }
-
     HorizontalPager(
         pageCount = state.media.size,
         state = pagerState,
@@ -108,6 +103,11 @@ internal fun Lightbox(
             sheetState = infoSheetState
         ) {
             LightboxScaffold(sheetSize, state, index, action)
+        }
+    }
+    LaunchedEffect(pagerState) {
+        snapshotFlow { pagerState.currentPage }.collectLatest { page ->
+            action(ChangedToPage(page))
         }
     }
 }

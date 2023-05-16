@@ -3,6 +3,7 @@ android {
 }
 
 dependencies {
+    api project(":feature:feed:view:api")
     api project(":foundation:ui:api")
     api project(":foundation:map:api")
     api(

@@ -1,0 +1,16 @@
+CREATE TABLE downloadingMediaItems (
+    id TEXT NOT NULL PRIMARY KEY,
+    downloadId INTEGER AS Long NOT NULL
+);
+
+insert:
+INSERT OR REPLACE INTO downloadingMediaItems VALUES ?;
+
+removeStartingWith:
+DELETE FROM downloadingMediaItems WHERE id LIKE :id || "%";
+
+removeDownloadId:
+DELETE FROM downloadingMediaItems WHERE downloadId == :id;
+
+getAll:
+SELECT id FROM downloadingMediaItems;

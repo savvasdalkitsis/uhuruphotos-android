@@ -15,9 +15,12 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.auth.domain.implementation.usecase
 
-import com.fredporciuncula.flow.preferences.FlowSharedPreferences
 import com.savvasdalkitsis.uhuruphotos.feature.auth.domain.api.usecase.ServerUseCase
 import com.savvasdalkitsis.uhuruphotos.foundation.http.api.prefixedWithHttpsIfNeeded
+import com.savvasdalkitsis.uhuruphotos.foundation.preferences.api.Preferences
+import com.savvasdalkitsis.uhuruphotos.foundation.preferences.api.get
+import com.savvasdalkitsis.uhuruphotos.foundation.preferences.api.observe
+import com.savvasdalkitsis.uhuruphotos.foundation.preferences.api.set
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.filterNot
 import kotlinx.coroutines.flow.filterNotNull
@@ -25,18 +28,19 @@ import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
 class ServerUseCase @Inject constructor(
-    preferences: FlowSharedPreferences,
+    private val preferences: Preferences,
 ) : ServerUseCase {
-    private val preference = preferences.getNullableString("serverUrl")
+    private val key = "serverUrl"
 
-    override fun observeServerUrl(): Flow<String> = preference.asFlow()
+    override fun observeServerUrl(): Flow<String> = preferences
+        .observe<String?>(key, defaultValue = null)
         .map { it?.trim() }
         .filterNot { it.isNullOrEmpty() }
         .filterNotNull()
 
-    override fun getServerUrl(): String? = preference.get()?.trim()
+    override fun getServerUrl(): String? = preferences.get<String?>(key)?.trim()
 
     override suspend fun setServerUrl(serverUrl: String) {
-        preference.setAndCommit(serverUrl.prefixedWithHttpsIfNeeded.removeSuffix("/"))
+        preferences.set(key, serverUrl.prefixedWithHttpsIfNeeded.removeSuffix("/"))
     }
 }

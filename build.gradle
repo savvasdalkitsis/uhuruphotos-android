@@ -7,7 +7,7 @@ buildscript {
         compose_compiler_version = '1.4.7'
     }
     dependencies {
-        classpath 'com.google.dagger:hilt-android-gradle-plugin:2.46'
+        classpath 'com.google.dagger:hilt-android-gradle-plugin:2.46.1'
         classpath 'com.squareup.sqldelight:gradle-plugin:1.5.5'
         classpath 'com.google.gms:google-services:4.3.15'
         classpath "io.gitlab.arturbosch.detekt:detekt-gradle-plugin:1.22.0"

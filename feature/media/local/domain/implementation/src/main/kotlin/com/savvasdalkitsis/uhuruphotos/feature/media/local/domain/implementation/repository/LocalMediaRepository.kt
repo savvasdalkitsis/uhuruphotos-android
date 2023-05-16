@@ -19,9 +19,11 @@ import android.content.ContentResolver
 import android.graphics.BitmapFactory.Options
 import android.graphics.BitmapFactory.decodeStream
 import androidx.palette.graphics.Palette
+import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.Database
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.extensions.async
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.extensions.await
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.extensions.awaitSingleOrNull
+import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.media.download.DownloadingMediaItemsQueries
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.media.local.LocalMediaItemDetails
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.media.local.LocalMediaItemDetailsQueries
 import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.model.LocalMediaDeletionException
@@ -34,6 +36,7 @@ import com.savvasdalkitsis.uhuruphotos.foundation.log.api.log
 import com.savvasdalkitsis.uhuruphotos.foundation.log.api.runCatchingWithLog
 import com.squareup.sqldelight.runtime.coroutines.asFlow
 import com.squareup.sqldelight.runtime.coroutines.mapToList
+import com.squareup.sqldelight.runtime.coroutines.mapToOneNotNull
 import kotlinx.coroutines.flow.Flow
 import org.joda.time.format.DateTimeFormatter
 import java.math.BigInteger
@@ -41,7 +44,9 @@ import java.security.MessageDigest
 import javax.inject.Inject
 
 class LocalMediaRepository @Inject constructor(
+    private val database: Database,
     private val localMediaItemDetailsQueries: LocalMediaItemDetailsQueries,
+    private val downloadingMediaItemsQueries: DownloadingMediaItemsQueries,
     private val localMediaService: LocalMediaService,
     private val contentResolver: ContentResolver,
     private val exifUseCase: ExifUseCase,
@@ -81,7 +86,10 @@ class LocalMediaRepository @Inject constructor(
         removeMissingItems: Boolean = true,
         forceProcess: Boolean = false,
     ) = process(bucketId, onProgressChange, removeMissingItems, forceProcess) { itemDetails ->
-        localMediaItemDetailsQueries.insert(itemDetails)
+        database.transaction {
+            downloadingMediaItemsQueries.removeStartingWith(itemDetails.md5)
+            localMediaItemDetailsQueries.insert(itemDetails)
+        }
     }
 
     private suspend fun <T : LocalMediaStoreServiceItem> List<T>.process(
@@ -190,16 +198,11 @@ class LocalMediaRepository @Inject constructor(
         )
     }
 
+    fun observeItem(id: Long): Flow<LocalMediaItemDetails> =
+        localMediaItemDetailsQueries.getItem(id).asFlow().mapToOneNotNull()
+
     suspend fun getItem(id: Long): LocalMediaItemDetails? =
         localMediaItemDetailsQueries.getItem(id).awaitSingleOrNull()
-
-    fun deleteItem(id: Long, video: Boolean) = runCatchingWithLog {
-        if (localMediaService.delete(id, video) > 0) {
-            removeItemsFromDb(id)
-        } else {
-            throw LocalMediaDeletionException(id)
-        }
-     }
 
     fun deletePhotos(vararg ids: Long) = runCatchingWithLog {
         if (localMediaService.deletePhotos(*ids) > 0) {

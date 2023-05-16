@@ -15,12 +15,12 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.album.user.view.implementation.seam
 
-import com.fredporciuncula.flow.preferences.FlowSharedPreferences
 import com.savvasdalkitsis.uhuruphotos.feature.album.user.domain.api.usecase.UserAlbumUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.toCluster
 import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.GalleryActionsContext
 import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.ui.state.GalleryDetails
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.api.model.LightboxSequenceDataSource.UserAlbum
+import com.savvasdalkitsis.uhuruphotos.foundation.preferences.api.Preferences
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.state.Title
 import kotlinx.coroutines.flow.map
 import javax.inject.Inject
@@ -28,7 +28,7 @@ import javax.inject.Inject
 internal class UserAlbumActionsContext @Inject constructor(
     userAlbumDisplay: UserAlbumDisplay,
     userAlbumUseCase: UserAlbumUseCase,
-    flowSharedPreferences: FlowSharedPreferences,
+    preferences: Preferences,
 ) : GalleryActionsContext(
     galleryRefresher = { userAlbumUseCase.refreshUserAlbum(it) },
     initialCollageDisplay = { userAlbumDisplay.getUserAlbumGalleryDisplay(it) },
@@ -48,5 +48,5 @@ internal class UserAlbumActionsContext @Inject constructor(
             }
     },
     lightboxSequenceDataSource = { UserAlbum(it) },
-    flowSharedPreferences = flowSharedPreferences,
+    preferences = preferences,
 )

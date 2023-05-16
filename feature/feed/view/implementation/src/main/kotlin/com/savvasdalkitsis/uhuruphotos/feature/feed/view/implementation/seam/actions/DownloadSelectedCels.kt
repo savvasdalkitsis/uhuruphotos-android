@@ -16,9 +16,9 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.actions
 
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.FeedActionsContext
-import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.effects.FeedEffect
-import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.effects.DownloadingFiles
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.FeedMutation
+import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.effects.DownloadingFiles
+import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.effects.FeedEffect
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.ui.state.FeedState
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.EffectHandler
 import kotlinx.coroutines.flow.flow
@@ -29,8 +29,9 @@ object DownloadSelectedCels : FeedAction() {
         effect: EffectHandler<FeedEffect>
     ) = flow<FeedMutation> {
         effect.handleEffect(DownloadingFiles)
-        state.selectedCels.forEach {
-            mediaUseCase.downloadOriginal(it.mediaItem.id)
-        }
+        selectionList.clear()
+        downloadUseCase.scheduleMediaDownload(state.selectedCels.mapNotNull {
+            it.mediaItem.id.findRemote
+        })
     }
 }

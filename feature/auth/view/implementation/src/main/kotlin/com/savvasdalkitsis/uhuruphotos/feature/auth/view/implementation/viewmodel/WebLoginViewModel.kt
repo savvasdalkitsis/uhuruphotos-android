@@ -15,31 +15,34 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.auth.view.implementation.viewmodel
 
-import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.savvasdalkitsis.uhuruphotos.feature.auth.view.api.navigation.WebLoginNavigationRoute
 import com.savvasdalkitsis.uhuruphotos.feature.auth.view.implementation.seam.WebEffectsContext
 import com.savvasdalkitsis.uhuruphotos.feature.auth.view.implementation.seam.WebLoginActionsContext
 import com.savvasdalkitsis.uhuruphotos.feature.auth.view.implementation.seam.actions.LoadPage
 import com.savvasdalkitsis.uhuruphotos.feature.auth.view.implementation.seam.actions.WebLoginAction
+import com.savvasdalkitsis.uhuruphotos.feature.auth.view.implementation.seam.effects.WebLoginEffect
 import com.savvasdalkitsis.uhuruphotos.feature.auth.view.implementation.ui.WebLoginState
-import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.HasInitializer
+import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.viewmodel.NavigationViewModel
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.ActionHandlerWithContext
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.EffectHandlerWithContext
-import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.HasActionableState
-import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.Seam
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class WebLoginViewModel @Inject constructor(
     webLoginActionsContext: WebLoginActionsContext,
     webEffectsContext: WebEffectsContext,
-) : ViewModel(), HasActionableState<WebLoginState, WebLoginAction> by Seam(
+) : NavigationViewModel<WebLoginState, WebLoginEffect, WebLoginAction, WebLoginNavigationRoute>(
     ActionHandlerWithContext(webLoginActionsContext),
     EffectHandlerWithContext(webEffectsContext),
     WebLoginState("")
-), HasInitializer<WebLoginAction, WebLoginNavigationRoute> {
-    override suspend fun initialize(initializerData: WebLoginNavigationRoute, action: (WebLoginAction) -> Unit) {
-        action(LoadPage(initializerData.url))
+) {
+
+    init {
+        viewModelScope.launch {
+            action(LoadPage(getRoute().url))
+        }
     }
 }

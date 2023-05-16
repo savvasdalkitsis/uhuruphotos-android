@@ -44,6 +44,7 @@ internal class LocalMediaSyncWorker @AssistedInject constructor(
 ) {
 
     override suspend fun work() = withContext(Dispatchers.IO) {
+        log { "Starting local media sync" }
         try {
             updateProgress(0)
             localMediaUseCase.refreshAll { current, total ->

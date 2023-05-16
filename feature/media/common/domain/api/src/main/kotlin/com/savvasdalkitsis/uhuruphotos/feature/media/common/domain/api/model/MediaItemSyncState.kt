@@ -23,10 +23,31 @@ import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
 enum class MediaItemSyncState(
     @DrawableRes
     val icon: Int,
+    @DrawableRes
+    val lightBoxIcon: Int,
+    val lightBoxIconAlpha: Float = 0.7f,
     @StringRes
     val contentDescription: Int,
 ) {
-    LOCAL_ONLY(drawable.ic_cloud_off, string.media_sync_status_local_only),
-    REMOTE_ONLY(drawable.ic_cloud, string.media_sync_status_remote_only),
-    SYNCED(drawable.ic_cloud_done, string.media_sync_status_fully_synced);
+    LOCAL_ONLY(
+        icon = drawable.ic_cloud_off,
+        lightBoxIcon = drawable.ic_cloud_off,
+        contentDescription = string.media_sync_status_local_only
+    ),
+    REMOTE_ONLY(
+        icon = drawable.ic_cloud,
+        lightBoxIcon = drawable.ic_cloud_download,
+        lightBoxIconAlpha = 1f,
+        contentDescription = string.media_sync_status_remote_only
+    ),
+    DOWNLOADING(
+        icon = drawable.ic_cloud_in_progress,
+        lightBoxIcon = drawable.ic_cloud_in_progress,
+        contentDescription = string.media_sync_status_downloading
+    ),
+    SYNCED(
+        icon = drawable.ic_cloud_done,
+        lightBoxIcon = drawable.ic_cloud_done,
+        contentDescription = string.media_sync_status_fully_synced
+    );
 }

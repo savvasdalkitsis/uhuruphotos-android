@@ -123,8 +123,8 @@ fun LightboxCanvas(
                     modifier = Modifier
                         .fillMaxWidth()
                         .align(Alignment.Center),
-                    videoUrl = mediaItem.fullResUrl,
-                    videoThumbnailUrl = mediaItem.lowResUrl,
+                    videoUrl = mediaItem.id.fullResUri,
+                    videoThumbnailUrl = mediaItem.id.thumbnailUri,
                     play = true,
                     onFinishedLoading = { action(FullMediaDataLoaded(mediaItem)) },
                 )
@@ -132,8 +132,8 @@ fun LightboxCanvas(
                     modifier = Modifier
                         .fillMaxWidth()
                         .align(Alignment.Center),
-                    lowResUrl = mediaItem.lowResUrl,
-                    fullResUrl = mediaItem.fullResUrl,
+                    lowResUrl = mediaItem.id.thumbnailUri,
+                    fullResUrl = mediaItem.id.fullResUri,
                     onFullResImageLoaded = { action(FullMediaDataLoaded(mediaItem)) },
                     contentScale = ContentScale.Fit,
                     contentDescription = stringResource(string.photo),

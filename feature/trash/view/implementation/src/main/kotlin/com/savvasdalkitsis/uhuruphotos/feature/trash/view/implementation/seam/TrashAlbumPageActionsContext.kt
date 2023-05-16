@@ -15,7 +15,6 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.trash.view.implementation.seam
 
-import com.fredporciuncula.flow.preferences.FlowSharedPreferences
 import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.Cluster
 import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.GalleryActionsContext
 import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.effects.NavigateBack
@@ -25,6 +24,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.state.to
 import com.savvasdalkitsis.uhuruphotos.feature.settings.domain.api.usecase.SettingsUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.trash.domain.api.usecase.TrashUseCase
 import com.savvasdalkitsis.uhuruphotos.foundation.biometrics.api.usecase.BiometricsUseCase
+import com.savvasdalkitsis.uhuruphotos.foundation.preferences.api.Preferences
 import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.state.Title
 import kotlinx.coroutines.flow.flatMapLatest
@@ -36,7 +36,7 @@ internal class TrashAlbumPageActionsContext @Inject constructor(
     trashUseCase: TrashUseCase,
     settingsUseCase: SettingsUseCase,
     biometricsUseCase: BiometricsUseCase,
-    flowSharedPreferences: FlowSharedPreferences,
+    preferences: Preferences,
 ) : GalleryActionsContext(
     galleryRefresher = { trashUseCase.refreshTrash() },
     initialCollageDisplay = { trashUseCase.getTrashGalleryDisplay() },
@@ -85,5 +85,5 @@ internal class TrashAlbumPageActionsContext @Inject constructor(
 
     },
     lightboxSequenceDataSource = { Trash },
-    flowSharedPreferences = flowSharedPreferences,
+    preferences = preferences,
 )

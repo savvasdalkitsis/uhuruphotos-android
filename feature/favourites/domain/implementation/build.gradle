@@ -4,8 +4,8 @@ android {
 
 dependencies {
     api project(":feature:favourites:domain:api")
+    implementation project(":foundation:preferences:api")
     implementation(
-            libs.flowpreferences,
             libs.hilt,
     )
 }

@@ -29,6 +29,9 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.Collage
 import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.PredefinedCollageDisplay
+import com.savvasdalkitsis.uhuruphotos.feature.feed.view.api.ui.state.FeedMediaItemSyncDisplay.ALWAYS_OFF
+import com.savvasdalkitsis.uhuruphotos.feature.feed.view.api.ui.state.FeedMediaItemSyncDisplay.ALWAYS_ON
+import com.savvasdalkitsis.uhuruphotos.feature.feed.view.api.ui.state.FeedMediaItemSyncDisplay.SHOW_ON_SCROLL
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.actions.CelLongPressed
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.actions.ChangeDisplay
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.actions.ClusterRefreshClicked
@@ -76,6 +79,15 @@ internal fun Feed(
             listState.isScrollInProgress
         }
     }
+    val showSyncState by remember {
+        derivedStateOf {
+            when (state.syncItemDisplay) {
+                SHOW_ON_SCROLL -> isScrolling
+                ALWAYS_ON -> true
+                ALWAYS_OFF -> false
+            }
+        }
+    }
     val permissionLauncher = rememberPermissionFlowRequestLauncher()
 
     HomeScaffold(
@@ -102,7 +114,7 @@ internal fun Feed(
                 contentPadding = contentPadding,
                 state = state.collageState,
                 showSelectionHeader = state.hasSelection,
-                showSyncState = isScrolling,
+                showSyncState = showSyncState,
                 listState = listState,
                 collageHeader = {
                     AnimatedVisibility(

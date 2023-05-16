@@ -18,9 +18,11 @@ package com.savvasdalkitsis.uhuruphotos.feature.feed.domain.implementation.worke
 import android.content.Context
 import androidx.hilt.work.HiltWorker
 import androidx.work.WorkerParameters
+import com.savvasdalkitsis.uhuruphotos.feature.auth.domain.api.usecase.ServerUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.extensions.isVideo
 import com.savvasdalkitsis.uhuruphotos.feature.feed.domain.implementation.broadcast.CancelPrecacheWorkBroadcastReceiver
 import com.savvasdalkitsis.uhuruphotos.feature.feed.domain.implementation.repository.FeedRepository
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaId
 import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.api.usecase.RemoteMediaUseCase
 import com.savvasdalkitsis.uhuruphotos.foundation.notification.api.ForegroundInfoBuilder
 import com.savvasdalkitsis.uhuruphotos.foundation.notification.api.ForegroundNotificationWorker
@@ -36,6 +38,7 @@ internal class PrecacheFeedThumbnailsWorker @AssistedInject constructor(
     @Assisted private val params: WorkerParameters,
     private val feedRepository: FeedRepository,
     private val mediaUseCase: RemoteMediaUseCase,
+    private val serverUseCase: ServerUseCase,
     foregroundInfoBuilder: ForegroundInfoBuilder,
 ) : ForegroundNotificationWorker<CancelPrecacheWorkBroadcastReceiver>(
     context,
@@ -48,15 +51,20 @@ internal class PrecacheFeedThumbnailsWorker @AssistedInject constructor(
 
     override suspend fun work() = withContext(Dispatchers.IO) {
         updateProgress(0)
-        val mediaItems = feedRepository.getRemoteMediaCollectionsByDate()
-            .items.entries.flatMap { it.value }
-        for ((index, entry) in mediaItems.withIndex()) {
+        val serverUrl = serverUseCase.getServerUrl()!!
+        val mediaItemIds = feedRepository.getRemoteMediaCollectionsByDate()
+            .items.entries.flatMap { entry ->
+                entry.value.mapNotNull { collections ->
+                    collections.photoId?.let { id ->
+                        MediaId.Remote(id, collections.isVideo, serverUrl)
+                    }
+                }
+            }
+        for ((index, id) in mediaItemIds.withIndex()) {
             if (isStopped)
                 break
-            entry.photoId?.let { mediaId ->
-                mediaUseCase.downloadThumbnail(mediaId, entry.isVideo)
-            }
-            updateProgress(index, mediaItems.size)
+            mediaUseCase.downloadThumbnail(id)
+            updateProgress(index, mediaItemIds.size)
         }
         Result.success()
     }

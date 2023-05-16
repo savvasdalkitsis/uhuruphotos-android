@@ -15,31 +15,34 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.heatmap.view.implementation.viewmodel
 
-import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.savvasdalkitsis.uhuruphotos.api.heatmap.navigation.HeatMapNavigationRoute
 import com.savvasdalkitsis.uhuruphotos.feature.heatmap.view.implementation.seam.HeatMapActionsContext
 import com.savvasdalkitsis.uhuruphotos.feature.heatmap.view.implementation.seam.HeatMapEffectsContext
 import com.savvasdalkitsis.uhuruphotos.feature.heatmap.view.implementation.seam.actions.HeatMapAction
 import com.savvasdalkitsis.uhuruphotos.feature.heatmap.view.implementation.seam.actions.Load
+import com.savvasdalkitsis.uhuruphotos.feature.heatmap.view.implementation.seam.effects.HeatMapEffect
 import com.savvasdalkitsis.uhuruphotos.feature.heatmap.view.implementation.ui.state.HeatMapState
-import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.HasInitializer
+import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.viewmodel.NavigationViewModel
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.ActionHandlerWithContext
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.EffectHandlerWithContext
-import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.HasActionableState
-import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.Seam
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 internal class HeatMapViewModel @Inject constructor(
     heatMapActionsContext: HeatMapActionsContext,
     effectsContext: HeatMapEffectsContext,
-) : ViewModel(), HasActionableState<HeatMapState, HeatMapAction> by Seam(
+) : NavigationViewModel<HeatMapState, HeatMapEffect, HeatMapAction, HeatMapNavigationRoute>(
     ActionHandlerWithContext(heatMapActionsContext),
     EffectHandlerWithContext(effectsContext),
     HeatMapState()
-), HasInitializer<HeatMapAction, HeatMapNavigationRoute> {
-    override suspend fun initialize(initializerData: HeatMapNavigationRoute, action: (HeatMapAction) -> Unit) {
-        action(Load)
+) {
+
+    init {
+        viewModelScope.launch {
+            action(Load)
+        }
     }
 }

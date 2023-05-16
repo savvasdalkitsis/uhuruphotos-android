@@ -17,9 +17,9 @@ package com.savvasdalkitsis.uhuruphotos.feature.people.view.implementation.seam.
 
 import com.savvasdalkitsis.uhuruphotos.feature.people.view.api.ui.state.toPerson
 import com.savvasdalkitsis.uhuruphotos.feature.people.view.implementation.seam.PeopleActionsContext
-import com.savvasdalkitsis.uhuruphotos.feature.people.view.implementation.seam.effects.PeopleEffect
 import com.savvasdalkitsis.uhuruphotos.feature.people.view.implementation.seam.PeopleMutation.DisplayPeople
 import com.savvasdalkitsis.uhuruphotos.feature.people.view.implementation.seam.PeopleMutation.Loading
+import com.savvasdalkitsis.uhuruphotos.feature.people.view.implementation.seam.effects.PeopleEffect
 import com.savvasdalkitsis.uhuruphotos.feature.people.view.implementation.ui.state.PeopleState
 import com.savvasdalkitsis.uhuruphotos.feature.people.view.implementation.ui.state.SortOrder
 import com.savvasdalkitsis.uhuruphotos.foundation.coroutines.api.safelyOnStartIgnoring
@@ -44,16 +44,15 @@ object LoadPeople : PeopleAction() {
                     }
                 },
         ) { sortOrder, people ->
-            with(remoteMediaUseCase) {
-                DisplayPeople(
-                    when (sortOrder) {
-                        SortOrder.ASCENDING -> people
-                        SortOrder.DESCENDING -> people.reversed()
-                    }.map {
-                        it.toPerson { url -> url.toRemoteUrl() }
-                    }
-                )
-            }
+            val serverUrl = serverUseCase.getServerUrl()!!
+            DisplayPeople(
+                when (sortOrder) {
+                    SortOrder.ASCENDING -> people
+                    SortOrder.DESCENDING -> people.reversed()
+                }.map {
+                    it.toPerson { url -> "$serverUrl$url" }
+                }
+            )
         },
     )
 

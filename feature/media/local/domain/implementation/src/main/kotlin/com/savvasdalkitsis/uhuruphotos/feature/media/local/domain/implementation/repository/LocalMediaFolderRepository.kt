@@ -15,13 +15,14 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.implementation.repository
 
-import com.fredporciuncula.flow.preferences.FlowSharedPreferences
-import com.fredporciuncula.flow.preferences.NullableSerializer
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.extensions.await
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.media.local.GetBuckets
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.media.local.LocalMediaItemDetailsQueries
 import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.model.LocalMediaFolder
 import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.implementation.service.LocalMediaService
+import com.savvasdalkitsis.uhuruphotos.foundation.preferences.api.Preferences
+import com.savvasdalkitsis.uhuruphotos.foundation.preferences.api.get
+import com.savvasdalkitsis.uhuruphotos.foundation.preferences.api.set
 import com.squareup.sqldelight.runtime.coroutines.asFlow
 import com.squareup.sqldelight.runtime.coroutines.mapToList
 import kotlinx.coroutines.flow.Flow
@@ -31,24 +32,17 @@ import javax.inject.Inject
 class LocalMediaFolderRepository @Inject constructor(
     private val localMediaService: LocalMediaService,
     private val localMediaItemDetailsQueries: LocalMediaItemDetailsQueries,
-    flowSharedPreferences: FlowSharedPreferences,
+    private val preferences: Preferences,
 ) {
 
-    private val defaultFolderId = flowSharedPreferences.getNullableObject(
-        // string value needs to remain as is for backwards compatibility
-        "defaultBucketId",
-        object: NullableSerializer<Int> {
-            override fun deserialize(serialized: String?): Int? = serialized?.toIntOrNull()
-            override fun serialize(value: Int?): String? = value?.toString()
-        },
-        null
-    )
+    // string value needs to remain as is for backwards compatibility
+    private val defaultFolderId = "defaultBucketId"
 
-    suspend fun getDefaultLocalFolderId(): Int? = defaultFolderId.get() ?:
+    suspend fun getDefaultLocalFolderId(): Int? = preferences.get<Int?>(defaultFolderId, null) ?:
         localMediaService.getDefaultBucketId()?.also(::setDefaultFolderId)
 
     fun setDefaultFolderId(folderId: Int) {
-        defaultFolderId.set(folderId)
+        preferences.set(defaultFolderId, folderId)
     }
 
     fun observeFolders(): Flow<Set<LocalMediaFolder>> =

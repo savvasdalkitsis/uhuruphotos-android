@@ -15,28 +15,20 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.api.usecase
 
-import androidx.work.WorkInfo
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.entities.media.DbRemoteMediaItemDetails
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.entities.media.DbRemoteMediaItemSummary
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaId
 import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.api.service.model.RemoteMediaCollection
 import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.api.service.model.RemoteMediaCollectionsByDate
 import kotlinx.coroutines.flow.Flow
 
 interface RemoteMediaUseCase {
 
-    fun String?.toRemoteUrl(): String?
-
-    fun String?.toThumbnailUrlFromIdNullable(): String?
-
-    fun String.toThumbnailUrlFromId(isVideo: Boolean = false): String
-
-    fun String?.toFullSizeUrlFromIdNullable(isVideo: Boolean = false): String?
-
-    fun String.toFullSizeUrlFromId(isVideo: Boolean = false): String
-
     fun observeAllRemoteMediaDetails(): Flow<List<DbRemoteMediaItemDetails>>
 
     fun observeFavouriteRemoteMedia(): Flow<Result<List<DbRemoteMediaItemSummary>>>
+
+    suspend fun observeRemoteMediaItemDetails(id: String): Flow<DbRemoteMediaItemDetails>
 
     suspend fun getRemoteMediaItemDetails(id: String): DbRemoteMediaItemDetails?
 
@@ -64,11 +56,7 @@ interface RemoteMediaUseCase {
 
     fun restoreMediaItem(id: String)
 
-    fun downloadOriginal(id: String, video: Boolean)
-
-    suspend fun downloadThumbnail(id: String, video: Boolean)
-
-    fun observeOriginalFileDownloadStatus(id: String): Flow<WorkInfo.State?>
+    suspend fun downloadThumbnail(id: MediaId.Remote)
 
     suspend fun processRemoteMediaCollections(
         albumsFetcher: suspend () -> RemoteMediaCollectionsByDate,

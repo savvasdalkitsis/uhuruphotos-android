@@ -16,17 +16,19 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.feature.catalogue.auto.domain.implementation.usecase
 
 import android.content.Context
-import com.fredporciuncula.flow.preferences.FlowSharedPreferences
+import com.savvasdalkitsis.uhuruphotos.feature.auth.domain.api.usecase.ServerUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.catalogue.auto.domain.api.usecase.AutoAlbumsUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.catalogue.auto.domain.implementation.repository.AutoAlbumsRepository
 import com.savvasdalkitsis.uhuruphotos.feature.catalogue.auto.view.api.state.AutoAlbum
 import com.savvasdalkitsis.uhuruphotos.feature.catalogue.view.api.ui.state.CatalogueSorting
 import com.savvasdalkitsis.uhuruphotos.feature.catalogue.view.api.ui.state.CatalogueSorting.Companion.sorted
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.album.auto.AutoAlbums
-import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaId
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaId.Remote
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemInstance
-import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemSyncState.REMOTE_ONLY
-import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.api.usecase.RemoteMediaUseCase
+import com.savvasdalkitsis.uhuruphotos.foundation.preferences.api.Preferences
+import com.savvasdalkitsis.uhuruphotos.foundation.preferences.api.get
+import com.savvasdalkitsis.uhuruphotos.foundation.preferences.api.observe
+import com.savvasdalkitsis.uhuruphotos.foundation.preferences.api.set
 import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.flow.Flow
@@ -35,18 +37,18 @@ import javax.inject.Inject
 
 class AutoAlbumsUseCase @Inject constructor(
     private val autoAlbumsRepository: AutoAlbumsRepository,
-    private val remoteMediaUseCase: RemoteMediaUseCase,
-    flowSharedPreferences: FlowSharedPreferences,
+    private val serverUseCase: ServerUseCase,
+    private val preferences: Preferences,
     @ApplicationContext private val context: Context,
 ) : AutoAlbumsUseCase {
 
-    private val autoAlbumsSorting =
-        flowSharedPreferences.getEnum("autoAlbumsSorting", CatalogueSorting.default)
+    private val key = "autoAlbumsSorting"
 
-    override fun observeAutoAlbumsSorting(): Flow<CatalogueSorting> = autoAlbumsSorting.asFlow()
+    override fun observeAutoAlbumsSorting(): Flow<CatalogueSorting> =
+        preferences.observe(key, CatalogueSorting.default)
 
     override suspend fun changeAutoAlbumsSorting(sorting: CatalogueSorting) {
-        autoAlbumsSorting.setAndCommit(sorting)
+        preferences.set(key, sorting)
     }
 
     override fun observeAutoAlbums(): Flow<List<AutoAlbum>> =
@@ -61,34 +63,30 @@ class AutoAlbumsUseCase @Inject constructor(
         autoAlbumsRepository.refreshAutoAlbums()
 
     override suspend fun getAutoAlbums(): List<AutoAlbum> =
-        autoAlbumsRepository.getAutoAlbums().toAutoAlbums(autoAlbumsSorting.get())
+        autoAlbumsRepository.getAutoAlbums()
+            .toAutoAlbums(preferences.get(key, CatalogueSorting.default))
 
-    private fun List<AutoAlbums>.toAutoAlbums(sorting: CatalogueSorting): List<AutoAlbum> =
-        sorted(
+    private fun List<AutoAlbums>.toAutoAlbums(sorting: CatalogueSorting): List<AutoAlbum> {
+        val serverUrl = serverUseCase.getServerUrl()!!
+        return sorted(
             sorting,
             timeStamp = { it.timestamp },
             title = { it.title },
         )
             .map {
-                with(remoteMediaUseCase) {
-                    AutoAlbum(
-                        id = it.id,
-                        cover = MediaItemInstance(
-                            id = MediaId.Remote(it.coverPhotoHash, it.coverPhotoIsVideo ?: false),
-                            mediaHash = it.coverPhotoHash,
-                            thumbnailUri = it.coverPhotoHash.toThumbnailUrlFromId(),
-                            fullResUri = it.coverPhotoHash.toFullSizeUrlFromId(
-                                it.coverPhotoIsVideo ?: false
-                            ),
-                            displayDayDate = null,
-                            sortableDate = it.timestamp,
-                            ratio = 1f,
-                            syncState = REMOTE_ONLY,
-                        ),
-                        title = it.title ?: context.getString(string.missing_album_title),
-                        photoCount = it.photoCount,
-                    )
-                }
+                AutoAlbum(
+                    id = it.id,
+                    cover = MediaItemInstance(
+                        id = Remote(it.coverPhotoHash, it.coverPhotoIsVideo ?: false, serverUrl),
+                        mediaHash = it.coverPhotoHash,
+                        displayDayDate = null,
+                        sortableDate = it.timestamp,
+                        ratio = 1f,
+                    ),
+                    title = it.title ?: context.getString(string.missing_album_title),
+                    photoCount = it.photoCount,
+                )
             }
+    }
 
 }

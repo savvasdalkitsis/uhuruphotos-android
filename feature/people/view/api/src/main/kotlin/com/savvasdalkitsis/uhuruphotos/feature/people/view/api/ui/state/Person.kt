@@ -25,16 +25,16 @@ data class Person(
     val id: Int,
 )
 
-suspend fun People.toPerson(urlResolver: suspend (String?) -> String?) = Person(
+suspend fun People.toPerson(urlResolver: suspend (String) -> String?) = Person(
     id = id,
     name = name,
-    imageUrl = urlResolver(faceUrl),
+    imageUrl = faceUrl?.let { urlResolver(it) },
     photos = faceCount,
 )
 
-suspend fun GetPeopleForAutoAlbum.toPerson(urlResolver: suspend (String?) -> String?) = Person(
+suspend fun GetPeopleForAutoAlbum.toPerson(urlResolver: suspend (String) -> String?) = Person(
     id = personId,
     name = name ?: "",
-    imageUrl = urlResolver(faceUrl),
+    imageUrl = faceUrl?.let { urlResolver(it) },
     photos = faceCount ?: 0,
 )

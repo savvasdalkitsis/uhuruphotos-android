@@ -64,7 +64,7 @@ internal fun LightboxScaffold(
         },
     ) { contentPadding ->
         when {
-            state.isLoading && state.media[index].lowResUrl.isEmpty() -> FullProgressBar()
+            state.isLoading && state.media[index].id.thumbnailUri.isEmpty() -> FullProgressBar()
             else -> LightboxCanvas(action, state, index, contentPadding)
         }
     }

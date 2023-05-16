@@ -1,0 +1,10 @@
+android {
+    namespace 'com.savvasdalkitsis.uhuruphotos.foundation.download.api'
+}
+
+dependencies {
+    api(
+            libs.kotlinx.coroutines,
+    )
+    api project(":feature:media:common:domain:api")
+}

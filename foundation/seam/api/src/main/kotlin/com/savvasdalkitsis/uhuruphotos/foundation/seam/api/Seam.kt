@@ -17,41 +17,47 @@ package com.savvasdalkitsis.uhuruphotos.foundation.seam.api
 
 import com.savvasdalkitsis.uhuruphotos.foundation.launchers.api.onMain
 import com.savvasdalkitsis.uhuruphotos.foundation.log.api.log
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.cancel
+import kotlinx.coroutines.currentCoroutineContext
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.cancellable
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.isActive
 
-class Seam<S : Any, E : Any, A : Any, M : Mutation<S>>(
-    private val actionHandler: ActionHandler<S, E, A, M>,
+class Seam<S : Any, E : Any, A : Any>(
+    private val actionHandler: ActionHandler<S, E, A>,
     private val effectsHandler: EffectHandler<E>,
     initialState: S,
+    private val scope: CoroutineScope,
 ) : HasActionableState<S, A> {
 
     private val _state = MutableStateFlow(initialState)
     override val state: StateFlow<S> = _state
 
     override suspend fun action(action: A)  {
-        log("MVI") { "Starting handling of action $action" }
+        log("Seam") { "Starting handling of action $action" }
         actionHandler.handleAction(
             _state.value,
             action,
         ) { effect ->
             onMain {
-                log("MVI") { "Received side effect to post: $effect from action: $action" }
+                log("Seam") { "Received side effect to post: $effect from action: $action" }
                 effectsHandler.handleEffect(effect)
             }
         }
-            .cancellable()
             .distinctUntilChanged()
             .flowOn(Dispatchers.Default)
+            .cancellable()
             .collect { mutation ->
-                log("MVI") { "Received mutation $mutation due to action $action" }
+                if (!scope.isActive)
+                    currentCoroutineContext().cancel()
+                log("Seam") { "Received mutation $mutation due to action $action" }
                 _state.update { mutation.reduce(_state.value) }
-                log("MVI") { "State updated to: ${_state.value}" }
             }
     }
 }

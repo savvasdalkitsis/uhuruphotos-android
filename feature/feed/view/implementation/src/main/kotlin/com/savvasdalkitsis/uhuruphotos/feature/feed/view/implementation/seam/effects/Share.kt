@@ -22,8 +22,8 @@ import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R
 data class Share(val selectedCels: List<CelState>) : FeedEffect() {
     context(FeedEffectsContext) override suspend fun handle() {
         toasterUseCase.show(R.string.downloading_photos_sharing)
-        shareUseCase.shareMultiple(selectedCels.mapNotNull {
-            it.mediaItem.fullResUri
+        shareUseCase.shareMultiple(selectedCels.map {
+            it.mediaItem.id.fullResUri
         })
     }
 }

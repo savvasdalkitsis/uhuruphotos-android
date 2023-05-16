@@ -41,8 +41,6 @@ object DeleteLocalKeepRemoteMediaItem : LightboxAction() {
                             current.id,
                             current.copy(
                                 id = remote,
-                                fullResUrl = remote.toFullSizeUriFromId(),
-                                lowResUrl = remote.toThumbnailUriFromId(),
                                 localPath = null,
                                 mediaItemSyncState = MediaItemSyncState.REMOTE_ONLY,
                             ),

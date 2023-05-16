@@ -15,30 +15,32 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.viewmodel
 
-import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.savvasdalkitsis.uhuruphotos.feature.account.view.api.seam.AccountOverviewActionsContext
 import com.savvasdalkitsis.uhuruphotos.feature.account.view.api.seam.AccountOverviewEffectsContext
 import com.savvasdalkitsis.uhuruphotos.feature.account.view.api.seam.actions.AccountOverviewAction
 import com.savvasdalkitsis.uhuruphotos.feature.account.view.api.seam.actions.Load
+import com.savvasdalkitsis.uhuruphotos.feature.account.view.api.seam.effects.AccountOverviewEffect
 import com.savvasdalkitsis.uhuruphotos.feature.account.view.api.ui.state.AccountOverviewState
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.api.navigation.FeedNavigationRoute
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.FeedActionsContext
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.FeedEffectsContext
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.actions.FeedAction
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.actions.LoadFeed
+import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.effects.FeedEffect
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.ui.state.FeedState
-import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.HasInitializer
+import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.viewmodel.NavigationViewModel
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.ActionHandlerWithContext
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.CompositeActionHandler
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.CompositeEffectHandler
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.EffectHandlerWithContext
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.Either
-import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.HasActionableState
-import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.Seam
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 private typealias FeedCompositeState = Pair<FeedState, AccountOverviewState>
+private typealias FeedCompositeEffect = Either<FeedEffect, AccountOverviewEffect>
 private typealias FeedCompositeAction = Either<FeedAction, AccountOverviewAction>
 
 @HiltViewModel
@@ -47,25 +49,24 @@ internal class FeedViewModel @Inject constructor(
     accountOverviewActionsContext: AccountOverviewActionsContext,
     feedEffectsContext: FeedEffectsContext,
     accountOverviewEffectsContext: AccountOverviewEffectsContext,
-) : ViewModel(),
-    HasActionableState<FeedCompositeState, FeedCompositeAction> by Seam(
-        CompositeActionHandler(
-            ActionHandlerWithContext(feedActionsContext),
-            ActionHandlerWithContext(accountOverviewActionsContext),
-        ),
-        CompositeEffectHandler(
-            EffectHandlerWithContext(feedEffectsContext),
-            EffectHandlerWithContext(accountOverviewEffectsContext),
-        ),
-        FeedState() to AccountOverviewState()
+) : NavigationViewModel<FeedCompositeState, FeedCompositeEffect, FeedCompositeAction, FeedNavigationRoute>(
+    CompositeActionHandler(
+        ActionHandlerWithContext(feedActionsContext),
+        ActionHandlerWithContext(accountOverviewActionsContext),
     ),
-    HasInitializer<FeedCompositeAction, FeedNavigationRoute> {
+    CompositeEffectHandler(
+        EffectHandlerWithContext(feedEffectsContext),
+        EffectHandlerWithContext(accountOverviewEffectsContext),
+    ),
+    FeedState() to AccountOverviewState(),
+) {
 
-    override suspend fun initialize(
-        initializerData: FeedNavigationRoute,
-        action: (FeedCompositeAction) -> Unit
-    ) {
-        action(Either.Left(LoadFeed))
-        action(Either.Right(Load))
+    init {
+        viewModelScope.launch {
+            action(Either.Left(LoadFeed))
+        }
+        viewModelScope.launch {
+            action(Either.Right(Load))
+        }
     }
 }

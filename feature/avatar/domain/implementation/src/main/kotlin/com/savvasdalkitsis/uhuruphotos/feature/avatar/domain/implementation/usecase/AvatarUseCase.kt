@@ -25,7 +25,6 @@ import com.savvasdalkitsis.uhuruphotos.feature.avatar.view.api.ui.state.SyncStat
 import com.savvasdalkitsis.uhuruphotos.feature.avatar.view.api.ui.state.SyncState.GOOD
 import com.savvasdalkitsis.uhuruphotos.feature.avatar.view.api.ui.state.SyncState.IN_PROGRESS
 import com.savvasdalkitsis.uhuruphotos.feature.feed.domain.api.worker.FeedWorkScheduler
-import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.api.usecase.RemoteMediaUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.user.domain.api.usecase.UserUseCase
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.combine
@@ -34,7 +33,6 @@ import javax.inject.Inject
 class AvatarUseCase @Inject constructor(
     private val userUseCase: UserUseCase,
     private val feedWorkScheduler: FeedWorkScheduler,
-    private val remoteMediaUseCase: RemoteMediaUseCase,
     private val serverUseCase: ServerUseCase,
 ) : AvatarUseCase {
 
@@ -46,7 +44,7 @@ class AvatarUseCase @Inject constructor(
     ) { user, feedSyncStatus, precacheStatus, serverUrl ->
         val statuses = listOf(feedSyncStatus, precacheStatus)
         AvatarState(
-            avatarUrl = with(remoteMediaUseCase) { user.avatar?.toRemoteUrl() },
+            avatarUrl = user.avatar?.let { "$serverUrl$it" },
             syncState = when {
                 BLOCKED in statuses || FAILED in statuses -> BAD
                 RUNNING in statuses -> IN_PROGRESS

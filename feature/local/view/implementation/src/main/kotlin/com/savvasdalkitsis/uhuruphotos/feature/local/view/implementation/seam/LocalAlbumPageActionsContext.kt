@@ -15,19 +15,19 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.local.view.implementation.seam
 
-import com.fredporciuncula.flow.preferences.FlowSharedPreferences
 import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.toCluster
 import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.GalleryActionsContext
 import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.ui.state.GalleryDetails
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.api.model.LightboxSequenceDataSource.LocalAlbum
 import com.savvasdalkitsis.uhuruphotos.feature.local.domain.api.usecase.LocalAlbumUseCase
+import com.savvasdalkitsis.uhuruphotos.foundation.preferences.api.Preferences
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.state.Title
 import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
 internal class LocalAlbumPageActionsContext @Inject constructor(
     localAlbumUseCase: LocalAlbumUseCase,
-    flowSharedPreferences: FlowSharedPreferences,
+    preferences: Preferences,
 ) : GalleryActionsContext(
     galleryRefresher = { localAlbumUseCase.refreshLocalAlbum(it) },
     initialCollageDisplay = { localAlbumUseCase.getLocalAlbumGalleryDisplay(it) },
@@ -47,5 +47,5 @@ internal class LocalAlbumPageActionsContext @Inject constructor(
             }
     },
     lightboxSequenceDataSource = { LocalAlbum(it) },
-    flowSharedPreferences = flowSharedPreferences,
+    preferences = preferences,
 )

@@ -15,7 +15,7 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.album.user.view.implementation.viewmodel
 
-import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.savvasdalkitsis.uhuruphotos.feature.album.user.view.api.navigation.UserAlbumNavigationRoute
 import com.savvasdalkitsis.uhuruphotos.feature.album.user.view.implementation.seam.UserAlbumActionsContext
 import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.CollageState
@@ -23,29 +23,29 @@ import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.GalleryEffe
 import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.GalleryId
 import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.action.GalleryAction
 import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.action.LoadCollage
+import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.effects.GalleryEffect
 import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.ui.state.GalleryState
-import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.HasInitializer
+import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.viewmodel.NavigationViewModel
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.ActionHandlerWithContext
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.EffectHandlerWithContext
-import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.HasActionableState
-import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.Seam
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 internal class UserAlbumViewModel @Inject constructor(
     userAlbumActionsContext: UserAlbumActionsContext,
     effectsContext: GalleryEffectsContext,
-) : ViewModel(), HasActionableState<GalleryState, GalleryAction> by Seam(
+) : NavigationViewModel<GalleryState, GalleryEffect, GalleryAction, UserAlbumNavigationRoute>(
     ActionHandlerWithContext(userAlbumActionsContext),
     EffectHandlerWithContext(effectsContext),
     GalleryState(collageState = CollageState())
-), HasInitializer<GalleryAction, UserAlbumNavigationRoute> {
-    override suspend fun initialize(
-        initializerData: UserAlbumNavigationRoute,
-        action: (GalleryAction) -> Unit
-    ) {
-        val id = initializerData.albumId
-        action(LoadCollage(GalleryId(id, "user:$id")))
+) {
+
+    init {
+        viewModelScope.launch {
+            val id = getRoute().albumId
+            action(LoadCollage(GalleryId(id, "user:$id")))
+        }
     }
 }

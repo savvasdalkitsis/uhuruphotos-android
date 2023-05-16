@@ -17,9 +17,7 @@ package com.savvasdalkitsis.uhuruphotos.feature.heatmap.view.implementation.seam
 
 import com.savvasdalkitsis.uhuruphotos.feature.heatmap.view.implementation.seam.HeatMapActionsContext
 import com.savvasdalkitsis.uhuruphotos.feature.heatmap.view.implementation.seam.effects.HeatMapEffect
-import com.savvasdalkitsis.uhuruphotos.feature.heatmap.view.implementation.seam.HeatMapMutation
 import com.savvasdalkitsis.uhuruphotos.feature.heatmap.view.implementation.ui.state.HeatMapState
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.Action
 
-sealed class HeatMapAction :
-    Action<HeatMapState, HeatMapEffect, HeatMapMutation, HeatMapActionsContext>
+sealed class HeatMapAction : Action<HeatMapState, HeatMapEffect, HeatMapActionsContext>

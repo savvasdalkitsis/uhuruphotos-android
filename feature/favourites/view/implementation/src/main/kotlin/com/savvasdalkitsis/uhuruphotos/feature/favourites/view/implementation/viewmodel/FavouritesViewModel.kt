@@ -15,7 +15,8 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.favourites.view.implementation.viewmodel
 
-import androidx.lifecycle.ViewModel
+import androidx.lifecycle.DefaultLifecycleObserver
+import androidx.lifecycle.viewModelScope
 import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.CollageState
 import com.savvasdalkitsis.uhuruphotos.feature.favourites.view.api.navigation.FavouritesNavigationRoute
 import com.savvasdalkitsis.uhuruphotos.feature.favourites.view.implementation.seam.FavouritesActionsContext
@@ -23,28 +24,29 @@ import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.GalleryEffe
 import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.GalleryId
 import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.action.GalleryAction
 import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.action.LoadCollage
+import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.effects.GalleryEffect
 import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.ui.state.GalleryState
-import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.HasInitializer
+import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.HasNavigationRoute
+import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.viewmodel.NavigationViewModel
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.ActionHandlerWithContext
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.EffectHandlerWithContext
-import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.HasActionableState
-import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.Seam
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 internal class FavouritesViewModel @Inject constructor(
     favouritesActionsContext: FavouritesActionsContext,
     effectsContext: GalleryEffectsContext,
-) : ViewModel(), HasActionableState<GalleryState, GalleryAction> by Seam(
+) : NavigationViewModel<GalleryState, GalleryEffect, GalleryAction, FavouritesNavigationRoute>(
     ActionHandlerWithContext(favouritesActionsContext),
     EffectHandlerWithContext(effectsContext),
     GalleryState(collageState = CollageState())
-), HasInitializer<GalleryAction, FavouritesNavigationRoute> {
-    override suspend fun initialize(
-        initializerData: FavouritesNavigationRoute,
-        action: (GalleryAction) -> Unit
-    ) {
-        action(LoadCollage(GalleryId(0, "favourites")))
+), HasNavigationRoute<FavouritesNavigationRoute>, DefaultLifecycleObserver {
+
+    init {
+        viewModelScope.launch {
+            action(LoadCollage(GalleryId(0, "favourites")))
+        }
     }
 }

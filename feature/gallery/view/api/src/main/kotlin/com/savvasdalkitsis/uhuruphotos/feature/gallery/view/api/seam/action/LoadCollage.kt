@@ -17,9 +17,9 @@ package com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.action
 
 import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.Cluster
 import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.GalleryActionsContext
-import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.effects.GalleryEffect
 import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.GalleryId
 import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.GalleryMutation
+import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.effects.GalleryEffect
 import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.ui.state.GallerySorting
 import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.ui.state.GalleryState
 import com.savvasdalkitsis.uhuruphotos.foundation.coroutines.api.safelyOnStartIgnoring
@@ -35,15 +35,12 @@ data class LoadCollage(val id: GalleryId) : GalleryAction() {
         state: GalleryState,
         effect: EffectHandler<GalleryEffect>
     ) : Flow<GalleryMutation> {
-        sorting = flowSharedPreferences.getEnum(
-            "gallerySorting::${id.serializationUniqueId}",
-            GallerySorting.default,
-        )
+        galleryId = id
         return merge(
             flowOf(GalleryMutation.ChangeCollageDisplay(initialCollageDisplay(id.id))),
             combine(
                 galleryDetailsFlow(id.id, effect),
-                sorting.asFlow(),
+                observeSorting(),
             ) { galleryDetails, sorting ->
                 galleryDetails.copy(
                     clusters = when (sorting) {
@@ -52,12 +49,11 @@ data class LoadCollage(val id: GalleryId) : GalleryAction() {
                     }
                 )
             }.map(GalleryMutation::ShowGallery),
-            sorting.asFlow()
+            observeSorting()
                 .map { GalleryMutation.ShowGallerySorting(it) },
             loading,
         ).safelyOnStartIgnoring {
-            galleryId = id.id
-            if (galleryDetailsEmptyCheck(galleryId)) {
+            if (galleryDetailsEmptyCheck(galleryId.id)) {
                 refreshGallery(effect)
             }
         }

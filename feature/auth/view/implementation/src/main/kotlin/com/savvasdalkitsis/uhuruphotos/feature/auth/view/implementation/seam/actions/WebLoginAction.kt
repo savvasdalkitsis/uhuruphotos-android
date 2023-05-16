@@ -17,9 +17,7 @@ package com.savvasdalkitsis.uhuruphotos.feature.auth.view.implementation.seam.ac
 
 import com.savvasdalkitsis.uhuruphotos.feature.auth.view.implementation.seam.WebLoginActionsContext
 import com.savvasdalkitsis.uhuruphotos.feature.auth.view.implementation.seam.effects.WebLoginEffect
-import com.savvasdalkitsis.uhuruphotos.feature.auth.view.implementation.seam.WebLoginMutation
 import com.savvasdalkitsis.uhuruphotos.feature.auth.view.implementation.ui.WebLoginState
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.Action
 
-sealed class WebLoginAction :
-    Action<WebLoginState, WebLoginEffect, WebLoginMutation, WebLoginActionsContext>
+sealed class WebLoginAction : Action<WebLoginState, WebLoginEffect, WebLoginActionsContext>

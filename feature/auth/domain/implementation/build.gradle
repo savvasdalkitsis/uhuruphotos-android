@@ -13,19 +13,19 @@ dependencies {
     api project(":feature:auth:domain:api")
     api project(":feature:auth:view:api")
     implementation project(":feature:db:domain:api")
+    implementation project(":feature:settings:domain:api")
     implementation project(":foundation:activity:api")
     implementation project(":foundation:http:api")
     implementation project(":foundation:launchers:api")
     implementation project(":foundation:log:api")
     implementation project(":foundation:navigation:api")
     implementation project(":foundation:network:api")
+    implementation project(":foundation:preferences:api")
     implementation project(":foundation:ui:api")
-    implementation project(":feature:settings:domain:api")
     implementation(
             libs.androidx.compose.hilt.navigation,
             libs.androidx.compose.ui,
             libs.bundles.androidx.credentials,
-            libs.flowpreferences,
             libs.jwt,
             libs.hilt,
             libs.moshi,

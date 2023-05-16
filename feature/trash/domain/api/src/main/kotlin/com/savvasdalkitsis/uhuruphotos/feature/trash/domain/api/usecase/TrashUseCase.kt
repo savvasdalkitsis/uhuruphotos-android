@@ -23,7 +23,7 @@ interface TrashUseCase {
 
     suspend fun refreshTrash(): Result<Unit>
     fun getTrashGalleryDisplay() : PredefinedCollageDisplay
-    suspend fun setTrashGalleryDisplay(galleryDisplay: PredefinedCollageDisplay)
+    fun setTrashGalleryDisplay(galleryDisplay: PredefinedCollageDisplay)
     suspend fun hasTrash(): Boolean
     fun observeTrashAlbums(): Flow<List<MediaCollection>>
     suspend fun getTrash(): List<MediaCollection>

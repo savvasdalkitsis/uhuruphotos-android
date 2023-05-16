@@ -16,12 +16,11 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.feature.search.view.implementation.seam.actions
 
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.people.People
-import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.api.usecase.RemoteMediaUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.people.view.api.ui.state.toPerson
 import com.savvasdalkitsis.uhuruphotos.feature.search.view.implementation.seam.SearchActionsContext
-import com.savvasdalkitsis.uhuruphotos.feature.search.view.implementation.seam.effects.SearchEffect
 import com.savvasdalkitsis.uhuruphotos.feature.search.view.implementation.seam.SearchMutation
 import com.savvasdalkitsis.uhuruphotos.feature.search.view.implementation.seam.effects.ErrorRefreshingPeople
+import com.savvasdalkitsis.uhuruphotos.feature.search.view.implementation.seam.effects.SearchEffect
 import com.savvasdalkitsis.uhuruphotos.feature.search.view.implementation.ui.state.SearchState
 import com.savvasdalkitsis.uhuruphotos.feature.search.view.implementation.ui.state.SearchSuggestion
 import com.savvasdalkitsis.uhuruphotos.foundation.coroutines.api.onErrors
@@ -41,17 +40,15 @@ object Initialise : SearchAction() {
     context(SearchActionsContext) override fun handle(
         state: SearchState,
         effect: EffectHandler<SearchEffect>
-    ) = with(remoteMediaUseCase) {
-        merge(
-            showLibrary(),
-            showFeedDisplay(),
-            showServerSearchSuggestion(),
-            showPeopleSuggestion(effect),
-            showSearchSuggestions()
-        )
-    }
+    ) = merge(
+        showLibrary(),
+        showFeedDisplay(),
+        showServerSearchSuggestion(),
+        showPeopleSuggestion(effect),
+        showSearchSuggestions()
+    )
 
-    context(RemoteMediaUseCase, SearchActionsContext)
+    context(SearchActionsContext)
     private fun showSearchSuggestions() = combine(
         searchUseCase.getRecentTextSearches()
             .map {
@@ -75,7 +72,7 @@ object Initialise : SearchAction() {
         }.filterQuery(query)
     }.map(SearchMutation::ShowSearchSuggestions)
 
-    context(RemoteMediaUseCase, SearchActionsContext)
+    context(SearchActionsContext)
     private fun showPeopleSuggestion(effect: EffectHandler<SearchEffect>) =
         peopleUseCase.observePeopleByPhotoCount()
             .onErrors {
@@ -105,10 +102,11 @@ object Initialise : SearchAction() {
         .distinctUntilChanged()
         .map(SearchMutation::ChangeFeedDisplay)
 
-    context(RemoteMediaUseCase)
+    context(SearchActionsContext)
     private fun Flow<List<People>>.toPeople() = map { people ->
+        val serverUrl = serverUseCase.getServerUrl()!!
         people.map {
-            it.toPerson { url -> url.toRemoteUrl() }
+            it.toPerson { url -> "$serverUrl$url" }
         }
     }
 

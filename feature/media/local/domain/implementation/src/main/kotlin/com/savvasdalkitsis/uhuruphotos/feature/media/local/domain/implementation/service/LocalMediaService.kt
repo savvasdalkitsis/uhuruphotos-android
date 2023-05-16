@@ -114,12 +114,6 @@ class LocalMediaService @Inject constructor(
             rowHandler = videoRowHandler,
         )
 
-    fun delete(id: Long, video: Boolean) =
-        contentResolver.delete(createMediaItemUri(id, video),
-            null,
-            null,
-        )
-
     fun deletePhotos(vararg ids: Long) =
         contentResolver.delete(LocalMediaPhotoColumns.collection,
             Images.Media._ID + " in (${ids.joinToString(",") { "?" }})",

@@ -25,6 +25,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.album.user.UserAlbu
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.album.user.UserAlbumQueries
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.album.user.UserAlbumsQueries
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.auth.TokenQueries
+import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.media.download.DownloadingMediaItemsQueries
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.media.local.LocalMediaItemDetailsQueries
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.media.remote.RemoteMediaCollectionsQueries
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.media.remote.RemoteMediaItemDetailsQueries
@@ -66,6 +67,7 @@ class AccountUseCaseTest {
         override val userAlbumQueries = mockk<UserAlbumQueries>(relaxed = true)
         override val userAlbumPhotosQueries = mockk<UserAlbumPhotosQueries>(relaxed = true)
         override val userAlbumsQueries = mockk<UserAlbumsQueries>(relaxed = true)
+        override val downloadingMediaItemsQueries = mockk<DownloadingMediaItemsQueries>(relaxed = true)
 
         override fun transaction(noEnclosing: Boolean, body: TransactionWithoutReturn.() -> Unit) {}
         override fun <R> transactionWithResult(

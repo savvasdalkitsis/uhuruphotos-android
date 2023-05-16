@@ -39,6 +39,7 @@ import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.R.drawable.ic_aspect
 import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.R.drawable.ic_camera
 import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.R.drawable.ic_camera_roll
 import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.R.drawable.ic_file_tree
+import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.R.drawable.ic_fingerprint
 import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.R.drawable.ic_folder_network
 import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.R.drawable.ic_image_aspect_ratio
 import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.R.drawable.ic_iso
@@ -102,6 +103,9 @@ internal fun LightboxInfoMetadata(
                 .Entry(ic_camera_roll, action)
             it.exifData.isoSpeed
                 .Entry(ic_iso, action)
+        }
+        mediaItem.md5?.let {
+            it.Entry(ic_fingerprint, action)
         }
         mediaItem.remotePath?.let {
             it.Entry(ic_folder_network, action)

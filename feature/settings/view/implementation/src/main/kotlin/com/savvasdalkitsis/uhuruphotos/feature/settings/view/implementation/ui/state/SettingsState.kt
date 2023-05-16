@@ -17,6 +17,7 @@ package com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.ui.
 
 import androidx.work.NetworkType
 import com.savvasdalkitsis.uhuruphotos.feature.avatar.view.api.ui.state.AvatarState
+import com.savvasdalkitsis.uhuruphotos.feature.feed.view.api.ui.state.FeedMediaItemSyncDisplay
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.theme.ThemeMode
 
 data class SettingsState(
@@ -51,4 +52,5 @@ data class SettingsState(
     val isLoggingEnabled: Boolean = false,
     val biometrics: BiometricsSetting? = null,
     val showMemories: Boolean = true,
+    val feedMediaItemSyncDisplay: FeedMediaItemSyncDisplay = FeedMediaItemSyncDisplay.default,
 )

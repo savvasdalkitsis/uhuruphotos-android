@@ -15,31 +15,34 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.home.view.implementation.viewmodel
 
-import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.savvasdalkitsis.uhuruphotos.feature.home.view.api.navigation.HomeNavigationRoute
 import com.savvasdalkitsis.uhuruphotos.feature.home.view.implementation.seam.HomeActionsContext
 import com.savvasdalkitsis.uhuruphotos.feature.home.view.implementation.seam.HomeEffectsContext
 import com.savvasdalkitsis.uhuruphotos.feature.home.view.implementation.seam.actions.HomeAction
 import com.savvasdalkitsis.uhuruphotos.feature.home.view.implementation.seam.actions.Load
+import com.savvasdalkitsis.uhuruphotos.feature.home.view.implementation.seam.effects.HomeEffect
 import com.savvasdalkitsis.uhuruphotos.feature.home.view.implementation.ui.state.HomeState
-import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.HasInitializer
+import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.viewmodel.NavigationViewModel
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.ActionHandlerWithContext
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.EffectHandlerWithContext
-import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.HasActionableState
-import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.Seam
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 internal class HomeViewModel @Inject constructor(
     homeActionsContext: HomeActionsContext,
     homeEffectsContext: HomeEffectsContext,
-) : ViewModel(), HasActionableState<HomeState, HomeAction> by Seam(
+) : NavigationViewModel<HomeState, HomeEffect, HomeAction, HomeNavigationRoute>(
     ActionHandlerWithContext(homeActionsContext),
     EffectHandlerWithContext(homeEffectsContext),
     HomeState()
-), HasInitializer<HomeAction, HomeNavigationRoute> {
-    override suspend fun initialize(initializerData: HomeNavigationRoute, action: (HomeAction) -> Unit) {
-        action(Load)
+) {
+
+    init {
+        viewModelScope.launch {
+            action(Load)
+        }
     }
 }

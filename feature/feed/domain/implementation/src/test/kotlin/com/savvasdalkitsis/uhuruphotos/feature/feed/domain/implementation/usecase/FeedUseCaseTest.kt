@@ -16,7 +16,6 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.feature.feed.domain.implementation.usecase
 
 import app.cash.turbine.test
-import com.fredporciuncula.flow.preferences.FlowSharedPreferences
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.media.remote.GetRemoteMediaCollections
 import com.savvasdalkitsis.uhuruphotos.feature.feed.domain.api.worker.FeedWorkScheduler
 import com.savvasdalkitsis.uhuruphotos.feature.feed.domain.implementation.repository.FeedRepository
@@ -26,6 +25,8 @@ import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.Med
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.usecase.MediaUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.api.TestRemoteMediaCollections.getRemoteMediaCollections
 import com.savvasdalkitsis.uhuruphotos.foundation.group.api.model.Group
+import com.savvasdalkitsis.uhuruphotos.foundation.preferences.api.Preferences
+import com.savvasdalktsis.uhuruphotos.foundation.download.api.usecase.DownloadUseCase
 import com.shazam.shazamcrest.MatcherAssert.assertThat
 import com.shazam.shazamcrest.matcher.Matchers.sameBeanAs
 import io.mockk.Called
@@ -44,11 +45,13 @@ class FeedUseCaseTest {
     private val feedRepository = mockk<FeedRepository>(relaxed = true)
     private val feedWorkScheduler = mockk<FeedWorkScheduler>(relaxed = true)
     private val mediaUseCase = mockk<MediaUseCase>(relaxed = true)
-    private val preferences = mockk<FlowSharedPreferences>(relaxed = true)
+    private val downloadUseCase = mockk<DownloadUseCase>(relaxed = true)
+    private val preferences = mockk<Preferences>(relaxed = true)
     private val underTest = FeedUseCase(
         feedRepository,
         mediaUseCase,
         feedWorkScheduler,
+        downloadUseCase,
         preferences,
     )
 
@@ -68,7 +71,7 @@ class FeedUseCaseTest {
             )
             assertThat(awaitItem(), sameBeanAs(listOf(mediaCollection.copy(
                 id = "albumId",
-                mediaItems = listOf(mediaItem.copy(id = MediaId.Remote("photoId", false)))
+                mediaItems = listOf(mediaItem.copy(id = MediaId.Remote("photoId", false, "serverUrl")))
             ))))
         }
     }
@@ -109,7 +112,7 @@ class FeedUseCaseTest {
         assertThat(underTest.getFeed(), sameBeanAs(listOf(
             mediaCollection.copy(
             id = "collectionId",
-            mediaItems = listOf(mediaItem.copy(id = MediaId.Remote("photoId", false)))
+            mediaItems = listOf(mediaItem.copy(id = MediaId.Remote("photoId", false, "serverUrl")))
         ))))
     }
 

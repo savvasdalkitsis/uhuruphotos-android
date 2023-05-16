@@ -16,6 +16,7 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.feature.server.view.implementation.seam
 
 import app.cash.turbine.test
+import com.savvasdalkitsis.uhuruphotos.feature.auth.domain.api.usecase.AuthenticationLoginUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.auth.domain.api.usecase.AuthenticationUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.auth.domain.api.usecase.ServerUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.server.view.implementation.seam.ServerMutation.HideUnsecureServerConfirmation
@@ -39,6 +40,7 @@ class ServerActionsContextTest {
 
     private val serverUseCase = mockk<ServerUseCase>(relaxed = true)
     private val authenticationUseCase = mockk<AuthenticationUseCase>(relaxed = true)
+    private val authenticationLoginUseCase = mockk<AuthenticationLoginUseCase>(relaxed = true)
     private val settingsUseCase = mockk<SettingsUseCase>(relaxed = true)
     private val serverUrl = ServerUrl("",
         isUrlValid = false,
@@ -49,6 +51,7 @@ class ServerActionsContextTest {
     private val underTest = ServerActionsContext(
         serverUseCase,
         authenticationUseCase,
+        authenticationLoginUseCase,
         settingsUseCase,
     )
     private val validHttpsUrl = "https://valid.url.com"

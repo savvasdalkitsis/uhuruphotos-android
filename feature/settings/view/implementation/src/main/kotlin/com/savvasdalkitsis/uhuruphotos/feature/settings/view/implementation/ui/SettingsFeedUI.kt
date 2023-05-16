@@ -15,8 +15,11 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.ui
 
+import androidx.compose.material.Divider
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.stringResource
+import com.savvasdalkitsis.uhuruphotos.feature.feed.view.api.ui.state.FeedMediaItemSyncDisplay
+import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.actions.ChangeFeedMediaItemSyncDisplay
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.actions.ChangeMemoriesEnabled
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.actions.SettingsAction
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.ui.state.SettingsState
@@ -34,5 +37,23 @@ internal fun SettingsFeedUI(
         isChecked = state.showMemories,
     ) {
         action(ChangeMemoriesEnabled(!state.showMemories))
+    }
+
+    Divider()
+    SettingsTextRow(stringResource(string.show_media_sync_status))
+    SettingsTextDropDownButtonRow(
+        content = {
+            SyncDisplayRow(state.feedMediaItemSyncDisplay)
+        },
+        buttonText = stringResource(string.change),
+        action = action,
+    ) {
+        @Composable
+        fun item(display: FeedMediaItemSyncDisplay) {
+            Item({ SyncDisplayRow(display) }, ChangeFeedMediaItemSyncDisplay(display))
+        }
+        item(FeedMediaItemSyncDisplay.SHOW_ON_SCROLL)
+        item(FeedMediaItemSyncDisplay.ALWAYS_OFF)
+        item(FeedMediaItemSyncDisplay.ALWAYS_ON)
     }
 }

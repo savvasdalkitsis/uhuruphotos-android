@@ -18,12 +18,14 @@ package com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.ui.
 import androidx.annotation.StringRes
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
-import com.fredporciuncula.flow.preferences.FlowSharedPreferences
+import com.savvasdalkitsis.uhuruphotos.foundation.preferences.api.Preferences
+import com.savvasdalkitsis.uhuruphotos.foundation.preferences.api.get
+import com.savvasdalkitsis.uhuruphotos.foundation.preferences.api.set
 import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
 import javax.inject.Inject
 
 class SettingsViewStateController @Inject constructor(
-    private val flowSharedPreferences: FlowSharedPreferences,
+    private val preferences: Preferences,
 ) {
     private val allGroups = mutableSetOf<SettingsGroupState>()
 
@@ -63,13 +65,12 @@ class SettingsViewStateController @Inject constructor(
         .also { allGroups += it }
 
     private fun preferencesState(key: String) = object : MutableState<Boolean> {
-        private val pref = flowSharedPreferences.getBoolean(key, true)
-        private val state = mutableStateOf(pref.get())
+        private val state = mutableStateOf(preferences.get(key, true))
 
         override var value: Boolean
             get() = state.value
             set(value) {
-                pref.set(value)
+                preferences.set(key, value)
                 state.value = value
             }
         override fun component1(): Boolean = value

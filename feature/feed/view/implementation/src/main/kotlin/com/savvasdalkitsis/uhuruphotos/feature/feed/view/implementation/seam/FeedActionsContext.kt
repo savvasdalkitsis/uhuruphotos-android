@@ -33,11 +33,13 @@ import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.worker.Loc
 import com.savvasdalkitsis.uhuruphotos.feature.memories.domain.api.usecase.MemoriesUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.settings.domain.api.usecase.SettingsUseCase
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.EffectHandler
+import com.savvasdalktsis.uhuruphotos.foundation.download.api.usecase.DownloadUseCase
 import kotlinx.coroutines.flow.FlowCollector
 import javax.inject.Inject
 
 internal class FeedActionsContext @Inject constructor(
     val avatarUseCase: AvatarUseCase,
+    val downloadUseCase: DownloadUseCase,
     val feedUseCase: FeedUseCase,
     val mediaUseCase: MediaUseCase,
     val localMediaDeletionUseCase: LocalMediaDeletionUseCase,

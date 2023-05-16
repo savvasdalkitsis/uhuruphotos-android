@@ -15,31 +15,34 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.people.view.implementation.viewmodel
 
-import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.savvasdalkitsis.uhuruphotos.feature.people.view.api.navigation.PeopleNavigationRoute
 import com.savvasdalkitsis.uhuruphotos.feature.people.view.implementation.seam.PeopleActionsContext
 import com.savvasdalkitsis.uhuruphotos.feature.people.view.implementation.seam.PeopleEffectsContext
 import com.savvasdalkitsis.uhuruphotos.feature.people.view.implementation.seam.actions.LoadPeople
 import com.savvasdalkitsis.uhuruphotos.feature.people.view.implementation.seam.actions.PeopleAction
+import com.savvasdalkitsis.uhuruphotos.feature.people.view.implementation.seam.effects.PeopleEffect
 import com.savvasdalkitsis.uhuruphotos.feature.people.view.implementation.ui.state.PeopleState
-import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.HasInitializer
+import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.viewmodel.NavigationViewModel
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.ActionHandlerWithContext
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.EffectHandlerWithContext
-import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.HasActionableState
-import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.Seam
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class PeopleViewModel @Inject constructor(
     peopleActionsContext: PeopleActionsContext,
     peopleEffectsContext: PeopleEffectsContext,
-) : ViewModel(), HasActionableState<PeopleState, PeopleAction> by Seam(
+) : NavigationViewModel<PeopleState, PeopleEffect, PeopleAction, PeopleNavigationRoute>(
     ActionHandlerWithContext(peopleActionsContext),
     EffectHandlerWithContext(peopleEffectsContext),
     PeopleState()
-), HasInitializer<PeopleAction, PeopleNavigationRoute> {
-    override suspend fun initialize(initializerData: PeopleNavigationRoute, action: (PeopleAction) -> Unit) {
-        action(LoadPeople)
+) {
+
+    init {
+        viewModelScope.launch {
+            action(LoadPeople)
+        }
     }
 }

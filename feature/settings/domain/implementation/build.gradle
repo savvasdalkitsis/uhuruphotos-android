@@ -4,11 +4,11 @@ android {
 
 dependencies {
     implementation project(":feature:settings:domain:api")
-    implementation project(':foundation:log:api')
-    implementation project(':foundation:video:api')
+    implementation project(":foundation:log:api")
+    implementation project(":foundation:preferences:api")
+    implementation project(":foundation:video:api")
     implementation(
             libs.coil.base,
-            libs.flowpreferences,
             libs.hilt,
             libs.play,
     )

@@ -11,28 +11,30 @@ android {
 dependencies {
 
     implementation project(":feature:account:view:api")
-    implementation project(":foundation:compose:api")
-    implementation project(":foundation:coroutines:api")
-    implementation project(":foundation:date:api")
-    implementation project(":feature:db:domain:api")
+    implementation project(":feature:auth:domain:api")
     implementation project(":feature:collage:view:api")
+    implementation project(":feature:db:domain:api")
     implementation project(":feature:feed:domain:api")
     implementation project(":feature:heatmap:view:api")
     implementation project(":feature:home:view:api")
+    implementation project(":feature:lightbox:view:api")
+    implementation project(":feature:media:common:view:api")
+    implementation project(":feature:media:remote:domain:api")
+    implementation project(":feature:people:domain:api")
+    implementation project(":feature:people:view:api")
+    implementation project(":feature:person:view:api")
+    implementation project(":feature:search:domain:api")
+    implementation project(":feature:search:view:api")
+    implementation project(":feature:server:view:api")
+    implementation project(":feature:settings:domain:api")
+    implementation project(":foundation:compose:api")
+    implementation project(":foundation:coroutines:api")
+    implementation project(":foundation:date:api")
     implementation project(":foundation:icons:api")
     implementation project(":foundation:log:api")
     implementation project(":foundation:map:api")
     implementation project(":foundation:navigation:api")
-    implementation project(':feature:people:domain:api')
-    implementation project(':feature:people:view:api')
-    implementation project(':feature:person:view:api')
-    implementation project(':feature:media:common:view:api')
-    implementation project(':feature:media:remote:domain:api')
-    implementation project(':feature:search:domain:api')
-    implementation project(":feature:lightbox:view:api")
-    implementation project(':feature:search:view:api')
-    implementation project(":feature:server:view:api")
-    implementation project(":feature:settings:domain:api")
+    implementation project(":foundation:preferences:api")
     implementation project(":foundation:strings:api")
     implementation project(":foundation:toaster:api")
     implementation project(":foundation:ui:api")
@@ -41,7 +43,6 @@ dependencies {
             libs.androidx.compose.hilt.navigation,
             libs.androidx.compose.material,
             libs.androidx.lifecycle,
-            libs.flowpreferences,
             libs.moshi,
             libs.retrofit.core,
             libs.retrofit.moshi,

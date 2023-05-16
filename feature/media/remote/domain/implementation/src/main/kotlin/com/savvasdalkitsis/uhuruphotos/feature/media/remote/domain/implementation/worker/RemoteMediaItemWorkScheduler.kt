@@ -16,16 +16,12 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.implementation.worker
 
 import androidx.work.BackoffPolicy
-import androidx.work.WorkInfo
 import com.savvasdalkitsis.uhuruphotos.foundation.worker.api.usecase.WorkScheduleUseCase
-import com.savvasdalkitsis.uhuruphotos.foundation.worker.api.usecase.WorkerStatusUseCase
-import kotlinx.coroutines.flow.Flow
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
 class RemoteMediaItemWorkScheduler @Inject constructor(
     private val workScheduleUseCase: WorkScheduleUseCase,
-    private val workerStatusUseCase: WorkerStatusUseCase,
 ) {
 
     fun scheduleMediaItemFavourite(id: String, favourite: Boolean) =
@@ -47,21 +43,6 @@ class RemoteMediaItemWorkScheduler @Inject constructor(
         ) {
             putString(RemoteMediaItemDetailsRetrieveWorker.KEY_ID, id)
         }
-
-    fun scheduleMediaItemOriginalFileRetrieve(id: String, video: Boolean) =
-        workScheduleUseCase.scheduleNow(
-            workName = RemoteMediaItemOriginalFileRetrieveWorker.workName(id),
-            klass = RemoteMediaItemOriginalFileRetrieveWorker::class,
-            backoffPolicy = BackoffPolicy.EXPONENTIAL,
-            backoffDelay = 2,
-            backoffTimeUnit = TimeUnit.SECONDS,
-        ) {
-            putString(RemoteMediaItemOriginalFileRetrieveWorker.KEY_ID, id)
-            putBoolean(RemoteMediaItemOriginalFileRetrieveWorker.KEY_VIDEO, video)
-        }
-
-    fun observeMediaItemOriginalFileRetrieveJobStatus(id: String): Flow<WorkInfo.State?> =
-        workerStatusUseCase.monitorUniqueJobStatus(RemoteMediaItemOriginalFileRetrieveWorker.workName(id))
 
     fun scheduleMediaItemTrashing(id: String) {
         workScheduleUseCase.scheduleNow(

@@ -15,22 +15,24 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.hidden.domain.implementation.usecase
 
-import com.fredporciuncula.flow.preferences.FlowSharedPreferences
 import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.CollageDisplay
 import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.PredefinedCollageDisplay
 import com.savvasdalkitsis.uhuruphotos.feature.hidden.domain.api.usecase.HiddenMediaUseCase
+import com.savvasdalkitsis.uhuruphotos.foundation.preferences.api.Preferences
+import com.savvasdalkitsis.uhuruphotos.foundation.preferences.api.get
+import com.savvasdalkitsis.uhuruphotos.foundation.preferences.api.set
 import javax.inject.Inject
 
 internal class HiddenMediaUseCase @Inject constructor(
-    flowSharedPreferences: FlowSharedPreferences,
+    private val preferences: Preferences,
 ) : HiddenMediaUseCase {
 
-    private val hiddenMediaGalleryDisplay =
-        flowSharedPreferences.getEnum("hiddenMediaGalleryDisplay", PredefinedCollageDisplay.default)
+    private val key = "hiddenMediaGalleryDisplay"
 
-    override fun getHiddenMediaGalleryDisplay(): CollageDisplay = hiddenMediaGalleryDisplay.get()
+    override fun getHiddenMediaGalleryDisplay(): CollageDisplay =
+        preferences.get(key, PredefinedCollageDisplay.default)
 
     override suspend fun setHiddenMediaGalleryDisplay(galleryDisplay: PredefinedCollageDisplay) {
-        hiddenMediaGalleryDisplay.setAndCommit(galleryDisplay)
+        preferences.set(key, galleryDisplay)
     }
 }

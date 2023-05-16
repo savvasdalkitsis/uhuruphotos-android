@@ -10,23 +10,23 @@ android {
 
 dependencies {
     implementation project(":feature:album:auto:view:api")
-    implementation project(':foundation:date:api')
-    implementation project(':foundation:strings:api')
-    implementation project(":feature:db:domain:api")
     implementation project(":feature:collage:view:api")
+    implementation project(":feature:db:domain:api")
+    implementation project(":feature:gallery:view:api")
+    implementation project(":feature:lightbox:view:api")
     implementation project(":feature:local:domain:api")
     implementation project(":feature:local:view:api")
-    implementation project(":feature:gallery:view:api")
-    implementation project(":foundation:navigation:api")
+    implementation project(":feature:media:common:domain:api")
     implementation project(":feature:media:local:domain:api")
-    implementation project(':feature:media:common:domain:api')
-    implementation project(":feature:lightbox:view:api")
-    implementation project(':feature:people:view:api')
+    implementation project(":feature:people:view:api")
     implementation project(":feature:settings:domain:api")
+    implementation project(":foundation:date:api")
+    implementation project(":foundation:navigation:api")
+    implementation project(":foundation:preferences:api")
+    implementation project(":foundation:strings:api")
     implementation(
             libs.androidx.compose.hilt.navigation,
             libs.androidx.compose.material,
             libs.bundles.permissions,
-            libs.flowpreferences,
     )
 }

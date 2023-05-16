@@ -3,13 +3,14 @@ android {
 }
 
 dependencies {
+    implementation project(":feature:auth:domain:api")
     implementation project(":feature:catalogue:auto:domain:api")
     implementation project(":feature:media:common:domain:api")
     implementation project(":feature:media:remote:domain:api")
     implementation project(":foundation:log:api")
+    implementation project(":foundation:preferences:api")
     implementation project(":foundation:strings:api")
     implementation(
-            libs.flowpreferences,
             libs.hilt,
             libs.sqldelight.coroutines,
             libs.retrofit.core,

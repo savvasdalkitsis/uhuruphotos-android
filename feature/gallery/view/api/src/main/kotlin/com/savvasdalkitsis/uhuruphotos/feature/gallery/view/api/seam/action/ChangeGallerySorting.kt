@@ -27,6 +27,6 @@ object ChangeGallerySorting : GalleryAction() {
         state: GalleryState,
         effect: EffectHandler<GalleryEffect>
     ) = flow<GalleryMutation> {
-        sorting.set(state.sorting.toggle())
+        setSorting(state.sorting.toggle())
     }
 }

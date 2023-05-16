@@ -17,6 +17,7 @@ package com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.sea
 
 import androidx.work.NetworkType
 import com.savvasdalkitsis.uhuruphotos.feature.avatar.view.api.ui.state.AvatarState
+import com.savvasdalkitsis.uhuruphotos.feature.feed.view.api.ui.state.FeedMediaItemSyncDisplay
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.ui.state.BiometricsSetting
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.ui.state.MapProviderState
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.ui.state.SettingsState
@@ -135,6 +136,10 @@ sealed class SettingsMutation(
 
     data class DisplayThemeMode(val themeMode: ThemeMode): SettingsMutation({
         it.copy(themeMode = themeMode)
+    })
+
+    data class DisplayFeedMediaItemSyncDisplay(val display: FeedMediaItemSyncDisplay): SettingsMutation({
+        it.copy(feedMediaItemSyncDisplay = display)
     })
 
     data class DisplaySearchSuggestionsEnabled(val enabled: Boolean): SettingsMutation({

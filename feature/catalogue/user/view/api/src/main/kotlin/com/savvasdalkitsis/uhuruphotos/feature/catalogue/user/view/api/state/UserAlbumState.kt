@@ -18,7 +18,6 @@ package com.savvasdalkitsis.uhuruphotos.feature.catalogue.user.view.api.state
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.album.user.UserAlbums
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaId
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemInstance
-import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemSyncState.REMOTE_ONLY
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.state.CelState
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.state.VitrineState
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.state.toCel
@@ -64,12 +63,9 @@ private fun celState(imageHash: String?, coverIsVideo: Boolean?): CelState? =
     imageHash?.let {
         val isVideo = coverIsVideo ?: false
         MediaItemInstance(
-            id = MediaId.Remote(it, isVideo),
+            id = MediaId.Remote(it, isVideo, "serverUrl"),
             mediaHash = it,
-            thumbnailUri = it.toThumbnailUrlFromId(),
-            fullResUri = it.toFullSizeUrlFromId(isVideo),
             displayDayDate = null,
             ratio = 1f,
-            syncState = REMOTE_ONLY,
         ).toCel()
     }

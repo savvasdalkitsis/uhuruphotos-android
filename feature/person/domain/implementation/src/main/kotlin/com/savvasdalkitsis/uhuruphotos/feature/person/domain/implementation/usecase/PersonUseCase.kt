@@ -38,6 +38,7 @@ class PersonUseCase @Inject constructor(
 
     override fun observePersonMedia(id: Int): Flow<List<MediaCollection>> =
         personRepository.observePersonAlbums(id)
+            .distinctUntilChanged()
             .map {
                 with(mediaUseCase) {
                     it.mapValues { getPersonAlbums ->
