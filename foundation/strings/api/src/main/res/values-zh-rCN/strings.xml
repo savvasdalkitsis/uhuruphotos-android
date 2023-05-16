@@ -157,4 +157,55 @@
     <string name="advanced">进阶</string>
     <string name="use_as">用于</string>
     <string name="full">完整</string>
+    <string name="max_animated_video_thumbnails">动态视频缩略图最大数量 (%s)</string>
+    <string name="max_animated_video_thumbnails_description">数值过高可能会导致应用不稳定。如果你遇到任何问题请尝试将数值调低</string>
+    <string name="today">今天</string>
+    <string name="requires_charging">只在充电时同步</string>
+    <string name="feed_size">照片流尺寸</string>
+    <string name="feed_sync_freq_changed">照片流同步频率已修改</string>
+    <string name="feed_sync_network_changed">照片流同步网络需求已修改</string>
+    <string name="feed_sync_freq">照片流全量同步频率</string>
+    <plurals name="trash_media">
+        <item quantity="other">将 %d 个媒体项移入回收站</item>
+    </plurals>
+    <string name="feed_refresh_days">下拉刷新时获取的照片流天数</string>
+    <string name="feed">照片流</string>
+    <string name="cannot_perform_full_sync">目前不能进行全量同步</string>
+    <string name="downloading_media_details">正在下载媒体信息</string>
+    <string name="restoring_media">正在将媒体从回收站中还原</string>
+    <string name="favourite_media">媒体收藏夹</string>
+    <string name="refreshing_feed">正在刷新照片流</string>
+    <string name="video">视频</string>
+    <string name="years_ago">%d 年前</string>
+    <string name="precache_thumbnails">预缓存所有缩略图</string>
+    <string name="precaching_thumbnails">正在预缓存缩略图</string>
+    <string name="cannot_perform_precaching">目前不能进行预缓存操作</string>
+    <string name="precaching_thumbnails_progress">预缓存缩略图进度</string>
+    <string name="cancel">取消</string>
+    <string name="feed_sync_job_configuration">照片流同步任务设置</string>
+    <string name="status">状态</string>
+    <string name="gallery_size">图库尺寸</string>
+    <string name="media">媒体</string>
+    <plurals name="delete_media">
+        <item quantity="other">删除 %d 个媒体项</item>
+    </plurals>
+    <plurals name="restore_media">
+        <item quantity="other">恢复 %d 个媒体项</item>
+    </plurals>
+    <plurals name="delete_media_confirmation">
+        <item quantity="other">您确定要删除这 %d 个媒体项吗？</item>
+    </plurals>
+    <plurals name="restore_media_confirmation">
+        <item quantity="other">您确定要恢复这 %d 个媒体项吗？</item>
+    </plurals>
+    <plurals name="trash_media_confirmation">
+        <item quantity="other">您确定要将这 %d 个媒体项移入回收站吗？</item>
+    </plurals>
+    <string name="feed_sync_charging_changed">照片流同步充电需求已修改</string>
+    <string name="perform_full_feed_sync">执行全量同步</string>
+    <string name="feed_sync_progress">照片流全量同步进度</string>
+    <string name="yearly">按年度</string>
+    <string name="animate_video_thumbnails">动态视频缩略图</string>
+    <string name="trashing_media">正在将媒体移入回收站</string>
+    <string name="deleting_media">正在删除媒体</string>
 </resources>
