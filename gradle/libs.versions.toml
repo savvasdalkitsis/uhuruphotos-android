@@ -50,7 +50,7 @@ androidx-splash = "androidx.core:core-splashscreen:1.0.1"
 androidx-startup = "androidx.startup:startup-runtime:1.2.0-alpha02"
 androidx-test-core = { module = "androidx.test:core", version.ref = "androidx-test" }
 androidx-test-runner = { module = "androidx.test:runner", version.ref = "androidx-test" }
-androidx-window = "androidx.window:window:1.1.0-beta02"
+androidx-window = "androidx.window:window:1.1.0-rc01"
 androidx-work = "androidx.work:work-runtime-ktx:2.8.1"
 androidx-work-hilt = "androidx.hilt:hilt-work:1.0.0"
 appcenter-crashes= "com.microsoft.appcenter:appcenter-crashes:5.0.1"
