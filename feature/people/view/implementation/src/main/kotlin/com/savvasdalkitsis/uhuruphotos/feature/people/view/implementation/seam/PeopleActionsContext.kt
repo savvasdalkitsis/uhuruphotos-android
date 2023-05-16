@@ -15,10 +15,10 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.people.view.implementation.seam
 
-import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.api.usecase.RemoteMediaUseCase
+import com.savvasdalkitsis.uhuruphotos.feature.auth.domain.api.usecase.ServerUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.people.domain.api.usecase.PeopleUseCase
-import com.savvasdalkitsis.uhuruphotos.feature.people.view.implementation.seam.effects.PeopleEffect
 import com.savvasdalkitsis.uhuruphotos.feature.people.view.implementation.seam.effects.ErrorLoadingPeople
+import com.savvasdalkitsis.uhuruphotos.feature.people.view.implementation.seam.effects.PeopleEffect
 import com.savvasdalkitsis.uhuruphotos.feature.people.view.implementation.ui.state.SortOrder
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.EffectHandler
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -27,7 +27,7 @@ import javax.inject.Inject
 
 class PeopleActionsContext @Inject constructor(
     val peopleUseCase: PeopleUseCase,
-    val remoteMediaUseCase: RemoteMediaUseCase,
+    val serverUseCase: ServerUseCase,
 ) {
 
     val sort: MutableSharedFlow<SortOrder> = MutableStateFlow(SortOrder.default)

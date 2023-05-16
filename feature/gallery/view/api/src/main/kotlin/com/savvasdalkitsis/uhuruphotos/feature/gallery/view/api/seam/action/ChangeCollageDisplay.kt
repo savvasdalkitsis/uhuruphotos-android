@@ -31,7 +31,7 @@ data class ChangeCollageDisplay(val collageDisplay: CollageDisplay) : GalleryAct
     ) = flow {
         emit(GalleryMutation.ChangeCollageDisplay(collageDisplay))
         (collageDisplay as? PredefinedCollageDisplay)?.let {
-            collageDisplayPersistence(galleryId, it)
+            collageDisplayPersistence(galleryId.id, it)
         }
     }
 }

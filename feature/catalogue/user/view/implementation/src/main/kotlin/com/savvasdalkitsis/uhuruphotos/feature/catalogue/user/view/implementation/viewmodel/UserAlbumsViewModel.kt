@@ -15,34 +15,34 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.catalogue.user.view.implementation.viewmodel
 
-import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.savvasdalkitsis.uhuruphotos.feature.catalogue.user.view.api.navigation.UserAlbumsNavigationRoute
 import com.savvasdalkitsis.uhuruphotos.feature.catalogue.user.view.implementation.seam.Load
 import com.savvasdalkitsis.uhuruphotos.feature.catalogue.user.view.implementation.seam.UserAlbumsAction
 import com.savvasdalkitsis.uhuruphotos.feature.catalogue.user.view.implementation.seam.UserAlbumsActionsContext
 import com.savvasdalkitsis.uhuruphotos.feature.catalogue.user.view.implementation.seam.UserAlbumsEffectsContext
 import com.savvasdalkitsis.uhuruphotos.feature.catalogue.user.view.implementation.seam.UserAlbumsState
-import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.HasInitializer
+import com.savvasdalkitsis.uhuruphotos.feature.catalogue.user.view.implementation.seam.effects.UserAlbumsEffect
+import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.viewmodel.NavigationViewModel
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.ActionHandlerWithContext
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.EffectHandlerWithContext
-import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.HasActionableState
-import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.Seam
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class UserAlbumsViewModel @Inject constructor(
     userAlbumsActionsContext: UserAlbumsActionsContext,
     userAlbumsEffectsContext: UserAlbumsEffectsContext,
-) : ViewModel(), HasActionableState<UserAlbumsState, UserAlbumsAction> by Seam(
+) : NavigationViewModel<UserAlbumsState, UserAlbumsEffect, UserAlbumsAction, UserAlbumsNavigationRoute>(
     ActionHandlerWithContext(userAlbumsActionsContext),
     EffectHandlerWithContext(userAlbumsEffectsContext),
     UserAlbumsState()
-), HasInitializer<UserAlbumsAction, UserAlbumsNavigationRoute> {
-    override suspend fun initialize(
-        initializerData: UserAlbumsNavigationRoute,
-        action: (UserAlbumsAction) -> Unit
-    ) {
-        action(Load)
+) {
+
+    init {
+        viewModelScope.launch {
+            action(Load)
+        }
     }
 }

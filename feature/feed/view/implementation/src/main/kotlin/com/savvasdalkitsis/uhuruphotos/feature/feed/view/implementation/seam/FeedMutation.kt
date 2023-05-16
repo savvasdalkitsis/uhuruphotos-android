@@ -18,6 +18,7 @@ package com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam
 import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.Cluster
 import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.CollageState
 import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.PredefinedCollageDisplay
+import com.savvasdalkitsis.uhuruphotos.feature.feed.view.api.ui.state.FeedMediaItemSyncDisplay
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.ui.state.FeedState
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.ui.state.MemoryCel
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemsOnDevice
@@ -71,6 +72,10 @@ sealed class FeedMutation(
 
     data class ChangeDisplay(val display: PredefinedCollageDisplay) : FeedMutation({
         it.copyFeed { copy(collageDisplay = display) }
+    })
+
+    data class ChangeItemSyncDisplay(val display: FeedMediaItemSyncDisplay) : FeedMutation({
+        it.copy(syncItemDisplay = display)
     })
 
     data class ShowLibrary(val showLibrary: Boolean) : FeedMutation({

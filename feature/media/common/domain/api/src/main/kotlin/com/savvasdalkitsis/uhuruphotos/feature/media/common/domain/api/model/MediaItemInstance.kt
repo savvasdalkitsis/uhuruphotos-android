@@ -18,13 +18,10 @@ package com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model
 data class MediaItemInstance(
     override val id: MediaId<*>,
     override val mediaHash: String,
-    override val thumbnailUri: String? = null,
-    override val fullResUri: String? = null,
     override val fallbackColor: String? = null,
     override val displayDayDate: String? = null,
     override val sortableDate: String? = null,
     override val isFavourite: Boolean = false,
     override val ratio: Float = 1f,
     override val latLng: Pair<Double, Double>? = null,
-    override val syncState: MediaItemSyncState
 ) : MediaItem

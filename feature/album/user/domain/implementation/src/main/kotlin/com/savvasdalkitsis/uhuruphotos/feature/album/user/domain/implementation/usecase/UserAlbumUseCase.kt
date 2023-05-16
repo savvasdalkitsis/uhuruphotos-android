@@ -23,6 +23,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.extensions.isVideo
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaCollectionSource
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.usecase.MediaUseCase
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
@@ -33,6 +34,7 @@ class UserAlbumUseCase @Inject constructor(
 
     override fun observeUserAlbum(albumId: Int): Flow<UserAlbum> = with(mediaUseCase) {
         userAlbumRepository.observeUserAlbum(albumId)
+            .distinctUntilChanged()
             .map { entry ->
                 UserAlbum(
                     title = entry.userAlbumTitle,

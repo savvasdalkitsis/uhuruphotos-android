@@ -21,12 +21,12 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 
 class CompositeActionHandler<
-        S1: Any, E1: Any, A1: Any, M1: Mutation<S1>,
-        S2: Any, E2: Any, A2: Any, M2: Mutation<S2>,
+        S1: Any, E1: Any, A1: Any,
+        S2: Any, E2: Any, A2: Any,
 >(
-    private val handler1: ActionHandler<S1, E1, A1, M1>,
-    private val handler2: ActionHandler<S2, E2, A2, M2>,
-) : ActionHandler<Pair<S1, S2>, Either<E1, E2>, Either<A1, A2>, Mutation<Pair<S1, S2>>> {
+    private val handler1: ActionHandler<S1, E1, A1>,
+    private val handler2: ActionHandler<S2, E2, A2>,
+) : ActionHandler<Pair<S1, S2>, Either<E1, E2>, Either<A1, A2>> {
 
     override fun handleAction(
         state: Pair<S1, S2>,

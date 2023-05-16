@@ -25,6 +25,8 @@ import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.usecase.M
 import com.savvasdalkitsis.uhuruphotos.foundation.group.api.model.mapValues
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
 internal class AutoAlbumUseCase @Inject constructor(
@@ -32,7 +34,17 @@ internal class AutoAlbumUseCase @Inject constructor(
     private val mediaUseCase: MediaUseCase,
 ) : AutoAlbumUseCase {
 
-    override fun observeAutoAlbum(albumId: Int): Flow<Pair<List<GetAutoAlbum>, List<GetPeopleForAutoAlbum>>> =
+    override fun observeAutoAlbum(albumId: Int): Flow<List<MediaCollection>> = with(mediaUseCase) {
+        autoAlbumRepository.observeAutoAlbum(albumId)
+            .distinctUntilChanged()
+            .map { albums ->
+                albums.map {
+                    it.toMediaCollectionSource()
+                }.toMediaCollections()
+            }
+    }
+
+    override fun observeAutoAlbumWithPeople(albumId: Int): Flow<Pair<List<GetAutoAlbum>, List<GetPeopleForAutoAlbum>>> =
         combine(
             autoAlbumRepository.observeAutoAlbum(albumId),
             autoAlbumRepository.observeAutoAlbumPeople(albumId),

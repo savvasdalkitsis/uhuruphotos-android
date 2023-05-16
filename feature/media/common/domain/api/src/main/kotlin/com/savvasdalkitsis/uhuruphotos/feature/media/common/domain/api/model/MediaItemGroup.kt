@@ -15,10 +15,6 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model
 
-import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemSyncState.LOCAL_ONLY
-import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemSyncState.REMOTE_ONLY
-import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemSyncState.SYNCED
-
 data class MediaItemGroup(
     val remoteInstance: MediaItem? = null,
     val localInstances: Set<MediaItem> = emptySet(),
@@ -37,23 +33,15 @@ data class MediaItemGroup(
             throw IllegalArgumentException("Media item group must contain instances with the same media type (video/photo). $this")
         }
     }
-    private val preferLocal: MediaItem = (localInstances.firstOrNull() ?: remoteInstance)!!
 
     override val id: MediaId<*> = MediaId.Group(all.map { it.id }, any.id.isVideo)
     override val mediaHash: String = any.mediaHash
-    override val thumbnailUri: String? = preferLocal.thumbnailUri
-    override val fullResUri: String? = preferLocal.fullResUri
     override val fallbackColor: String? = all.prop { fallbackColor }
     override val displayDayDate: String? = all.prop { displayDayDate }
     override val sortableDate: String? = all.prop { sortableDate }
     override val isFavourite: Boolean = all.any { it.isFavourite }
     override val ratio: Float = all.firstOrNull { it.ratio != 1f }?.ratio ?: 1f
     override val latLng: (Pair<Double, Double>)? = all.prop { latLng }
-    override val syncState: MediaItemSyncState = when {
-        localInstances.isEmpty() -> REMOTE_ONLY
-        remoteInstance == null -> LOCAL_ONLY
-        else -> SYNCED
-    }
 
     private fun <T> List<MediaItem>.prop(instance: MediaItem.() -> T): T? =
         firstOrNull { instance(it) != null }?.let(instance)

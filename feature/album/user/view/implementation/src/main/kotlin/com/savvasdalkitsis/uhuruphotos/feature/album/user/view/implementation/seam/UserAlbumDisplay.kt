@@ -15,23 +15,25 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.album.user.view.implementation.seam
 
-import com.fredporciuncula.flow.preferences.FlowSharedPreferences
 import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.CollageDisplay
 import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.PredefinedCollageDisplay
+import com.savvasdalkitsis.uhuruphotos.foundation.preferences.api.Preferences
+import com.savvasdalkitsis.uhuruphotos.foundation.preferences.api.get
+import com.savvasdalkitsis.uhuruphotos.foundation.preferences.api.set
 import javax.inject.Inject
 
 internal class UserAlbumDisplay @Inject constructor(
-    private val flowSharedPreferences: FlowSharedPreferences,
+    private val preferences: Preferences,
 ) {
 
     fun getUserAlbumGalleryDisplay(albumId: Int) : CollageDisplay =
-        userAlbumGalleryDisplay(albumId).get()
+        preferences.get(key(albumId), PredefinedCollageDisplay.default)
 
-    suspend fun setUserAlbumGalleryDisplay(albumId: Int, galleryDisplay: PredefinedCollageDisplay) {
-        userAlbumGalleryDisplay(albumId).setAndCommit(galleryDisplay)
+    fun setUserAlbumGalleryDisplay(albumId: Int, galleryDisplay: PredefinedCollageDisplay) {
+        preferences.set(key(albumId), galleryDisplay)
     }
 
-    private fun userAlbumGalleryDisplay(albumId: Int) =
-        flowSharedPreferences.getEnum("userAlbumGalleryDisplay/$albumId", PredefinedCollageDisplay.default)
+    private fun key(albumId: Int) =
+        "userAlbumGalleryDisplay/$albumId"
 
 }

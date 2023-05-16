@@ -17,7 +17,6 @@ package com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.sea
 
 import androidx.annotation.StringRes
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.ui.state.LightboxState
-import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.ui.state.OriginalFileIconState
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.ui.state.SingleMediaItemState
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaId
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemDetails
@@ -118,12 +117,6 @@ sealed class LightboxMutation(
         }
     })
 
-    data class SetOriginalFileIconState(val id: MediaId<*>, val state: OriginalFileIconState) : LightboxMutation({
-        it.copyItem(id) { photoState ->
-            photoState.copy(originalFileIconState = state)
-        }
-    })
-
     data class ShowMetadata(val id: MediaId<*>, val metadata: MediaItemMetadata) : LightboxMutation({
         it.copyItem(id) { photoState ->
             photoState.copy(metadata = metadata)
@@ -140,7 +133,7 @@ sealed class LightboxMutation(
             media = mediaItemStates,
         )
     }) {
-        override fun toString() = "ShowMedia [index: $index, size:${mediaItemStates.size}]"
+        override fun toString() = "ShowMedia [index: $index, size:${mediaItemStates.size}, current: ${mediaItemStates[index]}]"
     }
 
     data class ReceivedDetails(
@@ -155,15 +148,12 @@ sealed class LightboxMutation(
                     location = location,
                     gps = latLon,
                     peopleInMediaItem = peopleInMediaItem,
+                    md5 = md5,
                     remotePath = remotePath,
                     localPath = localPath,
                 )
             }
         }
-    })
-
-    data class ChangeCurrentIndex(val index: Int) : LightboxMutation({
-        it.copyWithIndex(index = index)
     })
 
     data class ShowMediaItemFavourite(

@@ -15,29 +15,28 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.album.auto.view.implementation.seam
 
-import com.fredporciuncula.flow.preferences.FlowSharedPreferences
 import com.savvasdalkitsis.uhuruphotos.feature.album.auto.domain.api.usecase.AutoAlbumUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.album.auto.view.implementation.state.AutoAlbumCollageDisplay
+import com.savvasdalkitsis.uhuruphotos.feature.auth.domain.api.usecase.ServerUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.Cluster
 import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.GalleryActionsContext
 import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.ui.state.GalleryDetails
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.api.model.LightboxSequenceDataSource.AutoAlbum
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaId
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemInstance
-import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemSyncState
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.state.toCel
-import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.api.usecase.RemoteMediaUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.people.view.api.ui.state.toPerson
 import com.savvasdalkitsis.uhuruphotos.foundation.date.api.DateDisplayer
+import com.savvasdalkitsis.uhuruphotos.foundation.preferences.api.Preferences
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.state.Title
 import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
 internal class AutoAlbumActionsContext @Inject constructor(
     autoAlbumUseCase: AutoAlbumUseCase,
-    remoteMediaUseCase: RemoteMediaUseCase,
+    serverUseCase: ServerUseCase,
     dateDisplayer: DateDisplayer,
-    flowSharedPreferences: FlowSharedPreferences,
+    preferences: Preferences,
 ) : GalleryActionsContext(
     galleryRefresher = { autoAlbumUseCase.refreshAutoAlbum(it) },
     initialCollageDisplay = { AutoAlbumCollageDisplay },
@@ -46,14 +45,13 @@ internal class AutoAlbumActionsContext @Inject constructor(
         autoAlbumUseCase.getAutoAlbum(albumId).isEmpty()
     },
     galleryDetailsFlow = { albumId, _ ->
-        autoAlbumUseCase.observeAutoAlbum(albumId)
+        val serverUrl = serverUseCase.getServerUrl()!!
+        autoAlbumUseCase.observeAutoAlbumWithPeople(albumId)
             .map { (photoEntries, people) ->
                 GalleryDetails(
                     title = Title.Text(photoEntries.firstOrNull()?.title ?: ""),
-                    people = with(remoteMediaUseCase) {
-                        people.map { person ->
-                            person.toPerson { it.toRemoteUrl() }
-                        }
+                    people = people.map { person ->
+                        person.toPerson { "$serverUrl$it" }
                     },
                     clusters = photoEntries.groupBy { entry ->
                         dateDisplayer.dateString(entry.timestamp)
@@ -65,18 +63,11 @@ internal class AutoAlbumActionsContext @Inject constructor(
                             location = null,
                             cels = photos.map {
                                 MediaItemInstance(
-                                    id = MediaId.Remote(it.photoId.toString(), it.video ?: false),
+                                    id = MediaId.Remote(it.photoId.toString(), it.video ?: false, serverUrl),
                                     mediaHash = it.photoId.toString(),
-                                    thumbnailUri = with(remoteMediaUseCase) {
-                                        it.photoId.toThumbnailUrlFromIdNullable()
-                                    },
-                                    fullResUri = with(remoteMediaUseCase) {
-                                        it.photoId.toFullSizeUrlFromIdNullable(it.video ?: false)
-                                    },
                                     displayDayDate = date,
                                     sortableDate = it.timestamp,
                                     isFavourite = it.isFavorite ?: false,
-                                    syncState = MediaItemSyncState.REMOTE_ONLY,
                                 ).toCel()
                             }
                         )
@@ -85,5 +76,5 @@ internal class AutoAlbumActionsContext @Inject constructor(
             }
     },
     lightboxSequenceDataSource = { AutoAlbum(it) },
-    flowSharedPreferences = flowSharedPreferences,
+    preferences = preferences,
 )

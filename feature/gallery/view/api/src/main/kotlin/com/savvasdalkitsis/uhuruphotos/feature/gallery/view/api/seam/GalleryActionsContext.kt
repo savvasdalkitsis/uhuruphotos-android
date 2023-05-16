@@ -15,16 +15,17 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam
 
-import com.fredporciuncula.flow.preferences.FlowSharedPreferences
-import com.fredporciuncula.flow.preferences.Preference
 import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.CollageDisplay
 import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.PredefinedCollageDisplay
-import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.effects.ErrorLoading
 import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.GalleryMutation.Loading
+import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.effects.ErrorLoading
 import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.effects.GalleryEffect
 import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.ui.state.GalleryDetails
 import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.ui.state.GallerySorting
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.api.model.LightboxSequenceDataSource
+import com.savvasdalkitsis.uhuruphotos.foundation.preferences.api.Preferences
+import com.savvasdalkitsis.uhuruphotos.foundation.preferences.api.observe
+import com.savvasdalkitsis.uhuruphotos.foundation.preferences.api.set
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.EffectHandler
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -37,17 +38,23 @@ open class GalleryActionsContext(
     val lightboxSequenceDataSource: (galleryId: Int) -> LightboxSequenceDataSource,
     val initialCollageDisplay: (galleryId: Int) -> CollageDisplay,
     val collageDisplayPersistence: suspend (galleryId: Int, PredefinedCollageDisplay) -> Unit,
-    val flowSharedPreferences: FlowSharedPreferences,
+    val preferences: Preferences,
 ) {
 
     val loading = MutableSharedFlow<GalleryMutation>()
-    var galleryId by Delegates.notNull<Int>()
+    var galleryId by Delegates.notNull<GalleryId>()
+    private val sortingKey get() = "gallerySorting::${galleryId.serializationUniqueId}"
 
-    lateinit var sorting: Preference<GallerySorting>
+    fun observeSorting(): Flow<GallerySorting> =
+        preferences.observe(sortingKey, GallerySorting.default)
+
+    fun setSorting(sorting: GallerySorting) {
+        preferences.set(sortingKey, sorting)
+    }
 
     suspend fun refreshGallery(effect: EffectHandler<GalleryEffect>) {
         loading.emit(Loading(true))
-        val result = galleryRefresher(galleryId)
+        val result = galleryRefresher(galleryId.id)
         if (result.isFailure) {
             effect.handleEffect(ErrorLoading)
         }

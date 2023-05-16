@@ -15,7 +15,6 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.hidden.view.implementation.seam
 
-import com.fredporciuncula.flow.preferences.FlowSharedPreferences
 import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.Cluster
 import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.GalleryActionsContext
 import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.effects.NavigateBack
@@ -26,6 +25,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.usecase.M
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.state.toCel
 import com.savvasdalkitsis.uhuruphotos.feature.settings.domain.api.usecase.SettingsUseCase
 import com.savvasdalkitsis.uhuruphotos.foundation.biometrics.api.usecase.BiometricsUseCase
+import com.savvasdalkitsis.uhuruphotos.foundation.preferences.api.Preferences
 import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.state.Title
 import kotlinx.coroutines.flow.flatMapLatest
@@ -39,7 +39,7 @@ internal class HiddenPhotosAlbumPageActionsContext @Inject constructor(
     hiddenMediaUseCase: HiddenMediaUseCase,
     settingsUseCase: SettingsUseCase,
     biometricsUseCase: BiometricsUseCase,
-    flowSharedPreferences: FlowSharedPreferences,
+    preferences: Preferences,
 ) : GalleryActionsContext(
     galleryRefresher = { mediaUseCase.refreshFavouriteMedia() },
     initialCollageDisplay = { hiddenMediaUseCase.getHiddenMediaGalleryDisplay() },
@@ -88,5 +88,5 @@ internal class HiddenPhotosAlbumPageActionsContext @Inject constructor(
 
     },
     lightboxSequenceDataSource = { HiddenMedia },
-    flowSharedPreferences = flowSharedPreferences,
+    preferences = preferences,
 )

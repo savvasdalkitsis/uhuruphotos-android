@@ -15,31 +15,33 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.library.view.implementation.viewmodel
 
-import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.savvasdalkitsis.uhuruphotos.feature.account.view.api.seam.AccountOverviewActionsContext
 import com.savvasdalkitsis.uhuruphotos.feature.account.view.api.seam.AccountOverviewEffectsContext
 import com.savvasdalkitsis.uhuruphotos.feature.account.view.api.seam.actions.AccountOverviewAction
+import com.savvasdalkitsis.uhuruphotos.feature.account.view.api.seam.effects.AccountOverviewEffect
 import com.savvasdalkitsis.uhuruphotos.feature.account.view.api.ui.state.AccountOverviewState
 import com.savvasdalkitsis.uhuruphotos.feature.library.view.api.navigation.LibraryNavigationRoute
 import com.savvasdalkitsis.uhuruphotos.feature.library.view.implementation.seam.LibraryActionsContext
 import com.savvasdalkitsis.uhuruphotos.feature.library.view.implementation.seam.LibraryEffectsContext
 import com.savvasdalkitsis.uhuruphotos.feature.library.view.implementation.seam.actions.LibraryAction
+import com.savvasdalkitsis.uhuruphotos.feature.library.view.implementation.seam.effects.LibraryEffect
 import com.savvasdalkitsis.uhuruphotos.feature.library.view.implementation.ui.state.LibraryState
-import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.HasInitializer
+import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.viewmodel.NavigationViewModel
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.ActionHandlerWithContext
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.CompositeActionHandler
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.CompositeEffectHandler
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.EffectHandlerWithContext
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.Either
-import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.HasActionableState
-import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.Seam
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 import com.savvasdalkitsis.uhuruphotos.feature.account.view.api.seam.actions.Load as LoadAccount
 import com.savvasdalkitsis.uhuruphotos.feature.library.view.implementation.seam.actions.Load as LoadLibrary
 
 private typealias LibraryCompositeState = Pair<LibraryState, AccountOverviewState>
 private typealias LibraryCompositeAction = Either<LibraryAction, AccountOverviewAction>
+private typealias LibraryCompositeEffect = Either<LibraryEffect, AccountOverviewEffect>
 
 @HiltViewModel
 internal class LibraryViewModel @Inject constructor(
@@ -47,25 +49,24 @@ internal class LibraryViewModel @Inject constructor(
     accountOverviewActionsContext: AccountOverviewActionsContext,
     accountOverviewEffectsContext: AccountOverviewEffectsContext,
     libraryEffectsContext: LibraryEffectsContext,
-) : ViewModel(),
-    HasActionableState<LibraryCompositeState, LibraryCompositeAction> by Seam(
-        CompositeActionHandler(
-            ActionHandlerWithContext(libraryActionsContext),
-            ActionHandlerWithContext(accountOverviewActionsContext),
-        ),
-        CompositeEffectHandler(
-            EffectHandlerWithContext(libraryEffectsContext),
-            EffectHandlerWithContext(accountOverviewEffectsContext),
-        ),
-        LibraryState() to AccountOverviewState()
+) : NavigationViewModel<LibraryCompositeState, LibraryCompositeEffect, LibraryCompositeAction, LibraryNavigationRoute>(
+    CompositeActionHandler(
+        ActionHandlerWithContext(libraryActionsContext),
+        ActionHandlerWithContext(accountOverviewActionsContext),
     ),
-    HasInitializer<LibraryCompositeAction, LibraryNavigationRoute> {
+    CompositeEffectHandler(
+        EffectHandlerWithContext(libraryEffectsContext),
+        EffectHandlerWithContext(accountOverviewEffectsContext),
+    ),
+    LibraryState() to AccountOverviewState()
+) {
 
-    override suspend fun initialize(
-        initializerData: LibraryNavigationRoute,
-        action: (LibraryCompositeAction) -> Unit,
-    ) {
-        action(Either.Left(LoadLibrary))
-        action(Either.Right(LoadAccount))
+    init {
+        viewModelScope.launch {
+            action(Either.Left(LoadLibrary))
+        }
+        viewModelScope.launch {
+            action(Either.Right(LoadAccount))
+        }
     }
 }

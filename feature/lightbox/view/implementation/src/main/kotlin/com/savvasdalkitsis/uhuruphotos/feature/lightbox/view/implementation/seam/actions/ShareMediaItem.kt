@@ -29,7 +29,7 @@ object ShareMediaItem : LightboxAction() {
         state: LightboxState,
         effect: EffectHandler<LightboxEffect>
     ) = flow<LightboxMutation> {
-        effect.handleEffect(ShareMedia(state.currentMediaItem.fullResUrl))
+        effect.handleEffect(ShareMedia(state.currentMediaItem.id.fullResUri))
     }
 
 }

@@ -15,7 +15,6 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.trash.domain.implementation.usecase
 
-import com.fredporciuncula.flow.preferences.FlowSharedPreferences
 import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.PredefinedCollageDisplay
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.extensions.isVideo
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.media.remote.GetTrash
@@ -25,31 +24,36 @@ import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.usecase.M
 import com.savvasdalkitsis.uhuruphotos.feature.trash.domain.api.usecase.TrashUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.trash.domain.implementation.repository.TrashRepository
 import com.savvasdalkitsis.uhuruphotos.foundation.group.api.model.mapValues
+import com.savvasdalkitsis.uhuruphotos.foundation.preferences.api.Preferences
+import com.savvasdalkitsis.uhuruphotos.foundation.preferences.api.get
+import com.savvasdalkitsis.uhuruphotos.foundation.preferences.api.set
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
 internal class TrashUseCase @Inject constructor(
     private val mediaUseCase: MediaUseCase,
     private val trashRepository: TrashRepository,
-    flowSharedPreferences: FlowSharedPreferences,
+    private val preferences: Preferences,
 ) : TrashUseCase {
 
-    private val trashGalleryDisplay =
-        flowSharedPreferences.getEnum("trashGalleryDisplay", PredefinedCollageDisplay.default)
+    private val key = "trashGalleryDisplay"
 
     override suspend fun refreshTrash(): Result<Unit> =
         trashRepository.refreshTrash()
 
-    override fun getTrashGalleryDisplay() : PredefinedCollageDisplay = trashGalleryDisplay.get()
+    override fun getTrashGalleryDisplay() : PredefinedCollageDisplay =
+        preferences.get(key, PredefinedCollageDisplay.default)
 
-    override suspend fun setTrashGalleryDisplay(galleryDisplay: PredefinedCollageDisplay) {
-        trashGalleryDisplay.setAndCommit(galleryDisplay)
+    override fun setTrashGalleryDisplay(galleryDisplay: PredefinedCollageDisplay) {
+        preferences.set(key, galleryDisplay)
     }
 
     override suspend fun hasTrash(): Boolean = trashRepository.hasTrash()
 
     override fun observeTrashAlbums(): Flow<List<MediaCollection>> = trashRepository.observeTrash()
+        .distinctUntilChanged()
         .map {
             it.mapValues {
                     getTrash -> getTrash.toMediaCollectionSource()

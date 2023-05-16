@@ -15,19 +15,21 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.implementation.repository
 
-import com.fredporciuncula.flow.preferences.FlowSharedPreferences
 import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.implementation.service.LocalMediaService
+import com.savvasdalkitsis.uhuruphotos.foundation.preferences.api.Preferences
+import com.savvasdalkitsis.uhuruphotos.foundation.preferences.api.get
+import com.savvasdalkitsis.uhuruphotos.foundation.preferences.api.set
 import javax.inject.Inject
 
 class MediaStoreVersionRepository @Inject constructor(
     private val localMediaService: LocalMediaService,
-    flowSharedPreferences: FlowSharedPreferences,
+    private val preferences: Preferences,
 ) {
-    private val mediaStoreSavedVersion = flowSharedPreferences.getString("media_store_version", "")
+    private val key = "media_store_version"
 
     var currentMediaStoreVersion
-        get() = mediaStoreSavedVersion.get()
-        set(value) { mediaStoreSavedVersion.set(value) }
+        get() = preferences.get(key, defaultValue = "")
+        set(value) { preferences.set(key, value) }
 
     val latestMediaStoreVersion get() = localMediaService.mediaStoreCurrentVersion
 }

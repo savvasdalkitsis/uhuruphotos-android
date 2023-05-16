@@ -1,0 +1,13 @@
+android {
+    namespace 'com.savvasdalkitsis.uhuruphotos.foundation.preferences.implementation'
+}
+
+dependencies {
+    implementation project(":foundation:preferences:api")
+    implementation(
+            libs.androidx.datastore.preferences,
+            libs.androidx.preference,
+            libs.flowpreferences,
+            libs.hilt,
+    )
+}

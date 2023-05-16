@@ -33,11 +33,10 @@ import androidx.lifecycle.viewmodel.compose.LocalViewModelStoreOwner
 import androidx.navigation.NavBackStackEntry
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
-import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.HasInitializer
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.NavigationRoute
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.NavigationRouteSerializer
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.NavigationTargetBuilder
-import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.HasActionableState
+import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.viewmodel.NavigationViewModel
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.theme.AppTheme
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.theme.ThemeMode
 import kotlinx.coroutines.flow.StateFlow
@@ -49,17 +48,26 @@ class NavigationTargetBuilder @Inject constructor(
     private val serializer: NavigationRouteSerializer,
 ) : NavigationTargetBuilder {
 
-    override fun <S : Any, A : Any, VM, R : NavigationRoute> NavGraphBuilder.navigationTarget(
+    override fun <S : Any, A : Any, VM : NavigationViewModel<S, *, A, R>, R : NavigationRoute> NavGraphBuilder.navigationTarget(
         themeMode: StateFlow<ThemeMode>,
         route: KClass<R>,
         viewModel: KClass<VM>,
         content: @Composable (state: S, actions: (A) -> Unit) -> Unit,
-    ) where VM : ViewModel, VM : HasActionableState<S, A>, VM : HasInitializer<A, R> {
+    ) {
         val routePath = serializer.createRouteTemplateFor(route)
         composable(
             routePath,
         ) { navBackStackEntry ->
             val model: VM = hiltViewModel(viewModel)
+
+            val keyboard = LocalSoftwareKeyboardController.current
+            LaunchedEffect(Unit) {
+                keyboard?.hide()
+                model.setRoute(serializer.deserialize(
+                    route,
+                    navBackStackEntry.arguments
+                ))
+            }
             val scope = rememberCoroutineScope()
             val action: (A) -> Unit = {
                 scope.launch {
@@ -76,18 +84,6 @@ class NavigationTargetBuilder @Inject constructor(
             }
             AppTheme(dark) {
                 content(state, action)
-            }
-
-            val keyboard = LocalSoftwareKeyboardController.current
-            LaunchedEffect(Unit) {
-                keyboard?.hide()
-                model.initialize(
-                    serializer.deserialize(
-                        route,
-                        navBackStackEntry.arguments
-                    ),
-                    action,
-                )
             }
         }
     }

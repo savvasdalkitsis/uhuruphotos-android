@@ -28,10 +28,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.actions.SetFavourite
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.actions.ShowInfo
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.ui.state.LightboxState
-import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.ui.state.OriginalFileIconState.ERROR
-import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.ui.state.OriginalFileIconState.HIDDEN
-import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.ui.state.OriginalFileIconState.IDLE
-import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.ui.state.OriginalFileIconState.IN_PROGRESS
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemSyncState
 import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.R.drawable
 import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.ActionIcon
@@ -53,31 +50,16 @@ fun LightboxActionBar(
     }
     state.currentMediaItem.mediaItemSyncState?.let { syncState ->
         ActionIcon(
-            modifier = Modifier.alpha(0.7f),
-            onClick = { },
-            enabled = false,
-            icon = syncState.icon,
+            modifier = Modifier.alpha(syncState.lightBoxIconAlpha),
+            onClick = {
+                if (syncState == MediaItemSyncState.REMOTE_ONLY) {
+                    action(DownloadOriginal(state.currentMediaItem))
+                }
+            },
+            enabled = syncState == MediaItemSyncState.REMOTE_ONLY,
+            icon = syncState.lightBoxIcon,
             contentDescription = stringResource(syncState.contentDescription)
         )
-    }
-    when (mediaItem.originalFileIconState) {
-        IDLE -> ActionIcon(
-            onClick = { action(DownloadOriginal(mediaItem)) },
-            icon = drawable.ic_cloud_download,
-            contentDescription = stringResource(string.download_original_file)
-        )
-        IN_PROGRESS -> ActionIcon(
-            enabled = false,
-            onClick = { },
-            icon = drawable.ic_cloud_in_progress,
-            contentDescription = stringResource(string.downloading_original_file)
-        )
-        ERROR -> ActionIcon(
-            onClick = { action(DownloadOriginal(mediaItem)) },
-            icon = drawable.ic_cloud_alert,
-            contentDescription = stringResource(string.download_original_file)
-        )
-        HIDDEN -> {}
     }
     AnimatedVisibility(visible = mediaItem.showFavouriteIcon && mediaItem.isFavourite != null) {
         if (mediaItem.showFavouriteIcon && mediaItem.isFavourite != null) {

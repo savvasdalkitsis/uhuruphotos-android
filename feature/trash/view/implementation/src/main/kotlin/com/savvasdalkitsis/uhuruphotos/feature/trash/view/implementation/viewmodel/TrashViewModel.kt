@@ -15,11 +15,12 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.trash.view.implementation.viewmodel
 
-import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.GalleryEffectsContext
 import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.GalleryId
 import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.action.GalleryAction
 import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.action.LoadCollage
+import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.effects.GalleryEffect
 import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.ui.state.GalleryState
 import com.savvasdalkitsis.uhuruphotos.feature.trash.view.api.navigation.TrashNavigationRoute
 import com.savvasdalkitsis.uhuruphotos.feature.trash.view.implementation.seam.TrashActionsContext
@@ -27,19 +28,20 @@ import com.savvasdalkitsis.uhuruphotos.feature.trash.view.implementation.seam.Tr
 import com.savvasdalkitsis.uhuruphotos.feature.trash.view.implementation.seam.TrashEffectsContext
 import com.savvasdalkitsis.uhuruphotos.feature.trash.view.implementation.seam.actions.Load
 import com.savvasdalkitsis.uhuruphotos.feature.trash.view.implementation.seam.actions.TrashAction
+import com.savvasdalkitsis.uhuruphotos.feature.trash.view.implementation.seam.effects.TrashEffect
 import com.savvasdalkitsis.uhuruphotos.feature.trash.view.implementation.state.TrashState
-import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.HasInitializer
+import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.viewmodel.NavigationViewModel
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.ActionHandlerWithContext
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.CompositeActionHandler
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.CompositeEffectHandler
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.EffectHandlerWithContext
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.Either
-import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.HasActionableState
-import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.Seam
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 private typealias TrashCompositeState = Pair<GalleryState, TrashState>
+private typealias TrashCompositeEffect = Either<GalleryEffect, TrashEffect>
 private typealias TrashCompositeAction = Either<GalleryAction, TrashAction>
 
 @HiltViewModel
@@ -48,25 +50,24 @@ internal class TrashViewModel @Inject constructor(
     trashAlbumPageActionsContext: TrashAlbumPageActionsContext,
     trashEffectsContext: TrashEffectsContext,
     galleryEffectsContext: GalleryEffectsContext,
-) : ViewModel(),
-    HasActionableState<TrashCompositeState, TrashCompositeAction> by Seam(
-        CompositeActionHandler(
-            ActionHandlerWithContext(trashAlbumPageActionsContext),
-            ActionHandlerWithContext(trashActionsContext),
-        ),
-        CompositeEffectHandler(
-            EffectHandlerWithContext(galleryEffectsContext),
-            EffectHandlerWithContext(trashEffectsContext),
-        ),
-        GalleryState() to TrashState()
+) : NavigationViewModel<TrashCompositeState, TrashCompositeEffect, TrashCompositeAction, TrashNavigationRoute>(
+    CompositeActionHandler(
+        ActionHandlerWithContext(trashAlbumPageActionsContext),
+        ActionHandlerWithContext(trashActionsContext),
     ),
-    HasInitializer<TrashCompositeAction, TrashNavigationRoute> {
+    CompositeEffectHandler(
+        EffectHandlerWithContext(galleryEffectsContext),
+        EffectHandlerWithContext(trashEffectsContext),
+    ),
+    GalleryState() to TrashState()
+) {
 
-    override suspend fun initialize(
-        initializerData: TrashNavigationRoute,
-        action: (TrashCompositeAction) -> Unit,
-    ) {
-        action(Either.Left(LoadCollage(GalleryId(0, "trash"))))
-        action(Either.Right(Load))
+    init {
+        viewModelScope.launch {
+            action(Either.Left(LoadCollage(GalleryId(0, "trash"))))
+        }
+        viewModelScope.launch {
+            action(Either.Right(Load))
+        }
     }
 }

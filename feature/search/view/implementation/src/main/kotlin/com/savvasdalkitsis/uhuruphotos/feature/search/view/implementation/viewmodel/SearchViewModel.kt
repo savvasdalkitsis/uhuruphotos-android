@@ -15,30 +15,32 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.search.view.implementation.viewmodel
 
-import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.savvasdalkitsis.uhuruphotos.feature.account.view.api.seam.AccountOverviewActionsContext
 import com.savvasdalkitsis.uhuruphotos.feature.account.view.api.seam.AccountOverviewEffectsContext
 import com.savvasdalkitsis.uhuruphotos.feature.account.view.api.seam.actions.AccountOverviewAction
 import com.savvasdalkitsis.uhuruphotos.feature.account.view.api.seam.actions.Load
+import com.savvasdalkitsis.uhuruphotos.feature.account.view.api.seam.effects.AccountOverviewEffect
 import com.savvasdalkitsis.uhuruphotos.feature.account.view.api.ui.state.AccountOverviewState
 import com.savvasdalkitsis.uhuruphotos.feature.search.view.api.navigation.SearchNavigationRoute
 import com.savvasdalkitsis.uhuruphotos.feature.search.view.implementation.seam.SearchActionsContext
 import com.savvasdalkitsis.uhuruphotos.feature.search.view.implementation.seam.SearchEffectsContext
 import com.savvasdalkitsis.uhuruphotos.feature.search.view.implementation.seam.actions.Initialise
 import com.savvasdalkitsis.uhuruphotos.feature.search.view.implementation.seam.actions.SearchAction
+import com.savvasdalkitsis.uhuruphotos.feature.search.view.implementation.seam.effects.SearchEffect
 import com.savvasdalkitsis.uhuruphotos.feature.search.view.implementation.ui.state.SearchState
-import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.HasInitializer
+import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.viewmodel.NavigationViewModel
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.ActionHandlerWithContext
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.CompositeActionHandler
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.CompositeEffectHandler
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.EffectHandlerWithContext
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.Either
-import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.HasActionableState
-import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.Seam
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 private typealias SearchCompositeState = Pair<SearchState, AccountOverviewState>
+private typealias SearchCompositeEffect = Either<SearchEffect, AccountOverviewEffect>
 private typealias SearchCompositeAction = Either<SearchAction, AccountOverviewAction>
 
 @HiltViewModel
@@ -47,25 +49,24 @@ class SearchViewModel @Inject constructor(
     accountOverviewActionsContext: AccountOverviewActionsContext,
     searchEffectsContext: SearchEffectsContext,
     accountOverviewEffectsContext: AccountOverviewEffectsContext,
-) : ViewModel(),
-    HasActionableState<SearchCompositeState, SearchCompositeAction> by Seam(
-        CompositeActionHandler(
-            ActionHandlerWithContext(searchActionsContext),
-            ActionHandlerWithContext(accountOverviewActionsContext),
-        ),
-        CompositeEffectHandler(
-            EffectHandlerWithContext(searchEffectsContext),
-            EffectHandlerWithContext(accountOverviewEffectsContext),
-        ),
-        SearchState() to AccountOverviewState()
+) : NavigationViewModel<SearchCompositeState, SearchCompositeEffect, SearchCompositeAction, SearchNavigationRoute>(
+    CompositeActionHandler(
+        ActionHandlerWithContext(searchActionsContext),
+        ActionHandlerWithContext(accountOverviewActionsContext),
     ),
-    HasInitializer<SearchCompositeAction, SearchNavigationRoute> {
+    CompositeEffectHandler(
+        EffectHandlerWithContext(searchEffectsContext),
+        EffectHandlerWithContext(accountOverviewEffectsContext),
+    ),
+    SearchState() to AccountOverviewState()
+) {
 
-    override suspend fun initialize(
-        initializerData: SearchNavigationRoute,
-        action: (SearchCompositeAction) -> Unit,
-    ) {
-        action(Either.Left(Initialise))
-        action(Either.Right(Load))
+    init {
+        viewModelScope.launch {
+            action(Either.Left(Initialise))
+        }
+        viewModelScope.launch {
+            action(Either.Right(Load))
+        }
     }
 }

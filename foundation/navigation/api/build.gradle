@@ -10,6 +10,7 @@ android {
 
 dependencies {
 
+    api project(':foundation:log:api')
     api project(':foundation:seam:api')
     api project(':foundation:ui:api')
     api(

@@ -15,8 +15,8 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.search.view.implementation.seam
 
+import com.savvasdalkitsis.uhuruphotos.feature.auth.domain.api.usecase.ServerUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.feed.domain.api.usecase.FeedUseCase
-import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.api.usecase.RemoteMediaUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.people.domain.api.usecase.PeopleUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.search.domain.api.usecase.SearchUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.settings.domain.api.usecase.SettingsUseCase
@@ -29,7 +29,7 @@ class SearchActionsContext @Inject constructor(
     val feedUseCase: FeedUseCase,
     val settingsUseCase: SettingsUseCase,
     val peopleUseCase: PeopleUseCase,
-    val remoteMediaUseCase: RemoteMediaUseCase,
+    val serverUseCase: ServerUseCase,
 ) {
     var lastSearch: Job? = null
     val queryFilter = MutableSharedFlow<String>()

@@ -28,10 +28,10 @@ import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.api.model.LightboxS
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.api.model.LightboxSequenceDataSource.Trash
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.api.model.LightboxSequenceDataSource.UserAlbum
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.LightboxActionsContext
-import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.effects.LightboxEffect
-import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.LightboxMutation
+import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.LightboxMutation.ReceivedDetails
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.LightboxMutation.ShowMedia
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.LightboxMutation.ShowRestoreButton
+import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.effects.LightboxEffect
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.ui.state.LightboxState
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.ui.state.MediaItemType
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.ui.state.SingleMediaItemState
@@ -39,8 +39,16 @@ import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.Med
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaId
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItem
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.EffectHandler
-import kotlinx.coroutines.flow.FlowCollector
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.emitAll
+import kotlinx.coroutines.flow.emptyFlow
+import kotlinx.coroutines.flow.filter
+import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.mapNotNull
+import kotlinx.coroutines.flow.merge
 
 data class LoadMediaItem(
     val actionMediaId: MediaId<*>,
@@ -51,48 +59,70 @@ data class LoadMediaItem(
     context(LightboxActionsContext) override fun handle(
         state: LightboxState,
         effect: EffectHandler<LightboxEffect>,
-    ) = flow {
-        if (sequenceDataSource == Trash) {
-            mediaItemType = MediaItemType.TRASHED
-            emit(ShowRestoreButton)
+    ) = merge(
+        flow {
+            currentMediaId.emit(actionMediaId)
+            emit(ShowMedia(listOf(actionMediaId.toSingleMediaItemState()), 0))
+
+            if (sequenceDataSource == Trash) {
+                mediaItemType = MediaItemType.TRASHED
+                emit(ShowRestoreButton)
+            }
+        },
+        combine(
+            observeMediaSequence()
+                .filter { it.isNotEmpty() },
+            currentMediaId,
+        ) { media, id ->
+            media to id
+        }.flatMapLatest { (media, id) ->
+            flow {
+                ShowMedia(media, id)?.let {
+                    emit(it)
+                    loadMediaDetails(id)
+                    emitAll(mediaUseCase.observeMediaItemDetails(id).map { details ->
+                        ReceivedDetails(id, details)
+                    })
+                }
+            }
         }
-
-        showMedia(listOf(actionMediaId.toSingleMediaItemState()))
-
-        showMedia(loadMediaFromSequenceToShow())
-
-        loadMediaDetails(actionMediaId)
-    }
+    )
 
     context(LightboxActionsContext)
-    private suspend fun loadMediaFromSequenceToShow() = when (sequenceDataSource) {
-        Single -> emptyList()
-        Feed -> feedUseCase.getFeed().toMediaItems
-        is Memory -> memoriesUseCase.getMemories()
-            .find { it.yearsAgo == sequenceDataSource.yearsAgo }?.mediaCollection?.mediaItems
+    private fun observeMediaSequence(): Flow<List<SingleMediaItemState>> = when (sequenceDataSource) {
+        Single -> emptyFlow()
+        Feed -> feedUseCase.observeFeed().toMediaItems
+        is Memory -> memoriesUseCase.observeMemories().map { collections ->
+            collections.find { it.yearsAgo == sequenceDataSource.yearsAgo }?.mediaCollection?.mediaItems
             ?: emptyList()
-        is SearchResults -> searchUseCase.searchResultsFor(sequenceDataSource.query).toMediaItems
-        is PersonResults -> personUseCase.getPersonMedia(sequenceDataSource.personId).toMediaItems
-        is AutoAlbum -> autoAlbumUseCase.getAutoAlbum(sequenceDataSource.albumId).toMediaItems
-        is UserAlbum -> userAlbumUseCase.getUserAlbum(sequenceDataSource.albumId).mediaCollections.toMediaItems
-        is LocalAlbum -> localAlbumUseCase.getLocalAlbum(sequenceDataSource.albumId).toMediaItems
-        FavouriteMedia -> mediaUseCase.getFavouriteMedia().getOrDefault(emptyList())
-        HiddenMedia -> mediaUseCase.getHiddenMedia().getOrDefault(emptyList())
-        Trash -> trashUseCase.getTrash().toMediaItems
-    }.map {
-        it.toSingleMediaItemState()
+        }
+        is SearchResults -> searchUseCase.searchFor(sequenceDataSource.query)
+            .mapNotNull { it.getOrNull() }.toMediaItems
+        is PersonResults -> personUseCase.observePersonMedia(sequenceDataSource.personId).toMediaItems
+        is AutoAlbum -> autoAlbumUseCase.observeAutoAlbum(sequenceDataSource.albumId).toMediaItems
+        is UserAlbum -> userAlbumUseCase.observeUserAlbum(sequenceDataSource.albumId)
+            .map { it.mediaCollections }.toMediaItems
+        is LocalAlbum -> localAlbumUseCase.observeLocalAlbum(sequenceDataSource.albumId)
+            .map { it.second }.toMediaItems
+        FavouriteMedia -> mediaUseCase.observeFavouriteMedia().map { it.getOrDefault(emptyList()) }
+        HiddenMedia -> mediaUseCase.observeHiddenMedia().map { it.getOrDefault(emptyList()) }
+        Trash -> trashUseCase.observeTrashAlbums().toMediaItems
+    }.map { mediaItems ->
+        mediaItems.map { it.toSingleMediaItemState() }
     }
 
-    private val List<MediaCollection>.toMediaItems get() = flatMap { it.mediaItems }
-
-    context(LightboxActionsContext)
-    private suspend fun FlowCollector<LightboxMutation>.showMedia(
-        mediaItemStates: List<SingleMediaItemState>,
-    ) {
-        if (mediaItemStates.isNotEmpty()) {
-            val index = mediaItemStates.indexOfFirst { it.id == actionMediaId }
-            emit(ShowMedia(mediaItemStates, index))
+    private val Flow<List<MediaCollection>>.toMediaItems get() = map { collections ->
+        collections.flatMap {
+            it.mediaItems
         }
+    }
+
+    private fun ShowMedia(
+        mediaItemStates: List<SingleMediaItemState>,
+        id: MediaId<*>,
+    ): ShowMedia? {
+        val index = mediaItemStates.indexOfFirst { it.id.matches(id) }
+        return ShowMedia(mediaItemStates, index).takeIf { index >=0 }
     }
 
     private val shouldShowDeleteButton =
@@ -101,26 +131,21 @@ data class LoadMediaItem(
         sequenceDataSource is LocalAlbum
 
     context(LightboxActionsContext)
-    private fun MediaItem.toSingleMediaItemState() = with(mediaUseCase) {
+    private fun MediaItem.toSingleMediaItemState() =
         SingleMediaItemState(
             id = id,
-            fullResUrl = fullResUri ?: id.toFullSizeUriFromId(),
-            lowResUrl = thumbnailUri ?: id.toThumbnailUriFromId(),
             isFavourite = isFavourite,
             showFavouriteIcon = id.preferRemote is MediaId.Remote,
             showDeleteButton = shouldShowDeleteButton,
-            mediaItemSyncState = syncState.takeIf { showMediaSyncState }
+            mediaItemSyncState = id.syncState.takeIf { showMediaSyncState }
         )
-    }
+
     context(LightboxActionsContext)
-    private fun MediaId<*>.toSingleMediaItemState() = with(mediaUseCase) {
+    private fun MediaId<*>.toSingleMediaItemState() =
         SingleMediaItemState(
-            id = this@toSingleMediaItemState,
-            fullResUrl = toFullSizeUriFromId(),
-            lowResUrl = toThumbnailUriFromId(),
+            id = this,
             showFavouriteIcon = false,
             showDeleteButton = shouldShowDeleteButton,
             mediaItemSyncState = syncState.takeIf { showMediaSyncState }
         )
-    }
 }

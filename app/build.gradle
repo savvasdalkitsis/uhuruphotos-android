@@ -69,23 +69,14 @@ dependencies {
     implementation project(":foundation:ui:implementation")
 
     implementation(
-            libs.accompanist.navigation,
             libs.accompanist.systemui,
             libs.androidx.activity,
             libs.androidx.compose.hilt.navigation,
-            libs.androidx.compose.material,
             libs.androidx.compose.material.windowsize,
-            libs.androidx.compose.navigation,
             libs.androidx.compose.ui,
-            libs.androidx.datastore.preferences,
-            libs.androidx.lifecycle,
-            libs.androidx.preference,
             libs.androidx.splash,
-            libs.androidx.work,
             libs.androidx.work.hilt,
             libs.appcenter.crashes,
-            libs.exoplayer.base,
-            libs.flowpreferences,
             libs.hilt,
             libs.permissions.base,
     )

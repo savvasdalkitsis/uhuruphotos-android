@@ -236,6 +236,7 @@
     <string name="media_sync_status_fully_synced">Media is fully synced</string>
     <string name="media_sync_status_remote_only">Media is only available on the server</string>
     <string name="media_sync_status_local_only">Media is only local to this device</string>
+    <string name="media_sync_status_downloading">Media is being downloaded to this device</string>
     <string name="today">Today</string>
     <string name="what_would_like_to_do">What would you like to do?</string>
     <string name="delete_fully_synced_media_both">Delete local/Trash remote</string>
@@ -244,4 +245,8 @@
     <string name="allow_storage_management_description">UhuruPhotos needs permission to manage your device storage to perform this action</string>
     <string name="allow_storage_management_details">You will be redirected to the system settings to allow this permission. Continue?</string>
     <string name="error_deleting_media">There was an error deleting media</string>
+    <string name="show_media_sync_status">Show media sync status</string>
+    <string name="show_on_scroll">Show while scrolling</string>
+    <string name="show_always">Always show</string>
+    <string name="show_never">Never show</string>
 </resources>

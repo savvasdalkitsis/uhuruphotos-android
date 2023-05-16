@@ -51,6 +51,7 @@ class SearchUseCase @Inject constructor(
 
     override fun searchFor(query: String): Flow<Result<List<MediaCollection>>> =
         searchRepository.observeSearchResults(query)
+            .distinctUntilChanged()
             .map { groups ->
                 with(mediaUseCase) {
                     groups.mapNotNullValues { it.toMediaCollectionSource() }

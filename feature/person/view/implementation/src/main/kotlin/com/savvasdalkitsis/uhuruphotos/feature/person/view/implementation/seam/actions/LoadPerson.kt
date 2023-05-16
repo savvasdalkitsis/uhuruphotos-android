@@ -34,9 +34,12 @@ data class LoadPerson(val id: Int) : PersonAction() {
     ) = merge(
         flowOf(PersonMutation.Loading),
         peopleUseCase.observePerson(id)
-            .map { with(remoteMediaUseCase) {
-                it.toPerson { it.toRemoteUrl() }
-            } }
+            .map {
+                val serverUrl = serverUseCase.getServerUrl()!!
+                it.toPerson { url ->
+                    "$serverUrl$url"
+                }
+            }
             .map(PersonMutation::ShowPersonDetails),
         personUseCase.observePersonMedia(id)
             .map { it.map(MediaCollection::toCluster) }

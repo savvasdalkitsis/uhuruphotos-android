@@ -9,6 +9,7 @@ android {
 }
 
 dependencies {
+    implementation project(":feature:auth:domain:api")
     implementation project(":feature:db:domain:api")
     implementation project(":feature:lightbox:view:api")
     implementation project(":feature:collage:view:api")

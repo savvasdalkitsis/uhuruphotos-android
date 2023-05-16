@@ -21,6 +21,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.memories.domain.api.model.MemoryC
 import com.savvasdalkitsis.uhuruphotos.feature.memories.domain.api.usecase.MemoriesUseCase
 import com.savvasdalkitsis.uhuruphotos.foundation.date.api.DateParser
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.map
 import org.joda.time.DateTime
 import javax.inject.Inject
@@ -31,9 +32,11 @@ class MemoriesUseCase @Inject constructor(
 ) : MemoriesUseCase {
 
     override fun observeMemories(): Flow<List<MemoryCollection>> =
-        feedUseCase.observeFeed().map {
-            it.findMemories()
-        }
+        feedUseCase.observeFeed()
+            .distinctUntilChanged()
+            .map {
+                it.findMemories()
+            }
 
     override suspend fun getMemories(): List<MemoryCollection> =
         feedUseCase.getFeed().findMemories()

@@ -15,12 +15,13 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.hidden.view.implementation.viewmodel
 
-import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.CollageState
 import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.GalleryEffectsContext
 import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.GalleryId
 import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.action.GalleryAction
 import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.action.LoadCollage
+import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.effects.GalleryEffect
 import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.ui.state.GalleryState
 import com.savvasdalkitsis.uhuruphotos.feature.hidden.view.api.HiddenPhotosNavigationRoute
 import com.savvasdalkitsis.uhuruphotos.feature.hidden.view.implementation.seam.HiddenPhotosActionsContext
@@ -29,18 +30,19 @@ import com.savvasdalkitsis.uhuruphotos.feature.hidden.view.implementation.seam.H
 import com.savvasdalkitsis.uhuruphotos.feature.hidden.view.implementation.seam.HiddenPhotosState
 import com.savvasdalkitsis.uhuruphotos.feature.hidden.view.implementation.seam.actions.HiddenPhotosAction
 import com.savvasdalkitsis.uhuruphotos.feature.hidden.view.implementation.seam.actions.Load
-import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.HasInitializer
+import com.savvasdalkitsis.uhuruphotos.feature.hidden.view.implementation.seam.effects.HiddenPhotosEffect
+import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.viewmodel.NavigationViewModel
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.ActionHandlerWithContext
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.CompositeActionHandler
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.CompositeEffectHandler
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.EffectHandlerWithContext
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.Either
-import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.HasActionableState
-import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.Seam
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 private typealias HiddenPhotosCompositeState = Pair<GalleryState, HiddenPhotosState>
+private typealias HiddenPhotosCompositeEffect = Either<GalleryEffect, HiddenPhotosEffect>
 private typealias HiddenPhotosCompositeAction = Either<GalleryAction, HiddenPhotosAction>
 
 @HiltViewModel
@@ -49,8 +51,7 @@ internal class HiddenPhotosViewModel @Inject constructor(
     hiddenPhotosActionsContext: HiddenPhotosActionsContext,
     hiddenPhotosEffectsContext: HiddenPhotosEffectsContext,
     galleryEffectsContext: GalleryEffectsContext,
-) : ViewModel(),
-    HasActionableState<HiddenPhotosCompositeState, HiddenPhotosCompositeAction> by Seam(
+) : NavigationViewModel<HiddenPhotosCompositeState, HiddenPhotosCompositeEffect, HiddenPhotosCompositeAction, HiddenPhotosNavigationRoute>(
         CompositeActionHandler(
             ActionHandlerWithContext(hiddenPhotosAlbumPageActionsContext),
             ActionHandlerWithContext(hiddenPhotosActionsContext),
@@ -59,15 +60,15 @@ internal class HiddenPhotosViewModel @Inject constructor(
             EffectHandlerWithContext(galleryEffectsContext),
             EffectHandlerWithContext(hiddenPhotosEffectsContext),
         ),
-        GalleryState(collageState = CollageState()) to HiddenPhotosState()
-    ),
-    HasInitializer<HiddenPhotosCompositeAction, HiddenPhotosNavigationRoute> {
+    GalleryState(collageState = CollageState()) to HiddenPhotosState()
+) {
 
-    override suspend fun initialize(
-        initializerData: HiddenPhotosNavigationRoute,
-        action: (HiddenPhotosCompositeAction) -> Unit
-    ) {
-        action(Either.Left(LoadCollage(GalleryId(0, "hidden"))))
-        action(Either.Right(Load))
+    init {
+        viewModelScope.launch {
+            action(Either.Left(LoadCollage(GalleryId(0, "hidden"))))
+        }
+        viewModelScope.launch {
+            action(Either.Right(Load))
+        }
     }
 }

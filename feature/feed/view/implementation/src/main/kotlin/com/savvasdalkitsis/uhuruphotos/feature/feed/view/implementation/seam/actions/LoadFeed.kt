@@ -55,6 +55,7 @@ object LoadFeed : FeedAction() {
         localMediaPermissionHeader(),
         localMediaSyncStatus(),
         memories(),
+        changeItemSyncDisplay(),
     )
 
     private fun FeedActionsContext.memories() =
@@ -64,7 +65,7 @@ object LoadFeed : FeedAction() {
                     flow {
                         var index = 0
                         while (currentCoroutineContext().isActive) {
-                            index++
+                            index += 1
                             emit(memoryCollections.map { (collection, yearsAgo) ->
                                 MemoryCel(
                                     yearsAgo = yearsAgo,
@@ -161,6 +162,12 @@ object LoadFeed : FeedAction() {
             .getFeedDisplay()
             .distinctUntilChanged()
             .map(FeedMutation::ChangeDisplay)
+
+    private fun FeedActionsContext.changeItemSyncDisplay() =
+        settingsUseCase
+            .observeFeedMediaItemSyncDisplay()
+            .distinctUntilChanged()
+            .map(FeedMutation::ChangeItemSyncDisplay)
 
     private fun FeedActionsContext.showLibraryTab() =
         settingsUseCase.observeShowLibrary()

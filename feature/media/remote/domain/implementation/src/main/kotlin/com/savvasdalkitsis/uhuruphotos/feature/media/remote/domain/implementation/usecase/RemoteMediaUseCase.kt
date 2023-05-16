@@ -15,12 +15,11 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.implementation.usecase
 
-import androidx.work.WorkInfo
-import com.savvasdalkitsis.uhuruphotos.feature.auth.domain.api.usecase.ServerUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.entities.media.DbRemoteMediaItemDetails
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.entities.media.DbRemoteMediaItemSummary
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.extensions.async
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.media.remote.RemoteMediaItemSummaryQueries
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaId
 import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.api.model.toDbModel
 import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.api.service.model.RemoteMediaCollection
 import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.api.service.model.RemoteMediaCollectionsByDate
@@ -31,6 +30,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.settings.domain.api.usecase.Setti
 import com.savvasdalkitsis.uhuruphotos.feature.user.domain.api.usecase.UserUseCase
 import com.savvasdalkitsis.uhuruphotos.foundation.log.api.runCatchingWithLog
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.emitAll
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOf
@@ -38,7 +38,6 @@ import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
 class RemoteMediaUseCase @Inject constructor(
-    private val serverUseCase: ServerUseCase,
     private val settingsUseCase: SettingsUseCase,
     private val remoteMediaRepository: RemoteMediaRepository,
     private val remoteMediaItemWorkScheduler: RemoteMediaItemWorkScheduler,
@@ -46,31 +45,6 @@ class RemoteMediaUseCase @Inject constructor(
     private val remoteMediaItemSummaryQueries: RemoteMediaItemSummaryQueries,
     private val remoteMediaPrecacher: RemoteMediaPrecacher,
 ) : RemoteMediaUseCase {
-
-    override fun String?.toRemoteUrl(): String? = this?.toAbsoluteRemoteUrl()
-
-    @JvmName("toAbsoluteUrlNotNull")
-    private fun String.toAbsoluteRemoteUrl(): String {
-        val serverUrl = serverUseCase.getServerUrl()
-        return this
-            .removeSuffix(".webp")
-            .removeSuffix(".mp4")
-            .let { serverUrl + it }
-    }
-
-    override fun String?.toThumbnailUrlFromIdNullable(): String? =
-        this?.toThumbnailUrlFromId()
-
-    override fun String.toThumbnailUrlFromId(isVideo: Boolean): String =
-        "/media/square_thumbnails/$this".toAbsoluteRemoteUrl()
-
-    override fun String?.toFullSizeUrlFromIdNullable(isVideo: Boolean): String? =
-        this?.toFullSizeUrlFromId(isVideo)
-
-    override fun String.toFullSizeUrlFromId(isVideo: Boolean): String = when {
-        isVideo -> "/media/video/$this".toAbsoluteRemoteUrl()
-        else -> "/media/photos/$this".toAbsoluteRemoteUrl()
-    }
 
     override fun observeAllRemoteMediaDetails(): Flow<List<DbRemoteMediaItemDetails>> =
         remoteMediaRepository.observeAllMediaItemDetails()
@@ -90,6 +64,9 @@ class RemoteMediaUseCase @Inject constructor(
 
     override fun observeHiddenRemoteMedia(): Flow<List<DbRemoteMediaItemSummary>> =
         remoteMediaRepository.observeHiddenMedia()
+
+    override suspend fun observeRemoteMediaItemDetails(id: String): Flow<DbRemoteMediaItemDetails> =
+        remoteMediaRepository.observeMediaItemDetails(id).distinctUntilChanged()
 
     override suspend fun getRemoteMediaItemDetails(id: String): DbRemoteMediaItemDetails? =
         remoteMediaRepository.getMediaItemDetails(id)
@@ -123,16 +100,9 @@ class RemoteMediaUseCase @Inject constructor(
             remoteMediaRepository.refreshFavourites(it)
         }
 
-    override fun downloadOriginal(id: String, video: Boolean) {
-        remoteMediaItemWorkScheduler.scheduleMediaItemOriginalFileRetrieve(id, video)
+    override suspend fun downloadThumbnail(id: MediaId.Remote) {
+        remoteMediaPrecacher.precacheMedia(id.thumbnailUri, id.isVideo)
     }
-
-    override suspend fun downloadThumbnail(id: String, video: Boolean) {
-        remoteMediaPrecacher.precacheMedia(id.toThumbnailUrlFromId(video), video)
-    }
-
-    override fun observeOriginalFileDownloadStatus(id: String): Flow<WorkInfo.State?> =
-        remoteMediaItemWorkScheduler.observeMediaItemOriginalFileRetrieveJobStatus(id)
 
     override suspend fun refreshHiddenMedia() =
         remoteMediaRepository.refreshHidden()

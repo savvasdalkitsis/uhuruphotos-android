@@ -19,8 +19,6 @@ import android.content.ClipboardManager
 import android.content.ContentResolver
 import android.content.Context
 import androidx.core.app.NotificationManagerCompat
-import androidx.preference.PreferenceManager
-import com.fredporciuncula.flow.preferences.FlowSharedPreferences
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -32,10 +30,6 @@ import javax.inject.Singleton
 @Module
 @InstallIn(SingletonComponent::class)
 class AppModule {
-
-    @Provides
-    fun preferences(@ApplicationContext context: Context): FlowSharedPreferences =
-        FlowSharedPreferences(PreferenceManager.getDefaultSharedPreferences(context))
 
     @Provides
     fun clipboardManager(@ApplicationContext context: Context): ClipboardManager =

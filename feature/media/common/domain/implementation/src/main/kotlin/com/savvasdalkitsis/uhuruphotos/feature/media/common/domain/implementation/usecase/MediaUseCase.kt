@@ -16,6 +16,7 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.implementation.usecase
 
 import androidx.work.WorkInfo
+import com.savvasdalkitsis.uhuruphotos.feature.auth.domain.api.usecase.ServerUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.entities.media.DbRemoteMediaItemDetails
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.entities.media.DbRemoteMediaItemSummary
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.entities.media.latLng
@@ -25,13 +26,12 @@ import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.Med
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaCollectionSource
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaFolderOnDevice
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaId
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaId.Downloading
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaId.Local
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaId.Remote
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItem
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemDetails
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemInstance
-import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemSyncState.LOCAL_ONLY
-import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemSyncState.REMOTE_ONLY
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemsOnDevice
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.usecase.MediaUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.model.LocalFolder
@@ -56,57 +56,21 @@ import com.savvasdalkitsis.uhuruphotos.foundation.map.api.model.LatLon
 import com.savvasdalkitsis.uhuruphotos.foundation.map.api.model.toLatLon
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.combine
-import kotlinx.coroutines.flow.flowOf
+import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.emptyFlow
 import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
 class MediaUseCase @Inject constructor(
     private val localMediaUseCase: LocalMediaUseCase,
     private val remoteMediaUseCase: RemoteMediaUseCase,
+    private val serverUseCase: ServerUseCase,
     private val remoteMediaRepository: RemoteMediaRepository,
     private val remoteMediaItemWorkScheduler: RemoteMediaItemWorkScheduler,
     private val userUseCase: UserUseCase,
     private val dateDisplayer: DateDisplayer,
     private val peopleUseCase: PeopleUseCase,
 ) : MediaUseCase {
-
-    override fun MediaId<*>.toThumbnailUriFromId(): String =
-        when (this) {
-            is Remote -> with(remoteMediaUseCase) {
-                value.toThumbnailUrlFromId(isVideo)
-            }
-            is Local -> with(localMediaUseCase) {
-                value.toContentUri(isVideo)
-            }
-            is MediaId.Group -> when (val id = preferLocal) {
-                is Remote -> with(remoteMediaUseCase) {
-                    id.value.toThumbnailUrlFromId(isVideo)
-                }
-                is Local -> with(localMediaUseCase) {
-                    id.value.toContentUri(isVideo)
-                }
-                else -> ""
-            }
-        }
-
-    override fun MediaId<*>.toFullSizeUriFromId(): String =
-        when (this) {
-            is Remote -> with(remoteMediaUseCase) {
-                value.toFullSizeUrlFromId(isVideo)
-            }
-            is Local -> with(localMediaUseCase) {
-                value.toContentUri(isVideo)
-            }
-            is MediaId.Group -> when (val id = preferLocal) {
-                is Remote -> with(remoteMediaUseCase) {
-                    id.value.toFullSizeUrlFromId(isVideo)
-                }
-                is Local -> with(localMediaUseCase) {
-                    id.value.toContentUri(isVideo)
-                }
-                else -> ""
-            }
-        }
 
     override fun observeLocalMedia(): Flow<MediaItemsOnDevice> =
         combine(
@@ -168,6 +132,7 @@ class MediaUseCase @Inject constructor(
 
     override fun observeFavouriteMedia(): Flow<Result<List<MediaItem>>> =
         remoteMediaUseCase.observeFavouriteRemoteMedia()
+            .distinctUntilChanged()
             .map { media ->
                 media.mapCatching {
                     it.mapToMediaItems().getOrThrow()
@@ -176,6 +141,7 @@ class MediaUseCase @Inject constructor(
 
     override fun observeHiddenMedia(): Flow<Result<List<MediaItem>>> =
             remoteMediaUseCase.observeHiddenRemoteMedia()
+                .distinctUntilChanged()
                 .mapToPhotos()
 
     private fun Flow<List<DbRemoteMediaItemSummary>>.mapToPhotos(): Flow<Result<List<MediaItem>>> =
@@ -183,37 +149,30 @@ class MediaUseCase @Inject constructor(
 
     override suspend fun List<DbRemoteMediaItemSummary>.mapToMediaItems(): Result<List<MediaItem>> =
         withFavouriteThreshold { threshold ->
+            val serverUrl = serverUseCase.getServerUrl()!!
             map {
-                with(remoteMediaUseCase) {
-                    val date = dateDisplayer.dateString(it.date)
-                    MediaItemInstance(
-                        id = Remote(it.id, it.isVideo),
-                        mediaHash = it.id,
-                        thumbnailUri = it.id.toThumbnailUrlFromIdNullable(),
-                        fullResUri = it.id.toFullSizeUrlFromId(it.isVideo),
-                        fallbackColor = it.dominantColor,
-                        displayDayDate = date,
-                        sortableDate = it.date,
-                        isFavourite = (it.rating ?: 0) >= threshold,
-                        ratio = it.aspectRatio ?: 1f,
-                        syncState = REMOTE_ONLY,
-                    )
-                }
+                val date = dateDisplayer.dateString(it.date)
+                MediaItemInstance(
+                    id = Remote(it.id, it.isVideo, serverUrl),
+                    mediaHash = it.id,
+                    fallbackColor = it.dominantColor,
+                    displayDayDate = date,
+                    sortableDate = it.date,
+                    isFavourite = (it.rating ?: 0) >= threshold,
+                    ratio = it.aspectRatio ?: 1f,
+                )
             }
         }
 
     private fun LocalMediaItem.toMediaItem(userId: Int) = MediaItemInstance(
-        id = Local(id, video),
+        id = Local(id, video, contentUri),
         mediaHash = md5 + userId,
-        thumbnailUri = contentUri,
-        fullResUri = contentUri,
         fallbackColor = fallbackColor,
         displayDayDate = displayDate,
         sortableDate = sortableDate,
         isFavourite = false,
         ratio = ratio,
         latLng = latLon,
-        syncState = LOCAL_ONLY,
     )
 
     private val LocalMediaItem.ratio: Float get() {
@@ -227,21 +186,52 @@ class MediaUseCase @Inject constructor(
         return (w / h.toFloat()).takeIf { it > 0 } ?: 1f
     }
 
-    override suspend fun getMediaItemDetails(id: MediaId<*>): MediaItemDetails? = when (id) {
-        is Remote -> remoteMediaUseCase.getRemoteMediaItemDetails(id.value)
-            ?.toMediaItemDetails()
-        is Local -> localMediaUseCase.getLocalMediaItem(id.value)
-            ?.toMediaItemDetails()
+    override suspend fun observeMediaItemDetails(id: MediaId<*>): Flow<MediaItemDetails> = when (id) {
+        is Remote -> id.observeDetails()
+        is Downloading -> id.remote.observeDetails()
+        is Local -> id.observeDetails()
         is MediaId.Group -> {
-            val remoteDetails = id.findRemote?.let {
-                remoteMediaUseCase.getRemoteMediaItemDetails(it.value)?.toMediaItemDetails()
+            val localDetails = id.findLocal?.observeDetails()
+            val remoteDetails = id.findRemote?.observeDetails()
+
+            when {
+                remoteDetails != null && localDetails != null ->
+                    combine(remoteDetails, localDetails) { (remote, local) ->
+                        remote.mergeWith(local)
+                    }
+                remoteDetails != null && localDetails == null -> remoteDetails
+                remoteDetails == null && localDetails != null -> localDetails
+                else -> emptyFlow()
             }
-            val localDetails = id.findLocal?.let {
-                localMediaUseCase.getLocalMediaItem(it.value)?.toMediaItemDetails()
-            }
+        }
+    }
+
+    override suspend fun getMediaItemDetails(id: MediaId<*>): MediaItemDetails? = when (id) {
+        is Remote -> id.getDetails()
+        is Downloading -> id.remote.getDetails()
+        is Local -> id.getDetails()
+        is MediaId.Group -> {
+            val remoteDetails = id.findRemote?.getDetails()
+            val localDetails = id.findLocal?.getDetails()
             remoteDetails?.mergeWith(localDetails) ?: localDetails
         }
     }
+
+    private suspend fun Remote.observeDetails() =
+        remoteMediaUseCase.observeRemoteMediaItemDetails(value).map {
+            it.toMediaItemDetails()
+        }
+
+    private suspend fun Remote.getDetails() =
+        remoteMediaUseCase.getRemoteMediaItemDetails(value)?.toMediaItemDetails()
+
+    private suspend fun Local.observeDetails() =
+        localMediaUseCase.observeLocalMediaItem(value).map {
+            it.toMediaItemDetails()
+        }
+
+    private suspend fun Local.getDetails() =
+        localMediaUseCase.getLocalMediaItem(value)?.toMediaItemDetails()
 
     private fun LocalMediaItem.toMediaItemDetails(): MediaItemDetails =
         MediaItemDetails(
@@ -249,6 +239,7 @@ class MediaUseCase @Inject constructor(
             isFavourite = false,
             location = "",
             latLon = latLon?.let { (lat, lon) -> LatLon(lat, lon) },
+            md5 = md5,
             localPath = path ?: contentUri,
             peopleInMediaItem = emptyList(),
         )
@@ -260,13 +251,12 @@ class MediaUseCase @Inject constructor(
             peopleUseCase.getPeopleByName()
         }
         val peopleNamesList = peopleNames.orEmpty().deserializePeopleNames
+        val serverUrl = serverUseCase.getServerUrl()!!
         val peopleInPhoto = people
             .filter { it.name in peopleNamesList }
             .map {
-                with(remoteMediaUseCase) {
-                    it.toPerson { person ->
-                        person.toRemoteUrl()
-                    }
+                it.toPerson { url ->
+                    "$serverUrl$url"
                 }
             }
         return MediaItemDetails(
@@ -274,6 +264,7 @@ class MediaUseCase @Inject constructor(
             isFavourite = favouriteThreshold != null && (rating ?: 0) >= favouriteThreshold,
             location = location.orEmpty(),
             latLon = latLng?.toLatLon,
+            md5 = imageHash,
             remotePath = imagePath,
             peopleInMediaItem = peopleInPhoto,
         )
@@ -316,6 +307,9 @@ class MediaUseCase @Inject constructor(
     override suspend fun refreshDetailsNowIfMissing(id: MediaId<*>) : Result<Unit> =
         when (id) {
             is Remote -> refreshRemoteDetailsNowIfMissing(id)
+            is Downloading -> {
+                refreshRemoteDetailsNowIfMissing(id.remote)
+            }
             is Local -> refreshLocalDetailsNowIfMissing(id)
             is MediaId.Group -> {
                 val remote = id.findRemote?.let {
@@ -331,6 +325,7 @@ class MediaUseCase @Inject constructor(
     override suspend fun refreshDetailsNow(id: MediaId<*>) : Result<Unit> =
         when (id) {
             is Remote -> refreshRemoteDetailsNow(id)
+            is Downloading -> refreshRemoteDetailsNow(id.remote)
             is Local -> refreshLocalDetailsNow(id)
             is MediaId.Group -> {
                 val remote = id.findRemote?.let {
@@ -364,18 +359,6 @@ class MediaUseCase @Inject constructor(
     override suspend fun refreshFavouriteMedia() =
         remoteMediaUseCase.refreshFavouriteMedia()
 
-    override fun downloadOriginal(id: MediaId<*>) {
-        if (id is Remote) {
-            remoteMediaUseCase.downloadOriginal(id.value, id.isVideo)
-        }
-    }
-
-    override fun observeOriginalFileDownloadStatus(id: MediaId<*>): Flow<WorkInfo.State?> =
-        when (id) {
-            is Remote -> remoteMediaUseCase.observeOriginalFileDownloadStatus(id.value)
-            else -> flowOf(WorkInfo.State.SUCCEEDED)
-        }
-
     override fun observeLocalMediaSyncJobStatus(): Flow<WorkInfo.State?> =
         localMediaUseCase.observeLocalMediaSyncJobStatus()
 
@@ -407,6 +390,7 @@ class MediaUseCase @Inject constructor(
         val albumLocation = source.firstOrNull()?.location
 
         val date = dateDisplayer.dateString(albumDate)
+        val serverUrl = serverUseCase.getServerUrl()!!
         return MediaCollection(
             id = id,
             displayTitle = date,
@@ -418,14 +402,8 @@ class MediaUseCase @Inject constructor(
                     photoId.isNullOrBlank() -> null
                     else -> {
                         MediaItemInstance(
-                            id = Remote(photoId, item.isVideo),
+                            id = Remote(photoId, item.isVideo, serverUrl),
                             mediaHash = photoId,
-                            thumbnailUri = with(remoteMediaUseCase) {
-                                photoId.toThumbnailUrlFromId()
-                            },
-                            fullResUri = with(remoteMediaUseCase) {
-                                photoId.toFullSizeUrlFromId(item.isVideo)
-                            },
                             fallbackColor = item.dominantColor,
                             displayDayDate = date,
                             sortableDate = item.date,
@@ -435,7 +413,6 @@ class MediaUseCase @Inject constructor(
                                 }
                                 .getOrElse { false },
                             ratio = item.aspectRatio ?: 1.0f,
-                            syncState = REMOTE_ONLY,
                         )
                     }
                 }

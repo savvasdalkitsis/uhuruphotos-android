@@ -44,6 +44,7 @@ data class LightboxState(
         """LightboxState(currentIndex=$currentIndex,
             |_currentIndex=$_currentIndex,
             | mediaCount=${media.size},
+            | currentMedia=${if (media.isEmpty()) "EMPTY" else currentMediaItem.toString()},
             | isLoading=$isLoading,
             | errorMessage=$errorMessage,
             | showUI=$showUI,
@@ -61,9 +62,7 @@ data class LightboxState(
 }
 
 data class SingleMediaItemState(
-    val id: MediaId<*> = MediaId.Remote("", false),
-    val fullResUrl: String = "",
-    val lowResUrl: String = "",
+    val id: MediaId<*>,
     val isFavourite: Boolean? = null,
     val dateAndTime: String = "",
     val location: String = "",
@@ -72,15 +71,11 @@ data class SingleMediaItemState(
     val showDeleteButton: Boolean = true,
     val showShareIcon: Boolean = false,
     val showUseAsIcon: Boolean = false,
-    val originalFileIconState: OriginalFileIconState = OriginalFileIconState.HIDDEN,
     val peopleInMediaItem: List<Person> = emptyList(),
     val metadata: MediaItemMetadata? = null,
+    val md5: String? = null,
     val remotePath: String? = null,
     val localPath: String? = null,
     val loadingDetails: Boolean = false,
     val mediaItemSyncState: MediaItemSyncState? = null,
 )
-
-enum class OriginalFileIconState {
-    HIDDEN, IDLE, IN_PROGRESS, ERROR
-}

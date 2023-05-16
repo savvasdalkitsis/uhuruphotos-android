@@ -16,6 +16,7 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.feature.settings.domain.api.usecase
 
 import androidx.work.NetworkType
+import com.savvasdalkitsis.uhuruphotos.feature.feed.view.api.ui.state.FeedMediaItemSyncDisplay
 import com.savvasdalkitsis.uhuruphotos.foundation.map.api.model.MapProvider
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.theme.ThemeMode
 import kotlinx.coroutines.flow.Flow
@@ -44,6 +45,7 @@ interface SettingsUseCase {
     fun getMaxAnimatedVideoThumbnails(): Int
     fun getShowBannerAskingForLocalMediaPermissionsOnFeed(): Boolean
     fun getShowBannerAskingForLocalMediaPermissionsOnHeatmap(): Boolean
+    fun getFeedMediaItemSyncDisplay(): FeedMediaItemSyncDisplay
 
     fun observeImageDiskCacheMaxLimit(): Flow<Int>
     fun observeImageMemCacheMaxLimit(): Flow<Int>
@@ -65,27 +67,29 @@ interface SettingsUseCase {
     fun observeMemoriesEnabled(): Flow<Boolean>
     fun observeAnimateVideoThumbnails(): Flow<Boolean>
     fun observeMaxAnimatedVideoThumbnails(): Flow<Int>
+    fun observeFeedMediaItemSyncDisplay(): Flow<FeedMediaItemSyncDisplay>
 
-    suspend fun setImageDiskCacheMaxLimit(sizeInMb: Int)
-    suspend fun setImageMemCacheMaxLimit(sizeInMb: Int)
-    suspend fun setVideoDiskCacheMaxLimit(sizeInMb: Int)
-    suspend fun setFeedSyncFrequency(frequency: Int)
-    suspend fun setFeedFeedDaysToRefresh(days: Int)
-    suspend fun setFullSyncNetworkRequirements(networkType: NetworkType)
-    suspend fun setFullSyncRequiresCharging(requiresCharging: Boolean)
-    suspend fun setShouldPerformPeriodicFullSync(perform: Boolean)
-    suspend fun setThemeMode(mode: ThemeMode)
-    suspend fun setSearchSuggestionsEnabled(enabled: Boolean)
-    suspend fun setShareRemoveGpsData(enabled: Boolean)
-    suspend fun setShowLibrary(show: Boolean)
-    suspend fun setMapProvider(provider: MapProvider)
-    suspend fun setLoggingEnabled(enabled: Boolean)
-    suspend fun setBiometricsRequiredForAppAccess(required: Boolean)
-    suspend fun setBiometricsRequiredForHiddenPhotosAccess(required: Boolean)
-    suspend fun setBiometricsRequiredForTrashAccess(required: Boolean)
-    suspend fun setMemoriesEnabled(enabled: Boolean)
-    suspend fun setAnimateVideoThumbnails(animate: Boolean)
-    suspend fun setMaxAnimatedVideoThumbnails(max: Int)
-    suspend fun setShowBannerAskingForLocalMediaPermissionsOnFeed(show: Boolean)
-    suspend fun setShowBannerAskingForLocalMediaPermissionsOnHeatmap(show: Boolean)
+    fun setImageDiskCacheMaxLimit(sizeInMb: Int)
+    fun setImageMemCacheMaxLimit(sizeInMb: Int)
+    fun setVideoDiskCacheMaxLimit(sizeInMb: Int)
+    fun setFeedSyncFrequency(frequency: Int)
+    fun setFeedFeedDaysToRefresh(days: Int)
+    fun setFullSyncNetworkRequirements(networkType: NetworkType)
+    fun setFullSyncRequiresCharging(requiresCharging: Boolean)
+    fun setShouldPerformPeriodicFullSync(perform: Boolean)
+    fun setThemeMode(mode: ThemeMode)
+    fun setSearchSuggestionsEnabled(enabled: Boolean)
+    fun setShareRemoveGpsData(enabled: Boolean)
+    fun setShowLibrary(show: Boolean)
+    fun setMapProvider(provider: MapProvider)
+    fun setLoggingEnabled(enabled: Boolean)
+    fun setBiometricsRequiredForAppAccess(required: Boolean)
+    fun setBiometricsRequiredForHiddenPhotosAccess(required: Boolean)
+    fun setBiometricsRequiredForTrashAccess(required: Boolean)
+    fun setMemoriesEnabled(enabled: Boolean)
+    fun setAnimateVideoThumbnails(animate: Boolean)
+    fun setMaxAnimatedVideoThumbnails(max: Int)
+    fun setShowBannerAskingForLocalMediaPermissionsOnFeed(show: Boolean)
+    fun setShowBannerAskingForLocalMediaPermissionsOnHeatmap(show: Boolean)
+    fun setFeedMediaItemSyncDisplay(display: FeedMediaItemSyncDisplay)
 }

@@ -10,6 +10,7 @@ android {
 
 dependencies {
     implementation project(':foundation:coroutines:api')
+    implementation project(":feature:auth:domain:api")
     implementation project(":feature:db:domain:api")
     implementation project(':foundation:image:api')
     implementation project(":foundation:icons:api")

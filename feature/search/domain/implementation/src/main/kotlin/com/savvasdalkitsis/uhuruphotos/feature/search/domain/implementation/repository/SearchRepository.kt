@@ -15,7 +15,6 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.search.domain.implementation.repository
 
-import com.fredporciuncula.flow.preferences.FlowSharedPreferences
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.entities.media.DbRemoteMediaItemSummary
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.extensions.await
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.media.remote.RemoteMediaItemSummaryQueries
@@ -25,6 +24,8 @@ import com.savvasdalkitsis.uhuruphotos.feature.search.domain.implementation.serv
 import com.savvasdalkitsis.uhuruphotos.foundation.group.api.model.Group
 import com.savvasdalkitsis.uhuruphotos.foundation.group.api.model.groupBy
 import com.savvasdalkitsis.uhuruphotos.foundation.log.api.runCatchingWithLog
+import com.savvasdalkitsis.uhuruphotos.foundation.preferences.api.Preferences
+import com.savvasdalkitsis.uhuruphotos.foundation.preferences.api.set
 import com.squareup.sqldelight.runtime.coroutines.asFlow
 import com.squareup.sqldelight.runtime.coroutines.mapToList
 import kotlinx.coroutines.flow.Flow
@@ -36,14 +37,12 @@ class SearchRepository @Inject constructor(
     private val searchService: SearchService,
     private val searchQueries: SearchQueries,
     private val remoteMediaItemSummaryQueries: RemoteMediaItemSummaryQueries,
-    flowSharedPreferences: FlowSharedPreferences,
+    private val preferences: Preferences,
 ) {
 
-    private val suggestions = flowSharedPreferences
-        .getNullableStringSet("searchSuggestions", emptySet())
+    private val suggestions = "searchSuggestions"
 
-    private val recentSearches = flowSharedPreferences
-        .getNullableStringSet("recentSearches", emptySet())
+    private val recentSearches = "recentSearches"
 
     fun observeSearchResults(query: String): Flow<Group<String, GetSearchResults>> =
         searchQueries.getSearchResults(query).asFlow().mapToList().groupBy(GetSearchResults::date)
@@ -82,29 +81,30 @@ class SearchRepository @Inject constructor(
         }
     }
 
-    fun getSearchSuggestions(): Flow<List<String>> = suggestions.asFlow()
-        .map { it.orEmpty().toList() }
+    fun getSearchSuggestions(): Flow<List<String>> = preferences.observeStringSet(suggestions, emptySet())
+        .map { it.toList() }
 
     suspend fun refreshSearchSuggestions() = runCatchingWithLog {
-        suggestions.setAndCommit(
-            searchService.getSearchSuggestions().results
-                .map(String::trim)
-                .toSet()
+        preferences.setStringSet(suggestions, searchService.getSearchSuggestions().results
+            .map(String::trim)
+            .toSet()
         )
     }
 
-    fun getRecentSearches(): Flow<List<String>> = recentSearches.asFlow()
-        .map { it.orEmpty().toList() }
+    fun getRecentSearches(): Flow<List<String>> = preferences.observeStringSet(recentSearches, emptySet())
+        .map { it.toList() }
 
-    suspend fun addSearchToRecentSearches(query: String) {
-        recentSearches.setAndCommit(recentSearches.get().orEmpty() + query)
+    fun addSearchToRecentSearches(query: String) {
+        val recent = preferences.getStringSet(recentSearches, emptySet())
+        preferences.setStringSet(recentSearches, recent + query)
     }
 
-    suspend fun removeFromRecentSearches(query: String) {
-        recentSearches.setAndCommit(recentSearches.get().orEmpty() - query)
+    fun removeFromRecentSearches(query: String) {
+        val recent = preferences.getStringSet(recentSearches, emptySet())
+        preferences.set(recentSearches, recent - query)
     }
 
-    suspend fun clearRecentSearchSuggestions() {
-        recentSearches.setAndCommit(emptySet())
+    fun clearRecentSearchSuggestions() {
+        preferences.setStringSet(recentSearches, emptySet())
     }
 }

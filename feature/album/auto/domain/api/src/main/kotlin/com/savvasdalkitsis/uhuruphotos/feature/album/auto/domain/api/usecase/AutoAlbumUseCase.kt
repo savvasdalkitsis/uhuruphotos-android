@@ -22,7 +22,9 @@ import kotlinx.coroutines.flow.Flow
 
 interface AutoAlbumUseCase {
 
-    fun observeAutoAlbum(albumId: Int): Flow<Pair<List<GetAutoAlbum>, List<GetPeopleForAutoAlbum>>>
+    fun observeAutoAlbumWithPeople(albumId: Int): Flow<Pair<List<GetAutoAlbum>, List<GetPeopleForAutoAlbum>>>
+
+    fun observeAutoAlbum(albumId: Int): Flow<List<MediaCollection>>
 
     suspend fun getAutoAlbum(albumId: Int): List<MediaCollection>
 

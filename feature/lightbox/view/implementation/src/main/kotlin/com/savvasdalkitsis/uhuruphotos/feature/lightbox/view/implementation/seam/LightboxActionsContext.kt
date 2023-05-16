@@ -27,7 +27,6 @@ import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.LightboxMutation.HideAllConfirmationDialogs
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.LightboxMutation.Loading
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.LightboxMutation.LoadingDetails
-import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.LightboxMutation.ReceivedDetails
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.LightboxMutation.RemoveMediaItemFromSource
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.LightboxMutation.ShowErrorMessage
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.effects.LightboxEffect
@@ -54,12 +53,15 @@ import com.savvasdalkitsis.uhuruphotos.feature.trash.domain.api.usecase.TrashUse
 import com.savvasdalkitsis.uhuruphotos.foundation.log.api.log
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.EffectHandler
 import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
+import com.savvasdalktsis.uhuruphotos.foundation.download.api.usecase.DownloadUseCase
 import kotlinx.coroutines.flow.FlowCollector
+import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
 
 internal class LightboxActionsContext @Inject constructor(
     val mediaUseCase: MediaUseCase,
+    val downloadUseCase: DownloadUseCase,
     val personUseCase: PersonUseCase,
     val feedUseCase: FeedUseCase,
     val memoriesUseCase: MemoriesUseCase,
@@ -74,6 +76,7 @@ internal class LightboxActionsContext @Inject constructor(
 ) {
 
     var mediaItemType = MediaItemType.default
+    val currentMediaId = MutableSharedFlow<MediaId<*>>(1)
 
     fun deletionCategory(item: SingleMediaItemState) = when {
         mediaItemType == TRASHED -> REMOTE_ITEM_TRASHED
@@ -143,10 +146,6 @@ internal class LightboxActionsContext @Inject constructor(
             mediaUseCase.refreshDetailsNowIfMissing(mediaId)
         }.onFailure {
             emit(ShowErrorMessage(string.error_loading_photo_details))
-        }
-        when (val details = mediaUseCase.getMediaItemDetails(mediaId)) {
-            null -> emit(ShowErrorMessage(string.error_loading_photo_details))
-            else -> emit(ReceivedDetails(mediaId, details))
         }
         emit(FinishedLoading)
         emit(FinishedLoadingDetails(mediaId))

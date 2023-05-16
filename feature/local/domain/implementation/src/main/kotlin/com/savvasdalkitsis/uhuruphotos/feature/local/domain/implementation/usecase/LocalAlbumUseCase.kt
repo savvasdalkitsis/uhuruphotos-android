@@ -15,7 +15,6 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.local.domain.implementation.usecase
 
-import com.fredporciuncula.flow.preferences.FlowSharedPreferences
 import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.PredefinedCollageDisplay
 import com.savvasdalkitsis.uhuruphotos.feature.local.domain.api.usecase.LocalAlbumUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaCollection
@@ -24,7 +23,11 @@ import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.Med
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.usecase.MediaUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.model.LocalMediaFolder
 import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.usecase.LocalMediaUseCase
+import com.savvasdalkitsis.uhuruphotos.foundation.preferences.api.Preferences
+import com.savvasdalkitsis.uhuruphotos.foundation.preferences.api.get
+import com.savvasdalkitsis.uhuruphotos.foundation.preferences.api.set
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.mapNotNull
 import javax.inject.Inject
@@ -32,11 +35,12 @@ import javax.inject.Inject
 internal class LocalAlbumUseCase @Inject constructor(
     private val mediaUseCase: MediaUseCase,
     private val localMediaUseCase: LocalMediaUseCase,
-    private val flowSharedPreferences: FlowSharedPreferences,
+    private val preferences: Preferences,
 ) : LocalAlbumUseCase {
 
     override fun observeLocalAlbum(albumId: Int): Flow<Pair<LocalMediaFolder, List<MediaCollection>>> =
         mediaUseCase.observeLocalAlbum(albumId)
+            .distinctUntilChanged()
             .mapNotNull { localMedia ->
                 when (localMedia) {
                     is MediaFolderOnDevice.Found ->
@@ -49,17 +53,16 @@ internal class LocalAlbumUseCase @Inject constructor(
         localMediaUseCase.refreshLocalMediaFolder(albumId)
 
     override fun getLocalAlbumGalleryDisplay(albumId: Int) : PredefinedCollageDisplay =
-        localFolderGalleryDisplay(albumId).get()
+        preferences.get(key(albumId), PredefinedCollageDisplay.default)
 
-    override suspend fun setLocalAlbumGalleryDisplay(albumId: Int, galleryDisplay: PredefinedCollageDisplay) {
-        localFolderGalleryDisplay(albumId).setAndCommit(galleryDisplay)
+    override fun setLocalAlbumGalleryDisplay(albumId: Int, galleryDisplay: PredefinedCollageDisplay) {
+        preferences.set(key(albumId), galleryDisplay)
     }
 
     override suspend fun getLocalAlbum(albumId: Int): List<MediaCollection> =
         observeLocalAlbum(albumId).first().second
 
-    private fun localFolderGalleryDisplay(albumId: Int) =
-        flowSharedPreferences.getEnum("localFolderGalleryDisplay/$albumId", PredefinedCollageDisplay.default)
+    private fun key(albumId: Int) = "localFolderGalleryDisplay/$albumId"
 
     private fun List<MediaItem>.toMediaCollections(): List<MediaCollection> =
         groupBy { it.displayDayDate }

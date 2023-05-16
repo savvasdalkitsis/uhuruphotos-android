@@ -17,8 +17,7 @@ package com.savvasdalkitsis.uhuruphotos.feature.search.view.implementation.seam.
 
 import com.savvasdalkitsis.uhuruphotos.feature.search.view.implementation.seam.SearchActionsContext
 import com.savvasdalkitsis.uhuruphotos.feature.search.view.implementation.seam.effects.SearchEffect
-import com.savvasdalkitsis.uhuruphotos.feature.search.view.implementation.seam.SearchMutation
 import com.savvasdalkitsis.uhuruphotos.feature.search.view.implementation.ui.state.SearchState
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.Action
 
-sealed class SearchAction : Action<SearchState, SearchEffect, SearchMutation, SearchActionsContext>
+sealed class SearchAction : Action<SearchState, SearchEffect, SearchActionsContext>

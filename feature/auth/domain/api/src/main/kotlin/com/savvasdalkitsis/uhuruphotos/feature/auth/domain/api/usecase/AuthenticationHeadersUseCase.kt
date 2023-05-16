@@ -13,14 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
  */
-package com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.effects
+package com.savvasdalkitsis.uhuruphotos.feature.auth.domain.api.usecase
 
-import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.LightboxEffectsContext
-import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R
+interface AuthenticationHeadersUseCase {
 
-object DownloadingOriginal : LightboxEffect() {
-    context(LightboxEffectsContext) override suspend fun handle() {
-        toasterUseCase.show(R.string.downloading_original_file_background)
-        toasterUseCase.show(R.string.you_can_leave)
-    }
+    fun headers(requestUrl: String): Set<Pair<String, String>>
 }

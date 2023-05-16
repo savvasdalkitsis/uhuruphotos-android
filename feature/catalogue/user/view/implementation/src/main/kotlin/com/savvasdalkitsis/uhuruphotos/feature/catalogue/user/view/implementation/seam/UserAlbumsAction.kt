@@ -18,5 +18,4 @@ package com.savvasdalkitsis.uhuruphotos.feature.catalogue.user.view.implementati
 import com.savvasdalkitsis.uhuruphotos.feature.catalogue.user.view.implementation.seam.effects.UserAlbumsEffect
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.Action
 
-sealed class UserAlbumsAction :
-    Action<UserAlbumsState, UserAlbumsEffect, UserAlbumsMutation, UserAlbumsActionsContext>
+sealed class UserAlbumsAction : Action<UserAlbumsState, UserAlbumsEffect, UserAlbumsActionsContext>

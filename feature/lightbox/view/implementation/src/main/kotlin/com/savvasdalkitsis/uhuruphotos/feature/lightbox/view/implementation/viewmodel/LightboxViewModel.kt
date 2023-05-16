@@ -15,37 +15,36 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.viewmodel
 
-import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.api.navigation.LightboxNavigationRoute
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.LightboxActionsContext
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.LightboxEffectsContext
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.actions.LightboxAction
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.actions.LoadMediaItem
+import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.effects.LightboxEffect
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.ui.state.LightboxState
-import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.HasInitializer
+import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.viewmodel.NavigationViewModel
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.ActionHandlerWithContext
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.EffectHandlerWithContext
-import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.HasActionableState
-import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.Seam
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 internal class LightboxViewModel @Inject constructor(
     lightboxActionsContext: LightboxActionsContext,
     lightboxEffectsContext: LightboxEffectsContext,
-) : ViewModel(), HasActionableState<LightboxState, LightboxAction> by Seam(
+) : NavigationViewModel<LightboxState, LightboxEffect, LightboxAction, LightboxNavigationRoute>(
     ActionHandlerWithContext(lightboxActionsContext),
     EffectHandlerWithContext(lightboxEffectsContext),
     LightboxState()
-), HasInitializer<LightboxAction, LightboxNavigationRoute> {
+) {
 
-    override suspend fun initialize(initializerData: LightboxNavigationRoute, action: (LightboxAction) -> Unit) {
-        action(LoadMediaItem(
-            initializerData.id,
-            initializerData.lightboxSequenceDataSource,
-            initializerData.showMediaSyncState,
-        ))
+    init {
+        viewModelScope.launch {
+            action(with(getRoute()) {
+                LoadMediaItem(id, lightboxSequenceDataSource, showMediaSyncState)
+            })
+        }
     }
-
 }

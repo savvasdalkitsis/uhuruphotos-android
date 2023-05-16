@@ -25,6 +25,6 @@ interface LocalAlbumUseCase {
     fun observeLocalAlbum(albumId: Int): Flow<Pair<LocalMediaFolder, List<MediaCollection>>>
     suspend fun refreshLocalAlbum(albumId: Int): Result<Unit>
     fun getLocalAlbumGalleryDisplay(albumId: Int): PredefinedCollageDisplay
-    suspend fun setLocalAlbumGalleryDisplay(albumId: Int, galleryDisplay: PredefinedCollageDisplay)
+    fun setLocalAlbumGalleryDisplay(albumId: Int, galleryDisplay: PredefinedCollageDisplay)
     suspend fun getLocalAlbum(albumId: Int): List<MediaCollection>
 }

@@ -16,6 +16,7 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.ui.state
 
 import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.CollageState
+import com.savvasdalkitsis.uhuruphotos.feature.feed.view.api.ui.state.FeedMediaItemSyncDisplay
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemSelectionMode
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemsOnDevice
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.state.CelState
@@ -31,6 +32,7 @@ data class FeedState(
     val localMediaSyncRunning: Boolean = false,
     val memories: List<MemoryCel> = emptyList(),
     val missingPermissions: List<String> = emptyList(),
+    val syncItemDisplay: FeedMediaItemSyncDisplay = FeedMediaItemSyncDisplay.default,
 ) {
     val selectedCelCount: Int = collageState.clusters.sumOf { cluster ->
         cluster.cels.count { cel ->

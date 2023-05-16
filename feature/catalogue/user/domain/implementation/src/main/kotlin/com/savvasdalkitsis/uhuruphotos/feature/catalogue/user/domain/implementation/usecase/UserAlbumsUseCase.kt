@@ -15,28 +15,31 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.catalogue.user.domain.implementation.usecase
 
-import com.fredporciuncula.flow.preferences.FlowSharedPreferences
 import com.savvasdalkitsis.uhuruphotos.feature.catalogue.user.domain.api.usecase.UserAlbumsUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.catalogue.user.domain.implementation.repository.UserAlbumsRepository
 import com.savvasdalkitsis.uhuruphotos.feature.catalogue.view.api.ui.state.CatalogueSorting
 import com.savvasdalkitsis.uhuruphotos.feature.catalogue.view.api.ui.state.CatalogueSorting.Companion.sorted
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.album.user.UserAlbums
+import com.savvasdalkitsis.uhuruphotos.foundation.preferences.api.Preferences
+import com.savvasdalkitsis.uhuruphotos.foundation.preferences.api.get
+import com.savvasdalkitsis.uhuruphotos.foundation.preferences.api.observe
+import com.savvasdalkitsis.uhuruphotos.foundation.preferences.api.set
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.combine
 import javax.inject.Inject
 
 class UserAlbumsUseCase @Inject constructor(
     private val userAlbumsRepository: UserAlbumsRepository,
-    flowSharedPreferences: FlowSharedPreferences,
+    private val preferences: Preferences,
 ) : UserAlbumsUseCase {
 
-    private val userAlbumsSorting =
-        flowSharedPreferences.getEnum("userAlbumsSorting", CatalogueSorting.default)
+    private val key = "userAlbumsSorting"
 
-    override fun observeUserAlbumsSorting(): Flow<CatalogueSorting> = userAlbumsSorting.asFlow()
+    override fun observeUserAlbumsSorting(): Flow<CatalogueSorting> =
+        preferences.observe(key, CatalogueSorting.default)
 
     override suspend fun changeUserAlbumsSorting(sorting: CatalogueSorting) {
-        userAlbumsSorting.setAndCommit(sorting)
+        preferences.set(key, sorting)
     }
 
     override fun observeUserAlbums(): Flow<List<UserAlbums>> =
@@ -51,7 +54,7 @@ class UserAlbumsUseCase @Inject constructor(
         userAlbumsRepository.refreshUserAlbums()
 
     override suspend fun getUserAlbums(): List<UserAlbums> =
-        userAlbumsRepository.getUserAlbums().sorted(userAlbumsSorting.get())
+        userAlbumsRepository.getUserAlbums().sorted(preferences.get(key, CatalogueSorting.default))
 
     private fun List<UserAlbums>.sorted(sorting: CatalogueSorting): List<UserAlbums> =
         sorted(

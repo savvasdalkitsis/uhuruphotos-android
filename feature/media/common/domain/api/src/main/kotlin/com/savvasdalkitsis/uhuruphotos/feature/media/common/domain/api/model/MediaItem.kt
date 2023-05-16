@@ -18,13 +18,10 @@ package com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model
 interface MediaItem {
     val id: MediaId<*>
     val mediaHash: String
-    val thumbnailUri: String?
-    val fullResUri: String?
     val fallbackColor: String?
     val displayDayDate: String?
     val sortableDate: String?
     val isFavourite: Boolean
     val ratio: Float
     val latLng: (Pair<Double, Double>)?
-    val syncState: MediaItemSyncState
 }

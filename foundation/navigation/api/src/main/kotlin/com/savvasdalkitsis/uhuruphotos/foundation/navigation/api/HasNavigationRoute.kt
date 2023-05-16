@@ -15,6 +15,7 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.foundation.navigation.api
 
-interface HasInitializer<A, D> {
-    suspend fun initialize(initializerData: D, action: (A) -> Unit)
+interface HasNavigationRoute<R> {
+    suspend fun getRoute(): R
+    fun setRoute(route: R)
 }

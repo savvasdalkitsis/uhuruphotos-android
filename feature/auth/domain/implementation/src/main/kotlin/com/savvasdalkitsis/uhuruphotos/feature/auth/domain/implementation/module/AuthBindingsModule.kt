@@ -17,6 +17,7 @@ package com.savvasdalkitsis.uhuruphotos.feature.auth.domain.implementation.modul
 
 import com.savvasdalkitsis.uhuruphotos.feature.auth.domain.implementation.cookies.CookieMonitor
 import com.savvasdalkitsis.uhuruphotos.feature.auth.domain.implementation.service.TokenRefreshInterceptor
+import com.savvasdalkitsis.uhuruphotos.feature.auth.domain.implementation.usecase.AuthenticationHeadersUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.auth.domain.implementation.usecase.AuthenticationUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.auth.domain.implementation.usecase.ServerUseCase
 import dagger.Binds
@@ -45,4 +46,8 @@ abstract class AuthBindingsModule {
     @Binds
     abstract fun cookieMonitor(cookieMonitor: CookieMonitor):
             com.savvasdalkitsis.uhuruphotos.feature.auth.domain.api.cookies.CookieMonitor
+
+    @Binds
+    abstract fun authenticationHeadersUseCase(useCase: AuthenticationHeadersUseCase):
+            com.savvasdalkitsis.uhuruphotos.feature.auth.domain.api.usecase.AuthenticationHeadersUseCase
 }

@@ -115,13 +115,10 @@ fun Cel(
             modifier = Modifier
                 .scale(scale.value)
         ) {
-            val thumbnailUri = mediaItem.thumbnailUri
+            val thumbnailUri = mediaItem.id.thumbnailUri
             val scope = rememberCoroutineScope()
-            val exoPlayer = if (thumbnailUri == null)
-                null
-            else
-                LocalExoPlayerProvider.current.maybeCreateExoplayer(thumbnailUri)
-            if (!LocalAnimatedVideoThumbnails.current || !mediaItem.id.isVideo || thumbnailUri == null || exoPlayer == null) {
+            val exoPlayer = LocalExoPlayerProvider.current.maybeCreateExoplayer(thumbnailUri)
+            if (!LocalAnimatedVideoThumbnails.current || !mediaItem.id.isVideo || exoPlayer == null) {
                 Image(
                     modifier = Modifier.fillMaxWidth(),
                     url = thumbnailUri,
@@ -183,7 +180,7 @@ fun Cel(
                         .size(iconSize)
                         .padding(2.dp)
                         .alpha(0.7f),
-                    painter = painterResource(mediaItem.syncState.icon),
+                    painter = painterResource(mediaItem.id.syncState.icon),
                     tint = Color.White,
                     contentDescription = null
                 )

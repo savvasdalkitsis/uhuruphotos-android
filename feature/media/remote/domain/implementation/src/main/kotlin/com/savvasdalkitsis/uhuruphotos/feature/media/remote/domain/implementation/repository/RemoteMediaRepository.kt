@@ -30,6 +30,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.implementatio
 import com.savvasdalkitsis.uhuruphotos.foundation.log.api.runCatchingWithLog
 import com.squareup.sqldelight.runtime.coroutines.asFlow
 import com.squareup.sqldelight.runtime.coroutines.mapToList
+import com.squareup.sqldelight.runtime.coroutines.mapToOneNotNull
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.emitAll
 import kotlinx.coroutines.flow.onStart
@@ -58,6 +59,9 @@ class RemoteMediaRepository @Inject constructor(
     fun observeHiddenMedia(): Flow<List<DbRemoteMediaItemSummary>> =
         remoteMediaItemSummaryQueries.getHidden().asFlow()
             .mapToList()
+
+    fun observeMediaItemDetails(id: String): Flow<DbRemoteMediaItemDetails> =
+        remoteMediaItemDetailsQueries.getMediaItem(id).asFlow().mapToOneNotNull()
 
     suspend fun getMediaItemDetails(id: String): DbRemoteMediaItemDetails? =
         remoteMediaItemDetailsQueries.getMediaItem(id).awaitSingleOrNull()
