@@ -24,7 +24,7 @@ class DownloadInitializer @Inject constructor(
             downloadUseCase.observeDownloading().collectLatest {
                 if (it.isNotEmpty()) {
                     while (isActive) {
-                        downloadUseCase.clearFailures()
+                        downloadUseCase.clearFailuresAndStale()
                         delay(1000)
                     }
                 }

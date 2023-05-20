@@ -14,3 +14,6 @@ DELETE FROM downloadingMediaItems WHERE downloadId == :id;
 
 getAll:
 SELECT id FROM downloadingMediaItems;
+
+getAllDownloadIds:
+SELECT downloadId FROM downloadingMediaItems;

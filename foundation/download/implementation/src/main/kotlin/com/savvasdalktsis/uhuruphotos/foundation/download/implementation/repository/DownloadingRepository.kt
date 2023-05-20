@@ -44,6 +44,8 @@ internal class DownloadingRepository @Inject constructor(
     }
 
     fun getAll(): Query<String> = downloadingMediaItemQueries.getAll()
+    fun getAllDownloadIds(): Set<Long> = downloadingMediaItemQueries.getAllDownloadIds()
+        .executeAsList().toSet()
 }
 
 @JvmInline

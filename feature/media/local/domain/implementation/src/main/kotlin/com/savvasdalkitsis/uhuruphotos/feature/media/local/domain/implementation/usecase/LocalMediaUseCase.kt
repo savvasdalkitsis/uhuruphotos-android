@@ -46,6 +46,7 @@ import com.savvasdalkitsis.uhuruphotos.foundation.worker.api.usecase.WorkerStatu
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dev.shreyaspatil.permissionFlow.PermissionFlow
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.map
@@ -127,9 +128,10 @@ class LocalMediaUseCase @Inject constructor(
                         permissions.deniedPermissions
                     )
                 )
-                LocalPermissions.Granted -> localMediaRepository.observeMedia().map { itemDetails ->
-                    foundLocalMediaItems(itemDetails)
-                }
+                LocalPermissions.Granted -> localMediaRepository.observeMedia()
+                    .distinctUntilChanged().map { itemDetails ->
+                        foundLocalMediaItems(itemDetails)
+                    }
             }
         }
 

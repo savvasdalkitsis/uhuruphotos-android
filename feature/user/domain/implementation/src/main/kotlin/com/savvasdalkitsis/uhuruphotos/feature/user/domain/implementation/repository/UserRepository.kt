@@ -24,6 +24,7 @@ import com.savvasdalkitsis.uhuruphotos.foundation.log.api.runCatchingWithLog
 import com.squareup.sqldelight.runtime.coroutines.asFlow
 import com.squareup.sqldelight.runtime.coroutines.mapToOneNotNull
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.distinctUntilChanged
 import javax.inject.Inject
 
 internal class UserRepository @Inject constructor(
@@ -31,7 +32,7 @@ internal class UserRepository @Inject constructor(
     private val userQueries: UserQueries,
 ) {
 
-    fun observeUser(): Flow<User> = userQueries.getUser().asFlow().mapToOneNotNull()
+    fun observeUser(): Flow<User> = userQueries.getUser().asFlow().mapToOneNotNull().distinctUntilChanged()
 
     suspend fun getUser(): User? = userQueries.getUser().awaitSingleOrNull()
 

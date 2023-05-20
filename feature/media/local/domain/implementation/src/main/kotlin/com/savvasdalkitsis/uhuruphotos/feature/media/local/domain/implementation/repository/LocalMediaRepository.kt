@@ -38,6 +38,7 @@ import com.squareup.sqldelight.runtime.coroutines.asFlow
 import com.squareup.sqldelight.runtime.coroutines.mapToList
 import com.squareup.sqldelight.runtime.coroutines.mapToOneNotNull
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.distinctUntilChanged
 import org.joda.time.format.DateTimeFormatter
 import java.math.BigInteger
 import java.security.MessageDigest
@@ -54,10 +55,11 @@ class LocalMediaRepository @Inject constructor(
     private val dateTimeFormat: DateTimeFormatter,
 ) {
 
-    fun observeMedia(): Flow<List<LocalMediaItemDetails>> = localMediaItemDetailsQueries.getItems().asFlow().mapToList()
+    fun observeMedia(): Flow<List<LocalMediaItemDetails>> = localMediaItemDetailsQueries.getItems()
+        .asFlow().mapToList().distinctUntilChanged()
 
     fun observeFolder(folderId: Int): Flow<List<LocalMediaItemDetails>> =
-        localMediaItemDetailsQueries.getBucketItems(folderId).asFlow().mapToList()
+        localMediaItemDetailsQueries.getBucketItems(folderId).asFlow().mapToList().distinctUntilChanged()
 
     suspend fun getMedia(): List<LocalMediaItemDetails> = localMediaItemDetailsQueries.getItems().await()
 
@@ -199,7 +201,7 @@ class LocalMediaRepository @Inject constructor(
     }
 
     fun observeItem(id: Long): Flow<LocalMediaItemDetails> =
-        localMediaItemDetailsQueries.getItem(id).asFlow().mapToOneNotNull()
+        localMediaItemDetailsQueries.getItem(id).asFlow().mapToOneNotNull().distinctUntilChanged()
 
     suspend fun getItem(id: Long): LocalMediaItemDetails? =
         localMediaItemDetailsQueries.getItem(id).awaitSingleOrNull()

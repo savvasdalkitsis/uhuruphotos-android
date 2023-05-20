@@ -20,7 +20,9 @@ import android.app.DownloadManager.Query
 import android.app.DownloadManager.Request.NETWORK_MOBILE
 import android.app.DownloadManager.Request.NETWORK_WIFI
 import android.app.DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED
-import android.app.DownloadManager.STATUS_FAILED
+import android.app.DownloadManager.STATUS_PAUSED
+import android.app.DownloadManager.STATUS_PENDING
+import android.app.DownloadManager.STATUS_RUNNING
 import android.net.Uri
 import android.os.Environment.DIRECTORY_DCIM
 import com.savvasdalkitsis.uhuruphotos.feature.auth.domain.api.usecase.AuthenticationHeadersUseCase
@@ -97,17 +99,28 @@ internal class DownloadUseCase @Inject constructor(
     override fun observeDownloading(): Flow<Set<String>> = downloadingRepository.getAll()
         .asFlow().mapToList().distinctUntilChanged().map { it.toSet() }
 
-    override suspend fun clearFailures() {
-        downloadManager.query(Query().setFilterByStatus(STATUS_FAILED)).use { cursor ->
+    override suspend fun clearFailuresAndStale() {
+        (downloadingRepository.getAllDownloadIds() - getActive().toSet())
+            .toSet()
+            .forEach {
+                downloadingRepository.removeDownloading(DownloadId(it))
+            }
+    }
+
+    private fun getActive(): List<Long> =
+        downloadManager.query(
+            Query().setFilterByStatus(STATUS_RUNNING or STATUS_PAUSED or STATUS_PENDING)
+        ).use { cursor ->
+            val results = mutableListOf<Long>()
             while (cursor.moveToNext()) {
                 val index = cursor.getColumnIndex(DownloadManager.COLUMN_ID)
                 if (index >= 0) {
                     val downloadId = cursor.getLong(index)
-                    downloadingRepository.removeDownloading(DownloadId(downloadId))
+                    results.add(downloadId)
                 }
             }
+            return results
         }
-    }
 
     private val Boolean.mimeType get() = if (this) "video/*" else "image/*"
     private fun String.path(isVideo: Boolean, extension: String) =

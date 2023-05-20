@@ -28,5 +28,5 @@ interface DownloadUseCase {
 
     fun observeDownloading(): Flow<Set<String>>
 
-    suspend fun clearFailures()
+    suspend fun clearFailuresAndStale()
 }

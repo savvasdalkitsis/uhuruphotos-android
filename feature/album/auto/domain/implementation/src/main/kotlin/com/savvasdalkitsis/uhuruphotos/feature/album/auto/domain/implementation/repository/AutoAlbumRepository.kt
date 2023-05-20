@@ -54,7 +54,7 @@ class AutoAlbumRepository @Inject constructor(
 
     fun observeAutoAlbumPeople(albumId: Int): Flow<List<GetPeopleForAutoAlbum>> =
         autoAlbumPeopleQueries.getPeopleForAutoAlbum(albumId.toString())
-            .asFlow().mapToList()
+            .asFlow().mapToList().distinctUntilChanged()
 
     suspend fun refreshAutoAlbum(albumId: Int): Result<Unit> = runCatchingWithLog {
         val album = autoAlbumService.getAutoAlbum(albumId.toString())

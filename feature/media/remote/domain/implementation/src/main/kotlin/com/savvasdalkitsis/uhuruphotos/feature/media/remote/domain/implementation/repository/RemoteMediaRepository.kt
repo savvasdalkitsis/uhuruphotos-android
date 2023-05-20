@@ -32,6 +32,7 @@ import com.squareup.sqldelight.runtime.coroutines.asFlow
 import com.squareup.sqldelight.runtime.coroutines.mapToList
 import com.squareup.sqldelight.runtime.coroutines.mapToOneNotNull
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.emitAll
 import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.flow.take
@@ -46,7 +47,7 @@ class RemoteMediaRepository @Inject constructor(
 ) {
 
     fun observeAllMediaItemDetails(): Flow<List<DbRemoteMediaItemDetails>> =
-        remoteMediaItemDetailsQueries.getAll(limit = -1).asFlow()
+        remoteMediaItemDetailsQueries.getAll(limit = -1).asFlow().distinctUntilChanged()
             .onStart {
                 emitAll(remoteMediaItemDetailsQueries.getAll(limit = 100).asFlow().take(1))
             }
@@ -55,13 +56,15 @@ class RemoteMediaRepository @Inject constructor(
     fun observeFavouriteMedia(favouriteThreshold: Int): Flow<List<DbRemoteMediaItemSummary>> =
         remoteMediaItemSummaryQueries.getFavourites(favouriteThreshold).asFlow()
             .mapToList()
+            .distinctUntilChanged()
 
     fun observeHiddenMedia(): Flow<List<DbRemoteMediaItemSummary>> =
         remoteMediaItemSummaryQueries.getHidden().asFlow()
-            .mapToList()
+            .mapToList().distinctUntilChanged()
 
     fun observeMediaItemDetails(id: String): Flow<DbRemoteMediaItemDetails> =
         remoteMediaItemDetailsQueries.getMediaItem(id).asFlow().mapToOneNotNull()
+            .distinctUntilChanged()
 
     suspend fun getMediaItemDetails(id: String): DbRemoteMediaItemDetails? =
         remoteMediaItemDetailsQueries.getMediaItem(id).awaitSingleOrNull()

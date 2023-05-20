@@ -7,6 +7,9 @@ coil = "2.3.0"
 com-google-android-gms = "18.1.0"
 compose = "1.5.0-alpha04"
 exoplayer = "2.18.6"
+google-services = "4.3.15"
+hilt = "2.46.1"
+hilt-compiler = "1.0.0"
 lumberjack = "5.3.0"
 mockk = "1.13.5"
 moshi = "1.15.0"
@@ -44,6 +47,7 @@ androidx-credentials-core = { module = "androidx.credentials:credentials", versi
 androidx-credentials-play = { module = "androidx.credentials:credentials-play-services-auth", version.ref = "androidx-credentials" }
 androidx-datastore-preferences = "androidx.datastore:datastore-preferences:1.1.0-alpha04"
 androidx-espresso = "androidx.test.espresso:espresso-core:3.6.0-alpha01"
+androidx-hilt-compiler = { module = "androidx.hilt:hilt-compiler", version.ref = "hilt-compiler" }
 androidx-lifecycle = "androidx.lifecycle:lifecycle-runtime-ktx:2.6.1"
 androidx-preference = "androidx.preference:preference-ktx:1.2.0"
 androidx-splash = "androidx.core:core-splashscreen:1.0.1"
@@ -64,10 +68,13 @@ exif = "androidx.exifinterface:exifinterface:1.3.6"
 exoplayer-base = { module = "com.google.android.exoplayer:exoplayer", version.ref = "exoplayer" }
 exoplayer-okhttp = { module = "com.google.android.exoplayer:extension-okhttp", version.ref = "exoplayer" }
 flowpreferences = "com.fredporciuncula:flow-preferences:1.9.1"
+google-services = { module = "com.google.gms:google-services", version.ref = "google-services" }
 gson = "com.google.code.gson:gson:2.10.1"
 # @pin pinning so the version tool doesn't recommend -jvm variant
 guava = "com.google.guava:guava:31.1-android"
-hilt = "com.google.dagger:hilt-android:2.46.1"
+hilt = { module = "com.google.dagger:hilt-android", version.ref = "hilt" }
+hilt-android-gradle-plugin = { module = "com.google.dagger:hilt-android-gradle-plugin", version.ref = "hilt" }
+hilt-dagger-compiler = { module = "com.google.dagger:hilt-compiler", version.ref = "hilt" }
 infobar = "com.radusalagean:info-bar-compose:1.0.0"
 joda-time = "net.danlew:android.joda:2.12.5"
 junit = "junit:junit:4.13.2"
@@ -104,6 +111,7 @@ scrollbar = "com.github.nanihadesuka:LazyColumnScrollbar:1.6.3"
 shazamcrest = "com.shazam:shazamcrest:0.11"
 sqldelight-android = { module = "com.squareup.sqldelight:android-driver", version.ref = "sqldelight" }
 sqldelight-coroutines = { module = "com.squareup.sqldelight:coroutines-extensions", version.ref = "sqldelight" }
+sqldelight-gradle-plugin = { module = "com.squareup.sqldelight:gradle-plugin", version.ref = "sqldelight" }
 sqldelight-jvm = { module = "com.squareup.sqldelight:sqlite-driver", version.ref = "sqldelight" }
 turbine = "app.cash.turbine:turbine:0.13.0"
 urlvalidator = "commons-validator:commons-validator:1.7"

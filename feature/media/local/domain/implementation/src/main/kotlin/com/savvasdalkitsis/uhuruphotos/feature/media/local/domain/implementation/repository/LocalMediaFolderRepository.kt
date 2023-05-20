@@ -26,6 +26,7 @@ import com.savvasdalkitsis.uhuruphotos.foundation.preferences.api.set
 import com.squareup.sqldelight.runtime.coroutines.asFlow
 import com.squareup.sqldelight.runtime.coroutines.mapToList
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
@@ -46,9 +47,10 @@ class LocalMediaFolderRepository @Inject constructor(
     }
 
     fun observeFolders(): Flow<Set<LocalMediaFolder>> =
-        localMediaItemDetailsQueries.getBuckets().asFlow().mapToList().map {
-            it.toMediaBuckets()
-        }
+        localMediaItemDetailsQueries.getBuckets().asFlow().mapToList().distinctUntilChanged()
+            .map {
+                it.toMediaBuckets()
+            }
 
     suspend fun getFolders(): Set<LocalMediaFolder> =
         localMediaItemDetailsQueries.getBuckets().await().toMediaBuckets()

@@ -1,4 +1,5 @@
-import io.gitlab.arturbosch.detekt.Detekt
+import org.jetbrains.kotlin.gradle.dsl.KotlinVersion
+import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 buildscript {
     ext {
@@ -7,10 +8,9 @@ buildscript {
         compose_compiler_version = '1.4.7'
     }
     dependencies {
-        classpath 'com.google.dagger:hilt-android-gradle-plugin:2.46.1'
-        classpath 'com.squareup.sqldelight:gradle-plugin:1.5.5'
-        classpath 'com.google.gms:google-services:4.3.15'
-        classpath "io.gitlab.arturbosch.detekt:detekt-gradle-plugin:1.22.0"
+        classpath libs.hilt.android.gradle.plugin
+        classpath libs.sqldelight.gradle.plugin
+        classpath libs.google.services
     }
 
     project.ext.set("app_version_code", 95)
@@ -23,41 +23,14 @@ plugins {
     id 'org.jetbrains.kotlin.android' version "$kotlin_version" apply false
     id 'com.squareup.sqldelight' version '1.5.5' apply false
     id 'com.google.android.libraries.mapsplatform.secrets-gradle-plugin' version '2.0.1' apply false
-//    id "com.bnorm.power.kotlin-power-assert" version "0.12.2" apply false
+    id "com.bnorm.power.kotlin-power-assert" version "0.13.0" apply false
     id "org.sonarqube" version "4.0.0.2929"
-    id "io.gitlab.arturbosch.detekt" version "1.22.0" apply true
     id "com.github.ben-manes.versions" version "0.46.0" apply true
     id "nl.littlerobots.version-catalog-update" version "0.8.0" apply true
     id "com.autonomousapps.dependency-analysis" version "1.20.0" apply true
 }
 
-
-def projectSource = file(projectDir)
-def configFile = files("$rootDir/config/detekt/detekt.yml")
-def kotlinFiles = "**/*.kt"
-def resourceFiles = "**/resources/**"
-def buildFiles = "**/build/**"
-
-tasks.register("detektAll", Detekt) {
-    def autoFix = project.hasProperty('detektAutoFix')
-
-    description = "Custom DETEKT build for all modules"
-    parallel = true
-    ignoreFailures = false
-    autoCorrect = autoFix
-    buildUponDefaultConfig = true
-    setSource(projectSource)
-    config.setFrom(configFile)
-    include(kotlinFiles)
-    exclude(resourceFiles, buildFiles)
-    reports {
-        html.enabled = true
-        xml.enabled = false
-        txt.enabled = false
-    }
-}
-
-task clean(type: Delete) {
+tasks.register('clean', Delete) {
     delete rootProject.buildDir
 }
 
@@ -76,7 +49,7 @@ subprojects {
         apply plugin: "com.android.library"
     }
 
-//    apply plugin: "com.bnorm.power.kotlin-power-assert"
+    apply plugin: "com.bnorm.power.kotlin-power-assert"
     apply plugin: 'org.jetbrains.kotlin.android'
     apply plugin: 'kotlin-kapt'
 
@@ -107,26 +80,28 @@ subprojects {
     }
 
     dependencies {
-        kapt "com.google.dagger:hilt-compiler:2.46.1"
-        kapt "androidx.hilt:hilt-compiler:1.0.0"
+        kapt libs.hilt.dagger.compiler
+        kapt libs.androidx.hilt.compiler
     }
 
-    tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).configureEach {
-        compilerOptions.languageVersion = org.jetbrains.kotlin.gradle.dsl.KotlinVersion.KOTLIN_1_9
-        kotlinOptions {
-            freeCompilerArgs += "-opt-in=com.google.accompanist.permissions.ExperimentalPermissionsApi"
-            freeCompilerArgs += "-opt-in=androidx.compose.animation.ExperimentalAnimationApi"
-            freeCompilerArgs += "-opt-in=androidx.compose.animation.graphics.ExperimentalAnimationGraphicsApi"
-            freeCompilerArgs += "-opt-in=androidx.compose.foundation.ExperimentalFoundationApi"
-            freeCompilerArgs += "-opt-in=androidx.compose.foundation.layout.ExperimentalLayoutApi"
-            freeCompilerArgs += "-opt-in=androidx.compose.material.ExperimentalMaterialApi"
-            freeCompilerArgs += "-opt-in=androidx.compose.material3.windowsizeclass.ExperimentalMaterial3WindowSizeClassApi"
-            freeCompilerArgs += "-opt-in=androidx.compose.ui.ExperimentalComposeUiApi"
-            freeCompilerArgs += "-opt-in=coil.annotation.ExperimentalCoilApi"
-            freeCompilerArgs += "-opt-in=kotlinx.coroutines.ExperimentalCoroutinesApi"
-            freeCompilerArgs += "-opt-in=kotlinx.coroutines.FlowPreview"
-            freeCompilerArgs += "-opt-in=kotlinx.ExperimentalStdlibApi"
-            freeCompilerArgs += "-Xcontext-receivers"
+    tasks.withType(KotlinCompile).configureEach {
+        compilerOptions {
+            languageVersion = KotlinVersion.KOTLIN_1_9
+            freeCompilerArgs.addAll(
+                    "-opt-in=com.google.accompanist.permissions.ExperimentalPermissionsApi",
+                    "-opt-in=androidx.compose.animation.ExperimentalAnimationApi",
+                    "-opt-in=androidx.compose.animation.graphics.ExperimentalAnimationGraphicsApi",
+                    "-opt-in=androidx.compose.foundation.ExperimentalFoundationApi",
+                    "-opt-in=androidx.compose.foundation.layout.ExperimentalLayoutApi",
+                    "-opt-in=androidx.compose.material.ExperimentalMaterialApi",
+                    "-opt-in=androidx.compose.material3.windowsizeclass.ExperimentalMaterial3WindowSizeClassApi",
+                    "-opt-in=androidx.compose.ui.ExperimentalComposeUiApi",
+                    "-opt-in=coil.annotation.ExperimentalCoilApi",
+                    "-opt-in=kotlinx.coroutines.ExperimentalCoroutinesApi",
+                    "-opt-in=kotlinx.coroutines.FlowPreview",
+                    "-opt-in=kotlinx.ExperimentalStdlibApi",
+                    "-Xcontext-receivers",
+            )
         }
     }
 }
