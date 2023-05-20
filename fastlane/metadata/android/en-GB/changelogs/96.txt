@@ -1,3 +1,4 @@
+* Downloading media now stores them in the DCIM folder, showing syncing state on feed and Lightbox
 * Fixing bug where local media syncing would not stop
 * Updating to new versions of many dependencies
 * Translations
