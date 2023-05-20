@@ -242,14 +242,14 @@
     <string name="cancel">Annuler</string>
     <string name="precaching_thumbnails">Mise en cache des miniatures</string>
     <string name="cannot_perform_full_sync">Impossible de synchroniser entièrement pour le moment</string>
-    <string name="missing_local_media_permissions">Voulez-vous voir les médias locaux dans votre flux \?</string>
+    <string name="missing_local_media_permissions">Voulez-vous voir les médias locaux dans votre flux \?</string>
     <string name="do_not_ask_again">Ne plus demander</string>
     <string name="media_sync_status_fully_synced">Les images et vidéos sont entièrement synchronisées</string>
     <string name="media_sync_status_remote_only">Uniquement disponible sur le serveur</string>
     <string name="media_sync_status_local_only">Uniquement disponible sur l\'appareil actuel</string>
     <string name="missing_local_media_permissions_photo_map">Souhaitez-vous voir vos fichiers locaux sur la carte \?</string>
     <string name="today">Aujourd\'hui</string>
-    <string name="what_would_like_to_do">Que voulez-vous faire \?</string>
+    <string name="what_would_like_to_do">Que voulez-vous faire \?</string>
     <string name="allow_storage_management_description">UhuruPhotos a besoin de la permission de gérer les fichiers de l\'appareil pour effectuer cette action</string>
     <string name="allow_storage_management_details">Vous allez être redirigé vers les paramètres du système pour autoriser cette permission. Continuer \?</string>
 </resources>
