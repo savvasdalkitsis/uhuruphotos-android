@@ -1,0 +1,3 @@
+* Fixing bug where local media syncing would not stop
+* Updating to new versions of many dependencies
+* Translations
