@@ -15,6 +15,7 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.catalogue.user.view.implementation.seam
 
+import com.savvasdalkitsis.uhuruphotos.feature.auth.domain.api.usecase.ServerUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.catalogue.user.domain.api.usecase.UserAlbumsUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.catalogue.user.view.implementation.seam.effects.UserAlbumsEffect
 import com.savvasdalkitsis.uhuruphotos.feature.catalogue.user.view.implementation.seam.effects.ErrorLoadingAlbums
@@ -26,7 +27,7 @@ import javax.inject.Inject
 
 class UserAlbumsActionsContext @Inject constructor(
     val userAlbumsUseCase: UserAlbumsUseCase,
-    val remoteMediaUseCase: RemoteMediaUseCase,
+    val serverUseCase: ServerUseCase,
 ) {
 
     val loading = MutableSharedFlow<Boolean>()

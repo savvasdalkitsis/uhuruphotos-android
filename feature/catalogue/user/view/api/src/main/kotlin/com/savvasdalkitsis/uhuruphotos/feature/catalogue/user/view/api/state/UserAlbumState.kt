@@ -21,7 +21,6 @@ import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.Med
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.state.CelState
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.state.VitrineState
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.state.toCel
-import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.api.usecase.RemoteMediaUseCase
 import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.state.Title
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.state.toTitleOr
@@ -33,37 +32,43 @@ data class UserAlbumState(
     val photoCount: Int?,
 )
 
-context(RemoteMediaUseCase)
-fun UserAlbums.toUserAlbumState() = UserAlbumState(
+fun UserAlbums.toUserAlbumState(serverUrl: String) = UserAlbumState(
     id = id,
     cover = VitrineState(
         cel1 = celState(
             coverPhoto1Hash,
-            coverPhoto1IsVideo
+            coverPhoto1IsVideo,
+            serverUrl,
         ),
         cel2 = celState(
             coverPhoto2Hash,
-            coverPhoto2IsVideo
+            coverPhoto2IsVideo,
+            serverUrl,
         ),
         cel3 = celState(
             coverPhoto3Hash,
-            coverPhoto3IsVideo
+            coverPhoto3IsVideo,
+            serverUrl,
         ),
         cel4 = celState(
             coverPhoto4Hash,
-            coverPhoto4IsVideo
+            coverPhoto4IsVideo,
+            serverUrl,
         ),
     ),
     title = title.toTitleOr(string.missing_album_title),
     photoCount = photoCount,
 )
 
-context(RemoteMediaUseCase)
-private fun celState(imageHash: String?, coverIsVideo: Boolean?): CelState? =
+private fun celState(
+    imageHash: String?,
+    coverIsVideo: Boolean?,
+    serverUrl: String,
+): CelState? =
     imageHash?.let {
         val isVideo = coverIsVideo ?: false
         MediaItemInstance(
-            id = MediaId.Remote(it, isVideo, "serverUrl"),
+            id = MediaId.Remote(it, isVideo, serverUrl),
             mediaHash = it,
             displayDayDate = null,
             ratio = 1f,

@@ -20,6 +20,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.catalogue.user.view.implementatio
 import com.savvasdalkitsis.uhuruphotos.foundation.coroutines.api.safelyOnStartIgnoring
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.EffectHandler
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.mapNotNull
 import kotlinx.coroutines.flow.merge
 
 data object Load : UserAlbumsAction() {
@@ -28,9 +29,9 @@ data object Load : UserAlbumsAction() {
         effect: EffectHandler<UserAlbumsEffect>
     ) = merge(
         userAlbumsUseCase.observeUserAlbums()
-            .map { albums ->
-                with(remoteMediaUseCase) {
-                    albums.map { it.toUserAlbumState() }
+            .mapNotNull { albums ->
+                serverUseCase.getServerUrl()?.let { serverUrl ->
+                    albums.map { it.toUserAlbumState(serverUrl) }
                 }
             }
             .map(UserAlbumsMutation::DisplayAlbums),

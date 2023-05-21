@@ -13,6 +13,7 @@ dependencies {
     implementation project(":feature:album:auto:view:api")
     implementation project(":feature:album:user:view:api")
     implementation project(":feature:avatar:view:api")
+    implementation project(":feature:auth:domain:api")
     implementation project(":feature:catalogue:auto:domain:api")
     implementation project(":feature:catalogue:user:domain:api")
     implementation project(":feature:catalogue:user:view:api")

@@ -47,9 +47,9 @@ data object Load : LibraryAction() {
             .mapToCover { it.cover.toCel() }
             .map(LibraryMutation::DisplayAutoAlbums),
         userAlbumsUseCase.observeUserAlbums()
-            .map { albums ->
-                with(remoteMediaUseCase) {
-                    albums.map { it.toUserAlbumState() }
+            .mapNotNull { albums ->
+                serverUseCase.getServerUrl()?.let { serverUrl ->
+                    albums.map { it.toUserAlbumState(serverUrl) }
                 }
             }
             .mapToCover { it.cover.cel1 }

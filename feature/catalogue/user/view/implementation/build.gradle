@@ -10,6 +10,7 @@ android {
 
 dependencies {
     implementation project(":feature:album:user:view:api")
+    implementation project(":feature:auth:domain:api")
     implementation project(":feature:catalogue:user:domain:api")
     implementation project(":feature:catalogue:user:view:api")
     implementation project(":feature:catalogue:view:api")

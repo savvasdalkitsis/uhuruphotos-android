@@ -15,6 +15,7 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.library.view.implementation.seam
 
+import com.savvasdalkitsis.uhuruphotos.feature.auth.domain.api.usecase.ServerUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.catalogue.auto.domain.api.usecase.AutoAlbumsUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.catalogue.user.domain.api.usecase.UserAlbumsUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.library.view.implementation.seam.effects.LibraryEffect
@@ -32,7 +33,7 @@ internal class LibraryActionsContext @Inject constructor(
     val autoAlbumsUseCase: AutoAlbumsUseCase,
     val userAlbumsUseCase: UserAlbumsUseCase,
     val mediaUseCase: MediaUseCase,
-    val remoteMediaUseCase: RemoteMediaUseCase,
+    val serverUseCase: ServerUseCase,
     val localMediaUseCase: LocalMediaUseCase,
     private val localMediaWorkScheduler: LocalMediaWorkScheduler,
 ) {
