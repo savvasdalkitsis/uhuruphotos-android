@@ -1,0 +1,2 @@
+* Fixing various crashes
+* Fix user album covers not loading
