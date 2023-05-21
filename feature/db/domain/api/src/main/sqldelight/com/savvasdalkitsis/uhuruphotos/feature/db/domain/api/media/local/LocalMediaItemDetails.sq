@@ -33,7 +33,7 @@ getBuckets:
 SELECT bucketId, bucketName FROM localMediaItemDetails;
 
 getExistingIds:
-SELECT id FROM localMediaItemDetails WHERE width > 0 AND height > 0 AND orientation IS NOT NULL;
+SELECT id FROM localMediaItemDetails WHERE width > 0 AND height > 0;
 
 getExistingBucketIds:
 SELECT id FROM localMediaItemDetails WHERE bucketId = :id;
