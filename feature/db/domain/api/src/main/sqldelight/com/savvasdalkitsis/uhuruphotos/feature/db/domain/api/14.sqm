@@ -1,0 +1,5 @@
+DROP TABLE downloadingMediaItems;
+CREATE TABLE downloadingMediaItems (
+    id TEXT NOT NULL PRIMARY KEY,
+    downloadId INTEGER AS Long NOT NULL
+);
