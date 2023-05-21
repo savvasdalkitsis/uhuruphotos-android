@@ -41,7 +41,7 @@ class Preferences @Inject constructor(
         int(key, defaultValue).get()
 
     override fun getNullableInt(key: String, defaultValue: Int?): Int? =
-        nullableInt(key, defaultValue).get()
+        nullableString(key, defaultValue?.toString()).get()?.toIntOrNull()
 
     override fun observeInt(key: String, defaultValue: Int): Flow<Int> =
         int(key, defaultValue).asFlow()
@@ -94,12 +94,6 @@ class Preferences @Inject constructor(
 
     private fun int(key: String, defaultValue: Int) =
         flowSharedPreferences.getInt(key, defaultValue)
-
-    private fun nullableInt(key: String, defaultValue: Int?) =
-        flowSharedPreferences.getNullableObject(key, object: NullableSerializer<Int> {
-            override fun deserialize(serialized: String?): Int? = serialized?.toIntOrNull()
-            override fun serialize(value: Int?): String? = value?.toString()
-        }, defaultValue)
 
     private fun string(key: String, defaultValue: String) =
         flowSharedPreferences.getString(key, defaultValue)
