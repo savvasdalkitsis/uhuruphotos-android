@@ -1,0 +1,2 @@
+* Adding MapLibre as a third map provider option
+* Fixing various crashes
