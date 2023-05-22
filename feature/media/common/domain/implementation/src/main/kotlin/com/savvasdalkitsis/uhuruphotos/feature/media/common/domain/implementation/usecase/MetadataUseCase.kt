@@ -66,7 +66,7 @@ class MetadataUseCase @Inject constructor(
     }
 
     private fun fromUrl(url: String): Pair<Long, ExifMetadata>? {
-        return diskCache[url]?.let { snapshot ->
+        return diskCache.openSnapshot(url)?.let { snapshot ->
             val file = snapshot.data.toFile()
             val exif = exifUseCase.extractFrom(file)
             file.length() to exif
