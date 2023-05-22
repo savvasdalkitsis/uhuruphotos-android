@@ -15,7 +15,7 @@ mockk = "1.13.5"
 moshi = "1.15.0"
 okhttp = "5.0.0-alpha.11"
 org-jetbrains-kotlinx = "1.7.1"
-permissions = "1.1.0"
+permissions = "1.2.0"
 retrofit = "2.9.0"
 sqldelight = "1.5.5"
 
