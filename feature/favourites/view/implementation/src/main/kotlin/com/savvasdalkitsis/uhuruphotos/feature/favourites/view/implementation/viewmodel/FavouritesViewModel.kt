@@ -42,7 +42,7 @@ internal class FavouritesViewModel @Inject constructor(
     ActionHandlerWithContext(favouritesActionsContext),
     EffectHandlerWithContext(effectsContext),
     GalleryState(collageState = CollageState())
-), HasNavigationRoute<FavouritesNavigationRoute>, DefaultLifecycleObserver {
+), HasNavigationRoute<FavouritesNavigationRoute> {
 
     init {
         viewModelScope.launch {

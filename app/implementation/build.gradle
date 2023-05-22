@@ -4,7 +4,7 @@ android {
 
 dependencies {
     for (p in rootProject.subprojects) {
-        if (p.path.endsWith(":implementation") && p != project) {
+        if (p.path.contains(":implementation") && p != project) {
             implementation p
         }
     }

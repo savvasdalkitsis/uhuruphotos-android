@@ -1,0 +1,33 @@
+android {
+    buildFeatures {
+        compose true
+    }
+    composeOptions {
+        kotlinCompilerExtensionVersion compose_compiler_version
+    }
+    namespace 'com.savvasdalkitsis.uhuruphotos.foundation.map.implementation.maplibre'
+}
+
+dependencies {
+
+    implementation project(":foundation:icons:api")
+    implementation project(":foundation:initializer:api")
+    implementation project(":foundation:log:api")
+    implementation project(":foundation:map:api")
+    implementation(
+            libs.androidx.compose.foundation.layout,
+            libs.androidx.compose.material,
+            libs.androidx.compose.ui,
+            libs.androidx.startup,
+            libs.hilt,
+    )
+    implementation(libs.maplibre) {
+        exclude group: 'org.maplibre.gl', module: 'android-sdk-geojson'
+        exclude group: 'com.jakewharton.timber', module: 'timber'
+    }
+    implementation(libs.maplibre.annotations) {
+        exclude group: 'org.maplibre.gl', module: 'android-sdk-geojson'
+        exclude group: 'com.jakewharton.timber', module: 'timber'
+    }
+    compileOnly('org.maplibre.gl:android-sdk-geojson:5.9.0')
+}

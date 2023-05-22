@@ -31,6 +31,12 @@ import com.savvasdalkitsis.uhuruphotos.app.navigation.AppNavigator
 import com.savvasdalkitsis.uhuruphotos.feature.settings.domain.api.usecase.SettingsUseCase
 import com.savvasdalkitsis.uhuruphotos.foundation.activity.api.holder.CurrentActivityHolder
 import com.savvasdalkitsis.uhuruphotos.foundation.log.api.Log
+import com.savvasdalkitsis.uhuruphotos.foundation.map.api.model.LocalMapViewFactoryProvider
+import com.savvasdalkitsis.uhuruphotos.foundation.map.api.model.LocalMapViewStateFactory
+import com.savvasdalkitsis.uhuruphotos.foundation.map.api.ui.CompositeMapViewFactoryProvider
+import com.savvasdalkitsis.uhuruphotos.foundation.map.api.ui.CompositeMapViewStateFactory
+import com.savvasdalkitsis.uhuruphotos.foundation.map.api.ui.MapViewFactoryProvider
+import com.savvasdalkitsis.uhuruphotos.foundation.map.api.ui.MapViewStateFactory
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.window.LocalSystemUiController
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.window.LocalWindowSize
 import dagger.hilt.android.AndroidEntryPoint
@@ -42,6 +48,8 @@ class AppActivity : FragmentActivity() {
     @Inject lateinit var navigator: AppNavigator
     @Inject lateinit var currentActivityHolder: CurrentActivityHolder
     @Inject lateinit var settingsUseCase: SettingsUseCase
+    @Inject lateinit var mapViewFactoryProviders: Set<@JvmSuppressWildcards MapViewFactoryProvider>
+    @Inject lateinit var mapViewStateFactories: Set<@JvmSuppressWildcards MapViewStateFactory>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         Log.enabled = true
@@ -59,6 +67,8 @@ class AppActivity : FragmentActivity() {
             CompositionLocalProvider(
                 LocalSystemUiController provides systemUiController,
                 LocalWindowSize provides windowSizeClass,
+                LocalMapViewStateFactory provides CompositeMapViewStateFactory(mapViewStateFactories),
+                LocalMapViewFactoryProvider provides CompositeMapViewFactoryProvider(mapViewFactoryProviders)
             ) {
                 navigator.NavigationTargets()
             }

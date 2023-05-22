@@ -17,6 +17,7 @@ package com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.ui.
 
 import androidx.compose.foundation.layout.Arrangement.spacedBy
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -65,6 +66,7 @@ internal fun LightboxInfoMap(
                         zoomControlsEnabled = true,
                     )
                 },
+                contentPadding = PaddingValues(bottom = 24.dp),
                 onMapClick = { action(ClickedOnMap(gps)) }
             ) {
                 Marker(gps)

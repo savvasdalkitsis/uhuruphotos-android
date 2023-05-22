@@ -98,6 +98,7 @@ subprojects {
                     "-opt-in=kotlinx.coroutines.ExperimentalCoroutinesApi",
                     "-opt-in=kotlinx.coroutines.FlowPreview",
                     "-opt-in=kotlinx.ExperimentalStdlibApi",
+                    "-opt-in=kotlin.ExperimentalStdlibApi",
                     "-Xcontext-receivers",
             )
         }

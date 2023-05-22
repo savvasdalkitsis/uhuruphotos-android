@@ -7,7 +7,6 @@ dependencies {
     implementation(
             libs.bundles.lumberjack,
             libs.hilt,
-            libs.logger,
     )
 }
 

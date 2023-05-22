@@ -1,0 +1,23 @@
+android {
+    buildFeatures {
+        compose true
+    }
+    composeOptions {
+        kotlinCompilerExtensionVersion compose_compiler_version
+    }
+    namespace 'com.savvasdalkitsis.uhuruphotos.foundation.map.implementation.mapbox'
+}
+
+dependencies {
+
+    implementation project(":foundation:initializer:api")
+    implementation project(":foundation:map:api")
+    implementation(
+            libs.androidx.compose.foundation.layout,
+            libs.androidx.compose.material,
+            libs.androidx.compose.ui,
+            libs.androidx.startup,
+            libs.hilt,
+            libs.mapbox,
+    )
+}

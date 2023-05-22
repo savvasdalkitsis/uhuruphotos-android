@@ -30,4 +30,5 @@ abstract class HeatMapBindingsModule {
     @Binds
     @IntoSet
     abstract fun heatMapNavigationTarget(target: HeatMapNavigationTarget): NavigationTarget
+
 }

@@ -16,7 +16,7 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.foundation.map.api.model
 
 enum class MapProvider {
-    Google, MapBox;
+    Google, MapBox, MapLibre;
 
     companion object {
         val default get() = Google

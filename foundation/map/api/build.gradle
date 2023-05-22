@@ -19,18 +19,10 @@ android {
 
 dependencies {
 
-    implementation project(":foundation:initializer:api")
-    implementation project(":foundation:launchers:api")
     implementation(
             libs.androidx.compose.foundation.layout,
             libs.androidx.compose.material,
             libs.androidx.compose.ui,
             libs.androidx.startup,
-            libs.hilt,
-            libs.mapbox,
-            libs.maps,
-            libs.maps.compose,
-            libs.maps.utils,
-            libs.maps.utils.ktx,
     )
 }

@@ -17,14 +17,9 @@ package com.savvasdalkitsis.uhuruphotos.foundation.map.api.ui
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
-import com.google.android.gms.maps.model.CameraPosition
-import com.google.maps.android.compose.rememberCameraPositionState
 import com.savvasdalkitsis.uhuruphotos.foundation.map.api.model.LatLon
 import com.savvasdalkitsis.uhuruphotos.foundation.map.api.model.LocalMapProvider
-import com.savvasdalkitsis.uhuruphotos.foundation.map.api.model.MapProvider.Google
-import com.savvasdalkitsis.uhuruphotos.foundation.map.api.model.MapProvider.MapBox
-import com.savvasdalkitsis.uhuruphotos.foundation.map.api.ui.google.GoogleMapViewState
-import com.savvasdalkitsis.uhuruphotos.foundation.map.api.ui.mapbox.MapBoxMapViewState
+import com.savvasdalkitsis.uhuruphotos.foundation.map.api.model.LocalMapViewStateFactory
 
 interface MapViewState : MapViewScope {
     val initialPosition: LatLon
@@ -39,11 +34,10 @@ interface MapViewState : MapViewScope {
 fun rememberMapViewState(
     initialPosition: LatLon,
     initialZoom: Float,
-): MapViewState = when (LocalMapProvider.current) {
-    Google -> rememberCameraPositionState {
-        position = CameraPosition.fromLatLngZoom(initialPosition.toLatLng, initialZoom)
-    }.let { GoogleMapViewState(it, initialPosition, initialZoom) }
-    MapBox -> remember {
-        MapBoxMapViewState(initialPosition, initialZoom)
+): MapViewState {
+    val mapProvider = LocalMapProvider.current
+    val mapViewStateFactory = LocalMapViewStateFactory.current
+    return remember {
+        mapViewStateFactory.create(mapProvider, initialPosition, initialZoom)
     }
 }

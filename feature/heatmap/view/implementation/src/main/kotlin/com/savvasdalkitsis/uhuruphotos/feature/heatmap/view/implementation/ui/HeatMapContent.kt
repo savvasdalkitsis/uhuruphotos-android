@@ -55,7 +55,7 @@ fun HeatMapContent(
                 enableMyLocation = locationPermissionGranted,
             )
         },
-        contentPadding = PaddingValues(top = insetsTop() + 56.dp)
+        contentPadding = PaddingValues(top = insetsTop() + 56.dp, bottom = 24.dp)
     ) {
         HeatMap(state.allPoints, state.pointsOnVisibleMap)
     }

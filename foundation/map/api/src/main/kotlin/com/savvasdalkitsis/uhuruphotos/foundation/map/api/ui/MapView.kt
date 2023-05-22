@@ -18,11 +18,9 @@ package com.savvasdalkitsis.uhuruphotos.foundation.map.api.ui
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import com.savvasdalkitsis.uhuruphotos.foundation.map.api.model.LocalMapProvider
+import com.savvasdalkitsis.uhuruphotos.foundation.map.api.model.LocalMapViewFactoryProvider
 import com.savvasdalkitsis.uhuruphotos.foundation.map.api.model.MapOptions
-import com.savvasdalkitsis.uhuruphotos.foundation.map.api.ui.google.GoogleMapView
-import com.savvasdalkitsis.uhuruphotos.foundation.map.api.ui.google.GoogleMapViewState
-import com.savvasdalkitsis.uhuruphotos.foundation.map.api.ui.mapbox.MapBoxMapView
-import com.savvasdalkitsis.uhuruphotos.foundation.map.api.ui.mapbox.MapBoxMapViewState
 
 @Composable
 fun MapView(
@@ -33,8 +31,10 @@ fun MapView(
     onMapClick: () -> Unit = {},
     content: @Composable (MapViewScope.() -> Unit)? = null,
 ) {
-    when (mapViewState) {
-        is GoogleMapViewState -> GoogleMapView(
+    val viewFactoryProvider = LocalMapViewFactoryProvider.current
+    val mapProvider = LocalMapProvider.current
+    viewFactoryProvider.getFactory(mapProvider)
+        .CreateMapView(
             modifier = modifier,
             mapViewState = mapViewState,
             mapOptions = mapOptions,
@@ -42,12 +42,4 @@ fun MapView(
             onMapClick = onMapClick,
             content = content,
         )
-        is MapBoxMapViewState -> MapBoxMapView(
-            modifier = modifier,
-            mapOptions = mapOptions,
-            onMapClick = onMapClick,
-            mapViewState = mapViewState,
-            content = content,
-        )
-    }
 }
