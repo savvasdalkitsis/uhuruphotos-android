@@ -256,4 +256,9 @@
     <string name="allow_storage_management_description">UhuruPhotos necesita permisos para administrar el almacenamiento de tu dispositivo para realizar esta acción</string>
     <string name="allow_storage_management_details">Se te redirigirá a la configuración del sistema para conceder este permiso. ¿Continuar\?</string>
     <string name="error_deleting_media">Se ha producido un error al borrar los medios</string>
+    <string name="media_sync_status_downloading">Se está descargando contenido multimedia en este dispositivo</string>
+    <string name="show_media_sync_status">Mostrar el estado de la sincronización multimedia</string>
+    <string name="show_on_scroll">Mostrar durante el desplazamiento</string>
+    <string name="show_always">Mostrar siempre</string>
+    <string name="show_never">Nunca mostrar</string>
 </resources>
