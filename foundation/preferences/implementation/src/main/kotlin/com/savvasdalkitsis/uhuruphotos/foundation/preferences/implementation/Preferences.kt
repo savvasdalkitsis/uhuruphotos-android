@@ -41,7 +41,15 @@ class Preferences @Inject constructor(
         int(key, defaultValue).get()
 
     override fun getNullableInt(key: String, defaultValue: Int?): Int? =
-        nullableString(key, defaultValue?.toString()).get()?.toIntOrNull()
+        if (!flowSharedPreferences.sharedPreferences.contains(key)) {
+            null
+        } else {
+            try {
+                flowSharedPreferences.sharedPreferences.getInt(key, defaultValue ?: 0)
+            } catch (e: ClassCastException) {
+                nullableString(key, defaultValue?.toString()).get()?.toIntOrNull()
+            }
+        }
 
     override fun observeInt(key: String, defaultValue: Int): Flow<Int> =
         int(key, defaultValue).asFlow()
