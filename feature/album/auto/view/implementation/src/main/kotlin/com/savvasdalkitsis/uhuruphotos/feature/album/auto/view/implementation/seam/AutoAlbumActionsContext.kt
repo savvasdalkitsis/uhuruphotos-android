@@ -41,7 +41,7 @@ internal class AutoAlbumActionsContext @Inject constructor(
     galleryRefresher = { autoAlbumUseCase.refreshAutoAlbum(it) },
     initialCollageDisplay = { AutoAlbumCollageDisplay },
     collageDisplayPersistence = { _, _ -> },
-    galleryDetailsEmptyCheck = { albumId ->
+    shouldRefreshOnLoad = { albumId ->
         autoAlbumUseCase.getAutoAlbum(albumId).isEmpty()
     },
     galleryDetailsFlow = { albumId, _ ->

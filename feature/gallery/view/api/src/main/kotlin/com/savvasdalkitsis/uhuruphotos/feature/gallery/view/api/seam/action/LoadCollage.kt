@@ -53,7 +53,7 @@ data class LoadCollage(val id: GalleryId) : GalleryAction() {
                 .map { GalleryMutation.ShowGallerySorting(it) },
             loading,
         ).safelyOnStartIgnoring {
-            if (galleryDetailsEmptyCheck(galleryId.id)) {
+            if (shouldRefreshOnLoad(galleryId.id)) {
                 refreshGallery(effect)
             }
         }

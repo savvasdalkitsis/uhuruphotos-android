@@ -34,7 +34,7 @@ internal class LocalAlbumPageActionsContext @Inject constructor(
     collageDisplayPersistence = { id, galleryDisplay ->
         localAlbumUseCase.setLocalAlbumGalleryDisplay(id, galleryDisplay)
     },
-    galleryDetailsEmptyCheck = { albumId ->
+    shouldRefreshOnLoad = { albumId ->
         localAlbumUseCase.getLocalAlbum(albumId).isEmpty()
     },
     galleryDetailsFlow = { albumId, _ ->

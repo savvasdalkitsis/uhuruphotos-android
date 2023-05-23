@@ -39,9 +39,7 @@ internal class FavouritesActionsContext @Inject constructor(
     collageDisplayPersistence = { _, galleryDisplay ->
         favouritesUseCase.setFavouriteMediaGalleryDisplay(galleryDisplay)
     },
-    galleryDetailsEmptyCheck = { _ ->
-        mediaUseCase.getFavouriteMediaCount().getOrDefault(0) > 0
-    },
+    shouldRefreshOnLoad = { _ -> true },
     galleryDetailsFlow = { _, _ ->
         mediaUseCase.observeFavouriteMedia()
             .mapNotNull { it.getOrNull() }

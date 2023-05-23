@@ -43,7 +43,7 @@ internal class TrashAlbumPageActionsContext @Inject constructor(
     collageDisplayPersistence = { _, galleryDisplay ->
         trashUseCase.setTrashGalleryDisplay(galleryDisplay)
     },
-    galleryDetailsEmptyCheck = {
+    shouldRefreshOnLoad = {
         !trashUseCase.hasTrash()
     },
     galleryDetailsFlow = { _, effect ->

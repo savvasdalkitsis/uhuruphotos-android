@@ -19,6 +19,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.extensions.await
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.extensions.awaitSingle
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.media.remote.GetRemoteMediaCollections
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.media.remote.RemoteMediaCollectionsQueries
+import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.media.remote.RemoteMediaItemSummaryQueries
 import com.savvasdalkitsis.uhuruphotos.feature.feed.domain.implementation.service.FeedService
 import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.api.service.model.RemoteMediaCollection
 import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.api.service.model.RemoteMediaCollectionsByDate
@@ -38,6 +39,7 @@ import javax.inject.Inject
 
 class FeedRepository @Inject constructor(
     private val remoteMediaCollectionsQueries: RemoteMediaCollectionsQueries,
+    private val remoteMediaItemSummaryQueries: RemoteMediaItemSummaryQueries,
     private val remoteMediaUseCase: RemoteMediaUseCase,
     private val feedService: FeedService,
 ) {
@@ -95,6 +97,14 @@ class FeedRepository @Inject constructor(
             ) },
             remoteMediaCollectionFetcher = getCollectionAllPages(),
             shallow = false,
+            incompleteAlbumsProcessor = { albums ->
+                remoteMediaCollectionsQueries.transaction {
+                    remoteMediaItemSummaryQueries.deletePhotoSummariesforAlbum(collectionId)
+                    for (album in albums.map { it.toDbModel() }) {
+                        remoteMediaCollectionsQueries.insert(album)
+                    }
+                }
+            }
         )
     }
 

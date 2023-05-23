@@ -35,7 +35,7 @@ internal class UserAlbumActionsContext @Inject constructor(
     collageDisplayPersistence = { albumId, galleryDisplay ->
         userAlbumDisplay.setUserAlbumGalleryDisplay(albumId, galleryDisplay)
     },
-    galleryDetailsEmptyCheck = { albumId ->
+    shouldRefreshOnLoad = { albumId ->
         userAlbumUseCase.getUserAlbum(albumId).mediaCollections.isEmpty()
     },
     galleryDetailsFlow = { albumId, _ ->

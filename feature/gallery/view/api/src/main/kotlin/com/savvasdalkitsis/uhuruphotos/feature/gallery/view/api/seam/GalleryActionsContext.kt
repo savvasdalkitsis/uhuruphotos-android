@@ -34,7 +34,7 @@ import kotlin.properties.Delegates
 open class GalleryActionsContext(
     val galleryRefresher: suspend (Int) -> Result<Unit>,
     val galleryDetailsFlow: (galleryId: Int, effect: EffectHandler<GalleryEffect>) -> Flow<GalleryDetails>,
-    val galleryDetailsEmptyCheck: suspend (galleryId: Int) -> Boolean,
+    val shouldRefreshOnLoad: suspend (galleryId: Int) -> Boolean,
     val lightboxSequenceDataSource: (galleryId: Int) -> LightboxSequenceDataSource,
     val initialCollageDisplay: (galleryId: Int) -> CollageDisplay,
     val collageDisplayPersistence: suspend (galleryId: Int, PredefinedCollageDisplay) -> Unit,

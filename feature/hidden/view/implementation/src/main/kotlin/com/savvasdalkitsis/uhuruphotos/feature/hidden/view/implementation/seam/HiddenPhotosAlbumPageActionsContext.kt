@@ -41,14 +41,12 @@ internal class HiddenPhotosAlbumPageActionsContext @Inject constructor(
     biometricsUseCase: BiometricsUseCase,
     preferences: Preferences,
 ) : GalleryActionsContext(
-    galleryRefresher = { mediaUseCase.refreshFavouriteMedia() },
+    galleryRefresher = { mediaUseCase.refreshHiddenMedia() },
     initialCollageDisplay = { hiddenMediaUseCase.getHiddenMediaGalleryDisplay() },
     collageDisplayPersistence = { _, galleryDisplay ->
         hiddenMediaUseCase.setHiddenMediaGalleryDisplay(galleryDisplay)
     },
-    galleryDetailsEmptyCheck = {
-        mediaUseCase.getHiddenMedia().getOrDefault(emptyList()).isEmpty()
-    },
+    shouldRefreshOnLoad = { true },
     galleryDetailsFlow = { _, effect ->
         settingsUseCase.observeBiometricsRequiredForHiddenPhotosAccess()
             .flatMapLatest { biometricsRequired ->
