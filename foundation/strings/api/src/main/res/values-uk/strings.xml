@@ -128,5 +128,9 @@
     <string name="not_roaming">Без роумінгу</string>
     <string name="metered">Обмежений</string>
     <string name="network_requirements">Вимоги до мережі: %s</string>
-    <string name="feedback">Зворотній зв\'язок</string>
+    <string name="feedback">Зворотний зв\'язок</string>
+    <string name="enable_logging">Ввімкнути ведення журналу</string>
+    <string name="send_feedback_with_logs">Надіслати відгук з журналами</string>
+    <string name="clear_log_file">Очистити файл журналу</string>
+    <string name="degrades_performance">Погіршує продуктивність, якщо ввімкнено</string>
 </resources>
