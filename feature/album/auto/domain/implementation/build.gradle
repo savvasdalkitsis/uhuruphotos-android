@@ -13,5 +13,5 @@ dependencies {
             libs.retrofit.core,
             libs.moshi,
     )
-    kapt libs.moshi.kapt
+    ksp libs.moshi.ksp
 }

@@ -27,6 +27,7 @@ plugins {
     id "org.sonarqube" version "4.0.0.2929"
     id "com.autonomousapps.dependency-analysis" version "1.20.0" apply true
     id "dev.zacsweers.redacted" version "1.4.0" apply false
+    id "com.google.devtools.ksp" version "1.8.21-1.0.11" apply false
 }
 
 tasks.register('clean', Delete) {
@@ -52,7 +53,7 @@ subprojects {
     apply plugin: 'org.jetbrains.kotlin.android'
     apply plugin: 'kotlin-kapt'
     apply plugin: 'dev.zacsweers.redacted'
-
+    apply plugin: "com.google.devtools.ksp"
 
     android {
         compileSdk 33
@@ -97,6 +98,7 @@ subprojects {
                     "-opt-in=androidx.compose.material3.windowsizeclass.ExperimentalMaterial3WindowSizeClassApi",
                     "-opt-in=androidx.compose.ui.ExperimentalComposeUiApi",
                     "-opt-in=coil.annotation.ExperimentalCoilApi",
+                    "-opt-in=com.google.accompanist.permissions.ExperimentalPermissionsApi",
                     "-opt-in=kotlinx.coroutines.ExperimentalCoroutinesApi",
                     "-opt-in=kotlinx.coroutines.FlowPreview",
                     "-opt-in=kotlinx.ExperimentalStdlibApi",
