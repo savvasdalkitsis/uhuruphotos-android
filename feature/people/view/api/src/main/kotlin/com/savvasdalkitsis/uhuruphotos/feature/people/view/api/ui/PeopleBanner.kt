@@ -15,16 +15,14 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.people.view.api.ui
 
-import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.material.Text
 import androidx.compose.material.TextButton
 import androidx.compose.runtime.Composable
@@ -58,19 +56,19 @@ fun PeopleBanner(
                 }
             }
         }
-        Row(
-            modifier = Modifier.horizontalScroll(rememberScrollState()),
-            horizontalArrangement = Arrangement.spacedBy(8.dp),
-        ) {
-            Spacer(modifier = Modifier)
+        LazyRow(horizontalArrangement = Arrangement.spacedBy(0.dp)) {
             for (person in people) {
-                PersonThumbnail(
-                    modifier = Modifier.width(90.dp),
-                    person = person,
-                    onPersonSelected = { onPersonSelected(person) },
-                )
+                item(contentType = "spacer") { Spacer(modifier = Modifier.width(4.dp)) }
+                item(person.id) {
+                    PersonThumbnail(
+                        modifier = Modifier
+                            .width(94.dp),
+                        person = person,
+                        onPersonSelected = { onPersonSelected(person) },
+                    )
+                }
+                item(contentType = "spacer") { Spacer(modifier = Modifier.width(4.dp)) }
             }
-            Spacer(modifier = Modifier)
         }
     }
 }
