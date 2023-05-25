@@ -108,7 +108,7 @@ internal class ShareUseCase @Inject constructor(
         addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
     }
 
-    private fun uriFor(url: String, postfix: String = "") = diskCache[url]?.let { snapshot ->
+    private fun uriFor(url: String, postfix: String = "") = diskCache.openSnapshot(url)?.let { snapshot ->
         val data = snapshot.data
         val path = data.toFile().copyTo(shareFile(postfix), overwrite = true)
         snapshot.close()
