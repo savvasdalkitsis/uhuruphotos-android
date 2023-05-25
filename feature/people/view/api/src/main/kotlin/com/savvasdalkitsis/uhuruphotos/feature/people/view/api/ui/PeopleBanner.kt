@@ -18,9 +18,11 @@ package com.savvasdalkitsis.uhuruphotos.feature.people.view.api.ui
 import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.material.Text
@@ -37,6 +39,7 @@ import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.SectionHeader
 fun PeopleBanner(
     modifier: Modifier = Modifier,
     people: List<Person>,
+    headerPadding: PaddingValues = PaddingValues(),
     onViewAllClicked: (() -> Unit)? = null,
     onPersonSelected: (Person) -> Unit,
 ) {
@@ -45,7 +48,10 @@ fun PeopleBanner(
             .fillMaxWidth(),
         verticalArrangement = Arrangement.spacedBy(8.dp),
     ) {
-        SectionHeader(title = stringResource(string.people)) {
+        SectionHeader(
+            modifier = Modifier.padding(headerPadding),
+            title = stringResource(string.people),
+        ) {
             if (onViewAllClicked != null) {
                 TextButton(onClick = onViewAllClicked) {
                     Text(stringResource(string.view_all))
