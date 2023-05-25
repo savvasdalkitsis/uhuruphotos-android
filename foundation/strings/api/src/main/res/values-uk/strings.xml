@@ -276,4 +276,6 @@
     <string name="remove_favourite">Видалити улюблене</string>
     <string name="hidden_photos">Приховані фото</string>
     <string name="info">Інформація</string>
+    <string name="search_for_something">Шукати щось</string>
+    <string name="search_icon">Значок пошуку</string>
 </resources>
