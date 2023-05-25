@@ -42,6 +42,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
@@ -52,6 +53,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.search.view.implementation.seam.a
 import com.savvasdalkitsis.uhuruphotos.feature.search.view.implementation.seam.actions.SearchFor
 import com.savvasdalkitsis.uhuruphotos.feature.search.view.implementation.ui.state.SearchResults.Idle
 import com.savvasdalkitsis.uhuruphotos.feature.search.view.implementation.ui.state.SearchState
+import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
 
 @Composable
 fun SearchField(
@@ -93,7 +95,7 @@ fun SearchField(
                         }) {
                             Icon(
                                 imageVector = Icons.Filled.Close,
-                                contentDescription = "Clear"
+                                contentDescription = stringResource(string.clear)
                             )
                         }
                     }
@@ -101,7 +103,7 @@ fun SearchField(
                     IconButton(onClick = { action(SearchFor(query)) }) {
                         Icon(
                             imageVector = Icons.Default.Search,
-                            contentDescription = "searchIcon"
+                            contentDescription = stringResource(string.search_icon)
                         )
                     }
                 }
@@ -114,7 +116,7 @@ fun SearchField(
             keyboardActions = KeyboardActions(
                 onSearch = { action(SearchFor(query)) }
             ),
-            placeholder = { Text("Search for something") },
+            placeholder = { Text(stringResource(string.search_for_something)) },
             value = query,
             onValueChange = ::changeQuery
         )

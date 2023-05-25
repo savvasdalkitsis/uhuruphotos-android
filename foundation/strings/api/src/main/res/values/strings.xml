@@ -249,4 +249,6 @@
     <string name="show_on_scroll">Show while scrolling</string>
     <string name="show_always">Always show</string>
     <string name="show_never">Never show</string>
+    <string name="search_for_something">Search for something</string>
+    <string name="search_icon">Search icon</string>
 </resources>
