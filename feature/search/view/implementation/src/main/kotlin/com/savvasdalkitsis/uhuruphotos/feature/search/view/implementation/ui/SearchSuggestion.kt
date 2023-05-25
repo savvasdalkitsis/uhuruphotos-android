@@ -26,6 +26,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import com.savvasdalkitsis.uhuruphotos.feature.search.view.implementation.seam.actions.QueryCacheChanged
 import com.savvasdalkitsis.uhuruphotos.feature.search.view.implementation.seam.actions.QueryChanged
 import com.savvasdalkitsis.uhuruphotos.feature.search.view.implementation.seam.actions.SearchAction
 import com.savvasdalkitsis.uhuruphotos.feature.search.view.implementation.seam.actions.SearchFor
@@ -47,6 +48,7 @@ fun SearchSuggestion(
         Text(modifier = Modifier.weight(1f), text = "Search suggestions:")
         OutlinedButton(onClick = {
             action(QueryChanged(suggestion))
+            action(QueryCacheChanged)
             action(SearchFor(suggestion))
         }) {
             Text(

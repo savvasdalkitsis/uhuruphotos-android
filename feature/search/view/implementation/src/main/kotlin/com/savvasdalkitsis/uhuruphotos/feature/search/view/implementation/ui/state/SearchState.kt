@@ -29,4 +29,5 @@ data class SearchState(
     val people: List<Person> = emptyList(),
     val searchSuggestions: List<SearchSuggestion> = emptyList(),
     val latestQuery: String = "",
+    val queryCacheKey: String = "",
 )

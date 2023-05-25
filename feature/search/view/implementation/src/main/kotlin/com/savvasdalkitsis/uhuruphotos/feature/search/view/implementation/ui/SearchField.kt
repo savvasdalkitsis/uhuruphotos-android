@@ -19,14 +19,17 @@ import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
 import androidx.compose.material.Text
 import androidx.compose.material.TextField
+import androidx.compose.material.TextFieldDefaults
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.Search
@@ -36,7 +39,9 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.focus.onFocusChanged
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
@@ -53,8 +58,13 @@ fun SearchField(
     state: SearchState,
     action: (SearchAction) -> Unit,
 ) {
-    var query by remember { mutableStateOf("") }
-    Column {
+    var query by remember(state.queryCacheKey) { mutableStateOf(state.latestQuery) }
+    Column(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(12.dp)
+            .clip(RoundedCornerShape(100))
+    ) {
         fun changeQuery(newQuery: String) {
             query = newQuery
             action(QueryChanged(newQuery))
@@ -63,41 +73,48 @@ fun SearchField(
         TextField(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(12.dp)
                 .onFocusChanged { action(ChangeFocus(it.isFocused)) },
             maxLines = 1,
             singleLine = true,
+            colors = TextFieldDefaults.textFieldColors(
+                focusedIndicatorColor = Color.Transparent,
+                unfocusedIndicatorColor = Color.Transparent
+            ),
             trailingIcon = {
-                AnimatedVisibility(
-                    visible = state.showClearButton,
-                    enter = fadeIn(),
-                    exit = fadeOut()
-                ) {
-                    IconButton(onClick = {
-                        changeQuery("")
-                        action(SearchCleared)
-                    }) {
+                Row {
+                    AnimatedVisibility(
+                        visible = state.showClearButton,
+                        enter = fadeIn(),
+                        exit = fadeOut()
+                    ) {
+                        IconButton(onClick = {
+                            changeQuery("")
+                            action(SearchCleared)
+                        }) {
+                            Icon(
+                                imageVector = Icons.Filled.Close,
+                                contentDescription = "Clear"
+                            )
+                        }
+                    }
+
+                    IconButton(onClick = { action(SearchFor(query)) }) {
                         Icon(
-                            imageVector = Icons.Filled.Close,
-                            contentDescription = "Clear"
+                            imageVector = Icons.Default.Search,
+                            contentDescription = "searchIcon"
                         )
                     }
                 }
             },
             keyboardOptions = KeyboardOptions.Default.copy(
+                autoCorrect = true,
                 keyboardType = KeyboardType.Text,
                 imeAction = ImeAction.Search,
             ),
             keyboardActions = KeyboardActions(
                 onSearch = { action(SearchFor(query)) }
             ),
-            leadingIcon = {
-                Icon(
-                    imageVector = Icons.Default.Search,
-                    contentDescription = "searchIcon"
-                )
-            },
-            label = { Text("Search for something") },
+            placeholder = { Text("Search for something") },
             value = query,
             onValueChange = ::changeQuery
         )
