@@ -16,7 +16,7 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.feature.people.domain.implementation.repository
 
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.extensions.async
-import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.extensions.await
+import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.extensions.awaitList
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.people.People
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.people.PeopleQueries
 import com.savvasdalkitsis.uhuruphotos.feature.people.domain.api.service.model.toDbModel
@@ -38,7 +38,7 @@ class PeopleRepository @Inject constructor(
         .asFlow().mapToList().distinctUntilChanged()
 
     suspend fun getPeopleByName(): List<People> = peopleQueries.getPeopleByName()
-        .await()
+        .awaitList()
 
     fun observePeopleByPhotoCount(): Flow<List<People>> = peopleQueries.getPeopleByFaceCount()
         .asFlow().mapToList().distinctUntilChanged()

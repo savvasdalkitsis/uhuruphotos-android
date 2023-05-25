@@ -27,7 +27,7 @@ suspend fun <R : Any> Query<R>.awaitSingleOrNull(): R? = withContext(Dispatchers
     executeAsOneOrNull()
 }
 
-suspend fun <R : Any> Query<R>.await(): List<R> = withContext(Dispatchers.IO) {
+suspend fun <R : Any> Query<R>.awaitList(): List<R> = withContext(Dispatchers.IO) {
     executeAsList()
 }
 

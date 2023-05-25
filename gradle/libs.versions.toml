@@ -5,7 +5,7 @@ androidx-hilt = "1.1.0-alpha01"
 androidx-test = "1.6.0-alpha02"
 coil = "2.4.0"
 com-google-android-gms = "18.1.0"
-compose = "1.5.0-alpha04"
+compose = "1.5.0-beta01"
 exoplayer = "2.18.7"
 google-services = "4.3.15"
 hilt = "2.46.1"
@@ -97,7 +97,7 @@ maps-utils-ktx = "com.google.maps.android:maps-utils-ktx:3.4.0"
 mockk = { module = "io.mockk:mockk", version.ref = "mockk" }
 mockk-android = { module = "io.mockk:mockk-android", version.ref = "mockk" }
 moshi = { module = "com.squareup.moshi:moshi-kotlin", version.ref = "moshi" }
-moshi-kapt = { module = "com.squareup.moshi:moshi-kotlin-codegen", version.ref = "moshi" }
+moshi-ksp = { module = "com.squareup.moshi:moshi-kotlin-codegen", version.ref = "moshi" }
 okhttp = { module = "com.squareup.okhttp3:okhttp", version.ref = "okhttp" }
 okhttp-logging = { module = "com.squareup.okhttp3:logging-interceptor", version.ref = "okhttp" }
 okhttp-url = { module = "com.squareup.okhttp3:okhttp-urlconnection", version.ref = "okhttp" }

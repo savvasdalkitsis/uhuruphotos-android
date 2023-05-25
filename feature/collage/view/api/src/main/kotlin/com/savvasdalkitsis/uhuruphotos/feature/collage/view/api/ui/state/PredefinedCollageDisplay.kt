@@ -101,8 +101,8 @@ enum class PredefinedCollageDisplay(
         friendlyName = string.full,
     );
 
-    override val zoomIn: CollageDisplay get() = values()[min(ordinal + 1, values().size - 1)]
-    override val zoomOut: CollageDisplay get() = values()[max(0, ordinal -1)]
+    override val zoomIn: CollageDisplay get() = entries[min(ordinal + 1, entries.size - 1)]
+    override val zoomOut: CollageDisplay get() = entries[max(0, ordinal -1)]
     override val allowsPinchGestures = true
 
     companion object {

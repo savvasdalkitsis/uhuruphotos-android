@@ -17,7 +17,6 @@ package com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.api.usecase
 
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.entities.media.DbRemoteMediaItemDetails
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.entities.media.DbRemoteMediaItemSummary
-import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaId
 import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.api.service.model.RemoteMediaCollection
 import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.api.service.model.RemoteMediaCollectionsByDate
 import kotlinx.coroutines.flow.Flow
@@ -55,8 +54,6 @@ interface RemoteMediaUseCase {
     fun deleteMediaItems(vararg ids: String)
 
     fun restoreMediaItem(id: String)
-
-    suspend fun downloadThumbnail(id: MediaId.Remote)
 
     suspend fun processRemoteMediaCollections(
         albumsFetcher: suspend () -> RemoteMediaCollectionsByDate,

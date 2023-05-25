@@ -12,7 +12,7 @@ dependencies {
             libs.sqldelight.coroutines,
     )
     testFixturesImplementation project(":feature:db:domain:api")
-    kapt libs.moshi.kapt
+    ksp libs.moshi.ksp
 }
 
 android {

@@ -19,7 +19,6 @@ import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.entities.media.DbRe
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.entities.media.DbRemoteMediaItemSummary
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.extensions.async
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.media.remote.RemoteMediaItemSummaryQueries
-import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaId
 import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.api.model.toDbModel
 import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.api.service.model.RemoteMediaCollection
 import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.api.service.model.RemoteMediaCollectionsByDate
@@ -43,7 +42,6 @@ class RemoteMediaUseCase @Inject constructor(
     private val remoteMediaItemWorkScheduler: RemoteMediaItemWorkScheduler,
     private val userUseCase: UserUseCase,
     private val remoteMediaItemSummaryQueries: RemoteMediaItemSummaryQueries,
-    private val remoteMediaPrecacher: RemoteMediaPrecacher,
 ) : RemoteMediaUseCase {
 
     override fun observeAllRemoteMediaDetails(): Flow<List<DbRemoteMediaItemDetails>> =
@@ -99,10 +97,6 @@ class RemoteMediaUseCase @Inject constructor(
         resultWithFavouriteThreshold {
             remoteMediaRepository.refreshFavourites(it)
         }
-
-    override suspend fun downloadThumbnail(id: MediaId.Remote) {
-        remoteMediaPrecacher.precacheMedia(id.thumbnailUri, id.isVideo)
-    }
 
     override suspend fun refreshHiddenMedia() =
         remoteMediaRepository.refreshHidden()

@@ -18,7 +18,7 @@ package com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.implementati
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.entities.media.DbRemoteMediaItemDetails
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.entities.media.DbRemoteMediaItemSummary
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.extensions.async
-import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.extensions.await
+import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.extensions.awaitList
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.extensions.awaitSingle
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.extensions.awaitSingleOrNull
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.media.remote.RemoteMediaItemDetailsQueries
@@ -26,7 +26,6 @@ import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.media.remote.Remote
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.media.remote.RemoteMediaTrashQueries
 import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.api.model.toDbModel
 import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.implementation.service.RemoteMediaService
-import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.implementation.worker.RemoteMediaItemWorkScheduler
 import com.savvasdalkitsis.uhuruphotos.foundation.log.api.runCatchingWithLog
 import com.squareup.sqldelight.runtime.coroutines.asFlow
 import com.squareup.sqldelight.runtime.coroutines.mapToList
@@ -41,7 +40,6 @@ import javax.inject.Inject
 class RemoteMediaRepository @Inject constructor(
     private val remoteMediaItemDetailsQueries: RemoteMediaItemDetailsQueries,
     private val remoteMediaItemSummaryQueries: RemoteMediaItemSummaryQueries,
-    private val remoteMediaItemWorkScheduler: RemoteMediaItemWorkScheduler,
     private val remoteMediaService: RemoteMediaService,
     private val remoteMediaTrashQueries: RemoteMediaTrashQueries,
 ) {
@@ -70,21 +68,13 @@ class RemoteMediaRepository @Inject constructor(
         remoteMediaItemDetailsQueries.getMediaItem(id).awaitSingleOrNull()
 
     suspend fun getFavouriteMedia(favouriteThreshold: Int): List<DbRemoteMediaItemSummary> =
-        remoteMediaItemSummaryQueries.getFavourites(favouriteThreshold).await()
+        remoteMediaItemSummaryQueries.getFavourites(favouriteThreshold).awaitList()
 
     suspend fun getFavouriteMediaCount(favouriteThreshold: Int): Long =
         remoteMediaItemSummaryQueries.countFavourites(favouriteThreshold).awaitSingle()
 
     suspend fun getHiddenMedia(): List<DbRemoteMediaItemSummary> =
-        remoteMediaItemSummaryQueries.getHidden().await()
-
-    suspend fun refreshDetailsIfMissing(id: String) {
-        when (getMediaItemDetails(id)) {
-            null -> {
-                refreshDetails(id)
-            }
-        }
-    }
+        remoteMediaItemSummaryQueries.getHidden().awaitList()
 
     suspend fun refreshDetailsNowIfMissing(id: String) =
         when (getMediaItemDetails(id)) {
@@ -98,13 +88,9 @@ class RemoteMediaRepository @Inject constructor(
         }
     }
 
-    fun refreshDetails(id: String) {
-        remoteMediaItemWorkScheduler.scheduleMediaItemDetailsRetrieve(id)
-    }
-
     suspend fun refreshFavourites(favouriteThreshold: Int) = runCatchingWithLog {
         val currentFavouriteIds = remoteMediaItemSummaryQueries.getFavourites(favouriteThreshold)
-            .await()
+            .awaitList()
             .map { it.id }
             .toSet()
         val newFavourites = remoteMediaService.getFavouriteMedia().results.flatMap { it.items }

@@ -15,7 +15,7 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.person.domain.implementation.repository
 
-import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.extensions.await
+import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.extensions.awaitList
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.media.remote.RemoteMediaCollectionsQueries
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.person.GetPersonAlbums
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.person.PersonQueries
@@ -46,7 +46,7 @@ class PersonRepository @Inject constructor(
             }
 
     suspend fun getPersonAlbums(personId: Int) : Group<String, GetPersonAlbums> =
-        personQueries.getPersonAlbums(personId).await().groupBy(GetPersonAlbums::id).let(::Group)
+        personQueries.getPersonAlbums(personId).awaitList().groupBy(GetPersonAlbums::id).let(::Group)
 
     private suspend fun downloadPersonAlbums(personId: Int) {
         remoteMediaUseCase.processRemoteMediaCollections(

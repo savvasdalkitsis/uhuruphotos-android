@@ -23,7 +23,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.extensions.isVideo
 import com.savvasdalkitsis.uhuruphotos.feature.feed.domain.implementation.broadcast.CancelPrecacheWorkBroadcastReceiver
 import com.savvasdalkitsis.uhuruphotos.feature.feed.domain.implementation.repository.FeedRepository
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaId
-import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.api.usecase.RemoteMediaUseCase
+import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.api.usecase.RemoteMediaPrecacher
 import com.savvasdalkitsis.uhuruphotos.foundation.notification.api.ForegroundInfoBuilder
 import com.savvasdalkitsis.uhuruphotos.foundation.notification.api.ForegroundNotificationWorker
 import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R
@@ -37,7 +37,7 @@ internal class PrecacheFeedThumbnailsWorker @AssistedInject constructor(
     @Assisted context: Context,
     @Assisted private val params: WorkerParameters,
     private val feedRepository: FeedRepository,
-    private val mediaUseCase: RemoteMediaUseCase,
+    private val remoteMediaPrecacher: RemoteMediaPrecacher,
     private val serverUseCase: ServerUseCase,
     foregroundInfoBuilder: ForegroundInfoBuilder,
 ) : ForegroundNotificationWorker<CancelPrecacheWorkBroadcastReceiver>(
@@ -63,7 +63,7 @@ internal class PrecacheFeedThumbnailsWorker @AssistedInject constructor(
         for ((index, id) in mediaItemIds.withIndex()) {
             if (isStopped)
                 break
-            mediaUseCase.downloadThumbnail(id)
+            remoteMediaPrecacher.precacheMedia(id.value, id.isVideo)
             updateProgress(index, mediaItemIds.size)
         }
         Result.success()

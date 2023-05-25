@@ -18,12 +18,8 @@ package com.savvasdalkitsis.uhuruphotos.foundation.worker.implementation.usecase
 import androidx.work.BackoffPolicy
 import androidx.work.Constraints
 import androidx.work.CoroutineWorker
-import androidx.work.Data
 import androidx.work.ExistingPeriodicWorkPolicy
-import androidx.work.ExistingWorkPolicy
 import androidx.work.NetworkType
-import androidx.work.OneTimeWorkRequest
-import androidx.work.OutOfQuotaPolicy
 import androidx.work.PeriodicWorkRequest
 import androidx.work.WorkManager
 import com.savvasdalkitsis.uhuruphotos.foundation.worker.api.usecase.WorkScheduleUseCase
@@ -34,30 +30,6 @@ import kotlin.reflect.KClass
 class WorkScheduleUseCase @Inject constructor(
     private val workManager: WorkManager,
 ) : WorkScheduleUseCase {
-
-    override fun <W: CoroutineWorker> scheduleNow(
-        workName: String,
-        klass: KClass<W>,
-        existingWorkPolicy: ExistingWorkPolicy,
-        backoffPolicy: BackoffPolicy,
-        backoffDelay: Long,
-        backoffTimeUnit: TimeUnit,
-        networkRequirement: NetworkType,
-        params: Data.Builder.() -> Data.Builder,
-    ) {
-        workManager.enqueueUniqueWork(
-            workName,
-            existingWorkPolicy,
-            OneTimeWorkRequest.Builder(klass.java)
-                .setInputData(params(Data.Builder()).build())
-                .setBackoffCriteria(backoffPolicy, backoffDelay, backoffTimeUnit)
-                .setConstraints(Constraints.Builder()
-                    .setRequiredNetworkType(networkRequirement)
-                    .build())
-                .setExpedited(OutOfQuotaPolicy.RUN_AS_NON_EXPEDITED_WORK_REQUEST)
-                .build(),
-        )
-    }
 
     override fun <W: CoroutineWorker> schedulePeriodic(
         workName: String,

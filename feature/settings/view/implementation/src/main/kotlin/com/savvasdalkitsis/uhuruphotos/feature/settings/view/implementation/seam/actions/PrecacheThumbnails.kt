@@ -27,7 +27,7 @@ data object PrecacheThumbnails : SettingsAction() {
         state: SettingsState,
         effect: EffectHandler<SettingsEffect>
     ) = flow {
-        feedWorkScheduler.schedulePrecacheThumbnailsNow()
+        feedImmediateWorkScheduler.schedulePrecacheThumbnailsNow()
         emit(HidePrecacheThumbnailsDialog)
     }
 

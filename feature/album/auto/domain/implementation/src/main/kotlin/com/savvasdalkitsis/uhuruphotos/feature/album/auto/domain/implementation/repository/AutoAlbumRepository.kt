@@ -22,7 +22,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.album.auto.AutoAlbu
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.album.auto.AutoAlbumQueries
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.album.auto.GetAutoAlbum
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.album.auto.GetPeopleForAutoAlbum
-import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.extensions.await
+import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.extensions.awaitList
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.media.remote.RemoteMediaItemDetailsQueries
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.people.PeopleQueries
 import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.api.model.toDbModel
@@ -50,7 +50,7 @@ class AutoAlbumRepository @Inject constructor(
             .distinctUntilChanged()
 
     suspend fun getAutoAlbum(albumId: Int): Group<String, GetAutoAlbum> =
-        autoAlbumQueries.getAutoAlbum(albumId.toString()).await().groupBy(GetAutoAlbum::id).let(::Group)
+        autoAlbumQueries.getAutoAlbum(albumId.toString()).awaitList().groupBy(GetAutoAlbum::id).let(::Group)
 
     fun observeAutoAlbumPeople(albumId: Int): Flow<List<GetPeopleForAutoAlbum>> =
         autoAlbumPeopleQueries.getPeopleForAutoAlbum(albumId.toString())

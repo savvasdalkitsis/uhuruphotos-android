@@ -15,14 +15,11 @@ limitations under the License.
  */
 package com.savvasdalktsis.uhuruphotos.foundation.download.implementation.module
 
-import com.savvasdalkitsis.uhuruphotos.foundation.initializer.api.ApplicationCreated
-import com.savvasdalktsis.uhuruphotos.foundation.download.implementation.initializer.DownloadInitializer
 import com.savvasdalktsis.uhuruphotos.foundation.download.implementation.usecase.DownloadUseCase
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
-import dagger.multibindings.IntoSet
 
 @Module
 @InstallIn(SingletonComponent::class)
@@ -31,9 +28,5 @@ internal abstract class DownloadBindingsModule {
     @Binds
     abstract fun downloadUseCase(downloadUseCase: DownloadUseCase):
             com.savvasdalktsis.uhuruphotos.foundation.download.api.usecase.DownloadUseCase
-
-    @Binds
-    @IntoSet
-    abstract fun downloadInitializer(downloadInitializer: DownloadInitializer): ApplicationCreated
 
 }

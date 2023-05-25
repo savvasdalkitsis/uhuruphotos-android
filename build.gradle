@@ -4,7 +4,7 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 buildscript {
     ext {
         kotlin_version = '1.8.21'
-        compose_version = '1.5.0-alpha02'
+        compose_version = '1.5.0-beta01'
         compose_compiler_version = '1.4.7'
     }
     dependencies {
@@ -19,13 +19,15 @@ buildscript {
 }// Top-level build file where you can add configuration options common to all sub-projects/modules.
 plugins {
     id 'com.android.application' version '8.0.2' apply false
-    id 'com.android.library' version '8.0.1' apply false
+    id 'com.android.library' version '8.0.2' apply false
     id 'org.jetbrains.kotlin.android' version "$kotlin_version" apply false
     id 'com.squareup.sqldelight' version '1.5.5' apply false
     id 'com.google.android.libraries.mapsplatform.secrets-gradle-plugin' version '2.0.1' apply false
     id "com.bnorm.power.kotlin-power-assert" version "0.13.0" apply false
     id "org.sonarqube" version "4.0.0.2929"
     id "com.autonomousapps.dependency-analysis" version "1.20.0" apply true
+    id "dev.zacsweers.redacted" version "1.4.0" apply false
+    id "com.google.devtools.ksp" version "1.8.21-1.0.11" apply false
 }
 
 tasks.register('clean', Delete) {
@@ -50,6 +52,8 @@ subprojects {
     apply plugin: "com.bnorm.power.kotlin-power-assert"
     apply plugin: 'org.jetbrains.kotlin.android'
     apply plugin: 'kotlin-kapt'
+    apply plugin: 'dev.zacsweers.redacted'
+    apply plugin: "com.google.devtools.ksp"
 
     android {
         compileSdk 33
@@ -86,7 +90,6 @@ subprojects {
         compilerOptions {
             languageVersion = KotlinVersion.KOTLIN_1_9
             freeCompilerArgs.addAll(
-                    "-opt-in=com.google.accompanist.permissions.ExperimentalPermissionsApi",
                     "-opt-in=androidx.compose.animation.ExperimentalAnimationApi",
                     "-opt-in=androidx.compose.animation.graphics.ExperimentalAnimationGraphicsApi",
                     "-opt-in=androidx.compose.foundation.ExperimentalFoundationApi",
@@ -95,6 +98,7 @@ subprojects {
                     "-opt-in=androidx.compose.material3.windowsizeclass.ExperimentalMaterial3WindowSizeClassApi",
                     "-opt-in=androidx.compose.ui.ExperimentalComposeUiApi",
                     "-opt-in=coil.annotation.ExperimentalCoilApi",
+                    "-opt-in=com.google.accompanist.permissions.ExperimentalPermissionsApi",
                     "-opt-in=kotlinx.coroutines.ExperimentalCoroutinesApi",
                     "-opt-in=kotlinx.coroutines.FlowPreview",
                     "-opt-in=kotlinx.ExperimentalStdlibApi",

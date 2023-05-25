@@ -15,7 +15,9 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.search.view.implementation.ui
 
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.unit.dp
 import com.savvasdalkitsis.uhuruphotos.feature.people.view.api.ui.PeopleBanner
 import com.savvasdalkitsis.uhuruphotos.feature.people.view.api.ui.state.Person
 import com.savvasdalkitsis.uhuruphotos.feature.search.view.implementation.seam.actions.PersonSelected
@@ -29,6 +31,7 @@ fun SearchPeopleSuggestions(
 ) {
     PeopleBanner(
         people = people,
+        headerPadding = PaddingValues(horizontal = 12.dp),
         onViewAllClicked = { action(ViewAllPeopleSelected) },
         onPersonSelected = { action(PersonSelected(it)) }
     )

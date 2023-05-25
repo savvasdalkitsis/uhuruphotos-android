@@ -48,5 +48,5 @@ dependencies {
             libs.retrofit.moshi,
             libs.sqldelight.coroutines,
     )
-    kapt libs.moshi.kapt
+    ksp libs.moshi.ksp
 }

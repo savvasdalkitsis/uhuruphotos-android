@@ -21,7 +21,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.album.user.GetUserA
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.album.user.UserAlbum
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.album.user.UserAlbumPhotosQueries
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.album.user.UserAlbumQueries
-import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.extensions.await
+import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.extensions.awaitList
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.media.remote.RemoteMediaItemSummaryQueries
 import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.api.model.toDbModel
 import com.savvasdalkitsis.uhuruphotos.foundation.log.api.runCatchingWithLog
@@ -40,7 +40,7 @@ class UserAlbumRepository @Inject constructor(
 ) {
 
     suspend fun getUserAlbum(albumId: Int): List<GetUserAlbum> =
-        userAlbumQueries.getUserAlbum(albumId.toString()).await()
+        userAlbumQueries.getUserAlbum(albumId.toString()).awaitList()
 
     fun observeUserAlbum(albumId: Int): Flow<List<GetUserAlbum>> =
         userAlbumQueries.getUserAlbum(albumId.toString())

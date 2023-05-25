@@ -16,7 +16,7 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.feature.search.domain.implementation.repository
 
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.entities.media.DbRemoteMediaItemSummary
-import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.extensions.await
+import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.extensions.awaitList
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.media.remote.RemoteMediaItemSummaryQueries
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.search.GetSearchResults
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.search.SearchQueries
@@ -49,7 +49,7 @@ class SearchRepository @Inject constructor(
             .distinctUntilChanged()
 
     suspend fun getSearchResults(query: String): Group<String, GetSearchResults> =
-        searchQueries.getSearchResults(query).await().groupBy(GetSearchResults::date).let(::Group)
+        searchQueries.getSearchResults(query).awaitList().groupBy(GetSearchResults::date).let(::Group)
 
     suspend fun refreshSearch(query: String) = runCatchingWithLog {
         val results = searchService.search(query)

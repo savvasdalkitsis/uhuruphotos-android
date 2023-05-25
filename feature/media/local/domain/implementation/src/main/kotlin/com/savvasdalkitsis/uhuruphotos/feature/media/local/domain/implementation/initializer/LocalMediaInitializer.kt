@@ -15,36 +15,42 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.implementation.initializer
 
-import android.app.Application
 import android.content.ContentResolver
 import android.database.ContentObserver
 import android.net.Uri
 import android.os.Handler
 import android.os.Looper
+import androidx.activity.ComponentActivity
 import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.worker.LocalMediaWorkScheduler
 import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.implementation.service.model.LocalMediaPhotoColumns
 import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.implementation.service.model.LocalMediaVideoColumns
-import com.savvasdalkitsis.uhuruphotos.foundation.initializer.api.ApplicationCreated
+import com.savvasdalkitsis.uhuruphotos.foundation.initializer.api.ActivityCreated
 import javax.inject.Inject
 
 internal class LocalMediaInitializer @Inject constructor(
     private val localMediaWorkScheduler: LocalMediaWorkScheduler,
     private val contentResolver: ContentResolver,
-) : ApplicationCreated {
+) : ActivityCreated {
 
-    override fun onAppCreated(app: Application) {
+    private val mediaObserver = object : ContentObserver(Handler(Looper.getMainLooper())) {
+        override fun onChange(selfChange: Boolean) {
+            localMediaWorkScheduler.scheduleLocalMediaSyncNowIfNotRunning()
+        }
+    }
+
+    override fun onActivityCreated(activity: ComponentActivity) {
         localMediaWorkScheduler.scheduleLocalMediaSyncNowIfNotRunning()
         registerObserver(LocalMediaPhotoColumns.collection)
         registerObserver(LocalMediaVideoColumns.collection)
     }
 
+    override fun onActivityDestroyed(activity: ComponentActivity) {
+        contentResolver.unregisterContentObserver(mediaObserver)
+    }
+
     private fun registerObserver(uri: Uri) = contentResolver.registerContentObserver(
         uri,
         true,
-        object : ContentObserver(Handler(Looper.getMainLooper())) {
-            override fun onChange(selfChange: Boolean) {
-                localMediaWorkScheduler.scheduleLocalMediaSyncNowIfNotRunning()
-            }
-        }
+        mediaObserver
     )
 }

@@ -19,10 +19,10 @@ import com.savvasdalkitsis.uhuruphotos.feature.memories.domain.implementation.us
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
-import dagger.hilt.components.SingletonComponent
+import dagger.hilt.android.components.ActivityRetainedComponent
 
 @Module
-@InstallIn(SingletonComponent::class)
+@InstallIn(ActivityRetainedComponent::class)
 abstract class MemoriesBindingsModule {
 
     @Binds

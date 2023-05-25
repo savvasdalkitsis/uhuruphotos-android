@@ -70,5 +70,5 @@ dependencies {
     )
     testFixturesImplementation project(":feature:db:domain:api")
     testFixturesImplementation project(':feature:media:remote:domain:api')
-    kapt libs.moshi.kapt
+    ksp libs.moshi.ksp
 }

@@ -15,7 +15,7 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.feed.domain.implementation.repository
 
-import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.extensions.await
+import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.extensions.awaitList
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.extensions.awaitSingle
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.media.remote.GetRemoteMediaCollections
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.media.remote.RemoteMediaCollectionsQueries
@@ -31,10 +31,8 @@ import com.squareup.sqldelight.runtime.coroutines.asFlow
 import com.squareup.sqldelight.runtime.coroutines.mapToList
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.distinctUntilChanged
-import kotlinx.coroutines.flow.emitAll
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.onStart
-import kotlinx.coroutines.flow.take
 import javax.inject.Inject
 
 class FeedRepository @Inject constructor(
@@ -53,7 +51,7 @@ class FeedRepository @Inject constructor(
         remoteMediaCollectionsQueries.getRemoteMediaCollections(limit = -1).asFlow()
             .onStart {
                 if (allRemoteMediaCollections.items.isEmpty()) {
-                    emitAll(remoteMediaCollectionsQueries.getRemoteMediaCollections(limit = 100).asFlow().take(1))
+                    emit(remoteMediaCollectionsQueries.getRemoteMediaCollections(limit = 100))
                 }
             }
             .mapToList().groupBy(GetRemoteMediaCollections::id)
@@ -69,7 +67,8 @@ class FeedRepository @Inject constructor(
 
 
     suspend fun getRemoteMediaCollectionsByDate(): Group<String, GetRemoteMediaCollections> =
-        remoteMediaCollectionsQueries.getRemoteMediaCollections(limit = -1).await().groupBy(GetRemoteMediaCollections::id).let(::Group)
+        remoteMediaCollectionsQueries.getRemoteMediaCollections(limit = -1).awaitList()
+            .groupBy(GetRemoteMediaCollections::id).let(::Group)
 
     suspend fun refreshRemoteMediaCollections(
         shallow: Boolean,

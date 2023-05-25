@@ -4,6 +4,8 @@ android {
 
 dependencies {
 
+    api project(":foundation:activity:api")
+    api project(":foundation:initializer:api")
     api project(":foundation:worker:api")
     implementation project(":foundation:launchers:api")
     implementation(

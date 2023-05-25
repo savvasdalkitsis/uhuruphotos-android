@@ -16,7 +16,7 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.feature.trash.domain.implementation.repository
 
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.extensions.async
-import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.extensions.await
+import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.extensions.awaitList
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.extensions.awaitSingle
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.media.remote.GetTrash
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.media.remote.RemoteMediaCollectionsQueries
@@ -48,7 +48,7 @@ class TrashRepository @Inject constructor(
         remoteMediaTrashQueries.count().awaitSingle() > 0
 
     suspend fun getTrash(): Group<String, GetTrash> =
-        remoteMediaTrashQueries.getTrash().await().groupBy(GetTrash::id).let(::Group)
+        remoteMediaTrashQueries.getTrash().awaitList().groupBy(GetTrash::id).let(::Group)
 
     suspend fun refreshTrash(): Result<Unit> = runCatchingWithLog {
         val trash = trashService.getTrash().results

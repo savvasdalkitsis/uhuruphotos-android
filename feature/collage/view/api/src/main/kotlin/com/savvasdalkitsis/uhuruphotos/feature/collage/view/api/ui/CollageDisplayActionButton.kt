@@ -67,7 +67,7 @@ fun CollageDisplayActionButton(
             expanded = isOpen,
             onDismissRequest = { isOpen = false },
         ) {
-            PredefinedCollageDisplay.values().reversedArray().forEach { display ->
+            PredefinedCollageDisplay.entries.toTypedArray().reversedArray().forEach { display ->
                 CollageDisplayDropDownItem(display, currentCollageDisplay) {
                     isOpen = false
                     onChange(it)

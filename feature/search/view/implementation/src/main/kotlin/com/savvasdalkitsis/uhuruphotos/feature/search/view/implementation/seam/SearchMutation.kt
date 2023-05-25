@@ -74,6 +74,10 @@ sealed class SearchMutation(
         it.copy(latestQuery = query)
     })
 
+    data class BustQueryCache(val hash: String) : SearchMutation({
+        it.copy(queryCacheKey = hash)
+    })
+
     data class ShowLibrary(val showLibrary: Boolean) : SearchMutation({
         it.copy(showLibrary = showLibrary)
     })
