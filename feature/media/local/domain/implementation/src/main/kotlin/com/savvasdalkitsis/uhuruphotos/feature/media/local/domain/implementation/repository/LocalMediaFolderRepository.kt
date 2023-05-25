@@ -15,7 +15,7 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.implementation.repository
 
-import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.extensions.await
+import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.extensions.awaitList
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.media.local.GetBuckets
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.media.local.LocalMediaItemDetailsQueries
 import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.model.LocalMediaFolder
@@ -53,7 +53,7 @@ class LocalMediaFolderRepository @Inject constructor(
             }
 
     suspend fun getFolders(): Set<LocalMediaFolder> =
-        localMediaItemDetailsQueries.getBuckets().await().toMediaBuckets()
+        localMediaItemDetailsQueries.getBuckets().awaitList().toMediaBuckets()
 
     private fun List<GetBuckets>.toMediaBuckets(): Set<LocalMediaFolder> = map {
         LocalMediaFolder(it.bucketId, it.bucketName)

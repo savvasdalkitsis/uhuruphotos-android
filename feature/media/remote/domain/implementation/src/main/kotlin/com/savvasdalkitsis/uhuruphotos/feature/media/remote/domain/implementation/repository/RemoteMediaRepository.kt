@@ -18,7 +18,7 @@ package com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.implementati
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.entities.media.DbRemoteMediaItemDetails
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.entities.media.DbRemoteMediaItemSummary
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.extensions.async
-import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.extensions.await
+import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.extensions.awaitList
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.extensions.awaitSingle
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.extensions.awaitSingleOrNull
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.media.remote.RemoteMediaItemDetailsQueries
@@ -68,13 +68,13 @@ class RemoteMediaRepository @Inject constructor(
         remoteMediaItemDetailsQueries.getMediaItem(id).awaitSingleOrNull()
 
     suspend fun getFavouriteMedia(favouriteThreshold: Int): List<DbRemoteMediaItemSummary> =
-        remoteMediaItemSummaryQueries.getFavourites(favouriteThreshold).await()
+        remoteMediaItemSummaryQueries.getFavourites(favouriteThreshold).awaitList()
 
     suspend fun getFavouriteMediaCount(favouriteThreshold: Int): Long =
         remoteMediaItemSummaryQueries.countFavourites(favouriteThreshold).awaitSingle()
 
     suspend fun getHiddenMedia(): List<DbRemoteMediaItemSummary> =
-        remoteMediaItemSummaryQueries.getHidden().await()
+        remoteMediaItemSummaryQueries.getHidden().awaitList()
 
     suspend fun refreshDetailsNowIfMissing(id: String) =
         when (getMediaItemDetails(id)) {
@@ -90,7 +90,7 @@ class RemoteMediaRepository @Inject constructor(
 
     suspend fun refreshFavourites(favouriteThreshold: Int) = runCatchingWithLog {
         val currentFavouriteIds = remoteMediaItemSummaryQueries.getFavourites(favouriteThreshold)
-            .await()
+            .awaitList()
             .map { it.id }
             .toSet()
         val newFavourites = remoteMediaService.getFavouriteMedia().results.flatMap { it.items }

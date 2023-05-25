@@ -21,7 +21,7 @@ import android.graphics.BitmapFactory.decodeStream
 import androidx.palette.graphics.Palette
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.Database
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.extensions.async
-import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.extensions.await
+import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.extensions.awaitList
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.extensions.awaitSingleOrNull
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.media.download.DownloadingMediaItemsQueries
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.media.local.LocalMediaItemDetails
@@ -61,7 +61,7 @@ class LocalMediaRepository @Inject constructor(
     fun observeFolder(folderId: Int): Flow<List<LocalMediaItemDetails>> =
         localMediaItemDetailsQueries.getBucketItems(folderId).asFlow().mapToList().distinctUntilChanged()
 
-    suspend fun getMedia(): List<LocalMediaItemDetails> = localMediaItemDetailsQueries.getItems().await()
+    suspend fun getMedia(): List<LocalMediaItemDetails> = localMediaItemDetailsQueries.getItems().awaitList()
 
     suspend fun refreshFolder(folderId: Int) =
         (localMediaService.getPhotosForBucket(folderId) + localMediaService.getVideosForBucket(folderId))
@@ -108,7 +108,7 @@ class LocalMediaRepository @Inject constructor(
                 localMediaItemDetailsQueries.getExistingBucketIds(bucketId)
             } else {
                 localMediaItemDetailsQueries.getExistingIds()
-            }.await().toSet()
+            }.awaitList().toSet()
         }
         if (removeMissingItems) {
             val currentIds = map { it.id }.toSet()

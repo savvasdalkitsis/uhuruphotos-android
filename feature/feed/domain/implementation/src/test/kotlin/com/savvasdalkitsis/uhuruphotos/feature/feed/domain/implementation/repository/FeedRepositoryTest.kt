@@ -18,7 +18,7 @@ package com.savvasdalkitsis.uhuruphotos.feature.feed.domain.implementation.repos
 import app.cash.turbine.test
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.TestDatabase
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.entities.media.DbRemoteMediaItemSummary
-import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.extensions.await
+import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.extensions.awaitList
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.media.remote.RemoteMediaCollections
 import com.savvasdalkitsis.uhuruphotos.feature.feed.domain.implementation.ProgressUpdate
 import com.savvasdalkitsis.uhuruphotos.feature.feed.domain.implementation.SERVER_ALBUM_LOCATION
@@ -152,7 +152,7 @@ class FeedRepositoryTest {
 
         val album1 = collection(1)
 
-        assertThat(db.remoteMediaCollectionsQueries.getRemoteMediaCollections(limit = -1).await(), sameBeanAs(listOf(
+        assertThat(db.remoteMediaCollectionsQueries.getRemoteMediaCollections(limit = -1).awaitList(), sameBeanAs(listOf(
             entry(mediaItemSummary(2, inCollection = 1))
                 .copy(id = album1.id, albumDate = album1.date)
                 .withServerResponseData(),
@@ -161,7 +161,7 @@ class FeedRepositoryTest {
                 .withServerResponseData(),
         )))
 
-        assertThat(db.remoteMediaItemSummaryQueries.getPhotoSummariesForAlbum(album1.id).await(), sameBeanAs(listOf(
+        assertThat(db.remoteMediaItemSummaryQueries.getPhotoSummariesForAlbum(album1.id).awaitList(), sameBeanAs(listOf(
             photoSummariesForAlbum.copy(id = mediaItemId(1)),
             photoSummariesForAlbum.copy(id = mediaItemId(2)),
         )))
