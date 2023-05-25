@@ -116,7 +116,7 @@ internal class SettingsUseCase @Inject constructor(
         get(showLibrary, showLibraryDefault)
     override fun getMapProvider(): MapProvider =
         get(mapProvider, mapProviderDefault).mapToAvailable()
-    override fun getAvailableMapProviders(): Set<MapProvider> = MapProvider.values()
+    override fun getAvailableMapProviders(): Set<MapProvider> = MapProvider.entries
         .map { it.mapToAvailable() }.toSet()
     override fun getLoggingEnabled(): Boolean =
         get(loggingEnabled, loggingEnabledDefault)

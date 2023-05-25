@@ -36,14 +36,6 @@ internal class FeedWorkScheduler @Inject constructor(
     private val settingsUseCase: SettingsUseCase
 ) : FeedWorkScheduler {
 
-    override fun scheduleFeedRefreshNow(shallow: Boolean) =
-        workScheduleUseCase.scheduleNow(
-            FeedDownloadWorker.WORK_NAME,
-            FeedDownloadWorker::class,
-        ) {
-            putBoolean(FeedDownloadWorker.KEY_SHALLOW, shallow)
-        }
-
     override fun scheduleFeedRefreshPeriodic(
         existingPeriodicWorkPolicy: ExistingPeriodicWorkPolicy
     ) {
@@ -62,13 +54,6 @@ internal class FeedWorkScheduler @Inject constructor(
         } else {
             workScheduleUseCase.cancelUniqueWork(FeedDownloadWorker.WORK_NAME)
         }
-    }
-
-    override fun schedulePrecacheThumbnailsNow() {
-        workScheduleUseCase.scheduleNow(
-            PrecacheFeedThumbnailsWorker.WORK_NAME,
-            PrecacheFeedThumbnailsWorker::class,
-        )
     }
 
     override fun observeFeedRefreshJob(): Flow<RefreshJobState?> =

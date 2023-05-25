@@ -58,6 +58,7 @@ dependencies {
     implementation project(":feature:home:view:api")
     implementation project(":feature:settings:domain:api")
     implementation project(":foundation:activity:api")
+    implementation project(":foundation:download:api")
     implementation project(":foundation:initializer:api")
     implementation project(":foundation:log:api")
     implementation project(":foundation:map:api")

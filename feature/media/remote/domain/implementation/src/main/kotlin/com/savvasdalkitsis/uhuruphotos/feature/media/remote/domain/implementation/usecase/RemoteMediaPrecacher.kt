@@ -26,6 +26,7 @@ import com.google.android.exoplayer2.upstream.DataSpec
 import com.google.android.exoplayer2.upstream.cache.CacheDataSource
 import com.google.android.exoplayer2.upstream.cache.CacheWriter
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.extensions.asyncReturn
+import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.api.usecase.RemoteMediaPrecacher
 import com.savvasdalkitsis.uhuruphotos.foundation.log.api.log
 import dagger.hilt.android.qualifiers.ApplicationContext
 import javax.inject.Inject
@@ -34,12 +35,12 @@ class RemoteMediaPrecacher @Inject constructor(
     @ApplicationContext val context: Context,
     private val imageLoader: ImageLoader,
     private val videoCache: CacheDataSource.Factory,
-){
+) : RemoteMediaPrecacher {
 
-    suspend fun precacheMedia(
+    override suspend fun precacheMedia(
         url: String,
         video: Boolean,
-        progressListener: (progress: Int) -> Unit = {},
+        progressListener: (progress: Int) -> Unit,
     ): Boolean = try {
         if (video) {
             cacheVideo(url, progressListener)

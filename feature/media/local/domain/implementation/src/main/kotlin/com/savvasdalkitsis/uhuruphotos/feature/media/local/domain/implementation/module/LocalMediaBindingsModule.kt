@@ -15,15 +15,12 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.implementation.module
 
-import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.implementation.initializer.LocalMediaInitializer
 import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.implementation.usecase.LocalMediaUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.implementation.worker.LocalMediaWorkScheduler
-import com.savvasdalkitsis.uhuruphotos.foundation.initializer.api.ApplicationCreated
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
-import dagger.multibindings.IntoSet
 
 @Module
 @InstallIn(SingletonComponent::class)
@@ -32,12 +29,4 @@ internal abstract class LocalMediaBindingsModule {
     @Binds
     abstract fun localMediaUseCase(localMediaUseCase: LocalMediaUseCase):
             com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.usecase.LocalMediaUseCase
-
-    @Binds
-    abstract fun localMediaWorkScheduler(localMediaWorkScheduler: LocalMediaWorkScheduler):
-            com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.worker.LocalMediaWorkScheduler
-    @Binds
-    @IntoSet
-    abstract fun localMediaInitializer(localMediaInitializer: LocalMediaInitializer):
-            ApplicationCreated
 }

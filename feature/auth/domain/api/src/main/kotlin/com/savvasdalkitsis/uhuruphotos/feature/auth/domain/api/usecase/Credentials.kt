@@ -15,8 +15,11 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.auth.domain.api.usecase
 
+import dev.zacsweers.redacted.annotations.Redacted
+
 data class Credentials(
     val username: String,
+    @Redacted
     val password: String,
 ) {
     val isEmpty: Boolean get() = username.isEmpty() || password.isEmpty()

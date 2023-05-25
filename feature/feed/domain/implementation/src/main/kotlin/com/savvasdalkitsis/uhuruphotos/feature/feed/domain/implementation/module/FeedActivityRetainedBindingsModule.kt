@@ -13,9 +13,10 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
  */
-package com.savvasdalkitsis.uhuruphotos.feature.memories.domain.implementation.module
+package com.savvasdalkitsis.uhuruphotos.feature.feed.domain.implementation.module
 
-import com.savvasdalkitsis.uhuruphotos.feature.memories.domain.implementation.usecase.MemoriesUseCase
+import com.savvasdalkitsis.uhuruphotos.feature.feed.domain.implementation.FeedImmediateWorkScheduler
+import com.savvasdalkitsis.uhuruphotos.feature.feed.domain.implementation.usecase.FeedUseCase
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -23,10 +24,14 @@ import dagger.hilt.android.components.ActivityRetainedComponent
 
 @Module
 @InstallIn(ActivityRetainedComponent::class)
-abstract class MemoriesBindingsModule {
+internal abstract class FeedActivityRetainedBindingsModule {
 
     @Binds
-    abstract fun memoriesUseCase(memoriesUseCase: MemoriesUseCase):
-            com.savvasdalkitsis.uhuruphotos.feature.memories.domain.api.usecase.MemoriesUseCase
+    abstract fun feedImmediateWorkScheduler(feedImmediateWorkScheduler: FeedImmediateWorkScheduler):
+            com.savvasdalkitsis.uhuruphotos.feature.feed.domain.api.worker.FeedImmediateWorkScheduler
+
+    @Binds
+    abstract fun feedUseCase(feedUseCase: FeedUseCase):
+            com.savvasdalkitsis.uhuruphotos.feature.feed.domain.api.usecase.FeedUseCase
 
 }

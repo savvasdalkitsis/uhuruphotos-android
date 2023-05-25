@@ -33,10 +33,6 @@ internal abstract class FeedBindingsModule {
     abstract fun feedInitializer(feedInitializer: FeedInitializer): ApplicationCreated
 
     @Binds
-    abstract fun feedUseCase(feedUseCase: FeedUseCase):
-            com.savvasdalkitsis.uhuruphotos.feature.feed.domain.api.usecase.FeedUseCase
-
-    @Binds
     abstract fun feedWorkScheduler(feedWorkScheduler: FeedWorkScheduler):
             com.savvasdalkitsis.uhuruphotos.feature.feed.domain.api.worker.FeedWorkScheduler
 

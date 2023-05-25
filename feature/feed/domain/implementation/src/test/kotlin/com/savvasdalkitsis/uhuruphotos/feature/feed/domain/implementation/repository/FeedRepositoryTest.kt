@@ -58,6 +58,7 @@ class FeedRepositoryTest {
     private val feedService = mockk<FeedService>(relaxed = true)
     private val underTest = FeedRepository(
         db.remoteMediaCollectionsQueries,
+        db.remoteMediaItemSummaryQueries,
         remoteMediaUseCase,
         feedService,
     )

@@ -13,14 +13,14 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
  */
-package com.savvasdalkitsis.uhuruphotos.feature.auth.domain.implementation.service.model
+package com.savvasdalkitsis.uhuruphotos.foundation.initializer.api
 
-import com.squareup.moshi.JsonClass
-import dev.zacsweers.redacted.annotations.Redacted
+import androidx.activity.ComponentActivity
 
-@JsonClass(generateAdapter = true)
-data class AuthenticationCredentials(
-    val username: String,
-    @Redacted
-    val password: String,
-)
+interface ActivityCreated {
+
+    fun onActivityCreated(activity: ComponentActivity)
+    fun onActivityDestroyed(activity: ComponentActivity)
+
+    fun priority(): Int = 0
+}

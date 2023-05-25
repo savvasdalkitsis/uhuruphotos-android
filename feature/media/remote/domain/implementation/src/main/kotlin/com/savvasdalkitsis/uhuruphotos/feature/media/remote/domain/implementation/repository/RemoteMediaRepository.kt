@@ -26,7 +26,6 @@ import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.media.remote.Remote
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.media.remote.RemoteMediaTrashQueries
 import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.api.model.toDbModel
 import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.implementation.service.RemoteMediaService
-import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.implementation.worker.RemoteMediaItemWorkScheduler
 import com.savvasdalkitsis.uhuruphotos.foundation.log.api.runCatchingWithLog
 import com.squareup.sqldelight.runtime.coroutines.asFlow
 import com.squareup.sqldelight.runtime.coroutines.mapToList
@@ -41,7 +40,6 @@ import javax.inject.Inject
 class RemoteMediaRepository @Inject constructor(
     private val remoteMediaItemDetailsQueries: RemoteMediaItemDetailsQueries,
     private val remoteMediaItemSummaryQueries: RemoteMediaItemSummaryQueries,
-    private val remoteMediaItemWorkScheduler: RemoteMediaItemWorkScheduler,
     private val remoteMediaService: RemoteMediaService,
     private val remoteMediaTrashQueries: RemoteMediaTrashQueries,
 ) {
@@ -78,14 +76,6 @@ class RemoteMediaRepository @Inject constructor(
     suspend fun getHiddenMedia(): List<DbRemoteMediaItemSummary> =
         remoteMediaItemSummaryQueries.getHidden().await()
 
-    suspend fun refreshDetailsIfMissing(id: String) {
-        when (getMediaItemDetails(id)) {
-            null -> {
-                refreshDetails(id)
-            }
-        }
-    }
-
     suspend fun refreshDetailsNowIfMissing(id: String) =
         when (getMediaItemDetails(id)) {
             null -> refreshDetailsNow(id)
@@ -96,10 +86,6 @@ class RemoteMediaRepository @Inject constructor(
         remoteMediaService.getMediaItem(id).toDbModel().let {
             insertMediaItem(it)
         }
-    }
-
-    fun refreshDetails(id: String) {
-        remoteMediaItemWorkScheduler.scheduleMediaItemDetailsRetrieve(id)
     }
 
     suspend fun refreshFavourites(favouriteThreshold: Int) = runCatchingWithLog {

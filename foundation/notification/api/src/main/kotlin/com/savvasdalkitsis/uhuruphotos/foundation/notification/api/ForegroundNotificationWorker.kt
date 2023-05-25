@@ -27,7 +27,7 @@ import androidx.work.WorkerParameters
 import androidx.work.workDataOf
 import com.savvasdalkitsis.uhuruphotos.math.toProgressPercent
 
-abstract class ForegroundNotificationWorker<BR> constructor(
+abstract class ForegroundNotificationWorker<BR>(
     context: Context,
     params: WorkerParameters,
     private val foregroundInfoBuilder: ForegroundInfoBuilder,

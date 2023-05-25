@@ -27,7 +27,7 @@ data object PerformFullFeedSync : SettingsAction() {
         state: SettingsState,
         effect: EffectHandler<SettingsEffect>
     ) = flow {
-        feedWorkScheduler.scheduleFeedRefreshNow(shallow = false)
+        feedImmediateWorkScheduler.scheduleFeedRefreshNow(shallow = false)
         emit(HideFullFeedSyncDialog)
     }
 }

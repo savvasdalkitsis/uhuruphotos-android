@@ -15,6 +15,7 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.implementation.module
 
+import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.implementation.usecase.RemoteMediaPrecacher
 import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.implementation.usecase.RemoteMediaUseCase
 import dagger.Binds
 import dagger.Module
@@ -28,4 +29,8 @@ abstract class RemoteMediaBindingsModule {
     @Binds
     abstract fun remoteMediaUseCase(remoteMediaUseCase: RemoteMediaUseCase):
             com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.api.usecase.RemoteMediaUseCase
+
+    @Binds
+    abstract fun remoteMediaPrecacher(remoteMediaPrecacher: RemoteMediaPrecacher):
+            com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.api.usecase.RemoteMediaPrecacher
 }

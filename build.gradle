@@ -26,6 +26,7 @@ plugins {
     id "com.bnorm.power.kotlin-power-assert" version "0.13.0" apply false
     id "org.sonarqube" version "4.0.0.2929"
     id "com.autonomousapps.dependency-analysis" version "1.20.0" apply true
+    id "dev.zacsweers.redacted" version "1.4.0" apply false
 }
 
 tasks.register('clean', Delete) {
@@ -50,6 +51,8 @@ subprojects {
     apply plugin: "com.bnorm.power.kotlin-power-assert"
     apply plugin: 'org.jetbrains.kotlin.android'
     apply plugin: 'kotlin-kapt'
+    apply plugin: 'dev.zacsweers.redacted'
+
 
     android {
         compileSdk 33
@@ -86,7 +89,6 @@ subprojects {
         compilerOptions {
             languageVersion = KotlinVersion.KOTLIN_1_9
             freeCompilerArgs.addAll(
-                    "-opt-in=com.google.accompanist.permissions.ExperimentalPermissionsApi",
                     "-opt-in=androidx.compose.animation.ExperimentalAnimationApi",
                     "-opt-in=androidx.compose.animation.graphics.ExperimentalAnimationGraphicsApi",
                     "-opt-in=androidx.compose.foundation.ExperimentalFoundationApi",

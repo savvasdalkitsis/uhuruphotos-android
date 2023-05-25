@@ -16,16 +16,16 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.implementation.worker
 
 import androidx.work.BackoffPolicy
-import com.savvasdalkitsis.uhuruphotos.foundation.worker.api.usecase.WorkScheduleUseCase
+import com.savvasdalkitsis.uhuruphotos.foundation.worker.api.usecase.WorkScheduleNowUseCase
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
 class RemoteMediaItemWorkScheduler @Inject constructor(
-    private val workScheduleUseCase: WorkScheduleUseCase,
+    private val workScheduleNowUseCase: WorkScheduleNowUseCase,
 ) {
 
     fun scheduleMediaItemFavourite(id: String, favourite: Boolean) =
-        workScheduleUseCase.scheduleNow(
+        workScheduleNowUseCase.scheduleNow(
             workName = RemoteMediaItemFavouriteWorker.workName(id),
             RemoteMediaItemFavouriteWorker::class,
         ) {
@@ -34,7 +34,7 @@ class RemoteMediaItemWorkScheduler @Inject constructor(
         }
 
     fun scheduleMediaItemDetailsRetrieve(id: String) =
-        workScheduleUseCase.scheduleNow(
+        workScheduleNowUseCase.scheduleNow(
             workName = RemoteMediaItemDetailsRetrieveWorker.workName(id),
             klass = RemoteMediaItemDetailsRetrieveWorker::class,
             backoffPolicy = BackoffPolicy.LINEAR,
@@ -45,7 +45,7 @@ class RemoteMediaItemWorkScheduler @Inject constructor(
         }
 
     fun scheduleMediaItemTrashing(id: String) {
-        workScheduleUseCase.scheduleNow(
+        workScheduleNowUseCase.scheduleNow(
             workName = RemoteMediaItemTrashWorker.workName(id),
             klass = RemoteMediaItemTrashWorker::class,
         ) {
@@ -54,7 +54,7 @@ class RemoteMediaItemWorkScheduler @Inject constructor(
     }
 
     fun scheduleMediaItemRestoration(id: String) {
-        workScheduleUseCase.scheduleNow(
+        workScheduleNowUseCase.scheduleNow(
             workName = RemoteMediaItemRestoreWorker.workName(id),
             klass = RemoteMediaItemRestoreWorker::class,
         ) {
@@ -63,7 +63,7 @@ class RemoteMediaItemWorkScheduler @Inject constructor(
     }
 
     fun scheduleMediaItemDeletion(id: String) {
-        workScheduleUseCase.scheduleNow(
+        workScheduleNowUseCase.scheduleNow(
             workName = RemoteMediaItemDeletionWorker.workName(id),
             klass = RemoteMediaItemDeletionWorker::class,
         ) {

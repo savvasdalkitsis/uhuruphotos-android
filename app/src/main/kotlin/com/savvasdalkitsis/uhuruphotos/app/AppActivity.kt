@@ -30,6 +30,7 @@ import com.savvasdalkitsis.uhuruphotos.app.config.AppCenterConfig
 import com.savvasdalkitsis.uhuruphotos.app.navigation.AppNavigator
 import com.savvasdalkitsis.uhuruphotos.feature.settings.domain.api.usecase.SettingsUseCase
 import com.savvasdalkitsis.uhuruphotos.foundation.activity.api.holder.CurrentActivityHolder
+import com.savvasdalkitsis.uhuruphotos.foundation.initializer.api.ActivityInitializer
 import com.savvasdalkitsis.uhuruphotos.foundation.log.api.Log
 import com.savvasdalkitsis.uhuruphotos.foundation.map.api.model.LocalMapViewFactoryProvider
 import com.savvasdalkitsis.uhuruphotos.foundation.map.api.model.LocalMapViewStateFactory
@@ -45,8 +46,9 @@ import javax.inject.Inject
 @AndroidEntryPoint
 class AppActivity : FragmentActivity() {
 
-    @Inject lateinit var navigator: AppNavigator
+    @Inject lateinit var activityInitializer: ActivityInitializer
     @Inject lateinit var currentActivityHolder: CurrentActivityHolder
+    @Inject lateinit var navigator: AppNavigator
     @Inject lateinit var settingsUseCase: SettingsUseCase
     @Inject lateinit var mapViewFactoryProviders: Set<@JvmSuppressWildcards MapViewFactoryProvider>
     @Inject lateinit var mapViewStateFactories: Set<@JvmSuppressWildcards MapViewStateFactory>
@@ -57,6 +59,7 @@ class AppActivity : FragmentActivity() {
         super.onCreate(savedInstanceState)
         installSplashScreen()
         currentActivityHolder.onCreated(this)
+        activityInitializer.onCreated(this)
         WindowCompat.setDecorFitsSystemWindows(window, false)
         setContent {
             LaunchedEffect(Unit) {
@@ -77,6 +80,7 @@ class AppActivity : FragmentActivity() {
 
     override fun onDestroy() {
         super.onDestroy()
+        activityInitializer.onDestroyed(this)
         currentActivityHolder.onDestroy()
     }
 }

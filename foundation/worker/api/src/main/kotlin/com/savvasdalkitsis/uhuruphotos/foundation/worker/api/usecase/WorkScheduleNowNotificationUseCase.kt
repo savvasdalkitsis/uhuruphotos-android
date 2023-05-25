@@ -17,29 +17,21 @@ package com.savvasdalkitsis.uhuruphotos.foundation.worker.api.usecase
 
 import androidx.work.BackoffPolicy
 import androidx.work.CoroutineWorker
-import androidx.work.ExistingPeriodicWorkPolicy
+import androidx.work.Data
+import androidx.work.ExistingWorkPolicy
 import androidx.work.NetworkType
 import java.util.concurrent.TimeUnit
 import kotlin.reflect.KClass
 
-interface WorkScheduleUseCase {
-
-    fun <W: CoroutineWorker> schedulePeriodic(
+interface WorkScheduleNowNotificationUseCase {
+    fun <W: CoroutineWorker> scheduleNow(
         workName: String,
         klass: KClass<W>,
-        repeatInterval: Long,
-        repeatIntervalTimeUnit: TimeUnit,
-        initialDelayDuration: Long,
-        initialDelayTimeUnit: TimeUnit,
+        existingWorkPolicy: ExistingWorkPolicy = ExistingWorkPolicy.REPLACE,
         backoffPolicy: BackoffPolicy = BackoffPolicy.EXPONENTIAL,
         backoffDelay: Long = 1,
         backoffTimeUnit: TimeUnit = TimeUnit.MINUTES,
         networkRequirement: NetworkType = NetworkType.CONNECTED,
-        requiresCharging: Boolean = false,
-        existingPeriodicWorkPolicy: ExistingPeriodicWorkPolicy = ExistingPeriodicWorkPolicy.CANCEL_AND_REENQUEUE,
+        params: Data.Builder.() -> Data.Builder = { this },
     )
-
-    fun cancelAllScheduledWork()
-
-    fun cancelUniqueWork(workName: String)
 }

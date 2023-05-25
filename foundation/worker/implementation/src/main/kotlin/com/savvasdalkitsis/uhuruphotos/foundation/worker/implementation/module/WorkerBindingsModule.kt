@@ -15,6 +15,7 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.foundation.worker.implementation.module
 
+import com.savvasdalkitsis.uhuruphotos.foundation.worker.implementation.usecase.WorkScheduleNowUseCase
 import com.savvasdalkitsis.uhuruphotos.foundation.worker.implementation.usecase.WorkScheduleUseCase
 import com.savvasdalkitsis.uhuruphotos.foundation.worker.implementation.usecase.WorkerStatusUseCase
 import dagger.Binds
@@ -29,6 +30,10 @@ abstract class WorkerBindingsModule {
     @Binds
     abstract fun workScheduler(scheduler: WorkScheduleUseCase):
             com.savvasdalkitsis.uhuruphotos.foundation.worker.api.usecase.WorkScheduleUseCase
+
+    @Binds
+    abstract fun workNowScheduler(scheduler: WorkScheduleNowUseCase):
+            com.savvasdalkitsis.uhuruphotos.foundation.worker.api.usecase.WorkScheduleNowUseCase
 
     @Binds
     abstract fun workerStatusUseCase(useCase: WorkerStatusUseCase):

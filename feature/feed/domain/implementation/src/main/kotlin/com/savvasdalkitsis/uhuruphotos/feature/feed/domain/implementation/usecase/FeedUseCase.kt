@@ -19,7 +19,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.Predefi
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.extensions.isVideo
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.media.remote.GetRemoteMediaCollections
 import com.savvasdalkitsis.uhuruphotos.feature.feed.domain.api.usecase.FeedUseCase
-import com.savvasdalkitsis.uhuruphotos.feature.feed.domain.api.worker.FeedWorkScheduler
+import com.savvasdalkitsis.uhuruphotos.feature.feed.domain.api.worker.FeedImmediateWorkScheduler
 import com.savvasdalkitsis.uhuruphotos.feature.feed.domain.implementation.repository.FeedRepository
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaCollection
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaCollectionSource
@@ -47,7 +47,7 @@ import javax.inject.Inject
 internal class FeedUseCase @Inject constructor(
     private val feedRepository: FeedRepository,
     private val mediaUseCase: MediaUseCase,
-    private val feedWorkScheduler: FeedWorkScheduler,
+    private val feedImmediateWorkScheduler: FeedImmediateWorkScheduler,
     private val downloadUseCase: DownloadUseCase,
     private val preferences: Preferences,
 ) : FeedUseCase {
@@ -110,7 +110,7 @@ internal class FeedUseCase @Inject constructor(
     }
 
     override fun refreshFeed(shallow: Boolean) {
-        feedWorkScheduler.scheduleFeedRefreshNow(shallow)
+        feedImmediateWorkScheduler.scheduleFeedRefreshNow(shallow)
     }
 
     private fun GetRemoteMediaCollections.toMediaCollectionSource() = MediaCollectionSource(

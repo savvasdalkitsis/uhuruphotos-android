@@ -1,5 +1,4 @@
 plugins {
-    id "dev.zacsweers.redacted" version "1.4.0"
     id 'kotlin-parcelize'
 }
 
