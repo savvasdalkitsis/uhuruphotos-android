@@ -246,4 +246,6 @@
     <string name="show_always">Altijd tonen</string>
     <string name="show_on_scroll">Tonen tijdens scrollen</string>
     <string name="show_never">Nooit tonen</string>
+    <string name="search_for_something">Zoek iets</string>
+    <string name="search_icon">Zoekpictogram</string>
 </resources>
