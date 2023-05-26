@@ -278,4 +278,9 @@
     <string name="info">Інформація</string>
     <string name="search_for_something">Шукати щось</string>
     <string name="search_icon">Значок пошуку</string>
+    <string name="close">Закрити</string>
+    <string name="are_you_sure_you_want_to_start_local_sync">Ви впевнені, що хочете почати синхронізацію локальних медіа\?</string>
+    <string name="start">Почати</string>
+    <string name="full_feed_sync">Повна синхронізація стрічки</string>
+    <string name="local_media_sync">Синхронізація локальних медіа</string>
 </resources>
