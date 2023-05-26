@@ -261,4 +261,6 @@
     <string name="show_on_scroll">Mostrar durante el desplazamiento</string>
     <string name="show_always">Mostrar siempre</string>
     <string name="show_never">Nunca mostrar</string>
+    <string name="search_for_something">Encontrar algo</string>
+    <string name="search_icon">Buscar un icono</string>
 </resources>
