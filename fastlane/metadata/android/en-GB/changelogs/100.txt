@@ -1,0 +1,5 @@
+* Fixing some issues around hidden media changes not reflecting in the app
+* UI fixes and tweaks to make the app prettier
+* Adding jobs status in the account overview popup
+* Adding local media sync job in the jobs list
+* New language (Ukrainian)
