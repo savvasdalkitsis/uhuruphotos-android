@@ -18,4 +18,5 @@ package com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.worker
 interface LocalMediaWorkScheduler {
 
     fun scheduleLocalMediaSyncNowIfNotRunning()
+    fun cancelLocalMediaSync()
 }

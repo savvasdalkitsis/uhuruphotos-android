@@ -10,9 +10,11 @@ android {
 
 dependencies {
     api project(':feature:avatar:view:api')
+    api project(":feature:jobs:domain:api")
     implementation project(':feature:avatar:domain:api')
     implementation project(":feature:account:domain:api")
     implementation project(":feature:home:view:api")
+    implementation project(":feature:jobs:view:api")
     implementation project(":foundation:icons:api")
     implementation project(":foundation:navigation:api")
     implementation project(":foundation:ui:api")

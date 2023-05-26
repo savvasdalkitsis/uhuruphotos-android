@@ -29,7 +29,6 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.widthIn
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
 import androidx.compose.material.MaterialTheme
@@ -43,19 +42,21 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.TransformOrigin
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Popup
-import com.savvasdalkitsis.uhuruphotos.feature.avatar.view.api.ui.state.AvatarState
+import com.savvasdalkitsis.uhuruphotos.feature.account.view.api.ui.state.AccountOverviewState
+import com.savvasdalkitsis.uhuruphotos.feature.jobs.domain.api.model.Job
 
 @Composable
 fun AccountOverviewPopUp(
-    visible: Boolean,
-    avatarState: AvatarState,
+    state: AccountOverviewState,
     onDismiss: () -> Unit,
     onLogoutClicked: () -> Unit,
     onEditServerClicked: () -> Unit,
     onSettingsClicked: () -> Unit,
+    onStartJob: (Job) -> Unit,
+    onCancelJob: (Job) -> Unit,
 ) {
     Box {
-        if (visible) {
+        if (state.showAccountOverview) {
             Box(
                 modifier = Modifier
                     .fillMaxSize()
@@ -74,30 +75,24 @@ fun AccountOverviewPopUp(
                     .align(Alignment.TopEnd),
                 enter = fadeIn() + scaleIn(transformOrigin = TransformOrigin(1f, 0f)),
                 exit = fadeOut() + scaleOut(transformOrigin = TransformOrigin(1f, 0f)),
-                visible = visible,
+                visible = state.showAccountOverview,
             ) {
                 Surface(
                     modifier = Modifier
-                        .clip(RoundedCornerShape(12.dp))
+                        .clip(MaterialTheme.shapes.large)
                         .widthIn(max = 480.dp)
                         .background(MaterialTheme.colors.background),
                     elevation = 4.dp,
-                    shape = RoundedCornerShape(12.dp),
+                    shape = MaterialTheme.shapes.large,
                 ) {
-                    Row {
-                        Spacer(modifier = Modifier.fillMaxWidth().weight(1f))
-                        IconButton(
-                            modifier = Modifier.align(Alignment.Top),
-                            onClick = onDismiss
-                        ) {
-                            Icon(imageVector = Icons.Default.Close, contentDescription = "close")
-                        }
-                    }
                     AccountOverview(
-                        avatarState = avatarState,
+                        state = state,
                         onLogoutClicked = onLogoutClicked,
                         onEditServerClicked = onEditServerClicked,
                         onSettingsClicked = onSettingsClicked,
+                        onStartJob = onStartJob,
+                        onCancelJob = onCancelJob,
+                        onClose = onDismiss,
                     )
                 }
             }

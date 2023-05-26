@@ -20,8 +20,8 @@ import androidx.compose.animation.core.tween
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Card
+import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -47,14 +47,18 @@ internal fun FeedMemory(
     Card(
         modifier = Modifier
             .padding(0.dp),
-        shape = RoundedCornerShape(12.dp),
+        shape = MaterialTheme.shapes.medium,
         elevation = 4.dp,
     ) {
         Box(
             modifier = Modifier
                 .width(130.dp)
         ) {
-            Crossfade(targetState = memory.cel, animationSpec = tween(1000)) { celState ->
+            Crossfade(
+                targetState = memory.cel,
+                animationSpec = tween(1000),
+                label = "memoryCrossFade",
+            ) { celState ->
                 Cel(
                     modifier = Modifier
                         .drawWithCache {

@@ -17,6 +17,8 @@ package com.savvasdalkitsis.uhuruphotos.feature.account.view.api.seam
 
 import com.savvasdalkitsis.uhuruphotos.feature.account.view.api.ui.state.AccountOverviewState
 import com.savvasdalkitsis.uhuruphotos.feature.avatar.view.api.ui.state.AvatarState
+import com.savvasdalkitsis.uhuruphotos.feature.jobs.domain.api.model.Job
+import com.savvasdalkitsis.uhuruphotos.feature.jobs.view.ui.state.JobState
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.Mutation
 
 sealed class AccountOverviewMutation(
@@ -43,4 +45,15 @@ sealed class AccountOverviewMutation(
         it.copy(showLogOutConfirmation = false)
     })
 
+    data class ShowJobs(val jobs: List<JobState>) : AccountOverviewMutation({
+        it.copy(jobs = jobs)
+    })
+
+    data class ShowJobStartDialog(val job: Job) : AccountOverviewMutation({
+        it.copy(showJobStartDialog = job)
+    })
+
+    data object HideJobDialog : AccountOverviewMutation({
+        it.copy(showJobStartDialog = null)
+    })
 }

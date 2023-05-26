@@ -18,6 +18,8 @@ package com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.ui.
 import androidx.work.NetworkType
 import com.savvasdalkitsis.uhuruphotos.feature.avatar.view.api.ui.state.AvatarState
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.api.ui.state.FeedMediaItemSyncDisplay
+import com.savvasdalkitsis.uhuruphotos.feature.jobs.domain.api.model.Job
+import com.savvasdalkitsis.uhuruphotos.feature.jobs.view.ui.state.JobState
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.theme.ThemeMode
 
 data class SettingsState(
@@ -34,15 +36,11 @@ data class SettingsState(
     val feedDaysToRefresh: Int = 0,
     val feedSyncFrequency: Int? = null,
     val avatarState: AvatarState = AvatarState(),
-    val showFullFeedSyncDialog: Boolean = false,
-    val showPrecacheThumbnailsDialog: Boolean = false,
-    val fullSyncButtonEnabled: Boolean = false,
-    val precacheThumbnailsButtonEnabled: Boolean = false,
+    val jobStates: List<JobState> = emptyList(),
+    val showJobStartDialog: Job? = null,
     val fullSyncNetworkRequirement: NetworkType? = null,
     val fullSyncRequiresCharging: Boolean = false,
     val themeMode: ThemeMode = ThemeMode.default,
-    val fullSyncJobProgress: Int? = null,
-    val precacheThumbnailsProgress: Int? = null,
     val searchSuggestionsEnabled: Boolean = true,
     val shareRemoveGpsDataEnabled: Boolean = false,
     val showLibrary: Boolean = true,

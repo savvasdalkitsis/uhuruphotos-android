@@ -21,10 +21,11 @@ import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass.Companion
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.stringResource
 import com.savvasdalkitsis.uhuruphotos.feature.avatar.view.api.ui.Avatar
-import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.actions.DismissFullFeedSyncDialog
-import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.actions.DismissPrecacheThumbnailsDialog
+import com.savvasdalkitsis.uhuruphotos.feature.jobs.view.ui.JobPermissionDialog
+import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.actions.DismissJobDialog
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.actions.NavigateBack
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.actions.SettingsAction
+import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.actions.StartJob
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.ui.controller.SettingsViewStateController
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.ui.state.MapProviderState.Selected
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.ui.state.SettingsState
@@ -134,18 +135,11 @@ internal fun Settings(
                 }
             }
         }
-        if (state.showFullFeedSyncDialog) {
-            SettingsFullFeedSyncPermissionDialog(action,
-                onDismiss = {
-                    action(DismissFullFeedSyncDialog)
-                }
-            )
-        }
-        if (state.showPrecacheThumbnailsDialog) {
-            SettingsPrecacheThumbnailsPermissionDialog(action,
-                onDismiss = {
-                    action(DismissPrecacheThumbnailsDialog)
-                }
+        state.showJobStartDialog?.let { job ->
+            JobPermissionDialog(
+                job = job,
+                onStartJob = { action(StartJob(it)) },
+                onDismiss = { action(DismissJobDialog) }
             )
         }
     }

@@ -20,6 +20,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.model.Loca
 import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.model.LocalMediaItem
 import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.model.LocalMediaItems
 import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.model.LocalPermissions
+import com.savvasdalkitsis.uhuruphotos.foundation.worker.api.model.RefreshJobState
 import kotlinx.coroutines.flow.Flow
 
 interface LocalMediaUseCase {
@@ -47,4 +48,6 @@ interface LocalMediaUseCase {
     fun observePermissionsState(): Flow<LocalPermissions>
 
     fun observeLocalMediaSyncJobStatus(): Flow<WorkInfo.State?>
+
+    fun observeLocalMediaSyncJob(): Flow<RefreshJobState?>
 }

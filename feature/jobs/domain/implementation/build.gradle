@@ -1,0 +1,12 @@
+android {
+    namespace 'com.savvasdalkitsis.uhuruphotos.feature.jobs.domain.implementation'
+}
+
+dependencies {
+    implementation project(":feature:feed:domain:api")
+    implementation project(":feature:jobs:domain:api")
+    implementation project(":feature:media:local:domain:api")
+    implementation(
+            libs.hilt,
+    )
+}

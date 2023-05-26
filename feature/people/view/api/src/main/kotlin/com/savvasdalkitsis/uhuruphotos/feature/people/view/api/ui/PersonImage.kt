@@ -16,10 +16,10 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.feature.people.view.api.ui
 
 import androidx.compose.foundation.layout.aspectRatio
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.layout.ContentScale
 import com.savvasdalkitsis.uhuruphotos.feature.people.view.api.ui.state.Person
 import com.savvasdalkitsis.uhuruphotos.foundation.image.api.ui.Image
@@ -27,7 +27,7 @@ import com.savvasdalkitsis.uhuruphotos.foundation.image.api.ui.Image
 @Composable
 fun PersonImage(
     modifier: Modifier = Modifier,
-    shape: RoundedCornerShape,
+    shape: Shape,
     person: Person
 ) {
     Image(

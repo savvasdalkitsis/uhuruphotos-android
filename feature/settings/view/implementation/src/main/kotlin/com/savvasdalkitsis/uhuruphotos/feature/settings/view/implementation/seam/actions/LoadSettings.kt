@@ -15,20 +15,13 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.actions
 
-import androidx.work.WorkInfo
+import com.savvasdalkitsis.uhuruphotos.feature.jobs.view.ui.state.toJobState
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.SettingsActionsContext
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.SettingsMutation
-import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.SettingsMutation.DisableFullSyncButton
-import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.SettingsMutation.DisablePrecacheThumbnailsButton
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.SettingsMutation.DisplayBiometrics
-import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.SettingsMutation.DisplayFullSyncProgress
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.SettingsMutation.DisplayMapProviders
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.SettingsMutation.DisplayNoMapProvidersOptions
-import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.SettingsMutation.DisplayPrecacheThumbnailsProgress
-import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.SettingsMutation.EnableFullSyncButton
-import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.SettingsMutation.EnablePrecacheThumbnailsButton
-import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.SettingsMutation.HideFullSyncProgress
-import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.SettingsMutation.HidePrecacheThumbnailsProgress
+import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.SettingsMutation.ShowJobs
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.effects.SettingsEffect
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.ui.state.BiometricsSetting.Enrolled
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.ui.state.BiometricsSetting.NotEnrolled
@@ -36,8 +29,6 @@ import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.ui.s
 import com.savvasdalkitsis.uhuruphotos.foundation.biometrics.api.model.Biometrics
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.EffectHandler
 import kotlinx.coroutines.flow.combine
-import kotlinx.coroutines.flow.flatMapMerge
-import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.merge
@@ -105,33 +96,9 @@ data object LoadSettings : SettingsAction() {
             .map(SettingsMutation::SetMemoryCacheUpperLimit),
         flowOf(systemUseCase.getAvailableStorageInMb())
             .map(SettingsMutation::SetDiskCacheUpperLimit),
-        combine(
-            feedWorkScheduler.observeFeedRefreshJob(),
-            feedWorkScheduler.observePrecacheThumbnailsJob(),
-        ) { feedRefresh, precacheThumbnails ->
-            feedRefresh to precacheThumbnails
-        }.flatMapMerge { (feedRefresh, precacheThumbnails) ->
-            flow {
-                when  {
-                    feedRefresh?.status == WorkInfo.State.RUNNING -> {
-                        emit(DisableFullSyncButton)
-                        emit(DisablePrecacheThumbnailsButton)
-                        emit(DisplayFullSyncProgress(feedRefresh.progress))
-                        emit(HidePrecacheThumbnailsProgress)
-                    }
-                    precacheThumbnails?.status == WorkInfo.State.RUNNING -> {
-                        emit(DisableFullSyncButton)
-                        emit(DisablePrecacheThumbnailsButton)
-                        emit(DisplayPrecacheThumbnailsProgress(precacheThumbnails.progress))
-                        emit(HideFullSyncProgress)
-                    }
-                    else -> {
-                        emit(EnableFullSyncButton)
-                        emit(EnablePrecacheThumbnailsButton)
-                    }
-                }
-            }
-        }
+        jobsUseCase.observeJobsStatus().map {
+            ShowJobs(it.jobs.toJobState)
+        },
     )
 
     context(SettingsActionsContext)

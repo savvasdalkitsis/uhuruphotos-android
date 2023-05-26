@@ -28,6 +28,7 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.material.OutlinedButton
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -40,21 +41,33 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.savvasdalkitsis.uhuruphotos.feature.account.view.api.ui.state.AccountOverviewState
 import com.savvasdalkitsis.uhuruphotos.feature.avatar.view.api.ui.Avatar
-import com.savvasdalkitsis.uhuruphotos.feature.avatar.view.api.ui.state.AvatarState
 import com.savvasdalkitsis.uhuruphotos.feature.avatar.view.api.ui.state.previewAvatarState
+import com.savvasdalkitsis.uhuruphotos.feature.jobs.domain.api.model.Job
+import com.savvasdalkitsis.uhuruphotos.feature.jobs.domain.api.model.JobStatus.Blocked
+import com.savvasdalkitsis.uhuruphotos.feature.jobs.domain.api.model.JobStatus.Idle
+import com.savvasdalkitsis.uhuruphotos.feature.jobs.domain.api.model.JobStatus.InProgress
+import com.savvasdalkitsis.uhuruphotos.feature.jobs.domain.api.model.JobStatus.Queued
+import com.savvasdalkitsis.uhuruphotos.feature.jobs.view.ui.Jobs
+import com.savvasdalkitsis.uhuruphotos.feature.jobs.view.ui.state.JobState
 import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.R.drawable
 import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.theme.PreviewAppTheme
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.ActionIcon
+import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.SectionHeader
+import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.state.Title
 
 @Composable
 internal fun AccountOverview(
     modifier: Modifier = Modifier,
-    avatarState: AvatarState,
+    state: AccountOverviewState,
     onLogoutClicked: () -> Unit = {},
     onEditServerClicked: () -> Unit = {},
     onSettingsClicked: () -> Unit = {},
+    onStartJob: (Job) -> Unit = {},
+    onCancelJob: (Job) -> Unit = {},
+    onClose: () -> Unit = {},
 ) {
     Column(
         modifier = modifier
@@ -68,19 +81,19 @@ internal fun AccountOverview(
             verticalAlignment = Alignment.CenterVertically,
         ) {
             Avatar(
-                state = avatarState,
+                state = state.avatarState,
                 size = 48.dp
             )
-            Column {
+            Column(modifier = Modifier.weight(1f)) {
                 Text(
-                    text = avatarState.userFullName,
+                    text = state.avatarState.userFullName,
                     style = TextStyle.Default.copy(
                         fontWeight = FontWeight.Bold,
                         fontSize = 14.sp
                     )
                 )
                 Text(
-                    text = avatarState.serverUrl,
+                    text = state.avatarState.serverUrl,
                     style = MaterialTheme.typography.caption.copy(color = Color.Gray),
                 )
             }
@@ -88,6 +101,19 @@ internal fun AccountOverview(
                 onClick = onEditServerClicked,
                 icon = drawable.ic_edit,
                 contentDescription = stringResource(string.edit_server_url)
+            )
+            ActionIcon(
+                onClick = onClose,
+                icon = drawable.ic_close,
+                contentDescription = stringResource(string.close)
+            )
+        }
+        Column {
+            SectionHeader(title = stringResource(string.jobs))
+            Jobs(
+                jobs = state.jobs,
+                onStartJob = onStartJob,
+                onCancelJob = onCancelJob,
             )
         }
         Row(
@@ -122,7 +148,15 @@ fun AccountOverviewPreview() {
     PreviewAppTheme {
         AccountOverview(
             modifier = Modifier.fillMaxWidth(),
-            avatarState = previewAvatarState,
+            state = AccountOverviewState(
+                avatarState = previewAvatarState,
+                jobs = listOf(
+                    JobState(Title.Text("Feed"), Job.FEED_SYNC, Idle),
+                    JobState(Title.Text("Precache"), Job.FEED_SYNC, Blocked),
+                    JobState(Title.Text("Local"), Job.FEED_SYNC, InProgress(25)),
+                    JobState(Title.Text("Queued"), Job.FEED_SYNC, Queued),
+                )
+            ),
         )
     }
 }

@@ -18,10 +18,12 @@ package com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.implementatio
 import androidx.work.ExistingWorkPolicy
 import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.worker.LocalMediaWorkScheduler
 import com.savvasdalkitsis.uhuruphotos.foundation.worker.api.usecase.WorkScheduleNowNotificationUseCase
+import com.savvasdalkitsis.uhuruphotos.foundation.worker.api.usecase.WorkScheduleUseCase
 import javax.inject.Inject
 
 class LocalMediaWorkScheduler @Inject constructor(
     private val workScheduleNowNotificationUseCase: WorkScheduleNowNotificationUseCase,
+    private val workScheduleUseCase: WorkScheduleUseCase,
 ): LocalMediaWorkScheduler {
 
     override fun scheduleLocalMediaSyncNowIfNotRunning() {
@@ -30,5 +32,9 @@ class LocalMediaWorkScheduler @Inject constructor(
             klass = LocalMediaSyncWorker::class,
             existingWorkPolicy = ExistingWorkPolicy.KEEP,
         )
+    }
+
+    override fun cancelLocalMediaSync() {
+        workScheduleUseCase.cancelUniqueWork(LocalMediaSyncWorker.WORK_NAME)
     }
 }

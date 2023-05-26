@@ -21,8 +21,8 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.BottomSheetScaffold
+import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
@@ -53,7 +53,7 @@ fun BottomPanelHeatMap(
 
     BottomSheetScaffold(
         sheetPeekHeight = sheetPeekHeight,
-        sheetShape = RoundedCornerShape(12.dp),
+        sheetShape = MaterialTheme.shapes.large,
         sheetContent = {
             val height = max(sheetPeekHeight, sheetSize.size.height - insetsTop() - 120.dp)
             Column(

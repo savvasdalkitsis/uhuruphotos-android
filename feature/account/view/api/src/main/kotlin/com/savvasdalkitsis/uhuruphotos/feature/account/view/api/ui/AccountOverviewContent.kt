@@ -18,12 +18,17 @@ package com.savvasdalkitsis.uhuruphotos.feature.account.view.api.ui
 import androidx.compose.runtime.Composable
 import com.savvasdalkitsis.uhuruphotos.feature.account.view.api.seam.actions.AccountOverviewAction
 import com.savvasdalkitsis.uhuruphotos.feature.account.view.api.seam.actions.AskToLogOut
+import com.savvasdalkitsis.uhuruphotos.feature.account.view.api.seam.actions.AskToStartJob
+import com.savvasdalkitsis.uhuruphotos.feature.account.view.api.seam.actions.CancelJob
 import com.savvasdalkitsis.uhuruphotos.feature.account.view.api.seam.actions.DismissAccountOverview
 import com.savvasdalkitsis.uhuruphotos.feature.account.view.api.seam.actions.DismissLogOutDialog
 import com.savvasdalkitsis.uhuruphotos.feature.account.view.api.seam.actions.EditServer
+import com.savvasdalkitsis.uhuruphotos.feature.account.view.api.seam.actions.HideJobDialog
 import com.savvasdalkitsis.uhuruphotos.feature.account.view.api.seam.actions.LogOut
 import com.savvasdalkitsis.uhuruphotos.feature.account.view.api.seam.actions.SettingsClick
+import com.savvasdalkitsis.uhuruphotos.feature.account.view.api.seam.actions.StartJob
 import com.savvasdalkitsis.uhuruphotos.feature.account.view.api.ui.state.AccountOverviewState
+import com.savvasdalkitsis.uhuruphotos.feature.jobs.view.ui.JobPermissionDialog
 
 @Composable
 fun AccountOverviewContent(
@@ -31,17 +36,25 @@ fun AccountOverviewContent(
     action: (AccountOverviewAction) -> Unit,
 ) {
     AccountOverviewPopUp(
-        visible = state.showAccountOverview,
-        avatarState = state.avatarState,
+        state = state,
         onDismiss = { action(DismissAccountOverview) },
         onLogoutClicked = { action(AskToLogOut) },
         onEditServerClicked = { action(EditServer) },
+        onStartJob = { action(AskToStartJob(it)) },
+        onCancelJob = { action(CancelJob(it)) },
         onSettingsClicked = { action(SettingsClick) },
     )
     if (state.showLogOutConfirmation) {
         LogOutConfirmationDialog(
             onDismiss = { action(DismissLogOutDialog) },
             onLogOut = { action(LogOut) },
+        )
+    }
+    state.showJobStartDialog?.let { job ->
+        JobPermissionDialog(
+            job = job,
+            onStartJob = { action(StartJob(job)) },
+            onDismiss = { action(HideJobDialog) }
         )
     }
 }

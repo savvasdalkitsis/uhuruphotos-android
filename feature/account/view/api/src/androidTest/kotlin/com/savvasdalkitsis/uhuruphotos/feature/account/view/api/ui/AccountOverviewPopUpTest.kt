@@ -41,8 +41,7 @@ class AccountOverviewPopUpTest {
         compose.setContent {
             Text("outside")
             AccountOverviewPopUp(
-                visible = true,
-                avatarState = AvatarState(),
+                state = AvatarState(),
                 onDismiss = dismiss,
                 onLogoutClicked = logOut,
                 onEditServerClicked = editServer,

@@ -18,6 +18,8 @@ package com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.sea
 import androidx.work.NetworkType
 import com.savvasdalkitsis.uhuruphotos.feature.avatar.view.api.ui.state.AvatarState
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.api.ui.state.FeedMediaItemSyncDisplay
+import com.savvasdalkitsis.uhuruphotos.feature.jobs.domain.api.model.Job
+import com.savvasdalkitsis.uhuruphotos.feature.jobs.view.ui.state.JobState
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.ui.state.BiometricsSetting
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.ui.state.MapProviderState
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.ui.state.SettingsState
@@ -29,52 +31,16 @@ sealed class SettingsMutation(
     mutation: Mutation<SettingsState>,
 ) : Mutation<SettingsState> by mutation {
 
-    data object ShowFullFeedSyncDialog : SettingsMutation({
-        it.copy(showFullFeedSyncDialog = true)
+    data class ShowJobStartDialog(val job: Job) : SettingsMutation({
+        it.copy(showJobStartDialog = job)
     })
 
-    data object HideFullFeedSyncDialog : SettingsMutation({
-        it.copy(showFullFeedSyncDialog = false)
+    data object HideJobDialog : SettingsMutation({
+        it.copy(showJobStartDialog = null)
     })
 
-    data object ShowPrecacheThumbnailsDialog : SettingsMutation({
-        it.copy(showPrecacheThumbnailsDialog = true)
-    })
-
-    data object HidePrecacheThumbnailsDialog : SettingsMutation({
-        it.copy(showPrecacheThumbnailsDialog = false)
-    })
-
-    data object EnableFullSyncButton : SettingsMutation({
-        it.copy(fullSyncButtonEnabled = true)
-    })
-
-    data object DisableFullSyncButton : SettingsMutation({
-        it.copy(fullSyncButtonEnabled = false)
-    })
-
-    data object EnablePrecacheThumbnailsButton : SettingsMutation({
-        it.copy(precacheThumbnailsButtonEnabled = true)
-    })
-
-    data object DisablePrecacheThumbnailsButton : SettingsMutation({
-        it.copy(precacheThumbnailsButtonEnabled = false)
-    })
-
-    data object HidePrecacheThumbnailsProgress : SettingsMutation({
-        it.copy(precacheThumbnailsProgress = null)
-    })
-
-    data object HideFullSyncProgress : SettingsMutation({
-        it.copy(fullSyncJobProgress = null)
-    })
-
-    data class DisplayFullSyncProgress(val progress: Int) : SettingsMutation({
-        it.copy(fullSyncJobProgress = progress)
-    })
-
-    data class DisplayPrecacheThumbnailsProgress(val progress: Int) : SettingsMutation({
-        it.copy(precacheThumbnailsProgress = progress)
+    data class ShowJobs(val jobStates: List<JobState>) : SettingsMutation({
+        it.copy(jobStates = jobStates)
     })
 
     data class DisplayDiskCacheMaxLimit(val limit: Int) : SettingsMutation({

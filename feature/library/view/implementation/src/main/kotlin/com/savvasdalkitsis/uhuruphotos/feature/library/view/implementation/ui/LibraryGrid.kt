@@ -35,7 +35,6 @@ import androidx.compose.foundation.lazy.grid.GridItemSpan
 import androidx.compose.foundation.lazy.grid.LazyGridItemSpanScope
 import androidx.compose.foundation.lazy.grid.LazyGridScope
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Icon
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
@@ -168,7 +167,7 @@ private fun PillItem(title: String, icon: Int, onSelected: () -> Unit) {
         Box(
             modifier = Modifier
                 .fillMaxWidth()
-                .clip(RoundedCornerShape(26.dp))
+                .clip(MaterialTheme.shapes.large)
                 .clickable { onSelected() }
                 .background(CustomColors.emptyItem)
                 .padding(16.dp),
@@ -222,7 +221,7 @@ fun LibraryEntry(
                 modifier = photoGridModifier,
                 state = state,
                 onSelected = onSelected,
-                shape = RoundedCornerShape(26.dp)
+                shape = MaterialTheme.shapes.large
             )
             if (overlayIcon != null) {
                 Icon(

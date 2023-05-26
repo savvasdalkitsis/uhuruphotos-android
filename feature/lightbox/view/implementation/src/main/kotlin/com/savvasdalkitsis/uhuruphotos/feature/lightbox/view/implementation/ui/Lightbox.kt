@@ -23,7 +23,6 @@ import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.ModalBottomSheetLayout
 import androidx.compose.material.ModalBottomSheetValue
@@ -79,7 +78,7 @@ internal fun Lightbox(
                 Surface(
                     modifier = Modifier
                         .align(CenterHorizontally)
-                        .clip(RoundedCornerShape(12.dp))
+                        .clip(MaterialTheme.shapes.large)
                         .heightIn(min = max(100.dp, sheetSize.size.height - insetsTop()))
                         .let {
                             when (LocalWindowSize.current.widthSizeClass) {

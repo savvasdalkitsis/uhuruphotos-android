@@ -17,6 +17,7 @@ package com.savvasdalkitsis.uhuruphotos.feature.feed.domain.api.worker
 
 import androidx.work.ExistingPeriodicWorkPolicy
 import androidx.work.WorkInfo
+import com.savvasdalkitsis.uhuruphotos.foundation.worker.api.model.RefreshJobState
 import kotlinx.coroutines.flow.Flow
 
 interface FeedWorkScheduler {

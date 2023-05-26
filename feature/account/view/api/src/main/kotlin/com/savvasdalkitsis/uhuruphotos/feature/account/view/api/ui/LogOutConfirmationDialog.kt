@@ -17,6 +17,7 @@ package com.savvasdalkitsis.uhuruphotos.feature.account.view.api.ui
 
 import androidx.compose.material.AlertDialog
 import androidx.compose.material.Button
+import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 
@@ -27,6 +28,7 @@ fun LogOutConfirmationDialog(
 ) {
     AlertDialog(
         onDismissRequest = onDismiss,
+        shape = MaterialTheme.shapes.large,
         title = { Text("Log out") },
         text = { Text("Are you sure you want to log out?") },
         confirmButton = {

@@ -19,9 +19,12 @@ import androidx.compose.animation.animateContentSize
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.material.Card
+import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Popup
 import com.savvasdalkitsis.uhuruphotos.feature.search.view.implementation.seam.actions.SearchAction
@@ -35,8 +38,9 @@ internal fun SearchSuggestions(
     onSearchAction: (String) -> Unit,
 ) {
     Popup {
-        Surface(
-            modifier = Modifier.padding(horizontal = 8.dp),
+        Card(
+            modifier = Modifier.clip(MaterialTheme.shapes.large)
+                .padding(horizontal = 16.dp, vertical = 8.dp),
             elevation = 2.dp,
         ) {
             LazyColumn(

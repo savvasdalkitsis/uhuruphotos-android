@@ -13,6 +13,7 @@ dependencies {
     implementation project(":feature:auth:domain:api")
     implementation project(":feature:db:domain:api")
     implementation project(":feature:feed:domain:api")
+    implementation project(":feature:jobs:domain:api")
     implementation project(":foundation:icons:api")
     implementation project(':foundation:image:api')
     implementation project(':feature:media:remote:domain:api')

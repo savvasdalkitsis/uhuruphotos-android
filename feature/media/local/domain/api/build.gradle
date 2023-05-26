@@ -3,6 +3,7 @@ android {
 }
 
 dependencies {
+    api project(":foundation:worker:api")
     api(
             libs.androidx.activity,
             libs.androidx.work,

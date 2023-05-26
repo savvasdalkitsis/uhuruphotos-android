@@ -1,0 +1,22 @@
+android {
+    buildFeatures {
+        compose true
+    }
+    composeOptions {
+        kotlinCompilerExtensionVersion compose_compiler_version
+    }
+    namespace 'com.savvasdalkitsis.uhuruphotos.feature.jobs.view.api'
+}
+
+dependencies {
+    api project(":feature:jobs:domain:api")
+    implementation project(":foundation:ui:api")
+    implementation project(":foundation:strings:api")
+    implementation(
+            libs.androidx.compose.material,
+            libs.androidx.compose.ui.tooling.preview,
+    )
+    debugImplementation(
+            libs.androidx.compose.ui.tooling,
+    )
+}

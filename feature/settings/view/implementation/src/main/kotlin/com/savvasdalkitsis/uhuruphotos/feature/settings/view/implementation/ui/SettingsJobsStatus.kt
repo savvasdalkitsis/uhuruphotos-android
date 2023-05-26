@@ -15,63 +15,22 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.ui
 
+import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.res.stringResource
-import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.actions.AskForFullFeedSync
-import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.actions.AskForPrecacheThumbnails
-import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.actions.CancelFullFeedSync
-import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.actions.CancelPrecacheThumbnails
+import com.savvasdalkitsis.uhuruphotos.feature.jobs.view.ui.Jobs
+import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.actions.CancelJob
+import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.actions.AskToStartJob
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.actions.SettingsAction
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.ui.state.SettingsState
-import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
 
 @Composable
-internal fun SettingsJobsStatus(
+internal fun ColumnScope.SettingsJobsStatus(
     state: SettingsState,
     action: (SettingsAction) -> Unit,
 ) {
-    when {
-        state.fullSyncButtonEnabled -> SettingsButtonRow(
-            buttonText = stringResource(string.perform_full_sync)
-        ) {
-            action(AskForFullFeedSync)
-        }
-        state.fullSyncJobProgress != null -> SettingsContentButtonRow(
-            content = {
-                SettingsProgressIndicator(
-                    text = stringResource(string.feed_sync_progress),
-                    progress = state.fullSyncJobProgress,
-                )
-            },
-            buttonText = stringResource(string.cancel),
-        ) {
-            action(CancelFullFeedSync)
-        }
-        else -> SettingsButtonRow(
-            enabled = false,
-            buttonText = stringResource(string.cannot_perform_full_sync)
-        ) {}
-    }
-    when {
-        state.precacheThumbnailsButtonEnabled -> SettingsButtonRow(
-            buttonText = stringResource(string.precache_thumbnails),
-            ) {
-                action(AskForPrecacheThumbnails)
-            }
-        state.precacheThumbnailsProgress != null -> SettingsContentButtonRow(
-            content = {
-                SettingsProgressIndicator(
-                    text = stringResource(string.precaching_thumbnails_progress),
-                    progress = state.precacheThumbnailsProgress,
-                )
-            },
-            buttonText = stringResource(string.cancel),
-        ) {
-            action(CancelPrecacheThumbnails)
-        }
-        else -> SettingsButtonRow(
-            enabled = false,
-            buttonText = stringResource(string.cannot_perform_precaching),
-        ) {}
-    }
+    Jobs(
+        jobs = state.jobStates,
+        onStartJob = { action(AskToStartJob(it)) },
+        onCancelJob = { action(CancelJob(it)) }
+    )
 }

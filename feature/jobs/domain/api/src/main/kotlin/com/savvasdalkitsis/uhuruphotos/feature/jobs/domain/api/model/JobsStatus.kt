@@ -13,11 +13,8 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
  */
-package com.savvasdalkitsis.uhuruphotos.feature.feed.domain.api.worker
+package com.savvasdalkitsis.uhuruphotos.feature.jobs.domain.api.model
 
-import androidx.work.WorkInfo
-
-data class RefreshJobState(
-    val status: WorkInfo.State,
-    val progress: Int,
+data class JobsStatus(
+    val jobs: Map<Job, JobStatus>
 )

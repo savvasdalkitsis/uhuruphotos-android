@@ -22,11 +22,11 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
+import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.material.TextField
 import androidx.compose.material.TextFieldDefaults
@@ -65,7 +65,7 @@ fun SearchField(
         modifier = Modifier
             .fillMaxWidth()
             .padding(12.dp)
-            .clip(RoundedCornerShape(100))
+            .clip(MaterialTheme.shapes.large)
     ) {
         fun changeQuery(newQuery: String) {
             query = newQuery

@@ -16,8 +16,8 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam
 
 import com.savvasdalkitsis.uhuruphotos.feature.avatar.domain.api.usecase.AvatarUseCase
-import com.savvasdalkitsis.uhuruphotos.feature.feed.domain.api.worker.FeedImmediateWorkScheduler
 import com.savvasdalkitsis.uhuruphotos.feature.feed.domain.api.worker.FeedWorkScheduler
+import com.savvasdalkitsis.uhuruphotos.feature.jobs.domain.api.usecase.JobsUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.search.domain.api.usecase.SearchUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.settings.domain.api.usecase.CacheSettingsUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.settings.domain.api.usecase.SettingsUseCase
@@ -31,13 +31,13 @@ import javax.inject.Inject
 internal class SettingsActionsContext @Inject constructor(
     val settingsUseCase: SettingsUseCase,
     val feedWorkScheduler: FeedWorkScheduler,
-    val feedImmediateWorkScheduler: FeedImmediateWorkScheduler,
     val avatarUseCase: AvatarUseCase,
     val cacheUseCase: CacheSettingsUseCase,
     val feedbackUseCase: FeedbackUseCase,
     val searchUseCase: SearchUseCase,
     val biometricsUseCase: BiometricsUseCase,
     val systemUseCase: SystemUseCase,
+    val jobsUseCase: JobsUseCase,
 ) {
 
     fun authenticateIfNeeded(

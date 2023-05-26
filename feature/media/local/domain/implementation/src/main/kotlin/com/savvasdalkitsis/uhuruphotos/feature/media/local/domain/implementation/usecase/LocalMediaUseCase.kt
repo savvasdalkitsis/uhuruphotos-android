@@ -42,6 +42,8 @@ import com.savvasdalkitsis.uhuruphotos.foundation.date.api.DateDisplayer
 import com.savvasdalkitsis.uhuruphotos.foundation.date.api.module.DateModule.ParsingDateFormat
 import com.savvasdalkitsis.uhuruphotos.foundation.date.api.module.DateModule.ParsingDateTimeFormat
 import com.savvasdalkitsis.uhuruphotos.foundation.log.api.runCatchingWithLog
+import com.savvasdalkitsis.uhuruphotos.foundation.notification.api.ForegroundNotificationWorker
+import com.savvasdalkitsis.uhuruphotos.foundation.worker.api.model.RefreshJobState
 import com.savvasdalkitsis.uhuruphotos.foundation.worker.api.usecase.WorkerStatusUseCase
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dev.shreyaspatil.permissionFlow.PermissionFlow
@@ -179,6 +181,16 @@ class LocalMediaUseCase @Inject constructor(
 
     override fun observeLocalMediaSyncJobStatus(): Flow<WorkInfo.State?> =
         workerStatusUseCase.monitorUniqueJobStatus(LocalMediaSyncWorker.WORK_NAME)
+
+    override fun observeLocalMediaSyncJob(): Flow<RefreshJobState?> =
+        workerStatusUseCase.monitorUniqueJob(LocalMediaSyncWorker.WORK_NAME).map {
+            it?.let { work ->
+                RefreshJobState(
+                    status = work.state,
+                    progress = ForegroundNotificationWorker.getProgressOf(work)
+                )
+            }
+        }
 
     override suspend fun refreshAll(
         onProgressChange: suspend (current: Int, total: Int) -> Unit,

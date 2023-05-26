@@ -53,15 +53,15 @@ fun Avatar(
         IN_PROGRESS -> MaterialTheme.colors.background
     }
     Box(modifier = Modifier
+        .clip(CircleShape)
+        .background(backgroundColor)
+        .size(size)
         .let {
             when(avatarPressed) {
                 null -> it
                 else -> it.clickable { avatarPressed() }
             }
         }
-        .clip(CircleShape)
-        .background(backgroundColor)
-        .size(size)
     ) {
         if (state.syncState == IN_PROGRESS) {
             CircularProgressIndicator(modifier = Modifier.size(size))

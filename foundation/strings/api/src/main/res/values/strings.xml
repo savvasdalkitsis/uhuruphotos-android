@@ -84,6 +84,7 @@
     <string name="requires_charging">Requires charging</string>
     <string name="perform_full_sync">Perform full sync now</string>
     <string name="cannot_perform_full_sync">Cannot perform full sync at the moment</string>
+    <string name="full_feed_sync">Full feed sync</string>
     <string name="perform_full_feed_sync">Perform full feed sync</string>
     <string name="feed_sync_progress">Full photo feed sync progress</string>
     <string name="jobs">Jobs</string>
@@ -209,6 +210,7 @@
     <string name="missing_permissions">Permissions missing</string>
     <string name="grant_permissions">Grant permissions</string>
     <string name="sync_local_media">Synchronising local media</string>
+    <string name="local_media_sync">Synchronise local media</string>
     <string name="enter_libre_photos_url">Enter LibrePhotos server url</string>
     <string name="server_url">Server Url</string>
     <string name="save">Save</string>
@@ -226,6 +228,7 @@
     <string name="cannot_perform_precaching">Cannot perform precaching at the moment</string>
     <string name="precaching_thumbnails_progress">Precaching thumbnails progress</string>
     <string name="are_you_sure_you_want_to_perform_precache">Are you sure you want to start precaching all thumbnails?</string>
+    <string name="are_you_sure_you_want_to_start_local_sync">Are you sure you want to start synchronizing local media?</string>
     <string name="process_takes_significant_time_consumes_battery">This process takes a significant amount of time and will consume a lot of battery.</string>
     <string name="cancel">Cancel</string>
     <string name="feed_sync_job_configuration">Feed sync job configuration</string>
@@ -251,4 +254,6 @@
     <string name="show_never">Never show</string>
     <string name="search_for_something">Search for something</string>
     <string name="search_icon">Search icon</string>
+    <string name="start">Start</string>
+    <string name="close">Close</string>
 </resources>

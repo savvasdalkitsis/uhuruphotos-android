@@ -17,9 +17,13 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.feature.account.view.api.ui.state
 
 import com.savvasdalkitsis.uhuruphotos.feature.avatar.view.api.ui.state.AvatarState
+import com.savvasdalkitsis.uhuruphotos.feature.jobs.domain.api.model.Job
+import com.savvasdalkitsis.uhuruphotos.feature.jobs.view.ui.state.JobState
 
 data class AccountOverviewState(
     val showAccountOverview: Boolean = false,
     val avatarState: AvatarState = AvatarState(),
     val showLogOutConfirmation: Boolean = false,
+    val showJobStartDialog: Job? = null,
+    val jobs: List<JobState> = emptyList(),
 )
