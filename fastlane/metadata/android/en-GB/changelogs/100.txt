@@ -1,3 +1,4 @@
+* Fixing notifications on Android 13
 * Fixing some issues around hidden media changes not reflecting in the app
 * UI fixes and tweaks to make the app prettier
 * Adding jobs status in the account overview popup
