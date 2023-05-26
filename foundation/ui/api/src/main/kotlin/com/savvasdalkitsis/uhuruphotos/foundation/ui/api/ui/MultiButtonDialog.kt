@@ -22,10 +22,10 @@ import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.AlertDialog
-import androidx.compose.material.Button
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Text
+import androidx.compose.material3.AlertDialog
+import androidx.compose.material3.Button
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -55,7 +55,8 @@ fun MultiButtonDialog(
                 body()
             }
         },
-        buttons = {
+        confirmButton = confirmButton,
+        dismissButton = {
             FlowRow(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -67,12 +68,10 @@ fun MultiButtonDialog(
                     button()
                 }
                 Button(
-                    modifier = Modifier.weight(1f),
                     onClick = onDismiss,
                 ) {
                     Text(negativeButtonText)
                 }
-                confirmButton()
             }
         },
     )

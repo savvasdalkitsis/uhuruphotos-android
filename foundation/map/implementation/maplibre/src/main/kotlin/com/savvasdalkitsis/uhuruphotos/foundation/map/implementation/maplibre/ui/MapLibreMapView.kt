@@ -19,7 +19,7 @@ import androidx.activity.ComponentActivity
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.calculateEndPadding
 import androidx.compose.foundation.layout.calculateStartPadding
-import androidx.compose.material.MaterialTheme
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalDensity
@@ -32,6 +32,8 @@ import com.mapbox.mapboxsdk.utils.BitmapUtils
 import com.savvasdalkitsis.uhuruphotos.foundation.map.api.model.MapOptions
 import com.savvasdalkitsis.uhuruphotos.foundation.map.api.ui.MapViewScope
 import com.savvasdalkitsis.uhuruphotos.foundation.map.implementation.maplibre.MapLibreApi
+import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.theme.LocalTheme
+import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.theme.Theme
 
 @Composable
 fun MapLibreMapView(
@@ -43,7 +45,7 @@ fun MapLibreMapView(
     content: @Composable (MapViewScope.() -> Unit)?,
 ) {
 
-    val colors = MaterialTheme.colors
+    val theme = LocalTheme.current
     val layoutDirection = LocalLayoutDirection.current
 
     val start = with(contentPadding) {
@@ -77,9 +79,9 @@ fun MapLibreMapView(
                         }
                     }
                     map.setStyle(
-                        when {
-                            colors.isLight -> "https://api.maptiler.com/maps/basic-v2/style.json?key="
-                            else -> "https://api.maptiler.com/maps/basic-v2-dark/style.json?key="
+                        when (theme) {
+                            Theme.Light -> "https://api.maptiler.com/maps/basic-v2/style.json?key="
+                            Theme.Dark -> "https://api.maptiler.com/maps/basic-v2-dark/style.json?key="
                         } + MapLibreApi.API_KEY
                     )
                     map.getStyle { style ->

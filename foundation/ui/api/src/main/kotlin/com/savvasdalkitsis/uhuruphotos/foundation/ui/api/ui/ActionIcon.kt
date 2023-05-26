@@ -17,8 +17,9 @@ package com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui
 
 import androidx.annotation.DrawableRes
 import androidx.compose.foundation.layout.sizeIn
-import androidx.compose.material.IconButton
-import androidx.compose.material.MaterialTheme
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
@@ -42,7 +43,7 @@ fun ActionIcon(
                 .sizeIn(maxWidth = 26.dp, maxHeight = 26.dp),
             icon = icon,
             contentDescription = contentDescription,
-            tint = MaterialTheme.colors.onBackground
+            tint = MaterialTheme.colorScheme.onBackground
         )
     }
 }

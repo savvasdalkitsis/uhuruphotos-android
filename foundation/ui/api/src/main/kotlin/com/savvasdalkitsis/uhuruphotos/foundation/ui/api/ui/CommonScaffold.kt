@@ -28,7 +28,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.MaterialTheme
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -42,8 +42,8 @@ fun CommonScaffold(
     title: @Composable () -> Unit = { Logo() },
     bottomBarContent: @Composable () -> Unit = {},
     actionBarContent: @Composable (RowScope.() -> Unit) = {},
-    toolbarColor: @Composable () -> Color = { MaterialTheme.colors.background.copy(alpha = 0.8f) },
-    bottomBarColor: @Composable () -> Color = { MaterialTheme.colors.background.copy(alpha = 0.8f) },
+    toolbarColor: @Composable () -> Color = { MaterialTheme.colorScheme.background.copy(alpha = 0.8f) },
+    bottomBarColor: @Composable () -> Color = { MaterialTheme.colorScheme.background.copy(alpha = 0.8f) },
     topBarDisplayed: Boolean = true,
     bottomBarDisplayed: Boolean = true,
     expandableTopBar: Boolean = false,
@@ -72,7 +72,7 @@ fun CommonScaffold(
     modifier: Modifier = Modifier,
     topBar: @Composable () -> Unit,
     bottomBarContent: @Composable () -> Unit = {},
-    bottomBarColor: @Composable () -> Color = { MaterialTheme.colors.background.copy(alpha = 0.8f) },
+    bottomBarColor: @Composable () -> Color = { MaterialTheme.colorScheme.background.copy(alpha = 0.8f) },
     bottomBarDisplayed: Boolean = true,
     content: @Composable (PaddingValues) -> Unit
 ) {

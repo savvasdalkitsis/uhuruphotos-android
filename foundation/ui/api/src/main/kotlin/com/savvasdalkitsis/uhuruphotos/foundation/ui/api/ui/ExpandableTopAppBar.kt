@@ -30,11 +30,10 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.material.AppBarDefaults
 import androidx.compose.material.ContentAlpha
 import androidx.compose.material.LocalContentAlpha
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.ProvideTextStyle
-import androidx.compose.material.Surface
-import androidx.compose.material.contentColorFor
-import androidx.compose.material.primarySurface
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.ProvideTextStyle
+import androidx.compose.material3.Surface
+import androidx.compose.material3.contentColorFor
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.Alignment
@@ -51,7 +50,7 @@ fun ExpandableTopAppBar(
     modifier: Modifier = Modifier,
     navigationIcon: @Composable (() -> Unit)? = null,
     actions: @Composable RowScope.() -> Unit = {},
-    backgroundColor: Color = MaterialTheme.colors.primarySurface,
+    backgroundColor: Color = MaterialTheme.colorScheme.primaryContainer,
     contentColor: Color = contentColorFor(backgroundColor),
     elevation: Dp = AppBarDefaults.TopAppBarElevation,
     expandable: Boolean = false
@@ -80,7 +79,7 @@ fun ExpandableTopAppBar(
             Modifier.fillMaxHeight().weight(1f),
             verticalAlignment = Alignment.CenterVertically
         ) {
-            ProvideTextStyle(value = MaterialTheme.typography.h6) {
+            ProvideTextStyle(value = MaterialTheme.typography.titleMedium) {
                 CompositionLocalProvider(
                     LocalContentAlpha provides ContentAlpha.high,
                     content = title
@@ -112,7 +111,7 @@ internal fun ExpandableAppBar(
     Surface(
         color = backgroundColor,
         contentColor = contentColor,
-        elevation = elevation,
+        shadowElevation = elevation,
         shape = shape,
         modifier = modifier
     ) {

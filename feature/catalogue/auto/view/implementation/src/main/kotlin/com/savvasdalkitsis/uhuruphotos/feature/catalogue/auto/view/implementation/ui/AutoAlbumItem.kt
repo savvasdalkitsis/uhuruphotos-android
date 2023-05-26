@@ -18,8 +18,8 @@ package com.savvasdalkitsis.uhuruphotos.feature.catalogue.auto.view.implementati
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Text
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
@@ -56,7 +56,7 @@ internal fun AutoAlbumItem(
             text = album.title,
             maxLines = 2,
             overflow = TextOverflow.Ellipsis,
-            style = MaterialTheme.typography.subtitle1
+            style = MaterialTheme.typography.labelSmall
                 .copy(fontWeight = FontWeight.Bold),
         )
         album.photoCount?.let {
@@ -64,7 +64,7 @@ internal fun AutoAlbumItem(
                 text = pluralStringResource(R.plurals.item_count, it, it),
                 maxLines = 1,
                 overflow = TextOverflow.Ellipsis,
-                style = MaterialTheme.typography.subtitle1,
+                style = MaterialTheme.typography.labelSmall,
             )
         }
     }

@@ -25,8 +25,8 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Text
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -82,7 +82,7 @@ fun SearchLocations(
                 modifier = Modifier
                     .align(Alignment.Center),
                 text = "Photo map",
-                style = MaterialTheme.typography.h4,
+                style = MaterialTheme.typography.labelMedium,
                 color = Color.White,
             )
         }

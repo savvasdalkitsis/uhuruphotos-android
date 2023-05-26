@@ -35,9 +35,9 @@ import androidx.compose.foundation.lazy.grid.GridItemSpan
 import androidx.compose.foundation.lazy.grid.LazyGridItemSpanScope
 import androidx.compose.foundation.lazy.grid.LazyGridScope
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
-import androidx.compose.material.Icon
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Text
+import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Alignment.Companion.CenterHorizontally
@@ -246,7 +246,7 @@ private fun ColumnScope.Subtitle(title: String) {
         text = title,
         maxLines = 2,
         overflow = TextOverflow.Ellipsis,
-        style = MaterialTheme.typography.subtitle1
+        style = MaterialTheme.typography.labelSmall
             .copy(fontWeight = FontWeight.Bold),
     )
 }

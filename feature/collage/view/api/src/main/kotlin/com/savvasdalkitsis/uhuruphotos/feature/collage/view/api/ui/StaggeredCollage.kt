@@ -23,7 +23,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyItemScope
 import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.rememberLazyListState
-import androidx.compose.material.MaterialTheme
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
@@ -117,8 +117,8 @@ internal fun StaggeredCollage(
                 listState = listState,
                 thickness = 8.dp,
                 selectionMode = ScrollbarSelectionMode.Thumb,
-                thumbColor = MaterialTheme.colors.primary.copy(alpha = 0.7f),
-                thumbSelectedColor = MaterialTheme.colors.primary,
+                thumbColor = MaterialTheme.colorScheme.primary.copy(alpha = 0.7f),
+                thumbSelectedColor = MaterialTheme.colorScheme.primary,
             )
         }
     }

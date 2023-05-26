@@ -25,10 +25,10 @@ import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.Icon
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Surface
-import androidx.compose.material.Text
+import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Surface
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.remember
@@ -48,7 +48,7 @@ internal fun Group(
 ) {
     Surface(
         modifier = Modifier.padding(4.dp),
-        elevation = 4.dp,
+        shadowElevation = 4.dp,
     ) {
         Column {
             val arrowAngle = remember { Animatable(180f) }
@@ -64,7 +64,7 @@ internal fun Group(
                 ) {
                     Text(
                         text = stringResource(groupState.title),
-                        style = MaterialTheme.typography.h6,
+                        style = MaterialTheme.typography.labelLarge,
                     )
                     Icon(
                         modifier = Modifier.rotate(arrowAngle.value),

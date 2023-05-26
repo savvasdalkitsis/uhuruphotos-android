@@ -19,11 +19,11 @@ import androidx.compose.foundation.gestures.detectVerticalDragGestures
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.DropdownMenu
-import androidx.compose.material.DropdownMenuItem
-import androidx.compose.material.Icon
-import androidx.compose.material.RadioButton
-import androidx.compose.material.Text
+import androidx.compose.material3.DropdownMenu
+import androidx.compose.material3.DropdownMenuItem
+import androidx.compose.material3.Icon
+import androidx.compose.material3.RadioButton
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -84,8 +84,8 @@ private fun CollageDisplayDropDownItem(
     onChange: (PredefinedCollageDisplay) -> Unit
 ) {
     DropdownMenuItem(
-        onClick = { onChange(display) }
-    ) {
+        onClick = { onChange(display) },
+        text = {
         Row {
             RadioButton(
                 selected = currentCollageDisplay == display,
@@ -105,5 +105,5 @@ private fun CollageDisplayDropDownItem(
                 contentDescription = null
             )
         }
-    }
+    })
 }

@@ -23,18 +23,11 @@ import androidx.compose.animation.scaleOut
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.widthIn
-import androidx.compose.material.Icon
-import androidx.compose.material.IconButton
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Surface
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Close
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -60,7 +53,7 @@ fun AccountOverviewPopUp(
             Box(
                 modifier = Modifier
                     .fillMaxSize()
-                    .background(MaterialTheme.colors.background.copy(alpha = 0.3f))
+                    .background(MaterialTheme.colorScheme.background.copy(alpha = 0.3f))
                     .clickable { onDismiss() }
             )
         }
@@ -81,8 +74,8 @@ fun AccountOverviewPopUp(
                     modifier = Modifier
                         .clip(MaterialTheme.shapes.large)
                         .widthIn(max = 480.dp)
-                        .background(MaterialTheme.colors.background),
-                    elevation = 4.dp,
+                        .background(MaterialTheme.colorScheme.background),
+                    shadowElevation = 4.dp,
                     shape = MaterialTheme.shapes.large,
                 ) {
                     AccountOverview(

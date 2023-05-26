@@ -17,10 +17,9 @@ package com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui
 
 import androidx.annotation.DrawableRes
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.RowScope
-import androidx.compose.material.DropdownMenu
-import androidx.compose.material.DropdownMenuItem
-import androidx.compose.material.Text
+import androidx.compose.material3.DropdownMenu
+import androidx.compose.material3.DropdownMenuItem
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -51,9 +50,9 @@ fun DropDownActionIcon(
                     DropdownMenuItem(onClick = {
                         action()
                         expanded = false
-                    }) {
+                    }, text = {
                         item()
-                    }
+                    })
                 }
             }
         }
@@ -61,10 +60,10 @@ fun DropDownActionIcon(
 }
 
 class DropDownActionIconScope {
-    val itemsActions: MutableList<Pair<@Composable RowScope.() -> Unit, () -> Unit>> = mutableListOf()
+    val itemsActions: MutableList<Pair<@Composable () -> Unit, () -> Unit>> = mutableListOf()
 
     @Composable
-    fun item(itemContent: @Composable RowScope.() -> Unit, action: () -> Unit) {
+    fun item(itemContent: @Composable () -> Unit, action: () -> Unit) {
         itemsActions += itemContent to action
     }
 

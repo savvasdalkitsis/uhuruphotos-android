@@ -17,7 +17,7 @@ package com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.ui
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.layout.RowScope
-import androidx.compose.material.Text
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource

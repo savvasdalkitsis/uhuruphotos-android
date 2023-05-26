@@ -18,9 +18,9 @@ package com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui
 import androidx.compose.foundation.layout.Arrangement.spacedBy
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.material.Button
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Text
+import androidx.compose.material3.Button
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -44,7 +44,7 @@ fun SectionHeader(
         Text(
             modifier = Modifier.weight(1f),
             text = title,
-            style = MaterialTheme.typography.subtitle1.copy(fontWeight = FontWeight.Bold),
+            style = MaterialTheme.typography.labelMedium.copy(fontWeight = FontWeight.Bold),
         )
         endContent()
     }

@@ -14,6 +14,7 @@ dependencies {
     implementation project(":foundation:initializer:api")
     implementation project(":foundation:log:api")
     implementation project(":foundation:map:api")
+    implementation project(":foundation:ui:api")
     implementation(
             libs.androidx.compose.foundation.layout,
             libs.androidx.compose.material,

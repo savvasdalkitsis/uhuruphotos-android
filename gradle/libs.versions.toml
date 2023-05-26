@@ -36,7 +36,7 @@ androidx-compose-animation-graphics = { module = "androidx.compose.animation:ani
 androidx-compose-foundation = { module = "androidx.compose.foundation:foundation", version.ref = "compose" }
 androidx-compose-foundation-layout = { module = "androidx.compose.foundation:foundation-layout", version.ref = "compose" }
 androidx-compose-hilt-navigation = { module = "androidx.hilt:hilt-navigation-compose", version.ref = "androidx-hilt" }
-androidx-compose-material = { module = "androidx.compose.material:material", version.ref = "compose" }
+androidx-compose-material = "androidx.compose.material3:material3:1.2.0-alpha02"
 androidx-compose-material-windowsize = "androidx.compose.material3:material3-window-size-class:1.1.0"
 androidx-compose-navigation = "androidx.navigation:navigation-compose:2.6.0"
 androidx-compose-test-junit = { module = "androidx.compose.ui:ui-test-junit4", version.ref = "compose" }

@@ -24,9 +24,9 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.ModalBottomSheetState
-import androidx.compose.material.ModalBottomSheetValue
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.SheetState
+import androidx.compose.material3.SheetValue
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
@@ -49,13 +49,13 @@ fun LightboxInfoSheet(
     modifier: Modifier = Modifier,
     state: LightboxState,
     index: Int,
-    sheetState: ModalBottomSheetState,
+    sheetState: SheetState,
     action: (LightboxAction) -> Unit,
 ) {
     val mediaItem = state.media[index]
     Box(
         modifier = modifier
-            .background(MaterialTheme.colors.background)
+            .background(MaterialTheme.colorScheme.background)
     ) {
         Column(
             verticalArrangement = Arrangement.spacedBy(16.dp),
@@ -93,7 +93,7 @@ fun LightboxInfoSheet(
             }
         }
     }
-    if (sheetState.currentValue != ModalBottomSheetValue.Hidden) {
+    if (sheetState.currentValue != SheetValue.Hidden) {
         DisposableEffect(Unit) {
             onDispose {
                 action(HideInfo)

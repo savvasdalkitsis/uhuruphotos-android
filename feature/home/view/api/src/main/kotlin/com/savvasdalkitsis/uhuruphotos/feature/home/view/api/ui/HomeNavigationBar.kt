@@ -19,14 +19,13 @@ import androidx.annotation.StringRes
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.Icon
-import androidx.compose.material.LocalContentColor
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.NavigationRail
-import androidx.compose.material.NavigationRailItem
-import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Search
+import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.NavigationRail
+import androidx.compose.material3.NavigationRailItem
+import androidx.compose.material3.Text
 import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass.Companion.Compact
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -92,8 +91,7 @@ fun HomeNavigationBar(
         }
         NAVIGATION_RAIL -> NavigationRail(
             modifier = Modifier.padding(top = contentPadding.calculateTopPadding()),
-            elevation = 0.dp,
-            backgroundColor = Color.Transparent,
+            containerColor = Color.Transparent,
         ) {
             Items(
                 currentDestination = currentDestination,
@@ -190,8 +188,8 @@ private fun BottomNavItem(
         BubbleNavigationBarItem(
             title = stringResource(label),
             iconPainter = icon,
-            selectedColor = MaterialTheme.colors.primary,
-            unSelectedBackgroundColor = MaterialTheme.colors.background,
+            selectedColor = MaterialTheme.colorScheme.primary,
+            unSelectedBackgroundColor = MaterialTheme.colorScheme.background,
             unSelectedIconColor = CustomColors.emptyItem,
             selected = isSelected(currentDestination, routeName),
             onClick = selectNavigationItem(currentDestination, routeName, navController, feedRoute, onReselected)
@@ -210,7 +208,6 @@ private fun NavRailNavItem(
 ) {
     val feedRoute = routeFor(FeedNavigationRoute::class)
     NavigationRailItem(
-        selectedContentColor = LocalContentColor.current,
         icon = { Icon(icon, contentDescription = null) },
         label = { Text(stringResource(label)) },
         selected = isSelected(currentDestination, routeName),

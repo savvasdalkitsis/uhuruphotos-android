@@ -27,10 +27,10 @@ import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.Icon
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Surface
-import androidx.compose.material.Text
+import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Surface
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -47,7 +47,7 @@ internal fun StaggeredGridScope.SuperGroup(
     item {
         Surface(
             modifier = Modifier,
-            elevation = 2.dp,
+            shadowElevation = 2.dp,
         ) {
             Column {
                 Box(modifier = Modifier
@@ -63,7 +63,7 @@ internal fun StaggeredGridScope.SuperGroup(
                         Text(
                             modifier = Modifier.weight(1f),
                             text = stringResource(groupState.title),
-                            style = MaterialTheme.typography.h6,
+                            style = MaterialTheme.typography.labelMedium,
                         )
                         Icon(
                             painter = rememberAnimatedVectorPainter(
