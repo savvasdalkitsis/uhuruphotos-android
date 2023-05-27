@@ -154,7 +154,24 @@
 					},
 					"request": {
 						"method": "GET",
-						"header": []
+						"header": [],
+						"url": {
+							"raw": "{{HOST}}/api/exists/:id",
+							"host": [
+								"{{HOST}}"
+							],
+							"path": [
+								"api",
+								"exists",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "510dc3c7c99b6c3da3227f4ae97023201"
+								}
+							]
+						}
 					},
 					"response": []
 				}
