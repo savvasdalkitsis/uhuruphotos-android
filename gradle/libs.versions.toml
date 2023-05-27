@@ -71,7 +71,7 @@ flowpreferences = "com.fredporciuncula:flow-preferences:1.9.1"
 google-services = { module = "com.google.gms:google-services", version.ref = "google-services" }
 gson = "com.google.code.gson:gson:2.10.1"
 # @pin pinning so the version tool doesn't recommend -jvm variant
-guava = "com.google.guava:guava:31.1-android"
+guava = "com.google.guava:guava:32.0.0-jre"
 hilt = { module = "com.google.dagger:hilt-android", version.ref = "hilt" }
 hilt-android-gradle-plugin = { module = "com.google.dagger:hilt-android-gradle-plugin", version.ref = "hilt" }
 hilt-dagger-compiler = { module = "com.google.dagger:hilt-compiler", version.ref = "hilt" }
