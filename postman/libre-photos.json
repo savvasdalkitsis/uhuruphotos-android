@@ -386,6 +386,24 @@
 				}
 			],
 			"id": "44789a4a-2049-41cd-a102-7469c80b7fc4"
+		},
+		{
+			"name": "User",
+			"item": [
+				{
+					"name": "Site settings",
+					"id": "2b0d3555-046f-427a-b88b-8a0af543a4a7",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				}
+			],
+			"id": "2a65fb9e-f93b-43fd-bb57-f04c28026f43"
 		}
 	],
 	"auth": {
