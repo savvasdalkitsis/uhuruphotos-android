@@ -370,8 +370,21 @@
 			"id": "7c9647cb-2162-46a8-8ee2-db1cf2e31692"
 		},
 		{
-			"name": "New Folder",
-			"item": [],
+			"name": "Site",
+			"item": [
+				{
+					"name": "New Request",
+					"id": "a9d3c600-e9b9-43c2-9220-b539d5dc926e",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				}
+			],
 			"id": "44789a4a-2049-41cd-a102-7469c80b7fc4"
 		}
 	],
