@@ -398,7 +398,8 @@
 					},
 					"request": {
 						"method": "GET",
-						"header": []
+						"header": [],
+						"url": "{{HOST}}/api/user"
 					},
 					"response": []
 				}
