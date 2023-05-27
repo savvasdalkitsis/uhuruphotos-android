@@ -373,7 +373,7 @@
 			"name": "Site",
 			"item": [
 				{
-					"name": "New Request",
+					"name": "Site settings",
 					"id": "a9d3c600-e9b9-43c2-9220-b539d5dc926e",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
