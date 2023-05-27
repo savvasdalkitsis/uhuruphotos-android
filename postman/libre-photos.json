@@ -150,7 +150,7 @@
 					"name": "Upload",
 					"item": [
 						{
-							"name": "New Request",
+							"name": "Scan uploaded",
 							"id": "45c6b125-6c8c-4d6b-8a82-3052f966b085",
 							"protocolProfileBehavior": {
 								"disableBodyPruning": true
