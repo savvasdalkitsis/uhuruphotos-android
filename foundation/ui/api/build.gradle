@@ -24,6 +24,7 @@ dependencies {
             libs.androidx.compose.ui.util,
             libs.androidx.splash,
             libs.androidx.window,
+            libs.lottie,
     )
     debugImplementation(
             libs.androidx.compose.ui.tooling,

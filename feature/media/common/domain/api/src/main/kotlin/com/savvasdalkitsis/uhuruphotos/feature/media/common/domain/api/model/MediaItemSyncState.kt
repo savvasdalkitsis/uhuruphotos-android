@@ -18,6 +18,7 @@ package com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.R.drawable
+import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.R.raw
 import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
 
 enum class MediaItemSyncState(
@@ -41,8 +42,8 @@ enum class MediaItemSyncState(
         contentDescription = string.media_sync_status_remote_only
     ),
     DOWNLOADING(
-        icon = drawable.ic_cloud_in_progress,
-        lightBoxIcon = drawable.ic_cloud_in_progress,
+        icon = raw.ic_animated_cloud_download,
+        lightBoxIcon = raw.ic_animated_cloud_download,
         contentDescription = string.media_sync_status_downloading
     ),
     SYNCED(

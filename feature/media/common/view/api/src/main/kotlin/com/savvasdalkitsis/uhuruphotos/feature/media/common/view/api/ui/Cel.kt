@@ -60,6 +60,7 @@ import com.savvasdalkitsis.uhuruphotos.foundation.compose.api.toColor
 import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.R.drawable
 import com.savvasdalkitsis.uhuruphotos.foundation.image.api.ui.Image
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.theme.CustomColors
+import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.DynamicIcon
 import com.savvasdalkitsis.uhuruphotos.foundation.video.api.LocalAnimatedVideoThumbnails
 import com.savvasdalkitsis.uhuruphotos.foundation.video.api.LocalExoPlayerProvider
 import com.savvasdalkitsis.uhuruphotos.foundation.video.api.ui.Video
@@ -175,15 +176,14 @@ fun Cel(
                 enter = fadeIn(animationSpec = tween(durationMillis = 400)),
                 exit = fadeOut(animationSpec = tween(delayMillis = 1200, durationMillis = 400))
             ) {
-                Icon(
+                Box(
                     modifier = Modifier
                         .size(iconSize)
                         .padding(2.dp)
                         .alpha(0.7f),
-                    painter = painterResource(mediaItem.id.syncState.icon),
-                    tint = Color.White,
-                    contentDescription = null
-                )
+                ) {
+                    DynamicIcon(icon = mediaItem.id.syncState.icon, tint = Color.White)
+                }
             }
         }
         AnimatedVisibility(visible = state.selectionMode != MediaItemSelectionMode.UNDEFINED) {

@@ -16,12 +16,12 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui
 
 import androidx.annotation.DrawableRes
-import androidx.compose.material.Icon
+import androidx.compose.foundation.layout.sizeIn
 import androidx.compose.material.IconButton
 import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.unit.dp
 
 @Composable
 fun ActionIcon(
@@ -32,16 +32,33 @@ fun ActionIcon(
     @DrawableRes icon: Int,
     contentDescription: String? = null
 ) {
+    ActionIcon(
+        modifier = modifier,
+        onClick = onClick,
+        enabled = enabled,
+    ) {
+        DynamicIcon(
+            modifier = iconModifier
+                .sizeIn(maxWidth = 26.dp, maxHeight = 26.dp),
+            icon = icon,
+            contentDescription = contentDescription,
+            tint = MaterialTheme.colors.onBackground
+        )
+    }
+}
+
+@Composable
+fun ActionIcon(
+    modifier: Modifier = Modifier,
+    enabled: Boolean = true,
+    onClick: () -> Unit,
+    icon: @Composable () -> Unit,
+) {
     IconButton(
         modifier = modifier,
         onClick = onClick,
         enabled = enabled,
     ) {
-        Icon(
-            modifier = iconModifier,
-            painter = painterResource(id = icon),
-            contentDescription = contentDescription,
-            tint = MaterialTheme.colors.onBackground
-        )
+        icon()
     }
 }
