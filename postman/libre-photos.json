@@ -380,7 +380,8 @@
 					},
 					"request": {
 						"method": "GET",
-						"header": []
+						"header": [],
+						"url": "{{HOST}}/api/sitesettings"
 					},
 					"response": []
 				}
