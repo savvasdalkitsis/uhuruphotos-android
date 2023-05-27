@@ -157,7 +157,8 @@
 							},
 							"request": {
 								"method": "GET",
-								"header": []
+								"header": [],
+								"url": "{{HOST}}/api/scanuploadedphotos"
 							},
 							"response": []
 						}
