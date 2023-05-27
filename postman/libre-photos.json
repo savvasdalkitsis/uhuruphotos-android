@@ -148,7 +148,20 @@
 				},
 				{
 					"name": "Upload",
-					"item": [],
+					"item": [
+						{
+							"name": "New Request",
+							"id": "45c6b125-6c8c-4d6b-8a82-3052f966b085",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": []
+							},
+							"response": []
+						}
+					],
 					"id": "8fa1f62e-fcaf-4f5d-95b6-0e9480719a8d"
 				},
 				{
