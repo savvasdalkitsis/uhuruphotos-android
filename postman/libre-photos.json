@@ -391,7 +391,7 @@
 			"name": "User",
 			"item": [
 				{
-					"name": "Site settings",
+					"name": "Get User",
 					"id": "2b0d3555-046f-427a-b88b-8a0af543a4a7",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
