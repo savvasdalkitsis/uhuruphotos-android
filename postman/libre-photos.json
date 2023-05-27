@@ -145,6 +145,18 @@
 						}
 					],
 					"id": "c60927a0-a53a-450e-ba0d-96e61190d863"
+				},
+				{
+					"name": "New Request",
+					"id": "35e35cda-308a-48b5-961b-c4fd509237b2",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
 				}
 			],
 			"id": "99c2ed92-27d3-4088-9956-6e01bfe24842"
