@@ -147,7 +147,7 @@
 					"id": "c60927a0-a53a-450e-ba0d-96e61190d863"
 				},
 				{
-					"name": "New Request",
+					"name": "Media exists",
 					"id": "35e35cda-308a-48b5-961b-c4fd509237b2",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
