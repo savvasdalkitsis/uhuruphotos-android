@@ -20,7 +20,8 @@ import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.onNodeWithContentDescription
 import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
-import com.savvasdalkitsis.uhuruphotos.feature.avatar.view.api.ui.state.AvatarState
+import com.savvasdalkitsis.uhuruphotos.feature.account.view.api.ui.state.AccountOverviewState
+import com.savvasdalkitsis.uhuruphotos.feature.jobs.domain.api.model.Job
 import io.mockk.mockk
 import io.mockk.verify
 import org.junit.Before
@@ -35,17 +36,21 @@ class AccountOverviewPopUpTest {
     val logOut = mockk<() -> Unit>(relaxed = true)
     val editServer = mockk<() -> Unit>(relaxed = true)
     val settings = mockk<() -> Unit>(relaxed = true)
+    val start = mockk<(Job) -> Unit>(relaxed = true)
+    val cancel = mockk<(Job) -> Unit>(relaxed = true)
 
     @Before
     fun setUp() {
         compose.setContent {
             Text("outside")
             AccountOverviewPopUp(
-                state = AvatarState(),
+                state = AccountOverviewState(),
                 onDismiss = dismiss,
                 onLogoutClicked = logOut,
                 onEditServerClicked = editServer,
                 onSettingsClicked = settings,
+                onStartJob = start,
+                onCancelJob = cancel,
             )
         }
     }
