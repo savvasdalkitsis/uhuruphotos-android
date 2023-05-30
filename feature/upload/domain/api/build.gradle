@@ -1,0 +1,7 @@
+android {
+    namespace 'com.savvasdalkitsis.uhuruphotos.foundation.upload.domain.api'
+}
+
+dependencies {
+    api project(":feature:media:common:domain:api")
+}

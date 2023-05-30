@@ -244,6 +244,7 @@
     <string name="media_sync_status_remote_only">Media is only available on the server</string>
     <string name="media_sync_status_local_only">Media is only local to this device</string>
     <string name="media_sync_status_downloading">Media is being downloaded to this device</string>
+    <string name="media_sync_status_uploading">Media is being uploaded to the server</string>
     <string name="today">Today</string>
     <string name="what_would_like_to_do">What would you like to do?</string>
     <string name="delete_fully_synced_media_both">Delete local/Trash remote</string>
@@ -303,4 +304,8 @@
     <string name="timeline">Timeline</string>
     <string name="username">Username</string>
     <string name="password">Password</string>
+    <string name="ok">OK</string>
+    <string name="cannot_upload">Cannot upload media</string>
+    <string name="upload_not_allowed">Uploading media is not allowed on your server. Please contact your administrator to enable it</string>
+    <string name="upload_error_checking">Cannot check status of upload capabilities of your server. Please try again</string>
 </resources>

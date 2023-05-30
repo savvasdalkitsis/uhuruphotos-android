@@ -1,0 +1,23 @@
+android {
+    buildFeatures {
+        compose true
+    }
+    composeOptions {
+        kotlinCompilerExtensionVersion compose_compiler_version
+    }
+    namespace 'com.savvasdalkitsis.uhuruphotos.foundation.upload.view.api'
+}
+
+dependencies {
+
+    implementation project(":foundation:ui:api")
+    implementation project(":foundation:strings:api")
+    implementation(
+            libs.androidx.compose.material,
+            libs.androidx.compose.ui,
+            libs.androidx.compose.ui.tooling.preview,
+    )
+    debugImplementation(
+            libs.androidx.compose.ui.tooling,
+    )
+}

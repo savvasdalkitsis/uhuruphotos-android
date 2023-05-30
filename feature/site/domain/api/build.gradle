@@ -1,0 +1,9 @@
+android {
+    namespace 'com.savvasdalkitsis.uhuruphotos.feature.site.domain.api'
+}
+dependencies {
+    implementation(
+            libs.moshi,
+    )
+    ksp libs.moshi.ksp
+}

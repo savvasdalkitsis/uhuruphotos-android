@@ -20,6 +20,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.Med
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemSyncState.LOCAL_ONLY
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemSyncState.REMOTE_ONLY
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemSyncState.SYNCED
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemSyncState.UPLOADING
 import kotlinx.parcelize.IgnoredOnParcel
 import kotlinx.parcelize.Parcelize
 import java.io.Serializable
@@ -103,6 +104,36 @@ sealed class MediaId<T : Serializable> private constructor(
     }
 
     @Parcelize
+    data class Uploading(
+        override val value: Long,
+        override val isVideo: Boolean,
+        val serverUrl: String,
+    ): MediaId<Long>(value, isVideo) {
+        @IgnoredOnParcel
+        val local get() = Local(value, isVideo, serverUrl)
+
+        @IgnoredOnParcel
+        @Transient
+        override val preferRemote = this
+        @IgnoredOnParcel
+        @Transient
+        override val preferLocal = local
+        @IgnoredOnParcel
+        @Transient
+        override val findRemote = null
+        @IgnoredOnParcel
+        @Transient
+        override val findLocal = local
+
+        @IgnoredOnParcel
+        override val syncState: MediaItemSyncState = UPLOADING
+        @IgnoredOnParcel
+        override val fullResUri = local.fullResUri
+        @IgnoredOnParcel
+        override val thumbnailUri = local.thumbnailUri
+    }
+
+    @Parcelize
     data class Local(
         override val value: Long,
         override val isVideo: Boolean,
@@ -150,6 +181,7 @@ sealed class MediaId<T : Serializable> private constructor(
         @IgnoredOnParcel
         override val syncState: MediaItemSyncState = when {
             value.any { it is Downloading } -> DOWNLOADING
+            value.any { it is Uploading } -> UPLOADING
             findRemote == null -> LOCAL_ONLY
             findLocal == null -> REMOTE_ONLY
             else -> SYNCED

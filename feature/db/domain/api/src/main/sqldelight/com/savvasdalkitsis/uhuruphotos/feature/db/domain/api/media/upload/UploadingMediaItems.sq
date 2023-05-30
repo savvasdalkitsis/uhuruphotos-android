@@ -1,0 +1,9 @@
+CREATE TABLE uploadingMediaItems (
+    id INTEGER AS Long NOT NULL PRIMARY KEY
+);
+
+insert:
+INSERT OR REPLACE INTO uploadingMediaItems VALUES (?);
+
+getAll:
+SELECT id FROM uploadingMediaItems;

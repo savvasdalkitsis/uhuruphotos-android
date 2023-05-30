@@ -1,0 +1,13 @@
+android {
+    namespace 'com.savvasdalkitsis.uhuruphotos.foundation.upload.domain.implementation'
+}
+
+dependencies {
+    implementation project(":feature:media:local:domain:api")
+    implementation project(":feature:site:domain:api")
+    implementation project(":feature:upload:domain:api")
+    implementation project(":foundation:log:api")
+    implementation(
+            libs.hilt,
+    )
+}

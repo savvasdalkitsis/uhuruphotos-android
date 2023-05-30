@@ -32,6 +32,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.usecase.Lo
 import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.worker.LocalMediaWorkScheduler
 import com.savvasdalkitsis.uhuruphotos.feature.memories.domain.api.usecase.MemoriesUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.settings.domain.api.usecase.SettingsUseCase
+import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.EffectHandler
 import com.savvasdalkitsis.uhuruphotos.foundation.download.api.usecase.DownloadUseCase
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.Navigator
 import com.savvasdalkitsis.uhuruphotos.foundation.share.api.usecase.ShareUseCase

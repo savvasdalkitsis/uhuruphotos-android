@@ -55,6 +55,9 @@ import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.ui.s
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.DeleteFullySyncedPermissionDialog
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.DeletePermissionDialog
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.TrashPermissionDialog
+import com.savvasdalkitsis.uhuruphotos.feature.upload.view.api.ui.UploadErrorDialog
+import com.savvasdalkitsis.uhuruphotos.feature.upload.view.api.ui.state.UploadErrorDialogMode
+import com.savvasdalkitsis.uhuruphotos.foundation.image.api.ui.Image
 import com.savvasdalkitsis.uhuruphotos.foundation.compose.api.recomposeHighlighter
 import com.savvasdalkitsis.uhuruphotos.foundation.image.api.ui.FullSizeImage
 import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
@@ -174,6 +177,16 @@ fun LightboxCanvas(
                     mediaItemCount = 1,
                     onDismiss = { action(DismissConfirmationDialogs) }
                 ) { action(RestoreMediaItem) }
+            }
+            if (state.showCannotUploadDialog) {
+                UploadErrorDialog(
+                    mode = UploadErrorDialogMode.NOT_ALLOWED,
+                ) { action(DismissConfirmationDialogs) }
+            }
+            if (state.showCannotCheckUploadStatusDialog) {
+                UploadErrorDialog(
+                    mode = UploadErrorDialogMode.ERROR_CHECKING,
+                ) { action(DismissConfirmationDialogs) }
             }
             if (state.missingPermissions.isNotEmpty()) {
                 permissionLauncher.launch(state.missingPermissions.toTypedArray())

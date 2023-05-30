@@ -43,6 +43,8 @@ import com.savvasdalkitsis.uhuruphotos.foundation.group.api.model.mapValues
 import com.savvasdalkitsis.uhuruphotos.foundation.preferences.api.Preferences
 import com.savvasdalkitsis.uhuruphotos.foundation.preferences.api.observe
 import com.savvasdalkitsis.uhuruphotos.foundation.preferences.api.set
+import com.savvasdalkitsis.uhuruphotos.feature.download.domain.api.usecase.DownloadUseCase
+import dagger.hilt.android.scopes.ActivityRetainedScoped
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.debounce

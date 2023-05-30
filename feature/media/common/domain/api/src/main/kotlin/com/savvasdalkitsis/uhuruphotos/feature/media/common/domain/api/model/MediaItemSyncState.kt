@@ -32,7 +32,8 @@ enum class MediaItemSyncState(
 ) {
     LOCAL_ONLY(
         icon = drawable.ic_cloud_off,
-        lightBoxIcon = drawable.ic_cloud_off,
+        lightBoxIcon = drawable.ic_cloud_upload,
+        lightBoxIconAlpha = 1f,
         contentDescription = string.media_sync_status_local_only
     ),
     REMOTE_ONLY(
@@ -45,6 +46,11 @@ enum class MediaItemSyncState(
         icon = raw.ic_animated_cloud_download,
         lightBoxIcon = raw.ic_animated_cloud_download,
         contentDescription = string.media_sync_status_downloading
+    ),
+    UPLOADING(
+        icon = raw.ic_animated_cloud_upload,
+        lightBoxIcon = raw.ic_animated_cloud_upload,
+        contentDescription = string.media_sync_status_uploading
     ),
     SYNCED(
         icon = drawable.ic_cloud_done,

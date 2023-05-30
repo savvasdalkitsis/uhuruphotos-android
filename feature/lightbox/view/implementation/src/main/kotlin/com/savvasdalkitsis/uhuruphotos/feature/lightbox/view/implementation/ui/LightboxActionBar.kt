@@ -19,6 +19,7 @@ import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.res.stringResource
@@ -27,8 +28,10 @@ import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.actions.LightboxAction
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.actions.SetFavourite
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.actions.ShowInfo
+import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.actions.UploadToServer
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.ui.state.LightboxState
-import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemSyncState
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemSyncState.LOCAL_ONLY
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemSyncState.REMOTE_ONLY
 import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.R.drawable
 import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.ActionIcon
@@ -52,11 +55,14 @@ fun LightboxActionBar(
         ActionIcon(
             modifier = Modifier.alpha(syncState.lightBoxIconAlpha),
             onClick = {
-                if (syncState == MediaItemSyncState.REMOTE_ONLY) {
+                if (syncState == REMOTE_ONLY) {
                     action(DownloadOriginal(state.currentMediaItem))
                 }
+                if (syncState == LOCAL_ONLY) {
+                    action(UploadToServer(state.currentMediaItem))
+                }
             },
-            enabled = syncState == MediaItemSyncState.REMOTE_ONLY,
+            enabled = syncState in remember { listOf(REMOTE_ONLY, LOCAL_ONLY) },
             icon = syncState.lightBoxIcon,
             contentDescription = stringResource(syncState.contentDescription)
         )

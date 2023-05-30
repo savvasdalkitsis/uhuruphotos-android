@@ -10,11 +10,11 @@ dependencies {
     implementation(
             project(":feature:auth:domain:api"),
             project(":feature:collage:view:api"),
+            project(":feature:download:domain:api"),
             project(":feature:feed:domain:api"),
             project(":feature:media:remote:domain:api"),
             project(":feature:settings:domain:api"),
             project(":foundation:coroutines:api"),
-            project(":foundation:download:api"),
             project(":foundation:initializer:api"),
             project(":foundation:log:api"),
             project(":foundation:math:api"),

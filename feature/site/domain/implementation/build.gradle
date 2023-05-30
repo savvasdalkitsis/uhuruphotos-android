@@ -1,0 +1,11 @@
+android {
+    namespace 'com.savvasdalkitsis.uhuruphotos.feature.site.domain.implementation'
+}
+dependencies {
+    implementation project(":feature:site:domain:api")
+    implementation project(":foundation:network:api")
+    implementation(
+            libs.hilt,
+            libs.retrofit.moshi,
+    )
+}
