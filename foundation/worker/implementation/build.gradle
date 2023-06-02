@@ -11,7 +11,9 @@ dependencies {
     implementation(
             libs.androidx.work,
             libs.androidx.work.hilt,
+            libs.autodagger.core,
             libs.hilt,
     )
+    kapt libs.autodagger.kapt
 }
 

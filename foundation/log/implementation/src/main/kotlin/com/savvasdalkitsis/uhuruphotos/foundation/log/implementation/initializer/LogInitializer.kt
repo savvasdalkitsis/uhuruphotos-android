@@ -27,9 +27,11 @@ import com.savvasdalkitsis.uhuruphotos.foundation.log.implementation.FeedbackUse
 import com.savvasdalkitsis.uhuruphotos.foundation.log.implementation.showCrashNotification
 import com.savvasdalkitsis.uhuruphotos.foundation.notification.api.NotificationChannels
 import dagger.hilt.android.qualifiers.ApplicationContext
+import se.ansman.dagger.auto.AutoBindIntoSet
 import timber.log.Timber
 import javax.inject.Inject
 
+@AutoBindIntoSet
 internal class LogInitializer @Inject constructor(
     private val trees: Set<@JvmSuppressWildcards Timber.Tree>,
     @ApplicationContext private val context: Context,

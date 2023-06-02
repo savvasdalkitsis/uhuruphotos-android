@@ -28,9 +28,11 @@ dependencies {
     implementation(
             libs.androidx.compose.hilt.navigation,
             libs.androidx.compose.material,
+            libs.autodagger.core,
             libs.okhttp,
             libs.urlvalidator,
     )
+    kapt libs.autodagger.kapt
 
     testImplementation(
             libs.bundles.test,

@@ -29,10 +29,6 @@ import dagger.multibindings.IntoSet
 abstract class WorkerActivityRetainedBindingsModule {
 
     @Binds
-    abstract fun workNowNotificationScheduler(scheduler: WorkScheduleNowNotificationUseCase):
-            com.savvasdalkitsis.uhuruphotos.foundation.worker.api.usecase.WorkScheduleNowNotificationUseCase
-
-    @Binds
     @IntoSet
     abstract fun workNowNotificationActivityInitializer(initializer: WorkScheduleNotificationActivityInitializer):
             ActivityCreated

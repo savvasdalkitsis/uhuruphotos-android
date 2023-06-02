@@ -25,8 +25,10 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.filterNot
 import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.map
+import se.ansman.dagger.auto.AutoBind
 import javax.inject.Inject
 
+@AutoBind
 class ServerUseCase @Inject constructor(
     private val preferences: Preferences,
 ) : ServerUseCase {

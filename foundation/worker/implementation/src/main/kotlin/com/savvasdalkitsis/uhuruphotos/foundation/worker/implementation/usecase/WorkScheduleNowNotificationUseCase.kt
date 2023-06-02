@@ -23,10 +23,14 @@ import androidx.work.ExistingWorkPolicy
 import androidx.work.NetworkType
 import com.savvasdalkitsis.uhuruphotos.foundation.worker.api.usecase.WorkScheduleNowNotificationUseCase
 import com.savvasdalkitsis.uhuruphotos.foundation.worker.api.usecase.WorkScheduleNowUseCase
+import dagger.hilt.android.scopes.ActivityRetainedScoped
+import se.ansman.dagger.auto.AutoBind
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 import kotlin.reflect.KClass
 
+@AutoBind
+@ActivityRetainedScoped
 class WorkScheduleNowNotificationUseCase @Inject constructor(
     private val workScheduleNowUseCase: WorkScheduleNowUseCase,
     private val notificationManager: NotificationManagerCompat,

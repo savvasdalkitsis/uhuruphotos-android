@@ -58,6 +58,7 @@ dependencies {
             libs.androidx.compose.material.windowsize,
             libs.androidx.work,
             libs.androidx.work.hilt,
+            libs.autodagger.core,
             libs.bundles.permissions,
             libs.coil.base,
             libs.exif,
@@ -70,5 +71,6 @@ dependencies {
     )
     testFixturesImplementation project(":feature:db:domain:api")
     testFixturesImplementation project(':feature:media:remote:domain:api')
+    kapt libs.autodagger.kapt
     ksp libs.moshi.ksp
 }

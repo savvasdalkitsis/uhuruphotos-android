@@ -31,6 +31,7 @@ import androidx.exifinterface.media.ExifInterface.TAG_SHUTTER_SPEED_VALUE
 import androidx.exifinterface.media.ExifInterface.TAG_SUBJECT_DISTANCE
 import com.savvasdalkitsis.uhuruphotos.foundation.exif.api.model.ExifMetadata
 import com.savvasdalkitsis.uhuruphotos.foundation.exif.api.usecase.ExifUseCase
+import se.ansman.dagger.auto.AutoBind
 import java.io.File
 import java.io.InputStream
 import javax.inject.Inject
@@ -38,6 +39,7 @@ import kotlin.math.exp
 import kotlin.math.ln
 import kotlin.math.pow
 
+@AutoBind
 class ExifUseCase @Inject constructor(
 ) : ExifUseCase {
 

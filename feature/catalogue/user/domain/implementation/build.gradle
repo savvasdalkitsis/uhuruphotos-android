@@ -7,10 +7,12 @@ dependencies {
     implementation project(":foundation:log:api")
     implementation project(":foundation:preferences:api")
     implementation(
+            libs.autodagger.core,
             libs.hilt,
             libs.sqldelight.coroutines,
             libs.retrofit.core,
             libs.moshi,
     )
+    kapt libs.autodagger.kapt
     ksp libs.moshi.ksp
 }

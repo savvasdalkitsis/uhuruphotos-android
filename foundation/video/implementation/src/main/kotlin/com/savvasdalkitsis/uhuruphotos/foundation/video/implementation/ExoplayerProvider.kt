@@ -30,9 +30,11 @@ import com.savvasdalkitsis.uhuruphotos.foundation.video.api.ExoplayerType
 import com.savvasdalkitsis.uhuruphotos.foundation.video.api.ExoplayerType.Local
 import com.savvasdalkitsis.uhuruphotos.foundation.video.api.ExoplayerType.Remote
 import dagger.hilt.android.qualifiers.ApplicationContext
+import se.ansman.dagger.auto.AutoBind
 import javax.inject.Inject
 import javax.inject.Singleton
 
+@AutoBind
 @Singleton
 class ExoplayerProvider @Inject constructor(
     @ApplicationContext private val context: Context,

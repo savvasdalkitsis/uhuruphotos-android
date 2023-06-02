@@ -20,8 +20,10 @@ import com.mapbox.mapboxsdk.Mapbox
 import com.mapbox.mapboxsdk.WellKnownTileServer
 import com.savvasdalkitsis.uhuruphotos.foundation.initializer.api.ApplicationCreated
 import com.savvasdalkitsis.uhuruphotos.foundation.map.implementation.maplibre.MapLibreApi
+import se.ansman.dagger.auto.AutoBindIntoSet
 import javax.inject.Inject
 
+@AutoBindIntoSet
 internal class MapsInitializer @Inject constructor(
 ) : ApplicationCreated {
 

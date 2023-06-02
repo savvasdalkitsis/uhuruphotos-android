@@ -41,9 +41,11 @@ import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.theme.AppTheme
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.theme.ThemeMode
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
+import se.ansman.dagger.auto.AutoBind
 import javax.inject.Inject
 import kotlin.reflect.KClass
 
+@AutoBind
 class NavigationTargetBuilder @Inject constructor(
     private val serializer: NavigationRouteSerializer,
 ) : NavigationTargetBuilder {

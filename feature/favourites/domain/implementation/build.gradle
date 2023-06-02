@@ -6,6 +6,8 @@ dependencies {
     api project(":feature:favourites:domain:api")
     implementation project(":foundation:preferences:api")
     implementation(
+            libs.autodagger.core,
             libs.hilt,
     )
+    kapt libs.autodagger.kapt
 }

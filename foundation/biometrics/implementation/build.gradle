@@ -10,6 +10,8 @@ dependencies {
     implementation project(":foundation:log:api")
     implementation(
             libs.assure,
+            libs.autodagger.core,
             libs.hilt,
     )
+    kapt libs.autodagger.kapt
 }

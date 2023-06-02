@@ -32,9 +32,11 @@ import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.extensions.awaitSin
 import com.savvasdalkitsis.uhuruphotos.foundation.log.api.log
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
+import se.ansman.dagger.auto.AutoBind
 import java.io.IOException
 import javax.inject.Inject
 
+@AutoBind
 class AuthenticationUseCase @Inject constructor(
     private val tokenQueries: TokenQueries,
     private val authenticationService: AuthenticationService,

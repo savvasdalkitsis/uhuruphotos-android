@@ -21,6 +21,7 @@ dependencies {
     implementation(
             libs.accompanist.systemui,
             libs.androidx.compose.foundation,
+            libs.autodagger.core,
             libs.gson,
     )
     api(
@@ -30,6 +31,7 @@ dependencies {
             libs.kotlin.reflect,
     )
 
+    kapt libs.autodagger.kapt
     testImplementation(
             libs.bundles.test,
     )

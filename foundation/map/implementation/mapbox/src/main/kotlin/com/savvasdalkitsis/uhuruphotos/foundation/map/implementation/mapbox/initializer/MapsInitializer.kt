@@ -19,8 +19,10 @@ import android.app.Application
 import androidx.startup.AppInitializer
 import com.mapbox.maps.loader.MapboxMapsInitializer
 import com.savvasdalkitsis.uhuruphotos.foundation.initializer.api.ApplicationCreated
+import se.ansman.dagger.auto.AutoBindIntoSet
 import javax.inject.Inject
 
+@AutoBindIntoSet
 internal class MapsInitializer @Inject constructor(
 ) : ApplicationCreated {
 

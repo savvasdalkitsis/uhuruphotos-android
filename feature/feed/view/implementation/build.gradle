@@ -42,8 +42,10 @@ dependencies {
             libs.androidx.compose.navigation,
             libs.androidx.compose.ui,
             libs.androidx.lifecycle,
+            libs.autodagger.core,
             libs.bundles.permissions,
             libs.hilt,
             libs.infobar,
     )
+    kapt libs.autodagger.kapt
 }

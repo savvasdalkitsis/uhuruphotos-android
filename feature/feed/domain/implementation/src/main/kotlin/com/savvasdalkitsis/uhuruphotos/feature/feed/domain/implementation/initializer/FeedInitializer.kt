@@ -19,8 +19,10 @@ import android.app.Application
 import androidx.work.ExistingPeriodicWorkPolicy
 import com.savvasdalkitsis.uhuruphotos.feature.feed.domain.api.worker.FeedWorkScheduler
 import com.savvasdalkitsis.uhuruphotos.foundation.initializer.api.ApplicationCreated
+import se.ansman.dagger.auto.AutoBindIntoSet
 import javax.inject.Inject
 
+@AutoBindIntoSet
 internal class FeedInitializer @Inject constructor(
     private val feedWorkScheduler: FeedWorkScheduler,
 ): ApplicationCreated {

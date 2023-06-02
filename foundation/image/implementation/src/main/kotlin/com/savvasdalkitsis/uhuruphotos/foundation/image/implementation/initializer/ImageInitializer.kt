@@ -19,8 +19,10 @@ import android.app.Application
 import coil.Coil
 import coil.ImageLoader
 import com.savvasdalkitsis.uhuruphotos.foundation.initializer.api.ApplicationCreated
+import se.ansman.dagger.auto.AutoBindIntoSet
 import javax.inject.Inject
 
+@AutoBindIntoSet
 class ImageInitializer @Inject constructor(
     private val imageLoader: ImageLoader,
 ) : ApplicationCreated {

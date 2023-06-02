@@ -34,8 +34,10 @@ import kotlinx.coroutines.flow.emitAll
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.map
+import se.ansman.dagger.auto.AutoBind
 import javax.inject.Inject
 
+@AutoBind
 class RemoteMediaUseCase @Inject constructor(
     private val settingsUseCase: SettingsUseCase,
     private val remoteMediaRepository: RemoteMediaRepository,

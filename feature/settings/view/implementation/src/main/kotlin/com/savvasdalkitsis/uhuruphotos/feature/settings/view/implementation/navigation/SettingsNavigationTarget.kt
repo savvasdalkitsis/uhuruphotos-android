@@ -24,8 +24,10 @@ import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.ui.c
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.viewmodel.SettingsViewModel
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.NavigationTarget
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.NavigationTargetBuilder
+import se.ansman.dagger.auto.AutoBindIntoSet
 import javax.inject.Inject
 
+@AutoBindIntoSet
 internal class SettingsNavigationTarget @Inject constructor(
     private val settingsUseCase: SettingsUseCase,
     private val settingsViewStateController: SettingsViewStateController,

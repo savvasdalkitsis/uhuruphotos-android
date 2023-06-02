@@ -10,10 +10,12 @@ dependencies {
     implementation project(':feature:people:domain:api')
     implementation project(':feature:media:remote:domain:api')
     implementation(
+            libs.autodagger.core,
             libs.hilt,
             libs.moshi,
             libs.retrofit.core,
             libs.sqldelight.coroutines,
     )
+    kapt libs.autodagger.kapt
     ksp libs.moshi.ksp
 }

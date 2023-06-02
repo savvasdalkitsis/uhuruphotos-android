@@ -19,8 +19,10 @@ dependencies {
             libs.androidx.compose.material,
             libs.androidx.compose.ui,
             libs.androidx.startup,
+            libs.autodagger.core,
             libs.hilt,
     )
+    kapt libs.autodagger.kapt
     implementation(libs.maplibre) {
         exclude group: 'org.maplibre.gl', module: 'android-sdk-geojson'
         exclude group: 'com.jakewharton.timber', module: 'timber'

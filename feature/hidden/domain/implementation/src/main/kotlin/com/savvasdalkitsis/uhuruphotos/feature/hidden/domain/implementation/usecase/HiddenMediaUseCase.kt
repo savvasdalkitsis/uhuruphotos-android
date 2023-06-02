@@ -21,8 +21,10 @@ import com.savvasdalkitsis.uhuruphotos.feature.hidden.domain.api.usecase.HiddenM
 import com.savvasdalkitsis.uhuruphotos.foundation.preferences.api.Preferences
 import com.savvasdalkitsis.uhuruphotos.foundation.preferences.api.get
 import com.savvasdalkitsis.uhuruphotos.foundation.preferences.api.set
+import se.ansman.dagger.auto.AutoBind
 import javax.inject.Inject
 
+@AutoBind
 internal class HiddenMediaUseCase @Inject constructor(
     private val preferences: Preferences,
 ) : HiddenMediaUseCase {

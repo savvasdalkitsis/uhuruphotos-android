@@ -24,8 +24,12 @@ import androidx.core.content.ContextCompat
 import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.worker.LocalMediaWorkScheduler
 import com.savvasdalkitsis.uhuruphotos.foundation.initializer.api.ActivityCreated
 import com.savvasdalkitsis.uhuruphotos.foundation.log.api.log
+import dagger.hilt.android.scopes.ActivityRetainedScoped
+import se.ansman.dagger.auto.AutoBindIntoSet
 import javax.inject.Inject
 
+@AutoBindIntoSet
+@ActivityRetainedScoped
 class DownloadActivityInitializer @Inject constructor(
     private val localMediaWorkScheduler: LocalMediaWorkScheduler,
 ): ActivityCreated {

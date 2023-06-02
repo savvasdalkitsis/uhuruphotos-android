@@ -20,8 +20,10 @@ import android.widget.Toast
 import androidx.annotation.StringRes
 import com.savvasdalkitsis.uhuruphotos.foundation.toaster.api.usecase.ToasterUseCase
 import dagger.hilt.android.qualifiers.ApplicationContext
+import se.ansman.dagger.auto.AutoBind
 import javax.inject.Inject
 
+@AutoBind
 class ToasterUseCase @Inject constructor(
     @ApplicationContext private val context: Context,
 ) : ToasterUseCase {

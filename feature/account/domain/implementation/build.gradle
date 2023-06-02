@@ -18,10 +18,12 @@ dependencies {
     implementation(
             libs.androidx.compose.foundation,
             libs.androidx.compose.material,
+            libs.autodagger.core,
             libs.okhttp,
             libs.hilt,
     )
     testImplementation(
             libs.bundles.test,
     )
+    kapt libs.autodagger.kapt
 }

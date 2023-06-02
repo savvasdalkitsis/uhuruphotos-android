@@ -24,11 +24,15 @@ import androidx.core.os.bundleOf
 import com.savvasdalkitsis.uhuruphotos.foundation.activity.api.holder.CurrentActivityHolder
 import com.savvasdalkitsis.uhuruphotos.foundation.activity.api.request.ActivityRequestFailed
 import com.savvasdalkitsis.uhuruphotos.foundation.activity.api.request.ActivityRequestLauncher
+import dagger.hilt.android.scopes.ActivityRetainedScoped
 import kotlinx.coroutines.suspendCancellableCoroutine
+import se.ansman.dagger.auto.AutoBind
 import java.util.concurrent.atomic.AtomicInteger
 import javax.inject.Inject
 import kotlin.coroutines.resume
 
+@AutoBind
+@ActivityRetainedScoped
 class ActivityRequestLauncher @Inject constructor(
     private val currentActivityHolder: CurrentActivityHolder
 ) : ActivityRequestLauncher {

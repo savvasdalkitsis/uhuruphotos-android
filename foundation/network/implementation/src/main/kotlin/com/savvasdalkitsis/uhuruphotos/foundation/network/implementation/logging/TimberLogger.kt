@@ -17,8 +17,10 @@ package com.savvasdalkitsis.uhuruphotos.foundation.network.implementation.loggin
 
 import com.savvasdalkitsis.uhuruphotos.foundation.log.api.log
 import okhttp3.logging.HttpLoggingInterceptor
+import se.ansman.dagger.auto.AutoBind
 import javax.inject.Inject
 
+@AutoBind
 internal class TimberLogger @Inject constructor() : HttpLoggingInterceptor.Logger {
 
     override fun log(message: String) = log("OkHttp") { message }

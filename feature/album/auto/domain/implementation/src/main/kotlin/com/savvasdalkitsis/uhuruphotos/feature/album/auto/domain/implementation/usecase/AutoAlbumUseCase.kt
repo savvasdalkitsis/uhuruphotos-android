@@ -27,8 +27,10 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.map
+import se.ansman.dagger.auto.AutoBind
 import javax.inject.Inject
 
+@AutoBind
 internal class AutoAlbumUseCase @Inject constructor(
     private val autoAlbumRepository: AutoAlbumRepository,
     private val mediaUseCase: MediaUseCase,

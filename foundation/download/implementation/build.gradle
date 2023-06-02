@@ -14,8 +14,10 @@ dependencies {
     implementation project(":foundation:download:api")
     implementation project(":foundation:log:api")
     implementation(
+            libs.autodagger.core,
             libs.hilt,
             libs.kotlinx.coroutines,
             libs.sqldelight.coroutines,
     )
+    kapt libs.autodagger.kapt
 }

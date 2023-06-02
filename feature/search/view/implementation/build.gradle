@@ -43,10 +43,12 @@ dependencies {
             libs.androidx.compose.hilt.navigation,
             libs.androidx.compose.material,
             libs.androidx.lifecycle,
+            libs.autodagger.core,
             libs.moshi,
             libs.retrofit.core,
             libs.retrofit.moshi,
             libs.sqldelight.coroutines,
     )
+    kapt libs.autodagger.kapt
     ksp libs.moshi.ksp
 }

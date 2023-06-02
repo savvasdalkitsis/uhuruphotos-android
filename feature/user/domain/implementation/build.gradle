@@ -5,6 +5,7 @@ dependencies {
     implementation project(":foundation:log:api")
     implementation project(":feature:user:domain:api")
     implementation(
+            libs.autodagger.core,
             libs.hilt,
             libs.moshi,
             libs.retrofit.core,
@@ -12,6 +13,7 @@ dependencies {
             libs.sqldelight.coroutines,
     )
     testFixturesImplementation project(":feature:db:domain:api")
+    kapt libs.autodagger.kapt
     ksp libs.moshi.ksp
 }
 

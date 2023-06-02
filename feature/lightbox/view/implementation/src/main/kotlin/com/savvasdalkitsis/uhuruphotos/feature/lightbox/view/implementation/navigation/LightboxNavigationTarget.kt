@@ -24,8 +24,10 @@ import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.NavigationTarge
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.NavigationTargetBuilder
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.theme.ThemeMode
 import kotlinx.coroutines.flow.MutableStateFlow
+import se.ansman.dagger.auto.AutoBindIntoSet
 import javax.inject.Inject
 
+@AutoBindIntoSet
 class LightboxNavigationTarget @Inject constructor(
     private val navigationTargetBuilder: NavigationTargetBuilder,
 ) : NavigationTarget {

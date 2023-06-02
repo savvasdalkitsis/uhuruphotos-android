@@ -18,9 +18,11 @@ dependencies {
     implementation(
             libs.androidx.work,
             libs.androidx.work.hilt,
+            libs.autodagger.core,
             libs.bundles.permissions,
             libs.hilt,
             libs.palette,
             libs.sqldelight.coroutines,
     )
+    kapt libs.autodagger.kapt
 }

@@ -28,8 +28,10 @@ import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.NavigationTarge
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.NavigationTargetBuilder
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.Either.Left
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.Either.Right
+import se.ansman.dagger.auto.AutoBindIntoSet
 import javax.inject.Inject
 
+@AutoBindIntoSet
 internal class FeedNavigationTarget @Inject constructor(
     private val settingsUseCase: SettingsUseCase,
     private val navigationTargetBuilder: NavigationTargetBuilder,

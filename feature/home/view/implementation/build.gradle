@@ -26,5 +26,7 @@ dependencies {
             libs.androidx.compose.material.windowsize,
             libs.androidx.compose.ui,
             libs.androidx.lifecycle,
+            libs.autodagger.core,
     )
+    kapt libs.autodagger.kapt
 }

@@ -21,8 +21,10 @@ import com.michaelflisar.lumberjack.L
 import com.michaelflisar.lumberjack.sendFeedback
 import com.savvasdalkitsis.uhuruphotos.foundation.log.api.usecase.FeedbackUseCase
 import dagger.hilt.android.qualifiers.ApplicationContext
+import se.ansman.dagger.auto.AutoBind
 import javax.inject.Inject
 
+@AutoBind
 internal class FeedbackUseCase @Inject constructor(
     @ApplicationContext private val context: Context,
     private val loggingSetup: FileLoggingSetup,

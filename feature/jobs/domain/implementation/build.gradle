@@ -7,6 +7,8 @@ dependencies {
     implementation project(":feature:jobs:domain:api")
     implementation project(":feature:media:local:domain:api")
     implementation(
+            libs.autodagger.core,
             libs.hilt,
     )
+    kapt libs.autodagger.kapt
 }

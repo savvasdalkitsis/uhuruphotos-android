@@ -20,9 +20,11 @@ import androidx.compose.ui.hapticfeedback.HapticFeedbackType
 import androidx.compose.ui.platform.SoftwareKeyboardController
 import com.google.accompanist.systemuicontroller.SystemUiController
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.usecase.UiUseCase
+import se.ansman.dagger.auto.AutoBind
 import javax.inject.Inject
 import javax.inject.Singleton
 
+@AutoBind
 @Singleton
 class UiUseCase @Inject constructor(
 ) : UiUseCase {

@@ -25,6 +25,7 @@ dependencies {
     implementation(
             libs.androidx.compose.hilt.navigation,
             libs.androidx.compose.ui,
+            libs.autodagger.core,
             libs.bundles.androidx.credentials,
             libs.jwt,
             libs.hilt,
@@ -32,4 +33,5 @@ dependencies {
             libs.retrofit.moshi,
     )
     ksp libs.moshi.ksp
+    kapt libs.autodagger.kapt
 }

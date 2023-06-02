@@ -25,8 +25,12 @@ import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.worker.Loc
 import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.implementation.service.model.LocalMediaPhotoColumns
 import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.implementation.service.model.LocalMediaVideoColumns
 import com.savvasdalkitsis.uhuruphotos.foundation.initializer.api.ActivityCreated
+import dagger.hilt.android.scopes.ActivityRetainedScoped
+import se.ansman.dagger.auto.AutoBindIntoSet
 import javax.inject.Inject
 
+@AutoBindIntoSet
+@ActivityRetainedScoped
 internal class LocalMediaInitializer @Inject constructor(
     private val localMediaWorkScheduler: LocalMediaWorkScheduler,
     private val contentResolver: ContentResolver,

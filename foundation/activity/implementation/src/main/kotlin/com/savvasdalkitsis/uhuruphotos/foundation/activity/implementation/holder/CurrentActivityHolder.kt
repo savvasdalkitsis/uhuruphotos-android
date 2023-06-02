@@ -18,9 +18,11 @@ package com.savvasdalkitsis.uhuruphotos.foundation.activity.implementation.holde
 import androidx.fragment.app.FragmentActivity
 import com.savvasdalkitsis.uhuruphotos.foundation.activity.api.holder.CurrentActivityHolder
 import dagger.hilt.android.scopes.ActivityRetainedScoped
+import se.ansman.dagger.auto.AutoBind
 import java.lang.ref.WeakReference
 import javax.inject.Inject
 
+@AutoBind
 @ActivityRetainedScoped
 class CurrentActivityHolder @Inject constructor() : CurrentActivityHolder {
 

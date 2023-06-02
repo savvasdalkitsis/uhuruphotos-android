@@ -17,5 +17,7 @@ dependencies {
     implementation(
             libs.accompanist.webview,
             libs.androidx.compose.navigation,
+            libs.autodagger.core,
     )
+    kapt libs.autodagger.kapt
 }

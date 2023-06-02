@@ -3,6 +3,7 @@ accompanist = "0.31.0-alpha"
 androidx-credentials = "1.0.0-alpha08"
 androidx-hilt = "1.1.0-alpha01"
 androidx-test = "1.6.0-alpha02"
+autodagger = "0.6.1"
 coil = "2.4.0"
 com-google-android-gms = "18.1.0"
 compose = "1.5.0-beta01"
@@ -59,6 +60,8 @@ androidx-work = "androidx.work:work-runtime-ktx:2.8.1"
 androidx-work-hilt = "androidx.hilt:hilt-work:1.0.0"
 appcenter-crashes= "com.microsoft.appcenter:appcenter-crashes:5.0.1"
 assure = "com.afollestad.assure:coroutines:0.2.0"
+autodagger-core = { module = "se.ansman.dagger.auto:android", version.ref = "autodagger" }
+autodagger-kapt = { module = "se.ansman.dagger.auto:compiler", version.ref = "autodagger" }
 bubble-navigation = "com.github.savvasdalkitsis:BubbleNavigationBarCompose:1.0.2"
 coil-base = { module = "io.coil-kt:coil-base", version.ref = "coil" }
 coil-compose = { module = "io.coil-kt:coil-compose", version.ref = "coil" }

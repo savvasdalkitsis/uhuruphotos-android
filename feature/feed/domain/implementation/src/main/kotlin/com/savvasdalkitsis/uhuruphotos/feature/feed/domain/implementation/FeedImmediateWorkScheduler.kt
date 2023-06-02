@@ -19,8 +19,12 @@ import com.savvasdalkitsis.uhuruphotos.feature.feed.domain.api.worker.FeedImmedi
 import com.savvasdalkitsis.uhuruphotos.feature.feed.domain.implementation.worker.FeedDownloadWorker
 import com.savvasdalkitsis.uhuruphotos.feature.feed.domain.implementation.worker.PrecacheFeedThumbnailsWorker
 import com.savvasdalkitsis.uhuruphotos.foundation.worker.api.usecase.WorkScheduleNowNotificationUseCase
+import dagger.hilt.android.scopes.ActivityRetainedScoped
+import se.ansman.dagger.auto.AutoBind
 import javax.inject.Inject
 
+@AutoBind
+@ActivityRetainedScoped
 internal class FeedImmediateWorkScheduler @Inject constructor(
     private val workScheduleNowNotificationUseCase: WorkScheduleNowNotificationUseCase,
 ) : FeedImmediateWorkScheduler {

@@ -35,5 +35,7 @@ dependencies {
             libs.androidx.compose.material,
             libs.androidx.compose.material.windowsize,
             libs.androidx.work,
+            libs.autodagger.core,
     )
+    kapt libs.autodagger.kapt
 }

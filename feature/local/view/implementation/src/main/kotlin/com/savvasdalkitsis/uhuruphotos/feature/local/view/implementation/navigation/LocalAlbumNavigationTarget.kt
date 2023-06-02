@@ -23,8 +23,10 @@ import com.savvasdalkitsis.uhuruphotos.feature.local.view.implementation.viewmod
 import com.savvasdalkitsis.uhuruphotos.feature.settings.domain.api.usecase.SettingsUseCase
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.NavigationTarget
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.NavigationTargetBuilder
+import se.ansman.dagger.auto.AutoBindIntoSet
 import javax.inject.Inject
 
+@AutoBindIntoSet
 internal class LocalAlbumNavigationTarget @Inject constructor(
     private val settingsUseCase: SettingsUseCase,
     private val navigationTargetBuilder: NavigationTargetBuilder,

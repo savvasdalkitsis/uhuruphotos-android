@@ -15,11 +15,7 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.auth.domain.implementation.module
 
-import com.savvasdalkitsis.uhuruphotos.feature.auth.domain.implementation.cookies.CookieMonitor
 import com.savvasdalkitsis.uhuruphotos.feature.auth.domain.implementation.service.TokenRefreshInterceptor
-import com.savvasdalkitsis.uhuruphotos.feature.auth.domain.implementation.usecase.AuthenticationHeadersUseCase
-import com.savvasdalkitsis.uhuruphotos.feature.auth.domain.implementation.usecase.AuthenticationUseCase
-import com.savvasdalkitsis.uhuruphotos.feature.auth.domain.implementation.usecase.ServerUseCase
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -34,20 +30,4 @@ abstract class AuthBindingsModule {
     @com.savvasdalkitsis.uhuruphotos.feature.auth.domain.api.TokenRefreshInterceptor
     abstract fun tokenRefreshInterceptor(tokenRefreshInterceptor: TokenRefreshInterceptor):
             Interceptor
-
-    @Binds
-    abstract fun authenticationUseCase(authenticationUseCase: AuthenticationUseCase):
-            com.savvasdalkitsis.uhuruphotos.feature.auth.domain.api.usecase.AuthenticationUseCase
-
-    @Binds
-    abstract fun serverUseCase(serverUseCase: ServerUseCase):
-            com.savvasdalkitsis.uhuruphotos.feature.auth.domain.api.usecase.ServerUseCase
-
-    @Binds
-    abstract fun cookieMonitor(cookieMonitor: CookieMonitor):
-            com.savvasdalkitsis.uhuruphotos.feature.auth.domain.api.cookies.CookieMonitor
-
-    @Binds
-    abstract fun authenticationHeadersUseCase(useCase: AuthenticationHeadersUseCase):
-            com.savvasdalkitsis.uhuruphotos.feature.auth.domain.api.usecase.AuthenticationHeadersUseCase
 }

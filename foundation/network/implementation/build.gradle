@@ -8,6 +8,7 @@ dependencies {
     implementation project(":foundation:log:api")
 
     implementation(
+            libs.autodagger.core,
             libs.hilt,
             libs.okhttp,
             libs.okhttp.logging,
@@ -18,5 +19,6 @@ dependencies {
             libs.moshi,
             libs.retrofit.core,
     )
+    kapt libs.autodagger.kapt
     ksp libs.moshi.ksp
 }

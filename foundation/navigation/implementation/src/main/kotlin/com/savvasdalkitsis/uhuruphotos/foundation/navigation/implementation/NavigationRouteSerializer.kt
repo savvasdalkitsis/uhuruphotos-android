@@ -21,9 +21,11 @@ import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.NavigationRoute
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.NavigationRouteSerializer
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.implementation.serialization.Base64String
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.implementation.serialization.Base64Transcoder
+import se.ansman.dagger.auto.AutoBind
 import javax.inject.Inject
 import kotlin.reflect.KClass
 
+@AutoBind
 class NavigationRouteSerializer @Inject constructor(
     private val gson: Gson,
     private val base64: Base64Transcoder,

@@ -30,10 +30,14 @@ import com.savvasdalkitsis.uhuruphotos.foundation.biometrics.api.usecase.Biometr
 import com.savvasdalkitsis.uhuruphotos.foundation.launchers.api.awaitOnMain
 import com.savvasdalkitsis.uhuruphotos.foundation.log.api.log
 import com.savvasdalkitsis.uhuruphotos.foundation.log.api.runCatchingWithLog
+import dagger.hilt.android.scopes.ActivityRetainedScoped
+import se.ansman.dagger.auto.AutoBind
 import javax.inject.Inject
 import kotlin.coroutines.resumeWithException
 import kotlin.coroutines.suspendCoroutine
 
+@AutoBind
+@ActivityRetainedScoped
 internal class BiometricsUseCase @Inject constructor(
     private val biometricManager: BiometricManager,
     private val currentActivityHolder: CurrentActivityHolder,

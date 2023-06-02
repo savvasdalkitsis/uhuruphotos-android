@@ -18,8 +18,10 @@ package com.savvasdalkitsis.uhuruphotos.foundation.image.implementation.cache
 import coil.disk.DiskCache
 import coil.memory.MemoryCache
 import com.savvasdalkitsis.uhuruphotos.foundation.image.api.cache.ImageCacheController
+import se.ansman.dagger.auto.AutoBind
 import javax.inject.Inject
 
+@AutoBind
 class ImageCacheController @Inject constructor(
     private val memoryCache: MemoryCache,
     private val diskCache: DiskCache,

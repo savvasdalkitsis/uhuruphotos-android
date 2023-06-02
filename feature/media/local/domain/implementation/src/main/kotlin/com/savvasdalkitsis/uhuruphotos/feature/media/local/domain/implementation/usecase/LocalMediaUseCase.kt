@@ -54,8 +54,10 @@ import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.mapLatest
 import org.joda.time.format.DateTimeFormatter
+import se.ansman.dagger.auto.AutoBind
 import javax.inject.Inject
 
+@AutoBind
 class LocalMediaUseCase @Inject constructor(
     @ApplicationContext
     private val context: Context,

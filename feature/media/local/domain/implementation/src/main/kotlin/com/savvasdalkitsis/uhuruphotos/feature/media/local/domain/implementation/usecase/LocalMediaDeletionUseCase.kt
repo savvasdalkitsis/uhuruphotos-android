@@ -38,8 +38,10 @@ import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.implementation
 import com.savvasdalkitsis.uhuruphotos.foundation.activity.api.request.ActivityRequestLauncher
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.android.scopes.ActivityRetainedScoped
+import se.ansman.dagger.auto.AutoBind
 import javax.inject.Inject
 
+@AutoBind
 @ActivityRetainedScoped
 class LocalMediaDeletionUseCase @Inject constructor(
     @ApplicationContext

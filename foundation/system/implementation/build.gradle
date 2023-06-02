@@ -5,6 +5,8 @@ android {
 dependencies {
     implementation project(":foundation:system:api")
     implementation(
+            libs.autodagger.core,
             libs.hilt,
     )
+    kapt libs.autodagger.kapt
 }

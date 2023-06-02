@@ -25,10 +25,12 @@ import androidx.work.OneTimeWorkRequest
 import androidx.work.OutOfQuotaPolicy
 import androidx.work.WorkManager
 import com.savvasdalkitsis.uhuruphotos.foundation.worker.api.usecase.WorkScheduleNowUseCase
+import se.ansman.dagger.auto.AutoBind
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 import kotlin.reflect.KClass
 
+@AutoBind
 class WorkScheduleNowUseCase @Inject constructor(
     private val workManager: WorkManager,
 ) : WorkScheduleNowUseCase {

@@ -19,8 +19,10 @@ import com.savvasdalkitsis.uhuruphotos.foundation.network.api.OkHttpBuilder
 import com.savvasdalkitsis.uhuruphotos.foundation.network.implementation.BasicOkHttpClient
 import okhttp3.OkHttpClient.Builder
 import okhttp3.logging.HttpLoggingInterceptor
+import se.ansman.dagger.auto.AutoBind
 import javax.inject.Inject
 
+@AutoBind
 internal class OkHttpBuilder @Inject constructor(
     @BasicOkHttpClient private val okHttpBuilder: Builder,
     private val logger: HttpLoggingInterceptor.Logger,

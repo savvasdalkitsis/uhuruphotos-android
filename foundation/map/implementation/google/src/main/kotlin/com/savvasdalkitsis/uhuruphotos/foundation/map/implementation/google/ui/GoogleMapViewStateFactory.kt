@@ -22,8 +22,10 @@ import com.savvasdalkitsis.uhuruphotos.foundation.map.api.model.MapProvider
 import com.savvasdalkitsis.uhuruphotos.foundation.map.api.model.MapProvider.Google
 import com.savvasdalkitsis.uhuruphotos.foundation.map.api.ui.MapViewState
 import com.savvasdalkitsis.uhuruphotos.foundation.map.api.ui.MapViewStateFactory
+import se.ansman.dagger.auto.AutoBindIntoSet
 import javax.inject.Inject
 
+@AutoBindIntoSet
 class GoogleMapViewStateFactory @Inject constructor(
 ) : MapViewStateFactory {
 
@@ -31,14 +33,12 @@ class GoogleMapViewStateFactory @Inject constructor(
         mapProvider: MapProvider,
         initialPosition: LatLon,
         initialZoom: Float,
-    ): MapViewState? {
-        return when (mapProvider) {
-            Google -> {
-                val cameraPosition =
-                    CameraPosition.fromLatLngZoom(initialPosition.toLatLng, initialZoom)
-                GoogleMapViewState(CameraPositionState(cameraPosition), initialPosition, initialZoom)
-            }
-            else -> null
-            }
+    ): MapViewState? = when (mapProvider) {
+        Google -> {
+            val cameraPosition =
+                CameraPosition.fromLatLngZoom(initialPosition.toLatLng, initialZoom)
+            GoogleMapViewState(CameraPositionState(cameraPosition), initialPosition, initialZoom)
+        }
+        else -> null
         }
 }

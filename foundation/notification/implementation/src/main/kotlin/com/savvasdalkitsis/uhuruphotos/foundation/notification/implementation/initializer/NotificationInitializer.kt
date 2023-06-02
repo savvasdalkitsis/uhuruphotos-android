@@ -23,8 +23,10 @@ import com.savvasdalkitsis.uhuruphotos.foundation.initializer.api.ApplicationCre
 import com.savvasdalkitsis.uhuruphotos.foundation.notification.api.NotificationChannels.CRASH_CHANNEL_ID
 import com.savvasdalkitsis.uhuruphotos.foundation.notification.api.NotificationChannels.JOBS_CHANNEL_ID
 import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
+import se.ansman.dagger.auto.AutoBindIntoSet
 import javax.inject.Inject
 
+@AutoBindIntoSet
 internal class NotificationInitializer @Inject constructor(
     private val notificationManager: NotificationManagerCompat,
 ): ApplicationCreated {

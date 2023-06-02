@@ -22,9 +22,11 @@ import com.savvasdalkitsis.uhuruphotos.foundation.log.api.log
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.NavigationRoute
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.NavigationRouteSerializer
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.Navigator
+import se.ansman.dagger.auto.AutoBind
 import javax.inject.Inject
 import javax.inject.Singleton
 
+@AutoBind
 @Singleton
 class Navigator @Inject internal constructor(
     private val intentLauncher: IntentLauncher,

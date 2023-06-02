@@ -17,7 +17,9 @@ dependencies {
             libs.androidx.compose.material,
             libs.androidx.compose.ui,
             libs.androidx.startup,
+            libs.autodagger.core,
             libs.hilt,
             libs.mapbox,
     )
+    kapt libs.autodagger.kapt
 }

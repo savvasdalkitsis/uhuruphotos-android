@@ -45,6 +45,8 @@ dependencies {
             libs.bundles.permissions,
             libs.androidx.compose.foundation,
             libs.androidx.compose.material,
+            libs.autodagger.core,
             libs.retrofit.core,
     )
+    kapt libs.autodagger.kapt
 }

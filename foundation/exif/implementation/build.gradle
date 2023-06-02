@@ -5,7 +5,9 @@ android {
 dependencies {
     api project(":foundation:exif:api")
     implementation(
+            libs.autodagger.core,
             libs.exif,
             libs.hilt,
     )
+    kapt libs.autodagger.kapt
 }

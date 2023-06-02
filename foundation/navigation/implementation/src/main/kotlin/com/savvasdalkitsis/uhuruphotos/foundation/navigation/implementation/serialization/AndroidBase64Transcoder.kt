@@ -16,8 +16,10 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.foundation.navigation.implementation.serialization
 
 import android.util.Base64
+import se.ansman.dagger.auto.AutoBind
 import javax.inject.Inject
 
+@AutoBind
 class AndroidBase64Transcoder @Inject constructor(
 ) : Base64Transcoder {
 

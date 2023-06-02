@@ -39,9 +39,11 @@ import com.squareup.sqldelight.runtime.coroutines.mapToList
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.map
+import se.ansman.dagger.auto.AutoBind
 import java.io.File
 import javax.inject.Inject
 
+@AutoBind
 internal class DownloadUseCase @Inject constructor(
     private val downloadManager: DownloadManager,
     private val downloadingRepository: DownloadingRepository,

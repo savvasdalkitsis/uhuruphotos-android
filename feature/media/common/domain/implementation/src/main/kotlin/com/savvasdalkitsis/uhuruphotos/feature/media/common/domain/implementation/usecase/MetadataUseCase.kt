@@ -24,8 +24,10 @@ import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.Med
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.usecase.MetadataUseCase
 import com.savvasdalkitsis.uhuruphotos.foundation.exif.api.model.ExifMetadata
 import com.savvasdalkitsis.uhuruphotos.foundation.exif.api.usecase.ExifUseCase
+import se.ansman.dagger.auto.AutoBind
 import javax.inject.Inject
 
+@AutoBind
 class MetadataUseCase @Inject constructor(
     private val diskCache: DiskCache,
     private val exifUseCase: ExifUseCase,

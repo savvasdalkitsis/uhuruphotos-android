@@ -33,8 +33,10 @@ import com.savvasdalkitsis.uhuruphotos.foundation.activity.api.holder.CurrentAct
 import com.savvasdalkitsis.uhuruphotos.foundation.log.api.log
 import com.savvasdalkitsis.uhuruphotos.foundation.log.api.runCatchingWithLog
 import dagger.hilt.android.scopes.ActivityRetainedScoped
+import se.ansman.dagger.auto.AutoBind
 import javax.inject.Inject
 
+@AutoBind
 @ActivityRetainedScoped
 class AuthenticationLoginUseCase @Inject constructor(
     private val tokenQueries: TokenQueries,

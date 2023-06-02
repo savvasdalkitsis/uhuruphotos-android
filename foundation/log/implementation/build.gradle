@@ -1,3 +1,7 @@
+android {
+    namespace 'com.savvasdalkitsis.uhuruphotos.foundation.log.implementation'
+}
+
 dependencies {
     implementation project(":foundation:icons:api")
     implementation project(":foundation:initializer:api")
@@ -5,11 +9,10 @@ dependencies {
     implementation project(":foundation:notification:api")
     implementation project(":feature:settings:domain:api")
     implementation(
+            libs.autodagger.core,
             libs.bundles.lumberjack,
             libs.hilt,
     )
+    kapt libs.autodagger.kapt
 }
 
-android {
-    namespace 'com.savvasdalkitsis.uhuruphotos.foundation.log.implementation'
-}
