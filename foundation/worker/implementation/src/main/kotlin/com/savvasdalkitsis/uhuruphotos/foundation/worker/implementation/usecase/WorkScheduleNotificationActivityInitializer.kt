@@ -21,9 +21,12 @@ import androidx.activity.ComponentActivity
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts.RequestPermission
 import com.savvasdalkitsis.uhuruphotos.foundation.initializer.api.ActivityCreated
+import dagger.hilt.android.components.ActivityRetainedComponent
+import se.ansman.dagger.auto.AutoBind
 import javax.inject.Inject
 import javax.inject.Singleton
 
+@AutoBind(inComponent = ActivityRetainedComponent::class)
 @Singleton
 class WorkScheduleNotificationActivityInitializer @Inject constructor(
 ) : ActivityCreated {
