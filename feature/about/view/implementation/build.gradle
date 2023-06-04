@@ -20,6 +20,7 @@ dependencies {
             libs.androidx.compose.hilt.navigation,
             libs.autodagger.core,
             libs.androidx.compose.material,
+            libs.scrollbar,
     )
     kapt libs.autodagger.kapt
 }
