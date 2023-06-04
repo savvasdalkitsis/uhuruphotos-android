@@ -1,0 +1,25 @@
+android {
+    buildFeatures {
+        compose true
+    }
+    composeOptions {
+        kotlinCompilerExtensionVersion compose_compiler_version
+    }
+    namespace 'com.savvasdalkitsis.uhuruphotos.foundation.about.view.implementation'
+}
+
+dependencies {
+    implementation project(":feature:about:domain:api")
+    implementation project(":feature:about:view:api")
+    implementation project(":feature:settings:domain:api")
+    implementation project(":foundation:navigation:api")
+    implementation project(":foundation:strings:api")
+    implementation project(":foundation:ui:api")
+    implementation(
+            libs.about,
+            libs.androidx.compose.hilt.navigation,
+            libs.autodagger.core,
+            libs.androidx.compose.material,
+    )
+    kapt libs.autodagger.kapt
+}

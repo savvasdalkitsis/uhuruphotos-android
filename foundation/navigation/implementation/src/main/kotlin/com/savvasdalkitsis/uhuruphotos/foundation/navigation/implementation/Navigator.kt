@@ -18,6 +18,7 @@ package com.savvasdalkitsis.uhuruphotos.foundation.navigation.implementation
 import android.content.Intent
 import androidx.navigation.NavHostController
 import com.savvasdalkitsis.uhuruphotos.feature.home.view.api.navigation.HomeNavigationRoute
+import com.savvasdalkitsis.uhuruphotos.foundation.launchers.api.onMain
 import com.savvasdalkitsis.uhuruphotos.foundation.log.api.log
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.NavigationRoute
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.NavigationRouteSerializer
@@ -35,26 +36,36 @@ class Navigator @Inject internal constructor(
     override lateinit var navController: NavHostController
 
     override fun navigateTo(intent: Intent) {
-        intentLauncher.launch(intent)
+        onMain {
+            intentLauncher.launch(intent)
+        }
     }
 
     override fun navigateTo(intent: Intent, fallbackIntent: Intent) {
-        intentLauncher.launch(intent, fallbackIntent)
+        onMain {
+            intentLauncher.launch(intent, fallbackIntent)
+        }
     }
 
     override fun <R : NavigationRoute> navigateTo(route: R) {
         val path = navigationRouteSerializer.serialize(route)
         log { "Navigating to $path" }
-        navController.navigate(path)
+        onMain {
+            navController.navigate(path)
+        }
     }
 
     override fun navigateBack() {
-        navController.popBackStack()
+        onMain {
+            navController.popBackStack()
+        }
     }
 
     override fun clearBackStack() {
-        navController.clearBackStack(
-            navigationRouteSerializer.createRouteTemplateFor(HomeNavigationRoute::class)
-        )
+        onMain {
+            navController.clearBackStack(
+                navigationRouteSerializer.createRouteTemplateFor(HomeNavigationRoute::class)
+            )
+        }
     }
 }

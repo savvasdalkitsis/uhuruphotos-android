@@ -1,0 +1,12 @@
+android {
+    namespace 'com.savvasdalkitsis.uhuruphotos.foundation.about.domain.implementation'
+}
+
+dependencies {
+    implementation project(":feature:about:domain:api")
+    implementation(
+            libs.autodagger.core,
+            libs.hilt,
+    )
+    kapt libs.autodagger.kapt
+}

@@ -53,7 +53,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.trash.domain.api.usecase.TrashUse
 import com.savvasdalkitsis.uhuruphotos.foundation.log.api.log
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.EffectHandler
 import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
-import com.savvasdalktsis.uhuruphotos.foundation.download.api.usecase.DownloadUseCase
+import com.savvasdalkitsis.uhuruphotos.foundation.download.api.usecase.DownloadUseCase
 import kotlinx.coroutines.flow.FlowCollector
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.flow

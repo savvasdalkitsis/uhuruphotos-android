@@ -1,0 +1,3 @@
+android {
+    namespace 'com.savvasdalkitsis.uhuruphotos.foundation.{{cookiecutter.project_slug}}.api'
+}

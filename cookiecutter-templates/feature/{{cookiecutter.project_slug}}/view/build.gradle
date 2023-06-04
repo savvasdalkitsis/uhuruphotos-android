@@ -1,0 +1,3 @@
+android {
+    namespace 'com.savvasdalkitsis.uhuruphotos.feature.{{cookiecutter.project_slug}}.view'
+}

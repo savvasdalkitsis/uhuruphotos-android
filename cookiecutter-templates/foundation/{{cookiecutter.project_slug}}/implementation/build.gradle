@@ -1,0 +1,10 @@
+android {
+    namespace 'com.savvasdalkitsis.uhuruphotos.foundation.{{cookiecutter.project_slug}}.implementation'
+}
+
+dependencies {
+    implementation project(":foundation:{{cookiecutter.project_slug}}:api")
+    implementation(
+            libs.hilt,
+    )
+}

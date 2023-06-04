@@ -22,6 +22,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.stringResource
 import com.savvasdalkitsis.uhuruphotos.feature.avatar.view.api.ui.Avatar
 import com.savvasdalkitsis.uhuruphotos.feature.jobs.view.ui.JobPermissionDialog
+import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.actions.AboutPressed
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.actions.DismissJobDialog
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.actions.NavigateBack
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.actions.SettingsAction
@@ -131,6 +132,9 @@ internal fun Settings(
                 SuperGroup(controller.help) {
                     Group(controller.helpFeedback) {
                         SettingsFeedback(state, action)
+                    }
+                    SettingsButtonRow(buttonText = stringResource(string.about)) {
+                        action(AboutPressed)
                     }
                 }
             }

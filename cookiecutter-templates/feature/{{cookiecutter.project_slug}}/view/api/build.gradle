@@ -1,0 +1,7 @@
+android {
+    namespace 'com.savvasdalkitsis.uhuruphotos.foundation.{{cookiecutter.project_slug}}.view.api'
+}
+
+dependencies {
+    api project(":foundation:navigation:api")
+}
