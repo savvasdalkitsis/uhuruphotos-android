@@ -268,4 +268,5 @@
     <string name="local_media_sync">Sincronizar los medios locales</string>
     <string name="start">Empezar</string>
     <string name="close">Cerrar</string>
+    <string name="about">Acerca de</string>
 </resources>
