@@ -17,6 +17,7 @@ moshi = "1.15.0"
 okhttp = "5.0.0-alpha.11"
 org-jetbrains-kotlinx = "1.7.1"
 permissions = "1.2.0"
+pluto = "2.1.4"
 retrofit = "2.9.0"
 sqldelight = "1.5.5"
 
@@ -85,6 +86,7 @@ jwt = "com.auth0.android:jwtdecode:2.0.2"
 kotlinx-coroutines = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-android", version.ref = "org-jetbrains-kotlinx" }
 kotlinx-coroutines-test = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test", version.ref = "org-jetbrains-kotlinx" }
 kotlin-reflect = "org.jetbrains.kotlin:kotlin-reflect:1.8.21"
+logger = "com.jakewharton.timber:timber:4.7.1"
 lottie = "com.airbnb.android:lottie-compose:6.0.0"
 lumberjack-core = { module = "com.github.savvasdalkitsis.Lumberjack:lumberjack-library", version.ref = "lumberjack" }
 lumberjack-feedback = { module = "com.github.savvasdalkitsis.Lumberjack:lumberjack-feedback", version.ref = "lumberjack" }
@@ -109,6 +111,10 @@ palette = "androidx.palette:palette-ktx:1.0.0"
 permissions-base = { module = "dev.shreyaspatil.permission-flow:permission-flow-android", version.ref = "permissions" }
 permissions-compose = { module = "dev.shreyaspatil.permission-flow:permission-flow-compose", version.ref = "permissions" }
 play = "com.google.android.gms:play-services-base:18.2.0"
+pluto-debug-core = { module = "com.plutolib:pluto", version.ref = "pluto" }
+pluto-debug-plugins = { module = "com.plutolib.plugins:bundle-core", version.ref = "pluto" }
+pluto-release-core = { module = "com.plutolib:pluto-no-op", version.ref = "pluto" }
+pluto-release-plugins = { module = "com.plutolib.plugins:bundle-core-no-op", version.ref = "pluto" }
 retrofit-core = { module = "com.squareup.retrofit2:retrofit", version.ref = "retrofit" }
 retrofit-moshi = { module = "com.squareup.retrofit2:converter-moshi", version.ref = "retrofit" }
 scrollbar = "com.github.nanihadesuka:LazyColumnScrollbar:1.6.3"
@@ -156,4 +162,12 @@ test-android = [
     "androidx-test-runner",
     "junit",
     "mockk-android",
+]
+pluto-debug = [
+    "pluto-debug-core",
+    "pluto-debug-plugins",
+]
+pluto-release = [
+    "pluto-release-core",
+    "pluto-release-plugins",
 ]

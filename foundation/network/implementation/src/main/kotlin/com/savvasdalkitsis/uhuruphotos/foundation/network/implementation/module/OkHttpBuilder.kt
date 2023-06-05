@@ -15,6 +15,7 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.foundation.network.implementation.module
 
+import com.pluto.plugins.network.PlutoInterceptor
 import com.savvasdalkitsis.uhuruphotos.foundation.network.api.OkHttpBuilder
 import com.savvasdalkitsis.uhuruphotos.foundation.network.implementation.BasicOkHttpClient
 import okhttp3.OkHttpClient.Builder
@@ -29,7 +30,11 @@ internal class OkHttpBuilder @Inject constructor(
 ) : OkHttpBuilder {
 
     override fun build(builder: Builder.() -> Builder): Builder =
-        builder(okHttpBuilder).addInterceptor(
-            HttpLoggingInterceptor(logger).setLevel(OkHttpLogLevel.LEVEL)
-        )
+        builder(okHttpBuilder)
+            .addInterceptor(
+                HttpLoggingInterceptor(logger).setLevel(OkHttpLogLevel.LEVEL)
+            )
+            .addInterceptor(
+                PlutoInterceptor()
+            )
 }

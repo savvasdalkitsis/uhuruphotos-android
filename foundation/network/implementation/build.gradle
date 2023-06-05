@@ -5,16 +5,28 @@ android {
 dependencies {
 
     api project(":foundation:network:api")
+    implementation project(":foundation:initializer:api")
     implementation project(":foundation:log:api")
 
     implementation(
             libs.autodagger.core,
             libs.hilt,
+            libs.logger,
             libs.okhttp,
             libs.okhttp.logging,
             libs.okhttp.url,
             libs.retrofit.moshi,
     )
+    debugImplementation(
+            libs.bundles.pluto.debug
+    ) {
+        exclude group: 'com.jakewharton.timber', module: 'timber'
+    }
+    releaseImplementation(
+            libs.bundles.pluto.release
+    ) {
+        exclude group: 'com.jakewharton.timber', module: 'timber'
+    }
     api(
             libs.moshi,
             libs.retrofit.core,
