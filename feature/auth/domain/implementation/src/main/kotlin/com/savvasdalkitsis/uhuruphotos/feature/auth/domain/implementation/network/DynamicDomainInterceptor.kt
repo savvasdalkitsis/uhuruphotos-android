@@ -31,7 +31,7 @@ class DynamicDomainInterceptor @Inject constructor(
     @Throws(Exception::class)
     override fun intercept(chain: Interceptor.Chain): Response {
         val request = chain.request()
-        return when (val serverUrl = runBlocking { serverUseCase.getServerUrl() }) {
+        return when (val serverUrl = serverUseCase.getServerUrl()) {
             null -> throw IOException("Server url is not initialised")
             else -> chain.proceed(
                 request
