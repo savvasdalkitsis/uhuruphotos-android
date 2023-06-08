@@ -1,0 +1,32 @@
+android {
+    buildFeatures {
+        compose true
+    }
+    composeOptions {
+        kotlinCompilerExtensionVersion compose_compiler_version
+    }
+    namespace 'com.savvasdalkitsis.uhuruphotos.foundation.edit.view.implementation'
+}
+
+dependencies {
+    implementation project(":feature:edit:view:api")
+    implementation project(":feature:media:local:domain:api")
+    implementation project(":feature:settings:domain:api")
+    implementation project(":foundation:compose:api")
+    implementation project(":foundation:icons:api")
+    implementation project(":foundation:navigation:api")
+    implementation project(":foundation:strings:api")
+    implementation project(":foundation:toaster:api")
+    implementation project(":foundation:ui:api")
+    implementation(
+            libs.androidx.compose.hilt.navigation,
+            libs.androidx.compose.material,
+            libs.androidx.compose.ui.tooling.preview,
+            libs.autodagger.core,
+            libs.crop,
+    )
+    debugImplementation(
+            libs.androidx.compose.ui.tooling,
+    )
+    kapt libs.autodagger.kapt
+}

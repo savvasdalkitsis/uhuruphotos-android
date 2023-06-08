@@ -137,6 +137,7 @@ data class LoadMediaItem(
             isFavourite = isFavourite,
             showFavouriteIcon = id.preferRemote is MediaId.Remote,
             showDeleteButton = shouldShowDeleteButton,
+            showEditIcon = id.findLocal != null,
             mediaItemSyncState = id.syncState.takeIf { showMediaSyncState }
         )
 
@@ -146,6 +147,7 @@ data class LoadMediaItem(
             id = this,
             showFavouriteIcon = false,
             showDeleteButton = shouldShowDeleteButton,
+            showEditIcon = findLocal != null,
             mediaItemSyncState = syncState.takeIf { showMediaSyncState }
         )
 }

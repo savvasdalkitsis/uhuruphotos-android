@@ -257,4 +257,8 @@
     <string name="start">Start</string>
     <string name="close">Close</string>
     <string name="about">About</string>
+    <string name="edit">Edit</string>
+    <string name="crop">Crop</string>
+    <string name="crop_options">Crop options</string>
+    <string name="error_editing_photo">There was an error while editing the photo</string>
 </resources>

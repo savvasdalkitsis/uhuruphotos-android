@@ -15,6 +15,8 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.usecase
 
+import android.graphics.Bitmap
+import android.net.Uri
 import androidx.work.WorkInfo
 import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.model.LocalFolder
 import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.model.LocalMediaItem
@@ -50,4 +52,6 @@ interface LocalMediaUseCase {
     fun observeLocalMediaSyncJobStatus(): Flow<WorkInfo.State?>
 
     fun observeLocalMediaSyncJob(): Flow<RefreshJobState?>
+
+    suspend fun savePhoto(bitmap: Bitmap, name: String, originalFileUri: Uri? = null): Boolean
 }

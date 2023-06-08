@@ -41,6 +41,7 @@ dependencies {
     implementation project(":foundation:ui:api")
     implementation project(":foundation:video:api")
     implementation project(":foundation:worker:api")
+    implementation project(':feature:edit:view:api')
     implementation project(':feature:media:common:domain:api')
     implementation project(':feature:media:common:view:api')
     implementation project(':feature:media:local:domain:api')

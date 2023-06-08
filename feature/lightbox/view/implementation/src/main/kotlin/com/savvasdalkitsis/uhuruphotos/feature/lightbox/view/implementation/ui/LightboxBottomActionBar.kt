@@ -24,6 +24,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.actions.AskForMediaItemRestoration
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.actions.AskForMediaItemTrashing
+import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.actions.EditMediaItem
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.actions.LightboxAction
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.actions.ShareMediaItem
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.actions.UseMediaItemAs
@@ -63,6 +64,19 @@ fun LightboxBottomActionBar(
                 onClick = { action(UseMediaItemAs) },
                 icon = drawable.ic_open_in_new,
                 text = stringResource(string.use_as),
+            )
+        }
+        AnimatedVisibility(
+            modifier = Modifier
+                .weight(1f),
+            visible = state.media[index].showEditIcon,
+            enter = slideInVertically(initialOffsetY = { it }),
+            exit = slideOutVertically(targetOffsetY = { it }),
+        ) {
+            ActionIconWithText(
+                onClick = { action(EditMediaItem) },
+                icon = drawable.ic_edit,
+                text = stringResource(string.edit),
             )
         }
         if (state.showRestoreButton) {

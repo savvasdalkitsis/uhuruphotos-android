@@ -50,6 +50,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.memories.domain.api.usecase.Memor
 import com.savvasdalkitsis.uhuruphotos.feature.person.domain.api.usecase.PersonUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.search.domain.api.usecase.SearchUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.trash.domain.api.usecase.TrashUseCase
+import com.savvasdalkitsis.uhuruphotos.foundation.date.api.module.DateModule
 import com.savvasdalkitsis.uhuruphotos.foundation.log.api.log
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.EffectHandler
 import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
@@ -57,6 +58,7 @@ import com.savvasdalkitsis.uhuruphotos.foundation.download.api.usecase.DownloadU
 import kotlinx.coroutines.flow.FlowCollector
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.flow
+import org.joda.time.format.DateTimeFormatter
 import javax.inject.Inject
 
 internal class LightboxActionsContext @Inject constructor(
@@ -72,7 +74,9 @@ internal class LightboxActionsContext @Inject constructor(
     val autoAlbumUseCase: AutoAlbumUseCase,
     val trashUseCase: TrashUseCase,
     val remoteMediaUseCase: RemoteMediaUseCase,
-    private val localMediaDeletionUseCase: LocalMediaDeletionUseCase,
+    @DateModule.DisplayingDateTimeFormat
+    val displayingDateTimeFormat: DateTimeFormatter,
+    val localMediaDeletionUseCase: LocalMediaDeletionUseCase,
 ) {
 
     var mediaItemType = MediaItemType.default

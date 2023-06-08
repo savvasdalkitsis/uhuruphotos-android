@@ -16,11 +16,18 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.implementation.usecase
 
 import android.Manifest
+import android.content.ContentValues
 import android.content.Context
 import android.content.pm.PackageManager.PERMISSION_GRANTED
+import android.graphics.Bitmap
+import android.net.Uri
 import android.os.Build.VERSION.SDK_INT
 import android.os.Build.VERSION_CODES.Q
 import android.os.Build.VERSION_CODES.TIRAMISU
+import android.os.Environment
+import android.provider.MediaStore
+import android.provider.MediaStore.Images
+import android.provider.MediaStore.MediaColumns.*
 import androidx.core.content.ContextCompat
 import androidx.work.WorkInfo
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.extensions.async
@@ -41,6 +48,8 @@ import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.implementation
 import com.savvasdalkitsis.uhuruphotos.foundation.date.api.DateDisplayer
 import com.savvasdalkitsis.uhuruphotos.foundation.date.api.module.DateModule.ParsingDateFormat
 import com.savvasdalkitsis.uhuruphotos.foundation.date.api.module.DateModule.ParsingDateTimeFormat
+import com.savvasdalkitsis.uhuruphotos.foundation.exif.api.usecase.ExifUseCase
+import com.savvasdalkitsis.uhuruphotos.foundation.log.api.log
 import com.savvasdalkitsis.uhuruphotos.foundation.log.api.runCatchingWithLog
 import com.savvasdalkitsis.uhuruphotos.foundation.notification.api.ForegroundNotificationWorker
 import com.savvasdalkitsis.uhuruphotos.foundation.worker.api.model.RefreshJobState
@@ -55,6 +64,8 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.mapLatest
 import org.joda.time.format.DateTimeFormatter
 import se.ansman.dagger.auto.AutoBind
+import java.io.ByteArrayOutputStream
+import java.io.IOException
 import javax.inject.Inject
 
 @AutoBind
@@ -73,6 +84,7 @@ class LocalMediaUseCase @Inject constructor(
     private val localMediaFolderRepository: LocalMediaFolderRepository,
     private val mediaStoreVersionRepository: MediaStoreVersionRepository,
     private val workerStatusUseCase: WorkerStatusUseCase,
+    private val exifUseCase: ExifUseCase,
 ) : LocalMediaUseCase {
 
     private val apiQPermissions = if (SDK_INT >= Q) {
@@ -89,6 +101,7 @@ class LocalMediaUseCase @Inject constructor(
             Manifest.permission.READ_EXTERNAL_STORAGE,
         )
     private val requiredPermissions = apiQPermissions + apiTPermissions
+    private val resolver get() = context.contentResolver
 
     override fun Long.toContentUri(isVideo: Boolean): String = contentUri(isVideo)
 
@@ -193,6 +206,59 @@ class LocalMediaUseCase @Inject constructor(
                 )
             }
         }
+
+    override suspend fun savePhoto(
+        bitmap: Bitmap,
+        name: String,
+        originalFileUri: Uri?,
+    ): Boolean {
+        val values = ContentValues().apply {
+            put(DISPLAY_NAME, name)
+            put(MIME_TYPE, "image/jpeg")
+            put(RELATIVE_PATH, Environment.DIRECTORY_DCIM)
+        }
+        return when (val uri = resolver.insert(Images.Media.EXTERNAL_CONTENT_URI, values)) {
+            null -> {
+                log { "Failed to create new MediaStore record." }
+                false
+            }
+            else -> try {
+                val bytes = bitmap.toJpeg().copyExifFrom(originalFileUri)
+                resolver.openOutputStream(uri)?.use {
+                    it.write(bytes)
+                } ?: throw IOException("Failed to open output stream.")
+                true
+            } catch (e: Exception) {
+                log(e)
+                resolver.delete(uri, null, null)
+                false
+            }
+        }
+    }
+
+    private fun Bitmap.toJpeg() = ByteArrayOutputStream().use {
+        if (!compress(Bitmap.CompressFormat.JPEG, 95, it)) {
+            throw IOException("Failed to create JPEG.")
+        }
+        it.toByteArray()
+    }
+
+    private fun ByteArray.copyExifFrom(
+        uri: Uri?
+    ): ByteArray = when (uri) {
+        null -> this
+        else -> try {
+            resolver.openInputStream(uri)?.use { original ->
+                with(exifUseCase) {
+                    copyExifFrom(original)
+                }
+            } ?: this
+        } catch (e: Exception) {
+            log(e)
+            this
+        }
+    }
+
 
     override suspend fun refreshAll(
         onProgressChange: suspend (current: Int, total: Int) -> Unit,

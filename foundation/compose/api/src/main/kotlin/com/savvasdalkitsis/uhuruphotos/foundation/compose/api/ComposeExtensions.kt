@@ -52,6 +52,6 @@ fun PaddingValues.copy(
 ): PaddingValues = PaddingValues(start, top, end, bottom)
 
 fun Modifier.blurIf(condition: Boolean): Modifier = composed {
-    val blur: Float by animateFloatAsState(if (condition) 8f else 0f)
+    val blur: Float by animateFloatAsState(if (condition) 8f else 0f, label = "blurAnimation")
     blur(blur.dp)
 }

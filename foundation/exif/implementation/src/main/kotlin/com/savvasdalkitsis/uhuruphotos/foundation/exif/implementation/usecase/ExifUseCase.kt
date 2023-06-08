@@ -31,7 +31,12 @@ import androidx.exifinterface.media.ExifInterface.TAG_SHUTTER_SPEED_VALUE
 import androidx.exifinterface.media.ExifInterface.TAG_SUBJECT_DISTANCE
 import com.savvasdalkitsis.uhuruphotos.foundation.exif.api.model.ExifMetadata
 import com.savvasdalkitsis.uhuruphotos.foundation.exif.api.usecase.ExifUseCase
+import com.savvasdalkitsis.uhuruphotos.foundation.log.api.log
+import org.apache.commons.imaging.Imaging
+import org.apache.commons.imaging.formats.jpeg.JpegImageMetadata
+import org.apache.commons.imaging.formats.jpeg.exif.ExifRewriter
 import se.ansman.dagger.auto.AutoBind
+import java.io.ByteArrayOutputStream
 import java.io.File
 import java.io.InputStream
 import javax.inject.Inject
@@ -45,6 +50,21 @@ class ExifUseCase @Inject constructor(
 
     override fun extractFrom(file: File) = ExifInterface(file).metadata()
     override fun extractFrom(stream: InputStream) = ExifInterface(stream).metadata()
+
+    override fun ByteArray.copyExifFrom(inputStream: InputStream): ByteArray = try {
+        val metadata = Imaging.getMetadata(inputStream, "")
+        when (val exif = (metadata as? JpegImageMetadata)?.exif) {
+            null -> this
+            else -> ByteArrayOutputStream().use {
+                ExifRewriter().updateExifMetadataLossless(this, it, exif.outputSet)
+                it.toByteArray()
+            }
+        }
+    } catch (e: Exception) {
+        log(e)
+        this
+    }
+
 
     private fun ExifInterface.metadata() = ExifMetadata(
         fStop = double(TAG_F_NUMBER)

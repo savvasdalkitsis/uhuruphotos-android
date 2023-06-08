@@ -30,6 +30,7 @@ import androidx.compose.ui.unit.dp
 @Composable
 fun ActionIconWithText(
     modifier: Modifier = Modifier,
+    iconModifier: Modifier = Modifier,
     onClick: () -> Unit,
     @DrawableRes icon: Int,
     text: String,
@@ -41,6 +42,7 @@ fun ActionIconWithText(
     ) {
         ActionIcon(
             modifier = Modifier.align(CenterHorizontally),
+            iconModifier = iconModifier,
             onClick = onClick,
             icon = icon,
             contentDescription = text,

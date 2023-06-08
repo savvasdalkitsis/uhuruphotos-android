@@ -23,4 +23,5 @@ interface ExifUseCase {
 
     fun extractFrom(file: File): ExifMetadata
     fun extractFrom(stream: InputStream): ExifMetadata
+    fun ByteArray.copyExifFrom(inputStream: InputStream): ByteArray
 }

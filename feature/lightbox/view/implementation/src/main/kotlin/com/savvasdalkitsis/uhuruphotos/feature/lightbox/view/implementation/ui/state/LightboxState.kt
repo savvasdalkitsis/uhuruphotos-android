@@ -71,6 +71,7 @@ data class SingleMediaItemState(
     val showDeleteButton: Boolean = true,
     val showShareIcon: Boolean = false,
     val showUseAsIcon: Boolean = false,
+    val showEditIcon: Boolean = false,
     val peopleInMediaItem: List<Person> = emptyList(),
     val metadata: MediaItemMetadata? = null,
     val md5: String? = null,
