@@ -87,7 +87,7 @@ kotlinx-coroutines = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-androi
 kotlinx-coroutines-test = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test", version.ref = "org-jetbrains-kotlinx" }
 kotlin-reflect = "org.jetbrains.kotlin:kotlin-reflect:1.8.21"
 logger = "com.jakewharton.timber:timber:4.7.1"
-lottie = "com.airbnb.android:lottie-compose:6.0.0"
+lottie = "com.airbnb.android:lottie-compose:6.0.1"
 lumberjack-core = { module = "com.github.savvasdalkitsis.Lumberjack:lumberjack-library", version.ref = "lumberjack" }
 lumberjack-feedback = { module = "com.github.savvasdalkitsis.Lumberjack:lumberjack-feedback", version.ref = "lumberjack" }
 lumberjack-feedback-manager = "com.github.MFlisar:FeedbackManager:2.0.3"
