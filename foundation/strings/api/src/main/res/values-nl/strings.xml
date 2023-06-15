@@ -258,4 +258,5 @@
     <string name="crop">Bijsnijden</string>
     <string name="error_editing_photo">Er is een fout opgetreden tijdens het bewerken</string>
     <string name="crop_options">Bijsnijdopties</string>
+    <string name="dismiss">Negeren</string>
 </resources>
