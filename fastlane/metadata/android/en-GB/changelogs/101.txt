@@ -1,0 +1,3 @@
+* Local Photos can now be edited. Cropping can be done in-app and external editing apps are shown as options
+* Added about screen (currently only showing licences)
+* Translations
