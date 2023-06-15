@@ -15,6 +15,7 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam
 
+import android.content.pm.ResolveInfo
 import androidx.annotation.StringRes
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.ui.state.LightboxState
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.ui.state.SingleMediaItemState
@@ -182,6 +183,10 @@ sealed class LightboxMutation(
 
     data class AskForPermissions(val deniedPermissions: List<String>) : LightboxMutation({
         it.copy(missingPermissions = deniedPermissions)
+    })
+
+    class ShowEditOptions(apps: List<ResolveInfo>) : LightboxMutation({
+        it.copy(showEditApps = apps)
     })
 
     data object ShowRestoreButton : LightboxMutation({

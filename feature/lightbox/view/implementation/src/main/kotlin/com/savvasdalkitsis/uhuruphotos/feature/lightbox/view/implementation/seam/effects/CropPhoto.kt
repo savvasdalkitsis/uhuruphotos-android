@@ -19,7 +19,7 @@ import android.net.Uri
 import com.savvasdalkitsis.uhuruphotos.feature.edit.view.api.navigation.EditNavigationRoute
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.LightboxEffectsContext
 
-data class EditPhoto(val uri: Uri, val fileName: String, val timestamp: Long?) : LightboxEffect() {
+data class CropPhoto(val uri: Uri, val fileName: String, val timestamp: Long?) : LightboxEffect() {
     context(LightboxEffectsContext) override suspend fun handle() {
         navigator.navigateTo(EditNavigationRoute(uri.toString(), fileName, timestamp))
     }

@@ -23,6 +23,7 @@ sqldelight = "1.5.5"
 
 [libraries]
 about = "com.mikepenz:aboutlibraries-compose:10.7.0"
+accompanist-drawable = { module = "com.google.accompanist:accompanist-drawablepainter", version.ref = "accompanist" }
 accompanist-insets = { module = "com.google.accompanist:accompanist-insets-ui", version.ref = "accompanist" }
 accompanist-navigation = { module = "com.google.accompanist:accompanist-navigation-animation", version.ref = "accompanist" }
 accompanist-permissions = { module = "com.google.accompanist:accompanist-permissions", version.ref = "accompanist" }

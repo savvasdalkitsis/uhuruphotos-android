@@ -15,6 +15,7 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.ui.state
 
+import android.content.pm.ResolveInfo
 import androidx.annotation.StringRes
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaId
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemMetadata
@@ -36,6 +37,7 @@ data class LightboxState(
     val infoSheetHidden: Boolean = true,
     val showRestoreButton: Boolean = false,
     val missingPermissions: List<String> = emptyList(),
+    val showEditApps: List<ResolveInfo> = emptyList(),
 ) {
     val currentIndex: Int = _currentIndex.coerceAtMost(media.size - 1).coerceAtLeast(0)
     val currentMediaItem: SingleMediaItemState get() = media[currentIndex]

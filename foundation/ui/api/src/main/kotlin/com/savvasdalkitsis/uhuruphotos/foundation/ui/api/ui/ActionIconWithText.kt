@@ -15,6 +15,7 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui
 
+import android.graphics.drawable.Drawable
 import androidx.annotation.DrawableRes
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
@@ -50,7 +51,38 @@ fun ActionIconWithText(
         Text(
             modifier = Modifier
                 .align(CenterHorizontally)
-                .padding(bottom = 8.dp),
+                .padding(bottom = 8.dp)
+                .padding(horizontal = 8.dp),
+            text = text,
+        )
+    }
+}
+
+@Composable
+fun ActionIconWithText(
+    modifier: Modifier = Modifier,
+    iconModifier: Modifier = Modifier,
+    onClick: () -> Unit,
+    icon: Drawable,
+    text: String,
+) {
+    Column(
+        modifier = modifier
+            .clip(CircleShape)
+            .clickable { onClick() },
+    ) {
+        ActionIcon(
+            modifier = Modifier.align(CenterHorizontally),
+            iconModifier = iconModifier,
+            onClick = onClick,
+            icon = icon,
+            contentDescription = text,
+        )
+        Text(
+            modifier = Modifier
+                .align(CenterHorizontally)
+                .padding(bottom = 8.dp)
+                .padding(horizontal = 8.dp),
             text = text,
         )
     }

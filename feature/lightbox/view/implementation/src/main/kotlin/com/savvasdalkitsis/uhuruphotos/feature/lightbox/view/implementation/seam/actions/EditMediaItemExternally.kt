@@ -17,39 +17,29 @@ package com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.sea
 
 import android.content.Intent
 import android.content.Intent.ACTION_EDIT
-import android.content.pm.PackageManager.ResolveInfoFlags
+import android.content.Intent.FLAG_ACTIVITY_NEW_TASK
+import android.content.Intent.FLAG_GRANT_READ_URI_PERMISSION
+import android.content.pm.ResolveInfo
 import android.net.Uri
-import android.os.Build
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.LightboxActionsContext
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.LightboxMutation
-import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.LightboxMutation.ShowEditOptions
-import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.effects.CropPhoto
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.effects.LightboxEffect
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.ui.state.LightboxState
-import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.ui.state.SingleMediaItemState
-import com.savvasdalkitsis.uhuruphotos.foundation.log.api.log
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.EffectHandler
 import kotlinx.coroutines.flow.flow
-import kotlin.random.Random
 
-data object EditMediaItem : LightboxAction() {
+data class EditMediaItemExternally(val app: ResolveInfo) : LightboxAction() {
 
     context(LightboxActionsContext) override fun handle(
         state: LightboxState,
         effect: EffectHandler<LightboxEffect>
     ) = flow<LightboxMutation> {
-        val intent = Intent(ACTION_EDIT).apply {
-            type = "image/*"
-        }
-        val result = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            context.packageManager.queryIntentActivities(intent, ResolveInfoFlags.of(0))
-        } else {
-            context.packageManager.queryIntentActivities(intent, 0)
-        }
-        if (result.isEmpty()) {
-            cropLocal(state, effect)
-        } else {
-            emit(ShowEditOptions(result))
+        state.currentMediaItem.id.findLocal?.let { media ->
+            val intent = Intent(ACTION_EDIT, Uri.parse(media.contentUri)).apply {
+                setPackage(app.activityInfo.packageName)
+                flags = FLAG_GRANT_READ_URI_PERMISSION or FLAG_ACTIVITY_NEW_TASK
+            }
+            context.startActivity(intent)
         }
     }
 }

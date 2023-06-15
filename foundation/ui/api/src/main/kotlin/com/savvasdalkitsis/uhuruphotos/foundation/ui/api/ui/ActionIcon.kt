@@ -15,13 +15,20 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui
 
+import android.graphics.drawable.Drawable
 import androidx.annotation.DrawableRes
 import androidx.compose.foundation.layout.sizeIn
+import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
 import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.asImageBitmap
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
+import androidx.core.graphics.drawable.toBitmap
+import com.google.accompanist.drawablepainter.rememberDrawablePainter
 
 @Composable
 fun ActionIcon(
@@ -43,6 +50,30 @@ fun ActionIcon(
             icon = icon,
             contentDescription = contentDescription,
             tint = MaterialTheme.colors.onBackground
+        )
+    }
+}
+
+@Composable
+fun ActionIcon(
+    modifier: Modifier = Modifier,
+    iconModifier: Modifier = Modifier,
+    enabled: Boolean = true,
+    onClick: () -> Unit,
+    icon: Drawable,
+    contentDescription: String? = null
+) {
+    ActionIcon(
+        modifier = modifier,
+        onClick = onClick,
+        enabled = enabled,
+    ) {
+        Icon(
+            modifier = iconModifier
+                .sizeIn(maxWidth = 26.dp, maxHeight = 26.dp),
+            painter = rememberDrawablePainter(icon),
+            contentDescription = contentDescription,
+            tint = Color.Unspecified,
         )
     }
 }

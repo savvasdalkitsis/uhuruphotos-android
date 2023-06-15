@@ -13,6 +13,7 @@ dependencies {
     implementation project(":foundation:icons:api")
     implementation project(":foundation:strings:api")
     implementation(
+            libs.accompanist.drawable,
             libs.accompanist.insets,
             libs.accompanist.systemui,
             libs.androidx.activity,

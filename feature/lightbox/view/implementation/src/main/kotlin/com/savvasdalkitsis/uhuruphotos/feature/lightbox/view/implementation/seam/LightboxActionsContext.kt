@@ -15,6 +15,8 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam
 
+import android.content.Context
+import android.net.Uri
 import com.savvasdalkitsis.uhuruphotos.feature.album.auto.domain.api.usecase.AutoAlbumUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.album.user.domain.api.usecase.UserAlbumUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.feed.domain.api.usecase.FeedUseCase
@@ -29,6 +31,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.LightboxMutation.LoadingDetails
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.LightboxMutation.RemoveMediaItemFromSource
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.LightboxMutation.ShowErrorMessage
+import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.effects.CropPhoto
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.effects.LightboxEffect
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.effects.NavigateBack
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.ui.state.LightboxState
@@ -55,11 +58,13 @@ import com.savvasdalkitsis.uhuruphotos.foundation.log.api.log
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.EffectHandler
 import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
 import com.savvasdalkitsis.uhuruphotos.foundation.download.api.usecase.DownloadUseCase
+import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.flow.FlowCollector
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.flow
 import org.joda.time.format.DateTimeFormatter
 import javax.inject.Inject
+import kotlin.random.Random
 
 internal class LightboxActionsContext @Inject constructor(
     val mediaUseCase: MediaUseCase,
@@ -76,7 +81,9 @@ internal class LightboxActionsContext @Inject constructor(
     val remoteMediaUseCase: RemoteMediaUseCase,
     @DateModule.DisplayingDateTimeFormat
     val displayingDateTimeFormat: DateTimeFormatter,
-    val localMediaDeletionUseCase: LocalMediaDeletionUseCase,
+    @ApplicationContext
+    val context: Context,
+    private val localMediaDeletionUseCase: LocalMediaDeletionUseCase,
 ) {
 
     var mediaItemType = MediaItemType.default
@@ -154,4 +161,27 @@ internal class LightboxActionsContext @Inject constructor(
         emit(FinishedLoading)
         emit(FinishedLoadingDetails(mediaId))
     }
+
+    internal suspend fun LightboxActionsContext.cropLocal(
+        state: LightboxState,
+        effect: EffectHandler<LightboxEffect>
+    ) {
+        fun SingleMediaItemState.fileName() = localPath?.substringAfterLast("/")
+            ?: "PHOTO_${Random.nextInt()}"
+        state.currentMediaItem.id.findLocal?.let { media ->
+            effect.handleEffect(
+                CropPhoto(
+                    uri = Uri.parse(media.contentUri),
+                    fileName = state.currentMediaItem.fileName(),
+                    timestamp = try {
+                        displayingDateTimeFormat.parseDateTime(state.currentMediaItem.dateAndTime).millis
+                    } catch (e: Exception) {
+                        log(e)
+                        null
+                    },
+                )
+            )
+        }
+    }
+
 }
