@@ -284,4 +284,8 @@
     <string name="full_feed_sync">Повна синхронізація стрічки</string>
     <string name="local_media_sync">Синхронізація локальних медіа</string>
     <string name="about">Про застосунок</string>
+    <string name="crop">Обрізати</string>
+    <string name="error_editing_photo">Виникла помилка при редагуванні фото</string>
+    <string name="edit">Редагувати</string>
+    <string name="crop_options">Параметри обрізання</string>
 </resources>
