@@ -15,27 +15,26 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.edit.view.implementation.navigation
 
-import androidx.compose.animation.AnimatedVisibility
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import com.savvasdalkitsis.uhuruphotos.feature.edit.view.api.navigation.EditNavigationRoute
 import com.savvasdalkitsis.uhuruphotos.feature.edit.view.implementation.ui.Edit
 import com.savvasdalkitsis.uhuruphotos.feature.edit.view.implementation.viewmodel.EditViewModel
-import com.savvasdalkitsis.uhuruphotos.feature.settings.domain.api.usecase.SettingsUseCase
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.NavigationTarget
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.NavigationTargetBuilder
+import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.theme.ThemeMode
+import kotlinx.coroutines.flow.MutableStateFlow
 import se.ansman.dagger.auto.AutoBindIntoSet
 import javax.inject.Inject
 
 @AutoBindIntoSet
 internal class EditNavigationTarget @Inject constructor(
-    private val settingsUseCase: SettingsUseCase,
     private val navigationTargetBuilder: NavigationTargetBuilder,
 ) : NavigationTarget {
 
     override suspend fun NavGraphBuilder.create(navHostController: NavHostController) = with(navigationTargetBuilder) {
         navigationTarget(
-            themeMode = settingsUseCase.observeThemeModeState(),
+            themeMode = MutableStateFlow(ThemeMode.DARK_MODE),
             route = EditNavigationRoute::class,
             viewModel = EditViewModel::class,
         ) { state, actions ->
