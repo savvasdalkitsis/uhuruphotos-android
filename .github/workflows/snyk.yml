@@ -1,4 +1,4 @@
-name: Snyk scan
+name: 🐛 Snyk scan
 on:
   schedule:
       - cron: '0 0 * * SUN'

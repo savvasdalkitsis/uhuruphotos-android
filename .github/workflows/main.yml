@@ -1,4 +1,4 @@
-name: Build main branch and PRs
+name: 🔧 Build main branch and PRs
 
 on:
   push:

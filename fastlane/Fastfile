@@ -27,6 +27,8 @@ platform :android do
         build_type: "release"
     )
 
+    put(message: "Android version code: " + android_get_version_code)
+
     set_github_release(
         repository_name: "savvasdalkitsis/uhuruphotos-android",
         api_bearer: ENV["GITHUB_TOKEN"],
