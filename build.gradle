@@ -13,8 +13,8 @@ buildscript {
         classpath libs.google.services
     }
 
-    project.ext.set("app_version_code", 102)
-    project.ext.set("app_version_name", "0.0.109")
+    project.ext.set("app_version_code", 103)
+    project.ext.set("app_version_name", "0.0.110")
 
 }// Top-level build file where you can add configuration options common to all sub-projects/modules.
 plugins {

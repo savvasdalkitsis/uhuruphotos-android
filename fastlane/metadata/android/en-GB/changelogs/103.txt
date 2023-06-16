@@ -1,0 +1,2 @@
+* Fixing crash with notification request launcher
+* Fixing crop ratios
