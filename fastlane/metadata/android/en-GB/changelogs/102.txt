@@ -1,0 +1,3 @@
+* Fixing theme on crop screen
+* Fixing lightbox bottom bar animations and edit bar between pages
+* Always using disk cache for images to fix feed performance with local media
