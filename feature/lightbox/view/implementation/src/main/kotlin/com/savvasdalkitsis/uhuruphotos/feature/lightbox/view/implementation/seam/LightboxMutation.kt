@@ -185,8 +185,10 @@ sealed class LightboxMutation(
         it.copy(missingPermissions = deniedPermissions)
     })
 
-    class ShowEditOptions(apps: List<ResolveInfo>) : LightboxMutation({
-        it.copy(showEditApps = apps)
+    class ShowEditOptions(id: MediaId<*>, apps: List<ResolveInfo>) : LightboxMutation({
+        it.copyItem(id) { photoState ->
+            photoState.copy(showEditApps = apps)
+        }
     })
 
     data object ShowRestoreButton : LightboxMutation({

@@ -16,14 +16,13 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.ui
 
 import androidx.compose.animation.AnimatedContent
-import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.animation.slideInVertically
 import androidx.compose.animation.slideOutVertically
 import androidx.compose.animation.togetherWith
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Arrangement.spacedBy
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.width
@@ -57,7 +56,7 @@ fun LightboxBottomActionBar(
     action: (LightboxAction) -> Unit,
 ) {
     AnimatedContent(
-        targetState = state.showEditApps,
+        targetState = state.media[index].showEditApps,
         transitionSpec = {
             fadeIn() + slideInVertically { it } togetherWith fadeOut() + slideOutVertically { it }
         },
@@ -65,7 +64,7 @@ fun LightboxBottomActionBar(
     ) { apps ->
         when {
             apps.isEmpty() -> LightboxBottomActionBarOptions(state, index, action)
-            else -> LightboxBottomActionBarEdit(state, action)
+            else -> LightboxBottomActionBarEdit(state, index, action)
         }
     }
 }
@@ -73,6 +72,7 @@ fun LightboxBottomActionBar(
 @Composable
 fun LightboxBottomActionBarEdit(
     state: LightboxState,
+    index: Int,
     action: (LightboxAction) -> Unit,
 ) {
     LazyRow(
@@ -98,7 +98,7 @@ fun LightboxBottomActionBarEdit(
                 text = stringResource(string.crop),
             )
         }
-        state.showEditApps.forEach { app ->
+        state.media[index].showEditApps.forEach { app ->
             item(app.iconResource) {
                 val pm = LocalContext.current.packageManager
                 ActionIconWithText(
@@ -120,63 +120,59 @@ fun LightboxBottomActionBarOptions(
     index: Int,
     action: (LightboxAction) -> Unit,
 ) {
-    Row {
-        AnimatedVisibility(
-            modifier = Modifier
-                .weight(1f),
-            visible = state.media[index].showShareIcon,
-            enter = slideInVertically(initialOffsetY = { it }),
-            exit = slideOutVertically(targetOffsetY = { it }),
-        ) {
-            ActionIconWithText(
-                onClick = { action(ShareMediaItem) },
-                icon = drawable.ic_share,
-                text = stringResource(string.share),
-            )
+    LazyRow(
+        modifier = Modifier.fillMaxWidth(),
+        horizontalArrangement = Arrangement.SpaceEvenly,
+    ) {
+        if (state.media[index].showShareIcon) {
+            item("share") {
+                ActionIconWithText(
+                    modifier = Modifier.animateItemPlacement(),
+                    onClick = { action(ShareMediaItem) },
+                    icon = drawable.ic_share,
+                    text = stringResource(string.share),
+                )
+            }
         }
-        AnimatedVisibility(
-            modifier = Modifier
-                .weight(1f),
-            visible = state.media[index].showUseAsIcon,
-            enter = slideInVertically(initialOffsetY = { it }),
-            exit = slideOutVertically(targetOffsetY = { it }),
-        ) {
-            ActionIconWithText(
-                onClick = { action(UseMediaItemAs) },
-                icon = drawable.ic_open_in_new,
-                text = stringResource(string.use_as),
-            )
+        if (state.media[index].showUseAsIcon) {
+            item("useAs") {
+                ActionIconWithText(
+                    modifier = Modifier.animateItemPlacement(),
+                    onClick = { action(UseMediaItemAs) },
+                    icon = drawable.ic_open_in_new,
+                    text = stringResource(string.use_as),
+                )
+            }
         }
-        AnimatedVisibility(
-            modifier = Modifier
-                .weight(1f),
-            visible = state.media[index].showEditIcon,
-            enter = slideInVertically(initialOffsetY = { it }),
-            exit = slideOutVertically(targetOffsetY = { it }),
-        ) {
-            ActionIconWithText(
-                onClick = { action(EditMediaItem) },
-                icon = drawable.ic_edit,
-                text = stringResource(string.edit),
-            )
+        if (state.media[index].showEditIcon) {
+            item("edit") {
+                ActionIconWithText(
+                    modifier = Modifier.animateItemPlacement(),
+                    onClick = { action(EditMediaItem) },
+                    icon = drawable.ic_edit,
+                    text = stringResource(string.edit),
+                )
+            }
         }
         if (state.showRestoreButton) {
-            ActionIconWithText(
-                onClick = { action(AskForMediaItemRestoration) },
-                modifier = Modifier
-                    .weight(1f),
-                icon = drawable.ic_restore_from_trash,
-                text = stringResource(string.restore),
-            )
+            item("restore") {
+                ActionIconWithText(
+                    modifier = Modifier.animateItemPlacement(),
+                    onClick = { action(AskForMediaItemRestoration) },
+                    icon = drawable.ic_restore_from_trash,
+                    text = stringResource(string.restore),
+                )
+            }
         }
         if (state.media[index].showDeleteButton) {
-            ActionIconWithText(
-                onClick = { action(AskForMediaItemTrashing) },
-                modifier = Modifier
-                    .weight(1f),
-                icon = drawable.ic_delete,
-                text = stringResource(string.delete),
-            )
+            item("delete") {
+                ActionIconWithText(
+                    modifier = Modifier.animateItemPlacement(),
+                    onClick = { action(AskForMediaItemTrashing) },
+                    icon = drawable.ic_delete,
+                    text = stringResource(string.delete),
+                )
+            }
         }
     }
 }

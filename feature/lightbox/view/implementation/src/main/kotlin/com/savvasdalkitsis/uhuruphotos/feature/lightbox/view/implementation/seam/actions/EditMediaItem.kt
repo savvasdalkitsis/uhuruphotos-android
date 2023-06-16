@@ -18,19 +18,14 @@ package com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.sea
 import android.content.Intent
 import android.content.Intent.ACTION_EDIT
 import android.content.pm.PackageManager.ResolveInfoFlags
-import android.net.Uri
 import android.os.Build
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.LightboxActionsContext
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.LightboxMutation
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.LightboxMutation.ShowEditOptions
-import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.effects.CropPhoto
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.effects.LightboxEffect
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.ui.state.LightboxState
-import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.ui.state.SingleMediaItemState
-import com.savvasdalkitsis.uhuruphotos.foundation.log.api.log
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.EffectHandler
 import kotlinx.coroutines.flow.flow
-import kotlin.random.Random
 
 data object EditMediaItem : LightboxAction() {
 
@@ -49,7 +44,7 @@ data object EditMediaItem : LightboxAction() {
         if (result.isEmpty()) {
             cropLocal(state, effect)
         } else {
-            emit(ShowEditOptions(result))
+            emit(ShowEditOptions(state.currentMediaItem.id, result))
         }
     }
 }

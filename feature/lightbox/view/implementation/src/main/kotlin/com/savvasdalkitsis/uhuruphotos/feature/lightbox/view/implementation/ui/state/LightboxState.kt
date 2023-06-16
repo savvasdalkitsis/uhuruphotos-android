@@ -37,7 +37,6 @@ data class LightboxState(
     val infoSheetHidden: Boolean = true,
     val showRestoreButton: Boolean = false,
     val missingPermissions: List<String> = emptyList(),
-    val showEditApps: List<ResolveInfo> = emptyList(),
 ) {
     val currentIndex: Int = _currentIndex.coerceAtMost(media.size - 1).coerceAtLeast(0)
     val currentMediaItem: SingleMediaItemState get() = media[currentIndex]
@@ -81,4 +80,5 @@ data class SingleMediaItemState(
     val localPath: String? = null,
     val loadingDetails: Boolean = false,
     val mediaItemSyncState: MediaItemSyncState? = null,
+    val showEditApps: List<ResolveInfo> = emptyList(),
 )

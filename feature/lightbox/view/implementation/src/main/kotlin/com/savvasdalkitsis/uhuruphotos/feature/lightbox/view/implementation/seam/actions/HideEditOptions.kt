@@ -13,6 +13,9 @@ data object HideEditOptions : LightboxAction() {
     context(LightboxActionsContext) override fun handle(
         state: LightboxState,
         effect: EffectHandler<LightboxEffect>
-    ): Flow<Mutation<LightboxState>> = flowOf(ShowEditOptions(emptyList()))
+    ): Flow<Mutation<LightboxState>> = flowOf(ShowEditOptions(
+        state.currentMediaItem.id,
+        emptyList()
+    ))
 
 }
