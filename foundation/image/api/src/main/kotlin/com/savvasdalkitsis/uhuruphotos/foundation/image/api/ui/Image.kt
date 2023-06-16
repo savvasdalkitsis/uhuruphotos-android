@@ -42,7 +42,7 @@ fun Image(
         modifier = modifier,
         model = ImageRequest.Builder(LocalContext.current)
             .data(url)
-            .diskCachePolicy(url.diskCachePolicy())
+            .diskCachePolicy(CachePolicy.ENABLED)
             .listener(onSuccess = { _, _ -> onSuccess() })
             .build(),
         contentScale = contentScale,
@@ -82,7 +82,7 @@ fun Image(
             model = ImageRequest.Builder(LocalContext.current)
                 .data(fullResUrl)
                 .size(Size.ORIGINAL)
-                .diskCachePolicy(fullResUrl.diskCachePolicy())
+                .diskCachePolicy(CachePolicy.ENABLED)
                 .listener(onSuccess = { _, _ ->
                     showLowRes = false
                     onFullResImageLoaded()
@@ -92,11 +92,4 @@ fun Image(
             contentDescription = contentDescription,
         )
     }
-
-}
-
-private fun String?.diskCachePolicy(): CachePolicy = if (orEmpty().startsWith("content://")) {
-    CachePolicy.DISABLED
-} else {
-    CachePolicy.ENABLED
 }
