@@ -24,9 +24,9 @@ enum class CropRatio(
     val label: String,
     val rotation: Float = 0f,
 ) {
-    Ratio_16x9(16/9f, drawable.ic_crop_16_9, "16:9", 90f),
-    Ratio_9x16(9/16f, drawable.ic_crop_16_9, "9:16"),
-    Ratio_3x2(3/2f, drawable.ic_crop_3_2, "3:2", 90f),
-    Ratio_2x3(2/3f, drawable.ic_crop_3_2, "2:3"),
+    Ratio_16x9(16/9f, drawable.ic_crop_16_9, "16:9"),
+    Ratio_9x16(9/16f, drawable.ic_crop_16_9, "9:16", 90f),
+    Ratio_3x2(3/2f, drawable.ic_crop_3_2, "3:2"),
+    Ratio_2x3(2/3f, drawable.ic_crop_3_2, "2:3", 90f),
     Ratio_Square(1f, drawable.ic_crop_square, "1:1"),
 }

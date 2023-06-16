@@ -50,7 +50,7 @@ internal fun EditCanvas(
         else -> {
             val option = remember(state.selectedRatio) {
                 CropifyOption(frameAspectRatio = state.selectedRatio?.let {
-                    AspectRatio(it.ratio)
+                    AspectRatio(1/it.ratio)
                 })
             }
             Box(modifier = Modifier.fillMaxSize()) {

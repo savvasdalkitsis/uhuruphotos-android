@@ -21,13 +21,15 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.rotate
+import androidx.compose.ui.tooling.preview.Preview
 import com.savvasdalkitsis.uhuruphotos.feature.edit.view.implementation.seam.actions.EditAction
 import com.savvasdalkitsis.uhuruphotos.feature.edit.view.implementation.seam.actions.SelectCropRatio
 import com.savvasdalkitsis.uhuruphotos.feature.edit.view.implementation.ui.state.CropRatio
+import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.theme.PreviewAppTheme
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.ActionIconWithText
 
 @Composable
-internal  fun EditCropOptions(
+internal fun EditCropOptions(
     action: (EditAction) -> Unit,
 ) {
     Row(
@@ -43,5 +45,13 @@ internal  fun EditCropOptions(
                 text = ratio.label,
             )
         }
+    }
+}
+
+@Preview
+@Composable
+fun EditCropOptionsPreview() {
+    PreviewAppTheme {
+        EditCropOptions {}
     }
 }
