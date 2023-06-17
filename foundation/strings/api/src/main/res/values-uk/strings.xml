@@ -288,4 +288,5 @@
     <string name="error_editing_photo">Виникла помилка при редагуванні фото</string>
     <string name="edit">Редагувати</string>
     <string name="crop_options">Параметри обрізання</string>
+    <string name="dismiss">Відхилити</string>
 </resources>
