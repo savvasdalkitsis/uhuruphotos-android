@@ -1,0 +1,4 @@
+* Visual changes to settings page to make it easier to understand
+* Adding header to about page with links to github and feedback
+* Adding about button in the account overview dialog
+* Translations
