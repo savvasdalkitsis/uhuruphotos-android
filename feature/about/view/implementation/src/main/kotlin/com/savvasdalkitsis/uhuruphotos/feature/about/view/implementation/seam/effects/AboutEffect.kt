@@ -18,5 +18,4 @@ package com.savvasdalkitsis.uhuruphotos.feature.about.view.implementation.seam.e
 import com.savvasdalkitsis.uhuruphotos.feature.about.view.implementation.seam.AboutEffectsContext
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.Effect
 
-sealed class AboutEffect : Effect<AboutEffectsContext> {
-}
+sealed class AboutEffect : Effect<AboutEffectsContext>

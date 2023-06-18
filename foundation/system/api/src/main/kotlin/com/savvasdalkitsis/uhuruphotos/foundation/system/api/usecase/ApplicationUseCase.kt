@@ -13,13 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
  */
-package com.savvasdalkitsis.uhuruphotos.feature.about.view.implementation.seam
+package com.savvasdalkitsis.uhuruphotos.foundation.system.api.usecase
 
-import com.savvasdalkitsis.uhuruphotos.foundation.log.api.usecase.FeedbackUseCase
-import com.savvasdalkitsis.uhuruphotos.foundation.system.api.usecase.ApplicationUseCase
-import javax.inject.Inject
+interface ApplicationUseCase {
 
-internal class AboutActionsContext @Inject constructor(
-    val applicationUseCase: ApplicationUseCase,
-    val feedbackUseCase: FeedbackUseCase,
-)
+    fun appVersion(): String
+}

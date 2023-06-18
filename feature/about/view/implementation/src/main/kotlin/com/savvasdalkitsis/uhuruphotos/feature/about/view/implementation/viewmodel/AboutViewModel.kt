@@ -15,16 +15,19 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.about.view.implementation.viewmodel
 
+import androidx.lifecycle.viewModelScope
 import com.savvasdalkitsis.uhuruphotos.feature.about.view.api.navigation.AboutNavigationRoute
 import com.savvasdalkitsis.uhuruphotos.feature.about.view.implementation.seam.AboutActionsContext
 import com.savvasdalkitsis.uhuruphotos.feature.about.view.implementation.seam.AboutEffectsContext
 import com.savvasdalkitsis.uhuruphotos.feature.about.view.implementation.seam.actions.AboutAction
+import com.savvasdalkitsis.uhuruphotos.feature.about.view.implementation.seam.actions.Load
 import com.savvasdalkitsis.uhuruphotos.feature.about.view.implementation.seam.effects.AboutEffect
 import com.savvasdalkitsis.uhuruphotos.feature.about.view.implementation.ui.state.AboutState
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.viewmodel.NavigationViewModel
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.ActionHandlerWithContext
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.EffectHandlerWithContext
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
@@ -34,5 +37,11 @@ internal class AboutViewModel @Inject constructor(
 ) : NavigationViewModel<AboutState, AboutEffect, AboutAction, AboutNavigationRoute>(
     ActionHandlerWithContext(actionsContext),
     EffectHandlerWithContext(effectsContext),
-    AboutState,
-)
+    AboutState(),
+) {
+    init {
+        viewModelScope.launch {
+            action(Load)
+        }
+    }
+}

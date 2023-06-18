@@ -15,28 +15,53 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.about.view.implementation.ui
 
+import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
+import androidx.compose.foundation.border
+import androidx.compose.foundation.layout.Arrangement.spacedBy
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.rememberLazyListState
+import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.material.Icon
 import androidx.compose.material.MaterialTheme
+import androidx.compose.material.OutlinedButton
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.SolidColor
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.mikepenz.aboutlibraries.ui.compose.LibrariesContainer
 import com.savvasdalkitsis.uhuruphotos.feature.about.view.implementation.seam.actions.AboutAction
 import com.savvasdalkitsis.uhuruphotos.feature.about.view.implementation.seam.actions.NavigateBack
+import com.savvasdalkitsis.uhuruphotos.feature.about.view.implementation.seam.actions.NavigateToGithub
+import com.savvasdalkitsis.uhuruphotos.feature.about.view.implementation.seam.actions.SendFeedback
+import com.savvasdalkitsis.uhuruphotos.feature.about.view.implementation.ui.state.AboutState
+import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.R.drawable
 import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
+import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.theme.PreviewAppTheme
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.BackNavButton
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.CommonScaffold
 import my.nanihadesuka.compose.InternalLazyColumnScrollbar
-import my.nanihadesuka.compose.LazyColumnScrollbar
 import my.nanihadesuka.compose.ScrollbarSelectionMode
 
 @Composable
 internal fun About(
+    state: AboutState,
     action: (AboutAction) -> Unit,
 ) {
     CommonScaffold(
@@ -52,6 +77,11 @@ internal fun About(
             modifier = Modifier.fillMaxSize(),
             contentPadding = contentPadding,
             lazyListState = listState,
+            header = {
+                stickyHeader {
+                    AboutHeader(state, action)
+                }
+            }
         )
         Box(modifier = Modifier
             .padding(contentPadding)
@@ -64,5 +94,80 @@ internal fun About(
                 thumbSelectedColor = MaterialTheme.colors.primary,
             )
         }
+    }
+}
+
+@Composable
+private fun AboutHeader(
+    state: AboutState,
+    action: (AboutAction) -> Unit,
+) {
+    Column(
+        modifier = Modifier
+            .fillMaxWidth()
+            .background(MaterialTheme.colors.background)
+            .padding(8.dp),
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = spacedBy(8.dp),
+    ) {
+        Icon(
+            modifier = Modifier
+                .size(80.dp)
+                .background(Color.White, CircleShape),
+            tint = Color.Black,
+            painter = painterResource(drawable.ic_logo),
+            contentDescription = null,
+        )
+        Text(
+            text = "UhuruPhotos",
+            style = MaterialTheme.typography.h3,
+        )
+        Text(
+            text = state.appVersion,
+            style = MaterialTheme.typography.subtitle1,
+        )
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = spacedBy(8.dp),
+        ) {
+            OutlinedButton(
+                modifier = Modifier.weight(1f),
+                onClick = { action(NavigateToGithub )},
+            ) {
+                Icon(
+                    painter = painterResource(drawable.ic_github),
+                    contentDescription = null
+                )
+                Spacer(modifier = Modifier.width(8.dp))
+                Text(text = "Github")
+            }
+            OutlinedButton(
+                modifier = Modifier.weight(1f),
+                onClick = { action(SendFeedback) },
+            ) {
+                Icon(
+                    painter = painterResource(drawable.ic_feedback),
+                    contentDescription = null
+                )
+                Spacer(modifier = Modifier.width(8.dp))
+                Text(text = stringResource(string.feedback))
+            }
+        }
+    }
+}
+
+@Preview
+@Composable
+fun AboutHeaderPreview() {
+    PreviewAppTheme {
+        AboutHeader(AboutState("0.0.999")) {}
+    }
+}
+
+@Preview
+@Composable
+fun AboutHeaderDarkPreview() {
+    PreviewAppTheme(darkTheme = true) {
+        AboutHeader(AboutState("0.0.999")) {}
     }
 }

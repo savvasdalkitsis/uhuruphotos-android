@@ -37,8 +37,9 @@ internal class AboutNavigationTarget @Inject constructor(
             themeMode = settingsUseCase.observeThemeModeState(),
             route = AboutNavigationRoute::class,
             viewModel = AboutViewModel::class,
-        ) { _, actions ->
+        ) { state, actions ->
             About(
+                state,
                 actions,
             )
         }

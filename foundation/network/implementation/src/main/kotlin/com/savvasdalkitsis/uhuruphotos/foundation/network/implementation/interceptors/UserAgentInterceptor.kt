@@ -15,30 +15,16 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.foundation.network.implementation.interceptors
 
-import android.content.Context
-import android.content.pm.PackageManager
-import android.os.Build
-import dagger.hilt.android.qualifiers.ApplicationContext
+import com.savvasdalkitsis.uhuruphotos.foundation.system.api.usecase.ApplicationUseCase
 import okhttp3.Interceptor
 import okhttp3.Response
 import javax.inject.Inject
 
 internal class UserAgentInterceptor @Inject constructor(
-    @ApplicationContext context: Context,
+    applicationUseCase: ApplicationUseCase,
 ): Interceptor {
 
-    private val versionName =
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            context.packageManager.getPackageInfo(
-                context.packageName,
-                PackageManager.PackageInfoFlags.of(0)
-            ).versionName
-        } else {
-            @Suppress("DEPRECATION")
-            context.packageManager.getPackageInfo(
-                context.packageName, 0
-            ).versionName
-        }
+    private val versionName = applicationUseCase.appVersion()
 
     override fun intercept(chain: Interceptor.Chain): Response =
         chain.proceed(chain.request().newBuilder()

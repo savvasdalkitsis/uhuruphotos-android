@@ -16,6 +16,7 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.feature.account.view.api.ui
 
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Arrangement.Absolute.spacedBy
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -62,6 +63,7 @@ import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.state.Title
 internal fun AccountOverview(
     modifier: Modifier = Modifier,
     state: AccountOverviewState,
+    onAboutClicked: () -> Unit = {},
     onLogoutClicked: () -> Unit = {},
     onEditServerClicked: () -> Unit = {},
     onSettingsClicked: () -> Unit = {},
@@ -116,11 +118,24 @@ internal fun AccountOverview(
                 onCancelJob = onCancelJob,
             )
         }
+        OutlinedButton(
+            modifier = Modifier.fillMaxWidth(),
+            onClick = onAboutClicked,
+        ) {
+            Icon(
+                painter = painterResource(id = drawable.ic_info),
+                contentDescription = null
+            )
+            Spacer(modifier = Modifier.width(8.dp))
+            Text(text = stringResource(string.about))
+        }
         Row(
             modifier = Modifier
-                .fillMaxWidth()
+                .fillMaxWidth(),
+            horizontalArrangement = spacedBy(8.dp),
         ) {
             OutlinedButton(
+                modifier = Modifier.weight(1f),
                 onClick = onLogoutClicked,
             ) {
                 Icon(
@@ -130,8 +145,8 @@ internal fun AccountOverview(
                 Spacer(modifier = Modifier.width(8.dp))
                 Text(text = stringResource(string.log_out))
             }
-            Spacer(modifier = Modifier.weight(1f))
             OutlinedButton(
+                modifier = Modifier.weight(1f),
                 onClick = onSettingsClicked
             ) {
                 Icon(Icons.Default.Settings, contentDescription = null)

@@ -13,13 +13,14 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
  */
-package com.savvasdalkitsis.uhuruphotos.feature.about.view.implementation.seam
+package com.savvasdalkitsis.uhuruphotos.feature.about.view.implementation.seam.effects
 
-import com.savvasdalkitsis.uhuruphotos.foundation.log.api.usecase.FeedbackUseCase
-import com.savvasdalkitsis.uhuruphotos.foundation.system.api.usecase.ApplicationUseCase
-import javax.inject.Inject
+import android.content.Intent
+import android.net.Uri
+import com.savvasdalkitsis.uhuruphotos.feature.about.view.implementation.seam.AboutEffectsContext
 
-internal class AboutActionsContext @Inject constructor(
-    val applicationUseCase: ApplicationUseCase,
-    val feedbackUseCase: FeedbackUseCase,
-)
+data object NavigateToGithub : AboutEffect() {
+    context(AboutEffectsContext) override suspend fun handle() {
+        navigator.navigateTo(Intent(Intent.ACTION_VIEW, Uri.parse("https://github.com/savvasdalkitsis/uhuruphotos-android")))
+    }
+}

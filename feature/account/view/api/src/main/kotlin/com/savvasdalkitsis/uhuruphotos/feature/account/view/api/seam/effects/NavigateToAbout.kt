@@ -13,13 +13,14 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
  */
-package com.savvasdalkitsis.uhuruphotos.feature.about.view.implementation.seam
+package com.savvasdalkitsis.uhuruphotos.feature.account.view.api.seam.effects
 
-import com.savvasdalkitsis.uhuruphotos.foundation.log.api.usecase.FeedbackUseCase
-import com.savvasdalkitsis.uhuruphotos.foundation.system.api.usecase.ApplicationUseCase
-import javax.inject.Inject
+import com.savvasdalkitsis.uhuruphotos.feature.about.view.api.navigation.AboutNavigationRoute
+import com.savvasdalkitsis.uhuruphotos.feature.account.view.api.seam.AccountOverviewEffectsContext
 
-internal class AboutActionsContext @Inject constructor(
-    val applicationUseCase: ApplicationUseCase,
-    val feedbackUseCase: FeedbackUseCase,
-)
+data object NavigateToAbout : AccountOverviewEffect() {
+    context(AccountOverviewEffectsContext) override suspend fun handle() {
+        navigator.navigateTo(AboutNavigationRoute)
+    }
+
+}

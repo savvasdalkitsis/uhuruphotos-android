@@ -17,7 +17,19 @@ package com.savvasdalkitsis.uhuruphotos.feature.about.view.implementation.seam.a
 
 import com.savvasdalkitsis.uhuruphotos.feature.about.view.implementation.seam.AboutActionsContext
 import com.savvasdalkitsis.uhuruphotos.feature.about.view.implementation.seam.effects.AboutEffect
+import com.savvasdalkitsis.uhuruphotos.feature.about.view.implementation.seam.effects.NavigateToGithub
 import com.savvasdalkitsis.uhuruphotos.feature.about.view.implementation.ui.state.AboutState
-import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.Action
+import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.EffectHandler
+import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.Mutation
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
 
-sealed class AboutAction : Action<AboutState, AboutEffect, AboutActionsContext>
+data object NavigateToGithub : AboutAction() {
+    context(AboutActionsContext) override fun handle(
+        state: AboutState,
+        effect: EffectHandler<AboutEffect>
+    ): Flow<Mutation<AboutState>> = flow {
+        effect.handleEffect(NavigateToGithub)
+    }
+
+}

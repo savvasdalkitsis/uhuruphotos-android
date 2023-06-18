@@ -15,11 +15,14 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.about.view.implementation.seam
 
-import com.savvasdalkitsis.uhuruphotos.foundation.log.api.usecase.FeedbackUseCase
-import com.savvasdalkitsis.uhuruphotos.foundation.system.api.usecase.ApplicationUseCase
-import javax.inject.Inject
+import com.savvasdalkitsis.uhuruphotos.feature.about.view.implementation.ui.state.AboutState
+import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.Mutation
 
-internal class AboutActionsContext @Inject constructor(
-    val applicationUseCase: ApplicationUseCase,
-    val feedbackUseCase: FeedbackUseCase,
-)
+sealed class AboutMutation(
+    mutation: Mutation<AboutState>
+) : Mutation<AboutState> by mutation {
+
+    data class DisplayAppVersion(val appVersion: String) : AboutMutation({
+        it.copy(appVersion = appVersion)
+    })
+}

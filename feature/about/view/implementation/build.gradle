@@ -9,18 +9,27 @@ android {
 }
 
 dependencies {
-    implementation project(":feature:about:domain:api")
-    implementation project(":feature:about:view:api")
-    implementation project(":feature:settings:domain:api")
-    implementation project(":foundation:navigation:api")
-    implementation project(":foundation:strings:api")
-    implementation project(":foundation:ui:api")
+    implementation(
+            project(":feature:about:domain:api"),
+            project(":feature:about:view:api"),
+            project(":feature:settings:domain:api"),
+            project(":foundation:icons:api"),
+            project(":foundation:log:api"),
+            project(":foundation:navigation:api"),
+            project(":foundation:strings:api"),
+            project(":foundation:system:api"),
+            project(":foundation:ui:api"),
+    )
     implementation(
             libs.about,
             libs.androidx.compose.hilt.navigation,
-            libs.autodagger.core,
             libs.androidx.compose.material,
+            libs.androidx.compose.ui.tooling.preview,
+            libs.autodagger.core,
             libs.scrollbar,
+    )
+    debugImplementation(
+            libs.androidx.compose.ui.tooling,
     )
     kapt libs.autodagger.kapt
 }

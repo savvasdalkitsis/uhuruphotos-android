@@ -16,6 +16,7 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.feature.account.view.api.ui
 
 import androidx.compose.runtime.Composable
+import com.savvasdalkitsis.uhuruphotos.feature.account.view.api.seam.actions.AboutClicked
 import com.savvasdalkitsis.uhuruphotos.feature.account.view.api.seam.actions.AccountOverviewAction
 import com.savvasdalkitsis.uhuruphotos.feature.account.view.api.seam.actions.AskToLogOut
 import com.savvasdalkitsis.uhuruphotos.feature.account.view.api.seam.actions.AskToStartJob
@@ -38,6 +39,7 @@ fun AccountOverviewContent(
     AccountOverviewPopUp(
         state = state,
         onDismiss = { action(DismissAccountOverview) },
+        onAboutClicked = { action(AboutClicked) },
         onLogoutClicked = { action(AskToLogOut) },
         onEditServerClicked = { action(EditServer) },
         onStartJob = { action(AskToStartJob(it)) },

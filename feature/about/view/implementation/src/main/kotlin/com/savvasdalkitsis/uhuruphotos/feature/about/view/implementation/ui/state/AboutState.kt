@@ -15,4 +15,6 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.about.view.implementation.ui.state
 
-data object AboutState
+data class AboutState(
+    val appVersion: String = "-"
+)

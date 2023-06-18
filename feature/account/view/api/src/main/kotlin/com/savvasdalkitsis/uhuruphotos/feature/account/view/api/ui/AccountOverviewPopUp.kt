@@ -49,6 +49,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.jobs.domain.api.model.Job
 fun AccountOverviewPopUp(
     state: AccountOverviewState,
     onDismiss: () -> Unit,
+    onAboutClicked: () -> Unit = {},
     onLogoutClicked: () -> Unit,
     onEditServerClicked: () -> Unit,
     onSettingsClicked: () -> Unit,
@@ -87,6 +88,7 @@ fun AccountOverviewPopUp(
                 ) {
                     AccountOverview(
                         state = state,
+                        onAboutClicked = onAboutClicked,
                         onLogoutClicked = onLogoutClicked,
                         onEditServerClicked = onEditServerClicked,
                         onSettingsClicked = onSettingsClicked,
