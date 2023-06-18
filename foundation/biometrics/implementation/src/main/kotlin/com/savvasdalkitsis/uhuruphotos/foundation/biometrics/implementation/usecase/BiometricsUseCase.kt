@@ -21,6 +21,7 @@ import androidx.biometric.BiometricManager.BIOMETRIC_ERROR_NO_HARDWARE
 import androidx.biometric.BiometricManager.BIOMETRIC_SUCCESS
 import com.afollestad.assure.Prompt
 import com.afollestad.assure.authenticate
+import com.github.michaelbull.result.Ok
 import com.savvasdalkitsis.uhuruphotos.foundation.activity.api.holder.CurrentActivityHolder
 import com.savvasdalkitsis.uhuruphotos.foundation.biometrics.api.model.Biometrics
 import com.savvasdalkitsis.uhuruphotos.foundation.biometrics.api.model.Biometrics.Enrolled
@@ -28,12 +29,13 @@ import com.savvasdalkitsis.uhuruphotos.foundation.biometrics.api.model.Biometric
 import com.savvasdalkitsis.uhuruphotos.foundation.biometrics.api.model.Biometrics.NotEnrolled
 import com.savvasdalkitsis.uhuruphotos.foundation.biometrics.api.usecase.BiometricsUseCase
 import com.savvasdalkitsis.uhuruphotos.foundation.launchers.api.awaitOnMain
-import com.savvasdalkitsis.uhuruphotos.foundation.log.api.log
 import com.savvasdalkitsis.uhuruphotos.foundation.log.api.runCatchingWithLog
+import com.savvasdalkitsis.uhuruphotos.foundation.result.api.SimpleResult
+import com.savvasdalkitsis.uhuruphotos.foundation.result.api.simple
 import dagger.hilt.android.scopes.ActivityRetainedScoped
 import se.ansman.dagger.auto.AutoBind
 import javax.inject.Inject
-import kotlin.coroutines.resumeWithException
+import kotlin.coroutines.resume
 import kotlin.coroutines.suspendCoroutine
 
 @AutoBind
@@ -57,7 +59,7 @@ internal class BiometricsUseCase @Inject constructor(
         @StringRes
         description: Int,
         confirmRequired: Boolean,
-    ): Result<Unit> = runCatchingWithLog {
+    ): SimpleResult = runCatchingWithLog {
         with(currentActivityHolder.currentActivity!!) {
             awaitOnMain {
                 suspendCoroutine { continuation ->
@@ -70,15 +72,13 @@ internal class BiometricsUseCase @Inject constructor(
                             deviceCredentialsAllowed = true,
                         )
                     ) { exception ->
-                        try {
-                            exception?.let { continuation.resumeWithException(it) }
-                                ?: continuation.resumeWith(Result.success(Unit))
-                        } catch (e: Exception) {
-                            log(e)
-                        }
+                        continuation.resume(when(exception) {
+                            null -> Ok(Unit)
+                            else -> Error(exception)
+                        })
                     }
                 }
             }
         }
-    }
+    }.simple()
 }

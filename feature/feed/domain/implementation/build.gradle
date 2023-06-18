@@ -7,21 +7,22 @@ android {
 }
 
 dependencies {
-    implementation project(":feature:auth:domain:api")
-    implementation project(":feature:collage:view:api")
-    implementation project(":feature:feed:domain:api")
-    implementation project(":feature:media:remote:domain:api")
-    implementation project(":feature:settings:domain:api")
-    implementation project(":foundation:coroutines:api")
-    implementation project(":foundation:download:api")
-    implementation project(":foundation:initializer:api")
-    implementation project(":foundation:log:api")
-    implementation project(":foundation:math:api")
-    implementation project(":foundation:notification:api")
-    implementation project(":foundation:preferences:api")
-    implementation project(":foundation:strings:api")
-    implementation project(":foundation:worker:api")
     implementation(
+            project(":feature:auth:domain:api"),
+            project(":feature:collage:view:api"),
+            project(":feature:feed:domain:api"),
+            project(":feature:media:remote:domain:api"),
+            project(":feature:settings:domain:api"),
+            project(":foundation:coroutines:api"),
+            project(":foundation:download:api"),
+            project(":foundation:initializer:api"),
+            project(":foundation:log:api"),
+            project(":foundation:math:api"),
+            project(":foundation:notification:api"),
+            project(":foundation:preferences:api"),
+            project(":foundation:result:api"),
+            project(":foundation:strings:api"),
+            project(":foundation:worker:api"),
             libs.androidx.work,
             libs.androidx.work.hilt,
             libs.autodagger.core,

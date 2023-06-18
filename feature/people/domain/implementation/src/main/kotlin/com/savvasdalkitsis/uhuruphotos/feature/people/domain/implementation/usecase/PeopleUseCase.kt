@@ -15,6 +15,7 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.people.domain.implementation.usecase
 
+import com.github.michaelbull.result.Result
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.people.People
 import com.savvasdalkitsis.uhuruphotos.feature.people.domain.api.usecase.PeopleUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.people.domain.implementation.repository.PeopleRepository
@@ -33,7 +34,7 @@ class PeopleUseCase @Inject constructor(
 
     override suspend fun getPeopleByName(): List<People> = peopleRepository.getPeopleByName()
 
-    override fun observePeopleByPhotoCount(): Flow<Result<List<People>>> =
+    override fun observePeopleByPhotoCount(): Flow<Result<List<People>, Throwable>> =
         peopleRepository.observePeopleByPhotoCount()
             .onStartWithResult {
                 refreshPeople()

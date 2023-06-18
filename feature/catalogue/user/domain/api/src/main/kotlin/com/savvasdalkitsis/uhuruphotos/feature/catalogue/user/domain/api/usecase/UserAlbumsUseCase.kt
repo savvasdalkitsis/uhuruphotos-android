@@ -17,12 +17,13 @@ package com.savvasdalkitsis.uhuruphotos.feature.catalogue.user.domain.api.usecas
 
 import com.savvasdalkitsis.uhuruphotos.feature.catalogue.view.api.ui.state.CatalogueSorting
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.album.user.UserAlbums
+import com.savvasdalkitsis.uhuruphotos.foundation.result.api.SimpleResult
 import kotlinx.coroutines.flow.Flow
 
 interface UserAlbumsUseCase {
     fun observeUserAlbumsSorting(): Flow<CatalogueSorting>
     suspend fun changeUserAlbumsSorting(sorting: CatalogueSorting)
     fun observeUserAlbums(): Flow<List<UserAlbums>>
-    suspend fun refreshUserAlbums(): Result<Unit>
+    suspend fun refreshUserAlbums(): SimpleResult
     suspend fun getUserAlbums(): List<UserAlbums>
 }

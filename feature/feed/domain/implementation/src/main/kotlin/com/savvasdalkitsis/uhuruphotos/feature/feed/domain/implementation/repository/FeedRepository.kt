@@ -27,6 +27,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.api.service.m
 import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.api.usecase.RemoteMediaUseCase
 import com.savvasdalkitsis.uhuruphotos.foundation.group.api.model.Group
 import com.savvasdalkitsis.uhuruphotos.foundation.group.api.model.groupBy
+import com.savvasdalkitsis.uhuruphotos.foundation.result.api.SimpleResult
 import com.squareup.sqldelight.runtime.coroutines.asFlow
 import com.squareup.sqldelight.runtime.coroutines.mapToList
 import kotlinx.coroutines.flow.Flow
@@ -73,7 +74,7 @@ class FeedRepository @Inject constructor(
     suspend fun refreshRemoteMediaCollections(
         shallow: Boolean,
         onProgressChange: suspend (current: Int, total: Int) -> Unit = { _, _ -> },
-    ): Result<Unit> =
+    ): SimpleResult =
         remoteMediaUseCase.processRemoteMediaCollections(
             albumsFetcher = { feedService.getRemoteMediaCollectionsByDate() },
             remoteMediaCollectionFetcher = getCollectionAllPages(),

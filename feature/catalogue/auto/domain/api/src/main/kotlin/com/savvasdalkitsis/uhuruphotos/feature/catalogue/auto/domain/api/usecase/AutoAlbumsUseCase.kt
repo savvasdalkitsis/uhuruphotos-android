@@ -17,12 +17,13 @@ package com.savvasdalkitsis.uhuruphotos.feature.catalogue.auto.domain.api.usecas
 
 import com.savvasdalkitsis.uhuruphotos.feature.catalogue.auto.view.api.state.AutoAlbum
 import com.savvasdalkitsis.uhuruphotos.feature.catalogue.view.api.ui.state.CatalogueSorting
+import com.savvasdalkitsis.uhuruphotos.foundation.result.api.SimpleResult
 import kotlinx.coroutines.flow.Flow
 
 interface AutoAlbumsUseCase {
     fun observeAutoAlbumsSorting(): Flow<CatalogueSorting>
     suspend fun changeAutoAlbumsSorting(sorting: CatalogueSorting)
     fun observeAutoAlbums(): Flow<List<AutoAlbum>>
-    suspend fun refreshAutoAlbums(): Result<Unit>
+    suspend fun refreshAutoAlbums(): SimpleResult
     suspend fun getAutoAlbums(): List<AutoAlbum>
 }

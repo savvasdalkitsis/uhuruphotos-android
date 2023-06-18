@@ -27,6 +27,8 @@ import com.savvasdalkitsis.uhuruphotos.feature.trash.domain.implementation.servi
 import com.savvasdalkitsis.uhuruphotos.foundation.group.api.model.Group
 import com.savvasdalkitsis.uhuruphotos.foundation.group.api.model.groupBy
 import com.savvasdalkitsis.uhuruphotos.foundation.log.api.runCatchingWithLog
+import com.savvasdalkitsis.uhuruphotos.foundation.result.api.SimpleResult
+import com.savvasdalkitsis.uhuruphotos.foundation.result.api.simple
 import com.squareup.sqldelight.runtime.coroutines.asFlow
 import com.squareup.sqldelight.runtime.coroutines.mapToList
 import kotlinx.coroutines.flow.Flow
@@ -50,7 +52,7 @@ class TrashRepository @Inject constructor(
     suspend fun getTrash(): Group<String, GetTrash> =
         remoteMediaTrashQueries.getTrash().awaitList().groupBy(GetTrash::id).let(::Group)
 
-    suspend fun refreshTrash(): Result<Unit> = runCatchingWithLog {
+    suspend fun refreshTrash(): SimpleResult = runCatchingWithLog {
         val trash = trashService.getTrash().results
         async {
             remoteMediaCollectionsQueries.transaction {
@@ -71,6 +73,6 @@ class TrashRepository @Inject constructor(
                     }
             }
         }
-    }
+    }.simple()
 
 }

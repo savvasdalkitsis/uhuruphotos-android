@@ -21,9 +21,12 @@ import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.IntentSenderRequest
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.os.bundleOf
+import com.github.michaelbull.result.Err
+import com.github.michaelbull.result.Ok
 import com.savvasdalkitsis.uhuruphotos.foundation.activity.api.holder.CurrentActivityHolder
 import com.savvasdalkitsis.uhuruphotos.foundation.activity.api.request.ActivityRequestFailed
 import com.savvasdalkitsis.uhuruphotos.foundation.activity.api.request.ActivityRequestLauncher
+import com.savvasdalkitsis.uhuruphotos.foundation.result.api.SimpleResult
 import dagger.hilt.android.scopes.ActivityRetainedScoped
 import kotlinx.coroutines.suspendCancellableCoroutine
 import se.ansman.dagger.auto.AutoBind
@@ -39,7 +42,7 @@ class ActivityRequestLauncher @Inject constructor(
 
     private val keyIncrement = AtomicInteger(0)
     private val activity get() = currentActivityHolder.currentActivity
-    private val noActivityResult get() = Result.failure<Unit>(
+    private val noActivityResult get() = Err(
         IllegalStateException("No active activity found when trying to launch request")
     )
     private val savedStateRegistryKey = "SAVED_STATE_REGISTRY_KEY"
@@ -49,7 +52,7 @@ class ActivityRequestLauncher @Inject constructor(
     override suspend fun performRequest(
         requestId: String,
         request: IntentSenderRequest,
-    ): Result<Unit> {
+    ): SimpleResult {
         var isLaunched = false
 
         val key = activity?.let { activity ->
@@ -79,9 +82,9 @@ class ActivityRequestLauncher @Inject constructor(
                     clearSavedStateData(activity)
                     continuation.resume(
                         if (result.resultCode == Activity.RESULT_OK) {
-                            Result.success(Unit)
+                            Ok(Unit)
                         } else {
-                            Result.failure(ActivityRequestFailed(result.resultCode.toString()))
+                            Err(ActivityRequestFailed(result.resultCode.toString()))
                         }
                     )
                 }

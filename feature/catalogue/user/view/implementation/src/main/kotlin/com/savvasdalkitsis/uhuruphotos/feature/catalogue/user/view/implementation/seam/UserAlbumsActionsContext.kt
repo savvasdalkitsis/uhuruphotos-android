@@ -15,11 +15,11 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.catalogue.user.view.implementation.seam
 
+import com.github.michaelbull.result.Err
 import com.savvasdalkitsis.uhuruphotos.feature.auth.domain.api.usecase.ServerUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.catalogue.user.domain.api.usecase.UserAlbumsUseCase
-import com.savvasdalkitsis.uhuruphotos.feature.catalogue.user.view.implementation.seam.effects.UserAlbumsEffect
 import com.savvasdalkitsis.uhuruphotos.feature.catalogue.user.view.implementation.seam.effects.ErrorLoadingAlbums
-import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.api.usecase.RemoteMediaUseCase
+import com.savvasdalkitsis.uhuruphotos.feature.catalogue.user.view.implementation.seam.effects.UserAlbumsEffect
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.EffectHandler
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -35,7 +35,7 @@ class UserAlbumsActionsContext @Inject constructor(
     suspend fun refreshAlbums(effect: EffectHandler<UserAlbumsEffect>) {
         loading.emit(true)
         val result = userAlbumsUseCase.refreshUserAlbums()
-        if (result.isFailure) {
+        if (result is Err) {
             effect.handleEffect(ErrorLoadingAlbums)
         }
         // delaying to give ui time to receive the new albums before

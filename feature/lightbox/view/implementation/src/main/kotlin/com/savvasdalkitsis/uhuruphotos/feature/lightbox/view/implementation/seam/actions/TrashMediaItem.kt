@@ -15,6 +15,8 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.actions
 
+import com.github.michaelbull.result.Ok
+import com.github.michaelbull.result.map
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.LightboxActionsContext
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.LightboxDeletionCategory.FULLY_SYNCED_ITEM
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.LightboxDeletionCategory.LOCAL_ONLY_ITEM
@@ -38,7 +40,7 @@ data object TrashMediaItem : LightboxAction() {
                 mediaItem.id.findRemote?.value?.let {
                     remoteMediaUseCase.deleteMediaItems(it)
                 }
-                Result.success(Unit)
+                Ok(Unit)
             }
             LOCAL_ONLY_ITEM -> deleteLocal(mediaItem)
             FULLY_SYNCED_ITEM -> deleteLocal(mediaItem).map {
@@ -48,7 +50,7 @@ data object TrashMediaItem : LightboxAction() {
             REMOTE_ITEM -> {
                 // this just schedules deletion so no need to check result
                 trashRemote(mediaItem)
-                Result.success(Unit)
+                Ok(Unit)
             }
         }
     }

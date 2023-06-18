@@ -15,6 +15,7 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.favourites.view.implementation.seam
 
+import com.github.michaelbull.result.getOr
 import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.Cluster
 import com.savvasdalkitsis.uhuruphotos.feature.favourites.domain.api.usecase.FavouritesUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.GalleryActionsContext
@@ -42,7 +43,7 @@ internal class FavouritesActionsContext @Inject constructor(
     shouldRefreshOnLoad = { _ -> true },
     galleryDetailsFlow = { _, _ ->
         mediaUseCase.observeFavouriteMedia()
-            .mapNotNull { it.getOrNull() }
+            .mapNotNull { it.getOr(null) }
             .map { mediaItems ->
                 GalleryDetails(
                     title = Title.Resource(string.favourite_media),

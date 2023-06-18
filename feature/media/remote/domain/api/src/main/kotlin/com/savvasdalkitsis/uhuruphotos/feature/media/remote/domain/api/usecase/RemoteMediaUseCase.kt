@@ -19,13 +19,14 @@ import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.entities.media.DbRe
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.entities.media.DbRemoteMediaItemSummary
 import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.api.service.model.RemoteMediaCollection
 import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.api.service.model.RemoteMediaCollectionsByDate
+import com.savvasdalkitsis.uhuruphotos.foundation.result.api.SimpleResult
 import kotlinx.coroutines.flow.Flow
 
 interface RemoteMediaUseCase {
 
     fun observeAllRemoteMediaDetails(): Flow<List<DbRemoteMediaItemDetails>>
 
-    fun observeFavouriteRemoteMedia(): Flow<Result<List<DbRemoteMediaItemSummary>>>
+    fun observeFavouriteRemoteMedia(): Flow<com.github.michaelbull.result.Result<List<DbRemoteMediaItemSummary>, Throwable>>
 
     suspend fun observeRemoteMediaItemDetails(id: String): Flow<DbRemoteMediaItemDetails>
 
@@ -33,21 +34,19 @@ interface RemoteMediaUseCase {
 
     fun observeHiddenRemoteMedia(): Flow<List<DbRemoteMediaItemSummary>>
 
-    suspend fun getFavouriteMediaSummaries(): Result<List<DbRemoteMediaItemSummary>>
-
-    suspend fun getFavouriteMediaSummariesCount(): Result<Long>
+    suspend fun getFavouriteMediaSummariesCount(): com.github.michaelbull.result.Result<Long, Throwable>
 
     suspend fun getHiddenMediaSummaries(): List<DbRemoteMediaItemSummary>
 
-    suspend fun setMediaItemFavourite(id: String, favourite: Boolean): Result<Unit>
+    suspend fun setMediaItemFavourite(id: String, favourite: Boolean): SimpleResult
 
-    suspend fun refreshDetailsNowIfMissing(id: String): Result<Unit>
+    suspend fun refreshDetailsNowIfMissing(id: String): SimpleResult
 
-    suspend fun refreshDetailsNow(id: String): Result<Unit>
+    suspend fun refreshDetailsNow(id: String): SimpleResult
 
-    suspend fun refreshFavouriteMedia(): Result<Unit>
+    suspend fun refreshFavouriteMedia(): SimpleResult
 
-    suspend fun refreshHiddenMedia(): Result<Unit>
+    suspend fun refreshHiddenMedia(): SimpleResult
 
     fun trashMediaItem(id: String)
 
@@ -63,5 +62,5 @@ interface RemoteMediaUseCase {
         incompleteAlbumsProcessor: suspend (List<RemoteMediaCollection.Incomplete>) -> Unit = {},
         completeAlbumProcessor: suspend (RemoteMediaCollection.Complete) -> Unit = {},
         clearSummariesBeforeInserting: Boolean = true,
-    ): Result<Unit>
+    ): SimpleResult
 }

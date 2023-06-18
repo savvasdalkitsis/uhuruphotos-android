@@ -26,6 +26,7 @@ import com.savvasdalkitsis.uhuruphotos.foundation.group.api.model.groupBy
 import com.savvasdalkitsis.uhuruphotos.foundation.log.api.runCatchingWithLog
 import com.savvasdalkitsis.uhuruphotos.foundation.preferences.api.Preferences
 import com.savvasdalkitsis.uhuruphotos.foundation.preferences.api.set
+import com.savvasdalkitsis.uhuruphotos.foundation.result.api.simple
 import com.squareup.sqldelight.runtime.coroutines.asFlow
 import com.squareup.sqldelight.runtime.coroutines.mapToList
 import kotlinx.coroutines.flow.Flow
@@ -79,7 +80,7 @@ class SearchRepository @Inject constructor(
                 )
             }
         }
-    }
+    }.simple()
 
     fun getSearchSuggestions(): Flow<List<String>> = preferences.observeStringSet(suggestions, emptySet())
         .map { it.toList() }
@@ -89,7 +90,7 @@ class SearchRepository @Inject constructor(
             .map(String::trim)
             .toSet()
         )
-    }
+    }.simple()
 
     fun getRecentSearches(): Flow<List<String>> = preferences.observeStringSet(recentSearches, emptySet())
         .map { it.toList() }

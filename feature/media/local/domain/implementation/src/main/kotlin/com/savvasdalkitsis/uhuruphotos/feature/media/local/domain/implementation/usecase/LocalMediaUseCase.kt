@@ -25,7 +25,6 @@ import android.os.Build.VERSION.SDK_INT
 import android.os.Build.VERSION_CODES.Q
 import android.os.Build.VERSION_CODES.TIRAMISU
 import android.os.Environment
-import android.provider.MediaStore
 import android.provider.MediaStore.Images
 import android.provider.MediaStore.MediaColumns.*
 import androidx.core.content.ContextCompat
@@ -52,6 +51,7 @@ import com.savvasdalkitsis.uhuruphotos.foundation.exif.api.usecase.ExifUseCase
 import com.savvasdalkitsis.uhuruphotos.foundation.log.api.log
 import com.savvasdalkitsis.uhuruphotos.foundation.log.api.runCatchingWithLog
 import com.savvasdalkitsis.uhuruphotos.foundation.notification.api.ForegroundNotificationWorker
+import com.savvasdalkitsis.uhuruphotos.foundation.result.api.simple
 import com.savvasdalkitsis.uhuruphotos.foundation.worker.api.model.RefreshJobState
 import com.savvasdalkitsis.uhuruphotos.foundation.worker.api.usecase.WorkerStatusUseCase
 import dagger.hilt.android.qualifiers.ApplicationContext
@@ -181,7 +181,7 @@ class LocalMediaUseCase @Inject constructor(
     override suspend fun refreshLocalMediaFolder(folderId: Int) = runCatchingWithLog {
         resetMediaStoreIfNeeded()
         localMediaRepository.refreshFolder(folderId)
-    }
+    }.simple()
 
     override fun observePermissionsState(): Flow<LocalPermissions>  =
         observePermissionsState(*requiredPermissions)

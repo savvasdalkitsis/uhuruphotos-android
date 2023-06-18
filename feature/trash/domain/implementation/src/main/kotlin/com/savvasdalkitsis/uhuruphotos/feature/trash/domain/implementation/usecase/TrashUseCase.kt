@@ -42,7 +42,7 @@ internal class TrashUseCase @Inject constructor(
 
     private val key = "trashGalleryDisplay"
 
-    override suspend fun refreshTrash(): Result<Unit> =
+    override suspend fun refreshTrash() =
         trashRepository.refreshTrash()
 
     override fun getTrashGalleryDisplay() : PredefinedCollageDisplay =

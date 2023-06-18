@@ -18,6 +18,8 @@ package com.savvasdalkitsis.uhuruphotos.feature.feed.domain.implementation.worke
 import android.content.Context
 import androidx.hilt.work.HiltWorker
 import androidx.work.WorkerParameters
+import com.github.michaelbull.result.Err
+import com.github.michaelbull.result.Ok
 import com.savvasdalkitsis.uhuruphotos.feature.feed.domain.implementation.broadcast.CancelFeedDownloadWorkBroadcastReceiver
 import com.savvasdalkitsis.uhuruphotos.feature.feed.domain.implementation.repository.FeedRepository
 import com.savvasdalkitsis.uhuruphotos.foundation.notification.api.ForegroundInfoBuilder
@@ -49,9 +51,9 @@ internal class FeedDownloadWorker @AssistedInject constructor(
         val result = feedRepository.refreshRemoteMediaCollections(shallow) { current, total ->
             updateProgress(current, total)
         }
-        when {
-            result.isSuccess -> Result.success()
-            else -> Result.retry()
+        when(result) {
+            is Ok -> Result.success()
+            is Err -> Result.retry()
         }
     }
 

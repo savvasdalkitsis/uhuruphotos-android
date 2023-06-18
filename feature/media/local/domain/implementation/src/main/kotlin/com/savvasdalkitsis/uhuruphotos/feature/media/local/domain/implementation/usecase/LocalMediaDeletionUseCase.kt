@@ -20,15 +20,23 @@ import android.app.RecoverableSecurityException
 import android.content.ContentResolver
 import android.content.Context
 import android.content.Intent
-import android.content.pm.PackageManager.*
+import android.content.pm.PackageManager.PERMISSION_GRANTED
 import android.os.Build.VERSION.SDK_INT
-import android.os.Build.VERSION_CODES.*
+import android.os.Build.VERSION_CODES.Q
+import android.os.Build.VERSION_CODES.R
 import android.provider.MediaStore.createDeleteRequest
 import androidx.activity.result.IntentSenderRequest
 import androidx.annotation.RequiresApi
 import androidx.core.content.ContextCompat
+import com.github.michaelbull.result.Err
+import com.github.michaelbull.result.Ok
+import com.github.michaelbull.result.combine
+import com.github.michaelbull.result.onSuccess
 import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.model.InternalLocalMediaItemDeletion
-import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.model.InternalLocalMediaItemDeletion.*
+import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.model.InternalLocalMediaItemDeletion.Error
+import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.model.InternalLocalMediaItemDeletion.NeedsSystemApproval
+import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.model.InternalLocalMediaItemDeletion.RequiresPermissions
+import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.model.InternalLocalMediaItemDeletion.Success
 import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.model.LocalMediaDeletionRequest
 import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.model.LocalMediaItemDeletion
 import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.model.LocalPermissions
@@ -75,9 +83,9 @@ class LocalMediaDeletionUseCase @Inject constructor(
                     localMediaRepository.removeItemsFromDb(*(items.map { it.id }.toLongArray()))
                     deleteMediaItems(items)
                 }
-                when {
-                    requestResult.isSuccess -> LocalMediaItemDeletion.Success
-                    else -> LocalMediaItemDeletion.Error(requestResult.exceptionOrNull() ?: UnknownError())
+                when(requestResult) {
+                    is Ok -> LocalMediaItemDeletion.Success
+                    is Err -> LocalMediaItemDeletion.Error(requestResult.error)
                 }
             }
             Success -> LocalMediaItemDeletion.Success
@@ -148,12 +156,9 @@ class LocalMediaDeletionUseCase @Inject constructor(
         val (videos, photos) = request.partition { it.isVideo }
         val photosResult = localMediaRepository.deletePhotos(*(photos.map { it.id }.toLongArray()))
         val videosResult = localMediaRepository.deleteVideos(*(videos.map { it.id }.toLongArray()))
-        return when {
-            photosResult.isSuccess && videosResult.isSuccess -> Success
-            else -> Error(
-                photosResult.exceptionOrNull() ?:
-                (videosResult.exceptionOrNull() ?: UnknownError())
-            )
+        return when(val result = combine(photosResult, videosResult)) {
+            is Ok -> Success
+            is Err -> Error(result.error)
         }
     }
 }

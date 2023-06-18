@@ -118,6 +118,7 @@ pluto-debug-core = { module = "com.plutolib:pluto", version.ref = "pluto" }
 pluto-debug-plugins = { module = "com.plutolib.plugins:bundle-core", version.ref = "pluto" }
 pluto-release-core = { module = "com.plutolib:pluto-no-op", version.ref = "pluto" }
 pluto-release-plugins = { module = "com.plutolib.plugins:bundle-core-no-op", version.ref = "pluto" }
+result = "com.michael-bull.kotlin-result:kotlin-result:1.1.18"
 retrofit-core = { module = "com.squareup.retrofit2:retrofit", version.ref = "retrofit" }
 retrofit-moshi = { module = "com.squareup.retrofit2:converter-moshi", version.ref = "retrofit" }
 scrollbar = "com.github.nanihadesuka:LazyColumnScrollbar:1.6.3"

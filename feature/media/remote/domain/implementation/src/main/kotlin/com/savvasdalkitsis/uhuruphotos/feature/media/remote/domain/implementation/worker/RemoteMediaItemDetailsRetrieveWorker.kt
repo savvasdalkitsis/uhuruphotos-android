@@ -19,6 +19,8 @@ import android.content.Context
 import androidx.hilt.work.HiltWorker
 import androidx.work.CoroutineWorker
 import androidx.work.WorkerParameters
+import com.github.michaelbull.result.Err
+import com.github.michaelbull.result.Ok
 import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.implementation.repository.RemoteMediaRepository
 import com.savvasdalkitsis.uhuruphotos.foundation.notification.api.ForegroundInfoBuilder
 import com.savvasdalkitsis.uhuruphotos.foundation.notification.api.NotificationChannels.JOBS_CHANNEL_ID
@@ -37,11 +39,9 @@ class RemoteMediaItemDetailsRetrieveWorker @AssistedInject constructor(
 ) : CoroutineWorker(context, params) {
 
     override suspend fun doWork() = withContext(Dispatchers.IO) {
-        val result = remoteMediaRepository.refreshDetailsNow(params.inputData.getString(KEY_ID)!!)
-        if (result.isSuccess) {
-            Result.success()
-        } else {
-            if (params.runAttemptCount < 2) {
+        when (remoteMediaRepository.refreshDetailsNow(params.inputData.getString(KEY_ID)!!)) {
+            is Ok -> Result.success()
+            is Err -> if (params.runAttemptCount < 2) {
                 Result.retry()
             } else {
                 Result.failure()

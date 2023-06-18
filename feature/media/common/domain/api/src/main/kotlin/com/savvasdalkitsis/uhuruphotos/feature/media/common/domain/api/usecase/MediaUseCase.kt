@@ -16,6 +16,7 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.usecase
 
 import androidx.work.WorkInfo
+import com.github.michaelbull.result.Result
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.entities.media.DbRemoteMediaItemSummary
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaCollection
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaCollectionSource
@@ -25,6 +26,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.Med
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemDetails
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemsOnDevice
 import com.savvasdalkitsis.uhuruphotos.foundation.group.api.model.Group
+import com.savvasdalkitsis.uhuruphotos.foundation.result.api.SimpleResult
 import kotlinx.coroutines.flow.Flow
 
 interface MediaUseCase {
@@ -35,31 +37,29 @@ interface MediaUseCase {
 
     fun observeLocalAlbum(albumId: Int): Flow<MediaFolderOnDevice>
 
-    fun observeFavouriteMedia(): Flow<Result<List<MediaItem>>>
+    fun observeFavouriteMedia(): Flow<Result<List<MediaItem>, Throwable>>
 
-    fun observeHiddenMedia(): Flow<Result<List<MediaItem>>>
+    fun observeHiddenMedia(): Flow<Result<List<MediaItem>, Throwable>>
 
-    suspend fun List<DbRemoteMediaItemSummary>.mapToMediaItems(): Result<List<MediaItem>>
+    suspend fun List<DbRemoteMediaItemSummary>.mapToMediaItems(): Result<List<MediaItem>, Throwable>
 
     suspend fun observeMediaItemDetails(id: MediaId<*>): Flow<MediaItemDetails>
 
     suspend fun getMediaItemDetails(id: MediaId<*>): MediaItemDetails?
 
-    suspend fun getFavouriteMedia(): Result<List<MediaItem>>
+    suspend fun getFavouriteMediaCount(): Result<Long, Throwable>
 
-    suspend fun getFavouriteMediaCount(): Result<Long>
+    suspend fun getHiddenMedia(): Result<List<MediaItem>, Throwable>
 
-    suspend fun getHiddenMedia(): Result<List<MediaItem>>
+    suspend fun setMediaItemFavourite(id: MediaId<*>, favourite: Boolean): SimpleResult
 
-    suspend fun setMediaItemFavourite(id: MediaId<*>, favourite: Boolean): Result<Unit>
+    suspend fun refreshDetailsNowIfMissing(id: MediaId<*>): SimpleResult
 
-    suspend fun refreshDetailsNowIfMissing(id: MediaId<*>): Result<Unit>
+    suspend fun refreshDetailsNow(id: MediaId<*>): SimpleResult
 
-    suspend fun refreshDetailsNow(id: MediaId<*>): Result<Unit>
+    suspend fun refreshFavouriteMedia(): SimpleResult
 
-    suspend fun refreshFavouriteMedia(): Result<Unit>
-
-    suspend fun refreshHiddenMedia(): Result<Unit>
+    suspend fun refreshHiddenMedia(): SimpleResult
 
     fun trashMediaItem(id: MediaId<*>)
 

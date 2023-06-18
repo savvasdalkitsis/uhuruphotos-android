@@ -15,6 +15,8 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.user.domain.implementation.usecase
 
+import com.github.michaelbull.result.Ok
+import com.github.michaelbull.result.Result
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.user.User
 import com.savvasdalkitsis.uhuruphotos.feature.user.domain.api.usecase.UserUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.user.domain.implementation.repository.UserRepository
@@ -33,6 +35,6 @@ internal class UserUseCase @Inject constructor(
             userRepository.refreshUser()
         }
 
-    override suspend fun getUserOrRefresh(): Result<User> =
-        userRepository.getUser()?.let { Result.success(it) } ?: userRepository.refreshUser()
+    override suspend fun getUserOrRefresh(): Result<User, Throwable> =
+        userRepository.getUser()?.let { Ok(it) } ?: userRepository.refreshUser()
 }

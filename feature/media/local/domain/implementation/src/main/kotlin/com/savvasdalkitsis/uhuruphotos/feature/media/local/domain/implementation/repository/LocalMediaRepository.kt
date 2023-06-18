@@ -34,6 +34,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.implementation
 import com.savvasdalkitsis.uhuruphotos.foundation.exif.api.usecase.ExifUseCase
 import com.savvasdalkitsis.uhuruphotos.foundation.log.api.log
 import com.savvasdalkitsis.uhuruphotos.foundation.log.api.runCatchingWithLog
+import com.savvasdalkitsis.uhuruphotos.foundation.result.api.simple
 import com.squareup.sqldelight.runtime.coroutines.asFlow
 import com.squareup.sqldelight.runtime.coroutines.mapToList
 import com.squareup.sqldelight.runtime.coroutines.mapToOneNotNull
@@ -198,7 +199,7 @@ class LocalMediaRepository @Inject constructor(
             removeMissingItems = false,
             forceProcess = true,
         )
-    }
+    }.simple()
 
     fun observeItem(id: Long): Flow<LocalMediaItemDetails> =
         localMediaItemDetailsQueries.getItem(id).asFlow().mapToOneNotNull().distinctUntilChanged()
@@ -212,7 +213,7 @@ class LocalMediaRepository @Inject constructor(
         } else {
             throw LocalMediaDeletionException(*ids)
         }
-     }
+     }.simple()
 
     fun deleteVideos(vararg ids: Long) = runCatchingWithLog {
         if (localMediaService.deleteVideos(*ids) > 0) {
@@ -220,7 +221,7 @@ class LocalMediaRepository @Inject constructor(
         } else {
             throw LocalMediaDeletionException(*ids)
         }
-     }
+     }.simple()
 
     fun removeItemsFromDb(vararg ids: Long) =
         localMediaItemDetailsQueries.delete(ids.toList())

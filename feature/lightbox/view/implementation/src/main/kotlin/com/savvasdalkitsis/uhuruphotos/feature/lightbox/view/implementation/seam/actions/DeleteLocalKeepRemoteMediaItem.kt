@@ -16,9 +16,9 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.actions
 
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.LightboxActionsContext
-import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.effects.LightboxEffect
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.LightboxMutation
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.LightboxMutation.ReplaceMediaItemInSource
+import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.effects.LightboxEffect
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.ui.state.LightboxState
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemSyncState
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.EffectHandler
@@ -35,18 +35,16 @@ data object DeleteLocalKeepRemoteMediaItem : LightboxAction() {
             postProcessAction = {
                 val current = state.currentMediaItem
                 val remote = current.id.findRemote!!
-                with(mediaUseCase) {
-                    emit(
-                        ReplaceMediaItemInSource(
-                            current.id,
-                            current.copy(
-                                id = remote,
-                                localPath = null,
-                                mediaItemSyncState = MediaItemSyncState.REMOTE_ONLY,
-                            ),
-                        )
+                emit(
+                    ReplaceMediaItemInSource(
+                        current.id,
+                        current.copy(
+                            id = remote,
+                            localPath = null,
+                            mediaItemSyncState = MediaItemSyncState.REMOTE_ONLY,
+                        ),
                     )
-                }
+                )
             }
         )
     }

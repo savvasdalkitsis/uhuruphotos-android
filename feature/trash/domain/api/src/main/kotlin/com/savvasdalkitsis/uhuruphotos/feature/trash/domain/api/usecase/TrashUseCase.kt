@@ -17,11 +17,12 @@ package com.savvasdalkitsis.uhuruphotos.feature.trash.domain.api.usecase
 
 import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.PredefinedCollageDisplay
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaCollection
+import com.savvasdalkitsis.uhuruphotos.foundation.result.api.SimpleResult
 import kotlinx.coroutines.flow.Flow
 
 interface TrashUseCase {
 
-    suspend fun refreshTrash(): Result<Unit>
+    suspend fun refreshTrash(): SimpleResult
     fun getTrashGalleryDisplay() : PredefinedCollageDisplay
     fun setTrashGalleryDisplay(galleryDisplay: PredefinedCollageDisplay)
     suspend fun hasTrash(): Boolean

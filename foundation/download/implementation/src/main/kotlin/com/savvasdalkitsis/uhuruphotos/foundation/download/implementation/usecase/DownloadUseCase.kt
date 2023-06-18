@@ -25,15 +25,19 @@ import android.app.DownloadManager.STATUS_PENDING
 import android.app.DownloadManager.STATUS_RUNNING
 import android.net.Uri
 import android.os.Environment.DIRECTORY_DCIM
+import com.github.michaelbull.result.onFailure
 import com.savvasdalkitsis.uhuruphotos.feature.auth.domain.api.usecase.AuthenticationHeadersUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.extensions.asyncReturn
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaId.Remote
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.usecase.MediaUseCase
-import com.savvasdalkitsis.uhuruphotos.foundation.log.api.log
 import com.savvasdalkitsis.uhuruphotos.foundation.download.api.usecase.DownloadUseCase
 import com.savvasdalkitsis.uhuruphotos.foundation.download.implementation.repository.DownloadId
 import com.savvasdalkitsis.uhuruphotos.foundation.download.implementation.repository.DownloadingRepository
 import com.savvasdalkitsis.uhuruphotos.foundation.download.implementation.repository.MediaId
+import com.savvasdalkitsis.uhuruphotos.foundation.log.api.log
+import com.savvasdalkitsis.uhuruphotos.foundation.result.api.SimpleResult
+import com.savvasdalkitsis.uhuruphotos.foundation.result.api.mapCatching
+import com.savvasdalkitsis.uhuruphotos.foundation.result.api.simple
 import com.squareup.sqldelight.runtime.coroutines.asFlow
 import com.squareup.sqldelight.runtime.coroutines.mapToList
 import kotlinx.coroutines.flow.Flow
@@ -66,7 +70,7 @@ internal class DownloadUseCase @Inject constructor(
         }
     }
 
-    private suspend fun queueDownload(id: Remote): Result<Unit> =
+    private suspend fun queueDownload(id: Remote): SimpleResult =
         mediaUseCase.refreshDetailsNowIfMissing(id).mapCatching {
             val remotePath = mediaUseCase.getMediaItemDetails(id)?.remotePath
             val fullFileName = remotePath?.substringAfterLast("/")
@@ -92,7 +96,7 @@ internal class DownloadUseCase @Inject constructor(
                 }
             val downloadId = downloadManager.enqueue(authenticatedRequest)
             downloadingRepository.setDownloading(MediaId(id.value), DownloadId(downloadId))
-        }
+        }.simple()
 
     override suspend fun getDownloading(): Set<String> = asyncReturn {
         downloadingRepository.getAll().executeAsList().toSet()

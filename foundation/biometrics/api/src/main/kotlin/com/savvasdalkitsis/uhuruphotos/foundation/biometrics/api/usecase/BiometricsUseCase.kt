@@ -16,6 +16,7 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.foundation.biometrics.api.usecase
 
 import com.savvasdalkitsis.uhuruphotos.foundation.biometrics.api.model.Biometrics
+import com.savvasdalkitsis.uhuruphotos.foundation.result.api.SimpleResult
 
 interface BiometricsUseCase {
     fun getBiometrics(): Biometrics
@@ -24,5 +25,5 @@ interface BiometricsUseCase {
         subtitle: Int,
         description: Int,
         confirmRequired: Boolean,
-    ): Result<Unit>
+    ): SimpleResult
 }

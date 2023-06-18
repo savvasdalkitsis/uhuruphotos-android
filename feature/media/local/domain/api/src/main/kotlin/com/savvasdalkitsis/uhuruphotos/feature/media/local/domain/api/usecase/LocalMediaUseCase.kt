@@ -22,6 +22,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.model.Loca
 import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.model.LocalMediaItem
 import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.model.LocalMediaItems
 import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.model.LocalPermissions
+import com.savvasdalkitsis.uhuruphotos.foundation.result.api.SimpleResult
 import com.savvasdalkitsis.uhuruphotos.foundation.worker.api.model.RefreshJobState
 import kotlinx.coroutines.flow.Flow
 
@@ -39,9 +40,9 @@ interface LocalMediaUseCase {
 
     fun observeLocalMediaFolder(folderId: Int): Flow<LocalFolder>
 
-    suspend fun refreshLocalMediaItem(id: Long, isVideo: Boolean): Result<Unit>
+    suspend fun refreshLocalMediaItem(id: Long, isVideo: Boolean): SimpleResult
 
-    suspend fun refreshLocalMediaFolder(folderId: Int): Result<Unit>
+    suspend fun refreshLocalMediaFolder(folderId: Int): SimpleResult
 
     suspend fun refreshAll(
         onProgressChange: suspend (current: Int, total: Int) -> Unit = { _, _ -> },

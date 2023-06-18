@@ -15,12 +15,13 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.search.view.implementation.seam.actions
 
+import com.github.michaelbull.result.getOr
 import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.toCluster
 import com.savvasdalkitsis.uhuruphotos.feature.search.view.implementation.seam.SearchActionsContext
-import com.savvasdalkitsis.uhuruphotos.feature.search.view.implementation.seam.effects.SearchEffect
 import com.savvasdalkitsis.uhuruphotos.feature.search.view.implementation.seam.SearchMutation
 import com.savvasdalkitsis.uhuruphotos.feature.search.view.implementation.seam.effects.ErrorSearching
 import com.savvasdalkitsis.uhuruphotos.feature.search.view.implementation.seam.effects.HideKeyboard
+import com.savvasdalkitsis.uhuruphotos.feature.search.view.implementation.seam.effects.SearchEffect
 import com.savvasdalkitsis.uhuruphotos.feature.search.view.implementation.ui.state.SearchResults
 import com.savvasdalkitsis.uhuruphotos.feature.search.view.implementation.ui.state.SearchState
 import com.savvasdalkitsis.uhuruphotos.foundation.log.api.log
@@ -47,7 +48,7 @@ data class SearchFor(val query: String) : SearchAction() {
             searchUseCase.searchFor(query)
                 .debounce(200)
                 .mapNotNull { result ->
-                    val clusters = result.getOrNull()?.map { it.toCluster() }
+                    val clusters = result.getOr(null)?.map { it.toCluster() }
                     if (clusters != null)
                         when {
                             clusters.isEmpty() -> SearchMutation.SwitchStateToSearching

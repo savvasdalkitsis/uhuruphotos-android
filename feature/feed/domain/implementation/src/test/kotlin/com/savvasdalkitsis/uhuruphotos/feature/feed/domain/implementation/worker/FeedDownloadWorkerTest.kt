@@ -26,6 +26,8 @@ import androidx.work.impl.utils.SerialExecutorImpl
 import androidx.work.impl.utils.futures.SettableFuture
 import androidx.work.impl.utils.taskexecutor.TaskExecutor
 import androidx.work.workDataOf
+import com.github.michaelbull.result.Err
+import com.github.michaelbull.result.Ok
 import com.google.common.util.concurrent.Futures
 import com.savvasdalkitsis.uhuruphotos.feature.feed.domain.implementation.repository.FeedRepository
 import com.savvasdalkitsis.uhuruphotos.foundation.notification.api.ForegroundInfoBuilder
@@ -95,7 +97,7 @@ class FeedDownloadWorkerTest {
         )
         val progress = slot<suspend (Int, Int) -> Unit>()
         coEvery { feedRepository.refreshRemoteMediaCollections(any(), capture(progress)) } returns
-                Result.success(Unit)
+                Ok(Unit)
         every {
             progressUpdater.updateProgress(
                 any(),
@@ -128,7 +130,7 @@ class FeedDownloadWorkerTest {
     fun `returns retry result when refreshing errors`() = runBlocking {
         val underTest = feedDownloadWorker()
         coEvery { feedRepository.refreshRemoteMediaCollections(any(), any()) } returns
-                Result.failure(IllegalStateException())
+                Err(IllegalStateException())
 
         assert(underTest.doWork() == ListenableWorker.Result.retry())
     }

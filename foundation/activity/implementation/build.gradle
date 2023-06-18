@@ -3,7 +3,9 @@ android {
 }
 
 dependencies {
-    api project(":foundation:activity:api")
+    api(
+            project(":foundation:activity:api"),
+    )
     implementation(
             libs.autodagger.core,
             libs.hilt,

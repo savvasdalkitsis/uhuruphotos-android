@@ -15,6 +15,9 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.hidden.view.implementation.seam
 
+import com.github.michaelbull.result.Err
+import com.github.michaelbull.result.Ok
+import com.github.michaelbull.result.getOr
 import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.Cluster
 import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.GalleryActionsContext
 import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.effects.NavigateBack
@@ -57,15 +60,15 @@ internal class HiddenPhotosAlbumPageActionsContext @Inject constructor(
                         string.authenticate_for_access_to_hidden_description,
                         true,
                     )
-                    else -> Result.success(Unit)
+                    else -> Ok(Unit)
                 }
-                if (proceed.isFailure) {
+                if (proceed is Err) {
                     flow {
                         effect.handleEffect(NavigateBack)
                     }
                 } else {
                     mediaUseCase.observeHiddenMedia()
-                        .mapNotNull { it.getOrNull() }
+                        .mapNotNull { it.getOr(null) }
                         .map { photoEntries ->
                             GalleryDetails(
                                 title = Title.Resource(string.hidden_photos),

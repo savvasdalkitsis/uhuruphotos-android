@@ -15,6 +15,7 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam
 
+import com.github.michaelbull.result.Ok
 import com.savvasdalkitsis.uhuruphotos.feature.avatar.domain.api.usecase.AvatarUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.feed.domain.api.worker.FeedWorkScheduler
 import com.savvasdalkitsis.uhuruphotos.feature.jobs.domain.api.usecase.JobsUseCase
@@ -45,7 +46,7 @@ internal class SettingsActionsContext @Inject constructor(
         change: suspend (Boolean) -> Unit,
     ) = flow<SettingsMutation> {
         val proceed = when {
-            required -> Result.success(Unit)
+            required -> Ok(Unit)
             else -> biometricsUseCase.authenticate(
                 string.authenticate,
                 string.authenticate_to_change,
@@ -53,7 +54,7 @@ internal class SettingsActionsContext @Inject constructor(
                 true,
             )
         }
-        if (proceed.isSuccess) {
+        if (proceed is Ok) {
             change(required)
         }
     }

@@ -15,6 +15,9 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.foundation.log.api
 
+import com.github.michaelbull.result.Err
+import com.github.michaelbull.result.Ok
+import com.github.michaelbull.result.Result
 import com.michaelflisar.lumberjack.L
 
 fun log(tag: String = "", msg: () -> String) {
@@ -45,11 +48,12 @@ data object Log {
         }
 }
 
-inline fun <T, R : Any> T.runCatchingWithLog(block: T.() -> R): Result<R> = try {
-    Result.success(block())
+
+inline fun <T, R : Any> T.runCatchingWithLog(block: T.() -> R): Result<R, Throwable> = try {
+    Ok(block())
 } catch (e: Throwable) {
     log(e)
-    Result.failure(e)
+    Err(e)
 }
 
 private inline fun tempEnable(log: () -> Unit) {

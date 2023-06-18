@@ -22,6 +22,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.people.PeopleQuerie
 import com.savvasdalkitsis.uhuruphotos.feature.people.domain.api.service.model.toDbModel
 import com.savvasdalkitsis.uhuruphotos.feature.people.domain.implementation.service.PeopleService
 import com.savvasdalkitsis.uhuruphotos.foundation.log.api.runCatchingWithLog
+import com.savvasdalkitsis.uhuruphotos.foundation.result.api.simple
 import com.squareup.sqldelight.runtime.coroutines.asFlow
 import com.squareup.sqldelight.runtime.coroutines.mapToList
 import com.squareup.sqldelight.runtime.coroutines.mapToOne
@@ -51,7 +52,7 @@ class PeopleRepository @Inject constructor(
         async {
             peopleQueries.insertPerson(person.toDbModel())
         }
-    }
+    }.simple()
 
     suspend fun refreshPeople() = runCatchingWithLog {
         val people = peopleService.getPeople().results
@@ -63,5 +64,5 @@ class PeopleRepository @Inject constructor(
                 }
             }
         }
-    }
+    }.simple()
 }

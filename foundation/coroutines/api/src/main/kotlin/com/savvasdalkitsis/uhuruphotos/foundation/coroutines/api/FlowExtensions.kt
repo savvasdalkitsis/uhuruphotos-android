@@ -15,7 +15,13 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.foundation.coroutines.api
 
+import com.github.michaelbull.result.Err
+import com.github.michaelbull.result.Ok
+import com.github.michaelbull.result.Result
+import com.github.michaelbull.result.getOrElse
+import com.github.michaelbull.result.runCatching
 import com.savvasdalkitsis.uhuruphotos.foundation.log.api.log
+import com.savvasdalkitsis.uhuruphotos.foundation.result.api.SimpleResult
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.currentCoroutineContext
@@ -25,8 +31,6 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.mapNotNull
 import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.launch
-import java.io.IOException
-import kotlin.Result.Companion.success
 
 fun <T> Flow<T>.safelyOnStartIgnoring(
     block: suspend () -> Unit
@@ -42,37 +46,26 @@ fun <T> Flow<T>.safelyOnStartIgnoring(
 
 fun <T> Flow<T>.safelyOnStart(
     block: suspend () -> Unit
-): Flow<Result<T>> = channelFlow {
-    map(::success)
-        .onStart {
-            CoroutineScope(currentCoroutineContext() + Dispatchers.IO).launch {
-                try {
-                    block()
-                } catch (e: IOException) {
-                    log(e)
-                    emit(Result.failure(e))
-                }
-            }
-        }
-        .collect { send(it) }
+): Flow<Result<T, Throwable>> = onStartWithResult {
+    runCatching { block() }
 }
 
 fun <T> Flow<T>.onStartWithResult(
-    block: suspend () -> Result<*>
-): Flow<Result<T>> = channelFlow {
-    map(::success)
+    block: suspend () -> SimpleResult
+): Flow<Result<T, Throwable>> = channelFlow {
+    map { Ok(it) }
         .onStart {
             CoroutineScope(currentCoroutineContext() + Dispatchers.IO).launch {
                 val result = block()
-                if (result.isFailure) {
-                    send(Result.failure(result.exceptionOrNull()!!))
+                if (result is Err) {
+                    send(Err(result.error))
                 }
             }
         }
         .collect { send(it) }
 }
 
-fun <V> Flow<Result<V>>.onErrors(onError: suspend (Throwable) -> Unit) : Flow<V> =
+fun <V> Flow<Result<V, Throwable>>.onErrors(onError: suspend (Throwable) -> Unit) : Flow<V> =
     mapNotNull {
         it.getOrElse { e ->
             onError(e)
@@ -80,4 +73,4 @@ fun <V> Flow<Result<V>>.onErrors(onError: suspend (Throwable) -> Unit) : Flow<V>
         }
     }
 
-fun <V> Flow<Result<V>>.onErrorsIgnore() : Flow<V> = onErrors { }
+fun <V> Flow<Result<V, Throwable>>.onErrorsIgnore() : Flow<V> = onErrors { }

@@ -15,6 +15,7 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.implementation.repository
 
+import com.github.michaelbull.result.Ok
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.entities.media.DbRemoteMediaItemDetails
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.entities.media.DbRemoteMediaItemSummary
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.extensions.async
@@ -27,6 +28,8 @@ import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.media.remote.Remote
 import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.api.model.toDbModel
 import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.implementation.service.RemoteMediaService
 import com.savvasdalkitsis.uhuruphotos.foundation.log.api.runCatchingWithLog
+import com.savvasdalkitsis.uhuruphotos.foundation.result.api.SimpleResult
+import com.savvasdalkitsis.uhuruphotos.foundation.result.api.simple
 import com.squareup.sqldelight.runtime.coroutines.asFlow
 import com.squareup.sqldelight.runtime.coroutines.mapToList
 import com.squareup.sqldelight.runtime.coroutines.mapToOneNotNull
@@ -79,8 +82,8 @@ class RemoteMediaRepository @Inject constructor(
     suspend fun refreshDetailsNowIfMissing(id: String) =
         when (getMediaItemDetails(id)) {
             null -> refreshDetailsNow(id)
-            else -> Result.success(Unit)
-        }
+            else -> Ok(Unit)
+        }.simple()
 
     suspend fun refreshDetailsNow(id: String) = runCatchingWithLog {
         remoteMediaService.getMediaItem(id).toDbModel().let {
@@ -102,9 +105,9 @@ class RemoteMediaRepository @Inject constructor(
             val rating = remoteMediaService.getMediaItem(it).rating
             async { remoteMediaItemSummaryQueries.setRating(rating, it) }
         }
-    }
+    }.simple()
 
-    suspend fun refreshHidden(): Result<Unit> = runCatchingWithLog {
+    suspend fun refreshHidden(): SimpleResult = runCatchingWithLog {
         val hidden = remoteMediaService.getHiddenMedia().results.flatMap { it.items }
         async {
             hidden.forEach {
@@ -122,7 +125,7 @@ class RemoteMediaRepository @Inject constructor(
                 )
             }
         }
-    }
+    }.simple()
 
     suspend fun insertMediaItem(mediaItemDetails: DbRemoteMediaItemDetails) {
         async {

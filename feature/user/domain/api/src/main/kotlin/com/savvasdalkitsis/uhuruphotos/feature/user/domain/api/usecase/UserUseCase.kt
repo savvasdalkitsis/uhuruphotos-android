@@ -15,11 +15,12 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.user.domain.api.usecase
 
+import com.github.michaelbull.result.Result
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.user.User
 import kotlinx.coroutines.flow.Flow
 
 interface UserUseCase {
 
     fun observeUser(): Flow<User>
-    suspend fun getUserOrRefresh(): Result<User>
+    suspend fun getUserOrRefresh(): Result<User, Throwable>
 }

@@ -18,6 +18,7 @@ package com.savvasdalkitsis.uhuruphotos.feature.album.auto.domain.api.usecase
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.album.auto.GetAutoAlbum
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.album.auto.GetPeopleForAutoAlbum
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaCollection
+import com.savvasdalkitsis.uhuruphotos.foundation.result.api.SimpleResult
 import kotlinx.coroutines.flow.Flow
 
 interface AutoAlbumUseCase {
@@ -28,6 +29,6 @@ interface AutoAlbumUseCase {
 
     suspend fun getAutoAlbum(albumId: Int): List<MediaCollection>
 
-    suspend fun refreshAutoAlbum(albumId: Int): Result<Unit>
+    suspend fun refreshAutoAlbum(albumId: Int): SimpleResult
 
 }

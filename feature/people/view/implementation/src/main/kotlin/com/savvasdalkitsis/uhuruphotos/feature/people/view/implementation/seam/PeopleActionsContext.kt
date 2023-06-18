@@ -15,6 +15,7 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.people.view.implementation.seam
 
+import com.github.michaelbull.result.Err
 import com.savvasdalkitsis.uhuruphotos.feature.auth.domain.api.usecase.ServerUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.people.domain.api.usecase.PeopleUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.people.view.implementation.seam.effects.ErrorLoadingPeople
@@ -36,7 +37,7 @@ class PeopleActionsContext @Inject constructor(
     suspend fun refresh(effect: EffectHandler<PeopleEffect>) {
         loading.emit(true)
         val result = peopleUseCase.refreshPeople()
-        if (result.isFailure) {
+        if (result is Err) {
             effect.handleEffect(ErrorLoadingPeople)
         }
         loading.emit(false)

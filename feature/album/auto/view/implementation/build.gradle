@@ -24,6 +24,7 @@ dependencies {
     implementation project(":foundation:date:api")
     implementation project(":foundation:navigation:api")
     implementation project(":foundation:preferences:api")
+    implementation project(":foundation:result:api")
     implementation(
             libs.androidx.compose.hilt.navigation,
             libs.autodagger.core,

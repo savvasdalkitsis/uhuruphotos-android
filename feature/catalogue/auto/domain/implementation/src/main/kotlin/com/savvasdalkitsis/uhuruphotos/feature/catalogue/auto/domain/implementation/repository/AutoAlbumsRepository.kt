@@ -21,6 +21,8 @@ import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.album.auto.AutoAlbu
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.album.auto.AutoAlbumsQueries
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.extensions.awaitList
 import com.savvasdalkitsis.uhuruphotos.foundation.log.api.runCatchingWithLog
+import com.savvasdalkitsis.uhuruphotos.foundation.result.api.SimpleResult
+import com.savvasdalkitsis.uhuruphotos.foundation.result.api.simple
 import com.squareup.sqldelight.runtime.coroutines.asFlow
 import com.squareup.sqldelight.runtime.coroutines.mapToList
 import kotlinx.coroutines.flow.Flow
@@ -38,7 +40,7 @@ class AutoAlbumsRepository @Inject constructor(
     suspend fun getAutoAlbums(): List<AutoAlbums> =
         autoAlbumsQueries.getAutoAlbums().awaitList()
 
-    suspend fun refreshAutoAlbums(): Result<Unit> = runCatchingWithLog {
+    suspend fun refreshAutoAlbums(): SimpleResult = runCatchingWithLog {
         val albums = autoAlbumsService.getAutoAlbums()
         autoAlbumsQueries.transaction {
             autoAlbumsQueries.clearAll()
@@ -46,6 +48,6 @@ class AutoAlbumsRepository @Inject constructor(
                 autoAlbumsQueries.insert(album.toAutoAlbums())
             }
         }
-    }
+    }.simple()
 
 }

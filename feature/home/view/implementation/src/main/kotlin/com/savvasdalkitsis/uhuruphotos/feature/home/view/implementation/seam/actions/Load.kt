@@ -15,10 +15,12 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.home.view.implementation.seam.actions
 
+import com.github.michaelbull.result.Err
+import com.github.michaelbull.result.Ok
 import com.savvasdalkitsis.uhuruphotos.feature.auth.domain.api.model.AuthStatus
 import com.savvasdalkitsis.uhuruphotos.feature.home.view.implementation.seam.HomeActionsContext
-import com.savvasdalkitsis.uhuruphotos.feature.home.view.implementation.seam.effects.HomeEffect
 import com.savvasdalkitsis.uhuruphotos.feature.home.view.implementation.seam.HomeMutation
+import com.savvasdalkitsis.uhuruphotos.feature.home.view.implementation.seam.effects.HomeEffect
 import com.savvasdalkitsis.uhuruphotos.feature.home.view.implementation.seam.effects.LaunchAuthentication
 import com.savvasdalkitsis.uhuruphotos.feature.home.view.implementation.seam.effects.LoadFeed
 import com.savvasdalkitsis.uhuruphotos.feature.home.view.implementation.ui.state.HomeState
@@ -40,11 +42,11 @@ data object Load : HomeAction() {
                 R.string.authenticate_for_access_description,
                 true,
             )
-            else -> Result.success(Unit)
+            else -> Ok(Unit)
         }
-        when {
-            proceed.isFailure -> emit(HomeMutation.NeedsBiometricAuthentication)
-            else -> when (authenticationUseCase.authenticationStatus()) {
+        when(proceed) {
+            is Err -> emit(HomeMutation.NeedsBiometricAuthentication)
+            is Ok -> when (authenticationUseCase.authenticationStatus()) {
                 is AuthStatus.Unauthenticated -> effect.handleEffect(LaunchAuthentication)
                 else -> effect.handleEffect(LoadFeed)
             }

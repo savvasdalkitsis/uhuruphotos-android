@@ -15,6 +15,7 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.catalogue.auto.view.implementation.seam
 
+import com.github.michaelbull.result.Err
 import com.savvasdalkitsis.uhuruphotos.feature.catalogue.auto.domain.api.usecase.AutoAlbumsUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.catalogue.auto.view.implementation.seam.effects.AutoAlbumsEffect
 import com.savvasdalkitsis.uhuruphotos.feature.catalogue.auto.view.implementation.seam.effects.ErrorLoadingAlbums
@@ -32,7 +33,7 @@ internal class AutoAlbumsActionsContext @Inject constructor(
     suspend fun refreshAlbums(effect: EffectHandler<AutoAlbumsEffect>) {
         loading.emit(true)
         val result = autoAlbumsUseCase.refreshAutoAlbums()
-        if (result.isFailure) {
+        if (result is Err) {
             effect.handleEffect(ErrorLoadingAlbums)
         }
         // delaying to give ui time to receive the new albums before

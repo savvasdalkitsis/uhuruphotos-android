@@ -15,10 +15,12 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.library.view.implementation.seam.actions
 
+import com.github.michaelbull.result.getOr
+import com.github.michaelbull.result.map
 import com.savvasdalkitsis.uhuruphotos.feature.catalogue.user.view.api.state.toUserAlbumState
 import com.savvasdalkitsis.uhuruphotos.feature.library.view.implementation.seam.LibraryActionsContext
-import com.savvasdalkitsis.uhuruphotos.feature.library.view.implementation.seam.effects.LibraryEffect
 import com.savvasdalkitsis.uhuruphotos.feature.library.view.implementation.seam.LibraryMutation
+import com.savvasdalkitsis.uhuruphotos.feature.library.view.implementation.seam.effects.LibraryEffect
 import com.savvasdalkitsis.uhuruphotos.feature.library.view.implementation.ui.state.LibraryLocalMedia
 import com.savvasdalkitsis.uhuruphotos.feature.library.view.implementation.ui.state.LibraryState
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItem
@@ -87,10 +89,10 @@ data object Load : LibraryAction() {
         if (userAlbumsUseCase.getUserAlbums().isEmpty()) {
             refreshUserAlbums(effect)
         }
-        if (mediaUseCase.getFavouriteMediaCount().map { it }.getOrDefault(0) == 0L) {
+        if (mediaUseCase.getFavouriteMediaCount().getOr(0) == 0L) {
             refreshFavouriteMedia(effect)
         }
-        if (mediaUseCase.getHiddenMedia().getOrDefault(emptyList()).isEmpty()) {
+        if (mediaUseCase.getHiddenMedia().getOr(emptyList()).isEmpty()) {
             refreshHiddenMedia(effect)
         }
         val localItems = localMediaUseCase.getLocalMediaItems()
@@ -100,8 +102,8 @@ data object Load : LibraryAction() {
     }
 
     context(LibraryActionsContext)
-    private fun favouriteMedia() = mediaUseCase.observeFavouriteMedia()
-        .mapNotNull { it.getOrNull() }
+    private fun favouriteMedia(): Flow<List<MediaItem>> = mediaUseCase.observeFavouriteMedia()
+        .mapNotNull { it.getOr(null) }
 
     private fun <T> Flow<List<T>>.mapToCover(cover: (T) -> CelState?): Flow<VitrineState> =
         map { albums ->

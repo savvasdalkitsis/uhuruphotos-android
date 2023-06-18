@@ -15,6 +15,7 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.server.view.implementation.seam.actions
 
+import com.github.michaelbull.result.mapEither
 import com.savvasdalkitsis.uhuruphotos.feature.auth.domain.api.model.AuthStatus
 import com.savvasdalkitsis.uhuruphotos.feature.auth.domain.api.usecase.Credentials
 import com.savvasdalkitsis.uhuruphotos.feature.server.view.implementation.seam.ServerActionsContext
@@ -38,18 +39,20 @@ data object Login : ServerAction() {
         emit(PerformingBackgroundJob)
         val credentials = state as ServerState.UserCredentials
         authenticationLoginUseCase.login(Credentials(credentials.username, credentials.password))
-            .onSuccess { authStatus ->
-                if (authStatus == AuthStatus.Authenticated) {
-                    effect.handleEffect(Close)
-                } else {
-                    effect.handleEffect(ErrorLoggingIn())
+            .mapEither(
+                success = { authStatus ->
+                    if (authStatus == AuthStatus.Authenticated) {
+                        effect.handleEffect(Close)
+                    } else {
+                        effect.handleEffect(ErrorLoggingIn())
+                        emit(AskForUserCredentials(credentials.username, credentials.password))
+                    }
+                },
+                failure = {
+                    effect.handleEffect(ErrorLoggingIn(it))
                     emit(AskForUserCredentials(credentials.username, credentials.password))
                 }
-            }
-            .onFailure {
-                effect.handleEffect(ErrorLoggingIn(it))
-                emit(AskForUserCredentials(credentials.username, credentials.password))
-            }
+            )
     }
 
 }

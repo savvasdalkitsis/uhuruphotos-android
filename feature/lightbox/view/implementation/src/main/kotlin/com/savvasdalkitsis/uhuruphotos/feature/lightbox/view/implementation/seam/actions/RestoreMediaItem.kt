@@ -15,6 +15,7 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.actions
 
+import com.github.michaelbull.result.Ok
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.LightboxActionsContext
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.effects.LightboxEffect
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.ui.state.LightboxState
@@ -28,7 +29,7 @@ data object RestoreMediaItem : LightboxAction() {
     ) = processAndRemoveMediaItem(state, effect) {
         // this just schedules deletion so no need to check result
         mediaUseCase.restoreMediaItem(state.currentMediaItem.id.preferRemote)
-        Result.success(Unit)
+        Ok(Unit)
     }
 
 }

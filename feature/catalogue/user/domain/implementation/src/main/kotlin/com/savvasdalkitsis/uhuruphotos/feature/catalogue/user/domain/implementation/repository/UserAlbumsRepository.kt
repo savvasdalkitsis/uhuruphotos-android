@@ -21,6 +21,8 @@ import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.album.user.UserAlbu
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.album.user.UserAlbumsQueries
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.extensions.awaitList
 import com.savvasdalkitsis.uhuruphotos.foundation.log.api.runCatchingWithLog
+import com.savvasdalkitsis.uhuruphotos.foundation.result.api.SimpleResult
+import com.savvasdalkitsis.uhuruphotos.foundation.result.api.simple
 import com.squareup.sqldelight.runtime.coroutines.asFlow
 import com.squareup.sqldelight.runtime.coroutines.mapToList
 import kotlinx.coroutines.flow.Flow
@@ -39,7 +41,7 @@ class UserAlbumsRepository @Inject constructor(
     suspend fun getUserAlbums(): List<UserAlbums> =
         userAlbumsQueries.getUserAlbums().awaitList()
 
-    suspend fun refreshUserAlbums(): Result<Unit> = runCatchingWithLog {
+    suspend fun refreshUserAlbums(): SimpleResult = runCatchingWithLog {
         val albums = userAlbumsService.getUserAlbums()
         userAlbumsQueries.transaction {
             userAlbumsQueries.clearAll()
@@ -47,5 +49,5 @@ class UserAlbumsRepository @Inject constructor(
                 userAlbumsQueries.insert(album.toUserAlbums())
             }
         }
-    }
+    }.simple()
 }

@@ -15,6 +15,7 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam
 
+import com.github.michaelbull.result.Err
 import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.CollageDisplay
 import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.PredefinedCollageDisplay
 import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.GalleryMutation.Loading
@@ -26,13 +27,14 @@ import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.api.model.LightboxS
 import com.savvasdalkitsis.uhuruphotos.foundation.preferences.api.Preferences
 import com.savvasdalkitsis.uhuruphotos.foundation.preferences.api.observe
 import com.savvasdalkitsis.uhuruphotos.foundation.preferences.api.set
+import com.savvasdalkitsis.uhuruphotos.foundation.result.api.SimpleResult
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.EffectHandler
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlin.properties.Delegates
 
 open class GalleryActionsContext(
-    val galleryRefresher: suspend (Int) -> Result<Unit>,
+    val galleryRefresher: suspend (Int) -> SimpleResult,
     val galleryDetailsFlow: (galleryId: Int, effect: EffectHandler<GalleryEffect>) -> Flow<GalleryDetails>,
     val shouldRefreshOnLoad: suspend (galleryId: Int) -> Boolean,
     val lightboxSequenceDataSource: (galleryId: Int) -> LightboxSequenceDataSource,
@@ -55,7 +57,7 @@ open class GalleryActionsContext(
     suspend fun refreshGallery(effect: EffectHandler<GalleryEffect>) {
         loading.emit(Loading(true))
         val result = galleryRefresher(galleryId.id)
-        if (result.isFailure) {
+        if (result is Err) {
             effect.handleEffect(ErrorLoading)
         }
         loading.emit(Loading(false))

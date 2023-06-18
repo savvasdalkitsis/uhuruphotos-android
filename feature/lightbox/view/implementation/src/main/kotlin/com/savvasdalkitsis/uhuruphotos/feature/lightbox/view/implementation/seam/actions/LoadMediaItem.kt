@@ -15,6 +15,7 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.actions
 
+import com.github.michaelbull.result.getOr
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.api.model.LightboxSequenceDataSource
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.api.model.LightboxSequenceDataSource.AutoAlbum
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.api.model.LightboxSequenceDataSource.FavouriteMedia
@@ -97,15 +98,15 @@ data class LoadMediaItem(
             ?: emptyList()
         }
         is SearchResults -> searchUseCase.searchFor(sequenceDataSource.query)
-            .mapNotNull { it.getOrNull() }.toMediaItems
+            .mapNotNull { it.getOr(null) }.toMediaItems
         is PersonResults -> personUseCase.observePersonMedia(sequenceDataSource.personId).toMediaItems
         is AutoAlbum -> autoAlbumUseCase.observeAutoAlbum(sequenceDataSource.albumId).toMediaItems
         is UserAlbum -> userAlbumUseCase.observeUserAlbum(sequenceDataSource.albumId)
             .map { it.mediaCollections }.toMediaItems
         is LocalAlbum -> localAlbumUseCase.observeLocalAlbum(sequenceDataSource.albumId)
             .map { it.second }.toMediaItems
-        FavouriteMedia -> mediaUseCase.observeFavouriteMedia().map { it.getOrDefault(emptyList()) }
-        HiddenMedia -> mediaUseCase.observeHiddenMedia().map { it.getOrDefault(emptyList()) }
+        FavouriteMedia -> mediaUseCase.observeFavouriteMedia().map { it.getOr(emptyList()) }
+        HiddenMedia -> mediaUseCase.observeHiddenMedia().map { it.getOr(emptyList()) }
         Trash -> trashUseCase.observeTrashAlbums().toMediaItems
     }.map { mediaItems ->
         mediaItems.map { it.toSingleMediaItemState() }

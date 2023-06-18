@@ -3,7 +3,10 @@ android {
 }
 
 dependencies {
-    api project(":feature:db:domain:api")
-    api project(":feature:media:common:domain:api")
-    api project(":foundation:group:api")
+    api(
+            project(":feature:db:domain:api"),
+            project(":feature:media:common:domain:api"),
+            project(":foundation:group:api"),
+            project(":foundation:result:api"),
+    )
 }

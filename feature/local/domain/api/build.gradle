@@ -3,10 +3,11 @@ android {
 }
 
 dependencies {
-    api project(":feature:collage:view:api")
-    api project(":feature:media:common:domain:api")
-    api project(":feature:media:local:domain:api")
     api(
+            project(":feature:collage:view:api"),
+            project(":feature:media:common:domain:api"),
+            project(":feature:media:local:domain:api"),
+            project(":foundation:result:api"),
             libs.androidx.compose.navigation,
     )
 }

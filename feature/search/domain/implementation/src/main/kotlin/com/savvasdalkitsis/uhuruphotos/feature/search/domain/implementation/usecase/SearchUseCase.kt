@@ -15,6 +15,7 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.search.domain.implementation.usecase
 
+import com.github.michaelbull.result.Result
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.extensions.isVideo
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.search.GetSearchResults
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaCollection
@@ -51,7 +52,7 @@ class SearchUseCase @Inject constructor(
             .toMediaCollection()
     }
 
-    override fun searchFor(query: String): Flow<Result<List<MediaCollection>>> =
+    override fun searchFor(query: String): Flow<Result<List<MediaCollection>, Throwable>> =
         searchRepository.observeSearchResults(query)
             .distinctUntilChanged()
             .map { groups ->

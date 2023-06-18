@@ -15,6 +15,7 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.user.domain.implementation.repository
 
+import com.github.michaelbull.result.Result
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.extensions.async
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.extensions.awaitSingleOrNull
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.user.User
@@ -36,7 +37,7 @@ internal class UserRepository @Inject constructor(
 
     suspend fun getUser(): User? = userQueries.getUser().awaitSingleOrNull()
 
-    suspend fun refreshUser(): Result<User> = runCatchingWithLog {
+    suspend fun refreshUser(): Result<User, Throwable> = runCatchingWithLog{
         val userResults = userService.getUser()
         for (userResult in userResults.results) {
             async { userQueries.addUser(userResult.toUser()) }

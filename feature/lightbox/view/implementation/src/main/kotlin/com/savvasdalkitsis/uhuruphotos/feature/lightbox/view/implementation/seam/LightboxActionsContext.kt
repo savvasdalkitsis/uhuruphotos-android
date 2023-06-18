@@ -17,6 +17,10 @@ package com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.sea
 
 import android.content.Context
 import android.net.Uri
+import com.github.michaelbull.result.Err
+import com.github.michaelbull.result.Ok
+import com.github.michaelbull.result.onFailure
+import com.github.michaelbull.result.onSuccess
 import com.savvasdalkitsis.uhuruphotos.feature.album.auto.domain.api.usecase.AutoAlbumUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.album.user.domain.api.usecase.UserAlbumUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.feed.domain.api.usecase.FeedUseCase
@@ -54,10 +58,11 @@ import com.savvasdalkitsis.uhuruphotos.feature.person.domain.api.usecase.PersonU
 import com.savvasdalkitsis.uhuruphotos.feature.search.domain.api.usecase.SearchUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.trash.domain.api.usecase.TrashUseCase
 import com.savvasdalkitsis.uhuruphotos.foundation.date.api.module.DateModule
+import com.savvasdalkitsis.uhuruphotos.foundation.download.api.usecase.DownloadUseCase
 import com.savvasdalkitsis.uhuruphotos.foundation.log.api.log
+import com.savvasdalkitsis.uhuruphotos.foundation.result.api.SimpleResult
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.EffectHandler
 import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
-import com.savvasdalkitsis.uhuruphotos.foundation.download.api.usecase.DownloadUseCase
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.flow.FlowCollector
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -98,7 +103,7 @@ internal class LightboxActionsContext @Inject constructor(
 
     suspend fun FlowCollector<LightboxMutation>.deleteLocal(
         mediaItem: SingleMediaItemState
-    ): Result<Unit> {
+    ): SimpleResult {
         val id = mediaItem.id.findLocal!!
         val result = localMediaDeletionUseCase.deleteLocalMediaItems(
             listOf(
@@ -106,19 +111,19 @@ internal class LightboxActionsContext @Inject constructor(
             )
         )
         return when(result) {
-            is Error -> Result.failure(result.e)
+            is Error -> Err(result.e)
             is RequiresPermissions -> {
                 emit(LightboxMutation.AskForPermissions(result.deniedPermissions))
-                Result.failure(MissingPermissionsException(result.deniedPermissions))
+                Err(MissingPermissionsException(result.deniedPermissions))
             }
-            Success -> Result.success(Unit)
+            Success -> Ok(Unit)
         }
     }
 
     fun processAndRemoveMediaItem(
         state: LightboxState,
         effect: EffectHandler<LightboxEffect>,
-        process: suspend FlowCollector<LightboxMutation>.() -> Result<Unit>,
+        process: suspend FlowCollector<LightboxMutation>.() -> SimpleResult,
     ) = processMediaItem(state, effect, process) {
         emit(RemoveMediaItemFromSource(state.currentMediaItem.id))
     }
@@ -126,7 +131,7 @@ internal class LightboxActionsContext @Inject constructor(
     fun processMediaItem(
         state: LightboxState,
         effect: EffectHandler<LightboxEffect>,
-        process: suspend FlowCollector<LightboxMutation>.() -> Result<Unit>,
+        process: suspend FlowCollector<LightboxMutation>.() -> SimpleResult,
         postProcessAction: suspend FlowCollector<LightboxMutation>.() -> Unit,
     ) = flow {
         emit(Loading)

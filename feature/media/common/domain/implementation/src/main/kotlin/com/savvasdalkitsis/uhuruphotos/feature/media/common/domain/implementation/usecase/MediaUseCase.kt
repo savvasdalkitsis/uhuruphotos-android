@@ -16,6 +16,13 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.implementation.usecase
 
 import androidx.work.WorkInfo
+import com.github.michaelbull.result.Ok
+import com.github.michaelbull.result.Result
+import com.github.michaelbull.result.combine
+import com.github.michaelbull.result.getOr
+import com.github.michaelbull.result.getOrElse
+import com.github.michaelbull.result.getOrThrow
+import com.github.michaelbull.result.map
 import com.savvasdalkitsis.uhuruphotos.feature.auth.domain.api.usecase.ServerUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.entities.media.DbRemoteMediaItemDetails
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.entities.media.DbRemoteMediaItemSummary
@@ -54,6 +61,10 @@ import com.savvasdalkitsis.uhuruphotos.foundation.date.api.DateDisplayer
 import com.savvasdalkitsis.uhuruphotos.foundation.group.api.model.Group
 import com.savvasdalkitsis.uhuruphotos.foundation.map.api.model.LatLon
 import com.savvasdalkitsis.uhuruphotos.foundation.map.api.model.toLatLon
+import com.savvasdalkitsis.uhuruphotos.foundation.result.api.SimpleResult
+import com.savvasdalkitsis.uhuruphotos.foundation.result.api.mapCatching
+import com.savvasdalkitsis.uhuruphotos.foundation.result.api.simple
+import com.savvasdalkitsis.uhuruphotos.foundation.result.api.simpleOk
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.distinctUntilChanged
@@ -132,24 +143,24 @@ class MediaUseCase @Inject constructor(
             }
         }
 
-    override fun observeFavouriteMedia(): Flow<Result<List<MediaItem>>> =
+    override fun observeFavouriteMedia(): Flow<Result<List<MediaItem>, Throwable>> =
         remoteMediaUseCase.observeFavouriteRemoteMedia()
             .distinctUntilChanged()
             .map { media ->
                 media.mapCatching {
-                    it.mapToMediaItems().getOrThrow()
+                    mapToMediaItems().getOrThrow()
                 }
             }
 
-    override fun observeHiddenMedia(): Flow<Result<List<MediaItem>>> =
+    override fun observeHiddenMedia(): Flow<Result<List<MediaItem>, Throwable>> =
             remoteMediaUseCase.observeHiddenRemoteMedia()
                 .distinctUntilChanged()
                 .mapToPhotos()
 
-    private fun Flow<List<DbRemoteMediaItemSummary>>.mapToPhotos(): Flow<Result<List<MediaItem>>> =
+    private fun Flow<List<DbRemoteMediaItemSummary>>.mapToPhotos(): Flow<Result<List<MediaItem>, Throwable>> =
         map { it.mapToMediaItems() }
 
-    override suspend fun List<DbRemoteMediaItemSummary>.mapToMediaItems(): Result<List<MediaItem>> =
+    override suspend fun List<DbRemoteMediaItemSummary>.mapToMediaItems(): Result<List<MediaItem>, Throwable> =
         withFavouriteThreshold { threshold ->
             val serverUrl = serverUseCase.getServerUrl()!!
             map {
@@ -247,7 +258,7 @@ class MediaUseCase @Inject constructor(
         )
 
     private suspend fun DbRemoteMediaItemDetails.toMediaItemDetails(): MediaItemDetails {
-        val favouriteThreshold = userUseCase.getUserOrRefresh().getOrNull()?.favoriteMinRating
+        val favouriteThreshold = userUseCase.getUserOrRefresh().getOr(null)?.favoriteMinRating
         val people = peopleUseCase.getPeopleByName().ifEmpty {
             peopleUseCase.refreshPeople()
             peopleUseCase.getPeopleByName()
@@ -272,59 +283,46 @@ class MediaUseCase @Inject constructor(
         )
     }
 
-    override suspend fun getFavouriteMedia(): Result<List<MediaItem>> =
-        remoteMediaUseCase.getFavouriteMediaSummaries()
-            .mapCatching {
-                it.mapToMediaItems().getOrThrow()
-            }
-
-    override suspend fun getFavouriteMediaCount(): Result<Long> =
+    override suspend fun getFavouriteMediaCount(): Result<Long, Throwable> =
         remoteMediaUseCase.getFavouriteMediaSummariesCount()
 
-    override suspend fun getHiddenMedia(): Result<List<MediaItem>> =
+    override suspend fun getHiddenMedia(): Result<List<MediaItem>, Throwable> =
         remoteMediaUseCase.getHiddenMediaSummaries().mapToMediaItems()
 
-    override suspend fun setMediaItemFavourite(id: MediaId<*>, favourite: Boolean): Result<Unit> =
+    override suspend fun setMediaItemFavourite(id: MediaId<*>, favourite: Boolean): SimpleResult =
         when (id) {
             is Remote -> setRemoteMediaFavourite(id, favourite)
             is MediaId.Group -> {
                 when (val preferred = id.preferRemote) {
                     is Remote -> setRemoteMediaFavourite(preferred, favourite)
-                    else -> Result.success(Unit)
+                    else -> Ok(Unit)
                 }
             }
-            else -> Result.success(Unit)
+            else -> simpleOk
         }
 
     private suspend fun setRemoteMediaFavourite(
         id: Remote,
         favourite: Boolean
-    ) = userUseCase.getUserOrRefresh().mapCatching { user ->
-        remoteMediaRepository.setMediaItemRating(
-            id.value,
-            user.favoriteMinRating?.takeIf { favourite } ?: 0)
-        remoteMediaItemWorkScheduler.scheduleMediaItemFavourite(id.value, favourite)
-    }
+    ) = remoteMediaUseCase.setMediaItemFavourite(id.value, favourite)
 
-    override suspend fun refreshDetailsNowIfMissing(id: MediaId<*>) : Result<Unit> =
+    override suspend fun refreshDetailsNowIfMissing(id: MediaId<*>) : SimpleResult =
         when (id) {
             is Remote -> refreshRemoteDetailsNowIfMissing(id)
-            is Downloading -> {
-                refreshRemoteDetailsNowIfMissing(id.remote)
-            }
+            is Downloading -> refreshRemoteDetailsNowIfMissing(id.remote)
             is Local -> refreshLocalDetailsNowIfMissing(id)
             is MediaId.Group -> {
                 val remote = id.findRemote?.let {
                     refreshRemoteDetailsNowIfMissing(it)
-                } ?: Result.success(Unit)
+                } ?: simpleOk
                 val local = id.findLocal?.let {
                     refreshLocalDetailsNowIfMissing(it)
-                } ?: Result.success(Unit)
-                remote + local
+                } ?: simpleOk
+                combine(remote, local).simple()
             }
         }
 
-    override suspend fun refreshDetailsNow(id: MediaId<*>) : Result<Unit> =
+    override suspend fun refreshDetailsNow(id: MediaId<*>) : SimpleResult =
         when (id) {
             is Remote -> refreshRemoteDetailsNow(id)
             is Downloading -> refreshRemoteDetailsNow(id.remote)
@@ -332,15 +330,13 @@ class MediaUseCase @Inject constructor(
             is MediaId.Group -> {
                 val remote = id.findRemote?.let {
                     refreshRemoteDetailsNow(it)
-                } ?: Result.success(Unit)
+                } ?: simpleOk
                 val local = id.findLocal?.let {
                     refreshLocalDetailsNow(it)
-                } ?: Result.success(Unit)
-                remote + local
+                } ?: simpleOk
+                combine(remote, local).simple()
             }
         }
-
-    private operator fun <T> Result<T>.plus(other: Result<T>) = if (isFailure) this else other
 
     private suspend fun refreshLocalDetailsNow(id: Local) =
         localMediaUseCase.refreshLocalMediaItem(id.value, id.isVideo)
@@ -351,11 +347,11 @@ class MediaUseCase @Inject constructor(
     private suspend fun refreshRemoteDetailsNowIfMissing(id: Remote) =
         remoteMediaUseCase.refreshDetailsNowIfMissing(id.value)
 
-    private suspend fun refreshLocalDetailsNowIfMissing(id: Local) =
+    private suspend fun refreshLocalDetailsNowIfMissing(id: Local): SimpleResult =
         if (localMediaUseCase.getLocalMediaItem(id.value) == null) {
             refreshLocalDetailsNow(id)
         } else {
-            Result.success(Unit)
+            simpleOk
         }
 
     override suspend fun refreshFavouriteMedia() =
@@ -366,7 +362,7 @@ class MediaUseCase @Inject constructor(
 
     override suspend fun Group<String, MediaCollectionSource>.toMediaCollection(): List<MediaCollection> {
         val favouriteThreshold = userUseCase.getUserOrRefresh()
-            .mapCatching { it.favoriteMinRating!! }
+            .mapCatching { favoriteMinRating!! }
         return items
             .map { (id, source) ->
                 mediaCollection(id, source, favouriteThreshold)
@@ -376,7 +372,7 @@ class MediaUseCase @Inject constructor(
 
     override suspend fun List<MediaCollectionSource>.toMediaCollections(): List<MediaCollection> {
         val favouriteThreshold = userUseCase.getUserOrRefresh()
-            .mapCatching { it.favoriteMinRating!! }
+            .mapCatching { favoriteMinRating!! }
         return groupBy { dateDisplayer.dateString(it.date) }
             .map { (date, items) ->
                 mediaCollection(date, items, favouriteThreshold)
@@ -386,7 +382,7 @@ class MediaUseCase @Inject constructor(
     private fun mediaCollection(
         id: String,
         source: List<MediaCollectionSource>,
-        favouriteThreshold: Result<Int>
+        favouriteThreshold: Result<Int, Throwable>
     ): MediaCollection {
         val albumDate = source.firstOrNull()?.date
         val albumLocation = source.firstOrNull()?.location
@@ -437,8 +433,8 @@ class MediaUseCase @Inject constructor(
         }
     }
 
-    private suspend fun <T> withFavouriteThreshold(action: suspend (Int) -> T): Result<T> =
+    private suspend fun <T> withFavouriteThreshold(action: suspend (Int) -> T): Result<T, Throwable> =
         userUseCase.getUserOrRefresh().mapCatching {
-            action(it.favoriteMinRating!!)
+            action(favoriteMinRating!!)
         }
 }

@@ -20,6 +20,8 @@ import androidx.credentials.CredentialManager
 import androidx.credentials.GetCredentialRequest
 import androidx.credentials.GetPasswordOption
 import androidx.credentials.PasswordCredential
+import com.github.michaelbull.result.Ok
+import com.github.michaelbull.result.Result
 import com.savvasdalkitsis.uhuruphotos.feature.auth.domain.api.model.AuthStatus
 import com.savvasdalkitsis.uhuruphotos.feature.auth.domain.api.usecase.AuthenticationLoginUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.auth.domain.api.usecase.Credentials
@@ -48,7 +50,7 @@ class AuthenticationLoginUseCase @Inject constructor(
 
     private val activity get() = currentActivityHolder.currentActivity
 
-    override suspend fun login(credentials: Credentials): Result<AuthStatus> =
+    override suspend fun login(credentials: Credentials): Result<AuthStatus, Throwable> =
         runCatchingWithLog {
             val response = authenticationService.login(AuthenticationCredentials(
                 credentials.username,
@@ -66,7 +68,7 @@ class AuthenticationLoginUseCase @Inject constructor(
             if (authStatus is AuthStatus.Authenticated) {
                 saveCredentials(credentials)
             }
-            return Result.success(authStatus)
+            return Ok(authStatus)
         }
 
     override suspend fun loadSavedCredentials(): Credentials? = activity?.let { activity ->

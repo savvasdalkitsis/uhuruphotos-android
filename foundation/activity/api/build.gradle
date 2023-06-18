@@ -4,6 +4,7 @@ android {
 
 dependencies {
     api(
+            project(":foundation:result:api"),
             libs.androidx.activity,
     )
     implementation(

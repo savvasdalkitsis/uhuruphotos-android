@@ -9,10 +9,11 @@ android {
 }
 
 dependencies {
-    api project(":feature:db:domain:api")
-    api project(":feature:media:common:domain:api")
-    api project(":foundation:map:api")
     api(
+            project(":feature:db:domain:api"),
+            project(":feature:media:common:domain:api"),
+            project(":foundation:map:api"),
+            project(":foundation:result:api"),
             libs.androidx.compose.navigation,
             libs.androidx.work,
             libs.kotlinx.coroutines,
