@@ -269,4 +269,9 @@
     <string name="start">Empezar</string>
     <string name="close">Cerrar</string>
     <string name="about">Acerca de</string>
+    <string name="edit">Editar</string>
+    <string name="crop">Recorte (Crop)</string>
+    <string name="crop_options">Opciones del recorte (Crop)</string>
+    <string name="error_editing_photo">Se ha producido un error al editar la foto</string>
+    <string name="dismiss">Descartar</string>
 </resources>
