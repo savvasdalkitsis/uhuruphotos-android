@@ -35,8 +35,12 @@ dependencies {
             libs.androidx.compose.foundation.layout,
             libs.androidx.compose.material,
             libs.androidx.compose.material.windowsize,
+            libs.androidx.compose.ui.tooling.preview,
             libs.androidx.work,
             libs.autodagger.core,
+    )
+    debugImplementation(
+            libs.androidx.compose.ui.tooling,
     )
     kapt libs.autodagger.kapt
 }

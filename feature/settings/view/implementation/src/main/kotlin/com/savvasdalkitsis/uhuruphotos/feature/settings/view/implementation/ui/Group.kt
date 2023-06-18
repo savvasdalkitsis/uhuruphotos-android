@@ -17,6 +17,7 @@ package com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.ui
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.Animatable
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -25,6 +26,7 @@ import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material.Card
 import androidx.compose.material.Icon
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
@@ -46,11 +48,12 @@ internal fun Group(
     groupState: SettingsGroupState,
     content: @Composable ColumnScope.() -> Unit,
 ) {
-    Surface(
+    Card(
         modifier = Modifier.padding(4.dp),
-        elevation = 4.dp,
+        shape = MaterialTheme.shapes.medium,
+        elevation = 0.dp,
     ) {
-        Column {
+        Column(modifier = Modifier.background(MaterialTheme.colors.secondaryVariant)) {
             val arrowAngle = remember { Animatable(180f) }
             Box(modifier = Modifier
                 .fillMaxWidth()

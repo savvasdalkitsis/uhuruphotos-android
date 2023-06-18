@@ -21,17 +21,20 @@ import androidx.compose.foundation.gestures.ScrollableDefaults
 import androidx.compose.foundation.gestures.rememberScrollableState
 import androidx.compose.foundation.gestures.scrollBy
 import androidx.compose.foundation.gestures.scrollable
+import androidx.compose.foundation.layout.Arrangement.Absolute.spacedBy
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.Dp
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
@@ -41,6 +44,7 @@ fun StaggeredGrid(
     contentPadding: PaddingValues,
     columnCount: Int,
     syncScrolling: Boolean = true,
+    itemSpacing: Dp,
     content: @Composable StaggeredGridScope.() -> Unit,
 ) {
     val states: Array<ScrollState> = (0 until columnCount)
@@ -69,12 +73,15 @@ fun StaggeredGrid(
                 flingBehavior = ScrollableDefaults.flingBehavior()
             )
     ) {
-        Row {
+        Row(
+            horizontalArrangement = spacedBy(itemSpacing),
+        ) {
             for (index in 0 until columnCount) {
                 Column(
                     modifier = Modifier
                         .weight(1f)
-                        .verticalScroll(states[index])
+                        .verticalScroll(states[index]),
+                    verticalArrangement = spacedBy(itemSpacing),
                 ) {
                     Spacer(modifier = Modifier.height(contentPadding.calculateTopPadding()))
                     gridScope.items[index].forEach { it() }

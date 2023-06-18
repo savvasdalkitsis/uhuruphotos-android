@@ -21,6 +21,7 @@ import androidx.compose.foundation.layout.Arrangement.spacedBy
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Checkbox
 import androidx.compose.material.Icon
 import androidx.compose.material.Text
@@ -28,7 +29,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.theme.PreviewAppTheme
+import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.R.drawable
 
 @Composable
 internal fun SettingsCheckBox(
@@ -41,6 +45,7 @@ internal fun SettingsCheckBox(
         modifier = Modifier
             .height(64.dp)
             .fillMaxWidth()
+            .padding(8.dp)
             .clickable { onCheckedChange(!isChecked) },
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = spacedBy(8.dp)
@@ -51,5 +56,13 @@ internal fun SettingsCheckBox(
             text = text,
         )
         Checkbox(checked = isChecked, onCheckedChange = onCheckedChange)
+    }
+}
+
+@Preview
+@Composable
+internal fun SettingsCheckBoxPreview() {
+    PreviewAppTheme {
+        SettingsCheckBox(text = "Setting", icon = drawable.ic_info, isChecked = true) {}
     }
 }
