@@ -34,6 +34,13 @@ fun log(t: Throwable) {
     }
 }
 
+
+fun log(t: Throwable, msg: () -> String) {
+    tempEnable {
+        L.w(t, msg)
+    }
+}
+
 fun logError(t: Throwable) {
     tempEnable {
         L.e(t)

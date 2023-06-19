@@ -20,6 +20,7 @@ import android.content.Context
 import android.net.Uri
 import coil.ImageLoader
 import coil.request.CachePolicy
+import coil.request.ErrorResult
 import coil.request.ImageRequest
 import coil.request.SuccessResult
 import com.google.android.exoplayer2.upstream.DataSpec
@@ -66,7 +67,7 @@ class RemoteMediaPrecacher @Inject constructor(
                 }.cache()
                 true
             } catch (e: Exception) {
-                log(e)
+                log(e) { "Error precaching video: $url"}
                 false
             }
         }
@@ -80,6 +81,9 @@ class RemoteMediaPrecacher @Inject constructor(
                 .target()
                 .build()
         )
+        if (result is ErrorResult) {
+            log(result.throwable) { "Error precaching photo: $url"}
+        }
 
         return result is SuccessResult
     }
