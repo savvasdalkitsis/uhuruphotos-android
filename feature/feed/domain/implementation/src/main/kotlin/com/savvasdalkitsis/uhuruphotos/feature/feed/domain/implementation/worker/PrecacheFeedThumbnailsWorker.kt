@@ -63,7 +63,7 @@ internal class PrecacheFeedThumbnailsWorker @AssistedInject constructor(
         for ((index, id) in mediaItemIds.withIndex()) {
             if (isStopped)
                 break
-            remoteMediaPrecacher.precacheMedia(id.value, id.isVideo)
+            remoteMediaPrecacher.precacheMedia(id.thumbnailUri, id.isVideo)
             updateProgress(index, mediaItemIds.size)
         }
         Result.success()
