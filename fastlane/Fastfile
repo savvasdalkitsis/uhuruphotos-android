@@ -32,7 +32,7 @@ platform :android do
         api_bearer: ENV["GITHUB_TOKEN"],
         name: "Release " + last_git_tag,
         tag_name: last_git_tag,
-        description: (File.read("fastlane/metadata/android/en-GB/changelogs/" + android_get_version_code + ".txt") rescue "No changelog provided"),
+        description: (File.read("./fastlane/metadata/android/en-GB/changelogs/" + android_get_version_code + ".txt") rescue "No changelog provided"),
         commitish: "main",
         upload_assets: [
             "app/build/outputs/bundle/release/app-release.aab",

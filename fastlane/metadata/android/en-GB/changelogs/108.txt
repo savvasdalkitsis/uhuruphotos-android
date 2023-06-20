@@ -1,0 +1,2 @@
+* Allowing drag-drop reordering of items in the Library tab
+* Extracting fallback color from local videos
