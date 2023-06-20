@@ -33,10 +33,10 @@ getBuckets:
 SELECT bucketId, bucketName FROM localMediaItemDetails;
 
 getExistingIds:
-SELECT id FROM localMediaItemDetails WHERE width > 0 AND height > 0;
+SELECT id FROM localMediaItemDetails WHERE width > 0 AND height > 0 AND fallbackColor NOT NULL ;
 
 getExistingBucketIds:
-SELECT id FROM localMediaItemDetails WHERE bucketId = :id;
+SELECT id FROM localMediaItemDetails WHERE bucketId = :id AND fallbackColor NOT NULL;
 
 delete:
 DELETE FROM localMediaItemDetails WHERE id IN :ids;

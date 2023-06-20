@@ -16,8 +16,13 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.implementation.repository
 
 import android.content.ContentResolver
+import android.content.Context
+import android.graphics.Bitmap
 import android.graphics.BitmapFactory.Options
 import android.graphics.BitmapFactory.decodeStream
+import android.graphics.Color
+import android.media.MediaMetadataRetriever
+import android.net.Uri
 import androidx.palette.graphics.Palette
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.Database
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.extensions.async
@@ -31,6 +36,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.implementation
 import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.implementation.service.LocalMediaService
 import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.implementation.service.model.LocalMediaStoreServiceItem
 import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.implementation.service.model.LocalMediaStoreServiceItem.Photo
+import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.implementation.service.model.LocalMediaStoreServiceItem.Video
 import com.savvasdalkitsis.uhuruphotos.foundation.exif.api.usecase.ExifUseCase
 import com.savvasdalkitsis.uhuruphotos.foundation.log.api.log
 import com.savvasdalkitsis.uhuruphotos.foundation.log.api.runCatchingWithLog
@@ -38,6 +44,7 @@ import com.savvasdalkitsis.uhuruphotos.foundation.result.api.simple
 import com.squareup.sqldelight.runtime.coroutines.asFlow
 import com.squareup.sqldelight.runtime.coroutines.mapToList
 import com.squareup.sqldelight.runtime.coroutines.mapToOneNotNull
+import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.distinctUntilChanged
 import org.joda.time.format.DateTimeFormatter
@@ -51,6 +58,7 @@ class LocalMediaRepository @Inject constructor(
     private val downloadingMediaItemsQueries: DownloadingMediaItemsQueries,
     private val localMediaService: LocalMediaService,
     private val contentResolver: ContentResolver,
+    @ApplicationContext private val context: Context,
     private val exifUseCase: ExifUseCase,
     @LocalMediaModule.LocalMediaDateTimeFormat
     private val dateTimeFormat: DateTimeFormatter,
@@ -95,7 +103,7 @@ class LocalMediaRepository @Inject constructor(
         }
     }
 
-    private suspend fun <T : LocalMediaStoreServiceItem> List<T>.process(
+    private suspend fun List<LocalMediaStoreServiceItem>.process(
         bucketId: Int? = null,
         onProgressChange: suspend (current: Int, total: Int) -> Unit = { _, _ -> },
         removeMissingItems: Boolean = true,
@@ -128,8 +136,8 @@ class LocalMediaRepository @Inject constructor(
         }
     }
 
-    private fun <T : LocalMediaStoreServiceItem> processNewItem(
-        item: T,
+    private fun processNewItem(
+        item: LocalMediaStoreServiceItem,
         onNewItem: (LocalMediaItemDetails) -> Unit
     ) {
         val exif = contentResolver.openInputStream(item.contentUri)!!.use { stream ->
@@ -148,18 +156,10 @@ class LocalMediaRepository @Inject constructor(
             } while (read > 0)
             totalRead to BigInteger(1, digest.digest()).toString(16).padStart(32, '0')
         }
-        val fallbackColor = if (item is Photo) {
-            try {
-                contentResolver.openInputStream(item.contentUri)!!.use { stream ->
-                    decodeStream(stream, null, Options().apply {
-                        outWidth = 100
-                    })
-                }?.let { Palette.from(it).generate().lightMutedSwatch?.rgb }
-            } catch (e: Exception) {
-                log(e)
-                null
-            }
-        } else null
+        val fallbackColor = when (item) {
+            is Photo -> item.palette
+            is Video -> item.palette
+        }
         onNewItem(
             LocalMediaItemDetails(
                 id = item.id,
@@ -172,12 +172,10 @@ class LocalMediaRepository @Inject constructor(
                 size = item.size ?: size,
                 contentUri = item.contentUri.toString(),
                 md5 = md5,
-                video = item is LocalMediaStoreServiceItem.Video,
-                duration = (item as? LocalMediaStoreServiceItem.Video)?.duration,
+                video = item is Video,
+                duration = (item as? Video)?.duration,
                 latLon = exif.latLon?.let { (lat, lon) -> "$lat,$lon" },
-                fallbackColor = fallbackColor?.let {
-                    "#${it.toUInt().toString(16).padStart(6, '0')}"
-                },
+                fallbackColor = "#${fallbackColor.toUInt().toString(16).padStart(6, '0')}",
                 path = item.path,
                 orientation = item.orientation,
             )
@@ -225,4 +223,27 @@ class LocalMediaRepository @Inject constructor(
 
     fun removeItemsFromDb(vararg ids: Long) =
         localMediaItemDetailsQueries.delete(ids.toList())
+
+    private val Video.palette get() = tryPalette {
+        MediaMetadataRetriever().apply {
+            setDataSource(context, contentUri)
+        }.getFrameAtTime(0)
+    }
+
+    private val Photo.palette get() = tryPalette {
+        contentResolver.openInputStream(contentUri)!!.use { stream ->
+            decodeStream(stream, null, Options().apply {
+                outWidth = 100
+            })
+        }
+    }
+
+    private val Bitmap.palette get() = Palette.from(this).generate().lightMutedSwatch?.rgb
+
+    private fun LocalMediaStoreServiceItem.tryPalette(bitmap: (Uri) -> Bitmap?): Int = try {
+        bitmap(contentUri)
+    } catch (e: Exception) {
+        log(e) { "Could not extract frame from item at $contentUri"}
+        null
+    }?.palette ?: Color.rgb(231, 231, 231)
 }
