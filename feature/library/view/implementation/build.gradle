@@ -9,43 +9,44 @@ android {
 }
 
 dependencies {
-    implementation project(":feature:account:view:api")
-    implementation project(":feature:album:auto:view:api")
-    implementation project(":feature:album:user:view:api")
-    implementation project(":feature:avatar:view:api")
-    implementation project(":feature:auth:domain:api")
-    implementation project(":feature:catalogue:auto:domain:api")
-    implementation project(":feature:catalogue:user:domain:api")
-    implementation project(":feature:catalogue:user:view:api")
-    implementation project(":feature:collage:view:api")
-    implementation project(":feature:db:domain:api")
-    implementation project(":feature:favourites:view:api")
-    implementation project(":feature:hidden:view:api")
-    implementation project(":feature:home:view:api")
-    implementation project(":feature:library:view:api")
-    implementation project(":feature:local:domain:api")
-    implementation project(":feature:local:view:api")
-    implementation project(":feature:local:view:implementation")
-    implementation project(":feature:media:common:domain:api")
-    implementation project(":feature:media:common:view:api")
-    implementation project(":feature:media:local:domain:api")
-    implementation project(":feature:media:remote:domain:api")
-    implementation project(":feature:settings:domain:api")
-    implementation project(":feature:trash:view:api")
-    implementation project(":foundation:compose:api")
-    implementation project(":foundation:coroutines:api")
-    implementation project(":foundation:icons:api")
-    implementation project(":foundation:log:api")
-    implementation project(":foundation:navigation:api")
-    implementation project(":foundation:preferences:api")
-    implementation project(":foundation:strings:api")
-    implementation project(":foundation:toaster:api")
-    implementation project(":foundation:ui:api")
     implementation(
+            project(":feature:account:view:api"),
+            project(":feature:album:auto:view:api"),
+            project(":feature:album:user:view:api"),
+            project(":feature:avatar:view:api"),
+            project(":feature:auth:domain:api"),
+            project(":feature:catalogue:auto:domain:api"),
+            project(":feature:catalogue:user:domain:api"),
+            project(":feature:catalogue:user:view:api"),
+            project(":feature:collage:view:api"),
+            project(":feature:db:domain:api"),
+            project(":feature:favourites:view:api"),
+            project(":feature:hidden:view:api"),
+            project(":feature:home:view:api"),
+            project(":feature:library:view:api"),
+            project(":feature:local:domain:api"),
+            project(":feature:local:view:api"),
+            project(":feature:local:view:implementation"),
+            project(":feature:media:common:domain:api"),
+            project(":feature:media:common:view:api"),
+            project(":feature:media:local:domain:api"),
+            project(":feature:media:remote:domain:api"),
+            project(":feature:settings:domain:api"),
+            project(":feature:trash:view:api"),
+            project(":foundation:compose:api"),
+            project(":foundation:coroutines:api"),
+            project(":foundation:icons:api"),
+            project(":foundation:log:api"),
+            project(":foundation:navigation:api"),
+            project(":foundation:preferences:api"),
+            project(":foundation:strings:api"),
+            project(":foundation:toaster:api"),
+            project(":foundation:ui:api"),
             libs.bundles.permissions,
             libs.androidx.compose.foundation,
             libs.androidx.compose.material,
             libs.autodagger.core,
+            libs.reorder,
             libs.retrofit.core,
     )
     kapt libs.autodagger.kapt

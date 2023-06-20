@@ -16,10 +16,10 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.feature.library.view.implementation.seam.actions
 
 import com.github.michaelbull.result.getOr
-import com.github.michaelbull.result.map
 import com.savvasdalkitsis.uhuruphotos.feature.catalogue.user.view.api.state.toUserAlbumState
 import com.savvasdalkitsis.uhuruphotos.feature.library.view.implementation.seam.LibraryActionsContext
 import com.savvasdalkitsis.uhuruphotos.feature.library.view.implementation.seam.LibraryMutation
+import com.savvasdalkitsis.uhuruphotos.feature.library.view.implementation.seam.LibraryMutation.SetItemOrder
 import com.savvasdalkitsis.uhuruphotos.feature.library.view.implementation.seam.effects.LibraryEffect
 import com.savvasdalkitsis.uhuruphotos.feature.library.view.implementation.ui.state.LibraryLocalMedia
 import com.savvasdalkitsis.uhuruphotos.feature.library.view.implementation.ui.state.LibraryState
@@ -45,6 +45,8 @@ data object Load : LibraryAction() {
         state: LibraryState,
         effect: EffectHandler<LibraryEffect>
     ) = merge(
+        libraryUseCase.getLibraryItems()
+            .map(::SetItemOrder),
         autoAlbumsUseCase.observeAutoAlbums()
             .mapToCover { it.cover.toCel() }
             .map(LibraryMutation::DisplayAutoAlbums),

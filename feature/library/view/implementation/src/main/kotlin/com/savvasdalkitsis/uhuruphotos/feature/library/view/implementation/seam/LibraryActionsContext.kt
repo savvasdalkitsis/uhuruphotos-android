@@ -21,6 +21,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.catalogue.auto.domain.api.usecase
 import com.savvasdalkitsis.uhuruphotos.feature.catalogue.user.domain.api.usecase.UserAlbumsUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.library.view.implementation.seam.effects.ErrorLoadingAlbums
 import com.savvasdalkitsis.uhuruphotos.feature.library.view.implementation.seam.effects.LibraryEffect
+import com.savvasdalkitsis.uhuruphotos.feature.library.view.implementation.usecase.LibraryUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.usecase.MediaUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.usecase.LocalMediaUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.worker.LocalMediaWorkScheduler
@@ -36,6 +37,7 @@ internal class LibraryActionsContext @Inject constructor(
     val mediaUseCase: MediaUseCase,
     val serverUseCase: ServerUseCase,
     val localMediaUseCase: LocalMediaUseCase,
+    val libraryUseCase: LibraryUseCase,
     private val localMediaWorkScheduler: LocalMediaWorkScheduler,
 ) {
 

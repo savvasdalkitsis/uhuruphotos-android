@@ -39,6 +39,8 @@ import androidx.compose.material.Icon
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Modifier
@@ -51,10 +53,17 @@ import androidx.compose.ui.unit.dp
 import com.savvasdalkitsis.uhuruphotos.feature.library.view.implementation.seam.actions.AutoAlbumsSelected
 import com.savvasdalkitsis.uhuruphotos.feature.library.view.implementation.seam.actions.FavouritePhotosSelected
 import com.savvasdalkitsis.uhuruphotos.feature.library.view.implementation.seam.actions.HiddenPhotosSelected
+import com.savvasdalkitsis.uhuruphotos.feature.library.view.implementation.seam.actions.ItemOrderChanged
 import com.savvasdalkitsis.uhuruphotos.feature.library.view.implementation.seam.actions.LibraryAction
 import com.savvasdalkitsis.uhuruphotos.feature.library.view.implementation.seam.actions.LocalBucketSelected
 import com.savvasdalkitsis.uhuruphotos.feature.library.view.implementation.seam.actions.TrashSelected
 import com.savvasdalkitsis.uhuruphotos.feature.library.view.implementation.seam.actions.UserAlbumsSelected
+import com.savvasdalkitsis.uhuruphotos.feature.library.view.implementation.ui.state.LibraryItem.AUTO
+import com.savvasdalkitsis.uhuruphotos.feature.library.view.implementation.ui.state.LibraryItem.FAVOURITE
+import com.savvasdalkitsis.uhuruphotos.feature.library.view.implementation.ui.state.LibraryItem.HIDDEN
+import com.savvasdalkitsis.uhuruphotos.feature.library.view.implementation.ui.state.LibraryItem.LOCAL
+import com.savvasdalkitsis.uhuruphotos.feature.library.view.implementation.ui.state.LibraryItem.TRASH
+import com.savvasdalkitsis.uhuruphotos.feature.library.view.implementation.ui.state.LibraryItem.USER
 import com.savvasdalkitsis.uhuruphotos.feature.library.view.implementation.ui.state.LibraryLocalMedia.Found
 import com.savvasdalkitsis.uhuruphotos.feature.library.view.implementation.ui.state.LibraryLocalMedia.RequiresPermissions
 import com.savvasdalkitsis.uhuruphotos.feature.library.view.implementation.ui.state.LibraryState
@@ -65,6 +74,12 @@ import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.theme.CustomColors
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.SectionHeader
 import dev.shreyaspatil.permissionflow.compose.rememberPermissionFlowRequestLauncher
+import org.burnoutcrew.reorderable.NoDragCancelledAnimation
+import org.burnoutcrew.reorderable.ReorderableItem
+import org.burnoutcrew.reorderable.ReorderableLazyGridState
+import org.burnoutcrew.reorderable.detectReorderAfterLongPress
+import org.burnoutcrew.reorderable.rememberReorderableLazyGridState
+import org.burnoutcrew.reorderable.reorderable
 
 @Composable
 internal fun LibraryGrid(
@@ -80,36 +95,56 @@ internal fun LibraryGrid(
     val local = stringResource(string.local_albums)
 
     val permissionLauncher = rememberPermissionFlowRequestLauncher()
+    if (state.items.isEmpty())
+        return
+    val data = remember { mutableStateOf(state.items) }
+    val reordering = rememberReorderableLazyGridState(dragCancelledAnimation = NoDragCancelledAnimation(),
+        onMove = { from, to ->
+            data.value = data.value.toMutableList().apply {
+                add(to.index, removeAt(from.index))
+            }
+            action(ItemOrderChanged(data.value))
+        }
+    )
 
     LazyVerticalGrid(
-        modifier = Modifier.fillMaxSize(),
+        modifier = Modifier
+            .fillMaxSize()
+            .reorderable(reordering)
+            .detectReorderAfterLongPress(reordering),
         contentPadding = contentPadding,
         columns = GridCells.Adaptive(160.dp),
+        state = reordering.gridState,
     ) {
-        pillItem(trash, drawable.ic_delete, { GridItemSpan(maxCurrentLineSpan / 2) }) {
-            action(TrashSelected)
-        }
-        pillItem(hidden, drawable.ic_invisible, { GridItemSpan(maxCurrentLineSpan) }) {
-            action(HiddenPhotosSelected)
-        }
-        item(local, { GridItemSpan(maxLineSpan) }) {
-            when (val media = state.localMedia) {
-                is Found -> LocalFolders(local, media, action)
-                is RequiresPermissions -> PillItem(local, drawable.ic_folder) {
-                    permissionLauncher.launch(media.deniedPermissions.toTypedArray())
+        for (item in data.value) {
+            when (item) {
+                TRASH -> pillItem(reordering, trash, drawable.ic_delete, { GridItemSpan(maxCurrentLineSpan / 2) }) {
+                    action(TrashSelected)
                 }
-                null -> {}
+                HIDDEN -> pillItem(reordering, hidden, drawable.ic_invisible, { GridItemSpan(maxCurrentLineSpan) }) {
+                    action(HiddenPhotosSelected)
+                }
+                LOCAL -> item(local, { GridItemSpan(maxLineSpan) }) {
+                    ReorderableItem(reordering, local) {
+                        when (val media = state.localMedia) {
+                            is Found -> LocalFolders(local, media, action)
+                            is RequiresPermissions -> PillItem(local, drawable.ic_folder) {
+                                permissionLauncher.launch(media.deniedPermissions.toTypedArray())
+                            }
+                            null -> {}
+                        }
+                    }
+                }
+                AUTO -> libraryItem(reordering, state.autoAlbums, auto) {
+                    action(AutoAlbumsSelected)
+                }
+                USER -> libraryItem(reordering, state.userAlbums, user) {
+                    action(UserAlbumsSelected)
+                }
+                FAVOURITE -> libraryItem(reordering, state.favouritePhotos, favourites) {
+                    action(FavouritePhotosSelected)
+                }
             }
-        }
-
-        libraryItem(state.autoAlbums, auto) {
-            action(AutoAlbumsSelected)
-        }
-        libraryItem(state.userAlbums, user) {
-            action(UserAlbumsSelected)
-        }
-        libraryItem(state.favouritePhotos, favourites) {
-            action(FavouritePhotosSelected)
         }
     }
 }
@@ -148,13 +183,16 @@ private fun LocalFolders(
 }
 
 internal fun LazyGridScope.pillItem(
+    reorderable: ReorderableLazyGridState,
     title: String,
     @DrawableRes icon: Int,
     span: (LazyGridItemSpanScope.() -> GridItemSpan)? = null,
     onSelected: () -> Unit,
 ) {
     item(title, span) {
-        PillItem(title, icon, onSelected)
+        ReorderableItem(reorderable, title) {
+            PillItem(title, icon, onSelected)
+        }
     }
 }
 
@@ -185,6 +223,7 @@ private fun PillItem(title: String, icon: Int, onSelected: () -> Unit) {
 }
 
 internal fun LazyGridScope.libraryItem(
+    reordering: ReorderableLazyGridState,
     vitrineState: VitrineState?,
     title: String,
     @DrawableRes overlayIcon: Int? = null,
@@ -192,13 +231,15 @@ internal fun LazyGridScope.libraryItem(
 ) {
     vitrineState?.let {
         item(title) {
-            LibraryEntry(
-                state = vitrineState,
-                photoGridModifier = Modifier.fillMaxWidth(),
-                title = title,
-                overlayIcon = overlayIcon,
-                onSelected = onSelected
-            )
+            ReorderableItem(reordering, title) {
+                LibraryEntry(
+                    state = vitrineState,
+                    photoGridModifier = Modifier.fillMaxWidth(),
+                    title = title,
+                    overlayIcon = overlayIcon,
+                    onSelected = onSelected
+                )
+            }
         }
     }
 }
