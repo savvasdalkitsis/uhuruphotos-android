@@ -25,6 +25,7 @@ import coil.disk.DiskCache
 import coil.memory.MemoryCache
 import com.savvasdalkitsis.uhuruphotos.feature.auth.domain.api.AuthenticatedOkHttpClient
 import com.savvasdalkitsis.uhuruphotos.feature.auth.domain.api.TokenRefreshInterceptor
+import com.savvasdalkitsis.uhuruphotos.feature.settings.domain.api.usecase.SettingsUseCase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -41,7 +42,7 @@ class ImageModule {
     @Provides
     @Singleton
     fun memoryCache(
-        settingsUseCase: com.savvasdalkitsis.uhuruphotos.feature.settings.domain.api.usecase.SettingsUseCase,
+        settingsUseCase: SettingsUseCase,
         @ApplicationContext context: Context,
     ): MemoryCache = MemoryCache.Builder(context)
         .maxSizeBytes((settingsUseCase.getImageMemCacheMaxLimit() * 1024 * 1024).coerceAtLeast(0))
@@ -51,7 +52,7 @@ class ImageModule {
     @Singleton
     fun diskCache(
         @ApplicationContext context: Context,
-        settingsUseCase: com.savvasdalkitsis.uhuruphotos.feature.settings.domain.api.usecase.SettingsUseCase,
+        settingsUseCase: SettingsUseCase,
     ): DiskCache = DiskCache.Builder()
         .directory(context.cacheDir.resolve("image_cache"))
         .maxSizeBytes(settingsUseCase.getImageDiskCacheMaxLimit().coerceAtLeast(0) * 1024L * 1024L)
