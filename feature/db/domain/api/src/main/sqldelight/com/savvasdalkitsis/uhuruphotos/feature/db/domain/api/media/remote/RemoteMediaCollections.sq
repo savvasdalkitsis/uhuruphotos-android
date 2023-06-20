@@ -7,6 +7,9 @@ CREATE TABLE remoteMediaCollections (
     numberOfItems INTEGER AS Int NOT NULL
 );
 
+get:
+SELECT * FROM remoteMediaCollections WHERE id = :id;
+
 getRemoteMediaCollections:
 SELECT
  remoteMediaCollections.id,

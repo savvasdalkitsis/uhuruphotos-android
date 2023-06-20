@@ -15,6 +15,7 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.feed.domain.implementation.repository
 
+import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.Database
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.extensions.awaitList
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.extensions.awaitSingle
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.media.remote.GetRemoteMediaCollections
@@ -37,6 +38,7 @@ import kotlinx.coroutines.flow.onStart
 import javax.inject.Inject
 
 class FeedRepository @Inject constructor(
+    private val database: Database,
     private val remoteMediaCollectionsQueries: RemoteMediaCollectionsQueries,
     private val remoteMediaItemSummaryQueries: RemoteMediaItemSummaryQueries,
     private val remoteMediaUseCase: RemoteMediaUseCase,
@@ -81,7 +83,7 @@ class FeedRepository @Inject constructor(
             shallow = shallow,
             onProgressChange = onProgressChange,
             incompleteAlbumsProcessor = { albums ->
-                remoteMediaCollectionsQueries.transaction {
+                database.transaction {
                     remoteMediaCollectionsQueries.clearAll()
                     for (album in albums.map { it.toDbModel() }) {
                         remoteMediaCollectionsQueries.insert(album)
@@ -92,17 +94,18 @@ class FeedRepository @Inject constructor(
 
     suspend fun refreshRemoteMediaCollection(collectionId: String) {
         remoteMediaUseCase.processRemoteMediaCollections(
-            albumsFetcher = { RemoteMediaCollectionsByDate(
-                results = listOf(RemoteMediaCollection.Incomplete(collectionId, null, "", true, 1))
-            ) },
+            albumsFetcher = {
+                with(remoteMediaCollectionsQueries.get(collectionId).awaitSingle()) {
+                    RemoteMediaCollectionsByDate(
+                        results = listOf(RemoteMediaCollection.Incomplete(collectionId, date, location.orEmpty(), true, numberOfItems))
+                    )
+                }},
             remoteMediaCollectionFetcher = getCollectionAllPages(),
             shallow = false,
+            clearSummariesBeforeInserting = true,
             incompleteAlbumsProcessor = { albums ->
-                remoteMediaCollectionsQueries.transaction {
-                    remoteMediaItemSummaryQueries.deletePhotoSummariesforAlbum(collectionId)
-                    for (album in albums.map { it.toDbModel() }) {
-                        remoteMediaCollectionsQueries.insert(album)
-                    }
+                for (album in albums.map { it.toDbModel() }) {
+                    remoteMediaCollectionsQueries.insert(album)
                 }
             }
         )
