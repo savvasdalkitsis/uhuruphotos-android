@@ -1,0 +1,1 @@
+* Fixing refreshing day on feed removing photos from that day
