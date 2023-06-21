@@ -17,4 +17,4 @@ package com.savvasdalkitsis.uhuruphotos.feature.{{cookiecutter.project_slug}}.vi
 
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.NavigationRoute
 
-object {{cookiecutter.project_slug.capitalize()}}NavigationRoute : NavigationRoute
+data object {{cookiecutter.project_slug.capitalize()}}NavigationRoute : NavigationRoute

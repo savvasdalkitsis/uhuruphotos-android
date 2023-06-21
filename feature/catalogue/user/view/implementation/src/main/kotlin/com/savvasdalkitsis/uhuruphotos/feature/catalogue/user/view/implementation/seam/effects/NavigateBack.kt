@@ -17,7 +17,7 @@ package com.savvasdalkitsis.uhuruphotos.feature.catalogue.user.view.implementati
 
 import com.savvasdalkitsis.uhuruphotos.feature.catalogue.user.view.implementation.seam.UserAlbumsEffectsContext
 
-object NavigateBack : UserAlbumsEffect() {
+data object NavigateBack : UserAlbumsEffect() {
     context(UserAlbumsEffectsContext) override suspend fun handle() {
         navigator.navigateBack()
     }

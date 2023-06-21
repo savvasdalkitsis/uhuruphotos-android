@@ -17,7 +17,7 @@ package com.savvasdalkitsis.uhuruphotos.feature.search.view.implementation.seam.
 
 import com.savvasdalkitsis.uhuruphotos.feature.search.view.implementation.seam.SearchEffectsContext
 
-object HideKeyboard : SearchEffect() {
+data object HideKeyboard : SearchEffect() {
     context(SearchEffectsContext) override suspend fun handle() {
         uiUseCase.hideKeyboard()
     }

@@ -18,7 +18,7 @@ package com.savvasdalkitsis.uhuruphotos.feature.library.view.implementation.seam
 import com.savvasdalkitsis.uhuruphotos.feature.hidden.view.api.HiddenPhotosNavigationRoute
 import com.savvasdalkitsis.uhuruphotos.feature.library.view.implementation.seam.LibraryEffectsContext
 
-object NavigateToHidden : LibraryEffect() {
+data object NavigateToHidden : LibraryEffect() {
     context(LibraryEffectsContext) override suspend fun handle() {
         navigator.navigateTo(HiddenPhotosNavigationRoute)
     }

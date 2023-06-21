@@ -19,7 +19,7 @@ import android.content.Intent
 import android.provider.Settings
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.SettingsEffectsContext
 
-object EnrollToBiometrics : SettingsEffect() {
+data object EnrollToBiometrics : SettingsEffect() {
     context(SettingsEffectsContext) override suspend fun handle() {
         navigator.navigateTo(Intent(Settings.ACTION_SECURITY_SETTINGS))
     }

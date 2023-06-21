@@ -17,7 +17,7 @@ package com.savvasdalkitsis.uhuruphotos.feature.heatmap.view.implementation.seam
 
 import com.savvasdalkitsis.uhuruphotos.feature.heatmap.view.implementation.seam.HeatMapEffectsContext
 
-object NavigateBack : HeatMapEffect() {
+data object NavigateBack : HeatMapEffect() {
     context(HeatMapEffectsContext) override suspend fun handle() {
         navigator.navigateBack()
     }

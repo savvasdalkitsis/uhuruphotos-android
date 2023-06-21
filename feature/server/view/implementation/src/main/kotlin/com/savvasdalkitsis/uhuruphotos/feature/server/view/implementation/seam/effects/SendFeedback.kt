@@ -17,7 +17,7 @@ package com.savvasdalkitsis.uhuruphotos.feature.server.view.implementation.seam.
 
 import com.savvasdalkitsis.uhuruphotos.feature.server.view.implementation.seam.ServerEffectsContext
 
-object SendFeedback : ServerEffect() {
+data object SendFeedback : ServerEffect() {
     context(ServerEffectsContext) override suspend fun handle() {
         feedbackUseCase.sendFeedback()
     }

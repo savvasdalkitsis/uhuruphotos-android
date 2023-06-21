@@ -17,7 +17,7 @@ package com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.ef
 
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.FeedEffectsContext
 
-object Vibrate : FeedEffect() {
+data object Vibrate : FeedEffect() {
     context(FeedEffectsContext) override suspend fun handle() {
         uiUseCase.performLongPressHaptic()
     }

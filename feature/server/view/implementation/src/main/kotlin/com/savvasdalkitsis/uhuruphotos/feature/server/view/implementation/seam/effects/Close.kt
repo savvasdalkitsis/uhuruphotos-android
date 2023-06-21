@@ -17,7 +17,7 @@ package com.savvasdalkitsis.uhuruphotos.feature.server.view.implementation.seam.
 
 import com.savvasdalkitsis.uhuruphotos.feature.server.view.implementation.seam.ServerEffectsContext
 
-object Close : ServerEffect() {
+data object Close : ServerEffect() {
     context(ServerEffectsContext) override suspend fun handle() {
         navigator.navigateBack()
     }

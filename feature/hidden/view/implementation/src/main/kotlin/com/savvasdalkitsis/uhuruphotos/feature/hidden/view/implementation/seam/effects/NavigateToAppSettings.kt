@@ -18,7 +18,7 @@ package com.savvasdalkitsis.uhuruphotos.feature.hidden.view.implementation.seam.
 import com.savvasdalkitsis.uhuruphotos.feature.hidden.view.implementation.seam.HiddenPhotosEffectsContext
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.api.navigation.SettingsNavigationRoute
 
-object NavigateToAppSettings : HiddenPhotosEffect() {
+data object NavigateToAppSettings : HiddenPhotosEffect() {
     context(HiddenPhotosEffectsContext) override suspend fun handle() {
         navigator.navigateTo(SettingsNavigationRoute)
     }

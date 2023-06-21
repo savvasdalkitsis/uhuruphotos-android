@@ -18,7 +18,7 @@ package com.savvasdalkitsis.uhuruphotos.feature.account.view.api.seam.effects
 import com.savvasdalkitsis.uhuruphotos.feature.account.view.api.seam.AccountOverviewEffectsContext
 import com.savvasdalkitsis.uhuruphotos.feature.home.view.api.navigation.HomeNavigationRoute
 
-object ReloadApp : AccountOverviewEffect() {
+data object ReloadApp : AccountOverviewEffect() {
     context(AccountOverviewEffectsContext) override suspend fun handle() {
         with(navigator) {
             clearBackStack()

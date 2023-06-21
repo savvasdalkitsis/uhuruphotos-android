@@ -18,7 +18,7 @@ package com.savvasdalkitsis.uhuruphotos.feature.catalogue.auto.view.implementati
 import com.savvasdalkitsis.uhuruphotos.feature.catalogue.auto.view.implementation.seam.AutoAlbumsEffectsContext
 import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R
 
-object ErrorLoadingAlbums : AutoAlbumsEffect() {
+data object ErrorLoadingAlbums : AutoAlbumsEffect() {
     context(AutoAlbumsEffectsContext) override suspend fun handle() {
         toasterUseCase.show(R.string.error_loading_auto_albums)
     }

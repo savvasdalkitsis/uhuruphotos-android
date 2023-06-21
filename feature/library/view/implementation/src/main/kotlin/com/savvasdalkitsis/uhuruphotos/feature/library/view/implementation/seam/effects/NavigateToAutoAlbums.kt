@@ -18,7 +18,7 @@ package com.savvasdalkitsis.uhuruphotos.feature.library.view.implementation.seam
 import com.savvasdalkitsis.uhuruphotos.feature.catalogue.auto.view.api.navigation.AutoAlbumsNavigationRoute
 import com.savvasdalkitsis.uhuruphotos.feature.library.view.implementation.seam.LibraryEffectsContext
 
-object NavigateToAutoAlbums : LibraryEffect() {
+data object NavigateToAutoAlbums : LibraryEffect() {
     context(LibraryEffectsContext) override suspend fun handle() {
         navigator.navigateTo(AutoAlbumsNavigationRoute)
     }

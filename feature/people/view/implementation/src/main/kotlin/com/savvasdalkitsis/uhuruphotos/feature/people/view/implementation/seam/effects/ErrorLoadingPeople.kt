@@ -18,7 +18,7 @@ package com.savvasdalkitsis.uhuruphotos.feature.people.view.implementation.seam.
 import com.savvasdalkitsis.uhuruphotos.feature.people.view.implementation.seam.PeopleEffectsContext
 import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R
 
-object ErrorLoadingPeople : PeopleEffect() {
+data object ErrorLoadingPeople : PeopleEffect() {
     context(PeopleEffectsContext) override suspend fun handle() {
         toasterUseCase.show(R.string.error_refreshing_people)
     }

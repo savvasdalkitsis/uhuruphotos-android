@@ -18,7 +18,7 @@ package com.savvasdalkitsis.uhuruphotos.feature.home.view.implementation.seam.ef
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.api.navigation.FeedNavigationRoute
 import com.savvasdalkitsis.uhuruphotos.feature.home.view.implementation.seam.HomeEffectsContext
 
-object LoadFeed : HomeEffect() {
+data object LoadFeed : HomeEffect() {
     context(HomeEffectsContext) override suspend fun handle() {
         navigator.navigateBack()
         navigator.navigateTo(FeedNavigationRoute)

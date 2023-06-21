@@ -18,7 +18,7 @@ package com.savvasdalkitsis.uhuruphotos.feature.library.view.implementation.seam
 import com.savvasdalkitsis.uhuruphotos.feature.library.view.implementation.seam.LibraryEffectsContext
 import com.savvasdalkitsis.uhuruphotos.feature.trash.view.api.navigation.TrashNavigationRoute
 
-object NavigateToTrash : LibraryEffect() {
+data object NavigateToTrash : LibraryEffect() {
     context(LibraryEffectsContext) override suspend fun handle() {
         navigator.navigateTo(TrashNavigationRoute)
     }

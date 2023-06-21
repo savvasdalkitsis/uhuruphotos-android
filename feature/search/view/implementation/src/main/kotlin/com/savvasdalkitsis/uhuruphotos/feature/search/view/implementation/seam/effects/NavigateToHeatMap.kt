@@ -18,7 +18,7 @@ package com.savvasdalkitsis.uhuruphotos.feature.search.view.implementation.seam.
 import com.savvasdalkitsis.uhuruphotos.api.heatmap.navigation.HeatMapNavigationRoute
 import com.savvasdalkitsis.uhuruphotos.feature.search.view.implementation.seam.SearchEffectsContext
 
-object NavigateToHeatMap : SearchEffect() {
+data object NavigateToHeatMap : SearchEffect() {
     context(SearchEffectsContext) override suspend fun handle() {
         navigator.navigateTo(HeatMapNavigationRoute)
     }

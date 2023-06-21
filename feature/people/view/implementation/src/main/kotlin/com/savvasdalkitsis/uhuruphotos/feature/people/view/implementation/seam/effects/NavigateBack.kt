@@ -17,7 +17,7 @@ package com.savvasdalkitsis.uhuruphotos.feature.people.view.implementation.seam.
 
 import com.savvasdalkitsis.uhuruphotos.feature.people.view.implementation.seam.PeopleEffectsContext
 
-object NavigateBack : PeopleEffect() {
+data object NavigateBack : PeopleEffect() {
     context(PeopleEffectsContext) override suspend fun handle() {
         navigator.navigateBack()
     }

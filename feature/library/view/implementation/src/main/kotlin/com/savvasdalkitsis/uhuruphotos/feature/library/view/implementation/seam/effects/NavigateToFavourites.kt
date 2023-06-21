@@ -18,7 +18,7 @@ package com.savvasdalkitsis.uhuruphotos.feature.library.view.implementation.seam
 import com.savvasdalkitsis.uhuruphotos.feature.favourites.view.api.navigation.FavouritesNavigationRoute
 import com.savvasdalkitsis.uhuruphotos.feature.library.view.implementation.seam.LibraryEffectsContext
 
-object NavigateToFavourites : LibraryEffect() {
+data object NavigateToFavourites : LibraryEffect() {
     context(LibraryEffectsContext) override suspend fun handle() {
         navigator.navigateTo(FavouritesNavigationRoute)
     }

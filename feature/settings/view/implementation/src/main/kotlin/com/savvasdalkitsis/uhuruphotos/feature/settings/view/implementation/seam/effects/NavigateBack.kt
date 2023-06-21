@@ -17,7 +17,7 @@ package com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.sea
 
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.SettingsEffectsContext
 
-object NavigateBack : SettingsEffect() {
+data object NavigateBack : SettingsEffect() {
     context(SettingsEffectsContext) override suspend fun handle() {
         navigator.navigateBack()
     }

@@ -18,7 +18,7 @@ package com.savvasdalkitsis.uhuruphotos.feature.heatmap.view.implementation.seam
 import com.savvasdalkitsis.uhuruphotos.feature.heatmap.view.implementation.seam.HeatMapEffectsContext
 import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R
 
-object ErrorLoadingPhotoDetails : HeatMapEffect() {
+data object ErrorLoadingPhotoDetails : HeatMapEffect() {
     context(HeatMapEffectsContext) override suspend fun handle() {
         toaster.show(R.string.error_loading_photo_details)
     }

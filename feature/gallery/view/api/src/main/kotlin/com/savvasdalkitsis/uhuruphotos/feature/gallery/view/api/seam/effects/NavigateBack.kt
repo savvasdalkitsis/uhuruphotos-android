@@ -17,7 +17,7 @@ package com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.effects
 
 import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.GalleryEffectsContext
 
-object NavigateBack : GalleryEffect() {
+data object NavigateBack : GalleryEffect() {
     context(GalleryEffectsContext) override suspend fun handle() {
         navigator.navigateBack()
     }

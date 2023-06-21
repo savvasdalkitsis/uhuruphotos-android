@@ -18,7 +18,7 @@ package com.savvasdalkitsis.uhuruphotos.feature.library.view.implementation.seam
 import com.savvasdalkitsis.uhuruphotos.feature.library.view.implementation.seam.LibraryEffectsContext
 import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R
 
-object ErrorLoadingAlbums : LibraryEffect() {
+data object ErrorLoadingAlbums : LibraryEffect() {
     context(LibraryEffectsContext) override suspend fun handle() {
         toasterUseCase.show(R.string.error_loading_albums)
     }

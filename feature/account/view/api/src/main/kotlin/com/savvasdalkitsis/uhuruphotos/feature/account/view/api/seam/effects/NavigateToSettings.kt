@@ -18,7 +18,7 @@ package com.savvasdalkitsis.uhuruphotos.feature.account.view.api.seam.effects
 import com.savvasdalkitsis.uhuruphotos.feature.account.view.api.seam.AccountOverviewEffectsContext
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.api.navigation.SettingsNavigationRoute
 
-object NavigateToSettings : AccountOverviewEffect() {
+data object NavigateToSettings : AccountOverviewEffect() {
     context(AccountOverviewEffectsContext) override suspend fun handle() {
         navigator.navigateTo(SettingsNavigationRoute)
     }

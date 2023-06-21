@@ -91,4 +91,4 @@ data class FieldsRoute(
     val field1: String,
     val field2: Int,
 ) : NavigationRoute
-object NoFieldsObject : NavigationRoute
+data object NoFieldsObject : NavigationRoute

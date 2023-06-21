@@ -18,7 +18,7 @@ package com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.ef
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.FeedEffectsContext
 import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R
 
-object ShowErrorDeletingMedia : FeedEffect() {
+data object ShowErrorDeletingMedia : FeedEffect() {
     context(FeedEffectsContext) override suspend fun handle() {
         toasterUseCase.show(R.string.error_deleting_media)
     }

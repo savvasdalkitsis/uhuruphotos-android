@@ -18,7 +18,7 @@ package com.savvasdalkitsis.uhuruphotos.feature.trash.view.implementation.seam.e
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.api.navigation.SettingsNavigationRoute
 import com.savvasdalkitsis.uhuruphotos.feature.trash.view.implementation.seam.TrashEffectsContext
 
-object NavigateToAppSettings: TrashEffect() {
+data object NavigateToAppSettings: TrashEffect() {
     context(TrashEffectsContext) override suspend fun handle() {
         navigator.navigateTo(SettingsNavigationRoute)
     }

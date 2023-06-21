@@ -17,4 +17,4 @@ package com.savvasdalkitsis.uhuruphotos.feature.about.view.api.navigation
 
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.NavigationRoute
 
-object AboutNavigationRoute : NavigationRoute
+data object AboutNavigationRoute : NavigationRoute

@@ -18,7 +18,7 @@ package com.savvasdalkitsis.uhuruphotos.feature.search.view.implementation.seam.
 import com.savvasdalkitsis.uhuruphotos.feature.search.view.implementation.seam.SearchEffectsContext
 import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R
 
-object ErrorRefreshingPeople : SearchEffect() {
+data object ErrorRefreshingPeople : SearchEffect() {
     context(SearchEffectsContext) override suspend fun handle() {
         toaster.show(R.string.error_refreshing_people)
     }

@@ -18,7 +18,7 @@ package com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.effects
 import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.GalleryEffectsContext
 import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R
 
-object ErrorLoading : GalleryEffect() {
+data object ErrorLoading : GalleryEffect() {
     context(GalleryEffectsContext) override suspend fun handle() {
         toaster.show(R.string.error_loading_album)
     }

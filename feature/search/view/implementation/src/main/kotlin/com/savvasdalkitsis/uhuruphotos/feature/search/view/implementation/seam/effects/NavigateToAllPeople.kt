@@ -18,7 +18,7 @@ package com.savvasdalkitsis.uhuruphotos.feature.search.view.implementation.seam.
 import com.savvasdalkitsis.uhuruphotos.feature.people.view.api.navigation.PeopleNavigationRoute
 import com.savvasdalkitsis.uhuruphotos.feature.search.view.implementation.seam.SearchEffectsContext
 
-object NavigateToAllPeople : SearchEffect() {
+data object NavigateToAllPeople : SearchEffect() {
     context(SearchEffectsContext) override suspend fun handle() {
         navigator.navigateTo(PeopleNavigationRoute)
     }

@@ -17,7 +17,7 @@ package com.savvasdalkitsis.uhuruphotos.feature.auth.view.implementation.seam.ef
 
 import com.savvasdalkitsis.uhuruphotos.feature.auth.view.implementation.seam.WebEffectsContext
 
-object Close : WebLoginEffect() {
+data object Close : WebLoginEffect() {
     context(WebEffectsContext) override suspend fun handle() {
         navigator.navigateBack()
     }

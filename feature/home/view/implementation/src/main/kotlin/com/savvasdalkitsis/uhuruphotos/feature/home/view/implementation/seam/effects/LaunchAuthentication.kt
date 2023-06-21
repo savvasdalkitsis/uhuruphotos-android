@@ -18,7 +18,7 @@ package com.savvasdalkitsis.uhuruphotos.feature.home.view.implementation.seam.ef
 import com.savvasdalkitsis.uhuruphotos.feature.home.view.implementation.seam.HomeEffectsContext
 import com.savvasdalkitsis.uhuruphotos.feature.server.view.api.navigation.ServerNavigationRoute
 
-object LaunchAuthentication : HomeEffect() {
+data object LaunchAuthentication : HomeEffect() {
     context(HomeEffectsContext) override suspend fun handle() {
         navigator.navigateTo(ServerNavigationRoute(auto = true))
     }

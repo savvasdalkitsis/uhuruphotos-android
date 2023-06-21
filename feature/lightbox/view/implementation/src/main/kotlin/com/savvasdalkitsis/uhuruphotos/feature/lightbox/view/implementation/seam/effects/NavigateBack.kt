@@ -17,7 +17,7 @@ package com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.sea
 
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.LightboxEffectsContext
 
-object NavigateBack : LightboxEffect() {
+data object NavigateBack : LightboxEffect() {
     context(LightboxEffectsContext) override suspend fun handle() {
         uiUseCase.setSystemBarsVisibility(true)
         navigator.navigateBack()

@@ -17,7 +17,7 @@ package com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.sea
 
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.LightboxEffectsContext
 
-object HideSystemBars : LightboxEffect() {
+data object HideSystemBars : LightboxEffect() {
     context(LightboxEffectsContext) override suspend fun handle() {
         uiUseCase.setSystemBarsVisibility(false)
     }
