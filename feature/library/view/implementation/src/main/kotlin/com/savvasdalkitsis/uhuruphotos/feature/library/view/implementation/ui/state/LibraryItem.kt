@@ -15,6 +15,16 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.library.view.implementation.ui.state
 
-enum class LibraryItem {
-    TRASH, HIDDEN, LOCAL, AUTO, USER, FAVOURITE
+import androidx.annotation.StringRes
+import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
+
+enum class LibraryItem(
+    @StringRes val title: Int,
+) {
+    TRASH(string.trash),
+    HIDDEN(string.hidden_photos),
+    LOCAL(string.local_albums),
+    AUTO(string.auto_albums),
+    USER(string.user_albums),
+    FAVOURITE(string.favourite_photos);
 }

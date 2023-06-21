@@ -16,48 +16,31 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.feature.library.view.implementation.ui
 
 import androidx.annotation.DrawableRes
-import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Arrangement.spacedBy
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.heightIn
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.GridItemSpan
 import androidx.compose.foundation.lazy.grid.LazyGridItemSpanScope
 import androidx.compose.foundation.lazy.grid.LazyGridScope
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
-import androidx.compose.material.Icon
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.ui.Alignment
-import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
-import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.hapticfeedback.HapticFeedbackType
+import androidx.compose.ui.platform.LocalHapticFeedback
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import com.savvasdalkitsis.uhuruphotos.feature.library.view.implementation.seam.actions.AutoAlbumsSelected
 import com.savvasdalkitsis.uhuruphotos.feature.library.view.implementation.seam.actions.FavouritePhotosSelected
 import com.savvasdalkitsis.uhuruphotos.feature.library.view.implementation.seam.actions.HiddenPhotosSelected
 import com.savvasdalkitsis.uhuruphotos.feature.library.view.implementation.seam.actions.ItemOrderChanged
 import com.savvasdalkitsis.uhuruphotos.feature.library.view.implementation.seam.actions.LibraryAction
-import com.savvasdalkitsis.uhuruphotos.feature.library.view.implementation.seam.actions.LocalBucketSelected
 import com.savvasdalkitsis.uhuruphotos.feature.library.view.implementation.seam.actions.TrashSelected
 import com.savvasdalkitsis.uhuruphotos.feature.library.view.implementation.seam.actions.UserAlbumsSelected
+import com.savvasdalkitsis.uhuruphotos.feature.library.view.implementation.ui.state.LibraryItem
 import com.savvasdalkitsis.uhuruphotos.feature.library.view.implementation.ui.state.LibraryItem.AUTO
 import com.savvasdalkitsis.uhuruphotos.feature.library.view.implementation.ui.state.LibraryItem.FAVOURITE
 import com.savvasdalkitsis.uhuruphotos.feature.library.view.implementation.ui.state.LibraryItem.HIDDEN
@@ -67,16 +50,12 @@ import com.savvasdalkitsis.uhuruphotos.feature.library.view.implementation.ui.st
 import com.savvasdalkitsis.uhuruphotos.feature.library.view.implementation.ui.state.LibraryLocalMedia.Found
 import com.savvasdalkitsis.uhuruphotos.feature.library.view.implementation.ui.state.LibraryLocalMedia.RequiresPermissions
 import com.savvasdalkitsis.uhuruphotos.feature.library.view.implementation.ui.state.LibraryState
-import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.Vitrine
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.state.VitrineState
 import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.R.drawable
-import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
-import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.theme.CustomColors
-import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.SectionHeader
 import dev.shreyaspatil.permissionflow.compose.rememberPermissionFlowRequestLauncher
-import org.burnoutcrew.reorderable.NoDragCancelledAnimation
 import org.burnoutcrew.reorderable.ReorderableItem
 import org.burnoutcrew.reorderable.ReorderableLazyGridState
+import org.burnoutcrew.reorderable.SpringDragCancelledAnimation
 import org.burnoutcrew.reorderable.detectReorderAfterLongPress
 import org.burnoutcrew.reorderable.rememberReorderableLazyGridState
 import org.burnoutcrew.reorderable.reorderable
@@ -87,18 +66,11 @@ internal fun LibraryGrid(
     state: LibraryState,
     action: (LibraryAction) -> Unit
 ) {
-    val auto = stringResource(string.auto_albums)
-    val user = stringResource(string.user_albums)
-    val favourites = stringResource(string.favourite_photos)
-    val hidden = stringResource(string.hidden_photos)
-    val trash = stringResource(string.trash)
-    val local = stringResource(string.local_albums)
-
-    val permissionLauncher = rememberPermissionFlowRequestLauncher()
     if (state.items.isEmpty())
         return
+    val permissionLauncher = rememberPermissionFlowRequestLauncher()
     val data = remember { mutableStateOf(state.items) }
-    val reordering = rememberReorderableLazyGridState(dragCancelledAnimation = NoDragCancelledAnimation(),
+    val reordering = rememberReorderableLazyGridState(dragCancelledAnimation = SpringDragCancelledAnimation(),
         onMove = { from, to ->
             data.value = data.value.toMutableList().apply {
                 add(to.index, removeAt(from.index))
@@ -118,30 +90,32 @@ internal fun LibraryGrid(
     ) {
         for (item in data.value) {
             when (item) {
-                TRASH -> pillItem(reordering, trash, drawable.ic_delete, { GridItemSpan(maxCurrentLineSpan / 2) }) {
+                TRASH -> pillItem(reordering, item, drawable.ic_delete, { GridItemSpan(maxCurrentLineSpan / 2) }) {
                     action(TrashSelected)
                 }
-                HIDDEN -> pillItem(reordering, hidden, drawable.ic_invisible, { GridItemSpan(maxCurrentLineSpan) }) {
+                HIDDEN -> pillItem(reordering, item, drawable.ic_invisible, { GridItemSpan(maxCurrentLineSpan) }) {
                     action(HiddenPhotosSelected)
                 }
-                LOCAL -> item(local, { GridItemSpan(maxLineSpan) }) {
-                    ReorderableItem(reordering, local) {
+                LOCAL -> item(item.title, { GridItemSpan(maxLineSpan) }) {
+                    ReorderableItem(reordering, item.title) { isDragging ->
+                        Vibrate(isDragging)
+                        val title = stringResource(item.title)
                         when (val media = state.localMedia) {
-                            is Found -> LocalFolders(local, media, action)
-                            is RequiresPermissions -> PillItem(local, drawable.ic_folder) {
-                                permissionLauncher.launch(media.deniedPermissions.toTypedArray())
+                            is Found -> LocalFolders(title, media, action)
+                            is RequiresPermissions -> LibraryPillItem(title, drawable.ic_folder) {
+                                permissionLauncher.launch(media.deniedPermissions.toTypedArray<String>())
                             }
                             null -> {}
                         }
                     }
                 }
-                AUTO -> libraryItem(reordering, state.autoAlbums, auto) {
+                AUTO -> libraryItem(reordering, state.autoAlbums, item) {
                     action(AutoAlbumsSelected)
                 }
-                USER -> libraryItem(reordering, state.userAlbums, user) {
+                USER -> libraryItem(reordering, state.userAlbums, item) {
                     action(UserAlbumsSelected)
                 }
-                FAVOURITE -> libraryItem(reordering, state.favouritePhotos, favourites) {
+                FAVOURITE -> libraryItem(reordering, state.favouritePhotos, item) {
                     action(FavouritePhotosSelected)
                 }
             }
@@ -149,94 +123,37 @@ internal fun LibraryGrid(
     }
 }
 
-@Composable
-private fun LocalFolders(
-    title: String,
-    media: Found,
-    action: (LibraryAction) -> Unit,
-) {
-    Column(
-        modifier = Modifier.fillMaxWidth(),
-        verticalArrangement = spacedBy(8.dp),
-    ) {
-        SectionHeader(
-            modifier = Modifier.padding(8.dp),
-            title = title,
-        )
-        LazyRow(
-            modifier = Modifier.heightIn(min = 120.dp)
-        ) {
-            for ((bucket, vitrineState) in media.buckets) {
-                item(bucket.id) {
-                    LibraryEntry(
-                        modifier = Modifier.animateItemPlacement(),
-                        state = vitrineState,
-                        photoGridModifier = Modifier.width(120.dp),
-                        title = bucket.displayName,
-                    ) {
-                        action(LocalBucketSelected(bucket))
-                    }
-                }
-            }
-        }
-    }
-}
-
 internal fun LazyGridScope.pillItem(
-    reorderable: ReorderableLazyGridState,
-    title: String,
+    reorder: ReorderableLazyGridState,
+    item: LibraryItem,
     @DrawableRes icon: Int,
     span: (LazyGridItemSpanScope.() -> GridItemSpan)? = null,
     onSelected: () -> Unit,
 ) {
-    item(title, span) {
-        ReorderableItem(reorderable, title) {
-            PillItem(title, icon, onSelected)
+    item(item.title, span) {
+        val title = stringResource(item.title)
+        ReorderableItem(reorder, title) { isDragging ->
+            Vibrate(isDragging)
+            LibraryPillItem(title, icon, onSelected)
         }
-    }
-}
-
-@Composable
-private fun PillItem(title: String, icon: Int, onSelected: () -> Unit) {
-    Column(
-        modifier = Modifier
-            .padding(8.dp)
-    ) {
-        Box(
-            modifier = Modifier
-                .fillMaxWidth()
-                .clip(MaterialTheme.shapes.large)
-                .clickable { onSelected() }
-                .background(CustomColors.emptyItem)
-                .padding(16.dp),
-        ) {
-            Icon(
-                modifier = Modifier
-                    .size(24.dp)
-                    .align(Alignment.Center),
-                painter = painterResource(icon),
-                contentDescription = null
-            )
-        }
-        Subtitle(title)
     }
 }
 
 internal fun LazyGridScope.libraryItem(
     reordering: ReorderableLazyGridState,
     vitrineState: VitrineState?,
-    title: String,
-    @DrawableRes overlayIcon: Int? = null,
+    item: LibraryItem,
     onSelected: () -> Unit,
 ) {
     vitrineState?.let {
-        item(title) {
-            ReorderableItem(reordering, title) {
-                LibraryEntry(
+        item(item.title) {
+            val title = stringResource(item.title)
+            ReorderableItem(reordering, title) { isDragging ->
+                Vibrate(isDragging)
+                LibraryItem(
                     state = vitrineState,
                     photoGridModifier = Modifier.fillMaxWidth(),
                     title = title,
-                    overlayIcon = overlayIcon,
                     onSelected = onSelected
                 )
             }
@@ -245,49 +162,11 @@ internal fun LazyGridScope.libraryItem(
 }
 
 @Composable
-fun LibraryEntry(
-    modifier: Modifier = Modifier,
-    state: VitrineState,
-    photoGridModifier: Modifier,
-    title: String,
-    @DrawableRes overlayIcon: Int? = null,
-    onSelected: () -> Unit,
-) {
-    Column(
-        modifier = modifier
-            .padding(8.dp),
-    ) {
-        Box(modifier = Modifier.fillMaxSize()) {
-            Vitrine(
-                modifier = photoGridModifier,
-                state = state,
-                onSelected = onSelected,
-                shape = MaterialTheme.shapes.large
-            )
-            if (overlayIcon != null) {
-                Icon(
-                    modifier = Modifier
-                        .size(24.dp)
-                        .align(Alignment.Center),
-                    painter = painterResource(overlayIcon),
-                    contentDescription = null
-                )
-            }
+private fun Vibrate(isDragging: Boolean) {
+    val haptic = LocalHapticFeedback.current
+    LaunchedEffect(isDragging) {
+        if (isDragging) {
+            haptic.performHapticFeedback(HapticFeedbackType.LongPress)
         }
-        Subtitle(title)
     }
-}
-
-@Composable
-private fun ColumnScope.Subtitle(title: String) {
-    Text(
-        modifier = Modifier
-            .align(CenterHorizontally)
-            .padding(4.dp),
-        text = title,
-        maxLines = 2,
-        overflow = TextOverflow.Ellipsis,
-        style = MaterialTheme.typography.subtitle1
-            .copy(fontWeight = FontWeight.Bold),
-    )
 }
