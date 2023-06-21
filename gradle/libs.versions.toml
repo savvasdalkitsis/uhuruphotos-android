@@ -128,7 +128,7 @@ sqldelight-android = { module = "com.squareup.sqldelight:android-driver", versio
 sqldelight-coroutines = { module = "com.squareup.sqldelight:coroutines-extensions", version.ref = "sqldelight" }
 sqldelight-gradle-plugin = { module = "com.squareup.sqldelight:gradle-plugin", version.ref = "sqldelight" }
 sqldelight-jvm = { module = "com.squareup.sqldelight:sqlite-driver", version.ref = "sqldelight" }
-turbine = "app.cash.turbine:turbine:0.13.0"
+turbine = "app.cash.turbine:turbine:1.0.0"
 urlvalidator = "commons-validator:commons-validator:1.7"
 zoomable = "com.mxalbert.zoomable:zoomable:1.6.1"
 
