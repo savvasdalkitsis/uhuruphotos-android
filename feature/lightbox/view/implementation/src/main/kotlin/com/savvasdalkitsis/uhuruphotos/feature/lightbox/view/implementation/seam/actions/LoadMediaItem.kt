@@ -133,22 +133,17 @@ data class LoadMediaItem(
 
     context(LightboxActionsContext)
     private fun MediaItem.toSingleMediaItemState() =
-        SingleMediaItemState(
-            id = id,
-            isFavourite = isFavourite,
-            showFavouriteIcon = id.preferRemote is MediaId.Remote,
-            showDeleteButton = shouldShowDeleteButton,
-            showEditIcon = id.findLocal != null,
-            mediaItemSyncState = id.syncState.takeIf { showMediaSyncState }
-        )
+        id.toSingleMediaItemState(isFavourite)
 
     context(LightboxActionsContext)
-    private fun MediaId<*>.toSingleMediaItemState() =
+    private fun MediaId<*>.toSingleMediaItemState(showFavouriteIcon: Boolean = false) =
         SingleMediaItemState(
             id = this,
-            showFavouriteIcon = false,
+            showFavouriteIcon = showFavouriteIcon,
             showDeleteButton = shouldShowDeleteButton,
-            showEditIcon = findLocal != null,
+            showEditIcon = shouldShowEditButton,
             mediaItemSyncState = syncState.takeIf { showMediaSyncState }
         )
+
+    private val MediaId<*>.shouldShowEditButton get() = !isVideo && findLocal != null
 }
