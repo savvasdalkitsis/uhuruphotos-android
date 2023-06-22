@@ -1,0 +1,3 @@
+* Using new, official, staggered list on Feed
+* Adding vibration to library reordering
+* Not showing edit button on videos
