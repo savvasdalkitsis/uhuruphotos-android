@@ -132,7 +132,7 @@ internal fun LazyGridScope.pillItem(
 ) {
     item(item.title, span) {
         val title = stringResource(item.title)
-        ReorderableItem(reorder, title) { isDragging ->
+        ReorderableItem(reorder, item.title) { isDragging ->
             Vibrate(isDragging)
             LibraryPillItem(title, icon, onSelected)
         }
@@ -148,7 +148,7 @@ internal fun LazyGridScope.libraryItem(
     vitrineState?.let {
         item(item.title) {
             val title = stringResource(item.title)
-            ReorderableItem(reordering, title) { isDragging ->
+            ReorderableItem(reordering, item.title) { isDragging ->
                 Vibrate(isDragging)
                 LibraryItem(
                     state = vitrineState,
