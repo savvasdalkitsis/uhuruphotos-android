@@ -19,6 +19,7 @@ import android.content.Context
 import android.webkit.CookieManager
 import androidx.credentials.CredentialManager
 import com.savvasdalkitsis.uhuruphotos.feature.auth.domain.api.AuthenticatedOkHttpClient
+import com.savvasdalkitsis.uhuruphotos.feature.auth.domain.api.TokenRefreshOkHttpClient
 import com.savvasdalkitsis.uhuruphotos.feature.auth.domain.implementation.cookies.WebkitCookieManager
 import com.savvasdalkitsis.uhuruphotos.feature.auth.domain.implementation.network.DynamicDomainInterceptor
 import com.savvasdalkitsis.uhuruphotos.feature.auth.domain.implementation.service.AuthenticationHeaderInterceptor
@@ -74,6 +75,17 @@ class AuthModule {
             .addInterceptor(tokenRefreshInterceptor)
             .build()
         )
+        .build()
+
+    @Provides
+    @Singleton
+    @TokenRefreshOkHttpClient
+    fun tokenRefreshOkHttpClient(
+        tokenRefreshInterceptor: TokenRefreshInterceptor,
+        @AuthenticatedOkHttpClient
+        okHttpBuilder: OkHttpClient.Builder,
+    ): OkHttpClient = okHttpBuilder
+        .addInterceptor(tokenRefreshInterceptor)
         .build()
 
     @Provides

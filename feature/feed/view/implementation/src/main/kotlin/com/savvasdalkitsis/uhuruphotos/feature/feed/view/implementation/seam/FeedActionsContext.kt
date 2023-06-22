@@ -39,6 +39,7 @@ import com.savvasdalkitsis.uhuruphotos.foundation.share.api.usecase.ShareUseCase
 import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R
 import com.savvasdalkitsis.uhuruphotos.foundation.toaster.api.usecase.ToasterUseCase
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.usecase.UiUseCase
+import com.savvasdalktsis.uhuruphotos.feature.download.domain.api.usecase.DownloadUseCase
 import kotlinx.coroutines.flow.FlowCollector
 import javax.inject.Inject
 

@@ -108,9 +108,10 @@ sealed class MediaId<T : Serializable> private constructor(
         override val value: Long,
         override val isVideo: Boolean,
         val serverUrl: String,
+        override val thumbnailUri: String,
     ): MediaId<Long>(value, isVideo) {
         @IgnoredOnParcel
-        val local get() = Local(value, isVideo, serverUrl)
+        val local get() = Local(value, isVideo, serverUrl, thumbnailUri)
 
         @IgnoredOnParcel
         @Transient
@@ -129,8 +130,6 @@ sealed class MediaId<T : Serializable> private constructor(
         override val syncState: MediaItemSyncState = UPLOADING
         @IgnoredOnParcel
         override val fullResUri = local.fullResUri
-        @IgnoredOnParcel
-        override val thumbnailUri = local.thumbnailUri
     }
 
     @Parcelize

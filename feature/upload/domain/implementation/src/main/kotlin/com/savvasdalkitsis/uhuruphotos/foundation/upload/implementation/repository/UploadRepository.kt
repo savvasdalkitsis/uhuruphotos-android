@@ -31,8 +31,4 @@ class UploadRepository @Inject constructor(
             }
         }
     }
-
-    fun addChunkToBeUploaded(mediaId: Long, contentUri: String, start: Int, end: Int, total: Int) {
-        TODO("Not yet implemented")
-    }
 }

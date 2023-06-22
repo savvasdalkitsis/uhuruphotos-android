@@ -25,6 +25,7 @@ import com.savvasdalkitsis.uhuruphotos.foundation.upload.api.model.UploadCapabil
 import com.savvasdalkitsis.uhuruphotos.foundation.upload.api.model.UploadItem
 import com.savvasdalkitsis.uhuruphotos.foundation.upload.api.usecase.UploadUseCase
 import com.savvasdalkitsis.uhuruphotos.foundation.upload.implementation.repository.UploadRepository
+import com.savvasdalkitsis.uhuruphotos.foundation.upload.implementation.service.UploadService
 import javax.inject.Inject
 
 const val MB = 1024 * 1024
@@ -33,6 +34,7 @@ class UploadUseCase @Inject constructor(
     private val localMediaUseCase: LocalMediaUseCase,
     private val siteUseCase: SiteUseCase,
     private val uploadRepository: UploadRepository,
+    private val uploadService: UploadService,
 ) : UploadUseCase {
 
     override suspend fun canUpload(): UploadCapability = siteUseCase.getSiteOptions()
@@ -51,19 +53,7 @@ class UploadUseCase @Inject constructor(
         uploadRepository.setUploading(*(items.map { it.id }.toLongArray()))
         for (item in items) {
             localMediaUseCase.getLocalMediaItem(item.id)?.let { mediaItem ->
-                var start: Int
-                var end = 0
-                while (end < mediaItem.size - 1) {
-                    start = end
-                    end = minOf(mediaItem.size, end + MB) - 1
-                    uploadRepository.addChunkToBeUploaded(
-                        mediaItem.id,
-                        mediaItem.contentUri,
-                        start,
-                        end,
-                        mediaItem.size,
-                    )
-                }
+                uploadService.upload(mediaItem.contentUri)
             }
         }
     }

@@ -58,7 +58,6 @@ import com.savvasdalkitsis.uhuruphotos.feature.person.domain.api.usecase.PersonU
 import com.savvasdalkitsis.uhuruphotos.feature.search.domain.api.usecase.SearchUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.trash.domain.api.usecase.TrashUseCase
 import com.savvasdalkitsis.uhuruphotos.foundation.date.api.module.DateModule
-import com.savvasdalkitsis.uhuruphotos.foundation.download.api.usecase.DownloadUseCase
 import com.savvasdalkitsis.uhuruphotos.foundation.log.api.log
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.Navigator
 import com.savvasdalkitsis.uhuruphotos.foundation.result.api.SimpleResult

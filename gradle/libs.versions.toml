@@ -18,6 +18,7 @@ org-jetbrains-kotlinx = "1.7.3"
 permissions = "1.2.0"
 retrofit = "2.9.0"
 sqldelight = "2.0.0"
+upload = "4.7.0"
 
 [libraries]
 about = "com.mikepenz:aboutlibraries-compose:10.8.3"
@@ -125,6 +126,8 @@ sqldelight-coroutines = { module = "app.cash.sqldelight:coroutines-extensions", 
 sqldelight-gradle-plugin = { module = "app.cash.sqldelight:gradle-plugin", version.ref = "sqldelight" }
 sqldelight-jvm = { module = "app.cash.sqldelight:sqlite-driver", version.ref = "sqldelight" }
 timeline = "com.github.yeocak:ComposableTimelineView:0.6"
+upload-core = { module = "net.gotev:uploadservice", version.ref = "upload" }
+upload-okhttp = { module = "net.gotev:uploadservice-okhttp", version.ref = "upload" }
 urlvalidator = "commons-validator:commons-validator:1.7"
 vico = "com.patrykandpatrick.vico:compose-m2:1.9.1"
 videocache = "com.github.Andrew0000:Android-VideoView-cache:1.0.15"
@@ -156,4 +159,8 @@ lumberjack = [
 permissions = [
     "permissions-base",
     "permissions-compose",
+]
+upload = [
+    "upload-core",
+    "upload-okhttp",
 ]

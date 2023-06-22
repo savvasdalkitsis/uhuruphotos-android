@@ -13,10 +13,10 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
  */
-package com.savvasdalkitsis.uhuruphotos.foundation.notification.api
+package com.savvasdalkitsis.uhuruphotos.feature.auth.domain.api
 
-data object NotificationChannels {
-    const val JOBS_CHANNEL_ID = "UHURU_PHOTOS_BACKGROUND_JOBS_CHANNEL_ID"
-    const val CRASH_CHANNEL_ID = "UHURU_PHOTOS_CRASH_CHANNEL_ID"
-    const val UPLOADS_CHANNEL_ID = "UHURU_PHOTOS_UPLOADS_CHANNEL_ID"
-}
+import javax.inject.Qualifier
+
+@Qualifier
+@Retention(AnnotationRetention.BINARY)
+annotation class TokenRefreshOkHttpClient
