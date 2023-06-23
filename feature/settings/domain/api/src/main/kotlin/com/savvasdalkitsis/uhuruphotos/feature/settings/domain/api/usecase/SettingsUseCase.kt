@@ -47,6 +47,7 @@ interface SettingsUseCase {
     fun getShowBannerAskingForLocalMediaPermissionsOnHeatmap(): Boolean
     fun getFeedMediaItemSyncDisplay(): FeedMediaItemSyncDisplay
     fun getShouldShowFeedSyncProgress(): Boolean
+    fun getShouldShowPrecacheProgress(): Boolean
 
     fun observeImageDiskCacheMaxLimit(): Flow<Int>
     fun observeImageMemCacheMaxLimit(): Flow<Int>
@@ -70,6 +71,7 @@ interface SettingsUseCase {
     fun observeMaxAnimatedVideoThumbnails(): Flow<Int>
     fun observeFeedMediaItemSyncDisplay(): Flow<FeedMediaItemSyncDisplay>
     fun observeShouldShowFeedSyncProgress(): Flow<Boolean>
+    fun observeShouldShowPrecacheProgress(): Flow<Boolean>
 
     fun setImageDiskCacheMaxLimit(sizeInMb: Int)
     fun setImageMemCacheMaxLimit(sizeInMb: Int)
@@ -95,4 +97,5 @@ interface SettingsUseCase {
     fun setShowBannerAskingForLocalMediaPermissionsOnHeatmap(show: Boolean)
     fun setFeedMediaItemSyncDisplay(display: FeedMediaItemSyncDisplay)
     fun setShouldShowFeedSyncProgress(show: Boolean)
+    fun setShouldShowPrecacheProgress(show: Boolean)
 }

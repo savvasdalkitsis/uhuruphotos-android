@@ -186,4 +186,8 @@ sealed class SettingsMutation(
     data class SetFullSyncProgressVisibility(val show: Boolean) : SettingsMutation({
         it.copy(shouldShowFeedSyncProgress = show)
     })
+
+    data class SetPrecacheProgressVisibility(val show: Boolean) : SettingsMutation({
+        it.copy(shouldShowPrecacheProgress = show)
+    })
 }

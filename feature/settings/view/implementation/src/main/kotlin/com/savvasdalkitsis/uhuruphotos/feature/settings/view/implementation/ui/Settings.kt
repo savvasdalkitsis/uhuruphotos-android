@@ -95,6 +95,9 @@ internal fun Settings(
                     Group(controller.uiTheme) {
                         SettingsTheme(state, action)
                     }
+                    Group(controller.uiProgress) {
+                        SettingsProgressUI(state, action)
+                    }
                     Group(controller.uiSearch) {
                         SettingsSearch(state, action)
                     }

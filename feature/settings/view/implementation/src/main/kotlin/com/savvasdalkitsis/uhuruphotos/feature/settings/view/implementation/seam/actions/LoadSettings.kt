@@ -86,6 +86,8 @@ data object LoadSettings : SettingsAction() {
         },
         settingsUseCase.observeShouldShowFeedSyncProgress()
             .map(SettingsMutation::SetFullSyncProgressVisibility),
+        settingsUseCase.observeShouldShowPrecacheProgress()
+            .map(SettingsMutation::SetPrecacheProgressVisibility),
         cacheUseCase.observeImageDiskCacheCurrentUse()
             .map(SettingsMutation::DisplayImageDiskCacheCurrentUse),
         cacheUseCase.observeImageMemCacheCurrentUse()

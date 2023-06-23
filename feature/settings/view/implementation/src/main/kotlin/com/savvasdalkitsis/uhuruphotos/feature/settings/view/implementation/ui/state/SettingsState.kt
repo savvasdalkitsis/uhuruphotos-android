@@ -52,4 +52,5 @@ data class SettingsState(
     val showMemories: Boolean = true,
     val feedMediaItemSyncDisplay: FeedMediaItemSyncDisplay = FeedMediaItemSyncDisplay.default,
     val shouldShowFeedSyncProgress: Boolean = false,
+    val shouldShowPrecacheProgress: Boolean = false,
 )

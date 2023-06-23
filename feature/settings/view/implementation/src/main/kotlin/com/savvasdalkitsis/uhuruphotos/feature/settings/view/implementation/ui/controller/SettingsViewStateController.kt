@@ -31,6 +31,7 @@ class SettingsViewStateController @Inject constructor(
 
     val ui = group(string.ui, "settings:group:ui")
     val uiFeed = group(string.feed, "settings:group:ui:feed")
+    val uiProgress = group(string.progress, "settings:group:ui:progress")
     val uiTheme = group(string.theme, "settings:group:ui:theme")
     val uiSearch = group(string.search, "settings:group:ui:search")
     val uiLibrary = group(string.library, "settings:group:ui:library")

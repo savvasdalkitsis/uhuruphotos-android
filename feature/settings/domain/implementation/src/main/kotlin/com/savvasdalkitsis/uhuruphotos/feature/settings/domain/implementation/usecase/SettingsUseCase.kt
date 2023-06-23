@@ -97,6 +97,8 @@ internal class SettingsUseCase @Inject constructor(
     private val feedMediaItemSyncDisplayDefault = FeedMediaItemSyncDisplay.default
     private val shouldShowFeedSyncProgress = "shouldShowFeedSyncProgress"
     private val shouldShowFeedSyncProgressDefault = false
+    private val shouldShowPrecacheProgress = "shouldShowPrecacheProgress"
+    private val shouldShowPrecacheProgressDefault = false
 
     override fun getImageDiskCacheMaxLimit(): Int =
         get(imageDiskCacheSize, imageDiskCacheSizeDefault)
@@ -144,6 +146,8 @@ internal class SettingsUseCase @Inject constructor(
         get(feedMediaItemSyncDisplay, feedMediaItemSyncDisplayDefault)
     override fun getShouldShowFeedSyncProgress(): Boolean =
         get(shouldShowFeedSyncProgress, shouldShowFeedSyncProgressDefault)
+    override fun getShouldShowPrecacheProgress(): Boolean =
+        get(shouldShowPrecacheProgress, shouldShowPrecacheProgressDefault)
 
     override fun observeImageDiskCacheMaxLimit(): Flow<Int> =
         observe(imageDiskCacheSize, imageDiskCacheSizeDefault)
@@ -191,6 +195,8 @@ internal class SettingsUseCase @Inject constructor(
         observe(feedMediaItemSyncDisplay, feedMediaItemSyncDisplayDefault)
     override fun observeShouldShowFeedSyncProgress(): Flow<Boolean> =
         observe(shouldShowFeedSyncProgress, shouldShowFeedSyncProgressDefault)
+    override fun observeShouldShowPrecacheProgress(): Flow<Boolean> =
+        observe(shouldShowPrecacheProgress, shouldShowPrecacheProgressDefault)
 
     override fun setImageDiskCacheMaxLimit(sizeInMb: Int) {
         set(imageDiskCacheSize, sizeInMb)
@@ -287,6 +293,10 @@ internal class SettingsUseCase @Inject constructor(
 
     override fun setShouldShowFeedSyncProgress(show: Boolean) {
         set(shouldShowFeedSyncProgress, show)
+    }
+
+    override fun setShouldShowPrecacheProgress(show: Boolean) {
+        set(shouldShowPrecacheProgress, show)
     }
 
     private fun MapProvider.mapToAvailable(): MapProvider =

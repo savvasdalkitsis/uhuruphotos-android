@@ -54,12 +54,14 @@ class JobsUseCase @Inject constructor(
 
     override fun observeJobsStatusFilteredBySettings(): Flow<JobsStatus> = combine(
         observeJobsStatus(),
-        settingsUseCase.observeShouldShowFeedSyncProgress()
-    ) { jobs, showFeedProgress ->
+        settingsUseCase.observeShouldShowFeedSyncProgress(),
+        settingsUseCase.observeShouldShowPrecacheProgress(),
+    ) { jobs, showFeedProgress, showPrecacheProgress ->
         jobs.copy(jobs = jobs.jobs.mapValues { (job, status) ->
             when (job) {
                 FEED_SYNC -> if (showFeedProgress) status else Idle
-                PRECACHE_THUMBNAILS, LOCAL_MEDIA_SYNC -> status
+                PRECACHE_THUMBNAILS  -> if (showPrecacheProgress) status else Idle
+                LOCAL_MEDIA_SYNC -> status
             }
         })
     }
