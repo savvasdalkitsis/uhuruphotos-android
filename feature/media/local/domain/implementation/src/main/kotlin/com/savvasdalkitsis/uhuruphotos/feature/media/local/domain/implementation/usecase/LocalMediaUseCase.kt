@@ -299,6 +299,7 @@ class LocalMediaUseCase @Inject constructor(
             height = height,
             size = size,
             contentUri = contentUri,
+            thumbnailPath = thumbnailPath,
             md5 = md5,
             video = video,
             duration = duration,

@@ -107,6 +107,7 @@ sealed class MediaId<T : Serializable> private constructor(
         override val value: Long,
         override val isVideo: Boolean,
         val contentUri: String,
+        override val thumbnailUri: String,
     ): MediaId<Long>(value, isVideo) {
         @IgnoredOnParcel
         @Transient
@@ -125,8 +126,6 @@ sealed class MediaId<T : Serializable> private constructor(
         override val syncState: MediaItemSyncState = LOCAL_ONLY
         @IgnoredOnParcel
         override val fullResUri = contentUri
-        @IgnoredOnParcel
-        override val thumbnailUri = contentUri
     }
 
     @Suppress("DataClassPrivateConstructor")

@@ -178,7 +178,7 @@ class MediaUseCase @Inject constructor(
         }
 
     private fun LocalMediaItem.toMediaItem(userId: Int) = MediaItemInstance(
-        id = Local(id, video, contentUri),
+        id = Local(id, video, contentUri, thumbnailPath ?: contentUri),
         mediaHash = md5 + userId,
         fallbackColor = fallbackColor,
         displayDayDate = displayDate,

@@ -18,10 +18,10 @@ package com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.implementatio
 import android.content.ContentResolver
 import android.content.Context
 import android.graphics.Bitmap
-import android.graphics.BitmapFactory.Options
 import android.graphics.BitmapFactory.decodeStream
 import android.graphics.Color
 import android.media.MediaMetadataRetriever
+import android.media.MediaMetadataRetriever.OPTION_CLOSEST_SYNC
 import android.net.Uri
 import androidx.palette.graphics.Palette
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.Database
@@ -48,6 +48,7 @@ import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.distinctUntilChanged
 import org.joda.time.format.DateTimeFormatter
+import java.io.File
 import java.math.BigInteger
 import java.security.MessageDigest
 import javax.inject.Inject
@@ -156,10 +157,13 @@ class LocalMediaRepository @Inject constructor(
             } while (read > 0)
             totalRead to BigInteger(1, digest.digest()).toString(16).padStart(32, '0')
         }
-        val fallbackColor = when (item) {
-            is Photo -> item.palette
-            is Video -> item.palette
+        val thumbnail = when (item) {
+            is Photo -> item.bitmap
+            is Video -> item.bitmap
         }
+        val thumbnailPath = thumbnail?.save(item)
+        val fallbackColor = thumbnail.palette(item)
+        thumbnail?.recycle()
         onNewItem(
             LocalMediaItemDetails(
                 id = item.id,
@@ -178,6 +182,7 @@ class LocalMediaRepository @Inject constructor(
                 fallbackColor = "#${fallbackColor.toUInt().toString(16).padStart(6, '0')}",
                 path = item.path,
                 orientation = item.orientation,
+                thumbnailPath = thumbnailPath,
             )
         )
     }
@@ -224,21 +229,65 @@ class LocalMediaRepository @Inject constructor(
     fun removeItemsFromDb(vararg ids: Long) =
         localMediaItemDetailsQueries.delete(ids.toList())
 
-    private val Video.palette get() = tryPalette {
+    private val thumbWidth = 400
+
+    private val Video.bitmap get() = try {
         MediaMetadataRetriever().apply {
             setDataSource(context, contentUri)
-        }.getFrameAtTime(0)
+        }.getFrameAtTime(0, OPTION_CLOSEST_SYNC).scale()
+    } catch (e: Exception) {
+        log(e)
+        null
     }
 
-    private val Photo.palette get() = tryPalette {
+    private val Photo.bitmap get() = try {
         contentResolver.openInputStream(contentUri)!!.use { stream ->
-            decodeStream(stream, null, Options().apply {
-                outWidth = 100
-            })
+            decodeStream(stream)
+        }.scale()
+    } catch (e: Exception) {
+        log(e)
+        null
+    }
+
+    private fun Bitmap?.scale() = try {
+        this?.let { frame ->
+            val ratio = frame.height / frame.width.toFloat()
+            Bitmap.createScaledBitmap(frame, thumbWidth, (thumbWidth * ratio).toInt(), true).also {
+                frame.recycle()
+            }
         }
     }
+    catch (e: Exception) {
+        log(e)
+        null
+    }
 
-    private val Bitmap.palette get() = Palette.from(this).generate().lightMutedSwatch?.rgb
+    private val Bitmap.palette get() = try {
+        Palette.from(this).generate().lightMutedSwatch?.rgb
+    } catch (e: Exception) {
+        log(e)
+        null
+    }
+
+    private fun Bitmap?.palette(item: LocalMediaStoreServiceItem) = item.tryPalette { this }
+
+    private fun Bitmap?.save(item: LocalMediaStoreServiceItem): String? = try {
+        this?.let { bitmap ->
+            val file = context.filesDir.subFolder("localThumbnails").subFile("${item.id}.jpg")
+            val saved = file.outputStream().use {
+                bitmap.compress(Bitmap.CompressFormat.JPEG, 80, it)
+            }
+            return file.absolutePath.takeIf { saved }
+        }
+    } catch (e: Exception) {
+        log(e)
+        null
+    }
+
+    private fun File.subFolder(name: String) = subFile(name).apply {
+        mkdirs()
+    }
+    private fun File.subFile(name: String) = File(this, name)
 
     private fun LocalMediaStoreServiceItem.tryPalette(bitmap: (Uri) -> Bitmap?): Int = try {
         bitmap(contentUri)
