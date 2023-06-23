@@ -16,9 +16,9 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.feature.trash.view.implementation.seam.actions
 
 import com.savvasdalkitsis.uhuruphotos.feature.trash.view.implementation.seam.TrashActionsContext
-import com.savvasdalkitsis.uhuruphotos.feature.trash.view.implementation.seam.effects.TrashEffect
-import com.savvasdalkitsis.uhuruphotos.feature.trash.view.implementation.seam.effects.NavigateToAppSettings
 import com.savvasdalkitsis.uhuruphotos.feature.trash.view.implementation.seam.TrashMutation
+import com.savvasdalkitsis.uhuruphotos.feature.trash.view.implementation.seam.effects.NavigateToAppSettings
+import com.savvasdalkitsis.uhuruphotos.feature.trash.view.implementation.seam.effects.TrashEffect
 import com.savvasdalkitsis.uhuruphotos.feature.trash.view.implementation.state.TrashState
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.EffectHandler
 import kotlinx.coroutines.flow.flow

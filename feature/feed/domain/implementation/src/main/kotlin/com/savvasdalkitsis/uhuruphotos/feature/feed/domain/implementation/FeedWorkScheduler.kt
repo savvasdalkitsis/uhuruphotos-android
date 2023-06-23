@@ -18,11 +18,11 @@ package com.savvasdalkitsis.uhuruphotos.feature.feed.domain.implementation
 import androidx.work.ExistingPeriodicWorkPolicy
 import androidx.work.WorkInfo
 import com.savvasdalkitsis.uhuruphotos.feature.feed.domain.api.worker.FeedWorkScheduler
-import com.savvasdalkitsis.uhuruphotos.foundation.worker.api.model.RefreshJobState
 import com.savvasdalkitsis.uhuruphotos.feature.feed.domain.implementation.worker.FeedDownloadWorker
 import com.savvasdalkitsis.uhuruphotos.feature.feed.domain.implementation.worker.PrecacheFeedThumbnailsWorker
 import com.savvasdalkitsis.uhuruphotos.feature.settings.domain.api.usecase.SettingsUseCase
 import com.savvasdalkitsis.uhuruphotos.foundation.notification.api.ForegroundNotificationWorker
+import com.savvasdalkitsis.uhuruphotos.foundation.worker.api.model.RefreshJobState
 import com.savvasdalkitsis.uhuruphotos.foundation.worker.api.usecase.WorkScheduleUseCase
 import com.savvasdalkitsis.uhuruphotos.foundation.worker.api.usecase.WorkerStatusUseCase
 import kotlinx.coroutines.flow.Flow

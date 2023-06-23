@@ -16,13 +16,11 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.feature.auth.domain.implementation.network
 
 import com.savvasdalkitsis.uhuruphotos.feature.auth.domain.api.usecase.ServerUseCase
-import kotlinx.coroutines.runBlocking
 import okhttp3.HttpUrl
 import okhttp3.Interceptor
 import okhttp3.Response
 import java.io.IOException
 import javax.inject.Inject
-import javax.inject.Singleton
 
 class DynamicDomainInterceptor @Inject constructor(
     private val serverUseCase: ServerUseCase,

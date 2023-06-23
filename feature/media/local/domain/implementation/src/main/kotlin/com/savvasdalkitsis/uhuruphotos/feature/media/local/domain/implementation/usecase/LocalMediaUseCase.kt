@@ -26,7 +26,9 @@ import android.os.Build.VERSION_CODES.Q
 import android.os.Build.VERSION_CODES.TIRAMISU
 import android.os.Environment
 import android.provider.MediaStore.Images
-import android.provider.MediaStore.MediaColumns.*
+import android.provider.MediaStore.MediaColumns.DISPLAY_NAME
+import android.provider.MediaStore.MediaColumns.MIME_TYPE
+import android.provider.MediaStore.MediaColumns.RELATIVE_PATH
 import androidx.core.content.ContextCompat
 import androidx.work.WorkInfo
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.extensions.async

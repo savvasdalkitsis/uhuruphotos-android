@@ -18,8 +18,8 @@ package com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.ui
 import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.runtime.Composable
 import com.savvasdalkitsis.uhuruphotos.feature.jobs.view.ui.Jobs
-import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.actions.CancelJob
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.actions.AskToStartJob
+import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.actions.CancelJob
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.actions.SettingsAction
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.ui.state.SettingsState
 

@@ -18,9 +18,9 @@ package com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam
 import com.savvasdalkitsis.uhuruphotos.feature.avatar.domain.api.usecase.AvatarUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.feed.domain.api.usecase.FeedUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.SelectionList
-import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.effects.ShowErrorDeletingMedia
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.FeedMutation.AskForPermissions
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.effects.FeedEffect
+import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.effects.ShowErrorDeletingMedia
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.ui.state.FeedState
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.usecase.MediaUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.state.CelState
@@ -32,8 +32,8 @@ import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.usecase.Lo
 import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.worker.LocalMediaWorkScheduler
 import com.savvasdalkitsis.uhuruphotos.feature.memories.domain.api.usecase.MemoriesUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.settings.domain.api.usecase.SettingsUseCase
-import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.EffectHandler
 import com.savvasdalkitsis.uhuruphotos.foundation.download.api.usecase.DownloadUseCase
+import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.EffectHandler
 import kotlinx.coroutines.flow.FlowCollector
 import javax.inject.Inject
 

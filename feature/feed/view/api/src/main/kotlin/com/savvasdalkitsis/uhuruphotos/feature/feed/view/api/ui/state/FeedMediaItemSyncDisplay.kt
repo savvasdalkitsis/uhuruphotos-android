@@ -17,8 +17,8 @@ package com.savvasdalkitsis.uhuruphotos.feature.feed.view.api.ui.state
 
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
-import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
 import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.R.drawable
+import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
 
 enum class FeedMediaItemSyncDisplay(
     @StringRes val friendlyName: Int,

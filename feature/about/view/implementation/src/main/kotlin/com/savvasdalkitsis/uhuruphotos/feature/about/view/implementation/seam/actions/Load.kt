@@ -1,7 +1,6 @@
 package com.savvasdalkitsis.uhuruphotos.feature.about.view.implementation.seam.actions
 
 import com.savvasdalkitsis.uhuruphotos.feature.about.view.implementation.seam.AboutActionsContext
-import com.savvasdalkitsis.uhuruphotos.feature.about.view.implementation.seam.AboutMutation
 import com.savvasdalkitsis.uhuruphotos.feature.about.view.implementation.seam.AboutMutation.DisplayAppVersion
 import com.savvasdalkitsis.uhuruphotos.feature.about.view.implementation.seam.effects.AboutEffect
 import com.savvasdalkitsis.uhuruphotos.feature.about.view.implementation.ui.state.AboutState

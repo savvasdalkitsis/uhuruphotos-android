@@ -17,9 +17,9 @@ package com.savvasdalkitsis.uhuruphotos.feature.search.view.implementation.seam.
 
 import com.savvasdalkitsis.uhuruphotos.feature.people.view.api.ui.state.Person
 import com.savvasdalkitsis.uhuruphotos.feature.search.view.implementation.seam.SearchActionsContext
-import com.savvasdalkitsis.uhuruphotos.feature.search.view.implementation.seam.effects.SearchEffect
-import com.savvasdalkitsis.uhuruphotos.feature.search.view.implementation.seam.effects.NavigateToPerson
 import com.savvasdalkitsis.uhuruphotos.feature.search.view.implementation.seam.SearchMutation
+import com.savvasdalkitsis.uhuruphotos.feature.search.view.implementation.seam.effects.NavigateToPerson
+import com.savvasdalkitsis.uhuruphotos.feature.search.view.implementation.seam.effects.SearchEffect
 import com.savvasdalkitsis.uhuruphotos.feature.search.view.implementation.ui.state.SearchState
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.EffectHandler
 import kotlinx.coroutines.flow.flow

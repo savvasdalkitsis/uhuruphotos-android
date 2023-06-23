@@ -1,7 +1,6 @@
 package com.savvasdalkitsis.uhuruphotos.feature.edit.view.implementation.seam.actions
 
 import com.savvasdalkitsis.uhuruphotos.feature.edit.view.implementation.seam.EditActionsContext
-import com.savvasdalkitsis.uhuruphotos.feature.edit.view.implementation.seam.EditMutation
 import com.savvasdalkitsis.uhuruphotos.feature.edit.view.implementation.seam.EditMutation.SetCropOptionsVisible
 import com.savvasdalkitsis.uhuruphotos.feature.edit.view.implementation.seam.effects.EditEffect
 import com.savvasdalkitsis.uhuruphotos.feature.edit.view.implementation.ui.state.EditState
