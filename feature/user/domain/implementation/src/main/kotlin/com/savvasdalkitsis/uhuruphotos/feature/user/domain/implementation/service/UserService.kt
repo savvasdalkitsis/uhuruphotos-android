@@ -15,11 +15,13 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.user.domain.implementation.service
 
+import com.savvasdalkitsis.uhuruphotos.feature.user.domain.implementation.service.model.UserResult
 import com.savvasdalkitsis.uhuruphotos.feature.user.domain.implementation.service.model.UsersResult
 import retrofit2.http.GET
+import retrofit2.http.Path
 
 internal interface UserService {
 
-    @GET("/api/user/")
-    suspend fun getUser(): UsersResult
+    @GET("/api/user/{id}/")
+    suspend fun getUser(@Path("id") id: String): UserResult
 }

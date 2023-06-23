@@ -16,6 +16,8 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.feature.user.domain.implementation.repository
 
 import com.github.michaelbull.result.Result
+import com.github.michaelbull.result.andThen
+import com.savvasdalkitsis.uhuruphotos.feature.auth.domain.api.usecase.AuthenticationUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.extensions.async
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.extensions.awaitSingleOrNull
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.user.User
@@ -31,17 +33,19 @@ import javax.inject.Inject
 internal class UserRepository @Inject constructor(
     private val userService: UserService,
     private val userQueries: UserQueries,
+    private val authenticationUseCase: AuthenticationUseCase,
 ) {
 
     fun observeUser(): Flow<User> = userQueries.getUser().asFlow().mapToOneNotNull().distinctUntilChanged()
 
     suspend fun getUser(): User? = userQueries.getUser().awaitSingleOrNull()
 
-    suspend fun refreshUser(): Result<User, Throwable> = runCatchingWithLog{
-        val userResults = userService.getUser()
-        for (userResult in userResults.results) {
-            async { userQueries.addUser(userResult.toUser()) }
+    suspend fun refreshUser(): Result<User, Throwable> = authenticationUseCase.getUserIdFromToken()
+        .andThen { id ->
+            runCatchingWithLog {
+                val userResult = userService.getUser(id)
+                async { userQueries.addUser(userResult.toUser()) }
+                userResult.toUser()
+            }
         }
-        userResults.results.last().toUser()
-    }
 }

@@ -27,6 +27,7 @@ dependencies {
             libs.androidx.compose.ui,
             libs.autodagger.core,
             libs.bundles.androidx.credentials,
+            libs.gson,
             libs.jwt,
             libs.hilt,
             libs.moshi,

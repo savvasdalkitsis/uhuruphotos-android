@@ -1,10 +1,11 @@
 dependencies {
 
-    implementation project(":foundation:coroutines:api")
-    implementation project(":feature:db:domain:api")
-    implementation project(":foundation:log:api")
-    implementation project(":feature:user:domain:api")
     implementation(
+            project(":feature:auth:domain:api"),
+            project(":feature:db:domain:api"),
+            project(":feature:user:domain:api"),
+            project(":foundation:coroutines:api"),
+            project(":foundation:log:api"),
             libs.autodagger.core,
             libs.hilt,
             libs.moshi,

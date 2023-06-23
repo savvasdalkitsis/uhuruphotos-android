@@ -15,6 +15,7 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.auth.domain.api.usecase
 
+import com.github.michaelbull.result.Result
 import com.savvasdalkitsis.uhuruphotos.feature.auth.domain.api.model.AuthStatus
 
 interface AuthenticationUseCase {
@@ -24,4 +25,6 @@ interface AuthenticationUseCase {
     suspend fun refreshToken(): AuthStatus
 
     suspend fun refreshAccessToken(refreshToken: String): AuthStatus
+
+    suspend fun getUserIdFromToken(): Result<String, Throwable>
 }
