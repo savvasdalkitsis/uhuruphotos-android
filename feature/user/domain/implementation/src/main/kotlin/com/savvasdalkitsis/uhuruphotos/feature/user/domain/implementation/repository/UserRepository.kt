@@ -16,14 +16,14 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.feature.user.domain.implementation.repository
 
 import com.github.michaelbull.result.Result
-import com.github.michaelbull.result.andThen
+import com.github.michaelbull.result.map
 import com.savvasdalkitsis.uhuruphotos.feature.auth.domain.api.usecase.AuthenticationUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.extensions.async
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.extensions.awaitSingleOrNull
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.user.User
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.user.UserQueries
 import com.savvasdalkitsis.uhuruphotos.feature.user.domain.implementation.service.UserService
-import com.savvasdalkitsis.uhuruphotos.foundation.log.api.runCatchingWithLog
+import com.savvasdalkitsis.uhuruphotos.foundation.result.api.andThenTry
 import com.squareup.sqldelight.runtime.coroutines.asFlow
 import com.squareup.sqldelight.runtime.coroutines.mapToOneNotNull
 import kotlinx.coroutines.flow.Flow
@@ -41,11 +41,10 @@ internal class UserRepository @Inject constructor(
     suspend fun getUser(): User? = userQueries.getUser().awaitSingleOrNull()
 
     suspend fun refreshUser(): Result<User, Throwable> = authenticationUseCase.getUserIdFromToken()
-        .andThen { id ->
-            runCatchingWithLog {
-                val userResult = userService.getUser(id)
-                async { userQueries.addUser(userResult.toUser()) }
-                userResult.toUser()
-            }
+        .andThenTry { id ->
+            userService.getUser(id)
+        }.map { userResult ->
+            async { userQueries.addUser(userResult.toUser()) }
+            userResult.toUser()
         }
 }

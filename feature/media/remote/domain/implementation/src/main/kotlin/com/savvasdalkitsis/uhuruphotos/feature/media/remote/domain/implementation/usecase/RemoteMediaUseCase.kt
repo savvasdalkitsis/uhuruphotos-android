@@ -15,10 +15,7 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.implementation.usecase
 
-import com.github.michaelbull.result.Err
-import com.github.michaelbull.result.Ok
 import com.github.michaelbull.result.Result
-import com.github.michaelbull.result.getOrElse
 import com.github.michaelbull.result.getOrThrow
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.entities.media.DbRemoteMediaItemDetails
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.entities.media.DbRemoteMediaItemSummary
@@ -34,14 +31,13 @@ import com.savvasdalkitsis.uhuruphotos.feature.settings.domain.api.usecase.Setti
 import com.savvasdalkitsis.uhuruphotos.feature.user.domain.api.usecase.UserUseCase
 import com.savvasdalkitsis.uhuruphotos.foundation.log.api.runCatchingWithLog
 import com.savvasdalkitsis.uhuruphotos.foundation.result.api.SimpleResult
-import com.savvasdalkitsis.uhuruphotos.foundation.result.api.mapCatching
+import com.savvasdalkitsis.uhuruphotos.foundation.result.api.andThenTry
+import com.savvasdalkitsis.uhuruphotos.foundation.result.api.mapToResultFlow
 import com.savvasdalkitsis.uhuruphotos.foundation.result.api.simple
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.emitAll
 import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.flow.flowOf
-import kotlinx.coroutines.flow.map
 import se.ansman.dagger.auto.AutoBind
 import javax.inject.Inject
 
@@ -62,11 +58,7 @@ class RemoteMediaUseCase @Inject constructor(
             emitAll(
                 withFavouriteThreshold { threshold ->
                     remoteMediaRepository.observeFavouriteMedia(threshold)
-                }.mapCatching {
-                    map { Ok(it) }
-                }.getOrElse {
-                    flowOf(Err(it))
-                }
+                }.mapToResultFlow()
             )
         }
 
@@ -87,8 +79,8 @@ class RemoteMediaUseCase @Inject constructor(
         remoteMediaRepository.getHiddenMedia()
 
     override suspend fun setMediaItemFavourite(id: String, favourite: Boolean): SimpleResult =
-        userUseCase.getUserOrRefresh().mapCatching {
-            remoteMediaRepository.setMediaItemRating(id, favoriteMinRating?.takeIf { favourite } ?: 0)
+        userUseCase.getUserOrRefresh().andThenTry {
+            remoteMediaRepository.setMediaItemRating(id, it.favoriteMinRating?.takeIf { favourite } ?: 0)
             remoteMediaItemWorkScheduler.scheduleMediaItemFavourite(id, favourite)
         }.simple()
 
@@ -166,12 +158,12 @@ class RemoteMediaUseCase @Inject constructor(
     }
 
     private suspend fun <T> withFavouriteThreshold(action: suspend (Int) -> T): Result<T, Throwable> =
-        userUseCase.getUserOrRefresh().mapCatching {
-            action(favoriteMinRating!!)
+        userUseCase.getUserOrRefresh().andThenTry {
+            action(it.favoriteMinRating!!)
         }
 
     private suspend fun resultWithFavouriteThreshold(action: suspend (Int) -> SimpleResult): SimpleResult =
-        userUseCase.getUserOrRefresh().mapCatching {
-            action(favoriteMinRating!!).getOrThrow()
+        userUseCase.getUserOrRefresh().andThenTry {
+            action(it.favoriteMinRating!!).getOrThrow()
         }
 }

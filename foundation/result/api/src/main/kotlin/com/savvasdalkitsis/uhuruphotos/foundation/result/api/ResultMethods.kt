@@ -15,15 +15,22 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.foundation.result.api
 
+import com.github.michaelbull.result.Err
 import com.github.michaelbull.result.Ok
 import com.github.michaelbull.result.Result
-import com.github.michaelbull.result.mapEither
+import com.github.michaelbull.result.andThen
+import com.github.michaelbull.result.mapBoth
+import com.savvasdalkitsis.uhuruphotos.foundation.log.api.runCatchingWithLog
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flowOf
+import kotlinx.coroutines.flow.map
 
-typealias SimpleResult = Result<Unit, Throwable>
+suspend fun <V, U> Result<V, Throwable>.andThenTry(transform: suspend (V) -> U): Result<U, Throwable> = andThen {
+    runCatchingWithLog { transform(it) }
+}
 
-val simpleOk = Ok(Unit).simple()
-
-fun <V> Result<V, Throwable>.simple() : SimpleResult = mapEither(
-    success = { },
-    failure = { it },
-)
+fun <T, E> Result<Flow<T>, E>.mapToResultFlow(): Flow<Result<T, E>> =
+    mapBoth(
+        success = { flow -> flow.map { Ok(it) } },
+        failure = { flowOf(Err(it)) }
+    )

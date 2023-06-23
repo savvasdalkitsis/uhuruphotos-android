@@ -52,8 +52,6 @@ import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.model.Medi
 import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.usecase.LocalMediaUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.api.model.deserializePeopleNames
 import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.api.usecase.RemoteMediaUseCase
-import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.implementation.repository.RemoteMediaRepository
-import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.implementation.worker.RemoteMediaItemWorkScheduler
 import com.savvasdalkitsis.uhuruphotos.feature.people.domain.api.usecase.PeopleUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.people.view.api.ui.state.toPerson
 import com.savvasdalkitsis.uhuruphotos.feature.user.domain.api.usecase.UserUseCase
@@ -62,7 +60,7 @@ import com.savvasdalkitsis.uhuruphotos.foundation.group.api.model.Group
 import com.savvasdalkitsis.uhuruphotos.foundation.map.api.model.LatLon
 import com.savvasdalkitsis.uhuruphotos.foundation.map.api.model.toLatLon
 import com.savvasdalkitsis.uhuruphotos.foundation.result.api.SimpleResult
-import com.savvasdalkitsis.uhuruphotos.foundation.result.api.mapCatching
+import com.savvasdalkitsis.uhuruphotos.foundation.result.api.andThenTry
 import com.savvasdalkitsis.uhuruphotos.foundation.result.api.simple
 import com.savvasdalkitsis.uhuruphotos.foundation.result.api.simpleOk
 import kotlinx.coroutines.flow.Flow
@@ -78,8 +76,6 @@ class MediaUseCase @Inject constructor(
     private val localMediaUseCase: LocalMediaUseCase,
     private val remoteMediaUseCase: RemoteMediaUseCase,
     private val serverUseCase: ServerUseCase,
-    private val remoteMediaRepository: RemoteMediaRepository,
-    private val remoteMediaItemWorkScheduler: RemoteMediaItemWorkScheduler,
     private val userUseCase: UserUseCase,
     private val dateDisplayer: DateDisplayer,
     private val peopleUseCase: PeopleUseCase,
@@ -147,8 +143,8 @@ class MediaUseCase @Inject constructor(
         remoteMediaUseCase.observeFavouriteRemoteMedia()
             .distinctUntilChanged()
             .map { media ->
-                media.mapCatching {
-                    mapToMediaItems().getOrThrow()
+                media.andThenTry {
+                    it.mapToMediaItems().getOrThrow()
                 }
             }
 
@@ -362,7 +358,7 @@ class MediaUseCase @Inject constructor(
 
     override suspend fun Group<String, MediaCollectionSource>.toMediaCollection(): List<MediaCollection> {
         val favouriteThreshold = userUseCase.getUserOrRefresh()
-            .mapCatching { favoriteMinRating!! }
+            .andThenTry { it.favoriteMinRating!! }
         return items
             .map { (id, source) ->
                 mediaCollection(id, source, favouriteThreshold)
@@ -372,7 +368,7 @@ class MediaUseCase @Inject constructor(
 
     override suspend fun List<MediaCollectionSource>.toMediaCollections(): List<MediaCollection> {
         val favouriteThreshold = userUseCase.getUserOrRefresh()
-            .mapCatching { favoriteMinRating!! }
+            .andThenTry { it.favoriteMinRating!! }
         return groupBy { dateDisplayer.dateString(it.date) }
             .map { (date, items) ->
                 mediaCollection(date, items, favouriteThreshold)
@@ -434,7 +430,7 @@ class MediaUseCase @Inject constructor(
     }
 
     private suspend fun <T> withFavouriteThreshold(action: suspend (Int) -> T): Result<T, Throwable> =
-        userUseCase.getUserOrRefresh().mapCatching {
-            action(favoriteMinRating!!)
+        userUseCase.getUserOrRefresh().andThenTry {
+            action(it.favoriteMinRating!!)
         }
 }

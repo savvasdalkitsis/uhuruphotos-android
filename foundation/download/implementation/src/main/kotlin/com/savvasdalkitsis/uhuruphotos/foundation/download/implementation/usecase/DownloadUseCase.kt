@@ -36,7 +36,7 @@ import com.savvasdalkitsis.uhuruphotos.foundation.download.implementation.reposi
 import com.savvasdalkitsis.uhuruphotos.foundation.download.implementation.repository.MediaId
 import com.savvasdalkitsis.uhuruphotos.foundation.log.api.log
 import com.savvasdalkitsis.uhuruphotos.foundation.result.api.SimpleResult
-import com.savvasdalkitsis.uhuruphotos.foundation.result.api.mapCatching
+import com.savvasdalkitsis.uhuruphotos.foundation.result.api.andThenTry
 import com.savvasdalkitsis.uhuruphotos.foundation.result.api.simple
 import com.squareup.sqldelight.runtime.coroutines.asFlow
 import com.squareup.sqldelight.runtime.coroutines.mapToList
@@ -71,7 +71,7 @@ internal class DownloadUseCase @Inject constructor(
     }
 
     private suspend fun queueDownload(id: Remote): SimpleResult =
-        mediaUseCase.refreshDetailsNowIfMissing(id).mapCatching {
+        mediaUseCase.refreshDetailsNowIfMissing(id).andThenTry {
             val remotePath = mediaUseCase.getMediaItemDetails(id)?.remotePath
             val fullFileName = remotePath?.substringAfterLast("/")
 

@@ -56,7 +56,7 @@ data object Log {
 }
 
 
-inline fun <T, R : Any> T.runCatchingWithLog(block: T.() -> R): Result<R, Throwable> = try {
+inline fun <T, R> T.runCatchingWithLog(block: T.() -> R): Result<R, Throwable> = try {
     Ok(block())
 } catch (e: Throwable) {
     log(e)
