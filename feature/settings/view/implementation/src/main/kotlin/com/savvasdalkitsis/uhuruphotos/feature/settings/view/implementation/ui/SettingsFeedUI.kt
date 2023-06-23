@@ -21,6 +21,7 @@ import androidx.compose.ui.res.stringResource
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.api.ui.state.FeedMediaItemSyncDisplay
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.actions.ChangeFeedMediaItemSyncDisplay
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.actions.ChangeMemoriesEnabled
+import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.actions.ChangeShouldShowFullSyncProgress
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.actions.SettingsAction
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.ui.state.SettingsState
 import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.R.drawable
@@ -37,6 +38,13 @@ internal fun SettingsFeedUI(
         isChecked = state.showMemories,
     ) {
         action(ChangeMemoriesEnabled(!state.showMemories))
+    }
+    SettingsCheckBox(
+        text = stringResource(string.show_feed_sync_progress),
+        icon = drawable.ic_progress_question,
+        isChecked = state.shouldShowFeedSyncProgress,
+    ) {
+        action(ChangeShouldShowFullSyncProgress(!state.shouldShowFeedSyncProgress))
     }
 
     Divider()

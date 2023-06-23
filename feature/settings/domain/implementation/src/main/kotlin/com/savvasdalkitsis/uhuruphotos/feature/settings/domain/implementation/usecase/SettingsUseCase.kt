@@ -95,6 +95,8 @@ internal class SettingsUseCase @Inject constructor(
     private val showBannerAskingForLocalMediaPermissionsOnHeatmapDefault = true
     private val feedMediaItemSyncDisplay = "feedMediaItemSyncDisplay"
     private val feedMediaItemSyncDisplayDefault = FeedMediaItemSyncDisplay.default
+    private val shouldShowFeedSyncProgress = "shouldShowFeedSyncProgress"
+    private val shouldShowFeedSyncProgressDefault = false
 
     override fun getImageDiskCacheMaxLimit(): Int =
         get(imageDiskCacheSize, imageDiskCacheSizeDefault)
@@ -140,6 +142,8 @@ internal class SettingsUseCase @Inject constructor(
         get(showBannerAskingForLocalMediaPermissionsOnHeatmap, showBannerAskingForLocalMediaPermissionsOnHeatmapDefault)
     override fun getFeedMediaItemSyncDisplay(): FeedMediaItemSyncDisplay =
         get(feedMediaItemSyncDisplay, feedMediaItemSyncDisplayDefault)
+    override fun getShouldShowFeedSyncProgress(): Boolean =
+        get(shouldShowFeedSyncProgress, shouldShowFeedSyncProgressDefault)
 
     override fun observeImageDiskCacheMaxLimit(): Flow<Int> =
         observe(imageDiskCacheSize, imageDiskCacheSizeDefault)
@@ -185,6 +189,8 @@ internal class SettingsUseCase @Inject constructor(
         observe(maxAnimatedVideoThumbnails, maxAnimatedVideoThumbnailsDefault)
     override fun observeFeedMediaItemSyncDisplay(): Flow<FeedMediaItemSyncDisplay> =
         observe(feedMediaItemSyncDisplay, feedMediaItemSyncDisplayDefault)
+    override fun observeShouldShowFeedSyncProgress(): Flow<Boolean> =
+        observe(shouldShowFeedSyncProgress, shouldShowFeedSyncProgressDefault)
 
     override fun setImageDiskCacheMaxLimit(sizeInMb: Int) {
         set(imageDiskCacheSize, sizeInMb)
@@ -277,6 +283,10 @@ internal class SettingsUseCase @Inject constructor(
 
     override fun setFeedMediaItemSyncDisplay(display: FeedMediaItemSyncDisplay) {
         set(feedMediaItemSyncDisplay, display)
+    }
+
+    override fun setShouldShowFeedSyncProgress(show: Boolean) {
+        set(shouldShowFeedSyncProgress, show)
     }
 
     private fun MapProvider.mapToAvailable(): MapProvider =

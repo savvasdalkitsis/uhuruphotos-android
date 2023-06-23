@@ -19,6 +19,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.jobs.domain.api.model.JobsStatus
 import com.savvasdalkitsis.uhuruphotos.feature.jobs.domain.api.usecase.JobsUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.usecase.LocalMediaUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.worker.LocalMediaWorkScheduler
+import com.savvasdalkitsis.uhuruphotos.feature.settings.domain.api.usecase.SettingsUseCase
 import com.savvasdalkitsis.uhuruphotos.foundation.worker.api.model.RefreshJobState
 import dagger.hilt.android.scopes.ActivityRetainedScoped
 import kotlinx.coroutines.flow.Flow
@@ -33,6 +34,7 @@ class JobsUseCase @Inject constructor(
     private val feedImmediateWorkScheduler: FeedImmediateWorkScheduler,
     private val localMediaUseCase: LocalMediaUseCase,
     private val localMediaWorkScheduler: LocalMediaWorkScheduler,
+    private val settingsUseCase: SettingsUseCase,
 ) : JobsUseCase {
 
     override fun observeJobsStatus(): Flow<JobsStatus> =
@@ -49,6 +51,18 @@ class JobsUseCase @Inject constructor(
                 )
             )
         }
+
+    override fun observeJobsStatusFilteredBySettings(): Flow<JobsStatus> = combine(
+        observeJobsStatus(),
+        settingsUseCase.observeShouldShowFeedSyncProgress()
+    ) { jobs, showFeedProgress ->
+        jobs.copy(jobs = jobs.jobs.mapValues { (job, status) ->
+            when (job) {
+                FEED_SYNC -> if (showFeedProgress) status else Idle
+                PRECACHE_THUMBNAILS, LOCAL_MEDIA_SYNC -> status
+            }
+        })
+    }
 
     override fun startJob(job: Job) {
         when (job) {

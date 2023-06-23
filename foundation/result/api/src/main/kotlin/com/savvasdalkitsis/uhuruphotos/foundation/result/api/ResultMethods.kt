@@ -18,16 +18,10 @@ package com.savvasdalkitsis.uhuruphotos.foundation.result.api
 import com.github.michaelbull.result.Err
 import com.github.michaelbull.result.Ok
 import com.github.michaelbull.result.Result
-import com.github.michaelbull.result.andThen
 import com.github.michaelbull.result.mapBoth
-import com.savvasdalkitsis.uhuruphotos.foundation.log.api.runCatchingWithLog
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.map
-
-suspend fun <V, U> Result<V, Throwable>.andThenTry(transform: suspend (V) -> U): Result<U, Throwable> = andThen {
-    runCatchingWithLog { transform(it) }
-}
 
 fun <T, E> Result<Flow<T>, E>.mapToResultFlow(): Flow<Result<T, E>> =
     mapBoth(

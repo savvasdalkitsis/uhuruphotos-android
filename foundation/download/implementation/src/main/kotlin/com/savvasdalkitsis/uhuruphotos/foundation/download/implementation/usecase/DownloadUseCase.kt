@@ -34,9 +34,9 @@ import com.savvasdalkitsis.uhuruphotos.foundation.download.api.usecase.DownloadU
 import com.savvasdalkitsis.uhuruphotos.foundation.download.implementation.repository.DownloadId
 import com.savvasdalkitsis.uhuruphotos.foundation.download.implementation.repository.DownloadingRepository
 import com.savvasdalkitsis.uhuruphotos.foundation.download.implementation.repository.MediaId
+import com.savvasdalkitsis.uhuruphotos.foundation.log.api.andThenTry
 import com.savvasdalkitsis.uhuruphotos.foundation.log.api.log
 import com.savvasdalkitsis.uhuruphotos.foundation.result.api.SimpleResult
-import com.savvasdalkitsis.uhuruphotos.foundation.result.api.andThenTry
 import com.savvasdalkitsis.uhuruphotos.foundation.result.api.simple
 import com.squareup.sqldelight.runtime.coroutines.asFlow
 import com.squareup.sqldelight.runtime.coroutines.mapToList

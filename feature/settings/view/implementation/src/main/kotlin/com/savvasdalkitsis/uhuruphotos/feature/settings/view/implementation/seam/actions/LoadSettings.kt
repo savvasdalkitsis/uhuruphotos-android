@@ -84,6 +84,8 @@ data object LoadSettings : SettingsAction() {
         ) { app, hiddenPhotos, trash ->
             DisplayBiometrics(enrollment(app, hiddenPhotos, trash))
         },
+        settingsUseCase.observeShouldShowFeedSyncProgress()
+            .map(SettingsMutation::SetFullSyncProgressVisibility),
         cacheUseCase.observeImageDiskCacheCurrentUse()
             .map(SettingsMutation::DisplayImageDiskCacheCurrentUse),
         cacheUseCase.observeImageMemCacheCurrentUse()

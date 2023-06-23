@@ -51,4 +51,5 @@ data class SettingsState(
     val biometrics: BiometricsSetting? = null,
     val showMemories: Boolean = true,
     val feedMediaItemSyncDisplay: FeedMediaItemSyncDisplay = FeedMediaItemSyncDisplay.default,
+    val shouldShowFeedSyncProgress: Boolean = false,
 )

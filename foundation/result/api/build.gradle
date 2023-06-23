@@ -3,7 +3,6 @@ android {
 }
 
 dependencies {
-    implementation project(":foundation:log:api")
     api(
         libs.kotlinx.coroutines,
         libs.result,

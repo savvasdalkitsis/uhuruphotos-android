@@ -23,7 +23,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.extensions.awaitSin
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.user.User
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.user.UserQueries
 import com.savvasdalkitsis.uhuruphotos.feature.user.domain.implementation.service.UserService
-import com.savvasdalkitsis.uhuruphotos.foundation.result.api.andThenTry
+import com.savvasdalkitsis.uhuruphotos.foundation.log.api.andThenTry
 import com.squareup.sqldelight.runtime.coroutines.asFlow
 import com.squareup.sqldelight.runtime.coroutines.mapToOneNotNull
 import kotlinx.coroutines.flow.Flow

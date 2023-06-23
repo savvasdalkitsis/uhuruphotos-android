@@ -10,18 +10,18 @@ android {
 
 dependencies {
 
-    implementation project(":feature:auth:domain:api")
-    implementation project(":feature:db:domain:api")
-    implementation project(":feature:feed:domain:api")
-    implementation project(":feature:jobs:domain:api")
-    implementation project(":foundation:icons:api")
-    implementation project(':foundation:image:api')
-    implementation project(':feature:media:remote:domain:api')
-    implementation project(":foundation:ui:api")
-    implementation project(":feature:user:domain:api")
-    implementation project(':feature:avatar:domain:api')
-    implementation project(':feature:avatar:view:api')
     implementation(
+            project(":feature:auth:domain:api"),
+            project(":feature:db:domain:api"),
+            project(":feature:feed:domain:api"),
+            project(":feature:jobs:domain:api"),
+            project(":feature:user:domain:api"),
+            project(":foundation:icons:api"),
+            project(":foundation:ui:api"),
+            project(':feature:avatar:domain:api'),
+            project(':feature:avatar:view:api'),
+            project(':feature:media:remote:domain:api'),
+            project(':foundation:image:api'),
             libs.androidx.compose.material,
             libs.androidx.work,
             libs.autodagger.core,

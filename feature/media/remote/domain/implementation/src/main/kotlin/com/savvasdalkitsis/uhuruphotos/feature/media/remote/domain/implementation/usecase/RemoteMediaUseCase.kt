@@ -29,9 +29,9 @@ import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.implementatio
 import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.implementation.worker.RemoteMediaItemWorkScheduler
 import com.savvasdalkitsis.uhuruphotos.feature.settings.domain.api.usecase.SettingsUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.user.domain.api.usecase.UserUseCase
+import com.savvasdalkitsis.uhuruphotos.foundation.log.api.andThenTry
 import com.savvasdalkitsis.uhuruphotos.foundation.log.api.runCatchingWithLog
 import com.savvasdalkitsis.uhuruphotos.foundation.result.api.SimpleResult
-import com.savvasdalkitsis.uhuruphotos.foundation.result.api.andThenTry
 import com.savvasdalkitsis.uhuruphotos.foundation.result.api.mapToResultFlow
 import com.savvasdalkitsis.uhuruphotos.foundation.result.api.simple
 import kotlinx.coroutines.flow.Flow

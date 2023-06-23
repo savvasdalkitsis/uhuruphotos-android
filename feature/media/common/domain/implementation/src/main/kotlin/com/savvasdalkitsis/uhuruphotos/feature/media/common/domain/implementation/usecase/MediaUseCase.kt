@@ -57,10 +57,10 @@ import com.savvasdalkitsis.uhuruphotos.feature.people.view.api.ui.state.toPerson
 import com.savvasdalkitsis.uhuruphotos.feature.user.domain.api.usecase.UserUseCase
 import com.savvasdalkitsis.uhuruphotos.foundation.date.api.DateDisplayer
 import com.savvasdalkitsis.uhuruphotos.foundation.group.api.model.Group
+import com.savvasdalkitsis.uhuruphotos.foundation.log.api.andThenTry
 import com.savvasdalkitsis.uhuruphotos.foundation.map.api.model.LatLon
 import com.savvasdalkitsis.uhuruphotos.foundation.map.api.model.toLatLon
 import com.savvasdalkitsis.uhuruphotos.foundation.result.api.SimpleResult
-import com.savvasdalkitsis.uhuruphotos.foundation.result.api.andThenTry
 import com.savvasdalkitsis.uhuruphotos.foundation.result.api.simple
 import com.savvasdalkitsis.uhuruphotos.foundation.result.api.simpleOk
 import kotlinx.coroutines.flow.Flow

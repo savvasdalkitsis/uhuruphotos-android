@@ -262,4 +262,5 @@
     <string name="crop_options">Crop options</string>
     <string name="error_editing_photo">There was an error while editing the photo</string>
     <string name="dismiss">Dismiss</string>
+    <string name="show_feed_sync_progress">Display full photo feed sync progress</string>
 </resources>

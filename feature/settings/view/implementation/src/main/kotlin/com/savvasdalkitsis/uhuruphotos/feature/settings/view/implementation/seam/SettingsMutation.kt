@@ -177,9 +177,13 @@ sealed class SettingsMutation(
         it.copy(biometrics = biometrics)
     })
 
-    object DisplayNoMapProvidersOptions : SettingsMutation({
+    data object DisplayNoMapProvidersOptions : SettingsMutation({
         it.copy(
             mapProviderState = MapProviderState.NoOptions
         )
+    })
+
+    data class SetFullSyncProgressVisibility(val show: Boolean) : SettingsMutation({
+        it.copy(shouldShowFeedSyncProgress = show)
     })
 }

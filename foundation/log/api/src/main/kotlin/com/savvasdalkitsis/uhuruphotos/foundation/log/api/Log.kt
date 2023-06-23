@@ -18,6 +18,7 @@ package com.savvasdalkitsis.uhuruphotos.foundation.log.api
 import com.github.michaelbull.result.Err
 import com.github.michaelbull.result.Ok
 import com.github.michaelbull.result.Result
+import com.github.michaelbull.result.andThen
 import com.michaelflisar.lumberjack.L
 
 fun log(tag: String = "", msg: () -> String) {
@@ -55,6 +56,9 @@ data object Log {
         }
 }
 
+suspend fun <V, U> Result<V, Throwable>.andThenTry(transform: suspend (V) -> U): Result<U, Throwable> = andThen {
+    runCatchingWithLog { transform(it) }
+}
 
 inline fun <T, R> T.runCatchingWithLog(block: T.() -> R): Result<R, Throwable> = try {
     Ok(block())

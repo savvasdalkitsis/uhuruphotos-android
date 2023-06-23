@@ -41,7 +41,7 @@ class AvatarUseCase @Inject constructor(
 
     override fun getAvatarState(): Flow<AvatarState> = combine(
         userUseCase.observeUser(),
-        jobsUseCase.observeJobsStatus(),
+        jobsUseCase.observeJobsStatusFilteredBySettings(),
         serverUseCase.observeServerUrl(),
     ) { user, jobsStatus, serverUrl ->
         val statuses = jobsStatus.jobs.values

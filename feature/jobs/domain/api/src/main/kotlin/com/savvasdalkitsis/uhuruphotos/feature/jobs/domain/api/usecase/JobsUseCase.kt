@@ -23,6 +23,8 @@ interface JobsUseCase {
 
     fun observeJobsStatus(): Flow<JobsStatus>
 
+    fun observeJobsStatusFilteredBySettings(): Flow<JobsStatus>
+
     fun startJob(job: Job)
 
     fun cancelJob(job: Job)
