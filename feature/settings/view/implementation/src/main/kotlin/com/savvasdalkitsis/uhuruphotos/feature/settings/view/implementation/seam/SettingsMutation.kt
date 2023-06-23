@@ -190,4 +190,8 @@ sealed class SettingsMutation(
     data class SetPrecacheProgressVisibility(val show: Boolean) : SettingsMutation({
         it.copy(shouldShowPrecacheProgress = show)
     })
+
+    data class SetLocalSyncProgressVisibility(val show: Boolean) : SettingsMutation({
+        it.copy(shouldShowLocalSyncProgress = show)
+    })
 }

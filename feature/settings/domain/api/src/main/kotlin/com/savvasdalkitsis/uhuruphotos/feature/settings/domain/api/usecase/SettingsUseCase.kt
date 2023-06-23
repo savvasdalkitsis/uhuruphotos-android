@@ -48,6 +48,7 @@ interface SettingsUseCase {
     fun getFeedMediaItemSyncDisplay(): FeedMediaItemSyncDisplay
     fun getShouldShowFeedSyncProgress(): Boolean
     fun getShouldShowPrecacheProgress(): Boolean
+    fun getShouldShowLocalSyncProgress(): Boolean
 
     fun observeImageDiskCacheMaxLimit(): Flow<Int>
     fun observeImageMemCacheMaxLimit(): Flow<Int>
@@ -72,6 +73,7 @@ interface SettingsUseCase {
     fun observeFeedMediaItemSyncDisplay(): Flow<FeedMediaItemSyncDisplay>
     fun observeShouldShowFeedSyncProgress(): Flow<Boolean>
     fun observeShouldShowPrecacheProgress(): Flow<Boolean>
+    fun observeShouldShowLocalSyncProgress(): Flow<Boolean>
 
     fun setImageDiskCacheMaxLimit(sizeInMb: Int)
     fun setImageMemCacheMaxLimit(sizeInMb: Int)
@@ -98,4 +100,5 @@ interface SettingsUseCase {
     fun setFeedMediaItemSyncDisplay(display: FeedMediaItemSyncDisplay)
     fun setShouldShowFeedSyncProgress(show: Boolean)
     fun setShouldShowPrecacheProgress(show: Boolean)
+    fun setShouldShowLocalSyncProgress(show: Boolean)
 }

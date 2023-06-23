@@ -22,6 +22,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.Fee
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.effects.FeedEffect
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.effects.ShowErrorDeletingMedia
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.ui.state.FeedState
+import com.savvasdalkitsis.uhuruphotos.feature.jobs.domain.api.usecase.JobsUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.usecase.MediaUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.state.CelState
 import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.model.LocalMediaDeletionRequest
@@ -42,6 +43,7 @@ internal class FeedActionsContext @Inject constructor(
     val downloadUseCase: DownloadUseCase,
     val feedUseCase: FeedUseCase,
     val mediaUseCase: MediaUseCase,
+    val jobsUseCase: JobsUseCase,
     val localMediaDeletionUseCase: LocalMediaDeletionUseCase,
     val selectionList: SelectionList,
     val settingsUseCase: SettingsUseCase,

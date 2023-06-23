@@ -30,7 +30,6 @@ import android.provider.MediaStore.MediaColumns.DISPLAY_NAME
 import android.provider.MediaStore.MediaColumns.MIME_TYPE
 import android.provider.MediaStore.MediaColumns.RELATIVE_PATH
 import androidx.core.content.ContextCompat
-import androidx.work.WorkInfo
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.extensions.async
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.media.local.LocalMediaItemDetails
 import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.model.LocalFolder
@@ -195,9 +194,6 @@ class LocalMediaUseCase @Inject constructor(
                 else -> LocalPermissions.Granted
             }
         }
-
-    override fun observeLocalMediaSyncJobStatus(): Flow<WorkInfo.State?> =
-        workerStatusUseCase.monitorUniqueJobStatus(LocalMediaSyncWorker.WORK_NAME)
 
     override fun observeLocalMediaSyncJob(): Flow<RefreshJobState?> =
         workerStatusUseCase.monitorUniqueJob(LocalMediaSyncWorker.WORK_NAME).map {

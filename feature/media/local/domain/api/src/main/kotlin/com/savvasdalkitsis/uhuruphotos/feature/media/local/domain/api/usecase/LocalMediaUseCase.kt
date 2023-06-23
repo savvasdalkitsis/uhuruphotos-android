@@ -17,7 +17,6 @@ package com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.usecase
 
 import android.graphics.Bitmap
 import android.net.Uri
-import androidx.work.WorkInfo
 import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.model.LocalFolder
 import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.model.LocalMediaItem
 import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.model.LocalMediaItems
@@ -49,8 +48,6 @@ interface LocalMediaUseCase {
     )
 
     fun observePermissionsState(): Flow<LocalPermissions>
-
-    fun observeLocalMediaSyncJobStatus(): Flow<WorkInfo.State?>
 
     fun observeLocalMediaSyncJob(): Flow<RefreshJobState?>
 

@@ -15,7 +15,6 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.usecase
 
-import androidx.work.WorkInfo
 import com.github.michaelbull.result.Result
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.entities.media.DbRemoteMediaItemSummary
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaCollection
@@ -68,6 +67,4 @@ interface MediaUseCase {
     suspend fun List<MediaCollectionSource>.toMediaCollections(): List<MediaCollection>
 
     suspend fun Group<String, MediaCollectionSource>.toMediaCollection(): List<MediaCollection>
-
-    fun observeLocalMediaSyncJobStatus(): Flow<WorkInfo.State?>
 }

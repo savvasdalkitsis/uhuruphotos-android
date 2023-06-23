@@ -15,7 +15,6 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.implementation.usecase
 
-import androidx.work.WorkInfo
 import com.github.michaelbull.result.Ok
 import com.github.michaelbull.result.Result
 import com.github.michaelbull.result.combine
@@ -352,9 +351,6 @@ class MediaUseCase @Inject constructor(
 
     override suspend fun refreshFavouriteMedia() =
         remoteMediaUseCase.refreshFavouriteMedia()
-
-    override fun observeLocalMediaSyncJobStatus(): Flow<WorkInfo.State?> =
-        localMediaUseCase.observeLocalMediaSyncJobStatus()
 
     override suspend fun Group<String, MediaCollectionSource>.toMediaCollection(): List<MediaCollection> {
         val favouriteThreshold = userUseCase.getUserOrRefresh()

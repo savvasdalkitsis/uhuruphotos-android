@@ -10,6 +10,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.jobs.domain.api.model.Job
 import com.savvasdalkitsis.uhuruphotos.feature.jobs.domain.api.model.Job.FEED_SYNC
 import com.savvasdalkitsis.uhuruphotos.feature.jobs.domain.api.model.Job.LOCAL_MEDIA_SYNC
 import com.savvasdalkitsis.uhuruphotos.feature.jobs.domain.api.model.Job.PRECACHE_THUMBNAILS
+import com.savvasdalkitsis.uhuruphotos.feature.jobs.domain.api.model.JobStatus
 import com.savvasdalkitsis.uhuruphotos.feature.jobs.domain.api.model.JobStatus.Blocked
 import com.savvasdalkitsis.uhuruphotos.feature.jobs.domain.api.model.JobStatus.Failed
 import com.savvasdalkitsis.uhuruphotos.feature.jobs.domain.api.model.JobStatus.Idle
@@ -56,15 +57,18 @@ class JobsUseCase @Inject constructor(
         observeJobsStatus(),
         settingsUseCase.observeShouldShowFeedSyncProgress(),
         settingsUseCase.observeShouldShowPrecacheProgress(),
-    ) { jobs, showFeedProgress, showPrecacheProgress ->
+        settingsUseCase.observeShouldShowLocalSyncProgress(),
+    ) { jobs, showFeedProgress, showPrecacheProgress, showLocalProgress ->
         jobs.copy(jobs = jobs.jobs.mapValues { (job, status) ->
-            when (job) {
-                FEED_SYNC -> if (showFeedProgress) status else Idle
-                PRECACHE_THUMBNAILS  -> if (showPrecacheProgress) status else Idle
-                LOCAL_MEDIA_SYNC -> status
-            }
+            status.unless(when (job) {
+                FEED_SYNC -> showFeedProgress
+                PRECACHE_THUMBNAILS  -> showPrecacheProgress
+                LOCAL_MEDIA_SYNC -> showLocalProgress
+            })
         })
     }
+
+    private fun JobStatus.unless(predicate: Boolean): JobStatus = if (predicate) this else Idle
 
     override fun startJob(job: Job) {
         when (job) {
