@@ -1,1 +1,1 @@
-UPDATE localMediaItemDetails SET thumbnailPath = NULL;
+ALTER TABLE localMediaItemDetails ADD COLUMN thumbnailPath TEXT;
