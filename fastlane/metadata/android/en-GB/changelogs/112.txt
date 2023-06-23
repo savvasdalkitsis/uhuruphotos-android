@@ -1,0 +1,3 @@
+* Fixing wrong user being resolved on server with many users
+* Creating thumbnails of local media to improve feed performance
+* Fixing library drag and drop for pills and vitrine items
