@@ -21,7 +21,6 @@ import androidx.biometric.BiometricManager.BIOMETRIC_ERROR_NO_HARDWARE
 import androidx.biometric.BiometricManager.BIOMETRIC_SUCCESS
 import com.afollestad.assure.Prompt
 import com.afollestad.assure.authenticate
-import com.github.michaelbull.result.Ok
 import com.savvasdalkitsis.uhuruphotos.foundation.activity.api.holder.CurrentActivityHolder
 import com.savvasdalkitsis.uhuruphotos.foundation.biometrics.api.model.Biometrics
 import com.savvasdalkitsis.uhuruphotos.foundation.biometrics.api.model.Biometrics.Enrolled
@@ -36,6 +35,7 @@ import dagger.hilt.android.scopes.ActivityRetainedScoped
 import se.ansman.dagger.auto.AutoBind
 import javax.inject.Inject
 import kotlin.coroutines.resume
+import kotlin.coroutines.resumeWithException
 import kotlin.coroutines.suspendCoroutine
 
 @AutoBind
@@ -72,10 +72,10 @@ internal class BiometricsUseCase @Inject constructor(
                             deviceCredentialsAllowed = true,
                         )
                     ) { exception ->
-                        continuation.resume(when(exception) {
-                            null -> Ok(Unit)
-                            else -> Error(exception)
-                        })
+                        when(exception) {
+                            null -> continuation.resume(Unit)
+                            else -> continuation.resumeWithException(exception)
+                        }
                     }
                 }
             }
