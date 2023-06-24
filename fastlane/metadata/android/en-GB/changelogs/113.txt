@@ -1,0 +1,3 @@
+* Making job progress showing on the avatar (and for local media on the feed) optional (hidden by default)
+* Fixing biometrics not working
+* Not showing swipe refresh icon when initially loading feed
