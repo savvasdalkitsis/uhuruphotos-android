@@ -27,9 +27,8 @@ import com.savvasdalkitsis.uhuruphotos.foundation.upload.api.model.UploadItem
 import com.savvasdalkitsis.uhuruphotos.foundation.upload.api.usecase.UploadUseCase
 import com.savvasdalkitsis.uhuruphotos.foundation.upload.implementation.repository.UploadRepository
 import com.savvasdalkitsis.uhuruphotos.foundation.upload.implementation.service.UploadService
+import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
-
-const val MB = 1024 * 1024
 
 class UploadUseCase @Inject constructor(
     private val localMediaUseCase: LocalMediaUseCase,
@@ -64,5 +63,7 @@ class UploadUseCase @Inject constructor(
             }
         }
     }
+
+    override fun observeUploading(): Flow<Set<Long>> = uploadRepository.observeUploading()
 
 }

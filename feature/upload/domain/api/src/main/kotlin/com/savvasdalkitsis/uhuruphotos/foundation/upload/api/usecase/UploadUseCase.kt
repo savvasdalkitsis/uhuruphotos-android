@@ -17,9 +17,11 @@ package com.savvasdalkitsis.uhuruphotos.foundation.upload.api.usecase
 
 import com.savvasdalkitsis.uhuruphotos.foundation.upload.api.model.UploadCapability
 import com.savvasdalkitsis.uhuruphotos.foundation.upload.api.model.UploadItem
+import kotlinx.coroutines.flow.Flow
 
 interface UploadUseCase {
 
     suspend fun canUpload(): UploadCapability
     suspend fun scheduleUpload(vararg items: UploadItem)
+    fun observeUploading(): Flow<Set<Long>>
 }

@@ -107,11 +107,11 @@ sealed class MediaId<T : Serializable> private constructor(
     data class Uploading(
         override val value: Long,
         override val isVideo: Boolean,
-        val serverUrl: String,
+        val contentUri: String,
         override val thumbnailUri: String,
     ): MediaId<Long>(value, isVideo) {
         @IgnoredOnParcel
-        val local get() = Local(value, isVideo, serverUrl, thumbnailUri)
+        val local get() = Local(value, isVideo, contentUri, thumbnailUri)
 
         @IgnoredOnParcel
         @Transient

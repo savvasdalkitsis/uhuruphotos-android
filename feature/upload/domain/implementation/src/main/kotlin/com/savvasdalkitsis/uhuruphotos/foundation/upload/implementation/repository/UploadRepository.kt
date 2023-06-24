@@ -17,6 +17,11 @@ package com.savvasdalkitsis.uhuruphotos.foundation.upload.implementation.reposit
 
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.Database
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.media.upload.UploadingMediaItemsQueries
+import com.squareup.sqldelight.runtime.coroutines.asFlow
+import com.squareup.sqldelight.runtime.coroutines.mapToList
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
 class UploadRepository @Inject constructor(
@@ -39,4 +44,7 @@ class UploadRepository @Inject constructor(
             }
         }
     }
+
+    fun observeUploading(): Flow<Set<Long>> = uploadingMediaItemsQueries.getAll()
+        .asFlow().mapToList().map { it.toSet() }.distinctUntilChanged()
 }

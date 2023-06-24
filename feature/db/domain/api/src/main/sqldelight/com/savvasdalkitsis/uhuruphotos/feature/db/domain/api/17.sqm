@@ -1,0 +1,3 @@
+CREATE TABLE uploadingMediaItems (
+    id INTEGER AS Long NOT NULL PRIMARY KEY
+);

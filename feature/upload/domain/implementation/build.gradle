@@ -17,6 +17,7 @@ dependencies {
             libs.hilt,
             libs.bundles.upload,
             libs.retrofit.core,
+            libs.sqldelight.coroutines,
     )
     kapt libs.autodagger.kapt
 }
