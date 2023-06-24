@@ -259,4 +259,8 @@
     <string name="error_editing_photo">Er is een fout opgetreden tijdens het bewerken</string>
     <string name="crop_options">Bijsnijdopties</string>
     <string name="dismiss">Negeren</string>
+    <string name="show_precache_progress">Voortgang van in cache plaatsen tonen</string>
+    <string name="show_local_progress">Voortgang van lokale synchronisatie tonen</string>
+    <string name="progress">Voortgang</string>
+    <string name="show_feed_sync_progress">Voortgang van volledige feedsynchronisatie tonen</string>
 </resources>
