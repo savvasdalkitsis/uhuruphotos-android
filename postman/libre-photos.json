@@ -161,6 +161,18 @@
 								"url": "{{HOST}}/api/scanuploadedphotos"
 							},
 							"response": []
+						},
+						{
+							"name": "New Request",
+							"id": "3654b6cf-1840-4c89-9597-25d1ab9ec57d",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": []
+							},
+							"response": []
 						}
 					],
 					"id": "8fa1f62e-fcaf-4f5d-95b6-0e9480719a8d"
