@@ -163,7 +163,7 @@
 							"response": []
 						},
 						{
-							"name": "New Request",
+							"name": "Complete Upload",
 							"id": "3654b6cf-1840-4c89-9597-25d1ab9ec57d",
 							"protocolProfileBehavior": {
 								"disableBodyPruning": true
