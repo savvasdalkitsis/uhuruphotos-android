@@ -107,7 +107,7 @@ internal fun Feed(
     ) { contentPadding ->
         SwipeRefresh(
             indicatorPadding = contentPadding,
-            isRefreshing = state.isRefreshing || state.collageState.isLoading,
+            isRefreshing = state.isRefreshing,
             onRefresh = { action(RefreshFeed) }
         ) {
             Collage(

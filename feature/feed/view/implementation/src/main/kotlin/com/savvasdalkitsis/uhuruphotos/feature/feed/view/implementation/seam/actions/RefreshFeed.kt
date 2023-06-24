@@ -31,7 +31,7 @@ data object RefreshFeed : FeedAction() {
     ) = flow {
         emit(StartRefreshing)
         feedUseCase.refreshFeed(shallow = true)
-        delay(200)
+        delay(1000)
         emit(StopRefreshing)
     }
 
