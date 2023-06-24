@@ -31,4 +31,12 @@ class UploadRepository @Inject constructor(
             }
         }
     }
+
+    fun setNotUploading(vararg mediaIds: Long) {
+        database.transaction {
+            mediaIds.forEach {
+                uploadingMediaItemsQueries.delete(it)
+            }
+        }
+    }
 }

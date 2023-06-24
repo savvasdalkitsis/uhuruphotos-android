@@ -53,7 +53,7 @@ internal class LogInitializer @Inject constructor(
                     logFile = fileLoggingSetup.getLatestLogFiles(),
                     receiver = FeedbackUseCase.EMAIL,
                     appIcon = R.mipmap.ic_launcher,
-                    notificationChannelId = NotificationChannels.CRASH_CHANNEL_ID,
+                    notificationChannelId = NotificationChannels.Crash.id,
                     notificationId = 1234,
                 )
                 default?.uncaughtException(t, e)

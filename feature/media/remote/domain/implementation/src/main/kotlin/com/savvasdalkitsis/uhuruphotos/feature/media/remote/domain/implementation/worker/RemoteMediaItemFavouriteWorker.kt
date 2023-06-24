@@ -25,7 +25,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.implementatio
 import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.implementation.service.model.RemoteMediaItemFavouriteRequestServiceModel
 import com.savvasdalkitsis.uhuruphotos.foundation.log.api.log
 import com.savvasdalkitsis.uhuruphotos.foundation.notification.api.ForegroundInfoBuilder
-import com.savvasdalkitsis.uhuruphotos.foundation.notification.api.NotificationChannels.JOBS_CHANNEL_ID
+import com.savvasdalkitsis.uhuruphotos.foundation.notification.api.NotificationChannels
 import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedInject
@@ -72,7 +72,7 @@ class RemoteMediaItemFavouriteWorker @AssistedInject constructor(
         applicationContext,
         string.setting_media_favourite,
         NOTIFICATION_ID,
-        JOBS_CHANNEL_ID
+        NotificationChannels.Jobs.id
     )
 
     companion object {

@@ -15,8 +15,33 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.foundation.notification.api
 
-data object NotificationChannels {
-    const val JOBS_CHANNEL_ID = "UHURU_PHOTOS_BACKGROUND_JOBS_CHANNEL_ID"
-    const val CRASH_CHANNEL_ID = "UHURU_PHOTOS_CRASH_CHANNEL_ID"
-    const val UPLOADS_CHANNEL_ID = "UHURU_PHOTOS_UPLOADS_CHANNEL_ID"
+import androidx.annotation.StringRes
+import androidx.core.app.NotificationManagerCompat.IMPORTANCE_LOW
+import androidx.core.app.NotificationManagerCompat.IMPORTANCE_MIN
+import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
+
+enum class NotificationChannels(
+    val id: String,
+    val importance: Int,
+    @StringRes val label: Int,
+    @StringRes val description: Int,
+) {
+    Jobs(
+        id = "UHURU_PHOTOS_BACKGROUND_JOBS_CHANNEL_ID",
+        importance = IMPORTANCE_MIN,
+        label = string.jobs,
+        description = string.background_jobs,
+    ),
+    Crash(
+        id = "UHURU_PHOTOS_CRASH_CHANNEL_ID",
+        importance = IMPORTANCE_LOW,
+        label = string.crash_reports,
+        description = string.send_crash_logs,
+    ),
+    Uploads(
+        id = "UHURU_PHOTOS_UPLOADS_CHANNEL_ID",
+        importance = IMPORTANCE_MIN,
+        label = string.uploads,
+        description = string.uploads,
+    );
 }

@@ -25,7 +25,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.implementatio
 import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.implementation.service.model.RemoteMediaOperationResponseServiceModel
 import com.savvasdalkitsis.uhuruphotos.foundation.log.api.log
 import com.savvasdalkitsis.uhuruphotos.foundation.notification.api.ForegroundInfoBuilder
-import com.savvasdalkitsis.uhuruphotos.foundation.notification.api.NotificationChannels.JOBS_CHANNEL_ID
+import com.savvasdalkitsis.uhuruphotos.foundation.notification.api.NotificationChannels
 import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedInject
@@ -77,7 +77,7 @@ class RemoteMediaItemRestoreWorker @AssistedInject constructor(
         applicationContext,
         string.restoring_media,
         NOTIFICATION_ID,
-        JOBS_CHANNEL_ID
+        NotificationChannels.Jobs.id
     )
 
     companion object {

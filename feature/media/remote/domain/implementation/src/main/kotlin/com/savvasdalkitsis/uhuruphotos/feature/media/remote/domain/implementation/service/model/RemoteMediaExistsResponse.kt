@@ -13,21 +13,11 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
  */
-package com.savvasdalkitsis.uhuruphotos.foundation.initializer.api
+package com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.implementation.service.model
 
-import android.app.Application
-import javax.inject.Inject
-import javax.inject.Singleton
+import com.squareup.moshi.JsonClass
 
-@Singleton
-class ApplicationInitializer @Inject constructor(
-    private val listeners: Set<@JvmSuppressWildcards ApplicationCreated>,
-) {
-
-    fun onCreated(app: Application) {
-        forEach { it.onAppCreated(app) }
-    }
-
-    private fun forEach(action: (ApplicationCreated) -> Unit) =
-        listeners.sortedBy { it.priority() }.forEach(action)
-}
+@JsonClass(generateAdapter = true)
+data class RemoteMediaExistsResponse(
+    val exists: Boolean,
+)

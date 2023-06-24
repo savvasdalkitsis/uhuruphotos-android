@@ -18,11 +18,8 @@ package com.savvasdalkitsis.uhuruphotos.foundation.notification.implementation.i
 import android.app.Application
 import androidx.core.app.NotificationChannelCompat.Builder
 import androidx.core.app.NotificationManagerCompat
-import androidx.core.app.NotificationManagerCompat.IMPORTANCE_LOW
 import com.savvasdalkitsis.uhuruphotos.foundation.initializer.api.ApplicationCreated
-import com.savvasdalkitsis.uhuruphotos.foundation.notification.api.NotificationChannels.CRASH_CHANNEL_ID
-import com.savvasdalkitsis.uhuruphotos.foundation.notification.api.NotificationChannels.JOBS_CHANNEL_ID
-import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
+import com.savvasdalkitsis.uhuruphotos.foundation.notification.api.NotificationChannels
 import se.ansman.dagger.auto.AutoBindIntoSet
 import javax.inject.Inject
 
@@ -31,18 +28,16 @@ internal class NotificationInitializer @Inject constructor(
     private val notificationManager: NotificationManagerCompat,
 ): ApplicationCreated {
 
+    override fun priority() = -1
+
     override fun onAppCreated(app: Application) {
-        notificationManager.createNotificationChannel(
-            Builder(JOBS_CHANNEL_ID, IMPORTANCE_LOW)
-                .setName(app.getString(string.jobs))
-                .setDescription(app.getString(string.background_jobs))
-                .build()
-        )
-        notificationManager.createNotificationChannel(
-            Builder(CRASH_CHANNEL_ID, IMPORTANCE_LOW)
-                .setName(app.getString(string.crash_reports))
-                .setDescription(app.getString(string.send_crash_logs))
-                .build()
-        )
+        NotificationChannels.entries.forEach { channel ->
+            notificationManager.createNotificationChannel(
+                Builder(channel.id, channel.importance)
+                    .setName(app.getString(channel.label))
+                    .setDescription(app.getString(channel.description))
+                    .build()
+            )
+        }
     }
 }

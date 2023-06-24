@@ -65,4 +65,6 @@ interface RemoteMediaUseCase {
         completeAlbumProcessor: suspend (RemoteMediaCollection.Complete) -> Unit = {},
         clearSummariesBeforeInserting: Boolean = true,
     ): SimpleResult
+
+    suspend fun exists(hash: String): Result<Boolean, Throwable>
 }

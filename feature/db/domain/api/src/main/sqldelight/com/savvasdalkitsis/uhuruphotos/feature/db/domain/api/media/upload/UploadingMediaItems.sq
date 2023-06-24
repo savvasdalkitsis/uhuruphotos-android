@@ -5,5 +5,8 @@ CREATE TABLE uploadingMediaItems (
 insert:
 INSERT OR REPLACE INTO uploadingMediaItems VALUES (?);
 
+delete:
+DELETE FROM uploadingMediaItems WHERE id = :id;
+
 getAll:
 SELECT id FROM uploadingMediaItems;

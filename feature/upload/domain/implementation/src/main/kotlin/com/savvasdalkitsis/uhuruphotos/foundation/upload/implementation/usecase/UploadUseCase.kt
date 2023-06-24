@@ -15,6 +15,7 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.foundation.upload.implementation.usecase
 
+import com.github.michaelbull.result.Ok
 import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.usecase.LocalMediaUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.site.domain.api.usecase.SiteUseCase
 import com.savvasdalkitsis.uhuruphotos.foundation.log.api.log
@@ -53,7 +54,13 @@ class UploadUseCase @Inject constructor(
         uploadRepository.setUploading(*(items.map { it.id }.toLongArray()))
         for (item in items) {
             localMediaUseCase.getLocalMediaItem(item.id)?.let { mediaItem ->
-                uploadService.upload(mediaItem.contentUri)
+                val exists = uploadService.exists(mediaItem.md5)
+                when {
+                    exists is Ok && !exists.value -> uploadService.upload(mediaItem.contentUri)
+                    else -> {
+                        uploadRepository.setNotUploading(mediaItem.id)
+                    }
+                }
             }
         }
     }

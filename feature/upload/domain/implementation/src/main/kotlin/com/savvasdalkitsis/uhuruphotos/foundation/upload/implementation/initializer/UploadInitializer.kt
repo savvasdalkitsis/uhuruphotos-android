@@ -34,10 +34,11 @@ import javax.inject.Inject
 @AutoBindIntoSet
 class UploadInitializer @Inject constructor(
     @TokenRefreshOkHttpClient private val okHttpClient: OkHttpClient,
-) : ApplicationCreated{
+) : ApplicationCreated {
+
     override fun onAppCreated(app: Application) {
         with(UploadServiceConfig) {
-            initialize(app, NotificationChannels.UPLOADS_CHANNEL_ID, false)
+            initialize(app, NotificationChannels.Uploads.id, false)
             setLogLevel(UploadServiceLogger.LogLevel.Info)
             httpStack = OkHttpStack(okHttpClient)
             bufferSizeBytes = 1024 * 1024

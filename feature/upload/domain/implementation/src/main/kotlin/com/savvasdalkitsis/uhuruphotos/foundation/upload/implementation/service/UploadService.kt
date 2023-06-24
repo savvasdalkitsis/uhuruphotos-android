@@ -16,8 +16,12 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.foundation.upload.implementation.service
 
 import android.content.Context
+import com.github.michaelbull.result.Result
+import com.github.michaelbull.result.andThen
 import com.savvasdalkitsis.uhuruphotos.feature.auth.domain.api.usecase.AuthenticationHeadersUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.auth.domain.api.usecase.ServerUseCase
+import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.api.usecase.RemoteMediaUseCase
+import com.savvasdalkitsis.uhuruphotos.feature.user.domain.api.usecase.UserUseCase
 import dagger.hilt.android.qualifiers.ApplicationContext
 import net.gotev.uploadservice.protocols.multipart.MultipartUploadRequest
 import javax.inject.Inject
@@ -26,6 +30,8 @@ class UploadService @Inject constructor(
     @ApplicationContext private val context: Context,
     private val serverUseCase: ServerUseCase,
     private val authenticationHeadersUseCase: AuthenticationHeadersUseCase,
+    private val remoteMediaUseCase: RemoteMediaUseCase,
+    private val userUseCase: UserUseCase,
 ) {
 
     fun upload(contentUri: String): Boolean {
@@ -41,4 +47,9 @@ class UploadService @Inject constructor(
             .startUpload()
         return true
     }
+
+    suspend fun exists(md5: String): Result<Boolean, Throwable> =
+        userUseCase.getUserOrRefresh().andThen { user ->
+            remoteMediaUseCase.exists("$md5${user.id}")
+        }
 }

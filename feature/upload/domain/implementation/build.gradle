@@ -6,14 +6,17 @@ dependencies {
     implementation(
             project(":feature:auth:domain:api"),
             project(":feature:media:local:domain:api"),
+            project(":feature:media:remote:domain:api"),
             project(":feature:site:domain:api"),
             project(":feature:upload:domain:api"),
+            project(":feature:user:domain:api"),
             project(":foundation:initializer:api"),
             project(":foundation:log:api"),
             project(":foundation:notification:api"),
             libs.autodagger.core,
             libs.hilt,
             libs.bundles.upload,
+            libs.retrofit.core,
     )
     kapt libs.autodagger.kapt
 }

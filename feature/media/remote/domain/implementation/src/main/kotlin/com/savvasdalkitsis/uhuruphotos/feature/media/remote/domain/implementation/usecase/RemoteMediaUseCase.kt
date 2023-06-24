@@ -27,6 +27,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.api.service.m
 import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.api.service.model.RemoteMediaCollectionsByDate
 import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.api.usecase.RemoteMediaUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.implementation.repository.RemoteMediaRepository
+import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.implementation.service.RemoteMediaService
 import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.implementation.worker.RemoteMediaItemWorkScheduler
 import com.savvasdalkitsis.uhuruphotos.feature.settings.domain.api.usecase.SettingsUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.user.domain.api.usecase.UserUseCase
@@ -46,6 +47,7 @@ import javax.inject.Inject
 class RemoteMediaUseCase @Inject constructor(
     private val settingsUseCase: SettingsUseCase,
     private val remoteMediaRepository: RemoteMediaRepository,
+    private val remoteMediaService: RemoteMediaService,
     private val remoteMediaItemWorkScheduler: RemoteMediaItemWorkScheduler,
     private val userUseCase: UserUseCase,
     private val remoteMediaItemSummaryQueries: RemoteMediaItemSummaryQueries,
@@ -135,6 +137,10 @@ class RemoteMediaUseCase @Inject constructor(
             onProgressChange(index, albumsToDownloadSummaries.size)
         }
     }.simple()
+
+    override suspend fun exists(hash: String): Result<Boolean, Throwable> = runCatchingWithLog {
+        remoteMediaService.exists(hash).exists
+    }
 
     private suspend fun updateSummaries(
         id: String,

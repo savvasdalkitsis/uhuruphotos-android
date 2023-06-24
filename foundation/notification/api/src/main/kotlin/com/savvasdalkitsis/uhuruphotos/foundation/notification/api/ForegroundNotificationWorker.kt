@@ -33,7 +33,7 @@ abstract class ForegroundNotificationWorker<BR>(
     private val foregroundInfoBuilder: ForegroundInfoBuilder,
     @StringRes private val notificationTitle: Int,
     private val notificationId: Int,
-    private val notificationChannelId: String = NotificationChannels.JOBS_CHANNEL_ID,
+    private val notificationChannelId: String = NotificationChannels.Jobs.id,
     private val cancelBroadcastReceiver: Class<BR>? = null,
 ) : CoroutineWorker(context, params) where BR: BroadcastReceiver {
 

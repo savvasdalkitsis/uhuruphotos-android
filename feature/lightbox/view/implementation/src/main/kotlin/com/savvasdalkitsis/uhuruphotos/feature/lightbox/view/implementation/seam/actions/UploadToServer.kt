@@ -16,7 +16,8 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.actions
 
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.LightboxActionsContext
-import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.LightboxMutation
+import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.LightboxMutation.FinishedLoading
+import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.LightboxMutation.Loading
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.LightboxMutation.ShowCannotCheckUploadStatusDialog
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.LightboxMutation.ShowCannotUploadDialog
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.effects.LightboxEffect
@@ -34,13 +35,15 @@ data class UploadToServer(val mediaItemState: SingleMediaItemState) : LightboxAc
     context(LightboxActionsContext) override fun handle(
         state: LightboxState,
         effect: EffectHandler<LightboxEffect>
-    ) = flow<LightboxMutation> {
+    ) = flow {
         mediaItemState.id.findLocal?.let { id ->
+            emit(Loading)
             when (uploadUseCase.canUpload()) {
                 CanUpload -> uploadUseCase.scheduleUpload(UploadItem(id.value, id.isVideo))
-                CannotUpload -> ShowCannotUploadDialog
-                UnableToCheck -> ShowCannotCheckUploadStatusDialog
+                CannotUpload -> emit(ShowCannotUploadDialog)
+                UnableToCheck -> emit(ShowCannotCheckUploadStatusDialog)
             }
+            emit(FinishedLoading)
         }
     }
 }

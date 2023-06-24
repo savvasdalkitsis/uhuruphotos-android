@@ -23,7 +23,7 @@ import com.github.michaelbull.result.Err
 import com.github.michaelbull.result.Ok
 import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.implementation.repository.RemoteMediaRepository
 import com.savvasdalkitsis.uhuruphotos.foundation.notification.api.ForegroundInfoBuilder
-import com.savvasdalkitsis.uhuruphotos.foundation.notification.api.NotificationChannels.JOBS_CHANNEL_ID
+import com.savvasdalkitsis.uhuruphotos.foundation.notification.api.NotificationChannels
 import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedInject
@@ -53,7 +53,7 @@ class RemoteMediaItemDetailsRetrieveWorker @AssistedInject constructor(
         applicationContext,
         string.downloading_media_details,
         NOTIFICATION_ID,
-        JOBS_CHANNEL_ID
+        NotificationChannels.Jobs.id
     )
 
     companion object {

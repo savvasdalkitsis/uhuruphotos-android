@@ -16,6 +16,7 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.implementation.service
 
 import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.api.model.RemoteMediaItem
+import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.implementation.service.model.RemoteMediaExistsResponse
 import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.implementation.service.model.RemoteMediaHashOperationResponseServiceModel
 import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.implementation.service.model.RemoteMediaItemDeleteRequestServiceModel
 import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.implementation.service.model.RemoteMediaItemDeletedRequestServiceModel
@@ -54,4 +55,7 @@ interface RemoteMediaService {
 
     @GET("/api/photos/hidden/")
     suspend fun getHiddenMedia(): RemoteMediaResultsServiceModel
+
+    @GET("/api/exists/{hash}/")
+    suspend fun exists(@Path("hash") hash: String): RemoteMediaExistsResponse
 }
