@@ -3,7 +3,7 @@
 [![Lines of code](https://tokei.rs/b1/github/savvasdalkitsis/uhuruphotos-android)](https://github.com/savvasdalkitsis/uhuruphotos-android)
 [![Join the chat at https://app.gitter.im/#/room/#uhuruphotos:gitter.im](https://badges.gitter.im/uhuruphotos/community.svg)](https://app.gitter.im/#/room/#uhuruphotos:gitter.im)
 [![CodeFactor](https://www.codefactor.io/repository/github/savvasdalkitsis/uhuruphotos-android/badge/main)](https://www.codefactor.io/repository/github/savvasdalkitsis/uhuruphotos-android/overview/main)
-![GitHub Sponsor](https://img.shields.io/github/sponsors/savvasdalkitsis?label=Sponsor&logo=GitHub)
+[![GitHub Sponsor](https://img.shields.io/github/sponsors/savvasdalkitsis?label=Sponsor&logo=GitHub)](https://github.com/sponsors/savvasdalkitsis)
 
 # <img src="https://github.com/savvasdalkitsis/uhuruphotos-android/raw/main/foundation/icons/api/src/main/ic_launcher-playstore.png" alt="logo" width = 60px> UhuruPhotos. A LibrePhotos client
 
@@ -54,12 +54,19 @@ mainly:
 
 ## Play store
 
-The app is currently in public beta on the Google Play store. You can join and try out the app: 
-[![Play Store Link](https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png)](https://play.google.com/apps/testing/com.savvasdalkitsis.uhuruphotos)
+The app is currently in public beta on the Google Play store. You can join and try out the app
+
+[<img src="https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png" width=300/>](https://play.google.com/apps/testing/com.savvasdalkitsis.uhuruphotos)
 
 ## Manual
 
 Both the apk and aab binaries can be found on the [latest release](https://github.com/savvasdalkitsis/uhuruphotos-android/releases/latest) page
+
+# Sponsorship
+
+You can sponsor the development of UhuruPhotos here
+
+[<img src="https://img.shields.io/github/sponsors/savvasdalkitsis?label=Sponsor&logo=GitHub" width=300/>](https://github.com/sponsors/savvasdalkitsis)
 
 # Feedback
 
