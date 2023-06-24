@@ -27,6 +27,7 @@ import androidx.compose.ui.platform.LocalContext
 import coil.compose.AsyncImage
 import coil.request.CachePolicy
 import coil.request.ImageRequest
+import coil.size.Precision
 import coil.size.Size
 
 @Composable
@@ -42,6 +43,7 @@ fun Image(
         modifier = modifier,
         model = ImageRequest.Builder(LocalContext.current)
             .data(url)
+            .precision(Precision.EXACT)
             .diskCachePolicy(CachePolicy.ENABLED)
             .listener(onSuccess = { _, _ -> onSuccess() })
             .build(),
