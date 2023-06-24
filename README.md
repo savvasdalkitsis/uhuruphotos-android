@@ -3,6 +3,7 @@
 [![Lines of code](https://tokei.rs/b1/github/savvasdalkitsis/uhuruphotos-android)](https://github.com/savvasdalkitsis/uhuruphotos-android)
 [![Join the chat at https://app.gitter.im/#/room/#uhuruphotos:gitter.im](https://badges.gitter.im/uhuruphotos/community.svg)](https://app.gitter.im/#/room/#uhuruphotos:gitter.im)
 [![CodeFactor](https://www.codefactor.io/repository/github/savvasdalkitsis/uhuruphotos-android/badge/main)](https://www.codefactor.io/repository/github/savvasdalkitsis/uhuruphotos-android/overview/main)
+![GitHub Sponsor](https://img.shields.io/github/sponsors/savvasdalkitsis?label=Sponsor&logo=GitHub)
 
 # <img src="https://github.com/savvasdalkitsis/uhuruphotos-android/raw/main/foundation/icons/api/src/main/ic_launcher-playstore.png" alt="logo" width = 60px> UhuruPhotos. A LibrePhotos client
 
