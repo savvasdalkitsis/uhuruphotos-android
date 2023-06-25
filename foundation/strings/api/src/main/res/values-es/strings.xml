@@ -274,4 +274,8 @@
     <string name="crop_options">Opciones del recorte (Crop)</string>
     <string name="error_editing_photo">Se ha producido un error al editar la foto</string>
     <string name="dismiss">Descartar</string>
+    <string name="show_precache_progress">Mostrar el progreso del almacenamiento previo a la memoria caché</string>
+    <string name="show_local_progress">Mostrar el progreso de la sincronización local</string>
+    <string name="progress">Progreso</string>
+    <string name="show_feed_sync_progress">Muestra el progreso completo de la sincronización de las fotos</string>
 </resources>
