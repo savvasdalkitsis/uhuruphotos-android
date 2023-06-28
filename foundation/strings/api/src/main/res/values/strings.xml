@@ -270,4 +270,5 @@
     <string name="lightbox_photo_memory_cache">Lightbox Photo Memory cache</string>
     <string name="thumbnail_disk_cache">Thumbnail Disk cache</string>
     <string name="thumbnail_memory_cache">Thumbnail Memory cache</string>
+    <string name="donate">Donate</string>
 </resources>
