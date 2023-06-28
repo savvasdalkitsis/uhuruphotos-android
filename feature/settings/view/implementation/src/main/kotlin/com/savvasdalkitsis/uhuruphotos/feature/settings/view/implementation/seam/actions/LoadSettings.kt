@@ -16,6 +16,7 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.actions
 
 import com.savvasdalkitsis.uhuruphotos.feature.jobs.view.ui.state.toJobState
+import com.savvasdalkitsis.uhuruphotos.feature.settings.domain.api.model.CacheType
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.SettingsActionsContext
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.SettingsMutation
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.SettingsMutation.DisplayBiometrics
@@ -38,10 +39,14 @@ data object LoadSettings : SettingsAction() {
         state: SettingsState,
         effect: EffectHandler<SettingsEffect>
     ) = merge(
-        settingsUseCase.observeImageDiskCacheMaxLimit()
-            .map(SettingsMutation::DisplayDiskCacheMaxLimit),
-        settingsUseCase.observeImageMemCacheMaxLimit()
-            .map(SettingsMutation::DisplayMemCacheMaxLimit),
+        settingsUseCase.observeLightboxPhotoDiskCacheMaxLimit()
+            .map(SettingsMutation::DisplayLightboxPhotoDiskCacheMaxLimit),
+        settingsUseCase.observeLightboxPhotoMemCacheMaxLimit()
+            .map(SettingsMutation::DisplayLightboxPhotoMemCacheMaxLimit),
+        settingsUseCase.observeThumbnailDiskCacheMaxLimit()
+            .map(SettingsMutation::DisplayThumbnailDiskCacheMaxLimit),
+        settingsUseCase.observeThumbnailMemCacheMaxLimit()
+            .map(SettingsMutation::DisplayThumbnailMemCacheMaxLimit),
         settingsUseCase.observeVideoDiskCacheMaxLimit()
             .map(SettingsMutation::DisplayVideoDiskCacheMaxLimit),
         settingsUseCase.observeFeedSyncFrequency()
@@ -90,11 +95,15 @@ data object LoadSettings : SettingsAction() {
             .map(SettingsMutation::SetPrecacheProgressVisibility),
         settingsUseCase.observeShouldShowLocalSyncProgress()
             .map(SettingsMutation::SetLocalSyncProgressVisibility),
-        cacheUseCase.observeImageDiskCacheCurrentUse()
-            .map(SettingsMutation::DisplayImageDiskCacheCurrentUse),
-        cacheUseCase.observeImageMemCacheCurrentUse()
-            .map(SettingsMutation::DisplayImageMemCacheCurrentUse),
-        cacheUseCase.observeVideoDiskCacheCurrentUse()
+        cacheUseCase.observeCacheCurrentUse(CacheType.LIGHTBOX_PHOTO_DISK)
+            .map(SettingsMutation::DisplayLightboxPhotoDiskCacheCurrentUse),
+        cacheUseCase.observeCacheCurrentUse(CacheType.LIGHTBOX_PHOTO_MEMORY)
+            .map(SettingsMutation::DisplayLightboxPhotoMemCacheCurrentUse),
+        cacheUseCase.observeCacheCurrentUse(CacheType.THUMBNAIL_DISK)
+            .map(SettingsMutation::DisplayThumbnailDiskCacheCurrentUse),
+        cacheUseCase.observeCacheCurrentUse(CacheType.THUMBNAIL_MEMORY)
+            .map(SettingsMutation::DisplayThumbnailMemCacheCurrentUse),
+        cacheUseCase.observeCacheCurrentUse(CacheType.VIDEO_DISK)
             .map(SettingsMutation::DisplayVideoDiskCacheCurrentUse),
         avatarUseCase.getAvatarState()
             .map(SettingsMutation::AvatarUpdate),

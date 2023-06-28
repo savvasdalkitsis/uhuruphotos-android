@@ -20,19 +20,16 @@ import com.savvasdalkitsis.uhuruphotos.feature.avatar.view.api.ui.state.AvatarSt
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.api.ui.state.FeedMediaItemSyncDisplay
 import com.savvasdalkitsis.uhuruphotos.feature.jobs.domain.api.model.Job
 import com.savvasdalkitsis.uhuruphotos.feature.jobs.view.ui.state.JobState
+import com.savvasdalkitsis.uhuruphotos.feature.settings.domain.api.model.CacheType
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.theme.ThemeMode
 
 data class SettingsState(
     val isLoading: Boolean = true,
-    val imageDiskCacheMax: Int = 0,
-    val imageDiskCacheLimit: Int = 2000,
-    val imageDiskCacheCurrent: Int = 0,
-    val videoDiskCacheMax: Int = 0,
-    val videoDiskCacheLimit: Int = 2000,
-    val videoDiskCacheCurrent: Int = 0,
-    val imageMemCacheMax: Int = 0,
-    val imageMemCacheLimit: Int = 2000,
-    val imageMemCacheCurrent: Int = 0,
+    val lightboxPhotoDiskCache: Cache = Cache(cacheType = CacheType.LIGHTBOX_PHOTO_DISK),
+    val lightboxPhotoMemCache: Cache = Cache(cacheType = CacheType.LIGHTBOX_PHOTO_MEMORY),
+    val thumbnailDiskCache: Cache = Cache(cacheType = CacheType.THUMBNAIL_DISK),
+    val thumbnailMemCache: Cache = Cache(cacheType = CacheType.THUMBNAIL_MEMORY),
+    val videoDiskCache: Cache = Cache(cacheType = CacheType.VIDEO_DISK),
     val feedDaysToRefresh: Int = 0,
     val feedSyncFrequency: Int? = null,
     val avatarState: AvatarState = AvatarState(),

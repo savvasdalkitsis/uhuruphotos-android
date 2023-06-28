@@ -133,14 +133,20 @@ internal fun Settings(
                     }
                 }
                 SuperGroup(controller.advanced) {
-                    Group(controller.advancedImageDiskCache) {
-                        SettingsImageDiskCache(state, action)
+                    Group(controller.advancedLightboxPhotoDiskCache) {
+                        SettingsCache(state.lightboxPhotoDiskCache, action)
                     }
-                    Group(controller.advancedImageMemoryCache) {
-                        SettingsImageMemoryCache(state, action)
+                    Group(controller.advancedLightboxPhotoMemoryCache) {
+                        SettingsCache(state.lightboxPhotoMemCache, action)
+                    }
+                    Group(controller.advancedThumbnailDiskCache) {
+                        SettingsCache(state.thumbnailDiskCache, action)
+                    }
+                    Group(controller.advancedThumbnailMemoryCache) {
+                        SettingsCache(state.thumbnailMemCache, action)
                     }
                     Group(controller.advancedVideoDiskCache) {
-                        SettingsVideoDiskCache(state, action)
+                        SettingsCache(state.videoDiskCache, action)
                     }
                 }
                 SuperGroup(controller.help) {

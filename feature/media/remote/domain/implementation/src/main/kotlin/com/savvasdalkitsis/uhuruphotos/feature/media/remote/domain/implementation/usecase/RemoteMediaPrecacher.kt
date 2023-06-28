@@ -17,64 +17,47 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.implementation.usecase
 
 import android.content.Context
-import android.net.Uri
 import coil.ImageLoader
 import coil.request.CachePolicy
 import coil.request.ErrorResult
-import coil.request.ImageRequest
 import coil.request.SuccessResult
-import com.google.android.exoplayer2.upstream.DataSpec
-import com.google.android.exoplayer2.upstream.cache.CacheDataSource
-import com.google.android.exoplayer2.upstream.cache.CacheWriter
-import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.extensions.asyncReturn
+import com.facebook.datasource.DataSource
+import com.facebook.datasource.DataSubscriber
+import com.facebook.drawee.backends.pipeline.Fresco
+import com.facebook.imagepipeline.request.ImageRequest
 import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.api.usecase.RemoteMediaPrecacher
 import com.savvasdalkitsis.uhuruphotos.foundation.log.api.log
 import dagger.hilt.android.qualifiers.ApplicationContext
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.asExecutor
+import kotlinx.coroutines.suspendCancellableCoroutine
 import se.ansman.dagger.auto.AutoBind
 import javax.inject.Inject
+import kotlin.coroutines.resume
 
 @AutoBind
 class RemoteMediaPrecacher @Inject constructor(
     @ApplicationContext val context: Context,
     private val imageLoader: ImageLoader,
-    private val videoCache: CacheDataSource.Factory,
 ) : RemoteMediaPrecacher {
 
     override suspend fun precacheMedia(
         url: String,
         video: Boolean,
-        progressListener: (progress: Int) -> Unit,
     ): Boolean = try {
         if (video) {
-            cacheVideo(url, progressListener)
+            cacheVideoThumbnail(url)
         } else {
-            cachePhoto(url)
+            cachePhotoThumbnail(url)
         }
     } catch (e: Exception) {
         log(e)
         false
     }
 
-    private suspend fun cacheVideo(url: String, progressListener: (Int) -> Unit): Boolean =
-        asyncReturn {
-            try {
-                CacheWriter(
-                    videoCache.createDataSourceForDownloading(),
-                    DataSpec(Uri.parse(url)),
-                    ByteArray(8 * 1024 * 1024)
-                ) { requestLength, bytesCached, _ ->
-                    progressListener(((bytesCached / requestLength.toFloat()) * 100).toInt())
-                }.cache()
-                true
-            } catch (e: Exception) {
-                log(e) { "Error precaching video: $url"}
-                false
-            }
-        }
-
-    private suspend fun cachePhoto(url: String): Boolean {
+    private suspend fun cacheVideoThumbnail(url: String): Boolean {
         val result = imageLoader.execute(
-            ImageRequest.Builder(context)
+            coil.request.ImageRequest.Builder(context)
                 .data(url)
                 .memoryCachePolicy(CachePolicy.DISABLED)
                 .diskCachePolicy(CachePolicy.ENABLED)
@@ -82,9 +65,38 @@ class RemoteMediaPrecacher @Inject constructor(
                 .build()
         )
         if (result is ErrorResult) {
-            log(result.throwable) { "Error precaching photo: $url"}
+            log(result.throwable) { "Error precaching video thumbnail: $url"}
         }
-
         return result is SuccessResult
     }
+
+    private suspend fun cachePhotoThumbnail(url: String): Boolean =
+        suspendCancellableCoroutine { continuation ->
+            Fresco.getImagePipeline()
+                .prefetchToDiskCache(
+                    ImageRequest.fromUri(url),
+                    null
+                )
+                .subscribe(object : DataSubscriber<Void> {
+                    override fun onNewResult(dataSource: DataSource<Void>) {
+                        if (dataSource.isFinished) {
+                            continuation.resume(true)
+                        }
+                    }
+
+                    override fun onFailure(dataSource: DataSource<Void>) {
+                        dataSource.failureCause?.let {
+                            log(it) { "Error precaching photo: $url"}
+                        }
+                        continuation.resume(false)
+                    }
+
+                    override fun onCancellation(dataSource: DataSource<Void>) {
+                        continuation.resume(false)
+                    }
+
+                    override fun onProgressUpdate(dataSource: DataSource<Void>) {
+                    }
+                }, Dispatchers.IO.asExecutor())
+        }
 }

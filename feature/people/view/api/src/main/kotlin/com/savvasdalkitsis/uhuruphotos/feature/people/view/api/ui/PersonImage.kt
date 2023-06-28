@@ -22,7 +22,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.layout.ContentScale
 import com.savvasdalkitsis.uhuruphotos.feature.people.view.api.ui.state.Person
-import com.savvasdalkitsis.uhuruphotos.foundation.image.api.ui.Image
+import com.savvasdalkitsis.uhuruphotos.foundation.image.api.ui.ThumbnailImage
 
 @Composable
 fun PersonImage(
@@ -30,7 +30,7 @@ fun PersonImage(
     shape: Shape,
     person: Person
 ) {
-    Image(
+    ThumbnailImage(
         modifier = modifier
             .aspectRatio(1f)
             .clip(shape),

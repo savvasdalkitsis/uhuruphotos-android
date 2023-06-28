@@ -33,7 +33,7 @@ import com.google.android.exoplayer2.MediaItem
 import com.google.android.exoplayer2.Player
 import com.google.android.exoplayer2.ui.AspectRatioFrameLayout
 import com.google.android.exoplayer2.ui.StyledPlayerView
-import com.savvasdalkitsis.uhuruphotos.foundation.image.api.ui.Image
+import com.savvasdalkitsis.uhuruphotos.foundation.image.api.ui.ThumbnailImage
 import com.savvasdalkitsis.uhuruphotos.foundation.video.api.LocalExoPlayerProvider
 import com.savvasdalkitsis.uhuruphotos.foundation.video.api.R
 
@@ -113,7 +113,7 @@ fun Video(
             modifier = modifier,
             contentAlignment = Alignment.Center,
         ) {
-            Image(
+            ThumbnailImage(
                 modifier = Modifier.fillMaxSize(),
                 url = videoThumbnailUrl,
                 contentScale = ContentScale.Fit,

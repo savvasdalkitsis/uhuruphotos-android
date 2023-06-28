@@ -15,6 +15,12 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.actions
 
+import com.savvasdalkitsis.uhuruphotos.feature.settings.domain.api.model.CacheType
+import com.savvasdalkitsis.uhuruphotos.feature.settings.domain.api.model.CacheType.LIGHTBOX_PHOTO_DISK
+import com.savvasdalkitsis.uhuruphotos.feature.settings.domain.api.model.CacheType.LIGHTBOX_PHOTO_MEMORY
+import com.savvasdalkitsis.uhuruphotos.feature.settings.domain.api.model.CacheType.THUMBNAIL_DISK
+import com.savvasdalkitsis.uhuruphotos.feature.settings.domain.api.model.CacheType.THUMBNAIL_MEMORY
+import com.savvasdalkitsis.uhuruphotos.feature.settings.domain.api.model.CacheType.VIDEO_DISK
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.SettingsActionsContext
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.SettingsMutation
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.effects.SettingsEffect
@@ -22,11 +28,20 @@ import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.ui.s
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.EffectHandler
 import kotlinx.coroutines.flow.flow
 
-data class ChangeImageMemCache(val sizeInMb: Float) : SettingsAction() {
+data class ChangeCache(
+    val cacheType: CacheType,
+    val sizeInMb: Float,
+) : SettingsAction() {
     context(SettingsActionsContext) override fun handle(
         state: SettingsState,
         effect: EffectHandler<SettingsEffect>
     ) = flow<SettingsMutation> {
-        settingsUseCase.setLightboxPhotoMemCacheMaxLimit(sizeInMb.toInt())
+        when(cacheType) {
+            LIGHTBOX_PHOTO_MEMORY -> settingsUseCase.setLightboxPhotoMemCacheMaxLimit(sizeInMb.toInt())
+            LIGHTBOX_PHOTO_DISK -> settingsUseCase.setLightboxPhotoDiskCacheMaxLimit(sizeInMb.toInt())
+            THUMBNAIL_MEMORY -> settingsUseCase.setThumbnailMemCacheMaxLimit(sizeInMb.toInt())
+            THUMBNAIL_DISK -> settingsUseCase.setThumbnailDiskCacheMaxLimit(sizeInMb.toInt())
+            VIDEO_DISK -> settingsUseCase.setVideoDiskCacheMaxLimit(sizeInMb.toInt())
+        }
     }
 }

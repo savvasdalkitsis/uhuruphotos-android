@@ -17,7 +17,14 @@ package com.savvasdalkitsis.uhuruphotos.feature.settings.domain.implementation.u
 
 import coil.disk.DiskCache
 import coil.memory.MemoryCache
+import com.facebook.drawee.backends.pipeline.Fresco
 import com.google.android.exoplayer2.upstream.cache.CacheDataSource
+import com.savvasdalkitsis.uhuruphotos.feature.settings.domain.api.model.CacheType
+import com.savvasdalkitsis.uhuruphotos.feature.settings.domain.api.model.CacheType.LIGHTBOX_PHOTO_DISK
+import com.savvasdalkitsis.uhuruphotos.feature.settings.domain.api.model.CacheType.LIGHTBOX_PHOTO_MEMORY
+import com.savvasdalkitsis.uhuruphotos.feature.settings.domain.api.model.CacheType.THUMBNAIL_DISK
+import com.savvasdalkitsis.uhuruphotos.feature.settings.domain.api.model.CacheType.THUMBNAIL_MEMORY
+import com.savvasdalkitsis.uhuruphotos.feature.settings.domain.api.model.CacheType.VIDEO_DISK
 import com.savvasdalkitsis.uhuruphotos.feature.settings.domain.api.usecase.CacheSettingsUseCase
 import com.savvasdalkitsis.uhuruphotos.foundation.video.api.evictAll
 import kotlinx.coroutines.Dispatchers
@@ -30,55 +37,56 @@ import javax.inject.Inject
 
 @AutoBind
 internal class CacheSettingsUseCase @Inject constructor(
-    private val diskCache: DiskCache,
-    private val memoryCache: MemoryCache,
+    private val lightboxPhotoDiskCache: DiskCache,
+    private val lightboxPhotoMemoryCache: MemoryCache,
     private val videoCache: CacheDataSource.Factory,
 ) : CacheSettingsUseCase {
 
-    private val imageDiskCacheFlow: MutableSharedFlow<Int> = MutableSharedFlow(1)
-    private val imageMemCacheFlow: MutableSharedFlow<Int> = MutableSharedFlow(1)
+    private val lightboxPhotoDiskCacheFlow: MutableSharedFlow<Int> = MutableSharedFlow(1)
+    private val lightboxPhotoMemCacheFlow: MutableSharedFlow<Int> = MutableSharedFlow(1)
+    private val thumbnailDiskCacheFlow: MutableSharedFlow<Int> = MutableSharedFlow(1)
+    private val thumbnailMemCacheFlow: MutableSharedFlow<Int> = MutableSharedFlow(1)
     private val videoDiskCacheFlow: MutableSharedFlow<Int> = MutableSharedFlow(1)
 
-    override fun observeImageDiskCacheCurrentUse(): Flow<Int> = imageDiskCacheFlow.onStart {
-        updateCurrentImageDiskCacheFlow()
+    private val fresco get() = Fresco.getImagePipeline()
+
+    override fun observeCacheCurrentUse(cacheType: CacheType): Flow<Int> = cacheFlow(cacheType).onStart {
+        updateCurrentCacheFlow(cacheType)
     }
 
-    override fun observeImageMemCacheCurrentUse(): Flow<Int> = imageMemCacheFlow.onStart {
-        updateCurrentImageMemCacheFlow()
-    }
-
-    override fun observeVideoDiskCacheCurrentUse(): Flow<Int> = videoDiskCacheFlow.onStart {
-        updateCurrentVideoDiskCacheFlow()
-    }
-
-    override suspend fun clearImageDiskCache() {
+    override suspend fun clearCache(cacheType: CacheType) {
         withContext(Dispatchers.IO) {
-            diskCache.clear()
-            updateCurrentImageDiskCacheFlow()
+            clear(cacheType)
+            updateCurrentCacheFlow(cacheType)
         }
     }
 
-    override suspend fun clearImageMemCache() {
-        withContext(Dispatchers.IO) {
-            memoryCache.clear()
-            updateCurrentImageMemCacheFlow()
-        }
+    private fun cacheFlow(cacheType: CacheType): MutableSharedFlow<Int> = when(cacheType) {
+        LIGHTBOX_PHOTO_DISK -> lightboxPhotoDiskCacheFlow
+        LIGHTBOX_PHOTO_MEMORY -> lightboxPhotoMemCacheFlow
+        THUMBNAIL_DISK -> thumbnailDiskCacheFlow
+        THUMBNAIL_MEMORY -> thumbnailMemCacheFlow
+        VIDEO_DISK -> videoDiskCacheFlow
     }
 
-    override suspend fun clearVideoDiskCache() {
-        withContext(Dispatchers.IO) {
-            runCatching {
-                videoCache.evictAll()
-            }
-            updateCurrentVideoDiskCacheFlow()
-        }
+    private fun clear(cacheType: CacheType) = when (cacheType) {
+        LIGHTBOX_PHOTO_MEMORY -> lightboxPhotoMemoryCache.clear()
+        LIGHTBOX_PHOTO_DISK -> lightboxPhotoDiskCache.clear()
+        THUMBNAIL_MEMORY -> fresco.clearMemoryCaches()
+        THUMBNAIL_DISK -> fresco.clearDiskCaches()
+        VIDEO_DISK -> videoCache.evictAll()
     }
 
-    private fun updateCurrentImageDiskCacheFlow() = imageDiskCacheFlow.tryEmit(diskCache.size.mb)
-    private fun updateCurrentImageMemCacheFlow() = imageMemCacheFlow.tryEmit(memoryCache.size.mb)
-    private fun updateCurrentVideoDiskCacheFlow() = videoDiskCacheFlow.tryEmit(
-        (videoCache.cache?.cacheSpace ?: 0).mb
-    )
+    private fun currentUse(cacheType: CacheType) = when(cacheType) {
+        LIGHTBOX_PHOTO_MEMORY -> lightboxPhotoMemoryCache.size.mb
+        LIGHTBOX_PHOTO_DISK -> lightboxPhotoDiskCache.size.mb
+        THUMBNAIL_MEMORY -> fresco.bitmapMemoryCache.sizeInBytes.mb
+        THUMBNAIL_DISK -> fresco.usedDiskCacheSize.mb
+        VIDEO_DISK -> (videoCache.cache?.cacheSpace ?: 0).mb
+    }
+
+    private fun updateCurrentCacheFlow(cacheType: CacheType) =
+        cacheFlow(cacheType).tryEmit(currentUse(cacheType))
 
     private val Number.mb: Int get() = toInt() / 1024 / 1024
 }

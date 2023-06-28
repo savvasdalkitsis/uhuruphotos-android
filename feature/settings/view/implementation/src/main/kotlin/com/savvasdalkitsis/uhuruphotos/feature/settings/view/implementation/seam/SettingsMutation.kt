@@ -43,40 +43,76 @@ sealed class SettingsMutation(
         it.copy(jobStates = jobStates)
     })
 
-    data class DisplayDiskCacheMaxLimit(val limit: Int) : SettingsMutation({
+    data class DisplayLightboxPhotoDiskCacheMaxLimit(val limit: Int) : SettingsMutation({
         it.copy(
             isLoading = false,
-            imageDiskCacheMax = limit,
+            lightboxPhotoDiskCache = it.lightboxPhotoDiskCache.copy(
+                max = limit,
+            )
         )
     })
 
-    data class DisplayMemCacheMaxLimit(val limit: Int) : SettingsMutation({
+    data class DisplayLightboxPhotoMemCacheMaxLimit(val limit: Int) : SettingsMutation({
         it.copy(
             isLoading = false,
-            imageMemCacheMax = limit,
+            lightboxPhotoMemCache = it.lightboxPhotoMemCache.copy(max = limit),
+        )
+    })
+
+    data class DisplayThumbnailDiskCacheMaxLimit(val limit: Int) : SettingsMutation({
+        it.copy(
+            isLoading = false,
+            thumbnailDiskCache = it.thumbnailDiskCache.copy(
+                max = limit,
+            )
+        )
+    })
+
+    data class DisplayThumbnailMemCacheMaxLimit(val limit: Int) : SettingsMutation({
+        it.copy(
+            isLoading = false,
+            thumbnailMemCache = it.thumbnailMemCache.copy(max = limit),
         )
     })
 
     data class DisplayVideoDiskCacheMaxLimit(val limit: Int) : SettingsMutation({
-        it.copy(videoDiskCacheMax = limit)
+        it.copy(videoDiskCache = it.videoDiskCache.copy(max = limit))
     })
 
-    data class DisplayImageDiskCacheCurrentUse(val current: Int): SettingsMutation({
+    data class DisplayLightboxPhotoDiskCacheCurrentUse(val current: Int): SettingsMutation({
         it.copy(
             isLoading = false,
-            imageDiskCacheCurrent = current,
+            lightboxPhotoDiskCache = it.lightboxPhotoDiskCache.copy(
+                current = current,
+            ),
         )
     })
 
-    data class DisplayImageMemCacheCurrentUse(val current: Int): SettingsMutation({
+    data class DisplayLightboxPhotoMemCacheCurrentUse(val current: Int): SettingsMutation({
         it.copy(
             isLoading = false,
-            imageMemCacheCurrent = current,
+            lightboxPhotoMemCache = it.lightboxPhotoMemCache.copy(current = current),
+        )
+    })
+
+    data class DisplayThumbnailDiskCacheCurrentUse(val current: Int): SettingsMutation({
+        it.copy(
+            isLoading = false,
+            thumbnailDiskCache = it.thumbnailDiskCache.copy(
+                current = current,
+            ),
+        )
+    })
+
+    data class DisplayThumbnailMemCacheCurrentUse(val current: Int): SettingsMutation({
+        it.copy(
+            isLoading = false,
+            thumbnailMemCache = it.thumbnailMemCache.copy(current = current),
         )
     })
 
     data class DisplayVideoDiskCacheCurrentUse(val current: Int): SettingsMutation({
-        it.copy(videoDiskCacheCurrent = current)
+        it.copy(videoDiskCache = it.videoDiskCache.copy(current = current))
     })
 
     data class DisplayFeedSyncFrequency(val frequency: Int): SettingsMutation({
@@ -149,7 +185,7 @@ sealed class SettingsMutation(
         val limit: Int,
     ): SettingsMutation({
         it.copy(
-            imageMemCacheLimit = limit,
+            lightboxPhotoMemCache = it.lightboxPhotoMemCache.copy(limit = limit),
         )
     })
 
@@ -157,8 +193,12 @@ sealed class SettingsMutation(
         val limit: Int,
     ): SettingsMutation({
         it.copy(
-            imageDiskCacheLimit = limit,
-            videoDiskCacheLimit = limit,
+            lightboxPhotoDiskCache = it.lightboxPhotoDiskCache.copy(
+                limit = limit,
+            ),
+            videoDiskCache = it.videoDiskCache.copy(
+                limit = limit
+            ),
         )
     })
 

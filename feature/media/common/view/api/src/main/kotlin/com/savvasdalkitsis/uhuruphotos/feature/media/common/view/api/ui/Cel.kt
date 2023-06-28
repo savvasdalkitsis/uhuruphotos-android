@@ -58,7 +58,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.Med
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.state.CelState
 import com.savvasdalkitsis.uhuruphotos.foundation.compose.api.toColor
 import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.R.drawable
-import com.savvasdalkitsis.uhuruphotos.foundation.image.api.ui.Image
+import com.savvasdalkitsis.uhuruphotos.foundation.image.api.ui.ThumbnailImage
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.theme.CustomColors
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.DynamicIcon
 import com.savvasdalkitsis.uhuruphotos.foundation.video.api.LocalAnimatedVideoThumbnails
@@ -120,11 +120,12 @@ fun Cel(
             val scope = rememberCoroutineScope()
             val exoPlayer = LocalExoPlayerProvider.current.maybeCreateExoplayer(thumbnailUri)
             if (!LocalAnimatedVideoThumbnails.current || !mediaItem.id.isVideo || exoPlayer == null) {
-                Image(
+                ThumbnailImage(
                     modifier = Modifier.fillMaxWidth(),
                     url = thumbnailUri,
                     contentScale = contentScale,
                     contentDescription = null,
+                    isVideo = mediaItem.id.isVideo,
                     onSuccess = {
                         scope.launch {
                             delay(100)
