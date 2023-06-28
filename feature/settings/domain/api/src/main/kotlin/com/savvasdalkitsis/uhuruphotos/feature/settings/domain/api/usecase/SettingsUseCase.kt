@@ -24,8 +24,10 @@ import kotlinx.coroutines.flow.StateFlow
 
 interface SettingsUseCase {
 
-    fun getImageDiskCacheMaxLimit(): Int
-    fun getImageMemCacheMaxLimit(): Int
+    fun getLightboxPhotoDiskCacheMaxLimit(): Int
+    fun getLightboxPhotoMemCacheMaxLimit(): Int
+    fun getThumbnailDiskCacheMaxLimit(): Int
+    fun getThumbnailMemCacheMaxLimit(): Int
     fun getVideoDiskCacheMaxLimit(): Int
     fun getFeedSyncFrequency(): Int
     fun getFeedDaysToRefresh(): Int
@@ -50,8 +52,10 @@ interface SettingsUseCase {
     fun getShouldShowPrecacheProgress(): Boolean
     fun getShouldShowLocalSyncProgress(): Boolean
 
-    fun observeImageDiskCacheMaxLimit(): Flow<Int>
-    fun observeImageMemCacheMaxLimit(): Flow<Int>
+    fun observeLightboxPhotoDiskCacheMaxLimit(): Flow<Int>
+    fun observeLightboxPhotoMemCacheMaxLimit(): Flow<Int>
+    fun observeThumbnailDiskCacheMaxLimit(): Flow<Int>
+    fun observeThumbnailMemCacheMaxLimit(): Flow<Int>
     fun observeVideoDiskCacheMaxLimit(): Flow<Int>
     fun observeFeedSyncFrequency(): Flow<Int>
     fun observeFeedDaysToRefresh(): Flow<Int>
@@ -75,8 +79,10 @@ interface SettingsUseCase {
     fun observeShouldShowPrecacheProgress(): Flow<Boolean>
     fun observeShouldShowLocalSyncProgress(): Flow<Boolean>
 
-    fun setImageDiskCacheMaxLimit(sizeInMb: Int)
-    fun setImageMemCacheMaxLimit(sizeInMb: Int)
+    fun setLightboxPhotoDiskCacheMaxLimit(sizeInMb: Int)
+    fun setLightboxPhotoMemCacheMaxLimit(sizeInMb: Int)
+    fun setThumbnailDiskCacheMaxLimit(sizeInMb: Int)
+    fun setThumbnailMemCacheMaxLimit(sizeInMb: Int)
     fun setVideoDiskCacheMaxLimit(sizeInMb: Int)
     fun setFeedSyncFrequency(frequency: Int)
     fun setFeedFeedDaysToRefresh(days: Int)

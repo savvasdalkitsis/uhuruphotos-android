@@ -136,10 +136,13 @@ data class LoadMediaItem(
         id.toSingleMediaItemState(isFavourite)
 
     context(LightboxActionsContext)
-    private fun MediaId<*>.toSingleMediaItemState(showFavouriteIcon: Boolean = false) =
+    private fun MediaId<*>.toSingleMediaItemState(
+        isFavourite: Boolean = false,
+    ) =
         SingleMediaItemState(
             id = this,
-            showFavouriteIcon = showFavouriteIcon,
+            isFavourite = isFavourite,
+            showFavouriteIcon = preferRemote is MediaId.Remote,
             showDeleteButton = shouldShowDeleteButton,
             showEditIcon = shouldShowEditButton,
             mediaItemSyncState = syncState.takeIf { showMediaSyncState }

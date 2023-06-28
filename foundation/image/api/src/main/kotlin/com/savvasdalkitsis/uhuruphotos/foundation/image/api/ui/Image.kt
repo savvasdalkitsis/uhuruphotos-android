@@ -15,6 +15,7 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.foundation.image.api.ui
 
+import android.graphics.drawable.Animatable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.runtime.Composable
@@ -27,30 +28,54 @@ import androidx.compose.ui.platform.LocalContext
 import coil.compose.AsyncImage
 import coil.request.CachePolicy
 import coil.request.ImageRequest
-import coil.size.Precision
 import coil.size.Size
+import com.facebook.drawee.backends.pipeline.Fresco
+import com.facebook.drawee.controller.BaseControllerListener
+import com.facebook.imagepipeline.image.ImageInfo
+import com.skydoves.landscapist.fresco.websupport.FrescoWebImage
 
 @Composable
-fun Image(
+fun ThumbnailImage(
     modifier: Modifier = Modifier,
     url: String?,
     contentScale: ContentScale,
     placeholder: Painter? = null,
     contentDescription: String?,
+    isVideo: Boolean = false,
     onSuccess: () -> Unit = {},
 ) {
-    AsyncImage(
-        modifier = modifier,
-        model = ImageRequest.Builder(LocalContext.current)
-            .data(url)
-            .precision(Precision.EXACT)
-            .diskCachePolicy(CachePolicy.ENABLED)
-            .listener(onSuccess = { _, _ -> onSuccess() })
-            .build(),
-        contentScale = contentScale,
-        placeholder = placeholder,
-        contentDescription = contentDescription,
-    )
+    if (!isVideo) {
+        FrescoWebImage(
+            modifier = modifier,
+            controllerBuilder = {
+                Fresco.newDraweeControllerBuilder()
+                    .setUri(url)
+                    .setControllerListener(object : BaseControllerListener<ImageInfo>() {
+                        override fun onFinalImageSet(
+                            id: String?,
+                            imageInfo: ImageInfo?,
+                            animatable: Animatable?
+                        ) {
+                            onSuccess()
+                        }
+                    })
+                    .setAutoPlayAnimations(true)
+            },
+            contentScale = contentScale,
+        )
+    } else {
+        AsyncImage(
+            modifier = modifier,
+            model = ImageRequest.Builder(LocalContext.current)
+                .data(url)
+                .diskCachePolicy(CachePolicy.ENABLED)
+                .listener(onSuccess = { _, _ -> onSuccess() })
+                .build(),
+            contentScale = contentScale,
+            placeholder = placeholder,
+            contentDescription = contentDescription,
+        )
+    }
 }
 
 @Composable
@@ -67,11 +92,13 @@ fun Image(
 
     Box(modifier = modifier) {
         if (showLowRes) {
-            Image(
+            AsyncImage(
                 modifier = Modifier
                     .fillMaxWidth()
                     .align(Alignment.Center),
-                url = lowResUrl,
+                model = ImageRequest.Builder(LocalContext.current)
+                    .data(lowResUrl)
+                    .build(),
                 contentScale = contentScale,
                 placeholder = placeholder,
                 contentDescription = null,

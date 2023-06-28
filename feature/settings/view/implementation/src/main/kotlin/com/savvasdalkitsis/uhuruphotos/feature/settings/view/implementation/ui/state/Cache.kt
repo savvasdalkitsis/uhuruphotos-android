@@ -1,5 +1,5 @@
 /*
-Copyright 2022 Savvas Dalkitsis
+Copyright 2023 Savvas Dalkitsis
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -13,13 +13,13 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
  */
-package com.savvasdalkitsis.uhuruphotos.feature.settings.domain.api.usecase
+package com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.ui.state
 
 import com.savvasdalkitsis.uhuruphotos.feature.settings.domain.api.model.CacheType
-import kotlinx.coroutines.flow.Flow
 
-interface CacheSettingsUseCase {
-
-    fun observeCacheCurrentUse(cacheType: CacheType): Flow<Int>
-    suspend fun clearCache(cacheType: CacheType)
-}
+data class Cache(
+    val max: Int = 0,
+    val limit: Int = 2000,
+    val current: Int = 0,
+    val cacheType: CacheType,
+)

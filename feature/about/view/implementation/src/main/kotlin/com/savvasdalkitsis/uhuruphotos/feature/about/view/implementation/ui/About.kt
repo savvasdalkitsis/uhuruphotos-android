@@ -42,6 +42,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.mikepenz.aboutlibraries.ui.compose.LibrariesContainer
 import com.savvasdalkitsis.uhuruphotos.feature.about.view.implementation.seam.actions.AboutAction
+import com.savvasdalkitsis.uhuruphotos.feature.about.view.implementation.seam.actions.Donate
 import com.savvasdalkitsis.uhuruphotos.feature.about.view.implementation.seam.actions.NavigateBack
 import com.savvasdalkitsis.uhuruphotos.feature.about.view.implementation.seam.actions.NavigateToGithub
 import com.savvasdalkitsis.uhuruphotos.feature.about.view.implementation.seam.actions.SendFeedback
@@ -138,15 +139,26 @@ private fun AboutHeader(
             }
             OutlinedButton(
                 modifier = Modifier.weight(1f),
-                onClick = { action(SendFeedback) },
+                onClick = { action(Donate) },
             ) {
                 Icon(
-                    painter = painterResource(drawable.ic_feedback),
+                    painter = painterResource(drawable.ic_money),
                     contentDescription = null
                 )
                 Spacer(modifier = Modifier.width(8.dp))
-                Text(text = stringResource(string.feedback))
+                Text(text = stringResource(string.donate))
             }
+        }
+        OutlinedButton(
+            modifier = Modifier.fillMaxWidth(),
+            onClick = { action(SendFeedback) },
+        ) {
+            Icon(
+                painter = painterResource(drawable.ic_feedback),
+                contentDescription = null
+            )
+            Spacer(modifier = Modifier.width(8.dp))
+            Text(text = stringResource(string.feedback))
         }
     }
 }

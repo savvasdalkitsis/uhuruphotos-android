@@ -23,6 +23,11 @@ import coil.decode.ImageDecoderDecoder
 import coil.decode.VideoFrameDecoder
 import coil.disk.DiskCache
 import coil.memory.MemoryCache
+import com.facebook.cache.disk.DiskCacheConfig
+import com.facebook.imagepipeline.backends.okhttp3.OkHttpImagePipelineConfigFactory
+import com.facebook.imagepipeline.cache.MemoryCacheParams
+import com.facebook.imagepipeline.core.ImagePipelineConfig
+import com.facebook.imagepipeline.core.ImageTranscoderType
 import com.savvasdalkitsis.uhuruphotos.feature.auth.domain.api.AuthenticatedOkHttpClient
 import com.savvasdalkitsis.uhuruphotos.feature.auth.domain.api.TokenRefreshInterceptor
 import com.savvasdalkitsis.uhuruphotos.feature.settings.domain.api.usecase.SettingsUseCase
@@ -41,21 +46,43 @@ class ImageModule {
 
     @Provides
     @Singleton
-    fun memoryCache(
+    fun coilMemoryCache(
         settingsUseCase: SettingsUseCase,
         @ApplicationContext context: Context,
     ): MemoryCache = MemoryCache.Builder(context)
-        .maxSizeBytes((settingsUseCase.getImageMemCacheMaxLimit() * 1024 * 1024).coerceAtLeast(0))
+        .maxSizeBytes((settingsUseCase.getLightboxPhotoMemCacheMaxLimit() * 1024 * 1024).coerceAtLeast(0))
         .build()
 
     @Provides
     @Singleton
-    fun diskCache(
+    fun coilDiskCache(
         @ApplicationContext context: Context,
         settingsUseCase: SettingsUseCase,
     ): DiskCache = DiskCache.Builder()
         .directory(context.cacheDir.resolve("image_cache"))
-        .maxSizeBytes(settingsUseCase.getImageDiskCacheMaxLimit().coerceAtLeast(0) * 1024L * 1024L)
+        .maxSizeBytes(settingsUseCase.getLightboxPhotoDiskCacheMaxLimit().coerceAtLeast(0) * 1024L * 1024L)
+        .build()
+
+    @Provides
+    @Singleton
+    fun frescoMemoryCache(
+        settingsUseCase: SettingsUseCase,
+    ): MemoryCacheParams = MemoryCacheParams(
+        maxCacheSize = (settingsUseCase.getThumbnailMemCacheMaxLimit() * 1024 * 1024).coerceAtLeast(0),
+        maxCacheEntries = Int.MAX_VALUE,
+        maxEvictionQueueSize = Int.MAX_VALUE,
+        maxEvictionQueueEntries = Int.MAX_VALUE,
+        maxCacheEntrySize = Int.MAX_VALUE
+    )
+
+    @Provides
+    @Singleton
+    fun frescoDiskCacheConfig(
+        @ApplicationContext context: Context,
+        settingsUseCase: SettingsUseCase,
+    ): DiskCacheConfig = DiskCacheConfig.newBuilder(context)
+        .setBaseDirectoryPath(context.cacheDir.resolve("image_cache_fresco_small"))
+        .setMaxCacheSize(settingsUseCase.getThumbnailDiskCacheMaxLimit().coerceAtLeast(0) * 1024L * 1024L)
         .build()
 
     @Provides
@@ -85,4 +112,29 @@ class ImageModule {
             }
         }
         .build()
+
+    @Provides
+    @Singleton
+    fun imagePipelineConfig(
+        @ApplicationContext context: Context,
+        @AuthenticatedOkHttpClient
+        okHttpBuilder: OkHttpClient.Builder,
+        @TokenRefreshInterceptor
+        tokenRefreshInterceptor: Interceptor,
+        diskCacheConfig: DiskCacheConfig,
+        memoryCache: MemoryCacheParams
+    ): ImagePipelineConfig =
+        OkHttpImagePipelineConfigFactory
+            .newBuilder(context, okHttpBuilder
+                .addInterceptor(tokenRefreshInterceptor)
+                .build())
+            .setDiskCacheEnabled(true)
+            .setMainDiskCacheConfig(diskCacheConfig)
+            .setIsPrefetchEnabledSupplier { true }
+            .setBitmapMemoryCacheParamsSupplier { memoryCache }
+            .setDownsampleEnabled(true)
+            .setImageTranscoderType(ImageTranscoderType.JAVA_TRANSCODER)
+            .experiment().setNativeCodeDisabled(true)
+            .setResizeAndRotateEnabledForNetwork(true)
+            .build()
 }

@@ -16,10 +16,13 @@ dependencies {
     implementation project(":feature:settings:domain:api")
     implementation(
             libs.autodagger.core,
+            libs.bundles.landscapist,
             libs.coil.compose,
             libs.coil.gif,
             libs.coil.video,
+            libs.gif,
             libs.hilt,
+            libs.webp,
     )
     kapt libs.autodagger.kapt
 }

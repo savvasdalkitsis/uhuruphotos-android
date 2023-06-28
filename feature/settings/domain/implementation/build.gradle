@@ -9,6 +9,7 @@ dependencies {
     implementation project(":foundation:video:api")
     implementation(
             libs.autodagger.core,
+            libs.fresco.core,
             libs.coil.base,
             libs.hilt,
             libs.play,

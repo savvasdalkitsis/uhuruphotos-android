@@ -18,6 +18,8 @@ package com.savvasdalkitsis.uhuruphotos.foundation.image.implementation.initiali
 import android.app.Application
 import coil.Coil
 import coil.ImageLoader
+import com.facebook.drawee.backends.pipeline.Fresco
+import com.facebook.imagepipeline.core.ImagePipelineConfig
 import com.savvasdalkitsis.uhuruphotos.foundation.initializer.api.ApplicationCreated
 import se.ansman.dagger.auto.AutoBindIntoSet
 import javax.inject.Inject
@@ -25,9 +27,12 @@ import javax.inject.Inject
 @AutoBindIntoSet
 class ImageInitializer @Inject constructor(
     private val imageLoader: ImageLoader,
+    private val imagePipelineConfig: ImagePipelineConfig,
 ) : ApplicationCreated {
 
     override fun onAppCreated(app: Application) {
         Coil.setImageLoader(imageLoader)
+
+        Fresco.initialize(app, imagePipelineConfig)
     }
 }

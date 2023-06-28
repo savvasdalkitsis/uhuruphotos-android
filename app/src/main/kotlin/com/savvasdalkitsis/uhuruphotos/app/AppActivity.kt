@@ -71,7 +71,7 @@ class AppActivity : FragmentActivity() {
                 LocalSystemUiController provides systemUiController,
                 LocalWindowSize provides windowSizeClass,
                 LocalMapViewStateFactory provides CompositeMapViewStateFactory(mapViewStateFactories),
-                LocalMapViewFactoryProvider provides CompositeMapViewFactoryProvider(mapViewFactoryProviders)
+                LocalMapViewFactoryProvider provides CompositeMapViewFactoryProvider(mapViewFactoryProviders),
             ) {
                 navigator.NavigationTargets()
             }

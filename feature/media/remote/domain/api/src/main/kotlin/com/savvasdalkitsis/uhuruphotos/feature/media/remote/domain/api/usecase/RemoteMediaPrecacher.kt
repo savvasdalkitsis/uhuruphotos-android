@@ -19,6 +19,5 @@ interface RemoteMediaPrecacher {
     suspend fun precacheMedia(
         url: String,
         video: Boolean,
-        progressListener: (progress: Int) -> Unit = {},
     ): Boolean
 }

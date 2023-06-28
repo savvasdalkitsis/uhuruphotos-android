@@ -49,10 +49,14 @@ internal class SettingsUseCase @Inject constructor(
     @ApplicationContext private val context: Context,
 ) : SettingsUseCase {
 
-    private val imageDiskCacheSize = "imageDiskCacheSize"
-    private val imageDiskCacheSizeDefault = 500
-    private val imageMemCacheSize = "imageDiskCacheSize"
-    private val imageMemCacheSizeDefault = 200
+    private val lightboxPhotoDiskCacheSize = "imageDiskCacheSize" // cannot change value for backwards compatibility
+    private val lightboxPhotoDiskCacheSizeDefault = 500
+    private val lightboxPhotoMemCacheSize = "imageDiskCacheSize"  // cannot change value for backwards compatibility
+    private val lightboxPhotoMemCacheSizeDefault = 200
+    private val thumbnailDiskCacheSize = "thumbnailDiskCacheSize"
+    private val thumbnailDiskCacheSizeDefault = 500
+    private val thumbnailMemCacheSize = "thumbnailDiskCacheSize"
+    private val thumbnailMemCacheSizeDefault = 200
     private val videoDiskCacheSize = "videoDiskCacheSize"
     private val videoDiskCacheSizeDefault = 700
     private val feedSyncFrequency = "feedSyncFrequency"
@@ -102,10 +106,14 @@ internal class SettingsUseCase @Inject constructor(
     private val shouldShowLocalSyncProgress = "shouldShowLocalSyncProgress"
     private val shouldShowLocalSyncProgressDefault = false
 
-    override fun getImageDiskCacheMaxLimit(): Int =
-        get(imageDiskCacheSize, imageDiskCacheSizeDefault)
-    override fun getImageMemCacheMaxLimit(): Int =
-        get(imageMemCacheSize, imageMemCacheSizeDefault)
+    override fun getLightboxPhotoDiskCacheMaxLimit(): Int =
+        get(lightboxPhotoDiskCacheSize, lightboxPhotoDiskCacheSizeDefault)
+    override fun getLightboxPhotoMemCacheMaxLimit(): Int =
+        get(lightboxPhotoMemCacheSize, lightboxPhotoMemCacheSizeDefault)
+    override fun getThumbnailDiskCacheMaxLimit(): Int =
+        get(thumbnailDiskCacheSize, thumbnailDiskCacheSizeDefault)
+    override fun getThumbnailMemCacheMaxLimit(): Int =
+        get(thumbnailMemCacheSize, thumbnailMemCacheSizeDefault)
     override fun getVideoDiskCacheMaxLimit(): Int =
         get(videoDiskCacheSize, videoDiskCacheSizeDefault)
     override fun getFeedSyncFrequency(): Int =
@@ -153,10 +161,14 @@ internal class SettingsUseCase @Inject constructor(
     override fun getShouldShowLocalSyncProgress(): Boolean =
         get(shouldShowLocalSyncProgress, shouldShowLocalSyncProgressDefault)
 
-    override fun observeImageDiskCacheMaxLimit(): Flow<Int> =
-        observe(imageDiskCacheSize, imageDiskCacheSizeDefault)
-    override fun observeImageMemCacheMaxLimit(): Flow<Int> =
-        observe(imageMemCacheSize, imageMemCacheSizeDefault)
+    override fun observeLightboxPhotoDiskCacheMaxLimit(): Flow<Int> =
+        observe(lightboxPhotoDiskCacheSize, lightboxPhotoDiskCacheSizeDefault)
+    override fun observeLightboxPhotoMemCacheMaxLimit(): Flow<Int> =
+        observe(lightboxPhotoMemCacheSize, lightboxPhotoMemCacheSizeDefault)
+    override fun observeThumbnailDiskCacheMaxLimit(): Flow<Int> =
+        observe(thumbnailDiskCacheSize, thumbnailMemCacheSizeDefault)
+    override fun observeThumbnailMemCacheMaxLimit(): Flow<Int> =
+        observe(thumbnailMemCacheSize, thumbnailMemCacheSizeDefault)
     override fun observeVideoDiskCacheMaxLimit(): Flow<Int> =
         observe(videoDiskCacheSize, videoDiskCacheSizeDefault)
     override fun observeFeedSyncFrequency(): Flow<Int> =
@@ -204,12 +216,20 @@ internal class SettingsUseCase @Inject constructor(
     override fun observeShouldShowLocalSyncProgress(): Flow<Boolean> =
         observe(shouldShowLocalSyncProgress, shouldShowLocalSyncProgressDefault)
 
-    override fun setImageDiskCacheMaxLimit(sizeInMb: Int) {
-        set(imageDiskCacheSize, sizeInMb)
+    override fun setLightboxPhotoDiskCacheMaxLimit(sizeInMb: Int) {
+        set(lightboxPhotoDiskCacheSize, sizeInMb)
     }
 
-    override fun setImageMemCacheMaxLimit(sizeInMb: Int) {
-        set(imageMemCacheSize, sizeInMb)
+    override fun setLightboxPhotoMemCacheMaxLimit(sizeInMb: Int) {
+        set(lightboxPhotoMemCacheSize, sizeInMb)
+    }
+
+    override fun setThumbnailDiskCacheMaxLimit(sizeInMb: Int) {
+        set(thumbnailDiskCacheSize, sizeInMb)
+    }
+
+    override fun setThumbnailMemCacheMaxLimit(sizeInMb: Int) {
+        set(thumbnailMemCacheSize, sizeInMb)
     }
 
     override fun setVideoDiskCacheMaxLimit(sizeInMb: Int) {

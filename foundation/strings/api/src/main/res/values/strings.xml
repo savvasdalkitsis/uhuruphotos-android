@@ -266,4 +266,9 @@
     <string name="show_precache_progress">Display precaching progress</string>
     <string name="show_local_progress">Display local sync progress</string>
     <string name="progress">Progress</string>
+    <string name="lightbox_photo_disk_cache">Lightbox Photo Disk cache</string>
+    <string name="lightbox_photo_memory_cache">Lightbox Photo Memory cache</string>
+    <string name="thumbnail_disk_cache">Thumbnail Disk cache</string>
+    <string name="thumbnail_memory_cache">Thumbnail Memory cache</string>
+    <string name="donate">Donate</string>
 </resources>
