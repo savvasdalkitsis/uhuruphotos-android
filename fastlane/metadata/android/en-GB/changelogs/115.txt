@@ -1,0 +1,3 @@
+* Changing thumbnail image loading library to Fresco to improve feed performance
+* Fixing favourite button showing in Lightbox
+* Adding donate link in About page
