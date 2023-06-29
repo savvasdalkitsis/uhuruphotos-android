@@ -1,3 +1,1 @@
-* Changing thumbnail image loading library to Fresco to improve feed performance
-* Fixing favourite button showing in Lightbox
-* Adding donate link in About page
+* Removing fresco and reverting to coil with some optimizations
