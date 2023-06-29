@@ -64,7 +64,7 @@ androidx-test-runner = { module = "androidx.test:runner", version.ref = "android
 androidx-window = "androidx.window:window:1.1.0"
 androidx-work = "androidx.work:work-runtime-ktx:2.8.1"
 androidx-work-hilt = "androidx.hilt:hilt-work:1.0.0"
-appcenter-crashes= "com.microsoft.appcenter:appcenter-crashes:5.0.1"
+appcenter-crashes= "com.microsoft.appcenter:appcenter-crashes:5.0.2"
 assure = "com.afollestad.assure:coroutines:0.2.0"
 autodagger-core = { module = "se.ansman.dagger.auto:android", version.ref = "autodagger" }
 autodagger-kapt = { module = "se.ansman.dagger.auto:compiler", version.ref = "autodagger" }
