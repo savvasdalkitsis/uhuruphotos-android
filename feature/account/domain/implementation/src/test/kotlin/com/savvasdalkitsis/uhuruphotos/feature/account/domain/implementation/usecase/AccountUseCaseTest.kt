@@ -35,7 +35,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.people.PeopleQuerie
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.person.PersonQueries
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.search.SearchQueries
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.user.UserQueries
-import com.savvasdalkitsis.uhuruphotos.foundation.image.api.cache.ImageCacheController
+import com.savvasdalkitsis.uhuruphotos.foundation.image.api.cache.ImageCacheUseCase
 import com.savvasdalkitsis.uhuruphotos.foundation.worker.api.usecase.WorkScheduleUseCase
 import com.squareup.sqldelight.TransactionWithReturn
 import com.squareup.sqldelight.TransactionWithoutReturn
@@ -46,7 +46,7 @@ import org.junit.Test
 
 class AccountUseCaseTest {
 
-    private val imageCacheController = mockk<ImageCacheController>(relaxed = true)
+    private val imageCacheUseCase = mockk<ImageCacheUseCase>(relaxed = true)
     private val videoCache = mockk<CacheDataSource.Factory>(relaxed = true)
     private val workScheduleUseCase = mockk<WorkScheduleUseCase>(relaxed = true)
     private val db = object: Database {
@@ -81,7 +81,7 @@ class AccountUseCaseTest {
 
     private val underTest = AccountUseCase(
         db,
-        imageCacheController,
+        imageCacheUseCase,
         videoCache,
         workScheduleUseCase,
     )
@@ -123,7 +123,7 @@ class AccountUseCaseTest {
     fun `clears image cache when logging out`() = runBlocking {
         underTest.logOut()
 
-        verify { imageCacheController.clear() }
+        verify { imageCacheUseCase.clearAll() }
     }
 
 //    @Test

@@ -55,7 +55,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.ui.s
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.DeleteFullySyncedPermissionDialog
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.DeletePermissionDialog
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.TrashPermissionDialog
-import com.savvasdalkitsis.uhuruphotos.foundation.image.api.ui.Image
+import com.savvasdalkitsis.uhuruphotos.foundation.image.api.ui.FullSizeImage
 import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
 import com.savvasdalkitsis.uhuruphotos.foundation.video.api.ui.Video
 import dev.shreyaspatil.permissionflow.compose.rememberPermissionFlowRequestLauncher
@@ -128,7 +128,7 @@ fun LightboxCanvas(
                     play = true,
                     onFinishedLoading = { action(FullMediaDataLoaded(mediaItem)) },
                 )
-                else -> Image(
+                else -> FullSizeImage(
                     modifier = Modifier
                         .fillMaxWidth()
                         .align(Alignment.Center),

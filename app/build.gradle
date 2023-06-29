@@ -16,8 +16,8 @@ android {
         applicationId "com.savvasdalkitsis.uhuruphotos"
         minSdk 23
         targetSdk 34
-        versionCode 115
-        versionName "0.0.122"
+        versionCode 116
+        versionName "0.0.123"
 
         vectorDrawables {
             useSupportLibrary true
@@ -56,21 +56,20 @@ android {
 }
 
 dependencies {
-    implementation project(":feature:home:view:api")
-    implementation project(":feature:settings:domain:api")
-    implementation project(":foundation:activity:api")
-    implementation project(":foundation:download:api")
-    implementation project(":foundation:initializer:api")
-    implementation project(":foundation:log:api")
-    implementation project(":foundation:map:api")
-    implementation project(":foundation:navigation:api")
-    implementation project(":foundation:ui:api")
-    implementation project(":foundation:video:api")
-
-    implementation project(':app:implementation')
-    implementation project(":foundation:ui:implementation")
-
     implementation(
+            project(':app:implementation'),
+            project(":feature:home:view:api"),
+            project(":feature:settings:domain:api"),
+            project(":foundation:activity:api"),
+            project(":foundation:download:api"),
+            project(":foundation:image:api"),
+            project(":foundation:initializer:api"),
+            project(":foundation:log:api"),
+            project(":foundation:map:api"),
+            project(":foundation:navigation:api"),
+            project(":foundation:ui:api"),
+            project(":foundation:ui:implementation"),
+            project(":foundation:video:api"),
             libs.accompanist.systemui,
             libs.androidx.activity,
             libs.androidx.compose.hilt.navigation,

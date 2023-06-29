@@ -23,8 +23,13 @@ import androidx.compose.ui.platform.LocalHapticFeedback
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.rememberNavController
+import coil.ImageLoader
 import com.savvasdalkitsis.uhuruphotos.feature.home.view.api.navigation.HomeNavigationRoute
 import com.savvasdalkitsis.uhuruphotos.feature.settings.domain.api.usecase.SettingsUseCase
+import com.savvasdalkitsis.uhuruphotos.foundation.image.api.model.FullImage
+import com.savvasdalkitsis.uhuruphotos.foundation.image.api.model.LocalFullImageLoader
+import com.savvasdalkitsis.uhuruphotos.foundation.image.api.model.LocalThumbnailImageLoader
+import com.savvasdalkitsis.uhuruphotos.foundation.image.api.model.ThumbnailImage
 import com.savvasdalkitsis.uhuruphotos.foundation.map.api.model.LocalMapProvider
 import com.savvasdalkitsis.uhuruphotos.foundation.map.api.model.MapProvider
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.LocalNavigationRouteSerializerProvider
@@ -46,6 +51,10 @@ class AppNavigator @Inject constructor(
     private val exoplayerProvider: ExoplayerProvider,
     private val settingsUseCase: SettingsUseCase,
     private val navigationRouteSerializer: NavigationRouteSerializer,
+    @FullImage
+    private val fullImageLoader: ImageLoader,
+    @ThumbnailImage
+    private val thumbnailImageLoader: ImageLoader,
 ) {
 
     @Composable
@@ -66,6 +75,8 @@ class AppNavigator @Inject constructor(
             LocalAnimatedVideoThumbnails provides animateVideoThumbnails.value,
             LocalMapProvider provides mapProvider,
             LocalNavigationRouteSerializerProvider provides navigationRouteSerializer,
+            LocalFullImageLoader provides fullImageLoader,
+            LocalThumbnailImageLoader provides thumbnailImageLoader,
         ) {
             NavHost(
                 navController = navHostController,

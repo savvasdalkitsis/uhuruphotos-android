@@ -20,24 +20,19 @@ import android.content.Context
 import coil.ImageLoader
 import coil.request.CachePolicy
 import coil.request.ErrorResult
+import coil.request.ImageRequest
 import coil.request.SuccessResult
-import com.facebook.datasource.DataSource
-import com.facebook.datasource.DataSubscriber
-import com.facebook.drawee.backends.pipeline.Fresco
-import com.facebook.imagepipeline.request.ImageRequest
 import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.api.usecase.RemoteMediaPrecacher
+import com.savvasdalkitsis.uhuruphotos.foundation.image.api.model.ThumbnailImage
 import com.savvasdalkitsis.uhuruphotos.foundation.log.api.log
 import dagger.hilt.android.qualifiers.ApplicationContext
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.asExecutor
-import kotlinx.coroutines.suspendCancellableCoroutine
 import se.ansman.dagger.auto.AutoBind
 import javax.inject.Inject
-import kotlin.coroutines.resume
 
 @AutoBind
 class RemoteMediaPrecacher @Inject constructor(
     @ApplicationContext val context: Context,
+    @ThumbnailImage
     private val imageLoader: ImageLoader,
 ) : RemoteMediaPrecacher {
 
@@ -45,19 +40,8 @@ class RemoteMediaPrecacher @Inject constructor(
         url: String,
         video: Boolean,
     ): Boolean = try {
-        if (video) {
-            cacheVideoThumbnail(url)
-        } else {
-            cachePhotoThumbnail(url)
-        }
-    } catch (e: Exception) {
-        log(e)
-        false
-    }
-
-    private suspend fun cacheVideoThumbnail(url: String): Boolean {
         val result = imageLoader.execute(
-            coil.request.ImageRequest.Builder(context)
+            ImageRequest.Builder(context)
                 .data(url)
                 .memoryCachePolicy(CachePolicy.DISABLED)
                 .diskCachePolicy(CachePolicy.ENABLED)
@@ -65,38 +49,12 @@ class RemoteMediaPrecacher @Inject constructor(
                 .build()
         )
         if (result is ErrorResult) {
-            log(result.throwable) { "Error precaching video thumbnail: $url"}
+            log(result.throwable) { "Error precaching thumbnail: $url" }
         }
-        return result is SuccessResult
+        result is SuccessResult
+    } catch (e: Exception) {
+        log(e)
+        false
     }
 
-    private suspend fun cachePhotoThumbnail(url: String): Boolean =
-        suspendCancellableCoroutine { continuation ->
-            Fresco.getImagePipeline()
-                .prefetchToDiskCache(
-                    ImageRequest.fromUri(url),
-                    null
-                )
-                .subscribe(object : DataSubscriber<Void> {
-                    override fun onNewResult(dataSource: DataSource<Void>) {
-                        if (dataSource.isFinished) {
-                            continuation.resume(true)
-                        }
-                    }
-
-                    override fun onFailure(dataSource: DataSource<Void>) {
-                        dataSource.failureCause?.let {
-                            log(it) { "Error precaching photo: $url"}
-                        }
-                        continuation.resume(false)
-                    }
-
-                    override fun onCancellation(dataSource: DataSource<Void>) {
-                        continuation.resume(false)
-                    }
-
-                    override fun onProgressUpdate(dataSource: DataSource<Void>) {
-                    }
-                }, Dispatchers.IO.asExecutor())
-        }
 }

@@ -15,71 +15,61 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.foundation.image.api.ui
 
-import android.graphics.drawable.Animatable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.painter.ColorPainter
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.unit.IntSize
 import coil.compose.AsyncImage
 import coil.request.CachePolicy
+import coil.request.DefaultRequestOptions
 import coil.request.ImageRequest
+import coil.size.Precision
 import coil.size.Size
-import com.facebook.drawee.backends.pipeline.Fresco
-import com.facebook.drawee.controller.BaseControllerListener
-import com.facebook.imagepipeline.image.ImageInfo
-import com.skydoves.landscapist.fresco.websupport.FrescoWebImage
+import com.savvasdalkitsis.uhuruphotos.foundation.image.api.model.LocalFullImageLoader
+import com.savvasdalkitsis.uhuruphotos.foundation.image.api.model.LocalThumbnailImageLoader
 
 @Composable
 fun ThumbnailImage(
     modifier: Modifier = Modifier,
     url: String?,
     contentScale: ContentScale,
-    placeholder: Painter? = null,
+    placeholder: Int? = null,
     contentDescription: String?,
-    isVideo: Boolean = false,
     onSuccess: () -> Unit = {},
 ) {
-    if (!isVideo) {
-        FrescoWebImage(
-            modifier = modifier,
-            controllerBuilder = {
-                Fresco.newDraweeControllerBuilder()
-                    .setUri(url)
-                    .setControllerListener(object : BaseControllerListener<ImageInfo>() {
-                        override fun onFinalImageSet(
-                            id: String?,
-                            imageInfo: ImageInfo?,
-                            animatable: Animatable?
-                        ) {
-                            onSuccess()
-                        }
-                    })
-                    .setAutoPlayAnimations(true)
-            },
-            contentScale = contentScale,
-        )
-    } else {
-        AsyncImage(
-            modifier = modifier,
-            model = ImageRequest.Builder(LocalContext.current)
-                .data(url)
-                .diskCachePolicy(CachePolicy.ENABLED)
-                .listener(onSuccess = { _, _ -> onSuccess() })
-                .build(),
-            contentScale = contentScale,
-            placeholder = placeholder,
-            contentDescription = contentDescription,
-        )
+    var size by remember {
+        mutableStateOf<IntSize?>(null)
     }
+    val bg = placeholder?.let { ColorPainter(Color(it)) }
+    AsyncImage(
+        modifier = modifier
+            .onGloballyPositioned { size = it.size },
+        imageLoader = LocalThumbnailImageLoader.current,
+        model = url.toRequest(size?.toSize) {
+            onSuccess()
+        },
+        contentScale = contentScale,
+        placeholder = bg,
+        error = bg,
+        fallback = bg,
+        contentDescription = contentDescription,
+    )
 }
 
 @Composable
-fun Image(
+fun FullSizeImage(
     modifier: Modifier = Modifier,
     lowResUrl: String?,
     fullResUrl: String?,
@@ -96,7 +86,9 @@ fun Image(
                 modifier = Modifier
                     .fillMaxWidth()
                     .align(Alignment.Center),
+                imageLoader = LocalFullImageLoader.current,
                 model = ImageRequest.Builder(LocalContext.current)
+                    .crossfade(true)
                     .data(lowResUrl)
                     .build(),
                 contentScale = contentScale,
@@ -108,17 +100,40 @@ fun Image(
             modifier = Modifier
                 .fillMaxWidth()
                 .align(Alignment.Center),
-            model = ImageRequest.Builder(LocalContext.current)
-                .data(fullResUrl)
-                .size(Size.ORIGINAL)
-                .diskCachePolicy(CachePolicy.ENABLED)
-                .listener(onSuccess = { _, _ ->
-                    showLowRes = false
-                    onFullResImageLoaded()
-                })
-                .build(),
+            imageLoader = LocalFullImageLoader.current,
+            model = fullResUrl.toRequest(size = Size.ORIGINAL, precision = Precision.EXACT) {
+                showLowRes = false
+                onFullResImageLoaded()
+            },
             contentScale = contentScale,
             contentDescription = contentDescription,
         )
+    }
+}
+
+private val IntSize.toSize get() = Size(width, height)
+
+@Composable
+private fun String?.toRequest(
+    size: Size?,
+    precision: Precision = Precision.INEXACT,
+    onSuccess: () -> Unit
+) = this?.let { url ->
+    if (size != null) {
+        ImageRequest.Builder(LocalContext.current)
+            .data(url)
+            .size(size)
+            .diskCachePolicy(CachePolicy.ENABLED)
+            .allowHardware(true)
+            .crossfade(true)
+            .defaults(
+                DefaultRequestOptions(
+                    precision = precision,
+                )
+            )
+            .listener(onSuccess = { _, _ -> onSuccess() })
+            .build()
+    } else {
+        null
     }
 }

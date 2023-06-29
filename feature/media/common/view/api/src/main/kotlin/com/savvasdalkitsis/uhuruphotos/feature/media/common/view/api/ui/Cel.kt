@@ -50,6 +50,7 @@ import androidx.compose.ui.draw.scale
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.graphics.Shape
+import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.Dp
@@ -124,15 +125,14 @@ fun Cel(
                     modifier = Modifier.fillMaxWidth(),
                     url = thumbnailUri,
                     contentScale = contentScale,
-                    contentDescription = null,
-                    isVideo = mediaItem.id.isVideo,
-                    onSuccess = {
-                        scope.launch {
-                            delay(100)
-                            loaded = true
-                        }
+                    placeholder = backgroundColor.toArgb(),
+                    contentDescription = null
+                ) {
+                    scope.launch {
+                        delay(100)
+                        loaded = true
                     }
-                )
+                }
             } else {
                 Video(
                     modifier = Modifier.fillMaxSize(),

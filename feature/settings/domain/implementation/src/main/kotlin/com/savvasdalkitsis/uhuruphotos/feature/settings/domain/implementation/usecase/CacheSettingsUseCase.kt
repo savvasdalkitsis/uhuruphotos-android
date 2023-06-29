@@ -15,9 +15,6 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.settings.domain.implementation.usecase
 
-import coil.disk.DiskCache
-import coil.memory.MemoryCache
-import com.facebook.drawee.backends.pipeline.Fresco
 import com.google.android.exoplayer2.upstream.cache.CacheDataSource
 import com.savvasdalkitsis.uhuruphotos.feature.settings.domain.api.model.CacheType
 import com.savvasdalkitsis.uhuruphotos.feature.settings.domain.api.model.CacheType.LIGHTBOX_PHOTO_DISK
@@ -26,6 +23,11 @@ import com.savvasdalkitsis.uhuruphotos.feature.settings.domain.api.model.CacheTy
 import com.savvasdalkitsis.uhuruphotos.feature.settings.domain.api.model.CacheType.THUMBNAIL_MEMORY
 import com.savvasdalkitsis.uhuruphotos.feature.settings.domain.api.model.CacheType.VIDEO_DISK
 import com.savvasdalkitsis.uhuruphotos.feature.settings.domain.api.usecase.CacheSettingsUseCase
+import com.savvasdalkitsis.uhuruphotos.foundation.image.api.cache.ImageCacheUseCase
+import com.savvasdalkitsis.uhuruphotos.foundation.image.api.model.Location.DISK
+import com.savvasdalkitsis.uhuruphotos.foundation.image.api.model.Location.MEMORY
+import com.savvasdalkitsis.uhuruphotos.foundation.image.api.model.Type.FULL
+import com.savvasdalkitsis.uhuruphotos.foundation.image.api.model.Type.THUMB
 import com.savvasdalkitsis.uhuruphotos.foundation.video.api.evictAll
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
@@ -37,8 +39,7 @@ import javax.inject.Inject
 
 @AutoBind
 internal class CacheSettingsUseCase @Inject constructor(
-    private val lightboxPhotoDiskCache: DiskCache,
-    private val lightboxPhotoMemoryCache: MemoryCache,
+    private val imageCacheUseCase: ImageCacheUseCase,
     private val videoCache: CacheDataSource.Factory,
 ) : CacheSettingsUseCase {
 
@@ -47,8 +48,6 @@ internal class CacheSettingsUseCase @Inject constructor(
     private val thumbnailDiskCacheFlow: MutableSharedFlow<Int> = MutableSharedFlow(1)
     private val thumbnailMemCacheFlow: MutableSharedFlow<Int> = MutableSharedFlow(1)
     private val videoDiskCacheFlow: MutableSharedFlow<Int> = MutableSharedFlow(1)
-
-    private val fresco get() = Fresco.getImagePipeline()
 
     override fun observeCacheCurrentUse(cacheType: CacheType): Flow<Int> = cacheFlow(cacheType).onStart {
         updateCurrentCacheFlow(cacheType)
@@ -70,18 +69,18 @@ internal class CacheSettingsUseCase @Inject constructor(
     }
 
     private fun clear(cacheType: CacheType) = when (cacheType) {
-        LIGHTBOX_PHOTO_MEMORY -> lightboxPhotoMemoryCache.clear()
-        LIGHTBOX_PHOTO_DISK -> lightboxPhotoDiskCache.clear()
-        THUMBNAIL_MEMORY -> fresco.clearMemoryCaches()
-        THUMBNAIL_DISK -> fresco.clearDiskCaches()
+        LIGHTBOX_PHOTO_MEMORY -> imageCacheUseCase.clear(MEMORY, FULL)
+        LIGHTBOX_PHOTO_DISK -> imageCacheUseCase.clear(DISK, FULL)
+        THUMBNAIL_MEMORY -> imageCacheUseCase.clear(MEMORY, THUMB)
+        THUMBNAIL_DISK -> imageCacheUseCase.clear(DISK, THUMB)
         VIDEO_DISK -> videoCache.evictAll()
     }
 
     private fun currentUse(cacheType: CacheType) = when(cacheType) {
-        LIGHTBOX_PHOTO_MEMORY -> lightboxPhotoMemoryCache.size.mb
-        LIGHTBOX_PHOTO_DISK -> lightboxPhotoDiskCache.size.mb
-        THUMBNAIL_MEMORY -> fresco.bitmapMemoryCache.sizeInBytes.mb
-        THUMBNAIL_DISK -> fresco.usedDiskCacheSize.mb
+        LIGHTBOX_PHOTO_MEMORY -> imageCacheUseCase.getCurrentUse(MEMORY, FULL)
+        LIGHTBOX_PHOTO_DISK -> imageCacheUseCase.getCurrentUse(DISK, FULL)
+        THUMBNAIL_MEMORY -> imageCacheUseCase.getCurrentUse(MEMORY, THUMB)
+        THUMBNAIL_DISK -> imageCacheUseCase.getCurrentUse(DISK, THUMB)
         VIDEO_DISK -> (videoCache.cache?.cacheSpace ?: 0).mb
     }
 

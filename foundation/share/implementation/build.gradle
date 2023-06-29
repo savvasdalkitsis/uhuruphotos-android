@@ -1,9 +1,10 @@
 dependencies {
 
-    implementation project(":foundation:navigation:api")
-    implementation project(":foundation:share:api")
-    implementation project(":feature:settings:domain:api")
     implementation(
+            project(":foundation:image:api"),
+            project(":foundation:navigation:api"),
+            project(":foundation:share:api"),
+            project(":feature:settings:domain:api"),
             libs.coil.base,
             libs.exif,
     )

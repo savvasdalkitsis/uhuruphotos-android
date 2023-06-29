@@ -10,17 +10,14 @@ android {
 
 dependencies {
 
+    api(
+            libs.coil.base,
+    )
+
     implementation(
             libs.coil.compose,
             libs.coil.gif,
             libs.coil.video,
+            libs.hilt,
     )
-    implementation(libs.bundles.landscapist) {
-        exclude group: 'com.facebook.soloader', module: 'soloader'
-        exclude group: 'com.facebook.fresco', module: 'soloader'
-        exclude group: 'com.facebook.fresco', module: 'nativeimagefilters'
-        exclude group: 'com.facebook.fresco', module: 'nativeimagetranscoder'
-        exclude group: 'com.facebook.fresco', module: 'memory-type-native'
-        exclude group: 'com.facebook.fresco', module: 'imagepipeline-native'
-    }
 }

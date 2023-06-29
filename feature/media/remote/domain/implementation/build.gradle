@@ -51,7 +51,6 @@ dependencies {
             libs.autodagger.core,
             libs.coil.base,
             libs.exif,
-            libs.fresco.core,
             libs.infobar,
             libs.moshi,
             libs.retrofit.core,

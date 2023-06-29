@@ -3,13 +3,13 @@ android {
 }
 
 dependencies {
-    implementation project(":feature:settings:domain:api")
-    implementation project(":foundation:log:api")
-    implementation project(":foundation:preferences:api")
-    implementation project(":foundation:video:api")
     implementation(
+            project(":feature:settings:domain:api"),
+            project(":foundation:image:api"),
+            project(":foundation:log:api"),
+            project(":foundation:preferences:api"),
+            project(":foundation:video:api"),
             libs.autodagger.core,
-            libs.fresco.core,
             libs.coil.base,
             libs.hilt,
             libs.play,

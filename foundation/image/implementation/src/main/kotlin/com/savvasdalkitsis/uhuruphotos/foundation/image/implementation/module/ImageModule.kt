@@ -23,14 +23,11 @@ import coil.decode.ImageDecoderDecoder
 import coil.decode.VideoFrameDecoder
 import coil.disk.DiskCache
 import coil.memory.MemoryCache
-import com.facebook.cache.disk.DiskCacheConfig
-import com.facebook.imagepipeline.backends.okhttp3.OkHttpImagePipelineConfigFactory
-import com.facebook.imagepipeline.cache.MemoryCacheParams
-import com.facebook.imagepipeline.core.ImagePipelineConfig
-import com.facebook.imagepipeline.core.ImageTranscoderType
 import com.savvasdalkitsis.uhuruphotos.feature.auth.domain.api.AuthenticatedOkHttpClient
 import com.savvasdalkitsis.uhuruphotos.feature.auth.domain.api.TokenRefreshInterceptor
 import com.savvasdalkitsis.uhuruphotos.feature.settings.domain.api.usecase.SettingsUseCase
+import com.savvasdalkitsis.uhuruphotos.foundation.image.api.model.FullImage
+import com.savvasdalkitsis.uhuruphotos.foundation.image.api.model.ThumbnailImage
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -46,48 +43,81 @@ class ImageModule {
 
     @Provides
     @Singleton
-    fun coilMemoryCache(
+    @FullImage
+    fun fullImageMemoryCache(
         settingsUseCase: SettingsUseCase,
         @ApplicationContext context: Context,
     ): MemoryCache = MemoryCache.Builder(context)
-        .maxSizeBytes((settingsUseCase.getLightboxPhotoMemCacheMaxLimit() * 1024 * 1024).coerceAtLeast(0))
+        .maxSizeBytes(settingsUseCase.getLightboxPhotoMemCacheMaxLimit().mb)
         .build()
 
     @Provides
     @Singleton
-    fun coilDiskCache(
+    @ThumbnailImage
+    fun thumbnailImageMemoryCache(
+        settingsUseCase: SettingsUseCase,
+        @ApplicationContext context: Context,
+    ): MemoryCache = MemoryCache.Builder(context)
+        .maxSizeBytes(settingsUseCase.getThumbnailMemCacheMaxLimit().mb)
+        .build()
+
+    @Provides
+    @Singleton
+    @FullImage
+    fun fullImageDiskCache(
         @ApplicationContext context: Context,
         settingsUseCase: SettingsUseCase,
     ): DiskCache = DiskCache.Builder()
-        .directory(context.cacheDir.resolve("image_cache"))
-        .maxSizeBytes(settingsUseCase.getLightboxPhotoDiskCacheMaxLimit().coerceAtLeast(0) * 1024L * 1024L)
+        .directory(context.cacheDir.resolve("image_cache_full"))
+        .maxSizeBytes(settingsUseCase.getLightboxPhotoDiskCacheMaxLimit().mb.toLong())
         .build()
 
     @Provides
     @Singleton
-    fun frescoMemoryCache(
+    @ThumbnailImage
+    fun thumbnailImageDiskCache(
+        @ApplicationContext context: Context,
         settingsUseCase: SettingsUseCase,
-    ): MemoryCacheParams = MemoryCacheParams(
-        maxCacheSize = (settingsUseCase.getThumbnailMemCacheMaxLimit() * 1024 * 1024).coerceAtLeast(0),
-        maxCacheEntries = Int.MAX_VALUE,
-        maxEvictionQueueSize = Int.MAX_VALUE,
-        maxEvictionQueueEntries = Int.MAX_VALUE,
-        maxCacheEntrySize = Int.MAX_VALUE
+    ): DiskCache = DiskCache.Builder()
+        .directory(context.cacheDir.resolve("image_cache")) // keeping same name for backwards compatibility
+        .maxSizeBytes(settingsUseCase.getThumbnailDiskCacheMaxLimit().mb.toLong())
+        .build()
+
+    @Provides
+    @Singleton
+    @FullImage
+    fun fullImageLoader(
+        @ApplicationContext context: Context,
+        @AuthenticatedOkHttpClient
+        okHttpBuilder: OkHttpClient.Builder,
+        @TokenRefreshInterceptor
+        tokenRefreshInterceptor: Interceptor,
+        @FullImage
+        memoryCache: MemoryCache,
+        @FullImage
+        diskCache: DiskCache,
+    ): ImageLoader = imageLoader(
+        context, okHttpBuilder, tokenRefreshInterceptor, memoryCache, diskCache
     )
 
     @Provides
     @Singleton
-    fun frescoDiskCacheConfig(
+    @ThumbnailImage
+    fun thumbnailImageLoader(
         @ApplicationContext context: Context,
-        settingsUseCase: SettingsUseCase,
-    ): DiskCacheConfig = DiskCacheConfig.newBuilder(context)
-        .setBaseDirectoryPath(context.cacheDir.resolve("image_cache_fresco_small"))
-        .setMaxCacheSize(settingsUseCase.getThumbnailDiskCacheMaxLimit().coerceAtLeast(0) * 1024L * 1024L)
-        .build()
+        @AuthenticatedOkHttpClient
+        okHttpBuilder: OkHttpClient.Builder,
+        @TokenRefreshInterceptor
+        tokenRefreshInterceptor: Interceptor,
+        @ThumbnailImage
+        memoryCache: MemoryCache,
+        @ThumbnailImage
+        diskCache: DiskCache,
+    ): ImageLoader = imageLoader(
+        context, okHttpBuilder, tokenRefreshInterceptor, memoryCache, diskCache
+    )
 
-    @Provides
-    @Singleton
-    fun imageLoader(
+    private fun imageLoader(
         @ApplicationContext context: Context,
         @AuthenticatedOkHttpClient
         okHttpBuilder: OkHttpClient.Builder,
@@ -113,28 +143,6 @@ class ImageModule {
         }
         .build()
 
-    @Provides
-    @Singleton
-    fun imagePipelineConfig(
-        @ApplicationContext context: Context,
-        @AuthenticatedOkHttpClient
-        okHttpBuilder: OkHttpClient.Builder,
-        @TokenRefreshInterceptor
-        tokenRefreshInterceptor: Interceptor,
-        diskCacheConfig: DiskCacheConfig,
-        memoryCache: MemoryCacheParams
-    ): ImagePipelineConfig =
-        OkHttpImagePipelineConfigFactory
-            .newBuilder(context, okHttpBuilder
-                .addInterceptor(tokenRefreshInterceptor)
-                .build())
-            .setDiskCacheEnabled(true)
-            .setMainDiskCacheConfig(diskCacheConfig)
-            .setIsPrefetchEnabledSupplier { true }
-            .setBitmapMemoryCacheParamsSupplier { memoryCache }
-            .setDownsampleEnabled(true)
-            .setImageTranscoderType(ImageTranscoderType.JAVA_TRANSCODER)
-            .experiment().setNativeCodeDisabled(true)
-            .setResizeAndRotateEnabledForNetwork(true)
-            .build()
+    private val Int.mb get() = coerceAtLeast(0) * 1024 * 1024
+
 }

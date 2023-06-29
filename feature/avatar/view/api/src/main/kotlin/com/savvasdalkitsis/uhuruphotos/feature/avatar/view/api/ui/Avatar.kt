@@ -28,7 +28,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.painter.ColorPainter
+import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.Dp
@@ -75,7 +75,7 @@ fun Avatar(
                     .align(Alignment.Center),
                 url = state.avatarUrl,
                 contentScale = ContentScale.FillBounds,
-                placeholder = ColorPainter(backgroundColor),
+                placeholder = backgroundColor.toArgb(),
                 contentDescription = "profileImage"
             )
             state.initials.isNotEmpty() -> Text(

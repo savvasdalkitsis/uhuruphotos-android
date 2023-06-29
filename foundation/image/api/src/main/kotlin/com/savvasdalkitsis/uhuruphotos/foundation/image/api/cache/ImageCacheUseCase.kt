@@ -13,22 +13,14 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
  */
-package com.savvasdalkitsis.uhuruphotos.foundation.image.implementation.cache
+package com.savvasdalkitsis.uhuruphotos.foundation.image.api.cache
 
-import coil.disk.DiskCache
-import coil.memory.MemoryCache
-import com.savvasdalkitsis.uhuruphotos.foundation.image.api.cache.ImageCacheController
-import se.ansman.dagger.auto.AutoBind
-import javax.inject.Inject
+import com.savvasdalkitsis.uhuruphotos.foundation.image.api.model.Location
+import com.savvasdalkitsis.uhuruphotos.foundation.image.api.model.Type
 
-@AutoBind
-class ImageCacheController @Inject constructor(
-    private val memoryCache: MemoryCache,
-    private val diskCache: DiskCache,
-) : ImageCacheController {
+interface ImageCacheUseCase {
 
-    override fun clear() {
-        memoryCache.clear()
-        diskCache.clear()
-    }
+    fun clear(location: Location, type: Type)
+    fun clearAll()
+    fun getCurrentUse(location: Location, type: Type): Int
 }
