@@ -79,7 +79,6 @@ flowpreferences = "com.fredporciuncula:flow-preferences:1.9.1"
 google-services = { module = "com.google.gms:google-services", version.ref = "google-services" }
 gif = "com.squareup:gifencoder:0.10.1"
 gson = "com.google.code.gson:gson:2.10.1"
-guava = "com.google.guava:guava:32.1.1-android"
 hilt = { module = "com.google.dagger:hilt-android", version.ref = "hilt" }
 hilt-android-gradle-plugin = { module = "com.google.dagger:hilt-android-gradle-plugin", version.ref = "hilt" }
 hilt-dagger-compiler = { module = "com.google.dagger:hilt-compiler", version.ref = "hilt" }
@@ -90,7 +89,7 @@ junit = "junit:junit:4.13.2"
 jwt = "com.auth0.android:jwtdecode:2.0.2"
 kotlinx-coroutines = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-android", version.ref = "org-jetbrains-kotlinx" }
 kotlinx-coroutines-test = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test", version.ref = "org-jetbrains-kotlinx" }
-kotlin-reflect = "org.jetbrains.kotlin:kotlin-reflect:1.8.21"
+kotlin-reflect = "org.jetbrains.kotlin:kotlin-reflect:1.8.22"
 logger = "com.jakewharton.timber:timber:4.7.1"
 lottie = "com.airbnb.android:lottie-compose:6.0.1"
 lumberjack-core = { module = "com.github.savvasdalkitsis.Lumberjack:lumberjack-library", version.ref = "lumberjack" }

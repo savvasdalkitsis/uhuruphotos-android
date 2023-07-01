@@ -27,7 +27,6 @@ dependencies {
             libs.androidx.work.hilt,
             libs.autodagger.core,
             libs.hilt,
-            libs.guava,
             libs.sqldelight.coroutines,
             libs.retrofit.core,
             libs.moshi,
