@@ -15,14 +15,8 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.foundation.image.api.model
 
-import androidx.compose.runtime.compositionLocalOf
-import coil.ImageLoader
+import javax.inject.Qualifier
 
-val LocalThumbnailImageLoader =
-    compositionLocalOf<ImageLoader> { throw IllegalStateException("not initialized") }
-
-val LocalThumbnailWithNetworkCacheImageLoader =
-    compositionLocalOf<ImageLoader> { throw IllegalStateException("not initialized") }
-
-val LocalFullImageLoader =
-    compositionLocalOf<ImageLoader> { throw IllegalStateException("not initialized") }
+@Qualifier
+@Retention(AnnotationRetention.BINARY)
+annotation class ThumbnailImageWithNetworkCacheSupport

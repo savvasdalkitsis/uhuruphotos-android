@@ -29,7 +29,9 @@ import com.savvasdalkitsis.uhuruphotos.feature.settings.domain.api.usecase.Setti
 import com.savvasdalkitsis.uhuruphotos.foundation.image.api.model.FullImage
 import com.savvasdalkitsis.uhuruphotos.foundation.image.api.model.LocalFullImageLoader
 import com.savvasdalkitsis.uhuruphotos.foundation.image.api.model.LocalThumbnailImageLoader
+import com.savvasdalkitsis.uhuruphotos.foundation.image.api.model.LocalThumbnailWithNetworkCacheImageLoader
 import com.savvasdalkitsis.uhuruphotos.foundation.image.api.model.ThumbnailImage
+import com.savvasdalkitsis.uhuruphotos.foundation.image.api.model.ThumbnailImageWithNetworkCacheSupport
 import com.savvasdalkitsis.uhuruphotos.foundation.map.api.model.LocalMapProvider
 import com.savvasdalkitsis.uhuruphotos.foundation.map.api.model.MapProvider
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.LocalNavigationRouteSerializerProvider
@@ -55,6 +57,8 @@ class AppNavigator @Inject constructor(
     private val fullImageLoader: ImageLoader,
     @ThumbnailImage
     private val thumbnailImageLoader: ImageLoader,
+    @ThumbnailImageWithNetworkCacheSupport
+    private val thumbnailImageWithNetworkCacheSupportLoader: ImageLoader,
 ) {
 
     @Composable
@@ -77,6 +81,7 @@ class AppNavigator @Inject constructor(
             LocalNavigationRouteSerializerProvider provides navigationRouteSerializer,
             LocalFullImageLoader provides fullImageLoader,
             LocalThumbnailImageLoader provides thumbnailImageLoader,
+            LocalThumbnailWithNetworkCacheImageLoader provides thumbnailImageWithNetworkCacheSupportLoader,
         ) {
             NavHost(
                 navController = navHostController,

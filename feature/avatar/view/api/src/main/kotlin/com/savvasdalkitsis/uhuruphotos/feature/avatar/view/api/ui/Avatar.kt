@@ -74,6 +74,7 @@ fun Avatar(
                     .clip(CircleShape)
                     .align(Alignment.Center),
                 url = state.avatarUrl,
+                respectNetworkCacheHeaders = true,
                 contentScale = ContentScale.FillBounds,
                 placeholder = backgroundColor.toArgb(),
                 contentDescription = "profileImage"

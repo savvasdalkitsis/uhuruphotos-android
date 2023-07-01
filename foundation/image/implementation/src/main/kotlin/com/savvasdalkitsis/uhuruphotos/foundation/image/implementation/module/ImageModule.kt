@@ -28,6 +28,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.auth.domain.api.TokenRefreshInter
 import com.savvasdalkitsis.uhuruphotos.feature.settings.domain.api.usecase.SettingsUseCase
 import com.savvasdalkitsis.uhuruphotos.foundation.image.api.model.FullImage
 import com.savvasdalkitsis.uhuruphotos.foundation.image.api.model.ThumbnailImage
+import com.savvasdalkitsis.uhuruphotos.foundation.image.api.model.ThumbnailImageWithNetworkCacheSupport
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -116,6 +117,16 @@ class ImageModule {
     ): ImageLoader = imageLoader(
         context, okHttpBuilder, tokenRefreshInterceptor, memoryCache, diskCache
     )
+
+    @Provides
+    @Singleton
+    @ThumbnailImageWithNetworkCacheSupport
+    fun thumbnailImageWithNetworkCacheSupportLoader(
+        @ThumbnailImage
+        imageLoader: ImageLoader,
+    ): ImageLoader = imageLoader.newBuilder()
+        .respectCacheHeaders(true)
+        .build()
 
     private fun imageLoader(
         @ApplicationContext context: Context,

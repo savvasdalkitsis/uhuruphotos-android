@@ -39,6 +39,7 @@ import coil.size.Precision
 import coil.size.Size
 import com.savvasdalkitsis.uhuruphotos.foundation.image.api.model.LocalFullImageLoader
 import com.savvasdalkitsis.uhuruphotos.foundation.image.api.model.LocalThumbnailImageLoader
+import com.savvasdalkitsis.uhuruphotos.foundation.image.api.model.LocalThumbnailWithNetworkCacheImageLoader
 
 @Composable
 fun ThumbnailImage(
@@ -47,6 +48,7 @@ fun ThumbnailImage(
     contentScale: ContentScale,
     placeholder: Int? = null,
     contentDescription: String?,
+    respectNetworkCacheHeaders: Boolean = false,
     onSuccess: () -> Unit = {},
 ) {
     var size by remember {
@@ -56,7 +58,10 @@ fun ThumbnailImage(
     AsyncImage(
         modifier = modifier
             .onGloballyPositioned { size = it.size },
-        imageLoader = LocalThumbnailImageLoader.current,
+        imageLoader = if (respectNetworkCacheHeaders)
+            LocalThumbnailWithNetworkCacheImageLoader.current
+        else
+            LocalThumbnailImageLoader.current,
         model = url.toRequest(size?.toSize) {
             onSuccess()
         },
