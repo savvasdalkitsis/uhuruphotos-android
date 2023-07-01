@@ -143,6 +143,6 @@ class ImageModule {
         }
         .build()
 
-    private val Int.mb get() = coerceAtLeast(0) * 1024 * 1024
+    private val Int.mb get() = (this * 1024 * 1024).coerceAtLeast(0)
 
 }
