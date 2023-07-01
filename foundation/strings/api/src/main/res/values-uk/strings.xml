@@ -293,4 +293,9 @@
     <string name="show_local_progress">Відображення прогресу локальної синхронізації</string>
     <string name="progress">Прогрес</string>
     <string name="show_feed_sync_progress">Відображати повний хід синхронізації фотострічки</string>
+    <string name="thumbnail_disk_cache">Дисковий кеш мініатюр</string>
+    <string name="thumbnail_memory_cache">Кеш пам\'яті мініатюр</string>
+    <string name="donate">Пожертвувати</string>
+    <string name="lightbox_photo_disk_cache">Кеш фотодиска Lightbox</string>
+    <string name="lightbox_photo_memory_cache">Кеш-пам\'ять фотографій Lightbox</string>
 </resources>
