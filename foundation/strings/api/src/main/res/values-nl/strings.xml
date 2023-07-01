@@ -263,4 +263,9 @@
     <string name="show_local_progress">Voortgang van lokale synchronisatie tonen</string>
     <string name="progress">Voortgang</string>
     <string name="show_feed_sync_progress">Voortgang van volledige feedsynchronisatie tonen</string>
+    <string name="lightbox_photo_memory_cache">Lichtbak-geheugencache</string>
+    <string name="thumbnail_disk_cache">Minatuurcache</string>
+    <string name="thumbnail_memory_cache">Miniatuur-geheugencache</string>
+    <string name="donate">Doneren</string>
+    <string name="lightbox_photo_disk_cache">Lichtbak-fotocache</string>
 </resources>
