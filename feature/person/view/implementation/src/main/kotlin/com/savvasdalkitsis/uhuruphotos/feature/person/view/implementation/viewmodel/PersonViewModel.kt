@@ -15,7 +15,6 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.person.view.implementation.viewmodel
 
-import androidx.lifecycle.viewModelScope
 import com.savvasdalkitsis.uhuruphotos.feature.person.view.api.navigation.PersonNavigationRoute
 import com.savvasdalkitsis.uhuruphotos.feature.person.view.implementation.seam.PersonActionsContext
 import com.savvasdalkitsis.uhuruphotos.feature.person.view.implementation.seam.PersonEffectsContext
@@ -27,7 +26,6 @@ import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.viewmodel.Navig
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.ActionHandlerWithContext
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.EffectHandlerWithContext
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
@@ -40,9 +38,7 @@ class PersonViewModel @Inject constructor(
     PersonState()
 ) {
 
-    init {
-        viewModelScope.launch {
-            action(LoadPerson(getRoute().personId))
-        }
+    override fun onRouteSet(route: PersonNavigationRoute) {
+        action(LoadPerson(route.personId))
     }
 }

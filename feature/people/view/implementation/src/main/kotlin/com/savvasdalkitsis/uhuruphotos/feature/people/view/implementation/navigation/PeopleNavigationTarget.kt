@@ -15,27 +15,33 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.people.view.implementation.navigation
 
-import androidx.navigation.NavGraphBuilder
-import androidx.navigation.NavHostController
+import androidx.compose.runtime.Composable
+import com.bumble.appyx.navmodel.backstack.BackStack
 import com.savvasdalkitsis.uhuruphotos.feature.people.view.api.navigation.PeopleNavigationRoute
 import com.savvasdalkitsis.uhuruphotos.feature.people.view.implementation.ui.People
 import com.savvasdalkitsis.uhuruphotos.feature.people.view.implementation.viewmodel.PeopleViewModel
 import com.savvasdalkitsis.uhuruphotos.feature.settings.domain.api.usecase.SettingsUseCase
+import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.NavigationRoute
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.NavigationTarget
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.NavigationTargetBuilder
-import se.ansman.dagger.auto.AutoBindIntoSet
+import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.NavigationTargetRegistry
+import se.ansman.dagger.auto.AutoInitialize
 import javax.inject.Inject
+import javax.inject.Singleton
 
-@AutoBindIntoSet
+@AutoInitialize
+@Singleton
 class PeopleNavigationTarget @Inject constructor(
+    registry: NavigationTargetRegistry,
     private val settingsUseCase: SettingsUseCase,
     private val navigationTargetBuilder: NavigationTargetBuilder,
-) : NavigationTarget {
+) : NavigationTarget<PeopleNavigationRoute>(PeopleNavigationRoute::class, registry) {
 
-    override suspend fun NavGraphBuilder.create(navHostController: NavHostController) = with(navigationTargetBuilder) {
-        navigationTarget(
+    @Composable
+    override fun View(route: PeopleNavigationRoute, backStack: BackStack<NavigationRoute>) = with(navigationTargetBuilder) {
+        ViewModelView(
             themeMode = settingsUseCase.observeThemeModeState(),
-            route = PeopleNavigationRoute::class,
+            route = route,
             viewModel = PeopleViewModel::class,
         ) { state, actions ->
             People(state, actions)

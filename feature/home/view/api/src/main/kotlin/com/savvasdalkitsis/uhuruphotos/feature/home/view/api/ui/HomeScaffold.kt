@@ -21,11 +21,12 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.RowScope
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.navigation.NavHostController
+import com.bumble.appyx.navmodel.backstack.BackStack
 import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.CollageDisplay
 import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.PredefinedCollageDisplay
 import com.savvasdalkitsis.uhuruphotos.feature.home.view.api.ui.NavigationStyle.BOTTOM_BAR
 import com.savvasdalkitsis.uhuruphotos.feature.home.view.api.ui.NavigationStyle.NAVIGATION_RAIL
+import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.NavigationRoute
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.CommonScaffold
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.Logo
 
@@ -33,7 +34,7 @@ import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.Logo
 fun HomeScaffold(
     modifier: Modifier = Modifier,
     title: @Composable () -> Unit = { Logo() },
-    navController: NavHostController,
+    backStack: BackStack<NavigationRoute>,
     homeFeedDisplay: CollageDisplay = PredefinedCollageDisplay.default,
     selectionMode: Boolean = false,
     showLibrary: Boolean = true,
@@ -50,7 +51,7 @@ fun HomeScaffold(
                 HomeNavigationBar(
                     homeFeedDisplay = homeFeedDisplay,
                     showLibrary = showLibrary,
-                    navController = navController,
+                    backStack = backStack,
                     onReselected = onReselected,
                 )
             }
@@ -67,7 +68,7 @@ fun HomeScaffold(
                         contentPadding = contentPadding,
                         homeFeedDisplay = homeFeedDisplay,
                         showLibrary = showLibrary,
-                        navController = navController,
+                        backStack = backStack,
                         onReselected = onReselected,
                     )
                 }

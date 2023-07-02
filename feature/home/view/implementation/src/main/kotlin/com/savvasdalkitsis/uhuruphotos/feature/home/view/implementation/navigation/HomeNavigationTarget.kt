@@ -15,27 +15,33 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.home.view.implementation.navigation
 
-import androidx.navigation.NavGraphBuilder
-import androidx.navigation.NavHostController
+import androidx.compose.runtime.Composable
+import com.bumble.appyx.navmodel.backstack.BackStack
 import com.savvasdalkitsis.uhuruphotos.feature.home.view.api.navigation.HomeNavigationRoute
 import com.savvasdalkitsis.uhuruphotos.feature.home.view.implementation.ui.Home
 import com.savvasdalkitsis.uhuruphotos.feature.home.view.implementation.viewmodel.HomeViewModel
 import com.savvasdalkitsis.uhuruphotos.feature.settings.domain.api.usecase.SettingsUseCase
+import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.NavigationRoute
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.NavigationTarget
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.NavigationTargetBuilder
-import se.ansman.dagger.auto.AutoBindIntoSet
+import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.NavigationTargetRegistry
+import se.ansman.dagger.auto.AutoInitialize
 import javax.inject.Inject
+import javax.inject.Singleton
 
-@AutoBindIntoSet
-internal class HomeNavigationTarget @Inject constructor(
+@AutoInitialize
+@Singleton
+class HomeNavigationTarget @Inject constructor(
+    registry: NavigationTargetRegistry,
     private val settingsUseCase: SettingsUseCase,
     private val navigationTargetBuilder: NavigationTargetBuilder,
-) : NavigationTarget {
+) : NavigationTarget<HomeNavigationRoute>(HomeNavigationRoute::class, registry) {
 
-    override suspend fun NavGraphBuilder.create(navHostController: NavHostController) = with(navigationTargetBuilder) {
-        navigationTarget(
+    @Composable
+    override fun View(route: HomeNavigationRoute, backStack: BackStack<NavigationRoute>) = with(navigationTargetBuilder) {
+        ViewModelView(
             themeMode = settingsUseCase.observeThemeModeState(),
-            route = HomeNavigationRoute::class,
+            route = route,
             viewModel = HomeViewModel::class,
         ) { state, action ->
             Home(state, action)

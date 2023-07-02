@@ -15,7 +15,6 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.hidden.view.implementation.viewmodel
 
-import androidx.lifecycle.viewModelScope
 import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.CollageState
 import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.GalleryEffectsContext
 import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.GalleryId
@@ -38,7 +37,6 @@ import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.CompositeEffectHandle
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.EffectHandlerWithContext
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.Either
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 private typealias HiddenPhotosCompositeState = Pair<GalleryState, HiddenPhotosState>
@@ -63,12 +61,8 @@ internal class HiddenPhotosViewModel @Inject constructor(
     GalleryState(collageState = CollageState()) to HiddenPhotosState()
 ) {
 
-    init {
-        viewModelScope.launch {
-            action(Either.Left(LoadCollage(GalleryId(0, "hidden"))))
-        }
-        viewModelScope.launch {
-            action(Either.Right(Load))
-        }
+    override fun onRouteSet(route: HiddenPhotosNavigationRoute) {
+        action(Either.Left(LoadCollage(GalleryId(0, "hidden"))))
+        action(Either.Right(Load))
     }
 }

@@ -16,12 +16,14 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.foundation.navigation.implementation
 
 import android.content.Intent
-import androidx.navigation.NavHostController
+import com.bumble.appyx.navmodel.backstack.BackStack
+import com.bumble.appyx.navmodel.backstack.operation.newRoot
+import com.bumble.appyx.navmodel.backstack.operation.pop
+import com.bumble.appyx.navmodel.backstack.operation.push
 import com.savvasdalkitsis.uhuruphotos.feature.home.view.api.navigation.HomeNavigationRoute
 import com.savvasdalkitsis.uhuruphotos.foundation.launchers.api.onMain
 import com.savvasdalkitsis.uhuruphotos.foundation.log.api.log
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.NavigationRoute
-import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.NavigationRouteSerializer
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.Navigator
 import se.ansman.dagger.auto.AutoBind
 import javax.inject.Inject
@@ -31,9 +33,9 @@ import javax.inject.Singleton
 @Singleton
 class Navigator @Inject internal constructor(
     private val intentLauncher: IntentLauncher,
-    private val navigationRouteSerializer: NavigationRouteSerializer,
 ) : Navigator {
-    override lateinit var navController: NavHostController
+
+    override lateinit var backStack: BackStack<NavigationRoute>
 
     override fun navigateTo(intent: Intent) {
         onMain {
@@ -48,24 +50,25 @@ class Navigator @Inject internal constructor(
     }
 
     override fun <R : NavigationRoute> navigateTo(route: R) {
-        val path = navigationRouteSerializer.serialize(route)
-        log { "Navigating to $path" }
+        log { "Navigating to $route" }
         onMain {
-            navController.navigate(path)
+            backStack.push(route)
         }
     }
 
     override fun navigateBack() {
         onMain {
-            navController.popBackStack()
+            backStack.pop()
         }
     }
 
     override fun clearBackStack() {
+        newRoot(HomeNavigationRoute)
+    }
+
+    override fun <R : NavigationRoute> newRoot(route: R) {
         onMain {
-            navController.clearBackStack(
-                navigationRouteSerializer.createRouteTemplateFor(HomeNavigationRoute::class)
-            )
+            backStack.newRoot(route)
         }
     }
 }

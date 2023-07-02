@@ -22,7 +22,6 @@ import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.LaunchedEffect
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.core.view.WindowCompat
-import androidx.fragment.app.FragmentActivity
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import com.microsoft.appcenter.AppCenter
 import com.microsoft.appcenter.crashes.Crashes
@@ -44,7 +43,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class AppActivity : FragmentActivity() {
+class AppActivity : FragmentNodeActivity() {
 
     @Inject lateinit var activityInitializer: ActivityInitializer
     @Inject lateinit var currentActivityHolder: CurrentActivityHolder
@@ -73,7 +72,7 @@ class AppActivity : FragmentActivity() {
                 LocalMapViewStateFactory provides CompositeMapViewStateFactory(mapViewStateFactories),
                 LocalMapViewFactoryProvider provides CompositeMapViewFactoryProvider(mapViewFactoryProviders),
             ) {
-                navigator.NavigationTargets()
+                navigator.NavigationTargets(appyxIntegrationPoint)
             }
         }
     }

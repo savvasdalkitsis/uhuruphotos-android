@@ -18,4 +18,3 @@ package com.savvasdalkitsis.uhuruphotos.foundation.seam.api
 fun interface EffectHandler<E> {
     suspend fun handleEffect(effect: E)
 }
-

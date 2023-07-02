@@ -15,7 +15,6 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.viewmodel
 
-import androidx.lifecycle.viewModelScope
 import com.savvasdalkitsis.uhuruphotos.feature.account.view.api.seam.AccountOverviewActionsContext
 import com.savvasdalkitsis.uhuruphotos.feature.account.view.api.seam.AccountOverviewEffectsContext
 import com.savvasdalkitsis.uhuruphotos.feature.account.view.api.seam.actions.AccountOverviewAction
@@ -36,7 +35,6 @@ import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.CompositeEffectHandle
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.EffectHandlerWithContext
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.Either
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 private typealias FeedCompositeState = Pair<FeedState, AccountOverviewState>
@@ -61,12 +59,8 @@ internal class FeedViewModel @Inject constructor(
     FeedState() to AccountOverviewState(),
 ) {
 
-    init {
-        viewModelScope.launch {
-            action(Either.Left(LoadFeed))
-        }
-        viewModelScope.launch {
-            action(Either.Right(Load))
-        }
+    override fun onRouteSet(route: FeedNavigationRoute) {
+        action(Either.Left(LoadFeed))
+        action(Either.Right(Load))
     }
 }

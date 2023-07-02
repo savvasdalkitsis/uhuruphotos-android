@@ -16,35 +16,41 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.navigation
 
 import androidx.compose.animation.AnimatedVisibility
-import androidx.navigation.NavGraphBuilder
-import androidx.navigation.NavHostController
+import androidx.compose.runtime.Composable
+import com.bumble.appyx.navmodel.backstack.BackStack
 import com.savvasdalkitsis.uhuruphotos.feature.account.view.api.ui.AccountOverviewActionBar
 import com.savvasdalkitsis.uhuruphotos.feature.account.view.api.ui.AccountOverviewContent
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.api.navigation.FeedNavigationRoute
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.ui.Feed
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.viewmodel.FeedViewModel
 import com.savvasdalkitsis.uhuruphotos.feature.settings.domain.api.usecase.SettingsUseCase
+import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.NavigationRoute
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.NavigationTarget
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.NavigationTargetBuilder
+import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.NavigationTargetRegistry
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.Either.Left
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.Either.Right
-import se.ansman.dagger.auto.AutoBindIntoSet
+import se.ansman.dagger.auto.AutoInitialize
 import javax.inject.Inject
+import javax.inject.Singleton
 
-@AutoBindIntoSet
+@AutoInitialize
+@Singleton
 internal class FeedNavigationTarget @Inject constructor(
+    registry: NavigationTargetRegistry,
     private val settingsUseCase: SettingsUseCase,
     private val navigationTargetBuilder: NavigationTargetBuilder,
-) : NavigationTarget {
+) : NavigationTarget<FeedNavigationRoute>(FeedNavigationRoute::class, registry) {
 
-    override suspend fun NavGraphBuilder.create(navHostController: NavHostController) = with(navigationTargetBuilder) {
-        navigationTarget(
+    @Composable
+    override fun View(route: FeedNavigationRoute, backStack: BackStack<NavigationRoute>) = with(navigationTargetBuilder) {
+        ViewModelView(
             themeMode = settingsUseCase.observeThemeModeState(),
-            route = FeedNavigationRoute::class,
+            route = route,
             viewModel = FeedViewModel::class,
         ) { state, actions ->
             Feed(
-                navHostController,
+                backStack,
                 state.first,
                 isShowingPopUp = state.second.showAccountOverview,
                 action = {

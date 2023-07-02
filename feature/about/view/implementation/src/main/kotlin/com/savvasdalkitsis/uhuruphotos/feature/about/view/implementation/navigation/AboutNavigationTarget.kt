@@ -15,27 +15,33 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.about.view.implementation.navigation
 
-import androidx.navigation.NavGraphBuilder
-import androidx.navigation.NavHostController
+import androidx.compose.runtime.Composable
+import com.bumble.appyx.navmodel.backstack.BackStack
 import com.savvasdalkitsis.uhuruphotos.feature.about.view.api.navigation.AboutNavigationRoute
 import com.savvasdalkitsis.uhuruphotos.feature.about.view.implementation.ui.About
 import com.savvasdalkitsis.uhuruphotos.feature.about.view.implementation.viewmodel.AboutViewModel
 import com.savvasdalkitsis.uhuruphotos.feature.settings.domain.api.usecase.SettingsUseCase
+import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.NavigationRoute
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.NavigationTarget
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.NavigationTargetBuilder
-import se.ansman.dagger.auto.AutoBindIntoSet
+import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.NavigationTargetRegistry
+import se.ansman.dagger.auto.AutoInitialize
 import javax.inject.Inject
+import javax.inject.Singleton
 
-@AutoBindIntoSet
+@AutoInitialize
+@Singleton
 internal class AboutNavigationTarget @Inject constructor(
     private val settingsUseCase: SettingsUseCase,
     private val navigationTargetBuilder: NavigationTargetBuilder,
-) : NavigationTarget {
+    registry: NavigationTargetRegistry,
+) : NavigationTarget<AboutNavigationRoute>(AboutNavigationRoute::class, registry) {
 
-    override suspend fun NavGraphBuilder.create(navHostController: NavHostController) = with(navigationTargetBuilder) {
-        navigationTarget(
+    @Composable
+    override fun View(route: AboutNavigationRoute, backStack: BackStack<NavigationRoute>) = with(navigationTargetBuilder) {
+        ViewModelView(
             themeMode = settingsUseCase.observeThemeModeState(),
-            route = AboutNavigationRoute::class,
+            route = route,
             viewModel = AboutViewModel::class,
         ) { state, actions ->
             About(

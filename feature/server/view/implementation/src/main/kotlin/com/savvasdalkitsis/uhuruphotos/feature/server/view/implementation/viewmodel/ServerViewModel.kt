@@ -15,7 +15,6 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.server.view.implementation.viewmodel
 
-import androidx.lifecycle.viewModelScope
 import com.savvasdalkitsis.uhuruphotos.feature.server.view.api.navigation.ServerNavigationRoute
 import com.savvasdalkitsis.uhuruphotos.feature.server.view.implementation.seam.ServerActionsContext
 import com.savvasdalkitsis.uhuruphotos.feature.server.view.implementation.seam.ServerEffectsContext
@@ -29,7 +28,6 @@ import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.viewmodel.Navig
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.ActionHandlerWithContext
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.EffectHandlerWithContext
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
@@ -42,17 +40,13 @@ internal class ServerViewModel @Inject constructor(
     ServerState.Loading(false)
 ) {
 
-    init {
-        viewModelScope.launch {
-            action(Load)
-        }
-        viewModelScope.launch {
-            action(
-                when {
-                    getRoute().auto -> CheckPersistedServer
-                    else -> RequestServerUrlChange
-                }
-            )
-        }
+    override fun onRouteSet(route: ServerNavigationRoute) {
+        action(Load)
+        action(
+            when {
+                route.auto -> CheckPersistedServer
+                else -> RequestServerUrlChange
+            }
+        )
     }
 }

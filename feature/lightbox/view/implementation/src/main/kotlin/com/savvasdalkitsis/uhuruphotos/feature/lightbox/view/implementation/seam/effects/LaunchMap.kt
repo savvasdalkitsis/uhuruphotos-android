@@ -22,9 +22,11 @@ import com.savvasdalkitsis.uhuruphotos.foundation.map.api.model.LatLon
 import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R
 
 data class LaunchMap(val gps: LatLon) : LightboxEffect() {
+
     context(LightboxEffectsContext) override suspend fun handle() {
         navigator.navigateTo(geoLocation(gps))
     }
+
     context(LightboxEffectsContext) private fun geoLocation(gps: LatLon) =
         Intent(Intent.ACTION_VIEW, with(gps) {
             "geo:$lat,$lon?q=$lat,$lon(${context.getString(R.string.media)})".uri

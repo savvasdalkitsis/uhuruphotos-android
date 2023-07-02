@@ -15,7 +15,6 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.local.view.implementation.viewmodel
 
-import androidx.lifecycle.viewModelScope
 import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.GalleryEffectsContext
 import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.GalleryId
 import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.action.GalleryAction
@@ -37,7 +36,6 @@ import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.EffectHandlerWithCont
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.Either
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.NoOpEffectHandler
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 private typealias LocalAlbumCompositeState = Pair<GalleryState, LocalAlbumState>
@@ -61,14 +59,9 @@ internal class LocalAlbumViewModel @Inject constructor(
     GalleryState() to LocalAlbumState()
 ) {
 
-    init {
-        viewModelScope.launch {
-            val albumId = getRoute().albumId
-            action(Either.Right(Load(albumId)))
-        }
-        viewModelScope.launch {
-            val albumId = getRoute().albumId
-            action(Either.Left(LoadCollage(GalleryId(albumId, "local:$albumId"))))
-        }
+    override fun onRouteSet(route: LocalAlbumNavigationRoute) {
+        val albumId = route.albumId
+        action(Either.Right(Load(albumId)))
+        action(Either.Left(LoadCollage(GalleryId(albumId, "local:$albumId"))))
     }
 }

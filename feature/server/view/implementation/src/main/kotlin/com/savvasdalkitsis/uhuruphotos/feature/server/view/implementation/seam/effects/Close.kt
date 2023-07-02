@@ -19,6 +19,6 @@ import com.savvasdalkitsis.uhuruphotos.feature.server.view.implementation.seam.S
 
 data object Close : ServerEffect() {
     context(ServerEffectsContext) override suspend fun handle() {
-        navigator.navigateBack()
+        navigator.clearBackStack()
     }
 }

@@ -16,7 +16,9 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.feature.edit.view.api.navigation
 
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.NavigationRoute
+import kotlinx.parcelize.Parcelize
 
+@Parcelize
 data class EditNavigationRoute(
     val uri: String,
     val fileName: String,

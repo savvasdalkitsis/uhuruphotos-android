@@ -25,7 +25,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import androidx.navigation.NavHostController
+import com.bumble.appyx.navmodel.backstack.BackStack
 import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.CollageDisplayActionButton
 import com.savvasdalkitsis.uhuruphotos.feature.home.view.api.ui.HomeScaffold
 import com.savvasdalkitsis.uhuruphotos.feature.search.view.implementation.seam.actions.ChangeDisplay
@@ -33,6 +33,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.search.view.implementation.seam.a
 import com.savvasdalkitsis.uhuruphotos.feature.search.view.implementation.ui.state.SearchResults.Found
 import com.savvasdalkitsis.uhuruphotos.feature.search.view.implementation.ui.state.SearchState
 import com.savvasdalkitsis.uhuruphotos.foundation.compose.api.blurIf
+import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.NavigationRoute
 import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.Logo
 
@@ -42,7 +43,7 @@ fun SearchPage(
     isShowingPopUp: Boolean,
     action: (SearchAction) -> Unit,
     actionBarContent: @Composable () -> Unit,
-    navHostController: NavHostController,
+    backStack: BackStack<NavigationRoute>,
     additionalContent: @Composable () -> Unit,
 ) {
     HomeScaffold(
@@ -58,7 +59,7 @@ fun SearchPage(
                 Text(stringResource(string.search))
             }
         },
-        navController = navHostController,
+        backStack = backStack,
         homeFeedDisplay = state.collageDisplay,
         showLibrary = state.showLibrary,
         actionBarContent = {

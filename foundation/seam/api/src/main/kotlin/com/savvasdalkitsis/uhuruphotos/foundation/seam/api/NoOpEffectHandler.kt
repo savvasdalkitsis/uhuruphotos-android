@@ -16,6 +16,5 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.foundation.seam.api
 
 class NoOpEffectHandler<E> : EffectHandler<E> {
-    override suspend fun handleEffect(effect: E) {
-    }
+    override suspend fun handleEffect(effect: E) {}
 }

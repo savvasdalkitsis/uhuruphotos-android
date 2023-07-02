@@ -15,7 +15,6 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.trash.view.implementation.viewmodel
 
-import androidx.lifecycle.viewModelScope
 import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.GalleryEffectsContext
 import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.GalleryId
 import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.action.GalleryAction
@@ -37,7 +36,6 @@ import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.CompositeEffectHandle
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.EffectHandlerWithContext
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.Either
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 private typealias TrashCompositeState = Pair<GalleryState, TrashState>
@@ -62,12 +60,8 @@ internal class TrashViewModel @Inject constructor(
     GalleryState() to TrashState()
 ) {
 
-    init {
-        viewModelScope.launch {
-            action(Either.Left(LoadCollage(GalleryId(0, "trash"))))
-        }
-        viewModelScope.launch {
-            action(Either.Right(Load))
-        }
+    override fun onRouteSet(route: TrashNavigationRoute) {
+        action(Either.Left(LoadCollage(GalleryId(0, "trash"))))
+        action(Either.Right(Load))
     }
 }

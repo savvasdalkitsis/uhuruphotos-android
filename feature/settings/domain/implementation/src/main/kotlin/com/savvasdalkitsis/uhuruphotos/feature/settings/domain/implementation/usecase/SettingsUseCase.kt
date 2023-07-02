@@ -36,10 +36,13 @@ import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.theme.ThemeMode
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.async
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.future.asCompletableFuture
 import se.ansman.dagger.auto.AutoBind
 import javax.inject.Inject
 
@@ -187,9 +190,11 @@ internal class SettingsUseCase @Inject constructor(
         observe(shareRemoveGpsData, shareRemoveGpsDataDefault)
     override fun observeShowLibrary(): Flow<Boolean> =
         observe(showLibrary, showLibraryDefault)
-    override suspend fun observeThemeModeState(): StateFlow<ThemeMode> = observeThemeMode().stateIn(
-        CoroutineScope(Dispatchers.IO)
-    )
+    override fun observeThemeModeState(): StateFlow<ThemeMode> = GlobalScope.async {
+        observeThemeMode().stateIn(
+            CoroutineScope(Dispatchers.IO)
+        )
+    }.asCompletableFuture().join()
     override fun observeMapProvider(): Flow<MapProvider> =
         observe(mapProvider, mapProviderDefault)
             .map { it.mapToAvailable() }

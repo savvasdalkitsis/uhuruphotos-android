@@ -15,9 +15,15 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.foundation.navigation.api
 
-import androidx.navigation.NavGraphBuilder
-import androidx.navigation.NavHostController
+import androidx.compose.runtime.Composable
+import com.bumble.appyx.navmodel.backstack.BackStack
+import kotlin.reflect.KClass
 
-interface NavigationTarget {
-    suspend fun NavGraphBuilder.create(navHostController: NavHostController)
+@Suppress("LeakingThis", "UNCHECKED_CAST")
+abstract class NavigationTarget<R : NavigationRoute>(val route: KClass<R>, registry: NavigationTargetRegistry) {
+    init {
+        registry.register(route, this as NavigationTarget<NavigationRoute>)
+    }
+    @Composable
+    abstract fun View(route: R, backStack: BackStack<NavigationRoute>)
 }

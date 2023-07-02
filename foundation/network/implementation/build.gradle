@@ -20,16 +20,6 @@ dependencies {
             libs.okhttp.url,
             libs.retrofit.moshi,
     )
-    debugImplementation(
-            libs.bundles.pluto.debug
-    ) {
-        exclude group: 'com.jakewharton.timber', module: 'timber'
-    }
-    releaseImplementation(
-            libs.bundles.pluto.release
-    ) {
-        exclude group: 'com.jakewharton.timber', module: 'timber'
-    }
     api(
             libs.moshi,
             libs.retrofit.core,

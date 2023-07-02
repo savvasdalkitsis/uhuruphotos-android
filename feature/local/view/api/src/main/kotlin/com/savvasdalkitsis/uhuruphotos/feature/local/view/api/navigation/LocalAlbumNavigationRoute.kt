@@ -16,7 +16,9 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.feature.local.view.api.navigation
 
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.NavigationRoute
+import kotlinx.parcelize.Parcelize
 
+@Parcelize
 data class LocalAlbumNavigationRoute(
     val albumId: Int,
 ) : NavigationRoute

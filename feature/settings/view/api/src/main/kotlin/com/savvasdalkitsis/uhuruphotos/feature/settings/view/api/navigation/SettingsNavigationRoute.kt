@@ -16,5 +16,7 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.feature.settings.view.api.navigation
 
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.NavigationRoute
+import kotlinx.parcelize.Parcelize
 
+@Parcelize
 data object SettingsNavigationRoute : NavigationRoute

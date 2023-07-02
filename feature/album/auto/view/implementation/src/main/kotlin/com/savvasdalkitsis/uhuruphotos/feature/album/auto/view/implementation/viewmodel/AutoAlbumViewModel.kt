@@ -15,7 +15,6 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.album.auto.view.implementation.viewmodel
 
-import androidx.lifecycle.viewModelScope
 import com.savvasdalkitsis.uhuruphotos.feature.album.auto.view.api.navigation.AutoAlbumNavigationRoute
 import com.savvasdalkitsis.uhuruphotos.feature.album.auto.view.implementation.seam.AutoAlbumActionsContext
 import com.savvasdalkitsis.uhuruphotos.feature.album.auto.view.implementation.state.AutoAlbumCollageDisplay
@@ -30,7 +29,6 @@ import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.viewmodel.Navig
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.ActionHandlerWithContext
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.EffectHandlerWithContext
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
@@ -43,10 +41,8 @@ internal class AutoAlbumViewModel @Inject constructor(
     GalleryState(collageState = CollageState(collageDisplay = AutoAlbumCollageDisplay))
 ) {
 
-    init {
-        viewModelScope.launch {
-            val id = getRoute().albumId
-            action(LoadCollage(GalleryId(id, "auto:$id")))
-        }
+    override fun onRouteSet(route: AutoAlbumNavigationRoute) {
+        val id = route.albumId
+        action(LoadCollage(GalleryId(id, "auto:$id")))
     }
 }

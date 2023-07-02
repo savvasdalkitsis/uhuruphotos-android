@@ -18,7 +18,9 @@ package com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.api.navigation
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.api.model.LightboxSequenceDataSource
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaId
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.NavigationRoute
+import kotlinx.parcelize.Parcelize
 
+@Parcelize
 data class LightboxNavigationRoute(
     val id: MediaId<*>,
     val lightboxSequenceDataSource: LightboxSequenceDataSource = LightboxSequenceDataSource.Single,

@@ -20,6 +20,7 @@ import androidx.hilt.work.HiltWorkerFactory
 import androidx.work.Configuration
 import com.savvasdalkitsis.uhuruphotos.foundation.initializer.api.ApplicationInitializer
 import dagger.hilt.android.HiltAndroidApp
+import se.ansman.dagger.auto.AutoDaggerInitializer
 import javax.inject.Inject
 
 @HiltAndroidApp
@@ -28,12 +29,15 @@ class App :
     Configuration.Provider {
 
     @Inject
+    lateinit var initializer: AutoDaggerInitializer
+    @Inject
     lateinit var workerFactory: HiltWorkerFactory
     @Inject
     lateinit var applicationInitializer: ApplicationInitializer
 
     override fun onCreate() {
         super.onCreate()
+        initializer.initialize()
         applicationInitializer.onCreated(this)
     }
 

@@ -65,7 +65,7 @@ interface SettingsUseCase {
     fun observeSearchSuggestionsEnabledMode(): Flow<Boolean>
     fun observeShareRemoveGpsData(): Flow<Boolean>
     fun observeShowLibrary(): Flow<Boolean>
-    suspend fun observeThemeModeState(): StateFlow<ThemeMode>
+    fun observeThemeModeState(): StateFlow<ThemeMode>
     fun observeMapProvider(): Flow<MapProvider>
     fun observeLoggingEnabled(): Flow<Boolean>
     fun observeBiometricsRequiredForAppAccess(): Flow<Boolean>

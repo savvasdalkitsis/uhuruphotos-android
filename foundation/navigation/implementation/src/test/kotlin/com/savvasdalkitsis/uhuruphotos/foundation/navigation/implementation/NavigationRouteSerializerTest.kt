@@ -22,6 +22,7 @@ import com.savvasdalkitsis.uhuruphotos.foundation.navigation.implementation.seri
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.implementation.serialization.Base64Transcoder
 import io.mockk.every
 import io.mockk.mockk
+import kotlinx.parcelize.Parcelize
 import org.junit.Test
 import java.util.*
 
@@ -85,10 +86,13 @@ class NavigationRouteSerializerTest {
     }
 }
 
+@Parcelize
 data class NamedRoute(val field: String) : NavigationRoute
+@Parcelize
 data class FieldsRoute(
     val field3: Boolean,
     val field1: String,
     val field2: Int,
 ) : NavigationRoute
+@Parcelize
 data object NoFieldsObject : NavigationRoute

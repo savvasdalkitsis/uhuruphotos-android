@@ -15,8 +15,6 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.favourites.view.implementation.viewmodel
 
-import androidx.lifecycle.DefaultLifecycleObserver
-import androidx.lifecycle.viewModelScope
 import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.CollageState
 import com.savvasdalkitsis.uhuruphotos.feature.favourites.view.api.navigation.FavouritesNavigationRoute
 import com.savvasdalkitsis.uhuruphotos.feature.favourites.view.implementation.seam.FavouritesActionsContext
@@ -26,12 +24,10 @@ import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.action.Gall
 import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.action.LoadCollage
 import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.effects.GalleryEffect
 import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.ui.state.GalleryState
-import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.HasNavigationRoute
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.viewmodel.NavigationViewModel
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.ActionHandlerWithContext
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.EffectHandlerWithContext
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
@@ -42,11 +38,9 @@ internal class FavouritesViewModel @Inject constructor(
     ActionHandlerWithContext(favouritesActionsContext),
     EffectHandlerWithContext(effectsContext),
     GalleryState(collageState = CollageState())
-), HasNavigationRoute<FavouritesNavigationRoute> {
+) {
 
-    init {
-        viewModelScope.launch {
-            action(LoadCollage(GalleryId(0, "favourites")))
-        }
+    override fun onRouteSet(route: FavouritesNavigationRoute) {
+        action(LoadCollage(GalleryId(0, "favourites")))
     }
 }

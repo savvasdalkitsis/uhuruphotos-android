@@ -15,9 +15,11 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.account.view.api.seam
 
+import com.savvasdalkitsis.uhuruphotos.foundation.activity.api.holder.CurrentActivityHolder
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.Navigator
 import javax.inject.Inject
 
 class AccountOverviewEffectsContext @Inject constructor(
     val navigator: Navigator,
+    val currentActivityHolder: CurrentActivityHolder,
 )

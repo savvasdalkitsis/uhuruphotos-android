@@ -15,7 +15,7 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.foundation.seam.api
 
-import com.savvasdalkitsis.uhuruphotos.foundation.launchers.api.onMain
+import com.savvasdalkitsis.uhuruphotos.foundation.launchers.api.awaitOnMain
 import com.savvasdalkitsis.uhuruphotos.foundation.log.api.log
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -34,18 +34,18 @@ class Seam<S : Any, E : Any, A : Any>(
     private val effectsHandler: EffectHandler<E>,
     initialState: S,
     private val scope: CoroutineScope,
-) : HasActionableState<S, A> {
+) : HasState<S> {
 
     private val _state = MutableStateFlow(initialState)
     override val state: StateFlow<S> = _state
 
-    override suspend fun action(action: A)  {
+    suspend fun action(action: A)  {
         log("Seam") { "Starting handling of action $action" }
         actionHandler.handleAction(
             _state.value,
             action,
         ) { effect ->
-            onMain {
+            awaitOnMain {
                 log("Seam") { "Received side effect to post: $effect from action: $action" }
                 effectsHandler.handleEffect(effect)
             }

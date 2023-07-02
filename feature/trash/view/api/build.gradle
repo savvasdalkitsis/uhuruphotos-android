@@ -1,3 +1,7 @@
+plugins {
+    id 'kotlin-parcelize'
+}
+
 android {
     namespace 'com.savvasdalkitsis.uhuruphotos.feature.trash.view.api'
 }

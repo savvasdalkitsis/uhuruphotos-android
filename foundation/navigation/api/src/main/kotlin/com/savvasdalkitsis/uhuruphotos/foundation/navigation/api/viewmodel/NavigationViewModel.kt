@@ -18,14 +18,11 @@ package com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.viewmodel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.savvasdalkitsis.uhuruphotos.foundation.log.api.log
-import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.HasNavigationRoute
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.ActionHandler
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.EffectHandler
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.HasActionableState
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.Seam
-import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 
 abstract class NavigationViewModel<S : Any, E : Any, A : Any, R : Any>(
@@ -33,10 +30,8 @@ abstract class NavigationViewModel<S : Any, E : Any, A : Any, R : Any>(
     effectHandler: EffectHandler<E>,
     initialState: S,
 ) : ViewModel(),
-    HasActionableState<S, A>,
-    HasNavigationRoute<R>
+    HasActionableState<S, A>
 {
-    private val route = MutableSharedFlow<R>(1)
 
     private val seam = Seam(
         actionHandler,
@@ -56,13 +51,11 @@ abstract class NavigationViewModel<S : Any, E : Any, A : Any, R : Any>(
     override val state: StateFlow<S>
         get() = seam.state
 
-    override suspend fun action(action: A) {
-        seam.action(action)
+    override fun action(action: A) {
+        viewModelScope.launch {
+            seam.action(action)
+        }
     }
 
-    override suspend fun getRoute(): R = route.first()
-
-    override fun setRoute(route: R) {
-        this.route.tryEmit(route)
-    }
+    abstract fun onRouteSet(route: R)
 }

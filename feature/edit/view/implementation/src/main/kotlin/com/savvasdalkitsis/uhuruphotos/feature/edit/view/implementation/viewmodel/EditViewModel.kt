@@ -16,7 +16,6 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.feature.edit.view.implementation.viewmodel
 
 import android.net.Uri
-import androidx.lifecycle.viewModelScope
 import com.savvasdalkitsis.uhuruphotos.feature.edit.view.api.navigation.EditNavigationRoute
 import com.savvasdalkitsis.uhuruphotos.feature.edit.view.implementation.seam.EditActionsContext
 import com.savvasdalkitsis.uhuruphotos.feature.edit.view.implementation.seam.EditEffectsContext
@@ -28,7 +27,6 @@ import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.viewmodel.Navig
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.ActionHandlerWithContext
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.EffectHandlerWithContext
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
@@ -41,11 +39,9 @@ internal class EditViewModel @Inject constructor(
     EditState(),
 ) {
 
-    init {
-        viewModelScope.launch {
-            with(getRoute()) {
-                action(Load(Uri.parse(uri), fileName, timestamp))
-            }
+    override fun onRouteSet(route: EditNavigationRoute) {
+        with(route) {
+            action(Load(Uri.parse(uri), fileName, timestamp))
         }
     }
 }

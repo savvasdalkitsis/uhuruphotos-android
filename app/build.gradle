@@ -14,7 +14,7 @@ android {
 
     defaultConfig {
         applicationId "com.savvasdalkitsis.uhuruphotos"
-        minSdk 23
+        minSdk 24
         targetSdk 34
         versionCode 116
         versionName "0.0.123"
@@ -78,6 +78,7 @@ dependencies {
             libs.androidx.splash,
             libs.androidx.work.hilt,
             libs.appcenter.crashes,
+            libs.autodagger.core,
             libs.hilt,
             libs.permissions.base,
     )

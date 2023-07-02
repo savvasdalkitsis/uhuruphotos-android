@@ -15,7 +15,20 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.foundation.navigation.api
 
-interface HasNavigationRoute<R> {
-    suspend fun getRoute(): R
-    fun setRoute(route: R)
+import javax.inject.Inject
+import javax.inject.Singleton
+import kotlin.reflect.KClass
+
+@Singleton
+class NavigationTargetRegistry @Inject constructor() {
+
+    val registry: Map<KClass<NavigationRoute>, NavigationTarget<NavigationRoute>> get() = targets
+
+    private val targets: MutableMap<KClass<NavigationRoute>, NavigationTarget< NavigationRoute>> =
+        mutableMapOf()
+
+    @Suppress("UNCHECKED_CAST")
+    internal fun <R : NavigationRoute> register(route: KClass<R>, target: NavigationTarget<NavigationRoute>) {
+        targets[route as KClass<NavigationRoute>] = target
+    }
 }

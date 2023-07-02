@@ -15,7 +15,6 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.home.view.implementation.viewmodel
 
-import androidx.lifecycle.viewModelScope
 import com.savvasdalkitsis.uhuruphotos.feature.home.view.api.navigation.HomeNavigationRoute
 import com.savvasdalkitsis.uhuruphotos.feature.home.view.implementation.seam.HomeActionsContext
 import com.savvasdalkitsis.uhuruphotos.feature.home.view.implementation.seam.HomeEffectsContext
@@ -27,7 +26,6 @@ import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.viewmodel.Navig
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.ActionHandlerWithContext
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.EffectHandlerWithContext
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
@@ -40,9 +38,7 @@ internal class HomeViewModel @Inject constructor(
     HomeState()
 ) {
 
-    init {
-        viewModelScope.launch {
-            action(Load)
-        }
+    override fun onRouteSet(route: HomeNavigationRoute) {
+        action(Load)
     }
 }

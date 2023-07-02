@@ -15,4 +15,6 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.foundation.navigation.api
 
-interface NavigationRoute
+import android.os.Parcelable
+
+interface NavigationRoute : Parcelable

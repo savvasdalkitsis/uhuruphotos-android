@@ -15,9 +15,6 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.foundation.seam.api
 
-import kotlinx.coroutines.flow.StateFlow
-
-interface HasActionableState<S : Any, A : Any> {
-    val state: StateFlow<S>
-    suspend fun action(action: A)
+interface HasActionableState<S : Any, A : Any> : HasState<S> {
+    fun action(action: A)
 }

@@ -16,14 +16,15 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.foundation.navigation.api
 
 import android.content.Intent
-import androidx.navigation.NavHostController
+import com.bumble.appyx.navmodel.backstack.BackStack
 
 interface Navigator {
-    var navController: NavHostController
+    var backStack: BackStack<NavigationRoute>
 
     fun navigateTo(intent: Intent)
     fun navigateTo(intent: Intent, fallbackIntent: Intent)
     fun <R : NavigationRoute> navigateTo(route: R)
+    fun <R : NavigationRoute> newRoot(route: R)
     fun navigateBack()
     fun clearBackStack()
 }

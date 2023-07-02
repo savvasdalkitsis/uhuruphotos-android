@@ -15,17 +15,31 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.api.model
 
-sealed class LightboxSequenceDataSource {
+import android.os.Parcelable
+import kotlinx.parcelize.Parcelize
 
+sealed class LightboxSequenceDataSource : Parcelable {
+
+    @Parcelize
     data object Single : LightboxSequenceDataSource()
+    @Parcelize
     data object Feed : LightboxSequenceDataSource()
+    @Parcelize
     data class Memory(val yearsAgo: Int) : LightboxSequenceDataSource()
+    @Parcelize
     data class SearchResults(val query: String) : LightboxSequenceDataSource()
+    @Parcelize
     data class PersonResults(val personId: Int) : LightboxSequenceDataSource()
+    @Parcelize
     data class AutoAlbum(val albumId: Int) : LightboxSequenceDataSource()
+    @Parcelize
     data class UserAlbum(val albumId: Int) : LightboxSequenceDataSource()
+    @Parcelize
     data class LocalAlbum(val albumId: Int) : LightboxSequenceDataSource()
+    @Parcelize
     data object FavouriteMedia : LightboxSequenceDataSource()
+    @Parcelize
     data object HiddenMedia : LightboxSequenceDataSource()
+    @Parcelize
     data object Trash : LightboxSequenceDataSource()
 }

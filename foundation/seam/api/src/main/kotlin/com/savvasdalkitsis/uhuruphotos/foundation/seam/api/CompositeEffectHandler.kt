@@ -22,10 +22,9 @@ class CompositeEffectHandler<E1, E2>(
     private val effectHandler1: EffectHandler<E1>,
     private val effectHandler2: EffectHandler<E2>,
 ) : EffectHandler<Either<E1, E2>> {
-    override suspend fun handleEffect(effect: Either<E1, E2>) {
+    override suspend fun handleEffect(effect: Either<E1, E2>) =
         when (effect) {
             is Left -> effectHandler1.handleEffect(effect.value)
             is Right -> effectHandler2.handleEffect(effect.value)
         }
-    }
 }

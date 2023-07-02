@@ -16,7 +16,6 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.foundation.navigation.api
 
 import androidx.compose.runtime.Composable
-import androidx.navigation.NavGraphBuilder
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.viewmodel.NavigationViewModel
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.theme.ThemeMode
 import kotlinx.coroutines.flow.StateFlow
@@ -24,9 +23,10 @@ import kotlin.reflect.KClass
 
 interface NavigationTargetBuilder {
 
-    fun <S : Any, A : Any, VM : NavigationViewModel<S, *, A, R>, R : NavigationRoute> NavGraphBuilder.navigationTarget(
+    @Composable
+    fun <S : Any, A : Any, VM : NavigationViewModel<S, *, A, R>, R : NavigationRoute> ViewModelView(
         themeMode: StateFlow<ThemeMode>,
-        route: KClass<R>,
+        route: R,
         viewModel: KClass<VM>,
         content: @Composable (state: S, actions: (A) -> Unit) -> Unit,
     )

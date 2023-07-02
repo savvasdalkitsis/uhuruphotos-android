@@ -26,7 +26,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import androidx.navigation.NavHostController
+import com.bumble.appyx.navmodel.backstack.BackStack
 import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.Collage
 import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.PredefinedCollageDisplay
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.api.ui.state.FeedMediaItemSyncDisplay.ALWAYS_OFF
@@ -52,6 +52,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.DeletePe
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.TrashPermissionDialog
 import com.savvasdalkitsis.uhuruphotos.feature.media.local.view.api.ui.LocalMediaAccessRequestBanner
 import com.savvasdalkitsis.uhuruphotos.foundation.compose.api.blurIf
+import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.NavigationRoute
 import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.SwipeRefresh
 import dev.shreyaspatil.permissionflow.compose.rememberPermissionFlowRequestLauncher
@@ -59,7 +60,7 @@ import kotlinx.coroutines.launch
 
 @Composable
 internal fun Feed(
-    navHostController: NavHostController,
+    backStack: BackStack<NavigationRoute>,
     state: FeedState,
     isShowingPopUp: Boolean,
     action: (FeedAction) -> Unit,
@@ -95,7 +96,7 @@ internal fun Feed(
         title = {
             FeedTitle(state, action, ::scrollToTop)
         },
-        navController = navHostController,
+        backStack = backStack,
         showLibrary = state.showLibrary,
         homeFeedDisplay = state.collageState.collageDisplay,
         selectionMode = state.hasSelection,

@@ -15,7 +15,6 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.viewmodel
 
-import androidx.lifecycle.viewModelScope
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.api.navigation.LightboxNavigationRoute
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.LightboxActionsContext
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.LightboxEffectsContext
@@ -27,7 +26,6 @@ import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.viewmodel.Navig
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.ActionHandlerWithContext
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.EffectHandlerWithContext
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
@@ -39,12 +37,9 @@ internal class LightboxViewModel @Inject constructor(
     EffectHandlerWithContext(lightboxEffectsContext),
     LightboxState()
 ) {
-
-    init {
-        viewModelScope.launch {
-            action(with(getRoute()) {
-                LoadMediaItem(id, lightboxSequenceDataSource, showMediaSyncState)
-            })
-        }
+    override fun onRouteSet(route: LightboxNavigationRoute) {
+        action(with(route) {
+            LoadMediaItem(id, lightboxSequenceDataSource, showMediaSyncState)
+        })
     }
 }

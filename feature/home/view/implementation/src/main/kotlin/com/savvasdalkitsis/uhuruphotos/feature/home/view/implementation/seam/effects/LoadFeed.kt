@@ -20,7 +20,6 @@ import com.savvasdalkitsis.uhuruphotos.feature.home.view.implementation.seam.Hom
 
 data object LoadFeed : HomeEffect() {
     context(HomeEffectsContext) override suspend fun handle() {
-        navigator.navigateBack()
-        navigator.navigateTo(FeedNavigationRoute)
+        navigator.newRoot(FeedNavigationRoute)
     }
 }
