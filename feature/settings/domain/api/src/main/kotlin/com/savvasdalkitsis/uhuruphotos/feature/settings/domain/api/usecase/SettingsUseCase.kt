@@ -22,6 +22,8 @@ import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.theme.ThemeMode
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.StateFlow
 
+const val minCacheSize = 10
+
 interface SettingsUseCase {
 
     fun getLightboxPhotoDiskCacheMaxLimit(): Int

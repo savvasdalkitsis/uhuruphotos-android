@@ -18,6 +18,7 @@ package com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.ui
 import androidx.compose.material.Divider
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.stringResource
+import com.savvasdalkitsis.uhuruphotos.feature.settings.domain.api.usecase.minCacheSize
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.actions.ChangeCache
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.actions.ClearCache
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.actions.SettingsAction
@@ -41,7 +42,7 @@ internal fun SettingsCache(
         text = { stringResource(string.max_limit, it.toInt()) },
         subtext = string.changes_effect_after_restart,
         initialValue = initialMaxLimit,
-        range = (10f.. cache.limit.toFloat()).maybeExpandTo(initialMaxLimit),
+        range = (minCacheSize.toFloat().. cache.limit.toFloat()).maybeExpandTo(initialMaxLimit),
         onValueChanged = { action(ChangeCache(cache.cacheType, it)) }
     )
 }

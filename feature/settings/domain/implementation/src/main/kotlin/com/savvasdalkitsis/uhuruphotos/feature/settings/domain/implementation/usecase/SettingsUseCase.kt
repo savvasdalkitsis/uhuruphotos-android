@@ -24,6 +24,7 @@ import com.google.android.gms.common.ConnectionResult.SUCCESS
 import com.google.android.gms.common.GoogleApiAvailability
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.api.ui.state.FeedMediaItemSyncDisplay
 import com.savvasdalkitsis.uhuruphotos.feature.settings.domain.api.usecase.SettingsUseCase
+import com.savvasdalkitsis.uhuruphotos.feature.settings.domain.api.usecase.minCacheSize
 import com.savvasdalkitsis.uhuruphotos.foundation.log.api.Log
 import com.savvasdalkitsis.uhuruphotos.foundation.map.api.model.MapProvider
 import com.savvasdalkitsis.uhuruphotos.foundation.map.api.model.MapProvider.Google
@@ -110,15 +111,15 @@ internal class SettingsUseCase @Inject constructor(
     private val shouldShowLocalSyncProgressDefault = false
 
     override fun getLightboxPhotoDiskCacheMaxLimit(): Int =
-        get(lightboxPhotoDiskCacheSize, lightboxPhotoDiskCacheSizeDefault)
+        getCache(lightboxPhotoDiskCacheSize, lightboxPhotoDiskCacheSizeDefault)
     override fun getLightboxPhotoMemCacheMaxLimit(): Int =
-        get(lightboxPhotoMemCacheSize, lightboxPhotoMemCacheSizeDefault)
+        getCache(lightboxPhotoMemCacheSize, lightboxPhotoMemCacheSizeDefault)
     override fun getThumbnailDiskCacheMaxLimit(): Int =
-        get(thumbnailDiskCacheSize, thumbnailDiskCacheSizeDefault)
+        getCache(thumbnailDiskCacheSize, thumbnailDiskCacheSizeDefault)
     override fun getThumbnailMemCacheMaxLimit(): Int =
-        get(thumbnailMemCacheSize, thumbnailMemCacheSizeDefault)
+        getCache(thumbnailMemCacheSize, thumbnailMemCacheSizeDefault)
     override fun getVideoDiskCacheMaxLimit(): Int =
-        get(videoDiskCacheSize, videoDiskCacheSizeDefault)
+        getCache(videoDiskCacheSize, videoDiskCacheSizeDefault)
     override fun getFeedSyncFrequency(): Int =
         get(feedSyncFrequency, feedSyncFrequencyDefault)
     override fun getFeedDaysToRefresh(): Int =
@@ -165,15 +166,15 @@ internal class SettingsUseCase @Inject constructor(
         get(shouldShowLocalSyncProgress, shouldShowLocalSyncProgressDefault)
 
     override fun observeLightboxPhotoDiskCacheMaxLimit(): Flow<Int> =
-        observe(lightboxPhotoDiskCacheSize, lightboxPhotoDiskCacheSizeDefault)
+        observeCache(lightboxPhotoDiskCacheSize, lightboxPhotoDiskCacheSizeDefault)
     override fun observeLightboxPhotoMemCacheMaxLimit(): Flow<Int> =
-        observe(lightboxPhotoMemCacheSize, lightboxPhotoMemCacheSizeDefault)
+        observeCache(lightboxPhotoMemCacheSize, lightboxPhotoMemCacheSizeDefault)
     override fun observeThumbnailDiskCacheMaxLimit(): Flow<Int> =
-        observe(thumbnailDiskCacheSize, thumbnailMemCacheSizeDefault)
+        observeCache(thumbnailDiskCacheSize, thumbnailMemCacheSizeDefault)
     override fun observeThumbnailMemCacheMaxLimit(): Flow<Int> =
-        observe(thumbnailMemCacheSize, thumbnailMemCacheSizeDefault)
+        observeCache(thumbnailMemCacheSize, thumbnailMemCacheSizeDefault)
     override fun observeVideoDiskCacheMaxLimit(): Flow<Int> =
-        observe(videoDiskCacheSize, videoDiskCacheSizeDefault)
+        observeCache(videoDiskCacheSize, videoDiskCacheSizeDefault)
     override fun observeFeedSyncFrequency(): Flow<Int> =
         observe(feedSyncFrequency, feedSyncFrequencyDefault)
     override fun observeFeedDaysToRefresh(): Flow<Int> =
@@ -345,12 +346,17 @@ internal class SettingsUseCase @Inject constructor(
             SUCCESS, SERVICE_VERSION_UPDATE_REQUIRED, SIGN_IN_REQUIRED, SERVICE_UPDATING
         )
 
+    private fun getCache(key: String, defaultValue: Int) = get(key, defaultValue).coerceAtLeast(
+        minCacheSize
+    )
     private inline fun <reified T: Enum<T>> get(key: String, defaultValue: T): T =
         preferences.get(key, defaultValue)
     private inline fun <reified T> get(key: String, defaultValue: T): T =
         preferences.get(key, defaultValue)
     private inline fun <reified T: Enum<T>> observe(key: String, defaultValue: T): Flow<T> =
         preferences.observe(key, defaultValue)
+    private fun observeCache(key: String, defaultValue: Int): Flow<Int> =
+        observe(key, defaultValue).map { it.coerceAtLeast(minCacheSize) }
     private inline fun <reified T> observe(key: String, defaultValue: T): Flow<T> =
         preferences.observe(key, defaultValue)
     private inline fun <reified T: Enum<T>> set(key: String, value: T) {
