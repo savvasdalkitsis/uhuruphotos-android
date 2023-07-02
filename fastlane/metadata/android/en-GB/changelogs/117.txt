@@ -1,0 +1,4 @@
+* Fixing infinite loading screen on login or server url change
+* Fixing avatar image change not reflecting in the app
+* Fixing startup crash
+* Translations
