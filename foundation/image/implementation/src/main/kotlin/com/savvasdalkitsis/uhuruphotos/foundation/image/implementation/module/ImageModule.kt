@@ -155,6 +155,6 @@ class ImageModule {
         }
         .build()
 
-    private val Int.mb get() = (this * 1024 * 1024).coerceAtLeast(minCacheSize)
+    private val Int.mb get() = (coerceAtLeast(minCacheSize) * 1024 * 1024)
 
 }
