@@ -26,6 +26,7 @@ import coil.memory.MemoryCache
 import com.savvasdalkitsis.uhuruphotos.feature.auth.domain.api.AuthenticatedOkHttpClient
 import com.savvasdalkitsis.uhuruphotos.feature.auth.domain.api.TokenRefreshInterceptor
 import com.savvasdalkitsis.uhuruphotos.feature.settings.domain.api.usecase.SettingsUseCase
+import com.savvasdalkitsis.uhuruphotos.feature.settings.domain.api.usecase.minCacheSize
 import com.savvasdalkitsis.uhuruphotos.foundation.image.api.model.FullImage
 import com.savvasdalkitsis.uhuruphotos.foundation.image.api.model.ThumbnailImage
 import com.savvasdalkitsis.uhuruphotos.foundation.image.api.model.ThumbnailImageWithNetworkCacheSupport
@@ -154,6 +155,6 @@ class ImageModule {
         }
         .build()
 
-    private val Int.mb get() = (this * 1024 * 1024).coerceAtLeast(0)
+    private val Int.mb get() = (this * 1024 * 1024).coerceAtLeast(minCacheSize)
 
 }
