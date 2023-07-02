@@ -1,0 +1,1 @@
+* Another attempt at fixing startup crash
