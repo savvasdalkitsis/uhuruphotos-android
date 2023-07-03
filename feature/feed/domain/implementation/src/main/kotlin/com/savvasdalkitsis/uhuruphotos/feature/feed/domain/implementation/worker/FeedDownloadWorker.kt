@@ -28,6 +28,7 @@ import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedInject
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.withContext
 
 @HiltWorker
@@ -49,6 +50,7 @@ internal class FeedDownloadWorker @AssistedInject constructor(
         val shallow = params.inputData.getBoolean(KEY_SHALLOW, false)
         updateProgress(0)
         val result = feedRepository.refreshRemoteMediaCollections(shallow) { current, total ->
+            delay(300)
             updateProgress(current, total)
         }
         when(result) {

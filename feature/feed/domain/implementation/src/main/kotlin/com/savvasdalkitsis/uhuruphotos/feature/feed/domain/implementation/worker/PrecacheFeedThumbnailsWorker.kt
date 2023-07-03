@@ -30,6 +30,7 @@ import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedInject
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.withContext
 
 @HiltWorker
@@ -64,6 +65,7 @@ internal class PrecacheFeedThumbnailsWorker @AssistedInject constructor(
             if (isStopped)
                 break
             remoteMediaPrecacher.precacheMedia(id.thumbnailUri, id.isVideo)
+            delay(300)
             updateProgress(index, mediaItemIds.size)
         }
         Result.success()
