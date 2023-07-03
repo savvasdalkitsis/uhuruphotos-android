@@ -18,7 +18,7 @@ plugins {
     id 'com.android.application' version '8.2.0-alpha10' apply false
     id 'com.android.library' version '8.2.0-alpha10' apply false
     id 'org.jetbrains.kotlin.android' version "$kotlin_version" apply false
-    id 'app.cash.sqldelight' version '2.0.0-rc02' apply false
+    id 'app.cash.sqldelight' version '2.0.0-SNAPSHOT' apply false
     id 'com.google.android.libraries.mapsplatform.secrets-gradle-plugin' version '2.0.1' apply false
     id "com.bnorm.power.kotlin-power-assert" version "0.13.0" apply false
     id "org.sonarqube" version "4.2.1.3168"
