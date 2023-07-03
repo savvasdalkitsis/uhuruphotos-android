@@ -15,29 +15,24 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui
 
+import androidx.compose.animation.animateContentSize
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.calculateEndPadding
-import androidx.compose.foundation.layout.calculateStartPadding
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.lazy.staggeredgrid.LazyStaggeredGridItemScope
-import androidx.compose.foundation.lazy.staggeredgrid.LazyStaggeredGridState
-import androidx.compose.foundation.lazy.staggeredgrid.LazyVerticalStaggeredGrid
-import androidx.compose.foundation.lazy.staggeredgrid.StaggeredGridCells
-import androidx.compose.foundation.lazy.staggeredgrid.StaggeredGridItemSpan
-import androidx.compose.foundation.lazy.staggeredgrid.rememberLazyStaggeredGridState
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyItemScope
+import androidx.compose.foundation.lazy.LazyListState
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.unit.dp
+import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.CelRowSlot.CelSlot
+import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.CelRowSlot.EmptySlot
 import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.Cluster
-import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.Cel
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.CelSelected
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.state.CelState
+import my.nanihadesuka.compose.InternalLazyColumnScrollbar
 import my.nanihadesuka.compose.ScrollbarSelectionMode
 
 @Composable
@@ -50,34 +45,28 @@ internal fun StaggeredCollage(
     miniIcons: Boolean = false,
     showSyncState: Boolean = false,
     columnCount: Int,
-    gridState: LazyStaggeredGridState = rememberLazyStaggeredGridState(),
-    collageHeader: @Composable (LazyStaggeredGridItemScope.() -> Unit)? = null,
+    shouldAddEmptyPhotosInRows: Boolean,
+    listState: LazyListState = rememberLazyListState(),
+    collageHeader: @Composable() (LazyItemScope.() -> Unit)? = null,
     onCelSelected: CelSelected,
     onCelLongPressed: (CelState) -> Unit,
     onClusterRefreshClicked: (Cluster) -> Unit,
     onClusterSelectionClicked: (Cluster) -> Unit,
 ) {
     Box {
-        LazyVerticalStaggeredGrid(
-            modifier = modifier
-                .padding(
-                    start = contentPadding.calculateStartPadding(LocalLayoutDirection.current),
-                    end = contentPadding.calculateEndPadding(LocalLayoutDirection.current),
-                ),
-            state = gridState,
-            columns = StaggeredGridCells.Fixed(columnCount),
+        LazyColumn(
+            modifier = modifier,
+            state = listState,
+            contentPadding = contentPadding,
         ) {
-            item("contentPaddingTop", "contentPadding", span = StaggeredGridItemSpan.FullLine) {
-                Spacer(modifier = Modifier.height(contentPadding.calculateTopPadding()))
-            }
             collageHeader?.let { header ->
-                item("collageHeader", "collageHeader", span = StaggeredGridItemSpan.FullLine) {
+                item("collageHeader", "collageHeader") {
                     header(this)
                 }
             }
-            for (cluster in state) {
+            state.forEach { cluster ->
                 if ((cluster.displayTitle + cluster.location.orEmpty()).isNotEmpty()) {
-                    item(cluster.id, "header", span = StaggeredGridItemSpan.FullLine) {
+                    item(cluster.id, "header") {
                         ClusterHeader(
                             modifier = Modifier.animateItemPlacement(),
                             state = cluster,
@@ -90,44 +79,47 @@ internal fun StaggeredCollage(
                         }
                     }
                 }
-
-                for (cel in cluster.cels) {
-                    item(cel.mediaItem.id.value) {
-                        val aspectRatio = when {
-                            maintainAspectRatio -> cel.mediaItem.ratio
-                            else -> 1f
-                        }
-                        Cel(
-                            modifier = Modifier.animateItemPlacement(),
-                            state = cel,
-                            onSelected = onCelSelected,
-                            onLongClick = onCelLongPressed,
-                            aspectRatio = aspectRatio,
+                val (slots, rows) = if (shouldAddEmptyPhotosInRows) {
+                    val emptyPhotos = (columnCount - cluster.cels.size % columnCount) % columnCount
+                    val paddedSlots = cluster.cels.map(::CelSlot) + List(emptyPhotos) { EmptySlot }
+                    paddedSlots to paddedSlots.size / columnCount
+                } else {
+                    val evenRows = cluster.cels.size / columnCount
+                    cluster.cels.map(::CelSlot) to evenRows + if (cluster.cels.size % columnCount == 0) 0 else 1
+                }
+                for (row in 0 until rows) {
+                    val slotsInRow = (0 until columnCount).mapNotNull { column ->
+                        slots.getOrNull(row * columnCount + column)
+                    }.toTypedArray()
+                    item(
+                        slotsInRow.firstNotNullOf { it as? CelSlot }.cel.mediaItem.id.value,
+                        "photoRow"
+                    ) {
+                        CelRow(
+                            modifier = Modifier
+                                .animateContentSize()
+                                .animateItemPlacement(),
                             showSyncState = showSyncState,
-                            contentScale = when {
-                                maintainAspectRatio -> ContentScale.FillBounds
-                                else -> ContentScale.Crop
-                            },
                             miniIcons = miniIcons,
+                            maintainAspectRatio = maintainAspectRatio,
+                            onCelSelected = onCelSelected,
+                            onCelLongPressed = onCelLongPressed,
+                            slots = slotsInRow
                         )
                     }
                 }
-            }
-            item("contentPaddingBottom", "contentPadding", span = StaggeredGridItemSpan.FullLine) {
-                Spacer(modifier = Modifier.height(contentPadding.calculateBottomPadding()))
             }
         }
         Box(modifier = Modifier
             .padding(contentPadding)
         ) {
-            LazyStaggeredGridScrollbar(
-                gridState = gridState,
+            InternalLazyColumnScrollbar(
+                listState = listState,
                 thickness = 8.dp,
                 selectionMode = ScrollbarSelectionMode.Thumb,
                 thumbColor = MaterialTheme.colors.primary.copy(alpha = 0.7f),
                 thumbSelectedColor = MaterialTheme.colors.primary,
             )
         }
-
     }
 }

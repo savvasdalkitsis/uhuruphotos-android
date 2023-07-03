@@ -17,9 +17,9 @@ package com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui
 
 import android.content.res.Configuration
 import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.lazy.staggeredgrid.LazyStaggeredGridItemScope
-import androidx.compose.foundation.lazy.staggeredgrid.LazyStaggeredGridState
-import androidx.compose.foundation.lazy.staggeredgrid.rememberLazyStaggeredGridState
+import androidx.compose.foundation.lazy.LazyItemScope
+import androidx.compose.foundation.lazy.LazyListState
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -42,8 +42,8 @@ fun Collage(
     state: CollageState,
     showSelectionHeader: Boolean = false,
     showSyncState: Boolean = false,
-    gridState: LazyStaggeredGridState = rememberLazyStaggeredGridState(),
-    collageHeader: @Composable (LazyStaggeredGridItemScope.() -> Unit)? = null,
+    listState: LazyListState = rememberLazyListState(),
+    collageHeader: @Composable() (LazyItemScope.() -> Unit)? = null,
     emptyContent: @Composable () -> Unit = { NoContent(string.no_photos) },
     onCelSelected: CelSelected = { _ -> },
     onChangeDisplay: (CollageDisplay) -> Unit = {},
@@ -76,7 +76,8 @@ fun Collage(
                 widthSizeClass = LocalWindowSize.current.widthSizeClass,
                 landscape = LocalConfiguration.current.orientation == Configuration.ORIENTATION_LANDSCAPE
             ),
-            gridState = gridState,
+            shouldAddEmptyPhotosInRows = collageDisplay.shouldAddEmptyPhotosInRows,
+            listState = listState,
             collageHeader = collageHeader,
             onCelSelected = onCelSelected,
             onCelLongPressed = onCelLongPressed,

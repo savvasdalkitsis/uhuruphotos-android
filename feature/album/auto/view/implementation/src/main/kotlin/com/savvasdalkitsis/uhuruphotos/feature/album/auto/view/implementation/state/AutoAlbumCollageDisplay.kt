@@ -23,6 +23,7 @@ data object AutoAlbumCollageDisplay: CollageDisplay {
     override val compactColumnsLandscape = 5
     override val wideColumnsPortrait = 6
     override val wideColumnsLandscape = 8
+    override val shouldAddEmptyPhotosInRows = true
     override val iconResource = 0
     override val maintainAspectRatio = false
     override val friendlyName = 0

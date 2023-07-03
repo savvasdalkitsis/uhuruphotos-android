@@ -18,7 +18,7 @@ package com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.ui
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.layout.Arrangement.spacedBy
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.lazy.staggeredgrid.rememberLazyStaggeredGridState
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
@@ -68,16 +68,16 @@ internal fun Feed(
     additionalContent: @Composable () -> Unit,
 ) {
     val coroutineScope = rememberCoroutineScope()
-    val gridState = rememberLazyStaggeredGridState()
+    val listState = rememberLazyListState()
 
     fun scrollToTop() {
         coroutineScope.launch {
-            gridState.animateScrollToItem(0, 0)
+            listState.animateScrollToItem(0, 0)
         }
     }
     val isScrolling by remember {
         derivedStateOf {
-            gridState.isScrollInProgress
+            listState.isScrollInProgress
         }
     }
     val showSyncState by remember {
@@ -116,7 +116,7 @@ internal fun Feed(
                 state = state.collageState,
                 showSelectionHeader = state.hasSelection,
                 showSyncState = showSyncState,
-                gridState = gridState,
+                listState = listState,
                 collageHeader = {
                     AnimatedVisibility(
                         visible =
