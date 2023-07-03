@@ -1,7 +1,7 @@
 CREATE TABLE people (
-    id INTEGER AS Int NOT NULL PRIMARY KEY,
+    id INTEGER AS kotlin.Int NOT NULL PRIMARY KEY,
     name TEXT NOT NULL,
-    faceCount INTEGER AS Int NOT NULL,
+    faceCount INTEGER AS kotlin.Int NOT NULL,
     faceUrl TEXT,
     facePhotoUrl TEXT
 );

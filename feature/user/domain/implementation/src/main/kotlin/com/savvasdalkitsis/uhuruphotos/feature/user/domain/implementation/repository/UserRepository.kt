@@ -15,6 +15,8 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.user.domain.implementation.repository
 
+import app.cash.sqldelight.coroutines.asFlow
+import app.cash.sqldelight.coroutines.mapToOneNotNull
 import com.github.michaelbull.result.Result
 import com.github.michaelbull.result.map
 import com.savvasdalkitsis.uhuruphotos.feature.auth.domain.api.usecase.AuthenticationUseCase
@@ -24,8 +26,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.user.User
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.user.UserQueries
 import com.savvasdalkitsis.uhuruphotos.feature.user.domain.implementation.service.UserService
 import com.savvasdalkitsis.uhuruphotos.foundation.log.api.andThenTry
-import com.squareup.sqldelight.runtime.coroutines.asFlow
-import com.squareup.sqldelight.runtime.coroutines.mapToOneNotNull
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.distinctUntilChanged
 import javax.inject.Inject
@@ -36,7 +37,8 @@ internal class UserRepository @Inject constructor(
     private val authenticationUseCase: AuthenticationUseCase,
 ) {
 
-    fun observeUser(): Flow<User> = userQueries.getUser().asFlow().mapToOneNotNull().distinctUntilChanged()
+    fun observeUser(): Flow<User> = userQueries.getUser()
+        .asFlow().mapToOneNotNull(Dispatchers.IO).distinctUntilChanged()
 
     suspend fun getUser(): User? = userQueries.getUser().awaitSingleOrNull()
 

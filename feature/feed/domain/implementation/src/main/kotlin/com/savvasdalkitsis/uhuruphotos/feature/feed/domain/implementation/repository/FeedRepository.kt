@@ -15,6 +15,8 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.feed.domain.implementation.repository
 
+import app.cash.sqldelight.coroutines.asFlow
+import app.cash.sqldelight.coroutines.mapToList
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.Database
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.extensions.awaitList
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.extensions.awaitSingle
@@ -28,8 +30,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.api.usecase.R
 import com.savvasdalkitsis.uhuruphotos.foundation.group.api.model.Group
 import com.savvasdalkitsis.uhuruphotos.foundation.group.api.model.groupBy
 import com.savvasdalkitsis.uhuruphotos.foundation.result.api.SimpleResult
-import com.squareup.sqldelight.runtime.coroutines.asFlow
-import com.squareup.sqldelight.runtime.coroutines.mapToList
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.onEach
@@ -55,7 +56,7 @@ class FeedRepository @Inject constructor(
                     emit(remoteMediaCollectionsQueries.getRemoteMediaCollections(limit = 100))
                 }
             }
-            .mapToList().groupBy(GetRemoteMediaCollections::id)
+            .mapToList(Dispatchers.IO).groupBy(GetRemoteMediaCollections::id)
             .onStart {
                 if (allRemoteMediaCollections.items.isNotEmpty()) {
                     emit(allRemoteMediaCollections)

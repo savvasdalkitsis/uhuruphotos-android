@@ -1,9 +1,9 @@
 CREATE TABLE autoAlbums (
-    id INTEGER AS Int NOT NULL PRIMARY KEY,
-    isFavorite INTEGER AS Boolean,
-    photoCount INTEGER AS Int,
+    id INTEGER AS kotlin.Int NOT NULL PRIMARY KEY,
+    isFavorite INTEGER AS kotlin.Boolean,
+    photoCount INTEGER AS kotlin.Int,
     coverPhotoHash TEXT NOT NULL,
-    coverPhotoIsVideo INTEGER AS Boolean,
+    coverPhotoIsVideo INTEGER AS kotlin.Boolean,
     timestamp TEXT,
     title TEXT
 );

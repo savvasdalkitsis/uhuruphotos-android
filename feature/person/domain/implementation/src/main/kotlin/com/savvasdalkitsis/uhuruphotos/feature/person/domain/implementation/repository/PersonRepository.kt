@@ -15,6 +15,8 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.person.domain.implementation.repository
 
+import app.cash.sqldelight.coroutines.asFlow
+import app.cash.sqldelight.coroutines.mapToList
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.extensions.awaitList
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.media.remote.RemoteMediaCollectionsQueries
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.person.GetPersonAlbums
@@ -25,8 +27,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.person.domain.implementation.serv
 import com.savvasdalkitsis.uhuruphotos.foundation.coroutines.api.safelyOnStartIgnoring
 import com.savvasdalkitsis.uhuruphotos.foundation.group.api.model.Group
 import com.savvasdalkitsis.uhuruphotos.foundation.group.api.model.groupBy
-import com.squareup.sqldelight.runtime.coroutines.asFlow
-import com.squareup.sqldelight.runtime.coroutines.mapToList
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.distinctUntilChanged
 import javax.inject.Inject
@@ -39,7 +40,7 @@ class PersonRepository @Inject constructor(
 ) {
 
     fun observePersonAlbums(personId: Int) : Flow<Group<String, GetPersonAlbums>> =
-        personQueries.getPersonAlbums(personId).asFlow().mapToList().groupBy(GetPersonAlbums::id)
+        personQueries.getPersonAlbums(personId).asFlow().mapToList(Dispatchers.IO).groupBy(GetPersonAlbums::id)
             .distinctUntilChanged()
             .safelyOnStartIgnoring {
                 downloadPersonAlbums(personId)

@@ -15,6 +15,9 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.implementation.repository
 
+import app.cash.sqldelight.coroutines.asFlow
+import app.cash.sqldelight.coroutines.mapToList
+import app.cash.sqldelight.coroutines.mapToOneNotNull
 import com.github.michaelbull.result.Ok
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.entities.media.DbRemoteMediaItemDetails
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.entities.media.DbRemoteMediaItemSummary
@@ -30,9 +33,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.implementatio
 import com.savvasdalkitsis.uhuruphotos.foundation.log.api.runCatchingWithLog
 import com.savvasdalkitsis.uhuruphotos.foundation.result.api.SimpleResult
 import com.savvasdalkitsis.uhuruphotos.foundation.result.api.simple
-import com.squareup.sqldelight.runtime.coroutines.asFlow
-import com.squareup.sqldelight.runtime.coroutines.mapToList
-import com.squareup.sqldelight.runtime.coroutines.mapToOneNotNull
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.emitAll
@@ -52,20 +53,20 @@ class RemoteMediaRepository @Inject constructor(
             .onStart {
                 emitAll(remoteMediaItemDetailsQueries.getAll(limit = 100).asFlow().take(1))
             }
-            .mapToList()
+            .mapToList(Dispatchers.IO)
 
     fun observeFavouriteMedia(favouriteThreshold: Int): Flow<List<DbRemoteMediaItemSummary>> =
         remoteMediaItemSummaryQueries.getFavourites(favouriteThreshold).asFlow()
-            .mapToList()
+            .mapToList(Dispatchers.IO)
             .distinctUntilChanged()
 
     fun observeHiddenMedia(): Flow<List<DbRemoteMediaItemSummary>> =
         remoteMediaItemSummaryQueries.getHidden().asFlow()
-            .mapToList().distinctUntilChanged()
+            .mapToList(Dispatchers.IO).distinctUntilChanged()
 
     fun observeMediaItemDetails(id: String): Flow<DbRemoteMediaItemDetails> =
-        remoteMediaItemDetailsQueries.getMediaItem(id).asFlow().mapToOneNotNull()
-            .distinctUntilChanged()
+        remoteMediaItemDetailsQueries.getMediaItem(id).asFlow()
+            .mapToOneNotNull(Dispatchers.IO).distinctUntilChanged()
 
     suspend fun getMediaItemDetails(id: String): DbRemoteMediaItemDetails? =
         remoteMediaItemDetailsQueries.getMediaItem(id).awaitSingleOrNull()

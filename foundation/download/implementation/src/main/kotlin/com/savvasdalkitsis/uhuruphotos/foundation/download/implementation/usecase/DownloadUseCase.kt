@@ -25,6 +25,8 @@ import android.app.DownloadManager.STATUS_PENDING
 import android.app.DownloadManager.STATUS_RUNNING
 import android.net.Uri
 import android.os.Environment.DIRECTORY_DCIM
+import app.cash.sqldelight.coroutines.asFlow
+import app.cash.sqldelight.coroutines.mapToList
 import com.github.michaelbull.result.onFailure
 import com.savvasdalkitsis.uhuruphotos.feature.auth.domain.api.usecase.AuthenticationHeadersUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.extensions.asyncReturn
@@ -38,8 +40,7 @@ import com.savvasdalkitsis.uhuruphotos.foundation.log.api.andThenTry
 import com.savvasdalkitsis.uhuruphotos.foundation.log.api.log
 import com.savvasdalkitsis.uhuruphotos.foundation.result.api.SimpleResult
 import com.savvasdalkitsis.uhuruphotos.foundation.result.api.simple
-import com.squareup.sqldelight.runtime.coroutines.asFlow
-import com.squareup.sqldelight.runtime.coroutines.mapToList
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.map
@@ -103,7 +104,7 @@ internal class DownloadUseCase @Inject constructor(
     }
 
     override fun observeDownloading(): Flow<Set<String>> = downloadingRepository.getAll()
-        .asFlow().mapToList().distinctUntilChanged().map { it.toSet() }
+        .asFlow().mapToList(Dispatchers.IO).distinctUntilChanged().map { it.toSet() }
 
     override suspend fun clearFailuresAndStale() {
         (downloadingRepository.getAllDownloadIds() - getActive().toSet())

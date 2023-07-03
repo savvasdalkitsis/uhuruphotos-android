@@ -24,6 +24,9 @@ import android.media.MediaMetadataRetriever
 import android.media.MediaMetadataRetriever.OPTION_CLOSEST_SYNC
 import android.net.Uri
 import androidx.palette.graphics.Palette
+import app.cash.sqldelight.coroutines.asFlow
+import app.cash.sqldelight.coroutines.mapToList
+import app.cash.sqldelight.coroutines.mapToOneNotNull
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.Database
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.extensions.async
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.extensions.awaitList
@@ -41,10 +44,8 @@ import com.savvasdalkitsis.uhuruphotos.foundation.exif.api.usecase.ExifUseCase
 import com.savvasdalkitsis.uhuruphotos.foundation.log.api.log
 import com.savvasdalkitsis.uhuruphotos.foundation.log.api.runCatchingWithLog
 import com.savvasdalkitsis.uhuruphotos.foundation.result.api.simple
-import com.squareup.sqldelight.runtime.coroutines.asFlow
-import com.squareup.sqldelight.runtime.coroutines.mapToList
-import com.squareup.sqldelight.runtime.coroutines.mapToOneNotNull
 import dagger.hilt.android.qualifiers.ApplicationContext
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.distinctUntilChanged
 import org.joda.time.format.DateTimeFormatter
@@ -66,10 +67,10 @@ class LocalMediaRepository @Inject constructor(
 ) {
 
     fun observeMedia(): Flow<List<LocalMediaItemDetails>> = localMediaItemDetailsQueries.getItems()
-        .asFlow().mapToList().distinctUntilChanged()
+        .asFlow().mapToList(Dispatchers.IO).distinctUntilChanged()
 
     fun observeFolder(folderId: Int): Flow<List<LocalMediaItemDetails>> =
-        localMediaItemDetailsQueries.getBucketItems(folderId).asFlow().mapToList().distinctUntilChanged()
+        localMediaItemDetailsQueries.getBucketItems(folderId).asFlow().mapToList(Dispatchers.IO).distinctUntilChanged()
 
     suspend fun getMedia(): List<LocalMediaItemDetails> = localMediaItemDetailsQueries.getItems().awaitList()
 
@@ -205,7 +206,8 @@ class LocalMediaRepository @Inject constructor(
     }.simple()
 
     fun observeItem(id: Long): Flow<LocalMediaItemDetails> =
-        localMediaItemDetailsQueries.getItem(id).asFlow().mapToOneNotNull().distinctUntilChanged()
+        localMediaItemDetailsQueries.getItem(id)
+            .asFlow().mapToOneNotNull(Dispatchers.IO).distinctUntilChanged()
 
     suspend fun getItem(id: Long): LocalMediaItemDetails? =
         localMediaItemDetailsQueries.getItem(id).awaitSingleOrNull()

@@ -1,10 +1,18 @@
 plugins {
-    id 'com.squareup.sqldelight'
+    id 'app.cash.sqldelight'
     id 'java-test-fixtures'
 }
 
 android {
     namespace 'com.savvasdalkitsis.uhuruphotos.feature.db.domain.api'
+}
+
+sqldelight {
+    databases {
+        Database {
+            packageName = "com.savvasdalkitsis.uhuruphotos.feature.db.domain.api"
+        }
+    }
 }
 
 dependencies {

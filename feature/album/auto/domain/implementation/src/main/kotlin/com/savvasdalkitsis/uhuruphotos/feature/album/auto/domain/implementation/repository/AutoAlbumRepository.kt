@@ -15,6 +15,8 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.album.auto.domain.implementation.repository
 
+import app.cash.sqldelight.coroutines.asFlow
+import app.cash.sqldelight.coroutines.mapToList
 import com.savvasdalkitsis.uhuruphotos.feature.album.auto.domain.implementation.service.AutoAlbumService
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.Database
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.album.auto.AutoAlbumPeopleQueries
@@ -31,8 +33,7 @@ import com.savvasdalkitsis.uhuruphotos.foundation.group.api.model.Group
 import com.savvasdalkitsis.uhuruphotos.foundation.log.api.runCatchingWithLog
 import com.savvasdalkitsis.uhuruphotos.foundation.result.api.SimpleResult
 import com.savvasdalkitsis.uhuruphotos.foundation.result.api.simple
-import com.squareup.sqldelight.runtime.coroutines.asFlow
-import com.squareup.sqldelight.runtime.coroutines.mapToList
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.distinctUntilChanged
 import javax.inject.Inject
@@ -48,7 +49,7 @@ class AutoAlbumRepository @Inject constructor(
 ) {
 
     fun observeAutoAlbum(albumId: Int): Flow<List<GetAutoAlbum>> =
-        autoAlbumQueries.getAutoAlbum(albumId.toString()).asFlow().mapToList()
+        autoAlbumQueries.getAutoAlbum(albumId.toString()).asFlow().mapToList(Dispatchers.IO)
             .distinctUntilChanged()
 
     suspend fun getAutoAlbum(albumId: Int): Group<String, GetAutoAlbum> =
@@ -56,7 +57,7 @@ class AutoAlbumRepository @Inject constructor(
 
     fun observeAutoAlbumPeople(albumId: Int): Flow<List<GetPeopleForAutoAlbum>> =
         autoAlbumPeopleQueries.getPeopleForAutoAlbum(albumId.toString())
-            .asFlow().mapToList().distinctUntilChanged()
+            .asFlow().mapToList(Dispatchers.IO).distinctUntilChanged()
 
     suspend fun refreshAutoAlbum(albumId: Int): SimpleResult = runCatchingWithLog {
         val album = autoAlbumService.getAutoAlbum(albumId.toString())

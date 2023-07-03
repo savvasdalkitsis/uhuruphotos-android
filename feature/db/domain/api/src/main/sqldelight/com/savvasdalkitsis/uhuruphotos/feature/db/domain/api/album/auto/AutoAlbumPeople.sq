@@ -1,5 +1,5 @@
 CREATE TABLE autoAlbumPeople (
-    personId INTEGER AS Int NOT NULL,
+    personId INTEGER AS kotlin.Int NOT NULL,
     albumId TEXT NOT NULL,
 
     PRIMARY KEY (personId, albumId)

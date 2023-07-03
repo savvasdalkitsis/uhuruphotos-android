@@ -1,2 +1,2 @@
 DELETE FROM downloadingMediaItems;
-ALTER TABLE downloadingMediaItems ADD COLUMN downloadId INTEGER AS Long NOT NULL DEFAULT 0;
+ALTER TABLE downloadingMediaItems ADD COLUMN downloadId INTEGER NOT NULL DEFAULT 0;

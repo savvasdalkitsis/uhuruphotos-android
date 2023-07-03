@@ -14,8 +14,8 @@ CREATE TABLE remoteMediaItemDetails (
   bigSquareThumbnailUrl TEXT,
   smallSquareThumbnailUrl TEXT,
   tinySquareThumbnailUrl TEXT,
-  video INTEGER AS Boolean,
-  rating INTEGER AS Int,
+  video INTEGER AS kotlin.Boolean,
+  rating INTEGER AS kotlin.Int,
   peopleNames TEXT,
   imagePath TEXT
 );

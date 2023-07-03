@@ -15,7 +15,7 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.extensions
 
-import com.squareup.sqldelight.Query
+import app.cash.sqldelight.Query
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 

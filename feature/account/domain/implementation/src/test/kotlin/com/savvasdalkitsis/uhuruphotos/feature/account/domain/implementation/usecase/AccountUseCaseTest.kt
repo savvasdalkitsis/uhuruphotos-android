@@ -15,6 +15,8 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.account.domain.implementation.usecase
 
+import app.cash.sqldelight.TransactionWithReturn
+import app.cash.sqldelight.TransactionWithoutReturn
 import com.google.android.exoplayer2.upstream.cache.CacheDataSource
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.Database
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.album.auto.AutoAlbumPeopleQueries
@@ -37,8 +39,6 @@ import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.search.SearchQuerie
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.user.UserQueries
 import com.savvasdalkitsis.uhuruphotos.foundation.image.api.cache.ImageCacheUseCase
 import com.savvasdalkitsis.uhuruphotos.foundation.worker.api.usecase.WorkScheduleUseCase
-import com.squareup.sqldelight.TransactionWithReturn
-import com.squareup.sqldelight.TransactionWithoutReturn
 import io.mockk.mockk
 import io.mockk.verify
 import kotlinx.coroutines.runBlocking

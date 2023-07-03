@@ -1,6 +1,6 @@
 CREATE TABLE personPhotos (
     id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
-    personId INTEGER AS Int NOT NULL,
+    personId INTEGER AS kotlin.Int NOT NULL,
     photoId TEXT NOT NULL
 );
 

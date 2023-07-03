@@ -1,15 +1,15 @@
 CREATE TABLE userAlbums (
-    id INTEGER AS Int NOT NULL PRIMARY KEY,
-    isFavorite INTEGER AS Boolean,
-    photoCount INTEGER AS Int,
+    id INTEGER AS kotlin.Int NOT NULL PRIMARY KEY,
+    isFavorite INTEGER AS kotlin.Boolean,
+    photoCount INTEGER AS kotlin.Int,
     coverPhoto1Hash TEXT,
-    coverPhoto1IsVideo INTEGER AS Boolean,
+    coverPhoto1IsVideo INTEGER AS kotlin.Boolean,
     coverPhoto2Hash TEXT,
-    coverPhoto2IsVideo INTEGER AS Boolean,
+    coverPhoto2IsVideo INTEGER AS kotlin.Boolean,
     coverPhoto3Hash TEXT,
-    coverPhoto3IsVideo INTEGER AS Boolean,
+    coverPhoto3IsVideo INTEGER AS kotlin.Boolean,
     coverPhoto4Hash TEXT,
-    coverPhoto4IsVideo INTEGER AS Boolean,
+    coverPhoto4IsVideo INTEGER AS kotlin.Boolean,
     timestamp TEXT,
     title TEXT
 );

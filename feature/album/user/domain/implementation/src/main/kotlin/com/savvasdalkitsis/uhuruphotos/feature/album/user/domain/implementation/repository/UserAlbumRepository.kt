@@ -15,6 +15,8 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.album.user.domain.implementation.repository
 
+import app.cash.sqldelight.coroutines.asFlow
+import app.cash.sqldelight.coroutines.mapToList
 import com.savvasdalkitsis.uhuruphotos.feature.album.user.domain.implementation.service.UserAlbumService
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.Database
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.album.user.GetUserAlbum
@@ -27,8 +29,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.api.model.toD
 import com.savvasdalkitsis.uhuruphotos.foundation.log.api.runCatchingWithLog
 import com.savvasdalkitsis.uhuruphotos.foundation.result.api.SimpleResult
 import com.savvasdalkitsis.uhuruphotos.foundation.result.api.simple
-import com.squareup.sqldelight.runtime.coroutines.asFlow
-import com.squareup.sqldelight.runtime.coroutines.mapToList
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.distinctUntilChanged
 import javax.inject.Inject
@@ -46,7 +47,7 @@ class UserAlbumRepository @Inject constructor(
 
     fun observeUserAlbum(albumId: Int): Flow<List<GetUserAlbum>> =
         userAlbumQueries.getUserAlbum(albumId.toString())
-            .asFlow().mapToList()
+            .asFlow().mapToList(Dispatchers.IO)
             .distinctUntilChanged()
 
     suspend fun refreshUserAlbum(albumId: Int): SimpleResult = runCatchingWithLog {

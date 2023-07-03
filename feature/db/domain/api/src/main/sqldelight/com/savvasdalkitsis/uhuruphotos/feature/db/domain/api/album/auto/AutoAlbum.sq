@@ -3,9 +3,9 @@ CREATE TABLE autoAlbum (
     title TEXT,
     timestamp TEXT,
     createdOn TEXT,
-    isFavorite INTEGER AS Boolean,
-    gpsLat REAL AS Double,
-    gpsLon REAL AS Double
+    isFavorite INTEGER AS kotlin.Boolean,
+    gpsLat REAL AS kotlin.Double,
+    gpsLon REAL AS kotlin.Double
 );
 
 insert:

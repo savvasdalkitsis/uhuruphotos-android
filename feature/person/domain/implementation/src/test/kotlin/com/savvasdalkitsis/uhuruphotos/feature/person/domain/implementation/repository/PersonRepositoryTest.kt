@@ -15,9 +15,6 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.person.domain.implementation.repository
 
-import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.TestDatabase
-import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.entities.media.DbRemoteMediaItemSummary
-import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.media.remote.RemoteMediaCollections
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.media.remote.RemoteMediaItemSummary
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.person.GetPersonAlbums
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.person.PersonQueries
@@ -31,17 +28,17 @@ import io.mockk.mockk
 
 class PersonRepositoryTest {
 
-    private val db = TestDatabase.getDb()
+//    private val db = TestDatabase.getDb()
     private val personQueries = mockk<PersonQueries>(relaxed = true)
     private val personService = mockk<PersonService>(relaxed = true)
     private val remoteMediaUseCase = mockk<RemoteMediaUseCase>(relaxed = true)
 
-    private val underTest = PersonRepository(
-        personQueries,
-        personService,
-        db.remoteMediaCollectionsQueries,
-        remoteMediaUseCase,
-    )
+//    private val underTest = PersonRepository(
+//        personQueries,
+//        personService,
+//        db.remoteMediaCollectionsQueries,
+//        remoteMediaUseCase,
+//    )
 
     // Commenting these out until the android gradle plugin supports kotlin test
     // fixtures so I can reuse the TestRemoteMediaCollections methods here
@@ -176,16 +173,16 @@ class PersonRepositoryTest {
 //        }
 //    }
 
-    private fun given(vararg albums: RemoteMediaCollections) = insert(*albums)
-
-    private fun insert(vararg albums: RemoteMediaCollections) = albums.forEach {
-        db.remoteMediaCollectionsQueries.insert(it)
-    }
-
-    private fun given(vararg mediaItemSummaries: DbRemoteMediaItemSummary) = insert(*mediaItemSummaries)
-
-    private fun insert(vararg photoSummaries: DbRemoteMediaItemSummary) =
-        photoSummaries.forEach { db.remoteMediaItemSummaryQueries.insert(it) }
+//    private fun given(vararg albums: RemoteMediaCollections) = insert(*albums)
+//
+//    private fun insert(vararg albums: RemoteMediaCollections) = albums.forEach {
+//        db.remoteMediaCollectionsQueries.insert(it)
+//    }
+//
+//    private fun given(vararg mediaItemSummaries: DbRemoteMediaItemSummary) = insert(*mediaItemSummaries)
+//
+//    private fun insert(vararg photoSummaries: DbRemoteMediaItemSummary) =
+//        photoSummaries.forEach { db.remoteMediaItemSummaryQueries.insert(it) }
 
     @Suppress("SameParameterValue")
     private fun given(person: Int) = PersonContinuation(person)
@@ -198,9 +195,9 @@ class PersonRepositoryTest {
         }
     }
 
-    private fun insert(personId: Int, photoId: String) {
-        db.personQueries.insert(id = null, personId = personId, photoId = photoId )
-    }
+//    private fun insert(personId: Int, photoId: String) {
+//        db.personQueries.insert(id = null, personId = personId, photoId = photoId )
+//    }
 
     private fun <T> Group<String, T>.assertSameAs(vararg pairs: Pair<String, List<T>>) =
         assertThat(this, sameBeanAs(Group(mapOf(*pairs))))
