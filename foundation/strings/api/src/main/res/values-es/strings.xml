@@ -278,4 +278,9 @@
     <string name="show_local_progress">Mostrar el progreso de la sincronización local</string>
     <string name="progress">Progreso</string>
     <string name="show_feed_sync_progress">Muestra el progreso completo de la sincronización de las fotos</string>
+    <string name="lightbox_photo_memory_cache">Memoria caché para LightboxPhoto</string>
+    <string name="thumbnail_disk_cache">Caché del disco de miniaturas</string>
+    <string name="donate">Donar</string>
+    <string name="lightbox_photo_disk_cache">Memoria caché de Lightbox Photo Disk</string>
+    <string name="thumbnail_memory_cache">Memoria caché de las miniaturas</string>
 </resources>
