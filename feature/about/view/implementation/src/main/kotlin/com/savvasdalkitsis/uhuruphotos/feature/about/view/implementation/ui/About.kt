@@ -47,6 +47,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.about.view.implementation.seam.ac
 import com.savvasdalkitsis.uhuruphotos.feature.about.view.implementation.seam.actions.NavigateToGithub
 import com.savvasdalkitsis.uhuruphotos.feature.about.view.implementation.seam.actions.SendFeedback
 import com.savvasdalkitsis.uhuruphotos.feature.about.view.implementation.ui.state.AboutState
+import com.savvasdalkitsis.uhuruphotos.foundation.compose.api.recomposeHighlighter
 import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.R.drawable
 import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.theme.PreviewAppTheme
@@ -70,7 +71,9 @@ internal fun About(
     ) { contentPadding ->
         val listState = rememberLazyListState()
         LibrariesContainer(
-            modifier = Modifier.fillMaxSize(),
+            modifier = Modifier
+                .recomposeHighlighter()
+                .fillMaxSize(),
             contentPadding = contentPadding,
             lazyListState = listState,
             header = {
@@ -80,6 +83,7 @@ internal fun About(
             }
         )
         Box(modifier = Modifier
+            .recomposeHighlighter()
             .padding(contentPadding)
         ) {
             InternalLazyColumnScrollbar(
@@ -100,6 +104,7 @@ private fun AboutHeader(
 ) {
     Column(
         modifier = Modifier
+            .recomposeHighlighter()
             .fillMaxWidth()
             .background(MaterialTheme.colors.background)
             .padding(8.dp),
@@ -108,6 +113,7 @@ private fun AboutHeader(
     ) {
         Icon(
             modifier = Modifier
+                .recomposeHighlighter()
                 .size(80.dp)
                 .background(Color.White, CircleShape),
             tint = Color.Black,
@@ -123,41 +129,55 @@ private fun AboutHeader(
             style = MaterialTheme.typography.subtitle1,
         )
         Row(
-            modifier = Modifier.fillMaxWidth(),
+            modifier = Modifier
+                .recomposeHighlighter()
+                .fillMaxWidth(),
             horizontalArrangement = spacedBy(8.dp),
         ) {
             OutlinedButton(
-                modifier = Modifier.weight(1f),
+                modifier = Modifier
+                    .recomposeHighlighter()
+                    .weight(1f),
                 onClick = { action(NavigateToGithub )},
             ) {
                 Icon(
                     painter = painterResource(drawable.ic_github),
                     contentDescription = null
                 )
-                Spacer(modifier = Modifier.width(8.dp))
+                Spacer(modifier = Modifier
+                    .recomposeHighlighter()
+                    .width(8.dp))
                 Text(text = "Github")
             }
             OutlinedButton(
-                modifier = Modifier.weight(1f),
+                modifier = Modifier
+                    .recomposeHighlighter()
+                    .weight(1f),
                 onClick = { action(Donate) },
             ) {
                 Icon(
                     painter = painterResource(drawable.ic_money),
                     contentDescription = null
                 )
-                Spacer(modifier = Modifier.width(8.dp))
+                Spacer(modifier = Modifier
+                    .recomposeHighlighter()
+                    .width(8.dp))
                 Text(text = stringResource(string.donate))
             }
         }
         OutlinedButton(
-            modifier = Modifier.fillMaxWidth(),
+            modifier = Modifier
+                .recomposeHighlighter()
+                .fillMaxWidth(),
             onClick = { action(SendFeedback) },
         ) {
             Icon(
                 painter = painterResource(drawable.ic_feedback),
                 contentDescription = null
             )
-            Spacer(modifier = Modifier.width(8.dp))
+            Spacer(modifier = Modifier
+                .recomposeHighlighter()
+                .width(8.dp))
             Text(text = stringResource(string.feedback))
         }
     }

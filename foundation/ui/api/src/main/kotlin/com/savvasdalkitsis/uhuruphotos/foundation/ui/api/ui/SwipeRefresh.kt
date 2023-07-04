@@ -27,6 +27,7 @@ import androidx.compose.material.pullrefresh.rememberPullRefreshState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import com.savvasdalkitsis.uhuruphotos.foundation.compose.api.recomposeHighlighter
 
 @Composable
 fun SwipeRefresh(
@@ -37,12 +38,14 @@ fun SwipeRefresh(
 ) {
     val refreshState = rememberPullRefreshState(refreshing = isRefreshing, onRefresh = onRefresh)
     Box(modifier = Modifier
+        .recomposeHighlighter()
         .fillMaxSize()
         .pullRefresh(refreshState)
     ) {
         content()
         PullRefreshIndicator(
             modifier = Modifier
+                .recomposeHighlighter()
                 .align(Alignment.TopCenter)
                 .padding(indicatorPadding),
             refreshing = isRefreshing,

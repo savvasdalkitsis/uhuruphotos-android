@@ -24,6 +24,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
+import com.savvasdalkitsis.uhuruphotos.foundation.compose.api.recomposeHighlighter
 import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.R.drawable
 
 @Composable
@@ -33,6 +34,7 @@ fun Logo(
 ) {
     Icon(
         modifier = modifier
+            .recomposeHighlighter()
             .clip(CircleShape)
             .let {
                 if (onClick != null) {

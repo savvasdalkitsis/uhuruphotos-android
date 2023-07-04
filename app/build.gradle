@@ -42,7 +42,8 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-            signingConfig signingConfigs.release
+            applicationIdSuffix ".profile"
+            signingConfig signingConfigs.debug
         }
     }
     packagingOptions {

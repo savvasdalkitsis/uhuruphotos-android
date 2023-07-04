@@ -15,12 +15,14 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.ui.state
 
+import androidx.compose.runtime.Immutable
 import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.CollageState
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.api.ui.state.FeedMediaItemSyncDisplay
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemSelectionMode
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemsOnDevice
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.state.CelState
 
+@Immutable
 data class FeedState(
     val collageState: CollageState = CollageState(),
     val isRefreshing: Boolean = false,

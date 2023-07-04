@@ -29,6 +29,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.people.view.api.ui.state.toPerson
 import com.savvasdalkitsis.uhuruphotos.foundation.date.api.DateDisplayer
 import com.savvasdalkitsis.uhuruphotos.foundation.preferences.api.Preferences
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.state.Title
+import kotlinx.collections.immutable.toPersistentList
 import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
@@ -69,7 +70,7 @@ internal class AutoAlbumActionsContext @Inject constructor(
                                     sortableDate = it.timestamp,
                                     isFavourite = it.isFavorite ?: false,
                                 ).toCel()
-                            }
+                            }.toPersistentList()
                         )
                     }
                 )

@@ -41,6 +41,7 @@ import com.savvasdalkitsis.uhuruphotos.foundation.preferences.api.set
 import dagger.hilt.android.scopes.ActivityRetainedScoped
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.map
 import se.ansman.dagger.auto.AutoBind
@@ -60,6 +61,7 @@ internal class FeedUseCase @Inject constructor(
 
     override fun observeFeed(): Flow<List<MediaCollection>> =
         combine(observeRemoteMediaFeed(), observeLocalMediaFeed(), observeDownloading(), ::mergeRemoteWithLocalMedia)
+            .debounce(500)
 
     override suspend fun getFeed(): List<MediaCollection> = mergeRemoteWithLocalMedia(
         getRemoteMediaFeed(), getLocalMediaFeed(), getDownloading(),

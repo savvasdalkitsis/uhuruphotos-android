@@ -30,6 +30,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import com.savvasdalkitsis.uhuruphotos.foundation.compose.api.recomposeHighlighter
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.insets.insetsEnd
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.insets.insetsStart
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.insets.insetsTop
@@ -50,11 +51,13 @@ fun CommonTopBar(
     ) {
         Row(
             modifier = Modifier
+                .recomposeHighlighter()
                 .background(toolbarColor())
         ) {
             Spacer(modifier = Modifier.width(insetsStart()))
             Column(
                 modifier = Modifier
+                    .recomposeHighlighter()
                     .weight(1f)
             ) {
                 Spacer(modifier = Modifier.height(insetsTop()))

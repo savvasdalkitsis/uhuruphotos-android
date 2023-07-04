@@ -44,6 +44,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.actions.ShareMediaItem
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.actions.UseMediaItemAs
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.ui.state.LightboxState
+import com.savvasdalkitsis.uhuruphotos.foundation.compose.api.recomposeHighlighter
 import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.R.drawable
 import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.ActionIcon
@@ -76,7 +77,9 @@ fun LightboxBottomActionBarEdit(
     action: (LightboxAction) -> Unit,
 ) {
     LazyRow(
-        modifier = Modifier.fillMaxWidth(),
+        modifier = Modifier
+            .recomposeHighlighter()
+            .fillMaxWidth(),
         horizontalArrangement = spacedBy(16.dp),
         verticalAlignment = Alignment.CenterVertically,
     ) {
@@ -121,7 +124,9 @@ fun LightboxBottomActionBarOptions(
     action: (LightboxAction) -> Unit,
 ) {
     LazyRow(
-        modifier = Modifier.fillMaxWidth(),
+        modifier = Modifier
+            .recomposeHighlighter()
+            .fillMaxWidth(),
         horizontalArrangement = Arrangement.SpaceEvenly,
     ) {
         if (state.media[index].showShareIcon) {

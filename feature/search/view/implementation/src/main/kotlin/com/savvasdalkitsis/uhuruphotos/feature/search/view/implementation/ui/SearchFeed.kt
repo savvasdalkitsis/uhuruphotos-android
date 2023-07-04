@@ -26,6 +26,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.search.view.implementation.seam.a
 import com.savvasdalkitsis.uhuruphotos.feature.search.view.implementation.ui.state.SearchResults
 import com.savvasdalkitsis.uhuruphotos.feature.search.view.implementation.ui.state.SearchState
 import com.savvasdalkitsis.uhuruphotos.foundation.compose.api.copy
+import kotlinx.collections.immutable.toPersistentList
 
 @Composable
 fun SearchFeed(
@@ -38,7 +39,7 @@ fun SearchFeed(
         contentPadding = contentPadding.copy(top = 0.dp),
         state = CollageState(
             isLoading = false,
-            clusters = searchResults.clusters,
+            clusters = searchResults.clusters.toPersistentList(),
             collageDisplay = state.searchDisplay,
         ),
         onCelSelected = { cel ->

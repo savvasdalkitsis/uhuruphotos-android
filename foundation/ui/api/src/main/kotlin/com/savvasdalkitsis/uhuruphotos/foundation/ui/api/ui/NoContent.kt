@@ -32,6 +32,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.savvasdalkitsis.uhuruphotos.foundation.compose.api.recomposeHighlighter
 
 @Composable
 fun NoContent(
@@ -39,6 +40,7 @@ fun NoContent(
 ) {
     Box(
         modifier = Modifier
+            .recomposeHighlighter()
             .fillMaxSize()
             .verticalScroll(rememberScrollState()) // for swipe to refresh
             .padding(16.dp),

@@ -15,10 +15,15 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state
 
+import androidx.compose.runtime.Immutable
+import kotlinx.collections.immutable.ImmutableList
+import kotlinx.collections.immutable.persistentListOf
+
+@Immutable
 data class CollageState(
     val isLoading: Boolean = false,
     val isEmpty: Boolean = false,
-    val clusters: List<Cluster> = emptyList(),
+    val clusters: ImmutableList<Cluster> = persistentListOf(),
     val collageDisplay: CollageDisplay = PredefinedCollageDisplay.default,
 ) {
     val hasMedia get() = clusters.sumOf { it.cels.size } > 0

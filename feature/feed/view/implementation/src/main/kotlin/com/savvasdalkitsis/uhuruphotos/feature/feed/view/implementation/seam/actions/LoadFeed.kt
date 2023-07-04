@@ -30,6 +30,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.Med
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemsOnDevice
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.state.toCel
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.EffectHandler
+import kotlinx.collections.immutable.toPersistentList
 import kotlinx.coroutines.currentCoroutineContext
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.combine
@@ -142,7 +143,7 @@ data object LoadFeed : FeedAction() {
                         else -> MediaItemSelectionMode.UNSELECTED
                     }
                 )
-            })
+            }.toPersistentList())
         }
     }
 
@@ -152,7 +153,7 @@ data object LoadFeed : FeedAction() {
         Cluster(
             id = year ?: "-",
             unformattedDate = year ?: "-",
-            cels = clusters.flatMap { it.cels },
+            cels = clusters.flatMap { it.cels }.toPersistentList(),
             displayTitle = year ?: "-",
             location = null,
         )

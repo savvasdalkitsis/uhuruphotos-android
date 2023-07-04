@@ -30,6 +30,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import com.savvasdalkitsis.uhuruphotos.foundation.compose.api.recomposeHighlighter
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
@@ -57,6 +58,7 @@ fun LazyStaggeredGrid(
     content(gridScope)
 
     Box(modifier = modifier
+        .recomposeHighlighter()
         .scrollable(scroll, Vertical, flingBehavior = ScrollableDefaults.flingBehavior())
     ) {
         Row {

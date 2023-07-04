@@ -15,9 +15,13 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui
 
+import androidx.compose.runtime.Immutable
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.state.CelState
 
+@Immutable
 internal sealed class CelRowSlot {
+    @Immutable
     data class CelSlot(val cel: CelState): CelRowSlot()
-    object EmptySlot : CelRowSlot()
+    @Immutable
+    data object EmptySlot : CelRowSlot()
 }

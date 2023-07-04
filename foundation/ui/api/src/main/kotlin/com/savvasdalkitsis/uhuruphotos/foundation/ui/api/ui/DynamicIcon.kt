@@ -34,6 +34,7 @@ import com.airbnb.lottie.compose.animateLottieCompositionAsState
 import com.airbnb.lottie.compose.rememberLottieComposition
 import com.airbnb.lottie.compose.rememberLottieDynamicProperties
 import com.airbnb.lottie.compose.rememberLottieDynamicProperty
+import com.savvasdalkitsis.uhuruphotos.foundation.compose.api.recomposeHighlighter
 
 @Composable
 fun DynamicIcon(
@@ -48,7 +49,9 @@ fun DynamicIcon(
     }
     when(type) {
         "drawable" -> Icon(
-            modifier = modifier,
+            modifier = modifier
+                .recomposeHighlighter()
+            ,
             painter = painterResource(id = icon),
             contentDescription = contentDescription,
             tint = tint,
@@ -66,7 +69,9 @@ fun DynamicIcon(
                 ),
             )
             LottieAnimation(
-                modifier = modifier,
+                modifier = modifier
+                    .recomposeHighlighter()
+                ,
                 composition = composition,
                 dynamicProperties = dynamicProperties,
                 iterations = LottieConstants.IterateForever,

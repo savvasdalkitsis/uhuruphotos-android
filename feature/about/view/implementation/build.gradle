@@ -13,6 +13,7 @@ dependencies {
             project(":feature:about:domain:api"),
             project(":feature:about:view:api"),
             project(":feature:settings:domain:api"),
+            project(":foundation:compose:api"),
             project(":foundation:icons:api"),
             project(":foundation:log:api"),
             project(":foundation:navigation:api"),

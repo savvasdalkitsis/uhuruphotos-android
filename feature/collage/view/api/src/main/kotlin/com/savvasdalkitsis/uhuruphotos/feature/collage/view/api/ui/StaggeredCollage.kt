@@ -32,6 +32,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.CelRowSlot.Em
 import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.Cluster
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.CelSelected
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.state.CelState
+import com.savvasdalkitsis.uhuruphotos.foundation.compose.api.recomposeHighlighter
 import my.nanihadesuka.compose.InternalLazyColumnScrollbar
 import my.nanihadesuka.compose.ScrollbarSelectionMode
 
@@ -55,7 +56,9 @@ internal fun StaggeredCollage(
 ) {
     Box {
         LazyColumn(
-            modifier = modifier,
+            modifier = modifier
+                .recomposeHighlighter()
+            ,
             state = listState,
             contentPadding = contentPadding,
         ) {
@@ -68,7 +71,7 @@ internal fun StaggeredCollage(
                 if ((cluster.displayTitle + cluster.location.orEmpty()).isNotEmpty()) {
                     item(cluster.id, "header") {
                         ClusterHeader(
-                            modifier = Modifier.animateItemPlacement(),
+                            modifier = Modifier.animateItemPlacement().recomposeHighlighter(),
                             state = cluster,
                             showSelectionHeader = showSelectionHeader,
                             onRefreshClicked = {
@@ -111,6 +114,7 @@ internal fun StaggeredCollage(
             }
         }
         Box(modifier = Modifier
+            .recomposeHighlighter()
             .padding(contentPadding)
         ) {
             InternalLazyColumnScrollbar(

@@ -20,6 +20,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.ui.state.Gallery
 import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.ui.state.GallerySorting
 import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.ui.state.GalleryState
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.Mutation
+import kotlinx.collections.immutable.toPersistentList
 
 sealed class GalleryMutation(
     mutation: Mutation<GalleryState>,
@@ -30,7 +31,7 @@ sealed class GalleryMutation(
             title = galleryDetails.title,
             people = galleryDetails.people,
             collageState = it.collageState.copy(
-                clusters = galleryDetails.clusters,
+                clusters = galleryDetails.clusters.toPersistentList(),
             )
         )
     })

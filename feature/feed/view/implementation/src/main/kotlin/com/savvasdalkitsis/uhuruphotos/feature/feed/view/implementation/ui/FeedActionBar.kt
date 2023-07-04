@@ -19,43 +19,47 @@ import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.layout.RowScope
 import androidx.compose.runtime.Composable
 import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.CollageDisplayActionButton
+import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.CollageDisplay
 import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.PredefinedCollageDisplay
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.actions.AskForSelectedPhotosTrashing
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.actions.ChangeDisplay
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.actions.DownloadSelectedCels
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.actions.FeedAction
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.actions.ShareSelectedCels
-import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.ui.state.FeedState
 import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.R.drawable
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.ActionIcon
 
 @Composable
 internal fun RowScope.FeedActionBar(
-    state: FeedState,
+    shouldShowShareIcon: Boolean,
+    shouldShowDeleteIcon: Boolean,
+    shouldShowDownloadIcon: Boolean,
+    hasSelection: Boolean,
+    collageDisplay: CollageDisplay,
     action: (FeedAction) -> Unit
 ) {
-    AnimatedVisibility(visible = state.shouldShowShareIcon) {
+    AnimatedVisibility(visible = shouldShowShareIcon) {
         ActionIcon(
             onClick = { action(ShareSelectedCels) },
             icon = drawable.ic_share
         )
     }
-    AnimatedVisibility(visible = state.shouldShowDeleteIcon) {
+    AnimatedVisibility(visible = shouldShowDeleteIcon) {
         ActionIcon(
             onClick = { action(AskForSelectedPhotosTrashing) },
             icon = drawable.ic_delete
         )
     }
-    AnimatedVisibility(visible = state.shouldShowDownloadIcon) {
+    AnimatedVisibility(visible = shouldShowDownloadIcon) {
         ActionIcon(
             onClick = { action(DownloadSelectedCels) },
             icon = drawable.ic_cloud_download
         )
     }
-    AnimatedVisibility(visible = !state.hasSelection) {
+    AnimatedVisibility(visible = !hasSelection) {
         CollageDisplayActionButton(
             onChange = { action(ChangeDisplay(it as PredefinedCollageDisplay)) },
-            currentCollageDisplay = state.collageState.collageDisplay
+            currentCollageDisplay = collageDisplay
         )
     }
 }

@@ -30,6 +30,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.Collage
 import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.CollageState
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.CelSelected
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.state.CelState
+import com.savvasdalkitsis.uhuruphotos.foundation.compose.api.recomposeHighlighter
 import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.FullProgressBar
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.NoContent
@@ -57,6 +58,7 @@ fun Collage(
         val collageDisplay = state.collageDisplay
         StaggeredCollage(
             modifier = modifier
+                .recomposeHighlighter()
                 .let {
                     when {
                         collageDisplay.allowsPinchGestures -> it.pinchToChange(

@@ -26,6 +26,7 @@ import androidx.compose.ui.Alignment.Companion.CenterVertically
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
+import com.savvasdalkitsis.uhuruphotos.foundation.compose.api.recomposeHighlighter
 
 @Composable
 fun TextWithIcon(
@@ -34,11 +35,14 @@ fun TextWithIcon(
     text: String,
 ) {
     Row(
-        modifier = modifier,
+        modifier = modifier
+            .recomposeHighlighter()
+        ,
         horizontalArrangement = Arrangement.spacedBy(8.dp),
     ) {
         Icon(
             modifier = Modifier
+                .recomposeHighlighter()
                 .size(16.dp)
                 .align(CenterVertically),
             painter = painterResource(id = icon),
@@ -46,6 +50,7 @@ fun TextWithIcon(
         )
         Text(
             modifier = Modifier
+                .recomposeHighlighter()
                 .align(CenterVertically),
             text = text
         )

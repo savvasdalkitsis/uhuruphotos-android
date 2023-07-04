@@ -30,6 +30,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import com.savvasdalkitsis.uhuruphotos.foundation.compose.api.recomposeHighlighter
 import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
 
 
@@ -58,6 +59,7 @@ fun MultiButtonDialog(
         buttons = {
             FlowRow(
                 modifier = Modifier
+                    .recomposeHighlighter()
                     .fillMaxWidth()
                     .padding(horizontal = 8.dp, vertical = 2.dp),
                 horizontalArrangement = spacedBy(8.dp),
@@ -67,7 +69,9 @@ fun MultiButtonDialog(
                     button()
                 }
                 Button(
-                    modifier = Modifier.weight(1f),
+                    modifier = Modifier
+                        .recomposeHighlighter()
+                        .weight(1f),
                     onClick = onDismiss,
                 ) {
                     Text(negativeButtonText)

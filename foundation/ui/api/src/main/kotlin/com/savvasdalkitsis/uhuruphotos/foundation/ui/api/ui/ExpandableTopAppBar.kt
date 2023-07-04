@@ -44,6 +44,7 @@ import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import com.savvasdalkitsis.uhuruphotos.foundation.compose.api.recomposeHighlighter
 
 @Composable
 fun ExpandableTopAppBar(
@@ -62,7 +63,9 @@ fun ExpandableTopAppBar(
         elevation,
         AppBarDefaults.ContentPadding,
         RectangleShape,
-        modifier,
+        modifier
+            .recomposeHighlighter()
+        ,
         expandable,
     ) {
         if (navigationIcon == null) {
@@ -90,7 +93,9 @@ fun ExpandableTopAppBar(
 
         CompositionLocalProvider(LocalContentAlpha provides ContentAlpha.medium) {
             Row(
-                Modifier.fillMaxHeight(),
+                Modifier
+                    .recomposeHighlighter()
+                    .fillMaxHeight(),
                 horizontalArrangement = Arrangement.End,
                 verticalAlignment = Alignment.CenterVertically,
                 content = actions

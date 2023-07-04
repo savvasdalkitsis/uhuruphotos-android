@@ -37,6 +37,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Popup
 import com.savvasdalkitsis.uhuruphotos.feature.account.view.api.ui.state.AccountOverviewState
 import com.savvasdalkitsis.uhuruphotos.feature.jobs.domain.api.model.Job
+import com.savvasdalkitsis.uhuruphotos.foundation.compose.api.recomposeHighlighter
 
 @Composable
 fun AccountOverviewPopUp(
@@ -53,6 +54,7 @@ fun AccountOverviewPopUp(
         if (state.showAccountOverview) {
             Box(
                 modifier = Modifier
+                    .recomposeHighlighter()
                     .fillMaxSize()
                     .background(MaterialTheme.colors.background.copy(alpha = 0.3f))
                     .clickable { onDismiss() }
@@ -61,6 +63,7 @@ fun AccountOverviewPopUp(
         Popup(onDismissRequest = onDismiss) {
             AnimatedVisibility(
                 modifier = Modifier
+                    .recomposeHighlighter()
                     .padding(
                         top = 32.dp,
                         start = 16.dp,
@@ -73,6 +76,7 @@ fun AccountOverviewPopUp(
             ) {
                 Surface(
                     modifier = Modifier
+                        .recomposeHighlighter()
                         .clip(MaterialTheme.shapes.large)
                         .widthIn(max = 480.dp)
                         .background(MaterialTheme.colors.background),

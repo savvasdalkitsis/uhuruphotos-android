@@ -28,11 +28,13 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.unit.dp
+import com.savvasdalkitsis.uhuruphotos.foundation.compose.api.recomposeHighlighter
 
 @Composable
 fun ColumnScope.SheetHandle() {
     Box(
         modifier = Modifier
+            .recomposeHighlighter()
             .padding(8.dp)
             .background(MaterialTheme.colors.onBackground)
             .clip(RoundedCornerShape(4.dp))
@@ -40,6 +42,7 @@ fun ColumnScope.SheetHandle() {
     ) {
         Box(
             modifier = Modifier
+                .recomposeHighlighter()
                 .background(MaterialTheme.colors.onBackground)
                 .width(24.dp)
                 .height(4.dp)

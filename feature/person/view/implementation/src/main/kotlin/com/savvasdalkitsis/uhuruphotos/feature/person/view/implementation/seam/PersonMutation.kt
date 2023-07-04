@@ -21,6 +21,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.Collage
 import com.savvasdalkitsis.uhuruphotos.feature.people.view.api.ui.state.Person
 import com.savvasdalkitsis.uhuruphotos.feature.person.view.implementation.ui.state.PersonState
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.Mutation
+import kotlinx.collections.immutable.toPersistentList
 
 sealed class PersonMutation(
     mutation: Mutation<PersonState>,
@@ -33,7 +34,7 @@ sealed class PersonMutation(
     data class ShowPersonMedia(val clusters: List<Cluster>) : PersonMutation({
         it.copyFeed { copy(
             isLoading = false,
-            clusters = clusters,
+            clusters = clusters.toPersistentList(),
         ) }
     })
 

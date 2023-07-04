@@ -24,6 +24,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.ui.state.Gallery
 import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.ui.state.GalleryState
 import com.savvasdalkitsis.uhuruphotos.foundation.coroutines.api.safelyOnStartIgnoring
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.EffectHandler
+import kotlinx.collections.immutable.toPersistentList
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.flowOf
@@ -63,7 +64,7 @@ data class LoadCollage(val id: GalleryId) : GalleryAction() {
         cluster.copy(cels = cluster.cels
             .sortedByDescending {
                 it.mediaItem.sortableDate
-            }
+            }.toPersistentList()
         )
     }.sortedByDescending {
         it.unformattedDate
@@ -73,7 +74,7 @@ data class LoadCollage(val id: GalleryId) : GalleryAction() {
         cluster.copy(cels = cluster.cels
             .sortedBy {
                 it.mediaItem.sortableDate
-            }
+            }.toPersistentList()
         )
     }.sortedBy {
         it.unformattedDate

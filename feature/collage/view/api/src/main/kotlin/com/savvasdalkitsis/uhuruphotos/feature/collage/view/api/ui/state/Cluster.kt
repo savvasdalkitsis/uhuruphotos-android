@@ -15,14 +15,19 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state
 
+import androidx.compose.runtime.Immutable
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaCollection
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaId
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.state.CelState
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.state.toCel
+import kotlinx.collections.immutable.ImmutableList
+import kotlinx.collections.immutable.persistentListOf
+import kotlinx.collections.immutable.toPersistentList
 
+@Immutable
 data class Cluster(
     val id: String,
-    val cels: List<CelState>,
+    val cels: ImmutableList<CelState>,
     val displayTitle: String,
     val unformattedDate: String? = null,
     val location: String?,
@@ -33,7 +38,7 @@ data class Cluster(
 
 val previewClusterEmpty = Cluster(
     "id",
-    emptyList(),
+    persistentListOf(),
     displayTitle = "01 January 2022",
     unformattedDate = "2022-01-01",
     location = "London, UK",
@@ -42,7 +47,7 @@ val previewClusterEmpty = Cluster(
 
 fun MediaCollection.toCluster() = Cluster(
     id = id,
-    cels = mediaItems.map { it.toCel() },
+    cels = mediaItems.map { it.toCel() }.toPersistentList(),
     displayTitle = displayTitle,
     unformattedDate = unformattedDate,
     location = location,

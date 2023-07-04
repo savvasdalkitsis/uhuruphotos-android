@@ -51,18 +51,20 @@ fun ThumbnailImage(
     respectNetworkCacheHeaders: Boolean = false,
     onSuccess: () -> Unit = {},
 ) {
-    var size by remember {
-        mutableStateOf<IntSize?>(null)
+//    var size by remember {
+//        mutableStateOf<IntSize?>(null)
+//    }
+    val bg = remember(placeholder) {
+        placeholder?.let { ColorPainter(Color(it)) }
     }
-    val bg = placeholder?.let { ColorPainter(Color(it)) }
     AsyncImage(
-        modifier = modifier
-            .onGloballyPositioned { size = it.size },
+        modifier = modifier,
+//            .onGloballyPositioned { size = it.size },
         imageLoader = if (respectNetworkCacheHeaders)
             LocalThumbnailWithNetworkCacheImageLoader.current
         else
             LocalThumbnailImageLoader.current,
-        model = url.toRequest(size?.toSize) {
+        model = url.toRequest(null){//size?.toSize) {
             onSuccess()
         },
         contentScale = contentScale,
@@ -124,10 +126,10 @@ private fun String?.toRequest(
     precision: Precision = Precision.INEXACT,
     onSuccess: () -> Unit
 ) = this?.let { url ->
-    if (size != null) {
+//    if (size != null) {
         ImageRequest.Builder(LocalContext.current)
             .data(url)
-            .size(size)
+//            .size(size)
             .diskCachePolicy(CachePolicy.ENABLED)
             .allowHardware(true)
             .crossfade(true)
@@ -138,7 +140,7 @@ private fun String?.toRequest(
             )
             .listener(onSuccess = { _, _ -> onSuccess() })
             .build()
-    } else {
-        null
-    }
+//    } else {
+//        null
+//    }
 }

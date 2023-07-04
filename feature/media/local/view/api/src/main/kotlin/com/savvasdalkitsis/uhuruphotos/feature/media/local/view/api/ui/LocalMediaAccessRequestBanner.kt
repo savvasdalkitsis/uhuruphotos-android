@@ -30,6 +30,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemsOnDevice
+import com.savvasdalkitsis.uhuruphotos.foundation.compose.api.recomposeHighlighter
 import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
 import dev.shreyaspatil.permissionflow.compose.rememberPermissionFlowRequestLauncher
 
@@ -43,14 +44,18 @@ fun LocalMediaAccessRequestBanner(
     val permissionLauncher = rememberPermissionFlowRequestLauncher()
 
     Card(
-        modifier = modifier,
+        modifier = modifier
+            .recomposeHighlighter()
+        ,
     ) {
         Column(
             modifier = Modifier
+                .recomposeHighlighter()
                 .fillMaxWidth(),
         ) {
             Text(
                 modifier = Modifier
+                    .recomposeHighlighter()
                     .fillMaxWidth()
                     .padding(8.dp),
                 text = stringResource(description),
@@ -58,11 +63,13 @@ fun LocalMediaAccessRequestBanner(
             )
             Row(
                 modifier = Modifier
+                    .recomposeHighlighter()
                     .padding(8.dp),
                 horizontalArrangement = Arrangement.spacedBy(8.dp),
             ) {
                 Button(
                     modifier = Modifier
+                        .recomposeHighlighter()
                         .fillMaxWidth()
                         .weight(1f),
                     onClick = {
@@ -73,6 +80,7 @@ fun LocalMediaAccessRequestBanner(
                 }
                 Button(
                     modifier = Modifier
+                        .recomposeHighlighter()
                         .fillMaxWidth()
                         .weight(1f),
                     onClick = onNeverRemindMeAgain

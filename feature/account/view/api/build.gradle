@@ -18,6 +18,7 @@ dependencies {
             project(":feature:home:view:api"),
             project(":feature:jobs:view:api"),
             project(':foundation:activity:api'),
+            project(":foundation:compose:api"),
             project(":foundation:icons:api"),
             project(":foundation:navigation:api"),
             project(":foundation:ui:api"),

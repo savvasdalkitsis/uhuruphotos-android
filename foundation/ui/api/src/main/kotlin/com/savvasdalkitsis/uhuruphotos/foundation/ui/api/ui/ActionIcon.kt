@@ -24,11 +24,9 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.asImageBitmap
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
-import androidx.core.graphics.drawable.toBitmap
 import com.google.accompanist.drawablepainter.rememberDrawablePainter
+import com.savvasdalkitsis.uhuruphotos.foundation.compose.api.recomposeHighlighter
 
 @Composable
 fun ActionIcon(
@@ -40,7 +38,9 @@ fun ActionIcon(
     contentDescription: String? = null
 ) {
     ActionIcon(
-        modifier = modifier,
+        modifier = modifier
+            .recomposeHighlighter()
+        ,
         onClick = onClick,
         enabled = enabled,
     ) {
@@ -64,12 +64,15 @@ fun ActionIcon(
     contentDescription: String? = null
 ) {
     ActionIcon(
-        modifier = modifier,
+        modifier = modifier
+            .recomposeHighlighter()
+        ,
         onClick = onClick,
         enabled = enabled,
     ) {
         Icon(
             modifier = iconModifier
+                .recomposeHighlighter()
                 .sizeIn(maxWidth = 26.dp, maxHeight = 26.dp),
             painter = rememberDrawablePainter(icon),
             contentDescription = contentDescription,
@@ -86,7 +89,9 @@ fun ActionIcon(
     icon: @Composable () -> Unit,
 ) {
     IconButton(
-        modifier = modifier,
+        modifier = modifier
+            .recomposeHighlighter()
+        ,
         onClick = onClick,
         enabled = enabled,
     ) {

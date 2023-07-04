@@ -23,12 +23,15 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import com.savvasdalkitsis.uhuruphotos.foundation.compose.api.recomposeHighlighter
 
 @Composable
 fun FullProgressBar() {
     Box(
         contentAlignment = Alignment.Center,
-        modifier = Modifier.fillMaxSize(),
+        modifier = Modifier
+            .recomposeHighlighter()
+            .fillMaxSize(),
     ) {
         CircularProgressIndicator(modifier = Modifier.size(48.dp))
     }

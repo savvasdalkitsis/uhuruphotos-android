@@ -31,7 +31,6 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.actions.ClearSelected
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.actions.FeedAction
-import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.ui.state.FeedState
 import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.R.drawable
 import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.ActionIcon
@@ -39,9 +38,10 @@ import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.Logo
 
 @Composable
 internal fun FeedTitle(
-    state: FeedState,
     action: (FeedAction) -> Unit,
-    scrollToTop: () -> Unit
+    scrollToTop: () -> Unit,
+    hasSelection: Boolean,
+    selectedCelCount: Int
 ) {
     Row(
         horizontalArrangement = Arrangement.spacedBy(12.dp),
@@ -50,7 +50,7 @@ internal fun FeedTitle(
         Logo(
             onClick = { scrollToTop() }
         )
-        if (!state.hasSelection) {
+        if (!hasSelection) {
             Text(stringResource(string.feed))
         } else {
             OutlinedButton(
@@ -62,7 +62,7 @@ internal fun FeedTitle(
             ) {
                 Text(
                     modifier = Modifier.padding(end = 8.dp),
-                    text = state.selectedCelCount.toString(),
+                    text = selectedCelCount.toString(),
                 )
                 ActionIcon(
                     modifier = Modifier.size(16.dp),

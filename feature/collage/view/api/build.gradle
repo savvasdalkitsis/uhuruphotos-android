@@ -28,6 +28,9 @@ dependencies {
             libs.androidx.core,
             libs.scrollbar,
     )
+    api(
+            libs.kotlinx.immutable,
+    )
     debugImplementation(
             libs.androidx.compose.ui.tooling,
     )

@@ -23,6 +23,8 @@ import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.ui.state
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.ui.state.MemoryCel
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemsOnDevice
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.Mutation
+import kotlinx.collections.immutable.persistentListOf
+import kotlinx.collections.immutable.toPersistentList
 
 sealed class FeedMutation(
     mutation: Mutation<FeedState>,
@@ -61,11 +63,11 @@ sealed class FeedMutation(
     })
 
     data object ShowNoPhotosFound : FeedMutation({
-        it.copyFeed { copy(isLoading = false, isEmpty = true, clusters = emptyList()) }
+        it.copyFeed { copy(isLoading = false, isEmpty = true, clusters = persistentListOf()) }
     })
 
     data class ShowClusters(val clusters: List<Cluster>) : FeedMutation({
-        it.copyFeed { copy(isLoading = false, isEmpty = false, clusters = clusters) }
+        it.copyFeed { copy(isLoading = false, isEmpty = false, clusters = clusters.toPersistentList()) }
     }) {
         override fun toString() = "ShowClusters(${clusters.size})"
     }

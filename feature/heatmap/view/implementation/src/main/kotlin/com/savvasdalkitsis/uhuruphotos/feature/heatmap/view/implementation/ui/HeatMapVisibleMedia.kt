@@ -18,6 +18,7 @@ package com.savvasdalkitsis.uhuruphotos.feature.heatmap.view.implementation.ui
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.Collage
@@ -29,6 +30,8 @@ import com.savvasdalkitsis.uhuruphotos.feature.heatmap.view.implementation.ui.st
 import com.savvasdalkitsis.uhuruphotos.feature.heatmap.view.implementation.ui.state.HeatMapState
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.state.toCel
 import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
+import kotlinx.collections.immutable.persistentListOf
+import kotlinx.collections.immutable.toPersistentList
 
 @Composable
 fun HeatMapVisibleMedia(
@@ -41,16 +44,19 @@ fun HeatMapVisibleMedia(
     if (state.allMedia.isEmpty()) {
         CircularProgressIndicator(modifier = loadingModifier)
     } else {
+        val cels = remember(state.photosOnVisibleMap) {
+            state.photosOnVisibleMap.map { it.toCel() }.toPersistentList()
+        }
         Collage(
             modifier = modifier,
             contentPadding = contentPadding,
             state = CollageState(
                 isLoading = false,
                 collageDisplay = HeatMapCollageDisplay,
-                clusters = listOf(
+                clusters = persistentListOf(
                     Cluster(
                         id = "visibleItems",
-                        cels = state.photosOnVisibleMap.map { it.toCel() },
+                        cels = cels,
                         displayTitle = stringResource(string.photos_on_map, state.photosOnVisibleMap.size, state.allMedia.size),
                         location = null,
                     )

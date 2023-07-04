@@ -37,6 +37,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.avatar.view.api.ui.state.AvatarSt
 import com.savvasdalkitsis.uhuruphotos.feature.avatar.view.api.ui.state.SyncState.BAD
 import com.savvasdalkitsis.uhuruphotos.feature.avatar.view.api.ui.state.SyncState.GOOD
 import com.savvasdalkitsis.uhuruphotos.feature.avatar.view.api.ui.state.SyncState.IN_PROGRESS
+import com.savvasdalkitsis.uhuruphotos.foundation.compose.api.recomposeHighlighter
 import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.R.drawable.ic_person
 import com.savvasdalkitsis.uhuruphotos.foundation.image.api.ui.ThumbnailImage
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.theme.CustomColors
@@ -53,6 +54,7 @@ fun Avatar(
         IN_PROGRESS -> MaterialTheme.colors.background
     }
     Box(modifier = Modifier
+        .recomposeHighlighter()
         .clip(CircleShape)
         .background(backgroundColor)
         .size(size)
@@ -64,7 +66,9 @@ fun Avatar(
         }
     ) {
         if (state.syncState == IN_PROGRESS) {
-            CircularProgressIndicator(modifier = Modifier.size(size))
+            CircularProgressIndicator(modifier = Modifier
+                .recomposeHighlighter()
+                .size(size))
         }
 
         when {

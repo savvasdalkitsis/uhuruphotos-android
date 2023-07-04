@@ -35,6 +35,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.Dp
+import com.savvasdalkitsis.uhuruphotos.foundation.compose.api.recomposeHighlighter
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
@@ -67,6 +68,7 @@ fun StaggeredGrid(
 
     Box(
         modifier = modifier
+            .recomposeHighlighter()
             .scrollable(
                 scroll,
                 Orientation.Vertical,
@@ -79,6 +81,7 @@ fun StaggeredGrid(
             for (index in 0 until columnCount) {
                 Column(
                     modifier = Modifier
+                        .recomposeHighlighter()
                         .weight(1f)
                         .verticalScroll(states[index]),
                     verticalArrangement = spacedBy(itemSpacing),

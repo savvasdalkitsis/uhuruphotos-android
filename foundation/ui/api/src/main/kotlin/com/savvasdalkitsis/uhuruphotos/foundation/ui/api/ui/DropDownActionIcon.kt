@@ -27,6 +27,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import com.savvasdalkitsis.uhuruphotos.foundation.compose.api.recomposeHighlighter
 
 @Composable
 fun DropDownActionIcon(
@@ -37,7 +38,9 @@ fun DropDownActionIcon(
 ) {
     var expanded by remember { mutableStateOf(false) }
 
-    Box(modifier = modifier) {
+    Box(modifier = modifier
+        .recomposeHighlighter()
+    ) {
         ActionIcon(
             onClick = { expanded = true },
             icon = icon,

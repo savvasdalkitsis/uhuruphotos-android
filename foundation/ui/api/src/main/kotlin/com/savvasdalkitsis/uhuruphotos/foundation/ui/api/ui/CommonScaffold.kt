@@ -33,6 +33,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import com.google.accompanist.insets.ui.Scaffold
+import com.savvasdalkitsis.uhuruphotos.foundation.compose.api.recomposeHighlighter
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.insets.insetsEnd
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.insets.insetsStart
 
@@ -78,6 +79,7 @@ fun CommonScaffold(
 ) {
     Scaffold(
         modifier = modifier
+            .recomposeHighlighter()
             .imePadding(),
         bottomBar = {
             AnimatedVisibility(
@@ -98,6 +100,7 @@ fun CommonScaffold(
     ) { contentPadding ->
         Box(
             modifier = Modifier
+                .recomposeHighlighter()
                 .padding(
                     start = insetsStart(),
                     end = insetsEnd(),

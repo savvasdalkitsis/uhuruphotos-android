@@ -17,7 +17,9 @@ package com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state
 
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
+import androidx.compose.runtime.Immutable
 
+@Immutable
 interface CollageDisplay {
     val miniIcons: Boolean
     val compactColumnsPortrait: Int

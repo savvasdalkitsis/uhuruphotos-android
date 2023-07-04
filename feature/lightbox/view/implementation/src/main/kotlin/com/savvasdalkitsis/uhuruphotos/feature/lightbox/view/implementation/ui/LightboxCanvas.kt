@@ -55,6 +55,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.ui.s
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.DeleteFullySyncedPermissionDialog
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.DeletePermissionDialog
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.TrashPermissionDialog
+import com.savvasdalkitsis.uhuruphotos.foundation.compose.api.recomposeHighlighter
 import com.savvasdalkitsis.uhuruphotos.foundation.image.api.ui.FullSizeImage
 import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
 import com.savvasdalkitsis.uhuruphotos.foundation.video.api.ui.Video
@@ -116,6 +117,7 @@ fun LightboxCanvas(
             modifier = Modifier
                 .fillMaxSize()
                 .background(MaterialTheme.colors.background)
+                .recomposeHighlighter()
         ) {
             val mediaItem = state.media[index]
             when {
@@ -130,6 +132,7 @@ fun LightboxCanvas(
                 )
                 else -> FullSizeImage(
                     modifier = Modifier
+                        .recomposeHighlighter()
                         .fillMaxWidth()
                         .align(Alignment.Center),
                     lowResUrl = mediaItem.id.thumbnailUri,

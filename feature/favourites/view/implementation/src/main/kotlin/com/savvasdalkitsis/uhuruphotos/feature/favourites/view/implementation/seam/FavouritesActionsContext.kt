@@ -26,6 +26,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.state.to
 import com.savvasdalkitsis.uhuruphotos.foundation.preferences.api.Preferences
 import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.state.Title
+import kotlinx.collections.immutable.toPersistentList
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.mapNotNull
 import javax.inject.Inject
@@ -54,7 +55,7 @@ internal class FavouritesActionsContext @Inject constructor(
                             location = null,
                             cels = mediaItems.map {
                                 it.toCel()
-                            },
+                            }.toPersistentList(),
                         )
                     ),
                 )

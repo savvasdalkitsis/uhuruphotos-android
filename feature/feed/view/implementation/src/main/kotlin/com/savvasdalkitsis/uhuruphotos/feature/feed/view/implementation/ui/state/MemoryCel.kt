@@ -15,8 +15,10 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.ui.state
 
+import androidx.compose.runtime.Immutable
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.state.CelState
 
+@Immutable
 data class MemoryCel(
     val yearsAgo: Int,
     val cel: CelState,

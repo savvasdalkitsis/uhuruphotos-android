@@ -51,6 +51,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.jobs.domain.api.model.JobStatus.I
 import com.savvasdalkitsis.uhuruphotos.feature.jobs.domain.api.model.JobStatus.Queued
 import com.savvasdalkitsis.uhuruphotos.feature.jobs.view.ui.Jobs
 import com.savvasdalkitsis.uhuruphotos.feature.jobs.view.ui.state.JobState
+import com.savvasdalkitsis.uhuruphotos.foundation.compose.api.recomposeHighlighter
 import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.R.drawable
 import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.theme.PreviewAppTheme
@@ -72,6 +73,7 @@ internal fun AccountOverview(
 ) {
     Column(
         modifier = modifier
+            .recomposeHighlighter()
             .defaultMinSize(minHeight = 120.dp)
             .fillMaxWidth()
             .padding(16.dp),
@@ -85,7 +87,9 @@ internal fun AccountOverview(
                 state = state.avatarState,
                 size = 48.dp
             )
-            Column(modifier = Modifier.weight(1f)) {
+            Column(modifier = Modifier
+                .recomposeHighlighter()
+                .weight(1f)) {
                 Text(
                     text = state.avatarState.userFullName,
                     style = TextStyle.Default.copy(
@@ -118,7 +122,9 @@ internal fun AccountOverview(
             )
         }
         OutlinedButton(
-            modifier = Modifier.fillMaxWidth(),
+            modifier = Modifier
+                .recomposeHighlighter()
+                .fillMaxWidth(),
             onClick = onAboutClicked,
         ) {
             Icon(
@@ -130,11 +136,14 @@ internal fun AccountOverview(
         }
         Row(
             modifier = Modifier
+                .recomposeHighlighter()
                 .fillMaxWidth(),
             horizontalArrangement = spacedBy(8.dp),
         ) {
             OutlinedButton(
-                modifier = Modifier.weight(1f),
+                modifier = Modifier
+                    .recomposeHighlighter()
+                    .weight(1f),
                 onClick = onLogoutClicked,
             ) {
                 Icon(
@@ -145,7 +154,9 @@ internal fun AccountOverview(
                 Text(text = stringResource(string.log_out))
             }
             OutlinedButton(
-                modifier = Modifier.weight(1f),
+                modifier = Modifier
+                    .recomposeHighlighter()
+                    .weight(1f),
                 onClick = onSettingsClicked
             ) {
                 Icon(Icons.Default.Settings, contentDescription = null)

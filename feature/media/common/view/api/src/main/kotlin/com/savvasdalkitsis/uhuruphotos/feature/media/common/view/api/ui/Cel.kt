@@ -15,7 +15,6 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui
 
-import android.support.v4.media.session.PlaybackStateCompat
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.Animatable
 import androidx.compose.animation.core.tween
@@ -25,7 +24,6 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.aspectRatio
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -33,11 +31,7 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.Icon
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Alignment.Companion.BottomEnd
 import androidx.compose.ui.Alignment.Companion.BottomStart
@@ -57,16 +51,12 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemSelectionMode
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.state.CelState
+import com.savvasdalkitsis.uhuruphotos.foundation.compose.api.recomposeHighlighter
 import com.savvasdalkitsis.uhuruphotos.foundation.compose.api.toColor
 import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.R.drawable
 import com.savvasdalkitsis.uhuruphotos.foundation.image.api.ui.ThumbnailImage
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.theme.CustomColors
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.DynamicIcon
-import com.savvasdalkitsis.uhuruphotos.foundation.video.api.LocalAnimatedVideoThumbnails
-import com.savvasdalkitsis.uhuruphotos.foundation.video.api.LocalExoPlayerProvider
-import com.savvasdalkitsis.uhuruphotos.foundation.video.api.ui.Video
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
 
 @Composable
 fun Cel(
@@ -84,16 +74,16 @@ fun Cel(
 ) {
     val mediaItem = state.mediaItem
     val scale = remember(mediaItem.id) { Animatable(1f) }
-    val iconSize = if (miniIcons) 16.dp else 24.dp
-    val fallbackColor = mediaItem.fallbackColor.toColor()
-    var loaded by remember {
-        mutableStateOf(false)
+    val iconSize = remember(miniIcons) {
+        if (miniIcons) 16.dp else 24.dp
     }
+    val fallbackColor = mediaItem.fallbackColor.toColor()
 
-    val backgroundColor = when {
-        state.selectionMode == MediaItemSelectionMode.SELECTED -> Color.LightGray
-        loaded -> Color.Transparent
-        else -> fallbackColor
+    val backgroundColor = remember(state.selectionMode) {
+        when (state.selectionMode) {
+            MediaItemSelectionMode.SELECTED -> Color.LightGray
+            else -> fallbackColor
+        }
     }
 
     Box(
@@ -112,43 +102,45 @@ fun Cel(
                     it
                 }
             }
+            .recomposeHighlighter()
     ) {
         Box(
             modifier = Modifier
                 .scale(scale.value)
         ) {
             val thumbnailUri = mediaItem.id.thumbnailUri
-            val scope = rememberCoroutineScope()
-            val exoPlayer = LocalExoPlayerProvider.current.maybeCreateExoplayer(thumbnailUri)
-            if (!LocalAnimatedVideoThumbnails.current || !mediaItem.id.isVideo || exoPlayer == null) {
-                ThumbnailImage(
-                    modifier = Modifier.fillMaxWidth(),
-                    url = thumbnailUri,
-                    contentScale = contentScale,
-                    placeholder = backgroundColor.toArgb(),
-                    contentDescription = null
-                ) {
-                    scope.launch {
-                        delay(100)
-                        loaded = true
-                    }
-                }
-            } else {
-                Video(
-                    modifier = Modifier.fillMaxSize(),
-                    exoPlayer = exoPlayer,
-                    videoUrl = thumbnailUri,
-                    videoThumbnailUrl = thumbnailUri,
-                    play = true,
-                    repeatMode = PlaybackStateCompat.REPEAT_MODE_ONE,
-                    showControls = false,
-                    showProgress = false,
-                    mute = true,
-                    crop = true,
-                ) {
-
-                }
-            }
+//            val scope = rememberCoroutineScope()
+//            val exoPlayer = LocalExoPlayerProvider.current.maybeCreateExoplayer(thumbnailUri)
+//            if (!LocalAnimatedVideoThumbnails.current || !mediaItem.id.isVideo || exoPlayer == null) {
+            ThumbnailImage(
+                modifier = Modifier.fillMaxWidth(),
+                url = thumbnailUri,
+                contentScale = contentScale,
+                placeholder = backgroundColor.toArgb(),
+                contentDescription = null
+            )
+//            {
+//                scope.launch {
+//                    delay(100)
+//                    loaded = true
+//                }
+//            }
+//            } else {
+//                Video(
+//                    modifier = Modifier.fillMaxSize(),
+//                    exoPlayer = exoPlayer,
+//                    videoUrl = thumbnailUri,
+//                    videoThumbnailUrl = thumbnailUri,
+//                    play = true,
+//                    repeatMode = PlaybackStateCompat.REPEAT_MODE_ONE,
+//                    showControls = false,
+//                    showProgress = false,
+//                    mute = true,
+//                    crop = true,
+//                ) {
+//
+//                }
+//            }
             if (mediaItem.id.isVideo) {
                 Icon(
                     modifier = Modifier

@@ -104,9 +104,9 @@ internal fun Settings(
                     Group(controller.uiLibrary) {
                         SettingsLibrary(state, action)
                     }
-                    Group(controller.uiVideo) {
-                        SettingsVideo(state, action)
-                    }
+//                    Group(controller.uiVideo) {
+//                        SettingsVideo(state, action)
+//                    }
                     val mapProvider = state.mapProviderState
                     if (mapProvider is Selected) {
                         Group(controller.uiMaps) {

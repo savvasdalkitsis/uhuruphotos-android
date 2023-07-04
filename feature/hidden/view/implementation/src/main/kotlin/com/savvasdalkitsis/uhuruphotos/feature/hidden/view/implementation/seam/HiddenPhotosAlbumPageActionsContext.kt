@@ -31,6 +31,7 @@ import com.savvasdalkitsis.uhuruphotos.foundation.biometrics.api.usecase.Biometr
 import com.savvasdalkitsis.uhuruphotos.foundation.preferences.api.Preferences
 import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.state.Title
+import kotlinx.collections.immutable.toPersistentList
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.map
@@ -79,7 +80,7 @@ internal class HiddenPhotosAlbumPageActionsContext @Inject constructor(
                                         location = null,
                                         cels = photoEntries.map {
                                             it.toCel()
-                                        },
+                                        }.toPersistentList(),
                                     )
                                 ),
                             )
