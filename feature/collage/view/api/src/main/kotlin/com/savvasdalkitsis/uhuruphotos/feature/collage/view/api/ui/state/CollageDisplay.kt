@@ -26,7 +26,6 @@ interface CollageDisplay {
     val compactColumnsLandscape: Int
     val wideColumnsPortrait: Int
     val wideColumnsLandscape: Int
-    val shouldAddEmptyPhotosInRows: Boolean
     @get:DrawableRes val iconResource: Int
     val maintainAspectRatio: Boolean
     @get:StringRes val friendlyName: Int
