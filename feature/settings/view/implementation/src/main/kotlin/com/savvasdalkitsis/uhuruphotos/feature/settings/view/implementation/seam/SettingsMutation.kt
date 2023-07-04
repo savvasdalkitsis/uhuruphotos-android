@@ -186,6 +186,7 @@ sealed class SettingsMutation(
     ): SettingsMutation({
         it.copy(
             lightboxPhotoMemCache = it.lightboxPhotoMemCache.copy(limit = limit),
+            thumbnailMemCache = it.thumbnailMemCache.copy(limit = limit),
         )
     })
 
@@ -193,12 +194,9 @@ sealed class SettingsMutation(
         val limit: Int,
     ): SettingsMutation({
         it.copy(
-            lightboxPhotoDiskCache = it.lightboxPhotoDiskCache.copy(
-                limit = limit,
-            ),
-            videoDiskCache = it.videoDiskCache.copy(
-                limit = limit
-            ),
+            lightboxPhotoDiskCache = it.lightboxPhotoDiskCache.copy(limit = limit,),
+            thumbnailDiskCache = it.thumbnailDiskCache.copy(limit = limit,),
+            videoDiskCache = it.videoDiskCache.copy(limit = limit),
         )
     })
 
