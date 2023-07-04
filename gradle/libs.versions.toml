@@ -58,7 +58,7 @@ androidx-splash = "androidx.core:core-splashscreen:1.0.1"
 androidx-startup = "androidx.startup:startup-runtime:1.2.0-alpha02"
 androidx-test-core = { module = "androidx.test:core", version.ref = "androidx-test" }
 androidx-test-runner = { module = "androidx.test:runner", version.ref = "androidx-test" }
-androidx-tracing = "androidx.tracing:tracing-ktx:1.0.0"
+androidx-tracing = "androidx.tracing:tracing-ktx:1.1.0"
 androidx-window = "androidx.window:window:1.1.0"
 androidx-work = "androidx.work:work-runtime-ktx:2.8.1"
 androidx-work-hilt = "androidx.hilt:hilt-work:1.0.0"
