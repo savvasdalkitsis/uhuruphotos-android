@@ -1,0 +1,3 @@
+* Massive performance improvement when scrolling the Feed
+* Removing animated video thumbnails temporarily (part of the performance issues fixed above)
+* Fixing thumbnail caches not using the correct max limits
