@@ -50,7 +50,7 @@ class ImageModule {
         settingsUseCase: SettingsUseCase,
         @ApplicationContext context: Context,
     ): MemoryCache = MemoryCache.Builder(context)
-        .maxSizeBytes(settingsUseCase.getLightboxPhotoMemCacheMaxLimit().mb)
+        .maxSizeBytes(settingsUseCase.getLightboxPhotoMemCacheMaxLimit().mb.positiveInt)
         .build()
 
     @Provides
@@ -60,7 +60,7 @@ class ImageModule {
         settingsUseCase: SettingsUseCase,
         @ApplicationContext context: Context,
     ): MemoryCache = MemoryCache.Builder(context)
-        .maxSizeBytes(settingsUseCase.getThumbnailMemCacheMaxLimit().mb)
+        .maxSizeBytes(settingsUseCase.getThumbnailMemCacheMaxLimit().mb.positiveInt)
         .build()
 
     @Provides
@@ -71,7 +71,7 @@ class ImageModule {
         settingsUseCase: SettingsUseCase,
     ): DiskCache = DiskCache.Builder()
         .directory(context.cacheDir.resolve("image_cache_full"))
-        .maxSizeBytes(settingsUseCase.getLightboxPhotoDiskCacheMaxLimit().mb.toLong())
+        .maxSizeBytes(settingsUseCase.getLightboxPhotoDiskCacheMaxLimit().mb)
         .build()
 
     @Provides
@@ -82,7 +82,7 @@ class ImageModule {
         settingsUseCase: SettingsUseCase,
     ): DiskCache = DiskCache.Builder()
         .directory(context.cacheDir.resolve("image_cache")) // keeping same name for backwards compatibility
-        .maxSizeBytes(settingsUseCase.getThumbnailDiskCacheMaxLimit().mb.toLong())
+        .maxSizeBytes(settingsUseCase.getThumbnailDiskCacheMaxLimit().mb)
         .build()
 
     @Provides
@@ -155,6 +155,7 @@ class ImageModule {
         }
         .build()
 
-    private val Int.mb get() = (coerceAtLeast(minCacheSize) * 1024 * 1024)
+    private val Int.mb get() = (coerceAtLeast(minCacheSize) * 1024 * 1024L)
+    private val Long.positiveInt get() = coerceIn(minCacheSize.toLong()..Int.MAX_VALUE).toInt()
 
 }
