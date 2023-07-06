@@ -131,7 +131,6 @@ sqldelight-gradle-plugin = { module = "app.cash.sqldelight:gradle-plugin", versi
 sqldelight-jvm = { module = "app.cash.sqldelight:sqlite-driver", version.ref = "sqldelight" }
 turbine = "app.cash.turbine:turbine:1.0.0"
 urlvalidator = "commons-validator:commons-validator:1.7"
-webp = "com.aureusapps.android:webp-android:1.0.4"
 zoomable = "com.mxalbert.zoomable:zoomable:1.6.1"
 
 [bundles]

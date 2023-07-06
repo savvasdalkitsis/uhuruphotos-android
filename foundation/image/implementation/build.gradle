@@ -21,7 +21,6 @@ dependencies {
             libs.coil.video,
             libs.gif,
             libs.hilt,
-            libs.webp,
     )
     kapt libs.autodagger.kapt
 }
