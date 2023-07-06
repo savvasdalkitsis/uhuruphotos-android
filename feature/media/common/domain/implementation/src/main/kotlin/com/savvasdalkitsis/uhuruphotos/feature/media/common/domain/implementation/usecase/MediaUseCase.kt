@@ -234,20 +234,25 @@ class MediaUseCase @Inject constructor(
         remoteMediaUseCase.getRemoteMediaItemDetails(value)?.toMediaItemDetails()
 
     private suspend fun Local.observeDetails() =
-        localMediaUseCase.observeLocalMediaItem(value).map {
-            it.toMediaItemDetails()
+        combine(
+            localMediaUseCase.observeLocalMediaItem(value),
+            userUseCase.observeUser(),
+        ) { item, user ->
+            item.toMediaItemDetails(user.id)
         }
 
-    private suspend fun Local.getDetails() =
-        localMediaUseCase.getLocalMediaItem(value)?.toMediaItemDetails()
+    private suspend fun Local.getDetails(): MediaItemDetails? =
+        userUseCase.getUserOrRefresh().map { user ->
+            localMediaUseCase.getLocalMediaItem(value)?.toMediaItemDetails(user.id)
+        }.getOr(null)
 
-    private fun LocalMediaItem.toMediaItemDetails(): MediaItemDetails =
+    private fun LocalMediaItem.toMediaItemDetails(userId: Int): MediaItemDetails =
         MediaItemDetails(
             formattedDateAndTime = displayDateTime,
             isFavourite = false,
             location = "",
             latLon = latLon?.let { (lat, lon) -> LatLon(lat, lon) },
-            md5 = md5,
+            md5 = md5 + userId,
             localPath = path ?: contentUri,
             peopleInMediaItem = emptyList(),
         )
