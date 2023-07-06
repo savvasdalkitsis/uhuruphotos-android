@@ -51,7 +51,6 @@ sealed class LightboxMutation(
     data object FinishedLoading : LightboxMutation({
         it.copy(
             isLoading = false,
-            showInfoButton = true,
         )
     })
 

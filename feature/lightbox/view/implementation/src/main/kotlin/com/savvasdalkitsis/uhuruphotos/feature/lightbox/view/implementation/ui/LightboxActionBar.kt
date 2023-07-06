@@ -75,13 +75,9 @@ fun LightboxActionBar(
             )
         }
     }
-    AnimatedVisibility(visible = state.showInfoButton) {
-        if (state.showInfoButton) {
-            ActionIcon(
-                onClick = { action(ShowInfo) },
-                icon = drawable.ic_info,
-                contentDescription = stringResource(string.info),
-            )
-        }
-    }
+    ActionIcon(
+        onClick = { action(ShowInfo) },
+        icon = drawable.ic_info,
+        contentDescription = stringResource(string.info),
+    )
 }

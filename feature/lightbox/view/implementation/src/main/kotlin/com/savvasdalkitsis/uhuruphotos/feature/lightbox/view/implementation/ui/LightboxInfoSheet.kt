@@ -86,11 +86,7 @@ fun LightboxInfoSheet(
             state.infoSheetHidden -> {
                 sheetState.hide()
             }
-            else -> if (state.showInfoButton) {
-                sheetState.show()
-            } else {
-                action(HideInfo)
-            }
+            else -> sheetState.show()
         }
     }
     if (sheetState.currentValue != ModalBottomSheetValue.Hidden) {
