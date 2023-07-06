@@ -22,10 +22,12 @@ import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.Med
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemSyncState
 import com.savvasdalkitsis.uhuruphotos.feature.people.view.api.ui.state.Person
 import com.savvasdalkitsis.uhuruphotos.foundation.map.api.model.LatLon
+import kotlinx.collections.immutable.ImmutableList
+import kotlinx.collections.immutable.persistentListOf
 
 data class LightboxState(
     private val _currentIndex: Int = 0,
-    val media: List<SingleMediaItemState> = emptyList(),
+    val media: ImmutableList<SingleMediaItemState> = persistentListOf(),
     val isLoading: Boolean = false,
     @StringRes val errorMessage: Int? = null,
     val showUI: Boolean = true,
@@ -35,7 +37,7 @@ data class LightboxState(
     val showRestorationConfirmationDialog: Boolean = false,
     val infoSheetHidden: Boolean = true,
     val showRestoreButton: Boolean = false,
-    val missingPermissions: List<String> = emptyList(),
+    val missingPermissions: ImmutableList<String> = persistentListOf(),
 ) {
     val currentIndex: Int = _currentIndex.coerceAtMost(media.size - 1).coerceAtLeast(0)
     val currentMediaItem: SingleMediaItemState get() = media[currentIndex]

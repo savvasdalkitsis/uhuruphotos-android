@@ -23,6 +23,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.Med
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemDetails
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemMetadata
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.Mutation
+import kotlinx.collections.immutable.toPersistentList
 import kotlin.math.min
 
 sealed class LightboxMutation(
@@ -130,7 +131,7 @@ sealed class LightboxMutation(
         it.copyWithIndex(
             index = index,
         ).copy(
-            media = mediaItemStates,
+            media = mediaItemStates.toPersistentList(),
         )
     }) {
         override fun toString() = "ShowMedia [index: $index, size:${mediaItemStates.size}, current: ${mediaItemStates[index]}]"
@@ -167,7 +168,7 @@ sealed class LightboxMutation(
 
     data class RemoveMediaItemFromSource(val id: MediaId<*>) : LightboxMutation({
         val removed = it.copy(
-            media = it.media.filter { photoState -> photoState.id != id },
+            media = it.media.filter { photoState -> photoState.id != id }.toPersistentList(),
         )
         removed.copyWithIndex(
             index = min(it.currentIndex, removed.media.size - 1)
@@ -181,7 +182,7 @@ sealed class LightboxMutation(
     })
 
     data class AskForPermissions(val deniedPermissions: List<String>) : LightboxMutation({
-        it.copy(missingPermissions = deniedPermissions)
+        it.copy(missingPermissions = deniedPermissions.toPersistentList())
     })
 
     class ShowEditOptions(id: MediaId<*>, apps: List<ResolveInfo>) : LightboxMutation({
@@ -203,4 +204,4 @@ private fun LightboxState.copyItem(
         id -> copy(mediaItem)
         else -> mediaItem
     }
-})
+}.toPersistentList())
