@@ -54,7 +54,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.state.Ce
 import com.savvasdalkitsis.uhuruphotos.foundation.compose.api.recomposeHighlighter
 import com.savvasdalkitsis.uhuruphotos.foundation.compose.api.toColor
 import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.R.drawable
-import com.savvasdalkitsis.uhuruphotos.foundation.image.api.ui.ThumbnailImage
+import com.savvasdalkitsis.uhuruphotos.foundation.image.api.ui.Thumbnail
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.theme.CustomColors
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.DynamicIcon
 
@@ -108,39 +108,14 @@ fun Cel(
             modifier = Modifier
                 .scale(scale.value)
         ) {
-            val thumbnailUri = mediaItem.id.thumbnailUri
-//            val scope = rememberCoroutineScope()
-//            val exoPlayer = LocalExoPlayerProvider.current.maybeCreateExoplayer(thumbnailUri)
-//            if (!LocalAnimatedVideoThumbnails.current || !mediaItem.id.isVideo || exoPlayer == null) {
-            ThumbnailImage(
+            Thumbnail(
                 modifier = Modifier.fillMaxWidth(),
-                url = thumbnailUri,
+                url = mediaItem.id.thumbnailUri,
+                isVideo = mediaItem.id.isVideo,
                 contentScale = contentScale,
                 placeholder = backgroundColor.toArgb(),
                 contentDescription = null
             )
-//            {
-//                scope.launch {
-//                    delay(100)
-//                    loaded = true
-//                }
-//            }
-//            } else {
-//                Video(
-//                    modifier = Modifier.fillMaxSize(),
-//                    exoPlayer = exoPlayer,
-//                    videoUrl = thumbnailUri,
-//                    videoThumbnailUrl = thumbnailUri,
-//                    play = true,
-//                    repeatMode = PlaybackStateCompat.REPEAT_MODE_ONE,
-//                    showControls = false,
-//                    showProgress = false,
-//                    mute = true,
-//                    crop = true,
-//                ) {
-//
-//                }
-//            }
             if (mediaItem.id.isVideo) {
                 Icon(
                     modifier = Modifier

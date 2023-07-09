@@ -33,7 +33,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.person.view.implementation.seam.a
 import com.savvasdalkitsis.uhuruphotos.feature.person.view.implementation.seam.actions.PersonAction
 import com.savvasdalkitsis.uhuruphotos.feature.person.view.implementation.seam.actions.SelectedCel
 import com.savvasdalkitsis.uhuruphotos.feature.person.view.implementation.ui.state.PersonState
-import com.savvasdalkitsis.uhuruphotos.foundation.image.api.ui.ThumbnailImage
+import com.savvasdalkitsis.uhuruphotos.foundation.image.api.ui.Thumbnail
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.BackNavButton
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.CommonScaffold
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.FullProgressBar
@@ -54,7 +54,7 @@ fun Person(
         navigationIcon = {
             BackNavButton(furtherContent = {
                 AnimatedVisibility(visible = state.person != null) {
-                    ThumbnailImage(
+                    Thumbnail(
                         modifier = Modifier
                             .width(32.dp)
                             .aspectRatio(1f)
