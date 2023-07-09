@@ -16,8 +16,6 @@ limitations under the License.
 
 package com.savvasdalkitsis.uhuruphotos.foundation.image.api.ui
 
-import android.net.Uri
-import android.widget.MediaController
 import android.widget.VideoView
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -30,6 +28,7 @@ import androidx.compose.ui.graphics.painter.ColorPainter
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.viewinterop.AndroidView
 import coil.compose.AsyncImage
+import com.savvasdalkitsis.uhuruphotos.foundation.image.api.LocalAnimatedVideoThumbnails
 import com.savvasdalkitsis.uhuruphotos.foundation.image.api.model.LocalThumbnailImageLoader
 import com.savvasdalkitsis.uhuruphotos.foundation.image.api.model.LocalThumbnailWithNetworkCacheImageLoader
 import crocodile8008.videoviewcache.lib.playUrl
@@ -52,7 +51,7 @@ fun Thumbnail(
     val bg = remember(placeholder) {
         placeholder?.let { ColorPainter(Color(it)) }
     }
-    if (!isVideo) {
+    if (!isVideo || !LocalAnimatedVideoThumbnails.current) {
         ImageThumbnail(
             modifier,
             respectNetworkCacheHeaders,
@@ -71,34 +70,35 @@ fun Thumbnail(
         }
         if (!error) {
             AndroidView(
-                modifier = modifier,
-                onReset = { },
-                onRelease = { },
                 factory = { context ->
                     VideoView(context)
-                }
-            ) {
-                if (url != null) {
-                    with(it) {
-                        playUrl(url)
-                        setOnPreparedListener { start() }
-                        setOnCompletionListener { start() }
-                        setOnErrorListener { _, _, _ ->
-                            error = true
-                            true
-                        }
-                        CoroutineScope(Dispatchers.Main).launch {
-                            while (!loaded) {
-                                if (isPlaying && currentPosition > 0) {
-                                    loaded = true
-                                } else {
-                                    delay(200)
+                },
+                modifier = modifier,
+                onReset = { },
+                update = {
+                    if (url != null) {
+                        with(it) {
+                            playUrl(url)
+                            setOnPreparedListener { start() }
+                            setOnCompletionListener { start() }
+                            setOnErrorListener { _, _, _ ->
+                                error = true
+                                true
+                            }
+                            CoroutineScope(Dispatchers.Main).launch {
+                                while (!loaded) {
+                                    if (isPlaying && currentPosition > 0) {
+                                        loaded = true
+                                    } else {
+                                        delay(200)
+                                    }
                                 }
                             }
                         }
                     }
-                }
-            }
+                },
+                onRelease = { },
+            )
         }
         if (!loaded) {
             ImageThumbnail(

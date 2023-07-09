@@ -19,5 +19,3 @@ import androidx.compose.runtime.compositionLocalOf
 
 val LocalExoPlayerProvider =
     compositionLocalOf<ExoplayerProvider> { throw IllegalStateException("not initialized") }
-val LocalAnimatedVideoThumbnails =
-    compositionLocalOf<Boolean> { throw IllegalStateException("not initialized") }

@@ -38,16 +38,16 @@ internal fun ColumnScope.SettingsVideo(
     ) {
         action(ChangeAnimateVideoThumbnails(it))
     }
-    AnimatedVisibility(visible = state.animateVideoThumbnails) {
-        val range = 1f..5f
-        SettingsSliderRow(
-            text = { stringResource(string.max_animated_video_thumbnails, it.toInt()) },
-            subtext = string.max_animated_video_thumbnails_description,
-            initialValue = state.maxAnimatedVideoThumbnails.toFloat(),
-            range = range,
-            steps = (range.endInclusive - range.start - 1).toInt(),
-        ) {
-            action(ChangeMaxAnimatedVideoThumbnails(it.toInt()))
-        }
-    }
+//    AnimatedVisibility(visible = state.animateVideoThumbnails) {
+//        val range = 1f..5f
+//        SettingsSliderRow(
+//            text = { stringResource(string.max_animated_video_thumbnails, it.toInt()) },
+//            subtext = string.max_animated_video_thumbnails_description,
+//            initialValue = state.maxAnimatedVideoThumbnails.toFloat(),
+//            range = range,
+//            steps = (range.endInclusive - range.start - 1).toInt(),
+//        ) {
+//            action(ChangeMaxAnimatedVideoThumbnails(it.toInt()))
+//        }
+//    }
 }
