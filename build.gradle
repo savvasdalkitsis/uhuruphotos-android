@@ -23,7 +23,7 @@ plugins {
     id "com.bnorm.power.kotlin-power-assert" version "0.13.0" apply false
     id "org.sonarqube" version "4.2.1.3168"
     id "com.autonomousapps.dependency-analysis" version "1.20.0" apply true
-    id "dev.zacsweers.redacted" version "1.4.0" apply false
+    id "dev.zacsweers.redacted" version "1.6.0" apply false
     id "com.google.devtools.ksp" version "1.9.0-1.0.11" apply false
     id 'com.mikepenz.aboutlibraries.plugin' version "10.8.0" apply false
 }
