@@ -28,6 +28,7 @@ interface CollageDisplay {
     val wideColumnsLandscape: Int
     @get:DrawableRes val iconResource: Int
     val maintainAspectRatio: Boolean
+    val allowsAnimatedVideoThumbnails: Boolean
     @get:StringRes val friendlyName: Int
     val zoomIn: CollageDisplay
     val zoomOut: CollageDisplay

@@ -25,6 +25,7 @@ data object AutoAlbumCollageDisplay: CollageDisplay {
     override val wideColumnsLandscape = 8
     override val iconResource = 0
     override val maintainAspectRatio = false
+    override val allowsAnimatedVideoThumbnails = true
     override val friendlyName = 0
     override val zoomIn = this
     override val zoomOut = this
