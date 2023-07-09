@@ -39,7 +39,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.avatar.view.api.ui.state.SyncStat
 import com.savvasdalkitsis.uhuruphotos.feature.avatar.view.api.ui.state.SyncState.IN_PROGRESS
 import com.savvasdalkitsis.uhuruphotos.foundation.compose.api.recomposeHighlighter
 import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.R.drawable.ic_person
-import com.savvasdalkitsis.uhuruphotos.foundation.image.api.ui.ThumbnailImage
+import com.savvasdalkitsis.uhuruphotos.foundation.image.api.ui.Thumbnail
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.theme.CustomColors
 
 @Composable
@@ -72,7 +72,7 @@ fun Avatar(
         }
 
         when {
-            !state.avatarUrl.isNullOrEmpty() -> ThumbnailImage(
+            !state.avatarUrl.isNullOrEmpty() -> Thumbnail(
                 modifier = Modifier
                     .size(size - 6.dp)
                     .clip(CircleShape)

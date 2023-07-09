@@ -173,7 +173,12 @@ class MediaUseCase @Inject constructor(
         }
 
     private fun LocalMediaItem.toMediaItem(userId: Int) = MediaItemInstance(
-        id = Local(id, video, contentUri, thumbnailPath?.let { "file://$it" } ?: contentUri),
+        id = Local(
+            value = id,
+            isVideo = video,
+            contentUri = contentUri,
+            thumbnailUri = animatedThumbnailPath.fileUri ?: thumbnailPath.fileUri ?: contentUri
+        ),
         mediaHash = md5 + userId,
         fallbackColor = fallbackColor,
         displayDayDate = displayDate,
@@ -182,6 +187,8 @@ class MediaUseCase @Inject constructor(
         ratio = ratio,
         latLng = latLon,
     )
+
+    private val String?.fileUri get(): String? = this?.let { "file://$it" }
 
     private val LocalMediaItem.ratio: Float get() {
         val (w, h) = when (orientation) {

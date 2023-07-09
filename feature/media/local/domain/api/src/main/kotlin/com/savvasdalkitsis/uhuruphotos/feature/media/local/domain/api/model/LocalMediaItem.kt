@@ -29,6 +29,7 @@ data class LocalMediaItem(
     val size: Int,
     val contentUri: String,
     val thumbnailPath: String?,
+    val animatedThumbnailPath: String?,
     val md5: String,
     val video: Boolean,
     val duration: Int?,

@@ -15,9 +15,11 @@ dependencies {
     )
 
     implementation(
+            project(":feature:auth:domain:api"),
             libs.coil.compose,
             libs.coil.gif,
             libs.coil.video,
             libs.hilt,
+            libs.videocache,
     )
 }

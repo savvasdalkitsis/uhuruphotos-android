@@ -22,6 +22,7 @@ import android.graphics.BitmapFactory.decodeStream
 import android.graphics.Color
 import android.media.MediaMetadataRetriever
 import android.media.MediaMetadataRetriever.OPTION_CLOSEST_SYNC
+import android.media.browse.MediaBrowser.MediaItem
 import android.net.Uri
 import androidx.palette.graphics.Palette
 import app.cash.sqldelight.coroutines.asFlow
@@ -35,11 +36,14 @@ import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.media.download.Down
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.media.local.LocalMediaItemDetails
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.media.local.LocalMediaItemDetailsQueries
 import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.model.LocalMediaDeletionException
+import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.implementation.model.subFile
+import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.implementation.model.subFolder
 import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.implementation.module.LocalMediaModule
 import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.implementation.service.LocalMediaService
 import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.implementation.service.model.LocalMediaStoreServiceItem
 import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.implementation.service.model.LocalMediaStoreServiceItem.Photo
 import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.implementation.service.model.LocalMediaStoreServiceItem.Video
+import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.implementation.usecase.VideoThumbnailUseCase
 import com.savvasdalkitsis.uhuruphotos.foundation.exif.api.usecase.ExifUseCase
 import com.savvasdalkitsis.uhuruphotos.foundation.log.api.log
 import com.savvasdalkitsis.uhuruphotos.foundation.log.api.runCatchingWithLog
@@ -64,6 +68,7 @@ class LocalMediaRepository @Inject constructor(
     private val exifUseCase: ExifUseCase,
     @LocalMediaModule.LocalMediaDateTimeFormat
     private val dateTimeFormat: DateTimeFormatter,
+    private val videoThumbnailUseCase: VideoThumbnailUseCase,
 ) {
 
     fun observeMedia(): Flow<List<LocalMediaItemDetails>> = localMediaItemDetailsQueries.getItems()
@@ -165,6 +170,7 @@ class LocalMediaRepository @Inject constructor(
         val thumbnailPath = thumbnail?.save(item)
         val fallbackColor = thumbnail.palette(item)
         thumbnail?.recycle()
+        val animatedThumbnailPath = item.animatedThumb
         onNewItem(
             LocalMediaItemDetails(
                 id = item.id,
@@ -184,6 +190,7 @@ class LocalMediaRepository @Inject constructor(
                 path = item.path,
                 orientation = item.orientation,
                 thumbnailPath = thumbnailPath,
+                animatedThumbnailPath = animatedThumbnailPath,
             )
         )
     }
@@ -242,6 +249,16 @@ class LocalMediaRepository @Inject constructor(
         null
     }
 
+    private val LocalMediaStoreServiceItem.animatedThumb get() = when (this) {
+        is Video -> try {
+            videoThumbnailUseCase.createAnimatedThumbnail(id.toString(), contentUri, thumbWidth)
+        } catch (e: Exception) {
+            log(e)
+            null
+        }
+        else -> null
+    }
+
     private val Photo.bitmap get() = try {
         contentResolver.openInputStream(contentUri)!!.use { stream ->
             decodeStream(stream)
@@ -285,11 +302,6 @@ class LocalMediaRepository @Inject constructor(
         log(e)
         null
     }
-
-    private fun File.subFolder(name: String) = subFile(name).apply {
-        mkdirs()
-    }
-    private fun File.subFile(name: String) = File(this, name)
 
     private fun LocalMediaStoreServiceItem.tryPalette(bitmap: (Uri) -> Bitmap?): Int = try {
         bitmap(contentUri)

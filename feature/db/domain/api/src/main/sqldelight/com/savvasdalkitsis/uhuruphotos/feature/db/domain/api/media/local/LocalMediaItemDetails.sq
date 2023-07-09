@@ -15,7 +15,8 @@ CREATE TABLE localMediaItemDetails (
     fallbackColor TEXT,
     path TEXT,
     orientation TEXT,
-    thumbnailPath TEXT
+    thumbnailPath TEXT,
+    animatedThumbnailPath TEXT
 );
 
 insert:

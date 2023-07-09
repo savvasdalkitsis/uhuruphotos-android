@@ -18,8 +18,13 @@ package com.savvasdalkitsis.uhuruphotos.foundation.image.implementation.initiali
 import android.app.Application
 import coil.Coil
 import coil.ImageLoader
+import com.savvasdalkitsis.uhuruphotos.feature.auth.domain.api.AuthenticatedOkHttpClient
+import com.savvasdalkitsis.uhuruphotos.feature.auth.domain.api.TokenRefreshInterceptor
 import com.savvasdalkitsis.uhuruphotos.foundation.image.api.model.FullImage
 import com.savvasdalkitsis.uhuruphotos.foundation.initializer.api.ApplicationCreated
+import crocodile8008.videoviewcache.lib.VideoViewCacheFacade
+import okhttp3.Interceptor
+import okhttp3.OkHttpClient
 import se.ansman.dagger.auto.AutoBindIntoSet
 import javax.inject.Inject
 
@@ -27,9 +32,16 @@ import javax.inject.Inject
 class ImageInitializer @Inject constructor(
     @FullImage
     private val imageLoader: ImageLoader,
+    @AuthenticatedOkHttpClient
+    private val okHttpBuilder: OkHttpClient.Builder,
+    @TokenRefreshInterceptor
+    private val tokenRefreshInterceptor: Interceptor,
 ) : ApplicationCreated {
 
     override fun onAppCreated(app: Application) {
         Coil.setImageLoader { imageLoader }
+        VideoViewCacheFacade.customOkHttpClient = okHttpBuilder
+            .addInterceptor(tokenRefreshInterceptor)
+            .build()
     }
 }
