@@ -122,7 +122,7 @@ reorder = "org.burnoutcrew.composereorderable:reorderable:0.9.6"
 result = "com.michael-bull.kotlin-result:kotlin-result:1.1.18"
 retrofit-core = { module = "com.squareup.retrofit2:retrofit", version.ref = "retrofit" }
 retrofit-moshi = { module = "com.squareup.retrofit2:converter-moshi", version.ref = "retrofit" }
-scrollbar = "com.github.nanihadesuka:LazyColumnScrollbar:1.6.3"
+scrollbar = "com.github.nanihadesuka:LazyColumnScrollbar:1.7.1"
 shazamcrest = "com.shazam:shazamcrest:0.11"
 sqldelight-adapters = { module = "app.cash.sqldelight:primitive-adapters", version.ref = "sqldelight" }
 sqldelight-android = { module = "app.cash.sqldelight:android-driver", version.ref = "sqldelight" }
