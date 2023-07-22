@@ -31,6 +31,7 @@ enum class PredefinedCollageDisplay(
     override val wideColumnsLandscape: Int,
     @DrawableRes override val iconResource: Int,
     override val maintainAspectRatio: Boolean,
+    override val allowsAnimatedVideoThumbnails: Boolean = true,
     @StringRes override val friendlyName: Int,
 ) : CollageDisplay {
     YEARLY(
@@ -41,6 +42,7 @@ enum class PredefinedCollageDisplay(
         wideColumnsLandscape = 18,
         iconResource = drawable.ic_month,
         maintainAspectRatio = false,
+        allowsAnimatedVideoThumbnails = false,
         friendlyName = string.yearly,
     ),
     TINY(

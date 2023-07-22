@@ -15,9 +15,11 @@ dependencies {
     )
 
     implementation(
+            libs.androidx.compose.ui,
             libs.coil.compose,
             libs.coil.gif,
             libs.coil.video,
             libs.hilt,
+            libs.videocache,
     )
 }

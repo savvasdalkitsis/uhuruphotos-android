@@ -68,7 +68,7 @@ assure = "com.afollestad.assure:coroutines:0.2.0"
 autodagger-core = { module = "se.ansman.dagger.auto:android", version.ref = "autodagger" }
 autodagger-kapt = { module = "se.ansman.dagger.auto:compiler", version.ref = "autodagger" }
 bubble-navigation = "com.github.savvasdalkitsis:BubbleNavigationBarCompose:1.0.2"
-crop = "com.github.moyuruaizawa:cropify:0.3.0"
+crop = "com.github.moyuruaizawa:cropify:0.3.1"
 coil-base = { module = "io.coil-kt:coil-base", version.ref = "coil" }
 coil-compose = { module = "io.coil-kt:coil-compose", version.ref = "coil" }
 coil-gif = { module = "io.coil-kt:coil-gif", version.ref = "coil" }
@@ -91,7 +91,7 @@ jwt = "com.auth0.android:jwtdecode:2.0.2"
 kotlinx-coroutines = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-android", version.ref = "org-jetbrains-kotlinx" }
 kotlinx-coroutines-test = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test", version.ref = "org-jetbrains-kotlinx" }
 kotlinx-immutable = "org.jetbrains.kotlinx:kotlinx-collections-immutable:0.3.5"
-kotlin-reflect = "org.jetbrains.kotlin:kotlin-reflect:1.8.22"
+kotlin-reflect = "org.jetbrains.kotlin:kotlin-reflect:1.9.0"
 logger = "com.jakewharton.timber:timber:4.7.1"
 lottie = "com.airbnb.android:lottie-compose:6.0.1"
 lumberjack-core = { module = "com.github.savvasdalkitsis.Lumberjack:lumberjack-library", version.ref = "lumberjack" }
@@ -117,12 +117,12 @@ palette = "androidx.palette:palette-ktx:1.0.0"
 permissions-base = { module = "dev.shreyaspatil.permission-flow:permission-flow-android", version.ref = "permissions" }
 permissions-compose = { module = "dev.shreyaspatil.permission-flow:permission-flow-compose", version.ref = "permissions" }
 play = "com.google.android.gms:play-services-base:18.2.0"
-recasa = "com.github.sebaslogen.resaca:resaca:2.4.4"
+recasa = "com.github.sebaslogen.resaca:resaca:2.4.5"
 reorder = "org.burnoutcrew.composereorderable:reorderable:0.9.6"
 result = "com.michael-bull.kotlin-result:kotlin-result:1.1.18"
 retrofit-core = { module = "com.squareup.retrofit2:retrofit", version.ref = "retrofit" }
 retrofit-moshi = { module = "com.squareup.retrofit2:converter-moshi", version.ref = "retrofit" }
-scrollbar = "com.github.nanihadesuka:LazyColumnScrollbar:1.6.3"
+scrollbar = "com.github.nanihadesuka:LazyColumnScrollbar:1.7.1"
 shazamcrest = "com.shazam:shazamcrest:0.11"
 sqldelight-adapters = { module = "app.cash.sqldelight:primitive-adapters", version.ref = "sqldelight" }
 sqldelight-android = { module = "app.cash.sqldelight:android-driver", version.ref = "sqldelight" }
@@ -131,6 +131,7 @@ sqldelight-gradle-plugin = { module = "app.cash.sqldelight:gradle-plugin", versi
 sqldelight-jvm = { module = "app.cash.sqldelight:sqlite-driver", version.ref = "sqldelight" }
 turbine = "app.cash.turbine:turbine:1.0.0"
 urlvalidator = "commons-validator:commons-validator:1.7"
+videocache = "com.github.Andrew0000:Android-VideoView-cache:1.0.15"
 zoomable = "com.mxalbert.zoomable:zoomable:1.6.1"
 
 [bundles]

@@ -22,6 +22,7 @@ import androidx.compose.foundation.lazy.staggeredgrid.LazyStaggeredGridState
 import androidx.compose.foundation.lazy.staggeredgrid.rememberLazyStaggeredGridState
 import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.unit.dp
@@ -31,6 +32,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.Collage
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.CelSelected
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.state.CelState
 import com.savvasdalkitsis.uhuruphotos.foundation.compose.api.recomposeHighlighter
+import com.savvasdalkitsis.uhuruphotos.foundation.image.api.LocalAnimatedVideoThumbnails
 import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.FullProgressBar
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.NoContent
@@ -56,35 +58,40 @@ fun Collage(
     !state.isLoading && state.isEmpty && state.clusters.isEmpty() -> emptyContent()
     else -> {
         val collageDisplay = state.collageDisplay
-        StaggeredCollage(
-            modifier = modifier
-                .recomposeHighlighter()
-                .let {
-                    when {
-                        collageDisplay.allowsPinchGestures -> it.pinchToChange(
-                            collageDisplay,
-                            onChangeDisplay,
-                        )
-                        else -> it
-                    }
-                },
-            contentPadding = contentPadding,
-            state = state.clusters,
-            showSelectionHeader = showSelectionHeader,
-            maintainAspectRatio = collageDisplay.maintainAspectRatio,
-            miniIcons = collageDisplay.miniIcons,
-            showSyncState = showSyncState,
-            columnCount = collageDisplay.columnCount(
-                widthSizeClass = LocalWindowSize.current.widthSizeClass,
-                landscape = LocalConfiguration.current.orientation == Configuration.ORIENTATION_LANDSCAPE
-            ),
-            gridState = gridState,
-            collageHeader = collageHeader,
-            onCelSelected = onCelSelected,
-            onCelLongPressed = onCelLongPressed,
-            onClusterRefreshClicked = onClusterRefreshClicked,
-            onClusterSelectionClicked = onClusterSelectionClicked,
-        )
+        val animatedThumbnails = LocalAnimatedVideoThumbnails.current
+        CompositionLocalProvider(
+            LocalAnimatedVideoThumbnails provides (animatedThumbnails && collageDisplay.allowsAnimatedVideoThumbnails)
+        ) {
+            StaggeredCollage(
+                modifier = modifier
+                    .recomposeHighlighter()
+                    .let {
+                        when {
+                            collageDisplay.allowsPinchGestures -> it.pinchToChange(
+                                collageDisplay,
+                                onChangeDisplay,
+                            )
+                            else -> it
+                        }
+                    },
+                contentPadding = contentPadding,
+                state = state.clusters,
+                showSelectionHeader = showSelectionHeader,
+                maintainAspectRatio = collageDisplay.maintainAspectRatio,
+                miniIcons = collageDisplay.miniIcons,
+                showSyncState = showSyncState,
+                columnCount = collageDisplay.columnCount(
+                    widthSizeClass = LocalWindowSize.current.widthSizeClass,
+                    landscape = LocalConfiguration.current.orientation == Configuration.ORIENTATION_LANDSCAPE
+                ),
+                gridState = gridState,
+                collageHeader = collageHeader,
+                onCelSelected = onCelSelected,
+                onCelLongPressed = onCelLongPressed,
+                onClusterRefreshClicked = onClusterRefreshClicked,
+                onClusterSelectionClicked = onClusterSelectionClicked,
+            )
+        }
     }
 }
 

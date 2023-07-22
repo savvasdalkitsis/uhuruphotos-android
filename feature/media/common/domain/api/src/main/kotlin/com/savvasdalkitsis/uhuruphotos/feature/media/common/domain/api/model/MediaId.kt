@@ -157,7 +157,10 @@ sealed class MediaId<T : Serializable> private constructor(
         @IgnoredOnParcel
         override val fullResUri = preferLocal.fullResUri
         @IgnoredOnParcel
-        override val thumbnailUri = preferLocal.thumbnailUri
+        override val thumbnailUri = if (isVideo)
+                preferRemote.thumbnailUri
+            else
+                preferLocal.thumbnailUri
 
         companion object {
             operator fun invoke(
