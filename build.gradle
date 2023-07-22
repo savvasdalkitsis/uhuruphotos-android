@@ -3,9 +3,9 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 buildscript {
     ext {
-        kotlin_version = '1.8.22'
+        kotlin_version = '1.9.0'
         compose_version = '1.6.0-alpha01'
-        compose_compiler_version = '1.4.8'
+        compose_compiler_version = '1.5.0'
     }
     dependencies {
         classpath libs.hilt.android.gradle.plugin
@@ -25,7 +25,7 @@ plugins {
     id "com.autonomousapps.dependency-analysis" version "1.20.0" apply true
     id "dev.zacsweers.redacted" version "1.4.0" apply false
     id "com.google.devtools.ksp" version "1.9.0-1.0.12" apply false
-    id 'com.mikepenz.aboutlibraries.plugin' version "10.8.0" apply false
+    id 'com.mikepenz.aboutlibraries.plugin' version "10.8.3" apply false
 }
 
 tasks.register('clean', Delete) {
