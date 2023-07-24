@@ -18,9 +18,8 @@ dependencies {
             libs.androidx.compose.material,
             libs.androidx.compose.ui,
             libs.autodagger.core,
-            libs.exoplayer.okhttp,
             libs.hilt,
-            libs.exoplayer.base,
+            libs.bundles.androidx.media3,
     )
     kapt libs.autodagger.kapt
 }

@@ -11,11 +11,12 @@ android {
 dependencies {
     api(
             libs.androidx.compose.foundation,
-            libs.exoplayer.base,
+            libs.androidx.media3.core,
     )
     implementation project(':foundation:image:api')
     implementation(
             libs.androidx.compose.material,
+            libs.androidx.media3.ui,
             libs.hilt,
     )
 }

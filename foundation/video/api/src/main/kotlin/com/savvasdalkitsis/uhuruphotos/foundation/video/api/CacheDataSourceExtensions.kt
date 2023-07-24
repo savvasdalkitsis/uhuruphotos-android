@@ -15,7 +15,7 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.foundation.video.api
 
-import com.google.android.exoplayer2.upstream.cache.CacheDataSource
+import androidx.media3.datasource.cache.CacheDataSource
 
 fun CacheDataSource.Factory.evictAll() {
     cache?.let { cache ->

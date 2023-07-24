@@ -21,9 +21,9 @@ import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.cache
 import androidx.compose.runtime.currentComposer
 import androidx.compose.runtime.mutableStateMapOf
-import com.google.android.exoplayer2.ExoPlayer
-import com.google.android.exoplayer2.source.DefaultMediaSourceFactory
-import com.google.android.exoplayer2.upstream.cache.CacheDataSource
+import androidx.media3.datasource.cache.CacheDataSource
+import androidx.media3.exoplayer.ExoPlayer
+import androidx.media3.exoplayer.source.DefaultMediaSourceFactory
 import com.savvasdalkitsis.uhuruphotos.feature.settings.domain.api.usecase.SettingsUseCase
 import com.savvasdalkitsis.uhuruphotos.foundation.video.api.ExoplayerProvider
 import com.savvasdalkitsis.uhuruphotos.foundation.video.api.ExoplayerType

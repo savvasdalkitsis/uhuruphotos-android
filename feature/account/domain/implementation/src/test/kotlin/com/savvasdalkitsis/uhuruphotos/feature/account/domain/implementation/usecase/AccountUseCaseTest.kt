@@ -15,9 +15,9 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.account.domain.implementation.usecase
 
+import androidx.media3.datasource.cache.CacheDataSource
 import app.cash.sqldelight.TransactionWithReturn
 import app.cash.sqldelight.TransactionWithoutReturn
-import com.google.android.exoplayer2.upstream.cache.CacheDataSource
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.Database
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.album.auto.AutoAlbumPeopleQueries
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.album.auto.AutoAlbumPhotosQueries

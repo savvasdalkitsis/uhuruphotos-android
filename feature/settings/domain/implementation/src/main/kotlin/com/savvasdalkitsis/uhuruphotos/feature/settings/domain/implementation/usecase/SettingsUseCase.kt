@@ -36,6 +36,7 @@ import com.savvasdalkitsis.uhuruphotos.foundation.preferences.api.set
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.theme.ThemeMode
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.async
@@ -191,6 +192,7 @@ internal class SettingsUseCase @Inject constructor(
         observe(shareRemoveGpsData, shareRemoveGpsDataDefault)
     override fun observeShowLibrary(): Flow<Boolean> =
         observe(showLibrary, showLibraryDefault)
+    @OptIn(DelicateCoroutinesApi::class)
     override fun observeThemeModeState(): StateFlow<ThemeMode> = GlobalScope.async {
         observeThemeMode().stateIn(
             CoroutineScope(Dispatchers.IO)

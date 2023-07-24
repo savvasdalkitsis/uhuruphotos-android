@@ -16,11 +16,11 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.foundation.video.implementation.module
 
 import android.content.Context
-import com.google.android.exoplayer2.database.StandaloneDatabaseProvider
-import com.google.android.exoplayer2.ext.okhttp.OkHttpDataSource
-import com.google.android.exoplayer2.upstream.cache.CacheDataSource
-import com.google.android.exoplayer2.upstream.cache.LeastRecentlyUsedCacheEvictor
-import com.google.android.exoplayer2.upstream.cache.SimpleCache
+import androidx.media3.database.StandaloneDatabaseProvider
+import androidx.media3.datasource.cache.CacheDataSource
+import androidx.media3.datasource.cache.LeastRecentlyUsedCacheEvictor
+import androidx.media3.datasource.cache.SimpleCache
+import androidx.media3.datasource.okhttp.OkHttpDataSource
 import com.savvasdalkitsis.uhuruphotos.feature.auth.domain.api.AuthenticatedOkHttpClient
 import com.savvasdalkitsis.uhuruphotos.feature.auth.domain.api.TokenRefreshInterceptor
 import com.savvasdalkitsis.uhuruphotos.feature.settings.domain.api.usecase.SettingsUseCase

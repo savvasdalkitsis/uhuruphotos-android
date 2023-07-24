@@ -15,7 +15,7 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.account.domain.implementation.usecase
 
-import com.google.android.exoplayer2.upstream.cache.CacheDataSource
+import androidx.media3.datasource.cache.CacheDataSource
 import com.savvasdalkitsis.uhuruphotos.feature.account.domain.api.usecase.AccountUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.Database
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.extensions.async

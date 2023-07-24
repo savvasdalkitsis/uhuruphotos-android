@@ -28,11 +28,11 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
-import com.google.android.exoplayer2.ExoPlayer
-import com.google.android.exoplayer2.MediaItem
-import com.google.android.exoplayer2.Player
-import com.google.android.exoplayer2.ui.AspectRatioFrameLayout
-import com.google.android.exoplayer2.ui.StyledPlayerView
+import androidx.media3.common.MediaItem
+import androidx.media3.common.Player
+import androidx.media3.exoplayer.ExoPlayer
+import androidx.media3.ui.AspectRatioFrameLayout
+import androidx.media3.ui.PlayerView
 import com.savvasdalkitsis.uhuruphotos.foundation.image.api.ui.Thumbnail
 import com.savvasdalkitsis.uhuruphotos.foundation.video.api.LocalExoPlayerProvider
 import com.savvasdalkitsis.uhuruphotos.foundation.video.api.R
@@ -92,7 +92,7 @@ fun Video(
             false
         )
         val playerView =
-            layout.findViewById(R.id.playerView) as StyledPlayerView
+            layout.findViewById(R.id.playerView) as PlayerView
         playerView.apply {
             player = exoPlayer
             if (mute) {

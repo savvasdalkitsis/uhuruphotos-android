@@ -15,7 +15,7 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.settings.domain.implementation.usecase
 
-import com.google.android.exoplayer2.upstream.cache.CacheDataSource
+import androidx.media3.datasource.cache.CacheDataSource
 import com.savvasdalkitsis.uhuruphotos.feature.settings.domain.api.model.CacheType
 import com.savvasdalkitsis.uhuruphotos.feature.settings.domain.api.model.CacheType.LIGHTBOX_PHOTO_DISK
 import com.savvasdalkitsis.uhuruphotos.feature.settings.domain.api.model.CacheType.LIGHTBOX_PHOTO_MEMORY

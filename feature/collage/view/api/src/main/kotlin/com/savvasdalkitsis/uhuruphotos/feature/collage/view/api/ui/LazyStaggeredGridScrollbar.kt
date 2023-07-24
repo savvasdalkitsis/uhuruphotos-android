@@ -269,8 +269,8 @@ fun LazyStaggeredGridScrollbar(
                     }
                 ) {
                     indicatorContent(
-                        index = firstVisibleItemIndex.value,
-                        isThumbSelected = isSelected
+                        firstVisibleItemIndex.value,
+                        isSelected
                     )
                 }
             }
