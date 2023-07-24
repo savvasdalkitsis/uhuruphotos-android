@@ -21,7 +21,5 @@ import androidx.media3.exoplayer.ExoPlayer
 interface ExoplayerProvider {
 
     @Composable
-    fun maybeCreateExoplayer(url: String?): ExoPlayer?
-    @Composable
     fun createExoplayer(url: String): ExoPlayer
 }

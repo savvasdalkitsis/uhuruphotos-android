@@ -24,7 +24,6 @@ import androidx.compose.runtime.mutableStateMapOf
 import androidx.media3.datasource.cache.CacheDataSource
 import androidx.media3.exoplayer.ExoPlayer
 import androidx.media3.exoplayer.source.DefaultMediaSourceFactory
-import com.savvasdalkitsis.uhuruphotos.feature.settings.domain.api.usecase.SettingsUseCase
 import com.savvasdalkitsis.uhuruphotos.foundation.video.api.ExoplayerProvider
 import com.savvasdalkitsis.uhuruphotos.foundation.video.api.ExoplayerType
 import com.savvasdalkitsis.uhuruphotos.foundation.video.api.ExoplayerType.Local
@@ -39,22 +38,9 @@ import javax.inject.Singleton
 class ExoplayerProvider @Inject constructor(
     @ApplicationContext private val context: Context,
     private val cacheDataSourceFactory: CacheDataSource.Factory,
-    private val settingsUseCase: SettingsUseCase,
 ) : ExoplayerProvider {
 
     private val animatedUrls = mutableStateMapOf<String?, ExoPlayer>()
-
-    @Composable
-    override fun maybeCreateExoplayer(url: String?): ExoPlayer? =
-        rememberUnreleasedIfNotNull(url) {
-            maybeNewPlayer(url)
-        }?.disposable(url)
-
-    private fun maybeNewPlayer(url: String?) =
-        when {
-            url == null || settingsUseCase.getMaxAnimatedVideoThumbnails() <= animatedUrls.size -> null
-            else -> newPlayer(url)
-        }
 
     @Composable
     override fun createExoplayer(url: String): ExoPlayer =
@@ -93,10 +79,6 @@ class ExoplayerProvider @Inject constructor(
 
     private fun newLocalPlayer() = ExoPlayer.Builder(context).build()
 
-
-    @Composable
-    private fun rememberUnreleasedIfNotNull(url: String?, block: () -> ExoPlayer?): ExoPlayer? =
-        currentComposer.cache(url == null || currentComposer.changed(url) || !animatedUrls.containsKey(url), block)
 
     @Composable
     private fun rememberUnreleased(url: String, block: () -> ExoPlayer): ExoPlayer =
