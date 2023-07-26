@@ -36,6 +36,8 @@ public class TestRemoteMediaCollections {
             null,
             null,
             null,
+            null,
+            null,
             null
     );
 

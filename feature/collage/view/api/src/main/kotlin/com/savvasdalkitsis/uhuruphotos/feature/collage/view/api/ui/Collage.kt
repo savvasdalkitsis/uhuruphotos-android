@@ -60,7 +60,7 @@ fun Collage(
         val collageDisplay = state.collageDisplay
         val animatedThumbnails = LocalAnimatedVideoThumbnails.current
         CompositionLocalProvider(
-            LocalAnimatedVideoThumbnails provides (animatedThumbnails && collageDisplay.allowsAnimatedVideoThumbnails)
+//            LocalAnimatedVideoThumbnails provides (animatedThumbnails && collageDisplay.allowsAnimatedVideoThumbnails)
         ) {
             StaggeredCollage(
                 modifier = modifier

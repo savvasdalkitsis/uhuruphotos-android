@@ -125,6 +125,8 @@ reorder = "org.burnoutcrew.composereorderable:reorderable:0.9.6"
 result = "com.michael-bull.kotlin-result:kotlin-result:1.1.18"
 retrofit-core = { module = "com.squareup.retrofit2:retrofit", version.ref = "retrofit" }
 retrofit-moshi = { module = "com.squareup.retrofit2:converter-moshi", version.ref = "retrofit" }
+rxjava-core = "io.reactivex.rxjava3:rxjava:3.1.6"
+rxjava-android = "io.reactivex.rxjava3:rxandroid:3.0.2"
 scrollbar = "com.github.nanihadesuka:LazyColumnScrollbar:1.7.2"
 shazamcrest = "com.shazam:shazamcrest:0.11"
 sqldelight-adapters = { module = "app.cash.sqldelight:primitive-adapters", version.ref = "sqldelight" }
@@ -163,6 +165,10 @@ lumberjack = [
 permissions = [
     "permissions-base",
     "permissions-compose",
+]
+rxjava = [
+    "rxjava-core",
+    "rxjava-android",
 ]
 test = [
     "junit",

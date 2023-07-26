@@ -16,7 +16,7 @@ limitations under the License.
 
 package com.savvasdalkitsis.uhuruphotos.foundation.image.api.ui
 
-import android.widget.VideoView
+import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -26,12 +26,18 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.painter.ColorPainter
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.layout.onGloballyPositioned
+import androidx.compose.ui.unit.IntSize
 import androidx.compose.ui.viewinterop.AndroidView
 import coil.compose.AsyncImage
+import coil.size.Precision
+import coil.size.Size
+import com.savvasdalkitsis.uhuruphotos.feature.auth.domain.api.model.LocalAuthenticationHeaders
 import com.savvasdalkitsis.uhuruphotos.foundation.image.api.LocalAnimatedVideoThumbnails
 import com.savvasdalkitsis.uhuruphotos.foundation.image.api.model.LocalThumbnailImageLoader
 import com.savvasdalkitsis.uhuruphotos.foundation.image.api.model.LocalThumbnailWithNetworkCacheImageLoader
-import crocodile8008.videoviewcache.lib.playUrl
+import com.savvasdalkitsis.uhuruphotos.foundation.image.api.ui.TextureVideoView.ScaleType
+import com.savvasdalkitsis.uhuruphotos.foundation.image.api.video.playUrl
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
@@ -43,6 +49,7 @@ fun Thumbnail(
     url: String?,
     contentScale: ContentScale,
     placeholder: Int? = null,
+    aspectRatio: Float? = null,
     contentDescription: String?,
     respectNetworkCacheHeaders: Boolean = false,
     isVideo: Boolean = false,
@@ -51,7 +58,8 @@ fun Thumbnail(
     val bg = remember(placeholder) {
         placeholder?.let { ColorPainter(Color(it)) }
     }
-    if (!isVideo || !LocalAnimatedVideoThumbnails.current) {
+    val static = !isVideo || !LocalAnimatedVideoThumbnails.current
+    if (static) {
         ImageThumbnail(
             modifier,
             respectNetworkCacheHeaders,
@@ -62,55 +70,94 @@ fun Thumbnail(
             contentDescription
         )
     } else {
-        var loaded by remember(url) {
-            mutableStateOf(false)
-        }
-        var error by remember(url) {
-            mutableStateOf(false)
-        }
-        if (!error) {
-            AndroidView(
-                factory = { context ->
-                    VideoView(context)
+        Animated(
+            url,
+            modifier,
+            aspectRatio,
+            contentScale,
+            respectNetworkCacheHeaders,
+            onSuccess,
+            bg,
+            contentDescription
+        )
+    }
+}
+
+@Composable
+private fun Animated(
+    url: String?,
+    modifier: Modifier,
+    aspectRatio: Float?,
+    contentScale: ContentScale,
+    respectNetworkCacheHeaders: Boolean,
+    onSuccess: () -> Unit,
+    bg: ColorPainter?,
+    contentDescription: String?
+) {
+    var loaded by remember(url) {
+        mutableStateOf(false)
+    }
+    var error by remember(url) {
+        mutableStateOf(false)
+    }
+    val headersUseCase = LocalAuthenticationHeaders.current
+    val headers = remember(url) {
+        url?.let {
+            headersUseCase.headers(url).toMap()
+        } ?: emptyMap()
+    }
+    if (!error) {
+        AndroidView(
+            factory = { context ->
+                TextureVideoView(context)
+            },
+            modifier = modifier
+                .run {
+                    aspectRatio?.let { aspectRatio(it) } ?: this
                 },
-                modifier = modifier,
-                onReset = { },
-                update = {
-                    if (url != null) {
-                        with(it) {
-                            playUrl(url)
-                            setOnPreparedListener { start() }
-                            setOnCompletionListener { start() }
-                            setOnErrorListener { _, _, _ ->
-                                error = true
-                                true
-                            }
-                            CoroutineScope(Dispatchers.Main).launch {
-                                while (!loaded) {
-                                    if (isPlaying && currentPosition > 0) {
-                                        loaded = true
-                                    } else {
-                                        delay(200)
-                                    }
-                                }
+            onReset = { },
+            update = {
+                it.setScaleType(
+                    when (contentScale) {
+                        ContentScale.Crop -> ScaleType.CENTER_CROP
+                        else -> ScaleType.FIT
+                    }
+                )
+                if (url != null) {
+                    it.setListener(
+                        onPrepared = { it.startPlayback() },
+                        onEnd = { it.startPlayback() },
+                        onError = {
+                            error = true
+                            loaded = false
+                        }
+                    )
+                    it.playUrl(url, headers)
+                    CoroutineScope(Dispatchers.Main).launch {
+                        while (!loaded) {
+                            val mp = it.mediaPlayer
+                            if (mp != null && mp.isPlaying && mp.currentPosition > 0) {
+                                loaded = true
+                            } else {
+                                delay(200)
                             }
                         }
                     }
-                },
-                onRelease = { },
-            )
-        }
-        if (!loaded) {
-            ImageThumbnail(
-                modifier,
-                respectNetworkCacheHeaders,
-                url,
-                onSuccess,
-                contentScale,
-                bg,
-                contentDescription
-            )
-        }
+                }
+            },
+            onRelease = { },
+        )
+    }
+    if (!loaded) {
+        ImageThumbnail(
+            modifier,
+            respectNetworkCacheHeaders,
+            url,
+            onSuccess,
+            contentScale,
+            bg,
+            contentDescription
+        )
     }
 }
 
@@ -124,13 +171,21 @@ private fun ImageThumbnail(
     bg: ColorPainter?,
     contentDescription: String?
 ) {
+    var size by remember {
+        mutableStateOf(null as IntSize?)
+    }
     AsyncImage(
-        modifier = modifier,
+        modifier = modifier.onGloballyPositioned {
+            size = it.size
+        },
         imageLoader = if (respectNetworkCacheHeaders)
             LocalThumbnailWithNetworkCacheImageLoader.current
         else
             LocalThumbnailImageLoader.current,
-        model = url.toRequest {
+        model = url.toRequest(
+            precision = Precision.INEXACT,
+            size = size?.let { Size(it.width, it.height) }
+        ) {
             onSuccess()
         },
         contentScale = contentScale,

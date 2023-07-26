@@ -117,10 +117,12 @@ fun Cel(
                 contentDescription = null
             )
             if (mediaItem.id.isVideo) {
+                val size = remember(miniIcons) { if (miniIcons) 16.dp else 48.dp }
+                val align = remember(miniIcons) { if (miniIcons) BottomStart else Center }
                 Icon(
                     modifier = Modifier
-                        .size(if (miniIcons) 16.dp else 48.dp)
-                        .align(if (miniIcons) BottomStart else Center),
+                        .size(size)
+                        .align(align),
                     painter = painterResource(id = drawable.ic_play_filled),
                     tint = Color.White,
                     contentDescription = null

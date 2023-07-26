@@ -21,15 +21,24 @@ import coil.request.CachePolicy
 import coil.request.DefaultRequestOptions
 import coil.request.ImageRequest
 import coil.size.Precision
+import coil.size.Size
 
 @Composable
 internal fun String?.toRequest(
     precision: Precision = Precision.INEXACT,
+    size: Size? = Size.ORIGINAL,
     onSuccess: () -> Unit
 ) = this?.let { url ->
     ImageRequest.Builder(LocalContext.current)
         .data(url)
         .diskCachePolicy(CachePolicy.ENABLED)
+        .run {
+            if (size != null) {
+                size(size)
+            } else {
+                this
+            }
+        }
         .allowHardware(true)
         .crossfade(true)
         .defaults(

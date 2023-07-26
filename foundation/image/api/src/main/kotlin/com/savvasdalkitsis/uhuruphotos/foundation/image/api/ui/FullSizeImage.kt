@@ -28,6 +28,7 @@ import androidx.compose.ui.platform.LocalContext
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import coil.size.Precision
+import coil.size.Size
 import com.savvasdalkitsis.uhuruphotos.foundation.image.api.model.LocalFullImageLoader
 
 @Composable
@@ -63,7 +64,10 @@ fun FullSizeImage(
                 .fillMaxWidth()
                 .align(Alignment.Center),
             imageLoader = LocalFullImageLoader.current,
-            model = fullResUrl.toRequest(precision = Precision.EXACT) {
+            model = fullResUrl.toRequest(
+                precision = Precision.EXACT,
+                size = Size.ORIGINAL,
+            ) {
                 showLowRes = false
                 onFullResImageLoaded()
             },

@@ -42,7 +42,8 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-            signingConfig signingConfigs.release
+            applicationIdSuffix ".profile"
+            signingConfig signingConfigs.debug
         }
     }
     packagingOptions {
@@ -58,6 +59,7 @@ android {
 dependencies {
     implementation(
             project(':app:implementation'),
+            project(":feature:auth:domain:api"),
             project(":feature:home:view:api"),
             project(":feature:settings:domain:api"),
             project(":foundation:activity:api"),
