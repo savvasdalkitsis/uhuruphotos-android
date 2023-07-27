@@ -18,6 +18,6 @@ package com.savvasdalkitsis.uhuruphotos.foundation.activity.api.request
 import androidx.activity.result.IntentSenderRequest
 import com.savvasdalkitsis.uhuruphotos.foundation.result.api.SimpleResult
 
-interface ActivityRequestLauncher {
+fun interface ActivityRequestLauncher {
     suspend fun performRequest(requestId: String, request: IntentSenderRequest): SimpleResult
 }

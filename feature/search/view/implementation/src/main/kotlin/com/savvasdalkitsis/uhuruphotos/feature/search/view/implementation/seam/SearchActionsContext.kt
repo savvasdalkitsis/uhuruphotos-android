@@ -21,6 +21,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.people.domain.api.usecase.PeopleU
 import com.savvasdalkitsis.uhuruphotos.feature.search.domain.api.usecase.SearchUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.settings.domain.api.usecase.SettingsUseCase
 import kotlinx.coroutines.Job
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableSharedFlow
 import javax.inject.Inject
 
@@ -32,5 +33,10 @@ class SearchActionsContext @Inject constructor(
     val serverUseCase: ServerUseCase,
 ) {
     var lastSearch: Job? = null
-    val queryFilter = MutableSharedFlow<String>()
+    private val _queryFilter = MutableSharedFlow<String>()
+    val queryFilter: Flow<String> get() = _queryFilter
+
+    suspend fun changeQuery(query: String) {
+        _queryFilter.emit(query)
+    }
 }

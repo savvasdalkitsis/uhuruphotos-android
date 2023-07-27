@@ -15,7 +15,7 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.api.usecase
 
-interface RemoteMediaPrecacher {
+fun interface RemoteMediaPrecacher {
     suspend fun precacheMedia(
         url: String,
         video: Boolean,

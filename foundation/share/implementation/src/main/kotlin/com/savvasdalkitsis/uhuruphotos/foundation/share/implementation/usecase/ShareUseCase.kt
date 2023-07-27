@@ -34,6 +34,8 @@ import kotlinx.coroutines.withContext
 import java.io.File
 import javax.inject.Inject
 
+private const val imageMimeType = "image/jpeg"
+
 internal class ShareUseCase @Inject constructor(
     @FullImage
     private val diskCache: DiskCache,
@@ -50,7 +52,7 @@ internal class ShareUseCase @Inject constructor(
         withContext(Dispatchers.IO) {
             url.actualize()?.let { uri ->
                 launch("Share Photo", Intent(Intent.ACTION_SEND).apply {
-                    setDataAndType(uri, "image/jpeg")
+                    setDataAndType(uri, imageMimeType)
                     putExtra(Intent.EXTRA_STREAM, uri)
                 })
             }
@@ -62,7 +64,7 @@ internal class ShareUseCase @Inject constructor(
             url.actualize()?.let { uri ->
                 launch("Use as", Intent(Intent.ACTION_ATTACH_DATA).apply {
                     addCategory(Intent.CATEGORY_DEFAULT)
-                    setDataAndType(uri, "image/jpeg")
+                    setDataAndType(uri, imageMimeType)
                 })
             }
         }
@@ -72,7 +74,7 @@ internal class ShareUseCase @Inject constructor(
         val uris = urls.realise()
         launch("Share Photos", Intent().apply {
             action = Intent.ACTION_SEND_MULTIPLE
-            type = "image/jpeg"
+            type = imageMimeType
             putParcelableArrayListExtra(Intent.EXTRA_STREAM, ArrayList(uris))
         })
     }

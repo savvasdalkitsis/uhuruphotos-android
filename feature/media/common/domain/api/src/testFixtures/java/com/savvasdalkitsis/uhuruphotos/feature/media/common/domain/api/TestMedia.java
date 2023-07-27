@@ -10,7 +10,7 @@ public class TestMedia {
 
     private TestMedia() {}
 
-    public static MediaCollection mediaCollection = new MediaCollection(
+    public static final MediaCollection mediaCollection = new MediaCollection(
             "id",
             Collections.emptyList(),
             "",

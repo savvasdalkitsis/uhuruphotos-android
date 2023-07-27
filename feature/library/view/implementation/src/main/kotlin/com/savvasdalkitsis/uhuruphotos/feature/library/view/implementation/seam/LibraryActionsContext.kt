@@ -28,6 +28,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.worker.Loc
 import com.savvasdalkitsis.uhuruphotos.foundation.result.api.SimpleResult
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.EffectHandler
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableSharedFlow
 import javax.inject.Inject
 
@@ -41,7 +42,8 @@ internal class LibraryActionsContext @Inject constructor(
     private val localMediaWorkScheduler: LocalMediaWorkScheduler,
 ) {
 
-    val loading = MutableSharedFlow<Boolean>()
+    private val _loading = MutableSharedFlow<Boolean>()
+    val loading: Flow<Boolean> get() = _loading
 
     suspend fun refreshAutoAlbums(effect: EffectHandler<LibraryEffect>) {
         refresh(effect) {
@@ -75,7 +77,7 @@ internal class LibraryActionsContext @Inject constructor(
         effect: EffectHandler<LibraryEffect>,
         refresh: suspend () -> SimpleResult,
     ) {
-        loading.emit(true)
+        _loading.emit(true)
         val result = refresh()
         if (result is Err) {
             effect.handleEffect(ErrorLoadingAlbums)
@@ -83,6 +85,6 @@ internal class LibraryActionsContext @Inject constructor(
         // delaying to give ui time to receive the new albums before
         // dismissing the loading bar since no albums logic relies on that
         delay(500)
-        loading.emit(false)
+        _loading.emit(false)
     }
 }

@@ -34,6 +34,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.savvasdalkitsis.uhuruphotos.feature.jobs.domain.api.model.Job
+import com.savvasdalkitsis.uhuruphotos.feature.jobs.domain.api.model.JobStatus
 import com.savvasdalkitsis.uhuruphotos.feature.jobs.domain.api.model.JobStatus.Blocked
 import com.savvasdalkitsis.uhuruphotos.feature.jobs.domain.api.model.JobStatus.Failed
 import com.savvasdalkitsis.uhuruphotos.feature.jobs.domain.api.model.JobStatus.Idle
@@ -120,42 +121,29 @@ private fun JobProgressIndicator(
 @Preview
 @Composable
 private fun JobInProgress() {
-    PreviewAppTheme {
-        JobRow(
-            JobState(
-                title = Title.Text("Job title"),
-                job = Job.FEED_SYNC,
-                InProgress(
-                    progress = 25
-                )
-            )
-        )
-    }
+    Job(InProgress(progress = 25))
 }
 
 @Preview
 @Composable
 private fun JobIdle() {
-    PreviewAppTheme {
-        JobRow(
-            JobState(
-                title = Title.Text("Job title"),
-                job = Job.FEED_SYNC,
-                Idle
-            )
-        )
-    }
+    Job(Idle)
 }
 
 @Preview
 @Composable
 private fun JobBlocked() {
+    Job(Blocked)
+}
+
+@Composable
+private fun Job(status: JobStatus) {
     PreviewAppTheme {
         JobRow(
             JobState(
                 title = Title.Text("Job title"),
                 job = Job.FEED_SYNC,
-                Blocked
+                status
             )
         )
     }

@@ -17,7 +17,7 @@ package com.savvasdalkitsis.uhuruphotos.foundation.network.api
 
 import okhttp3.OkHttpClient.Builder
 
-interface OkHttpBuilder {
+fun interface OkHttpBuilder {
 
     fun build(builder: Builder.() -> Builder): Builder
 }

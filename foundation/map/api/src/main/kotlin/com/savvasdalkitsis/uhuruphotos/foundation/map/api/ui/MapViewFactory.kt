@@ -20,7 +20,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import com.savvasdalkitsis.uhuruphotos.foundation.map.api.model.MapOptions
 
-interface MapViewFactory {
+fun interface MapViewFactory {
 
     @Composable
     fun CreateMapView(

@@ -17,7 +17,7 @@ package com.savvasdalkitsis.uhuruphotos.foundation.toaster.api.usecase
 
 import androidx.annotation.StringRes
 
-interface ToasterUseCase {
+fun interface ToasterUseCase {
 
     fun show(@StringRes message: Int)
 }

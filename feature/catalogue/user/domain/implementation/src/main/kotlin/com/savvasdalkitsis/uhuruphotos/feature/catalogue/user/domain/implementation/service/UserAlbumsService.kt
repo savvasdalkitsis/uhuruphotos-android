@@ -18,7 +18,7 @@ package com.savvasdalkitsis.uhuruphotos.feature.catalogue.user.domain.implementa
 import com.savvasdalkitsis.uhuruphotos.feature.catalogue.user.domain.implementation.service.model.UserAlbums
 import retrofit2.http.GET
 
-interface UserAlbumsService {
+fun interface UserAlbumsService {
 
     @GET("api/albums/user/list/")
     suspend fun getUserAlbums(): UserAlbums

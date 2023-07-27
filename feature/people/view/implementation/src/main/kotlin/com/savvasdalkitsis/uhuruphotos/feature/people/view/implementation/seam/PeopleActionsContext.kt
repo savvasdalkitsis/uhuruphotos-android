@@ -22,6 +22,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.people.view.implementation.seam.e
 import com.savvasdalkitsis.uhuruphotos.feature.people.view.implementation.seam.effects.PeopleEffect
 import com.savvasdalkitsis.uhuruphotos.feature.people.view.implementation.ui.state.SortOrder
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.EffectHandler
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import javax.inject.Inject
@@ -31,16 +32,21 @@ class PeopleActionsContext @Inject constructor(
     val serverUseCase: ServerUseCase,
 ) {
 
-    val sort: MutableSharedFlow<SortOrder> = MutableStateFlow(SortOrder.default)
-    val loading: MutableSharedFlow<Boolean> = MutableStateFlow(false)
+    private val _sort: MutableSharedFlow<SortOrder> = MutableStateFlow(SortOrder.default)
+    val sort: Flow<SortOrder> get() = _sort
+    private val _loading: MutableSharedFlow<Boolean> = MutableStateFlow(false)
+    val loading: Flow<Boolean> get() = _loading
 
     suspend fun refresh(effect: EffectHandler<PeopleEffect>) {
-        loading.emit(true)
+        _loading.emit(true)
         val result = peopleUseCase.refreshPeople()
         if (result is Err) {
             effect.handleEffect(ErrorLoadingPeople)
         }
-        loading.emit(false)
+        _loading.emit(false)
     }
 
+    suspend fun changeSort(sortOrder: SortOrder) {
+        _sort.emit(sortOrder)
+    }
 }

@@ -19,7 +19,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.user.domain.implementation.servic
 import retrofit2.http.GET
 import retrofit2.http.Path
 
-internal interface UserService {
+internal fun interface UserService {
 
     @GET("/api/user/{id}/")
     suspend fun getUser(@Path("id") id: String): UserResult

@@ -27,7 +27,7 @@ data class QueryChanged(val query: String) : SearchAction() {
         state: SearchState,
         effect: EffectHandler<SearchEffect>
     ) = flow<SearchMutation> {
-        queryFilter.emit(query)
+        changeQuery(query)
         emit(SearchMutation.UpdateLatestQuery(query))
     }
 }

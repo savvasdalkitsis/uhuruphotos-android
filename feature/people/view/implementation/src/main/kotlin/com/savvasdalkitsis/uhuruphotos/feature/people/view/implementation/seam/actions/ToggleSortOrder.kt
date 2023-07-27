@@ -30,6 +30,6 @@ data object ToggleSortOrder : PeopleAction() {
     ) = flow {
         val sortOrder = state.sortOrder.toggle()
         emit(SetSortOrder(sortOrder))
-        sort.emit(sortOrder)
+        changeSort(sortOrder)
     }
 }

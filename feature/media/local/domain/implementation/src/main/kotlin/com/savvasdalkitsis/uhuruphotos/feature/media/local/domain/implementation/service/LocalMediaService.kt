@@ -132,11 +132,6 @@ class LocalMediaService @Inject constructor(
             else -> LocalMediaPhotoColumns.collection
         }, id)
 
-    fun createMediaUri(video: Boolean): Uri = when {
-            video -> LocalMediaVideoColumns.collection
-            else -> LocalMediaPhotoColumns.collection
-        }
-
     private val videoRowHandler: Cursor.() -> LocalMediaStoreServiceItem.Video = {
         val id = long(Video.Media._ID)
         LocalMediaStoreServiceItem.Video(
@@ -187,20 +182,6 @@ class LocalMediaService @Inject constructor(
         return buckets
     }
 
-    suspend fun getBuckets(): Set<LocalMediaFolder> =
-        query(LocalMediaPhotoColumns.collection, arrayOf(Images.Media.BUCKET_ID)) {
-            LocalMediaFolder(
-                id = int(Images.Media.BUCKET_ID),
-                displayName = string(Images.Media.BUCKET_DISPLAY_NAME)
-            )
-        }.toSet() +
-        query(LocalMediaVideoColumns.collection, arrayOf(Video.Media.BUCKET_ID)) {
-            LocalMediaFolder(
-                id = int(Video.Media.BUCKET_ID),
-                displayName = string(Video.Media.BUCKET_DISPLAY_NAME)
-            )
-        }.toSet()
-
     private suspend fun <T> query(
         collection: Uri,
         projection: Array<String>,
@@ -240,5 +221,4 @@ class LocalMediaService @Inject constructor(
     private fun Cursor.long(col: String) = getLong(getColumnIndexOrThrow(col))
     private fun Cursor.string(col: String) = getString(getColumnIndexOrThrow(col))
     private fun Cursor.int(col: String) = getInt(getColumnIndexOrThrow(col))
-    private fun Cursor.bool(col: String) = getInt(getColumnIndexOrThrow(col)) == 1
 }

@@ -21,12 +21,9 @@ import androidx.activity.ComponentActivity
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts.RequestPermission
 import com.savvasdalkitsis.uhuruphotos.foundation.initializer.api.ActivityCreated
-import dagger.hilt.android.components.ActivityRetainedComponent
 import dagger.hilt.android.scopes.ActivityRetainedScoped
-import se.ansman.dagger.auto.AutoBind
 import se.ansman.dagger.auto.AutoBindIntoSet
 import javax.inject.Inject
-import javax.inject.Singleton
 
 @AutoBindIntoSet
 @ActivityRetainedScoped

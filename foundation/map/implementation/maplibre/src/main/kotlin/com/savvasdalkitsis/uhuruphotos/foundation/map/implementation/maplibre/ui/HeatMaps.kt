@@ -17,9 +17,15 @@ package com.savvasdalkitsis.uhuruphotos.foundation.map.implementation.maplibre.u
 
 import com.mapbox.geojson.Feature
 import com.mapbox.geojson.FeatureCollection
-import com.mapbox.mapboxsdk.maps.Style
-import com.mapbox.mapboxsdk.style.expressions.Expression
-import com.mapbox.mapboxsdk.style.expressions.Expression.*
+import com.mapbox.mapboxsdk.style.expressions.Expression.get
+import com.mapbox.mapboxsdk.style.expressions.Expression.heatmapDensity
+import com.mapbox.mapboxsdk.style.expressions.Expression.interpolate
+import com.mapbox.mapboxsdk.style.expressions.Expression.linear
+import com.mapbox.mapboxsdk.style.expressions.Expression.literal
+import com.mapbox.mapboxsdk.style.expressions.Expression.rgb
+import com.mapbox.mapboxsdk.style.expressions.Expression.rgba
+import com.mapbox.mapboxsdk.style.expressions.Expression.stop
+import com.mapbox.mapboxsdk.style.expressions.Expression.zoom
 import com.mapbox.mapboxsdk.style.layers.CircleLayer
 import com.mapbox.mapboxsdk.style.layers.HeatmapLayer
 import com.mapbox.mapboxsdk.style.layers.PropertyFactory

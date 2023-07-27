@@ -15,12 +15,10 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.ui
 
-import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.stringResource
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.actions.ChangeAnimateVideoThumbnails
-import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.actions.ChangeMaxAnimatedVideoThumbnails
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.actions.SettingsAction
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.ui.state.SettingsState
 import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.R.drawable
@@ -38,16 +36,4 @@ internal fun ColumnScope.SettingsVideo(
     ) {
         action(ChangeAnimateVideoThumbnails(it))
     }
-//    AnimatedVisibility(visible = state.animateVideoThumbnails) {
-//        val range = 1f..5f
-//        SettingsSliderRow(
-//            text = { stringResource(string.max_animated_video_thumbnails, it.toInt()) },
-//            subtext = string.max_animated_video_thumbnails_description,
-//            initialValue = state.maxAnimatedVideoThumbnails.toFloat(),
-//            range = range,
-//            steps = (range.endInclusive - range.start - 1).toInt(),
-//        ) {
-//            action(ChangeMaxAnimatedVideoThumbnails(it.toInt()))
-//        }
-//    }
 }

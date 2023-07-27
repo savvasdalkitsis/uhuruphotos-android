@@ -15,7 +15,6 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.foundation.log.implementation.module
 
-import android.content.Context
 import com.savvasdalkitsis.uhuruphotos.foundation.log.implementation.NoOpTree
 import dagger.Module
 import dagger.Provides

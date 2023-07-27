@@ -65,7 +65,6 @@ inline fun <reified T> Preferences.get(key: String, defaultValue: T = null as T)
         getNullableInt(key, null) as T
     else
         getInt(key, (defaultValue as? Int) ?: 0) as T
-    T::class == Int::class -> getInt(key, defaultValue as Int) as T
     T::class == Boolean::class -> getBoolean(key, defaultValue as Boolean) as T
     else -> throw IllegalArgumentException("Unrecognized preference type requested: ${T::class}")
 }

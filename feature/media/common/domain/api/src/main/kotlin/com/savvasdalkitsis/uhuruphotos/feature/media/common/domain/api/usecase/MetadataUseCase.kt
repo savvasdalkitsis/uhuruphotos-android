@@ -17,6 +17,6 @@ package com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.usecase
 
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemMetadata
 
-interface MetadataUseCase {
+fun interface MetadataUseCase {
     suspend fun extractMetadata(url: String): MediaItemMetadata?
 }

@@ -19,7 +19,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.album.user.domain.implementation.
 import retrofit2.http.GET
 import retrofit2.http.Path
 
-interface UserAlbumService {
+fun interface UserAlbumService {
 
     @GET("/api/albums/user/{id}/")
     suspend fun getUserAlbum(@Path("id") id: String): UserAlbumServiceModel

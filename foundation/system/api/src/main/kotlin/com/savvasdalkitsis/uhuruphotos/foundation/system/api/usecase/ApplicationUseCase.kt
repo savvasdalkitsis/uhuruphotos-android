@@ -15,7 +15,7 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.foundation.system.api.usecase
 
-interface ApplicationUseCase {
+fun interface ApplicationUseCase {
 
     fun appVersion(): String
 }

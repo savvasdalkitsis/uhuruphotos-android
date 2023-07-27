@@ -15,7 +15,7 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.auth.domain.api.usecase
 
-interface AuthenticationHeadersUseCase {
+fun interface AuthenticationHeadersUseCase {
 
     fun headers(requestUrl: String): Set<Pair<String, String>>
 }

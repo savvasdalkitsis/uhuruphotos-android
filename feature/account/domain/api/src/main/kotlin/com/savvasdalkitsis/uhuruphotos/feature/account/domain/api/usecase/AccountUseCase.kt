@@ -15,6 +15,6 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.account.domain.api.usecase
 
-interface AccountUseCase {
+fun interface AccountUseCase {
     suspend fun logOut()
 }

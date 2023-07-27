@@ -43,7 +43,8 @@ open class GalleryActionsContext(
     val preferences: Preferences,
 ) {
 
-    val loading = MutableSharedFlow<GalleryMutation>()
+    private val _loading = MutableSharedFlow<GalleryMutation>()
+    val loading: Flow<GalleryMutation> get() = _loading
     var galleryId by Delegates.notNull<GalleryId>()
     private val sortingKey get() = "gallerySorting::${galleryId.serializationUniqueId}"
 
@@ -55,11 +56,11 @@ open class GalleryActionsContext(
     }
 
     suspend fun refreshGallery(effect: EffectHandler<GalleryEffect>) {
-        loading.emit(Loading(true))
+        _loading.emit(Loading(true))
         val result = galleryRefresher(galleryId.id)
         if (result is Err) {
             effect.handleEffect(ErrorLoading)
         }
-        loading.emit(Loading(false))
+        _loading.emit(Loading(false))
     }
 }

@@ -22,6 +22,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.catalogue.user.view.implementatio
 import com.savvasdalkitsis.uhuruphotos.feature.catalogue.user.view.implementation.seam.effects.UserAlbumsEffect
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.EffectHandler
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableSharedFlow
 import javax.inject.Inject
 
@@ -30,10 +31,11 @@ class UserAlbumsActionsContext @Inject constructor(
     val serverUseCase: ServerUseCase,
 ) {
 
-    val loading = MutableSharedFlow<Boolean>()
+    private val _loading = MutableSharedFlow<Boolean>()
+    val loading: Flow<Boolean> get() = _loading
 
     suspend fun refreshAlbums(effect: EffectHandler<UserAlbumsEffect>) {
-        loading.emit(true)
+        _loading.emit(true)
         val result = userAlbumsUseCase.refreshUserAlbums()
         if (result is Err) {
             effect.handleEffect(ErrorLoadingAlbums)
@@ -41,6 +43,6 @@ class UserAlbumsActionsContext @Inject constructor(
         // delaying to give ui time to receive the new albums before
         // dismissing the loading bar since no albums logic relies on that
         delay(500)
-        loading.emit(false)
+        _loading.emit(false)
     }
 }
