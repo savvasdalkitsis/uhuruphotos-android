@@ -28,7 +28,7 @@ interface RemoteMediaUseCase {
 
     fun observeFavouriteRemoteMedia(): Flow<com.github.michaelbull.result.Result<List<DbRemoteMediaItemSummary>, Throwable>>
 
-    suspend fun observeRemoteMediaItemDetails(id: String): Flow<DbRemoteMediaItemDetails>
+    fun observeRemoteMediaItemDetails(id: String): Flow<DbRemoteMediaItemDetails>
 
     suspend fun getRemoteMediaItemDetails(id: String): DbRemoteMediaItemDetails?
 

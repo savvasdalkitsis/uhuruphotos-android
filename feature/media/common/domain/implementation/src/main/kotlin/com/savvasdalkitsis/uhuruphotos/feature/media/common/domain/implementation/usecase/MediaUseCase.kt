@@ -194,7 +194,7 @@ class MediaUseCase @Inject constructor(
         return (w / h.toFloat()).takeIf { it > 0 } ?: 1f
     }
 
-    override suspend fun observeMediaItemDetails(id: MediaId<*>): Flow<MediaItemDetails> = when (id) {
+    override fun observeMediaItemDetails(id: MediaId<*>): Flow<MediaItemDetails> = when (id) {
         is Remote -> id.observeDetails()
         is Downloading -> id.remote.observeDetails()
         is Local -> id.observeDetails()
@@ -225,7 +225,7 @@ class MediaUseCase @Inject constructor(
         }
     }
 
-    private suspend fun Remote.observeDetails() =
+    private fun Remote.observeDetails() =
         remoteMediaUseCase.observeRemoteMediaItemDetails(value).map {
             it.toMediaItemDetails()
         }
@@ -233,7 +233,7 @@ class MediaUseCase @Inject constructor(
     private suspend fun Remote.getDetails() =
         remoteMediaUseCase.getRemoteMediaItemDetails(value)?.toMediaItemDetails()
 
-    private suspend fun Local.observeDetails() =
+    private fun Local.observeDetails() =
         combine(
             localMediaUseCase.observeLocalMediaItem(value),
             userUseCase.observeUser(),

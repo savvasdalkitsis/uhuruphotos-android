@@ -31,7 +31,7 @@ interface LocalMediaUseCase {
 
     suspend fun getLocalMediaItems(): LocalMediaItems
 
-    suspend fun observeLocalMediaItem(id: Long): Flow<LocalMediaItem>
+    fun observeLocalMediaItem(id: Long): Flow<LocalMediaItem>
 
     suspend fun getLocalMediaItem(id: Long): LocalMediaItem?
 

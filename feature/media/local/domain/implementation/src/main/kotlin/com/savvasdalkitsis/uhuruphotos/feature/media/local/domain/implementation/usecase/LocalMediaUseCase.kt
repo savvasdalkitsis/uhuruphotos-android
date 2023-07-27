@@ -106,7 +106,7 @@ class LocalMediaUseCase @Inject constructor(
 
     override fun Long.toContentUri(isVideo: Boolean): String = contentUri(isVideo)
 
-    override suspend fun observeLocalMediaItem(id: Long): Flow<LocalMediaItem> =
+    override fun observeLocalMediaItem(id: Long): Flow<LocalMediaItem> =
         localMediaRepository.observeItem(id).map { it.toItem() }
 
     override suspend fun getLocalMediaItem(id: Long): LocalMediaItem? =

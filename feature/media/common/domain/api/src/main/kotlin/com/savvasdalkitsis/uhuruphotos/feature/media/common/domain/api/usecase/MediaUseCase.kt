@@ -42,7 +42,7 @@ interface MediaUseCase {
 
     suspend fun List<DbRemoteMediaItemSummary>.mapToMediaItems(): Result<List<MediaItem>, Throwable>
 
-    suspend fun observeMediaItemDetails(id: MediaId<*>): Flow<MediaItemDetails>
+    fun observeMediaItemDetails(id: MediaId<*>): Flow<MediaItemDetails>
 
     suspend fun getMediaItemDetails(id: MediaId<*>): MediaItemDetails?
 
