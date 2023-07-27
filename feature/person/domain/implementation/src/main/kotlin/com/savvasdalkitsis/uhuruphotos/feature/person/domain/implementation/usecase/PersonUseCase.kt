@@ -74,5 +74,7 @@ class PersonUseCase @Inject constructor(
         rating = rating,
         aspectRatio = aspectRatio,
         isVideo = isVideo,
+        lat = null,
+        lon = null,
     )
 }

@@ -72,6 +72,8 @@ internal class AutoAlbumUseCase @Inject constructor(
         rating = rating,
         aspectRatio = 1f,
         isVideo = video == true,
+        lat = null,
+        lon = null,
     )
 }
 

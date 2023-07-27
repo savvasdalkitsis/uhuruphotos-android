@@ -24,4 +24,6 @@ data class MediaCollectionSource(
     val rating: Int?,
     val aspectRatio: Float?,
     val isVideo: Boolean,
+    val lat: String?,
+    val lon: String?,
 )

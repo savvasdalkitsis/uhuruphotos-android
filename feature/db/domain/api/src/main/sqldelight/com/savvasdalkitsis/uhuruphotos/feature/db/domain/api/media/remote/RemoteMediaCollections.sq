@@ -19,9 +19,12 @@ SELECT
  summary.dominantColor,
  summary.rating,
  summary.aspectRatio,
- summary.type
+ summary.type,
+ details.gpsLat,
+ details.gpsLon
 FROM remoteMediaCollections
 LEFT JOIN remoteMediaItemSummary AS summary ON remoteMediaCollections.id = summary.containerId
+LEFT JOIN remoteMediaItemDetails AS details ON summary.id = details.imageHash
 GROUP BY summary.id
 ORDER BY summary.date DESC
 LIMIT :limit;

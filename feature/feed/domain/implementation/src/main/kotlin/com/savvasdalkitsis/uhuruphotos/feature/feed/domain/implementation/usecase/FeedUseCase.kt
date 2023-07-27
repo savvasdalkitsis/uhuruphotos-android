@@ -128,6 +128,8 @@ internal class FeedUseCase @Inject constructor(
         rating = rating,
         aspectRatio = aspectRatio,
         isVideo = isVideo,
+        lat = gpsLat,
+        lon = gpsLon,
     )
 
     private suspend fun Group<String, MediaCollectionSource>.toCollection() =

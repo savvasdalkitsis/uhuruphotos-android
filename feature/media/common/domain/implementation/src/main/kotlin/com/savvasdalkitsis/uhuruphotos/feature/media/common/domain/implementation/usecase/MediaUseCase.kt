@@ -408,11 +408,20 @@ class MediaUseCase @Inject constructor(
                                 }
                                 .getOrElse { false },
                             ratio = item.aspectRatio ?: 1.0f,
+                            latLng = (item.lat?.toDoubleOrNull() to item.lon?.toDoubleOrNull()).notNull()
                         )
                     }
                 }
             }
         )
+    }
+
+    private fun <T> Pair<T?, T?>.notNull(): Pair<T, T>? {
+        val (k, v) = this
+        return when {
+            k != null && v != null -> k to v
+            else -> null
+        }
     }
 
     override suspend fun refreshHiddenMedia() =

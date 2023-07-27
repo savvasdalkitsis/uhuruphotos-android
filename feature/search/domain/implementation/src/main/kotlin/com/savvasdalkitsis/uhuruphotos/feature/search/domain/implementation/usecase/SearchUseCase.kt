@@ -76,6 +76,8 @@ class SearchUseCase @Inject constructor(
             aspectRatio = aspectRatio,
             isVideo = isVideo,
             rating = null,
+            lat = null,
+            lon = null,
         )
     }
 
