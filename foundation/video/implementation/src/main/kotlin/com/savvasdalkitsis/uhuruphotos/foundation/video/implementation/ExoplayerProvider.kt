@@ -18,9 +18,7 @@ package com.savvasdalkitsis.uhuruphotos.foundation.video.implementation
 import android.content.Context
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
-import androidx.compose.runtime.cache
-import androidx.compose.runtime.currentComposer
-import androidx.compose.runtime.mutableStateMapOf
+import androidx.compose.runtime.remember
 import androidx.media3.datasource.cache.CacheDataSource
 import androidx.media3.exoplayer.ExoPlayer
 import androidx.media3.exoplayer.source.DefaultMediaSourceFactory
@@ -40,32 +38,20 @@ class ExoplayerProvider @Inject constructor(
     private val cacheDataSourceFactory: CacheDataSource.Factory,
 ) : ExoplayerProvider {
 
-    private val animatedUrls = mutableStateMapOf<String?, ExoPlayer>()
-
     @Composable
-    override fun createExoplayer(url: String): ExoPlayer =
-        rememberUnreleased(url) {
-            newPlayer(url)
-        }.disposable(url)
-
-    @Composable
-    private fun ExoPlayer.disposable(url: String?) = apply {
+    override fun createExoplayer(url: String): ExoPlayer = remember(url) {
+        newPlayer(url)
+    }.apply {
         DisposableEffect(url) {
             onDispose {
-                animatedUrls.remove(url)
-                release(this@disposable)
+                release(this@apply)
             }
         }
     }
 
-    private fun newPlayer(url: String): ExoPlayer {
-        val type = ExoplayerType.fromUrl(url)
-        return when (type) {
-            Remote -> newRemotePlayer()
-            Local -> newLocalPlayer()
-        }.apply {
-            animatedUrls[url] = this
-        }
+    private fun newPlayer(url: String): ExoPlayer = when (ExoplayerType.fromUrl(url)) {
+        Remote -> newRemotePlayer()
+        Local -> newLocalPlayer()
     }
 
     private fun release(exoPlayer: ExoPlayer) {
@@ -78,10 +64,5 @@ class ExoplayerProvider @Inject constructor(
         .build()
 
     private fun newLocalPlayer() = ExoPlayer.Builder(context).build()
-
-
-    @Composable
-    private fun rememberUnreleased(url: String, block: () -> ExoPlayer): ExoPlayer =
-        currentComposer.cache(currentComposer.changed(url) || !animatedUrls.containsKey(url), block)
 
 }
