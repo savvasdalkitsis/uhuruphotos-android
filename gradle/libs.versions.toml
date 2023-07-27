@@ -18,7 +18,7 @@ okhttp = "5.0.0-alpha.11"
 org-jetbrains-kotlinx = "1.7.3"
 permissions = "1.2.0"
 retrofit = "2.9.0"
-sqldelight = "2.0.0-rc02"
+sqldelight = "2.0.0"
 
 [libraries]
 about = "com.mikepenz:aboutlibraries-compose:10.8.3"
