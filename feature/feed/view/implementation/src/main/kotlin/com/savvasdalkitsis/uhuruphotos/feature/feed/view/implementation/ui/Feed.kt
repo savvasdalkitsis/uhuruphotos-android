@@ -20,26 +20,12 @@ import androidx.compose.foundation.layout.Arrangement.spacedBy
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.lazy.staggeredgrid.rememberLazyStaggeredGridState
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.Stable
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.composed
-import androidx.compose.ui.draw.drawWithCache
-import androidx.compose.ui.geometry.Offset
-import androidx.compose.ui.geometry.Size
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.SolidColor
-import androidx.compose.ui.graphics.drawscope.Fill
-import androidx.compose.ui.graphics.drawscope.Stroke
-import androidx.compose.ui.graphics.lerp
-import androidx.compose.ui.platform.debugInspectorInfo
 import androidx.compose.ui.unit.dp
-import com.bumble.appyx.navmodel.backstack.BackStack
 import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.Collage
 import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.PredefinedCollageDisplay
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.api.ui.state.FeedMediaItemSyncDisplay.ALWAYS_OFF
@@ -65,18 +51,13 @@ import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.DeletePe
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.TrashPermissionDialog
 import com.savvasdalkitsis.uhuruphotos.feature.media.local.view.api.ui.LocalMediaAccessRequestBanner
 import com.savvasdalkitsis.uhuruphotos.foundation.compose.api.blurIf
-import com.savvasdalkitsis.uhuruphotos.foundation.compose.api.recomposeHighlighter
-import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.NavigationRoute
 import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.SwipeRefresh
 import dev.shreyaspatil.permissionflow.compose.rememberPermissionFlowRequestLauncher
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
-import kotlin.math.min
 
 @Composable
 internal fun Feed(
-    backStack: BackStack<NavigationRoute>,
     state: FeedState,
     isShowingPopUp: Boolean,
     action: (FeedAction) -> Unit,
@@ -108,10 +89,9 @@ internal fun Feed(
         title = {
             FeedTitle(action, ::scrollToTop, state.hasSelection, state.selectedCelCount)
         },
-        backStack = backStack,
-        showLibrary = state.showLibrary,
         homeFeedDisplay = state.collageState.collageDisplay,
         selectionMode = state.hasSelection,
+        showLibrary = state.showLibrary,
         actionBarContent = {
             FeedActionBar(
                 state.shouldShowShareIcon,

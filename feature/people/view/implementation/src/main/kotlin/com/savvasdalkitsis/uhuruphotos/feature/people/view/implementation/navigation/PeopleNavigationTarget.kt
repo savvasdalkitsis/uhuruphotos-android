@@ -16,12 +16,10 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.feature.people.view.implementation.navigation
 
 import androidx.compose.runtime.Composable
-import com.bumble.appyx.navmodel.backstack.BackStack
 import com.savvasdalkitsis.uhuruphotos.feature.people.view.api.navigation.PeopleNavigationRoute
 import com.savvasdalkitsis.uhuruphotos.feature.people.view.implementation.ui.People
 import com.savvasdalkitsis.uhuruphotos.feature.people.view.implementation.viewmodel.PeopleViewModel
 import com.savvasdalkitsis.uhuruphotos.feature.settings.domain.api.usecase.SettingsUseCase
-import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.NavigationRoute
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.NavigationTarget
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.NavigationTargetBuilder
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.NavigationTargetRegistry
@@ -38,7 +36,7 @@ class PeopleNavigationTarget @Inject constructor(
 ) : NavigationTarget<PeopleNavigationRoute>(PeopleNavigationRoute::class, registry) {
 
     @Composable
-    override fun View(route: PeopleNavigationRoute, backStack: BackStack<NavigationRoute>) = with(navigationTargetBuilder) {
+    override fun View(route: PeopleNavigationRoute) = with(navigationTargetBuilder) {
         ViewModelView(
             themeMode = settingsUseCase.observeThemeModeState(),
             route = route,

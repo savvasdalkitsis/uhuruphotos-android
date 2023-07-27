@@ -16,11 +16,9 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.feature.trash.view.implementation.navigation
 
 import androidx.compose.runtime.Composable
-import com.bumble.appyx.navmodel.backstack.BackStack
 import com.savvasdalkitsis.uhuruphotos.feature.settings.domain.api.usecase.SettingsUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.trash.view.api.navigation.TrashNavigationRoute
 import com.savvasdalkitsis.uhuruphotos.feature.trash.view.implementation.viewmodel.TrashViewModel
-import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.NavigationRoute
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.NavigationTarget
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.NavigationTargetBuilder
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.NavigationTargetRegistry
@@ -37,7 +35,7 @@ internal class TrashNavigationTarget @Inject constructor(
 ) : NavigationTarget<TrashNavigationRoute>(TrashNavigationRoute::class, registry) {
 
     @Composable
-    override fun View(route: TrashNavigationRoute, backStack: BackStack<NavigationRoute>) = with(navigationTargetBuilder) {
+    override fun View(route: TrashNavigationRoute) = with(navigationTargetBuilder) {
         ViewModelView(
             themeMode = settingsUseCase.observeThemeModeState(),
             route = route,

@@ -16,12 +16,10 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.feature.album.auto.view.implementation.navigation
 
 import androidx.compose.runtime.Composable
-import com.bumble.appyx.navmodel.backstack.BackStack
 import com.savvasdalkitsis.uhuruphotos.feature.album.auto.view.api.navigation.AutoAlbumNavigationRoute
 import com.savvasdalkitsis.uhuruphotos.feature.album.auto.view.implementation.viewmodel.AutoAlbumViewModel
 import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.ui.Gallery
 import com.savvasdalkitsis.uhuruphotos.feature.settings.domain.api.usecase.SettingsUseCase
-import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.NavigationRoute
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.NavigationTarget
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.NavigationTargetBuilder
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.NavigationTargetRegistry
@@ -38,7 +36,7 @@ internal class AutoAlbumNavigationTarget @Inject constructor(
 ) : NavigationTarget<AutoAlbumNavigationRoute>(AutoAlbumNavigationRoute::class, registry) {
 
     @Composable
-    override fun View(route: AutoAlbumNavigationRoute, backStack: BackStack<NavigationRoute>) = with(navigationTargetBuilder) {
+    override fun View(route: AutoAlbumNavigationRoute) = with(navigationTargetBuilder) {
         ViewModelView(
             themeMode = settingsUseCase.observeThemeModeState(),
             route = route,

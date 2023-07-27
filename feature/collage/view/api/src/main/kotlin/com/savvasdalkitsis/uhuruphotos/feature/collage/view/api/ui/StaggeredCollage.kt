@@ -39,7 +39,6 @@ import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.Cel
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.CelSelected
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.state.CelState
 import com.savvasdalkitsis.uhuruphotos.foundation.compose.api.recomposeHighlighter
-import my.nanihadesuka.compose.InternalLazyColumnScrollbar
 import my.nanihadesuka.compose.ScrollbarSelectionMode
 
 @Composable
@@ -124,7 +123,7 @@ internal fun StaggeredCollage(
             .recomposeHighlighter()
             .padding(contentPadding)
         ) {
-            LazyStaggeredGridScrollbar(
+            InternalLazyStaggeredGridScrollbar(
                 gridState = gridState,
                 thickness = 8.dp,
                 selectionMode = ScrollbarSelectionMode.Thumb,

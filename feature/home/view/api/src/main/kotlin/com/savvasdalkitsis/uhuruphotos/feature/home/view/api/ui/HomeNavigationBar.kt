@@ -29,6 +29,9 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass.Companion.Compact
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.derivedStateOf
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.painter.Painter
@@ -49,6 +52,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.home.view.api.ui.NavigationStyle.
 import com.savvasdalkitsis.uhuruphotos.feature.library.view.api.navigation.LibraryNavigationRoute
 import com.savvasdalkitsis.uhuruphotos.feature.search.view.api.navigation.SearchNavigationRoute
 import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.R.drawable
+import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.LocalBackStack
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.NavigationRoute
 import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.theme.CustomColors
@@ -65,10 +69,8 @@ fun HomeNavigationBar(
     contentPadding: PaddingValues = PaddingValues(0.dp),
     homeFeedDisplay: CollageDisplay,
     showLibrary: Boolean,
-    backStack: BackStack<NavigationRoute>,
     onReselected: () -> Unit = {},
 ) {
-    val activeRoute = backStack.activeElement
 
     when (homeNavigationStyle()) {
         BOTTOM_BAR -> {
@@ -77,8 +79,6 @@ fun HomeNavigationBar(
                 contentColor = Color.Transparent,
             ) {
                 Items(
-                    activeRoute = activeRoute,
-                    backStack = backStack,
                     homeFeedDisplay = homeFeedDisplay,
                     showLibrary = showLibrary,
                     onReselected = onReselected,
@@ -92,8 +92,6 @@ fun HomeNavigationBar(
             backgroundColor = Color.Transparent,
         ) {
             Items(
-                activeRoute = activeRoute,
-                backStack = backStack,
                 homeFeedDisplay = homeFeedDisplay,
                 showLibrary = showLibrary,
                 onReselected = onReselected,
@@ -104,16 +102,12 @@ fun HomeNavigationBar(
 
 @Composable
 private fun Items(
-    activeRoute: NavigationRoute?,
-    backStack: BackStack<NavigationRoute>,
     homeFeedDisplay: CollageDisplay,
     showLibrary: Boolean,
     onReselected: () -> Unit,
     rowScope: RowScope? = null,
 ) {
     NavItem(
-        activeRoute,
-        backStack,
         label = string.feed,
         route = FeedNavigationRoute,
         painterResource(id = homeFeedDisplay.iconResource),
@@ -121,31 +115,25 @@ private fun Items(
         rowScope,
     )
     NavItem(
-        activeRoute,
-        backStack,
         label = string.search,
         route = SearchNavigationRoute,
         icon = rememberVectorPainter(Icons.Filled.Search),
-        rowScope = rowScope,
         onReselected = onReselected,
+        rowScope = rowScope,
     )
     if (showLibrary) {
         NavItem(
-            activeRoute,
-            backStack,
             label = string.library,
             route = LibraryNavigationRoute,
             icon = painterResource(drawable.ic_photo_album),
-            rowScope = rowScope,
             onReselected = onReselected,
+            rowScope = rowScope,
         )
     }
 }
 
 @Composable
 private fun <R: NavigationRoute> NavItem(
-    activeRoute: NavigationRoute?,
-    backStack: BackStack<NavigationRoute>,
     @StringRes label: Int,
     route: R,
     icon: Painter,
@@ -155,16 +143,12 @@ private fun <R: NavigationRoute> NavItem(
     when (homeNavigationStyle()) {
         BOTTOM_BAR -> BottomNavItem(
             rowScope = rowScope!!,
-            activeRoute,
-            backStack,
             label,
             route,
             icon,
             onReselected,
         )
         NAVIGATION_RAIL -> NavRailNavItem(
-            activeRoute,
-            backStack,
             label,
             route,
             icon,
@@ -177,13 +161,15 @@ private fun <R: NavigationRoute> NavItem(
 @Composable
 private fun <R: NavigationRoute> BottomNavItem(
     rowScope: RowScope,
-    activeRoute: NavigationRoute?,
-    backStack: BackStack<NavigationRoute>,
     @StringRes label: Int,
     route: R,
     icon: Painter,
     onReselected: () -> Unit,
 ) {
+    val backStack = LocalBackStack.current
+    val activeRoute by remember {
+        derivedStateOf { backStack().activeElement }
+    }
     with(rowScope) {
         BubbleNavigationBarItem(
             title = stringResource(label),
@@ -204,13 +190,15 @@ private fun <R: NavigationRoute> BottomNavItem(
 
 @Composable
 private fun <R: NavigationRoute> NavRailNavItem(
-    activeRoute: NavigationRoute?,
-    backStack: BackStack<NavigationRoute>,
     @StringRes label: Int,
     route: R,
     icon: Painter,
     onReselected: () -> Unit,
 ) {
+    val backStack = LocalBackStack.current
+    val activeRoute by remember {
+        derivedStateOf { backStack().activeElement }
+    }
     NavigationRailItem(
         selectedContentColor = LocalContentColor.current,
         icon = { Icon(icon, contentDescription = null) },
@@ -223,13 +211,14 @@ private fun <R: NavigationRoute> NavRailNavItem(
 private fun <R: NavigationRoute> selectNavigationItem(
     activeRoute: NavigationRoute?,
     route: R,
-    backStack: BackStack<NavigationRoute>,
+    backStack: () -> BackStack<NavigationRoute>,
     onReselected: () -> Unit,
-): () -> Unit = {
-    if (activeRoute != route) {
-        backStack.singleTop(FeedNavigationRoute)
-        backStack.push(route)
-    } else {
-        onReselected()
+): () -> Unit = { with(backStack()) {
+        if (activeRoute != route) {
+            singleTop(FeedNavigationRoute)
+            push(route)
+        } else {
+            onReselected()
+        }
     }
 }

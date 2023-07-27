@@ -16,11 +16,9 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.feature.edit.view.implementation.navigation
 
 import androidx.compose.runtime.Composable
-import com.bumble.appyx.navmodel.backstack.BackStack
 import com.savvasdalkitsis.uhuruphotos.feature.edit.view.api.navigation.EditNavigationRoute
 import com.savvasdalkitsis.uhuruphotos.feature.edit.view.implementation.ui.Edit
 import com.savvasdalkitsis.uhuruphotos.feature.edit.view.implementation.viewmodel.EditViewModel
-import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.NavigationRoute
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.NavigationTarget
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.NavigationTargetBuilder
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.NavigationTargetRegistry
@@ -38,7 +36,7 @@ internal class EditNavigationTarget @Inject constructor(
 ) : NavigationTarget<EditNavigationRoute>(EditNavigationRoute::class, registry) {
 
     @Composable
-    override fun View(route: EditNavigationRoute, backStack: BackStack<NavigationRoute>) = with(navigationTargetBuilder) {
+    override fun View(route: EditNavigationRoute) = with(navigationTargetBuilder) {
         ViewModelView(
             themeMode = MutableStateFlow(ThemeMode.DARK_MODE),
             route = route,

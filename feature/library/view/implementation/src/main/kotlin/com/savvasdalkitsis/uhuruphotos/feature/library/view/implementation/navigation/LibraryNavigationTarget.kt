@@ -16,7 +16,6 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.feature.library.view.implementation.navigation
 
 import androidx.compose.runtime.Composable
-import com.bumble.appyx.navmodel.backstack.BackStack
 import com.savvasdalkitsis.uhuruphotos.feature.account.view.api.ui.AccountOverviewActionBar
 import com.savvasdalkitsis.uhuruphotos.feature.account.view.api.ui.AccountOverviewContent
 import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.PredefinedCollageDisplay
@@ -24,7 +23,6 @@ import com.savvasdalkitsis.uhuruphotos.feature.library.view.api.navigation.Libra
 import com.savvasdalkitsis.uhuruphotos.feature.library.view.implementation.ui.Library
 import com.savvasdalkitsis.uhuruphotos.feature.library.view.implementation.viewmodel.LibraryViewModel
 import com.savvasdalkitsis.uhuruphotos.feature.settings.domain.api.usecase.SettingsUseCase
-import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.NavigationRoute
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.NavigationTarget
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.NavigationTargetBuilder
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.NavigationTargetRegistry
@@ -43,7 +41,7 @@ class LibraryNavigationTarget @Inject constructor(
 ) : NavigationTarget<LibraryNavigationRoute>(LibraryNavigationRoute::class, registry) {
 
     @Composable
-    override fun View(route: LibraryNavigationRoute, backStack: BackStack<NavigationRoute>) = with(navigationTargetBuilder) {
+    override fun View(route: LibraryNavigationRoute) = with(navigationTargetBuilder) {
         ViewModelView(
             themeMode = settingsUseCase.observeThemeModeState(),
             route = route,
@@ -54,7 +52,6 @@ class LibraryNavigationTarget @Inject constructor(
                 homeFeedDisplay = PredefinedCollageDisplay.default,
                 isShowingPopUp = state.second.showAccountOverview,
                 action = { actions(Left(it)) },
-                backStack = backStack,
                 actionBarContent = {
                     AccountOverviewActionBar(state.second) {
                         actions(Right(it))

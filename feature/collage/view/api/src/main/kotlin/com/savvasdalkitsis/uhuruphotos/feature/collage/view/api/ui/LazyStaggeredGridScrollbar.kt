@@ -1,6 +1,5 @@
 package com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui
 
-
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.background
@@ -17,6 +16,7 @@ import androidx.compose.foundation.lazy.staggeredgrid.LazyStaggeredGridItemInfo
 import androidx.compose.foundation.lazy.staggeredgrid.LazyStaggeredGridState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -30,10 +30,13 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.graphics.graphicsLayer
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import my.nanihadesuka.compose.ScrollbarSelectionActionable
 import my.nanihadesuka.compose.ScrollbarSelectionMode
 import kotlin.math.floor
 
@@ -42,7 +45,7 @@ import kotlin.math.floor
  *
  * @param rightSide true -> right,  false -> left
  * @param thickness Thickness of the scrollbar thumb
- * @param padding   Padding of the scrollbar
+ * @param padding Padding of the scrollbar
  * @param thumbMinHeight Thumb minimum height proportional to total scrollbar's height (eg: 0.1 -> 10% of total)
  */
 @Composable
@@ -56,6 +59,8 @@ fun LazyStaggeredGridScrollbar(
     thumbSelectedColor: Color = Color(0xFF5281CA),
     thumbShape: Shape = CircleShape,
     selectionMode: ScrollbarSelectionMode = ScrollbarSelectionMode.Thumb,
+    selectionActionable: ScrollbarSelectionActionable = ScrollbarSelectionActionable.Always,
+    hideDelayMillis: Int = 400,
     enabled: Boolean = true,
     indicatorContent: (@Composable (index: Int, isThumbSelected: Boolean) -> Unit)? = null,
     content: @Composable () -> Unit
@@ -63,32 +68,37 @@ fun LazyStaggeredGridScrollbar(
     if (!enabled) content()
     else Box {
         content()
-        LazyStaggeredGridScrollbar(
+        InternalLazyStaggeredGridScrollbar(
             gridState = gridState,
+            modifier = Modifier,
             rightSide = rightSide,
             thickness = thickness,
             padding = padding,
             thumbMinHeight = thumbMinHeight,
             thumbColor = thumbColor,
             thumbSelectedColor = thumbSelectedColor,
+            selectionActionable = selectionActionable,
+            hideDelayMillis = hideDelayMillis,
             thumbShape = thumbShape,
-            indicatorContent = indicatorContent,
             selectionMode = selectionMode,
+            indicatorContent = indicatorContent,
         )
     }
 }
 
 /**
  * Scrollbar for LazyColumn
+ * Use this variation if you want to place the scrollbar independently of the LazyColumn position
  *
  * @param rightSide true -> right,  false -> left
  * @param thickness Thickness of the scrollbar thumb
- * @param padding   Padding of the scrollbar
+ * @param padding Padding of the scrollbar
  * @param thumbMinHeight Thumb minimum height proportional to total scrollbar's height (eg: 0.1 -> 10% of total)
  */
 @Composable
-fun LazyStaggeredGridScrollbar(
+fun InternalLazyStaggeredGridScrollbar(
     gridState: LazyStaggeredGridState,
+    modifier: Modifier = Modifier,
     rightSide: Boolean = true,
     thickness: Dp = 6.dp,
     padding: Dp = 8.dp,
@@ -97,11 +107,11 @@ fun LazyStaggeredGridScrollbar(
     thumbSelectedColor: Color = Color(0xFF5281CA),
     thumbShape: Shape = CircleShape,
     selectionMode: ScrollbarSelectionMode = ScrollbarSelectionMode.Thumb,
+    selectionActionable: ScrollbarSelectionActionable = ScrollbarSelectionActionable.Always,
+    hideDelayMillis: Int = 400,
     indicatorContent: (@Composable (index: Int, isThumbSelected: Boolean) -> Unit)? = null,
 ) {
-
-    val firstVisibleItemIndex =
-        remember { derivedStateOf { gridState.firstVisibleItemIndex } }
+    val firstVisibleItemIndex = remember { derivedStateOf { gridState.firstVisibleItemIndex } }
 
     val coroutineScope = rememberCoroutineScope()
 
@@ -126,34 +136,30 @@ fun LazyStaggeredGridScrollbar(
         }
     }
 
-    @Composable
-    fun LazyStaggeredGridItemInfo.fractionHiddenTop() = remember {
+    fun LazyStaggeredGridItemInfo.fractionHiddenTop(firstItemOffset: Int) =
+        if (size.height == 0) 0f else firstItemOffset / size.height.toFloat()
+
+    fun LazyStaggeredGridItemInfo.fractionVisibleBottom(viewportEndOffset: Int) =
+        if (size.height == 0) 0f else (viewportEndOffset - offset.y).toFloat() / size.height.toFloat()
+
+    val normalizedThumbSizeReal by remember {
         derivedStateOf {
-            if (size.height == 0) 0f else -offset.y.toFloat() / size.height.toFloat()
+            gridState.layoutInfo.let {
+                if (it.totalItemsCount == 0)
+                    return@let 0f
+
+                val firstItem = realFirstVisibleItem ?: return@let 0f
+                val firstPartial =
+                    firstItem.fractionHiddenTop(gridState.firstVisibleItemScrollOffset)
+                val lastPartial =
+                    1f - it.visibleItemsInfo.last().fractionVisibleBottom(it.viewportEndOffset)
+
+                val realSize = it.visibleItemsInfo.size - if (isStickyHeaderInAction) 1 else 0
+                val realVisibleSize = realSize.toFloat() - firstPartial - lastPartial
+                realVisibleSize / it.totalItemsCount.toFloat()
+            }
         }
     }
-
-    @Composable
-    fun LazyStaggeredGridItemInfo.fractionVisibleBottom(viewportEndOffset: Int) = remember {
-        derivedStateOf {
-            if (size.height == 0) 0f else (viewportEndOffset - offset.y).toFloat() / size.height.toFloat()
-        }
-    }
-
-    val normalizedThumbSizeReal =
-        gridState.layoutInfo.let {
-            if (it.totalItemsCount == 0)
-                return@let 0f
-
-            val firstItem = realFirstVisibleItem ?: return@let 0f
-            val firstPartial = firstItem.fractionHiddenTop().value
-            val lastPartial =
-                1f - it.visibleItemsInfo.last().fractionVisibleBottom(it.viewportEndOffset).value
-
-            val realSize = it.visibleItemsInfo.size - if (isStickyHeaderInAction) 1 else 0
-            val realVisibleSize = realSize.toFloat() - firstPartial - lastPartial
-            realVisibleSize / it.totalItemsCount.toFloat()
-        }
 
     val normalizedThumbSize by remember {
         derivedStateOf {
@@ -162,9 +168,11 @@ fun LazyStaggeredGridScrollbar(
     }
 
     fun offsetCorrection(top: Float): Float {
-        if (normalizedThumbSizeReal >= thumbMinHeight)
+        val topRealMax = (1f - normalizedThumbSizeReal).coerceIn(0f, 1f)
+        if (normalizedThumbSizeReal >= thumbMinHeight) {
             return top
-        val topRealMax = 1f - normalizedThumbSizeReal
+        }
+
         val topMax = 1f - thumbMinHeight
         return top * topMax / topRealMax
     }
@@ -177,16 +185,19 @@ fun LazyStaggeredGridScrollbar(
         return top * topRealMax / topMax
     }
 
-    val normalizedOffsetPosition =
-        gridState.layoutInfo.let {
-            if (it.totalItemsCount == 0 || it.visibleItemsInfo.isEmpty())
-                return@let 0f
+    val normalizedOffsetPosition by remember {
+        derivedStateOf {
+            gridState.layoutInfo.let {
+                if (it.totalItemsCount == 0 || it.visibleItemsInfo.isEmpty())
+                    return@let 0f
 
-            val firstItem = realFirstVisibleItem ?: return@let 0f
-            val top = firstItem
-                .run { index.toFloat() + fractionHiddenTop().value } / it.totalItemsCount.toFloat()
-            offsetCorrection(top)
+                val firstItem = realFirstVisibleItem ?: return@let 0f
+                val top = firstItem
+                    .run { index.toFloat() + fractionHiddenTop(gridState.firstVisibleItemScrollOffset) } / it.totalItemsCount.toFloat()
+                offsetCorrection(top)
+            }
         }
+    }
 
     fun setDragOffset(value: Float) {
         val maxValue = (1f - normalizedThumbSize).coerceAtLeast(0f)
@@ -212,86 +223,106 @@ fun LazyStaggeredGridScrollbar(
 
     val isInAction = gridState.isScrollInProgress || isSelected
 
+    val isInActionSelectable = remember { mutableStateOf(isInAction) }
+    val durationAnimationMillis: Int = 500
+    LaunchedEffect(isInAction) {
+        if (isInAction) {
+            isInActionSelectable.value = true
+        } else {
+            delay(timeMillis = durationAnimationMillis.toLong() + hideDelayMillis.toLong())
+            isInActionSelectable.value = false
+        }
+    }
+
     val alpha by animateFloatAsState(
         targetValue = if (isInAction) 1f else 0f,
         animationSpec = tween(
-            durationMillis = if (isInAction) 75 else 500,
-            delayMillis = if (isInAction) 0 else 500
-        )
+            durationMillis = if (isInAction) 75 else durationAnimationMillis,
+            delayMillis = if (isInAction) 0 else hideDelayMillis
+        ),
+        label = "scrollbar alpha value"
     )
 
     val displacement by animateFloatAsState(
         targetValue = if (isInAction) 0f else 14f,
         animationSpec = tween(
-            durationMillis = if (isInAction) 75 else 500,
-            delayMillis = if (isInAction) 0 else 500
-        )
+            durationMillis = if (isInAction) 75 else durationAnimationMillis,
+            delayMillis = if (isInAction) 0 else hideDelayMillis
+        ),
+        label = "scrollbar displacement value"
     )
 
     BoxWithConstraints(
-        Modifier
-            .alpha(alpha)
+        modifier = modifier
             .fillMaxWidth()
     ) {
-        if (indicatorContent != null) BoxWithConstraints(
-            Modifier
+        val maxHeightFloat = constraints.maxHeight.toFloat()
+        ConstraintLayout(
+            modifier = Modifier
                 .align(if (rightSide) Alignment.TopEnd else Alignment.TopStart)
-                .fillMaxHeight()
-                .graphicsLayer {
-                    translationX = (if (rightSide) displacement.dp else -displacement.dp).toPx()
-                    translationY = constraints.maxHeight.toFloat() * normalizedOffsetPosition
-                }
+                .graphicsLayer(
+                    translationX = with(LocalDensity.current) { (if (rightSide) displacement.dp else -displacement.dp).toPx() },
+                    translationY = maxHeightFloat * normalizedOffsetPosition
+                )
         ) {
-            ConstraintLayout(
-                Modifier.align(Alignment.TopEnd)
-            ) {
-                val (box, content) = createRefs()
-                Box(
-                    Modifier
-                        .fillMaxHeight(normalizedThumbSize)
-                        .padding(
-                            start = if (rightSide) 0.dp else padding,
-                            end = if (!rightSide) 0.dp else padding,
-                        )
-                        .width(thickness)
-                        .constrainAs(box) {
-                            if (rightSide) end.linkTo(parent.end)
-                            else start.linkTo(parent.start)
-                        }
-                ) {}
-
-                Box(
-                    Modifier.constrainAs(content) {
-                        top.linkTo(box.top)
-                        bottom.linkTo(box.bottom)
-                        if (rightSide) end.linkTo(box.start)
-                        else start.linkTo(box.end)
+            val (box, content) = createRefs()
+            Box(
+                modifier = Modifier
+                    .padding(
+                        start = if (rightSide) 0.dp else padding,
+                        end = if (!rightSide) 0.dp else padding,
+                    )
+                    .clip(thumbShape)
+                    .width(thickness)
+                    .fillMaxHeight(normalizedThumbSize)
+                    .alpha(alpha)
+                    .background(if (isSelected) thumbSelectedColor else thumbColor)
+                    .constrainAs(box) {
+                        if (rightSide) end.linkTo(parent.end)
+                        else start.linkTo(parent.start)
                     }
+            )
+
+            if (indicatorContent != null) {
+                Box(
+                    modifier = Modifier
+                        .alpha(alpha)
+                        .constrainAs(content) {
+                            top.linkTo(box.top)
+                            bottom.linkTo(box.bottom)
+                            if (rightSide) end.linkTo(box.start)
+                            else start.linkTo(box.end)
+                        }
                 ) {
                     indicatorContent(
-                        firstVisibleItemIndex.value,
-                        isSelected
+                        index = firstVisibleItemIndex.value,
+                        isThumbSelected = isSelected
                     )
                 }
             }
         }
 
-        BoxWithConstraints(
-            Modifier
+        @Composable
+        fun DraggableBar() = Box(
+            modifier = Modifier
                 .align(if (rightSide) Alignment.TopEnd else Alignment.TopStart)
+                .width(padding * 2 + thickness)
                 .fillMaxHeight()
                 .draggable(
                     state = rememberDraggableState { delta ->
+                        val displace = delta // side effect ?
                         if (isSelected) {
-                            setScrollOffset(dragOffset + delta / constraints.maxHeight.toFloat())
+                            setScrollOffset(dragOffset + displace / maxHeightFloat)
                         }
                     },
                     orientation = Orientation.Vertical,
                     enabled = selectionMode != ScrollbarSelectionMode.Disabled,
                     startDragImmediately = true,
-                    onDragStarted = { offset ->
-                        val newOffset = offset.y / constraints.maxHeight.toFloat()
+                    onDragStarted = onDragStarted@{ offset ->
+                        if (maxHeightFloat <= 0f) return@onDragStarted
+                        val newOffset = offset.y / maxHeightFloat
                         val currentOffset = normalizedOffsetPosition
+
                         when (selectionMode) {
                             ScrollbarSelectionMode.Full -> {
                                 if (newOffset in currentOffset..(currentOffset + normalizedThumbSize))
@@ -300,12 +331,14 @@ fun LazyStaggeredGridScrollbar(
                                     setScrollOffset(newOffset)
                                 isSelected = true
                             }
+
                             ScrollbarSelectionMode.Thumb -> {
                                 if (newOffset in currentOffset..(currentOffset + normalizedThumbSize)) {
                                     setDragOffset(currentOffset)
                                     isSelected = true
                                 }
                             }
+
                             ScrollbarSelectionMode.Disabled -> Unit
                         }
                     },
@@ -313,23 +346,13 @@ fun LazyStaggeredGridScrollbar(
                         isSelected = false
                     }
                 )
-                .graphicsLayer {
-                    translationX = (if (rightSide) displacement.dp else -displacement.dp).toPx()
-                }
-        ) {
-            Box(
-                Modifier
-                    .align(Alignment.TopEnd)
-                    .graphicsLayer {
-                        translationY = constraints.maxHeight.toFloat() * normalizedOffsetPosition
-                    }
-                    .padding(horizontal = padding)
-                    .width(thickness)
-                    .clip(thumbShape)
-                    .background(if (isSelected) thumbSelectedColor else thumbColor)
-                    .fillMaxHeight(normalizedThumbSize)
-            )
-        }
+        )
 
+        if (
+            when (selectionActionable) {
+                ScrollbarSelectionActionable.Always -> true
+                ScrollbarSelectionActionable.WhenVisible -> isInActionSelectable.value
+            }
+        ) { DraggableBar() }
     }
 }

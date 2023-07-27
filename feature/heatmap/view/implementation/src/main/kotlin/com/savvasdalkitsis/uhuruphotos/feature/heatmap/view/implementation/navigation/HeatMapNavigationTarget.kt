@@ -16,12 +16,10 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.feature.heatmap.view.implementation.navigation
 
 import androidx.compose.runtime.Composable
-import com.bumble.appyx.navmodel.backstack.BackStack
 import com.savvasdalkitsis.uhuruphotos.api.heatmap.navigation.HeatMapNavigationRoute
 import com.savvasdalkitsis.uhuruphotos.feature.heatmap.view.implementation.ui.HeatMap
 import com.savvasdalkitsis.uhuruphotos.feature.heatmap.view.implementation.viewmodel.HeatMapViewModel
 import com.savvasdalkitsis.uhuruphotos.feature.settings.domain.api.usecase.SettingsUseCase
-import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.NavigationRoute
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.NavigationTarget
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.NavigationTargetBuilder
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.NavigationTargetRegistry
@@ -38,7 +36,7 @@ class HeatMapNavigationTarget @Inject constructor(
 ) : NavigationTarget<HeatMapNavigationRoute>(HeatMapNavigationRoute::class, registry) {
 
     @Composable
-    override fun View(route: HeatMapNavigationRoute, backStack: BackStack<NavigationRoute>) = with(navigationTargetBuilder) {
+    override fun View(route: HeatMapNavigationRoute) = with(navigationTargetBuilder) {
         ViewModelView(
             themeMode = settingsUseCase.observeThemeModeState(),
             route = route,

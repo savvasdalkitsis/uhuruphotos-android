@@ -23,14 +23,12 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import com.bumble.appyx.navmodel.backstack.BackStack
 import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.CollageDisplay
 import com.savvasdalkitsis.uhuruphotos.feature.home.view.api.ui.HomeScaffold
 import com.savvasdalkitsis.uhuruphotos.feature.library.view.implementation.seam.actions.LibraryAction
 import com.savvasdalkitsis.uhuruphotos.feature.library.view.implementation.seam.actions.Refresh
 import com.savvasdalkitsis.uhuruphotos.feature.library.view.implementation.ui.state.LibraryState
 import com.savvasdalkitsis.uhuruphotos.foundation.compose.api.blurIf
-import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.NavigationRoute
 import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.FullProgressBar
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.Logo
@@ -42,7 +40,6 @@ internal fun Library(
     homeFeedDisplay: CollageDisplay,
     isShowingPopUp: Boolean,
     action: (LibraryAction) -> Unit,
-    backStack: BackStack<NavigationRoute>,
     actionBarContent: @Composable () -> Unit,
     additionalContent: @Composable () -> Unit,
 ) {
@@ -57,12 +54,11 @@ internal fun Library(
                 Text(stringResource(string.library))
             }
         },
+        homeFeedDisplay = homeFeedDisplay,
+        showLibrary = true,
         actionBarContent = {
            actionBarContent()
         },
-        showLibrary = true,
-        backStack = backStack,
-        homeFeedDisplay = homeFeedDisplay,
     ) { contentPadding ->
         when {
             state.loading
