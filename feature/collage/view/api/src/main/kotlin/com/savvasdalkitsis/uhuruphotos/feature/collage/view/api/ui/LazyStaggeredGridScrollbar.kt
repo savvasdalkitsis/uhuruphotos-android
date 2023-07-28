@@ -294,10 +294,7 @@ fun InternalLazyStaggeredGridScrollbar(
                             else start.linkTo(box.end)
                         }
                 ) {
-                    indicatorContent(
-                        index = firstVisibleItemIndex.value,
-                        isThumbSelected = isSelected
-                    )
+                    indicatorContent(firstVisibleItemIndex.value, isSelected)
                 }
             }
         }
