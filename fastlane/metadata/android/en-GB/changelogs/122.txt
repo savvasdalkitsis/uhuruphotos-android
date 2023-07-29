@@ -1,0 +1,5 @@
+* Remote media now showing in heat map correctly
+* Info button now always displayed in lightbox (swipe up action always enabled too)
+* Fixing a bug with calculating local media hashes
+* Some performance improvements
+* Updating to latest versions of dependencies
