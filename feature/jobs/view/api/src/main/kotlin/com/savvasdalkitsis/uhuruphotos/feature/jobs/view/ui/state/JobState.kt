@@ -32,6 +32,7 @@ val Map<Job, JobStatus>.toJobState get() = map { (job, status) ->
             Job.FEED_SYNC -> string.full_feed_sync
             Job.PRECACHE_THUMBNAILS -> string.precache_thumbnails
             Job.LOCAL_MEDIA_SYNC -> string.local_media_sync
+            Job.FEED_DETAILS_SYNC -> string.full_feed_details_sync
         }),
         job = job,
         status = status,

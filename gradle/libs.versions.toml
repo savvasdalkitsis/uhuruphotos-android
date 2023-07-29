@@ -123,6 +123,7 @@ play = "com.google.android.gms:play-services-base:18.2.0"
 recasa = "com.github.sebaslogen.resaca:resaca:2.4.6"
 reorder = "org.burnoutcrew.composereorderable:reorderable:0.9.6"
 result = "com.michael-bull.kotlin-result:kotlin-result:1.1.18"
+result-coroutines = "com.michael-bull.kotlin-result:kotlin-result-coroutines:1.1.18"
 retrofit-core = { module = "com.squareup.retrofit2:retrofit", version.ref = "retrofit" }
 retrofit-moshi = { module = "com.squareup.retrofit2:converter-moshi", version.ref = "retrofit" }
 scrollbar = "com.github.nanihadesuka:LazyColumnScrollbar:1.7.2"

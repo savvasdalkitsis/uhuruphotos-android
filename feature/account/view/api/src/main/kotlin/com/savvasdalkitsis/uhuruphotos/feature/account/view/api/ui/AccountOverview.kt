@@ -31,6 +31,8 @@ import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -56,7 +58,9 @@ import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.R.drawable
 import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.theme.PreviewAppTheme
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.ActionIcon
+import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.CollapsibleGroup
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.SectionHeader
+import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.state.CollapsibleGroupState
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.state.Title
 
 @Composable
@@ -76,10 +80,11 @@ internal fun AccountOverview(
             .recomposeHighlighter()
             .defaultMinSize(minHeight = 120.dp)
             .fillMaxWidth()
-            .padding(16.dp),
+            .padding(vertical = 16.dp),
         verticalArrangement = Arrangement.spacedBy(16.dp)
     ) {
         Row(
+            modifier = Modifier.padding(horizontal = 16.dp),
             horizontalArrangement = Arrangement.spacedBy(8.dp),
             verticalAlignment = Alignment.CenterVertically,
         ) {
@@ -113,18 +118,26 @@ internal fun AccountOverview(
                 contentDescription = stringResource(string.close)
             )
         }
-        Column {
-            SectionHeader(title = stringResource(string.jobs))
-            Jobs(
-                jobs = state.jobs,
-                onStartJob = onStartJob,
-                onCancelJob = onCancelJob,
-            )
+        Column(
+            modifier = Modifier
+                .padding(horizontal = 8.dp),
+        ) {
+            val collapsed = remember {
+                mutableStateOf(false)
+            }
+            CollapsibleGroup(groupState = CollapsibleGroupState(string.jobs, collapsed)) {
+                Jobs(
+                    jobs = state.jobs,
+                    onStartJob = onStartJob,
+                    onCancelJob = onCancelJob,
+                )
+            }
         }
         OutlinedButton(
             modifier = Modifier
                 .recomposeHighlighter()
-                .fillMaxWidth(),
+                .fillMaxWidth()
+                .padding(horizontal = 16.dp),
             onClick = onAboutClicked,
         ) {
             Icon(
@@ -137,7 +150,8 @@ internal fun AccountOverview(
         Row(
             modifier = Modifier
                 .recomposeHighlighter()
-                .fillMaxWidth(),
+                .fillMaxWidth()
+                .padding(horizontal = 16.dp),
             horizontalArrangement = spacedBy(8.dp),
         ) {
             OutlinedButton(

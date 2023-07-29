@@ -22,12 +22,13 @@ import com.savvasdalkitsis.uhuruphotos.foundation.preferences.api.Preferences
 import com.savvasdalkitsis.uhuruphotos.foundation.preferences.api.get
 import com.savvasdalkitsis.uhuruphotos.foundation.preferences.api.set
 import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
+import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.state.CollapsibleGroupState
 import javax.inject.Inject
 
 class SettingsViewStateController @Inject constructor(
     private val preferences: Preferences,
 ) {
-    private val allGroups = mutableSetOf<SettingsGroupState>()
+    private val allGroups = mutableSetOf<CollapsibleGroupState>()
 
     val ui = group(string.ui, "settings:group:ui")
     val uiFeed = group(string.feed, "settings:group:ui:feed")
@@ -64,7 +65,7 @@ class SettingsViewStateController @Inject constructor(
     private fun group(
         @StringRes title: Int,
         key: String,
-    ): SettingsGroupState = SettingsGroupState(title, preferencesState(key))
+    ): CollapsibleGroupState = CollapsibleGroupState(title, preferencesState(key))
         .also { allGroups += it }
 
     private fun preferencesState(key: String) = object : MutableState<Boolean> {

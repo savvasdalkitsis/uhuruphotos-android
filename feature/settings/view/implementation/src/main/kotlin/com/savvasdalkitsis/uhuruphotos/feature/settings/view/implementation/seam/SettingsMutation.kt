@@ -122,7 +122,7 @@ sealed class SettingsMutation(
         )
     })
 
-    data class DisplayFeedDaystoRefresh(val days: Int): SettingsMutation({
+    data class DisplayFeedDaysToRefresh(val days: Int): SettingsMutation({
         it.copy(
             feedDaysToRefresh = days,
         )
@@ -223,6 +223,10 @@ sealed class SettingsMutation(
 
     data class SetFullSyncProgressVisibility(val show: Boolean) : SettingsMutation({
         it.copy(shouldShowFeedSyncProgress = show)
+    })
+
+    data class SetFeedDetailsSyncProgressVisibility(val show: Boolean) : SettingsMutation({
+        it.copy(shouldShowFeedDetailsSyncProgress = show)
     })
 
     data class SetPrecacheProgressVisibility(val show: Boolean) : SettingsMutation({

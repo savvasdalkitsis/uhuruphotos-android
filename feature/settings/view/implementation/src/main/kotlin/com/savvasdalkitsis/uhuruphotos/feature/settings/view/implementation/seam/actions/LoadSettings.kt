@@ -52,7 +52,7 @@ data object LoadSettings : SettingsAction() {
         settingsUseCase.observeFeedSyncFrequency()
             .map(SettingsMutation::DisplayFeedSyncFrequency),
         settingsUseCase.observeFeedDaysToRefresh()
-            .map(SettingsMutation::DisplayFeedDaystoRefresh),
+            .map(SettingsMutation::DisplayFeedDaysToRefresh),
         settingsUseCase.observeFullSyncNetworkRequirements()
             .map(SettingsMutation::DisplayFullSyncNetworkRequirements),
         settingsUseCase.observeFullSyncRequiresCharging()
@@ -91,6 +91,8 @@ data object LoadSettings : SettingsAction() {
         },
         settingsUseCase.observeShouldShowFeedSyncProgress()
             .map(SettingsMutation::SetFullSyncProgressVisibility),
+        settingsUseCase.observeShouldShowFeedDetailsSyncProgress()
+            .map(SettingsMutation::SetFeedDetailsSyncProgressVisibility),
         settingsUseCase.observeShouldShowPrecacheProgress()
             .map(SettingsMutation::SetPrecacheProgressVisibility),
         settingsUseCase.observeShouldShowLocalSyncProgress()

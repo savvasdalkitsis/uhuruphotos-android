@@ -18,5 +18,6 @@ package com.savvasdalkitsis.uhuruphotos.feature.jobs.domain.api.model
 enum class Job(val order: Int) {
     FEED_SYNC(0),
     PRECACHE_THUMBNAILS(1),
-    LOCAL_MEDIA_SYNC(2);
+    LOCAL_MEDIA_SYNC(2),
+    FEED_DETAILS_SYNC(3),
 }

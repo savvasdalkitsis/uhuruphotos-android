@@ -30,7 +30,7 @@ data object RefreshFeed : FeedAction() {
         effect: EffectHandler<FeedEffect>
     ) = flow {
         emit(StartRefreshing)
-        feedUseCase.refreshFeed(shallow = true)
+        feedWorkScheduler.scheduleFeedRefreshNow(shallow = true)
         delay(1000)
         emit(StopRefreshing)
     }

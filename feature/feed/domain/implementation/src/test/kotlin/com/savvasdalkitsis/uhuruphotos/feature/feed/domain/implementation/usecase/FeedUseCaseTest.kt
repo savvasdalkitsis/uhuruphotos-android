@@ -17,7 +17,7 @@ package com.savvasdalkitsis.uhuruphotos.feature.feed.domain.implementation.useca
 
 import app.cash.turbine.test
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.media.remote.GetRemoteMediaCollections
-import com.savvasdalkitsis.uhuruphotos.feature.feed.domain.api.worker.FeedImmediateWorkScheduler
+import com.savvasdalkitsis.uhuruphotos.feature.feed.domain.api.worker.FeedWorkScheduler
 import com.savvasdalkitsis.uhuruphotos.feature.feed.domain.implementation.repository.FeedRepository
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.TestMedia.mediaCollection
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.TestMedia.mediaItem
@@ -43,14 +43,14 @@ import org.junit.Test
 class FeedUseCaseTest {
 
     private val feedRepository = mockk<FeedRepository>(relaxed = true)
-    private val feedImmediateWorkScheduler = mockk<FeedImmediateWorkScheduler>(relaxed = true)
+    private val feedWorkScheduler = mockk<FeedWorkScheduler>(relaxed = true)
     private val mediaUseCase = mockk<MediaUseCase>(relaxed = true)
     private val downloadUseCase = mockk<DownloadUseCase>(relaxed = true)
     private val preferences = mockk<Preferences>(relaxed = true)
     private val underTest = FeedUseCase(
         feedRepository,
         mediaUseCase,
-        feedImmediateWorkScheduler,
+        feedWorkScheduler,
         downloadUseCase,
         preferences,
     )
@@ -79,7 +79,7 @@ class FeedUseCaseTest {
     @Test
     fun `ignores errors when refreshing feed after observing`() = runBlocking {
         feedRepository.reportsHavingNoAlbums()
-        every { feedImmediateWorkScheduler.scheduleFeedRefreshNow(false) } throws IllegalStateException()
+        every { feedWorkScheduler.scheduleFeedRefreshNow(false) } throws IllegalStateException()
 
         underTest.observeFeed().collect()
     }
@@ -90,7 +90,7 @@ class FeedUseCaseTest {
 
         underTest.observeFeed().collect()
 
-        verify { feedImmediateWorkScheduler.scheduleFeedRefreshNow(false) }
+        verify { feedWorkScheduler.scheduleFeedRefreshNow(false) }
     }
 
     @Test
@@ -99,7 +99,7 @@ class FeedUseCaseTest {
 
         underTest.observeFeed().collect()
 
-        verify { feedImmediateWorkScheduler wasNot Called }
+        verify { feedWorkScheduler wasNot Called }
     }
 
     @Test

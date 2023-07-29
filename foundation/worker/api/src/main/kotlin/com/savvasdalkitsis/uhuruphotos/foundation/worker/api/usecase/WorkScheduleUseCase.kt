@@ -17,7 +17,9 @@ package com.savvasdalkitsis.uhuruphotos.foundation.worker.api.usecase
 
 import androidx.work.BackoffPolicy
 import androidx.work.CoroutineWorker
+import androidx.work.Data
 import androidx.work.ExistingPeriodicWorkPolicy
+import androidx.work.ExistingWorkPolicy
 import androidx.work.NetworkType
 import java.util.concurrent.TimeUnit
 import kotlin.reflect.KClass
@@ -37,6 +39,17 @@ interface WorkScheduleUseCase {
         networkRequirement: NetworkType = NetworkType.CONNECTED,
         requiresCharging: Boolean = false,
         existingPeriodicWorkPolicy: ExistingPeriodicWorkPolicy = ExistingPeriodicWorkPolicy.CANCEL_AND_REENQUEUE,
+    )
+
+    fun <W: CoroutineWorker> scheduleNow(
+        workName: String,
+        klass: KClass<W>,
+        existingWorkPolicy: ExistingWorkPolicy = ExistingWorkPolicy.REPLACE,
+        backoffPolicy: BackoffPolicy = BackoffPolicy.EXPONENTIAL,
+        backoffDelay: Long = 1,
+        backoffTimeUnit: TimeUnit = TimeUnit.MINUTES,
+        networkRequirement: NetworkType = NetworkType.CONNECTED,
+        params: Data.Builder.() -> Data.Builder = { this },
     )
 
     fun cancelAllScheduledWork()

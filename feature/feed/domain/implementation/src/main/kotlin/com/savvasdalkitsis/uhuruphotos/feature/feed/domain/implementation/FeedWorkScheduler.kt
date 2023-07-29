@@ -16,8 +16,11 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.feature.feed.domain.implementation
 
 import androidx.work.ExistingPeriodicWorkPolicy
+import androidx.work.ExistingWorkPolicy
+import androidx.work.NetworkType
 import androidx.work.WorkInfo
 import com.savvasdalkitsis.uhuruphotos.feature.feed.domain.api.worker.FeedWorkScheduler
+import com.savvasdalkitsis.uhuruphotos.feature.feed.domain.implementation.worker.FeedDetailsDownloadWorker
 import com.savvasdalkitsis.uhuruphotos.feature.feed.domain.implementation.worker.FeedDownloadWorker
 import com.savvasdalkitsis.uhuruphotos.feature.feed.domain.implementation.worker.PrecacheFeedThumbnailsWorker
 import com.savvasdalkitsis.uhuruphotos.feature.settings.domain.api.usecase.SettingsUseCase
@@ -91,4 +94,42 @@ internal class FeedWorkScheduler @Inject constructor(
 
     override fun observePrecacheThumbnailsJobStatus(): Flow<WorkInfo.State?> =
         workerStatusUseCase.monitorUniqueJobStatus(PrecacheFeedThumbnailsWorker.WORK_NAME)
+
+    override fun scheduleFeedRefreshNow(shallow: Boolean) =
+        workScheduleUseCase.scheduleNow(
+            FeedDownloadWorker.WORK_NAME,
+            FeedDownloadWorker::class,
+        ) {
+            putBoolean(FeedDownloadWorker.KEY_SHALLOW, shallow)
+        }
+
+    override fun schedulePrecacheThumbnailsNow() {
+        workScheduleUseCase.scheduleNow(
+            PrecacheFeedThumbnailsWorker.WORK_NAME,
+            PrecacheFeedThumbnailsWorker::class,
+        )
+    }
+
+    override fun scheduleFeedDetailsRefreshNow() {
+        workScheduleUseCase.scheduleNow(
+            FeedDetailsDownloadWorker.WORK_NAME,
+            FeedDetailsDownloadWorker::class,
+            existingWorkPolicy = ExistingWorkPolicy.KEEP,
+            networkRequirement = NetworkType.CONNECTED,
+        )
+    }
+
+    override fun observeFeedDetailsRefreshJob(): Flow<RefreshJobState?> =
+        workerStatusUseCase.monitorUniqueJob(FeedDetailsDownloadWorker.WORK_NAME).map {
+            it?.let { work ->
+                RefreshJobState(
+                    status = work.state,
+                    progress = ForegroundNotificationWorker.getProgressOf(work)
+                )
+            }
+        }
+
+    override fun cancelFeedDetailsSync() {
+        workScheduleUseCase.cancelUniqueWork(FeedDetailsDownloadWorker.WORK_NAME)
+    }
 }

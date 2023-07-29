@@ -106,6 +106,8 @@ internal class SettingsUseCase @Inject constructor(
     private val feedMediaItemSyncDisplayDefault = FeedMediaItemSyncDisplay.default
     private val shouldShowFeedSyncProgress = "shouldShowFeedSyncProgress"
     private val shouldShowFeedSyncProgressDefault = false
+    private val shouldShowFeedDetailsSyncProgress = "shouldShowFeedDetailsSyncProgress"
+    private val shouldShowFeedDetailsSyncProgressDefault = false
     private val shouldShowPrecacheProgress = "shouldShowPrecacheProgress"
     private val shouldShowPrecacheProgressDefault = false
     private val shouldShowLocalSyncProgress = "shouldShowLocalSyncProgress"
@@ -161,6 +163,8 @@ internal class SettingsUseCase @Inject constructor(
         get(feedMediaItemSyncDisplay, feedMediaItemSyncDisplayDefault)
     override fun getShouldShowFeedSyncProgress(): Boolean =
         get(shouldShowFeedSyncProgress, shouldShowFeedSyncProgressDefault)
+    override fun getShouldShowFeedDetailsSyncProgress(): Boolean =
+        get(shouldShowFeedDetailsSyncProgress, shouldShowFeedDetailsSyncProgressDefault)
     override fun getShouldShowPrecacheProgress(): Boolean =
         get(shouldShowPrecacheProgress, shouldShowPrecacheProgressDefault)
     override fun getShouldShowLocalSyncProgress(): Boolean =
@@ -219,6 +223,8 @@ internal class SettingsUseCase @Inject constructor(
         observe(feedMediaItemSyncDisplay, feedMediaItemSyncDisplayDefault)
     override fun observeShouldShowFeedSyncProgress(): Flow<Boolean> =
         observe(shouldShowFeedSyncProgress, shouldShowFeedSyncProgressDefault)
+    override fun observeShouldShowFeedDetailsSyncProgress(): Flow<Boolean> =
+        observe(shouldShowFeedDetailsSyncProgress, shouldShowFeedDetailsSyncProgressDefault)
     override fun observeShouldShowPrecacheProgress(): Flow<Boolean> =
         observe(shouldShowPrecacheProgress, shouldShowPrecacheProgressDefault)
     override fun observeShouldShowLocalSyncProgress(): Flow<Boolean> =
@@ -327,6 +333,10 @@ internal class SettingsUseCase @Inject constructor(
 
     override fun setShouldShowFeedSyncProgress(show: Boolean) {
         set(shouldShowFeedSyncProgress, show)
+    }
+
+    override fun setShouldShowFeedDetailsSyncProgress(show: Boolean) {
+        set(shouldShowFeedDetailsSyncProgress, show)
     }
 
     override fun setShouldShowPrecacheProgress(show: Boolean) {

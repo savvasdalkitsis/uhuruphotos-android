@@ -16,10 +16,11 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.foundation.worker.implementation.usecase
 
 import android.Manifest
-import android.os.Build
+import android.os.Build.VERSION.SDK_INT
+import android.os.Build.VERSION_CODES.TIRAMISU
 import androidx.activity.ComponentActivity
-import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts.RequestPermission
+import androidx.core.app.NotificationManagerCompat
 import com.savvasdalkitsis.uhuruphotos.foundation.initializer.api.ActivityCreated
 import dagger.hilt.android.scopes.ActivityRetainedScoped
 import se.ansman.dagger.auto.AutoBindIntoSet
@@ -28,21 +29,17 @@ import javax.inject.Inject
 @AutoBindIntoSet
 @ActivityRetainedScoped
 class WorkScheduleNotificationActivityInitializer @Inject constructor(
+    private val notificationManager: NotificationManagerCompat,
 ) : ActivityCreated {
-
-    private lateinit var launcher: ActivityResultLauncher<String>
 
     override fun priority(): Int = -1
 
     override fun onActivityCreated(activity: ComponentActivity) {
-        launcher = activity.registerForActivityResult(RequestPermission()) {}
+        if (SDK_INT >= TIRAMISU && !notificationManager.areNotificationsEnabled()) {
+            activity.registerForActivityResult(RequestPermission()) {}
+                .launch(Manifest.permission.POST_NOTIFICATIONS)
+        }
     }
 
     override fun onActivityDestroyed(activity: ComponentActivity) {}
-
-    fun requestPermission() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            launcher.launch(Manifest.permission.POST_NOTIFICATIONS)
-        }
-    }
 }

@@ -17,6 +17,7 @@ package com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.ui
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.stringResource
+import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.actions.ChangeShouldShowFeedDetailsSyncProgress
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.actions.ChangeShouldShowFullSyncProgress
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.actions.ChangeShouldShowLocalProgress
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.actions.ChangeShouldShowPrecacheProgress
@@ -36,6 +37,13 @@ internal fun SettingsProgressUI(
         isChecked = state.shouldShowFeedSyncProgress,
     ) {
         action(ChangeShouldShowFullSyncProgress(!state.shouldShowFeedSyncProgress))
+    }
+    SettingsCheckBox(
+        text = stringResource(string.show_feed_details_sync_progress),
+        icon = drawable.ic_feed,
+        isChecked = state.shouldShowFeedDetailsSyncProgress,
+    ) {
+        action(ChangeShouldShowFeedDetailsSyncProgress(!state.shouldShowFeedDetailsSyncProgress))
     }
     SettingsCheckBox(
         text = stringResource(string.show_precache_progress),

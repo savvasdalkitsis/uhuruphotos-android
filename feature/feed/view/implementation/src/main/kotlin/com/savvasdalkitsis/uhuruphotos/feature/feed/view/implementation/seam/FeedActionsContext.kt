@@ -17,6 +17,7 @@ package com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam
 
 import com.savvasdalkitsis.uhuruphotos.feature.avatar.domain.api.usecase.AvatarUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.feed.domain.api.usecase.FeedUseCase
+import com.savvasdalkitsis.uhuruphotos.feature.feed.domain.api.worker.FeedWorkScheduler
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.SelectionList
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.FeedMutation.AskForPermissions
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.effects.FeedEffect
@@ -42,6 +43,7 @@ internal class FeedActionsContext @Inject constructor(
     val avatarUseCase: AvatarUseCase,
     val downloadUseCase: DownloadUseCase,
     val feedUseCase: FeedUseCase,
+    val feedWorkScheduler: FeedWorkScheduler,
     val mediaUseCase: MediaUseCase,
     val jobsUseCase: JobsUseCase,
     val localMediaDeletionUseCase: LocalMediaDeletionUseCase,

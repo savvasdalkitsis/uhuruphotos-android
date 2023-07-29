@@ -35,13 +35,13 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.ui.controller.SettingsGroupState
 import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.R.drawable
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.StaggeredGridScope
+import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.state.CollapsibleGroupState
 
 @Composable
 internal fun StaggeredGridScope.SuperGroup(
-    groupState: SettingsGroupState,
+    groupState: CollapsibleGroupState,
     content: @Composable ColumnScope.() -> Unit,
 ) {
     item {

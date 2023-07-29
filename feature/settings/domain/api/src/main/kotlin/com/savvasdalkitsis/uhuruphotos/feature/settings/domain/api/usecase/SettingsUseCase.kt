@@ -51,6 +51,7 @@ interface SettingsUseCase {
     fun getShowBannerAskingForLocalMediaPermissionsOnHeatmap(): Boolean
     fun getFeedMediaItemSyncDisplay(): FeedMediaItemSyncDisplay
     fun getShouldShowFeedSyncProgress(): Boolean
+    fun getShouldShowFeedDetailsSyncProgress(): Boolean
     fun getShouldShowPrecacheProgress(): Boolean
     fun getShouldShowLocalSyncProgress(): Boolean
 
@@ -78,6 +79,7 @@ interface SettingsUseCase {
     fun observeMaxAnimatedVideoThumbnails(): Flow<Int>
     fun observeFeedMediaItemSyncDisplay(): Flow<FeedMediaItemSyncDisplay>
     fun observeShouldShowFeedSyncProgress(): Flow<Boolean>
+    fun observeShouldShowFeedDetailsSyncProgress(): Flow<Boolean>
     fun observeShouldShowPrecacheProgress(): Flow<Boolean>
     fun observeShouldShowLocalSyncProgress(): Flow<Boolean>
 
@@ -107,6 +109,7 @@ interface SettingsUseCase {
     fun setShowBannerAskingForLocalMediaPermissionsOnHeatmap(show: Boolean)
     fun setFeedMediaItemSyncDisplay(display: FeedMediaItemSyncDisplay)
     fun setShouldShowFeedSyncProgress(show: Boolean)
+    fun setShouldShowFeedDetailsSyncProgress(show: Boolean)
     fun setShouldShowPrecacheProgress(show: Boolean)
     fun setShouldShowLocalSyncProgress(show: Boolean)
 }

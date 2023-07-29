@@ -4,9 +4,9 @@ import androidx.work.WorkInfo.State.BLOCKED
 import androidx.work.WorkInfo.State.ENQUEUED
 import androidx.work.WorkInfo.State.FAILED
 import androidx.work.WorkInfo.State.RUNNING
-import com.savvasdalkitsis.uhuruphotos.feature.feed.domain.api.worker.FeedImmediateWorkScheduler
 import com.savvasdalkitsis.uhuruphotos.feature.feed.domain.api.worker.FeedWorkScheduler
 import com.savvasdalkitsis.uhuruphotos.feature.jobs.domain.api.model.Job
+import com.savvasdalkitsis.uhuruphotos.feature.jobs.domain.api.model.Job.FEED_DETAILS_SYNC
 import com.savvasdalkitsis.uhuruphotos.feature.jobs.domain.api.model.Job.FEED_SYNC
 import com.savvasdalkitsis.uhuruphotos.feature.jobs.domain.api.model.Job.LOCAL_MEDIA_SYNC
 import com.savvasdalkitsis.uhuruphotos.feature.jobs.domain.api.model.Job.PRECACHE_THUMBNAILS
@@ -32,7 +32,6 @@ import javax.inject.Inject
 @ActivityRetainedScoped
 class JobsUseCase @Inject constructor(
     private val feedWorkScheduler: FeedWorkScheduler,
-    private val feedImmediateWorkScheduler: FeedImmediateWorkScheduler,
     private val localMediaUseCase: LocalMediaUseCase,
     private val localMediaWorkScheduler: LocalMediaWorkScheduler,
     private val settingsUseCase: SettingsUseCase,
@@ -43,12 +42,14 @@ class JobsUseCase @Inject constructor(
             feedWorkScheduler.observeFeedRefreshJob(),
             feedWorkScheduler.observePrecacheThumbnailsJob(),
             localMediaUseCase.observeLocalMediaSyncJob(),
-        ) { feedRefresh, precacheThumbnails, localMedia ->
+            feedWorkScheduler.observeFeedDetailsRefreshJob(),
+        ) { feedRefresh, precacheThumbnails, localMedia, feedDetails ->
             JobsStatus(
                 mapOf(
                     FEED_SYNC to feedRefresh.jobStatus(blockedBy = precacheThumbnails),
                     PRECACHE_THUMBNAILS to precacheThumbnails.jobStatus(blockedBy = feedRefresh),
-                    LOCAL_MEDIA_SYNC to localMedia.jobStatus()
+                    LOCAL_MEDIA_SYNC to localMedia.jobStatus(),
+                    FEED_DETAILS_SYNC to feedDetails.jobStatus(),
                 )
             )
         }
@@ -58,12 +59,14 @@ class JobsUseCase @Inject constructor(
         settingsUseCase.observeShouldShowFeedSyncProgress(),
         settingsUseCase.observeShouldShowPrecacheProgress(),
         settingsUseCase.observeShouldShowLocalSyncProgress(),
-    ) { jobs, showFeedProgress, showPrecacheProgress, showLocalProgress ->
+        settingsUseCase.observeShouldShowFeedDetailsSyncProgress(),
+    ) { jobs, showFeedProgress, showPrecacheProgress, showLocalProgress, showFeedDetailsProgress ->
         jobs.copy(jobs = jobs.jobs.mapValues { (job, status) ->
             status.unless(when (job) {
                 FEED_SYNC -> showFeedProgress
                 PRECACHE_THUMBNAILS  -> showPrecacheProgress
                 LOCAL_MEDIA_SYNC -> showLocalProgress
+                FEED_DETAILS_SYNC -> showFeedDetailsProgress
             })
         })
     }
@@ -72,9 +75,10 @@ class JobsUseCase @Inject constructor(
 
     override fun startJob(job: Job) {
         when (job) {
-            FEED_SYNC -> feedImmediateWorkScheduler.scheduleFeedRefreshNow(shallow = false)
-            PRECACHE_THUMBNAILS -> feedImmediateWorkScheduler.schedulePrecacheThumbnailsNow()
+            FEED_SYNC -> feedWorkScheduler.scheduleFeedRefreshNow(shallow = false)
+            PRECACHE_THUMBNAILS -> feedWorkScheduler.schedulePrecacheThumbnailsNow()
             LOCAL_MEDIA_SYNC -> localMediaWorkScheduler.scheduleLocalMediaSyncNowIfNotRunning()
+            FEED_DETAILS_SYNC -> feedWorkScheduler.scheduleFeedDetailsRefreshNow()
         }
     }
 
@@ -83,6 +87,7 @@ class JobsUseCase @Inject constructor(
             FEED_SYNC -> feedWorkScheduler.cancelFullFeedSync()
             PRECACHE_THUMBNAILS -> feedWorkScheduler.cancelPrecacheThumbnails()
             LOCAL_MEDIA_SYNC -> localMediaWorkScheduler.cancelLocalMediaSync()
+            FEED_DETAILS_SYNC -> feedWorkScheduler.cancelFeedDetailsSync()
         }
     }
 

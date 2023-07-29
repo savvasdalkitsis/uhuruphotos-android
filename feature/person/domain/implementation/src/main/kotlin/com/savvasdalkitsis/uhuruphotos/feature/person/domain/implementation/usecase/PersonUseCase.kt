@@ -18,6 +18,7 @@ package com.savvasdalkitsis.uhuruphotos.feature.person.domain.implementation.use
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.extensions.isVideo
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.person.GetPersonAlbums
 import com.savvasdalkitsis.uhuruphotos.feature.feed.domain.api.usecase.FeedUseCase
+import com.savvasdalkitsis.uhuruphotos.feature.feed.domain.api.worker.FeedWorkScheduler
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaCollection
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaCollectionSource
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.usecase.MediaUseCase
@@ -38,6 +39,7 @@ class PersonUseCase @Inject constructor(
     private val personRepository: PersonRepository,
     private val mediaUseCase: MediaUseCase,
     private val feedUseCase: FeedUseCase,
+    private val feedWorkScheduler: FeedWorkScheduler,
 ) : PersonUseCase {
 
     override fun observePersonMedia(id: Int): Flow<List<MediaCollection>> =
@@ -55,7 +57,7 @@ class PersonUseCase @Inject constructor(
     private fun Flow<List<MediaCollection>>.initialize(): Flow<List<MediaCollection>> = distinctUntilChanged()
         .safelyOnStartIgnoring {
             if (!feedUseCase.hasFeed()) {
-                feedUseCase.refreshFeed(shallow = false)
+                feedWorkScheduler.scheduleFeedRefreshNow(shallow = false)
             }
         }
 
@@ -65,7 +67,7 @@ class PersonUseCase @Inject constructor(
             .toMediaCollection()
     }
 
-    fun GetPersonAlbums.toMediaCollectionSource() = MediaCollectionSource(
+    private fun GetPersonAlbums.toMediaCollectionSource() = MediaCollectionSource(
         id = id,
         date = albumDate,
         location = albumLocation,

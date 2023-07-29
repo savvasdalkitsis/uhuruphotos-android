@@ -8,9 +8,7 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.stringResource
 import com.savvasdalkitsis.uhuruphotos.feature.jobs.domain.api.model.Job
-import com.savvasdalkitsis.uhuruphotos.feature.jobs.domain.api.model.Job.FEED_SYNC
-import com.savvasdalkitsis.uhuruphotos.feature.jobs.domain.api.model.Job.LOCAL_MEDIA_SYNC
-import com.savvasdalkitsis.uhuruphotos.feature.jobs.domain.api.model.Job.PRECACHE_THUMBNAILS
+import com.savvasdalkitsis.uhuruphotos.feature.jobs.domain.api.model.Job.*
 import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
 
 @Composable
@@ -26,6 +24,7 @@ fun JobPermissionDialog(
             FEED_SYNC -> string.perform_full_feed_sync
             PRECACHE_THUMBNAILS -> string.precache_thumbnails
             LOCAL_MEDIA_SYNC -> string.local_media_sync
+            FEED_DETAILS_SYNC -> string.perform_full_feed_details_sync
         })) },
         text = {
             Column {
@@ -33,6 +32,7 @@ fun JobPermissionDialog(
                     FEED_SYNC -> string.are_you_sure_you_want_to_perform_full_sync
                     PRECACHE_THUMBNAILS -> string.are_you_sure_you_want_to_perform_precache
                     LOCAL_MEDIA_SYNC -> string.are_you_sure_you_want_to_start_local_sync
+                    FEED_DETAILS_SYNC -> string.are_you_sure_you_want_to_perform_feed_details_sync
                 }))
                 if (job != LOCAL_MEDIA_SYNC) {
                     Text(

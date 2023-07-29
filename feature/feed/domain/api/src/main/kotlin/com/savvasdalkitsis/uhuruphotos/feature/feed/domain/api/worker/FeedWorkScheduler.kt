@@ -31,4 +31,11 @@ interface FeedWorkScheduler {
     fun observePrecacheThumbnailsJob(): Flow<RefreshJobState?>
     fun observePrecacheThumbnailsJobStatus(): Flow<WorkInfo.State?>
     fun cancelPrecacheThumbnails()
+
+    fun scheduleFeedRefreshNow(shallow: Boolean)
+    fun schedulePrecacheThumbnailsNow()
+
+    fun scheduleFeedDetailsRefreshNow()
+    fun observeFeedDetailsRefreshJob(): Flow<RefreshJobState?>
+    fun cancelFeedDetailsSync()
 }

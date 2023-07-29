@@ -15,6 +15,7 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.heatmap.view.implementation.seam.actions
 
+import androidx.work.WorkInfo
 import com.savvasdalkitsis.uhuruphotos.feature.heatmap.view.implementation.seam.HeatMapActionsContext
 import com.savvasdalkitsis.uhuruphotos.feature.heatmap.view.implementation.seam.HeatMapMutation
 import com.savvasdalkitsis.uhuruphotos.feature.heatmap.view.implementation.seam.effects.ErrorLoadingPhotoDetails
@@ -24,12 +25,6 @@ import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.Med
 import com.savvasdalkitsis.uhuruphotos.foundation.coroutines.api.onErrors
 import com.savvasdalkitsis.uhuruphotos.foundation.coroutines.api.safelyOnStart
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.EffectHandler
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.async
-import kotlinx.coroutines.awaitAll
-import kotlinx.coroutines.currentCoroutineContext
-import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.flatMapLatest
@@ -39,8 +34,6 @@ import kotlinx.coroutines.flow.mapNotNull
 import kotlinx.coroutines.flow.merge
 
 data object Load : HeatMapAction() {
-
-    private val detailsDownloading = MutableStateFlow(false)
 
     context(HeatMapActionsContext) override fun handle(
         state: HeatMapState,
@@ -53,18 +46,7 @@ data object Load : HeatMapAction() {
                     .filter { it.latLng != null }
             }
             .safelyOnStart {
-                feedUseCase.observeFeed().collect { mediaCollections ->
-                    detailsDownloading.emit(true)
-                    mediaCollections
-                        .flatMap { it.mediaItems }
-                        .map { mediaItem ->
-                            CoroutineScope(currentCoroutineContext() + Dispatchers.IO).async {
-                                mediaUseCase.refreshDetailsNowIfMissing(mediaItem.id)
-                            }
-                        }
-                        .awaitAll()
-                    detailsDownloading.emit(false)
-                }
+                feedWorkScheduler.scheduleFeedDetailsRefreshNow()
             }
             .debounce(500)
             .distinctUntilChanged()
@@ -72,7 +54,8 @@ data object Load : HeatMapAction() {
             .flatMapLatest { media ->
                 flowOf(HeatMapMutation.UpdateAllMedia(media), updateDisplay(media))
             },
-        detailsDownloading
+        feedWorkScheduler.observeFeedDetailsRefreshJob()
+            .mapNotNull { it?.status == WorkInfo.State.RUNNING }
             .map(HeatMapMutation::ShowLoading),
         mediaUseCase.observeLocalMedia()
             .mapNotNull {

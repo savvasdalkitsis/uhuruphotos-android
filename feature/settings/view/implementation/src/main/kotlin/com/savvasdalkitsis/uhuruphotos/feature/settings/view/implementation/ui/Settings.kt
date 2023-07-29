@@ -40,6 +40,7 @@ import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.theme.PreviewAppTheme
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.ActionIcon
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.BackNavButton
+import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.CollapsibleGroup
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.CommonScaffold
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.FullProgressBar
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.StaggeredGrid
@@ -89,19 +90,19 @@ internal fun Settings(
                 columnCount = columns,
             ) {
                 SuperGroup(controller.ui) {
-                    Group(controller.uiFeed) {
+                    CollapsibleGroup(controller.uiFeed) {
                         SettingsFeedUI(state, action)
                     }
-                    Group(controller.uiTheme) {
+                    CollapsibleGroup(controller.uiTheme) {
                         SettingsTheme(state, action)
                     }
-                    Group(controller.uiProgress) {
+                    CollapsibleGroup(controller.uiProgress) {
                         SettingsProgressUI(state, action)
                     }
-                    Group(controller.uiSearch) {
+                    CollapsibleGroup(controller.uiSearch) {
                         SettingsSearch(state, action)
                     }
-                    Group(controller.uiLibrary) {
+                    CollapsibleGroup(controller.uiLibrary) {
                         SettingsLibrary(state, action)
                     }
 //                    Group(controller.uiVideo) {
@@ -109,48 +110,48 @@ internal fun Settings(
 //                    }
                     val mapProvider = state.mapProviderState
                     if (mapProvider is Selected) {
-                        Group(controller.uiMaps) {
+                        CollapsibleGroup(controller.uiMaps) {
                             SettingsMaps(mapProvider, action)
                         }
                     }
                 }
                 SuperGroup(controller.privacy) {
                     state.biometrics?.let {
-                        Group(controller.privacyBiometrics) {
+                        CollapsibleGroup(controller.privacyBiometrics) {
                             SettingsBiometrics(it, action)
                         }
                     }
-                    Group(controller.privacyShare) {
+                    CollapsibleGroup(controller.privacyShare) {
                         SettingsShare(state, action)
                     }
                 }
                 SuperGroup(controller.jobs) {
-                    Group(controller.jobsFeedConfiguration) {
+                    CollapsibleGroup(controller.jobsFeedConfiguration) {
                         SettingsJobsFeedConfiguration(state, action)
                     }
-                    Group(controller.jobsStatus) {
+                    CollapsibleGroup(controller.jobsStatus) {
                         SettingsJobsStatus(state, action)
                     }
                 }
                 SuperGroup(controller.advanced) {
-                    Group(controller.advancedLightboxPhotoDiskCache) {
+                    CollapsibleGroup(controller.advancedLightboxPhotoDiskCache) {
                         SettingsCache(state.lightboxPhotoDiskCache, action)
                     }
-                    Group(controller.advancedLightboxPhotoMemoryCache) {
+                    CollapsibleGroup(controller.advancedLightboxPhotoMemoryCache) {
                         SettingsCache(state.lightboxPhotoMemCache, action)
                     }
-                    Group(controller.advancedThumbnailDiskCache) {
+                    CollapsibleGroup(controller.advancedThumbnailDiskCache) {
                         SettingsCache(state.thumbnailDiskCache, action)
                     }
-                    Group(controller.advancedThumbnailMemoryCache) {
+                    CollapsibleGroup(controller.advancedThumbnailMemoryCache) {
                         SettingsCache(state.thumbnailMemCache, action)
                     }
-                    Group(controller.advancedVideoDiskCache) {
+                    CollapsibleGroup(controller.advancedVideoDiskCache) {
                         SettingsCache(state.videoDiskCache, action)
                     }
                 }
                 SuperGroup(controller.help) {
-                    Group(controller.helpFeedback) {
+                    CollapsibleGroup(controller.helpFeedback) {
                         SettingsFeedback(state, action)
                     }
                     SettingsOutlineButtonRow(

@@ -19,7 +19,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.Predefi
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.extensions.isVideo
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.media.remote.GetRemoteMediaCollections
 import com.savvasdalkitsis.uhuruphotos.feature.feed.domain.api.usecase.FeedUseCase
-import com.savvasdalkitsis.uhuruphotos.feature.feed.domain.api.worker.FeedImmediateWorkScheduler
+import com.savvasdalkitsis.uhuruphotos.feature.feed.domain.api.worker.FeedWorkScheduler
 import com.savvasdalkitsis.uhuruphotos.feature.feed.domain.implementation.repository.FeedRepository
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaCollection
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaCollectionSource
@@ -38,7 +38,6 @@ import com.savvasdalkitsis.uhuruphotos.foundation.group.api.model.mapValues
 import com.savvasdalkitsis.uhuruphotos.foundation.preferences.api.Preferences
 import com.savvasdalkitsis.uhuruphotos.foundation.preferences.api.observe
 import com.savvasdalkitsis.uhuruphotos.foundation.preferences.api.set
-import dagger.hilt.android.scopes.ActivityRetainedScoped
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.debounce
@@ -48,11 +47,10 @@ import se.ansman.dagger.auto.AutoBind
 import javax.inject.Inject
 
 @AutoBind
-@ActivityRetainedScoped
 internal class FeedUseCase @Inject constructor(
     private val feedRepository: FeedRepository,
     private val mediaUseCase: MediaUseCase,
-    private val feedImmediateWorkScheduler: FeedImmediateWorkScheduler,
+    private val feedWorkScheduler: FeedWorkScheduler,
     private val downloadUseCase: DownloadUseCase,
     private val preferences: Preferences,
 ) : FeedUseCase {
@@ -116,7 +114,7 @@ internal class FeedUseCase @Inject constructor(
     }
 
     override fun refreshFeed(shallow: Boolean) {
-        feedImmediateWorkScheduler.scheduleFeedRefreshNow(shallow)
+        feedWorkScheduler.scheduleFeedRefreshNow(shallow)
     }
 
     private fun GetRemoteMediaCollections.toMediaCollectionSource() = MediaCollectionSource(
