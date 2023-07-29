@@ -32,6 +32,7 @@ import com.savvasdalkitsis.uhuruphotos.foundation.image.api.LocalAnimatedVideoTh
 import com.savvasdalkitsis.uhuruphotos.foundation.image.api.model.LocalThumbnailImageLoader
 import com.savvasdalkitsis.uhuruphotos.foundation.image.api.model.LocalThumbnailWithNetworkCacheImageLoader
 import crocodile8008.videoviewcache.lib.playUrl
+import crocodile8008.videoviewcache.lib.stop
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
@@ -74,7 +75,7 @@ fun Thumbnail(
                     VideoView(context)
                 },
                 modifier = modifier,
-                onReset = { },
+                onReset = { it.stop() },
                 update = {
                     if (url != null) {
                         with(it) {
@@ -97,7 +98,7 @@ fun Thumbnail(
                         }
                     }
                 },
-                onRelease = { },
+                onRelease = { it.suspend() },
             )
         }
         if (!loaded) {

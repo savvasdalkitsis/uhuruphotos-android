@@ -111,7 +111,7 @@ fun Cel(
             Thumbnail(
                 modifier = Modifier.fillMaxWidth(),
                 url = mediaItem.id.thumbnailUri,
-                isVideo = mediaItem.id.isVideo,
+                isVideo = false,//mediaItem.id.isVideo,
                 contentScale = contentScale,
                 placeholder = backgroundColor.toArgb(),
                 contentDescription = null
