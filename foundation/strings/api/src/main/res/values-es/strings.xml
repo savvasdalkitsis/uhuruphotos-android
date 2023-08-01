@@ -283,4 +283,9 @@
     <string name="donate">Donar</string>
     <string name="lightbox_photo_disk_cache">Memoria caché de Lightbox Photo Disk</string>
     <string name="thumbnail_memory_cache">Memoria caché de las miniaturas</string>
+    <string name="perform_full_feed_details_sync">Realizar la sincronización completa de los detalles del feed</string>
+    <string name="refreshing_feed_details">Actualizando los detalles del feed</string>
+    <string name="full_feed_details_sync">Sincronización completa de los detalles del feed</string>
+    <string name="are_you_sure_you_want_to_perform_feed_details_sync">¿Estás seguro de que deseas iniciar la sincronización de los detalles del feed\?</string>
+    <string name="show_feed_details_sync_progress">Muestra el progreso completo de sincronización de los detalles del feed de las fotos</string>
 </resources>
