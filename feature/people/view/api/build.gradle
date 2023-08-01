@@ -22,7 +22,6 @@ dependencies {
     implementation(
             libs.androidx.compose.foundation,
             libs.androidx.compose.material,
-            libs.hilt,
             libs.moshi,
             libs.sqldelight.coroutines,
     )

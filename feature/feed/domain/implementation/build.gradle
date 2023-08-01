@@ -1,7 +1,3 @@
-plugins {
-    id 'dagger.hilt.android.plugin'
-}
-
 android {
     namespace 'com.savvasdalkitsis.uhuruphotos.feature.feed.domain.implementation'
 }
@@ -26,7 +22,6 @@ dependencies {
             libs.androidx.work,
             libs.androidx.work.hilt,
             libs.autodagger.core,
-            libs.hilt,
             libs.sqldelight.coroutines,
             libs.retrofit.core,
             libs.moshi,

@@ -9,7 +9,6 @@ dependencies {
             libs.androidx.preference,
             libs.autodagger.core,
             libs.flowpreferences,
-            libs.hilt,
     )
     kapt libs.autodagger.kapt
 }

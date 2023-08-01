@@ -6,7 +6,4 @@ dependencies {
     api(
             libs.okhttp,
     )
-    implementation(
-            libs.hilt,
-    )
 }

@@ -44,7 +44,6 @@ dependencies {
             libs.androidx.lifecycle,
             libs.autodagger.core,
             libs.bundles.permissions,
-            libs.hilt,
             libs.infobar,
     )
     kapt libs.autodagger.kapt

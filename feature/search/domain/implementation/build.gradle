@@ -13,7 +13,6 @@ dependencies {
     implementation project(":foundation:preferences:api")
     implementation(
             libs.autodagger.core,
-            libs.hilt,
             libs.moshi,
             libs.retrofit.core,
             libs.retrofit.moshi,

@@ -29,7 +29,6 @@ dependencies {
             libs.bundles.androidx.credentials,
             libs.gson,
             libs.jwt,
-            libs.hilt,
             libs.moshi,
             libs.retrofit.moshi,
     )

@@ -10,7 +10,6 @@ dependencies {
     implementation project(":foundation:log:api")
     implementation(
             libs.autodagger.core,
-            libs.hilt,
             libs.sqldelight.coroutines,
             libs.retrofit.core,
             libs.moshi,

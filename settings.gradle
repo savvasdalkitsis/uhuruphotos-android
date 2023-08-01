@@ -127,6 +127,7 @@ include ':feature:trash:view:api'
 include ':feature:trash:view:implementation'
 include ':feature:user:domain:api'
 include ':feature:user:domain:implementation'
+include ':feature:widget:view:implementation'
 
 include ':foundation:activity:api'
 include ':foundation:activity:implementation'

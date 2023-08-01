@@ -5,7 +5,6 @@ android {
 dependencies {
     implementation project(":feature:db:domain:api")
     implementation (
-            libs.hilt,
             libs.sqldelight.adapters,
             libs.sqldelight.android,
     )

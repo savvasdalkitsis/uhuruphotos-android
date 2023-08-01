@@ -27,4 +27,6 @@ interface Navigator {
     fun <R : NavigationRoute> newRoot(route: R)
     fun navigateBack()
     fun clearBackStack()
+    fun maybeHandleDeeplink(intent: Intent?)
+    fun <R : NavigationRoute> deepLinkTo(route: R)
 }

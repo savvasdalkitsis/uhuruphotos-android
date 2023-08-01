@@ -15,7 +15,11 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.foundation.navigation.implementation
 
+import android.content.Context
 import android.content.Intent
+import android.os.Build
+import android.os.Build.VERSION.SDK_INT
+import android.os.Build.VERSION_CODES.TIRAMISU
 import com.bumble.appyx.navmodel.backstack.BackStack
 import com.bumble.appyx.navmodel.backstack.operation.newRoot
 import com.bumble.appyx.navmodel.backstack.operation.pop
@@ -25,6 +29,7 @@ import com.savvasdalkitsis.uhuruphotos.foundation.launchers.api.onMain
 import com.savvasdalkitsis.uhuruphotos.foundation.log.api.log
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.NavigationRoute
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.Navigator
+import dagger.hilt.android.qualifiers.ApplicationContext
 import se.ansman.dagger.auto.AutoBind
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -32,8 +37,11 @@ import javax.inject.Singleton
 @AutoBind
 @Singleton
 class Navigator @Inject internal constructor(
+    @ApplicationContext private val context: Context,
     private val intentLauncher: IntentLauncher,
 ) : Navigator {
+
+    private val routeKey = "route"
 
     override lateinit var backStack: BackStack<NavigationRoute>
 
@@ -71,4 +79,21 @@ class Navigator @Inject internal constructor(
             backStack.newRoot(route)
         }
     }
+
+    override fun maybeHandleDeeplink(intent: Intent?) {
+        if (SDK_INT >= TIRAMISU) {
+            intent?.extras?.getParcelable(routeKey, NavigationRoute::class.java)
+        } else {
+            @Suppress("DEPRECATION")
+            intent?.extras?.getParcelable(routeKey)
+        }?.let(::navigateTo)
+    }
+
+    override fun <R : NavigationRoute> deepLinkTo(route: R) {
+        navigateTo(Intent(Intent.ACTION_VIEW).apply {
+            setClassName(context, "com.savvasdalkitsis.uhuruphotos.app.AppActivity")
+            putExtra(routeKey, route)
+        })
+    }
+
 }

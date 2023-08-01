@@ -29,6 +29,7 @@
         <activity
             android:name="com.savvasdalkitsis.uhuruphotos.app.AppActivity"
             android:exported="true"
+            android:launchMode="singleInstance"
             android:theme="@style/Theme.UhuruPhotos"
             android:windowSoftInputMode="adjustResize">
             <intent-filter>

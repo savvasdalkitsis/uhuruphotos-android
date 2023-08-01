@@ -6,7 +6,6 @@ dependencies {
     implementation project(":feature:{{cookiecutter.project_slug}}:domain:api")
     implementation(
             libs.autodagger.core,
-            libs.hilt,
     )
     kapt libs.autodagger.kapt
 }

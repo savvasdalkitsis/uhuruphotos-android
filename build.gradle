@@ -49,9 +49,10 @@ subprojects {
 
     apply plugin: "com.bnorm.power.kotlin-power-assert"
     apply plugin: 'org.jetbrains.kotlin.android'
-    apply plugin: 'kotlin-kapt'
     apply plugin: 'dev.zacsweers.redacted'
     apply plugin: "com.google.devtools.ksp"
+    apply plugin: "dagger.hilt.android.plugin"
+    apply plugin: 'kotlin-kapt'
 
     android {
         compileSdk 34
@@ -80,6 +81,9 @@ subprojects {
     }
 
     dependencies {
+        implementation(
+                libs.hilt,
+        )
         kapt libs.hilt.dagger.compiler
         kapt libs.androidx.hilt.compiler
     }

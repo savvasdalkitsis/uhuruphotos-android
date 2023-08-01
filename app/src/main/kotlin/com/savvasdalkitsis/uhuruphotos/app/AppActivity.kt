@@ -15,6 +15,7 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.app
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.activity.compose.setContent
 import androidx.compose.material3.windowsizeclass.calculateWindowSizeClass
@@ -37,6 +38,7 @@ import com.savvasdalkitsis.uhuruphotos.foundation.map.api.ui.CompositeMapViewFac
 import com.savvasdalkitsis.uhuruphotos.foundation.map.api.ui.CompositeMapViewStateFactory
 import com.savvasdalkitsis.uhuruphotos.foundation.map.api.ui.MapViewFactoryProvider
 import com.savvasdalkitsis.uhuruphotos.foundation.map.api.ui.MapViewStateFactory
+import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.Navigator
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.window.LocalSystemUiController
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.window.LocalWindowSize
 import dagger.hilt.android.AndroidEntryPoint
@@ -47,10 +49,16 @@ class AppActivity : FragmentNodeActivity() {
 
     @Inject lateinit var activityInitializer: ActivityInitializer
     @Inject lateinit var currentActivityHolder: CurrentActivityHolder
-    @Inject lateinit var navigator: AppNavigator
+    @Inject lateinit var appNavigator: AppNavigator
+    @Inject lateinit var navigator: Navigator
     @Inject lateinit var settingsUseCase: SettingsUseCase
     @Inject lateinit var mapViewFactoryProviders: Set<@JvmSuppressWildcards MapViewFactoryProvider>
     @Inject lateinit var mapViewStateFactories: Set<@JvmSuppressWildcards MapViewStateFactory>
+
+    override fun onNewIntent(intent: Intent?) {
+        super.onNewIntent(intent)
+        navigator.maybeHandleDeeplink(intent)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         Log.enabled = true
@@ -72,9 +80,10 @@ class AppActivity : FragmentNodeActivity() {
                 LocalMapViewStateFactory provides CompositeMapViewStateFactory(mapViewStateFactories),
                 LocalMapViewFactoryProvider provides CompositeMapViewFactoryProvider(mapViewFactoryProviders),
             ) {
-                navigator.NavigationTargets(appyxIntegrationPoint)
+                appNavigator.NavigationTargets(appyxIntegrationPoint)
             }
         }
+        navigator.maybeHandleDeeplink(intent)
     }
 
     override fun onDestroy() {

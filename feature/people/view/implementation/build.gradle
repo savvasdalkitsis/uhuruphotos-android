@@ -31,7 +31,6 @@ dependencies {
             libs.androidx.compose.material.windowsize,
             libs.autodagger.core,
             libs.kotlinx.coroutines,
-            libs.hilt,
             libs.moshi,
             libs.retrofit.core,
             libs.sqldelight.coroutines,

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<appwidget-provider
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:description="@string/favourite_media"
+    android:previewImage="@drawable/favourite_media_widget_preview"
+    android:minWidth="160dp"
+    android:minHeight="160dp"
+    android:minResizeWidth="80dp"
+    android:minResizeHeight="80dp"
+    android:targetCellWidth="3"
+    android:targetCellHeight="3"
+    android:resizeMode="horizontal|vertical"
+    android:widgetCategory="home_screen"
+    tools:targetApi="s" />

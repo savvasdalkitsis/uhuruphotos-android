@@ -1,5 +1,4 @@
 plugins {
-    id 'dagger.hilt.android.plugin'
     id 'com.google.gms.google-services'
     id 'com.mikepenz.aboutlibraries.plugin'
 }
@@ -79,7 +78,6 @@ dependencies {
             libs.androidx.work.hilt,
             libs.appcenter.crashes,
             libs.autodagger.core,
-            libs.hilt,
             libs.permissions.base,
     )
 }

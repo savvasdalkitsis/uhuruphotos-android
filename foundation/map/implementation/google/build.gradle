@@ -27,7 +27,6 @@ dependencies {
             libs.androidx.compose.ui,
             libs.androidx.startup,
             libs.autodagger.core,
-            libs.hilt,
             libs.maps,
             libs.maps.compose,
             libs.maps.utils,

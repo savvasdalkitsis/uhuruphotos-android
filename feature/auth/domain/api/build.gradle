@@ -6,7 +6,4 @@ dependencies {
     api(
             project(":foundation:result:api"),
     )
-    implementation(
-            libs.hilt,
-    )
 }

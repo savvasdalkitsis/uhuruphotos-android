@@ -33,7 +33,6 @@ dependencies {
             libs.androidx.compose.material,
             libs.androidx.compose.ui.tooling.preview,
             libs.androidx.compose.ui,
-            libs.hilt,
     )
     debugImplementation(
             libs.androidx.compose.ui.tooling,

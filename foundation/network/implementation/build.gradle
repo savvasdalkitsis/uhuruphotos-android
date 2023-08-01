@@ -13,7 +13,6 @@ dependencies {
 
     implementation(
             libs.autodagger.core,
-            libs.hilt,
             libs.logger,
             libs.okhttp,
             libs.okhttp.logging,

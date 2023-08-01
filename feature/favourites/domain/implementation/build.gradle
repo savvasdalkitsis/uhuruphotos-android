@@ -7,7 +7,6 @@ dependencies {
     implementation project(":foundation:preferences:api")
     implementation(
             libs.autodagger.core,
-            libs.hilt,
     )
     kapt libs.autodagger.kapt
 }

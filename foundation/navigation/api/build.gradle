@@ -16,7 +16,6 @@ dependencies {
     api(
             libs.androidx.compose.navigation,
             libs.appyx,
-            libs.hilt,
             libs.recasa,
     )
 }

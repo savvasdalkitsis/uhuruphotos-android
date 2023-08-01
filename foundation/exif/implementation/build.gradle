@@ -8,7 +8,6 @@ dependencies {
     implementation(
             libs.autodagger.core,
             libs.exif,
-            libs.hilt,
             libs.imaging,
     )
     kapt libs.autodagger.kapt

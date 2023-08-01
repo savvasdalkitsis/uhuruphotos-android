@@ -7,7 +7,6 @@ dependencies {
             project(":foundation:coroutines:api"),
             project(":foundation:log:api"),
             libs.autodagger.core,
-            libs.hilt,
             libs.moshi,
             libs.retrofit.core,
             libs.retrofit.moshi,

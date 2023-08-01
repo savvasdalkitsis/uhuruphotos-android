@@ -17,6 +17,5 @@ dependencies {
     implementation(
             libs.androidx.compose.material,
             libs.androidx.work,
-            libs.hilt,
     )
 }

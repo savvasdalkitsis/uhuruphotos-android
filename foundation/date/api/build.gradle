@@ -9,7 +9,4 @@ dependencies {
     )
     implementation project(":foundation:log:api")
     implementation project(":foundation:strings:api")
-    implementation(
-            libs.hilt,
-    )
 }

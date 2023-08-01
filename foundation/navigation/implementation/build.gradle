@@ -32,7 +32,6 @@ dependencies {
     api(
             libs.accompanist.navigation,
             libs.androidx.compose.hilt.navigation,
-            libs.hilt,
             libs.kotlin.reflect,
     )
 

@@ -6,7 +6,6 @@ dependencies {
     api project(":foundation:toaster:api")
     implementation(
             libs.autodagger.core,
-            libs.hilt,
     )
     kapt libs.autodagger.kapt
 }
