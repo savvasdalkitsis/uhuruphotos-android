@@ -15,7 +15,17 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui
 
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.animateContentSize
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
+import androidx.compose.animation.scaleIn
+import androidx.compose.animation.scaleOut
+import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.BoxScope
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.calculateEndPadding
@@ -29,10 +39,23 @@ import androidx.compose.foundation.lazy.staggeredgrid.StaggeredGridCells
 import androidx.compose.foundation.lazy.staggeredgrid.StaggeredGridItemSpan
 import androidx.compose.foundation.lazy.staggeredgrid.rememberLazyStaggeredGridState
 import androidx.compose.material.MaterialTheme
+import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.derivedStateOf
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.shadow
+import androidx.compose.ui.graphics.TransformOrigin
+import androidx.compose.ui.hapticfeedback.HapticFeedbackType
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.platform.LocalHapticFeedback
 import androidx.compose.ui.platform.LocalLayoutDirection
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.Cluster
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.Cel
@@ -50,6 +73,8 @@ internal fun StaggeredCollage(
     maintainAspectRatio: Boolean = true,
     miniIcons: Boolean = false,
     showSyncState: Boolean = false,
+    showStickyHeaders: Boolean = false,
+    showScrollbarHint: Boolean = false,
     columnCount: Int,
     gridState: LazyStaggeredGridState = rememberLazyStaggeredGridState(),
     collageHeader: @Composable (LazyStaggeredGridItemScope.() -> Unit)? = null,
@@ -59,6 +84,7 @@ internal fun StaggeredCollage(
     onClusterSelectionClicked: (Cluster) -> Unit,
 ) {
     Box {
+        val topPadding = contentPadding.calculateTopPadding()
         LazyVerticalStaggeredGrid(
             modifier = modifier
                 .recomposeHighlighter()
@@ -70,18 +96,20 @@ internal fun StaggeredCollage(
             columns = StaggeredGridCells.Fixed(columnCount),
         ) {
             item("contentPaddingTop", "contentPadding", span = StaggeredGridItemSpan.FullLine) {
-                Spacer(modifier = Modifier.height(contentPadding.calculateTopPadding()))
+                Spacer(modifier = Modifier.height(topPadding))
             }
             collageHeader?.let { header ->
                 item("collageHeader", "collageHeader", span = StaggeredGridItemSpan.FullLine) {
                     header(this)
                 }
             }
-            for (cluster in state) {
+            for ((clusterIndex, cluster) in state.withIndex()) {
                 if ((cluster.displayTitle + cluster.location.orEmpty()).isNotEmpty()) {
-                    item(cluster.id, "header", span = StaggeredGridItemSpan.FullLine) {
+                    item("item:$clusterIndex:header", "header", span = StaggeredGridItemSpan.FullLine) {
                         ClusterHeader(
-                            modifier = Modifier.animateItemPlacement().recomposeHighlighter(),
+                            modifier = Modifier
+                                .animateItemPlacement()
+                                .recomposeHighlighter(),
                             state = cluster,
                             showSelectionHeader = showSelectionHeader,
                             onRefreshClicked = {
@@ -94,7 +122,7 @@ internal fun StaggeredCollage(
                 }
 
                 for (cel in cluster.cels) {
-                    item(cel.mediaItem.id.value) {
+                    item("item:$clusterIndex:" + cel.mediaItem.id.value) {
                         val aspectRatio = when {
                             maintainAspectRatio -> cel.mediaItem.ratio
                             else -> 1f
@@ -119,18 +147,118 @@ internal fun StaggeredCollage(
                 Spacer(modifier = Modifier.height(contentPadding.calculateBottomPadding()))
             }
         }
-        Box(modifier = Modifier
-            .recomposeHighlighter()
-            .padding(contentPadding)
-        ) {
-            InternalLazyStaggeredGridScrollbar(
-                gridState = gridState,
-                thickness = 8.dp,
-                selectionMode = ScrollbarSelectionMode.Thumb,
-                thumbColor = MaterialTheme.colors.primary.copy(alpha = 0.7f),
-                thumbSelectedColor = MaterialTheme.colors.primary,
+        val density = LocalDensity.current
+        val firstOffscreenCluster by remember {
+            derivedStateOf {
+                with(density) {
+                    gridState.layoutInfo.visibleItemsInfo
+                        .firstOrNull { it.offset.y + it.size.height > topPadding.toPx() }
+                        ?.key?.toString()
+                        ?.takeIf { it.startsWith("item:") }
+                        ?.split(":")
+                        ?.get(1)
+                        ?.toIntOrNull()
+                }
+            }
+        }
+        if (showStickyHeaders) {
+            StickyHeader(
+                firstOffscreenCluster,
+                topPadding,
+                state,
+                showSelectionHeader,
+                onClusterRefreshClicked,
+                onClusterSelectionClicked
             )
         }
+        ScrollbarThumb(contentPadding, gridState, firstOffscreenCluster, state, showScrollbarHint)
+    }
+}
 
+@Composable
+private fun ScrollbarThumb(
+    contentPadding: PaddingValues,
+    gridState: LazyStaggeredGridState,
+    firstOffscreenCluster: Int?,
+    state: List<Cluster>,
+    showScrollbarHint: Boolean
+) {
+    Box(
+        modifier = Modifier
+            .recomposeHighlighter()
+            .padding(contentPadding)
+    ) {
+        InternalLazyStaggeredGridScrollbar(
+            gridState = gridState,
+            thickness = 8.dp,
+            selectionMode = ScrollbarSelectionMode.Thumb,
+            thumbColor = MaterialTheme.colors.primary.copy(alpha = 0.7f),
+            thumbSelectedColor = MaterialTheme.colors.primary,
+        ) { _, isThumbSelected ->
+            val show = showScrollbarHint && isThumbSelected && firstOffscreenCluster != null
+            AnimatedVisibility(
+                modifier = Modifier.padding(end = 8.dp),
+                enter = fadeIn() + scaleIn(transformOrigin = TransformOrigin(1f, 0.5f)),
+                exit = fadeOut() + scaleOut(transformOrigin = TransformOrigin(1f, 0.5f)),
+                visible = show,
+            ) {
+                Box(
+                    modifier = Modifier
+                        .clip(MaterialTheme.shapes.small)
+                        .background(MaterialTheme.colors.onBackground.copy(alpha = 0.8f))
+                        .shadow(2.dp)
+                        .padding(8.dp)
+                        .animateContentSize(),
+                ) {
+                    val text = firstOffscreenCluster?.let { state[it] }?.displayTitle ?: ""
+                    val haptic = LocalHapticFeedback.current
+                    Text(
+                        text = text,
+                        color = MaterialTheme.colors.onPrimary,
+                    )
+                    LaunchedEffect(text) {
+                        haptic.performHapticFeedback(HapticFeedbackType.TextHandleMove)
+                    }
+                }
+            }
+        }
+    }
+}
+
+@Composable
+private fun BoxScope.StickyHeader(
+    firstOffscreenCluster: Int?,
+    topPadding: Dp,
+    state: List<Cluster>,
+    showSelectionHeader: Boolean,
+    onClusterRefreshClicked: (Cluster) -> Unit,
+    onClusterSelectionClicked: (Cluster) -> Unit
+) {
+    AnimatedVisibility(
+        visible = firstOffscreenCluster != null,
+        enter = fadeIn(),
+        exit = fadeOut(),
+        modifier = Modifier.Companion
+            .align(Alignment.TopCenter)
+            .padding(top = topPadding)
+            .recomposeHighlighter(),
+        label = "persistent cluster",
+    ) {
+        val interactionSource = remember { MutableInteractionSource() }
+        val cluster = remember(firstOffscreenCluster) {
+            firstOffscreenCluster?.let { state[it] } ?: Cluster("")
+        }
+        ClusterHeader(
+            modifier = Modifier
+                .background(MaterialTheme.colors.background.copy(alpha = 0.8f))
+                .clickable(interactionSource = interactionSource, indication = null) {},
+            state = cluster,
+            showSelectionHeader = showSelectionHeader,
+            onRefreshClicked = {
+                onClusterRefreshClicked(cluster)
+            }
+        ) {
+            onClusterSelectionClicked(cluster)
+        }
     }
 }

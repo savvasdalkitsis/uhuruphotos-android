@@ -27,10 +27,10 @@ import kotlinx.collections.immutable.toPersistentList
 @Immutable
 data class Cluster(
     val id: String,
-    val cels: ImmutableList<CelState>,
-    val displayTitle: String,
+    val cels: ImmutableList<CelState> = persistentListOf(),
+    val displayTitle: String = "",
     val unformattedDate: String? = null,
-    val location: String?,
+    val location: String? = null,
     val showRefreshIcon: Boolean = false,
 ) {
     val hasAnyCelsWithRemoteMedia = cels.any { it.mediaItem.id.preferRemote is MediaId.Remote }

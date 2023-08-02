@@ -115,6 +115,8 @@ internal fun Feed(
                 state = state.collageState,
                 showSelectionHeader = state.hasSelection,
                 showSyncState = showSyncState,
+                showStickyHeaders = true,
+                showScrollbarHint = true,
                 gridState = gridState,
                 collageHeader = {
                     AnimatedVisibility(

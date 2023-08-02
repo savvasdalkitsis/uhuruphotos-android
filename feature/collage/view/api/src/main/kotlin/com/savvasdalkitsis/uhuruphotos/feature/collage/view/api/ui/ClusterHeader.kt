@@ -40,7 +40,7 @@ import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.ActionIcon
 
 @Composable
 internal fun ClusterHeader(
-    modifier: Modifier,
+    modifier: Modifier = Modifier,
     state: Cluster,
     showSelectionHeader: Boolean,
     onRefreshClicked: () -> Unit = {},

@@ -42,6 +42,8 @@ fun SearchFeed(
             clusters = searchResults.clusters.toPersistentList(),
             collageDisplay = state.searchDisplay,
         ),
+        showStickyHeaders = true,
+        showScrollbarHint = true,
         onCelSelected = { cel ->
             action(SelectedCel(cel))
         },
