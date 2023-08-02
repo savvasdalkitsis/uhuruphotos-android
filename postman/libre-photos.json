@@ -205,6 +205,36 @@
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "Media details",
+					"id": "01b66e30-794e-4ee7-9b1e-3a0b707807b9",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{HOST}}/api/exists/:id",
+							"host": [
+								"{{HOST}}"
+							],
+							"path": [
+								"api",
+								"exists",
+								":id"
+							],
+							"variable": [
+								{
+									"id": "595ca949-1b2f-4ab4-9b30-e32568d0468b",
+									"key": "id",
+									"value": "510dc3c7c99b6c3da3227f4ae97023201"
+								}
+							]
+						}
+					},
+					"response": []
 				}
 			],
 			"id": "99c2ed92-27d3-4088-9956-6e01bfe24842"
