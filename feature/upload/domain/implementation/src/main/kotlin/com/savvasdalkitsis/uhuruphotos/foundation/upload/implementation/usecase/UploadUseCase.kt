@@ -28,8 +28,10 @@ import com.savvasdalkitsis.uhuruphotos.foundation.upload.api.usecase.UploadUseCa
 import com.savvasdalkitsis.uhuruphotos.foundation.upload.implementation.repository.UploadRepository
 import com.savvasdalkitsis.uhuruphotos.foundation.upload.implementation.service.UploadService
 import kotlinx.coroutines.flow.Flow
+import se.ansman.dagger.auto.AutoBind
 import javax.inject.Inject
 
+@AutoBind
 class UploadUseCase @Inject constructor(
     private val localMediaUseCase: LocalMediaUseCase,
     private val siteUseCase: SiteUseCase,
@@ -55,10 +57,13 @@ class UploadUseCase @Inject constructor(
             localMediaUseCase.getLocalMediaItem(item.id)?.let { mediaItem ->
                 val exists = uploadService.exists(mediaItem.md5)
                 when {
-                    exists is Ok && !exists.value -> uploadService.upload(mediaItem.contentUri)
-                    else -> {
-                        uploadRepository.setNotUploading(mediaItem.id)
+                    exists is Ok && !exists.value -> {
+                        when (val uploadId = uploadService.upload(mediaItem.contentUri)) {
+                            null -> uploadRepository.setNotUploading(mediaItem.id)
+                            else -> uploadRepository.associateUploadIdWithMedia(uploadId, mediaItem.id)
+                        }
                     }
+                    else -> uploadRepository.setNotUploading(mediaItem.id)
                 }
             }
         }

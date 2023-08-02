@@ -15,17 +15,18 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.foundation.upload.implementation.module
 
-import com.savvasdalkitsis.uhuruphotos.foundation.upload.implementation.usecase.UploadUseCase
-import dagger.Binds
+import com.savvasdalkitsis.uhuruphotos.foundation.upload.implementation.service.UploadCompleteService
 import dagger.Module
+import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
+import retrofit2.Retrofit
 
 @Module
 @InstallIn(SingletonComponent::class)
-abstract class UploadBindingsModule {
+class UploadModule {
 
-    @Binds
-    abstract fun uploadUseCase(useCase: UploadUseCase):
-        com.savvasdalkitsis.uhuruphotos.foundation.upload.api.usecase.UploadUseCase
+    @Provides
+    fun uploadCompleteService(retrofit: Retrofit): UploadCompleteService =
+        retrofit.create(UploadCompleteService::class.java)
 }

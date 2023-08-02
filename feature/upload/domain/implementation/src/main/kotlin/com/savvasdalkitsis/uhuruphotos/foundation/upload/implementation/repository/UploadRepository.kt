@@ -15,10 +15,15 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.foundation.upload.implementation.repository
 
+import app.cash.sqldelight.coroutines.asFlow
+import app.cash.sqldelight.coroutines.mapToList
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.Database
+import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.extensions.awaitSingle
+import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.extensions.awaitSingleOrNull
+import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.media.upload.UploadIds
+import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.media.upload.UploadIdsQueries
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.media.upload.UploadingMediaItemsQueries
-import com.squareup.sqldelight.runtime.coroutines.asFlow
-import com.squareup.sqldelight.runtime.coroutines.mapToList
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.map
@@ -26,6 +31,7 @@ import javax.inject.Inject
 
 class UploadRepository @Inject constructor(
     private val uploadingMediaItemsQueries: UploadingMediaItemsQueries,
+    private val uploadIdsQueries: UploadIdsQueries,
     private val database: Database,
 ) {
 
@@ -45,6 +51,13 @@ class UploadRepository @Inject constructor(
         }
     }
 
+    fun associateUploadIdWithMedia(uploadId: String, localMediaId: Long) {
+        uploadIdsQueries.insert(UploadIds(uploadId, localMediaId))
+    }
+
     fun observeUploading(): Flow<Set<Long>> = uploadingMediaItemsQueries.getAll()
-        .asFlow().mapToList().map { it.toSet() }.distinctUntilChanged()
+        .asFlow().mapToList(Dispatchers.IO).map { it.toSet() }.distinctUntilChanged()
+
+    suspend fun getLocalMediaIdFor(uploadId: String): Long? =
+        uploadIdsQueries.get(uploadId).awaitSingleOrNull()?.localMediaId
 }

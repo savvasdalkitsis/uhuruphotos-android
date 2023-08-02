@@ -28,7 +28,6 @@ import android.os.Environment.DIRECTORY_DCIM
 import app.cash.sqldelight.coroutines.asFlow
 import app.cash.sqldelight.coroutines.mapToList
 import com.github.michaelbull.result.onFailure
-import com.github.michaelbull.result.onFailure
 import com.savvasdalkitsis.uhuruphotos.feature.auth.domain.api.usecase.AuthenticationHeadersUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.extensions.asyncReturn
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaId.Remote
@@ -41,8 +40,6 @@ import com.savvasdalktsis.uhuruphotos.feature.download.domain.api.usecase.Downlo
 import com.savvasdalktsis.uhuruphotos.feature.download.domain.implementation.repository.DownloadId
 import com.savvasdalktsis.uhuruphotos.feature.download.domain.implementation.repository.DownloadingRepository
 import com.savvasdalktsis.uhuruphotos.feature.download.domain.implementation.repository.MediaId
-import com.squareup.sqldelight.runtime.coroutines.asFlow
-import com.squareup.sqldelight.runtime.coroutines.mapToList
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.distinctUntilChanged

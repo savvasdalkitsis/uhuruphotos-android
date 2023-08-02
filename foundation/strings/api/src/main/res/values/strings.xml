@@ -309,4 +309,5 @@
     <string name="upload_not_allowed">Uploading media is not allowed on your server. Please contact your administrator to enable it</string>
     <string name="upload_error_checking">Cannot check status of upload capabilities of your server. Please try again</string>
     <string name="uploads">Uploads</string>
+    <string name="finalizing_upload">Finalizing Upload</string>
 </resources>

@@ -19,6 +19,7 @@ import android.app.Application
 import com.savvasdalkitsis.uhuruphotos.feature.auth.domain.api.TokenRefreshOkHttpClient
 import com.savvasdalkitsis.uhuruphotos.foundation.initializer.api.ApplicationCreated
 import com.savvasdalkitsis.uhuruphotos.foundation.notification.api.NotificationChannels
+import com.savvasdalkitsis.uhuruphotos.foundation.upload.implementation.service.CompleteUploadsObserver
 import net.gotev.uploadservice.UploadServiceConfig
 import net.gotev.uploadservice.data.RetryPolicyConfig
 import net.gotev.uploadservice.data.UploadNotificationConfig
@@ -26,6 +27,7 @@ import net.gotev.uploadservice.data.UploadNotificationStatusConfig
 import net.gotev.uploadservice.logger.UploadServiceLogger
 import net.gotev.uploadservice.logger.UploadServiceLogger.setDelegate
 import net.gotev.uploadservice.logger.UploadServiceLogger.setLogLevel
+import net.gotev.uploadservice.observer.request.GlobalRequestObserver
 import net.gotev.uploadservice.okhttp.OkHttpStack
 import okhttp3.OkHttpClient
 import se.ansman.dagger.auto.AutoBindIntoSet
@@ -34,6 +36,7 @@ import javax.inject.Inject
 @AutoBindIntoSet
 class UploadInitializer @Inject constructor(
     @TokenRefreshOkHttpClient private val okHttpClient: OkHttpClient,
+    private val completeUploadsObserver: CompleteUploadsObserver,
 ) : ApplicationCreated {
 
     override fun onAppCreated(app: Application) {
@@ -49,7 +52,7 @@ class UploadInitializer @Inject constructor(
                 defaultMaxRetries = 3
             )
             setDelegate(UploadLogger())
-            notificationConfigFactory = { context, uploadId ->
+            notificationConfigFactory = { _, _ ->
                 UploadNotificationConfig(
                     notificationChannelId = defaultNotificationChannel!!,
                     isRingToneEnabled = true,
@@ -72,5 +75,6 @@ class UploadInitializer @Inject constructor(
                 )
             }
         }
+        GlobalRequestObserver(app, completeUploadsObserver)
     }
 }

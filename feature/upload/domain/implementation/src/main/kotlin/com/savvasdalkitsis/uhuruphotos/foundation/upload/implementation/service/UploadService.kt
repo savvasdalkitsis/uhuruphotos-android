@@ -34,18 +34,18 @@ class UploadService @Inject constructor(
     private val userUseCase: UserUseCase,
 ) {
 
-    fun upload(contentUri: String): Boolean {
-        val baseUrl = serverUseCase.getServerUrl() ?: return false
+    fun upload(contentUri: String): String? {
+        val baseUrl = serverUseCase.getServerUrl() ?: return null
         val url = "$baseUrl/api/upload/"
         val headers = authenticationHeadersUseCase.headers(url)
-        MultipartUploadRequest(context, baseUrl)
+        return MultipartUploadRequest(context, baseUrl)
             .addFileToUpload(contentUri, parameterName = "file", fileName = "blob")
+            .setUsesFixedLengthStreamingMode(false)
             .run {
                 headers.fold(this) { c, (key, value) -> c.addHeader(key, value) }
             }
             .setMethod("POST")
             .startUpload()
-        return true
     }
 
     suspend fun exists(md5: String): Result<Boolean, Throwable> =

@@ -1,0 +1,4 @@
+CREATE TABLE uploadIds (
+    uploadId TEXT NOT NULL PRIMARY KEY,
+    localMediaId INTEGER AS kotlin.Long NOT NULL
+);

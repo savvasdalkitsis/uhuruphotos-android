@@ -1,0 +1,13 @@
+CREATE TABLE uploadIds (
+    uploadId TEXT NOT NULL PRIMARY KEY,
+    localMediaId INTEGER NOT NULL
+);
+
+insert:
+INSERT OR REPLACE INTO uploadIds VALUES ?;
+
+delete:
+DELETE FROM uploadIds WHERE uploadId = :uploadId;
+
+get:
+SELECT * FROM uploadIds WHERE uploadId = :uploadId;
