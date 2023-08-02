@@ -1,0 +1,3 @@
+* Sticky headers will now show in the feed and search results
+* Scrollbar hint showing the date will show when dragging the scrollbar in the feed and search results
+* Moving background of loading of all media details (needed in heatmap) to its own job which can be manually triggered and will run in the background even after leaving the heatmap page
