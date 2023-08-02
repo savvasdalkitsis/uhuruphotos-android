@@ -206,7 +206,6 @@ private fun ScrollbarThumb(
                     modifier = Modifier
                         .clip(MaterialTheme.shapes.small)
                         .background(MaterialTheme.colors.onBackground.copy(alpha = 0.8f))
-                        .shadow(2.dp)
                         .padding(8.dp)
                         .animateContentSize(),
                 ) {
