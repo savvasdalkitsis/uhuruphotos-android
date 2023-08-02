@@ -216,20 +216,19 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{HOST}}/api/exists/:id",
+							"raw": "{{HOST}}/api/photos/:id",
 							"host": [
 								"{{HOST}}"
 							],
 							"path": [
 								"api",
-								"exists",
+								"photos",
 								":id"
 							],
 							"variable": [
 								{
-									"id": "595ca949-1b2f-4ab4-9b30-e32568d0468b",
 									"key": "id",
-									"value": "510dc3c7c99b6c3da3227f4ae97023201"
+									"value": "13c678efeed0f33fadecfffdda8ac3aa1"
 								}
 							]
 						}
