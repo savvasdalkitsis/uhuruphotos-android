@@ -19,6 +19,7 @@ import app.cash.sqldelight.coroutines.asFlow
 import app.cash.sqldelight.coroutines.mapToList
 import app.cash.sqldelight.coroutines.mapToOneNotNull
 import com.github.michaelbull.result.Ok
+import com.github.michaelbull.result.map
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.entities.media.DbRemoteMediaItemDetails
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.entities.media.DbRemoteMediaItemSummary
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.extensions.async
@@ -28,6 +29,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.extensions.awaitSin
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.media.remote.RemoteMediaItemDetailsQueries
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.media.remote.RemoteMediaItemSummaryQueries
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.media.remote.RemoteMediaTrashQueries
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaRefreshResult
 import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.api.model.toDbModel
 import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.implementation.service.RemoteMediaService
 import com.savvasdalkitsis.uhuruphotos.foundation.log.api.runCatchingWithLog
@@ -82,9 +84,9 @@ class RemoteMediaRepository @Inject constructor(
 
     suspend fun refreshDetailsNowIfMissing(id: String) =
         when (getMediaItemDetails(id)) {
-            null -> refreshDetailsNow(id)
-            else -> Ok(Unit)
-        }.simple()
+            null -> refreshDetailsNow(id).map { MediaRefreshResult.REFRESHED }
+            else -> Ok(MediaRefreshResult.SKIPPED)
+        }
 
     suspend fun refreshDetailsNow(id: String) = runCatchingWithLog {
         remoteMediaService.getMediaItem(id).toDbModel().let {

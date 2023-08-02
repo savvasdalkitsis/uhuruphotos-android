@@ -15,8 +15,10 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.api.usecase
 
+import com.github.michaelbull.result.Result
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.entities.media.DbRemoteMediaItemDetails
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.entities.media.DbRemoteMediaItemSummary
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaRefreshResult
 import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.api.service.model.RemoteMediaCollection
 import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.api.service.model.RemoteMediaCollectionsByDate
 import com.savvasdalkitsis.uhuruphotos.foundation.result.api.SimpleResult
@@ -26,7 +28,7 @@ interface RemoteMediaUseCase {
 
     fun observeAllRemoteMediaDetails(): Flow<List<DbRemoteMediaItemDetails>>
 
-    fun observeFavouriteRemoteMedia(): Flow<com.github.michaelbull.result.Result<List<DbRemoteMediaItemSummary>, Throwable>>
+    fun observeFavouriteRemoteMedia(): Flow<Result<List<DbRemoteMediaItemSummary>, Throwable>>
 
     fun observeRemoteMediaItemDetails(id: String): Flow<DbRemoteMediaItemDetails>
 
@@ -34,13 +36,13 @@ interface RemoteMediaUseCase {
 
     fun observeHiddenRemoteMedia(): Flow<List<DbRemoteMediaItemSummary>>
 
-    suspend fun getFavouriteMediaSummariesCount(): com.github.michaelbull.result.Result<Long, Throwable>
+    suspend fun getFavouriteMediaSummariesCount(): Result<Long, Throwable>
 
     suspend fun getHiddenMediaSummaries(): List<DbRemoteMediaItemSummary>
 
     suspend fun setMediaItemFavourite(id: String, favourite: Boolean): SimpleResult
 
-    suspend fun refreshDetailsNowIfMissing(id: String): SimpleResult
+    suspend fun refreshDetailsNowIfMissing(id: String): Result<MediaRefreshResult, Throwable>
 
     suspend fun refreshDetailsNow(id: String): SimpleResult
 
