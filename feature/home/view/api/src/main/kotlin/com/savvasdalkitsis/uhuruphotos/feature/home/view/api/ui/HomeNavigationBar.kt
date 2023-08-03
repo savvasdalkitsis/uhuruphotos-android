@@ -50,7 +50,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.feed.view.api.navigation.FeedNavi
 import com.savvasdalkitsis.uhuruphotos.feature.home.view.api.ui.NavigationStyle.BOTTOM_BAR
 import com.savvasdalkitsis.uhuruphotos.feature.home.view.api.ui.NavigationStyle.NAVIGATION_RAIL
 import com.savvasdalkitsis.uhuruphotos.feature.library.view.api.navigation.LibraryNavigationRoute
-import com.savvasdalkitsis.uhuruphotos.feature.search.view.api.navigation.SearchNavigationRoute
+import com.savvasdalkitsis.uhuruphotos.feature.discover.view.api.navigation.DiscoverNavigationRoute
 import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.R.drawable
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.LocalBackStack
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.NavigationRoute
@@ -115,8 +115,8 @@ private fun Items(
         rowScope,
     )
     NavItem(
-        label = string.search,
-        route = SearchNavigationRoute,
+        label = string.discover,
+        route = DiscoverNavigationRoute,
         icon = rememberVectorPainter(Icons.Filled.Search),
         onReselected = onReselected,
         rowScope = rowScope,

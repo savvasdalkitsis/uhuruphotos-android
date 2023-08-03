@@ -16,52 +16,36 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.feature.search.view.implementation.navigation
 
 import androidx.compose.runtime.Composable
-import com.savvasdalkitsis.uhuruphotos.feature.account.view.api.ui.AccountOverviewActionBar
-import com.savvasdalkitsis.uhuruphotos.feature.account.view.api.ui.AccountOverviewContent
 import com.savvasdalkitsis.uhuruphotos.feature.search.view.api.navigation.SearchNavigationRoute
-import com.savvasdalkitsis.uhuruphotos.feature.search.view.implementation.ui.SearchPage
+import com.savvasdalkitsis.uhuruphotos.feature.search.view.implementation.ui.Search
 import com.savvasdalkitsis.uhuruphotos.feature.search.view.implementation.viewmodel.SearchViewModel
 import com.savvasdalkitsis.uhuruphotos.feature.settings.domain.api.usecase.SettingsUseCase
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.NavigationTarget
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.NavigationTargetBuilder
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.NavigationTargetRegistry
-import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.Either.Left
-import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.Either.Right
 import se.ansman.dagger.auto.AutoInitialize
 import javax.inject.Inject
 import javax.inject.Singleton
 
 @AutoInitialize
 @Singleton
-class SearchNavigationTarget @Inject constructor(
-    registry: NavigationTargetRegistry,
+internal class SearchNavigationTarget @Inject constructor(
     private val settingsUseCase: SettingsUseCase,
     private val navigationTargetBuilder: NavigationTargetBuilder,
+    registry: NavigationTargetRegistry,
 ) : NavigationTarget<SearchNavigationRoute>(SearchNavigationRoute::class, registry) {
 
     @Composable
     override fun View(route: SearchNavigationRoute) = with(navigationTargetBuilder) {
         ViewModelView(
-            themeMode = settingsUseCase.observeThemeModeState(),
-            route = route,
-            viewModel = SearchViewModel::class,
-        ) { state, actions ->
-            SearchPage(
-                state.first,
-                isShowingPopUp = state.second.showAccountOverview,
-                action = {
-                    actions(Left(it))
-                },
-                actionBarContent = {
-                    AccountOverviewActionBar(state.second) {
-                        actions(Right(it))
-                    }
-                },
-            ) {
-                AccountOverviewContent(state.second) {
-                    actions(Right(it))
-                }
-            }
+            settingsUseCase.observeThemeModeState(),
+            route,
+            SearchViewModel::class,
+        ) { state, action ->
+            Search(
+                state,
+                action,
+            )
         }
     }
 }

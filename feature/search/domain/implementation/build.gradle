@@ -1,17 +1,15 @@
 android {
-    namespace 'com.savvasdalkitsis.uhuruphotos.feature.search.domain.implementation'
+    namespace 'com.savvasdalkitsis.uhuruphotos.foundation.search.domain.implementation'
 }
 
 dependencies {
-    implementation project(":feature:db:domain:api")
-    implementation project(":feature:media:remote:domain:api")
-    implementation project(":feature:search:domain:api")
-    implementation project(":foundation:coroutines:api")
-    implementation project(":foundation:date:api")
-    implementation project(":foundation:group:api")
-    implementation project(":foundation:log:api")
-    implementation project(":foundation:preferences:api")
     implementation(
+            project(":feature:media:remote:domain:api"),
+            project(":feature:search:domain:api"),
+            project(":foundation:coroutines:api"),
+            project(":foundation:date:api"),
+            project(":foundation:log:api"),
+            project(":foundation:preferences:api"),
             libs.autodagger.core,
             libs.hilt,
             libs.moshi,

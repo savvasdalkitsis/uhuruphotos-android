@@ -18,56 +18,50 @@ package com.savvasdalkitsis.uhuruphotos.feature.search.view.implementation.seam.
 import com.github.michaelbull.result.getOr
 import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.toCluster
 import com.savvasdalkitsis.uhuruphotos.feature.search.view.implementation.seam.SearchActionsContext
-import com.savvasdalkitsis.uhuruphotos.feature.search.view.implementation.seam.SearchMutation
+import com.savvasdalkitsis.uhuruphotos.feature.search.view.implementation.seam.SearchMutation.DisplaySearchResults
+import com.savvasdalkitsis.uhuruphotos.feature.search.view.implementation.seam.SearchMutation.Loading
+import com.savvasdalkitsis.uhuruphotos.feature.search.view.implementation.seam.SearchMutation.SetQuery
+import com.savvasdalkitsis.uhuruphotos.feature.search.view.implementation.seam.SearchMutation.ShowErrorScreen
 import com.savvasdalkitsis.uhuruphotos.feature.search.view.implementation.seam.effects.ErrorSearching
-import com.savvasdalkitsis.uhuruphotos.feature.search.view.implementation.seam.effects.HideKeyboard
 import com.savvasdalkitsis.uhuruphotos.feature.search.view.implementation.seam.effects.SearchEffect
-import com.savvasdalkitsis.uhuruphotos.feature.search.view.implementation.ui.state.SearchResults
 import com.savvasdalkitsis.uhuruphotos.feature.search.view.implementation.ui.state.SearchState
-import com.savvasdalkitsis.uhuruphotos.foundation.log.api.log
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.EffectHandler
-import kotlinx.coroutines.CancellationException
+import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.Mutation
+import kotlinx.coroutines.cancel
+import kotlinx.coroutines.currentCoroutineContext
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.cancellable
-import kotlinx.coroutines.flow.catch
-import kotlinx.coroutines.flow.channelFlow
 import kotlinx.coroutines.flow.debounce
+import kotlinx.coroutines.flow.emitAll
+import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.mapNotNull
-import kotlinx.coroutines.launch
 
 data class SearchFor(val query: String) : SearchAction() {
     context(SearchActionsContext) override fun handle(
         state: SearchState,
         effect: EffectHandler<SearchEffect>
-    ) = channelFlow {
-        lastSearch?.cancel()
-        send(SearchMutation.UpdateLatestQuery(query))
-        send(SearchMutation.SwitchStateToSearching)
-        effect.handleEffect(HideKeyboard)
-        lastSearch = launch {
-            searchUseCase.addSearchToRecentSearches(query)
-            searchUseCase.searchFor(query)
-                .debounce(200)
-                .mapNotNull { result ->
-                    val clusters = result.getOr(null)?.map { it.toCluster() }
-                    if (clusters != null)
-                        when {
-                            clusters.isEmpty() -> SearchMutation.SwitchStateToSearching
-                            else -> SearchMutation.SwitchStateToFound(SearchResults.Found(clusters))
+    ): Flow<Mutation<SearchState>> = flow {
+        emit(Loading)
+        emit(SetQuery(query))
+        searchUseCase.addSearchToRecentSearches(query)
+        emitAll(searchUseCase.searchFor(query)
+            .debounce(200)
+            .cancellable()
+            .mapNotNull { result ->
+                val clusters = result.getOr(null)?.map { it.toCluster() }
+                when {
+                    clusters != null -> DisplaySearchResults(clusters)
+                    else -> {
+                        currentCoroutineContext().cancel()
+                        if (!state.clusters.isEmpty()) {
+                            effect.handleEffect(ErrorSearching)
                         }
-                    else {
-                        effect.handleEffect(ErrorSearching)
                         null
                     }
                 }
-                .cancellable()
-                .catch {
-                    if (it !is CancellationException) {
-                        log(it)
-                        effect.handleEffect(ErrorSearching)
-                    }
-                    send(SearchMutation.SwitchStateToIdle)
-                }
-                .collect { send(it) }
-        }
+            }
+        )
+        emit(ShowErrorScreen)
     }
+
 }

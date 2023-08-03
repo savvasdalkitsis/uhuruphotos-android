@@ -3,7 +3,7 @@ plugins {
 }
 
 android {
-    namespace 'com.savvasdalkitsis.uhuruphotos.feature.search.view.api'
+    namespace 'com.savvasdalkitsis.uhuruphotos.foundation.search.view.api'
 }
 
 dependencies {

@@ -19,4 +19,4 @@ import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.NavigationRoute
 import kotlinx.parcelize.Parcelize
 
 @Parcelize
-data object SearchNavigationRoute : NavigationRoute
+data class SearchNavigationRoute(val query: String) : NavigationRoute

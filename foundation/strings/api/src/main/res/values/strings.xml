@@ -276,4 +276,7 @@
     <string name="thumbnail_disk_cache">Thumbnail Disk cache</string>
     <string name="thumbnail_memory_cache">Thumbnail Memory cache</string>
     <string name="donate">Donate</string>
+    <string name="searching">Searching</string>
+    <string name="retry">Retry</string>
+    <string name="discover">Discover</string>
 </resources>

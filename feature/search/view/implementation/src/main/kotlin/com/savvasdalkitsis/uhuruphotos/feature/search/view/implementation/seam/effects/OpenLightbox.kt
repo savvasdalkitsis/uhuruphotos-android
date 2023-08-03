@@ -22,10 +22,9 @@ import com.savvasdalkitsis.uhuruphotos.feature.search.view.implementation.seam.S
 
 data class OpenLightbox(
     val id: MediaId<*>,
-    val currentQuery: String,
+    val query: String,
 ) : SearchEffect() {
     context(SearchEffectsContext) override suspend fun handle() {
-        navigator.navigateTo(LightboxNavigationRoute(id, SearchResults(currentQuery)))
-
+        navigator.navigateTo(LightboxNavigationRoute(id, SearchResults(query)))
     }
 }

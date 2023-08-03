@@ -17,11 +17,9 @@ package com.savvasdalkitsis.uhuruphotos.feature.search.view.implementation.seam
 
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.Navigator
 import com.savvasdalkitsis.uhuruphotos.foundation.toaster.api.usecase.ToasterUseCase
-import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.usecase.UiUseCase
 import javax.inject.Inject
 
 class SearchEffectsContext @Inject constructor(
     val navigator: Navigator,
-    val uiUseCase: UiUseCase,
     val toaster: ToasterUseCase,
 )

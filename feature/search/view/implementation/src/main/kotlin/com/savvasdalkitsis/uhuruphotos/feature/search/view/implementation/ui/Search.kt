@@ -15,31 +15,60 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.search.view.implementation.ui
 
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.height
+import androidx.compose.material.Button
+import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
+import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.Collage
+import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.CollageDisplayActionButton
+import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.CollageState
+import com.savvasdalkitsis.uhuruphotos.feature.search.view.implementation.seam.actions.ChangeDisplay
+import com.savvasdalkitsis.uhuruphotos.feature.search.view.implementation.seam.actions.NavigateBack
 import com.savvasdalkitsis.uhuruphotos.feature.search.view.implementation.seam.actions.SearchAction
-import com.savvasdalkitsis.uhuruphotos.feature.search.view.implementation.ui.state.SearchResults.Found
-import com.savvasdalkitsis.uhuruphotos.feature.search.view.implementation.ui.state.SearchResults.Idle
-import com.savvasdalkitsis.uhuruphotos.feature.search.view.implementation.ui.state.SearchResults.Searching
+import com.savvasdalkitsis.uhuruphotos.feature.search.view.implementation.seam.actions.SearchFor
+import com.savvasdalkitsis.uhuruphotos.feature.search.view.implementation.seam.actions.SelectedCel
 import com.savvasdalkitsis.uhuruphotos.feature.search.view.implementation.ui.state.SearchState
-import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.FullProgressBar
+import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
+import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.BackNavButton
+import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.CommonScaffold
+import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.NoContent
 
-@Composable fun Search(
+@Composable
+fun Search(
     state: SearchState,
-    action: (SearchAction) -> Unit,
-    contentPadding: PaddingValues,
+    action: (SearchAction) -> Unit
 ) {
-    Column {
-        Spacer(modifier = Modifier.height(contentPadding.calculateTopPadding()))
-        SearchField(state, action)
-        when (state.searchResults) {
-            Idle -> SearchIdle(state, action)
-            Searching -> FullProgressBar()
-            is Found -> SearchFeed(state, contentPadding, state.searchResults, action)
+    CommonScaffold(
+        title = { Text(state.query.ifEmpty { stringResource(string.searching) }) },
+        actionBarContent = {
+            CollageDisplayActionButton(
+                onChange = { action(ChangeDisplay(it)) },
+                currentCollageDisplay = state.searchDisplay
+            )
+        },
+        navigationIcon = { BackNavButton {
+            action(NavigateBack)
+        }}
+    ) { contentPadding ->
+        if (state.isError) {
+            NoContent(string.error_searching) {
+                Button(onClick = { action(SearchFor(state.query)) }) {
+                    Text(text = stringResource(string.retry))
+                }
+            }
+        } else {
+            Collage(
+                contentPadding = contentPadding,
+                state = CollageState(
+                    isLoading = state.isLoading,
+                    clusters = state.clusters,
+                    collageDisplay = state.searchDisplay,
+                ),
+                onCelSelected = { cel ->
+                    action(SelectedCel(cel))
+                },
+                onChangeDisplay = { action(ChangeDisplay(it)) },
+            )
         }
     }
 }

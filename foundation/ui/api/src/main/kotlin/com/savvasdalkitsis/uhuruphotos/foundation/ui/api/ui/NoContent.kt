@@ -37,6 +37,7 @@ import com.savvasdalkitsis.uhuruphotos.foundation.compose.api.recomposeHighlight
 @Composable
 fun NoContent(
     @StringRes message: Int,
+    additionalContent: (@Composable () -> Unit)? = null,
 ) {
     Box(
         modifier = Modifier
@@ -59,6 +60,7 @@ fun NoContent(
                 style = MaterialTheme.typography.h4
                     .copy(fontWeight = FontWeight.Bold),
             )
+            additionalContent?.invoke()
         }
     }
 }

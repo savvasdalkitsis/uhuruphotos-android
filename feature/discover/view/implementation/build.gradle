@@ -1,0 +1,54 @@
+android {
+    buildFeatures {
+        compose true
+    }
+    composeOptions {
+        kotlinCompilerExtensionVersion compose_compiler_version
+    }
+    namespace 'com.savvasdalkitsis.uhuruphotos.feature.discover.view.implementation'
+}
+
+dependencies {
+
+    implementation(
+            project(":feature:account:view:api"),
+            project(":feature:auth:domain:api"),
+            project(":feature:collage:view:api"),
+            project(":feature:db:domain:api"),
+            project(":feature:feed:domain:api"),
+            project(":feature:heatmap:view:api"),
+            project(":feature:home:view:api"),
+            project(":feature:lightbox:view:api"),
+            project(":feature:media:common:view:api"),
+            project(":feature:media:remote:domain:api"),
+            project(":feature:people:domain:api"),
+            project(":feature:people:view:api"),
+            project(":feature:person:view:api"),
+            project(":feature:discover:view:api"),
+            project(":feature:search:domain:api"),
+            project(":feature:search:view:api"),
+            project(":feature:server:view:api"),
+            project(":feature:settings:domain:api"),
+            project(":foundation:compose:api"),
+            project(":foundation:coroutines:api"),
+            project(":foundation:date:api"),
+            project(":foundation:icons:api"),
+            project(":foundation:log:api"),
+            project(":foundation:map:api"),
+            project(":foundation:navigation:api"),
+            project(":foundation:preferences:api"),
+            project(":foundation:strings:api"),
+            project(":foundation:toaster:api"),
+            project(":foundation:ui:api"),
+            libs.androidx.compose.hilt.navigation,
+            libs.androidx.compose.material,
+            libs.androidx.lifecycle,
+            libs.autodagger.core,
+            libs.moshi,
+            libs.retrofit.core,
+            libs.retrofit.moshi,
+            libs.sqldelight.coroutines,
+    )
+    kapt libs.autodagger.kapt
+    ksp libs.moshi.ksp
+}

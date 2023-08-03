@@ -1,5 +1,5 @@
 /*
-Copyright 2022 Savvas Dalkitsis
+Copyright 2023 Savvas Dalkitsis
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -15,19 +15,16 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.search.view.implementation.ui.state
 
+import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.Cluster
 import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.CollageDisplay
 import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.PredefinedCollageDisplay
-import com.savvasdalkitsis.uhuruphotos.feature.people.view.api.ui.state.Person
+import kotlinx.collections.immutable.ImmutableList
+import kotlinx.collections.immutable.persistentListOf
 
 data class SearchState(
-    val showClearButton: Boolean = false,
-    val searchResults: SearchResults = SearchResults.Idle,
-    val collageDisplay: CollageDisplay = PredefinedCollageDisplay.default,
+    val query: String = "",
+    val isLoading: Boolean = true,
+    val isError: Boolean = false,
+    val clusters: ImmutableList<Cluster> = persistentListOf(),
     val searchDisplay: CollageDisplay = PredefinedCollageDisplay.default,
-    val showLibrary: Boolean = true,
-    val suggestion: String? = null,
-    val people: List<Person> = emptyList(),
-    val searchSuggestions: List<SearchSuggestion> = emptyList(),
-    val latestQuery: String = "",
-    val queryCacheKey: String = "",
 )

@@ -31,9 +31,9 @@ data class SelectedCel(val celState: CelState) : SearchAction() {
     ) = flow<SearchMutation> {
         effect.handleEffect(
             OpenLightbox(
-            celState.mediaItem.id,
-            state.latestQuery
-        )
+                celState.mediaItem.id,
+                state.query
+            )
         )
     }
 }
