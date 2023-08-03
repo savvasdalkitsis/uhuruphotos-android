@@ -32,11 +32,12 @@ import androidx.compose.ui.unit.dp
 import com.savvasdalkitsis.uhuruphotos.feature.people.view.api.ui.state.Person
 import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.SectionHeader
+import kotlinx.collections.immutable.ImmutableList
 
 @Composable
 fun PeopleBanner(
     modifier: Modifier = Modifier,
-    people: List<Person>,
+    people: ImmutableList<Person>,
     headerPadding: PaddingValues = PaddingValues(),
     onViewAllClicked: (() -> Unit)? = null,
     onPersonSelected: (Person) -> Unit,

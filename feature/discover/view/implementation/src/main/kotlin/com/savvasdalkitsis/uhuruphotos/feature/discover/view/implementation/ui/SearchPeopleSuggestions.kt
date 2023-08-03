@@ -18,15 +18,16 @@ package com.savvasdalkitsis.uhuruphotos.feature.discover.view.implementation.ui
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.unit.dp
+import com.savvasdalkitsis.uhuruphotos.feature.discover.view.implementation.seam.actions.DiscoverAction
+import com.savvasdalkitsis.uhuruphotos.feature.discover.view.implementation.seam.actions.PersonSelected
+import com.savvasdalkitsis.uhuruphotos.feature.discover.view.implementation.seam.actions.ViewAllPeopleSelected
 import com.savvasdalkitsis.uhuruphotos.feature.people.view.api.ui.PeopleBanner
 import com.savvasdalkitsis.uhuruphotos.feature.people.view.api.ui.state.Person
-import com.savvasdalkitsis.uhuruphotos.feature.discover.view.implementation.seam.actions.PersonSelected
-import com.savvasdalkitsis.uhuruphotos.feature.discover.view.implementation.seam.actions.DiscoverAction
-import com.savvasdalkitsis.uhuruphotos.feature.discover.view.implementation.seam.actions.ViewAllPeopleSelected
+import kotlinx.collections.immutable.ImmutableList
 
 @Composable
 fun SearchPeopleSuggestions(
-    people: List<Person>,
+    people: ImmutableList<Person>,
     action: (DiscoverAction) -> Unit,
 ) {
     PeopleBanner(

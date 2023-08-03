@@ -23,6 +23,7 @@ dependencies {
             libs.androidx.compose.foundation,
             libs.androidx.compose.material,
             libs.hilt,
+            libs.kotlinx.immutable,
             libs.moshi,
             libs.sqldelight.coroutines,
     )

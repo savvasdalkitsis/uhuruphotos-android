@@ -20,6 +20,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.discover.view.implementation.ui.s
 import com.savvasdalkitsis.uhuruphotos.feature.discover.view.implementation.ui.state.SearchSuggestion
 import com.savvasdalkitsis.uhuruphotos.feature.people.view.api.ui.state.Person
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.Mutation
+import kotlinx.collections.immutable.toPersistentList
 
 sealed class DiscoverMutation(
     mutation: Mutation<DiscoverState>,
@@ -42,13 +43,13 @@ sealed class DiscoverMutation(
     })
 
     data class ShowPeople(val people: List<Person>) : DiscoverMutation({
-        it.copy(people = people)
+        it.copy(people = people.toPersistentList())
     })
 
     data class ShowSearchSuggestions(
         val suggestions: List<SearchSuggestion>,
     ) : DiscoverMutation({
-        it.copy(searchSuggestions = suggestions)
+        it.copy(searchSuggestions = suggestions.toPersistentList())
     })
 
     data class UpdateLatestQuery(val query: String) : DiscoverMutation({

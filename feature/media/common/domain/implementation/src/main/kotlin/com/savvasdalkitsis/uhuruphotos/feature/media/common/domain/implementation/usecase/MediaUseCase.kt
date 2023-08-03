@@ -283,6 +283,7 @@ class MediaUseCase @Inject constructor(
             md5 = imageHash,
             remotePath = imagePath,
             peopleInMediaItem = peopleInPhoto,
+            searchCaptions = captions,
         )
     }
 

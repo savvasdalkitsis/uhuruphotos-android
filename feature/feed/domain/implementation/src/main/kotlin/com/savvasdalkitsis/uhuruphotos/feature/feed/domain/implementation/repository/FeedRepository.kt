@@ -29,10 +29,13 @@ import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.api.service.m
 import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.api.usecase.RemoteMediaUseCase
 import com.savvasdalkitsis.uhuruphotos.foundation.group.api.model.Group
 import com.savvasdalkitsis.uhuruphotos.foundation.group.api.model.groupBy
+import com.savvasdalkitsis.uhuruphotos.foundation.log.api.log
 import com.savvasdalkitsis.uhuruphotos.foundation.result.api.SimpleResult
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.emitAll
+import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.onStart
 import javax.inject.Inject
@@ -49,23 +52,29 @@ class FeedRepository @Inject constructor(
     suspend fun hasRemoteMediaCollections(): Boolean =
         remoteMediaCollectionsQueries.remoteMediaCollectionCount().awaitSingle() > 0
 
-    fun observeRemoteMediaCollectionsByDate(): Flow<Group<String, GetRemoteMediaCollections>> =
-        remoteMediaCollectionsQueries.getRemoteMediaCollections(limit = -1).asFlow()
-            .onStart {
-                if (allRemoteMediaCollections.items.isEmpty()) {
-                    emit(remoteMediaCollectionsQueries.getRemoteMediaCollections(limit = 100))
+    fun observeRemoteMediaCollectionsByDate(): Flow<Group<String, GetRemoteMediaCollections>> = flow {
+        try {
+            emitAll(remoteMediaCollectionsQueries.getRemoteMediaCollections(limit = -1).asFlow()
+                .onStart {
+                    if (allRemoteMediaCollections.items.isEmpty()) {
+                        emit(remoteMediaCollectionsQueries.getRemoteMediaCollections(limit = 100))
+                    }
                 }
-            }
-            .mapToList(Dispatchers.IO).groupBy(GetRemoteMediaCollections::id)
-            .onStart {
-                if (allRemoteMediaCollections.items.isNotEmpty()) {
-                    emit(allRemoteMediaCollections)
+                .mapToList(Dispatchers.IO).groupBy(GetRemoteMediaCollections::id)
+                .onStart {
+                    if (allRemoteMediaCollections.items.isNotEmpty()) {
+                        emit(allRemoteMediaCollections)
+                    }
                 }
-            }
-            .onEach {
-                allRemoteMediaCollections = it
-            }
-            .distinctUntilChanged()
+                .onEach {
+                    allRemoteMediaCollections = it
+                }
+                .distinctUntilChanged()
+            )
+        } catch (e: Exception) {
+            log(e)
+        }
+    }
 
 
     suspend fun getRemoteMediaCollectionsByDate(): Group<String, GetRemoteMediaCollections> =

@@ -19,12 +19,14 @@ import androidx.annotation.StringRes
 import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.CollageState
 import com.savvasdalkitsis.uhuruphotos.feature.people.view.api.ui.state.Person
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.state.Title
+import kotlinx.collections.immutable.ImmutableList
+import kotlinx.collections.immutable.persistentListOf
 
 data class GalleryState(
     val collageState: CollageState = CollageState(),
     @get:StringRes
     val error: Int? = null,
     val title: Title = Title.Text(""),
-    val people: List<Person> = emptyList(),
+    val people: ImmutableList<Person> = persistentListOf(),
     val sorting: GallerySorting = GallerySorting.DATE_DESC,
 )

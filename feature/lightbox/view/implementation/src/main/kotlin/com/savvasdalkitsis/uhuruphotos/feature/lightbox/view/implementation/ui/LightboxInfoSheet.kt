@@ -73,6 +73,7 @@ fun LightboxInfoSheet(
                 LightboxInfoMap(mediaItem, action)
                 LightboxInfoLocation(mediaItem)
                 LightboxInfoGps(mediaItem, action)
+                LightboxSearchCaptions(mediaItem, action)
                 LightboxInfoMetadata(mediaItem, action)
 
                 Spacer(modifier = Modifier.height(insetsBottom()))

@@ -26,7 +26,8 @@ data class MediaItemDetails(
     val remotePath: String? = null,
     val localPath: String? = null,
     val md5: String? = null,
-    val peopleInMediaItem: List<Person>
+    val peopleInMediaItem: List<Person>,
+    val searchCaptions: String? = null,
 ) {
     fun mergeWith(mediaItemDetails: MediaItemDetails?): MediaItemDetails = copy(
         location = location.ifBlank { mediaItemDetails?.location.orEmpty() },
@@ -34,5 +35,6 @@ data class MediaItemDetails(
         md5 = md5 ?: mediaItemDetails?.md5,
         remotePath = remotePath ?: mediaItemDetails?.remotePath,
         localPath = localPath ?: mediaItemDetails?.localPath,
+        searchCaptions = searchCaptions ?: mediaItemDetails?.searchCaptions,
     )
 }

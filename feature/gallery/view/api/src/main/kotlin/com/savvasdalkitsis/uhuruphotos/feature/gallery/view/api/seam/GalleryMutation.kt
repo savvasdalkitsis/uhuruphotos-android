@@ -29,7 +29,7 @@ sealed class GalleryMutation(
     data class ShowGallery(val galleryDetails: GalleryDetails) : GalleryMutation({
         it.copy(
             title = galleryDetails.title,
-            people = galleryDetails.people,
+            people = galleryDetails.people.toPersistentList(),
             collageState = it.collageState.copy(
                 clusters = galleryDetails.clusters.toPersistentList(),
             )

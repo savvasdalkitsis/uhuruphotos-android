@@ -18,14 +18,16 @@ package com.savvasdalkitsis.uhuruphotos.feature.discover.view.implementation.ui.
 import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.CollageDisplay
 import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.PredefinedCollageDisplay
 import com.savvasdalkitsis.uhuruphotos.feature.people.view.api.ui.state.Person
+import kotlinx.collections.immutable.ImmutableList
+import kotlinx.collections.immutable.persistentListOf
 
 data class DiscoverState(
     val showClearButton: Boolean = false,
     val collageDisplay: CollageDisplay = PredefinedCollageDisplay.default,
     val showLibrary: Boolean = true,
     val suggestion: String? = null,
-    val people: List<Person> = emptyList(),
-    val searchSuggestions: List<SearchSuggestion> = emptyList(),
+    val people: ImmutableList<Person> = persistentListOf(),
+    val searchSuggestions: ImmutableList<SearchSuggestion> = persistentListOf(),
     val latestQuery: String = "",
     val queryCacheKey: String = "",
 )

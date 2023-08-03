@@ -17,6 +17,7 @@ package com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.sea
 
 import android.content.pm.ResolveInfo
 import androidx.annotation.StringRes
+import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.ui.info.LightboxCaptionIcons
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.ui.state.LightboxState
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.ui.state.SingleMediaItemState
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaId
@@ -148,10 +149,15 @@ sealed class LightboxMutation(
                     dateAndTime = formattedDateAndTime,
                     location = location,
                     gps = latLon,
-                    peopleInMediaItem = peopleInMediaItem,
+                    peopleInMediaItem = peopleInMediaItem.toPersistentList(),
                     md5 = md5,
                     remotePath = remotePath,
                     localPath = localPath,
+                    searchCaptions = searchCaptions?.split(",")?.toList().orEmpty()
+                        .map { it.trim() }
+                        .map {
+                            it to LightboxCaptionIcons.icons[it]
+                        }.toPersistentList()
                 )
             }
         }
@@ -187,7 +193,7 @@ sealed class LightboxMutation(
 
     class ShowEditOptions(id: MediaId<*>, apps: List<ResolveInfo>) : LightboxMutation({
         it.copyItem(id) { photoState ->
-            photoState.copy(showEditApps = apps)
+            photoState.copy(showEditApps = apps.toPersistentList())
         }
     })
 

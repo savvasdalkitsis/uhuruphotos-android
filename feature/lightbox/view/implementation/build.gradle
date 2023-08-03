@@ -52,11 +52,13 @@ dependencies {
     implementation project(':feature:person:domain:api')
     implementation project(':feature:person:view:api')
     implementation project(':feature:search:domain:api')
+    implementation project(':feature:search:view:api')
     implementation(
             libs.accompanist.systemui,
             libs.androidx.compose.hilt.navigation,
             libs.androidx.compose.material,
             libs.androidx.compose.material.windowsize,
+            libs.androidx.compose.ui.tooling.preview,
             libs.androidx.work,
             libs.androidx.work.hilt,
             libs.autodagger.core,
@@ -69,6 +71,9 @@ dependencies {
             libs.retrofit.moshi,
             libs.sqldelight.coroutines,
             libs.zoomable,
+    )
+    debugImplementation(
+            libs.androidx.compose.ui.tooling,
     )
     testFixturesImplementation project(":feature:db:domain:api")
     testFixturesImplementation project(':feature:media:remote:domain:api')
