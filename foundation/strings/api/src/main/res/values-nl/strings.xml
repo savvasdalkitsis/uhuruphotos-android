@@ -273,4 +273,7 @@
     <string name="refreshing_feed_details">Bezig met herladen…</string>
     <string name="are_you_sure_you_want_to_perform_feed_details_sync">Weet u zeker dat u een volledige synchronisatie met details wilt uitvoeren\?</string>
     <string name="show_feed_details_sync_progress">Voortgang van synchronisatie tonen</string>
+    <string name="searching">Bezig met zoeken…</string>
+    <string name="retry">Opnieuw</string>
+    <string name="discover">Ontdekken</string>
 </resources>
