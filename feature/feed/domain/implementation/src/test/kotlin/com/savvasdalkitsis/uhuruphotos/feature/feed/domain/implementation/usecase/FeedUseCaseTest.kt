@@ -127,6 +127,6 @@ class FeedUseCaseTest {
     }
 
     private fun FeedRepository.returnsAlbumWithEntries(vararg albums: GetRemoteMediaCollections) {
-        coEvery { getRemoteMediaCollectionsByDate(true) } returns Group(mapOf("albumId" to albums.toList()))
+        coEvery { getRemoteMediaCollectionsByDate(ALL) } returns Group(mapOf("albumId" to albums.toList()))
     }
 }

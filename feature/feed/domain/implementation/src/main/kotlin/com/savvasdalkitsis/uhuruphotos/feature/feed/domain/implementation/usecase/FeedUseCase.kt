@@ -19,6 +19,10 @@ import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.Predefi
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.extensions.isVideo
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.media.remote.GetRemoteMediaCollections
 import com.savvasdalkitsis.uhuruphotos.feature.feed.domain.api.model.FeedFetchType
+import com.savvasdalkitsis.uhuruphotos.feature.feed.domain.api.model.FeedFetchType.ALL
+import com.savvasdalkitsis.uhuruphotos.feature.feed.domain.api.model.FeedFetchType.ONLY_WITHOUT_DATES
+import com.savvasdalkitsis.uhuruphotos.feature.feed.domain.api.model.FeedFetchType.ONLY_WITH_DATES
+import com.savvasdalkitsis.uhuruphotos.feature.feed.domain.api.model.FeedFetchType.VIDEOS
 import com.savvasdalkitsis.uhuruphotos.feature.feed.domain.api.usecase.FeedUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.feed.domain.api.worker.FeedWorkScheduler
 import com.savvasdalkitsis.uhuruphotos.feature.feed.domain.implementation.repository.FeedRepository
@@ -61,11 +65,15 @@ internal class FeedUseCase @Inject constructor(
     override fun observeFeed(
         feedFetchType: FeedFetchType,
     ): Flow<List<MediaCollection>> =
-        combine(observeRemoteMediaFeed(feedFetchType), observeLocalMediaFeed(), observeDownloading(), ::mergeRemoteWithLocalMedia)
-            .debounce(500)
+        combine(
+            observeRemoteMediaFeed(feedFetchType),
+            observeLocalMediaFeed(feedFetchType),
+            observeDownloading(),
+            ::mergeRemoteWithLocalMedia
+        ).debounce(500)
 
     override suspend fun getFeed(feedFetchType: FeedFetchType): List<MediaCollection> = mergeRemoteWithLocalMedia(
-        getRemoteMediaFeed(feedFetchType), getLocalMediaFeed(), getDownloading(),
+        getRemoteMediaFeed(feedFetchType), getLocalMediaFeed(feedFetchType), getDownloading(),
     )
 
     private fun mergeRemoteWithLocalMedia(
@@ -186,11 +194,11 @@ internal class FeedUseCase @Inject constructor(
             )
         }
 
-    private fun observeLocalMediaFeed() = mediaUseCase.observeLocalMedia()
+    private fun observeLocalMediaFeed(feedFetchType: FeedFetchType) = mediaUseCase.observeLocalMedia()
         .distinctUntilChanged()
         .map {
             when (it) {
-                is Found -> it.primaryFolder?.second ?: emptyList()
+                is Found -> it.filteredWith(feedFetchType)
                 else -> emptyList()
             }
         }
@@ -217,12 +225,21 @@ internal class FeedUseCase @Inject constructor(
             .mapValues { it.toMediaCollectionSource() }
             .toCollection()
 
-    private suspend fun getLocalMediaFeed(): List<MediaItem> = when (val mediaOnDevice = mediaUseCase.getLocalMedia()) {
+    private suspend fun getLocalMediaFeed(feedFetchType: FeedFetchType): List<MediaItem> = when (val mediaOnDevice = mediaUseCase.getLocalMedia()) {
         Error -> emptyList()
-        is Found -> mediaOnDevice.primaryFolder?.second ?: emptyList()
+        is Found -> mediaOnDevice.filteredWith(feedFetchType)
         is RequiresPermissions -> emptyList()
     }
 
     private suspend fun getDownloading(): Set<String> = downloadUseCase.getDownloading()
 
+    private fun Found.filteredWith(feedFetchType: FeedFetchType) =
+        (primaryFolder?.second ?: emptyList()).filter { item ->
+            when (feedFetchType) {
+                ALL -> true
+                ONLY_WITH_DATES -> !item.displayDayDate.isNullOrEmpty()
+                ONLY_WITHOUT_DATES -> item.displayDayDate.isNullOrEmpty()
+                VIDEOS -> item.id.isVideo
+            }
+        }
 }
