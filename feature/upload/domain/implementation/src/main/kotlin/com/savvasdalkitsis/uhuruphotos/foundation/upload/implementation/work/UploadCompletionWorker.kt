@@ -65,7 +65,7 @@ class UploadCompletionWorker @AssistedInject constructor(
             uploadCompleteService.completeUpload(
                 createFormData("upload_id", uploadId),
                 createFormData("user", userId.toString()),
-                createFormData("md5", md5),
+                createFormData("md5", md5.value),
                 createFormData("filename", filename)
             )
             Ok(Unit)

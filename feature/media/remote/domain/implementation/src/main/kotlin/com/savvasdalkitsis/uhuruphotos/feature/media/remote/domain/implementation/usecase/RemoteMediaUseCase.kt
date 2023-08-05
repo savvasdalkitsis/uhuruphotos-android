@@ -22,6 +22,8 @@ import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.entities.media.DbRe
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.extensions.async
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.media.remote.RemoteMediaItemSummaryQueries
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaOperationResult
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemHash
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaRefreshResult
 import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.api.model.toDbModel
 import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.api.service.model.RemoteMediaCollection
 import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.api.service.model.RemoteMediaCollectionsByDate
@@ -138,8 +140,8 @@ class RemoteMediaUseCase @Inject constructor(
         }
     }.simple()
 
-    override suspend fun exists(hash: String): Result<Boolean, Throwable> = runCatchingWithLog {
-        remoteMediaService.exists(hash).exists
+    override suspend fun exists(hash: MediaItemHash): Result<Boolean, Throwable> = runCatchingWithLog {
+        remoteMediaService.exists(hash.value).exists
     }
 
     private suspend fun updateSummaries(

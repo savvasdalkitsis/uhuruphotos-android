@@ -20,6 +20,8 @@ import com.github.michaelbull.result.Result
 import com.github.michaelbull.result.andThen
 import com.savvasdalkitsis.uhuruphotos.feature.auth.domain.api.usecase.AuthenticationHeadersUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.auth.domain.api.usecase.ServerUseCase
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.toMediaItemHash
+import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.model.Md5Hash
 import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.api.usecase.RemoteMediaUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.user.domain.api.usecase.UserUseCase
 import dagger.hilt.android.qualifiers.ApplicationContext
@@ -48,8 +50,8 @@ class UploadService @Inject constructor(
             .startUpload()
     }
 
-    suspend fun exists(md5: String): Result<Boolean, Throwable> =
+    suspend fun exists(md5: Md5Hash): Result<Boolean, Throwable> =
         userUseCase.getUserOrRefresh().andThen { user ->
-            remoteMediaUseCase.exists("$md5${user.id}")
+            remoteMediaUseCase.exists(md5.toMediaItemHash(user.id))
         }
 }

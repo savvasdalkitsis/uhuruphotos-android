@@ -45,6 +45,10 @@ import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.Med
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaOperationResult
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaOperationResult.CHANGED
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaOperationResult.SKIPPED
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaRefreshResult
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaRefreshResult.REFRESHED
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaRefreshResult.SKIPPED
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.toMediaItemHash
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.usecase.MediaUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.model.LocalFolder
 import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.model.LocalMediaItem
@@ -188,7 +192,7 @@ class MediaUseCase @Inject constructor(
 
     private fun LocalMediaItem.toMediaItem(userId: Int) = MediaItemInstance(
         id = Local(id, video, contentUri, thumbnailPath?.let { "file://$it" } ?: contentUri),
-        mediaHash = MediaItemHash(md5.value + userId),
+        mediaHash = md5.toMediaItemHash(userId),
         fallbackColor = fallbackColor,
         displayDayDate = displayDate,
         sortableDate = sortableDate,
@@ -269,7 +273,7 @@ class MediaUseCase @Inject constructor(
             isFavourite = false,
             location = "",
             latLon = latLon?.let { (lat, lon) -> LatLon(lat, lon) },
-            hash = MediaItemHash(md5.value + userId),
+            hash = md5.toMediaItemHash(userId),
             localPath = path ?: contentUri,
             peopleInMediaItem = emptyList(),
         )
@@ -347,7 +351,7 @@ class MediaUseCase @Inject constructor(
         when (id) {
             is Remote -> refreshRemoteDetailsNow(id)
             is Downloading -> refreshRemoteDetailsNow(id.remote)
-            is MediaId.Uploading -> refreshLocalDetailsNowIfMissing(id.local)
+            is MediaId.Uploading -> refreshLocalDetailsNow(id.local)
             is Local -> refreshLocalDetailsNow(id)
             is MediaId.Group -> {
                 val remote = id.findRemote?.let {

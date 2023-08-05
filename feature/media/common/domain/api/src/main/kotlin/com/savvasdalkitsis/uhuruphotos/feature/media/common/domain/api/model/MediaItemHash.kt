@@ -15,5 +15,9 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model
 
+import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.model.Md5Hash
+
 @JvmInline
-value class MediaItemHash(val value: String?)
+value class MediaItemHash(val value: String)
+
+fun Md5Hash.toMediaItemHash(userId: Int) = MediaItemHash("$value$userId")

@@ -16,6 +16,8 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.foundation.upload.implementation.usecase
 
 import com.github.michaelbull.result.Ok
+import com.github.michaelbull.result.onFailure
+import com.github.michaelbull.result.onSuccess
 import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.usecase.LocalMediaUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.site.domain.api.usecase.SiteUseCase
 import com.savvasdalkitsis.uhuruphotos.foundation.log.api.log
