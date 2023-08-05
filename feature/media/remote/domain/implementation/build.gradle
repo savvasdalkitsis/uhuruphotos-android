@@ -1,7 +1,3 @@
-plugins {
-    id 'java-test-fixtures'
-}
-
 android {
     buildFeatures {
         compose true
@@ -57,9 +53,6 @@ dependencies {
             libs.sqldelight.coroutines,
             libs.zoomable,
     )
-    testFixturesImplementation project(":feature:db:domain:api")
-    testFixturesImplementation project(':feature:media:common:domain:api')
-    testFixturesImplementation project(':feature:media:remote:domain:api')
     kapt libs.autodagger.kapt
     ksp libs.moshi.ksp
 }

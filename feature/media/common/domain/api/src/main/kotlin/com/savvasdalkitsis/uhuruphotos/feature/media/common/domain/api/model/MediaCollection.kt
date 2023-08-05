@@ -20,5 +20,5 @@ data class MediaCollection(
     val mediaItems: List<MediaItem>,
     val displayTitle: String,
     val unformattedDate: String? = null,
-    val location: String?,
+    val location: String? = null,
 )

@@ -13,7 +13,6 @@ dependencies {
             libs.retrofit.moshi,
             libs.sqldelight.coroutines,
     )
-    testFixturesImplementation project(":feature:db:domain:api")
     kapt libs.autodagger.kapt
     ksp libs.moshi.ksp
 }

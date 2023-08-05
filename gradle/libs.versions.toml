@@ -2,7 +2,6 @@
 accompanist = "0.31.0-alpha"
 androidx-credentials = "1.0.0-alpha09"
 androidx-hilt = "1.1.0-alpha01"
-androidx-test = "1.6.0-alpha03"
 autodagger = "0.6.4"
 coil = "2.4.0"
 com-google-android-gms = "18.1.0"
@@ -40,8 +39,6 @@ androidx-compose-hilt-navigation = { module = "androidx.hilt:hilt-navigation-com
 androidx-compose-material = { module = "androidx.compose.material:material", version.ref = "compose" }
 androidx-compose-material-windowsize = "androidx.compose.material3:material3-window-size-class:1.1.1"
 androidx-compose-navigation = "androidx.navigation:navigation-compose:2.6.0"
-androidx-compose-test-junit = { module = "androidx.compose.ui:ui-test-junit4", version.ref = "compose" }
-androidx-compose-test-manifest = { module = "androidx.compose.ui:ui-test-manifest", version.ref = "compose" }
 androidx-compose-ui = { module = "androidx.compose.ui:ui", version.ref = "compose" }
 androidx-compose-ui-tooling = { module = "androidx.compose.ui:ui-tooling", version.ref = "compose" }
 androidx-compose-ui-tooling-preview = { module = "androidx.compose.ui:ui-tooling-preview", version.ref = "compose" }
@@ -50,7 +47,6 @@ androidx-core = "androidx.core:core-ktx:1.10.1"
 androidx-credentials-core = { module = "androidx.credentials:credentials", version.ref = "androidx-credentials" }
 androidx-credentials-play = { module = "androidx.credentials:credentials-play-services-auth", version.ref = "androidx-credentials" }
 androidx-datastore-preferences = "androidx.datastore:datastore-preferences:1.1.0-alpha04"
-androidx-espresso = "androidx.test.espresso:espresso-core:3.6.0-alpha01"
 androidx-hilt-compiler = { module = "androidx.hilt:hilt-compiler", version.ref = "hilt-compiler" }
 androidx-media3-core = { module = "androidx.media3:media3-exoplayer", version.ref = "media3" }
 androidx-media3-database = { module = "androidx.media3:media3-database", version.ref = "media3" }
@@ -61,8 +57,6 @@ androidx-lifecycle = "androidx.lifecycle:lifecycle-runtime-ktx:2.6.1"
 androidx-preference = "androidx.preference:preference-ktx:1.2.0"
 androidx-splash = "androidx.core:core-splashscreen:1.0.1"
 androidx-startup = "androidx.startup:startup-runtime:1.2.0-alpha02"
-androidx-test-core = { module = "androidx.test:core", version.ref = "androidx-test" }
-androidx-test-runner = { module = "androidx.test:runner", version.ref = "androidx-test" }
 androidx-tracing = "androidx.tracing:tracing-ktx:1.1.0"
 androidx-window = "androidx.window:window:1.1.0"
 androidx-work = "androidx.work:work-runtime-ktx:2.8.1"
@@ -92,7 +86,6 @@ joda-time = "net.danlew:android.joda:2.12.5"
 junit = "junit:junit:4.13.2"
 jwt = "com.auth0.android:jwtdecode:2.0.2"
 kotlinx-coroutines = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-android", version.ref = "org-jetbrains-kotlinx" }
-kotlinx-coroutines-test = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test", version.ref = "org-jetbrains-kotlinx" }
 kotlinx-immutable = "org.jetbrains.kotlinx:kotlinx-collections-immutable:0.3.5"
 kotlin-reflect = "org.jetbrains.kotlin:kotlin-reflect:1.9.0"
 logger = "com.jakewharton.timber:timber:4.7.1"
@@ -164,20 +157,4 @@ lumberjack = [
 permissions = [
     "permissions-base",
     "permissions-compose",
-]
-test = [
-    "junit",
-    "kotlinx-coroutines-test",
-    "mockk",
-    "shazamcrest",
-    "turbine",
-]
-test-android = [
-    "androidx-compose-test-junit",
-    "androidx-compose-test-manifest",
-    "androidx-espresso",
-    "androidx-test-core",
-    "androidx-test-runner",
-    "junit",
-    "mockk-android",
 ]

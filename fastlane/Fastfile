@@ -1,11 +1,6 @@
 default_platform(:android)
 
 platform :android do
-  desc "Runs all the tests"
-  lane :test do
-    gradle(task: "test")
-  end
-
   desc "Tag and deploy a new internal release"
   lane :deploy do
     gradle(

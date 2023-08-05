@@ -59,11 +59,6 @@ subprojects {
         defaultConfig {
             minSdk 24
             targetSdk 34
-
-            testInstrumentationRunner 'androidx.test.runner.AndroidJUnitRunner'
-        }
-        testFixtures {
-            enable = true
         }
         buildTypes {
             release {

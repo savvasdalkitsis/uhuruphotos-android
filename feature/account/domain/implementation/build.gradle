@@ -22,8 +22,5 @@ dependencies {
             libs.okhttp,
             libs.hilt,
     )
-    testImplementation(
-            libs.bundles.test,
-    )
     kapt libs.autodagger.kapt
 }

@@ -33,10 +33,4 @@ dependencies {
     )
     kapt libs.autodagger.kapt
     ksp libs.moshi.ksp
-    testImplementation testFixtures(project(":feature:db:domain:api"))
-    testImplementation testFixtures(project(":feature:media:common:domain:api"))
-    testImplementation testFixtures(project(":feature:media:remote:domain:api"))
-    testImplementation(
-            libs.bundles.test,
-    )
 }

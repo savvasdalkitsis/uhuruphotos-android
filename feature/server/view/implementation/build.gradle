@@ -33,8 +33,4 @@ dependencies {
             libs.urlvalidator,
     )
     kapt libs.autodagger.kapt
-
-    testImplementation(
-            libs.bundles.test,
-    )
 }

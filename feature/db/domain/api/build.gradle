@@ -1,6 +1,5 @@
 plugins {
     id 'app.cash.sqldelight'
-    id 'java-test-fixtures'
 }
 
 android {
@@ -21,8 +20,5 @@ dependencies {
             libs.hilt,
             libs.sqldelight.android,
             libs.sqldelight.coroutines,
-    )
-    testFixturesImplementation(
-            libs.sqldelight.jvm,
     )
 }

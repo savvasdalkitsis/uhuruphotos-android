@@ -38,10 +38,4 @@ dependencies {
     debugImplementation(
             libs.androidx.compose.ui.tooling,
     )
-    androidTestImplementation(
-            libs.bundles.test.android,
-    )
-    testImplementation(
-            libs.bundles.test,
-    )
 }
