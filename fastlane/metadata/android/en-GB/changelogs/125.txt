@@ -1,3 +1,3 @@
-* Search tab is now Discover. The search results show in a separate page now
-* Showing clickable search captions in lightbox info sheet.
-* Downloading details job does not delay between already downloaded items making it faster
+* Added Categories in the Discover tab. You can now see all Videos and all media without dates in one place.
+* Removed undated media from the Feed
+* Showing sticky headers and scrollbar hints in person album page
