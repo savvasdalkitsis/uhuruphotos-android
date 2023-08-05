@@ -18,6 +18,7 @@ package com.savvasdalkitsis.uhuruphotos.feature.person.domain.implementation.use
 import app.cash.turbine.test
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.person.GetPersonAlbums
 import com.savvasdalkitsis.uhuruphotos.feature.feed.domain.api.usecase.FeedUseCase
+import com.savvasdalkitsis.uhuruphotos.feature.feed.domain.api.worker.FeedWorkScheduler
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.TestMedia.mediaCollection
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.TestMedia.mediaItem
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaId
@@ -43,10 +44,12 @@ class PersonUseCaseTest {
     private val personRepository = mockk<PersonRepository>(relaxed = true)
     private val mediaUseCase = mockk<MediaUseCase>(relaxed = true)
     private val feedUseCase = mockk<FeedUseCase>(relaxed = true)
+    private val feedWorkScheduler = mockk<FeedWorkScheduler>(relaxed = true)
     private val underTest = PersonUseCase(
         personRepository,
         mediaUseCase,
         feedUseCase,
+        feedWorkScheduler,
     )
 
     @Test
