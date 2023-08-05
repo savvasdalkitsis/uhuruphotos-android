@@ -91,6 +91,8 @@ fun Person(
                 onCelSelected = { cel ->
                     action(SelectedCel(cel))
                 },
+                showStickyHeaders = true,
+                showScrollbarHint = true,
                 onChangeDisplay = { action(ChangeDisplay(it)) },
             )
         }
