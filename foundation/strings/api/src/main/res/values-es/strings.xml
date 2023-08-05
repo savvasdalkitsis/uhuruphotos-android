@@ -288,4 +288,7 @@
     <string name="full_feed_details_sync">Sincronización completa de los detalles del feed</string>
     <string name="are_you_sure_you_want_to_perform_feed_details_sync">¿Estás seguro de que deseas iniciar la sincronización de los detalles del feed\?</string>
     <string name="show_feed_details_sync_progress">Muestra el progreso completo de sincronización de los detalles del feed de las fotos</string>
+    <string name="searching">Buscando</string>
+    <string name="retry">Reintentar</string>
+    <string name="discover">Descubrir</string>
 </resources>
