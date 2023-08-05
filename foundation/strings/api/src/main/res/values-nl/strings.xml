@@ -276,4 +276,5 @@
     <string name="searching">Bezig met zoeken…</string>
     <string name="retry">Opnieuw</string>
     <string name="discover">Ontdekken</string>
+    <string name="search_captions">Bĳschriften doorzoeken</string>
 </resources>
