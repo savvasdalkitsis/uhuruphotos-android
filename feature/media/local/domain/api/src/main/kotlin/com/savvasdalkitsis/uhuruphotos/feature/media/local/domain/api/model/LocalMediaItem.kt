@@ -15,8 +15,6 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.model
 
-import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.Md5Hash
-
 data class LocalMediaItem(
     val id: Long,
     val displayName: String?,

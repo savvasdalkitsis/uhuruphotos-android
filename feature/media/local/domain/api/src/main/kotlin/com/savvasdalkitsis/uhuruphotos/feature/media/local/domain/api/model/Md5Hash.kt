@@ -13,7 +13,7 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
  */
-package com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model
+package com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.model
 
 @JvmInline
-value class Md5Hash(val value: String?)
+value class Md5Hash(val value: String)
