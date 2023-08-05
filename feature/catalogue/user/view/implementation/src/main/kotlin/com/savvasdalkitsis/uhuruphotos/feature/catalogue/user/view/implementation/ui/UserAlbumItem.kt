@@ -31,6 +31,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.catalogue.user.view.api.state.Use
 import com.savvasdalkitsis.uhuruphotos.feature.catalogue.user.view.implementation.seam.UserAlbumSelected
 import com.savvasdalkitsis.uhuruphotos.feature.catalogue.user.view.implementation.seam.UserAlbumsAction
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaId
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemHash
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemInstance
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.Cel
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.Vitrine
@@ -59,7 +60,7 @@ internal fun UserAlbumItem(
             Cel(
                 state = album.cover.cel1 ?: MediaItemInstance(
                     id = MediaId.Remote("", false, ""),
-                    mediaHash = "",
+                    mediaHash = MediaItemHash(""),
                 ).toCel(),
                 onSelected = {
                     action(UserAlbumSelected(album))

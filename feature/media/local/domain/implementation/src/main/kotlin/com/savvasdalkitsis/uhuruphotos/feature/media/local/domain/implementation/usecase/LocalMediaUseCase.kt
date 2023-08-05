@@ -32,6 +32,7 @@ import android.provider.MediaStore.MediaColumns.RELATIVE_PATH
 import androidx.core.content.ContextCompat
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.extensions.async
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.media.local.LocalMediaItemDetails
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.Md5Hash
 import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.model.LocalFolder
 import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.model.LocalMediaFolder
 import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.model.LocalMediaItem
@@ -298,7 +299,7 @@ class LocalMediaUseCase @Inject constructor(
             size = size,
             contentUri = contentUri,
             thumbnailPath = thumbnailPath,
-            md5 = md5,
+            md5 = Md5Hash(md5),
             video = video,
             duration = duration,
             latLon = latLon?.split(",")?.let { value ->

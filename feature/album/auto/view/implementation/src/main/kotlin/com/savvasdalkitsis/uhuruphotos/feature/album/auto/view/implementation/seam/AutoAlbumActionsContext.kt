@@ -23,6 +23,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.GalleryActi
 import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.ui.state.GalleryDetails
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.api.model.LightboxSequenceDataSource.AutoAlbum
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaId
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemHash
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemInstance
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.state.toCel
 import com.savvasdalkitsis.uhuruphotos.feature.people.view.api.ui.state.toPerson
@@ -65,7 +66,7 @@ internal class AutoAlbumActionsContext @Inject constructor(
                             cels = photos.map {
                                 MediaItemInstance(
                                     id = MediaId.Remote(it.photoId.toString(), it.video ?: false, serverUrl),
-                                    mediaHash = it.photoId.toString(),
+                                    mediaHash = MediaItemHash(it.photoId.toString()),
                                     displayDayDate = date,
                                     sortableDate = it.timestamp,
                                     isFavourite = it.isFavorite ?: false,

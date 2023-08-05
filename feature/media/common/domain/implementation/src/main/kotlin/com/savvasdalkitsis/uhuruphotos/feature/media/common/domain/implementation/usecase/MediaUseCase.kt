@@ -37,11 +37,12 @@ import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.Med
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaId.Remote
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItem
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemDetails
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemHash
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemInstance
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemsOnDevice
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaRefreshResult
-import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaRefreshResult.SKIPPED
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaRefreshResult.REFRESHED
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaRefreshResult.SKIPPED
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.usecase.MediaUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.model.LocalFolder
 import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.model.LocalMediaItem
@@ -165,7 +166,7 @@ class MediaUseCase @Inject constructor(
                 val date = dateDisplayer.dateString(it.date)
                 MediaItemInstance(
                     id = Remote(it.id, it.isVideo, serverUrl),
-                    mediaHash = it.id,
+                    mediaHash = MediaItemHash(it.id),
                     fallbackColor = it.dominantColor,
                     displayDayDate = date,
                     sortableDate = it.date,
@@ -177,7 +178,7 @@ class MediaUseCase @Inject constructor(
 
     private fun LocalMediaItem.toMediaItem(userId: Int) = MediaItemInstance(
         id = Local(id, video, contentUri, thumbnailPath?.let { "file://$it" } ?: contentUri),
-        mediaHash = md5 + userId,
+        mediaHash = MediaItemHash(md5.value + userId),
         fallbackColor = fallbackColor,
         displayDayDate = displayDate,
         sortableDate = sortableDate,
@@ -255,7 +256,7 @@ class MediaUseCase @Inject constructor(
             isFavourite = false,
             location = "",
             latLon = latLon?.let { (lat, lon) -> LatLon(lat, lon) },
-            md5 = md5 + userId,
+            hash = MediaItemHash(md5.value + userId),
             localPath = path ?: contentUri,
             peopleInMediaItem = emptyList(),
         )
@@ -280,7 +281,7 @@ class MediaUseCase @Inject constructor(
             isFavourite = favouriteThreshold != null && (rating ?: 0) >= favouriteThreshold,
             location = location.orEmpty(),
             latLon = latLng?.toLatLon,
-            md5 = imageHash,
+            hash = MediaItemHash(imageHash),
             remotePath = imagePath,
             peopleInMediaItem = peopleInPhoto,
             searchCaptions = captions,
@@ -404,7 +405,7 @@ class MediaUseCase @Inject constructor(
                     else -> {
                         MediaItemInstance(
                             id = Remote(photoId, item.isVideo, serverUrl),
-                            mediaHash = photoId,
+                            mediaHash = MediaItemHash(photoId),
                             fallbackColor = item.dominantColor,
                             displayDayDate = date,
                             sortableDate = item.date,

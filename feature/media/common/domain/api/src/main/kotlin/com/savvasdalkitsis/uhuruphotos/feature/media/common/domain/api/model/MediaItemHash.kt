@@ -1,5 +1,5 @@
 /*
-Copyright 2022 Savvas Dalkitsis
+Copyright 2023 Savvas Dalkitsis
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -15,13 +15,5 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model
 
-data class MediaItemInstance(
-    override val id: MediaId<*>,
-    override val mediaHash: MediaItemHash,
-    override val fallbackColor: String? = null,
-    override val displayDayDate: String? = null,
-    override val sortableDate: String? = null,
-    override val isFavourite: Boolean = false,
-    override val ratio: Float = 1f,
-    override val latLng: Pair<Double, Double>? = null,
-) : MediaItem
+@JvmInline
+value class MediaItemHash(val value: String?)

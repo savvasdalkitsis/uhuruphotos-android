@@ -17,6 +17,7 @@ package com.savvasdalkitsis.uhuruphotos.feature.catalogue.user.view.api.state
 
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.album.user.UserAlbums
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaId
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemHash
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemInstance
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.state.CelState
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.state.VitrineState
@@ -69,7 +70,7 @@ private fun celState(
         val isVideo = coverIsVideo ?: false
         MediaItemInstance(
             id = MediaId.Remote(it, isVideo, serverUrl),
-            mediaHash = it,
+            mediaHash = MediaItemHash(it),
             displayDayDate = null,
             ratio = 1f,
         ).toCel()

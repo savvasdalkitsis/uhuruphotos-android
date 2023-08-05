@@ -24,6 +24,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.catalogue.view.api.ui.state.Catal
 import com.savvasdalkitsis.uhuruphotos.feature.catalogue.view.api.ui.state.CatalogueSorting.Companion.sorted
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.album.auto.AutoAlbums
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaId.Remote
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemHash
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemInstance
 import com.savvasdalkitsis.uhuruphotos.foundation.preferences.api.Preferences
 import com.savvasdalkitsis.uhuruphotos.foundation.preferences.api.get
@@ -80,7 +81,7 @@ class AutoAlbumsUseCase @Inject constructor(
                     id = it.id,
                     cover = MediaItemInstance(
                         id = Remote(it.coverPhotoHash, it.coverPhotoIsVideo ?: false, serverUrl),
-                        mediaHash = it.coverPhotoHash,
+                        mediaHash = MediaItemHash(it.coverPhotoHash),
                         displayDayDate = null,
                         sortableDate = it.timestamp,
                         ratio = 1f,

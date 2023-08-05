@@ -104,8 +104,8 @@ internal fun LightboxInfoMetadata(
             it.exifData.isoSpeed
                 .Entry(ic_iso, action)
         }
-        mediaItem.md5?.let {
-            it.Entry(ic_fingerprint, action)
+        mediaItem.hash?.let {
+            it.value.Entry(ic_fingerprint, action)
         }
         mediaItem.remotePath?.let {
             it.Entry(ic_folder_network, action)

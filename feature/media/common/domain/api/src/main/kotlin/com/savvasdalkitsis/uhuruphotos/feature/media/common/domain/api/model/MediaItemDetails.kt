@@ -25,14 +25,14 @@ data class MediaItemDetails(
     val latLon: LatLon?,
     val remotePath: String? = null,
     val localPath: String? = null,
-    val md5: String? = null,
+    val hash: MediaItemHash? = null,
     val peopleInMediaItem: List<Person>,
     val searchCaptions: String? = null,
 ) {
     fun mergeWith(mediaItemDetails: MediaItemDetails?): MediaItemDetails = copy(
         location = location.ifBlank { mediaItemDetails?.location.orEmpty() },
         latLon = latLon ?: mediaItemDetails?.latLon,
-        md5 = md5 ?: mediaItemDetails?.md5,
+        hash = hash ?: mediaItemDetails?.hash,
         remotePath = remotePath ?: mediaItemDetails?.remotePath,
         localPath = localPath ?: mediaItemDetails?.localPath,
         searchCaptions = searchCaptions ?: mediaItemDetails?.searchCaptions,

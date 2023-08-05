@@ -18,6 +18,7 @@ package com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.ui.
 import android.content.pm.ResolveInfo
 import androidx.annotation.StringRes
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaId
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemHash
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemMetadata
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemSyncState
 import com.savvasdalkitsis.uhuruphotos.feature.people.view.api.ui.state.Person
@@ -76,7 +77,7 @@ data class SingleMediaItemState(
     val peopleInMediaItem: ImmutableList<Person> = persistentListOf(),
     val searchCaptions: ImmutableList<Pair<String, Int?>> = persistentListOf(),
     val metadata: MediaItemMetadata? = null,
-    val md5: String? = null,
+    val hash: MediaItemHash? = null,
     val remotePath: String? = null,
     val localPath: String? = null,
     val loadingDetails: Boolean = false,

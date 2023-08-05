@@ -150,7 +150,7 @@ sealed class LightboxMutation(
                     location = location,
                     gps = latLon,
                     peopleInMediaItem = peopleInMediaItem.toPersistentList(),
-                    md5 = md5,
+                    hash = hash,
                     remotePath = remotePath,
                     localPath = localPath,
                     searchCaptions = searchCaptions?.split(",")?.toList().orEmpty()

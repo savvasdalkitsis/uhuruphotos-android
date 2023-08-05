@@ -20,7 +20,7 @@ import androidx.compose.runtime.Immutable
 @Immutable
 interface MediaItem {
     val id: MediaId<*>
-    val mediaHash: String
+    val mediaHash: MediaItemHash
     val fallbackColor: String?
     val displayDayDate: String?
     val sortableDate: String?

@@ -4,6 +4,7 @@ android {
 
 dependencies {
     api(
+            project(":feature:media:common:domain:api"),
             project(":foundation:result:api"),
             project(":foundation:worker:api"),
             libs.androidx.activity,
