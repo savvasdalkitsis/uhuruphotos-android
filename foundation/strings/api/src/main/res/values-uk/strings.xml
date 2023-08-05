@@ -298,4 +298,18 @@
     <string name="donate">Пожертвувати</string>
     <string name="lightbox_photo_disk_cache">Кеш фотодиска Lightbox</string>
     <string name="lightbox_photo_memory_cache">Кеш-пам\'ять фотографій Lightbox</string>
+    <string name="videos">Відео</string>
+    <string name="categories">Категорії</string>
+    <string name="locations">Розташування</string>
+    <string name="no_date">Без дати</string>
+    <string name="media_without_date">Медіа без дати</string>
+    <string name="search_captions">Пошук підписів</string>
+    <string name="full_feed_details_sync">Синхронізація подробиць повного каналу</string>
+    <string name="perform_full_feed_details_sync">Виконати синхронізацію подробиць повного каналу</string>
+    <string name="refreshing_feed_details">Оновлення подробиць каналу</string>
+    <string name="are_you_sure_you_want_to_perform_feed_details_sync">Ви впевнені, що хочете розпочати синхронізацію подробиць каналу\?</string>
+    <string name="show_feed_details_sync_progress">Відображення повних подробиць синхронізації фотографій</string>
+    <string name="searching">Пошук</string>
+    <string name="retry">Повторити спробу</string>
+    <string name="discover">Знайти</string>
 </resources>
