@@ -25,12 +25,18 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment.Companion.CenterVertically
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.savvasdalkitsis.uhuruphotos.foundation.compose.api.recomposeHighlighter
+import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.R.drawable
+import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.theme.PreviewAppTheme
 
 @Composable
 fun TextWithIcon(
     modifier: Modifier = Modifier,
+    iconModifier: Modifier = Modifier
+        .size(16.dp),
+    textModifier: Modifier = Modifier,
     @DrawableRes icon: Int,
     text: String,
 ) {
@@ -41,18 +47,25 @@ fun TextWithIcon(
         horizontalArrangement = Arrangement.spacedBy(8.dp),
     ) {
         Icon(
-            modifier = Modifier
+            modifier = iconModifier
                 .recomposeHighlighter()
-                .size(16.dp)
                 .align(CenterVertically),
             painter = painterResource(id = icon),
             contentDescription = null
         )
         Text(
-            modifier = Modifier
+            modifier = textModifier
                 .recomposeHighlighter()
                 .align(CenterVertically),
             text = text
         )
+    }
+}
+
+@Preview
+@Composable
+private fun TextWithIconPreview() {
+    PreviewAppTheme {
+        TextWithIcon(icon = drawable.ic_airplane, text = "Some text")
     }
 }

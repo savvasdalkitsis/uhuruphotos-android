@@ -43,6 +43,8 @@ internal fun ClusterHeader(
     modifier: Modifier = Modifier,
     state: Cluster,
     showSelectionHeader: Boolean,
+    title: String = state.displayTitle,
+    location: String? = state.location,
     onRefreshClicked: () -> Unit = {},
     onSelectionHeaderClicked: () -> Unit = {},
 ) {
@@ -61,21 +63,23 @@ internal fun ClusterHeader(
             )
         }
         Column(
-            modifier = Modifier.padding(
-                start = 8.dp,
-                end = 8.dp,
-                top = 16.dp,
-                bottom = 16.dp,
-            ).weight(1f),
+            modifier = Modifier
+                .padding(
+                    start = 8.dp,
+                    end = 8.dp,
+                    top = 16.dp,
+                    bottom = 16.dp,
+                )
+                .weight(1f),
         ) {
             Text(
-                text = state.displayTitle,
+                text = title,
                 style = TextStyle.Default.copy(
                     fontWeight = FontWeight.Bold,
                     fontSize = 14.sp
                 )
             )
-            state.location.takeIf { !it.isNullOrEmpty() }?.let {
+            location.takeIf { !it.isNullOrEmpty() }?.let {
                 Spacer(modifier = Modifier.height(8.dp))
                 Text(
                     text = it,

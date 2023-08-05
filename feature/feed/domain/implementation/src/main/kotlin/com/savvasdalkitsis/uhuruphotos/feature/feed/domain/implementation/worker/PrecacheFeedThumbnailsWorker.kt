@@ -20,6 +20,7 @@ import androidx.hilt.work.HiltWorker
 import androidx.work.WorkerParameters
 import com.savvasdalkitsis.uhuruphotos.feature.auth.domain.api.usecase.ServerUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.extensions.isVideo
+import com.savvasdalkitsis.uhuruphotos.feature.feed.domain.api.model.FeedFetchType
 import com.savvasdalkitsis.uhuruphotos.feature.feed.domain.implementation.broadcast.CancelPrecacheWorkBroadcastReceiver
 import com.savvasdalkitsis.uhuruphotos.feature.feed.domain.implementation.repository.FeedRepository
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaId
@@ -53,7 +54,7 @@ internal class PrecacheFeedThumbnailsWorker @AssistedInject constructor(
     override suspend fun work() = withContext(Dispatchers.IO) {
         updateProgress(0)
         val serverUrl = serverUseCase.getServerUrl()!!
-        val mediaItemIds = feedRepository.getRemoteMediaCollectionsByDate()
+        val mediaItemIds = feedRepository.getRemoteMediaCollectionsByDate(FeedFetchType.ALL)
             .items.entries.flatMap { entry ->
                 entry.value.mapNotNull { collections ->
                     collections.photoId?.let { id ->

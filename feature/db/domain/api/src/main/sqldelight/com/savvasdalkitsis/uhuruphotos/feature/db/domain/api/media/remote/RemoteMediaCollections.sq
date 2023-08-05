@@ -25,6 +25,21 @@ SELECT
 FROM remoteMediaCollections
 LEFT JOIN remoteMediaItemSummary AS summary ON remoteMediaCollections.id = summary.containerId
 LEFT JOIN remoteMediaItemDetails AS details ON summary.id = details.imageHash
+WHERE
+    CASE WHEN :includeNoDates
+        THEN TRUE
+        ELSE albumDate NOT NULL
+    END
+    AND
+    CASE WHEN :includeDates
+        THEN TRUE
+        ELSE albumDate IS NULL
+    END
+    AND
+    CASE WHEN :onlyVideos
+        THEN summary.type == 'video'
+        ELSE TRUE
+    END
 GROUP BY summary.id
 ORDER BY summary.date DESC
 LIMIT :limit;

@@ -30,8 +30,13 @@ import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.onGloballyPositioned
 import com.google.accompanist.insets.ui.Scaffold
 import com.savvasdalkitsis.uhuruphotos.foundation.compose.api.recomposeHighlighter
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.insets.insetsEnd
@@ -77,6 +82,9 @@ fun CommonScaffold(
     bottomBarDisplayed: Boolean = true,
     content: @Composable (PaddingValues) -> Unit
 ) {
+    var bottomBarHeight by remember {
+        mutableIntStateOf(0)
+    }
     Scaffold(
         modifier = modifier
             .recomposeHighlighter()
@@ -91,6 +99,9 @@ fun CommonScaffold(
                     Modifier
                         .background(bottomBarColor())
                         .navigationBarsPadding()
+                        .onGloballyPositioned {
+                            bottomBarHeight = it.size.height
+                        }
                 ) {
                     bottomBarContent()
                 }

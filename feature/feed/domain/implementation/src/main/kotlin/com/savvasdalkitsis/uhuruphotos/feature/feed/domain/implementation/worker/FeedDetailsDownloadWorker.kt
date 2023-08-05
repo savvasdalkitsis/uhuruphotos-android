@@ -21,6 +21,7 @@ import androidx.work.WorkerParameters
 import com.github.michaelbull.result.Err
 import com.github.michaelbull.result.Ok
 import com.github.michaelbull.result.coroutines.binding.binding
+import com.savvasdalkitsis.uhuruphotos.feature.feed.domain.api.model.FeedFetchType
 import com.savvasdalkitsis.uhuruphotos.feature.feed.domain.api.usecase.FeedUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.feed.domain.implementation.broadcast.CancelFeedDetailsDownloadWorkBroadcastReceiver
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaRefreshResult.REFRESHED
@@ -52,7 +53,7 @@ internal class FeedDetailsDownloadWorker @AssistedInject constructor(
 
     override suspend fun work() = withContext(Dispatchers.IO) {
         updateProgress(0)
-        val items = feedUseCase.getFeed().flatMap { it.mediaItems }.mapNotNull { it.id.findRemote }
+        val items = feedUseCase.getFeed(FeedFetchType.ALL).flatMap { it.mediaItems }.mapNotNull { it.id.findRemote }
         val total = items.size
         val result = binding {
             items.forEachIndexed { current, item ->

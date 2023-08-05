@@ -29,6 +29,8 @@ dependencies {
             project(":feature:search:view:api"),
             project(":feature:server:view:api"),
             project(":feature:settings:domain:api"),
+            project(":feature:videos:view:api"),
+            project(":feature:undated:view:api"),
             project(":foundation:compose:api"),
             project(":foundation:coroutines:api"),
             project(":foundation:date:api"),
@@ -42,12 +44,16 @@ dependencies {
             project(":foundation:ui:api"),
             libs.androidx.compose.hilt.navigation,
             libs.androidx.compose.material,
+            libs.androidx.compose.ui.tooling.preview,
             libs.androidx.lifecycle,
             libs.autodagger.core,
             libs.moshi,
             libs.retrofit.core,
             libs.retrofit.moshi,
             libs.sqldelight.coroutines,
+    )
+    debugImplementation(
+            libs.androidx.compose.ui.tooling,
     )
     kapt libs.autodagger.kapt
     ksp libs.moshi.ksp

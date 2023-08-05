@@ -40,6 +40,7 @@ open class GalleryActionsContext(
     val lightboxSequenceDataSource: (galleryId: Int) -> LightboxSequenceDataSource,
     val initialCollageDisplay: (galleryId: Int) -> CollageDisplay,
     val collageDisplayPersistence: suspend (galleryId: Int, PredefinedCollageDisplay) -> Unit,
+    val shouldShowSortingAction: Boolean = true,
     val preferences: Preferences,
 ) {
 

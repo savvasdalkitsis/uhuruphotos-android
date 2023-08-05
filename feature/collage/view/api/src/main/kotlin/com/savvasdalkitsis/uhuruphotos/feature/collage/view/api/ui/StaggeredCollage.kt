@@ -48,13 +48,13 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.TransformOrigin
 import androidx.compose.ui.hapticfeedback.HapticFeedbackType
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.LocalHapticFeedback
 import androidx.compose.ui.platform.LocalLayoutDirection
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.Cluster
@@ -62,6 +62,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.Cel
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.CelSelected
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.state.CelState
 import com.savvasdalkitsis.uhuruphotos.foundation.compose.api.recomposeHighlighter
+import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
 import my.nanihadesuka.compose.ScrollbarSelectionMode
 
 @Composable
@@ -104,20 +105,20 @@ internal fun StaggeredCollage(
                 }
             }
             for ((clusterIndex, cluster) in state.withIndex()) {
-                if ((cluster.displayTitle + cluster.location.orEmpty()).isNotEmpty()) {
-                    item("item:$clusterIndex:header", "header", span = StaggeredGridItemSpan.FullLine) {
-                        ClusterHeader(
-                            modifier = Modifier
-                                .animateItemPlacement()
-                                .recomposeHighlighter(),
-                            state = cluster,
-                            showSelectionHeader = showSelectionHeader,
-                            onRefreshClicked = {
-                                onClusterRefreshClicked(cluster)
-                            }
-                        ) {
-                            onClusterSelectionClicked(cluster)
+                item("item:$clusterIndex:header", "header", span = StaggeredGridItemSpan.FullLine) {
+                    ClusterHeader(
+                        modifier = Modifier
+                            .animateItemPlacement()
+                            .recomposeHighlighter(),
+                        state = cluster,
+                        title = cluster.displayTitle.ifEmpty { stringResource(string.no_date) },
+                        location = cluster.location?.takeIf { cluster.displayTitle.isNotEmpty() },
+                        showSelectionHeader = showSelectionHeader,
+                        onRefreshClicked = {
+                            onClusterRefreshClicked(cluster)
                         }
+                    ) {
+                        onClusterSelectionClicked(cluster)
                     }
                 }
 

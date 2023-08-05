@@ -18,6 +18,7 @@ package com.savvasdalkitsis.uhuruphotos.feature.feed.domain.implementation.useca
 import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.PredefinedCollageDisplay
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.extensions.isVideo
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.media.remote.GetRemoteMediaCollections
+import com.savvasdalkitsis.uhuruphotos.feature.feed.domain.api.model.FeedFetchType
 import com.savvasdalkitsis.uhuruphotos.feature.feed.domain.api.usecase.FeedUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.feed.domain.api.worker.FeedWorkScheduler
 import com.savvasdalkitsis.uhuruphotos.feature.feed.domain.implementation.repository.FeedRepository
@@ -57,12 +58,14 @@ internal class FeedUseCase @Inject constructor(
 
     private val key = "feedDisplay"
 
-    override fun observeFeed(): Flow<List<MediaCollection>> =
-        combine(observeRemoteMediaFeed(), observeLocalMediaFeed(), observeDownloading(), ::mergeRemoteWithLocalMedia)
+    override fun observeFeed(
+        feedFetchType: FeedFetchType,
+    ): Flow<List<MediaCollection>> =
+        combine(observeRemoteMediaFeed(feedFetchType), observeLocalMediaFeed(), observeDownloading(), ::mergeRemoteWithLocalMedia)
             .debounce(500)
 
-    override suspend fun getFeed(): List<MediaCollection> = mergeRemoteWithLocalMedia(
-        getRemoteMediaFeed(), getLocalMediaFeed(), getDownloading(),
+    override suspend fun getFeed(feedFetchType: FeedFetchType): List<MediaCollection> = mergeRemoteWithLocalMedia(
+        getRemoteMediaFeed(feedFetchType), getLocalMediaFeed(), getDownloading(),
     )
 
     private fun mergeRemoteWithLocalMedia(
@@ -196,7 +199,9 @@ internal class FeedUseCase @Inject constructor(
         it
     }
 
-    private fun observeRemoteMediaFeed() = feedRepository.observeRemoteMediaCollectionsByDate()
+    private fun observeRemoteMediaFeed(
+        feedFetchType: FeedFetchType,
+    ) = feedRepository.observeRemoteMediaCollectionsByDate(feedFetchType)
         .distinctUntilChanged()
         .map {
             it.mapValues { albums ->
@@ -207,9 +212,10 @@ internal class FeedUseCase @Inject constructor(
         }.initialize()
 
 
-    private suspend fun getRemoteMediaFeed() = feedRepository.getRemoteMediaCollectionsByDate()
-        .mapValues { it.toMediaCollectionSource() }
-        .toCollection()
+    private suspend fun getRemoteMediaFeed(feedFetchType: FeedFetchType) =
+        feedRepository.getRemoteMediaCollectionsByDate(feedFetchType)
+            .mapValues { it.toMediaCollectionSource() }
+            .toCollection()
 
     private suspend fun getLocalMediaFeed(): List<MediaItem> = when (val mediaOnDevice = mediaUseCase.getLocalMedia()) {
         Error -> emptyList()

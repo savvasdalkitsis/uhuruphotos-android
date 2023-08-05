@@ -19,6 +19,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.avatar.view.api.ui.state.SyncStat
 import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.Cluster
 import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.PredefinedCollageDisplay
 import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.toCluster
+import com.savvasdalkitsis.uhuruphotos.feature.feed.domain.api.model.FeedFetchType
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.FeedActionsContext
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.FeedMutation
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.effects.FeedEffect
@@ -107,7 +108,7 @@ data object LoadFeed : FeedAction() {
 
     private fun FeedActionsContext.showClusters() =
         combine(
-            feedUseCase.observeFeed().debounce(200),
+            feedUseCase.observeFeed(FeedFetchType.ONLY_WITH_DATES).debounce(200),
             selectionList.ids,
             avatarUseCase.getAvatarState(),
             feedUseCase

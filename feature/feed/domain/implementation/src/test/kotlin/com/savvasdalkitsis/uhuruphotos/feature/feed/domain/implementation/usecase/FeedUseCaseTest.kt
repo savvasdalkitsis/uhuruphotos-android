@@ -17,6 +17,8 @@ package com.savvasdalkitsis.uhuruphotos.feature.feed.domain.implementation.useca
 
 import app.cash.turbine.test
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.media.remote.GetRemoteMediaCollections
+import com.savvasdalkitsis.uhuruphotos.feature.feed.domain.api.model.FeedFetchType
+import com.savvasdalkitsis.uhuruphotos.feature.feed.domain.api.model.FeedFetchType.ALL
 import com.savvasdalkitsis.uhuruphotos.feature.feed.domain.api.worker.FeedWorkScheduler
 import com.savvasdalkitsis.uhuruphotos.feature.feed.domain.implementation.repository.FeedRepository
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.TestMedia.mediaCollection
@@ -58,7 +60,7 @@ class FeedUseCaseTest {
     @Test
     fun `observes feed from repository and updates`() = runBlocking {
         val albums = Channel<Group<String, GetRemoteMediaCollections>> {}
-        coEvery { feedRepository.observeRemoteMediaCollectionsByDate() } returns albums.receiveAsFlow()
+        coEvery { feedRepository.observeRemoteMediaCollectionsByDate(ALL) } returns albums.receiveAsFlow()
 
         underTest.observeFeed().test {
             albums.send(
@@ -125,6 +127,6 @@ class FeedUseCaseTest {
     }
 
     private fun FeedRepository.returnsAlbumWithEntries(vararg albums: GetRemoteMediaCollections) {
-        coEvery { getRemoteMediaCollectionsByDate() } returns Group(mapOf("albumId" to albums.toList()))
+        coEvery { getRemoteMediaCollectionsByDate(true) } returns Group(mapOf("albumId" to albums.toList()))
     }
 }

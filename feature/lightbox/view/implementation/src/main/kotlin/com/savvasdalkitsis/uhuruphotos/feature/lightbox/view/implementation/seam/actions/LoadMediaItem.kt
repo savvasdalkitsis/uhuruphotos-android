@@ -16,18 +16,9 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.actions
 
 import com.github.michaelbull.result.getOr
+import com.savvasdalkitsis.uhuruphotos.feature.feed.domain.api.model.FeedFetchType
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.api.model.LightboxSequenceDataSource
-import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.api.model.LightboxSequenceDataSource.AutoAlbum
-import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.api.model.LightboxSequenceDataSource.FavouriteMedia
-import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.api.model.LightboxSequenceDataSource.Feed
-import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.api.model.LightboxSequenceDataSource.HiddenMedia
-import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.api.model.LightboxSequenceDataSource.LocalAlbum
-import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.api.model.LightboxSequenceDataSource.Memory
-import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.api.model.LightboxSequenceDataSource.PersonResults
-import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.api.model.LightboxSequenceDataSource.SearchResults
-import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.api.model.LightboxSequenceDataSource.Single
-import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.api.model.LightboxSequenceDataSource.Trash
-import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.api.model.LightboxSequenceDataSource.UserAlbum
+import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.api.model.LightboxSequenceDataSource.*
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.LightboxActionsContext
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.LightboxMutation.ReceivedDetails
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.LightboxMutation.ShowMedia
@@ -92,7 +83,7 @@ data class LoadMediaItem(
     context(LightboxActionsContext)
     private fun observeMediaSequence(): Flow<List<SingleMediaItemState>> = when (sequenceDataSource) {
         Single -> emptyFlow()
-        Feed -> feedUseCase.observeFeed().toMediaItems
+        Feed -> feedUseCase.observeFeed(FeedFetchType.ONLY_WITH_DATES).toMediaItems
         is Memory -> memoriesUseCase.observeMemories().map { collections ->
             collections.find { it.yearsAgo == sequenceDataSource.yearsAgo }?.mediaCollection?.mediaItems
             ?: emptyList()
@@ -108,6 +99,8 @@ data class LoadMediaItem(
         FavouriteMedia -> mediaUseCase.observeFavouriteMedia().map { it.getOr(emptyList()) }
         HiddenMedia -> mediaUseCase.observeHiddenMedia().map { it.getOr(emptyList()) }
         Trash -> trashUseCase.observeTrashAlbums().toMediaItems
+        Videos -> feedUseCase.observeFeed(FeedFetchType.VIDEOS).toMediaItems
+        Undated -> feedUseCase.observeFeed(FeedFetchType.ONLY_WITHOUT_DATES).toMediaItems
     }.map { mediaItems ->
         mediaItems.map { it.toSingleMediaItemState() }
     }

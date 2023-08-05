@@ -32,6 +32,6 @@ import com.savvasdalkitsis.uhuruphotos.feature.discover.view.implementation.ui.s
     Column {
         Spacer(modifier = Modifier.height(contentPadding.calculateTopPadding()))
         SearchField(state, action)
-        DiscoverIdle(state, action)
+        DiscoverIdle(state, action, contentPadding)
     }
 }

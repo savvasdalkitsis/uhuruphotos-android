@@ -32,16 +32,19 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import com.savvasdalkitsis.uhuruphotos.feature.discover.view.implementation.seam.actions.LoadHeatMap
 import com.savvasdalkitsis.uhuruphotos.feature.discover.view.implementation.seam.actions.DiscoverAction
+import com.savvasdalkitsis.uhuruphotos.feature.discover.view.implementation.seam.actions.LoadHeatMap
 import com.savvasdalkitsis.uhuruphotos.foundation.map.api.Locations
 import com.savvasdalkitsis.uhuruphotos.foundation.map.api.ui.MapView
 import com.savvasdalkitsis.uhuruphotos.foundation.map.api.ui.rememberMapViewState
+import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
+import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.SectionHeader
 
 @Composable
 fun DiscoverLocations(
-    action: (DiscoverAction) -> Unit,
+    action: (DiscoverAction) -> Unit = {},
 ) {
     Column(
         modifier = Modifier
@@ -49,15 +52,12 @@ fun DiscoverLocations(
             .padding(
                 start = 12.dp,
                 end = 12.dp,
-                bottom = 12.dp,
             ),
         verticalArrangement = Arrangement.spacedBy(8.dp),
     ) {
-        Text(
-            modifier = Modifier
-                .fillMaxWidth(),
-            text = "Locations"
-        )
+        SectionHeader(
+            title = stringResource(string.locations)
+        ) {}
         Box(
             modifier = Modifier
                 .height(180.dp)

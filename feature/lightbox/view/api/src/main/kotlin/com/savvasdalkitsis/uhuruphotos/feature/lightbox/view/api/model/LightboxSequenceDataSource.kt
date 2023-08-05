@@ -42,4 +42,8 @@ sealed class LightboxSequenceDataSource : Parcelable {
     data object HiddenMedia : LightboxSequenceDataSource()
     @Parcelize
     data object Trash : LightboxSequenceDataSource()
+    @Parcelize
+    data object Videos : LightboxSequenceDataSource()
+    @Parcelize
+    data object Undated : LightboxSequenceDataSource()
 }

@@ -26,6 +26,14 @@ dependencyResolutionManagement {
         }
     }
 }
+
+buildCache {
+    local {
+        directory = new File(rootDir, 'build-cache')
+        removeUnusedEntriesAfterDays = 30
+    }
+}
+
 rootProject.name = "uhuruphotos-android"
 include ':app'
 include ':app:implementation'
@@ -127,8 +135,16 @@ include ':feature:trash:domain:api'
 include ':feature:trash:domain:implementation'
 include ':feature:trash:view:api'
 include ':feature:trash:view:implementation'
+include ':feature:undated:domain:api'
+include ':feature:undated:domain:implementation'
+include ':feature:undated:view:api'
+include ':feature:undated:view:implementation'
 include ':feature:user:domain:api'
 include ':feature:user:domain:implementation'
+include ':feature:videos:domain:api'
+include ':feature:videos:domain:implementation'
+include ':feature:videos:view:api'
+include ':feature:videos:view:implementation'
 
 include ':foundation:activity:api'
 include ':foundation:activity:implementation'

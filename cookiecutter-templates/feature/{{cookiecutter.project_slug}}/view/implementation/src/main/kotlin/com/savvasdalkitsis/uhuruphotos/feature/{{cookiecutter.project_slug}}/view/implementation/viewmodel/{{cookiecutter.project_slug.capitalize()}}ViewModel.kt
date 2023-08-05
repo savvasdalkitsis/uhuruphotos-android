@@ -36,11 +36,9 @@ internal class {{cookiecutter.project_slug.capitalize()}}ViewModel @Inject const
 ) : NavigationViewModel<{{cookiecutter.project_slug.capitalize()}}State, {{cookiecutter.project_slug.capitalize()}}Effect, {{cookiecutter.project_slug.capitalize()}}Action, {{cookiecutter.project_slug.capitalize()}}NavigationRoute>(
     ActionHandlerWithContext(actionsContext),
     EffectHandlerWithContext(effectsContext),
-    {{cookiecutter.project_slug.capitalize()}}State,
+    {{cookiecutter.project_slug.capitalize()}}State(),
 ) {
 
-    init {
-        viewModelScope.launch {
-        }
+    override fun onRouteSet(route: {{cookiecutter.project_slug.capitalize()}}NavigationRoute) {
     }
 }

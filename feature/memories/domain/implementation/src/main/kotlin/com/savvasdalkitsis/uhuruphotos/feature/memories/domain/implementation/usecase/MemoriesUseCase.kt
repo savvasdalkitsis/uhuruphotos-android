@@ -15,6 +15,7 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.memories.domain.implementation.usecase
 
+import com.savvasdalkitsis.uhuruphotos.feature.feed.domain.api.model.FeedFetchType
 import com.savvasdalkitsis.uhuruphotos.feature.feed.domain.api.usecase.FeedUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaCollection
 import com.savvasdalkitsis.uhuruphotos.feature.memories.domain.api.model.MemoryCollection
@@ -36,14 +37,14 @@ class MemoriesUseCase @Inject constructor(
 ) : MemoriesUseCase {
 
     override fun observeMemories(): Flow<List<MemoryCollection>> =
-        feedUseCase.observeFeed()
+        feedUseCase.observeFeed(FeedFetchType.ONLY_WITH_DATES)
             .distinctUntilChanged()
             .map {
                 it.findMemories()
             }
 
     override suspend fun getMemories(): List<MemoryCollection> =
-        feedUseCase.getFeed().findMemories()
+        feedUseCase.getFeed(FeedFetchType.ONLY_WITH_DATES).findMemories()
 
     private fun DateTime?.sameAsNow(field: DateTime.() -> Int) =
         this != null && field(this) == field(DateTime.now())

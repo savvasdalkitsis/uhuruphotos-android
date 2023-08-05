@@ -280,4 +280,9 @@
     <string name="retry">Retry</string>
     <string name="discover">Discover</string>
     <string name="search_captions">Search Captions</string>
+    <string name="categories">Categories</string>
+    <string name="locations">Locations</string>
+    <string name="media_without_date">Media without date</string>
+    <string name="no_date">No date</string>
+    <string name="videos">Videos</string>
 </resources>

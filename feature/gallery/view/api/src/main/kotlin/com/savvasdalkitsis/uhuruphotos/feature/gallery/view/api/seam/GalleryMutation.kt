@@ -49,7 +49,7 @@ sealed class GalleryMutation(
         ))
     })
 
-    data class ShowGallerySorting(val sorting: GallerySorting) : GalleryMutation({
+    data class ShowGallerySorting(val sorting: GallerySorting?) : GalleryMutation({
         it.copy(sorting = sorting)
     })
 }

@@ -15,4 +15,4 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.{{cookiecutter.project_slug}}.view.implementation.ui.state
 
-data object {{cookiecutter.project_slug.capitalize()}}State
+class {{cookiecutter.project_slug.capitalize()}}State

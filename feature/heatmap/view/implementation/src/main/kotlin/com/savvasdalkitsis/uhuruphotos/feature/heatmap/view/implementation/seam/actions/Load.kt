@@ -16,6 +16,7 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.feature.heatmap.view.implementation.seam.actions
 
 import androidx.work.WorkInfo
+import com.savvasdalkitsis.uhuruphotos.feature.feed.domain.api.model.FeedFetchType
 import com.savvasdalkitsis.uhuruphotos.feature.heatmap.view.implementation.seam.HeatMapActionsContext
 import com.savvasdalkitsis.uhuruphotos.feature.heatmap.view.implementation.seam.HeatMapMutation
 import com.savvasdalkitsis.uhuruphotos.feature.heatmap.view.implementation.seam.effects.ErrorLoadingPhotoDetails
@@ -39,7 +40,7 @@ data object Load : HeatMapAction() {
         state: HeatMapState,
         effect: EffectHandler<HeatMapEffect>
     ) = merge(
-        feedUseCase.observeFeed()
+        feedUseCase.observeFeed(FeedFetchType.ALL)
             .map { mediaCollections ->
                 mediaCollections
                     .flatMap { it.mediaItems }

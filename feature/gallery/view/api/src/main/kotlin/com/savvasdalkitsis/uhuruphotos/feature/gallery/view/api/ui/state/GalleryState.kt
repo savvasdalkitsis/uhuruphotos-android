@@ -28,5 +28,5 @@ data class GalleryState(
     val error: Int? = null,
     val title: Title = Title.Text(""),
     val people: ImmutableList<Person> = persistentListOf(),
-    val sorting: GallerySorting = GallerySorting.DATE_DESC,
+    val sorting: GallerySorting? = null,
 )

@@ -51,7 +51,7 @@ data class LoadCollage(val id: GalleryId) : GalleryAction() {
                 )
             }.map(GalleryMutation::ShowGallery),
             observeSorting()
-                .map { GalleryMutation.ShowGallerySorting(it) },
+                .map { GalleryMutation.ShowGallerySorting(it.takeIf { shouldShowSortingAction }) },
             loading,
         ).safelyOnStartIgnoring {
             if (shouldRefreshOnLoad(galleryId.id)) {

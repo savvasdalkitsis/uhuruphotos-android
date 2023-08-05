@@ -55,11 +55,13 @@ fun Gallery(
             }
         },
         actionBarContent = {
-            ActionIcon(
-                onClick = { action(ChangeGallerySorting) },
-                icon = state.sorting.icon,
-                contentDescription = stringResource(string.sorting)
-            )
+            state.sorting?.let { sorting ->
+                ActionIcon(
+                    onClick = { action(ChangeGallerySorting(sorting.toggle())) },
+                    icon = sorting.icon,
+                    contentDescription = stringResource(string.sorting)
+                )
+            }
             AnimatedVisibility(state.collageState.collageDisplay.iconResource != 0
                     && state.collageState.clusters.isNotEmpty()) {
                 CollageDisplayActionButton(
