@@ -277,4 +277,9 @@
     <string name="retry">Opnieuw</string>
     <string name="discover">Ontdekken</string>
     <string name="search_captions">Bĳschriften doorzoeken</string>
+    <string name="categories">Categorieën</string>
+    <string name="locations">Locaties</string>
+    <string name="media_without_date">Media zonder datum</string>
+    <string name="no_date">Zonder datum</string>
+    <string name="videos">Video\'s</string>
 </resources>
