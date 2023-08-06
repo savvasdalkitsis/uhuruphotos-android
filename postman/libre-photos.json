@@ -172,8 +172,19 @@
 								"disableBodyPruning": true
 							},
 							"request": {
-								"method": "GET",
-								"header": []
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "upload_id",
+											"value": "",
+											"type": "text"
+										}
+									]
+								},
+								"url": "{{HOST}}/api/upload/complete/"
 							},
 							"response": []
 						}
