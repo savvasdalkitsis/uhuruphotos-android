@@ -18,7 +18,6 @@ dependencies {
             project(":feature:media:common:view:api"),
             project(":feature:settings:domain:api"),
             project(":foundation:coroutines:api"),
-            project(":foundation:effects:api"),
             project(":foundation:log:api"),
             project(":foundation:navigation:api"),
             project(":foundation:preferences:api"),

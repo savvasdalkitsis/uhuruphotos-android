@@ -47,7 +47,7 @@ internal class AutoAlbumActionsContext @Inject constructor(
         shouldRefreshOnLoad = { albumId ->
             autoAlbumUseCase.getAutoAlbum(albumId).isEmpty()
         },
-        galleryDetailsFlow = { albumId, _ ->
+        galleryDetailsFlow = { albumId ->
             val serverUrl = serverUseCase.getServerUrl()!!
             autoAlbumUseCase.observeAutoAlbumWithPeople(albumId)
                 .map { (photoEntries, people) ->

@@ -22,16 +22,13 @@ import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.api.model.LightboxS
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.api.navigation.LightboxNavigationRoute
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemSelectionMode
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.state.CelState
-import com.savvasdalkitsis.uhuruphotos.foundation.effects.api.seam.effects.CommonEffect
-import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.EffectHandler
 import kotlinx.coroutines.flow.flow
 
 data class SelectedCel(
     val celState: CelState,
 ) : FeedAction() {
     context(FeedActionsContext) override fun handle(
-        state: FeedState,
-        effect: EffectHandler<CommonEffect>
+        state: FeedState
     ) = flow<FeedMutation> {
         when {
             state.selectedCelCount == 0 -> navigator.navigateTo(

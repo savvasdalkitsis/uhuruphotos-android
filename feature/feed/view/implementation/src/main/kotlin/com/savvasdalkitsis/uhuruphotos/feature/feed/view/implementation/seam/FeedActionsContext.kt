@@ -33,9 +33,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.worker.Loc
 import com.savvasdalkitsis.uhuruphotos.feature.memories.domain.api.usecase.MemoriesUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.settings.domain.api.usecase.SettingsUseCase
 import com.savvasdalkitsis.uhuruphotos.foundation.download.api.usecase.DownloadUseCase
-import com.savvasdalkitsis.uhuruphotos.foundation.effects.api.seam.effects.CommonEffect
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.Navigator
-import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.EffectHandler
 import com.savvasdalkitsis.uhuruphotos.foundation.share.api.usecase.ShareUseCase
 import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R
 import com.savvasdalkitsis.uhuruphotos.foundation.toaster.api.usecase.ToasterUseCase
@@ -76,7 +74,6 @@ internal class FeedActionsContext @Inject constructor(
 
     suspend fun FlowCollector<FeedMutation>.deleteLocalSelectedCels(
         state: FeedState,
-        effect: EffectHandler<CommonEffect>,
         onSuccess: () -> Unit = {},
     ) = when (val result = localMediaDeletionUseCase.deleteLocalMediaItems(state.selectedCels
             .mapNotNull { it.mediaItem.id.findLocal }

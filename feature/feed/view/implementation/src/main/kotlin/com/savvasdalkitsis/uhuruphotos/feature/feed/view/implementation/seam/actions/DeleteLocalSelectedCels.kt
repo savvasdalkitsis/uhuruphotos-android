@@ -18,17 +18,14 @@ package com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.ac
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.FeedActionsContext
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.FeedMutation.HideAllConfirmationDialogs
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.ui.state.FeedState
-import com.savvasdalkitsis.uhuruphotos.foundation.effects.api.seam.effects.CommonEffect
-import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.EffectHandler
 import kotlinx.coroutines.flow.flow
 
 data object DeleteLocalSelectedCels : FeedAction() {
     context(FeedActionsContext) override fun handle(
-        state: FeedState,
-        effect: EffectHandler<CommonEffect>
+        state: FeedState
     ) = flow {
         emit(HideAllConfirmationDialogs)
-        deleteLocalSelectedCels(state, effect)
+        deleteLocalSelectedCels(state)
         selectionList.clear()
     }
 }

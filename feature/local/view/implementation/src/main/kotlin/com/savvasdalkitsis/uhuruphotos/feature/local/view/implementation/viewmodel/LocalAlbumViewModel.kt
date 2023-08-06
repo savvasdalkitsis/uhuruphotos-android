@@ -25,34 +25,24 @@ import com.savvasdalkitsis.uhuruphotos.feature.local.view.implementation.seam.Lo
 import com.savvasdalkitsis.uhuruphotos.feature.local.view.implementation.seam.actions.Load
 import com.savvasdalkitsis.uhuruphotos.feature.local.view.implementation.seam.actions.LocalAlbumAction
 import com.savvasdalkitsis.uhuruphotos.feature.local.view.implementation.ui.state.LocalAlbumState
-import com.savvasdalkitsis.uhuruphotos.foundation.effects.api.seam.effects.CommonEffect
-import com.savvasdalkitsis.uhuruphotos.foundation.effects.api.seam.effects.CommonEffectHandler
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.viewmodel.NavigationViewModel
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.ActionHandlerWithContext
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.CompositeActionHandler
-import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.CompositeEffectHandler
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.Either
-import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.NoOpEffectHandler
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
 private typealias LocalAlbumCompositeState = Pair<GalleryState, LocalAlbumState>
-private typealias LocalAlbumCompositeEffect = Either<CommonEffect, CommonEffect>
 private typealias LocalAlbumCompositeAction = Either<GalleryAction, LocalAlbumAction>
 
 @HiltViewModel
 internal class LocalAlbumViewModel @Inject constructor(
     localAlbumActionsContext: LocalAlbumActionsContext,
     localAlbumPageActionsContext: LocalAlbumPageActionsContext,
-    commonEffectHandler: CommonEffectHandler,
-) : NavigationViewModel<LocalAlbumCompositeState, LocalAlbumCompositeEffect, LocalAlbumCompositeAction, LocalAlbumNavigationRoute>(
+) : NavigationViewModel<LocalAlbumCompositeState, LocalAlbumCompositeAction, LocalAlbumNavigationRoute>(
     CompositeActionHandler(
         ActionHandlerWithContext(localAlbumPageActionsContext.galleryActionsContext),
         ActionHandlerWithContext(localAlbumActionsContext),
-    ),
-    CompositeEffectHandler(
-        commonEffectHandler,
-        NoOpEffectHandler(),
     ),
     GalleryState() to LocalAlbumState()
 ) {

@@ -24,7 +24,7 @@ import kotlin.reflect.KClass
 interface NavigationTargetBuilder {
 
     @Composable
-    fun <S : Any, A : Any, VM : NavigationViewModel<S, *, A, R>, R : NavigationRoute> ViewModelView(
+    fun <S : Any, A : Any, VM : NavigationViewModel<S, A, R>, R : NavigationRoute> ViewModelView(
         themeMode: StateFlow<ThemeMode>,
         route: R,
         viewModel: KClass<VM>,

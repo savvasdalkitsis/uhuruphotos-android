@@ -17,10 +17,8 @@ package com.savvasdalkitsis.uhuruphotos.feature.heatmap.view.implementation.seam
 
 import com.savvasdalkitsis.uhuruphotos.feature.heatmap.view.implementation.seam.HeatMapActionsContext
 import com.savvasdalkitsis.uhuruphotos.feature.heatmap.view.implementation.ui.state.HeatMapState
-import com.savvasdalkitsis.uhuruphotos.foundation.effects.api.seam.effects.CommonEffect
 import com.savvasdalkitsis.uhuruphotos.foundation.map.api.model.LatLon
 import com.savvasdalkitsis.uhuruphotos.foundation.map.api.model.Viewport
-import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.EffectHandler
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.async
 import kotlinx.coroutines.currentCoroutineContext
@@ -32,8 +30,7 @@ data class CameraViewPortChanged(
 ) : HeatMapAction() {
 
     context(HeatMapActionsContext) override fun handle(
-        state: HeatMapState,
-        effect: EffectHandler<CommonEffect>
+        state: HeatMapState
     ) = flow {
         updateVisibleMapContentJob?.cancel()
         boundsChecker = newBoundsChecker

@@ -19,8 +19,6 @@ import com.savvasdalkitsis.uhuruphotos.feature.edit.view.implementation.seam.Edi
 import com.savvasdalkitsis.uhuruphotos.feature.edit.view.implementation.seam.EditMutation
 import com.savvasdalkitsis.uhuruphotos.feature.edit.view.implementation.ui.state.CropRatio
 import com.savvasdalkitsis.uhuruphotos.feature.edit.view.implementation.ui.state.EditState
-import com.savvasdalkitsis.uhuruphotos.foundation.effects.api.seam.effects.CommonEffect
-import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.EffectHandler
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.Mutation
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOf
@@ -30,8 +28,7 @@ data class SelectCropRatio(
 ) : EditAction() {
 
     context(EditActionsContext) override fun handle(
-        state: EditState,
-        effect: EffectHandler<CommonEffect>
+        state: EditState
     ): Flow<Mutation<EditState>> = flowOf(EditMutation.SelectCropRatio(ratio))
 
 }

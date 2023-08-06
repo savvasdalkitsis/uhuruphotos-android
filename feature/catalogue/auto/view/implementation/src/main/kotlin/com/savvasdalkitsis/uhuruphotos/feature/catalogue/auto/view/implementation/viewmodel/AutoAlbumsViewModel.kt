@@ -20,8 +20,6 @@ import com.savvasdalkitsis.uhuruphotos.feature.catalogue.auto.view.implementatio
 import com.savvasdalkitsis.uhuruphotos.feature.catalogue.auto.view.implementation.seam.AutoAlbumsState
 import com.savvasdalkitsis.uhuruphotos.feature.catalogue.auto.view.implementation.seam.actions.AutoAlbumsAction
 import com.savvasdalkitsis.uhuruphotos.feature.catalogue.auto.view.implementation.seam.actions.Load
-import com.savvasdalkitsis.uhuruphotos.foundation.effects.api.seam.effects.CommonEffect
-import com.savvasdalkitsis.uhuruphotos.foundation.effects.api.seam.effects.CommonEffectHandler
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.viewmodel.NavigationViewModel
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.ActionHandlerWithContext
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -30,10 +28,8 @@ import javax.inject.Inject
 @HiltViewModel
 internal class AutoAlbumsViewModel @Inject constructor(
     autoAlbumsActionsContext: AutoAlbumsActionsContext,
-    commonEffectHandler: CommonEffectHandler,
-) : NavigationViewModel<AutoAlbumsState, CommonEffect, AutoAlbumsAction, AutoAlbumsNavigationRoute>(
+) : NavigationViewModel<AutoAlbumsState, AutoAlbumsAction, AutoAlbumsNavigationRoute>(
     ActionHandlerWithContext(autoAlbumsActionsContext),
-    commonEffectHandler,
     AutoAlbumsState()
 ) {
 

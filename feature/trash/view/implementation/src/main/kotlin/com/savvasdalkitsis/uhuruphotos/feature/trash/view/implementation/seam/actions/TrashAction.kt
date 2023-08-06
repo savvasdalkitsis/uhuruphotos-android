@@ -17,7 +17,6 @@ package com.savvasdalkitsis.uhuruphotos.feature.trash.view.implementation.seam.a
 
 import com.savvasdalkitsis.uhuruphotos.feature.trash.view.implementation.seam.TrashActionsContext
 import com.savvasdalkitsis.uhuruphotos.feature.trash.view.implementation.state.TrashState
-import com.savvasdalkitsis.uhuruphotos.foundation.effects.api.seam.effects.CommonEffect
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.Action
 
-sealed class TrashAction : Action<TrashState, CommonEffect, TrashActionsContext>
+sealed class TrashAction : Action<TrashState, TrashActionsContext>

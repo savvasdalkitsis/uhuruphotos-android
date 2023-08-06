@@ -17,16 +17,15 @@ package com.savvasdalkitsis.uhuruphotos.foundation.seam.api
 
 import kotlinx.coroutines.flow.Flow
 
-class ActionHandlerWithContext<ActionsContext, S, E, A: Action<S, E, ActionsContext>>(
+class ActionHandlerWithContext<ActionsContext, S, A: Action<S, ActionsContext>>(
     private val actionsContext: ActionsContext,
-) : ActionHandler<S, E, A> {
+) : ActionHandler<S, A> {
 
     override fun handleAction(
         state: S,
-        action: A,
-        effect: EffectHandler<E>
+        action: A
     ): Flow<Mutation<S>> = with(actionsContext) {
-        action.handle(state, effect)
+        action.handle(state)
     }
 
 }

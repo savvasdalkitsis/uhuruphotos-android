@@ -20,8 +20,6 @@ import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.actions.LoadSettings
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.actions.SettingsAction
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.ui.state.SettingsState
-import com.savvasdalkitsis.uhuruphotos.foundation.effects.api.seam.effects.CommonEffect
-import com.savvasdalkitsis.uhuruphotos.foundation.effects.api.seam.effects.CommonEffectHandler
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.viewmodel.NavigationViewModel
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.ActionHandlerWithContext
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -30,10 +28,8 @@ import javax.inject.Inject
 @HiltViewModel
 internal class SettingsViewModel @Inject constructor(
     settingsActionsContext: SettingsActionsContext,
-    commonEffectHandler: CommonEffectHandler,
-) : NavigationViewModel<SettingsState, CommonEffect, SettingsAction, SettingsNavigationRoute>(
+) : NavigationViewModel<SettingsState, SettingsAction, SettingsNavigationRoute>(
     ActionHandlerWithContext(settingsActionsContext),
-    commonEffectHandler,
     SettingsState()
 ) {
 

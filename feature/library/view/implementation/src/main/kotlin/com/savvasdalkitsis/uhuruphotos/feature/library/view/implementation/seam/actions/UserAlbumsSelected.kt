@@ -19,14 +19,11 @@ import com.savvasdalkitsis.uhuruphotos.feature.catalogue.user.view.api.navigatio
 import com.savvasdalkitsis.uhuruphotos.feature.library.view.implementation.seam.LibraryActionsContext
 import com.savvasdalkitsis.uhuruphotos.feature.library.view.implementation.seam.LibraryMutation
 import com.savvasdalkitsis.uhuruphotos.feature.library.view.implementation.ui.state.LibraryState
-import com.savvasdalkitsis.uhuruphotos.foundation.effects.api.seam.effects.CommonEffect
-import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.EffectHandler
 import kotlinx.coroutines.flow.flow
 
 data object UserAlbumsSelected : LibraryAction() {
     context(LibraryActionsContext) override fun handle(
-        state: LibraryState,
-        effect: EffectHandler<CommonEffect>
+        state: LibraryState
     ) = flow<LibraryMutation> {
         navigator.navigateTo(UserAlbumsNavigationRoute)
     }

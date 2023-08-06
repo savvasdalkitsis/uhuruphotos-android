@@ -37,7 +37,6 @@ dependencies {
             project(":foundation:compose:api"),
             project(":foundation:date:api"),
             project(":foundation:download:api"),
-            project(":foundation:effects:api"),
             project(":foundation:exif:api"),
             project(":foundation:icons:api"),
             project(":foundation:log:api"),

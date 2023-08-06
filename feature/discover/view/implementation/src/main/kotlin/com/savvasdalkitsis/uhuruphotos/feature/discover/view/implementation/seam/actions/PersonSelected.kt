@@ -20,14 +20,11 @@ import com.savvasdalkitsis.uhuruphotos.feature.discover.view.implementation.seam
 import com.savvasdalkitsis.uhuruphotos.feature.discover.view.implementation.ui.state.DiscoverState
 import com.savvasdalkitsis.uhuruphotos.feature.people.view.api.ui.state.Person
 import com.savvasdalkitsis.uhuruphotos.feature.person.view.api.navigation.PersonNavigationRoute
-import com.savvasdalkitsis.uhuruphotos.foundation.effects.api.seam.effects.CommonEffect
-import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.EffectHandler
 import kotlinx.coroutines.flow.flow
 
 data class PersonSelected(val person: Person) : DiscoverAction() {
     context(DiscoverActionsContext) override fun handle(
-        state: DiscoverState,
-        effect: EffectHandler<CommonEffect>
+        state: DiscoverState
     ) = flow<DiscoverMutation> {
         navigator.navigateTo(PersonNavigationRoute(person.id))
     }

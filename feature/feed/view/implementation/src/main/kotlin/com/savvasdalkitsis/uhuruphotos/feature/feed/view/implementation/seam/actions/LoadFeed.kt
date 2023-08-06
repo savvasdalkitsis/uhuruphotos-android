@@ -29,8 +29,6 @@ import com.savvasdalkitsis.uhuruphotos.feature.jobs.domain.api.model.JobStatus
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemSelectionMode
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemsOnDevice
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.state.toCel
-import com.savvasdalkitsis.uhuruphotos.foundation.effects.api.seam.effects.CommonEffect
-import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.EffectHandler
 import kotlinx.collections.immutable.toPersistentList
 import kotlinx.coroutines.currentCoroutineContext
 import kotlinx.coroutines.delay
@@ -48,8 +46,7 @@ import kotlinx.coroutines.isActive
 data object LoadFeed : FeedAction() {
 
     context(FeedActionsContext) override fun handle(
-        state: FeedState,
-        effect: EffectHandler<CommonEffect>
+        state: FeedState
     ) = merge(
         showLibraryTab(),
         changeDisplay(),

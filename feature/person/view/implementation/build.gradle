@@ -21,7 +21,6 @@ dependencies {
             project(":feature:person:domain:api"),
             project(":feature:person:view:api"),
             project(":feature:settings:domain:api"),
-            project(":foundation:effects:api"),
             project(":foundation:image:api"),
             project(":foundation:navigation:api"),
             project(":foundation:ui:api"),

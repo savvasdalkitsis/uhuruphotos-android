@@ -21,8 +21,6 @@ import com.savvasdalkitsis.uhuruphotos.feature.edit.view.implementation.seam.Edi
 import com.savvasdalkitsis.uhuruphotos.feature.edit.view.implementation.seam.actions.EditAction
 import com.savvasdalkitsis.uhuruphotos.feature.edit.view.implementation.seam.actions.Load
 import com.savvasdalkitsis.uhuruphotos.feature.edit.view.implementation.ui.state.EditState
-import com.savvasdalkitsis.uhuruphotos.foundation.effects.api.seam.effects.CommonEffect
-import com.savvasdalkitsis.uhuruphotos.foundation.effects.api.seam.effects.CommonEffectHandler
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.viewmodel.NavigationViewModel
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.ActionHandlerWithContext
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -31,10 +29,8 @@ import javax.inject.Inject
 @HiltViewModel
 internal class EditViewModel @Inject constructor(
     actionsContext: EditActionsContext,
-    commonEffectHandler: CommonEffectHandler,
-) : NavigationViewModel<EditState, CommonEffect, EditAction, EditNavigationRoute>(
+) : NavigationViewModel<EditState, EditAction, EditNavigationRoute>(
     ActionHandlerWithContext(actionsContext),
-    commonEffectHandler,
     EditState(),
 ) {
 

@@ -23,8 +23,6 @@ import com.savvasdalkitsis.uhuruphotos.feature.heatmap.view.implementation.ui.st
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemsOnDevice
 import com.savvasdalkitsis.uhuruphotos.foundation.coroutines.api.onErrors
 import com.savvasdalkitsis.uhuruphotos.foundation.coroutines.api.safelyOnStart
-import com.savvasdalkitsis.uhuruphotos.foundation.effects.api.seam.effects.CommonEffect
-import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.EffectHandler
 import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R
 import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.flow.distinctUntilChanged
@@ -39,8 +37,7 @@ import kotlinx.coroutines.flow.merge
 data object Load : HeatMapAction() {
 
     context(HeatMapActionsContext) override fun handle(
-        state: HeatMapState,
-        effect: EffectHandler<CommonEffect>
+        state: HeatMapState
     ) = merge(
         flow {
             val initialViewPort = heatMapUseCase.observeViewport().first()

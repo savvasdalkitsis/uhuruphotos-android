@@ -22,8 +22,6 @@ import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.GalleryId
 import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.action.GalleryAction
 import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.action.LoadCollage
 import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.ui.state.GalleryState
-import com.savvasdalkitsis.uhuruphotos.foundation.effects.api.seam.effects.CommonEffect
-import com.savvasdalkitsis.uhuruphotos.foundation.effects.api.seam.effects.CommonEffectHandler
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.viewmodel.NavigationViewModel
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.ActionHandlerWithContext
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -32,10 +30,8 @@ import javax.inject.Inject
 @HiltViewModel
 internal class UserAlbumViewModel @Inject constructor(
     userAlbumActionsContext: UserAlbumActionsContext,
-    commonEffectHandler: CommonEffectHandler,
-) : NavigationViewModel<GalleryState, CommonEffect, GalleryAction, UserAlbumNavigationRoute>(
+) : NavigationViewModel<GalleryState, GalleryAction, UserAlbumNavigationRoute>(
     ActionHandlerWithContext(userAlbumActionsContext.galleryActionsContext),
-    commonEffectHandler,
     GalleryState(collageState = CollageState())
 ) {
 

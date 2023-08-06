@@ -20,8 +20,6 @@ import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.actions.LightboxAction
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.actions.LoadMediaItem
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.ui.state.LightboxState
-import com.savvasdalkitsis.uhuruphotos.foundation.effects.api.seam.effects.CommonEffect
-import com.savvasdalkitsis.uhuruphotos.foundation.effects.api.seam.effects.CommonEffectHandler
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.viewmodel.NavigationViewModel
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.ActionHandlerWithContext
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -30,10 +28,8 @@ import javax.inject.Inject
 @HiltViewModel
 internal class LightboxViewModel @Inject constructor(
     lightboxActionsContext: LightboxActionsContext,
-    commonEffectHandler: CommonEffectHandler,
-) : NavigationViewModel<LightboxState, CommonEffect, LightboxAction, LightboxNavigationRoute>(
+) : NavigationViewModel<LightboxState, LightboxAction, LightboxNavigationRoute>(
     ActionHandlerWithContext(lightboxActionsContext),
-    commonEffectHandler,
     LightboxState()
 ) {
     override fun onRouteSet(route: LightboxNavigationRoute) {

@@ -20,8 +20,6 @@ import com.savvasdalkitsis.uhuruphotos.feature.heatmap.view.implementation.seam.
 import com.savvasdalkitsis.uhuruphotos.feature.heatmap.view.implementation.seam.actions.HeatMapAction
 import com.savvasdalkitsis.uhuruphotos.feature.heatmap.view.implementation.seam.actions.Load
 import com.savvasdalkitsis.uhuruphotos.feature.heatmap.view.implementation.ui.state.HeatMapState
-import com.savvasdalkitsis.uhuruphotos.foundation.effects.api.seam.effects.CommonEffect
-import com.savvasdalkitsis.uhuruphotos.foundation.effects.api.seam.effects.CommonEffectHandler
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.viewmodel.NavigationViewModel
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.ActionHandlerWithContext
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -30,10 +28,8 @@ import javax.inject.Inject
 @HiltViewModel
 internal class HeatMapViewModel @Inject constructor(
     heatMapActionsContext: HeatMapActionsContext,
-    commonEffectHandler: CommonEffectHandler,
-) : NavigationViewModel<HeatMapState, CommonEffect, HeatMapAction, HeatMapNavigationRoute>(
+) : NavigationViewModel<HeatMapState, HeatMapAction, HeatMapNavigationRoute>(
     ActionHandlerWithContext(heatMapActionsContext),
-    commonEffectHandler,
     HeatMapState()
 ) {
 

@@ -19,14 +19,11 @@ import com.savvasdalkitsis.uhuruphotos.feature.settings.view.api.navigation.Sett
 import com.savvasdalkitsis.uhuruphotos.feature.trash.view.implementation.seam.TrashActionsContext
 import com.savvasdalkitsis.uhuruphotos.feature.trash.view.implementation.seam.TrashMutation
 import com.savvasdalkitsis.uhuruphotos.feature.trash.view.implementation.state.TrashState
-import com.savvasdalkitsis.uhuruphotos.foundation.effects.api.seam.effects.CommonEffect
-import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.EffectHandler
 import kotlinx.coroutines.flow.flow
 
 data object FingerPrintActionPressed : TrashAction() {
     context(TrashActionsContext) override fun handle(
-        state: TrashState,
-        effect: EffectHandler<CommonEffect>
+        state: TrashState
     ) = flow<TrashMutation> {
         navigator.navigateTo(SettingsNavigationRoute)
     }

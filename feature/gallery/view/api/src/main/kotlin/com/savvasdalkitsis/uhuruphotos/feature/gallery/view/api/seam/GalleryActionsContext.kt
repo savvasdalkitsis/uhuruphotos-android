@@ -22,13 +22,11 @@ import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.GalleryMuta
 import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.ui.state.GalleryDetails
 import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.ui.state.GallerySorting
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.api.model.LightboxSequenceDataSource
-import com.savvasdalkitsis.uhuruphotos.foundation.effects.api.seam.effects.CommonEffect
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.Navigator
 import com.savvasdalkitsis.uhuruphotos.foundation.preferences.api.Preferences
 import com.savvasdalkitsis.uhuruphotos.foundation.preferences.api.observe
 import com.savvasdalkitsis.uhuruphotos.foundation.preferences.api.set
 import com.savvasdalkitsis.uhuruphotos.foundation.result.api.SimpleResult
-import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.EffectHandler
 import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R
 import com.savvasdalkitsis.uhuruphotos.foundation.toaster.api.usecase.ToasterUseCase
 import dagger.assisted.Assisted
@@ -41,7 +39,7 @@ class GalleryActionsContext @AssistedInject constructor(
     @Assisted
     val galleryRefresher: suspend (Int) -> SimpleResult,
     @Assisted
-    val galleryDetailsFlow: (galleryId: Int, effect: EffectHandler<CommonEffect>) -> Flow<GalleryDetails>,
+    val galleryDetailsFlow: (galleryId: Int) -> Flow<GalleryDetails>,
     @Assisted
     val shouldRefreshOnLoad: suspend (galleryId: Int) -> Boolean,
     @Assisted
@@ -69,7 +67,7 @@ class GalleryActionsContext @AssistedInject constructor(
         preferences.set(sortingKey, sorting)
     }
 
-    suspend fun refreshGallery(effect: EffectHandler<CommonEffect>) {
+    suspend fun refreshGallery() {
         _loading.emit(Loading(true))
         val result = galleryRefresher(galleryId.id)
         if (result is Err) {

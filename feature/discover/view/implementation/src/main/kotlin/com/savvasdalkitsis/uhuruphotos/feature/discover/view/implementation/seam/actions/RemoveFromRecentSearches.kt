@@ -18,14 +18,11 @@ package com.savvasdalkitsis.uhuruphotos.feature.discover.view.implementation.sea
 import com.savvasdalkitsis.uhuruphotos.feature.discover.view.implementation.seam.DiscoverActionsContext
 import com.savvasdalkitsis.uhuruphotos.feature.discover.view.implementation.seam.DiscoverMutation
 import com.savvasdalkitsis.uhuruphotos.feature.discover.view.implementation.ui.state.DiscoverState
-import com.savvasdalkitsis.uhuruphotos.foundation.effects.api.seam.effects.CommonEffect
-import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.EffectHandler
 import kotlinx.coroutines.flow.flow
 
 data class RemoveFromRecentSearches(val query: String) : DiscoverAction() {
     context(DiscoverActionsContext) override fun handle(
-        state: DiscoverState,
-        effect: EffectHandler<CommonEffect>
+        state: DiscoverState
     ) = flow<DiscoverMutation> {
         searchUseCase.removeFromRecentSearches(query)
     }

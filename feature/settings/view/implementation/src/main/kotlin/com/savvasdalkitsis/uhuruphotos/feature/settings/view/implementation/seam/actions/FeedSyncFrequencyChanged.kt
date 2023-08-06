@@ -19,15 +19,12 @@ import androidx.work.ExistingPeriodicWorkPolicy
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.SettingsActionsContext
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.SettingsMutation
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.ui.state.SettingsState
-import com.savvasdalkitsis.uhuruphotos.foundation.effects.api.seam.effects.CommonEffect
-import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.EffectHandler
 import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R
 import kotlinx.coroutines.flow.flow
 
 data class FeedSyncFrequencyChanged(val frequency: Float, val upperLimit: Float) : SettingsAction() {
     context(SettingsActionsContext) override fun handle(
-        state: SettingsState,
-        effect: EffectHandler<CommonEffect>
+        state: SettingsState
     ) = flow<SettingsMutation> {
         settingsUseCase.setFeedSyncFrequency(frequency.toInt())
         settingsUseCase.setShouldPerformPeriodicFullSync(frequency != upperLimit)

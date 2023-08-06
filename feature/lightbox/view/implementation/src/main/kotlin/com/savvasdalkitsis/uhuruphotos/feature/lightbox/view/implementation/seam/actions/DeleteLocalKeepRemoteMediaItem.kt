@@ -20,32 +20,27 @@ import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.LightboxMutation.ReplaceMediaItemInSource
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.ui.state.LightboxState
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemSyncState
-import com.savvasdalkitsis.uhuruphotos.foundation.effects.api.seam.effects.CommonEffect
-import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.EffectHandler
 import kotlinx.coroutines.flow.Flow
 
 data object DeleteLocalKeepRemoteMediaItem : LightboxAction() {
 
     context(LightboxActionsContext) override fun handle(
-        state: LightboxState,
-        effect: EffectHandler<CommonEffect>
+        state: LightboxState
     ): Flow<LightboxMutation> {
-        return processMediaItem(state, effect,
-            process = { deleteLocal(state.currentMediaItem) },
-            postProcessAction = {
-                val current = state.currentMediaItem
-                val remote = current.id.findRemote!!
-                emit(
-                    ReplaceMediaItemInSource(
-                        current.id,
-                        current.copy(
-                            id = remote,
-                            localPath = null,
-                            mediaItemSyncState = MediaItemSyncState.REMOTE_ONLY,
-                        ),
-                    )
+        return processMediaItem(state, process = { deleteLocal(state.currentMediaItem) }
+        ) {
+            val current = state.currentMediaItem
+            val remote = current.id.findRemote!!
+            emit(
+                ReplaceMediaItemInSource(
+                    current.id,
+                    current.copy(
+                        id = remote,
+                        localPath = null,
+                        mediaItemSyncState = MediaItemSyncState.REMOTE_ONLY,
+                    ),
                 )
-            }
-        )
+            )
+        }
     }
 }

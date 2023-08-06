@@ -17,9 +17,7 @@ package com.savvasdalkitsis.uhuruphotos.feature.catalogue.auto.view.implementati
 
 import com.github.michaelbull.result.Err
 import com.savvasdalkitsis.uhuruphotos.feature.catalogue.auto.domain.api.usecase.AutoAlbumsUseCase
-import com.savvasdalkitsis.uhuruphotos.foundation.effects.api.seam.effects.CommonEffect
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.Navigator
-import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.EffectHandler
 import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R
 import com.savvasdalkitsis.uhuruphotos.foundation.toaster.api.usecase.ToasterUseCase
 import kotlinx.coroutines.delay
@@ -36,7 +34,7 @@ internal class AutoAlbumsActionsContext @Inject constructor(
     private val _loading = MutableSharedFlow<Boolean>()
     val loading: Flow<Boolean> get() = _loading
 
-    suspend fun refreshAlbums(effect: EffectHandler<CommonEffect>) {
+    suspend fun refreshAlbums() {
         _loading.emit(true)
         val result = autoAlbumsUseCase.refreshAutoAlbums()
         if (result is Err) {

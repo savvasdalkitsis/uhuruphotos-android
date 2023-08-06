@@ -17,18 +17,15 @@ package com.savvasdalkitsis.uhuruphotos.feature.account.view.api.seam.actions
 
 import com.savvasdalkitsis.uhuruphotos.feature.account.view.api.seam.AccountOverviewActionsContext
 import com.savvasdalkitsis.uhuruphotos.feature.account.view.api.seam.AccountOverviewMutation.HideAccountOverview
-import com.savvasdalkitsis.uhuruphotos.feature.account.view.api.seam.effects.AccountOverviewEffect
-import com.savvasdalkitsis.uhuruphotos.feature.account.view.api.seam.effects.NavigateToServerEdit
 import com.savvasdalkitsis.uhuruphotos.feature.account.view.api.ui.state.AccountOverviewState
-import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.EffectHandler
+import com.savvasdalkitsis.uhuruphotos.feature.server.view.api.navigation.ServerNavigationRoute
 import kotlinx.coroutines.flow.flow
 
 data object EditServer : AccountOverviewAction() {
     context(AccountOverviewActionsContext) override fun handle(
-        state: AccountOverviewState,
-        effect: EffectHandler<AccountOverviewEffect>
+        state: AccountOverviewState
     ) = flow {
         emit(HideAccountOverview)
-        effect.handleEffect(NavigateToServerEdit)
+        navigator.navigateTo(ServerNavigationRoute(auto = false))
     }
 }

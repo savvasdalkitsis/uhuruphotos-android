@@ -18,9 +18,7 @@ package com.savvasdalkitsis.uhuruphotos.feature.catalogue.user.view.implementati
 import com.github.michaelbull.result.Err
 import com.savvasdalkitsis.uhuruphotos.feature.auth.domain.api.usecase.ServerUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.catalogue.user.domain.api.usecase.UserAlbumsUseCase
-import com.savvasdalkitsis.uhuruphotos.foundation.effects.api.seam.effects.CommonEffect
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.Navigator
-import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.EffectHandler
 import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R
 import com.savvasdalkitsis.uhuruphotos.foundation.toaster.api.usecase.ToasterUseCase
 import kotlinx.coroutines.delay
@@ -38,7 +36,7 @@ class UserAlbumsActionsContext @Inject constructor(
     private val _loading = MutableSharedFlow<Boolean>()
     val loading: Flow<Boolean> get() = _loading
 
-    suspend fun refreshAlbums(effect: EffectHandler<CommonEffect>) {
+    suspend fun refreshAlbums() {
         _loading.emit(true)
         val result = userAlbumsUseCase.refreshUserAlbums()
         if (result is Err) {

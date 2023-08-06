@@ -21,8 +21,6 @@ import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.action.Load
 import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.ui.state.GalleryState
 import com.savvasdalkitsis.uhuruphotos.feature.videos.view.api.navigation.VideosNavigationRoute
 import com.savvasdalkitsis.uhuruphotos.feature.videos.view.implementation.seam.VideosActionsContext
-import com.savvasdalkitsis.uhuruphotos.foundation.effects.api.seam.effects.CommonEffect
-import com.savvasdalkitsis.uhuruphotos.foundation.effects.api.seam.effects.CommonEffectHandler
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.viewmodel.NavigationViewModel
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.ActionHandlerWithContext
 import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
@@ -33,10 +31,8 @@ import javax.inject.Inject
 @HiltViewModel
 internal class VideosViewModel @Inject constructor(
     actionsContext: VideosActionsContext,
-    commonEffectHandler: CommonEffectHandler,
-) : NavigationViewModel<GalleryState, CommonEffect, GalleryAction, VideosNavigationRoute>(
+) : NavigationViewModel<GalleryState, GalleryAction, VideosNavigationRoute>(
     ActionHandlerWithContext(actionsContext.galleryActionsContext),
-    commonEffectHandler,
     GalleryState(title = Title.Resource(string.videos)),
 ) {
 

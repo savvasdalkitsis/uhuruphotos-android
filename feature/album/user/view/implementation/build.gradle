@@ -23,7 +23,6 @@ dependencies {
             project(":feature:settings:domain:api"),
             project(":feature:user:domain:api"),
             project(":foundation:date:api"),
-            project(":foundation:effects:api"),
             project(":foundation:navigation:api"),
             project(":foundation:preferences:api"),
             libs.androidx.compose.hilt.navigation,

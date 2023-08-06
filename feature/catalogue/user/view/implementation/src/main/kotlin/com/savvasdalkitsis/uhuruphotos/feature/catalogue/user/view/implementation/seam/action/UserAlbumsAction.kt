@@ -17,7 +17,6 @@ package com.savvasdalkitsis.uhuruphotos.feature.catalogue.user.view.implementati
 
 import com.savvasdalkitsis.uhuruphotos.feature.catalogue.user.view.implementation.seam.UserAlbumsActionsContext
 import com.savvasdalkitsis.uhuruphotos.feature.catalogue.user.view.implementation.seam.UserAlbumsState
-import com.savvasdalkitsis.uhuruphotos.foundation.effects.api.seam.effects.CommonEffect
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.Action
 
-sealed class UserAlbumsAction : Action<UserAlbumsState, CommonEffect, UserAlbumsActionsContext>
+sealed class UserAlbumsAction : Action<UserAlbumsState, UserAlbumsActionsContext>

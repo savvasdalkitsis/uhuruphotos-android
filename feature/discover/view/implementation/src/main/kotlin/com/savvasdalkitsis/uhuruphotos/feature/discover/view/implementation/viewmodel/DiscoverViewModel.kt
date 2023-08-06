@@ -16,45 +16,32 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.feature.discover.view.implementation.viewmodel
 
 import com.savvasdalkitsis.uhuruphotos.feature.account.view.api.seam.AccountOverviewActionsContext
-import com.savvasdalkitsis.uhuruphotos.feature.account.view.api.seam.AccountOverviewEffectsContext
 import com.savvasdalkitsis.uhuruphotos.feature.account.view.api.seam.actions.AccountOverviewAction
 import com.savvasdalkitsis.uhuruphotos.feature.account.view.api.seam.actions.Load
-import com.savvasdalkitsis.uhuruphotos.feature.account.view.api.seam.effects.AccountOverviewEffect
 import com.savvasdalkitsis.uhuruphotos.feature.account.view.api.ui.state.AccountOverviewState
 import com.savvasdalkitsis.uhuruphotos.feature.discover.view.api.navigation.DiscoverNavigationRoute
 import com.savvasdalkitsis.uhuruphotos.feature.discover.view.implementation.seam.DiscoverActionsContext
 import com.savvasdalkitsis.uhuruphotos.feature.discover.view.implementation.seam.actions.DiscoverAction
 import com.savvasdalkitsis.uhuruphotos.feature.discover.view.implementation.seam.actions.Initialise
 import com.savvasdalkitsis.uhuruphotos.feature.discover.view.implementation.ui.state.DiscoverState
-import com.savvasdalkitsis.uhuruphotos.foundation.effects.api.seam.effects.CommonEffect
-import com.savvasdalkitsis.uhuruphotos.foundation.effects.api.seam.effects.CommonEffectHandler
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.viewmodel.NavigationViewModel
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.ActionHandlerWithContext
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.CompositeActionHandler
-import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.CompositeEffectHandler
-import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.EffectHandlerWithContext
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.Either
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
 private typealias SearchCompositeState = Pair<DiscoverState, AccountOverviewState>
-private typealias SearchCompositeEffect = Either<CommonEffect, AccountOverviewEffect>
 private typealias SearchCompositeAction = Either<DiscoverAction, AccountOverviewAction>
 
 @HiltViewModel
 class DiscoverViewModel @Inject constructor(
     discoverActionsContext: DiscoverActionsContext,
     accountOverviewActionsContext: AccountOverviewActionsContext,
-    commonEffectHandler: CommonEffectHandler,
-    accountOverviewEffectsContext: AccountOverviewEffectsContext,
-) : NavigationViewModel<SearchCompositeState, SearchCompositeEffect, SearchCompositeAction, DiscoverNavigationRoute>(
+) : NavigationViewModel<SearchCompositeState, SearchCompositeAction, DiscoverNavigationRoute>(
     CompositeActionHandler(
         ActionHandlerWithContext(discoverActionsContext),
         ActionHandlerWithContext(accountOverviewActionsContext),
-    ),
-    CompositeEffectHandler(
-        commonEffectHandler,
-        EffectHandlerWithContext(accountOverviewEffectsContext),
     ),
     DiscoverState() to AccountOverviewState()
 ) {

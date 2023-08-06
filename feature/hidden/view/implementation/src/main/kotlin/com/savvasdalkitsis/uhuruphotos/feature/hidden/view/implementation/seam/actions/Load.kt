@@ -18,14 +18,11 @@ package com.savvasdalkitsis.uhuruphotos.feature.hidden.view.implementation.seam.
 import com.savvasdalkitsis.uhuruphotos.feature.hidden.view.implementation.seam.HiddenPhotosActionsContext
 import com.savvasdalkitsis.uhuruphotos.feature.hidden.view.implementation.seam.HiddenPhotosMutation.DisplayFingerPrintAction
 import com.savvasdalkitsis.uhuruphotos.feature.hidden.view.implementation.seam.HiddenPhotosState
-import com.savvasdalkitsis.uhuruphotos.foundation.effects.api.seam.effects.CommonEffect
-import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.EffectHandler
 import kotlinx.coroutines.flow.map
 
 data object Load : HiddenPhotosAction() {
     context(HiddenPhotosActionsContext) override fun handle(
-        state: HiddenPhotosState,
-        effect: EffectHandler<CommonEffect>
+        state: HiddenPhotosState
     ) = settingsUseCase.observeBiometricsRequiredForHiddenPhotosAccess()
         .map { required ->
             DisplayFingerPrintAction(!required && biometricsUseCase.getBiometrics().isSupported)

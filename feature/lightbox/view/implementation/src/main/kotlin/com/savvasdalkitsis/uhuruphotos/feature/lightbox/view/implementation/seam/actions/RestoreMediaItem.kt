@@ -18,15 +18,12 @@ package com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.sea
 import com.github.michaelbull.result.Ok
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.LightboxActionsContext
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.ui.state.LightboxState
-import com.savvasdalkitsis.uhuruphotos.foundation.effects.api.seam.effects.CommonEffect
-import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.EffectHandler
 
 data object RestoreMediaItem : LightboxAction() {
 
     context(LightboxActionsContext) override fun handle(
-        state: LightboxState,
-        effect: EffectHandler<CommonEffect>
-    ) = processAndRemoveMediaItem(state, effect) {
+        state: LightboxState
+    ) = processAndRemoveMediaItem(state) {
         // this just schedules deletion so no need to check result
         mediaUseCase.restoreMediaItem(state.currentMediaItem.id.preferRemote)
         Ok(Unit)

@@ -19,16 +19,13 @@ import android.content.Intent
 import android.net.Uri
 import com.savvasdalkitsis.uhuruphotos.feature.about.view.implementation.seam.AboutActionsContext
 import com.savvasdalkitsis.uhuruphotos.feature.about.view.implementation.ui.state.AboutState
-import com.savvasdalkitsis.uhuruphotos.foundation.effects.api.seam.effects.CommonEffect
-import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.EffectHandler
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.Mutation
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 
 data object NavigateToGithub : AboutAction() {
     context(AboutActionsContext) override fun handle(
-        state: AboutState,
-        effect: EffectHandler<CommonEffect>
+        state: AboutState
     ): Flow<Mutation<AboutState>> = flow {
         navigator.navigateTo(
             Intent(Intent.ACTION_VIEW, Uri.parse("https://github.com/savvasdalkitsis/uhuruphotos-android"))

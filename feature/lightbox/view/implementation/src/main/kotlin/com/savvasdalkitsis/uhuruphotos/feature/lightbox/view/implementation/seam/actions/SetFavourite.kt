@@ -21,16 +21,13 @@ import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.LightboxMutation.ShowErrorMessage
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.LightboxMutation.ShowMediaItemFavourite
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.ui.state.LightboxState
-import com.savvasdalkitsis.uhuruphotos.foundation.effects.api.seam.effects.CommonEffect
-import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.EffectHandler
 import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R
 import kotlinx.coroutines.flow.flow
 
 data class SetFavourite(val favourite: Boolean) : LightboxAction() {
 
     context(LightboxActionsContext) override fun handle(
-        state: LightboxState,
-        effect: EffectHandler<CommonEffect>
+        state: LightboxState
     ) = flow {
         mediaUseCase.setMediaItemFavourite(state.currentMediaItem.id, favourite)
             .onFailure {

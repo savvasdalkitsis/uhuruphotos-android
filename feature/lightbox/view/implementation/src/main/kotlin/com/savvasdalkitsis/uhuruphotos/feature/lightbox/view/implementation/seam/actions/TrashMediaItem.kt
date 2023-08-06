@@ -24,15 +24,12 @@ import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.LightboxDeletionCategory.REMOTE_ITEM_TRASHED
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.ui.state.LightboxState
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.ui.state.SingleMediaItemState
-import com.savvasdalkitsis.uhuruphotos.foundation.effects.api.seam.effects.CommonEffect
-import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.EffectHandler
 
 data object TrashMediaItem : LightboxAction() {
 
     context(LightboxActionsContext) override fun handle(
-        state: LightboxState,
-        effect: EffectHandler<CommonEffect>
-    ) = processAndRemoveMediaItem(state, effect) {
+        state: LightboxState
+    ) = processAndRemoveMediaItem(state) {
         val mediaItem = state.currentMediaItem
         when (deletionCategory(mediaItem)) {
             REMOTE_ITEM_TRASHED -> {

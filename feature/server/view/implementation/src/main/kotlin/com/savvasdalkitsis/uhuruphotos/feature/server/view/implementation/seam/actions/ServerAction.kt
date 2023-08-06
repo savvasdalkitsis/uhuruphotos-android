@@ -17,7 +17,6 @@ package com.savvasdalkitsis.uhuruphotos.feature.server.view.implementation.seam.
 
 import com.savvasdalkitsis.uhuruphotos.feature.server.view.implementation.seam.ServerActionsContext
 import com.savvasdalkitsis.uhuruphotos.feature.server.view.implementation.ui.ServerState
-import com.savvasdalkitsis.uhuruphotos.foundation.effects.api.seam.effects.CommonEffect
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.Action
 
-sealed class ServerAction : Action<ServerState, CommonEffect, ServerActionsContext>
+sealed class ServerAction : Action<ServerState, ServerActionsContext>

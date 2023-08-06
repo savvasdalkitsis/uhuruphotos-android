@@ -40,7 +40,7 @@ internal class VideosActionsContext @Inject constructor(
             delay(500)
             simpleOk
         },
-        galleryDetailsFlow = { _, _ ->
+        galleryDetailsFlow = { _ ->
             feedUseCase.observeFeed(FeedFetchType.VIDEOS)
                 .map {
                     GalleryDetails(

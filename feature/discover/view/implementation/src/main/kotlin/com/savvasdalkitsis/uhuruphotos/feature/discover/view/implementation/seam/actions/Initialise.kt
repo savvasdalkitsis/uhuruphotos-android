@@ -25,8 +25,6 @@ import com.savvasdalkitsis.uhuruphotos.feature.discover.view.implementation.ui.s
 import com.savvasdalkitsis.uhuruphotos.feature.people.view.api.ui.state.toPerson
 import com.savvasdalkitsis.uhuruphotos.foundation.coroutines.api.onErrors
 import com.savvasdalkitsis.uhuruphotos.foundation.coroutines.api.onErrorsIgnore
-import com.savvasdalkitsis.uhuruphotos.foundation.effects.api.seam.effects.CommonEffect
-import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.EffectHandler
 import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.combine
@@ -40,14 +38,13 @@ import kotlin.math.min
 
 data object Initialise : DiscoverAction() {
     context(DiscoverActionsContext) override fun handle(
-        state: DiscoverState,
-        effect: EffectHandler<CommonEffect>
+        state: DiscoverState
     ) = merge(
         showLibrary(),
         showHeatMap(),
         showFeedDisplay(),
         showServerSearchSuggestion(),
-        showPeopleSuggestion(effect),
+        showPeopleSuggestion(),
         showSearchSuggestions()
     )
 
@@ -80,7 +77,7 @@ data object Initialise : DiscoverAction() {
     }.map(DiscoverMutation::ShowSearchSuggestions)
 
     context(DiscoverActionsContext)
-    private fun showPeopleSuggestion(effect: EffectHandler<CommonEffect>) =
+    private fun showPeopleSuggestion() =
         peopleUseCase.observePeopleByPhotoCount()
             .onErrors {
                 toaster.show(R.string.error_refreshing_people)

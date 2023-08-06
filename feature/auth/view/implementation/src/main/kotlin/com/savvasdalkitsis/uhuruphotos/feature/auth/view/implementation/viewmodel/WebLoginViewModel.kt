@@ -20,8 +20,6 @@ import com.savvasdalkitsis.uhuruphotos.feature.auth.view.implementation.seam.Web
 import com.savvasdalkitsis.uhuruphotos.feature.auth.view.implementation.seam.actions.LoadPage
 import com.savvasdalkitsis.uhuruphotos.feature.auth.view.implementation.seam.actions.WebLoginAction
 import com.savvasdalkitsis.uhuruphotos.feature.auth.view.implementation.ui.WebLoginState
-import com.savvasdalkitsis.uhuruphotos.foundation.effects.api.seam.effects.CommonEffect
-import com.savvasdalkitsis.uhuruphotos.foundation.effects.api.seam.effects.CommonEffectHandler
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.viewmodel.NavigationViewModel
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.ActionHandlerWithContext
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -30,10 +28,8 @@ import javax.inject.Inject
 @HiltViewModel
 class WebLoginViewModel @Inject constructor(
     webLoginActionsContext: WebLoginActionsContext,
-    commonEffectHandler: CommonEffectHandler,
-) : NavigationViewModel<WebLoginState, CommonEffect, WebLoginAction, WebLoginNavigationRoute>(
+) : NavigationViewModel<WebLoginState, WebLoginAction, WebLoginNavigationRoute>(
     ActionHandlerWithContext(webLoginActionsContext),
-    commonEffectHandler,
     WebLoginState("")
 ) {
 

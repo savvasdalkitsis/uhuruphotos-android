@@ -17,8 +17,6 @@ package com.savvasdalkitsis.uhuruphotos.feature.edit.view.implementation.seam.ac
 
 import com.savvasdalkitsis.uhuruphotos.feature.edit.view.implementation.seam.EditActionsContext
 import com.savvasdalkitsis.uhuruphotos.feature.edit.view.implementation.ui.state.EditState
-import com.savvasdalkitsis.uhuruphotos.foundation.effects.api.seam.effects.CommonEffect
-import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.EffectHandler
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.Mutation
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
@@ -26,8 +24,7 @@ import kotlinx.coroutines.flow.flow
 data object NavigateBack : EditAction() {
 
     context(EditActionsContext) override fun handle(
-        state: EditState,
-        effect: EffectHandler<CommonEffect>
+        state: EditState
     ): Flow<Mutation<EditState>> = flow {
         navigator.navigateBack()
     }

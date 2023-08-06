@@ -25,33 +25,24 @@ import com.savvasdalkitsis.uhuruphotos.feature.trash.view.implementation.seam.Tr
 import com.savvasdalkitsis.uhuruphotos.feature.trash.view.implementation.seam.actions.Load
 import com.savvasdalkitsis.uhuruphotos.feature.trash.view.implementation.seam.actions.TrashAction
 import com.savvasdalkitsis.uhuruphotos.feature.trash.view.implementation.state.TrashState
-import com.savvasdalkitsis.uhuruphotos.foundation.effects.api.seam.effects.CommonEffect
-import com.savvasdalkitsis.uhuruphotos.foundation.effects.api.seam.effects.CommonEffectHandler
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.viewmodel.NavigationViewModel
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.ActionHandlerWithContext
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.CompositeActionHandler
-import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.CompositeEffectHandler
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.Either
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
 private typealias TrashCompositeState = Pair<GalleryState, TrashState>
-private typealias TrashCompositeEffect = Either<CommonEffect, CommonEffect>
 private typealias TrashCompositeAction = Either<GalleryAction, TrashAction>
 
 @HiltViewModel
 internal class TrashViewModel @Inject constructor(
     trashActionsContext: TrashActionsContext,
     trashAlbumPageActionsContext: TrashAlbumPageActionsContext,
-    commonEffectHandler: CommonEffectHandler,
-) : NavigationViewModel<TrashCompositeState, TrashCompositeEffect, TrashCompositeAction, TrashNavigationRoute>(
+) : NavigationViewModel<TrashCompositeState, TrashCompositeAction, TrashNavigationRoute>(
     CompositeActionHandler(
         ActionHandlerWithContext(trashAlbumPageActionsContext.galleryActionsContext),
         ActionHandlerWithContext(trashActionsContext),
-    ),
-    CompositeEffectHandler(
-        commonEffectHandler,
-        commonEffectHandler,
     ),
     GalleryState() to TrashState()
 ) {

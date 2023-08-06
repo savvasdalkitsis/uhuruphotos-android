@@ -42,7 +42,7 @@ internal class FavouritesActionsContext @Inject constructor(
             favouritesUseCase.setFavouriteMediaGalleryDisplay(galleryDisplay)
         },
         shouldRefreshOnLoad = { _ -> true },
-        galleryDetailsFlow = { _, _ ->
+        galleryDetailsFlow = { _ ->
             mediaUseCase.observeFavouriteMedia()
                 .mapNotNull { it.getOr(null) }
                 .map { mediaItems ->

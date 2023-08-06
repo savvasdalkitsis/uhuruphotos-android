@@ -21,14 +21,11 @@ import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.state.Ce
 import com.savvasdalkitsis.uhuruphotos.feature.search.view.implementation.seam.SearchActionsContext
 import com.savvasdalkitsis.uhuruphotos.feature.search.view.implementation.seam.SearchMutation
 import com.savvasdalkitsis.uhuruphotos.feature.search.view.implementation.ui.state.SearchState
-import com.savvasdalkitsis.uhuruphotos.foundation.effects.api.seam.effects.CommonEffect
-import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.EffectHandler
 import kotlinx.coroutines.flow.flow
 
 data class SelectedCel(val celState: CelState) : SearchAction() {
     context(SearchActionsContext) override fun handle(
-        state: SearchState,
-        effect: EffectHandler<CommonEffect>
+        state: SearchState
     ) = flow<SearchMutation> {
         navigator.navigateTo(
             LightboxNavigationRoute(celState.mediaItem.id, SearchResults(state.query))

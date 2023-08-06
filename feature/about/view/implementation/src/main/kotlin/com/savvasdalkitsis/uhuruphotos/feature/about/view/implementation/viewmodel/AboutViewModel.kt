@@ -20,8 +20,6 @@ import com.savvasdalkitsis.uhuruphotos.feature.about.view.implementation.seam.Ab
 import com.savvasdalkitsis.uhuruphotos.feature.about.view.implementation.seam.actions.AboutAction
 import com.savvasdalkitsis.uhuruphotos.feature.about.view.implementation.seam.actions.Load
 import com.savvasdalkitsis.uhuruphotos.feature.about.view.implementation.ui.state.AboutState
-import com.savvasdalkitsis.uhuruphotos.foundation.effects.api.seam.effects.CommonEffect
-import com.savvasdalkitsis.uhuruphotos.foundation.effects.api.seam.effects.CommonEffectHandler
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.viewmodel.NavigationViewModel
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.ActionHandlerWithContext
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -30,10 +28,8 @@ import javax.inject.Inject
 @HiltViewModel
 internal class AboutViewModel @Inject constructor(
     actionsContext: AboutActionsContext,
-    commonEffectHandler: CommonEffectHandler,
-) : NavigationViewModel<AboutState, CommonEffect, AboutAction, AboutNavigationRoute>(
+) : NavigationViewModel<AboutState, AboutAction, AboutNavigationRoute>(
     ActionHandlerWithContext(actionsContext),
-    commonEffectHandler,
     AboutState(),
 ) {
 

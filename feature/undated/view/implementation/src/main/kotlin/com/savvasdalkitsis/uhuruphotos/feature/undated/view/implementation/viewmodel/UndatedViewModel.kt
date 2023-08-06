@@ -21,8 +21,6 @@ import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.action.Load
 import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.ui.state.GalleryState
 import com.savvasdalkitsis.uhuruphotos.feature.undated.view.api.navigation.UndatedNavigationRoute
 import com.savvasdalkitsis.uhuruphotos.feature.undated.view.implementation.seam.UndatedActionsContext
-import com.savvasdalkitsis.uhuruphotos.foundation.effects.api.seam.effects.CommonEffect
-import com.savvasdalkitsis.uhuruphotos.foundation.effects.api.seam.effects.CommonEffectHandler
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.viewmodel.NavigationViewModel
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.ActionHandlerWithContext
 import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
@@ -33,10 +31,8 @@ import javax.inject.Inject
 @HiltViewModel
 internal class UndatedViewModel @Inject constructor(
     actionsContext: UndatedActionsContext,
-    commonEffectHandler: CommonEffectHandler,
-) : NavigationViewModel<GalleryState, CommonEffect, GalleryAction, UndatedNavigationRoute>(
+) : NavigationViewModel<GalleryState, GalleryAction, UndatedNavigationRoute>(
     ActionHandlerWithContext(actionsContext.galleryActionsContext),
-    commonEffectHandler,
     GalleryState(title = Title.Resource(string.media_without_date)),
 ) {
 

@@ -22,15 +22,12 @@ import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.ui.state.LightboxState
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.ui.state.SingleMediaItemState
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaId
-import com.savvasdalkitsis.uhuruphotos.foundation.effects.api.seam.effects.CommonEffect
-import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.EffectHandler
 import kotlinx.coroutines.flow.flow
 
 data class FullMediaDataLoaded(val mediaItemState: SingleMediaItemState) : LightboxAction() {
 
     context(LightboxActionsContext) override fun handle(
-        state: LightboxState,
-        effect: EffectHandler<CommonEffect>
+        state: LightboxState
     ) = flow {
         if (!(mediaItemState.id is MediaId.Remote && mediaItemState.id.isVideo)) {
             emit(ShowShareIcon(mediaItemState.id))

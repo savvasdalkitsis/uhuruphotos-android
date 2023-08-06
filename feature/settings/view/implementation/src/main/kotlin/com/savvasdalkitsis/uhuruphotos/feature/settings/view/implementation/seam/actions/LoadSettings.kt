@@ -27,8 +27,6 @@ import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.ui.s
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.ui.state.BiometricsSetting.NotEnrolled
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.ui.state.SettingsState
 import com.savvasdalkitsis.uhuruphotos.foundation.biometrics.api.model.Biometrics
-import com.savvasdalkitsis.uhuruphotos.foundation.effects.api.seam.effects.CommonEffect
-import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.EffectHandler
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.map
@@ -36,8 +34,7 @@ import kotlinx.coroutines.flow.merge
 
 data object LoadSettings : SettingsAction() {
     context(SettingsActionsContext) override fun handle(
-        state: SettingsState,
-        effect: EffectHandler<CommonEffect>
+        state: SettingsState
     ) = merge(
         settingsUseCase.observeLightboxPhotoDiskCacheMaxLimit()
             .map(SettingsMutation::DisplayLightboxPhotoDiskCacheMaxLimit),

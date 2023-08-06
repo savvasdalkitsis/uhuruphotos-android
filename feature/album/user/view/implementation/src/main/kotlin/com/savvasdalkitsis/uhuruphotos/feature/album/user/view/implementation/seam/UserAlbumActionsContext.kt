@@ -38,7 +38,7 @@ internal class UserAlbumActionsContext @Inject constructor(
         shouldRefreshOnLoad = { albumId ->
             userAlbumUseCase.getUserAlbum(albumId).mediaCollections.isEmpty()
         },
-        galleryDetailsFlow = { albumId, _ ->
+        galleryDetailsFlow = { albumId ->
             userAlbumUseCase.observeUserAlbum(albumId)
                 .map { album ->
                     GalleryDetails(

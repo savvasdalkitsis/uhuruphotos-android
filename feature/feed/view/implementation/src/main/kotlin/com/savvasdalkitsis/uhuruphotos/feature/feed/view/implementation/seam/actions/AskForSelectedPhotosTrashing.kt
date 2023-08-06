@@ -26,15 +26,12 @@ import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.Med
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemSyncState.REMOTE_ONLY
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemSyncState.SYNCED
 import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.model.LocalMediaDeletionRequest
-import com.savvasdalkitsis.uhuruphotos.foundation.effects.api.seam.effects.CommonEffect
-import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.EffectHandler
 import kotlinx.coroutines.flow.flow
 
 data object AskForSelectedPhotosTrashing : FeedAction() {
 
     context(FeedActionsContext) override fun handle(
-        state: FeedState,
-        effect: EffectHandler<CommonEffect>
+        state: FeedState
     ) = flow {
         when (state.selectedCels.syncStates) {
             setOf(REMOTE_ONLY) -> emit(ShowTrashingConfirmationDialog)

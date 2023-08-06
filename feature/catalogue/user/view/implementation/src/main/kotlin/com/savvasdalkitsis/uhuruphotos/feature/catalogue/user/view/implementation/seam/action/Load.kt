@@ -20,16 +20,13 @@ import com.savvasdalkitsis.uhuruphotos.feature.catalogue.user.view.implementatio
 import com.savvasdalkitsis.uhuruphotos.feature.catalogue.user.view.implementation.seam.UserAlbumsMutation
 import com.savvasdalkitsis.uhuruphotos.feature.catalogue.user.view.implementation.seam.UserAlbumsState
 import com.savvasdalkitsis.uhuruphotos.foundation.coroutines.api.safelyOnStartIgnoring
-import com.savvasdalkitsis.uhuruphotos.foundation.effects.api.seam.effects.CommonEffect
-import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.EffectHandler
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.mapNotNull
 import kotlinx.coroutines.flow.merge
 
 data object Load : UserAlbumsAction() {
     context(UserAlbumsActionsContext) override fun handle(
-        state: UserAlbumsState,
-        effect: EffectHandler<CommonEffect>
+        state: UserAlbumsState
     ) = merge(
         userAlbumsUseCase.observeUserAlbums()
             .mapNotNull { albums ->
@@ -42,7 +39,7 @@ data object Load : UserAlbumsAction() {
             .map(UserAlbumsMutation::Loading)
     ).safelyOnStartIgnoring {
         if (userAlbumsUseCase.getUserAlbums().isEmpty()) {
-            refreshAlbums(effect)
+            refreshAlbums()
         }
     }
 

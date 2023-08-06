@@ -17,13 +17,10 @@ package com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.sea
 
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.SettingsActionsContext
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.ui.state.SettingsState
-import com.savvasdalkitsis.uhuruphotos.foundation.effects.api.seam.effects.CommonEffect
-import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.EffectHandler
 
 data class ChangeBiometricsAppAccessRequirement(val required: Boolean) : SettingsAction() {
     context(SettingsActionsContext) override fun handle(
-        state: SettingsState,
-        effect: EffectHandler<CommonEffect>
+        state: SettingsState
     ) = authenticateIfNeeded(required) {
         settingsUseCase.setBiometricsRequiredForAppAccess(it)
     }

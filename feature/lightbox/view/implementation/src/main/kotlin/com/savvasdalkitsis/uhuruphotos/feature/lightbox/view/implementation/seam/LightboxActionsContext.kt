@@ -59,11 +59,9 @@ import com.savvasdalkitsis.uhuruphotos.feature.search.domain.api.usecase.SearchU
 import com.savvasdalkitsis.uhuruphotos.feature.trash.domain.api.usecase.TrashUseCase
 import com.savvasdalkitsis.uhuruphotos.foundation.date.api.module.DateModule
 import com.savvasdalkitsis.uhuruphotos.foundation.download.api.usecase.DownloadUseCase
-import com.savvasdalkitsis.uhuruphotos.foundation.effects.api.seam.effects.CommonEffect
 import com.savvasdalkitsis.uhuruphotos.foundation.log.api.log
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.Navigator
 import com.savvasdalkitsis.uhuruphotos.foundation.result.api.SimpleResult
-import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.EffectHandler
 import com.savvasdalkitsis.uhuruphotos.foundation.share.api.usecase.ShareUseCase
 import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
 import com.savvasdalkitsis.uhuruphotos.foundation.toaster.api.usecase.ToasterUseCase
@@ -132,15 +130,13 @@ internal class LightboxActionsContext @Inject constructor(
 
     fun processAndRemoveMediaItem(
         state: LightboxState,
-        effect: EffectHandler<CommonEffect>,
         process: suspend FlowCollector<LightboxMutation>.() -> SimpleResult,
-    ) = processMediaItem(state, effect, process) {
+    ) = processMediaItem(state, process) {
         emit(RemoveMediaItemFromSource(state.currentMediaItem.id))
     }
 
     fun processMediaItem(
         state: LightboxState,
-        effect: EffectHandler<CommonEffect>,
         process: suspend FlowCollector<LightboxMutation>.() -> SimpleResult,
         postProcessAction: suspend FlowCollector<LightboxMutation>.() -> Unit,
     ) = flow {
@@ -178,9 +174,8 @@ internal class LightboxActionsContext @Inject constructor(
         emit(FinishedLoadingDetails(mediaId))
     }
 
-    internal suspend fun LightboxActionsContext.cropLocal(
-        state: LightboxState,
-        effect: EffectHandler<CommonEffect>
+    internal fun LightboxActionsContext.cropLocal(
+        state: LightboxState
     ) {
         fun SingleMediaItemState.fileName() = localPath?.substringAfterLast("/")
             ?: "PHOTO_${Random.nextInt()}"
@@ -189,13 +184,12 @@ internal class LightboxActionsContext @Inject constructor(
                 uri = Uri.parse(media.contentUri).toString(),
                 fileName = state.currentMediaItem.fileName(),
                 timestamp = try {
-                        displayingDateTimeFormat.parseDateTime(state.currentMediaItem.dateAndTime).millis
-                    } catch (e: Exception) {
-                        log(e)
-                        null
-                    },
-                )
-            )
+                    displayingDateTimeFormat.parseDateTime(state.currentMediaItem.dateAndTime).millis
+                } catch (e: Exception) {
+                    log(e)
+                    null
+                },
+            ))
         }
     }
 

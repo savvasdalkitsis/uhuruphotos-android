@@ -46,7 +46,7 @@ import kotlin.reflect.KClass
 class NavigationTargetBuilder @Inject constructor() : NavigationTargetBuilder {
 
     @Composable
-    override fun <S : Any, A : Any, VM : NavigationViewModel<S, *, A, R>, R : NavigationRoute> ViewModelView(
+    override fun <S : Any, A : Any, VM : NavigationViewModel<S, A, R>, R : NavigationRoute> ViewModelView(
         themeMode: StateFlow<ThemeMode>,
         route: R,
         viewModel: KClass<VM>,

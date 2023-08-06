@@ -52,7 +52,7 @@ internal class HiddenPhotosAlbumPageActionsContext @Inject constructor(
             hiddenMediaUseCase.setHiddenMediaGalleryDisplay(galleryDisplay)
         },
         shouldRefreshOnLoad = { true },
-        galleryDetailsFlow = { _, effect ->
+        galleryDetailsFlow = { _ ->
             settingsUseCase.observeBiometricsRequiredForHiddenPhotosAccess()
                 .flatMapLatest { biometricsRequired ->
                     val proceed = when {

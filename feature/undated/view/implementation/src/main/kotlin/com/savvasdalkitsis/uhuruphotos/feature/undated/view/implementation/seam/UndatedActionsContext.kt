@@ -40,7 +40,7 @@ internal class UndatedActionsContext @Inject constructor(
             delay(500)
             simpleOk
         },
-        galleryDetailsFlow = { _, _ ->
+        galleryDetailsFlow = { _ ->
             feedUseCase.observeFeed(FeedFetchType.ONLY_WITHOUT_DATES)
                 .map {
                     GalleryDetails(

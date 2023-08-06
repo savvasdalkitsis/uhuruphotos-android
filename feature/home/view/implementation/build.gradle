@@ -17,7 +17,6 @@ dependencies {
             project(":feature:server:view:api"),
             project(":feature:settings:domain:api"),
             project(":foundation:biometrics:api"),
-            project(":foundation:effects:api"),
             project(":foundation:navigation:api"),
             project(":foundation:strings:api"),
             project(":foundation:ui:api"),

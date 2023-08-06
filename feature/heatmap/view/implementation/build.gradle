@@ -24,7 +24,6 @@ dependencies {
             project(":feature:settings:domain:api"),
             project(":foundation:coroutines:api"),
             project(":foundation:date:api"),
-            project(":foundation:effects:api"),
             project(":foundation:icons:api"),
             project(":foundation:map:api"),
             project(":foundation:navigation:api"),

@@ -18,16 +18,13 @@ package com.savvasdalkitsis.uhuruphotos.feature.discover.view.implementation.sea
 import com.savvasdalkitsis.uhuruphotos.feature.discover.view.implementation.seam.DiscoverActionsContext
 import com.savvasdalkitsis.uhuruphotos.feature.discover.view.implementation.ui.state.DiscoverState
 import com.savvasdalkitsis.uhuruphotos.feature.videos.view.api.navigation.VideosNavigationRoute
-import com.savvasdalkitsis.uhuruphotos.foundation.effects.api.seam.effects.CommonEffect
-import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.EffectHandler
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.Mutation
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 
 data object VideoCategorySelected : DiscoverAction() {
     context(DiscoverActionsContext) override fun handle(
-        state: DiscoverState,
-        effect: EffectHandler<CommonEffect>
+        state: DiscoverState
     ): Flow<Mutation<DiscoverState>> = flow {
         navigator.navigateTo(VideosNavigationRoute)
     }

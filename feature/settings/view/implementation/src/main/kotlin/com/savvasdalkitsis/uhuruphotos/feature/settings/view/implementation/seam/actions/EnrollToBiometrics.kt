@@ -20,14 +20,11 @@ import android.provider.Settings
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.SettingsActionsContext
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.SettingsMutation
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.ui.state.SettingsState
-import com.savvasdalkitsis.uhuruphotos.foundation.effects.api.seam.effects.CommonEffect
-import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.EffectHandler
 import kotlinx.coroutines.flow.flow
 
 data object EnrollToBiometrics : SettingsAction() {
     context(SettingsActionsContext) override fun handle(
-        state: SettingsState,
-        effect: EffectHandler<CommonEffect>
+        state: SettingsState
     ) = flow<SettingsMutation> {
         navigator.navigateTo(Intent(Settings.ACTION_SECURITY_SETTINGS))
     }

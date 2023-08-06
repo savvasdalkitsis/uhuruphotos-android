@@ -26,34 +26,25 @@ import com.savvasdalkitsis.uhuruphotos.feature.hidden.view.implementation.seam.H
 import com.savvasdalkitsis.uhuruphotos.feature.hidden.view.implementation.seam.HiddenPhotosState
 import com.savvasdalkitsis.uhuruphotos.feature.hidden.view.implementation.seam.actions.HiddenPhotosAction
 import com.savvasdalkitsis.uhuruphotos.feature.hidden.view.implementation.seam.actions.Load
-import com.savvasdalkitsis.uhuruphotos.foundation.effects.api.seam.effects.CommonEffect
-import com.savvasdalkitsis.uhuruphotos.foundation.effects.api.seam.effects.CommonEffectHandler
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.viewmodel.NavigationViewModel
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.ActionHandlerWithContext
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.CompositeActionHandler
-import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.CompositeEffectHandler
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.Either
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
 private typealias HiddenPhotosCompositeState = Pair<GalleryState, HiddenPhotosState>
-private typealias HiddenPhotosCompositeEffect = Either<CommonEffect, CommonEffect>
 private typealias HiddenPhotosCompositeAction = Either<GalleryAction, HiddenPhotosAction>
 
 @HiltViewModel
 internal class HiddenPhotosViewModel @Inject constructor(
     hiddenPhotosAlbumPageActionsContext: HiddenPhotosAlbumPageActionsContext,
     hiddenPhotosActionsContext: HiddenPhotosActionsContext,
-    commonEffectHandler: CommonEffectHandler,
-) : NavigationViewModel<HiddenPhotosCompositeState, HiddenPhotosCompositeEffect, HiddenPhotosCompositeAction, HiddenPhotosNavigationRoute>(
-        CompositeActionHandler(
-            ActionHandlerWithContext(hiddenPhotosAlbumPageActionsContext.galleryActionsContext),
-            ActionHandlerWithContext(hiddenPhotosActionsContext),
-        ),
-        CompositeEffectHandler(
-            commonEffectHandler,
-            commonEffectHandler,
-        ),
+) : NavigationViewModel<HiddenPhotosCompositeState, HiddenPhotosCompositeAction, HiddenPhotosNavigationRoute>(
+    CompositeActionHandler(
+        ActionHandlerWithContext(hiddenPhotosAlbumPageActionsContext.galleryActionsContext),
+        ActionHandlerWithContext(hiddenPhotosActionsContext),
+    ),
     GalleryState(collageState = CollageState()) to HiddenPhotosState()
 ) {
 

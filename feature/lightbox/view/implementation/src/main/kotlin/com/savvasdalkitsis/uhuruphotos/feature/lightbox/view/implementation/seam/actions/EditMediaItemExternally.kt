@@ -24,15 +24,12 @@ import android.net.Uri
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.LightboxActionsContext
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.LightboxMutation
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.ui.state.LightboxState
-import com.savvasdalkitsis.uhuruphotos.foundation.effects.api.seam.effects.CommonEffect
-import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.EffectHandler
 import kotlinx.coroutines.flow.flow
 
 data class EditMediaItemExternally(val app: ResolveInfo) : LightboxAction() {
 
     context(LightboxActionsContext) override fun handle(
-        state: LightboxState,
-        effect: EffectHandler<CommonEffect>
+        state: LightboxState
     ) = flow<LightboxMutation> {
         state.currentMediaItem.id.findLocal?.let { media ->
             val intent = Intent(ACTION_EDIT, Uri.parse(media.contentUri)).apply {

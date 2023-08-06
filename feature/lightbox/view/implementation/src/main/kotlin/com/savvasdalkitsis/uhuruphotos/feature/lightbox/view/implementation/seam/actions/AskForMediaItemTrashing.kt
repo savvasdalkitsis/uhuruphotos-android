@@ -25,16 +25,13 @@ import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.LightboxMutation.ShowFullySyncedDeleteConfirmationDialog
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.LightboxMutation.ShowRemoteTrashingConfirmationDialog
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.ui.state.LightboxState
-import com.savvasdalkitsis.uhuruphotos.foundation.effects.api.seam.effects.CommonEffect
-import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.EffectHandler
 import kotlinx.coroutines.flow.emitAll
 import kotlinx.coroutines.flow.flow
 
 data object AskForMediaItemTrashing : LightboxAction() {
 
     context(LightboxActionsContext) override fun handle(
-        state: LightboxState,
-        effect: EffectHandler<CommonEffect>
+        state: LightboxState
     ) = flow {
         when (deletionCategory(state.currentMediaItem)) {
             REMOTE_ITEM_TRASHED -> emit(ShowDeleteConfirmationDialog)
@@ -42,7 +39,7 @@ data object AskForMediaItemTrashing : LightboxAction() {
             LOCAL_ONLY_ITEM -> if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
                 // On R and later, we have to present the user with a native dialog so no need to show
                 // ours for local only items
-                emitAll(processAndRemoveMediaItem(state, effect) {
+                emitAll(processAndRemoveMediaItem(state) {
                     deleteLocal(state.currentMediaItem)
                 })
             } else {

@@ -19,7 +19,6 @@ dependencies {
             project(":feature:db:domain:api"),
             project(":feature:server:view:api"),
             project(":feature:settings:domain:api"),
-            project(":foundation:effects:api"),
             project(":foundation:http:api"),
             project(":foundation:icons:api"),
             project(":foundation:log:api"),

@@ -30,8 +30,6 @@ import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.state.to
 import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.model.LocalMediaFolder
 import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.model.LocalMediaItems
 import com.savvasdalkitsis.uhuruphotos.foundation.coroutines.api.safelyOnStartIgnoring
-import com.savvasdalkitsis.uhuruphotos.foundation.effects.api.seam.effects.CommonEffect
-import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.EffectHandler
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.flow.distinctUntilChanged
@@ -42,8 +40,7 @@ import kotlinx.coroutines.flow.merge
 data object Load : LibraryAction() {
 
     context(LibraryActionsContext) override fun handle(
-        state: LibraryState,
-        effect: EffectHandler<CommonEffect>
+        state: LibraryState
     ) = merge(
         libraryUseCase.getLibraryItems()
             .map(::SetItemOrder),
@@ -80,22 +77,22 @@ data object Load : LibraryAction() {
             .distinctUntilChanged()
             .map(LibraryMutation::DisplayLocalAlbums)
     ).safelyOnStartIgnoring {
-        initialRefresh(effect)
+        initialRefresh()
     }
 
     context(LibraryActionsContext)
-    private suspend fun initialRefresh(effect: EffectHandler<CommonEffect>) {
+    private suspend fun initialRefresh() {
         if (autoAlbumsUseCase.getAutoAlbums().isEmpty()) {
-            refreshAutoAlbums(effect)
+            refreshAutoAlbums()
         }
         if (userAlbumsUseCase.getUserAlbums().isEmpty()) {
-            refreshUserAlbums(effect)
+            refreshUserAlbums()
         }
         if (mediaUseCase.getFavouriteMediaCount().getOr(0) == 0L) {
-            refreshFavouriteMedia(effect)
+            refreshFavouriteMedia()
         }
         if (mediaUseCase.getHiddenMedia().getOr(emptyList()).isEmpty()) {
-            refreshHiddenMedia(effect)
+            refreshHiddenMedia()
         }
         val localItems = localMediaUseCase.getLocalMediaItems()
         if (localItems is LocalMediaItems.Found && localItems.allFolders.isEmpty()) {

@@ -50,7 +50,7 @@ internal class TrashAlbumPageActionsContext @Inject constructor(
         shouldRefreshOnLoad = {
             !trashUseCase.hasTrash()
         },
-        galleryDetailsFlow = { _, effect ->
+        galleryDetailsFlow = { _ ->
             settingsUseCase.observeBiometricsRequiredForTrashAccess()
                 .flatMapLatest { biometricsRequired ->
                     val proceed = when {

@@ -17,7 +17,6 @@ package com.savvasdalkitsis.uhuruphotos.feature.library.view.implementation.seam
 
 import com.savvasdalkitsis.uhuruphotos.feature.library.view.implementation.seam.LibraryActionsContext
 import com.savvasdalkitsis.uhuruphotos.feature.library.view.implementation.ui.state.LibraryState
-import com.savvasdalkitsis.uhuruphotos.foundation.effects.api.seam.effects.CommonEffect
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.Action
 
-sealed class LibraryAction : Action<LibraryState, CommonEffect, LibraryActionsContext>
+sealed class LibraryAction : Action<LibraryState, LibraryActionsContext>

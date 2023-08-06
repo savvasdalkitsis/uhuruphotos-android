@@ -18,14 +18,11 @@ package com.savvasdalkitsis.uhuruphotos.feature.person.view.implementation.seam.
 import com.savvasdalkitsis.uhuruphotos.feature.person.view.implementation.seam.PersonActionsContext
 import com.savvasdalkitsis.uhuruphotos.feature.person.view.implementation.seam.PersonMutation
 import com.savvasdalkitsis.uhuruphotos.feature.person.view.implementation.ui.state.PersonState
-import com.savvasdalkitsis.uhuruphotos.foundation.effects.api.seam.effects.CommonEffect
-import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.EffectHandler
 import kotlinx.coroutines.flow.flow
 
 data object NavigateBack : PersonAction() {
     context(PersonActionsContext) override fun handle(
-        state: PersonState,
-        effect: EffectHandler<CommonEffect>
+        state: PersonState
     ) = flow<PersonMutation> {
         navigator.navigateBack()
     }

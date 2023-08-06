@@ -19,23 +19,18 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.savvasdalkitsis.uhuruphotos.foundation.log.api.log
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.ActionHandler
-import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.EffectHandler
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.HasActionableState
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.Seam
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 
-abstract class NavigationViewModel<S : Any, E : Any, A : Any, R : Any>(
-    actionHandler: ActionHandler<S, E, A>,
-    effectHandler: EffectHandler<E>,
+abstract class NavigationViewModel<S : Any, A : Any, R : Any>(
+    actionHandler: ActionHandler<S, A>,
     initialState: S,
-) : ViewModel(),
-    HasActionableState<S, A>
-{
+) : ViewModel(), HasActionableState<S, A> {
 
     private val seam = Seam(
         actionHandler,
-        effectHandler,
         initialState,
         viewModelScope,
     )

@@ -22,8 +22,6 @@ import com.savvasdalkitsis.uhuruphotos.feature.server.view.implementation.seam.a
 import com.savvasdalkitsis.uhuruphotos.feature.server.view.implementation.seam.actions.RequestServerUrlChange
 import com.savvasdalkitsis.uhuruphotos.feature.server.view.implementation.seam.actions.ServerAction
 import com.savvasdalkitsis.uhuruphotos.feature.server.view.implementation.ui.ServerState
-import com.savvasdalkitsis.uhuruphotos.foundation.effects.api.seam.effects.CommonEffect
-import com.savvasdalkitsis.uhuruphotos.foundation.effects.api.seam.effects.CommonEffectHandler
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.viewmodel.NavigationViewModel
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.ActionHandlerWithContext
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -32,10 +30,8 @@ import javax.inject.Inject
 @HiltViewModel
 internal class ServerViewModel @Inject constructor(
     serverActionsContext: ServerActionsContext,
-    commonEffectHandler: CommonEffectHandler,
-) : NavigationViewModel<ServerState, CommonEffect, ServerAction, ServerNavigationRoute>(
+) : NavigationViewModel<ServerState, ServerAction, ServerNavigationRoute>(
     ActionHandlerWithContext(serverActionsContext),
-    commonEffectHandler,
     ServerState.Loading(false)
 ) {
 

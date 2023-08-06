@@ -22,15 +22,12 @@ import com.savvasdalkitsis.uhuruphotos.feature.server.view.implementation.seam.S
 import com.savvasdalkitsis.uhuruphotos.feature.server.view.implementation.seam.ServerMutation.AskForUserCredentials
 import com.savvasdalkitsis.uhuruphotos.feature.server.view.implementation.seam.ServerMutation.PerformingBackgroundJob
 import com.savvasdalkitsis.uhuruphotos.feature.server.view.implementation.ui.ServerState
-import com.savvasdalkitsis.uhuruphotos.foundation.effects.api.seam.effects.CommonEffect
-import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.EffectHandler
 import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R
 import kotlinx.coroutines.flow.flow
 
 data object Login : ServerAction() {
     context(ServerActionsContext) override fun handle(
-        state: ServerState,
-        effect: EffectHandler<CommonEffect>
+        state: ServerState
     ) = flow {
         if ((state as? ServerState.UserCredentials)?.allowLogin == false) {
             return@flow

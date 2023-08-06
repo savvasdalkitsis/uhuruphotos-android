@@ -23,15 +23,12 @@ import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.LightboxMutation
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.LightboxMutation.ShowEditOptions
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.ui.state.LightboxState
-import com.savvasdalkitsis.uhuruphotos.foundation.effects.api.seam.effects.CommonEffect
-import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.EffectHandler
 import kotlinx.coroutines.flow.flow
 
 data object EditMediaItem : LightboxAction() {
 
     context(LightboxActionsContext) override fun handle(
-        state: LightboxState,
-        effect: EffectHandler<CommonEffect>
+        state: LightboxState
     ) = flow<LightboxMutation> {
         val intent = Intent(ACTION_EDIT).apply {
             type = "image/*"
@@ -43,7 +40,7 @@ data object EditMediaItem : LightboxAction() {
             context.packageManager.queryIntentActivities(intent, 0)
         }
         if (result.isEmpty()) {
-            cropLocal(state, effect)
+            cropLocal(state)
         } else {
             emit(ShowEditOptions(state.currentMediaItem.id, result))
         }

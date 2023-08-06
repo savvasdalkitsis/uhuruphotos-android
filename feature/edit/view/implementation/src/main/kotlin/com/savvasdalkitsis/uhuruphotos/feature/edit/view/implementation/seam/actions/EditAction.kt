@@ -17,7 +17,6 @@ package com.savvasdalkitsis.uhuruphotos.feature.edit.view.implementation.seam.ac
 
 import com.savvasdalkitsis.uhuruphotos.feature.edit.view.implementation.seam.EditActionsContext
 import com.savvasdalkitsis.uhuruphotos.feature.edit.view.implementation.ui.state.EditState
-import com.savvasdalkitsis.uhuruphotos.foundation.effects.api.seam.effects.CommonEffect
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.Action
 
-sealed class EditAction : Action<EditState, CommonEffect, EditActionsContext>
+sealed class EditAction : Action<EditState, EditActionsContext>

@@ -17,7 +17,6 @@ package com.savvasdalkitsis.uhuruphotos.feature.local.view.implementation.seam.a
 
 import com.savvasdalkitsis.uhuruphotos.feature.local.view.implementation.seam.LocalAlbumActionsContext
 import com.savvasdalkitsis.uhuruphotos.feature.local.view.implementation.ui.state.LocalAlbumState
-import com.savvasdalkitsis.uhuruphotos.foundation.effects.api.seam.effects.CommonEffect
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.Action
 
-sealed class LocalAlbumAction : Action<LocalAlbumState, CommonEffect, LocalAlbumActionsContext>
+sealed class LocalAlbumAction : Action<LocalAlbumState, LocalAlbumActionsContext>

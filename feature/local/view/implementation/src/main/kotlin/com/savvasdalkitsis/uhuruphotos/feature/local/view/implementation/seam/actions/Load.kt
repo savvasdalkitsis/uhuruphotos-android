@@ -19,16 +19,13 @@ import com.savvasdalkitsis.uhuruphotos.feature.local.view.implementation.seam.Lo
 import com.savvasdalkitsis.uhuruphotos.feature.local.view.implementation.seam.LocalAlbumMutation
 import com.savvasdalkitsis.uhuruphotos.feature.local.view.implementation.ui.state.LocalAlbumState
 import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.model.LocalPermissions
-import com.savvasdalkitsis.uhuruphotos.foundation.effects.api.seam.effects.CommonEffect
-import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.EffectHandler
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOf
 
 data class Load(val albumId: Int) : LocalAlbumAction() {
     context(LocalAlbumActionsContext) override fun handle(
-        state: LocalAlbumState,
-        effect: EffectHandler<CommonEffect>
+        state: LocalAlbumState
     ) = localMediaUseCase.observePermissionsState()
         .flatMapLatest { when (it) {
             is LocalPermissions.RequiresPermissions -> flowOf(LocalAlbumMutation.AskForPermissions(it.deniedPermissions))

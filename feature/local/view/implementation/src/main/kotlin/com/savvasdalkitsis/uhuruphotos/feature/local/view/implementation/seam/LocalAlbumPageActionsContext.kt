@@ -37,7 +37,7 @@ internal class LocalAlbumPageActionsContext @Inject constructor(
         shouldRefreshOnLoad = { albumId ->
             localAlbumUseCase.getLocalAlbum(albumId).isEmpty()
         },
-        galleryDetailsFlow = { albumId, _ ->
+        galleryDetailsFlow = { albumId ->
             localAlbumUseCase.observeLocalAlbum(albumId)
                 .map { (bucket, albums) ->
                     GalleryDetails(

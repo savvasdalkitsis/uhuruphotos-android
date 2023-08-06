@@ -18,15 +18,12 @@ package com.savvasdalkitsis.uhuruphotos.feature.people.view.implementation.seam.
 import com.savvasdalkitsis.uhuruphotos.feature.people.view.implementation.seam.PeopleActionsContext
 import com.savvasdalkitsis.uhuruphotos.feature.people.view.implementation.seam.PeopleMutation.SetSortOrder
 import com.savvasdalkitsis.uhuruphotos.feature.people.view.implementation.ui.state.PeopleState
-import com.savvasdalkitsis.uhuruphotos.foundation.effects.api.seam.effects.CommonEffect
-import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.EffectHandler
 import kotlinx.coroutines.flow.flow
 
 data object ToggleSortOrder : PeopleAction() {
 
     context(PeopleActionsContext) override fun handle(
-        state: PeopleState,
-        effect: EffectHandler<CommonEffect>
+        state: PeopleState
     ) = flow {
         val sortOrder = state.sortOrder.toggle()
         emit(SetSortOrder(sortOrder))

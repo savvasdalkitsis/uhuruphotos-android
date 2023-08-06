@@ -23,8 +23,6 @@ import com.savvasdalkitsis.uhuruphotos.feature.search.view.implementation.seam.S
 import com.savvasdalkitsis.uhuruphotos.feature.search.view.implementation.seam.SearchMutation.SetQuery
 import com.savvasdalkitsis.uhuruphotos.feature.search.view.implementation.seam.SearchMutation.ShowErrorScreen
 import com.savvasdalkitsis.uhuruphotos.feature.search.view.implementation.ui.state.SearchState
-import com.savvasdalkitsis.uhuruphotos.foundation.effects.api.seam.effects.CommonEffect
-import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.EffectHandler
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.Mutation
 import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R
 import kotlinx.coroutines.cancel
@@ -38,8 +36,7 @@ import kotlinx.coroutines.flow.mapNotNull
 
 data class SearchFor(val query: String) : SearchAction() {
     context(SearchActionsContext) override fun handle(
-        state: SearchState,
-        effect: EffectHandler<CommonEffect>
+        state: SearchState
     ): Flow<Mutation<SearchState>> = flow {
         emit(Loading)
         emit(SetQuery(query))

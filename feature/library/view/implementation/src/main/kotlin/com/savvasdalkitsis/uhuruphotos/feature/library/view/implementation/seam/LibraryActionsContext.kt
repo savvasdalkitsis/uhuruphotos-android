@@ -23,10 +23,8 @@ import com.savvasdalkitsis.uhuruphotos.feature.library.view.implementation.useca
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.usecase.MediaUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.usecase.LocalMediaUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.worker.LocalMediaWorkScheduler
-import com.savvasdalkitsis.uhuruphotos.foundation.effects.api.seam.effects.CommonEffect
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.Navigator
 import com.savvasdalkitsis.uhuruphotos.foundation.result.api.SimpleResult
-import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.EffectHandler
 import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R
 import com.savvasdalkitsis.uhuruphotos.foundation.toaster.api.usecase.ToasterUseCase
 import kotlinx.coroutines.delay
@@ -49,26 +47,26 @@ internal class LibraryActionsContext @Inject constructor(
     private val _loading = MutableSharedFlow<Boolean>()
     val loading: Flow<Boolean> get() = _loading
 
-    suspend fun refreshAutoAlbums(effect: EffectHandler<CommonEffect>) {
-        refresh(effect) {
+    suspend fun refreshAutoAlbums() {
+        refresh {
             autoAlbumsUseCase.refreshAutoAlbums()
         }
     }
 
-    suspend fun refreshUserAlbums(effect: EffectHandler<CommonEffect>) {
-        refresh(effect) {
+    suspend fun refreshUserAlbums() {
+        refresh {
             userAlbumsUseCase.refreshUserAlbums()
         }
     }
 
-    suspend fun refreshFavouriteMedia(effect: EffectHandler<CommonEffect>) {
-        refresh(effect) {
+    suspend fun refreshFavouriteMedia() {
+        refresh {
             mediaUseCase.refreshFavouriteMedia()
         }
     }
 
-    suspend fun refreshHiddenMedia(effect: EffectHandler<CommonEffect>) {
-        refresh(effect) {
+    suspend fun refreshHiddenMedia() {
+        refresh {
             mediaUseCase.refreshHiddenMedia()
         }
     }
@@ -78,7 +76,6 @@ internal class LibraryActionsContext @Inject constructor(
     }
 
     private suspend fun refresh(
-        effect: EffectHandler<CommonEffect>,
         refresh: suspend () -> SimpleResult,
     ) {
         _loading.emit(true)

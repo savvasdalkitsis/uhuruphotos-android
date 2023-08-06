@@ -20,16 +20,13 @@ import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.GalleryMuta
 import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.ui.state.GalleryState
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.api.navigation.LightboxNavigationRoute
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.state.CelState
-import com.savvasdalkitsis.uhuruphotos.foundation.effects.api.seam.effects.CommonEffect
-import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.EffectHandler
 import kotlinx.coroutines.flow.flow
 
 data class SelectedCel(
     val cel: CelState,
 ) : GalleryAction() {
     context(GalleryActionsContext) override fun handle(
-        state: GalleryState,
-        effect: EffectHandler<CommonEffect>
+        state: GalleryState
     ) = flow<GalleryMutation> {
         navigator.navigateTo(
             LightboxNavigationRoute(

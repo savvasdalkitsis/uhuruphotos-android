@@ -22,8 +22,6 @@ import com.savvasdalkitsis.uhuruphotos.feature.people.view.implementation.seam.P
 import com.savvasdalkitsis.uhuruphotos.feature.people.view.implementation.ui.state.PeopleState
 import com.savvasdalkitsis.uhuruphotos.feature.people.view.implementation.ui.state.SortOrder
 import com.savvasdalkitsis.uhuruphotos.foundation.coroutines.api.safelyOnStartIgnoring
-import com.savvasdalkitsis.uhuruphotos.foundation.effects.api.seam.effects.CommonEffect
-import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.EffectHandler
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.merge
@@ -31,8 +29,7 @@ import kotlinx.coroutines.flow.merge
 data object LoadPeople : PeopleAction() {
 
     context(PeopleActionsContext) override fun handle(
-        state: PeopleState,
-        effect: EffectHandler<CommonEffect>
+        state: PeopleState
     ) = merge(
         loading.map { Loading(it) },
         combine(
@@ -40,7 +37,7 @@ data object LoadPeople : PeopleAction() {
             peopleUseCase.observePeopleByName()
                 .safelyOnStartIgnoring {
                     if (peopleUseCase.getPeopleByName().isEmpty()) {
-                        refresh(effect)
+                        refresh()
                     }
                 },
         ) { sortOrder, people ->

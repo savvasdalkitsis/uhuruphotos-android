@@ -19,13 +19,10 @@ import com.savvasdalkitsis.uhuruphotos.feature.jobs.domain.api.model.Job
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.SettingsActionsContext
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.SettingsMutation.ShowJobStartDialog
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.ui.state.SettingsState
-import com.savvasdalkitsis.uhuruphotos.foundation.effects.api.seam.effects.CommonEffect
-import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.EffectHandler
 import kotlinx.coroutines.flow.flowOf
 
 data class AskToStartJob(val job: Job) : SettingsAction() {
     context(SettingsActionsContext) override fun handle(
-        state: SettingsState,
-        effect: EffectHandler<CommonEffect>
+        state: SettingsState
     ) = flowOf(ShowJobStartDialog(job))
 }

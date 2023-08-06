@@ -18,16 +18,13 @@ package com.savvasdalkitsis.uhuruphotos.feature.library.view.implementation.seam
 import com.savvasdalkitsis.uhuruphotos.feature.library.view.implementation.seam.LibraryActionsContext
 import com.savvasdalkitsis.uhuruphotos.feature.library.view.implementation.ui.state.LibraryItem
 import com.savvasdalkitsis.uhuruphotos.feature.library.view.implementation.ui.state.LibraryState
-import com.savvasdalkitsis.uhuruphotos.foundation.effects.api.seam.effects.CommonEffect
-import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.EffectHandler
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.Mutation
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 
 data class ItemOrderChanged(val items: List<LibraryItem>) : LibraryAction() {
     context(LibraryActionsContext) override fun handle(
-        state: LibraryState,
-        effect: EffectHandler<CommonEffect>
+        state: LibraryState
     ): Flow<Mutation<LibraryState>> = flow {
         libraryUseCase.setLibraryItems(items)
     }

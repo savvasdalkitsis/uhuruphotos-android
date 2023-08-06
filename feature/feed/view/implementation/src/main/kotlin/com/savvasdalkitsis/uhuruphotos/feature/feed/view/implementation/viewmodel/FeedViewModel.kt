@@ -16,45 +16,32 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.viewmodel
 
 import com.savvasdalkitsis.uhuruphotos.feature.account.view.api.seam.AccountOverviewActionsContext
-import com.savvasdalkitsis.uhuruphotos.feature.account.view.api.seam.AccountOverviewEffectsContext
 import com.savvasdalkitsis.uhuruphotos.feature.account.view.api.seam.actions.AccountOverviewAction
 import com.savvasdalkitsis.uhuruphotos.feature.account.view.api.seam.actions.Load
-import com.savvasdalkitsis.uhuruphotos.feature.account.view.api.seam.effects.AccountOverviewEffect
 import com.savvasdalkitsis.uhuruphotos.feature.account.view.api.ui.state.AccountOverviewState
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.api.navigation.FeedNavigationRoute
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.FeedActionsContext
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.actions.FeedAction
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.actions.LoadFeed
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.ui.state.FeedState
-import com.savvasdalkitsis.uhuruphotos.foundation.effects.api.seam.effects.CommonEffect
-import com.savvasdalkitsis.uhuruphotos.foundation.effects.api.seam.effects.CommonEffectHandler
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.viewmodel.NavigationViewModel
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.ActionHandlerWithContext
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.CompositeActionHandler
-import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.CompositeEffectHandler
-import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.EffectHandlerWithContext
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.Either
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
 private typealias FeedCompositeState = Pair<FeedState, AccountOverviewState>
-private typealias FeedCompositeEffect = Either<CommonEffect, AccountOverviewEffect>
 private typealias FeedCompositeAction = Either<FeedAction, AccountOverviewAction>
 
 @HiltViewModel
 internal class FeedViewModel @Inject constructor(
     feedActionsContext: FeedActionsContext,
     accountOverviewActionsContext: AccountOverviewActionsContext,
-    commonEffectHandler: CommonEffectHandler,
-    accountOverviewEffectsContext: AccountOverviewEffectsContext,
-) : NavigationViewModel<FeedCompositeState, FeedCompositeEffect, FeedCompositeAction, FeedNavigationRoute>(
+) : NavigationViewModel<FeedCompositeState, FeedCompositeAction, FeedNavigationRoute>(
     CompositeActionHandler(
         ActionHandlerWithContext(feedActionsContext),
         ActionHandlerWithContext(accountOverviewActionsContext),
-    ),
-    CompositeEffectHandler(
-        commonEffectHandler,
-        EffectHandlerWithContext(accountOverviewEffectsContext),
     ),
     FeedState() to AccountOverviewState(),
 ) {
