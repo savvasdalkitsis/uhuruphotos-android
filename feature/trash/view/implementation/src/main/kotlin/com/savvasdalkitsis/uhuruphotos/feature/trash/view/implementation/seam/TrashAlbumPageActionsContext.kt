@@ -18,15 +18,14 @@ package com.savvasdalkitsis.uhuruphotos.feature.trash.view.implementation.seam
 import com.github.michaelbull.result.Err
 import com.github.michaelbull.result.Ok
 import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.Cluster
-import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.GalleryActionsContext
+import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.GalleryActionsContextFactory
 import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.ui.state.GalleryDetails
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.api.model.LightboxSequenceDataSource.Trash
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.state.toCel
 import com.savvasdalkitsis.uhuruphotos.feature.settings.domain.api.usecase.SettingsUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.trash.domain.api.usecase.TrashUseCase
 import com.savvasdalkitsis.uhuruphotos.foundation.biometrics.api.usecase.BiometricsUseCase
-import com.savvasdalkitsis.uhuruphotos.foundation.effects.api.seam.effects.NavigateBack
-import com.savvasdalkitsis.uhuruphotos.foundation.preferences.api.Preferences
+import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.Navigator
 import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.state.Title
 import kotlinx.collections.immutable.toPersistentList
@@ -39,54 +38,57 @@ internal class TrashAlbumPageActionsContext @Inject constructor(
     trashUseCase: TrashUseCase,
     settingsUseCase: SettingsUseCase,
     biometricsUseCase: BiometricsUseCase,
-    preferences: Preferences,
-) : GalleryActionsContext(
-    galleryRefresher = { trashUseCase.refreshTrash() },
-    initialCollageDisplay = { trashUseCase.getTrashGalleryDisplay() },
-    collageDisplayPersistence = { _, galleryDisplay ->
-        trashUseCase.setTrashGalleryDisplay(galleryDisplay)
-    },
-    shouldRefreshOnLoad = {
-        !trashUseCase.hasTrash()
-    },
-    galleryDetailsFlow = { _, effect ->
-        settingsUseCase.observeBiometricsRequiredForTrashAccess()
-            .flatMapLatest { biometricsRequired ->
-                val proceed = when {
-                    biometricsRequired -> biometricsUseCase.authenticate(
-                        string.authenticate,
-                        string.authenticate_for_access_to_trash,
-                        string.authenticate_for_access_to_trash_description,
-                        true,
-                    )
-                    else -> Ok(Unit)
-                }
-                if (proceed is Err) {
-                    flow {
-                        effect.handleEffect(NavigateBack)
-                    }
-                } else {
-                    trashUseCase.observeTrashAlbums()
-                        .map { mediaCollections ->
-                            GalleryDetails(
-                                title = Title.Resource(string.trash),
-                                clusters = mediaCollections.map { mediaCollection ->
-                                    Cluster(
-                                        id = mediaCollection.id,
-                                        unformattedDate = mediaCollection.unformattedDate,
-                                        displayTitle = mediaCollection.displayTitle,
-                                        location = mediaCollection.location,
-                                        cels = mediaCollection.mediaItems.map {
-                                          it.toCel()
-                                        }.toPersistentList(),
-                                    )
-                                }
-                            )
-                        }
-                }
-            }
+    navigator: Navigator,
+    galleryActionsContextFactory: GalleryActionsContextFactory,
+) {
+    val galleryActionsContext = galleryActionsContextFactory.create(
+        galleryRefresher = { trashUseCase.refreshTrash() },
+        initialCollageDisplay = { trashUseCase.getTrashGalleryDisplay() },
+        collageDisplayPersistence = { _, galleryDisplay ->
+            trashUseCase.setTrashGalleryDisplay(galleryDisplay)
+        },
+        shouldRefreshOnLoad = {
+            !trashUseCase.hasTrash()
+        },
+        galleryDetailsFlow = { _, effect ->
+            settingsUseCase.observeBiometricsRequiredForTrashAccess()
+                .flatMapLatest { biometricsRequired ->
+                    val proceed = when {
+                        biometricsRequired -> biometricsUseCase.authenticate(
+                            string.authenticate,
+                            string.authenticate_for_access_to_trash,
+                            string.authenticate_for_access_to_trash_description,
+                            true,
+                        )
 
-    },
-    lightboxSequenceDataSource = { Trash },
-    preferences = preferences,
-)
+                        else -> Ok(Unit)
+                    }
+                    if (proceed is Err) {
+                        flow {
+                            navigator.navigateBack()
+                        }
+                    } else {
+                        trashUseCase.observeTrashAlbums()
+                            .map { mediaCollections ->
+                                GalleryDetails(
+                                    title = Title.Resource(string.trash),
+                                    clusters = mediaCollections.map { mediaCollection ->
+                                        Cluster(
+                                            id = mediaCollection.id,
+                                            unformattedDate = mediaCollection.unformattedDate,
+                                            displayTitle = mediaCollection.displayTitle,
+                                            location = mediaCollection.location,
+                                            cels = mediaCollection.mediaItems.map {
+                                                it.toCel()
+                                            }.toPersistentList(),
+                                        )
+                                    }
+                                )
+                            }
+                    }
+                }
+
+        },
+        lightboxSequenceDataSource = { Trash },
+    )
+}

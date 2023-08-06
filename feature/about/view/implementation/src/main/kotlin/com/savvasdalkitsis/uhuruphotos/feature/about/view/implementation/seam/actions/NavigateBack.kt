@@ -18,7 +18,6 @@ package com.savvasdalkitsis.uhuruphotos.feature.about.view.implementation.seam.a
 import com.savvasdalkitsis.uhuruphotos.feature.about.view.implementation.seam.AboutActionsContext
 import com.savvasdalkitsis.uhuruphotos.feature.about.view.implementation.ui.state.AboutState
 import com.savvasdalkitsis.uhuruphotos.foundation.effects.api.seam.effects.CommonEffect
-import com.savvasdalkitsis.uhuruphotos.foundation.effects.api.seam.effects.NavigateBack
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.EffectHandler
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.Mutation
 import kotlinx.coroutines.flow.Flow
@@ -29,6 +28,6 @@ data object NavigateBack : AboutAction() {
         state: AboutState,
         effect: EffectHandler<CommonEffect>
     ): Flow<Mutation<AboutState>> = flow {
-        effect.handleEffect(NavigateBack)
+        navigator.navigateBack()
     }
 }

@@ -21,7 +21,6 @@ import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.ui.s
 import com.savvasdalkitsis.uhuruphotos.feature.people.view.api.ui.state.Person
 import com.savvasdalkitsis.uhuruphotos.feature.person.view.api.navigation.PersonNavigationRoute
 import com.savvasdalkitsis.uhuruphotos.foundation.effects.api.seam.effects.CommonEffect
-import com.savvasdalkitsis.uhuruphotos.foundation.effects.api.seam.effects.NavigateTo
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.EffectHandler
 import kotlinx.coroutines.flow.flow
 
@@ -31,6 +30,6 @@ data class PersonSelected(val person: Person) : LightboxAction() {
         state: LightboxState,
         effect: EffectHandler<CommonEffect>
     ) = flow<LightboxMutation> {
-        effect.handleEffect(NavigateTo(PersonNavigationRoute(person.id)))
+        navigator.navigateTo(PersonNavigationRoute(person.id))
     }
 }

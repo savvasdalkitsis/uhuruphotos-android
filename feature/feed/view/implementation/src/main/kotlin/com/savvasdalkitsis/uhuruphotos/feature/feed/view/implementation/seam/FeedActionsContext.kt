@@ -34,9 +34,12 @@ import com.savvasdalkitsis.uhuruphotos.feature.memories.domain.api.usecase.Memor
 import com.savvasdalkitsis.uhuruphotos.feature.settings.domain.api.usecase.SettingsUseCase
 import com.savvasdalkitsis.uhuruphotos.foundation.download.api.usecase.DownloadUseCase
 import com.savvasdalkitsis.uhuruphotos.foundation.effects.api.seam.effects.CommonEffect
-import com.savvasdalkitsis.uhuruphotos.foundation.effects.api.seam.effects.ShowToast
+import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.Navigator
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.EffectHandler
+import com.savvasdalkitsis.uhuruphotos.foundation.share.api.usecase.ShareUseCase
 import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R
+import com.savvasdalkitsis.uhuruphotos.foundation.toaster.api.usecase.ToasterUseCase
+import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.usecase.UiUseCase
 import kotlinx.coroutines.flow.FlowCollector
 import javax.inject.Inject
 
@@ -52,6 +55,10 @@ internal class FeedActionsContext @Inject constructor(
     val settingsUseCase: SettingsUseCase,
     val memoriesUseCase: MemoriesUseCase,
     val localMediaWorkScheduler: LocalMediaWorkScheduler,
+    val uiUseCase: UiUseCase,
+    val shareUseCase: ShareUseCase,
+    val toaster: ToasterUseCase,
+    val navigator: Navigator,
 ) {
     suspend fun CelState.deselect() {
         selectionList.deselect(mediaItem.id)
@@ -75,7 +82,7 @@ internal class FeedActionsContext @Inject constructor(
             .mapNotNull { it.mediaItem.id.findLocal }
             .map { LocalMediaDeletionRequest(it.value, it.isVideo) }
         )) {
-            is Error -> effect.handleEffect(ShowToast(R.string.error_deleting_media))
+            is Error -> toaster.show(R.string.error_deleting_media)
             is RequiresPermissions -> emit(AskForPermissions(result.deniedPermissions))
             Success -> onSuccess()
         }

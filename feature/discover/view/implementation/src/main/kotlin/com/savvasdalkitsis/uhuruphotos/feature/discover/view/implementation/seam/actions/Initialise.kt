@@ -26,7 +26,6 @@ import com.savvasdalkitsis.uhuruphotos.feature.people.view.api.ui.state.toPerson
 import com.savvasdalkitsis.uhuruphotos.foundation.coroutines.api.onErrors
 import com.savvasdalkitsis.uhuruphotos.foundation.coroutines.api.onErrorsIgnore
 import com.savvasdalkitsis.uhuruphotos.foundation.effects.api.seam.effects.CommonEffect
-import com.savvasdalkitsis.uhuruphotos.foundation.effects.api.seam.effects.ShowToast
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.EffectHandler
 import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R
 import kotlinx.coroutines.flow.Flow
@@ -84,7 +83,7 @@ data object Initialise : DiscoverAction() {
     private fun showPeopleSuggestion(effect: EffectHandler<CommonEffect>) =
         peopleUseCase.observePeopleByPhotoCount()
             .onErrors {
-                effect.handleEffect(ShowToast(R.string.error_refreshing_people))
+                toaster.show(R.string.error_refreshing_people)
             }
             .toPeople()
             .map { it.subList(0, max(0, min(10, it.size - 1))) }

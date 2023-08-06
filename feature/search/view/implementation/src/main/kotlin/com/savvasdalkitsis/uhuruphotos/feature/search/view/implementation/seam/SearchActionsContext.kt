@@ -16,8 +16,12 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.feature.search.view.implementation.seam
 
 import com.savvasdalkitsis.uhuruphotos.feature.search.domain.api.usecase.SearchUseCase
+import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.Navigator
+import com.savvasdalkitsis.uhuruphotos.foundation.toaster.api.usecase.ToasterUseCase
 import javax.inject.Inject
 
 internal class SearchActionsContext @Inject constructor(
     val searchUseCase: SearchUseCase,
+    val toaster: ToasterUseCase,
+    val navigator: Navigator,
 )

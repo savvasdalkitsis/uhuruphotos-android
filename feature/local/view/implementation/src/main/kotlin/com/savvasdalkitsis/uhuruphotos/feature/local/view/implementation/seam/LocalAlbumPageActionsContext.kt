@@ -16,36 +16,36 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.feature.local.view.implementation.seam
 
 import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.toCluster
-import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.GalleryActionsContext
+import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.GalleryActionsContextFactory
 import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.ui.state.GalleryDetails
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.api.model.LightboxSequenceDataSource.LocalAlbum
 import com.savvasdalkitsis.uhuruphotos.feature.local.domain.api.usecase.LocalAlbumUseCase
-import com.savvasdalkitsis.uhuruphotos.foundation.preferences.api.Preferences
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.state.Title
 import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
 internal class LocalAlbumPageActionsContext @Inject constructor(
     localAlbumUseCase: LocalAlbumUseCase,
-    preferences: Preferences,
-) : GalleryActionsContext(
-    galleryRefresher = { localAlbumUseCase.refreshLocalAlbum(it) },
-    initialCollageDisplay = { localAlbumUseCase.getLocalAlbumGalleryDisplay(it) },
-    collageDisplayPersistence = { id, galleryDisplay ->
-        localAlbumUseCase.setLocalAlbumGalleryDisplay(id, galleryDisplay)
-    },
-    shouldRefreshOnLoad = { albumId ->
-        localAlbumUseCase.getLocalAlbum(albumId).isEmpty()
-    },
-    galleryDetailsFlow = { albumId, _ ->
-        localAlbumUseCase.observeLocalAlbum(albumId)
-            .map { (bucket, albums) ->
-                GalleryDetails(
-                    title = Title.Text(bucket.displayName),
-                    clusters = albums.map { it.toCluster() },
-                )
-            }
-    },
-    lightboxSequenceDataSource = { LocalAlbum(it) },
-    preferences = preferences,
-)
+    galleryActionsContextFactory: GalleryActionsContextFactory,
+) {
+    val galleryActionsContext = galleryActionsContextFactory.create(
+        galleryRefresher = { localAlbumUseCase.refreshLocalAlbum(it) },
+        initialCollageDisplay = { localAlbumUseCase.getLocalAlbumGalleryDisplay(it) },
+        collageDisplayPersistence = { id, galleryDisplay ->
+            localAlbumUseCase.setLocalAlbumGalleryDisplay(id, galleryDisplay)
+        },
+        shouldRefreshOnLoad = { albumId ->
+            localAlbumUseCase.getLocalAlbum(albumId).isEmpty()
+        },
+        galleryDetailsFlow = { albumId, _ ->
+            localAlbumUseCase.observeLocalAlbum(albumId)
+                .map { (bucket, albums) ->
+                    GalleryDetails(
+                        title = Title.Text(bucket.displayName),
+                        clusters = albums.map { it.toCluster() },
+                    )
+                }
+        },
+        lightboxSequenceDataSource = { LocalAlbum(it) },
+    )
+}

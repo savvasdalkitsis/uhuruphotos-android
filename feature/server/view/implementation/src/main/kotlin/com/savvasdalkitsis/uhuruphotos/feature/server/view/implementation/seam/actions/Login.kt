@@ -22,9 +22,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.server.view.implementation.seam.S
 import com.savvasdalkitsis.uhuruphotos.feature.server.view.implementation.seam.ServerMutation.AskForUserCredentials
 import com.savvasdalkitsis.uhuruphotos.feature.server.view.implementation.seam.ServerMutation.PerformingBackgroundJob
 import com.savvasdalkitsis.uhuruphotos.feature.server.view.implementation.ui.ServerState
-import com.savvasdalkitsis.uhuruphotos.foundation.effects.api.seam.effects.ClearBackStack
 import com.savvasdalkitsis.uhuruphotos.foundation.effects.api.seam.effects.CommonEffect
-import com.savvasdalkitsis.uhuruphotos.foundation.effects.api.seam.effects.ShowToast
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.EffectHandler
 import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R
 import kotlinx.coroutines.flow.flow
@@ -43,14 +41,14 @@ data object Login : ServerAction() {
             .mapEither(
                 success = { authStatus ->
                     if (authStatus == AuthStatus.Authenticated) {
-                        effect.handleEffect(ClearBackStack)
+                        navigator.clearBackStack()
                     } else {
-                        effect.handleEffect(ShowToast(R.string.error_logging_in))
+                        toaster.show(R.string.error_logging_in)
                         emit(AskForUserCredentials(credentials.username, credentials.password))
                     }
                 },
                 failure = {
-                    effect.handleEffect(ShowToast(R.string.error_logging_in))
+                    toaster.show(R.string.error_logging_in)
                     emit(AskForUserCredentials(credentials.username, credentials.password))
                 }
             )

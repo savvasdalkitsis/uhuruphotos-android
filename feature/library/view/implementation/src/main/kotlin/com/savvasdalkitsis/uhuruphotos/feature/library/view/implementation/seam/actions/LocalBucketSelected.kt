@@ -21,7 +21,6 @@ import com.savvasdalkitsis.uhuruphotos.feature.library.view.implementation.ui.st
 import com.savvasdalkitsis.uhuruphotos.feature.local.view.api.navigation.LocalAlbumNavigationRoute
 import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.model.LocalMediaFolder
 import com.savvasdalkitsis.uhuruphotos.foundation.effects.api.seam.effects.CommonEffect
-import com.savvasdalkitsis.uhuruphotos.foundation.effects.api.seam.effects.NavigateTo
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.EffectHandler
 import kotlinx.coroutines.flow.flow
 
@@ -30,6 +29,6 @@ data class LocalBucketSelected(val bucket: LocalMediaFolder) : LibraryAction() {
         state: LibraryState,
         effect: EffectHandler<CommonEffect>
     ) = flow<LibraryMutation> {
-        effect.handleEffect(NavigateTo(LocalAlbumNavigationRoute(bucket.id)))
+        navigator.navigateTo(LocalAlbumNavigationRoute(bucket.id))
     }
 }

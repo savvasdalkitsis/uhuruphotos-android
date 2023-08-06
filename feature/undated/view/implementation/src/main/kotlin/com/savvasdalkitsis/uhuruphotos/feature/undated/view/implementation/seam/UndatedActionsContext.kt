@@ -18,11 +18,10 @@ package com.savvasdalkitsis.uhuruphotos.feature.undated.view.implementation.seam
 import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.toCluster
 import com.savvasdalkitsis.uhuruphotos.feature.feed.domain.api.model.FeedFetchType
 import com.savvasdalkitsis.uhuruphotos.feature.feed.domain.api.usecase.FeedUseCase
-import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.GalleryActionsContext
+import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.GalleryActionsContextFactory
 import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.ui.state.GalleryDetails
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.api.model.LightboxSequenceDataSource
 import com.savvasdalkitsis.uhuruphotos.feature.undated.domain.api.usecase.UndatedUseCase
-import com.savvasdalkitsis.uhuruphotos.foundation.preferences.api.Preferences
 import com.savvasdalkitsis.uhuruphotos.foundation.result.api.simpleOk
 import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.state.Title
@@ -31,28 +30,31 @@ import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
 internal class UndatedActionsContext @Inject constructor(
-    private val undatedUseCase: UndatedUseCase,
-    private val feedUseCase: FeedUseCase,
-    preferences: Preferences,
-) : GalleryActionsContext(
-    galleryRefresher = {
-        feedUseCase.refreshFeed(true)
-        delay(500)
-        simpleOk
-    },
-    galleryDetailsFlow = { _, _ -> feedUseCase.observeFeed(FeedFetchType.ONLY_WITHOUT_DATES)
-        .map { GalleryDetails(
-            title = Title.Resource(string.media_without_date),
-            clusters = it.map { collection -> collection.toCluster() }
-            )
-        }
-    },
-    shouldRefreshOnLoad = { false },
-    lightboxSequenceDataSource = { LightboxSequenceDataSource.Undated },
-    initialCollageDisplay = { undatedUseCase.getUndatedGalleryDisplay() },
-    collageDisplayPersistence = { _, galleryDisplay ->
-        undatedUseCase.setUndatedGalleryDisplay(galleryDisplay)
-    },
-    shouldShowSortingAction = false,
-    preferences = preferences,
-)
+    undatedUseCase: UndatedUseCase,
+    feedUseCase: FeedUseCase,
+    galleryActionsContextFactory: GalleryActionsContextFactory,
+) {
+    val galleryActionsContext = galleryActionsContextFactory.create(
+        galleryRefresher = {
+            feedUseCase.refreshFeed(true)
+            delay(500)
+            simpleOk
+        },
+        galleryDetailsFlow = { _, _ ->
+            feedUseCase.observeFeed(FeedFetchType.ONLY_WITHOUT_DATES)
+                .map {
+                    GalleryDetails(
+                        title = Title.Resource(string.media_without_date),
+                        clusters = it.map { collection -> collection.toCluster() }
+                    )
+                }
+        },
+        shouldRefreshOnLoad = { false },
+        lightboxSequenceDataSource = { LightboxSequenceDataSource.Undated },
+        initialCollageDisplay = { undatedUseCase.getUndatedGalleryDisplay() },
+        collageDisplayPersistence = { _, galleryDisplay ->
+            undatedUseCase.setUndatedGalleryDisplay(galleryDisplay)
+        },
+        shouldShowSortingAction = false,
+    )
+}

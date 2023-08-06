@@ -16,10 +16,12 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.feature.about.view.implementation.seam
 
 import com.savvasdalkitsis.uhuruphotos.foundation.log.api.usecase.FeedbackUseCase
+import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.Navigator
 import com.savvasdalkitsis.uhuruphotos.foundation.system.api.usecase.ApplicationUseCase
 import javax.inject.Inject
 
 internal class AboutActionsContext @Inject constructor(
     val applicationUseCase: ApplicationUseCase,
     val feedbackUseCase: FeedbackUseCase,
+    val navigator: Navigator,
 )

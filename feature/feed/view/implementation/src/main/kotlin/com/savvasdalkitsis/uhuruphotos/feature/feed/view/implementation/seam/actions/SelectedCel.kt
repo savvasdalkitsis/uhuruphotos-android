@@ -23,8 +23,6 @@ import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.api.navigation.Ligh
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemSelectionMode
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.state.CelState
 import com.savvasdalkitsis.uhuruphotos.foundation.effects.api.seam.effects.CommonEffect
-import com.savvasdalkitsis.uhuruphotos.foundation.effects.api.seam.effects.NavigateTo
-import com.savvasdalkitsis.uhuruphotos.foundation.effects.api.seam.effects.Vibrate
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.EffectHandler
 import kotlinx.coroutines.flow.flow
 
@@ -36,15 +34,15 @@ data class SelectedCel(
         effect: EffectHandler<CommonEffect>
     ) = flow<FeedMutation> {
         when {
-            state.selectedCelCount == 0 -> effect.handleEffect(NavigateTo(
+            state.selectedCelCount == 0 -> navigator.navigateTo(
                 LightboxNavigationRoute(celState.mediaItem.id, Feed, showMediaSyncState = true)
-            ))
+            )
             celState.selectionMode == MediaItemSelectionMode.SELECTED -> {
-                effect.handleEffect(Vibrate)
+                uiUseCase.performLongPressHaptic()
                 celState.deselect()
             }
             else -> {
-                effect.handleEffect(Vibrate)
+                uiUseCase.performLongPressHaptic()
                 celState.select()
             }
         }

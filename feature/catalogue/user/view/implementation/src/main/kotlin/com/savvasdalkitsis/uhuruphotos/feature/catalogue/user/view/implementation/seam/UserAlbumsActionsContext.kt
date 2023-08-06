@@ -19,9 +19,10 @@ import com.github.michaelbull.result.Err
 import com.savvasdalkitsis.uhuruphotos.feature.auth.domain.api.usecase.ServerUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.catalogue.user.domain.api.usecase.UserAlbumsUseCase
 import com.savvasdalkitsis.uhuruphotos.foundation.effects.api.seam.effects.CommonEffect
-import com.savvasdalkitsis.uhuruphotos.foundation.effects.api.seam.effects.ShowToast
+import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.Navigator
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.EffectHandler
 import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R
+import com.savvasdalkitsis.uhuruphotos.foundation.toaster.api.usecase.ToasterUseCase
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -30,6 +31,8 @@ import javax.inject.Inject
 class UserAlbumsActionsContext @Inject constructor(
     val userAlbumsUseCase: UserAlbumsUseCase,
     val serverUseCase: ServerUseCase,
+    val toaster: ToasterUseCase,
+    val navigator: Navigator,
 ) {
 
     private val _loading = MutableSharedFlow<Boolean>()
@@ -39,7 +42,7 @@ class UserAlbumsActionsContext @Inject constructor(
         _loading.emit(true)
         val result = userAlbumsUseCase.refreshUserAlbums()
         if (result is Err) {
-            effect.handleEffect(ShowToast(R.string.error_loading_user_albums))
+            toaster.show(R.string.error_loading_user_albums)
         }
         // delaying to give ui time to receive the new albums before
         // dismissing the loading bar since no albums logic relies on that

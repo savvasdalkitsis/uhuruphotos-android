@@ -18,11 +18,10 @@ package com.savvasdalkitsis.uhuruphotos.feature.videos.view.implementation.seam
 import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.toCluster
 import com.savvasdalkitsis.uhuruphotos.feature.feed.domain.api.model.FeedFetchType
 import com.savvasdalkitsis.uhuruphotos.feature.feed.domain.api.usecase.FeedUseCase
-import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.GalleryActionsContext
+import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.GalleryActionsContextFactory
 import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.ui.state.GalleryDetails
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.api.model.LightboxSequenceDataSource
 import com.savvasdalkitsis.uhuruphotos.feature.videos.domain.api.usecase.VideosUseCase
-import com.savvasdalkitsis.uhuruphotos.foundation.preferences.api.Preferences
 import com.savvasdalkitsis.uhuruphotos.foundation.result.api.simpleOk
 import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.state.Title
@@ -31,27 +30,30 @@ import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
 internal class VideosActionsContext @Inject constructor(
-    val videosUseCase: VideosUseCase,
-    val feedUseCase: FeedUseCase,
-    preferences: Preferences,
-) : GalleryActionsContext(
-    galleryRefresher = {
-        feedUseCase.refreshFeed(true)
-        delay(500)
-        simpleOk
-    },
-    galleryDetailsFlow = { _, _ -> feedUseCase.observeFeed(FeedFetchType.VIDEOS)
-        .map { GalleryDetails(
-            title = Title.Resource(string.videos),
-            clusters = it.map { collection -> collection.toCluster() }
-            )
-        }
-    },
-    shouldRefreshOnLoad = { false },
-    lightboxSequenceDataSource = { LightboxSequenceDataSource.Videos },
-    initialCollageDisplay = { videosUseCase.getVideosGalleryDisplay() },
-    collageDisplayPersistence = { _, galleryDisplay ->
-        videosUseCase.setVideosGalleryDisplay(galleryDisplay)
-    },
-    preferences = preferences,
-)
+    videosUseCase: VideosUseCase,
+    feedUseCase: FeedUseCase,
+    galleryActionsContextFactory: GalleryActionsContextFactory,
+) {
+    val galleryActionsContext = galleryActionsContextFactory.create(
+        galleryRefresher = {
+            feedUseCase.refreshFeed(true)
+            delay(500)
+            simpleOk
+        },
+        galleryDetailsFlow = { _, _ ->
+            feedUseCase.observeFeed(FeedFetchType.VIDEOS)
+                .map {
+                    GalleryDetails(
+                        title = Title.Resource(string.videos),
+                        clusters = it.map { collection -> collection.toCluster() }
+                    )
+                }
+        },
+        shouldRefreshOnLoad = { false },
+        lightboxSequenceDataSource = { LightboxSequenceDataSource.Videos },
+        initialCollageDisplay = { videosUseCase.getVideosGalleryDisplay() },
+        collageDisplayPersistence = { _, galleryDisplay ->
+            videosUseCase.setVideosGalleryDisplay(galleryDisplay)
+        },
+    )
+}

@@ -19,7 +19,6 @@ import com.savvasdalkitsis.uhuruphotos.feature.catalogue.user.view.implementatio
 import com.savvasdalkitsis.uhuruphotos.feature.catalogue.user.view.implementation.seam.UserAlbumsMutation
 import com.savvasdalkitsis.uhuruphotos.feature.catalogue.user.view.implementation.seam.UserAlbumsState
 import com.savvasdalkitsis.uhuruphotos.foundation.effects.api.seam.effects.CommonEffect
-import com.savvasdalkitsis.uhuruphotos.foundation.effects.api.seam.effects.NavigateBack
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.EffectHandler
 import kotlinx.coroutines.flow.flow
 
@@ -28,6 +27,6 @@ data object NavigateBack : UserAlbumsAction() {
         state: UserAlbumsState,
         effect: EffectHandler<CommonEffect>
     ) = flow<UserAlbumsMutation> {
-        effect.handleEffect(NavigateBack)
+        navigator.navigateBack()
     }
 }

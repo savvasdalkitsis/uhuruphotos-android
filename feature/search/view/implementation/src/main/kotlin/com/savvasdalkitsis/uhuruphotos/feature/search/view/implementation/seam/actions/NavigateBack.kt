@@ -19,7 +19,6 @@ import com.savvasdalkitsis.uhuruphotos.feature.search.view.implementation.seam.S
 import com.savvasdalkitsis.uhuruphotos.feature.search.view.implementation.seam.SearchMutation
 import com.savvasdalkitsis.uhuruphotos.feature.search.view.implementation.ui.state.SearchState
 import com.savvasdalkitsis.uhuruphotos.foundation.effects.api.seam.effects.CommonEffect
-import com.savvasdalkitsis.uhuruphotos.foundation.effects.api.seam.effects.NavigateBack
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.EffectHandler
 import kotlinx.coroutines.flow.flow
 
@@ -28,6 +27,6 @@ data object NavigateBack : SearchAction() {
         state: SearchState,
         effect: EffectHandler<CommonEffect>
     ) = flow<SearchMutation> {
-        effect.handleEffect(NavigateBack)
+        navigator.navigateBack()
     }
 }

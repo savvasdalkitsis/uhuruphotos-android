@@ -21,7 +21,6 @@ import com.savvasdalkitsis.uhuruphotos.feature.people.view.implementation.seam.P
 import com.savvasdalkitsis.uhuruphotos.feature.people.view.implementation.ui.state.PeopleState
 import com.savvasdalkitsis.uhuruphotos.feature.person.view.api.navigation.PersonNavigationRoute
 import com.savvasdalkitsis.uhuruphotos.foundation.effects.api.seam.effects.CommonEffect
-import com.savvasdalkitsis.uhuruphotos.foundation.effects.api.seam.effects.NavigateTo
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.EffectHandler
 import kotlinx.coroutines.flow.flow
 
@@ -30,6 +29,6 @@ data class PersonSelected(val person: Person) : PeopleAction() {
         state: PeopleState,
         effect: EffectHandler<CommonEffect>
     ) = flow<PeopleMutation> {
-        effect.handleEffect(NavigateTo(PersonNavigationRoute(person.id)))
+        navigator.navigateTo(PersonNavigationRoute(person.id))
     }
 }

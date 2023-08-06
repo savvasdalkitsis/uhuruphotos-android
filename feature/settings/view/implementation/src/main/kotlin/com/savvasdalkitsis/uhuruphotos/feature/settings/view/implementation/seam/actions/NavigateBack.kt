@@ -19,7 +19,6 @@ import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.SettingsMutation
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.ui.state.SettingsState
 import com.savvasdalkitsis.uhuruphotos.foundation.effects.api.seam.effects.CommonEffect
-import com.savvasdalkitsis.uhuruphotos.foundation.effects.api.seam.effects.NavigateBack
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.EffectHandler
 import kotlinx.coroutines.flow.flow
 
@@ -28,6 +27,6 @@ data object NavigateBack : SettingsAction() {
         state: SettingsState,
         effect: EffectHandler<CommonEffect>
     ) = flow<SettingsMutation> {
-        effect.handleEffect(NavigateBack)
+        navigator.navigateBack()
     }
 }

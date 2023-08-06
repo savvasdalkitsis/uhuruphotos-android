@@ -35,7 +35,7 @@ internal class AutoAlbumViewModel @Inject constructor(
     autoAlbumActionsContext: AutoAlbumActionsContext,
     commonEffectHandler: CommonEffectHandler,
 ) : NavigationViewModel<GalleryState, CommonEffect, GalleryAction, AutoAlbumNavigationRoute>(
-    ActionHandlerWithContext(autoAlbumActionsContext),
+    ActionHandlerWithContext(autoAlbumActionsContext.galleryActionsContext),
     commonEffectHandler,
     GalleryState(collageState = CollageState(collageDisplay = AutoAlbumCollageDisplay))
 ) {

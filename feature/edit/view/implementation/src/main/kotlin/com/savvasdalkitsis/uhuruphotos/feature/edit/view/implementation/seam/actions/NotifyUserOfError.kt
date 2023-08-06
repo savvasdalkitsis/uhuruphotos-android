@@ -18,8 +18,6 @@ package com.savvasdalkitsis.uhuruphotos.feature.edit.view.implementation.seam.ac
 import com.savvasdalkitsis.uhuruphotos.feature.edit.view.implementation.seam.EditActionsContext
 import com.savvasdalkitsis.uhuruphotos.feature.edit.view.implementation.ui.state.EditState
 import com.savvasdalkitsis.uhuruphotos.foundation.effects.api.seam.effects.CommonEffect
-import com.savvasdalkitsis.uhuruphotos.foundation.effects.api.seam.effects.NavigateBack
-import com.savvasdalkitsis.uhuruphotos.foundation.effects.api.seam.effects.ShowToast
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.EffectHandler
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.Mutation
 import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R
@@ -31,7 +29,7 @@ data object NotifyUserOfError : EditAction() {
         state: EditState,
         effect: EffectHandler<CommonEffect>
     ): Flow<Mutation<EditState>> = flow {
-        effect.handleEffect(ShowToast(R.string.error_editing_photo))
-        effect.handleEffect(NavigateBack)
+        toaster.show(R.string.error_editing_photo)
+        navigator.navigateBack()
     }
 }

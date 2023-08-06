@@ -21,7 +21,6 @@ import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.Fee
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.ui.state.FeedState
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemSelectionMode
 import com.savvasdalkitsis.uhuruphotos.foundation.effects.api.seam.effects.CommonEffect
-import com.savvasdalkitsis.uhuruphotos.foundation.effects.api.seam.effects.Vibrate
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.EffectHandler
 import kotlinx.coroutines.flow.flow
 
@@ -31,7 +30,7 @@ data class ClusterSelectionClicked(val cluster: Cluster) : FeedAction() {
         effect: EffectHandler<CommonEffect>
     ) = flow<FeedMutation> {
         val cels = cluster.cels
-        effect.handleEffect(Vibrate)
+        uiUseCase.performLongPressHaptic()
         if (cels.all { it.selectionMode == MediaItemSelectionMode.SELECTED }) {
             cels.forEach { it.deselect() }
         } else {

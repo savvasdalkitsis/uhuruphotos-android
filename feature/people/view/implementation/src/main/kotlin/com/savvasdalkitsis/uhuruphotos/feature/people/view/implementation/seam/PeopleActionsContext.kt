@@ -20,9 +20,10 @@ import com.savvasdalkitsis.uhuruphotos.feature.auth.domain.api.usecase.ServerUse
 import com.savvasdalkitsis.uhuruphotos.feature.people.domain.api.usecase.PeopleUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.people.view.implementation.ui.state.SortOrder
 import com.savvasdalkitsis.uhuruphotos.foundation.effects.api.seam.effects.CommonEffect
-import com.savvasdalkitsis.uhuruphotos.foundation.effects.api.seam.effects.ShowToast
+import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.Navigator
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.EffectHandler
 import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R
+import com.savvasdalkitsis.uhuruphotos.foundation.toaster.api.usecase.ToasterUseCase
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -31,6 +32,8 @@ import javax.inject.Inject
 class PeopleActionsContext @Inject constructor(
     val peopleUseCase: PeopleUseCase,
     val serverUseCase: ServerUseCase,
+    val toaster: ToasterUseCase,
+    val navigator: Navigator,
 ) {
 
     private val _sort: MutableSharedFlow<SortOrder> = MutableStateFlow(SortOrder.default)
@@ -42,7 +45,7 @@ class PeopleActionsContext @Inject constructor(
         _loading.emit(true)
         val result = peopleUseCase.refreshPeople()
         if (result is Err) {
-            effect.handleEffect(ShowToast(R.string.error_refreshing_people))
+            toaster.show(R.string.error_refreshing_people)
         }
         _loading.emit(false)
     }

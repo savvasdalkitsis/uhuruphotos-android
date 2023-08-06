@@ -19,7 +19,6 @@ import com.savvasdalkitsis.uhuruphotos.feature.heatmap.view.implementation.seam.
 import com.savvasdalkitsis.uhuruphotos.feature.heatmap.view.implementation.seam.HeatMapMutation
 import com.savvasdalkitsis.uhuruphotos.feature.heatmap.view.implementation.ui.state.HeatMapState
 import com.savvasdalkitsis.uhuruphotos.foundation.effects.api.seam.effects.CommonEffect
-import com.savvasdalkitsis.uhuruphotos.foundation.effects.api.seam.effects.NavigateBack
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.EffectHandler
 import kotlinx.coroutines.flow.flow
 
@@ -28,6 +27,6 @@ data object BackPressed : HeatMapAction() {
         state: HeatMapState,
         effect: EffectHandler<CommonEffect>
     ) = flow<HeatMapMutation> {
-        effect.handleEffect(NavigateBack)
+        navigator.navigateBack()
     }
 }

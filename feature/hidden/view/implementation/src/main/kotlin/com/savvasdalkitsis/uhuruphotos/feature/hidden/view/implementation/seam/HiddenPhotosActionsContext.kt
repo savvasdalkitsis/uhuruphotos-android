@@ -17,9 +17,11 @@ package com.savvasdalkitsis.uhuruphotos.feature.hidden.view.implementation.seam
 
 import com.savvasdalkitsis.uhuruphotos.feature.settings.domain.api.usecase.SettingsUseCase
 import com.savvasdalkitsis.uhuruphotos.foundation.biometrics.api.usecase.BiometricsUseCase
+import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.Navigator
 import javax.inject.Inject
 
 internal class HiddenPhotosActionsContext @Inject constructor(
     val settingsUseCase: SettingsUseCase,
     val biometricsUseCase: BiometricsUseCase,
+    val navigator: Navigator,
 )

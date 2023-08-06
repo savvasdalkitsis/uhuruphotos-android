@@ -19,8 +19,6 @@ import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.Fee
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.FeedMutation
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.ui.state.FeedState
 import com.savvasdalkitsis.uhuruphotos.foundation.effects.api.seam.effects.CommonEffect
-import com.savvasdalkitsis.uhuruphotos.foundation.effects.api.seam.effects.ShareMultiple
-import com.savvasdalkitsis.uhuruphotos.foundation.effects.api.seam.effects.ShowToast
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.EffectHandler
 import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R
 import kotlinx.coroutines.flow.flow
@@ -30,9 +28,9 @@ data object ShareSelectedCels : FeedAction() {
         state: FeedState,
         effect: EffectHandler<CommonEffect>
     ) = flow<FeedMutation> {
-        effect.handleEffect(ShowToast(R.string.downloading_photos_sharing))
-        effect.handleEffect(ShareMultiple(state.selectedCels.map {
+        toaster.show(R.string.downloading_photos_sharing)
+        shareUseCase.shareMultiple(state.selectedCels.map {
             it.mediaItem.id.fullResUri
-        }))
+        })
     }
 }

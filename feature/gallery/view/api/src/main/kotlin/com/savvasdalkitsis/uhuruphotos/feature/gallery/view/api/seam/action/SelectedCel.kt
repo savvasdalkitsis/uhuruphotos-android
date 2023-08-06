@@ -21,7 +21,6 @@ import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.ui.state.Gallery
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.api.navigation.LightboxNavigationRoute
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.state.CelState
 import com.savvasdalkitsis.uhuruphotos.foundation.effects.api.seam.effects.CommonEffect
-import com.savvasdalkitsis.uhuruphotos.foundation.effects.api.seam.effects.NavigateTo
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.EffectHandler
 import kotlinx.coroutines.flow.flow
 
@@ -32,11 +31,11 @@ data class SelectedCel(
         state: GalleryState,
         effect: EffectHandler<CommonEffect>
     ) = flow<GalleryMutation> {
-        effect.handleEffect(NavigateTo(
+        navigator.navigateTo(
             LightboxNavigationRoute(
                 id = cel.mediaItem.id,
                 lightboxSequenceDataSource = lightboxSequenceDataSource(galleryId.id)
             )
-        ))
+        )
     }
 }

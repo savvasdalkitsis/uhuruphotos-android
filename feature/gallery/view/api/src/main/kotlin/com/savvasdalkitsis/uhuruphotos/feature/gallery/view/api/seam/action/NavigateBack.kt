@@ -19,7 +19,6 @@ import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.GalleryActi
 import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.GalleryMutation
 import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.ui.state.GalleryState
 import com.savvasdalkitsis.uhuruphotos.foundation.effects.api.seam.effects.CommonEffect
-import com.savvasdalkitsis.uhuruphotos.foundation.effects.api.seam.effects.NavigateBack
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.EffectHandler
 import kotlinx.coroutines.flow.flow
 
@@ -28,6 +27,6 @@ data object NavigateBack : GalleryAction() {
         state: GalleryState,
         effect: EffectHandler<CommonEffect>
     ) = flow<GalleryMutation> {
-        effect.handleEffect(NavigateBack)
+        navigator.navigateBack()
     }
 }

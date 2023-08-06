@@ -22,7 +22,6 @@ import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.ui.state
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.api.model.LightboxSequenceDataSource.Memory
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.api.navigation.LightboxNavigationRoute
 import com.savvasdalkitsis.uhuruphotos.foundation.effects.api.seam.effects.CommonEffect
-import com.savvasdalkitsis.uhuruphotos.foundation.effects.api.seam.effects.NavigateTo
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.EffectHandler
 import kotlinx.coroutines.flow.flow
 
@@ -31,8 +30,8 @@ data class MemorySelected(val memoryCel: MemoryCel) : FeedAction() {
         state: FeedState,
         effect: EffectHandler<CommonEffect>
     ) = flow<FeedMutation> {
-        effect.handleEffect(NavigateTo(
+        navigator.navigateTo(
             LightboxNavigationRoute(memoryCel.cel.mediaItem.id, Memory(memoryCel.yearsAgo), showMediaSyncState = true)
-        ))
+        )
     }
 }

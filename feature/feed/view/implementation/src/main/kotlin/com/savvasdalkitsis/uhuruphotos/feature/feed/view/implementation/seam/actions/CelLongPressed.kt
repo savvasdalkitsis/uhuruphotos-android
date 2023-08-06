@@ -20,7 +20,6 @@ import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.Fee
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.ui.state.FeedState
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.state.CelState
 import com.savvasdalkitsis.uhuruphotos.foundation.effects.api.seam.effects.CommonEffect
-import com.savvasdalkitsis.uhuruphotos.foundation.effects.api.seam.effects.Vibrate
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.EffectHandler
 import kotlinx.coroutines.flow.flow
 
@@ -30,7 +29,7 @@ data class CelLongPressed(val celState: CelState) : FeedAction() {
         effect: EffectHandler<CommonEffect>
     ) = flow<FeedMutation> {
         if (state.selectedCelCount == 0) {
-            effect.handleEffect(Vibrate)
+            uiUseCase.performLongPressHaptic()
             celState.select()
         }
     }

@@ -22,7 +22,6 @@ import com.savvasdalkitsis.uhuruphotos.feature.person.view.implementation.seam.P
 import com.savvasdalkitsis.uhuruphotos.feature.person.view.implementation.seam.PersonMutation
 import com.savvasdalkitsis.uhuruphotos.feature.person.view.implementation.ui.state.PersonState
 import com.savvasdalkitsis.uhuruphotos.foundation.effects.api.seam.effects.CommonEffect
-import com.savvasdalkitsis.uhuruphotos.foundation.effects.api.seam.effects.NavigateTo
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.EffectHandler
 import kotlinx.coroutines.flow.flow
 
@@ -31,8 +30,8 @@ data class SelectedCel(val cel: CelState) : PersonAction() {
         state: PersonState,
         effect: EffectHandler<CommonEffect>
     ) = flow<PersonMutation> {
-        effect.handleEffect(NavigateTo(
+        navigator.navigateTo(
             LightboxNavigationRoute(cel.mediaItem.id, PersonResults(state.person!!.id))
-        ))
+        )
     }
 }

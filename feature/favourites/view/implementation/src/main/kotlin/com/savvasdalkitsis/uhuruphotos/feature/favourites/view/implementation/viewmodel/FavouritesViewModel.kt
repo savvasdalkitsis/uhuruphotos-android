@@ -34,7 +34,7 @@ internal class FavouritesViewModel @Inject constructor(
     favouritesActionsContext: FavouritesActionsContext,
     commonEffectHandler: CommonEffectHandler,
 ) : NavigationViewModel<GalleryState, CommonEffect, GalleryAction, FavouritesNavigationRoute>(
-    ActionHandlerWithContext(favouritesActionsContext),
+    ActionHandlerWithContext(favouritesActionsContext.galleryActionsContext),
     commonEffectHandler,
     GalleryState(collageState = CollageState())
 ) {

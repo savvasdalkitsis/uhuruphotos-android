@@ -47,7 +47,7 @@ internal class LocalAlbumViewModel @Inject constructor(
     commonEffectHandler: CommonEffectHandler,
 ) : NavigationViewModel<LocalAlbumCompositeState, LocalAlbumCompositeEffect, LocalAlbumCompositeAction, LocalAlbumNavigationRoute>(
     CompositeActionHandler(
-        ActionHandlerWithContext(localAlbumPageActionsContext),
+        ActionHandlerWithContext(localAlbumPageActionsContext.galleryActionsContext),
         ActionHandlerWithContext(localAlbumActionsContext),
     ),
     CompositeEffectHandler(

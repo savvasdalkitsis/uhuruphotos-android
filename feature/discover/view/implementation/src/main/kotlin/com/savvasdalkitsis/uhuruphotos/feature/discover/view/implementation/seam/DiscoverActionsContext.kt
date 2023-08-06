@@ -21,6 +21,9 @@ import com.savvasdalkitsis.uhuruphotos.feature.heatmap.domain.api.usecase.HeatMa
 import com.savvasdalkitsis.uhuruphotos.feature.people.domain.api.usecase.PeopleUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.search.domain.api.usecase.SearchUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.settings.domain.api.usecase.SettingsUseCase
+import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.Navigator
+import com.savvasdalkitsis.uhuruphotos.foundation.toaster.api.usecase.ToasterUseCase
+import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.usecase.UiUseCase
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableSharedFlow
 import javax.inject.Inject
@@ -32,6 +35,9 @@ class DiscoverActionsContext @Inject constructor(
     val serverUseCase: ServerUseCase,
     val searchUseCase: SearchUseCase,
     val heatMapUseCase: HeatMapUseCase,
+    val uiUseCase: UiUseCase,
+    val toaster: ToasterUseCase,
+    val navigator: Navigator,
 ) {
     private val _queryFilter = MutableSharedFlow<String>()
     val queryFilter: Flow<String> get() = _queryFilter

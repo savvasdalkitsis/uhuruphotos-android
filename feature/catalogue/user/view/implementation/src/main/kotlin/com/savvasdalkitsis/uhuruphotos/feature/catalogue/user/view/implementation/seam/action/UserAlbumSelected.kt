@@ -21,7 +21,6 @@ import com.savvasdalkitsis.uhuruphotos.feature.catalogue.user.view.implementatio
 import com.savvasdalkitsis.uhuruphotos.feature.catalogue.user.view.implementation.seam.UserAlbumsMutation
 import com.savvasdalkitsis.uhuruphotos.feature.catalogue.user.view.implementation.seam.UserAlbumsState
 import com.savvasdalkitsis.uhuruphotos.foundation.effects.api.seam.effects.CommonEffect
-import com.savvasdalkitsis.uhuruphotos.foundation.effects.api.seam.effects.NavigateTo
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.EffectHandler
 import kotlinx.coroutines.flow.flow
 
@@ -30,6 +29,6 @@ data class UserAlbumSelected(val album: UserAlbumState) : UserAlbumsAction() {
         state: UserAlbumsState,
         effect: EffectHandler<CommonEffect>
     ) = flow<UserAlbumsMutation> {
-        effect.handleEffect(NavigateTo(UserAlbumNavigationRoute(album.id)))
+        navigator.navigateTo(UserAlbumNavigationRoute(album.id))
     }
 }

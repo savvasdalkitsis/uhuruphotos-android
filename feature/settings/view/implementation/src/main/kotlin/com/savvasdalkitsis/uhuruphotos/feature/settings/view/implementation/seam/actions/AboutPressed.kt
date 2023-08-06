@@ -19,7 +19,6 @@ import com.savvasdalkitsis.uhuruphotos.feature.about.view.api.navigation.AboutNa
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.SettingsActionsContext
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.ui.state.SettingsState
 import com.savvasdalkitsis.uhuruphotos.foundation.effects.api.seam.effects.CommonEffect
-import com.savvasdalkitsis.uhuruphotos.foundation.effects.api.seam.effects.NavigateTo
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.EffectHandler
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.Mutation
 import kotlinx.coroutines.flow.Flow
@@ -30,6 +29,6 @@ data object AboutPressed : SettingsAction() {
         state: SettingsState,
         effect: EffectHandler<CommonEffect>
     ): Flow<Mutation<SettingsState>> = flow {
-        effect.handleEffect(NavigateTo(AboutNavigationRoute))
+        navigator.navigateTo(AboutNavigationRoute)
     }
 }

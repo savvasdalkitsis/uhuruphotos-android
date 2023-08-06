@@ -35,7 +35,7 @@ internal class VideosViewModel @Inject constructor(
     actionsContext: VideosActionsContext,
     commonEffectHandler: CommonEffectHandler,
 ) : NavigationViewModel<GalleryState, CommonEffect, GalleryAction, VideosNavigationRoute>(
-    ActionHandlerWithContext(actionsContext),
+    ActionHandlerWithContext(actionsContext.galleryActionsContext),
     commonEffectHandler,
     GalleryState(title = Title.Resource(string.videos)),
 ) {

@@ -24,7 +24,6 @@ import com.savvasdalkitsis.uhuruphotos.feature.search.view.implementation.seam.S
 import com.savvasdalkitsis.uhuruphotos.feature.search.view.implementation.seam.SearchMutation.ShowErrorScreen
 import com.savvasdalkitsis.uhuruphotos.feature.search.view.implementation.ui.state.SearchState
 import com.savvasdalkitsis.uhuruphotos.foundation.effects.api.seam.effects.CommonEffect
-import com.savvasdalkitsis.uhuruphotos.foundation.effects.api.seam.effects.ShowToast
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.EffectHandler
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.Mutation
 import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R
@@ -55,7 +54,7 @@ data class SearchFor(val query: String) : SearchAction() {
                     else -> {
                         currentCoroutineContext().cancel()
                         if (!state.clusters.isEmpty()) {
-                            effect.handleEffect(ShowToast(R.string.error_searching))
+                            toaster.show(R.string.error_searching)
                         }
                         null
                     }

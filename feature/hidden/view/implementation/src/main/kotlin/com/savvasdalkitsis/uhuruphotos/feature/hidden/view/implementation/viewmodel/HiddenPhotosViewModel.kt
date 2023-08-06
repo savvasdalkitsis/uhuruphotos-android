@@ -47,7 +47,7 @@ internal class HiddenPhotosViewModel @Inject constructor(
     commonEffectHandler: CommonEffectHandler,
 ) : NavigationViewModel<HiddenPhotosCompositeState, HiddenPhotosCompositeEffect, HiddenPhotosCompositeAction, HiddenPhotosNavigationRoute>(
         CompositeActionHandler(
-            ActionHandlerWithContext(hiddenPhotosAlbumPageActionsContext),
+            ActionHandlerWithContext(hiddenPhotosAlbumPageActionsContext.galleryActionsContext),
             ActionHandlerWithContext(hiddenPhotosActionsContext),
         ),
         CompositeEffectHandler(

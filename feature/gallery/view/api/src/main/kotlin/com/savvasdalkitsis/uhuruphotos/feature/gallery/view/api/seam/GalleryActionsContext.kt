@@ -23,26 +23,38 @@ import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.ui.state.Gallery
 import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.ui.state.GallerySorting
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.api.model.LightboxSequenceDataSource
 import com.savvasdalkitsis.uhuruphotos.foundation.effects.api.seam.effects.CommonEffect
-import com.savvasdalkitsis.uhuruphotos.foundation.effects.api.seam.effects.ShowToast
+import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.Navigator
 import com.savvasdalkitsis.uhuruphotos.foundation.preferences.api.Preferences
 import com.savvasdalkitsis.uhuruphotos.foundation.preferences.api.observe
 import com.savvasdalkitsis.uhuruphotos.foundation.preferences.api.set
 import com.savvasdalkitsis.uhuruphotos.foundation.result.api.SimpleResult
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.EffectHandler
 import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R
+import com.savvasdalkitsis.uhuruphotos.foundation.toaster.api.usecase.ToasterUseCase
+import dagger.assisted.Assisted
+import dagger.assisted.AssistedInject
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlin.properties.Delegates
 
-open class GalleryActionsContext(
+class GalleryActionsContext @AssistedInject constructor(
+    @Assisted
     val galleryRefresher: suspend (Int) -> SimpleResult,
+    @Assisted
     val galleryDetailsFlow: (galleryId: Int, effect: EffectHandler<CommonEffect>) -> Flow<GalleryDetails>,
+    @Assisted
     val shouldRefreshOnLoad: suspend (galleryId: Int) -> Boolean,
+    @Assisted
     val lightboxSequenceDataSource: (galleryId: Int) -> LightboxSequenceDataSource,
+    @Assisted
     val initialCollageDisplay: (galleryId: Int) -> CollageDisplay,
+    @Assisted
     val collageDisplayPersistence: suspend (galleryId: Int, PredefinedCollageDisplay) -> Unit,
+    @Assisted
     val shouldShowSortingAction: Boolean = true,
     val preferences: Preferences,
+    val toaster: ToasterUseCase,
+    val navigator: Navigator,
 ) {
 
     private val _loading = MutableSharedFlow<GalleryMutation>()
@@ -61,7 +73,7 @@ open class GalleryActionsContext(
         _loading.emit(Loading(true))
         val result = galleryRefresher(galleryId.id)
         if (result is Err) {
-            effect.handleEffect(ShowToast(R.string.error_loading_album))
+            toaster.show(R.string.error_loading_album)
         }
         _loading.emit(Loading(false))
     }

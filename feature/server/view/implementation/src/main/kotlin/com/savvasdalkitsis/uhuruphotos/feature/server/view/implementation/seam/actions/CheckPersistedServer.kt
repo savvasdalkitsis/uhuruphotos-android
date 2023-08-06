@@ -24,7 +24,6 @@ import com.savvasdalkitsis.uhuruphotos.feature.server.view.implementation.seam.S
 import com.savvasdalkitsis.uhuruphotos.feature.server.view.implementation.seam.ServerMutation.AskForUserCredentials
 import com.savvasdalkitsis.uhuruphotos.feature.server.view.implementation.ui.ServerState
 import com.savvasdalkitsis.uhuruphotos.feature.server.view.implementation.ui.ServerState.UserCredentials
-import com.savvasdalkitsis.uhuruphotos.foundation.effects.api.seam.effects.ClearBackStack
 import com.savvasdalkitsis.uhuruphotos.foundation.effects.api.seam.effects.CommonEffect
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.EffectHandler
 import kotlinx.coroutines.flow.flow
@@ -37,7 +36,7 @@ data object CheckPersistedServer : ServerAction() {
         when (serverUseCase.getServerUrl()) {
             null -> emit(AskForServerDetails(null, isValid = false))
             else -> when (authenticationUseCase.authenticationStatus()) {
-                is ServerDown, is Offline, is Authenticated -> effect.handleEffect(ClearBackStack)
+                is ServerDown, is Offline, is Authenticated -> navigator.clearBackStack()
                 is Unauthenticated -> emit(
                     when (state) {
                         is UserCredentials -> AskForUserCredentials(state.username, state.password)

@@ -34,7 +34,7 @@ internal class UserAlbumViewModel @Inject constructor(
     userAlbumActionsContext: UserAlbumActionsContext,
     commonEffectHandler: CommonEffectHandler,
 ) : NavigationViewModel<GalleryState, CommonEffect, GalleryAction, UserAlbumNavigationRoute>(
-    ActionHandlerWithContext(userAlbumActionsContext),
+    ActionHandlerWithContext(userAlbumActionsContext.galleryActionsContext),
     commonEffectHandler,
     GalleryState(collageState = CollageState())
 ) {

@@ -19,7 +19,6 @@ import com.savvasdalkitsis.uhuruphotos.feature.discover.view.implementation.seam
 import com.savvasdalkitsis.uhuruphotos.feature.discover.view.implementation.ui.state.DiscoverState
 import com.savvasdalkitsis.uhuruphotos.feature.videos.view.api.navigation.VideosNavigationRoute
 import com.savvasdalkitsis.uhuruphotos.foundation.effects.api.seam.effects.CommonEffect
-import com.savvasdalkitsis.uhuruphotos.foundation.effects.api.seam.effects.NavigateTo
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.EffectHandler
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.Mutation
 import kotlinx.coroutines.flow.Flow
@@ -30,7 +29,7 @@ data object VideoCategorySelected : DiscoverAction() {
         state: DiscoverState,
         effect: EffectHandler<CommonEffect>
     ): Flow<Mutation<DiscoverState>> = flow {
-        effect.handleEffect(NavigateTo(VideosNavigationRoute))
+        navigator.navigateTo(VideosNavigationRoute)
     }
 
 }

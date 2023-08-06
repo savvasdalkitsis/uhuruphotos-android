@@ -21,7 +21,6 @@ import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.SettingsMutation
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.ui.state.SettingsState
 import com.savvasdalkitsis.uhuruphotos.foundation.effects.api.seam.effects.CommonEffect
-import com.savvasdalkitsis.uhuruphotos.foundation.effects.api.seam.effects.NavigateToIntent
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.EffectHandler
 import kotlinx.coroutines.flow.flow
 
@@ -30,6 +29,6 @@ data object EnrollToBiometrics : SettingsAction() {
         state: SettingsState,
         effect: EffectHandler<CommonEffect>
     ) = flow<SettingsMutation> {
-        effect.handleEffect(NavigateToIntent(Intent(Settings.ACTION_SECURITY_SETTINGS)))
+        navigator.navigateTo(Intent(Settings.ACTION_SECURITY_SETTINGS))
     }
 }

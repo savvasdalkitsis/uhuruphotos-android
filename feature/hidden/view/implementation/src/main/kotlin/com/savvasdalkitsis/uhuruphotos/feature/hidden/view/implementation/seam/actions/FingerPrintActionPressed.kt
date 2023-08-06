@@ -20,7 +20,6 @@ import com.savvasdalkitsis.uhuruphotos.feature.hidden.view.implementation.seam.H
 import com.savvasdalkitsis.uhuruphotos.feature.hidden.view.implementation.seam.HiddenPhotosState
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.api.navigation.SettingsNavigationRoute
 import com.savvasdalkitsis.uhuruphotos.foundation.effects.api.seam.effects.CommonEffect
-import com.savvasdalkitsis.uhuruphotos.foundation.effects.api.seam.effects.NavigateTo
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.EffectHandler
 import kotlinx.coroutines.flow.flow
 
@@ -29,6 +28,6 @@ data object FingerPrintActionPressed : HiddenPhotosAction() {
         state: HiddenPhotosState,
         effect: EffectHandler<CommonEffect>
     ) = flow<HiddenPhotosMutation> {
-        effect.handleEffect(NavigateTo(SettingsNavigationRoute))
+        navigator.navigateTo(SettingsNavigationRoute)
     }
 }

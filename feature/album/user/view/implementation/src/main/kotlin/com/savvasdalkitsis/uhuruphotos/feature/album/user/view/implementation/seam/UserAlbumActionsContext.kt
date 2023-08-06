@@ -17,10 +17,9 @@ package com.savvasdalkitsis.uhuruphotos.feature.album.user.view.implementation.s
 
 import com.savvasdalkitsis.uhuruphotos.feature.album.user.domain.api.usecase.UserAlbumUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.toCluster
-import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.GalleryActionsContext
+import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.GalleryActionsContextFactory
 import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.ui.state.GalleryDetails
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.api.model.LightboxSequenceDataSource.UserAlbum
-import com.savvasdalkitsis.uhuruphotos.foundation.preferences.api.Preferences
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.state.Title
 import kotlinx.coroutines.flow.map
 import javax.inject.Inject
@@ -28,25 +27,26 @@ import javax.inject.Inject
 internal class UserAlbumActionsContext @Inject constructor(
     userAlbumDisplay: UserAlbumDisplay,
     userAlbumUseCase: UserAlbumUseCase,
-    preferences: Preferences,
-) : GalleryActionsContext(
-    galleryRefresher = { userAlbumUseCase.refreshUserAlbum(it) },
-    initialCollageDisplay = { userAlbumDisplay.getUserAlbumGalleryDisplay(it) },
-    collageDisplayPersistence = { albumId, galleryDisplay ->
-        userAlbumDisplay.setUserAlbumGalleryDisplay(albumId, galleryDisplay)
-    },
-    shouldRefreshOnLoad = { albumId ->
-        userAlbumUseCase.getUserAlbum(albumId).mediaCollections.isEmpty()
-    },
-    galleryDetailsFlow = { albumId, _ ->
-        userAlbumUseCase.observeUserAlbum(albumId)
-            .map { album ->
-                GalleryDetails(
-                    title = Title.Text(album.title),
-                    clusters = album.mediaCollections.map { it.toCluster() }
-                )
-            }
-    },
-    lightboxSequenceDataSource = { UserAlbum(it) },
-    preferences = preferences,
-)
+    galleryActionsContextFactory: GalleryActionsContextFactory,
+) {
+    val galleryActionsContext = galleryActionsContextFactory.create(
+        galleryRefresher = { userAlbumUseCase.refreshUserAlbum(it) },
+        initialCollageDisplay = { userAlbumDisplay.getUserAlbumGalleryDisplay(it) },
+        collageDisplayPersistence = { albumId, galleryDisplay ->
+            userAlbumDisplay.setUserAlbumGalleryDisplay(albumId, galleryDisplay)
+        },
+        shouldRefreshOnLoad = { albumId ->
+            userAlbumUseCase.getUserAlbum(albumId).mediaCollections.isEmpty()
+        },
+        galleryDetailsFlow = { albumId, _ ->
+            userAlbumUseCase.observeUserAlbum(albumId)
+                .map { album ->
+                    GalleryDetails(
+                        title = Title.Text(album.title),
+                        clusters = album.mediaCollections.map { it.toCluster() }
+                    )
+                }
+        },
+        lightboxSequenceDataSource = { UserAlbum(it) },
+    )
+}

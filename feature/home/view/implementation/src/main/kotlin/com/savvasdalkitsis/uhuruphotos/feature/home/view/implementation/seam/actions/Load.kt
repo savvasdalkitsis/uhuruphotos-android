@@ -24,8 +24,6 @@ import com.savvasdalkitsis.uhuruphotos.feature.home.view.implementation.seam.Hom
 import com.savvasdalkitsis.uhuruphotos.feature.home.view.implementation.ui.state.HomeState
 import com.savvasdalkitsis.uhuruphotos.feature.server.view.api.navigation.ServerNavigationRoute
 import com.savvasdalkitsis.uhuruphotos.foundation.effects.api.seam.effects.CommonEffect
-import com.savvasdalkitsis.uhuruphotos.foundation.effects.api.seam.effects.NavigateTo
-import com.savvasdalkitsis.uhuruphotos.foundation.effects.api.seam.effects.NewNavigationRoute
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.EffectHandler
 import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R
 import kotlinx.coroutines.flow.flow
@@ -49,10 +47,10 @@ data object Load : HomeAction() {
         when(proceed) {
             is Err -> emit(HomeMutation.NeedsBiometricAuthentication)
             is Ok -> when (authenticationUseCase.authenticationStatus()) {
-                is AuthStatus.Unauthenticated -> effect.handleEffect(NavigateTo(
+                is AuthStatus.Unauthenticated -> navigator.navigateTo(
                     ServerNavigationRoute(auto = true)
-                ))
-                else -> effect.handleEffect(NewNavigationRoute(FeedNavigationRoute))
+                )
+                else -> navigator.newRoot(FeedNavigationRoute)
             }
         }
     }

@@ -16,8 +16,10 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.feature.auth.view.implementation.seam
 
 import com.savvasdalkitsis.uhuruphotos.feature.auth.domain.api.cookies.CookieMonitor
+import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.Navigator
 import javax.inject.Inject
 
 class WebLoginActionsContext @Inject constructor(
     val cookieMonitor: CookieMonitor,
+    val navigator: Navigator,
 )

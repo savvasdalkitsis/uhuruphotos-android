@@ -24,10 +24,11 @@ import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.usecase.M
 import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.usecase.LocalMediaUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.worker.LocalMediaWorkScheduler
 import com.savvasdalkitsis.uhuruphotos.foundation.effects.api.seam.effects.CommonEffect
-import com.savvasdalkitsis.uhuruphotos.foundation.effects.api.seam.effects.ShowToast
+import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.Navigator
 import com.savvasdalkitsis.uhuruphotos.foundation.result.api.SimpleResult
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.EffectHandler
 import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R
+import com.savvasdalkitsis.uhuruphotos.foundation.toaster.api.usecase.ToasterUseCase
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -40,6 +41,8 @@ internal class LibraryActionsContext @Inject constructor(
     val serverUseCase: ServerUseCase,
     val localMediaUseCase: LocalMediaUseCase,
     val libraryUseCase: LibraryUseCase,
+    val toaster: ToasterUseCase,
+    val navigator: Navigator,
     private val localMediaWorkScheduler: LocalMediaWorkScheduler,
 ) {
 
@@ -81,7 +84,7 @@ internal class LibraryActionsContext @Inject constructor(
         _loading.emit(true)
         val result = refresh()
         if (result is Err) {
-            effect.handleEffect(ShowToast(R.string.error_loading_albums))
+            toaster.show(R.string.error_loading_albums)
         }
         // delaying to give ui time to receive the new albums before
         // dismissing the loading bar since no albums logic relies on that

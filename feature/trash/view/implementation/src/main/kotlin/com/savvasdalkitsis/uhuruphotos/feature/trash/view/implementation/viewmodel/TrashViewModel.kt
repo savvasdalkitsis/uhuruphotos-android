@@ -46,7 +46,7 @@ internal class TrashViewModel @Inject constructor(
     commonEffectHandler: CommonEffectHandler,
 ) : NavigationViewModel<TrashCompositeState, TrashCompositeEffect, TrashCompositeAction, TrashNavigationRoute>(
     CompositeActionHandler(
-        ActionHandlerWithContext(trashAlbumPageActionsContext),
+        ActionHandlerWithContext(trashAlbumPageActionsContext.galleryActionsContext),
         ActionHandlerWithContext(trashActionsContext),
     ),
     CompositeEffectHandler(

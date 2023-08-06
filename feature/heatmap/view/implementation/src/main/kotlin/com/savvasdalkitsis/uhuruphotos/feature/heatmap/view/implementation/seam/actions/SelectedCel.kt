@@ -21,7 +21,6 @@ import com.savvasdalkitsis.uhuruphotos.feature.heatmap.view.implementation.ui.st
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.api.navigation.LightboxNavigationRoute
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.state.CelState
 import com.savvasdalkitsis.uhuruphotos.foundation.effects.api.seam.effects.CommonEffect
-import com.savvasdalkitsis.uhuruphotos.foundation.effects.api.seam.effects.NavigateTo
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.EffectHandler
 import kotlinx.coroutines.flow.flow
 
@@ -32,6 +31,6 @@ data class SelectedCel(
         state: HeatMapState,
         effect: EffectHandler<CommonEffect>
     ) = flow<HeatMapMutation> {
-        effect.handleEffect(NavigateTo(LightboxNavigationRoute(celState.mediaItem.id)))
+        navigator.navigateTo(LightboxNavigationRoute(celState.mediaItem.id))
     }
 }

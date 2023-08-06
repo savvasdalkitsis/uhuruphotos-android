@@ -19,7 +19,6 @@ import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.SettingsMutation
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.ui.state.SettingsState
 import com.savvasdalkitsis.uhuruphotos.foundation.effects.api.seam.effects.CommonEffect
-import com.savvasdalkitsis.uhuruphotos.foundation.effects.api.seam.effects.ShowToast
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.EffectHandler
 import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R
 import kotlinx.coroutines.flow.flow
@@ -30,6 +29,6 @@ data object ClearRecentSearches : SettingsAction() {
         effect: EffectHandler<CommonEffect>
     ) = flow<SettingsMutation> {
         searchUseCase.clearRecentSearchSuggestions()
-        effect.handleEffect(ShowToast(R.string.recent_searches_cleared))
+        toaster.show(R.string.recent_searches_cleared)
     }
 }

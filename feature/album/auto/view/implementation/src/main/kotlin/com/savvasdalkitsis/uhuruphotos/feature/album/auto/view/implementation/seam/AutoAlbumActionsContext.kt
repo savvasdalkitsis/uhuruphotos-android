@@ -19,7 +19,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.album.auto.domain.api.usecase.Aut
 import com.savvasdalkitsis.uhuruphotos.feature.album.auto.view.implementation.state.AutoAlbumCollageDisplay
 import com.savvasdalkitsis.uhuruphotos.feature.auth.domain.api.usecase.ServerUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.Cluster
-import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.GalleryActionsContext
+import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.GalleryActionsContextFactory
 import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.ui.state.GalleryDetails
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.api.model.LightboxSequenceDataSource.AutoAlbum
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaId
@@ -38,45 +38,50 @@ internal class AutoAlbumActionsContext @Inject constructor(
     autoAlbumUseCase: AutoAlbumUseCase,
     serverUseCase: ServerUseCase,
     dateDisplayer: DateDisplayer,
-    preferences: Preferences,
-) : GalleryActionsContext(
-    galleryRefresher = { autoAlbumUseCase.refreshAutoAlbum(it) },
-    initialCollageDisplay = { AutoAlbumCollageDisplay },
-    collageDisplayPersistence = { _, _ -> },
-    shouldRefreshOnLoad = { albumId ->
-        autoAlbumUseCase.getAutoAlbum(albumId).isEmpty()
-    },
-    galleryDetailsFlow = { albumId, _ ->
-        val serverUrl = serverUseCase.getServerUrl()!!
-        autoAlbumUseCase.observeAutoAlbumWithPeople(albumId)
-            .map { (photoEntries, people) ->
-                GalleryDetails(
-                    title = Title.Text(photoEntries.firstOrNull()?.title ?: ""),
-                    people = people.map { person ->
-                        person.toPerson { "$serverUrl$it" }
-                    },
-                    clusters = photoEntries.groupBy { entry ->
-                        dateDisplayer.dateString(entry.timestamp)
-                    }.entries.map { (date, photos) ->
-                        Cluster(
-                            id = date,
-                            unformattedDate = photos.firstOrNull()?.timestamp,
-                            displayTitle = date,
-                            location = null,
-                            cels = photos.map {
-                                MediaItemInstance(
-                                    id = MediaId.Remote(it.photoId.toString(), it.video ?: false, serverUrl),
-                                    mediaHash = MediaItemHash(it.photoId.toString()),
-                                    displayDayDate = date,
-                                    sortableDate = it.timestamp,
-                                    isFavourite = it.isFavorite ?: false,
-                                ).toCel()
-                            }.toPersistentList()
-                        )
-                    }
-                )
-            }
-    },
-    lightboxSequenceDataSource = { AutoAlbum(it) },
-    preferences = preferences,
-)
+    galleryActionsContextFactory: GalleryActionsContextFactory,
+) {
+    val galleryActionsContext = galleryActionsContextFactory.create(
+        galleryRefresher = { autoAlbumUseCase.refreshAutoAlbum(it) },
+        initialCollageDisplay = { AutoAlbumCollageDisplay },
+        collageDisplayPersistence = { _, _ -> },
+        shouldRefreshOnLoad = { albumId ->
+            autoAlbumUseCase.getAutoAlbum(albumId).isEmpty()
+        },
+        galleryDetailsFlow = { albumId, _ ->
+            val serverUrl = serverUseCase.getServerUrl()!!
+            autoAlbumUseCase.observeAutoAlbumWithPeople(albumId)
+                .map { (photoEntries, people) ->
+                    GalleryDetails(
+                        title = Title.Text(photoEntries.firstOrNull()?.title ?: ""),
+                        people = people.map { person ->
+                            person.toPerson { "$serverUrl$it" }
+                        },
+                        clusters = photoEntries.groupBy { entry ->
+                            dateDisplayer.dateString(entry.timestamp)
+                        }.entries.map { (date, photos) ->
+                            Cluster(
+                                id = date,
+                                unformattedDate = photos.firstOrNull()?.timestamp,
+                                displayTitle = date,
+                                location = null,
+                                cels = photos.map {
+                                    MediaItemInstance(
+                                        id = MediaId.Remote(
+                                            it.photoId.toString(),
+                                            it.video ?: false,
+                                            serverUrl
+                                        ),
+                                        mediaHash = MediaItemHash(it.photoId.toString()),
+                                        displayDayDate = date,
+                                        sortableDate = it.timestamp,
+                                        isFavourite = it.isFavorite ?: false,
+                                    ).toCel()
+                                }.toPersistentList()
+                            )
+                        }
+                    )
+                }
+        },
+        lightboxSequenceDataSource = { AutoAlbum(it) },
+    )
+}

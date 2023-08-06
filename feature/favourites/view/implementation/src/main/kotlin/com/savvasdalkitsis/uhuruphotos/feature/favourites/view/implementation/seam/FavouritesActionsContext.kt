@@ -18,12 +18,11 @@ package com.savvasdalkitsis.uhuruphotos.feature.favourites.view.implementation.s
 import com.github.michaelbull.result.getOr
 import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.Cluster
 import com.savvasdalkitsis.uhuruphotos.feature.favourites.domain.api.usecase.FavouritesUseCase
-import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.GalleryActionsContext
+import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.GalleryActionsContextFactory
 import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.ui.state.GalleryDetails
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.api.model.LightboxSequenceDataSource.FavouriteMedia
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.usecase.MediaUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.state.toCel
-import com.savvasdalkitsis.uhuruphotos.foundation.preferences.api.Preferences
 import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.state.Title
 import kotlinx.collections.immutable.toPersistentList
@@ -34,33 +33,34 @@ import javax.inject.Inject
 internal class FavouritesActionsContext @Inject constructor(
     mediaUseCase: MediaUseCase,
     favouritesUseCase: FavouritesUseCase,
-    preferences: Preferences,
-) : GalleryActionsContext(
-    galleryRefresher = { mediaUseCase.refreshFavouriteMedia() },
-    initialCollageDisplay = { favouritesUseCase.getFavouriteMediaGalleryDisplay() },
-    collageDisplayPersistence = { _, galleryDisplay ->
-        favouritesUseCase.setFavouriteMediaGalleryDisplay(galleryDisplay)
-    },
-    shouldRefreshOnLoad = { _ -> true },
-    galleryDetailsFlow = { _, _ ->
-        mediaUseCase.observeFavouriteMedia()
-            .mapNotNull { it.getOr(null) }
-            .map { mediaItems ->
-                GalleryDetails(
-                    title = Title.Resource(string.favourite_media),
-                    clusters = listOf(
-                        Cluster(
-                            id = "favourites",
-                            displayTitle = "",
-                            location = null,
-                            cels = mediaItems.map {
-                                it.toCel()
-                            }.toPersistentList(),
-                        )
-                    ),
-                )
-            }
-    },
-    lightboxSequenceDataSource = { FavouriteMedia },
-    preferences = preferences,
-)
+    galleryActionsContextFactory: GalleryActionsContextFactory,
+) {
+    val galleryActionsContext = galleryActionsContextFactory.create(
+        galleryRefresher = { mediaUseCase.refreshFavouriteMedia() },
+        initialCollageDisplay = { favouritesUseCase.getFavouriteMediaGalleryDisplay() },
+        collageDisplayPersistence = { _, galleryDisplay ->
+            favouritesUseCase.setFavouriteMediaGalleryDisplay(galleryDisplay)
+        },
+        shouldRefreshOnLoad = { _ -> true },
+        galleryDetailsFlow = { _, _ ->
+            mediaUseCase.observeFavouriteMedia()
+                .mapNotNull { it.getOr(null) }
+                .map { mediaItems ->
+                    GalleryDetails(
+                        title = Title.Resource(string.favourite_media),
+                        clusters = listOf(
+                            Cluster(
+                                id = "favourites",
+                                displayTitle = "",
+                                location = null,
+                                cels = mediaItems.map {
+                                    it.toCel()
+                                }.toPersistentList(),
+                            )
+                        ),
+                    )
+                }
+        },
+        lightboxSequenceDataSource = { FavouriteMedia },
+    )
+}

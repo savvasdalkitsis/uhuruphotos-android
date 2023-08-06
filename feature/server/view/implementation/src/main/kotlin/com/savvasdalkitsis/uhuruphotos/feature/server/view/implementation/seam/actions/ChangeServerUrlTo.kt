@@ -18,7 +18,6 @@ package com.savvasdalkitsis.uhuruphotos.feature.server.view.implementation.seam.
 import com.savvasdalkitsis.uhuruphotos.feature.server.view.implementation.seam.ServerActionsContext
 import com.savvasdalkitsis.uhuruphotos.feature.server.view.implementation.seam.ServerMutation.HideUnsecureServerConfirmation
 import com.savvasdalkitsis.uhuruphotos.feature.server.view.implementation.ui.ServerState
-import com.savvasdalkitsis.uhuruphotos.foundation.effects.api.seam.effects.ClearBackStack
 import com.savvasdalkitsis.uhuruphotos.foundation.effects.api.seam.effects.CommonEffect
 import com.savvasdalkitsis.uhuruphotos.foundation.http.api.isValidUrlOrDomain
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.EffectHandler
@@ -32,7 +31,7 @@ data class ChangeServerUrlTo(val url: String) : ServerAction() {
         emit(HideUnsecureServerConfirmation)
         if (url.isValidUrlOrDomain) {
             serverUseCase.setServerUrl(url)
-            effect.handleEffect(ClearBackStack)
+            navigator.clearBackStack()
         }
     }
 

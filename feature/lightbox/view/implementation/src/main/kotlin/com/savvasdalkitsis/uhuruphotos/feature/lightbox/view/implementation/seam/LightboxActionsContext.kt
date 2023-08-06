@@ -15,6 +15,8 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam
 
+import android.content.ClipData
+import android.content.ClipboardManager
 import android.content.Context
 import android.net.Uri
 import com.github.michaelbull.result.Err
@@ -58,13 +60,14 @@ import com.savvasdalkitsis.uhuruphotos.feature.trash.domain.api.usecase.TrashUse
 import com.savvasdalkitsis.uhuruphotos.foundation.date.api.module.DateModule
 import com.savvasdalkitsis.uhuruphotos.foundation.download.api.usecase.DownloadUseCase
 import com.savvasdalkitsis.uhuruphotos.foundation.effects.api.seam.effects.CommonEffect
-import com.savvasdalkitsis.uhuruphotos.foundation.effects.api.seam.effects.NavigateBack
-import com.savvasdalkitsis.uhuruphotos.foundation.effects.api.seam.effects.NavigateTo
-import com.savvasdalkitsis.uhuruphotos.foundation.effects.api.seam.effects.ShowSystemBars
 import com.savvasdalkitsis.uhuruphotos.foundation.log.api.log
+import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.Navigator
 import com.savvasdalkitsis.uhuruphotos.foundation.result.api.SimpleResult
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.EffectHandler
+import com.savvasdalkitsis.uhuruphotos.foundation.share.api.usecase.ShareUseCase
 import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
+import com.savvasdalkitsis.uhuruphotos.foundation.toaster.api.usecase.ToasterUseCase
+import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.usecase.UiUseCase
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.flow.FlowCollector
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -90,6 +93,11 @@ internal class LightboxActionsContext @Inject constructor(
     val displayingDateTimeFormat: DateTimeFormatter,
     @ApplicationContext
     val context: Context,
+    val uiUseCase: UiUseCase,
+    val shareUseCase: ShareUseCase,
+    val toaster: ToasterUseCase,
+    val navigator: Navigator,
+    private val clipboardManager: ClipboardManager,
     private val localMediaDeletionUseCase: LocalMediaDeletionUseCase,
 ) {
 
@@ -147,8 +155,8 @@ internal class LightboxActionsContext @Inject constructor(
             .onSuccess {
                 postProcessAction()
                 if (state.media.size == 1) {
-                    effect.handleEffect(ShowSystemBars)
-                    effect.handleEffect(NavigateBack)
+                    uiUseCase.setSystemBarsVisibility(true)
+                    navigator.navigateBack()
                 }
             }
     }
@@ -177,20 +185,21 @@ internal class LightboxActionsContext @Inject constructor(
         fun SingleMediaItemState.fileName() = localPath?.substringAfterLast("/")
             ?: "PHOTO_${Random.nextInt()}"
         state.currentMediaItem.id.findLocal?.let { media ->
-            effect.handleEffect(
-                NavigateTo(EditNavigationRoute(
-                    uri = Uri.parse(media.contentUri).toString(),
-                    fileName = state.currentMediaItem.fileName(),
-                    timestamp = try {
-                            displayingDateTimeFormat.parseDateTime(state.currentMediaItem.dateAndTime).millis
-                        } catch (e: Exception) {
-                            log(e)
-                            null
-                        },
-                    )
+            navigator.navigateTo(EditNavigationRoute(
+                uri = Uri.parse(media.contentUri).toString(),
+                fileName = state.currentMediaItem.fileName(),
+                timestamp = try {
+                        displayingDateTimeFormat.parseDateTime(state.currentMediaItem.dateAndTime).millis
+                    } catch (e: Exception) {
+                        log(e)
+                        null
+                    },
                 )
             )
         }
     }
 
+    fun copyToClipBoard(text: String) {
+        clipboardManager.setPrimaryClip(ClipData.newPlainText("", text))
+    }
 }

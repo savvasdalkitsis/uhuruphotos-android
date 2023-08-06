@@ -22,8 +22,6 @@ import com.savvasdalkitsis.uhuruphotos.feature.edit.view.implementation.seam.Edi
 import com.savvasdalkitsis.uhuruphotos.feature.edit.view.implementation.seam.EditMutation
 import com.savvasdalkitsis.uhuruphotos.feature.edit.view.implementation.ui.state.EditState
 import com.savvasdalkitsis.uhuruphotos.foundation.effects.api.seam.effects.CommonEffect
-import com.savvasdalkitsis.uhuruphotos.foundation.effects.api.seam.effects.NavigateBack
-import com.savvasdalkitsis.uhuruphotos.foundation.effects.api.seam.effects.ShowToast
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.EffectHandler
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.Mutation
 import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R
@@ -37,8 +35,8 @@ data class ImageCropped(val image: ImageBitmap, val name: String, val uri: Uri) 
     ): Flow<Mutation<EditState>> = flow {
         emit(EditMutation.Saving)
         if (!localMediaUseCase.savePhoto(image.asAndroidBitmap(), "CROPPED_$name", uri)) {
-            effect.handleEffect(ShowToast(R.string.error_editing_photo))
+            toaster.show(R.string.error_editing_photo)
         }
-        effect.handleEffect(NavigateBack)
+        navigator.navigateBack()
     }
 }

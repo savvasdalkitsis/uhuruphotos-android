@@ -20,8 +20,6 @@ import com.savvasdalkitsis.uhuruphotos.feature.discover.view.implementation.seam
 import com.savvasdalkitsis.uhuruphotos.feature.discover.view.implementation.ui.state.DiscoverState
 import com.savvasdalkitsis.uhuruphotos.feature.search.view.api.navigation.SearchNavigationRoute
 import com.savvasdalkitsis.uhuruphotos.foundation.effects.api.seam.effects.CommonEffect
-import com.savvasdalkitsis.uhuruphotos.foundation.effects.api.seam.effects.HideKeyboard
-import com.savvasdalkitsis.uhuruphotos.foundation.effects.api.seam.effects.NavigateTo
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.EffectHandler
 import kotlinx.coroutines.flow.flow
 
@@ -31,7 +29,7 @@ data class SearchFor(val query: String) : DiscoverAction() {
         effect: EffectHandler<CommonEffect>
     ) = flow {
         emit(DiscoverMutation.UpdateLatestQuery(query))
-        effect.handleEffect(HideKeyboard)
-        effect.handleEffect(NavigateTo(SearchNavigationRoute(query)))
+        uiUseCase.hideKeyboard()
+        navigator.navigateTo(SearchNavigationRoute(query))
     }
 }

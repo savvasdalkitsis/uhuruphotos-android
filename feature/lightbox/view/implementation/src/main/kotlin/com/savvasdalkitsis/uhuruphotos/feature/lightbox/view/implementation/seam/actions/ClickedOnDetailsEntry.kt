@@ -19,8 +19,6 @@ import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.LightboxMutation
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.ui.state.LightboxState
 import com.savvasdalkitsis.uhuruphotos.foundation.effects.api.seam.effects.CommonEffect
-import com.savvasdalkitsis.uhuruphotos.foundation.effects.api.seam.effects.CopyToClipboard
-import com.savvasdalkitsis.uhuruphotos.foundation.effects.api.seam.effects.ShowToast
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.EffectHandler
 import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R
 import kotlinx.coroutines.flow.flow
@@ -31,8 +29,8 @@ data class ClickedOnDetailsEntry(val text: String) : LightboxAction() {
         state: LightboxState,
         effect: EffectHandler<CommonEffect>
     ) = flow<LightboxMutation> {
-        effect.handleEffect(CopyToClipboard(text))
-        effect.handleEffect(ShowToast(R.string.copied_to_clipboard))
+        copyToClipBoard(text)
+        toaster.show(R.string.copied_to_clipboard)
     }
 
 }

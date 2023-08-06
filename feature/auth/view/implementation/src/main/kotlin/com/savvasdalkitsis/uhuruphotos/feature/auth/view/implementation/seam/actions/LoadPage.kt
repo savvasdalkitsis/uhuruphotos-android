@@ -19,7 +19,6 @@ import com.savvasdalkitsis.uhuruphotos.feature.auth.view.implementation.seam.Web
 import com.savvasdalkitsis.uhuruphotos.feature.auth.view.implementation.seam.WebLoginMutation
 import com.savvasdalkitsis.uhuruphotos.feature.auth.view.implementation.ui.WebLoginState
 import com.savvasdalkitsis.uhuruphotos.foundation.effects.api.seam.effects.CommonEffect
-import com.savvasdalkitsis.uhuruphotos.foundation.effects.api.seam.effects.NavigateBack
 import com.savvasdalkitsis.uhuruphotos.foundation.launchers.api.onMain
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.EffectHandler
 import kotlinx.coroutines.flow.flow
@@ -33,7 +32,7 @@ data class LoadPage(val url: String): WebLoginAction() {
         emit(WebLoginMutation.Loading)
         cookieMonitor.monitor(coroutineContext).invokeOnCompletion {
             onMain {
-                effect.handleEffect(NavigateBack)
+                navigator.navigateBack()
             }
         }
 

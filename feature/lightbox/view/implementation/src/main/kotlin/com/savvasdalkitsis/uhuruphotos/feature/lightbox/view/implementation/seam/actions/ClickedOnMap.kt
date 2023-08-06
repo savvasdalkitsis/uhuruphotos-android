@@ -21,7 +21,6 @@ import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.LightboxMutation
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.ui.state.LightboxState
 import com.savvasdalkitsis.uhuruphotos.foundation.effects.api.seam.effects.CommonEffect
-import com.savvasdalkitsis.uhuruphotos.foundation.effects.api.seam.effects.NavigateToIntent
 import com.savvasdalkitsis.uhuruphotos.foundation.map.api.model.LatLon
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.EffectHandler
 import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R
@@ -33,7 +32,7 @@ data class ClickedOnMap(val gps: LatLon) : LightboxAction() {
         state: LightboxState,
         effect: EffectHandler<CommonEffect>
     ) = flow<LightboxMutation> {
-        effect.handleEffect(NavigateToIntent(geoLocation(gps)))
+        navigator.navigateTo(geoLocation(gps))
     }
 
     context(LightboxActionsContext) private fun geoLocation(gps: LatLon) =

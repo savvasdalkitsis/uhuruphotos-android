@@ -19,7 +19,7 @@ import com.github.michaelbull.result.Err
 import com.github.michaelbull.result.Ok
 import com.github.michaelbull.result.getOr
 import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.Cluster
-import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.GalleryActionsContext
+import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.GalleryActionsContextFactory
 import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.ui.state.GalleryDetails
 import com.savvasdalkitsis.uhuruphotos.feature.hidden.domain.api.usecase.HiddenMediaUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.api.model.LightboxSequenceDataSource.HiddenMedia
@@ -27,8 +27,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.usecase.M
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.state.toCel
 import com.savvasdalkitsis.uhuruphotos.feature.settings.domain.api.usecase.SettingsUseCase
 import com.savvasdalkitsis.uhuruphotos.foundation.biometrics.api.usecase.BiometricsUseCase
-import com.savvasdalkitsis.uhuruphotos.foundation.effects.api.seam.effects.NavigateBack
-import com.savvasdalkitsis.uhuruphotos.foundation.preferences.api.Preferences
+import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.Navigator
 import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.state.Title
 import kotlinx.collections.immutable.toPersistentList
@@ -43,52 +42,55 @@ internal class HiddenPhotosAlbumPageActionsContext @Inject constructor(
     hiddenMediaUseCase: HiddenMediaUseCase,
     settingsUseCase: SettingsUseCase,
     biometricsUseCase: BiometricsUseCase,
-    preferences: Preferences,
-) : GalleryActionsContext(
-    galleryRefresher = { mediaUseCase.refreshHiddenMedia() },
-    initialCollageDisplay = { hiddenMediaUseCase.getHiddenMediaGalleryDisplay() },
-    collageDisplayPersistence = { _, galleryDisplay ->
-        hiddenMediaUseCase.setHiddenMediaGalleryDisplay(galleryDisplay)
-    },
-    shouldRefreshOnLoad = { true },
-    galleryDetailsFlow = { _, effect ->
-        settingsUseCase.observeBiometricsRequiredForHiddenPhotosAccess()
-            .flatMapLatest { biometricsRequired ->
-                val proceed = when {
-                    biometricsRequired -> biometricsUseCase.authenticate(
-                        string.authenticate,
-                        string.authenticate_for_access_to_hidden,
-                        string.authenticate_for_access_to_hidden_description,
-                        true,
-                    )
-                    else -> Ok(Unit)
-                }
-                if (proceed is Err) {
-                    flow {
-                        effect.handleEffect(NavigateBack)
-                    }
-                } else {
-                    mediaUseCase.observeHiddenMedia()
-                        .mapNotNull { it.getOr(null) }
-                        .map { photoEntries ->
-                            GalleryDetails(
-                                title = Title.Resource(string.hidden_photos),
-                                clusters = listOf(
-                                    Cluster(
-                                        id = "hidden",
-                                        displayTitle = "",
-                                        location = null,
-                                        cels = photoEntries.map {
-                                            it.toCel()
-                                        }.toPersistentList(),
-                                    )
-                                ),
-                            )
-                        }
-                }
-            }
+    navigator: Navigator,
+    galleryActionsContextFactory: GalleryActionsContextFactory,
+) {
+    val galleryActionsContext = galleryActionsContextFactory.create(
+        galleryRefresher = { mediaUseCase.refreshHiddenMedia() },
+        initialCollageDisplay = { hiddenMediaUseCase.getHiddenMediaGalleryDisplay() },
+        collageDisplayPersistence = { _, galleryDisplay ->
+            hiddenMediaUseCase.setHiddenMediaGalleryDisplay(galleryDisplay)
+        },
+        shouldRefreshOnLoad = { true },
+        galleryDetailsFlow = { _, effect ->
+            settingsUseCase.observeBiometricsRequiredForHiddenPhotosAccess()
+                .flatMapLatest { biometricsRequired ->
+                    val proceed = when {
+                        biometricsRequired -> biometricsUseCase.authenticate(
+                            string.authenticate,
+                            string.authenticate_for_access_to_hidden,
+                            string.authenticate_for_access_to_hidden_description,
+                            true,
+                        )
 
-    },
-    lightboxSequenceDataSource = { HiddenMedia },
-    preferences = preferences,
-)
+                        else -> Ok(Unit)
+                    }
+                    if (proceed is Err) {
+                        flow {
+                            navigator.navigateBack()
+                        }
+                    } else {
+                        mediaUseCase.observeHiddenMedia()
+                            .mapNotNull { it.getOr(null) }
+                            .map { photoEntries ->
+                                GalleryDetails(
+                                    title = Title.Resource(string.hidden_photos),
+                                    clusters = listOf(
+                                        Cluster(
+                                            id = "hidden",
+                                            displayTitle = "",
+                                            location = null,
+                                            cels = photoEntries.map {
+                                                it.toCel()
+                                            }.toPersistentList(),
+                                        )
+                                    ),
+                                )
+                            }
+                    }
+                }
+
+        },
+        lightboxSequenceDataSource = { HiddenMedia },
+    )
+}

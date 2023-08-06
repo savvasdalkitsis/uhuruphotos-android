@@ -19,8 +19,6 @@ import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.LightboxMutation
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.ui.state.LightboxState
 import com.savvasdalkitsis.uhuruphotos.foundation.effects.api.seam.effects.CommonEffect
-import com.savvasdalkitsis.uhuruphotos.foundation.effects.api.seam.effects.HideSystemBars
-import com.savvasdalkitsis.uhuruphotos.foundation.effects.api.seam.effects.ShowSystemBars
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.EffectHandler
 import kotlinx.coroutines.flow.flow
 
@@ -32,10 +30,10 @@ data object ToggleUI : LightboxAction() {
     ) = flow {
         if (state.showUI) {
             emit(LightboxMutation.HideUI)
-            effect.handleEffect(HideSystemBars)
+            uiUseCase.setSystemBarsVisibility(false)
         } else {
             emit(LightboxMutation.ShowUI)
-            effect.handleEffect(ShowSystemBars)
+            uiUseCase.setSystemBarsVisibility(true)
         }
     }
 

@@ -35,7 +35,7 @@ internal class UndatedViewModel @Inject constructor(
     actionsContext: UndatedActionsContext,
     commonEffectHandler: CommonEffectHandler,
 ) : NavigationViewModel<GalleryState, CommonEffect, GalleryAction, UndatedNavigationRoute>(
-    ActionHandlerWithContext(actionsContext),
+    ActionHandlerWithContext(actionsContext.galleryActionsContext),
     commonEffectHandler,
     GalleryState(title = Title.Resource(string.media_without_date)),
 ) {

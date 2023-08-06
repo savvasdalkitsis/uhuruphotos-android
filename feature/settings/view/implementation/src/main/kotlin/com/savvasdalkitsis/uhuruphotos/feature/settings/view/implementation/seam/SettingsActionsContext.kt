@@ -24,8 +24,10 @@ import com.savvasdalkitsis.uhuruphotos.feature.settings.domain.api.usecase.Cache
 import com.savvasdalkitsis.uhuruphotos.feature.settings.domain.api.usecase.SettingsUseCase
 import com.savvasdalkitsis.uhuruphotos.foundation.biometrics.api.usecase.BiometricsUseCase
 import com.savvasdalkitsis.uhuruphotos.foundation.log.api.usecase.FeedbackUseCase
+import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.Navigator
 import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
 import com.savvasdalkitsis.uhuruphotos.foundation.system.api.usecase.SystemUseCase
+import com.savvasdalkitsis.uhuruphotos.foundation.toaster.api.usecase.ToasterUseCase
 import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
 
@@ -39,6 +41,8 @@ internal class SettingsActionsContext @Inject constructor(
     val biometricsUseCase: BiometricsUseCase,
     val systemUseCase: SystemUseCase,
     val jobsUseCase: JobsUseCase,
+    val toaster: ToasterUseCase,
+    val navigator: Navigator,
 ) {
 
     fun authenticateIfNeeded(

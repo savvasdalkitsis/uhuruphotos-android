@@ -20,7 +20,6 @@ import com.savvasdalkitsis.uhuruphotos.feature.discover.view.implementation.seam
 import com.savvasdalkitsis.uhuruphotos.feature.discover.view.implementation.ui.state.DiscoverState
 import com.savvasdalkitsis.uhuruphotos.feature.people.view.api.navigation.PeopleNavigationRoute
 import com.savvasdalkitsis.uhuruphotos.foundation.effects.api.seam.effects.CommonEffect
-import com.savvasdalkitsis.uhuruphotos.foundation.effects.api.seam.effects.NavigateTo
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.EffectHandler
 import kotlinx.coroutines.flow.flow
 
@@ -29,6 +28,6 @@ data object ViewAllPeopleSelected : DiscoverAction() {
         state: DiscoverState,
         effect: EffectHandler<CommonEffect>
     ) = flow<DiscoverMutation> {
-        effect.handleEffect(NavigateTo(PeopleNavigationRoute))
+        navigator.navigateTo(PeopleNavigationRoute)
     }
 }

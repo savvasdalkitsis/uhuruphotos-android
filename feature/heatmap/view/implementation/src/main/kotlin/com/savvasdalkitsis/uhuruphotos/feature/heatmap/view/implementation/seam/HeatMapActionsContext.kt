@@ -25,6 +25,8 @@ import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.usecase.M
 import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.worker.LocalMediaWorkScheduler
 import com.savvasdalkitsis.uhuruphotos.feature.settings.domain.api.usecase.SettingsUseCase
 import com.savvasdalkitsis.uhuruphotos.foundation.map.api.model.LatLon
+import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.Navigator
+import com.savvasdalkitsis.uhuruphotos.foundation.toaster.api.usecase.ToasterUseCase
 import kotlinx.coroutines.Deferred
 import javax.inject.Inject
 
@@ -36,6 +38,8 @@ internal class HeatMapActionsContext @Inject constructor(
     val localMediaWorkScheduler: LocalMediaWorkScheduler,
     val locationManager: LocationManager,
     val heatMapUseCase: HeatMapUseCase,
+    val toaster: ToasterUseCase,
+    val navigator: Navigator,
 ) {
 
     @Volatile
