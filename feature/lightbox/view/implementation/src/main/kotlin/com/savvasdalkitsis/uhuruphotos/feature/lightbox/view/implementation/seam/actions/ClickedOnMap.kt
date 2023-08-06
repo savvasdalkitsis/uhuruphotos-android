@@ -15,21 +15,31 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.actions
 
+import android.content.Intent
+import android.net.Uri
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.LightboxActionsContext
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.LightboxMutation
-import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.effects.LaunchMap
-import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.effects.LightboxEffect
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.ui.state.LightboxState
+import com.savvasdalkitsis.uhuruphotos.foundation.effects.api.seam.effects.CommonEffect
+import com.savvasdalkitsis.uhuruphotos.foundation.effects.api.seam.effects.NavigateToIntent
 import com.savvasdalkitsis.uhuruphotos.foundation.map.api.model.LatLon
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.EffectHandler
+import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R
 import kotlinx.coroutines.flow.flow
 
 data class ClickedOnMap(val gps: LatLon) : LightboxAction() {
 
     context(LightboxActionsContext) override fun handle(
         state: LightboxState,
-        effect: EffectHandler<LightboxEffect>
+        effect: EffectHandler<CommonEffect>
     ) = flow<LightboxMutation> {
-        effect.handleEffect(LaunchMap(gps))
+        effect.handleEffect(NavigateToIntent(geoLocation(gps)))
     }
+
+    context(LightboxActionsContext) private fun geoLocation(gps: LatLon) =
+        Intent(Intent.ACTION_VIEW, with(gps) {
+            "geo:$lat,$lon?q=$lat,$lon(${context.getString(R.string.media)})".uri
+        })
+
+    private val String.uri get () = Uri.parse(this)
 }

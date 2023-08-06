@@ -19,10 +19,10 @@ import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.Cluster
 import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.GalleryActionsContext
 import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.GalleryId
 import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.GalleryMutation
-import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.effects.GalleryEffect
 import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.ui.state.GallerySorting
 import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.ui.state.GalleryState
 import com.savvasdalkitsis.uhuruphotos.foundation.coroutines.api.safelyOnStartIgnoring
+import com.savvasdalkitsis.uhuruphotos.foundation.effects.api.seam.effects.CommonEffect
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.EffectHandler
 import kotlinx.collections.immutable.toPersistentList
 import kotlinx.coroutines.flow.Flow
@@ -34,7 +34,7 @@ import kotlinx.coroutines.flow.merge
 data class LoadCollage(val id: GalleryId) : GalleryAction() {
     context(GalleryActionsContext) override fun handle(
         state: GalleryState,
-        effect: EffectHandler<GalleryEffect>
+        effect: EffectHandler<CommonEffect>
     ) : Flow<GalleryMutation> {
         galleryId = id
         return merge(

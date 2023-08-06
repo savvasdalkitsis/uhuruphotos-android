@@ -22,11 +22,12 @@ import com.savvasdalkitsis.uhuruphotos.feature.search.view.implementation.seam.S
 import com.savvasdalkitsis.uhuruphotos.feature.search.view.implementation.seam.SearchMutation.Loading
 import com.savvasdalkitsis.uhuruphotos.feature.search.view.implementation.seam.SearchMutation.SetQuery
 import com.savvasdalkitsis.uhuruphotos.feature.search.view.implementation.seam.SearchMutation.ShowErrorScreen
-import com.savvasdalkitsis.uhuruphotos.feature.search.view.implementation.seam.effects.ErrorSearching
-import com.savvasdalkitsis.uhuruphotos.feature.search.view.implementation.seam.effects.SearchEffect
 import com.savvasdalkitsis.uhuruphotos.feature.search.view.implementation.ui.state.SearchState
+import com.savvasdalkitsis.uhuruphotos.foundation.effects.api.seam.effects.CommonEffect
+import com.savvasdalkitsis.uhuruphotos.foundation.effects.api.seam.effects.ShowToast
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.EffectHandler
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.Mutation
+import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.currentCoroutineContext
 import kotlinx.coroutines.flow.Flow
@@ -39,7 +40,7 @@ import kotlinx.coroutines.flow.mapNotNull
 data class SearchFor(val query: String) : SearchAction() {
     context(SearchActionsContext) override fun handle(
         state: SearchState,
-        effect: EffectHandler<SearchEffect>
+        effect: EffectHandler<CommonEffect>
     ): Flow<Mutation<SearchState>> = flow {
         emit(Loading)
         emit(SetQuery(query))
@@ -54,7 +55,7 @@ data class SearchFor(val query: String) : SearchAction() {
                     else -> {
                         currentCoroutineContext().cancel()
                         if (!state.clusters.isEmpty()) {
-                            effect.handleEffect(ErrorSearching)
+                            effect.handleEffect(ShowToast(R.string.error_searching))
                         }
                         null
                     }

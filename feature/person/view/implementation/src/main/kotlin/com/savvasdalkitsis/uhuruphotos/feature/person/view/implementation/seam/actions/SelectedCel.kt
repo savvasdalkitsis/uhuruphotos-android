@@ -15,22 +15,24 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.person.view.implementation.seam.actions
 
+import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.api.model.LightboxSequenceDataSource.PersonResults
+import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.api.navigation.LightboxNavigationRoute
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.state.CelState
 import com.savvasdalkitsis.uhuruphotos.feature.person.view.implementation.seam.PersonActionsContext
 import com.savvasdalkitsis.uhuruphotos.feature.person.view.implementation.seam.PersonMutation
-import com.savvasdalkitsis.uhuruphotos.feature.person.view.implementation.seam.effects.OpenLightbox
-import com.savvasdalkitsis.uhuruphotos.feature.person.view.implementation.seam.effects.PersonEffect
 import com.savvasdalkitsis.uhuruphotos.feature.person.view.implementation.ui.state.PersonState
+import com.savvasdalkitsis.uhuruphotos.foundation.effects.api.seam.effects.CommonEffect
+import com.savvasdalkitsis.uhuruphotos.foundation.effects.api.seam.effects.NavigateTo
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.EffectHandler
 import kotlinx.coroutines.flow.flow
 
 data class SelectedCel(val cel: CelState) : PersonAction() {
     context(PersonActionsContext) override fun handle(
         state: PersonState,
-        effect: EffectHandler<PersonEffect>
+        effect: EffectHandler<CommonEffect>
     ) = flow<PersonMutation> {
-        effect.handleEffect(
-            OpenLightbox(cel.mediaItem.id, state.person!!)
-        )
+        effect.handleEffect(NavigateTo(
+            LightboxNavigationRoute(cel.mediaItem.id, PersonResults(state.person!!.id))
+        ))
     }
 }

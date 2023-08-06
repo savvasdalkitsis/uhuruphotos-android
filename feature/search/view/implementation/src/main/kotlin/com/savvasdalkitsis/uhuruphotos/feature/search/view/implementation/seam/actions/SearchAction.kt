@@ -16,8 +16,8 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.feature.search.view.implementation.seam.actions
 
 import com.savvasdalkitsis.uhuruphotos.feature.search.view.implementation.seam.SearchActionsContext
-import com.savvasdalkitsis.uhuruphotos.feature.search.view.implementation.seam.effects.SearchEffect
 import com.savvasdalkitsis.uhuruphotos.feature.search.view.implementation.ui.state.SearchState
+import com.savvasdalkitsis.uhuruphotos.foundation.effects.api.seam.effects.CommonEffect
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.Action
 
-sealed class SearchAction : Action<SearchState, SearchEffect, SearchActionsContext>
+sealed class SearchAction : Action<SearchState, CommonEffect, SearchActionsContext>

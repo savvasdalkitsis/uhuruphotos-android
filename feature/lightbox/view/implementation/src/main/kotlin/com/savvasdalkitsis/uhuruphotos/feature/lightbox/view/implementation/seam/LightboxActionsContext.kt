@@ -23,6 +23,7 @@ import com.github.michaelbull.result.onFailure
 import com.github.michaelbull.result.onSuccess
 import com.savvasdalkitsis.uhuruphotos.feature.album.auto.domain.api.usecase.AutoAlbumUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.album.user.domain.api.usecase.UserAlbumUseCase
+import com.savvasdalkitsis.uhuruphotos.feature.edit.view.api.navigation.EditNavigationRoute
 import com.savvasdalkitsis.uhuruphotos.feature.feed.domain.api.usecase.FeedUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.LightboxDeletionCategory.FULLY_SYNCED_ITEM
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.LightboxDeletionCategory.LOCAL_ONLY_ITEM
@@ -35,9 +36,6 @@ import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.LightboxMutation.LoadingDetails
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.LightboxMutation.RemoveMediaItemFromSource
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.LightboxMutation.ShowErrorMessage
-import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.effects.CropPhoto
-import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.effects.LightboxEffect
-import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.effects.NavigateBack
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.ui.state.LightboxState
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.ui.state.MediaItemType
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.ui.state.MediaItemType.TRASHED
@@ -59,6 +57,10 @@ import com.savvasdalkitsis.uhuruphotos.feature.search.domain.api.usecase.SearchU
 import com.savvasdalkitsis.uhuruphotos.feature.trash.domain.api.usecase.TrashUseCase
 import com.savvasdalkitsis.uhuruphotos.foundation.date.api.module.DateModule
 import com.savvasdalkitsis.uhuruphotos.foundation.download.api.usecase.DownloadUseCase
+import com.savvasdalkitsis.uhuruphotos.foundation.effects.api.seam.effects.CommonEffect
+import com.savvasdalkitsis.uhuruphotos.foundation.effects.api.seam.effects.NavigateBack
+import com.savvasdalkitsis.uhuruphotos.foundation.effects.api.seam.effects.NavigateTo
+import com.savvasdalkitsis.uhuruphotos.foundation.effects.api.seam.effects.ShowSystemBars
 import com.savvasdalkitsis.uhuruphotos.foundation.log.api.log
 import com.savvasdalkitsis.uhuruphotos.foundation.result.api.SimpleResult
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.EffectHandler
@@ -122,7 +124,7 @@ internal class LightboxActionsContext @Inject constructor(
 
     fun processAndRemoveMediaItem(
         state: LightboxState,
-        effect: EffectHandler<LightboxEffect>,
+        effect: EffectHandler<CommonEffect>,
         process: suspend FlowCollector<LightboxMutation>.() -> SimpleResult,
     ) = processMediaItem(state, effect, process) {
         emit(RemoveMediaItemFromSource(state.currentMediaItem.id))
@@ -130,7 +132,7 @@ internal class LightboxActionsContext @Inject constructor(
 
     fun processMediaItem(
         state: LightboxState,
-        effect: EffectHandler<LightboxEffect>,
+        effect: EffectHandler<CommonEffect>,
         process: suspend FlowCollector<LightboxMutation>.() -> SimpleResult,
         postProcessAction: suspend FlowCollector<LightboxMutation>.() -> Unit,
     ) = flow {
@@ -145,6 +147,7 @@ internal class LightboxActionsContext @Inject constructor(
             .onSuccess {
                 postProcessAction()
                 if (state.media.size == 1) {
+                    effect.handleEffect(ShowSystemBars)
                     effect.handleEffect(NavigateBack)
                 }
             }
@@ -169,21 +172,22 @@ internal class LightboxActionsContext @Inject constructor(
 
     internal suspend fun LightboxActionsContext.cropLocal(
         state: LightboxState,
-        effect: EffectHandler<LightboxEffect>
+        effect: EffectHandler<CommonEffect>
     ) {
         fun SingleMediaItemState.fileName() = localPath?.substringAfterLast("/")
             ?: "PHOTO_${Random.nextInt()}"
         state.currentMediaItem.id.findLocal?.let { media ->
             effect.handleEffect(
-                CropPhoto(
-                    uri = Uri.parse(media.contentUri),
+                NavigateTo(EditNavigationRoute(
+                    uri = Uri.parse(media.contentUri).toString(),
                     fileName = state.currentMediaItem.fileName(),
                     timestamp = try {
-                        displayingDateTimeFormat.parseDateTime(state.currentMediaItem.dateAndTime).millis
-                    } catch (e: Exception) {
-                        log(e)
-                        null
-                    },
+                            displayingDateTimeFormat.parseDateTime(state.currentMediaItem.dateAndTime).millis
+                        } catch (e: Exception) {
+                            log(e)
+                            null
+                        },
+                    )
                 )
             )
         }

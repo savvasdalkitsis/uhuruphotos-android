@@ -17,24 +17,23 @@ package com.savvasdalkitsis.uhuruphotos.feature.about.view.implementation.viewmo
 
 import com.savvasdalkitsis.uhuruphotos.feature.about.view.api.navigation.AboutNavigationRoute
 import com.savvasdalkitsis.uhuruphotos.feature.about.view.implementation.seam.AboutActionsContext
-import com.savvasdalkitsis.uhuruphotos.feature.about.view.implementation.seam.AboutEffectsContext
 import com.savvasdalkitsis.uhuruphotos.feature.about.view.implementation.seam.actions.AboutAction
 import com.savvasdalkitsis.uhuruphotos.feature.about.view.implementation.seam.actions.Load
-import com.savvasdalkitsis.uhuruphotos.feature.about.view.implementation.seam.effects.AboutEffect
 import com.savvasdalkitsis.uhuruphotos.feature.about.view.implementation.ui.state.AboutState
+import com.savvasdalkitsis.uhuruphotos.foundation.effects.api.seam.effects.CommonEffect
+import com.savvasdalkitsis.uhuruphotos.foundation.effects.api.seam.effects.CommonEffectHandler
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.viewmodel.NavigationViewModel
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.ActionHandlerWithContext
-import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.EffectHandlerWithContext
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
 @HiltViewModel
 internal class AboutViewModel @Inject constructor(
     actionsContext: AboutActionsContext,
-    effectsContext: AboutEffectsContext,
-) : NavigationViewModel<AboutState, AboutEffect, AboutAction, AboutNavigationRoute>(
+    commonEffectHandler: CommonEffectHandler,
+) : NavigationViewModel<AboutState, CommonEffect, AboutAction, AboutNavigationRoute>(
     ActionHandlerWithContext(actionsContext),
-    EffectHandlerWithContext(effectsContext),
+    commonEffectHandler,
     AboutState(),
 ) {
 

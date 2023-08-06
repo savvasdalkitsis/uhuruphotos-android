@@ -20,7 +20,6 @@ import com.github.michaelbull.result.Ok
 import com.github.michaelbull.result.getOr
 import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.Cluster
 import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.GalleryActionsContext
-import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.effects.NavigateBack
 import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.ui.state.GalleryDetails
 import com.savvasdalkitsis.uhuruphotos.feature.hidden.domain.api.usecase.HiddenMediaUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.api.model.LightboxSequenceDataSource.HiddenMedia
@@ -28,6 +27,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.usecase.M
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.state.toCel
 import com.savvasdalkitsis.uhuruphotos.feature.settings.domain.api.usecase.SettingsUseCase
 import com.savvasdalkitsis.uhuruphotos.foundation.biometrics.api.usecase.BiometricsUseCase
+import com.savvasdalkitsis.uhuruphotos.foundation.effects.api.seam.effects.NavigateBack
 import com.savvasdalkitsis.uhuruphotos.foundation.preferences.api.Preferences
 import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.state.Title

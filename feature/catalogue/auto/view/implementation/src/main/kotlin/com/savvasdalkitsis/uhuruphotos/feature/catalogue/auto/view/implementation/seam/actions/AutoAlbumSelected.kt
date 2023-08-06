@@ -15,20 +15,21 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.catalogue.auto.view.implementation.seam.actions
 
+import com.savvasdalkitsis.uhuruphotos.feature.album.auto.view.api.navigation.AutoAlbumNavigationRoute
 import com.savvasdalkitsis.uhuruphotos.feature.catalogue.auto.view.api.state.AutoAlbum
 import com.savvasdalkitsis.uhuruphotos.feature.catalogue.auto.view.implementation.seam.AutoAlbumsActionsContext
-import com.savvasdalkitsis.uhuruphotos.feature.catalogue.auto.view.implementation.seam.effects.AutoAlbumsEffect
-import com.savvasdalkitsis.uhuruphotos.feature.catalogue.auto.view.implementation.seam.effects.NavigateToAutoAlbum
 import com.savvasdalkitsis.uhuruphotos.feature.catalogue.auto.view.implementation.seam.AutoAlbumsMutation
 import com.savvasdalkitsis.uhuruphotos.feature.catalogue.auto.view.implementation.seam.AutoAlbumsState
+import com.savvasdalkitsis.uhuruphotos.foundation.effects.api.seam.effects.CommonEffect
+import com.savvasdalkitsis.uhuruphotos.foundation.effects.api.seam.effects.NavigateTo
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.EffectHandler
 import kotlinx.coroutines.flow.flow
 
 data class AutoAlbumSelected(val album: AutoAlbum) : AutoAlbumsAction() {
     context(AutoAlbumsActionsContext) override fun handle(
         state: AutoAlbumsState,
-        effect: EffectHandler<AutoAlbumsEffect>
+        effect: EffectHandler<CommonEffect>
     ) = flow<AutoAlbumsMutation> {
-        effect.handleEffect(NavigateToAutoAlbum(album))
+        effect.handleEffect(NavigateTo(AutoAlbumNavigationRoute(album.id)))
     }
 }

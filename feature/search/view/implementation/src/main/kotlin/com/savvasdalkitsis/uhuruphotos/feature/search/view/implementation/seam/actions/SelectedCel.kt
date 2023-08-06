@@ -15,25 +15,24 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.search.view.implementation.seam.actions
 
+import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.api.model.LightboxSequenceDataSource.SearchResults
+import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.api.navigation.LightboxNavigationRoute
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.state.CelState
 import com.savvasdalkitsis.uhuruphotos.feature.search.view.implementation.seam.SearchActionsContext
 import com.savvasdalkitsis.uhuruphotos.feature.search.view.implementation.seam.SearchMutation
-import com.savvasdalkitsis.uhuruphotos.feature.search.view.implementation.seam.effects.OpenLightbox
-import com.savvasdalkitsis.uhuruphotos.feature.search.view.implementation.seam.effects.SearchEffect
 import com.savvasdalkitsis.uhuruphotos.feature.search.view.implementation.ui.state.SearchState
+import com.savvasdalkitsis.uhuruphotos.foundation.effects.api.seam.effects.CommonEffect
+import com.savvasdalkitsis.uhuruphotos.foundation.effects.api.seam.effects.NavigateTo
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.EffectHandler
 import kotlinx.coroutines.flow.flow
 
 data class SelectedCel(val celState: CelState) : SearchAction() {
     context(SearchActionsContext) override fun handle(
         state: SearchState,
-        effect: EffectHandler<SearchEffect>
+        effect: EffectHandler<CommonEffect>
     ) = flow<SearchMutation> {
-        effect.handleEffect(
-            OpenLightbox(
-                celState.mediaItem.id,
-                state.query
-            )
-        )
+        effect.handleEffect(NavigateTo(
+            LightboxNavigationRoute(celState.mediaItem.id, SearchResults(state.query))
+        ))
     }
 }

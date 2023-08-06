@@ -17,24 +17,23 @@ package com.savvasdalkitsis.uhuruphotos.feature.home.view.implementation.viewmod
 
 import com.savvasdalkitsis.uhuruphotos.feature.home.view.api.navigation.HomeNavigationRoute
 import com.savvasdalkitsis.uhuruphotos.feature.home.view.implementation.seam.HomeActionsContext
-import com.savvasdalkitsis.uhuruphotos.feature.home.view.implementation.seam.HomeEffectsContext
 import com.savvasdalkitsis.uhuruphotos.feature.home.view.implementation.seam.actions.HomeAction
 import com.savvasdalkitsis.uhuruphotos.feature.home.view.implementation.seam.actions.Load
-import com.savvasdalkitsis.uhuruphotos.feature.home.view.implementation.seam.effects.HomeEffect
 import com.savvasdalkitsis.uhuruphotos.feature.home.view.implementation.ui.state.HomeState
+import com.savvasdalkitsis.uhuruphotos.foundation.effects.api.seam.effects.CommonEffect
+import com.savvasdalkitsis.uhuruphotos.foundation.effects.api.seam.effects.CommonEffectHandler
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.viewmodel.NavigationViewModel
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.ActionHandlerWithContext
-import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.EffectHandlerWithContext
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
 @HiltViewModel
 internal class HomeViewModel @Inject constructor(
     homeActionsContext: HomeActionsContext,
-    homeEffectsContext: HomeEffectsContext,
-) : NavigationViewModel<HomeState, HomeEffect, HomeAction, HomeNavigationRoute>(
+    commonEffectHandler: CommonEffectHandler,
+) : NavigationViewModel<HomeState, CommonEffect, HomeAction, HomeNavigationRoute>(
     ActionHandlerWithContext(homeActionsContext),
-    EffectHandlerWithContext(homeEffectsContext),
+    commonEffectHandler,
     HomeState()
 ) {
 

@@ -23,11 +23,11 @@ import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.SettingsMutation.DisplayMapProviders
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.SettingsMutation.DisplayNoMapProvidersOptions
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.SettingsMutation.ShowJobs
-import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.effects.SettingsEffect
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.ui.state.BiometricsSetting.Enrolled
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.ui.state.BiometricsSetting.NotEnrolled
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.ui.state.SettingsState
 import com.savvasdalkitsis.uhuruphotos.foundation.biometrics.api.model.Biometrics
+import com.savvasdalkitsis.uhuruphotos.foundation.effects.api.seam.effects.CommonEffect
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.EffectHandler
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.flowOf
@@ -37,7 +37,7 @@ import kotlinx.coroutines.flow.merge
 data object LoadSettings : SettingsAction() {
     context(SettingsActionsContext) override fun handle(
         state: SettingsState,
-        effect: EffectHandler<SettingsEffect>
+        effect: EffectHandler<CommonEffect>
     ) = merge(
         settingsUseCase.observeLightboxPhotoDiskCacheMaxLimit()
             .map(SettingsMutation::DisplayLightboxPhotoDiskCacheMaxLimit),

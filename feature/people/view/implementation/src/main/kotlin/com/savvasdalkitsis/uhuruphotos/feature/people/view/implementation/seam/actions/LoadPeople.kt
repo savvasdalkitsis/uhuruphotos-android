@@ -19,10 +19,10 @@ import com.savvasdalkitsis.uhuruphotos.feature.people.view.api.ui.state.toPerson
 import com.savvasdalkitsis.uhuruphotos.feature.people.view.implementation.seam.PeopleActionsContext
 import com.savvasdalkitsis.uhuruphotos.feature.people.view.implementation.seam.PeopleMutation.DisplayPeople
 import com.savvasdalkitsis.uhuruphotos.feature.people.view.implementation.seam.PeopleMutation.Loading
-import com.savvasdalkitsis.uhuruphotos.feature.people.view.implementation.seam.effects.PeopleEffect
 import com.savvasdalkitsis.uhuruphotos.feature.people.view.implementation.ui.state.PeopleState
 import com.savvasdalkitsis.uhuruphotos.feature.people.view.implementation.ui.state.SortOrder
 import com.savvasdalkitsis.uhuruphotos.foundation.coroutines.api.safelyOnStartIgnoring
+import com.savvasdalkitsis.uhuruphotos.foundation.effects.api.seam.effects.CommonEffect
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.EffectHandler
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.map
@@ -32,7 +32,7 @@ data object LoadPeople : PeopleAction() {
 
     context(PeopleActionsContext) override fun handle(
         state: PeopleState,
-        effect: EffectHandler<PeopleEffect>
+        effect: EffectHandler<CommonEffect>
     ) = merge(
         loading.map { Loading(it) },
         combine(

@@ -9,22 +9,23 @@ android {
 }
 
 dependencies {
-    implementation project(":feature:album:user:view:api")
-    implementation project(":feature:auth:domain:api")
-    implementation project(":feature:catalogue:user:domain:api")
-    implementation project(":feature:catalogue:user:view:api")
-    implementation project(":feature:catalogue:view:api")
-    implementation project(":feature:media:common:domain:api")
-    implementation project(":feature:media:common:view:api")
-    implementation project(":feature:media:remote:domain:api")
-    implementation project(":feature:settings:domain:api")
-    implementation project(":foundation:coroutines:api")
-    implementation project(":foundation:log:api")
-    implementation project(":foundation:navigation:api")
-    implementation project(":foundation:preferences:api")
-    implementation project(":foundation:strings:api")
-    implementation project(":foundation:toaster:api")
     implementation(
+            project(":feature:album:user:view:api"),
+            project(":feature:auth:domain:api"),
+            project(":feature:catalogue:user:domain:api"),
+            project(":feature:catalogue:user:view:api"),
+            project(":feature:catalogue:view:api"),
+            project(":feature:media:common:domain:api"),
+            project(":feature:media:common:view:api"),
+            project(":feature:media:remote:domain:api"),
+            project(":feature:settings:domain:api"),
+            project(":foundation:coroutines:api"),
+            project(":foundation:effects:api"),
+            project(":foundation:log:api"),
+            project(":foundation:navigation:api"),
+            project(":foundation:preferences:api"),
+            project(":foundation:strings:api"),
+            project(":foundation:toaster:api"),
             libs.androidx.compose.foundation,
             libs.androidx.compose.material,
             libs.autodagger.core,

@@ -17,6 +17,7 @@ dependencies {
             project(":feature:search:view:api"),
             project(":feature:settings:domain:api"),
             project(":foundation:compose:api"),
+            project(":foundation:effects:api"),
             project(":foundation:navigation:api"),
             project(":foundation:strings:api"),
             project(":foundation:toaster:api"),

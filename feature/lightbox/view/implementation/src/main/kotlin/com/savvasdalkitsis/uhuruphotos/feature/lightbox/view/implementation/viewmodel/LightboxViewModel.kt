@@ -17,24 +17,23 @@ package com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.vie
 
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.api.navigation.LightboxNavigationRoute
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.LightboxActionsContext
-import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.LightboxEffectsContext
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.actions.LightboxAction
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.actions.LoadMediaItem
-import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.effects.LightboxEffect
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.ui.state.LightboxState
+import com.savvasdalkitsis.uhuruphotos.foundation.effects.api.seam.effects.CommonEffect
+import com.savvasdalkitsis.uhuruphotos.foundation.effects.api.seam.effects.CommonEffectHandler
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.viewmodel.NavigationViewModel
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.ActionHandlerWithContext
-import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.EffectHandlerWithContext
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
 @HiltViewModel
 internal class LightboxViewModel @Inject constructor(
     lightboxActionsContext: LightboxActionsContext,
-    lightboxEffectsContext: LightboxEffectsContext,
-) : NavigationViewModel<LightboxState, LightboxEffect, LightboxAction, LightboxNavigationRoute>(
+    commonEffectHandler: CommonEffectHandler,
+) : NavigationViewModel<LightboxState, CommonEffect, LightboxAction, LightboxNavigationRoute>(
     ActionHandlerWithContext(lightboxActionsContext),
-    EffectHandlerWithContext(lightboxEffectsContext),
+    commonEffectHandler,
     LightboxState()
 ) {
     override fun onRouteSet(route: LightboxNavigationRoute) {

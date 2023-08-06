@@ -16,8 +16,8 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.feature.auth.view.implementation.seam.actions
 
 import com.savvasdalkitsis.uhuruphotos.feature.auth.view.implementation.seam.WebLoginActionsContext
-import com.savvasdalkitsis.uhuruphotos.feature.auth.view.implementation.seam.effects.WebLoginEffect
 import com.savvasdalkitsis.uhuruphotos.feature.auth.view.implementation.ui.WebLoginState
+import com.savvasdalkitsis.uhuruphotos.foundation.effects.api.seam.effects.CommonEffect
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.Action
 
-sealed class WebLoginAction : Action<WebLoginState, WebLoginEffect, WebLoginActionsContext>
+sealed class WebLoginAction : Action<WebLoginState, CommonEffect, WebLoginActionsContext>

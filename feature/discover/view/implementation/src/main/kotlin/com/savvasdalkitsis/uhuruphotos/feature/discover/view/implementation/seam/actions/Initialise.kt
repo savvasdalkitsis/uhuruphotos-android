@@ -18,15 +18,17 @@ package com.savvasdalkitsis.uhuruphotos.feature.discover.view.implementation.sea
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.people.People
 import com.savvasdalkitsis.uhuruphotos.feature.discover.view.implementation.seam.DiscoverActionsContext
 import com.savvasdalkitsis.uhuruphotos.feature.discover.view.implementation.seam.DiscoverMutation
-import com.savvasdalkitsis.uhuruphotos.feature.discover.view.implementation.seam.DiscoverMutation.*
-import com.savvasdalkitsis.uhuruphotos.feature.discover.view.implementation.seam.effects.DiscoverEffect
-import com.savvasdalkitsis.uhuruphotos.feature.discover.view.implementation.seam.effects.ErrorRefreshingPeople
+import com.savvasdalkitsis.uhuruphotos.feature.discover.view.implementation.seam.DiscoverMutation.ChangeMapViewport
+import com.savvasdalkitsis.uhuruphotos.feature.discover.view.implementation.seam.DiscoverMutation.HideSuggestions
 import com.savvasdalkitsis.uhuruphotos.feature.discover.view.implementation.ui.state.DiscoverState
 import com.savvasdalkitsis.uhuruphotos.feature.discover.view.implementation.ui.state.SearchSuggestion
 import com.savvasdalkitsis.uhuruphotos.feature.people.view.api.ui.state.toPerson
 import com.savvasdalkitsis.uhuruphotos.foundation.coroutines.api.onErrors
 import com.savvasdalkitsis.uhuruphotos.foundation.coroutines.api.onErrorsIgnore
+import com.savvasdalkitsis.uhuruphotos.foundation.effects.api.seam.effects.CommonEffect
+import com.savvasdalkitsis.uhuruphotos.foundation.effects.api.seam.effects.ShowToast
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.EffectHandler
+import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.distinctUntilChanged
@@ -40,7 +42,7 @@ import kotlin.math.min
 data object Initialise : DiscoverAction() {
     context(DiscoverActionsContext) override fun handle(
         state: DiscoverState,
-        effect: EffectHandler<DiscoverEffect>
+        effect: EffectHandler<CommonEffect>
     ) = merge(
         showLibrary(),
         showHeatMap(),
@@ -79,10 +81,10 @@ data object Initialise : DiscoverAction() {
     }.map(DiscoverMutation::ShowSearchSuggestions)
 
     context(DiscoverActionsContext)
-    private fun showPeopleSuggestion(effect: EffectHandler<DiscoverEffect>) =
+    private fun showPeopleSuggestion(effect: EffectHandler<CommonEffect>) =
         peopleUseCase.observePeopleByPhotoCount()
             .onErrors {
-                effect.handleEffect(ErrorRefreshingPeople)
+                effect.handleEffect(ShowToast(R.string.error_refreshing_people))
             }
             .toPeople()
             .map { it.subList(0, max(0, min(10, it.size - 1))) }

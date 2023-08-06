@@ -20,8 +20,6 @@ import com.savvasdalkitsis.uhuruphotos.feature.feed.domain.api.usecase.FeedUseCa
 import com.savvasdalkitsis.uhuruphotos.feature.feed.domain.api.worker.FeedWorkScheduler
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.SelectionList
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.FeedMutation.AskForPermissions
-import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.effects.FeedEffect
-import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.effects.ShowErrorDeletingMedia
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.ui.state.FeedState
 import com.savvasdalkitsis.uhuruphotos.feature.jobs.domain.api.usecase.JobsUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.usecase.MediaUseCase
@@ -35,7 +33,10 @@ import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.worker.Loc
 import com.savvasdalkitsis.uhuruphotos.feature.memories.domain.api.usecase.MemoriesUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.settings.domain.api.usecase.SettingsUseCase
 import com.savvasdalkitsis.uhuruphotos.foundation.download.api.usecase.DownloadUseCase
+import com.savvasdalkitsis.uhuruphotos.foundation.effects.api.seam.effects.CommonEffect
+import com.savvasdalkitsis.uhuruphotos.foundation.effects.api.seam.effects.ShowToast
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.EffectHandler
+import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R
 import kotlinx.coroutines.flow.FlowCollector
 import javax.inject.Inject
 
@@ -68,13 +69,13 @@ internal class FeedActionsContext @Inject constructor(
 
     suspend fun FlowCollector<FeedMutation>.deleteLocalSelectedCels(
         state: FeedState,
-        effect: EffectHandler<FeedEffect>,
+        effect: EffectHandler<CommonEffect>,
         onSuccess: () -> Unit = {},
     ) = when (val result = localMediaDeletionUseCase.deleteLocalMediaItems(state.selectedCels
             .mapNotNull { it.mediaItem.id.findLocal }
             .map { LocalMediaDeletionRequest(it.value, it.isVideo) }
         )) {
-            is Error -> effect.handleEffect(ShowErrorDeletingMedia)
+            is Error -> effect.handleEffect(ShowToast(R.string.error_deleting_media))
             is RequiresPermissions -> emit(AskForPermissions(result.deniedPermissions))
             Success -> onSuccess()
         }

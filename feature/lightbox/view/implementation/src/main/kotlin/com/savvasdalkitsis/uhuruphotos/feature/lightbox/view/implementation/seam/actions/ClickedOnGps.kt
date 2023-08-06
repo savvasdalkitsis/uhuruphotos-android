@@ -17,19 +17,22 @@ package com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.sea
 
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.LightboxActionsContext
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.LightboxMutation
-import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.effects.CopyToClipboard
-import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.effects.LightboxEffect
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.ui.state.LightboxState
+import com.savvasdalkitsis.uhuruphotos.foundation.effects.api.seam.effects.CommonEffect
+import com.savvasdalkitsis.uhuruphotos.foundation.effects.api.seam.effects.CopyToClipboard
+import com.savvasdalkitsis.uhuruphotos.foundation.effects.api.seam.effects.ShowToast
 import com.savvasdalkitsis.uhuruphotos.foundation.map.api.model.LatLon
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.EffectHandler
+import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R
 import kotlinx.coroutines.flow.flow
 
 data class ClickedOnGps(val gps: LatLon) : LightboxAction() {
 
     context(LightboxActionsContext) override fun handle(
         state: LightboxState,
-        effect: EffectHandler<LightboxEffect>
+        effect: EffectHandler<CommonEffect>
     ) = flow<LightboxMutation> {
         effect.handleEffect(CopyToClipboard(gps.toString()))
+        effect.handleEffect(ShowToast(R.string.copied_to_clipboard))
     }
 }

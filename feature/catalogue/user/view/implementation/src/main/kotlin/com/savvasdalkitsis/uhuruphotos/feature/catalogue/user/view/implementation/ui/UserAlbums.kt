@@ -16,10 +16,10 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.feature.catalogue.user.view.implementation.ui
 
 import androidx.compose.runtime.Composable
-import com.savvasdalkitsis.uhuruphotos.feature.catalogue.user.view.implementation.seam.ChangeSorting
-import com.savvasdalkitsis.uhuruphotos.feature.catalogue.user.view.implementation.seam.NavigateBack
-import com.savvasdalkitsis.uhuruphotos.feature.catalogue.user.view.implementation.seam.Refresh
-import com.savvasdalkitsis.uhuruphotos.feature.catalogue.user.view.implementation.seam.UserAlbumsAction
+import com.savvasdalkitsis.uhuruphotos.feature.catalogue.user.view.implementation.seam.action.ChangeSorting
+import com.savvasdalkitsis.uhuruphotos.feature.catalogue.user.view.implementation.seam.action.NavigateBack
+import com.savvasdalkitsis.uhuruphotos.feature.catalogue.user.view.implementation.seam.action.Refresh
+import com.savvasdalkitsis.uhuruphotos.feature.catalogue.user.view.implementation.seam.action.UserAlbumsAction
 import com.savvasdalkitsis.uhuruphotos.feature.catalogue.user.view.implementation.seam.UserAlbumsState
 import com.savvasdalkitsis.uhuruphotos.feature.catalogue.view.api.ui.Catalogue
 import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string

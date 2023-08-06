@@ -17,14 +17,14 @@ package com.savvasdalkitsis.uhuruphotos.feature.discover.view.implementation.sea
 
 import com.savvasdalkitsis.uhuruphotos.feature.discover.view.implementation.seam.DiscoverActionsContext
 import com.savvasdalkitsis.uhuruphotos.feature.discover.view.implementation.seam.DiscoverMutation.FocusChanged
-import com.savvasdalkitsis.uhuruphotos.feature.discover.view.implementation.seam.effects.DiscoverEffect
 import com.savvasdalkitsis.uhuruphotos.feature.discover.view.implementation.ui.state.DiscoverState
+import com.savvasdalkitsis.uhuruphotos.foundation.effects.api.seam.effects.CommonEffect
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.EffectHandler
 import kotlinx.coroutines.flow.flowOf
 
 data class ChangeFocus(val focused: Boolean) : DiscoverAction() {
     context(DiscoverActionsContext) override fun handle(
         state: DiscoverState,
-        effect: EffectHandler<DiscoverEffect>
+        effect: EffectHandler<CommonEffect>
     ) = flowOf(FocusChanged(focused))
 }

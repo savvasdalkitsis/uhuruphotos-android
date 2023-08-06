@@ -9,12 +9,13 @@ android {
 }
 
 dependencies {
-    implementation project(":feature:settings:domain:api")
-    implementation project(":feature:auth:domain:api")
-    implementation project(":feature:auth:view:api")
-    implementation project(":foundation:navigation:api")
-    implementation project(":foundation:launchers:api")
     implementation(
+            project(":feature:auth:domain:api"),
+            project(":feature:auth:view:api"),
+            project(":feature:settings:domain:api"),
+            project(":foundation:effects:api"),
+            project(":foundation:launchers:api"),
+            project(":foundation:navigation:api"),
             libs.accompanist.webview,
             libs.androidx.compose.navigation,
             libs.autodagger.core,

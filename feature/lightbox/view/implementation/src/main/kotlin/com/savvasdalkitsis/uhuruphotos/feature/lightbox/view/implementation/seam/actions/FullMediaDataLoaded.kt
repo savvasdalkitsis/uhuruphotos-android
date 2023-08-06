@@ -19,10 +19,10 @@ import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.LightboxMutation.ShowMetadata
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.LightboxMutation.ShowShareIcon
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.LightboxMutation.ShowUseAsIcon
-import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.effects.LightboxEffect
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.ui.state.LightboxState
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.ui.state.SingleMediaItemState
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaId
+import com.savvasdalkitsis.uhuruphotos.foundation.effects.api.seam.effects.CommonEffect
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.EffectHandler
 import kotlinx.coroutines.flow.flow
 
@@ -30,7 +30,7 @@ data class FullMediaDataLoaded(val mediaItemState: SingleMediaItemState) : Light
 
     context(LightboxActionsContext) override fun handle(
         state: LightboxState,
-        effect: EffectHandler<LightboxEffect>
+        effect: EffectHandler<CommonEffect>
     ) = flow {
         if (!(mediaItemState.id is MediaId.Remote && mediaItemState.id.isVideo)) {
             emit(ShowShareIcon(mediaItemState.id))

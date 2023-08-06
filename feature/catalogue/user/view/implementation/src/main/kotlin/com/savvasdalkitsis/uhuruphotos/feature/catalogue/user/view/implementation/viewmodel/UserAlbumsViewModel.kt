@@ -16,25 +16,24 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.feature.catalogue.user.view.implementation.viewmodel
 
 import com.savvasdalkitsis.uhuruphotos.feature.catalogue.user.view.api.navigation.UserAlbumsNavigationRoute
-import com.savvasdalkitsis.uhuruphotos.feature.catalogue.user.view.implementation.seam.Load
-import com.savvasdalkitsis.uhuruphotos.feature.catalogue.user.view.implementation.seam.UserAlbumsAction
+import com.savvasdalkitsis.uhuruphotos.feature.catalogue.user.view.implementation.seam.action.Load
+import com.savvasdalkitsis.uhuruphotos.feature.catalogue.user.view.implementation.seam.action.UserAlbumsAction
 import com.savvasdalkitsis.uhuruphotos.feature.catalogue.user.view.implementation.seam.UserAlbumsActionsContext
-import com.savvasdalkitsis.uhuruphotos.feature.catalogue.user.view.implementation.seam.UserAlbumsEffectsContext
 import com.savvasdalkitsis.uhuruphotos.feature.catalogue.user.view.implementation.seam.UserAlbumsState
-import com.savvasdalkitsis.uhuruphotos.feature.catalogue.user.view.implementation.seam.effects.UserAlbumsEffect
+import com.savvasdalkitsis.uhuruphotos.foundation.effects.api.seam.effects.CommonEffect
+import com.savvasdalkitsis.uhuruphotos.foundation.effects.api.seam.effects.CommonEffectHandler
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.viewmodel.NavigationViewModel
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.ActionHandlerWithContext
-import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.EffectHandlerWithContext
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
 @HiltViewModel
 class UserAlbumsViewModel @Inject constructor(
     userAlbumsActionsContext: UserAlbumsActionsContext,
-    userAlbumsEffectsContext: UserAlbumsEffectsContext,
-) : NavigationViewModel<UserAlbumsState, UserAlbumsEffect, UserAlbumsAction, UserAlbumsNavigationRoute>(
+    commonEffectHandler: CommonEffectHandler,
+) : NavigationViewModel<UserAlbumsState, CommonEffect, UserAlbumsAction, UserAlbumsNavigationRoute>(
     ActionHandlerWithContext(userAlbumsActionsContext),
-    EffectHandlerWithContext(userAlbumsEffectsContext),
+    commonEffectHandler,
     UserAlbumsState()
 ) {
 

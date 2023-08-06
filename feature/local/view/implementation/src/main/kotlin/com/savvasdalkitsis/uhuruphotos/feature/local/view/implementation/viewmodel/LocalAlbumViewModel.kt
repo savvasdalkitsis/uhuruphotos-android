@@ -15,45 +15,43 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.local.view.implementation.viewmodel
 
-import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.GalleryEffectsContext
 import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.GalleryId
 import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.action.GalleryAction
 import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.action.LoadCollage
-import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.effects.GalleryEffect
 import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.ui.state.GalleryState
 import com.savvasdalkitsis.uhuruphotos.feature.local.view.api.navigation.LocalAlbumNavigationRoute
 import com.savvasdalkitsis.uhuruphotos.feature.local.view.implementation.seam.LocalAlbumActionsContext
 import com.savvasdalkitsis.uhuruphotos.feature.local.view.implementation.seam.LocalAlbumPageActionsContext
 import com.savvasdalkitsis.uhuruphotos.feature.local.view.implementation.seam.actions.Load
 import com.savvasdalkitsis.uhuruphotos.feature.local.view.implementation.seam.actions.LocalAlbumAction
-import com.savvasdalkitsis.uhuruphotos.feature.local.view.implementation.seam.effects.LocalAlbumEffect
 import com.savvasdalkitsis.uhuruphotos.feature.local.view.implementation.ui.state.LocalAlbumState
+import com.savvasdalkitsis.uhuruphotos.foundation.effects.api.seam.effects.CommonEffect
+import com.savvasdalkitsis.uhuruphotos.foundation.effects.api.seam.effects.CommonEffectHandler
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.viewmodel.NavigationViewModel
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.ActionHandlerWithContext
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.CompositeActionHandler
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.CompositeEffectHandler
-import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.EffectHandlerWithContext
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.Either
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.NoOpEffectHandler
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
 private typealias LocalAlbumCompositeState = Pair<GalleryState, LocalAlbumState>
-private typealias LocalAlbumCompositeEffect = Either<GalleryEffect, LocalAlbumEffect>
+private typealias LocalAlbumCompositeEffect = Either<CommonEffect, CommonEffect>
 private typealias LocalAlbumCompositeAction = Either<GalleryAction, LocalAlbumAction>
 
 @HiltViewModel
 internal class LocalAlbumViewModel @Inject constructor(
     localAlbumActionsContext: LocalAlbumActionsContext,
     localAlbumPageActionsContext: LocalAlbumPageActionsContext,
-    galleryEffectsContext: GalleryEffectsContext,
+    commonEffectHandler: CommonEffectHandler,
 ) : NavigationViewModel<LocalAlbumCompositeState, LocalAlbumCompositeEffect, LocalAlbumCompositeAction, LocalAlbumNavigationRoute>(
     CompositeActionHandler(
         ActionHandlerWithContext(localAlbumPageActionsContext),
         ActionHandlerWithContext(localAlbumActionsContext),
     ),
     CompositeEffectHandler(
-        EffectHandlerWithContext(galleryEffectsContext),
+        commonEffectHandler,
         NoOpEffectHandler(),
     ),
     GalleryState() to LocalAlbumState()

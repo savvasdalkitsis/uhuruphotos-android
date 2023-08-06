@@ -23,11 +23,11 @@ import com.savvasdalkitsis.uhuruphotos.feature.account.view.api.seam.effects.Acc
 import com.savvasdalkitsis.uhuruphotos.feature.account.view.api.ui.state.AccountOverviewState
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.api.navigation.FeedNavigationRoute
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.FeedActionsContext
-import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.FeedEffectsContext
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.actions.FeedAction
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.actions.LoadFeed
-import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.effects.FeedEffect
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.ui.state.FeedState
+import com.savvasdalkitsis.uhuruphotos.foundation.effects.api.seam.effects.CommonEffect
+import com.savvasdalkitsis.uhuruphotos.foundation.effects.api.seam.effects.CommonEffectHandler
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.viewmodel.NavigationViewModel
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.ActionHandlerWithContext
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.CompositeActionHandler
@@ -38,14 +38,14 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
 private typealias FeedCompositeState = Pair<FeedState, AccountOverviewState>
-private typealias FeedCompositeEffect = Either<FeedEffect, AccountOverviewEffect>
+private typealias FeedCompositeEffect = Either<CommonEffect, AccountOverviewEffect>
 private typealias FeedCompositeAction = Either<FeedAction, AccountOverviewAction>
 
 @HiltViewModel
 internal class FeedViewModel @Inject constructor(
     feedActionsContext: FeedActionsContext,
     accountOverviewActionsContext: AccountOverviewActionsContext,
-    feedEffectsContext: FeedEffectsContext,
+    commonEffectHandler: CommonEffectHandler,
     accountOverviewEffectsContext: AccountOverviewEffectsContext,
 ) : NavigationViewModel<FeedCompositeState, FeedCompositeEffect, FeedCompositeAction, FeedNavigationRoute>(
     CompositeActionHandler(
@@ -53,7 +53,7 @@ internal class FeedViewModel @Inject constructor(
         ActionHandlerWithContext(accountOverviewActionsContext),
     ),
     CompositeEffectHandler(
-        EffectHandlerWithContext(feedEffectsContext),
+        commonEffectHandler,
         EffectHandlerWithContext(accountOverviewEffectsContext),
     ),
     FeedState() to AccountOverviewState(),

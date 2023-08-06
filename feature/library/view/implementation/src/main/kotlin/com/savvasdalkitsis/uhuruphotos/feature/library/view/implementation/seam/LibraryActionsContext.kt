@@ -19,14 +19,15 @@ import com.github.michaelbull.result.Err
 import com.savvasdalkitsis.uhuruphotos.feature.auth.domain.api.usecase.ServerUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.catalogue.auto.domain.api.usecase.AutoAlbumsUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.catalogue.user.domain.api.usecase.UserAlbumsUseCase
-import com.savvasdalkitsis.uhuruphotos.feature.library.view.implementation.seam.effects.ErrorLoadingAlbums
-import com.savvasdalkitsis.uhuruphotos.feature.library.view.implementation.seam.effects.LibraryEffect
 import com.savvasdalkitsis.uhuruphotos.feature.library.view.implementation.usecase.LibraryUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.usecase.MediaUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.usecase.LocalMediaUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.worker.LocalMediaWorkScheduler
+import com.savvasdalkitsis.uhuruphotos.foundation.effects.api.seam.effects.CommonEffect
+import com.savvasdalkitsis.uhuruphotos.foundation.effects.api.seam.effects.ShowToast
 import com.savvasdalkitsis.uhuruphotos.foundation.result.api.SimpleResult
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.EffectHandler
+import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -45,25 +46,25 @@ internal class LibraryActionsContext @Inject constructor(
     private val _loading = MutableSharedFlow<Boolean>()
     val loading: Flow<Boolean> get() = _loading
 
-    suspend fun refreshAutoAlbums(effect: EffectHandler<LibraryEffect>) {
+    suspend fun refreshAutoAlbums(effect: EffectHandler<CommonEffect>) {
         refresh(effect) {
             autoAlbumsUseCase.refreshAutoAlbums()
         }
     }
 
-    suspend fun refreshUserAlbums(effect: EffectHandler<LibraryEffect>) {
+    suspend fun refreshUserAlbums(effect: EffectHandler<CommonEffect>) {
         refresh(effect) {
             userAlbumsUseCase.refreshUserAlbums()
         }
     }
 
-    suspend fun refreshFavouriteMedia(effect: EffectHandler<LibraryEffect>) {
+    suspend fun refreshFavouriteMedia(effect: EffectHandler<CommonEffect>) {
         refresh(effect) {
             mediaUseCase.refreshFavouriteMedia()
         }
     }
 
-    suspend fun refreshHiddenMedia(effect: EffectHandler<LibraryEffect>) {
+    suspend fun refreshHiddenMedia(effect: EffectHandler<CommonEffect>) {
         refresh(effect) {
             mediaUseCase.refreshHiddenMedia()
         }
@@ -74,13 +75,13 @@ internal class LibraryActionsContext @Inject constructor(
     }
 
     private suspend fun refresh(
-        effect: EffectHandler<LibraryEffect>,
+        effect: EffectHandler<CommonEffect>,
         refresh: suspend () -> SimpleResult,
     ) {
         _loading.emit(true)
         val result = refresh()
         if (result is Err) {
-            effect.handleEffect(ErrorLoadingAlbums)
+            effect.handleEffect(ShowToast(R.string.error_loading_albums))
         }
         // delaying to give ui time to receive the new albums before
         // dismissing the loading bar since no albums logic relies on that

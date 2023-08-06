@@ -15,19 +15,20 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.trash.view.implementation.seam.actions
 
+import com.savvasdalkitsis.uhuruphotos.feature.settings.view.api.navigation.SettingsNavigationRoute
 import com.savvasdalkitsis.uhuruphotos.feature.trash.view.implementation.seam.TrashActionsContext
 import com.savvasdalkitsis.uhuruphotos.feature.trash.view.implementation.seam.TrashMutation
-import com.savvasdalkitsis.uhuruphotos.feature.trash.view.implementation.seam.effects.NavigateToAppSettings
-import com.savvasdalkitsis.uhuruphotos.feature.trash.view.implementation.seam.effects.TrashEffect
 import com.savvasdalkitsis.uhuruphotos.feature.trash.view.implementation.state.TrashState
+import com.savvasdalkitsis.uhuruphotos.foundation.effects.api.seam.effects.CommonEffect
+import com.savvasdalkitsis.uhuruphotos.foundation.effects.api.seam.effects.NavigateTo
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.EffectHandler
 import kotlinx.coroutines.flow.flow
 
 data object FingerPrintActionPressed : TrashAction() {
     context(TrashActionsContext) override fun handle(
         state: TrashState,
-        effect: EffectHandler<TrashEffect>
+        effect: EffectHandler<CommonEffect>
     ) = flow<TrashMutation> {
-        effect.handleEffect(NavigateToAppSettings)
+        effect.handleEffect(NavigateTo(SettingsNavigationRoute))
     }
 }

@@ -15,19 +15,20 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.library.view.implementation.seam.actions
 
+import com.savvasdalkitsis.uhuruphotos.feature.catalogue.user.view.api.navigation.UserAlbumsNavigationRoute
 import com.savvasdalkitsis.uhuruphotos.feature.library.view.implementation.seam.LibraryActionsContext
 import com.savvasdalkitsis.uhuruphotos.feature.library.view.implementation.seam.LibraryMutation
-import com.savvasdalkitsis.uhuruphotos.feature.library.view.implementation.seam.effects.LibraryEffect
-import com.savvasdalkitsis.uhuruphotos.feature.library.view.implementation.seam.effects.NavigateToUserAlbums
 import com.savvasdalkitsis.uhuruphotos.feature.library.view.implementation.ui.state.LibraryState
+import com.savvasdalkitsis.uhuruphotos.foundation.effects.api.seam.effects.CommonEffect
+import com.savvasdalkitsis.uhuruphotos.foundation.effects.api.seam.effects.NavigateTo
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.EffectHandler
 import kotlinx.coroutines.flow.flow
 
 data object UserAlbumsSelected : LibraryAction() {
     context(LibraryActionsContext) override fun handle(
         state: LibraryState,
-        effect: EffectHandler<LibraryEffect>
+        effect: EffectHandler<CommonEffect>
     ) = flow<LibraryMutation> {
-        effect.handleEffect(NavigateToUserAlbums)
+        effect.handleEffect(NavigateTo(UserAlbumsNavigationRoute))
     }
 }

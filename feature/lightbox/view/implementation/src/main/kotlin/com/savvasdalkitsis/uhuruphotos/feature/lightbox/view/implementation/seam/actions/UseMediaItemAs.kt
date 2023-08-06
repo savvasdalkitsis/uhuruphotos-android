@@ -17,9 +17,9 @@ package com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.sea
 
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.LightboxActionsContext
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.LightboxMutation
-import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.effects.LightboxEffect
-import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.effects.UseMediaAs
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.ui.state.LightboxState
+import com.savvasdalkitsis.uhuruphotos.foundation.effects.api.seam.effects.CommonEffect
+import com.savvasdalkitsis.uhuruphotos.foundation.effects.api.seam.effects.UsePhotoAs
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.EffectHandler
 import kotlinx.coroutines.flow.flow
 
@@ -27,9 +27,9 @@ data object UseMediaItemAs : LightboxAction() {
 
     context(LightboxActionsContext) override fun handle(
         state: LightboxState,
-        effect: EffectHandler<LightboxEffect>
+        effect: EffectHandler<CommonEffect>
     ) = flow<LightboxMutation> {
-        effect.handleEffect(UseMediaAs(state.currentMediaItem.id.fullResUri))
+        effect.handleEffect(UsePhotoAs(state.currentMediaItem.id.fullResUri))
     }
 
 }

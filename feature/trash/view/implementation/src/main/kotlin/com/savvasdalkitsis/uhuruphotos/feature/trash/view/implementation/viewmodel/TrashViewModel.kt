@@ -15,47 +15,43 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.trash.view.implementation.viewmodel
 
-import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.GalleryEffectsContext
 import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.GalleryId
 import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.action.GalleryAction
 import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.action.LoadCollage
-import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.effects.GalleryEffect
 import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.ui.state.GalleryState
 import com.savvasdalkitsis.uhuruphotos.feature.trash.view.api.navigation.TrashNavigationRoute
 import com.savvasdalkitsis.uhuruphotos.feature.trash.view.implementation.seam.TrashActionsContext
 import com.savvasdalkitsis.uhuruphotos.feature.trash.view.implementation.seam.TrashAlbumPageActionsContext
-import com.savvasdalkitsis.uhuruphotos.feature.trash.view.implementation.seam.TrashEffectsContext
 import com.savvasdalkitsis.uhuruphotos.feature.trash.view.implementation.seam.actions.Load
 import com.savvasdalkitsis.uhuruphotos.feature.trash.view.implementation.seam.actions.TrashAction
-import com.savvasdalkitsis.uhuruphotos.feature.trash.view.implementation.seam.effects.TrashEffect
 import com.savvasdalkitsis.uhuruphotos.feature.trash.view.implementation.state.TrashState
+import com.savvasdalkitsis.uhuruphotos.foundation.effects.api.seam.effects.CommonEffect
+import com.savvasdalkitsis.uhuruphotos.foundation.effects.api.seam.effects.CommonEffectHandler
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.viewmodel.NavigationViewModel
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.ActionHandlerWithContext
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.CompositeActionHandler
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.CompositeEffectHandler
-import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.EffectHandlerWithContext
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.Either
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
 private typealias TrashCompositeState = Pair<GalleryState, TrashState>
-private typealias TrashCompositeEffect = Either<GalleryEffect, TrashEffect>
+private typealias TrashCompositeEffect = Either<CommonEffect, CommonEffect>
 private typealias TrashCompositeAction = Either<GalleryAction, TrashAction>
 
 @HiltViewModel
 internal class TrashViewModel @Inject constructor(
     trashActionsContext: TrashActionsContext,
     trashAlbumPageActionsContext: TrashAlbumPageActionsContext,
-    trashEffectsContext: TrashEffectsContext,
-    galleryEffectsContext: GalleryEffectsContext,
+    commonEffectHandler: CommonEffectHandler,
 ) : NavigationViewModel<TrashCompositeState, TrashCompositeEffect, TrashCompositeAction, TrashNavigationRoute>(
     CompositeActionHandler(
         ActionHandlerWithContext(trashAlbumPageActionsContext),
         ActionHandlerWithContext(trashActionsContext),
     ),
     CompositeEffectHandler(
-        EffectHandlerWithContext(galleryEffectsContext),
-        EffectHandlerWithContext(trashEffectsContext),
+        commonEffectHandler,
+        commonEffectHandler,
     ),
     GalleryState() to TrashState()
 ) {

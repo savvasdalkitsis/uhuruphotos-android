@@ -19,13 +19,14 @@ import androidx.work.WorkInfo
 import com.savvasdalkitsis.uhuruphotos.feature.feed.domain.api.model.FeedFetchType
 import com.savvasdalkitsis.uhuruphotos.feature.heatmap.view.implementation.seam.HeatMapActionsContext
 import com.savvasdalkitsis.uhuruphotos.feature.heatmap.view.implementation.seam.HeatMapMutation
-import com.savvasdalkitsis.uhuruphotos.feature.heatmap.view.implementation.seam.effects.ErrorLoadingPhotoDetails
-import com.savvasdalkitsis.uhuruphotos.feature.heatmap.view.implementation.seam.effects.HeatMapEffect
 import com.savvasdalkitsis.uhuruphotos.feature.heatmap.view.implementation.ui.state.HeatMapState
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemsOnDevice
 import com.savvasdalkitsis.uhuruphotos.foundation.coroutines.api.onErrors
 import com.savvasdalkitsis.uhuruphotos.foundation.coroutines.api.safelyOnStart
+import com.savvasdalkitsis.uhuruphotos.foundation.effects.api.seam.effects.CommonEffect
+import com.savvasdalkitsis.uhuruphotos.foundation.effects.api.seam.effects.ShowToast
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.EffectHandler
+import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R
 import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.first
@@ -40,7 +41,7 @@ data object Load : HeatMapAction() {
 
     context(HeatMapActionsContext) override fun handle(
         state: HeatMapState,
-        effect: EffectHandler<HeatMapEffect>
+        effect: EffectHandler<CommonEffect>
     ) = merge(
         flow {
             val initialViewPort = heatMapUseCase.observeViewport().first()
@@ -57,7 +58,7 @@ data object Load : HeatMapAction() {
             }
             .debounce(500)
             .distinctUntilChanged()
-            .onErrors { effect.handleEffect(ErrorLoadingPhotoDetails) }
+            .onErrors { effect.handleEffect(ShowToast(R.string.error_loading_photo_details)) }
             .flatMapLatest { media ->
                 flowOf(HeatMapMutation.UpdateAllMedia(media), updateDisplay(media))
             },

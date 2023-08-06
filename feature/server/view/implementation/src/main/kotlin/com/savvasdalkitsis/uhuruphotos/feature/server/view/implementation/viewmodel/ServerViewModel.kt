@@ -17,26 +17,25 @@ package com.savvasdalkitsis.uhuruphotos.feature.server.view.implementation.viewm
 
 import com.savvasdalkitsis.uhuruphotos.feature.server.view.api.navigation.ServerNavigationRoute
 import com.savvasdalkitsis.uhuruphotos.feature.server.view.implementation.seam.ServerActionsContext
-import com.savvasdalkitsis.uhuruphotos.feature.server.view.implementation.seam.ServerEffectsContext
 import com.savvasdalkitsis.uhuruphotos.feature.server.view.implementation.seam.actions.CheckPersistedServer
 import com.savvasdalkitsis.uhuruphotos.feature.server.view.implementation.seam.actions.Load
 import com.savvasdalkitsis.uhuruphotos.feature.server.view.implementation.seam.actions.RequestServerUrlChange
 import com.savvasdalkitsis.uhuruphotos.feature.server.view.implementation.seam.actions.ServerAction
-import com.savvasdalkitsis.uhuruphotos.feature.server.view.implementation.seam.effects.ServerEffect
 import com.savvasdalkitsis.uhuruphotos.feature.server.view.implementation.ui.ServerState
+import com.savvasdalkitsis.uhuruphotos.foundation.effects.api.seam.effects.CommonEffect
+import com.savvasdalkitsis.uhuruphotos.foundation.effects.api.seam.effects.CommonEffectHandler
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.viewmodel.NavigationViewModel
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.ActionHandlerWithContext
-import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.EffectHandlerWithContext
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
 @HiltViewModel
 internal class ServerViewModel @Inject constructor(
     serverActionsContext: ServerActionsContext,
-    effectsContext: ServerEffectsContext,
-) : NavigationViewModel<ServerState, ServerEffect, ServerAction, ServerNavigationRoute>(
+    commonEffectHandler: CommonEffectHandler,
+) : NavigationViewModel<ServerState, CommonEffect, ServerAction, ServerNavigationRoute>(
     ActionHandlerWithContext(serverActionsContext),
-    EffectHandlerWithContext(effectsContext),
+    commonEffectHandler,
     ServerState.Loading(false)
 ) {
 

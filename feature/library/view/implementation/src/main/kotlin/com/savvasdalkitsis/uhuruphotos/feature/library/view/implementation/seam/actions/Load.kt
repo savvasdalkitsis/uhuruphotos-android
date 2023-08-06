@@ -20,7 +20,6 @@ import com.savvasdalkitsis.uhuruphotos.feature.catalogue.user.view.api.state.toU
 import com.savvasdalkitsis.uhuruphotos.feature.library.view.implementation.seam.LibraryActionsContext
 import com.savvasdalkitsis.uhuruphotos.feature.library.view.implementation.seam.LibraryMutation
 import com.savvasdalkitsis.uhuruphotos.feature.library.view.implementation.seam.LibraryMutation.SetItemOrder
-import com.savvasdalkitsis.uhuruphotos.feature.library.view.implementation.seam.effects.LibraryEffect
 import com.savvasdalkitsis.uhuruphotos.feature.library.view.implementation.ui.state.LibraryLocalMedia
 import com.savvasdalkitsis.uhuruphotos.feature.library.view.implementation.ui.state.LibraryState
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItem
@@ -31,6 +30,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.state.to
 import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.model.LocalMediaFolder
 import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.model.LocalMediaItems
 import com.savvasdalkitsis.uhuruphotos.foundation.coroutines.api.safelyOnStartIgnoring
+import com.savvasdalkitsis.uhuruphotos.foundation.effects.api.seam.effects.CommonEffect
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.EffectHandler
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.debounce
@@ -43,7 +43,7 @@ data object Load : LibraryAction() {
 
     context(LibraryActionsContext) override fun handle(
         state: LibraryState,
-        effect: EffectHandler<LibraryEffect>
+        effect: EffectHandler<CommonEffect>
     ) = merge(
         libraryUseCase.getLibraryItems()
             .map(::SetItemOrder),
@@ -84,7 +84,7 @@ data object Load : LibraryAction() {
     }
 
     context(LibraryActionsContext)
-    private suspend fun initialRefresh(effect: EffectHandler<LibraryEffect>) {
+    private suspend fun initialRefresh(effect: EffectHandler<CommonEffect>) {
         if (autoAlbumsUseCase.getAutoAlbums().isEmpty()) {
             refreshAutoAlbums(effect)
         }

@@ -17,8 +17,8 @@ package com.savvasdalkitsis.uhuruphotos.feature.hidden.view.implementation.seam.
 
 import com.savvasdalkitsis.uhuruphotos.feature.hidden.view.implementation.seam.HiddenPhotosActionsContext
 import com.savvasdalkitsis.uhuruphotos.feature.hidden.view.implementation.seam.HiddenPhotosState
-import com.savvasdalkitsis.uhuruphotos.feature.hidden.view.implementation.seam.effects.HiddenPhotosEffect
+import com.savvasdalkitsis.uhuruphotos.foundation.effects.api.seam.effects.CommonEffect
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.Action
 
 sealed class HiddenPhotosAction :
-    Action<HiddenPhotosState, HiddenPhotosEffect, HiddenPhotosActionsContext>
+    Action<HiddenPhotosState, CommonEffect, HiddenPhotosActionsContext>

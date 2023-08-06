@@ -10,16 +10,17 @@ android {
 
 dependencies {
 
-    implementation project(":feature:auth:domain:api")
-    implementation project(":foundation:biometrics:api")
-    implementation project(":feature:home:view:api")
-    implementation project(":feature:feed:view:api")
-    implementation project(":foundation:navigation:api")
-    implementation project(":feature:server:view:api")
-    implementation project(":feature:settings:domain:api")
-    implementation project(":foundation:strings:api")
-    implementation project(":foundation:ui:api")
     implementation(
+            project(":feature:auth:domain:api"),
+            project(":feature:feed:view:api"),
+            project(":feature:home:view:api"),
+            project(":feature:server:view:api"),
+            project(":feature:settings:domain:api"),
+            project(":foundation:biometrics:api"),
+            project(":foundation:effects:api"),
+            project(":foundation:navigation:api"),
+            project(":foundation:strings:api"),
+            project(":foundation:ui:api"),
             libs.androidx.compose.foundation.layout,
             libs.androidx.compose.hilt.navigation,
             libs.androidx.compose.material,

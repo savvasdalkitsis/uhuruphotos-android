@@ -16,10 +16,10 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.feature.catalogue.auto.view.implementation.seam.actions
 
 import com.savvasdalkitsis.uhuruphotos.feature.catalogue.auto.view.implementation.seam.AutoAlbumsActionsContext
-import com.savvasdalkitsis.uhuruphotos.feature.catalogue.auto.view.implementation.seam.effects.AutoAlbumsEffect
 import com.savvasdalkitsis.uhuruphotos.feature.catalogue.auto.view.implementation.seam.AutoAlbumsMutation
 import com.savvasdalkitsis.uhuruphotos.feature.catalogue.auto.view.implementation.seam.AutoAlbumsState
 import com.savvasdalkitsis.uhuruphotos.foundation.coroutines.api.safelyOnStartIgnoring
+import com.savvasdalkitsis.uhuruphotos.foundation.effects.api.seam.effects.CommonEffect
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.EffectHandler
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.merge
@@ -27,7 +27,7 @@ import kotlinx.coroutines.flow.merge
 data object Load : AutoAlbumsAction() {
     context(AutoAlbumsActionsContext) override fun handle(
         state: AutoAlbumsState,
-        effect: EffectHandler<AutoAlbumsEffect>
+        effect: EffectHandler<CommonEffect>
     ) = merge(
         autoAlbumsUseCase.observeAutoAlbums()
             .map(AutoAlbumsMutation::DisplayAlbums),

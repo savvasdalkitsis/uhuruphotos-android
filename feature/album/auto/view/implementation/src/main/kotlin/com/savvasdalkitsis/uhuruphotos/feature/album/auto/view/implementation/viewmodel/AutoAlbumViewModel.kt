@@ -19,25 +19,24 @@ import com.savvasdalkitsis.uhuruphotos.feature.album.auto.view.api.navigation.Au
 import com.savvasdalkitsis.uhuruphotos.feature.album.auto.view.implementation.seam.AutoAlbumActionsContext
 import com.savvasdalkitsis.uhuruphotos.feature.album.auto.view.implementation.state.AutoAlbumCollageDisplay
 import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.CollageState
-import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.GalleryEffectsContext
 import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.GalleryId
 import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.action.GalleryAction
 import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.action.LoadCollage
-import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.effects.GalleryEffect
 import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.ui.state.GalleryState
+import com.savvasdalkitsis.uhuruphotos.foundation.effects.api.seam.effects.CommonEffect
+import com.savvasdalkitsis.uhuruphotos.foundation.effects.api.seam.effects.CommonEffectHandler
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.viewmodel.NavigationViewModel
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.ActionHandlerWithContext
-import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.EffectHandlerWithContext
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
 @HiltViewModel
 internal class AutoAlbumViewModel @Inject constructor(
     autoAlbumActionsContext: AutoAlbumActionsContext,
-    effectsContext: GalleryEffectsContext,
-) : NavigationViewModel<GalleryState, GalleryEffect, GalleryAction, AutoAlbumNavigationRoute>(
+    commonEffectHandler: CommonEffectHandler,
+) : NavigationViewModel<GalleryState, CommonEffect, GalleryAction, AutoAlbumNavigationRoute>(
     ActionHandlerWithContext(autoAlbumActionsContext),
-    EffectHandlerWithContext(effectsContext),
+    commonEffectHandler,
     GalleryState(collageState = CollageState(collageDisplay = AutoAlbumCollageDisplay))
 ) {
 

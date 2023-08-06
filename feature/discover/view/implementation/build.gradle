@@ -35,6 +35,7 @@ dependencies {
             project(":foundation:compose:api"),
             project(":foundation:coroutines:api"),
             project(":foundation:date:api"),
+            project(":foundation:effects:api"),
             project(":foundation:icons:api"),
             project(":foundation:log:api"),
             project(":foundation:map:api"),

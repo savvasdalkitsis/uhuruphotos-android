@@ -16,47 +16,43 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.feature.hidden.view.implementation.viewmodel
 
 import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.CollageState
-import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.GalleryEffectsContext
 import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.GalleryId
 import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.action.GalleryAction
 import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.action.LoadCollage
-import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.effects.GalleryEffect
 import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.ui.state.GalleryState
 import com.savvasdalkitsis.uhuruphotos.feature.hidden.view.api.HiddenPhotosNavigationRoute
 import com.savvasdalkitsis.uhuruphotos.feature.hidden.view.implementation.seam.HiddenPhotosActionsContext
 import com.savvasdalkitsis.uhuruphotos.feature.hidden.view.implementation.seam.HiddenPhotosAlbumPageActionsContext
-import com.savvasdalkitsis.uhuruphotos.feature.hidden.view.implementation.seam.HiddenPhotosEffectsContext
 import com.savvasdalkitsis.uhuruphotos.feature.hidden.view.implementation.seam.HiddenPhotosState
 import com.savvasdalkitsis.uhuruphotos.feature.hidden.view.implementation.seam.actions.HiddenPhotosAction
 import com.savvasdalkitsis.uhuruphotos.feature.hidden.view.implementation.seam.actions.Load
-import com.savvasdalkitsis.uhuruphotos.feature.hidden.view.implementation.seam.effects.HiddenPhotosEffect
+import com.savvasdalkitsis.uhuruphotos.foundation.effects.api.seam.effects.CommonEffect
+import com.savvasdalkitsis.uhuruphotos.foundation.effects.api.seam.effects.CommonEffectHandler
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.viewmodel.NavigationViewModel
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.ActionHandlerWithContext
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.CompositeActionHandler
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.CompositeEffectHandler
-import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.EffectHandlerWithContext
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.Either
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
 private typealias HiddenPhotosCompositeState = Pair<GalleryState, HiddenPhotosState>
-private typealias HiddenPhotosCompositeEffect = Either<GalleryEffect, HiddenPhotosEffect>
+private typealias HiddenPhotosCompositeEffect = Either<CommonEffect, CommonEffect>
 private typealias HiddenPhotosCompositeAction = Either<GalleryAction, HiddenPhotosAction>
 
 @HiltViewModel
 internal class HiddenPhotosViewModel @Inject constructor(
     hiddenPhotosAlbumPageActionsContext: HiddenPhotosAlbumPageActionsContext,
     hiddenPhotosActionsContext: HiddenPhotosActionsContext,
-    hiddenPhotosEffectsContext: HiddenPhotosEffectsContext,
-    galleryEffectsContext: GalleryEffectsContext,
+    commonEffectHandler: CommonEffectHandler,
 ) : NavigationViewModel<HiddenPhotosCompositeState, HiddenPhotosCompositeEffect, HiddenPhotosCompositeAction, HiddenPhotosNavigationRoute>(
         CompositeActionHandler(
             ActionHandlerWithContext(hiddenPhotosAlbumPageActionsContext),
             ActionHandlerWithContext(hiddenPhotosActionsContext),
         ),
         CompositeEffectHandler(
-            EffectHandlerWithContext(galleryEffectsContext),
-            EffectHandlerWithContext(hiddenPhotosEffectsContext),
+            commonEffectHandler,
+            commonEffectHandler,
         ),
     GalleryState(collageState = CollageState()) to HiddenPhotosState()
 ) {

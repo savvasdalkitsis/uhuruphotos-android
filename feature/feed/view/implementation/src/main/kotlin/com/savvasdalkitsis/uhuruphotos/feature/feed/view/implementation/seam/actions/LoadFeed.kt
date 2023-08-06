@@ -22,7 +22,6 @@ import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.toClust
 import com.savvasdalkitsis.uhuruphotos.feature.feed.domain.api.model.FeedFetchType
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.FeedActionsContext
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.FeedMutation
-import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.effects.FeedEffect
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.ui.state.FeedState
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.ui.state.MemoryCel
 import com.savvasdalkitsis.uhuruphotos.feature.jobs.domain.api.model.Job
@@ -30,6 +29,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.jobs.domain.api.model.JobStatus
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemSelectionMode
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemsOnDevice
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.state.toCel
+import com.savvasdalkitsis.uhuruphotos.foundation.effects.api.seam.effects.CommonEffect
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.EffectHandler
 import kotlinx.collections.immutable.toPersistentList
 import kotlinx.coroutines.currentCoroutineContext
@@ -49,7 +49,7 @@ data object LoadFeed : FeedAction() {
 
     context(FeedActionsContext) override fun handle(
         state: FeedState,
-        effect: EffectHandler<FeedEffect>
+        effect: EffectHandler<CommonEffect>
     ) = merge(
         showLibraryTab(),
         changeDisplay(),

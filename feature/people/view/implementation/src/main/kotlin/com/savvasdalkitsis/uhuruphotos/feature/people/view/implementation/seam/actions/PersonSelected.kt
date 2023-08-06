@@ -18,17 +18,18 @@ package com.savvasdalkitsis.uhuruphotos.feature.people.view.implementation.seam.
 import com.savvasdalkitsis.uhuruphotos.feature.people.view.api.ui.state.Person
 import com.savvasdalkitsis.uhuruphotos.feature.people.view.implementation.seam.PeopleActionsContext
 import com.savvasdalkitsis.uhuruphotos.feature.people.view.implementation.seam.PeopleMutation
-import com.savvasdalkitsis.uhuruphotos.feature.people.view.implementation.seam.effects.NavigateToPerson
-import com.savvasdalkitsis.uhuruphotos.feature.people.view.implementation.seam.effects.PeopleEffect
 import com.savvasdalkitsis.uhuruphotos.feature.people.view.implementation.ui.state.PeopleState
+import com.savvasdalkitsis.uhuruphotos.feature.person.view.api.navigation.PersonNavigationRoute
+import com.savvasdalkitsis.uhuruphotos.foundation.effects.api.seam.effects.CommonEffect
+import com.savvasdalkitsis.uhuruphotos.foundation.effects.api.seam.effects.NavigateTo
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.EffectHandler
 import kotlinx.coroutines.flow.flow
 
 data class PersonSelected(val person: Person) : PeopleAction() {
     context(PeopleActionsContext) override fun handle(
         state: PeopleState,
-        effect: EffectHandler<PeopleEffect>
+        effect: EffectHandler<CommonEffect>
     ) = flow<PeopleMutation> {
-        effect.handleEffect(NavigateToPerson(person))
+        effect.handleEffect(NavigateTo(PersonNavigationRoute(person.id)))
     }
 }

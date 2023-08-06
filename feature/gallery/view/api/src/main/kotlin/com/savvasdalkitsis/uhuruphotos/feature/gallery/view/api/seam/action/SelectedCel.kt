@@ -17,10 +17,11 @@ package com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.action
 
 import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.GalleryActionsContext
 import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.GalleryMutation
-import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.effects.GalleryEffect
-import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.effects.OpenLightbox
 import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.ui.state.GalleryState
+import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.api.navigation.LightboxNavigationRoute
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.state.CelState
+import com.savvasdalkitsis.uhuruphotos.foundation.effects.api.seam.effects.CommonEffect
+import com.savvasdalkitsis.uhuruphotos.foundation.effects.api.seam.effects.NavigateTo
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.EffectHandler
 import kotlinx.coroutines.flow.flow
 
@@ -29,13 +30,13 @@ data class SelectedCel(
 ) : GalleryAction() {
     context(GalleryActionsContext) override fun handle(
         state: GalleryState,
-        effect: EffectHandler<GalleryEffect>
+        effect: EffectHandler<CommonEffect>
     ) = flow<GalleryMutation> {
-        effect.handleEffect(
-            OpenLightbox(
+        effect.handleEffect(NavigateTo(
+            LightboxNavigationRoute(
                 id = cel.mediaItem.id,
                 lightboxSequenceDataSource = lightboxSequenceDataSource(galleryId.id)
             )
-        )
+        ))
     }
 }

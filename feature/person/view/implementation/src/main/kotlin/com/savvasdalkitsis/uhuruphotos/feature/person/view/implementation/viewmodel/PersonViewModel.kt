@@ -17,24 +17,23 @@ package com.savvasdalkitsis.uhuruphotos.feature.person.view.implementation.viewm
 
 import com.savvasdalkitsis.uhuruphotos.feature.person.view.api.navigation.PersonNavigationRoute
 import com.savvasdalkitsis.uhuruphotos.feature.person.view.implementation.seam.PersonActionsContext
-import com.savvasdalkitsis.uhuruphotos.feature.person.view.implementation.seam.PersonEffectsContext
 import com.savvasdalkitsis.uhuruphotos.feature.person.view.implementation.seam.actions.LoadPerson
 import com.savvasdalkitsis.uhuruphotos.feature.person.view.implementation.seam.actions.PersonAction
-import com.savvasdalkitsis.uhuruphotos.feature.person.view.implementation.seam.effects.PersonEffect
 import com.savvasdalkitsis.uhuruphotos.feature.person.view.implementation.ui.state.PersonState
+import com.savvasdalkitsis.uhuruphotos.foundation.effects.api.seam.effects.CommonEffect
+import com.savvasdalkitsis.uhuruphotos.foundation.effects.api.seam.effects.CommonEffectHandler
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.viewmodel.NavigationViewModel
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.ActionHandlerWithContext
-import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.EffectHandlerWithContext
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
 @HiltViewModel
 class PersonViewModel @Inject constructor(
     personActionsContext: PersonActionsContext,
-    personEffectsContext: PersonEffectsContext,
-) : NavigationViewModel<PersonState, PersonEffect, PersonAction, PersonNavigationRoute>(
+    commonEffectHandler: CommonEffectHandler,
+) : NavigationViewModel<PersonState, CommonEffect, PersonAction, PersonNavigationRoute>(
     ActionHandlerWithContext(personActionsContext),
-    EffectHandlerWithContext(personEffectsContext),
+    commonEffectHandler,
     PersonState()
 ) {
 

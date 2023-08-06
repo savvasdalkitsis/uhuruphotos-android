@@ -20,23 +20,24 @@ import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.graphics.asAndroidBitmap
 import com.savvasdalkitsis.uhuruphotos.feature.edit.view.implementation.seam.EditActionsContext
 import com.savvasdalkitsis.uhuruphotos.feature.edit.view.implementation.seam.EditMutation
-import com.savvasdalkitsis.uhuruphotos.feature.edit.view.implementation.seam.effects.EditEffect
-import com.savvasdalkitsis.uhuruphotos.feature.edit.view.implementation.seam.effects.NavigateBack
-import com.savvasdalkitsis.uhuruphotos.feature.edit.view.implementation.seam.effects.ShowError
 import com.savvasdalkitsis.uhuruphotos.feature.edit.view.implementation.ui.state.EditState
+import com.savvasdalkitsis.uhuruphotos.foundation.effects.api.seam.effects.CommonEffect
+import com.savvasdalkitsis.uhuruphotos.foundation.effects.api.seam.effects.NavigateBack
+import com.savvasdalkitsis.uhuruphotos.foundation.effects.api.seam.effects.ShowToast
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.EffectHandler
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.Mutation
+import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 
 data class ImageCropped(val image: ImageBitmap, val name: String, val uri: Uri) : EditAction() {
     context(EditActionsContext) override fun handle(
         state: EditState,
-        effect: EffectHandler<EditEffect>
+        effect: EffectHandler<CommonEffect>
     ): Flow<Mutation<EditState>> = flow {
         emit(EditMutation.Saving)
         if (!localMediaUseCase.savePhoto(image.asAndroidBitmap(), "CROPPED_$name", uri)) {
-            effect.handleEffect(ShowError)
+            effect.handleEffect(ShowToast(R.string.error_editing_photo))
         }
         effect.handleEffect(NavigateBack)
     }

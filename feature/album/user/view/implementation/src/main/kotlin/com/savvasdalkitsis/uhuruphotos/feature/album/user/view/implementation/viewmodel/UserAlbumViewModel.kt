@@ -18,25 +18,24 @@ package com.savvasdalkitsis.uhuruphotos.feature.album.user.view.implementation.v
 import com.savvasdalkitsis.uhuruphotos.feature.album.user.view.api.navigation.UserAlbumNavigationRoute
 import com.savvasdalkitsis.uhuruphotos.feature.album.user.view.implementation.seam.UserAlbumActionsContext
 import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.CollageState
-import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.GalleryEffectsContext
 import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.GalleryId
 import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.action.GalleryAction
 import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.action.LoadCollage
-import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.effects.GalleryEffect
 import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.ui.state.GalleryState
+import com.savvasdalkitsis.uhuruphotos.foundation.effects.api.seam.effects.CommonEffect
+import com.savvasdalkitsis.uhuruphotos.foundation.effects.api.seam.effects.CommonEffectHandler
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.viewmodel.NavigationViewModel
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.ActionHandlerWithContext
-import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.EffectHandlerWithContext
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
 @HiltViewModel
 internal class UserAlbumViewModel @Inject constructor(
     userAlbumActionsContext: UserAlbumActionsContext,
-    effectsContext: GalleryEffectsContext,
-) : NavigationViewModel<GalleryState, GalleryEffect, GalleryAction, UserAlbumNavigationRoute>(
+    commonEffectHandler: CommonEffectHandler,
+) : NavigationViewModel<GalleryState, CommonEffect, GalleryAction, UserAlbumNavigationRoute>(
     ActionHandlerWithContext(userAlbumActionsContext),
-    EffectHandlerWithContext(effectsContext),
+    commonEffectHandler,
     GalleryState(collageState = CollageState())
 ) {
 

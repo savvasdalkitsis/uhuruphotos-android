@@ -18,12 +18,14 @@ package com.savvasdalkitsis.uhuruphotos.feature.home.view.implementation.seam.ac
 import com.github.michaelbull.result.Err
 import com.github.michaelbull.result.Ok
 import com.savvasdalkitsis.uhuruphotos.feature.auth.domain.api.model.AuthStatus
+import com.savvasdalkitsis.uhuruphotos.feature.feed.view.api.navigation.FeedNavigationRoute
 import com.savvasdalkitsis.uhuruphotos.feature.home.view.implementation.seam.HomeActionsContext
 import com.savvasdalkitsis.uhuruphotos.feature.home.view.implementation.seam.HomeMutation
-import com.savvasdalkitsis.uhuruphotos.feature.home.view.implementation.seam.effects.HomeEffect
-import com.savvasdalkitsis.uhuruphotos.feature.home.view.implementation.seam.effects.LaunchAuthentication
-import com.savvasdalkitsis.uhuruphotos.feature.home.view.implementation.seam.effects.LoadFeed
 import com.savvasdalkitsis.uhuruphotos.feature.home.view.implementation.ui.state.HomeState
+import com.savvasdalkitsis.uhuruphotos.feature.server.view.api.navigation.ServerNavigationRoute
+import com.savvasdalkitsis.uhuruphotos.foundation.effects.api.seam.effects.CommonEffect
+import com.savvasdalkitsis.uhuruphotos.foundation.effects.api.seam.effects.NavigateTo
+import com.savvasdalkitsis.uhuruphotos.foundation.effects.api.seam.effects.NewNavigationRoute
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.EffectHandler
 import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R
 import kotlinx.coroutines.flow.flow
@@ -32,7 +34,7 @@ data object Load : HomeAction() {
 
     context(HomeActionsContext) override fun handle(
         state: HomeState,
-        effect: EffectHandler<HomeEffect>
+        effect: EffectHandler<CommonEffect>
     ) = flow {
         emit(HomeMutation.Loading)
         val proceed = when {
@@ -47,8 +49,10 @@ data object Load : HomeAction() {
         when(proceed) {
             is Err -> emit(HomeMutation.NeedsBiometricAuthentication)
             is Ok -> when (authenticationUseCase.authenticationStatus()) {
-                is AuthStatus.Unauthenticated -> effect.handleEffect(LaunchAuthentication)
-                else -> effect.handleEffect(LoadFeed)
+                is AuthStatus.Unauthenticated -> effect.handleEffect(NavigateTo(
+                    ServerNavigationRoute(auto = true)
+                ))
+                else -> effect.handleEffect(NewNavigationRoute(FeedNavigationRoute))
             }
         }
     }

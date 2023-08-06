@@ -18,10 +18,10 @@ package com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.sea
 import androidx.work.ExistingPeriodicWorkPolicy
 import androidx.work.NetworkType
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.SettingsActionsContext
-import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.effects.SettingsEffect
-import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.effects.ShowMessage
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.SettingsMutation
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.ui.state.SettingsState
+import com.savvasdalkitsis.uhuruphotos.foundation.effects.api.seam.effects.CommonEffect
+import com.savvasdalkitsis.uhuruphotos.foundation.effects.api.seam.effects.ShowToast
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.EffectHandler
 import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R
 import kotlinx.coroutines.flow.flow
@@ -29,10 +29,10 @@ import kotlinx.coroutines.flow.flow
 data class ChangeFullSyncNetworkRequirements(val networkType: NetworkType) : SettingsAction() {
     context(SettingsActionsContext) override fun handle(
         state: SettingsState,
-        effect: EffectHandler<SettingsEffect>
+        effect: EffectHandler<CommonEffect>
     ) = flow<SettingsMutation> {
         settingsUseCase.setFullSyncNetworkRequirements(networkType)
         feedWorkScheduler.scheduleFeedRefreshPeriodic(ExistingPeriodicWorkPolicy.CANCEL_AND_REENQUEUE)
-        effect.handleEffect(ShowMessage(R.string.feed_sync_network_changed))
+        effect.handleEffect(ShowToast(R.string.feed_sync_network_changed))
     }
 }

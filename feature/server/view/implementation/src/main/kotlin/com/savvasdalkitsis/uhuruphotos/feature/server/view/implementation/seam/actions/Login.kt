@@ -21,17 +21,18 @@ import com.savvasdalkitsis.uhuruphotos.feature.auth.domain.api.usecase.Credentia
 import com.savvasdalkitsis.uhuruphotos.feature.server.view.implementation.seam.ServerActionsContext
 import com.savvasdalkitsis.uhuruphotos.feature.server.view.implementation.seam.ServerMutation.AskForUserCredentials
 import com.savvasdalkitsis.uhuruphotos.feature.server.view.implementation.seam.ServerMutation.PerformingBackgroundJob
-import com.savvasdalkitsis.uhuruphotos.feature.server.view.implementation.seam.effects.Close
-import com.savvasdalkitsis.uhuruphotos.feature.server.view.implementation.seam.effects.ErrorLoggingIn
-import com.savvasdalkitsis.uhuruphotos.feature.server.view.implementation.seam.effects.ServerEffect
 import com.savvasdalkitsis.uhuruphotos.feature.server.view.implementation.ui.ServerState
+import com.savvasdalkitsis.uhuruphotos.foundation.effects.api.seam.effects.ClearBackStack
+import com.savvasdalkitsis.uhuruphotos.foundation.effects.api.seam.effects.CommonEffect
+import com.savvasdalkitsis.uhuruphotos.foundation.effects.api.seam.effects.ShowToast
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.EffectHandler
+import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R
 import kotlinx.coroutines.flow.flow
 
 data object Login : ServerAction() {
     context(ServerActionsContext) override fun handle(
         state: ServerState,
-        effect: EffectHandler<ServerEffect>
+        effect: EffectHandler<CommonEffect>
     ) = flow {
         if ((state as? ServerState.UserCredentials)?.allowLogin == false) {
             return@flow
@@ -42,14 +43,14 @@ data object Login : ServerAction() {
             .mapEither(
                 success = { authStatus ->
                     if (authStatus == AuthStatus.Authenticated) {
-                        effect.handleEffect(Close)
+                        effect.handleEffect(ClearBackStack)
                     } else {
-                        effect.handleEffect(ErrorLoggingIn())
+                        effect.handleEffect(ShowToast(R.string.error_logging_in))
                         emit(AskForUserCredentials(credentials.username, credentials.password))
                     }
                 },
                 failure = {
-                    effect.handleEffect(ErrorLoggingIn(it))
+                    effect.handleEffect(ShowToast(R.string.error_logging_in))
                     emit(AskForUserCredentials(credentials.username, credentials.password))
                 }
             )

@@ -17,7 +17,7 @@ package com.savvasdalkitsis.uhuruphotos.feature.catalogue.auto.view.implementati
 
 import com.savvasdalkitsis.uhuruphotos.feature.catalogue.auto.view.implementation.seam.AutoAlbumsActionsContext
 import com.savvasdalkitsis.uhuruphotos.feature.catalogue.auto.view.implementation.seam.AutoAlbumsState
-import com.savvasdalkitsis.uhuruphotos.feature.catalogue.auto.view.implementation.seam.effects.AutoAlbumsEffect
+import com.savvasdalkitsis.uhuruphotos.foundation.effects.api.seam.effects.CommonEffect
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.Action
 
-sealed class AutoAlbumsAction : Action<AutoAlbumsState, AutoAlbumsEffect, AutoAlbumsActionsContext>
+sealed class AutoAlbumsAction : Action<AutoAlbumsState, CommonEffect, AutoAlbumsActionsContext>

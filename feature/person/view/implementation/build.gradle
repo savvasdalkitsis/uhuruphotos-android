@@ -9,21 +9,22 @@ android {
 }
 
 dependencies {
-    implementation project(":feature:auth:domain:api")
-    implementation project(":feature:db:domain:api")
-    implementation project(":feature:lightbox:view:api")
-    implementation project(":feature:collage:view:api")
-    implementation project(':foundation:image:api')
-    implementation project(":foundation:navigation:api")
-    implementation project(':feature:people:domain:api')
-    implementation project(':feature:people:view:api')
-    implementation project(':feature:person:domain:api')
-    implementation project(':feature:person:view:api')
-    implementation project(':feature:media:common:view:api')
-    implementation project(':feature:media:remote:domain:api')
-    implementation project(":feature:settings:domain:api")
-    implementation project(":foundation:ui:api")
     implementation(
+            project(":feature:auth:domain:api"),
+            project(":feature:collage:view:api"),
+            project(":feature:db:domain:api"),
+            project(":feature:lightbox:view:api"),
+            project(":feature:media:common:view:api"),
+            project(":feature:media:remote:domain:api"),
+            project(":feature:people:domain:api"),
+            project(":feature:people:view:api"),
+            project(":feature:person:domain:api"),
+            project(":feature:person:view:api"),
+            project(":feature:settings:domain:api"),
+            project(":foundation:effects:api"),
+            project(":foundation:image:api"),
+            project(":foundation:navigation:api"),
+            project(":foundation:ui:api"),
             libs.androidx.compose.foundation,
             libs.androidx.compose.material,
             libs.autodagger.core,

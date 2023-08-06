@@ -23,11 +23,11 @@ import com.savvasdalkitsis.uhuruphotos.feature.account.view.api.seam.effects.Acc
 import com.savvasdalkitsis.uhuruphotos.feature.account.view.api.ui.state.AccountOverviewState
 import com.savvasdalkitsis.uhuruphotos.feature.discover.view.api.navigation.DiscoverNavigationRoute
 import com.savvasdalkitsis.uhuruphotos.feature.discover.view.implementation.seam.DiscoverActionsContext
-import com.savvasdalkitsis.uhuruphotos.feature.discover.view.implementation.seam.DiscoverEffectsContext
-import com.savvasdalkitsis.uhuruphotos.feature.discover.view.implementation.seam.actions.Initialise
 import com.savvasdalkitsis.uhuruphotos.feature.discover.view.implementation.seam.actions.DiscoverAction
-import com.savvasdalkitsis.uhuruphotos.feature.discover.view.implementation.seam.effects.DiscoverEffect
+import com.savvasdalkitsis.uhuruphotos.feature.discover.view.implementation.seam.actions.Initialise
 import com.savvasdalkitsis.uhuruphotos.feature.discover.view.implementation.ui.state.DiscoverState
+import com.savvasdalkitsis.uhuruphotos.foundation.effects.api.seam.effects.CommonEffect
+import com.savvasdalkitsis.uhuruphotos.foundation.effects.api.seam.effects.CommonEffectHandler
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.viewmodel.NavigationViewModel
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.ActionHandlerWithContext
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.CompositeActionHandler
@@ -38,14 +38,14 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
 private typealias SearchCompositeState = Pair<DiscoverState, AccountOverviewState>
-private typealias SearchCompositeEffect = Either<DiscoverEffect, AccountOverviewEffect>
+private typealias SearchCompositeEffect = Either<CommonEffect, AccountOverviewEffect>
 private typealias SearchCompositeAction = Either<DiscoverAction, AccountOverviewAction>
 
 @HiltViewModel
 class DiscoverViewModel @Inject constructor(
     discoverActionsContext: DiscoverActionsContext,
     accountOverviewActionsContext: AccountOverviewActionsContext,
-    discoverEffectsContext: DiscoverEffectsContext,
+    commonEffectHandler: CommonEffectHandler,
     accountOverviewEffectsContext: AccountOverviewEffectsContext,
 ) : NavigationViewModel<SearchCompositeState, SearchCompositeEffect, SearchCompositeAction, DiscoverNavigationRoute>(
     CompositeActionHandler(
@@ -53,7 +53,7 @@ class DiscoverViewModel @Inject constructor(
         ActionHandlerWithContext(accountOverviewActionsContext),
     ),
     CompositeEffectHandler(
-        EffectHandlerWithContext(discoverEffectsContext),
+        commonEffectHandler,
         EffectHandlerWithContext(accountOverviewEffectsContext),
     ),
     DiscoverState() to AccountOverviewState()

@@ -14,18 +14,19 @@ android {
 
 dependencies {
 
-    implementation project(":feature:auth:domain:api")
-    implementation project(":feature:db:domain:api")
-    implementation project(":foundation:http:api")
-    implementation project(":foundation:icons:api")
-    implementation project(":foundation:log:api")
-    implementation project(":foundation:navigation:api")
-    implementation project(":feature:server:view:api")
-    implementation project(":feature:settings:domain:api")
-    implementation project(":foundation:strings:api")
-    implementation project(":foundation:toaster:api")
-    implementation project(":foundation:ui:api")
     implementation(
+            project(":feature:auth:domain:api"),
+            project(":feature:db:domain:api"),
+            project(":feature:server:view:api"),
+            project(":feature:settings:domain:api"),
+            project(":foundation:effects:api"),
+            project(":foundation:http:api"),
+            project(":foundation:icons:api"),
+            project(":foundation:log:api"),
+            project(":foundation:navigation:api"),
+            project(":foundation:strings:api"),
+            project(":foundation:toaster:api"),
+            project(":foundation:ui:api"),
             libs.androidx.compose.hilt.navigation,
             libs.androidx.compose.material,
             libs.autodagger.core,

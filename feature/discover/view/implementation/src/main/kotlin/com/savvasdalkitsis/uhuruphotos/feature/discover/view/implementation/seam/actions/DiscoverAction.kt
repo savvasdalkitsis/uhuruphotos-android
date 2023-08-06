@@ -16,8 +16,8 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.feature.discover.view.implementation.seam.actions
 
 import com.savvasdalkitsis.uhuruphotos.feature.discover.view.implementation.seam.DiscoverActionsContext
-import com.savvasdalkitsis.uhuruphotos.feature.discover.view.implementation.seam.effects.DiscoverEffect
 import com.savvasdalkitsis.uhuruphotos.feature.discover.view.implementation.ui.state.DiscoverState
+import com.savvasdalkitsis.uhuruphotos.foundation.effects.api.seam.effects.CommonEffect
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.Action
 
-sealed class DiscoverAction : Action<DiscoverState, DiscoverEffect, DiscoverActionsContext>
+sealed class DiscoverAction : Action<DiscoverState, CommonEffect, DiscoverActionsContext>

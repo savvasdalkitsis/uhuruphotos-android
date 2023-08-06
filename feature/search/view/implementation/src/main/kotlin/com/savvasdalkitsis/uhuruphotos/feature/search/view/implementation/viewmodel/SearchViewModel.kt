@@ -17,24 +17,23 @@ package com.savvasdalkitsis.uhuruphotos.feature.search.view.implementation.viewm
 
 import com.savvasdalkitsis.uhuruphotos.feature.search.view.api.navigation.SearchNavigationRoute
 import com.savvasdalkitsis.uhuruphotos.feature.search.view.implementation.seam.SearchActionsContext
-import com.savvasdalkitsis.uhuruphotos.feature.search.view.implementation.seam.SearchEffectsContext
 import com.savvasdalkitsis.uhuruphotos.feature.search.view.implementation.seam.actions.SearchAction
 import com.savvasdalkitsis.uhuruphotos.feature.search.view.implementation.seam.actions.SearchFor
-import com.savvasdalkitsis.uhuruphotos.feature.search.view.implementation.seam.effects.SearchEffect
 import com.savvasdalkitsis.uhuruphotos.feature.search.view.implementation.ui.state.SearchState
+import com.savvasdalkitsis.uhuruphotos.foundation.effects.api.seam.effects.CommonEffect
+import com.savvasdalkitsis.uhuruphotos.foundation.effects.api.seam.effects.CommonEffectHandler
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.viewmodel.NavigationViewModel
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.ActionHandlerWithContext
-import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.EffectHandlerWithContext
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
 @HiltViewModel
 internal class SearchViewModel @Inject constructor(
     actionsContext: SearchActionsContext,
-    effectsContext: SearchEffectsContext,
-) : NavigationViewModel<SearchState, SearchEffect, SearchAction, SearchNavigationRoute>(
+    effectHandler: CommonEffectHandler,
+) : NavigationViewModel<SearchState, CommonEffect, SearchAction, SearchNavigationRoute>(
     ActionHandlerWithContext(actionsContext),
-    EffectHandlerWithContext(effectsContext),
+    effectHandler,
     SearchState(),
 ) {
 

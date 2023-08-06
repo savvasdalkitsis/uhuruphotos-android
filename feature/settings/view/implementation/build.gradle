@@ -10,26 +10,27 @@ android {
 
 dependencies {
 
-    implementation project(":feature:about:view:api")
-    implementation project(":feature:avatar:domain:api")
-    implementation project(":feature:avatar:view:api")
-    implementation project(":feature:feed:domain:api")
-    implementation project(":feature:jobs:domain:api")
-    implementation project(":feature:jobs:view:api")
-    implementation project(":feature:search:domain:api")
-    implementation project(":feature:settings:domain:api")
-    implementation project(":feature:settings:view:api")
-    implementation project(":foundation:biometrics:api")
-    implementation project(":foundation:icons:api")
-    implementation project(":foundation:initializer:api")
-    implementation project(":foundation:log:api")
-    implementation project(":foundation:navigation:api")
-    implementation project(":foundation:preferences:api")
-    implementation project(":foundation:strings:api")
-    implementation project(":foundation:system:api")
-    implementation project(":foundation:toaster:api")
-    implementation project(":foundation:ui:api")
     implementation(
+            project(":feature:about:view:api"),
+            project(":feature:avatar:domain:api"),
+            project(":feature:avatar:view:api"),
+            project(":feature:feed:domain:api"),
+            project(":feature:jobs:domain:api"),
+            project(":feature:jobs:view:api"),
+            project(":feature:search:domain:api"),
+            project(":feature:settings:domain:api"),
+            project(":feature:settings:view:api"),
+            project(":foundation:biometrics:api"),
+            project(":foundation:effects:api"),
+            project(":foundation:icons:api"),
+            project(":foundation:initializer:api"),
+            project(":foundation:log:api"),
+            project(":foundation:navigation:api"),
+            project(":foundation:preferences:api"),
+            project(":foundation:strings:api"),
+            project(":foundation:system:api"),
+            project(":foundation:toaster:api"),
+            project(":foundation:ui:api"),
             libs.bundles.androidx.compose.animation,
             libs.androidx.compose.foundation,
             libs.androidx.compose.foundation.layout,

@@ -9,16 +9,17 @@ android {
 }
 
 dependencies {
-    implementation project(":feature:edit:view:api")
-    implementation project(":feature:media:local:domain:api")
-    implementation project(":feature:settings:domain:api")
-    implementation project(":foundation:compose:api")
-    implementation project(":foundation:icons:api")
-    implementation project(":foundation:navigation:api")
-    implementation project(":foundation:strings:api")
-    implementation project(":foundation:toaster:api")
-    implementation project(":foundation:ui:api")
     implementation(
+            project(":feature:edit:view:api"),
+            project(":feature:media:local:domain:api"),
+            project(":feature:settings:domain:api"),
+            project(":foundation:compose:api"),
+            project(":foundation:effects:api"),
+            project(":foundation:icons:api"),
+            project(":foundation:navigation:api"),
+            project(":foundation:strings:api"),
+            project(":foundation:toaster:api"),
+            project(":foundation:ui:api"),
             libs.androidx.compose.hilt.navigation,
             libs.androidx.compose.material,
             libs.androidx.compose.ui.tooling.preview,

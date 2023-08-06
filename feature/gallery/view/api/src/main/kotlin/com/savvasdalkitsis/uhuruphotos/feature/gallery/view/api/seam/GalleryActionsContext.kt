@@ -19,23 +19,24 @@ import com.github.michaelbull.result.Err
 import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.CollageDisplay
 import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.PredefinedCollageDisplay
 import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.GalleryMutation.Loading
-import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.effects.ErrorLoading
-import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.effects.GalleryEffect
 import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.ui.state.GalleryDetails
 import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.ui.state.GallerySorting
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.api.model.LightboxSequenceDataSource
+import com.savvasdalkitsis.uhuruphotos.foundation.effects.api.seam.effects.CommonEffect
+import com.savvasdalkitsis.uhuruphotos.foundation.effects.api.seam.effects.ShowToast
 import com.savvasdalkitsis.uhuruphotos.foundation.preferences.api.Preferences
 import com.savvasdalkitsis.uhuruphotos.foundation.preferences.api.observe
 import com.savvasdalkitsis.uhuruphotos.foundation.preferences.api.set
 import com.savvasdalkitsis.uhuruphotos.foundation.result.api.SimpleResult
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.EffectHandler
+import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlin.properties.Delegates
 
 open class GalleryActionsContext(
     val galleryRefresher: suspend (Int) -> SimpleResult,
-    val galleryDetailsFlow: (galleryId: Int, effect: EffectHandler<GalleryEffect>) -> Flow<GalleryDetails>,
+    val galleryDetailsFlow: (galleryId: Int, effect: EffectHandler<CommonEffect>) -> Flow<GalleryDetails>,
     val shouldRefreshOnLoad: suspend (galleryId: Int) -> Boolean,
     val lightboxSequenceDataSource: (galleryId: Int) -> LightboxSequenceDataSource,
     val initialCollageDisplay: (galleryId: Int) -> CollageDisplay,
@@ -56,11 +57,11 @@ open class GalleryActionsContext(
         preferences.set(sortingKey, sorting)
     }
 
-    suspend fun refreshGallery(effect: EffectHandler<GalleryEffect>) {
+    suspend fun refreshGallery(effect: EffectHandler<CommonEffect>) {
         _loading.emit(Loading(true))
         val result = galleryRefresher(galleryId.id)
         if (result is Err) {
-            effect.handleEffect(ErrorLoading)
+            effect.handleEffect(ShowToast(R.string.error_loading_album))
         }
         _loading.emit(Loading(false))
     }

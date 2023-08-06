@@ -18,10 +18,11 @@ package com.savvasdalkitsis.uhuruphotos.feature.people.view.implementation.seam
 import com.github.michaelbull.result.Err
 import com.savvasdalkitsis.uhuruphotos.feature.auth.domain.api.usecase.ServerUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.people.domain.api.usecase.PeopleUseCase
-import com.savvasdalkitsis.uhuruphotos.feature.people.view.implementation.seam.effects.ErrorLoadingPeople
-import com.savvasdalkitsis.uhuruphotos.feature.people.view.implementation.seam.effects.PeopleEffect
 import com.savvasdalkitsis.uhuruphotos.feature.people.view.implementation.ui.state.SortOrder
+import com.savvasdalkitsis.uhuruphotos.foundation.effects.api.seam.effects.CommonEffect
+import com.savvasdalkitsis.uhuruphotos.foundation.effects.api.seam.effects.ShowToast
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.EffectHandler
+import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -37,11 +38,11 @@ class PeopleActionsContext @Inject constructor(
     private val _loading: MutableSharedFlow<Boolean> = MutableStateFlow(false)
     val loading: Flow<Boolean> get() = _loading
 
-    suspend fun refresh(effect: EffectHandler<PeopleEffect>) {
+    suspend fun refresh(effect: EffectHandler<CommonEffect>) {
         _loading.emit(true)
         val result = peopleUseCase.refreshPeople()
         if (result is Err) {
-            effect.handleEffect(ErrorLoadingPeople)
+            effect.handleEffect(ShowToast(R.string.error_refreshing_people))
         }
         _loading.emit(false)
     }

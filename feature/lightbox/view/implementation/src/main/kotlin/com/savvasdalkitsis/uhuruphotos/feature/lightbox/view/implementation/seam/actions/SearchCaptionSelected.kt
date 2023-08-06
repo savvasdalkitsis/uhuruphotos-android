@@ -16,9 +16,10 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.actions
 
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.LightboxActionsContext
-import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.effects.LightboxEffect
-import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.effects.NavigateToSearch
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.ui.state.LightboxState
+import com.savvasdalkitsis.uhuruphotos.feature.search.view.api.navigation.SearchNavigationRoute
+import com.savvasdalkitsis.uhuruphotos.foundation.effects.api.seam.effects.CommonEffect
+import com.savvasdalkitsis.uhuruphotos.foundation.effects.api.seam.effects.NavigateTo
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.EffectHandler
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.Mutation
 import kotlinx.coroutines.flow.Flow
@@ -27,9 +28,9 @@ import kotlinx.coroutines.flow.flow
 data class SearchCaptionSelected(val caption: String) : LightboxAction() {
     context(LightboxActionsContext) override fun handle(
         state: LightboxState,
-        effect: EffectHandler<LightboxEffect>
+        effect: EffectHandler<CommonEffect>
     ): Flow<Mutation<LightboxState>> = flow {
-        effect.handleEffect(NavigateToSearch(caption))
+        effect.handleEffect(NavigateTo(SearchNavigationRoute(caption)))
     }
 
 }

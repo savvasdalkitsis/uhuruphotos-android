@@ -17,20 +17,22 @@ package com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.ac
 
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.FeedActionsContext
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.FeedMutation
-import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.effects.FeedEffect
-import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.effects.OpenMemoryLightbox
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.ui.state.FeedState
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.ui.state.MemoryCel
+import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.api.model.LightboxSequenceDataSource.Memory
+import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.api.navigation.LightboxNavigationRoute
+import com.savvasdalkitsis.uhuruphotos.foundation.effects.api.seam.effects.CommonEffect
+import com.savvasdalkitsis.uhuruphotos.foundation.effects.api.seam.effects.NavigateTo
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.EffectHandler
 import kotlinx.coroutines.flow.flow
 
 data class MemorySelected(val memoryCel: MemoryCel) : FeedAction() {
     context(FeedActionsContext) override fun handle(
         state: FeedState,
-        effect: EffectHandler<FeedEffect>
+        effect: EffectHandler<CommonEffect>
     ) = flow<FeedMutation> {
-        effect.handleEffect(
-            OpenMemoryLightbox(memoryCel.cel.mediaItem.id, memoryCel.yearsAgo)
-        )
+        effect.handleEffect(NavigateTo(
+            LightboxNavigationRoute(memoryCel.cel.mediaItem.id, Memory(memoryCel.yearsAgo), showMediaSyncState = true)
+        ))
     }
 }

@@ -17,12 +17,14 @@ package com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.ac
 
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.FeedActionsContext
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.FeedMutation
-import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.effects.FeedEffect
-import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.effects.OpenLightbox
-import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.effects.Vibrate
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.ui.state.FeedState
+import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.api.model.LightboxSequenceDataSource.Feed
+import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.api.navigation.LightboxNavigationRoute
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemSelectionMode
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.state.CelState
+import com.savvasdalkitsis.uhuruphotos.foundation.effects.api.seam.effects.CommonEffect
+import com.savvasdalkitsis.uhuruphotos.foundation.effects.api.seam.effects.NavigateTo
+import com.savvasdalkitsis.uhuruphotos.foundation.effects.api.seam.effects.Vibrate
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.EffectHandler
 import kotlinx.coroutines.flow.flow
 
@@ -31,12 +33,12 @@ data class SelectedCel(
 ) : FeedAction() {
     context(FeedActionsContext) override fun handle(
         state: FeedState,
-        effect: EffectHandler<FeedEffect>
+        effect: EffectHandler<CommonEffect>
     ) = flow<FeedMutation> {
         when {
-            state.selectedCelCount == 0 -> effect.handleEffect(
-                OpenLightbox(celState.mediaItem.id)
-            )
+            state.selectedCelCount == 0 -> effect.handleEffect(NavigateTo(
+                LightboxNavigationRoute(celState.mediaItem.id, Feed, showMediaSyncState = true)
+            ))
             celState.selectionMode == MediaItemSelectionMode.SELECTED -> {
                 effect.handleEffect(Vibrate)
                 celState.deselect()

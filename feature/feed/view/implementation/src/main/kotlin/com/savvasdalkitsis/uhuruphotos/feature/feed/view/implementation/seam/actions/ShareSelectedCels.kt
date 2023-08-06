@@ -17,17 +17,22 @@ package com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.ac
 
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.FeedActionsContext
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.FeedMutation
-import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.effects.FeedEffect
-import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.effects.Share
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.ui.state.FeedState
+import com.savvasdalkitsis.uhuruphotos.foundation.effects.api.seam.effects.CommonEffect
+import com.savvasdalkitsis.uhuruphotos.foundation.effects.api.seam.effects.ShareMultiple
+import com.savvasdalkitsis.uhuruphotos.foundation.effects.api.seam.effects.ShowToast
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.EffectHandler
+import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R
 import kotlinx.coroutines.flow.flow
 
 data object ShareSelectedCels : FeedAction() {
     context(FeedActionsContext) override fun handle(
         state: FeedState,
-        effect: EffectHandler<FeedEffect>
+        effect: EffectHandler<CommonEffect>
     ) = flow<FeedMutation> {
-        effect.handleEffect(Share(state.selectedCels))
+        effect.handleEffect(ShowToast(R.string.downloading_photos_sharing))
+        effect.handleEffect(ShareMultiple(state.selectedCels.map {
+            it.mediaItem.id.fullResUri
+        }))
     }
 }

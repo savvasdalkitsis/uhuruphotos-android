@@ -19,6 +19,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.auth.domain.api.usecase.Authentic
 import com.savvasdalkitsis.uhuruphotos.feature.auth.domain.api.usecase.AuthenticationUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.auth.domain.api.usecase.ServerUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.settings.domain.api.usecase.SettingsUseCase
+import com.savvasdalkitsis.uhuruphotos.foundation.log.api.usecase.FeedbackUseCase
 import dagger.hilt.android.scopes.ActivityRetainedScoped
 import javax.inject.Inject
 
@@ -28,4 +29,5 @@ internal class ServerActionsContext @Inject constructor(
     val authenticationUseCase: AuthenticationUseCase,
     val authenticationLoginUseCase: AuthenticationLoginUseCase,
     val settingsUseCase: SettingsUseCase,
+    val feedbackUseCase: FeedbackUseCase,
 )

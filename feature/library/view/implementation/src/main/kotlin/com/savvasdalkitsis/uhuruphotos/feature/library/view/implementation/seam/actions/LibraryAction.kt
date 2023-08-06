@@ -16,8 +16,8 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.feature.library.view.implementation.seam.actions
 
 import com.savvasdalkitsis.uhuruphotos.feature.library.view.implementation.seam.LibraryActionsContext
-import com.savvasdalkitsis.uhuruphotos.feature.library.view.implementation.seam.effects.LibraryEffect
 import com.savvasdalkitsis.uhuruphotos.feature.library.view.implementation.ui.state.LibraryState
+import com.savvasdalkitsis.uhuruphotos.foundation.effects.api.seam.effects.CommonEffect
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.Action
 
-sealed class LibraryAction : Action<LibraryState, LibraryEffect, LibraryActionsContext>
+sealed class LibraryAction : Action<LibraryState, CommonEffect, LibraryActionsContext>

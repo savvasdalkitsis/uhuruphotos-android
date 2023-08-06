@@ -17,24 +17,23 @@ package com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.vie
 
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.api.navigation.SettingsNavigationRoute
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.SettingsActionsContext
-import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.SettingsEffectsContext
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.actions.LoadSettings
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.actions.SettingsAction
-import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.effects.SettingsEffect
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.ui.state.SettingsState
+import com.savvasdalkitsis.uhuruphotos.foundation.effects.api.seam.effects.CommonEffect
+import com.savvasdalkitsis.uhuruphotos.foundation.effects.api.seam.effects.CommonEffectHandler
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.viewmodel.NavigationViewModel
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.ActionHandlerWithContext
-import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.EffectHandlerWithContext
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
 @HiltViewModel
 internal class SettingsViewModel @Inject constructor(
     settingsActionsContext: SettingsActionsContext,
-    settingsEffectsContext: SettingsEffectsContext,
-) : NavigationViewModel<SettingsState, SettingsEffect, SettingsAction, SettingsNavigationRoute>(
+    commonEffectHandler: CommonEffectHandler,
+) : NavigationViewModel<SettingsState, CommonEffect, SettingsAction, SettingsNavigationRoute>(
     ActionHandlerWithContext(settingsActionsContext),
-    EffectHandlerWithContext(settingsEffectsContext),
+    commonEffectHandler,
     SettingsState()
 ) {
 

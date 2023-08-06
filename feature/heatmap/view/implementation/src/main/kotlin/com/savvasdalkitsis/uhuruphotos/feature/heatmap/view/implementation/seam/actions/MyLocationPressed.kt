@@ -22,8 +22,8 @@ import com.google.accompanist.permissions.PermissionState
 import com.google.accompanist.permissions.isGranted
 import com.savvasdalkitsis.uhuruphotos.feature.heatmap.view.implementation.seam.HeatMapActionsContext
 import com.savvasdalkitsis.uhuruphotos.feature.heatmap.view.implementation.seam.HeatMapMutation
-import com.savvasdalkitsis.uhuruphotos.feature.heatmap.view.implementation.seam.effects.HeatMapEffect
 import com.savvasdalkitsis.uhuruphotos.feature.heatmap.view.implementation.ui.state.HeatMapState
+import com.savvasdalkitsis.uhuruphotos.foundation.effects.api.seam.effects.CommonEffect
 import com.savvasdalkitsis.uhuruphotos.foundation.map.api.model.LatLon
 import com.savvasdalkitsis.uhuruphotos.foundation.map.api.ui.MapViewState
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.EffectHandler
@@ -37,7 +37,7 @@ data class MyLocationPressed(
 
     context(HeatMapActionsContext) override fun handle(
         state: HeatMapState,
-        effect: EffectHandler<HeatMapEffect>
+        effect: EffectHandler<CommonEffect>
     ) = flow<HeatMapMutation> {
         if (locationPermissionState.status.isGranted) {
             var location: LatLon? = null

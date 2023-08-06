@@ -16,14 +16,14 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.actions
 
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.SettingsActionsContext
-import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.effects.SettingsEffect
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.ui.state.SettingsState
+import com.savvasdalkitsis.uhuruphotos.foundation.effects.api.seam.effects.CommonEffect
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.EffectHandler
 
 data class ChangeBiometricsHiddenPhotosAccessRequirement(val required: Boolean) : SettingsAction() {
     context(SettingsActionsContext) override fun handle(
         state: SettingsState,
-        effect: EffectHandler<SettingsEffect>
+        effect: EffectHandler<CommonEffect>
     ) = authenticateIfNeeded(required) {
         settingsUseCase.setBiometricsRequiredForHiddenPhotosAccess(it)
     }
