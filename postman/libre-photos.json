@@ -495,7 +495,7 @@
 			"name": "Stats",
 			"item": [
 				{
-					"name": "Get site settings",
+					"name": "Timeline",
 					"id": "13661675-ae53-4642-add1-d9f676442736",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
