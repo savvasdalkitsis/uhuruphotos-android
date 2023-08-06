@@ -503,7 +503,7 @@
 					"request": {
 						"method": "GET",
 						"header": [],
-						"url": "{{HOST}}/api/sitesettings"
+						"url": "{{HOST}}/api/locationtimeline"
 					},
 					"response": []
 				},
