@@ -162,6 +162,18 @@ internal fun StaggeredCollage(
                 }
             }
         }
+        val scrollText by remember(state) {
+            derivedStateOf {
+                firstOffscreenCluster
+                    ?.let { state[it] }
+                    ?.cels
+                    ?.firstOrNull()
+                    ?.mediaItem
+                    ?.mediaDay
+                    ?.let { "${it.monthText} ${it.year}" }
+                    ?: ""
+            }
+        }
         if (showStickyHeaders) {
             StickyHeader(
                 firstOffscreenCluster,
@@ -172,7 +184,12 @@ internal fun StaggeredCollage(
                 onClusterSelectionClicked
             )
         }
-        ScrollbarThumb(contentPadding, gridState, firstOffscreenCluster, state, showScrollbarHint)
+        ScrollbarThumb(
+            contentPadding,
+            gridState,
+            showScrollbarHint,
+            scrollText
+        )
     }
 }
 
@@ -180,9 +197,8 @@ internal fun StaggeredCollage(
 private fun ScrollbarThumb(
     contentPadding: PaddingValues,
     gridState: LazyStaggeredGridState,
-    firstOffscreenCluster: Int?,
-    state: List<Cluster>,
-    showScrollbarHint: Boolean
+    showScrollbarHint: Boolean,
+    scrollText: String
 ) {
     Box(
         modifier = Modifier
@@ -196,28 +212,29 @@ private fun ScrollbarThumb(
             thumbColor = MaterialTheme.colors.primary.copy(alpha = 0.7f),
             thumbSelectedColor = MaterialTheme.colors.primary,
         ) { _, isThumbSelected ->
-            val show = showScrollbarHint && isThumbSelected && firstOffscreenCluster != null
+            val show = showScrollbarHint && isThumbSelected
             AnimatedVisibility(
                 modifier = Modifier.padding(end = 8.dp),
                 enter = fadeIn() + scaleIn(transformOrigin = TransformOrigin(1f, 0.5f)),
                 exit = fadeOut() + scaleOut(transformOrigin = TransformOrigin(1f, 0.5f)),
                 visible = show,
             ) {
-                Box(
-                    modifier = Modifier
-                        .clip(MaterialTheme.shapes.small)
-                        .background(MaterialTheme.colors.onBackground.copy(alpha = 0.8f))
-                        .padding(8.dp)
-                        .animateContentSize(),
-                ) {
-                    val text = firstOffscreenCluster?.let { state[it] }?.displayTitle ?: ""
-                    val haptic = LocalHapticFeedback.current
-                    Text(
-                        text = text,
-                        color = MaterialTheme.colors.onPrimary,
-                    )
-                    LaunchedEffect(text) {
-                        haptic.performHapticFeedback(HapticFeedbackType.TextHandleMove)
+                Box(modifier = Modifier.padding(end = 52.dp)) {
+                    Box(
+                        modifier = Modifier
+                            .clip(MaterialTheme.shapes.small)
+                            .background(MaterialTheme.colors.onBackground.copy(alpha = 0.8f))
+                            .padding(8.dp)
+                            .animateContentSize(),
+                    ) {
+                        val haptic = LocalHapticFeedback.current
+                        Text(
+                            text = scrollText,
+                            color = MaterialTheme.colors.onPrimary,
+                        )
+                        LaunchedEffect(scrollText) {
+                            haptic.performHapticFeedback(HapticFeedbackType.TextHandleMove)
+                        }
                     }
                 }
             }

@@ -15,6 +15,7 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.implementation.usecase
 
+import android.content.Context
 import com.github.michaelbull.result.Ok
 import com.github.michaelbull.result.Result
 import com.github.michaelbull.result.combine
@@ -30,6 +31,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.extensions.isVideo
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.user.User
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaCollection
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaCollectionSource
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaDay
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaFolderOnDevice
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaId
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaId.Downloading
@@ -59,6 +61,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.people.domain.api.usecase.PeopleU
 import com.savvasdalkitsis.uhuruphotos.feature.people.view.api.ui.state.toPerson
 import com.savvasdalkitsis.uhuruphotos.feature.user.domain.api.usecase.UserUseCase
 import com.savvasdalkitsis.uhuruphotos.foundation.date.api.DateDisplayer
+import com.savvasdalkitsis.uhuruphotos.foundation.date.api.DateParser
 import com.savvasdalkitsis.uhuruphotos.foundation.group.api.model.Group
 import com.savvasdalkitsis.uhuruphotos.foundation.log.api.andThenTry
 import com.savvasdalkitsis.uhuruphotos.foundation.map.api.model.LatLon
@@ -66,13 +69,16 @@ import com.savvasdalkitsis.uhuruphotos.foundation.map.api.model.toLatLon
 import com.savvasdalkitsis.uhuruphotos.foundation.result.api.SimpleResult
 import com.savvasdalkitsis.uhuruphotos.foundation.result.api.simple
 import com.savvasdalkitsis.uhuruphotos.foundation.result.api.simpleOk
+import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.emptyFlow
 import kotlinx.coroutines.flow.map
+import org.joda.time.DateTime
 import se.ansman.dagger.auto.AutoBind
 import javax.inject.Inject
+import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
 
 @AutoBind
 class MediaUseCase @Inject constructor(
@@ -81,7 +87,9 @@ class MediaUseCase @Inject constructor(
     private val serverUseCase: ServerUseCase,
     private val userUseCase: UserUseCase,
     private val dateDisplayer: DateDisplayer,
+    private val dateParser: DateParser,
     private val peopleUseCase: PeopleUseCase,
+    private @ApplicationContext val context: Context,
 ) : MediaUseCase {
 
     override fun observeLocalMedia(): Flow<MediaItemsOnDevice> =
@@ -162,16 +170,18 @@ class MediaUseCase @Inject constructor(
     override suspend fun List<DbRemoteMediaItemSummary>.mapToMediaItems(): Result<List<MediaItem>, Throwable> =
         withFavouriteThreshold { threshold ->
             val serverUrl = serverUseCase.getServerUrl()!!
-            map {
-                val date = dateDisplayer.dateString(it.date)
+            map { dbRecord ->
+                val date = dateDisplayer.dateString(dbRecord.date)
+                val day = dateParser.parseDateOrTimeString(dbRecord.date)
                 MediaItemInstance(
-                    id = Remote(it.id, it.isVideo, serverUrl),
-                    mediaHash = MediaItemHash(it.id),
-                    fallbackColor = it.dominantColor,
+                    id = Remote(dbRecord.id, dbRecord.isVideo, serverUrl),
+                    mediaHash = MediaItemHash(dbRecord.id),
+                    fallbackColor = dbRecord.dominantColor,
                     displayDayDate = date,
-                    sortableDate = it.date,
-                    isFavourite = (it.rating ?: 0) >= threshold,
-                    ratio = it.aspectRatio ?: 1f,
+                    sortableDate = dbRecord.date,
+                    isFavourite = (dbRecord.rating ?: 0) >= threshold,
+                    ratio = dbRecord.aspectRatio ?: 1f,
+                    mediaDay = day?.toMediaDay(),
                 )
             }
         }
@@ -182,6 +192,7 @@ class MediaUseCase @Inject constructor(
         fallbackColor = fallbackColor,
         displayDayDate = displayDate,
         sortableDate = sortableDate,
+        mediaDay = dateParser.parseDateOrTimeString(sortableDate)?.toMediaDay(),
         isFavourite = false,
         ratio = ratio,
         latLng = latLon,
@@ -392,6 +403,7 @@ class MediaUseCase @Inject constructor(
         val albumLocation = source.firstOrNull()?.location
 
         val date = dateDisplayer.dateString(albumDate)
+        val day = dateParser.parseDateOrTimeString(albumDate)
         val serverUrl = serverUseCase.getServerUrl()!!
         return MediaCollection(
             id = id,
@@ -415,7 +427,8 @@ class MediaUseCase @Inject constructor(
                                 }
                                 .getOrElse { false },
                             ratio = item.aspectRatio ?: 1.0f,
-                            latLng = (item.lat?.toDoubleOrNull() to item.lon?.toDoubleOrNull()).notNull()
+                            latLng = (item.lat?.toDoubleOrNull() to item.lon?.toDoubleOrNull()).notNull(),
+                            mediaDay = day?.toMediaDay(),
                         )
                     }
                 }
@@ -450,4 +463,24 @@ class MediaUseCase @Inject constructor(
         userUseCase.getUserOrRefresh().andThenTry {
             action(it.favoriteMinRating!!)
         }
+
+    private fun DateTime.toMediaDay(): MediaDay = MediaDay(
+        day = dayOfMonth,
+        month = monthOfYear,
+        year = year,
+        monthText = context.getString(when (monthOfYear) {
+            1 -> string.month_january_short
+            2 -> string.month_february_short
+            3 -> string.month_march_short
+            4 -> string.month_april_short
+            5 -> string.month_may_short
+            6 -> string.month_june_short
+            7 -> string.month_july_short
+            8 -> string.month_august_short
+            9 -> string.month_september_short
+            10 -> string.month_october_short
+            11 -> string.month_november_short
+            else -> string.month_december_short
+        })
+    )
 }

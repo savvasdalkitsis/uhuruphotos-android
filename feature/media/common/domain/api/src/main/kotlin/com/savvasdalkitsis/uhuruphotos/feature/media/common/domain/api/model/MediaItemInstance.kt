@@ -24,4 +24,5 @@ data class MediaItemInstance(
     override val isFavourite: Boolean = false,
     override val ratio: Float = 1f,
     override val latLng: Pair<Double, Double>? = null,
+    override val mediaDay: MediaDay? = null,
 ) : MediaItem

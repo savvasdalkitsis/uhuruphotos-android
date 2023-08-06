@@ -42,6 +42,7 @@ data class MediaItemGroup(
     override val isFavourite: Boolean = all.any { it.isFavourite }
     override val ratio: Float = all.firstOrNull { it.ratio != 1f }?.ratio ?: 1f
     override val latLng: (Pair<Double, Double>)? = all.prop { latLng }
+    override val mediaDay: MediaDay? = all.prop { mediaDay }
 
     private fun <T> List<MediaItem>.prop(instance: MediaItem.() -> T): T? =
         firstOrNull { instance(it) != null }?.let(instance)
