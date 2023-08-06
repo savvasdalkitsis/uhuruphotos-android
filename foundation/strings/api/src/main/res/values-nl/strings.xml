@@ -282,4 +282,16 @@
     <string name="media_without_date">Media zonder datum</string>
     <string name="no_date">Zonder datum</string>
     <string name="videos">Video\'s</string>
+    <string name="month_february_short">feb</string>
+    <string name="month_june_short">jun</string>
+    <string name="month_july_short">jul</string>
+    <string name="month_january_short">jan</string>
+    <string name="month_may_short">mei</string>
+    <string name="month_december_short">dec</string>
+    <string name="month_march_short">mrt</string>
+    <string name="month_august_short">aug</string>
+    <string name="month_october_short">okt</string>
+    <string name="month_november_short">nov</string>
+    <string name="month_april_short">apr</string>
+    <string name="month_september_short">sep</string>
 </resources>
