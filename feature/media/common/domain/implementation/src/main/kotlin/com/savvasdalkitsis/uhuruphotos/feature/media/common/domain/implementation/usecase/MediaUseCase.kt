@@ -40,9 +40,9 @@ import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.Med
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemHash
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemInstance
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemsOnDevice
-import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaRefreshResult
-import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaRefreshResult.REFRESHED
-import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaRefreshResult.SKIPPED
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaOperationResult
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaOperationResult.CHANGED
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaOperationResult.SKIPPED
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.usecase.MediaUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.model.LocalFolder
 import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.model.LocalMediaItem
@@ -311,7 +311,7 @@ class MediaUseCase @Inject constructor(
         favourite: Boolean
     ) = remoteMediaUseCase.setMediaItemFavourite(id.value, favourite)
 
-    override suspend fun refreshDetailsNowIfMissing(id: MediaId<*>) : Result<MediaRefreshResult, Throwable> =
+    override suspend fun refreshDetailsNowIfMissing(id: MediaId<*>) : Result<MediaOperationResult, Throwable> =
         when (id) {
             is Remote -> refreshRemoteDetailsNowIfMissing(id)
             is Downloading -> refreshRemoteDetailsNowIfMissing(id.remote)
@@ -324,7 +324,7 @@ class MediaUseCase @Inject constructor(
                     refreshLocalDetailsNowIfMissing(it)
                 } ?: Ok(SKIPPED)
                 combine(remote, local).map {
-                    if (it.any { type -> type == REFRESHED }) REFRESHED else SKIPPED
+                    if (it.any { type -> type == CHANGED }) CHANGED else SKIPPED
                 }
             }
         }
@@ -354,9 +354,9 @@ class MediaUseCase @Inject constructor(
     private suspend fun refreshRemoteDetailsNowIfMissing(id: Remote) =
         remoteMediaUseCase.refreshDetailsNowIfMissing(id.value)
 
-    private suspend fun refreshLocalDetailsNowIfMissing(id: Local): Result<MediaRefreshResult, Throwable> =
+    private suspend fun refreshLocalDetailsNowIfMissing(id: Local): Result<MediaOperationResult, Throwable> =
         if (localMediaUseCase.getLocalMediaItem(id.value) == null) {
-            refreshLocalDetailsNow(id).map { REFRESHED }
+            refreshLocalDetailsNow(id).map { CHANGED }
         } else {
             Ok(SKIPPED)
         }

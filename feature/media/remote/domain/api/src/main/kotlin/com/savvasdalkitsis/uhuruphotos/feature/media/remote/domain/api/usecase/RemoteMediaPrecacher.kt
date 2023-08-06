@@ -15,9 +15,12 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.api.usecase
 
+import com.github.michaelbull.result.Result
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaOperationResult
+
 fun interface RemoteMediaPrecacher {
     suspend fun precacheMedia(
         url: String,
         video: Boolean,
-    ): Boolean
+    ): Result<MediaOperationResult, Throwable>
 }

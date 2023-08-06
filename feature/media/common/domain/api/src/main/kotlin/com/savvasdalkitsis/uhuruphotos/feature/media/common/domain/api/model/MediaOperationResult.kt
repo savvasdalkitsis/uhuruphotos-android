@@ -15,6 +15,6 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model
 
-enum class MediaRefreshResult {
-    SKIPPED, REFRESHED
+enum class MediaOperationResult {
+    SKIPPED, CHANGED
 }

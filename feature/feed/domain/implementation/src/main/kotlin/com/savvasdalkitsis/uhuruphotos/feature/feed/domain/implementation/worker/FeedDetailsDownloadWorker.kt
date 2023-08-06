@@ -24,7 +24,7 @@ import com.github.michaelbull.result.coroutines.binding.binding
 import com.savvasdalkitsis.uhuruphotos.feature.feed.domain.api.model.FeedFetchType
 import com.savvasdalkitsis.uhuruphotos.feature.feed.domain.api.usecase.FeedUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.feed.domain.implementation.broadcast.CancelFeedDetailsDownloadWorkBroadcastReceiver
-import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaRefreshResult.REFRESHED
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaOperationResult.CHANGED
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.usecase.MediaUseCase
 import com.savvasdalkitsis.uhuruphotos.foundation.notification.api.ForegroundInfoBuilder
 import com.savvasdalkitsis.uhuruphotos.foundation.notification.api.ForegroundNotificationWorker
@@ -58,7 +58,7 @@ internal class FeedDetailsDownloadWorker @AssistedInject constructor(
         val result = binding {
             items.forEachIndexed { current, item ->
                 val retrieval = mediaUseCase.refreshDetailsNowIfMissing(item).bind()
-                if (retrieval == REFRESHED) {
+                if (retrieval == CHANGED) {
                     // don't overwhelm the server and our CPU
                     delay(300)
                 }

@@ -29,7 +29,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.extensions.awaitSin
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.media.remote.RemoteMediaItemDetailsQueries
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.media.remote.RemoteMediaItemSummaryQueries
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.media.remote.RemoteMediaTrashQueries
-import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaRefreshResult
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaOperationResult
 import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.api.model.toDbModel
 import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.implementation.service.RemoteMediaService
 import com.savvasdalkitsis.uhuruphotos.foundation.log.api.runCatchingWithLog
@@ -84,8 +84,8 @@ class RemoteMediaRepository @Inject constructor(
 
     suspend fun refreshDetailsNowIfMissing(id: String) =
         when (getMediaItemDetails(id)) {
-            null -> refreshDetailsNow(id).map { MediaRefreshResult.REFRESHED }
-            else -> Ok(MediaRefreshResult.SKIPPED)
+            null -> refreshDetailsNow(id).map { MediaOperationResult.CHANGED }
+            else -> Ok(MediaOperationResult.SKIPPED)
         }
 
     suspend fun refreshDetailsNow(id: String) = runCatchingWithLog {

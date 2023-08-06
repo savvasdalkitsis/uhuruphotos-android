@@ -18,10 +18,16 @@ package com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.implementati
 
 import android.content.Context
 import coil.ImageLoader
+import coil.decode.DataSource
 import coil.request.CachePolicy
 import coil.request.ErrorResult
 import coil.request.ImageRequest
 import coil.request.SuccessResult
+import com.github.michaelbull.result.Err
+import com.github.michaelbull.result.Ok
+import com.github.michaelbull.result.Result
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaOperationResult
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaOperationResult.*
 import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.api.usecase.RemoteMediaPrecacher
 import com.savvasdalkitsis.uhuruphotos.foundation.image.api.model.ThumbnailImage
 import com.savvasdalkitsis.uhuruphotos.foundation.log.api.log
@@ -39,7 +45,7 @@ class RemoteMediaPrecacher @Inject constructor(
     override suspend fun precacheMedia(
         url: String,
         video: Boolean,
-    ): Boolean = try {
+    ): Result<MediaOperationResult, Throwable> = try {
         val result = imageLoader.execute(
             ImageRequest.Builder(context)
                 .data(url)
@@ -48,13 +54,22 @@ class RemoteMediaPrecacher @Inject constructor(
                 .target()
                 .build()
         )
-        if (result is ErrorResult) {
-            log(result.throwable) { "Error precaching thumbnail: $url" }
+        when (result) {
+            is ErrorResult -> {
+                log(result.throwable) { "Error precaching thumbnail: $url" }
+                Err(result.throwable)
+            }
+
+            is SuccessResult -> Ok(
+                if (result.dataSource == DataSource.NETWORK)
+                    CHANGED
+                else
+                    SKIPPED
+            )
         }
-        result is SuccessResult
     } catch (e: Exception) {
         log(e)
-        false
+        Err(e)
     }
 
 }

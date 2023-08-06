@@ -24,7 +24,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.Med
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItem
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemDetails
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemsOnDevice
-import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaRefreshResult
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaOperationResult
 import com.savvasdalkitsis.uhuruphotos.foundation.group.api.model.Group
 import com.savvasdalkitsis.uhuruphotos.foundation.result.api.SimpleResult
 import kotlinx.coroutines.flow.Flow
@@ -53,7 +53,7 @@ interface MediaUseCase {
 
     suspend fun setMediaItemFavourite(id: MediaId<*>, favourite: Boolean): SimpleResult
 
-    suspend fun refreshDetailsNowIfMissing(id: MediaId<*>): Result<MediaRefreshResult, Throwable>
+    suspend fun refreshDetailsNowIfMissing(id: MediaId<*>): Result<MediaOperationResult, Throwable>
 
     suspend fun refreshDetailsNow(id: MediaId<*>): SimpleResult
 

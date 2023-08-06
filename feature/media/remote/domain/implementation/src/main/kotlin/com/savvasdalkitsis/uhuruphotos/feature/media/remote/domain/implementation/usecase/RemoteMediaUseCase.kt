@@ -21,7 +21,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.entities.media.DbRe
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.entities.media.DbRemoteMediaItemSummary
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.extensions.async
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.media.remote.RemoteMediaItemSummaryQueries
-import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaRefreshResult
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaOperationResult
 import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.api.model.toDbModel
 import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.api.service.model.RemoteMediaCollection
 import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.api.service.model.RemoteMediaCollectionsByDate
@@ -85,7 +85,7 @@ class RemoteMediaUseCase @Inject constructor(
             remoteMediaItemWorkScheduler.scheduleMediaItemFavourite(id, favourite)
         }.simple()
 
-    override suspend fun refreshDetailsNowIfMissing(id: String): Result<MediaRefreshResult, Throwable> =
+    override suspend fun refreshDetailsNowIfMissing(id: String): Result<MediaOperationResult, Throwable> =
         remoteMediaRepository.refreshDetailsNowIfMissing(id)
 
     override suspend fun refreshDetailsNow(id: String): SimpleResult =
