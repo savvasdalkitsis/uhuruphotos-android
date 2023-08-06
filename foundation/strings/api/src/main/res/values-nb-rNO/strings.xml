@@ -63,4 +63,31 @@
     <string name="clear">Tøm</string>
     <string name="log_out">Logg ut</string>
     <string name="edit_server_url">Rediger tjenernettadresse</string>
+    <plurals name="restore_photos">
+        <item quantity="one">Gjenopprett %d bilde</item>
+        <item quantity="other">Gjenopprett %d bilder</item>
+    </plurals>
+    <string name="view_all">Vis alle</string>
+    <plurals name="trash_photos">
+        <item quantity="one">Send %d bilde til papirkurven</item>
+        <item quantity="other">Send %d bilder til papirkurven</item>
+    </plurals>
+    <plurals name="trash_media">
+        <item quantity="one">Send %d medieelement til papirkurven</item>
+        <item quantity="other">Send %d medieelementer til papirkurven</item>
+    </plurals>
+    <string name="media">Media</string>
+    <plurals name="restore_media">
+        <item quantity="one">Gjenopprett %d mediaelement</item>
+        <item quantity="other">Gjenopprett %d mediaelementer</item>
+    </plurals>
+    <string name="gallery_size">Galleristørrelse</string>
+    <plurals name="delete_media">
+        <item quantity="one">Slett %d medieelement</item>
+        <item quantity="other">Slett %d medieelementer</item>
+    </plurals>
+    <plurals name="delete_media_confirmation">
+        <item quantity="one">Slett dette %d-medieelementet\?</item>
+        <item quantity="other">Slett disse %d-medieelementene\?</item>
+    </plurals>
 </resources>
