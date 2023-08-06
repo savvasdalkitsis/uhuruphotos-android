@@ -492,6 +492,25 @@
 			"id": "44789a4a-2049-41cd-a102-7469c80b7fc4"
 		},
 		{
+			"name": "Stats",
+			"item": [
+				{
+					"name": "Get site settings",
+					"id": "13661675-ae53-4642-add1-d9f676442736",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "{{HOST}}/api/sitesettings"
+					},
+					"response": []
+				}
+			],
+			"id": "5cd2a1a9-35d7-453e-878c-1ae4f1e8af24"
+		},
+		{
 			"name": "User",
 			"item": [
 				{
