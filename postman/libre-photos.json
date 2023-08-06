@@ -506,6 +506,19 @@
 						"url": "{{HOST}}/api/sitesettings"
 					},
 					"response": []
+				},
+				{
+					"name": "Monthly counts",
+					"id": "eab3b63c-5583-4db9-bf4d-75933b714236",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "{{HOST}}/api/sitesettings"
+					},
+					"response": []
 				}
 			],
 			"id": "5cd2a1a9-35d7-453e-878c-1ae4f1e8af24"
