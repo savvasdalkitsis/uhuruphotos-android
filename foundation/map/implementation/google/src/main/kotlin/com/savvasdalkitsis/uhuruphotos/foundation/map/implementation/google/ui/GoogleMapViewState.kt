@@ -23,6 +23,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.toArgb
 import com.google.android.gms.maps.CameraUpdateFactory
+import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.LatLngBounds
 import com.google.maps.android.compose.CameraPositionState
 import com.google.maps.android.compose.Marker
@@ -32,6 +33,8 @@ import com.google.maps.android.heatmaps.Gradient
 import com.google.maps.android.heatmaps.HeatmapTileProvider
 import com.savvasdalkitsis.uhuruphotos.foundation.launchers.api.onMain
 import com.savvasdalkitsis.uhuruphotos.foundation.map.api.model.LatLon
+import com.savvasdalkitsis.uhuruphotos.foundation.map.api.model.Viewport
+import com.savvasdalkitsis.uhuruphotos.foundation.map.api.model.toLatLon
 import com.savvasdalkitsis.uhuruphotos.foundation.map.api.ui.MapViewState
 
 internal class GoogleMapViewState(
@@ -82,19 +85,24 @@ internal class GoogleMapViewState(
     }
 
     @Composable
-    override fun Composition(onStoppedMoving: () -> Unit) {
+    override fun Composition(onStoppedMoving: (Viewport) -> Unit) {
         var startedMoving by remember { mutableStateOf(false) }
         if (cameraPositionState.isMoving) {
             startedMoving = true
         }
         if (startedMoving && !cameraPositionState.isMoving) {
-            @Suppress("UNUSED_VALUE")
             startedMoving = false
-            bounds = cameraPositionState
-                .projection
-                ?.visibleRegion
-                ?.latLngBounds
-            onStoppedMoving()
+            with(cameraPositionState) {
+                bounds = projection
+                    ?.visibleRegion
+                    ?.latLngBounds
+                onStoppedMoving(
+                    Viewport(
+                        position.target.toLatLon,
+                        position.zoom
+                    )
+                )
+            }
         }
     }
 
@@ -106,4 +114,7 @@ internal class GoogleMapViewState(
             cameraPositionState.animate(CameraUpdateFactory.newLatLng(latLon.toLatLng))
         }
     }
+
+    private val LatLng.toLatLon: LatLon
+        get() = (latitude to longitude).toLatLon
 }

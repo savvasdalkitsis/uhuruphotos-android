@@ -16,6 +16,7 @@ dependencies {
             project(":feature:collage:view:api"),
             project(":feature:db:domain:api"),
             project(":feature:feed:domain:api"),
+            project(":feature:heatmap:domain:api"),
             project(":feature:heatmap:view:api"),
             project(":feature:home:view:api"),
             project(":feature:lightbox:view:api"),

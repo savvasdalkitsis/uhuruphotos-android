@@ -16,20 +16,20 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.feature.heatmap.view.implementation.seam.actions
 
 import com.savvasdalkitsis.uhuruphotos.feature.heatmap.view.implementation.seam.HeatMapActionsContext
-import com.savvasdalkitsis.uhuruphotos.feature.heatmap.view.implementation.seam.HeatMapMutation
 import com.savvasdalkitsis.uhuruphotos.feature.heatmap.view.implementation.seam.effects.HeatMapEffect
 import com.savvasdalkitsis.uhuruphotos.feature.heatmap.view.implementation.ui.state.HeatMapState
 import com.savvasdalkitsis.uhuruphotos.foundation.map.api.model.LatLon
+import com.savvasdalkitsis.uhuruphotos.foundation.map.api.model.Viewport
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.EffectHandler
 import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Deferred
 import kotlinx.coroutines.async
 import kotlinx.coroutines.currentCoroutineContext
 import kotlinx.coroutines.flow.flow
 
-data class CameraViewPortChanged(val newBoundsChecker: suspend (LatLon) -> Boolean) : HeatMapAction() {
-
-    private var updateVisibleMapContentJob: Deferred<HeatMapMutation.UpdateVisibleMapContent>? = null
+data class CameraViewPortChanged(
+    val viewport: Viewport,
+    val newBoundsChecker: suspend (LatLon) -> Boolean,
+) : HeatMapAction() {
 
     context(HeatMapActionsContext) override fun handle(
         state: HeatMapState,
@@ -37,6 +37,7 @@ data class CameraViewPortChanged(val newBoundsChecker: suspend (LatLon) -> Boole
     ) = flow {
         updateVisibleMapContentJob?.cancel()
         boundsChecker = newBoundsChecker
+        heatMapUseCase.setViewport(viewport)
         updateVisibleMapContentJob = CoroutineScope(currentCoroutineContext()).async { updateDisplay(state.allMedia) }
         updateVisibleMapContentJob?.await()?.let {
             emit(it)

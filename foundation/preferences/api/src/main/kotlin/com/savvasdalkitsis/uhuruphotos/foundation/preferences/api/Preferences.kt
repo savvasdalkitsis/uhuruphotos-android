@@ -28,6 +28,16 @@ interface Preferences {
     fun observeInt(key: String, defaultValue: Int): Flow<Int>
     fun setInt(key: String, value: Int)
 
+    fun getDouble(key: String, defaultValue: Double): Double
+    fun getNullableDouble(key: String, defaultValue: Double?): Double?
+    fun observeDouble(key: String, defaultValue: Double): Flow<Double>
+    fun setDouble(key: String, value: Double)
+
+    fun getFloat(key: String, defaultValue: Float): Float
+    fun getNullableFloat(key: String, defaultValue: Float?): Float?
+    fun observeFloat(key: String, defaultValue: Float): Flow<Float>
+    fun setFloat(key: String, value: Float)
+
     fun getString(key: String, defaultValue: String): String
     fun getNullableString(key: String, defaultValue: String?): String?
     fun observeString(key: String, defaultValue: String): Flow<String>
@@ -65,6 +75,14 @@ inline fun <reified T> Preferences.get(key: String, defaultValue: T = null as T)
         getNullableInt(key, null) as T
     else
         getInt(key, (defaultValue as? Int) ?: 0) as T
+    T::class == Float::class -> if (defaultValue == null)
+        getNullableFloat(key, null) as T
+    else
+        getFloat(key, (defaultValue as? Float) ?: 0f) as T
+    T::class == Double::class -> if (defaultValue == null)
+        getNullableDouble(key, null) as T
+    else
+        getDouble(key, (defaultValue as? Double) ?: 0.0) as T
     T::class == Boolean::class -> getBoolean(key, defaultValue as Boolean) as T
     else -> throw IllegalArgumentException("Unrecognized preference type requested: ${T::class}")
 }
@@ -86,6 +104,8 @@ inline fun <reified T> Preferences.observe(key: String, defaultValue: T? = null)
     else
         observeString(key, (defaultValue as? String) ?: "").map { it as T }
     T::class == Int::class -> observeInt(key, defaultValue as? Int ?: 0).map { it as T }
+    T::class == Double::class -> observeDouble(key, defaultValue as? Double ?: 0.0).map { it as T }
+    T::class == Float::class -> observeFloat(key, defaultValue as? Float ?: 0f).map { it as T }
     T::class == Boolean::class -> observeBoolean(key, defaultValue as? Boolean ?: false).map { it as T }
     else -> throw IllegalArgumentException("Unrecognized preference type requested: ${T::class}")
 }
@@ -99,6 +119,8 @@ inline fun <reified T: Enum<T>> Preferences.set(key: String, value: T) {
 inline fun <reified T> Preferences.set(key: String, value: T) = when {
     T::class == String::class -> setString(key, value as String)
     T::class == Int::class -> setInt(key, value as Int)
+    T::class == Double::class -> setDouble(key, value as Double)
+    T::class == Float::class -> setFloat(key, value as Float)
     T::class == Boolean::class -> setBoolean(key, value as Boolean)
     else -> throw IllegalArgumentException("Unrecognized preference type requested: ${T::class}")
 }

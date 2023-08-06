@@ -1,0 +1,13 @@
+android {
+    namespace 'com.savvasdalkitsis.uhuruphotos.feature.heatmap.domain.implementation'
+}
+
+dependencies {
+    implementation(
+            project(":feature:heatmap:domain:api"),
+            project(":foundation:preferences:api"),
+            libs.autodagger.core,
+            libs.hilt,
+    )
+    kapt libs.autodagger.kapt
+}

@@ -36,6 +36,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.savvasdalkitsis.uhuruphotos.feature.discover.view.implementation.seam.actions.DiscoverAction
 import com.savvasdalkitsis.uhuruphotos.feature.discover.view.implementation.seam.actions.LoadHeatMap
+import com.savvasdalkitsis.uhuruphotos.feature.discover.view.implementation.ui.state.DiscoverState
 import com.savvasdalkitsis.uhuruphotos.foundation.map.api.Locations
 import com.savvasdalkitsis.uhuruphotos.foundation.map.api.ui.MapView
 import com.savvasdalkitsis.uhuruphotos.foundation.map.api.ui.rememberMapViewState
@@ -44,6 +45,7 @@ import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.SectionHeader
 
 @Composable
 fun DiscoverLocations(
+    state: DiscoverState,
     action: (DiscoverAction) -> Unit = {},
 ) {
     Column(
@@ -67,8 +69,8 @@ fun DiscoverLocations(
             MapView(
                 modifier = Modifier.fillMaxSize(),
                 mapViewState = rememberMapViewState(
-                    initialPosition = Locations.TRAFALGAR_SQUARE,
-                    initialZoom = 3f,
+                    initialPosition = state.mapViewport.center,
+                    initialZoom = state.mapViewport.zoom,
                 ),
                 contentPadding = PaddingValues(bottom = 24.dp),
                 onMapClick = { action(LoadHeatMap) },

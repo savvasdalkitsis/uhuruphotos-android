@@ -28,7 +28,9 @@ import com.savvasdalkitsis.uhuruphotos.foundation.coroutines.api.safelyOnStart
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.EffectHandler
 import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flatMapLatest
+import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.mapNotNull
@@ -40,6 +42,10 @@ data object Load : HeatMapAction() {
         state: HeatMapState,
         effect: EffectHandler<HeatMapEffect>
     ) = merge(
+        flow {
+            val initialViewPort = heatMapUseCase.observeViewport().first()
+            emit(HeatMapMutation.ChangeInitialMapViewPort(initialViewPort))
+        },
         feedUseCase.observeFeed(FeedFetchType.ALL)
             .map { mediaCollections ->
                 mediaCollections

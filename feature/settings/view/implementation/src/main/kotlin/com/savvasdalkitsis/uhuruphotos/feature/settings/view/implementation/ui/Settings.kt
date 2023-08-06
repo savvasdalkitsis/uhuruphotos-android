@@ -202,6 +202,24 @@ private fun preferences() = object : Preferences {
     override fun setInt(key: String, value: Int) {
     }
 
+    override fun getDouble(key: String, defaultValue: Double): Double = 0.0
+
+    override fun getNullableDouble(key: String, defaultValue: Double?): Double? = 0.0
+
+    override fun observeDouble(key: String, defaultValue: Double): Flow<Double> = flowOf(0.0)
+
+    override fun setDouble(key: String, value: Double) {
+    }
+
+    override fun getFloat(key: String, defaultValue: Float): Float = 0f
+
+    override fun getNullableFloat(key: String, defaultValue: Float?): Float? = 0f
+
+    override fun observeFloat(key: String, defaultValue: Float): Flow<Float> = flowOf(0f)
+
+    override fun setFloat(key: String, value: Float) {
+    }
+
     override fun getString(key: String, defaultValue: String): String = "test"
 
     override fun getNullableString(key: String, defaultValue: String?): String? = "test"

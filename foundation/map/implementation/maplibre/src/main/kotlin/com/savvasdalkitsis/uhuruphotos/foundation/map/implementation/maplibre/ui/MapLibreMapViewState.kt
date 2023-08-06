@@ -20,6 +20,8 @@ import com.mapbox.mapboxsdk.camera.CameraPosition
 import com.mapbox.mapboxsdk.geometry.LatLng
 import com.mapbox.mapboxsdk.maps.MapView
 import com.savvasdalkitsis.uhuruphotos.foundation.map.api.model.LatLon
+import com.savvasdalkitsis.uhuruphotos.foundation.map.api.model.Viewport
+import com.savvasdalkitsis.uhuruphotos.foundation.map.api.model.toLatLon
 import com.savvasdalkitsis.uhuruphotos.foundation.map.api.ui.MapViewState
 
 class MapLibreMapViewState(
@@ -29,7 +31,7 @@ class MapLibreMapViewState(
 
     var mapView: MapView? = null
     private var bounds: Pair<LatLng, LatLng>? = null
-    private var onStoppedMoving: () -> Unit = {}
+    private var onStoppedMoving: (Viewport) -> Unit = {}
 
     override fun contains(latLon: LatLon): Boolean = bounds?.let { (ne, sw) ->
         latLon.lon < ne.longitude && latLon.lon > sw.longitude &&
@@ -47,7 +49,7 @@ class MapLibreMapViewState(
     }
 
     @Composable
-    override fun Composition(onStoppedMoving: () -> Unit) {
+    override fun Composition(onStoppedMoving: (Viewport) -> Unit) {
         this.onStoppedMoving = onStoppedMoving
     }
 
@@ -71,8 +73,12 @@ class MapLibreMapViewState(
             bounds = with(projection.visibleRegion.latLngBounds) {
                 northEast to southWest
             }
-            onStoppedMoving()
+            onStoppedMoving(
+                Viewport(cameraPosition.target!!.toLatLon, cameraPosition.zoom.toFloat())
+            )
         }
     }
 
+    private val LatLng.toLatLon: LatLon
+        get() = (latitude to longitude).toLatLon
 }

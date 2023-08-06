@@ -1,5 +1,5 @@
 /*
-Copyright 2022 Savvas Dalkitsis
+Copyright 2023 Savvas Dalkitsis
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -13,15 +13,12 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
  */
-package com.savvasdalkitsis.uhuruphotos.foundation.map.api
+package com.savvasdalkitsis.uhuruphotos.feature.heatmap.domain.api.usecase
 
 import com.savvasdalkitsis.uhuruphotos.foundation.map.api.model.Viewport
-import com.savvasdalkitsis.uhuruphotos.foundation.map.api.model.toLatLon
+import kotlinx.coroutines.flow.Flow
 
-data object Locations {
-    @Suppress("MagicNumber")
-    val TRAFALGAR_SQUARE: Viewport = Viewport(
-        (51.50803011165474 to -0.12805053251940438).toLatLon,
-        3f
-    )
+interface HeatMapUseCase {
+    fun observeViewport(): Flow<Viewport>
+    fun setViewport(viewport: Viewport)
 }

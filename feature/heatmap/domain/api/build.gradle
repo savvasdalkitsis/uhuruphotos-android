@@ -1,0 +1,10 @@
+android {
+    namespace 'com.savvasdalkitsis.uhuruphotos.feature.heatmap.domain.api'
+}
+
+dependencies {
+    api(
+            project(":foundation:map:api"),
+            libs.kotlinx.coroutines,
+    )
+}

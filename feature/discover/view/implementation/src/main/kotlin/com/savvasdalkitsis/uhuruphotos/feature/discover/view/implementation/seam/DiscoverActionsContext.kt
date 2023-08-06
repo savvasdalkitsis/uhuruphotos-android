@@ -17,6 +17,7 @@ package com.savvasdalkitsis.uhuruphotos.feature.discover.view.implementation.sea
 
 import com.savvasdalkitsis.uhuruphotos.feature.auth.domain.api.usecase.ServerUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.feed.domain.api.usecase.FeedUseCase
+import com.savvasdalkitsis.uhuruphotos.feature.heatmap.domain.api.usecase.HeatMapUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.people.domain.api.usecase.PeopleUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.search.domain.api.usecase.SearchUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.settings.domain.api.usecase.SettingsUseCase
@@ -30,6 +31,7 @@ class DiscoverActionsContext @Inject constructor(
     val peopleUseCase: PeopleUseCase,
     val serverUseCase: ServerUseCase,
     val searchUseCase: SearchUseCase,
+    val heatMapUseCase: HeatMapUseCase,
 ) {
     private val _queryFilter = MutableSharedFlow<String>()
     val queryFilter: Flow<String> get() = _queryFilter

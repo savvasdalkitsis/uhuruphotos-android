@@ -19,6 +19,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.heatmap.view.implementation.ui.st
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItem
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemsOnDevice
 import com.savvasdalkitsis.uhuruphotos.foundation.map.api.model.LatLon
+import com.savvasdalkitsis.uhuruphotos.foundation.map.api.model.Viewport
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.Mutation
 
 sealed class HeatMapMutation(
@@ -52,6 +53,10 @@ sealed class HeatMapMutation(
 
     data class ShowLocalStoragePermissionRequest(val permissions: MediaItemsOnDevice.RequiresPermissions) : HeatMapMutation({
         it.copy(showRequestPermissionForLocalMediaAccess = permissions)
+    })
+
+    data class ChangeInitialMapViewPort(val initialViewPort: Viewport) : HeatMapMutation({
+        it.copy(initialViewport = initialViewPort)
     })
 
     data object HideLocalStoragePermissionRequest : HeatMapMutation({

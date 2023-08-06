@@ -21,6 +21,8 @@ import com.mapbox.maps.CameraOptions
 import com.mapbox.maps.MapView
 import com.mapbox.maps.toCameraOptions
 import com.savvasdalkitsis.uhuruphotos.foundation.map.api.model.LatLon
+import com.savvasdalkitsis.uhuruphotos.foundation.map.api.model.Viewport
+import com.savvasdalkitsis.uhuruphotos.foundation.map.api.model.toLatLon
 import com.savvasdalkitsis.uhuruphotos.foundation.map.api.ui.MapViewState
 
 internal class MapBoxMapViewState(
@@ -31,7 +33,7 @@ internal class MapBoxMapViewState(
     var mapView: MapView? = null
     private val map get() = mapView?.getMapboxMap()
     private var bounds: Pair<Point, Point>? = null
-    private var onStoppedMoving: () -> Unit = {}
+    private var onStoppedMoving: (Viewport) -> Unit = {}
 
     @Composable
     override fun Marker(latLon: LatLon) {
@@ -49,7 +51,7 @@ internal class MapBoxMapViewState(
     }
 
     @Composable
-    override fun Composition(onStoppedMoving: () -> Unit) {
+    override fun Composition(onStoppedMoving: (Viewport) -> Unit) {
         this.onStoppedMoving = onStoppedMoving
     }
 
@@ -69,7 +71,10 @@ internal class MapBoxMapViewState(
         map?.let {
             val coords = it.coordinateBoundsForCamera(it.cameraState.toCameraOptions())
             bounds = coords.northeast to coords.southwest
+            onStoppedMoving(Viewport(it.cameraState.center.toLatLon, it.cameraState.zoom.toFloat()))
         }
-        onStoppedMoving()
     }
+
+    private val Point.toLatLon: LatLon
+        get() = (latitude() to longitude()).toLatLon
 }

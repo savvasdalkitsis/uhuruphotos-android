@@ -18,6 +18,7 @@ package com.savvasdalkitsis.uhuruphotos.feature.discover.view.implementation.sea
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.people.People
 import com.savvasdalkitsis.uhuruphotos.feature.discover.view.implementation.seam.DiscoverActionsContext
 import com.savvasdalkitsis.uhuruphotos.feature.discover.view.implementation.seam.DiscoverMutation
+import com.savvasdalkitsis.uhuruphotos.feature.discover.view.implementation.seam.DiscoverMutation.*
 import com.savvasdalkitsis.uhuruphotos.feature.discover.view.implementation.seam.effects.DiscoverEffect
 import com.savvasdalkitsis.uhuruphotos.feature.discover.view.implementation.seam.effects.ErrorRefreshingPeople
 import com.savvasdalkitsis.uhuruphotos.feature.discover.view.implementation.ui.state.DiscoverState
@@ -42,11 +43,16 @@ data object Initialise : DiscoverAction() {
         effect: EffectHandler<DiscoverEffect>
     ) = merge(
         showLibrary(),
+        showHeatMap(),
         showFeedDisplay(),
         showServerSearchSuggestion(),
         showPeopleSuggestion(effect),
         showSearchSuggestions()
     )
+
+    context(DiscoverActionsContext)
+    private fun showHeatMap() = heatMapUseCase.observeViewport()
+        .map(::ChangeMapViewport)
 
     context(DiscoverActionsContext)
     private fun showSearchSuggestions() = combine(
@@ -89,7 +95,7 @@ data object Initialise : DiscoverAction() {
                 searchUseCase.getRandomSearchSuggestion()
                     .map(DiscoverMutation::ShowSearchSuggestion)
             else
-                flowOf(DiscoverMutation.HideSuggestions)
+                flowOf(HideSuggestions)
         }
 
     context(DiscoverActionsContext)

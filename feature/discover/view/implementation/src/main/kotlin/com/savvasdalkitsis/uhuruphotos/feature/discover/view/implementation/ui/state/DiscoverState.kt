@@ -15,12 +15,16 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.discover.view.implementation.ui.state
 
+import androidx.compose.runtime.Immutable
 import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.CollageDisplay
 import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.PredefinedCollageDisplay
 import com.savvasdalkitsis.uhuruphotos.feature.people.view.api.ui.state.Person
+import com.savvasdalkitsis.uhuruphotos.foundation.map.api.Locations.TRAFALGAR_SQUARE
+import com.savvasdalkitsis.uhuruphotos.foundation.map.api.model.Viewport
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
 
+@Immutable
 data class DiscoverState(
     val showClearButton: Boolean = false,
     val collageDisplay: CollageDisplay = PredefinedCollageDisplay.default,
@@ -30,4 +34,5 @@ data class DiscoverState(
     val searchSuggestions: ImmutableList<SearchSuggestion> = persistentListOf(),
     val latestQuery: String = "",
     val queryCacheKey: String = "",
+    val mapViewport: Viewport = TRAFALGAR_SQUARE,
 )

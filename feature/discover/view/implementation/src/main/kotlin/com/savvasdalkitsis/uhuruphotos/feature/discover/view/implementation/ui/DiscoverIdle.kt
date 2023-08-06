@@ -71,7 +71,7 @@ fun DiscoverIdle(
         ) {
             SearchPeopleSuggestions(state.people, action)
         }
-        DiscoverLocations(action)
+        DiscoverLocations(state, action)
         DiscoverCategories(action)
         Spacer(modifier = Modifier.height(contentPadding.calculateBottomPadding()))
     }

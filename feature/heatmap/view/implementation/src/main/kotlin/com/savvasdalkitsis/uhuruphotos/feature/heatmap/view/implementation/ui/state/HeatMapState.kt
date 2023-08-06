@@ -18,6 +18,7 @@ package com.savvasdalkitsis.uhuruphotos.feature.heatmap.view.implementation.ui.s
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItem
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemsOnDevice
 import com.savvasdalkitsis.uhuruphotos.foundation.map.api.model.LatLon
+import com.savvasdalkitsis.uhuruphotos.foundation.map.api.model.Viewport
 
 data class HeatMapState(
     val loading: Boolean = false,
@@ -26,4 +27,5 @@ data class HeatMapState(
     val allMedia: List<MediaItem> = emptyList(),
     val photosOnVisibleMap: List<MediaItem> = emptyList(),
     val showRequestPermissionForLocalMediaAccess: MediaItemsOnDevice.RequiresPermissions? = null,
+    val initialViewport: Viewport? = null,
 )

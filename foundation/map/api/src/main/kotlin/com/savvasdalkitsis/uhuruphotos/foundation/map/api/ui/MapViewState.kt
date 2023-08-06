@@ -17,6 +17,7 @@ package com.savvasdalkitsis.uhuruphotos.foundation.map.api.ui
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
+import com.savvasdalkitsis.uhuruphotos.foundation.map.api.model.Viewport
 import com.savvasdalkitsis.uhuruphotos.foundation.map.api.model.LatLon
 import com.savvasdalkitsis.uhuruphotos.foundation.map.api.model.LocalMapProvider
 import com.savvasdalkitsis.uhuruphotos.foundation.map.api.model.LocalMapViewStateFactory
@@ -27,7 +28,7 @@ interface MapViewState : MapViewScope {
     fun contains(latLon: LatLon): Boolean
     suspend fun centerToLocation(latLon: LatLon)
     @Composable
-    fun Composition(onStoppedMoving: () -> Unit)
+    fun Composition(onStoppedMoving: (Viewport) -> Unit)
 }
 
 @Composable

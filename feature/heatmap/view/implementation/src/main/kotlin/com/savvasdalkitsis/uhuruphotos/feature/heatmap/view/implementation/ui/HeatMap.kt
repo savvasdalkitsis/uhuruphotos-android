@@ -24,7 +24,6 @@ import com.google.accompanist.permissions.rememberPermissionState
 import com.google.accompanist.permissions.shouldShowRationale
 import com.savvasdalkitsis.uhuruphotos.feature.heatmap.view.implementation.seam.actions.HeatMapAction
 import com.savvasdalkitsis.uhuruphotos.feature.heatmap.view.implementation.ui.state.HeatMapState
-import com.savvasdalkitsis.uhuruphotos.foundation.map.api.Locations
 import com.savvasdalkitsis.uhuruphotos.foundation.map.api.ui.MapViewState
 import com.savvasdalkitsis.uhuruphotos.foundation.map.api.ui.rememberMapViewState
 
@@ -36,14 +35,21 @@ fun HeatMap(
     val locationPermissionState = rememberPermissionState(
         android.Manifest.permission.ACCESS_FINE_LOCATION
     )
+    if (state.initialViewport != null) {
+        val mapViewState: MapViewState = rememberMapViewState(
+            initialPosition = state.initialViewport.center,
+            initialZoom = state.initialViewport.zoom,
+        )
+        when (LocalConfiguration.current.orientation) {
+            ORIENTATION_LANDSCAPE -> SidePanelHeatMap(
+                state,
+                action,
+                locationPermissionState,
+                mapViewState
+            )
 
-    val mapViewState: MapViewState = rememberMapViewState(
-        initialPosition = Locations.TRAFALGAR_SQUARE,
-        initialZoom = 2f,
-    )
-    when (LocalConfiguration.current.orientation) {
-        ORIENTATION_LANDSCAPE -> SidePanelHeatMap(state, action, locationPermissionState, mapViewState)
-        else -> BottomPanelHeatMap(state, action, locationPermissionState, mapViewState)
+            else -> BottomPanelHeatMap(state, action, locationPermissionState, mapViewState)
+        }
     }
 
     LaunchedEffect(locationPermissionState.status) {

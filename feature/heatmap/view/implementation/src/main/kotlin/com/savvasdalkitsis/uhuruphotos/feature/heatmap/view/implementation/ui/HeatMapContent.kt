@@ -36,8 +36,8 @@ fun HeatMapContent(
     state: HeatMapState,
     mapViewState: MapViewState
 ) {
-    mapViewState.Composition(onStoppedMoving = {
-        action(CameraViewPortChanged(newBoundsChecker = { latLng ->
+    mapViewState.Composition(onStoppedMoving = { viewport ->
+        action(CameraViewPortChanged(viewport, newBoundsChecker = { latLng ->
             mapViewState.contains(latLng)
         }))
     })

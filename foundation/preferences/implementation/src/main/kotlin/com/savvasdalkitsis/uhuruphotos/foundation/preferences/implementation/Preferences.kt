@@ -21,6 +21,7 @@ import com.fredporciuncula.flow.preferences.Preference
 import com.fredporciuncula.flow.preferences.Serializer
 import com.savvasdalkitsis.uhuruphotos.foundation.preferences.api.Preferences
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.map
 import se.ansman.dagger.auto.AutoBind
 import javax.inject.Inject
 
@@ -58,6 +59,40 @@ class Preferences @Inject constructor(
 
     override fun setInt(key: String, value: Int) {
         int(key, value).set(value)
+    }
+
+    override fun getDouble(key: String, defaultValue: Double): Double =
+        getFloat(key, defaultValue.toFloat()).toDouble()
+
+    override fun getNullableDouble(key: String, defaultValue: Double?): Double? =
+        getNullableFloat(key, defaultValue?.toFloat())?.toDouble()
+
+    override fun observeDouble(key: String, defaultValue: Double): Flow<Double> =
+        observeFloat(key, defaultValue.toFloat()).map { it.toDouble() }
+
+    override fun setDouble(key: String, value: Double) {
+        setFloat(key, value.toFloat())
+    }
+
+    override fun getFloat(key: String, defaultValue: Float): Float =
+        float(key, defaultValue).get()
+
+    override fun getNullableFloat(key: String, defaultValue: Float?): Float? =
+        if (!flowSharedPreferences.sharedPreferences.contains(key)) {
+            null
+        } else {
+            try {
+                flowSharedPreferences.sharedPreferences.getFloat(key, defaultValue ?: 0f)
+            } catch (e: ClassCastException) {
+                nullableString(key, defaultValue?.toString()).get()?.toFloatOrNull()
+            }
+        }
+
+    override fun observeFloat(key: String, defaultValue: Float): Flow<Float> =
+        float(key, defaultValue).asFlow()
+
+    override fun setFloat(key: String, value: Float) {
+        float(key, value).set(value)
     }
 
     override fun getString(key: String, defaultValue: String): String =
@@ -104,6 +139,9 @@ class Preferences @Inject constructor(
 
     private fun int(key: String, defaultValue: Int) =
         flowSharedPreferences.getInt(key, defaultValue)
+
+    private fun float(key: String, defaultValue: Float) =
+        flowSharedPreferences.getFloat(key, defaultValue)
 
     private fun string(key: String, defaultValue: String) =
         flowSharedPreferences.getString(key, defaultValue)

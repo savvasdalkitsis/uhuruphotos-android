@@ -18,12 +18,14 @@ package com.savvasdalkitsis.uhuruphotos.feature.heatmap.view.implementation.seam
 import android.location.LocationManager
 import com.savvasdalkitsis.uhuruphotos.feature.feed.domain.api.usecase.FeedUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.feed.domain.api.worker.FeedWorkScheduler
+import com.savvasdalkitsis.uhuruphotos.feature.heatmap.domain.api.usecase.HeatMapUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.heatmap.view.implementation.seam.HeatMapMutation.UpdateVisibleMapContent
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItem
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.usecase.MediaUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.worker.LocalMediaWorkScheduler
 import com.savvasdalkitsis.uhuruphotos.feature.settings.domain.api.usecase.SettingsUseCase
 import com.savvasdalkitsis.uhuruphotos.foundation.map.api.model.LatLon
+import kotlinx.coroutines.Deferred
 import javax.inject.Inject
 
 internal class HeatMapActionsContext @Inject constructor(
@@ -33,10 +35,12 @@ internal class HeatMapActionsContext @Inject constructor(
     val settingsUseCase: SettingsUseCase,
     val localMediaWorkScheduler: LocalMediaWorkScheduler,
     val locationManager: LocationManager,
+    val heatMapUseCase: HeatMapUseCase,
 ) {
 
     @Volatile
     var boundsChecker: suspend (LatLon) -> Boolean = { true }
+    var updateVisibleMapContentJob: Deferred<UpdateVisibleMapContent>? = null
 
     suspend fun updateDisplay(allMedia: List<MediaItem>): UpdateVisibleMapContent {
         val photosToDisplay = allMedia

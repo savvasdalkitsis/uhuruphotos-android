@@ -19,6 +19,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.Collage
 import com.savvasdalkitsis.uhuruphotos.feature.discover.view.implementation.ui.state.DiscoverState
 import com.savvasdalkitsis.uhuruphotos.feature.discover.view.implementation.ui.state.SearchSuggestion
 import com.savvasdalkitsis.uhuruphotos.feature.people.view.api.ui.state.Person
+import com.savvasdalkitsis.uhuruphotos.foundation.map.api.model.Viewport
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.Mutation
 import kotlinx.collections.immutable.toPersistentList
 
@@ -62,5 +63,9 @@ sealed class DiscoverMutation(
 
     data class ShowLibrary(val showLibrary: Boolean) : DiscoverMutation({
         it.copy(showLibrary = showLibrary)
+    })
+
+    data class ChangeMapViewport(val viewport: Viewport) : DiscoverMutation({
+        it.copy(mapViewport = viewport)
     })
 }
