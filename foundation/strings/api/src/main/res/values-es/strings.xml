@@ -291,4 +291,22 @@
     <string name="searching">Buscando</string>
     <string name="retry">Reintentar</string>
     <string name="discover">Descubrir</string>
+    <string name="month_march_short">mzo.</string>
+    <string name="month_may_short">may.</string>
+    <string name="month_june_short">jun.</string>
+    <string name="month_july_short">jul.</string>
+    <string name="month_august_short">agto.</string>
+    <string name="month_october_short">oct.</string>
+    <string name="month_november_short">nov.</string>
+    <string name="month_december_short">dic.</string>
+    <string name="categories">Categorías</string>
+    <string name="month_february_short">febr.</string>
+    <string name="media_without_date">Medios sin fecha</string>
+    <string name="month_january_short">en.</string>
+    <string name="month_april_short">abr.</string>
+    <string name="month_september_short">sept.</string>
+    <string name="locations">Ubicaciones</string>
+    <string name="no_date">Sin fecha</string>
+    <string name="videos">Vídeos</string>
+    <string name="search_captions">Buscar subtítulos</string>
 </resources>
