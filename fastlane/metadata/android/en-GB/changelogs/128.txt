@@ -1,0 +1,4 @@
+* New stats page in Discover tab. For now only showing media per year, more coming soon
+* Better scroll hints. Now showing month - year only and scroll hint is offset to not be under the finger
+* Remembering the last heatmap viewport. Also affects the discover tab map view
+* No delaying between cached media when the precaching job runs to make it faster
