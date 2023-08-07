@@ -1,5 +1,5 @@
 /*
-Copyright 2022 Savvas Dalkitsis
+Copyright 2023 Savvas Dalkitsis
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -13,11 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
  */
-package com.savvasdalkitsis.uhuruphotos.feature.{{cookiecutter.project_slug}}.view.implementation.seam
+package com.savvasdalkitsis.uhuruphotos.feature.stats.domain.api.model
 
-import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.Navigator
-import javax.inject.Inject
-
-class {{cookiecutter.project_slug.capitalize()}}EffectsContext @Inject constructor(
-    val navigator: Navigator,
+@JvmInline
+value class Year(
+    val year: Int,
 )

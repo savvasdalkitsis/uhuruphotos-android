@@ -9,12 +9,12 @@ android {
 }
 
 dependencies {
-    implementation project(":feature:{{cookiecutter.project_slug}}:domain:api")
-    implementation project(":feature:{{cookiecutter.project_slug}}:view:api")
-    implementation project(":feature:settings:domain:api")
-    implementation project(":foundation:navigation:api")
-    implementation project(":foundation:ui:api")
     implementation(
+            project(":feature:{{cookiecutter.project_slug}}:domain:api"),
+            project(":feature:{{cookiecutter.project_slug}}:view:api"),
+            project(":feature:settings:domain:api"),
+            project(":foundation:navigation:api"),
+            project(":foundation:ui:api"),
             libs.androidx.compose.hilt.navigation,
             libs.androidx.compose.material,
             libs.autodagger.core,

@@ -20,4 +20,6 @@ data class MediaDay(
     val month: Int,
     val year: Int,
     val monthText: String,
-)
+) {
+    val displayText = "$monthText $year"
+}

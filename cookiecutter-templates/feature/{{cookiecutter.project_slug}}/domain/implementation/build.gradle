@@ -3,8 +3,8 @@ android {
 }
 
 dependencies {
-    implementation project(":feature:{{cookiecutter.project_slug}}:domain:api")
     implementation(
+            project(":feature:{{cookiecutter.project_slug}}:domain:api"),
             libs.autodagger.core,
             libs.hilt,
     )

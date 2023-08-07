@@ -82,8 +82,8 @@ hilt-android-gradle-plugin = { module = "com.google.dagger:hilt-android-gradle-p
 hilt-dagger-compiler = { module = "com.google.dagger:hilt-compiler", version.ref = "hilt" }
 imaging = "org.apache.commons:commons-imaging:1.0-alpha3"
 infobar = "com.radusalagean:info-bar-compose:1.0.0"
+jetlime = "io.github.pushpalroy:jetlime:1.0.3"
 joda-time = "net.danlew:android.joda:2.12.5"
-junit = "junit:junit:4.13.2"
 jwt = "com.auth0.android:jwtdecode:2.0.2"
 kotlinx-coroutines = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-android", version.ref = "org-jetbrains-kotlinx" }
 kotlinx-immutable = "org.jetbrains.kotlinx:kotlinx-collections-immutable:0.3.5"
@@ -102,8 +102,6 @@ maps = { module = "com.google.android.gms:play-services-maps", version.ref = "co
 maps-compose = "com.google.maps.android:maps-compose:2.12.0"
 maps-utils = "com.google.maps.android:android-maps-utils:3.5.0"
 maps-utils-ktx = "com.google.maps.android:maps-utils-ktx:3.4.0"
-mockk = { module = "io.mockk:mockk", version.ref = "mockk" }
-mockk-android = { module = "io.mockk:mockk-android", version.ref = "mockk" }
 moshi = { module = "com.squareup.moshi:moshi-kotlin", version.ref = "moshi" }
 moshi-ksp = { module = "com.squareup.moshi:moshi-kotlin-codegen", version.ref = "moshi" }
 okhttp = { module = "com.squareup.okhttp3:okhttp", version.ref = "okhttp" }
@@ -115,19 +113,20 @@ permissions-compose = { module = "dev.shreyaspatil.permission-flow:permission-fl
 play = "com.google.android.gms:play-services-base:18.2.0"
 recasa = "com.github.sebaslogen.resaca:resaca:2.4.6"
 reorder = "org.burnoutcrew.composereorderable:reorderable:0.9.6"
+remember = "dev.burnoo:compose-remember-preference:1.0.1"
 result = "com.michael-bull.kotlin-result:kotlin-result:1.1.18"
 result-coroutines = "com.michael-bull.kotlin-result:kotlin-result-coroutines:1.1.18"
 retrofit-core = { module = "com.squareup.retrofit2:retrofit", version.ref = "retrofit" }
 retrofit-moshi = { module = "com.squareup.retrofit2:converter-moshi", version.ref = "retrofit" }
 scrollbar = "com.github.nanihadesuka:LazyColumnScrollbar:1.7.2"
-shazamcrest = "com.shazam:shazamcrest:0.11"
 sqldelight-adapters = { module = "app.cash.sqldelight:primitive-adapters", version.ref = "sqldelight" }
 sqldelight-android = { module = "app.cash.sqldelight:android-driver", version.ref = "sqldelight" }
 sqldelight-coroutines = { module = "app.cash.sqldelight:coroutines-extensions", version.ref = "sqldelight" }
 sqldelight-gradle-plugin = { module = "app.cash.sqldelight:gradle-plugin", version.ref = "sqldelight" }
 sqldelight-jvm = { module = "app.cash.sqldelight:sqlite-driver", version.ref = "sqldelight" }
-turbine = "app.cash.turbine:turbine:1.0.0"
+timeline = "com.github.yeocak:ComposableTimelineView:0.6"
 urlvalidator = "commons-validator:commons-validator:1.7"
+vico = "com.patrykandpatrick.vico:compose-m2:1.9.1"
 videocache = "com.github.Andrew0000:Android-VideoView-cache:1.0.15"
 zoomable = "com.mxalbert.zoomable:zoomable:1.6.1"
 

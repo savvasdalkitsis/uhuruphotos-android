@@ -297,4 +297,8 @@
     <string name="month_october_short">Oct</string>
     <string name="month_november_short">Nov</string>
     <string name="month_december_short">Dec</string>
+    <string name="stats">Stats</string>
+    <string name="year">Year</string>
+    <string name="media_per_year">Media per year</string>
+    <string name="timeline">Timeline</string>
 </resources>

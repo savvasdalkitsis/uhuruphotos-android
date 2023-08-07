@@ -18,9 +18,7 @@ package com.savvasdalkitsis.uhuruphotos.feature.{{cookiecutter.project_slug}}.vi
 import androidx.lifecycle.viewModelScope
 import com.savvasdalkitsis.uhuruphotos.feature.{{cookiecutter.project_slug}}.view.api.navigation.{{cookiecutter.project_slug.capitalize()}}NavigationRoute
 import com.savvasdalkitsis.uhuruphotos.feature.{{cookiecutter.project_slug}}.view.implementation.seam.{{cookiecutter.project_slug.capitalize()}}ActionsContext
-import com.savvasdalkitsis.uhuruphotos.feature.{{cookiecutter.project_slug}}.view.implementation.seam.{{cookiecutter.project_slug.capitalize()}}EffectsContext
 import com.savvasdalkitsis.uhuruphotos.feature.{{cookiecutter.project_slug}}.view.implementation.seam.actions.{{cookiecutter.project_slug.capitalize()}}Action
-import com.savvasdalkitsis.uhuruphotos.feature.{{cookiecutter.project_slug}}.view.implementation.seam.effects.{{cookiecutter.project_slug.capitalize()}}Effect
 import com.savvasdalkitsis.uhuruphotos.feature.{{cookiecutter.project_slug}}.view.implementation.ui.state.{{cookiecutter.project_slug.capitalize()}}State
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.viewmodel.NavigationViewModel
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.ActionHandlerWithContext
@@ -32,10 +30,8 @@ import javax.inject.Inject
 @HiltViewModel
 internal class {{cookiecutter.project_slug.capitalize()}}ViewModel @Inject constructor(
     actionsContext: {{cookiecutter.project_slug.capitalize()}}ActionsContext,
-    effectsContext: {{cookiecutter.project_slug.capitalize()}}EffectsContext,
-) : NavigationViewModel<{{cookiecutter.project_slug.capitalize()}}State, {{cookiecutter.project_slug.capitalize()}}Effect, {{cookiecutter.project_slug.capitalize()}}Action, {{cookiecutter.project_slug.capitalize()}}NavigationRoute>(
+) : NavigationViewModel<{{cookiecutter.project_slug.capitalize()}}State, {{cookiecutter.project_slug.capitalize()}}Action, {{cookiecutter.project_slug.capitalize()}}NavigationRoute>(
     ActionHandlerWithContext(actionsContext),
-    EffectHandlerWithContext(effectsContext),
     {{cookiecutter.project_slug.capitalize()}}State(),
 ) {
 

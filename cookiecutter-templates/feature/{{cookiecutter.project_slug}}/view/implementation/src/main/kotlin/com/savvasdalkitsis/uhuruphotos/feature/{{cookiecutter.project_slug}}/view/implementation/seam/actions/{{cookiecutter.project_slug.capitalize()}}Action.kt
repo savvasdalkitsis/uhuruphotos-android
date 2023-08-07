@@ -16,9 +16,7 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.feature.{{cookiecutter.project_slug}}.view.implementation.seam.actions
 
 import com.savvasdalkitsis.uhuruphotos.feature.{{cookiecutter.project_slug}}.view.implementation.seam.{{cookiecutter.project_slug.capitalize()}}ActionsContext
-import com.savvasdalkitsis.uhuruphotos.feature.{{cookiecutter.project_slug}}.view.implementation.seam.effects.{{cookiecutter.project_slug.capitalize()}}Effect
 import com.savvasdalkitsis.uhuruphotos.feature.{{cookiecutter.project_slug}}.view.implementation.ui.state.{{cookiecutter.project_slug.capitalize()}}State
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.Action
 
-sealed class {{cookiecutter.project_slug.capitalize()}}Action :
-    Action<{{cookiecutter.project_slug.capitalize()}}State, {{cookiecutter.project_slug.capitalize()}}Effect, {{cookiecutter.project_slug.capitalize()}}ActionsContext>
+sealed class {{cookiecutter.project_slug.capitalize()}}Action : Action<{{cookiecutter.project_slug.capitalize()}}State, {{cookiecutter.project_slug.capitalize()}}ActionsContext>

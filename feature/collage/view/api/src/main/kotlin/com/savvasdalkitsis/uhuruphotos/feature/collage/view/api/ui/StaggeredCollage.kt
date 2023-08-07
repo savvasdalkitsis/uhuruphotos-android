@@ -170,7 +170,7 @@ internal fun StaggeredCollage(
                     ?.firstOrNull()
                     ?.mediaItem
                     ?.mediaDay
-                    ?.let { "${it.monthText} ${it.year}" }
+                    ?.displayText
                     ?: ""
             }
         }

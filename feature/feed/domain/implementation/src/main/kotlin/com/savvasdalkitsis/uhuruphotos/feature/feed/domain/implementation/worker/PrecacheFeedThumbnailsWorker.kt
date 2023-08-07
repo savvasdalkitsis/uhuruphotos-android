@@ -25,7 +25,6 @@ import com.savvasdalkitsis.uhuruphotos.feature.feed.domain.api.model.FeedFetchTy
 import com.savvasdalkitsis.uhuruphotos.feature.feed.domain.implementation.broadcast.CancelPrecacheWorkBroadcastReceiver
 import com.savvasdalkitsis.uhuruphotos.feature.feed.domain.implementation.repository.FeedRepository
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaId
-import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaOperationResult
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaOperationResult.CHANGED
 import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.api.usecase.RemoteMediaPrecacher
 import com.savvasdalkitsis.uhuruphotos.foundation.notification.api.ForegroundInfoBuilder
@@ -57,7 +56,9 @@ internal class PrecacheFeedThumbnailsWorker @AssistedInject constructor(
     override suspend fun work() = withContext(Dispatchers.IO) {
         updateProgress(0)
         val serverUrl = serverUseCase.getServerUrl()!!
-        val mediaItemIds = feedRepository.getRemoteMediaCollectionsByDate(FeedFetchType.ALL)
+        val mediaItemIds = feedRepository.getRemoteMediaCollectionsByDate(
+            FeedFetchType.ALL
+        )
             .items.entries.flatMap { entry ->
                 entry.value.mapNotNull { collections ->
                     collections.photoId?.let { id ->

@@ -64,16 +64,21 @@ internal class FeedUseCase @Inject constructor(
 
     override fun observeFeed(
         feedFetchType: FeedFetchType,
+        loadSmallInitialChunk: Boolean,
     ): Flow<List<MediaCollection>> =
         combine(
-            observeRemoteMediaFeed(feedFetchType),
+            observeRemoteMediaFeed(feedFetchType, loadSmallInitialChunk),
             observeLocalMediaFeed(feedFetchType),
             observeDownloading(),
             ::mergeRemoteWithLocalMedia
         ).debounce(500)
 
-    override suspend fun getFeed(feedFetchType: FeedFetchType): List<MediaCollection> = mergeRemoteWithLocalMedia(
-        getRemoteMediaFeed(feedFetchType), getLocalMediaFeed(feedFetchType), getDownloading(),
+    override suspend fun getFeed(
+        feedFetchType: FeedFetchType,
+    ): List<MediaCollection> = mergeRemoteWithLocalMedia(
+        getRemoteMediaFeed(feedFetchType),
+        getLocalMediaFeed(feedFetchType),
+        getDownloading(),
     )
 
     private fun mergeRemoteWithLocalMedia(
@@ -209,7 +214,8 @@ internal class FeedUseCase @Inject constructor(
 
     private fun observeRemoteMediaFeed(
         feedFetchType: FeedFetchType,
-    ) = feedRepository.observeRemoteMediaCollectionsByDate(feedFetchType)
+        loadSmallInitialChunk: Boolean,
+    ) = feedRepository.observeRemoteMediaCollectionsByDate(feedFetchType, loadSmallInitialChunk)
         .distinctUntilChanged()
         .map {
             it.mapValues { albums ->
@@ -220,7 +226,9 @@ internal class FeedUseCase @Inject constructor(
         }.initialize()
 
 
-    private suspend fun getRemoteMediaFeed(feedFetchType: FeedFetchType) =
+    private suspend fun getRemoteMediaFeed(
+        feedFetchType: FeedFetchType
+    ) =
         feedRepository.getRemoteMediaCollectionsByDate(feedFetchType)
             .mapValues { it.toMediaCollectionSource() }
             .toCollection()

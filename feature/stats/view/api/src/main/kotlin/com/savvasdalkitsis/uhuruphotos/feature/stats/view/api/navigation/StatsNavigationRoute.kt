@@ -1,5 +1,5 @@
 /*
-Copyright 2022 Savvas Dalkitsis
+Copyright 2023 Savvas Dalkitsis
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -13,9 +13,10 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
  */
-package com.savvasdalkitsis.uhuruphotos.feature.{{cookiecutter.project_slug}}.view.implementation.seam.effects
+package com.savvasdalkitsis.uhuruphotos.feature.stats.view.api.navigation
 
-import com.savvasdalkitsis.uhuruphotos.feature.{{cookiecutter.project_slug}}.view.implementation.seam.{{cookiecutter.project_slug.capitalize()}}EffectsContext
-import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.Effect
+import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.NavigationRoute
+import kotlinx.parcelize.Parcelize
 
-sealed class {{cookiecutter.project_slug.capitalize()}}Effect : Effect<{{cookiecutter.project_slug.capitalize()}}EffectsContext>
+@Parcelize
+data object StatsNavigationRoute : NavigationRoute

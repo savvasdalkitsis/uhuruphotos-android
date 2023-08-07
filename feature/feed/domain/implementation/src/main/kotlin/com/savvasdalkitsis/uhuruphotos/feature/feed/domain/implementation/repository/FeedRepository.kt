@@ -55,6 +55,7 @@ class FeedRepository @Inject constructor(
 
     fun observeRemoteMediaCollectionsByDate(
         feedFetchType: FeedFetchType,
+        loadSmallInitialChunk: Boolean,
     ): Flow<Group<String, GetRemoteMediaCollections>> = flow {
         try {
             emitAll(remoteMediaCollectionsQueries.getRemoteMediaCollections(
@@ -64,7 +65,7 @@ class FeedRepository @Inject constructor(
                 onlyVideos = feedFetchType.onlyVideos,
             ).asFlow()
                 .onStart {
-                    if (allRemoteMediaCollections.items.isEmpty()) {
+                    if (loadSmallInitialChunk && allRemoteMediaCollections.items.isEmpty()) {
                         emit(remoteMediaCollectionsQueries.getRemoteMediaCollections(
                             limit = 100,
                             includeNoDates = feedFetchType.includeMediaWithoutDate,
