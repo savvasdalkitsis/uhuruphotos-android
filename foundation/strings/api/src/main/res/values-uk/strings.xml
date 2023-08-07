@@ -312,4 +312,16 @@
     <string name="searching">Пошук</string>
     <string name="retry">Повторити спробу</string>
     <string name="discover">Знайти</string>
+    <string name="month_april_short">Квіт</string>
+    <string name="month_january_short">Січ</string>
+    <string name="month_july_short">Лип</string>
+    <string name="month_october_short">Жовт</string>
+    <string name="month_november_short">Лист</string>
+    <string name="month_february_short">Лют</string>
+    <string name="month_march_short">Бер</string>
+    <string name="month_june_short">Черв</string>
+    <string name="month_august_short">Сер</string>
+    <string name="month_december_short">Груд</string>
+    <string name="month_may_short">Трав</string>
+    <string name="month_september_short">Вер</string>
 </resources>
