@@ -28,9 +28,13 @@ dependencies {
             project(":foundation:ui:api"),
             libs.androidx.compose.hilt.navigation,
             libs.androidx.compose.material,
+            libs.androidx.compose.ui.tooling.preview,
             libs.autodagger.core,
             libs.okhttp,
             libs.urlvalidator,
+    )
+    debugImplementation(
+            libs.androidx.compose.ui.tooling,
     )
     kapt libs.autodagger.kapt
 }

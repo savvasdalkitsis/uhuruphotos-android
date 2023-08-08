@@ -10,7 +10,9 @@ android {
 
 dependencies {
 
-    implementation project(":foundation:compose:api")
+    api(
+            project(":foundation:compose:api"),
+    )
     implementation project(":foundation:icons:api")
     implementation project(":foundation:strings:api")
     implementation(

@@ -301,4 +301,6 @@
     <string name="year">Year</string>
     <string name="media_per_year">Media per year</string>
     <string name="timeline">Timeline</string>
+    <string name="username">Username</string>
+    <string name="password">Password</string>
 </resources>

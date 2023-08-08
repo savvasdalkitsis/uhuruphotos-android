@@ -34,11 +34,13 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.savvasdalkitsis.uhuruphotos.feature.server.view.implementation.seam.actions.Login
 import com.savvasdalkitsis.uhuruphotos.feature.server.view.implementation.seam.actions.RequestServerUrlChange
 import com.savvasdalkitsis.uhuruphotos.feature.server.view.implementation.seam.actions.ServerAction
 import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
+import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.theme.PreviewAppTheme
 
 @Composable
 internal fun UserCredentialsPage(
@@ -86,5 +88,19 @@ internal fun UserCredentialsPage(
                 Text(stringResource(string.login))
             }
         }
+    }
+}
+
+@Preview
+@Composable
+internal fun UserCredentialsPagePreview() {
+    PreviewAppTheme {
+        UserCredentialsPage(action = {}, state = ServerState.UserCredentials(
+            username = "username",
+            password = "pass",
+            isLoggingEnabled = true,
+            allowLogin = true,
+            passwordVisible = false,
+        ))
     }
 }
