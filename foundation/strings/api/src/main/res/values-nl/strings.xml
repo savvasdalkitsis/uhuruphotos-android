@@ -298,4 +298,6 @@
     <string name="media_per_year">Media per jaar</string>
     <string name="stats">Statistieken</string>
     <string name="year">Jaar</string>
+    <string name="username">Gebruikersnaam</string>
+    <string name="password">Wachtwoord</string>
 </resources>
