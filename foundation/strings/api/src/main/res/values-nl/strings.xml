@@ -300,4 +300,11 @@
     <string name="year">Jaar</string>
     <string name="username">Gebruikersnaam</string>
     <string name="password">Wachtwoord</string>
+    <string name="media_sync_status_uploading">De media wordt geüpload naar de server</string>
+    <string name="ok">Oké</string>
+    <string name="uploads">Uploads</string>
+    <string name="cannot_upload">Media-upload mislukt</string>
+    <string name="upload_not_allowed">Het uploaden van media is niet toegestaan op deze server. Neem contact op met de beheerder.</string>
+    <string name="upload_error_checking">De uploadmogelĳkheid van de server kan niet worden gecontroleerd. Probeer het opnieuw.</string>
+    <string name="finalizing_upload">Bezig met voltooien…</string>
 </resources>
