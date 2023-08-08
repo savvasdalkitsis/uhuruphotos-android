@@ -15,13 +15,10 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.stats.view.implementation.seam.actions
 
-import com.github.michaelbull.result.onFailure
-import com.github.michaelbull.result.onSuccess
 import com.savvasdalkitsis.uhuruphotos.feature.feed.domain.api.model.FeedFetchType
 import com.savvasdalkitsis.uhuruphotos.feature.stats.view.implementation.seam.StatsActionsContext
 import com.savvasdalkitsis.uhuruphotos.feature.stats.view.implementation.seam.StatsMutation.Loading
 import com.savvasdalkitsis.uhuruphotos.feature.stats.view.implementation.seam.StatsMutation.ShowMediaPerYear
-import com.savvasdalkitsis.uhuruphotos.feature.stats.view.implementation.seam.StatsMutation.ShowTimeline
 import com.savvasdalkitsis.uhuruphotos.feature.stats.view.implementation.ui.state.StatsState
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.Mutation
 import kotlinx.coroutines.flow.Flow

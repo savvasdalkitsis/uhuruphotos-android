@@ -17,10 +17,10 @@ package com.savvasdalkitsis.uhuruphotos.foundation.map.api.ui
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
-import com.savvasdalkitsis.uhuruphotos.foundation.map.api.model.Viewport
 import com.savvasdalkitsis.uhuruphotos.foundation.map.api.model.LatLon
 import com.savvasdalkitsis.uhuruphotos.foundation.map.api.model.LocalMapProvider
 import com.savvasdalkitsis.uhuruphotos.foundation.map.api.model.LocalMapViewStateFactory
+import com.savvasdalkitsis.uhuruphotos.foundation.map.api.model.Viewport
 
 interface MapViewState : MapViewScope {
     val initialPosition: LatLon

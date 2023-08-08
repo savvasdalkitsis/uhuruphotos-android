@@ -27,7 +27,8 @@ import com.github.michaelbull.result.Err
 import com.github.michaelbull.result.Ok
 import com.github.michaelbull.result.Result
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaOperationResult
-import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaOperationResult.*
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaOperationResult.CHANGED
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaOperationResult.SKIPPED
 import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.api.usecase.RemoteMediaPrecacher
 import com.savvasdalkitsis.uhuruphotos.foundation.image.api.model.ThumbnailImage
 import com.savvasdalkitsis.uhuruphotos.foundation.log.api.log

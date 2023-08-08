@@ -15,11 +15,8 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.stats.view.implementation.ui
 
-import android.widget.ProgressBar
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.sizeIn
 import androidx.compose.material.CircularProgressIndicator
@@ -49,7 +46,6 @@ import com.patrykandpatrick.vico.core.scroll.InitialScroll
 import com.savvasdalkitsis.uhuruphotos.feature.stats.domain.api.model.Year
 import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.CollapsibleGroup
-import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.FullProgressBar
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.state.rememberCollapsibleGroupState
 
 @Composable

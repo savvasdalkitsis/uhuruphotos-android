@@ -17,7 +17,7 @@ package com.savvasdalkitsis.uhuruphotos.feature.feed.domain.api.usecase
 
 import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.PredefinedCollageDisplay
 import com.savvasdalkitsis.uhuruphotos.feature.feed.domain.api.model.FeedFetchType
-import com.savvasdalkitsis.uhuruphotos.feature.feed.domain.api.model.FeedFetchType.*
+import com.savvasdalkitsis.uhuruphotos.feature.feed.domain.api.model.FeedFetchType.ALL
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaCollection
 import kotlinx.coroutines.flow.Flow
 

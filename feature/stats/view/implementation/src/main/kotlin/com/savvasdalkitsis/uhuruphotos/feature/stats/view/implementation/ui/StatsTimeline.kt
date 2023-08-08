@@ -26,21 +26,17 @@ import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.pushpal.jetlime.data.JetLimeItemsModel
-import com.pushpal.jetlime.data.config.JetLimeViewConfig
-import com.pushpal.jetlime.ui.JetLimeView
 import com.savvasdalkitsis.uhuruphotos.feature.stats.domain.api.model.CountryVisit
 import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.CollapsibleGroup
-import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.TextWithIcon
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.state.rememberCollapsibleGroupState
 import com.yeocak.timelineview.TimelineView
-import com.yeocak.timelineview.TimelineView.NodeType
-import com.yeocak.timelineview.TimelineView.NodeType.*
+import com.yeocak.timelineview.TimelineView.NodeType.FIRST
+import com.yeocak.timelineview.TimelineView.NodeType.LAST
+import com.yeocak.timelineview.TimelineView.NodeType.MIDDLE
 import kotlinx.collections.immutable.ImmutableList
 
 @Composable

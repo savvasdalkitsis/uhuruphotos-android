@@ -18,7 +18,6 @@ package com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.state
 import androidx.annotation.StringRes
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
-import androidx.compose.runtime.remember
 import dev.burnoo.compose.rememberpreference.rememberBooleanPreference
 
 data class CollapsibleGroupState(
