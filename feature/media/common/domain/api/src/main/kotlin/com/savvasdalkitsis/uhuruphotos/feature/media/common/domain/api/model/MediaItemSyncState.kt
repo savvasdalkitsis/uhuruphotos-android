@@ -32,8 +32,9 @@ enum class MediaItemSyncState(
 ) {
     LOCAL_ONLY(
         icon = drawable.ic_cloud_off,
-        lightBoxIcon = drawable.ic_cloud_upload,
-        lightBoxIconAlpha = 1f,
+        lightBoxIcon = drawable.ic_cloud_off,
+//        lightBoxIcon = drawable.ic_cloud_upload,
+//        lightBoxIconAlpha = 1f,
         contentDescription = string.media_sync_status_local_only
     ),
     REMOTE_ONLY(
