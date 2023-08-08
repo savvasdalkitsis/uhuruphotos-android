@@ -17,5 +17,5 @@ package com.savvasdalkitsis.uhuruphotos.foundation.upload.api.model
 
 data class UploadItem(
     val id: Long,
-    val isVideo: Boolean,
+    val contentUri: String,
 )

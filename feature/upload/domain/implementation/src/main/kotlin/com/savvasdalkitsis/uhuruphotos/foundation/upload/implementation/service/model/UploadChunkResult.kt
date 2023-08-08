@@ -13,21 +13,13 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
  */
-package com.savvasdalkitsis.uhuruphotos.foundation.upload.implementation.service
+package com.savvasdalkitsis.uhuruphotos.foundation.upload.implementation.service.model
 
-import okhttp3.MultipartBody
-import retrofit2.http.Multipart
-import retrofit2.http.POST
-import retrofit2.http.Part
+import com.squareup.moshi.Json
+import com.squareup.moshi.JsonClass
 
-interface UploadCompleteService {
-
-    @Multipart
-    @POST("/api/upload/complete/")
-    suspend fun completeUpload(
-        @Part uploadId: MultipartBody.Part,
-        @Part userId: MultipartBody.Part,
-        @Part md5: MultipartBody.Part,
-        @Part filename: MultipartBody.Part?
-    )
-}
+@JsonClass(generateAdapter = true)
+data class UploadChunkResult(
+    @field:Json(name = "upload_id")
+    val uploadId: String
+)

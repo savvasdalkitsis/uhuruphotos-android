@@ -13,20 +13,22 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
  */
-package com.savvasdalkitsis.uhuruphotos.foundation.upload.implementation.module
+package com.savvasdalkitsis.uhuruphotos.foundation.upload.api.work
 
-import com.savvasdalkitsis.uhuruphotos.foundation.upload.implementation.service.UploadService
-import dagger.Module
-import dagger.Provides
-import dagger.hilt.InstallIn
-import dagger.hilt.components.SingletonComponent
-import retrofit2.Retrofit
+import com.savvasdalkitsis.uhuruphotos.foundation.upload.api.model.UploadItem
 
-@Module
-@InstallIn(SingletonComponent::class)
-class UploadModule {
+interface UploadWorkScheduler {
 
-    @Provides
-    fun uploadCompleteService(retrofit: Retrofit): UploadService =
-        retrofit.create(UploadService::class.java)
+    fun scheduleUploadInitialization(item: UploadItem)
+
+    fun scheduleChunkUpload(
+        item: UploadItem,
+        offset: Long,
+        uploadId: String
+    )
+
+    fun scheduleUploadCompletion(
+        item: UploadItem,
+        uploadId: String,
+    )
 }

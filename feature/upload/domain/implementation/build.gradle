@@ -16,9 +16,10 @@ dependencies {
             project(":foundation:strings:api"),
             libs.autodagger.core,
             libs.hilt,
-            libs.bundles.upload,
+            libs.moshi,
             libs.retrofit.core,
             libs.sqldelight.coroutines,
     )
     kapt libs.autodagger.kapt
+    ksp libs.moshi.ksp
 }

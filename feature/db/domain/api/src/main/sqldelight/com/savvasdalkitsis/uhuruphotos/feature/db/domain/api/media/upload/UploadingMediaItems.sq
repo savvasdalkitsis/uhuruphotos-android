@@ -1,9 +1,10 @@
 CREATE TABLE uploadingMediaItems (
-    id INTEGER NOT NULL PRIMARY KEY
+    id INTEGER NOT NULL PRIMARY KEY,
+    contentUri TEXT NOT NULL
 );
 
 insert:
-INSERT OR REPLACE INTO uploadingMediaItems VALUES (?);
+INSERT OR REPLACE INTO uploadingMediaItems VALUES ?;
 
 delete:
 DELETE FROM uploadingMediaItems WHERE id = :id;

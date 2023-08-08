@@ -15,43 +15,32 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.foundation.upload.implementation.service
 
-import android.content.Context
-import com.github.michaelbull.result.Result
-import com.github.michaelbull.result.andThen
-import com.savvasdalkitsis.uhuruphotos.feature.auth.domain.api.usecase.AuthenticationHeadersUseCase
-import com.savvasdalkitsis.uhuruphotos.feature.auth.domain.api.usecase.ServerUseCase
-import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.toMediaItemHash
-import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.model.Md5Hash
-import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.api.usecase.RemoteMediaUseCase
-import com.savvasdalkitsis.uhuruphotos.feature.user.domain.api.usecase.UserUseCase
-import dagger.hilt.android.qualifiers.ApplicationContext
-import net.gotev.uploadservice.protocols.multipart.MultipartUploadRequest
-import javax.inject.Inject
+import com.savvasdalkitsis.uhuruphotos.foundation.upload.implementation.service.model.UploadChunkResult
+import okhttp3.MultipartBody
+import retrofit2.http.Header
+import retrofit2.http.Multipart
+import retrofit2.http.POST
+import retrofit2.http.Part
 
-class UploadService @Inject constructor(
-    @ApplicationContext private val context: Context,
-    private val serverUseCase: ServerUseCase,
-    private val authenticationHeadersUseCase: AuthenticationHeadersUseCase,
-    private val remoteMediaUseCase: RemoteMediaUseCase,
-    private val userUseCase: UserUseCase,
-) {
+interface UploadService {
 
-    fun upload(contentUri: String): String? {
-        val baseUrl = serverUseCase.getServerUrl() ?: return null
-        val url = "$baseUrl/api/upload/"
-        val headers = authenticationHeadersUseCase.headers(url)
-        return MultipartUploadRequest(context, baseUrl)
-            .addFileToUpload(contentUri, parameterName = "file", fileName = "blob")
-            .setUsesFixedLengthStreamingMode(false)
-            .run {
-                headers.fold(this) { c, (key, value) -> c.addHeader(key, value) }
-            }
-            .setMethod("POST")
-            .startUpload()
-    }
+    @Multipart
+    @POST("/api/upload/")
+    suspend fun uploadChunk(
+        @Header("Content-Range") range: String,
+        @Part uploadId: MultipartBody.Part,
+        @Part user: MultipartBody.Part,
+        @Part offset: MultipartBody.Part,
+        @Part md5: MultipartBody.Part,
+        @Part chunk: MultipartBody.Part,
+    ): UploadChunkResult
 
-    suspend fun exists(md5: Md5Hash): Result<Boolean, Throwable> =
-        userUseCase.getUserOrRefresh().andThen { user ->
-            remoteMediaUseCase.exists(md5.toMediaItemHash(user.id))
-        }
+    @Multipart
+    @POST("/api/upload/complete/")
+    suspend fun completeUpload(
+        @Part uploadId: MultipartBody.Part,
+        @Part user: MultipartBody.Part,
+        @Part filename: MultipartBody.Part,
+        @Part md5: MultipartBody.Part,
+    )
 }

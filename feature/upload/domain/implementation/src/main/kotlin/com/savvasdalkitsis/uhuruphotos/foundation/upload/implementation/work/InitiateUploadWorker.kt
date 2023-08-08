@@ -18,68 +18,57 @@ package com.savvasdalkitsis.uhuruphotos.foundation.upload.implementation.work
 import android.content.Context
 import androidx.hilt.work.HiltWorker
 import androidx.work.WorkerParameters
-import com.github.michaelbull.result.Err
 import com.github.michaelbull.result.Ok
 import com.github.michaelbull.result.coroutines.binding.binding
 import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.usecase.LocalMediaUseCase
-import com.savvasdalkitsis.uhuruphotos.feature.user.domain.api.usecase.UserUseCase
-import com.savvasdalkitsis.uhuruphotos.foundation.log.api.log
 import com.savvasdalkitsis.uhuruphotos.foundation.notification.api.ForegroundInfoBuilder
 import com.savvasdalkitsis.uhuruphotos.foundation.notification.api.ForegroundNotificationWorker
 import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
+import com.savvasdalkitsis.uhuruphotos.foundation.upload.api.model.UploadItem
 import com.savvasdalkitsis.uhuruphotos.foundation.upload.api.usecase.UploadUseCase
-import com.savvasdalkitsis.uhuruphotos.foundation.upload.implementation.service.UploadService
+import com.savvasdalkitsis.uhuruphotos.foundation.upload.api.work.UploadWorkScheduler
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedInject
-import okhttp3.MultipartBody.Part.Companion.createFormData
 
 @HiltWorker
-class UploadCompletionWorker @AssistedInject constructor(
+class InitiateUploadWorker @AssistedInject constructor(
     @Assisted context: Context,
     @Assisted private val params: WorkerParameters,
-    private val userUseCase: UserUseCase,
     private val uploadUseCase: UploadUseCase,
-    private val uploadService: UploadService,
+    private val uploadWorkScheduler: UploadWorkScheduler,
     private val localMediaUseCase: LocalMediaUseCase,
     foregroundInfoBuilder: ForegroundInfoBuilder,
 ) : ForegroundNotificationWorker<Nothing>(
     context,
     params,
     foregroundInfoBuilder,
-    notificationTitle = string.finalizing_upload,
+    notificationTitle = string.media_sync_status_uploading,
     notificationId = NOTIFICATION_ID,
     cancelBroadcastReceiver = null,
 ) {
 
     override suspend fun work(): Result {
-        val uploadId = params.inputData.getString(KEY_UPLOAD_ID)!!
-        val itemId = params.inputData.getLong(KEY_ITEM_ID, -1)
-        val result = binding<Unit, Throwable> {
-            val userId = userUseCase.getUserOrRefresh().bind().id
-            val mediaItem = localMediaUseCase.getLocalMediaItem(itemId)
-                ?: throw IllegalArgumentException("Could not find associated local media with id: $itemId")
-            val md5 = mediaItem.md5
-            val filename = mediaItem.displayName
-                ?: throw IllegalArgumentException("No name associated with file $itemId")
-            try {
-                uploadService.completeUpload(
-                    uploadId = createFormData("upload_id", uploadId),
-                    user = createFormData("user", userId.toString()),
-                    md5 = createFormData("md5", md5.value),
-                    filename = createFormData("filename", filename),
-                )
-                Ok(Unit)
-            } catch (e: Exception) {
-                log(e)
-                Err(e)
-            }
+        val item = UploadItem(
+            id = params.inputData.getLong(KEY_ID, -1),
+            contentUri = params.inputData.getString(KEY_CONTENT_URI)!!
+        )
+        val result = binding {
+            val mediaItem = localMediaUseCase.getLocalMediaItem(item.id)
+                ?: throw IllegalArgumentException("Could not find associated local media with id: ${item.id}")
+            uploadUseCase.exists(mediaItem.md5).bind()
         }
         return when (result) {
             is Ok -> {
-                uploadUseCase.markAsNotUploading(itemId)
+                if (!result.value) {
+                    uploadWorkScheduler.scheduleChunkUpload(
+                        item = item,
+                        offset = 0L,
+                        uploadId = "",
+                    )
+                }
                 Result.success()
             }
-            else -> failOrRetry(itemId)
+            else -> failOrRetry(item.id)
         }
     }
 
@@ -91,9 +80,9 @@ class UploadCompletionWorker @AssistedInject constructor(
     }
 
     companion object {
-        const val KEY_UPLOAD_ID = "uploadId"
-        const val KEY_ITEM_ID = "itemId"
-        fun workName(uploadId: String) = "finalizingUpload/$uploadId"
-        private const val NOTIFICATION_ID = 1285
+        const val KEY_ID = "id"
+        const val KEY_CONTENT_URI = "contentUri"
+        fun workName(id: Long) = "initiatingUpload/$id"
+        private const val NOTIFICATION_ID = 1283
     }
 }

@@ -140,7 +140,7 @@ class RemoteMediaUseCase @Inject constructor(
     }.simple()
 
     override suspend fun exists(hash: MediaItemHash): Result<Boolean, Throwable> = runCatchingWithLog {
-        remoteMediaService.exists(hash.value).exists
+        remoteMediaService.exists(hash.hash).exists
     }
 
     private suspend fun updateSummaries(

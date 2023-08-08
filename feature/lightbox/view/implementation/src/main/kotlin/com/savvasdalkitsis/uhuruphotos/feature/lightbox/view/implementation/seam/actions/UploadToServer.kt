@@ -20,10 +20,11 @@ import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.LightboxMutation.Loading
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.LightboxMutation.ShowCannotCheckUploadStatusDialog
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.LightboxMutation.ShowCannotUploadDialog
-import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.effects.LightboxEffect
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.ui.state.LightboxState
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.ui.state.SingleMediaItemState
-import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.EffectHandler
+import com.savvasdalkitsis.uhuruphotos.foundation.upload.api.model.UploadCapability.CanUpload
+import com.savvasdalkitsis.uhuruphotos.foundation.upload.api.model.UploadCapability.CannotUpload
+import com.savvasdalkitsis.uhuruphotos.foundation.upload.api.model.UploadCapability.UnableToCheck
 import com.savvasdalkitsis.uhuruphotos.foundation.upload.api.model.UploadItem
 import kotlinx.coroutines.flow.flow
 
@@ -31,12 +32,12 @@ data class UploadToServer(val mediaItemState: SingleMediaItemState) : LightboxAc
 
     context(LightboxActionsContext) override fun handle(
         state: LightboxState,
-        effect: EffectHandler<LightboxEffect>
     ) = flow {
-        mediaItemState.id.findLocal?.let { id ->
+        val id = mediaItemState.id.findLocal
+        if (id != null) {
             emit(Loading)
             when (uploadUseCase.canUpload()) {
-                CanUpload -> uploadUseCase.scheduleUpload(UploadItem(id.value, id.isVideo))
+                CanUpload -> uploadUseCase.scheduleUpload(UploadItem(id.value, id.contentUri))
                 CannotUpload -> emit(ShowCannotUploadDialog)
                 UnableToCheck -> emit(ShowCannotCheckUploadStatusDialog)
             }
