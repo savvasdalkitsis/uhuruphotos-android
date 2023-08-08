@@ -294,4 +294,8 @@
     <string name="month_november_short">nov</string>
     <string name="month_april_short">apr</string>
     <string name="month_september_short">sep</string>
+    <string name="timeline">Tĳdlĳn</string>
+    <string name="media_per_year">Media per jaar</string>
+    <string name="stats">Statistieken</string>
+    <string name="year">Jaar</string>
 </resources>
