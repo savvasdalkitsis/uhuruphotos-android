@@ -259,14 +259,15 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{HOST}}/api/photos/:id",
+							"raw": "{{HOST}}/api/photos/:id/summary",
 							"host": [
 								"{{HOST}}"
 							],
 							"path": [
 								"api",
 								"photos",
-								":id"
+								":id",
+								"summary"
 							],
 							"variable": [
 								{
