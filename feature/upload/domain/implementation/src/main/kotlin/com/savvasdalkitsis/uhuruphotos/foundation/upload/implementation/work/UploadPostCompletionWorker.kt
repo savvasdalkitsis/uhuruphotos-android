@@ -18,61 +18,59 @@ package com.savvasdalkitsis.uhuruphotos.foundation.upload.implementation.work
 import android.content.Context
 import androidx.hilt.work.HiltWorker
 import androidx.work.WorkerParameters
+import com.github.michaelbull.result.Err
 import com.github.michaelbull.result.Ok
 import com.github.michaelbull.result.coroutines.binding.binding
-import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.toMediaItemHash
-import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.usecase.LocalMediaUseCase
-import com.savvasdalkitsis.uhuruphotos.feature.user.domain.api.usecase.UserUseCase
+import com.savvasdalkitsis.uhuruphotos.feature.feed.domain.api.usecase.FeedUseCase
+import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.api.usecase.RemoteMediaUseCase
+import com.savvasdalkitsis.uhuruphotos.foundation.log.api.log
 import com.savvasdalkitsis.uhuruphotos.foundation.notification.api.ForegroundInfoBuilder
 import com.savvasdalkitsis.uhuruphotos.foundation.notification.api.ForegroundNotificationWorker
 import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
-import com.savvasdalkitsis.uhuruphotos.foundation.upload.api.model.UploadItem
 import com.savvasdalkitsis.uhuruphotos.foundation.upload.api.usecase.UploadUseCase
-import com.savvasdalkitsis.uhuruphotos.foundation.upload.api.work.UploadWorkScheduler
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedInject
+import okio.IOException
 
 @HiltWorker
-class InitiateUploadWorker @AssistedInject constructor(
+class UploadPostCompletionWorker @AssistedInject constructor(
     @Assisted context: Context,
     @Assisted private val params: WorkerParameters,
+    private val mediaUseCase: RemoteMediaUseCase,
+    private val feedUseCase: FeedUseCase,
     private val uploadUseCase: UploadUseCase,
-    private val uploadWorkScheduler: UploadWorkScheduler,
-    private val userUseCase: UserUseCase,
-    private val localMediaUseCase: LocalMediaUseCase,
     foregroundInfoBuilder: ForegroundInfoBuilder,
 ) : ForegroundNotificationWorker<Nothing>(
     context,
     params,
     foregroundInfoBuilder,
-    notificationTitle = string.media_sync_status_uploading,
+    notificationTitle = string.finalizing_upload,
     notificationId = NOTIFICATION_ID,
     cancelBroadcastReceiver = null,
 ) {
 
     override suspend fun work(): Result {
-        val item = UploadItem(
-            id = params.inputData.getLong(KEY_ID, -1),
-            contentUri = params.inputData.getString(KEY_CONTENT_URI)!!
-        )
-        val result = binding {
-            val mediaItem = localMediaUseCase.getLocalMediaItem(item.id)
-                ?: throw IllegalArgumentException("Could not find associated local media with id: ${item.id}")
-            val exists = uploadUseCase.exists(mediaItem.md5).bind()
-            if (exists) {
-                val user = userUseCase.getUserOrRefresh().bind()
-                uploadWorkScheduler.schedulePostUploadSync(mediaItem.md5.toMediaItemHash(user.id), item.id)
-            } else {
-                uploadWorkScheduler.scheduleChunkUpload(
-                    item = item,
-                    offset = 0L,
-                    uploadId = "",
-                )
+        val hash = params.inputData.getString(KEY_HASH)!!
+        val itemId = params.inputData.getLong(KEY_ITEM_ID, -1)
+        val result = try {
+            binding<Unit, Throwable> {
+                val summary = mediaUseCase.getRemoteMediaItemSummary(hash)
+                if (summary != null) {
+                    feedUseCase.refreshCluster(summary.containerId).bind()
+                } else {
+                    throw IOException("Could not load remote media summary for $hash")
+                }
             }
+        } catch (e: Exception) {
+            log(e)
+            Err(e)
         }
         return when (result) {
-            is Ok -> Result.success()
-            else -> failOrRetry(item.id)
+            is Ok -> {
+                uploadUseCase.markAsNotUploading(itemId)
+                Result.success()
+            }
+            else -> failOrRetry(itemId)
         }
     }
 
@@ -84,9 +82,9 @@ class InitiateUploadWorker @AssistedInject constructor(
     }
 
     companion object {
-        const val KEY_ID = "id"
-        const val KEY_CONTENT_URI = "contentUri"
-        fun workName(id: Long) = "initiatingUpload/$id"
-        private const val NOTIFICATION_ID = 1283
+        const val KEY_ITEM_ID = "itemId"
+        const val KEY_HASH = "hash"
+        fun workName(hash: String) = "postUploadSync/$hash"
+        private const val NOTIFICATION_ID = 1286
     }
 }

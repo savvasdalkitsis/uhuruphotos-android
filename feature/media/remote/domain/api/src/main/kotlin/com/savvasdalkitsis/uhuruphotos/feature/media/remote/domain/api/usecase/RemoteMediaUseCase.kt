@@ -21,7 +21,6 @@ import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.entities.media.DbRe
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemHash
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaOperationResult
 import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.api.service.model.RemoteMediaCollection
-import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.api.service.model.RemoteMediaCollectionsByDate
 import com.savvasdalkitsis.uhuruphotos.foundation.result.api.SimpleResult
 import kotlinx.coroutines.flow.Flow
 
@@ -34,6 +33,8 @@ interface RemoteMediaUseCase {
     fun observeRemoteMediaItemDetails(id: String): Flow<DbRemoteMediaItemDetails>
 
     suspend fun getRemoteMediaItemDetails(id: String): DbRemoteMediaItemDetails?
+
+    suspend fun getRemoteMediaItemSummary(id: String): DbRemoteMediaItemSummary?
 
     fun observeHiddenRemoteMedia(): Flow<List<DbRemoteMediaItemSummary>>
 
@@ -58,8 +59,8 @@ interface RemoteMediaUseCase {
     fun restoreMediaItem(id: String)
 
     suspend fun processRemoteMediaCollections(
-        albumsFetcher: suspend () -> RemoteMediaCollectionsByDate,
-        remoteMediaCollectionFetcher: suspend (String) -> RemoteMediaCollection.Complete,
+        incompleteAlbumsFetcher: suspend () -> List<RemoteMediaCollection.Incomplete>,
+        completeAlbumsFetcher: suspend (String) -> RemoteMediaCollection.Complete,
         shallow: Boolean,
         onProgressChange: suspend (current: Int, total: Int) -> Unit = { _, _ -> },
         incompleteAlbumsProcessor: suspend (List<RemoteMediaCollection.Incomplete>) -> Unit = {},

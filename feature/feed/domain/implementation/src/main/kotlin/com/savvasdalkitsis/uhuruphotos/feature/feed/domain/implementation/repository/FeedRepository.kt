@@ -20,12 +20,13 @@ import app.cash.sqldelight.coroutines.mapToList
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.Database
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.extensions.awaitList
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.extensions.awaitSingle
+import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.extensions.awaitSingleOrNull
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.media.remote.GetRemoteMediaCollections
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.media.remote.RemoteMediaCollectionsQueries
 import com.savvasdalkitsis.uhuruphotos.feature.feed.domain.api.model.FeedFetchType
 import com.savvasdalkitsis.uhuruphotos.feature.feed.domain.implementation.service.FeedService
-import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.api.service.model.RemoteMediaCollection
-import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.api.service.model.RemoteMediaCollectionsByDate
+import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.api.service.model.RemoteMediaCollection.Complete
+import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.api.service.model.RemoteMediaCollection.Incomplete
 import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.api.service.model.toDbModel
 import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.api.usecase.RemoteMediaUseCase
 import com.savvasdalkitsis.uhuruphotos.foundation.group.api.model.Group
@@ -106,8 +107,8 @@ class FeedRepository @Inject constructor(
         onProgressChange: suspend (current: Int, total: Int) -> Unit = { _, _ -> },
     ): SimpleResult =
         remoteMediaUseCase.processRemoteMediaCollections(
-            albumsFetcher = { feedService.getRemoteMediaCollectionsByDate() },
-            remoteMediaCollectionFetcher = getCollectionAllPages(),
+            incompleteAlbumsFetcher = { feedService.getRemoteMediaCollectionsByDate().results },
+            completeAlbumsFetcher = getCollectionAllPages(),
             shallow = shallow,
             onProgressChange = onProgressChange,
             incompleteAlbumsProcessor = { albums ->
@@ -120,28 +121,30 @@ class FeedRepository @Inject constructor(
             }
         )
 
-    suspend fun refreshRemoteMediaCollection(collectionId: String) {
+    suspend fun refreshRemoteMediaCollection(collectionId: String) =
         remoteMediaUseCase.processRemoteMediaCollections(
-            albumsFetcher = {
-                with(remoteMediaCollectionsQueries.get(collectionId).awaitSingle()) {
-                    RemoteMediaCollectionsByDate(
-                        results = listOf(RemoteMediaCollection.Incomplete(collectionId, date, location.orEmpty(), true, numberOfItems))
-                    )
-                }},
-            remoteMediaCollectionFetcher = getCollectionAllPages(),
+            incompleteAlbumsFetcher = {
+                val collections = remoteMediaCollectionsQueries.get(collectionId).awaitSingleOrNull()
+                listOf(Incomplete(
+                        id = collectionId,
+                        date = collections?.date,
+                        location = collections?.location.orEmpty(),
+                        incomplete = true,
+                        numberOfItems = collections?.numberOfItems ?: 0
+                ))
+            },
+            completeAlbumsFetcher = getCollectionAllPages(),
             shallow = false,
             clearSummariesBeforeInserting = true,
-            incompleteAlbumsProcessor = { albums ->
-                for (album in albums.map { it.toDbModel() }) {
-                    remoteMediaCollectionsQueries.insert(album)
-                }
-            }
+            completeAlbumProcessor = { album ->
+                remoteMediaCollectionsQueries.insert(album.toIncomplete().toDbModel())
+            },
+            incompleteAlbumsProcessor = { }
         )
-    }
 
-    private fun getCollectionAllPages(): suspend (String) -> RemoteMediaCollection.Complete = { id ->
+    private fun getCollectionAllPages(): suspend (String) -> Complete = { id ->
         var page = 1
-        val albums = mutableListOf<RemoteMediaCollection.Complete>()
+        val albums = mutableListOf<Complete>()
         do {
             val album = feedService.getRemoteMediaCollection(id, page).results
             albums += album

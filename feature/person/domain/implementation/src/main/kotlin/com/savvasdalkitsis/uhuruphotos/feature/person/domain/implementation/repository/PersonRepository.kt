@@ -51,8 +51,8 @@ class PersonRepository @Inject constructor(
 
     private suspend fun downloadPersonAlbums(personId: Int) {
         remoteMediaUseCase.processRemoteMediaCollections(
-            albumsFetcher = { personService.getMediaCollectionsForPerson(personId) },
-            remoteMediaCollectionFetcher = { personService.getMediaCollectionForPerson(it, personId).results },
+            incompleteAlbumsFetcher = { personService.getMediaCollectionsForPerson(personId).results },
+            completeAlbumsFetcher = { personService.getMediaCollectionForPerson(it, personId).results },
             shallow = false,
             clearSummariesBeforeInserting = false,
             incompleteAlbumsProcessor = { albums ->

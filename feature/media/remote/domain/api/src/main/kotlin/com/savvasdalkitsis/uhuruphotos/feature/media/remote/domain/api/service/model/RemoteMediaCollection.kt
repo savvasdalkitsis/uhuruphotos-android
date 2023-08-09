@@ -45,7 +45,11 @@ sealed class RemoteMediaCollection(
         override val numberOfItems: Int,
         val rating: Int?,
         val items: List<RemoteMediaItemSummary>,
-    ) : RemoteMediaCollection(id, date, location, incomplete, numberOfItems)
+    ) : RemoteMediaCollection(id, date, location, incomplete, numberOfItems) {
+        fun toIncomplete() = Incomplete(
+            id, date, location, incomplete, numberOfItems
+        )
+    }
 }
 
 fun RemoteMediaCollection.Incomplete.toDbModel() = DbRemoteMediaCollections(

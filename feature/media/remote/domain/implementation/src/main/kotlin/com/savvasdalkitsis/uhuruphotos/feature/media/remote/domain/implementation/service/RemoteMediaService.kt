@@ -16,6 +16,7 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.implementation.service
 
 import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.api.model.RemoteMediaItem
+import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.api.model.RemoteMediaItemSummaryContainer
 import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.implementation.service.model.RemoteMediaExistsResponse
 import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.implementation.service.model.RemoteMediaHashOperationResponseServiceModel
 import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.implementation.service.model.RemoteMediaItemDeleteRequestServiceModel
@@ -34,6 +35,9 @@ interface RemoteMediaService {
 
     @GET("/api/photos/{id}/")
     suspend fun getMediaItem(@Path("id") id: String): RemoteMediaItem
+
+    @GET("/api/photos/{id}/summary/")
+    suspend fun getMediaItemSummary(@Path("id") id: String): RemoteMediaItemSummaryContainer
 
     @POST("/api/photosedit/favorite/")
     suspend fun setMediaItemFavourite(

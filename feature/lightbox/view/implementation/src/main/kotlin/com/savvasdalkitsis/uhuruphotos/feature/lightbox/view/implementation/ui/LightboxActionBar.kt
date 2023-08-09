@@ -62,7 +62,7 @@ fun LightboxActionBar(
                     action(UploadToServer(state.currentMediaItem))
                 }
             },
-            enabled = syncState in remember { listOf(REMOTE_ONLY) }, //, LOCAL_ONLY) },
+            enabled = syncState in remember { listOf(REMOTE_ONLY, LOCAL_ONLY) },
             icon = syncState.lightBoxIcon,
             contentDescription = stringResource(syncState.contentDescription)
         )

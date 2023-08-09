@@ -25,7 +25,6 @@ import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.Med
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaOperationResult
 import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.api.model.toDbModel
 import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.api.service.model.RemoteMediaCollection
-import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.api.service.model.RemoteMediaCollectionsByDate
 import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.api.usecase.RemoteMediaUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.implementation.repository.RemoteMediaRepository
 import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.implementation.service.RemoteMediaService
@@ -75,6 +74,9 @@ class RemoteMediaUseCase @Inject constructor(
     override suspend fun getRemoteMediaItemDetails(id: String): DbRemoteMediaItemDetails? =
         remoteMediaRepository.getMediaItemDetails(id)
 
+    override suspend fun getRemoteMediaItemSummary(id: String): DbRemoteMediaItemSummary? =
+        remoteMediaRepository.getOrRefreshRemoteMediaItemSummary(id)
+
     override suspend fun getFavouriteMediaSummariesCount(): Result<Long, Throwable> = withFavouriteThreshold {
         remoteMediaRepository.getFavouriteMediaCount(it)
     }
@@ -117,8 +119,8 @@ class RemoteMediaUseCase @Inject constructor(
     }
 
     override suspend fun processRemoteMediaCollections(
-        albumsFetcher: suspend () -> RemoteMediaCollectionsByDate,
-        remoteMediaCollectionFetcher: suspend (String) -> RemoteMediaCollection.Complete,
+        incompleteAlbumsFetcher: suspend () -> List<RemoteMediaCollection.Incomplete>,
+        completeAlbumsFetcher: suspend (String) -> RemoteMediaCollection.Complete,
         shallow: Boolean,
         onProgressChange: suspend (current: Int, total: Int) -> Unit,
         incompleteAlbumsProcessor: suspend (List<RemoteMediaCollection.Incomplete>) -> Unit,
@@ -126,15 +128,15 @@ class RemoteMediaUseCase @Inject constructor(
         clearSummariesBeforeInserting: Boolean,
     ): SimpleResult = runCatchingWithLog {
         onProgressChange(0, 0)
-        val albums = albumsFetcher()
-        incompleteAlbumsProcessor(albums.results)
+        val albums = incompleteAlbumsFetcher()
+        incompleteAlbumsProcessor(albums)
         val albumsToDownloadSummaries = when {
-            shallow -> albums.results.take(settingsUseCase.getFeedDaysToRefresh())
-            else -> albums.results
+            shallow -> albums.take(settingsUseCase.getFeedDaysToRefresh())
+            else -> albums
         }
         for ((index, incompleteAlbum) in albumsToDownloadSummaries.withIndex()) {
             val id = incompleteAlbum.id
-            updateSummaries(id, remoteMediaCollectionFetcher, completeAlbumProcessor, clearSummariesBeforeInserting)
+            updateSummaries(id, completeAlbumsFetcher, completeAlbumProcessor, clearSummariesBeforeInserting)
             onProgressChange(index, albumsToDownloadSummaries.size)
         }
     }.simple()

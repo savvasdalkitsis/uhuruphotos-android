@@ -19,6 +19,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.Predefi
 import com.savvasdalkitsis.uhuruphotos.feature.feed.domain.api.model.FeedFetchType
 import com.savvasdalkitsis.uhuruphotos.feature.feed.domain.api.model.FeedFetchType.ALL
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaCollection
+import com.savvasdalkitsis.uhuruphotos.foundation.result.api.SimpleResult
 import kotlinx.coroutines.flow.Flow
 
 interface FeedUseCase {
@@ -30,7 +31,7 @@ interface FeedUseCase {
     suspend fun getFeed(feedFetchType: FeedFetchType = ALL): List<MediaCollection>
     fun getFeedDisplay(): Flow<PredefinedCollageDisplay>
     fun setFeedDisplay(feedDisplay: PredefinedCollageDisplay)
-    suspend fun refreshCluster(clusterId: String)
+    suspend fun refreshCluster(clusterId: String): SimpleResult
     fun refreshFeed(shallow: Boolean)
     suspend fun hasFeed(): Boolean
 }

@@ -132,9 +132,8 @@ internal class FeedUseCase @Inject constructor(
         })
     }
 
-    override suspend fun refreshCluster(clusterId: String) {
+    override suspend fun refreshCluster(clusterId: String) =
         feedRepository.refreshRemoteMediaCollection(clusterId)
-    }
 
     private fun Flow<List<MediaCollection>>.initialize() = distinctUntilChanged()
         .safelyOnStartIgnoring {

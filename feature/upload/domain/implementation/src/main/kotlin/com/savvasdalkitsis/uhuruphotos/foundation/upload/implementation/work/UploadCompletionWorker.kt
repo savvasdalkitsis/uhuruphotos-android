@@ -21,6 +21,7 @@ import androidx.work.WorkerParameters
 import com.github.michaelbull.result.Err
 import com.github.michaelbull.result.Ok
 import com.github.michaelbull.result.coroutines.binding.binding
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.toMediaItemHash
 import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.usecase.LocalMediaUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.user.domain.api.usecase.UserUseCase
 import com.savvasdalkitsis.uhuruphotos.foundation.log.api.log
@@ -31,6 +32,7 @@ import com.savvasdalkitsis.uhuruphotos.foundation.upload.api.usecase.UploadUseCa
 import com.savvasdalkitsis.uhuruphotos.foundation.upload.implementation.service.UploadService
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedInject
+import kotlinx.coroutines.delay
 import okhttp3.MultipartBody.Part.Companion.createFormData
 
 @HiltWorker
@@ -40,6 +42,7 @@ class UploadCompletionWorker @AssistedInject constructor(
     private val userUseCase: UserUseCase,
     private val uploadUseCase: UploadUseCase,
     private val uploadService: UploadService,
+    private val uploadWorkScheduler: UploadWorkScheduler,
     private val localMediaUseCase: LocalMediaUseCase,
     foregroundInfoBuilder: ForegroundInfoBuilder,
 ) : ForegroundNotificationWorker<Nothing>(
@@ -54,29 +57,29 @@ class UploadCompletionWorker @AssistedInject constructor(
     override suspend fun work(): Result {
         val uploadId = params.inputData.getString(KEY_UPLOAD_ID)!!
         val itemId = params.inputData.getLong(KEY_ITEM_ID, -1)
-        val result = binding<Unit, Throwable> {
-            val userId = userUseCase.getUserOrRefresh().bind().id
-            val mediaItem = localMediaUseCase.getLocalMediaItem(itemId)
-                ?: throw IllegalArgumentException("Could not find associated local media with id: $itemId")
-            val md5 = mediaItem.md5
-            val filename = mediaItem.displayName
-                ?: throw IllegalArgumentException("No name associated with file $itemId")
-            try {
+        val result = try {
+            binding<Unit, Throwable> {
+                val userId = userUseCase.getUserOrRefresh().bind().id
+                val mediaItem = localMediaUseCase.getLocalMediaItem(itemId)
+                    ?: throw IllegalArgumentException("Could not find associated local media with id: $itemId")
+                val md5 = mediaItem.md5
+                val filename = mediaItem.displayName
+                    ?: throw IllegalArgumentException("No name associated with file $itemId")
                 uploadService.completeUpload(
                     uploadId = createFormData("upload_id", uploadId),
                     user = createFormData("user", userId.toString()),
                     md5 = createFormData("md5", md5.value),
                     filename = createFormData("filename", filename),
                 )
-                Ok(Unit)
-            } catch (e: Exception) {
-                log(e)
-                Err(e)
+                delay(1000)
+                uploadWorkScheduler.schedulePostUploadSync(md5.toMediaItemHash(userId), itemId)
             }
+        } catch (e: Exception) {
+            log(e)
+            Err(e)
         }
         return when (result) {
             is Ok -> {
-                uploadUseCase.markAsNotUploading(itemId)
                 Result.success()
             }
             else -> failOrRetry(itemId)

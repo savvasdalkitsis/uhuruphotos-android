@@ -5,6 +5,7 @@ android {
 dependencies {
     implementation(
             project(":feature:auth:domain:api"),
+            project(":feature:feed:domain:api"),
             project(":feature:media:local:domain:api"),
             project(":feature:media:remote:domain:api"),
             project(":feature:site:domain:api"),

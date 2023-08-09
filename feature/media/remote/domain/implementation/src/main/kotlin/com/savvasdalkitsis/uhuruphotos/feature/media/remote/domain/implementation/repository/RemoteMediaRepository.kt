@@ -32,6 +32,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.media.remote.Remote
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaOperationResult
 import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.api.model.toDbModel
 import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.implementation.service.RemoteMediaService
+import com.savvasdalkitsis.uhuruphotos.foundation.log.api.log
 import com.savvasdalkitsis.uhuruphotos.foundation.log.api.runCatchingWithLog
 import com.savvasdalkitsis.uhuruphotos.foundation.result.api.SimpleResult
 import com.savvasdalkitsis.uhuruphotos.foundation.result.api.simple
@@ -72,6 +73,20 @@ class RemoteMediaRepository @Inject constructor(
 
     suspend fun getMediaItemDetails(id: String): DbRemoteMediaItemDetails? =
         remoteMediaItemDetailsQueries.getMediaItem(id).awaitSingleOrNull()
+
+    suspend fun getOrRefreshRemoteMediaItemSummary(id: String): DbRemoteMediaItemSummary? {
+        val summary = remoteMediaItemSummaryQueries.get(id).awaitSingleOrNull()
+        if (summary == null) {
+            try {
+                val response = remoteMediaService.getMediaItemSummary(id)
+                remoteMediaItemSummaryQueries.insert(response.photoSummary.toDbModel(response.albumDateId))
+                return remoteMediaItemSummaryQueries.get(id).awaitSingleOrNull()
+            } catch (e: Exception) {
+                log(e)
+            }
+        }
+        return summary
+    }
 
     suspend fun getFavouriteMedia(favouriteThreshold: Int): List<DbRemoteMediaItemSummary> =
         remoteMediaItemSummaryQueries.getFavourites(favouriteThreshold).awaitList()

@@ -15,6 +15,7 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.foundation.upload.api.work
 
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemHash
 import com.savvasdalkitsis.uhuruphotos.foundation.upload.api.model.UploadItem
 
 interface UploadWorkScheduler {
@@ -31,4 +32,6 @@ interface UploadWorkScheduler {
         item: UploadItem,
         uploadId: String,
     )
+
+    fun schedulePostUploadSync(hash: MediaItemHash, itemId: Long)
 }
