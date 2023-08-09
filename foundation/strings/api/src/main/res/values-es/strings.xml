@@ -309,4 +309,17 @@
     <string name="no_date">Sin fecha</string>
     <string name="videos">Vídeos</string>
     <string name="search_captions">Buscar subtítulos</string>
+    <string name="media_sync_status_uploading">Se están cargando los medios en el servidor</string>
+    <string name="stats">Estadísticas</string>
+    <string name="year">Año</string>
+    <string name="media_per_year">Medios por año</string>
+    <string name="username">Nombre de usuario</string>
+    <string name="password">Contraseña</string>
+    <string name="timeline">Cronología</string>
+    <string name="ok">DE ACUERDO</string>
+    <string name="cannot_upload">No se pueden cargar los archivos multimedia</string>
+    <string name="upload_not_allowed">La carga de archivos multimedia no está permitida en tu servidor. Ponte en contacto con tu administrador para habilitarla</string>
+    <string name="upload_error_checking">No se puede comprobar el estado de las capacidades de carga de tu servidor. Vuelve a intentarlo</string>
+    <string name="uploads">Cargas</string>
+    <string name="finalizing_upload">Finalizando la carga</string>
 </resources>
