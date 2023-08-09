@@ -248,6 +248,36 @@
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "Media summary",
+					"id": "92b12077-97db-4c9c-94b7-fc382eaf069e",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{HOST}}/api/photos/:id",
+							"host": [
+								"{{HOST}}"
+							],
+							"path": [
+								"api",
+								"photos",
+								":id"
+							],
+							"variable": [
+								{
+									"id": "d49aed0d-920b-43ce-a245-87e81ee88cca",
+									"key": "id",
+									"value": "13c678efeed0f33fadecfffdda8ac3aa1"
+								}
+							]
+						}
+					},
+					"response": []
 				}
 			],
 			"id": "99c2ed92-27d3-4088-9956-6e01bfe24842"
