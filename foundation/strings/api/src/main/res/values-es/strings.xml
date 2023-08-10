@@ -214,9 +214,9 @@
         <item quantity="other">¿Estás seguro de que quieres restaurar estos %d elementos multimedia\?</item>
     </plurals>
     <plurals name="trash_media_confirmation">
-        <item quantity="one">¿Estás seguro de que quieres enviar este elemento multimedia %d a la papelera\?</item>
-        <item quantity="many">¿Estás seguro de que quieres enviar estos %d elementos multimedia a la papelera\?</item>
-        <item quantity="other">¿Estás seguro de que quieres enviar estos %d elementos multimedia a la papelera\?</item>
+        <item quantity="one">¿Enviar este elemento multimedia %d a la papelera ahora\?</item>
+        <item quantity="many">¿Enviar estos %d elementos multimedia a la papelera\?</item>
+        <item quantity="other">¿Enviar estos %d elementos multimedia a la papelera\?</item>
     </plurals>
     <string name="media">Medios</string>
     <string name="restoring_media">Restaurar medios de la papelera</string>
