@@ -11,7 +11,7 @@
         <item quantity="other">Verwijder %d foto\'s</item>
     </plurals>
     <string name="photo">Foto</string>
-    <string name="error_searching">Probleem bij de zoekopdracht</string>
+    <string name="error_searching">Kan de zoekopdracht niet uitvoeren</string>
     <string name="error_loading_photo_details">Probleem bij het laden van foto details</string>
     <string name="feed_size">Omvang van fotorol</string>
     <string name="feed_sync_freq">Synchronisatiefrequentie van fotorol</string>
@@ -97,7 +97,7 @@
     <string name="video_disk_cache">Videocache op schijf</string>
     <string name="collapse_all">Alles inklappen</string>
     <string name="expand_all">Alles uitklappen</string>
-    <string name="error_changing_photo_favourite">Er is een fout opgetreden tijdens het wijzigen van de favorietstatus</string>
+    <string name="error_changing_photo_favourite">Kan favorietstatus van foto niet wijzigen</string>
     <string name="no_photos">Er zijn geen foto\'s beschikbaar</string>
     <string name="auto_albums">Automatische albums</string>
     <string name="user_created_albums">Zelfgemaakte albums</string>
@@ -199,8 +199,8 @@
         <item quantity="other">Weet je zeker dat je %d media-items wilt herstellen\?</item>
     </plurals>
     <plurals name="trash_media_confirmation">
-        <item quantity="one">Weet je zeker dat je %d media-item raar de prullenbak wil verplaatsen\?</item>
-        <item quantity="other">Weet je zeker dat je %d media-items raar de prullenbak wil verplaatsen\?</item>
+        <item quantity="one">Dit %d media-item naar de prullenbak verplaatsen\?</item>
+        <item quantity="other">Deze %d media-items naar de prullenbak verplaatsen\?</item>
     </plurals>
     <string name="trashing_media">Bezig met verplaatsen naar prullenbak</string>
     <string name="restoring_media">Bezig met herstellen van media</string>
