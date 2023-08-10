@@ -1,8 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources
-    xmlns:tools="http://schemas.android.com/tools"
-    tools:ignore="MissingTranslation"
->
+<resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="MissingTranslation">
     <string name="feed_size">Feed Size</string>
     <string name="gallery_size">Gallery Size</string>
     <string name="photo">Photo</string>
@@ -44,25 +41,25 @@
         <item quantity="other">Are you sure you want to restore these %d photos?</item>
     </plurals>
     <plurals name="restore_media_confirmation">
-        <item quantity="one">Are you sure you want to restore this %d media item?</item>
-        <item quantity="other">Are you sure you want to restore these %d media item?</item>
+        <item quantity="one">Restore this %d media item\?</item>
+        <item quantity="other">Restore these %d media items\?</item>
     </plurals>
     <plurals name="trash_photos_confirmation">
-        <item quantity="one">Are you sure you want to send this %d photo to the trash?</item>
-        <item quantity="other">Are you sure you want to send these %d photos to the trash?</item>
+        <item quantity="one">Send this %d photo to the trash\?</item>
+        <item quantity="other">Are you sure you want to send these %d photos to the trash\?</item>
     </plurals>
     <plurals name="trash_media_confirmation">
-        <item quantity="one">Are you sure you want to send this %d media item to the trash?</item>
-        <item quantity="other">Are you sure you want to send these %d media items to the trash?</item>
+        <item quantity="one">Send this %d media item to the trash\?</item>
+        <item quantity="other">Are you sure you want to send these %d media items to the trash\?</item>
     </plurals>
     <string name="people">People</string>
     <string name="view_all">View all</string>
-    <string name="error_refreshing_people">There was an error refreshing people</string>
-    <string name="error_loading_photo_details">There was an error loading photo details</string>
-    <string name="error_changing_photo_favourite">There was an error changing the photo favourite status</string>
-    <string name="error_searching">There was an error while searching</string>
-    <string name="feed_sync_freq">Full photo feed sync frequency</string>
-    <string name="feed_sync_freq_changed">Feed sync frequency changed</string>
+    <string name="error_refreshing_people">Could not refresh people</string>
+    <string name="error_loading_photo_details">Could not load photo details</string>
+    <string name="error_changing_photo_favourite">Could not change favourite status of the photo</string>
+    <string name="error_searching">Could not perform search</string>
+    <string name="feed_sync_freq">Sync full photo feed every</string>
+    <string name="feed_sync_freq_changed">Frequency of feed syncing changed</string>
     <string name="feed_sync_network_changed">Feed sync network requirement changed</string>
     <string name="feed_sync_charging_changed">Feed sync charging requirements changed</string>
     <string name="feed_refresh_days">Number of feed days to refresh on pull to refresh</string>
