@@ -9,7 +9,7 @@
         <item quantity="other">Ви дійсно хочете видалити цих %d медіафайлів\?</item>
     </plurals>
     <string name="people">Люди</string>
-    <string name="feed_sync_freq_changed">Змінено частоту синхронізації подачі</string>
+    <string name="feed_sync_freq_changed">Змінено частоту синхронізації каналів</string>
     <string name="feed">Стрічка</string>
     <string name="search">Пошук</string>
     <string name="tiny">Крихітний</string>
@@ -54,22 +54,22 @@
         <item quantity="other">Надіслати %d медіафайлів до кошика</item>
     </plurals>
     <plurals name="restore_media_confirmation">
-        <item quantity="one">Ви дійсно хочете відновити цей %d медіафайл\?</item>
-        <item quantity="few">Ви дійсно хочете відновити ці %d медіафайли\?</item>
-        <item quantity="many">Ви дійсно хочете відновити цих %d медіафайлів\?</item>
-        <item quantity="other">Ви дійсно хочете відновити цих %d медіафайлів\?</item>
+        <item quantity="one">Відновити %d медіа елемент\?</item>
+        <item quantity="few">Відновити %d медіа елементи\?</item>
+        <item quantity="many">Відновити %d медіа елементів\?</item>
+        <item quantity="other">Відновити %d медіа елементів\?</item>
     </plurals>
     <plurals name="trash_photos_confirmation">
-        <item quantity="one">Ви впевнені, що хочете відправити цю %d фотографію у кошик\?</item>
-        <item quantity="few">Ви впевнені, що хочете відправити ці %d фотографії у кошик\?</item>
-        <item quantity="many">Ви впевнені, що хочете відправити цих %d фотографій у кошик\?</item>
-        <item quantity="other">Ви впевнені, що хочете відправити цих %d фотографій у кошик\?</item>
+        <item quantity="one">Надіслати це фото до кошика\?</item>
+        <item quantity="few">Надіслати %d фото до кошика\?</item>
+        <item quantity="many">Надіслати %d фото до кошика\?</item>
+        <item quantity="other">Надіслати %d фото до кошика\?</item>
     </plurals>
     <plurals name="restore_photos_confirmation">
-        <item quantity="one">Ви впевнені, що хочете відновити цю %d фотографію\?</item>
-        <item quantity="few">Ви впевнені, що хочете відновити ці %d фотографії\?</item>
-        <item quantity="many">Ви впевнені, що хочете відновити цих %d фотографій\?</item>
-        <item quantity="other">Ви впевнені, що хочете відновити цих %d фотографій\?</item>
+        <item quantity="one">Відновити %d фотографію\?</item>
+        <item quantity="few">Відновити %d фотографії\?</item>
+        <item quantity="many">Відновити %d фотографій\?</item>
+        <item quantity="other">Відновити %d фотографій\?</item>
     </plurals>
     <string name="view_all">Переглянути всі</string>
     <plurals name="delete_photos_confirmation">
@@ -79,33 +79,33 @@
         <item quantity="other">Ви дійсно хочете видалити цих %d фотографій\?</item>
     </plurals>
     <plurals name="trash_media_confirmation">
-        <item quantity="one">Ви впевнені, що хочете відправити цей %d мадіафайл у кошик\?</item>
-        <item quantity="few">Ви впевнені, що хочете відправити ці %d мадіафайли у кошик\?</item>
-        <item quantity="many">Ви впевнені, що хочете відправити цих %d мадіафайлів у кошик\?</item>
-        <item quantity="other">Ви впевнені, що хочете відправити цих %d мадіафайлів у кошик\?</item>
+        <item quantity="one">Надіслати %d медіа елемент до кошика\?</item>
+        <item quantity="few">Надіслати %d медіа елементи до кошика\?</item>
+        <item quantity="many">Надіслати %d медіа елементів до кошика\?</item>
+        <item quantity="other">Надіслати %d медіа елементів до кошика\?</item>
     </plurals>
-    <string name="error_refreshing_people">Виникла помилка при оновленні людей</string>
-    <string name="error_loading_photo_details">Виникла помилка при завантаженні інформації про фото</string>
+    <string name="error_refreshing_people">Не вдалося оновити людей</string>
+    <string name="error_loading_photo_details">Не вдалося завантажити подробиці фотографії</string>
     <string name="feed_refresh_days">Кількість днів до перезавантаження стрічки після оновлення</string>
     <string name="copied_to_clipboard">Скопійовано в буфер обміну</string>
-    <string name="error_changing_photo_favourite">Виникла помилка при зміні статусу обраного фото</string>
-    <string name="error_searching">Під час пошуку виникла помилка</string>
+    <string name="error_changing_photo_favourite">Неможливо змінити статус улюбленої фотографії</string>
+    <string name="error_searching">Не вдалося виконати пошук</string>
     <string name="feed_sync_freq">Повна частота синхронізації фотопотоку</string>
-    <string name="feed_sync_network_changed">Змінено вимоги до мережі синхронізації подачі</string>
-    <string name="feed_sync_charging_changed">Змінено вимоги до синхронізації подачі</string>
+    <string name="feed_sync_network_changed">Вимоги до мережі для синхронізації каналів змінено</string>
+    <string name="feed_sync_charging_changed">Вимоги до заряджання для синхронізації каналів змінено</string>
     <string name="logs_cleared">Журнали очищено</string>
     <string name="recent_searches_cleared">Останні пошукові запити очищено</string>
-    <string name="downloading_photos_sharing">Фотографії завантажуються і будуть опубліковані найближчим часом</string>
+    <string name="downloading_photos_sharing">Завантаження фотографій і надання спільного доступу…</string>
     <string name="could_not_find_app_to_open">Не вдалося знайти застосунок для відкриття</string>
-    <string name="error_logging_in">Виникла помилка при вході в систему</string>
+    <string name="error_logging_in">Не вдалося увійти</string>
     <string name="photo_map">Фотомапа</string>
     <string name="full">Повний</string>
     <string name="big">Великий</string>
     <string name="compact">Компактний</string>
     <string name="comfortable">Комфортно</string>
     <string name="requires_charging">Потрібна зарядка</string>
-    <string name="perform_full_sync">Виконайте повну синхронізацію зараз</string>
-    <string name="cannot_perform_full_sync">Неможливо виконати повну синхронізацію на даний момент</string>
+    <string name="perform_full_sync">Виконати повну синхронізацію</string>
+    <string name="cannot_perform_full_sync">Не вдалося виконати повну синхронізацію</string>
     <string name="perform_full_feed_sync">Виконайте повну синхронізацію стрічки</string>
     <string name="jobs">Робочі місця</string>
     <string name="never">ніколи</string>
