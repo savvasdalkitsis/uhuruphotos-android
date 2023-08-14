@@ -1,0 +1,4 @@
+* New onboarding wizard. Users can now use UhuruPhotos without a LibrePhotos server.
+* Upload media to server from lightbox implemented
+* Fixing bugs with username and password fields text behaviour
+* Removed old unused apis and moving to new ones
