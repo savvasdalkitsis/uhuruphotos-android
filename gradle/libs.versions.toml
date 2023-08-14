@@ -31,14 +31,14 @@ accompanist-webview = { module = "com.google.accompanist:accompanist-webview", v
 androidx-activity = "androidx.activity:activity-compose:1.7.2"
 androidx-annotation = "androidx.annotation:annotation:1.6.0"
 androidx-compose-animation-base = { module = "androidx.compose.animation:animation", version.ref = "compose" }
-androidx-compose-constraintlayout = "androidx.constraintlayout:constraintlayout-compose:1.1.0-alpha11"
+androidx-compose-constraintlayout = "androidx.constraintlayout:constraintlayout-compose:1.1.0-alpha12"
 androidx-compose-animation-graphics = { module = "androidx.compose.animation:animation-graphics", version.ref = "compose" }
 androidx-compose-foundation = { module = "androidx.compose.foundation:foundation", version.ref = "compose" }
 androidx-compose-foundation-layout = { module = "androidx.compose.foundation:foundation-layout", version.ref = "compose" }
 androidx-compose-hilt-navigation = { module = "androidx.hilt:hilt-navigation-compose", version.ref = "androidx-hilt" }
 androidx-compose-material = { module = "androidx.compose.material:material", version.ref = "compose" }
 androidx-compose-material-windowsize = "androidx.compose.material3:material3-window-size-class:1.1.1"
-androidx-compose-navigation = "androidx.navigation:navigation-compose:2.6.0"
+androidx-compose-navigation = "androidx.navigation:navigation-compose:2.7.0"
 androidx-compose-ui = { module = "androidx.compose.ui:ui", version.ref = "compose" }
 androidx-compose-ui-tooling = { module = "androidx.compose.ui:ui-tooling", version.ref = "compose" }
 androidx-compose-ui-tooling-preview = { module = "androidx.compose.ui:ui-tooling-preview", version.ref = "compose" }
@@ -54,7 +54,7 @@ androidx-media3-hls = { module = "androidx.media3:media3-exoplayer-hls", version
 androidx-media3-okhttp = { module = "androidx.media3:media3-datasource-okhttp", version.ref = "media3" }
 androidx-media3-ui = { module = "androidx.media3:media3-ui", version.ref = "media3" }
 androidx-lifecycle = "androidx.lifecycle:lifecycle-runtime-ktx:2.6.1"
-androidx-preference = "androidx.preference:preference-ktx:1.2.0"
+androidx-preference = "androidx.preference:preference-ktx:1.2.1"
 androidx-splash = "androidx.core:core-splashscreen:1.0.1"
 androidx-startup = "androidx.startup:startup-runtime:1.2.0-alpha02"
 androidx-tracing = "androidx.tracing:tracing-ktx:1.1.0"
