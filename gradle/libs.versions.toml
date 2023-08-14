@@ -54,7 +54,7 @@ androidx-media3-hls = { module = "androidx.media3:media3-exoplayer-hls", version
 androidx-media3-okhttp = { module = "androidx.media3:media3-datasource-okhttp", version.ref = "media3" }
 androidx-media3-ui = { module = "androidx.media3:media3-ui", version.ref = "media3" }
 androidx-lifecycle = "androidx.lifecycle:lifecycle-runtime-ktx:2.6.1"
-androidx-preference = "androidx.preference:preference-ktx:1.2.0"
+androidx-preference = "androidx.preference:preference-ktx:1.2.1"
 androidx-splash = "androidx.core:core-splashscreen:1.0.1"
 androidx-startup = "androidx.startup:startup-runtime:1.2.0-alpha02"
 androidx-tracing = "androidx.tracing:tracing-ktx:1.1.0"
