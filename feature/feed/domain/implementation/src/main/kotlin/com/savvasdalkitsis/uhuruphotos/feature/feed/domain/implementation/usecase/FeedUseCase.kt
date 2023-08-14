@@ -36,6 +36,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.Med
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemsOnDevice.Found
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemsOnDevice.RequiresPermissions
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.usecase.MediaUseCase
+import com.savvasdalkitsis.uhuruphotos.feature.welcome.domain.api.usecase.WelcomeUseCase
 import com.savvasdalkitsis.uhuruphotos.foundation.coroutines.api.safelyOnStartIgnoring
 import com.savvasdalkitsis.uhuruphotos.foundation.group.api.model.Group
 import com.savvasdalkitsis.uhuruphotos.foundation.group.api.model.mapValues
@@ -48,7 +49,10 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.emptyFlow
 import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.flatMapLatest
+import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.map
 import se.ansman.dagger.auto.AutoBind
 import javax.inject.Inject
@@ -61,6 +65,7 @@ internal class FeedUseCase @Inject constructor(
     private val downloadUseCase: DownloadUseCase,
     private val uploadUseCase: UploadUseCase,
     private val preferences: Preferences,
+    private val welcomeUseCase: WelcomeUseCase,
 ) : FeedUseCase {
 
     private val key = "feedDisplay"
@@ -125,7 +130,14 @@ internal class FeedUseCase @Inject constructor(
                 && id is MediaId.Local
                 && id.value in inProgress
             ) {
-                mediaItem.copy(id = MediaId.Uploading(id.value, id.isVideo, id.contentUri, id.thumbnailUri))
+                mediaItem.copy(
+                    id = MediaId.Uploading(
+                        id.value,
+                        id.isVideo,
+                        id.contentUri,
+                        id.thumbnailUri
+                    )
+                )
             } else {
                 mediaItem
             }
@@ -203,6 +215,7 @@ internal class FeedUseCase @Inject constructor(
                     remoteInstance = remoteMediaItem,
                     localInstances = localCopies,
                 )
+
             else -> remoteMediaItem
         }
     }
@@ -222,14 +235,15 @@ internal class FeedUseCase @Inject constructor(
             )
         }
 
-    private fun observeLocalMediaFeed(feedFetchType: FeedFetchType) = mediaUseCase.observeLocalMedia()
-        .distinctUntilChanged()
-        .map {
-            when (it) {
-                is Found -> it.filteredWith(feedFetchType)
-                else -> emptyList()
+    private fun observeLocalMediaFeed(feedFetchType: FeedFetchType) =
+        mediaUseCase.observeLocalMedia()
+            .distinctUntilChanged()
+            .map {
+                when (it) {
+                    is Found -> it.filteredWith(feedFetchType)
+                    else -> emptyList()
+                }
             }
-        }
 
     private fun observeDownloading() = downloadUseCase.observeDownloading()
 
@@ -238,29 +252,33 @@ internal class FeedUseCase @Inject constructor(
     private fun observeRemoteMediaFeed(
         feedFetchType: FeedFetchType,
         loadSmallInitialChunk: Boolean,
-    ) = feedRepository.observeRemoteMediaCollectionsByDate(feedFetchType, loadSmallInitialChunk)
-        .distinctUntilChanged()
-        .map {
-            it.mapValues { albums ->
-                albums.toMediaCollectionSource()
-            }
-        }.map {
-            it.toCollection()
-        }.initialize()
-
+    ) = welcomeUseCase.flow(
+        withoutRemoteAccess = flowOf(emptyList()),
+        withRemoteAccess = feedRepository.observeRemoteMediaCollectionsByDate(
+            feedFetchType,
+            loadSmallInitialChunk
+        ).distinctUntilChanged()
+            .map {
+                it.mapValues { albums ->
+                    albums.toMediaCollectionSource()
+                }
+            }.map {
+                it.toCollection()
+            }.initialize()
+        )
 
     private suspend fun getRemoteMediaFeed(
         feedFetchType: FeedFetchType
-    ) =
-        feedRepository.getRemoteMediaCollectionsByDate(feedFetchType)
-            .mapValues { it.toMediaCollectionSource() }
-            .toCollection()
+    ) = feedRepository.getRemoteMediaCollectionsByDate(feedFetchType)
+        .mapValues { it.toMediaCollectionSource() }
+        .toCollection()
 
-    private suspend fun getLocalMediaFeed(feedFetchType: FeedFetchType): List<MediaItem> = when (val mediaOnDevice = mediaUseCase.getLocalMedia()) {
-        Error -> emptyList()
-        is Found -> mediaOnDevice.filteredWith(feedFetchType)
-        is RequiresPermissions -> emptyList()
-    }
+    private suspend fun getLocalMediaFeed(feedFetchType: FeedFetchType): List<MediaItem> =
+        when (val mediaOnDevice = mediaUseCase.getLocalMedia()) {
+            Error -> emptyList()
+            is Found -> mediaOnDevice.filteredWith(feedFetchType)
+            is RequiresPermissions -> emptyList()
+        }
 
     private suspend fun getDownloading(): Set<String> = downloadUseCase.getDownloading()
 

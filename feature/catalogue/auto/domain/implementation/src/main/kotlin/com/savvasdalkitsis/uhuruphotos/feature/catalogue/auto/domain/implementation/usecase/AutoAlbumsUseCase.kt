@@ -69,27 +69,27 @@ class AutoAlbumsUseCase @Inject constructor(
         autoAlbumsRepository.getAutoAlbums()
             .toAutoAlbums(preferences.get(key, CatalogueSorting.default))
 
-    private fun List<AutoAlbums>.toAutoAlbums(sorting: CatalogueSorting): List<AutoAlbum> {
-        val serverUrl = serverUseCase.getServerUrl()!!
-        return sorted(
-            sorting,
-            timeStamp = { it.timestamp },
-            title = { it.title },
-        )
-            .map {
-                AutoAlbum(
-                    id = it.id,
-                    cover = MediaItemInstance(
-                        id = Remote(it.coverPhotoHash, it.coverPhotoIsVideo ?: false, serverUrl),
-                        mediaHash = MediaItemHash(it.coverPhotoHash),
-                        displayDayDate = null,
-                        sortableDate = it.timestamp,
-                        ratio = 1f,
-                    ),
-                    title = it.title ?: context.getString(string.missing_album_title),
-                    photoCount = it.photoCount,
-                )
-            }
-    }
+    private fun List<AutoAlbums>.toAutoAlbums(sorting: CatalogueSorting): List<AutoAlbum> =
+        serverUseCase.getServerUrl()?.let { serverUrl ->
+            sorted(
+                sorting,
+                timeStamp = { it.timestamp },
+                title = { it.title },
+            )
+                .map {
+                    AutoAlbum(
+                        id = it.id,
+                        cover = MediaItemInstance(
+                            id = Remote(it.coverPhotoHash, it.coverPhotoIsVideo ?: false, serverUrl),
+                            mediaHash = MediaItemHash(it.coverPhotoHash),
+                            displayDayDate = null,
+                            sortableDate = it.timestamp,
+                            ratio = 1f,
+                        ),
+                        title = it.title ?: context.getString(string.missing_album_title),
+                        photoCount = it.photoCount,
+                    )
+                }
+        } ?: emptyList()
 
 }

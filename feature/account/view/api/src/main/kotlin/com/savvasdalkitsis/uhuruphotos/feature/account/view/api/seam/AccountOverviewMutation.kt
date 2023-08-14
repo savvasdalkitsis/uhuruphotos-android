@@ -29,6 +29,14 @@ sealed class AccountOverviewMutation(
         it.copy(avatarState = avatarState)
     })
 
+    data class ShowLogin(val show: Boolean) : AccountOverviewMutation({
+        it.copy(showLogIn = show)
+    })
+
+    data class ShowUserAndServerDetails(val show: Boolean) : AccountOverviewMutation({
+        it.copy(showUserAndServerDetails = show)
+    })
+
     data object ShowAccountOverview : AccountOverviewMutation({
         it.copy(showAccountOverview = true)
     })

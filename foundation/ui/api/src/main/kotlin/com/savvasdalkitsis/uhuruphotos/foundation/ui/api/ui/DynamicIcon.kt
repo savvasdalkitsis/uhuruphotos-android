@@ -16,6 +16,8 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui
 
 import androidx.compose.material.Icon
+import androidx.compose.material.LocalContentAlpha
+import androidx.compose.material.LocalContentColor
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
@@ -38,7 +40,7 @@ fun DynamicIcon(
     modifier: Modifier = Modifier,
     icon: Int,
     contentDescription: String? = null,
-    tint: Color,
+    tint: Color? = null,
 ) {
     val resources = LocalContext.current.resources
     val type = remember(icon) {
@@ -51,20 +53,22 @@ fun DynamicIcon(
             ,
             painter = painterResource(id = icon),
             contentDescription = contentDescription,
-            tint = tint,
+            tint = tint ?: LocalContentColor.current.copy(alpha = LocalContentAlpha.current),
         )
         "raw" -> {
             val composition by rememberLottieComposition(LottieCompositionSpec.RawRes(icon))
 
-            val dynamicProperties = rememberLottieDynamicProperties(
-                rememberLottieDynamicProperty(
-                    property = LottieProperty.COLOR,
-                    value = tint.toArgb(),
-                    keyPath = arrayOf(
-                        "**",
-                    )
-                ),
-            )
+            val dynamicProperties = tint?.let {
+                rememberLottieDynamicProperties(
+                    rememberLottieDynamicProperty(
+                        property = LottieProperty.COLOR,
+                        value = tint.toArgb(),
+                        keyPath = arrayOf(
+                            "**",
+                        )
+                    ),
+                )
+            }
             LottieAnimation(
                 modifier = modifier
                     .recomposeHighlighter()

@@ -35,10 +35,10 @@ class WorkScheduleNotificationActivityInitializer @Inject constructor(
     override fun priority(): Int = -1
 
     override fun onActivityCreated(activity: ComponentActivity) {
-        if (SDK_INT >= TIRAMISU && !notificationManager.areNotificationsEnabled()) {
-            activity.registerForActivityResult(RequestPermission()) {}
-                .launch(Manifest.permission.POST_NOTIFICATIONS)
-        }
+//        if (SDK_INT >= TIRAMISU && !notificationManager.areNotificationsEnabled()) {
+//            activity.registerForActivityResult(RequestPermission()) {}
+//                .launch(Manifest.permission.POST_NOTIFICATIONS)
+//        }
     }
 
     override fun onActivityDestroyed(activity: ComponentActivity) {}

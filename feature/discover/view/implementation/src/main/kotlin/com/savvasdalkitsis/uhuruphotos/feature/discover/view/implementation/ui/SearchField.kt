@@ -18,6 +18,7 @@ package com.savvasdalkitsis.uhuruphotos.feature.discover.view.implementation.ui
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -50,6 +51,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.discover.view.implementation.seam
 import com.savvasdalkitsis.uhuruphotos.feature.discover.view.implementation.seam.actions.DiscoverAction
 import com.savvasdalkitsis.uhuruphotos.feature.discover.view.implementation.seam.actions.QueryChanged
 import com.savvasdalkitsis.uhuruphotos.feature.discover.view.implementation.seam.actions.SearchFor
+import com.savvasdalkitsis.uhuruphotos.feature.discover.view.implementation.seam.actions.UpsellLoginFromSearch
 import com.savvasdalkitsis.uhuruphotos.feature.discover.view.implementation.ui.state.DiscoverState
 import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
 
@@ -73,12 +75,21 @@ fun SearchField(
         TextField(
             modifier = Modifier
                 .fillMaxWidth()
-                .onFocusChanged { action(ChangeFocus(it.isFocused)) },
+                .onFocusChanged { action(ChangeFocus(it.isFocused)) }
+                .run {
+                    if (state.isSearchEnabled)
+                        this
+                    else
+                        clickable { action(UpsellLoginFromSearch) }
+                }
+            ,
+            enabled = state.isSearchEnabled,
             maxLines = 1,
             singleLine = true,
             colors = TextFieldDefaults.textFieldColors(
                 focusedIndicatorColor = Color.Transparent,
-                unfocusedIndicatorColor = Color.Transparent
+                unfocusedIndicatorColor = Color.Transparent,
+                disabledIndicatorColor = Color.Transparent,
             ),
             trailingIcon = {
                 Row {
@@ -97,7 +108,10 @@ fun SearchField(
                         }
                     }
 
-                    IconButton(onClick = { action(SearchFor(query)) }) {
+                    IconButton(
+                        enabled = state.isSearchEnabled,
+                        onClick = { action(SearchFor(query)) }
+                    ) {
                         Icon(
                             imageVector = Icons.Default.Search,
                             contentDescription = stringResource(string.search_icon)

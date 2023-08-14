@@ -19,9 +19,12 @@ import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.state.Vi
 
 data class LibraryState(
     val loading: Boolean = false,
+    val showTrash: Boolean = true,
+    val showHidden: Boolean = true,
     val autoAlbums: VitrineState? = null,
     val userAlbums: VitrineState? = null,
     val favouritePhotos: VitrineState? = null,
     val localMedia: LibraryLocalMedia? = null,
     val items: List<LibraryItem> = emptyList(),
+    val showUpsellDialogFromSource: LibraryItem? = null,
 )

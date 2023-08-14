@@ -16,14 +16,10 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.feature.{{cookiecutter.project_slug}}.view.implementation.seam
 
 import com.savvasdalkitsis.uhuruphotos.feature.{{cookiecutter.project_slug}}.domain.api.usecase.{{cookiecutter.project_slug.capitalize()}}UseCase
-import com.savvasdalkitsis.uhuruphotos.feature.{{cookiecutter.project_slug}}.view.implementation.seam.effects.{{cookiecutter.project_slug.capitalize()}}Effect
-import com.savvasdalkitsis.uhuruphotos.feature.{{cookiecutter.project_slug}}.view.implementation.ui.state.{{cookiecutter.project_slug.capitalize()}}State
 import com.savvasdalkitsis.uhuruphotos.feature.settings.domain.api.usecase.SettingsUseCase
 import javax.inject.Inject
 
 internal class {{cookiecutter.project_slug.capitalize()}}ActionsContext @Inject constructor(
     val {{cookiecutter.project_slug}}UseCase: {{cookiecutter.project_slug.capitalize()}}UseCase,
     val settingsUseCase: SettingsUseCase,
-) {
-
-}
+)

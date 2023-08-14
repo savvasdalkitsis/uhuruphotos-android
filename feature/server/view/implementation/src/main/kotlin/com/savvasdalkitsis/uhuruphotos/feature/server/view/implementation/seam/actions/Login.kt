@@ -19,36 +19,45 @@ import com.github.michaelbull.result.mapEither
 import com.savvasdalkitsis.uhuruphotos.feature.auth.domain.api.model.AuthStatus
 import com.savvasdalkitsis.uhuruphotos.feature.auth.domain.api.usecase.Credentials
 import com.savvasdalkitsis.uhuruphotos.feature.server.view.implementation.seam.ServerActionsContext
-import com.savvasdalkitsis.uhuruphotos.feature.server.view.implementation.seam.ServerMutation.AskForUserCredentials
-import com.savvasdalkitsis.uhuruphotos.feature.server.view.implementation.seam.ServerMutation.PerformingBackgroundJob
+import com.savvasdalkitsis.uhuruphotos.feature.server.view.implementation.seam.ServerMutation.SetLoading
+import com.savvasdalkitsis.uhuruphotos.feature.server.view.implementation.seam.ServerMutation.ShowUnsecureServerConfirmation
 import com.savvasdalkitsis.uhuruphotos.feature.server.view.implementation.ui.ServerState
+import com.savvasdalkitsis.uhuruphotos.foundation.http.api.isHttpUrl
+import com.savvasdalkitsis.uhuruphotos.foundation.http.api.isValidUrlOrDomain
 import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R
 import kotlinx.coroutines.flow.flow
 
-data object Login : ServerAction() {
+data class Login(val allowUnsecuredServers: Boolean) : ServerAction() {
     context(ServerActionsContext) override fun handle(
         state: ServerState
     ) = flow {
-        if ((state as? ServerState.UserCredentials)?.allowLogin == false) {
+        if (!state.allowLogin) {
             return@flow
         }
-        emit(PerformingBackgroundJob)
-        val credentials = state as ServerState.UserCredentials
-        authenticationLoginUseCase.login(Credentials(credentials.username, credentials.password))
-            .mapEither(
-                success = { authStatus ->
-                    if (authStatus == AuthStatus.Authenticated) {
-                        navigator.clearBackStack()
-                    } else {
-                        toaster.show(R.string.error_logging_in)
-                        emit(AskForUserCredentials(credentials.username, credentials.password))
-                    }
-                },
-                failure = {
-                    toaster.show(R.string.error_logging_in)
-                    emit(AskForUserCredentials(credentials.username, credentials.password))
-                }
-            )
+
+        if (state.currentUrl.isValidUrlOrDomain) {
+            if (!allowUnsecuredServers && state.currentUrl.isHttpUrl) {
+                emit(ShowUnsecureServerConfirmation)
+            } else {
+                serverUseCase.setServerUrl(state.currentUrl)
+                emit(SetLoading(true))
+                authenticationLoginUseCase.login(Credentials(state.username, state.password))
+                    .mapEither(
+                        success = { authStatus ->
+                            if (authStatus == AuthStatus.Authenticated) {
+                                navigator.navigateBack()
+                            } else {
+                                emit(SetLoading(false))
+                                toaster.show(R.string.error_logging_in)
+                            }
+                        },
+                        failure = {
+                            emit(SetLoading(false))
+                            toaster.show(R.string.error_logging_in)
+                        }
+                    )
+            }
+        }
     }
 
 }

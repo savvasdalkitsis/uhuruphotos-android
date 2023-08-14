@@ -16,6 +16,7 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.foundation.navigation.implementation
 
 import android.content.Intent
+import android.net.Uri
 import com.bumble.appyx.navmodel.backstack.BackStack
 import com.bumble.appyx.navmodel.backstack.operation.newRoot
 import com.bumble.appyx.navmodel.backstack.operation.pop
@@ -36,6 +37,10 @@ class Navigator @Inject internal constructor(
 ) : Navigator {
 
     override lateinit var backStack: BackStack<NavigationRoute>
+
+    override fun navigateToWeb(webUrl: String) = navigateTo(
+        Intent(Intent.ACTION_VIEW, Uri.parse(webUrl))
+    )
 
     override fun navigateTo(intent: Intent) {
         onMain {

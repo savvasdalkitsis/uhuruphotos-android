@@ -16,9 +16,6 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.feature.server.view.implementation.seam
 
 import com.savvasdalkitsis.uhuruphotos.feature.server.view.implementation.ui.ServerState
-import com.savvasdalkitsis.uhuruphotos.feature.server.view.implementation.ui.ServerState.Loading
-import com.savvasdalkitsis.uhuruphotos.feature.server.view.implementation.ui.ServerState.ServerUrl
-import com.savvasdalkitsis.uhuruphotos.feature.server.view.implementation.ui.ServerState.UserCredentials
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.Mutation
 import dev.zacsweers.redacted.annotations.Redacted
 
@@ -26,77 +23,61 @@ sealed class ServerMutation(
     mutation: Mutation<ServerState>,
 ) : Mutation<ServerState> by mutation {
 
-    data class AskForServerDetails(
-        val previousUrl: String?,
-        val isValid: Boolean,
-    ) : ServerMutation({
-        ServerUrl(
-            prefilledUrl = previousUrl.orEmpty(),
-            isUrlValid = isValid,
-            allowSaveUrl = isValid,
-            isLoggingEnabled = it.isLoggingEnabled,
-        )
-    })
-
-    data class AskForUserCredentials(
-        val userName: String,
-        @Redacted val password: String,
-    ) : ServerMutation({
-        UserCredentials(
-            userName,
-            password,
-            allowLogin = false,
-            passwordVisible = false,
-            isLoggingEnabled = it.isLoggingEnabled,
-        ).shouldAllowLogin()
-    })
-
     data class ShowUrlValidation(
         val prefilledUrl: String?,
         val isValid: Boolean,
     ) : ServerMutation({
-        ServerUrl(
+        it.copy(
             prefilledUrl = prefilledUrl.orEmpty(),
             isUrlValid = isValid,
-            allowSaveUrl = isValid,
             isLoggingEnabled = it.isLoggingEnabled,
-        )
+        ).shouldAllowLogin()
     })
 
-    data object PerformingBackgroundJob : ServerMutation({
-        Loading(
-            isLoggingEnabled = it.isLoggingEnabled,
-        )
+    data class SetLoading(val isLoading: Boolean) : ServerMutation({
+        it.copy(isLoading = isLoading)
     })
 
     data object ShowUnsecureServerConfirmation : ServerMutation({
-        (it as ServerUrl).copy(showUnsecureServerConfirmation = true)
+        it.copy(showUnsecureServerConfirmation = true)
     })
 
     data object HideUnsecureServerConfirmation : ServerMutation({
-        (it as ServerUrl).copy(showUnsecureServerConfirmation = false)
+        it.copy(showUnsecureServerConfirmation = false)
+    })
+
+    data object ShowHelpDialog : ServerMutation({
+        it.copy(showHelpDialog = true)
+    })
+
+    data object HideHelpDialog : ServerMutation({
+        it.copy(showHelpDialog = false)
+    })
+
+    data class SetCurrentUrlTo(val url: String) : ServerMutation({
+        it.copy(currentUrl = url).shouldAllowLogin()
     })
 
     data class ChangeUsernameTo(val username: String) : ServerMutation({
-        (it as UserCredentials).copy(username = username).shouldAllowLogin()
+        it.copy(username = username).shouldAllowLogin()
     })
 
     data class ChangePasswordTo(@Redacted val password: String) : ServerMutation({
-        (it as UserCredentials).copy(password = password).shouldAllowLogin()
+        it.copy(password = password).shouldAllowLogin()
     })
 
     data class SetPasswordVisibility(val visible: Boolean) : ServerMutation({
-        (it as UserCredentials).copy(passwordVisible = visible)
+        it.copy(passwordVisible = visible)
     })
 
     data class SetLoggingEnabled(val enabled: Boolean) : ServerMutation({
-        when (it) {
-            is Loading -> it.copy(isLoggingEnabled = enabled)
-            is ServerUrl -> it.copy(isLoggingEnabled = enabled)
-            is UserCredentials -> it.copy(isLoggingEnabled = enabled)
-        }
+        it.copy(isLoggingEnabled = enabled)
+    })
+
+    data class ChangeServerUrlTo(val url: String) : ServerMutation({
+        it.copy(prefilledUrl = url, currentUrl = url).shouldAllowLogin()
     })
 }
 
-private fun UserCredentials.shouldAllowLogin(): UserCredentials =
-    copy(allowLogin = username.isNotEmpty() && password.isNotEmpty())
+private fun ServerState.shouldAllowLogin(): ServerState =
+    copy(allowLogin = username.isNotEmpty() && password.isNotEmpty() && currentUrl.isNotEmpty() && isUrlValid)

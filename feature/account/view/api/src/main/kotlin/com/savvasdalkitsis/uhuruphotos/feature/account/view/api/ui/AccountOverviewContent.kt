@@ -23,8 +23,8 @@ import com.savvasdalkitsis.uhuruphotos.feature.account.view.api.seam.actions.Ask
 import com.savvasdalkitsis.uhuruphotos.feature.account.view.api.seam.actions.CancelJob
 import com.savvasdalkitsis.uhuruphotos.feature.account.view.api.seam.actions.DismissAccountOverview
 import com.savvasdalkitsis.uhuruphotos.feature.account.view.api.seam.actions.DismissLogOutDialog
-import com.savvasdalkitsis.uhuruphotos.feature.account.view.api.seam.actions.EditServer
 import com.savvasdalkitsis.uhuruphotos.feature.account.view.api.seam.actions.HideJobDialog
+import com.savvasdalkitsis.uhuruphotos.feature.account.view.api.seam.actions.LogIn
 import com.savvasdalkitsis.uhuruphotos.feature.account.view.api.seam.actions.LogOut
 import com.savvasdalkitsis.uhuruphotos.feature.account.view.api.seam.actions.SettingsClick
 import com.savvasdalkitsis.uhuruphotos.feature.account.view.api.seam.actions.StartJob
@@ -40,8 +40,8 @@ fun AccountOverviewContent(
         state = state,
         onDismiss = { action(DismissAccountOverview) },
         onAboutClicked = { action(AboutClicked) },
+        onLoginClicked = { action(LogIn) },
         onLogoutClicked = { action(AskToLogOut) },
-        onEditServerClicked = { action(EditServer) },
         onStartJob = { action(AskToStartJob(it)) },
         onCancelJob = { action(CancelJob(it)) },
         onSettingsClicked = { action(SettingsClick) },

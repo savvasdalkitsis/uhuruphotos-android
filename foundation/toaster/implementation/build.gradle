@@ -5,6 +5,7 @@ android {
 dependencies {
     api project(":foundation:toaster:api")
     implementation(
+            project(":foundation:launchers:api"),
             libs.autodagger.core,
             libs.hilt,
     )

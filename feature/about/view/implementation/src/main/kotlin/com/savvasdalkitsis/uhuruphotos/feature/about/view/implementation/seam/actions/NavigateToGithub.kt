@@ -15,8 +15,6 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.about.view.implementation.seam.actions
 
-import android.content.Intent
-import android.net.Uri
 import com.savvasdalkitsis.uhuruphotos.feature.about.view.implementation.seam.AboutActionsContext
 import com.savvasdalkitsis.uhuruphotos.feature.about.view.implementation.ui.state.AboutState
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.Mutation
@@ -27,9 +25,7 @@ data object NavigateToGithub : AboutAction() {
     context(AboutActionsContext) override fun handle(
         state: AboutState
     ): Flow<Mutation<AboutState>> = flow {
-        navigator.navigateTo(
-            Intent(Intent.ACTION_VIEW, Uri.parse("https://github.com/savvasdalkitsis/uhuruphotos-android"))
-        )
+        navigator.navigateToWeb("https://github.com/savvasdalkitsis/uhuruphotos-android")
     }
 
 }

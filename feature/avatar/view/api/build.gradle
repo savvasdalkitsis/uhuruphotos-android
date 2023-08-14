@@ -10,13 +10,17 @@ android {
 
 dependencies {
 
-    implementation project(":foundation:compose:api")
-    implementation project(":foundation:icons:api")
-    implementation project(':foundation:image:api')
-    implementation project(":foundation:ui:api")
     implementation(
+            project(":foundation:compose:api"),
+            project(":foundation:icons:api"),
+            project(":foundation:image:api"),
+            project(":foundation:ui:api"),
             libs.androidx.compose.material,
+            libs.androidx.compose.ui.tooling.preview,
             libs.androidx.work,
             libs.hilt,
+    )
+    debugImplementation(
+            libs.androidx.compose.ui.tooling,
     )
 }

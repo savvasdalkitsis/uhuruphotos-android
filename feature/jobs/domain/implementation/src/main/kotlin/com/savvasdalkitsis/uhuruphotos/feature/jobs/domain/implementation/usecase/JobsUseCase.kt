@@ -21,6 +21,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.jobs.domain.api.usecase.JobsUseCa
 import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.usecase.LocalMediaUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.worker.LocalMediaWorkScheduler
 import com.savvasdalkitsis.uhuruphotos.feature.settings.domain.api.usecase.SettingsUseCase
+import com.savvasdalkitsis.uhuruphotos.feature.welcome.domain.api.usecase.WelcomeUseCase
 import com.savvasdalkitsis.uhuruphotos.foundation.worker.api.model.RefreshJobState
 import dagger.hilt.android.scopes.ActivityRetainedScoped
 import kotlinx.coroutines.flow.Flow
@@ -35,22 +36,29 @@ class JobsUseCase @Inject constructor(
     private val localMediaUseCase: LocalMediaUseCase,
     private val localMediaWorkScheduler: LocalMediaWorkScheduler,
     private val settingsUseCase: SettingsUseCase,
+    private val welcomeUseCase: WelcomeUseCase,
 ) : JobsUseCase {
 
     override fun observeJobsStatus(): Flow<JobsStatus> =
         combine(
+            welcomeUseCase.observeWelcomeStatus(),
             feedWorkScheduler.observeFeedRefreshJob(),
             feedWorkScheduler.observePrecacheThumbnailsJob(),
             localMediaUseCase.observeLocalMediaSyncJob(),
             feedWorkScheduler.observeFeedDetailsRefreshJob(),
-        ) { feedRefresh, precacheThumbnails, localMedia, feedDetails ->
+        ) { welcomeStatus, feedRefresh, precacheThumbnails, localMedia, feedDetails ->
             JobsStatus(
-                mapOf(
-                    FEED_SYNC to feedRefresh.jobStatus(blockedBy = precacheThumbnails),
-                    PRECACHE_THUMBNAILS to precacheThumbnails.jobStatus(blockedBy = feedRefresh),
-                    LOCAL_MEDIA_SYNC to localMedia.jobStatus(),
-                    FEED_DETAILS_SYNC to feedDetails.jobStatus(),
-                )
+                when {
+                    welcomeStatus.hasRemoteAccess -> mapOf(
+                        FEED_SYNC to feedRefresh.jobStatus(blockedBy = precacheThumbnails),
+                        PRECACHE_THUMBNAILS to precacheThumbnails.jobStatus(blockedBy = feedRefresh),
+                        LOCAL_MEDIA_SYNC to localMedia.jobStatus(),
+                        FEED_DETAILS_SYNC to feedDetails.jobStatus(),
+                    )
+                    else -> mapOf(
+                        LOCAL_MEDIA_SYNC to localMedia.jobStatus(),
+                    )
+                }
             )
         }
 

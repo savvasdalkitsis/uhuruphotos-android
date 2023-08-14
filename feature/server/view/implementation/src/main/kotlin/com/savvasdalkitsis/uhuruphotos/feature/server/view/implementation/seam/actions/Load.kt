@@ -17,24 +17,29 @@ package com.savvasdalkitsis.uhuruphotos.feature.server.view.implementation.seam.
 
 import com.savvasdalkitsis.uhuruphotos.feature.server.view.implementation.seam.ServerActionsContext
 import com.savvasdalkitsis.uhuruphotos.feature.server.view.implementation.seam.ServerMutation
-import com.savvasdalkitsis.uhuruphotos.feature.server.view.implementation.seam.ServerMutation.ChangePasswordTo
-import com.savvasdalkitsis.uhuruphotos.feature.server.view.implementation.seam.ServerMutation.ChangeUsernameTo
+import com.savvasdalkitsis.uhuruphotos.feature.server.view.implementation.seam.ServerMutation.*
 import com.savvasdalkitsis.uhuruphotos.feature.server.view.implementation.ui.ServerState
-import kotlinx.coroutines.flow.emitAll
+import com.savvasdalkitsis.uhuruphotos.foundation.http.api.isValidUrlOrDomain
+import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.andThen
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.merge
 
 data object Load : ServerAction() {
     context(ServerActionsContext) override fun handle(
         state: ServerState
-    ) = flow {
-        authenticationLoginUseCase.loadSavedCredentials()?.let { credentials ->
-            if (!credentials.isEmpty) {
-                emit(ChangeUsernameTo(credentials.username))
-                emit(ChangePasswordTo(credentials.password))
+    ) = merge(
+        serverUseCase.observeServerUrl()
+            .map { ChangeServerUrlTo(it) andThen ShowUrlValidation(it, it.isValidUrlOrDomain) },
+        settingsUseCase.observeLoggingEnabled()
+            .map(ServerMutation::SetLoggingEnabled),
+        flow {
+            authenticationLoginUseCase.loadSavedCredentials()?.let { credentials ->
+                if (!credentials.isEmpty) {
+                    emit(ChangeUsernameTo(credentials.username))
+                    emit(ChangePasswordTo(credentials.password))
+                }
             }
         }
-        emitAll(settingsUseCase.observeLoggingEnabled()
-            .map(ServerMutation::SetLoggingEnabled))
-    }
+    )
 }

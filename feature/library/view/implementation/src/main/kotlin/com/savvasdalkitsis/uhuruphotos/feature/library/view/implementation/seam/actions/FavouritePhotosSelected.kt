@@ -18,13 +18,21 @@ package com.savvasdalkitsis.uhuruphotos.feature.library.view.implementation.seam
 import com.savvasdalkitsis.uhuruphotos.feature.favourites.view.api.navigation.FavouritesNavigationRoute
 import com.savvasdalkitsis.uhuruphotos.feature.library.view.implementation.seam.LibraryActionsContext
 import com.savvasdalkitsis.uhuruphotos.feature.library.view.implementation.seam.LibraryMutation
+import com.savvasdalkitsis.uhuruphotos.feature.library.view.implementation.seam.LibraryMutation.ShowUpsellFrom
+import com.savvasdalkitsis.uhuruphotos.feature.library.view.implementation.ui.state.LibraryItem
+import com.savvasdalkitsis.uhuruphotos.feature.library.view.implementation.ui.state.LibraryItem.FAVOURITE
 import com.savvasdalkitsis.uhuruphotos.feature.library.view.implementation.ui.state.LibraryState
+import com.savvasdalkitsis.uhuruphotos.feature.trash.view.api.navigation.TrashNavigationRoute
 import kotlinx.coroutines.flow.flow
 
 data object FavouritePhotosSelected : LibraryAction() {
     context(LibraryActionsContext) override fun handle(
         state: LibraryState
     ) = flow<LibraryMutation> {
-        navigator.navigateTo(FavouritesNavigationRoute)
+        if (welcomeUseCase.getWelcomeStatus().hasRemoteAccess) {
+            navigator.navigateTo(FavouritesNavigationRoute)
+        } else {
+            emit(ShowUpsellFrom(FAVOURITE))
+        }
     }
 }

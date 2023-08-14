@@ -15,6 +15,7 @@ dependencies {
             project(":feature:media:remote:domain:api"),
             project(":feature:settings:domain:api"),
             project(":feature:upload:domain:api"),
+            project(":feature:welcome:domain:api"),
             project(":foundation:coroutines:api"),
             project(":foundation:initializer:api"),
             project(":foundation:log:api"),

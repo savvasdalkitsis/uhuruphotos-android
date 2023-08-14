@@ -26,6 +26,7 @@ dependencies {
             project(":feature:memories:domain:api"),
             project(":feature:server:view:api"),
             project(":feature:settings:domain:api"),
+            project(":feature:welcome:domain:api"),
             project(":foundation:compose:api"),
             project(":foundation:icons:api"),
             project(":foundation:log:api"),

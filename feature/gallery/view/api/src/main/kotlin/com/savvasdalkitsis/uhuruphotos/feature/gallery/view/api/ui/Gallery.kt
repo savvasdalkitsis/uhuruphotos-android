@@ -43,7 +43,7 @@ import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.SwipeRefresh
 fun Gallery(
     state: GalleryState,
     additionalActionBarContent: @Composable RowScope.() -> Unit = {},
-    emptyContent: @Composable () -> Unit = { NoContent(string.no_photos) },
+    emptyContent: @Composable () -> Unit = { NoContent(string.no_media) },
     action: (GalleryAction) -> Unit
 ) {
     CommonScaffold(

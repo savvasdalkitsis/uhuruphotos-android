@@ -18,6 +18,7 @@ package com.savvasdalkitsis.uhuruphotos.foundation.toaster.implementation.usecas
 import android.content.Context
 import android.widget.Toast
 import androidx.annotation.StringRes
+import com.savvasdalkitsis.uhuruphotos.foundation.launchers.api.onMain
 import com.savvasdalkitsis.uhuruphotos.foundation.toaster.api.usecase.ToasterUseCase
 import dagger.hilt.android.qualifiers.ApplicationContext
 import se.ansman.dagger.auto.AutoBind
@@ -29,6 +30,8 @@ class ToasterUseCase @Inject constructor(
 ) : ToasterUseCase {
 
     override fun show(@StringRes message: Int) {
-        Toast.makeText(context, message, Toast.LENGTH_LONG).show()
+        onMain {
+            Toast.makeText(context, message, Toast.LENGTH_LONG).show()
+        }
     }
 }

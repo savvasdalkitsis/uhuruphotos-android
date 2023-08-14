@@ -57,7 +57,7 @@ fun HeatMapVisibleMedia(
                     Cluster(
                         id = "visibleItems",
                         cels = cels,
-                        displayTitle = stringResource(string.photos_on_map, state.photosOnVisibleMap.size, state.allMedia.size),
+                        displayTitle = stringResource(string.media_on_map, state.photosOnVisibleMap.size, state.allMedia.size),
                         location = null,
                     )
                 ),

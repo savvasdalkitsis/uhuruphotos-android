@@ -22,6 +22,7 @@ data class VitrineState(
     val cel4: CelState? = null,
 ) {
     val hasMoreThanOneItem = cel2 != null
+    val isEmpty = cel1 == null && cel2 == null && cel3 == null && cel4 == null
 
     companion object {
         operator fun invoke(celStates: List<CelState?>)= VitrineState(

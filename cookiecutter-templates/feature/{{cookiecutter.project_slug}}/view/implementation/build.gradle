@@ -5,7 +5,7 @@ android {
     composeOptions {
         kotlinCompilerExtensionVersion compose_compiler_version
     }
-    namespace 'com.savvasdalkitsis.uhuruphotos.foundation.{{cookiecutter.project_slug}}.view.implementation'
+    namespace 'com.savvasdalkitsis.uhuruphotos.feature.{{cookiecutter.project_slug}}.view.implementation'
 }
 
 dependencies {
@@ -14,10 +14,15 @@ dependencies {
             project(":feature:{{cookiecutter.project_slug}}:view:api"),
             project(":feature:settings:domain:api"),
             project(":foundation:navigation:api"),
+            project(":foundation:strings:api"),
             project(":foundation:ui:api"),
             libs.androidx.compose.hilt.navigation,
             libs.androidx.compose.material,
+            libs.androidx.compose.ui.tooling.preview,
             libs.autodagger.core,
+    )
+    debugImplementation(
+            libs.androidx.compose.ui.tooling,
     )
     kapt libs.autodagger.kapt
 }

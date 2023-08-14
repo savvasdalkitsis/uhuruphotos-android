@@ -74,7 +74,7 @@ internal class HiddenPhotosAlbumPageActionsContext @Inject constructor(
                             .mapNotNull { it.getOr(null) }
                             .map { photoEntries ->
                                 GalleryDetails(
-                                    title = Title.Resource(string.hidden_photos),
+                                    title = Title.Resource(string.hidden_media),
                                     clusters = listOf(
                                         Cluster(
                                             id = "hidden",

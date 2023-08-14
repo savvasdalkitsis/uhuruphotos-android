@@ -21,13 +21,17 @@ import com.savvasdalkitsis.uhuruphotos.feature.avatar.view.api.ui.state.AvatarSt
 import com.savvasdalkitsis.uhuruphotos.feature.avatar.view.api.ui.state.SyncState.BAD
 import com.savvasdalkitsis.uhuruphotos.feature.avatar.view.api.ui.state.SyncState.GOOD
 import com.savvasdalkitsis.uhuruphotos.feature.avatar.view.api.ui.state.SyncState.IN_PROGRESS
+import com.savvasdalkitsis.uhuruphotos.feature.jobs.domain.api.model.JobStatus
 import com.savvasdalkitsis.uhuruphotos.feature.jobs.domain.api.model.JobStatus.Failed
 import com.savvasdalkitsis.uhuruphotos.feature.jobs.domain.api.model.JobStatus.InProgress
+import com.savvasdalkitsis.uhuruphotos.feature.jobs.domain.api.model.JobsStatus
 import com.savvasdalkitsis.uhuruphotos.feature.jobs.domain.api.usecase.JobsUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.user.domain.api.usecase.UserUseCase
+import com.savvasdalkitsis.uhuruphotos.feature.welcome.domain.api.usecase.WelcomeUseCase
 import dagger.hilt.android.scopes.ActivityRetainedScoped
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.map
 import se.ansman.dagger.auto.AutoBind
 import javax.inject.Inject
 
@@ -37,25 +41,34 @@ class AvatarUseCase @Inject constructor(
     private val userUseCase: UserUseCase,
     private val serverUseCase: ServerUseCase,
     private val jobsUseCase: JobsUseCase,
+    private val welcomeUseCase: WelcomeUseCase,
 ) : AvatarUseCase {
 
-    override fun getAvatarState(): Flow<AvatarState> = combine(
-        userUseCase.observeUser(),
-        jobsUseCase.observeJobsStatusFilteredBySettings(),
-        serverUseCase.observeServerUrl(),
-    ) { user, jobsStatus, serverUrl ->
-        val statuses = jobsStatus.jobs.values
-        AvatarState(
-            avatarUrl = user.avatar?.let { "$serverUrl$it" },
-            syncState = when {
-                statuses.any { it is Failed } -> BAD
-                statuses.any { it is InProgress } -> IN_PROGRESS
-                else -> GOOD
-            },
-            initials = user.firstName.initial() + user.lastName.initial(),
-            userFullName = "${user.firstName} ${user.lastName}",
-            serverUrl = serverUrl,
-        )
+    override fun getAvatarState(): Flow<AvatarState> = welcomeUseCase.flow(
+        withoutRemoteAccess = jobsUseCase.observeJobsStatusFilteredBySettings().map { jobsStatus ->
+            AvatarState(syncState = jobsStatus.syncState())
+        },
+        withRemoteAccess = combine(
+            userUseCase.observeUser(),
+            jobsUseCase.observeJobsStatusFilteredBySettings(),
+            serverUseCase.observeServerUrl(),
+        ) { user, jobsStatus, serverUrl ->
+            AvatarState(
+                avatarUrl = user.avatar?.let { "$serverUrl$it" },
+                syncState = jobsStatus.syncState(),
+                initials = user.firstName.initial() + user.lastName.initial(),
+                userFullName = "${user.firstName} ${user.lastName}",
+                serverUrl = serverUrl,
+            )
+        },
+    )
+
+    private fun JobsStatus.syncState() = jobs.values.run {
+        when {
+            any { it is Failed } -> BAD
+            any { it is InProgress } -> IN_PROGRESS
+            else -> GOOD
+        }
     }
 
     private fun String?.initial() =

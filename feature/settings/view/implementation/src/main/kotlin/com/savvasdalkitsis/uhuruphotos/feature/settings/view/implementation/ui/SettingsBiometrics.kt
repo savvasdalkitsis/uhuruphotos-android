@@ -53,7 +53,7 @@ internal fun SettingsBiometrics(
                 )
             }
             SettingsCheckBox(
-                text = stringResource(string.require_biometrics_for_hidden_photos_access),
+                text = stringResource(string.require_biometrics_for_hidden_media_access),
                 icon = drawable.ic_invisible,
                 isChecked = biometrics.requiredForHiddenPhotosAccess,
                 onCheckedChange = {

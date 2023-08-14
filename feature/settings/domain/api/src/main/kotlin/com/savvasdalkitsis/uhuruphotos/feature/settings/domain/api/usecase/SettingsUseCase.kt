@@ -49,7 +49,7 @@ interface SettingsUseCase {
     fun getMaxAnimatedVideoThumbnails(): Int
     fun getShowBannerAskingForLocalMediaPermissionsOnFeed(): Boolean
     fun getShowBannerAskingForLocalMediaPermissionsOnHeatmap(): Boolean
-    fun getFeedMediaItemSyncDisplay(): FeedMediaItemSyncDisplay
+    suspend fun getFeedMediaItemSyncDisplay(): FeedMediaItemSyncDisplay
     fun getShouldShowFeedSyncProgress(): Boolean
     fun getShouldShowFeedDetailsSyncProgress(): Boolean
     fun getShouldShowPrecacheProgress(): Boolean

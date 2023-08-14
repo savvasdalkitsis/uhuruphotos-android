@@ -18,20 +18,22 @@ package com.savvasdalkitsis.uhuruphotos.feature.discover.view.implementation.sea
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.people.People
 import com.savvasdalkitsis.uhuruphotos.feature.discover.view.implementation.seam.DiscoverActionsContext
 import com.savvasdalkitsis.uhuruphotos.feature.discover.view.implementation.seam.DiscoverMutation
-import com.savvasdalkitsis.uhuruphotos.feature.discover.view.implementation.seam.DiscoverMutation.ChangeMapViewport
-import com.savvasdalkitsis.uhuruphotos.feature.discover.view.implementation.seam.DiscoverMutation.HideSuggestions
+import com.savvasdalkitsis.uhuruphotos.feature.discover.view.implementation.seam.DiscoverMutation.*
 import com.savvasdalkitsis.uhuruphotos.feature.discover.view.implementation.ui.state.DiscoverState
 import com.savvasdalkitsis.uhuruphotos.feature.discover.view.implementation.ui.state.SearchSuggestion
 import com.savvasdalkitsis.uhuruphotos.feature.people.view.api.ui.state.toPerson
 import com.savvasdalkitsis.uhuruphotos.foundation.coroutines.api.onErrors
 import com.savvasdalkitsis.uhuruphotos.foundation.coroutines.api.onErrorsIgnore
+import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.andThen
 import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.emptyFlow
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.mapNotNull
 import kotlinx.coroutines.flow.merge
 import kotlin.math.max
 import kotlin.math.min
@@ -53,48 +55,59 @@ data object Initialise : DiscoverAction() {
         .map(::ChangeMapViewport)
 
     context(DiscoverActionsContext)
-    private fun showSearchSuggestions() = combine(
-        searchUseCase.getRecentTextSearches()
-            .map {
-                it.map(SearchSuggestion::RecentSearchSuggestion)
-            },
-        peopleUseCase.observePeopleByPhotoCount()
-            .onErrorsIgnore()
-            .toPeople()
-            .map {
-                it.map(SearchSuggestion::PersonSearchSuggestion)
-            },
-        searchUseCase.getSearchSuggestions()
-            .map {
-                it.map(SearchSuggestion::ServerSearchSuggestion)
-            },
-        queryFilter,
-    ) { recentSearches, people, searchSuggestions, query ->
-        when {
-            query.isEmpty() -> emptyList()
-            else -> recentSearches + people + searchSuggestions
-        }.filterQuery(query)
-    }.map(DiscoverMutation::ShowSearchSuggestions)
+    private fun showSearchSuggestions() = welcomeUseCase.flow(
+        withRemoteAccess = merge(
+            flowOf(EnableSearch),
+            combine(
+                searchUseCase.getRecentTextSearches()
+                    .map {
+                        it.map(SearchSuggestion::RecentSearchSuggestion)
+                    },
+                peopleUseCase.observePeopleByPhotoCount()
+                    .onErrorsIgnore()
+                    .toPeople()
+                    .map {
+                        it.map(SearchSuggestion::PersonSearchSuggestion)
+                    },
+                searchUseCase.getSearchSuggestions()
+                    .map {
+                        it.map(SearchSuggestion::ServerSearchSuggestion)
+                    },
+                queryFilter,
+                ) { recentSearches, people, searchSuggestions, query ->
+                    when {
+                        query.isEmpty() -> emptyList()
+                        else -> recentSearches + people + searchSuggestions
+                    }.filterQuery(query)
+                }.map(::ShowSearchSuggestions)
+        ),
+        withoutRemoteAccess = flowOf(DisableSearch)
+    )
 
     context(DiscoverActionsContext)
-    private fun showPeopleSuggestion() =
-        peopleUseCase.observePeopleByPhotoCount()
+    private fun showPeopleSuggestion() = welcomeUseCase.flow(
+        withRemoteAccess = peopleUseCase.observePeopleByPhotoCount()
             .onErrors {
                 toaster.show(R.string.error_refreshing_people)
             }
             .toPeople()
             .map { it.subList(0, max(0, min(10, it.size - 1))) }
-            .map(DiscoverMutation::ShowPeople)
+            .map { ShowPeople(it) andThen ShowPeopleUpsell(false)},
+        withoutRemoteAccess = observeShowPeopleUpsell()
+            .map(::ShowPeopleUpsell),
+    )
 
     context(DiscoverActionsContext)
-    private fun showServerSearchSuggestion() =
-        settingsUseCase.observeSearchSuggestionsEnabledMode().flatMapLatest { enabled ->
+    private fun showServerSearchSuggestion() = welcomeUseCase.flow(
+        withRemoteAccess = settingsUseCase.observeSearchSuggestionsEnabledMode().flatMapLatest { enabled ->
             if (enabled)
                 searchUseCase.getRandomSearchSuggestion()
                     .map(DiscoverMutation::ShowSearchSuggestion)
             else
                 flowOf(HideSuggestions)
-        }
+        },
+        withoutRemoteAccess = emptyFlow()
+    )
 
     context(DiscoverActionsContext)
     private fun showLibrary() = settingsUseCase.observeShowLibrary()
@@ -107,10 +120,11 @@ data object Initialise : DiscoverAction() {
         .map(DiscoverMutation::ChangeFeedDisplay)
 
     context(DiscoverActionsContext)
-    private fun Flow<List<People>>.toPeople() = map { people ->
-        val serverUrl = serverUseCase.getServerUrl()!!
-        people.map {
-            it.toPerson { url -> "$serverUrl$url" }
+    private fun Flow<List<People>>.toPeople() = mapNotNull { people ->
+        serverUseCase.getServerUrl()?.let { serverUrl ->
+            people.map {
+                it.toPerson { url -> "$serverUrl$url" }
+            }
         }
     }
 

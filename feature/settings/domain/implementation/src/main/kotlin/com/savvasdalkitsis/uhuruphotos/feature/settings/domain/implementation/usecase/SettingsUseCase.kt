@@ -23,8 +23,10 @@ import com.google.android.gms.common.ConnectionResult.SIGN_IN_REQUIRED
 import com.google.android.gms.common.ConnectionResult.SUCCESS
 import com.google.android.gms.common.GoogleApiAvailability
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.api.ui.state.FeedMediaItemSyncDisplay
+import com.savvasdalkitsis.uhuruphotos.feature.feed.view.api.ui.state.FeedMediaItemSyncDisplay.ALWAYS_OFF
 import com.savvasdalkitsis.uhuruphotos.feature.settings.domain.api.usecase.SettingsUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.settings.domain.api.usecase.minCacheSize
+import com.savvasdalkitsis.uhuruphotos.feature.welcome.domain.api.usecase.WelcomeUseCase
 import com.savvasdalkitsis.uhuruphotos.foundation.log.api.Log
 import com.savvasdalkitsis.uhuruphotos.foundation.map.api.model.MapProvider
 import com.savvasdalkitsis.uhuruphotos.foundation.map.api.model.MapProvider.Google
@@ -42,6 +44,7 @@ import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.async
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.future.asCompletableFuture
@@ -51,6 +54,7 @@ import javax.inject.Inject
 @AutoBind
 internal class SettingsUseCase @Inject constructor(
     private val preferences: Preferences,
+    private val welcomeUseCase: WelcomeUseCase,
     @ApplicationContext private val context: Context,
 ) : SettingsUseCase {
 
@@ -159,8 +163,10 @@ internal class SettingsUseCase @Inject constructor(
         get(showBannerAskingForLocalMediaPermissionsOnFeed, showBannerAskingForLocalMediaPermissionsOnFeedDefault)
     override fun getShowBannerAskingForLocalMediaPermissionsOnHeatmap(): Boolean =
         get(showBannerAskingForLocalMediaPermissionsOnHeatmap, showBannerAskingForLocalMediaPermissionsOnHeatmapDefault)
-    override fun getFeedMediaItemSyncDisplay(): FeedMediaItemSyncDisplay =
-        get(feedMediaItemSyncDisplay, feedMediaItemSyncDisplayDefault)
+    override suspend fun getFeedMediaItemSyncDisplay(): FeedMediaItemSyncDisplay = when {
+        welcomeUseCase.getWelcomeStatus().hasRemoteAccess -> get(feedMediaItemSyncDisplay, feedMediaItemSyncDisplayDefault)
+        else -> ALWAYS_OFF
+    }
     override fun getShouldShowFeedSyncProgress(): Boolean =
         get(shouldShowFeedSyncProgress, shouldShowFeedSyncProgressDefault)
     override fun getShouldShowFeedDetailsSyncProgress(): Boolean =
@@ -219,8 +225,10 @@ internal class SettingsUseCase @Inject constructor(
         observe(animateVideoThumbnails, animateVideoThumbnailsDefault)
     override fun observeMaxAnimatedVideoThumbnails(): Flow<Int> =
         observe(maxAnimatedVideoThumbnails, maxAnimatedVideoThumbnailsDefault)
-    override fun observeFeedMediaItemSyncDisplay(): Flow<FeedMediaItemSyncDisplay> =
-        observe(feedMediaItemSyncDisplay, feedMediaItemSyncDisplayDefault)
+    override fun observeFeedMediaItemSyncDisplay(): Flow<FeedMediaItemSyncDisplay> = welcomeUseCase.flow(
+        withRemoteAccess = observe(feedMediaItemSyncDisplay, feedMediaItemSyncDisplayDefault),
+        withoutRemoteAccess = flowOf(ALWAYS_OFF)
+    )
     override fun observeShouldShowFeedSyncProgress(): Flow<Boolean> =
         observe(shouldShowFeedSyncProgress, shouldShowFeedSyncProgressDefault)
     override fun observeShouldShowFeedDetailsSyncProgress(): Flow<Boolean> =

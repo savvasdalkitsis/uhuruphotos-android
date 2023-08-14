@@ -37,7 +37,7 @@ import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
 
 @Composable
 internal fun UsernameField(
-    state: ServerState.UserCredentials,
+    state: ServerState,
     action: (ServerAction) -> Unit
 ) {
     var username by remember {

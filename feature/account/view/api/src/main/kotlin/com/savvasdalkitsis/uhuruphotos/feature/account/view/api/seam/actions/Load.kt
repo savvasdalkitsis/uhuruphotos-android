@@ -17,8 +17,11 @@ package com.savvasdalkitsis.uhuruphotos.feature.account.view.api.seam.actions
 
 import com.savvasdalkitsis.uhuruphotos.feature.account.view.api.seam.AccountOverviewActionsContext
 import com.savvasdalkitsis.uhuruphotos.feature.account.view.api.seam.AccountOverviewMutation
+import com.savvasdalkitsis.uhuruphotos.feature.account.view.api.seam.AccountOverviewMutation.ShowLogin
+import com.savvasdalkitsis.uhuruphotos.feature.account.view.api.seam.AccountOverviewMutation.ShowUserAndServerDetails
 import com.savvasdalkitsis.uhuruphotos.feature.account.view.api.ui.state.AccountOverviewState
 import com.savvasdalkitsis.uhuruphotos.feature.jobs.view.ui.state.toJobState
+import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.andThen
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.merge
 
@@ -26,6 +29,11 @@ data object Load : AccountOverviewAction() {
     context(AccountOverviewActionsContext) override fun handle(
         state: AccountOverviewState
     ) = merge(
+        welcomeUseCase.observeWelcomeStatus()
+            .map { it.hasRemoteAccess }
+            .map {
+                ShowLogin(!it) andThen ShowUserAndServerDetails(it)
+            },
         avatarUseCase.getAvatarState()
             .map(AccountOverviewMutation::AvatarUpdate),
         jobsUseCase.observeJobsStatus().map {

@@ -31,26 +31,28 @@ internal fun SettingsProgressUI(
     state: SettingsState,
     action: (SettingsAction) -> Unit,
 ) {
-    SettingsCheckBox(
-        text = stringResource(string.show_feed_sync_progress),
-        icon = drawable.ic_feed,
-        isChecked = state.shouldShowFeedSyncProgress,
-    ) {
-        action(ChangeShouldShowFullSyncProgress(!state.shouldShowFeedSyncProgress))
-    }
-    SettingsCheckBox(
-        text = stringResource(string.show_feed_details_sync_progress),
-        icon = drawable.ic_feed,
-        isChecked = state.shouldShowFeedDetailsSyncProgress,
-    ) {
-        action(ChangeShouldShowFeedDetailsSyncProgress(!state.shouldShowFeedDetailsSyncProgress))
-    }
-    SettingsCheckBox(
-        text = stringResource(string.show_precache_progress),
-        icon = drawable.ic_photo,
-        isChecked = state.shouldShowPrecacheProgress,
-    ) {
-        action(ChangeShouldShowPrecacheProgress(!state.shouldShowPrecacheProgress))
+    if (state.hasRemoteAccess) {
+        SettingsCheckBox(
+            text = stringResource(string.show_feed_sync_progress),
+            icon = drawable.ic_feed,
+            isChecked = state.shouldShowFeedSyncProgress,
+        ) {
+            action(ChangeShouldShowFullSyncProgress(!state.shouldShowFeedSyncProgress))
+        }
+        SettingsCheckBox(
+            text = stringResource(string.show_feed_details_sync_progress),
+            icon = drawable.ic_feed,
+            isChecked = state.shouldShowFeedDetailsSyncProgress,
+        ) {
+            action(ChangeShouldShowFeedDetailsSyncProgress(!state.shouldShowFeedDetailsSyncProgress))
+        }
+        SettingsCheckBox(
+            text = stringResource(string.show_precache_progress),
+            icon = drawable.ic_photo,
+            isChecked = state.shouldShowPrecacheProgress,
+        ) {
+            action(ChangeShouldShowPrecacheProgress(!state.shouldShowPrecacheProgress))
+        }
     }
     SettingsCheckBox(
         text = stringResource(string.show_local_progress),

@@ -33,6 +33,7 @@ dependencies {
             project(":feature:stats:view:api"),
             project(":feature:videos:view:api"),
             project(":feature:undated:view:api"),
+            project(":feature:welcome:domain:api"),
             project(":foundation:compose:api"),
             project(":foundation:coroutines:api"),
             project(":foundation:date:api"),

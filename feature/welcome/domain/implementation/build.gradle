@@ -1,0 +1,15 @@
+android {
+    namespace 'com.savvasdalkitsis.uhuruphotos.foundation.welcome.domain.implementation'
+}
+
+dependencies {
+    implementation(
+            project(":feature:auth:domain:api"),
+            project(":feature:local:domain:api"),
+            project(":feature:welcome:domain:api"),
+            project(":foundation:preferences:api"),
+            libs.autodagger.core,
+            libs.hilt,
+    )
+    kapt libs.autodagger.kapt
+}

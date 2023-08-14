@@ -19,11 +19,16 @@ import com.github.michaelbull.result.Err
 import com.savvasdalkitsis.uhuruphotos.feature.auth.domain.api.usecase.ServerUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.catalogue.auto.domain.api.usecase.AutoAlbumsUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.catalogue.user.domain.api.usecase.UserAlbumsUseCase
+import com.savvasdalkitsis.uhuruphotos.feature.library.view.implementation.ui.state.LibraryItem
 import com.savvasdalkitsis.uhuruphotos.feature.library.view.implementation.usecase.LibraryUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.usecase.MediaUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.usecase.LocalMediaUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.worker.LocalMediaWorkScheduler
+import com.savvasdalkitsis.uhuruphotos.feature.welcome.domain.api.usecase.WelcomeUseCase
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.Navigator
+import com.savvasdalkitsis.uhuruphotos.foundation.preferences.api.Preferences
+import com.savvasdalkitsis.uhuruphotos.foundation.preferences.api.observe
+import com.savvasdalkitsis.uhuruphotos.foundation.preferences.api.set
 import com.savvasdalkitsis.uhuruphotos.foundation.result.api.SimpleResult
 import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R
 import com.savvasdalkitsis.uhuruphotos.foundation.toaster.api.usecase.ToasterUseCase
@@ -39,13 +44,17 @@ internal class LibraryActionsContext @Inject constructor(
     val serverUseCase: ServerUseCase,
     val localMediaUseCase: LocalMediaUseCase,
     val libraryUseCase: LibraryUseCase,
-    val toaster: ToasterUseCase,
     val navigator: Navigator,
+    val welcomeUseCase: WelcomeUseCase,
+    private val preferences: Preferences,
+    private val toaster: ToasterUseCase,
     private val localMediaWorkScheduler: LocalMediaWorkScheduler,
 ) {
 
     private val _loading = MutableSharedFlow<Boolean>()
     val loading: Flow<Boolean> get() = _loading
+
+    private val upsellSourceKey = "libraryUpsellSource"
 
     suspend fun refreshAutoAlbums() {
         refresh {
@@ -73,6 +82,13 @@ internal class LibraryActionsContext @Inject constructor(
 
     fun refreshLocalMedia() {
         localMediaWorkScheduler.scheduleLocalMediaSyncNowIfNotRunning()
+    }
+
+    fun observeShouldShowUpsellFromSource(source: LibraryItem) =
+        preferences.observe("upsellSourceKey::${source.name}", true)
+
+    fun disableUpsellFromSource(source: LibraryItem) {
+        preferences.set("upsellSourceKey::${source.name}", false)
     }
 
     private suspend fun refresh(

@@ -19,6 +19,4 @@ import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.NavigationRoute
 import kotlinx.parcelize.Parcelize
 
 @Parcelize
-data class ServerNavigationRoute(
-    val auto: Boolean,
-) : NavigationRoute
+data object ServerNavigationRoute : NavigationRoute

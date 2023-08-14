@@ -25,5 +25,7 @@ data class AccountOverviewState(
     val avatarState: AvatarState = AvatarState(),
     val showLogOutConfirmation: Boolean = false,
     val showJobStartDialog: Job? = null,
+    val showLogIn: Boolean = false,
+    val showUserAndServerDetails: Boolean = false,
     val jobs: List<JobState> = emptyList(),
 )

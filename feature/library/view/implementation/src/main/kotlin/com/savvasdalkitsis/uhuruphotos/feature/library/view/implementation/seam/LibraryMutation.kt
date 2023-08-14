@@ -25,11 +25,19 @@ sealed class LibraryMutation(
     mutation: Mutation<LibraryState>,
 ) : Mutation<LibraryState> by mutation {
 
-    data class DisplayAutoAlbums(val cover: VitrineState) : LibraryMutation({
+    data class DisplayTrash(val show: Boolean) : LibraryMutation({
+        it.copy(showTrash = show)
+    })
+
+    data class DisplayHidden(val show: Boolean) : LibraryMutation({
+        it.copy(showHidden = show)
+    })
+
+    data class DisplayAutoAlbums(val cover: VitrineState?) : LibraryMutation({
         it.copy(autoAlbums = cover)
     })
 
-    data class DisplayUserAlbums(val cover: VitrineState) : LibraryMutation({
+    data class DisplayUserAlbums(val cover: VitrineState?) : LibraryMutation({
         it.copy(userAlbums = cover)
     })
 
@@ -37,7 +45,7 @@ sealed class LibraryMutation(
         it.copy(loading = loading)
     })
 
-    data class DisplayFavouritePhotos(val cover: VitrineState) : LibraryMutation({
+    data class DisplayFavouriteMedia(val cover: VitrineState?) : LibraryMutation({
         it.copy(favouritePhotos = cover)
     })
 
@@ -47,5 +55,13 @@ sealed class LibraryMutation(
 
     data class SetItemOrder(val items: List<LibraryItem>) : LibraryMutation({
         it.copy(items = items)
+    })
+
+    data class ShowUpsellFrom(val item: LibraryItem): LibraryMutation({
+        it.copy(showUpsellDialogFromSource = item)
+    })
+
+    data object HideUpsellDialog : LibraryMutation({
+        it.copy(showUpsellDialogFromSource = null)
     })
 }

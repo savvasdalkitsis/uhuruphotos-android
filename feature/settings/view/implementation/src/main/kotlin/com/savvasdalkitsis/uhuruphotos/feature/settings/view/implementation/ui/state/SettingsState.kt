@@ -52,4 +52,5 @@ data class SettingsState(
     val shouldShowFeedDetailsSyncProgress: Boolean = false,
     val shouldShowPrecacheProgress: Boolean = false,
     val shouldShowLocalSyncProgress: Boolean = false,
+    val hasRemoteAccess: Boolean = false,
 )

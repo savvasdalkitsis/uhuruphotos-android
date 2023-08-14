@@ -33,6 +33,7 @@ import androidx.compose.ui.hapticfeedback.HapticFeedbackType
 import androidx.compose.ui.platform.LocalHapticFeedback
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import com.savvasdalkitsis.uhuruphotos.feature.library.view.implementation.R
 import com.savvasdalkitsis.uhuruphotos.feature.library.view.implementation.seam.actions.AutoAlbumsSelected
 import com.savvasdalkitsis.uhuruphotos.feature.library.view.implementation.seam.actions.FavouritePhotosSelected
 import com.savvasdalkitsis.uhuruphotos.feature.library.view.implementation.seam.actions.HiddenPhotosSelected
@@ -90,11 +91,15 @@ internal fun LibraryGrid(
     ) {
         for (item in data.value) {
             when (item) {
-                TRASH -> pillItem(reordering, item, drawable.ic_delete, { GridItemSpan(maxCurrentLineSpan / 2) }) {
-                    action(TrashSelected)
+                TRASH -> if (state.showTrash) {
+                    pillItem(reordering, item, drawable.ic_delete, { GridItemSpan(maxCurrentLineSpan / 2) }) {
+                        action(TrashSelected)
+                    }
                 }
-                HIDDEN -> pillItem(reordering, item, drawable.ic_invisible, { GridItemSpan(maxCurrentLineSpan) }) {
-                    action(HiddenPhotosSelected)
+                HIDDEN -> if (state.showHidden){
+                    pillItem(reordering, item, drawable.ic_invisible, { GridItemSpan(maxCurrentLineSpan) }) {
+                        action(HiddenPhotosSelected)
+                    }
                 }
                 LOCAL -> item(item.title, { GridItemSpan(maxLineSpan) }) {
                     ReorderableItem(reordering, item.title) { isDragging ->
@@ -109,13 +114,13 @@ internal fun LibraryGrid(
                         }
                     }
                 }
-                AUTO -> libraryItem(reordering, state.autoAlbums, item) {
+                AUTO -> libraryItem(reordering, state.autoAlbums, item, R.drawable.ic_album_auto) {
                     action(AutoAlbumsSelected)
                 }
-                USER -> libraryItem(reordering, state.userAlbums, item) {
+                USER -> libraryItem(reordering, state.userAlbums, item, R.drawable.ic_album_user) {
                     action(UserAlbumsSelected)
                 }
-                FAVOURITE -> libraryItem(reordering, state.favouritePhotos, item) {
+                FAVOURITE -> libraryItem(reordering, state.favouritePhotos, item, R.drawable.ic_album_favourites) {
                     action(FavouritePhotosSelected)
                 }
             }
@@ -143,6 +148,7 @@ internal fun LazyGridScope.libraryItem(
     reordering: ReorderableLazyGridState,
     vitrineState: VitrineState?,
     item: LibraryItem,
+    iconFallback: Int,
     onSelected: () -> Unit,
 ) {
     vitrineState?.let {
@@ -153,6 +159,7 @@ internal fun LazyGridScope.libraryItem(
                 LibraryItem(
                     state = vitrineState,
                     photoGridModifier = Modifier.fillMaxWidth(),
+                    iconFallback = iconFallback,
                     title = title,
                     onSelected = onSelected
                 )

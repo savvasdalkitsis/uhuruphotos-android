@@ -18,11 +18,10 @@ package com.savvasdalkitsis.uhuruphotos.feature.server.view.implementation.seam.
 import com.savvasdalkitsis.uhuruphotos.feature.server.view.implementation.seam.ServerActionsContext
 import com.savvasdalkitsis.uhuruphotos.feature.server.view.implementation.seam.ServerMutation.SetPasswordVisibility
 import com.savvasdalkitsis.uhuruphotos.feature.server.view.implementation.ui.ServerState
-import com.savvasdalkitsis.uhuruphotos.feature.server.view.implementation.ui.ServerState.UserCredentials
 import kotlinx.coroutines.flow.flowOf
 
 data object TogglePasswordVisibility : ServerAction() {
     context(ServerActionsContext) override fun handle(
         state: ServerState
-    ) = flowOf(SetPasswordVisibility(!(state as UserCredentials).passwordVisible))
+    ) = flowOf(SetPasswordVisibility(!state.passwordVisible))
 }

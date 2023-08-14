@@ -21,7 +21,10 @@ import com.savvasdalkitsis.uhuruphotos.feature.heatmap.domain.api.usecase.HeatMa
 import com.savvasdalkitsis.uhuruphotos.feature.people.domain.api.usecase.PeopleUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.search.domain.api.usecase.SearchUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.settings.domain.api.usecase.SettingsUseCase
+import com.savvasdalkitsis.uhuruphotos.feature.welcome.domain.api.usecase.WelcomeUseCase
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.Navigator
+import com.savvasdalkitsis.uhuruphotos.foundation.preferences.api.Preferences
+import com.savvasdalkitsis.uhuruphotos.foundation.preferences.api.set
 import com.savvasdalkitsis.uhuruphotos.foundation.toaster.api.usecase.ToasterUseCase
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.usecase.UiUseCase
 import kotlinx.coroutines.flow.Flow
@@ -38,11 +41,20 @@ class DiscoverActionsContext @Inject constructor(
     val uiUseCase: UiUseCase,
     val toaster: ToasterUseCase,
     val navigator: Navigator,
+    val welcomeUseCase: WelcomeUseCase,
+    private val preferences: Preferences,
 ) {
     private val _queryFilter = MutableSharedFlow<String>()
     val queryFilter: Flow<String> get() = _queryFilter
+    private val showPeopleUpsellKey = "discoverShowPeopleUpsell"
 
     suspend fun changeQuery(query: String) {
         _queryFilter.emit(query)
+    }
+
+    fun observeShowPeopleUpsell() = preferences.observeBoolean(showPeopleUpsellKey, true)
+
+    fun neverShowPeopleUpsell() {
+        preferences.set(showPeopleUpsellKey, false)
     }
 }

@@ -9,18 +9,19 @@ android {
 }
 
 dependencies {
-    implementation project(":feature:feed:domain:api")
-    implementation project(":feature:gallery:view:api")
-    implementation project(":feature:lightbox:view:api")
-    implementation project(":feature:media:common:view:api")
-    implementation project(":feature:settings:domain:api")
-    implementation project(":feature:videos:domain:api")
-    implementation project(":feature:videos:view:api")
-    implementation project(":foundation:navigation:api")
-    implementation project(":foundation:preferences:api")
-    implementation project(":foundation:strings:api")
-    implementation project(":foundation:ui:api")
     implementation(
+            project(":feature:feed:domain:api"),
+            project(":feature:gallery:view:api"),
+            project(":feature:lightbox:view:api"),
+            project(":feature:media:common:view:api"),
+            project(":feature:settings:domain:api"),
+            project(":feature:videos:domain:api"),
+            project(":feature:videos:view:api"),
+            project(":feature:welcome:domain:api"),
+            project(":foundation:navigation:api"),
+            project(":foundation:preferences:api"),
+            project(":foundation:strings:api"),
+            project(":foundation:ui:api"),
             libs.androidx.compose.hilt.navigation,
             libs.androidx.compose.material,
             libs.autodagger.core,

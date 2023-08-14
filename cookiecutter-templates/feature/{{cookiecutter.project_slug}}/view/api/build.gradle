@@ -3,7 +3,7 @@ plugins {
 }
 
 android {
-    namespace 'com.savvasdalkitsis.uhuruphotos.foundation.{{cookiecutter.project_slug}}.view.api'
+    namespace 'com.savvasdalkitsis.uhuruphotos.feature.{{cookiecutter.project_slug}}.view.api'
 }
 
 dependencies {

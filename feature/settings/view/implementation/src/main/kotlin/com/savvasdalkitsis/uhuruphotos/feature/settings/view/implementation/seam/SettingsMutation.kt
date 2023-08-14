@@ -144,6 +144,10 @@ sealed class SettingsMutation(
         it.copy(feedMediaItemSyncDisplay = display)
     })
 
+    data class SetRemoteAccess(val hasAccess: Boolean): SettingsMutation({
+        it.copy(hasRemoteAccess = hasAccess)
+    })
+
     data class DisplaySearchSuggestionsEnabled(val enabled: Boolean): SettingsMutation({
         it.copy(searchSuggestionsEnabled = enabled)
     })

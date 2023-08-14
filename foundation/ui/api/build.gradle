@@ -12,6 +12,7 @@ dependencies {
 
     api(
             project(":foundation:compose:api"),
+            libs.androidx.constraint,
     )
     implementation project(":foundation:icons:api")
     implementation project(":foundation:strings:api")

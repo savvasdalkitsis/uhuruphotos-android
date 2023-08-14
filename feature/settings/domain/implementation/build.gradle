@@ -5,6 +5,7 @@ android {
 dependencies {
     implementation(
             project(":feature:settings:domain:api"),
+            project(":feature:welcome:domain:api"),
             project(":foundation:image:api"),
             project(":foundation:log:api"),
             project(":foundation:preferences:api"),

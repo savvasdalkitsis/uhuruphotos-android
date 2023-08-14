@@ -31,6 +31,7 @@ sealed class GalleryMutation(
             title = galleryDetails.title,
             people = galleryDetails.people.toPersistentList(),
             collageState = it.collageState.copy(
+                isEmpty = galleryDetails.clusters.isEmpty(),
                 clusters = galleryDetails.clusters.toPersistentList(),
             )
         )

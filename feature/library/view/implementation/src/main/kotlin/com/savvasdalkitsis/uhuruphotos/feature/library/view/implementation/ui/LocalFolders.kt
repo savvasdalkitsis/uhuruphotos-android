@@ -39,6 +39,7 @@ internal fun LocalFolders(
                         state = vitrineState,
                         photoGridModifier = Modifier.width(120.dp),
                         title = bucket.displayName,
+                        iconFallback = -1,
                     ) {
                         action(LocalBucketSelected(bucket))
                     }

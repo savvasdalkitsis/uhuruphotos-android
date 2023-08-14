@@ -5,7 +5,7 @@
 ## UhuruPhotos is a full featured gallery app built using the latest Android technologies, like Jetpack Compose, SQLDelight, Coroutines etc using an MVI architecture.
 
 * View and backup/sync[^1] your memories.
-* Find the right memory using keywords, faces or location[^1]
+* Find the right memory using keywords, faces or location[^1][^3]
 * See your memories on the world map
 
 ![tablet1](assets/tablet-1.png)
@@ -25,6 +25,6 @@ The app is currently in public beta on the Google Play store. You can join and t
 
 Both the apk and aab binaries can be found on the [latest release](https://github.com/savvasdalkitsis/uhuruphotos-android/releases/latest) page
 
-
 [^1]: advanced features require a [LibrePhotos](https://docs.librephotos.com/) server
 [^2]: images created using [https://screenshots.pro/](https://screenshots.pro/)
+[^3]: Person icons created by [Freepik - Flaticon](https://www.flaticon.com/free-icons/person). Album icons created by [Smashicons - Flaticon](https://www.flaticon.com/free-icons/album). Photograph icons created by [Good Ware - Flaticon](https://www.flaticon.com/free-icons/photograph)

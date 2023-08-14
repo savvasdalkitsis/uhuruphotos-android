@@ -23,8 +23,8 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.unit.dp
-import com.savvasdalkitsis.uhuruphotos.feature.server.view.implementation.seam.actions.ChangeServerUrlTo
 import com.savvasdalkitsis.uhuruphotos.feature.server.view.implementation.seam.actions.DismissUnsecuredServerDialog
+import com.savvasdalkitsis.uhuruphotos.feature.server.view.implementation.seam.actions.Login
 import com.savvasdalkitsis.uhuruphotos.feature.server.view.implementation.seam.actions.ServerAction
 
 @Composable
@@ -45,7 +45,10 @@ internal fun UnsecuredServerConfirmationDialog(
             }
         },
         confirmButton = {
-            Button(onClick = { action(ChangeServerUrlTo(currentUrl)) }) {
+            Button(onClick = {
+                action(DismissUnsecuredServerDialog)
+                action(Login(allowUnsecuredServers = true))
+            }) {
                 Text("Yes")
             }
         },

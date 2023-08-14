@@ -49,7 +49,7 @@ fun Collage(
     showScrollbarHint: Boolean = false,
     gridState: LazyStaggeredGridState = rememberLazyStaggeredGridState(),
     collageHeader: @Composable (LazyStaggeredGridItemScope.() -> Unit)? = null,
-    emptyContent: @Composable () -> Unit = { NoContent(string.no_photos) },
+    emptyContent: @Composable () -> Unit = { NoContent(string.no_media) },
     onCelSelected: CelSelected = { _ -> },
     onChangeDisplay: (CollageDisplay) -> Unit = {},
     onCelLongPressed: (CelState) -> Unit = {},

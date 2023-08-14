@@ -14,12 +14,15 @@ android {
 
 
 dependencies {
-    api project(":feature:db:domain:api")
-    api project(":foundation:navigation:api")
-    implementation project(':foundation:image:api')
-    implementation project(':foundation:strings:api')
-    implementation project(':foundation:ui:api')
+    api(
+            project(":feature:db:domain:api"),
+            project(":foundation:navigation:api"),
+    )
     implementation(
+            project(":foundation:icons:api"),
+            project(":foundation:image:api"),
+            project(":foundation:strings:api"),
+            project(":foundation:ui:api"),
             libs.androidx.compose.foundation,
             libs.androidx.compose.material,
             libs.hilt,

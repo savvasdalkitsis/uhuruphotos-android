@@ -19,6 +19,7 @@ import androidx.compose.foundation.layout.Arrangement.spacedBy
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.FlowRow
+import androidx.compose.foundation.layout.FlowRowScope
 import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -33,14 +34,23 @@ import androidx.compose.ui.unit.dp
 import com.savvasdalkitsis.uhuruphotos.foundation.compose.api.recomposeHighlighter
 import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
 
-
 @Composable
 fun MultiButtonDialog(
     title: String,
     onDismiss: () -> Unit,
-    confirmButton: @Composable () -> Unit,
+    confirmButton: @Composable FlowRowScope.() -> Unit,
     extraButtons: List<@Composable RowScope.()-> Unit> = emptyList(),
     negativeButtonText: String = stringResource(string.no),
+    dismissButton: @Composable FlowRowScope.() -> Unit = {
+        Button(
+            modifier = Modifier
+                .recomposeHighlighter()
+                .weight(1f),
+            onClick = onDismiss,
+        ) {
+            Text(negativeButtonText)
+        }
+    },
     body: @Composable ColumnScope.() -> Unit,
 ) {
     AlertDialog(
@@ -68,14 +78,7 @@ fun MultiButtonDialog(
                 for (button in extraButtons) {
                     button()
                 }
-                Button(
-                    modifier = Modifier
-                        .recomposeHighlighter()
-                        .weight(1f),
-                    onClick = onDismiss,
-                ) {
-                    Text(negativeButtonText)
-                }
+                dismissButton()
                 confirmButton()
             }
         },

@@ -22,4 +22,4 @@ value class MediaItemHash(
     val hash: String,
 )
 
-fun Md5Hash.toMediaItemHash(userId: Int) = MediaItemHash("$value$userId")
+fun Md5Hash.toMediaItemHash(userId: Int?) = MediaItemHash("$value${userId ?: ""}")

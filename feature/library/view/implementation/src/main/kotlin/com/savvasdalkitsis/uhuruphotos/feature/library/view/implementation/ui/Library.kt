@@ -25,7 +25,10 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.CollageDisplay
 import com.savvasdalkitsis.uhuruphotos.feature.home.view.api.ui.HomeScaffold
+import com.savvasdalkitsis.uhuruphotos.feature.library.view.implementation.seam.actions.DismissUpsellDialog
+import com.savvasdalkitsis.uhuruphotos.feature.library.view.implementation.seam.actions.DoNotShowUpsellAgainFrom
 import com.savvasdalkitsis.uhuruphotos.feature.library.view.implementation.seam.actions.LibraryAction
+import com.savvasdalkitsis.uhuruphotos.feature.library.view.implementation.seam.actions.Login
 import com.savvasdalkitsis.uhuruphotos.feature.library.view.implementation.seam.actions.Refresh
 import com.savvasdalkitsis.uhuruphotos.feature.library.view.implementation.ui.state.LibraryState
 import com.savvasdalkitsis.uhuruphotos.foundation.compose.api.blurIf
@@ -33,6 +36,7 @@ import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.FullProgressBar
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.Logo
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.SwipeRefresh
+import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.UpsellDialog
 
 @Composable
 internal fun Library(
@@ -73,5 +77,12 @@ internal fun Library(
             }
         }
         additionalContent()
+    }
+    state.showUpsellDialogFromSource?.let { source ->
+        UpsellDialog(
+            onDismiss = { action(DismissUpsellDialog)},
+            onNeverAgain = { action(DoNotShowUpsellAgainFrom(source)) },
+            onLogin = { action(Login) },
+        )
     }
 }

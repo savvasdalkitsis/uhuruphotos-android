@@ -16,6 +16,8 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.feature.auth.domain.implementation.usecase
 
 import android.util.Base64
+import app.cash.sqldelight.coroutines.asFlow
+import app.cash.sqldelight.coroutines.mapToOneOrNull
 import com.github.michaelbull.result.Err
 import com.github.michaelbull.result.Ok
 import com.github.michaelbull.result.Result
@@ -39,6 +41,8 @@ import com.savvasdalkitsis.uhuruphotos.foundation.log.api.log
 import com.savvasdalkitsis.uhuruphotos.foundation.preferences.api.Preferences
 import com.savvasdalkitsis.uhuruphotos.foundation.preferences.api.get
 import com.savvasdalkitsis.uhuruphotos.foundation.preferences.api.set
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
 import se.ansman.dagger.auto.AutoBind
@@ -58,7 +62,7 @@ class AuthenticationUseCase @Inject constructor(
     private val userKey = "userIdFromToken"
 
     override suspend fun authenticationStatus(): AuthStatus {
-        val accessToken = tokenQueries.getAccessToken().awaitSingleOrNull()
+        val accessToken = getAccessToken()
         return when {
             accessToken.isNullOrEmpty() || accessToken.jwt.isExpired(0) -> refreshToken()
             else -> {
@@ -67,6 +71,14 @@ class AuthenticationUseCase @Inject constructor(
             }
         }
     }
+
+    override fun observeAccessToken(): Flow<String?> =
+        tokenQueries.getAccessToken().asFlow().mapToOneOrNull(Dispatchers.IO)
+
+    override fun observeRefreshToken(): Flow<String?> =
+        tokenQueries.getRefreshToken().asFlow().mapToOneOrNull(Dispatchers.IO)
+
+    override suspend fun getAccessToken(): String? = tokenQueries.getAccessToken().awaitSingleOrNull()
 
     override suspend fun refreshToken(): AuthStatus = mutex.withLock {
         val refreshToken = tokenQueries.getRefreshToken().awaitSingleOrNull()

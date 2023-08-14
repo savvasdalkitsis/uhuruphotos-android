@@ -22,7 +22,11 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import com.savvasdalkitsis.uhuruphotos.feature.discover.view.implementation.seam.actions.DiscoverAction
+import com.savvasdalkitsis.uhuruphotos.feature.discover.view.implementation.seam.actions.DismissUpsellLogin
+import com.savvasdalkitsis.uhuruphotos.feature.discover.view.implementation.seam.actions.DoNotShowUpsellAgain
+import com.savvasdalkitsis.uhuruphotos.feature.discover.view.implementation.seam.actions.Login
 import com.savvasdalkitsis.uhuruphotos.feature.discover.view.implementation.ui.state.DiscoverState
+import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.UpsellDialog
 
 @Composable fun Discover(
     state: DiscoverState,
@@ -33,5 +37,18 @@ import com.savvasdalkitsis.uhuruphotos.feature.discover.view.implementation.ui.s
         Spacer(modifier = Modifier.height(contentPadding.calculateTopPadding()))
         SearchField(state, action)
         DiscoverIdle(state, action, contentPadding)
+    }
+    if (state.showLoginUpsellDialogFromPeople) {
+        UpsellDialog(
+            onDismiss = { action(DismissUpsellLogin) },
+            onNeverAgain = { action(DoNotShowUpsellAgain) },
+            onLogin = { action(Login) }
+        )
+    }
+    if (state.showLoginUpsellDialogFromSearch) {
+        UpsellDialog(
+            onDismiss = { action(DismissUpsellLogin) },
+            onLogin = { action(Login) }
+        )
     }
 }

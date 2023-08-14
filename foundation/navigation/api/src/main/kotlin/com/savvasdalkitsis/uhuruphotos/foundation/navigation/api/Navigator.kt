@@ -21,6 +21,7 @@ import com.bumble.appyx.navmodel.backstack.BackStack
 interface Navigator {
     var backStack: BackStack<NavigationRoute>
 
+    fun navigateToWeb(webUrl: String)
     fun navigateTo(intent: Intent)
     fun navigateTo(intent: Intent, fallbackIntent: Intent)
     fun <R : NavigationRoute> navigateTo(route: R)

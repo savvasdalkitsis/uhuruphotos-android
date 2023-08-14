@@ -22,6 +22,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.jobs.domain.api.usecase.JobsUseCa
 import com.savvasdalkitsis.uhuruphotos.feature.search.domain.api.usecase.SearchUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.settings.domain.api.usecase.CacheSettingsUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.settings.domain.api.usecase.SettingsUseCase
+import com.savvasdalkitsis.uhuruphotos.feature.welcome.domain.api.usecase.WelcomeUseCase
 import com.savvasdalkitsis.uhuruphotos.foundation.biometrics.api.usecase.BiometricsUseCase
 import com.savvasdalkitsis.uhuruphotos.foundation.log.api.usecase.FeedbackUseCase
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.Navigator
@@ -43,6 +44,7 @@ internal class SettingsActionsContext @Inject constructor(
     val jobsUseCase: JobsUseCase,
     val toaster: ToasterUseCase,
     val navigator: Navigator,
+    val welcomeUseCase: WelcomeUseCase,
 ) {
 
     fun authenticateIfNeeded(

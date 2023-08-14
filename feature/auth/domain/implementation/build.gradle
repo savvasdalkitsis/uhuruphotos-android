@@ -32,6 +32,7 @@ dependencies {
             libs.hilt,
             libs.moshi,
             libs.retrofit.moshi,
+            libs.sqldelight.coroutines,
     )
     ksp libs.moshi.ksp
     kapt libs.autodagger.kapt

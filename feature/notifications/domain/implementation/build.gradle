@@ -1,0 +1,14 @@
+android {
+    namespace 'com.savvasdalkitsis.uhuruphotos.feature.notifications.domain.implementation'
+}
+
+dependencies {
+    implementation(
+            project(":feature:notifications:domain:api"),
+            project(":foundation:activity:api"),
+            project(":foundation:initializer:api"),
+            libs.autodagger.core,
+            libs.hilt,
+    )
+    kapt libs.autodagger.kapt
+}

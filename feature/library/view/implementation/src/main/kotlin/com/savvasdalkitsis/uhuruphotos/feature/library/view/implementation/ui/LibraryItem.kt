@@ -15,6 +15,10 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.library.view.implementation.ui
 
+import androidx.annotation.DrawableRes
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -22,15 +26,19 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.Vitrine
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.state.VitrineState
+import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.theme.CustomColors
 
 @Composable
 internal fun LibraryItem(
     modifier: Modifier = Modifier,
     state: VitrineState,
     photoGridModifier: Modifier,
+    @DrawableRes iconFallback: Int,
     title: String,
     onSelected: () -> Unit,
 ) {
@@ -39,7 +47,15 @@ internal fun LibraryItem(
             .padding(8.dp),
     ) {
         Box(modifier = Modifier.fillMaxSize()) {
-            Vitrine(
+            if (state.isEmpty && iconFallback != -1) Image(
+                modifier = photoGridModifier
+                    .clip(MaterialTheme.shapes.large)
+                    .background(CustomColors.emptyItem)
+                    .clickable { onSelected() }
+                    .padding(24.dp),
+                painter = painterResource(iconFallback),
+                contentDescription = null,
+            ) else Vitrine(
                 modifier = photoGridModifier,
                 state = state,
                 onSelected = onSelected,

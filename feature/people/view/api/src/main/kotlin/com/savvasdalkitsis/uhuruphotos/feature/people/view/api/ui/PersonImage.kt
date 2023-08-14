@@ -16,12 +16,18 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.feature.people.view.api.ui
 
 import androidx.compose.foundation.layout.aspectRatio
+import androidx.compose.material.Icon
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.painterResource
+import com.savvasdalkitsis.uhuruphotos.feature.people.view.api.R
 import com.savvasdalkitsis.uhuruphotos.feature.people.view.api.ui.state.Person
+import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.R.drawable
 import com.savvasdalkitsis.uhuruphotos.foundation.image.api.ui.Thumbnail
 
 @Composable
@@ -30,12 +36,36 @@ fun PersonImage(
     shape: Shape,
     person: Person
 ) {
-    Thumbnail(
-        modifier = modifier
-            .aspectRatio(1f)
-            .clip(shape),
-        url = person.imageUrl,
-        contentScale = ContentScale.Crop,
-        contentDescription = "person image"
-    )
+    if (person.imageUrl != null) {
+        Thumbnail(
+            modifier = modifier
+                .aspectRatio(1f)
+                .clip(shape),
+            url = person.imageUrl,
+            contentScale = ContentScale.Crop,
+            contentDescription = "person image"
+        )
+    } else {
+        val avatars = remember {
+            listOf(
+                R.drawable.ic_person_1,
+                R.drawable.ic_person_2,
+                R.drawable.ic_person_3,
+                R.drawable.ic_person_4,
+                R.drawable.ic_person_5,
+                R.drawable.ic_person_6,
+            )
+        }
+        val icon = remember(person.id) {
+            avatars[person.id % avatars.size]
+        }
+        Icon(
+            modifier = modifier
+                .aspectRatio(1f)
+                .clip(shape),
+            painter = painterResource(icon),
+            tint = Color.Unspecified,
+            contentDescription = "person image"
+        )
+    }
 }

@@ -45,6 +45,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.savvasdalkitsis.uhuruphotos.feature.account.view.api.ui.state.AccountOverviewState
 import com.savvasdalkitsis.uhuruphotos.feature.avatar.view.api.ui.Avatar
+import com.savvasdalkitsis.uhuruphotos.feature.avatar.view.api.ui.state.AvatarState
+import com.savvasdalkitsis.uhuruphotos.feature.avatar.view.api.ui.state.SyncState
 import com.savvasdalkitsis.uhuruphotos.feature.avatar.view.api.ui.state.previewAvatarState
 import com.savvasdalkitsis.uhuruphotos.feature.jobs.domain.api.model.Job
 import com.savvasdalkitsis.uhuruphotos.feature.jobs.domain.api.model.JobStatus.Blocked
@@ -68,7 +70,7 @@ internal fun AccountOverview(
     state: AccountOverviewState,
     onAboutClicked: () -> Unit = {},
     onLogoutClicked: () -> Unit = {},
-    onEditServerClicked: () -> Unit = {},
+    onLoginClicked: () -> Unit = {},
     onSettingsClicked: () -> Unit = {},
     onStartJob: (Job) -> Unit = {},
     onCancelJob: (Job) -> Unit = {},
@@ -91,26 +93,33 @@ internal fun AccountOverview(
                 state = state.avatarState,
                 size = 48.dp
             )
-            Column(modifier = Modifier
-                .recomposeHighlighter()
-                .weight(1f)) {
-                Text(
-                    text = state.avatarState.userFullName,
-                    style = TextStyle.Default.copy(
-                        fontWeight = FontWeight.Bold,
-                        fontSize = 14.sp
+            if (state.showUserAndServerDetails) {
+                Column(
+                    modifier = Modifier
+                        .recomposeHighlighter()
+                        .weight(1f)
+                ) {
+                    Text(
+                        text = state.avatarState.userFullName,
+                        style = TextStyle.Default.copy(
+                            fontWeight = FontWeight.Bold,
+                            fontSize = 14.sp
+                        )
                     )
-                )
+                    Text(
+                        text = state.avatarState.serverUrl,
+                        style = MaterialTheme.typography.caption.copy(color = Color.Gray),
+                    )
+                }
+            } else {
                 Text(
-                    text = state.avatarState.serverUrl,
-                    style = MaterialTheme.typography.caption.copy(color = Color.Gray),
+                    modifier = Modifier
+                        .recomposeHighlighter()
+                        .weight(1f),
+                    text = "UhuruPhotos",
+                    style = MaterialTheme.typography.h5,
                 )
             }
-            ActionIcon(
-                onClick = onEditServerClicked,
-                icon = drawable.ic_edit,
-                contentDescription = stringResource(string.edit_server_url)
-            )
             ActionIcon(
                 onClick = onClose,
                 icon = drawable.ic_close,
@@ -157,14 +166,25 @@ internal fun AccountOverview(
                 modifier = Modifier
                     .recomposeHighlighter()
                     .weight(1f),
-                onClick = onLogoutClicked,
+                onClick = if (state.showLogIn)
+                    onLoginClicked
+                else
+                    onLogoutClicked,
             ) {
                 Icon(
-                    painter = painterResource(id = drawable.ic_logout),
+                    painter = painterResource(id = if (state.showLogIn)
+                        drawable.ic_login
+                    else
+                        drawable.ic_logout
+                    ),
                     contentDescription = null
                 )
                 Spacer(modifier = Modifier.width(8.dp))
-                Text(text = stringResource(string.log_out))
+                Text(text = if (state.showLogIn)
+                    stringResource(string.login)
+                else
+                    stringResource(string.log_out)
+                )
             }
             OutlinedButton(
                 modifier = Modifier
@@ -182,17 +202,37 @@ internal fun AccountOverview(
 
 @Preview
 @Composable
-fun AccountOverviewPreview() {
+private fun AccountOverviewPreview() {
     PreviewAppTheme {
         AccountOverview(
             modifier = Modifier.fillMaxWidth(),
             state = AccountOverviewState(
+                showLogIn = false,
+                showUserAndServerDetails = true,
                 avatarState = previewAvatarState,
                 jobs = listOf(
                     JobState(Title.Text("Feed"), Job.FEED_SYNC, Idle),
                     JobState(Title.Text("Precache"), Job.FEED_SYNC, Blocked),
                     JobState(Title.Text("Local"), Job.FEED_SYNC, InProgress(25)),
                     JobState(Title.Text("Queued"), Job.FEED_SYNC, Queued),
+                )
+            ),
+        )
+    }
+}
+
+@Preview
+@Composable
+private fun AccountOverviewPreviewLoggedOut() {
+    PreviewAppTheme {
+        AccountOverview(
+            modifier = Modifier.fillMaxWidth(),
+            state = AccountOverviewState(
+                showLogIn = true,
+                showUserAndServerDetails = false,
+                avatarState = AvatarState(syncState = SyncState.GOOD),
+                jobs = listOf(
+                    JobState(Title.Text("Local"), Job.FEED_SYNC, InProgress(25)),
                 )
             ),
         )

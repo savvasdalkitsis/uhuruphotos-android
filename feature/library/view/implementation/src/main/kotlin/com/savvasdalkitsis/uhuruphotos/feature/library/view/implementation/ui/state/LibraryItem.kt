@@ -22,7 +22,7 @@ enum class LibraryItem(
     @StringRes val title: Int,
 ) {
     TRASH(string.trash),
-    HIDDEN(string.hidden_photos),
+    HIDDEN(string.hidden_media),
     LOCAL(string.local_albums),
     AUTO(string.auto_albums),
     USER(string.user_albums),

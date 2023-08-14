@@ -22,7 +22,9 @@ import com.savvasdalkitsis.uhuruphotos.feature.feed.view.api.navigation.FeedNavi
 import com.savvasdalkitsis.uhuruphotos.feature.home.view.implementation.seam.HomeActionsContext
 import com.savvasdalkitsis.uhuruphotos.feature.home.view.implementation.seam.HomeMutation
 import com.savvasdalkitsis.uhuruphotos.feature.home.view.implementation.ui.state.HomeState
+import com.savvasdalkitsis.uhuruphotos.feature.notifications.view.api.navigation.NotificationsNavigationRoute
 import com.savvasdalkitsis.uhuruphotos.feature.server.view.api.navigation.ServerNavigationRoute
+import com.savvasdalkitsis.uhuruphotos.feature.welcome.view.api.navigation.WelcomeNavigationRoute
 import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R
 import kotlinx.coroutines.flow.flow
 
@@ -43,12 +45,13 @@ data object Load : HomeAction() {
         }
         when(proceed) {
             is Err -> emit(HomeMutation.NeedsBiometricAuthentication)
-            is Ok -> when (authenticationUseCase.authenticationStatus()) {
-                is AuthStatus.Unauthenticated -> navigator.navigateTo(
-                    ServerNavigationRoute(auto = true)
-                )
-                else -> navigator.newRoot(FeedNavigationRoute)
-            }
+            is Ok -> navigator.newRoot(
+                when {
+                    welcomeUseCase.needToShowWelcomeScreen() -> WelcomeNavigationRoute
+                    notificationsUseCase.needToShowNotificationsOnboardingScreen() -> NotificationsNavigationRoute
+                    else -> FeedNavigationRoute
+                }
+            )
         }
     }
 }

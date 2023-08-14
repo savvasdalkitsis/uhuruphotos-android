@@ -82,7 +82,7 @@ fun DiscoverLocations(
             Text(
                 modifier = Modifier
                     .align(Alignment.Center),
-                text = "Photo map",
+                text = stringResource(string.media_map),
                 style = MaterialTheme.typography.h4,
                 color = Color.White,
             )

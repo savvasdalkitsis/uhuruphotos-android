@@ -189,7 +189,7 @@ class LocalMediaUseCase @Inject constructor(
         observePermissionsState(*requiredPermissions)
 
     private fun observePermissionsState(vararg permissions: String): Flow<LocalPermissions>  =
-        permissionFlow.getMultiplePermissionState(*permissions).mapLatest {
+        permissionFlow.getMultiplePermissionState(*permissions).map {
             when {
                 !it.allGranted -> LocalPermissions.RequiresPermissions(it.deniedPermissions)
                 else -> LocalPermissions.Granted

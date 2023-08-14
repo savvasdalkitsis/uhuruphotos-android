@@ -61,6 +61,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.api.usecase.R
 import com.savvasdalkitsis.uhuruphotos.feature.people.domain.api.usecase.PeopleUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.people.view.api.ui.state.toPerson
 import com.savvasdalkitsis.uhuruphotos.feature.user.domain.api.usecase.UserUseCase
+import com.savvasdalkitsis.uhuruphotos.feature.welcome.domain.api.usecase.WelcomeUseCase
 import com.savvasdalkitsis.uhuruphotos.foundation.date.api.DateDisplayer
 import com.savvasdalkitsis.uhuruphotos.foundation.date.api.DateParser
 import com.savvasdalkitsis.uhuruphotos.foundation.group.api.model.Group
@@ -76,6 +77,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.emptyFlow
+import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.map
 import org.joda.time.DateTime
 import se.ansman.dagger.auto.AutoBind
@@ -90,38 +92,45 @@ class MediaUseCase @Inject constructor(
     private val dateDisplayer: DateDisplayer,
     private val dateParser: DateParser,
     private val peopleUseCase: PeopleUseCase,
-    private @ApplicationContext val context: Context,
+    private val welcomeUseCase: WelcomeUseCase,
+    @ApplicationContext private val context: Context,
 ) : MediaUseCase {
 
     override fun observeLocalMedia(): Flow<MediaItemsOnDevice> =
         combine(
             localMediaUseCase.observeLocalMediaItems(),
-            userUseCase.observeUser(),
+            welcomeUseCase.flow(
+                withRemoteAccess = userUseCase.observeUser(),
+                withoutRemoteAccess = flowOf(null),
+            ),
         ) { localMediaItems, user ->
             combineLocalMediaItemsWithUser(localMediaItems, user)
         }
 
     override suspend fun getLocalMedia(): MediaItemsOnDevice {
-        val userResult = userUseCase.getUserOrRefresh()
-        return userResult.map { user ->
-            val localMedia = localMediaUseCase.getLocalMediaItems()
-            combineLocalMediaItemsWithUser(localMedia, user)
-        }.getOrElse {
-            MediaItemsOnDevice.Error
+        val status = welcomeUseCase.getWelcomeStatus()
+        val localMedia = localMediaUseCase.getLocalMediaItems()
+        return when {
+            status.hasRemoteAccess -> userUseCase.getUserOrRefresh().map { user ->
+                combineLocalMediaItemsWithUser(localMedia, user)
+            }.getOrElse {
+                MediaItemsOnDevice.Error
+            }
+            else -> combineLocalMediaItemsWithUser(localMedia, null)
         }
     }
 
     private fun combineLocalMediaItemsWithUser(
         localMediaItems: LocalMediaItems,
-        user: User
+        user: User?
     ) = when (localMediaItems) {
         is LocalMediaItems.Found -> {
             MediaItemsOnDevice.Found(
                 primaryFolder = localMediaItems.primaryLocalMediaFolder?.let { (folder, items) ->
-                    folder to items.map { it.toMediaItem(user.id) }
+                    folder to items.map { it.toMediaItem(user?.id) }
                 },
                 mediaFolders = localMediaItems.localMediaFolders.map { (folder, items) ->
-                    folder to items.map { it.toMediaItem(user.id) }
+                    folder to items.map { it.toMediaItem(user?.id) }
                 }
             )
         }
@@ -134,13 +143,16 @@ class MediaUseCase @Inject constructor(
     override fun observeLocalAlbum(albumId: Int): Flow<MediaFolderOnDevice> =
         combine(
             localMediaUseCase.observeLocalMediaFolder(albumId),
-            userUseCase.observeUser(),
+            welcomeUseCase.flow(
+                withRemoteAccess = userUseCase.observeUser(),
+                withoutRemoteAccess = flowOf(null),
+            ),
         ) { mediaItems, user ->
             when (mediaItems) {
                 is LocalFolder.Found -> {
                     MediaFolderOnDevice.Found(
                         mediaItems.bucket.first to mediaItems.bucket.second.map {
-                            it.toMediaItem(user.id)
+                            it.toMediaItem(user?.id)
                         }
                     )
                 }
@@ -187,7 +199,7 @@ class MediaUseCase @Inject constructor(
             }
         }
 
-    private fun LocalMediaItem.toMediaItem(userId: Int) = MediaItemInstance(
+    private fun LocalMediaItem.toMediaItem(userId: Int?) = MediaItemInstance(
         id = Local(id, video, contentUri, thumbnailPath?.let { "file://$it" } ?: contentUri),
         mediaHash = md5.toMediaItemHash(userId),
         fallbackColor = fallbackColor,

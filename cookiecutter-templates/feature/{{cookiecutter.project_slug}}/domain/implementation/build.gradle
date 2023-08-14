@@ -1,5 +1,5 @@
 android {
-    namespace 'com.savvasdalkitsis.uhuruphotos.foundation.{{cookiecutter.project_slug}}.domain.implementation'
+    namespace 'com.savvasdalkitsis.uhuruphotos.feature.{{cookiecutter.project_slug}}.domain.implementation'
 }
 
 dependencies {

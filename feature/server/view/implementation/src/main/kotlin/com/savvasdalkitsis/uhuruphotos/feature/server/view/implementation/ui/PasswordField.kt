@@ -44,7 +44,7 @@ import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.ActionIcon
 
 @Composable
 internal fun PasswordField(
-    state: ServerState.UserCredentials,
+    state: ServerState,
     action: (ServerAction) -> Unit
 ) {
     var password by remember {
@@ -63,7 +63,7 @@ internal fun PasswordField(
             imeAction = ImeAction.Done,
         ),
         keyboardActions = KeyboardActions(
-            onDone = { action(Login) }
+            onDone = { action(Login(allowUnsecuredServers = false)) }
         ),
         leadingIcon = {
             Icon(

@@ -16,12 +16,46 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.actions
 
 import com.savvasdalkitsis.uhuruphotos.feature.jobs.view.ui.state.toJobState
-import com.savvasdalkitsis.uhuruphotos.feature.settings.domain.api.model.CacheType
+import com.savvasdalkitsis.uhuruphotos.feature.settings.domain.api.model.CacheType.LIGHTBOX_PHOTO_DISK
+import com.savvasdalkitsis.uhuruphotos.feature.settings.domain.api.model.CacheType.LIGHTBOX_PHOTO_MEMORY
+import com.savvasdalkitsis.uhuruphotos.feature.settings.domain.api.model.CacheType.THUMBNAIL_DISK
+import com.savvasdalkitsis.uhuruphotos.feature.settings.domain.api.model.CacheType.THUMBNAIL_MEMORY
+import com.savvasdalkitsis.uhuruphotos.feature.settings.domain.api.model.CacheType.VIDEO_DISK
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.SettingsActionsContext
-import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.SettingsMutation
+import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.SettingsMutation.AvatarUpdate
+import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.SettingsMutation.DisplayAnimateVideoThumbnailsEnabled
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.SettingsMutation.DisplayBiometrics
+import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.SettingsMutation.DisplayFeedDaysToRefresh
+import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.SettingsMutation.DisplayFeedMediaItemSyncDisplay
+import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.SettingsMutation.DisplayFeedSyncFrequency
+import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.SettingsMutation.DisplayFullSyncNetworkRequirements
+import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.SettingsMutation.DisplayFullSyncRequiresCharging
+import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.SettingsMutation.DisplayLightboxPhotoDiskCacheCurrentUse
+import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.SettingsMutation.DisplayLightboxPhotoDiskCacheMaxLimit
+import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.SettingsMutation.DisplayLightboxPhotoMemCacheCurrentUse
+import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.SettingsMutation.DisplayLightboxPhotoMemCacheMaxLimit
+import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.SettingsMutation.DisplayLoggingEnabled
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.SettingsMutation.DisplayMapProviders
+import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.SettingsMutation.DisplayMaxAnimatedVideoThumbnails
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.SettingsMutation.DisplayNoMapProvidersOptions
+import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.SettingsMutation.DisplaySearchSuggestionsEnabled
+import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.SettingsMutation.DisplayShareGpsDataEnabled
+import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.SettingsMutation.DisplayShowLibrary
+import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.SettingsMutation.DisplayShowMemories
+import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.SettingsMutation.DisplayThemeMode
+import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.SettingsMutation.DisplayThumbnailDiskCacheCurrentUse
+import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.SettingsMutation.DisplayThumbnailDiskCacheMaxLimit
+import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.SettingsMutation.DisplayThumbnailMemCacheCurrentUse
+import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.SettingsMutation.DisplayThumbnailMemCacheMaxLimit
+import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.SettingsMutation.DisplayVideoDiskCacheCurrentUse
+import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.SettingsMutation.DisplayVideoDiskCacheMaxLimit
+import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.SettingsMutation.SetRemoteAccess
+import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.SettingsMutation.SetDiskCacheUpperLimit
+import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.SettingsMutation.SetFeedDetailsSyncProgressVisibility
+import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.SettingsMutation.SetFullSyncProgressVisibility
+import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.SettingsMutation.SetLocalSyncProgressVisibility
+import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.SettingsMutation.SetMemoryCacheUpperLimit
+import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.SettingsMutation.SetPrecacheProgressVisibility
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.SettingsMutation.ShowJobs
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.ui.state.BiometricsSetting.Enrolled
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.ui.state.BiometricsSetting.NotEnrolled
@@ -35,85 +69,68 @@ import kotlinx.coroutines.flow.merge
 data object LoadSettings : SettingsAction() {
     context(SettingsActionsContext) override fun handle(
         state: SettingsState
-    ) = merge(
-        settingsUseCase.observeLightboxPhotoDiskCacheMaxLimit()
-            .map(SettingsMutation::DisplayLightboxPhotoDiskCacheMaxLimit),
-        settingsUseCase.observeLightboxPhotoMemCacheMaxLimit()
-            .map(SettingsMutation::DisplayLightboxPhotoMemCacheMaxLimit),
-        settingsUseCase.observeThumbnailDiskCacheMaxLimit()
-            .map(SettingsMutation::DisplayThumbnailDiskCacheMaxLimit),
-        settingsUseCase.observeThumbnailMemCacheMaxLimit()
-            .map(SettingsMutation::DisplayThumbnailMemCacheMaxLimit),
-        settingsUseCase.observeVideoDiskCacheMaxLimit()
-            .map(SettingsMutation::DisplayVideoDiskCacheMaxLimit),
-        settingsUseCase.observeFeedSyncFrequency()
-            .map(SettingsMutation::DisplayFeedSyncFrequency),
-        settingsUseCase.observeFeedDaysToRefresh()
-            .map(SettingsMutation::DisplayFeedDaysToRefresh),
-        settingsUseCase.observeFullSyncNetworkRequirements()
-            .map(SettingsMutation::DisplayFullSyncNetworkRequirements),
-        settingsUseCase.observeFullSyncRequiresCharging()
-            .map(SettingsMutation::DisplayFullSyncRequiresCharging),
-        settingsUseCase.observeThemeMode()
-            .map(SettingsMutation::DisplayThemeMode),
-        settingsUseCase.observeSearchSuggestionsEnabledMode()
-            .map(SettingsMutation::DisplaySearchSuggestionsEnabled),
-        settingsUseCase.observeShareRemoveGpsData()
-            .map(SettingsMutation::DisplayShareGpsDataEnabled),
-        settingsUseCase.observeShowLibrary()
-            .map(SettingsMutation::DisplayShowLibrary),
-        settingsUseCase.observeMemoriesEnabled()
-            .map(SettingsMutation::DisplayShowMemories),
-        settingsUseCase.observeAnimateVideoThumbnails()
-            .map(SettingsMutation::DisplayAnimateVideoThumbnailsEnabled),
-        settingsUseCase.observeMaxAnimatedVideoThumbnails()
-            .map(SettingsMutation::DisplayMaxAnimatedVideoThumbnails),
-        settingsUseCase.observeMapProvider().map { current ->
-            val available = settingsUseCase.getAvailableMapProviders()
-            when {
-                available.size > 1 -> DisplayMapProviders(current, available)
-                else -> DisplayNoMapProvidersOptions
-            }
-        },
-        settingsUseCase.observeLoggingEnabled()
-            .map(SettingsMutation::DisplayLoggingEnabled),
-        settingsUseCase.observeFeedMediaItemSyncDisplay()
-            .map(SettingsMutation::DisplayFeedMediaItemSyncDisplay),
-        combine(
-            settingsUseCase.observeBiometricsRequiredForAppAccess(),
-            settingsUseCase.observeBiometricsRequiredForHiddenPhotosAccess(),
-            settingsUseCase.observeBiometricsRequiredForTrashAccess(),
-        ) { app, hiddenPhotos, trash ->
-            DisplayBiometrics(enrollment(app, hiddenPhotos, trash))
-        },
-        settingsUseCase.observeShouldShowFeedSyncProgress()
-            .map(SettingsMutation::SetFullSyncProgressVisibility),
-        settingsUseCase.observeShouldShowFeedDetailsSyncProgress()
-            .map(SettingsMutation::SetFeedDetailsSyncProgressVisibility),
-        settingsUseCase.observeShouldShowPrecacheProgress()
-            .map(SettingsMutation::SetPrecacheProgressVisibility),
-        settingsUseCase.observeShouldShowLocalSyncProgress()
-            .map(SettingsMutation::SetLocalSyncProgressVisibility),
-        cacheUseCase.observeCacheCurrentUse(CacheType.LIGHTBOX_PHOTO_DISK)
-            .map(SettingsMutation::DisplayLightboxPhotoDiskCacheCurrentUse),
-        cacheUseCase.observeCacheCurrentUse(CacheType.LIGHTBOX_PHOTO_MEMORY)
-            .map(SettingsMutation::DisplayLightboxPhotoMemCacheCurrentUse),
-        cacheUseCase.observeCacheCurrentUse(CacheType.THUMBNAIL_DISK)
-            .map(SettingsMutation::DisplayThumbnailDiskCacheCurrentUse),
-        cacheUseCase.observeCacheCurrentUse(CacheType.THUMBNAIL_MEMORY)
-            .map(SettingsMutation::DisplayThumbnailMemCacheCurrentUse),
-        cacheUseCase.observeCacheCurrentUse(CacheType.VIDEO_DISK)
-            .map(SettingsMutation::DisplayVideoDiskCacheCurrentUse),
-        avatarUseCase.getAvatarState()
-            .map(SettingsMutation::AvatarUpdate),
-        flowOf(systemUseCase.getAvailableSystemMemoryInMb())
-            .map(SettingsMutation::SetMemoryCacheUpperLimit),
-        flowOf(systemUseCase.getAvailableStorageInMb())
-            .map(SettingsMutation::SetDiskCacheUpperLimit),
-        jobsUseCase.observeJobsStatus().map {
-            ShowJobs(it.jobs.toJobState)
-        },
-    )
+    ) = with(settingsUseCase) {
+        merge(
+            welcomeUseCase.observeWelcomeStatus().map { status ->
+                SetRemoteAccess(status.hasRemoteAccess)
+            },
+            observeLightboxPhotoDiskCacheMaxLimit().map(::DisplayLightboxPhotoDiskCacheMaxLimit),
+            observeLightboxPhotoMemCacheMaxLimit().map(::DisplayLightboxPhotoMemCacheMaxLimit),
+            observeThumbnailDiskCacheMaxLimit().map(::DisplayThumbnailDiskCacheMaxLimit),
+            observeThumbnailMemCacheMaxLimit().map(::DisplayThumbnailMemCacheMaxLimit),
+            observeVideoDiskCacheMaxLimit().map(::DisplayVideoDiskCacheMaxLimit),
+            observeFeedSyncFrequency().map(::DisplayFeedSyncFrequency),
+            observeFeedDaysToRefresh().map(::DisplayFeedDaysToRefresh),
+            observeFullSyncNetworkRequirements().map(::DisplayFullSyncNetworkRequirements),
+            observeFullSyncRequiresCharging().map(::DisplayFullSyncRequiresCharging),
+            observeThemeMode().map(::DisplayThemeMode),
+            observeSearchSuggestionsEnabledMode().map(::DisplaySearchSuggestionsEnabled),
+            observeShareRemoveGpsData().map(::DisplayShareGpsDataEnabled),
+            observeShowLibrary().map(::DisplayShowLibrary),
+            observeMemoriesEnabled().map(::DisplayShowMemories),
+            observeAnimateVideoThumbnails().map(::DisplayAnimateVideoThumbnailsEnabled),
+            observeMaxAnimatedVideoThumbnails().map(::DisplayMaxAnimatedVideoThumbnails),
+            observeMapProvider().map { current ->
+                val available = getAvailableMapProviders()
+                when {
+                    available.size > 1 -> DisplayMapProviders(current, available)
+                    else -> DisplayNoMapProvidersOptions
+                }
+            },
+            observeLoggingEnabled().map(::DisplayLoggingEnabled),
+            observeFeedMediaItemSyncDisplay().map(::DisplayFeedMediaItemSyncDisplay),
+            combine(
+                observeBiometricsRequiredForAppAccess(),
+                observeBiometricsRequiredForHiddenPhotosAccess(),
+                observeBiometricsRequiredForTrashAccess(),
+            ) { app, hiddenPhotos, trash ->
+                DisplayBiometrics(enrollment(app, hiddenPhotos, trash))
+            },
+            observeShouldShowFeedSyncProgress().map(::SetFullSyncProgressVisibility),
+            observeShouldShowFeedDetailsSyncProgress().map(::SetFeedDetailsSyncProgressVisibility),
+            observeShouldShowPrecacheProgress().map(::SetPrecacheProgressVisibility),
+            observeShouldShowLocalSyncProgress().map(::SetLocalSyncProgressVisibility),
+            cacheUseCase.observeCacheCurrentUse(LIGHTBOX_PHOTO_DISK)
+                .map(::DisplayLightboxPhotoDiskCacheCurrentUse),
+            cacheUseCase.observeCacheCurrentUse(LIGHTBOX_PHOTO_MEMORY)
+                .map(::DisplayLightboxPhotoMemCacheCurrentUse),
+            cacheUseCase.observeCacheCurrentUse(THUMBNAIL_DISK)
+                .map(::DisplayThumbnailDiskCacheCurrentUse),
+            cacheUseCase.observeCacheCurrentUse(THUMBNAIL_MEMORY)
+                .map(::DisplayThumbnailMemCacheCurrentUse),
+            cacheUseCase.observeCacheCurrentUse(VIDEO_DISK)
+                .map(::DisplayVideoDiskCacheCurrentUse),
+            avatarUseCase.getAvatarState()
+                .map(::AvatarUpdate),
+            flowOf(systemUseCase.getAvailableSystemMemoryInMb())
+                .map(::SetMemoryCacheUpperLimit),
+            flowOf(systemUseCase.getAvailableStorageInMb())
+                .map(::SetDiskCacheUpperLimit),
+            jobsUseCase.observeJobsStatus().map {
+                ShowJobs(it.jobs.toJobState)
+            },
+        )
+    }
 
     context(SettingsActionsContext)
     private fun enrollment(

@@ -60,6 +60,13 @@ fun DiscoverIdle(
         ) {
             SearchPeopleSuggestions(state.people, action)
         }
+        AnimatedVisibility(
+            visible = state.showPeopleUpsell,
+            enter = slideInVertically() + expandVertically(),
+            exit = slideOutHorizontally() + shrinkVertically(),
+        ) {
+            SearchPeopleUpsell(action)
+        }
         DiscoverLocations(state, action)
         DiscoverCategories(action)
         Spacer(modifier = Modifier.height(contentPadding.calculateBottomPadding()))

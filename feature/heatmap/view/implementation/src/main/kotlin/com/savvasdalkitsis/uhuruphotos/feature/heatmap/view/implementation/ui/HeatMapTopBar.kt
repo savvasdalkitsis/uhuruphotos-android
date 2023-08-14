@@ -66,7 +66,7 @@ fun HeatMapTopBar(
                 horizontalArrangement = Arrangement.spacedBy(8.dp),
                 verticalAlignment = Alignment.CenterVertically,
             ) {
-                Text(stringResource(string.photo_map))
+                Text(stringResource(string.media_map))
                 if (actionsInTitle) {
                     Actions(state, action, locationPermissionState, mapViewState)
                 }

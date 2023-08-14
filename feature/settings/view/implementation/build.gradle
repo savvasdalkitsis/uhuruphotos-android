@@ -20,6 +20,7 @@ dependencies {
             project(":feature:search:domain:api"),
             project(":feature:settings:domain:api"),
             project(":feature:settings:view:api"),
+            project(":feature:welcome:domain:api"),
             project(":foundation:biometrics:api"),
             project(":foundation:icons:api"),
             project(":foundation:initializer:api"),

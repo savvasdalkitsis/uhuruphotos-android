@@ -99,8 +99,10 @@ internal fun Settings(
                     CollapsibleGroup(controller.uiProgress) {
                         SettingsProgressUI(state, action)
                     }
-                    CollapsibleGroup(controller.uiSearch) {
-                        SettingsSearch(state, action)
+                    if (state.hasRemoteAccess) {
+                        CollapsibleGroup(controller.uiSearch) {
+                            SettingsSearch(state, action)
+                        }
                     }
                     CollapsibleGroup(controller.uiLibrary) {
                         SettingsLibrary(state, action)
@@ -126,8 +128,10 @@ internal fun Settings(
                     }
                 }
                 SuperGroup(controller.jobs) {
-                    CollapsibleGroup(controller.jobsFeedConfiguration) {
-                        SettingsJobsFeedConfiguration(state, action)
+                    if (state.hasRemoteAccess) {
+                        CollapsibleGroup(controller.jobsFeedConfiguration) {
+                            SettingsJobsFeedConfiguration(state, action)
+                        }
                     }
                     CollapsibleGroup(controller.jobsStatus) {
                         SettingsJobsStatus(state, action)

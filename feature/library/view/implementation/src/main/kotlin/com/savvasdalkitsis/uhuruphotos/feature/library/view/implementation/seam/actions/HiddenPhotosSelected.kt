@@ -18,13 +18,21 @@ package com.savvasdalkitsis.uhuruphotos.feature.library.view.implementation.seam
 import com.savvasdalkitsis.uhuruphotos.feature.hidden.view.api.HiddenPhotosNavigationRoute
 import com.savvasdalkitsis.uhuruphotos.feature.library.view.implementation.seam.LibraryActionsContext
 import com.savvasdalkitsis.uhuruphotos.feature.library.view.implementation.seam.LibraryMutation
+import com.savvasdalkitsis.uhuruphotos.feature.library.view.implementation.seam.LibraryMutation.ShowUpsellFrom
+import com.savvasdalkitsis.uhuruphotos.feature.library.view.implementation.ui.state.LibraryItem
+import com.savvasdalkitsis.uhuruphotos.feature.library.view.implementation.ui.state.LibraryItem.HIDDEN
 import com.savvasdalkitsis.uhuruphotos.feature.library.view.implementation.ui.state.LibraryState
+import com.savvasdalkitsis.uhuruphotos.feature.trash.view.api.navigation.TrashNavigationRoute
 import kotlinx.coroutines.flow.flow
 
 data object HiddenPhotosSelected : LibraryAction() {
     context(LibraryActionsContext) override fun handle(
         state: LibraryState
     ) = flow<LibraryMutation> {
-        navigator.navigateTo(HiddenPhotosNavigationRoute)
+        if (welcomeUseCase.getWelcomeStatus().hasRemoteAccess) {
+            navigator.navigateTo(HiddenPhotosNavigationRoute)
+        } else {
+            emit(ShowUpsellFrom(HIDDEN))
+        }
     }
 }

@@ -18,6 +18,7 @@ package com.savvasdalkitsis.uhuruphotos.feature.avatar.view.api.ui
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.CircularProgressIndicator
@@ -28,9 +29,13 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.PreviewParameter
+import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.savvasdalkitsis.uhuruphotos.feature.avatar.view.api.ui.state.AvatarState
@@ -38,9 +43,11 @@ import com.savvasdalkitsis.uhuruphotos.feature.avatar.view.api.ui.state.SyncStat
 import com.savvasdalkitsis.uhuruphotos.feature.avatar.view.api.ui.state.SyncState.GOOD
 import com.savvasdalkitsis.uhuruphotos.feature.avatar.view.api.ui.state.SyncState.IN_PROGRESS
 import com.savvasdalkitsis.uhuruphotos.foundation.compose.api.recomposeHighlighter
+import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.R.drawable.ic_logo
 import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.R.drawable.ic_person
 import com.savvasdalkitsis.uhuruphotos.foundation.image.api.ui.Thumbnail
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.theme.CustomColors
+import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.theme.PreviewAppTheme
 
 @Composable
 fun Avatar(
@@ -59,7 +66,7 @@ fun Avatar(
         .background(backgroundColor)
         .size(size)
         .let {
-            when(avatarPressed) {
+            when (avatarPressed) {
                 null -> it
                 else -> it.clickable { avatarPressed() }
             }
@@ -90,10 +97,47 @@ fun Avatar(
             )
             else -> Icon(
                 modifier = Modifier
+                    .size(size - 6.dp)
+                    .clip(CircleShape)
+                    .background(Color.White)
                     .align(Alignment.Center),
-                painter = painterResource(ic_person),
+                painter = painterResource(ic_logo),
+                tint = Color.Black,
                 contentDescription = "profileIcon"
             )
         }
     }
+}
+
+@Preview
+@Composable
+private fun AvatarPreview(@PreviewParameter(AvatarPreviews::class) state: AvatarState) {
+    Column {
+        PreviewAppTheme {
+            Avatar(state = state)
+        }
+        PreviewAppTheme(darkTheme = true) {
+            Avatar(state = state)
+        }
+    }
+}
+
+private class AvatarPreviews : PreviewParameterProvider<AvatarState> {
+    override val values: Sequence<AvatarState> = sequenceOf(
+        AvatarState(
+            initials = "SD",
+            syncState = GOOD
+        ),
+        AvatarState(
+            syncState = GOOD
+        ),
+        AvatarState(
+            initials = "SD",
+            syncState = BAD
+        ),
+        AvatarState(
+            initials = "SD",
+            syncState = IN_PROGRESS
+        ),
+    )
 }

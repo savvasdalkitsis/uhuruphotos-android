@@ -31,6 +31,29 @@ sealed class DiscoverMutation(
         it.copy(suggestion = null)
     })
 
+    data object HideLoginUpsellDialogs : DiscoverMutation({
+        it.copy(
+            showLoginUpsellDialogFromPeople = false,
+            showLoginUpsellDialogFromSearch = false,
+        )
+    })
+
+    data object ShowLoginUpsellDialogFromPeople : DiscoverMutation({
+        it.copy(showLoginUpsellDialogFromPeople = true)
+    })
+
+    data object ShowLoginUpsellDialogFromSearch : DiscoverMutation({
+        it.copy(showLoginUpsellDialogFromSearch = true)
+    })
+
+    data object EnableSearch : DiscoverMutation({
+        it.copy(isSearchEnabled = true)
+    })
+
+    data object DisableSearch : DiscoverMutation({
+        it.copy(isSearchEnabled = false)
+    })
+
     data class ChangeFeedDisplay(val display: CollageDisplay) : DiscoverMutation({
         it.copy(collageDisplay = display)
     })
@@ -45,6 +68,10 @@ sealed class DiscoverMutation(
 
     data class ShowPeople(val people: List<Person>) : DiscoverMutation({
         it.copy(people = people.toPersistentList())
+    })
+
+    data class ShowPeopleUpsell(val show: Boolean) : DiscoverMutation({
+        it.copy(showPeopleUpsell = show)
     })
 
     data class ShowSearchSuggestions(

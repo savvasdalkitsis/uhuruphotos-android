@@ -70,7 +70,7 @@ fun LocalAlbumPage(
                     }
                 }
             } else {
-                NoContent(string.no_photos)
+                NoContent(string.no_media)
             }
         }
     )

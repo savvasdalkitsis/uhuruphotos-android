@@ -27,7 +27,10 @@ data object RefreshFeed : FeedAction() {
         state: FeedState
     ) = flow {
         emit(StartRefreshing)
-        feedWorkScheduler.scheduleFeedRefreshNow(shallow = true)
+        localMediaWorkScheduler.scheduleLocalMediaSyncNowIfNotRunning()
+        if (welcomeUseCase.getWelcomeStatus().hasRemoteAccess) {
+            feedWorkScheduler.scheduleFeedRefreshNow(shallow = true)
+        }
         delay(1000)
         emit(StopRefreshing)
     }

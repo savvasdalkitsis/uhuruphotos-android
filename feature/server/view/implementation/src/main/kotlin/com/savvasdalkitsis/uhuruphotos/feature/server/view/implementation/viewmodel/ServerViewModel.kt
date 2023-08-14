@@ -17,9 +17,7 @@ package com.savvasdalkitsis.uhuruphotos.feature.server.view.implementation.viewm
 
 import com.savvasdalkitsis.uhuruphotos.feature.server.view.api.navigation.ServerNavigationRoute
 import com.savvasdalkitsis.uhuruphotos.feature.server.view.implementation.seam.ServerActionsContext
-import com.savvasdalkitsis.uhuruphotos.feature.server.view.implementation.seam.actions.CheckPersistedServer
 import com.savvasdalkitsis.uhuruphotos.feature.server.view.implementation.seam.actions.Load
-import com.savvasdalkitsis.uhuruphotos.feature.server.view.implementation.seam.actions.RequestServerUrlChange
 import com.savvasdalkitsis.uhuruphotos.feature.server.view.implementation.seam.actions.ServerAction
 import com.savvasdalkitsis.uhuruphotos.feature.server.view.implementation.ui.ServerState
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.viewmodel.NavigationViewModel
@@ -32,16 +30,10 @@ internal class ServerViewModel @Inject constructor(
     serverActionsContext: ServerActionsContext,
 ) : NavigationViewModel<ServerState, ServerAction, ServerNavigationRoute>(
     ActionHandlerWithContext(serverActionsContext),
-    ServerState.Loading(false)
+    ServerState()
 ) {
 
     override fun onRouteSet(route: ServerNavigationRoute) {
         action(Load)
-        action(
-            when {
-                route.auto -> CheckPersistedServer
-                else -> RequestServerUrlChange
-            }
-        )
     }
 }
