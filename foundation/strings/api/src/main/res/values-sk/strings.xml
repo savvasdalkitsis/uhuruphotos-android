@@ -106,4 +106,9 @@
         <item quantity="few">%d dni</item>
         <item quantity="other">%d dní</item>
     </plurals>
+    <string name="feed_sync_freq_changed">Frekvencia synchronizácie kanálu zmenená</string>
+    <string name="feed_sync_network_changed">Požiadavka siete na synchronizáciu kanála sa zmenila</string>
+    <string name="feed">Dávka</string>
+    <string name="feed_sync_progress">Stav úplnej synchronizácie kanálu fotiek</string>
+    <string name="feed_size">Veľkosť kanálu</string>
 </resources>
