@@ -54,10 +54,10 @@ interface RemoteMediaService {
         @Body deleteRequest: RemoteMediaItemDeleteRequestServiceModel
     ): Response<RemoteMediaHashOperationResponseServiceModel>
 
-    @GET("/api/photos/favorites/")
+    @GET("/api/albums/date/list/?favorite=true")
     suspend fun getFavouriteMedia(): RemoteMediaResultsServiceModel
 
-    @GET("/api/photos/hidden/")
+    @GET("/api/albums/date/list/?hidden=true")
     suspend fun getHiddenMedia(): RemoteMediaResultsServiceModel
 
     @GET("/api/exists/{hash}/")
