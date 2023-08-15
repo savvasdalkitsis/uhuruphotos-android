@@ -19,6 +19,9 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.CircularProgressIndicator
@@ -26,6 +29,7 @@ import androidx.compose.material.Icon
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -33,6 +37,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
@@ -43,8 +48,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.avatar.view.api.ui.state.SyncStat
 import com.savvasdalkitsis.uhuruphotos.feature.avatar.view.api.ui.state.SyncState.GOOD
 import com.savvasdalkitsis.uhuruphotos.feature.avatar.view.api.ui.state.SyncState.IN_PROGRESS
 import com.savvasdalkitsis.uhuruphotos.foundation.compose.api.recomposeHighlighter
-import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.R.drawable.ic_logo
-import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.R.drawable.ic_person
+import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.R.drawable
 import com.savvasdalkitsis.uhuruphotos.foundation.image.api.ui.Thumbnail
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.theme.CustomColors
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.theme.PreviewAppTheme
@@ -60,18 +64,21 @@ fun Avatar(
         GOOD -> CustomColors.syncSuccess
         IN_PROGRESS -> MaterialTheme.colors.background
     }
-    Box(modifier = Modifier
-        .recomposeHighlighter()
-        .clip(CircleShape)
-        .background(backgroundColor)
-        .size(size)
-        .let {
-            when (avatarPressed) {
-                null -> it
-                else -> it.clickable { avatarPressed() }
+    val modifier = remember(avatarPressed == null, backgroundColor, size) {
+        Modifier
+            .recomposeHighlighter()
+            .clip(CircleShape)
+            .background(backgroundColor)
+            .size(size)
+            .let {
+                when (avatarPressed) {
+                    null -> it
+                    else -> it.clickable { avatarPressed() }
+                }
             }
-        }
-    ) {
+            .padding(3.dp)
+    }
+    Box(modifier = modifier) {
         if (state.syncState == IN_PROGRESS) {
             CircularProgressIndicator(modifier = Modifier
                 .recomposeHighlighter()
@@ -81,7 +88,7 @@ fun Avatar(
         when {
             !state.avatarUrl.isNullOrEmpty() -> Thumbnail(
                 modifier = Modifier
-                    .size(size - 6.dp)
+                    .fillMaxSize()
                     .clip(CircleShape)
                     .align(Alignment.Center),
                 url = state.avatarUrl,
@@ -92,16 +99,18 @@ fun Avatar(
             )
             state.initials.isNotEmpty() -> Text(
                 modifier = Modifier
+                    .fillMaxWidth()
                     .align(Alignment.Center),
-                text = state.initials
+                text = state.initials,
+                textAlign = TextAlign.Center,
             )
             else -> Icon(
                 modifier = Modifier
-                    .size(size - 6.dp)
+                    .fillMaxSize()
                     .clip(CircleShape)
                     .background(Color.White)
                     .align(Alignment.Center),
-                painter = painterResource(ic_logo),
+                painter = painterResource(drawable.ic_logo_small),
                 tint = Color.Black,
                 contentDescription = "profileIcon"
             )
