@@ -63,13 +63,14 @@ import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.CelSelec
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.state.CelState
 import com.savvasdalkitsis.uhuruphotos.foundation.compose.api.recomposeHighlighter
 import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
+import kotlinx.collections.immutable.ImmutableList
 import my.nanihadesuka.compose.ScrollbarSelectionMode
 
 @Composable
 internal fun StaggeredCollage(
     modifier: Modifier = Modifier,
     contentPadding: PaddingValues,
-    state: List<Cluster>,
+    state: ImmutableList<Cluster>,
     showSelectionHeader: Boolean = false,
     maintainAspectRatio: Boolean = true,
     miniIcons: Boolean = false,
