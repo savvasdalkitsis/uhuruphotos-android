@@ -63,6 +63,7 @@ import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.ActionIcon
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.CollapsibleGroup
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.state.CollapsibleGroupState
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.state.Title
+import kotlinx.collections.immutable.persistentListOf
 
 @Composable
 internal fun AccountOverview(
@@ -210,7 +211,7 @@ private fun AccountOverviewPreview() {
                 showLogIn = false,
                 showUserAndServerDetails = true,
                 avatarState = previewAvatarState,
-                jobs = listOf(
+                jobs = persistentListOf(
                     JobState(Title.Text("Feed"), Job.FEED_SYNC, Idle),
                     JobState(Title.Text("Precache"), Job.FEED_SYNC, Blocked),
                     JobState(Title.Text("Local"), Job.FEED_SYNC, InProgress(25)),
@@ -231,7 +232,7 @@ private fun AccountOverviewPreviewLoggedOut() {
                 showLogIn = true,
                 showUserAndServerDetails = false,
                 avatarState = AvatarState(syncState = SyncState.GOOD),
-                jobs = listOf(
+                jobs = persistentListOf(
                     JobState(Title.Text("Local"), Job.FEED_SYNC, InProgress(25)),
                 )
             ),

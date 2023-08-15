@@ -20,6 +20,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.avatar.view.api.ui.state.AvatarSt
 import com.savvasdalkitsis.uhuruphotos.feature.jobs.domain.api.model.Job
 import com.savvasdalkitsis.uhuruphotos.feature.jobs.view.ui.state.JobState
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.Mutation
+import kotlinx.collections.immutable.toPersistentList
 
 sealed class AccountOverviewMutation(
     mutation: Mutation<AccountOverviewState>
@@ -54,7 +55,7 @@ sealed class AccountOverviewMutation(
     })
 
     data class ShowJobs(val jobs: List<JobState>) : AccountOverviewMutation({
-        it.copy(jobs = jobs)
+        it.copy(jobs = jobs.toPersistentList())
     })
 
     data class ShowJobStartDialog(val job: Job) : AccountOverviewMutation({

@@ -16,10 +16,14 @@ limitations under the License.
 
 package com.savvasdalkitsis.uhuruphotos.feature.account.view.api.ui.state
 
+import androidx.compose.runtime.Immutable
 import com.savvasdalkitsis.uhuruphotos.feature.avatar.view.api.ui.state.AvatarState
 import com.savvasdalkitsis.uhuruphotos.feature.jobs.domain.api.model.Job
 import com.savvasdalkitsis.uhuruphotos.feature.jobs.view.ui.state.JobState
+import kotlinx.collections.immutable.ImmutableList
+import kotlinx.collections.immutable.persistentListOf
 
+@Immutable
 data class AccountOverviewState(
     val showAccountOverview: Boolean = false,
     val avatarState: AvatarState = AvatarState(),
@@ -27,5 +31,5 @@ data class AccountOverviewState(
     val showJobStartDialog: Job? = null,
     val showLogIn: Boolean = false,
     val showUserAndServerDetails: Boolean = false,
-    val jobs: List<JobState> = emptyList(),
+    val jobs: ImmutableList<JobState> = persistentListOf(),
 )
