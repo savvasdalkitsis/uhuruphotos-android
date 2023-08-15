@@ -129,8 +129,8 @@ internal fun Feed(
                             verticalArrangement = spacedBy(8.dp),
                         ) {
                             if (state.memories.isNotEmpty()) {
-                                FeedMemories(state.memories) { cel ->
-                                    action(MemorySelected(cel))
+                                FeedMemories(state.memories) { cel, yearsAgo ->
+                                    action(MemorySelected(cel, yearsAgo))
                                 }
                             }
                             val missingPermissions = state.showRequestPermissionForLocalMediaAccess

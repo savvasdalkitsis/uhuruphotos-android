@@ -30,18 +30,14 @@ import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.Med
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemsOnDevice
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.state.toCel
 import kotlinx.collections.immutable.toPersistentList
-import kotlinx.coroutines.currentCoroutineContext
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.flatMapLatest
-import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.mapNotNull
 import kotlinx.coroutines.flow.merge
-import kotlinx.coroutines.isActive
 
 data object LoadFeed : FeedAction() {
 
@@ -61,19 +57,12 @@ data object LoadFeed : FeedAction() {
     private fun FeedActionsContext.memories() =
         settingsUseCase.observeMemoriesEnabled().flatMapLatest { enabled ->
             if (enabled) {
-                memoriesUseCase.observeMemories().flatMapLatest { memoryCollections ->
-                    flow {
-                        var index = 0
-                        while (currentCoroutineContext().isActive) {
-                            index += 1
-                            emit(memoryCollections.map { (collection, yearsAgo) ->
-                                MemoryCel(
-                                    yearsAgo = yearsAgo,
-                                    cel = collection.mediaItems[index % collection.mediaItems.size].toCel()
-                                )
-                            })
-                            delay(6000)
-                        }
+                memoriesUseCase.observeMemories().map { memoryCollections ->
+                    memoryCollections.map { (collection, yearsAgo) ->
+                        MemoryCel(
+                            yearsAgo = yearsAgo,
+                            cels = collection.mediaItems.map { it.toCel() }.toPersistentList(),
+                        )
                     }
                 }.map(FeedMutation::ShowMemories)
             } else {

@@ -17,9 +17,10 @@ package com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.ui.stat
 
 import androidx.compose.runtime.Immutable
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.state.CelState
+import kotlinx.collections.immutable.ImmutableList
 
 @Immutable
 data class MemoryCel(
     val yearsAgo: Int,
-    val cel: CelState,
+    val cels: ImmutableList<CelState>,
 )

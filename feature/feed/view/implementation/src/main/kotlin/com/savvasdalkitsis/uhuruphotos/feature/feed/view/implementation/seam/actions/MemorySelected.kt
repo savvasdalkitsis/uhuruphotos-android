@@ -18,17 +18,17 @@ package com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.ac
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.FeedActionsContext
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.FeedMutation
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.ui.state.FeedState
-import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.ui.state.MemoryCel
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.api.model.LightboxSequenceDataSource.Memory
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.api.navigation.LightboxNavigationRoute
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.state.CelState
 import kotlinx.coroutines.flow.flow
 
-data class MemorySelected(val memoryCel: MemoryCel) : FeedAction() {
+data class MemorySelected(val cel: CelState, val yearsAgo: Int) : FeedAction() {
     context(FeedActionsContext) override fun handle(
         state: FeedState
     ) = flow<FeedMutation> {
         navigator.navigateTo(
-            LightboxNavigationRoute(memoryCel.cel.mediaItem.id, Memory(memoryCel.yearsAgo), showMediaSyncState = true)
+            LightboxNavigationRoute(cel.mediaItem.id, Memory(yearsAgo), showMediaSyncState = true)
         )
     }
 }

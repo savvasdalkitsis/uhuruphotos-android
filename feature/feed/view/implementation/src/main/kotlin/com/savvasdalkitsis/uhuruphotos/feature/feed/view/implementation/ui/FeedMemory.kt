@@ -24,6 +24,11 @@ import androidx.compose.material.Card
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.drawWithCache
@@ -37,13 +42,19 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.ui.state.MemoryCel
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.Cel
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.state.CelState
 import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.isActive
 
 @Composable
 internal fun FeedMemory(
     memory: MemoryCel,
-    onMemorySelected: (memory: MemoryCel) -> Unit,
+    onMemorySelected: (memory: CelState, yearsAgo: Int) -> Unit,
 ) {
+    var index by remember {
+        mutableIntStateOf(0)
+    }
     Card(
         modifier = Modifier
             .padding(0.dp),
@@ -54,8 +65,9 @@ internal fun FeedMemory(
             modifier = Modifier
                 .width(130.dp)
         ) {
+            val cel = memory.cels[index]
             Crossfade(
-                targetState = memory.cel,
+                targetState = cel,
                 animationSpec = tween(1000),
                 label = "memoryCrossFade",
             ) { celState ->
@@ -79,7 +91,7 @@ internal fun FeedMemory(
                     itemPadding = 0.dp,
                     state = celState,
                     onSelected = {
-                        onMemorySelected(memory)
+                        onMemorySelected(cel, memory.yearsAgo)
                     },
                     aspectRatio = 0.7f,
                     contentScale = ContentScale.Crop,
@@ -95,6 +107,12 @@ internal fun FeedMemory(
                 fontSize = 18.sp,
                 fontWeight = FontWeight.Bold,
             )
+        }
+    }
+    LaunchedEffect(memory) {
+        while(isActive) {
+            delay(6000)
+            index = (index + 1) % memory.cels.size
         }
     }
 }
