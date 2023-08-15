@@ -72,8 +72,8 @@ fun SearchField(
             action(QueryChanged(newQuery))
         }
 
-        TextField(
-            modifier = Modifier
+        val modifier = remember(state.isSearchEnabled) {
+            Modifier
                 .fillMaxWidth()
                 .onFocusChanged { action(ChangeFocus(it.isFocused)) }
                 .run {
@@ -82,7 +82,10 @@ fun SearchField(
                     else
                         clickable { action(UpsellLoginFromSearch) }
                 }
-            ,
+        }
+
+        TextField(
+            modifier = modifier,
             enabled = state.isSearchEnabled,
             maxLines = 1,
             singleLine = true,

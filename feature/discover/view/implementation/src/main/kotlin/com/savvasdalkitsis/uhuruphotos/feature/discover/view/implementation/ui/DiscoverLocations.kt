@@ -28,6 +28,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -71,7 +72,9 @@ fun DiscoverLocations(
                     initialPosition = state.mapViewport.center,
                     initialZoom = state.mapViewport.zoom,
                 ),
-                contentPadding = PaddingValues(bottom = 24.dp),
+                contentPadding = remember {
+                    PaddingValues(bottom = 24.dp)
+                },
                 onMapClick = { action(LoadHeatMap) },
             )
             Box(modifier = Modifier

@@ -23,6 +23,9 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.derivedStateOf
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
@@ -79,7 +82,12 @@ internal fun ClusterHeader(
                     fontSize = 14.sp
                 )
             )
-            location.takeIf { !it.isNullOrEmpty() }?.let {
+            val locationDisplay by remember {
+                derivedStateOf {
+                    location.takeIf { !it.isNullOrEmpty() }
+                }
+            }
+            locationDisplay?.let {
                 Spacer(modifier = Modifier.height(8.dp))
                 Text(
                     text = it,

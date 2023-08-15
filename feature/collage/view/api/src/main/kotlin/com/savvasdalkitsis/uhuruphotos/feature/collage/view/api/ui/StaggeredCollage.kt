@@ -206,12 +206,16 @@ private fun ScrollbarThumb(
             .recomposeHighlighter()
             .padding(contentPadding)
     ) {
+        val primary = MaterialTheme.colors.primary
+        val thumbColor = remember {
+            primary.copy(alpha = 0.7f)
+        }
         InternalLazyStaggeredGridScrollbar(
             gridState = gridState,
             thickness = 8.dp,
             selectionMode = ScrollbarSelectionMode.Thumb,
-            thumbColor = MaterialTheme.colors.primary.copy(alpha = 0.7f),
-            thumbSelectedColor = MaterialTheme.colors.primary,
+            thumbColor = thumbColor,
+            thumbSelectedColor = primary,
         ) { _, isThumbSelected ->
             val show = showScrollbarHint && isThumbSelected
             AnimatedVisibility(
