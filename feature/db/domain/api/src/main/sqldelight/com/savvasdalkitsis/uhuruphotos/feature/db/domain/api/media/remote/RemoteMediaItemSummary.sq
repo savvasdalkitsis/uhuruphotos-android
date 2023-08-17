@@ -31,6 +31,9 @@ ORDER BY date DESC;
 insertHidden:
 INSERT OR REPLACE INTO remoteMediaItemSummary VALUES (?,?,?,?,?,?,?,?,?,?,'hiddenPhoto');
 
+deleteHidden:
+DELETE FROM remoteMediaItemSummary WHERE containerId == 'hiddenPhoto';
+
 insert:
 INSERT OR REPLACE INTO remoteMediaItemSummary VALUES ?;
 

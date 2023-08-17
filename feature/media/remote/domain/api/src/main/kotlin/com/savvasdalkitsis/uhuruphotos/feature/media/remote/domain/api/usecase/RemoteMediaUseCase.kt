@@ -20,7 +20,10 @@ import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.entities.media.DbRe
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.entities.media.DbRemoteMediaItemSummary
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemHash
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaOperationResult
+import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.api.model.RemoteMediaItemSummary
 import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.api.service.model.RemoteMediaCollection
+import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.api.service.model.RemoteMediaCollectionById
+import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.api.service.model.RemoteMediaCollectionsByDate
 import com.savvasdalkitsis.uhuruphotos.foundation.result.api.SimpleResult
 import kotlinx.coroutines.flow.Flow
 
@@ -69,4 +72,11 @@ interface RemoteMediaUseCase {
     ): SimpleResult
 
     suspend fun exists(hash: MediaItemHash): Result<Boolean, Throwable>
+
+    suspend fun refreshMediaCollections(
+        incompleteMediaCollections: suspend () -> RemoteMediaCollectionsByDate,
+        clearCollectionsBeforeRefreshing: () -> Unit,
+        completeMediaCollection: suspend (String) -> RemoteMediaCollectionById,
+        processSummary: (albumId: String, summary: RemoteMediaItemSummary) -> Unit,
+    ): SimpleResult
 }

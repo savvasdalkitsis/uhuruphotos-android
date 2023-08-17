@@ -17,20 +17,16 @@ package com.savvasdalkitsis.uhuruphotos.feature.trash.domain.implementation.repo
 
 import app.cash.sqldelight.coroutines.asFlow
 import app.cash.sqldelight.coroutines.mapToList
-import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.extensions.async
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.extensions.awaitList
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.extensions.awaitSingle
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.media.remote.GetTrash
-import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.media.remote.RemoteMediaCollectionsQueries
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.media.remote.RemoteMediaTrashQueries
 import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.api.model.toTrash
-import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.api.service.model.toDbModel
+import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.api.usecase.RemoteMediaUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.trash.domain.implementation.service.TrashService
 import com.savvasdalkitsis.uhuruphotos.foundation.group.api.model.Group
 import com.savvasdalkitsis.uhuruphotos.foundation.group.api.model.groupBy
-import com.savvasdalkitsis.uhuruphotos.foundation.log.api.runCatchingWithLog
 import com.savvasdalkitsis.uhuruphotos.foundation.result.api.SimpleResult
-import com.savvasdalkitsis.uhuruphotos.foundation.result.api.simple
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.distinctUntilChanged
@@ -38,7 +34,7 @@ import javax.inject.Inject
 
 class TrashRepository @Inject constructor(
     private val remoteMediaTrashQueries: RemoteMediaTrashQueries,
-    private val remoteMediaCollectionsQueries: RemoteMediaCollectionsQueries,
+    private val remoteMediaUseCase: RemoteMediaUseCase,
     private val trashService: TrashService,
 ) {
 
@@ -53,27 +49,13 @@ class TrashRepository @Inject constructor(
     suspend fun getTrash(): Group<String, GetTrash> =
         remoteMediaTrashQueries.getTrash().awaitList().groupBy(GetTrash::id).let(::Group)
 
-    suspend fun refreshTrash(): SimpleResult = runCatchingWithLog {
-        val trash = trashService.getTrash().results
-        async {
-            remoteMediaCollectionsQueries.transaction {
-                for (album in trash) {
-                    remoteMediaCollectionsQueries.insert(album.toDbModel())
-                }
-            }
-        }
-        async { remoteMediaTrashQueries.clear() }
-        for (incompleteAlbum in trash) {
-            val id = incompleteAlbum.id
-            val completeAlbum = trashService.getTrashMediaCollection(id).results
-            async {
-                completeAlbum.items
-                    .map { it.toTrash(id) }
-                    .forEach {
-                        remoteMediaTrashQueries.insert(it)
-                    }
-            }
-        }
-    }.simple()
+    suspend fun refreshTrash(): SimpleResult = remoteMediaUseCase.refreshMediaCollections(
+        incompleteMediaCollections = { trashService.getTrash() },
+        clearCollectionsBeforeRefreshing = { remoteMediaTrashQueries.clear() },
+        completeMediaCollection = { trashService.getTrashMediaCollection(it) },
+        processSummary = { albumId, summary -> remoteMediaTrashQueries.insert(
+            summary.toTrash(albumId)
+        )}
+    )
 
 }

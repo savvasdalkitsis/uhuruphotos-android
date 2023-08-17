@@ -20,12 +20,14 @@ import app.cash.sqldelight.coroutines.mapToList
 import app.cash.sqldelight.coroutines.mapToOneNotNull
 import com.github.michaelbull.result.Ok
 import com.github.michaelbull.result.map
+import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.entities.media.DbRemoteMediaCollections
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.entities.media.DbRemoteMediaItemDetails
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.entities.media.DbRemoteMediaItemSummary
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.extensions.async
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.extensions.awaitList
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.extensions.awaitSingle
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.extensions.awaitSingleOrNull
+import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.media.remote.RemoteMediaCollectionsQueries
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.media.remote.RemoteMediaItemDetailsQueries
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.media.remote.RemoteMediaItemSummaryQueries
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.media.remote.RemoteMediaTrashQueries
@@ -34,8 +36,6 @@ import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.api.model.toD
 import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.implementation.service.RemoteMediaService
 import com.savvasdalkitsis.uhuruphotos.foundation.log.api.log
 import com.savvasdalkitsis.uhuruphotos.foundation.log.api.runCatchingWithLog
-import com.savvasdalkitsis.uhuruphotos.foundation.result.api.SimpleResult
-import com.savvasdalkitsis.uhuruphotos.foundation.result.api.simple
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.distinctUntilChanged
@@ -45,6 +45,7 @@ import kotlinx.coroutines.flow.take
 import javax.inject.Inject
 
 class RemoteMediaRepository @Inject constructor(
+    private val remoteMediaCollectionsQueries: RemoteMediaCollectionsQueries,
     private val remoteMediaItemDetailsQueries: RemoteMediaItemDetailsQueries,
     private val remoteMediaItemSummaryQueries: RemoteMediaItemSummaryQueries,
     private val remoteMediaService: RemoteMediaService,
@@ -109,42 +110,6 @@ class RemoteMediaRepository @Inject constructor(
         }
     }
 
-    suspend fun refreshFavourites(favouriteThreshold: Int) = runCatchingWithLog {
-        val currentFavouriteIds = remoteMediaItemSummaryQueries.getFavourites(favouriteThreshold)
-            .awaitList()
-            .map { it.id }
-            .toSet()
-        val newFavourites = remoteMediaService.getFavouriteMedia().results.flatMap { it.items }
-        val newFavouriteIds = newFavourites.map { it.id }.toSet()
-        newFavourites.forEach {
-            async { remoteMediaItemSummaryQueries.setRating(it.rating, it.id) }
-        }
-        (currentFavouriteIds - newFavouriteIds).forEach {
-            val rating = remoteMediaService.getMediaItem(it).rating
-            async { remoteMediaItemSummaryQueries.setRating(rating, it) }
-        }
-    }.simple()
-
-    suspend fun refreshHidden(): SimpleResult = runCatchingWithLog {
-        val hidden = remoteMediaService.getHiddenMedia().results.flatMap { it.items }
-        async {
-            hidden.forEach {
-                remoteMediaItemSummaryQueries.insertHidden(
-                    id = it.id,
-                    dominantColor = it.dominantColor,
-                    aspectRatio = it.aspectRatio,
-                    location = it.location,
-                    rating = it.rating,
-                    url = it.url,
-                    date = it.date,
-                    birthTime = it.birthTime,
-                    type = it.type,
-                    videoLength = it.videoLength,
-                )
-            }
-        }
-    }.simple()
-
     suspend fun insertMediaItem(mediaItemDetails: DbRemoteMediaItemDetails) {
         async {
             remoteMediaItemDetailsQueries.insert(mediaItemDetails)
@@ -183,5 +148,9 @@ class RemoteMediaRepository @Inject constructor(
             remoteMediaItemSummaryQueries.delete(id)
             remoteMediaTrashQueries.delete(id)
         }
+    }
+
+    fun insertMediaCollection(remoteMediaCollections: DbRemoteMediaCollections) {
+        remoteMediaCollectionsQueries.insert(remoteMediaCollections)
     }
 }

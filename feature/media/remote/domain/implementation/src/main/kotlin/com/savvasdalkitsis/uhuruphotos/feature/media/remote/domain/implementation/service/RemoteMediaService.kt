@@ -17,13 +17,14 @@ package com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.implementati
 
 import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.api.model.RemoteMediaItem
 import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.api.model.RemoteMediaItemSummaryContainer
+import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.api.service.model.RemoteMediaCollectionById
+import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.api.service.model.RemoteMediaCollectionsByDate
 import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.implementation.service.model.RemoteMediaExistsResponse
 import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.implementation.service.model.RemoteMediaHashOperationResponseServiceModel
 import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.implementation.service.model.RemoteMediaItemDeleteRequestServiceModel
 import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.implementation.service.model.RemoteMediaItemDeletedRequestServiceModel
 import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.implementation.service.model.RemoteMediaItemFavouriteRequestServiceModel
 import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.implementation.service.model.RemoteMediaOperationResponseServiceModel
-import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.implementation.service.model.RemoteMediaResultsServiceModel
 import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.GET
@@ -55,10 +56,16 @@ interface RemoteMediaService {
     ): Response<RemoteMediaHashOperationResponseServiceModel>
 
     @GET("/api/albums/date/list/?favorite=true")
-    suspend fun getFavouriteMedia(): RemoteMediaResultsServiceModel
+    suspend fun getFavouriteMedia(): RemoteMediaCollectionsByDate
+
+    @GET("/api/albums/date/{id}/?favorite=true")
+    suspend fun getFavouriteMediaCollection(@Path("id") id: String): RemoteMediaCollectionById
 
     @GET("/api/albums/date/list/?hidden=true")
-    suspend fun getHiddenMedia(): RemoteMediaResultsServiceModel
+    suspend fun getHiddenMedia(): RemoteMediaCollectionsByDate
+
+    @GET("/api/albums/date/{id}/?hidden=true")
+    suspend fun getHiddenMediaCollection(@Path("id") id: String): RemoteMediaCollectionById
 
     @GET("/api/exists/{hash}/")
     suspend fun exists(@Path("hash") hash: String): RemoteMediaExistsResponse
