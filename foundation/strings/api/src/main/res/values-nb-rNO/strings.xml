@@ -300,4 +300,5 @@
     <string name="media_sync_status_remote_only">Media er kun tilgjengelig på tjeneren</string>
     <string name="ui">Grensesnitt</string>
     <string name="feed_sync_job_configuration">Oppsett av jobben for synkronisering av strømmen</string>
+    <string name="hidden_media">Skjult media</string>
 </resources>
