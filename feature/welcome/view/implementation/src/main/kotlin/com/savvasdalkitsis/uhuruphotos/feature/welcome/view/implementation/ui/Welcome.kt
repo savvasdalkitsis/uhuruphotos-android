@@ -32,6 +32,7 @@ import androidx.compose.foundation.layout.sizeIn
 import androidx.compose.material.Button
 import androidx.compose.material.Card
 import androidx.compose.material.MaterialTheme
+import androidx.compose.material.OutlinedButton
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -128,7 +129,7 @@ internal fun Welcome(
                             horizontalArrangement = spacedBy(32.dp),
                         ) {
                             Spacer(modifier = Modifier.weight(1f))
-                            Button(
+                            OutlinedButton(
                                 modifier = Modifier.weight(1f),
                                 onClick = { action(LogOut) }
                             ) {
@@ -196,10 +197,10 @@ internal fun Welcome(
         }
         if (state.showNeedsAccess) {
             MultiButtonDialog(
-                title = "Permissions required",
+                title = stringResource(string.missing_permissions),
                 onDismiss = { action(HideNeedsAccess) },
                 extraButtons = listOf {
-                    Button(onClick = {
+                    OutlinedButton(onClick = {
                         action(HideNeedsAccess)
                         action(NavigateToAppSettings)
                     }) {

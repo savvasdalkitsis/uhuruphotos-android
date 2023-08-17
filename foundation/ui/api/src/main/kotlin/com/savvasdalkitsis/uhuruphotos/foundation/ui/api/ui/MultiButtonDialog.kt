@@ -26,6 +26,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material.AlertDialog
 import androidx.compose.material.Button
 import androidx.compose.material.MaterialTheme
+import androidx.compose.material.OutlinedButton
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -42,7 +43,7 @@ fun MultiButtonDialog(
     extraButtons: List<@Composable RowScope.()-> Unit> = emptyList(),
     negativeButtonText: String = stringResource(string.no),
     dismissButton: @Composable FlowRowScope.() -> Unit = {
-        Button(
+        OutlinedButton(
             modifier = Modifier
                 .recomposeHighlighter()
                 .weight(1f),
