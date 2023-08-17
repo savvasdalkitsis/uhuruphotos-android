@@ -23,6 +23,7 @@ import androidx.compose.foundation.lazy.staggeredgrid.rememberLazyStaggeredGridS
 import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.unit.dp
@@ -64,8 +65,8 @@ fun Collage(
         CompositionLocalProvider(
             LocalAnimatedVideoThumbnails provides (animatedThumbnails && collageDisplay.allowsAnimatedVideoThumbnails)
         ) {
-            StaggeredCollage(
-                modifier = modifier
+            val collageModifier = remember(collageDisplay.allowsPinchGestures) {
+                modifier
                     .recomposeHighlighter()
                     .let {
                         when {
@@ -73,9 +74,13 @@ fun Collage(
                                 collageDisplay,
                                 onChangeDisplay,
                             )
+
                             else -> it
                         }
-                    },
+                    }
+            }
+            StaggeredCollage(
+                modifier = collageModifier,
                 contentPadding = contentPadding,
                 state = state.clusters,
                 showSelectionHeader = showSelectionHeader,
@@ -99,6 +104,7 @@ fun Collage(
     }
 }
 
+@Composable
 private fun CollageDisplay.columnCount(
     widthSizeClass: WindowWidthSizeClass,
     landscape: Boolean,

@@ -88,7 +88,6 @@ internal fun FeedMemory(
                                 )
                             }
                         },
-                    itemPadding = 0.dp,
                     state = celState,
                     onSelected = {
                         onMemorySelected(cel, memory.yearsAgo)

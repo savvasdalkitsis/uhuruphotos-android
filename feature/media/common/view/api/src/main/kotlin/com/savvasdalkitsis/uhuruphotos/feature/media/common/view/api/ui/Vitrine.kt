@@ -72,7 +72,6 @@ private fun RowScope.GridItem(celState: CelState?) {
             onSelected = { _, -> },
             aspectRatio = 1f,
             contentScale = ContentScale.Crop,
-            itemPadding = 0.dp,
             miniIcons = true,
             selectable = false
         )

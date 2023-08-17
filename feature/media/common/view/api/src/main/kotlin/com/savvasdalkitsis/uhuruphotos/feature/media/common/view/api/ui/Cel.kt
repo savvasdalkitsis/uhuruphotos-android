@@ -47,7 +47,6 @@ import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemSelectionMode
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.state.CelState
@@ -66,7 +65,6 @@ fun Cel(
     aspectRatio: Float = state.mediaItem.ratio,
     contentScale: ContentScale = ContentScale.FillBounds,
     shape: Shape = RectangleShape,
-    itemPadding: Dp = 1.dp,
     miniIcons: Boolean = false,
     selectable: Boolean = true,
     showSyncState: Boolean = false,
@@ -89,7 +87,6 @@ fun Cel(
     Box(
         modifier = modifier
             .aspectRatio(aspectRatio)
-            .padding(itemPadding)
             .background(backgroundColor)
             .clip(shape)
             .let {

@@ -24,6 +24,7 @@ import androidx.compose.animation.scaleOut
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
+import androidx.compose.foundation.layout.Arrangement.spacedBy
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxScope
 import androidx.compose.foundation.layout.PaddingValues
@@ -86,7 +87,9 @@ internal fun StaggeredCollage(
     onClusterSelectionClicked: (Cluster) -> Unit,
 ) {
     Box {
-        val topPadding = contentPadding.calculateTopPadding()
+        val topPadding = remember {
+            contentPadding.calculateTopPadding()
+        }
         LazyVerticalStaggeredGrid(
             modifier = modifier
                 .recomposeHighlighter()
@@ -95,7 +98,11 @@ internal fun StaggeredCollage(
                     end = contentPadding.calculateEndPadding(LocalLayoutDirection.current),
                 ),
             state = gridState,
-            columns = StaggeredGridCells.Fixed(columnCount),
+            columns = remember(columnCount) {
+                StaggeredGridCells.Fixed(columnCount)
+            },
+            verticalItemSpacing = 2.dp,
+            horizontalArrangement = spacedBy(2.dp),
         ) {
             item("contentPaddingTop", "contentPadding", span = StaggeredGridItemSpan.FullLine) {
                 Spacer(modifier = Modifier.height(topPadding))
@@ -133,14 +140,14 @@ internal fun StaggeredCollage(
                             modifier = Modifier.animateItemPlacement(),
                             state = cel,
                             onSelected = onCelSelected,
-                            onLongClick = onCelLongPressed,
                             aspectRatio = aspectRatio,
-                            showSyncState = showSyncState,
                             contentScale = when {
                                 maintainAspectRatio -> ContentScale.FillBounds
                                 else -> ContentScale.Crop
                             },
                             miniIcons = miniIcons,
+                            showSyncState = showSyncState,
+                            onLongClick = onCelLongPressed,
                         )
                     }
                 }

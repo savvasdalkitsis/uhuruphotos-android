@@ -48,15 +48,15 @@ internal fun CelRow(
                         modifier = Modifier
                             .weight(aspectRatio),
                         state = item.cel,
-                        showSyncState = showSyncState,
                         onSelected = onCelSelected,
-                        onLongClick = onCelLongPressed,
                         aspectRatio = aspectRatio,
                         contentScale = when {
                             maintainAspectRatio -> ContentScale.FillBounds
                             else -> ContentScale.Crop
                         },
                         miniIcons = miniIcons,
+                        showSyncState = showSyncState,
+                        onLongClick = onCelLongPressed,
                     )
                 }
                 EmptySlot -> Spacer(modifier = Modifier.weight(1f))
