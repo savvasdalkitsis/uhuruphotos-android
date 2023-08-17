@@ -100,14 +100,17 @@ internal class FeedUseCase @Inject constructor(
         val allLocalDays = allLocalMedia.groupBy { it.displayDayDate }
         val combined = mergeLocalMediaIntoExistingRemoteDays(allRemoteDays, allLocalDays) +
                 remainingLocalDays(allRemoteDays, allLocalDays)
-        return combined.sortedByDescending { it.unformattedDate }
+        return combined
+            .asSequence()
+            .sortedByDescending { it.unformattedDate }
             .markDownloading(mediaBeingDownloaded)
             .markUploading(mediaBeingUploaded)
+            .toList()
     }
 
-    private fun List<MediaCollection>.markDownloading(
+    private fun Sequence<MediaCollection>.markDownloading(
         inProgress: Set<String>,
-    ): List<MediaCollection> = map { collection ->
+    ): Sequence<MediaCollection> = map { collection ->
         collection.copy(mediaItems = collection.mediaItems.map { mediaItem ->
             val id = mediaItem.id
             if (mediaItem is MediaItemInstance
@@ -121,9 +124,9 @@ internal class FeedUseCase @Inject constructor(
         })
     }
 
-    private fun List<MediaCollection>.markUploading(
+    private fun Sequence<MediaCollection>.markUploading(
         inProgress: Set<Long>,
-    ): List<MediaCollection> = map { collection ->
+    ): Sequence<MediaCollection> = map { collection ->
         collection.copy(mediaItems = collection.mediaItems.map { mediaItem ->
             val id = mediaItem.id
             if (mediaItem is MediaItemInstance
