@@ -56,18 +56,19 @@ fun LightboxBottomActionBar(
     index: Int,
     action: (LightboxAction) -> Unit,
 ) {
-    AnimatedContent(
-        targetState = state.media[index].showEditApps,
-        transitionSpec = {
-            fadeIn() + slideInVertically { it } togetherWith fadeOut() + slideOutVertically { it }
-        },
-        label = "editApps",
-    ) { apps ->
+    val apps = state.media[index].showEditApps
+//    AnimatedContent(
+//        targetState = state.media[index].showEditApps,
+//        transitionSpec = {
+//            fadeIn() + slideInVertically { it } togetherWith fadeOut() + slideOutVertically { it }
+//        },
+//        label = "editApps",
+//    ) { apps ->
         when {
             apps.isEmpty() -> LightboxBottomActionBarOptions(state, index, action)
             else -> LightboxBottomActionBarEdit(state, index, action)
         }
-    }
+//    }
 }
 
 @Composable
