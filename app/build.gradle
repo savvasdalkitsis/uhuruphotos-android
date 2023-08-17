@@ -82,4 +82,7 @@ dependencies {
             libs.hilt,
             libs.permissions.base,
     )
+    debugImplementation(
+            libs.leaks,
+    )
 }
