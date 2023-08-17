@@ -19,6 +19,7 @@ import androidx.compose.ui.hapticfeedback.HapticFeedback
 import androidx.compose.ui.hapticfeedback.HapticFeedbackType
 import androidx.compose.ui.platform.SoftwareKeyboardController
 import com.google.accompanist.systemuicontroller.SystemUiController
+import com.savvasdalkitsis.uhuruphotos.foundation.launchers.api.onMain
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.usecase.UiUseCase
 import se.ansman.dagger.auto.AutoBind
 import javax.inject.Inject
@@ -34,15 +35,21 @@ class UiUseCase @Inject constructor(
     lateinit var haptics: HapticFeedback
 
     override fun hideKeyboard() {
-        keyboardController.hide()
+        onMain {
+            keyboardController.hide()
+        }
     }
 
     override fun setSystemBarsVisibility(visible: Boolean) {
-        systemUiController.isSystemBarsVisible = visible
+        onMain {
+            systemUiController.isSystemBarsVisible = visible
+        }
     }
 
     override fun performLongPressHaptic() {
-        haptics.performHapticFeedback(HapticFeedbackType.LongPress)
+        onMain {
+            haptics.performHapticFeedback(HapticFeedbackType.LongPress)
+        }
     }
 
 }

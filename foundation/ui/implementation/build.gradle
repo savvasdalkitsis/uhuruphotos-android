@@ -3,8 +3,9 @@ android {
 }
 
 dependencies {
-    implementation project(":foundation:ui:api")
     implementation(
+            project(":foundation:launchers:api"),
+            project(":foundation:ui:api"),
             libs.accompanist.systemui,
             libs.androidx.compose.ui,
             libs.autodagger.core,
