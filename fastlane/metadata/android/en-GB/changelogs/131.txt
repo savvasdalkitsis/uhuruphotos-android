@@ -1,0 +1,6 @@
+* New onboarding wizard. Users can now use UhuruPhotos without a LibrePhotos server.
+* Upload media to server from lightbox implemented
+* Fixing crash in Android 14
+* Fixing bugs with username and password fields text behaviour
+* Galleries are now edge to edge
+* Removed old unused apis and moving to new ones
