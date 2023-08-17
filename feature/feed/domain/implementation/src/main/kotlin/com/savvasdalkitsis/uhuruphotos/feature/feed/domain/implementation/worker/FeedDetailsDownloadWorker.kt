@@ -31,9 +31,7 @@ import com.savvasdalkitsis.uhuruphotos.foundation.notification.api.ForegroundNot
 import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedInject
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
-import kotlinx.coroutines.withContext
 
 @HiltWorker
 internal class FeedDetailsDownloadWorker @AssistedInject constructor(
@@ -51,7 +49,7 @@ internal class FeedDetailsDownloadWorker @AssistedInject constructor(
     cancelBroadcastReceiver = CancelFeedDetailsDownloadWorkBroadcastReceiver::class.java,
 ) {
 
-    override suspend fun work() = withContext(Dispatchers.IO) {
+    override suspend fun work(): Result {
         updateProgress(0)
         val items = feedUseCase.getFeed(FeedFetchType.ALL).flatMap { it.mediaItems }.mapNotNull { it.id.findRemote }
         val total = items.size
@@ -65,7 +63,7 @@ internal class FeedDetailsDownloadWorker @AssistedInject constructor(
                 updateProgress(current, total)
             }
         }
-        when(result) {
+        return when(result) {
             is Ok -> Result.success()
             is Err -> failOrRetry()
         }

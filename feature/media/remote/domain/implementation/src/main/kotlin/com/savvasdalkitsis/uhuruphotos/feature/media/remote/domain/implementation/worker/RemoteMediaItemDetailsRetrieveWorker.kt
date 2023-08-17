@@ -27,8 +27,6 @@ import com.savvasdalkitsis.uhuruphotos.foundation.notification.api.NotificationC
 import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedInject
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.withContext
 
 @HiltWorker
 class RemoteMediaItemDetailsRetrieveWorker @AssistedInject constructor(
@@ -38,7 +36,7 @@ class RemoteMediaItemDetailsRetrieveWorker @AssistedInject constructor(
     private val foregroundInfoBuilder: ForegroundInfoBuilder,
 ) : CoroutineWorker(context, params) {
 
-    override suspend fun doWork() = withContext(Dispatchers.IO) {
+    override suspend fun doWork(): Result =
         when (remoteMediaRepository.refreshDetailsNow(params.inputData.getString(KEY_ID)!!)) {
             is Ok -> Result.success()
             is Err -> if (params.runAttemptCount < 2) {
@@ -47,7 +45,6 @@ class RemoteMediaItemDetailsRetrieveWorker @AssistedInject constructor(
                 Result.failure()
             }
         }
-    }
 
     override suspend fun getForegroundInfo() = foregroundInfoBuilder.build(
         applicationContext,

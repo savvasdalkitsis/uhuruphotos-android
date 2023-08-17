@@ -19,3 +19,4 @@ google-services.json
 app/google-services.json
 fastlane/google.json
 thunder-tests/thunderEnvironment.json
+*.log

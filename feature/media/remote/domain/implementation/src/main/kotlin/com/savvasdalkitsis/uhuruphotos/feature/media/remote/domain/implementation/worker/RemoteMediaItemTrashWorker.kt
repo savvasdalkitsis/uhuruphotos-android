@@ -29,8 +29,6 @@ import com.savvasdalkitsis.uhuruphotos.foundation.notification.api.NotificationC
 import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedInject
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.withContext
 import retrofit2.Response
 
 @HiltWorker
@@ -42,7 +40,7 @@ class RemoteMediaItemTrashWorker @AssistedInject constructor(
     private val foregroundInfoBuilder: ForegroundInfoBuilder,
 ) : CoroutineWorker(context, params) {
 
-    override suspend fun doWork() = withContext(Dispatchers.IO) {
+    override suspend fun doWork() =
         try {
             val id = params.inputData.getString(KEY_ID)!!
             val response = remoteMediaService.setMediaItemDeleted(
@@ -64,7 +62,6 @@ class RemoteMediaItemTrashWorker @AssistedInject constructor(
             log(e)
             failOrRetry()
         }
-    }
 
     private fun shouldTrashLocally(response: Response<RemoteMediaOperationResponseServiceModel>) =
         response.code() in 200..299 && response.body()?.status == true

@@ -32,9 +32,7 @@ import com.savvasdalkitsis.uhuruphotos.foundation.notification.api.ForegroundNot
 import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedInject
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
-import kotlinx.coroutines.withContext
 
 @HiltWorker
 internal class PrecacheFeedThumbnailsWorker @AssistedInject constructor(
@@ -53,7 +51,7 @@ internal class PrecacheFeedThumbnailsWorker @AssistedInject constructor(
     cancelBroadcastReceiver = CancelPrecacheWorkBroadcastReceiver::class.java,
 ) {
 
-    override suspend fun work() = withContext(Dispatchers.IO) {
+    override suspend fun work(): Result {
         updateProgress(0)
         val serverUrl = serverUseCase.getServerUrl()!!
         val mediaItemIds = feedRepository.getRemoteMediaCollectionsByDate(
@@ -77,7 +75,7 @@ internal class PrecacheFeedThumbnailsWorker @AssistedInject constructor(
                 }
             updateProgress(index, mediaItemIds.size)
         }
-        Result.success()
+        return Result.success()
     }
 
     companion object {

@@ -29,8 +29,6 @@ import com.savvasdalkitsis.uhuruphotos.foundation.notification.api.NotificationC
 import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedInject
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.withContext
 
 @HiltWorker
 class RemoteMediaItemFavouriteWorker @AssistedInject constructor(
@@ -41,7 +39,7 @@ class RemoteMediaItemFavouriteWorker @AssistedInject constructor(
     private val foregroundInfoBuilder: ForegroundInfoBuilder,
 ) : CoroutineWorker(context, params) {
 
-    override suspend fun doWork() = withContext(Dispatchers.IO) {
+    override suspend fun doWork(): Result =
         try {
             val response = remoteMediaService.setMediaItemFavourite(
                 RemoteMediaItemFavouriteRequestServiceModel(
@@ -65,8 +63,6 @@ class RemoteMediaItemFavouriteWorker @AssistedInject constructor(
                 Result.failure()
             }
         }
-    }
-
 
     override suspend fun getForegroundInfo() = foregroundInfoBuilder.build(
         applicationContext,

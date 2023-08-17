@@ -27,9 +27,7 @@ import com.savvasdalkitsis.uhuruphotos.foundation.notification.api.ForegroundNot
 import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedInject
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
-import kotlinx.coroutines.withContext
 
 @HiltWorker
 internal class FeedDownloadWorker @AssistedInject constructor(
@@ -46,14 +44,14 @@ internal class FeedDownloadWorker @AssistedInject constructor(
     cancelBroadcastReceiver = CancelFeedDownloadWorkBroadcastReceiver::class.java,
 ) {
 
-    override suspend fun work() = withContext(Dispatchers.IO) {
+    override suspend fun work(): Result {
         val shallow = params.inputData.getBoolean(KEY_SHALLOW, false)
         updateProgress(0)
         val result = feedRepository.refreshRemoteMediaCollections(shallow) { current, total ->
             delay(300)
             updateProgress(current, total)
         }
-        when(result) {
+        return when(result) {
             is Ok -> Result.success()
             is Err -> Result.retry()
         }

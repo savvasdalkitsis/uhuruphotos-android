@@ -26,6 +26,8 @@ import androidx.work.WorkInfo
 import androidx.work.WorkerParameters
 import androidx.work.workDataOf
 import com.savvasdalkitsis.uhuruphotos.math.toProgressPercent
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 
 abstract class ForegroundNotificationWorker<BR>(
     context: Context,
@@ -39,10 +41,10 @@ abstract class ForegroundNotificationWorker<BR>(
 
     private val notificationManager = NotificationManagerCompat.from(applicationContext)
 
-    final override suspend fun doWork(): Result {
+    final override suspend fun doWork(): Result = withContext(Dispatchers.IO) {
         setForeground(createForegroundInfo(0))
         updateProgress(0)
-        return work()
+        work()
     }
 
     abstract suspend fun work(): Result

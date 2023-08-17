@@ -26,9 +26,7 @@ import com.savvasdalkitsis.uhuruphotos.foundation.notification.api.ForegroundNot
 import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedInject
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
-import kotlinx.coroutines.withContext
 
 @HiltWorker
 internal class LocalMediaSyncWorker @AssistedInject constructor(
@@ -44,9 +42,9 @@ internal class LocalMediaSyncWorker @AssistedInject constructor(
     notificationId = NOTIFICATION_ID,
 ) {
 
-    override suspend fun work() = withContext(Dispatchers.IO) {
+    override suspend fun work(): Result {
         log { "Starting local media sync" }
-        try {
+        return try {
             updateProgress(0)
             localMediaUseCase.refreshAll { current, total ->
                 delay(300)
