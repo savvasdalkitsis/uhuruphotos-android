@@ -12,7 +12,6 @@ import com.savvasdalkitsis.uhuruphotos.foundation.group.api.model.Group
 import com.savvasdalkitsis.uhuruphotos.foundation.group.api.model.groupBy
 import com.savvasdalkitsis.uhuruphotos.foundation.log.api.runCatchingWithLog
 import com.savvasdalkitsis.uhuruphotos.foundation.preferences.api.Preferences
-import com.savvasdalkitsis.uhuruphotos.foundation.preferences.api.set
 import com.savvasdalkitsis.uhuruphotos.foundation.result.api.simple
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
@@ -89,7 +88,7 @@ class SearchRepository @Inject constructor(
 
     fun removeFromRecentSearches(query: String) {
         val recent = preferences.getStringSet(recentSearches, emptySet())
-        preferences.set(recentSearches, recent - query)
+        preferences.setStringSet(recentSearches, recent - query)
     }
 
     fun clearRecentSearchSuggestions() {
