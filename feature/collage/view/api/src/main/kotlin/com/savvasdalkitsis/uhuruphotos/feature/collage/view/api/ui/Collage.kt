@@ -65,7 +65,7 @@ fun Collage(
         CompositionLocalProvider(
             LocalAnimatedVideoThumbnails provides (animatedThumbnails && collageDisplay.allowsAnimatedVideoThumbnails)
         ) {
-            val collageModifier = remember(collageDisplay.allowsPinchGestures) {
+            val collageModifier = remember(collageDisplay) {
                 modifier
                     .recomposeHighlighter()
                     .let {
