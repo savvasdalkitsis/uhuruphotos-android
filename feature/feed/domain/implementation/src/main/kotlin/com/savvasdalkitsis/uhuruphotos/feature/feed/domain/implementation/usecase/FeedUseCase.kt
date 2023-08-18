@@ -49,9 +49,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.flow.distinctUntilChanged
-import kotlinx.coroutines.flow.emptyFlow
 import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.map
 import se.ansman.dagger.auto.AutoBind
@@ -92,8 +90,8 @@ internal class FeedUseCase @Inject constructor(
     )
 
     private fun mergeRemoteWithLocalMedia(
-        allRemoteDays: List<MediaCollection>,
-        allLocalMedia: List<MediaItem>,
+        allRemoteDays: Sequence<MediaCollection>,
+        allLocalMedia: Sequence<MediaItem>,
         mediaBeingDownloaded: Set<String>,
         mediaBeingUploaded: Set<Long>,
     ): List<MediaCollection> {
@@ -101,7 +99,6 @@ internal class FeedUseCase @Inject constructor(
         val combined = mergeLocalMediaIntoExistingRemoteDays(allRemoteDays, allLocalDays) +
                 remainingLocalDays(allRemoteDays, allLocalDays)
         return combined
-            .asSequence()
             .sortedByDescending { it.unformattedDate }
             .markDownloading(mediaBeingDownloaded)
             .markUploading(mediaBeingUploaded)
@@ -150,7 +147,7 @@ internal class FeedUseCase @Inject constructor(
     override suspend fun refreshCluster(clusterId: String) =
         feedRepository.refreshRemoteMediaCollection(clusterId)
 
-    private fun Flow<List<MediaCollection>>.initialize() = distinctUntilChanged()
+    private fun Flow<Sequence<MediaCollection>>.initialize() = distinctUntilChanged()
         .safelyOnStartIgnoring {
             if (!feedRepository.hasRemoteMediaCollections()) {
                 refreshFeed(shallow = false)
@@ -190,7 +187,7 @@ internal class FeedUseCase @Inject constructor(
         }
 
     private fun mergeLocalMediaIntoExistingRemoteDays(
-        remoteDays: List<MediaCollection>,
+        remoteDays: Sequence<MediaCollection>,
         localDays: Map<String?, List<MediaItem>>
     ) = remoteDays.map { remoteDay ->
         val localMediaOnDay = localDays[remoteDay.displayTitle] ?: emptyList()
@@ -224,7 +221,7 @@ internal class FeedUseCase @Inject constructor(
     }
 
     private fun remainingLocalDays(
-        allRemoteDays: List<MediaCollection>,
+        allRemoteDays: Sequence<MediaCollection>,
         allLocalDays: Map<String?, List<MediaItem>>
     ) = allLocalDays
         .filter { (day, _) -> day !in allRemoteDays.map { it.displayTitle } }
@@ -243,8 +240,8 @@ internal class FeedUseCase @Inject constructor(
             .distinctUntilChanged()
             .map {
                 when (it) {
-                    is Found -> it.filteredWith(feedFetchType)
-                    else -> emptyList()
+                    is Found -> it.filteredWith(feedFetchType).asSequence()
+                    else -> emptySequence()
                 }
             }
 
@@ -256,7 +253,7 @@ internal class FeedUseCase @Inject constructor(
         feedFetchType: FeedFetchType,
         loadSmallInitialChunk: Boolean,
     ) = welcomeUseCase.flow(
-        withoutRemoteAccess = flowOf(emptyList()),
+        withoutRemoteAccess = flowOf(emptySequence()),
         withRemoteAccess = feedRepository.observeRemoteMediaCollectionsByDate(
             feedFetchType,
             loadSmallInitialChunk
@@ -266,7 +263,7 @@ internal class FeedUseCase @Inject constructor(
                     albums.toMediaCollectionSource()
                 }
             }.map {
-                it.toCollection()
+                it.toCollection().asSequence()
             }.initialize()
         )
 
@@ -275,12 +272,13 @@ internal class FeedUseCase @Inject constructor(
     ) = feedRepository.getRemoteMediaCollectionsByDate(feedFetchType)
         .mapValues { it.toMediaCollectionSource() }
         .toCollection()
+        .asSequence()
 
-    private suspend fun getLocalMediaFeed(feedFetchType: FeedFetchType): List<MediaItem> =
+    private suspend fun getLocalMediaFeed(feedFetchType: FeedFetchType) =
         when (val mediaOnDevice = mediaUseCase.getLocalMedia()) {
-            Error -> emptyList()
-            is Found -> mediaOnDevice.filteredWith(feedFetchType)
-            is RequiresPermissions -> emptyList()
+            Error -> emptySequence()
+            is Found -> mediaOnDevice.filteredWith(feedFetchType).asSequence()
+            is RequiresPermissions -> emptySequence()
         }
 
     private suspend fun getDownloading(): Set<String> = downloadUseCase.getDownloading()
