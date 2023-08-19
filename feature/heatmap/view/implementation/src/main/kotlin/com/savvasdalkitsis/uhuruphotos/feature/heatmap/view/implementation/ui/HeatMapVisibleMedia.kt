@@ -47,20 +47,27 @@ fun HeatMapVisibleMedia(
         val cels = remember(state.photosOnVisibleMap) {
             state.photosOnVisibleMap.map { it.toCel() }.toPersistentList()
         }
+        val displayTitle = stringResource(
+            string.media_on_map,
+            state.photosOnVisibleMap.size,
+            state.allMedia.size
+        )
         Collage(
             modifier = modifier,
             contentPadding = contentPadding,
             state = CollageState(
                 isLoading = false,
                 collageDisplay = HeatMapCollageDisplay,
-                clusters = persistentListOf(
-                    Cluster(
-                        id = "visibleItems",
-                        cels = cels,
-                        displayTitle = stringResource(string.media_on_map, state.photosOnVisibleMap.size, state.allMedia.size),
-                        location = null,
+                clusters = remember(displayTitle, cels) {
+                    persistentListOf(
+                        Cluster(
+                            id = "visibleItems",
+                            cels = cels,
+                            displayTitle = displayTitle,
+                            location = null,
+                        )
                     )
-                ),
+                },
             ),
             onCelSelected = { cel ->
                 action(SelectedCel(cel))

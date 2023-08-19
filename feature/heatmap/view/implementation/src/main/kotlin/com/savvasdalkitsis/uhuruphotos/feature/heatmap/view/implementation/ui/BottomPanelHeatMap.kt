@@ -24,7 +24,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material.BottomSheetScaffold
 import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
@@ -48,14 +47,14 @@ fun BottomPanelHeatMap(
     locationPermissionState: PermissionState,
     mapViewState: MapViewState
 ) {
-    val sheetSize: SheetSize by SheetSize.rememberSheetSize()
+    val sheetSize: SheetSize = SheetSize.rememberSheetSize()
     val sheetPeekHeight = 320.dp
 
     BottomSheetScaffold(
         sheetPeekHeight = sheetPeekHeight,
         sheetShape = MaterialTheme.shapes.large,
         sheetContent = {
-            val height = max(sheetPeekHeight, sheetSize.size.height - insetsTop() - 120.dp)
+            val height = max(sheetPeekHeight, sheetSize.size.value.height - insetsTop() - 120.dp)
             Column(
                 modifier = Modifier
                     .fillMaxWidth()

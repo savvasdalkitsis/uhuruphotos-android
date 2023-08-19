@@ -31,7 +31,6 @@ import androidx.compose.material.rememberModalBottomSheetState
 import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.getValue
 import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Modifier
@@ -55,7 +54,7 @@ internal fun Lightbox(
 ) {
     LightboxBackPressHandler(state, action)
     val infoSheetState = rememberModalBottomSheetState(initialValue = ModalBottomSheetValue.Hidden)
-    val sheetSize by SheetSize.rememberSheetSize()
+    val sheetSize = SheetSize.rememberSheetSize()
     val pagerState = rememberPagerState(
         initialPage = state.currentIndex,
         pageCount = { state.media.size },
@@ -79,7 +78,7 @@ internal fun Lightbox(
                     modifier = Modifier
                         .align(CenterHorizontally)
                         .clip(MaterialTheme.shapes.large)
-                        .heightIn(min = max(100.dp, sheetSize.size.height - insetsTop()))
+                        .heightIn(min = max(100.dp, sheetSize.size.value.height - insetsTop()))
                         .let {
                             when (LocalWindowSize.current.widthSizeClass) {
                                 WindowWidthSizeClass.Compact -> it

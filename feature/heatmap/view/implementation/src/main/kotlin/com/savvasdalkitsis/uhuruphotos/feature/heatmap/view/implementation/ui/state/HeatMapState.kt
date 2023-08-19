@@ -15,17 +15,21 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.heatmap.view.implementation.ui.state
 
+import androidx.compose.runtime.Immutable
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItem
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemsOnDevice
 import com.savvasdalkitsis.uhuruphotos.foundation.map.api.model.LatLon
 import com.savvasdalkitsis.uhuruphotos.foundation.map.api.model.Viewport
+import kotlinx.collections.immutable.ImmutableList
+import kotlinx.collections.immutable.persistentListOf
 
+@Immutable
 data class HeatMapState(
     val loading: Boolean = false,
-    val allPoints: List<LatLon> = emptyList(),
-    val pointsOnVisibleMap: List<LatLon> = emptyList(),
-    val allMedia: List<MediaItem> = emptyList(),
-    val photosOnVisibleMap: List<MediaItem> = emptyList(),
+    val allPoints: ImmutableList<LatLon> = persistentListOf(),
+    val pointsOnVisibleMap: ImmutableList<LatLon> = persistentListOf(),
+    val allMedia: ImmutableList<MediaItem> = persistentListOf(),
+    val photosOnVisibleMap: ImmutableList<MediaItem> = persistentListOf(),
     val showRequestPermissionForLocalMediaAccess: MediaItemsOnDevice.RequiresPermissions? = null,
     val initialViewport: Viewport? = null,
 )

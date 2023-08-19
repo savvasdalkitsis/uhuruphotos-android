@@ -17,7 +17,6 @@ package com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
-import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
@@ -29,14 +28,13 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.toSize
 
 class SheetSize private constructor(
-    var size: DpSize
+    var size: MutableState<DpSize>,
 ) {
 
     companion object {
         @Composable
-        fun rememberSheetSize(): MutableState<SheetSize> {
-            val size by remember { mutableStateOf(DpSize(0.dp, 0.dp)) }
-            return remember { mutableStateOf(SheetSize(size)) }
+        fun rememberSheetSize(): SheetSize {
+            return remember { SheetSize(mutableStateOf(DpSize(0.dp, 0.dp))) }
         }
     }
 }
@@ -45,7 +43,7 @@ fun Modifier.adjustingSheetSize(sheetSize: SheetSize) = composed {
     val density = LocalDensity.current
     onGloballyPositioned { coordinates ->
         with(density) {
-            sheetSize.size = coordinates.size.toSize().toDpSize()
+            sheetSize.size.value = coordinates.size.toSize().toDpSize()
         }
     }
 }
