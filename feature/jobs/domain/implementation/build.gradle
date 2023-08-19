@@ -9,7 +9,7 @@ dependencies {
             project(":feature:media:local:domain:api"),
             project(":feature:settings:domain:api"),
             project(":feature:welcome:domain:api"),
-            libs.autodagger.core,
+            libs.bundles.autodagger,
             libs.hilt,
     )
     kapt libs.autodagger.kapt

@@ -31,7 +31,11 @@ import retrofit2.http.GET
 import retrofit2.http.HTTP
 import retrofit2.http.POST
 import retrofit2.http.Path
+import se.ansman.dagger.auto.retrofit.AutoProvideService
+import javax.inject.Singleton
 
+@AutoProvideService
+@Singleton
 interface RemoteMediaService {
 
     @GET("/api/photos/{id}/")

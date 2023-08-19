@@ -8,7 +8,7 @@ dependencies {
             project(":foundation:ui:api"),
             libs.accompanist.systemui,
             libs.androidx.compose.ui,
-            libs.autodagger.core,
+            libs.bundles.autodagger,
             libs.hilt,
     )
     kapt libs.autodagger.kapt

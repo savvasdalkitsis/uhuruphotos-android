@@ -15,7 +15,7 @@ dependencies {
     implementation project(":foundation:initializer:api")
     implementation project(":feature:settings:domain:api")
     implementation(
-            libs.autodagger.core,
+            libs.bundles.autodagger,
             libs.coil.compose,
             libs.coil.gif,
             libs.coil.video,

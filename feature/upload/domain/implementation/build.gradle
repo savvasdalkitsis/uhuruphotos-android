@@ -15,7 +15,7 @@ dependencies {
             project(":foundation:log:api"),
             project(":foundation:notification:api"),
             project(":foundation:strings:api"),
-            libs.autodagger.core,
+            libs.bundles.autodagger,
             libs.hilt,
             libs.moshi,
             libs.retrofit.core,

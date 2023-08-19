@@ -7,7 +7,7 @@ dependencies {
     implementation project(":feature:feed:domain:api")
     implementation project(":foundation:date:api")
     implementation(
-            libs.autodagger.core,
+            libs.bundles.autodagger,
             libs.hilt,
     )
     kapt libs.autodagger.kapt

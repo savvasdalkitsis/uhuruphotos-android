@@ -25,7 +25,7 @@ dependencies {
     implementation(
             libs.androidx.compose.hilt.navigation,
             libs.androidx.compose.material,
-            libs.autodagger.core,
+            libs.bundles.autodagger,
             libs.bundles.permissions,
     )
     kapt libs.autodagger.kapt

@@ -17,7 +17,7 @@ dependencies {
             libs.androidx.compose.foundation,
             libs.androidx.compose.material,
             libs.androidx.compose.ui,
-            libs.autodagger.core,
+            libs.bundles.autodagger,
             libs.hilt,
             libs.bundles.androidx.media3,
     )

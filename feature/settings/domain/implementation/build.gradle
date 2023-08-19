@@ -10,7 +10,7 @@ dependencies {
             project(":foundation:log:api"),
             project(":foundation:preferences:api"),
             project(":foundation:video:api"),
-            libs.autodagger.core,
+            libs.bundles.autodagger,
             libs.coil.base,
             libs.hilt,
             libs.play,

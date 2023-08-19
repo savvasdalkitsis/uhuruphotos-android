@@ -7,7 +7,7 @@ dependencies {
     implementation project(":feature:media:remote:domain:api")
     implementation project(":foundation:log:api")
     implementation(
-            libs.autodagger.core,
+            libs.bundles.autodagger,
             libs.hilt,
             libs.sqldelight.coroutines,
             libs.retrofit.core,

@@ -17,7 +17,11 @@ package com.savvasdalkitsis.uhuruphotos.feature.site.domain.implementation.servi
 
 import com.savvasdalkitsis.uhuruphotos.feature.site.domain.api.model.SiteOptions
 import retrofit2.http.GET
+import se.ansman.dagger.auto.retrofit.AutoProvideService
+import javax.inject.Singleton
 
+@AutoProvideService
+@Singleton
 interface SiteService {
 
     @GET("/api/sitesettings")

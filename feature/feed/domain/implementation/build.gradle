@@ -27,7 +27,7 @@ dependencies {
             project(":foundation:worker:api"),
             libs.androidx.work,
             libs.androidx.work.hilt,
-            libs.autodagger.core,
+            libs.bundles.autodagger,
             libs.hilt,
             libs.sqldelight.coroutines,
             libs.retrofit.core,

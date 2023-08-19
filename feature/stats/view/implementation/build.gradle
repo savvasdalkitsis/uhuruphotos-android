@@ -19,7 +19,7 @@ dependencies {
             project(":foundation:ui:api"),
             libs.androidx.compose.hilt.navigation,
             libs.androidx.compose.material,
-            libs.autodagger.core,
+            libs.bundles.autodagger,
             libs.jetlime,
             libs.timeline,
             libs.vico,

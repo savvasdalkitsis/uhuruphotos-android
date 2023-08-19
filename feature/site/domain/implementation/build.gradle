@@ -5,6 +5,7 @@ dependencies {
     implementation project(":feature:site:domain:api")
     implementation project(":foundation:network:api")
     implementation(
+            libs.bundles.autodagger,
             libs.hilt,
             libs.retrofit.moshi,
     )

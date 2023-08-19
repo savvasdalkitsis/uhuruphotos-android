@@ -6,7 +6,7 @@ dependencies {
     implementation(
             project(":foundation:initializer:api"),
             libs.androidx.tracing,
-            libs.autodagger.core,
+            libs.bundles.autodagger,
             libs.hilt,
     )
     kapt libs.autodagger.kapt

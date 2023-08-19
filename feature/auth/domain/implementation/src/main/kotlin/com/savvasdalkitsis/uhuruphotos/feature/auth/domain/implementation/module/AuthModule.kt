@@ -23,7 +23,6 @@ import com.savvasdalkitsis.uhuruphotos.feature.auth.domain.api.TokenRefreshOkHtt
 import com.savvasdalkitsis.uhuruphotos.feature.auth.domain.implementation.cookies.WebkitCookieManager
 import com.savvasdalkitsis.uhuruphotos.feature.auth.domain.implementation.network.DynamicDomainInterceptor
 import com.savvasdalkitsis.uhuruphotos.feature.auth.domain.implementation.service.AuthenticationHeaderInterceptor
-import com.savvasdalkitsis.uhuruphotos.feature.auth.domain.implementation.service.AuthenticationService
 import com.savvasdalkitsis.uhuruphotos.feature.auth.domain.implementation.service.TokenRefreshInterceptor
 import com.savvasdalkitsis.uhuruphotos.feature.auth.domain.implementation.service.WebLoginInterceptor
 import com.savvasdalkitsis.uhuruphotos.foundation.network.api.OkHttpBuilder
@@ -87,12 +86,6 @@ class AuthModule {
     ): OkHttpClient = okHttpBuilder
         .addInterceptor(tokenRefreshInterceptor)
         .build()
-
-    @Provides
-    @Singleton
-    fun authenticationService(
-        @RetrofitWithoutTokenRefresh retrofit: Retrofit,
-    ): AuthenticationService = retrofit.create(AuthenticationService::class.java)
 
     @Qualifier
     @Retention(AnnotationRetention.BINARY)

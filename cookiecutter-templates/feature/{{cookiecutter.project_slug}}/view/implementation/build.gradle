@@ -19,7 +19,7 @@ dependencies {
             libs.androidx.compose.hilt.navigation,
             libs.androidx.compose.material,
             libs.androidx.compose.ui.tooling.preview,
-            libs.autodagger.core,
+            libs.bundles.autodagger,
     )
     debugImplementation(
             libs.androidx.compose.ui.tooling,

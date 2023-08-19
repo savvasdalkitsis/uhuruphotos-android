@@ -17,7 +17,7 @@ dependencies {
             project(":foundation:navigation:api"),
             libs.accompanist.webview,
             libs.androidx.compose.navigation,
-            libs.autodagger.core,
+            libs.bundles.autodagger,
     )
     kapt libs.autodagger.kapt
 }

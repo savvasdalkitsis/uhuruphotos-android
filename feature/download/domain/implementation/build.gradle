@@ -14,7 +14,7 @@ dependencies {
     implementation project(":feature:download:domain:api")
     implementation project(":foundation:log:api")
     implementation(
-            libs.autodagger.core,
+            libs.bundles.autodagger,
             libs.hilt,
             libs.kotlinx.coroutines,
             libs.sqldelight.coroutines,

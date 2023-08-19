@@ -20,7 +20,11 @@ import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.api.service.m
 import retrofit2.http.GET
 import retrofit2.http.Path
 import retrofit2.http.Query
+import se.ansman.dagger.auto.retrofit.AutoProvideService
+import javax.inject.Singleton
 
+@AutoProvideService
+@Singleton
 interface FeedService {
 
     @GET("/api/albums/date/list/")

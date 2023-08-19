@@ -7,7 +7,7 @@ dependencies {
             project(":foundation:activity:api"),
     )
     implementation(
-            libs.autodagger.core,
+            libs.bundles.autodagger,
             libs.hilt,
     )
     kapt libs.autodagger.kapt

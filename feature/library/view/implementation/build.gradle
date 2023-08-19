@@ -47,7 +47,7 @@ dependencies {
             libs.bundles.permissions,
             libs.androidx.compose.foundation,
             libs.androidx.compose.material,
-            libs.autodagger.core,
+            libs.bundles.autodagger,
             libs.reorder,
             libs.retrofit.core,
     )

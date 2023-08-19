@@ -21,7 +21,11 @@ import com.savvasdalkitsis.uhuruphotos.feature.auth.domain.implementation.servic
 import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.POST
+import se.ansman.dagger.auto.retrofit.AutoProvideService
+import javax.inject.Singleton
 
+@AutoProvideService
+@Singleton
 interface AuthenticationService {
 
     @POST("/api/auth/token/obtain/")

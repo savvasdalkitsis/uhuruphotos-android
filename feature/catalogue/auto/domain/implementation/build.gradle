@@ -11,7 +11,7 @@ dependencies {
     implementation project(":foundation:preferences:api")
     implementation project(":foundation:strings:api")
     implementation(
-            libs.autodagger.core,
+            libs.bundles.autodagger,
             libs.hilt,
             libs.sqldelight.coroutines,
             libs.retrofit.core,

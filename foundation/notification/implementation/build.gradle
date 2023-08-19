@@ -6,7 +6,7 @@ dependencies {
     implementation(
             libs.androidx.core,
             libs.androidx.work,
-            libs.autodagger.core,
+            libs.bundles.autodagger,
             libs.hilt,
     )
     kapt libs.autodagger.kapt

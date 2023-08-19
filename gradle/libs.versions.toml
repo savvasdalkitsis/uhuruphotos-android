@@ -66,6 +66,7 @@ appcenter-crashes= "com.microsoft.appcenter:appcenter-crashes:5.0.2"
 appyx = "com.bumble.appyx:core:1.3.0"
 assure = "com.afollestad.assure:coroutines:0.2.0"
 autodagger-core = { module = "se.ansman.dagger.auto:android", version.ref = "autodagger" }
+autodagger-retrofit = { module = "se.ansman.dagger.auto:retrofit", version.ref = "autodagger" }
 autodagger-kapt = { module = "se.ansman.dagger.auto:compiler", version.ref = "autodagger" }
 bubble-navigation = "com.github.savvasdalkitsis:BubbleNavigationBarCompose:1.0.2"
 crop = "com.github.moyuruaizawa:cropify:0.3.1"
@@ -147,6 +148,10 @@ androidx-media3 = [
     "androidx-media3-hls",
     "androidx-media3-okhttp",
     "androidx-media3-ui",
+]
+autodagger = [
+    "autodagger-core",
+    "autodagger-retrofit",
 ]
 lumberjack = [
     "lumberjack-core",

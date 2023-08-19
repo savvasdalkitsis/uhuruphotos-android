@@ -6,7 +6,7 @@ dependencies {
     implementation(
             project(":feature:heatmap:domain:api"),
             project(":foundation:preferences:api"),
-            libs.autodagger.core,
+            libs.bundles.autodagger,
             libs.hilt,
     )
     kapt libs.autodagger.kapt

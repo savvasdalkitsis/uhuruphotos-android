@@ -19,7 +19,11 @@ import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.api.service.m
 import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.api.service.model.RemoteMediaCollectionsByDate
 import retrofit2.http.GET
 import retrofit2.http.Path
+import se.ansman.dagger.auto.retrofit.AutoProvideService
+import javax.inject.Singleton
 
+@AutoProvideService
+@Singleton
 interface TrashService {
 
     @GET("/api/albums/date/list/?deleted=true")

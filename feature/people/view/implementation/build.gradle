@@ -29,7 +29,7 @@ dependencies {
             libs.androidx.compose.foundation,
             libs.androidx.compose.material,
             libs.androidx.compose.material.windowsize,
-            libs.autodagger.core,
+            libs.bundles.autodagger,
             libs.kotlinx.coroutines,
             libs.hilt,
             libs.moshi,

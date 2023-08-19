@@ -49,7 +49,7 @@ dependencies {
             libs.androidx.compose.material,
             libs.androidx.compose.ui.tooling.preview,
             libs.androidx.lifecycle,
-            libs.autodagger.core,
+            libs.bundles.autodagger,
             libs.moshi,
             libs.retrofit.core,
             libs.retrofit.moshi,

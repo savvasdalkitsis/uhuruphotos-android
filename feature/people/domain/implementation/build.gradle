@@ -10,7 +10,7 @@ dependencies {
     implementation project(':feature:people:domain:api')
     implementation project(':feature:media:remote:domain:api')
     implementation(
-            libs.autodagger.core,
+            libs.bundles.autodagger,
             libs.hilt,
             libs.moshi,
             libs.retrofit.core,

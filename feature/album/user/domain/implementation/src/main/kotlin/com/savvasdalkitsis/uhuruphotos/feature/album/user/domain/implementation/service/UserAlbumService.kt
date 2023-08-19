@@ -18,7 +18,11 @@ package com.savvasdalkitsis.uhuruphotos.feature.album.user.domain.implementation
 import com.savvasdalkitsis.uhuruphotos.feature.album.user.domain.implementation.service.model.UserAlbumServiceModel
 import retrofit2.http.GET
 import retrofit2.http.Path
+import se.ansman.dagger.auto.retrofit.AutoProvideService
+import javax.inject.Singleton
 
+@AutoProvideService
+@Singleton
 fun interface UserAlbumService {
 
     @GET("/api/albums/user/{id}/")

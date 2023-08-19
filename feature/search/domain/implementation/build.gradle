@@ -10,7 +10,7 @@ dependencies {
             project(":foundation:date:api"),
             project(":foundation:log:api"),
             project(":foundation:preferences:api"),
-            libs.autodagger.core,
+            libs.bundles.autodagger,
             libs.hilt,
             libs.moshi,
             libs.retrofit.core,

@@ -9,7 +9,7 @@ dependencies {
     implementation project(":foundation:notification:api")
     implementation project(":feature:settings:domain:api")
     implementation(
-            libs.autodagger.core,
+            libs.bundles.autodagger,
             libs.bundles.lumberjack,
             libs.hilt,
     )

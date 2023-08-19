@@ -28,7 +28,7 @@ dependencies {
     implementation project(":foundation:ui:api")
     implementation(
             libs.androidx.compose.material,
-            libs.autodagger.core,
+            libs.bundles.autodagger,
             libs.sqldelight.coroutines,
     )
     kapt libs.autodagger.kapt

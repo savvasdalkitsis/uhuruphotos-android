@@ -17,7 +17,11 @@ package com.savvasdalkitsis.uhuruphotos.feature.catalogue.auto.domain.implementa
 
 import com.savvasdalkitsis.uhuruphotos.feature.catalogue.auto.domain.implementation.service.model.AutoAlbums
 import retrofit2.http.GET
+import se.ansman.dagger.auto.retrofit.AutoProvideService
+import javax.inject.Singleton
 
+@AutoProvideService
+@Singleton
 interface AutoAlbumsService {
 
     @GET("api/albums/auto/list/")

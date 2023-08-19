@@ -34,7 +34,7 @@ dependencies {
             libs.androidx.compose.foundation.layout,
             libs.androidx.compose.material,
             libs.androidx.compose.ui,
-            libs.autodagger.core,
+            libs.bundles.autodagger,
             libs.hilt,
     )
     kapt libs.autodagger.kapt

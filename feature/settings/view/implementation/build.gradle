@@ -38,7 +38,7 @@ dependencies {
             libs.androidx.compose.material.windowsize,
             libs.androidx.compose.ui.tooling.preview,
             libs.androidx.work,
-            libs.autodagger.core,
+            libs.bundles.autodagger,
     )
     debugImplementation(
             libs.androidx.compose.ui.tooling,

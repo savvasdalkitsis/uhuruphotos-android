@@ -6,7 +6,7 @@ dependencies {
     api project(":foundation:exif:api")
     api project(":foundation:log:api")
     implementation(
-            libs.autodagger.core,
+            libs.bundles.autodagger,
             libs.exif,
             libs.hilt,
             libs.imaging,

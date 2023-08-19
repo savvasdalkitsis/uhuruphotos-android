@@ -9,7 +9,7 @@ dependencies {
     implementation project(":foundation:coroutines:api")
     implementation project(":foundation:log:api")
     implementation(
-            libs.autodagger.core,
+            libs.bundles.autodagger,
             libs.hilt,
             libs.sqldelight.coroutines,
             libs.retrofit.core,

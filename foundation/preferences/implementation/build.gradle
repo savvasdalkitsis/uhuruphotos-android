@@ -7,7 +7,7 @@ dependencies {
     implementation(
             libs.androidx.datastore.preferences,
             libs.androidx.preference,
-            libs.autodagger.core,
+            libs.bundles.autodagger,
             libs.flowpreferences,
             libs.hilt,
     )

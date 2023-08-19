@@ -27,7 +27,7 @@ dependencies {
             project(":foundation:toaster:api"),
             libs.androidx.compose.foundation,
             libs.androidx.compose.material,
-            libs.autodagger.core,
+            libs.bundles.autodagger,
             libs.hilt,
     )
     kapt libs.autodagger.kapt

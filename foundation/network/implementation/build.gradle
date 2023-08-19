@@ -12,7 +12,7 @@ dependencies {
     )
 
     implementation(
-            libs.autodagger.core,
+            libs.bundles.autodagger,
             libs.hilt,
             libs.logger,
             libs.okhttp,

@@ -43,7 +43,7 @@ dependencies {
             libs.androidx.compose.navigation,
             libs.androidx.compose.ui,
             libs.androidx.lifecycle,
-            libs.autodagger.core,
+            libs.bundles.autodagger,
             libs.bundles.permissions,
             libs.hilt,
             libs.infobar,

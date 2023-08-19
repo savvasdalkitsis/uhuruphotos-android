@@ -59,7 +59,7 @@ dependencies {
             libs.androidx.compose.ui.tooling.preview,
             libs.androidx.work,
             libs.androidx.work.hilt,
-            libs.autodagger.core,
+            libs.bundles.autodagger,
             libs.bundles.permissions,
             libs.coil.base,
             libs.exif,

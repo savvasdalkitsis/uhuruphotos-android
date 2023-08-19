@@ -27,7 +27,7 @@ dependencies {
     implementation project(":foundation:result:api")
     implementation(
             libs.androidx.compose.hilt.navigation,
-            libs.autodagger.core,
+            libs.bundles.autodagger,
     )
     kapt libs.autodagger.kapt
 }

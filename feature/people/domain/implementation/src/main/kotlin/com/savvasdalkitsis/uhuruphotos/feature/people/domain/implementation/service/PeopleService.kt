@@ -19,7 +19,11 @@ import com.savvasdalkitsis.uhuruphotos.feature.people.domain.api.service.model.P
 import com.savvasdalkitsis.uhuruphotos.feature.people.domain.implementation.service.model.PeopleResult
 import retrofit2.http.GET
 import retrofit2.http.Path
+import se.ansman.dagger.auto.retrofit.AutoProvideService
+import javax.inject.Singleton
 
+@AutoProvideService
+@Singleton
 interface PeopleService {
 
     @GET("/api/persons/")

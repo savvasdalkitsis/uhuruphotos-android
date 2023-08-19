@@ -78,7 +78,7 @@ dependencies {
             libs.androidx.splash,
             libs.androidx.work.hilt,
             libs.appcenter.crashes,
-            libs.autodagger.core,
+            libs.bundles.autodagger,
             libs.hilt,
             libs.permissions.base,
     )
