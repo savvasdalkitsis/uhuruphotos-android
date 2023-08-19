@@ -47,6 +47,7 @@ dependencies {
             project(":foundation:ui:api"),
             libs.androidx.compose.hilt.navigation,
             libs.androidx.compose.material,
+            libs.androidx.compose.material.windowsize,
             libs.androidx.compose.ui.tooling.preview,
             libs.androidx.lifecycle,
             libs.bundles.autodagger,

@@ -16,9 +16,12 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.feature.home.view.api.ui
 
 import androidx.annotation.StringRes
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Icon
 import androidx.compose.material.LocalContentColor
 import androidx.compose.material.MaterialTheme
@@ -91,11 +94,15 @@ fun HomeNavigationBar(
             elevation = 0.dp,
             backgroundColor = Color.Transparent,
         ) {
-            Items(
-                homeFeedDisplay = homeFeedDisplay,
-                showLibrary = showLibrary,
-                onReselected = onReselected,
-            )
+            Column(
+                modifier = Modifier.verticalScroll(rememberScrollState())
+            ) {
+                Items(
+                    homeFeedDisplay = homeFeedDisplay,
+                    showLibrary = showLibrary,
+                    onReselected = onReselected,
+                )
+            }
         }
     }
 }

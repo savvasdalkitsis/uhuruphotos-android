@@ -15,6 +15,7 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.discover.view.implementation.ui
 
+import android.content.res.Configuration.ORIENTATION_LANDSCAPE
 import androidx.compose.animation.animateContentSize
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
@@ -24,6 +25,7 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Popup
 import com.savvasdalkitsis.uhuruphotos.feature.discover.view.implementation.seam.actions.DiscoverAction
@@ -42,9 +44,13 @@ internal fun SearchSuggestions(
                 .padding(horizontal = 16.dp, vertical = 8.dp),
             elevation = 2.dp,
         ) {
+            val height = when (LocalConfiguration.current.orientation) {
+                ORIENTATION_LANDSCAPE -> 120.dp
+                else -> 320.dp
+            }
             LazyColumn(
                 modifier = Modifier
-                    .heightIn(max = 320.dp)
+                    .heightIn(max = height)
                     .animateContentSize()
             ) {
                 for (suggestion in state.searchSuggestions) {

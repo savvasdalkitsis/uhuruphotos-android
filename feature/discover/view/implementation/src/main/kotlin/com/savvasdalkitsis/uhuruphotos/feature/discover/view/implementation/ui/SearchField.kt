@@ -34,6 +34,7 @@ import androidx.compose.material.TextFieldDefaults
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.Search
+import androidx.compose.material3.windowsizeclass.WindowHeightSizeClass
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -54,6 +55,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.discover.view.implementation.seam
 import com.savvasdalkitsis.uhuruphotos.feature.discover.view.implementation.seam.actions.UpsellLoginFromSearch
 import com.savvasdalkitsis.uhuruphotos.feature.discover.view.implementation.ui.state.DiscoverState
 import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
+import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.window.LocalWindowSize
 
 @Composable
 fun SearchField(
@@ -134,8 +136,9 @@ fun SearchField(
             value = query,
             onValueChange = ::changeQuery
         )
+        val heightShort = LocalWindowSize.current.heightSizeClass == WindowHeightSizeClass.Compact
         AnimatedVisibility(
-            visible = query.isNotEmpty() && state.searchSuggestions.isNotEmpty(),
+            visible = !heightShort && query.isNotEmpty() && state.searchSuggestions.isNotEmpty(),
         ) {
             SearchSuggestions(state, action) {
                 query = it
