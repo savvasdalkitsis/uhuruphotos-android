@@ -30,4 +30,5 @@ data object AutoAlbumCollageDisplay: CollageDisplay {
     override val zoomIn = this
     override val zoomOut = this
     override val allowsPinchGestures = false
+    override val usingStaggeredGrid = true
 }

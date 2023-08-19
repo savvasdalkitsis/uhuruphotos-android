@@ -13,6 +13,7 @@ dependencies {
     api(
             project(":foundation:compose:api"),
             libs.androidx.constraint,
+            libs.scrollbar,
     )
     implementation project(":foundation:icons:api")
     implementation project(":foundation:strings:api")

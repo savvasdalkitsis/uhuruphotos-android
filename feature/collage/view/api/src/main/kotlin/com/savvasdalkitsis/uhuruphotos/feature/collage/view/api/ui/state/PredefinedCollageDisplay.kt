@@ -33,6 +33,7 @@ enum class PredefinedCollageDisplay(
     override val maintainAspectRatio: Boolean,
     override val allowsAnimatedVideoThumbnails: Boolean = true,
     @StringRes override val friendlyName: Int,
+    override val usingStaggeredGrid: Boolean = true,
 ) : CollageDisplay {
     YEARLY(
         miniIcons = true,

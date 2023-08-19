@@ -17,9 +17,6 @@ package com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui
 
 import android.content.res.Configuration
 import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.lazy.staggeredgrid.LazyStaggeredGridItemScope
-import androidx.compose.foundation.lazy.staggeredgrid.LazyStaggeredGridState
-import androidx.compose.foundation.lazy.staggeredgrid.rememberLazyStaggeredGridState
 import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
@@ -37,6 +34,9 @@ import com.savvasdalkitsis.uhuruphotos.foundation.image.api.LocalAnimatedVideoTh
 import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.FullProgressBar
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.NoContent
+import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.grid.SmartGridItemScope
+import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.grid.SmartGridState
+import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.grid.rememberSmartGridState
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.window.LocalWindowSize
 
 @Composable
@@ -48,8 +48,8 @@ fun Collage(
     showSyncState: Boolean = false,
     showStickyHeaders: Boolean = false,
     showScrollbarHint: Boolean = false,
-    gridState: LazyStaggeredGridState = rememberLazyStaggeredGridState(),
-    collageHeader: @Composable (LazyStaggeredGridItemScope.() -> Unit)? = null,
+    gridState: SmartGridState = rememberSmartGridState(state.collageDisplay.usingStaggeredGrid),
+    collageHeader: @Composable (SmartGridItemScope.() -> Unit)? = null,
     emptyContent: @Composable () -> Unit = { NoContent(string.no_media) },
     onCelSelected: CelSelected = { _ -> },
     onChangeDisplay: (CollageDisplay) -> Unit = {},
@@ -79,7 +79,7 @@ fun Collage(
                         }
                     }
             }
-            StaggeredCollage(
+            SmartCollage(
                 modifier = collageModifier,
                 contentPadding = contentPadding,
                 state = state.clusters,

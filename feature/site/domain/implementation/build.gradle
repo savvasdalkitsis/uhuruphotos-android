@@ -9,4 +9,5 @@ dependencies {
             libs.hilt,
             libs.retrofit.moshi,
     )
+    kapt libs.autodagger.kapt
 }

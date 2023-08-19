@@ -31,4 +31,5 @@ data object HeatMapCollageDisplay : CollageDisplay {
     override val zoomIn get() = HeatMapCollageDisplay
     override val zoomOut get() = HeatMapCollageDisplay
     override val allowsPinchGestures = false
+    override val usingStaggeredGrid = false
 }

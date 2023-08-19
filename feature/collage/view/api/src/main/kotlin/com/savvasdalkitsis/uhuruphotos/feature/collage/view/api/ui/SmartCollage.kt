@@ -16,11 +16,8 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui
 
 import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.animation.animateContentSize
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
-import androidx.compose.animation.scaleIn
-import androidx.compose.animation.scaleOut
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
@@ -33,27 +30,15 @@ import androidx.compose.foundation.layout.calculateEndPadding
 import androidx.compose.foundation.layout.calculateStartPadding
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.lazy.staggeredgrid.LazyStaggeredGridItemScope
-import androidx.compose.foundation.lazy.staggeredgrid.LazyStaggeredGridState
-import androidx.compose.foundation.lazy.staggeredgrid.LazyVerticalStaggeredGrid
-import androidx.compose.foundation.lazy.staggeredgrid.StaggeredGridCells
-import androidx.compose.foundation.lazy.staggeredgrid.StaggeredGridItemSpan
-import androidx.compose.foundation.lazy.staggeredgrid.rememberLazyStaggeredGridState
 import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.TransformOrigin
-import androidx.compose.ui.hapticfeedback.HapticFeedbackType
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalDensity
-import androidx.compose.ui.platform.LocalHapticFeedback
 import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.Dp
@@ -64,11 +49,15 @@ import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.CelSelec
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.state.CelState
 import com.savvasdalkitsis.uhuruphotos.foundation.compose.api.recomposeHighlighter
 import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
+import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.grid.SmartGrid
+import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.grid.SmartGridItemScope
+import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.grid.SmartGridScrollbarThumb
+import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.grid.SmartGridState
+import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.grid.rememberSmartGridState
 import kotlinx.collections.immutable.ImmutableList
-import my.nanihadesuka.compose.ScrollbarSelectionMode
 
 @Composable
-internal fun StaggeredCollage(
+internal fun SmartCollage(
     modifier: Modifier = Modifier,
     contentPadding: PaddingValues,
     state: ImmutableList<Cluster>,
@@ -79,8 +68,8 @@ internal fun StaggeredCollage(
     showStickyHeaders: Boolean = false,
     showScrollbarHint: Boolean = false,
     columnCount: Int,
-    gridState: LazyStaggeredGridState = rememberLazyStaggeredGridState(),
-    collageHeader: @Composable (LazyStaggeredGridItemScope.() -> Unit)? = null,
+    gridState: SmartGridState = rememberSmartGridState(staggered = true),
+    collageHeader: @Composable (SmartGridItemScope.() -> Unit)? = null,
     onCelSelected: CelSelected,
     onCelLongPressed: (CelState) -> Unit,
     onClusterRefreshClicked: (Cluster) -> Unit,
@@ -90,30 +79,28 @@ internal fun StaggeredCollage(
         val topPadding = remember {
             contentPadding.calculateTopPadding()
         }
-        LazyVerticalStaggeredGrid(
+        SmartGrid(
             modifier = modifier
                 .recomposeHighlighter()
                 .padding(
                     start = contentPadding.calculateStartPadding(LocalLayoutDirection.current),
                     end = contentPadding.calculateEndPadding(LocalLayoutDirection.current),
                 ),
-            state = gridState,
-            columns = remember(columnCount) {
-                StaggeredGridCells.Fixed(columnCount)
-            },
+            gridState = gridState,
+            columns = columnCount,
             verticalItemSpacing = 2.dp,
             horizontalArrangement = spacedBy(2.dp),
         ) {
-            item("contentPaddingTop", "contentPadding", span = StaggeredGridItemSpan.FullLine) {
+            item("contentPaddingTop", "contentPadding", fullLine = true) {
                 Spacer(modifier = Modifier.height(topPadding))
             }
             collageHeader?.let { header ->
-                item("collageHeader", "collageHeader", span = StaggeredGridItemSpan.FullLine) {
+                item("collageHeader", "collageHeader", fullLine = true) {
                     header(this)
                 }
             }
             for ((clusterIndex, cluster) in state.withIndex()) {
-                item("item:$clusterIndex:header", "header", span = StaggeredGridItemSpan.FullLine) {
+                item("item:$clusterIndex:header", "header", fullLine = true) {
                     ClusterHeader(
                         modifier = Modifier
                             .animateItemPlacement()
@@ -152,7 +139,7 @@ internal fun StaggeredCollage(
                     }
                 }
             }
-            item("contentPaddingBottom", "contentPadding", span = StaggeredGridItemSpan.FullLine) {
+            item("contentPaddingBottom", "contentPadding", fullLine = true) {
                 Spacer(modifier = Modifier.height(contentPadding.calculateBottomPadding()))
             }
         }
@@ -192,65 +179,12 @@ internal fun StaggeredCollage(
                 onClusterSelectionClicked
             )
         }
-        ScrollbarThumb(
+        SmartGridScrollbarThumb(
             contentPadding,
             gridState,
             showScrollbarHint,
             scrollText
         )
-    }
-}
-
-@Composable
-private fun ScrollbarThumb(
-    contentPadding: PaddingValues,
-    gridState: LazyStaggeredGridState,
-    showScrollbarHint: Boolean,
-    scrollText: String
-) {
-    Box(
-        modifier = Modifier
-            .recomposeHighlighter()
-            .padding(contentPadding)
-    ) {
-        val primary = MaterialTheme.colors.primary
-        val thumbColor = remember {
-            primary.copy(alpha = 0.7f)
-        }
-        InternalLazyStaggeredGridScrollbar(
-            gridState = gridState,
-            thickness = 8.dp,
-            selectionMode = ScrollbarSelectionMode.Thumb,
-            thumbColor = thumbColor,
-            thumbSelectedColor = primary,
-        ) { _, isThumbSelected ->
-            val show = showScrollbarHint && isThumbSelected
-            AnimatedVisibility(
-                modifier = Modifier.padding(end = 8.dp),
-                enter = fadeIn() + scaleIn(transformOrigin = TransformOrigin(1f, 0.5f)),
-                exit = fadeOut() + scaleOut(transformOrigin = TransformOrigin(1f, 0.5f)),
-                visible = show,
-            ) {
-                Box(modifier = Modifier.padding(end = 52.dp)) {
-                    Box(
-                        modifier = Modifier
-                            .clip(MaterialTheme.shapes.small)
-                            .background(MaterialTheme.colors.onBackground.copy(alpha = 0.8f))
-                            .padding(8.dp)
-                            .animateContentSize(),
-                    ) {
-                        val haptic = LocalHapticFeedback.current
-                        Text(
-                            text = scrollText,
-                            color = MaterialTheme.colors.onPrimary,
-                        )
-                        LaunchedEffect(scrollText) {
-                            haptic.performHapticFeedback(HapticFeedbackType.TextHandleMove)
-                        }
-                    }
-                }
-            }
-        }
     }
 }
 

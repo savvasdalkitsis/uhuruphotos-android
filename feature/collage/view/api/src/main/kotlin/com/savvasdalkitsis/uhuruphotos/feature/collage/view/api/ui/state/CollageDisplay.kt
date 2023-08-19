@@ -33,4 +33,5 @@ interface CollageDisplay {
     val zoomIn: CollageDisplay
     val zoomOut: CollageDisplay
     val allowsPinchGestures: Boolean
+    val usingStaggeredGrid: Boolean
 }

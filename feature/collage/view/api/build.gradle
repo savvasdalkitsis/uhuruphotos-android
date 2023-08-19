@@ -27,7 +27,6 @@ dependencies {
             libs.androidx.compose.ui.tooling.preview,
             libs.androidx.compose.ui.util,
             libs.androidx.core,
-            libs.scrollbar,
     )
     api(
             libs.kotlinx.immutable,

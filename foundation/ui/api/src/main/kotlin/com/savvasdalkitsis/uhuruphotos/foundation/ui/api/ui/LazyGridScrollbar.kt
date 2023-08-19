@@ -1,4 +1,4 @@
-package com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui
+package com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui
 
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.tween
@@ -12,8 +12,8 @@ import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.lazy.staggeredgrid.LazyStaggeredGridItemInfo
-import androidx.compose.foundation.lazy.staggeredgrid.LazyStaggeredGridState
+import androidx.compose.foundation.lazy.grid.LazyGridItemInfo
+import androidx.compose.foundation.lazy.grid.LazyGridState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -49,8 +49,8 @@ import kotlin.math.floor
  * @param thumbMinHeight Thumb minimum height proportional to total scrollbar's height (eg: 0.1 -> 10% of total)
  */
 @Composable
-fun LazyStaggeredGridScrollbar(
-    gridState: LazyStaggeredGridState,
+fun LazyGridScrollbar(
+    gridState: LazyGridState,
     rightSide: Boolean = true,
     thickness: Dp = 6.dp,
     padding: Dp = 8.dp,
@@ -68,7 +68,7 @@ fun LazyStaggeredGridScrollbar(
     if (!enabled) content()
     else Box {
         content()
-        InternalLazyStaggeredGridScrollbar(
+        InternalLazyGridScrollbar(
             gridState = gridState,
             modifier = Modifier,
             rightSide = rightSide,
@@ -96,8 +96,8 @@ fun LazyStaggeredGridScrollbar(
  * @param thumbMinHeight Thumb minimum height proportional to total scrollbar's height (eg: 0.1 -> 10% of total)
  */
 @Composable
-fun InternalLazyStaggeredGridScrollbar(
-    gridState: LazyStaggeredGridState,
+fun InternalLazyGridScrollbar(
+    gridState: LazyGridState,
     modifier: Modifier = Modifier,
     rightSide: Boolean = true,
     thickness: Dp = 6.dp,
@@ -136,10 +136,10 @@ fun InternalLazyStaggeredGridScrollbar(
         }
     }
 
-    fun LazyStaggeredGridItemInfo.fractionHiddenTop(firstItemOffset: Int) =
+    fun LazyGridItemInfo.fractionHiddenTop(firstItemOffset: Int) =
         if (size.height == 0) 0f else firstItemOffset / size.height.toFloat()
 
-    fun LazyStaggeredGridItemInfo.fractionVisibleBottom(viewportEndOffset: Int) =
+    fun LazyGridItemInfo.fractionVisibleBottom(viewportEndOffset: Int) =
         if (size.height == 0) 0f else (viewportEndOffset - offset.y).toFloat() / size.height.toFloat()
 
     val normalizedThumbSizeReal by remember {

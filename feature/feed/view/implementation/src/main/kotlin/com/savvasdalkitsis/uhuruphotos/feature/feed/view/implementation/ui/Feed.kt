@@ -18,7 +18,6 @@ package com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.ui
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.layout.Arrangement.spacedBy
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.lazy.staggeredgrid.rememberLazyStaggeredGridState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
@@ -53,6 +52,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.media.local.view.api.ui.LocalMedi
 import com.savvasdalkitsis.uhuruphotos.foundation.compose.api.blurIf
 import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.SwipeRefresh
+import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.grid.rememberSmartGridState
 import dev.shreyaspatil.permissionflow.compose.rememberPermissionFlowRequestLauncher
 import kotlinx.coroutines.launch
 
@@ -65,7 +65,7 @@ internal fun Feed(
     additionalContent: @Composable () -> Unit,
 ) {
     val coroutineScope = rememberCoroutineScope()
-    val gridState = rememberLazyStaggeredGridState()
+    val gridState = rememberSmartGridState(state.collageState.collageDisplay.usingStaggeredGrid)
 
     fun scrollToTop() {
         coroutineScope.launch {
