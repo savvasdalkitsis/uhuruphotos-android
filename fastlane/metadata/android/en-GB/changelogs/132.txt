@@ -1,0 +1,5 @@
+* Fixing heatmap bottom sheet scrolling issues
+* Fixing pinch gestures in galleries
+* Fixing welcome screen on small devices
+* Fixing some issues with keyboard interactions in landscape
+* Fixing some crashes
