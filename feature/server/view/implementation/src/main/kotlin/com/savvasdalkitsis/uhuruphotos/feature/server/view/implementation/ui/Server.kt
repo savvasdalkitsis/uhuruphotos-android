@@ -46,10 +46,10 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.savvasdalkitsis.uhuruphotos.feature.server.view.implementation.seam.actions.DismissHelpDialog
-import com.savvasdalkitsis.uhuruphotos.feature.server.view.implementation.seam.actions.ShowHelp
 import com.savvasdalkitsis.uhuruphotos.feature.server.view.implementation.seam.actions.Login
 import com.savvasdalkitsis.uhuruphotos.feature.server.view.implementation.seam.actions.SendLogsClick
 import com.savvasdalkitsis.uhuruphotos.feature.server.view.implementation.seam.actions.ServerAction
+import com.savvasdalkitsis.uhuruphotos.feature.server.view.implementation.seam.actions.ShowHelp
 import com.savvasdalkitsis.uhuruphotos.feature.server.view.implementation.seam.actions.TakeUserToLibrePhotosWebsite
 import com.savvasdalkitsis.uhuruphotos.feature.server.view.implementation.seam.actions.UpPressed
 import com.savvasdalkitsis.uhuruphotos.feature.server.view.implementation.seam.actions.UrlTyped
@@ -128,6 +128,17 @@ internal fun Server(
                             action(UrlTyped(it))
                         },
                     )
+                    OutlinedButton(
+                        modifier = Modifier.fillMaxWidth().padding(8.dp),
+                        onClick = { action(ShowHelp) }
+                    ) {
+                        Icon(
+                            painter = painterResource(id = drawable.ic_help),
+                            contentDescription = null
+                        )
+                        Spacer(modifier = Modifier.width(8.dp))
+                        Text(stringResource(string.what_is_libre_photos))
+                    }
                 }
                 Spacer(modifier = Modifier.weight(1f))
                 Column(
@@ -167,17 +178,6 @@ internal fun Server(
                         )
                         Spacer(modifier = Modifier.width(8.dp))
                         Text(stringResource(string.send_feedback_with_logs))
-                    }
-                    OutlinedButton(
-                        modifier = Modifier.fillMaxWidth(),
-                        onClick = { action(ShowHelp) }
-                    ) {
-                        Icon(
-                            painter = painterResource(id = drawable.ic_help),
-                            contentDescription = null
-                        )
-                        Spacer(modifier = Modifier.width(8.dp))
-                        Text(stringResource(string.what_is_libre_photos))
                     }
                 }
             }
