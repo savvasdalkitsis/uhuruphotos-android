@@ -29,6 +29,8 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.sizeIn
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Button
 import androidx.compose.material.Card
 import androidx.compose.material.MaterialTheme
@@ -93,9 +95,10 @@ internal fun Welcome(
                     top = contentPadding.calculateTopPadding(),
                     start = 24.dp,
                     end = 24.dp,
-                    bottom = 24.dp,
+                    bottom = contentPadding.calculateBottomPadding() + 24.dp,
                 )
-                .fillMaxSize(),
+                .fillMaxSize()
+                .verticalScroll(rememberScrollState()),
             verticalArrangement = spacedBy(24.dp)
         ) {
             Text(
