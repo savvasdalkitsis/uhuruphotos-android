@@ -15,6 +15,7 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.welcome.view.implementation.ui
 
+import androidx.activity.compose.ManagedActivityResultLauncher
 import androidx.annotation.RawRes
 import androidx.annotation.StringRes
 import androidx.compose.foundation.clickable
@@ -74,6 +75,7 @@ import dev.shreyaspatil.permissionflow.compose.rememberPermissionFlowRequestLaun
 @Composable
 internal fun Welcome(
     state: WelcomeState,
+    permissionLauncher: ManagedActivityResultLauncher<Array<String>, Map<String, Boolean>>? = rememberPermissionFlowRequestLauncher(),
     action: (WelcomeAction) -> Unit,
 ) {
     CommonScaffold(
@@ -88,7 +90,6 @@ internal fun Welcome(
         val permissionState = state.missingPermissions?.let {
             rememberMultiplePermissionsState(it)
         }
-        val permissionLauncher = rememberPermissionFlowRequestLauncher()
         Column(
             modifier = Modifier
                 .padding(
@@ -99,11 +100,11 @@ internal fun Welcome(
                 )
                 .fillMaxSize()
                 .verticalScroll(rememberScrollState()),
-            verticalArrangement = spacedBy(24.dp)
+            verticalArrangement = spacedBy(18.dp)
         ) {
             Text(
                 text = stringResource(string.welcome_to_uhuruphotos),
-                style = MaterialTheme.typography.h3,
+                style = MaterialTheme.typography.h4,
             )
             Text(
                 text = stringResource(string.welcome_description),
@@ -187,7 +188,7 @@ internal fun Welcome(
                     Button(onClick = {
                         action(HidePermissionRationale)
                         state.missingPermissions?.let {
-                            permissionLauncher.launch(it.toTypedArray())
+                            permissionLauncher?.launch(it.toTypedArray())
                         }
                     }) {
                         Text(stringResource(string.ok))
@@ -214,7 +215,7 @@ internal fun Welcome(
                     Button(onClick = {
                         action(HideNeedsAccess)
                         state.missingPermissions?.let {
-                            permissionLauncher.launch(it.toTypedArray())
+                            permissionLauncher?.launch(it.toTypedArray())
                         }
                     }) {
                         Text(stringResource(string.attempt_grant_permissions))
@@ -279,13 +280,19 @@ private fun RowScope.UseCase(
 @Composable
 private fun WelcomePreview() {
     PreviewAppTheme {
-        Welcome(WelcomeState(localMediaSelected = true)) {}
+        Welcome(
+            state = WelcomeState(localMediaSelected = true, isLoading = false),
+            permissionLauncher = null,
+        ) {}
     }
 }
 @Preview
 @Composable
 private fun WelcomePreviewDark() {
     PreviewAppTheme(darkTheme = true) {
-        Welcome(WelcomeState(localMediaSelected = true)) {}
+        Welcome(
+            state = WelcomeState(localMediaSelected = true, isLoading = false),
+            permissionLauncher = null,
+        ) {}
     }
 }

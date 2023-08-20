@@ -43,8 +43,8 @@ internal class WelcomeNavigationTarget @Inject constructor(
             WelcomeViewModel::class,
         ) { state, action ->
             Welcome(
-                    state,
-                    action,
+                    state = state,
+                    action = action,
             )
         }
     }
