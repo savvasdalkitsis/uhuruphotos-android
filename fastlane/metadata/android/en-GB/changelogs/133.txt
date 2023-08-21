@@ -1,0 +1,3 @@
+* Account overview popup fixes
+* Memory usage reductions
+* Some spacing tweaks in Welcome screen
