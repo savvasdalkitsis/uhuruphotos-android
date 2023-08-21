@@ -37,6 +37,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.LocalLayoutDirection
@@ -79,6 +80,20 @@ internal fun SmartCollage(
         val topPadding = remember {
             contentPadding.calculateTopPadding()
         }
+        val density = LocalDensity.current
+        val firstOffscreenCluster by remember {
+            derivedStateOf {
+                with(density) {
+                    gridState.layoutInfo.visibleItemsInfo
+                        .firstOrNull { it.offset.y + it.size.height > topPadding.toPx() }
+                        ?.key?.toString()
+                        ?.takeIf { it.startsWith("item:") }
+                        ?.split(":")
+                        ?.get(1)
+                        ?.toIntOrNull()
+                }
+            }
+        }
         SmartGrid(
             modifier = modifier
                 .recomposeHighlighter()
@@ -101,20 +116,18 @@ internal fun SmartCollage(
             }
             for ((clusterIndex, cluster) in state.withIndex()) {
                 item("item:$clusterIndex:header", "header", fullLine = true) {
-                    ClusterHeader(
+                    val alpha by remember {
+                        derivedStateOf { if (clusterIndex == firstOffscreenCluster) 0f else 1f }
+                    }
+                    FeedClusterHeader(
                         modifier = Modifier
                             .animateItemPlacement()
-                            .recomposeHighlighter(),
-                        state = cluster,
-                        title = cluster.displayTitle.ifEmpty { stringResource(string.no_date) },
-                        location = cluster.location?.takeIf { cluster.displayTitle.isNotEmpty() },
+                            .alpha(alpha),
+                        cluster = cluster,
                         showSelectionHeader = showSelectionHeader,
-                        onRefreshClicked = {
-                            onClusterRefreshClicked(cluster)
-                        }
-                    ) {
-                        onClusterSelectionClicked(cluster)
-                    }
+                        onClusterRefreshClicked = onClusterRefreshClicked,
+                        onClusterSelectionClicked = onClusterSelectionClicked,
+                    )
                 }
 
                 for (cel in cluster.cels) {
@@ -141,20 +154,6 @@ internal fun SmartCollage(
             }
             item("contentPaddingBottom", "contentPadding", fullLine = true) {
                 Spacer(modifier = Modifier.height(contentPadding.calculateBottomPadding()))
-            }
-        }
-        val density = LocalDensity.current
-        val firstOffscreenCluster by remember {
-            derivedStateOf {
-                with(density) {
-                    gridState.layoutInfo.visibleItemsInfo
-                        .firstOrNull { it.offset.y + it.size.height > topPadding.toPx() }
-                        ?.key?.toString()
-                        ?.takeIf { it.startsWith("item:") }
-                        ?.split(":")
-                        ?.get(1)
-                        ?.toIntOrNull()
-                }
             }
         }
         val scrollText by remember(state) {
@@ -192,7 +191,7 @@ internal fun SmartCollage(
 private fun BoxScope.StickyHeader(
     firstOffscreenCluster: Int?,
     topPadding: Dp,
-    state: List<Cluster>,
+    state: ImmutableList<Cluster>,
     showSelectionHeader: Boolean,
     onClusterRefreshClicked: (Cluster) -> Unit,
     onClusterSelectionClicked: (Cluster) -> Unit
@@ -211,17 +210,37 @@ private fun BoxScope.StickyHeader(
         val cluster = remember(firstOffscreenCluster) {
             firstOffscreenCluster?.let { state[it] } ?: Cluster("")
         }
-        ClusterHeader(
+        FeedClusterHeader(
             modifier = Modifier
                 .background(MaterialTheme.colors.background.copy(alpha = 0.8f))
                 .clickable(interactionSource = interactionSource, indication = null) {},
-            state = cluster,
+            cluster = cluster,
             showSelectionHeader = showSelectionHeader,
-            onRefreshClicked = {
-                onClusterRefreshClicked(cluster)
-            }
-        ) {
-            onClusterSelectionClicked(cluster)
+            onClusterRefreshClicked = onClusterRefreshClicked,
+            onClusterSelectionClicked = onClusterSelectionClicked,
+        )
+    }
+}
+
+@Composable
+private fun FeedClusterHeader(
+    modifier: Modifier,
+    cluster: Cluster,
+    showSelectionHeader: Boolean,
+    onClusterRefreshClicked: (Cluster) -> Unit,
+    onClusterSelectionClicked: (Cluster) -> Unit,
+) {
+    ClusterHeader(
+        modifier = modifier
+            .recomposeHighlighter(),
+        state = cluster,
+        title = cluster.displayTitle.ifEmpty { stringResource(string.no_date) },
+        location = cluster.location?.takeIf { cluster.displayTitle.isNotEmpty() },
+        showSelectionHeader = showSelectionHeader,
+        onRefreshClicked = {
+            onClusterRefreshClicked(cluster)
         }
+    ) {
+        onClusterSelectionClicked(cluster)
     }
 }
