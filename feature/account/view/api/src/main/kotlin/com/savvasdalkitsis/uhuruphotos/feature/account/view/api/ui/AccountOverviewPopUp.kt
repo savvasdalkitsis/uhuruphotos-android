@@ -16,6 +16,7 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.feature.account.view.api.ui
 
 import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.core.MutableTransitionState
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.animation.scaleIn
@@ -26,15 +27,16 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.widthIn
+import androidx.compose.material.Card
 import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.TransformOrigin
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Popup
+import androidx.compose.ui.window.PopupProperties
 import com.savvasdalkitsis.uhuruphotos.feature.account.view.api.ui.state.AccountOverviewState
 import com.savvasdalkitsis.uhuruphotos.feature.jobs.domain.api.model.Job
 import com.savvasdalkitsis.uhuruphotos.foundation.compose.api.recomposeHighlighter
@@ -50,8 +52,10 @@ fun AccountOverviewPopUp(
     onStartJob: (Job) -> Unit,
     onCancelJob: (Job) -> Unit,
 ) {
+    val show = remember { MutableTransitionState(false) }
+    show.targetState = state.showAccountOverview
     Box {
-        if (state.showAccountOverview) {
+        if (show.currentState || show.targetState || !show.isIdle) {
             Box(
                 modifier = Modifier
                     .recomposeHighlighter()
@@ -59,40 +63,45 @@ fun AccountOverviewPopUp(
                     .background(MaterialTheme.colors.background.copy(alpha = 0.3f))
                     .clickable { onDismiss() }
             )
-        }
-        Popup(onDismissRequest = onDismiss) {
-            AnimatedVisibility(
-                modifier = Modifier
-                    .recomposeHighlighter()
-                    .padding(
-                        top = 32.dp,
-                        start = 16.dp,
-                        end = 16.dp,
-                    )
-                    .align(Alignment.TopEnd),
-                enter = fadeIn() + scaleIn(transformOrigin = TransformOrigin(1f, 0f)),
-                exit = fadeOut() + scaleOut(transformOrigin = TransformOrigin(1f, 0f)),
-                visible = state.showAccountOverview,
+            Popup(
+                properties = PopupProperties(
+                    focusable = true,
+                    dismissOnBackPress = true,
+                    dismissOnClickOutside= true,
+                ),
+                onDismissRequest = onDismiss,
             ) {
-                Surface(
+                AnimatedVisibility(
                     modifier = Modifier
                         .recomposeHighlighter()
-                        .clip(MaterialTheme.shapes.large)
-                        .widthIn(max = 480.dp)
-                        .background(MaterialTheme.colors.background),
-                    elevation = 4.dp,
-                    shape = MaterialTheme.shapes.large,
+                        .padding(
+                            top = 32.dp,
+                            start = 16.dp,
+                            end = 16.dp,
+                        )
+                        .align(Alignment.TopEnd),
+                    enter = fadeIn() + scaleIn(transformOrigin = TransformOrigin(1f, 0f)),
+                    exit = fadeOut() + scaleOut(transformOrigin = TransformOrigin(1f, 0f)),
+                    visibleState = show
                 ) {
-                    AccountOverview(
-                        state = state,
-                        onAboutClicked = onAboutClicked,
-                        onLogoutClicked = onLogoutClicked,
-                        onLoginClicked = onLoginClicked,
-                        onSettingsClicked = onSettingsClicked,
-                        onStartJob = onStartJob,
-                        onCancelJob = onCancelJob,
-                        onClose = onDismiss,
-                    )
+                    Card(
+                        modifier = Modifier
+                            .recomposeHighlighter()
+                            .widthIn(max = 480.dp),
+                        elevation = 4.dp,
+                        shape = MaterialTheme.shapes.large,
+                    ) {
+                        AccountOverview(
+                            state = state,
+                            onAboutClicked = onAboutClicked,
+                            onLogoutClicked = onLogoutClicked,
+                            onLoginClicked = onLoginClicked,
+                            onSettingsClicked = onSettingsClicked,
+                            onStartJob = onStartJob,
+                            onCancelJob = onCancelJob,
+                            onClose = onDismiss,
+                        )
+                    }
                 }
             }
         }
