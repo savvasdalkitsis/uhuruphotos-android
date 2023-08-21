@@ -49,13 +49,14 @@ import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.SettingsMutation.DisplayThumbnailMemCacheMaxLimit
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.SettingsMutation.DisplayVideoDiskCacheCurrentUse
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.SettingsMutation.DisplayVideoDiskCacheMaxLimit
-import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.SettingsMutation.SetRemoteAccess
+import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.SettingsMutation.SetAutoHideFeedNavOnScroll
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.SettingsMutation.SetDiskCacheUpperLimit
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.SettingsMutation.SetFeedDetailsSyncProgressVisibility
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.SettingsMutation.SetFullSyncProgressVisibility
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.SettingsMutation.SetLocalSyncProgressVisibility
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.SettingsMutation.SetMemoryCacheUpperLimit
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.SettingsMutation.SetPrecacheProgressVisibility
+import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.SettingsMutation.SetRemoteAccess
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.SettingsMutation.ShowJobs
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.ui.state.BiometricsSetting.Enrolled
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.ui.state.BiometricsSetting.NotEnrolled
@@ -110,6 +111,7 @@ data object LoadSettings : SettingsAction() {
             observeShouldShowFeedDetailsSyncProgress().map(::SetFeedDetailsSyncProgressVisibility),
             observeShouldShowPrecacheProgress().map(::SetPrecacheProgressVisibility),
             observeShouldShowLocalSyncProgress().map(::SetLocalSyncProgressVisibility),
+            observeAutoHideFeedNavOnScroll().map(::SetAutoHideFeedNavOnScroll),
             cacheUseCase.observeCacheCurrentUse(LIGHTBOX_PHOTO_DISK)
                 .map(::DisplayLightboxPhotoDiskCacheCurrentUse),
             cacheUseCase.observeCacheCurrentUse(LIGHTBOX_PHOTO_MEMORY)

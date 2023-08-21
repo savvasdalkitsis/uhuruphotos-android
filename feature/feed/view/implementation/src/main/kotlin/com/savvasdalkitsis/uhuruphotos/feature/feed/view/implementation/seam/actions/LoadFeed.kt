@@ -52,6 +52,7 @@ data object LoadFeed : FeedAction() {
         localMediaSyncStatus(),
         memories(),
         changeItemSyncDisplay(),
+        setAutoHideNav(),
     )
 
     private fun FeedActionsContext.memories() =
@@ -161,5 +162,9 @@ data object LoadFeed : FeedAction() {
     private fun FeedActionsContext.showLibraryTab() =
         settingsUseCase.observeShowLibrary()
             .map(FeedMutation::ShowLibrary)
+
+    private fun FeedActionsContext.setAutoHideNav() =
+        settingsUseCase.observeAutoHideFeedNavOnScroll()
+            .map(FeedMutation::AutoHideNavBar)
 
 }

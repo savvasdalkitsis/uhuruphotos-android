@@ -54,6 +54,7 @@ interface SettingsUseCase {
     fun getShouldShowFeedDetailsSyncProgress(): Boolean
     fun getShouldShowPrecacheProgress(): Boolean
     fun getShouldShowLocalSyncProgress(): Boolean
+    fun getAutoHideFeedNavOnScroll(): Boolean
 
     fun observeLightboxPhotoDiskCacheMaxLimit(): Flow<Int>
     fun observeLightboxPhotoMemCacheMaxLimit(): Flow<Int>
@@ -82,6 +83,7 @@ interface SettingsUseCase {
     fun observeShouldShowFeedDetailsSyncProgress(): Flow<Boolean>
     fun observeShouldShowPrecacheProgress(): Flow<Boolean>
     fun observeShouldShowLocalSyncProgress(): Flow<Boolean>
+    fun observeAutoHideFeedNavOnScroll(): Flow<Boolean>
 
     fun setLightboxPhotoDiskCacheMaxLimit(sizeInMb: Int)
     fun setLightboxPhotoMemCacheMaxLimit(sizeInMb: Int)
@@ -112,4 +114,5 @@ interface SettingsUseCase {
     fun setShouldShowFeedDetailsSyncProgress(show: Boolean)
     fun setShouldShowPrecacheProgress(show: Boolean)
     fun setShouldShowLocalSyncProgress(show: Boolean)
+    fun setAutoHideFeedNavOnScroll(autoHide: Boolean)
 }

@@ -107,6 +107,10 @@ sealed class FeedMutation(
     data object HideLocalStoragePermissionRequest : FeedMutation({
         it.copy(showRequestPermissionForLocalMediaAccess = null)
     })
+
+    data class AutoHideNavBar(val autoHide: Boolean) : FeedMutation({
+        it.copy(autoHideNavOnScroll = autoHide)
+    })
 }
 
 private fun FeedState.copyFeed(collageStateMutation: CollageState.() -> CollageState) =

@@ -116,6 +116,8 @@ internal class SettingsUseCase @Inject constructor(
     private val shouldShowPrecacheProgressDefault = false
     private val shouldShowLocalSyncProgress = "shouldShowLocalSyncProgress"
     private val shouldShowLocalSyncProgressDefault = false
+    private val autoHideFeedNavOnScroll = "autoHideFeedNavOnScroll"
+    private val autoHideFeedNavOnScrollDefault = true
 
     override fun getLightboxPhotoDiskCacheMaxLimit(): Int =
         getCache(lightboxPhotoDiskCacheSize, lightboxPhotoDiskCacheSizeDefault)
@@ -175,6 +177,8 @@ internal class SettingsUseCase @Inject constructor(
         get(shouldShowPrecacheProgress, shouldShowPrecacheProgressDefault)
     override fun getShouldShowLocalSyncProgress(): Boolean =
         get(shouldShowLocalSyncProgress, shouldShowLocalSyncProgressDefault)
+    override fun getAutoHideFeedNavOnScroll(): Boolean =
+        get(autoHideFeedNavOnScroll, autoHideFeedNavOnScrollDefault)
 
     override fun observeLightboxPhotoDiskCacheMaxLimit(): Flow<Int> =
         observeCache(lightboxPhotoDiskCacheSize, lightboxPhotoDiskCacheSizeDefault)
@@ -237,6 +241,8 @@ internal class SettingsUseCase @Inject constructor(
         observe(shouldShowPrecacheProgress, shouldShowPrecacheProgressDefault)
     override fun observeShouldShowLocalSyncProgress(): Flow<Boolean> =
         observe(shouldShowLocalSyncProgress, shouldShowLocalSyncProgressDefault)
+    override fun observeAutoHideFeedNavOnScroll(): Flow<Boolean> =
+        observe(autoHideFeedNavOnScroll, autoHideFeedNavOnScrollDefault)
 
     override fun setLightboxPhotoDiskCacheMaxLimit(sizeInMb: Int) {
         set(lightboxPhotoDiskCacheSize, sizeInMb)
@@ -353,6 +359,10 @@ internal class SettingsUseCase @Inject constructor(
 
     override fun setShouldShowLocalSyncProgress(show: Boolean) {
         set(shouldShowLocalSyncProgress, show)
+    }
+
+    override fun setAutoHideFeedNavOnScroll(autoHide: Boolean) {
+        set(autoHideFeedNavOnScroll, autoHide)
     }
 
     private fun MapProvider.mapToAvailable(): MapProvider =

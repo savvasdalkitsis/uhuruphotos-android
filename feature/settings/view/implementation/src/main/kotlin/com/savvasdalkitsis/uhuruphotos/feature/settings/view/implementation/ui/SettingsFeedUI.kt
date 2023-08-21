@@ -22,6 +22,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.feed.view.api.ui.state.FeedMediaI
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.api.ui.state.FeedMediaItemSyncDisplay.ALWAYS_OFF
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.api.ui.state.FeedMediaItemSyncDisplay.ALWAYS_ON
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.api.ui.state.FeedMediaItemSyncDisplay.SHOW_ON_SCROLL
+import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.actions.ChangeAutoHideNavOnScrollEnabled
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.actions.ChangeFeedMediaItemSyncDisplay
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.actions.ChangeMemoriesEnabled
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.actions.SettingsAction
@@ -40,6 +41,13 @@ internal fun SettingsFeedUI(
         isChecked = state.showMemories,
     ) {
         action(ChangeMemoriesEnabled(!state.showMemories))
+    }
+    SettingsCheckBox(
+        text = stringResource(string.auto_hide_nav_on_scroll),
+        icon = drawable.ic_swipe_vertical,
+        isChecked = state.autoHideFeedNavOnScroll,
+    ) {
+        action(ChangeAutoHideNavOnScrollEnabled(!state.autoHideFeedNavOnScroll))
     }
     if (state.hasRemoteAccess) {
         Divider()

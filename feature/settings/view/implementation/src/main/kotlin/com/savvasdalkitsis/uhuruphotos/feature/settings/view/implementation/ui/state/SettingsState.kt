@@ -47,6 +47,7 @@ data class SettingsState(
     val isLoggingEnabled: Boolean = false,
     val biometrics: BiometricsSetting? = null,
     val showMemories: Boolean = true,
+    val autoHideFeedNavOnScroll: Boolean = true,
     val feedMediaItemSyncDisplay: FeedMediaItemSyncDisplay = FeedMediaItemSyncDisplay.default,
     val shouldShowFeedSyncProgress: Boolean = false,
     val shouldShowFeedDetailsSyncProgress: Boolean = false,

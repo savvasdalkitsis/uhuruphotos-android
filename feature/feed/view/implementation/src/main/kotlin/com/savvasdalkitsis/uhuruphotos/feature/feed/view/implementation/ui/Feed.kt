@@ -21,8 +21,10 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.Collage
@@ -52,6 +54,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.media.local.view.api.ui.LocalMedi
 import com.savvasdalkitsis.uhuruphotos.foundation.compose.api.blurIf
 import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.SwipeRefresh
+import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.grid.SmartGridState
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.grid.rememberSmartGridState
 import dev.shreyaspatil.permissionflow.compose.rememberPermissionFlowRequestLauncher
 import kotlinx.coroutines.launch
@@ -92,6 +95,7 @@ internal fun Feed(
         homeFeedDisplay = state.collageState.collageDisplay,
         selectionMode = state.hasSelection,
         showLibrary = state.showLibrary,
+        showBottomNavigationBar = !state.autoHideNavOnScroll || gridState.isScrollingUp(),
         actionBarContent = {
             FeedActionBar(
                 state.shouldShowShareIcon,
@@ -188,4 +192,22 @@ internal fun Feed(
         }
         additionalContent()
     }
+}
+
+@Composable
+private fun SmartGridState.isScrollingUp(): Boolean {
+    var previousIndex by remember(this) { mutableIntStateOf(firstVisibleItemIndex) }
+    var previousScrollOffset by remember(this) { mutableIntStateOf(firstVisibleItemScrollOffset) }
+    return remember(this) {
+        derivedStateOf {
+            if (previousIndex != firstVisibleItemIndex) {
+                previousIndex > firstVisibleItemIndex
+            } else {
+                previousScrollOffset >= firstVisibleItemScrollOffset
+            }.also {
+                previousIndex = firstVisibleItemIndex
+                previousScrollOffset = firstVisibleItemScrollOffset
+            }
+        }
+    }.value
 }

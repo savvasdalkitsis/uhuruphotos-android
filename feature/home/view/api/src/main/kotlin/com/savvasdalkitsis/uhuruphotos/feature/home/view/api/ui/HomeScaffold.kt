@@ -35,14 +35,15 @@ fun HomeScaffold(
     homeFeedDisplay: CollageDisplay = PredefinedCollageDisplay.default,
     selectionMode: Boolean = false,
     showLibrary: Boolean = true,
-    actionBarContent: @Composable() (RowScope.() -> Unit) = {},
+    showBottomNavigationBar: Boolean = true,
+    actionBarContent: @Composable (RowScope.() -> Unit) = {},
     onReselected: () -> Unit = {},
     content: @Composable (PaddingValues) -> Unit,
 ) {
     CommonScaffold(
         modifier = modifier,
         title = title,
-        bottomBarDisplayed = !selectionMode,
+        bottomBarDisplayed = !selectionMode && showBottomNavigationBar,
         bottomBarContent = {
             if (homeNavigationStyle() == BOTTOM_BAR) {
                 HomeNavigationBar(

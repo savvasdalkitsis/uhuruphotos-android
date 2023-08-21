@@ -26,6 +26,8 @@ interface SmartGridState {
     suspend fun animateScrollToItem(index: Int, scrollOffset: Int = 0)
     val isScrollInProgress: Boolean
     val layoutInfo: SmartLayoutInfo
+    val firstVisibleItemIndex: Int
+    val firstVisibleItemScrollOffset: Int
 }
 
 

@@ -15,4 +15,8 @@ class SmartStaggeredGridState(
         get() = lazyStaggeredGridState.isScrollInProgress
     override val layoutInfo: SmartLayoutInfo
         get() = SmartStaggeredLayoutInfo(lazyStaggeredGridState.layoutInfo)
+    override val firstVisibleItemIndex: Int
+        get() = lazyStaggeredGridState.firstVisibleItemIndex
+    override val firstVisibleItemScrollOffset: Int
+        get() = lazyStaggeredGridState.firstVisibleItemScrollOffset
 }

@@ -29,4 +29,8 @@ class SmartSimpleGridState(
         get() = lazyGridState.isScrollInProgress
     override val layoutInfo: SmartLayoutInfo
         get() = SmartSimpleGridLayoutInfo(lazyGridState.layoutInfo)
+    override val firstVisibleItemIndex: Int
+        get() = lazyGridState.firstVisibleItemIndex
+    override val firstVisibleItemScrollOffset: Int
+        get() = lazyGridState.firstVisibleItemScrollOffset
 }

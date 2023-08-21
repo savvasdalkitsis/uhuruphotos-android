@@ -240,4 +240,8 @@ sealed class SettingsMutation(
     data class SetLocalSyncProgressVisibility(val show: Boolean) : SettingsMutation({
         it.copy(shouldShowLocalSyncProgress = show)
     })
+
+    data class SetAutoHideFeedNavOnScroll(val autoHide: Boolean) : SettingsMutation({
+        it.copy(autoHideFeedNavOnScroll = autoHide)
+    })
 }
