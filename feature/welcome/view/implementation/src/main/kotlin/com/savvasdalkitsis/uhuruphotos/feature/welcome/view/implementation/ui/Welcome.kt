@@ -66,7 +66,7 @@ import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.theme.PreviewAppTheme
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.ActionIcon
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.CommonScaffold
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.DynamicIcon
-import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.FullProgressBar
+import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.FullLoading
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.Logo
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.MultiButtonDialog
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.TextWithIcon
@@ -123,7 +123,7 @@ internal fun Welcome(
             Spacer(modifier = Modifier.weight(1f))
 
             when {
-                state.isLoading -> FullProgressBar()
+                state.isLoading -> FullLoading()
                 else -> Column(
                     verticalArrangement = spacedBy(8.dp)
                 ) {

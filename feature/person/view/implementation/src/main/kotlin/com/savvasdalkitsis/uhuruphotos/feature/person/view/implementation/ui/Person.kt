@@ -36,7 +36,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.person.view.implementation.ui.sta
 import com.savvasdalkitsis.uhuruphotos.foundation.image.api.ui.Thumbnail
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.BackNavButton
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.CommonScaffold
-import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.FullProgressBar
+import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.FullLoading
 
 @Composable
 fun Person(
@@ -83,7 +83,7 @@ fun Person(
         }
     ) { contentPadding ->
         if (state.collageState.clusters.isEmpty()) {
-            FullProgressBar()
+            FullLoading()
         } else {
             Collage(
                 contentPadding = contentPadding,

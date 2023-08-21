@@ -61,7 +61,7 @@ import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.ActionIcon
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.BackNavButton
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.CollapsibleGroup
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.CommonScaffold
-import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.FullProgressBar
+import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.FullLoading
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.MultiButtonDialog
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.state.rememberCollapsibleGroupState
 
@@ -86,7 +86,7 @@ internal fun Server(
         }
     ) { contentPadding ->
         if (state.isLoading) {
-            FullProgressBar()
+            FullLoading()
         } else {
             var serverTextFieldValue by remember(state.prefilledUrl) {
                 mutableStateOf(state.prefilledUrl)

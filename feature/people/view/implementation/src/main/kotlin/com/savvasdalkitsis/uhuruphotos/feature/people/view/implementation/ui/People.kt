@@ -39,7 +39,7 @@ import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.R.drawable
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.ActionIcon
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.BackNavButton
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.CommonScaffold
-import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.FullProgressBar
+import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.FullLoading
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.SwipeRefresh
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.window.LocalWindowSize
 
@@ -61,7 +61,7 @@ fun People(
         }
     ) { contentPadding ->
         if (state.people.isEmpty()) {
-            FullProgressBar()
+            FullLoading()
         } else {
             val columns = when (LocalWindowSize.current.widthSizeClass) {
                 Compact -> 4

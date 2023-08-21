@@ -32,8 +32,8 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.savvasdalkitsis.uhuruphotos.feature.notifications.view.implementation.R
-import com.savvasdalkitsis.uhuruphotos.feature.notifications.view.implementation.seam.actions.NotificationsAction
 import com.savvasdalkitsis.uhuruphotos.feature.notifications.view.implementation.seam.actions.Allow
+import com.savvasdalkitsis.uhuruphotos.feature.notifications.view.implementation.seam.actions.NotificationsAction
 import com.savvasdalkitsis.uhuruphotos.feature.notifications.view.implementation.seam.actions.Skip
 import com.savvasdalkitsis.uhuruphotos.feature.notifications.view.implementation.ui.state.NotificationsState
 import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
@@ -41,7 +41,7 @@ import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.layout.plus
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.theme.PreviewAppTheme
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.CommonScaffold
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.DynamicIcon
-import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.FullProgressBar
+import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.FullLoading
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.Logo
 
 @Composable
@@ -54,7 +54,7 @@ internal fun Notifications(
         navigationIcon = { Logo() },
     ) { contentPadding ->
         if (state.isLoading) {
-            FullProgressBar()
+            FullLoading()
         } else {
             Column(
                 modifier = Modifier.padding(contentPadding + PaddingValues(8.dp))

@@ -33,7 +33,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.library.view.implementation.seam.
 import com.savvasdalkitsis.uhuruphotos.feature.library.view.implementation.ui.state.LibraryState
 import com.savvasdalkitsis.uhuruphotos.foundation.compose.api.blurIf
 import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
-import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.FullProgressBar
+import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.FullLoading
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.Logo
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.SwipeRefresh
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.UpsellDialog
@@ -67,7 +67,7 @@ internal fun Library(
         when {
             state.loading
                     && state.autoAlbums == null
-                    && state.userAlbums == null -> FullProgressBar()
+                    && state.userAlbums == null -> FullLoading()
             else -> SwipeRefresh(
                 indicatorPadding = contentPadding,
                 isRefreshing = state.loading,

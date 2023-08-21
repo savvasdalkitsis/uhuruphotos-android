@@ -16,6 +16,7 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui
 
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.BoxScope
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.CircularProgressIndicator
@@ -26,13 +27,16 @@ import androidx.compose.ui.unit.dp
 import com.savvasdalkitsis.uhuruphotos.foundation.compose.api.recomposeHighlighter
 
 @Composable
-fun FullProgressBar() {
+fun FullLoading(
+    content: @Composable BoxScope.() -> Unit = {
+        CircularProgressIndicator(modifier = Modifier.size(48.dp))
+    }
+) {
     Box(
         contentAlignment = Alignment.Center,
         modifier = Modifier
             .recomposeHighlighter()
             .fillMaxSize(),
-    ) {
-        CircularProgressIndicator(modifier = Modifier.size(48.dp))
-    }
+        content = content,
+    )
 }

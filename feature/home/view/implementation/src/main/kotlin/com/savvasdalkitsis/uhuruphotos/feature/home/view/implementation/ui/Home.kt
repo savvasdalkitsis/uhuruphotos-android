@@ -28,7 +28,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.home.view.implementation.seam.act
 import com.savvasdalkitsis.uhuruphotos.feature.home.view.implementation.ui.state.HomeState
 import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.CommonScaffold
-import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.FullProgressBar
+import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.FullLoading
 
 @Composable
 internal fun Home(
@@ -37,7 +37,7 @@ internal fun Home(
 ) {
     CommonScaffold {
         if (state.isLoading) {
-            FullProgressBar()
+            FullLoading()
         } else if (state.needsAuthentication) {
             Box(
                 modifier = Modifier.fillMaxSize()

@@ -33,7 +33,7 @@ import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.theme.PreviewAppTheme
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.BackNavButton
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.CommonScaffold
-import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.FullProgressBar
+import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.FullLoading
 import io.moyuru.cropify.rememberCropifyState
 
 @Composable
@@ -63,7 +63,7 @@ internal fun Edit(
             .pointerInput(Unit) {
             }
         ) {
-            FullProgressBar()
+            FullLoading()
         }
     }
 }

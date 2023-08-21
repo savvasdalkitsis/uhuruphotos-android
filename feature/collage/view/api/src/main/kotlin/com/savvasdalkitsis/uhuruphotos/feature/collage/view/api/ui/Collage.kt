@@ -16,6 +16,7 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui
 
 import android.content.res.Configuration
+import androidx.annotation.RawRes
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
 import androidx.compose.runtime.Composable
@@ -32,7 +33,8 @@ import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.state.Ce
 import com.savvasdalkitsis.uhuruphotos.foundation.compose.api.recomposeHighlighter
 import com.savvasdalkitsis.uhuruphotos.foundation.image.api.LocalAnimatedVideoThumbnails
 import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
-import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.FullProgressBar
+import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.DynamicIcon
+import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.FullLoading
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.NoContent
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.grid.SmartGridItemScope
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.grid.SmartGridState
@@ -51,13 +53,22 @@ fun Collage(
     gridState: SmartGridState = rememberSmartGridState(state.collageDisplay.usingStaggeredGrid),
     collageHeader: @Composable (SmartGridItemScope.() -> Unit)? = null,
     emptyContent: @Composable () -> Unit = { NoContent(string.no_media) },
+    @RawRes loadingAnimation: Int? = null,
     onCelSelected: CelSelected = { _ -> },
     onChangeDisplay: (CollageDisplay) -> Unit = {},
     onCelLongPressed: (CelState) -> Unit = {},
     onClusterRefreshClicked: (Cluster) -> Unit = {},
     onClusterSelectionClicked: (Cluster) -> Unit = {},
 ) = when {
-    (state.isLoading && state.clusters.isEmpty()) || (!state.isEmpty && state.clusters.isEmpty()) -> FullProgressBar()
+    (state.isLoading && state.clusters.isEmpty()) || (!state.isEmpty && state.clusters.isEmpty()) -> {
+        if (loadingAnimation != null) {
+            FullLoading {
+                DynamicIcon(icon = loadingAnimation)
+            }
+        } else {
+            FullLoading()
+        }
+    }
     !state.isLoading && state.isEmpty && state.clusters.isEmpty() -> emptyContent()
     else -> {
         val collageDisplay = state.collageDisplay

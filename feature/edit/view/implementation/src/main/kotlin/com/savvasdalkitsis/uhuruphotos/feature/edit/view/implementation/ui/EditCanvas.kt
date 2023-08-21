@@ -33,7 +33,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.edit.view.implementation.seam.act
 import com.savvasdalkitsis.uhuruphotos.feature.edit.view.implementation.seam.actions.ImageCropped
 import com.savvasdalkitsis.uhuruphotos.feature.edit.view.implementation.seam.actions.NotifyUserOfError
 import com.savvasdalkitsis.uhuruphotos.feature.edit.view.implementation.ui.state.EditState
-import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.FullProgressBar
+import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.FullLoading
 import io.moyuru.cropify.AspectRatio
 import io.moyuru.cropify.Cropify
 import io.moyuru.cropify.CropifyOption
@@ -46,7 +46,7 @@ internal fun EditCanvas(
     action: (EditAction) -> Unit
 ) {
     when (state.photoUri) {
-        null -> FullProgressBar()
+        null -> FullLoading()
         else -> {
             val option = remember(state.selectedRatio) {
                 CropifyOption(frameAspectRatio = state.selectedRatio?.let {

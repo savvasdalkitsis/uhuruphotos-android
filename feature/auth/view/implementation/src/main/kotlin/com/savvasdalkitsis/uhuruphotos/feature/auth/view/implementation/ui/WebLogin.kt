@@ -25,7 +25,7 @@ import androidx.compose.ui.Modifier
 import com.google.accompanist.web.WebView
 import com.google.accompanist.web.rememberWebViewState
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.CommonScaffold
-import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.FullProgressBar
+import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.FullLoading
 
 private const val USER_AGENT =
     "Mozilla/5.0 (Linux; Android 12; Pixel 6 Pro) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/" +
@@ -35,7 +35,7 @@ private const val USER_AGENT =
 @Composable
 fun WebLogin(state: WebLoginState) {
     if (state.url == null) {
-        FullProgressBar()
+        FullLoading()
     } else {
         val webState = rememberWebViewState(url = state.url)
         CommonScaffold { contentPadding ->

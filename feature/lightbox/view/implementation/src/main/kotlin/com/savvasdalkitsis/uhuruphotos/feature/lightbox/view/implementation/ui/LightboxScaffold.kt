@@ -27,7 +27,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.ui.state.LightboxState
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.BackNavButton
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.CommonScaffold
-import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.FullProgressBar
+import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.FullLoading
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.SheetSize
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.adjustingSheetSize
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.window.LocalWindowSize
@@ -64,7 +64,7 @@ internal fun LightboxScaffold(
         },
     ) { contentPadding ->
         when {
-            state.isLoading && state.media[index].id.thumbnailUri.isEmpty() -> FullProgressBar()
+            state.isLoading && state.media[index].id.thumbnailUri.isEmpty() -> FullLoading()
             else -> LightboxCanvas(action, state, index, contentPadding)
         }
     }
