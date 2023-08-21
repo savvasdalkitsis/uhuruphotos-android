@@ -27,27 +27,30 @@ import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.isActive
+import kotlinx.coroutines.launch
 
 class Seam<S : Any, A : Any>(
     private val actionHandler: ActionHandler<S, A>,
     initialState: S,
     private val scope: CoroutineScope,
-) : HasState<S> {
+) : HasActionableState<S, A> {
 
     private val _state = MutableStateFlow(initialState)
     override val state: StateFlow<S> = _state
 
-    suspend fun action(action: A)  {
-        log("Seam") { "Starting handling of action $action" }
-        actionHandler.handleAction(_state.value, action,)
-            .distinctUntilChanged()
-            .flowOn(Dispatchers.Default)
-            .cancellable()
-            .collect { mutation ->
-                if (!scope.isActive)
-                    currentCoroutineContext().cancel()
-                log("Seam") { "Received mutation $mutation due to action $action" }
-                _state.update { mutation.reduce(_state.value) }
-            }
+    override fun action(action: A) {
+        scope.launch {
+            log("Seam") { "Starting handling of action $action" }
+            actionHandler.handleAction(_state.value, action,)
+                .distinctUntilChanged()
+                .flowOn(Dispatchers.Default)
+                .cancellable()
+                .collect { mutation ->
+                    if (!scope.isActive)
+                        currentCoroutineContext().cancel()
+                    log("Seam") { "Received mutation $mutation due to action $action" }
+                    _state.update { mutation.reduce(_state.value) }
+                }
+        }
     }
 }

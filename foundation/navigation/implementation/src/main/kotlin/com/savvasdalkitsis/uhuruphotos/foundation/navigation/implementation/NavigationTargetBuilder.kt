@@ -18,7 +18,7 @@ package com.savvasdalkitsis.uhuruphotos.foundation.navigation.implementation
 import android.os.Bundle
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.platform.LocalContext
@@ -27,6 +27,7 @@ import androidx.hilt.navigation.HiltViewModelFactory
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelStoreOwner
+import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.compose.LocalViewModelStoreOwner
 import androidx.navigation.NavBackStackEntry
 import com.savvasdalkitsis.uhuruphotos.foundation.log.api.log
@@ -37,6 +38,8 @@ import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.theme.AppTheme
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.theme.ThemeMode
 import com.sebaslogen.resaca.ScopedViewModelContainer
 import com.sebaslogen.resaca.generateKeysAndObserveLifecycle
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.cancelChildren
 import kotlinx.coroutines.flow.StateFlow
 import se.ansman.dagger.auto.AutoBind
 import javax.inject.Inject
@@ -55,15 +58,14 @@ class NavigationTargetBuilder @Inject constructor() : NavigationTargetBuilder {
         val model: VM = hiltViewModelScoped(route.toString(), viewModel)
 
         val keyboard = LocalSoftwareKeyboardController.current
-        LaunchedEffect(route) {
+        DisposableEffect(route) {
             log { "Navigated to route: $route" }
             keyboard?.hide()
             model.onRouteSet(route)
+            onDispose {
+                model.viewModelScope.coroutineContext[Job]?.cancelChildren()
+            }
         }
-        val action: (A) -> Unit = {
-            model.action(it)
-        }
-
         val state by model.state.collectAsState()
         val theme by themeMode.collectAsState()
         val dark = when (theme) {
@@ -72,7 +74,7 @@ class NavigationTargetBuilder @Inject constructor() : NavigationTargetBuilder {
             ThemeMode.LIGHT_MODE -> false
         }
         AppTheme(dark) {
-            content(state, action)
+            content(state, model::action)
         }
     }
 

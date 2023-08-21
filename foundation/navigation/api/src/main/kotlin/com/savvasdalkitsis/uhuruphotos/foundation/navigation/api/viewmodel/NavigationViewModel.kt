@@ -47,9 +47,7 @@ abstract class NavigationViewModel<S : Any, A : Any, R : Any>(
         get() = seam.state
 
     override fun action(action: A) {
-        viewModelScope.launch {
-            seam.action(action)
-        }
+        seam.action(action)
     }
 
     abstract fun onRouteSet(route: R)
