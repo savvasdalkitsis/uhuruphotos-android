@@ -31,8 +31,6 @@ import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -61,8 +59,8 @@ import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.theme.PreviewAppTheme
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.ActionIcon
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.CollapsibleGroup
-import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.state.CollapsibleGroupState
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.state.Title
+import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.state.rememberCollapsibleGroupState
 import kotlinx.collections.immutable.persistentListOf
 
 @Composable
@@ -131,10 +129,12 @@ internal fun AccountOverview(
             modifier = Modifier
                 .padding(horizontal = 8.dp),
         ) {
-            val collapsed = remember {
-                mutableStateOf(false)
-            }
-            CollapsibleGroup(groupState = CollapsibleGroupState(string.jobs, collapsed)) {
+            CollapsibleGroup(
+                groupState = rememberCollapsibleGroupState(
+                    title = string.jobs,
+                    uniqueKey = "accountOverviewJobs",
+                )
+            ) {
                 Jobs(
                     jobs = state.jobs,
                     onStartJob = onStartJob,
