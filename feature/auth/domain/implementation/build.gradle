@@ -12,17 +12,17 @@ dependencies {
 
     api project(":feature:auth:domain:api")
     api project(":feature:auth:view:api")
-    implementation project(":feature:db:domain:api")
-    implementation project(":feature:settings:domain:api")
-    implementation project(":foundation:activity:api")
-    implementation project(":foundation:http:api")
-    implementation project(":foundation:launchers:api")
-    implementation project(":foundation:log:api")
-    implementation project(":foundation:navigation:api")
-    implementation project(":foundation:network:api")
-    implementation project(":foundation:preferences:api")
-    implementation project(":foundation:ui:api")
     implementation(
+            project(":feature:db:domain:api"),
+            project(":feature:settings:domain:api"),
+            project(":foundation:activity:api"),
+            project(":foundation:http:api"),
+            project(":foundation:launchers:api"),
+            project(":foundation:log:api"),
+            project(":foundation:navigation:api"),
+            project(":foundation:network:api"),
+            project(":foundation:preferences:api"),
+            project(":foundation:ui:api"),
             libs.androidx.compose.hilt.navigation,
             libs.androidx.compose.ui,
             libs.bundles.autodagger,

@@ -32,8 +32,8 @@ class TokenRefreshInterceptor @Inject constructor(
         return when {
             response.hasExpiredToken() -> {
                 response.close()
-                when (runBlocking { authenticationUseCase.refreshToken() }) {
-                    Unauthenticated -> throw AccessTokenRefreshError()
+                when (val auth = runBlocking { authenticationUseCase.refreshToken() }) {
+                    is Unauthenticated -> throw AccessTokenRefreshError(auth.status)
                     else -> chain.proceed(authenticationHeaderInjector.inject(chain))
                 }
             }

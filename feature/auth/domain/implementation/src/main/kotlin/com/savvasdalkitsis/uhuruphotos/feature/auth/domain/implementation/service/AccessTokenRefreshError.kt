@@ -17,4 +17,4 @@ package com.savvasdalkitsis.uhuruphotos.feature.auth.domain.implementation.servi
 
 import java.io.IOException
 
-class AccessTokenRefreshError : IOException("Could not refresh access token")
+class AccessTokenRefreshError(status: Int?) : IOException("Could not refresh access token. Status code: $status")

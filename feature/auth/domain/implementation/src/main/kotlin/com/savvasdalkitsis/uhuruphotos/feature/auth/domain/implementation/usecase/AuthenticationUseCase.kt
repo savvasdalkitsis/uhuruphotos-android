@@ -83,9 +83,17 @@ class AuthenticationUseCase @Inject constructor(
     override suspend fun refreshToken(): AuthStatus = mutex.withLock {
         val refreshToken = tokenQueries.getRefreshToken().awaitSingleOrNull()
         return when {
-            refreshToken.isNullOrEmpty() || refreshToken.jwt.isExpired(0) -> Unauthenticated
+            refreshToken.isNullOrEmpty() || refreshToken.jwt.isExpired(0) -> Unauthenticated()
             else -> refreshAccessToken(refreshToken)
+        }.also {
+            if (it is Unauthenticated) {
+                clearTokens()
+            }
         }
+    }
+
+    private fun clearTokens() {
+        tokenQueries.clearAll()
     }
 
     override suspend fun refreshAccessToken(refreshToken: String): AuthStatus = try {
@@ -106,14 +114,14 @@ class AuthenticationUseCase @Inject constructor(
                 Authenticated
             }
             response.code() >= 500 || response.code() == 404 -> ServerDown
-            else -> Unauthenticated
+            else -> Unauthenticated(response.code())
         }
     } catch (e: IOException) {
         log(e)
         Offline
     } catch (e: Exception) {
         log(e)
-        Unauthenticated
+        Unauthenticated()
     }
 
     override suspend fun getUserIdFromToken(): Result<String, Throwable> =
