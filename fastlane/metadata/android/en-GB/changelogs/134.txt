@@ -1,0 +1,5 @@
+* Hiding the original cluster header that is duplicated as a sticky one
+* Custom loading animation for search page
+* Automatically hiding nav bar on feed when scrolling (controllable in settings)
+* Switching app to local only mode when refresh token expires, forcing users to log in again
+* Adding themed icon support for new Android versions
