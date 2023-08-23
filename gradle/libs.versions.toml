@@ -89,7 +89,7 @@ joda-time = "net.danlew:android.joda:2.12.5"
 jwt = "com.auth0.android:jwtdecode:2.0.2"
 kotlinx-coroutines = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-android", version.ref = "org-jetbrains-kotlinx" }
 kotlinx-immutable = "org.jetbrains.kotlinx:kotlinx-collections-immutable:0.3.5"
-kotlin-reflect = "org.jetbrains.kotlin:kotlin-reflect:1.9.0"
+kotlin-reflect = "org.jetbrains.kotlin:kotlin-reflect:1.9.10"
 leaks = "com.squareup.leakcanary:leakcanary-android:2.12"
 logger = "com.jakewharton.timber:timber:4.7.1"
 lottie = "com.airbnb.android:lottie-compose:6.1.0"
