@@ -21,18 +21,24 @@ import com.savvasdalkitsis.uhuruphotos.feature.account.view.api.seam.AccountOver
 import com.savvasdalkitsis.uhuruphotos.feature.account.view.api.seam.AccountOverviewMutation.ShowUserAndServerDetails
 import com.savvasdalkitsis.uhuruphotos.feature.account.view.api.ui.state.AccountOverviewState
 import com.savvasdalkitsis.uhuruphotos.feature.jobs.view.ui.state.toJobState
+import com.savvasdalkitsis.uhuruphotos.feature.welcome.view.api.navigation.WelcomeNavigationRoute
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.andThen
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.merge
+import kotlinx.coroutines.flow.onEach
 
 data object Load : AccountOverviewAction() {
     context(AccountOverviewActionsContext) override fun handle(
         state: AccountOverviewState
     ) = merge(
         welcomeUseCase.observeWelcomeStatus()
-            .map { it.hasRemoteAccess }
+            .onEach {
+                if (it.allMissing) {
+                    navigator.newRoot(WelcomeNavigationRoute)
+                }
+            }
             .map {
-                ShowLogin(!it) andThen ShowUserAndServerDetails(it)
+                ShowLogin(!it.hasRemoteAccess) andThen ShowUserAndServerDetails(it.hasRemoteAccess)
             },
         avatarUseCase.getAvatarState()
             .map(AccountOverviewMutation::AvatarUpdate),
