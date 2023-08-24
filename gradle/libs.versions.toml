@@ -122,6 +122,7 @@ result-coroutines = "com.michael-bull.kotlin-result:kotlin-result-coroutines:1.1
 retrofit-core = { module = "com.squareup.retrofit2:retrofit", version.ref = "retrofit" }
 retrofit-moshi = { module = "com.squareup.retrofit2:converter-moshi", version.ref = "retrofit" }
 scrollbar = "com.github.nanihadesuka:LazyColumnScrollbar:1.7.2"
+seeker = "io.github.2307vivek:seeker:1.2.1"
 sqldelight-adapters = { module = "app.cash.sqldelight:primitive-adapters", version.ref = "sqldelight" }
 sqldelight-android = { module = "app.cash.sqldelight:android-driver", version.ref = "sqldelight" }
 sqldelight-coroutines = { module = "app.cash.sqldelight:coroutines-extensions", version.ref = "sqldelight" }

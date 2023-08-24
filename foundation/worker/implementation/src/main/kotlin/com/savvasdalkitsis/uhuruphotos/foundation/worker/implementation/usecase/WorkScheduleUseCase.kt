@@ -49,6 +49,7 @@ class WorkScheduleUseCase @Inject constructor(
         backoffTimeUnit: TimeUnit,
         networkRequirement: NetworkType,
         requiresCharging: Boolean,
+        tags: Set<String>,
         existingPeriodicWorkPolicy: ExistingPeriodicWorkPolicy,
     ) {
         workManager.enqueueUniquePeriodicWork(
@@ -61,6 +62,9 @@ class WorkScheduleUseCase @Inject constructor(
                     .setRequiredNetworkType(networkRequirement)
                     .setRequiresCharging(requiresCharging)
                     .build())
+                .run {
+                    tags.fold(this) { builder, tag -> builder.addTag(tag) }
+                }
                 .build(),
         )
     }
@@ -73,6 +77,7 @@ class WorkScheduleUseCase @Inject constructor(
         backoffDelay: Long,
         backoffTimeUnit: TimeUnit,
         networkRequirement: NetworkType,
+        tags: Set<String>,
         params: Data.Builder.() -> Data.Builder,
     ) {
         workManager.enqueueUniqueWork(
@@ -87,6 +92,9 @@ class WorkScheduleUseCase @Inject constructor(
                         .build()
                 )
                 .setExpedited(OutOfQuotaPolicy.RUN_AS_NON_EXPEDITED_WORK_REQUEST)
+                .run {
+                    tags.fold(this) { builder, tag -> builder.addTag(tag) }
+                }
                 .build(),
         )
     }

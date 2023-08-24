@@ -57,6 +57,10 @@ data class FeedState(
         selected.isNotEmpty() && selected.none { it.mediaItem.id.findLocal != null }
     }
 
+    val shouldShowUploadIcon: Boolean = selectedCels.let { selected ->
+        selected.isNotEmpty() && selected.none { it.mediaItem.id.findRemote != null }
+    }
+
 }
 
 val List<CelState>.syncStates get() = map { it.mediaItem.id.syncState }.toSet()

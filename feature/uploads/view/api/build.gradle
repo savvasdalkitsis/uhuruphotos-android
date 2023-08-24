@@ -1,0 +1,11 @@
+plugins {
+    id 'kotlin-parcelize'
+}
+
+android {
+    namespace 'com.savvasdalkitsis.uhuruphotos.feature.uploads.view.api'
+}
+
+dependencies {
+    api project(":foundation:navigation:api")
+}

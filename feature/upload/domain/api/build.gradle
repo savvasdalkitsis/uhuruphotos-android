@@ -3,5 +3,11 @@ android {
 }
 
 dependencies {
-    api project(":feature:media:common:domain:api")
+    api(
+            project(":feature:media:common:domain:api"),
+            libs.kotlinx.immutable,
+    )
+    implementation(
+            project(":foundation:strings:api"),
+    )
 }

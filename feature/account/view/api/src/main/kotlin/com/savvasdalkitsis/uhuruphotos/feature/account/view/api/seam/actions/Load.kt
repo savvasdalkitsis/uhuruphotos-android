@@ -17,7 +17,10 @@ package com.savvasdalkitsis.uhuruphotos.feature.account.view.api.seam.actions
 
 import com.savvasdalkitsis.uhuruphotos.feature.account.view.api.seam.AccountOverviewActionsContext
 import com.savvasdalkitsis.uhuruphotos.feature.account.view.api.seam.AccountOverviewMutation
+import com.savvasdalkitsis.uhuruphotos.feature.account.view.api.seam.AccountOverviewMutation.ShowJobs
 import com.savvasdalkitsis.uhuruphotos.feature.account.view.api.seam.AccountOverviewMutation.ShowLogin
+import com.savvasdalkitsis.uhuruphotos.feature.account.view.api.seam.AccountOverviewMutation.ShowUploads
+import com.savvasdalkitsis.uhuruphotos.feature.account.view.api.seam.AccountOverviewMutation.ShowUploadsProgress
 import com.savvasdalkitsis.uhuruphotos.feature.account.view.api.seam.AccountOverviewMutation.ShowUserAndServerDetails
 import com.savvasdalkitsis.uhuruphotos.feature.account.view.api.ui.state.AccountOverviewState
 import com.savvasdalkitsis.uhuruphotos.feature.jobs.view.ui.state.toJobState
@@ -38,12 +41,17 @@ data object Load : AccountOverviewAction() {
                 }
             }
             .map {
-                ShowLogin(!it.hasRemoteAccess) andThen ShowUserAndServerDetails(it.hasRemoteAccess)
+                ShowLogin(!it.hasRemoteAccess) andThen
+                        ShowUserAndServerDetails(it.hasRemoteAccess) andThen
+                        ShowUploads(it.hasRemoteAccess)
             },
         avatarUseCase.getAvatarState()
             .map(AccountOverviewMutation::AvatarUpdate),
         jobsUseCase.observeJobsStatus().map {
-            AccountOverviewMutation.ShowJobs(it.jobs.toJobState)
+            ShowJobs(it.jobs.toJobState)
+        },
+        uploadsUseCase.observeUploadsInFlight().map { uploads ->
+            ShowUploadsProgress(uploads.jobs.isNotEmpty() && !uploads.jobs.all { it.latestJobState.state.isFinished })
         }
     )
 }

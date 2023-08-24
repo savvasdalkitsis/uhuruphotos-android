@@ -20,6 +20,7 @@ dependencies {
             libs.androidx.compose.material,
             libs.androidx.compose.ui.tooling.preview,
             libs.bundles.autodagger,
+            libs.kotlinx.immutable,
     )
     debugImplementation(
             libs.androidx.compose.ui.tooling,

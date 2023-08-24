@@ -23,12 +23,12 @@ import com.github.michaelbull.result.Ok
 import com.github.michaelbull.result.coroutines.binding.binding
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.toMediaItemHash
 import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.usecase.LocalMediaUseCase
+import com.savvasdalkitsis.uhuruphotos.feature.upload.domain.api.usecase.UploadUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.user.domain.api.usecase.UserUseCase
 import com.savvasdalkitsis.uhuruphotos.foundation.log.api.log
 import com.savvasdalkitsis.uhuruphotos.foundation.notification.api.ForegroundInfoBuilder
 import com.savvasdalkitsis.uhuruphotos.foundation.notification.api.ForegroundNotificationWorker
 import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
-import com.savvasdalkitsis.uhuruphotos.foundation.upload.api.usecase.UploadUseCase
 import com.savvasdalkitsis.uhuruphotos.foundation.upload.implementation.service.UploadService
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedInject

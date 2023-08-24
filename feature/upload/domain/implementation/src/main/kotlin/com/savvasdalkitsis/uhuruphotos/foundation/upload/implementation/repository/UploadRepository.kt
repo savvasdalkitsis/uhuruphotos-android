@@ -20,7 +20,7 @@ import app.cash.sqldelight.coroutines.mapToList
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.Database
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.media.upload.UploadingMediaItems
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.media.upload.UploadingMediaItemsQueries
-import com.savvasdalkitsis.uhuruphotos.foundation.upload.api.model.UploadItem
+import com.savvasdalkitsis.uhuruphotos.feature.upload.domain.api.model.UploadItem
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.distinctUntilChanged

@@ -23,4 +23,5 @@ interface WorkerStatusUseCase {
     fun monitorUniqueJobStatus(jobName: String): Flow<WorkInfo.State?>
 
     fun monitorUniqueJob(jobName: String): Flow<WorkInfo?>
+    fun monitorUniqueJobsByTag(tag: String): Flow<List<WorkInfo?>>
 }

@@ -22,10 +22,10 @@ import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.LightboxMutation.ShowCannotUploadDialog
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.ui.state.LightboxState
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.ui.state.SingleMediaItemState
-import com.savvasdalkitsis.uhuruphotos.foundation.upload.api.model.UploadCapability.CanUpload
-import com.savvasdalkitsis.uhuruphotos.foundation.upload.api.model.UploadCapability.CannotUpload
-import com.savvasdalkitsis.uhuruphotos.foundation.upload.api.model.UploadCapability.UnableToCheck
-import com.savvasdalkitsis.uhuruphotos.foundation.upload.api.model.UploadItem
+import com.savvasdalkitsis.uhuruphotos.feature.upload.domain.api.model.UploadCapability.CanUpload
+import com.savvasdalkitsis.uhuruphotos.feature.upload.domain.api.model.UploadCapability.CannotUpload
+import com.savvasdalkitsis.uhuruphotos.feature.upload.domain.api.model.UploadCapability.UnableToCheck
+import com.savvasdalkitsis.uhuruphotos.feature.upload.domain.api.model.UploadItem
 import kotlinx.coroutines.flow.flow
 
 data class UploadToServer(val mediaItemState: SingleMediaItemState) : LightboxAction() {

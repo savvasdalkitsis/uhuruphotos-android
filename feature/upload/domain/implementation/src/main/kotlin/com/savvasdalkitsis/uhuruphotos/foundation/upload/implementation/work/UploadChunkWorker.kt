@@ -19,14 +19,14 @@ import android.content.Context
 import androidx.hilt.work.HiltWorker
 import androidx.work.WorkerParameters
 import com.github.michaelbull.result.Ok
+import com.savvasdalkitsis.uhuruphotos.feature.upload.domain.api.model.UploadItem
+import com.savvasdalkitsis.uhuruphotos.feature.upload.domain.api.model.UploadResult.ChunkUploaded
+import com.savvasdalkitsis.uhuruphotos.feature.upload.domain.api.model.UploadResult.Finished
+import com.savvasdalkitsis.uhuruphotos.feature.upload.domain.api.usecase.UploadUseCase
+import com.savvasdalkitsis.uhuruphotos.feature.upload.domain.api.work.UploadWorkScheduler
 import com.savvasdalkitsis.uhuruphotos.foundation.notification.api.ForegroundInfoBuilder
 import com.savvasdalkitsis.uhuruphotos.foundation.notification.api.ForegroundNotificationWorker
 import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
-import com.savvasdalkitsis.uhuruphotos.foundation.upload.api.model.UploadItem
-import com.savvasdalkitsis.uhuruphotos.foundation.upload.api.model.UploadResult.ChunkUploaded
-import com.savvasdalkitsis.uhuruphotos.foundation.upload.api.model.UploadResult.Finished
-import com.savvasdalkitsis.uhuruphotos.foundation.upload.api.usecase.UploadUseCase
-import com.savvasdalkitsis.uhuruphotos.foundation.upload.api.work.UploadWorkScheduler
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedInject
 

@@ -16,17 +16,26 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.foundation.upload.implementation.work
 
 import androidx.work.ExistingWorkPolicy
+import androidx.work.WorkInfo
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemHash
-import com.savvasdalkitsis.uhuruphotos.foundation.upload.api.model.UploadItem
-import com.savvasdalkitsis.uhuruphotos.foundation.upload.api.work.UploadWorkScheduler
+import com.savvasdalkitsis.uhuruphotos.feature.upload.domain.api.model.UploadItem
+import com.savvasdalkitsis.uhuruphotos.feature.upload.domain.api.model.UploadJobType
+import com.savvasdalkitsis.uhuruphotos.feature.upload.domain.api.model.UploadJobType.Completing
+import com.savvasdalkitsis.uhuruphotos.feature.upload.domain.api.model.UploadJobType.Initializing
+import com.savvasdalkitsis.uhuruphotos.feature.upload.domain.api.model.UploadJobType.Synchronising
+import com.savvasdalkitsis.uhuruphotos.feature.upload.domain.api.model.UploadJobType.Uploading
+import com.savvasdalkitsis.uhuruphotos.feature.upload.domain.api.work.UploadWorkScheduler
 import com.savvasdalkitsis.uhuruphotos.foundation.worker.api.usecase.WorkScheduleUseCase
+import com.savvasdalkitsis.uhuruphotos.foundation.worker.api.usecase.WorkerStatusUseCase
+import kotlinx.coroutines.flow.Flow
 import se.ansman.dagger.auto.AutoBind
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
 @AutoBind
 class UploadWorkScheduler @Inject constructor(
-    private val workScheduleUseCase: WorkScheduleUseCase
+    private val workScheduleUseCase: WorkScheduleUseCase,
+    private val workerStatusUseCase: WorkerStatusUseCase,
 ) : UploadWorkScheduler {
 
     override fun scheduleUploadInitialization(item: UploadItem) = with(InitiateUploadWorker) {
@@ -34,6 +43,7 @@ class UploadWorkScheduler @Inject constructor(
             workName = workName(item.id),
             klass = InitiateUploadWorker::class,
             existingWorkPolicy = ExistingWorkPolicy.KEEP,
+            tags = setOf(UPLOAD_WORK_TAG, tagFor(item.id)),
         ) {
             putLong(KEY_ID, item.id)
             putString(KEY_CONTENT_URI, item.contentUri)
@@ -49,6 +59,7 @@ class UploadWorkScheduler @Inject constructor(
             workName = workName(item.id, offset),
             klass = UploadChunkWorker::class,
             existingWorkPolicy = ExistingWorkPolicy.KEEP,
+            tags = setOf(UPLOAD_WORK_TAG, tagFor(item.id)),
         ) {
             putLong(KEY_ITEM_ID, item.id)
             putString(KEY_CONTENT_URI, item.contentUri)
@@ -64,6 +75,7 @@ class UploadWorkScheduler @Inject constructor(
         workScheduleUseCase.scheduleNow(
             workName = workName(uploadId),
             klass = UploadCompletionWorker::class,
+            tags = setOf(UPLOAD_WORK_TAG, tagFor(item.id)),
         ) {
             putString(KEY_UPLOAD_ID, uploadId)
             putLong(KEY_ITEM_ID, item.id)
@@ -79,9 +91,35 @@ class UploadWorkScheduler @Inject constructor(
             klass = UploadPostCompletionWorker::class,
             backoffDelay = 10,
             backoffTimeUnit = TimeUnit.SECONDS,
+            tags = setOf(UPLOAD_WORK_TAG, tagFor(itemId)),
         ) {
             putString(KEY_HASH, hash.hash)
             putLong(KEY_ITEM_ID, itemId)
         }
+    }
+
+    override fun monitorUploadJobs(): Flow<List<WorkInfo?>> =
+        workerStatusUseCase.monitorUniqueJobsByTag(UPLOAD_WORK_TAG)
+
+    private fun tagFor(itemId: Long) = "$UPLOAD_WORK_TAG_ITEM_ID_PREFIX::$itemId"
+
+    override fun mediaItemIdFrom(workInfo: WorkInfo): Long? = workInfo.tags.firstOrNull {
+        it.startsWith(UPLOAD_WORK_TAG_ITEM_ID_PREFIX)
+    }?.split("::")?.get(1)?.toLongOrNull()
+
+    override fun List<WorkInfo>.findType(jobType: UploadJobType): WorkInfo.State? = firstOrNull {
+        it.tags.contains(jobType.workType.java.name)
+    }?.state
+
+    private val UploadJobType.workType get() = when(this) {
+        Initializing -> InitiateUploadWorker::class
+        Uploading -> UploadChunkWorker::class
+        Completing -> UploadCompletionWorker::class
+        Synchronising -> UploadPostCompletionWorker::class
+    }
+
+    companion object {
+        const val UPLOAD_WORK_TAG = "uploadWorkTag"
+        const val UPLOAD_WORK_TAG_ITEM_ID_PREFIX = "uploadWorkTagItemId"
     }
 }

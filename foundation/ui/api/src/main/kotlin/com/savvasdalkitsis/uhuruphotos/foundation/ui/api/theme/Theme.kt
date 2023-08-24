@@ -60,6 +60,7 @@ private val LightColorPalette = lightColors(
 data object CustomColors {
     val syncError = Color(158, 6, 37)
     val syncSuccess = Color(21, 158, 6, 255)
+    val syncQueued = Color(33, 150, 243, 255)
     val selected = Color(69, 158, 59, 255)
     val emptyItem: Color
         @Composable get() = if (MaterialTheme.colors.isLight) {

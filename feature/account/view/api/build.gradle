@@ -19,6 +19,8 @@ dependencies {
             project(":feature:jobs:view:api"),
             project(":feature:server:view:api"),
             project(":feature:settings:view:api"),
+            project(":feature:uploads:domain:api"),
+            project(":feature:uploads:view:api"),
             project(":feature:welcome:domain:api"),
             project(":feature:welcome:view:api"),
             project(":foundation:activity:api"),

@@ -338,4 +338,14 @@
     <string name="advanced_feature_body">This is an advanced feature which requires a free LibrePhotos server</string>
     <string name="do_not_show_again">Don\'t show again</string>
     <string name="auto_hide_nav_on_scroll">Automatically hide the navigation bar when scrolling</string>
+    <string name="initializing">Initializing</string>
+    <string name="uploading">Uploading</string>
+    <string name="completing">Completing</string>
+    <string name="synchronizing">Synchronizing</string>
+    <string name="queued">Queued</string>
+    <string name="running">Running</string>
+    <string name="succeeded">Succeeded</string>
+    <string name="failed">Failed</string>
+    <string name="blocked">Blocked</string>
+    <string name="canceled">Canceled</string>
 </resources>

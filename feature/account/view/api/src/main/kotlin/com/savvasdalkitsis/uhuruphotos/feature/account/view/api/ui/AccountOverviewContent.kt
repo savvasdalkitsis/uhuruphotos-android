@@ -28,6 +28,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.account.view.api.seam.actions.Log
 import com.savvasdalkitsis.uhuruphotos.feature.account.view.api.seam.actions.LogOut
 import com.savvasdalkitsis.uhuruphotos.feature.account.view.api.seam.actions.SettingsClick
 import com.savvasdalkitsis.uhuruphotos.feature.account.view.api.seam.actions.StartJob
+import com.savvasdalkitsis.uhuruphotos.feature.account.view.api.seam.actions.ViewAllUploads
 import com.savvasdalkitsis.uhuruphotos.feature.account.view.api.ui.state.AccountOverviewState
 import com.savvasdalkitsis.uhuruphotos.feature.jobs.view.ui.JobPermissionDialog
 
@@ -45,6 +46,7 @@ fun AccountOverviewContent(
         onStartJob = { action(AskToStartJob(it)) },
         onCancelJob = { action(CancelJob(it)) },
         onSettingsClicked = { action(SettingsClick) },
+        onViewAllUploadsClicked = { action(ViewAllUploads) }
     )
     if (state.showLogOutConfirmation) {
         LogOutConfirmationDialog(

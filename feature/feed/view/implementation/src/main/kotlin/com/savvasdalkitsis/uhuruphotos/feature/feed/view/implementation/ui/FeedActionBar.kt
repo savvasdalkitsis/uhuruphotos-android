@@ -26,14 +26,16 @@ import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.act
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.actions.DownloadSelectedCels
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.actions.FeedAction
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.actions.ShareSelectedCels
+import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.actions.UploadSelectedCels
 import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.R.drawable
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.ActionIcon
 
 @Composable
 internal fun RowScope.FeedActionBar(
-    shouldShowShareIcon: Boolean,
-    shouldShowDeleteIcon: Boolean,
-    shouldShowDownloadIcon: Boolean,
+    shouldShowShareIcon: Boolean = false,
+    shouldShowDeleteIcon: Boolean = false,
+    shouldShowDownloadIcon: Boolean = false,
+    shouldShowUploadIcon: Boolean = false,
     hasSelection: Boolean,
     collageDisplay: CollageDisplay,
     action: (FeedAction) -> Unit
@@ -54,6 +56,12 @@ internal fun RowScope.FeedActionBar(
         ActionIcon(
             onClick = { action(DownloadSelectedCels) },
             icon = drawable.ic_cloud_download
+        )
+    }
+    AnimatedVisibility(visible = shouldShowUploadIcon) {
+        ActionIcon(
+            onClick = { action(UploadSelectedCels) },
+            icon = drawable.ic_cloud_upload
         )
     }
     AnimatedVisibility(visible = !hasSelection) {

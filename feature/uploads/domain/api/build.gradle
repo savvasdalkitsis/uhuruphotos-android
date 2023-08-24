@@ -1,0 +1,10 @@
+android {
+    namespace 'com.savvasdalkitsis.uhuruphotos.feature.uploads.domain.api'
+}
+
+dependencies {
+    api(
+            project(":feature:upload:domain:api"),
+            libs.kotlinx.coroutines,
+    )
+}

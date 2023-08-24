@@ -18,6 +18,7 @@ package com.savvasdalkitsis.uhuruphotos.foundation.worker.implementation.usecase
 import androidx.lifecycle.LiveData
 import androidx.work.WorkInfo
 import androidx.work.WorkManager
+import androidx.work.WorkQuery
 import com.savvasdalkitsis.uhuruphotos.foundation.launchers.api.onMain
 import com.savvasdalkitsis.uhuruphotos.foundation.worker.api.usecase.WorkerStatusUseCase
 import kotlinx.coroutines.CoroutineScope
@@ -39,17 +40,25 @@ class WorkerStatusUseCase @Inject constructor(
     override fun monitorUniqueJobStatus(jobName: String): Flow<WorkInfo.State?> =
         monitorUniqueJob(jobName).map { it?.state }
 
-    override fun monitorUniqueJob(jobName: String): Flow<WorkInfo?> {
+    override fun monitorUniqueJob(jobName: String): Flow<WorkInfo?> = queryWork {
+        workManager.getWorkInfosForUniqueWorkLiveData(jobName)
+    }.map { it.firstOrNull() }
+
+    override fun monitorUniqueJobsByTag(tag: String): Flow<List<WorkInfo?>> = queryWork {
+        workManager.getWorkInfosLiveData(WorkQuery.fromTags(tag))
+    }
+
+    private fun queryWork(query: () -> LiveData<MutableList<WorkInfo?>>?): Flow<List<WorkInfo?>> {
         var observer: ((MutableList<WorkInfo?>) -> Unit)?
         var liveData: LiveData<MutableList<WorkInfo?>>?
         return channelFlow {
             observer = {
-                val workInfo = it.getOrNull(0)
+                val workInfo = it
                 CoroutineScope(Dispatchers.Default).launch {
                     send(workInfo)
                 }
             }
-            liveData = workManager.getWorkInfosForUniqueWorkLiveData(jobName)
+            liveData = query()
             onMain {
                 liveData!!.observeForever(observer!!)
             }

@@ -98,12 +98,13 @@ internal fun Feed(
         showBottomNavigationBar = !state.autoHideNavOnScroll || gridState.isScrollingUp(),
         actionBarContent = {
             FeedActionBar(
-                state.shouldShowShareIcon,
-                state.shouldShowDeleteIcon,
-                state.shouldShowDownloadIcon,
-                state.hasSelection,
-                state.collageState.collageDisplay,
-                action
+                shouldShowShareIcon = state.shouldShowShareIcon,
+                shouldShowDeleteIcon = state.shouldShowDeleteIcon,
+                shouldShowDownloadIcon = state.shouldShowDownloadIcon,
+                shouldShowUploadIcon = state.shouldShowUploadIcon,
+                hasSelection = state.hasSelection,
+                collageDisplay = state.collageState.collageDisplay,
+                action = action
             )
             actionBarContent()
         },

@@ -58,6 +58,14 @@ sealed class AccountOverviewMutation(
         it.copy(jobs = jobs.toPersistentList())
     })
 
+    data class ShowUploads(val show: Boolean) : AccountOverviewMutation({
+        it.copy(showUploads = show)
+    })
+
+    data class ShowUploadsProgress(val inProgress: Boolean) : AccountOverviewMutation({
+        it.copy(uploadsInProgress = inProgress)
+    })
+
     data class ShowJobStartDialog(val job: Job) : AccountOverviewMutation({
         it.copy(showJobStartDialog = job)
     })

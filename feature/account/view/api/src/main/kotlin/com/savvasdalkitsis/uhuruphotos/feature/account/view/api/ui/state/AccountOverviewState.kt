@@ -32,4 +32,6 @@ data class AccountOverviewState(
     val showLogIn: Boolean = false,
     val showUserAndServerDetails: Boolean = false,
     val jobs: ImmutableList<JobState> = persistentListOf(),
+    val showUploads: Boolean = false,
+    val uploadsInProgress: Boolean = false,
 )

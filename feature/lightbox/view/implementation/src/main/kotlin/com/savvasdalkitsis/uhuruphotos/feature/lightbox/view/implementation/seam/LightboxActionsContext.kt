@@ -57,6 +57,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.memories.domain.api.usecase.Memor
 import com.savvasdalkitsis.uhuruphotos.feature.person.domain.api.usecase.PersonUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.search.domain.api.usecase.SearchUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.trash.domain.api.usecase.TrashUseCase
+import com.savvasdalkitsis.uhuruphotos.feature.upload.domain.api.usecase.UploadUseCase
 import com.savvasdalkitsis.uhuruphotos.foundation.date.api.module.DateModule
 import com.savvasdalkitsis.uhuruphotos.foundation.log.api.log
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.Navigator
@@ -65,7 +66,6 @@ import com.savvasdalkitsis.uhuruphotos.foundation.share.api.usecase.ShareUseCase
 import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
 import com.savvasdalkitsis.uhuruphotos.foundation.toaster.api.usecase.ToasterUseCase
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.usecase.UiUseCase
-import com.savvasdalkitsis.uhuruphotos.foundation.upload.api.usecase.UploadUseCase
 import com.savvasdalktsis.uhuruphotos.feature.download.domain.api.usecase.DownloadUseCase
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.flow.FlowCollector
