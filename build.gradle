@@ -3,8 +3,8 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 buildscript {
     ext {
-        kotlin_version = '1.9.10'
-        compose_version = '1.6.0-alpha03'
+        kotlin_version = '1.9.0'
+        compose_version = '1.6.0-alpha04'
         compose_compiler_version = '1.5.2'
     }
     dependencies {
@@ -24,7 +24,7 @@ plugins {
     id "org.sonarqube" version "4.3.0.3225"
     id "com.autonomousapps.dependency-analysis" version "1.21.0" apply true
     id "dev.zacsweers.redacted" version "1.6.0" apply false
-    id "com.google.devtools.ksp" version "1.9.10-1.0.13" apply false
+    id "com.google.devtools.ksp" version "1.9.0-1.0.13" apply false
     id 'com.mikepenz.aboutlibraries.plugin' version "10.8.3" apply false
 }
 
