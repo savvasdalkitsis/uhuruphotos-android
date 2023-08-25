@@ -43,8 +43,7 @@ internal class StatsNavigationTarget @Inject constructor(
             StatsViewModel::class,
         ) { state, action ->
             Stats(
-                    state,
-                    action,
+                state,
             )
         }
     }
