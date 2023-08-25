@@ -39,11 +39,11 @@ import com.savvasdalkitsis.uhuruphotos.foundation.preferences.api.Preferences
 import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.theme.PreviewAppTheme
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.ActionIcon
-import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.BackNavButton
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.CollapsibleGroup
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.CommonScaffold
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.FullLoading
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.StaggeredGrid
+import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.UpNavButton
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.window.LocalWindowSize
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.emptyFlow
@@ -70,7 +70,7 @@ internal fun Settings(
             )
             Avatar(state = state.avatarState)
         },
-        navigationIcon = { BackNavButton {
+        navigationIcon = { UpNavButton {
             action(NavigateBack)
         }}
     ) { contentPadding ->

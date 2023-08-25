@@ -28,7 +28,7 @@ import androidx.compose.ui.unit.dp
 import com.savvasdalkitsis.uhuruphotos.foundation.compose.api.recomposeHighlighter
 
 @Composable
-fun BackNavButton(
+fun UpNavButton(
     modifier: Modifier = Modifier,
     furtherContent: @Composable () -> Unit = {},
     onBackPressed: () -> Unit,

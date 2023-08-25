@@ -26,10 +26,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.savvasdalkitsis.uhuruphotos.feature.catalogue.view.api.ui.state.CatalogueSorting
-import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.BackNavButton
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.CommonScaffold
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.NoContent
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.SwipeRefresh
+import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.UpNavButton
 
 @Composable
 fun Catalogue(
@@ -46,7 +46,7 @@ fun Catalogue(
     CommonScaffold(
         title = { Text(text = stringResource(title)) },
         navigationIcon = {
-            BackNavButton {
+            UpNavButton {
                 onBackPressed()
             }
         },

@@ -25,10 +25,10 @@ import androidx.compose.ui.graphics.Color
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.actions.LightboxAction
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.actions.NavigateBack
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.ui.state.LightboxState
-import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.BackNavButton
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.CommonScaffold
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.FullLoading
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.SheetSize
+import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.UpNavButton
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.adjustingSheetSize
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.window.LocalWindowSize
 
@@ -60,7 +60,7 @@ internal fun LightboxScaffold(
         topBarDisplayed = state.showUI,
         bottomBarDisplayed = state.showUI,
         navigationIcon = {
-            BackNavButton { action(NavigateBack) }
+            UpNavButton { action(NavigateBack) }
         },
     ) { contentPadding ->
         when {

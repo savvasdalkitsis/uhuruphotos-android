@@ -58,11 +58,11 @@ import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.layout.plus
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.theme.PreviewAppTheme
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.ActionIcon
-import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.BackNavButton
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.CollapsibleGroup
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.CommonScaffold
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.FullLoading
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.MultiButtonDialog
+import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.UpNavButton
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.state.rememberCollapsibleGroupState
 
 @Composable
@@ -74,7 +74,7 @@ internal fun Server(
         modifier = Modifier
             .imeNestedScroll(),
         title = { Text(stringResource(string.libre_photos_server))},
-        navigationIcon = { BackNavButton {
+        navigationIcon = { UpNavButton {
             action(UpPressed)
         }},
         actionBarContent = {

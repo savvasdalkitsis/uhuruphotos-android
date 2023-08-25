@@ -40,8 +40,8 @@ import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.R.drawable
 import com.savvasdalkitsis.uhuruphotos.foundation.map.api.ui.MapViewState
 import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.ActionIcon
-import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.BackNavButton
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.CommonTopBar
+import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.UpNavButton
 
 @Composable
 fun HeatMapTopBar(
@@ -53,7 +53,7 @@ fun HeatMapTopBar(
 ) {
     CommonTopBar(
         navigationIcon = {
-            BackNavButton(
+            UpNavButton(
                 modifier = Modifier
                     .clip(CircleShape)
                     .background(MaterialTheme.colors.background)

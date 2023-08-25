@@ -34,10 +34,10 @@ import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.ui.state.Gallery
 import com.savvasdalkitsis.uhuruphotos.feature.people.view.api.ui.PeopleBanner
 import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.ActionIcon
-import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.BackNavButton
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.CommonScaffold
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.NoContent
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.SwipeRefresh
+import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.UpNavButton
 
 @Composable
 fun Gallery(
@@ -50,7 +50,7 @@ fun Gallery(
         title = { Text(state.title.toText()) },
         expandableTopBar = true,
         navigationIcon = {
-            BackNavButton {
+            UpNavButton {
                 action(NavigateBack)
             }
         },

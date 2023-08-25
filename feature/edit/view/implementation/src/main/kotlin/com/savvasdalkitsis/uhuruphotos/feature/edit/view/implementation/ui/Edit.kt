@@ -31,9 +31,9 @@ import com.savvasdalkitsis.uhuruphotos.feature.edit.view.implementation.ui.state
 import com.savvasdalkitsis.uhuruphotos.foundation.compose.api.blurIf
 import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.theme.PreviewAppTheme
-import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.BackNavButton
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.CommonScaffold
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.FullLoading
+import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.UpNavButton
 import io.moyuru.cropify.rememberCropifyState
 
 @Composable
@@ -49,7 +49,7 @@ internal fun Edit(
             EditActionBar(state, action, cropState)
         },
         navigationIcon = {
-            BackNavButton {
+            UpNavButton {
                 action(NavigateBack)
             }
         }
