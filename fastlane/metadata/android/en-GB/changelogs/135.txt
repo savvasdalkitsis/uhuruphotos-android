@@ -1,0 +1,2 @@
+* Users can now upload multiple photos at once from the Feed
+* Created page listing all current and past uploads and their status accessible from account overview and settings
