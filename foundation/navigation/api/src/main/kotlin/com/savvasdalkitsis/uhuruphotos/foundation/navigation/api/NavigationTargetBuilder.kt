@@ -17,7 +17,7 @@ package com.savvasdalkitsis.uhuruphotos.foundation.navigation.api
 
 import androidx.compose.runtime.Composable
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.viewmodel.NavigationViewModel
-import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.theme.ThemeMode
+import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.ThemeMode
 import kotlinx.coroutines.flow.StateFlow
 import kotlin.reflect.KClass
 

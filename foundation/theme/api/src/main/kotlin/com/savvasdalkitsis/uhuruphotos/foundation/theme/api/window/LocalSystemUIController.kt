@@ -13,21 +13,11 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
  */
-package com.savvasdalkitsis.uhuruphotos.foundation.ui.api.theme
+package com.savvasdalkitsis.uhuruphotos.foundation.theme.api.window
 
-import androidx.annotation.DrawableRes
-import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.R.drawable
+import androidx.compose.runtime.ProvidableCompositionLocal
+import androidx.compose.runtime.compositionLocalOf
+import com.google.accompanist.systemuicontroller.SystemUiController
 
-enum class ThemeMode(
-    val friendlyName: String,
-    @DrawableRes val icon: Int,
-) {
-
-    FOLLOW_SYSTEM("Follow system", drawable.ic_brightness_auto),
-    DARK_MODE("Dark mode", drawable.ic_dark_mode),
-    LIGHT_MODE("Light mode", drawable.ic_light_mode);
-
-    companion object {
-        val default = FOLLOW_SYSTEM
-    }
-}
+val LocalSystemUiController: ProvidableCompositionLocal<SystemUiController> =
+    compositionLocalOf { throw IllegalStateException("Not initialised") }

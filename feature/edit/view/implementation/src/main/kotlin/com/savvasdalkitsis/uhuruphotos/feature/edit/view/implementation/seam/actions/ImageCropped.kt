@@ -34,6 +34,6 @@ data class ImageCropped(val image: ImageBitmap, val name: String, val uri: Uri) 
         if (!localMediaUseCase.savePhoto(image.asAndroidBitmap(), "CROPPED_$name", uri)) {
             toaster.show(R.string.error_editing_photo)
         }
-        navigator.navigateBack()
+        navigator.navigateUp()
     }
 }

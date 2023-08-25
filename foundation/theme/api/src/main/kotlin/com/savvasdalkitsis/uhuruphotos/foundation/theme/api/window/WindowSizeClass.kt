@@ -13,11 +13,11 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
  */
-package com.savvasdalkitsis.uhuruphotos.foundation.ui.api.window
+package com.savvasdalkitsis.uhuruphotos.foundation.theme.api.window
 
-import androidx.compose.runtime.ProvidableCompositionLocal
+import androidx.compose.material3.windowsizeclass.WindowSizeClass
 import androidx.compose.runtime.compositionLocalOf
-import com.google.accompanist.systemuicontroller.SystemUiController
 
-val LocalSystemUiController: ProvidableCompositionLocal<SystemUiController> =
-    compositionLocalOf { throw IllegalStateException("Not initialised") }
+val LocalWindowSize = compositionLocalOf<WindowSizeClass> {
+    throw IllegalStateException("Not initialised")
+}

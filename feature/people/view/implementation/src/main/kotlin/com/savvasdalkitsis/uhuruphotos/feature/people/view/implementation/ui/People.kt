@@ -27,7 +27,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.savvasdalkitsis.uhuruphotos.feature.people.view.api.ui.PersonThumbnail
-import com.savvasdalkitsis.uhuruphotos.feature.people.view.implementation.seam.actions.NavigateBack
 import com.savvasdalkitsis.uhuruphotos.feature.people.view.implementation.seam.actions.PeopleAction
 import com.savvasdalkitsis.uhuruphotos.feature.people.view.implementation.seam.actions.PersonSelected
 import com.savvasdalkitsis.uhuruphotos.feature.people.view.implementation.seam.actions.SwipeToRefresh
@@ -36,12 +35,12 @@ import com.savvasdalkitsis.uhuruphotos.feature.people.view.implementation.ui.sta
 import com.savvasdalkitsis.uhuruphotos.feature.people.view.implementation.ui.state.SortOrder.ASCENDING
 import com.savvasdalkitsis.uhuruphotos.feature.people.view.implementation.ui.state.SortOrder.DESCENDING
 import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.R.drawable
+import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.window.LocalWindowSize
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.ActionIcon
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.CommonScaffold
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.FullLoading
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.SwipeRefresh
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.UpNavButton
-import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.window.LocalWindowSize
 
 @Composable
 fun People(
@@ -50,9 +49,7 @@ fun People(
 ) {
     CommonScaffold(
         title = { Text("People") },
-        navigationIcon = { UpNavButton {
-            action(NavigateBack)
-        } },
+        navigationIcon = { UpNavButton() },
         actionBarContent = {
             ActionIcon(onClick = { action(ToggleSortOrder) }, icon = when (state.sortOrder) {
                 ASCENDING -> drawable.ic_sort_az_ascending

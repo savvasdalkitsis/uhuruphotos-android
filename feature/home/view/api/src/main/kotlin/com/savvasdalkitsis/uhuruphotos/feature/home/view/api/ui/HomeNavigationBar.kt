@@ -58,8 +58,8 @@ import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.R.drawable
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.LocalBackStack
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.NavigationRoute
 import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
-import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.theme.CustomColors
-import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.window.LocalWindowSize
+import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.CustomColors
+import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.window.LocalWindowSize
 
 @Composable
 fun homeNavigationStyle() = when (LocalWindowSize.current.widthSizeClass) {

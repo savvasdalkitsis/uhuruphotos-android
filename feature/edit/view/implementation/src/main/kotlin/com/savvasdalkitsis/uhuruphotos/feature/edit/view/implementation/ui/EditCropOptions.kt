@@ -25,7 +25,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import com.savvasdalkitsis.uhuruphotos.feature.edit.view.implementation.seam.actions.EditAction
 import com.savvasdalkitsis.uhuruphotos.feature.edit.view.implementation.seam.actions.SelectCropRatio
 import com.savvasdalkitsis.uhuruphotos.feature.edit.view.implementation.ui.state.CropRatio
-import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.theme.PreviewAppTheme
+import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.PreviewAppTheme
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.ActionIconWithText
 
 @Composable

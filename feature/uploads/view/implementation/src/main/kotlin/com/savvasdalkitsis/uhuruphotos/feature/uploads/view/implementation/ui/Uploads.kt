@@ -62,15 +62,14 @@ import com.savvasdalkitsis.uhuruphotos.feature.upload.domain.api.model.UploadJob
 import com.savvasdalkitsis.uhuruphotos.feature.upload.domain.api.model.UploadJobType.Uploading
 import com.savvasdalkitsis.uhuruphotos.feature.uploads.view.implementation.R
 import com.savvasdalkitsis.uhuruphotos.feature.uploads.view.implementation.seam.actions.ClearFinished
-import com.savvasdalkitsis.uhuruphotos.feature.uploads.view.implementation.seam.actions.UpPressed
 import com.savvasdalkitsis.uhuruphotos.feature.uploads.view.implementation.seam.actions.UploadsAction
 import com.savvasdalkitsis.uhuruphotos.feature.uploads.view.implementation.ui.state.UploadsState
 import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.R.drawable
 import com.savvasdalkitsis.uhuruphotos.foundation.image.api.model.LocalThumbnailImageLoader
 import com.savvasdalkitsis.uhuruphotos.foundation.image.api.ui.Thumbnail
 import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
-import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.theme.CustomColors
-import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.theme.PreviewAppTheme
+import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.CustomColors
+import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.PreviewAppTheme
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.ActionIcon
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.CommonScaffold
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.DynamicIcon
@@ -86,9 +85,7 @@ internal fun Uploads(
 ) {
     CommonScaffold(
         title = { Text(text = stringResource(string.uploads)) },
-        navigationIcon = { UpNavButton {
-            action(UpPressed)
-        }},
+        navigationIcon = { UpNavButton() },
         actionBarContent = {
             AnimatedVisibility(visible = !state.isLoading) {
                 ActionIcon(

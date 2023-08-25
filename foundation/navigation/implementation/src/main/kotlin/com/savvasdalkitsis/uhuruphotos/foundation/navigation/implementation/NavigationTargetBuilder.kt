@@ -34,8 +34,8 @@ import com.savvasdalkitsis.uhuruphotos.foundation.log.api.log
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.NavigationRoute
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.NavigationTargetBuilder
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.viewmodel.NavigationViewModel
-import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.theme.AppTheme
-import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.theme.ThemeMode
+import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.AppTheme
+import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.ThemeMode
 import com.sebaslogen.resaca.ScopedViewModelContainer
 import com.sebaslogen.resaca.generateKeysAndObserveLifecycle
 import kotlinx.coroutines.Job

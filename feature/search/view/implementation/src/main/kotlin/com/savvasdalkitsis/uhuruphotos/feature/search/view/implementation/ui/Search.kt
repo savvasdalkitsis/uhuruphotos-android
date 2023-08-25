@@ -23,7 +23,6 @@ import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.Collage
 import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.CollageDisplayActionButton
 import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.CollageState
 import com.savvasdalkitsis.uhuruphotos.feature.search.view.implementation.seam.actions.ChangeDisplay
-import com.savvasdalkitsis.uhuruphotos.feature.search.view.implementation.seam.actions.NavigateBack
 import com.savvasdalkitsis.uhuruphotos.feature.search.view.implementation.seam.actions.SearchAction
 import com.savvasdalkitsis.uhuruphotos.feature.search.view.implementation.seam.actions.SearchFor
 import com.savvasdalkitsis.uhuruphotos.feature.search.view.implementation.seam.actions.SelectedCel
@@ -47,9 +46,7 @@ fun Search(
                 currentCollageDisplay = state.searchDisplay
             )
         },
-        navigationIcon = { UpNavButton {
-            action(NavigateBack)
-        }}
+        navigationIcon = { UpNavButton() }
     ) { contentPadding ->
         if (state.isError) {
             NoContent(string.error_searching) {

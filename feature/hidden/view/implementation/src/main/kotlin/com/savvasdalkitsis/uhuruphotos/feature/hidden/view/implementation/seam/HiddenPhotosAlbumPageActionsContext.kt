@@ -67,7 +67,7 @@ internal class HiddenPhotosAlbumPageActionsContext @Inject constructor(
                     }
                     if (proceed is Err) {
                         flow {
-                            navigator.navigateBack()
+                            navigator.navigateUp()
                         }
                     } else {
                         mediaUseCase.observeHiddenMedia()

@@ -41,10 +41,10 @@ import androidx.compose.ui.unit.max
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.actions.ChangedToPage
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.actions.LightboxAction
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.ui.state.LightboxState
+import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.window.LocalWindowSize
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.insets.insetsTop
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.SheetHandle
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.SheetSize
-import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.window.LocalWindowSize
 import kotlinx.coroutines.flow.collectLatest
 
 @Composable

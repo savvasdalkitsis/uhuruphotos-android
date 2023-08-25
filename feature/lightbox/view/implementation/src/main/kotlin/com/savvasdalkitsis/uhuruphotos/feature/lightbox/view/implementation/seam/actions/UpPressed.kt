@@ -20,12 +20,12 @@ import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.ui.state.LightboxState
 import kotlinx.coroutines.flow.flow
 
-data object NavigateBack : LightboxAction() {
+data object UpPressed : LightboxAction() {
 
     context(LightboxActionsContext) override fun handle(
         state: LightboxState
     ) = flow<LightboxMutation> {
         uiUseCase.setSystemBarsVisibility(true)
-        navigator.navigateBack()
+        navigator.navigateUp()
     }
 }

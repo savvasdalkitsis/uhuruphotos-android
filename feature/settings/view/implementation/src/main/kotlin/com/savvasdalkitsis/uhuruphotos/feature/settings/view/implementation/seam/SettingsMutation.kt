@@ -25,7 +25,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.ui.s
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.ui.state.SettingsState
 import com.savvasdalkitsis.uhuruphotos.foundation.map.api.model.MapProvider
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.Mutation
-import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.theme.ThemeMode
+import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.ThemeMode
 
 sealed class SettingsMutation(
     mutation: Mutation<SettingsState>,

@@ -43,14 +43,13 @@ import androidx.compose.ui.unit.dp
 import com.mikepenz.aboutlibraries.ui.compose.LibrariesContainer
 import com.savvasdalkitsis.uhuruphotos.feature.about.view.implementation.seam.actions.AboutAction
 import com.savvasdalkitsis.uhuruphotos.feature.about.view.implementation.seam.actions.Donate
-import com.savvasdalkitsis.uhuruphotos.feature.about.view.implementation.seam.actions.NavigateBack
 import com.savvasdalkitsis.uhuruphotos.feature.about.view.implementation.seam.actions.NavigateToGithub
 import com.savvasdalkitsis.uhuruphotos.feature.about.view.implementation.seam.actions.SendFeedback
 import com.savvasdalkitsis.uhuruphotos.feature.about.view.implementation.ui.state.AboutState
 import com.savvasdalkitsis.uhuruphotos.foundation.compose.api.recomposeHighlighter
 import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.R.drawable
 import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
-import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.theme.PreviewAppTheme
+import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.PreviewAppTheme
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.CommonScaffold
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.UpNavButton
 import my.nanihadesuka.compose.InternalLazyColumnScrollbar
@@ -63,11 +62,7 @@ internal fun About(
 ) {
     CommonScaffold(
         title = { Text(stringResource(string.about)) },
-        navigationIcon =  {
-            UpNavButton {
-                action(NavigateBack)
-            }
-        },
+        navigationIcon = { UpNavButton() },
     ) { contentPadding ->
         val listState = rememberLazyListState()
         LibrariesContainer(

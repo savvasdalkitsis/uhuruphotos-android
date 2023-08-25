@@ -26,18 +26,22 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.savvasdalkitsis.uhuruphotos.foundation.compose.api.recomposeHighlighter
+import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.LocalNavigator
 
 @Composable
 fun UpNavButton(
     modifier: Modifier = Modifier,
     furtherContent: @Composable () -> Unit = {},
-    onBackPressed: () -> Unit,
+    onBackPressed: (() -> Unit)? = null,
 ) {
+    val navigator = LocalNavigator.current
     IconButton(
         modifier = modifier
             .recomposeHighlighter()
         ,
-        onClick = onBackPressed,
+        onClick = onBackPressed ?: {
+            navigator.navigateUp()
+        },
     ) {
         Row(
             horizontalArrangement = Arrangement.spacedBy(8.dp),

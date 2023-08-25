@@ -13,11 +13,21 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
  */
-package com.savvasdalkitsis.uhuruphotos.foundation.ui.api.window
+package com.savvasdalkitsis.uhuruphotos.foundation.theme.api
 
-import androidx.compose.material3.windowsizeclass.WindowSizeClass
-import androidx.compose.runtime.compositionLocalOf
+import androidx.annotation.DrawableRes
+import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.R.drawable
 
-val LocalWindowSize = compositionLocalOf<WindowSizeClass> {
-    throw IllegalStateException("Not initialised")
+enum class ThemeMode(
+    val friendlyName: String,
+    @DrawableRes val icon: Int,
+) {
+
+    FOLLOW_SYSTEM("Follow system", drawable.ic_brightness_auto),
+    DARK_MODE("Dark mode", drawable.ic_dark_mode),
+    LIGHT_MODE("Light mode", drawable.ic_light_mode);
+
+    companion object {
+        val default = FOLLOW_SYSTEM
+    }
 }

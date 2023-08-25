@@ -27,5 +27,6 @@ interface Navigator {
     fun <R : NavigationRoute> navigateTo(route: R)
     fun <R : NavigationRoute> newRoot(route: R)
     fun navigateBack()
+    fun navigateUp()
     fun clearBackStack()
 }

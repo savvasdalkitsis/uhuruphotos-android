@@ -35,7 +35,6 @@ import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.UpNavButton
 fun Catalogue(
     @StringRes title: Int,
     onRefresh: () -> Unit,
-    onBackPressed: () -> Unit,
     isRefreshing: Boolean,
     isEmpty: Boolean,
     emptyContentMessage: Int,
@@ -45,11 +44,7 @@ fun Catalogue(
 ) {
     CommonScaffold(
         title = { Text(text = stringResource(title)) },
-        navigationIcon = {
-            UpNavButton {
-                onBackPressed()
-            }
-        },
+        navigationIcon = { UpNavButton() },
         actionBarContent = {
             CatalogueSortingAction(sorting, onChangeSorting)
         }

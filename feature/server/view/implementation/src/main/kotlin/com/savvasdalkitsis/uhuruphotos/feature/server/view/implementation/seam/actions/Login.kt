@@ -45,7 +45,7 @@ data class Login(val allowUnsecuredServers: Boolean) : ServerAction() {
                     .mapEither(
                         success = { authStatus ->
                             if (authStatus == AuthStatus.Authenticated) {
-                                navigator.navigateBack()
+                                navigator.navigateUp()
                             } else {
                                 emit(SetLoading(false))
                                 toaster.show(R.string.error_logging_in)

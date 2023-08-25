@@ -28,7 +28,6 @@ import com.savvasdalkitsis.uhuruphotos.feature.avatar.view.api.ui.Avatar
 import com.savvasdalkitsis.uhuruphotos.feature.jobs.view.ui.JobPermissionDialog
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.actions.AboutPressed
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.actions.DismissJobDialog
-import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.actions.NavigateBack
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.actions.SettingsAction
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.actions.StartJob
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.ui.controller.SettingsViewStateController
@@ -37,14 +36,14 @@ import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.ui.s
 import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.R.drawable
 import com.savvasdalkitsis.uhuruphotos.foundation.preferences.api.Preferences
 import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
-import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.theme.PreviewAppTheme
+import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.PreviewAppTheme
+import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.window.LocalWindowSize
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.ActionIcon
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.CollapsibleGroup
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.CommonScaffold
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.FullLoading
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.StaggeredGrid
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.UpNavButton
-import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.window.LocalWindowSize
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.emptyFlow
 import kotlinx.coroutines.flow.flowOf
@@ -70,9 +69,7 @@ internal fun Settings(
             )
             Avatar(state = state.avatarState)
         },
-        navigationIcon = { UpNavButton {
-            action(NavigateBack)
-        }}
+        navigationIcon = { UpNavButton() }
     ) { contentPadding ->
         if (state.isLoading) {
             FullLoading()

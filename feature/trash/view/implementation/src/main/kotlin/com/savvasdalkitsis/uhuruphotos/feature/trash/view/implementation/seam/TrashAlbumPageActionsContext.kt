@@ -65,7 +65,7 @@ internal class TrashAlbumPageActionsContext @Inject constructor(
                     }
                     if (proceed is Err) {
                         flow {
-                            navigator.navigateBack()
+                            navigator.navigateUp()
                         }
                     } else {
                         trashUseCase.observeTrashAlbums()

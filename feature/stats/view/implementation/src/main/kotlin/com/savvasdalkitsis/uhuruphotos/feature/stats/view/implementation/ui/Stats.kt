@@ -26,8 +26,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import com.savvasdalkitsis.uhuruphotos.feature.stats.view.implementation.seam.actions.StatsAction
-import com.savvasdalkitsis.uhuruphotos.feature.stats.view.implementation.seam.actions.UpActionPressed
 import com.savvasdalkitsis.uhuruphotos.feature.stats.view.implementation.ui.state.StatsState
 import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.CommonScaffold
@@ -36,13 +34,10 @@ import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.UpNavButton
 @Composable
 internal fun Stats(
     state: StatsState,
-    action: (StatsAction) -> Unit,
 ) {
     CommonScaffold(
         title = { Text(stringResource(string.stats)) },
-        navigationIcon = { UpNavButton {
-            action(UpActionPressed)
-        }}
+        navigationIcon = { UpNavButton() }
     ) { contentPadding ->
         Column(
             modifier = Modifier

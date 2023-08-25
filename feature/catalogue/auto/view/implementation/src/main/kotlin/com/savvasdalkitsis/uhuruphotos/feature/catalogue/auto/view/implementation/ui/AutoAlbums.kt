@@ -19,7 +19,6 @@ import androidx.compose.runtime.Composable
 import com.savvasdalkitsis.uhuruphotos.feature.catalogue.auto.view.implementation.seam.AutoAlbumsState
 import com.savvasdalkitsis.uhuruphotos.feature.catalogue.auto.view.implementation.seam.actions.AutoAlbumsAction
 import com.savvasdalkitsis.uhuruphotos.feature.catalogue.auto.view.implementation.seam.actions.ChangeSorting
-import com.savvasdalkitsis.uhuruphotos.feature.catalogue.auto.view.implementation.seam.actions.NavigateBack
 import com.savvasdalkitsis.uhuruphotos.feature.catalogue.auto.view.implementation.seam.actions.Refresh
 import com.savvasdalkitsis.uhuruphotos.feature.catalogue.view.api.ui.Catalogue
 import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
@@ -31,7 +30,6 @@ internal fun AutoAlbums(
 ) {
     Catalogue(
         title = string.auto_generated_albums,
-        onBackPressed = { action(NavigateBack) },
         onRefresh = { action(Refresh) },
         isRefreshing = state.isLoading,
         isEmpty = state.albums.isEmpty(),

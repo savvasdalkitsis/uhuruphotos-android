@@ -154,7 +154,7 @@ internal class LightboxActionsContext @Inject constructor(
                 postProcessAction()
                 if (state.media.size == 1) {
                     uiUseCase.setSystemBarsVisibility(true)
-                    navigator.navigateBack()
+                    navigator.navigateUp()
                 }
             }
     }

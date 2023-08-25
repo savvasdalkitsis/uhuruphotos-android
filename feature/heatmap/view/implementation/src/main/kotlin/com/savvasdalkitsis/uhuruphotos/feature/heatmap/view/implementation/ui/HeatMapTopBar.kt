@@ -32,7 +32,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.google.accompanist.permissions.PermissionState
-import com.savvasdalkitsis.uhuruphotos.feature.heatmap.view.implementation.seam.actions.BackPressed
 import com.savvasdalkitsis.uhuruphotos.feature.heatmap.view.implementation.seam.actions.HeatMapAction
 import com.savvasdalkitsis.uhuruphotos.feature.heatmap.view.implementation.seam.actions.MyLocationPressed
 import com.savvasdalkitsis.uhuruphotos.feature.heatmap.view.implementation.ui.state.HeatMapState
@@ -57,9 +56,7 @@ fun HeatMapTopBar(
                 modifier = Modifier
                     .clip(CircleShape)
                     .background(MaterialTheme.colors.background)
-            ) {
-                action(BackPressed)
-            }
+            )
         },
         title = {
             Row(

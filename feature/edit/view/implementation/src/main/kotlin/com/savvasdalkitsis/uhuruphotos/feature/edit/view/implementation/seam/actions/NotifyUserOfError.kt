@@ -27,6 +27,6 @@ data object NotifyUserOfError : EditAction() {
         state: EditState
     ): Flow<Mutation<EditState>> = flow {
         toaster.show(R.string.error_editing_photo)
-        navigator.navigateBack()
+        navigator.navigateUp()
     }
 }

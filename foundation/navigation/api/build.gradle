@@ -12,7 +12,7 @@ dependencies {
 
     api project(':foundation:log:api')
     api project(':foundation:seam:api')
-    api project(':foundation:ui:api')
+    api project(':foundation:theme:api')
     api(
             libs.androidx.compose.navigation,
             libs.appyx,

@@ -37,8 +37,8 @@ import com.savvasdalkitsis.uhuruphotos.foundation.map.api.ui.CompositeMapViewFac
 import com.savvasdalkitsis.uhuruphotos.foundation.map.api.ui.CompositeMapViewStateFactory
 import com.savvasdalkitsis.uhuruphotos.foundation.map.api.ui.MapViewFactoryProvider
 import com.savvasdalkitsis.uhuruphotos.foundation.map.api.ui.MapViewStateFactory
-import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.window.LocalSystemUiController
-import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.window.LocalWindowSize
+import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.window.LocalSystemUiController
+import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.window.LocalWindowSize
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 

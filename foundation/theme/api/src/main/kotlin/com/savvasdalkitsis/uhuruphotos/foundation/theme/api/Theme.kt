@@ -13,7 +13,7 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
  */
-package com.savvasdalkitsis.uhuruphotos.foundation.ui.api.theme
+package com.savvasdalkitsis.uhuruphotos.foundation.theme.api
 
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
@@ -26,9 +26,8 @@ import androidx.compose.runtime.SideEffect
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.DpSize
 import androidx.compose.ui.unit.dp
-import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.NoOpSystemUiController
-import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.window.LocalSystemUiController
-import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.window.LocalWindowSize
+import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.window.LocalSystemUiController
+import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.window.LocalWindowSize
 
 private val DarkColorPalette = darkColors(
     primary = Color.White,

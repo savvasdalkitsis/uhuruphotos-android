@@ -26,7 +26,6 @@ import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.CollageDispla
 import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.action.ChangeCollageDisplay
 import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.action.ChangeGallerySorting
 import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.action.GalleryAction
-import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.action.NavigateBack
 import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.action.PersonSelected
 import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.action.SelectedCel
 import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.action.SwipeToRefresh
@@ -49,11 +48,7 @@ fun Gallery(
     CommonScaffold(
         title = { Text(state.title.toText()) },
         expandableTopBar = true,
-        navigationIcon = {
-            UpNavButton {
-                action(NavigateBack)
-            }
-        },
+        navigationIcon = { UpNavButton() },
         actionBarContent = {
             state.sorting?.let { sorting ->
                 ActionIcon(

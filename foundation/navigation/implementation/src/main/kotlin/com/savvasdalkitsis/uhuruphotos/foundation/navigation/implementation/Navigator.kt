@@ -67,6 +67,16 @@ class Navigator @Inject internal constructor(
         }
     }
 
+    override fun navigateUp() {
+        onMain {
+            if (backStack.elements.value.size > 1) {
+                navigateBack()
+            } else {
+                clearBackStack()
+            }
+        }
+    }
+
     override fun clearBackStack() {
         newRoot(HomeNavigationRoute)
     }

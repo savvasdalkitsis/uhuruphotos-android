@@ -13,7 +13,7 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
  */
-package com.savvasdalkitsis.uhuruphotos.foundation.ui.api.theme
+package com.savvasdalkitsis.uhuruphotos.foundation.theme.api
 
 import androidx.compose.material.Typography
 import androidx.compose.ui.text.TextStyle

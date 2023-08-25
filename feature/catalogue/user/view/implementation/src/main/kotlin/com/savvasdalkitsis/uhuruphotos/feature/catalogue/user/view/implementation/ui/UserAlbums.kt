@@ -18,7 +18,6 @@ package com.savvasdalkitsis.uhuruphotos.feature.catalogue.user.view.implementati
 import androidx.compose.runtime.Composable
 import com.savvasdalkitsis.uhuruphotos.feature.catalogue.user.view.implementation.seam.UserAlbumsState
 import com.savvasdalkitsis.uhuruphotos.feature.catalogue.user.view.implementation.seam.action.ChangeSorting
-import com.savvasdalkitsis.uhuruphotos.feature.catalogue.user.view.implementation.seam.action.NavigateBack
 import com.savvasdalkitsis.uhuruphotos.feature.catalogue.user.view.implementation.seam.action.Refresh
 import com.savvasdalkitsis.uhuruphotos.feature.catalogue.user.view.implementation.seam.action.UserAlbumsAction
 import com.savvasdalkitsis.uhuruphotos.feature.catalogue.view.api.ui.Catalogue
@@ -31,7 +30,6 @@ internal fun UserAlbums(
 ) {
     Catalogue(
         title = string.user_albums,
-        onBackPressed = { action(NavigateBack) },
         onRefresh = { action(Refresh) },
         isRefreshing = state.isLoading,
         isEmpty = state.albums.isEmpty(),

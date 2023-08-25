@@ -22,7 +22,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.view
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.NavigationTarget
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.NavigationTargetBuilder
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.NavigationTargetRegistry
-import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.theme.ThemeMode
+import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.ThemeMode
 import kotlinx.coroutines.flow.MutableStateFlow
 import se.ansman.dagger.auto.AutoInitialize
 import javax.inject.Inject

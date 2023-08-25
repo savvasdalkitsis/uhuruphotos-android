@@ -29,7 +29,7 @@ data class LoadPage(val url: String): WebLoginAction() {
         emit(WebLoginMutation.Loading)
         cookieMonitor.monitor(coroutineContext).invokeOnCompletion {
             onMain {
-                navigator.navigateBack()
+                navigator.navigateUp()
             }
         }
 
