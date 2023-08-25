@@ -21,7 +21,9 @@ import com.savvasdalkitsis.uhuruphotos.feature.jobs.view.ui.Jobs
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.actions.AskToStartJob
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.actions.CancelJob
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.actions.SettingsAction
+import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.actions.ViewAllJobs
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.ui.state.SettingsState
+import com.savvasdalkitsis.uhuruphotos.feature.uploads.view.api.ui.UploadsRow
 
 @Composable
 internal fun ColumnScope.SettingsJobsStatus(
@@ -33,4 +35,9 @@ internal fun ColumnScope.SettingsJobsStatus(
         onStartJob = { action(AskToStartJob(it)) },
         onCancelJob = { action(CancelJob(it)) }
     )
+    if (state.hasRemoteAccess) {
+        UploadsRow(inProgress = state.uploadsInProgress) {
+            action(ViewAllJobs)
+        }
+    }
 }

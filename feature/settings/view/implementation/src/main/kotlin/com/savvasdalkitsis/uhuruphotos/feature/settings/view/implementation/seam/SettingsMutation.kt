@@ -148,6 +148,10 @@ sealed class SettingsMutation(
         it.copy(hasRemoteAccess = hasAccess)
     })
 
+    data class SetUploadsInProgress(val inProgress: Boolean): SettingsMutation({
+        it.copy(uploadsInProgress = inProgress)
+    })
+
     data class DisplaySearchSuggestionsEnabled(val enabled: Boolean): SettingsMutation({
         it.copy(searchSuggestionsEnabled = enabled)
     })

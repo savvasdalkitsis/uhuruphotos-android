@@ -57,6 +57,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.SettingsMutation.SetMemoryCacheUpperLimit
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.SettingsMutation.SetPrecacheProgressVisibility
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.SettingsMutation.SetRemoteAccess
+import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.SettingsMutation.SetUploadsInProgress
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.SettingsMutation.ShowJobs
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.ui.state.BiometricsSetting.Enrolled
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.ui.state.BiometricsSetting.NotEnrolled
@@ -131,6 +132,9 @@ data object LoadSettings : SettingsAction() {
             jobsUseCase.observeJobsStatus().map {
                 ShowJobs(it.jobs.toJobState)
             },
+            uploadsUseCase.observeUploadsInFlight().map { uploads ->
+                SetUploadsInProgress(uploads.inProgress)
+            }
         )
     }
 

@@ -51,7 +51,7 @@ data object Load : AccountOverviewAction() {
             ShowJobs(it.jobs.toJobState)
         },
         uploadsUseCase.observeUploadsInFlight().map { uploads ->
-            ShowUploadsProgress(uploads.jobs.isNotEmpty() && !uploads.jobs.all { it.latestJobState.state.isFinished })
+            ShowUploadsProgress(uploads.inProgress)
         }
     )
 }
