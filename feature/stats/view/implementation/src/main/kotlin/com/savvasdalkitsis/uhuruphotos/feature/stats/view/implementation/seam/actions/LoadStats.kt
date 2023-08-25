@@ -18,21 +18,31 @@ package com.savvasdalkitsis.uhuruphotos.feature.stats.view.implementation.seam.a
 import com.savvasdalkitsis.uhuruphotos.feature.feed.domain.api.model.FeedFetchType
 import com.savvasdalkitsis.uhuruphotos.feature.stats.view.implementation.seam.StatsActionsContext
 import com.savvasdalkitsis.uhuruphotos.feature.stats.view.implementation.seam.StatsMutation.Loading
+import com.savvasdalkitsis.uhuruphotos.feature.stats.view.implementation.seam.StatsMutation.ShowMediaPerDayOfMonth
+import com.savvasdalkitsis.uhuruphotos.feature.stats.view.implementation.seam.StatsMutation.ShowMediaPerDayOfWeek
+import com.savvasdalkitsis.uhuruphotos.feature.stats.view.implementation.seam.StatsMutation.ShowMediaPerMonth
 import com.savvasdalkitsis.uhuruphotos.feature.stats.view.implementation.seam.StatsMutation.ShowMediaPerYear
 import com.savvasdalkitsis.uhuruphotos.feature.stats.view.implementation.ui.state.StatsState
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.Mutation
+import kotlinx.coroutines.async
+import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.channelFlow
 import kotlinx.coroutines.flow.onStart
 
 data object LoadStats : StatsAction() {
 
     context(StatsActionsContext)
-    override fun handle(state: StatsState): Flow<Mutation<StatsState>> = flow {
+    override fun handle(state: StatsState): Flow<Mutation<StatsState>> = channelFlow {
         val media = feedUseCase.getFeed(FeedFetchType.ONLY_WITH_DATES)
             .flatMap { it.mediaItems }
         with(statsUseCase) {
-            emit(ShowMediaPerYear(media.breakdownByYear()))
+            listOf(
+                async { trySend(ShowMediaPerYear(media.breakdownByYear())) },
+                async { trySend(ShowMediaPerMonth(media.breakdownByMonth())) },
+                async { trySend(ShowMediaPerDayOfMonth(media.breakdownByDayOfMonth())) },
+                async { trySend(ShowMediaPerDayOfWeek(media.breakdownByDayOfWeek())) },
+            ).awaitAll()
 //            media.timeline()
 //                .onSuccess {
 //                    emit(ShowTimeline(it))

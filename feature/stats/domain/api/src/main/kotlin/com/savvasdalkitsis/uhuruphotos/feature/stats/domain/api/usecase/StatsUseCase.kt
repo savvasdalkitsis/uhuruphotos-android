@@ -18,10 +18,16 @@ package com.savvasdalkitsis.uhuruphotos.feature.stats.domain.api.usecase
 import com.github.michaelbull.result.Result
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItem
 import com.savvasdalkitsis.uhuruphotos.feature.stats.domain.api.model.CountryVisit
+import com.savvasdalkitsis.uhuruphotos.feature.stats.domain.api.model.DayOfMonth
+import com.savvasdalkitsis.uhuruphotos.feature.stats.domain.api.model.DayOfWeek
+import com.savvasdalkitsis.uhuruphotos.feature.stats.domain.api.model.Month
 import com.savvasdalkitsis.uhuruphotos.feature.stats.domain.api.model.Year
 
 interface StatsUseCase {
 
     fun List<MediaItem>.breakdownByYear(): Map<Year, Int>
+    fun List<MediaItem>.breakdownByMonth(): Map<Month, Int>
+    fun List<MediaItem>.breakdownByDayOfMonth(): Map<DayOfMonth, Int>
     fun List<MediaItem>.timeline(): Result<List<CountryVisit>, Unit>
+    fun List<MediaItem>.breakdownByDayOfWeek(): Map<DayOfWeek, Int>
 }

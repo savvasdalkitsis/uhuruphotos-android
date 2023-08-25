@@ -41,7 +41,7 @@ internal class StatsNavigationTarget @Inject constructor(
             settingsUseCase.observeThemeModeState(),
             route,
             StatsViewModel::class,
-        ) { state, action ->
+        ) { state, _ ->
             Stats(
                 state,
             )

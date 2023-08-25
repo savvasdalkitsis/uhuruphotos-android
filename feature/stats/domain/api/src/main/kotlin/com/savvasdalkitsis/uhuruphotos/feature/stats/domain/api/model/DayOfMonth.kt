@@ -13,14 +13,11 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
  */
-package com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model
+package com.savvasdalkitsis.uhuruphotos.feature.stats.domain.api.model
 
-data class MediaDay(
+@JvmInline
+value class DayOfMonth(
     val day: Int,
-    val dayOfWeek: Int,
-    val month: Int,
-    val year: Int,
-    val monthText: String,
-) {
-    val displayText = "$monthText $year"
+) : Period {
+    override val value: Int get() = day
 }

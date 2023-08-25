@@ -43,17 +43,22 @@ import com.patrykandpatrick.vico.compose.style.ProvideChartStyle
 import com.patrykandpatrick.vico.core.entry.ChartEntryModelProducer
 import com.patrykandpatrick.vico.core.entry.FloatEntry
 import com.patrykandpatrick.vico.core.scroll.InitialScroll
-import com.savvasdalkitsis.uhuruphotos.feature.stats.domain.api.model.Year
-import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R
+import com.savvasdalkitsis.uhuruphotos.feature.stats.domain.api.model.Period
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.CollapsibleGroup
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.state.rememberCollapsibleGroupState
 
 @Composable
-internal fun StatsMediaPerYear(isLoading: Boolean, mediaByYear: Map<Year, Int>) {
-    val model = remember(mediaByYear) {
-        ChartEntryModelProducer(mediaByYear.map { FloatEntry(it.key.year.toFloat(), it.value.toFloat()) })
+internal fun StatsMediaPerPeriod(
+    isLoading: Boolean,
+    mediaByPeriod: Map<out Period, Int>,
+    title: Int,
+    uniqueId: String,
+    bottomAxisLabel: Int,
+) {
+    val model = remember(mediaByPeriod) {
+        ChartEntryModelProducer(mediaByPeriod.map { FloatEntry(it.key.value.toFloat(), it.value.toFloat()) })
     }
-    val groupState = rememberCollapsibleGroupState(R.string.media_per_year, "stats_media_per_year")
+    val groupState = rememberCollapsibleGroupState(title, "stats_media_per_$uniqueId")
     CollapsibleGroup(groupState = groupState) {
         if (isLoading) {
             Box(
@@ -87,7 +92,7 @@ internal fun StatsMediaPerYear(isLoading: Boolean, mediaByYear: Map<Year, Int>) 
                         valueFormatter = { v, _ -> v.toInt().toString() }
                     ),
                     bottomAxis = rememberBottomAxis(
-                        title = stringResource(R.string.year),
+                        title = stringResource(bottomAxisLabel),
                         titleComponent = axisLabelComponent(),
                         valueFormatter = { v, _ -> v.toInt().toString() },
                         labelRotationDegrees = 90f,

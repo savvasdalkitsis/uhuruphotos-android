@@ -22,6 +22,9 @@ import com.github.michaelbull.result.Ok
 import com.github.michaelbull.result.Result
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItem
 import com.savvasdalkitsis.uhuruphotos.feature.stats.domain.api.model.CountryVisit
+import com.savvasdalkitsis.uhuruphotos.feature.stats.domain.api.model.DayOfMonth
+import com.savvasdalkitsis.uhuruphotos.feature.stats.domain.api.model.DayOfWeek
+import com.savvasdalkitsis.uhuruphotos.feature.stats.domain.api.model.Month
 import com.savvasdalkitsis.uhuruphotos.feature.stats.domain.api.model.Year
 import com.savvasdalkitsis.uhuruphotos.feature.stats.domain.api.usecase.StatsUseCase
 import dagger.hilt.android.qualifiers.ApplicationContext
@@ -37,6 +40,27 @@ class StatsUseCase @Inject constructor(
         .mapNotNull {
             it.key?.let { year ->
                 Year(year) to it.value.count()
+            }
+        }.toMap()
+
+    override fun List<MediaItem>.breakdownByMonth(): Map<Month, Int> = groupBy { it.mediaDay?.month }
+        .mapNotNull {
+            it.key?.let { month ->
+                Month(month) to it.value.count()
+            }
+        }.toMap()
+
+    override fun List<MediaItem>.breakdownByDayOfMonth(): Map<DayOfMonth, Int> = groupBy { it.mediaDay?.day }
+        .mapNotNull {
+            it.key?.let { day ->
+                DayOfMonth(day) to it.value.count()
+            }
+        }.toMap()
+
+    override fun List<MediaItem>.breakdownByDayOfWeek(): Map<DayOfWeek, Int> = groupBy { it.mediaDay?.dayOfWeek }
+        .mapNotNull {
+            it.key?.let { day ->
+                DayOfWeek(day) to it.value.count()
             }
         }.toMap()
 

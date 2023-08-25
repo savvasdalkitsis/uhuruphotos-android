@@ -302,7 +302,12 @@
     <string name="month_december_short">Dec</string>
     <string name="stats">Stats</string>
     <string name="year">Year</string>
+    <string name="month">Month</string>
+    <string name="day">Day</string>
     <string name="media_per_year">Media per year</string>
+    <string name="media_per_month">Media per month</string>
+    <string name="media_per_day_of_month">Media per day of month</string>
+    <string name="media_per_day_of_week">Media per day of week</string>
     <string name="timeline">Timeline</string>
     <string name="username">Username</string>
     <string name="password">Password</string>

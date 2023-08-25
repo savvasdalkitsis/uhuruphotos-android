@@ -483,6 +483,7 @@ class MediaUseCase @Inject constructor(
 
     private fun DateTime.toMediaDay(): MediaDay = MediaDay(
         day = dayOfMonth,
+        dayOfWeek = dayOfWeek,
         month = monthOfYear,
         year = year,
         monthText = context.getString(when (monthOfYear) {

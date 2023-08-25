@@ -17,6 +17,9 @@ package com.savvasdalkitsis.uhuruphotos.feature.stats.view.implementation.ui.sta
 
 import androidx.compose.runtime.Immutable
 import com.savvasdalkitsis.uhuruphotos.feature.stats.domain.api.model.CountryVisit
+import com.savvasdalkitsis.uhuruphotos.feature.stats.domain.api.model.DayOfMonth
+import com.savvasdalkitsis.uhuruphotos.feature.stats.domain.api.model.DayOfWeek
+import com.savvasdalkitsis.uhuruphotos.feature.stats.domain.api.model.Month
 import com.savvasdalkitsis.uhuruphotos.feature.stats.domain.api.model.Year
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
@@ -24,9 +27,19 @@ import kotlinx.collections.immutable.persistentListOf
 @Immutable
 data class StatsState(
     val isLoadingMediaByYear: Boolean = true,
+    val isLoadingMediaByMonth: Boolean = true,
+    val isLoadingMediaByDayOfMonth: Boolean = true,
+    val isLoadingMediaByDayOfWeek: Boolean = true,
     val mediaByYear: Map<Year, Int> = emptyMap(),
+    val mediaByMonth: Map<Month, Int> = emptyMap(),
+    val mediaByDayOfMonth: Map<DayOfMonth, Int> = emptyMap(),
+    val mediaByDayOfWeek: Map<DayOfWeek, Int> = emptyMap(),
     val isLoadingTimeline: Boolean = true,
     val timeline: ImmutableList<CountryVisit> = persistentListOf(),
 ) {
-    val isLoading = isLoadingMediaByYear && isLoadingTimeline
+    val isLoading = isLoadingMediaByYear
+            && isLoadingTimeline
+            && isLoadingMediaByMonth
+            && isLoadingMediaByDayOfMonth
+            && isLoadingMediaByDayOfWeek
 }

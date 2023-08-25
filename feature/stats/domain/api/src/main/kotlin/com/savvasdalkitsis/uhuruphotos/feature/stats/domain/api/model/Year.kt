@@ -18,4 +18,6 @@ package com.savvasdalkitsis.uhuruphotos.feature.stats.domain.api.model
 @JvmInline
 value class Year(
     val year: Int,
-)
+) : Period {
+    override val value: Int get() = year
+}

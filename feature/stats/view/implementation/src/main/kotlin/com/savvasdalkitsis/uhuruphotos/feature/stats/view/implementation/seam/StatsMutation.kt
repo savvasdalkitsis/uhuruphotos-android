@@ -16,6 +16,9 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.feature.stats.view.implementation.seam
 
 import com.savvasdalkitsis.uhuruphotos.feature.stats.domain.api.model.CountryVisit
+import com.savvasdalkitsis.uhuruphotos.feature.stats.domain.api.model.DayOfMonth
+import com.savvasdalkitsis.uhuruphotos.feature.stats.domain.api.model.DayOfWeek
+import com.savvasdalkitsis.uhuruphotos.feature.stats.domain.api.model.Month
 import com.savvasdalkitsis.uhuruphotos.feature.stats.domain.api.model.Year
 import com.savvasdalkitsis.uhuruphotos.feature.stats.view.implementation.ui.state.StatsState
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.Mutation
@@ -29,6 +32,27 @@ sealed class StatsMutation(
         it.copy(
             isLoadingMediaByYear = false,
             mediaByYear = mediaByYear,
+        )
+    })
+
+    data class ShowMediaPerMonth(val mediaByMonth: Map<Month, Int>) : StatsMutation({
+        it.copy(
+            isLoadingMediaByMonth = false,
+            mediaByMonth = mediaByMonth,
+        )
+    })
+
+    data class ShowMediaPerDayOfMonth(val mediaByDayOfMonth: Map<DayOfMonth, Int>) : StatsMutation({
+        it.copy(
+            isLoadingMediaByDayOfMonth = false,
+            mediaByDayOfMonth = mediaByDayOfMonth,
+        )
+    })
+
+    data class ShowMediaPerDayOfWeek(val mediaByDayOfWeek: Map<DayOfWeek, Int>) : StatsMutation({
+        it.copy(
+            isLoadingMediaByDayOfWeek = false,
+            mediaByDayOfWeek = mediaByDayOfWeek,
         )
     })
 

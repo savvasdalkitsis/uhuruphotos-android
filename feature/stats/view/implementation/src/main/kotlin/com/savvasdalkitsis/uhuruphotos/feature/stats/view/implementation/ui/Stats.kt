@@ -21,6 +21,8 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -42,12 +44,41 @@ internal fun Stats(
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(16.dp),
+                .padding(horizontal = 16.dp)
+                .verticalScroll(rememberScrollState()),
             verticalArrangement = spacedBy(16.dp),
         ) {
-            Spacer(modifier = Modifier.height(contentPadding.calculateTopPadding()))
-            StatsMediaPerYear(state.isLoadingMediaByYear, state.mediaByYear)
+            Spacer(modifier = Modifier.height(contentPadding.calculateTopPadding() + 16.dp))
+            StatsMediaPerPeriod(
+                isLoading = state.isLoadingMediaByYear,
+                mediaByPeriod = state.mediaByYear,
+                title = string.media_per_year,
+                uniqueId = "year",
+                bottomAxisLabel = string.year,
+            )
+            StatsMediaPerPeriod(
+                isLoading = state.isLoadingMediaByMonth,
+                mediaByPeriod = state.mediaByMonth,
+                title = string.media_per_month,
+                uniqueId = "month",
+                bottomAxisLabel = string.month,
+            )
+            StatsMediaPerPeriod(
+                isLoading = state.isLoadingMediaByDayOfMonth,
+                mediaByPeriod = state.mediaByDayOfMonth,
+                title = string.media_per_day_of_month,
+                uniqueId = "day_of_month",
+                bottomAxisLabel = string.day,
+            )
+            StatsMediaPerPeriod(
+                isLoading = state.isLoadingMediaByDayOfWeek,
+                mediaByPeriod = state.mediaByDayOfWeek,
+                title = string.media_per_day_of_week,
+                uniqueId = "day_of_week",
+                bottomAxisLabel = string.day,
+            )
 //            StatsTimeline(state.isLoadingTimeline, state.timeline)
+            Spacer(modifier = Modifier.height(contentPadding.calculateBottomPadding() + 16.dp))
         }
     }
 }
