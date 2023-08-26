@@ -37,40 +37,38 @@ class StatsUseCase @Inject constructor(
     @ApplicationContext val context: Context,
 ) : StatsUseCase {
 
-    override fun List<MediaItem>.breakdownByTypeIsVideo(): Map<Boolean, List<MediaItem>> = groupBy { it.id.isVideo }
+    override fun List<MediaItem>.breakdownByTypeIsVideo(): Map<Boolean, List<MediaItem>> =
+        groupBy { it.id.isVideo }
 
-    override fun List<MediaItem>.breakdownByYear(): Map<Year, Int> = groupBy { it.mediaDay?.year }
-        .mapNotNull {
-            it.key?.let { year ->
-                Year(year) to it.value.count()
-            }
-        }.toMap()
+    override fun List<MediaItem>.breakdownByYear(): Map<Year, Int> = breakdownBy(
+        grouper =  { it.mediaDay?.year },
+        mapper = { Year(it) },
+    )
 
-    override fun List<MediaItem>.breakdownByMonth(): Map<Month, Int> = groupBy { it.mediaDay?.month }
-        .mapNotNull {
-            it.key?.let { month ->
-                Month(month) to it.value.count()
-            }
-        }.toMap()
+    override fun List<MediaItem>.breakdownByMonth(): Map<Month, Int> = breakdownBy(
+        grouper =  { it.mediaDay?.month },
+        mapper = { Month(it) },
+    )
 
-    override fun List<MediaItem>.breakdownByDayOfMonth(): Map<DayOfMonth, Int> = groupBy { it.mediaDay?.day }
-        .mapNotNull {
-            it.key?.let { day ->
-                DayOfMonth(day) to it.value.count()
-            }
-        }.toMap()
+    override fun List<MediaItem>.breakdownByDayOfMonth(): Map<DayOfMonth, Int> = breakdownBy(
+        grouper = { it.mediaDay?.day },
+        mapper = { DayOfMonth(it) },
+    )
 
-    override fun List<MediaItem>.breakdownByDayOfWeek(): Map<DayOfWeek, Int> = groupBy { it.mediaDay?.dayOfWeek }
-        .mapNotNull {
-            it.key?.let { day ->
-                DayOfWeek(day) to it.value.count()
-            }
-        }.toMap()
+    override fun List<MediaItem>.breakdownByDayOfWeek(): Map<DayOfWeek, Int> = breakdownBy(
+        grouper = { it.mediaDay?.dayOfWeek },
+        mapper = { DayOfWeek(it) },
+    )
 
-    override fun List<MediaItem>.breakdownByMediaDay(): Map<MediaDay, Int> = groupBy { it.mediaDay }
-        .mapNotNull {
-            it.key?.let { day ->
-                day to it.value.count()
+    override fun List<MediaItem>.breakdownByMediaDay(): Map<MediaDay, Int> = breakdownBy(
+        grouper = { it.mediaDay },
+        mapper = { it },
+    )
+
+    private fun <T, P>List<MediaItem>.breakdownBy(grouper: (MediaItem) -> T?, mapper: (T) -> P): Map<P, Int> =
+        groupBy(grouper).mapNotNull {
+            it.key?.let { item ->
+                mapper(item) to it.value.count()
             }
         }.toMap()
 
