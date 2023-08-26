@@ -81,4 +81,11 @@ existing translations at [weblate](https://hosted.weblate.org/engage/uhuruphotos
 
 ## Star History
 
-[![Star History Chart](https://api.star-history.com/svg?repos=savvasdalkitsis/uhuruphotos-android&type=Date)](https://star-history.com/#savvasdalkitsis/uhuruphotos-android&Date)
+<a href="https://star-history.com/#savvasdalkitsis/uhuruphotos-android&Date">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="https://api.star-history.com/svg?repos=savvasdalkitsis/uhuruphotos-android&type=Date&theme=dark" />
+    <source media="(prefers-color-scheme: light)" srcset="https://api.star-history.com/svg?repos=savvasdalkitsis/uhuruphotos-android&type=Date" />
+    <img alt="Star History Chart" src="https://api.star-history.com/svg?repos=savvasdalkitsis/uhuruphotos-android&type=Date" />
+  </picture>
+</a>
+
