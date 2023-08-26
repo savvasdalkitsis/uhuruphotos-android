@@ -15,15 +15,11 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.stats.view.implementation.ui
 
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.sizeIn
-import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
@@ -44,8 +40,6 @@ import com.patrykandpatrick.vico.core.entry.ChartEntryModelProducer
 import com.patrykandpatrick.vico.core.entry.FloatEntry
 import com.patrykandpatrick.vico.core.scroll.InitialScroll
 import com.savvasdalkitsis.uhuruphotos.feature.stats.domain.api.model.Period
-import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.CollapsibleGroup
-import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.state.rememberCollapsibleGroupState
 
 @Composable
 internal fun StatsMediaPerPeriod(
@@ -58,53 +52,41 @@ internal fun StatsMediaPerPeriod(
     val model = remember(mediaByPeriod) {
         ChartEntryModelProducer(mediaByPeriod.map { FloatEntry(it.key.value.toFloat(), it.value.toFloat()) })
     }
-    val groupState = rememberCollapsibleGroupState(title, "stats_media_per_$uniqueId")
-    CollapsibleGroup(groupState = groupState) {
-        if (isLoading) {
-            Box(
-                contentAlignment = Alignment.Center,
+    StatsGroup(title, uniqueId, isLoading) {
+        ProvideChartStyle(m2ChartStyle()) {
+            Chart(
                 modifier = Modifier
                     .fillMaxWidth()
                     .sizeIn(minHeight = 240.dp),
-            ) {
-                CircularProgressIndicator(modifier = Modifier.size(48.dp))
-            }
-        } else {
-            ProvideChartStyle(m2ChartStyle()) {
-                Chart(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .sizeIn(minHeight = 240.dp),
-                    chart = columnChart(
-                        spacing = 4.dp,
+                chart = columnChart(
+                    spacing = 4.dp,
+                ),
+                chartModelProducer = model,
+                chartScrollSpec = rememberChartScrollSpec(
+                    initialScroll = InitialScroll.End
+                ),
+                marker = markerComponent(
+                    label = textComponent(),
+                    indicator = shapeComponent(),
+                    guideline = lineComponent(color = MaterialTheme.colors.onBackground.copy(alpha = 0.8f)),
+                ),
+                startAxis = rememberStartAxis(
+                    label = axisLabelComponent(verticalPadding = 8.dp),
+                    valueFormatter = { v, _ -> v.toInt().toString() }
+                ),
+                bottomAxis = rememberBottomAxis(
+                    title = stringResource(bottomAxisLabel),
+                    titleComponent = axisLabelComponent(),
+                    valueFormatter = { v, _ -> v.toInt().toString() },
+                    labelRotationDegrees = 90f,
+                    label = axisLabelComponent(
+                        textSize = 8.sp,
                     ),
-                    chartModelProducer = model,
-                    chartScrollSpec = rememberChartScrollSpec(
-                        initialScroll = InitialScroll.End
-                    ),
-                    marker = markerComponent(
-                        label = textComponent(),
-                        indicator = shapeComponent(),
-                        guideline = lineComponent(color = MaterialTheme.colors.onBackground.copy(alpha = 0.8f)),
-                    ),
-                    startAxis = rememberStartAxis(
-                        label = axisLabelComponent(verticalPadding = 8.dp),
-                        valueFormatter = { v, _ -> v.toInt().toString() }
-                    ),
-                    bottomAxis = rememberBottomAxis(
-                        title = stringResource(bottomAxisLabel),
-                        titleComponent = axisLabelComponent(),
-                        valueFormatter = { v, _ -> v.toInt().toString() },
-                        labelRotationDegrees = 90f,
-                        label = axisLabelComponent(
-                            textSize = 8.sp,
-                        ),
-                    ),
-                    isZoomEnabled = true,
-                    getXStep = { 1f },
-                    runInitialAnimation = true,
-                )
-            }
+                ),
+                isZoomEnabled = true,
+                getXStep = { 1f },
+                runInitialAnimation = true,
+            )
         }
     }
 }

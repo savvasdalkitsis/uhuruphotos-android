@@ -308,6 +308,7 @@
     <string name="media_per_month">Media per month</string>
     <string name="media_per_day_of_month">Media per day of month</string>
     <string name="media_per_day_of_week">Media per day of week</string>
+    <string name="media_heatmap">Media heatmap</string>
     <string name="timeline">Timeline</string>
     <string name="username">Username</string>
     <string name="password">Password</string>

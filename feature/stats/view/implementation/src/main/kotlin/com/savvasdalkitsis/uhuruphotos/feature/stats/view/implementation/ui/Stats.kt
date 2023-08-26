@@ -15,6 +15,7 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.stats.view.implementation.ui
 
+import android.os.Build
 import androidx.compose.foundation.layout.Arrangement.spacedBy
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -25,13 +26,18 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import com.ksurtel.heat_map.HeatMap
+import com.ksurtel.heat_map.Properties
+import com.ksurtel.heat_map.Record
 import com.savvasdalkitsis.uhuruphotos.feature.stats.view.implementation.ui.state.StatsState
 import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.CommonScaffold
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.UpNavButton
+import java.time.LocalDate
 
 @Composable
 internal fun Stats(
@@ -77,6 +83,28 @@ internal fun Stats(
                 uniqueId = "day_of_week",
                 bottomAxisLabel = string.day,
             )
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                StatsGroup(
+                    isLoading = state.isLoadingMediaHeatMap,
+                    title = string.media_heatmap,
+                    uniqueId = "heatmap",
+                ) {
+                    HeatMap(
+                        properties = remember {
+                            Properties()
+                        },
+                        records = remember(state.mediaHeatMap) {
+                            state.mediaHeatMap.map { (day, count) ->
+                                Record(
+                                    date = LocalDate.of(day.year, day.month, day.day),
+                                    value = count.toDouble(),
+                                )
+                            }
+                        },
+                        onSquareClick = {},
+                    )
+                }
+            }
 //            StatsTimeline(state.isLoadingTimeline, state.timeline)
             Spacer(modifier = Modifier.height(contentPadding.calculateBottomPadding() + 16.dp))
         }

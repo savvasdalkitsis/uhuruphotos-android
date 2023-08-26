@@ -20,6 +20,7 @@ dependencies {
             libs.androidx.compose.hilt.navigation,
             libs.androidx.compose.material,
             libs.bundles.autodagger,
+            libs.heatmap,
             libs.jetlime,
             libs.timeline,
             libs.vico,

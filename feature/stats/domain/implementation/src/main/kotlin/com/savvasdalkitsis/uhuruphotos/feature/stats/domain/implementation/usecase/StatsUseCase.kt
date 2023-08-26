@@ -20,6 +20,7 @@ import android.location.Geocoder
 import com.github.michaelbull.result.Err
 import com.github.michaelbull.result.Ok
 import com.github.michaelbull.result.Result
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaDay
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItem
 import com.savvasdalkitsis.uhuruphotos.feature.stats.domain.api.model.CountryVisit
 import com.savvasdalkitsis.uhuruphotos.feature.stats.domain.api.model.DayOfMonth
@@ -61,6 +62,13 @@ class StatsUseCase @Inject constructor(
         .mapNotNull {
             it.key?.let { day ->
                 DayOfWeek(day) to it.value.count()
+            }
+        }.toMap()
+
+    override fun List<MediaItem>.breakdownByMediaDay(): Map<MediaDay, Int> = groupBy { it.mediaDay }
+        .mapNotNull {
+            it.key?.let { day ->
+                day to it.value.count()
             }
         }.toMap()
 

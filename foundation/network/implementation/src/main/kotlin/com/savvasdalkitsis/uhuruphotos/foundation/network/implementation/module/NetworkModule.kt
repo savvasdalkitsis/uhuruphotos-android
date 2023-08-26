@@ -29,10 +29,8 @@ import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 import java.io.File
+import java.util.concurrent.TimeUnit
 import javax.inject.Singleton
-import kotlin.time.DurationUnit
-import kotlin.time.toDuration
-import kotlin.time.toJavaDuration
 
 @Module
 @InstallIn(SingletonComponent::class)
@@ -44,10 +42,10 @@ internal class NetworkModule {
         userAgentInterceptor: UserAgentInterceptor,
     ): OkHttpClient.Builder = OkHttpClient().newBuilder()
         .followRedirects(false)
-        .callTimeout(60.seconds)
-        .connectTimeout(60.seconds)
-        .readTimeout(60.seconds)
-        .writeTimeout(60.seconds)
+        .callTimeout(60, TimeUnit.SECONDS)
+        .connectTimeout(60, TimeUnit.SECONDS)
+        .readTimeout(60, TimeUnit.SECONDS)
+        .writeTimeout(60, TimeUnit.SECONDS)
         .addInterceptor(userAgentInterceptor)
 
     @Provides
@@ -67,6 +65,4 @@ internal class NetworkModule {
 
     @Provides
     fun moshi(): Moshi = Moshi.Builder().build()
-
-    private val Int.seconds get() = this.toDuration(DurationUnit.SECONDS).toJavaDuration()
 }

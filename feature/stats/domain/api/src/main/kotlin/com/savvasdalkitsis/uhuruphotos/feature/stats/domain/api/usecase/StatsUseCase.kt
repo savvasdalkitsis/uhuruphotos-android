@@ -16,6 +16,7 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.feature.stats.domain.api.usecase
 
 import com.github.michaelbull.result.Result
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaDay
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItem
 import com.savvasdalkitsis.uhuruphotos.feature.stats.domain.api.model.CountryVisit
 import com.savvasdalkitsis.uhuruphotos.feature.stats.domain.api.model.DayOfMonth
@@ -30,4 +31,5 @@ interface StatsUseCase {
     fun List<MediaItem>.breakdownByDayOfMonth(): Map<DayOfMonth, Int>
     fun List<MediaItem>.timeline(): Result<List<CountryVisit>, Unit>
     fun List<MediaItem>.breakdownByDayOfWeek(): Map<DayOfWeek, Int>
+    fun List<MediaItem>.breakdownByMediaDay(): Map<MediaDay, Int>
 }

@@ -18,6 +18,7 @@ package com.savvasdalkitsis.uhuruphotos.feature.stats.view.implementation.seam.a
 import com.savvasdalkitsis.uhuruphotos.feature.feed.domain.api.model.FeedFetchType
 import com.savvasdalkitsis.uhuruphotos.feature.stats.view.implementation.seam.StatsActionsContext
 import com.savvasdalkitsis.uhuruphotos.feature.stats.view.implementation.seam.StatsMutation.Loading
+import com.savvasdalkitsis.uhuruphotos.feature.stats.view.implementation.seam.StatsMutation.ShowMediaHeatMap
 import com.savvasdalkitsis.uhuruphotos.feature.stats.view.implementation.seam.StatsMutation.ShowMediaPerDayOfMonth
 import com.savvasdalkitsis.uhuruphotos.feature.stats.view.implementation.seam.StatsMutation.ShowMediaPerDayOfWeek
 import com.savvasdalkitsis.uhuruphotos.feature.stats.view.implementation.seam.StatsMutation.ShowMediaPerMonth
@@ -42,6 +43,7 @@ data object LoadStats : StatsAction() {
                 async { trySend(ShowMediaPerMonth(media.breakdownByMonth())) },
                 async { trySend(ShowMediaPerDayOfMonth(media.breakdownByDayOfMonth())) },
                 async { trySend(ShowMediaPerDayOfWeek(media.breakdownByDayOfWeek())) },
+                async { trySend(ShowMediaHeatMap(media.breakdownByMediaDay())) },
             ).awaitAll()
 //            media.timeline()
 //                .onSuccess {
