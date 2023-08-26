@@ -36,6 +36,7 @@ data class FeedState(
     val memories: List<MemoryCel> = emptyList(),
     val missingPermissions: List<String> = emptyList(),
     val syncItemDisplay: FeedMediaItemSyncDisplay = FeedMediaItemSyncDisplay.default,
+    val showRequestForCloudSync: Boolean = false,
 ) {
     val selectedCelCount: Int = collageState.clusters.sumOf { cluster ->
         cluster.cels.count { cel ->

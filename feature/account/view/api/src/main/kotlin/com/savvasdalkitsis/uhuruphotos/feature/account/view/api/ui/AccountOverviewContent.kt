@@ -21,6 +21,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.account.view.api.seam.actions.Acc
 import com.savvasdalkitsis.uhuruphotos.feature.account.view.api.seam.actions.AskToLogOut
 import com.savvasdalkitsis.uhuruphotos.feature.account.view.api.seam.actions.AskToStartJob
 import com.savvasdalkitsis.uhuruphotos.feature.account.view.api.seam.actions.CancelJob
+import com.savvasdalkitsis.uhuruphotos.feature.account.view.api.seam.actions.ChangeCloudSync
 import com.savvasdalkitsis.uhuruphotos.feature.account.view.api.seam.actions.DismissAccountOverview
 import com.savvasdalkitsis.uhuruphotos.feature.account.view.api.seam.actions.DismissLogOutDialog
 import com.savvasdalkitsis.uhuruphotos.feature.account.view.api.seam.actions.HideJobDialog
@@ -46,7 +47,8 @@ fun AccountOverviewContent(
         onStartJob = { action(AskToStartJob(it)) },
         onCancelJob = { action(CancelJob(it)) },
         onSettingsClicked = { action(SettingsClick) },
-        onViewAllUploadsClicked = { action(ViewAllUploads) }
+        onViewAllUploadsClicked = { action(ViewAllUploads) },
+        onCloudSyncChanged = { action(ChangeCloudSync(it)) },
     )
     if (state.showLogOutConfirmation) {
         LogOutConfirmationDialog(

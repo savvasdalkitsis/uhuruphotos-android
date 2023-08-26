@@ -108,6 +108,14 @@ sealed class FeedMutation(
         it.copy(showRequestPermissionForLocalMediaAccess = null)
     })
 
+    data object ShowCloudSyncRequest : FeedMutation({
+        it.copy(showRequestForCloudSync = true)
+    })
+
+    data object HideCloudSyncRequest : FeedMutation({
+        it.copy(showRequestForCloudSync = false)
+    })
+
     data class AutoHideNavBar(val autoHide: Boolean) : FeedMutation({
         it.copy(autoHideNavOnScroll = autoHide)
     })

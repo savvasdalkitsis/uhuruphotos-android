@@ -102,6 +102,8 @@ internal class SettingsUseCase @Inject constructor(
     private val animateVideoThumbnailsDefault = true
     private val maxAnimatedVideoThumbnails = "maxAnimatedVideoThumbnails"
     private val maxAnimatedVideoThumbnailsDefault = 3
+    private val showBannerAskingForCloudSyncOnFeed = "showBannerAskingForCloudSyncOnFeed"
+    private val showBannerAskingForCloudSyncOnFeedDefault = true
     private val showBannerAskingForLocalMediaPermissionsOnFeed = "showBannerAskingForLocalMediaPermissionsOnFeed"
     private val showBannerAskingForLocalMediaPermissionsOnFeedDefault = true
     private val showBannerAskingForLocalMediaPermissionsOnHeatmap = "showBannerAskingForLocalMediaPermissionsOnHeatmap"
@@ -161,6 +163,8 @@ internal class SettingsUseCase @Inject constructor(
         get(animateVideoThumbnails, animateVideoThumbnailsDefault)
     override fun getMaxAnimatedVideoThumbnails(): Int =
         get(maxAnimatedVideoThumbnails, maxAnimatedVideoThumbnailsDefault)
+    override fun getShowBannerAskingForCloudSyncOnFeed(): Boolean =
+        get(showBannerAskingForCloudSyncOnFeed, showBannerAskingForCloudSyncOnFeedDefault)
     override fun getShowBannerAskingForLocalMediaPermissionsOnFeed(): Boolean =
         get(showBannerAskingForLocalMediaPermissionsOnFeed, showBannerAskingForLocalMediaPermissionsOnFeedDefault)
     override fun getShowBannerAskingForLocalMediaPermissionsOnHeatmap(): Boolean =
@@ -331,6 +335,10 @@ internal class SettingsUseCase @Inject constructor(
 
     override fun setMaxAnimatedVideoThumbnails(max: Int) {
         set(maxAnimatedVideoThumbnails, max)
+    }
+
+    override fun setShowBannerAskingForCloudSyncOnFeed(show: Boolean) {
+        set(showBannerAskingForCloudSyncOnFeed, show)
     }
 
     override fun setShowBannerAskingForLocalMediaPermissionsOnFeed(show: Boolean) {

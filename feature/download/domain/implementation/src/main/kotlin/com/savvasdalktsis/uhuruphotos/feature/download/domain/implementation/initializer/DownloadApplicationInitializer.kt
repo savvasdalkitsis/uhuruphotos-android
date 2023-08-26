@@ -25,10 +25,12 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.isActive
 import kotlinx.coroutines.launch
+import se.ansman.dagger.auto.AutoBindIntoSet
 import javax.inject.Inject
 import javax.inject.Singleton
 
 @OptIn(DelicateCoroutinesApi::class)
+@AutoBindIntoSet
 @Singleton
 class DownloadInitializer @Inject constructor(
     private val downloadUseCase: DownloadUseCase,

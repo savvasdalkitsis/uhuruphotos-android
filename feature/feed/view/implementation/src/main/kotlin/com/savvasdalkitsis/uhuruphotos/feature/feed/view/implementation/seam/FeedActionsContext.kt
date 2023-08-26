@@ -32,6 +32,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.usecase.Lo
 import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.worker.LocalMediaWorkScheduler
 import com.savvasdalkitsis.uhuruphotos.feature.memories.domain.api.usecase.MemoriesUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.settings.domain.api.usecase.SettingsUseCase
+import com.savvasdalkitsis.uhuruphotos.feature.sync.domain.api.usecase.SyncUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.upload.domain.api.usecase.UploadUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.welcome.domain.api.usecase.WelcomeUseCase
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.Navigator
@@ -61,6 +62,7 @@ internal class FeedActionsContext @Inject constructor(
     val toaster: ToasterUseCase,
     val navigator: Navigator,
     val welcomeUseCase: WelcomeUseCase,
+    val syncUseCase: SyncUseCase,
 ) {
     suspend fun CelState.deselect() {
         selectionList.deselect(mediaItem.id)

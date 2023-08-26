@@ -22,6 +22,14 @@ import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.toClust
 import com.savvasdalkitsis.uhuruphotos.feature.feed.domain.api.model.FeedFetchType
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.FeedActionsContext
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.FeedMutation
+import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.FeedMutation.HideLocalStoragePermissionRequest
+import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.FeedMutation.HideMemories
+import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.FeedMutation.Loading
+import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.FeedMutation.ShowCloudSyncRequest
+import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.FeedMutation.ShowClusters
+import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.FeedMutation.ShowLocalMediaSyncRunning
+import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.FeedMutation.ShowLocalStoragePermissionRequest
+import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.FeedMutation.ShowNoPhotosFound
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.ui.state.FeedState
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.ui.state.MemoryCel
 import com.savvasdalkitsis.uhuruphotos.feature.jobs.domain.api.model.Job
@@ -46,9 +54,10 @@ data object LoadFeed : FeedAction() {
     ) = merge(
         showLibraryTab(),
         changeDisplay(),
-        flowOf(FeedMutation.Loading),
+        flowOf(Loading),
         showClusters(),
         localMediaPermissionHeader(),
+        cloudSyncHeader(),
         localMediaSyncStatus(),
         memories(),
         changeItemSyncDisplay(),
@@ -67,20 +76,20 @@ data object LoadFeed : FeedAction() {
                     }
                 }.map(FeedMutation::ShowMemories)
             } else {
-                flowOf(FeedMutation.HideMemories)
+                flowOf(HideMemories)
             }
         }
 
     private fun FeedActionsContext.localMediaSyncStatus() =
         jobsUseCase.observeJobsStatusFilteredBySettings().map { it.jobs[Job.LOCAL_MEDIA_SYNC] }.map {
-            FeedMutation.ShowLocalMediaSyncRunning(it == JobStatus.Queued || it is JobStatus.InProgress)
+            ShowLocalMediaSyncRunning(it == JobStatus.Queued || it is JobStatus.InProgress)
         }
 
     private fun FeedActionsContext.localMediaPermissionHeader() =
         mediaUseCase.observeLocalMedia()
             .mapNotNull {
                 when (it) {
-                    is MediaItemsOnDevice.RequiresPermissions -> FeedMutation.ShowLocalStoragePermissionRequest(
+                    is MediaItemsOnDevice.RequiresPermissions -> ShowLocalStoragePermissionRequest(
                         it
                     )
                         .takeIf {
@@ -88,10 +97,15 @@ data object LoadFeed : FeedAction() {
                         }
                     else -> {
                         localMediaWorkScheduler.scheduleLocalMediaSyncNowIfNotRunning()
-                        FeedMutation.HideLocalStoragePermissionRequest
+                        HideLocalStoragePermissionRequest
                     }
                 }
             }
+
+    private fun FeedActionsContext.cloudSyncHeader() =
+        syncUseCase.observeSyncEnabled().mapNotNull { enabled ->
+            ShowCloudSyncRequest.takeIf { !enabled && settingsUseCase.getShowBannerAskingForCloudSyncOnFeed() }
+        }
 
     private fun FeedActionsContext.showClusters() =
         combine(
@@ -112,9 +126,9 @@ data object LoadFeed : FeedAction() {
                     .map { it.copy(showRefreshIcon = it.hasAnyCelsWithRemoteMedia) }
             }
             if (avatar.syncState != SyncState.IN_PROGRESS && final.celCount == 0) {
-                FeedMutation.ShowNoPhotosFound
+                ShowNoPhotosFound
             } else {
-                FeedMutation.ShowClusters(final)
+                ShowClusters(final)
             }
         }
 

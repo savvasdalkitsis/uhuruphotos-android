@@ -52,6 +52,7 @@ fun AccountOverviewPopUp(
     onStartJob: (Job) -> Unit,
     onCancelJob: (Job) -> Unit,
     onViewAllUploadsClicked: () -> Unit = {},
+    onCloudSyncChanged: (Boolean) -> Unit = {},
 ) {
     val show = remember { MutableTransitionState(false) }
     show.targetState = state.showAccountOverview
@@ -102,6 +103,7 @@ fun AccountOverviewPopUp(
                             onCancelJob = onCancelJob,
                             onClose = onDismiss,
                             onViewAllUploadsClicked = onViewAllUploadsClicked,
+                            onCloudSyncChanged = onCloudSyncChanged,
                         )
                     }
                 }

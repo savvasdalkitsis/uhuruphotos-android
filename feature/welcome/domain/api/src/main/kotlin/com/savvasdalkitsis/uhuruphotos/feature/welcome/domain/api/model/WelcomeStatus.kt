@@ -16,7 +16,6 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.feature.welcome.domain.api.model
 
 import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.model.LocalPermissions
-import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.model.LocalPermissions.RequiresPermissions
 
 data class WelcomeStatus(
     val permissions: LocalPermissions,
@@ -25,4 +24,5 @@ data class WelcomeStatus(
     val hasLocalAccess = permissions is LocalPermissions.Granted
     val hasRemoteAccess = !refreshToken.isNullOrBlank()
     val allMissing = !hasLocalAccess && !hasRemoteAccess
+    val allGranted = hasLocalAccess && hasRemoteAccess
 }

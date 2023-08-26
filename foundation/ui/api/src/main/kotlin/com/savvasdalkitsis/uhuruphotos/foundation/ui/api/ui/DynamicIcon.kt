@@ -41,6 +41,7 @@ fun DynamicIcon(
     icon: Int,
     contentDescription: String? = null,
     tint: Color? = null,
+    animateIfAvailable: Boolean = true,
 ) {
     val resources = LocalContext.current.resources
     val type = remember(icon) {
@@ -73,6 +74,7 @@ fun DynamicIcon(
                 modifier = modifier
                     .recomposeHighlighter()
                 ,
+                isPlaying = animateIfAvailable,
                 composition = composition,
                 dynamicProperties = dynamicProperties,
                 iterations = LottieConstants.IterateForever,

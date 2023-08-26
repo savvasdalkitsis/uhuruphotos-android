@@ -34,4 +34,6 @@ data class AccountOverviewState(
     val jobs: ImmutableList<JobState> = persistentListOf(),
     val showUploads: Boolean = false,
     val uploadsInProgress: Boolean = false,
+    val showCloudSync: Boolean = false,
+    val cloudBackUpEnabled: Boolean = false,
 )

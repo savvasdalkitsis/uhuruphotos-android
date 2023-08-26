@@ -1,0 +1,16 @@
+android {
+    namespace 'com.savvasdalkitsis.uhuruphotos.feature.sync.domain.implementation'
+}
+
+dependencies {
+    implementation(
+            project(":feature:feed:domain:api"),
+            project(":feature:sync:domain:api"),
+            project(":feature:welcome:domain:api"),
+            project(":foundation:preferences:api"),
+            project(":foundation:initializer:api"),
+            libs.bundles.autodagger,
+            libs.hilt,
+    )
+    kapt libs.autodagger.kapt
+}

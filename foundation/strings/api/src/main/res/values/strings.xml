@@ -355,4 +355,7 @@
     <string name="blocked">Blocked</string>
     <string name="canceled">Canceled</string>
     <string name="photos">Photos</string>
+    <string name="cloud_sync">Cloud backup &amp; sync</string>
+    <string name="enable_cloud_sync">Enable cloud backup &amp; sync</string>
+    <string name="enable">Enable</string>
 </resources>

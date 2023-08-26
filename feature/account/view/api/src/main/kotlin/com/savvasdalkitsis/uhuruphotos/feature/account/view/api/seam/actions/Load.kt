@@ -16,7 +16,9 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.feature.account.view.api.seam.actions
 
 import com.savvasdalkitsis.uhuruphotos.feature.account.view.api.seam.AccountOverviewActionsContext
-import com.savvasdalkitsis.uhuruphotos.feature.account.view.api.seam.AccountOverviewMutation
+import com.savvasdalkitsis.uhuruphotos.feature.account.view.api.seam.AccountOverviewMutation.AvatarUpdate
+import com.savvasdalkitsis.uhuruphotos.feature.account.view.api.seam.AccountOverviewMutation.ShowCloudSync
+import com.savvasdalkitsis.uhuruphotos.feature.account.view.api.seam.AccountOverviewMutation.ShowCloudSyncEnabled
 import com.savvasdalkitsis.uhuruphotos.feature.account.view.api.seam.AccountOverviewMutation.ShowJobs
 import com.savvasdalkitsis.uhuruphotos.feature.account.view.api.seam.AccountOverviewMutation.ShowLogin
 import com.savvasdalkitsis.uhuruphotos.feature.account.view.api.seam.AccountOverviewMutation.ShowUploads
@@ -43,15 +45,19 @@ data object Load : AccountOverviewAction() {
             .map {
                 ShowLogin(!it.hasRemoteAccess) andThen
                         ShowUserAndServerDetails(it.hasRemoteAccess) andThen
-                        ShowUploads(it.hasRemoteAccess)
+                        ShowUploads(it.hasRemoteAccess) andThen
+                        ShowCloudSync(it.hasRemoteAccess)
             },
         avatarUseCase.getAvatarState()
-            .map(AccountOverviewMutation::AvatarUpdate),
+            .map(::AvatarUpdate),
         jobsUseCase.observeJobsStatus().map {
             ShowJobs(it.jobs.toJobState)
         },
         uploadsUseCase.observeUploadsInFlight().map { uploads ->
             ShowUploadsProgress(uploads.inProgress)
+        },
+        syncUseCase.observeSyncEnabled().map { enabled ->
+            ShowCloudSyncEnabled(enabled)
         }
     )
 }

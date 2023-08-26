@@ -16,22 +16,9 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.feature.media.local.view.api.ui
 
 import androidx.annotation.StringRes
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material.Button
-import androidx.compose.material.Card
-import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.unit.dp
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemsOnDevice
-import com.savvasdalkitsis.uhuruphotos.foundation.compose.api.recomposeHighlighter
-import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
 import dev.shreyaspatil.permissionflow.compose.rememberPermissionFlowRequestLauncher
 
 @Composable
@@ -42,52 +29,12 @@ fun LocalMediaAccessRequestBanner(
     onNeverRemindMeAgain: () -> Unit,
 ) {
     val permissionLauncher = rememberPermissionFlowRequestLauncher()
-
-    Card(
-        modifier = modifier
-            .recomposeHighlighter()
-        ,
-    ) {
-        Column(
-            modifier = Modifier
-                .recomposeHighlighter()
-                .fillMaxWidth(),
-        ) {
-            Text(
-                modifier = Modifier
-                    .recomposeHighlighter()
-                    .fillMaxWidth()
-                    .padding(8.dp),
-                text = stringResource(description),
-                textAlign = TextAlign.Center,
-            )
-            Row(
-                modifier = Modifier
-                    .recomposeHighlighter()
-                    .padding(8.dp),
-                horizontalArrangement = Arrangement.spacedBy(8.dp),
-            ) {
-                Button(
-                    modifier = Modifier
-                        .recomposeHighlighter()
-                        .fillMaxWidth()
-                        .weight(1f),
-                    onClick = {
-                        permissionLauncher.launch(missingPermissions.deniedPermissions.toTypedArray())
-                    }
-                ) {
-                    Text(stringResource(string.grant_permissions))
-                }
-                Button(
-                    modifier = Modifier
-                        .recomposeHighlighter()
-                        .fillMaxWidth()
-                        .weight(1f),
-                    onClick = onNeverRemindMeAgain
-                ) {
-                    Text(stringResource(string.do_not_ask_again))
-                }
-            }
-        }
-    }
+    RequestBanner(
+        modifier = modifier,
+        description = description,
+        onAccessGranted = {
+            permissionLauncher.launch(missingPermissions.deniedPermissions.toTypedArray())
+        },
+        onNeverRemindMeAgain = onNeverRemindMeAgain,
+    )
 }

@@ -62,8 +62,16 @@ sealed class AccountOverviewMutation(
         it.copy(showUploads = show)
     })
 
+    data class ShowCloudSync(val show: Boolean) : AccountOverviewMutation({
+        it.copy(showCloudSync = show)
+    })
+
     data class ShowUploadsProgress(val inProgress: Boolean) : AccountOverviewMutation({
         it.copy(uploadsInProgress = inProgress)
+    })
+
+    data class ShowCloudSyncEnabled(val enabled: Boolean) : AccountOverviewMutation({
+        it.copy(cloudBackUpEnabled = enabled)
     })
 
     data class ShowJobStartDialog(val job: Job) : AccountOverviewMutation({

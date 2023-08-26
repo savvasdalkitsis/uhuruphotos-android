@@ -47,6 +47,7 @@ interface SettingsUseCase {
     fun getMemoriesEnabled(): Boolean
     fun getAnimateVideoThumbnails(): Boolean
     fun getMaxAnimatedVideoThumbnails(): Int
+    fun getShowBannerAskingForCloudSyncOnFeed(): Boolean
     fun getShowBannerAskingForLocalMediaPermissionsOnFeed(): Boolean
     fun getShowBannerAskingForLocalMediaPermissionsOnHeatmap(): Boolean
     suspend fun getFeedMediaItemSyncDisplay(): FeedMediaItemSyncDisplay
@@ -107,6 +108,7 @@ interface SettingsUseCase {
     fun setMemoriesEnabled(enabled: Boolean)
     fun setAnimateVideoThumbnails(animate: Boolean)
     fun setMaxAnimatedVideoThumbnails(max: Int)
+    fun setShowBannerAskingForCloudSyncOnFeed(show: Boolean)
     fun setShowBannerAskingForLocalMediaPermissionsOnFeed(show: Boolean)
     fun setShowBannerAskingForLocalMediaPermissionsOnHeatmap(show: Boolean)
     fun setFeedMediaItemSyncDisplay(display: FeedMediaItemSyncDisplay)

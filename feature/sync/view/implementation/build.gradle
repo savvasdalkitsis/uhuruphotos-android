@@ -1,0 +1,29 @@
+android {
+    buildFeatures {
+        compose true
+    }
+    composeOptions {
+        kotlinCompilerExtensionVersion compose_compiler_version
+    }
+    namespace 'com.savvasdalkitsis.uhuruphotos.feature.sync.view.implementation'
+}
+
+dependencies {
+    implementation(
+            project(":feature:sync:domain:api"),
+            project(":feature:sync:view:api"),
+            project(":feature:settings:domain:api"),
+            project(":foundation:navigation:api"),
+            project(":foundation:strings:api"),
+            project(":foundation:ui:api"),
+            libs.androidx.compose.hilt.navigation,
+            libs.androidx.compose.material,
+            libs.androidx.compose.ui.tooling.preview,
+            libs.bundles.autodagger,
+            libs.kotlinx.immutable,
+    )
+    debugImplementation(
+            libs.androidx.compose.ui.tooling,
+    )
+    kapt libs.autodagger.kapt
+}

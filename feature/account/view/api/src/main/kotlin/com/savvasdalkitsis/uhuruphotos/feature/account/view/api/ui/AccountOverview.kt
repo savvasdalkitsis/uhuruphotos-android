@@ -15,15 +15,20 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.account.view.api.ui
 
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Arrangement.Absolute.spacedBy
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.defaultMinSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Icon
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.OutlinedButton
@@ -56,10 +61,12 @@ import com.savvasdalkitsis.uhuruphotos.feature.jobs.view.ui.state.JobState
 import com.savvasdalkitsis.uhuruphotos.feature.uploads.view.api.ui.UploadsRow
 import com.savvasdalkitsis.uhuruphotos.foundation.compose.api.recomposeHighlighter
 import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.R.drawable
+import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.R.raw
 import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
 import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.PreviewAppTheme
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.ActionIcon
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.CollapsibleGroup
+import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.ToggleableButtonWithIcon
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.state.Title
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.state.rememberCollapsibleGroupState
 import kotlinx.collections.immutable.persistentListOf
@@ -76,6 +83,7 @@ internal fun AccountOverview(
     onCancelJob: (Job) -> Unit = {},
     onClose: () -> Unit = {},
     onViewAllUploadsClicked: () -> Unit = {},
+    onCloudSyncChanged: (Boolean) -> Unit = {},
 ) {
     Column(
         modifier = modifier
@@ -129,37 +137,60 @@ internal fun AccountOverview(
         }
         Column(
             modifier = Modifier
-                .padding(horizontal = 8.dp),
+                .verticalScroll(rememberScrollState()),
+            verticalArrangement = Arrangement.spacedBy(16.dp)
         ) {
-            CollapsibleGroup(
-                groupState = rememberCollapsibleGroupState(
-                    title = string.jobs,
-                    uniqueKey = "accountOverviewJobs",
-                )
+            Box(
+                modifier = Modifier
+                    .padding(horizontal = 12.dp)
             ) {
-                Jobs(
-                    jobs = state.jobs,
-                    onStartJob = onStartJob,
-                    onCancelJob = onCancelJob,
-                )
-                if (state.showUploads) {
-                    UploadsRow(inProgress = state.uploadsInProgress, onViewAllUploadsClicked)
+                CollapsibleGroup(
+                    groupState = rememberCollapsibleGroupState(
+                        title = string.jobs,
+                        uniqueKey = "accountOverviewJobs",
+                    )
+                ) {
+                    Jobs(
+                        jobs = state.jobs,
+                        onStartJob = onStartJob,
+                        onCancelJob = onCancelJob,
+                    )
+                    if (state.showUploads) {
+                        UploadsRow(inProgress = state.uploadsInProgress, onViewAllUploadsClicked)
+                    }
                 }
             }
-        }
-        OutlinedButton(
-            modifier = Modifier
-                .recomposeHighlighter()
-                .fillMaxWidth()
-                .padding(horizontal = 16.dp),
-            onClick = onAboutClicked,
-        ) {
-            Icon(
-                painter = painterResource(id = drawable.ic_info),
-                contentDescription = null
-            )
-            Spacer(modifier = Modifier.width(8.dp))
-            Text(text = stringResource(string.about))
+            AnimatedVisibility(visible = state.showCloudSync) {
+                ToggleableButtonWithIcon(
+                    modifier = Modifier
+                        .recomposeHighlighter()
+                        .fillMaxWidth()
+                        .padding(horizontal = 16.dp),
+                    iconModifier = Modifier.size(48.dp),
+                    icon = if (MaterialTheme.colors.isLight)
+                            raw.animation_syncing
+                        else
+                            raw.animation_syncing_dark,
+                    animateIfAvailable = state.cloudBackUpEnabled,
+                    text = stringResource(string.cloud_sync),
+                    checked = state.cloudBackUpEnabled,
+                    onCheckedChange = onCloudSyncChanged,
+                )
+            }
+            OutlinedButton(
+                modifier = Modifier
+                    .recomposeHighlighter()
+                    .fillMaxWidth()
+                    .padding(horizontal = 16.dp),
+                onClick = onAboutClicked,
+            ) {
+                Icon(
+                    painter = painterResource(id = drawable.ic_info),
+                    contentDescription = null
+                )
+                Spacer(modifier = Modifier.width(8.dp))
+                Text(text = stringResource(string.about))
+            }
         }
         Row(
             modifier = Modifier
@@ -215,6 +246,31 @@ private fun AccountOverviewPreview() {
             state = AccountOverviewState(
                 showLogIn = false,
                 showUserAndServerDetails = true,
+                showUploads = true,
+                showCloudSync = true,
+                avatarState = previewAvatarState,
+                jobs = persistentListOf(
+                    JobState(Title.Text("Feed"), Job.FEED_SYNC, Idle),
+                    JobState(Title.Text("Precache"), Job.FEED_SYNC, Blocked),
+                    JobState(Title.Text("Local"), Job.FEED_SYNC, InProgress(25)),
+                    JobState(Title.Text("Queued"), Job.FEED_SYNC, Queued),
+                )
+            ),
+        )
+    }
+}
+
+@Preview
+@Composable
+private fun AccountOverviewDarkPreview() {
+    PreviewAppTheme(darkTheme = true) {
+        AccountOverview(
+            modifier = Modifier.fillMaxWidth(),
+            state = AccountOverviewState(
+                showLogIn = false,
+                showUserAndServerDetails = true,
+                showUploads = true,
+                showCloudSync = true,
                 avatarState = previewAvatarState,
                 jobs = persistentListOf(
                     JobState(Title.Text("Feed"), Job.FEED_SYNC, Idle),

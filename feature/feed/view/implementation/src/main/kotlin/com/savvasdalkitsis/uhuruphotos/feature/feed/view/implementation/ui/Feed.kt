@@ -18,6 +18,7 @@ package com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.ui
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.layout.Arrangement.spacedBy
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
@@ -38,8 +39,10 @@ import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.act
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.actions.ClusterSelectionClicked
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.actions.DeleteLocalSelectedCels
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.actions.DismissSelectedMediaTrashing
+import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.actions.EnableCloudSync
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.actions.FeedAction
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.actions.MemorySelected
+import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.actions.NeverAskForCloudSyncRequest
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.actions.NeverAskForLocalMediaAccessPermissionRequest
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.actions.RefreshFeed
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.actions.SelectedCel
@@ -51,6 +54,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.DeleteFu
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.DeletePermissionDialog
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.TrashPermissionDialog
 import com.savvasdalkitsis.uhuruphotos.feature.media.local.view.api.ui.LocalMediaAccessRequestBanner
+import com.savvasdalkitsis.uhuruphotos.feature.media.local.view.api.ui.RequestBanner
 import com.savvasdalkitsis.uhuruphotos.foundation.compose.api.blurIf
 import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.SwipeRefresh
@@ -128,7 +132,8 @@ internal fun Feed(
                         visible =
                         state.memories.isNotEmpty()
                                 || state.showRequestPermissionForLocalMediaAccess != null
-                                || state.localMediaSyncRunning,
+                                || state.localMediaSyncRunning
+                                || state.showRequestForCloudSync,
                     ) {
                         Column(
                             verticalArrangement = spacedBy(8.dp),
@@ -141,11 +146,21 @@ internal fun Feed(
                             val missingPermissions = state.showRequestPermissionForLocalMediaAccess
                             if (missingPermissions != null) {
                                 LocalMediaAccessRequestBanner(
+                                    modifier = Modifier.padding(4.dp),
                                     missingPermissions = missingPermissions,
                                     description = string.missing_local_media_permissions,
                                 ) {
                                     action(NeverAskForLocalMediaAccessPermissionRequest)
                                 }
+                            }
+                            if (state.showRequestForCloudSync) {
+                                RequestBanner(
+                                    modifier = Modifier.padding(4.dp),
+                                    description = string.enable_cloud_sync,
+                                    grantText = string.enable,
+                                    onAccessGranted = { action(EnableCloudSync) },
+                                    onNeverRemindMeAgain = { action(NeverAskForCloudSyncRequest) },
+                                )
                             }
                             if (state.localMediaSyncRunning) {
                                 FeedLocalMediaSyncRunning()
