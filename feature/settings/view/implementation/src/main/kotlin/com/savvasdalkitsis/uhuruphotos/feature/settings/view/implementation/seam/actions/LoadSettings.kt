@@ -39,6 +39,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.SettingsMutation.DisplayMaxAnimatedVideoThumbnails
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.SettingsMutation.DisplayNoMapProvidersOptions
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.SettingsMutation.DisplaySearchSuggestionsEnabled
+import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.SettingsMutation.DisplaySendDatabaseEnabled
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.SettingsMutation.DisplayShareGpsDataEnabled
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.SettingsMutation.DisplayShowLibrary
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.SettingsMutation.DisplayShowMemories
@@ -100,6 +101,7 @@ data object LoadSettings : SettingsAction() {
                 }
             },
             observeLoggingEnabled().map(::DisplayLoggingEnabled),
+            observeSendDatabaseEnabled().map(::DisplaySendDatabaseEnabled),
             observeFeedMediaItemSyncDisplay().map(::DisplayFeedMediaItemSyncDisplay),
             combine(
                 observeBiometricsRequiredForAppAccess(),

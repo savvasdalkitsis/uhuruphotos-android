@@ -18,6 +18,7 @@ package com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.ui
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.stringResource
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.actions.ChangeLoggingEnabled
+import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.actions.ChangeSendDatabaseEnabled
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.actions.ClearLogFileClicked
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.actions.SendFeedbackClicked
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.actions.SettingsAction
@@ -36,6 +37,12 @@ internal fun SettingsFeedback(
     ) {
         action(SendFeedbackClicked)
     }
+    SettingsCheckBox(
+        text = stringResource(string.send_database),
+        icon = drawable.ic_database_send,
+        isChecked = state.isSendDatabaseEnabled,
+        onCheckedChange = { action(ChangeSendDatabaseEnabled(it)) }
+    )
     SettingsEntryWithSubtext(subtext = string.degrades_performance) {
         SettingsCheckBox(
             text = stringResource(string.enable_logging),

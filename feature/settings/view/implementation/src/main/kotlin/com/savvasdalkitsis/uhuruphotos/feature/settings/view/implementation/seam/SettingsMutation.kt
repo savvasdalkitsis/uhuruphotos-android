@@ -172,6 +172,10 @@ sealed class SettingsMutation(
         it.copy(isLoggingEnabled = enabled)
     })
 
+    data class DisplaySendDatabaseEnabled(val enabled: Boolean): SettingsMutation({
+        it.copy(isSendDatabaseEnabled = enabled)
+    })
+
     data class DisplayAnimateVideoThumbnailsEnabled(val enabled: Boolean): SettingsMutation({
         it.copy(animateVideoThumbnails = enabled)
     })

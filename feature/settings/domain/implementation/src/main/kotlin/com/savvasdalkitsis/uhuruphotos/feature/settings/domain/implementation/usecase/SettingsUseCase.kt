@@ -90,6 +90,8 @@ internal class SettingsUseCase @Inject constructor(
     private val showLibraryDefault = true
     private val loggingEnabled = "loggingEnabled"
     private val loggingEnabledDefault = false
+    private val sendDatabaseEnabled = "sendDatabaseEnabled"
+    private val sendDatabaseEnabledDefault = false
     private val biometricsRequiredForAppAccess = "biometricsRequiredForAppAccess"
     private val biometricsRequiredForAppAccessDefault = false
     private val biometricsRequiredForHiddenPhotosAccess = "biometricsRequiredForHiddenPhotosAccess"
@@ -151,6 +153,8 @@ internal class SettingsUseCase @Inject constructor(
         .map { it.mapToAvailable() }.toSet()
     override fun getLoggingEnabled(): Boolean =
         get(loggingEnabled, loggingEnabledDefault)
+    override fun getSendDatabaseEnabled(): Boolean =
+        get(sendDatabaseEnabled, sendDatabaseEnabledDefault)
     override fun getBiometricsRequiredForAppAccess(): Boolean =
         get(biometricsRequiredForAppAccess, biometricsRequiredForAppAccessDefault)
     override fun getBiometricsRequiredForHiddenPhotosAccess(): Boolean =
@@ -221,6 +225,8 @@ internal class SettingsUseCase @Inject constructor(
             .map { it.mapToAvailable() }
     override fun observeLoggingEnabled(): Flow<Boolean> =
         observe(loggingEnabled, loggingEnabledDefault)
+    override fun observeSendDatabaseEnabled(): Flow<Boolean> =
+        observe(sendDatabaseEnabled, sendDatabaseEnabledDefault)
     override fun observeBiometricsRequiredForAppAccess(): Flow<Boolean> =
         observe(biometricsRequiredForAppAccess, biometricsRequiredForAppAccessDefault)
     override fun observeBiometricsRequiredForHiddenPhotosAccess(): Flow<Boolean> =
@@ -311,6 +317,10 @@ internal class SettingsUseCase @Inject constructor(
     override fun setLoggingEnabled(enabled: Boolean) {
         set(loggingEnabled, enabled)
         Log.enabled = enabled
+    }
+
+    override fun setSendDatabaseEnabled(enabled: Boolean) {
+        set(sendDatabaseEnabled, enabled)
     }
 
     override fun setBiometricsRequiredForAppAccess(required: Boolean) {

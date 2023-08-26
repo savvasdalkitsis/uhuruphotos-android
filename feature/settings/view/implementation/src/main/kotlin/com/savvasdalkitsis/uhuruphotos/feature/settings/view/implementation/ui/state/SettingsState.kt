@@ -46,6 +46,7 @@ data class SettingsState(
     val maxAnimatedVideoThumbnails: Int = 3,
     val mapProviderState: MapProviderState = MapProviderState.NoOptions,
     val isLoggingEnabled: Boolean = false,
+    val isSendDatabaseEnabled: Boolean = false,
     val biometrics: BiometricsSetting? = null,
     val showMemories: Boolean = true,
     val autoHideFeedNavOnScroll: Boolean = true,

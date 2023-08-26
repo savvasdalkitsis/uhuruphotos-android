@@ -33,12 +33,13 @@ internal fun SettingsEntryWithSubtext(
 ) {
     Column(
         modifier = Modifier
-            .fillMaxWidth()
-            .padding(8.dp),
+            .fillMaxWidth(),
     ) {
         entry()
         if (subtext != null) {
             Text(
+                modifier = Modifier
+                    .padding(horizontal = 12.dp),
                 text = stringResource(subtext),
                 style = MaterialTheme.typography.subtitle2
             )

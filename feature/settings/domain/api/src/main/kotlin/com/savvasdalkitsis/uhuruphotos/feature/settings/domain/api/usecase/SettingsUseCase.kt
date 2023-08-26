@@ -41,6 +41,7 @@ interface SettingsUseCase {
     fun getMapProvider(): MapProvider
     fun getAvailableMapProviders(): Set<MapProvider>
     fun getLoggingEnabled(): Boolean
+    fun getSendDatabaseEnabled(): Boolean
     fun getBiometricsRequiredForAppAccess(): Boolean
     fun getBiometricsRequiredForHiddenPhotosAccess(): Boolean
     fun getBiometricsRequiredForTrashAccess(): Boolean
@@ -73,6 +74,7 @@ interface SettingsUseCase {
     fun observeThemeModeState(): StateFlow<ThemeMode>
     fun observeMapProvider(): Flow<MapProvider>
     fun observeLoggingEnabled(): Flow<Boolean>
+    fun observeSendDatabaseEnabled(): Flow<Boolean>
     fun observeBiometricsRequiredForAppAccess(): Flow<Boolean>
     fun observeBiometricsRequiredForHiddenPhotosAccess(): Flow<Boolean>
     fun observeBiometricsRequiredForTrashAccess(): Flow<Boolean>
@@ -102,6 +104,7 @@ interface SettingsUseCase {
     fun setShowLibrary(show: Boolean)
     fun setMapProvider(provider: MapProvider)
     fun setLoggingEnabled(enabled: Boolean)
+    fun setSendDatabaseEnabled(enabled: Boolean)
     fun setBiometricsRequiredForAppAccess(required: Boolean)
     fun setBiometricsRequiredForHiddenPhotosAccess(required: Boolean)
     fun setBiometricsRequiredForTrashAccess(required: Boolean)
