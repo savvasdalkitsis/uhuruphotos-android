@@ -37,6 +37,8 @@ class StatsUseCase @Inject constructor(
     @ApplicationContext val context: Context,
 ) : StatsUseCase {
 
+    override fun List<MediaItem>.breakdownByTypeIsVideo(): Map<Boolean, List<MediaItem>> = groupBy { it.id.isVideo }
+
     override fun List<MediaItem>.breakdownByYear(): Map<Year, Int> = groupBy { it.mediaDay?.year }
         .mapNotNull {
             it.key?.let { year ->

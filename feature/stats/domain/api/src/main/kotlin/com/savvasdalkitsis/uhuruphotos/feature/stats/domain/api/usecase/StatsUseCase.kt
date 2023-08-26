@@ -26,6 +26,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.stats.domain.api.model.Year
 
 interface StatsUseCase {
 
+    fun List<MediaItem>.breakdownByTypeIsVideo(): Map<Boolean, List<MediaItem>>
     fun List<MediaItem>.breakdownByYear(): Map<Year, Int>
     fun List<MediaItem>.breakdownByMonth(): Map<Month, Int>
     fun List<MediaItem>.breakdownByDayOfMonth(): Map<DayOfMonth, Int>

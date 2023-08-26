@@ -27,6 +27,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.savvasdalkitsis.uhuruphotos.foundation.compose.api.recomposeHighlighter
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.LocalNavigator
+import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.Navigator
 
 @Composable
 fun UpNavButton(
@@ -34,13 +35,14 @@ fun UpNavButton(
     furtherContent: @Composable () -> Unit = {},
     onBackPressed: (() -> Unit)? = null,
 ) {
-    val navigator = LocalNavigator.current
+    val navigator: Navigator? = LocalNavigator.current
     IconButton(
         modifier = modifier
             .recomposeHighlighter()
         ,
         onClick = onBackPressed ?: {
-            navigator.navigateUp()
+            navigator?.navigateUp()
+            Unit
         },
     ) {
         Row(

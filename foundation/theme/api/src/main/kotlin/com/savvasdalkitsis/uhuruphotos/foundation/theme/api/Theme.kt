@@ -104,7 +104,7 @@ fun PreviewAppTheme(
 ) {
     CompositionLocalProvider(
         LocalSystemUiController provides NoOpSystemUiController,
-        LocalWindowSize provides WindowSizeClass.calculateFromSize(DpSize(450.dp, 800.dp))
+        LocalWindowSize provides WindowSizeClass.calculateFromSize(DpSize(450.dp, 800.dp)),
     ) {
         AppTheme(darkTheme = darkTheme) {
             Surface {

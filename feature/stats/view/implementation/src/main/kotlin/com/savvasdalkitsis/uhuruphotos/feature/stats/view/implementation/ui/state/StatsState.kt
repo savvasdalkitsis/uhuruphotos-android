@@ -39,6 +39,8 @@ data class StatsState(
     val mediaHeatMap: Map<MediaDay, Int> = emptyMap(),
     val isLoadingTimeline: Boolean = true,
     val timeline: ImmutableList<CountryVisit> = persistentListOf(),
+    val photoCount: Int? = null,
+    val videoCount: Int? = null,
 ) {
     val isLoading = isLoadingMediaByYear
             && isLoadingTimeline

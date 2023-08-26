@@ -29,6 +29,13 @@ sealed class StatsMutation(
     mutation: Mutation<StatsState>,
 ) : Mutation<StatsState> by mutation {
 
+    data class ShowMediaTypeCounts(val photos: Int, val videos: Int) : StatsMutation({
+        it.copy(
+            photoCount = photos,
+            videoCount = videos,
+        )
+    })
+
     data class ShowMediaPerYear(val mediaByYear: Map<Year, Int>) : StatsMutation({
         it.copy(
             isLoadingMediaByYear = false,

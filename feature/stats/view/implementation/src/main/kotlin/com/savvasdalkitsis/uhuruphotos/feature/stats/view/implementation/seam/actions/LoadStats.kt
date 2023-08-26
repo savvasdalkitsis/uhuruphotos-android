@@ -23,6 +23,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.stats.view.implementation.seam.St
 import com.savvasdalkitsis.uhuruphotos.feature.stats.view.implementation.seam.StatsMutation.ShowMediaPerDayOfWeek
 import com.savvasdalkitsis.uhuruphotos.feature.stats.view.implementation.seam.StatsMutation.ShowMediaPerMonth
 import com.savvasdalkitsis.uhuruphotos.feature.stats.view.implementation.seam.StatsMutation.ShowMediaPerYear
+import com.savvasdalkitsis.uhuruphotos.feature.stats.view.implementation.seam.StatsMutation.ShowMediaTypeCounts
 import com.savvasdalkitsis.uhuruphotos.feature.stats.view.implementation.ui.state.StatsState
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.Mutation
 import kotlinx.coroutines.async
@@ -35,15 +36,22 @@ data object LoadStats : StatsAction() {
 
     context(StatsActionsContext)
     override fun handle(state: StatsState): Flow<Mutation<StatsState>> = channelFlow {
-        val media = feedUseCase.getFeed(FeedFetchType.ONLY_WITH_DATES)
+        val allMedia = feedUseCase.getFeed(FeedFetchType.ALL)
             .flatMap { it.mediaItems }
+        val mediaWithDates = allMedia.filter { it.mediaDay != null }
         with(statsUseCase) {
             listOf(
-                async { trySend(ShowMediaPerYear(media.breakdownByYear())) },
-                async { trySend(ShowMediaPerMonth(media.breakdownByMonth())) },
-                async { trySend(ShowMediaPerDayOfMonth(media.breakdownByDayOfMonth())) },
-                async { trySend(ShowMediaPerDayOfWeek(media.breakdownByDayOfWeek())) },
-                async { trySend(ShowMediaHeatMap(media.breakdownByMediaDay())) },
+                async { val typeIsVideo = allMedia.breakdownByTypeIsVideo()
+                    trySend(ShowMediaTypeCounts(
+                        photos = typeIsVideo[false].orEmpty().count(),
+                        videos = typeIsVideo[true].orEmpty().count())
+                    )
+                },
+                async { trySend(ShowMediaPerYear(mediaWithDates.breakdownByYear())) },
+                async { trySend(ShowMediaPerMonth(mediaWithDates.breakdownByMonth())) },
+                async { trySend(ShowMediaPerDayOfMonth(mediaWithDates.breakdownByDayOfMonth())) },
+                async { trySend(ShowMediaPerDayOfWeek(mediaWithDates.breakdownByDayOfWeek())) },
+                async { trySend(ShowMediaHeatMap(mediaWithDates.breakdownByMediaDay())) },
             ).awaitAll()
 //            media.timeline()
 //                .onSuccess {

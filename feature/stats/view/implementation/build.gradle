@@ -19,11 +19,15 @@ dependencies {
             project(":foundation:ui:api"),
             libs.androidx.compose.hilt.navigation,
             libs.androidx.compose.material,
+            libs.androidx.compose.ui.tooling.preview,
             libs.bundles.autodagger,
             libs.heatmap,
             libs.jetlime,
             libs.timeline,
             libs.vico,
+    )
+    debugImplementation(
+            libs.androidx.compose.ui.tooling,
     )
     kapt libs.autodagger.kapt
 }
