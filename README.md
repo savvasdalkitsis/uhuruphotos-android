@@ -78,3 +78,7 @@ You can sponsor the development of UhuruPhotos here
 existing translations at [weblate](https://hosted.weblate.org/engage/uhuruphotos/)
 
 <a href="https://hosted.weblate.org/engage/uhuruphotos/"><img src="https://hosted.weblate.org/widgets/uhuruphotos/-/open-graph.png" alt="Translation status" width = 240px></a>
+
+## Star History
+
+[![Star History Chart](https://api.star-history.com/svg?repos=savvasdalkitsis/uhuruphotos-android&type=Date)](https://star-history.com/#savvasdalkitsis/uhuruphotos-android&Date)
