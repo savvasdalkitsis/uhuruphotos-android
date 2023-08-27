@@ -1,0 +1,3 @@
+* Cloud backup/sync is now available (for feed items only)
+* Adding photo/video count in the stats screen
+* Adding option to send the database along with logs when sending feedback
