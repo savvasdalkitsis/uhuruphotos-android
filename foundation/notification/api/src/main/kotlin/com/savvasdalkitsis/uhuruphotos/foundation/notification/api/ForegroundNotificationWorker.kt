@@ -41,7 +41,7 @@ abstract class ForegroundNotificationWorker<BR>(
 
     private val notificationManager = NotificationManagerCompat.from(applicationContext)
 
-    final override suspend fun doWork(): Result = withContext(Dispatchers.IO) {
+    final override suspend fun doWork(): Result = withContext(dispatcher) {
         setForeground(createForegroundInfo(0))
         updateProgress(0)
         work()
@@ -78,6 +78,7 @@ abstract class ForegroundNotificationWorker<BR>(
 
     companion object {
         private const val Progress = "Progress"
+        private val dispatcher = Dispatchers.IO.limitedParallelism(5)
 
         fun getProgressOf(work: WorkInfo) = work.progress.getInt(Progress, 0)
     }
