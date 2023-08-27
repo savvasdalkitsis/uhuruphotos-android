@@ -101,7 +101,7 @@ lumberjack-file = { module = "com.github.savvasdalkitsis.Lumberjack:lumberjack-f
 lumberjack-notification = { module = "com.github.savvasdalkitsis.Lumberjack:lumberjack-notification", version.ref = "lumberjack" }
 mapbox = "com.mapbox.maps:android:10.9.1"
 maplibre = "org.maplibre.gl:android-sdk:10.2.0"
-maplibre-annotations = "org.maplibre.gl:android-plugin-annotation-v9:2.0.0"
+maplibre-annotations = "org.maplibre.gl:android-plugin-annotation-v9:2.0.1"
 maps = { module = "com.google.android.gms:play-services-maps", version.ref = "com-google-android-gms" }
 maps-compose = "com.google.maps.android:maps-compose:2.14.0"
 maps-utils = "com.google.maps.android:android-maps-utils:3.5.3"
