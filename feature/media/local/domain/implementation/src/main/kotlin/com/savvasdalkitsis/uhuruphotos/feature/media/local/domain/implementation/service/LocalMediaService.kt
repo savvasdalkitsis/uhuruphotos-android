@@ -217,7 +217,13 @@ class LocalMediaService @Inject constructor(
         }
     }
 
-    private fun Cursor.long(col: String) = getLong(getColumnIndexOrThrow(col))
-    private fun Cursor.string(col: String) = getString(getColumnIndexOrThrow(col))
-    private fun Cursor.int(col: String) = getInt(getColumnIndexOrThrow(col))
+    private fun Cursor.long(col: String) = tryGet(col, ::getLong)
+    private fun Cursor.string(col: String) = tryGet(col, ::getString)
+    private fun Cursor.int(col: String) = tryGet(col, ::getInt)
+    private fun <T> Cursor.tryGet(col: String, value: (Int) -> T) : T =
+        try {
+            value(getColumnIndexOrThrow(col))
+        } catch (e: Exception) {
+            throw IllegalStateException("Could not get column: $col", e)
+        }
 }
