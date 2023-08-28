@@ -1,0 +1,1 @@
+* Fixing bug where some local items had no folder name causing the whole local scan to fail
