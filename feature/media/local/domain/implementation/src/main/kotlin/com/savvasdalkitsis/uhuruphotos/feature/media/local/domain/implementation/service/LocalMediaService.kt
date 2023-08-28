@@ -27,6 +27,7 @@ import android.provider.MediaStore
 import android.provider.MediaStore.Images
 import android.provider.MediaStore.Video
 import androidx.core.content.ContentResolverCompat
+import androidx.core.database.getStringOrNull
 import androidx.core.os.CancellationSignal
 import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.implementation.model.MediaStoreContentUriResolver
 import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.implementation.service.model.LocalMediaPhotoColumns
@@ -138,7 +139,7 @@ class LocalMediaService @Inject constructor(
             displayName = string(Video.Media.DISPLAY_NAME),
             dateTaken = long(Video.Media.DATE_TAKEN),
             bucketId = int(Video.Media.BUCKET_ID),
-            bucketName = string(Video.Media.BUCKET_DISPLAY_NAME),
+            bucketName = nullableString(Video.Media.BUCKET_DISPLAY_NAME) ?: "-",
             width = int(Video.Media.WIDTH),
             height = int(Video.Media.HEIGHT),
             size = int(Video.Media.SIZE),
@@ -218,11 +219,13 @@ class LocalMediaService @Inject constructor(
     }
 
     private fun Cursor.long(col: String) = tryGet(col, ::getLong)
+    private fun Cursor.nullableString(col: String) = getStringOrNull(getColumnIndexOrThrow(col))
     private fun Cursor.string(col: String) = tryGet(col, ::getString)
     private fun Cursor.int(col: String) = tryGet(col, ::getInt)
     private fun <T> Cursor.tryGet(col: String, value: (Int) -> T) : T =
         try {
-            value(getColumnIndexOrThrow(col))
+            value(getColumnIndexOrThrow(col)) ?:
+            throw IllegalStateException("Could not get column: $col")
         } catch (e: Exception) {
             throw IllegalStateException("Could not get column: $col", e)
         }
