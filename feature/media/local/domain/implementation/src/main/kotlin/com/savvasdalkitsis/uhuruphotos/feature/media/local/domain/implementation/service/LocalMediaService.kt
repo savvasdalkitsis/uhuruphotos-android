@@ -79,13 +79,13 @@ class LocalMediaService @Inject constructor(
             displayName = string(Images.Media.DISPLAY_NAME),
             dateTaken = long(Images.Media.DATE_TAKEN),
             bucketId = int(Images.Media.BUCKET_ID),
-            bucketName = string(Images.Media.BUCKET_DISPLAY_NAME),
+            bucketName = nullableString(Images.Media.BUCKET_DISPLAY_NAME) ?: "-",
             width = int(Images.Media.WIDTH),
             height = int(Images.Media.HEIGHT),
             size = int(Images.Media.SIZE),
             contentUri = MediaStoreContentUriResolver.getContentUriForItem(id, video = false),
             path = string(Images.Media.DATA),
-            orientation = string(Images.Media.ORIENTATION),
+            orientation = nullableString(Images.Media.ORIENTATION),
         )
     }
 
@@ -146,7 +146,7 @@ class LocalMediaService @Inject constructor(
             duration = if (SDK_INT >= R) int(Video.Media.DURATION) else null,
             contentUri = MediaStoreContentUriResolver.getContentUriForItem(id, video = true),
             path = string(Video.Media.DATA),
-            orientation = string(Video.Media.ORIENTATION),
+            orientation = nullableString(Video.Media.ORIENTATION),
         )
     }
 
