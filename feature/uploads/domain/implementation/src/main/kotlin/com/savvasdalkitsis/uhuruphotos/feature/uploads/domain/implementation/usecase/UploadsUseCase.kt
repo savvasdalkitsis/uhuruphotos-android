@@ -62,6 +62,7 @@ class UploadsUseCase @Inject constructor(
                         }
                     }
                 }
+                .sortedBy { it.displayName }
         }.map { jobs -> Uploads(jobs)
             .also { uploads ->
                 val finishedJobs = uploads.jobs.filter { job ->
