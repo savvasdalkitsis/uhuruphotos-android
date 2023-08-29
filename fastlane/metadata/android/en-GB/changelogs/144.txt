@@ -1,0 +1,4 @@
+* Fixing bug with local media being duplicated in feed when at the end of a day if uploaded
+* Adding monochrome icon for the new Android Themed icons
+* Sorting items in the uploads list by name
+* Limiting items to sync to 5 at a time
