@@ -7,21 +7,17 @@
 
 # <img src="https://github.com/savvasdalkitsis/uhuruphotos-android/raw/main/foundation/icons/api/src/main/ic_launcher-playstore.png" alt="logo" width = 60px> UhuruPhotos. A LibrePhotos client
 
-UhuruPhotos is a full featured gallery app built using the latest Android technologies, like Jetpack Compose, SQLDelight, Coroutines etc 
-using an MVI architecture.
+Welcome to UhuruPhotos. A modern media gallery, with features like backup/sync, semantic search, media map, face recognition, memories and much more*
 
-- View and backup/sync* your memories.
-- Find the right memory using keywords, faces or location*
-- See your memories on the world map
+It is built using the latest Android technologies, like Jetpack Compose, SQLDelight, Coroutines etc using an MVI architecture.
+
+Own your memories. UhuruPhotos and LibrePhotos are both non commercial, open source projects. No user tracking, data training or advertising ever.
 
 (* advanced features require a [LibrePhotos](https://github.com/LibrePhotos/librephotos) server)
 
-It borrows a lot of ideas from Google Photos and aims to become a full featured photo album 
-replacement, including features like offline support, backup and sync etc.
-
 |<img src="https://github.com/savvasdalkitsis/uhuruphotos-android/raw/main/docs/assets/phone-1.png" alt="screen 1" width = 180px>|<img src="https://github.com/savvasdalkitsis/uhuruphotos-android/raw/main/docs/assets/phone-2.png" alt="screen 2" width = 180px>|<img src="https://github.com/savvasdalkitsis/uhuruphotos-android/raw/main/docs/assets/phone-3.png" alt="screen 3" width = 180px>|
 
-While still early days, it already has a lot of features:
+Features include:
 
 * Photo feed with multiple views which can be changed by pinch to zoom gestures
 * Multiple select in feed to share/delete multiple items at once
@@ -40,10 +36,6 @@ While still early days, it already has a lot of features:
 * Tablet support
 * A lot of settings to help you control the app storage and memory requirements along with how 
   frequently to perform synchronization with the LibrePhotos server.
-  
-As mentioned above, a lot of features will soon be implemented before the full public release, 
-mainly:
-
 * Backup/Sync local images with LibrePhotos server. Take control of your data by never having to 
   worry about photo backups.
 * Basic photo editing capabilities.

@@ -2,11 +2,33 @@
 
 |![phone1](assets/phone-1.png)|![phone2](assets/phone-2.png)|![phone3](assets/phone-3.png)|
 
-## UhuruPhotos is a full featured gallery app built using the latest Android technologies, like Jetpack Compose, SQLDelight, Coroutines etc using an MVI architecture.
+## Welcome to UhuruPhotos. A modern media gallery, with features like backup/sync, semantic search, media map, face recognition, memories and much more[^1]
+## Own your memories. UhuruPhotos and LibrePhotos are both non commercial, open source projects. No user tracking, data training or advertising ever.
 
-* View and backup/sync[^1] your memories.
-* Find the right memory using keywords, faces or location[^1][^3]
-* See your memories on the world map
+Features include:
+
+* Photo feed with multiple views which can be changed by pinch to zoom gestures
+* Multiple select in feed to share/delete multiple items at once
+* Periodic background synchronization with LibrePhotos server
+* Photo details view with information like date, location, gps map, people view, sharing,
+  adding/removing from favourites (synced with LibrePhotos server)
+* Video details view with all the above features and video playback
+* Search your photos using LibrePhotos' search engine. Get search suggestions based on your photos.
+* People view and suggestions for people with most photos.
+* Photo map. See a heatmap of your photos. Navigate around the globe with the interactive map and
+  see photos taken in the location currently viewed.
+* User created and auto generated albums from LibrePhotos
+* Dark/Light mode (manual and auto)
+* Local photo support. This makes UhuruPhotos a viable Google Photos alternative which can be
+  used as your primary camera roll viewer.
+* Tablet support
+* A lot of settings to help you control the app storage and memory requirements along with how
+  frequently to perform synchronization with the LibrePhotos server.
+* Backup/Sync local images with LibrePhotos server. Take control of your data by never having to
+  worry about photo backups.
+* Basic photo editing capabilities.
+* Foldables support.
+* ...and more
 
 ![tablet1](assets/tablet-1.png)
 ![tablet2](assets/tablet-2.png)
