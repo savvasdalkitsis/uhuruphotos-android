@@ -91,75 +91,64 @@ internal class FeedUseCase @Inject constructor(
 
     private fun mergeRemoteWithLocalMedia(
         allRemoteDays: Sequence<MediaCollection>,
-        allLocalMedia: Sequence<MediaItem>,
+        allLocalMedia: List<MediaItem>,
         mediaBeingDownloaded: Set<String>,
         mediaBeingUploaded: Set<Long>,
     ): List<MediaCollection> {
-        val allLocalDays = allLocalMedia.groupBy { it.displayDayDate }
-        val mergedToRemote =
-            allRemoteDays.mergeLocalMediaIntoExistingRemoteDays(allLocalMedia)
-        val remainingLocalDays = allLocalDays.mediaNotIn(mergedToRemote)
-        val remoteAndLocalExistingDays = mergedToRemote
-            .addRemainingLocalMediaToExistingDays(remainingLocalDays)
-        val combined = remoteAndLocalExistingDays + allLocalDays
-            .mediaNotIn(remoteAndLocalExistingDays)
+        val remainingLocalMedia = allLocalMedia.toMutableList()
+
+        val merged = allRemoteDays
+            .map { day ->
+                day.copy(mediaItems = day.mediaItems.map { item ->
+                    val local = remainingLocalMedia
+                        .filter { it.mediaHash == item.mediaHash }
+                    remainingLocalMedia.removeAll(local)
+                    when {
+                        local.isEmpty() -> item.orDownloading(mediaBeingDownloaded)
+                        else -> MediaItemGroup(
+                            remoteInstance = item,
+                            localInstances = local.toSet()
+                        )
+                    }
+                })
+            }
+            .map { collection ->
+                val local = remainingLocalMedia
+                    .filter { it.displayDayDate == collection.displayTitle }
+                remainingLocalMedia.removeAll(local)
+                when {
+                    local.isEmpty() -> collection
+                    else -> collection.copy(mediaItems = (collection.mediaItems + local)
+                            .sortedByDescending { it.sortableDate }
+                    )
+                }
+            }
+            .toList()
+
+        val localOnlyDays = remainingLocalMedia
+            .map { it.orUploading(mediaBeingUploaded) }
+            .groupBy { it.displayDayDate }
             .toMediaCollections()
-        return combined
+
+        return (merged + localOnlyDays)
             .sortedByDescending { it.unformattedDate }
-            .markDownloading(mediaBeingDownloaded)
-            .markUploading(mediaBeingUploaded)
             .toList()
     }
 
-    private fun Map<String?, List<MediaItem>>.mediaNotIn(
-        mergedToRemote: Sequence<MediaCollection>
-    ): Map<String?, List<MediaItem>> {
-        val mergedToRemoteHashes = mergedToRemote
-            .flatMap { it.mediaItems }
-            .map { it.mediaHash }
-        return mapValues { (_, media) ->
-                media.filter { it.mediaHash !in mergedToRemoteHashes }
-            }
-            .filter { (_, media) -> media.isNotEmpty() }
+    private fun MediaItem.orDownloading(inProgress: Set<String>): MediaItem {
+        val id = id
+        return if (this is MediaItemInstance && id is MediaId.Remote && id.value in inProgress)
+            copy(id = id.toDownloading())
+        else
+            this
     }
 
-    private fun Sequence<MediaCollection>.markDownloading(
-        inProgress: Set<String>,
-    ): Sequence<MediaCollection> = map { collection ->
-        collection.copy(mediaItems = collection.mediaItems.map { mediaItem ->
-            val id = mediaItem.id
-            if (mediaItem is MediaItemInstance
-                && id is MediaId.Remote
-                && id.value in inProgress
-            ) {
-                mediaItem.copy(id = MediaId.Downloading(id.value, id.isVideo, id.serverUrl))
-            } else {
-                mediaItem
-            }
-        })
-    }
-
-    private fun Sequence<MediaCollection>.markUploading(
-        inProgress: Set<Long>,
-    ): Sequence<MediaCollection> = map { collection ->
-        collection.copy(mediaItems = collection.mediaItems.map { mediaItem ->
-            val id = mediaItem.id
-            if (mediaItem is MediaItemInstance
-                && id is MediaId.Local
-                && id.value in inProgress
-            ) {
-                mediaItem.copy(
-                    id = MediaId.Uploading(
-                        id.value,
-                        id.isVideo,
-                        id.contentUri,
-                        id.thumbnailUri
-                    )
-                )
-            } else {
-                mediaItem
-            }
-        })
+    private fun MediaItem.orUploading(inProgress: Set<Long>): MediaItem {
+        val id = id
+        return if (this is MediaItemInstance && id is MediaId.Local && id.value in inProgress)
+            copy(id = id.toUploading())
+        else
+            this
     }
 
     override suspend fun refreshCluster(clusterId: String) =
@@ -204,43 +193,6 @@ internal class FeedUseCase @Inject constructor(
             toMediaCollection()
         }
 
-    private fun Sequence<MediaCollection>.mergeLocalMediaIntoExistingRemoteDays(
-        localMedia: Sequence<MediaItem>
-    ) = map { remoteDay ->
-        remoteDay.copy(
-            mediaItems = remoteDay.mediaItems.map { remoteMediaItem ->
-                mergeLocalDuplicates(localMedia, remoteMediaItem)
-            }
-        )
-    }
-
-    private fun Sequence<MediaCollection>.addRemainingLocalMediaToExistingDays(
-        remainingLocalDays: Map<String?, List<MediaItem>>
-    ) = map { remoteDay ->
-        val localMediaOnDay = remainingLocalDays[remoteDay.displayTitle] ?: emptyList()
-        val combinedMediaItems = remoteDay.mediaItems + localMediaOnDay
-        remoteDay.copy(
-            mediaItems = combinedMediaItems.sortedByDescending { it.sortableDate }
-        )
-    }
-
-    private fun mergeLocalDuplicates(
-        localMedia: Sequence<MediaItem>,
-        remoteMediaItem: MediaItem
-    ): MediaItem {
-        val localCopies =
-            localMedia.filter { it.mediaHash == remoteMediaItem.mediaHash }.toSet()
-        return when {
-            localCopies.isNotEmpty() ->
-                MediaItemGroup(
-                    remoteInstance = remoteMediaItem,
-                    localInstances = localCopies,
-                )
-
-            else -> remoteMediaItem
-        }
-    }
-
     private fun Map<String?, List<MediaItem>>.toMediaCollections() = map { (day, items) ->
         MediaCollection(
             id = "local_media_collection_$day",
@@ -256,8 +208,8 @@ internal class FeedUseCase @Inject constructor(
             .distinctUntilChanged()
             .map {
                 when (it) {
-                    is Found -> it.filteredWith(feedFetchType).asSequence()
-                    else -> emptySequence()
+                    is Found -> it.filteredWith(feedFetchType)
+                    else -> emptyList()
                 }
             }
 
@@ -292,9 +244,9 @@ internal class FeedUseCase @Inject constructor(
 
     private suspend fun getLocalMediaFeed(feedFetchType: FeedFetchType) =
         when (val mediaOnDevice = mediaUseCase.getLocalMedia()) {
-            Error -> emptySequence()
-            is Found -> mediaOnDevice.filteredWith(feedFetchType).asSequence()
-            is RequiresPermissions -> emptySequence()
+            Error -> emptyList()
+            is Found -> mediaOnDevice.filteredWith(feedFetchType)
+            is RequiresPermissions -> emptyList()
         }
 
     private suspend fun getDownloading(): Set<String> = downloadUseCase.getDownloading()

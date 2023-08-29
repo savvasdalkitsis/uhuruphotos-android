@@ -27,13 +27,6 @@ dependencyResolutionManagement {
     }
 }
 
-buildCache {
-    local {
-        directory = new File(rootDir, 'build-cache')
-        removeUnusedEntriesAfterDays = 30
-    }
-}
-
 rootProject.name = "uhuruphotos-android"
 include ':app'
 include ':app:implementation'
@@ -147,8 +140,6 @@ include ':feature:stats:view:api'
 include ':feature:stats:view:implementation'
 include ':feature:sync:domain:api'
 include ':feature:sync:domain:implementation'
-include ':feature:sync:view:api'
-include ':feature:sync:view:implementation'
 include ':feature:trash:domain:api'
 include ':feature:trash:domain:implementation'
 include ':feature:trash:view:api'

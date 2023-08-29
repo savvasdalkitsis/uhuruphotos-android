@@ -71,6 +71,8 @@ sealed class MediaId<T : Serializable> private constructor(
         override val fullResUri = value.toFullSizeUrlFromId(isVideo, serverUrl)
         @IgnoredOnParcel
         override val thumbnailUri = value.toThumbnailUrlFromId(serverUrl)
+
+        fun toDownloading() = Downloading(value, isVideo, serverUrl)
     }
 
     @Parcelize
@@ -156,6 +158,8 @@ sealed class MediaId<T : Serializable> private constructor(
         override val syncState: MediaItemSyncState = LOCAL_ONLY
         @IgnoredOnParcel
         override val fullResUri = contentUri
+
+        fun toUploading() = Uploading(value, isVideo, contentUri, thumbnailUri)
     }
 
     @Suppress("DataClassPrivateConstructor")
