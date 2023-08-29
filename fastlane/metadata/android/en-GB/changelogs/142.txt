@@ -1,0 +1,2 @@
+* Fixing bug with local media being duplicated in feed when at the end of a day if uploaded
+* Adding monochrome icon for the new Android Themed icons
