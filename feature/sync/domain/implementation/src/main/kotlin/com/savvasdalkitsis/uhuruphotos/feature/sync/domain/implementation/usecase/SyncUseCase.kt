@@ -17,7 +17,6 @@ package com.savvasdalkitsis.uhuruphotos.feature.sync.domain.implementation.useca
 
 import com.savvasdalkitsis.uhuruphotos.feature.feed.domain.api.model.FeedFetchType
 import com.savvasdalkitsis.uhuruphotos.feature.feed.domain.api.usecase.FeedUseCase
-import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemSyncState.LOCAL_ONLY
 import com.savvasdalkitsis.uhuruphotos.feature.sync.domain.api.usecase.SyncUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.upload.domain.api.model.UploadItem
 import com.savvasdalkitsis.uhuruphotos.feature.welcome.domain.api.usecase.WelcomeUseCase
@@ -60,8 +59,7 @@ class SyncUseCase @Inject constructor(
                 emptySet()
             else
                 feed.flatMap { it.mediaItems }
-                    .filter { it.id.syncState == LOCAL_ONLY }
-                    .mapNotNull { it.id.findLocal }
+                    .mapNotNull { item -> item.id.findLocal?.takeIf { item.id.findRemote == null } }
                     .map { item ->
                         UploadItem(item.value, item.contentUri)
                     }.toSet()
