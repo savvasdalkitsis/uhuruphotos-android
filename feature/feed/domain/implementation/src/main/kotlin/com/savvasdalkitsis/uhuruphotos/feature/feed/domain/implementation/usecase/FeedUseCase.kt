@@ -96,13 +96,31 @@ internal class FeedUseCase @Inject constructor(
         mediaBeingUploaded: Set<Long>,
     ): List<MediaCollection> {
         val allLocalDays = allLocalMedia.groupBy { it.displayDayDate }
-        val combined = mergeLocalMediaIntoExistingRemoteDays(allRemoteDays, allLocalDays) +
-                remainingLocalDays(allRemoteDays, allLocalDays)
+        val mergedToRemote =
+            allRemoteDays.mergeLocalMediaIntoExistingRemoteDays(allLocalMedia)
+        val remainingLocalDays = allLocalDays.mediaNotIn(mergedToRemote)
+        val remoteAndLocalExistingDays = mergedToRemote
+            .addRemainingLocalMediaToExistingDays(remainingLocalDays)
+        val combined = remoteAndLocalExistingDays + allLocalDays
+            .mediaNotIn(remoteAndLocalExistingDays)
+            .toMediaCollections()
         return combined
             .sortedByDescending { it.unformattedDate }
             .markDownloading(mediaBeingDownloaded)
             .markUploading(mediaBeingUploaded)
             .toList()
+    }
+
+    private fun Map<String?, List<MediaItem>>.mediaNotIn(
+        mergedToRemote: Sequence<MediaCollection>
+    ): Map<String?, List<MediaItem>> {
+        val mergedToRemoteHashes = mergedToRemote
+            .flatMap { it.mediaItems }
+            .map { it.mediaHash }
+        return mapValues { (_, media) ->
+                media.filter { it.mediaHash !in mergedToRemoteHashes }
+            }
+            .filter { (_, media) -> media.isNotEmpty() }
     }
 
     private fun Sequence<MediaCollection>.markDownloading(
@@ -186,29 +204,32 @@ internal class FeedUseCase @Inject constructor(
             toMediaCollection()
         }
 
-    private fun mergeLocalMediaIntoExistingRemoteDays(
-        remoteDays: Sequence<MediaCollection>,
-        localDays: Map<String?, List<MediaItem>>
-    ) = remoteDays.map { remoteDay ->
-        val localMediaOnDay = localDays[remoteDay.displayTitle] ?: emptyList()
-        val existingRemoteMediaHashes = remoteDay.mediaItems.map { it.mediaHash }
-        val localMediaNotPresentRemotely = localMediaOnDay.filter {
-            it.mediaHash !in existingRemoteMediaHashes
-        }
-        val combinedMediaItems = remoteDay.mediaItems.map { remoteMediaItem ->
-            mergeLocalDuplicates(localDays.flatMap { it.value }, remoteMediaItem)
-        } + localMediaNotPresentRemotely
+    private fun Sequence<MediaCollection>.mergeLocalMediaIntoExistingRemoteDays(
+        localMedia: Sequence<MediaItem>
+    ) = map { remoteDay ->
+        remoteDay.copy(
+            mediaItems = remoteDay.mediaItems.map { remoteMediaItem ->
+                mergeLocalDuplicates(localMedia, remoteMediaItem)
+            }
+        )
+    }
+
+    private fun Sequence<MediaCollection>.addRemainingLocalMediaToExistingDays(
+        remainingLocalDays: Map<String?, List<MediaItem>>
+    ) = map { remoteDay ->
+        val localMediaOnDay = remainingLocalDays[remoteDay.displayTitle] ?: emptyList()
+        val combinedMediaItems = remoteDay.mediaItems + localMediaOnDay
         remoteDay.copy(
             mediaItems = combinedMediaItems.sortedByDescending { it.sortableDate }
         )
     }
 
     private fun mergeLocalDuplicates(
-        allLocalMedia: List<MediaItem>,
+        localMedia: Sequence<MediaItem>,
         remoteMediaItem: MediaItem
     ): MediaItem {
         val localCopies =
-            allLocalMedia.filter { it.mediaHash == remoteMediaItem.mediaHash }.toSet()
+            localMedia.filter { it.mediaHash == remoteMediaItem.mediaHash }.toSet()
         return when {
             localCopies.isNotEmpty() ->
                 MediaItemGroup(
@@ -220,20 +241,15 @@ internal class FeedUseCase @Inject constructor(
         }
     }
 
-    private fun remainingLocalDays(
-        allRemoteDays: Sequence<MediaCollection>,
-        allLocalDays: Map<String?, List<MediaItem>>
-    ) = allLocalDays
-        .filter { (day, _) -> day !in allRemoteDays.map { it.displayTitle } }
-        .map { (day, items) ->
-            MediaCollection(
-                id = "local_media_collection_$day",
-                mediaItems = items,
-                displayTitle = day ?: "-",
-                location = null,
-                unformattedDate = items.firstOrNull()?.sortableDate
-            )
-        }
+    private fun Map<String?, List<MediaItem>>.toMediaCollections() = map { (day, items) ->
+        MediaCollection(
+            id = "local_media_collection_$day",
+            mediaItems = items,
+            displayTitle = day ?: "-",
+            location = null,
+            unformattedDate = items.firstOrNull()?.sortableDate
+        )
+    }
 
     private fun observeLocalMediaFeed(feedFetchType: FeedFetchType) =
         mediaUseCase.observeLocalMedia()

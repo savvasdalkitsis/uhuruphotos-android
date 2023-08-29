@@ -169,7 +169,7 @@ class LocalMediaRepository @Inject constructor(
             LocalMediaItemDetails(
                 id = item.id,
                 displayName = item.displayName,
-                dateTaken = item.dateTaken.toDateString(),
+                dateTaken = (exif.dateTime ?: item.dateTaken).toDateString(),
                 bucketId = item.bucketId,
                 bucketName = item.bucketName,
                 width = item.width ?: 0,

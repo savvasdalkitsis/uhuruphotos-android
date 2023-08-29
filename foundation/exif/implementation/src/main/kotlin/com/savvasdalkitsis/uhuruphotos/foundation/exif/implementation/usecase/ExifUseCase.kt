@@ -15,6 +15,7 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.foundation.exif.implementation.usecase
 
+import android.annotation.SuppressLint
 import androidx.exifinterface.media.ExifInterface
 import androidx.exifinterface.media.ExifInterface.TAG_APERTURE_VALUE
 import androidx.exifinterface.media.ExifInterface.TAG_DIGITAL_ZOOM_RATIO
@@ -66,6 +67,7 @@ class ExifUseCase @Inject constructor(
     }
 
 
+    @SuppressLint("RestrictedApi")
     private fun ExifInterface.metadata() = ExifMetadata(
         fStop = double(TAG_F_NUMBER)
             ?: ratio(TAG_APERTURE_VALUE)?.let { exp(it * ln(2.0) * 0.5) },
@@ -74,6 +76,7 @@ class ExifUseCase @Inject constructor(
         },
         isoSpeed = int(TAG_PHOTOGRAPHIC_SENSITIVITY),
         camera = string(TAG_MODEL),
+        dateTime = dateTime,
         focalLength = ratio(TAG_FOCAL_LENGTH),
         focalLength35Equivalent = int(TAG_FOCAL_LENGTH_IN_35MM_FILM),
         width = int(TAG_PIXEL_X_DIMENSION) ?: int(TAG_IMAGE_WIDTH),

@@ -20,6 +20,7 @@ data class ExifMetadata(
     val shutterSpeed: Double?,
     val isoSpeed: Int?,
     val camera: String?,
+    val dateTime: Long?,
     val focalLength: Double?,
     val focalLength35Equivalent: Int?,
     val width: Int?,
