@@ -23,7 +23,8 @@ import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.flow.collectLatest
-import kotlinx.coroutines.flow.take
+import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import se.ansman.dagger.auto.AutoBindIntoSet
 import javax.inject.Inject
@@ -36,9 +37,12 @@ class SyncInitializer @Inject constructor(
 ) : ApplicationCreated {
     override fun onAppCreated(app: Application) {
         GlobalScope.launch(Dispatchers.Default) {
-            syncUseCase.observePendingItems().take(5).collectLatest { pending ->
-                uploadUseCase.scheduleUpload(*pending.toTypedArray())
-            }
+            syncUseCase.observePendingItems()
+                .map { it.take(5) }
+                .distinctUntilChanged()
+                .collectLatest { pending ->
+                    uploadUseCase.scheduleUpload(*pending.toTypedArray())
+                }
         }
     }
 }
