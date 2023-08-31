@@ -21,6 +21,6 @@ import kotlinx.coroutines.flow.Flow
 interface SyncUseCase {
 
     fun observeSyncEnabled(): Flow<Boolean>
-    fun observePendingItems(): Flow<Set<UploadItem>>
+    fun observePendingItems(): Flow<List<UploadItem>>
     fun setSyncEnabled(enabled: Boolean)
 }
