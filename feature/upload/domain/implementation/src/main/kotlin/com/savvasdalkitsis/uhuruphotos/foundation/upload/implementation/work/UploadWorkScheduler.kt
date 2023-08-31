@@ -15,6 +15,7 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.foundation.upload.implementation.work
 
+import androidx.work.BackoffPolicy
 import androidx.work.ExistingWorkPolicy
 import androidx.work.WorkInfo
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemHash
@@ -89,6 +90,7 @@ class UploadWorkScheduler @Inject constructor(
         workScheduleUseCase.scheduleNow(
             workName = workName(hash.hash),
             klass = UploadPostCompletionWorker::class,
+            backoffPolicy = BackoffPolicy.EXPONENTIAL,
             backoffDelay = 10,
             backoffTimeUnit = TimeUnit.SECONDS,
             tags = setOf(UPLOAD_WORK_TAG, tagFor(itemId)),
