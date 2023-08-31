@@ -28,6 +28,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.upload.domain.api.usecase.UploadU
 import com.savvasdalkitsis.uhuruphotos.feature.upload.domain.api.work.UploadWorkScheduler
 import com.savvasdalkitsis.uhuruphotos.feature.uploads.domain.api.model.Uploads
 import com.savvasdalkitsis.uhuruphotos.feature.uploads.domain.api.usecase.UploadsUseCase
+import com.savvasdalkitsis.uhuruphotos.foundation.worker.api.model.isFailed
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import se.ansman.dagger.auto.AutoBind
@@ -73,6 +74,15 @@ class UploadsUseCase @Inject constructor(
         }
     }
 
-    private fun WorkInfo.State?.asState(type: UploadJobType) = this?.let { UploadJobState(it, type) }
+    private fun List<WorkInfo.State>.asState(type: UploadJobType): UploadJobState? =
+        sortedWith { a, b ->
+            when {
+                !a.isFinished -> -1
+                !b.isFinished -> 1
+                a.isFailed -> -1
+                b.isFailed -> 1
+                else -> 0
+            }
+        }.firstOrNull()?.let { UploadJobState(it, type) }
 
 }

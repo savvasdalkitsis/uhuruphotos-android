@@ -109,9 +109,9 @@ class UploadWorkScheduler @Inject constructor(
         it.startsWith(UPLOAD_WORK_TAG_ITEM_ID_PREFIX)
     }?.split("::")?.get(1)?.toLongOrNull()
 
-    override fun List<WorkInfo>.findType(jobType: UploadJobType): WorkInfo.State? = firstOrNull {
+    override fun List<WorkInfo>.findType(jobType: UploadJobType): List<WorkInfo.State> = filter {
         it.tags.contains(jobType.workType.java.name)
-    }?.state
+    }.map { it.state }
 
     private val UploadJobType.workType get() = when(this) {
         Initializing -> InitiateUploadWorker::class

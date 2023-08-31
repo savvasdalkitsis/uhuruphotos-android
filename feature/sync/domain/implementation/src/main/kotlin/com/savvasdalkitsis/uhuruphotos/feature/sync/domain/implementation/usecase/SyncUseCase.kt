@@ -15,8 +15,6 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.sync.domain.implementation.usecase
 
-import android.telecom.DisconnectCause.CANCELED
-import androidx.work.WorkInfo.State.FAILED
 import com.savvasdalkitsis.uhuruphotos.feature.feed.domain.api.model.FeedFetchType
 import com.savvasdalkitsis.uhuruphotos.feature.feed.domain.api.usecase.FeedUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.sync.domain.api.usecase.SyncUseCase
@@ -26,6 +24,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.welcome.domain.api.usecase.Welcom
 import com.savvasdalkitsis.uhuruphotos.foundation.preferences.api.Preferences
 import com.savvasdalkitsis.uhuruphotos.foundation.preferences.api.observe
 import com.savvasdalkitsis.uhuruphotos.foundation.preferences.api.set
+import com.savvasdalkitsis.uhuruphotos.foundation.worker.api.model.isFailed
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.distinctUntilChanged
@@ -60,7 +59,7 @@ class SyncUseCase @Inject constructor(
             feedUseCase.observeFeed(FeedFetchType.ALL, loadSmallInitialChunk = false),
             uploadsUseCase.observeUploadsInFlight().map { uploads ->
                 uploads.jobs.filter { job ->
-                    job.latestJobState.state in listOf(FAILED, CANCELED)
+                    job.latestJobState.state.isFailed
                 }.map { it.localItemId }
             },
         )

@@ -41,5 +41,5 @@ interface UploadWorkScheduler {
     fun monitorUploadJobs(): Flow<List<WorkInfo?>>
     fun mediaItemIdFrom(workInfo: WorkInfo): Long?
 
-    fun List<WorkInfo>.findType(jobType: UploadJobType): WorkInfo.State?
+    fun List<WorkInfo>.findType(jobType: UploadJobType): List<WorkInfo.State>
 }
