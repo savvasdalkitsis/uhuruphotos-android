@@ -1,0 +1,3 @@
+* Limiting sync work to 1 item at a time
+* Previously failed sync items are moved to the end of the queue
+* Fixing bug where app was showing complete state for uploading when it was still uploading
