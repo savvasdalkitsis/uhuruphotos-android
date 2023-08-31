@@ -49,6 +49,10 @@ abstract class ForegroundNotificationWorker<BR>(
 
     abstract suspend fun work(): Result
 
+    suspend fun updateProgress(current: Int, max: Int) {
+        updateProgress(current.toProgressPercent(max), "$current/$max")
+    }
+
     suspend fun updateProgress(current: Long, max: Long) {
         updateProgress(current.toProgressPercent(max), "$current/$max")
     }
