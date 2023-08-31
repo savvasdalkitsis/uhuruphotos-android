@@ -54,6 +54,7 @@ class UploadWorkScheduler @Inject constructor(
     override fun scheduleChunkUpload(
         item: UploadItem,
         offset: Long,
+        remaining: Long?,
         uploadId: String
     ) = with(UploadChunkWorker) {
         workScheduleUseCase.scheduleNow(
@@ -65,6 +66,9 @@ class UploadWorkScheduler @Inject constructor(
             putLong(KEY_ITEM_ID, item.id)
             putString(KEY_CONTENT_URI, item.contentUri)
             putString(KEY_UPLOAD_ID, uploadId)
+            remaining?.let {
+                putLong(KEY_REMAINING, it)
+            }
             putLong(KEY_OFFSET, offset)
         }
     }
@@ -109,9 +113,9 @@ class UploadWorkScheduler @Inject constructor(
         it.startsWith(UPLOAD_WORK_TAG_ITEM_ID_PREFIX)
     }?.split("::")?.get(1)?.toLongOrNull()
 
-    override fun List<WorkInfo>.findType(jobType: UploadJobType): List<WorkInfo.State> = filter {
+    override fun List<WorkInfo>.findType(jobType: UploadJobType): List<WorkInfo> = filter {
         it.tags.contains(jobType.workType.java.name)
-    }.map { it.state }
+    }
 
     private val UploadJobType.workType get() = when(this) {
         Initializing -> InitiateUploadWorker::class

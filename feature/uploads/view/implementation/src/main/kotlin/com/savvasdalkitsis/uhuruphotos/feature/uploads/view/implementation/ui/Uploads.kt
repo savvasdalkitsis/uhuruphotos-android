@@ -177,17 +177,18 @@ private fun RowScope.Segment(
     jobState: UploadJobState,
 ) {
     when {
-        jobState.jobType == displayingJobType && !jobState.state.isFinished -> LinearProgressIndicator(
-            modifier = Modifier
-                .fillMaxHeight()
-                .weight(weight),
-            strokeCap = StrokeCap.Round,
-            color = if (jobState.state == ENQUEUED)
-                CustomColors.syncQueued
-            else
-                MaterialTheme.colors.primary,
+        jobState.jobType != displayingJobType -> Box(modifier = Modifier
+            .fillMaxHeight()
+            .weight(weight)
+            .background(
+                if (displayingJobType.precedes(jobState.jobType))
+                    CustomColors.syncSuccess
+                else
+                    CustomColors.emptyItem,
+                RoundedCornerShape(2.dp)
+            )
         )
-        jobState.jobType == displayingJobType && jobState.state.isFinished -> Box(modifier = Modifier
+        jobState.state.isFinished -> Box(modifier = Modifier
             .fillMaxHeight()
             .weight(weight)
             .background(
@@ -198,16 +199,22 @@ private fun RowScope.Segment(
                 RoundedCornerShape(2.dp)
             )
         )
-        else -> Box(modifier = Modifier
-            .fillMaxHeight()
-            .weight(weight)
-            .background(
-                if (displayingJobType.precedes(jobState.jobType))
-                    CustomColors.syncSuccess
-                else
-                    CustomColors.emptyItem,
-                RoundedCornerShape(2.dp)
-            )
+        jobState.progressPercent != null -> LinearProgressIndicator(
+            modifier = Modifier
+                .fillMaxHeight()
+                .weight(weight),
+            progress = jobState.progressPercent!!,
+            strokeCap = StrokeCap.Round,
+        )
+        else -> LinearProgressIndicator(
+            modifier = Modifier
+                .fillMaxHeight()
+                .weight(weight),
+            strokeCap = StrokeCap.Round,
+            color = if (jobState.state == ENQUEUED)
+                CustomColors.syncQueued
+            else
+                MaterialTheme.colors.primary,
         )
     }
 }
@@ -230,6 +237,7 @@ private fun UploadsPreview() {
                             latestJobState = UploadJobState(
                                 state = ENQUEUED,
                                 jobType = Initializing,
+                                progressPercent = null,
                             )
                         ),
                         UploadJob(
@@ -239,6 +247,7 @@ private fun UploadsPreview() {
                             latestJobState = UploadJobState(
                                 state = RUNNING,
                                 jobType = Initializing,
+                                progressPercent = null,
                             )
                         ),
                         UploadJob(
@@ -248,6 +257,17 @@ private fun UploadsPreview() {
                             latestJobState = UploadJobState(
                                 state = RUNNING,
                                 jobType = Uploading,
+                                progressPercent = null,
+                            )
+                        ),
+                        UploadJob(
+                            localItemId = 30,
+                            displayName = "PXL_20230801_103507810.mp4",
+                            thumbnailUrl = "",
+                            latestJobState = UploadJobState(
+                                state = RUNNING,
+                                jobType = Uploading,
+                                progressPercent = 0.1f,
                             )
                         ),
                         UploadJob(
@@ -257,6 +277,7 @@ private fun UploadsPreview() {
                             latestJobState = UploadJobState(
                                 state = FAILED,
                                 jobType = Uploading,
+                                progressPercent = null,
                             )
                         ),
                         UploadJob(
@@ -266,6 +287,7 @@ private fun UploadsPreview() {
                             latestJobState = UploadJobState(
                                 state = RUNNING,
                                 jobType = Completing,
+                                progressPercent = null,
                             )
                         ),
                         UploadJob(
@@ -275,6 +297,7 @@ private fun UploadsPreview() {
                             latestJobState = UploadJobState(
                                 state = RUNNING,
                                 jobType = Synchronising,
+                                progressPercent = null,
                             )
                         ),
                         UploadJob(
@@ -283,7 +306,8 @@ private fun UploadsPreview() {
                             thumbnailUrl = "",
                             latestJobState = UploadJobState(
                                 state = SUCCEEDED,
-                                jobType = Synchronising
+                                jobType = Synchronising,
+                                progressPercent = null,
                             )
                         ),
                     ),

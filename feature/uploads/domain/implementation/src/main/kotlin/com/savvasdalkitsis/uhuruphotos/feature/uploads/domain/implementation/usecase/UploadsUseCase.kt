@@ -16,6 +16,10 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.feature.uploads.domain.implementation.usecase
 
 import androidx.work.WorkInfo
+import androidx.work.WorkInfo.State.BLOCKED
+import androidx.work.WorkInfo.State.ENQUEUED
+import androidx.work.WorkInfo.State.RUNNING
+import androidx.work.WorkInfo.State.SUCCEEDED
 import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.usecase.LocalMediaUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.upload.domain.api.model.UploadJob
 import com.savvasdalkitsis.uhuruphotos.feature.upload.domain.api.model.UploadJobState
@@ -28,6 +32,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.upload.domain.api.usecase.UploadU
 import com.savvasdalkitsis.uhuruphotos.feature.upload.domain.api.work.UploadWorkScheduler
 import com.savvasdalkitsis.uhuruphotos.feature.uploads.domain.api.model.Uploads
 import com.savvasdalkitsis.uhuruphotos.feature.uploads.domain.api.usecase.UploadsUseCase
+import com.savvasdalkitsis.uhuruphotos.foundation.notification.api.ForegroundNotificationWorker
 import com.savvasdalkitsis.uhuruphotos.foundation.worker.api.model.isFailed
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
@@ -48,10 +53,10 @@ class UploadsUseCase @Inject constructor(
                     itemId?.let {
                         localMediaUseCase.getLocalMediaItem(itemId)?.let { mediaItem ->
                             val latestJobState =
-                                info.findType(Synchronising).asState(Synchronising) ?:
-                                info.findType(Completing).asState(Completing) ?:
-                                info.findType(Uploading).asState(Uploading) ?:
-                                info.findType(Initializing).asState(Initializing)
+                                info.asState(Synchronising) ?:
+                                info.asState(Completing) ?:
+                                info.asState(Uploading) ?:
+                                info.asState(Initializing)
                             latestJobState?.let {
                                 UploadJob(
                                     localItemId = itemId,
@@ -64,25 +69,65 @@ class UploadsUseCase @Inject constructor(
                     }
                 }
                 .sortedBy { it.displayName }
-        }.map { jobs -> Uploads(jobs)
-            .also { uploads ->
-                val finishedJobs = uploads.jobs.filter { job ->
-                    job.latestJobState.jobType.isLast && job.latestJobState.state.isFinished
+        }.map { jobs ->
+            Uploads(jobs)
+                .also { uploads ->
+                    val finishedJobs = uploads.jobs.filter { job ->
+                        job.latestJobState.jobType.isLast && job.latestJobState.state.isFinished
+                    }
+                    uploadUseCase.markAsNotUploading(*(finishedJobs.map { it.localItemId }
+                        .toLongArray()))
                 }
-                uploadUseCase.markAsNotUploading(*(finishedJobs.map { it.localItemId }.toLongArray()))
-            }
         }
     }
 
-    private fun List<WorkInfo.State>.asState(type: UploadJobType): UploadJobState? =
+    fun List<WorkInfo>.sort(): List<WorkInfo> =
         sortedWith { a, b ->
             when {
-                !a.isFinished -> -1
-                !b.isFinished -> 1
-                a.isFailed -> -1
-                b.isFailed -> 1
-                else -> 0
+                a.unfinished && b.unfinished && haveProgress(a, b) ->
+                    b.progressPc.compareTo(a.progressPc)
+                a.state == RUNNING -> -1
+                b.state == RUNNING -> 1
+                a.unfinished -> -1
+                b.unfinished -> 1
+                a.state.isFailed -> -1
+                b.state.isFailed -> 1
+                haveProgress(a, b) -> b.progressPc.compareTo(a.progressPc)
+                a.state == SUCCEEDED -> -1
+                b.state == SUCCEEDED -> 1
+                else -> b.compareWaitingTo(a)
             }
-        }.firstOrNull()?.let { UploadJobState(it, type) }
+        }
 
+    private val WorkInfo.unfinished get() = !state.isFinished
+
+    private fun WorkInfo.compareWaitingTo(other: WorkInfo) = when {
+        state == other.state -> 0
+        state == ENQUEUED -> -1
+        other.state == ENQUEUED -> 1
+        state == BLOCKED -> -1
+        other.state == BLOCKED -> 1
+        else -> 0
+    }
+
+    context(UploadWorkScheduler)
+    private fun List<WorkInfo>.asState(type: UploadJobType): UploadJobState? =
+        findType(type).sort().firstOrNull()?.let {
+            UploadJobState(it.state, type, it.progressPc)
+        }
+
+    private fun haveProgress(a: WorkInfo, b: WorkInfo) = a.hasProgress && b.hasProgress
+
+    private val WorkInfo.hasProgress: Boolean
+        get() = progressPc != null
+
+    private val WorkInfo.progressPc: Float?
+        get() = ForegroundNotificationWorker.getProgressOrNullOf(this)?.let { it / 100f }
+
+    private operator fun Float?.compareTo(other: Float?) = when {
+        this == null && other == null -> 0
+        this == null -> -1
+        other == null -> 1
+        else -> this.compareTo(other)
+    }
 }

@@ -48,6 +48,10 @@ class UploadChunkWorker @AssistedInject constructor(
 
     override suspend fun work(): Result {
         val offset = params.inputData.getLong(KEY_OFFSET, -1)
+        val remaining = params.inputData.getLong(KEY_REMAINING, -1)
+        if (remaining > 0) {
+            updateProgress(offset, offset + remaining)
+        }
         val uploadId = params.inputData.getString(KEY_UPLOAD_ID)!!
         val item = UploadItem(
             id = params.inputData.getLong(KEY_ITEM_ID, -1),
@@ -60,6 +64,7 @@ class UploadChunkWorker @AssistedInject constructor(
                         uploadWorkScheduler.scheduleChunkUpload(
                             item = item,
                             offset = status.newOffset,
+                            remaining = status.remaining,
                             uploadId = status.uploadId,
                         )
                     }
@@ -85,6 +90,7 @@ class UploadChunkWorker @AssistedInject constructor(
         const val KEY_ITEM_ID = "itemId"
         const val KEY_CONTENT_URI = "contentUri"
         const val KEY_OFFSET = "offset"
+        const val KEY_REMAINING = "remaining"
         const val KEY_UPLOAD_ID = "uploadId"
         fun workName(id: Long, offset: Long) = "uploadChunk/$id/$offset"
         private const val NOTIFICATION_ID = 1285

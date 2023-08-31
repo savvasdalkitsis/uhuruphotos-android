@@ -22,5 +22,6 @@ sealed class UploadResult {
     data class ChunkUploaded(
         val uploadId: String,
         val newOffset: Long,
+        val remaining: Long,
     ) : UploadResult()
 }

@@ -87,8 +87,10 @@ imaging = "org.apache.commons:commons-imaging:1.0-alpha3"
 infobar = "com.radusalagean:info-bar-compose:1.0.0"
 jetlime = "io.github.pushpalroy:jetlime:1.0.3"
 joda-time = "net.danlew:android.joda:2.12.5"
+junit = "junit:junit:4.13.2"
 jwt = "com.auth0.android:jwtdecode:2.0.2"
 kotlinx-coroutines = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-android", version.ref = "org-jetbrains-kotlinx" }
+kotlinx-coroutines-test = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test", version.ref = "org-jetbrains-kotlinx" }
 kotlinx-immutable = "org.jetbrains.kotlinx:kotlinx-collections-immutable:0.3.5"
 kotlin-reflect = "org.jetbrains.kotlin:kotlin-reflect:1.9.0"
 leaks = "com.squareup.leakcanary:leakcanary-android:2.12"
@@ -106,6 +108,7 @@ maps = { module = "com.google.android.gms:play-services-maps", version.ref = "co
 maps-compose = "com.google.maps.android:maps-compose:2.14.0"
 maps-utils = "com.google.maps.android:android-maps-utils:3.5.3"
 maps-utils-ktx = "com.google.maps.android:maps-utils-ktx:3.4.0"
+mockk = { module = "io.mockk:mockk", version.ref = "mockk" }
 moshi = { module = "com.squareup.moshi:moshi-kotlin", version.ref = "moshi" }
 moshi-ksp = { module = "com.squareup.moshi:moshi-kotlin-codegen", version.ref = "moshi" }
 okhttp = { module = "com.squareup.okhttp3:okhttp", version.ref = "okhttp" }
@@ -123,6 +126,7 @@ result-coroutines = "com.michael-bull.kotlin-result:kotlin-result-coroutines:1.1
 retrofit-core = { module = "com.squareup.retrofit2:retrofit", version.ref = "retrofit" }
 retrofit-moshi = { module = "com.squareup.retrofit2:converter-moshi", version.ref = "retrofit" }
 scrollbar = "com.github.nanihadesuka:LazyColumnScrollbar:1.7.2"
+shazamcrest = "com.shazam:shazamcrest:0.11"
 seeker = "io.github.2307vivek:seeker:1.2.1"
 sqldelight-adapters = { module = "app.cash.sqldelight:primitive-adapters", version.ref = "sqldelight" }
 sqldelight-android = { module = "app.cash.sqldelight:android-driver", version.ref = "sqldelight" }
@@ -130,6 +134,7 @@ sqldelight-coroutines = { module = "app.cash.sqldelight:coroutines-extensions", 
 sqldelight-gradle-plugin = { module = "app.cash.sqldelight:gradle-plugin", version.ref = "sqldelight" }
 sqldelight-jvm = { module = "app.cash.sqldelight:sqlite-driver", version.ref = "sqldelight" }
 timeline = "com.github.yeocak:ComposableTimelineView:0.6"
+turbine = "app.cash.turbine:turbine:1.0.0"
 urlvalidator = "commons-validator:commons-validator:1.7"
 vico = "com.patrykandpatrick.vico:compose-m2:1.9.2"
 videocache = "com.github.Andrew0000:Android-VideoView-cache:1.0.15"
@@ -165,4 +170,11 @@ lumberjack = [
 permissions = [
     "permissions-base",
     "permissions-compose",
+]
+test = [
+    "junit",
+    "kotlinx-coroutines-test",
+    "mockk",
+    "shazamcrest",
+    "turbine",
 ]

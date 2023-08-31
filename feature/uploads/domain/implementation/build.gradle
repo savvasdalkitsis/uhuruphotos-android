@@ -6,9 +6,13 @@ dependencies {
     implementation(
             project(":feature:upload:domain:api"),
             project(":feature:uploads:domain:api"),
+            project(":foundation:notification:api"),
             project(":foundation:worker:api"),
             libs.bundles.autodagger,
             libs.hilt,
+    )
+    testImplementation(
+            libs.bundles.test,
     )
     kapt libs.autodagger.kapt
 }

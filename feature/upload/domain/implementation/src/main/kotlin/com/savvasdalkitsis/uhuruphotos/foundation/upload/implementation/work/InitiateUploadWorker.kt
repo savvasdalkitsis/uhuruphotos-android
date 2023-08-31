@@ -66,6 +66,7 @@ class InitiateUploadWorker @AssistedInject constructor(
                 uploadWorkScheduler.scheduleChunkUpload(
                     item = item,
                     offset = 0L,
+                    remaining = null,
                     uploadId = "",
                 )
             }

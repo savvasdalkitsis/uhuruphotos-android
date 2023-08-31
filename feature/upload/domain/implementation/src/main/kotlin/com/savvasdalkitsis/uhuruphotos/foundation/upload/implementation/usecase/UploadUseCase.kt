@@ -115,7 +115,7 @@ class UploadUseCase @Inject constructor(
                 )
                 when (remaining) {
                     0L -> UploadResult.Finished(result.uploadId)
-                    else -> UploadResult.ChunkUploaded(result.uploadId, offset + chunkSize)
+                    else -> UploadResult.ChunkUploaded(result.uploadId, offset + chunkSize, remaining)
                 }
             }
         }

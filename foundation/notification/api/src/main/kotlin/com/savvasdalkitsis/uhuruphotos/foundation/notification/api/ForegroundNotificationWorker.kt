@@ -49,7 +49,7 @@ abstract class ForegroundNotificationWorker<BR>(
 
     abstract suspend fun work(): Result
 
-    suspend fun updateProgress(current: Int, max: Int) {
+    suspend fun updateProgress(current: Long, max: Long) {
         updateProgress(current.toProgressPercent(max), "$current/$max")
     }
 
@@ -77,9 +77,12 @@ abstract class ForegroundNotificationWorker<BR>(
     )
 
     companion object {
-        private const val Progress = "Progress"
+        const val Progress = "Progress"
         private val dispatcher = Dispatchers.IO.limitedParallelism(5)
 
         fun getProgressOf(work: WorkInfo) = work.progress.getInt(Progress, 0)
+        fun getProgressOrNullOf(work: WorkInfo) = getProgressOf(work).takeIf {
+            work.progress.keyValueMap.containsKey(Progress)
+        }
     }
 }

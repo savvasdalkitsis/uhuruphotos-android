@@ -28,6 +28,7 @@ interface UploadWorkScheduler {
     fun scheduleChunkUpload(
         item: UploadItem,
         offset: Long,
+        remaining: Long?,
         uploadId: String
     )
 
@@ -41,5 +42,5 @@ interface UploadWorkScheduler {
     fun monitorUploadJobs(): Flow<List<WorkInfo?>>
     fun mediaItemIdFrom(workInfo: WorkInfo): Long?
 
-    fun List<WorkInfo>.findType(jobType: UploadJobType): List<WorkInfo.State>
+    fun List<WorkInfo>.findType(jobType: UploadJobType): List<WorkInfo>
 }

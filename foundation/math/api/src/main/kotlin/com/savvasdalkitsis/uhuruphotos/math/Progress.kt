@@ -15,7 +15,9 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.math
 
-fun Int.toProgressPercent(total: Int) = when (this) {
+fun Long.toProgressPercent(total: Long) = when (this) {
     total -> 0
     else -> (100 * ((this + 1) / total.toFloat())).toInt()
 }
+
+fun Int.toProgressPercent(total: Int) = toLong().toProgressPercent(total.toLong())
