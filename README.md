@@ -5,7 +5,7 @@
 [![CodeFactor](https://www.codefactor.io/repository/github/savvasdalkitsis/uhuruphotos-android/badge/main)](https://www.codefactor.io/repository/github/savvasdalkitsis/uhuruphotos-android/overview/main)
 [![GitHub Sponsor](https://img.shields.io/github/sponsors/savvasdalkitsis?label=Sponsor&logo=GitHub)](https://github.com/sponsors/savvasdalkitsis)
 
-# <img src="https://github.com/savvasdalkitsis/uhuruphotos-android/raw/main/foundation/icons/api/src/main/ic_launcher-playstore.png" alt="logo" width = 60px> UhuruPhotos. A LibrePhotos client
+# <img src="https://github.com/savvasdalkitsis/uhuruphotos-android/raw/main/foundation/icons/api/src/main/ic_launcher-playstore.png" alt="logo" width = 60px> UhuruPhotos. A modern media gallery.
 
 Welcome to UhuruPhotos. A modern media gallery, with features like backup/sync, semantic search, media map, face recognition, memories and much more*
 
