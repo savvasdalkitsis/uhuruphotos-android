@@ -29,6 +29,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.Fee
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.FeedMutation.ShowClusters
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.FeedMutation.ShowLocalMediaSyncRunning
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.FeedMutation.ShowLocalStoragePermissionRequest
+import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.FeedMutation.ShowLostServerConnection
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.FeedMutation.ShowNoPhotosFound
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.ui.state.FeedState
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.ui.state.MemoryCel
@@ -62,7 +63,13 @@ data object LoadFeed : FeedAction() {
         memories(),
         changeItemSyncDisplay(),
         setAutoHideNav(),
+        lostServerConnection(),
     )
+
+    private fun FeedActionsContext.lostServerConnection() =
+        welcomeUseCase.observeWelcomeStatus().map {
+            ShowLostServerConnection(it.hasLostRemoteAccess)
+        }
 
     private fun FeedActionsContext.memories() =
         settingsUseCase.observeMemoriesEnabled().flatMapLatest { enabled ->

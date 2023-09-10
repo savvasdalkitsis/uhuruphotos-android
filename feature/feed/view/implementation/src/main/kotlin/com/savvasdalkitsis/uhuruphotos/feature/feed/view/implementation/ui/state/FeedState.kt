@@ -31,6 +31,7 @@ data class FeedState(
     val showDeleteConfirmationDialog: Boolean = false,
     val showFullySyncedDeleteConfirmationDialog: Boolean = false,
     val showRequestPermissionForLocalMediaAccess: MediaItemsOnDevice.RequiresPermissions? = null,
+    val showLoginBanner: Boolean = false,
     val localMediaSyncRunning: Boolean = false,
     val autoHideNavOnScroll: Boolean = true,
     val memories: List<MemoryCel> = emptyList(),

@@ -359,4 +359,6 @@
     <string name="enable_cloud_sync">Enable cloud backup &amp; sync</string>
     <string name="enable">Enable</string>
     <string name="send_database">Send database with feedback</string>
+    <string name="connection_to_server_lost">Connection to server lost</string>
+    <string name="forget_server">Forget server</string>
 </resources>

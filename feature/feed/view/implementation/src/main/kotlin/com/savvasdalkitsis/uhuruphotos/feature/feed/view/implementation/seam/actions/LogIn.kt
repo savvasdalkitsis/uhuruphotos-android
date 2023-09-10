@@ -17,6 +17,14 @@ package com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.ac
 
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.FeedActionsContext
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.ui.state.FeedState
-import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.Action
+import com.savvasdalkitsis.uhuruphotos.feature.server.view.api.navigation.ServerNavigationRoute
+import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.Mutation
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
 
-sealed class FeedAction : Action<FeedState, FeedActionsContext>
+data object LogIn : FeedAction() {
+    context(FeedActionsContext)
+    override fun handle(state: FeedState): Flow<Mutation<FeedState>> = flow {
+        navigator.navigateTo(ServerNavigationRoute)
+    }
+}

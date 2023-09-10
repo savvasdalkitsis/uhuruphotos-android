@@ -15,10 +15,6 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.ui
 
-import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.foundation.layout.Arrangement.spacedBy
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
@@ -27,7 +23,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
 import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.Collage
 import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.PredefinedCollageDisplay
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.api.ui.state.FeedMediaItemSyncDisplay.ALWAYS_OFF
@@ -39,11 +34,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.act
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.actions.ClusterSelectionClicked
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.actions.DeleteLocalSelectedCels
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.actions.DismissSelectedMediaTrashing
-import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.actions.EnableCloudSync
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.actions.FeedAction
-import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.actions.MemorySelected
-import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.actions.NeverAskForCloudSyncRequest
-import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.actions.NeverAskForLocalMediaAccessPermissionRequest
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.actions.RefreshFeed
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.actions.SelectedCel
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.actions.TrashRemoteAndDeleteLocalSelectedCels
@@ -53,10 +44,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.home.view.api.ui.HomeScaffold
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.DeleteFullySyncedPermissionDialog
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.DeletePermissionDialog
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.TrashPermissionDialog
-import com.savvasdalkitsis.uhuruphotos.feature.media.local.view.api.ui.LocalMediaAccessRequestBanner
-import com.savvasdalkitsis.uhuruphotos.feature.media.local.view.api.ui.RequestBanner
 import com.savvasdalkitsis.uhuruphotos.foundation.compose.api.blurIf
-import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.SwipeRefresh
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.grid.SmartGridState
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.grid.rememberSmartGridState
@@ -128,45 +116,7 @@ internal fun Feed(
                 showScrollbarHint = true,
                 gridState = gridState,
                 collageHeader = {
-                    AnimatedVisibility(
-                        visible =
-                        state.memories.isNotEmpty()
-                                || state.showRequestPermissionForLocalMediaAccess != null
-                                || state.localMediaSyncRunning
-                                || state.showRequestForCloudSync,
-                    ) {
-                        Column(
-                            verticalArrangement = spacedBy(8.dp),
-                        ) {
-                            if (state.memories.isNotEmpty()) {
-                                FeedMemories(state.memories) { cel, yearsAgo ->
-                                    action(MemorySelected(cel, yearsAgo))
-                                }
-                            }
-                            val missingPermissions = state.showRequestPermissionForLocalMediaAccess
-                            if (missingPermissions != null) {
-                                LocalMediaAccessRequestBanner(
-                                    modifier = Modifier.padding(4.dp),
-                                    missingPermissions = missingPermissions,
-                                    description = string.missing_local_media_permissions,
-                                ) {
-                                    action(NeverAskForLocalMediaAccessPermissionRequest)
-                                }
-                            }
-                            if (state.showRequestForCloudSync) {
-                                RequestBanner(
-                                    modifier = Modifier.padding(4.dp),
-                                    description = string.enable_cloud_sync,
-                                    grantText = string.enable,
-                                    onAccessGranted = { action(EnableCloudSync) },
-                                    onNeverRemindMeAgain = { action(NeverAskForCloudSyncRequest) },
-                                )
-                            }
-                            if (state.localMediaSyncRunning) {
-                                FeedLocalMediaSyncRunning()
-                            }
-                        }
-                    }
+                    FeedHeaders(state, action)
                 },
                 onCelSelected = { cel ->
                     action(SelectedCel(cel))

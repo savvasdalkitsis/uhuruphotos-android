@@ -16,7 +16,16 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.actions
 
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.FeedActionsContext
+import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.FeedMutation.ShowLostServerConnection
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.ui.state.FeedState
-import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.Action
+import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.Mutation
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
 
-sealed class FeedAction : Action<FeedState, FeedActionsContext>
+data object LogOut : FeedAction() {
+    context(FeedActionsContext)
+    override fun handle(state: FeedState): Flow<Mutation<FeedState>> = flow {
+        accountUseCase.logOut()
+        emit(ShowLostServerConnection(false))
+    }
+}

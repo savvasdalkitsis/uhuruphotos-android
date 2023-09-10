@@ -15,21 +15,21 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.auth.domain.implementation.usecase
 
-import android.util.Base64
 import app.cash.sqldelight.coroutines.asFlow
 import app.cash.sqldelight.coroutines.mapToOneOrNull
 import com.github.michaelbull.result.Err
 import com.github.michaelbull.result.Ok
 import com.github.michaelbull.result.Result
-import com.google.gson.Gson
-import com.google.gson.reflect.TypeToken
 import com.savvasdalkitsis.uhuruphotos.feature.auth.domain.api.model.AuthStatus
 import com.savvasdalkitsis.uhuruphotos.feature.auth.domain.api.model.AuthStatus.Authenticated
 import com.savvasdalkitsis.uhuruphotos.feature.auth.domain.api.model.AuthStatus.Offline
 import com.savvasdalkitsis.uhuruphotos.feature.auth.domain.api.model.AuthStatus.ServerDown
 import com.savvasdalkitsis.uhuruphotos.feature.auth.domain.api.model.AuthStatus.Unauthenticated
+import com.savvasdalkitsis.uhuruphotos.feature.auth.domain.api.model.ServerToken
+import com.savvasdalkitsis.uhuruphotos.feature.auth.domain.api.model.ServerToken.Expired
+import com.savvasdalkitsis.uhuruphotos.feature.auth.domain.api.model.ServerToken.NotFound
+import com.savvasdalkitsis.uhuruphotos.feature.auth.domain.api.model.ServerToken.Valid
 import com.savvasdalkitsis.uhuruphotos.feature.auth.domain.api.usecase.AuthenticationUseCase
-import com.savvasdalkitsis.uhuruphotos.feature.auth.domain.implementation.network.jwt
 import com.savvasdalkitsis.uhuruphotos.feature.auth.domain.implementation.service.AuthenticationService
 import com.savvasdalkitsis.uhuruphotos.feature.auth.domain.implementation.service.model.AuthenticationObtainResponse
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.auth.Token
@@ -43,19 +43,21 @@ import com.savvasdalkitsis.uhuruphotos.foundation.preferences.api.get
 import com.savvasdalkitsis.uhuruphotos.foundation.preferences.api.set
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
 import se.ansman.dagger.auto.AutoBind
 import java.io.IOException
-import java.lang.reflect.Type
-import java.nio.charset.Charset
 import javax.inject.Inject
+
+private const val EXPIRED = "EXPIRED"
 
 @AutoBind
 class AuthenticationUseCase @Inject constructor(
     private val tokenQueries: TokenQueries,
     private val authenticationService: AuthenticationService,
     private val preferences: Preferences,
+    private val jwtUseCase: JwtUseCase,
 ) : AuthenticationUseCase {
 
     private val mutex = Mutex()
@@ -64,7 +66,7 @@ class AuthenticationUseCase @Inject constructor(
     override suspend fun authenticationStatus(): AuthStatus {
         val accessToken = getAccessToken()
         return when {
-            accessToken.isNullOrEmpty() || accessToken.jwt.isExpired(0) -> refreshToken()
+            accessToken.isNullOrEmpty() || accessToken.isExpired -> refreshToken()
             else -> {
                 preferences.set(userKey, accessToken.userId)
                 Authenticated
@@ -72,28 +74,35 @@ class AuthenticationUseCase @Inject constructor(
         }
     }
 
-    override fun observeAccessToken(): Flow<String?> =
-        tokenQueries.getAccessToken().asFlow().mapToOneOrNull(Dispatchers.IO)
+    override fun observeRefreshToken(): Flow<ServerToken> =
+        tokenQueries.getRefreshToken().asFlow().mapToOneOrNull(Dispatchers.IO).map {
+            when {
+                it.isNullOrEmpty() -> NotFound
+                it.isExpired -> Expired
+                else -> Valid(it)
+            }
+        }
 
-    override fun observeRefreshToken(): Flow<String?> =
-        tokenQueries.getRefreshToken().asFlow().mapToOneOrNull(Dispatchers.IO)
-
-    override suspend fun getAccessToken(): String? = tokenQueries.getAccessToken().awaitSingleOrNull()
+    private suspend fun getAccessToken(): String? = tokenQueries.getAccessToken().awaitSingleOrNull()
 
     override suspend fun refreshToken(): AuthStatus = mutex.withLock {
         val refreshToken = tokenQueries.getRefreshToken().awaitSingleOrNull()
         return when {
-            refreshToken.isNullOrEmpty() || refreshToken.jwt.isExpired(0) -> Unauthenticated()
+            refreshToken.isNullOrEmpty() || refreshToken.isExpired -> Unauthenticated()
             else -> refreshAccessToken(refreshToken)
         }.also {
             if (it is Unauthenticated) {
-                clearTokens()
+                clearTokensForAuthenticationLoss()
             }
         }
     }
 
-    private fun clearTokens() {
-        tokenQueries.clearAll()
+    private fun clearTokensForAuthenticationLoss() {
+        tokenQueries.delete(TokenType.ACCESS)
+        tokenQueries.saveToken(Token(
+            token = EXPIRED,
+            type = TokenType.REFRESH,
+        ))
     }
 
     override suspend fun refreshAccessToken(refreshToken: String): AuthStatus = try {
@@ -129,49 +138,18 @@ class AuthenticationUseCase @Inject constructor(
             null -> {
                 refreshToken()
                 idFromPref()?.let { Ok(it) }
-                    ?: Err(IllegalStateException("Could not refresh user if from token"))
+                    ?: Err(IllegalStateException("Could not refresh user id from token"))
             }
             else -> Ok(id)
         }
 
     private fun idFromPref() = preferences.get<String?>(userKey, null)
 
-    private val String.userId: String
-        get() {
-            val parts: Array<String> = splitToken(this)
-            val mapType: Type = object : TypeToken<Map<String, String>>() {}.type
-            val payload = Gson().fromJson<Map<String, String>>(base64Decode(parts[1]), mapType)
-            return payload["user_id"].toString()
-        }
-
-    private fun base64Decode(string: String): String {
-        val decoded: String = try {
-            val bytes =
-                Base64.decode(string, Base64.URL_SAFE or Base64.NO_WRAP or Base64.NO_PADDING)
-            String(bytes, Charset.defaultCharset())
-        } catch (e: java.lang.IllegalArgumentException) {
-            throw IllegalArgumentException(
-                "Received bytes didn't correspond to a valid Base64 encoded string.",
-                e
-            )
-        }
-        return decoded
+    private val String.userId: String get() = with(jwtUseCase) {
+        return this@userId["user_id"]
     }
 
-    private fun splitToken(token: String): Array<String> {
-        var parts: Array<String> = token.split("\\.".toRegex()).dropLastWhile { it.isEmpty() }
-            .toTypedArray()
-        if (parts.size == 2 && token.endsWith(".")) {
-            parts = arrayOf(parts[0], parts[1], "")
-        }
-        if (parts.size != 3) {
-            throw IllegalArgumentException(
-                String.format(
-                    "The token was expected to have 3 parts, but got %s.",
-                    parts.size
-                )
-            )
-        }
-        return parts
+    private val String.isExpired: Boolean get() = this == EXPIRED || with(jwtUseCase) {
+        expired()
     }
 }

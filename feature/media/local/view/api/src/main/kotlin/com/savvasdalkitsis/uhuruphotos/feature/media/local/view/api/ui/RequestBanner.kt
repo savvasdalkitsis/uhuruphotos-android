@@ -19,6 +19,7 @@ import androidx.annotation.StringRes
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Button
@@ -40,6 +41,43 @@ fun RequestBanner(
     onAccessGranted: () -> Unit,
     onNeverRemindMeAgain: () -> Unit,
 ) {
+    RequestBanner(
+        modifier = modifier,
+        description = description,
+        grantButton = {
+            Button(
+                modifier = Modifier
+                    .recomposeHighlighter()
+                    .fillMaxWidth()
+                    .weight(1f),
+                onClick = onAccessGranted,
+            ) {
+                Text(stringResource(grantText))
+            }
+        },
+        denyButton = {
+            Button(
+                modifier = Modifier
+                    .recomposeHighlighter()
+                    .fillMaxWidth()
+                    .weight(1f),
+                onClick = onNeverRemindMeAgain
+            ) {
+                Text(stringResource(string.do_not_ask_again))
+            }
+        },
+    )
+}
+
+
+
+@Composable
+fun RequestBanner(
+    modifier: Modifier = Modifier,
+    @StringRes description: Int,
+    grantButton: @Composable() (RowScope.() -> Unit),
+    denyButton: @Composable() (RowScope.() -> Unit),
+){
     Card(
         modifier = modifier
             .recomposeHighlighter()
@@ -64,24 +102,8 @@ fun RequestBanner(
                     .padding(8.dp),
                 horizontalArrangement = Arrangement.spacedBy(8.dp),
             ) {
-                Button(
-                    modifier = Modifier
-                        .recomposeHighlighter()
-                        .fillMaxWidth()
-                        .weight(1f),
-                    onClick = onAccessGranted,
-                ) {
-                    Text(stringResource(grantText))
-                }
-                Button(
-                    modifier = Modifier
-                        .recomposeHighlighter()
-                        .fillMaxWidth()
-                        .weight(1f),
-                    onClick = onNeverRemindMeAgain
-                ) {
-                    Text(stringResource(string.do_not_ask_again))
-                }
+                grantButton()
+                denyButton()
             }
         }
     }

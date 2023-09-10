@@ -92,6 +92,10 @@ sealed class FeedMutation(
         it.copy(memories = emptyList())
     })
 
+    data class ShowLostServerConnection(val show: Boolean) : FeedMutation({
+        it.copy(showLoginBanner = show)
+    })
+
     data class ShowLocalMediaSyncRunning(val running: Boolean) : FeedMutation({
         it.copy(localMediaSyncRunning = running)
     })

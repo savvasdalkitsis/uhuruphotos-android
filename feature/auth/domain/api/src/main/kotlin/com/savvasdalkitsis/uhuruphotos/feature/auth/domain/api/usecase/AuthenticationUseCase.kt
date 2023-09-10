@@ -17,6 +17,7 @@ package com.savvasdalkitsis.uhuruphotos.feature.auth.domain.api.usecase
 
 import com.github.michaelbull.result.Result
 import com.savvasdalkitsis.uhuruphotos.feature.auth.domain.api.model.AuthStatus
+import com.savvasdalkitsis.uhuruphotos.feature.auth.domain.api.model.ServerToken
 import kotlinx.coroutines.flow.Flow
 
 interface AuthenticationUseCase {
@@ -29,9 +30,5 @@ interface AuthenticationUseCase {
 
     suspend fun getUserIdFromToken(): Result<String, Throwable>
 
-    suspend fun getAccessToken(): String?
-
-    fun observeAccessToken(): Flow<String?>
-
-    fun observeRefreshToken(): Flow<String?>
+    fun observeRefreshToken(): Flow<ServerToken>
 }
