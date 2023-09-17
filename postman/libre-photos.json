@@ -123,7 +123,68 @@
 							"request": {
 								"method": "GET",
 								"header": [],
-								"url": "{{HOST}}/api/photos/hidden"
+								"url": {
+									"raw": "{{HOST}}/api/albums/date/list/?hidden=true",
+									"host": [
+										"{{HOST}}"
+									],
+									"path": [
+										"api",
+										"albums",
+										"date",
+										"list",
+										""
+									],
+									"query": [
+										{
+											"key": "hidden",
+											"value": "true"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get Hidden Summary",
+							"id": "e02c0969-40f1-4951-ae78-4b88cd4e8a1b",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{HOST}}/api/albums/date/:id/?hidden=true",
+									"host": [
+										"{{HOST}}"
+									],
+									"path": [
+										"api",
+										"albums",
+										"date",
+										":id",
+										""
+									],
+									"query": [
+										{
+											"key": "hidden",
+											"value": "true"
+										},
+										{
+											"key": "",
+											"value": "",
+											"type": "text",
+											"disabled": true
+										}
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "1480"
+										}
+									]
+								}
 							},
 							"response": []
 						}
@@ -142,7 +203,62 @@
 							"request": {
 								"method": "GET",
 								"header": [],
-								"url": "{{HOST}}/api/photos/favorites"
+								"url": {
+									"raw": "{{HOST}}/api/albums/date/list/?favorite=true",
+									"host": [
+										"{{HOST}}"
+									],
+									"path": [
+										"api",
+										"albums",
+										"date",
+										"list",
+										""
+									],
+									"query": [
+										{
+											"key": "favorite",
+											"value": "true"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get Favourites Summary",
+							"id": "bcf8507a-ebf5-4032-82c9-32619bd2fac6",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{HOST}}/api/albums/date/:id/?favorite=true",
+									"host": [
+										"{{HOST}}"
+									],
+									"path": [
+										"api",
+										"albums",
+										"date",
+										":id",
+										""
+									],
+									"query": [
+										{
+											"key": "favorite",
+											"value": "true"
+										}
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "450"
+										}
+									]
+								}
 							},
 							"response": []
 						}
@@ -190,6 +306,78 @@
 						}
 					],
 					"id": "8fa1f62e-fcaf-4f5d-95b6-0e9480719a8d"
+				},
+				{
+					"name": "Delete",
+					"item": [
+						{
+							"name": "Move to trash",
+							"id": "191a4db8-5e86-4eab-9c31-8922c866ae42",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"deleted\": true,\r\n    \"image_hashes\": [\"5858ae5d2a38505d5c083fb6ffa0c0161\"]\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "{{HOST}}/api/photosedit/setdeleted"
+							},
+							"response": []
+						},
+						{
+							"name": "Move out of trash",
+							"id": "71ed76d7-8727-4f8b-837f-1b5a1604fa5f",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"deleted\": true,\r\n    \"image_hashes\": [\"5858ae5d2a38505d5c083fb6ffa0c0161\"]\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "{{HOST}}/api/photosedit/setdeleted"
+							},
+							"response": []
+						},
+						{
+							"name": "Delete",
+							"id": "3280bbda-cdda-4a32-89b2-e3a5c5f4afb0",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"image_hashes\": [\"5858ae5d2a38505d5c083fb6ffa0c0161\"]\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "{{HOST}}/api/photosedit/delete"
+							},
+							"response": []
+						}
+					],
+					"id": "f2943e8a-a897-4095-84fd-902f6d9ba61f"
 				},
 				{
 					"name": "Media exists",
