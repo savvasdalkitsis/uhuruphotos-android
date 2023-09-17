@@ -343,7 +343,7 @@
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\r\n    \"deleted\": true,\r\n    \"image_hashes\": [\"5858ae5d2a38505d5c083fb6ffa0c0161\"]\r\n}",
+									"raw": "{\r\n    \"deleted\": false,\r\n    \"image_hashes\": [\"5858ae5d2a38505d5c083fb6ffa0c0161\"]\r\n}",
 									"options": {
 										"raw": {
 											"language": "json"
