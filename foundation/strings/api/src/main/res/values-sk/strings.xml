@@ -46,7 +46,7 @@
     <string name="error_searching">Pri vyhľadávaní sa vyskytla chyba</string>
     <string name="logs_cleared">Záznamy vymazané</string>
     <string name="recent_searches_cleared">Nedávne vyhľadávania boli vymazané</string>
-    <string name="downloading_photos_sharing">Sťahujú sa fotografie a čoskoro sa budú zdieľať</string>
+    <string name="downloading_photos_sharing">Sťahujú sa fotografie a čoskoro sa budú zdieľať…</string>
     <string name="copied_to_clipboard">Skopírované do schránky</string>
     <string name="could_not_find_app_to_open">Nepodarilo sa nájsť aplikáciu na otvorenie</string>
     <string name="feed_sync_freq">Frekvencia úplnej synchronizácie kanálu fotiek</string>
