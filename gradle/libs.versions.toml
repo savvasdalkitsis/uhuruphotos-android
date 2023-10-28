@@ -31,7 +31,7 @@ accompanist-webview = { module = "com.google.accompanist:accompanist-webview", v
 androidx-activity = "androidx.activity:activity-compose:1.7.2"
 androidx-annotation = "androidx.annotation:annotation:1.6.0"
 androidx-compose-animation-base = { module = "androidx.compose.animation:animation", version.ref = "compose" }
-androidx-compose-constraintlayout = "androidx.constraintlayout:constraintlayout-compose:1.1.0-alpha12"
+androidx-compose-constraintlayout = "androidx.constraintlayout:constraintlayout-compose:1.1.0-alpha13"
 androidx-compose-animation-graphics = { module = "androidx.compose.animation:animation-graphics", version.ref = "compose" }
 androidx-compose-foundation = { module = "androidx.compose.foundation:foundation", version.ref = "compose" }
 androidx-compose-foundation-layout = { module = "androidx.compose.foundation:foundation-layout", version.ref = "compose" }
@@ -43,7 +43,7 @@ androidx-compose-ui = { module = "androidx.compose.ui:ui", version.ref = "compos
 androidx-compose-ui-tooling = { module = "androidx.compose.ui:ui-tooling", version.ref = "compose" }
 androidx-compose-ui-tooling-preview = { module = "androidx.compose.ui:ui-tooling-preview", version.ref = "compose" }
 androidx-compose-ui-util = { module = "androidx.compose.ui:ui-util", version.ref = "compose" }
-androidx-constraint = "androidx.constraintlayout:constraintlayout-compose:1.1.0-alpha12"
+androidx-constraint = "androidx.constraintlayout:constraintlayout-compose:1.1.0-alpha13"
 androidx-core = "androidx.core:core-ktx:1.10.1"
 androidx-credentials-core = { module = "androidx.credentials:credentials", version.ref = "androidx-credentials" }
 androidx-credentials-play = { module = "androidx.credentials:credentials-play-services-auth", version.ref = "androidx-credentials" }
