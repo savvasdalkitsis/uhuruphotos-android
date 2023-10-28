@@ -80,4 +80,4 @@ existing translations at [weblate](https://hosted.weblate.org/engage/uhuruphotos
     <img alt="Star History Chart" src="https://api.star-history.com/svg?repos=savvasdalkitsis/uhuruphotos-android&type=Date" />
   </picture>
 </a>
-<p align="right"><img src="https://cdn-icons-png.flaticon.com/512/892/892692.png" height="50px" href="#top"></p>
+<p align="right"><a href="#top"><img src="https://cdn-icons-png.flaticon.com/512/892/892692.png" height="50px"></a></p>
