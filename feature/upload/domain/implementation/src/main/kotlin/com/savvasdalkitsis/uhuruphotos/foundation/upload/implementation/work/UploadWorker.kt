@@ -19,13 +19,9 @@ import android.content.Context
 import androidx.hilt.work.HiltWorker
 import androidx.work.WorkerParameters
 import com.github.michaelbull.result.Ok
-import com.github.michaelbull.result.coroutines.binding.binding
-import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.toMediaItemHash
-import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.usecase.LocalMediaUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.upload.domain.api.model.UploadItem
 import com.savvasdalkitsis.uhuruphotos.feature.upload.domain.api.usecase.UploadUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.upload.domain.api.work.UploadWorkScheduler
-import com.savvasdalkitsis.uhuruphotos.feature.user.domain.api.usecase.UserUseCase
 import com.savvasdalkitsis.uhuruphotos.foundation.notification.api.ForegroundInfoBuilder
 import com.savvasdalkitsis.uhuruphotos.foundation.notification.api.ForegroundNotificationWorker
 import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
@@ -33,13 +29,11 @@ import dagger.assisted.Assisted
 import dagger.assisted.AssistedInject
 
 @HiltWorker
-class InitiateUploadWorker @AssistedInject constructor(
+class UploadWorker @AssistedInject constructor(
     @Assisted context: Context,
     @Assisted private val params: WorkerParameters,
     private val uploadUseCase: UploadUseCase,
     private val uploadWorkScheduler: UploadWorkScheduler,
-    private val userUseCase: UserUseCase,
-    private val localMediaUseCase: LocalMediaUseCase,
     foregroundInfoBuilder: ForegroundInfoBuilder,
 ) : ForegroundNotificationWorker<Nothing>(
     context,
@@ -52,22 +46,18 @@ class InitiateUploadWorker @AssistedInject constructor(
 
     override suspend fun work(): Result {
         val item = UploadItem(
-            id = params.inputData.getLong(KEY_ID, -1),
+            id = params.inputData.getLong(KEY_ITEM_ID, -1),
             contentUri = params.inputData.getString(KEY_CONTENT_URI)!!
         )
-        val result = binding {
-            val mediaItem = localMediaUseCase.getLocalMediaItem(item.id)
-                ?: throw IllegalArgumentException("Could not find associated local media with id: ${item.id}")
-            val exists = uploadUseCase.exists(mediaItem.md5).bind()
-            if (exists) {
-                val user = userUseCase.getUserOrRefresh().bind()
-                uploadWorkScheduler.schedulePostUploadSync(mediaItem.md5.toMediaItemHash(user.id), item.id)
-            } else {
-                uploadWorkScheduler.scheduleUpload(item, mediaItem.size)
-            }
+        val size = params.inputData.getInt(KEY_ITEM_SIZE, -1)
+        val result = uploadUseCase.uploadInChunks(item, size) { current, total ->
+            updateProgress(current, total)
         }
         return when (result) {
-            is Ok -> Result.success()
+            is Ok -> {
+                uploadWorkScheduler.scheduleUploadCompletion(item = item, uploadId = result.value)
+                Result.success()
+            }
             else -> failOrRetry(item.id)
         }
     }
@@ -80,9 +70,10 @@ class InitiateUploadWorker @AssistedInject constructor(
     }
 
     companion object {
-        const val KEY_ID = "id"
+        const val KEY_ITEM_ID = "itemId"
+        const val KEY_ITEM_SIZE = "itemSize"
         const val KEY_CONTENT_URI = "contentUri"
-        fun workName(id: Long) = "initiatingUpload/$id"
-        private const val NOTIFICATION_ID = 1283
+        fun workName(id: Long) = "uploadFile/$id"
+        private const val NOTIFICATION_ID = 1288
     }
 }

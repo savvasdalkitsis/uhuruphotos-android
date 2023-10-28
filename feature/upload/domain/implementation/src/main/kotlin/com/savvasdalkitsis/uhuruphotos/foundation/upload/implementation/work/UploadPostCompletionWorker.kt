@@ -85,6 +85,6 @@ class UploadPostCompletionWorker @AssistedInject constructor(
         const val KEY_ITEM_ID = "itemId"
         const val KEY_HASH = "hash"
         fun workName(hash: String) = "postUploadSync/$hash"
-        private const val NOTIFICATION_ID = 1286
+        private const val NOTIFICATION_ID = 1287
     }
 }

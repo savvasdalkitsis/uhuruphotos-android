@@ -97,6 +97,6 @@ class UploadCompletionWorker @AssistedInject constructor(
         const val KEY_UPLOAD_ID = "uploadId"
         const val KEY_ITEM_ID = "itemId"
         fun workName(uploadId: String) = "finalizingUpload/$uploadId"
-        private const val NOTIFICATION_ID = 1285
+        private const val NOTIFICATION_ID = 1286
     }
 }

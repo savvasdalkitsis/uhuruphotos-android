@@ -18,24 +18,17 @@ package com.savvasdalkitsis.uhuruphotos.foundation.upload.implementation.work
 import android.content.Context
 import androidx.hilt.work.HiltWorker
 import androidx.work.WorkerParameters
-import com.github.michaelbull.result.Ok
-import com.savvasdalkitsis.uhuruphotos.feature.upload.domain.api.model.UploadItem
-import com.savvasdalkitsis.uhuruphotos.feature.upload.domain.api.model.UploadResult.ChunkUploaded
-import com.savvasdalkitsis.uhuruphotos.feature.upload.domain.api.model.UploadResult.Finished
-import com.savvasdalkitsis.uhuruphotos.feature.upload.domain.api.usecase.UploadUseCase
-import com.savvasdalkitsis.uhuruphotos.feature.upload.domain.api.work.UploadWorkScheduler
 import com.savvasdalkitsis.uhuruphotos.foundation.notification.api.ForegroundInfoBuilder
 import com.savvasdalkitsis.uhuruphotos.foundation.notification.api.ForegroundNotificationWorker
 import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedInject
 
+@Deprecated("This class is no longer used. Left for backwards compatibility")
 @HiltWorker
 class UploadChunkWorker @AssistedInject constructor(
     @Assisted context: Context,
     @Assisted private val params: WorkerParameters,
-    private val uploadUseCase: UploadUseCase,
-    private val uploadWorkScheduler: UploadWorkScheduler,
     foregroundInfoBuilder: ForegroundInfoBuilder,
 ) : ForegroundNotificationWorker<Nothing>(
     context,
@@ -46,52 +39,9 @@ class UploadChunkWorker @AssistedInject constructor(
     cancelBroadcastReceiver = null,
 ) {
 
-    override suspend fun work(): Result {
-        val offset = params.inputData.getLong(KEY_OFFSET, -1)
-        val remaining = params.inputData.getLong(KEY_REMAINING, -1)
-        if (remaining > 0) {
-            updateProgress(offset, offset + remaining)
-        }
-        val uploadId = params.inputData.getString(KEY_UPLOAD_ID)!!
-        val item = UploadItem(
-            id = params.inputData.getLong(KEY_ITEM_ID, -1),
-            contentUri = params.inputData.getString(KEY_CONTENT_URI)!!
-        )
-        return when (val result = uploadUseCase.uploadChunk(item.contentUri, uploadId, offset)) {
-            is Ok -> {
-                when (val status = result.value) {
-                    is ChunkUploaded -> {
-                        uploadWorkScheduler.scheduleChunkUpload(
-                            item = item,
-                            offset = status.newOffset,
-                            remaining = status.remaining,
-                            uploadId = status.uploadId,
-                        )
-                    }
-                    is Finished -> uploadWorkScheduler.scheduleUploadCompletion(
-                        item = item,
-                        uploadId = status.uploadId,
-                    )
-                }
-                Result.success()
-            }
-            else -> failOrRetry(item.id)
-        }
-    }
-
-    private fun failOrRetry(itemId: Long) = if (params.runAttemptCount < 4) {
-        Result.retry()
-    } else {
-        uploadUseCase.markAsNotUploading(itemId)
-        Result.failure()
-    }
+    override suspend fun work(): Result = Result.success()
 
     companion object {
-        const val KEY_ITEM_ID = "itemId"
-        const val KEY_CONTENT_URI = "contentUri"
-        const val KEY_OFFSET = "offset"
-        const val KEY_REMAINING = "remaining"
-        const val KEY_UPLOAD_ID = "uploadId"
         fun workName(id: Long, offset: Long) = "uploadChunk/$id/$offset"
         private const val NOTIFICATION_ID = 1285
     }

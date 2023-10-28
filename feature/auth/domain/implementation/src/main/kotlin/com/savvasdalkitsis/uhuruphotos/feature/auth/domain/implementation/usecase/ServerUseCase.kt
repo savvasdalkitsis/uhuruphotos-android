@@ -28,10 +28,29 @@ import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.map
 import se.ansman.dagger.auto.AutoBind
 import javax.inject.Inject
+import javax.inject.Named
 
 @AutoBind
 class ServerUseCase @Inject constructor(
     @PlainTextPreferences
+    private val preferences: Preferences,
+) : ServerUseCase {
+    private val key = "serverUrl"
+
+    override fun observeServerUrl(): Flow<String> = preferences
+        .observe<String?>(key, defaultValue = null)
+        .map { it?.trim() }
+        .filterNot { it.isNullOrEmpty() }
+        .filterNotNull()
+
+    override fun getServerUrl(): String? = preferences.get<String?>(key)?.trim()
+
+    override suspend fun setServerUrl(serverUrl: String) {
+        preferences.set(key, serverUrl.prefixedWithHttpsIfNeeded.removeSuffix("/"))
+    }
+}
+@Named("authenticated")
+class AuthenticatedServerUseCase @Inject constructor(
     private val preferences: Preferences,
 ) : ServerUseCase {
     private val key = "serverUrl"

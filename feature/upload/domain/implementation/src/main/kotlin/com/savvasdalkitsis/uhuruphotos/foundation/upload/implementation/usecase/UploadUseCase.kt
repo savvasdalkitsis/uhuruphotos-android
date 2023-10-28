@@ -29,8 +29,8 @@ import com.savvasdalkitsis.uhuruphotos.feature.upload.domain.api.model.UploadCap
 import com.savvasdalkitsis.uhuruphotos.feature.upload.domain.api.model.UploadCapability.CanUpload
 import com.savvasdalkitsis.uhuruphotos.feature.upload.domain.api.model.UploadCapability.CannotUpload
 import com.savvasdalkitsis.uhuruphotos.feature.upload.domain.api.model.UploadCapability.UnableToCheck
+import com.savvasdalkitsis.uhuruphotos.feature.upload.domain.api.model.UploadId
 import com.savvasdalkitsis.uhuruphotos.feature.upload.domain.api.model.UploadItem
-import com.savvasdalkitsis.uhuruphotos.feature.upload.domain.api.model.UploadResult
 import com.savvasdalkitsis.uhuruphotos.feature.upload.domain.api.usecase.UploadUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.upload.domain.api.work.UploadWorkScheduler
 import com.savvasdalkitsis.uhuruphotos.feature.user.domain.api.usecase.UserUseCase
@@ -80,48 +80,58 @@ class UploadUseCase @Inject constructor(
 
     override fun observeUploading(): Flow<Set<Long>> = uploadRepository.observeUploading()
 
-    override suspend fun uploadChunk(
-        contentUri: String,
-        uploadId: String,
-        offset: Long
-    ): Result<UploadResult, Throwable> = try {
-        binding {
-            val maxChunkSize = 1_000_000
-            val user = userUseCase.getUserOrRefresh().bind()
-            contentResolver.openInputStream(Uri.parse(contentUri))!!.use { input ->
-                input.skip(offset)
-                val chunk = ByteArray(maxChunkSize)
-                val chunkSize = input.read(chunk)
-                val ignore = ByteArray(maxChunkSize)
-                var remaining = 0L
-                var read: Int
-                do {
-                    read = input.read(ignore)
-                    if (read >= 0) {
-                        remaining += read
-                    }
-                }
-                while (read != -1)
-                val result = uploadService.uploadChunk(
-                    range = "bytes $offset-${offset + chunkSize - 1}/$chunkSize",
-                    uploadId = createFormData("upload_id", uploadId),
-                    user = createFormData("user", user.id.toString()),
-                    offset = createFormData("offset", offset.toString()),
-                    md5 = createFormData("md5", ""), // see https://docs.librephotos.com/docs/development/contribution/backend/upload/
-                    chunk = createFormData("file", "blob", chunk.toRequestBody(
-                        contentType = "application/octet-stream".toMediaType(),
-                        byteCount = chunkSize,
-                    ))
-                )
-                when (remaining) {
-                    0L -> UploadResult.Finished(result.uploadId)
-                    else -> UploadResult.ChunkUploaded(result.uploadId, offset + chunkSize, remaining)
+    override suspend fun uploadInChunks(
+        item: UploadItem,
+        size: Int,
+        progress: suspend (current: Long, total: Long) -> Unit,
+    ): Result<UploadId, Throwable> {
+        val initialOffset = uploadRepository.getOffset(item.id) ?: 0
+        val uploadId = uploadRepository.getUploadId(item.id) ?: ""
+        return try {
+            binding {
+                val maxChunkSize = 1_000_000
+                val user = userUseCase.getUserOrRefresh().bind()
+                contentResolver.openInputStream(Uri.parse(item.contentUri))!!.use { input ->
+                    val total = (size.takeIf { it > 0 } ?: input.available()).toLong()
+                    input.skip(initialOffset)
+                    val chunk = ByteArray(maxChunkSize)
+                    var currentOffset = initialOffset
+
+                    progress(currentOffset, total)
+                    var chunkSize: Int
+                    do {
+                        chunkSize = input.read(chunk)
+                        if (chunkSize > 0) {
+                            val result = uploadService.uploadChunk(
+                                range = "bytes $currentOffset-${currentOffset + chunkSize - 1}/$chunkSize",
+                                uploadId = createFormData("upload_id", uploadId),
+                                user = createFormData("user", user.id.toString()),
+                                offset = createFormData("offset", currentOffset.toString()),
+                                md5 = createFormData(
+                                    "md5",
+                                    ""
+                                ), // see https://docs.librephotos.com/docs/development/contribution/backend/upload/
+                                chunk = createFormData(
+                                    "file", "blob", chunk.toRequestBody(
+                                        contentType = "application/octet-stream".toMediaType(),
+                                        byteCount = chunkSize,
+                                    )
+                                )
+                            )
+                            currentOffset += chunkSize
+                            uploadRepository.updateOffset(item.id, currentOffset)
+                            uploadRepository.updateUploadId(item.id, result.uploadId)
+                            progress(currentOffset, total)
+                        }
+                    } while (chunkSize > 0)
+                    UploadId(uploadRepository.getUploadId(item.id)
+                        ?: throw IllegalStateException("Upload id not found for item ${item.id}"))
                 }
             }
+        } catch (e: Exception) {
+            log(e)
+            Err(e)
         }
-    } catch (e: Exception) {
-        log(e)
-        Err(e)
     }
 
     override suspend fun exists(md5: Md5Hash): Result<Boolean, Throwable> =

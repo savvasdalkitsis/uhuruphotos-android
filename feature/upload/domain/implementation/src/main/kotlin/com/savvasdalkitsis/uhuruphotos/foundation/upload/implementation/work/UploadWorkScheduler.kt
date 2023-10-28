@@ -19,6 +19,7 @@ import androidx.work.BackoffPolicy
 import androidx.work.ExistingWorkPolicy
 import androidx.work.WorkInfo
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemHash
+import com.savvasdalkitsis.uhuruphotos.feature.upload.domain.api.model.UploadId
 import com.savvasdalkitsis.uhuruphotos.feature.upload.domain.api.model.UploadItem
 import com.savvasdalkitsis.uhuruphotos.feature.upload.domain.api.model.UploadJobType
 import com.savvasdalkitsis.uhuruphotos.feature.upload.domain.api.model.UploadJobType.Completing
@@ -51,38 +52,32 @@ class UploadWorkScheduler @Inject constructor(
         }
     }
 
-    override fun scheduleChunkUpload(
+    override fun scheduleUpload(
         item: UploadItem,
-        offset: Long,
-        remaining: Long?,
-        uploadId: String
-    ) = with(UploadChunkWorker) {
+        size: Int,
+    ) = with(UploadWorker) {
         workScheduleUseCase.scheduleNow(
-            workName = workName(item.id, offset),
-            klass = UploadChunkWorker::class,
+            workName = workName(item.id),
+            klass = UploadWorker::class,
             existingWorkPolicy = ExistingWorkPolicy.KEEP,
             tags = setOf(UPLOAD_WORK_TAG, tagFor(item.id)),
         ) {
             putLong(KEY_ITEM_ID, item.id)
+            putInt(KEY_ITEM_SIZE, size)
             putString(KEY_CONTENT_URI, item.contentUri)
-            putString(KEY_UPLOAD_ID, uploadId)
-            remaining?.let {
-                putLong(KEY_REMAINING, it)
-            }
-            putLong(KEY_OFFSET, offset)
         }
     }
 
     override fun scheduleUploadCompletion(
         item: UploadItem,
-        uploadId: String,
+        uploadId: UploadId,
     ) = with(UploadCompletionWorker) {
         workScheduleUseCase.scheduleNow(
-            workName = workName(uploadId),
+            workName = workName(uploadId.value),
             klass = UploadCompletionWorker::class,
             tags = setOf(UPLOAD_WORK_TAG, tagFor(item.id)),
         ) {
-            putString(KEY_UPLOAD_ID, uploadId)
+            putString(KEY_UPLOAD_ID, uploadId.value)
             putLong(KEY_ITEM_ID, item.id)
         }
     }

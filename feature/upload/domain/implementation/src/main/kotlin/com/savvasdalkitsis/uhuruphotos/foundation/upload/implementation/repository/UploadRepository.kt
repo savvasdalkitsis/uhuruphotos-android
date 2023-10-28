@@ -18,6 +18,8 @@ package com.savvasdalkitsis.uhuruphotos.foundation.upload.implementation.reposit
 import app.cash.sqldelight.coroutines.asFlow
 import app.cash.sqldelight.coroutines.mapToList
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.Database
+import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.extensions.awaitSingle
+import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.extensions.awaitSingleOrNull
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.media.upload.UploadingMediaItems
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.media.upload.UploadingMediaItemsQueries
 import com.savvasdalkitsis.uhuruphotos.feature.upload.domain.api.model.UploadItem
@@ -38,6 +40,8 @@ class UploadRepository @Inject constructor(
                 uploadingMediaItemsQueries.insert(UploadingMediaItems(
                     id = item.id,
                     contentUri = item.contentUri,
+                    offset = 0L,
+                    uploadId = "",
                 ))
             }
         }
@@ -53,4 +57,18 @@ class UploadRepository @Inject constructor(
 
     fun observeUploading(): Flow<Set<Long>> = uploadingMediaItemsQueries.getAll()
         .asFlow().mapToList(Dispatchers.IO).map { it.toSet() }.distinctUntilChanged()
+
+    suspend fun getOffset(itemId: Long): Long? =
+        uploadingMediaItemsQueries.getOffset(itemId).awaitSingleOrNull()
+
+    fun getUploadId(itemId: Long): String? =
+        uploadingMediaItemsQueries.getUploadId(itemId).executeAsOneOrNull()
+
+    fun updateOffset(itemId: Long, offset: Long) {
+        uploadingMediaItemsQueries.updateOffset(offset, itemId)
+    }
+
+    fun updateUploadId(itemId: Long, uploadId: String) {
+        uploadingMediaItemsQueries.updateUploadId(uploadId, itemId)
+    }
 }

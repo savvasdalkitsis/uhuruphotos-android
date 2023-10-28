@@ -15,13 +15,7 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.upload.domain.api.model
 
-sealed class UploadResult {
-    data class Finished(
-        val uploadId: String,
-    ) : UploadResult()
-    data class ChunkUploaded(
-        val uploadId: String,
-        val newOffset: Long,
-        val remaining: Long,
-    ) : UploadResult()
-}
+@JvmInline
+value class UploadId(
+    val value: String,
+)
