@@ -3,7 +3,7 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 buildscript {
     ext {
-        kotlin_version = '1.9.0'
+        kotlin_version = '1.9.10'
         compose_version = '1.6.0-alpha04'
         compose_compiler_version = '1.5.3'
     }
