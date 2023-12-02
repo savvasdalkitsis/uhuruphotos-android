@@ -98,7 +98,7 @@ logger = "com.jakewharton.timber:timber:4.7.1"
 lottie = "com.airbnb.android:lottie-compose:6.1.0"
 lumberjack-core = { module = "com.github.savvasdalkitsis.Lumberjack:lumberjack-library", version.ref = "lumberjack" }
 lumberjack-feedback = { module = "com.github.savvasdalkitsis.Lumberjack:lumberjack-feedback", version.ref = "lumberjack" }
-lumberjack-feedback-manager = "com.github.MFlisar:FeedbackManager:2.0.3"
+lumberjack-feedback-manager = "com.github.MFlisar:FeedbackManager:2.0.4"
 lumberjack-file = { module = "com.github.savvasdalkitsis.Lumberjack:lumberjack-filelogger", version.ref = "lumberjack" }
 lumberjack-notification = { module = "com.github.savvasdalkitsis.Lumberjack:lumberjack-notification", version.ref = "lumberjack" }
 mapbox = "com.mapbox.maps:android:10.9.1"
