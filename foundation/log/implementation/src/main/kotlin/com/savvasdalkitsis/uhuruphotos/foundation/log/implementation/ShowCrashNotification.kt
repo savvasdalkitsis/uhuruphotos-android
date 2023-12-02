@@ -48,7 +48,7 @@ internal fun showCrashNotification(
     val feedback = Feedback(
         listOf(receiver),
         CoreUtil.getRealSubject(context, subject),
-        attachments = allFiles.map { FeedbackFile.DefaultName(it) }
+        attachments = allFiles.map { FeedbackFile(it) }
     )
 
     feedback.startNotificationFixed(
