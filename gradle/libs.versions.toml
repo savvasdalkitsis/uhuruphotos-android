@@ -1,7 +1,7 @@
 [versions]
 accompanist = "0.32.0"
 androidx-credentials = "1.0.0-alpha09"
-androidx-hilt = "1.1.0-alpha01"
+androidx-hilt = "1.1.0"
 autodagger = "0.10.0"
 coil = "2.4.0"
 com-google-android-gms = "18.1.0"
