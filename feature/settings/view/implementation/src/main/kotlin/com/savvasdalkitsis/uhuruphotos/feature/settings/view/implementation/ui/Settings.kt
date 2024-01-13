@@ -87,21 +87,21 @@ internal fun Settings(
                 columnCount = columns,
             ) {
                 SuperGroup(controller.ui) {
-                    CollapsibleGroup(controller.uiFeed) {
+                    CollapsibleGroup(groupState = controller.uiFeed) {
                         SettingsFeedUI(state, action)
                     }
-                    CollapsibleGroup(controller.uiTheme) {
+                    CollapsibleGroup(groupState = controller.uiTheme) {
                         SettingsTheme(state, action)
                     }
-                    CollapsibleGroup(controller.uiProgress) {
+                    CollapsibleGroup(groupState = controller.uiProgress) {
                         SettingsProgressUI(state, action)
                     }
                     if (state.hasRemoteAccess) {
-                        CollapsibleGroup(controller.uiSearch) {
+                        CollapsibleGroup(groupState = controller.uiSearch) {
                             SettingsSearch(state, action)
                         }
                     }
-                    CollapsibleGroup(controller.uiLibrary) {
+                    CollapsibleGroup(groupState = controller.uiLibrary) {
                         SettingsLibrary(state, action)
                     }
 //                    Group(controller.uiVideo) {
@@ -109,50 +109,50 @@ internal fun Settings(
 //                    }
                     val mapProvider = state.mapProviderState
                     if (mapProvider is Selected) {
-                        CollapsibleGroup(controller.uiMaps) {
+                        CollapsibleGroup(groupState = controller.uiMaps) {
                             SettingsMaps(mapProvider, action)
                         }
                     }
                 }
                 SuperGroup(controller.privacy) {
                     state.biometrics?.let {
-                        CollapsibleGroup(controller.privacyBiometrics) {
+                        CollapsibleGroup(groupState = controller.privacyBiometrics) {
                             SettingsBiometrics(it, action)
                         }
                     }
-                    CollapsibleGroup(controller.privacyShare) {
+                    CollapsibleGroup(groupState = controller.privacyShare) {
                         SettingsShare(state, action)
                     }
                 }
                 SuperGroup(controller.jobs) {
                     if (state.hasRemoteAccess) {
-                        CollapsibleGroup(controller.jobsFeedConfiguration) {
+                        CollapsibleGroup(groupState = controller.jobsFeedConfiguration) {
                             SettingsJobsFeedConfiguration(state, action)
                         }
                     }
-                    CollapsibleGroup(controller.jobsStatus) {
+                    CollapsibleGroup(groupState = controller.jobsStatus) {
                         SettingsJobsStatus(state, action)
                     }
                 }
                 SuperGroup(controller.advanced) {
-                    CollapsibleGroup(controller.advancedLightboxPhotoDiskCache) {
+                    CollapsibleGroup(groupState = controller.advancedLightboxPhotoDiskCache) {
                         SettingsCache(state.lightboxPhotoDiskCache, action)
                     }
-                    CollapsibleGroup(controller.advancedLightboxPhotoMemoryCache) {
+                    CollapsibleGroup(groupState = controller.advancedLightboxPhotoMemoryCache) {
                         SettingsCache(state.lightboxPhotoMemCache, action)
                     }
-                    CollapsibleGroup(controller.advancedThumbnailDiskCache) {
+                    CollapsibleGroup(groupState = controller.advancedThumbnailDiskCache) {
                         SettingsCache(state.thumbnailDiskCache, action)
                     }
-                    CollapsibleGroup(controller.advancedThumbnailMemoryCache) {
+                    CollapsibleGroup(groupState = controller.advancedThumbnailMemoryCache) {
                         SettingsCache(state.thumbnailMemCache, action)
                     }
-                    CollapsibleGroup(controller.advancedVideoDiskCache) {
+                    CollapsibleGroup(groupState = controller.advancedVideoDiskCache) {
                         SettingsCache(state.videoDiskCache, action)
                     }
                 }
                 SuperGroup(controller.help) {
-                    CollapsibleGroup(controller.helpFeedback) {
+                    CollapsibleGroup(groupState = controller.helpFeedback) {
                         SettingsFeedback(state, action)
                     }
                     SettingsOutlineButtonRow(
