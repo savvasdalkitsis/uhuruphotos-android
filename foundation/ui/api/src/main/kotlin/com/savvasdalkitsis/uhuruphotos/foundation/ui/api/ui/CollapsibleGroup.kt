@@ -44,11 +44,12 @@ import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.state.CollapsibleGro
 
 @Composable
 fun CollapsibleGroup(
+    modifier: Modifier = Modifier,
     groupState: CollapsibleGroupState,
     content: @Composable ColumnScope.() -> Unit,
 ) {
     Card(
-        modifier = Modifier.padding(4.dp),
+        modifier = modifier.padding(4.dp),
         shape = MaterialTheme.shapes.medium,
         elevation = 0.dp,
     ) {
