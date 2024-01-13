@@ -74,8 +74,8 @@ class AuthenticationLoginUseCase @Inject constructor(
     override suspend fun loadSavedCredentials(): Credentials? = activity?.let { activity ->
         try {
             val result = credentialManager.getCredential(
-                GetCredentialRequest(listOf(GetPasswordOption())),
                 activity,
+                GetCredentialRequest(listOf(GetPasswordOption())),
             )
             when (val credentials = result.credential) {
                 is PasswordCredential -> Credentials(credentials.id, credentials.password)
@@ -91,7 +91,8 @@ class AuthenticationLoginUseCase @Inject constructor(
         activity?.let { activity ->
             try {
                 credentialManager.createCredential(
-                    CreatePasswordRequest(credentials.username, credentials.password), activity
+                    activity,
+                    CreatePasswordRequest(credentials.username, credentials.password)
                 )
             } catch (e: Exception) {
                 log(e)
