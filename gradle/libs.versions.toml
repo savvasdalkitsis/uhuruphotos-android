@@ -47,7 +47,7 @@ androidx-constraint = "androidx.constraintlayout:constraintlayout-compose:1.1.0-
 androidx-core = "androidx.core:core-ktx:1.12.0"
 androidx-credentials-core = { module = "androidx.credentials:credentials", version.ref = "androidx-credentials" }
 androidx-credentials-play = { module = "androidx.credentials:credentials-play-services-auth", version.ref = "androidx-credentials" }
-androidx-datastore-preferences = "androidx.datastore:datastore-preferences:1.1.0-alpha07"
+androidx-datastore-preferences = "androidx.datastore:datastore-preferences:1.1.0-beta01"
 androidx-hilt-compiler = { module = "androidx.hilt:hilt-compiler", version.ref = "hilt-compiler" }
 androidx-media3-core = { module = "androidx.media3:media3-exoplayer", version.ref = "media3" }
 androidx-media3-database = { module = "androidx.media3:media3-database", version.ref = "media3" }
