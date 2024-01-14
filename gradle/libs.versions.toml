@@ -86,7 +86,7 @@ hilt-dagger-compiler = { module = "com.google.dagger:hilt-compiler", version.ref
 imaging = "org.apache.commons:commons-imaging:1.0-alpha3"
 infobar = "com.radusalagean:info-bar-compose:1.0.0"
 jetlime = "io.github.pushpalroy:jetlime:1.0.3"
-joda-time = "net.danlew:android.joda:2.12.5"
+joda-time = "net.danlew:android.joda:2.12.6"
 junit = "junit:junit:4.13.2"
 jwt = "com.auth0.android:jwtdecode:2.0.2"
 kotlinx-coroutines = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-android", version.ref = "org-jetbrains-kotlinx" }
