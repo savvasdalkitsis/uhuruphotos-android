@@ -93,7 +93,7 @@
     <string name="help">帮助</string>
     <string name="nothing_here_yet">这里暂时什么都没有</string>
     <string name="operation_irreverisble">此操作是不可逆的</string>
-    <string name="trash">垃圾桶</string>
+    <string name="trash">回收站</string>
     <string name="no_auto_albums">此用户没有自动生成的相册</string>
     <string name="theme">主题</string>
     <string name="map_provider">提供者</string>
@@ -158,7 +158,7 @@
     <string name="use_as">用于</string>
     <string name="full">全面（full）</string>
     <string name="max_animated_video_thumbnails">动态视频缩略图最大数量 (%s)</string>
-    <string name="max_animated_video_thumbnails_description">数值过高可能会导致应用不稳定。如果你遇到任何问题请尝试将数值调低。</string>
+    <string name="max_animated_video_thumbnails_description">数值过高可能会导致应用不稳定。如果您遇到任何问题请尝试将数值调低。</string>
     <string name="today">今天</string>
     <string name="requires_charging">只在充电时同步</string>
     <string name="feed_size">照片流大小</string>
