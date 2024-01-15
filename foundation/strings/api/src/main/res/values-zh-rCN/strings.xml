@@ -29,7 +29,7 @@
     <plurals name="trash_photos_confirmation">
         <item quantity="other">将这 %d 张照片移入回收站？</item>
     </plurals>
-    <string name="perform_full_sync">执行全量同步</string>
+    <string name="perform_full_sync">执行全面同步</string>
     <plurals name="days">
         <item quantity="other">%d 天</item>
     </plurals>
@@ -57,7 +57,7 @@
     <string name="restoring_photo">正在将照片从回收站中还原……</string>
     <string name="photo">照片</string>
     <string name="authenticate_for_access_description">您已要求此应用需要验证</string>
-    <string name="favourite_photos">收藏夹</string>
+    <string name="favourite_photos">我的最爱</string>
     <string name="hidden_photos">隐藏照片</string>
     <string name="remove_favourite">从我的最爱中移出</string>
     <string name="edit_server_url">编辑服务器地址</string>
@@ -117,9 +117,9 @@
     <string name="user_albums">用户相册</string>
     <string name="sorting">分类中</string>
     <string name="no_photos">没有照片可显示</string>
-    <string name="are_you_sure_you_want_to_perform_full_sync">要开始全量同步照片流吗？</string>
+    <string name="are_you_sure_you_want_to_perform_full_sync">要开始全面同步照片流吗？</string>
     <string name="process_takes_while_consumes_battery">这需要一段时间，而且会消耗电池。</string>
-    <string name="not_roaming">没有漫游网路</string>
+    <string name="not_roaming">没有漫游网络</string>
     <string name="metered">按流量计费的网络</string>
     <string name="degrades_performance">会降低性能</string>
     <string name="network_requirements">网络要求: %s</string>
@@ -142,7 +142,7 @@
     <string name="unmetered">不用按计量付费的网络</string>
     <string name="feedback">反馈</string>
     <string name="send_feedback_with_logs">使用日志发送反馈</string>
-    <string name="show_library_on_home">在主屏幕上显示图库</string>
+    <string name="show_library_on_home">在主屏幕上显示影像库</string>
     <string name="video_disk_cache">视频的磁盘缓存</string>
     <string name="expand_all">展开全部</string>
     <string name="collapse_all">全部收缩</string>
@@ -158,22 +158,22 @@
     <string name="use_as">用于</string>
     <string name="full">全面（full）</string>
     <string name="max_animated_video_thumbnails">动态视频缩略图最大数量 (%s)</string>
-    <string name="max_animated_video_thumbnails_description">数值过高可能会导致应用不稳定。如果您遇到任何问题请尝试将数值调低。</string>
+    <string name="max_animated_video_thumbnails_description">数值过高可能会导致应用不稳定。如果你遇到任何问题请尝试将数值调低。</string>
     <string name="today">今天</string>
     <string name="requires_charging">只在充电时同步</string>
     <string name="feed_size">照片流大小</string>
     <string name="feed_sync_freq_changed">照片流同步频率已修改</string>
     <string name="feed_sync_network_changed">照片流同步的网络要求已修改</string>
-    <string name="feed_sync_freq">全量同步照片流，每</string>
+    <string name="feed_sync_freq">全面同步照片流，每</string>
     <plurals name="trash_media">
         <item quantity="other">将 %d 个影像移入回收站</item>
     </plurals>
     <string name="feed_refresh_days">下拉刷新所包含的照片流天数</string>
     <string name="feed">照片流</string>
-    <string name="cannot_perform_full_sync">现在无法进行全量同步</string>
+    <string name="cannot_perform_full_sync">现在无法进行全面同步</string>
     <string name="downloading_media_details">正在下载影像信息……</string>
     <string name="restoring_media">正在将影像从回收站中还原……</string>
-    <string name="favourite_media">媒体收藏夹</string>
+    <string name="favourite_media">最爱的影像</string>
     <string name="refreshing_feed">正在刷新照片流</string>
     <string name="video">视频</string>
     <string name="years_ago">%d 年前</string>
@@ -196,14 +196,14 @@
         <item quantity="other">您确定要删除这 %d 个影像吗？</item>
     </plurals>
     <plurals name="restore_media_confirmation">
-        <item quantity="other">恢复这 %d 个影像项目？</item>
+        <item quantity="other">恢复这 %d 个影像？</item>
     </plurals>
     <plurals name="trash_media_confirmation">
-        <item quantity="other">将这 %d 个影像项目移入回收站？</item>
+        <item quantity="other">将这 %d 个影像移入回收站？</item>
     </plurals>
     <string name="feed_sync_charging_changed">照片流同步的充电要求已修改</string>
-    <string name="perform_full_feed_sync">执行照片流的全量同步</string>
-    <string name="feed_sync_progress">照片流的全量同步进度</string>
+    <string name="perform_full_feed_sync">执行照片流的全面同步</string>
+    <string name="feed_sync_progress">照片流的全面同步进度</string>
     <string name="yearly">按年度</string>
     <string name="animate_video_thumbnails">动态视频缩略图</string>
     <string name="trashing_media">正在将影像移入回收站……</string>
@@ -294,11 +294,12 @@
     <string name="stats">统计数据</string>
     <string name="navigate_to_settings">导航到设置</string>
     <string name="do_not_ask_again">不再询问</string>
-    <string name="media_sync_status_fully_synced">已全量同步影像</string>
+    <string name="media_sync_status_fully_synced">已全面同步影像</string>
+    <string name="delete_fully_synced_media_both">删除本地、暂删远程</string>
     <string name="delete_fully_synced_media_local">删除本地</string>
     <string name="allow_storage_management_title">存储管理</string>
-    <string name="full_feed_details_sync">照片流的全量同步详情</string>
-    <string name="perform_full_feed_details_sync">获取照片流的全量同步详情</string>
+    <string name="full_feed_details_sync">照片流的全面同步详情</string>
+    <string name="perform_full_feed_details_sync">获取照片流的全面同步详情</string>
     <string name="missing_local_media_permissions">在照片流中查看本地影像？</string>
     <string name="missing_local_media_permissions_photo_map">在照片地图中查看本地影像？</string>
     <string name="show_media_sync_status">显示影像同步状态</string>
@@ -313,7 +314,7 @@
     <string name="forget_server">忘记服务器</string>
     <string name="search_icon">搜索图标</string>
     <string name="search_for_something">搜索某个事物</string>
-    <string name="full_feed_sync">全量同步照片流</string>
+    <string name="full_feed_sync">全面同步照片流</string>
     <string name="close">关闭</string>
     <string name="auto_hide_nav_on_scroll">滚动时自动隐藏导航栏</string>
     <string name="hidden_media">隐藏的影像</string>
@@ -338,11 +339,7 @@
     <string name="server">服务器</string>
     <string name="need_permissions_to_manage_gallery">UhuruPhotos 需要权限来访问本地影像以便帮您整理展馆</string>
     <string name="libre_photos_server">LibrePhotos 服务器</string>
-    <string name="libre_photos_description">LibrePhotos 是一个自由免费、自托管的开源照片管理服务。
-\n
-\nLibrePhotos 不同于在云端存储、扫描、索引您的照片并用来训练机器学习模型、收集针对于您的广告数据的那些商业服务，而是在您的本地机器上保存您的所有照片和元数据。
-\n
-\n您的数据永远不会被发送到或存储于某个第三方的服务器上。获得与那些商业服务相同的强大功能，而且不用放弃您的个人数据与隐私。</string>
+    <string name="libre_photos_description">LibrePhotos 是一个自由免费、自托管的开源照片管理服务。\n\nLibrePhotos 不同于在云端存储、扫描、索引您的照片并用来训练机器学习模型、收集针对于您的广告数据的那些商业服务，而是在您的本地机器上保存您的所有照片和元数据。\n\n您的数据永远不会被发送到或存储于某个第三方的服务器上。获得与那些商业服务相同的强大功能，而且不用放弃您的个人数据与隐私。</string>
     <string name="skip">跳过</string>
     <string name="notifications_explanation">UhuruPhotos 使用后台任务来执行各种动作，例如同步影像、备份与同步等。若您想看到这些任务的进度，您需要允许访问通知。</string>
     <string name="completing">正在完成</string>
