@@ -1,7 +1,11 @@
 default_platform(:android)
 
+
 platform :android do
   desc "Tag and deploy a new internal release"
+  before_all do
+    update_fastlane
+  end
   lane :deploy do
     gradle(
         task: "bundle",
