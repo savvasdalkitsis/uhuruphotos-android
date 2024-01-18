@@ -40,6 +40,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.implementation
 import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.implementation.service.model.LocalMediaStoreServiceItem
 import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.implementation.service.model.LocalMediaStoreServiceItem.Photo
 import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.implementation.service.model.LocalMediaStoreServiceItem.Video
+import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.implementation.usecase.BitmapUseCase
 import com.savvasdalkitsis.uhuruphotos.foundation.exif.api.usecase.ExifUseCase
 import com.savvasdalkitsis.uhuruphotos.foundation.log.api.log
 import com.savvasdalkitsis.uhuruphotos.foundation.log.api.runCatchingWithLog
@@ -64,6 +65,7 @@ class LocalMediaRepository @Inject constructor(
     private val exifUseCase: ExifUseCase,
     @LocalMediaModule.LocalMediaDateTimeFormat
     private val dateTimeFormat: DateTimeFormatter,
+    private val bitmapUseCase: BitmapUseCase,
 ) {
 
     fun observeMedia(): Flow<List<LocalMediaItemDetails>> = localMediaItemDetailsQueries.getItems()
@@ -276,10 +278,12 @@ class LocalMediaRepository @Inject constructor(
     private fun Bitmap?.save(item: LocalMediaStoreServiceItem): String? = try {
         this?.let { bitmap ->
             val file = context.filesDir.subFolder("localThumbnails").subFile("${item.id}.jpg")
-            val saved = file.outputStream().use {
-                bitmap.compress(Bitmap.CompressFormat.JPEG, 80, it)
+            with(bitmapUseCase) {
+                file.writeBytes(
+                    bitmap.toJpeg().copyExifFrom(item.contentUri)
+                )
             }
-            return file.absolutePath.takeIf { saved }
+            return file.absolutePath
         }
     } catch (e: Exception) {
         log(e)

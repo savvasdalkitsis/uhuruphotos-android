@@ -49,7 +49,6 @@ import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.implementation
 import com.savvasdalkitsis.uhuruphotos.foundation.date.api.DateDisplayer
 import com.savvasdalkitsis.uhuruphotos.foundation.date.api.module.DateModule.ParsingDateFormat
 import com.savvasdalkitsis.uhuruphotos.foundation.date.api.module.DateModule.ParsingDateTimeFormat
-import com.savvasdalkitsis.uhuruphotos.foundation.exif.api.usecase.ExifUseCase
 import com.savvasdalkitsis.uhuruphotos.foundation.log.api.log
 import com.savvasdalkitsis.uhuruphotos.foundation.log.api.runCatchingWithLog
 import com.savvasdalkitsis.uhuruphotos.foundation.notification.api.ForegroundNotificationWorker
@@ -63,10 +62,8 @@ import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.flow.mapLatest
 import org.joda.time.format.DateTimeFormatter
 import se.ansman.dagger.auto.AutoBind
-import java.io.ByteArrayOutputStream
 import java.io.IOException
 import javax.inject.Inject
 
@@ -86,7 +83,7 @@ class LocalMediaUseCase @Inject constructor(
     private val localMediaFolderRepository: LocalMediaFolderRepository,
     private val mediaStoreVersionRepository: MediaStoreVersionRepository,
     private val workerStatusUseCase: WorkerStatusUseCase,
-    private val exifUseCase: ExifUseCase,
+    private val bitmapUseCase: BitmapUseCase,
 ) : LocalMediaUseCase {
 
     private val apiQPermissions = if (SDK_INT >= Q) {
@@ -222,7 +219,9 @@ class LocalMediaUseCase @Inject constructor(
                 false
             }
             else -> try {
-                val bytes = bitmap.toJpeg().copyExifFrom(originalFileUri)
+                val bytes = with(bitmapUseCase) {
+                    bitmap.toJpeg().copyExifFrom(originalFileUri)
+                }
                 resolver.openOutputStream(uri)?.use {
                     it.write(bytes)
                 } ?: throw IOException("Failed to open output stream.")
@@ -234,30 +233,6 @@ class LocalMediaUseCase @Inject constructor(
             }
         }
     }
-
-    private fun Bitmap.toJpeg() = ByteArrayOutputStream().use {
-        if (!compress(Bitmap.CompressFormat.JPEG, 95, it)) {
-            throw IOException("Failed to create JPEG.")
-        }
-        it.toByteArray()
-    }
-
-    private fun ByteArray.copyExifFrom(
-        uri: Uri?
-    ): ByteArray = when (uri) {
-        null -> this
-        else -> try {
-            resolver.openInputStream(uri)?.use { original ->
-                with(exifUseCase) {
-                    copyExifFrom(original)
-                }
-            } ?: this
-        } catch (e: Exception) {
-            log(e)
-            this
-        }
-    }
-
 
     override suspend fun refreshAll(
         onProgressChange: suspend (current: Int, total: Int) -> Unit,
