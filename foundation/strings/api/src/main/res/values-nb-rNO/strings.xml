@@ -87,8 +87,8 @@
         <item quantity="other">Slett %d medieelementer</item>
     </plurals>
     <plurals name="delete_media_confirmation">
-        <item quantity="one">Slett dette %d-medieelementet\?</item>
-        <item quantity="other">Slett disse %d-medieelementene\?</item>
+        <item quantity="one">Slett dette %d-medieelementet?</item>
+        <item quantity="other">Slett disse %d-medieelementene?</item>
     </plurals>
     <string name="crop">Beskjær</string>
     <string name="error_editing_photo">Kunne ikke redigerer bildet</string>
@@ -102,8 +102,8 @@
     <string name="timeline">Tidslinje</string>
     <string name="password">Passord</string>
     <plurals name="restore_photos_confirmation">
-        <item quantity="one">Gjenopprett dette bildet\?</item>
-        <item quantity="other">Gjenopprett disse %d bildene\?</item>
+        <item quantity="one">Gjenopprett dette bildet?</item>
+        <item quantity="other">Gjenopprett disse %d bildene?</item>
     </plurals>
     <plurals name="days">
         <item quantity="one">%d dag</item>
@@ -119,8 +119,8 @@
     <string name="cannot_upload">Kan ikke laste opp media</string>
     <string name="uploads">Opplastninger</string>
     <plurals name="restore_media_confirmation">
-        <item quantity="one">Gjenopprett dette medieelementet\?</item>
-        <item quantity="other">Gjenopprett disse %d medieelementene\?</item>
+        <item quantity="one">Gjenopprett dette medieelementet?</item>
+        <item quantity="other">Gjenopprett disse %d medieelementene?</item>
     </plurals>
     <string name="allow_storage_management_title">Lagringshåndtering</string>
     <string name="donate">Doner</string>
@@ -178,7 +178,7 @@
     <string name="status">Status</string>
     <string name="expand_all">Utvid alle</string>
     <string name="refreshing_feed">Gjenoppfrisker strøm …</string>
-    <string name="are_you_sure_you_want_to_perform_full_sync">Start synkronisering av hele strømmen\?</string>
+    <string name="are_you_sure_you_want_to_perform_full_sync">Start synkronisering av hele strømmen?</string>
     <string name="unmetered">Ubegrenset</string>
     <string name="favourite_photos">Favorittbilder</string>
     <string name="hidden_photos">Skjulte bilder</string>
@@ -228,7 +228,7 @@
     <string name="media_sync_status_uploading">Laster opp media til tjeneren …</string>
     <string name="show_feed_details_sync_progress">Vis framdrift for synkronisering av detaljer for hele billedstrømmen</string>
     <string name="upload_error_checking">Kunne ikke sjekke hvorvidt opplasting av filer tillates på tjeneren din. Prøv igjen.</string>
-    <string name="what_would_like_to_do">Hva vil du gjøre\?</string>
+    <string name="what_would_like_to_do">Hva vil du gjøre?</string>
     <string name="media_sync_status_downloading">Laster ned media til enheten …</string>
     <string name="authenticate_for_access_to_trash_description">Du forespurte identitetsbekreftelse for tilgang til papirkurven</string>
     <string name="trash">Papirkurv</string>
@@ -257,21 +257,21 @@
     <string name="precaching_thumbnails">Forhåndshurtiglagrer miniatyrbilder …</string>
     <string name="cannot_perform_precaching">Kan ikke utføre forhåndshurtiglagring nå</string>
     <string name="precache_thumbnails">Forhåndshurtiglagring av miniatyrbilder</string>
-    <string name="missing_local_media_permissions">Vis lokal media i strøm\?</string>
+    <string name="missing_local_media_permissions">Vis lokal media i strøm?</string>
     <string name="error_changing_photo_favourite">Kunne ikke endre favorittstatus på bildet</string>
     <string name="remove_gps_data_when_sharing">Fjern GPS-data ved deling</string>
     <string name="search_captions">Søk etter undertekster</string>
     <string name="process_takes_while_consumes_battery">Dette tar en stund og bruker batteri.</string>
     <string name="downloading_original_files">Laster ned opprinnelige filer …</string>
     <string name="show_precache_progress">Vis forhåndshurtiglagringsframdrift</string>
-    <string name="allow_storage_management_details">Åpne systeminnstillingene for å tillate denne tilgangen\?</string>
+    <string name="allow_storage_management_details">Åpne systeminnstillingene for å tillate denne tilgangen?</string>
     <plurals name="trash_photos_confirmation">
-        <item quantity="one">Send dette bildet til papirkurven\?</item>
-        <item quantity="other">Send disse %d bildene til papirkurven\?</item>
+        <item quantity="one">Send dette bildet til papirkurven?</item>
+        <item quantity="other">Send disse %d bildene til papirkurven?</item>
     </plurals>
     <plurals name="trash_media_confirmation">
-        <item quantity="one">Send dette medieelementet til papirkurven\?</item>
-        <item quantity="other">Send disse %d medieelementene til papirkurven\?</item>
+        <item quantity="one">Send dette medieelementet til papirkurven?</item>
+        <item quantity="other">Send disse %d medieelementene til papirkurven?</item>
     </plurals>
     <string name="full_feed_details_sync">Detaljer for fullstendig synkronisering av strøm</string>
     <string name="setting_media_favourite">Setter favorittilstand for media …</string>
@@ -287,15 +287,15 @@
     <string name="nothing_here_yet">Ingenting her enda</string>
     <string name="use_as">Bruk som</string>
     <string name="missing_permissions">Tilganger mangler</string>
-    <string name="are_you_sure_you_want_to_perform_feed_details_sync">Start innhenting av detaljer for strøm\?</string>
+    <string name="are_you_sure_you_want_to_perform_feed_details_sync">Start innhenting av detaljer for strøm?</string>
     <string name="show_library_on_home">Vis bibliotek på hjemmeskjermen</string>
     <string name="authenticate_for_access">Identitetsbekreft deg for tilgang til programmet</string>
     <string name="authenticate_to_change_description">Å skru dette av krever identitetsbekreftelse i sikkerhetsøyemed</string>
     <string name="precaching_thumbnails_progress">Framdrift for forhåndshurtiglagring av miniatyrbilder</string>
-    <string name="are_you_sure_you_want_to_perform_precache">Start forhåndshurtiglagring av miniatyrbilder\?</string>
-    <string name="are_you_sure_you_want_to_start_local_sync">Start synkronisering av lokal media\?</string>
+    <string name="are_you_sure_you_want_to_perform_precache">Start forhåndshurtiglagring av miniatyrbilder?</string>
+    <string name="are_you_sure_you_want_to_start_local_sync">Start synkronisering av lokal media?</string>
     <string name="delete_fully_synced_media_local">Slett lokal</string>
-    <string name="missing_local_media_permissions_photo_map">Vis lokal media på billedkartet\?</string>
+    <string name="missing_local_media_permissions_photo_map">Vis lokal media på billedkartet?</string>
     <string name="discover">Oppdagelse</string>
     <string name="media_sync_status_remote_only">Media er kun tilgjengelig på tjeneren</string>
     <string name="ui">Grensesnitt</string>
