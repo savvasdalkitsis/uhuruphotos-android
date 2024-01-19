@@ -1,0 +1,3 @@
+* Fixing thumbnails of some local media showing up with the wrong orientation
+* Small tweaks to account overview on small phones
+* Fixing notification upsell in small phones
