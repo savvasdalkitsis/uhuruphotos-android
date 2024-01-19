@@ -135,7 +135,7 @@ sqldelight-gradle-plugin = { module = "app.cash.sqldelight:gradle-plugin", versi
 sqldelight-jvm = { module = "app.cash.sqldelight:sqlite-driver", version.ref = "sqldelight" }
 timeline = "com.github.yeocak:ComposableTimelineView:0.6"
 turbine = "app.cash.turbine:turbine:1.0.0"
-urlvalidator = "commons-validator:commons-validator:1.7"
+urlvalidator = "commons-validator:commons-validator:1.8.0"
 vico = "com.patrykandpatrick.vico:compose-m2:1.9.2"
 videocache = "com.github.Andrew0000:Android-VideoView-cache:1.0.15"
 zoomable = "com.mxalbert.zoomable:zoomable:1.6.1"
