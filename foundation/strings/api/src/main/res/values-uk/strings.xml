@@ -54,22 +54,22 @@
         <item quantity="other">Надіслати %d медіафайлів до кошика</item>
     </plurals>
     <plurals name="restore_media_confirmation">
-        <item quantity="one">Відновити %d медіа елемент\?</item>
-        <item quantity="few">Відновити %d медіа елементи\?</item>
-        <item quantity="many">Відновити %d медіа елементів\?</item>
-        <item quantity="other">Відновити %d медіа елементів\?</item>
+        <item quantity="one">Відновити %d медіа елемент?</item>
+        <item quantity="few">Відновити %d медіа елементи?</item>
+        <item quantity="many">Відновити %d медіа елементів?</item>
+        <item quantity="other">Відновити %d медіа елементів?</item>
     </plurals>
     <plurals name="trash_photos_confirmation">
-        <item quantity="one">Надіслати це фото до кошика\?</item>
-        <item quantity="few">Надіслати %d фото до кошика\?</item>
-        <item quantity="many">Надіслати %d фото до кошика\?</item>
-        <item quantity="other">Надіслати %d фото до кошика\?</item>
+        <item quantity="one">Надіслати це фото до кошика?</item>
+        <item quantity="few">Надіслати %d фото до кошика?</item>
+        <item quantity="many">Надіслати %d фото до кошика?</item>
+        <item quantity="other">Надіслати %d фото до кошика?</item>
     </plurals>
     <plurals name="restore_photos_confirmation">
-        <item quantity="one">Відновити %d фотографію\?</item>
-        <item quantity="few">Відновити %d фотографії\?</item>
-        <item quantity="many">Відновити %d фотографій\?</item>
-        <item quantity="other">Відновити %d фотографій\?</item>
+        <item quantity="one">Відновити %d фотографію?</item>
+        <item quantity="few">Відновити %d фотографії?</item>
+        <item quantity="many">Відновити %d фотографій?</item>
+        <item quantity="other">Відновити %d фотографій?</item>
     </plurals>
     <string name="view_all">Переглянути всі</string>
     <plurals name="delete_photos_confirmation">
@@ -79,10 +79,10 @@
         <item quantity="other">Ви дійсно хочете видалити цих %d фотографій\?</item>
     </plurals>
     <plurals name="trash_media_confirmation">
-        <item quantity="one">Надіслати %d медіа елемент до кошика\?</item>
-        <item quantity="few">Надіслати %d медіа елементи до кошика\?</item>
-        <item quantity="many">Надіслати %d медіа елементів до кошика\?</item>
-        <item quantity="other">Надіслати %d медіа елементів до кошика\?</item>
+        <item quantity="one">Надіслати %d медіа елемент до кошика?</item>
+        <item quantity="few">Надіслати %d медіа елементи до кошика?</item>
+        <item quantity="many">Надіслати %d медіа елементів до кошика?</item>
+        <item quantity="other">Надіслати %d медіа елементів до кошика?</item>
     </plurals>
     <string name="error_refreshing_people">Не вдалося оновити людей</string>
     <string name="error_loading_photo_details">Не вдалося завантажити подробиці фотографії</string>
