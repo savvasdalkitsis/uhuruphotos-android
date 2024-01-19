@@ -20,7 +20,7 @@ retrofit = "2.9.0"
 sqldelight = "2.0.1"
 
 [libraries]
-about = "com.mikepenz:aboutlibraries-compose:10.8.3"
+about = "com.mikepenz:aboutlibraries-compose:10.10.0"
 accompanist-drawable = { module = "com.google.accompanist:accompanist-drawablepainter", version.ref = "accompanist" }
 accompanist-insets = { module = "com.google.accompanist:accompanist-insets-ui", version.ref = "accompanist" }
 accompanist-navigation = { module = "com.google.accompanist:accompanist-navigation-animation", version.ref = "accompanist" }
