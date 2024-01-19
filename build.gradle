@@ -24,7 +24,7 @@ plugins {
     id "org.sonarqube" version "4.3.0.3225"
     id "com.autonomousapps.dependency-analysis" version "1.21.0" apply true
     id "dev.zacsweers.redacted" version "1.7.1" apply false
-    id "com.google.devtools.ksp" version "1.9.22-1.0.16" apply false
+    id "com.google.devtools.ksp" version "1.9.22-1.0.17" apply false
     id 'com.mikepenz.aboutlibraries.plugin' version "10.8.3" apply false
 }
 
