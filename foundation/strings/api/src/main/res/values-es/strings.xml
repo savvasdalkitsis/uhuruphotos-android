@@ -324,8 +324,8 @@
     <string name="finalizing_upload">Finalizando la carga</string>
     <string name="send_database">Enviar base de datos con comentarios</string>
     <string name="cloud_sync">Copia de seguridad y sincronización en la nube</string>
-    <string name="what_is_libre_photos">¿Qué es LibrePhotos\?</string>
-    <string name="what_would_you_like_to_do">¿Qué te gustaría hacer\?</string>
+    <string name="what_is_libre_photos">¿Qué es LibrePhotos?</string>
+    <string name="what_would_you_like_to_do">¿Qué te gustaría hacer?</string>
     <string name="notifications_explanation">UhuruPhotos emplea trabajos en segundo plano para realizar varias acciones como sincronizar medios, copias de seguridad/sincronización, etc. Si deseas ver el progreso de esas tareas, debes permitir acceso a notificaciones.</string>
     <string name="month">Mes</string>
     <string name="media_per_month">Medios por mes</string>
