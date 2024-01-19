@@ -120,14 +120,14 @@
         <item quantity="other">Restaurer %d photos</item>
     </plurals>
     <plurals name="restore_photos_confirmation">
-        <item quantity="one">Restaurer cette %d photo \?</item>
-        <item quantity="many">Restaurer ces %d photos \?</item>
-        <item quantity="other">Restaurer ces %d photos \?</item>
+        <item quantity="one">Restaurer cette %d photo ?</item>
+        <item quantity="many">Restaurer ces %d photos ?</item>
+        <item quantity="other">Restaurer ces %d photos ?</item>
     </plurals>
     <plurals name="trash_photos_confirmation">
-        <item quantity="one">Envoyer cette photo dans la corbeille \?</item>
-        <item quantity="many">Envoyer ces %d photos dans la corbeille \?</item>
-        <item quantity="other">Envoyer ces %d photos dans la corbeille \?</item>
+        <item quantity="one">Envoyer cette photo dans la corbeille ?</item>
+        <item quantity="many">Envoyer ces %d photos dans la corbeille ?</item>
+        <item quantity="other">Envoyer ces %d photos dans la corbeille ?</item>
     </plurals>
     <string name="enable_logging">Activer la journalisation</string>
     <string name="feed_refresh_days">Nombre de jours du flux à mettre à jour lors de \"Tirer pour rafraîchir\"</string>
