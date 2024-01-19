@@ -337,7 +337,12 @@
     <string name="uploads">上传</string>
     <string name="server">服务器</string>
     <string name="need_permissions_to_manage_gallery">UhuruPhotos 需要权限来访问本地影像以便帮您整理展馆</string>
-    <string name="libre_photos_server">LibrePhotos 服务器</string><string name="libre_photos_description">LibrePhotos 是一个自由免费、自托管的开源照片管理服务。\n\nLibrePhotos 不同于在云端存储、扫描、索引您的照片并用来训练机器学习模型、收集针对于您的广告数据的那些商业服务，而是在您的本地机器上保存您的所有照片和元数据。\n\n您的数据永远不会被发送到或存储于某个第三方的服务器上。获得与那些商业服务相同的强大功能，而且不用放弃您的个人数据与隐私。</string>
+    <string name="libre_photos_server">LibrePhotos 服务器</string>
+    <string name="libre_photos_description">LibrePhotos 是一个自由免费、自托管的开源照片管理服务。
+\n
+\nLibrePhotos 不同于在云端存储、扫描、索引您的照片并用来训练机器学习模型、收集针对于您的广告数据的那些商业服务，而是在您的本地机器上保存您的所有照片和元数据。
+\n
+\n您的数据永远不会被发送到或存储于某个第三方的服务器上。获得与那些商业服务相同的强大功能，而且不用放弃您的个人数据与隐私。</string>
     <string name="skip">跳过</string>
     <string name="notifications_explanation">UhuruPhotos 使用后台任务来执行各种动作，例如同步影像、备份与同步等。若您想看到这些任务的进度，您需要允许访问通知。</string>
     <string name="completing">正在完成</string>
