@@ -2,16 +2,16 @@
 accompanist = "0.32.0"
 androidx-credentials = "1.2.0"
 androidx-hilt = "1.1.0"
-autodagger = "0.10.0"
-coil = "2.4.0"
+autodagger = "0.11.0"
+coil = "2.5.0"
 com-google-android-gms = "18.2.0"
 compose = "1.6.0-rc01"
 google-services = "4.4.0"
 hilt = "2.50"
 hilt-compiler = "1.1.0"
 lumberjack = "5.3.1"
-media3 = "1.2.0"
-mockk = "1.13.8"
+media3 = "1.2.1"
+mockk = "1.13.9"
 moshi = "1.15.0"
 okhttp = "5.0.0-alpha.11"
 org-jetbrains-kotlinx = "1.7.3"
@@ -20,7 +20,7 @@ retrofit = "2.9.0"
 sqldelight = "2.0.1"
 
 [libraries]
-about = "com.mikepenz:aboutlibraries-compose:10.8.3"
+about = "com.mikepenz:aboutlibraries-compose:10.10.0"
 accompanist-drawable = { module = "com.google.accompanist:accompanist-drawablepainter", version.ref = "accompanist" }
 accompanist-insets = { module = "com.google.accompanist:accompanist-insets-ui", version.ref = "accompanist" }
 accompanist-navigation = { module = "com.google.accompanist:accompanist-navigation-animation", version.ref = "accompanist" }
@@ -62,7 +62,7 @@ androidx-tracing = "androidx.tracing:tracing-ktx:1.2.0"
 androidx-window = "androidx.window:window:1.2.0"
 androidx-work = "androidx.work:work-runtime-ktx:2.9.0"
 androidx-work-hilt = "androidx.hilt:hilt-work:1.1.0"
-appcenter-crashes= "com.microsoft.appcenter:appcenter-crashes:5.0.3"
+appcenter-crashes= "com.microsoft.appcenter:appcenter-crashes:5.0.4"
 appyx = "com.bumble.appyx:core:1.4.0"
 assure = "com.afollestad.assure:coroutines:0.2.0"
 autodagger-core = { module = "se.ansman.dagger.auto:android", version.ref = "autodagger" }
@@ -86,16 +86,16 @@ hilt-dagger-compiler = { module = "com.google.dagger:hilt-compiler", version.ref
 imaging = "org.apache.commons:commons-imaging:1.0-alpha3"
 infobar = "com.radusalagean:info-bar-compose:1.0.0"
 jetlime = "io.github.pushpalroy:jetlime:1.0.3"
-joda-time = "net.danlew:android.joda:2.12.5"
+joda-time = "net.danlew:android.joda:2.12.6"
 junit = "junit:junit:4.13.2"
 jwt = "com.auth0.android:jwtdecode:2.0.2"
 kotlinx-coroutines = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-android", version.ref = "org-jetbrains-kotlinx" }
 kotlinx-coroutines-test = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test", version.ref = "org-jetbrains-kotlinx" }
-kotlinx-immutable = "org.jetbrains.kotlinx:kotlinx-collections-immutable:0.3.6"
+kotlinx-immutable = "org.jetbrains.kotlinx:kotlinx-collections-immutable:0.3.7"
 kotlin-reflect = "org.jetbrains.kotlin:kotlin-reflect:1.9.22"
 leaks = "com.squareup.leakcanary:leakcanary-android:2.12"
 logger = "com.jakewharton.timber:timber:4.7.1"
-lottie = "com.airbnb.android:lottie-compose:6.1.0"
+lottie = "com.airbnb.android:lottie-compose:6.3.0"
 lumberjack-core = { module = "com.github.savvasdalkitsis.Lumberjack:lumberjack-library", version.ref = "lumberjack" }
 lumberjack-feedback = { module = "com.github.savvasdalkitsis.Lumberjack:lumberjack-feedback", version.ref = "lumberjack" }
 lumberjack-feedback-manager = "com.github.MFlisar:FeedbackManager:2.0.4"
@@ -105,8 +105,8 @@ mapbox = "com.mapbox.maps:android:10.9.1"
 maplibre = "org.maplibre.gl:android-sdk:10.2.0"
 maplibre-annotations = "org.maplibre.gl:android-plugin-annotation-v9:2.0.2"
 maps = { module = "com.google.android.gms:play-services-maps", version.ref = "com-google-android-gms" }
-maps-compose = "com.google.maps.android:maps-compose:2.14.0"
-maps-utils = "com.google.maps.android:android-maps-utils:3.5.3"
+maps-compose = "com.google.maps.android:maps-compose:2.15.0"
+maps-utils = "com.google.maps.android:android-maps-utils:3.8.2"
 maps-utils-ktx = "com.google.maps.android:maps-utils-ktx:3.4.0"
 mockk = { module = "io.mockk:mockk", version.ref = "mockk" }
 moshi = { module = "com.squareup.moshi:moshi-kotlin", version.ref = "moshi" }
@@ -120,12 +120,12 @@ permissions-compose = { module = "dev.shreyaspatil.permission-flow:permission-fl
 play = "com.google.android.gms:play-services-base:18.3.0"
 recasa = "com.github.sebaslogen.resaca:resaca:2.4.9"
 reorder = "org.burnoutcrew.composereorderable:reorderable:0.9.6"
-remember = "dev.burnoo:compose-remember-preference:1.0.1"
+remember = "dev.burnoo:compose-remember-preference:1.0.2"
 result = "com.michael-bull.kotlin-result:kotlin-result:1.1.18"
 result-coroutines = "com.michael-bull.kotlin-result:kotlin-result-coroutines:1.1.18"
 retrofit-core = { module = "com.squareup.retrofit2:retrofit", version.ref = "retrofit" }
 retrofit-moshi = { module = "com.squareup.retrofit2:converter-moshi", version.ref = "retrofit" }
-scrollbar = "com.github.nanihadesuka:LazyColumnScrollbar:1.7.2"
+scrollbar = "com.github.nanihadesuka:LazyColumnScrollbar:1.9.0"
 shazamcrest = "com.shazam:shazamcrest:0.11"
 seeker = "io.github.2307vivek:seeker:1.2.2"
 sqldelight-adapters = { module = "app.cash.sqldelight:primitive-adapters", version.ref = "sqldelight" }
