@@ -22,10 +22,10 @@ plugins {
     id 'com.google.android.libraries.mapsplatform.secrets-gradle-plugin' version '2.0.1' apply false
     id "com.bnorm.power.kotlin-power-assert" version "0.13.0" apply false
     id "org.sonarqube" version "4.3.0.3225"
-    id "com.autonomousapps.dependency-analysis" version "1.21.0" apply true
+    id "com.autonomousapps.dependency-analysis" version "1.29.0" apply true
     id "dev.zacsweers.redacted" version "1.7.1" apply false
     id "com.google.devtools.ksp" version "1.9.22-1.0.17" apply false
-    id 'com.mikepenz.aboutlibraries.plugin' version "10.8.3" apply false
+    id 'com.mikepenz.aboutlibraries.plugin' version "10.10.0" apply false
 }
 
 tasks.register('clean', Delete) {

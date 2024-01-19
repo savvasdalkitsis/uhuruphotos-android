@@ -9,7 +9,7 @@
     <string name="photo_map">照片地图</string>
     <string name="search">搜索</string>
     <string name="tiny">小</string>
-    <string name="comfortable">舒适</string>
+    <string name="comfortable">适中</string>
     <string name="logs_cleared">日志已清理</string>
     <string name="error_refreshing_people">无法刷新人物</string>
     <string name="error_loading_photo_details">无法加载照片详情</string>
@@ -59,14 +59,14 @@
     <string name="authenticate_for_access_description">您已要求此应用需要验证</string>
     <string name="favourite_photos">收藏夹</string>
     <string name="hidden_photos">隐藏照片</string>
-    <string name="remove_favourite">从收藏夹中移出</string>
+    <string name="remove_favourite">从我的最爱中移出</string>
     <string name="edit_server_url">编辑服务器地址</string>
     <string name="background_jobs">后台任务</string>
     <string name="albums">相册</string>
-    <string name="crash_reports">错误日志</string>
+    <string name="crash_reports">崩溃日志</string>
     <string name="send_crash_logs">发送错误报告以向开发者反馈</string>
     <string name="user_created_albums">用户创建的相册</string>
-    <string name="require_biometrics_for_app_access">访问App需要进行生物识别验证</string>
+    <string name="require_biometrics_for_app_access">访问应用时需要进行生物识别验证</string>
     <string name="authenticate">验证</string>
     <string name="authenticate_to_change">验证以解锁</string>
     <string name="authenticate_to_change_description">出于安全考虑，禁用此选项需要验证</string>
@@ -79,9 +79,9 @@
     <string name="details">详细信息</string>
     <string name="deleting_photo">正在删除照片</string>
     <string name="refresh">刷新</string>
-    <string name="favourite">收藏</string>
+    <string name="favourite">最爱</string>
     <string name="info">信息</string>
-    <string name="library">媒体库</string>
+    <string name="library">影像库</string>
     <string name="missing_album_title">相册标题缺失</string>
     <string name="auto_generated_albums">自动生成的相册</string>
     <string name="require_biometrics_for_hidden_photos_access">访问隐藏的照片需要进行生物识别验证</string>
@@ -139,7 +139,7 @@
     <string name="no_user_albums">此用户没有创建相册</string>
     <string name="change">改动</string>
     <string name="any_connected">任何已连接</string>
-    <string name="unmetered">不用按计量付费的网路</string>
+    <string name="unmetered">不用按计量付费的网络</string>
     <string name="feedback">反馈</string>
     <string name="send_feedback_with_logs">使用日志发送反馈</string>
     <string name="show_library_on_home">在主屏幕上显示图库</string>
@@ -156,17 +156,17 @@
     <string name="privacy_security">隐私与安全</string>
     <string name="advanced">进阶</string>
     <string name="use_as">用于</string>
-    <string name="full">完整</string>
+    <string name="full">全面（full）</string>
     <string name="max_animated_video_thumbnails">动态视频缩略图最大数量 (%s)</string>
-    <string name="max_animated_video_thumbnails_description">数值过高可能会导致应用不稳定。如果你遇到任何问题请尝试将数值调低。</string>
+    <string name="max_animated_video_thumbnails_description">数值过高可能会导致应用不稳定。如果您遇到任何问题请尝试将数值调低。</string>
     <string name="today">今天</string>
     <string name="requires_charging">只在充电时同步</string>
-    <string name="feed_size">照片流尺寸</string>
+    <string name="feed_size">照片流大小</string>
     <string name="feed_sync_freq_changed">照片流同步频率已修改</string>
     <string name="feed_sync_network_changed">照片流同步的网络要求已修改</string>
     <string name="feed_sync_freq">全量同步照片流，每</string>
     <plurals name="trash_media">
-        <item quantity="other">将 %d 个媒体项移入回收站</item>
+        <item quantity="other">将 %d 个影像移入回收站</item>
     </plurals>
     <string name="feed_refresh_days">下拉刷新所包含的照片流天数</string>
     <string name="feed">照片流</string>
@@ -184,16 +184,16 @@
     <string name="cancel">取消</string>
     <string name="feed_sync_job_configuration">照片流同步任务设置</string>
     <string name="status">状态</string>
-    <string name="gallery_size">图库尺寸</string>
-    <string name="media">媒体</string>
+    <string name="gallery_size">展馆大小</string>
+    <string name="media">影像</string>
     <plurals name="delete_media">
-        <item quantity="other">删除 %d 个媒体项</item>
+        <item quantity="other">删除 %d 个影像</item>
     </plurals>
     <plurals name="restore_media">
-        <item quantity="other">恢复 %d 个媒体项</item>
+        <item quantity="other">恢复 %d 个影像</item>
     </plurals>
     <plurals name="delete_media_confirmation">
-        <item quantity="other">您确定要删除这 %d 个媒体项吗？</item>
+        <item quantity="other">您确定要删除这 %d 个影像吗？</item>
     </plurals>
     <plurals name="restore_media_confirmation">
         <item quantity="other">恢复这 %d 个影像项目？</item>
@@ -337,12 +337,7 @@
     <string name="uploads">上传</string>
     <string name="server">服务器</string>
     <string name="need_permissions_to_manage_gallery">UhuruPhotos 需要权限来访问本地影像以便帮您整理展馆</string>
-    <string name="libre_photos_server">LibrePhotos 服务器</string>
-    <string name="libre_photos_description">LibrePhotos 是一个自由免费、自托管的开源照片管理服务。
-\n
-\nLibrePhotos 不同于在云端存储、扫描、索引您的照片并用来训练机器学习模型、收集针对于您的广告数据的那些商业服务，而是在您的本地机器上保存您的所有照片和元数据。
-\n
-\n您的数据永远不会被发送到或存储于某个第三方的服务器上。获得与那些商业服务相同的强大功能，而且不用放弃您的个人数据与隐私。</string>
+    <string name="libre_photos_server">LibrePhotos 服务器</string><string name="libre_photos_description">LibrePhotos 是一个自由免费、自托管的开源照片管理服务。\n\nLibrePhotos 不同于在云端存储、扫描、索引您的照片并用来训练机器学习模型、收集针对于您的广告数据的那些商业服务，而是在您的本地机器上保存您的所有照片和元数据。\n\n您的数据永远不会被发送到或存储于某个第三方的服务器上。获得与那些商业服务相同的强大功能，而且不用放弃您的个人数据与隐私。</string>
     <string name="skip">跳过</string>
     <string name="notifications_explanation">UhuruPhotos 使用后台任务来执行各种动作，例如同步影像、备份与同步等。若您想看到这些任务的进度，您需要允许访问通知。</string>
     <string name="completing">正在完成</string>
