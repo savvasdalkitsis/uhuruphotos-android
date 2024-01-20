@@ -118,7 +118,7 @@ palette = "androidx.palette:palette-ktx:1.0.0"
 permissions-base = { module = "dev.shreyaspatil.permission-flow:permission-flow-android", version.ref = "permissions" }
 permissions-compose = { module = "dev.shreyaspatil.permission-flow:permission-flow-compose", version.ref = "permissions" }
 play = "com.google.android.gms:play-services-base:18.3.0"
-recasa = "com.github.sebaslogen.resaca:resaca:2.4.9"
+recasa = "com.github.sebaslogen.resaca:resaca:3.1.0"
 reorder = "org.burnoutcrew.composereorderable:reorderable:0.9.6"
 remember = "dev.burnoo:compose-remember-preference:1.0.2"
 result = "com.michael-bull.kotlin-result:kotlin-result:1.1.18"
