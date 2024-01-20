@@ -53,7 +53,7 @@ jobs:
 #        arch: x86
 #        script: ./gradlew connectedCheck
     - name: Archive apk
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: apk
         path: |
