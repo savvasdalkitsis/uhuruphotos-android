@@ -21,15 +21,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
-import androidx.hilt.navigation.HiltViewModelFactory
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelStoreOwner
 import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.compose.LocalViewModelStoreOwner
-import androidx.navigation.NavBackStackEntry
 import com.savvasdalkitsis.uhuruphotos.foundation.log.api.log
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.NavigationRoute
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.NavigationTargetBuilder
@@ -79,22 +75,8 @@ class NavigationTargetBuilder @Inject constructor() : NavigationTargetBuilder {
     }
 
     @Composable
-    private fun createHiltViewModelFactory(
-        viewModelStoreOwner: ViewModelStoreOwner
-    ): ViewModelProvider.Factory? = if (viewModelStoreOwner is NavBackStackEntry) {
-        HiltViewModelFactory(
-            context = LocalContext.current,
-            navBackStackEntry = viewModelStoreOwner
-        )
-    } else {
-        // Use the default factory provided by the ViewModelStoreOwner
-        // and assume it is an @AndroidEntryPoint annotated fragment or activity
-        null
-    }
-
-    @Composable
-    private fun <T : ViewModel> hiltViewModelScoped(key: Any? = null, klass: KClass<T>, defaultArguments: Bundle = Bundle.EMPTY): T {
-        val (scopedViewModelContainer: ScopedViewModelContainer, positionalMemoizationKey: String, externalKey: ScopedViewModelContainer.ExternalKey) =
+    private fun <T : ViewModel> hiltViewModelScoped(key: Any? = null, clazz: KClass<T>, defaultArguments: Bundle = Bundle.EMPTY): T {
+        val (scopedViewModelContainer: ScopedViewModelContainer, positionalMemoizationKey: ScopedViewModelContainer.InternalKey, externalKey: ScopedViewModelContainer.ExternalKey) =
             generateKeysAndObserveLifecycle(key = key)
 
         val viewModelStoreOwner: ViewModelStoreOwner = checkNotNull(LocalViewModelStoreOwner.current) {
@@ -103,10 +85,10 @@ class NavigationTargetBuilder @Inject constructor() : NavigationTargetBuilder {
 
         // The object will be built the first time and retrieved in next calls or recompositions
         return scopedViewModelContainer.getOrBuildViewModel(
-            modelClass = klass.java,
+            modelClass = clazz.java,
             positionalMemoizationKey = positionalMemoizationKey,
             externalKey = externalKey,
-            factory = createHiltViewModelFactory(viewModelStoreOwner),
+            factory = com.sebaslogen.resaca.hilt.createHiltViewModelFactory(viewModelStoreOwner),
             viewModelStoreOwner = viewModelStoreOwner,
             defaultArguments = defaultArguments
         )
