@@ -54,7 +54,7 @@ jobs:
         echo $ENCODED_STRING | base64 -di > app/google-services.json
 
     - name: Setup Android SDK
-      uses: android-actions/setup-android@v2
+      uses: android-actions/setup-android@v3
 
     - name: Build & deploy Android release
       run: bundle exec fastlane android deploy
