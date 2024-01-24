@@ -1,0 +1,1 @@
+* Multiple local folders can now contribute to the Feed and be synced automatically
