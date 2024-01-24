@@ -80,6 +80,7 @@ internal fun AccountOverview(
     modifier: Modifier = Modifier,
     state: AccountOverviewState,
     onAboutClicked: () -> Unit = {},
+    onFoldersClicked: () -> Unit = {},
     onLogoutClicked: () -> Unit = {},
     onLoginClicked: () -> Unit = {},
     onSettingsClicked: () -> Unit = {},
@@ -107,7 +108,8 @@ internal fun AccountOverview(
             onCancelJob,
             onViewAllUploadsClicked,
             onCloudSyncChanged,
-            onAboutClicked
+            onAboutClicked,
+            onFoldersClicked,
         )
     }
 }
@@ -178,7 +180,8 @@ private fun ConstraintLayoutScope.Content(
     onCancelJob: (Job) -> Unit,
     onViewAllUploadsClicked: () -> Unit,
     onCloudSyncChanged: (Boolean) -> Unit,
-    onAboutClicked: () -> Unit
+    onAboutClicked: () -> Unit,
+    onFoldersClicked: () -> Unit,
 ) {
     Column(
         modifier = Modifier
@@ -229,19 +232,41 @@ private fun ConstraintLayoutScope.Content(
                 onCheckedChange = onCloudSyncChanged,
             )
         }
-        OutlinedButton(
+        Row(
             modifier = Modifier
                 .recomposeHighlighter()
                 .fillMaxWidth()
                 .padding(horizontal = 16.dp),
-            onClick = onAboutClicked,
+            horizontalArrangement = spacedBy(8.dp)
         ) {
-            Icon(
-                painter = painterResource(id = drawable.ic_info),
-                contentDescription = null
-            )
-            Spacer(modifier = Modifier.width(8.dp))
-            Text(text = stringResource(string.about))
+            OutlinedButton(
+                modifier = Modifier
+                    .recomposeHighlighter()
+                    .weight(1f)
+                    .fillMaxWidth(),
+                onClick = onFoldersClicked,
+            ) {
+                Icon(
+                    painter = painterResource(id = drawable.ic_folder),
+                    contentDescription = null
+                )
+                Spacer(modifier = Modifier.width(8.dp))
+                Text(text = stringResource(string.feed_folders))
+            }
+            OutlinedButton(
+                modifier = Modifier
+                    .recomposeHighlighter()
+                    .weight(1f)
+                    .fillMaxWidth(),
+                onClick = onAboutClicked,
+            ) {
+                Icon(
+                    painter = painterResource(id = drawable.ic_info),
+                    contentDescription = null
+                )
+                Spacer(modifier = Modifier.width(8.dp))
+                Text(text = stringResource(string.about))
+            }
         }
     }
 }

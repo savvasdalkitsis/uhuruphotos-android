@@ -18,9 +18,9 @@ package com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.ui.stat
 import androidx.compose.runtime.Immutable
 import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.CollageState
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.api.ui.state.FeedMediaItemSyncDisplay
-import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemSelectionMode
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemsOnDevice
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.state.CelState
+import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.SelectionMode
 
 @Immutable
 data class FeedState(
@@ -41,13 +41,13 @@ data class FeedState(
 ) {
     val selectedCelCount: Int = collageState.clusters.sumOf { cluster ->
         cluster.cels.count { cel ->
-            cel.selectionMode == MediaItemSelectionMode.SELECTED
+            cel.selectionMode == SelectionMode.SELECTED
         }
     }
     val hasSelection = selectedCelCount > 0
     val selectedCels: List<CelState> = collageState.clusters.flatMap { cluster ->
         cluster.cels.filter { cel ->
-            cel.selectionMode == MediaItemSelectionMode.SELECTED
+            cel.selectionMode == SelectionMode.SELECTED
         }
     }
     val shouldShowShareIcon: Boolean = selectedCels.let { selected ->

@@ -14,6 +14,8 @@ dependencies {
             project(":foundation:compose:api"),
             project(":foundation:theme:api"),
             libs.androidx.constraint,
+            libs.androidx.compose.material,
+            libs.androidx.compose.ui,
             libs.scrollbar,
     )
     implementation(
@@ -25,9 +27,7 @@ dependencies {
             libs.accompanist.systemui,
             libs.androidx.activity,
             libs.androidx.compose.foundation.layout,
-            libs.androidx.compose.material,
             libs.androidx.compose.material.windowsize,
-            libs.androidx.compose.ui,
             libs.androidx.compose.ui.tooling.preview,
             libs.androidx.compose.ui.util,
             libs.androidx.splash,

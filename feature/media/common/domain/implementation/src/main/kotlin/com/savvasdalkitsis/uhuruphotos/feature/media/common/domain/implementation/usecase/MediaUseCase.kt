@@ -107,19 +107,6 @@ class MediaUseCase @Inject constructor(
             combineLocalMediaItemsWithUser(localMediaItems, user)
         }
 
-    override suspend fun getLocalMedia(): MediaItemsOnDevice {
-        val status = welcomeUseCase.getWelcomeStatus()
-        val localMedia = localMediaUseCase.getLocalMediaItems()
-        return when {
-            status.hasRemoteAccess -> userUseCase.getUserOrRefresh().map { user ->
-                combineLocalMediaItemsWithUser(localMedia, user)
-            }.getOrElse {
-                MediaItemsOnDevice.Error
-            }
-            else -> combineLocalMediaItemsWithUser(localMedia, null)
-        }
-    }
-
     private fun combineLocalMediaItemsWithUser(
         localMediaItems: LocalMediaItems,
         user: User?
@@ -243,25 +230,10 @@ class MediaUseCase @Inject constructor(
         }
     }
 
-    override suspend fun getMediaItemDetails(id: MediaId<*>): MediaItemDetails? = when (id) {
-        is Remote -> id.getDetails()
-        is Downloading -> id.remote.getDetails()
-        is MediaId.Uploading -> id.local.getDetails()
-        is Local -> id.getDetails()
-        is MediaId.Group -> {
-            val remoteDetails = id.findRemote?.getDetails()
-            val localDetails = id.findLocal?.getDetails()
-            remoteDetails?.mergeWith(localDetails) ?: localDetails
-        }
-    }
-
     private fun Remote.observeDetails() =
         remoteMediaUseCase.observeRemoteMediaItemDetails(value).map {
             it.toMediaItemDetails()
         }
-
-    private suspend fun Remote.getDetails() =
-        remoteMediaUseCase.getRemoteMediaItemDetails(value)?.toMediaItemDetails()
 
     private fun Local.observeDetails() =
         combine(
@@ -270,11 +242,6 @@ class MediaUseCase @Inject constructor(
         ) { item, user ->
             item.toMediaItemDetails(user.id)
         }
-
-    private suspend fun Local.getDetails(): MediaItemDetails? =
-        userUseCase.getUserOrRefresh().map { user ->
-            localMediaUseCase.getLocalMediaItem(value)?.toMediaItemDetails(user.id)
-        }.getOr(null)
 
     private fun LocalMediaItem.toMediaItemDetails(userId: Int): MediaItemDetails =
         MediaItemDetails(

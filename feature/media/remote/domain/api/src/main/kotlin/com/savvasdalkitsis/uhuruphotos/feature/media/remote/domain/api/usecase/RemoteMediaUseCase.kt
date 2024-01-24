@@ -35,8 +35,6 @@ interface RemoteMediaUseCase {
 
     fun observeRemoteMediaItemDetails(id: String): Flow<DbRemoteMediaItemDetails>
 
-    suspend fun getRemoteMediaItemDetails(id: String): DbRemoteMediaItemDetails?
-
     suspend fun getRemoteMediaItemSummary(id: String): DbRemoteMediaItemSummary?
 
     fun observeHiddenRemoteMedia(): Flow<List<DbRemoteMediaItemSummary>>

@@ -30,13 +30,14 @@ import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.channelFlow
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.onStart
 
 data object LoadStats : StatsAction() {
 
     context(StatsActionsContext)
     override fun handle(state: StatsState): Flow<Mutation<StatsState>> = channelFlow {
-        val allMedia = feedUseCase.getFeed(FeedFetchType.ALL)
+        val allMedia = feedUseCase.observeFeed(FeedFetchType.ALL).first()
             .flatMap { it.mediaItems }
         val mediaWithDates = allMedia.filter { it.mediaDay != null }
         with(statsUseCase) {

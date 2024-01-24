@@ -28,6 +28,7 @@ import androidx.compose.ui.unit.dp
 import com.savvasdalkitsis.uhuruphotos.feature.library.view.implementation.seam.actions.LibraryAction
 import com.savvasdalkitsis.uhuruphotos.feature.library.view.implementation.seam.actions.LocalBucketSelected
 import com.savvasdalkitsis.uhuruphotos.feature.library.view.implementation.ui.state.LibraryLocalMedia
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.NamedVitrine
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.SectionHeader
 
 @Composable
@@ -49,7 +50,7 @@ internal fun LocalFolders(
         ) {
             for ((bucket, vitrineState) in media.buckets) {
                 item(bucket.id) {
-                    LibraryItem(
+                    NamedVitrine(
                         modifier = Modifier.animateItemPlacement(),
                         state = vitrineState,
                         photoGridModifier = Modifier.width(120.dp),

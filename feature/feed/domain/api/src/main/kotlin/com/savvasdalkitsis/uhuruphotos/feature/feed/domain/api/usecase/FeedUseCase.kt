@@ -28,8 +28,8 @@ interface FeedUseCase {
         feedFetchType: FeedFetchType = ALL,
         loadSmallInitialChunk: Boolean = true,
     ): Flow<List<MediaCollection>>
-    suspend fun getFeed(feedFetchType: FeedFetchType = ALL): List<MediaCollection>
-    fun getFeedDisplay(): Flow<PredefinedCollageDisplay>
+
+    fun observeFeedDisplay(): Flow<PredefinedCollageDisplay>
     fun setFeedDisplay(feedDisplay: PredefinedCollageDisplay)
     suspend fun refreshCluster(clusterId: String): SimpleResult
     fun refreshFeed(shallow: Boolean)

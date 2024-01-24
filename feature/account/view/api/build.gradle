@@ -20,6 +20,7 @@ dependencies {
             project(":feature:server:view:api"),
             project(":feature:settings:view:api"),
             project(":feature:sync:domain:api"),
+            project(":feature:portfolio:view:api"),
             project(":feature:uploads:domain:api"),
             project(":feature:uploads:view:api"),
             project(":feature:welcome:domain:api"),

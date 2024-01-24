@@ -1,5 +1,5 @@
 /*
-Copyright 2023 Savvas Dalkitsis
+Copyright 2024 Savvas Dalkitsis
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -17,6 +17,7 @@ package com.savvasdalkitsis.uhuruphotos.feature.portfolio.view.implementation.vi
 
 import com.savvasdalkitsis.uhuruphotos.feature.portfolio.view.api.navigation.PortfolioNavigationRoute
 import com.savvasdalkitsis.uhuruphotos.feature.portfolio.view.implementation.seam.PortfolioActionsContext
+import com.savvasdalkitsis.uhuruphotos.feature.portfolio.view.implementation.seam.actions.Load
 import com.savvasdalkitsis.uhuruphotos.feature.portfolio.view.implementation.seam.actions.PortfolioAction
 import com.savvasdalkitsis.uhuruphotos.feature.portfolio.view.implementation.ui.state.PortfolioState
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.viewmodel.NavigationViewModel
@@ -33,5 +34,6 @@ internal class PortfolioViewModel @Inject constructor(
 ) {
 
     override fun onRouteSet(route: PortfolioNavigationRoute) {
+        action(Load)
     }
 }

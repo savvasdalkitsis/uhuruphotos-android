@@ -38,6 +38,7 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.material.OutlinedButton
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
@@ -45,7 +46,6 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
-import com.google.accompanist.permissions.rememberMultiplePermissionsState
 import com.savvasdalkitsis.uhuruphotos.feature.welcome.view.implementation.R
 import com.savvasdalkitsis.uhuruphotos.feature.welcome.view.implementation.seam.actions.Help
 import com.savvasdalkitsis.uhuruphotos.feature.welcome.view.implementation.seam.actions.HideNeedsAccess
@@ -54,11 +54,10 @@ import com.savvasdalkitsis.uhuruphotos.feature.welcome.view.implementation.seam.
 import com.savvasdalkitsis.uhuruphotos.feature.welcome.view.implementation.seam.actions.NavigateToAppSettings
 import com.savvasdalkitsis.uhuruphotos.feature.welcome.view.implementation.seam.actions.Save
 import com.savvasdalkitsis.uhuruphotos.feature.welcome.view.implementation.seam.actions.SelectCloudMedia
-import com.savvasdalkitsis.uhuruphotos.feature.welcome.view.implementation.seam.actions.ShowNeedsAccess
-import com.savvasdalkitsis.uhuruphotos.feature.welcome.view.implementation.seam.actions.ShowPermissionRationale
 import com.savvasdalkitsis.uhuruphotos.feature.welcome.view.implementation.seam.actions.WelcomeAction
 import com.savvasdalkitsis.uhuruphotos.feature.welcome.view.implementation.ui.state.WelcomeState
 import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.R.drawable
+import com.savvasdalkitsis.uhuruphotos.foundation.permissions.api.ui.PermissionsState
 import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
 import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.AppTheme
 import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.CustomColors
@@ -87,9 +86,7 @@ internal fun Welcome(
             )
         }
     ) { contentPadding ->
-        val permissionState = state.missingPermissions?.let {
-            rememberMultiplePermissionsState(it)
-        }
+        val permissionState by PermissionsState.rememberPermissionsState(state.missingPermissions)
         Column(
             modifier = Modifier
                 .padding(
@@ -150,13 +147,7 @@ internal fun Welcome(
                             string.manage_media_on_device,
                             state.localMediaSelected,
                         ) {
-                            permissionState?.let {
-                                if (it.shouldShowRationale) {
-                                    action(ShowPermissionRationale)
-                                } else if (!it.allPermissionsGranted) {
-                                    action(ShowNeedsAccess)
-                                }
-                            }
+                            permissionState.askForPermissions()
                         }
                         UseCase(
                             if (state.localMediaSelected) R.raw.animation_cloud_backup else R.raw.animation_cloud,

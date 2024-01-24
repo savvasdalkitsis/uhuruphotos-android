@@ -51,6 +51,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.library.view.implementation.ui.st
 import com.savvasdalkitsis.uhuruphotos.feature.library.view.implementation.ui.state.LibraryLocalMedia.Found
 import com.savvasdalkitsis.uhuruphotos.feature.library.view.implementation.ui.state.LibraryLocalMedia.RequiresPermissions
 import com.savvasdalkitsis.uhuruphotos.feature.library.view.implementation.ui.state.LibraryState
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.NamedVitrine
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.state.VitrineState
 import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.R.drawable
 import dev.shreyaspatil.permissionflow.compose.rememberPermissionFlowRequestLauncher
@@ -156,7 +157,7 @@ internal fun LazyGridScope.libraryItem(
             val title = stringResource(item.title)
             ReorderableItem(reordering, item.title) { isDragging ->
                 Vibrate(isDragging)
-                LibraryItem(
+                NamedVitrine(
                     state = vitrineState,
                     photoGridModifier = Modifier.fillMaxWidth(),
                     iconFallback = iconFallback,

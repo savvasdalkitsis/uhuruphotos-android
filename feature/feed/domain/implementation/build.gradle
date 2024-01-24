@@ -13,6 +13,7 @@ dependencies {
             project(":feature:download:domain:api"),
             project(":feature:feed:domain:api"),
             project(":feature:media:remote:domain:api"),
+            project(":feature:portfolio:domain:api"),
             project(":feature:settings:domain:api"),
             project(":feature:upload:domain:api"),
             project(":feature:welcome:domain:api"),

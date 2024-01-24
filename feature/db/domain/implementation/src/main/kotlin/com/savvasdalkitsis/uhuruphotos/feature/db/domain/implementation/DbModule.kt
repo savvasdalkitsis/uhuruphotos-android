@@ -50,6 +50,8 @@ import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.people.People
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.people.PeopleQueries
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.person.PersonPhotos
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.person.PersonQueries
+import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.portfolio.Portfolio
+import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.portfolio.PortfolioQueries
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.search.SearchQueries
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.user.User
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.user.UserQueries
@@ -84,7 +86,8 @@ class DbModule {
         remoteMediaItemSummaryAdapter = RemoteMediaItemSummary.Adapter(FloatColumnAdapter, IntColumnAdapter),
         remoteMediaTrashAdapter =  RemoteMediaTrash.Adapter(FloatColumnAdapter, IntColumnAdapter),
         userAdapter = User.Adapter(IntColumnAdapter, IntColumnAdapter, FloatColumnAdapter, IntColumnAdapter, IntColumnAdapter, IntColumnAdapter, IntColumnAdapter),
-        userAlbumsAdapter = UserAlbums.Adapter(IntColumnAdapter, IntColumnAdapter)
+        userAlbumsAdapter = UserAlbums.Adapter(IntColumnAdapter, IntColumnAdapter),
+        portfolioAdapter = Portfolio.Adapter(IntColumnAdapter),
     )
 
     @Provides
@@ -143,5 +146,8 @@ class DbModule {
 
     @Provides
     fun uploadingMediaItemsQueries(database: Database): UploadingMediaItemsQueries = database.uploadingMediaItemsQueries
+
+    @Provides
+    fun portfolioQueries(database: Database): PortfolioQueries = database.portfolioQueries
 
 }

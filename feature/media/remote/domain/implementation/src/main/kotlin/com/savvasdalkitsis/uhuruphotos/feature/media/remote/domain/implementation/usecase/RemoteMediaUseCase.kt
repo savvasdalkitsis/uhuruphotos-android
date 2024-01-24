@@ -77,9 +77,6 @@ class RemoteMediaUseCase @Inject constructor(
     override fun observeRemoteMediaItemDetails(id: String): Flow<DbRemoteMediaItemDetails> =
         remoteMediaRepository.observeMediaItemDetails(id).distinctUntilChanged()
 
-    override suspend fun getRemoteMediaItemDetails(id: String): DbRemoteMediaItemDetails? =
-        remoteMediaRepository.getMediaItemDetails(id)
-
     override suspend fun getRemoteMediaItemSummary(id: String): DbRemoteMediaItemSummary? =
         remoteMediaRepository.getOrRefreshRemoteMediaItemSummary(id)
 

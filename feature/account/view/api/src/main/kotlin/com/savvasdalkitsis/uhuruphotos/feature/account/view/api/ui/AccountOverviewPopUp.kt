@@ -46,6 +46,7 @@ fun AccountOverviewPopUp(
     state: AccountOverviewState,
     onDismiss: () -> Unit,
     onAboutClicked: () -> Unit = {},
+    onFoldersClicked: () -> Unit = {},
     onLogoutClicked: () -> Unit,
     onLoginClicked: () -> Unit,
     onSettingsClicked: () -> Unit,
@@ -96,6 +97,7 @@ fun AccountOverviewPopUp(
                         AccountOverview(
                             state = state,
                             onAboutClicked = onAboutClicked,
+                            onFoldersClicked = onFoldersClicked,
                             onLogoutClicked = onLogoutClicked,
                             onLoginClicked = onLoginClicked,
                             onSettingsClicked = onSettingsClicked,

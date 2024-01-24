@@ -39,6 +39,7 @@ import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.CustomColors
 fun Vitrine(
     modifier: Modifier = Modifier,
     state: VitrineState,
+    selectable: Boolean = true,
     onSelected: () -> Unit,
     shape: Shape = RectangleShape,
 ) {
@@ -47,9 +48,7 @@ fun Vitrine(
             .padding(1.dp)
             .aspectRatio(1f)
             .clip(shape)
-            .clickable(
-                onClick = onSelected,
-            ),
+            .let { if(selectable) it.clickable(onClick = onSelected) else it },
     ) {
         Row {
             GridItem(state.cel1)

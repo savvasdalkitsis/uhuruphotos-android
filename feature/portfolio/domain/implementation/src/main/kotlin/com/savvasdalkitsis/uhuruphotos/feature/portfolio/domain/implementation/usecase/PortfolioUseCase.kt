@@ -1,5 +1,5 @@
 /*
-Copyright 2023 Savvas Dalkitsis
+Copyright 2024 Savvas Dalkitsis
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -15,13 +15,65 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.portfolio.domain.implementation.usecase
 
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItem
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemsOnDevice
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.usecase.MediaUseCase
+import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.model.LocalMediaFolder
+import com.savvasdalkitsis.uhuruphotos.feature.portfolio.domain.api.domain.PortfolioItem
+import com.savvasdalkitsis.uhuruphotos.feature.portfolio.domain.api.domain.PortfolioLocalMedia.Error
+import com.savvasdalkitsis.uhuruphotos.feature.portfolio.domain.api.domain.PortfolioLocalMedia.Found
+import com.savvasdalkitsis.uhuruphotos.feature.portfolio.domain.api.domain.PortfolioLocalMedia.RequiresPermissions
 import com.savvasdalkitsis.uhuruphotos.feature.portfolio.domain.api.usecase.PortfolioUseCase
+import com.savvasdalkitsis.uhuruphotos.feature.portfolio.domain.implementation.repository.PortfolioRepository
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.combine
 import se.ansman.dagger.auto.AutoBind
 import javax.inject.Inject
 
 @AutoBind
 class PortfolioUseCase @Inject constructor(
-
+    private val mediaUseCase: MediaUseCase,
+    private val portfolioRepository: PortfolioRepository,
 ) : PortfolioUseCase {
 
+    override fun observePortfolio() = combine(
+        mediaUseCase.observeLocalMedia(),
+        portfolioRepository.observePublishedPortfolio(),
+    ) { media, published ->
+        when (media) {
+            is MediaItemsOnDevice.Found -> Found(
+                listOfNotNull(media.primaryFolder
+                    ?.toPortfolioItem(
+                        isPublished = true,
+                        canBeModified = false,
+                    )
+                ) +
+                media.mediaFolders.map {
+                    it.toPortfolioItem(
+                        isPublished = it.first.id in published,
+                        canBeModified = true,
+                    )
+                }
+            )
+            is MediaItemsOnDevice.RequiresPermissions -> RequiresPermissions(media.deniedPermissions)
+            is MediaItemsOnDevice.Error -> Error
+        }
+    }
+
+    override fun observePublishedFolderIds(): Flow<Set<Int>> =
+        portfolioRepository.observePublishedPortfolio()
+
+    override fun setPortfolioItemPublished(folderId: Int, published: Boolean) {
+        portfolioRepository.setFolderPublished(folderId, published)
+    }
+
+    private fun Pair<LocalMediaFolder, List<MediaItem>>.toPortfolioItem(
+        isPublished: Boolean,
+        canBeModified: Boolean,
+    ) = PortfolioItem(
+        published = isPublished,
+        canBeModified = canBeModified,
+        folder = first,
+        items = second,
+    )
 }

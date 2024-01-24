@@ -32,6 +32,7 @@ import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedInject
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.first
 
 @HiltWorker
 internal class FeedDetailsDownloadWorker @AssistedInject constructor(
@@ -51,7 +52,8 @@ internal class FeedDetailsDownloadWorker @AssistedInject constructor(
 
     override suspend fun work(): Result {
         updateProgress(0)
-        val items = feedUseCase.getFeed(FeedFetchType.ALL).flatMap { it.mediaItems }.mapNotNull { it.id.findRemote }
+        val items = feedUseCase.observeFeed(FeedFetchType.ALL).first()
+            .flatMap { it.mediaItems }.mapNotNull { it.id.findRemote }
         val total = items.size
         val result = binding {
             items.forEachIndexed { current, item ->

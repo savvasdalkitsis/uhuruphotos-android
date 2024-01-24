@@ -36,10 +36,10 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.Cluster
 import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.previewClusterEmpty
-import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemSelectionMode
 import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.R.drawable
 import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.PreviewAppTheme
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.ActionIcon
+import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.SelectionMode
 
 @Composable
 internal fun ClusterHeader(
@@ -59,7 +59,7 @@ internal fun ClusterHeader(
             ActionIcon(
                 onClick = onSelectionHeaderClicked,
                 icon = when {
-                    state.cels.any { it.selectionMode == MediaItemSelectionMode.UNSELECTED } ->
+                    state.cels.any { it.selectionMode == SelectionMode.UNSELECTED } ->
                         drawable.ic_check_circle
                     else -> drawable.ic_clear
                 }

@@ -35,9 +35,9 @@ import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.ui.state
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.ui.state.MemoryCel
 import com.savvasdalkitsis.uhuruphotos.feature.jobs.domain.api.model.Job
 import com.savvasdalkitsis.uhuruphotos.feature.jobs.domain.api.model.JobStatus
-import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemSelectionMode
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemsOnDevice
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.state.toCel
+import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.SelectionMode
 import kotlinx.collections.immutable.toPersistentList
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.debounce
@@ -120,7 +120,7 @@ data object LoadFeed : FeedAction() {
             selectionList.ids,
             avatarUseCase.getAvatarState(),
             feedUseCase
-                .getFeedDisplay()
+                .observeFeedDisplay()
                 .distinctUntilChanged()
         ) { mediaCollections, selectedIds, avatar, feedDisplay ->
             val selected = mediaCollections
@@ -147,9 +147,9 @@ data object LoadFeed : FeedAction() {
             cluster.copy(cels = cluster.cels.map { cel ->
                 cel.copy(
                     selectionMode = when {
-                        empty -> MediaItemSelectionMode.UNDEFINED
-                        cel.mediaItem.id.value.toString() in ids -> MediaItemSelectionMode.SELECTED
-                        else -> MediaItemSelectionMode.UNSELECTED
+                        empty -> SelectionMode.UNDEFINED
+                        cel.mediaItem.id.value.toString() in ids -> SelectionMode.SELECTED
+                        else -> SelectionMode.UNSELECTED
                     }
                 )
             }.toPersistentList())
@@ -170,7 +170,7 @@ data object LoadFeed : FeedAction() {
 
     private fun FeedActionsContext.changeDisplay() =
         feedUseCase
-            .getFeedDisplay()
+            .observeFeedDisplay()
             .distinctUntilChanged()
             .map(FeedMutation::ChangeDisplay)
 

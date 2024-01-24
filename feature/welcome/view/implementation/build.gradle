@@ -22,6 +22,7 @@ dependencies {
             project(":feature:settings:domain:api"),
             project(":foundation:icons:api"),
             project(":foundation:navigation:api"),
+            project(":foundation:permissions:api"),
             project(":foundation:strings:api"),
             project(":foundation:ui:api"),
             libs.accompanist.permissions,

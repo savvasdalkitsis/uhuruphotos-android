@@ -24,6 +24,7 @@ import com.savvasdalkitsis.uhuruphotos.foundation.date.api.DateParser
 import dagger.hilt.android.scopes.ActivityRetainedScoped
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
 import org.joda.time.DateTime
 import se.ansman.dagger.auto.AutoBind
@@ -44,7 +45,7 @@ class MemoriesUseCase @Inject constructor(
             }
 
     override suspend fun getMemories(): List<MemoryCollection> =
-        feedUseCase.getFeed(FeedFetchType.ONLY_WITH_DATES).findMemories()
+        feedUseCase.observeFeed(FeedFetchType.ONLY_WITH_DATES).first().findMemories()
 
     private fun DateTime?.sameAsNow(field: DateTime.() -> Int) =
         this != null && field(this) == field(DateTime.now())

@@ -32,10 +32,9 @@ import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.Med
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItem
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemGroup
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemInstance
-import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemsOnDevice.Error
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemsOnDevice.Found
-import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemsOnDevice.RequiresPermissions
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.usecase.MediaUseCase
+import com.savvasdalkitsis.uhuruphotos.feature.portfolio.domain.api.usecase.PortfolioUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.upload.domain.api.usecase.UploadUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.welcome.domain.api.usecase.WelcomeUseCase
 import com.savvasdalkitsis.uhuruphotos.foundation.coroutines.api.safelyOnStartIgnoring
@@ -49,7 +48,6 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.flow.distinctUntilChanged
-import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.map
 import se.ansman.dagger.auto.AutoBind
@@ -64,6 +62,7 @@ internal class FeedUseCase @Inject constructor(
     private val uploadUseCase: UploadUseCase,
     private val preferences: Preferences,
     private val welcomeUseCase: WelcomeUseCase,
+    private val portfolioUseCase: PortfolioUseCase,
 ) : FeedUseCase {
 
     private val key = "feedDisplay"
@@ -79,15 +78,6 @@ internal class FeedUseCase @Inject constructor(
             observeUploading(),
             ::mergeRemoteWithLocalMedia
         ).debounce(500)
-
-    override suspend fun getFeed(
-        feedFetchType: FeedFetchType,
-    ): List<MediaCollection> = mergeRemoteWithLocalMedia(
-        getRemoteMediaFeed(feedFetchType),
-        getLocalMediaFeed(feedFetchType),
-        getDownloading(),
-        getUploading(),
-    )
 
     private fun mergeRemoteWithLocalMedia(
         allRemoteDays: Sequence<MediaCollection>,
@@ -164,7 +154,7 @@ internal class FeedUseCase @Inject constructor(
     override suspend fun hasFeed(): Boolean =
         feedRepository.hasRemoteMediaCollections()
 
-    override fun getFeedDisplay(): Flow<PredefinedCollageDisplay> =
+    override fun observeFeedDisplay(): Flow<PredefinedCollageDisplay> =
         preferences.observe(key, PredefinedCollageDisplay.default)
 
     override fun setFeedDisplay(feedDisplay: PredefinedCollageDisplay) {
@@ -204,14 +194,16 @@ internal class FeedUseCase @Inject constructor(
     }
 
     private fun observeLocalMediaFeed(feedFetchType: FeedFetchType) =
-        mediaUseCase.observeLocalMedia()
-            .distinctUntilChanged()
-            .map {
-                when (it) {
-                    is Found -> it.filteredWith(feedFetchType)
-                    else -> emptyList()
-                }
+        combine(
+            mediaUseCase.observeLocalMedia()
+                .distinctUntilChanged(),
+            portfolioUseCase.observePublishedFolderIds(),
+        ) { itemsOnDevice, publishedFolderIds ->
+            when (itemsOnDevice) {
+                is Found -> itemsOnDevice.filteredWith(publishedFolderIds, feedFetchType)
+                else -> emptyList()
             }
+        }
 
     private fun observeDownloading() = downloadUseCase.observeDownloading()
 
@@ -235,32 +227,25 @@ internal class FeedUseCase @Inject constructor(
             }.initialize()
         )
 
-    private suspend fun getRemoteMediaFeed(
+    private fun Found.filteredWith(
+        publishedFolderIds: Set<Int>,
         feedFetchType: FeedFetchType
-    ) = feedRepository.getRemoteMediaCollectionsByDate(feedFetchType)
-        .mapValues { it.toMediaCollectionSource() }
-        .toCollection()
-        .asSequence()
+    ): List<MediaItem> {
+        val primaryFolderItems = primaryFolder?.second ?: emptyList()
+        val publishedFoldersItems = mediaFolders.filter { (folder, _) ->
+            folder.id in publishedFolderIds
+        }.flatMap { (_, mediaItems) -> mediaItems }
+        return (primaryFolderItems + publishedFoldersItems).filter(feedFetchType)
+    }
 
-    private suspend fun getLocalMediaFeed(feedFetchType: FeedFetchType) =
-        when (val mediaOnDevice = mediaUseCase.getLocalMedia()) {
-            Error -> emptyList()
-            is Found -> mediaOnDevice.filteredWith(feedFetchType)
-            is RequiresPermissions -> emptyList()
+    private fun List<MediaItem>.filter(
+        feedFetchType: FeedFetchType
+    ) = filter { item ->
+        when (feedFetchType) {
+            ALL -> true
+            ONLY_WITH_DATES -> !item.displayDayDate.isNullOrEmpty()
+            ONLY_WITHOUT_DATES -> item.displayDayDate.isNullOrEmpty()
+            VIDEOS -> item.id.isVideo
         }
-
-    private suspend fun getDownloading(): Set<String> = downloadUseCase.getDownloading()
-
-    private fun Found.filteredWith(feedFetchType: FeedFetchType) =
-        (primaryFolder?.second ?: emptyList()).filter { item ->
-            when (feedFetchType) {
-                ALL -> true
-                ONLY_WITH_DATES -> !item.displayDayDate.isNullOrEmpty()
-                ONLY_WITHOUT_DATES -> item.displayDayDate.isNullOrEmpty()
-                VIDEOS -> item.id.isVideo
-            }
-        }
-
-    private suspend fun getUploading(): Set<Long> = uploadUseCase.observeUploading().first()
-
+    }
 }

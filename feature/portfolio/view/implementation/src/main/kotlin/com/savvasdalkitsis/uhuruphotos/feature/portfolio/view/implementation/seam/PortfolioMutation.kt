@@ -1,5 +1,5 @@
 /*
-Copyright 2022 Savvas Dalkitsis
+Copyright 2024 Savvas Dalkitsis
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -15,14 +15,25 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.portfolio.view.implementation.seam
 
+import com.savvasdalkitsis.uhuruphotos.feature.portfolio.view.implementation.ui.state.PortfolioCelState
+import com.savvasdalkitsis.uhuruphotos.feature.portfolio.view.implementation.ui.state.PortfolioItems
 import com.savvasdalkitsis.uhuruphotos.feature.portfolio.view.implementation.ui.state.PortfolioState
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.Mutation
+import kotlinx.collections.immutable.toPersistentList
 
 sealed class PortfolioMutation(
     mutation: Mutation<PortfolioState>,
 ) : Mutation<PortfolioState> by mutation {
 
-    data object Loading : PortfolioMutation({
+    data class RequestPermissions(val deniedPermissions: List<String>): PortfolioMutation({
+        it.copy(localMedia = PortfolioItems.RequiresPermissions(deniedPermissions))
+    })
+
+    data object ShowError : PortfolioMutation({
         it
+    })
+
+    data class DisplayPortfolio(val states: List<PortfolioCelState>) : PortfolioMutation({
+        it.copy(localMedia = PortfolioItems.Found(states.toPersistentList()))
     })
 }

@@ -1,5 +1,5 @@
 /*
-Copyright 2023 Savvas Dalkitsis
+Copyright 2024 Savvas Dalkitsis
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -15,6 +15,12 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.portfolio.domain.api.usecase
 
+import com.savvasdalkitsis.uhuruphotos.feature.portfolio.domain.api.domain.PortfolioLocalMedia
+import kotlinx.coroutines.flow.Flow
+
 interface PortfolioUseCase {
 
+    fun observePortfolio(): Flow<PortfolioLocalMedia>
+    fun observePublishedFolderIds(): Flow<Set<Int>>
+    fun setPortfolioItemPublished(folderId: Int, published: Boolean)
 }

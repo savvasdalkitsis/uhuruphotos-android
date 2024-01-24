@@ -1,0 +1,3 @@
+CREATE TABLE portfolio (
+    id INTEGER AS kotlin.Int NOT NULL PRIMARY KEY
+);

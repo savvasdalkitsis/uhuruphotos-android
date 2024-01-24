@@ -1,0 +1,12 @@
+CREATE TABLE portfolio (
+    id INTEGER AS kotlin.Int NOT NULL PRIMARY KEY
+);
+
+all:
+SELECT id FROM portfolio;
+
+insert:
+INSERT OR IGNORE INTO portfolio VALUES (:id);
+
+remove:
+DELETE FROM portfolio WHERE id = :id;

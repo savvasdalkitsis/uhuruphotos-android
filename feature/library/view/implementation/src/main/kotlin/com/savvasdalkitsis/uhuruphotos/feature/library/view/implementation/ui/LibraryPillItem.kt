@@ -30,6 +30,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.VitrineSubtitle
 import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.CustomColors
 
 @Composable
@@ -54,6 +55,6 @@ internal fun LibraryPillItem(title: String, icon: Int, onSelected: () -> Unit) {
                 contentDescription = null
             )
         }
-        LibrarySubtitle(title)
+        VitrineSubtitle(title)
     }
 }

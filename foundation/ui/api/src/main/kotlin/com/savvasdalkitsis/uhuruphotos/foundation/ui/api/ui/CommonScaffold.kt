@@ -22,6 +22,7 @@ import androidx.compose.animation.slideInVertically
 import androidx.compose.animation.slideOutVertically
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.BoxScope
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.fillMaxSize
@@ -54,7 +55,7 @@ fun CommonScaffold(
     bottomBarDisplayed: Boolean = true,
     expandableTopBar: Boolean = false,
     navigationIcon: @Composable (() -> Unit)? = null,
-    content: @Composable (PaddingValues) -> Unit
+    content: @Composable BoxScope.(PaddingValues) -> Unit
 ) = CommonScaffold(
     modifier = modifier,
     topBar = {
@@ -80,7 +81,7 @@ fun CommonScaffold(
     bottomBarContent: @Composable () -> Unit = {},
     bottomBarColor: @Composable () -> Color = { MaterialTheme.colors.background.copy(alpha = 0.8f) },
     bottomBarDisplayed: Boolean = true,
-    content: @Composable (PaddingValues) -> Unit
+    content: @Composable BoxScope.(PaddingValues) -> Unit
 ) {
     var bottomBarHeight by remember {
         mutableIntStateOf(0)

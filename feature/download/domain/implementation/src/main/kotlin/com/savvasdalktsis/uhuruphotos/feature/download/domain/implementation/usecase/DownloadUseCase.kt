@@ -31,7 +31,6 @@ import com.github.michaelbull.result.onFailure
 import com.savvasdalkitsis.uhuruphotos.feature.auth.domain.api.usecase.AuthenticationHeadersUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.extensions.asyncReturn
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaId.Remote
-import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaOperationResult
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.usecase.MediaUseCase
 import com.savvasdalkitsis.uhuruphotos.foundation.log.api.andThenTry
 import com.savvasdalkitsis.uhuruphotos.foundation.log.api.log
@@ -43,6 +42,7 @@ import com.savvasdalktsis.uhuruphotos.feature.download.domain.implementation.rep
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.map
 import se.ansman.dagger.auto.AutoBind
 import java.io.File
@@ -72,8 +72,8 @@ internal class DownloadUseCase @Inject constructor(
     }
 
     private suspend fun queueDownload(id: Remote): SimpleResult =
-        mediaUseCase.refreshDetailsNowIfMissing(id).andThenTry<MediaOperationResult, Unit> {
-            val remotePath = mediaUseCase.getMediaItemDetails(id)?.remotePath
+        mediaUseCase.refreshDetailsNowIfMissing(id).andThenTry {
+            val remotePath = mediaUseCase.observeMediaItemDetails(id).firstOrNull()?.remotePath
             val fullFileName = remotePath?.substringAfterLast("/")
 
             val url = id.fullResUri

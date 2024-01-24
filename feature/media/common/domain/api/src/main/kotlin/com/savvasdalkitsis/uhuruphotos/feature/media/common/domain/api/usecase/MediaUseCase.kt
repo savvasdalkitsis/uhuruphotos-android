@@ -33,8 +33,6 @@ interface MediaUseCase {
 
     fun observeLocalMedia(): Flow<MediaItemsOnDevice>
 
-    suspend fun getLocalMedia(): MediaItemsOnDevice
-
     fun observeLocalAlbum(albumId: Int): Flow<MediaFolderOnDevice>
 
     fun observeFavouriteMedia(): Flow<Result<List<MediaItem>, Throwable>>
@@ -44,8 +42,6 @@ interface MediaUseCase {
     suspend fun List<DbRemoteMediaItemSummary>.mapToMediaItems(): Result<List<MediaItem>, Throwable>
 
     fun observeMediaItemDetails(id: MediaId<*>): Flow<MediaItemDetails>
-
-    suspend fun getMediaItemDetails(id: MediaId<*>): MediaItemDetails?
 
     suspend fun getFavouriteMediaCount(): Result<Long, Throwable>
 

@@ -1,5 +1,5 @@
 /*
-Copyright 2022 Savvas Dalkitsis
+Copyright 2024 Savvas Dalkitsis
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -17,8 +17,8 @@ package com.savvasdalkitsis.uhuruphotos.feature.portfolio.view.implementation.na
 
 import androidx.compose.runtime.Composable
 import com.savvasdalkitsis.uhuruphotos.feature.portfolio.view.api.navigation.PortfolioNavigationRoute
-import com.savvasdalkitsis.uhuruphotos.feature.portfolio.view.implementation.viewmodel.PortfolioViewModel
 import com.savvasdalkitsis.uhuruphotos.feature.portfolio.view.implementation.ui.Portfolio
+import com.savvasdalkitsis.uhuruphotos.feature.portfolio.view.implementation.viewmodel.PortfolioViewModel
 import com.savvasdalkitsis.uhuruphotos.feature.settings.domain.api.usecase.SettingsUseCase
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.NavigationTarget
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.NavigationTargetBuilder

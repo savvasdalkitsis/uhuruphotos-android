@@ -24,6 +24,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.account.view.api.seam.actions.Can
 import com.savvasdalkitsis.uhuruphotos.feature.account.view.api.seam.actions.ChangeCloudSync
 import com.savvasdalkitsis.uhuruphotos.feature.account.view.api.seam.actions.DismissAccountOverview
 import com.savvasdalkitsis.uhuruphotos.feature.account.view.api.seam.actions.DismissLogOutDialog
+import com.savvasdalkitsis.uhuruphotos.feature.account.view.api.seam.actions.FoldersClicked
 import com.savvasdalkitsis.uhuruphotos.feature.account.view.api.seam.actions.HideJobDialog
 import com.savvasdalkitsis.uhuruphotos.feature.account.view.api.seam.actions.LogIn
 import com.savvasdalkitsis.uhuruphotos.feature.account.view.api.seam.actions.LogOut
@@ -42,6 +43,7 @@ fun AccountOverviewContent(
         state = state,
         onDismiss = { action(DismissAccountOverview) },
         onAboutClicked = { action(AboutClicked) },
+        onFoldersClicked = { action(FoldersClicked) },
         onLoginClicked = { action(LogIn) },
         onLogoutClicked = { action(AskToLogOut) },
         onStartJob = { action(AskToStartJob(it)) },
