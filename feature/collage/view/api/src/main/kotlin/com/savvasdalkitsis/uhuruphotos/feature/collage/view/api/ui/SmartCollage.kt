@@ -207,9 +207,7 @@ private fun BoxScope.StickyHeader(
         label = "persistent cluster",
     ) {
         val interactionSource = remember { MutableInteractionSource() }
-        val cluster = remember(firstOffscreenCluster) {
-            firstOffscreenCluster?.let { state[it] } ?: Cluster("")
-        }
+        val cluster = firstOffscreenCluster?.let { state[it] } ?: Cluster("")
         FeedClusterHeader(
             modifier = Modifier
                 .background(MaterialTheme.colors.background.copy(alpha = 0.8f))

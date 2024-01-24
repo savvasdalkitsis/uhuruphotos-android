@@ -39,7 +39,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.preview
 import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.R.drawable
 import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.PreviewAppTheme
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.ActionIcon
-import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.SelectionMode
+import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.SelectionMode.UNSELECTED
 
 @Composable
 internal fun ClusterHeader(
@@ -56,13 +56,18 @@ internal fun ClusterHeader(
         verticalAlignment = Alignment.CenterVertically,
     ) {
         AnimatedVisibility(visible = showSelectionHeader) {
+            val icon by remember(state.cels) {
+                derivedStateOf {
+                    when {
+                        state.cels.any { it.selectionMode == UNSELECTED } ->
+                            drawable.ic_check_circle
+                        else -> drawable.ic_clear
+                    }
+                }
+            }
             ActionIcon(
                 onClick = onSelectionHeaderClicked,
-                icon = when {
-                    state.cels.any { it.selectionMode == SelectionMode.UNSELECTED } ->
-                        drawable.ic_check_circle
-                    else -> drawable.ic_clear
-                }
+                icon = icon,
             )
         }
         Column(
