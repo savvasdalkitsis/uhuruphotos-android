@@ -1,0 +1,2 @@
+* App can now remember user's credentials on login. Also allows the app to automatically attempt to login when the refresh token expires, which should log the user out much less frequently
+* Fixing bug with sticky headers when entering multi-selection mode on the Feed
