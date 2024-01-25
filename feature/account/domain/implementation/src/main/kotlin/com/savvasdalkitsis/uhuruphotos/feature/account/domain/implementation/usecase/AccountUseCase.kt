@@ -44,6 +44,7 @@ class AccountUseCase @Inject constructor(
                 autoAlbumsQueries.clearAll()
                 peopleQueries.clearAll()
                 personQueries.clearAll()
+                portfolioQueries.clearAll()
                 remoteMediaItemDetailsQueries.clearAll()
                 remoteMediaItemSummaryQueries.clearAll()
                 remoteMediaTrashQueries.clear()

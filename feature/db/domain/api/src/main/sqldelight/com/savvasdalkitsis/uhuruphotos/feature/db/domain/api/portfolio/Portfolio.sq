@@ -5,6 +5,9 @@ CREATE TABLE portfolio (
 all:
 SELECT id FROM portfolio;
 
+clearAll:
+DELETE FROM portfolio;
+
 insert:
 INSERT OR IGNORE INTO portfolio VALUES (:id);
 
