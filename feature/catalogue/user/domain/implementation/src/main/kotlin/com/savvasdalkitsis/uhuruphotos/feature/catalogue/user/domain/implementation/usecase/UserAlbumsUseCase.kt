@@ -20,6 +20,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.catalogue.user.domain.implementat
 import com.savvasdalkitsis.uhuruphotos.feature.catalogue.view.api.ui.state.CatalogueSorting
 import com.savvasdalkitsis.uhuruphotos.feature.catalogue.view.api.ui.state.CatalogueSorting.Companion.sorted
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.album.user.UserAlbums
+import com.savvasdalkitsis.uhuruphotos.foundation.preferences.api.PlainTextPreferences
 import com.savvasdalkitsis.uhuruphotos.foundation.preferences.api.Preferences
 import com.savvasdalkitsis.uhuruphotos.foundation.preferences.api.get
 import com.savvasdalkitsis.uhuruphotos.foundation.preferences.api.observe
@@ -32,6 +33,7 @@ import javax.inject.Inject
 @AutoBind
 class UserAlbumsUseCase @Inject constructor(
     private val userAlbumsRepository: UserAlbumsRepository,
+    @PlainTextPreferences
     private val preferences: Preferences,
 ) : UserAlbumsUseCase {
 

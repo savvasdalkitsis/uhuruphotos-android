@@ -17,6 +17,7 @@ package com.savvasdalkitsis.uhuruphotos.feature.auth.domain.implementation.useca
 
 import com.savvasdalkitsis.uhuruphotos.feature.auth.domain.api.usecase.ServerUseCase
 import com.savvasdalkitsis.uhuruphotos.foundation.http.api.prefixedWithHttpsIfNeeded
+import com.savvasdalkitsis.uhuruphotos.foundation.preferences.api.PlainTextPreferences
 import com.savvasdalkitsis.uhuruphotos.foundation.preferences.api.Preferences
 import com.savvasdalkitsis.uhuruphotos.foundation.preferences.api.get
 import com.savvasdalkitsis.uhuruphotos.foundation.preferences.api.observe
@@ -30,6 +31,7 @@ import javax.inject.Inject
 
 @AutoBind
 class ServerUseCase @Inject constructor(
+    @PlainTextPreferences
     private val preferences: Preferences,
 ) : ServerUseCase {
     private val key = "serverUrl"

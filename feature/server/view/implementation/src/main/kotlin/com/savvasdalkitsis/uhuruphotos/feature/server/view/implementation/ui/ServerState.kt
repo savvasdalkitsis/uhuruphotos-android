@@ -31,5 +31,6 @@ data class ServerState(
     val username: String = "",
     @Redacted val password: String = "",
     val allowLogin: Boolean = false,
+    val rememberCredentials: Boolean = false,
     val passwordVisible: Boolean = false,
 ) : Parcelable

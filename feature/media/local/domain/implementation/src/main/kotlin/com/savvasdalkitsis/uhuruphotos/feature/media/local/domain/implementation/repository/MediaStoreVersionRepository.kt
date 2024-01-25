@@ -16,6 +16,7 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.implementation.repository
 
 import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.implementation.service.LocalMediaService
+import com.savvasdalkitsis.uhuruphotos.foundation.preferences.api.PlainTextPreferences
 import com.savvasdalkitsis.uhuruphotos.foundation.preferences.api.Preferences
 import com.savvasdalkitsis.uhuruphotos.foundation.preferences.api.get
 import com.savvasdalkitsis.uhuruphotos.foundation.preferences.api.set
@@ -23,6 +24,7 @@ import javax.inject.Inject
 
 class MediaStoreVersionRepository @Inject constructor(
     private val localMediaService: LocalMediaService,
+    @PlainTextPreferences
     private val preferences: Preferences,
 ) {
     private val key = "media_store_version"

@@ -13,17 +13,11 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
  */
-package com.savvasdalkitsis.uhuruphotos.feature.auth.domain.api.usecase
+package com.savvasdalkitsis.uhuruphotos.feature.auth.domain.implementation.service.model
 
-import com.github.michaelbull.result.Result
-import com.savvasdalkitsis.uhuruphotos.feature.auth.domain.api.model.AuthStatus
+import com.squareup.moshi.JsonClass
 
-interface AuthenticationLoginUseCase {
-
-    suspend fun login(
-        credentials: Credentials,
-        rememberCredentials: Boolean
-    ): Result<AuthStatus, Throwable>
-
-    suspend fun loadSavedCredentials(): Credentials?
-}
+@JsonClass(generateAdapter = true)
+data class AuthenticationRefreshRequest(
+    val refresh: String,
+)

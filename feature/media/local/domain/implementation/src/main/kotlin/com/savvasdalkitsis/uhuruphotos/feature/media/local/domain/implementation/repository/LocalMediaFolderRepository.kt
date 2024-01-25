@@ -22,6 +22,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.media.local.GetBuck
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.media.local.LocalMediaItemDetailsQueries
 import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.model.LocalMediaFolder
 import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.implementation.service.LocalMediaService
+import com.savvasdalkitsis.uhuruphotos.foundation.preferences.api.PlainTextPreferences
 import com.savvasdalkitsis.uhuruphotos.foundation.preferences.api.Preferences
 import com.savvasdalkitsis.uhuruphotos.foundation.preferences.api.get
 import com.savvasdalkitsis.uhuruphotos.foundation.preferences.api.set
@@ -34,6 +35,7 @@ import javax.inject.Inject
 class LocalMediaFolderRepository @Inject constructor(
     private val localMediaService: LocalMediaService,
     private val localMediaItemDetailsQueries: LocalMediaItemDetailsQueries,
+    @PlainTextPreferences
     private val preferences: Preferences,
 ) {
 

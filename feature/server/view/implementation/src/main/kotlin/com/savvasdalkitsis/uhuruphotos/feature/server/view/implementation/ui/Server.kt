@@ -45,6 +45,7 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.savvasdalkitsis.uhuruphotos.feature.server.view.implementation.seam.actions.ChangeRememberCredentials
 import com.savvasdalkitsis.uhuruphotos.feature.server.view.implementation.seam.actions.DismissHelpDialog
 import com.savvasdalkitsis.uhuruphotos.feature.server.view.implementation.seam.actions.Login
 import com.savvasdalkitsis.uhuruphotos.feature.server.view.implementation.seam.actions.SendLogsClick
@@ -61,6 +62,7 @@ import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.CollapsibleGroup
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.CommonScaffold
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.FullLoading
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.MultiButtonDialog
+import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.ToggleableButtonWithIcon
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.UpNavButton
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.state.rememberCollapsibleGroupState
 
@@ -126,7 +128,9 @@ internal fun Server(
                         },
                     )
                     OutlinedButton(
-                        modifier = Modifier.fillMaxWidth().padding(8.dp),
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(8.dp),
                         onClick = { action(ShowHelp) }
                     ) {
                         Icon(
@@ -149,10 +153,22 @@ internal fun Server(
                     )
                     UsernameField(state, action)
                     PasswordField(state, action)
+                    ToggleableButtonWithIcon(
+                        modifier = Modifier
+                            .padding(vertical = 4.dp),
+                        icon = drawable.ic_lock_add,
+                        text = stringResource(string.remember_credentials),
+                        checked = state.rememberCredentials,
+                    ) {
+                        action(ChangeRememberCredentials(it))
+                    }
                     Button(
                         modifier = Modifier.fillMaxWidth(),
                         enabled = state.allowLogin,
-                        onClick = { action(Login(allowUnsecuredServers = false)) }
+                        onClick = { action(Login(
+                            allowUnsecuredServers = false,
+                            rememberCredentials = state.rememberCredentials,
+                        )) }
                     ) {
                         Text(stringResource(string.login))
                     }
@@ -174,12 +190,12 @@ internal fun Server(
                             contentDescription = null
                         )
                         Spacer(modifier = Modifier.width(8.dp))
-                        Text(stringResource(string.send_feedback_with_logs))
+                        Text(text = stringResource(string.send_feedback_with_logs))
                     }
                 }
             }
             if (state.showUnsecureServerConfirmation) {
-                UnsecuredServerConfirmationDialog(serverTextFieldValue, action)
+                UnsecuredServerConfirmationDialog(serverTextFieldValue, action, state)
             }
             if (state.showHelpDialog) {
                 MultiButtonDialog(

@@ -18,6 +18,7 @@ package com.savvasdalkitsis.uhuruphotos.feature.hidden.domain.implementation.use
 import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.CollageDisplay
 import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.PredefinedCollageDisplay
 import com.savvasdalkitsis.uhuruphotos.feature.hidden.domain.api.usecase.HiddenMediaUseCase
+import com.savvasdalkitsis.uhuruphotos.foundation.preferences.api.PlainTextPreferences
 import com.savvasdalkitsis.uhuruphotos.foundation.preferences.api.Preferences
 import com.savvasdalkitsis.uhuruphotos.foundation.preferences.api.get
 import com.savvasdalkitsis.uhuruphotos.foundation.preferences.api.set
@@ -26,6 +27,7 @@ import javax.inject.Inject
 
 @AutoBind
 internal class HiddenMediaUseCase @Inject constructor(
+    @PlainTextPreferences
     private val preferences: Preferences,
 ) : HiddenMediaUseCase {
 

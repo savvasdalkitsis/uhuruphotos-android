@@ -15,6 +15,7 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.auth.domain.implementation.service.model
 
+import com.savvasdalkitsis.uhuruphotos.feature.auth.domain.api.usecase.Credentials
 import com.squareup.moshi.JsonClass
 import dev.zacsweers.redacted.annotations.Redacted
 
@@ -24,3 +25,5 @@ data class AuthenticationCredentials(
     @Redacted
     val password: String,
 )
+
+val Credentials.toAuthenticationCredentials get() = AuthenticationCredentials(username, password)

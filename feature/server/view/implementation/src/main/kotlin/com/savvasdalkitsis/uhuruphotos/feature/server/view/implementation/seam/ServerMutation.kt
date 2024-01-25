@@ -77,6 +77,10 @@ sealed class ServerMutation(
     data class ChangeServerUrlTo(val url: String) : ServerMutation({
         it.copy(prefilledUrl = url, currentUrl = url).shouldAllowLogin()
     })
+
+    data class SetRememberCredentials(val remember: Boolean) : ServerMutation({
+        it.copy(rememberCredentials = remember)
+    })
 }
 
 private fun ServerState.shouldAllowLogin(): ServerState =

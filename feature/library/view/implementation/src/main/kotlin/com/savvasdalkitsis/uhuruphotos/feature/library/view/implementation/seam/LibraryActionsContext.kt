@@ -26,6 +26,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.usecase.Lo
 import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.worker.LocalMediaWorkScheduler
 import com.savvasdalkitsis.uhuruphotos.feature.welcome.domain.api.usecase.WelcomeUseCase
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.Navigator
+import com.savvasdalkitsis.uhuruphotos.foundation.preferences.api.PlainTextPreferences
 import com.savvasdalkitsis.uhuruphotos.foundation.preferences.api.Preferences
 import com.savvasdalkitsis.uhuruphotos.foundation.preferences.api.observe
 import com.savvasdalkitsis.uhuruphotos.foundation.preferences.api.set
@@ -46,6 +47,7 @@ internal class LibraryActionsContext @Inject constructor(
     val libraryUseCase: LibraryUseCase,
     val navigator: Navigator,
     val welcomeUseCase: WelcomeUseCase,
+    @PlainTextPreferences
     private val preferences: Preferences,
     private val toaster: ToasterUseCase,
     private val localMediaWorkScheduler: LocalMediaWorkScheduler,

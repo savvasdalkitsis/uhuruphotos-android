@@ -22,13 +22,14 @@ import com.fredporciuncula.flow.preferences.Serializer
 import com.savvasdalkitsis.uhuruphotos.foundation.preferences.api.Preferences
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
-import se.ansman.dagger.auto.AutoBind
 import javax.inject.Inject
 
-@AutoBind
 class Preferences @Inject constructor(
     private val flowSharedPreferences: FlowSharedPreferences,
 ) : Preferences {
+    override fun remove(key: String) {
+        flowSharedPreferences.sharedPreferences.edit().remove(key).apply()
+    }
 
     override fun getBoolean(key: String, defaultValue: Boolean): Boolean =
         bool(key, defaultValue).get()

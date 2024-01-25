@@ -40,7 +40,7 @@ internal fun UsernameField(
     state: ServerState,
     action: (ServerAction) -> Unit
 ) {
-    var username by remember {
+    var username by remember(state.username) {
         mutableStateOf(state.username)
     }
     OutlinedTextField(

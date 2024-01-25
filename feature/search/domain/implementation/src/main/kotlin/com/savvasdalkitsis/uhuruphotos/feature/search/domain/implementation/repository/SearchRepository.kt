@@ -26,6 +26,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.search.domain.implementation.serv
 import com.savvasdalkitsis.uhuruphotos.foundation.group.api.model.Group
 import com.savvasdalkitsis.uhuruphotos.foundation.group.api.model.groupBy
 import com.savvasdalkitsis.uhuruphotos.foundation.log.api.runCatchingWithLog
+import com.savvasdalkitsis.uhuruphotos.foundation.preferences.api.PlainTextPreferences
 import com.savvasdalkitsis.uhuruphotos.foundation.preferences.api.Preferences
 import com.savvasdalkitsis.uhuruphotos.foundation.result.api.simple
 import kotlinx.coroutines.Dispatchers
@@ -38,6 +39,7 @@ class SearchRepository @Inject constructor(
     private val searchService: SearchService,
     private val searchQueries: SearchQueries,
     private val remoteMediaItemSummaryQueries: RemoteMediaItemSummaryQueries,
+    @PlainTextPreferences
     private val preferences: Preferences,
 ) {
 

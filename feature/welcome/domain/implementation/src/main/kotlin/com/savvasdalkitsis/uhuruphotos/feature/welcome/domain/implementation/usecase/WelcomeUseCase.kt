@@ -19,6 +19,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.auth.domain.api.usecase.Authentic
 import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.usecase.LocalMediaUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.welcome.domain.api.model.WelcomeStatus
 import com.savvasdalkitsis.uhuruphotos.feature.welcome.domain.api.usecase.WelcomeUseCase
+import com.savvasdalkitsis.uhuruphotos.foundation.preferences.api.PlainTextPreferences
 import com.savvasdalkitsis.uhuruphotos.foundation.preferences.api.Preferences
 import com.savvasdalkitsis.uhuruphotos.foundation.preferences.api.get
 import com.savvasdalkitsis.uhuruphotos.foundation.preferences.api.set
@@ -32,6 +33,7 @@ import javax.inject.Inject
 class WelcomeUseCase @Inject constructor(
     private val localMediaUseCase: LocalMediaUseCase,
     private val authenticationUseCase: AuthenticationUseCase,
+    @PlainTextPreferences
     private val preferences: Preferences,
 ) : WelcomeUseCase {
 

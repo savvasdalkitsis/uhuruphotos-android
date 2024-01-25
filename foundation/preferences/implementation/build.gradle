@@ -8,6 +8,7 @@ dependencies {
             libs.androidx.datastore.preferences,
             libs.androidx.preference,
             libs.bundles.autodagger,
+            libs.bundles.androidx.security.crypto,
             libs.flowpreferences,
             libs.hilt,
     )

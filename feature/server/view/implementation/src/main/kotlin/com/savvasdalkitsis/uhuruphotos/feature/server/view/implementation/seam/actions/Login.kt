@@ -27,7 +27,10 @@ import com.savvasdalkitsis.uhuruphotos.foundation.http.api.isValidUrlOrDomain
 import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R
 import kotlinx.coroutines.flow.flow
 
-data class Login(val allowUnsecuredServers: Boolean) : ServerAction() {
+data class Login(
+    val allowUnsecuredServers: Boolean,
+    val rememberCredentials: Boolean = false,
+) : ServerAction() {
     context(ServerActionsContext) override fun handle(
         state: ServerState
     ) = flow {
@@ -41,21 +44,24 @@ data class Login(val allowUnsecuredServers: Boolean) : ServerAction() {
             } else {
                 serverUseCase.setServerUrl(state.currentUrl)
                 emit(SetLoading(true))
-                authenticationLoginUseCase.login(Credentials(state.username, state.password))
-                    .mapEither(
-                        success = { authStatus ->
-                            if (authStatus == AuthStatus.Authenticated) {
-                                navigator.navigateUp()
-                            } else {
+                authenticationLoginUseCase.login(
+                    credentials = Credentials(state.username, state.password),
+                    rememberCredentials = rememberCredentials,
+                ).mapEither(
+                    success = { authStatus ->
+                        when (authStatus) {
+                            AuthStatus.Authenticated -> navigator.navigateUp()
+                            else -> {
                                 emit(SetLoading(false))
                                 toaster.show(R.string.error_logging_in)
                             }
-                        },
-                        failure = {
-                            emit(SetLoading(false))
-                            toaster.show(R.string.error_logging_in)
                         }
-                    )
+                    },
+                    failure = {
+                        emit(SetLoading(false))
+                        toaster.show(R.string.error_logging_in)
+                    }
+                )
             }
         }
     }

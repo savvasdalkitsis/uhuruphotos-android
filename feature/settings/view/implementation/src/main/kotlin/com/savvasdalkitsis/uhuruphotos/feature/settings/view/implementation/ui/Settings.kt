@@ -187,6 +187,8 @@ internal fun SettingsPreview() {
 
 @Composable
 private fun preferences() = object : Preferences {
+    override fun remove(key: String) {}
+
     override fun getBoolean(key: String, defaultValue: Boolean): Boolean = false
 
     override fun observeBoolean(key: String, defaultValue: Boolean): Flow<Boolean> = flowOf(false)

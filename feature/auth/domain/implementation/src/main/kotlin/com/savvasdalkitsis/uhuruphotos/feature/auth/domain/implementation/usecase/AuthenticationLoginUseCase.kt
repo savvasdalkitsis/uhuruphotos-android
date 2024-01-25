@@ -15,88 +15,66 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.auth.domain.implementation.usecase
 
-import androidx.credentials.CreatePasswordRequest
-import androidx.credentials.CredentialManager
-import androidx.credentials.GetCredentialRequest
-import androidx.credentials.GetPasswordOption
-import androidx.credentials.PasswordCredential
 import com.github.michaelbull.result.Ok
 import com.github.michaelbull.result.Result
 import com.savvasdalkitsis.uhuruphotos.feature.auth.domain.api.model.AuthStatus
+import com.savvasdalkitsis.uhuruphotos.feature.auth.domain.api.model.AuthStatus.Authenticated
 import com.savvasdalkitsis.uhuruphotos.feature.auth.domain.api.usecase.AuthenticationLoginUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.auth.domain.api.usecase.Credentials
+import com.savvasdalkitsis.uhuruphotos.feature.auth.domain.implementation.repository.AuthenticationRepository
 import com.savvasdalkitsis.uhuruphotos.feature.auth.domain.implementation.service.AuthenticationService
-import com.savvasdalkitsis.uhuruphotos.feature.auth.domain.implementation.service.model.AuthenticationCredentials
-import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.auth.Token
-import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.auth.TokenQueries
-import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.entities.auth.TokenType
-import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.extensions.async
-import com.savvasdalkitsis.uhuruphotos.foundation.activity.api.holder.CurrentActivityHolder
-import com.savvasdalkitsis.uhuruphotos.foundation.log.api.log
+import com.savvasdalkitsis.uhuruphotos.feature.auth.domain.implementation.service.model.toAuthenticationCredentials
 import com.savvasdalkitsis.uhuruphotos.foundation.log.api.runCatchingWithLog
-import dagger.hilt.android.scopes.ActivityRetainedScoped
+import com.savvasdalkitsis.uhuruphotos.foundation.preferences.api.EncryptedPreferences
+import com.savvasdalkitsis.uhuruphotos.foundation.preferences.api.Preferences
+import com.savvasdalkitsis.uhuruphotos.foundation.preferences.api.set
 import se.ansman.dagger.auto.AutoBind
 import javax.inject.Inject
 
 @AutoBind
-@ActivityRetainedScoped
 class AuthenticationLoginUseCase @Inject constructor(
-    private val tokenQueries: TokenQueries,
-    private val authenticationUseCase: AuthenticationUseCase,
     private val authenticationService: AuthenticationService,
-    private val credentialManager: CredentialManager,
-    private val currentActivityHolder: CurrentActivityHolder,
+    @EncryptedPreferences
+    private val preferences: Preferences,
+    private val authenticationRepository: AuthenticationRepository,
 ) : AuthenticationLoginUseCase {
 
-    private val activity get() = currentActivityHolder.currentActivity
+    private val keyUserName = "auth:keyUserName"
+    private val keyPassword = "auth:keyPassword"
 
-    override suspend fun login(credentials: Credentials): Result<AuthStatus, Throwable> =
-        runCatchingWithLog {
-            val response = authenticationService.login(AuthenticationCredentials(
-                credentials.username,
-                credentials.password,
-            ))
-            async {
-                tokenQueries.saveToken(
-                    Token(
-                        token = response.refresh,
-                        type = TokenType.REFRESH,
-                    )
-                )
-            }
-            val authStatus = authenticationUseCase.refreshAccessToken(response.refresh)
-            if (authStatus is AuthStatus.Authenticated) {
-                saveCredentials(credentials)
-            }
-            return Ok(authStatus)
+    override suspend fun login(
+        credentials: Credentials,
+        rememberCredentials: Boolean,
+    ): Result<AuthStatus, Throwable> = runCatchingWithLog {
+        val response = authenticationService.login(credentials.toAuthenticationCredentials)
+        authenticationRepository.saveRefreshToken(response.refresh)
+        authenticationRepository.saveAccessToken(response.access)
+        if (rememberCredentials) {
+            saveCredentials(credentials)
+        } else {
+            clearCredentials()
         }
-
-    override suspend fun loadSavedCredentials(): Credentials? = activity?.let { activity ->
-        try {
-            val result = credentialManager.getCredential(
-                activity,
-                GetCredentialRequest(listOf(GetPasswordOption())),
-            )
-            when (val credentials = result.credential) {
-                is PasswordCredential -> Credentials(credentials.id, credentials.password)
-                else -> null
-            }
-        } catch (e: Exception) {
-            log(e)
-            null
-        }
+        return Ok(Authenticated)
     }
 
-    private suspend fun saveCredentials(credentials: Credentials) {
-        activity?.let { activity ->
-            try {
-                credentialManager.createCredential(
-                    activity,
-                    CreatePasswordRequest(credentials.username, credentials.password)
-                )
-            } catch (e: Exception) {
-                log(e)
+    override suspend fun loadSavedCredentials(): Credentials? =
+        keyUserName.pref?.let { username ->
+            keyPassword.pref?.let { pass ->
+                Credentials(username, pass)
             }
         }
+
+    private fun clearCredentials() {
+        preferences.remove(keyUserName)
+        preferences.remove(keyPassword)
     }
+
+    private fun saveCredentials(credentials: Credentials) {
+        keyUserName.pref = credentials.username
+        keyPassword.pref = credentials.password
+    }
+
+    private var String.pref
+        get() = preferences.getNullableString(this, null)
+        set(value) { preferences.set(this, value) }
 }

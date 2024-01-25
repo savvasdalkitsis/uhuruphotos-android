@@ -23,6 +23,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.search.domain.api.usecase.SearchU
 import com.savvasdalkitsis.uhuruphotos.feature.settings.domain.api.usecase.SettingsUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.welcome.domain.api.usecase.WelcomeUseCase
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.Navigator
+import com.savvasdalkitsis.uhuruphotos.foundation.preferences.api.PlainTextPreferences
 import com.savvasdalkitsis.uhuruphotos.foundation.preferences.api.Preferences
 import com.savvasdalkitsis.uhuruphotos.foundation.preferences.api.set
 import com.savvasdalkitsis.uhuruphotos.foundation.toaster.api.usecase.ToasterUseCase
@@ -42,6 +43,7 @@ class DiscoverActionsContext @Inject constructor(
     val toaster: ToasterUseCase,
     val navigator: Navigator,
     val welcomeUseCase: WelcomeUseCase,
+    @PlainTextPreferences
     private val preferences: Preferences,
 ) {
     private val _queryFilter = MutableSharedFlow<String>()

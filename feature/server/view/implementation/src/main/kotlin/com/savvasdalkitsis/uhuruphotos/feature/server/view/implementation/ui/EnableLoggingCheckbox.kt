@@ -15,37 +15,29 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.server.view.implementation.ui
 
-import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.ColumnScope
-import androidx.compose.foundation.layout.Row
-import androidx.compose.material.Checkbox
-import androidx.compose.material.Text
+import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.savvasdalkitsis.uhuruphotos.feature.server.view.implementation.seam.actions.ServerAction
 import com.savvasdalkitsis.uhuruphotos.feature.server.view.implementation.seam.actions.SetLoggingEnabled
+import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.R
 import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
+import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.ToggleableButtonWithIcon
 
 @Composable
-internal fun ColumnScope.EnableLoggingCheckbox(
+internal fun EnableLoggingCheckbox(
     state: ServerState,
     action: (ServerAction) -> Unit
 ) {
-    Row(
+    ToggleableButtonWithIcon(
         modifier = Modifier
-            .align(Alignment.End)
-            .clickable { action(SetLoggingEnabled(!state.isLoggingEnabled)) },
-        horizontalArrangement = Arrangement.spacedBy(8.dp),
-        verticalAlignment = Alignment.CenterVertically,
+            .padding(vertical = 4.dp),
+        icon = R.drawable.ic_logs,
+        text = stringResource(string.enable_logging),
+        checked = state.isLoggingEnabled,
     ) {
-        Checkbox(
-            checked = state.isLoggingEnabled,
-            onCheckedChange = { action(SetLoggingEnabled(it)) },
-        )
-        Text(stringResource(string.enable_logging))
+        action(SetLoggingEnabled(it))
     }
 }

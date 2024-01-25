@@ -47,7 +47,7 @@ internal fun PasswordField(
     state: ServerState,
     action: (ServerAction) -> Unit
 ) {
-    var password by remember {
+    var password by remember(state.password) {
         mutableStateOf(state.password)
     }
     OutlinedTextField(
@@ -63,7 +63,12 @@ internal fun PasswordField(
             imeAction = ImeAction.Done,
         ),
         keyboardActions = KeyboardActions(
-            onDone = { action(Login(allowUnsecuredServers = false)) }
+            onDone = {
+                action(Login(
+                    allowUnsecuredServers = false,
+                    rememberCredentials = state.rememberCredentials,
+                ))
+            }
         ),
         leadingIcon = {
             Icon(

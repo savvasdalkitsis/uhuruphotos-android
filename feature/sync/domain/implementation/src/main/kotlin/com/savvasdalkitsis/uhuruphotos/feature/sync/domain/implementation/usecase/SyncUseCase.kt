@@ -21,6 +21,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.sync.domain.api.usecase.SyncUseCa
 import com.savvasdalkitsis.uhuruphotos.feature.upload.domain.api.model.UploadItem
 import com.savvasdalkitsis.uhuruphotos.feature.uploads.domain.api.usecase.UploadsUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.welcome.domain.api.usecase.WelcomeUseCase
+import com.savvasdalkitsis.uhuruphotos.foundation.preferences.api.PlainTextPreferences
 import com.savvasdalkitsis.uhuruphotos.foundation.preferences.api.Preferences
 import com.savvasdalkitsis.uhuruphotos.foundation.preferences.api.observe
 import com.savvasdalkitsis.uhuruphotos.foundation.preferences.api.set
@@ -35,6 +36,7 @@ import javax.inject.Inject
 @AutoBind
 class SyncUseCase @Inject constructor(
     private val welcomeUseCase: WelcomeUseCase,
+    @PlainTextPreferences
     private val preferences: Preferences,
     private val feedUseCase: FeedUseCase,
     private val uploadsUseCase: UploadsUseCase,

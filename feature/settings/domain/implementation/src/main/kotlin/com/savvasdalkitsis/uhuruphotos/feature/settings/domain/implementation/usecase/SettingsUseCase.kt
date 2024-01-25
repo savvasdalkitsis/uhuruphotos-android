@@ -31,6 +31,7 @@ import com.savvasdalkitsis.uhuruphotos.foundation.log.api.Log
 import com.savvasdalkitsis.uhuruphotos.foundation.map.api.model.MapProvider
 import com.savvasdalkitsis.uhuruphotos.foundation.map.api.model.MapProvider.Google
 import com.savvasdalkitsis.uhuruphotos.foundation.map.api.model.MapProvider.MapBox
+import com.savvasdalkitsis.uhuruphotos.foundation.preferences.api.PlainTextPreferences
 import com.savvasdalkitsis.uhuruphotos.foundation.preferences.api.Preferences
 import com.savvasdalkitsis.uhuruphotos.foundation.preferences.api.get
 import com.savvasdalkitsis.uhuruphotos.foundation.preferences.api.observe
@@ -53,6 +54,7 @@ import javax.inject.Inject
 
 @AutoBind
 internal class SettingsUseCase @Inject constructor(
+    @PlainTextPreferences
     private val preferences: Preferences,
     private val welcomeUseCase: WelcomeUseCase,
     @ApplicationContext private val context: Context,

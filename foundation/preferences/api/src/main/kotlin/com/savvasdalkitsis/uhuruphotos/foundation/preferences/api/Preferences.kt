@@ -19,6 +19,8 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 
 interface Preferences {
+    fun remove(key: String)
+
     fun getBoolean(key: String, defaultValue: Boolean): Boolean
     fun observeBoolean(key: String, defaultValue: Boolean): Flow<Boolean>
     fun setBoolean(key: String, value: Boolean)

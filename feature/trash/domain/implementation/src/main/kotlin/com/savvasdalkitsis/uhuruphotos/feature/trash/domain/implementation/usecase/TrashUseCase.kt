@@ -24,6 +24,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.usecase.M
 import com.savvasdalkitsis.uhuruphotos.feature.trash.domain.api.usecase.TrashUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.trash.domain.implementation.repository.TrashRepository
 import com.savvasdalkitsis.uhuruphotos.foundation.group.api.model.mapValues
+import com.savvasdalkitsis.uhuruphotos.foundation.preferences.api.PlainTextPreferences
 import com.savvasdalkitsis.uhuruphotos.foundation.preferences.api.Preferences
 import com.savvasdalkitsis.uhuruphotos.foundation.preferences.api.get
 import com.savvasdalkitsis.uhuruphotos.foundation.preferences.api.set
@@ -37,6 +38,7 @@ import javax.inject.Inject
 internal class TrashUseCase @Inject constructor(
     private val mediaUseCase: MediaUseCase,
     private val trashRepository: TrashRepository,
+    @PlainTextPreferences
     private val preferences: Preferences,
 ) : TrashUseCase {
 

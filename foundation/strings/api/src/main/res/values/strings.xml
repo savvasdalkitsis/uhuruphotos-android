@@ -363,4 +363,5 @@
     <string name="forget_server">Forget server</string>
     <string name="folders_on_feed">Folders contributing to Feed</string>
     <string name="feed_folders">Feed Folders</string>
+    <string name="remember_credentials">Remember credentials</string>
 </resources>

@@ -40,6 +40,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.welcome.domain.api.usecase.Welcom
 import com.savvasdalkitsis.uhuruphotos.foundation.coroutines.api.safelyOnStartIgnoring
 import com.savvasdalkitsis.uhuruphotos.foundation.group.api.model.Group
 import com.savvasdalkitsis.uhuruphotos.foundation.group.api.model.mapValues
+import com.savvasdalkitsis.uhuruphotos.foundation.preferences.api.PlainTextPreferences
 import com.savvasdalkitsis.uhuruphotos.foundation.preferences.api.Preferences
 import com.savvasdalkitsis.uhuruphotos.foundation.preferences.api.observe
 import com.savvasdalkitsis.uhuruphotos.foundation.preferences.api.set
@@ -60,6 +61,7 @@ internal class FeedUseCase @Inject constructor(
     private val feedWorkScheduler: FeedWorkScheduler,
     private val downloadUseCase: DownloadUseCase,
     private val uploadUseCase: UploadUseCase,
+    @PlainTextPreferences
     private val preferences: Preferences,
     private val welcomeUseCase: WelcomeUseCase,
     private val portfolioUseCase: PortfolioUseCase,

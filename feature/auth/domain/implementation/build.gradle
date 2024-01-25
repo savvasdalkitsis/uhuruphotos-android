@@ -26,7 +26,6 @@ dependencies {
             libs.androidx.compose.hilt.navigation,
             libs.androidx.compose.ui,
             libs.bundles.autodagger,
-            libs.bundles.androidx.credentials,
             libs.gson,
             libs.jwt,
             libs.hilt,

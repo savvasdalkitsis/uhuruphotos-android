@@ -30,7 +30,8 @@ import com.savvasdalkitsis.uhuruphotos.feature.server.view.implementation.seam.a
 @Composable
 internal fun UnsecuredServerConfirmationDialog(
     currentUrl: String,
-    action: (ServerAction) -> Unit
+    action: (ServerAction) -> Unit,
+    state: ServerState
 ) {
     AlertDialog(
         onDismissRequest = { action(DismissUnsecuredServerDialog) },
@@ -47,7 +48,10 @@ internal fun UnsecuredServerConfirmationDialog(
         confirmButton = {
             Button(onClick = {
                 action(DismissUnsecuredServerDialog)
-                action(Login(allowUnsecuredServers = true))
+                action(Login(
+                    allowUnsecuredServers = true,
+                    rememberCredentials = state.rememberCredentials,
+                ))
             }) {
                 Text("Yes")
             }

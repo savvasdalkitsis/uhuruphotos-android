@@ -16,8 +16,17 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.foundation.preferences.implementation.module
 
 import android.content.Context
+import android.content.SharedPreferences
 import androidx.preference.PreferenceManager
+import androidx.security.crypto.EncryptedSharedPreferences
+import androidx.security.crypto.EncryptedSharedPreferences.PrefKeyEncryptionScheme.AES256_SIV
+import androidx.security.crypto.EncryptedSharedPreferences.PrefValueEncryptionScheme.AES256_GCM
+import androidx.security.crypto.MasterKey
+import androidx.security.crypto.MasterKey.KeyScheme
 import com.fredporciuncula.flow.preferences.FlowSharedPreferences
+import com.savvasdalkitsis.uhuruphotos.foundation.preferences.api.EncryptedPreferences
+import com.savvasdalkitsis.uhuruphotos.foundation.preferences.api.PlainTextPreferences
+import com.savvasdalkitsis.uhuruphotos.foundation.preferences.api.Preferences
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -29,6 +38,36 @@ import dagger.hilt.components.SingletonComponent
 class PreferencesModule {
 
     @Provides
+    @PlainTextPreferences
+    fun preferences(@PlainTextPreferences prefs: FlowSharedPreferences): Preferences =
+        com.savvasdalkitsis.uhuruphotos.foundation.preferences.implementation.Preferences(prefs)
+
+    @Provides
+    @EncryptedPreferences
+    fun encryptedPreferences(@EncryptedPreferences prefs: FlowSharedPreferences): Preferences =
+        com.savvasdalkitsis.uhuruphotos.foundation.preferences.implementation.Preferences(prefs)
+
+    @Provides
+    @PlainTextPreferences
     fun flowPreferences(@ApplicationContext context: Context): FlowSharedPreferences =
         FlowSharedPreferences(PreferenceManager.getDefaultSharedPreferences(context))
+
+    @Provides
+    @EncryptedPreferences
+    fun encryptedFlowPreferences(
+        @EncryptedPreferences encryptedPreferences: SharedPreferences
+    ): FlowSharedPreferences = FlowSharedPreferences(encryptedPreferences)
+
+    @Provides
+    @EncryptedPreferences
+    fun encryptedSharedPreferences(@ApplicationContext context: Context): SharedPreferences =
+        EncryptedSharedPreferences.create(
+            context,
+            "encrypted_shared_prefs",
+            MasterKey.Builder(context)
+                .setKeyScheme(KeyScheme.AES256_GCM)
+                .build(),
+            AES256_SIV,
+            AES256_GCM
+        )
 }

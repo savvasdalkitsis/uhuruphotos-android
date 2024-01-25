@@ -17,7 +17,11 @@ package com.savvasdalkitsis.uhuruphotos.feature.server.view.implementation.seam.
 
 import com.savvasdalkitsis.uhuruphotos.feature.server.view.implementation.seam.ServerActionsContext
 import com.savvasdalkitsis.uhuruphotos.feature.server.view.implementation.seam.ServerMutation
-import com.savvasdalkitsis.uhuruphotos.feature.server.view.implementation.seam.ServerMutation.*
+import com.savvasdalkitsis.uhuruphotos.feature.server.view.implementation.seam.ServerMutation.ChangePasswordTo
+import com.savvasdalkitsis.uhuruphotos.feature.server.view.implementation.seam.ServerMutation.ChangeServerUrlTo
+import com.savvasdalkitsis.uhuruphotos.feature.server.view.implementation.seam.ServerMutation.ChangeUsernameTo
+import com.savvasdalkitsis.uhuruphotos.feature.server.view.implementation.seam.ServerMutation.SetRememberCredentials
+import com.savvasdalkitsis.uhuruphotos.feature.server.view.implementation.seam.ServerMutation.ShowUrlValidation
 import com.savvasdalkitsis.uhuruphotos.feature.server.view.implementation.ui.ServerState
 import com.savvasdalkitsis.uhuruphotos.foundation.http.api.isValidUrlOrDomain
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.andThen
@@ -38,6 +42,7 @@ data object Load : ServerAction() {
                 if (!credentials.isEmpty) {
                     emit(ChangeUsernameTo(credentials.username))
                     emit(ChangePasswordTo(credentials.password))
+                    emit(SetRememberCredentials(true))
                 }
             }
         }

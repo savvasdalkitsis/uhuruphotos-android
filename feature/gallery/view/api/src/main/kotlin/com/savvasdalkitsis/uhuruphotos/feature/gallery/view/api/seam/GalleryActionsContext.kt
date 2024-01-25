@@ -23,6 +23,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.ui.state.Gallery
 import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.ui.state.GallerySorting
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.api.model.LightboxSequenceDataSource
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.Navigator
+import com.savvasdalkitsis.uhuruphotos.foundation.preferences.api.PlainTextPreferences
 import com.savvasdalkitsis.uhuruphotos.foundation.preferences.api.Preferences
 import com.savvasdalkitsis.uhuruphotos.foundation.preferences.api.observe
 import com.savvasdalkitsis.uhuruphotos.foundation.preferences.api.set
@@ -50,6 +51,7 @@ class GalleryActionsContext @AssistedInject constructor(
     val collageDisplayPersistence: suspend (galleryId: Int, PredefinedCollageDisplay) -> Unit,
     @Assisted
     val shouldShowSortingAction: Boolean = true,
+    @PlainTextPreferences
     val preferences: Preferences,
     val toaster: ToasterUseCase,
     val navigator: Navigator,

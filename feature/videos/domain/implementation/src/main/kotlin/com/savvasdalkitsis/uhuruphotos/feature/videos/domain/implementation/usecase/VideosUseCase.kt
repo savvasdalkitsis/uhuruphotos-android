@@ -17,6 +17,7 @@ package com.savvasdalkitsis.uhuruphotos.feature.videos.domain.implementation.use
 
 import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.PredefinedCollageDisplay
 import com.savvasdalkitsis.uhuruphotos.feature.videos.domain.api.usecase.VideosUseCase
+import com.savvasdalkitsis.uhuruphotos.foundation.preferences.api.PlainTextPreferences
 import com.savvasdalkitsis.uhuruphotos.foundation.preferences.api.Preferences
 import com.savvasdalkitsis.uhuruphotos.foundation.preferences.api.get
 import com.savvasdalkitsis.uhuruphotos.foundation.preferences.api.set
@@ -25,6 +26,7 @@ import javax.inject.Inject
 
 @AutoBind
 class VideosUseCase @Inject constructor(
+    @PlainTextPreferences
     private val preferences: Preferences,
 ) : VideosUseCase {
     private val key = "videosGalleryDisplay"

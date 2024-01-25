@@ -26,6 +26,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.album.auto.AutoAlbu
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaId.Remote
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemHash
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemInstance
+import com.savvasdalkitsis.uhuruphotos.foundation.preferences.api.PlainTextPreferences
 import com.savvasdalkitsis.uhuruphotos.foundation.preferences.api.Preferences
 import com.savvasdalkitsis.uhuruphotos.foundation.preferences.api.get
 import com.savvasdalkitsis.uhuruphotos.foundation.preferences.api.observe
@@ -41,6 +42,7 @@ import javax.inject.Inject
 class AutoAlbumsUseCase @Inject constructor(
     private val autoAlbumsRepository: AutoAlbumsRepository,
     private val serverUseCase: ServerUseCase,
+    @PlainTextPreferences
     private val preferences: Preferences,
     @ApplicationContext private val context: Context,
 ) : AutoAlbumsUseCase {
