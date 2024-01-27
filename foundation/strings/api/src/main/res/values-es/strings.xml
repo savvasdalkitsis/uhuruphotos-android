@@ -171,9 +171,9 @@
     <string name="privacy_security">Privacidad y seguridad</string>
     <string name="help">Ayuda</string>
     <plurals name="restore_photos_confirmation">
-        <item quantity="one">¿Estás seguro de que quieres restaurar %d foto\?</item>
-        <item quantity="many">¿Estás seguro de que quieres restaurar estas %d fotos\?</item>
-        <item quantity="other">¿Estás seguro de que quieres restaurar estas %d fotos\?</item>
+        <item quantity="one">¿Restaurar esta foto %d?</item>
+        <item quantity="many">¿Restaurar estas fotos %d?</item>
+        <item quantity="other">¿Restaurar estas fotos %d?</item>
     </plurals>
     <string name="nothing_here_yet">Todavía no hay nada aquí</string>
     <string name="use_as">Usar como</string>
