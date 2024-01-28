@@ -21,13 +21,13 @@ import com.savvasdalkitsis.uhuruphotos.feature.avatar.view.api.ui.state.AvatarSt
 import com.savvasdalkitsis.uhuruphotos.feature.avatar.view.api.ui.state.SyncState.BAD
 import com.savvasdalkitsis.uhuruphotos.feature.avatar.view.api.ui.state.SyncState.GOOD
 import com.savvasdalkitsis.uhuruphotos.feature.avatar.view.api.ui.state.SyncState.IN_PROGRESS
-import com.savvasdalkitsis.uhuruphotos.feature.jobs.domain.api.model.JobStatus
 import com.savvasdalkitsis.uhuruphotos.feature.jobs.domain.api.model.JobStatus.Failed
 import com.savvasdalkitsis.uhuruphotos.feature.jobs.domain.api.model.JobStatus.InProgress
 import com.savvasdalkitsis.uhuruphotos.feature.jobs.domain.api.model.JobsStatus
 import com.savvasdalkitsis.uhuruphotos.feature.jobs.domain.api.usecase.JobsUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.user.domain.api.usecase.UserUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.welcome.domain.api.usecase.WelcomeUseCase
+import com.savvasdalkitsis.uhuruphotos.feature.welcome.domain.api.usecase.flow
 import dagger.hilt.android.scopes.ActivityRetainedScoped
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.combine
