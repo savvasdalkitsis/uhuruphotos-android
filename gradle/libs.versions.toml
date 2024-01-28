@@ -1,5 +1,5 @@
 [versions]
-accompanist = "0.32.0"
+accompanist = "0.34.0"
 androidx-hilt = "1.1.0"
 autodagger = "1.0.0"
 coil = "2.5.0"
