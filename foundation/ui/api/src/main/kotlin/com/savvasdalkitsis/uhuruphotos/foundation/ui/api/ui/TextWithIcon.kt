@@ -18,8 +18,6 @@ package com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.size
-import androidx.compose.material.LocalContentAlpha
-import androidx.compose.material.LocalContentColor
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment.Companion.CenterVertically
@@ -53,7 +51,7 @@ fun TextWithIcon(
                 .recomposeHighlighter()
                 .align(CenterVertically),
             icon = icon,
-            tint = tint ?: LocalContentColor.current.copy(alpha = LocalContentAlpha.current),
+            tint = tint,
             animateIfAvailable = animateIfAvailable,
             contentDescription = null
         )
