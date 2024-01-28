@@ -18,6 +18,7 @@ package com.savvasdalkitsis.uhuruphotos.feature.heatmap.view.implementation.seam
 import com.savvasdalkitsis.uhuruphotos.feature.heatmap.view.implementation.ui.state.HeatMapState
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItem
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemsOnDevice
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.state.toCel
 import com.savvasdalkitsis.uhuruphotos.foundation.map.api.model.LatLon
 import com.savvasdalkitsis.uhuruphotos.foundation.map.api.model.Viewport
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.Mutation
@@ -43,7 +44,7 @@ sealed class HeatMapMutation(
         val pointsOnVisibleMap: List<LatLon>,
     ) : HeatMapMutation({
         it.copy(
-            photosOnVisibleMap = photosOnVisibleMap.toPersistentList(),
+            photosOnVisibleMap = photosOnVisibleMap.map(MediaItem::toCel).toPersistentList(),
             pointsOnVisibleMap = pointsOnVisibleMap.toPersistentList(),
         )
     })

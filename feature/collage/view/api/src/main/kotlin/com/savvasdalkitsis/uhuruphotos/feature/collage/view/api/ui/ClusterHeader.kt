@@ -82,10 +82,12 @@ internal fun ClusterHeader(
         ) {
             Text(
                 text = title,
-                style = TextStyle.Default.copy(
-                    fontWeight = FontWeight.Bold,
-                    fontSize = 14.sp
-                )
+                style = remember {
+                    TextStyle.Default.copy(
+                        fontWeight = FontWeight.Bold,
+                        fontSize = 14.sp
+                    )
+                }
             )
             val locationDisplay by remember {
                 derivedStateOf {
@@ -96,7 +98,9 @@ internal fun ClusterHeader(
                 Spacer(modifier = Modifier.height(8.dp))
                 Text(
                     text = it,
-                    style = TextStyle.Default.copy(fontWeight = FontWeight.Light)
+                    style = remember {
+                        TextStyle.Default.copy(fontWeight = FontWeight.Light)
+                    }
                 )
             }
         }

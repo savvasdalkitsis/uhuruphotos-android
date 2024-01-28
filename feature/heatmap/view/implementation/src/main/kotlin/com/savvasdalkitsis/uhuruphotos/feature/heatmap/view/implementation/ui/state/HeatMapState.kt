@@ -18,6 +18,7 @@ package com.savvasdalkitsis.uhuruphotos.feature.heatmap.view.implementation.ui.s
 import androidx.compose.runtime.Immutable
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItem
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemsOnDevice
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.state.CelState
 import com.savvasdalkitsis.uhuruphotos.foundation.map.api.model.LatLon
 import com.savvasdalkitsis.uhuruphotos.foundation.map.api.model.Viewport
 import kotlinx.collections.immutable.ImmutableList
@@ -29,7 +30,7 @@ data class HeatMapState(
     val allPoints: ImmutableList<LatLon> = persistentListOf(),
     val pointsOnVisibleMap: ImmutableList<LatLon> = persistentListOf(),
     val allMedia: ImmutableList<MediaItem> = persistentListOf(),
-    val photosOnVisibleMap: ImmutableList<MediaItem> = persistentListOf(),
+    val photosOnVisibleMap: ImmutableList<CelState> = persistentListOf(),
     val showRequestPermissionForLocalMediaAccess: MediaItemsOnDevice.RequiresPermissions? = null,
     val initialViewport: Viewport? = null,
 )

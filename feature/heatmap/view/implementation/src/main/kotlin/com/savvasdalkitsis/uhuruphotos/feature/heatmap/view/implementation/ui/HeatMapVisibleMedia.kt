@@ -28,10 +28,8 @@ import com.savvasdalkitsis.uhuruphotos.feature.heatmap.view.implementation.seam.
 import com.savvasdalkitsis.uhuruphotos.feature.heatmap.view.implementation.seam.actions.SelectedCel
 import com.savvasdalkitsis.uhuruphotos.feature.heatmap.view.implementation.ui.state.HeatMapCollageDisplay
 import com.savvasdalkitsis.uhuruphotos.feature.heatmap.view.implementation.ui.state.HeatMapState
-import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.state.toCel
 import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
 import kotlinx.collections.immutable.persistentListOf
-import kotlinx.collections.immutable.toPersistentList
 
 @Composable
 fun HeatMapVisibleMedia(
@@ -44,9 +42,6 @@ fun HeatMapVisibleMedia(
     if (state.allMedia.isEmpty()) {
         CircularProgressIndicator(modifier = loadingModifier)
     } else {
-        val cels = remember(state.photosOnVisibleMap) {
-            state.photosOnVisibleMap.map { it.toCel() }.toPersistentList()
-        }
         val displayTitle = stringResource(
             string.media_on_map,
             state.photosOnVisibleMap.size,
@@ -58,11 +53,11 @@ fun HeatMapVisibleMedia(
             state = CollageState(
                 isLoading = false,
                 collageDisplay = HeatMapCollageDisplay,
-                clusters = remember(displayTitle, cels) {
+                clusters = remember(displayTitle, state.photosOnVisibleMap) {
                     persistentListOf(
                         Cluster(
                             id = "visibleItems",
-                            cels = cels,
+                            cels = state.photosOnVisibleMap,
                             displayTitle = displayTitle,
                             location = null,
                         )
