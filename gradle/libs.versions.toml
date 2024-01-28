@@ -16,7 +16,7 @@ moshi = "1.15.0"
 okhttp = "5.0.0-alpha.11"
 org-jetbrains-kotlinx = "1.7.3"
 permissions = "1.2.0"
-resaca = "3.1.3"
+resaca = "3.2.0"
 retrofit = "2.9.0"
 sqldelight = "2.0.1"
 
