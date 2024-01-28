@@ -106,7 +106,7 @@ mapbox = "com.mapbox.maps:android:10.9.1"
 maplibre = "org.maplibre.gl:android-sdk:10.2.0"
 maplibre-annotations = "org.maplibre.gl:android-plugin-annotation-v9:2.0.2"
 maps = { module = "com.google.android.gms:play-services-maps", version.ref = "com-google-android-gms" }
-maps-compose = "com.google.maps.android:maps-compose:4.3.0"
+maps-compose = "com.google.maps.android:maps-compose:4.3.2"
 maps-utils = "com.google.maps.android:android-maps-utils:3.8.2"
 maps-utils-ktx = "com.google.maps.android:maps-utils-ktx:5.0.0"
 mockk = { module = "io.mockk:mockk", version.ref = "mockk" }
