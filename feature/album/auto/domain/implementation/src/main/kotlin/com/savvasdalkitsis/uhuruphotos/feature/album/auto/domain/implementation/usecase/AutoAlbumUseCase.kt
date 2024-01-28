@@ -55,9 +55,8 @@ internal class AutoAlbumUseCase @Inject constructor(
         }
 
     override suspend fun getAutoAlbum(albumId: Int): List<MediaCollection> = with(mediaUseCase) {
-        autoAlbumRepository.getAutoAlbum(albumId)
-            .mapValues { it.toMediaCollectionSource() }
-            .toMediaCollection()
+        toMediaCollection(autoAlbumRepository.getAutoAlbum(albumId)
+            .mapValues { it.toMediaCollectionSource() })
     }
 
     override suspend fun refreshAutoAlbum(albumId: Int) =

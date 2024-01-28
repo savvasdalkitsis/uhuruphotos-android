@@ -25,14 +25,14 @@ interface WelcomeUseCase {
     fun markWelcomeScreenSeen()
     fun observeWelcomeStatus(): Flow<WelcomeStatus>
     suspend fun getWelcomeStatus(): WelcomeStatus
+}
 
-    fun <T> flow(
-        withRemoteAccess: Flow<T>,
-        withoutRemoteAccess: Flow<T>,
-    ) = observeWelcomeStatus().flatMapLatest { welcomeStatus ->
-        when {
-            welcomeStatus.hasRemoteAccess -> withRemoteAccess
-            else -> withoutRemoteAccess
-        }
+fun <T> WelcomeUseCase.flow(
+    withRemoteAccess: Flow<T>,
+    withoutRemoteAccess: Flow<T>,
+) = observeWelcomeStatus().flatMapLatest { welcomeStatus ->
+    when {
+        welcomeStatus.hasRemoteAccess -> withRemoteAccess
+        else -> withoutRemoteAccess
     }
 }

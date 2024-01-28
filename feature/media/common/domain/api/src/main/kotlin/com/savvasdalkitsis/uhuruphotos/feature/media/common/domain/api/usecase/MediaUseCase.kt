@@ -63,5 +63,5 @@ interface MediaUseCase {
 
     suspend fun List<MediaCollectionSource>.toMediaCollections(): List<MediaCollection>
 
-    suspend fun Group<String, MediaCollectionSource>.toMediaCollection(): List<MediaCollection>
+    suspend fun toMediaCollection(groups: Group<String, MediaCollectionSource>): List<MediaCollection>
 }

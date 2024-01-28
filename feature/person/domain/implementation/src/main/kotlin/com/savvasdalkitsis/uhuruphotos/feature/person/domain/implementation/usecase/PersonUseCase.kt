@@ -47,9 +47,9 @@ class PersonUseCase @Inject constructor(
             .distinctUntilChanged()
             .map {
                 with(mediaUseCase) {
-                    it.mapValues { getPersonAlbums ->
+                    toMediaCollection(it.mapValues { getPersonAlbums ->
                         getPersonAlbums.toMediaCollectionSource()
-                    }.toMediaCollection()
+                    })
                 }
             }
             .initialize()
@@ -62,9 +62,8 @@ class PersonUseCase @Inject constructor(
         }
 
     override suspend fun getPersonMedia(id: Int): List<MediaCollection> = with(mediaUseCase) {
-        personRepository.getPersonAlbums(id)
-            .mapValues { it.toMediaCollectionSource() }
-            .toMediaCollection()
+        toMediaCollection(personRepository.getPersonAlbums(id)
+            .mapValues { it.toMediaCollectionSource() })
     }
 
     private fun GetPersonAlbums.toMediaCollectionSource() = MediaCollectionSource(

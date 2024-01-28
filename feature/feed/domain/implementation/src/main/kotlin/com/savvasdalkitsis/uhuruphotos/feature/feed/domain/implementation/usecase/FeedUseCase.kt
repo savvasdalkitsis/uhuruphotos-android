@@ -37,6 +37,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.usecase.M
 import com.savvasdalkitsis.uhuruphotos.feature.portfolio.domain.api.usecase.PortfolioUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.upload.domain.api.usecase.UploadUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.welcome.domain.api.usecase.WelcomeUseCase
+import com.savvasdalkitsis.uhuruphotos.feature.welcome.domain.api.usecase.flow
 import com.savvasdalkitsis.uhuruphotos.foundation.coroutines.api.safelyOnStartIgnoring
 import com.savvasdalkitsis.uhuruphotos.foundation.group.api.model.Group
 import com.savvasdalkitsis.uhuruphotos.foundation.group.api.model.mapValues
@@ -181,9 +182,7 @@ internal class FeedUseCase @Inject constructor(
     )
 
     private suspend fun Group<String, MediaCollectionSource>.toCollection() =
-        with(mediaUseCase) {
-            toMediaCollection()
-        }
+            mediaUseCase.toMediaCollection(this@toCollection)
 
     private fun Map<String?, List<MediaItem>>.toMediaCollections() = map { (day, items) ->
         MediaCollection(

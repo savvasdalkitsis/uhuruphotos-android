@@ -47,9 +47,8 @@ class SearchUseCase @Inject constructor(
 ) : SearchUseCase {
 
     override suspend fun searchResultsFor(query: String): List<MediaCollection> = with(mediaUseCase) {
-        searchRepository.getSearchResults(query)
-            .mapNotNullValues { it.toMediaCollectionSource() }
-            .toMediaCollection()
+        toMediaCollection(searchRepository.getSearchResults(query)
+            .mapNotNullValues { it.toMediaCollectionSource() })
     }
 
     override fun searchFor(query: String): Flow<Result<List<MediaCollection>, Throwable>> =
@@ -57,8 +56,7 @@ class SearchUseCase @Inject constructor(
             .distinctUntilChanged()
             .map { groups ->
                 with(mediaUseCase) {
-                    groups.mapNotNullValues { it.toMediaCollectionSource() }
-                        .toMediaCollection()
+                    toMediaCollection(groups.mapNotNullValues { it.toMediaCollectionSource() })
                 }
             }
             .distinctUntilChanged()

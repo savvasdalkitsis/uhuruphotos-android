@@ -65,14 +65,13 @@ internal class TrashUseCase @Inject constructor(
         }
         .map {
             with(mediaUseCase) {
-                it.toMediaCollection()
+                toMediaCollection(it)
             }
         }
 
     override suspend fun getTrash() = with(mediaUseCase) {
-        trashRepository.getTrash()
-            .mapValues { it.toMediaCollectionSource() }
-            .toMediaCollection()
+        toMediaCollection(trashRepository.getTrash()
+            .mapValues { it.toMediaCollectionSource() })
     }
 
     private fun GetTrash.toMediaCollectionSource() = MediaCollectionSource(

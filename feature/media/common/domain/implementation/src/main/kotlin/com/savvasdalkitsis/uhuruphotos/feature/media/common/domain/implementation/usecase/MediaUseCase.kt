@@ -62,6 +62,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.people.domain.api.usecase.PeopleU
 import com.savvasdalkitsis.uhuruphotos.feature.people.view.api.ui.state.toPerson
 import com.savvasdalkitsis.uhuruphotos.feature.user.domain.api.usecase.UserUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.welcome.domain.api.usecase.WelcomeUseCase
+import com.savvasdalkitsis.uhuruphotos.feature.welcome.domain.api.usecase.flow
 import com.savvasdalkitsis.uhuruphotos.foundation.date.api.DateDisplayer
 import com.savvasdalkitsis.uhuruphotos.foundation.date.api.DateParser
 import com.savvasdalkitsis.uhuruphotos.foundation.group.api.model.Group
@@ -359,10 +360,10 @@ class MediaUseCase @Inject constructor(
     override suspend fun refreshFavouriteMedia() =
         remoteMediaUseCase.refreshFavouriteMedia()
 
-    override suspend fun Group<String, MediaCollectionSource>.toMediaCollection(): List<MediaCollection> {
+    override suspend fun toMediaCollection(groups: Group<String, MediaCollectionSource>): List<MediaCollection> {
         val favouriteThreshold = userUseCase.getUserOrRefresh()
             .andThenTry { it.favoriteMinRating!! }
-        return items
+        return groups.items
             .map { (id, source) ->
                 mediaCollection(id, source, favouriteThreshold)
             }
