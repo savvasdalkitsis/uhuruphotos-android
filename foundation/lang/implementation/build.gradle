@@ -1,0 +1,10 @@
+android {
+    namespace 'com.savvasdalkitsis.uhuruphotos.foundation.lang.implementation'
+}
+
+dependencies {
+    implementation project(":foundation:lang:api")
+    implementation(
+            libs.hilt,
+    )
+}
