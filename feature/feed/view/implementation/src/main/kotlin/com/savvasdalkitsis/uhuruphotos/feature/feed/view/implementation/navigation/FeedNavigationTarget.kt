@@ -22,7 +22,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.account.view.api.ui.AccountOvervi
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.api.navigation.FeedNavigationRoute
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.ui.Feed
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.viewmodel.FeedViewModel
-import com.savvasdalkitsis.uhuruphotos.feature.settings.domain.api.usecase.SettingsUseCase
+import com.savvasdalkitsis.uhuruphotos.feature.settings.domain.api.usecase.SettingsUIUseCase
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.NavigationTarget
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.NavigationTargetBuilder
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.NavigationTargetRegistry
@@ -36,14 +36,14 @@ import javax.inject.Singleton
 @Singleton
 internal class FeedNavigationTarget @Inject constructor(
     registry: NavigationTargetRegistry,
-    private val settingsUseCase: SettingsUseCase,
+    private val settingsUIUseCase: SettingsUIUseCase,
     private val navigationTargetBuilder: NavigationTargetBuilder,
 ) : NavigationTarget<FeedNavigationRoute>(FeedNavigationRoute::class, registry) {
 
     @Composable
     override fun View(route: FeedNavigationRoute) = with(navigationTargetBuilder) {
         ViewModelView(
-            themeMode = settingsUseCase.observeThemeModeState(),
+            themeMode = settingsUIUseCase.observeThemeModeState(),
             route = route,
             viewModel = FeedViewModel::class,
         ) { state, actions ->

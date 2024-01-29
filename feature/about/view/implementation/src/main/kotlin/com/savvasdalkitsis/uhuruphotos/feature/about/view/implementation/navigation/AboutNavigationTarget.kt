@@ -19,7 +19,7 @@ import androidx.compose.runtime.Composable
 import com.savvasdalkitsis.uhuruphotos.feature.about.view.api.navigation.AboutNavigationRoute
 import com.savvasdalkitsis.uhuruphotos.feature.about.view.implementation.ui.About
 import com.savvasdalkitsis.uhuruphotos.feature.about.view.implementation.viewmodel.AboutViewModel
-import com.savvasdalkitsis.uhuruphotos.feature.settings.domain.api.usecase.SettingsUseCase
+import com.savvasdalkitsis.uhuruphotos.feature.settings.domain.api.usecase.SettingsUIUseCase
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.NavigationTarget
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.NavigationTargetBuilder
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.NavigationTargetRegistry
@@ -30,7 +30,7 @@ import javax.inject.Singleton
 @AutoInitialize
 @Singleton
 internal class AboutNavigationTarget @Inject constructor(
-    private val settingsUseCase: SettingsUseCase,
+    private val settingsUIUseCase: SettingsUIUseCase,
     private val navigationTargetBuilder: NavigationTargetBuilder,
     registry: NavigationTargetRegistry,
 ) : NavigationTarget<AboutNavigationRoute>(AboutNavigationRoute::class, registry) {
@@ -38,7 +38,7 @@ internal class AboutNavigationTarget @Inject constructor(
     @Composable
     override fun View(route: AboutNavigationRoute) = with(navigationTargetBuilder) {
         ViewModelView(
-            themeMode = settingsUseCase.observeThemeModeState(),
+            themeMode = settingsUIUseCase.observeThemeModeState(),
             route = route,
             viewModel = AboutViewModel::class,
         ) { state, actions ->

@@ -13,7 +13,6 @@ dependencies {
     api project(":feature:jobs:domain:api")
     implementation(
             project(":feature:about:view:api"),
-            project(":feature:account:domain:api"),
             project(":feature:avatar:domain:api"),
             project(":feature:home:view:api"),
             project(":feature:jobs:view:api"),

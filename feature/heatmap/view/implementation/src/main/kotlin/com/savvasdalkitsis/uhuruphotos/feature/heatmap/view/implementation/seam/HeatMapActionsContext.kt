@@ -23,6 +23,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.heatmap.view.implementation.seam.
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItem
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.usecase.MediaUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.worker.LocalMediaWorkScheduler
+import com.savvasdalkitsis.uhuruphotos.feature.settings.domain.api.usecase.SettingsUIUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.settings.domain.api.usecase.SettingsUseCase
 import com.savvasdalkitsis.uhuruphotos.foundation.map.api.model.LatLon
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.Navigator
@@ -35,6 +36,7 @@ internal class HeatMapActionsContext @Inject constructor(
     val feedWorkScheduler: FeedWorkScheduler,
     val mediaUseCase: MediaUseCase,
     val settingsUseCase: SettingsUseCase,
+    val settingsUIUseCase: SettingsUIUseCase,
     val localMediaWorkScheduler: LocalMediaWorkScheduler,
     val locationManager: LocationManager,
     val heatMapUseCase: HeatMapUseCase,

@@ -20,6 +20,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.feed.domain.api.usecase.FeedUseCa
 import com.savvasdalkitsis.uhuruphotos.feature.heatmap.domain.api.usecase.HeatMapUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.people.domain.api.usecase.PeopleUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.search.domain.api.usecase.SearchUseCase
+import com.savvasdalkitsis.uhuruphotos.feature.settings.domain.api.usecase.SettingsUIUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.settings.domain.api.usecase.SettingsUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.welcome.domain.api.usecase.WelcomeUseCase
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.Navigator
@@ -35,6 +36,7 @@ import javax.inject.Inject
 class DiscoverActionsContext @Inject constructor(
     val feedUseCase: FeedUseCase,
     val settingsUseCase: SettingsUseCase,
+    val settingsUIUseCase: SettingsUIUseCase,
     val peopleUseCase: PeopleUseCase,
     val serverUseCase: ServerUseCase,
     val searchUseCase: SearchUseCase,

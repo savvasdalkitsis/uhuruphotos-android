@@ -25,6 +25,6 @@ data class ChangeThemeMode(val themeMode: ThemeMode) : SettingsAction() {
     context(SettingsActionsContext) override fun handle(
         state: SettingsState
     ) = flow<SettingsMutation> {
-        settingsUseCase.setThemeMode(themeMode)
+        settingsUIUseCase.setThemeMode(themeMode)
     }
 }

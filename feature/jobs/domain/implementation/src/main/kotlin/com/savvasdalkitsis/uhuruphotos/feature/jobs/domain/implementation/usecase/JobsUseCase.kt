@@ -35,7 +35,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.jobs.domain.api.model.JobsStatus
 import com.savvasdalkitsis.uhuruphotos.feature.jobs.domain.api.usecase.JobsUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.usecase.LocalMediaUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.worker.LocalMediaWorkScheduler
-import com.savvasdalkitsis.uhuruphotos.feature.settings.domain.api.usecase.SettingsUseCase
+import com.savvasdalkitsis.uhuruphotos.feature.settings.domain.api.usecase.SettingsUIUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.welcome.domain.api.usecase.WelcomeUseCase
 import com.savvasdalkitsis.uhuruphotos.foundation.worker.api.model.RefreshJobState
 import dagger.hilt.android.scopes.ActivityRetainedScoped
@@ -50,7 +50,7 @@ class JobsUseCase @Inject constructor(
     private val feedWorkScheduler: FeedWorkScheduler,
     private val localMediaUseCase: LocalMediaUseCase,
     private val localMediaWorkScheduler: LocalMediaWorkScheduler,
-    private val settingsUseCase: SettingsUseCase,
+    private val settingsUIUseCase: SettingsUIUseCase,
     private val welcomeUseCase: WelcomeUseCase,
 ) : JobsUseCase {
 
@@ -79,10 +79,10 @@ class JobsUseCase @Inject constructor(
 
     override fun observeJobsStatusFilteredBySettings(): Flow<JobsStatus> = combine(
         observeJobsStatus(),
-        settingsUseCase.observeShouldShowFeedSyncProgress(),
-        settingsUseCase.observeShouldShowPrecacheProgress(),
-        settingsUseCase.observeShouldShowLocalSyncProgress(),
-        settingsUseCase.observeShouldShowFeedDetailsSyncProgress(),
+        settingsUIUseCase.observeShouldShowFeedSyncProgress(),
+        settingsUIUseCase.observeShouldShowPrecacheProgress(),
+        settingsUIUseCase.observeShouldShowLocalSyncProgress(),
+        settingsUIUseCase.observeShouldShowFeedDetailsSyncProgress(),
     ) { jobs, showFeedProgress, showPrecacheProgress, showLocalProgress, showFeedDetailsProgress ->
         jobs.copy(jobs = jobs.jobs.mapValues { (job, status) ->
             status.unless(when (job) {

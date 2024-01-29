@@ -25,5 +25,7 @@ interface AuthenticationLoginUseCase {
         rememberCredentials: Boolean
     ): Result<AuthStatus, Throwable>
 
+    suspend fun logOut()
+
     suspend fun loadSavedCredentials(): Credentials?
 }

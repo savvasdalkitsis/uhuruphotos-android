@@ -106,7 +106,7 @@ data object Initialise : DiscoverAction() {
 
     context(DiscoverActionsContext)
     private fun showServerSearchSuggestion() = welcomeUseCase.flow(
-        withRemoteAccess = settingsUseCase.observeSearchSuggestionsEnabledMode().flatMapLatest { enabled ->
+        withRemoteAccess = settingsUIUseCase.observeSearchSuggestionsEnabledMode().flatMapLatest { enabled ->
             if (enabled)
                 searchUseCase.getRandomSearchSuggestion()
                     .map(DiscoverMutation::ShowSearchSuggestion)
@@ -117,7 +117,7 @@ data object Initialise : DiscoverAction() {
     )
 
     context(DiscoverActionsContext)
-    private fun showLibrary() = settingsUseCase.observeShowLibrary()
+    private fun showLibrary() = settingsUIUseCase.observeShowLibrary()
         .map(DiscoverMutation::ShowLibrary)
 
     context(DiscoverActionsContext)

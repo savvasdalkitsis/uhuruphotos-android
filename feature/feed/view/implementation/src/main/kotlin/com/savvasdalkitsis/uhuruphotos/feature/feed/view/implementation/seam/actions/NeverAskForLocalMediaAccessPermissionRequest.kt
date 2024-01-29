@@ -25,6 +25,6 @@ data object NeverAskForLocalMediaAccessPermissionRequest : FeedAction() {
         state: FeedState
     ) = flow {
         emit(HideLocalStoragePermissionRequest)
-        settingsUseCase.setShowBannerAskingForLocalMediaPermissionsOnFeed(false)
+        settingsUIUseCase.setShowBannerAskingForLocalMediaPermissionsOnFeed(false)
     }
 }

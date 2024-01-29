@@ -73,6 +73,7 @@ data object LoadSettings : SettingsAction() {
     context(SettingsActionsContext) override fun handle(
         state: SettingsState
     ) = with(settingsUseCase) {
+        with(settingsUIUseCase) {
         merge(
             welcomeUseCase.observeWelcomeStatus().map { status ->
                 SetRemoteAccess(status.hasRemoteAccess)
@@ -138,7 +139,7 @@ data object LoadSettings : SettingsAction() {
                 SetUploadsInProgress(uploads.inProgress)
             }
         )
-    }
+    }}
 
     context(SettingsActionsContext)
     private fun enrollment(

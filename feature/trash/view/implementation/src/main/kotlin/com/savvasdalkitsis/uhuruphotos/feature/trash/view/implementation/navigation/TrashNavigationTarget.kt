@@ -16,7 +16,7 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.feature.trash.view.implementation.navigation
 
 import androidx.compose.runtime.Composable
-import com.savvasdalkitsis.uhuruphotos.feature.settings.domain.api.usecase.SettingsUseCase
+import com.savvasdalkitsis.uhuruphotos.feature.settings.domain.api.usecase.SettingsUIUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.trash.view.api.navigation.TrashNavigationRoute
 import com.savvasdalkitsis.uhuruphotos.feature.trash.view.implementation.viewmodel.TrashViewModel
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.NavigationTarget
@@ -30,14 +30,14 @@ import javax.inject.Singleton
 @Singleton
 internal class TrashNavigationTarget @Inject constructor(
     registry: NavigationTargetRegistry,
-    private val settingsUseCase: SettingsUseCase,
+    private val settingsUIUseCase: SettingsUIUseCase,
     private val navigationTargetBuilder: NavigationTargetBuilder,
 ) : NavigationTarget<TrashNavigationRoute>(TrashNavigationRoute::class, registry) {
 
     @Composable
     override fun View(route: TrashNavigationRoute) = with(navigationTargetBuilder) {
         ViewModelView(
-            themeMode = settingsUseCase.observeThemeModeState(),
+            themeMode = settingsUIUseCase.observeThemeModeState(),
             route = route,
             viewModel = TrashViewModel::class,
         ) { state, action ->

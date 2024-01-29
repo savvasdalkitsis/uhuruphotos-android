@@ -17,18 +17,19 @@ package com.savvasdalkitsis.uhuruphotos.feature.auth.domain.implementation.useca
 
 import android.webkit.CookieManager
 import com.savvasdalkitsis.uhuruphotos.feature.auth.domain.api.usecase.AuthenticationHeadersUseCase
-import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.auth.TokenQueries
+import com.savvasdalkitsis.uhuruphotos.feature.auth.domain.implementation.repository.AuthenticationRepository
+import kotlinx.coroutines.runBlocking
 import se.ansman.dagger.auto.AutoBind
 import javax.inject.Inject
 
 @AutoBind
 class AuthenticationHeadersUseCase @Inject constructor(
-    private val tokenQueries: TokenQueries,
+    private val authenticationRepository: AuthenticationRepository,
     private val cookieManager: CookieManager,
 ) : AuthenticationHeadersUseCase {
 
     override fun headers(requestUrl: String): Set<Pair<String, String>> {
-        val accessToken = tokenQueries.getAccessToken().executeAsOneOrNull()
+        val accessToken = runBlocking { authenticationRepository.getAccessToken() }
         val cookie = cookieManager.getCookie(requestUrl)
         return setOf(
             "Authorization" to "Bearer $accessToken",

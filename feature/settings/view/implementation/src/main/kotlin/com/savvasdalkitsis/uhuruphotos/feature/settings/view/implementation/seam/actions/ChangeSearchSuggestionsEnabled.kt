@@ -24,6 +24,6 @@ data class ChangeSearchSuggestionsEnabled(val enabled: Boolean) : SettingsAction
     context(SettingsActionsContext) override fun handle(
         state: SettingsState
     ) = flow<SettingsMutation> {
-        settingsUseCase.setSearchSuggestionsEnabled(enabled)
+        settingsUIUseCase.setSearchSuggestionsEnabled(enabled)
     }
 }

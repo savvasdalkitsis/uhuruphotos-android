@@ -16,7 +16,7 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.feature.uploads.view.implementation.navigation
 
 import androidx.compose.runtime.Composable
-import com.savvasdalkitsis.uhuruphotos.feature.settings.domain.api.usecase.SettingsUseCase
+import com.savvasdalkitsis.uhuruphotos.feature.settings.domain.api.usecase.SettingsUIUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.uploads.view.api.navigation.UploadsNavigationRoute
 import com.savvasdalkitsis.uhuruphotos.feature.uploads.view.implementation.ui.Uploads
 import com.savvasdalkitsis.uhuruphotos.feature.uploads.view.implementation.viewmodel.UploadsViewModel
@@ -30,7 +30,7 @@ import javax.inject.Singleton
 @AutoInitialize
 @Singleton
 internal class UploadsNavigationTarget @Inject constructor(
-    private val settingsUseCase: SettingsUseCase,
+    private val settingsUIUseCase: SettingsUIUseCase,
     private val navigationTargetBuilder: NavigationTargetBuilder,
     registry: NavigationTargetRegistry,
 ) : NavigationTarget<UploadsNavigationRoute>(UploadsNavigationRoute::class, registry) {
@@ -38,7 +38,7 @@ internal class UploadsNavigationTarget @Inject constructor(
     @Composable
     override fun View(route: UploadsNavigationRoute) = with(navigationTargetBuilder) {
         ViewModelView(
-            settingsUseCase.observeThemeModeState(),
+            settingsUIUseCase.observeThemeModeState(),
             route,
             UploadsViewModel::class,
         ) { state, action ->

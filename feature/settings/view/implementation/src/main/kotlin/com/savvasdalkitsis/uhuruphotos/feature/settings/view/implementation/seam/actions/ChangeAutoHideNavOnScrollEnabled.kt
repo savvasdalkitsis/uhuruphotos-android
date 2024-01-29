@@ -24,6 +24,6 @@ data class ChangeAutoHideNavOnScrollEnabled(val enabled: Boolean) : SettingsActi
     context(SettingsActionsContext) override fun handle(
         state: SettingsState
     ) = flow<SettingsMutation> {
-        settingsUseCase.setAutoHideFeedNavOnScroll(enabled)
+        settingsUIUseCase.setAutoHideFeedNavOnScroll(enabled)
     }
 }

@@ -25,6 +25,6 @@ data object NeverAskForLocalMediaAccessPermissionRequest : HeatMapAction() {
         state: HeatMapState
     ) = flow {
         emit(HideLocalStoragePermissionRequest)
-        settingsUseCase.setShowBannerAskingForLocalMediaPermissionsOnHeatmap(false)
+        settingsUIUseCase.setShowBannerAskingForLocalMediaPermissionsOnHeatmap(false)
     }
 }

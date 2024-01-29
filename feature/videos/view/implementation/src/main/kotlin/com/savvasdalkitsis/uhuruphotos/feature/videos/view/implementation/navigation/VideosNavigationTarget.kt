@@ -16,7 +16,7 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.feature.videos.view.implementation.navigation
 
 import androidx.compose.runtime.Composable
-import com.savvasdalkitsis.uhuruphotos.feature.settings.domain.api.usecase.SettingsUseCase
+import com.savvasdalkitsis.uhuruphotos.feature.settings.domain.api.usecase.SettingsUIUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.videos.view.api.navigation.VideosNavigationRoute
 import com.savvasdalkitsis.uhuruphotos.feature.videos.view.implementation.ui.Videos
 import com.savvasdalkitsis.uhuruphotos.feature.videos.view.implementation.viewmodel.VideosViewModel
@@ -30,7 +30,7 @@ import javax.inject.Singleton
 @AutoInitialize
 @Singleton
 internal class VideosNavigationTarget @Inject constructor(
-    private val settingsUseCase: SettingsUseCase,
+    private val settingsUIUseCase: SettingsUIUseCase,
     private val navigationTargetBuilder: NavigationTargetBuilder,
     registry: NavigationTargetRegistry,
 ) : NavigationTarget<VideosNavigationRoute>(VideosNavigationRoute::class, registry) {
@@ -38,7 +38,7 @@ internal class VideosNavigationTarget @Inject constructor(
     @Composable
     override fun View(route: VideosNavigationRoute) = with(navigationTargetBuilder) {
         ViewModelView(
-            settingsUseCase.observeThemeModeState(),
+            settingsUIUseCase.observeThemeModeState(),
             route,
             VideosViewModel::class,
         ) { state, action ->

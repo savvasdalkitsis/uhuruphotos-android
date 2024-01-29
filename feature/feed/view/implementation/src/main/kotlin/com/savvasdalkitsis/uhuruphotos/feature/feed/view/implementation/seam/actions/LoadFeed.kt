@@ -72,7 +72,7 @@ data object LoadFeed : FeedAction() {
         }
 
     private fun FeedActionsContext.memories() =
-        settingsUseCase.observeMemoriesEnabled().flatMapLatest { enabled ->
+        settingsUIUseCase.observeMemoriesEnabled().flatMapLatest { enabled ->
             if (enabled) {
                 memoriesUseCase.observeMemories().map { memoryCollections ->
                     memoryCollections.map { (collection, yearsAgo) ->
@@ -100,7 +100,7 @@ data object LoadFeed : FeedAction() {
                         it
                     )
                         .takeIf {
-                            settingsUseCase.getShowBannerAskingForLocalMediaPermissionsOnFeed()
+                            settingsUIUseCase.getShowBannerAskingForLocalMediaPermissionsOnFeed()
                         }
                     else -> {
                         localMediaWorkScheduler.scheduleLocalMediaSyncNowIfNotRunning()
@@ -111,7 +111,7 @@ data object LoadFeed : FeedAction() {
 
     private fun FeedActionsContext.cloudSyncHeader() =
         syncUseCase.observeSyncEnabled().mapNotNull { enabled ->
-            ShowCloudSyncRequest.takeIf { !enabled && settingsUseCase.getShowBannerAskingForCloudSyncOnFeed() }
+            ShowCloudSyncRequest.takeIf { !enabled && settingsUIUseCase.getShowBannerAskingForCloudSyncOnFeed() }
         }
 
     private fun FeedActionsContext.showClusters() =
@@ -175,17 +175,17 @@ data object LoadFeed : FeedAction() {
             .map(FeedMutation::ChangeDisplay)
 
     private fun FeedActionsContext.changeItemSyncDisplay() =
-        settingsUseCase
+        settingsUIUseCase
             .observeFeedMediaItemSyncDisplay()
             .distinctUntilChanged()
             .map(FeedMutation::ChangeItemSyncDisplay)
 
     private fun FeedActionsContext.showLibraryTab() =
-        settingsUseCase.observeShowLibrary()
+        settingsUIUseCase.observeShowLibrary()
             .map(FeedMutation::ShowLibrary)
 
     private fun FeedActionsContext.setAutoHideNav() =
-        settingsUseCase.observeAutoHideFeedNavOnScroll()
+        settingsUIUseCase.observeAutoHideFeedNavOnScroll()
             .map(FeedMutation::AutoHideNavBar)
 
 }

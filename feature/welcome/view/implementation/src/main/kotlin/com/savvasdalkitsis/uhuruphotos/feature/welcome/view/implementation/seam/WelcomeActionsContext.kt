@@ -16,18 +16,15 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.feature.welcome.view.implementation.seam
 
 import android.content.Context
-import com.savvasdalkitsis.uhuruphotos.feature.account.domain.api.usecase.AccountUseCase
-import com.savvasdalkitsis.uhuruphotos.feature.auth.domain.api.usecase.AuthenticationUseCase
-import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.usecase.LocalMediaUseCase
+import com.savvasdalkitsis.uhuruphotos.feature.auth.domain.api.usecase.AuthenticationLoginUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.welcome.domain.api.usecase.WelcomeUseCase
-import com.savvasdalkitsis.uhuruphotos.feature.settings.domain.api.usecase.SettingsUseCase
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.Navigator
 import dagger.hilt.android.qualifiers.ApplicationContext
 import javax.inject.Inject
 
 internal class WelcomeActionsContext @Inject constructor(
     val welcomeUseCase: WelcomeUseCase,
-    val accountUseCase: AccountUseCase,
+    val authenticationLoginUseCase: AuthenticationLoginUseCase,
     val navigator: Navigator,
     @ApplicationContext val context: Context,
 )

@@ -19,7 +19,7 @@ import androidx.compose.runtime.Composable
 import com.savvasdalkitsis.uhuruphotos.feature.album.auto.view.api.navigation.AutoAlbumNavigationRoute
 import com.savvasdalkitsis.uhuruphotos.feature.album.auto.view.implementation.viewmodel.AutoAlbumViewModel
 import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.ui.Gallery
-import com.savvasdalkitsis.uhuruphotos.feature.settings.domain.api.usecase.SettingsUseCase
+import com.savvasdalkitsis.uhuruphotos.feature.settings.domain.api.usecase.SettingsUIUseCase
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.NavigationTarget
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.NavigationTargetBuilder
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.NavigationTargetRegistry
@@ -30,7 +30,7 @@ import javax.inject.Singleton
 @AutoInitialize
 @Singleton
 internal class AutoAlbumNavigationTarget @Inject constructor(
-    private val settingsUseCase: SettingsUseCase,
+    private val settingsUIUseCase: SettingsUIUseCase,
     private val navigationTargetBuilder: NavigationTargetBuilder,
     registry: NavigationTargetRegistry,
 ) : NavigationTarget<AutoAlbumNavigationRoute>(AutoAlbumNavigationRoute::class, registry) {
@@ -38,7 +38,7 @@ internal class AutoAlbumNavigationTarget @Inject constructor(
     @Composable
     override fun View(route: AutoAlbumNavigationRoute) = with(navigationTargetBuilder) {
         ViewModelView(
-            themeMode = settingsUseCase.observeThemeModeState(),
+            themeMode = settingsUIUseCase.observeThemeModeState(),
             route = route,
             viewModel = AutoAlbumViewModel::class,
         ) { state, action ->

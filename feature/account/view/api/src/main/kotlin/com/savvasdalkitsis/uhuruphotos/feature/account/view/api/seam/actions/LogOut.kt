@@ -28,7 +28,7 @@ data object LogOut : AccountOverviewAction() {
     ) = flow {
         emit(HideLogOutConfirmation)
         emit(HideAccountOverview)
-        accountUseCase.logOut()
+        authenticationLoginUseCase.logOut()
         with(navigator) {
             clearBackStack()
             navigateTo(HomeNavigationRoute)

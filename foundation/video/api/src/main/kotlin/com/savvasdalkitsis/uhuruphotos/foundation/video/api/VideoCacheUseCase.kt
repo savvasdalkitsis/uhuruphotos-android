@@ -1,5 +1,5 @@
 /*
-Copyright 2022 Savvas Dalkitsis
+Copyright 2024 Savvas Dalkitsis
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -15,12 +15,8 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.foundation.video.api
 
-import androidx.media3.datasource.cache.CacheDataSource
+interface VideoCacheUseCase {
 
-fun CacheDataSource.Factory.evictAll() {
-    cache?.let { cache ->
-        cache.keys.forEach {
-            cache.removeResource(it)
-        }
-    }
+    fun clearAll()
+    fun cacheSpace(): Int
 }

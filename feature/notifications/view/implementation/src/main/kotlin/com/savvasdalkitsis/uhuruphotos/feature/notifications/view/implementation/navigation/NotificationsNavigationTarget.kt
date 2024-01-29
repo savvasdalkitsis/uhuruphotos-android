@@ -17,9 +17,9 @@ package com.savvasdalkitsis.uhuruphotos.feature.notifications.view.implementatio
 
 import androidx.compose.runtime.Composable
 import com.savvasdalkitsis.uhuruphotos.feature.notifications.view.api.navigation.NotificationsNavigationRoute
-import com.savvasdalkitsis.uhuruphotos.feature.notifications.view.implementation.viewmodel.NotificationsViewModel
 import com.savvasdalkitsis.uhuruphotos.feature.notifications.view.implementation.ui.Notifications
-import com.savvasdalkitsis.uhuruphotos.feature.settings.domain.api.usecase.SettingsUseCase
+import com.savvasdalkitsis.uhuruphotos.feature.notifications.view.implementation.viewmodel.NotificationsViewModel
+import com.savvasdalkitsis.uhuruphotos.feature.settings.domain.api.usecase.SettingsUIUseCase
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.NavigationTarget
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.NavigationTargetBuilder
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.NavigationTargetRegistry
@@ -30,7 +30,7 @@ import javax.inject.Singleton
 @AutoInitialize
 @Singleton
 internal class NotificationsNavigationTarget @Inject constructor(
-    private val settingsUseCase: SettingsUseCase,
+    private val settingsUIUseCase: SettingsUIUseCase,
     private val navigationTargetBuilder: NavigationTargetBuilder,
     registry: NavigationTargetRegistry,
 ) : NavigationTarget<NotificationsNavigationRoute>(NotificationsNavigationRoute::class, registry) {
@@ -38,7 +38,7 @@ internal class NotificationsNavigationTarget @Inject constructor(
     @Composable
     override fun View(route: NotificationsNavigationRoute) = with(navigationTargetBuilder) {
         ViewModelView(
-            settingsUseCase.observeThemeModeState(),
+            settingsUIUseCase.observeThemeModeState(),
             route,
             NotificationsViewModel::class,
         ) { state, action ->

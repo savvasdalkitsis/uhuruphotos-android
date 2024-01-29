@@ -21,7 +21,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.account.view.api.ui.AccountOvervi
 import com.savvasdalkitsis.uhuruphotos.feature.discover.view.api.navigation.DiscoverNavigationRoute
 import com.savvasdalkitsis.uhuruphotos.feature.discover.view.implementation.ui.DiscoverPage
 import com.savvasdalkitsis.uhuruphotos.feature.discover.view.implementation.viewmodel.DiscoverViewModel
-import com.savvasdalkitsis.uhuruphotos.feature.settings.domain.api.usecase.SettingsUseCase
+import com.savvasdalkitsis.uhuruphotos.feature.settings.domain.api.usecase.SettingsUIUseCase
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.NavigationTarget
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.NavigationTargetBuilder
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.NavigationTargetRegistry
@@ -35,14 +35,14 @@ import javax.inject.Singleton
 @Singleton
 class DiscoverNavigationTarget @Inject constructor(
     registry: NavigationTargetRegistry,
-    private val settingsUseCase: SettingsUseCase,
+    private val settingsUIUseCase: SettingsUIUseCase,
     private val navigationTargetBuilder: NavigationTargetBuilder,
 ) : NavigationTarget<DiscoverNavigationRoute>(DiscoverNavigationRoute::class, registry) {
 
     @Composable
     override fun View(route: DiscoverNavigationRoute) = with(navigationTargetBuilder) {
         ViewModelView(
-            themeMode = settingsUseCase.observeThemeModeState(),
+            themeMode = settingsUIUseCase.observeThemeModeState(),
             route = route,
             viewModel = DiscoverViewModel::class,
         ) { state, actions ->

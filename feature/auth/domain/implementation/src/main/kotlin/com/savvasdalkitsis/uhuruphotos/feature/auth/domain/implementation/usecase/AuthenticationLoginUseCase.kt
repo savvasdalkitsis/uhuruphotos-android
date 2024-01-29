@@ -24,57 +24,65 @@ import com.savvasdalkitsis.uhuruphotos.feature.auth.domain.api.usecase.Credentia
 import com.savvasdalkitsis.uhuruphotos.feature.auth.domain.implementation.repository.AuthenticationRepository
 import com.savvasdalkitsis.uhuruphotos.feature.auth.domain.implementation.service.AuthenticationService
 import com.savvasdalkitsis.uhuruphotos.feature.auth.domain.implementation.service.model.toAuthenticationCredentials
+import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.Database
+import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.extensions.async
+import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.extensions.clearAllUserLinkedTables
+import com.savvasdalkitsis.uhuruphotos.foundation.image.api.cache.ImageCacheUseCase
+import com.savvasdalkitsis.uhuruphotos.foundation.lang.api.letBoth
 import com.savvasdalkitsis.uhuruphotos.foundation.log.api.runCatchingWithLog
-import com.savvasdalkitsis.uhuruphotos.foundation.preferences.api.EncryptedPreferences
-import com.savvasdalkitsis.uhuruphotos.foundation.preferences.api.Preferences
-import com.savvasdalkitsis.uhuruphotos.foundation.preferences.api.set
+import com.savvasdalkitsis.uhuruphotos.foundation.video.api.VideoCacheUseCase
+import com.savvasdalkitsis.uhuruphotos.foundation.worker.api.usecase.WorkScheduleUseCase
 import se.ansman.dagger.auto.AutoBind
 import javax.inject.Inject
 
 @AutoBind
 class AuthenticationLoginUseCase @Inject constructor(
     private val authenticationService: AuthenticationService,
-    @EncryptedPreferences
-    private val preferences: Preferences,
     private val authenticationRepository: AuthenticationRepository,
+    private val db: Database,
+    private val imageCacheUseCase: ImageCacheUseCase,
+    private val videoCacheUseCase: VideoCacheUseCase,
+    private val workScheduleUseCase: WorkScheduleUseCase,
 ) : AuthenticationLoginUseCase {
-
-    private val keyUserName = "auth:keyUserName"
-    private val keyPassword = "auth:keyPassword"
 
     override suspend fun login(
         credentials: Credentials,
         rememberCredentials: Boolean,
     ): Result<AuthStatus, Throwable> = runCatchingWithLog {
         val response = authenticationService.login(credentials.toAuthenticationCredentials)
-        authenticationRepository.saveRefreshToken(response.refresh)
-        authenticationRepository.saveAccessToken(response.access)
-        if (rememberCredentials) {
-            saveCredentials(credentials)
-        } else {
-            clearCredentials()
+        with(authenticationRepository) {
+            if (getUserId() != response.access.userId) {
+                logOut()
+                clearCredentials()
+            }
+            saveRefreshToken(response.refresh)
+            saveAccessToken(response.access)
+            if (rememberCredentials) {
+                saveUsername(credentials.username)
+                savePassword(credentials.password)
+            } else {
+                clearCredentials()
+            }
         }
         return Ok(Authenticated)
     }
 
-    override suspend fun loadSavedCredentials(): Credentials? =
-        keyUserName.pref?.let { username ->
-            keyPassword.pref?.let { pass ->
-                Credentials(username, pass)
-            }
+    override suspend fun logOut() = async {
+        workScheduleUseCase.cancelAllScheduledWork()
+        db.clearAllUserLinkedTables()
+        imageCacheUseCase.clearAll()
+        videoCacheUseCase.clearAll()
+    }
+
+    override suspend fun loadSavedCredentials(): Credentials? = with(authenticationRepository) {
+        letBoth(getUsername(), getPassword()) { username, password ->
+            Credentials(username, password)
         }
+    }
 
+    context(AuthenticationRepository)
     private fun clearCredentials() {
-        preferences.remove(keyUserName)
-        preferences.remove(keyPassword)
+        clearUsername()
+        clearPassword()
     }
-
-    private fun saveCredentials(credentials: Credentials) {
-        keyUserName.pref = credentials.username
-        keyPassword.pref = credentials.password
-    }
-
-    private var String.pref
-        get() = preferences.getNullableString(this, null)
-        set(value) { preferences.set(this, value) }
 }

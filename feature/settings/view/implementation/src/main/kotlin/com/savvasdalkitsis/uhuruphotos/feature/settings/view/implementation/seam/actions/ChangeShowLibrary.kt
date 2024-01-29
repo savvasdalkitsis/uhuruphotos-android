@@ -24,6 +24,6 @@ data class ChangeShowLibrary(val show: Boolean) : SettingsAction() {
     context(SettingsActionsContext) override fun handle(
         state: SettingsState
     ) = flow<SettingsMutation> {
-        settingsUseCase.setShowLibrary(show)
+        settingsUIUseCase.setShowLibrary(show)
     }
 }

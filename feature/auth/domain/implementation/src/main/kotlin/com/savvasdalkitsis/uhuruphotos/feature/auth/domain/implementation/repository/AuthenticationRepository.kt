@@ -15,14 +15,19 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.auth.domain.implementation.repository
 
+import app.cash.sqldelight.coroutines.asFlow
+import app.cash.sqldelight.coroutines.mapToOneOrNull
 import com.savvasdalkitsis.uhuruphotos.feature.auth.domain.implementation.usecase.JwtUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.auth.Token
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.auth.TokenQueries
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.entities.auth.TokenType
+import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.extensions.awaitSingleOrNull
+import com.savvasdalkitsis.uhuruphotos.foundation.preferences.api.EncryptedPreferences
 import com.savvasdalkitsis.uhuruphotos.foundation.preferences.api.PlainTextPreferences
 import com.savvasdalkitsis.uhuruphotos.foundation.preferences.api.Preferences
 import com.savvasdalkitsis.uhuruphotos.foundation.preferences.api.get
 import com.savvasdalkitsis.uhuruphotos.foundation.preferences.api.set
+import kotlinx.coroutines.Dispatchers
 import javax.inject.Inject
 
 internal const val EXPIRED = "EXPIRED"
@@ -32,8 +37,12 @@ class AuthenticationRepository @Inject constructor(
     private val jwtUseCase: JwtUseCase,
     @PlainTextPreferences
     private val preferences: Preferences,
+    @EncryptedPreferences
+    private val encryptedPreferences: Preferences,
 ) {
     private val userKey = "userIdFromToken"
+    private val keyUserName = "auth:keyUserName"
+    private val keyPassword = "auth:keyPassword"
 
     fun clearTokensForAuthenticationLoss() {
         tokenQueries.delete(TokenType.ACCESS)
@@ -68,7 +77,39 @@ class AuthenticationRepository @Inject constructor(
 
     fun getUserId() = preferences.get<String?>(userKey, null)
 
-    private val String.userId: String get() = with(jwtUseCase) {
+    fun saveUsername(username: String) {
+        username.secretPref = username
+    }
+
+    fun getUsername() = keyUserName.secretPref
+
+    fun getPassword() = keyPassword.secretPref
+
+    fun savePassword(password: String) {
+        password.secretPref = password
+    }
+
+    fun clearUsername() {
+        encryptedPreferences.remove(keyUserName)
+    }
+
+    fun clearPassword() {
+        encryptedPreferences.remove(keyPassword)
+    }
+
+    fun observeRefreshToken() =
+        tokenQueries.getRefreshToken().asFlow().mapToOneOrNull(Dispatchers.IO)
+
+    suspend fun getRefreshToken() =
+        tokenQueries.getRefreshToken().awaitSingleOrNull()
+
+    suspend fun getAccessToken(): String? = tokenQueries.getAccessToken().awaitSingleOrNull()
+
+    val String.userId: String get() = with(jwtUseCase) {
         return this@userId["user_id"]
     }
+
+    private var String.secretPref
+        get() = encryptedPreferences.getNullableString(this, null)
+        set(value) { encryptedPreferences.set(this, value) }
 }

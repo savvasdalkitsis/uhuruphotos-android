@@ -66,7 +66,7 @@ data object Load : HeatMapAction() {
                 when (it) {
                     is MediaItemsOnDevice.RequiresPermissions -> HeatMapMutation.ShowLocalStoragePermissionRequest(it)
                         .takeIf {
-                        settingsUseCase.getShowBannerAskingForLocalMediaPermissionsOnHeatmap()
+                        settingsUIUseCase.getShowBannerAskingForLocalMediaPermissionsOnHeatmap()
                     }
                     else -> {
                         localMediaWorkScheduler.scheduleLocalMediaSyncNowIfNotRunning()

@@ -25,7 +25,7 @@ data class ChangeShouldShowPrecacheProgress(val show: Boolean) : SettingsAction(
     context(SettingsActionsContext) override fun handle(
         state: SettingsState
     ): Flow<Mutation<SettingsState>> = flow {
-        settingsUseCase.setShouldShowPrecacheProgress(show)
+        settingsUIUseCase.setShouldShowPrecacheProgress(show)
     }
 
 }

@@ -25,7 +25,7 @@ import kotlinx.coroutines.flow.flow
 data object LogOut : FeedAction() {
     context(FeedActionsContext)
     override fun handle(state: FeedState): Flow<Mutation<FeedState>> = flow {
-        accountUseCase.logOut()
+        authenticationLoginUseCase.logOut()
         emit(ShowLostServerConnection(false))
     }
 }

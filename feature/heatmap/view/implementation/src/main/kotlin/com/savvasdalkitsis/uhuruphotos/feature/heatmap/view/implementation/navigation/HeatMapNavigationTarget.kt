@@ -19,7 +19,7 @@ import androidx.compose.runtime.Composable
 import com.savvasdalkitsis.uhuruphotos.feature.heatmap.view.api.navigation.HeatMapNavigationRoute
 import com.savvasdalkitsis.uhuruphotos.feature.heatmap.view.implementation.ui.HeatMap
 import com.savvasdalkitsis.uhuruphotos.feature.heatmap.view.implementation.viewmodel.HeatMapViewModel
-import com.savvasdalkitsis.uhuruphotos.feature.settings.domain.api.usecase.SettingsUseCase
+import com.savvasdalkitsis.uhuruphotos.feature.settings.domain.api.usecase.SettingsUIUseCase
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.NavigationTarget
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.NavigationTargetBuilder
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.NavigationTargetRegistry
@@ -31,14 +31,14 @@ import javax.inject.Singleton
 @Singleton
 class HeatMapNavigationTarget @Inject constructor(
     registry: NavigationTargetRegistry,
-    private val settingsUseCase: SettingsUseCase,
+    private val settingsUIUseCase: SettingsUIUseCase,
     private val navigationTargetBuilder: NavigationTargetBuilder,
 ) : NavigationTarget<HeatMapNavigationRoute>(HeatMapNavigationRoute::class, registry) {
 
     @Composable
     override fun View(route: HeatMapNavigationRoute) = with(navigationTargetBuilder) {
         ViewModelView(
-            themeMode = settingsUseCase.observeThemeModeState(),
+            themeMode = settingsUIUseCase.observeThemeModeState(),
             route = route,
             viewModel = HeatMapViewModel::class,
         ) { state, action ->

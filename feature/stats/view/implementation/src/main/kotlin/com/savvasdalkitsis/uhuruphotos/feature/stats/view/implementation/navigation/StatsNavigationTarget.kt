@@ -16,7 +16,7 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.feature.stats.view.implementation.navigation
 
 import androidx.compose.runtime.Composable
-import com.savvasdalkitsis.uhuruphotos.feature.settings.domain.api.usecase.SettingsUseCase
+import com.savvasdalkitsis.uhuruphotos.feature.settings.domain.api.usecase.SettingsUIUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.stats.view.api.navigation.StatsNavigationRoute
 import com.savvasdalkitsis.uhuruphotos.feature.stats.view.implementation.ui.Stats
 import com.savvasdalkitsis.uhuruphotos.feature.stats.view.implementation.viewmodel.StatsViewModel
@@ -30,7 +30,7 @@ import javax.inject.Singleton
 @AutoInitialize
 @Singleton
 internal class StatsNavigationTarget @Inject constructor(
-    private val settingsUseCase: SettingsUseCase,
+    private val settingsUIUseCase: SettingsUIUseCase,
     private val navigationTargetBuilder: NavigationTargetBuilder,
     registry: NavigationTargetRegistry,
 ) : NavigationTarget<StatsNavigationRoute>(StatsNavigationRoute::class, registry) {
@@ -38,7 +38,7 @@ internal class StatsNavigationTarget @Inject constructor(
     @Composable
     override fun View(route: StatsNavigationRoute) = with(navigationTargetBuilder) {
         ViewModelView(
-            settingsUseCase.observeThemeModeState(),
+            settingsUIUseCase.observeThemeModeState(),
             route,
             StatsViewModel::class,
         ) { state, _ ->

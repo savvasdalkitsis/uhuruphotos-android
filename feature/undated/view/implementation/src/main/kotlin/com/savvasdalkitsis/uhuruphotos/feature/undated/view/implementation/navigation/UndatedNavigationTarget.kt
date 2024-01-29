@@ -16,7 +16,7 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.feature.undated.view.implementation.navigation
 
 import androidx.compose.runtime.Composable
-import com.savvasdalkitsis.uhuruphotos.feature.settings.domain.api.usecase.SettingsUseCase
+import com.savvasdalkitsis.uhuruphotos.feature.settings.domain.api.usecase.SettingsUIUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.undated.view.api.navigation.UndatedNavigationRoute
 import com.savvasdalkitsis.uhuruphotos.feature.undated.view.implementation.ui.Undated
 import com.savvasdalkitsis.uhuruphotos.feature.undated.view.implementation.viewmodel.UndatedViewModel
@@ -30,7 +30,7 @@ import javax.inject.Singleton
 @AutoInitialize
 @Singleton
 internal class UndatedNavigationTarget @Inject constructor(
-    private val settingsUseCase: SettingsUseCase,
+    private val settingsUIUseCase: SettingsUIUseCase,
     private val navigationTargetBuilder: NavigationTargetBuilder,
     registry: NavigationTargetRegistry,
 ) : NavigationTarget<UndatedNavigationRoute>(UndatedNavigationRoute::class, registry) {
@@ -38,7 +38,7 @@ internal class UndatedNavigationTarget @Inject constructor(
     @Composable
     override fun View(route: UndatedNavigationRoute) = with(navigationTargetBuilder) {
         ViewModelView(
-            settingsUseCase.observeThemeModeState(),
+            settingsUIUseCase.observeThemeModeState(),
             route,
             UndatedViewModel::class,
         ) { state, action ->

@@ -15,7 +15,7 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam
 
-import com.savvasdalkitsis.uhuruphotos.feature.account.domain.api.usecase.AccountUseCase
+import com.savvasdalkitsis.uhuruphotos.feature.auth.domain.api.usecase.AuthenticationLoginUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.avatar.domain.api.usecase.AvatarUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.feed.domain.api.usecase.FeedUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.feed.domain.api.worker.FeedWorkScheduler
@@ -32,7 +32,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.model.Loca
 import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.usecase.LocalMediaDeletionUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.worker.LocalMediaWorkScheduler
 import com.savvasdalkitsis.uhuruphotos.feature.memories.domain.api.usecase.MemoriesUseCase
-import com.savvasdalkitsis.uhuruphotos.feature.settings.domain.api.usecase.SettingsUseCase
+import com.savvasdalkitsis.uhuruphotos.feature.settings.domain.api.usecase.SettingsUIUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.sync.domain.api.usecase.SyncUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.upload.domain.api.usecase.UploadUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.welcome.domain.api.usecase.WelcomeUseCase
@@ -55,7 +55,7 @@ internal class FeedActionsContext @Inject constructor(
     val jobsUseCase: JobsUseCase,
     val localMediaDeletionUseCase: LocalMediaDeletionUseCase,
     val selectionList: SelectionList,
-    val settingsUseCase: SettingsUseCase,
+    val settingsUIUseCase: SettingsUIUseCase,
     val memoriesUseCase: MemoriesUseCase,
     val localMediaWorkScheduler: LocalMediaWorkScheduler,
     val uiUseCase: UiUseCase,
@@ -64,7 +64,7 @@ internal class FeedActionsContext @Inject constructor(
     val navigator: Navigator,
     val welcomeUseCase: WelcomeUseCase,
     val syncUseCase: SyncUseCase,
-    val accountUseCase: AccountUseCase,
+    val authenticationLoginUseCase: AuthenticationLoginUseCase,
 ) {
     suspend fun CelState.deselect() {
         selectionList.deselect(mediaItem.id)

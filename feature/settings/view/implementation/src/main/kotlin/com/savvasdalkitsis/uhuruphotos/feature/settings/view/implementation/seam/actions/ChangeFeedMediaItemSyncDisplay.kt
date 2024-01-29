@@ -25,6 +25,6 @@ data class ChangeFeedMediaItemSyncDisplay(val display: FeedMediaItemSyncDisplay)
     context(SettingsActionsContext) override fun handle(
         state: SettingsState
     ) = flow<SettingsMutation> {
-        settingsUseCase.setFeedMediaItemSyncDisplay(display)
+        settingsUIUseCase.setFeedMediaItemSyncDisplay(display)
     }
 }

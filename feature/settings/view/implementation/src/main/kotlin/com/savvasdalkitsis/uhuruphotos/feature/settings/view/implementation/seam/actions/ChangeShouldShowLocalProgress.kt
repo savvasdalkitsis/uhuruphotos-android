@@ -25,7 +25,7 @@ data class ChangeShouldShowLocalProgress(val show: Boolean) : SettingsAction() {
     context(SettingsActionsContext) override fun handle(
         state: SettingsState
     ): Flow<Mutation<SettingsState>> = flow {
-        settingsUseCase.setShouldShowLocalSyncProgress(show)
+        settingsUIUseCase.setShouldShowLocalSyncProgress(show)
     }
 
 }

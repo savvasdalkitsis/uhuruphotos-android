@@ -24,6 +24,6 @@ data class ChangeMemoriesEnabled(val enabled: Boolean) : SettingsAction() {
     context(SettingsActionsContext) override fun handle(
         state: SettingsState
     ) = flow<SettingsMutation> {
-        settingsUseCase.setMemoriesEnabled(enabled)
+        settingsUIUseCase.setMemoriesEnabled(enabled)
     }
 }

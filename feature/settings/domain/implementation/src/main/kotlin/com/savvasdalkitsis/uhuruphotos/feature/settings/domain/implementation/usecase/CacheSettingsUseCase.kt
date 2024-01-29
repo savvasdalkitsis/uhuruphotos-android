@@ -15,7 +15,6 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.settings.domain.implementation.usecase
 
-import androidx.media3.datasource.cache.CacheDataSource
 import com.savvasdalkitsis.uhuruphotos.feature.settings.domain.api.model.CacheType
 import com.savvasdalkitsis.uhuruphotos.feature.settings.domain.api.model.CacheType.LIGHTBOX_PHOTO_DISK
 import com.savvasdalkitsis.uhuruphotos.feature.settings.domain.api.model.CacheType.LIGHTBOX_PHOTO_MEMORY
@@ -28,7 +27,7 @@ import com.savvasdalkitsis.uhuruphotos.foundation.image.api.model.Location.DISK
 import com.savvasdalkitsis.uhuruphotos.foundation.image.api.model.Location.MEMORY
 import com.savvasdalkitsis.uhuruphotos.foundation.image.api.model.Type.FULL
 import com.savvasdalkitsis.uhuruphotos.foundation.image.api.model.Type.THUMB
-import com.savvasdalkitsis.uhuruphotos.foundation.video.api.evictAll
+import com.savvasdalkitsis.uhuruphotos.foundation.video.api.VideoCacheUseCase
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -40,7 +39,7 @@ import javax.inject.Inject
 @AutoBind
 internal class CacheSettingsUseCase @Inject constructor(
     private val imageCacheUseCase: ImageCacheUseCase,
-    private val videoCache: CacheDataSource.Factory,
+    private val videoCacheUseCase: VideoCacheUseCase,
 ) : CacheSettingsUseCase {
 
     private val lightboxPhotoDiskCacheFlow: MutableSharedFlow<Int> = MutableSharedFlow(1)
@@ -73,7 +72,7 @@ internal class CacheSettingsUseCase @Inject constructor(
         LIGHTBOX_PHOTO_DISK -> imageCacheUseCase.clear(DISK, FULL)
         THUMBNAIL_MEMORY -> imageCacheUseCase.clear(MEMORY, THUMB)
         THUMBNAIL_DISK -> imageCacheUseCase.clear(DISK, THUMB)
-        VIDEO_DISK -> videoCache.evictAll()
+        VIDEO_DISK -> videoCacheUseCase.clearAll()
     }
 
     private fun currentUse(cacheType: CacheType) = when(cacheType) {
@@ -81,11 +80,10 @@ internal class CacheSettingsUseCase @Inject constructor(
         LIGHTBOX_PHOTO_DISK -> imageCacheUseCase.getCurrentUse(DISK, FULL)
         THUMBNAIL_MEMORY -> imageCacheUseCase.getCurrentUse(MEMORY, THUMB)
         THUMBNAIL_DISK -> imageCacheUseCase.getCurrentUse(DISK, THUMB)
-        VIDEO_DISK -> (videoCache.cache?.cacheSpace ?: 0).mb
+        VIDEO_DISK -> videoCacheUseCase.cacheSpace()
     }
 
     private fun updateCurrentCacheFlow(cacheType: CacheType) =
         cacheFlow(cacheType).tryEmit(currentUse(cacheType))
 
-    private val Number.mb: Int get() = toInt() / 1024 / 1024
 }

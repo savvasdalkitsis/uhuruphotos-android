@@ -17,6 +17,7 @@ sqldelight {
 dependencies {
 
     implementation(
+            project(":foundation:lang:api"),
             libs.hilt,
             libs.sqldelight.android,
             libs.sqldelight.coroutines,

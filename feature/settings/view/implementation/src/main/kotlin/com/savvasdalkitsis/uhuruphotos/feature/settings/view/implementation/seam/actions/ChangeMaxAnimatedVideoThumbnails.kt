@@ -24,6 +24,6 @@ data class ChangeMaxAnimatedVideoThumbnails(val max: Int) : SettingsAction() {
     context(SettingsActionsContext) override fun handle(
         state: SettingsState
     ) = flow<SettingsMutation> {
-        settingsUseCase.setMaxAnimatedVideoThumbnails(max)
+        settingsUIUseCase.setMaxAnimatedVideoThumbnails(max)
     }
 }

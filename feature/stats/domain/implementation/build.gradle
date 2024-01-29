@@ -5,6 +5,7 @@ android {
 dependencies {
     implementation(
             project(":feature:stats:domain:api"),
+            project(":foundation:lang:api"),
             libs.bundles.autodagger,
             libs.hilt,
     )

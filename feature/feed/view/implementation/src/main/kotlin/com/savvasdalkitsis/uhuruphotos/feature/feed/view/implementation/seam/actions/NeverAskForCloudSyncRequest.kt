@@ -25,6 +25,6 @@ data object NeverAskForCloudSyncRequest : FeedAction() {
         state: FeedState
     ) = flow {
         emit(HideCloudSyncRequest)
-        settingsUseCase.setShowBannerAskingForCloudSyncOnFeed(false)
+        settingsUIUseCase.setShowBannerAskingForCloudSyncOnFeed(false)
     }
 }

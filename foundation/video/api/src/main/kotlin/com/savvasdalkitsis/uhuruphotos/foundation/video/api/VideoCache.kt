@@ -1,5 +1,5 @@
 /*
-Copyright 2024 Savvas Dalkitsis
+Copyright 2022 Savvas Dalkitsis
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -13,13 +13,10 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
  */
-package com.savvasdalkitsis.uhuruphotos.foundation.lang.implementation.usecase
+package com.savvasdalkitsis.uhuruphotos.foundation.video.api
 
-import com.savvasdalkitsis.uhuruphotos.foundation.lang.api.usecase.LangUseCase
-import javax.inject.Inject
+import javax.inject.Qualifier
 
-class LangUseCase @Inject constructor(
-
-) : LangUseCase {
-
-}
+@Qualifier
+@Retention(AnnotationRetention.BINARY)
+annotation class VideoCache

@@ -27,7 +27,7 @@ import com.bumble.appyx.core.integration.NodeHost
 import com.bumble.appyx.core.integrationpoint.ActivityIntegrationPoint
 import com.bumble.appyx.navmodel.backstack.BackStack
 import com.savvasdalkitsis.uhuruphotos.feature.home.view.api.navigation.HomeNavigationRoute
-import com.savvasdalkitsis.uhuruphotos.feature.settings.domain.api.usecase.SettingsUseCase
+import com.savvasdalkitsis.uhuruphotos.feature.settings.domain.api.usecase.SettingsUIUseCase
 import com.savvasdalkitsis.uhuruphotos.foundation.image.api.LocalAnimatedVideoThumbnails
 import com.savvasdalkitsis.uhuruphotos.foundation.image.api.model.FullImage
 import com.savvasdalkitsis.uhuruphotos.foundation.image.api.model.LocalFullImageLoader
@@ -53,7 +53,7 @@ class AppNavigator @Inject constructor(
     private val navigator: Navigator,
     private val uiUseCase: UiUseCase,
     private val exoplayerProvider: ExoplayerProvider,
-    private val settingsUseCase: SettingsUseCase,
+    private val settingsUIUseCase: SettingsUIUseCase,
     @FullImage
     private val fullImageLoader: ImageLoader,
     @ThumbnailImage
@@ -69,8 +69,8 @@ class AppNavigator @Inject constructor(
             systemUiController = LocalSystemUiController.current
             haptics = LocalHapticFeedback.current
         }
-        val mapProvider by settingsUseCase.observeMapProvider().collectAsState(MapProvider.default)
-        val animateVideoThumbnails = settingsUseCase.observeAnimateVideoThumbnails().collectAsState(
+        val mapProvider by settingsUIUseCase.observeMapProvider().collectAsState(MapProvider.default)
+        val animateVideoThumbnails = settingsUIUseCase.observeAnimateVideoThumbnails().collectAsState(
             initial = true
         )
         CompositionLocalProvider(

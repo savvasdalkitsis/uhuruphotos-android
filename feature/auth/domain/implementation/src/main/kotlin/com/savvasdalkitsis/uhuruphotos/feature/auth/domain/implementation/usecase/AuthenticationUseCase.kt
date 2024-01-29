@@ -15,8 +15,6 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.auth.domain.implementation.usecase
 
-import app.cash.sqldelight.coroutines.asFlow
-import app.cash.sqldelight.coroutines.mapToOneOrNull
 import com.github.michaelbull.result.Err
 import com.github.michaelbull.result.Ok
 import com.github.michaelbull.result.Result
@@ -36,11 +34,8 @@ import com.savvasdalkitsis.uhuruphotos.feature.auth.domain.implementation.reposi
 import com.savvasdalkitsis.uhuruphotos.feature.auth.domain.implementation.repository.EXPIRED
 import com.savvasdalkitsis.uhuruphotos.feature.auth.domain.implementation.service.AuthenticationService
 import com.savvasdalkitsis.uhuruphotos.feature.auth.domain.implementation.service.model.AuthenticationRefreshRequest
-import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.auth.TokenQueries
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.extensions.async
-import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.extensions.awaitSingleOrNull
 import com.savvasdalkitsis.uhuruphotos.foundation.log.api.log
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.sync.Mutex
@@ -51,7 +46,6 @@ import javax.inject.Inject
 
 @AutoBind
 class AuthenticationUseCase @Inject constructor(
-    private val tokenQueries: TokenQueries,
     private val authenticationService: AuthenticationService,
     private val jwtUseCase: JwtUseCase,
     private val authenticationRepository: AuthenticationRepository,
@@ -61,7 +55,7 @@ class AuthenticationUseCase @Inject constructor(
     private val mutex = Mutex()
 
     override suspend fun authenticationStatus(): AuthStatus {
-        val accessToken = getAccessToken()
+        val accessToken = authenticationRepository.getAccessToken()
         return when {
             accessToken.isNullOrEmpty() || accessToken.isExpired -> refreshToken()
             else -> {
@@ -72,7 +66,7 @@ class AuthenticationUseCase @Inject constructor(
     }
 
     override fun observeRefreshToken(): Flow<ServerToken> =
-        tokenQueries.getRefreshToken().asFlow().mapToOneOrNull(Dispatchers.IO).map {
+        authenticationRepository.observeRefreshToken().map {
             when {
                 it.isNullOrEmpty() -> NotFound
                 it.isExpired -> Expired
@@ -80,10 +74,8 @@ class AuthenticationUseCase @Inject constructor(
             }
         }
 
-    private suspend fun getAccessToken(): String? = tokenQueries.getAccessToken().awaitSingleOrNull()
-
     override suspend fun refreshToken(): AuthStatus = mutex.withLock {
-        val refreshToken = tokenQueries.getRefreshToken().awaitSingleOrNull()
+        val refreshToken = authenticationRepository.getRefreshToken()
         val refreshStatus = when {
             refreshToken.isNullOrEmpty() || refreshToken.isExpired -> Unauthenticated()
             else -> refreshAccessToken(refreshToken)

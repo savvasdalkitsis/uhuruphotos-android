@@ -16,11 +16,11 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.entities.media
 
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.media.remote.RemoteMediaItemDetails
+import com.savvasdalkitsis.uhuruphotos.foundation.lang.api.letBoth
 
 typealias DbRemoteMediaItemDetails = RemoteMediaItemDetails
 
-val DbRemoteMediaItemDetails.latLng get() = gpsLat?.toDoubleOrNull()?.let { lat ->
-    gpsLon?.toDoubleOrNull()?.let { lon ->
+val DbRemoteMediaItemDetails.latLng get() =
+    letBoth(gpsLat?.toDoubleOrNull(), gpsLon?.toDoubleOrNull()) { lat, lon ->
         lat to lon
     }
-}

@@ -24,7 +24,7 @@ import kotlinx.coroutines.flow.flow
 data object LogOut : WelcomeAction() {
     context(WelcomeActionsContext)
     override fun handle(state: WelcomeState): Flow<Mutation<WelcomeState>> = flow {
-        accountUseCase.logOut()
+        authenticationLoginUseCase.logOut()
     }
 
 }

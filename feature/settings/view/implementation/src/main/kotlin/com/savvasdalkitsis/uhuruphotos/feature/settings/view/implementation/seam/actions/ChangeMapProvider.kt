@@ -25,6 +25,6 @@ data class ChangeMapProvider(val mapProvider: MapProvider) : SettingsAction() {
     context(SettingsActionsContext) override fun handle(
         state: SettingsState
     ) = flow<SettingsMutation> {
-        settingsUseCase.setMapProvider(mapProvider)
+        settingsUIUseCase.setMapProvider(mapProvider)
     }
 }

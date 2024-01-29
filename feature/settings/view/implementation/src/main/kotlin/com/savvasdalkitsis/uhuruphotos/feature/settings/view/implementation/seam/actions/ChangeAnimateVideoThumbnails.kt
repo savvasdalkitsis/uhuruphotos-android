@@ -24,6 +24,6 @@ data class ChangeAnimateVideoThumbnails(val animate: Boolean) : SettingsAction()
     context(SettingsActionsContext) override fun handle(
         state: SettingsState
     ) = flow<SettingsMutation> {
-        settingsUseCase.setAnimateVideoThumbnails(animate)
+        settingsUIUseCase.setAnimateVideoThumbnails(animate)
     }
 }
