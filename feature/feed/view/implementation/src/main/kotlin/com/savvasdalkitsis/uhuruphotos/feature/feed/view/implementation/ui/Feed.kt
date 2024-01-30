@@ -67,11 +67,8 @@ internal fun Feed(
             gridState.animateScrollToItem(0, 0)
         }
     }
-    val isScrolling by remember {
-        derivedStateOf {
-            gridState.isScrollInProgress
-        }
-    }
+    val isScrolling = gridState.isScrollInProgress
+
     val showSyncState = when (state.syncItemDisplay) {
         SHOW_ON_SCROLL -> isScrolling
         ALWAYS_ON -> true
