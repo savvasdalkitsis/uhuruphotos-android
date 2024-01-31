@@ -77,6 +77,7 @@ class WorkScheduleUseCase @Inject constructor(
         backoffDelay: Long,
         backoffTimeUnit: TimeUnit,
         networkRequirement: NetworkType,
+        requiresCharging: Boolean,
         tags: Set<String>,
         params: Data.Builder.() -> Data.Builder,
     ) {
@@ -89,6 +90,7 @@ class WorkScheduleUseCase @Inject constructor(
                 .setConstraints(
                     Constraints.Builder()
                         .setRequiredNetworkType(networkRequirement)
+                        .setRequiresCharging(requiresCharging)
                         .build()
                 )
                 .setExpedited(OutOfQuotaPolicy.RUN_AS_NON_EXPEDITED_WORK_REQUEST)

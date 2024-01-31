@@ -55,6 +55,10 @@ internal class SettingsUseCase @Inject constructor(
     private val fullSyncNetworkRequirementsDefault = NetworkType.NOT_ROAMING
     private val fullSyncRequiresCharging = "fullSyncRequiresCharging"
     private val fullSyncRequiresChargingDefault = false
+    private val cloudSyncNetworkRequirements = "cloudSyncNetworkRequirements"
+    private val cloudSyncNetworkRequirementsDefault = NetworkType.NOT_ROAMING
+    private val cloudSyncRequiresCharging = "cloudSyncRequiresCharging"
+    private val cloudSyncRequiresChargingDefault = false
     private val shareRemoveGpsData = "shareRemoveGpsData"
     private val shareRemoveGpsDataDefault = false
     private val loggingEnabled = "loggingEnabled"
@@ -86,6 +90,10 @@ internal class SettingsUseCase @Inject constructor(
         get(fullSyncNetworkRequirements, fullSyncNetworkRequirementsDefault)
     override fun getFullSyncRequiresCharging(): Boolean =
         get(fullSyncRequiresCharging, fullSyncRequiresChargingDefault)
+    override fun getCloudSyncNetworkRequirements(): NetworkType =
+        get(cloudSyncNetworkRequirements, cloudSyncNetworkRequirementsDefault)
+    override fun getCloudSyncRequiresCharging(): Boolean =
+        get(cloudSyncRequiresCharging, cloudSyncRequiresChargingDefault)
     override fun getShouldPerformPeriodicFullSync(): Boolean =
         get(shouldPerformPeriodicFeedSync, shouldPerformPeriodicFeedSyncDefault)
     override fun getShareRemoveGpsData(): Boolean =
@@ -119,6 +127,10 @@ internal class SettingsUseCase @Inject constructor(
         observe(fullSyncNetworkRequirements, fullSyncNetworkRequirementsDefault)
     override fun observeFullSyncRequiresCharging(): Flow<Boolean> =
         observe(fullSyncRequiresCharging, fullSyncRequiresChargingDefault)
+    override fun observeCloudSyncNetworkRequirements(): Flow<NetworkType> =
+        observe(cloudSyncNetworkRequirements, cloudSyncNetworkRequirementsDefault)
+    override fun observeCloudSyncRequiresCharging(): Flow<Boolean> =
+        observe(cloudSyncRequiresCharging, cloudSyncRequiresChargingDefault)
     override fun observeShareRemoveGpsData(): Flow<Boolean> =
         observe(shareRemoveGpsData, shareRemoveGpsDataDefault)
     override fun observeLoggingEnabled(): Flow<Boolean> =
@@ -166,6 +178,14 @@ internal class SettingsUseCase @Inject constructor(
 
     override fun setFullSyncRequiresCharging(requiresCharging: Boolean) {
         set(fullSyncRequiresCharging, requiresCharging)
+    }
+
+    override fun setCloudSyncNetworkRequirements(networkType: NetworkType) {
+        set(cloudSyncNetworkRequirements, networkType)
+    }
+
+    override fun setCloudSyncRequiresCharging(requiresCharging: Boolean) {
+        set(cloudSyncRequiresCharging, requiresCharging)
     }
 
     override fun setShouldPerformPeriodicFullSync(perform: Boolean) {

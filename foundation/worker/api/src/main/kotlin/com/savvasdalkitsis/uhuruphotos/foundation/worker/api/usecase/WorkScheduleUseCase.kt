@@ -50,6 +50,7 @@ interface WorkScheduleUseCase {
         backoffDelay: Long = 1,
         backoffTimeUnit: TimeUnit = TimeUnit.MINUTES,
         networkRequirement: NetworkType = NetworkType.CONNECTED,
+        requiresCharging: Boolean = false,
         tags: Set<String> = emptySet(),
         params: Data.Builder.() -> Data.Builder = { this },
     )

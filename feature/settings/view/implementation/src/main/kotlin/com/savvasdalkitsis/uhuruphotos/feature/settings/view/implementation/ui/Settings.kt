@@ -133,6 +133,11 @@ internal fun Settings(
                     CollapsibleGroup(groupState = controller.jobsStatus) {
                         SettingsJobsStatus(state, action)
                     }
+                    if (state.hasRemoteAccess) {
+                        CollapsibleGroup(groupState = controller.jobsCloudSync) {
+                            SettingsJobsCloudSyncConfiguration(state, action)
+                        }
+                    }
                 }
                 SuperGroup(controller.advanced) {
                     CollapsibleGroup(groupState = controller.advancedLightboxPhotoDiskCache) {

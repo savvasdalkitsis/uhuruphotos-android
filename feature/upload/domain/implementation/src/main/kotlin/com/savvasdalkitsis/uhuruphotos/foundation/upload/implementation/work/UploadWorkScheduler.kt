@@ -17,6 +17,7 @@ package com.savvasdalkitsis.uhuruphotos.foundation.upload.implementation.work
 
 import androidx.work.BackoffPolicy
 import androidx.work.ExistingWorkPolicy
+import androidx.work.NetworkType
 import androidx.work.WorkInfo
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemHash
 import com.savvasdalkitsis.uhuruphotos.feature.upload.domain.api.model.UploadItem
@@ -35,11 +36,15 @@ class UploadWorkScheduler @Inject constructor(
 
     override fun scheduleUpload(
         item: UploadItem,
+        networkType: NetworkType,
+        requiresCharging: Boolean,
     ) = with(UploadWorker) {
         workScheduleUseCase.scheduleNow(
             workName = workName(item.id),
             klass = UploadWorker::class,
             existingWorkPolicy = ExistingWorkPolicy.REPLACE,
+            networkRequirement = networkType,
+            requiresCharging = requiresCharging,
             tags = setOf(UPLOAD_WORK_TAG, tagFor(item.id)),
         ) {
             putLong(KEY_ITEM_ID, item.id)

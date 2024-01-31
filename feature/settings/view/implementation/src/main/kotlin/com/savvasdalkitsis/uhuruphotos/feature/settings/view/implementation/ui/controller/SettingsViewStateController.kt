@@ -46,6 +46,7 @@ class SettingsViewStateController @Inject constructor(
     val jobs = group(string.jobs, "settings:group:jobs")
     val jobsFeedConfiguration = group(string.feed_sync_job_configuration, "settings:group:jobs:feedConfiguration")
     val jobsStatus = group(string.status, "settings:group:jobs:status")
+    val jobsCloudSync = group(string.cloud_sync, "settings:group:jobs:cloudSync")
     val advanced = group(string.advanced, "settings:group:advanced")
     val advancedLightboxPhotoDiskCache = group(string.lightbox_photo_disk_cache, "settings:group:advanced:lightbox:photo:diskCache")
     val advancedLightboxPhotoMemoryCache = group(string.lightbox_photo_memory_cache, "settings:group:advanced:lightbox:photo:memoryCache")

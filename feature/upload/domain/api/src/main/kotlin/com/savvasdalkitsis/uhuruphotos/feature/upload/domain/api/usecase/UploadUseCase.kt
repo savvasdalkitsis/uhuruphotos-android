@@ -15,6 +15,7 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.upload.domain.api.usecase
 
+import androidx.work.NetworkType
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.media.upload.ProcessingMediaItems
 import com.savvasdalkitsis.uhuruphotos.feature.upload.domain.api.model.UploadCapability
 import com.savvasdalkitsis.uhuruphotos.feature.upload.domain.api.model.UploadItem
@@ -25,6 +26,7 @@ interface UploadUseCase {
 
     suspend fun canUpload(): UploadCapability
     suspend fun scheduleUpload(vararg items: UploadItem)
+    suspend fun scheduleUpload(networkType: NetworkType, requiresCharging: Boolean, vararg items: UploadItem)
     fun observeUploading(): Flow<Set<Long>>
     fun observeProcessing(): Flow<Set<ProcessingMediaItems>>
     suspend fun upload(

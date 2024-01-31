@@ -51,7 +51,7 @@ class UploadsUseCase @Inject constructor(
                                 UploadJob(
                                     localItemId = itemId,
                                     displayName = mediaItem.displayName,
-                                    thumbnailUrl = mediaItem.contentUri,
+                                    contentUri = mediaItem.contentUri,
                                     latestJobState = jobState,
                                 )
                             }

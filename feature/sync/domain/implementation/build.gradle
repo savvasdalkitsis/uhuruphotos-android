@@ -7,6 +7,7 @@ dependencies {
             libs.bundles.autodagger,
             libs.hilt,
             project(":feature:feed:domain:api"),
+            project(":feature:settings:domain:api"),
             project(":feature:sync:domain:api"),
             project(":feature:uploads:domain:api"),
             project(":feature:welcome:domain:api"),

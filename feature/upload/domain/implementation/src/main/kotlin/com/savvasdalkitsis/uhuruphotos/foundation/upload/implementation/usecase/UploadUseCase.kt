@@ -15,6 +15,7 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.foundation.upload.implementation.usecase
 
+import androidx.work.NetworkType
 import com.github.michaelbull.result.Err
 import com.github.michaelbull.result.Ok
 import com.github.michaelbull.result.Result
@@ -26,6 +27,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.model.Loca
 import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.model.Md5Hash
 import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.usecase.LocalMediaUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.api.usecase.RemoteMediaUseCase
+import com.savvasdalkitsis.uhuruphotos.feature.settings.domain.api.usecase.SettingsUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.site.domain.api.usecase.SiteUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.upload.domain.api.model.UploadCapability
 import com.savvasdalkitsis.uhuruphotos.feature.upload.domain.api.model.UploadCapability.CanUpload
@@ -56,6 +58,7 @@ class UploadUseCase @Inject constructor(
     private val remoteMediaUseCase: RemoteMediaUseCase,
     private val uploadWorkScheduler: UploadWorkScheduler,
     private val chunkedUploader: ChunkedUploader,
+    private val settingsUseCase: SettingsUseCase,
 ) : UploadUseCase {
 
     override suspend fun canUpload(): UploadCapability = siteUseCase.getSiteOptions()
@@ -70,11 +73,21 @@ class UploadUseCase @Inject constructor(
             UnableToCheck
         }
 
-    override suspend fun scheduleUpload(vararg items: UploadItem) {
+    override suspend fun scheduleUpload(
+        networkType: NetworkType,
+        requiresCharging: Boolean,
+        vararg items: UploadItem
+    ) {
         uploadRepository.setUploading(*items)
         for (item in items) {
-            uploadWorkScheduler.scheduleUpload(item)
+            uploadWorkScheduler.scheduleUpload(item, networkType, requiresCharging)
         }
+    }
+
+    override suspend fun scheduleUpload(vararg items: UploadItem) {
+        val networkRequirements = settingsUseCase.getCloudSyncNetworkRequirements()
+        val requiresCharging = settingsUseCase.getCloudSyncRequiresCharging()
+        scheduleUpload(networkRequirements, requiresCharging, *items)
     }
 
     override fun markAsNotUploading(vararg mediaIds: Long) {

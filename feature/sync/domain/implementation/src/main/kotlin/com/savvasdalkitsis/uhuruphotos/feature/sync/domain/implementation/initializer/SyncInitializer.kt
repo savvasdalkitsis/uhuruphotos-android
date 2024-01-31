@@ -16,13 +16,17 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.feature.sync.domain.implementation.initializer
 
 import android.app.Application
+import com.savvasdalkitsis.uhuruphotos.feature.settings.domain.api.usecase.SettingsUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.sync.domain.api.usecase.SyncUseCase
+import com.savvasdalkitsis.uhuruphotos.feature.upload.domain.api.model.UploadItem
 import com.savvasdalkitsis.uhuruphotos.feature.upload.domain.api.usecase.UploadUseCase
+import com.savvasdalkitsis.uhuruphotos.feature.uploads.domain.api.usecase.UploadsUseCase
 import com.savvasdalkitsis.uhuruphotos.foundation.initializer.api.ApplicationCreated
 import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
@@ -34,15 +38,39 @@ import javax.inject.Inject
 class SyncInitializer @Inject constructor(
     private val syncUseCase: SyncUseCase,
     private val uploadUseCase: UploadUseCase,
+    private val uploadsUseCase: UploadsUseCase,
+    private val settingsUseCase: SettingsUseCase,
 ) : ApplicationCreated {
     override fun onAppCreated(app: Application) {
         GlobalScope.launch(Dispatchers.Default) {
-            syncUseCase.observePendingItems()
-                .map { it.take(2) }
-                .distinctUntilChanged()
-                .collectLatest { pending ->
-                    uploadUseCase.scheduleUpload(*pending.toTypedArray())
-                }
+            combine(
+                syncUseCase.observePendingItems()
+                    .map { it.take(2) }
+                    .distinctUntilChanged(),
+                settingsUseCase.observeCloudSyncNetworkRequirements(),
+                settingsUseCase.observeCloudSyncRequiresCharging(),
+            ) { pending, networkRequirement, requiresCharging ->
+                Triple(pending, networkRequirement, requiresCharging)
+            }.collectLatest { (pending, networkRequirement, requiresCharging) ->
+                uploadUseCase.scheduleUpload(networkRequirement, requiresCharging, *pending.toTypedArray())
+            }
+        }
+        GlobalScope.launch(Dispatchers.Default) {
+            combine(
+                uploadsUseCase.observeUploadsInFlight().map { uploads ->
+                    uploads.jobs
+                        .filter { !it.latestJobState.state.isFinished }
+                        .map {
+                            UploadItem(it.localItemId, it.contentUri)
+                        }
+                }.distinctUntilChanged(),
+                settingsUseCase.observeCloudSyncNetworkRequirements(),
+                settingsUseCase.observeCloudSyncRequiresCharging(),
+            ) { inFlight, networkRequirement, requiresCharging ->
+                Triple(inFlight, networkRequirement, requiresCharging)
+            }.collectLatest { (inFlight, networkRequirement, requiresCharging) ->
+                uploadUseCase.scheduleUpload(networkRequirement, requiresCharging, *inFlight.toTypedArray())
+            }
         }
     }
 }

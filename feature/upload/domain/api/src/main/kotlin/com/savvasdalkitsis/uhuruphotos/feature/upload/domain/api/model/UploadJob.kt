@@ -18,6 +18,6 @@ package com.savvasdalkitsis.uhuruphotos.feature.upload.domain.api.model
 data class UploadJob(
     val localItemId: Long,
     val displayName: String?,
-    val thumbnailUrl: String,
+    val contentUri: String,
     val latestJobState: UploadJobState,
 )

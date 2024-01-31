@@ -20,6 +20,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.pluralStringResource
 import androidx.compose.ui.res.stringResource
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.actions.ChangeFullSyncChargingRequirements
+import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.actions.ChangeFullSyncNetworkRequirements
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.actions.FeedRefreshChanged
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.actions.FeedSyncFrequencyChanged
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.actions.SettingsAction
@@ -70,5 +71,7 @@ internal fun SettingsJobsFeedConfiguration(
         action(ChangeFullSyncChargingRequirements(selected))
     }
     Divider()
-    SettingsFullSyncNetworkRequirements(state, action)
+    SettingsNetworkRequirements(state.fullSyncNetworkRequirement, action) {
+        ChangeFullSyncNetworkRequirements(it)
+    }
 }

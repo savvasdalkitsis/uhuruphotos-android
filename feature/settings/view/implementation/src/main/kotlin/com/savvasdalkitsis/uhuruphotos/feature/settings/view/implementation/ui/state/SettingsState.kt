@@ -37,6 +37,8 @@ data class SettingsState(
     val showJobStartDialog: Job? = null,
     val fullSyncNetworkRequirement: NetworkType? = null,
     val fullSyncRequiresCharging: Boolean = false,
+    val cloudSyncNetworkRequirement: NetworkType? = null,
+    val cloudSyncRequiresCharging: Boolean = false,
     val uploadsInProgress: Boolean = false,
     val themeMode: ThemeMode = ThemeMode.default,
     val searchSuggestionsEnabled: Boolean = true,

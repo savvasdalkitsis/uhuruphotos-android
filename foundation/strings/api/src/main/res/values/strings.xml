@@ -237,7 +237,7 @@
     <string name="are_you_sure_you_want_to_start_local_sync">Start syncing local media\?</string>
     <string name="process_takes_significant_time_consumes_battery">Takes a significant amount of time and consumes a lot of battery.</string>
     <string name="cancel">Cancel</string>
-    <string name="feed_sync_job_configuration">Configuration of the job to sync the feed</string>
+    <string name="feed_sync_job_configuration">Feed sync job configuration</string>
     <string name="status">Status</string>
     <string name="missing_local_media_permissions">View local media in feed\?</string>
     <string name="missing_local_media_permissions_photo_map">View local media on the photo map\?</string>
@@ -369,4 +369,6 @@
     <string name="folders_on_feed">Folders contributing to Feed</string>
     <string name="feed_folders">Feed Folders</string>
     <string name="remember_credentials">Remember credentials</string>
+    <string name="cloud_sync_charging_changed">Charging requirements for cloud sync changed</string>
+    <string name="cloud_sync_network_changed">Network requirements for cloud sync changed</string>
 </resources>

@@ -129,7 +129,7 @@ fun UploadJobRow(job: UploadJob) {
             modifier = Modifier
                 .fillMaxHeight()
                 .aspectRatio(1f),
-            url = job.thumbnailUrl,
+            url = job.contentUri,
             contentScale = ContentScale.Crop,
             contentDescription = null,
         )
@@ -220,7 +220,7 @@ private fun UploadsPreview() {
                         UploadJob(
                             localItemId = 1,
                             displayName = "PXL_20230801_103507882.jpg",
-                            thumbnailUrl = "",
+                            contentUri = "",
                             latestJobState = UploadJobState(
                                 state = ENQUEUED,
                                 progressPercent = null,
@@ -229,7 +229,7 @@ private fun UploadsPreview() {
                         UploadJob(
                             localItemId = 2,
                             displayName = "PXL_20230801_103507850.jpg",
-                            thumbnailUrl = "",
+                            contentUri = "",
                             latestJobState = UploadJobState(
                                 state = RUNNING,
                                 progressPercent = null,
@@ -238,7 +238,7 @@ private fun UploadsPreview() {
                         UploadJob(
                             localItemId = 3,
                             displayName = "PXL_20230801_103507810.mp4",
-                            thumbnailUrl = "",
+                            contentUri = "",
                             latestJobState = UploadJobState(
                                 state = RUNNING,
                                 progressPercent = null,
@@ -247,7 +247,7 @@ private fun UploadsPreview() {
                         UploadJob(
                             localItemId = 30,
                             displayName = "PXL_20230801_103507810.mp4",
-                            thumbnailUrl = "",
+                            contentUri = "",
                             latestJobState = UploadJobState(
                                 state = RUNNING,
                                 progressPercent = 0.1f,
@@ -256,7 +256,7 @@ private fun UploadsPreview() {
                         UploadJob(
                             localItemId = 4,
                             displayName = "PXL_20230801_103507810.mp4",
-                            thumbnailUrl = "",
+                            contentUri = "",
                             latestJobState = UploadJobState(
                                 state = FAILED,
                                 progressPercent = null,
@@ -265,7 +265,7 @@ private fun UploadsPreview() {
                         UploadJob(
                             localItemId = 5,
                             displayName = "PXL_20230801_103507800.jpg",
-                            thumbnailUrl = "",
+                            contentUri = "",
                             latestJobState = UploadJobState(
                                 state = RUNNING,
                                 progressPercent = null,
@@ -274,7 +274,7 @@ private fun UploadsPreview() {
                         UploadJob(
                             localItemId = 6,
                             displayName = "PXL_20230801_103507100.jpg",
-                            thumbnailUrl = "",
+                            contentUri = "",
                             latestJobState = UploadJobState(
                                 state = RUNNING,
                                 progressPercent = null,
@@ -283,7 +283,7 @@ private fun UploadsPreview() {
                         UploadJob(
                             localItemId = 7,
                             displayName = "PXL_20230801_103507100.jpg",
-                            thumbnailUrl = "",
+                            contentUri = "",
                             latestJobState = UploadJobState(
                                 state = SUCCEEDED,
                                 progressPercent = null,

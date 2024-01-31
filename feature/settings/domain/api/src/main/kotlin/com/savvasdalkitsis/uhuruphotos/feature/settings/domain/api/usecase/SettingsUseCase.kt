@@ -31,6 +31,8 @@ interface SettingsUseCase {
     fun getFeedDaysToRefresh(): Int
     fun getFullSyncNetworkRequirements(): NetworkType
     fun getFullSyncRequiresCharging(): Boolean
+    fun getCloudSyncNetworkRequirements(): NetworkType
+    fun getCloudSyncRequiresCharging(): Boolean
     fun getShouldPerformPeriodicFullSync(): Boolean
     fun getShareRemoveGpsData(): Boolean
     fun getLoggingEnabled(): Boolean
@@ -48,6 +50,8 @@ interface SettingsUseCase {
     fun observeFeedDaysToRefresh(): Flow<Int>
     fun observeFullSyncNetworkRequirements(): Flow<NetworkType>
     fun observeFullSyncRequiresCharging(): Flow<Boolean>
+    fun observeCloudSyncNetworkRequirements(): Flow<NetworkType>
+    fun observeCloudSyncRequiresCharging(): Flow<Boolean>
     fun observeShareRemoveGpsData(): Flow<Boolean>
     fun observeLoggingEnabled(): Flow<Boolean>
     fun observeSendDatabaseEnabled(): Flow<Boolean>
@@ -64,6 +68,8 @@ interface SettingsUseCase {
     fun setFeedFeedDaysToRefresh(days: Int)
     fun setFullSyncNetworkRequirements(networkType: NetworkType)
     fun setFullSyncRequiresCharging(requiresCharging: Boolean)
+    fun setCloudSyncNetworkRequirements(networkType: NetworkType)
+    fun setCloudSyncRequiresCharging(requiresCharging: Boolean)
     fun setShouldPerformPeriodicFullSync(perform: Boolean)
     fun setShareRemoveGpsData(enabled: Boolean)
     fun setLoggingEnabled(enabled: Boolean)

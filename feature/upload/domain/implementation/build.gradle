@@ -13,6 +13,7 @@ dependencies {
             project(":feature:feed:domain:api"),
             project(":feature:media:local:domain:api"),
             project(":feature:media:remote:domain:api"),
+            project(":feature:settings:domain:api"),
             project(":feature:site:domain:api"),
             project(":feature:upload:domain:api"),
             project(":feature:user:domain:api"),

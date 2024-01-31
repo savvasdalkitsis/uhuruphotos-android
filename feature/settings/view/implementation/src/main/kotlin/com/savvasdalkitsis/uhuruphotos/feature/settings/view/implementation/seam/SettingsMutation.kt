@@ -132,8 +132,16 @@ sealed class SettingsMutation(
         it.copy(fullSyncNetworkRequirement = networkType)
     })
 
+    data class DisplayCloudSyncNetworkRequirements(val networkType: NetworkType): SettingsMutation({
+        it.copy(cloudSyncNetworkRequirement = networkType)
+    })
+
     data class DisplayFullSyncRequiresCharging(val requiresCharging: Boolean): SettingsMutation({
         it.copy(fullSyncRequiresCharging = requiresCharging)
+    })
+
+    data class DisplayCloudSyncRequiresCharging(val requiresCharging: Boolean): SettingsMutation({
+        it.copy(cloudSyncRequiresCharging = requiresCharging)
     })
 
     data class DisplayThemeMode(val themeMode: ThemeMode): SettingsMutation({

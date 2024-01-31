@@ -15,6 +15,7 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.upload.domain.api.work
 
+import androidx.work.NetworkType
 import androidx.work.WorkInfo
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemHash
 import com.savvasdalkitsis.uhuruphotos.feature.upload.domain.api.model.UploadItem
@@ -22,7 +23,7 @@ import kotlinx.coroutines.flow.Flow
 
 interface UploadWorkScheduler {
 
-    fun scheduleUpload(item: UploadItem)
+    fun scheduleUpload(item: UploadItem, networkType: NetworkType, requiresCharging: Boolean)
 
     fun schedulePostUploadProcessing(hash: MediaItemHash, itemId: Long)
 

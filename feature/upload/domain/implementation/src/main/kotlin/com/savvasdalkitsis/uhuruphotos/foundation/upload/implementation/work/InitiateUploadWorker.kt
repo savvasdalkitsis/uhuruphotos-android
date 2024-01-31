@@ -19,7 +19,7 @@ import android.content.Context
 import androidx.hilt.work.HiltWorker
 import androidx.work.WorkerParameters
 import com.savvasdalkitsis.uhuruphotos.feature.upload.domain.api.model.UploadItem
-import com.savvasdalkitsis.uhuruphotos.feature.upload.domain.api.work.UploadWorkScheduler
+import com.savvasdalkitsis.uhuruphotos.feature.upload.domain.api.usecase.UploadUseCase
 import com.savvasdalkitsis.uhuruphotos.foundation.notification.api.ForegroundInfoBuilder
 import com.savvasdalkitsis.uhuruphotos.foundation.notification.api.ForegroundNotificationWorker
 import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
@@ -31,7 +31,7 @@ import dagger.assisted.AssistedInject
 class InitiateUploadWorker @AssistedInject constructor(
     @Assisted context: Context,
     @Assisted private val params: WorkerParameters,
-    private val uploadWorkScheduler: UploadWorkScheduler,
+    private val uploadUseCase: UploadUseCase,
     foregroundInfoBuilder: ForegroundInfoBuilder,
 ) : ForegroundNotificationWorker<Nothing>(
     context,
@@ -47,7 +47,7 @@ class InitiateUploadWorker @AssistedInject constructor(
             id = params.inputData.getLong(KEY_ID, -1),
             contentUri = params.inputData.getString(KEY_CONTENT_URI)!!
         )
-        uploadWorkScheduler.scheduleUpload(item)
+        uploadUseCase.scheduleUpload(item)
         return Result.success()
     }
 
