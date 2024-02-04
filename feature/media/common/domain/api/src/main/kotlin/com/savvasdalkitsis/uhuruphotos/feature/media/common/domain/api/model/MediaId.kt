@@ -18,6 +18,7 @@ package com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model
 import android.os.Parcelable
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemSyncState.DOWNLOADING
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemSyncState.LOCAL_ONLY
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemSyncState.PROCESSING
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemSyncState.REMOTE_ONLY
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemSyncState.SYNCED
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemSyncState.UPLOADING
@@ -134,6 +135,36 @@ sealed class MediaId<T : Serializable> private constructor(
         override val fullResUri = local.fullResUri
     }
 
+
+    @Parcelize
+    data class Processing(
+        override val value: Long,
+        override val isVideo: Boolean,
+        val contentUri: String,
+        override val thumbnailUri: String,
+    ): MediaId<Long>(value, isVideo) {
+        @IgnoredOnParcel
+        val local get() = Local(value, isVideo, contentUri, thumbnailUri)
+
+        @IgnoredOnParcel
+        @Transient
+        override val preferRemote = this
+        @IgnoredOnParcel
+        @Transient
+        override val preferLocal = local
+        @IgnoredOnParcel
+        @Transient
+        override val findRemote = null
+        @IgnoredOnParcel
+        @Transient
+        override val findLocal = local
+
+        @IgnoredOnParcel
+        override val syncState: MediaItemSyncState = PROCESSING
+        @IgnoredOnParcel
+        override val fullResUri = local.fullResUri
+    }
+
     @Parcelize
     data class Local(
         override val value: Long,
@@ -160,6 +191,7 @@ sealed class MediaId<T : Serializable> private constructor(
         override val fullResUri = contentUri
 
         fun toUploading() = Uploading(value, isVideo, contentUri, thumbnailUri)
+        fun toProcessing() = Processing(value, isVideo, contentUri, thumbnailUri)
     }
 
     @Suppress("DataClassPrivateConstructor")

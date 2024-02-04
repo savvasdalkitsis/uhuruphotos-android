@@ -17,23 +17,15 @@ package com.savvasdalkitsis.uhuruphotos.feature.upload.domain.api.work
 
 import androidx.work.WorkInfo
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemHash
-import com.savvasdalkitsis.uhuruphotos.feature.upload.domain.api.model.UploadId
 import com.savvasdalkitsis.uhuruphotos.feature.upload.domain.api.model.UploadItem
-import com.savvasdalkitsis.uhuruphotos.feature.upload.domain.api.model.UploadJobType
 import kotlinx.coroutines.flow.Flow
 
 interface UploadWorkScheduler {
 
-    fun scheduleUploadInitialization(item: UploadItem)
+    fun scheduleUpload(item: UploadItem)
 
-    fun scheduleUpload(item: UploadItem, size: Int)
-
-    fun scheduleUploadCompletion(item: UploadItem, uploadId: UploadId)
-
-    fun schedulePostUploadSync(hash: MediaItemHash, itemId: Long)
+    fun schedulePostUploadProcessing(hash: MediaItemHash, itemId: Long)
 
     fun monitorUploadJobs(): Flow<List<WorkInfo?>>
     fun mediaItemIdFrom(workInfo: WorkInfo): Long?
-
-    fun List<WorkInfo>.findType(jobType: UploadJobType): List<WorkInfo>
 }

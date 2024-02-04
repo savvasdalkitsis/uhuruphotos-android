@@ -15,11 +15,9 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.upload.domain.api.usecase
 
-import com.github.michaelbull.result.Result
-import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.model.Md5Hash
 import com.savvasdalkitsis.uhuruphotos.feature.upload.domain.api.model.UploadCapability
-import com.savvasdalkitsis.uhuruphotos.feature.upload.domain.api.model.UploadId
 import com.savvasdalkitsis.uhuruphotos.feature.upload.domain.api.model.UploadItem
+import com.savvasdalkitsis.uhuruphotos.foundation.result.api.SimpleResult
 import kotlinx.coroutines.flow.Flow
 
 interface UploadUseCase {
@@ -27,11 +25,11 @@ interface UploadUseCase {
     suspend fun canUpload(): UploadCapability
     suspend fun scheduleUpload(vararg items: UploadItem)
     fun observeUploading(): Flow<Set<Long>>
-    suspend fun exists(md5: Md5Hash): Result<Boolean, Throwable>
-    suspend fun uploadInChunks(
+    fun observeProcessing(): Flow<Set<Long>>
+    suspend fun upload(
         item: UploadItem,
-        size: Int,
         progress: suspend (current: Long, total: Long) -> Unit,
-    ): Result<UploadId, Throwable>
+    ): SimpleResult
     fun markAsNotUploading(vararg mediaIds: Long)
+    fun markAsNotProcessing(mediaId: Long)
 }

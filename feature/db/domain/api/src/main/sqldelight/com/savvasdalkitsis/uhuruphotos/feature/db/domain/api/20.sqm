@@ -1,0 +1,24 @@
+CREATE TEMPORARY TABLE uploadingMediaItemsBackup (
+    id INTEGER NOT NULL PRIMARY KEY,
+    contentUri TEXT NOT NULL
+);
+
+INSERT INTO uploadingMediaItemsBackup SELECT * FROM uploadingMediaItems;
+
+DROP TABLE uploadingMediaItems;
+
+CREATE TABLE uploadingMediaItems (
+    id INTEGER NOT NULL PRIMARY KEY,
+    contentUri TEXT NOT NULL,
+    offset INTEGER NOT NULL,
+    completed INTEGER AS kotlin.Boolean NOT NULL,
+    uploadId TEXT NOT NULL
+);
+
+INSERT INTO uploadingMediaItems SELECT id, contentUri, 0, FALSE, '' FROM uploadingMediaItemsBackup;
+
+DROP TABLE uploadingMediaItemsBackup;
+
+CREATE TABLE processingMediaItems (
+    id INTEGER NOT NULL PRIMARY KEY
+);

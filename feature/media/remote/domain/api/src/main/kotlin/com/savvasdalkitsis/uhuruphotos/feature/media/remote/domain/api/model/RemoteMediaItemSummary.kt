@@ -28,7 +28,7 @@ data class RemoteMediaItemSummary(
     val location: String,
     val date: String?,
     val birthTime: String,
-    val aspectRatio: Float,
+    val aspectRatio: Float? = null,
     val type: String,
     @Json(name = "video_length") val videoLength: String,
     val rating: Int

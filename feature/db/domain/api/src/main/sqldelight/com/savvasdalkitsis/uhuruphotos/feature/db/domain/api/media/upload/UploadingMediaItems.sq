@@ -1,7 +1,10 @@
+import kotlin.Boolean;
+
 CREATE TABLE uploadingMediaItems (
     id INTEGER NOT NULL PRIMARY KEY,
     contentUri TEXT NOT NULL,
     offset INTEGER NOT NULL,
+    completed INTEGER AS kotlin.Boolean NOT NULL,
     uploadId TEXT NOT NULL
 );
 
@@ -22,6 +25,12 @@ SELECT id FROM uploadingMediaItems;
 
 getOffset:
 SELECT offset FROM uploadingMediaItems WHERE id = :id;
+
+isCompleted:
+SELECT completed FROM uploadingMediaItems WHERE id = :id;
+
+setCompleted:
+UPDATE uploadingMediaItems SET completed = TRUE WHERE id = :id;
 
 getUploadId:
 SELECT uploadId FROM uploadingMediaItems WHERE id = :id;

@@ -19,6 +19,5 @@ import androidx.work.WorkInfo
 
 data class UploadJobState(
     val state: WorkInfo.State,
-    val jobType: UploadJobType,
     val progressPercent: Float?,
 )

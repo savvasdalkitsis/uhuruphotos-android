@@ -18,10 +18,11 @@ package com.savvasdalkitsis.uhuruphotos.foundation.upload.implementation.work
 import android.content.Context
 import androidx.hilt.work.HiltWorker
 import androidx.work.WorkerParameters
+import com.github.michaelbull.result.Err
 import com.github.michaelbull.result.Ok
 import com.savvasdalkitsis.uhuruphotos.feature.upload.domain.api.model.UploadItem
 import com.savvasdalkitsis.uhuruphotos.feature.upload.domain.api.usecase.UploadUseCase
-import com.savvasdalkitsis.uhuruphotos.feature.upload.domain.api.work.UploadWorkScheduler
+import com.savvasdalkitsis.uhuruphotos.foundation.log.api.log
 import com.savvasdalkitsis.uhuruphotos.foundation.notification.api.ForegroundInfoBuilder
 import com.savvasdalkitsis.uhuruphotos.foundation.notification.api.ForegroundNotificationWorker
 import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
@@ -33,7 +34,6 @@ class UploadWorker @AssistedInject constructor(
     @Assisted context: Context,
     @Assisted private val params: WorkerParameters,
     private val uploadUseCase: UploadUseCase,
-    private val uploadWorkScheduler: UploadWorkScheduler,
     foregroundInfoBuilder: ForegroundInfoBuilder,
 ) : ForegroundNotificationWorker<Nothing>(
     context,
@@ -49,29 +49,28 @@ class UploadWorker @AssistedInject constructor(
             id = params.inputData.getLong(KEY_ITEM_ID, -1),
             contentUri = params.inputData.getString(KEY_CONTENT_URI)!!
         )
-        val size = params.inputData.getInt(KEY_ITEM_SIZE, -1)
-        val result = uploadUseCase.uploadInChunks(item, size) { current, total ->
+
+        val result = uploadUseCase.upload(item) { current, total ->
             updateProgress(current, total)
         }
+
         return when (result) {
-            is Ok -> {
-                uploadWorkScheduler.scheduleUploadCompletion(item = item, uploadId = result.value)
-                Result.success()
-            }
-            else -> failOrRetry(item.id)
+            is Ok -> Result.success()
+            is Err -> result.failOrRetry(item.id)
         }
     }
 
-    private fun failOrRetry(itemId: Long) = if (params.runAttemptCount < 4) {
+    private fun Err<Throwable>.failOrRetry(itemId: Long) = if (params.runAttemptCount < 4) {
+        log(error) { "Failed to upload item $itemId, retrying" }
         Result.retry()
     } else {
+        log(error) { "Failed to upload item $itemId, not retrying" }
         uploadUseCase.markAsNotUploading(itemId)
         Result.failure()
     }
 
     companion object {
         const val KEY_ITEM_ID = "itemId"
-        const val KEY_ITEM_SIZE = "itemSize"
         const val KEY_CONTENT_URI = "contentUri"
         fun workName(id: Long) = "uploadFile/$id"
         private const val NOTIFICATION_ID = 1288

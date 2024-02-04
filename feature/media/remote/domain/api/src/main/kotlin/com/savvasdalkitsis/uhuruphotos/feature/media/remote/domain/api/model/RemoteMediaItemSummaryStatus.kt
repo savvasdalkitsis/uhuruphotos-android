@@ -1,5 +1,5 @@
 /*
-Copyright 2023 Savvas Dalkitsis
+Copyright 2024 Savvas Dalkitsis
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -15,11 +15,9 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.api.model
 
-import com.squareup.moshi.Json
-import com.squareup.moshi.JsonClass
+import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.entities.media.DbRemoteMediaItemSummary
 
-@JsonClass(generateAdapter = true)
-data class RemoteMediaItemSummaryContainer(
-    @Json(name = "album_date_id") val albumDateId: String,
-    @Json(name = "photo_summary") val photoSummary: RemoteMediaItemSummary,
-)
+sealed class RemoteMediaItemSummaryStatus {
+    data class Found(val summary: DbRemoteMediaItemSummary) : RemoteMediaItemSummaryStatus()
+    data object Processing : RemoteMediaItemSummaryStatus()
+}
