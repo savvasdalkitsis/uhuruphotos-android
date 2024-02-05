@@ -16,8 +16,10 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model
 
 import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.model.Md5Hash
+import kotlinx.serialization.Serializable
 
 @JvmInline
+@Serializable
 value class MediaItemHash(
     val hash: String,
 )

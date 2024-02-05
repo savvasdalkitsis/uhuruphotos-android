@@ -25,6 +25,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.feed.domain.api.model.FeedFetchTy
 import com.savvasdalkitsis.uhuruphotos.feature.feed.domain.api.model.FeedFetchType.VIDEOS
 import com.savvasdalkitsis.uhuruphotos.feature.feed.domain.api.usecase.FeedUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.feed.domain.api.worker.FeedWorkScheduler
+import com.savvasdalkitsis.uhuruphotos.feature.feed.domain.implementation.repository.FeedProtoCache
 import com.savvasdalkitsis.uhuruphotos.feature.feed.domain.implementation.repository.FeedRepository
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaCollection
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaCollectionSource
@@ -52,6 +53,8 @@ import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.merge
+import kotlinx.coroutines.flow.onEach
 import se.ansman.dagger.auto.AutoBind
 import java.io.Serializable
 import javax.inject.Inject
@@ -59,6 +62,7 @@ import javax.inject.Inject
 @AutoBind
 internal class FeedUseCase @Inject constructor(
     private val feedRepository: FeedRepository,
+    private val feedProtoCache: FeedProtoCache,
     private val mediaUseCase: MediaUseCase,
     private val feedWorkScheduler: FeedWorkScheduler,
     private val downloadUseCase: DownloadUseCase,
@@ -74,15 +78,24 @@ internal class FeedUseCase @Inject constructor(
     override fun observeFeed(
         feedFetchType: FeedFetchType,
         loadSmallInitialChunk: Boolean,
-    ): Flow<List<MediaCollection>> =
-        combine(
-            observeRemoteMediaFeed(feedFetchType, loadSmallInitialChunk),
-            observeLocalMediaFeed(feedFetchType),
-            observeDownloading(),
-            observeUploading(),
-            observeProcessing(),
-            ::mergeRemoteWithLocalMedia
-        ).debounce(500)
+    ): Flow<List<MediaCollection>> = merge(
+        feedProtoCache.observeFeed(),
+        liveFeed(feedFetchType, loadSmallInitialChunk).onEach {
+            feedProtoCache.cacheFeed(it)
+        }
+    )
+
+    private fun liveFeed(
+        feedFetchType: FeedFetchType,
+        loadSmallInitialChunk: Boolean
+    ) = combine(
+        observeRemoteMediaFeed(feedFetchType, loadSmallInitialChunk),
+        observeLocalMediaFeed(feedFetchType),
+        observeDownloading(),
+        observeUploading(),
+        observeProcessing(),
+        ::mergeRemoteWithLocalMedia
+    ).debounce(500)
 
     private fun mergeRemoteWithLocalMedia(
         allRemoteDays: Sequence<MediaCollection>,
