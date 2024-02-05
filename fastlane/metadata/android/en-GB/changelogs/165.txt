@@ -1,0 +1,4 @@
+* Big upload process improvements. Faster, better handling of items being processed on the backend
+* Feed performance improvements
+* Fixing cloud sync icon on light theme
+* Fixing issue with logging in with different user after logout
