@@ -374,4 +374,8 @@
     <string name="day">Día</string>
     <string name="failed">Fallido</string>
     <string name="initializing">Inicializar</string>
+    <string name="media_on_map">Medios en el mapa (%1$d de %2$d)</string>
+    <string name="folders_on_feed">Carpetas que contribuyen al Feed</string>
+    <string name="feed_folders">Carpetas Feed</string>
+    <string name="remember_credentials">Recordar credenciales</string>
 </resources>
