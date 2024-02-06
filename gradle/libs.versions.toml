@@ -6,13 +6,14 @@ coil = "2.5.0"
 com-google-android-gms = "18.2.0"
 compose = "1.6.0"
 crypto = "1.1.0-alpha06"
+datastore = "1.1.0-beta01"
 google-services = "4.4.0"
 hilt = "2.50"
 hilt-compiler = "1.1.0"
 lumberjack = "5.3.1"
 media3 = "1.2.1"
 mockk = "1.13.9"
-moshi = "1.15.0"
+moshi = "1.15.1"
 okhttp = "5.0.0-alpha.11"
 org-jetbrains-kotlinx = "1.7.3"
 permissions = "1.2.0"
@@ -46,7 +47,7 @@ androidx-compose-ui-tooling-preview = { module = "androidx.compose.ui:ui-tooling
 androidx-compose-ui-util = { module = "androidx.compose.ui:ui-util", version.ref = "compose" }
 androidx-constraint = "androidx.constraintlayout:constraintlayout-compose:1.1.0-alpha13"
 androidx-core = "androidx.core:core-ktx:1.12.0"
-androidx-datastore-preferences = "androidx.datastore:datastore-preferences:1.1.0-beta01"
+androidx-datastore-preferences = { module = "androidx.datastore:datastore-preferences", version.ref = "datastore" }
 androidx-hilt-compiler = { module = "androidx.hilt:hilt-compiler", version.ref = "hilt-compiler" }
 androidx-media3-core = { module = "androidx.media3:media3-exoplayer", version.ref = "media3" }
 androidx-media3-database = { module = "androidx.media3:media3-database", version.ref = "media3" }
@@ -87,12 +88,13 @@ hilt-dagger-compiler = { module = "com.google.dagger:hilt-compiler", version.ref
 imaging = "org.apache.commons:commons-imaging:1.0-alpha3"
 infobar = "com.radusalagean:info-bar-compose:1.0.0"
 jetlime = "io.github.pushpalroy:jetlime:2.0.0"
-joda-time = "net.danlew:android.joda:2.12.6"
+joda-time = "net.danlew:android.joda:2.12.7"
 junit = "junit:junit:4.13.2"
 jwt = "com.auth0.android:jwtdecode:2.0.2"
 kotlinx-coroutines = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-android", version.ref = "org-jetbrains-kotlinx" }
 kotlinx-coroutines-test = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test", version.ref = "org-jetbrains-kotlinx" }
 kotlinx-immutable = "org.jetbrains.kotlinx:kotlinx-collections-immutable:0.3.7"
+kotlinx-serialization-proto = "org.jetbrains.kotlinx:kotlinx-serialization-protobuf:1.6.2"
 kotlin-reflect = "org.jetbrains.kotlin:kotlin-reflect:1.9.22"
 leaks = "com.squareup.leakcanary:leakcanary-android:2.13"
 logger = "com.jakewharton.timber:timber:4.7.1"
@@ -134,7 +136,6 @@ sqldelight-adapters = { module = "app.cash.sqldelight:primitive-adapters", versi
 sqldelight-android = { module = "app.cash.sqldelight:android-driver", version.ref = "sqldelight" }
 sqldelight-coroutines = { module = "app.cash.sqldelight:coroutines-extensions", version.ref = "sqldelight" }
 sqldelight-gradle-plugin = { module = "app.cash.sqldelight:gradle-plugin", version.ref = "sqldelight" }
-sqldelight-jvm = { module = "app.cash.sqldelight:sqlite-driver", version.ref = "sqldelight" }
 timeline = "com.github.yeocak:ComposableTimelineView:0.6"
 turbine = "app.cash.turbine:turbine:1.0.0"
 urlvalidator = "commons-validator:commons-validator:1.8.0"

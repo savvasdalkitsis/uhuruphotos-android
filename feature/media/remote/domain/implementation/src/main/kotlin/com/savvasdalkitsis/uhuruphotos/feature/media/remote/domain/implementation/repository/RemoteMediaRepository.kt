@@ -18,7 +18,9 @@ package com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.implementati
 import app.cash.sqldelight.coroutines.asFlow
 import app.cash.sqldelight.coroutines.mapToList
 import app.cash.sqldelight.coroutines.mapToOneNotNull
+import com.github.michaelbull.result.Err
 import com.github.michaelbull.result.Ok
+import com.github.michaelbull.result.Result
 import com.github.michaelbull.result.map
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.entities.media.DbRemoteMediaCollections
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.entities.media.DbRemoteMediaItemDetails
@@ -32,6 +34,9 @@ import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.media.remote.Remote
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.media.remote.RemoteMediaItemSummaryQueries
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.media.remote.RemoteMediaTrashQueries
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaOperationResult
+import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.api.model.RemoteMediaItemSummaryStatus
+import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.api.model.RemoteMediaItemSummaryStatus.Found
+import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.api.model.RemoteMediaItemSummaryStatus.Processing
 import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.api.model.toDbModel
 import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.implementation.service.RemoteMediaService
 import com.savvasdalkitsis.uhuruphotos.foundation.log.api.log
@@ -72,21 +77,29 @@ class RemoteMediaRepository @Inject constructor(
         remoteMediaItemDetailsQueries.getMediaItem(id).asFlow()
             .mapToOneNotNull(Dispatchers.IO).distinctUntilChanged()
 
-    suspend fun getMediaItemDetails(id: String): DbRemoteMediaItemDetails? =
+    private suspend fun getMediaItemDetails(id: String): DbRemoteMediaItemDetails? =
         remoteMediaItemDetailsQueries.getMediaItem(id).awaitSingleOrNull()
 
-    suspend fun getOrRefreshRemoteMediaItemSummary(id: String): DbRemoteMediaItemSummary? {
+    suspend fun getOrRefreshRemoteMediaItemSummary(id: String): Result<RemoteMediaItemSummaryStatus, Throwable> {
         val summary = remoteMediaItemSummaryQueries.get(id).awaitSingleOrNull()
-        if (summary == null) {
+        return if (summary != null) {
+            Ok(Found(summary))
+        } else {
             try {
                 val response = remoteMediaService.getMediaItemSummary(id)
-                remoteMediaItemSummaryQueries.insert(response.photoSummary.toDbModel(response.albumDateId))
-                return remoteMediaItemSummaryQueries.get(id).awaitSingleOrNull()
+                val albumDateId = response.albumDateId
+                if (albumDateId == null || response.processing == true || response.photoSummary.aspectRatio == null) {
+                    Ok(Processing)
+                } else {
+                    val model = response.photoSummary.toDbModel(albumDateId)
+                    remoteMediaItemSummaryQueries.insert(model)
+                    Ok(Found(model))
+                }
             } catch (e: Exception) {
                 log(e)
+                Err(e)
             }
         }
-        return summary
     }
 
     suspend fun getFavouriteMedia(favouriteThreshold: Int): List<DbRemoteMediaItemSummary> =

@@ -18,19 +18,19 @@ package com.savvasdalkitsis.uhuruphotos.foundation.upload.implementation.work
 import android.content.Context
 import androidx.hilt.work.HiltWorker
 import androidx.work.WorkerParameters
-import com.github.michaelbull.result.Err
-import com.github.michaelbull.result.Ok
 import com.github.michaelbull.result.coroutines.binding.binding
+import com.github.michaelbull.result.getOr
 import com.savvasdalkitsis.uhuruphotos.feature.feed.domain.api.usecase.FeedUseCase
+import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.api.model.RemoteMediaItemSummaryStatus.Found
+import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.api.model.RemoteMediaItemSummaryStatus.Processing
 import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.api.usecase.RemoteMediaUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.upload.domain.api.usecase.UploadUseCase
-import com.savvasdalkitsis.uhuruphotos.foundation.log.api.log
 import com.savvasdalkitsis.uhuruphotos.foundation.notification.api.ForegroundInfoBuilder
 import com.savvasdalkitsis.uhuruphotos.foundation.notification.api.ForegroundNotificationWorker
 import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedInject
-import okio.IOException
+import java.util.concurrent.TimeUnit
 
 @HiltWorker
 class UploadPostCompletionWorker @AssistedInject constructor(
@@ -49,42 +49,33 @@ class UploadPostCompletionWorker @AssistedInject constructor(
     cancelBroadcastReceiver = null,
 ) {
 
-    override suspend fun work(): Result {
+    override suspend fun work(): Result = binding {
         val hash = params.inputData.getString(KEY_HASH)!!
         val itemId = params.inputData.getLong(KEY_ITEM_ID, -1)
-        val result = try {
-            binding<Unit, Throwable> {
-                val summary = mediaUseCase.getRemoteMediaItemSummary(hash)
-                if (summary != null) {
-                    feedUseCase.refreshCluster(summary.containerId).bind()
-                } else {
-                    throw IOException("Could not load remote media summary for $hash")
-                }
-            }
-        } catch (e: Exception) {
-            log(e)
-            Err(e)
-        }
-        return when (result) {
-            is Ok -> {
-                uploadUseCase.markAsNotUploading(itemId)
+        when (val status = mediaUseCase.getRemoteMediaItemSummary(hash).bind()) {
+            is Found -> {
+                feedUseCase.refreshCluster(status.summary.containerId).bind()
+                uploadUseCase.markAsNotProcessing(itemId)
                 Result.success()
             }
-            else -> failOrRetry(itemId)
+            Processing -> failOrRetry(itemId)
         }
-    }
+    }.getOr(Result.retry())
 
-    private fun failOrRetry(itemId: Long) = if (params.runAttemptCount < 4) {
+    private fun failOrRetry(itemId: Long) = if (params.runAttemptCount < SCHEDULE_MAX_ATTEMPTS) {
         Result.retry()
     } else {
-        uploadUseCase.markAsNotUploading(itemId)
+        uploadUseCase.markAsNotProcessing(itemId)
         Result.failure()
     }
 
     companion object {
         const val KEY_ITEM_ID = "itemId"
         const val KEY_HASH = "hash"
+        const val SCHEDULE_DELAY = 10L
+        val SCHEDULE_UNIT = TimeUnit.SECONDS
+        private const val SCHEDULE_MAX_ATTEMPTS = 60480 // amount of 10 second intervals in a week
         fun workName(hash: String) = "postUploadSync/$hash"
-        private const val NOTIFICATION_ID = 1286
+        private const val NOTIFICATION_ID = 1287
     }
 }

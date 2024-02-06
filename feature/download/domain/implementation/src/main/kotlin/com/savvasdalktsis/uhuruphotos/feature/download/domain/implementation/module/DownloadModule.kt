@@ -17,6 +17,10 @@ package com.savvasdalktsis.uhuruphotos.feature.download.domain.implementation.mo
 
 import android.app.DownloadManager
 import android.content.Context
+import com.savvasdalktsis.uhuruphotos.feature.download.domain.api.usecase.DownloadUseCase
+import com.savvasdalktsis.uhuruphotos.feature.download.domain.implementation.module.DownloadModule_DownloadManagerFactory.downloadManager
+import com.savvasdalktsis.uhuruphotos.feature.download.domain.implementation.repository.DownloadingRepository
+import dagger.Binds
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

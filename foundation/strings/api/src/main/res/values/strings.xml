@@ -247,6 +247,7 @@
     <string name="media_sync_status_local_only">Media is only local to this device</string>
     <string name="media_sync_status_downloading">Downloading media to device…</string>
     <string name="media_sync_status_uploading">Uploading media to the server…</string>
+    <string name="media_sync_status_processing">Server is processing media</string>
     <string name="today">Today</string>
     <string name="what_would_like_to_do">What would you like to do?</string>
     <string name="delete_fully_synced_media_both">Delete local/Trash remote</string>

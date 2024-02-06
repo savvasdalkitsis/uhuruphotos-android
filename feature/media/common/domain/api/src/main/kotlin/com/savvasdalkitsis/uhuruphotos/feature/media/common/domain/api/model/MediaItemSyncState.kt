@@ -52,6 +52,11 @@ enum class MediaItemSyncState(
         lightBoxIcon = raw.ic_animated_cloud_upload,
         contentDescription = string.media_sync_status_uploading
     ),
+    PROCESSING(
+        icon = drawable.ic_cloud_in_progress,
+        lightBoxIcon = drawable.ic_cloud_in_progress,
+        contentDescription = string.media_sync_status_processing
+    ),
     SYNCED(
         icon = drawable.ic_cloud_done,
         lightBoxIcon = drawable.ic_cloud_done,

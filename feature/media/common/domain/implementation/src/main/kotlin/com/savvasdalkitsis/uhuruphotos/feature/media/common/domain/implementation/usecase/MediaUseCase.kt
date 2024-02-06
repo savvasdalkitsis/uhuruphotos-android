@@ -36,7 +36,9 @@ import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.Med
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaId
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaId.Downloading
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaId.Local
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaId.Processing
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaId.Remote
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaId.Uploading
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItem
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemDetails
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemHash
@@ -213,7 +215,8 @@ class MediaUseCase @Inject constructor(
     override fun observeMediaItemDetails(id: MediaId<*>): Flow<MediaItemDetails> = when (id) {
         is Remote -> id.observeDetails()
         is Downloading -> id.remote.observeDetails()
-        is MediaId.Uploading -> id.local.observeDetails()
+        is Uploading -> id.local.observeDetails()
+        is Processing -> id.local.observeDetails()
         is Local -> id.observeDetails()
         is MediaId.Group -> {
             val localDetails = id.findLocal?.observeDetails()
@@ -309,7 +312,8 @@ class MediaUseCase @Inject constructor(
         when (id) {
             is Remote -> refreshRemoteDetailsNowIfMissing(id)
             is Downloading -> refreshRemoteDetailsNowIfMissing(id.remote)
-            is MediaId.Uploading -> refreshLocalDetailsNowIfMissing(id.local)
+            is Uploading -> refreshLocalDetailsNowIfMissing(id.local)
+            is Processing -> refreshLocalDetailsNowIfMissing(id.local)
             is Local -> refreshLocalDetailsNowIfMissing(id)
             is MediaId.Group -> {
                 val remote = id.findRemote?.let {
@@ -328,7 +332,8 @@ class MediaUseCase @Inject constructor(
         when (id) {
             is Remote -> refreshRemoteDetailsNow(id)
             is Downloading -> refreshRemoteDetailsNow(id.remote)
-            is MediaId.Uploading -> refreshLocalDetailsNow(id.local)
+            is Uploading -> refreshLocalDetailsNow(id.local)
+            is Processing -> refreshLocalDetailsNow(id.local)
             is Local -> refreshLocalDetailsNow(id)
             is MediaId.Group -> {
                 val remote = id.findRemote?.let {

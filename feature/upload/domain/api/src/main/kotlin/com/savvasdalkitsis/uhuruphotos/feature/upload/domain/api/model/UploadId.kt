@@ -15,7 +15,7 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.upload.domain.api.model
 
-data class UploadItem(
-    val id: Long,
-    val contentUri: String,
+@JvmInline
+value class UploadId(
+    val value: String,
 )

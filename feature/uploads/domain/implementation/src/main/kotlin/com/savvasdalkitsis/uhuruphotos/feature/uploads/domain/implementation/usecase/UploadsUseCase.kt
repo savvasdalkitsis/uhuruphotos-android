@@ -23,11 +23,6 @@ import androidx.work.WorkInfo.State.SUCCEEDED
 import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.usecase.LocalMediaUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.upload.domain.api.model.UploadJob
 import com.savvasdalkitsis.uhuruphotos.feature.upload.domain.api.model.UploadJobState
-import com.savvasdalkitsis.uhuruphotos.feature.upload.domain.api.model.UploadJobType
-import com.savvasdalkitsis.uhuruphotos.feature.upload.domain.api.model.UploadJobType.Completing
-import com.savvasdalkitsis.uhuruphotos.feature.upload.domain.api.model.UploadJobType.Initializing
-import com.savvasdalkitsis.uhuruphotos.feature.upload.domain.api.model.UploadJobType.Synchronising
-import com.savvasdalkitsis.uhuruphotos.feature.upload.domain.api.model.UploadJobType.Uploading
 import com.savvasdalkitsis.uhuruphotos.feature.upload.domain.api.usecase.UploadUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.upload.domain.api.work.UploadWorkScheduler
 import com.savvasdalkitsis.uhuruphotos.feature.uploads.domain.api.model.Uploads
@@ -46,34 +41,29 @@ class UploadsUseCase @Inject constructor(
     private val uploadUseCase: UploadUseCase,
 ) : UploadsUseCase {
     override fun observeUploadsInFlight(): Flow<Uploads> = with(uploadWorkScheduler) {
-        monitorUploadJobs().map { info ->
-            info.mapNotNull { it }
-                .groupBy { mediaItemIdFrom(it) }
+        monitorUploadJobs().map {
+            it.filterNotNull()
+                .groupBy(::mediaItemIdFrom)
                 .mapNotNull { (itemId, info) ->
                     itemId?.let {
                         localMediaUseCase.getLocalMediaItem(itemId)?.let { mediaItem ->
-                            val latestJobState =
-                                info.asState(Synchronising) ?:
-                                info.asState(Completing) ?:
-                                info.asState(Uploading) ?:
-                                info.asState(Initializing)
-                            latestJobState?.let {
+                            info.asState()?.let { jobState ->
                                 UploadJob(
                                     localItemId = itemId,
                                     displayName = mediaItem.displayName,
                                     thumbnailUrl = mediaItem.contentUri,
-                                    latestJobState = latestJobState,
+                                    latestJobState = jobState,
                                 )
                             }
                         }
                     }
                 }
-                .sortedBy { it.displayName }
+                .sortedBy(UploadJob::displayName)
         }.map { jobs ->
             Uploads(jobs)
                 .also { uploads ->
                     val finishedJobs = uploads.jobs.filter { job ->
-                        job.latestJobState.jobType.isLast && job.latestJobState.state.isFinished
+                        job.latestJobState.state.isFinished
                     }
                     uploadUseCase.markAsNotUploading(*(finishedJobs.map { it.localItemId }
                         .toLongArray()))
@@ -111,9 +101,9 @@ class UploadsUseCase @Inject constructor(
     }
 
     context(UploadWorkScheduler)
-    private fun List<WorkInfo>.asState(type: UploadJobType): UploadJobState? =
-        findType(type).sort().firstOrNull()?.let {
-            UploadJobState(it.state, type, it.progressPc)
+    private fun List<WorkInfo>.asState(): UploadJobState? =
+        sort().firstOrNull()?.let {
+            UploadJobState(it.state, it.progressPc)
         }
 
     private fun haveProgress(a: WorkInfo, b: WorkInfo) = a.hasProgress && b.hasProgress

@@ -15,14 +15,15 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.foundation.upload.implementation.usecase
 
-import android.content.ContentResolver
-import android.net.Uri
 import com.github.michaelbull.result.Err
+import com.github.michaelbull.result.Ok
 import com.github.michaelbull.result.Result
-import com.github.michaelbull.result.andThen
 import com.github.michaelbull.result.coroutines.binding.binding
+import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.user.User
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.toMediaItemHash
+import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.model.LocalMediaItem
 import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.model.Md5Hash
+import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.usecase.LocalMediaUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.api.usecase.RemoteMediaUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.site.domain.api.usecase.SiteUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.upload.domain.api.model.UploadCapability
@@ -30,17 +31,17 @@ import com.savvasdalkitsis.uhuruphotos.feature.upload.domain.api.model.UploadCap
 import com.savvasdalkitsis.uhuruphotos.feature.upload.domain.api.model.UploadCapability.CannotUpload
 import com.savvasdalkitsis.uhuruphotos.feature.upload.domain.api.model.UploadCapability.UnableToCheck
 import com.savvasdalkitsis.uhuruphotos.feature.upload.domain.api.model.UploadItem
-import com.savvasdalkitsis.uhuruphotos.feature.upload.domain.api.model.UploadResult
 import com.savvasdalkitsis.uhuruphotos.feature.upload.domain.api.usecase.UploadUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.upload.domain.api.work.UploadWorkScheduler
 import com.savvasdalkitsis.uhuruphotos.feature.user.domain.api.usecase.UserUseCase
 import com.savvasdalkitsis.uhuruphotos.foundation.log.api.log
+import com.savvasdalkitsis.uhuruphotos.foundation.log.api.runCatchingWithLog
+import com.savvasdalkitsis.uhuruphotos.foundation.result.api.SimpleResult
+import com.savvasdalkitsis.uhuruphotos.foundation.upload.implementation.model.uploadId
 import com.savvasdalkitsis.uhuruphotos.foundation.upload.implementation.repository.UploadRepository
 import com.savvasdalkitsis.uhuruphotos.foundation.upload.implementation.service.UploadService
 import kotlinx.coroutines.flow.Flow
-import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.MultipartBody.Part.Companion.createFormData
-import okhttp3.RequestBody.Companion.toRequestBody
 import se.ansman.dagger.auto.AutoBind
 import javax.inject.Inject
 
@@ -50,9 +51,10 @@ class UploadUseCase @Inject constructor(
     private val userUseCase: UserUseCase,
     private val uploadRepository: UploadRepository,
     private val uploadService: UploadService,
+    private val localMediaUseCase: LocalMediaUseCase,
     private val remoteMediaUseCase: RemoteMediaUseCase,
     private val uploadWorkScheduler: UploadWorkScheduler,
-    private val contentResolver: ContentResolver,
+    private val chunkedUploader: ChunkedUploader,
 ) : UploadUseCase {
 
     override suspend fun canUpload(): UploadCapability = siteUseCase.getSiteOptions()
@@ -70,7 +72,7 @@ class UploadUseCase @Inject constructor(
     override suspend fun scheduleUpload(vararg items: UploadItem) {
         uploadRepository.setUploading(*items)
         for (item in items) {
-            uploadWorkScheduler.scheduleUploadInitialization(item)
+            uploadWorkScheduler.scheduleUpload(item)
         }
     }
 
@@ -78,54 +80,59 @@ class UploadUseCase @Inject constructor(
         uploadRepository.setNotUploading(*mediaIds)
     }
 
-    override fun observeUploading(): Flow<Set<Long>> = uploadRepository.observeUploading()
-
-    override suspend fun uploadChunk(
-        contentUri: String,
-        uploadId: String,
-        offset: Long
-    ): Result<UploadResult, Throwable> = try {
-        binding {
-            val maxChunkSize = 1_000_000
-            val user = userUseCase.getUserOrRefresh().bind()
-            contentResolver.openInputStream(Uri.parse(contentUri))!!.use { input ->
-                input.skip(offset)
-                val chunk = ByteArray(maxChunkSize)
-                val chunkSize = input.read(chunk)
-                val ignore = ByteArray(maxChunkSize)
-                var remaining = 0L
-                var read: Int
-                do {
-                    read = input.read(ignore)
-                    if (read >= 0) {
-                        remaining += read
-                    }
-                }
-                while (read != -1)
-                val result = uploadService.uploadChunk(
-                    range = "bytes $offset-${offset + chunkSize - 1}/$chunkSize",
-                    uploadId = createFormData("upload_id", uploadId),
-                    user = createFormData("user", user.id.toString()),
-                    offset = createFormData("offset", offset.toString()),
-                    md5 = createFormData("md5", ""), // see https://docs.librephotos.com/docs/development/contribution/backend/upload/
-                    chunk = createFormData("file", "blob", chunk.toRequestBody(
-                        contentType = "application/octet-stream".toMediaType(),
-                        byteCount = chunkSize,
-                    ))
-                )
-                when (remaining) {
-                    0L -> UploadResult.Finished(result.uploadId)
-                    else -> UploadResult.ChunkUploaded(result.uploadId, offset + chunkSize, remaining)
-                }
-            }
-        }
-    } catch (e: Exception) {
-        log(e)
-        Err(e)
+    override fun markAsNotProcessing(mediaId: Long) {
+        uploadRepository.setNotProcessing(mediaId)
     }
 
-    override suspend fun exists(md5: Md5Hash): Result<Boolean, Throwable> =
-        userUseCase.getUserOrRefresh().andThen { user ->
-            remoteMediaUseCase.exists(md5.toMediaItemHash(user.id))
+    override fun observeUploading(): Flow<Set<Long>> = uploadRepository.observeUploading()
+
+    override fun observeProcessing(): Flow<Set<Long>> = uploadRepository.observeProcessing()
+
+    override suspend fun upload(
+        item: UploadItem,
+        progress: suspend (current: Long, total: Long) -> Unit,
+    ): SimpleResult = binding {
+        val mediaItem = localMediaItem(item).bind()
+        val user = userUseCase.getUserOrRefresh().bind()
+
+        if (!exists(mediaItem.md5, user).bind()) {
+            if (!uploadRepository.isCompleted(item.id)) {
+                chunkedUploader.uploadInChunks(item, mediaItem.size, user, progress).bind()
+            }
+
+            completeUpload(item, mediaItem, user).bind()
         }
+
+        uploadRepository.setNotUploading(item.id)
+        uploadRepository.setProcessing(item.id)
+        uploadWorkScheduler.schedulePostUploadProcessing(mediaItem.md5.toMediaItemHash(user.id), item.id)
+    }
+
+    private suspend fun exists(md5: Md5Hash, user: User): Result<Boolean, Throwable> =
+        remoteMediaUseCase.exists(md5.toMediaItemHash(user.id))
+
+    private suspend fun completeUpload(
+        item: UploadItem,
+        mediaItem: LocalMediaItem,
+        user: User
+    ): SimpleResult = runCatchingWithLog {
+        uploadRepository.setCompleted(item.id)
+        val filename = mediaItem.displayName
+            ?: throw IllegalArgumentException("No name associated with file ${item.id}")
+        val uploadId = with(uploadRepository) {
+            item.uploadId()
+        }.ifEmpty {
+            throw IllegalStateException("Upload id not found for item ${item.id}")
+        }
+        uploadService.completeUpload(
+            uploadId = createFormData("upload_id", uploadId),
+            user = createFormData("user", user.id.toString()),
+            md5 = createFormData("md5", mediaItem.md5.value),
+            filename = createFormData("filename", filename),
+        )
+    }
+
+    private suspend fun localMediaItem(item: UploadItem): Result<LocalMediaItem, Throwable> =
+        localMediaUseCase.getLocalMediaItem(item.id)?.let { Ok(it) }
+            ?: Err(IllegalArgumentException("Could not find associated local media with id: ${item.id}"))
 }

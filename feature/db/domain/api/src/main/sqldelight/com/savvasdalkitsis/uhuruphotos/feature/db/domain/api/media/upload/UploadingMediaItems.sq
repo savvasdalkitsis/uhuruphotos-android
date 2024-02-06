@@ -1,6 +1,11 @@
+import kotlin.Boolean;
+
 CREATE TABLE uploadingMediaItems (
     id INTEGER NOT NULL PRIMARY KEY,
-    contentUri TEXT NOT NULL
+    contentUri TEXT NOT NULL,
+    offset INTEGER NOT NULL,
+    completed INTEGER AS kotlin.Boolean NOT NULL,
+    uploadId TEXT NOT NULL
 );
 
 insert:
@@ -9,5 +14,23 @@ INSERT OR REPLACE INTO uploadingMediaItems VALUES ?;
 delete:
 DELETE FROM uploadingMediaItems WHERE id = :id;
 
+updateOffset:
+UPDATE uploadingMediaItems SET offset = :offset WHERE id = :id;
+
+updateUploadId:
+UPDATE uploadingMediaItems SET uploadId = :uploadId WHERE id = :id;
+
 getAll:
 SELECT id FROM uploadingMediaItems;
+
+getOffset:
+SELECT offset FROM uploadingMediaItems WHERE id = :id;
+
+isCompleted:
+SELECT completed FROM uploadingMediaItems WHERE id = :id;
+
+setCompleted:
+UPDATE uploadingMediaItems SET completed = TRUE WHERE id = :id;
+
+getUploadId:
+SELECT uploadId FROM uploadingMediaItems WHERE id = :id;

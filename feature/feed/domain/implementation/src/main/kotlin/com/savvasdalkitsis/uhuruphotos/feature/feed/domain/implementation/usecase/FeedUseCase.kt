@@ -25,6 +25,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.feed.domain.api.model.FeedFetchTy
 import com.savvasdalkitsis.uhuruphotos.feature.feed.domain.api.model.FeedFetchType.VIDEOS
 import com.savvasdalkitsis.uhuruphotos.feature.feed.domain.api.usecase.FeedUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.feed.domain.api.worker.FeedWorkScheduler
+import com.savvasdalkitsis.uhuruphotos.feature.feed.domain.implementation.repository.FeedProtoCache
 import com.savvasdalkitsis.uhuruphotos.feature.feed.domain.implementation.repository.FeedRepository
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaCollection
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaCollectionSource
@@ -52,12 +53,16 @@ import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.merge
+import kotlinx.coroutines.flow.onEach
 import se.ansman.dagger.auto.AutoBind
+import java.io.Serializable
 import javax.inject.Inject
 
 @AutoBind
 internal class FeedUseCase @Inject constructor(
     private val feedRepository: FeedRepository,
+    private val feedProtoCache: FeedProtoCache,
     private val mediaUseCase: MediaUseCase,
     private val feedWorkScheduler: FeedWorkScheduler,
     private val downloadUseCase: DownloadUseCase,
@@ -73,20 +78,31 @@ internal class FeedUseCase @Inject constructor(
     override fun observeFeed(
         feedFetchType: FeedFetchType,
         loadSmallInitialChunk: Boolean,
-    ): Flow<List<MediaCollection>> =
-        combine(
-            observeRemoteMediaFeed(feedFetchType, loadSmallInitialChunk),
-            observeLocalMediaFeed(feedFetchType),
-            observeDownloading(),
-            observeUploading(),
-            ::mergeRemoteWithLocalMedia
-        ).debounce(500)
+    ): Flow<List<MediaCollection>> = merge(
+        feedProtoCache.observeFeed(),
+        liveFeed(feedFetchType, loadSmallInitialChunk).onEach {
+            feedProtoCache.cacheFeed(it)
+        }
+    )
+
+    private fun liveFeed(
+        feedFetchType: FeedFetchType,
+        loadSmallInitialChunk: Boolean
+    ) = combine(
+        observeRemoteMediaFeed(feedFetchType, loadSmallInitialChunk),
+        observeLocalMediaFeed(feedFetchType),
+        observeDownloading(),
+        observeUploading(),
+        observeProcessing(),
+        ::mergeRemoteWithLocalMedia
+    ).debounce(500)
 
     private fun mergeRemoteWithLocalMedia(
         allRemoteDays: Sequence<MediaCollection>,
         allLocalMedia: List<MediaItem>,
         mediaBeingDownloaded: Set<String>,
         mediaBeingUploaded: Set<Long>,
+        mediaBeingProcessed: Set<Long>,
     ): List<MediaCollection> {
         val remainingLocalMedia = allLocalMedia.toMutableList()
 
@@ -119,7 +135,7 @@ internal class FeedUseCase @Inject constructor(
             .toList()
 
         val localOnlyDays = remainingLocalMedia
-            .map { it.orUploading(mediaBeingUploaded) }
+            .map { it.orUploading(mediaBeingUploaded).orProcessing(mediaBeingProcessed) }
             .groupBy { it.displayDayDate }
             .toMediaCollections()
 
@@ -128,18 +144,19 @@ internal class FeedUseCase @Inject constructor(
             .toList()
     }
 
-    private fun MediaItem.orDownloading(inProgress: Set<String>): MediaItem {
-        val id = id
-        return if (this is MediaItemInstance && id is MediaId.Remote && id.value in inProgress)
-            copy(id = id.toDownloading())
-        else
-            this
-    }
+    private fun MediaItem.orDownloading(inProgress: Set<String>): MediaItem =
+        orIf<MediaId.Remote>(inProgress, MediaId.Remote::toDownloading)
 
-    private fun MediaItem.orUploading(inProgress: Set<Long>): MediaItem {
+    private fun MediaItem.orUploading(inProgress: Set<Long>): MediaItem =
+        orIf<MediaId.Local>(inProgress, MediaId.Local::toUploading)
+
+    private fun MediaItem.orProcessing(inProgress: Set<Long>): MediaItem =
+        orIf<MediaId.Local>(inProgress, MediaId.Local::toProcessing)
+
+    private inline fun <reified M> MediaItem.orIf(set: Set<Serializable>, map: (M) -> MediaId<*>): MediaItem {
         val id = id
-        return if (this is MediaItemInstance && id is MediaId.Local && id.value in inProgress)
-            copy(id = id.toUploading())
+        return if (this is MediaItemInstance && id is M && id.value in set)
+            copy(id = map(id))
         else
             this
     }
@@ -209,6 +226,8 @@ internal class FeedUseCase @Inject constructor(
     private fun observeDownloading() = downloadUseCase.observeDownloading()
 
     private fun observeUploading() = uploadUseCase.observeUploading()
+
+    private fun observeProcessing() = uploadUseCase.observeProcessing()
 
     private fun observeRemoteMediaFeed(
         feedFetchType: FeedFetchType,

@@ -1,5 +1,5 @@
 /*
-Copyright 2023 Savvas Dalkitsis
+Copyright 2024 Savvas Dalkitsis
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -13,15 +13,11 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
  */
-package com.savvasdalkitsis.uhuruphotos.feature.upload.domain.api.model
+package com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.api.model
 
-sealed class UploadResult {
-    data class Finished(
-        val uploadId: String,
-    ) : UploadResult()
-    data class ChunkUploaded(
-        val uploadId: String,
-        val newOffset: Long,
-        val remaining: Long,
-    ) : UploadResult()
+import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.entities.media.DbRemoteMediaItemSummary
+
+sealed class RemoteMediaItemSummaryStatus {
+    data class Found(val summary: DbRemoteMediaItemSummary) : RemoteMediaItemSummaryStatus()
+    data object Processing : RemoteMediaItemSummaryStatus()
 }

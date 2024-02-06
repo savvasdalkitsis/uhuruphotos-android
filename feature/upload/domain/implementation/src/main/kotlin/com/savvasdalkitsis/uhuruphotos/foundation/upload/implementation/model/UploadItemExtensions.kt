@@ -1,5 +1,5 @@
 /*
-Copyright 2023 Savvas Dalkitsis
+Copyright 2024 Savvas Dalkitsis
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -13,13 +13,10 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
  */
-package com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.api.model
+package com.savvasdalkitsis.uhuruphotos.foundation.upload.implementation.model
 
-import com.squareup.moshi.Json
-import com.squareup.moshi.JsonClass
+import com.savvasdalkitsis.uhuruphotos.feature.upload.domain.api.model.UploadItem
+import com.savvasdalkitsis.uhuruphotos.foundation.upload.implementation.repository.UploadRepository
 
-@JsonClass(generateAdapter = true)
-data class RemoteMediaItemSummaryContainer(
-    @Json(name = "album_date_id") val albumDateId: String,
-    @Json(name = "photo_summary") val photoSummary: RemoteMediaItemSummary,
-)
+context(UploadRepository)
+fun UploadItem.uploadId() = getUploadId(id) ?: ""

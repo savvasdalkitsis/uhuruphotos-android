@@ -55,11 +55,6 @@ import androidx.work.WorkInfo.State.SUCCEEDED
 import coil.ImageLoader
 import com.savvasdalkitsis.uhuruphotos.feature.upload.domain.api.model.UploadJob
 import com.savvasdalkitsis.uhuruphotos.feature.upload.domain.api.model.UploadJobState
-import com.savvasdalkitsis.uhuruphotos.feature.upload.domain.api.model.UploadJobType
-import com.savvasdalkitsis.uhuruphotos.feature.upload.domain.api.model.UploadJobType.Completing
-import com.savvasdalkitsis.uhuruphotos.feature.upload.domain.api.model.UploadJobType.Initializing
-import com.savvasdalkitsis.uhuruphotos.feature.upload.domain.api.model.UploadJobType.Synchronising
-import com.savvasdalkitsis.uhuruphotos.feature.upload.domain.api.model.UploadJobType.Uploading
 import com.savvasdalkitsis.uhuruphotos.feature.uploads.view.implementation.R
 import com.savvasdalkitsis.uhuruphotos.feature.uploads.view.implementation.seam.actions.ClearFinished
 import com.savvasdalkitsis.uhuruphotos.feature.uploads.view.implementation.seam.actions.UploadsAction
@@ -145,10 +140,7 @@ fun UploadJobRow(job: UploadJob) {
                     .height(4.dp),
                 horizontalArrangement = spacedBy(2.dp),
             ) {
-                Segment(weight = smallSegment, displayingJobType = Initializing, job.latestJobState)
-                Segment(weight = 1f, displayingJobType = Uploading, job.latestJobState)
-                Segment(weight = smallSegment, displayingJobType = Completing, job.latestJobState)
-                Segment(weight = smallSegment, displayingJobType = Synchronising, job.latestJobState)
+                Segment(weight = 1f, job.latestJobState)
             }
             Spacer(modifier = Modifier.weight(1f))
             Row(
@@ -161,7 +153,7 @@ fun UploadJobRow(job: UploadJob) {
                 )
                 Spacer(modifier = Modifier.weight(1f))
                 Text(
-                    text = stringResource(job.latestJobState.jobType.displayName),
+                    text = stringResource(string.uploading),
                     textAlign = TextAlign.End,
                     style = MaterialTheme.typography.body2,
                 )
@@ -173,21 +165,9 @@ fun UploadJobRow(job: UploadJob) {
 @Composable
 private fun RowScope.Segment(
     weight: Float,
-    displayingJobType: UploadJobType,
     jobState: UploadJobState,
 ) {
     when {
-        jobState.jobType != displayingJobType -> Box(modifier = Modifier
-            .fillMaxHeight()
-            .weight(weight)
-            .background(
-                if (displayingJobType.precedes(jobState.jobType))
-                    CustomColors.syncSuccess
-                else
-                    CustomColors.emptyItem,
-                RoundedCornerShape(2.dp)
-            )
-        )
         jobState.state.isFinished -> Box(modifier = Modifier
             .fillMaxHeight()
             .weight(weight)
@@ -236,7 +216,6 @@ private fun UploadsPreview() {
                             thumbnailUrl = "",
                             latestJobState = UploadJobState(
                                 state = ENQUEUED,
-                                jobType = Initializing,
                                 progressPercent = null,
                             )
                         ),
@@ -246,7 +225,6 @@ private fun UploadsPreview() {
                             thumbnailUrl = "",
                             latestJobState = UploadJobState(
                                 state = RUNNING,
-                                jobType = Initializing,
                                 progressPercent = null,
                             )
                         ),
@@ -256,7 +234,6 @@ private fun UploadsPreview() {
                             thumbnailUrl = "",
                             latestJobState = UploadJobState(
                                 state = RUNNING,
-                                jobType = Uploading,
                                 progressPercent = null,
                             )
                         ),
@@ -266,7 +243,6 @@ private fun UploadsPreview() {
                             thumbnailUrl = "",
                             latestJobState = UploadJobState(
                                 state = RUNNING,
-                                jobType = Uploading,
                                 progressPercent = 0.1f,
                             )
                         ),
@@ -276,7 +252,6 @@ private fun UploadsPreview() {
                             thumbnailUrl = "",
                             latestJobState = UploadJobState(
                                 state = FAILED,
-                                jobType = Uploading,
                                 progressPercent = null,
                             )
                         ),
@@ -286,7 +261,6 @@ private fun UploadsPreview() {
                             thumbnailUrl = "",
                             latestJobState = UploadJobState(
                                 state = RUNNING,
-                                jobType = Completing,
                                 progressPercent = null,
                             )
                         ),
@@ -296,7 +270,6 @@ private fun UploadsPreview() {
                             thumbnailUrl = "",
                             latestJobState = UploadJobState(
                                 state = RUNNING,
-                                jobType = Synchronising,
                                 progressPercent = null,
                             )
                         ),
@@ -306,7 +279,6 @@ private fun UploadsPreview() {
                             thumbnailUrl = "",
                             latestJobState = UploadJobState(
                                 state = SUCCEEDED,
-                                jobType = Synchronising,
                                 progressPercent = null,
                             )
                         ),

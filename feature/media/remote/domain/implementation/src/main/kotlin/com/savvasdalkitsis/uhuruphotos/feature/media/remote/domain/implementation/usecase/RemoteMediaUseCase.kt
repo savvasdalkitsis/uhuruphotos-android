@@ -25,6 +25,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.media.remote.Remote
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemHash
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaOperationResult
 import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.api.model.RemoteMediaItemSummary
+import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.api.model.RemoteMediaItemSummaryStatus
 import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.api.model.toDbModel
 import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.api.service.model.RemoteMediaCollection
 import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.api.service.model.RemoteMediaCollectionById
@@ -77,7 +78,7 @@ class RemoteMediaUseCase @Inject constructor(
     override fun observeRemoteMediaItemDetails(id: String): Flow<DbRemoteMediaItemDetails> =
         remoteMediaRepository.observeMediaItemDetails(id).distinctUntilChanged()
 
-    override suspend fun getRemoteMediaItemSummary(id: String): DbRemoteMediaItemSummary? =
+    override suspend fun getRemoteMediaItemSummary(id: String): Result<RemoteMediaItemSummaryStatus, Throwable> =
         remoteMediaRepository.getOrRefreshRemoteMediaItemSummary(id)
 
     override suspend fun getFavouriteMediaSummariesCount(): Result<Long, Throwable> = withFavouriteThreshold {
