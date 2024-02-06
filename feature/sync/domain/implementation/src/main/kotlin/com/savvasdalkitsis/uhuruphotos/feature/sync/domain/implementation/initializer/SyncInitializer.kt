@@ -38,7 +38,7 @@ class SyncInitializer @Inject constructor(
     override fun onAppCreated(app: Application) {
         GlobalScope.launch(Dispatchers.Default) {
             syncUseCase.observePendingItems()
-                .map { it.take(20) }
+                .map { it.take(2) }
                 .distinctUntilChanged()
                 .collectLatest { pending ->
                     uploadUseCase.scheduleUpload(*pending.toTypedArray())
