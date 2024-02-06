@@ -15,27 +15,16 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.feed.domain.implementation.usecase
 
-import com.savvasdalkitsis.uhuruphotos.feature.upload.domain.api.usecase.UploadUseCase
+import com.savvasdalkitsis.uhuruphotos.feature.feed.domain.implementation.repository.FeedProtoCache
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaCollection
 import io.mockk.every
+import kotlinx.coroutines.flow.emptyFlow
 import kotlinx.coroutines.flow.flowOf
 
-fun UploadUseCase.defaults() = apply {
-    hasNoUploadsInProgress()
-    hasNoProcessingInProgress()
+fun FeedProtoCache.defaults() = apply {
+    every { observeFeed() }.returns(emptyFlow())
 }
 
-fun UploadUseCase.hasNoUploadsInProgress() {
-    hasUploadsInProgress()
-}
-
-fun UploadUseCase.hasUploadsInProgress(vararg ids: Long) {
-    every { observeUploading() }.returns(flowOf(ids.toSet()))
-}
-
-fun UploadUseCase.hasNoProcessingInProgress() {
-    hasProcessingInProgress()
-}
-
-fun UploadUseCase.hasProcessingInProgress(vararg ids: Long) {
-    every { observeProcessing() }.returns(flowOf(ids.toSet()))
+fun FeedProtoCache.hasFeedCached(feed: List<MediaCollection>) = apply {
+    every { observeFeed() }.returns(flowOf(feed))
 }

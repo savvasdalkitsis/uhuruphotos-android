@@ -18,6 +18,8 @@ package com.savvasdalkitsis.uhuruphotos.foundation.notification.api
 
 import android.content.BroadcastReceiver
 import android.content.Context
+import android.icu.text.NumberFormat.getIntegerInstance
+import android.icu.text.NumberFormat.getPercentInstance
 import androidx.annotation.StringRes
 import androidx.core.app.NotificationManagerCompat
 import androidx.work.CoroutineWorker
@@ -50,11 +52,14 @@ abstract class ForegroundNotificationWorker<BR>(
     abstract suspend fun work(): Result
 
     suspend fun updateProgress(current: Int, max: Int) {
-        updateProgress(current.toProgressPercent(max), "$current/$max")
+        updateProgress(current.toLong(), max.toLong())
     }
 
     suspend fun updateProgress(current: Long, max: Long) {
-        updateProgress(current.toProgressPercent(max), "$current/$max")
+        val progress = current.toProgressPercent(max)
+        val i = getIntegerInstance()
+        val p = getPercentInstance()
+        updateProgress(progress, "${i.format(current)}/${i.format(max)} (${p.format(progress)})")
     }
 
     suspend fun updateProgress(progress: Int, text: String? = null) {
