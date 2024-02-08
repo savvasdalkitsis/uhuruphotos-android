@@ -62,6 +62,7 @@ class WorkScheduleUseCase @Inject constructor(
                     .setRequiredNetworkType(networkRequirement)
                     .setRequiresCharging(requiresCharging)
                     .build())
+                .setExpedited(OutOfQuotaPolicy.RUN_AS_NON_EXPEDITED_WORK_REQUEST)
                 .run {
                     tags.fold(this) { builder, tag -> builder.addTag(tag) }
                 }

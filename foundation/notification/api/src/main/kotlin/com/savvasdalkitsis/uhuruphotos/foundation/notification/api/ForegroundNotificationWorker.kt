@@ -39,12 +39,11 @@ abstract class ForegroundNotificationWorker<BR>(
     private val notificationId: Int,
     private val notificationChannelId: String = NotificationChannels.Jobs.id,
     private val cancelBroadcastReceiver: Class<BR>? = null,
-) : CoroutineWorker(context, params) where BR: BroadcastReceiver {
+) : CoroutineWorker(context, params) where BR : BroadcastReceiver {
 
     private val notificationManager = NotificationManagerCompat.from(applicationContext)
 
     final override suspend fun doWork(): Result = withContext(dispatcher) {
-        setForeground(createForegroundInfo(0))
         updateProgress(0)
         work()
     }
@@ -75,14 +74,12 @@ abstract class ForegroundNotificationWorker<BR>(
         ))
     }
 
-    override suspend fun getForegroundInfo(): ForegroundInfo = createForegroundInfo(null)
-
-    private fun createForegroundInfo(progress: Int?) = foregroundInfoBuilder.build(
+    override suspend fun getForegroundInfo(): ForegroundInfo = foregroundInfoBuilder.build(
         applicationContext,
         notificationTitle,
         notificationId,
         notificationChannelId,
-        progress,
+        0,
     )
 
     companion object {
