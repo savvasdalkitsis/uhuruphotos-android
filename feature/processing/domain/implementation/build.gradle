@@ -1,0 +1,18 @@
+android {
+    namespace 'com.savvasdalkitsis.uhuruphotos.feature.processing.domain.implementation'
+}
+
+dependencies {
+    implementation(
+            project(":feature:upload:domain:api"),
+            project(":feature:processing:domain:api"),
+            project(":foundation:notification:api"),
+            project(":foundation:worker:api"),
+            libs.bundles.autodagger,
+            libs.hilt,
+    )
+    testImplementation(
+            libs.bundles.test,
+    )
+    kapt libs.autodagger.kapt
+}

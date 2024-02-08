@@ -13,20 +13,10 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
  */
-package com.savvasdalkitsis.uhuruphotos.feature.upload.domain.api.work
+package com.savvasdalkitsis.uhuruphotos.feature.processing.view.implementation.seam.actions
 
-import androidx.work.WorkInfo
-import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemHash
-import com.savvasdalkitsis.uhuruphotos.feature.upload.domain.api.model.UploadItem
-import kotlinx.coroutines.flow.Flow
+import com.savvasdalkitsis.uhuruphotos.feature.processing.view.implementation.seam.ProcessingActionsContext
+import com.savvasdalkitsis.uhuruphotos.feature.processing.view.implementation.ui.state.ProcessingState
+import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.Action
 
-interface UploadWorkScheduler {
-
-    fun scheduleUpload(item: UploadItem)
-
-    fun schedulePostUploadProcessing(hash: MediaItemHash, itemId: Long)
-
-    fun monitorUploadJobs(): Flow<List<WorkInfo?>>
-
-    fun mediaItemIdFrom(workInfo: WorkInfo): Long?
-}
+sealed class UploadsAction : Action<ProcessingState, ProcessingActionsContext>
