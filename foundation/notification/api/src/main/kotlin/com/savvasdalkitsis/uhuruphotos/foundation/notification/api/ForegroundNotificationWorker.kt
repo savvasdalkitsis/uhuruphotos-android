@@ -58,7 +58,10 @@ abstract class ForegroundNotificationWorker<BR>(
         val progress = current.toProgressPercent(max)
         val i = getIntegerInstance()
         val p = getPercentInstance()
-        updateProgress(progress, "${i.format(current)}/${i.format(max)} (${p.format(progress)})")
+        updateProgress(
+            (100 * progress).toInt(),
+            "${i.format(current)}/${i.format(max)} (${p.format(progress)})"
+        )
     }
 
     suspend fun updateProgress(progress: Int, text: String? = null) {
