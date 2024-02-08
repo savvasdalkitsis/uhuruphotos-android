@@ -1,0 +1,4 @@
+* Adding screen showing media being processed by the server
+* Limiting cloud syncs to 2 at a time
+* Showing properly formatted numbers and percentage on notification
+* Allowing jobs to run when the app is in the background
