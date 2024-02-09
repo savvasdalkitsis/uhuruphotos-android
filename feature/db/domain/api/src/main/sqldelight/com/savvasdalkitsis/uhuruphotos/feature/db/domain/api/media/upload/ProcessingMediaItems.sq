@@ -1,12 +1,26 @@
 CREATE TABLE processingMediaItems (
-    id INTEGER NOT NULL PRIMARY KEY
+    id INTEGER NOT NULL PRIMARY KEY,
+    error TEXT,
+    lastResponse TEXT
 );
 
 insert:
-INSERT OR REPLACE INTO processingMediaItems VALUES (:id);
+INSERT OR IGNORE INTO processingMediaItems VALUES (:id, "", "");
 
 delete:
 DELETE FROM processingMediaItems WHERE id = :id;
 
+setError:
+UPDATE processingMediaItems SET error = :error WHERE id = :id;
+
+setResponse:
+UPDATE processingMediaItems SET lastResponse = :response WHERE id = :id;
+
+getError:
+SELECT error FROM processingMediaItems WHERE id = :id;
+
+getResponse:
+SELECT lastResponse FROM processingMediaItems WHERE id = :id;
+
 getAll:
-SELECT id FROM processingMediaItems;
+SELECT * FROM processingMediaItems;

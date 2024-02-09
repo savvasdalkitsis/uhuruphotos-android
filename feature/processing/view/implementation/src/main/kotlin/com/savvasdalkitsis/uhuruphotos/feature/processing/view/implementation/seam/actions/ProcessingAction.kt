@@ -19,4 +19,4 @@ import com.savvasdalkitsis.uhuruphotos.feature.processing.view.implementation.se
 import com.savvasdalkitsis.uhuruphotos.feature.processing.view.implementation.ui.state.ProcessingState
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.Action
 
-sealed class UploadsAction : Action<ProcessingState, ProcessingActionsContext>
+sealed class ProcessingAction : Action<ProcessingState, ProcessingActionsContext>

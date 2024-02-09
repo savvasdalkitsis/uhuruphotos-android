@@ -1,0 +1,16 @@
+CREATE TABLE processingMediaItemsBackup (
+    id INTEGER NOT NULL PRIMARY KEY
+);
+
+INSERT INTO processingMediaItemsBackup SELECT * FROM processingMediaItems;
+
+DROP TABLE processingMediaItems;
+
+CREATE TABLE processingMediaItems (
+    id INTEGER NOT NULL PRIMARY KEY,
+    error TEXT
+);
+
+INSERT INTO processingMediaItems SELECT id, '' FROM processingMediaItemsBackup;
+
+DROP TABLE processingMediaItemsBackup;

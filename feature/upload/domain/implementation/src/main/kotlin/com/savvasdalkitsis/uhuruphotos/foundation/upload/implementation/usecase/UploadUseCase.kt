@@ -19,6 +19,7 @@ import com.github.michaelbull.result.Err
 import com.github.michaelbull.result.Ok
 import com.github.michaelbull.result.Result
 import com.github.michaelbull.result.coroutines.binding.binding
+import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.media.upload.ProcessingMediaItems
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.user.User
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.toMediaItemHash
 import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.model.LocalMediaItem
@@ -84,9 +85,17 @@ class UploadUseCase @Inject constructor(
         uploadRepository.setNotProcessing(mediaId)
     }
 
+    override fun saveErrorForProcessingItem(itemId: Long, error: Throwable) {
+        uploadRepository.setProcessingError(itemId, error.stackTraceToString())
+    }
+
+    override fun saveLastResponseForProcessingItem(itemId: Long, response: String) {
+        uploadRepository.setLastResponseForProcessing(itemId, response)
+    }
+
     override fun observeUploading(): Flow<Set<Long>> = uploadRepository.observeUploading()
 
-    override fun observeProcessing(): Flow<Set<Long>> = uploadRepository.observeProcessing()
+    override fun observeProcessing(): Flow<Set<ProcessingMediaItems>> = uploadRepository.observeProcessing()
 
     override suspend fun upload(
         item: UploadItem,

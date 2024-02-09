@@ -20,6 +20,7 @@ import androidx.hilt.work.HiltWorker
 import androidx.work.WorkerParameters
 import com.github.michaelbull.result.coroutines.binding.binding
 import com.github.michaelbull.result.getOr
+import com.github.michaelbull.result.onFailure
 import com.savvasdalkitsis.uhuruphotos.feature.feed.domain.api.usecase.FeedUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.api.model.RemoteMediaItemSummaryStatus.Found
 import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.api.model.RemoteMediaItemSummaryStatus.Processing
@@ -49,17 +50,23 @@ class UploadPostCompletionWorker @AssistedInject constructor(
     cancelBroadcastReceiver = null,
 ) {
 
+    private val itemId get() = params.inputData.getLong(KEY_ITEM_ID, -1)
+
     override suspend fun work(): Result = binding {
         val hash = params.inputData.getString(KEY_HASH)!!
-        val itemId = params.inputData.getLong(KEY_ITEM_ID, -1)
         when (val status = mediaUseCase.getRemoteMediaItemSummary(hash).bind()) {
             is Found -> {
                 feedUseCase.refreshCluster(status.summary.containerId).bind()
                 uploadUseCase.markAsNotProcessing(itemId)
                 Result.success()
             }
-            Processing -> failOrRetry(itemId)
+            is Processing -> {
+                uploadUseCase.saveLastResponseForProcessingItem(itemId, status.response.toString())
+                failOrRetry(itemId)
+            }
         }
+    }.onFailure {
+        uploadUseCase.saveErrorForProcessingItem(itemId, it)
     }.getOr(Result.retry())
 
     private fun failOrRetry(itemId: Long) = if (params.runAttemptCount < SCHEDULE_MAX_ATTEMPTS) {

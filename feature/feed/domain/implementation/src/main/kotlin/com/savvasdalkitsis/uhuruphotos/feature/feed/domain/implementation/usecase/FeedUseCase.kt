@@ -18,6 +18,7 @@ package com.savvasdalkitsis.uhuruphotos.feature.feed.domain.implementation.useca
 import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.PredefinedCollageDisplay
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.extensions.isVideo
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.media.remote.GetRemoteMediaCollections
+import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.media.upload.ProcessingMediaItems
 import com.savvasdalkitsis.uhuruphotos.feature.feed.domain.api.model.FeedFetchType
 import com.savvasdalkitsis.uhuruphotos.feature.feed.domain.api.model.FeedFetchType.ALL
 import com.savvasdalkitsis.uhuruphotos.feature.feed.domain.api.model.FeedFetchType.ONLY_WITHOUT_DATES
@@ -93,7 +94,7 @@ internal class FeedUseCase @Inject constructor(
         observeLocalMediaFeed(feedFetchType),
         observeDownloading(),
         observeUploading(),
-        observeProcessing(),
+        observeProcessing().map { it.map(ProcessingMediaItems::id).toSet() },
         ::mergeRemoteWithLocalMedia
     ).debounce(500)
 

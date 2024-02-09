@@ -15,9 +15,13 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.processing.view.implementation.ui
 
+import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement.spacedBy
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxHeight
@@ -26,11 +30,13 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.LinearProgressIndicator
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.StrokeCap
 import androidx.compose.ui.layout.ContentScale
@@ -42,15 +48,20 @@ import androidx.compose.ui.unit.dp
 import coil.ImageLoader
 import com.savvasdalkitsis.uhuruphotos.feature.processing.domain.api.model.ProcessingItem
 import com.savvasdalkitsis.uhuruphotos.feature.processing.view.implementation.R
+import com.savvasdalkitsis.uhuruphotos.feature.processing.view.implementation.seam.actions.DismissMessageDialog
+import com.savvasdalkitsis.uhuruphotos.feature.processing.view.implementation.seam.actions.ProcessingAction
+import com.savvasdalkitsis.uhuruphotos.feature.processing.view.implementation.seam.actions.SelectedProcessingItem
 import com.savvasdalkitsis.uhuruphotos.feature.processing.view.implementation.ui.state.ProcessingState
 import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.R.drawable
 import com.savvasdalkitsis.uhuruphotos.foundation.image.api.model.LocalThumbnailImageLoader
 import com.savvasdalkitsis.uhuruphotos.foundation.image.api.ui.Thumbnail
 import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
+import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.CustomColors
 import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.PreviewAppTheme
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.CommonScaffold
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.DynamicIcon
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.FullLoading
+import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.OkDialog
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.UpNavButton
 import kotlinx.collections.immutable.persistentListOf
 
@@ -58,6 +69,7 @@ import kotlinx.collections.immutable.persistentListOf
 @Composable
 internal fun Processing(
     state: ProcessingState,
+    action: (ProcessingAction) -> Unit,
 ) {
     CommonScaffold(
         title = { Text(text = stringResource(string.processing_media_on_server)) },
@@ -73,8 +85,29 @@ internal fun Processing(
             ) {
                 for (processingItem in state.items) {
                     item(processingItem.localItemId) {
-                        ProcessingItemRow(processingItem)
+                        ProcessingItemRow(processingItem, action)
                     }
+                }
+            }
+        }
+        state.itemMessageToDisplay?.let { (item, message) ->
+            OkDialog(
+                title = stringResource(
+                    when {
+                        item.hasError -> string.last_error_processing
+                        item.hasResponse -> string.last_response_processing
+                        else -> string.processing
+                    }
+                ),
+                onDismiss = { action(DismissMessageDialog) },
+            ) {
+                Column(
+                    modifier = Modifier.padding(16.dp),
+                    verticalArrangement = spacedBy(8.dp),
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                ) {
+                    ProcessingItemRow(item, action, clickable = false)
+                    Text(text = message)
                 }
             }
         }
@@ -82,19 +115,24 @@ internal fun Processing(
 }
 
 @Composable
-fun ProcessingItemRow(processingItem: ProcessingItem) {
+fun ProcessingItemRow(
+    item: ProcessingItem,
+    action: (ProcessingAction) -> Unit,
+    clickable: Boolean = item.hasError || item.hasResponse,
+) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
             .padding(8.dp)
-            .height(64.dp),
+            .height(64.dp)
+            .clickable(enabled = clickable) { action(SelectedProcessingItem(item)) },
         horizontalArrangement = spacedBy(4.dp),
     ) {
         Thumbnail(
             modifier = Modifier
                 .fillMaxHeight()
                 .aspectRatio(1f),
-            url = processingItem.thumbnailUrl,
+            url = item.thumbnailUrl,
             contentScale = ContentScale.Crop,
             contentDescription = null,
         )
@@ -103,7 +141,7 @@ fun ProcessingItemRow(processingItem: ProcessingItem) {
             verticalArrangement = spacedBy(4.dp),
         ) {
             Text(
-                text = processingItem.displayName ?: "",
+                text = item.displayName ?: "",
                 textAlign = TextAlign.Start,
                 style = MaterialTheme.typography.body2,
             )
@@ -112,13 +150,7 @@ fun ProcessingItemRow(processingItem: ProcessingItem) {
                     .height(4.dp),
                 horizontalArrangement = spacedBy(2.dp),
             ) {
-                LinearProgressIndicator(
-                    modifier = Modifier
-                        .fillMaxHeight()
-                        .weight(1f),
-                    strokeCap = StrokeCap.Round,
-                    color = MaterialTheme.colors.primary,
-                )
+                ProgressLine(item.hasError)
             }
             Spacer(modifier = Modifier.weight(1f))
             Row(
@@ -133,6 +165,27 @@ fun ProcessingItemRow(processingItem: ProcessingItem) {
                 )
             }
         }
+    }
+}
+
+@Composable
+private fun RowScope.ProgressLine(error: Boolean) {
+    when {
+        error -> Box(modifier = Modifier
+            .fillMaxHeight()
+            .weight(1f)
+            .background(
+                CustomColors.syncError,
+                RoundedCornerShape(2.dp)
+            )
+        )
+        else -> LinearProgressIndicator(
+            modifier = Modifier
+                .fillMaxHeight()
+                .weight(1f),
+            strokeCap = StrokeCap.Round,
+            color = MaterialTheme.colors.primary,
+        )
     }
 }
 
@@ -188,8 +241,8 @@ private fun ProcessingPreview() {
                             thumbnailUrl = "",
                         ),
                     ),
-                )
-            )
+                ),
+            ) {}
         }
     }
 }

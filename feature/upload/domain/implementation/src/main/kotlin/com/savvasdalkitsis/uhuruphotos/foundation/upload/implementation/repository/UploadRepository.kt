@@ -20,6 +20,7 @@ import app.cash.sqldelight.coroutines.mapToList
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.Database
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.extensions.awaitSingle
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.extensions.awaitSingleOrNull
+import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.media.upload.ProcessingMediaItems
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.media.upload.ProcessingMediaItemsQueries
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.media.upload.UploadingMediaItems
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.media.upload.UploadingMediaItemsQueries
@@ -61,7 +62,7 @@ class UploadRepository @Inject constructor(
     fun observeUploading(): Flow<Set<Long>> = uploadingMediaItemsQueries.getAll()
         .asFlow().mapToList(Dispatchers.IO).map { it.toSet() }.distinctUntilChanged()
 
-    fun observeProcessing(): Flow<Set<Long>> = processingMediaItemsQueries.getAll()
+    fun observeProcessing(): Flow<Set<ProcessingMediaItems>> = processingMediaItemsQueries.getAll()
         .asFlow().mapToList(Dispatchers.IO).map { it.toSet() }.distinctUntilChanged()
 
     suspend fun getOffset(itemId: Long): Long? =
@@ -92,4 +93,13 @@ class UploadRepository @Inject constructor(
     fun setNotProcessing(id: Long) {
         processingMediaItemsQueries.delete(id)
     }
+
+    fun setProcessingError(id: Long, error: String) {
+        processingMediaItemsQueries.setError(error, id)
+    }
+
+    fun setLastResponseForProcessing(id: Long, response: String) {
+        processingMediaItemsQueries.setResponse(response, id)
+    }
+
 }

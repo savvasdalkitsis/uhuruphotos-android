@@ -18,7 +18,7 @@ package com.savvasdalkitsis.uhuruphotos.feature.processing.view.implementation.v
 import com.savvasdalkitsis.uhuruphotos.feature.processing.view.api.navigation.ProcessingNavigationRoute
 import com.savvasdalkitsis.uhuruphotos.feature.processing.view.implementation.seam.ProcessingActionsContext
 import com.savvasdalkitsis.uhuruphotos.feature.processing.view.implementation.seam.actions.Load
-import com.savvasdalkitsis.uhuruphotos.feature.processing.view.implementation.seam.actions.UploadsAction
+import com.savvasdalkitsis.uhuruphotos.feature.processing.view.implementation.seam.actions.ProcessingAction
 import com.savvasdalkitsis.uhuruphotos.feature.processing.view.implementation.ui.state.ProcessingState
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.viewmodel.NavigationViewModel
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.ActionHandlerWithContext
@@ -28,7 +28,7 @@ import javax.inject.Inject
 @HiltViewModel
 internal class ProcessingViewModel @Inject constructor(
     actionsContext: ProcessingActionsContext,
-) : NavigationViewModel<ProcessingState, UploadsAction, ProcessingNavigationRoute>(
+) : NavigationViewModel<ProcessingState, ProcessingAction, ProcessingNavigationRoute>(
     ActionHandlerWithContext(actionsContext),
     ProcessingState(),
 ) {

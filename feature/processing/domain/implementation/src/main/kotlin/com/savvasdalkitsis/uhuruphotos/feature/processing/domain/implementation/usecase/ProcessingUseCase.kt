@@ -30,14 +30,17 @@ class ProcessingUseCase @Inject constructor(
     private val localMediaUseCase: LocalMediaUseCase,
     private val uploadUseCase: UploadUseCase,
 ) : ProcessingUseCase {
+
     override fun observeProcessingMedia(): Flow<Processing> = uploadUseCase.observeProcessing().map { ids ->
         Processing(
-            ids.mapNotNull { itemId ->
-                localMediaUseCase.getLocalMediaItem(itemId)?.let { mediaItem ->
+            ids.mapNotNull { item ->
+                localMediaUseCase.getLocalMediaItem(item.id)?.let { mediaItem ->
                     ProcessingItem(
-                        localItemId = itemId,
+                        localItemId = item.id,
                         displayName = mediaItem.displayName,
                         thumbnailUrl = mediaItem.contentUri,
+                        error = item.error,
+                        lastResponse = item.lastResponse,
                     )
                 }
             }

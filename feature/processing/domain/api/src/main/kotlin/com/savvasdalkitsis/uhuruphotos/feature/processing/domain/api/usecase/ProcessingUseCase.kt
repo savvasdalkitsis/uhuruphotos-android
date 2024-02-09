@@ -21,5 +21,4 @@ import kotlinx.coroutines.flow.Flow
 interface ProcessingUseCase {
 
     fun observeProcessingMedia(): Flow<Processing>
-
 }

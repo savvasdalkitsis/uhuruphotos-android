@@ -16,6 +16,7 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.feature.processing.view.implementation.seam
 
 import com.savvasdalkitsis.uhuruphotos.feature.processing.domain.api.model.Processing
+import com.savvasdalkitsis.uhuruphotos.feature.processing.domain.api.model.ProcessingItem
 import com.savvasdalkitsis.uhuruphotos.feature.processing.view.implementation.ui.state.ProcessingState
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.Mutation
 import kotlinx.collections.immutable.toPersistentList
@@ -28,7 +29,15 @@ sealed class ProcessingMutation(
         it.copy(isLoading = true)
     })
 
+    data object DismissMessageDialog : ProcessingMutation({
+        it.copy(itemMessageToDisplay = null)
+    })
+
     data class ShowProcessing(val processing: Processing) : ProcessingMutation({
         it.copy(isLoading = false, items = processing.jobs.toPersistentList())
+    })
+
+    data class ShowMessageDialog(val item: ProcessingItem, val message: String) : ProcessingMutation({
+        it.copy(itemMessageToDisplay = item to message)
     })
 }

@@ -19,4 +19,9 @@ data class ProcessingItem(
     val localItemId: Long,
     val displayName: String?,
     val thumbnailUrl: String,
-)
+    val error: String? = null,
+    val lastResponse: String? = null,
+) {
+    val hasError = !error.isNullOrBlank()
+    val hasResponse = !lastResponse.isNullOrBlank()
+}

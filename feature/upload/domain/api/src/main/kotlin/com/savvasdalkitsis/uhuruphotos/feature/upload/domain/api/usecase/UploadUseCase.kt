@@ -15,6 +15,7 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.upload.domain.api.usecase
 
+import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.media.upload.ProcessingMediaItems
 import com.savvasdalkitsis.uhuruphotos.feature.upload.domain.api.model.UploadCapability
 import com.savvasdalkitsis.uhuruphotos.feature.upload.domain.api.model.UploadItem
 import com.savvasdalkitsis.uhuruphotos.foundation.result.api.SimpleResult
@@ -25,11 +26,16 @@ interface UploadUseCase {
     suspend fun canUpload(): UploadCapability
     suspend fun scheduleUpload(vararg items: UploadItem)
     fun observeUploading(): Flow<Set<Long>>
-    fun observeProcessing(): Flow<Set<Long>>
+    fun observeProcessing(): Flow<Set<ProcessingMediaItems>>
     suspend fun upload(
         item: UploadItem,
         progress: suspend (current: Long, total: Long) -> Unit,
     ): SimpleResult
     fun markAsNotUploading(vararg mediaIds: Long)
     fun markAsNotProcessing(mediaId: Long)
+    fun saveLastResponseForProcessingItem(
+        itemId: Long,
+        response: String,
+    )
+    fun saveErrorForProcessingItem(itemId: Long, error: Throwable)
 }

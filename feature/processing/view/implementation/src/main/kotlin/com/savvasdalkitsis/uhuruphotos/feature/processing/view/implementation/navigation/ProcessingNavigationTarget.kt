@@ -44,6 +44,7 @@ internal class ProcessingNavigationTarget @Inject constructor(
         ) { state, action ->
             Processing(
                 state,
+                action,
             )
         }
     }

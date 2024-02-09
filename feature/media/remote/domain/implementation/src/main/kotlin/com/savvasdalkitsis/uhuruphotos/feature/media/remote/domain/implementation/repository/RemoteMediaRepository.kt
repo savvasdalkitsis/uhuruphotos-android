@@ -89,7 +89,7 @@ class RemoteMediaRepository @Inject constructor(
                 val response = remoteMediaService.getMediaItemSummary(id)
                 val albumDateId = response.albumDateId
                 if (albumDateId == null || response.processing == true || response.photoSummary.aspectRatio == null) {
-                    Ok(Processing)
+                    Ok(Processing(response))
                 } else {
                     val model = response.photoSummary.toDbModel(albumDateId)
                     remoteMediaItemSummaryQueries.insert(model)

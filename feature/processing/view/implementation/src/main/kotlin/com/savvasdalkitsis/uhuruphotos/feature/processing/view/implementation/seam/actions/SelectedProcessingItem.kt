@@ -1,5 +1,5 @@
 /*
-Copyright 2023 Savvas Dalkitsis
+Copyright 2024 Savvas Dalkitsis
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -15,22 +15,22 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.processing.view.implementation.seam.actions
 
+import com.savvasdalkitsis.uhuruphotos.feature.processing.domain.api.model.ProcessingItem
 import com.savvasdalkitsis.uhuruphotos.feature.processing.view.implementation.seam.ProcessingActionsContext
-import com.savvasdalkitsis.uhuruphotos.feature.processing.view.implementation.seam.ProcessingMutation.Loading
-import com.savvasdalkitsis.uhuruphotos.feature.processing.view.implementation.seam.ProcessingMutation.ShowProcessing
+import com.savvasdalkitsis.uhuruphotos.feature.processing.view.implementation.seam.ProcessingMutation.ShowMessageDialog
 import com.savvasdalkitsis.uhuruphotos.feature.processing.view.implementation.ui.state.ProcessingState
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.Mutation
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.emptyFlow
 import kotlinx.coroutines.flow.flowOf
-import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.flow.merge
 
-data object Load : ProcessingAction() {
+data class SelectedProcessingItem(val item: ProcessingItem) : ProcessingAction() {
 
     context(ProcessingActionsContext)
     override fun handle(state: ProcessingState): Flow<Mutation<ProcessingState>> =
-        merge(
-            flowOf(Loading),
-            processingUseCase.observeProcessingMedia().map(::ShowProcessing)
-        )
+        (item.error.notBlank ?: item.lastResponse.notBlank)?.let {
+            flowOf(ShowMessageDialog(item, it))
+        } ?: emptyFlow()
+
+    private val String?.notBlank get() = this?.takeIf { it.isNotBlank() }
 }
