@@ -21,6 +21,7 @@ import kotlinx.coroutines.flow.flowOf
 
 fun UploadUseCase.defaults() = apply {
     hasNoUploadsInProgress()
+    hasNoProcessingInProgress()
 }
 
 fun UploadUseCase.hasNoUploadsInProgress() {
@@ -29,4 +30,12 @@ fun UploadUseCase.hasNoUploadsInProgress() {
 
 fun UploadUseCase.hasUploadsInProgress(vararg ids: Long) {
     every { observeUploading() }.returns(flowOf(ids.toSet()))
+}
+
+fun UploadUseCase.hasNoProcessingInProgress() {
+    hasProcessingInProgress()
+}
+
+fun UploadUseCase.hasProcessingInProgress(vararg ids: Long) {
+    every { observeProcessing() }.returns(flowOf(ids.toSet()))
 }

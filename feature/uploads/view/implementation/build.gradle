@@ -10,6 +10,7 @@ android {
 
 dependencies {
     implementation(
+            project(":feature:processing:view:api"),
             project(":feature:uploads:domain:api"),
             project(":feature:uploads:view:api"),
             project(":feature:settings:domain:api"),

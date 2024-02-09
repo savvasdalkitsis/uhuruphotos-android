@@ -53,6 +53,7 @@ import androidx.work.WorkInfo.State.FAILED
 import androidx.work.WorkInfo.State.RUNNING
 import androidx.work.WorkInfo.State.SUCCEEDED
 import coil.ImageLoader
+import com.savvasdalkitsis.uhuruphotos.feature.processing.view.api.navigation.ProcessingNavigationRoute
 import com.savvasdalkitsis.uhuruphotos.feature.upload.domain.api.model.UploadJob
 import com.savvasdalkitsis.uhuruphotos.feature.upload.domain.api.model.UploadJobState
 import com.savvasdalkitsis.uhuruphotos.feature.uploads.view.implementation.R
@@ -62,6 +63,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.uploads.view.implementation.ui.st
 import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.R.drawable
 import com.savvasdalkitsis.uhuruphotos.foundation.image.api.model.LocalThumbnailImageLoader
 import com.savvasdalkitsis.uhuruphotos.foundation.image.api.ui.Thumbnail
+import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.LocalNavigator
 import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
 import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.CustomColors
 import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.PreviewAppTheme
@@ -78,10 +80,15 @@ internal fun Uploads(
     state: UploadsState,
     action: (UploadsAction) -> Unit,
 ) {
+    val navigator = LocalNavigator.current
     CommonScaffold(
         title = { Text(text = stringResource(string.uploads)) },
         navigationIcon = { UpNavButton() },
         actionBarContent = {
+            ActionIcon(
+                icon = drawable.ic_cloud_in_progress,
+                onClick = { navigator?.navigateTo(ProcessingNavigationRoute) },
+            )
             AnimatedVisibility(visible = !state.isLoading) {
                 ActionIcon(
                     icon = drawable.ic_clear_all,

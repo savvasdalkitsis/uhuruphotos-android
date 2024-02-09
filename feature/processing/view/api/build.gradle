@@ -1,0 +1,22 @@
+plugins {
+    id 'kotlin-parcelize'
+}
+
+android {
+    buildFeatures {
+        compose true
+    }
+    composeOptions {
+        kotlinCompilerExtensionVersion compose_compiler_version
+    }
+    namespace 'com.savvasdalkitsis.uhuruphotos.feature.processing.view.api'
+}
+
+dependencies {
+    api project(":foundation:navigation:api")
+    implementation(
+            project(":foundation:strings:api"),
+            libs.androidx.compose.material,
+            libs.androidx.compose.ui,
+    )
+}

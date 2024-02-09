@@ -18,6 +18,8 @@ package com.savvasdalkitsis.uhuruphotos.foundation.notification.api
 
 import android.content.BroadcastReceiver
 import android.content.Context
+import android.icu.text.NumberFormat.getIntegerInstance
+import android.icu.text.NumberFormat.getPercentInstance
 import androidx.annotation.StringRes
 import androidx.core.app.NotificationManagerCompat
 import androidx.work.CoroutineWorker
@@ -37,12 +39,11 @@ abstract class ForegroundNotificationWorker<BR>(
     private val notificationId: Int,
     private val notificationChannelId: String = NotificationChannels.Jobs.id,
     private val cancelBroadcastReceiver: Class<BR>? = null,
-) : CoroutineWorker(context, params) where BR: BroadcastReceiver {
+) : CoroutineWorker(context, params) where BR : BroadcastReceiver {
 
     private val notificationManager = NotificationManagerCompat.from(applicationContext)
 
     final override suspend fun doWork(): Result = withContext(dispatcher) {
-        setForeground(createForegroundInfo(0))
         updateProgress(0)
         work()
     }
@@ -50,11 +51,17 @@ abstract class ForegroundNotificationWorker<BR>(
     abstract suspend fun work(): Result
 
     suspend fun updateProgress(current: Int, max: Int) {
-        updateProgress(current.toProgressPercent(max), "$current/$max")
+        updateProgress(current.toLong(), max.toLong())
     }
 
     suspend fun updateProgress(current: Long, max: Long) {
-        updateProgress(current.toProgressPercent(max), "$current/$max")
+        val progress = current.toProgressPercent(max)
+        val i = getIntegerInstance()
+        val p = getPercentInstance()
+        updateProgress(
+            (100 * progress).toInt(),
+            "${i.format(current)}/${i.format(max)} (${p.format(progress)})"
+        )
     }
 
     suspend fun updateProgress(progress: Int, text: String? = null) {
@@ -70,14 +77,12 @@ abstract class ForegroundNotificationWorker<BR>(
         ))
     }
 
-    override suspend fun getForegroundInfo(): ForegroundInfo = createForegroundInfo(null)
-
-    private fun createForegroundInfo(progress: Int?) = foregroundInfoBuilder.build(
+    override suspend fun getForegroundInfo(): ForegroundInfo = foregroundInfoBuilder.build(
         applicationContext,
         notificationTitle,
         notificationId,
         notificationChannelId,
-        progress,
+        0,
     )
 
     companion object {

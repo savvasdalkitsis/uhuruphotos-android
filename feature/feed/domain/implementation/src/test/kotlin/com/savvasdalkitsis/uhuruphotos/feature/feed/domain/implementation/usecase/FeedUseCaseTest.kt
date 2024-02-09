@@ -1,7 +1,9 @@
 package com.savvasdalkitsis.uhuruphotos.feature.feed.domain.implementation.usecase
 
+import app.cash.turbine.TurbineTestContext
 import app.cash.turbine.test
 import com.savvasdalkitsis.uhuruphotos.feature.feed.domain.api.worker.FeedWorkScheduler
+import com.savvasdalkitsis.uhuruphotos.feature.feed.domain.implementation.repository.FeedProtoCache
 import com.savvasdalkitsis.uhuruphotos.feature.feed.domain.implementation.repository.FeedRepository
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaCollection
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemHash
@@ -15,7 +17,9 @@ import com.savvasdalktsis.uhuruphotos.feature.download.domain.api.usecase.Downlo
 import com.shazam.shazamcrest.MatcherAssert.assertThat
 import com.shazam.shazamcrest.matcher.Matchers.sameBeanAs
 import io.mockk.mockk
+import io.mockk.verify
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.test.runTest
 import org.junit.Test
 
@@ -29,8 +33,10 @@ class FeedUseCaseTest {
     private val feedWorkScheduler: FeedWorkScheduler = mockk()
     private val mediaUseCase: MediaUseCase = mockk<MediaUseCase>().defaults()
     private val feedRepository: FeedRepository = mockk<FeedRepository>().defaults()
+    private val feedProtoCache: FeedProtoCache = mockk<FeedProtoCache>(relaxed = true).defaults()
     private val underTest = FeedUseCase(
         feedRepository,
+        feedProtoCache,
         mediaUseCase,
         feedWorkScheduler,
         downloadUseCase,
@@ -171,13 +177,62 @@ class FeedUseCaseTest {
         )
     }
 
+    @Test
+    fun `loads processing feed from primary folder`() = runTest {
+        mediaUseCase.returnsLocalMedia(
+            primaryFolder = localFolder(100) to listOf(
+                localMediaItem(1, "day1"),
+                localMediaItem(2, "day1"),
+                localMediaItem(3, "day2"),
+            ),
+        )
+        uploadUseCase.hasProcessingInProgress(1, 2, 3)
+
+        underTest.observeFeed().assert(
+            mediaCollection("day1".localOnlyId, "day1", processing(1), processing(2)),
+            mediaCollection("day2".localOnlyId, "day2", processing(3)),
+        )
+    }
+
+    @Test
+    fun `caches feed`() = runTest {
+        feedRepository.returnsRemoteFeed(
+            "day1" to listOf(mediaItem("1"), mediaItem("2")),
+        )
+
+        underTest.observeFeed().collect()
+
+        verify { feedProtoCache.cacheFeed(listOf(mediaCollection("day1", remote("1"), remote("2")))) }
+    }
+
+    @Test
+    fun `loads feed from cache before loading live feed`() = runTest {
+        val cached = listOf(
+            mediaCollection("day1".localOnlyId, "day1", local(1))
+        )
+        feedProtoCache.hasFeedCached(cached)
+        feedRepository.returnsRemoteFeed(
+            "day1" to listOf(mediaItem("1")),
+        )
+
+        underTest.observeFeed().test {
+            expect(cached)
+            expect(listOf(mediaCollection("day1", remote("1"))))
+            awaitComplete()
+        }
+    }
+
     private val String.localOnlyId get() = "local_media_collection_$this"
 
     private suspend fun Flow<List<MediaCollection>>.assert(vararg collections: MediaCollection) {
         test {
-            assertThat(awaitItem(), sameBeanAs(collections.toList()))
+            expect(collections.toList())
             awaitComplete()
         }
+    }
+
+    private suspend fun TurbineTestContext<List<MediaCollection>>.expect(collections: List<MediaCollection>) {
+        assertThat(awaitItem(), sameBeanAs(collections))
     }
 
     private fun MediaItemInstance.withHash(hash: String) = copy(mediaHash = MediaItemHash(hash))

@@ -27,5 +27,6 @@ interface UploadWorkScheduler {
     fun schedulePostUploadProcessing(hash: MediaItemHash, itemId: Long)
 
     fun monitorUploadJobs(): Flow<List<WorkInfo?>>
+
     fun mediaItemIdFrom(workInfo: WorkInfo): Long?
 }
