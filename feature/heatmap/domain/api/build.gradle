@@ -4,7 +4,7 @@ android {
 
 dependencies {
     api(
-            project(":foundation:map:api"),
             libs.kotlinx.coroutines,
+            project(":foundation:map:api"),
     )
 }

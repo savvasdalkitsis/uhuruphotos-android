@@ -3,13 +3,19 @@ android {
         compose true
     }
     composeOptions {
-        kotlinCompilerExtensionVersion compose_compiler_version
+        kotlinCompilerExtensionVersion libs.versions.compose.compiler.get()
     }
     namespace 'com.savvasdalkitsis.uhuruphotos.feature.portfolio.view.implementation'
 }
 
 dependencies {
     implementation(
+            libs.accompanist.permissions,
+            libs.androidx.compose.hilt.navigation,
+            libs.androidx.compose.material,
+            libs.androidx.compose.ui.tooling.preview,
+            libs.bundles.autodagger,
+            libs.kotlinx.immutable,
             project(":feature:portfolio:domain:api"),
             project(":feature:portfolio:view:api"),
             project(":feature:settings:domain:api"),
@@ -18,12 +24,6 @@ dependencies {
             project(":foundation:permissions:api"),
             project(":foundation:strings:api"),
             project(":foundation:ui:api"),
-            libs.accompanist.permissions,
-            libs.androidx.compose.hilt.navigation,
-            libs.androidx.compose.material,
-            libs.androidx.compose.ui.tooling.preview,
-            libs.bundles.autodagger,
-            libs.kotlinx.immutable,
     )
     debugImplementation(
             libs.androidx.compose.ui.tooling,

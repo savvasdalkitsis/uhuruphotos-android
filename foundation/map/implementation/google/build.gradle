@@ -1,5 +1,5 @@
 plugins {
-    id 'com.google.android.libraries.mapsplatform.secrets-gradle-plugin'
+    alias(libs.plugins.mapsSecrets)
 }
 
 secrets {
@@ -12,15 +12,13 @@ android {
         compose true
     }
     composeOptions {
-        kotlinCompilerExtensionVersion compose_compiler_version
+        kotlinCompilerExtensionVersion libs.versions.compose.compiler.get()
     }
     namespace 'com.savvasdalkitsis.uhuruphotos.foundation.map.implementation.google'
 }
 
 dependencies {
 
-    implementation project(":foundation:launchers:api")
-    implementation project(":foundation:map:api")
     implementation(
             libs.androidx.compose.foundation.layout,
             libs.androidx.compose.material,
@@ -32,6 +30,8 @@ dependencies {
             libs.maps.compose,
             libs.maps.utils,
             libs.maps.utils.ktx,
+            project(":foundation:launchers:api"),
+            project(":foundation:map:api"),
     )
     kapt libs.autodagger.kapt
 }

@@ -3,7 +3,7 @@ android {
         compose true
     }
     composeOptions {
-        kotlinCompilerExtensionVersion compose_compiler_version
+        kotlinCompilerExtensionVersion libs.versions.compose.compiler.get()
     }
     namespace 'com.savvasdalkitsis.uhuruphotos.feature.avatar.domain.implementation'
 }
@@ -11,6 +11,10 @@ android {
 dependencies {
 
     implementation(
+            libs.androidx.compose.material,
+            libs.androidx.work,
+            libs.bundles.autodagger,
+            libs.hilt,
             project(":feature:auth:domain:api"),
             project(":feature:avatar:domain:api"),
             project(":feature:avatar:view:api"),
@@ -23,10 +27,6 @@ dependencies {
             project(":foundation:icons:api"),
             project(":foundation:image:api"),
             project(":foundation:ui:api"),
-            libs.androidx.compose.material,
-            libs.androidx.work,
-            libs.bundles.autodagger,
-            libs.hilt,
     )
     kapt libs.autodagger.kapt
 }

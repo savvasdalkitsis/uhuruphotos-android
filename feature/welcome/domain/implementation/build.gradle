@@ -4,12 +4,12 @@ android {
 
 dependencies {
     implementation(
+            libs.bundles.autodagger,
+            libs.hilt,
             project(":feature:auth:domain:api"),
             project(":feature:local:domain:api"),
             project(":feature:welcome:domain:api"),
             project(":foundation:preferences:api"),
-            libs.bundles.autodagger,
-            libs.hilt,
     )
     kapt libs.autodagger.kapt
 }

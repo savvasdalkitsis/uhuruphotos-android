@@ -3,7 +3,7 @@ android {
         compose true
     }
     composeOptions {
-        kotlinCompilerExtensionVersion compose_compiler_version
+        kotlinCompilerExtensionVersion libs.versions.compose.compiler.get()
     }
     namespace 'com.savvasdalkitsis.uhuruphotos.feature.heatmap.view.implementation'
 }
@@ -11,16 +11,18 @@ android {
 dependencies {
 
     implementation(
+            libs.accompanist.permissions,
+            libs.androidx.compose.foundation.layout,
+            libs.androidx.compose.material,
+            libs.androidx.compose.ui,
+            libs.bundles.autodagger,
+            libs.hilt,
             project(":feature:collage:view:api"),
             project(":feature:db:domain:api"),
             project(":feature:feed:domain:api"),
             project(":feature:heatmap:domain:api"),
             project(":feature:heatmap:view:api"),
             project(":feature:lightbox:view:api"),
-            project(':feature:media:common:domain:api'),
-            project(':feature:media:common:view:api'),
-            project(':feature:media:local:view:api'),
-            project(':feature:media:remote:domain:api'),
             project(":feature:settings:domain:api"),
             project(":foundation:coroutines:api"),
             project(":foundation:date:api"),
@@ -30,12 +32,10 @@ dependencies {
             project(":foundation:strings:api"),
             project(":foundation:toaster:api"),
             project(":foundation:ui:api"),
-            libs.accompanist.permissions,
-            libs.androidx.compose.foundation.layout,
-            libs.androidx.compose.material,
-            libs.androidx.compose.ui,
-            libs.bundles.autodagger,
-            libs.hilt,
+            project(":feature:media:common:domain:api"),
+            project(":feature:media:common:view:api"),
+            project(":feature:media:local:view:api"),
+            project(":feature:media:remote:domain:api"),
     )
     kapt libs.autodagger.kapt
 }

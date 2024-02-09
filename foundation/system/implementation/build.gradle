@@ -3,10 +3,10 @@ android {
 }
 
 dependencies {
-    implementation project(":foundation:system:api")
     implementation(
             libs.bundles.autodagger,
             libs.hilt,
+            project(":foundation:system:api"),
     )
     kapt libs.autodagger.kapt
 }

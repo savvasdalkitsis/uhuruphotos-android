@@ -4,11 +4,11 @@ android {
 
 dependencies {
     implementation(
+            libs.bundles.autodagger,
+            libs.hilt,
             project(":feature:notifications:domain:api"),
             project(":foundation:activity:api"),
             project(":foundation:initializer:api"),
-            libs.bundles.autodagger,
-            libs.hilt,
     )
     kapt libs.autodagger.kapt
 }

@@ -5,10 +5,10 @@ android {
 dependencies {
     api(
             libs.kotlinx.coroutines,
+            project(":feature:media:common:domain:api"),
     )
-    api project(":feature:media:common:domain:api")
     implementation(
             libs.hilt,
+            project(":foundation:log:api"),
     )
-    implementation project(":foundation:log:api")
 }

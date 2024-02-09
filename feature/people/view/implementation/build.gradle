@@ -3,13 +3,22 @@ android {
         compose true
     }
     composeOptions {
-        kotlinCompilerExtensionVersion compose_compiler_version
+        kotlinCompilerExtensionVersion libs.versions.compose.compiler.get()
     }
     namespace 'com.savvasdalkitsis.uhuruphotos.feature.people.view.implementation'
 }
 
 dependencies {
     implementation(
+            libs.androidx.compose.foundation,
+            libs.androidx.compose.material,
+            libs.androidx.compose.material.windowsize,
+            libs.bundles.autodagger,
+            libs.hilt,
+            libs.kotlinx.coroutines,
+            libs.moshi,
+            libs.retrofit.core,
+            libs.sqldelight.coroutines,
             project(":feature:auth:domain:api"),
             project(":feature:db:domain:api"),
             project(":feature:media:remote:domain:api"),
@@ -26,15 +35,6 @@ dependencies {
             project(":foundation:strings:api"),
             project(":foundation:toaster:api"),
             project(":foundation:ui:api"),
-            libs.androidx.compose.foundation,
-            libs.androidx.compose.material,
-            libs.androidx.compose.material.windowsize,
-            libs.bundles.autodagger,
-            libs.kotlinx.coroutines,
-            libs.hilt,
-            libs.moshi,
-            libs.retrofit.core,
-            libs.sqldelight.coroutines,
     )
     kapt libs.autodagger.kapt
     ksp libs.moshi.ksp

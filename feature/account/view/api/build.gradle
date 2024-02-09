@@ -3,23 +3,30 @@ android {
         compose true
     }
     composeOptions {
-        kotlinCompilerExtensionVersion compose_compiler_version
+        kotlinCompilerExtensionVersion libs.versions.compose.compiler.get()
     }
     namespace 'com.savvasdalkitsis.uhuruphotos.feature.account.view.api'
 }
 
 dependencies {
-    api project(':feature:avatar:view:api')
-    api project(":feature:jobs:domain:api")
+    api(
+            project(":feature:avatar:view:api"),
+            project(":feature:jobs:domain:api"),
+    )
     implementation(
+            libs.androidx.compose.foundation.layout,
+            libs.androidx.compose.material,
+            libs.androidx.compose.ui,
+            libs.androidx.compose.ui.tooling.preview,
+            libs.hilt,
             project(":feature:about:view:api"),
             project(":feature:avatar:domain:api"),
             project(":feature:home:view:api"),
             project(":feature:jobs:view:api"),
+            project(":feature:portfolio:view:api"),
             project(":feature:server:view:api"),
             project(":feature:settings:view:api"),
             project(":feature:sync:domain:api"),
-            project(":feature:portfolio:view:api"),
             project(":feature:uploads:domain:api"),
             project(":feature:uploads:view:api"),
             project(":feature:welcome:domain:api"),
@@ -31,14 +38,6 @@ dependencies {
             project(":foundation:seam:api"),
             project(":foundation:strings:api"),
             project(":foundation:ui:api"),
-    )
-
-    implementation(
-            libs.androidx.compose.foundation.layout,
-            libs.androidx.compose.material,
-            libs.androidx.compose.ui.tooling.preview,
-            libs.androidx.compose.ui,
-            libs.hilt,
     )
     debugImplementation(
             libs.androidx.compose.ui.tooling,

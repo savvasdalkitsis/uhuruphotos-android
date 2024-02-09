@@ -7,33 +7,33 @@ android {
         compose true
     }
     composeOptions {
-        kotlinCompilerExtensionVersion compose_compiler_version
+        kotlinCompilerExtensionVersion libs.versions.compose.compiler.get()
     }
     namespace 'com.savvasdalkitsis.uhuruphotos.foundation.navigation.implementation'
 }
 
 dependencies {
 
-    api project(':foundation:navigation:api')
-    implementation project(':foundation:seam:api')
-    implementation project(":feature:home:view:api")
-    implementation project(":foundation:activity:api")
-    implementation project(":foundation:launchers:api")
-    implementation project(":foundation:log:api")
-    implementation project(":foundation:toaster:api")
-    implementation project(":foundation:ui:api")
-    implementation project(":foundation:strings:api")
-    implementation(
-            libs.accompanist.systemui,
-            libs.androidx.compose.foundation,
-            libs.bundles.autodagger,
-            libs.gson,
-    )
     api(
             libs.accompanist.navigation,
             libs.androidx.compose.hilt.navigation,
             libs.hilt,
             libs.kotlin.reflect,
+            project(":foundation:navigation:api"),
+    )
+    implementation(
+            libs.accompanist.systemui,
+            libs.androidx.compose.foundation,
+            libs.bundles.autodagger,
+            libs.gson,
+            project(":feature:home:view:api"),
+            project(":foundation:activity:api"),
+            project(":foundation:launchers:api"),
+            project(":foundation:log:api"),
+            project(":foundation:strings:api"),
+            project(":foundation:toaster:api"),
+            project(":foundation:ui:api"),
+            project(":foundation:seam:api"),
     )
 
     kapt libs.autodagger.kapt

@@ -3,17 +3,13 @@ android {
         compose true
     }
     composeOptions {
-        kotlinCompilerExtensionVersion compose_compiler_version
+        kotlinCompilerExtensionVersion libs.versions.compose.compiler.get()
     }
     namespace 'com.savvasdalkitsis.uhuruphotos.foundation.map.implementation.maplibre'
 }
 
 dependencies {
 
-    implementation project(":foundation:icons:api")
-    implementation project(":foundation:initializer:api")
-    implementation project(":foundation:log:api")
-    implementation project(":foundation:map:api")
     implementation(
             libs.androidx.compose.foundation.layout,
             libs.androidx.compose.material,
@@ -21,6 +17,10 @@ dependencies {
             libs.androidx.startup,
             libs.bundles.autodagger,
             libs.hilt,
+            project(":foundation:icons:api"),
+            project(":foundation:initializer:api"),
+            project(":foundation:log:api"),
+            project(":foundation:map:api"),
     )
     kapt libs.autodagger.kapt
     implementation(libs.maplibre) {

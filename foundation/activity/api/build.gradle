@@ -4,8 +4,8 @@ android {
 
 dependencies {
     api(
-            project(":foundation:result:api"),
             libs.androidx.activity,
+            project(":foundation:result:api"),
     )
     implementation(
             libs.hilt,

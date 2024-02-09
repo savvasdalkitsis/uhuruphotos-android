@@ -3,11 +3,11 @@ android {
 }
 
 dependencies {
-    implementation project(":feature:undated:domain:api")
-    implementation project(":foundation:preferences:api")
     implementation(
             libs.bundles.autodagger,
             libs.hilt,
+            project(":feature:undated:domain:api"),
+            project(":foundation:preferences:api"),
     )
     kapt libs.autodagger.kapt
 }

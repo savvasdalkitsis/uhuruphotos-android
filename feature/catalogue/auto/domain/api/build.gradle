@@ -4,9 +4,9 @@ android {
 
 dependencies {
     api(
-            project(":feature:catalogue:view:api"),
-            project(":feature:catalogue:auto:view:api"),
-            project(":foundation:result:api"),
             libs.kotlinx.coroutines,
+            project(":feature:catalogue:auto:view:api"),
+            project(":feature:catalogue:view:api"),
+            project(":foundation:result:api"),
     )
 }

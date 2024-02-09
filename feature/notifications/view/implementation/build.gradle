@@ -3,13 +3,17 @@ android {
         compose true
     }
     composeOptions {
-        kotlinCompilerExtensionVersion compose_compiler_version
+        kotlinCompilerExtensionVersion libs.versions.compose.compiler.get()
     }
     namespace 'com.savvasdalkitsis.uhuruphotos.feature.notifications.view.implementation'
 }
 
 dependencies {
     implementation(
+            libs.androidx.compose.hilt.navigation,
+            libs.androidx.compose.material,
+            libs.androidx.compose.ui.tooling.preview,
+            libs.bundles.autodagger,
             project(":feature:feed:view:api"),
             project(":feature:notifications:domain:api"),
             project(":feature:notifications:view:api"),
@@ -17,10 +21,6 @@ dependencies {
             project(":foundation:navigation:api"),
             project(":foundation:strings:api"),
             project(":foundation:ui:api"),
-            libs.androidx.compose.hilt.navigation,
-            libs.androidx.compose.material,
-            libs.androidx.compose.ui.tooling.preview,
-            libs.bundles.autodagger,
     )
     debugImplementation(
             libs.androidx.compose.ui.tooling,

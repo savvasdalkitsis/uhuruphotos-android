@@ -6,10 +6,9 @@ android {
     namespace 'com.savvasdalkitsis.uhuruphotos.feature.album.user.view.api'
 }
 
-
 dependencies {
-    api project(":foundation:navigation:api")
     api(
             libs.androidx.compose.navigation,
+            project(":foundation:navigation:api"),
     )
 }

@@ -3,7 +3,7 @@ android {
         compose true
     }
     composeOptions {
-        kotlinCompilerExtensionVersion compose_compiler_version
+        kotlinCompilerExtensionVersion libs.versions.compose.compiler.get()
     }
     namespace 'com.savvasdalkitsis.uhuruphotos.foundation.ui.api'
 }
@@ -11,17 +11,14 @@ android {
 dependencies {
 
     api(
-            project(":foundation:compose:api"),
-            project(":foundation:theme:api"),
-            libs.androidx.constraint,
             libs.androidx.compose.material,
             libs.androidx.compose.ui,
+            libs.androidx.constraint,
             libs.scrollbar,
+            project(":foundation:compose:api"),
+            project(":foundation:theme:api"),
     )
     implementation(
-            project(":foundation:icons:api"),
-            project(":foundation:navigation:api"),
-            project(":foundation:strings:api"),
             libs.accompanist.drawable,
             libs.accompanist.insets,
             libs.accompanist.systemui,
@@ -34,6 +31,9 @@ dependencies {
             libs.androidx.window,
             libs.lottie,
             libs.remember,
+            project(":foundation:icons:api"),
+            project(":foundation:navigation:api"),
+            project(":foundation:strings:api"),
     )
     debugImplementation(
             libs.androidx.compose.ui.tooling,

@@ -2,12 +2,12 @@ android {
     namespace 'com.savvasdalkitsis.uhuruphotos.feature.site.domain.implementation'
 }
 dependencies {
-    implementation project(":feature:site:domain:api")
-    implementation project(":foundation:network:api")
     implementation(
             libs.bundles.autodagger,
             libs.hilt,
             libs.retrofit.moshi,
+            project(":feature:site:domain:api"),
+            project(":foundation:network:api"),
     )
     kapt libs.autodagger.kapt
 }

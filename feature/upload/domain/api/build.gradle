@@ -4,10 +4,8 @@ android {
 
 dependencies {
     api(
-            project(":feature:media:common:domain:api"),
             libs.kotlinx.immutable,
+            project(":feature:media:common:domain:api"),
     )
-    implementation(
-            project(":foundation:strings:api"),
-    )
+    implementation project(":foundation:strings:api")
 }

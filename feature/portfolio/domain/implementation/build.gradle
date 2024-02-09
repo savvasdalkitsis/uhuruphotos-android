@@ -4,12 +4,12 @@ android {
 
 dependencies {
     implementation(
-            project(":feature:db:domain:api"),
-            project(":feature:portfolio:domain:api"),
-            project(":feature:media:common:domain:api"),
             libs.bundles.autodagger,
             libs.hilt,
             libs.sqldelight.coroutines,
+            project(":feature:db:domain:api"),
+            project(":feature:media:common:domain:api"),
+            project(":feature:portfolio:domain:api"),
     )
     kapt libs.autodagger.kapt
 }

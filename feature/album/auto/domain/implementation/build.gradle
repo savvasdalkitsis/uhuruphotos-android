@@ -3,16 +3,16 @@ android {
 }
 
 dependencies {
-    implementation project(":feature:album:auto:domain:api")
-    implementation project(":feature:media:remote:domain:api")
-    implementation project(':feature:people:domain:api')
-    implementation project(":foundation:log:api")
     implementation(
             libs.bundles.autodagger,
             libs.hilt,
-            libs.sqldelight.coroutines,
-            libs.retrofit.core,
             libs.moshi,
+            libs.retrofit.core,
+            libs.sqldelight.coroutines,
+            project(":feature:album:auto:domain:api"),
+            project(":feature:media:remote:domain:api"),
+            project(":foundation:log:api"),
+            project(":feature:people:domain:api"),
     )
     kapt libs.autodagger.kapt
     ksp libs.moshi.ksp

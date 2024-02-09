@@ -7,7 +7,7 @@ android {
         compose true
     }
     composeOptions {
-        kotlinCompilerExtensionVersion compose_compiler_version
+        kotlinCompilerExtensionVersion libs.versions.compose.compiler.get()
     }
     namespace 'com.savvasdalkitsis.uhuruphotos.feature.server.view.implementation'
 }
@@ -15,6 +15,12 @@ android {
 dependencies {
 
     implementation(
+            libs.androidx.compose.hilt.navigation,
+            libs.androidx.compose.material,
+            libs.androidx.compose.ui.tooling.preview,
+            libs.bundles.autodagger,
+            libs.okhttp,
+            libs.urlvalidator,
             project(":feature:auth:domain:api"),
             project(":feature:db:domain:api"),
             project(":feature:server:view:api"),
@@ -26,12 +32,6 @@ dependencies {
             project(":foundation:strings:api"),
             project(":foundation:toaster:api"),
             project(":foundation:ui:api"),
-            libs.androidx.compose.hilt.navigation,
-            libs.androidx.compose.material,
-            libs.androidx.compose.ui.tooling.preview,
-            libs.bundles.autodagger,
-            libs.okhttp,
-            libs.urlvalidator,
     )
     debugImplementation(
             libs.androidx.compose.ui.tooling,

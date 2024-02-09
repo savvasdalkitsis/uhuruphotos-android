@@ -3,10 +3,10 @@ android {
 }
 
 dependencies {
-    implementation project(":feature:db:domain:api")
-    implementation (
+    implementation(
             libs.hilt,
             libs.sqldelight.adapters,
             libs.sqldelight.android,
+            project(":feature:db:domain:api"),
     )
 }

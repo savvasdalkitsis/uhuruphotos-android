@@ -3,21 +3,20 @@ android {
         compose true
     }
     composeOptions {
-        kotlinCompilerExtensionVersion compose_compiler_version
+        kotlinCompilerExtensionVersion libs.versions.compose.compiler.get()
     }
     namespace 'com.savvasdalkitsis.uhuruphotos.feature.media.local.view.api'
 }
 
 dependencies {
 
-    implementation project(":feature:media:common:domain:api")
-    implementation project(":foundation:compose:api")
-    implementation project(":foundation:strings:api")
-
     implementation(
             libs.androidx.compose.foundation.layout,
             libs.androidx.compose.material,
             libs.androidx.compose.ui,
             libs.bundles.permissions,
+            project(":feature:media:common:domain:api"),
+            project(":foundation:compose:api"),
+            project(":foundation:strings:api"),
     )
 }

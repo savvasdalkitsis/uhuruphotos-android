@@ -1,7 +1,7 @@
 plugins {
     id 'dagger.hilt.android.plugin'
-    id 'com.google.gms.google-services'
-    id 'com.mikepenz.aboutlibraries.plugin'
+    alias(libs.plugins.google.services)
+    alias(libs.plugins.about)
 }
 
 android {
@@ -9,7 +9,7 @@ android {
         compose true
     }
     composeOptions {
-        kotlinCompilerExtensionVersion compose_compiler_version
+        kotlinCompilerExtensionVersion libs.versions.compose.compiler.get()
     }
 
     defaultConfig {
@@ -57,19 +57,6 @@ android {
 
 dependencies {
     implementation(
-            project(':app:implementation'),
-            project(":feature:home:view:api"),
-            project(":feature:settings:domain:api"),
-            project(":foundation:activity:api"),
-            project(":feature:download:domain:api"),
-            project(":foundation:image:api"),
-            project(":foundation:initializer:api"),
-            project(":foundation:log:api"),
-            project(":foundation:map:api"),
-            project(":foundation:navigation:api"),
-            project(":foundation:ui:api"),
-            project(":foundation:ui:implementation"),
-            project(":foundation:video:api"),
             libs.accompanist.systemui,
             libs.androidx.activity,
             libs.androidx.compose.hilt.navigation,
@@ -81,6 +68,19 @@ dependencies {
             libs.bundles.autodagger,
             libs.hilt,
             libs.permissions.base,
+            project(":feature:download:domain:api"),
+            project(":feature:home:view:api"),
+            project(":feature:settings:domain:api"),
+            project(":foundation:activity:api"),
+            project(":foundation:image:api"),
+            project(":foundation:initializer:api"),
+            project(":foundation:log:api"),
+            project(":foundation:map:api"),
+            project(":foundation:navigation:api"),
+            project(":foundation:ui:api"),
+            project(":foundation:ui:implementation"),
+            project(":foundation:video:api"),
+            project(":app:implementation"),
     )
     debugImplementation(
             libs.leaks,

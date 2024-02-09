@@ -7,7 +7,7 @@ android {
         compose true
     }
     composeOptions {
-        kotlinCompilerExtensionVersion compose_compiler_version
+        kotlinCompilerExtensionVersion libs.versions.compose.compiler.get()
     }
     namespace 'com.savvasdalkitsis.uhuruphotos.feature.processing.view.api'
 }
@@ -15,8 +15,8 @@ android {
 dependencies {
     api project(":foundation:navigation:api")
     implementation(
-            project(":foundation:strings:api"),
             libs.androidx.compose.material,
             libs.androidx.compose.ui,
+            project(":foundation:strings:api"),
     )
 }

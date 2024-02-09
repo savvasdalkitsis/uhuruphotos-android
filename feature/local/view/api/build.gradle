@@ -6,13 +6,11 @@ android {
     namespace 'com.savvasdalkitsis.uhuruphotos.feature.local.view.api'
 }
 
-
-
 dependencies {
-    api project(":foundation:navigation:api")
-    api project(":feature:collage:view:api")
-    api project(":feature:media:local:domain:api")
     api(
             libs.androidx.compose.navigation,
+            project(":feature:collage:view:api"),
+            project(":feature:media:local:domain:api"),
+            project(":foundation:navigation:api"),
     )
 }

@@ -3,7 +3,7 @@ android {
         compose true
     }
     composeOptions {
-        kotlinCompilerExtensionVersion compose_compiler_version
+        kotlinCompilerExtensionVersion libs.versions.compose.compiler.get()
     }
     namespace 'com.savvasdalkitsis.uhuruphotos.feature.avatar.view.api'
 }
@@ -11,14 +11,14 @@ android {
 dependencies {
 
     implementation(
-            project(":foundation:compose:api"),
-            project(":foundation:icons:api"),
-            project(":foundation:image:api"),
-            project(":foundation:ui:api"),
             libs.androidx.compose.material,
             libs.androidx.compose.ui.tooling.preview,
             libs.androidx.work,
             libs.hilt,
+            project(":foundation:compose:api"),
+            project(":foundation:icons:api"),
+            project(":foundation:image:api"),
+            project(":foundation:ui:api"),
     )
     debugImplementation(
             libs.androidx.compose.ui.tooling,

@@ -6,16 +6,15 @@ android {
     namespace 'com.savvasdalkitsis.uhuruphotos.feature.catalogue.user.view.api'
 }
 
-
 dependencies {
-    api project(":feature:catalogue:view:api")
-    api project(":feature:media:remote:domain:api")
-    api project(":feature:media:common:domain:api")
-    api project(":feature:media:common:view:api")
-    api project(":foundation:navigation:api")
-    api project(":foundation:ui:api")
     api(
             libs.androidx.compose.navigation,
+            project(":feature:catalogue:view:api"),
+            project(":feature:media:common:domain:api"),
+            project(":feature:media:common:view:api"),
+            project(":feature:media:remote:domain:api"),
+            project(":foundation:navigation:api"),
+            project(":foundation:ui:api"),
     )
 
     implementation project(":foundation:strings:api")

@@ -1,15 +1,15 @@
+android {
+    namespace 'com.savvasdalkitsis.uhuruphotos.foundation.share.implementation'
+}
+
 dependencies {
 
     implementation(
+            libs.coil.base,
+            libs.exif,
+            project(":feature:settings:domain:api"),
             project(":foundation:image:api"),
             project(":foundation:navigation:api"),
             project(":foundation:share:api"),
-            project(":feature:settings:domain:api"),
-            libs.coil.base,
-            libs.exif,
     )
-}
-
-android {
-    namespace 'com.savvasdalkitsis.uhuruphotos.foundation.share.implementation'
 }

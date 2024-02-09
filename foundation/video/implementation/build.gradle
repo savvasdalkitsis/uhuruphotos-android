@@ -3,23 +3,23 @@ android {
         compose true
     }
     composeOptions {
-        kotlinCompilerExtensionVersion compose_compiler_version
+        kotlinCompilerExtensionVersion libs.versions.compose.compiler.get()
     }
     namespace 'com.savvasdalkitsis.uhuruphotos.foundation.video.implementation'
 }
 
 dependencies {
 
-    implementation project(":feature:auth:domain:api")
-    implementation project(":feature:settings:domain:api")
-    implementation project(':foundation:video:api')
     implementation(
             libs.androidx.compose.foundation,
             libs.androidx.compose.material,
             libs.androidx.compose.ui,
+            libs.bundles.androidx.media3,
             libs.bundles.autodagger,
             libs.hilt,
-            libs.bundles.androidx.media3,
+            project(":feature:auth:domain:api"),
+            project(":feature:settings:domain:api"),
+            project(":foundation:video:api"),
     )
     kapt libs.autodagger.kapt
 }

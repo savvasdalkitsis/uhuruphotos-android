@@ -4,13 +4,11 @@ android {
 
 dependencies {
 
-    api project(":foundation:network:api")
-    implementation(
-            project(":foundation:initializer:api"),
-            project(":foundation:log:api"),
-            project(":foundation:system:api"),
+    api(
+            libs.moshi,
+            libs.retrofit.core,
+            project(":foundation:network:api"),
     )
-
     implementation(
             libs.bundles.autodagger,
             libs.hilt,
@@ -19,10 +17,9 @@ dependencies {
             libs.okhttp.logging,
             libs.okhttp.url,
             libs.retrofit.moshi,
-    )
-    api(
-            libs.moshi,
-            libs.retrofit.core,
+            project(":foundation:initializer:api"),
+            project(":foundation:log:api"),
+            project(":foundation:system:api"),
     )
     kapt libs.autodagger.kapt
     ksp libs.moshi.ksp

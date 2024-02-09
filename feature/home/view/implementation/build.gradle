@@ -3,7 +3,7 @@ android {
         compose true
     }
     composeOptions {
-        kotlinCompilerExtensionVersion compose_compiler_version
+        kotlinCompilerExtensionVersion libs.versions.compose.compiler.get()
     }
     namespace 'com.savvasdalkitsis.uhuruphotos.feature.home.view.implementation'
 }
@@ -11,6 +11,13 @@ android {
 dependencies {
 
     implementation(
+            libs.androidx.compose.foundation.layout,
+            libs.androidx.compose.hilt.navigation,
+            libs.androidx.compose.material,
+            libs.androidx.compose.material.windowsize,
+            libs.androidx.compose.ui,
+            libs.androidx.lifecycle,
+            libs.bundles.autodagger,
             project(":feature:auth:domain:api"),
             project(":feature:feed:view:api"),
             project(":feature:home:view:api"),
@@ -24,13 +31,6 @@ dependencies {
             project(":foundation:navigation:api"),
             project(":foundation:strings:api"),
             project(":foundation:ui:api"),
-            libs.androidx.compose.foundation.layout,
-            libs.androidx.compose.hilt.navigation,
-            libs.androidx.compose.material,
-            libs.androidx.compose.material.windowsize,
-            libs.androidx.compose.ui,
-            libs.androidx.lifecycle,
-            libs.bundles.autodagger,
     )
     kapt libs.autodagger.kapt
 }

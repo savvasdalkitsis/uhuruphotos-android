@@ -3,18 +3,24 @@ android {
         compose true
     }
     composeOptions {
-        kotlinCompilerExtensionVersion compose_compiler_version
+        kotlinCompilerExtensionVersion libs.versions.compose.compiler.get()
     }
     namespace 'com.savvasdalkitsis.uhuruphotos.feature.library.view.implementation'
 }
 
 dependencies {
     implementation(
+            libs.androidx.compose.foundation,
+            libs.androidx.compose.material,
+            libs.bundles.autodagger,
+            libs.bundles.permissions,
+            libs.reorder,
+            libs.retrofit.core,
             project(":feature:account:view:api"),
             project(":feature:album:auto:view:api"),
             project(":feature:album:user:view:api"),
-            project(":feature:avatar:view:api"),
             project(":feature:auth:domain:api"),
+            project(":feature:avatar:view:api"),
             project(":feature:catalogue:auto:domain:api"),
             project(":feature:catalogue:user:domain:api"),
             project(":feature:catalogue:user:view:api"),
@@ -44,12 +50,6 @@ dependencies {
             project(":foundation:strings:api"),
             project(":foundation:toaster:api"),
             project(":foundation:ui:api"),
-            libs.bundles.permissions,
-            libs.androidx.compose.foundation,
-            libs.androidx.compose.material,
-            libs.bundles.autodagger,
-            libs.reorder,
-            libs.retrofit.core,
     )
     kapt libs.autodagger.kapt
 }

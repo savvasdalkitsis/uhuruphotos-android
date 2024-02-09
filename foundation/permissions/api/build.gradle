@@ -3,7 +3,7 @@ android {
         compose true
     }
     composeOptions {
-        kotlinCompilerExtensionVersion compose_compiler_version
+        kotlinCompilerExtensionVersion libs.versions.compose.compiler.get()
     }
     namespace 'com.savvasdalkitsis.uhuruphotos.foundation.permissions.api'
 }
@@ -13,11 +13,11 @@ dependencies {
             libs.kotlinx.coroutines,
     )
     implementation(
-            project(":foundation:navigation:api"),
-            project(":foundation:strings:api"),
-            project(":foundation:ui:api"),
             libs.accompanist.permissions,
             libs.androidx.activity,
             libs.bundles.permissions,
+            project(":foundation:navigation:api"),
+            project(":foundation:strings:api"),
+            project(":foundation:ui:api"),
     )
 }

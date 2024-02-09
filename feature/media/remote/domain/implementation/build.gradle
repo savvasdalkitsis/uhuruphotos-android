@@ -3,39 +3,13 @@ android {
         compose true
     }
     composeOptions {
-        kotlinCompilerExtensionVersion compose_compiler_version
+        kotlinCompilerExtensionVersion libs.versions.compose.compiler.get()
     }
     namespace 'com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.implementation'
 }
 
 dependencies {
 
-    implementation project(":feature:auth:domain:api")
-    implementation project(":feature:db:domain:api")
-    implementation project(":feature:local:domain:api")
-    implementation project(":feature:settings:domain:api")
-    implementation project(":feature:user:domain:api")
-    implementation project(":foundation:compose:api")
-    implementation project(":foundation:date:api")
-    implementation project(":foundation:exif:api")
-    implementation project(":foundation:icons:api")
-    implementation project(":foundation:log:api")
-    implementation project(":foundation:math:api")
-    implementation project(":foundation:map:api")
-    implementation project(":foundation:navigation:api")
-    implementation project(":foundation:notification:api")
-    implementation project(":foundation:share:api")
-    implementation project(":foundation:strings:api")
-    implementation project(":foundation:toaster:api")
-    implementation project(":foundation:ui:api")
-    implementation project(":foundation:video:api")
-    implementation project(":foundation:worker:api")
-    implementation project(':feature:media:common:domain:api')
-    implementation project(':feature:media:local:domain:api')
-    implementation project(':feature:media:remote:domain:api')
-    implementation project(':feature:people:view:api')
-    implementation project(':feature:person:view:api')
-    implementation project(':foundation:image:api')
     implementation(
             libs.accompanist.systemui,
             libs.androidx.compose.hilt.navigation,
@@ -52,6 +26,32 @@ dependencies {
             libs.retrofit.moshi,
             libs.sqldelight.coroutines,
             libs.zoomable,
+            project(":feature:auth:domain:api"),
+            project(":feature:db:domain:api"),
+            project(":feature:local:domain:api"),
+            project(":feature:settings:domain:api"),
+            project(":feature:user:domain:api"),
+            project(":foundation:compose:api"),
+            project(":foundation:date:api"),
+            project(":foundation:exif:api"),
+            project(":foundation:icons:api"),
+            project(":foundation:log:api"),
+            project(":foundation:map:api"),
+            project(":foundation:math:api"),
+            project(":foundation:navigation:api"),
+            project(":foundation:notification:api"),
+            project(":foundation:share:api"),
+            project(":foundation:strings:api"),
+            project(":foundation:toaster:api"),
+            project(":foundation:ui:api"),
+            project(":foundation:video:api"),
+            project(":foundation:worker:api"),
+            project(":feature:media:common:domain:api"),
+            project(":feature:media:local:domain:api"),
+            project(":feature:media:remote:domain:api"),
+            project(":feature:people:view:api"),
+            project(":feature:person:view:api"),
+            project(":foundation:image:api"),
     )
     kapt libs.autodagger.kapt
     ksp libs.moshi.ksp

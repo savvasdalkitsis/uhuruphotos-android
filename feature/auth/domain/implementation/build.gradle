@@ -3,39 +3,41 @@ android {
         compose true
     }
     composeOptions {
-        kotlinCompilerExtensionVersion compose_compiler_version
+        kotlinCompilerExtensionVersion libs.versions.compose.compiler.get()
     }
     namespace 'com.savvasdalkitsis.uhuruphotos.feature.auth.domain.implementation'
 }
 
 dependencies {
 
-    api project(":feature:auth:domain:api")
-    api project(":feature:auth:view:api")
+    api(
+            project(":feature:auth:domain:api"),
+            project(":feature:auth:view:api"),
+    )
     implementation(
+            libs.androidx.compose.hilt.navigation,
+            libs.androidx.compose.ui,
+            libs.bundles.autodagger,
+            libs.gson,
+            libs.hilt,
+            libs.jwt,
+            libs.moshi,
+            libs.retrofit.moshi,
+            libs.sqldelight.coroutines,
             project(":feature:db:domain:api"),
             project(":feature:settings:domain:api"),
             project(":foundation:activity:api"),
             project(":foundation:http:api"),
             project(":foundation:image:api"),
-            project(":foundation:launchers:api"),
             project(":foundation:lang:api"),
+            project(":foundation:launchers:api"),
             project(":foundation:log:api"),
             project(":foundation:navigation:api"),
             project(":foundation:network:api"),
             project(":foundation:preferences:api"),
-            project(':foundation:video:api'),
             project(":foundation:ui:api"),
             project(":foundation:worker:api"),
-            libs.androidx.compose.hilt.navigation,
-            libs.androidx.compose.ui,
-            libs.bundles.autodagger,
-            libs.gson,
-            libs.jwt,
-            libs.hilt,
-            libs.moshi,
-            libs.retrofit.moshi,
-            libs.sqldelight.coroutines,
+            project(":foundation:video:api"),
     )
     ksp libs.moshi.ksp
     kapt libs.autodagger.kapt

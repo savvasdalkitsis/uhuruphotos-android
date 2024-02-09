@@ -3,10 +3,10 @@ android {
 }
 
 dependencies {
-    implementation project(":feature:about:domain:api")
     implementation(
             libs.bundles.autodagger,
             libs.hilt,
+            project(":feature:about:domain:api"),
     )
     kapt libs.autodagger.kapt
 }

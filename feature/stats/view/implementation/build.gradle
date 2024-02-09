@@ -3,20 +3,13 @@ android {
         compose true
     }
     composeOptions {
-        kotlinCompilerExtensionVersion compose_compiler_version
+        kotlinCompilerExtensionVersion libs.versions.compose.compiler.get()
     }
     namespace 'com.savvasdalkitsis.uhuruphotos.foundation.stats.view.implementation'
 }
 
 dependencies {
     implementation(
-            project(":feature:feed:domain:api"),
-            project(":feature:stats:domain:api"),
-            project(":feature:stats:view:api"),
-            project(":feature:settings:domain:api"),
-            project(":foundation:navigation:api"),
-            project(":foundation:strings:api"),
-            project(":foundation:ui:api"),
             libs.androidx.compose.hilt.navigation,
             libs.androidx.compose.material,
             libs.androidx.compose.ui.tooling.preview,
@@ -25,6 +18,13 @@ dependencies {
             libs.jetlime,
             libs.timeline,
             libs.vico,
+            project(":feature:feed:domain:api"),
+            project(":feature:settings:domain:api"),
+            project(":feature:stats:domain:api"),
+            project(":feature:stats:view:api"),
+            project(":foundation:navigation:api"),
+            project(":foundation:strings:api"),
+            project(":foundation:ui:api"),
     )
     debugImplementation(
             libs.androidx.compose.ui.tooling,

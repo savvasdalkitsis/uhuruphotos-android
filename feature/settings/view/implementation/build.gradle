@@ -3,7 +3,7 @@ android {
         compose true
     }
     composeOptions {
-        kotlinCompilerExtensionVersion compose_compiler_version
+        kotlinCompilerExtensionVersion libs.versions.compose.compiler.get()
     }
     namespace 'com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation'
 }
@@ -11,6 +11,14 @@ android {
 dependencies {
 
     implementation(
+            libs.androidx.compose.foundation,
+            libs.androidx.compose.foundation.layout,
+            libs.androidx.compose.material,
+            libs.androidx.compose.material.windowsize,
+            libs.androidx.compose.ui.tooling.preview,
+            libs.androidx.work,
+            libs.bundles.androidx.compose.animation,
+            libs.bundles.autodagger,
             project(":feature:about:view:api"),
             project(":feature:avatar:domain:api"),
             project(":feature:avatar:view:api"),
@@ -33,14 +41,6 @@ dependencies {
             project(":foundation:system:api"),
             project(":foundation:toaster:api"),
             project(":foundation:ui:api"),
-            libs.bundles.androidx.compose.animation,
-            libs.androidx.compose.foundation,
-            libs.androidx.compose.foundation.layout,
-            libs.androidx.compose.material,
-            libs.androidx.compose.material.windowsize,
-            libs.androidx.compose.ui.tooling.preview,
-            libs.androidx.work,
-            libs.bundles.autodagger,
     )
     debugImplementation(
             libs.androidx.compose.ui.tooling,

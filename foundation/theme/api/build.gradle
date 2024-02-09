@@ -3,17 +3,17 @@ android {
         compose true
     }
     composeOptions {
-        kotlinCompilerExtensionVersion compose_compiler_version
+        kotlinCompilerExtensionVersion libs.versions.compose.compiler.get()
     }
     namespace 'com.savvasdalkitsis.uhuruphotos.foundation.theme.api'
 }
 
 dependencies {
     implementation(
-            project(":foundation:icons:api"),
             libs.accompanist.systemui,
             libs.androidx.compose.material,
             libs.androidx.compose.material.windowsize,
             libs.androidx.compose.ui,
+            project(":foundation:icons:api"),
     )
 }

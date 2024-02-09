@@ -3,7 +3,7 @@ android {
         compose true
     }
     composeOptions {
-        kotlinCompilerExtensionVersion compose_compiler_version
+        kotlinCompilerExtensionVersion libs.versions.compose.compiler.get()
     }
     namespace 'com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation'
 }
@@ -11,6 +11,23 @@ android {
 dependencies {
 
     implementation(
+            libs.accompanist.systemui,
+            libs.androidx.compose.hilt.navigation,
+            libs.androidx.compose.material,
+            libs.androidx.compose.material.windowsize,
+            libs.androidx.compose.ui.tooling.preview,
+            libs.androidx.work,
+            libs.androidx.work.hilt,
+            libs.bundles.autodagger,
+            libs.bundles.permissions,
+            libs.coil.base,
+            libs.exif,
+            libs.infobar,
+            libs.moshi,
+            libs.retrofit.core,
+            libs.retrofit.moshi,
+            libs.sqldelight.coroutines,
+            libs.zoomable,
             project(":feature:album:auto:domain:api"),
             project(":feature:album:user:domain:api"),
             project(":feature:auth:domain:api"),
@@ -33,9 +50,9 @@ dependencies {
             project(":feature:search:domain:api"),
             project(":feature:search:view:api"),
             project(":feature:trash:domain:api"),
-            project(":feature:user:domain:api"),
             project(":feature:upload:domain:api"),
             project(":feature:upload:view:api"),
+            project(":feature:user:domain:api"),
             project(":foundation:activity:api"),
             project(":foundation:compose:api"),
             project(":foundation:date:api"),
@@ -51,24 +68,7 @@ dependencies {
             project(":foundation:ui:api"),
             project(":foundation:video:api"),
             project(":foundation:worker:api"),
-            project(':foundation:image:api'),
-            libs.accompanist.systemui,
-            libs.androidx.compose.hilt.navigation,
-            libs.androidx.compose.material,
-            libs.androidx.compose.material.windowsize,
-            libs.androidx.compose.ui.tooling.preview,
-            libs.androidx.work,
-            libs.androidx.work.hilt,
-            libs.bundles.autodagger,
-            libs.bundles.permissions,
-            libs.coil.base,
-            libs.exif,
-            libs.infobar,
-            libs.moshi,
-            libs.retrofit.core,
-            libs.retrofit.moshi,
-            libs.sqldelight.coroutines,
-            libs.zoomable,
+            project(":foundation:image:api"),
     )
     debugImplementation(
             libs.androidx.compose.ui.tooling,

@@ -4,14 +4,14 @@ android {
 
 dependencies {
 
-    implementation project(":foundation:activity:api")
-    implementation project(":foundation:biometrics:api")
-    implementation project(":foundation:launchers:api")
-    implementation project(":foundation:log:api")
     implementation(
             libs.assure,
             libs.bundles.autodagger,
             libs.hilt,
+            project(":foundation:activity:api"),
+            project(":foundation:biometrics:api"),
+            project(":foundation:launchers:api"),
+            project(":foundation:log:api"),
     )
     kapt libs.autodagger.kapt
 }

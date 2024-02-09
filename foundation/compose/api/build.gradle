@@ -3,7 +3,7 @@ android {
         compose true
     }
     composeOptions {
-        kotlinCompilerExtensionVersion compose_compiler_version
+        kotlinCompilerExtensionVersion libs.versions.compose.compiler.get()
     }
     namespace 'com.savvasdalkitsis.uhuruphotos.foundation.compose.api'
 }
@@ -13,8 +13,8 @@ dependencies {
             libs.androidx.compose.foundation.layout,
             libs.androidx.compose.ui,
     )
-    implementation project(":foundation:log:api")
     implementation(
             libs.androidx.compose.material,
+            project(":foundation:log:api"),
     )
 }

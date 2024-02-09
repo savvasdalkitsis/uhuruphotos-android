@@ -3,8 +3,10 @@ android {
 }
 
 dependencies {
-    api project(":foundation:exif:api")
-    api project(":foundation:log:api")
+    api(
+            project(":foundation:exif:api"),
+            project(":foundation:log:api"),
+    )
     implementation(
             libs.bundles.autodagger,
             libs.exif,

@@ -3,20 +3,20 @@ android {
         compose true
     }
     composeOptions {
-        kotlinCompilerExtensionVersion compose_compiler_version
+        kotlinCompilerExtensionVersion libs.versions.compose.compiler.get()
     }
     namespace 'com.savvasdalkitsis.uhuruphotos.foundation.navigation.api'
 }
 
 dependencies {
 
-    api project(':foundation:log:api')
-    api project(':foundation:seam:api')
-    api project(':foundation:theme:api')
     api(
             libs.androidx.compose.navigation,
             libs.appyx,
             libs.bundles.resaca,
             libs.hilt,
+            project(":foundation:log:api"),
+            project(":foundation:seam:api"),
+            project(":foundation:theme:api"),
     )
 }

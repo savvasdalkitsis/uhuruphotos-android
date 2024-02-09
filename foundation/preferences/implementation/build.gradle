@@ -3,14 +3,14 @@ android {
 }
 
 dependencies {
-    implementation project(":foundation:preferences:api")
     implementation(
             libs.androidx.datastore.preferences,
             libs.androidx.preference,
-            libs.bundles.autodagger,
             libs.bundles.androidx.security.crypto,
+            libs.bundles.autodagger,
             libs.flowpreferences,
             libs.hilt,
+            project(":foundation:preferences:api"),
     )
     kapt libs.autodagger.kapt
 }

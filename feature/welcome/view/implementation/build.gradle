@@ -3,33 +3,33 @@ android {
         compose true
     }
     composeOptions {
-        kotlinCompilerExtensionVersion compose_compiler_version
+        kotlinCompilerExtensionVersion libs.versions.compose.compiler.get()
     }
     namespace 'com.savvasdalkitsis.uhuruphotos.feature.welcome.view.implementation'
 }
 
 dependencies {
     implementation(
-            project(":feature:about:view:api"),
-            project(":feature:auth:domain:api"),
-            project(":feature:feed:view:api"),
-            project(":feature:media:local:domain:api"),
-            project(":feature:notifications:view:api"),
-            project(":feature:server:view:api"),
-            project(":feature:welcome:domain:api"),
-            project(":feature:welcome:view:api"),
-            project(":feature:settings:domain:api"),
-            project(":foundation:icons:api"),
-            project(":foundation:navigation:api"),
-            project(":foundation:permissions:api"),
-            project(":foundation:strings:api"),
-            project(":foundation:ui:api"),
             libs.accompanist.permissions,
             libs.androidx.compose.hilt.navigation,
             libs.androidx.compose.material,
             libs.androidx.compose.ui.tooling.preview,
             libs.bundles.autodagger,
             libs.bundles.permissions,
+            project(":feature:about:view:api"),
+            project(":feature:auth:domain:api"),
+            project(":feature:feed:view:api"),
+            project(":feature:media:local:domain:api"),
+            project(":feature:notifications:view:api"),
+            project(":feature:server:view:api"),
+            project(":feature:settings:domain:api"),
+            project(":feature:welcome:domain:api"),
+            project(":feature:welcome:view:api"),
+            project(":foundation:icons:api"),
+            project(":foundation:navigation:api"),
+            project(":foundation:permissions:api"),
+            project(":foundation:strings:api"),
+            project(":foundation:ui:api"),
     )
     debugImplementation(
             libs.androidx.compose.ui.tooling,

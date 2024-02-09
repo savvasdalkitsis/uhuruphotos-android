@@ -3,19 +3,19 @@ android {
 }
 
 dependencies {
-    implementation project(":feature:collage:view:api")
-    implementation project(":feature:media:common:domain:api")
-    implementation project(":feature:media:remote:domain:api")
-    implementation project(":feature:trash:domain:api")
-    implementation project(":foundation:log:api")
-    implementation project(":foundation:group:api")
-    implementation project(":foundation:preferences:api")
     implementation(
             libs.bundles.autodagger,
             libs.hilt,
-            libs.sqldelight.coroutines,
-            libs.retrofit.core,
             libs.moshi,
+            libs.retrofit.core,
+            libs.sqldelight.coroutines,
+            project(":feature:collage:view:api"),
+            project(":feature:media:common:domain:api"),
+            project(":feature:media:remote:domain:api"),
+            project(":feature:trash:domain:api"),
+            project(":foundation:group:api"),
+            project(":foundation:log:api"),
+            project(":foundation:preferences:api"),
     )
     kapt libs.autodagger.kapt
     ksp libs.moshi.ksp

@@ -3,21 +3,21 @@ android {
         compose true
     }
     composeOptions {
-        kotlinCompilerExtensionVersion compose_compiler_version
+        kotlinCompilerExtensionVersion libs.versions.compose.compiler.get()
     }
     namespace 'com.savvasdalkitsis.uhuruphotos.feature.auth.view.implementation'
 }
 
 dependencies {
     implementation(
+            libs.accompanist.webview,
+            libs.androidx.compose.navigation,
+            libs.bundles.autodagger,
             project(":feature:auth:domain:api"),
             project(":feature:auth:view:api"),
             project(":feature:settings:domain:api"),
             project(":foundation:launchers:api"),
             project(":foundation:navigation:api"),
-            libs.accompanist.webview,
-            libs.androidx.compose.navigation,
-            libs.bundles.autodagger,
     )
     kapt libs.autodagger.kapt
 }

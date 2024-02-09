@@ -4,6 +4,11 @@ android {
 
 dependencies {
     implementation(
+            libs.bundles.autodagger,
+            libs.hilt,
+            libs.moshi,
+            libs.retrofit.core,
+            libs.sqldelight.coroutines,
             project(":feature:auth:domain:api"),
             project(":feature:feed:domain:api"),
             project(":feature:media:local:domain:api"),
@@ -15,11 +20,6 @@ dependencies {
             project(":foundation:log:api"),
             project(":foundation:notification:api"),
             project(":foundation:strings:api"),
-            libs.bundles.autodagger,
-            libs.hilt,
-            libs.moshi,
-            libs.retrofit.core,
-            libs.sqldelight.coroutines,
     )
     kapt libs.autodagger.kapt
     ksp libs.moshi.ksp

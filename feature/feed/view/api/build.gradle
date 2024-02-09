@@ -8,6 +8,8 @@ android {
 
 dependencies {
     api project(":foundation:navigation:api")
-    implementation project(":foundation:strings:api")
-    implementation project(":foundation:icons:api")
+    implementation(
+            project(":foundation:icons:api"),
+            project(":foundation:strings:api"),
+    )
 }

@@ -3,8 +3,8 @@ android {
 }
 
 dependencies {
-    implementation project(":foundation:{{cookiecutter.project_slug}}:api")
     implementation(
             libs.hilt,
+            project(":foundation:{{cookiecutter.project_slug}}:api"),
     )
 }

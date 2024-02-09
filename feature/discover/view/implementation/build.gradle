@@ -3,7 +3,7 @@ android {
         compose true
     }
     composeOptions {
-        kotlinCompilerExtensionVersion compose_compiler_version
+        kotlinCompilerExtensionVersion libs.versions.compose.compiler.get()
     }
     namespace 'com.savvasdalkitsis.uhuruphotos.feature.discover.view.implementation'
 }
@@ -11,10 +11,21 @@ android {
 dependencies {
 
     implementation(
+            libs.androidx.compose.hilt.navigation,
+            libs.androidx.compose.material,
+            libs.androidx.compose.material.windowsize,
+            libs.androidx.compose.ui.tooling.preview,
+            libs.androidx.lifecycle,
+            libs.bundles.autodagger,
+            libs.moshi,
+            libs.retrofit.core,
+            libs.retrofit.moshi,
+            libs.sqldelight.coroutines,
             project(":feature:account:view:api"),
             project(":feature:auth:domain:api"),
             project(":feature:collage:view:api"),
             project(":feature:db:domain:api"),
+            project(":feature:discover:view:api"),
             project(":feature:feed:domain:api"),
             project(":feature:heatmap:domain:api"),
             project(":feature:heatmap:view:api"),
@@ -25,14 +36,13 @@ dependencies {
             project(":feature:people:domain:api"),
             project(":feature:people:view:api"),
             project(":feature:person:view:api"),
-            project(":feature:discover:view:api"),
             project(":feature:search:domain:api"),
             project(":feature:search:view:api"),
             project(":feature:server:view:api"),
             project(":feature:settings:domain:api"),
             project(":feature:stats:view:api"),
-            project(":feature:videos:view:api"),
             project(":feature:undated:view:api"),
+            project(":feature:videos:view:api"),
             project(":feature:welcome:domain:api"),
             project(":foundation:compose:api"),
             project(":foundation:coroutines:api"),
@@ -45,16 +55,6 @@ dependencies {
             project(":foundation:strings:api"),
             project(":foundation:toaster:api"),
             project(":foundation:ui:api"),
-            libs.androidx.compose.hilt.navigation,
-            libs.androidx.compose.material,
-            libs.androidx.compose.material.windowsize,
-            libs.androidx.compose.ui.tooling.preview,
-            libs.androidx.lifecycle,
-            libs.bundles.autodagger,
-            libs.moshi,
-            libs.retrofit.core,
-            libs.retrofit.moshi,
-            libs.sqldelight.coroutines,
     )
     debugImplementation(
             libs.androidx.compose.ui.tooling,

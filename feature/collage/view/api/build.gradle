@@ -3,20 +3,16 @@ android {
         compose true
     }
     composeOptions {
-        kotlinCompilerExtensionVersion compose_compiler_version
+        kotlinCompilerExtensionVersion libs.versions.compose.compiler.get()
     }
     namespace 'com.savvasdalkitsis.uhuruphotos.feature.collage.view.api'
 }
 
 dependencies {
 
-    implementation project(':feature:media:common:domain:api')
-    implementation project(':feature:media:common:view:api')
-    implementation project(":foundation:compose:api")
-    implementation project(":foundation:icons:api")
-    implementation project(':foundation:image:api')
-    implementation project(":foundation:strings:api")
-    implementation project(":foundation:ui:api")
+    api(
+            libs.kotlinx.immutable,
+    )
     implementation(
             libs.androidx.compose.constraintlayout,
             libs.androidx.compose.foundation,
@@ -27,9 +23,13 @@ dependencies {
             libs.androidx.compose.ui.tooling.preview,
             libs.androidx.compose.ui.util,
             libs.androidx.core,
-    )
-    api(
-            libs.kotlinx.immutable,
+            project(":foundation:compose:api"),
+            project(":foundation:icons:api"),
+            project(":foundation:strings:api"),
+            project(":foundation:ui:api"),
+            project(":feature:media:common:domain:api"),
+            project(":feature:media:common:view:api"),
+            project(":foundation:image:api"),
     )
     debugImplementation(
             libs.androidx.compose.ui.tooling,

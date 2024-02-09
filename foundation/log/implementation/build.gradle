@@ -3,15 +3,15 @@ android {
 }
 
 dependencies {
-    implementation project(":foundation:icons:api")
-    implementation project(":foundation:initializer:api")
-    implementation project(":foundation:log:api")
-    implementation project(":foundation:notification:api")
-    implementation project(":feature:settings:domain:api")
     implementation(
             libs.bundles.autodagger,
             libs.bundles.lumberjack,
             libs.hilt,
+            project(":feature:settings:domain:api"),
+            project(":foundation:icons:api"),
+            project(":foundation:initializer:api"),
+            project(":foundation:log:api"),
+            project(":foundation:notification:api"),
     )
     kapt libs.autodagger.kapt
 }

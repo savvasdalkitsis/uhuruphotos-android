@@ -1,5 +1,5 @@
 plugins {
-    id 'app.cash.sqldelight'
+    alias(libs.plugins.sqldelight)
 }
 
 android {
@@ -17,9 +17,9 @@ sqldelight {
 dependencies {
 
     implementation(
-            project(":foundation:lang:api"),
             libs.hilt,
             libs.sqldelight.android,
             libs.sqldelight.coroutines,
+            project(":foundation:lang:api"),
     )
 }

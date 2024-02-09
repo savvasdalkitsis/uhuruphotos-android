@@ -7,8 +7,8 @@ dependencies {
         libs.androidx.work.hilt,
     )
     implementation(
+            libs.androidx.work,
             project(":foundation:math:api"),
             project(":foundation:strings:api"),
-            libs.androidx.work,
     )
 }

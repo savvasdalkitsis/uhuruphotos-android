@@ -3,7 +3,7 @@ android {
         compose true
     }
     composeOptions {
-        kotlinCompilerExtensionVersion compose_compiler_version
+        kotlinCompilerExtensionVersion libs.versions.compose.compiler.get()
     }
     namespace 'com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.implementation'
 }
@@ -11,6 +11,21 @@ android {
 dependencies {
 
     implementation(
+            libs.accompanist.systemui,
+            libs.androidx.compose.hilt.navigation,
+            libs.androidx.compose.material,
+            libs.androidx.compose.material.windowsize,
+            libs.androidx.work,
+            libs.androidx.work.hilt,
+            libs.bundles.autodagger,
+            libs.coil.base,
+            libs.exif,
+            libs.infobar,
+            libs.moshi,
+            libs.retrofit.core,
+            libs.retrofit.moshi,
+            libs.sqldelight.coroutines,
+            libs.zoomable,
             project(":feature:auth:domain:api"),
             project(":feature:db:domain:api"),
             project(":feature:lightbox:view:api"),
@@ -40,21 +55,6 @@ dependencies {
             project(":foundation:ui:api"),
             project(":foundation:video:api"),
             project(":foundation:worker:api"),
-            libs.accompanist.systemui,
-            libs.androidx.compose.hilt.navigation,
-            libs.androidx.compose.material,
-            libs.androidx.compose.material.windowsize,
-            libs.androidx.work,
-            libs.androidx.work.hilt,
-            libs.bundles.autodagger,
-            libs.coil.base,
-            libs.exif,
-            libs.infobar,
-            libs.moshi,
-            libs.retrofit.core,
-            libs.retrofit.moshi,
-            libs.sqldelight.coroutines,
-            libs.zoomable,
     )
     kapt libs.autodagger.kapt
     ksp libs.moshi.ksp

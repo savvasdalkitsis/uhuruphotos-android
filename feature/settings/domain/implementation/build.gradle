@@ -4,16 +4,16 @@ android {
 
 dependencies {
     implementation(
+            libs.bundles.autodagger,
+            libs.coil.base,
+            libs.hilt,
+            libs.play,
             project(":feature:settings:domain:api"),
             project(":feature:welcome:domain:api"),
             project(":foundation:image:api"),
             project(":foundation:log:api"),
             project(":foundation:preferences:api"),
             project(":foundation:video:api"),
-            libs.bundles.autodagger,
-            libs.coil.base,
-            libs.hilt,
-            libs.play,
     )
     kapt libs.autodagger.kapt
 }

@@ -3,13 +3,16 @@ android {
         compose true
     }
     composeOptions {
-        kotlinCompilerExtensionVersion compose_compiler_version
+        kotlinCompilerExtensionVersion libs.versions.compose.compiler.get()
     }
     namespace 'com.savvasdalkitsis.uhuruphotos.foundation.videos.view.implementation'
 }
 
 dependencies {
     implementation(
+            libs.androidx.compose.hilt.navigation,
+            libs.androidx.compose.material,
+            libs.bundles.autodagger,
             project(":feature:feed:domain:api"),
             project(":feature:gallery:view:api"),
             project(":feature:lightbox:view:api"),
@@ -22,9 +25,6 @@ dependencies {
             project(":foundation:preferences:api"),
             project(":foundation:strings:api"),
             project(":foundation:ui:api"),
-            libs.androidx.compose.hilt.navigation,
-            libs.androidx.compose.material,
-            libs.bundles.autodagger,
     )
     kapt libs.autodagger.kapt
 }

@@ -3,9 +3,7 @@ android {
 }
 
 dependencies {
-    api(
-            project(":foundation:result:api")
-    )
+    api project(":foundation:result:api")
     implementation(
             libs.bundles.lumberjack,
     )

@@ -3,13 +3,15 @@ android {
         compose true
     }
     composeOptions {
-        kotlinCompilerExtensionVersion compose_compiler_version
+        kotlinCompilerExtensionVersion libs.versions.compose.compiler.get()
     }
     namespace 'com.savvasdalkitsis.uhuruphotos.feature.album.user.view.implementation'
 }
 
 dependencies {
     implementation(
+            libs.androidx.compose.hilt.navigation,
+            libs.bundles.autodagger,
             project(":feature:album:user:domain:api"),
             project(":feature:album:user:view:api"),
             project(":feature:collage:view:api"),
@@ -25,8 +27,6 @@ dependencies {
             project(":foundation:date:api"),
             project(":foundation:navigation:api"),
             project(":foundation:preferences:api"),
-            libs.androidx.compose.hilt.navigation,
-            libs.bundles.autodagger,
     )
     kapt libs.autodagger.kapt
 }

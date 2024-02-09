@@ -3,30 +3,30 @@ android {
         compose true
     }
     composeOptions {
-        kotlinCompilerExtensionVersion compose_compiler_version
+        kotlinCompilerExtensionVersion libs.versions.compose.compiler.get()
     }
     namespace 'com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.api'
 }
 
 dependencies {
     api(
+            libs.androidx.compose.navigation,
+            libs.androidx.work,
+            libs.kotlinx.coroutines,
             project(":feature:db:domain:api"),
             project(":feature:media:common:domain:api"),
             project(":foundation:map:api"),
             project(":foundation:result:api"),
-            libs.androidx.compose.navigation,
-            libs.androidx.work,
-            libs.kotlinx.coroutines,
     )
-    implementation project(":foundation:compose:api")
-    implementation project(":foundation:icons:api")
-    implementation project(":foundation:image:api")
-    implementation project(":feature:people:view:api")
-    implementation project(":foundation:strings:api")
-    implementation project(":foundation:ui:api")
     implementation(
             libs.androidx.compose.material,
             libs.moshi,
+            project(":feature:people:view:api"),
+            project(":foundation:compose:api"),
+            project(":foundation:icons:api"),
+            project(":foundation:image:api"),
+            project(":foundation:strings:api"),
+            project(":foundation:ui:api"),
     )
     ksp libs.moshi.ksp
 }

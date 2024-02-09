@@ -4,8 +4,8 @@ android {
 
 dependencies {
     api(
+            libs.kotlinx.coroutines,
             project(":feature:db:domain:api"),
             project(":foundation:result:api"),
-            libs.kotlinx.coroutines,
     )
 }

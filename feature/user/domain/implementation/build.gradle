@@ -1,17 +1,17 @@
 dependencies {
 
     implementation(
-            project(":feature:auth:domain:api"),
-            project(":feature:db:domain:api"),
-            project(":feature:user:domain:api"),
-            project(":foundation:coroutines:api"),
-            project(":foundation:log:api"),
             libs.bundles.autodagger,
             libs.hilt,
             libs.moshi,
             libs.retrofit.core,
             libs.retrofit.moshi,
             libs.sqldelight.coroutines,
+            project(":feature:auth:domain:api"),
+            project(":feature:db:domain:api"),
+            project(":feature:user:domain:api"),
+            project(":foundation:coroutines:api"),
+            project(":foundation:log:api"),
     )
     kapt libs.autodagger.kapt
     ksp libs.moshi.ksp

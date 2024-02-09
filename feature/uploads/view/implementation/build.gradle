@@ -3,28 +3,28 @@ android {
         compose true
     }
     composeOptions {
-        kotlinCompilerExtensionVersion compose_compiler_version
+        kotlinCompilerExtensionVersion libs.versions.compose.compiler.get()
     }
     namespace 'com.savvasdalkitsis.uhuruphotos.feature.uploads.view.implementation'
 }
 
 dependencies {
     implementation(
-            project(":feature:processing:view:api"),
-            project(":feature:uploads:domain:api"),
-            project(":feature:uploads:view:api"),
-            project(":feature:settings:domain:api"),
-            project(":foundation:icons:api"),
-            project(":foundation:image:api"),
-            project(":foundation:navigation:api"),
-            project(":foundation:strings:api"),
-            project(":foundation:ui:api"),
             libs.androidx.compose.hilt.navigation,
             libs.androidx.compose.material,
             libs.androidx.compose.ui.tooling.preview,
             libs.bundles.autodagger,
             libs.kotlinx.immutable,
             libs.seeker,
+            project(":feature:processing:view:api"),
+            project(":feature:settings:domain:api"),
+            project(":feature:uploads:domain:api"),
+            project(":feature:uploads:view:api"),
+            project(":foundation:icons:api"),
+            project(":foundation:image:api"),
+            project(":foundation:navigation:api"),
+            project(":foundation:strings:api"),
+            project(":foundation:ui:api"),
     )
     debugImplementation(
             libs.androidx.compose.ui.tooling,

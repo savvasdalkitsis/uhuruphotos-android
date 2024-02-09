@@ -3,29 +3,29 @@ android {
         compose true
     }
     composeOptions {
-        kotlinCompilerExtensionVersion compose_compiler_version
+        kotlinCompilerExtensionVersion libs.versions.compose.compiler.get()
     }
     namespace 'com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api'
 }
 
 dependencies {
-    implementation project(":feature:collage:view:api")
-    implementation project(":feature:lightbox:view:api")
-    implementation project(":feature:media:common:domain:api")
-    implementation project(":feature:media:common:view:api")
-    implementation project(":feature:people:view:api")
-    implementation project(":feature:person:view:api")
-    implementation project(":foundation:coroutines:api")
-    implementation project(":foundation:icons:api")
-    implementation project(":foundation:log:api")
-    implementation project(":foundation:navigation:api")
-    implementation project(":foundation:preferences:api")
-    implementation project(":foundation:strings:api")
-    implementation project(":foundation:toaster:api")
-    implementation project(":foundation:ui:api")
     implementation(
             libs.androidx.compose.foundation,
             libs.androidx.compose.material,
             libs.retrofit.core,
+            project(":feature:collage:view:api"),
+            project(":feature:lightbox:view:api"),
+            project(":feature:media:common:domain:api"),
+            project(":feature:media:common:view:api"),
+            project(":feature:people:view:api"),
+            project(":feature:person:view:api"),
+            project(":foundation:coroutines:api"),
+            project(":foundation:icons:api"),
+            project(":foundation:log:api"),
+            project(":foundation:navigation:api"),
+            project(":foundation:preferences:api"),
+            project(":foundation:strings:api"),
+            project(":foundation:toaster:api"),
+            project(":foundation:ui:api"),
     )
 }

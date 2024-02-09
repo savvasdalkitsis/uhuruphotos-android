@@ -4,12 +4,12 @@ android {
 
 dependencies {
     implementation(
-            project(":feature:upload:domain:api"),
-            project(":feature:processing:domain:api"),
-            project(":foundation:notification:api"),
-            project(":foundation:worker:api"),
             libs.bundles.autodagger,
             libs.hilt,
+            project(":feature:processing:domain:api"),
+            project(":feature:upload:domain:api"),
+            project(":foundation:notification:api"),
+            project(":foundation:worker:api"),
     )
     testImplementation(
             libs.bundles.test,

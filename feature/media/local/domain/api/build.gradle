@@ -4,9 +4,9 @@ android {
 
 dependencies {
     api(
-            project(":foundation:result:api"),
-            project(":foundation:worker:api"),
             libs.androidx.activity,
             libs.androidx.work,
+            project(":foundation:result:api"),
+            project(":foundation:worker:api"),
     )
 }

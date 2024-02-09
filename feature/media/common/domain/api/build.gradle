@@ -1,6 +1,6 @@
 plugins {
     id 'kotlin-parcelize'
-    id 'org.jetbrains.kotlin.plugin.serialization'
+    alias(libs.plugins.kotlin.serialization)
 }
 
 android {
@@ -9,25 +9,25 @@ android {
 
 dependencies {
     api(
+            libs.androidx.compose.navigation,
+            libs.androidx.work,
+            libs.kotlinx.coroutines,
             project(":feature:db:domain:api"),
             project(":feature:media:local:domain:api"),
             project(":foundation:group:api"),
             project(":foundation:map:api"),
             project(":foundation:result:api"),
-            libs.androidx.compose.navigation,
-            libs.androidx.work,
-            libs.kotlinx.coroutines,
     )
     implementation(
-            project(":foundation:compose:api"),
-            project(":foundation:icons:api"),
-            project(":foundation:image:api"),
-            project(":feature:people:view:api"),
-            project(":foundation:strings:api"),
-            project(":foundation:ui:api"),
             libs.androidx.compose.material,
             libs.kotlinx.serialization.proto,
             libs.moshi,
+            project(":feature:people:view:api"),
+            project(":foundation:compose:api"),
+            project(":foundation:icons:api"),
+            project(":foundation:image:api"),
+            project(":foundation:strings:api"),
+            project(":foundation:ui:api"),
     )
     ksp libs.moshi.ksp
 }

@@ -7,30 +7,30 @@ android {
         compose true
     }
     composeOptions {
-        kotlinCompilerExtensionVersion compose_compiler_version
+        kotlinCompilerExtensionVersion libs.versions.compose.compiler.get()
     }
     namespace 'com.savvasdalkitsis.uhuruphotos.feature.home.view.api'
 }
 
 
 dependencies {
-    api project(":feature:feed:domain:api")
-    api project(":feature:feed:view:api")
-    api project(":feature:discover:view:api")
-    api project(":feature:library:view:api")
-    api project(":feature:avatar:view:api")
-    api project(":foundation:navigation:api")
     api(
             libs.androidx.compose.foundation,
-            libs.androidx.compose.ui,
             libs.androidx.compose.navigation,
+            libs.androidx.compose.ui,
+            project(":feature:avatar:view:api"),
+            project(":feature:discover:view:api"),
+            project(":feature:feed:domain:api"),
+            project(":feature:feed:view:api"),
+            project(":feature:library:view:api"),
+            project(":foundation:navigation:api"),
     )
-    implementation project(":foundation:icons:api")
-    implementation project(":foundation:strings:api")
-    implementation project(":foundation:ui:api")
     implementation(
             libs.androidx.compose.material,
             libs.androidx.compose.material.windowsize,
             libs.bubble.navigation,
+            project(":foundation:icons:api"),
+            project(":foundation:strings:api"),
+            project(":foundation:ui:api"),
     )
 }

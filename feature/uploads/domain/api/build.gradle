@@ -4,7 +4,7 @@ android {
 
 dependencies {
     api(
-            project(":feature:upload:domain:api"),
             libs.kotlinx.coroutines,
+            project(":feature:upload:domain:api"),
     )
 }

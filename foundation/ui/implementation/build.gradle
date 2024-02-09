@@ -4,12 +4,12 @@ android {
 
 dependencies {
     implementation(
-            project(":foundation:launchers:api"),
-            project(":foundation:ui:api"),
             libs.accompanist.systemui,
             libs.androidx.compose.ui,
             libs.bundles.autodagger,
             libs.hilt,
+            project(":foundation:launchers:api"),
+            project(":foundation:ui:api"),
     )
     kapt libs.autodagger.kapt
 }
