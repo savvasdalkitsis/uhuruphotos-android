@@ -3,7 +3,7 @@ package com.savvasdalkitsis.uhuruphotos.feature.feed.domain.implementation.useca
 import app.cash.turbine.TurbineTestContext
 import app.cash.turbine.test
 import com.savvasdalkitsis.uhuruphotos.feature.feed.domain.api.worker.FeedWorkScheduler
-import com.savvasdalkitsis.uhuruphotos.feature.feed.domain.implementation.repository.FeedProtoCache
+import com.savvasdalkitsis.uhuruphotos.feature.feed.domain.implementation.repository.FeedCache
 import com.savvasdalkitsis.uhuruphotos.feature.feed.domain.implementation.repository.FeedRepository
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaCollection
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemHash
@@ -33,10 +33,10 @@ class FeedUseCaseTest {
     private val feedWorkScheduler: FeedWorkScheduler = mockk()
     private val mediaUseCase: MediaUseCase = mockk<MediaUseCase>().defaults()
     private val feedRepository: FeedRepository = mockk<FeedRepository>().defaults()
-    private val feedProtoCache: FeedProtoCache = mockk<FeedProtoCache>(relaxed = true).defaults()
+    private val feedCache: FeedCache = mockk<FeedCache>(relaxed = true).defaults()
     private val underTest = FeedUseCase(
         feedRepository,
-        feedProtoCache,
+        feedCache,
         mediaUseCase,
         feedWorkScheduler,
         downloadUseCase,
@@ -202,7 +202,7 @@ class FeedUseCaseTest {
 
         underTest.observeFeed().collect()
 
-        verify { feedProtoCache.cacheFeed(listOf(mediaCollection("day1", remote("1"), remote("2")))) }
+        verify { feedCache.cacheFeed(listOf(mediaCollection("day1", remote("1"), remote("2")))) }
     }
 
     @Test
@@ -210,7 +210,7 @@ class FeedUseCaseTest {
         val cached = listOf(
             mediaCollection("day1".localOnlyId, "day1", local(1))
         )
-        feedProtoCache.hasFeedCached(cached)
+        feedCache.hasFeedCached(cached)
         feedRepository.returnsRemoteFeed(
             "day1" to listOf(mediaItem("1")),
         )

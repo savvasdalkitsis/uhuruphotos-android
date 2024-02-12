@@ -26,7 +26,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.feed.domain.api.model.FeedFetchTy
 import com.savvasdalkitsis.uhuruphotos.feature.feed.domain.api.model.FeedFetchType.VIDEOS
 import com.savvasdalkitsis.uhuruphotos.feature.feed.domain.api.usecase.FeedUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.feed.domain.api.worker.FeedWorkScheduler
-import com.savvasdalkitsis.uhuruphotos.feature.feed.domain.implementation.repository.FeedProtoCache
+import com.savvasdalkitsis.uhuruphotos.feature.feed.domain.implementation.repository.FeedCache
 import com.savvasdalkitsis.uhuruphotos.feature.feed.domain.implementation.repository.FeedRepository
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaCollection
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaCollectionSource
@@ -63,7 +63,7 @@ import javax.inject.Inject
 @AutoBind
 internal class FeedUseCase @Inject constructor(
     private val feedRepository: FeedRepository,
-    private val feedProtoCache: FeedProtoCache,
+    private val feedCache: FeedCache,
     private val mediaUseCase: MediaUseCase,
     private val feedWorkScheduler: FeedWorkScheduler,
     private val downloadUseCase: DownloadUseCase,
@@ -80,9 +80,9 @@ internal class FeedUseCase @Inject constructor(
         feedFetchType: FeedFetchType,
         loadSmallInitialChunk: Boolean,
     ): Flow<List<MediaCollection>> = merge(
-        feedProtoCache.observeFeed(),
+        feedCache.observeFeed(),
         liveFeed(feedFetchType, loadSmallInitialChunk).onEach {
-            feedProtoCache.cacheFeed(it)
+            feedCache.cacheFeed(it)
         }
     )
 

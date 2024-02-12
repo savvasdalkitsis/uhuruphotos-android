@@ -30,9 +30,11 @@ import kotlinx.serialization.encodeToByteArray
 import kotlinx.serialization.protobuf.ProtoBuf
 import java.io.File
 import javax.inject.Inject
+import javax.inject.Singleton
 
 @OptIn(ExperimentalSerializationApi::class)
-class FeedProtoCache @Inject constructor(
+@Singleton
+class FeedCache @Inject constructor(
     @ApplicationContext
     private val context: Context,
 ) {
