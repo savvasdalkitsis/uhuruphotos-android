@@ -1,0 +1,1 @@
+* Fixing general app slowness recently introduced
