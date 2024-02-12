@@ -20,8 +20,10 @@ import com.github.michaelbull.result.Result
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.user.User
 import com.savvasdalkitsis.uhuruphotos.feature.user.domain.api.usecase.UserUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.user.domain.implementation.repository.UserRepository
-import com.savvasdalkitsis.uhuruphotos.foundation.coroutines.api.safelyOnStartIgnoring
+import com.savvasdalkitsis.uhuruphotos.foundation.launchers.api.onIO
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.filterNotNull
+import kotlinx.coroutines.flow.onEach
 import se.ansman.dagger.auto.AutoBind
 import javax.inject.Inject
 
@@ -31,10 +33,17 @@ internal class UserUseCase @Inject constructor(
 ) : UserUseCase {
 
     override fun observeUser(): Flow<User> = userRepository.observeUser()
-        .safelyOnStartIgnoring {
-            userRepository.refreshUser()
+        .onEach { user ->
+            if (user == null) {
+                onIO { userRepository.refreshUser() }
+            }
         }
+        .filterNotNull()
 
     override suspend fun getUserOrRefresh(): Result<User, Throwable> =
         userRepository.getUser()?.let { Ok(it) } ?: userRepository.refreshUser()
+
+    override suspend fun refreshUser() {
+        userRepository.refreshUser()
+    }
 }

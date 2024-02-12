@@ -16,7 +16,7 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.feature.user.domain.implementation.repository
 
 import app.cash.sqldelight.coroutines.asFlow
-import app.cash.sqldelight.coroutines.mapToOneNotNull
+import app.cash.sqldelight.coroutines.mapToOneOrNull
 import com.github.michaelbull.result.Result
 import com.github.michaelbull.result.map
 import com.savvasdalkitsis.uhuruphotos.feature.auth.domain.api.usecase.AuthenticationUseCase
@@ -37,8 +37,8 @@ internal class UserRepository @Inject constructor(
     private val authenticationUseCase: AuthenticationUseCase,
 ) {
 
-    fun observeUser(): Flow<User> = userQueries.getUser()
-        .asFlow().mapToOneNotNull(Dispatchers.IO).distinctUntilChanged()
+    fun observeUser(): Flow<User?> = userQueries.getUser()
+        .asFlow().mapToOneOrNull(Dispatchers.IO).distinctUntilChanged()
 
     suspend fun getUser(): User? = userQueries.getUser().awaitSingleOrNull()
 

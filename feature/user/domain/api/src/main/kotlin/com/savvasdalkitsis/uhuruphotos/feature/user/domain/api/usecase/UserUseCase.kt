@@ -23,4 +23,5 @@ interface UserUseCase {
 
     fun observeUser(): Flow<User>
     suspend fun getUserOrRefresh(): Result<User, Throwable>
+    suspend fun refreshUser()
 }

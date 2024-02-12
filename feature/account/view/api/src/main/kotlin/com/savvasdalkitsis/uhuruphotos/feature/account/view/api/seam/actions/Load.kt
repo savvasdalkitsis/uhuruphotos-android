@@ -27,10 +27,12 @@ import com.savvasdalkitsis.uhuruphotos.feature.account.view.api.seam.AccountOver
 import com.savvasdalkitsis.uhuruphotos.feature.account.view.api.ui.state.AccountOverviewState
 import com.savvasdalkitsis.uhuruphotos.feature.jobs.view.ui.state.toJobState
 import com.savvasdalkitsis.uhuruphotos.feature.welcome.view.api.navigation.WelcomeNavigationRoute
+import com.savvasdalkitsis.uhuruphotos.foundation.launchers.api.onIO
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.andThen
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.merge
 import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.flow.onStart
 
 data object Load : AccountOverviewAction() {
     context(AccountOverviewActionsContext) override fun handle(
@@ -59,5 +61,9 @@ data object Load : AccountOverviewAction() {
         syncUseCase.observeSyncEnabled().map { enabled ->
             ShowCloudSyncEnabled(enabled)
         }
-    )
+    ).onStart {
+        onIO {
+            userUseCase.refreshUser()
+        }
+    }
 }
