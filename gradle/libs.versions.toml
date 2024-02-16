@@ -115,7 +115,7 @@ kotlin-reflect = { module = "org.jetbrains.kotlin:kotlin-reflect", version.ref =
 kotlinx-coroutines = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-android", version.ref = "kotlinx" }
 kotlinx-coroutines-test = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test", version.ref = "kotlinx" }
 kotlinx-immutable = "org.jetbrains.kotlinx:kotlinx-collections-immutable:0.3.7"
-kotlinx-serialization-proto = "org.jetbrains.kotlinx:kotlinx-serialization-protobuf:1.6.2"
+kotlinx-serialization-proto = "org.jetbrains.kotlinx:kotlinx-serialization-protobuf:1.6.3"
 leaks = "com.squareup.leakcanary:leakcanary-android:2.13"
 logger = "com.jakewharton.timber:timber:4.7.1"
 lottie = "com.airbnb.android:lottie-compose:6.3.0"
