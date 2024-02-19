@@ -19,11 +19,11 @@ import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.actions.ContributeToPortfolio
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.actions.DownloadOriginal
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.actions.LightboxAction
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.actions.SetFavourite
@@ -35,6 +35,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.Med
 import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.R.drawable
 import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.ActionIcon
+import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.ToggleableActionIcon
 
 @Composable
 fun LightboxActionBar(
@@ -42,7 +43,7 @@ fun LightboxActionBar(
     index: Int,
     action: (LightboxAction) -> Unit,
 ) {
-    val mediaItem = state.media[index]
+    val item = state.media[index]
     AnimatedVisibility(visible = state.isLoading) {
         if (state.isLoading) {
             CircularProgressIndicator(
@@ -51,30 +52,44 @@ fun LightboxActionBar(
             )
         }
     }
-    state.currentMediaItem.mediaItemSyncState?.let { syncState ->
+    if (item.showAddToPortfolioIcon) {
+        ToggleableActionIcon(
+            modifier = Modifier.alpha(
+                if (item.addToPortfolioIconEnabled) 1f else 0.7f
+            ),
+            onClick = {
+                action(ContributeToPortfolio(item, !item.inPortfolio))
+            },
+            enabled = item.addToPortfolioIconEnabled,
+            icon = drawable.ic_feed,
+            selected = item.inPortfolio,
+            contentDescription = stringResource(string.show_on_feed)
+        )
+    }
+    item.mediaItemSyncState?.let { syncState ->
         ActionIcon(
             modifier = Modifier.alpha(syncState.lightBoxIconAlpha),
             onClick = {
                 if (syncState == REMOTE_ONLY) {
-                    action(DownloadOriginal(state.currentMediaItem))
+                    action(DownloadOriginal(item))
                 }
                 if (syncState == LOCAL_ONLY) {
-                    action(UploadToServer(state.currentMediaItem))
+                    action(UploadToServer(item))
                 }
             },
-            enabled = syncState in remember { listOf(REMOTE_ONLY, LOCAL_ONLY) },
+            enabled = syncState.enabled,
             icon = syncState.lightBoxIcon,
             contentDescription = stringResource(syncState.contentDescription)
         )
     }
-    AnimatedVisibility(visible = mediaItem.showFavouriteIcon && mediaItem.isFavourite != null) {
-        if (mediaItem.showFavouriteIcon && mediaItem.isFavourite != null) {
+    AnimatedVisibility(visible = item.showFavouriteIcon && item.isFavourite != null) {
+        if (item.showFavouriteIcon && item.isFavourite != null) {
             ActionIcon(
-                onClick = { action(SetFavourite(!mediaItem.isFavourite)) },
-                icon = if (mediaItem.isFavourite) drawable.ic_favourite else drawable.ic_not_favourite,
+                onClick = { action(SetFavourite(!item.isFavourite)) },
+                icon = if (item.isFavourite) drawable.ic_favourite else drawable.ic_not_favourite,
                 contentDescription = stringResource(
                     when {
-                        mediaItem.isFavourite -> string.remove_favourite
+                        item.isFavourite -> string.remove_favourite
                         else -> string.favourite
                     }
                 )

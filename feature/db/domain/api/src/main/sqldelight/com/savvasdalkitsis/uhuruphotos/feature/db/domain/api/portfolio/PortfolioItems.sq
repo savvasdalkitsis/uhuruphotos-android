@@ -1,0 +1,13 @@
+CREATE TABLE portfolioItems (
+    id INTEGER NOT NULL PRIMARY KEY,
+    folderId INTEGER AS kotlin.Int NOT NULL
+);
+
+all:
+SELECT * FROM portfolioItems;
+
+insert:
+INSERT OR IGNORE INTO portfolioItems VALUES (:id, :folderId);
+
+remove:
+DELETE FROM portfolioItems WHERE id = :id;

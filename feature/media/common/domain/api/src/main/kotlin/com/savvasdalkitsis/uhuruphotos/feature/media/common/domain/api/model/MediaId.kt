@@ -121,12 +121,13 @@ sealed class MediaId<T : Serializable> private constructor(
     @kotlinx.serialization.Serializable
     data class Uploading(
         override val value: Long,
+        val folderId: Int,
         override val isVideo: Boolean,
         val contentUri: String,
         override val thumbnailUri: String,
     ): MediaId<Long>() {
         @IgnoredOnParcel
-        val local get() = Local(value, isVideo, contentUri, thumbnailUri)
+        val local get() = Local(value, folderId, isVideo, contentUri, thumbnailUri)
 
         @IgnoredOnParcel
         @Transient
@@ -158,12 +159,13 @@ sealed class MediaId<T : Serializable> private constructor(
     @kotlinx.serialization.Serializable
     data class Processing(
         override val value: Long,
+        val folderId: Int,
         override val isVideo: Boolean,
         val contentUri: String,
         override val thumbnailUri: String,
     ): MediaId<Long>() {
         @IgnoredOnParcel
-        val local get() = Local(value, isVideo, contentUri, thumbnailUri)
+        val local get() = Local(value, folderId, isVideo, contentUri, thumbnailUri)
 
         @IgnoredOnParcel
         @Transient
@@ -194,6 +196,7 @@ sealed class MediaId<T : Serializable> private constructor(
     @kotlinx.serialization.Serializable
     data class Local(
         override val value: Long,
+        val folderId: Int,
         override val isVideo: Boolean,
         val contentUri: String,
         override val thumbnailUri: String,
@@ -222,8 +225,8 @@ sealed class MediaId<T : Serializable> private constructor(
         @kotlinx.serialization.Transient
         override val fullResUri = contentUri
 
-        fun toUploading() = Uploading(value, isVideo, contentUri, thumbnailUri)
-        fun toProcessing() = Processing(value, isVideo, contentUri, thumbnailUri)
+        fun toUploading() = Uploading(value, folderId, isVideo, contentUri, thumbnailUri)
+        fun toProcessing() = Processing(value, folderId, isVideo, contentUri, thumbnailUri)
     }
 
     @Suppress("DataClassPrivateConstructor")

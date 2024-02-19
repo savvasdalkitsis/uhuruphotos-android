@@ -28,6 +28,6 @@ data class ChangePortfolioItem(
 ) : PortfolioAction() {
     context(PortfolioActionsContext)
     override fun handle(state: PortfolioState): Flow<Mutation<PortfolioState>> = flow {
-        portfolioUseCase.setPortfolioItemPublished(folder.id, published)
+        portfolioUseCase.setPortfolioFolderPublished(folder.id, published)
     }
 }

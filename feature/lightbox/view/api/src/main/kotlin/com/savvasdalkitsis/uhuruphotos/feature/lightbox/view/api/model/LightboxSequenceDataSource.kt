@@ -18,14 +18,23 @@ package com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.api.model
 import android.os.Parcelable
 import kotlinx.parcelize.Parcelize
 
-sealed class LightboxSequenceDataSource : Parcelable {
+sealed class LightboxSequenceDataSource(
+    val showMediaSyncState: Boolean = false,
+    val shouldShowDeleteButton: Boolean = false,
+) : Parcelable {
 
     @Parcelize
     data object Single : LightboxSequenceDataSource()
     @Parcelize
-    data object Feed : LightboxSequenceDataSource()
+    data object Feed : LightboxSequenceDataSource(
+        showMediaSyncState = true,
+        shouldShowDeleteButton = true,
+    )
     @Parcelize
-    data class Memory(val yearsAgo: Int) : LightboxSequenceDataSource()
+    data class Memory(val yearsAgo: Int) : LightboxSequenceDataSource(
+        showMediaSyncState = true,
+        shouldShowDeleteButton = true,
+    )
     @Parcelize
     data class SearchResults(val query: String) : LightboxSequenceDataSource()
     @Parcelize
@@ -35,7 +44,9 @@ sealed class LightboxSequenceDataSource : Parcelable {
     @Parcelize
     data class UserAlbum(val albumId: Int) : LightboxSequenceDataSource()
     @Parcelize
-    data class LocalAlbum(val albumId: Int) : LightboxSequenceDataSource()
+    data class LocalAlbum(val albumId: Int) : LightboxSequenceDataSource(
+        shouldShowDeleteButton = true,
+    )
     @Parcelize
     data object FavouriteMedia : LightboxSequenceDataSource()
     @Parcelize

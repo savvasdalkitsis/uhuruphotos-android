@@ -19,6 +19,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.Predefi
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.extensions.isVideo
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.media.remote.GetRemoteMediaCollections
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.media.upload.ProcessingMediaItems
+import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.portfolio.PortfolioItems
 import com.savvasdalkitsis.uhuruphotos.feature.feed.domain.api.model.FeedFetchType
 import com.savvasdalkitsis.uhuruphotos.feature.feed.domain.api.model.FeedFetchType.ALL
 import com.savvasdalkitsis.uhuruphotos.feature.feed.domain.api.model.FeedFetchType.ONLY_WITHOUT_DATES
@@ -217,9 +218,17 @@ internal class FeedUseCase @Inject constructor(
             mediaUseCase.observeLocalMedia()
                 .distinctUntilChanged(),
             portfolioUseCase.observePublishedFolderIds(),
-        ) { itemsOnDevice, publishedFolderIds ->
+            portfolioUseCase.observeIndividualPortfolioItems(),
+        ) { itemsOnDevice, publishedFolderIds, publishedItems ->
+            val publishedItemsNotInPublishedFolders = publishedItems
+                .filter { it.folderId !in publishedFolderIds }
+                .map(PortfolioItems::id)
             when (itemsOnDevice) {
-                is Found -> itemsOnDevice.filteredWith(publishedFolderIds, feedFetchType)
+                is Found -> itemsOnDevice.filteredWith(
+                    publishedFolderIds,
+                    publishedItemsNotInPublishedFolders,
+                    feedFetchType,
+                )
                 else -> emptyList()
             }
         }
@@ -250,13 +259,16 @@ internal class FeedUseCase @Inject constructor(
 
     private fun Found.filteredWith(
         publishedFolderIds: Set<Int>,
+        publishedItemsIds: List<Long>,
         feedFetchType: FeedFetchType
     ): List<MediaItem> {
         val primaryFolderItems = primaryFolder?.second ?: emptyList()
         val publishedFoldersItems = mediaFolders.filter { (folder, _) ->
             folder.id in publishedFolderIds
         }.flatMap { (_, mediaItems) -> mediaItems }
-        return (primaryFolderItems + publishedFoldersItems).filter(feedFetchType)
+        val publishedItems = mediaFolders.flatMap { (_, items) -> items }
+            .filter { it.id.value in publishedItemsIds }
+        return (primaryFolderItems + publishedFoldersItems + publishedItems).filter(feedFetchType)
     }
 
     private fun List<MediaItem>.filter(

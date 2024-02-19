@@ -24,5 +24,4 @@ import kotlinx.parcelize.Parcelize
 data class LightboxNavigationRoute(
     val id: MediaId<*>,
     val lightboxSequenceDataSource: LightboxSequenceDataSource = LightboxSequenceDataSource.Single,
-    val showMediaSyncState: Boolean = false,
 ) : NavigationRoute

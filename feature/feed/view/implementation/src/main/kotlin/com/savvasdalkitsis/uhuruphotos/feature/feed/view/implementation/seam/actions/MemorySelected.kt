@@ -28,7 +28,7 @@ data class MemorySelected(val cel: CelState, val yearsAgo: Int) : FeedAction() {
         state: FeedState
     ) = flow<FeedMutation> {
         navigator.navigateTo(
-            LightboxNavigationRoute(cel.mediaItem.id, Memory(yearsAgo), showMediaSyncState = true)
+            LightboxNavigationRoute(cel.mediaItem.id, Memory(yearsAgo))
         )
     }
 }

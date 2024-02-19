@@ -190,7 +190,7 @@ class MediaUseCase @Inject constructor(
         }
 
     private fun LocalMediaItem.toMediaItem(userId: Int?) = MediaItemInstance(
-        id = Local(id, video, contentUri, thumbnailPath?.let { "file://$it" } ?: contentUri),
+        id = Local(id, bucket.id, video, contentUri, thumbnailPath?.let { "file://$it" } ?: contentUri),
         mediaHash = md5.toMediaItemHash(userId),
         fallbackColor = fallbackColor,
         displayDayDate = displayDate,

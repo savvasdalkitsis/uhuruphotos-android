@@ -15,12 +15,16 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.portfolio.domain.api.usecase
 
+import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.portfolio.PortfolioItems
 import com.savvasdalkitsis.uhuruphotos.feature.portfolio.domain.api.domain.PortfolioLocalMedia
 import kotlinx.coroutines.flow.Flow
 
 interface PortfolioUseCase {
 
     fun observePortfolio(): Flow<PortfolioLocalMedia>
+    fun observeIndividualPortfolioItems(): Flow<List<PortfolioItems>>
     fun observePublishedFolderIds(): Flow<Set<Int>>
-    fun setPortfolioItemPublished(folderId: Int, published: Boolean)
+    fun getPublishedFolderIds(): Set<Int>
+    fun setPortfolioFolderPublished(folderId: Int, published: Boolean)
+    fun publishItemToPortfolio(id: Long, folderId: Int, contribute: Boolean)
 }

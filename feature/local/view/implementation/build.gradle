@@ -24,10 +24,13 @@ dependencies {
             project(":feature:media:common:domain:api"),
             project(":feature:media:local:domain:api"),
             project(":feature:people:view:api"),
+            project(":feature:portfolio:domain:api"),
             project(":feature:settings:domain:api"),
             project(":foundation:date:api"),
+            project(":foundation:icons:api"),
             project(":foundation:navigation:api"),
             project(":foundation:preferences:api"),
+            project(":foundation:toaster:api"),
             project(":foundation:strings:api"),
     )
     kapt libs.autodagger.kapt

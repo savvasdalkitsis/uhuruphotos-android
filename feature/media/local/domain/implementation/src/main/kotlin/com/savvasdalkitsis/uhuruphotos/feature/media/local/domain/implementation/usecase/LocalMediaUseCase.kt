@@ -303,7 +303,7 @@ class LocalMediaUseCase @Inject constructor(
             null
     }
 
-    private suspend fun getDefaultBucketId(): Int? {
+    override suspend fun getDefaultBucketId(): Int? {
         resetMediaStoreIfNeeded()
         return localMediaFolderRepository.getDefaultLocalFolderId()
     }

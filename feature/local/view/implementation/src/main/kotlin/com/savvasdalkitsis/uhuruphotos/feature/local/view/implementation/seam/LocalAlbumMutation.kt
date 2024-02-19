@@ -29,4 +29,8 @@ sealed class LocalAlbumMutation(
     data class AskForPermissions(val deniedPermissions: List<String>) : LocalAlbumMutation({
         it.copy(deniedPermissions = deniedPermissions)
     })
+
+    data class DisplayContributingToPortfolio(val contributingToPortfolio: Boolean) : LocalAlbumMutation({
+        it.copy(contributingToPortfolio = contributingToPortfolio)
+    })
 }

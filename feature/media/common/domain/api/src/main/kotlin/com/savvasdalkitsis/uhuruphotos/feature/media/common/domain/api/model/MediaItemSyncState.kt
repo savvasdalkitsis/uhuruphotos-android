@@ -29,37 +29,40 @@ enum class MediaItemSyncState(
     val lightBoxIconAlpha: Float = 0.7f,
     @StringRes
     val contentDescription: Int,
+    val enabled: Boolean = false,
 ) {
     LOCAL_ONLY(
         icon = drawable.ic_cloud_off,
         lightBoxIcon = drawable.ic_cloud_upload,
         lightBoxIconAlpha = 1f,
-        contentDescription = string.media_sync_status_local_only
+        contentDescription = string.media_sync_status_local_only,
+        enabled = true,
     ),
     REMOTE_ONLY(
         icon = drawable.ic_cloud,
         lightBoxIcon = drawable.ic_cloud_download,
         lightBoxIconAlpha = 1f,
-        contentDescription = string.media_sync_status_remote_only
+        contentDescription = string.media_sync_status_remote_only,
+        enabled = true,
     ),
     DOWNLOADING(
         icon = drawable.ic_cloud_download,
         lightBoxIcon = raw.ic_animated_cloud_download,
-        contentDescription = string.media_sync_status_downloading
+        contentDescription = string.media_sync_status_downloading,
     ),
     UPLOADING(
         icon = drawable.ic_cloud_upload,
         lightBoxIcon = raw.ic_animated_cloud_upload,
-        contentDescription = string.media_sync_status_uploading
+        contentDescription = string.media_sync_status_uploading,
     ),
     PROCESSING(
         icon = drawable.ic_cloud_in_progress,
         lightBoxIcon = drawable.ic_cloud_in_progress,
-        contentDescription = string.media_sync_status_processing
+        contentDescription = string.media_sync_status_processing,
     ),
     SYNCED(
         icon = drawable.ic_cloud_done,
         lightBoxIcon = drawable.ic_cloud_done,
-        contentDescription = string.media_sync_status_fully_synced
+        contentDescription = string.media_sync_status_fully_synced,
     );
 }

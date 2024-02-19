@@ -52,6 +52,8 @@ import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.people.PeopleQuerie
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.person.PersonPhotos
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.person.PersonQueries
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.portfolio.Portfolio
+import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.portfolio.PortfolioItems
+import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.portfolio.PortfolioItemsQueries
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.portfolio.PortfolioQueries
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.search.SearchQueries
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.user.User
@@ -89,6 +91,7 @@ class DbModule {
         userAdapter = User.Adapter(IntColumnAdapter, IntColumnAdapter, FloatColumnAdapter, IntColumnAdapter, IntColumnAdapter, IntColumnAdapter, IntColumnAdapter),
         userAlbumsAdapter = UserAlbums.Adapter(IntColumnAdapter, IntColumnAdapter),
         portfolioAdapter = Portfolio.Adapter(IntColumnAdapter),
+        portfolioItemsAdapter = PortfolioItems.Adapter(IntColumnAdapter),
     )
 
     @Provides
@@ -153,5 +156,8 @@ class DbModule {
 
     @Provides
     fun portfolioQueries(database: Database): PortfolioQueries = database.portfolioQueries
+
+    @Provides
+    fun portfolioItemsQueries(database: Database): PortfolioItemsQueries = database.portfolioItemsQueries
 
 }

@@ -31,7 +31,7 @@ data class SelectedCel(
         navigator.navigateTo(
             LightboxNavigationRoute(
                 id = cel.mediaItem.id,
-                lightboxSequenceDataSource = lightboxSequenceDataSource(galleryId.id)
+                lightboxSequenceDataSource = lightboxSequenceDataSource(galleryId.id),
             )
         )
     }

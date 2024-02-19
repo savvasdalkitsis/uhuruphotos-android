@@ -31,10 +31,13 @@ import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.action.Gall
 import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.ui.Gallery
 import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.ui.state.GalleryState
 import com.savvasdalkitsis.uhuruphotos.feature.local.view.implementation.seam.actions.LocalAlbumAction
+import com.savvasdalkitsis.uhuruphotos.feature.local.view.implementation.seam.actions.SetContributingToPortfolio
 import com.savvasdalkitsis.uhuruphotos.feature.local.view.implementation.ui.state.LocalAlbumState
+import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.R.drawable
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.Either
 import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.NoContent
+import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.ToggleableActionIcon
 import dev.shreyaspatil.permissionflow.compose.rememberPermissionFlowRequestLauncher
 
 @Composable
@@ -43,12 +46,24 @@ fun LocalAlbumPage(
     action: (Either<GalleryAction, LocalAlbumAction>) -> Unit
 ) {
     val permissionLauncher = rememberPermissionFlowRequestLauncher()
+    val albumState = state.second
 
     Gallery(
         state = state.first,
         action = { action(Either.Left(it)) },
+        additionalActionBarContent = {
+            albumState.contributingToPortfolio?.let { contributing ->
+                ToggleableActionIcon(
+                    onClick = {
+                        action(Either.Right(SetContributingToPortfolio(!contributing)))
+                    },
+                    icon = drawable.ic_feed,
+                    selected = contributing,
+                )
+            }
+        },
         emptyContent = {
-            if (state.second.deniedPermissions.isNotEmpty()) {
+            if (albumState.deniedPermissions.isNotEmpty()) {
                 Box(
                     modifier = Modifier
                         .fillMaxSize()
@@ -62,7 +77,7 @@ fun LocalAlbumPage(
                         Text(text = stringResource(string.missing_permissions))
                         Button(
                             onClick = {
-                                permissionLauncher.launch(state.second.deniedPermissions.toTypedArray())
+                                permissionLauncher.launch(albumState.deniedPermissions.toTypedArray())
                             },
                         ) {
                             Text(text = stringResource(string.grant_permissions))

@@ -16,6 +16,7 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.actions
 
 import com.github.michaelbull.result.getOr
+import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.portfolio.PortfolioItems
 import com.savvasdalkitsis.uhuruphotos.feature.feed.domain.api.model.FeedFetchType
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.api.model.LightboxSequenceDataSource
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.api.model.LightboxSequenceDataSource.AutoAlbum
@@ -48,6 +49,7 @@ import kotlinx.coroutines.flow.emptyFlow
 import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.mapNotNull
 import kotlinx.coroutines.flow.merge
@@ -55,7 +57,6 @@ import kotlinx.coroutines.flow.merge
 data class LoadMediaItem(
     val actionMediaId: MediaId<*>,
     val sequenceDataSource: LightboxSequenceDataSource,
-    val showMediaSyncState: Boolean,
 ) : LightboxAction() {
 
     context(LightboxActionsContext) override fun handle(
@@ -90,7 +91,21 @@ data class LoadMediaItem(
     )
 
     context(LightboxActionsContext)
-    private fun observeMediaSequence(): Flow<List<SingleMediaItemState>> = when (sequenceDataSource) {
+    private fun observeMediaSequence(): Flow<List<SingleMediaItemState>> =
+        combine(
+            observeMediaItemsSequence(),
+            isInPortfolio(),
+        ) { mediaItems, isInPortfolio ->
+            val addToPortfolioEnabled = addToPortfolioIconEnabled()
+            val showAddToPortfolioIcon = sequenceDataSource is LocalAlbum
+                    && sequenceDataSource.albumId != localMediaUseCase.getDefaultBucketId()
+            mediaItems.map {
+                it.toSingleMediaItemState(isInPortfolio, showAddToPortfolioIcon, addToPortfolioEnabled)
+            }
+        }
+
+    context(LightboxActionsContext)
+    private fun observeMediaItemsSequence(): Flow<List<MediaItem>> = when (sequenceDataSource) {
         Single -> emptyFlow()
         Feed -> feedUseCase.observeFeed(FeedFetchType.ONLY_WITH_DATES).toMediaItems
         is Memory -> memoriesUseCase.observeMemories().map { collections ->
@@ -104,15 +119,35 @@ data class LoadMediaItem(
         is UserAlbum -> userAlbumUseCase.observeUserAlbum(sequenceDataSource.albumId)
             .map { it.mediaCollections }.toMediaItems
         is LocalAlbum -> localAlbumUseCase.observeLocalAlbum(sequenceDataSource.albumId)
-            .map { it.second }.toMediaItems
+                .map { it.second }.toMediaItems
         FavouriteMedia -> mediaUseCase.observeFavouriteMedia().map { it.getOr(emptyList()) }
         HiddenMedia -> mediaUseCase.observeHiddenMedia().map { it.getOr(emptyList()) }
         Trash -> trashUseCase.observeTrashAlbums().toMediaItems
         Videos -> feedUseCase.observeFeed(FeedFetchType.VIDEOS).toMediaItems
         Undated -> feedUseCase.observeFeed(FeedFetchType.ONLY_WITHOUT_DATES).toMediaItems
-    }.map { mediaItems ->
-        mediaItems.map { it.toSingleMediaItemState() }
     }
+
+    context(LightboxActionsContext)
+    private fun isInPortfolio(): Flow<(Long) -> Boolean> = when {
+        isViewingLocalFolderContributingToPortfolio() -> flowOf { true }
+        sequenceDataSource is LocalAlbum ->
+            portfolioUseCase.observeIndividualPortfolioItems().map {
+                it.map(PortfolioItems::id)::contains
+            }
+        else -> flowOf { false }
+    }
+
+    context(LightboxActionsContext)
+    private fun addToPortfolioIconEnabled(): Boolean = when {
+        isViewingLocalFolderContributingToPortfolio() -> false
+        sequenceDataSource is LocalAlbum -> true
+        else -> false
+    }
+
+    context(LightboxActionsContext)
+    private fun isViewingLocalFolderContributingToPortfolio() =
+        sequenceDataSource is LocalAlbum && sequenceDataSource.albumId in
+                portfolioUseCase.getPublishedFolderIds()
 
     private val Flow<List<MediaCollection>>.toMediaItems get() = map { collections ->
         collections.flatMap {
@@ -128,27 +163,30 @@ data class LoadMediaItem(
         return ShowMedia(mediaItemStates, index).takeIf { index >=0 }
     }
 
-    private val shouldShowDeleteButton =
-        sequenceDataSource is Feed ||
-        sequenceDataSource is Memory ||
-        sequenceDataSource is LocalAlbum
-
     context(LightboxActionsContext)
-    private fun MediaItem.toSingleMediaItemState() =
-        id.toSingleMediaItemState(isFavourite)
+    private fun MediaItem.toSingleMediaItemState(
+        isInPortfolio: (Long) -> Boolean,
+        showAddToPortfolioIcon: Boolean,
+        addToPortfolioEnabled: Boolean
+    ) = id.toSingleMediaItemState(isFavourite, isInPortfolio, showAddToPortfolioIcon, addToPortfolioEnabled)
 
     context(LightboxActionsContext)
     private fun MediaId<*>.toSingleMediaItemState(
         isFavourite: Boolean = false,
-    ) =
-        SingleMediaItemState(
-            id = this,
-            isFavourite = isFavourite,
-            showFavouriteIcon = preferRemote is MediaId.Remote,
-            showDeleteButton = shouldShowDeleteButton,
-            showEditIcon = shouldShowEditButton,
-            mediaItemSyncState = syncState.takeIf { showMediaSyncState }
-        )
+        isInPortfolio: (Long) -> Boolean = { false },
+        showAddToPortfolioIcon: Boolean = false,
+        addToPortfolioEnabled: Boolean = false,
+    ) = SingleMediaItemState(
+        id = this,
+        isFavourite = isFavourite,
+        showFavouriteIcon = preferRemote is MediaId.Remote,
+        showDeleteButton = sequenceDataSource.shouldShowDeleteButton,
+        showEditIcon = shouldShowEditButton,
+        showAddToPortfolioIcon = showAddToPortfolioIcon,
+        addToPortfolioIconEnabled = addToPortfolioEnabled,
+        inPortfolio = findLocal?.value?.let { isInPortfolio(it) } ?: false,
+        mediaItemSyncState = syncState.takeIf { sequenceDataSource.showMediaSyncState }
+    )
 
     private val MediaId<*>.shouldShowEditButton get() = !isVideo && findLocal != null
 }

@@ -15,6 +15,7 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.portfolio.domain.implementation.usecase
 
+import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.portfolio.PortfolioItems
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItem
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemsOnDevice
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.usecase.MediaUseCase
@@ -63,9 +64,19 @@ class PortfolioUseCase @Inject constructor(
     override fun observePublishedFolderIds(): Flow<Set<Int>> =
         portfolioRepository.observePublishedPortfolio()
 
-    override fun setPortfolioItemPublished(folderId: Int, published: Boolean) {
+    override fun getPublishedFolderIds(): Set<Int> =
+        portfolioRepository.getPublishedPortfolio()
+
+    override fun setPortfolioFolderPublished(folderId: Int, published: Boolean) {
         portfolioRepository.setFolderPublished(folderId, published)
     }
+
+    override fun publishItemToPortfolio(id: Long, folderId: Int, contribute: Boolean) {
+        portfolioRepository.publishItemToPortfolio(id, folderId, contribute)
+    }
+
+    override fun observeIndividualPortfolioItems(): Flow<List<PortfolioItems>> =
+        portfolioRepository.observeIndividualPortfolioItems()
 
     private fun Pair<LocalMediaFolder, List<MediaItem>>.toPortfolioItem(
         isPublished: Boolean,

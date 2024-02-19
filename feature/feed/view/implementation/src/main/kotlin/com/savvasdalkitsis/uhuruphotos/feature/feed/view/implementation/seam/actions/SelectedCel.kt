@@ -32,7 +32,7 @@ data class SelectedCel(
     ) = flow<FeedMutation> {
         when {
             state.selectedCelCount == 0 -> navigator.navigateTo(
-                LightboxNavigationRoute(celState.mediaItem.id, Feed, showMediaSyncState = true)
+                LightboxNavigationRoute(celState.mediaItem.id, Feed)
             )
             celState.selectionMode == SelectionMode.SELECTED -> {
                 uiUseCase.performLongPressHaptic()

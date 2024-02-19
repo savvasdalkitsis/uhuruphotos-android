@@ -17,6 +17,8 @@ package com.savvasdalkitsis.uhuruphotos.feature.portfolio.domain.implementation.
 
 import app.cash.sqldelight.coroutines.asFlow
 import app.cash.sqldelight.coroutines.mapToList
+import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.portfolio.PortfolioItems
+import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.portfolio.PortfolioItemsQueries
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.portfolio.PortfolioQueries
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
@@ -26,10 +28,24 @@ import javax.inject.Inject
 
 class PortfolioRepository @Inject constructor(
     private val portfolioQueries: PortfolioQueries,
+    private val portfolioItemsQueries: PortfolioItemsQueries,
 ) {
 
-    fun observePublishedPortfolio(): Flow<Set<Int>> = portfolioQueries.all().asFlow().mapToList(
-        Dispatchers.IO).map { it.toSet() }.distinctUntilChanged()
+    fun observePublishedPortfolio(): Flow<Set<Int>> = portfolioQueries.all()
+        .asFlow().mapToList(Dispatchers.IO).map { it.toSet() }.distinctUntilChanged()
+
+    fun getPublishedPortfolio(): Set<Int> = portfolioQueries.all().executeAsList().toSet()
+
+    fun publishItemToPortfolio(id: Long, folderId: Int, contribute: Boolean) {
+        if (contribute) {
+            portfolioItemsQueries.insert(id, folderId)
+        } else {
+            portfolioItemsQueries.remove(id)
+        }
+    }
+
+    fun observeIndividualPortfolioItems(): Flow<List<PortfolioItems>> =
+        portfolioItemsQueries.all().asFlow().mapToList(Dispatchers.IO).distinctUntilChanged()
 
     fun setFolderPublished(id: Int, published: Boolean) {
         if (published) {

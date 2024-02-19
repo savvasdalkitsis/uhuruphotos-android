@@ -52,4 +52,5 @@ interface LocalMediaUseCase {
     fun observeLocalMediaSyncJob(): Flow<RefreshJobState?>
 
     suspend fun savePhoto(bitmap: Bitmap, name: String, originalFileUri: Uri? = null): Boolean
+    suspend fun getDefaultBucketId(): Int?
 }

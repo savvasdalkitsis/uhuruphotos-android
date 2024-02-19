@@ -39,9 +39,9 @@ fun mediaItem(id: MediaId<*>, date: String = "") = MediaItemInstance(id, MediaIt
 fun localMediaItem(id: Long, displayDate: String) = mediaItem(local(id), displayDate)
 fun remote(id: String) = MediaId.Remote(id, false, "")
 fun downloading(id: String) = MediaId.Downloading(id, false, "")
-fun local(id: Long) = MediaId.Local(id, false, "", "")
-fun processing(id: Long) = MediaId.Processing(id, false, "", "")
-fun uploading(id: Long) = MediaId.Uploading(id, false, "", "")
+fun local(id: Long) = MediaId.Local(id, 0, false, "", "")
+fun processing(id: Long) = MediaId.Processing(id, 0, false, "", "")
+fun uploading(id: Long) = MediaId.Uploading(id, 0, false, "", "")
 
 fun mediaItem(id: String, hash: String = id) = GetRemoteMediaCollections(
     id,

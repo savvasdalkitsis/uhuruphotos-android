@@ -17,21 +17,40 @@ package com.savvasdalkitsis.uhuruphotos.feature.local.view.implementation.seam.a
 
 import com.savvasdalkitsis.uhuruphotos.feature.local.view.implementation.seam.LocalAlbumActionsContext
 import com.savvasdalkitsis.uhuruphotos.feature.local.view.implementation.seam.LocalAlbumMutation
+import com.savvasdalkitsis.uhuruphotos.feature.local.view.implementation.seam.LocalAlbumMutation.AskForPermissions
+import com.savvasdalkitsis.uhuruphotos.feature.local.view.implementation.seam.LocalAlbumMutation.DisplayContributingToPortfolio
+import com.savvasdalkitsis.uhuruphotos.feature.local.view.implementation.seam.LocalAlbumMutation.PermissionsGranted
 import com.savvasdalkitsis.uhuruphotos.feature.local.view.implementation.ui.state.LocalAlbumState
 import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.model.LocalPermissions
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOf
+import kotlinx.coroutines.flow.mapNotNull
+import kotlinx.coroutines.flow.merge
 
 data class Load(val albumId: Int) : LocalAlbumAction() {
     context(LocalAlbumActionsContext) override fun handle(
         state: LocalAlbumState
-    ) = localMediaUseCase.observePermissionsState()
-        .flatMapLatest { when (it) {
-            is LocalPermissions.RequiresPermissions -> flowOf(LocalAlbumMutation.AskForPermissions(it.deniedPermissions))
-            else -> flow {
-                LocalAlbumMutation.PermissionsGranted
-                localMediaUseCase.refreshLocalMediaFolder(albumId)
+    ) = merge(
+        flow { galleryId = albumId },
+        localMediaUseCase.observePermissionsState()
+            .flatMapLatest {
+                when (it) {
+                    is LocalPermissions.RequiresPermissions -> flowOf(AskForPermissions(it.deniedPermissions))
+                    else -> flow<LocalAlbumMutation> {
+                        emit(PermissionsGranted)
+                        localMediaUseCase.refreshLocalMediaFolder(albumId)
+                    }
+                }
+            },
+        portfolioUseCase.observePublishedFolderIds()
+            .mapNotNull {
+                val primaryFolder = localMediaUseCase.getDefaultBucketId()
+                if (primaryFolder != albumId) {
+                    DisplayContributingToPortfolio(albumId in it)
+                } else {
+                    null
+                }
             }
-        } }
+    )
 }

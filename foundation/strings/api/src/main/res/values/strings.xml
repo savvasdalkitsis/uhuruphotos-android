@@ -371,4 +371,7 @@
     <string name="remember_credentials">Remember credentials</string>
     <string name="cloud_sync_charging_changed">Charging requirements for cloud sync changed</string>
     <string name="cloud_sync_network_changed">Network requirements for cloud sync changed</string>
+    <string name="show_on_feed">Show on feed</string>
+    <string name="contributing_to_feed">Contributing to feed</string>
+    <string name="not_contributing_to_feed">No longer contributing to feed</string>
 </resources>
