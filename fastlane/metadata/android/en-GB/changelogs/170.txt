@@ -1,0 +1,3 @@
+* Adding options to select when uploading happens (roaming, charging etc)
+* User can now selected individual media to be added to the feed (and be synced to the server if enabled)
+* Adding option to see all local folders on its own page
