@@ -16,8 +16,10 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.feature.portfolio.view.implementation.seam
 
 import com.savvasdalkitsis.uhuruphotos.feature.portfolio.domain.api.usecase.PortfolioUseCase
+import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.Navigator
 import javax.inject.Inject
 
 internal class PortfolioActionsContext @Inject constructor(
     val portfolioUseCase: PortfolioUseCase,
+    val navigator: Navigator,
 )

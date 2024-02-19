@@ -27,10 +27,11 @@ import com.savvasdalkitsis.uhuruphotos.feature.portfolio.view.implementation.ui.
 import com.savvasdalkitsis.uhuruphotos.feature.portfolio.view.implementation.ui.state.PortfolioItems.Loading
 import com.savvasdalkitsis.uhuruphotos.feature.portfolio.view.implementation.ui.state.PortfolioItems.RequiresPermissions
 import com.savvasdalkitsis.uhuruphotos.feature.portfolio.view.implementation.ui.state.PortfolioState
-import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
 import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.PreviewAppTheme
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.CommonScaffold
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.FullLoading
+import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.SelectionMode.SELECTED
+import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.SelectionMode.UNSELECTED
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.UpNavButton
 import kotlinx.collections.immutable.toPersistentList
 
@@ -40,7 +41,7 @@ internal fun Portfolio(
     action: (PortfolioAction) -> Unit = {},
 ) {
     CommonScaffold(
-        title = { Text(text = stringResource(string.folders_on_feed)) },
+        title = { Text(text = state.title?.let { stringResource(it) } ?: "") },
         navigationIcon = { UpNavButton() },
     ) { contentPadding ->
         when(state.localMedia) {
@@ -81,8 +82,8 @@ fun PortfolioNoPermissionsPreview() {
 
 @Composable
 private fun state(index: Int) = PortfolioCelState(
-    selected = index % 2 == 0,
-    editable = index > 0,
+    selection = if (index % 2 == 0) SELECTED else UNSELECTED,
+    clickable = index > 0,
     folder = LocalMediaFolder(index, "Folder $index"),
     vitrine = VitrineState()
 )

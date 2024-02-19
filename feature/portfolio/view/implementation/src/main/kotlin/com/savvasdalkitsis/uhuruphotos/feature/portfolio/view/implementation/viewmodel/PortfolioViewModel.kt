@@ -34,6 +34,6 @@ internal class PortfolioViewModel @Inject constructor(
 ) {
 
     override fun onRouteSet(route: PortfolioNavigationRoute) {
-        action(Load)
+        action(Load(route))
     }
 }

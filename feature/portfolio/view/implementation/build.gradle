@@ -16,6 +16,7 @@ dependencies {
             libs.androidx.compose.ui.tooling.preview,
             libs.bundles.autodagger,
             libs.kotlinx.immutable,
+            project(":feature:local:view:api"),
             project(":feature:portfolio:domain:api"),
             project(":feature:portfolio:view:api"),
             project(":feature:settings:domain:api"),

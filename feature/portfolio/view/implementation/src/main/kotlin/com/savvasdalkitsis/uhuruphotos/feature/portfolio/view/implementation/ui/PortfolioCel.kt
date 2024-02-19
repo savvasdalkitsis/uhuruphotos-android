@@ -24,12 +24,15 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.NamedVitrine
 import com.savvasdalkitsis.uhuruphotos.feature.portfolio.view.implementation.seam.actions.ChangePortfolioItem
+import com.savvasdalkitsis.uhuruphotos.feature.portfolio.view.implementation.seam.actions.NavigateToFolder
 import com.savvasdalkitsis.uhuruphotos.feature.portfolio.view.implementation.seam.actions.PortfolioAction
 import com.savvasdalkitsis.uhuruphotos.feature.portfolio.view.implementation.ui.state.PortfolioCelState
 import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.R
 import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.CustomColors
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.Checkable
-import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.SelectionMode
+import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.SelectionMode.SELECTED
+import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.SelectionMode.UNDEFINED
+import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.SelectionMode.UNSELECTED
 
 @Composable
 fun PortfolioCel(
@@ -40,13 +43,16 @@ fun PortfolioCel(
         modifier = Modifier.fillMaxHeight(1f),
         id = cel.folder.id,
         shape = RoundedCornerShape(12.dp),
-        selectionMode = when {
-            cel.selected -> SelectionMode.SELECTED
-            else -> SelectionMode.UNSELECTED
-        },
+        selectionMode = cel.selection,
         selectionBackgroundColor = CustomColors.selectedBackground,
-        editable = cel.editable,
-        onClick = { action(ChangePortfolioItem(cel.folder, !cel.selected)) }
+        editable = cel.clickable,
+        onClick = {
+            when(cel.selection) {
+                UNDEFINED -> action(NavigateToFolder(cel.folder))
+                SELECTED -> action(ChangePortfolioItem(cel.folder, false))
+                UNSELECTED -> action(ChangePortfolioItem(cel.folder, true))
+            }
+        }
     ) {
         NamedVitrine(
             modifier = Modifier.fillMaxWidth(),

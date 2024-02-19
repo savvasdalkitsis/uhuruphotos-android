@@ -17,10 +17,11 @@ package com.savvasdalkitsis.uhuruphotos.feature.portfolio.view.implementation.ui
 
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.state.VitrineState
 import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.model.LocalMediaFolder
+import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.SelectionMode
 
 data class PortfolioCelState(
-    val selected: Boolean,
-    val editable: Boolean,
+    val selection: SelectionMode,
+    val clickable: Boolean,
     val folder: LocalMediaFolder,
     val vitrine: VitrineState,
 )

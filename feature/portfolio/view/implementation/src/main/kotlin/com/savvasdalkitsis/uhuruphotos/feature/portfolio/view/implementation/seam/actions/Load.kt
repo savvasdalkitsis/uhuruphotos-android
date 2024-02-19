@@ -20,6 +20,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.state.to
 import com.savvasdalkitsis.uhuruphotos.feature.portfolio.domain.api.domain.PortfolioLocalMedia.Error
 import com.savvasdalkitsis.uhuruphotos.feature.portfolio.domain.api.domain.PortfolioLocalMedia.Found
 import com.savvasdalkitsis.uhuruphotos.feature.portfolio.domain.api.domain.PortfolioLocalMedia.RequiresPermissions
+import com.savvasdalkitsis.uhuruphotos.feature.portfolio.view.api.navigation.PortfolioNavigationRoute
 import com.savvasdalkitsis.uhuruphotos.feature.portfolio.view.implementation.seam.PortfolioActionsContext
 import com.savvasdalkitsis.uhuruphotos.feature.portfolio.view.implementation.seam.PortfolioMutation
 import com.savvasdalkitsis.uhuruphotos.feature.portfolio.view.implementation.seam.PortfolioMutation.RequestPermissions
@@ -27,24 +28,35 @@ import com.savvasdalkitsis.uhuruphotos.feature.portfolio.view.implementation.sea
 import com.savvasdalkitsis.uhuruphotos.feature.portfolio.view.implementation.ui.state.PortfolioCelState
 import com.savvasdalkitsis.uhuruphotos.feature.portfolio.view.implementation.ui.state.PortfolioState
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.Mutation
+import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.SelectionMode.SELECTED
+import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.SelectionMode.UNDEFINED
+import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.SelectionMode.UNSELECTED
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.emitAll
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.map
 
-data object Load : PortfolioAction() {
+data class Load(val route: PortfolioNavigationRoute) : PortfolioAction() {
 
     context(PortfolioActionsContext)
     override fun handle(state: PortfolioState): Flow<Mutation<PortfolioState>> = flow {
+        emit(PortfolioMutation.ChangeTitle(route.title))
         emitAll(
             portfolioUseCase.observePortfolio().map { portfolio ->
                 when(portfolio) {
                     is Found -> PortfolioMutation.DisplayPortfolio(portfolio.items.map { item ->
                         PortfolioCelState(
-                            selected = item.published,
-                            editable = item.canBeModified,
+                            selection = when {
+                                !route.editMode -> UNDEFINED
+                                item.published -> SELECTED
+                                else -> UNSELECTED
+                            },
+                            clickable = when {
+                                route.editMode -> item.canBeModified
+                                else -> true
+                            },
                             folder = item.folder,
-                            vitrine = VitrineState(item.items.map { it.toCel() })
+                            vitrine = VitrineState(item.items.map { it.toCel() }),
                         )
                     })
                     is RequiresPermissions -> RequestPermissions(portfolio.deniedPermissions)
