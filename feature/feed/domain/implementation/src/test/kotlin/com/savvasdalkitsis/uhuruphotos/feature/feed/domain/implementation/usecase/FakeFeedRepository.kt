@@ -31,5 +31,5 @@ fun FeedRepository.hasNoRemoteMedia() {
 }
 
 fun FeedRepository.returnsRemoteFeed(vararg feed: Pair<String, List<GetRemoteMediaCollections>>) {
-    every { observeRemoteMediaCollectionsByDate(ALL, true) }.returns(flowOf(Group(feed.toMap())))
+    every { observeRemoteMediaCollectionsByDate(ALL, false) }.returns(flowOf(Group(feed.toMap())))
 }

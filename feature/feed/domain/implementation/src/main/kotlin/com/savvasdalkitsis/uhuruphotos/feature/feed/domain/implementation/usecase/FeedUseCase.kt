@@ -41,6 +41,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.portfolio.domain.api.usecase.Port
 import com.savvasdalkitsis.uhuruphotos.feature.upload.domain.api.usecase.UploadUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.welcome.domain.api.usecase.WelcomeUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.welcome.domain.api.usecase.flow
+import com.savvasdalkitsis.uhuruphotos.foundation.coroutines.api.andThenSwitchTo
 import com.savvasdalkitsis.uhuruphotos.foundation.coroutines.api.safelyOnStartIgnoring
 import com.savvasdalkitsis.uhuruphotos.foundation.group.api.model.Group
 import com.savvasdalkitsis.uhuruphotos.foundation.group.api.model.mapValues
@@ -80,12 +81,23 @@ internal class FeedUseCase @Inject constructor(
     override fun observeFeed(
         feedFetchType: FeedFetchType,
         loadSmallInitialChunk: Boolean,
-    ): Flow<List<MediaCollection>> = merge(
-        feedCache.observeFeed(),
-        liveFeed(feedFetchType, loadSmallInitialChunk).onEach {
-            feedCache.cacheFeed(it)
-        }
-    )
+    ): Flow<List<MediaCollection>> = when {
+        loadSmallInitialChunk -> combinedFeed(feedFetchType, true)
+            .andThenSwitchTo(
+                combinedFeed(feedFetchType, false),
+            )
+        else -> combinedFeed(feedFetchType, false)
+    }.distinctUntilChanged()
+
+    private fun combinedFeed(
+        feedFetchType: FeedFetchType,
+        loadSmallInitialChunk: Boolean
+    ) = merge(
+            feedCache.observeFeed(feedFetchType, loadSmallInitialChunk),
+            liveFeed(feedFetchType, loadSmallInitialChunk).onEach {
+                feedCache.cacheFeed(it, feedFetchType, loadSmallInitialChunk)
+            }
+        )
 
     private fun liveFeed(
         feedFetchType: FeedFetchType,

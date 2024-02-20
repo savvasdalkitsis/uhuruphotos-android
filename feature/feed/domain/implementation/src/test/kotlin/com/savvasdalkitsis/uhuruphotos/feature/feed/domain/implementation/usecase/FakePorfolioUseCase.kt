@@ -21,6 +21,7 @@ import kotlinx.coroutines.flow.flowOf
 
 fun PortfolioUseCase.defaults() = apply {
     hasNoPublishedPortfolio()
+    every { observeIndividualPortfolioItems() }.returns(flowOf(emptyList()))
 }
 
 fun PortfolioUseCase.hasNoPublishedPortfolio() {

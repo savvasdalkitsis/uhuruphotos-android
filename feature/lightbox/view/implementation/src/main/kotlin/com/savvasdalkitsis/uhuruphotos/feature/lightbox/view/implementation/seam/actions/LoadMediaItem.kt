@@ -107,8 +107,8 @@ data class LoadMediaItem(
     context(LightboxActionsContext)
     private fun observeMediaItemsSequence(): Flow<List<MediaItem>> = when (sequenceDataSource) {
         Single -> emptyFlow()
-        Feed -> feedUseCase.observeFeed(FeedFetchType.ONLY_WITH_DATES).toMediaItems
-        is Memory -> memoriesUseCase.observeMemories().map { collections ->
+        Feed -> feedUseCase.observeFeed(FeedFetchType.ONLY_WITH_DATES, loadSmallInitialChunk = false).toMediaItems
+        is Memory -> memoriesUseCase.observeMemories(loadSmallInitialChunk = false).map { collections ->
             collections.find { it.yearsAgo == sequenceDataSource.yearsAgo }?.mediaCollection?.mediaItems
             ?: emptyList()
         }

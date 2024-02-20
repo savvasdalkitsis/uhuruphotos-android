@@ -2,6 +2,7 @@ package com.savvasdalkitsis.uhuruphotos.feature.feed.domain.implementation.useca
 
 import app.cash.turbine.TurbineTestContext
 import app.cash.turbine.test
+import com.savvasdalkitsis.uhuruphotos.feature.feed.domain.api.model.FeedFetchType
 import com.savvasdalkitsis.uhuruphotos.feature.feed.domain.api.worker.FeedWorkScheduler
 import com.savvasdalkitsis.uhuruphotos.feature.feed.domain.implementation.repository.FeedCache
 import com.savvasdalkitsis.uhuruphotos.feature.feed.domain.implementation.repository.FeedRepository
@@ -53,7 +54,7 @@ class FeedUseCaseTest {
             "day2" to listOf(mediaItem("3")),
         )
 
-        underTest.observeFeed().assert(
+        observeFeed().assert(
             mediaCollection("day1", remote("1"), remote("2")),
             mediaCollection("day2", remote("3")),
         )
@@ -67,7 +68,7 @@ class FeedUseCaseTest {
         )
         downloadUseCase.isDownloading("2", "3")
 
-        underTest.observeFeed().assert(
+        observeFeed().assert(
             mediaCollection("day1", remote("1"), downloading("2")),
             mediaCollection("day2", downloading("3")),
         )
@@ -83,7 +84,7 @@ class FeedUseCaseTest {
             ),
         )
 
-        underTest.observeFeed().assert(
+        observeFeed().assert(
             mediaCollection("day1".localOnlyId, "day1", local(1), local(2)),
             mediaCollection("day2".localOnlyId, "day2", local(3)),
         )
@@ -98,7 +99,7 @@ class FeedUseCaseTest {
         )
         uploadUseCase.hasUploadsInProgress(1)
 
-        underTest.observeFeed().assert(
+        observeFeed().assert(
             mediaCollection("day1".localOnlyId, "day1", uploading(1)),
         )
     }
@@ -116,7 +117,7 @@ class FeedUseCaseTest {
         )
         portfolioUseCase.hasPublishedPortfolio(102)
 
-        underTest.observeFeed().assert(
+        observeFeed().assert(
             mediaCollection("day1".localOnlyId, "day1", local(1)),
             mediaCollection("day2".localOnlyId, "day2", local(3)),
         )
@@ -133,7 +134,7 @@ class FeedUseCaseTest {
             ),
         )
 
-        underTest.observeFeed().assert(
+        observeFeed().assert(
             mediaCollection("day1", remote("1")),
             mediaCollection("day2".localOnlyId, "day2", local(2)),
         )
@@ -150,7 +151,7 @@ class FeedUseCaseTest {
             ),
         )
 
-        underTest.observeFeed().assert(
+        observeFeed().assert(
             mediaCollection("day1", remote("1"), local(2)),
         )
     }
@@ -170,7 +171,7 @@ class FeedUseCaseTest {
         )
         portfolioUseCase.hasPublishedPortfolio(101)
 
-        underTest.observeFeed().assert(
+        observeFeed().assert(
             MediaCollection("day1", listOf(
                 mediaGroup(mediaItem(remote("1"), "day1").withHash("hash"), local2, local3)
             ), "day1"),
@@ -188,7 +189,7 @@ class FeedUseCaseTest {
         )
         uploadUseCase.hasProcessingInProgress(1, 2, 3)
 
-        underTest.observeFeed().assert(
+        observeFeed().assert(
             mediaCollection("day1".localOnlyId, "day1", processing(1), processing(2)),
             mediaCollection("day2".localOnlyId, "day2", processing(3)),
         )
@@ -200,9 +201,13 @@ class FeedUseCaseTest {
             "day1" to listOf(mediaItem("1"), mediaItem("2")),
         )
 
-        underTest.observeFeed().collect()
+        underTest.observeFeed(FeedFetchType.ALL, false).collect()
 
-        verify { feedCache.cacheFeed(listOf(mediaCollection("day1", remote("1"), remote("2")))) }
+        verify { feedCache.cacheFeed(
+            listOf(mediaCollection("day1", remote("1"), remote("2"))),
+            FeedFetchType.ALL,
+            false,
+        ) }
     }
 
     @Test
@@ -212,15 +217,17 @@ class FeedUseCaseTest {
         )
         feedCache.hasFeedCached(cached)
         feedRepository.returnsRemoteFeed(
-            "day1" to listOf(mediaItem("1")),
+            "day2" to listOf(mediaItem("2")),
         )
 
-        underTest.observeFeed().test {
+        observeFeed().test {
             expect(cached)
-            expect(listOf(mediaCollection("day1", remote("1"))))
+            expect(listOf(mediaCollection("day2", remote("2"))))
             awaitComplete()
         }
     }
+
+    private fun observeFeed() = underTest.observeFeed(FeedFetchType.ALL, false)
 
     private val String.localOnlyId get() = "local_media_collection_$this"
 

@@ -31,3 +31,7 @@ inline fun onIO(crossinline action: suspend () -> Unit) = CoroutineScope(Dispatc
 suspend inline fun <T> awaitOnMain(crossinline action: suspend () -> T) = CoroutineScope(Dispatchers.Main).async {
     action()
 }.await()
+
+suspend inline fun <T> awaitOnIO(crossinline action: suspend () -> T) = CoroutineScope(Dispatchers.IO).async {
+    action()
+}.await()

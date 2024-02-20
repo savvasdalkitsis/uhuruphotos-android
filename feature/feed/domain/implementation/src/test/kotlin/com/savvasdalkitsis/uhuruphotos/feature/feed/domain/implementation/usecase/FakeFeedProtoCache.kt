@@ -15,6 +15,7 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.feed.domain.implementation.usecase
 
+import com.savvasdalkitsis.uhuruphotos.feature.feed.domain.api.model.FeedFetchType
 import com.savvasdalkitsis.uhuruphotos.feature.feed.domain.implementation.repository.FeedCache
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaCollection
 import io.mockk.every
@@ -22,9 +23,9 @@ import kotlinx.coroutines.flow.emptyFlow
 import kotlinx.coroutines.flow.flowOf
 
 fun FeedCache.defaults() = apply {
-    every { observeFeed() }.returns(emptyFlow())
+    every { observeFeed(FeedFetchType.ALL, false) }.returns(emptyFlow())
 }
 
 fun FeedCache.hasFeedCached(feed: List<MediaCollection>) = apply {
-    every { observeFeed() }.returns(flowOf(feed))
+    every { observeFeed(FeedFetchType.ALL, false) }.returns(flowOf(feed))
 }

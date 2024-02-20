@@ -24,6 +24,7 @@ import com.savvasdalkitsis.uhuruphotos.foundation.log.api.log
 import com.savvasdalkitsis.uhuruphotos.foundation.result.api.SimpleResult
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.currentCoroutineContext
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.channelFlow
@@ -74,3 +75,19 @@ fun <V> Flow<Result<V, Throwable>>.onErrors(onError: suspend (Throwable) -> Unit
     }
 
 fun <V> Flow<Result<V, Throwable>>.onErrorsIgnore() : Flow<V> = onErrors { }
+
+fun <T> Flow<T>.andThenSwitchTo(
+    second: Flow<T>,
+) = channelFlow {
+    coroutineScope {
+        val firstJob = launch {
+            this@andThenSwitchTo.collect {
+                channel.send(it)
+            }
+        }
+        second.collect {
+            firstJob.cancel()
+            channel.send(it)
+        }
+    }
+}

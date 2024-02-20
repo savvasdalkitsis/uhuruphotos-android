@@ -24,7 +24,6 @@ import com.savvasdalkitsis.uhuruphotos.foundation.date.api.DateParser
 import dagger.hilt.android.scopes.ActivityRetainedScoped
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.distinctUntilChanged
-import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
 import org.joda.time.DateTime
 import se.ansman.dagger.auto.AutoBind
@@ -37,15 +36,12 @@ class MemoriesUseCase @Inject constructor(
     private val dateParser: DateParser,
 ) : MemoriesUseCase {
 
-    override fun observeMemories(): Flow<List<MemoryCollection>> =
-        feedUseCase.observeFeed(FeedFetchType.ONLY_WITH_DATES)
+    override fun observeMemories(loadSmallInitialChunk: Boolean): Flow<List<MemoryCollection>> =
+        feedUseCase.observeFeed(FeedFetchType.ONLY_WITH_DATES, loadSmallInitialChunk)
             .distinctUntilChanged()
             .map {
                 it.findMemories()
             }
-
-    override suspend fun getMemories(): List<MemoryCollection> =
-        feedUseCase.observeFeed(FeedFetchType.ONLY_WITH_DATES).first().findMemories()
 
     private fun DateTime?.sameAsNow(field: DateTime.() -> Int) =
         this != null && field(this) == field(DateTime.now())

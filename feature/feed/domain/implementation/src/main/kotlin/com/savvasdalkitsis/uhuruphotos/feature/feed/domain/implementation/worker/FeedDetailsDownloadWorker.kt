@@ -52,7 +52,7 @@ internal class FeedDetailsDownloadWorker @AssistedInject constructor(
 
     override suspend fun work(): Result {
         updateProgress(0)
-        val items = feedUseCase.observeFeed(FeedFetchType.ALL).first()
+        val items = feedUseCase.observeFeed(FeedFetchType.ALL, loadSmallInitialChunk = false).first()
             .flatMap { it.mediaItems }.mapNotNull { it.id.findRemote }
         val total = items.size
         val result = binding {

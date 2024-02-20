@@ -15,6 +15,7 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.feed.domain.implementation.usecase
 
+import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.media.upload.ProcessingMediaItems
 import com.savvasdalkitsis.uhuruphotos.feature.upload.domain.api.usecase.UploadUseCase
 import io.mockk.every
 import kotlinx.coroutines.flow.flowOf
@@ -37,5 +38,5 @@ fun UploadUseCase.hasNoProcessingInProgress() {
 }
 
 fun UploadUseCase.hasProcessingInProgress(vararg ids: Long) {
-    every { observeProcessing() }.returns(flowOf(ids.toSet()))
+    every { observeProcessing() }.returns(flowOf(ids.map { ProcessingMediaItems(it, null, null) }.toSet()))
 }

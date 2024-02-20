@@ -38,8 +38,6 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.emitAll
 import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.flow.onEach
-import kotlinx.coroutines.flow.onStart
 import javax.inject.Inject
 
 class FeedRepository @Inject constructor(
@@ -48,8 +46,6 @@ class FeedRepository @Inject constructor(
     private val remoteMediaUseCase: RemoteMediaUseCase,
     private val feedService: FeedService,
 ) {
-
-    private var allRemoteMediaCollections: Group<String, GetRemoteMediaCollections> = Group(emptyMap())
 
     suspend fun hasRemoteMediaCollections(): Boolean =
         remoteMediaCollectionsQueries.remoteMediaCollectionCount().awaitSingle() > 0
@@ -60,30 +56,12 @@ class FeedRepository @Inject constructor(
     ): Flow<Group<String, GetRemoteMediaCollections>> = flow {
         try {
             emitAll(remoteMediaCollectionsQueries.getRemoteMediaCollections(
-                limit = -1,
+                limit = if (loadSmallInitialChunk) 100 else -1,
                 includeNoDates = feedFetchType.includeMediaWithoutDate,
                 includeDates = feedFetchType.includeMediaWithDate,
                 onlyVideos = feedFetchType.onlyVideos,
             ).asFlow()
-                .onStart {
-                    if (loadSmallInitialChunk && allRemoteMediaCollections.items.isEmpty()) {
-                        emit(remoteMediaCollectionsQueries.getRemoteMediaCollections(
-                            limit = 100,
-                            includeNoDates = feedFetchType.includeMediaWithoutDate,
-                            includeDates = feedFetchType.includeMediaWithDate,
-                            onlyVideos = feedFetchType.onlyVideos,
-                        ))
-                    }
-                }
                 .mapToList(Dispatchers.IO).groupBy(GetRemoteMediaCollections::id)
-                .onStart {
-                    if (allRemoteMediaCollections.items.isNotEmpty()) {
-                        emit(allRemoteMediaCollections)
-                    }
-                }
-                .onEach {
-                    allRemoteMediaCollections = it
-                }
                 .distinctUntilChanged()
             )
         } catch (e: Exception) {
