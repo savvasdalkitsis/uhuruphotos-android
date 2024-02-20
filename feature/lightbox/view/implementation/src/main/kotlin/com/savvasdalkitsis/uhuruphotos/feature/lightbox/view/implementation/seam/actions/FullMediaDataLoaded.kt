@@ -29,10 +29,11 @@ data class FullMediaDataLoaded(val mediaItemState: SingleMediaItemState) : Light
     context(LightboxActionsContext) override fun handle(
         state: LightboxState
     ) = flow {
-        if (!(mediaItemState.id is MediaId.Remote && mediaItemState.id.isVideo)) {
+        val serverUrl = serverUseCase.getServerUrl()
+        if (serverUrl != null && !(mediaItemState.id is MediaId.Remote && mediaItemState.id.isVideo)) {
             emit(ShowShareIcon(mediaItemState.id))
             emit(ShowUseAsIcon(mediaItemState.id))
-            val metadata = metadataUseCase.extractMetadata(mediaItemState.id.fullResUri)
+            val metadata = metadataUseCase.extractMetadata(mediaItemState.id.fullResUri(serverUrl))
             if (metadata != null) {
                 emit(ShowMetadata(mediaItemState.id, metadata))
             }

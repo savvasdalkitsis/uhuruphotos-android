@@ -33,28 +33,24 @@ data class UserAlbumState(
     val photoCount: Int?,
 )
 
-fun UserAlbums.toUserAlbumState(serverUrl: String) = UserAlbumState(
+fun UserAlbums.toUserAlbumState() = UserAlbumState(
     id = id,
     cover = VitrineState(
         cel1 = celState(
             coverPhoto1Hash,
             coverPhoto1IsVideo,
-            serverUrl,
         ),
         cel2 = celState(
             coverPhoto2Hash,
             coverPhoto2IsVideo,
-            serverUrl,
         ),
         cel3 = celState(
             coverPhoto3Hash,
             coverPhoto3IsVideo,
-            serverUrl,
         ),
         cel4 = celState(
             coverPhoto4Hash,
             coverPhoto4IsVideo,
-            serverUrl,
         ),
     ),
     title = title.toTitleOr(string.missing_album_title),
@@ -64,12 +60,11 @@ fun UserAlbums.toUserAlbumState(serverUrl: String) = UserAlbumState(
 private fun celState(
     imageHash: String?,
     coverIsVideo: Boolean?,
-    serverUrl: String,
 ): CelState? =
     imageHash?.let {
         val isVideo = coverIsVideo ?: false
         MediaItemInstance(
-            id = MediaId.Remote(it, isVideo, serverUrl),
+            id = MediaId.Remote(it, isVideo),
             mediaHash = MediaItemHash(it),
             displayDayDate = null,
             ratio = 1f,

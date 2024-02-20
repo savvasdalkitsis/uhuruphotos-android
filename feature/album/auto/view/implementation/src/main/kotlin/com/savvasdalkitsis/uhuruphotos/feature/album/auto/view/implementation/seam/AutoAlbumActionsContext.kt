@@ -67,8 +67,7 @@ internal class AutoAlbumActionsContext @Inject constructor(
                                     MediaItemInstance(
                                         id = MediaId.Remote(
                                             it.photoId.toString(),
-                                            it.video ?: false,
-                                            serverUrl
+                                            it.video ?: false
                                         ),
                                         mediaHash = MediaItemHash(it.photoId.toString()),
                                         displayDayDate = date,

@@ -68,6 +68,8 @@ dependencies {
             libs.bundles.autodagger,
             libs.hilt,
             libs.permissions.base,
+            project(":feature:auth:domain:api"),
+            project(":feature:auth:view:api"),
             project(":feature:download:domain:api"),
             project(":feature:home:view:api"),
             project(":feature:settings:domain:api"),

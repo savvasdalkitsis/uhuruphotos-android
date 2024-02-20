@@ -60,14 +60,14 @@ internal class PrecacheFeedThumbnailsWorker @AssistedInject constructor(
             .items.entries.flatMap { entry ->
                 entry.value.mapNotNull { collections ->
                     collections.photoId?.let { id ->
-                        MediaId.Remote(id, collections.isVideo, serverUrl)
+                        MediaId.Remote(id, collections.isVideo)
                     }
                 }
             }
         for ((index, id) in mediaItemIds.withIndex()) {
             if (isStopped)
                 break
-            remoteMediaPrecacher.precacheMedia(id.thumbnailUri, id.isVideo)
+            remoteMediaPrecacher.precacheMedia(id.thumbnailUri(serverUrl), id.isVideo)
                 .onSuccess {
                     if (it == CHANGED) {
                         delay(300)

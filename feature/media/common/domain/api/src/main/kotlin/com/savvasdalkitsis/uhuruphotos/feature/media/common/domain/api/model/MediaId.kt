@@ -35,8 +35,8 @@ sealed class MediaId<T : Serializable> private constructor(
 
     abstract val value: T
     abstract val isVideo: Boolean
-    abstract val thumbnailUri: String
-    abstract val fullResUri: String
+    abstract fun thumbnailUri(serverUrl: String?): String
+    abstract fun fullResUri(serverUrl: String?): String
     abstract val syncState: MediaItemSyncState
 
     abstract val preferRemote: MediaId<*>
@@ -51,7 +51,6 @@ sealed class MediaId<T : Serializable> private constructor(
     data class Remote(
         override val value: String,
         override val isVideo: Boolean,
-        val serverUrl: String,
     ): MediaId<String>() {
         @IgnoredOnParcel
         @Transient
@@ -72,14 +71,12 @@ sealed class MediaId<T : Serializable> private constructor(
 
         @IgnoredOnParcel
         override val syncState: MediaItemSyncState = REMOTE_ONLY
-        @IgnoredOnParcel
-        @kotlinx.serialization.Transient
-        override val fullResUri = value.toFullSizeUrlFromId(isVideo, serverUrl)
-        @IgnoredOnParcel
-        @kotlinx.serialization.Transient
-        override val thumbnailUri = value.toThumbnailUrlFromId(serverUrl)
+        override fun fullResUri(serverUrl: String?): String =
+            value.toFullSizeUrlFromId(isVideo, serverUrl!!)
+        override fun thumbnailUri(serverUrl: String?): String =
+            value.toThumbnailUrlFromId(serverUrl!!)
 
-        fun toDownloading() = Downloading(value, isVideo, serverUrl)
+        fun toDownloading() = Downloading(value, isVideo)
     }
 
     @Parcelize
@@ -87,10 +84,9 @@ sealed class MediaId<T : Serializable> private constructor(
     data class Downloading(
         override val value: String,
         override val isVideo: Boolean,
-        val serverUrl: String,
     ): MediaId<String>() {
         @IgnoredOnParcel
-        val remote get() = Remote(value, isVideo, serverUrl)
+        val remote get() = Remote(value, isVideo)
 
         @IgnoredOnParcel
         @Transient
@@ -111,10 +107,8 @@ sealed class MediaId<T : Serializable> private constructor(
 
         @IgnoredOnParcel
         override val syncState: MediaItemSyncState = DOWNLOADING
-        @IgnoredOnParcel
-        override val fullResUri = remote.fullResUri
-        @IgnoredOnParcel
-        override val thumbnailUri = remote.thumbnailUri
+        override fun fullResUri(serverUrl: String?): String = remote.fullResUri(serverUrl)
+        override fun thumbnailUri(serverUrl: String?): String = remote.thumbnailUri(serverUrl)
     }
 
     @Parcelize
@@ -124,7 +118,7 @@ sealed class MediaId<T : Serializable> private constructor(
         val folderId: Int,
         override val isVideo: Boolean,
         val contentUri: String,
-        override val thumbnailUri: String,
+        val thumbnailUri: String,
     ): MediaId<Long>() {
         @IgnoredOnParcel
         val local get() = Local(value, folderId, isVideo, contentUri, thumbnailUri)
@@ -149,9 +143,8 @@ sealed class MediaId<T : Serializable> private constructor(
         @IgnoredOnParcel
         @kotlinx.serialization.Transient
         override val syncState: MediaItemSyncState = UPLOADING
-        @IgnoredOnParcel
-        @kotlinx.serialization.Transient
-        override val fullResUri = local.fullResUri
+        override fun fullResUri(serverUrl: String?): String = local.fullResUri(serverUrl)
+        override fun thumbnailUri(serverUrl: String?): String = thumbnailUri
     }
 
 
@@ -162,7 +155,7 @@ sealed class MediaId<T : Serializable> private constructor(
         val folderId: Int,
         override val isVideo: Boolean,
         val contentUri: String,
-        override val thumbnailUri: String,
+        val thumbnailUri: String,
     ): MediaId<Long>() {
         @IgnoredOnParcel
         val local get() = Local(value, folderId, isVideo, contentUri, thumbnailUri)
@@ -187,9 +180,9 @@ sealed class MediaId<T : Serializable> private constructor(
         @IgnoredOnParcel
         @kotlinx.serialization.Transient
         override val syncState: MediaItemSyncState = PROCESSING
-        @IgnoredOnParcel
-        @kotlinx.serialization.Transient
-        override val fullResUri = local.fullResUri
+
+        override fun fullResUri(serverUrl: String?): String = local.fullResUri(serverUrl)
+        override fun thumbnailUri(serverUrl: String?): String = thumbnailUri
     }
 
     @Parcelize
@@ -199,7 +192,7 @@ sealed class MediaId<T : Serializable> private constructor(
         val folderId: Int,
         override val isVideo: Boolean,
         val contentUri: String,
-        override val thumbnailUri: String,
+        val thumbnailUri: String,
     ): MediaId<Long>() {
         @IgnoredOnParcel
         @Transient
@@ -221,9 +214,8 @@ sealed class MediaId<T : Serializable> private constructor(
         @IgnoredOnParcel
         @kotlinx.serialization.Transient
         override val syncState: MediaItemSyncState = LOCAL_ONLY
-        @IgnoredOnParcel
-        @kotlinx.serialization.Transient
-        override val fullResUri = contentUri
+        override fun fullResUri(serverUrl: String?): String = contentUri
+        override fun thumbnailUri(serverUrl: String?): String = thumbnailUri
 
         fun toUploading() = Uploading(value, folderId, isVideo, contentUri, thumbnailUri)
         fun toProcessing() = Processing(value, folderId, isVideo, contentUri, thumbnailUri)
@@ -261,15 +253,11 @@ sealed class MediaId<T : Serializable> private constructor(
             findLocal == null -> REMOTE_ONLY
             else -> SYNCED
         }
-        @IgnoredOnParcel
-        @kotlinx.serialization.Transient
-        override val fullResUri = preferLocal.fullResUri
-        @IgnoredOnParcel
-        @kotlinx.serialization.Transient
-        override val thumbnailUri = if (isVideo)
-                preferRemote.thumbnailUri
-            else
-                preferLocal.thumbnailUri
+        override fun fullResUri(serverUrl: String?): String = preferLocal.fullResUri(serverUrl)
+        override fun thumbnailUri(serverUrl: String?): String = if (isVideo)
+            preferRemote.thumbnailUri(serverUrl)
+        else
+            preferLocal.thumbnailUri(serverUrl)
 
         companion object {
             operator fun invoke(

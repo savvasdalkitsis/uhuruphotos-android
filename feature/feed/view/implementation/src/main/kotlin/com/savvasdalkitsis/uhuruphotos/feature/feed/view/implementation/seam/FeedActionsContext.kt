@@ -16,6 +16,7 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam
 
 import com.savvasdalkitsis.uhuruphotos.feature.auth.domain.api.usecase.AuthenticationLoginUseCase
+import com.savvasdalkitsis.uhuruphotos.feature.auth.domain.api.usecase.ServerUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.avatar.domain.api.usecase.AvatarUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.feed.domain.api.usecase.FeedUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.feed.domain.api.worker.FeedWorkScheduler
@@ -65,6 +66,7 @@ internal class FeedActionsContext @Inject constructor(
     val welcomeUseCase: WelcomeUseCase,
     val syncUseCase: SyncUseCase,
     val authenticationLoginUseCase: AuthenticationLoginUseCase,
+    val serverUseCase: ServerUseCase,
 ) {
     suspend fun CelState.deselect() {
         selectionList.deselect(mediaItem.id)

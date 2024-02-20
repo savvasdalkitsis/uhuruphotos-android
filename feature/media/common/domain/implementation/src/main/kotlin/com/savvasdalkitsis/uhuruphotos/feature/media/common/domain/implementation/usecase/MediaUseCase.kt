@@ -172,12 +172,11 @@ class MediaUseCase @Inject constructor(
 
     override suspend fun List<DbRemoteMediaItemSummary>.mapToMediaItems(): Result<List<MediaItem>, Throwable> =
         withFavouriteThreshold { threshold ->
-            val serverUrl = serverUseCase.getServerUrl()!!
             map { dbRecord ->
                 val date = dateDisplayer.dateString(dbRecord.date)
                 val day = dateParser.parseDateOrTimeString(dbRecord.date)
                 MediaItemInstance(
-                    id = Remote(dbRecord.id, dbRecord.isVideo, serverUrl),
+                    id = Remote(dbRecord.id, dbRecord.isVideo),
                     mediaHash = MediaItemHash(dbRecord.id),
                     fallbackColor = dbRecord.dominantColor,
                     displayDayDate = date,
@@ -394,7 +393,6 @@ class MediaUseCase @Inject constructor(
 
         val date = dateDisplayer.dateString(albumDate)
         val day = dateParser.parseDateOrTimeString(albumDate)
-        val serverUrl = serverUseCase.getServerUrl()!!
         return MediaCollection(
             id = id,
             displayTitle = date,
@@ -406,7 +404,7 @@ class MediaUseCase @Inject constructor(
                     photoId.isNullOrBlank() -> null
                     else -> {
                         MediaItemInstance(
-                            id = Remote(photoId, item.isVideo, serverUrl),
+                            id = Remote(photoId, item.isVideo),
                             mediaHash = MediaItemHash(photoId),
                             fallbackColor = item.dominantColor,
                             displayDayDate = date,

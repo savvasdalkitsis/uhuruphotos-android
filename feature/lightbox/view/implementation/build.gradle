@@ -31,6 +31,7 @@ dependencies {
             project(":feature:album:auto:domain:api"),
             project(":feature:album:user:domain:api"),
             project(":feature:auth:domain:api"),
+            project(":feature:auth:view:api"),
             project(":feature:db:domain:api"),
             project(":feature:download:domain:api"),
             project(":feature:edit:view:api"),

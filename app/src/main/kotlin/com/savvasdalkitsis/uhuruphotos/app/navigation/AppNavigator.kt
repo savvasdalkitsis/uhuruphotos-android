@@ -26,6 +26,8 @@ import coil.ImageLoader
 import com.bumble.appyx.core.integration.NodeHost
 import com.bumble.appyx.core.integrationpoint.ActivityIntegrationPoint
 import com.bumble.appyx.navmodel.backstack.BackStack
+import com.savvasdalkitsis.uhuruphotos.feature.auth.domain.api.usecase.ServerUseCase
+import com.savvasdalkitsis.uhuruphotos.feature.auth.view.api.navigation.LocalServerUrl
 import com.savvasdalkitsis.uhuruphotos.feature.home.view.api.navigation.HomeNavigationRoute
 import com.savvasdalkitsis.uhuruphotos.feature.settings.domain.api.usecase.SettingsUIUseCase
 import com.savvasdalkitsis.uhuruphotos.foundation.image.api.LocalAnimatedVideoThumbnails
@@ -60,6 +62,7 @@ class AppNavigator @Inject constructor(
     private val thumbnailImageLoader: ImageLoader,
     @ThumbnailImageWithNetworkCacheSupport
     private val thumbnailImageWithNetworkCacheSupportLoader: ImageLoader,
+    private val serverUseCase: ServerUseCase,
 ) {
 
     @Composable
@@ -81,6 +84,7 @@ class AppNavigator @Inject constructor(
             LocalThumbnailImageLoader provides thumbnailImageLoader,
             LocalThumbnailWithNetworkCacheImageLoader provides thumbnailImageWithNetworkCacheSupportLoader,
             LocalNavigator provides navigator,
+            LocalServerUrl provides serverUseCase.getServerUrl()
         ) {
             NodeHost(integrationPoint = integrationPoint) { buildContext ->
                 val backStack: BackStack<NavigationRoute> = BackStack(

@@ -105,9 +105,7 @@ data object Load : LibraryAction() {
     private fun userAlbums() = welcomeUseCase.flow(
         withRemoteAccess = userAlbumsUseCase.observeUserAlbums()
             .mapNotNull { albums ->
-                serverUseCase.getServerUrl()?.let { serverUrl ->
-                    albums.map { it.toUserAlbumState(serverUrl) }
-                }
+                albums.map { it.toUserAlbumState() }
             }
             .mapToCover { it.cover.cel1 }
             .map(::DisplayUserAlbums),

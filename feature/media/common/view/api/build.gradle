@@ -19,6 +19,7 @@ dependencies {
     implementation(
             libs.androidx.compose.material,
             libs.moshi,
+            project(":feature:auth:view:api"),
             project(":feature:media:common:domain:api"),
             project(":feature:people:view:api"),
             project(":foundation:compose:api"),

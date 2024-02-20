@@ -48,7 +48,6 @@ import kotlinx.coroutines.flow.map
 import se.ansman.dagger.auto.AutoBind
 import java.io.File
 import javax.inject.Inject
-import javax.inject.Named
 
 @AutoBind
 internal class DownloadUseCase @Inject constructor(
@@ -56,6 +55,7 @@ internal class DownloadUseCase @Inject constructor(
     private val downloadingRepository: DownloadingRepository,
     private val mediaUseCase: MediaUseCase,
     private val authenticationHeadersUseCase: AuthenticationHeadersUseCase,
+    private val serverUseCase: ServerUseCase,
 ): DownloadUseCase {
 
     override suspend fun scheduleMediaDownload(ids: Collection<Remote>) {
@@ -75,10 +75,11 @@ internal class DownloadUseCase @Inject constructor(
 
     private suspend fun queueDownload(id: Remote): SimpleResult =
         mediaUseCase.refreshDetailsNowIfMissing(id).andThenTry {
+            val serverUrl = serverUseCase.getServerUrl()!!
             val remotePath = mediaUseCase.observeMediaItemDetails(id).firstOrNull()?.remotePath
             val fullFileName = remotePath?.substringAfterLast("/")
 
-            val url = id.fullResUri
+            val url = id.fullResUri(serverUrl)
             val isVideo = id.isVideo
             val fileName = fullFileName?.substringBeforeLast(".") ?: id.value
             val extension = fullFileName?.substringAfterLast(".").orEmpty()

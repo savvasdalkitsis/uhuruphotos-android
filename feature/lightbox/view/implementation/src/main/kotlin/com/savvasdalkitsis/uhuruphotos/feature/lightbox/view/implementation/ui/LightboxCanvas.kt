@@ -41,6 +41,7 @@ import com.mxalbert.zoomable.Zoomable
 import com.mxalbert.zoomable.rememberZoomableState
 import com.radusalagean.infobarcompose.InfoBar
 import com.radusalagean.infobarcompose.InfoBarMessage
+import com.savvasdalkitsis.uhuruphotos.feature.auth.view.api.navigation.LocalServerUrl
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.actions.DeleteLocalKeepRemoteMediaItem
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.actions.DismissConfirmationDialogs
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.actions.DismissErrorMessage
@@ -122,13 +123,18 @@ fun LightboxCanvas(
                 .recomposeHighlighter()
         ) {
             val mediaItem = state.media[index]
+            val serverUrl = LocalServerUrl.current
             when {
                 mediaItem.id.isVideo -> Video(
                     modifier = Modifier
                         .fillMaxWidth()
                         .align(Alignment.Center),
-                    videoUrl = mediaItem.id.fullResUri,
-                    videoThumbnailUrl = mediaItem.id.thumbnailUri,
+                    videoUrl = remember(serverUrl, mediaItem.id) {
+                        mediaItem.id.fullResUri(serverUrl)
+                    },
+                    videoThumbnailUrl = remember(serverUrl, mediaItem.id) {
+                        mediaItem.id.thumbnailUri(serverUrl)
+                    },
                     play = true,
                     onFinishedLoading = { action(FullMediaDataLoaded(mediaItem)) },
                 )
@@ -137,8 +143,12 @@ fun LightboxCanvas(
                         .recomposeHighlighter()
                         .fillMaxWidth()
                         .align(Alignment.Center),
-                    lowResUrl = mediaItem.id.thumbnailUri,
-                    fullResUrl = mediaItem.id.fullResUri,
+                    lowResUrl = remember(serverUrl, mediaItem.id) {
+                        mediaItem.id.thumbnailUri(serverUrl)
+                    },
+                    fullResUrl = remember(serverUrl, mediaItem.id) {
+                        mediaItem.id.fullResUri(serverUrl)
+                    },
                     onFullResImageLoaded = { action(FullMediaDataLoaded(mediaItem)) },
                     contentScale = ContentScale.Fit,
                     contentDescription = stringResource(string.photo),

@@ -30,9 +30,7 @@ data object Load : UserAlbumsAction() {
     ) = merge(
         userAlbumsUseCase.observeUserAlbums()
             .mapNotNull { albums ->
-                serverUseCase.getServerUrl()?.let { serverUrl ->
-                    albums.map { it.toUserAlbumState(serverUrl) }
-                }
+                albums.map { it.toUserAlbumState() }
             }
             .map(UserAlbumsMutation::DisplayAlbums),
         loading

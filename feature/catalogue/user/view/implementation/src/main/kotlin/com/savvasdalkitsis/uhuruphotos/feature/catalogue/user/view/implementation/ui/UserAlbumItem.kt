@@ -59,7 +59,7 @@ internal fun UserAlbumItem(
         } else {
             Cel(
                 state = album.cover.cel1 ?: MediaItemInstance(
-                    id = MediaId.Remote("", false, ""),
+                    id = MediaId.Remote("", false),
                     mediaHash = MediaItemHash(""),
                 ).toCel(),
                 onSelected = {

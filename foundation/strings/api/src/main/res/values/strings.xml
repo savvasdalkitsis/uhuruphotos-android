@@ -374,4 +374,5 @@
     <string name="show_on_feed">Show on feed</string>
     <string name="contributing_to_feed">Contributing to feed</string>
     <string name="not_contributing_to_feed">No longer contributing to feed</string>
+    <string name="general_error">There was an error</string>
 </resources>

@@ -20,8 +20,10 @@ import androidx.compose.animation.slideInVertically
 import androidx.compose.animation.slideOutVertically
 import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass.Companion.Compact
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import com.savvasdalkitsis.uhuruphotos.feature.auth.view.api.navigation.LocalServerUrl
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.actions.LightboxAction
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.actions.UpPressed
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.ui.state.LightboxState
@@ -63,8 +65,13 @@ internal fun LightboxScaffold(
             UpNavButton { action(UpPressed) }
         },
     ) { contentPadding ->
+        val serverUrl = LocalServerUrl.current
+        val mediaItem = state.media[index]
+        val thumbnailUri = remember(serverUrl, mediaItem.id) {
+            mediaItem.id.thumbnailUri(serverUrl)
+        }
         when {
-            state.isLoading && state.media[index].id.thumbnailUri.isEmpty() -> FullLoading()
+            state.isLoading && thumbnailUri.isEmpty() -> FullLoading()
             else -> LightboxCanvas(action, state, index, contentPadding)
         }
     }

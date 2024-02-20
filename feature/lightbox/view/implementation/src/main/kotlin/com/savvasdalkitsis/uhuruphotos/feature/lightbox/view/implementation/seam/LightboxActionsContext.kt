@@ -25,6 +25,7 @@ import com.github.michaelbull.result.onFailure
 import com.github.michaelbull.result.onSuccess
 import com.savvasdalkitsis.uhuruphotos.feature.album.auto.domain.api.usecase.AutoAlbumUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.album.user.domain.api.usecase.UserAlbumUseCase
+import com.savvasdalkitsis.uhuruphotos.feature.auth.domain.api.usecase.ServerUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.edit.view.api.navigation.EditNavigationRoute
 import com.savvasdalkitsis.uhuruphotos.feature.feed.domain.api.usecase.FeedUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.LightboxDeletionCategory.FULLY_SYNCED_ITEM
@@ -103,6 +104,7 @@ internal class LightboxActionsContext @Inject constructor(
     val navigator: Navigator,
     private val clipboardManager: ClipboardManager,
     private val localMediaDeletionUseCase: LocalMediaDeletionUseCase,
+    val serverUseCase: ServerUseCase,
 ) {
 
     var mediaItemType = MediaItemType.default

@@ -124,7 +124,7 @@ fun CaptionsPreviewDark() {
 private fun CaptionsPreviewContent() {
     LightboxSearchCaptions(
         SingleMediaItemState(
-            id = MediaId.Remote("", false, ""),
+            id = MediaId.Remote("", false),
             searchCaptions = LightboxCaptionIcons.icons.toList().take(13).toPersistentList(),
         )
     ) {}

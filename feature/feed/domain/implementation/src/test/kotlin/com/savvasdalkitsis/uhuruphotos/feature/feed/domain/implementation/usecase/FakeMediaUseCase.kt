@@ -53,7 +53,7 @@ private fun MediaUseCase.mapsRemoteMediaCollections() {
         groups.items.map { (id, source) ->
             MediaCollection(id, source.map {
                 MediaItemInstance(
-                    id = MediaId.Remote(it.id, it.isVideo, ""),
+                    id = MediaId.Remote(it.id, it.isVideo),
                     mediaHash = MediaItemHash(it.mediaItemId ?: "missing"),
                     displayDayDate = id,
                 )

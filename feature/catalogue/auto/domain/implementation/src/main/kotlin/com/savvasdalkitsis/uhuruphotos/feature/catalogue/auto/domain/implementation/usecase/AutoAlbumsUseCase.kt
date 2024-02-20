@@ -16,7 +16,6 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.feature.catalogue.auto.domain.implementation.usecase
 
 import android.content.Context
-import com.savvasdalkitsis.uhuruphotos.feature.auth.domain.api.usecase.ServerUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.catalogue.auto.domain.api.usecase.AutoAlbumsUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.catalogue.auto.domain.implementation.repository.AutoAlbumsRepository
 import com.savvasdalkitsis.uhuruphotos.feature.catalogue.auto.view.api.state.AutoAlbum
@@ -41,7 +40,6 @@ import javax.inject.Inject
 @AutoBind
 class AutoAlbumsUseCase @Inject constructor(
     private val autoAlbumsRepository: AutoAlbumsRepository,
-    private val serverUseCase: ServerUseCase,
     @PlainTextPreferences
     private val preferences: Preferences,
     @ApplicationContext private val context: Context,
@@ -72,26 +70,23 @@ class AutoAlbumsUseCase @Inject constructor(
             .toAutoAlbums(preferences.get(key, CatalogueSorting.default))
 
     private fun List<AutoAlbums>.toAutoAlbums(sorting: CatalogueSorting): List<AutoAlbum> =
-        serverUseCase.getServerUrl()?.let { serverUrl ->
-            sorted(
-                sorting,
-                timeStamp = { it.timestamp },
-                title = { it.title },
-            )
-                .map {
-                    AutoAlbum(
-                        id = it.id,
-                        cover = MediaItemInstance(
-                            id = Remote(it.coverPhotoHash, it.coverPhotoIsVideo ?: false, serverUrl),
-                            mediaHash = MediaItemHash(it.coverPhotoHash),
-                            displayDayDate = null,
-                            sortableDate = it.timestamp,
-                            ratio = 1f,
-                        ),
-                        title = it.title ?: context.getString(string.missing_album_title),
-                        photoCount = it.photoCount,
-                    )
-                }
-        } ?: emptyList()
-
+        sorted(
+            sorting,
+            timeStamp = { it.timestamp },
+            title = { it.title },
+        )
+            .map {
+                AutoAlbum(
+                    id = it.id,
+                    cover = MediaItemInstance(
+                        id = Remote(it.coverPhotoHash, it.coverPhotoIsVideo ?: false),
+                        mediaHash = MediaItemHash(it.coverPhotoHash),
+                        displayDayDate = null,
+                        sortableDate = it.timestamp,
+                        ratio = 1f,
+                    ),
+                    title = it.title ?: context.getString(string.missing_album_title),
+                    photoCount = it.photoCount,
+                )
+            }
 }

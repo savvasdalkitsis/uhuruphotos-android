@@ -18,6 +18,7 @@ package com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.sea
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.LightboxActionsContext
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.LightboxMutation
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.ui.state.LightboxState
+import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
 import kotlinx.coroutines.flow.flow
 
 data object ShareMediaItem : LightboxAction() {
@@ -25,7 +26,12 @@ data object ShareMediaItem : LightboxAction() {
     context(LightboxActionsContext) override fun handle(
         state: LightboxState
     ) = flow<LightboxMutation> {
-        shareUseCase.share(state.currentMediaItem.id.fullResUri)
+        val serverUrl = serverUseCase.getServerUrl()
+        if (serverUrl != null) {
+            shareUseCase.share(state.currentMediaItem.id.fullResUri(serverUrl))
+        } else {
+            toaster.show(string.general_error)
+        }
     }
 
 }

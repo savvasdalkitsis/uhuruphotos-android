@@ -42,6 +42,7 @@ import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
+import com.savvasdalkitsis.uhuruphotos.feature.auth.view.api.navigation.LocalServerUrl
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.state.CelState
 import com.savvasdalkitsis.uhuruphotos.foundation.compose.api.recomposeHighlighter
 import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.R.drawable
@@ -108,9 +109,12 @@ private fun Cel(
             .clip(shape)
             .recomposeHighlighter()
     ) {
+        val serverUrl = LocalServerUrl.current
         Thumbnail(
             modifier = Modifier.fillMaxWidth(),
-            url = mediaItem.id.thumbnailUri,
+            url = remember(serverUrl, mediaItem.id) {
+                mediaItem.id.thumbnailUri(serverUrl)
+            },
             isVideo = false,//mediaItem.id.isVideo,
             contentScale = contentScale,
             placeholder = backgroundColor.toArgb(),

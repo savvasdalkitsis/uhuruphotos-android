@@ -18,16 +18,21 @@ package com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.ac
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.FeedActionsContext
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.FeedMutation
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.ui.state.FeedState
-import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R
+import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
 import kotlinx.coroutines.flow.flow
 
 data object ShareSelectedCels : FeedAction() {
     context(FeedActionsContext) override fun handle(
         state: FeedState
     ) = flow<FeedMutation> {
-        toaster.show(R.string.downloading_photos_sharing)
-        shareUseCase.shareMultiple(state.selectedCels.map {
-            it.mediaItem.id.fullResUri
-        })
+        when(val serverUrl = serverUseCase.getServerUrl()) {
+            null -> toaster.show(string.general_error)
+            else -> {
+                toaster.show(string.downloading_photos_sharing)
+                shareUseCase.shareMultiple(state.selectedCels.map {
+                    it.mediaItem.id.fullResUri(serverUrl)
+                })
+            }
+        }
     }
 }
