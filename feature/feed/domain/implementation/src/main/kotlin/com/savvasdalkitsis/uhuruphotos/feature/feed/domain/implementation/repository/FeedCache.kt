@@ -20,13 +20,11 @@ import com.savvasdalkitsis.uhuruphotos.feature.feed.domain.api.model.FeedFetchTy
 import com.savvasdalkitsis.uhuruphotos.feature.feed.domain.api.model.FeedFetchType.ALL
 import com.savvasdalkitsis.uhuruphotos.feature.feed.domain.api.model.FeedFetchType.ONLY_WITH_DATES
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaCollection
-import com.savvasdalkitsis.uhuruphotos.foundation.launchers.api.awaitOnIO
 import com.savvasdalkitsis.uhuruphotos.foundation.launchers.api.onIO
 import com.savvasdalkitsis.uhuruphotos.foundation.log.api.log
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableSharedFlow
-import kotlinx.coroutines.flow.mapNotNull
 import kotlinx.coroutines.flow.onStart
 import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.decodeFromByteArray
@@ -49,17 +47,18 @@ class FeedCache @Inject constructor(
         (ONLY_WITH_DATES to true) to File(context.cacheDir, "feed_only_with_dates_small_chunk"),
         (ONLY_WITH_DATES to false) to File(context.cacheDir, "feed_only_with_dates"),
     )
-    private val caches: Map<Pair<FeedFetchType, Boolean>, MutableSharedFlow<ByteArray>?> = mapOf(
-        (ALL to true) to MutableSharedFlow(),
-        (ALL to false) to MutableSharedFlow(),
-        (ONLY_WITH_DATES to true) to MutableSharedFlow(),
-        (ONLY_WITH_DATES to false) to MutableSharedFlow(),
+    private val caches: Map<Pair<FeedFetchType, Boolean>, MutableSharedFlow<List<MediaCollection>>?> = mapOf(
+        (ALL to true) to MutableSharedFlow(replay = 1),
+        (ALL to false) to MutableSharedFlow(replay = 1),
+        (ONLY_WITH_DATES to true) to MutableSharedFlow(replay = 1),
+        (ONLY_WITH_DATES to false) to MutableSharedFlow(replay = 1),
     )
 
     private fun cache(
         feedFetchType: FeedFetchType,
         loadSmallInitialChunk: Boolean
-    ): MutableSharedFlow<ByteArray> = caches[feedFetchType to loadSmallInitialChunk] ?: MutableSharedFlow()
+    ): MutableSharedFlow<List<MediaCollection>> =
+        caches[feedFetchType to loadSmallInitialChunk] ?: MutableSharedFlow()
 
     private fun cacheFile(
         feedFetchType: FeedFetchType,
@@ -69,22 +68,19 @@ class FeedCache @Inject constructor(
     fun observeFeed(
         feedFetchType: FeedFetchType = ALL,
         loadSmallInitialChunk: Boolean = true,
-    ): Flow<List<MediaCollection>> = cache(feedFetchType, loadSmallInitialChunk).mapNotNull {
-        awaitOnIO {
-            try {
-                ProtoBuf.decodeFromByteArray<List<MediaCollection>>(it)
-            } catch (e: Exception) {
-                log(e) { "Error decoding feed from proto" }
-                null
-            }
-        }
-    }.onStart {
+    ): Flow<List<MediaCollection>> = cache(feedFetchType, loadSmallInitialChunk).onStart {
         onIO {
             try {
                 cacheFile(feedFetchType, loadSmallInitialChunk)?.let {
                     val value = it.readBytes()
                     if (value.isNotEmpty()) {
-                        cache(feedFetchType, loadSmallInitialChunk).tryEmit(value)
+                        try {
+                            val feed = ProtoBuf.decodeFromByteArray<List<MediaCollection>>(value)
+                            cache(feedFetchType, loadSmallInitialChunk).tryEmit(feed)
+                        } catch (e: Exception) {
+                            log(e) { "Error decoding feed from proto" }
+                        }
+
                     }
                 }
             } catch (_: Exception) { }
@@ -96,8 +92,8 @@ class FeedCache @Inject constructor(
         feedFetchType: FeedFetchType,
         loadSmallInitialChunk: Boolean
     ) = onIO {
+        cache(feedFetchType, loadSmallInitialChunk).emit(feed)
         val bytes = ProtoBuf.encodeToByteArray(feed)
-        cache(feedFetchType, loadSmallInitialChunk).emit(bytes)
         cacheFile(feedFetchType, loadSmallInitialChunk)?.writeBytes(bytes)
     }
 }
