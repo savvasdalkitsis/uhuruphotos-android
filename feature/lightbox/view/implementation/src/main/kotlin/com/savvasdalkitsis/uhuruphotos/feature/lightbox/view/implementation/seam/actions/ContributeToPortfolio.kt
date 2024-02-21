@@ -30,7 +30,7 @@ data class ContributeToPortfolio(
     context(LightboxActionsContext) override fun handle(
         state: LightboxState,
     ) = flow<LightboxMutation> {
-        mediaItemState.id.findLocal?.let { id ->
+        mediaItemState.id.findLocals.firstOrNull()?.let { id ->
             portfolioUseCase.publishItemToPortfolio(id.value, id.folderId, contribute)
             toaster.show(
                 if (contribute) string.contributing_to_feed else string.not_contributing_to_feed

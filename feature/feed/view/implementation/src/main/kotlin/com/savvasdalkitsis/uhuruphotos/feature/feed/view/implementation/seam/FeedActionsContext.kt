@@ -86,7 +86,7 @@ internal class FeedActionsContext @Inject constructor(
         state: FeedState,
         onSuccess: () -> Unit = {},
     ) = when (val result = localMediaDeletionUseCase.deleteLocalMediaItems(state.selectedCels
-            .mapNotNull { it.mediaItem.id.findLocal }
+            .flatMap { it.mediaItem.id.findLocals }
             .map { LocalMediaDeletionRequest(it.value, it.isVideo) }
         )) {
             is Error -> toaster.show(R.string.error_deleting_media)

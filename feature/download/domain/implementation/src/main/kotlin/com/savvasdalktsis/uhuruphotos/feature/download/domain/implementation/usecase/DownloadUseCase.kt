@@ -76,7 +76,7 @@ internal class DownloadUseCase @Inject constructor(
     private suspend fun queueDownload(id: Remote): SimpleResult =
         mediaUseCase.refreshDetailsNowIfMissing(id).andThenTry {
             val serverUrl = serverUseCase.getServerUrl()!!
-            val remotePath = mediaUseCase.observeMediaItemDetails(id).firstOrNull()?.remotePath
+            val remotePath = mediaUseCase.observeMediaItemDetails(id).firstOrNull()?.remotePaths?.firstOrNull()
             val fullFileName = remotePath?.substringAfterLast("/")
 
             val url = id.fullResUri(serverUrl)

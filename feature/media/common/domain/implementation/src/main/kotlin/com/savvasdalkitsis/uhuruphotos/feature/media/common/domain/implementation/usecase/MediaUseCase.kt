@@ -58,6 +58,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.model.Medi
 import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.model.MediaOrientation.ORIENTATION_90
 import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.model.MediaOrientation.ORIENTATION_UNKNOWN
 import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.usecase.LocalMediaUseCase
+import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.api.model.deserializePaths
 import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.api.model.deserializePeopleNames
 import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.api.usecase.RemoteMediaUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.people.domain.api.usecase.PeopleUseCase
@@ -79,7 +80,6 @@ import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.distinctUntilChanged
-import kotlinx.coroutines.flow.emptyFlow
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.map
 import org.joda.time.DateTime
@@ -218,17 +218,14 @@ class MediaUseCase @Inject constructor(
         is Processing -> id.local.observeDetails()
         is Local -> id.observeDetails()
         is MediaId.Group -> {
-            val localDetails = id.findLocal?.observeDetails()
+            val localDetails = id.findLocals.map { it.observeDetails() }
             val remoteDetails = id.findRemote?.observeDetails()
 
-            when {
-                remoteDetails != null && localDetails != null ->
-                    combine(remoteDetails, localDetails) { (remote, local) ->
-                        remote.mergeWith(local)
-                    }
-                remoteDetails != null && localDetails == null -> remoteDetails
-                remoteDetails == null && localDetails != null -> localDetails
-                else -> emptyFlow()
+            val details = listOfNotNull(*(localDetails + remoteDetails).toTypedArray())
+            combine(*details.toTypedArray()) { items ->
+                items.reduce { first, second ->
+                    first.mergeWith(second)
+                }
             }
         }
     }
@@ -253,7 +250,7 @@ class MediaUseCase @Inject constructor(
             location = "",
             latLon = latLon?.let { (lat, lon) -> LatLon(lat, lon) },
             hash = md5.toMediaItemHash(userId),
-            localPath = path ?: contentUri,
+            localPaths = setOf(path ?: contentUri),
             peopleInMediaItem = emptyList(),
         )
 
@@ -278,7 +275,7 @@ class MediaUseCase @Inject constructor(
             location = location.orEmpty(),
             latLon = latLng?.toLatLon,
             hash = MediaItemHash(imageHash),
-            remotePath = imagePath,
+            remotePaths = imagePath?.deserializePaths ?: emptySet(),
             peopleInMediaItem = peopleInPhoto,
             searchCaptions = captions,
         )
@@ -318,10 +315,10 @@ class MediaUseCase @Inject constructor(
                 val remote = id.findRemote?.let {
                     refreshRemoteDetailsNowIfMissing(it)
                 } ?: Ok(SKIPPED)
-                val local = id.findLocal?.let {
+                val local = id.findLocals.map {
                     refreshLocalDetailsNowIfMissing(it)
-                } ?: Ok(SKIPPED)
-                combine(remote, local).map {
+                }
+                combine(*(local + remote).toTypedArray()).map {
                     if (it.any { type -> type == CHANGED }) CHANGED else SKIPPED
                 }
             }
@@ -338,10 +335,10 @@ class MediaUseCase @Inject constructor(
                 val remote = id.findRemote?.let {
                     refreshRemoteDetailsNow(it)
                 } ?: simpleOk
-                val local = id.findLocal?.let {
+                val local = id.findLocals.map {
                     refreshLocalDetailsNow(it)
-                } ?: simpleOk
-                combine(remote, local).simple()
+                }
+                combine(*(local + remote).toTypedArray()).simple()
             }
         }
 

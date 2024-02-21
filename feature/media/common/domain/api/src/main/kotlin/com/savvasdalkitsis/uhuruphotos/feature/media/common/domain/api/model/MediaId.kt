@@ -42,9 +42,9 @@ sealed class MediaId<T : Serializable> private constructor(
     abstract val preferRemote: MediaId<*>
     abstract val findRemote: Remote?
     abstract val preferLocal: MediaId<*>
-    abstract val findLocal: Local?
+    abstract val findLocals: Set<Local>
 
-    val isBothRemoteAndLocal: Boolean get() = findLocal != null && findRemote != null
+    val isBothRemoteAndLocal: Boolean get() = findLocals.isNotEmpty() && findRemote != null
 
     @Parcelize
     @kotlinx.serialization.Serializable
@@ -67,7 +67,7 @@ sealed class MediaId<T : Serializable> private constructor(
         @IgnoredOnParcel
         @Transient
         @kotlinx.serialization.Transient
-        override val findLocal = null
+        override val findLocals: Set<Local> = emptySet()
 
         @IgnoredOnParcel
         override val syncState: MediaItemSyncState = REMOTE_ONLY
@@ -103,7 +103,7 @@ sealed class MediaId<T : Serializable> private constructor(
         @IgnoredOnParcel
         @Transient
         @kotlinx.serialization.Transient
-        override val findLocal = null
+        override val findLocals: Set<Local> = emptySet()
 
         @IgnoredOnParcel
         override val syncState: MediaItemSyncState = DOWNLOADING
@@ -138,7 +138,7 @@ sealed class MediaId<T : Serializable> private constructor(
         @IgnoredOnParcel
         @Transient
         @kotlinx.serialization.Transient
-        override val findLocal = local
+        override val findLocals: Set<Local> = setOf(local)
 
         @IgnoredOnParcel
         @kotlinx.serialization.Transient
@@ -175,7 +175,7 @@ sealed class MediaId<T : Serializable> private constructor(
         @IgnoredOnParcel
         @Transient
         @kotlinx.serialization.Transient
-        override val findLocal = local
+        override val findLocals: Set<Local> = setOf(local)
 
         @IgnoredOnParcel
         @kotlinx.serialization.Transient
@@ -209,7 +209,7 @@ sealed class MediaId<T : Serializable> private constructor(
         @IgnoredOnParcel
         @Transient
         @kotlinx.serialization.Transient
-        override val findLocal = this
+        override val findLocals: Set<Local> = setOf(this)
 
         @IgnoredOnParcel
         @kotlinx.serialization.Transient
@@ -235,7 +235,7 @@ sealed class MediaId<T : Serializable> private constructor(
         @IgnoredOnParcel
         @Transient
         @kotlinx.serialization.Transient
-        override val findLocal: Local? = value.firstNotNullOfOrNull { it.findLocal }
+        override val findLocals: Set<Local> = value.flatMap { it.findLocals }.toSet()
         @IgnoredOnParcel
         @Transient
         @kotlinx.serialization.Transient
@@ -243,14 +243,14 @@ sealed class MediaId<T : Serializable> private constructor(
         @IgnoredOnParcel
         @Transient
         @kotlinx.serialization.Transient
-        override val preferLocal: MediaId<*> = findLocal ?: value.first()
+        override val preferLocal: MediaId<*> = findLocals.firstOrNull() ?: value.first()
 
         @IgnoredOnParcel
         override val syncState: MediaItemSyncState = when {
             value.any { it is Downloading } -> DOWNLOADING
             value.any { it is Uploading } -> UPLOADING
             findRemote == null -> LOCAL_ONLY
-            findLocal == null -> REMOTE_ONLY
+            findLocals.isEmpty() -> REMOTE_ONLY
             else -> SYNCED
         }
         override fun fullResUri(serverUrl: String?): String = preferLocal.fullResUri(serverUrl)

@@ -29,7 +29,7 @@ data object UploadSelectedCels : FeedAction() {
         toaster.show(R.string.media_sync_status_uploading)
         selectionList.clear()
         uploadUseCase.scheduleUpload(*(state.selectedCels.mapNotNull {
-            it.mediaItem.id.findLocal
+            it.mediaItem.id.findLocals.firstOrNull()
         }.map { UploadItem(
             id = it.value,
             contentUri = it.contentUri,

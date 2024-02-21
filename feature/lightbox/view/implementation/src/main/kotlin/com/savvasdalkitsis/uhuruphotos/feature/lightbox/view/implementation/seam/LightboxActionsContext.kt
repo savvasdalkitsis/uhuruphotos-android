@@ -113,18 +113,17 @@ internal class LightboxActionsContext @Inject constructor(
     fun deletionCategory(item: SingleMediaItemState) = when {
         mediaItemType == TRASHED -> REMOTE_ITEM_TRASHED
         item.id.isBothRemoteAndLocal -> FULLY_SYNCED_ITEM
-        item.id.findLocal != null -> LOCAL_ONLY_ITEM
+        item.id.findLocals.isNotEmpty() -> LOCAL_ONLY_ITEM
         else -> REMOTE_ITEM
     }
 
     suspend fun FlowCollector<LightboxMutation>.deleteLocal(
         mediaItem: SingleMediaItemState
     ): SimpleResult {
-        val id = mediaItem.id.findLocal!!
         val result = localMediaDeletionUseCase.deleteLocalMediaItems(
-            listOf(
+            mediaItem.id.findLocals.map { id ->
                 LocalMediaDeletionRequest(id.value, id.isVideo)
-            )
+            }
         )
         return when(result) {
             is Error -> Err(result.e)
@@ -185,9 +184,9 @@ internal class LightboxActionsContext @Inject constructor(
     internal fun LightboxActionsContext.cropLocal(
         state: LightboxState
     ) {
-        fun SingleMediaItemState.fileName() = localPath?.substringAfterLast("/")
+        fun SingleMediaItemState.fileName() = localPaths.firstOrNull()?.substringAfterLast("/")
             ?: "PHOTO_${Random.nextInt()}"
-        state.currentMediaItem.id.findLocal?.let { media ->
+        state.currentMediaItem.id.findLocals.firstOrNull()?.let { media ->
             navigator.navigateTo(EditNavigationRoute(
                 uri = Uri.parse(media.contentUri).toString(),
                 fileName = state.currentMediaItem.fileName(),

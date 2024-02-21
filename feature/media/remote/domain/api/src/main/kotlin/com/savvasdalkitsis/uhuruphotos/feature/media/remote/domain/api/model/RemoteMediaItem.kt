@@ -48,6 +48,12 @@ private val RemoteMediaItem.serializePeople: String?
 val String.deserializePeopleNames: List<String>
     get() = split("::")
 
+private val RemoteMediaItem.serializePaths: String?
+    get() = imagePath?.joinToString(separator = "::") { it }
+
+val String.deserializePaths: Set<String>
+    get() = split("::").toSet()
+
 fun RemoteMediaItem.toDbModel() = DbRemoteMediaItemDetails(
     imageHash = imageHash,
     gpsLat = gpsLat,
@@ -67,5 +73,5 @@ fun RemoteMediaItem.toDbModel() = DbRemoteMediaItemDetails(
     video = video,
     rating = rating,
     peopleNames = serializePeople,
-    imagePath = imagePath?.firstOrNull(),
+    imagePath = serializePaths,
 )

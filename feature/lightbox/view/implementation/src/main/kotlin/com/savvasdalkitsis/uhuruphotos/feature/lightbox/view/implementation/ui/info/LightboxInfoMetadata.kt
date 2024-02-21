@@ -107,17 +107,15 @@ internal fun LightboxInfoMetadata(
         mediaItem.hash?.let {
             it.hash.Entry(ic_fingerprint, action)
         }
-        mediaItem.remotePath?.let {
+        mediaItem.remotePaths.forEach {
             it.Entry(ic_folder_network, action)
         }
-        mediaItem.localPath?.let {
+        mediaItem.localPaths.forEach {
             it.Entry(ic_file_tree, action)
         }
-        if (listOf(
-                mediaItem.metadata,
-                mediaItem.remotePath,
-                mediaItem.localPath,
-            ).all { it == null }) {
+        if ((mediaItem.localPaths + mediaItem.remotePaths + mediaItem.metadata)
+                .all { it == null }
+            ) {
             Text(stringResource(string.nothing_here_yet))
         }
     }

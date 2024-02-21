@@ -70,7 +70,7 @@ class SyncUseCase @Inject constructor(
                 emptyList()
             else
                 feed.flatMap { it.mediaItems }
-                    .mapNotNull { item -> item.id.findLocal?.takeIf { item.id.findRemote == null } }
+                    .mapNotNull { item -> item.id.findLocals.firstOrNull()?.takeIf { item.id.findRemote == null } }
                     .map { item ->
                         UploadItem(item.value, item.contentUri)
                     }

@@ -184,9 +184,9 @@ data class LoadMediaItem(
         showEditIcon = shouldShowEditButton,
         showAddToPortfolioIcon = showAddToPortfolioIcon,
         addToPortfolioIconEnabled = addToPortfolioEnabled,
-        inPortfolio = findLocal?.value?.let { isInPortfolio(it) } ?: false,
+        inPortfolio = findLocals.any { isInPortfolio(it.value) },
         mediaItemSyncState = syncState.takeIf { sequenceDataSource.showMediaSyncState }
     )
 
-    private val MediaId<*>.shouldShowEditButton get() = !isVideo && findLocal != null
+    private val MediaId<*>.shouldShowEditButton get() = !isVideo && findLocals.isNotEmpty()
 }

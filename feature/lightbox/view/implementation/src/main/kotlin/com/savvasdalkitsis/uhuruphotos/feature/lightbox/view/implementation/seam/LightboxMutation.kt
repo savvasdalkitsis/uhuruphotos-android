@@ -153,8 +153,8 @@ sealed class LightboxMutation(
                     gps = latLon,
                     peopleInMediaItem = peopleInMediaItem.toPersistentList(),
                     hash = hash,
-                    remotePath = remotePath,
-                    localPath = localPath,
+                    remotePaths = remotePaths,
+                    localPaths = localPaths,
                     searchCaptions = searchCaptions?.split(",")?.toList().orEmpty()
                         .map { it.trim() }
                         .map {

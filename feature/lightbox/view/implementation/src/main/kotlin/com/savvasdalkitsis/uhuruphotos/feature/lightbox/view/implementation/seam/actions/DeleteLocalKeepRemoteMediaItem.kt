@@ -36,7 +36,7 @@ data object DeleteLocalKeepRemoteMediaItem : LightboxAction() {
                     current.id,
                     current.copy(
                         id = remote,
-                        localPath = null,
+                        localPaths = emptySet(),
                         mediaItemSyncState = MediaItemSyncState.REMOTE_ONLY,
                     ),
                 )

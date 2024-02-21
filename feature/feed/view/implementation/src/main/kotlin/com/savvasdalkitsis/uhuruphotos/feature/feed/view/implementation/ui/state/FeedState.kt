@@ -56,7 +56,7 @@ data class FeedState(
     val shouldShowDeleteIcon: Boolean = selectedCels.syncStates.size == 1
 
     val shouldShowDownloadIcon: Boolean = selectedCels.let { selected ->
-        selected.isNotEmpty() && selected.none { it.mediaItem.id.findLocal != null }
+        selected.isNotEmpty() && selected.none { it.mediaItem.id.findLocals.isNotEmpty() }
     }
 
     val shouldShowUploadIcon: Boolean = selectedCels.let { selected ->

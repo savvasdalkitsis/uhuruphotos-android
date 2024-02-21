@@ -31,7 +31,7 @@ data class EditMediaItemExternally(val app: ResolveInfo) : LightboxAction() {
     context(LightboxActionsContext) override fun handle(
         state: LightboxState
     ) = flow<LightboxMutation> {
-        state.currentMediaItem.id.findLocal?.let { media ->
+        state.currentMediaItem.id.findLocals.firstOrNull()?.let { media ->
             val intent = Intent(ACTION_EDIT, Uri.parse(media.contentUri)).apply {
                 setPackage(app.activityInfo.packageName)
                 flags = FLAG_GRANT_READ_URI_PERMISSION or FLAG_ACTIVITY_NEW_TASK

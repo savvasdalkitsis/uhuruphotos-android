@@ -33,7 +33,7 @@ data class UploadToServer(val mediaItemState: SingleMediaItemState) : LightboxAc
     context(LightboxActionsContext) override fun handle(
         state: LightboxState,
     ) = flow {
-        val id = mediaItemState.id.findLocal
+        val id = mediaItemState.id.findLocals.firstOrNull()
         if (id != null) {
             emit(Loading)
             when (uploadUseCase.canUpload()) {

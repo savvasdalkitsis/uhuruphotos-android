@@ -23,8 +23,8 @@ data class MediaItemDetails(
     val isFavourite: Boolean,
     val location: String,
     val latLon: LatLon?,
-    val remotePath: String? = null,
-    val localPath: String? = null,
+    val remotePaths: Set<String> = emptySet(),
+    val localPaths: Set<String> = emptySet(),
     val hash: MediaItemHash? = null,
     val peopleInMediaItem: List<Person>,
     val searchCaptions: String? = null,
@@ -33,8 +33,8 @@ data class MediaItemDetails(
         location = location.ifBlank { mediaItemDetails?.location.orEmpty() },
         latLon = latLon ?: mediaItemDetails?.latLon,
         hash = hash ?: mediaItemDetails?.hash,
-        remotePath = remotePath ?: mediaItemDetails?.remotePath,
-        localPath = localPath ?: mediaItemDetails?.localPath,
+        remotePaths = remotePaths + mediaItemDetails?.remotePaths.orEmpty(),
+        localPaths = localPaths + mediaItemDetails?.localPaths.orEmpty(),
         searchCaptions = searchCaptions ?: mediaItemDetails?.searchCaptions,
     )
 }
