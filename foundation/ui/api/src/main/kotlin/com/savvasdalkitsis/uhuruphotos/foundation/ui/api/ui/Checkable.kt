@@ -66,13 +66,12 @@ fun Checkable(
         modifier = modifier
             .clip(shape)
             .background(backgroundColor)
-            .let {
-                if (!editable) it else it.combinedClickable(
-                    role = Role.Button,
-                    onClick = { onClick() },
-                    onLongClick = { onLongClick() }
-                )
-            }
+            .combinedClickable(
+                enabled = editable,
+                role = Role.Button,
+                onClick = { onClick() },
+                onLongClick = { onLongClick() }
+            )
             .recomposeHighlighter()
     ) {
         Box(

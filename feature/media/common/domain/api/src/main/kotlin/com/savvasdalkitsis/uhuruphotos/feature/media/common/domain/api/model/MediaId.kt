@@ -16,6 +16,7 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model
 
 import android.os.Parcelable
+import androidx.compose.runtime.Immutable
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemSyncState.DOWNLOADING
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemSyncState.LOCAL_ONLY
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemSyncState.PROCESSING
@@ -27,6 +28,7 @@ import kotlinx.parcelize.Parcelize
 import java.io.Serializable
 
 @kotlinx.serialization.Serializable
+@Immutable
 sealed class MediaId<T : Serializable> private constructor(
 ) : Parcelable {
 
