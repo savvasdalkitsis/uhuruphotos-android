@@ -8,6 +8,7 @@ dependencies {
     )
     implementation(
             libs.androidx.work,
+            project(":foundation:log:api"),
             project(":foundation:math:api"),
             project(":foundation:strings:api"),
     )
