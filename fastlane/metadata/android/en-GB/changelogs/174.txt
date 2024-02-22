@@ -1,0 +1,2 @@
+* Improving scroll performance on the feed
+* Supporting multiple remote and local paths for media details
