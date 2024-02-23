@@ -42,6 +42,7 @@ import kotlinx.collections.immutable.toPersistentList
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.map
@@ -110,9 +111,16 @@ data object LoadFeed : FeedAction() {
             }
 
     private fun FeedActionsContext.cloudSyncHeader() =
-        syncUseCase.observeSyncEnabled().mapNotNull { enabled ->
-            ShowCloudSyncRequest.takeIf { !enabled && settingsUIUseCase.getShowBannerAskingForCloudSyncOnFeed() }
-        }
+        combine(
+            welcomeUseCase.observeWelcomeStatus(),
+            syncUseCase.observeSyncEnabled(),
+        ) { welcomeStatus, enabled ->
+            ShowCloudSyncRequest.takeIf {
+                welcomeStatus.hasRemoteAccess
+                        && !enabled
+                        && settingsUIUseCase.getShowBannerAskingForCloudSyncOnFeed()
+            }
+        }.filterNotNull()
 
     private fun FeedActionsContext.showClusters() =
         combine(
