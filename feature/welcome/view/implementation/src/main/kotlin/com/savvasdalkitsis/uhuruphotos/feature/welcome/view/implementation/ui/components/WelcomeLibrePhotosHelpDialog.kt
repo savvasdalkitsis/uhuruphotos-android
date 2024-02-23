@@ -28,29 +28,32 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.savvasdalkitsis.uhuruphotos.feature.welcome.view.implementation.seam.actions.HideLibrePhotosHelp
 import com.savvasdalkitsis.uhuruphotos.feature.welcome.view.implementation.seam.actions.SelectCloudMedia
 import com.savvasdalkitsis.uhuruphotos.feature.welcome.view.implementation.seam.actions.TakeUserToLibrePhotosWebsite
 import com.savvasdalkitsis.uhuruphotos.feature.welcome.view.implementation.seam.actions.WelcomeAction
-import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R
+import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.R.drawable
+import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
+import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.PreviewAppTheme
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.YesNoDialog
 
 @Composable
 internal fun WelcomeLibrePhotosHelpDialog(action: (WelcomeAction) -> Unit) {
     YesNoDialog(
-        title = stringResource(R.string.enable_cloud_sync),
+        title = stringResource(string.enable_cloud_sync),
         onYes = {
             action(SelectCloudMedia)
         },
         onDismiss = { action(HideLibrePhotosHelp) },
     ) {
-        Text(stringResource(R.string.need_a_libre_photos_server_1))
+        Text(stringResource(string.need_a_libre_photos_server_1))
         Text(
-            stringResource(R.string.what_is_libre_photos),
+            stringResource(string.what_is_libre_photos),
             style = MaterialTheme.typography.subtitle2.copy(fontWeight = FontWeight.Bold),
         )
-        Text(stringResource(R.string.libre_photos_description))
+        Text(stringResource(string.libre_photos_description))
         OutlinedButton(
             modifier = Modifier
                 .fillMaxWidth()
@@ -58,15 +61,26 @@ internal fun WelcomeLibrePhotosHelpDialog(action: (WelcomeAction) -> Unit) {
             onClick = { action(TakeUserToLibrePhotosWebsite) }
         ) {
             Icon(
-                painter = painterResource(id = com.savvasdalkitsis.uhuruphotos.foundation.icons.api.R.drawable.ic_help),
+                painter = painterResource(id = drawable.ic_help),
                 contentDescription = null
             )
             Spacer(modifier = Modifier.width(8.dp))
-            Text(stringResource(R.string.take_me_to_website))
+            Text(stringResource(string.take_me_to_website))
         }
         Text(
-            stringResource(R.string.need_a_libre_photos_server_2),
+            stringResource(string.need_a_libre_photos_server_2),
             style = MaterialTheme.typography.subtitle2.copy(fontWeight = FontWeight.Bold),
         )
     }
 }
+
+@Preview
+@Composable
+fun WelcomeLibrePhotosHelpDialogPreview() {
+    PreviewAppTheme {
+        WelcomeLibrePhotosHelpDialog(
+            action = {},
+        )
+    }
+}
+

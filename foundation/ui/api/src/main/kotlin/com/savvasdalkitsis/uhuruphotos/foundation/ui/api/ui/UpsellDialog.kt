@@ -21,8 +21,10 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.tooling.preview.Preview
 import com.savvasdalkitsis.uhuruphotos.foundation.compose.api.recomposeHighlighter
 import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R
+import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.PreviewAppTheme
 
 @Composable
 fun UpsellDialog(
@@ -56,5 +58,17 @@ fun UpsellDialog(
         confirmButton = { LoginButton(onLogin = onLogin) },
     ) {
         Text(stringResource(R.string.advanced_feature_body))
+    }
+}
+
+@Preview
+@Composable
+fun UpsellDialogPreview() {
+    PreviewAppTheme {
+        UpsellDialog(
+            onDismiss = {},
+            onNeverAgain = {},
+            onLogin = {}
+        )
     }
 }

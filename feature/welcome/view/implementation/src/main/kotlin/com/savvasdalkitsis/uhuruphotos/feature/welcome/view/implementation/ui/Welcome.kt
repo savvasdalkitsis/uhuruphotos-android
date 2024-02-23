@@ -15,7 +15,6 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.welcome.view.implementation.ui
 
-import androidx.activity.compose.ManagedActivityResultLauncher
 import androidx.compose.foundation.layout.Arrangement.spacedBy
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -41,8 +40,6 @@ import com.savvasdalkitsis.uhuruphotos.feature.welcome.view.implementation.seam.
 import com.savvasdalkitsis.uhuruphotos.feature.welcome.view.implementation.ui.components.WelcomeHeader
 import com.savvasdalkitsis.uhuruphotos.feature.welcome.view.implementation.ui.components.WelcomeLibrePhotosHelpDialog
 import com.savvasdalkitsis.uhuruphotos.feature.welcome.view.implementation.ui.components.WelcomeLoadedContent
-import com.savvasdalkitsis.uhuruphotos.feature.welcome.view.implementation.ui.components.WelcomeNeedsAccessDialog
-import com.savvasdalkitsis.uhuruphotos.feature.welcome.view.implementation.ui.components.WelcomePermissionRationale
 import com.savvasdalkitsis.uhuruphotos.feature.welcome.view.implementation.ui.state.WelcomeState
 import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.R.drawable
 import com.savvasdalkitsis.uhuruphotos.foundation.permissions.api.ui.PermissionsState
@@ -52,12 +49,10 @@ import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.ActionIcon
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.CommonScaffold
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.FullLoading
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.Logo
-import dev.shreyaspatil.permissionflow.compose.rememberPermissionFlowRequestLauncher
 
 @Composable
 internal fun Welcome(
     state: WelcomeState,
-    permissionLauncher: ManagedActivityResultLauncher<Array<String>, Map<String, Boolean>>? = rememberPermissionFlowRequestLauncher(),
     action: (WelcomeAction) -> Unit,
 ) {
     CommonScaffold(
@@ -102,12 +97,6 @@ internal fun Welcome(
                 Text(text = stringResource(string.save))
             }
         }
-        if (state.showPermissionRationale) {
-            WelcomePermissionRationale(action, state, permissionLauncher)
-        }
-        if (state.showNeedsAccess) {
-            WelcomeNeedsAccessDialog(action, state, permissionLauncher)
-        }
         if (state.showLibrePhotosHelp) {
             WelcomeLibrePhotosHelpDialog(action)
         }
@@ -121,8 +110,6 @@ private class WelcomePreviews : PreviewParameterProvider<WelcomeState> {
         WelcomeState(isLoading = false, localMediaSelected = true, isSaveEnabled = true),
         WelcomeState(isLoading = false, cloudMediaSelected = true, isSaveEnabled = true),
         WelcomeState(isLoading = false, cloudMediaSelected = true, localMediaSelected = true, isSaveEnabled = true),
-        WelcomeState(isLoading = false, showPermissionRationale = true),
-        WelcomeState(isLoading = false, showNeedsAccess = true),
         WelcomeState(isLoading = false, showLibrePhotosHelp = true),
     )
 }
@@ -133,7 +120,6 @@ private fun WelcomePreview(@PreviewParameter(WelcomePreviews::class) state: Welc
     PreviewAppTheme {
         Welcome(
             state = state,
-            permissionLauncher = null,
         ) {}
     }
 }
@@ -143,7 +129,6 @@ private fun WelcomePreviewDark(@PreviewParameter(WelcomePreviews::class) state: 
     PreviewAppTheme(darkTheme = true) {
         Welcome(
             state = state,
-            permissionLauncher = null,
         ) {}
     }
 }

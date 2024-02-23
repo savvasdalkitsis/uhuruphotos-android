@@ -15,13 +15,20 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui
 
-import androidx.compose.material.Button
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.tooling.preview.Preview
+import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.R.drawable
 import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
-import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.MultiButtonDialog
+import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.CustomColors
+import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.PreviewAppTheme
+import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.CancelDialog
+import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.IconOutlineButton
+import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.IconText
 
 @Composable
 fun DeleteFullySyncedPermissionDialog(
@@ -29,28 +36,43 @@ fun DeleteFullySyncedPermissionDialog(
     onDeleteLocalTrashRemote: () -> Unit,
     onDeleteLocal: () -> Unit,
 ) {
-    MultiButtonDialog(
+    CancelDialog(
         title = stringResource(string.media_sync_status_fully_synced),
         onDismiss = onDismiss,
-        confirmButton = {
-            Button(onClick = onDeleteLocalTrashRemote) {
-                Text(stringResource(string.delete_fully_synced_media_both))
-            }
-        },
-        extraButtons = listOf {
-            Button(
-                modifier = Modifier.weight(1f),
-                onClick = onDeleteLocal,
-            ) {
-                Text(stringResource(string.delete_fully_synced_media_local))
-            }
-        },
-        negativeButtonText = stringResource(string.cancel),
         body = {
-            Text(
-                stringResource(string.what_would_like_to_do)
+            Text(stringResource(string.what_would_like_to_do))
+            IconOutlineButton(
+                modifier = Modifier
+                    .fillMaxWidth(),
+                icon = drawable.ic_delete,
+                text = stringResource(string.delete_fully_synced_media_local),
+                onClick = onDeleteLocal,
             )
-            Text(stringResource(string.operation_irreverisble))
+            IconOutlineButton(
+                modifier = Modifier
+                    .fillMaxWidth(),
+                icon = drawable.ic_folder_network,
+                text = stringResource(string.delete_fully_synced_media_both),
+                onClick = onDeleteLocalTrashRemote,
+            )
+            IconText(
+                icon = drawable.ic_alert,
+                text = stringResource(string.operation_irreverisble),
+                style = MaterialTheme.typography.subtitle2,
+                tint = CustomColors.alert,
+            )
         },
     )
+}
+
+@Preview
+@Composable
+private fun DeleteFullySyncedPermissionDialogPreview() {
+    PreviewAppTheme {
+        DeleteFullySyncedPermissionDialog(
+            onDismiss = {},
+            onDeleteLocalTrashRemote = {},
+            onDeleteLocal = {},
+        )
+    }
 }

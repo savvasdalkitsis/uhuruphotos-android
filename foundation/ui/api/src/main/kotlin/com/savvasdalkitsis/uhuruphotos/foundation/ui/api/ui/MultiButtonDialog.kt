@@ -24,14 +24,16 @@ import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.AlertDialog
-import androidx.compose.material.Button
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.OutlinedButton
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import com.savvasdalkitsis.uhuruphotos.foundation.compose.api.flip
 import com.savvasdalkitsis.uhuruphotos.foundation.compose.api.recomposeHighlighter
 import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
 
@@ -58,7 +60,7 @@ fun MultiButtonDialog(
         onDismissRequest = onDismiss,
         shape = MaterialTheme.shapes.large,
         title = {
-            Text(title)
+            Text(title, style = MaterialTheme.typography.h5)
         },
         text = {
             Column(
@@ -68,19 +70,21 @@ fun MultiButtonDialog(
             }
         },
         buttons = {
-            FlowRow(
-                modifier = Modifier
-                    .recomposeHighlighter()
-                    .fillMaxWidth()
-                    .padding(horizontal = 8.dp, vertical = 2.dp),
-                horizontalArrangement = spacedBy(8.dp),
-                verticalArrangement = spacedBy(4.dp),
-            ) {
-                for (button in extraButtons) {
-                    button()
+            val direction = LocalLayoutDirection.current
+            CompositionLocalProvider(LocalLayoutDirection provides direction.flip ) {
+                FlowRow(
+                    Modifier
+                        .fillMaxWidth()
+                        .padding(horizontal = 16.dp, vertical = 12.dp),
+                    horizontalArrangement = spacedBy(8.dp),
+                    verticalArrangement = spacedBy(12.dp)
+                ) {
+                    for (button in extraButtons) {
+                        button()
+                    }
+                    dismissButton()
+                    confirmButton()
                 }
-                dismissButton()
-                confirmButton()
             }
         },
     )

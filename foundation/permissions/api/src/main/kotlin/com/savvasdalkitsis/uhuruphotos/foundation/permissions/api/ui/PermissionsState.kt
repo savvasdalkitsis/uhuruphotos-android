@@ -9,9 +9,9 @@ import com.google.accompanist.permissions.MultiplePermissionsState
 import com.google.accompanist.permissions.rememberMultiplePermissionsState
 
 class PermissionsState(
-    internal val missingPermissions: List<String>?,
-    internal var showRationale: MutableState<Boolean>,
-    internal var showAccessRequest: MutableState<Boolean>,
+    internal val missingPermissions: List<String>? = null,
+    internal var showRationale: MutableState<Boolean>? = null,
+    internal var showAccessRequest: MutableState<Boolean>? = null,
 ) {
     private var permissionState: MultiplePermissionsState? = null
 
@@ -25,9 +25,9 @@ class PermissionsState(
     fun askForPermissions() {
         permissionState?.let {
             if (it.shouldShowRationale) {
-                showRationale.value = true
+                showRationale?.value = true
             } else if (!it.allPermissionsGranted) {
-                showAccessRequest.value = true
+                showAccessRequest?.value = true
             }
         }
     }

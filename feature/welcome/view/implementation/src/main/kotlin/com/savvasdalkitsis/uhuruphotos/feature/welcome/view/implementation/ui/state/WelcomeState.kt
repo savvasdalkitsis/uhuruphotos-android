@@ -21,7 +21,5 @@ data class WelcomeState(
     val localMediaSelected: Boolean = false,
     val cloudMediaSelected: Boolean = false,
     val missingPermissions: List<String>? = null,
-    val showPermissionRationale: Boolean = false,
-    val showNeedsAccess: Boolean = false,
     val showLibrePhotosHelp: Boolean = false,
 )

@@ -27,6 +27,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import com.savvasdalkitsis.uhuruphotos.feature.welcome.view.implementation.R.raw
 import com.savvasdalkitsis.uhuruphotos.feature.welcome.view.implementation.seam.actions.LogOut
 import com.savvasdalkitsis.uhuruphotos.feature.welcome.view.implementation.seam.actions.ShowLibrePhotosHelp
 import com.savvasdalkitsis.uhuruphotos.feature.welcome.view.implementation.seam.actions.WelcomeAction
@@ -62,14 +63,14 @@ internal fun WelcomeLoadedContent(
             horizontalArrangement = Arrangement.spacedBy(32.dp),
         ) {
             WelcomeUseCase(
-                com.savvasdalkitsis.uhuruphotos.feature.welcome.view.implementation.R.raw.animation_local_media,
+                raw.animation_local_media,
                 R.string.manage_media_on_device,
                 state.localMediaSelected,
             ) {
                 permissionState.askForPermissions()
             }
             WelcomeUseCase(
-                if (state.localMediaSelected) com.savvasdalkitsis.uhuruphotos.feature.welcome.view.implementation.R.raw.animation_cloud_backup else com.savvasdalkitsis.uhuruphotos.feature.welcome.view.implementation.R.raw.animation_cloud,
+                if (state.localMediaSelected) raw.animation_cloud_backup else raw.animation_cloud,
                 if (state.localMediaSelected) R.string.backup_media_on_cloud else R.string.manage_media_on_cloud,
                 state.cloudMediaSelected,
             ) {

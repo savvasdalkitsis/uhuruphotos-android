@@ -61,7 +61,8 @@ import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.ActionIcon
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.CollapsibleGroup
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.CommonScaffold
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.FullLoading
-import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.MultiButtonDialog
+import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.IconOutlineButton
+import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.OkDialog
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.ToggleableButtonWithIcon
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.UpNavButton
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.state.rememberCollapsibleGroupState
@@ -198,17 +199,20 @@ internal fun Server(
                 UnsecuredServerConfirmationDialog(serverTextFieldValue, action, state)
             }
             if (state.showHelpDialog) {
-                MultiButtonDialog(
+                OkDialog(
                     title = stringResource(string.help),
                     onDismiss = { action(DismissHelpDialog) },
-                    negativeButtonText = stringResource(string.ok),
-                    confirmButton = {
-                        Button(onClick = { action(TakeUserToLibrePhotosWebsite) }) {
-                            Text(stringResource(string.take_me_to_website))
-                        }
-                    }
                 ) {
                     Text(stringResource(string.libre_photos_description))
+                    IconOutlineButton(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(8.dp),
+                        icon = drawable.ic_help,
+                        text = stringResource(string.take_me_to_website),
+                    ) {
+                        action(TakeUserToLibrePhotosWebsite)
+                    }
                 }
             }
         }

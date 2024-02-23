@@ -18,6 +18,7 @@ dependencies {
     )
     implementation(
             libs.androidx.compose.material,
+            libs.androidx.compose.ui.tooling.preview,
             libs.moshi,
             project(":feature:auth:view:api"),
             project(":feature:media:common:domain:api"),
@@ -28,6 +29,9 @@ dependencies {
             project(":foundation:strings:api"),
             project(":foundation:ui:api"),
             project(":foundation:video:api"),
+    )
+    debugImplementation(
+            libs.androidx.compose.ui.tooling,
     )
     ksp libs.moshi.ksp
 }

@@ -31,6 +31,7 @@ dependencies {
             libs.androidx.window,
             libs.lottie,
             libs.remember,
+            project(":foundation:compose:api"),
             project(":foundation:icons:api"),
             project(":foundation:navigation:api"),
             project(":foundation:strings:api"),

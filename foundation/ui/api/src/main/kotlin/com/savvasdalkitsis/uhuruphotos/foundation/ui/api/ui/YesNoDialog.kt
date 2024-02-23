@@ -15,18 +15,27 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui
 
-import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Arrangement.spacedBy
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ColumnScope
+import androidx.compose.foundation.layout.FlowRow
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material.AlertDialog
 import androidx.compose.material.Button
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.OutlinedButton
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.savvasdalkitsis.uhuruphotos.foundation.compose.api.flip
 import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
+import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.PreviewAppTheme
 
 @Composable
 fun YesNoDialog(
@@ -35,28 +44,63 @@ fun YesNoDialog(
     onYes: () -> Unit,
     body: @Composable ColumnScope.() -> Unit,
 ) {
+    YesNoDialog(title, onDismiss, onYes, stringResource(string.yes), stringResource(string.no), body)
+}
+
+@Composable
+fun YesNoDialog(
+    title: String,
+    onNo: () -> Unit,
+    onYes: () -> Unit,
+    yes: String,
+    no: String,
+    body: @Composable ColumnScope.() -> Unit,
+) {
     AlertDialog(
-        onDismissRequest = onDismiss,
+        onDismissRequest = onNo,
         shape = MaterialTheme.shapes.large,
         title = {
-            Text(title)
+            Text(title, style = MaterialTheme.typography.h5)
         },
         text = {
             Column(
-                verticalArrangement = Arrangement.spacedBy(8.dp)
+                verticalArrangement = spacedBy(8.dp)
             ) {
                 body()
             }
         },
-        confirmButton = {
-            Button(onClick = onYes) {
-                Text(stringResource(string.yes))
-            }
-        },
-        dismissButton = {
-            OutlinedButton(onClick = onDismiss) {
-                Text(stringResource(string.no))
+        buttons = {
+            val direction = LocalLayoutDirection.current
+            CompositionLocalProvider(LocalLayoutDirection provides direction.flip ) {
+                FlowRow(
+                    Modifier
+                        .fillMaxWidth()
+                        .padding(horizontal = 16.dp, vertical = 12.dp),
+                    horizontalArrangement = spacedBy(8.dp),
+                    verticalArrangement = spacedBy(12.dp)
+                ) {
+                    Button(onClick = onYes) {
+                        Text(yes)
+                    }
+                    OutlinedButton(onClick = onNo) {
+                        Text(no)
+                    }
+                }
             }
         },
     )
+}
+
+@Preview
+@Composable
+fun WelcomeNeedsAccessDialogPreview() {
+    PreviewAppTheme {
+        YesNoDialog(
+            title = "Title",
+            onDismiss = {},
+            onYes = {},
+        ) {
+            Text("Body")
+        }
+    }
 }

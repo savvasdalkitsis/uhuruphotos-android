@@ -15,20 +15,18 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.foundation.permissions.api.ui
 
-import androidx.compose.runtime.Composable
-import dev.shreyaspatil.permissionflow.compose.rememberPermissionFlowRequestLauncher
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContract
+import androidx.core.app.ActivityOptionsCompat
 
-@Composable
-internal fun PermissionsCheck(
-    state: PermissionsState,
-) {
-    state.Compose()
-    val permissionLauncher = rememberPermissionFlowRequestLauncher()
-
-    if (state.showRationale?.value == true) {
-        PermissionsShowRationaleDialog(state, permissionLauncher)
+internal object FakeResultLauncher : ActivityResultLauncher<Array<String>>() {
+    override fun launch(input: Array<String>?, options: ActivityOptionsCompat?) {
     }
-    if (state.showAccessRequest?.value == true) {
-        PermissionsShowAccessRequestDialog(state, permissionLauncher)
+
+    override fun unregister() {
+    }
+
+    override fun getContract(): ActivityResultContract<Array<String>, *> {
+        TODO("Not yet implemented")
     }
 }

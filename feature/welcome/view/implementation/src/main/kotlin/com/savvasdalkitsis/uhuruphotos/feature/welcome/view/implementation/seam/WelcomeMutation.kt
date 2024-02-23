@@ -41,14 +41,6 @@ sealed class WelcomeMutation(
         it.copy(isSaveEnabled = it.localMediaSelected || it.cloudMediaSelected)
     })
 
-    data class DisplayPermissionsRationale(val showPermissionRationale: Boolean) : WelcomeMutation({
-        it.copy(showPermissionRationale = showPermissionRationale)
-    })
-
-    data class DisplayNeedAccessDialog(val showNeedsAccess: Boolean) : WelcomeMutation({
-        it.copy(showNeedsAccess = showNeedsAccess)
-    })
-
     data class DisplayLibrePhotosHelpDialog(val showLibrePhotosHelp: Boolean) : WelcomeMutation({
         it.copy(showLibrePhotosHelp = showLibrePhotosHelp)
     })
