@@ -4,6 +4,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.ui.platform.LocalInspectionMode
 import com.google.accompanist.permissions.MultiplePermissionsState
 import com.google.accompanist.permissions.rememberMultiplePermissionsState
 
@@ -46,7 +47,9 @@ class PermissionsState(
                     )
                 )
             }
-            PermissionsCheck(state.value)
+            if (!LocalInspectionMode.current) {
+                PermissionsCheck(state.value)
+            }
             return state
         }
     }

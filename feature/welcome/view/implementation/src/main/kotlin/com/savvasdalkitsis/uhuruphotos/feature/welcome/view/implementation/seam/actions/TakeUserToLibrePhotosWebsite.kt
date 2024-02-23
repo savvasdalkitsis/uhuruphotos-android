@@ -1,5 +1,5 @@
 /*
-Copyright 2023 Savvas Dalkitsis
+Copyright 2024 Savvas Dalkitsis
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -13,18 +13,17 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
  */
-package com.savvasdalkitsis.uhuruphotos.feature.server.view.implementation.seam.actions
+package com.savvasdalkitsis.uhuruphotos.feature.welcome.view.implementation.seam.actions
 
-import com.savvasdalkitsis.uhuruphotos.feature.server.view.implementation.seam.ServerActionsContext
-import com.savvasdalkitsis.uhuruphotos.feature.server.view.implementation.ui.ServerState
+import com.savvasdalkitsis.uhuruphotos.feature.welcome.view.implementation.seam.WelcomeActionsContext
+import com.savvasdalkitsis.uhuruphotos.feature.welcome.view.implementation.ui.state.WelcomeState
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.Mutation
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 
-data object TakeUserToLibrePhotosWebsite : ServerAction() {
-    context(ServerActionsContext)
-    override fun handle(state: ServerState): Flow<Mutation<ServerState>> = flow {
+data object TakeUserToLibrePhotosWebsite : WelcomeAction() {
+    context(WelcomeActionsContext)
+    override fun handle(state: WelcomeState): Flow<Mutation<WelcomeState>> = flow {
         navigator.navigateToWeb("https://docs.librephotos.com/")
     }
-
 }

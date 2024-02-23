@@ -1,5 +1,5 @@
 /*
-Copyright 2023 Savvas Dalkitsis
+Copyright 2024 Savvas Dalkitsis
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -15,18 +15,16 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.welcome.view.implementation.seam.actions
 
-import com.savvasdalkitsis.uhuruphotos.feature.server.view.api.navigation.ServerNavigationRoute
 import com.savvasdalkitsis.uhuruphotos.feature.welcome.view.implementation.seam.WelcomeActionsContext
 import com.savvasdalkitsis.uhuruphotos.feature.welcome.view.implementation.seam.WelcomeMutation
 import com.savvasdalkitsis.uhuruphotos.feature.welcome.view.implementation.ui.state.WelcomeState
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.Mutation
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.flowOf
 
-data object SelectCloudMedia : WelcomeAction() {
+data object HideLibrePhotosHelp : WelcomeAction() {
     context(WelcomeActionsContext)
-    override fun handle(state: WelcomeState): Flow<Mutation<WelcomeState>> = flow {
-        emit(WelcomeMutation.DisplayLibrePhotosHelpDialog(false))
-        navigator.navigateTo(ServerNavigationRoute)
-    }
+    override fun handle(state: WelcomeState): Flow<Mutation<WelcomeState>> = flowOf(
+        WelcomeMutation.DisplayLibrePhotosHelpDialog(false)
+    )
 }

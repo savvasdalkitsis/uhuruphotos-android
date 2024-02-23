@@ -23,4 +23,5 @@ data class WelcomeState(
     val missingPermissions: List<String>? = null,
     val showPermissionRationale: Boolean = false,
     val showNeedsAccess: Boolean = false,
+    val showLibrePhotosHelp: Boolean = false,
 )

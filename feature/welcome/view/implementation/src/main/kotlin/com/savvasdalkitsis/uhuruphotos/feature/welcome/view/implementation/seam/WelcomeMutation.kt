@@ -16,7 +16,6 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.feature.welcome.view.implementation.seam
 
 import com.savvasdalkitsis.uhuruphotos.feature.welcome.view.implementation.ui.state.WelcomeState
-import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.CompositeMutation
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.Mutation
 
 sealed class WelcomeMutation(
@@ -48,5 +47,9 @@ sealed class WelcomeMutation(
 
     data class DisplayNeedAccessDialog(val showNeedsAccess: Boolean) : WelcomeMutation({
         it.copy(showNeedsAccess = showNeedsAccess)
+    })
+
+    data class DisplayLibrePhotosHelpDialog(val showLibrePhotosHelp: Boolean) : WelcomeMutation({
+        it.copy(showLibrePhotosHelp = showLibrePhotosHelp)
     })
 }

@@ -16,6 +16,7 @@ dependencies {
             libs.androidx.compose.ui.tooling.preview,
             libs.bundles.autodagger,
             libs.bundles.permissions,
+            libs.dowel,
             project(":feature:about:view:api"),
             project(":feature:auth:domain:api"),
             project(":feature:feed:view:api"),
@@ -35,4 +36,5 @@ dependencies {
             libs.androidx.compose.ui.tooling,
     )
     kapt libs.autodagger.kapt
+    ksp libs.dowel.ksp
 }

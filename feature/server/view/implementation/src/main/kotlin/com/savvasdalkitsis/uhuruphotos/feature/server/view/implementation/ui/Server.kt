@@ -231,3 +231,21 @@ private fun ServerPreview() {
         ))
     }
 }
+
+@Preview
+@Composable
+private fun ServerPreviewWithHelp() {
+    PreviewAppTheme {
+        Server(state = ServerState(
+            password = "pass",
+            isLoggingEnabled = true,
+            prefilledUrl = "http://librephotos.server",
+            isUrlValid = true,
+            showUnsecureServerConfirmation = false,
+            username = "username",
+            allowLogin = true,
+            passwordVisible = false,
+            showHelpDialog = true,
+        ))
+    }
+}

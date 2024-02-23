@@ -9,6 +9,7 @@ compose = "1.7.0-alpha02"
 compose-compiler = "1.5.9"
 crypto = "1.1.0-alpha06"
 datastore = "1.1.0-beta01"
+dowel = "0.8.0"
 gms = "18.2.0"
 google-services = "4.4.1"
 hilt = "2.50"
@@ -96,6 +97,8 @@ coil-compose = { module = "io.coil-kt:coil-compose", version.ref = "coil" }
 coil-gif = { module = "io.coil-kt:coil-gif", version.ref = "coil" }
 coil-video = { module = "io.coil-kt:coil-video", version.ref = "coil" }
 crop = "com.github.moyuruaizawa:cropify:0.3.1"
+dowel = { module = "com.github.jayasuryat.dowel:dowel", version.ref = "dowel" }
+dowel-ksp = { module = "com.github.jayasuryat.dowel:dowel-processor", version.ref = "dowel" }
 exif = "androidx.exifinterface:exifinterface:1.3.7"
 flowpreferences = "com.fredporciuncula:flow-preferences:1.9.1"
 gif = "com.squareup:gifencoder:0.10.1"

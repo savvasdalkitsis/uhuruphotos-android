@@ -28,13 +28,14 @@ import com.savvasdalkitsis.uhuruphotos.foundation.compose.api.recomposeHighlight
 
 @Composable
 fun FullLoading(
+    modifier: Modifier = Modifier,
     content: @Composable BoxScope.() -> Unit = {
         CircularProgressIndicator(modifier = Modifier.size(48.dp))
     }
 ) {
     Box(
         contentAlignment = Alignment.Center,
-        modifier = Modifier
+        modifier = modifier
             .recomposeHighlighter()
             .fillMaxSize(),
         content = content,
