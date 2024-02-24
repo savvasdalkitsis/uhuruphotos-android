@@ -81,3 +81,4 @@ existing translations at [weblate](https://hosted.weblate.org/engage/uhuruphotos
   </picture>
 </a>
 
+This project is tested with BrowserStack.
