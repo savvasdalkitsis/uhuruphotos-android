@@ -171,7 +171,7 @@ private fun StatsHeader(state: StatsState) {
 
 @Preview
 @Composable
-fun StatsPreviewLoading() {
+private fun StatsPreviewLoading() {
     PreviewAppTheme {
         Stats(state = StatsState())
     }
@@ -179,7 +179,7 @@ fun StatsPreviewLoading() {
 
 @Preview
 @Composable
-fun StatsPreviewStats() {
+private fun StatsPreviewStats() {
     PreviewAppTheme {
         Stats(state = StatsState(
             isLoadingMediaByYear = false,

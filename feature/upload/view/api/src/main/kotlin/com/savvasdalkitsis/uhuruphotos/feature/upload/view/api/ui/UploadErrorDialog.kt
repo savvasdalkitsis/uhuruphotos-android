@@ -57,7 +57,7 @@ fun UploadErrorDialog(
 
 @Preview
 @Composable
-fun UploadErrorDialogPreviewNotAllowed() {
+private fun UploadErrorDialogPreviewNotAllowed() {
     PreviewAppTheme {
         UploadErrorDialog(mode = NOT_ALLOWED)
     }
@@ -65,7 +65,7 @@ fun UploadErrorDialogPreviewNotAllowed() {
 
 @Preview
 @Composable
-fun UploadErrorDialogPreviewCannotCheck() {
+private fun UploadErrorDialogPreviewCannotCheck() {
     PreviewAppTheme {
         UploadErrorDialog(mode = ERROR_CHECKING)
     }

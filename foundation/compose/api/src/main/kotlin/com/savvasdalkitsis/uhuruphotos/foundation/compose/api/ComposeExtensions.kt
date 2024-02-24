@@ -29,8 +29,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.LayoutDirection
-import androidx.compose.ui.unit.LayoutDirection.Ltr
-import androidx.compose.ui.unit.LayoutDirection.Rtl
 import androidx.compose.ui.unit.dp
 import com.savvasdalkitsis.uhuruphotos.foundation.log.api.log
 
@@ -57,9 +55,3 @@ fun Modifier.blurIf(condition: Boolean): Modifier = composed {
     val blur: Float by animateFloatAsState(if (condition) 8f else 0f, label = "blurAnimation")
     blur(blur.dp)
 }
-
-val LayoutDirection.flip: LayoutDirection
-    get() = when (this) {
-        Ltr -> Rtl
-        Rtl -> Ltr
-    }

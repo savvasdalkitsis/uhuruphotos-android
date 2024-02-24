@@ -106,7 +106,7 @@ private fun LightboxSearchCaption(
 
 @Preview
 @Composable
-fun CaptionsPreview() {
+private fun CaptionsPreview() {
     PreviewAppTheme {
         CaptionsPreviewContent()
     }
@@ -114,7 +114,7 @@ fun CaptionsPreview() {
 
 @Preview
 @Composable
-fun CaptionsPreviewDark() {
+private fun CaptionsPreviewDark() {
     PreviewAppTheme(darkTheme = true) {
         CaptionsPreviewContent()
     }

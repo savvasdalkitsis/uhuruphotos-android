@@ -76,7 +76,7 @@ internal fun WelcomeLibrePhotosHelpDialog(action: (WelcomeAction) -> Unit) {
 
 @Preview
 @Composable
-fun WelcomeLibrePhotosHelpDialogPreview() {
+private fun WelcomeLibrePhotosHelpDialogPreview() {
     PreviewAppTheme {
         WelcomeLibrePhotosHelpDialog(
             action = {},

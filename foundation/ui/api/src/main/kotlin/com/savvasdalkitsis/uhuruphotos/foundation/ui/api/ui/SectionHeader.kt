@@ -57,7 +57,7 @@ fun SectionHeader(
 
 @Preview
 @Composable
-fun SectionHeaderPreview() {
+private fun SectionHeaderPreview() {
     PreviewAppTheme {
         SectionHeader(title = "Section") {
             Button(onClick = { }) {

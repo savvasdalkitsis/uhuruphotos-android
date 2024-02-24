@@ -63,7 +63,7 @@ fun UpsellDialog(
 
 @Preview
 @Composable
-fun UpsellDialogPreview() {
+private fun UpsellDialogPreview() {
     PreviewAppTheme {
         UpsellDialog(
             onDismiss = {},

@@ -60,7 +60,7 @@ internal fun SettingsCheckBox(
 
 @Preview
 @Composable
-internal fun SettingsCheckBoxPreview() {
+private fun SettingsCheckBoxPreview() {
     PreviewAppTheme {
         SettingsCheckBox(text = "Setting", icon = drawable.ic_info, isChecked = true) {}
     }

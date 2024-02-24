@@ -104,7 +104,7 @@ private fun navigateToSettings(navigator: Navigator?, context: Context) {
 
 @Preview
 @Composable
-fun PermissionsShowAccessRequestDialogPreview() {
+private fun PermissionsShowAccessRequestDialogPreview() {
     PreviewAppTheme {
         PermissionsShowAccessRequestDialog(PermissionsState(), FakeResultLauncher)
     }

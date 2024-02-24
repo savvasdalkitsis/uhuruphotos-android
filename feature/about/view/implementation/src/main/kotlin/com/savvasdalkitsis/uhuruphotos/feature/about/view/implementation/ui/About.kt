@@ -180,7 +180,7 @@ private fun AboutHeader(
 
 @Preview
 @Composable
-fun AboutHeaderPreview() {
+private fun AboutHeaderPreview() {
     PreviewAppTheme {
         AboutHeader(AboutState("0.0.999")) {}
     }
@@ -188,7 +188,7 @@ fun AboutHeaderPreview() {
 
 @Preview
 @Composable
-fun AboutHeaderDarkPreview() {
+private fun AboutHeaderDarkPreview() {
     PreviewAppTheme(darkTheme = true) {
         AboutHeader(AboutState("0.0.999")) {}
     }

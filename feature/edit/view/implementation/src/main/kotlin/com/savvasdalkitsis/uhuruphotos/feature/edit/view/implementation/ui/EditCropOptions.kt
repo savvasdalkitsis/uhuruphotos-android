@@ -50,7 +50,7 @@ internal fun EditCropOptions(
 
 @Preview
 @Composable
-fun EditCropOptionsPreview() {
+private fun EditCropOptionsPreview() {
     PreviewAppTheme {
         EditCropOptions {}
     }

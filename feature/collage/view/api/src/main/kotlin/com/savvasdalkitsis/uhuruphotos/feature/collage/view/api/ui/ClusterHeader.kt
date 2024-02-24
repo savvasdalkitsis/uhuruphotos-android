@@ -116,7 +116,7 @@ internal fun ClusterHeader(
 
 @Preview
 @Composable
-internal fun CollageGroupHeaderPreview() {
+private fun CollageGroupHeaderPreview() {
     PreviewAppTheme {
         ClusterHeader(
             modifier = Modifier,
@@ -128,7 +128,7 @@ internal fun CollageGroupHeaderPreview() {
 
 @Preview
 @Composable
-internal fun CollageGroupPreviewSelection() {
+private fun CollageGroupPreviewSelection() {
     PreviewAppTheme {
         ClusterHeader(
             modifier = Modifier,

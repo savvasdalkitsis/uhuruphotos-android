@@ -24,3 +24,8 @@ import androidx.compose.ui.unit.LayoutDirection
 fun WithDirection(direction: LayoutDirection, content: @Composable () -> Unit) {
     CompositionLocalProvider(LocalLayoutDirection provides direction, content = content)
 }
+
+@Composable
+fun ReverseDirection(content: @Composable () -> Unit) {
+    WithDirection(LocalLayoutDirection.current.reverse, content = content)
+}

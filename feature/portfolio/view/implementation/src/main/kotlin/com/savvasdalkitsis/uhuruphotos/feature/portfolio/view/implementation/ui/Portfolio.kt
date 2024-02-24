@@ -54,7 +54,7 @@ internal fun Portfolio(
 
 @Preview
 @Composable
-fun PortfolioPreview() {
+private fun PortfolioPreview() {
     PreviewAppTheme {
         Portfolio(state = PortfolioState(
             Found(
@@ -66,7 +66,7 @@ fun PortfolioPreview() {
 
 @Preview
 @Composable
-fun PortfolioLoadingPreview() {
+private fun PortfolioLoadingPreview() {
     PreviewAppTheme {
         Portfolio(state = PortfolioState(Loading))
     }
@@ -74,7 +74,7 @@ fun PortfolioLoadingPreview() {
 
 @Preview
 @Composable
-fun PortfolioNoPermissionsPreview() {
+private fun PortfolioNoPermissionsPreview() {
     PreviewAppTheme {
         Portfolio(state = PortfolioState(RequiresPermissions(emptyList())))
     }

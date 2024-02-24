@@ -181,7 +181,7 @@ internal fun Settings(
 
 @Preview
 @Composable
-internal fun SettingsPreview() {
+private fun SettingsPreview() {
     PreviewAppTheme {
         Settings(
             controller = SettingsViewStateController(preferences()),

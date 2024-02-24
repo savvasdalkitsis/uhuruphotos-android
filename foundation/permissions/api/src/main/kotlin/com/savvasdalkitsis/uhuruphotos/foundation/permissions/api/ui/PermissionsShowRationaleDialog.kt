@@ -48,7 +48,7 @@ internal fun PermissionsShowRationaleDialog(
 
 @Preview
 @Composable
-fun PermissionsShowRationaleDialogPreview() {
+private fun PermissionsShowRationaleDialogPreview() {
     PreviewAppTheme {
         PermissionsShowRationaleDialog(PermissionsState(), FakeResultLauncher)
     }

@@ -26,13 +26,11 @@ import androidx.compose.material.Button
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import com.savvasdalkitsis.uhuruphotos.foundation.compose.api.flip
 import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
+import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.layout.ReverseDirection
 
 @Composable
 fun OkDialog(
@@ -64,8 +62,7 @@ fun OkDialog(
             }
         },
         buttons = {
-            val direction = LocalLayoutDirection.current
-            CompositionLocalProvider(LocalLayoutDirection provides direction.flip ) {
+            ReverseDirection {
                 FlowRow(
                     Modifier
                         .fillMaxWidth()

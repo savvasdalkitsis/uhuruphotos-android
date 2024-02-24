@@ -60,7 +60,7 @@ fun ToggleableButtonWithIcon(
 
 @Preview
 @Composable
-fun ToggleableButtonWithIconPreview() {
+private fun ToggleableButtonWithIconPreview() {
     PreviewAppTheme {
         Box(Modifier.padding(8.dp)) {
             ToggleableButtonWithIcon(

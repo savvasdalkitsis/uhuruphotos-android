@@ -65,7 +65,7 @@ internal fun Edit(
 
 @Preview
 @Composable
-fun CropOptionsPreview() {
+private fun CropOptionsPreview() {
     PreviewAppTheme {
         Box {
             EditCropOptions {}

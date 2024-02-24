@@ -61,7 +61,7 @@ fun BoxScope.PortfolioMissingPermissions(
 
 @Preview
 @Composable
-fun PortfolioMissingPermissionsPreview() {
+private fun PortfolioMissingPermissionsPreview() {
     PreviewAppTheme {
         Box {
             PortfolioMissingPermissions()
