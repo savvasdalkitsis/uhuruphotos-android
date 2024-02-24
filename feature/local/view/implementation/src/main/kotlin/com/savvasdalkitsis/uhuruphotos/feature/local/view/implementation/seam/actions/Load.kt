@@ -45,7 +45,7 @@ data class Load(val albumId: Int) : LocalAlbumAction() {
             },
         portfolioUseCase.observePublishedFolderIds()
             .mapNotNull {
-                val primaryFolder = localMediaUseCase.getDefaultBucketId()
+                val primaryFolder = localMediaUseCase.getDefaultFolderId()
                 if (primaryFolder != albumId) {
                     DisplayContributingToPortfolio(albumId in it)
                 } else {

@@ -164,15 +164,15 @@ class LocalMediaUseCase @Inject constructor(
     private suspend fun foundLocalMediaItems(
         itemDetails: List<LocalMediaItemDetails>
     ): LocalMediaItems.Found {
-        val defaultBucket = getDefaultBucketId()
+        val defaultFolder = getDefaultFolderId()
         val media = itemDetails.toItems()
             .groupBy(LocalMediaItem::bucket)
         return LocalMediaItems.Found(
             primaryLocalMediaFolder = media.entries.firstOrNull { (folder, _) ->
-                folder.id == defaultBucket
+                folder.id == defaultFolder
             }?.toPair(),
             localMediaFolders = media.filter { (folder, _) ->
-                folder.id != defaultBucket
+                folder.id != defaultFolder
             }.toList().sortedBy { (folder, _) -> folder.displayName },
         )
     }
@@ -303,7 +303,7 @@ class LocalMediaUseCase @Inject constructor(
             null
     }
 
-    override suspend fun getDefaultBucketId(): Int? {
+    override suspend fun getDefaultFolderId(): Int? {
         resetMediaStoreIfNeeded()
         return localMediaFolderRepository.getDefaultLocalFolderId()
     }

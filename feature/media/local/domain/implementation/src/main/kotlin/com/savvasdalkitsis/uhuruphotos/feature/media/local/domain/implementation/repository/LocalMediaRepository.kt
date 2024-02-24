@@ -60,6 +60,7 @@ class LocalMediaRepository @Inject constructor(
     private val localMediaItemDetailsQueries: LocalMediaItemDetailsQueries,
     private val downloadingMediaItemsQueries: DownloadingMediaItemsQueries,
     private val localMediaService: LocalMediaService,
+    private val localMediaFolderRepository: LocalMediaFolderRepository,
     private val contentResolver: ContentResolver,
     @ApplicationContext private val context: Context,
     private val exifUseCase: ExifUseCase,
@@ -72,9 +73,11 @@ class LocalMediaRepository @Inject constructor(
         .asFlow().mapToList(Dispatchers.IO).distinctUntilChanged()
 
     fun observeFolder(folderId: Int): Flow<List<LocalMediaItemDetails>> =
-        localMediaItemDetailsQueries.getBucketItems(folderId).asFlow().mapToList(Dispatchers.IO).distinctUntilChanged()
+        localMediaItemDetailsQueries.getBucketItems(folderId)
+            .asFlow().mapToList(Dispatchers.IO).distinctUntilChanged()
 
-    suspend fun getMedia(): List<LocalMediaItemDetails> = localMediaItemDetailsQueries.getItems().awaitList()
+    suspend fun getMedia(): List<LocalMediaItemDetails> =
+        localMediaItemDetailsQueries.getItems().awaitList()
 
     suspend fun refreshFolder(folderId: Int) =
         (localMediaService.getPhotosForBucket(folderId) + localMediaService.getVideosForBucket(folderId))
@@ -83,7 +86,7 @@ class LocalMediaRepository @Inject constructor(
     suspend fun refresh(
         onProgressChange: suspend (current: Int, total: Int) -> Unit = { _, _ -> },
     ) {
-        val camera = localMediaService.getDefaultBucketId()
+        val camera = localMediaFolderRepository.getDefaultLocalFolderId()
         val cameraPhotos = (camera?.let { localMediaService.getPhotosForBucket(it) } ?: emptyList())
             .sortedByDescending { it.dateTaken }
         val cameraVideos = (camera?.let { localMediaService.getVideosForBucket(it) } ?: emptyList())

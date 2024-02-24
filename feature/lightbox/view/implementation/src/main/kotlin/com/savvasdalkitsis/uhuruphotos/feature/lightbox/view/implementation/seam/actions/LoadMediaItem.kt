@@ -98,7 +98,7 @@ data class LoadMediaItem(
         ) { mediaItems, isInPortfolio ->
             val addToPortfolioEnabled = addToPortfolioIconEnabled()
             val showAddToPortfolioIcon = sequenceDataSource is LocalAlbum
-                    && sequenceDataSource.albumId != localMediaUseCase.getDefaultBucketId()
+                    && sequenceDataSource.albumId != localMediaUseCase.getDefaultFolderId()
             mediaItems.map {
                 it.toSingleMediaItemState(isInPortfolio, showAddToPortfolioIcon, addToPortfolioEnabled)
             }

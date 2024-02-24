@@ -50,7 +50,8 @@ class LocalMediaFolderRepository @Inject constructor(
     }
 
     fun observeFolders(): Flow<Set<LocalMediaFolder>> =
-        localMediaItemDetailsQueries.getBuckets().asFlow().mapToList(Dispatchers.IO).distinctUntilChanged()
+        localMediaItemDetailsQueries.getBuckets()
+            .asFlow().mapToList(Dispatchers.IO).distinctUntilChanged()
             .map {
                 it.toMediaBuckets()
             }
