@@ -1,0 +1,5 @@
+* Improvements to the welcome process for new users
+* Improvements to dialogs across the app
+* Not showing sync prompt on feed for logged out users
+* Fixed bug not showing details for local only media in lightbox for logged out users
+* Fixed not showing first header on albums (and heatmap) not showing
