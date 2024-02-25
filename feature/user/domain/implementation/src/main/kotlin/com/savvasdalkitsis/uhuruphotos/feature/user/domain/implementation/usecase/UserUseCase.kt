@@ -22,7 +22,6 @@ import com.savvasdalkitsis.uhuruphotos.feature.user.domain.api.usecase.UserUseCa
 import com.savvasdalkitsis.uhuruphotos.feature.user.domain.implementation.repository.UserRepository
 import com.savvasdalkitsis.uhuruphotos.foundation.launchers.api.onIO
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.onEach
 import se.ansman.dagger.auto.AutoBind
 import javax.inject.Inject
@@ -32,13 +31,12 @@ internal class UserUseCase @Inject constructor(
     private val userRepository: UserRepository,
 ) : UserUseCase {
 
-    override fun observeUser(): Flow<User> = userRepository.observeUser()
+    override fun observeUser(): Flow<User?> = userRepository.observeUser()
         .onEach { user ->
             if (user == null) {
                 onIO { userRepository.refreshUser() }
             }
         }
-        .filterNotNull()
 
     override suspend fun getUserOrRefresh(): Result<User, Throwable> =
         userRepository.getUser()?.let { Ok(it) } ?: userRepository.refreshUser()

@@ -31,6 +31,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.welcome.domain.api.usecase.flow
 import dagger.hilt.android.scopes.ActivityRetainedScoped
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.map
 import se.ansman.dagger.auto.AutoBind
 import javax.inject.Inject
@@ -49,7 +50,7 @@ class AvatarUseCase @Inject constructor(
             AvatarState(syncState = jobsStatus.syncState())
         },
         withRemoteAccess = combine(
-            userUseCase.observeUser(),
+            userUseCase.observeUser().filterNotNull(),
             jobsUseCase.observeJobsStatusFilteredBySettings(),
             serverUseCase.observeServerUrl(),
         ) { user, jobsStatus, serverUrl ->

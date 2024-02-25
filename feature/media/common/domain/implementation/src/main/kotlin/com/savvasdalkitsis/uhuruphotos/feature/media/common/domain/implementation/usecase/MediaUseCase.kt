@@ -240,10 +240,10 @@ class MediaUseCase @Inject constructor(
             localMediaUseCase.observeLocalMediaItem(value),
             userUseCase.observeUser(),
         ) { item, user ->
-            item.toMediaItemDetails(user.id)
+            item.toMediaItemDetails(user?.id)
         }
 
-    private fun LocalMediaItem.toMediaItemDetails(userId: Int): MediaItemDetails =
+    private fun LocalMediaItem.toMediaItemDetails(userId: Int?): MediaItemDetails =
         MediaItemDetails(
             formattedDateAndTime = displayDateTime,
             isFavourite = false,
