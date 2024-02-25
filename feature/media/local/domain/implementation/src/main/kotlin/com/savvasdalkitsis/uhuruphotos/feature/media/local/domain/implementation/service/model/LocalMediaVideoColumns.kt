@@ -22,6 +22,7 @@ import android.os.Build.VERSION_CODES.R
 import android.provider.MediaStore
 import android.provider.MediaStore.Video.Media.DURATION
 import android.provider.MediaStore.Video.Media.EXTERNAL_CONTENT_URI
+import android.provider.MediaStore.Video.Media.ORIENTATION
 import android.provider.MediaStore.Video.Media.getContentUri
 
 internal data object LocalMediaVideoColumns {
@@ -36,8 +37,12 @@ internal data object LocalMediaVideoColumns {
         MediaStore.Video.Media.BUCKET_ID,
         MediaStore.Video.Media.BUCKET_DISPLAY_NAME,
     ) + when {
+        SDK_INT == Q -> arrayOf(
+            ORIENTATION,
+        )
         SDK_INT >= R -> arrayOf(
             DURATION,
+            ORIENTATION,
         )
         else -> emptyArray()
     }

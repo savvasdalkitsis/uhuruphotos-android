@@ -31,6 +31,7 @@ internal data object LocalMediaPhotoColumns {
     }
 
     val projection = LocalMediaCommonColumns.projection + arrayOf(
+        MediaStore.Images.Media.ORIENTATION,
         MediaStore.Images.Media.BUCKET_ID,
         MediaStore.Images.Media.BUCKET_DISPLAY_NAME,
     )

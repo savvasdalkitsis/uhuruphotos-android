@@ -1,0 +1,15 @@
+android {
+    namespace 'com.savvasdalkitsis.uhuruphotos.foundation.date.implementation'
+}
+
+dependencies {
+
+    implementation(
+            libs.androidx.startup,
+            libs.hilt,
+            libs.bundles.autodagger,
+            project(":foundation:date:api"),
+            project(":foundation:initializer:api"),
+    )
+    kapt libs.autodagger.kapt
+}

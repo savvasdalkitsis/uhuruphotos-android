@@ -219,7 +219,12 @@ class LocalMediaService @Inject constructor(
     }
 
     private fun Cursor.long(col: String) = tryGet(col, ::getLong)
-    private fun Cursor.nullableString(col: String) = getStringOrNull(getColumnIndexOrThrow(col))
+    private fun Cursor.nullableString(col: String) = try {
+        getStringOrNull(getColumnIndexOrThrow(col))
+    } catch (e: Exception) {
+        log(e)
+        null
+    }
     private fun Cursor.string(col: String) = tryGet(col, ::getString)
     private fun Cursor.int(col: String) = tryGet(col, ::getInt)
     private fun <T> Cursor.tryGet(col: String, value: (Int) -> T) : T =

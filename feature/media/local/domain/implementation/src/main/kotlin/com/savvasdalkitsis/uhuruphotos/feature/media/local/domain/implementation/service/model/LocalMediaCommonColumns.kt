@@ -19,7 +19,6 @@ import android.provider.MediaStore.MediaColumns.DATA
 import android.provider.MediaStore.MediaColumns.DATE_TAKEN
 import android.provider.MediaStore.MediaColumns.DISPLAY_NAME
 import android.provider.MediaStore.MediaColumns.HEIGHT
-import android.provider.MediaStore.MediaColumns.ORIENTATION
 import android.provider.MediaStore.MediaColumns.SIZE
 import android.provider.MediaStore.MediaColumns.WIDTH
 import android.provider.MediaStore.MediaColumns._ID
@@ -34,6 +33,5 @@ internal data object LocalMediaCommonColumns {
         SIZE,
         DATE_TAKEN,
         DATA,
-        ORIENTATION,
     )
 }
