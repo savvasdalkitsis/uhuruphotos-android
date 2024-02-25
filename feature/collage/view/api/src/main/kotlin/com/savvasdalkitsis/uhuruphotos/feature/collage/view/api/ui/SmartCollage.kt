@@ -117,7 +117,12 @@ internal fun SmartCollage(
             for ((clusterIndex, cluster) in state.withIndex()) {
                 item("item:$clusterIndex:header", "header", fullLine = true) {
                     val alpha by remember {
-                        derivedStateOf { if (clusterIndex == firstOffscreenCluster) 0f else 1f }
+                        derivedStateOf {
+                            if (showStickyHeaders && clusterIndex == firstOffscreenCluster)
+                                0f
+                            else
+                                1f
+                        }
                     }
                     FeedClusterHeader(
                         modifier = Modifier
