@@ -74,20 +74,24 @@ class UploadUseCase @Inject constructor(
         }
 
     override suspend fun scheduleUpload(
+        force: Boolean,
         networkType: NetworkType,
         requiresCharging: Boolean,
         vararg items: UploadItem
     ) {
         uploadRepository.setUploading(*items)
         for (item in items) {
-            uploadWorkScheduler.scheduleUpload(item, networkType, requiresCharging)
+            uploadWorkScheduler.scheduleUpload(force, item, networkType, requiresCharging)
         }
     }
 
-    override suspend fun scheduleUpload(vararg items: UploadItem) {
+    override suspend fun scheduleUpload(
+        force: Boolean,
+        vararg items: UploadItem,
+    ) {
         val networkRequirements = settingsUseCase.getCloudSyncNetworkRequirements()
         val requiresCharging = settingsUseCase.getCloudSyncRequiresCharging()
-        scheduleUpload(networkRequirements, requiresCharging, *items)
+        scheduleUpload(force, networkRequirements, requiresCharging, *items)
     }
 
     override fun markAsNotUploading(vararg mediaIds: Long) {
@@ -112,13 +116,14 @@ class UploadUseCase @Inject constructor(
 
     override suspend fun upload(
         item: UploadItem,
+        force: Boolean,
         progress: suspend (current: Long, total: Long) -> Unit,
     ): SimpleResult = binding {
         val mediaItem = localMediaItem(item).bind()
         val user = userUseCase.getUserOrRefresh().bind()
 
-        if (!exists(mediaItem.md5, user).bind()) {
-            if (!uploadRepository.isCompleted(item.id)) {
+        if (force || !exists(mediaItem.md5, user).bind()) {
+            if (force || !uploadRepository.isCompleted(item.id)) {
                 chunkedUploader.uploadInChunks(item, mediaItem.size, user, progress).bind()
             }
 

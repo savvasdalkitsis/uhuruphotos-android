@@ -37,7 +37,7 @@ data class UploadToServer(val mediaItemState: SingleMediaItemState) : LightboxAc
         if (id != null) {
             emit(Loading)
             when (uploadUseCase.canUpload()) {
-                CanUpload -> uploadUseCase.scheduleUpload(UploadItem(id.value, id.contentUri))
+                CanUpload -> uploadUseCase.scheduleUpload(items = arrayOf(UploadItem(id.value, id.contentUri)))
                 CannotUpload -> emit(ShowCannotUploadDialog)
                 UnableToCheck -> emit(ShowCannotCheckUploadStatusDialog)
             }

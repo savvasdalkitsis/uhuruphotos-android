@@ -49,8 +49,9 @@ class UploadWorker @AssistedInject constructor(
             id = params.inputData.getLong(KEY_ITEM_ID, -1),
             contentUri = params.inputData.getString(KEY_CONTENT_URI)!!
         )
+        val force = params.inputData.getBoolean(KEY_FORCE, false)
 
-        val result = uploadUseCase.upload(item) { current, total ->
+        val result = uploadUseCase.upload(item = item, force = force) { current, total ->
             updateProgress(current, total)
         }
 
@@ -72,6 +73,7 @@ class UploadWorker @AssistedInject constructor(
     companion object {
         const val KEY_ITEM_ID = "itemId"
         const val KEY_CONTENT_URI = "contentUri"
+        const val KEY_FORCE = "force"
         fun workName(id: Long) = "uploadFile/$id"
         private const val NOTIFICATION_ID = 1288
     }

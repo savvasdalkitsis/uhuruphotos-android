@@ -54,7 +54,7 @@ class UploadCompletionWorker @AssistedInject constructor(
         return try {
             val mediaItem = localMediaUseCase.getLocalMediaItem(itemId)
                 ?: throw IllegalArgumentException("Could not find associated local media with id: $itemId")
-            uploadUseCase.scheduleUpload(UploadItem(itemId, mediaItem.contentUri))
+            uploadUseCase.scheduleUpload(items = arrayOf(UploadItem(itemId, mediaItem.contentUri)))
             Result.success()
         } catch (e: Exception) {
             log(e) { "Failed to schedule upload for item $itemId" }

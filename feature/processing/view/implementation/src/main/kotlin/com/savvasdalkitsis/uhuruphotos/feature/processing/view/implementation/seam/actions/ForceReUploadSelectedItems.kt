@@ -31,6 +31,6 @@ data object ForceReUploadSelectedItems : ProcessingAction() {
         selectedItems.forEach {
             uploadUseCase.markAsNotProcessing(it.id)
         }
-        uploadUseCase.scheduleUpload(*selectedItems.toTypedArray())
+        uploadUseCase.scheduleUpload(force = true, items = selectedItems.toTypedArray())
     }
 }

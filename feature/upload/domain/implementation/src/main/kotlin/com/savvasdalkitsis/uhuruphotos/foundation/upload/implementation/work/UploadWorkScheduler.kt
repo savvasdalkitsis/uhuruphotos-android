@@ -35,6 +35,7 @@ class UploadWorkScheduler @Inject constructor(
 ) : UploadWorkScheduler {
 
     override fun scheduleUpload(
+        force: Boolean,
         item: UploadItem,
         networkType: NetworkType,
         requiresCharging: Boolean,
@@ -49,6 +50,7 @@ class UploadWorkScheduler @Inject constructor(
         ) {
             putLong(KEY_ITEM_ID, item.id)
             putString(KEY_CONTENT_URI, item.contentUri)
+            putBoolean(KEY_FORCE, force)
         }
     }
 

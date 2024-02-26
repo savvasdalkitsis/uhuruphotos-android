@@ -28,6 +28,7 @@ import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import se.ansman.dagger.auto.AutoBindIntoSet
@@ -52,24 +53,34 @@ class SyncInitializer @Inject constructor(
             ) { pending, networkRequirement, requiresCharging ->
                 Triple(pending, networkRequirement, requiresCharging)
             }.collectLatest { (pending, networkRequirement, requiresCharging) ->
-                uploadUseCase.scheduleUpload(networkRequirement, requiresCharging, *pending.toTypedArray())
+                uploadUseCase.scheduleUpload(
+                    networkType = networkRequirement,
+                    requiresCharging = requiresCharging,
+                    items = pending.toTypedArray()
+                )
             }
         }
         GlobalScope.launch(Dispatchers.Default) {
             combine(
-                uploadsUseCase.observeUploadsInFlight().map { uploads ->
+                settingsUseCase.observeCloudSyncNetworkRequirements(),
+                settingsUseCase.observeCloudSyncRequiresCharging(),
+            ) { networkRequirement, requiresCharging ->
+                networkRequirement to requiresCharging
+            }.collectLatest { (networkRequirement, requiresCharging) ->
+                val inFlight = uploadsUseCase.observeUploadsInFlight().map { uploads ->
                     uploads.jobs
                         .filter { !it.latestJobState.state.isFinished }
                         .map {
                             UploadItem(it.localItemId, it.contentUri)
                         }
-                }.distinctUntilChanged(),
-                settingsUseCase.observeCloudSyncNetworkRequirements(),
-                settingsUseCase.observeCloudSyncRequiresCharging(),
-            ) { inFlight, networkRequirement, requiresCharging ->
-                Triple(inFlight, networkRequirement, requiresCharging)
-            }.collectLatest { (inFlight, networkRequirement, requiresCharging) ->
-                uploadUseCase.scheduleUpload(networkRequirement, requiresCharging, *inFlight.toTypedArray())
+                }.firstOrNull()
+                if (inFlight != null) {
+                    uploadUseCase.scheduleUpload(
+                        networkType = networkRequirement,
+                        requiresCharging = requiresCharging,
+                        items = inFlight.toTypedArray()
+                    )
+                }
             }
         }
     }

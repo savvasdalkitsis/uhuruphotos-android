@@ -47,7 +47,7 @@ class InitiateUploadWorker @AssistedInject constructor(
             id = params.inputData.getLong(KEY_ID, -1),
             contentUri = params.inputData.getString(KEY_CONTENT_URI)!!
         )
-        uploadUseCase.scheduleUpload(item)
+        uploadUseCase.scheduleUpload(items = arrayOf(item))
         return Result.success()
     }
 

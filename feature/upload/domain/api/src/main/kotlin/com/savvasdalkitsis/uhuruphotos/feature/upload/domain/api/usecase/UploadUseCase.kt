@@ -25,12 +25,18 @@ import kotlinx.coroutines.flow.Flow
 interface UploadUseCase {
 
     suspend fun canUpload(): UploadCapability
-    suspend fun scheduleUpload(vararg items: UploadItem)
-    suspend fun scheduleUpload(networkType: NetworkType, requiresCharging: Boolean, vararg items: UploadItem)
+    suspend fun scheduleUpload(force: Boolean = false, vararg items: UploadItem)
+    suspend fun scheduleUpload(
+        force: Boolean = false,
+        networkType: NetworkType,
+        requiresCharging: Boolean,
+        vararg items: UploadItem
+    )
     fun observeUploading(): Flow<Set<Long>>
     fun observeProcessing(): Flow<Set<ProcessingMediaItems>>
     suspend fun upload(
         item: UploadItem,
+        force: Boolean = false,
         progress: suspend (current: Long, total: Long) -> Unit,
     ): SimpleResult
     fun markAsNotUploading(vararg mediaIds: Long)
