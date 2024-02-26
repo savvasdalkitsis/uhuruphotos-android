@@ -76,11 +76,12 @@ internal fun Processing(
     state: ProcessingState,
     action: (ProcessingAction) -> Unit,
 ) {
+    val showForceReUpload = state.showForceReUpload
     CommonScaffold(
         title = { Text(text = stringResource(string.processing_media_on_server)) },
         navigationIcon = { UpNavButton() },
         actionBarContent = {
-            AnimatedVisibility(visible = state.showForceReUpload) {
+            AnimatedVisibility(visible = showForceReUpload) {
                 ActionIcon(
                     onClick = { action(ForceReUploadSelectedItems) },
                     icon = drawable.ic_cloud_upload_progress
@@ -100,13 +101,15 @@ internal fun Processing(
                     item(item.localItemId) {
                         Checkable(
                             id = item.localItemId,
+                            selectedScale = 0.9f,
                             selectionMode = when {
                                 item.selected -> SelectionMode.SELECTED
-                                else -> SelectionMode.UNSELECTED
+                                showForceReUpload -> SelectionMode.UNSELECTED
+                                else -> SelectionMode.UNDEFINED
                             },
                             onClick = {
                                 when {
-                                    state.showForceReUpload -> {
+                                    showForceReUpload -> {
                                         action(SelectedProcessingItem(item))
                                     }
                                     else -> if (item.hasError || item.hasResponse) {
@@ -115,7 +118,7 @@ internal fun Processing(
                                 }
                             },
                             onLongClick = {
-                                if (!state.showForceReUpload) {
+                                if (!showForceReUpload) {
                                     action(SelectedProcessingItem(item))
                                 }
                             },

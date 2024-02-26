@@ -51,6 +51,7 @@ fun Checkable(
     selectionBackgroundColor: Color = Color.LightGray,
     fallbackColor: Color = Color.Transparent,
     editable: Boolean = true,
+    selectedScale: Float = 0.85f,
     onClick: () -> Unit,
     onLongClick: () -> Unit = {},
     content: @Composable BoxScope.() -> Unit,
@@ -108,7 +109,7 @@ fun Checkable(
     }
     LaunchedEffect(id, selectionMode) {
         if (selectionMode == SelectionMode.SELECTED) {
-            scale.animateTo(0.85f)
+            scale.animateTo(selectedScale)
         } else {
             scale.animateTo(1f)
         }
