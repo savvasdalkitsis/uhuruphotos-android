@@ -2,7 +2,7 @@
 <resources>
     <plurals name="delete_photos">
         <item quantity="one">Elimina %d foto</item>
-        <item quantity="many"></item>
+        <item quantity="many"/>
         <item quantity="other">Elimina %d foto</item>
     </plurals>
     <string name="photo">Foto</string>
@@ -22,7 +22,7 @@
     <string name="jobs">Lavori</string>
     <plurals name="days">
         <item quantity="one">%d giorno</item>
-        <item quantity="many"></item>
+        <item quantity="many"/>
         <item quantity="other">%d giorni</item>
     </plurals>
     <string name="currently_used">Attualmente in uso: %dmb</string>
@@ -37,7 +37,7 @@
     <string name="full">Full</string>
     <plurals name="delete_photos_confirmation">
         <item quantity="one">Sei sicuro di voler eliminare questa %d foto?</item>
-        <item quantity="many"></item>
+        <item quantity="many"/>
         <item quantity="other">Sei sicuro di voler eliminare queste %d foto?</item>
     </plurals>
     <string name="error_refreshing_people">C\'è stato un errore aggiornando le persone</string>
@@ -51,7 +51,7 @@
     <string name="downloading_photos_sharing">Scaricando la foto e condividendola tra poco</string>
     <plurals name="hours">
         <item quantity="one">%d ora</item>
-        <item quantity="many"></item>
+        <item quantity="many"/>
         <item quantity="other">%d ore</item>
     </plurals>
     <string name="settings">Impostazioni</string>
@@ -71,7 +71,7 @@
     <string name="log_out">Esci</string>
     <plurals name="restore_photos">
         <item quantity="one">Cancella la foto %d</item>
-        <item quantity="many"></item>
+        <item quantity="many"/>
         <item quantity="other">Cancella le foto %d</item>
     </plurals>
     <string name="view_all">Vedi tutte</string>
@@ -89,7 +89,7 @@
     <string name="authenticate_for_access_to_hidden">Autenticati per avere accesso alle foto nascoste</string>
     <plurals name="trash_photos">
         <item quantity="one">Sposta la %d foto nel cestino</item>
-        <item quantity="many"></item>
+        <item quantity="many"/>
         <item quantity="other">Sposta le %d foto nel cestino</item>
     </plurals>
     <string name="local_albums">Album Locali</string>
@@ -97,13 +97,13 @@
     <string name="sync_local_media">Sincronizzando i media locali</string>
     <plurals name="delete_media">
         <item quantity="one">Cancella %d elemento multimediale</item>
-        <item quantity="many"></item>
+        <item quantity="many"/>
         <item quantity="other">Cancella %d elementi multimediali</item>
     </plurals>
     <string name="media">Media</string>
     <plurals name="trash_media">
         <item quantity="one">Sposta %d elemento multimediale nel cestino</item>
-        <item quantity="many"></item>
+        <item quantity="many"/>
         <item quantity="other">Sposta %d elementi multimediali nel cestino</item>
     </plurals>
     <plurals name="restore_media_confirmation">
@@ -132,7 +132,7 @@
     <string name="collapse_all">Comprimi tutto</string>
     <plurals name="item_count">
         <item quantity="one">%d oggetto</item>
-        <item quantity="many"></item>
+        <item quantity="many"/>
         <item quantity="other">%d oggetti</item>
     </plurals>
     <string name="require_biometrics_for_hidden_photos_access">Richiedi l\'autenticazione biometrica per accedere alle foto nascoste</string>
@@ -171,12 +171,12 @@
     <string name="gallery_size">Dimensione Galleria</string>
     <plurals name="restore_media">
         <item quantity="one">Ripristina l\'elemento multimediale %d</item>
-        <item quantity="many"></item>
+        <item quantity="many"/>
         <item quantity="other">Ripristina gli elementi multimediali %d</item>
     </plurals>
     <plurals name="delete_media_confirmation">
         <item quantity="one">Sei sicuro di voler eliminare questo %d elemento multimediale?</item>
-        <item quantity="many"></item>
+        <item quantity="many"/>
         <item quantity="other">Sei sicuro di voler eliminare questi %d elementi multimediale?</item>
     </plurals>
     <string name="feed_refresh_days">Numero di giorni di feed da ricaricare durante il refresh</string>
