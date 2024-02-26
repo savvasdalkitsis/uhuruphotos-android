@@ -70,7 +70,7 @@ internal class PrecacheFeedThumbnailsWorker @AssistedInject constructor(
             remoteMediaPrecacher.precacheMedia(id.thumbnailUri(serverUrl), id.isVideo)
                 .onSuccess {
                     if (it == CHANGED) {
-                        delay(300)
+                        delay(100)
                     }
                 }
             updateProgress(index, mediaItemIds.size)

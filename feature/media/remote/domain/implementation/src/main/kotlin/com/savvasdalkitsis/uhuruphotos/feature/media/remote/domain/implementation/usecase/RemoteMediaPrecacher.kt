@@ -19,7 +19,8 @@ package com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.implementati
 import android.content.Context
 import coil.ImageLoader
 import coil.decode.DataSource
-import coil.request.CachePolicy
+import coil.request.CachePolicy.DISABLED
+import coil.request.CachePolicy.ENABLED
 import coil.request.ErrorResult
 import coil.request.ImageRequest
 import coil.request.SuccessResult
@@ -47,30 +48,36 @@ class RemoteMediaPrecacher @Inject constructor(
         url: String,
         video: Boolean,
     ): Result<MediaOperationResult, Throwable> = try {
-        val result = imageLoader.execute(
-            ImageRequest.Builder(context)
-                .data(url)
-                .memoryCachePolicy(CachePolicy.DISABLED)
-                .diskCachePolicy(CachePolicy.ENABLED)
-                .target()
-                .build()
-        )
-        when (result) {
-            is ErrorResult -> {
-                log(result.throwable) { "Error precaching thumbnail: $url" }
-                Err(result.throwable)
-            }
+        when {
+            inDiskCache(url) -> Ok(SKIPPED)
+            else -> when (val result = fetch(url)) {
+                is ErrorResult -> {
+                    log(result.throwable) { "Error precaching thumbnail: $url" }
+                    Err(result.throwable)
+                }
 
-            is SuccessResult -> Ok(
-                if (result.dataSource == DataSource.NETWORK)
-                    CHANGED
-                else
-                    SKIPPED
-            )
+                is SuccessResult -> Ok(
+                    if (result.dataSource == DataSource.NETWORK)
+                        CHANGED
+                    else
+                        SKIPPED
+                )
+            }
         }
     } catch (e: Exception) {
         log(e)
         Err(e)
     }
 
+    private fun inDiskCache(url: String) =
+        imageLoader.diskCache?.openSnapshot(url)?.use { true } ?: false
+
+    private suspend fun fetch(url: String) = imageLoader.execute(
+        ImageRequest.Builder(context)
+            .data(url)
+            .memoryCachePolicy(DISABLED)
+            .diskCachePolicy(ENABLED)
+            .target()
+            .build()
+    )
 }

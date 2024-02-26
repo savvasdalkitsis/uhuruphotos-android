@@ -47,7 +47,7 @@ internal class LocalMediaSyncWorker @AssistedInject constructor(
         return try {
             updateProgress(0)
             localMediaUseCase.refreshAll { current, total ->
-                delay(300)
+                delay(100)
                 updateProgress(current, total)
             }
             Result.success()
