@@ -25,7 +25,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.Icon
-import androidx.compose.material.SnackbarDefaults.backgroundColor
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment.Companion.BottomEnd
@@ -45,10 +44,12 @@ import androidx.compose.ui.unit.dp
 import com.savvasdalkitsis.uhuruphotos.feature.auth.view.api.navigation.LocalServerUrl
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.state.CelState
 import com.savvasdalkitsis.uhuruphotos.foundation.compose.api.recomposeHighlighter
+import com.savvasdalkitsis.uhuruphotos.foundation.compose.api.toColor
 import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.R.drawable
 import com.savvasdalkitsis.uhuruphotos.foundation.image.api.ui.Thumbnail
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.Checkable
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.DynamicIcon
+import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.SelectionMode
 
 @Composable
 fun Cel(
@@ -101,6 +102,14 @@ private fun Cel(
     val mediaItem = state.mediaItem
     val iconSize = remember(miniIcons) {
         if (miniIcons) 16.dp else 24.dp
+    }
+    val fallbackColor = mediaItem.fallbackColor.toColor()
+
+    val backgroundColor = remember(state.selectionMode) {
+        when (state.selectionMode) {
+            SelectionMode.SELECTED -> Color.LightGray
+            else -> fallbackColor
+        }
     }
 
     Box(
