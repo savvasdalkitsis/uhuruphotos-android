@@ -19,6 +19,7 @@ dependencies {
             project(":feature:processing:domain:api"),
             project(":feature:processing:view:api"),
             project(":feature:settings:domain:api"),
+            project(":feature:upload:domain:api"),
             project(":foundation:icons:api"),
             project(":foundation:image:api"),
             project(":foundation:navigation:api"),

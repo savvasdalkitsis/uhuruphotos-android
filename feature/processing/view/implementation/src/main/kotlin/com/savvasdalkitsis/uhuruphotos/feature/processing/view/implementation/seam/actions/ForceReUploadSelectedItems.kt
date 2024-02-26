@@ -15,18 +15,22 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.processing.view.implementation.seam.actions
 
-import com.savvasdalkitsis.uhuruphotos.feature.processing.domain.api.model.ProcessingItem
 import com.savvasdalkitsis.uhuruphotos.feature.processing.view.implementation.seam.ProcessingActionsContext
-import com.savvasdalkitsis.uhuruphotos.feature.processing.view.implementation.seam.ProcessingMutation.ToggleItemSelected
 import com.savvasdalkitsis.uhuruphotos.feature.processing.view.implementation.ui.state.ProcessingState
+import com.savvasdalkitsis.uhuruphotos.feature.upload.domain.api.model.UploadItem
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.Mutation
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flowOf
+import kotlinx.coroutines.flow.flow
 
-data class SelectedProcessingItem(val item: ProcessingItem) : ProcessingAction() {
-
+data object ForceReUploadSelectedItems : ProcessingAction() {
     context(ProcessingActionsContext)
-    override fun handle(state: ProcessingState): Flow<Mutation<ProcessingState>> = flowOf(
-        ToggleItemSelected(item),
-    )
+    override fun handle(state: ProcessingState): Flow<Mutation<ProcessingState>> = flow {
+        val selectedItems = state.items
+            .filter { it.selected }
+            .map { UploadItem(it.localItemId, it.contentUri) }
+        selectedItems.forEach {
+            uploadUseCase.markAsNotProcessing(it.id)
+        }
+        uploadUseCase.scheduleUpload(*selectedItems.toTypedArray())
+    }
 }

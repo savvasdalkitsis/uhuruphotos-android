@@ -38,7 +38,7 @@ class ProcessingUseCase @Inject constructor(
                     ProcessingItem(
                         localItemId = item.id,
                         displayName = mediaItem.displayName,
-                        thumbnailUrl = mediaItem.contentUri,
+                        contentUri = mediaItem.contentUri,
                         error = item.error,
                         lastResponse = item.lastResponse,
                     )

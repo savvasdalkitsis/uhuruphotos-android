@@ -40,4 +40,14 @@ sealed class ProcessingMutation(
     data class ShowMessageDialog(val item: ProcessingItem, val message: String) : ProcessingMutation({
         it.copy(itemMessageToDisplay = item to message)
     })
+
+    data class ToggleItemSelected(val item: ProcessingItem) : ProcessingMutation({
+        it.copy(items = it.items.map { processingItem ->
+            if (processingItem == item) {
+                processingItem.copy(selected = !processingItem.selected)
+            } else {
+                processingItem
+            }
+        }.toPersistentList())
+    })
 }

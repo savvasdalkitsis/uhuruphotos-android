@@ -16,8 +16,10 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.feature.processing.view.implementation.seam
 
 import com.savvasdalkitsis.uhuruphotos.feature.processing.domain.api.usecase.ProcessingUseCase
+import com.savvasdalkitsis.uhuruphotos.feature.upload.domain.api.usecase.UploadUseCase
 import javax.inject.Inject
 
 internal class ProcessingActionsContext @Inject constructor(
     val processingUseCase: ProcessingUseCase,
+    val uploadUseCase: UploadUseCase,
 )

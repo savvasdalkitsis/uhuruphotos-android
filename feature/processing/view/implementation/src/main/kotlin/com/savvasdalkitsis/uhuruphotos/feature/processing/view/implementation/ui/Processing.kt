@@ -15,8 +15,8 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.processing.view.implementation.ui
 
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement.spacedBy
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -49,8 +49,10 @@ import coil.ImageLoader
 import com.savvasdalkitsis.uhuruphotos.feature.processing.domain.api.model.ProcessingItem
 import com.savvasdalkitsis.uhuruphotos.feature.processing.view.implementation.R
 import com.savvasdalkitsis.uhuruphotos.feature.processing.view.implementation.seam.actions.DismissMessageDialog
+import com.savvasdalkitsis.uhuruphotos.feature.processing.view.implementation.seam.actions.ForceReUploadSelectedItems
 import com.savvasdalkitsis.uhuruphotos.feature.processing.view.implementation.seam.actions.ProcessingAction
 import com.savvasdalkitsis.uhuruphotos.feature.processing.view.implementation.seam.actions.SelectedProcessingItem
+import com.savvasdalkitsis.uhuruphotos.feature.processing.view.implementation.seam.actions.TappedProcessingItem
 import com.savvasdalkitsis.uhuruphotos.feature.processing.view.implementation.ui.state.ProcessingState
 import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.R.drawable
 import com.savvasdalkitsis.uhuruphotos.foundation.image.api.model.LocalThumbnailImageLoader
@@ -58,10 +60,13 @@ import com.savvasdalkitsis.uhuruphotos.foundation.image.api.ui.Thumbnail
 import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
 import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.CustomColors
 import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.PreviewAppTheme
+import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.ActionIcon
+import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.Checkable
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.CommonScaffold
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.DynamicIcon
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.FullLoading
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.OkDialog
+import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.SelectionMode
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.UpNavButton
 import kotlinx.collections.immutable.persistentListOf
 
@@ -74,6 +79,14 @@ internal fun Processing(
     CommonScaffold(
         title = { Text(text = stringResource(string.processing_media_on_server)) },
         navigationIcon = { UpNavButton() },
+        actionBarContent = {
+            AnimatedVisibility(visible = state.showForceReUpload) {
+                ActionIcon(
+                    onClick = { action(ForceReUploadSelectedItems) },
+                    icon = drawable.ic_cloud_upload_progress
+                )
+            }
+        }
     ) { contentPadding ->
         when {
             state.isLoading -> FullLoading()
@@ -83,9 +96,32 @@ internal fun Processing(
             else -> LazyColumn(
                 modifier = Modifier.padding(contentPadding),
             ) {
-                for (processingItem in state.items) {
-                    item(processingItem.localItemId) {
-                        ProcessingItemRow(processingItem, action)
+                for (item in state.items) {
+                    item(item.localItemId) {
+                        Checkable(
+                            id = item.localItemId,
+                            selectionMode = when {
+                                item.selected -> SelectionMode.SELECTED
+                                else -> SelectionMode.UNSELECTED
+                            },
+                            onClick = {
+                                when {
+                                    state.showForceReUpload -> {
+                                        action(SelectedProcessingItem(item))
+                                    }
+                                    else -> if (item.hasError || item.hasResponse) {
+                                        action(TappedProcessingItem(item))
+                                    }
+                                }
+                            },
+                            onLongClick = {
+                                if (!state.showForceReUpload) {
+                                    action(SelectedProcessingItem(item))
+                                }
+                            },
+                        ) {
+                            ProcessingItemRow(item)
+                        }
                     }
                 }
             }
@@ -106,7 +142,7 @@ internal fun Processing(
                     verticalArrangement = spacedBy(8.dp),
                     horizontalAlignment = Alignment.CenterHorizontally,
                 ) {
-                    ProcessingItemRow(item, action, clickable = false)
+                    ProcessingItemRow(item)
                     Text(text = message)
                 }
             }
@@ -117,22 +153,19 @@ internal fun Processing(
 @Composable
 fun ProcessingItemRow(
     item: ProcessingItem,
-    action: (ProcessingAction) -> Unit,
-    clickable: Boolean = item.hasError || item.hasResponse,
 ) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
             .padding(8.dp)
-            .height(64.dp)
-            .clickable(enabled = clickable) { action(SelectedProcessingItem(item)) },
+            .height(64.dp),
         horizontalArrangement = spacedBy(4.dp),
     ) {
         Thumbnail(
             modifier = Modifier
                 .fillMaxHeight()
                 .aspectRatio(1f),
-            url = item.thumbnailUrl,
+            url = item.contentUri,
             contentScale = ContentScale.Crop,
             contentDescription = null,
         )
@@ -203,42 +236,42 @@ private fun ProcessingPreview() {
                         ProcessingItem(
                             localItemId = 1,
                             displayName = "PXL_20230801_103507882.jpg",
-                            thumbnailUrl = "",
+                            contentUri = "",
                         ),
                         ProcessingItem(
                             localItemId = 2,
                             displayName = "PXL_20230801_103507850.jpg",
-                            thumbnailUrl = "",
+                            contentUri = "",
                         ),
                         ProcessingItem(
                             localItemId = 3,
                             displayName = "PXL_20230801_103507810.mp4",
-                            thumbnailUrl = "",
+                            contentUri = "",
                         ),
                         ProcessingItem(
                             localItemId = 30,
                             displayName = "PXL_20230801_103507810.mp4",
-                            thumbnailUrl = "",
+                            contentUri = "",
                         ),
                         ProcessingItem(
                             localItemId = 4,
                             displayName = "PXL_20230801_103507810.mp4",
-                            thumbnailUrl = "",
+                            contentUri = "",
                         ),
                         ProcessingItem(
                             localItemId = 5,
                             displayName = "PXL_20230801_103507800.jpg",
-                            thumbnailUrl = "",
+                            contentUri = "",
                         ),
                         ProcessingItem(
                             localItemId = 6,
                             displayName = "PXL_20230801_103507100.jpg",
-                            thumbnailUrl = "",
+                            contentUri = "",
                         ),
                         ProcessingItem(
                             localItemId = 7,
                             displayName = "PXL_20230801_103507100.jpg",
-                            thumbnailUrl = "",
+                            contentUri = "",
                         ),
                     ),
                 ),

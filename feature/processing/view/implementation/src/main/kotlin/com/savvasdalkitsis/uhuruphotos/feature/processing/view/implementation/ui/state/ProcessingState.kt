@@ -23,4 +23,6 @@ data class ProcessingState(
     val isLoading: Boolean = true,
     val items: ImmutableList<ProcessingItem> = persistentListOf(),
     val itemMessageToDisplay: (Pair<ProcessingItem, String>)? = null,
-)
+) {
+    val showForceReUpload: Boolean = items.any { it.selected }
+}

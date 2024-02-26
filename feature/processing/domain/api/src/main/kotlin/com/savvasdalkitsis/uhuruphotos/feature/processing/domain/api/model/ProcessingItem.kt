@@ -18,9 +18,10 @@ package com.savvasdalkitsis.uhuruphotos.feature.processing.domain.api.model
 data class ProcessingItem(
     val localItemId: Long,
     val displayName: String?,
-    val thumbnailUrl: String,
+    val contentUri: String,
     val error: String? = null,
     val lastResponse: String? = null,
+    val selected: Boolean = false,
 ) {
     val hasError = !error.isNullOrBlank()
     val hasResponse = !lastResponse.isNullOrBlank()
