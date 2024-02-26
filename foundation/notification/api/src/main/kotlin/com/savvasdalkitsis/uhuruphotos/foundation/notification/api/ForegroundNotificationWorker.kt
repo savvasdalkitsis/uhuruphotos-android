@@ -46,6 +46,11 @@ abstract class ForegroundNotificationWorker<BR>(
 
     final override suspend fun doWork(): Result = withContext(dispatcher) {
         try {
+            setForeground(getForegroundInfo())
+        } catch (_: Exception) {
+            // ignore
+        }
+        try {
             updateProgress(0)
             work()
         } catch (e: Exception) {

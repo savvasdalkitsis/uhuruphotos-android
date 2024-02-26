@@ -74,9 +74,9 @@ sealed class MediaId<T : Serializable> private constructor(
         @IgnoredOnParcel
         override val syncState: MediaItemSyncState = REMOTE_ONLY
         override fun fullResUri(serverUrl: String?): String =
-            value.toFullSizeUrlFromId(isVideo, serverUrl!!)
+            serverUrl?.let { value.toFullSizeUrlFromId(isVideo, it) } ?: ""
         override fun thumbnailUri(serverUrl: String?): String =
-            value.toThumbnailUrlFromId(serverUrl!!)
+            serverUrl?.let { value.toThumbnailUrlFromId(it) } ?: ""
 
         fun toDownloading() = Downloading(value, isVideo)
     }
