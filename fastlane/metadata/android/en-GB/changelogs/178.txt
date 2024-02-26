@@ -1,0 +1,2 @@
+* Adding option to force re-upload processing items
+* Fixes for background work
