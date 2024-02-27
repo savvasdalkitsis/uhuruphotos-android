@@ -17,9 +17,11 @@ package com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.ui
 
 import androidx.compose.animation.Crossfade
 import androidx.compose.animation.core.tween
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.Card
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
@@ -31,6 +33,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.drawWithCache
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
@@ -38,12 +41,20 @@ import androidx.compose.ui.graphics.TileMode
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.ui.state.MemoryCel
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaId
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemHash
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemInstance
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.Cel
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.state.CelState
+import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.R.drawable
 import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
+import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.PreviewAppTheme
+import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.ActionIcon
+import kotlinx.collections.immutable.persistentListOf
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.isActive
 
@@ -51,6 +62,7 @@ import kotlinx.coroutines.isActive
 internal fun FeedMemory(
     memory: MemoryCel,
     onMemorySelected: (memory: CelState, yearsAgo: Int) -> Unit,
+    onScrollToMemory: (CelState) -> Unit,
 ) {
     var index by remember {
         mutableIntStateOf(0)
@@ -97,6 +109,18 @@ internal fun FeedMemory(
                     selectable = true,
                 )
             }
+            Box(modifier = Modifier
+                .align(Alignment.TopEnd)
+                .padding(2.dp),
+            ) {
+                ActionIcon(
+                    modifier = Modifier
+                        .clip(CircleShape)
+                        .background(MaterialTheme.colors.background.copy(alpha = 0.4f)),
+                    onClick = { onScrollToMemory(cel) },
+                    icon = drawable.ic_down_arrow,
+                )
+            }
             Text(
                 modifier = Modifier
                     .align(Alignment.BottomCenter)
@@ -114,4 +138,21 @@ internal fun FeedMemory(
             index = (index + 1) % memory.cels.size
         }
     }
+}
+
+@Preview
+@Composable
+private fun FeedMemoryPreview() {
+    PreviewAppTheme {
+        FeedMemory(memory = MemoryCel(
+            yearsAgo = 10,
+            cels = persistentListOf(CelState(
+                MediaItemInstance(
+                    id = MediaId.Local(0L, 0, false, "", ""),
+                    mediaHash = MediaItemHash("hash"),
+                )
+            )),
+        ), { _, _ -> }, {})
+    }
+
 }

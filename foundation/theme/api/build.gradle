@@ -15,5 +15,6 @@ dependencies {
             libs.androidx.compose.material.windowsize,
             libs.androidx.compose.ui,
             project(":foundation:icons:api"),
+            project(":foundation:image:api"),
     )
 }

@@ -39,6 +39,7 @@ import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
 @Composable
 internal fun FeedMemories(
     memories: List<MemoryCel>,
+    onScrollToMemory: (CelState) -> Unit,
     onMemorySelected: (memory: CelState, yearsAgo: Int) -> Unit,
 ) {
     Column(
@@ -64,7 +65,7 @@ internal fun FeedMemories(
         ) {
             Spacer(modifier = Modifier.width(0.dp))
             for (memory in memories) {
-                FeedMemory(memory, onMemorySelected)
+                FeedMemory(memory, onMemorySelected, onScrollToMemory)
             }
             Spacer(modifier = Modifier.width(0.dp))
         }

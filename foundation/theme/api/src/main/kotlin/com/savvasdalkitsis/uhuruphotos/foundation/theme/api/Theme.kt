@@ -15,6 +15,7 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.foundation.theme.api
 
+import android.graphics.drawable.ColorDrawable
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.material.darkColors
@@ -24,8 +25,13 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.SideEffect
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.DpSize
 import androidx.compose.ui.unit.dp
+import coil.ImageLoader
+import com.savvasdalkitsis.uhuruphotos.foundation.image.api.model.LocalFullImageLoader
+import com.savvasdalkitsis.uhuruphotos.foundation.image.api.model.LocalThumbnailImageLoader
+import com.savvasdalkitsis.uhuruphotos.foundation.image.api.model.LocalThumbnailWithNetworkCacheImageLoader
 import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.window.LocalSystemUiController
 import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.window.LocalWindowSize
 
@@ -104,9 +110,18 @@ fun PreviewAppTheme(
     darkTheme: Boolean = false,
     content: @Composable () -> Unit,
 ) {
+    val drawable = ColorDrawable(android.graphics.Color.CYAN)
+    val imageLoader = ImageLoader.Builder(LocalContext.current)
+        .placeholder(drawable)
+        .error(drawable)
+        .fallback(drawable)
+        .build()
     CompositionLocalProvider(
         LocalSystemUiController provides NoOpSystemUiController,
         LocalWindowSize provides WindowSizeClass.calculateFromSize(DpSize(450.dp, 800.dp)),
+        LocalThumbnailImageLoader provides imageLoader,
+        LocalThumbnailWithNetworkCacheImageLoader provides imageLoader,
+        LocalFullImageLoader provides imageLoader,
     ) {
         AppTheme(darkTheme = darkTheme) {
             Surface {

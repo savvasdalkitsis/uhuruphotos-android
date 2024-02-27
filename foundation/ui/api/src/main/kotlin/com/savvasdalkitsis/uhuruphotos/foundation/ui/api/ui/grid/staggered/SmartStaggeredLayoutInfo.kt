@@ -24,4 +24,6 @@ class SmartStaggeredLayoutInfo(
 ) : SmartLayoutInfo {
     override val visibleItemsInfo: List<SmartLayoutItemInfo>
         get() = layoutInfo.visibleItemsInfo.map { SmartStaggeredLayoutItemInfo(it) }
+    override val totalItemsCount: Int
+        get() = layoutInfo.totalItemsCount
 }

@@ -16,6 +16,7 @@ dependencies {
             libs.androidx.compose.material,
             libs.androidx.compose.navigation,
             libs.androidx.compose.ui,
+            libs.androidx.compose.ui.tooling.preview,
             libs.androidx.lifecycle,
             libs.bundles.autodagger,
             libs.bundles.permissions,
@@ -49,6 +50,9 @@ dependencies {
             project(":foundation:strings:api"),
             project(":foundation:toaster:api"),
             project(":foundation:ui:api"),
+    )
+    debugImplementation(
+            libs.androidx.compose.ui.tooling,
     )
     kapt libs.autodagger.kapt
 }

@@ -34,6 +34,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.act
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.actions.NeverAskForCloudSyncRequest
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.actions.NeverAskForLocalMediaAccessPermissionRequest
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.ui.state.FeedState
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.state.CelState
 import com.savvasdalkitsis.uhuruphotos.feature.media.local.view.api.ui.LocalMediaAccessRequestBanner
 import com.savvasdalkitsis.uhuruphotos.feature.media.local.view.api.ui.RequestBanner
 import com.savvasdalkitsis.uhuruphotos.foundation.compose.api.recomposeHighlighter
@@ -43,21 +44,18 @@ import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.LoginButton
 @Composable
 fun FeedHeaders(
     state: FeedState,
+    visible: Boolean,
+    onScrollToMemory: (CelState) -> Unit,
     action: (FeedAction) -> Unit
 ) {
     AnimatedVisibility(
-        visible =
-        state.memories.isNotEmpty()
-                || state.showRequestPermissionForLocalMediaAccess != null
-                || state.localMediaSyncRunning
-                || state.showRequestForCloudSync
-                || state.showLoginBanner,
+        visible = visible,
     ) {
         Column(
             verticalArrangement = Arrangement.spacedBy(8.dp),
         ) {
             if (state.memories.isNotEmpty()) {
-                FeedMemories(state.memories) { cel, yearsAgo ->
+                FeedMemories(state.memories, onScrollToMemory) { cel, yearsAgo ->
                     action(MemorySelected(cel, yearsAgo))
                 }
             }

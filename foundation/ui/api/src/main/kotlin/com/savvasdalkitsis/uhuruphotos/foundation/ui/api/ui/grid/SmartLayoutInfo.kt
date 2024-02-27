@@ -17,4 +17,5 @@ package com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.grid
 
 interface SmartLayoutInfo {
     val visibleItemsInfo: List<SmartLayoutItemInfo>
+    val totalItemsCount: Int
 }

@@ -24,5 +24,6 @@ class SmartSimpleGridLayoutInfo(
 ) : SmartLayoutInfo {
     override val visibleItemsInfo: List<SmartLayoutItemInfo>
         get() = layoutInfo.visibleItemsInfo.map { SmartSimpleGridLayoutItemInfo(it) }
-
+    override val totalItemsCount: Int
+        get() = layoutInfo.totalItemsCount
 }

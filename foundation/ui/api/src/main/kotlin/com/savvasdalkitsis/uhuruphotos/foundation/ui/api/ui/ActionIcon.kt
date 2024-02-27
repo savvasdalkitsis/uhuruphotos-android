@@ -36,6 +36,7 @@ fun ActionIcon(
     modifier: Modifier = Modifier,
     iconModifier: Modifier = Modifier,
     enabled: Boolean = true,
+    tint: Color? = MaterialTheme.colors.onBackground,
     onClick: () -> Unit,
     @DrawableRes icon: Int,
     contentDescription: String? = null
@@ -52,7 +53,7 @@ fun ActionIcon(
                 .sizeIn(maxWidth = 26.dp, maxHeight = 26.dp),
             icon = icon,
             contentDescription = contentDescription,
-            tint = MaterialTheme.colors.onBackground
+            tint = tint,
         )
     }
 }

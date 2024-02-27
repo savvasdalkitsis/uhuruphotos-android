@@ -23,6 +23,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalDensity
 import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.Collage
 import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.PredefinedCollageDisplay
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.api.ui.state.FeedMediaItemSyncDisplay.ALWAYS_OFF
@@ -44,6 +45,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.home.view.api.ui.HomeScaffold
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.DeleteFullySyncedPermissionDialog
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.DeletePermissionDialog
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.TrashPermissionDialog
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.state.CelState
 import com.savvasdalkitsis.uhuruphotos.foundation.compose.api.blurIf
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.SwipeRefresh
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.grid.SmartGridState
@@ -67,6 +69,11 @@ internal fun Feed(
             gridState.animateScrollToItem(0, 0)
         }
     }
+    val feedHeadersVisible = state.memories.isNotEmpty()
+            || state.showRequestPermissionForLocalMediaAccess != null
+            || state.localMediaSyncRunning
+            || state.showRequestForCloudSync
+            || state.showLoginBanner
     val isScrolling = gridState.isScrollInProgress
 
     val showSyncState = when (state.syncItemDisplay) {
@@ -99,6 +106,27 @@ internal fun Feed(
         },
         onReselected = { scrollToTop() },
     ) { contentPadding ->
+        val topPadding = with(LocalDensity.current) {
+            contentPadding.calculateTopPadding().toPx()
+        }.toInt()
+        fun scrollToCel(cel: CelState) {
+            coroutineScope.launch {
+                var found = false
+                val index = state.collageState.clusters.fold(0) { index, cluster ->
+                    if (found) {
+                        index
+                    } else if (cluster.cels.contains(cel)) {
+                        found = true
+                        index + 1 + cluster.cels.indexOf(cel)
+                    } else {
+                        index + 1 + cluster.cels.size
+                    }
+                } + if (feedHeadersVisible) 1 else 0
+                if (index < gridState.layoutInfo.totalItemsCount) {
+                    gridState.animateScrollToItem(index, -topPadding)
+                }
+            }
+        }
         SwipeRefresh(
             indicatorPadding = contentPadding,
             isRefreshing = state.isRefreshing,
@@ -113,7 +141,11 @@ internal fun Feed(
                 showScrollbarHint = true,
                 gridState = gridState,
                 collageHeader = {
-                    FeedHeaders(state, action)
+                    FeedHeaders(
+                        state = state,
+                        visible = feedHeadersVisible,
+                        onScrollToMemory = ::scrollToCel,
+                        action = action)
                 },
                 onCelSelected = { cel ->
                     action(SelectedCel(cel))
