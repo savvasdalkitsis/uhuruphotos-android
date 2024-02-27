@@ -35,6 +35,8 @@ import androidx.compose.ui.draw.scale
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.graphics.Shape
+import androidx.compose.ui.hapticfeedback.HapticFeedbackType.Companion.LongPress
+import androidx.compose.ui.platform.LocalHapticFeedback
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.unit.dp
@@ -63,6 +65,7 @@ fun Checkable(
             else -> fallbackColor
         }
     }
+    val haptics = LocalHapticFeedback.current
     Box(
         modifier = modifier
             .clip(shape)
@@ -71,7 +74,10 @@ fun Checkable(
                 enabled = editable,
                 role = Role.Button,
                 onClick = { onClick() },
-                onLongClick = { onLongClick() }
+                onLongClick = {
+                    haptics.performHapticFeedback(LongPress)
+                    onLongClick()
+                }
             )
             .recomposeHighlighter()
     ) {

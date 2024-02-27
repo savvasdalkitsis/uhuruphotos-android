@@ -106,7 +106,6 @@ internal fun FeedMemory(
                     },
                     aspectRatio = 0.7f,
                     contentScale = ContentScale.Crop,
-                    selectable = true,
                 )
             }
             Box(modifier = Modifier

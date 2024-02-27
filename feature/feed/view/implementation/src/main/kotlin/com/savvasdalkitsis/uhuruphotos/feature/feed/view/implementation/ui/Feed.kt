@@ -45,6 +45,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.home.view.api.ui.HomeScaffold
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.DeleteFullySyncedPermissionDialog
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.DeletePermissionDialog
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.TrashPermissionDialog
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.state.CelSelectionMode
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.state.CelState
 import com.savvasdalkitsis.uhuruphotos.foundation.compose.api.blurIf
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.SwipeRefresh
@@ -139,6 +140,7 @@ internal fun Feed(
                 showSyncState = showSyncState,
                 showStickyHeaders = true,
                 showScrollbarHint = true,
+                celsSelectionMode = CelSelectionMode.CHECKABLE,
                 gridState = gridState,
                 collageHeader = {
                     FeedHeaders(

@@ -31,6 +31,7 @@ import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.state.CelSelectionMode
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.state.CelState
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.state.VitrineState
 import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.CustomColors
@@ -72,7 +73,7 @@ private fun RowScope.GridItem(celState: CelState?) {
             aspectRatio = 1f,
             contentScale = ContentScale.Crop,
             miniIcons = true,
-            selectable = false
+            selectionMode = CelSelectionMode.NONE,
         )
     } else {
         Box(modifier = Modifier

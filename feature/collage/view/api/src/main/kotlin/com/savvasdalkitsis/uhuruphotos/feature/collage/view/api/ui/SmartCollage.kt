@@ -47,6 +47,7 @@ import androidx.compose.ui.unit.dp
 import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.Cluster
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.Cel
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.CelSelected
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.state.CelSelectionMode
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.state.CelState
 import com.savvasdalkitsis.uhuruphotos.foundation.compose.api.recomposeHighlighter
 import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
@@ -68,9 +69,10 @@ internal fun SmartCollage(
     showSyncState: Boolean = false,
     showStickyHeaders: Boolean = false,
     showScrollbarHint: Boolean = false,
+    celsSelectionMode: CelSelectionMode = CelSelectionMode.SELECTABLE,
     columnCount: Int,
     gridState: SmartGridState = rememberSmartGridState(staggered = true),
-    collageHeader: @Composable (SmartGridItemScope.() -> Unit)? = null,
+    collageHeader: @Composable() (SmartGridItemScope.() -> Unit)? = null,
     onCelSelected: CelSelected,
     onCelLongPressed: (CelState) -> Unit,
     onClusterRefreshClicked: (Cluster) -> Unit,
@@ -151,6 +153,7 @@ internal fun SmartCollage(
                                 else -> ContentScale.Crop
                             },
                             miniIcons = miniIcons,
+                            selectionMode = celsSelectionMode,
                             showSyncState = showSyncState,
                             onLongClick = onCelLongPressed,
                         )

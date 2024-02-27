@@ -19,6 +19,7 @@ import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -42,6 +43,10 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import com.savvasdalkitsis.uhuruphotos.feature.auth.view.api.navigation.LocalServerUrl
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.state.CelSelectionMode
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.state.CelSelectionMode.CHECKABLE
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.state.CelSelectionMode.NONE
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.state.CelSelectionMode.SELECTABLE
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.state.CelState
 import com.savvasdalkitsis.uhuruphotos.foundation.compose.api.recomposeHighlighter
 import com.savvasdalkitsis.uhuruphotos.foundation.compose.api.toColor
@@ -60,14 +65,16 @@ fun Cel(
     contentScale: ContentScale = ContentScale.FillBounds,
     shape: Shape = RectangleShape,
     miniIcons: Boolean = false,
-    selectable: Boolean = true,
+    selectionMode: CelSelectionMode = SELECTABLE,
     showSyncState: Boolean = false,
     onLongClick: (CelState) -> Unit = {},
 ) {
     @Composable
-    fun cel() {
+    fun cel(
+        celModifier: Modifier = modifier,
+    ) {
         Cel(
-            modifier,
+            celModifier,
             state,
             aspectRatio,
             contentScale,
@@ -76,8 +83,8 @@ fun Cel(
             showSyncState
         )
     }
-    when {
-        selectable -> Checkable(
+    when (selectionMode) {
+        CHECKABLE -> Checkable(
             id = state.mediaItem.id,
             selectionMode = state.selectionMode,
             onClick = { onSelected(state) },
@@ -85,7 +92,8 @@ fun Cel(
         ) {
             cel()
         }
-        else -> cel()
+        SELECTABLE -> cel(celModifier = Modifier.clickable { onSelected(state) })
+        NONE -> cel()
     }
 }
 

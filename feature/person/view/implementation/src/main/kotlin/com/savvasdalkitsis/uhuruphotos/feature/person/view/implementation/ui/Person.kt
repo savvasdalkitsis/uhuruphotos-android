@@ -85,11 +85,11 @@ fun Person(
             Collage(
                 contentPadding = contentPadding,
                 state = state.collageState,
+                showStickyHeaders = true,
+                showScrollbarHint = true,
                 onCelSelected = { cel ->
                     action(SelectedCel(cel))
                 },
-                showStickyHeaders = true,
-                showScrollbarHint = true,
                 onChangeDisplay = { action(ChangeDisplay(it)) },
             )
         }

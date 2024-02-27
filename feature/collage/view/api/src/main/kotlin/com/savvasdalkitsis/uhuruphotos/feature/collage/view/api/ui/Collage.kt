@@ -29,6 +29,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.Cluster
 import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.CollageDisplay
 import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.CollageState
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.CelSelected
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.state.CelSelectionMode
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.state.CelState
 import com.savvasdalkitsis.uhuruphotos.foundation.compose.api.recomposeHighlighter
 import com.savvasdalkitsis.uhuruphotos.foundation.image.api.LocalAnimatedVideoThumbnails
@@ -50,6 +51,7 @@ fun Collage(
     showSyncState: Boolean = false,
     showStickyHeaders: Boolean = false,
     showScrollbarHint: Boolean = false,
+    celsSelectionMode: CelSelectionMode = CelSelectionMode.SELECTABLE,
     gridState: SmartGridState = rememberSmartGridState(state.collageDisplay.usingStaggeredGrid),
     collageHeader: @Composable (SmartGridItemScope.() -> Unit)? = null,
     emptyContent: @Composable () -> Unit = { NoContent(string.no_media) },
@@ -95,11 +97,12 @@ fun Collage(
                 contentPadding = contentPadding,
                 state = state.clusters,
                 showSelectionHeader = showSelectionHeader,
-                showStickyHeaders = showStickyHeaders,
-                showScrollbarHint = showScrollbarHint,
                 maintainAspectRatio = collageDisplay.maintainAspectRatio,
                 miniIcons = collageDisplay.miniIcons,
                 showSyncState = showSyncState,
+                showStickyHeaders = showStickyHeaders,
+                showScrollbarHint = showScrollbarHint,
+                celsSelectionMode = celsSelectionMode,
                 columnCount = collageDisplay.columnCount(
                     widthSizeClass = LocalWindowSize.current.widthSizeClass,
                     landscape = LocalConfiguration.current.orientation == Configuration.ORIENTATION_LANDSCAPE

@@ -26,7 +26,6 @@ data class CelLongPressed(val celState: CelState) : FeedAction() {
         state: FeedState
     ) = flow<FeedMutation> {
         if (state.selectedCelCount == 0) {
-            uiUseCase.performLongPressHaptic()
             celState.select()
         }
     }
