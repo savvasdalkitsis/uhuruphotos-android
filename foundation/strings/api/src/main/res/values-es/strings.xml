@@ -378,4 +378,19 @@
     <string name="folders_on_feed">Carpetas que contribuyen al Feed</string>
     <string name="feed_folders">Carpetas Feed</string>
     <string name="remember_credentials">Recordar credenciales</string>
+    <string name="media_sync_status_processing">El servidor está procesando medios</string>
+    <string name="show_on_feed">Mostrar en feed</string>
+    <string name="contributing_to_feed">Contribución a la alimentación</string>
+    <string name="not_contributing_to_feed">Ya no contribuye a la alimentación</string>
+    <string name="general_error">Hubo un error</string>
+    <string name="more_than_one">Puede elegir más de una opción</string>
+    <string name="processing_media_on_server">Procesamiento de medios en el servidor</string>
+    <string name="processing">Procesando</string>
+    <string name="last_error_processing">Último error durante el procesamiento</string>
+    <string name="last_response_processing">Última respuesta durante el procesamiento</string>
+    <string name="need_a_libre_photos_server_1">Considere que necesita acceso a una instancia de un servidor LibrePhotos para activar la copia de seguridad y sincronización en la nube.</string>
+    <string name="need_a_libre_photos_server_2">¿Tiene acceso a un servidor LibrePhotos?</string>
+    <string name="having_problems">¿Tiene problemas?</string>
+    <string name="cloud_sync_charging_changed">Cambian los requisitos de tarificación para la sincronización en la nube</string>
+    <string name="cloud_sync_network_changed">Cambian los requisitos de red para la sincronización en la nube</string>
 </resources>
