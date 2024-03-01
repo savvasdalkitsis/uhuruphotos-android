@@ -12,12 +12,12 @@
         <item quantity="many">¿Estás seguro de que quieres borrar estas %d fotos\?</item>
         <item quantity="other">¿Estás seguro de que quieres borrar estas %d fotos\?</item>
     </plurals>
-    <string name="error_refreshing_people">Hubo un error al actualizar a las personas</string>
-    <string name="error_loading_photo_details">Hubo un error al cargar los detalles de la foto</string>
-    <string name="error_searching">Hubo un error al buscar</string>
-    <string name="feed_sync_freq">Frecuencia de sincronización completa de fotos</string>
-    <string name="feed_sync_freq_changed">La frecuencia de sincronización del feed cambió</string>
-    <string name="feed_sync_network_changed">Se modificó el requisito de la red de sincronización de feeds</string>
+    <string name="error_refreshing_people">No se pudo actualizar a las personas</string>
+    <string name="error_loading_photo_details">No se pueden cargar los detalles de la foto</string>
+    <string name="error_searching">No se ha podido realizar la búsqueda</string>
+    <string name="feed_sync_freq">Sincroniza todas las fotos cada</string>
+    <string name="feed_sync_freq_changed">La frecuencia de sincronización de feeds cambió</string>
+    <string name="feed_sync_network_changed">Cambian los requisitos de red para la sincronización del feed</string>
     <string name="feed_sync_charging_changed">Los requisitos de carga de sincronización de feeds cambiaron</string>
     <string name="logs_cleared">Registros borrados</string>
     <string name="recent_searches_cleared">Búsquedas recientes borradas</string>
@@ -114,9 +114,9 @@
         <item quantity="other">Enviar las %d fotos a la papelera</item>
     </plurals>
     <plurals name="trash_photos_confirmation">
-        <item quantity="one">¿Estás seguro que quieres enviar esta %d foto a la papelera\?</item>
-        <item quantity="many">¿Estás seguro de que quieres enviar estas %d fotos a la papelera\?</item>
-        <item quantity="other">¿Estás seguro de que quieres enviar estas %d fotos a la papelera\?</item>
+        <item quantity="one">¿Enviar esta foto a la papelera?</item>
+        <item quantity="many">¿Enviar estas %d fotos a la papelera?</item>
+        <item quantity="other">¿Enviar estas %d fotos a la papelera?</item>
     </plurals>
     <string name="hidden_photos">Fotos escondidas</string>
     <string name="maps">Mapas</string>
@@ -209,14 +209,14 @@
     <string name="server_url">Url del servidor</string>
     <string name="enter_libre_photos_url">Introduzca la url del servidor de LibrePhotos</string>
     <plurals name="restore_media_confirmation">
-        <item quantity="one">¿Estás seguro de que quieres restaurar este %d elemento multimedia\?</item>
-        <item quantity="many">¿Estás seguro de que quieres restaurar estos %d elementos multimedia\?</item>
-        <item quantity="other">¿Estás seguro de que quieres restaurar estos %d elementos multimedia\?</item>
+        <item quantity="one">¿Restaurar este elemento multimedia %d?</item>
+        <item quantity="many">¿Restaurar estos elementos multimedia %d?</item>
+        <item quantity="other">¿Restaurar estos elementos multimedia %d?</item>
     </plurals>
     <plurals name="trash_media_confirmation">
-        <item quantity="one">¿Enviar este elemento multimedia %d a la papelera ahora\?</item>
-        <item quantity="many">¿Enviar estos %d elementos multimedia a la papelera\?</item>
-        <item quantity="other">¿Enviar estos %d elementos multimedia a la papelera\?</item>
+        <item quantity="one">¿Enviar este elemento multimedia %d a la papelera?</item>
+        <item quantity="many">¿Enviar estos %d elementos multimedia a la papelera?</item>
+        <item quantity="other">¿Enviar estos %d elementos multimedia a la papelera?</item>
     </plurals>
     <string name="media">Medios</string>
     <string name="restoring_media">Restaurar medios de la papelera</string>
