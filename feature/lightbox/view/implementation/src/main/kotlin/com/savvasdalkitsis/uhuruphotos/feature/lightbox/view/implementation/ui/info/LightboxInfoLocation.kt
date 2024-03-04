@@ -22,11 +22,11 @@ import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.R.drawable
 
 @Composable
 internal fun LightboxInfoLocation(mediaItem: SingleMediaItemState) {
-    if (mediaItem.location.isNotEmpty()) {
+    if (!mediaItem.details.location.isNullOrBlank()) {
         LightboxInfoIconEntry(
             icon = drawable.ic_location_place,
         ) {
-            Text(mediaItem.location)
+            Text(mediaItem.details.location)
         }
     }
 }

@@ -25,7 +25,7 @@ data class Person(
     val id: Int,
 )
 
-suspend fun People.toPerson(urlResolver: suspend (String) -> String?) = Person(
+fun People.toPerson(urlResolver: (String) -> String?) = Person(
     id = id,
     name = name,
     imageUrl = faceUrl?.let { urlResolver(it) },

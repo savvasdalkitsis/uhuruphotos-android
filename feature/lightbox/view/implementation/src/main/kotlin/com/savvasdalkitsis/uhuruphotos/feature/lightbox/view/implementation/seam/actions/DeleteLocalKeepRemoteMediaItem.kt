@@ -20,6 +20,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.LightboxMutation.ReplaceMediaItemInSource
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.ui.state.LightboxState
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemSyncState
+import kotlinx.collections.immutable.persistentSetOf
 import kotlinx.coroutines.flow.Flow
 
 data object DeleteLocalKeepRemoteMediaItem : LightboxAction() {
@@ -36,7 +37,9 @@ data object DeleteLocalKeepRemoteMediaItem : LightboxAction() {
                     current.id,
                     current.copy(
                         id = remote,
-                        localPaths = emptySet(),
+                        details = current.details.copy(
+                            localPaths = persistentSetOf(),
+                        ),
                         mediaItemSyncState = MediaItemSyncState.REMOTE_ONLY,
                     ),
                 )

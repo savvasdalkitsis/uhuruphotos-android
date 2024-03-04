@@ -1,0 +1,20 @@
+android {
+    namespace 'com.savvasdalkitsis.uhuruphotos.feature.lightbox.domain.implementation'
+}
+
+dependencies {
+    implementation(
+            libs.bundles.autodagger,
+            libs.hilt,
+            libs.sqldelight.coroutines,
+            project(":feature:db:domain:api"),
+            project(":feature:lightbox:domain:api"),
+            project(":feature:media:local:domain:api"),
+            project(":feature:media:remote:domain:api"),
+            project(":feature:people:domain:api"),
+            project(":feature:user:domain:api"),
+            project(":foundation:date:api"),
+            project(":foundation:launchers:api"),
+    )
+    kapt libs.autodagger.kapt
+}

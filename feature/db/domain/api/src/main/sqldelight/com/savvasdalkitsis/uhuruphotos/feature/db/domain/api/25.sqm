@@ -1,0 +1,23 @@
+CREATE TABLE lightboxDetails (
+    id TEXT NOT NULL PRIMARY KEY,
+    formattedDatetime TEXT,
+    location TEXT,
+    lat REAL,
+    lon REAL,
+    remotePaths TEXT,
+    localPaths TEXT,
+    hash TEXT,
+    peopleInMediaItem TEXT,
+    searchCaptions TEXT,
+    size TEXT,
+    fStop TEXT,
+    shutterSpeed TEXT,
+    isoSpeed TEXT,
+    camera TEXT,
+    focalLength TEXT,
+    focalLength35Equivalent TEXT,
+    subjectDistance TEXT,
+    digitalZoomRatio TEXT,
+    width INTEGER AS kotlin.Int,
+    height INTEGER AS kotlin.Int
+);

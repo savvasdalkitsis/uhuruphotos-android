@@ -1,0 +1,11 @@
+android {
+    namespace 'com.savvasdalkitsis.uhuruphotos.feature.lightbox.domain.api'
+}
+
+dependencies {
+    api(
+            libs.kotlinx.coroutines,
+            project(":feature:db:domain:api"),
+            project(":feature:media:common:domain:api"),
+    )
+}

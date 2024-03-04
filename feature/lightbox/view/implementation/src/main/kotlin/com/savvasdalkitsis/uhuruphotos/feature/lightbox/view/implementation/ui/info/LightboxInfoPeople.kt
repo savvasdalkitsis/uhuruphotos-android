@@ -26,9 +26,9 @@ internal fun LightboxInfoPeople(
     mediaItem: SingleMediaItemState,
     action: (LightboxAction) -> Unit
 ) {
-    if (mediaItem.peopleInMediaItem.isNotEmpty()) {
+    if (mediaItem.details.peopleInMediaItem.isNotEmpty()) {
         PeopleBanner(
-            people = mediaItem.peopleInMediaItem,
+            people = mediaItem.details.peopleInMediaItem,
             onPersonSelected = { action(PersonSelected(it)) }
         )
     }

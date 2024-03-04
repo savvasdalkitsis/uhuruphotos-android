@@ -30,7 +30,7 @@ internal fun LightboxInfoGps(
     mediaItem: SingleMediaItemState,
     action: (LightboxAction) -> Unit
 ) {
-    mediaItem.gps?.let { gps ->
+    mediaItem.details.latLon?.let { gps ->
         Box(
             modifier = Modifier.clickable { action(ClickedOnGps(gps)) },
         ) {

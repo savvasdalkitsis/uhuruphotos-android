@@ -18,11 +18,7 @@ package com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.ui.
 import android.content.pm.ResolveInfo
 import androidx.annotation.StringRes
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaId
-import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemHash
-import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemMetadata
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemSyncState
-import com.savvasdalkitsis.uhuruphotos.feature.people.view.api.ui.state.Person
-import com.savvasdalkitsis.uhuruphotos.foundation.map.api.model.LatLon
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
 
@@ -68,9 +64,6 @@ data class LightboxState(
 data class SingleMediaItemState(
     val id: MediaId<*>,
     val isFavourite: Boolean? = null,
-    val dateAndTime: String = "",
-    val location: String = "",
-    val gps: LatLon? = null,
     val showFavouriteIcon: Boolean = false,
     val showDeleteButton: Boolean = true,
     val showShareIcon: Boolean = false,
@@ -79,13 +72,8 @@ data class SingleMediaItemState(
     val showAddToPortfolioIcon: Boolean = false,
     val addToPortfolioIconEnabled: Boolean = false,
     val inPortfolio: Boolean = false,
-    val peopleInMediaItem: ImmutableList<Person> = persistentListOf(),
-    val searchCaptions: ImmutableList<Pair<String, Int?>> = persistentListOf(),
-    val metadata: MediaItemMetadata? = null,
-    val hash: MediaItemHash? = null,
-    val remotePaths: Set<String> = emptySet(),
-    val localPaths: Set<String> = emptySet(),
     val loadingDetails: Boolean = false,
     val mediaItemSyncState: MediaItemSyncState? = null,
     val showEditApps: ImmutableList<ResolveInfo> = persistentListOf(),
+    val details: LightboxDetailsState = LightboxDetailsState(),
 )

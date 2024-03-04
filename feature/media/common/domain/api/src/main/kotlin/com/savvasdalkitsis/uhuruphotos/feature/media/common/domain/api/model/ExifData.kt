@@ -40,6 +40,19 @@ data class ExifData(
         } else {
             null
         }
+
+    fun mergeWith(other: ExifData) = ExifData(
+        fStop = fStop ?: other.fStop,
+        shutterSpeed = shutterSpeed ?: other.shutterSpeed,
+        isoSpeed = isoSpeed ?: other.isoSpeed,
+        camera = camera ?: other.camera,
+        focalLength = focalLength ?: other.focalLength,
+        focalLength35Equivalent = focalLength35Equivalent ?: other.focalLength35Equivalent,
+        subjectDistance = subjectDistance ?: other.subjectDistance,
+        digitalZoomRatio = digitalZoomRatio ?: other.digitalZoomRatio,
+        width = width ?: other.width,
+        height = height ?: other.height,
+    )
 }
 
 private val Long.mb get() = this / 1024 / 1024f

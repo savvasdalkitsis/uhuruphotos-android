@@ -21,6 +21,7 @@ import android.content.Context
 import android.net.Uri
 import com.github.michaelbull.result.Err
 import com.github.michaelbull.result.Ok
+import com.github.michaelbull.result.Result
 import com.github.michaelbull.result.onFailure
 import com.github.michaelbull.result.onSuccess
 import com.savvasdalkitsis.uhuruphotos.feature.album.auto.domain.api.usecase.AutoAlbumUseCase
@@ -28,10 +29,12 @@ import com.savvasdalkitsis.uhuruphotos.feature.album.user.domain.api.usecase.Use
 import com.savvasdalkitsis.uhuruphotos.feature.auth.domain.api.usecase.ServerUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.edit.view.api.navigation.EditNavigationRoute
 import com.savvasdalkitsis.uhuruphotos.feature.feed.domain.api.usecase.FeedUseCase
+import com.savvasdalkitsis.uhuruphotos.feature.lightbox.domain.api.usecase.LightboxUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.LightboxDeletionCategory.FULLY_SYNCED_ITEM
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.LightboxDeletionCategory.LOCAL_ONLY_ITEM
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.LightboxDeletionCategory.REMOTE_ITEM
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.LightboxDeletionCategory.REMOTE_ITEM_TRASHED
+import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.LightboxMutation.AskForPermissions
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.LightboxMutation.FinishedLoading
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.LightboxMutation.FinishedLoadingDetails
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.LightboxMutation.HideAllConfirmationDialogs
@@ -66,7 +69,7 @@ import com.savvasdalkitsis.uhuruphotos.foundation.log.api.log
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.Navigator
 import com.savvasdalkitsis.uhuruphotos.foundation.result.api.SimpleResult
 import com.savvasdalkitsis.uhuruphotos.foundation.share.api.usecase.ShareUseCase
-import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
+import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R
 import com.savvasdalkitsis.uhuruphotos.foundation.toaster.api.usecase.ToasterUseCase
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.usecase.UiUseCase
 import com.savvasdalktsis.uhuruphotos.feature.download.domain.api.usecase.DownloadUseCase
@@ -105,6 +108,7 @@ internal class LightboxActionsContext @Inject constructor(
     private val clipboardManager: ClipboardManager,
     private val localMediaDeletionUseCase: LocalMediaDeletionUseCase,
     val serverUseCase: ServerUseCase,
+    val lightboxUseCase: LightboxUseCase,
 ) {
 
     var mediaItemType = MediaItemType.default
@@ -128,7 +132,7 @@ internal class LightboxActionsContext @Inject constructor(
         return when(result) {
             is Error -> Err(result.e)
             is RequiresPermissions -> {
-                emit(LightboxMutation.AskForPermissions(result.deniedPermissions))
+                emit(AskForPermissions(result.deniedPermissions))
                 Err(MissingPermissionsException(result.deniedPermissions))
             }
             Success -> Ok(Unit)
@@ -170,28 +174,33 @@ internal class LightboxActionsContext @Inject constructor(
     ) {
         emit(Loading)
         emit(LoadingDetails(mediaId))
-        if (refresh) {
-            mediaUseCase.refreshDetailsNow(mediaId)
-        } else {
-            mediaUseCase.refreshDetailsNowIfMissing(mediaId)
-        }.onFailure {
-            emit(ShowErrorMessage(string.error_loading_photo_details))
+        loadDetails(mediaId, refresh).onFailure {
+            emit(ShowErrorMessage(R.string.error_loading_photo_details))
         }
         emit(FinishedLoading)
         emit(FinishedLoadingDetails(mediaId))
     }
 
+    private suspend fun loadDetails(
+        mediaId: MediaId<*>,
+        refresh: Boolean,
+    ): Result<Any, Throwable> = if (refresh) {
+        mediaUseCase.refreshDetailsNow(mediaId)
+    } else {
+        mediaUseCase.refreshDetailsNowIfMissing(mediaId)
+    }
+
     internal fun LightboxActionsContext.cropLocal(
         state: LightboxState
     ) {
-        fun SingleMediaItemState.fileName() = localPaths.firstOrNull()?.substringAfterLast("/")
+        fun SingleMediaItemState.fileName() = details.localPaths.firstOrNull()?.substringAfterLast("/")
             ?: "PHOTO_${Random.nextInt()}"
         state.currentMediaItem.id.findLocals.firstOrNull()?.let { media ->
             navigator.navigateTo(EditNavigationRoute(
                 uri = Uri.parse(media.contentUri).toString(),
                 fileName = state.currentMediaItem.fileName(),
                 timestamp = try {
-                    displayingDateTimeFormat.parseDateTime(state.currentMediaItem.dateAndTime).millis
+                    displayingDateTimeFormat.parseDateTime(state.currentMediaItem.details.formattedDateTime).millis
                 } catch (e: Exception) {
                     log(e)
                     null

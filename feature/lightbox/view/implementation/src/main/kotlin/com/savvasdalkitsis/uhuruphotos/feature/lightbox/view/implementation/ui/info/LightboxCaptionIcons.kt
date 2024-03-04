@@ -15,6 +15,8 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.ui.info
 
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.R.drawable.ic_airplane
 import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.R.drawable.ic_airport
 import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.R.drawable.ic_amphitheatre
@@ -182,6 +184,11 @@ import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.R.drawable.ic_windmi
 import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.R.drawable.ic_wine
 
 object LightboxCaptionIcons {
+
+    @Composable
+    fun icon(caption: String): Int? = remember(caption) {
+        icons[caption]
+    }
 
     val icons = mapOf(
         "airfield" to ic_airport,

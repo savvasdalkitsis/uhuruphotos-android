@@ -49,10 +49,16 @@ val String.deserializePeopleNames: List<String>
     get() = split("::")
 
 private val RemoteMediaItem.serializePaths: String?
-    get() = imagePath?.joinToString(separator = "::") { it }
+    get() = imagePath?.serializePaths
+
+val Collection<String>.serializePaths: String
+    get() = joinToString(separator = "::") { it }
+
+val String?.deserializePaths: Set<String> @JvmName("get-null-deserializePaths") get() =
+    orEmpty().deserializePaths
 
 val String.deserializePaths: Set<String>
-    get() = split("::").toSet()
+    get() = split("::").filter { it.isNotEmpty() }.toSet()
 
 fun RemoteMediaItem.toDbModel() = DbRemoteMediaItemDetails(
     imageHash = imageHash,

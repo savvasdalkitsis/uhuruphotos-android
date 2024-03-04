@@ -38,19 +38,21 @@ import androidx.compose.ui.unit.dp
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.actions.LightboxAction
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.actions.SearchCaptionSelected
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.ui.info.LightboxCaptionIcons
+import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.ui.info.LightboxCaptionIcons.icon
+import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.ui.state.LightboxDetailsState
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.ui.state.SingleMediaItemState
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaId
 import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
 import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.PreviewAppTheme
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.SectionHeader
-import kotlinx.collections.immutable.toPersistentList
+import kotlinx.collections.immutable.toPersistentSet
 
 @Composable
 fun LightboxSearchCaptions(
     mediaItem: SingleMediaItemState,
     action: (LightboxAction) -> Unit,
 ) {
-    if (mediaItem.searchCaptions.isNotEmpty()) {
+    if (mediaItem.details.searchCaptions.isNotEmpty()) {
         Column(
             verticalArrangement = spacedBy(16.dp)
         ) {
@@ -61,8 +63,8 @@ fun LightboxSearchCaptions(
                 horizontalArrangement = spacedBy(8.dp),
                 verticalArrangement = spacedBy(8.dp),
             ) {
-                for ((caption, icon) in mediaItem.searchCaptions) {
-                    LightboxSearchCaption(caption, icon, action)
+                for (caption in mediaItem.details.searchCaptions) {
+                    LightboxSearchCaption(caption, icon(caption), action)
                 }
             }
         }
@@ -125,7 +127,9 @@ private fun CaptionsPreviewContent() {
     LightboxSearchCaptions(
         SingleMediaItemState(
             id = MediaId.Remote("", false),
-            searchCaptions = LightboxCaptionIcons.icons.toList().take(13).toPersistentList(),
+            details = LightboxDetailsState(
+                searchCaptions = LightboxCaptionIcons.icons.keys.toList().toPersistentSet()
+            )
         )
     ) {}
 }

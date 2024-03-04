@@ -1,5 +1,5 @@
 /*
-Copyright 2022 Savvas Dalkitsis
+Copyright 2024 Savvas Dalkitsis
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -13,31 +13,36 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
  */
-package com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model
+package com.savvasdalkitsis.uhuruphotos.feature.lightbox.domain.api.model
 
-import com.savvasdalkitsis.uhuruphotos.feature.people.view.api.ui.state.Person
+import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.people.People
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.ExifData
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemHash
 import com.savvasdalkitsis.uhuruphotos.foundation.map.api.model.LatLon
 
-data class MediaItemDetails(
-    val formattedDateAndTime: String,
-    val isFavourite: Boolean,
-    val location: String,
-    val latLon: LatLon?,
+data class LightboxDetails(
+    val formattedDateTime: String? = null,
+    val location: String? = null,
+    val latLon: LatLon? = null,
     val remotePaths: Set<String> = emptySet(),
     val localPaths: Set<String> = emptySet(),
     val hash: MediaItemHash? = null,
-    val peopleInMediaItem: List<Person>,
-    val searchCaptions: String? = null,
+    val peopleInMediaItem: List<People>,
+    val searchCaptions: Set<String> = emptySet(),
+    val size: String? = null,
+    val exifData: ExifData,
 ) {
-    fun mergeWith(other: MediaItemDetails): MediaItemDetails = copy(
-        formattedDateAndTime = formattedDateAndTime.ifBlank { other.formattedDateAndTime },
-        isFavourite = isFavourite || other.isFavourite,
-        location = location.ifBlank { other.location },
+
+    fun mergeWith(other: LightboxDetails): LightboxDetails = copy(
+        formattedDateTime = formattedDateTime ?: other.formattedDateTime,
+        location = location.orEmpty().ifBlank { other.location },
         latLon = latLon ?: other.latLon,
         remotePaths = remotePaths + other.remotePaths,
         localPaths = localPaths + other.localPaths,
         hash = hash ?: other.hash,
         peopleInMediaItem = peopleInMediaItem.ifEmpty { other.peopleInMediaItem },
-        searchCaptions = searchCaptions ?: other.searchCaptions,
+        searchCaptions = searchCaptions + other.searchCaptions,
+        size = size ?: other.size,
+        exifData = exifData.mergeWith(other.exifData)
     )
 }

@@ -17,12 +17,11 @@ package com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.sea
 
 import android.content.pm.ResolveInfo
 import androidx.annotation.StringRes
-import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.ui.info.LightboxCaptionIcons
+import com.savvasdalkitsis.uhuruphotos.feature.lightbox.domain.api.model.LightboxDetails
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.ui.state.LightboxState
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.ui.state.SingleMediaItemState
+import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.ui.state.toLightboxDetailsState
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaId
-import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemDetails
-import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemMetadata
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.Mutation
 import kotlinx.collections.immutable.toPersistentList
 import kotlin.math.min
@@ -109,32 +108,15 @@ sealed class LightboxMutation(
         )
     })
 
-    data class ShowShareIcon(val id: MediaId<*>) : LightboxMutation({
-        it.copyItem(id) { photoState ->
-            photoState.copy(showShareIcon = true)
-        }
-    })
-
-    data class ShowUseAsIcon(val id: MediaId<*>) : LightboxMutation({
-        it.copyItem(id) { photoState ->
-            photoState.copy(showUseAsIcon = true)
-        }
-    })
-
-    data class ShowMetadata(val id: MediaId<*>, val metadata: MediaItemMetadata) : LightboxMutation({
-        it.copyItem(id) { photoState ->
-            photoState.copy(metadata = metadata)
-        }
-    })
-
     data class ShowMedia(
         val mediaItemStates: List<SingleMediaItemState>,
         val index: Int,
     ) : LightboxMutation({
+        val current = if (it.media.isNotEmpty()) it.currentMediaItem else null
         it.copyWithIndex(
             index = index,
         ).copy(
-            media = mediaItemStates.toPersistentList(),
+            media = mediaItemStates.reuse(current).toPersistentList(),
         )
     }) {
         override fun toString() = "ShowMedia [index: $index, size:${mediaItemStates.size}, current: ${mediaItemStates[index]}]"
@@ -142,26 +124,13 @@ sealed class LightboxMutation(
 
     data class ReceivedDetails(
         val id: MediaId<*>,
-        val details: MediaItemDetails,
+        val details: LightboxDetails,
+        val serverUrl: String,
     ) : LightboxMutation({
-        with(details) {
-            it.copyItem(id) { photoState ->
-                photoState.copy(
-                    isFavourite = isFavourite,
-                    dateAndTime = formattedDateAndTime,
-                    location = location,
-                    gps = latLon,
-                    peopleInMediaItem = peopleInMediaItem.toPersistentList(),
-                    hash = hash,
-                    remotePaths = remotePaths,
-                    localPaths = localPaths,
-                    searchCaptions = searchCaptions?.split(",")?.toList().orEmpty()
-                        .map { it.trim() }
-                        .map {
-                            it to LightboxCaptionIcons.icons[it]
-                        }.toPersistentList()
-                )
-            }
+        it.copyItem(id) { photoState ->
+            photoState.copy(
+                details = details.toLightboxDetailsState(serverUrl),
+            )
         }
     })
 
@@ -221,3 +190,15 @@ private fun LightboxState.copyItem(
         else -> mediaItem
     }
 }.toPersistentList())
+
+
+private fun List<SingleMediaItemState>.reuse(current: SingleMediaItemState?): List<SingleMediaItemState> =
+    when (current) {
+        null -> this
+        else -> map {
+            when (it.id) {
+                current.id -> current
+                else -> it
+            }
+        }
+    }

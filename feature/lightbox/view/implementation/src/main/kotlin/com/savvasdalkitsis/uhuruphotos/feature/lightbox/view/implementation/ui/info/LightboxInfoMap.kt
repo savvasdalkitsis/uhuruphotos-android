@@ -41,7 +41,7 @@ internal fun LightboxInfoMap(
     mediaItem: SingleMediaItemState,
     action: (LightboxAction) -> Unit
 ) {
-    mediaItem.gps?.let { gps ->
+    mediaItem.details.latLon?.let { gps ->
         Column(
             verticalArrangement = spacedBy(8.dp)
         ) {

@@ -25,6 +25,6 @@ internal fun LightboxInfoDateTime(mediaItem: SingleMediaItemState) {
     LightboxInfoIconEntry(
         icon = drawable.ic_calendar,
     ) {
-        Text(mediaItem.dateAndTime)
+        Text(mediaItem.details.formattedDateTime.orEmpty())
     }
 }

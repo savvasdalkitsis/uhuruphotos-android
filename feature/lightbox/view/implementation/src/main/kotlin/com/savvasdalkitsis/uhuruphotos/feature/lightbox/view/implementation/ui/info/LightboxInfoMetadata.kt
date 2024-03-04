@@ -84,38 +84,34 @@ internal fun LightboxInfoMetadata(
                 }
             }
         }
-        mediaItem.metadata?.let {
-            it.exifData.wh?.let { (w, h) -> "$w x $h" }
-                .Entry(ic_image_aspect_ratio, action)
-            it.exifData.megapixels
-                .Entry(ic_aspect_ratio, action)
-            it.size
-                .Entry(ic_save, action)
-            it.exifData.camera
-                .Entry(ic_camera, action)
-            it.exifData.fStop
-                .Entry(ic_lens, action)
-            it.exifData.shutterSpeed
-                .Entry(ic_shutter_speed, action)
-            it.exifData.focalLength
-                .Entry(ic_videocam, action)
-            it.exifData.focalLength35Equivalent
-                .Entry(ic_camera_roll, action)
-            it.exifData.isoSpeed
-                .Entry(ic_iso, action)
-        }
-        mediaItem.hash?.let {
+        mediaItem.details.wh?.let { (w, h) -> "$w x $h" }
+            .Entry(ic_image_aspect_ratio, action)
+        mediaItem.details.megapixels
+            .Entry(ic_aspect_ratio, action)
+        mediaItem.details.size
+            .Entry(ic_save, action)
+        mediaItem.details.camera
+            .Entry(ic_camera, action)
+        mediaItem.details.fStop
+            .Entry(ic_lens, action)
+        mediaItem.details.shutterSpeed
+            .Entry(ic_shutter_speed, action)
+        mediaItem.details.focalLength
+            .Entry(ic_videocam, action)
+        mediaItem.details.focalLength35Equivalent
+            .Entry(ic_camera_roll, action)
+        mediaItem.details.isoSpeed
+            .Entry(ic_iso, action)
+        mediaItem.details.hash?.let {
             it.hash.Entry(ic_fingerprint, action)
         }
-        mediaItem.remotePaths.forEach {
+        mediaItem.details.remotePaths.forEach {
             it.Entry(ic_folder_network, action)
         }
-        mediaItem.localPaths.forEach {
+        mediaItem.details.localPaths.forEach {
             it.Entry(ic_file_tree, action)
         }
-        if ((mediaItem.localPaths + mediaItem.remotePaths + mediaItem.metadata)
-                .all { it == null }
-            ) {
+        if (mediaItem.details.isEmpty) {
             Text(stringResource(string.nothing_here_yet))
         }
     }

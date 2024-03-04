@@ -16,27 +16,20 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.actions
 
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.LightboxActionsContext
-import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.LightboxMutation.ShowMetadata
-import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.LightboxMutation.ShowShareIcon
-import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.LightboxMutation.ShowUseAsIcon
+import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.LightboxMutation
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.ui.state.LightboxState
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.ui.state.SingleMediaItemState
-import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaId
 import kotlinx.coroutines.flow.flow
 
 data class FullMediaDataLoaded(val mediaItemState: SingleMediaItemState) : LightboxAction() {
 
     context(LightboxActionsContext) override fun handle(
         state: LightboxState
-    ) = flow {
-        if (!(mediaItemState.id is MediaId.Remote && mediaItemState.id.isVideo)) {
-            emit(ShowShareIcon(mediaItemState.id))
-            emit(ShowUseAsIcon(mediaItemState.id))
-        }
+    ) = flow<LightboxMutation> {
         val serverUrl = serverUseCase.getServerUrl()
         val metadata = metadataUseCase.extractMetadata(mediaItemState.id.fullResUri(serverUrl))
         if (metadata != null) {
-            emit(ShowMetadata(mediaItemState.id, metadata))
+            lightboxUseCase.saveMetadata(mediaItemState.id, metadata)
         }
     }
 

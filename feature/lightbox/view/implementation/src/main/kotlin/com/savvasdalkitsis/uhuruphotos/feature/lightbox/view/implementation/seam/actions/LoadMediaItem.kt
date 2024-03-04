@@ -33,6 +33,10 @@ import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.api.model.LightboxS
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.api.model.LightboxSequenceDataSource.UserAlbum
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.api.model.LightboxSequenceDataSource.Videos
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.LightboxActionsContext
+import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.LightboxMutation.FinishedLoading
+import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.LightboxMutation.FinishedLoadingDetails
+import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.LightboxMutation.Loading
+import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.LightboxMutation.LoadingDetails
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.LightboxMutation.ReceivedDetails
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.LightboxMutation.ShowMedia
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.LightboxMutation.ShowRestoreButton
@@ -43,8 +47,8 @@ import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.Med
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaId
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItem
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.channelFlow
 import kotlinx.coroutines.flow.combine
-import kotlinx.coroutines.flow.emitAll
 import kotlinx.coroutines.flow.emptyFlow
 import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.flow.flatMapLatest
@@ -53,6 +57,7 @@ import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.mapNotNull
 import kotlinx.coroutines.flow.merge
+import kotlinx.coroutines.flow.onEach
 
 data class LoadMediaItem(
     val actionMediaId: MediaId<*>,
@@ -74,17 +79,22 @@ data class LoadMediaItem(
         combine(
             observeMediaSequence()
                 .filter { it.isNotEmpty() },
+            serverUseCase.observeServerUrl(),
             currentMediaId,
-        ) { media, id ->
-            media to id
-        }.flatMapLatest { (media, id) ->
-            flow {
+        ) { media, serverUrl, id ->
+            Triple(media, serverUrl, id)
+        }.flatMapLatest { (media, serverUrl, id) ->
+            channelFlow {
                 ShowMedia(media, id)?.let {
-                    emit(it)
-                    loadMediaDetails(id)
-                    emitAll(mediaUseCase.observeMediaItemDetails(id).map { details ->
-                        ReceivedDetails(id, details)
-                    })
+                    send(it)
+                    send(Loading)
+                    send(LoadingDetails(id))
+                    lightboxUseCase.observeLightboxItemDetails(id).map { details ->
+                        ReceivedDetails(id, details, serverUrl)
+                    }.onEach {
+                        send(FinishedLoading)
+                        send(FinishedLoadingDetails(id))
+                    }.collect(this::send)
                 }
             }
         }
@@ -178,14 +188,16 @@ data class LoadMediaItem(
         addToPortfolioEnabled: Boolean = false,
     ) = SingleMediaItemState(
         id = this,
-        isFavourite = isFavourite,
         showFavouriteIcon = preferRemote is MediaId.Remote,
         showDeleteButton = sequenceDataSource.shouldShowDeleteButton,
         showEditIcon = shouldShowEditButton,
+        showShareIcon = !isVideo,
+        showUseAsIcon = !isVideo,
         showAddToPortfolioIcon = showAddToPortfolioIcon,
         addToPortfolioIconEnabled = addToPortfolioEnabled,
         inPortfolio = findLocals.any { isInPortfolio(it.value) },
-        mediaItemSyncState = syncState.takeIf { sequenceDataSource.showMediaSyncState }
+        mediaItemSyncState = syncState.takeIf { sequenceDataSource.showMediaSyncState },
+        isFavourite = isFavourite
     )
 
     private val MediaId<*>.shouldShowEditButton get() = !isVideo && findLocals.isNotEmpty()
