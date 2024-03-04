@@ -1,0 +1,3 @@
+* Memory cards have button to scroll feed to it
+* fix lightbox details and action icons loading problems
+* Every page that has checkable items now supports haptic feedback
