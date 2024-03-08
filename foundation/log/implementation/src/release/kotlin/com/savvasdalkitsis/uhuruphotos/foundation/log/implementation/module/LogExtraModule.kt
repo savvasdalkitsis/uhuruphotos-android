@@ -17,6 +17,7 @@ package com.savvasdalkitsis.uhuruphotos.foundation.log.implementation.module
 
 import com.michaelflisar.lumberjack.implementation.interfaces.ILumberjackLogger
 import com.michaelflisar.lumberjack.loggers.console.ConsoleLogger
+import com.savvasdalkitsis.uhuruphotos.foundation.log.implementation.NoOpTree
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
