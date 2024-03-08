@@ -19,7 +19,7 @@ import com.github.michaelbull.result.Err
 import com.github.michaelbull.result.Ok
 import com.github.michaelbull.result.Result
 import com.github.michaelbull.result.andThen
-import com.michaelflisar.lumberjack.L
+import com.michaelflisar.lumberjack.core.L
 
 fun log(tag: String = "", msg: () -> String) {
     if (tag.isNotEmpty()) {
@@ -50,9 +50,9 @@ fun logError(t: Throwable) {
 
 data object Log {
     var enabled: Boolean
-        get() = L.enabled
+        get() = L.isEnabled()
         set(value) {
-            L.enabled = value
+            L.enable(value)
         }
 }
 

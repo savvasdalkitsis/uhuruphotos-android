@@ -16,42 +16,65 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.foundation.log.implementation
 
 import android.content.Context
-import com.michaelflisar.lumberjack.FileLoggingSetup
-import com.michaelflisar.lumberjack.L
-import com.michaelflisar.lumberjack.sendFeedback
+import androidx.appcompat.app.AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM
+import androidx.appcompat.app.AppCompatDelegate.MODE_NIGHT_NO
+import androidx.appcompat.app.AppCompatDelegate.MODE_NIGHT_YES
+import androidx.appcompat.app.AppCompatDelegate.setDefaultNightMode
+import com.michaelflisar.lumberjack.core.L
+import com.michaelflisar.lumberjack.extensions.feedback.sendFeedback
+import com.michaelflisar.lumberjack.extensions.viewer.showLog
+import com.michaelflisar.lumberjack.loggers.file.FileLoggerSetup
+import com.savvasdalkitsis.uhuruphotos.feature.settings.domain.api.usecase.SettingsUIUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.settings.domain.api.usecase.SettingsUseCase
 import com.savvasdalkitsis.uhuruphotos.foundation.log.api.usecase.FeedbackUseCase
+import com.savvasdalkitsis.uhuruphotos.foundation.log.api.usecase.FeedbackUseCase.Companion.EMAIL
+import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
+import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.ThemeMode.DARK_MODE
+import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.ThemeMode.FOLLOW_SYSTEM
+import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.ThemeMode.LIGHT_MODE
 import dagger.hilt.android.qualifiers.ApplicationContext
 import se.ansman.dagger.auto.AutoBind
-import java.io.File
 import javax.inject.Inject
 
 @AutoBind
 internal class FeedbackUseCase @Inject constructor(
     @ApplicationContext private val context: Context,
-    private val loggingSetup: FileLoggingSetup,
+    private val loggerSetup: FileLoggerSetup,
     private val settingsUseCase: SettingsUseCase,
+    private val settingsUIUseCase: SettingsUIUseCase,
 ) : FeedbackUseCase {
 
     override fun sendFeedback() {
         L.sendFeedback(
             context = context,
-            logFile = loggingSetup.getLatestLogFiles(),
+            attachments = listOfNotNull(loggerSetup.getLatestLogFiles()) +
+                    if (settingsUseCase.getSendDatabaseEnabled())
+                        listOf(context.getDatabasePath("uhuruPhotos.db"))
+                    else
+                        emptyList(),
             receiver = EMAIL,
-            filesToAppend = if (settingsUseCase.getSendDatabaseEnabled())
-                listOf(context.filesDir.subFile("databases").subFile("uhuruPhotos.db"))
-            else
-                emptyList()
         )
     }
 
-    override fun clearLogs() {
-        loggingSetup.clearLogFiles()
+    override fun showLogs() {
+        setDefaultNightMode(
+            when (settingsUIUseCase.getThemeMode()) {
+                FOLLOW_SYSTEM -> MODE_NIGHT_FOLLOW_SYSTEM
+                DARK_MODE -> MODE_NIGHT_YES
+                LIGHT_MODE -> MODE_NIGHT_NO
+            }
+        )
+        L.showLog(
+            context = context,
+            fileLoggingSetup = loggerSetup,
+            receiver = EMAIL,
+            theme = R.style.AppTheme,
+            title = context.getString(string.logs)
+        )
+
     }
 
-    private fun File.subFile(name: String) = File(this, name)
-
-    companion object {
-        const val EMAIL = "feedback@uhuru.photos"
+    override suspend fun clearLogs() {
+        loggerSetup.clearLogFiles()
     }
 }

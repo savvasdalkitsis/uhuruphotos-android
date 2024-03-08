@@ -21,7 +21,7 @@ import se.ansman.dagger.auto.AutoBind
 import javax.inject.Inject
 
 @AutoBind
-internal class TimberLogger @Inject constructor() : HttpLoggingInterceptor.Logger {
+internal class HttpLogger @Inject constructor() : HttpLoggingInterceptor.Logger {
 
     override fun log(message: String) = log("OkHttp") { message }
 }

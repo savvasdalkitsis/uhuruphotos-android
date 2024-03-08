@@ -1,10 +1,18 @@
 android {
-    namespace 'com.savvasdalkitsis.api.log'
+    buildFeatures {
+        compose true
+    }
+    composeOptions {
+        kotlinCompilerExtensionVersion libs.versions.compose.compiler.get()
+    }
+    namespace 'com.savvasdalkitsis.uhuruphotos.foundation.log.api'
 }
 
 dependencies {
     api project(":foundation:result:api")
     implementation(
+            libs.androidx.compose.foundation.layout,
             libs.bundles.lumberjack,
+            project(":foundation:strings:api"),
     )
 }

@@ -15,11 +15,25 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.foundation.log.implementation
 
-import timber.log.Timber
+import com.michaelflisar.lumberjack.core.classes.Level
+import com.michaelflisar.lumberjack.implementation.classes.LumberjackFilter
+import com.michaelflisar.lumberjack.implementation.interfaces.ILumberjackLogger
 
-internal class NoOpTree : Timber.Tree() {
+internal class NoOpTree : ILumberjackLogger {
 
-    override fun log(priority: Int, tag: String?, message: String, t: Throwable?) {
-        // no-op
+    override var enabled = false
+    override val filter: LumberjackFilter = { _,_,_,_,_,_,_,_,_ -> false }
+
+    override fun log(
+        level: Level,
+        tag: String?,
+        time: Long,
+        fileName: String,
+        className: String,
+        methodName: String,
+        line: Int,
+        msg: String?,
+        throwable: Throwable?
+    ) {
     }
 }

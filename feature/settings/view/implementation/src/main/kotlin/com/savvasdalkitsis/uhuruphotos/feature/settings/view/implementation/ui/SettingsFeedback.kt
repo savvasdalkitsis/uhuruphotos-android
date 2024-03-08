@@ -22,6 +22,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.actions.ClearLogFileClicked
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.actions.SendFeedbackClicked
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.actions.SettingsAction
+import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.actions.ViewLogsClicked
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.ui.state.SettingsState
 import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.R.drawable
 import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
@@ -31,6 +32,12 @@ internal fun SettingsFeedback(
     state: SettingsState,
     action: (SettingsAction) -> Unit,
 ) {
+    SettingsOutlineButtonRow(
+        buttonText = stringResource(string.view_logs),
+        icon = drawable.ic_logs,
+    ) {
+        action(ViewLogsClicked)
+    }
     SettingsOutlineButtonRow(
         buttonText = stringResource(string.send_feedback_with_logs),
         icon = drawable.ic_feedback,

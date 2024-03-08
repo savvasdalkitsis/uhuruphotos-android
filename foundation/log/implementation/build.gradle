@@ -12,6 +12,7 @@ dependencies {
             project(":foundation:initializer:api"),
             project(":foundation:log:api"),
             project(":foundation:notification:api"),
+            project(":foundation:strings:api"),
     )
     kapt libs.autodagger.kapt
 }

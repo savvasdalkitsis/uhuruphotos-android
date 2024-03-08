@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="AppTheme" parent="@style/LumberjackTheme">
+        <item name="colorPrimary">@color/primary</item>
+        <item name="colorOnPrimary">@color/onPrimary</item>
+    </style>
+    <color name="primary">@color/white</color>
+    <color name="onPrimary">@color/black</color>
+</resources>

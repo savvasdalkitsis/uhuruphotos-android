@@ -12,7 +12,6 @@ dependencies {
     implementation(
             libs.bundles.autodagger,
             libs.hilt,
-            libs.logger,
             libs.okhttp,
             libs.okhttp.logging,
             libs.okhttp.url,

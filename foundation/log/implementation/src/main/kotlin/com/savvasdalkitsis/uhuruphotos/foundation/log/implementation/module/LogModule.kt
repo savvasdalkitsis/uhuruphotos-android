@@ -16,15 +16,15 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.foundation.log.implementation.module
 
 import android.content.Context
-import com.michaelflisar.lumberjack.FileLoggingSetup
-import com.michaelflisar.lumberjack.FileLoggingTree
+import com.michaelflisar.lumberjack.implementation.interfaces.ILumberjackLogger
+import com.michaelflisar.lumberjack.loggers.file.FileLogger
+import com.michaelflisar.lumberjack.loggers.file.FileLoggerSetup
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import dagger.multibindings.IntoSet
-import timber.log.Timber
 import javax.inject.Singleton
 
 @Module
@@ -33,19 +33,15 @@ internal class LogModule {
 
     @Provides
     @Singleton
-    fun loggingSetup(@ApplicationContext context: Context): FileLoggingSetup =
-        FileLoggingSetup.NumberedFiles(
+    fun loggerSetup(@ApplicationContext context: Context): FileLoggerSetup =
+        FileLoggerSetup.Daily(
             context = context,
-            setup = FileLoggingSetup.Setup(
-                logsToKeep = 1
-            ),
-            logOnBackgroundThread = true,
-            sizeLimit = "2MB"
+            filesToKeep = 1,
         )
 
     @Provides
     @IntoSet
     fun fileTree(
-        loggingSetup: FileLoggingSetup,
-    ): Timber.Tree = FileLoggingTree(loggingSetup)
+        loggerSetup: FileLoggerSetup,
+    ): ILumberjackLogger = FileLogger(loggerSetup)
 }

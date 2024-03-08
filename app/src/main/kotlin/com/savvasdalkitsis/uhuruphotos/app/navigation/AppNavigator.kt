@@ -84,7 +84,7 @@ class AppNavigator @Inject constructor(
             LocalThumbnailImageLoader provides thumbnailImageLoader,
             LocalThumbnailWithNetworkCacheImageLoader provides thumbnailImageWithNetworkCacheSupportLoader,
             LocalNavigator provides navigator,
-            LocalServerUrl provides serverUseCase.getServerUrl()
+            LocalServerUrl provides serverUseCase.getServerUrl(),
         ) {
             NodeHost(integrationPoint = integrationPoint) { buildContext ->
                 val backStack: BackStack<NavigationRoute> = BackStack(

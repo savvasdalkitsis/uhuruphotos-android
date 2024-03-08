@@ -379,4 +379,6 @@
     <string name="need_a_libre_photos_server_1">Please note that you need access to an instance of a LibrePhotos server to enable cloud backup &amp; sync.</string>
     <string name="need_a_libre_photos_server_2">Do you have access to a LibrePhotos server?</string>
     <string name="having_problems">Having problems?</string>
+    <string name="view_logs">View logs</string>
+    <string name="logs">Logs</string>
 </resources>

@@ -55,4 +55,5 @@ interface SettingsUIUseCase {
     fun setShouldShowPrecacheProgress(show: Boolean)
     fun setShouldShowLocalSyncProgress(show: Boolean)
     fun setAutoHideFeedNavOnScroll(autoHide: Boolean)
+    fun getThemeMode(): ThemeMode
 }

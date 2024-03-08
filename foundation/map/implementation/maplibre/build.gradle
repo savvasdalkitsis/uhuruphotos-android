@@ -25,11 +25,9 @@ dependencies {
     kapt libs.autodagger.kapt
     implementation(libs.maplibre) {
         exclude group: 'org.maplibre.gl', module: 'android-sdk-geojson'
-        exclude group: 'com.jakewharton.timber', module: 'timber'
     }
     implementation(libs.maplibre.annotations) {
         exclude group: 'org.maplibre.gl', module: 'android-sdk-geojson'
-        exclude group: 'com.jakewharton.timber', module: 'timber'
     }
     compileOnly('org.maplibre.gl:android-sdk-geojson:5.9.0')
 }

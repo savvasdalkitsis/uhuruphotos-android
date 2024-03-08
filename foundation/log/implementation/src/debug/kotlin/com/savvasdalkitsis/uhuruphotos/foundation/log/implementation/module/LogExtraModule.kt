@@ -15,13 +15,13 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.foundation.log.implementation.module
 
+import com.michaelflisar.lumberjack.implementation.interfaces.ILumberjackLogger
+import com.michaelflisar.lumberjack.loggers.console.ConsoleLogger
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import dagger.multibindings.IntoSet
-import timber.log.ConsoleTree
-import timber.log.Timber
 
 @Module
 @InstallIn(SingletonComponent::class)
@@ -29,5 +29,5 @@ internal class LogExtraModule {
 
     @Provides
     @IntoSet
-    fun consoleTree(): Timber.Tree = ConsoleTree()
+    fun consoleTree(): ILumberjackLogger = ConsoleLogger()
 }

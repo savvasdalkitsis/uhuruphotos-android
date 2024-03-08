@@ -18,5 +18,10 @@ package com.savvasdalkitsis.uhuruphotos.foundation.log.api.usecase
 interface FeedbackUseCase {
 
     fun sendFeedback()
-    fun clearLogs()
+    fun showLogs()
+    suspend fun clearLogs()
+
+    companion object {
+        const val EMAIL = "feedback@uhuru.photos"
+    }
 }

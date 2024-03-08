@@ -17,29 +17,34 @@ package com.savvasdalkitsis.uhuruphotos.foundation.log.implementation.initialize
 
 import android.app.Application
 import android.content.Context
-import com.michaelflisar.lumberjack.FileLoggingSetup
-import com.michaelflisar.lumberjack.L
+import com.michaelflisar.lumberjack.core.L
+import com.michaelflisar.lumberjack.extensions.notification.NotificationClickHandler
+import com.michaelflisar.lumberjack.extensions.notification.showNotification
+import com.michaelflisar.lumberjack.implementation.LumberjackLogger
+import com.michaelflisar.lumberjack.implementation.interfaces.ILumberjackLogger
+import com.michaelflisar.lumberjack.implementation.plant
+import com.michaelflisar.lumberjack.loggers.file.FileLoggerSetup
+import com.savvasdalkitsis.uhuruphotos.feature.settings.domain.api.usecase.SettingsUseCase
 import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.R
 import com.savvasdalkitsis.uhuruphotos.foundation.initializer.api.ApplicationCreated
 import com.savvasdalkitsis.uhuruphotos.foundation.log.api.Log
 import com.savvasdalkitsis.uhuruphotos.foundation.log.api.logError
-import com.savvasdalkitsis.uhuruphotos.foundation.log.implementation.FeedbackUseCase
-import com.savvasdalkitsis.uhuruphotos.foundation.log.implementation.showCrashNotification
+import com.savvasdalkitsis.uhuruphotos.foundation.log.api.usecase.FeedbackUseCase
 import com.savvasdalkitsis.uhuruphotos.foundation.notification.api.NotificationChannels
 import dagger.hilt.android.qualifiers.ApplicationContext
 import se.ansman.dagger.auto.AutoBindIntoSet
-import timber.log.Timber
 import javax.inject.Inject
 
 @AutoBindIntoSet
 internal class LogInitializer @Inject constructor(
-    private val trees: Set<@JvmSuppressWildcards Timber.Tree>,
+    private val trees: Set<@JvmSuppressWildcards ILumberjackLogger>,
     @ApplicationContext private val context: Context,
-    private val fileLoggingSetup: FileLoggingSetup,
-    private val settingsUseCase: com.savvasdalkitsis.uhuruphotos.feature.settings.domain.api.usecase.SettingsUseCase,
+    private val fileLoggerSetup: FileLoggerSetup,
+    private val settingsUseCase: SettingsUseCase,
 ) : ApplicationCreated {
 
     override fun onAppCreated(app: Application) {
+        L.init(LumberjackLogger)
         for (tree in trees) {
             L.plant(tree)
         }
@@ -48,13 +53,16 @@ internal class LogInitializer @Inject constructor(
         Thread.setDefaultUncaughtExceptionHandler { t, e ->
             logError(e)
             try {
-                showCrashNotification(
+                L.showNotification(
                     context = context,
-                    logFile = fileLoggingSetup.getLatestLogFiles(),
-                    receiver = FeedbackUseCase.EMAIL,
-                    appIcon = R.mipmap.ic_launcher,
+                    notificationIcon = R.mipmap.ic_launcher,
                     notificationChannelId = NotificationChannels.Crash.id,
                     notificationId = 1234,
+                    clickHandler = NotificationClickHandler.SendFeedback(
+                        context = context,
+                        receiver = FeedbackUseCase.EMAIL,
+                        attachments = listOfNotNull(fileLoggerSetup.getLatestLogFiles()),
+                    ),
                 )
                 default?.uncaughtException(t, e)
             } catch (n: Throwable) {

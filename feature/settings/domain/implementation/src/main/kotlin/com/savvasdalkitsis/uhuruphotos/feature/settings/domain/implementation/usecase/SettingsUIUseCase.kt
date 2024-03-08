@@ -126,6 +126,8 @@ internal class SettingsUIUseCase @Inject constructor(
 
     override fun observeThemeMode(): Flow<ThemeMode> =
         observe(themeMode, themeModeDefault)
+    override fun getThemeMode(): ThemeMode =
+        get(themeMode, themeModeDefault)
     override fun observeSearchSuggestionsEnabledMode(): Flow<Boolean> =
         observe(searchSuggestionsEnabled, searchSuggestionsEnabledDefault)
     override fun observeShowLibrary(): Flow<Boolean> =
