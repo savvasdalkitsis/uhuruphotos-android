@@ -46,6 +46,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import coil.ImageLoader
+import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.model.Md5Hash
 import com.savvasdalkitsis.uhuruphotos.feature.processing.domain.api.model.ProcessingItem
 import com.savvasdalkitsis.uhuruphotos.feature.processing.view.implementation.R
 import com.savvasdalkitsis.uhuruphotos.feature.processing.view.implementation.seam.actions.DismissMessageDialog
@@ -240,41 +241,49 @@ private fun ProcessingPreview() {
                             localItemId = 1,
                             displayName = "PXL_20230801_103507882.jpg",
                             contentUri = "",
+                            md5 = Md5Hash(""),
                         ),
                         ProcessingItem(
                             localItemId = 2,
                             displayName = "PXL_20230801_103507850.jpg",
                             contentUri = "",
+                            md5 = Md5Hash(""),
                         ),
                         ProcessingItem(
                             localItemId = 3,
                             displayName = "PXL_20230801_103507810.mp4",
                             contentUri = "",
+                            md5 = Md5Hash(""),
                         ),
                         ProcessingItem(
                             localItemId = 30,
                             displayName = "PXL_20230801_103507810.mp4",
                             contentUri = "",
+                            md5 = Md5Hash(""),
                         ),
                         ProcessingItem(
                             localItemId = 4,
                             displayName = "PXL_20230801_103507810.mp4",
                             contentUri = "",
+                            md5 = Md5Hash(""),
                         ),
                         ProcessingItem(
                             localItemId = 5,
                             displayName = "PXL_20230801_103507800.jpg",
                             contentUri = "",
+                            md5 = Md5Hash(""),
                         ),
                         ProcessingItem(
                             localItemId = 6,
                             displayName = "PXL_20230801_103507100.jpg",
                             contentUri = "",
+                            md5 = Md5Hash(""),
                         ),
                         ProcessingItem(
                             localItemId = 7,
                             displayName = "PXL_20230801_103507100.jpg",
                             contentUri = "",
+                            md5 = Md5Hash(""),
                         ),
                     ),
                 ),
