@@ -19,37 +19,27 @@ import android.content.Context
 import androidx.hilt.work.HiltWorker
 import androidx.work.CoroutineWorker
 import androidx.work.WorkerParameters
-import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.implementation.repository.RemoteMediaRepository
-import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.implementation.service.RemoteMediaService
-import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.implementation.service.model.RemoteMediaHashOperationResponseServiceModel
-import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.implementation.service.model.RemoteMediaItemDeleteRequestServiceModel
+import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.api.usecase.RemoteMediaUseCase
 import com.savvasdalkitsis.uhuruphotos.foundation.log.api.log
 import com.savvasdalkitsis.uhuruphotos.foundation.notification.api.ForegroundInfoBuilder
 import com.savvasdalkitsis.uhuruphotos.foundation.notification.api.NotificationChannels
 import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedInject
-import retrofit2.Response
 
 @HiltWorker
 class RemoteMediaItemDeletionWorker @AssistedInject constructor(
     @Assisted context: Context,
     @Assisted val params: WorkerParameters,
-    private val remoteMediaService: RemoteMediaService,
-    private val remoteMediaRepository: RemoteMediaRepository,
+    private val remoteMediaUseCase: RemoteMediaUseCase,
     private val foregroundInfoBuilder: ForegroundInfoBuilder,
 ) : CoroutineWorker(context, params) {
 
     override suspend fun doWork(): Result {
         return try {
             val id = params.inputData.getString(KEY_ID)!!
-            val response = remoteMediaService.deleteMediaItemPermanently(
-                RemoteMediaItemDeleteRequestServiceModel(
-                    mediaHashes = listOf(id),
-                )
-            )
-            if (shouldDeleteLocally(response)) {
-                remoteMediaRepository.deleteMediaItem(id)
+            val deleted = remoteMediaUseCase.deleteMediaItemNow(id)
+            if (deleted) {
                 Result.success()
             } else {
                 failOrRetry()
@@ -59,10 +49,6 @@ class RemoteMediaItemDeletionWorker @AssistedInject constructor(
             failOrRetry()
         }
     }
-
-    private fun shouldDeleteLocally(response: Response<RemoteMediaHashOperationResponseServiceModel>) =
-        response.code() == 404 ||
-                (response.code() in 200..299 && response.body()?.status == true)
 
     private fun failOrRetry() = if (params.runAttemptCount < 4) {
         Result.retry()

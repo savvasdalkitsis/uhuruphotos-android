@@ -58,6 +58,8 @@ interface RemoteMediaUseCase {
 
     fun deleteMediaItems(vararg ids: String)
 
+    suspend fun deleteMediaItemNow(id: String): Boolean
+
     fun restoreMediaItem(id: String)
 
     suspend fun processRemoteMediaCollections(
@@ -78,4 +80,5 @@ interface RemoteMediaUseCase {
         completeMediaCollection: suspend (String) -> RemoteMediaCollectionById,
         processSummary: (albumId: String, summary: RemoteMediaItemSummary) -> Unit,
     ): SimpleResult
+
 }

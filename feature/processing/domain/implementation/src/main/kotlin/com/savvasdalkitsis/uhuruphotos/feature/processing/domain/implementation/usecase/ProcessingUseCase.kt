@@ -41,6 +41,7 @@ class ProcessingUseCase @Inject constructor(
                         contentUri = mediaItem.contentUri,
                         error = item.error,
                         lastResponse = item.lastResponse,
+                        md5 = mediaItem.md5,
                     )
                 }
             }

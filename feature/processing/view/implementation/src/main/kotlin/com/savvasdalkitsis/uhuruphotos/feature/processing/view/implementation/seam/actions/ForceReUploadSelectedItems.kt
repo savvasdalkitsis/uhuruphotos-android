@@ -15,9 +15,12 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.processing.view.implementation.seam.actions
 
+import com.github.michaelbull.result.onSuccess
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.toMediaItemHash
 import com.savvasdalkitsis.uhuruphotos.feature.processing.view.implementation.seam.ProcessingActionsContext
 import com.savvasdalkitsis.uhuruphotos.feature.processing.view.implementation.ui.state.ProcessingState
 import com.savvasdalkitsis.uhuruphotos.feature.upload.domain.api.model.UploadItem
+import com.savvasdalkitsis.uhuruphotos.foundation.log.api.log
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.Mutation
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
@@ -27,10 +30,22 @@ data object ForceReUploadSelectedItems : ProcessingAction() {
     override fun handle(state: ProcessingState): Flow<Mutation<ProcessingState>> = flow {
         val selectedItems = state.items
             .filter { it.selected }
-            .map { UploadItem(it.localItemId, it.contentUri) }
-        selectedItems.forEach {
-            uploadUseCase.markAsNotProcessing(it.id)
+            .map { UploadItem(it.localItemId, it.contentUri) to it.md5 }
+        selectedItems.forEach { (item, _) ->
+            uploadUseCase.markAsNotProcessing(item.id)
         }
-        uploadUseCase.scheduleUpload(force = true, items = selectedItems.toTypedArray())
+        userUseCase.getUserOrRefresh().onSuccess { user ->
+            selectedItems.forEach { (_, md5) ->
+                try {
+                    remoteMediaUseCase.deleteMediaItemNow(md5.toMediaItemHash(user.id).hash)
+                } catch (e: Exception) {
+                    log(e)
+                }
+            }
+        }
+        uploadUseCase.scheduleUpload(force = true, items = selectedItems
+            .map {  (item, _) -> item }
+            .toTypedArray()
+        )
     }
 }

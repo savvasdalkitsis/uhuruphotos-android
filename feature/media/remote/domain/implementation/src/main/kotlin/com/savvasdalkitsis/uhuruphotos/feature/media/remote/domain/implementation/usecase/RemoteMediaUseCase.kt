@@ -34,6 +34,8 @@ import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.api.service.m
 import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.api.usecase.RemoteMediaUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.implementation.repository.RemoteMediaRepository
 import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.implementation.service.RemoteMediaService
+import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.implementation.service.model.RemoteMediaHashOperationResponseServiceModel
+import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.implementation.service.model.RemoteMediaItemDeleteRequestServiceModel
 import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.implementation.worker.RemoteMediaItemWorkScheduler
 import com.savvasdalkitsis.uhuruphotos.feature.settings.domain.api.usecase.SettingsUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.user.domain.api.usecase.UserUseCase
@@ -46,6 +48,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.emitAll
 import kotlinx.coroutines.flow.flow
+import retrofit2.Response
 import se.ansman.dagger.auto.AutoBind
 import javax.inject.Inject
 
@@ -156,6 +159,24 @@ class RemoteMediaUseCase @Inject constructor(
             remoteMediaItemWorkScheduler.scheduleMediaItemDeletion(id)
         }
     }
+
+    override suspend fun deleteMediaItemNow(id: String): Boolean {
+        val response = remoteMediaService.deleteMediaItemPermanently(
+            RemoteMediaItemDeleteRequestServiceModel(
+                mediaHashes = listOf(id),
+            )
+        )
+        if (shouldDeleteLocally(response)) {
+            remoteMediaRepository.deleteMediaItem(id)
+            return true
+        }
+        return false
+    }
+
+    private fun shouldDeleteLocally(response: Response<RemoteMediaHashOperationResponseServiceModel>) =
+        response.code() == 404 ||
+                (response.code() in 200..299 && response.body()?.status == true)
+
 
     override fun restoreMediaItem(id: String) {
         remoteMediaItemWorkScheduler.scheduleMediaItemRestoration(id)

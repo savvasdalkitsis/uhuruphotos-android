@@ -15,6 +15,8 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.processing.domain.api.model
 
+import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.model.Md5Hash
+
 data class ProcessingItem(
     val localItemId: Long,
     val displayName: String?,
@@ -22,6 +24,7 @@ data class ProcessingItem(
     val error: String? = null,
     val lastResponse: String? = null,
     val selected: Boolean = false,
+    val md5: Md5Hash,
 ) {
     val hasError = !error.isNullOrBlank()
     val hasResponse = !lastResponse.isNullOrBlank()
