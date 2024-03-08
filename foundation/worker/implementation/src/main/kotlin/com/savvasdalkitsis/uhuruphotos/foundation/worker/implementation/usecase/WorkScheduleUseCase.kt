@@ -23,7 +23,6 @@ import androidx.work.ExistingPeriodicWorkPolicy
 import androidx.work.ExistingWorkPolicy
 import androidx.work.NetworkType
 import androidx.work.OneTimeWorkRequest
-import androidx.work.OutOfQuotaPolicy
 import androidx.work.PeriodicWorkRequest
 import androidx.work.WorkManager
 import com.savvasdalkitsis.uhuruphotos.foundation.worker.api.usecase.WorkScheduleUseCase
@@ -93,7 +92,6 @@ class WorkScheduleUseCase @Inject constructor(
                         .setRequiresCharging(requiresCharging)
                         .build()
                 )
-                .setExpedited(OutOfQuotaPolicy.RUN_AS_NON_EXPEDITED_WORK_REQUEST)
                 .run {
                     tags.fold(this) { builder, tag -> builder.addTag(tag) }
                 }
