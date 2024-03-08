@@ -1,0 +1,3 @@
+* Fixing crash when sending feedback
+* Adding button to view logs inside the app
+* Deleting remove media before attempting to force re-uploading in the processing screen
