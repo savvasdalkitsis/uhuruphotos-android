@@ -254,7 +254,7 @@
     <string name="last_response_processing">Last response while processing</string>
     <string name="today">Today</string>
     <string name="what_would_like_to_do">What would you like to do?</string>
-    <string name="delete_fully_synced_media_both">Delete local/Trash remote</string>
+    <string name="delete_fully_synced_media_both">Delete local/Delete remote</string>
     <string name="delete_fully_synced_media_local">Delete local</string>
     <string name="allow_storage_management_title">Storage management</string>
     <string name="allow_storage_management_description">The app needs permission to manage your device storage first</string>
