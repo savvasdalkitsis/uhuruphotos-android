@@ -17,15 +17,15 @@ package com.savvasdalkitsis.uhuruphotos.feature.server.view.implementation.ui
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.material.AlertDialog
-import androidx.compose.material.Button
-import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.savvasdalkitsis.uhuruphotos.feature.server.view.implementation.seam.actions.DismissUnsecuredServerDialog
 import com.savvasdalkitsis.uhuruphotos.feature.server.view.implementation.seam.actions.Login
 import com.savvasdalkitsis.uhuruphotos.feature.server.view.implementation.seam.actions.ServerAction
+import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
+import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.YesNoDialog
 
 @Composable
 internal fun UnsecuredServerConfirmationDialog(
@@ -33,33 +33,22 @@ internal fun UnsecuredServerConfirmationDialog(
     action: (ServerAction) -> Unit,
     state: ServerState
 ) {
-    AlertDialog(
-        onDismissRequest = { action(DismissUnsecuredServerDialog) },
-        shape = MaterialTheme.shapes.large,
-        title = { Text("Unsecured server") },
-        text = {
-            Column(
-                verticalArrangement = Arrangement.spacedBy(8.dp),
-            ) {
-                Text("Are you sure you want to connect to an unsecured server?")
-                Text("This server communicates over plain http and is not encrypted: $currentUrl")
-            }
+    YesNoDialog(
+        title = stringResource(string.unsecured_server),
+        onDismiss = { action(DismissUnsecuredServerDialog) },
+        onYes = {
+            action(DismissUnsecuredServerDialog)
+            action(Login(
+                allowUnsecuredServers = true,
+                rememberCredentials = state.rememberCredentials,
+            ))
         },
-        confirmButton = {
-            Button(onClick = {
-                action(DismissUnsecuredServerDialog)
-                action(Login(
-                    allowUnsecuredServers = true,
-                    rememberCredentials = state.rememberCredentials,
-                ))
-            }) {
-                Text("Yes")
-            }
-        },
-        dismissButton = {
-            Button(onClick = { action(DismissUnsecuredServerDialog) }) {
-                Text("No")
-            }
-        },
-    )
+    ) {
+        Column(
+            verticalArrangement = Arrangement.spacedBy(8.dp),
+        ) {
+            Text(stringResource(string.unsecured_server_are_you_sure))
+            Text(stringResource(string.unsecured_server_not_encrypted, currentUrl))
+        }
+    }
 }

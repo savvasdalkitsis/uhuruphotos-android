@@ -18,19 +18,13 @@ package com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ColumnScope
-import androidx.compose.foundation.layout.FlowRow
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material.AlertDialog
 import androidx.compose.material.Button
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
-import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.layout.ReverseDirection
 
 @Composable
 fun OkDialog(
@@ -48,9 +42,8 @@ fun OkDialog(
     onDismiss: () -> Unit,
     body: @Composable ColumnScope.() -> Unit,
 ) {
-    AlertDialog(
+    PaddedDialog(
         onDismissRequest = onDismiss,
-        shape = MaterialTheme.shapes.large,
         title = {
             Text(title, style = MaterialTheme.typography.h5)
         },
@@ -62,18 +55,8 @@ fun OkDialog(
             }
         },
         buttons = {
-            ReverseDirection {
-                FlowRow(
-                    Modifier
-                        .fillMaxWidth()
-                        .padding(horizontal = 16.dp, vertical = 12.dp),
-                    horizontalArrangement = Arrangement.spacedBy(8.dp),
-                    verticalArrangement = Arrangement.spacedBy(12.dp)
-                ) {
-                    Button(onClick = onDismiss) {
-                        Text(ok)
-                    }
-                }
+            Button(onClick = onDismiss) {
+                Text(ok)
             }
         },
     )

@@ -18,22 +18,16 @@ package com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui
 import androidx.compose.foundation.layout.Arrangement.spacedBy
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ColumnScope
-import androidx.compose.foundation.layout.FlowRow
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material.AlertDialog
 import androidx.compose.material.Button
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.OutlinedButton
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
 import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.PreviewAppTheme
-import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.layout.ReverseDirection
 
 @Composable
 fun YesNoDialog(
@@ -54,9 +48,8 @@ fun YesNoDialog(
     no: String,
     body: @Composable ColumnScope.() -> Unit,
 ) {
-    AlertDialog(
+    PaddedDialog(
         onDismissRequest = onNo,
-        shape = MaterialTheme.shapes.large,
         title = {
             Text(title, style = MaterialTheme.typography.h5)
         },
@@ -68,21 +61,11 @@ fun YesNoDialog(
             }
         },
         buttons = {
-            ReverseDirection {
-                FlowRow(
-                    Modifier
-                        .fillMaxWidth()
-                        .padding(horizontal = 16.dp, vertical = 12.dp),
-                    horizontalArrangement = spacedBy(8.dp),
-                    verticalArrangement = spacedBy(12.dp)
-                ) {
-                    Button(onClick = onYes) {
-                        Text(yes)
-                    }
-                    OutlinedButton(onClick = onNo) {
-                        Text(no)
-                    }
-                }
+            Button(onClick = onYes) {
+                Text(yes)
+            }
+            OutlinedButton(onClick = onNo) {
+                Text(no)
             }
         },
     )

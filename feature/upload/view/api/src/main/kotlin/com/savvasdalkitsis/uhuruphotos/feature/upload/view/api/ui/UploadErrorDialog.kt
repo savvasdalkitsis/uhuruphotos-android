@@ -15,9 +15,6 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.upload.view.api.ui
 
-import androidx.compose.material.AlertDialog
-import androidx.compose.material.Button
-import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.stringResource
@@ -27,32 +24,24 @@ import com.savvasdalkitsis.uhuruphotos.feature.upload.view.api.ui.state.UploadEr
 import com.savvasdalkitsis.uhuruphotos.feature.upload.view.api.ui.state.UploadErrorDialogMode.NOT_ALLOWED
 import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
 import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.PreviewAppTheme
+import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.OkDialog
 
 @Composable
 fun UploadErrorDialog(
     mode: UploadErrorDialogMode,
     onDismiss: () -> Unit = {},
 ) {
-    AlertDialog(
-        onDismissRequest = onDismiss,
-        shape = MaterialTheme.shapes.large,
-        title = {
-            Text(stringResource(string.cannot_upload))
-        },
-        text = {
-            Text(
-                stringResource(when (mode) {
-                    NOT_ALLOWED -> string.upload_not_allowed
-                    ERROR_CHECKING -> string.upload_error_checking
-                })
-            )
-        },
-        confirmButton = {
-            Button(onClick = onDismiss) {
-                Text(stringResource(string.ok))
-            }
-        },
-    )
+    OkDialog(
+        title = stringResource(string.cannot_upload),
+        onDismiss = onDismiss,
+    ) {
+        Text(
+            stringResource(when (mode) {
+                NOT_ALLOWED -> string.upload_not_allowed
+                ERROR_CHECKING -> string.upload_error_checking
+            })
+        )
+    }
 }
 
 @Preview

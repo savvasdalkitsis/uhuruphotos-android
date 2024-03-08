@@ -15,15 +15,11 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui
 
-import androidx.compose.material.AlertDialog
-import androidx.compose.material.Button
-import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.pluralStringResource
-import androidx.compose.ui.res.stringResource
 import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R
-import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
+import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.YesNoDialog
 
 @Composable
 fun TrashPermissionDialog(
@@ -31,36 +27,21 @@ fun TrashPermissionDialog(
     onDismiss: () -> Unit,
     onDelete: () -> Unit,
 ) {
-    AlertDialog(
-        onDismissRequest = onDismiss,
-        shape = MaterialTheme.shapes.large,
-        title = {
-            Text(
-                pluralStringResource(
-                    R.plurals.trash_media,
-                    mediaItemCount,
-                    mediaItemCount
-                )
+    YesNoDialog(
+        title = pluralStringResource(
+            R.plurals.trash_media,
+            mediaItemCount,
+            mediaItemCount
+        ),
+        onDismiss = onDismiss,
+        onYes = onDelete,
+    ) {
+        Text(
+            pluralStringResource(
+                R.plurals.trash_media_confirmation,
+                count = mediaItemCount,
+                mediaItemCount
             )
-        },
-        text = {
-            Text(
-                pluralStringResource(
-                    R.plurals.trash_media_confirmation,
-                    count = mediaItemCount,
-                    mediaItemCount
-                )
-            )
-        },
-        confirmButton = {
-            Button(onClick = onDelete) {
-                Text(stringResource(string.yes))
-            }
-        },
-        dismissButton = {
-            Button(onClick = onDismiss) {
-                Text(stringResource(string.no))
-            }
-        },
-    )
+        )
+    }
 }

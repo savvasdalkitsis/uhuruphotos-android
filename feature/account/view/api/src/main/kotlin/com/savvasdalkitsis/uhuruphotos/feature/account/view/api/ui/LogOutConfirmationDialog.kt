@@ -15,31 +15,22 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.account.view.api.ui
 
-import androidx.compose.material.AlertDialog
-import androidx.compose.material.Button
-import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.res.stringResource
+import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
+import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.YesNoDialog
 
 @Composable
 fun LogOutConfirmationDialog(
     onDismiss: () -> Unit,
     onLogOut: () -> Unit,
 ) {
-    AlertDialog(
-        onDismissRequest = onDismiss,
-        shape = MaterialTheme.shapes.large,
-        title = { Text("Log out") },
-        text = { Text("Are you sure you want to log out?") },
-        confirmButton = {
-            Button(onClick = onLogOut) {
-                Text("Yes")
-            }
-        },
-        dismissButton = {
-            Button(onClick = onDismiss) {
-                Text("No")
-            }
-        },
-    )
+    YesNoDialog(
+        title = stringResource(string.log_out),
+        onDismiss = onDismiss,
+        onYes = onLogOut,
+    ) {
+        Text("Are you sure you want to log out?")
+    }
 }

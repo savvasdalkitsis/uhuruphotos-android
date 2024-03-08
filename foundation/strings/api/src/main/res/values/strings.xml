@@ -381,4 +381,7 @@
     <string name="having_problems">Having problems?</string>
     <string name="view_logs">View logs</string>
     <string name="logs">Logs</string>
+    <string name="unsecured_server">Unsecured server</string>
+    <string name="unsecured_server_are_you_sure">Are you sure you want to connect to an unsecured server?</string>
+    <string name="unsecured_server_not_encrypted">This server communicates over plain http and is not encrypted: %s</string>
 </resources>
