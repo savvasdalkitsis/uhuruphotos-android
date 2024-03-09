@@ -1,0 +1,5 @@
+* Fixing memory cells not drawing gradient for text visibility
+* Fixing issue with default camera folder not found when it contains another folder inside it
+* Fixing parsing of dates for media missing date_taken exif data
+* Fixing aspect ratio of local media without specified orientation
+* Adding button in settings to wipe the local media database and rescan everything from scratch
