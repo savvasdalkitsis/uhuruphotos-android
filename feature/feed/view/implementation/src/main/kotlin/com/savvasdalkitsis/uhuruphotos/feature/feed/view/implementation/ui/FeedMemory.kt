@@ -83,30 +83,32 @@ internal fun FeedMemory(
                 animationSpec = tween(1000),
                 label = "memoryCrossFade",
             ) { celState ->
-                Cel(
-                    modifier = Modifier
-                        .drawWithCache {
-                            onDrawWithContent {
-                                drawContent()
-                                drawRect(
-                                    brush = Brush.verticalGradient(
-                                        0f to Color.Transparent,
-                                        0.5f to Color.Transparent,
-                                        1f to Color.Black.copy(alpha = 0.8f),
-                                        startY = 0f,
-                                        endY = Float.POSITIVE_INFINITY,
-                                        tileMode = TileMode.Clamp,
-                                    )
+                Box(modifier = Modifier
+                    .drawWithCache {
+                        onDrawWithContent {
+                            drawContent()
+                            drawRect(
+                                brush = Brush.verticalGradient(
+                                    0f to Color.Transparent,
+                                    0.5f to Color.Transparent,
+                                    1f to Color.Black.copy(alpha = 0.8f),
+                                    startY = 0f,
+                                    endY = Float.POSITIVE_INFINITY,
+                                    tileMode = TileMode.Clamp,
                                 )
-                            }
-                        },
-                    state = celState,
-                    onSelected = {
-                        onMemorySelected(cel, memory.yearsAgo)
+                            )
+                        }
                     },
-                    aspectRatio = 0.7f,
-                    contentScale = ContentScale.Crop,
-                )
+                ) {
+                    Cel(
+                        state = celState,
+                        onSelected = {
+                            onMemorySelected(cel, memory.yearsAgo)
+                        },
+                        aspectRatio = 0.7f,
+                        contentScale = ContentScale.Crop,
+                    )
+                }
             }
             Box(modifier = Modifier
                 .align(Alignment.TopEnd)
