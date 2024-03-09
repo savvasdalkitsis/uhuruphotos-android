@@ -155,31 +155,34 @@ class LocalMediaService @Inject constructor(
         val buckets = queryBucket(dcim.absolutePath.trim())
 
         return if (buckets.size == 1) {
-            buckets.firstOrNull()
+            buckets.entries.firstOrNull()?.key
         } else {
-            queryBucket(dcim.absolutePath.trim() + "/Camera").firstOrNull()
+            val entries = queryBucket(dcim.absolutePath.trim() + "/Camera").entries
+            entries.find { (_, name) ->
+                name.endsWith("Camera")
+            }?.key
         }
     }
 
     private suspend fun queryBucket(
         path: String
-    ): Set<Int> {
+    ): Map<Int, String> {
         val buckets = query(
             collection = LocalMediaPhotoColumns.collection,
-            projection = arrayOf(Images.Media.BUCKET_ID, Images.Media.DATA),
+            projection = arrayOf(Images.Media.BUCKET_ID, Images.Media.DATA, Images.Media.BUCKET_DISPLAY_NAME),
             selection = Images.Media.DATA + " LIKE '$path%'",
             selectionArgs = null,
         ) {
-            int(Images.Media.BUCKET_ID)
+            int(Images.Media.BUCKET_ID) to nullableString(Images.Media.BUCKET_DISPLAY_NAME).orEmpty()
         }.toSet() + query(
             collection = LocalMediaVideoColumns.collection,
-            projection = arrayOf(Video.Media.BUCKET_ID, Video.Media.DATA),
+            projection = arrayOf(Video.Media.BUCKET_ID, Video.Media.DATA, Video.Media.BUCKET_DISPLAY_NAME),
             selection = Video.Media.DATA + " LIKE '$path%'",
             selectionArgs = null,
         ) {
-            int(Video.Media.BUCKET_ID)
+            int(Video.Media.BUCKET_ID) to nullableString(Video.Media.BUCKET_DISPLAY_NAME).orEmpty()
         }.toSet()
-        return buckets
+        return buckets.toMap()
     }
 
     private suspend fun <T> query(
