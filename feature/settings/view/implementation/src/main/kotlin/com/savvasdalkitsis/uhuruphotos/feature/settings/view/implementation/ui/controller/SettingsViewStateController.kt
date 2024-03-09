@@ -53,6 +53,7 @@ class SettingsViewStateController @Inject constructor(
     val advancedThumbnailDiskCache = group(string.thumbnail_disk_cache, "settings:group:advanced:thumbnail:diskCache")
     val advancedThumbnailMemoryCache = group(string.thumbnail_memory_cache, "settings:group:advanced:thumbnail:memoryCache")
     val advancedVideoDiskCache = group(string.video_disk_cache, "settings:group:advanced:video:diskCache")
+    val advancedLocalMedia = group(string.local_media, "settings:group:advanced:localMedia")
     val help = group(string.help, "settings:group:help")
     val helpFeedback = group(string.feedback, "settings:group:help:feedback")
 

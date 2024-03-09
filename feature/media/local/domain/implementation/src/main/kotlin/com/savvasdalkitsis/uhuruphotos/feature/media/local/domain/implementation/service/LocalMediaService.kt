@@ -77,7 +77,7 @@ class LocalMediaService @Inject constructor(
         LocalMediaStoreServiceItem.Photo(
             id = id,
             displayName = string(Images.Media.DISPLAY_NAME),
-            dateTaken = long(Images.Media.DATE_TAKEN),
+            dateTaken = long(Images.Media.DATE_TAKEN).orFrom { long(Images.Media.DATE_ADDED) * 1000 },
             bucketId = int(Images.Media.BUCKET_ID),
             bucketName = nullableString(Images.Media.BUCKET_DISPLAY_NAME) ?: "-",
             width = int(Images.Media.WIDTH),
@@ -137,7 +137,7 @@ class LocalMediaService @Inject constructor(
         LocalMediaStoreServiceItem.Video(
             id = id,
             displayName = string(Video.Media.DISPLAY_NAME),
-            dateTaken = long(Video.Media.DATE_TAKEN),
+            dateTaken = long(Video.Media.DATE_TAKEN).orFrom { long(Video.Media.DATE_ADDED) },
             bucketId = int(Video.Media.BUCKET_ID),
             bucketName = nullableString(Video.Media.BUCKET_DISPLAY_NAME) ?: "-",
             width = int(Video.Media.WIDTH),
@@ -234,4 +234,5 @@ class LocalMediaService @Inject constructor(
         } catch (e: Exception) {
             throw IllegalStateException("Could not get column: $col", e)
         }
+    private fun Long.orFrom(block: () -> Long) = this.takeIf { it > 0 } ?: block()
 }

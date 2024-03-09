@@ -308,11 +308,15 @@ class LocalMediaUseCase @Inject constructor(
         return localMediaFolderRepository.getDefaultLocalFolderId()
     }
 
+    override fun clearAll() {
+        localMediaRepository.clearAll()
+    }
+
     private suspend fun resetMediaStoreIfNeeded() {
         with (mediaStoreVersionRepository) {
             if (latestMediaStoreVersion != currentMediaStoreVersion) {
                 async {
-                    localMediaRepository.clearAll()
+                    clearAll()
                 }
                 currentMediaStoreVersion = latestMediaStoreVersion
             }

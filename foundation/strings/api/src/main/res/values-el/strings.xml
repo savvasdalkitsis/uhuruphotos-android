@@ -132,7 +132,7 @@
     <string name="authenticate">Επαλήθευση ταυτότητας</string>
     <string name="authenticate_for_access_description">Ζητήσατε η πρόσβαση στην εφαρμογή να γίνεται μονο με επαλήθευση ταυτότητας</string>
     <string name="authenticate_for_access_to_trash_description">Ζητήσατε η πρόσβαση στον κάδο να γίνεται μονο με επαλήθευση ταυτότητας</string>
-    <string name="sync_local_media">Συγχρονισμός τοπικών πολυμέσων</string>
+    <string name="scanning_local_media">Συγχρονισμός τοπικών πολυμέσων</string>
     <string name="media">Πολυμέσα</string>
     <plurals name="delete_media">
         <item quantity="one">Διαγραφή %d στοιχείου πολυμέσων</item>

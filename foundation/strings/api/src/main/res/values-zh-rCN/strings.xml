@@ -104,7 +104,7 @@
     <string name="local_albums">本地相册</string>
     <string name="missing_permissions">缺少权限</string>
     <string name="grant_permissions">授予权限</string>
-    <string name="sync_local_media">正在同步本地影像……</string>
+    <string name="scanning_local_media">正在同步本地影像……</string>
     <string name="server_url">服务器网址</string>
     <string name="save">保存</string>
     <string name="login_to_server">登录服务器</string>
@@ -303,7 +303,7 @@
     <string name="missing_local_media_permissions">在照片流中查看本地影像？</string>
     <string name="missing_local_media_permissions_photo_map">在照片地图中查看本地影像？</string>
     <string name="show_media_sync_status">显示影像同步状态</string>
-    <string name="local_media_sync">同步本地影像</string>
+    <string name="scan_local_media">同步本地影像</string>
     <string name="allow_storage_management_description">本应用需要权限以管理您的设备存储</string>
     <string name="start">开始</string>
     <string name="show_feed_details_sync_progress">显示整个照片流详情的同步进度</string>
@@ -343,7 +343,7 @@
     <string name="skip">跳过</string>
     <string name="notifications_explanation">UhuruPhotos 使用后台任务来执行各种动作，例如同步影像、备份与同步等。若您想看到这些任务的进度，您需要允许访问通知。</string>
     <string name="completing">正在完成</string>
-    <string name="are_you_sure_you_want_to_start_local_sync">要开始同步本地影像吗？</string>
+    <string name="are_you_sure_you_want_to_start_local_scan">要开始同步本地影像吗？</string>
     <string name="media_sync_status_uploading">正在将影像上传到服务器……</string>
     <string name="upload_error_checking">无法检查您的服务器是否允许上传影像。请重试。</string>
 </resources>

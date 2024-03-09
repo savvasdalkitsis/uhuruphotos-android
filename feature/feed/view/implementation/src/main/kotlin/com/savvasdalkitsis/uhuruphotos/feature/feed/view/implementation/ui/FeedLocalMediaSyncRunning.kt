@@ -39,7 +39,7 @@ internal fun FeedLocalMediaSyncRunning() {
             modifier = Modifier.align(Alignment.Center),
             horizontalArrangement = spacedBy(8.dp),
         ) {
-            Text(stringResource(string.sync_local_media))
+            Text(stringResource(string.scanning_local_media))
             CircularProgressIndicator(modifier = Modifier.size(24.dp))
         }
     }

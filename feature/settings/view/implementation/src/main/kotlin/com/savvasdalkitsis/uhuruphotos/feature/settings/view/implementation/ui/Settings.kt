@@ -155,6 +155,9 @@ internal fun Settings(
                     CollapsibleGroup(groupState = controller.advancedVideoDiskCache) {
                         SettingsCache(state.videoDiskCache, action)
                     }
+                    CollapsibleGroup(groupState = controller.advancedLocalMedia) {
+                        SettingsLocalMedia(action)
+                    }
                 }
                 SuperGroup(controller.help) {
                     CollapsibleGroup(groupState = controller.helpFeedback) {

@@ -38,7 +38,7 @@ internal class LocalMediaSyncWorker @AssistedInject constructor(
     context,
     params,
     foregroundInfoBuilder,
-    notificationTitle = string.sync_local_media,
+    notificationTitle = string.scanning_local_media,
     notificationId = NOTIFICATION_ID,
 ) {
 

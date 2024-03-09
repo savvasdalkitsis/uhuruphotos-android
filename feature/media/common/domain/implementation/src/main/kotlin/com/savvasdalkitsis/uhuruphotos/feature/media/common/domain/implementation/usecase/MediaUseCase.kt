@@ -202,11 +202,10 @@ class MediaUseCase @Inject constructor(
 
     private val LocalMediaItem.ratio: Float get() {
         val (w, h) = when (orientation) {
-            ORIENTATION_0, ORIENTATION_180 ->
+            ORIENTATION_UNKNOWN, ORIENTATION_0, ORIENTATION_180 ->
                 width to height
             ORIENTATION_90, ORIENTATION_270 ->
                 height to width
-            ORIENTATION_UNKNOWN -> 0 to 1
         }
         return (w / h.toFloat()).takeIf { it > 0 } ?: 1f
     }

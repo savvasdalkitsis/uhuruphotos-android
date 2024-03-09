@@ -178,7 +178,7 @@
     <string name="nothing_here_yet">Todavía no hay nada aquí</string>
     <string name="use_as">Usar como</string>
     <string name="local_albums">Álbumes locales</string>
-    <string name="sync_local_media">Sincronización de medios locales</string>
+    <string name="scanning_local_media">Sincronización de medios locales</string>
     <plurals name="delete_media_confirmation">
         <item quantity="one">¿Estás seguro de que quieres eliminar este %d elemento multimedia\?</item>
         <item quantity="many">¿Estás seguro de que quieres borrar estos %d elementos multimedia\?</item>
@@ -264,8 +264,8 @@
     <string name="search_for_something">Encontrar algo</string>
     <string name="search_icon">Buscar un icono</string>
     <string name="full_feed_sync">Sincronización del Feed completa</string>
-    <string name="are_you_sure_you_want_to_start_local_sync">¿Estás seguro de que quieres empezar a sincronizar los medios locales\?</string>
-    <string name="local_media_sync">Sincronizar los medios locales</string>
+    <string name="are_you_sure_you_want_to_start_local_scan">¿Estás seguro de que quieres empezar a sincronizar los medios locales\?</string>
+    <string name="scan_local_media">Sincronizar los medios locales</string>
     <string name="start">Empezar</string>
     <string name="close">Cerrar</string>
     <string name="about">Acerca de</string>

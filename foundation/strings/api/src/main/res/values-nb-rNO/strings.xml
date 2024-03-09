@@ -155,7 +155,7 @@
     <string name="metered">Kvotebasert</string>
     <string name="people">Folk</string>
     <string name="authenticate">Identitetsbekreftelse</string>
-    <string name="sync_local_media">Synkroniserer lokal media …</string>
+    <string name="scanning_local_media">Synkroniserer lokal media …</string>
     <string name="restoring_photo">Gjenoppretter bilde fra papirkurv …</string>
     <string name="restoring_media">Gjenoppretter media fra papirkurv …</string>
     <string name="details">Detaljer</string>
@@ -205,7 +205,7 @@
     <string name="biometrics">Biometri</string>
     <string name="authenticate_to_change">Identitetsbekreft for å låse opp</string>
     <string name="grant_permissions">Innvilg tilganger</string>
-    <string name="local_media_sync">Synkroniser lokal media</string>
+    <string name="scan_local_media">Synkroniser lokal media</string>
     <string name="save">Lagre</string>
     <string name="login_to_server">Logg inn på tjeneren</string>
     <string name="login">Logg inn</string>
@@ -293,7 +293,7 @@
     <string name="authenticate_to_change_description">Å skru dette av krever identitetsbekreftelse i sikkerhetsøyemed</string>
     <string name="precaching_thumbnails_progress">Framdrift for forhåndshurtiglagring av miniatyrbilder</string>
     <string name="are_you_sure_you_want_to_perform_precache">Start forhåndshurtiglagring av miniatyrbilder?</string>
-    <string name="are_you_sure_you_want_to_start_local_sync">Start synkronisering av lokal media?</string>
+    <string name="are_you_sure_you_want_to_start_local_scan">Start synkronisering av lokal media?</string>
     <string name="delete_fully_synced_media_local">Slett lokal</string>
     <string name="missing_local_media_permissions_photo_map">Vis lokal media på billedkartet?</string>
     <string name="discover">Oppdagelse</string>

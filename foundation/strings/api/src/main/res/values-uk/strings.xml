@@ -238,7 +238,7 @@
     <string name="login">Логін</string>
     <string name="enable_memories">Ввімкнути спогади</string>
     <string name="video">Відео</string>
-    <string name="sync_local_media">Синхронізація локальних медіа</string>
+    <string name="scanning_local_media">Синхронізація локальних медіа</string>
     <string name="save">Зберегти</string>
     <string name="years_ago">%d роки(ів) тому</string>
     <string name="cannot_perform_precaching">Наразі неможливо виконати попереднє кешування</string>
@@ -279,10 +279,10 @@
     <string name="search_for_something">Шукати щось</string>
     <string name="search_icon">Значок пошуку</string>
     <string name="close">Закрити</string>
-    <string name="are_you_sure_you_want_to_start_local_sync">Ви впевнені, що хочете почати синхронізацію локальних медіа\?</string>
+    <string name="are_you_sure_you_want_to_start_local_scan">Ви впевнені, що хочете почати синхронізацію локальних медіа\?</string>
     <string name="start">Почати</string>
     <string name="full_feed_sync">Повна синхронізація стрічки</string>
-    <string name="local_media_sync">Синхронізація локальних медіа</string>
+    <string name="scan_local_media">Синхронізація локальних медіа</string>
     <string name="about">Про застосунок</string>
     <string name="crop">Обрізати</string>
     <string name="error_editing_photo">Виникла помилка при редагуванні фото</string>

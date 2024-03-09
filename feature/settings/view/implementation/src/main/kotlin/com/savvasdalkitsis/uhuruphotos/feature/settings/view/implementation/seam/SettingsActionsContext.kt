@@ -19,6 +19,8 @@ import com.github.michaelbull.result.Ok
 import com.savvasdalkitsis.uhuruphotos.feature.avatar.domain.api.usecase.AvatarUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.feed.domain.api.worker.FeedWorkScheduler
 import com.savvasdalkitsis.uhuruphotos.feature.jobs.domain.api.usecase.JobsUseCase
+import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.usecase.LocalMediaUseCase
+import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.worker.LocalMediaWorkScheduler
 import com.savvasdalkitsis.uhuruphotos.feature.search.domain.api.usecase.SearchUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.settings.domain.api.usecase.CacheSettingsUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.settings.domain.api.usecase.SettingsUIUseCase
@@ -49,6 +51,8 @@ internal class SettingsActionsContext @Inject constructor(
     val navigator: Navigator,
     val welcomeUseCase: WelcomeUseCase,
     val uploadsUseCase: UploadsUseCase,
+    val localMediaUseCase: LocalMediaUseCase,
+    val localMediaWorkScheduler: LocalMediaWorkScheduler,
 ) {
 
     fun authenticateIfNeeded(

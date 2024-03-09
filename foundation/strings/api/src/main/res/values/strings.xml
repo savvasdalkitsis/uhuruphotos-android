@@ -215,8 +215,8 @@
     <string name="local_albums">Local albums</string>
     <string name="missing_permissions">Permissions missing</string>
     <string name="grant_permissions">Grant permissions</string>
-    <string name="sync_local_media">Syncing local media…</string>
-    <string name="local_media_sync">Sync local media</string>
+    <string name="scanning_local_media">Scanning local media…</string>
+    <string name="scan_local_media">Scan local media</string>
     <string name="enter_libre_photos_url">Enter URL of LibrePhotos server</string>
     <string name="server_url">Server URL</string>
     <string name="save">Save</string>
@@ -234,7 +234,7 @@
     <string name="cannot_perform_precaching">Cannot perform pre-caching now</string>
     <string name="precaching_thumbnails_progress">Progress of pre-caching thumbnails</string>
     <string name="are_you_sure_you_want_to_perform_precache">Start pre-caching all thumbnails\?</string>
-    <string name="are_you_sure_you_want_to_start_local_sync">Start syncing local media\?</string>
+    <string name="are_you_sure_you_want_to_start_local_scan">Start scanning local media\?</string>
     <string name="process_takes_significant_time_consumes_battery">Takes a significant amount of time and consumes a lot of battery.</string>
     <string name="cancel">Cancel</string>
     <string name="feed_sync_job_configuration">Feed sync job configuration</string>
@@ -277,7 +277,7 @@
     <string name="show_feed_sync_progress">Display full progress of syncing the photo feed</string>
     <string name="show_feed_details_sync_progress">Display the progress of syncing the details of the whole photo feed</string>
     <string name="show_precache_progress">Display pre-caching progress</string>
-    <string name="show_local_progress">Display local syncing progress</string>
+    <string name="show_local_progress">Display local scanning progress</string>
     <string name="progress">Progress</string>
     <string name="lightbox_photo_disk_cache">Lightbox Photo disk cache</string>
     <string name="lightbox_photo_memory_cache">Memory cache for Lightbox Photo</string>
@@ -384,4 +384,6 @@
     <string name="unsecured_server">Unsecured server</string>
     <string name="unsecured_server_are_you_sure">Are you sure you want to connect to an unsecured server?</string>
     <string name="unsecured_server_not_encrypted">This server communicates over plain http and is not encrypted: %s</string>
+    <string name="local_media">Local media</string>
+    <string name="local_media_rescan">Re-scan local media from scratch</string>
 </resources>

@@ -38,7 +38,7 @@ fun JobPermissionDialog(
         title = stringResource(when(job) {
             FEED_SYNC -> string.perform_full_feed_sync
             PRECACHE_THUMBNAILS -> string.precache_thumbnails
-            LOCAL_MEDIA_SYNC -> string.local_media_sync
+            LOCAL_MEDIA_SYNC -> string.scan_local_media
             FEED_DETAILS_SYNC -> string.perform_full_feed_details_sync
         }),
         onDismiss = onDismiss,
@@ -48,7 +48,7 @@ fun JobPermissionDialog(
             Text(stringResource(when(job) {
                 FEED_SYNC -> string.are_you_sure_you_want_to_perform_full_sync
                 PRECACHE_THUMBNAILS -> string.are_you_sure_you_want_to_perform_precache
-                LOCAL_MEDIA_SYNC -> string.are_you_sure_you_want_to_start_local_sync
+                LOCAL_MEDIA_SYNC -> string.are_you_sure_you_want_to_start_local_scan
                 FEED_DETAILS_SYNC -> string.are_you_sure_you_want_to_perform_feed_details_sync
             }))
             if (job != LOCAL_MEDIA_SYNC) {

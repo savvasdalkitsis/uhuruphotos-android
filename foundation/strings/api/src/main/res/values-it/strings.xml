@@ -94,7 +94,7 @@
     </plurals>
     <string name="local_albums">Album Locali</string>
     <string name="grant_permissions">Concedi i permessi</string>
-    <string name="sync_local_media">Sincronizzando i media locali</string>
+    <string name="scanning_local_media">Sincronizzando i media locali</string>
     <plurals name="delete_media">
         <item quantity="one">Cancella %d elemento multimediale</item>
         <item quantity="many"/>

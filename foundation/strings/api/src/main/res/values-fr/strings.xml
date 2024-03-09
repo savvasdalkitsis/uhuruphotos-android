@@ -178,7 +178,7 @@
     <string name="local_albums">Albums locaux</string>
     <string name="missing_permissions">Permissions manquantes</string>
     <string name="grant_permissions">Accorder les permissions</string>
-    <string name="sync_local_media">Synchronisation des médias locaux</string>
+    <string name="scanning_local_media">Synchronisation des médias locaux</string>
     <string name="media">Média</string>
     <plurals name="trash_media">
         <item quantity="one">Envoyer %d média dans la corbeille</item>

@@ -53,4 +53,6 @@ interface LocalMediaUseCase {
 
     suspend fun savePhoto(bitmap: Bitmap, name: String, originalFileUri: Uri? = null): Boolean
     suspend fun getDefaultFolderId(): Int?
+
+    fun clearAll()
 }
