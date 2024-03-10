@@ -1,0 +1,10 @@
+* Fixing local media not showing details in lightbox when not connected to a server
+* Using the empty box animated icon for the empty content view
+* Fixing local media not loading details when logged in to a server
+* Allowing user to remember choice to not allow notifications
+* Making local media scan header visible by default and adding it as a footer as well
+* Adding upsell dialog to upload button in lightbox when not connected to a server
+* Adding 'What is LibrePhotos' button on the upsell dialog
+* Not showing 'connection to server lost' banner for local only users
+* Fixing 'Share' and 'Use As' actions for local only users
+* Pressing Back when edit options are shown in the lightbox dismisses them instead of navigating back
