@@ -30,9 +30,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import com.savvasdalkitsis.uhuruphotos.foundation.compose.api.recomposeHighlighter
+import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
+import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.PreviewAppTheme
+import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.R
 
 @Composable
 fun NoContent(
@@ -50,9 +53,8 @@ fun NoContent(
             modifier = Modifier.align(Alignment.Center),
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
-            Text(
-                text = "☹️",
-                fontSize = 48.sp,
+            DynamicIcon(
+                icon = R.raw.animation_empty,
             )
             Text(
                 text = stringResource(id = message),
@@ -62,5 +64,13 @@ fun NoContent(
             )
             additionalContent?.invoke()
         }
+    }
+}
+
+@Preview
+@Composable
+private fun NoContentPreview() {
+    PreviewAppTheme {
+        NoContent(message = string.no_media)
     }
 }

@@ -48,7 +48,6 @@ import androidx.compose.ui.unit.dp
 import coil.ImageLoader
 import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.model.Md5Hash
 import com.savvasdalkitsis.uhuruphotos.feature.processing.domain.api.model.ProcessingItem
-import com.savvasdalkitsis.uhuruphotos.feature.processing.view.implementation.R
 import com.savvasdalkitsis.uhuruphotos.feature.processing.view.implementation.seam.actions.DismissMessageDialog
 import com.savvasdalkitsis.uhuruphotos.feature.processing.view.implementation.seam.actions.ForceReUploadSelectedItems
 import com.savvasdalkitsis.uhuruphotos.feature.processing.view.implementation.seam.actions.ProcessingAction
@@ -61,6 +60,7 @@ import com.savvasdalkitsis.uhuruphotos.foundation.image.api.ui.Thumbnail
 import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
 import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.CustomColors
 import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.PreviewAppTheme
+import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.R
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.ActionIcon
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.Checkable
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.CommonScaffold
@@ -70,7 +70,6 @@ import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.OkDialog
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.SelectionMode
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.UpNavButton
 import kotlinx.collections.immutable.persistentListOf
-
 
 @Composable
 internal fun Processing(
