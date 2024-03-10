@@ -386,4 +386,5 @@
     <string name="unsecured_server_not_encrypted">This server communicates over plain http and is not encrypted: %s</string>
     <string name="local_media">Local media</string>
     <string name="local_media_rescan">Re-scan local media from scratch</string>
+    <string name="remember_choice">Remember choice</string>
 </resources>

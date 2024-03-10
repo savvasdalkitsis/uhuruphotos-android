@@ -18,6 +18,7 @@ dependencies {
             project(":feature:notifications:domain:api"),
             project(":feature:notifications:view:api"),
             project(":feature:settings:domain:api"),
+            project(":foundation:icons:api"),
             project(":foundation:navigation:api"),
             project(":foundation:strings:api"),
             project(":foundation:ui:api"),

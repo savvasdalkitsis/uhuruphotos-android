@@ -37,7 +37,9 @@ import com.savvasdalkitsis.uhuruphotos.feature.notifications.view.implementation
 import com.savvasdalkitsis.uhuruphotos.feature.notifications.view.implementation.seam.actions.Allow
 import com.savvasdalkitsis.uhuruphotos.feature.notifications.view.implementation.seam.actions.NotificationsAction
 import com.savvasdalkitsis.uhuruphotos.feature.notifications.view.implementation.seam.actions.Skip
+import com.savvasdalkitsis.uhuruphotos.feature.notifications.view.implementation.seam.actions.ToggleRememberChoice
 import com.savvasdalkitsis.uhuruphotos.feature.notifications.view.implementation.ui.state.NotificationsState
+import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.R.drawable
 import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
 import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.PreviewAppTheme
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.layout.plus
@@ -45,6 +47,7 @@ import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.CommonScaffold
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.DynamicIcon
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.FullLoading
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.Logo
+import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.ToggleableButtonWithIcon
 
 @Composable
 internal fun Notifications(
@@ -79,6 +82,13 @@ internal fun Notifications(
                     icon = R.raw.animation_notifications,
                 )
                 Spacer(modifier = Modifier.weight(1f))
+                ToggleableButtonWithIcon(
+                    icon = drawable.ic_remember,
+                    text = stringResource(string.remember_choice),
+                    checked = state.rememberChoice,
+                ) {
+                    action(ToggleRememberChoice)
+                }
                 Row(
                     horizontalArrangement = spacedBy(16.dp),
                 ) {

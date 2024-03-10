@@ -25,6 +25,9 @@ import kotlinx.coroutines.flow.flow
 data object Skip : NotificationsAction() {
     context(NotificationsActionsContext)
     override fun handle(state: NotificationsState): Flow<Mutation<NotificationsState>> = flow {
+        if (state.rememberChoice) {
+            notificationsUseCase.neverShowNotificationsOnboardingScreenAgain()
+        }
         navigator.newRoot(FeedNavigationRoute)
     }
 }

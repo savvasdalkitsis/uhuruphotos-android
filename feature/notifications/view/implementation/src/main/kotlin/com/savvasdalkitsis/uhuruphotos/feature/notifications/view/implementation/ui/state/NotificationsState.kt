@@ -17,4 +17,5 @@ package com.savvasdalkitsis.uhuruphotos.feature.notifications.view.implementatio
 
 data class NotificationsState(
     val isLoading: Boolean = true,
+    val rememberChoice: Boolean = false,
 )

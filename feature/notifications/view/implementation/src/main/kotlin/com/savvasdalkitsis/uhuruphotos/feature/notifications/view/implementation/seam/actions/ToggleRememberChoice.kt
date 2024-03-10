@@ -1,5 +1,5 @@
 /*
-Copyright 2022 Savvas Dalkitsis
+Copyright 2024 Savvas Dalkitsis
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -13,19 +13,18 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
  */
-package com.savvasdalkitsis.uhuruphotos.feature.notifications.view.implementation.seam
+package com.savvasdalkitsis.uhuruphotos.feature.notifications.view.implementation.seam.actions
 
+import com.savvasdalkitsis.uhuruphotos.feature.notifications.view.implementation.seam.NotificationsActionsContext
+import com.savvasdalkitsis.uhuruphotos.feature.notifications.view.implementation.seam.NotificationsMutation
 import com.savvasdalkitsis.uhuruphotos.feature.notifications.view.implementation.ui.state.NotificationsState
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.Mutation
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flowOf
 
-sealed class NotificationsMutation(
-    mutation: Mutation<NotificationsState>,
-) : Mutation<NotificationsState> by mutation {
-    data object ShowOnboarding : NotificationsMutation({
-        it.copy(isLoading = false)
-    })
+data object ToggleRememberChoice : NotificationsAction() {
+    context(NotificationsActionsContext)
+    override fun handle(state: NotificationsState): Flow<Mutation<NotificationsState>> =
+        flowOf(NotificationsMutation.SetRememberChoice(!state.rememberChoice))
 
-    data class SetRememberChoice(val remember: Boolean) : NotificationsMutation({
-        it.copy(rememberChoice = remember)
-    })
 }

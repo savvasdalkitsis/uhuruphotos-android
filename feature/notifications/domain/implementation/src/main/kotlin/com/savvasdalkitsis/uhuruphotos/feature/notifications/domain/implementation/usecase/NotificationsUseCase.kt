@@ -20,9 +20,13 @@ import android.os.Build.VERSION.SDK_INT
 import android.os.Build.VERSION_CODES.TIRAMISU
 import androidx.annotation.ChecksSdkIntAtLeast
 import androidx.core.app.NotificationManagerCompat
-import com.savvasdalkitsis.uhuruphotos.feature.notifications.domain.implementation.model.NotificationRequest.ACCEPTED
 import com.savvasdalkitsis.uhuruphotos.feature.notifications.domain.api.usecase.NotificationsUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.notifications.domain.implementation.initializer.NotificationActivityInitializer
+import com.savvasdalkitsis.uhuruphotos.feature.notifications.domain.implementation.model.NotificationRequest.ACCEPTED
+import com.savvasdalkitsis.uhuruphotos.foundation.preferences.api.PlainTextPreferences
+import com.savvasdalkitsis.uhuruphotos.foundation.preferences.api.Preferences
+import com.savvasdalkitsis.uhuruphotos.foundation.preferences.api.get
+import com.savvasdalkitsis.uhuruphotos.foundation.preferences.api.set
 import dagger.hilt.android.scopes.ActivityRetainedScoped
 import se.ansman.dagger.auto.AutoBind
 import javax.inject.Inject
@@ -32,10 +36,19 @@ import javax.inject.Inject
 class NotificationsUseCase @Inject constructor(
     private val notificationManager: NotificationManagerCompat,
     private val notificationActivityInitializer: NotificationActivityInitializer,
+    @PlainTextPreferences
+    private val preferences: Preferences,
 ) : NotificationsUseCase {
 
+    private val keyShowNotificationsOnboarding = "show_notifications_onboarding"
+
     override fun needToShowNotificationsOnboardingScreen(): Boolean =
-        isTiramisuOrLater() && !notificationManager.areNotificationsEnabled()
+        preferences.get(keyShowNotificationsOnboarding, true) && isTiramisuOrLater() &&
+                !notificationManager.areNotificationsEnabled()
+
+    override fun neverShowNotificationsOnboardingScreenAgain() {
+        preferences.set(keyShowNotificationsOnboarding, false)
+    }
 
     override suspend fun askForPermission(): Boolean =
         if (isTiramisuOrLater()) {

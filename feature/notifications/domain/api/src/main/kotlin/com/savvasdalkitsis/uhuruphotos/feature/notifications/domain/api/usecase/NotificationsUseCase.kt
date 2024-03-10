@@ -20,4 +20,6 @@ interface NotificationsUseCase {
     fun needToShowNotificationsOnboardingScreen(): Boolean
 
     suspend fun askForPermission(): Boolean
+
+    fun neverShowNotificationsOnboardingScreenAgain()
 }
