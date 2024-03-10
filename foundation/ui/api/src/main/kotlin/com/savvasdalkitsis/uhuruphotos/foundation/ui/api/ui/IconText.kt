@@ -25,11 +25,15 @@ import androidx.compose.material.LocalContentColor
 import androidx.compose.material.LocalTextStyle
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.R.drawable
+import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.PreviewAppTheme
 
 @Composable
 fun IconText(
@@ -41,6 +45,7 @@ fun IconText(
 ) {
     Row(
         modifier = modifier,
+        verticalAlignment = Alignment.CenterVertically
     ) {
         Icon(
             painter = painterResource(id = icon),
@@ -49,5 +54,16 @@ fun IconText(
         )
         Spacer(modifier = Modifier.width(8.dp))
         Text(text, style = style)
+    }
+}
+
+@Preview
+@Composable
+private fun IconTextPreview() {
+    PreviewAppTheme {
+        IconText(
+            icon = drawable.ic_folder,
+            text = "Some text",
+        )
     }
 }

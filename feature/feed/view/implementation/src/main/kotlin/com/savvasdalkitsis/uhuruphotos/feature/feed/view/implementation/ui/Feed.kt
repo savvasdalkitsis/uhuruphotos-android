@@ -149,6 +149,11 @@ internal fun Feed(
                         onScrollToMemory = ::scrollToCel,
                         action = action)
                 },
+                collageFooter = {
+                    FeedFooters(
+                        state = state
+                    )
+                },
                 onCelSelected = { cel ->
                     action(SelectedCel(cel))
                 },

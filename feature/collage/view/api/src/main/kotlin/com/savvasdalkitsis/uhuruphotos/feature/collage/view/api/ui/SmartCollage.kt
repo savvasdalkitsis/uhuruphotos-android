@@ -73,6 +73,7 @@ internal fun SmartCollage(
     columnCount: Int,
     gridState: SmartGridState = rememberSmartGridState(staggered = true),
     collageHeader: @Composable() (SmartGridItemScope.() -> Unit)? = null,
+    collageFooter: @Composable() (SmartGridItemScope.() -> Unit)? = null,
     onCelSelected: CelSelected,
     onCelLongPressed: (CelState) -> Unit,
     onClusterRefreshClicked: (Cluster) -> Unit,
@@ -158,6 +159,11 @@ internal fun SmartCollage(
                             onLongClick = onCelLongPressed,
                         )
                     }
+                }
+            }
+            collageFooter?.let { footer ->
+                item("collageFooter", "collageFooter", fullLine = true) {
+                    footer(this)
                 }
             }
             item("contentPaddingBottom", "contentPadding", fullLine = true) {

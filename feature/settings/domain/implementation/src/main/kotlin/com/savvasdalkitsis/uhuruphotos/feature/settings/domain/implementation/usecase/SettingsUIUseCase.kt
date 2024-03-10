@@ -87,7 +87,7 @@ internal class SettingsUIUseCase @Inject constructor(
     private val shouldShowPrecacheProgress = "shouldShowPrecacheProgress"
     private val shouldShowPrecacheProgressDefault = false
     private val shouldShowLocalSyncProgress = "shouldShowLocalSyncProgress"
-    private val shouldShowLocalSyncProgressDefault = false
+    private val shouldShowLocalSyncProgressDefault = true
     private val autoHideFeedNavOnScroll = "autoHideFeedNavOnScroll"
     private val autoHideFeedNavOnScrollDefault = true
 
