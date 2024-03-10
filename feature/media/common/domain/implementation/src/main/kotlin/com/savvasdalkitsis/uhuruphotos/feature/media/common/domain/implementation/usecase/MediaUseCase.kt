@@ -64,8 +64,6 @@ import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.api.usecase.R
 import com.savvasdalkitsis.uhuruphotos.feature.people.domain.api.usecase.PeopleUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.people.view.api.ui.state.toPerson
 import com.savvasdalkitsis.uhuruphotos.feature.user.domain.api.usecase.UserUseCase
-import com.savvasdalkitsis.uhuruphotos.feature.welcome.domain.api.usecase.WelcomeUseCase
-import com.savvasdalkitsis.uhuruphotos.feature.welcome.domain.api.usecase.flow
 import com.savvasdalkitsis.uhuruphotos.foundation.date.api.DateDisplayer
 import com.savvasdalkitsis.uhuruphotos.foundation.date.api.DateParser
 import com.savvasdalkitsis.uhuruphotos.foundation.group.api.model.Group
@@ -80,7 +78,6 @@ import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.distinctUntilChanged
-import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.map
 import org.joda.time.DateTime
 import se.ansman.dagger.auto.AutoBind
@@ -95,17 +92,13 @@ class MediaUseCase @Inject constructor(
     private val dateDisplayer: DateDisplayer,
     private val dateParser: DateParser,
     private val peopleUseCase: PeopleUseCase,
-    private val welcomeUseCase: WelcomeUseCase,
     @ApplicationContext private val context: Context,
 ) : MediaUseCase {
 
     override fun observeLocalMedia(): Flow<MediaItemsOnDevice> =
         combine(
             localMediaUseCase.observeLocalMediaItems(),
-            welcomeUseCase.flow(
-                withRemoteAccess = userUseCase.observeUser(),
-                withoutRemoteAccess = flowOf(null),
-            ),
+            userUseCase.observeUser(),
         ) { localMediaItems, user ->
             combineLocalMediaItemsWithUser(localMediaItems, user)
         }
@@ -133,10 +126,7 @@ class MediaUseCase @Inject constructor(
     override fun observeLocalAlbum(albumId: Int): Flow<MediaFolderOnDevice> =
         combine(
             localMediaUseCase.observeLocalMediaFolder(albumId),
-            welcomeUseCase.flow(
-                withRemoteAccess = userUseCase.observeUser(),
-                withoutRemoteAccess = flowOf(null),
-            ),
+            userUseCase.observeUser(),
         ) { mediaItems, user ->
             when (mediaItems) {
                 is LocalFolder.Found -> {

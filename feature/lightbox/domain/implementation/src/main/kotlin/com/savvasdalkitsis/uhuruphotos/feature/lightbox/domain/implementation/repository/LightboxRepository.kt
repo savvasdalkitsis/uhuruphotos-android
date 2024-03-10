@@ -76,9 +76,9 @@ class LightboxRepository @Inject constructor(
         },
         combine(
             localMediaUseCase.observeLocalMediaItem(value),
-            userUseCase.observeUser().filterNotNull(),
+            userUseCase.observeUser(),
         ) { item, user ->
-            item.toLightboxDetails(user.id).upsert(value.toString())
+            item.toLightboxDetails(user?.id).upsert(value.toString())
             null
         }.filterNotNull()
     )
@@ -204,7 +204,7 @@ class LightboxRepository @Inject constructor(
         height = null,
     )
 
-    private fun LocalMediaItem.toLightboxDetails(userId: Int) =
+    private fun LocalMediaItem.toLightboxDetails(userId: Int?) =
         dbLightboxDetails(id.toString()).copy(
             formattedDatetime = displayDateTime,
             lat = latLon?.first,
