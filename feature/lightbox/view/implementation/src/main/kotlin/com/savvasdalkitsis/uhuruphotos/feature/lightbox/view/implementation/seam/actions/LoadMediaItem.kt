@@ -79,10 +79,10 @@ data class LoadMediaItem(
         combine(
             observeMediaSequence()
                 .filter { it.isNotEmpty() },
-            serverUseCase.observeServerUrl(),
+            serverUseCase.observeMaybeServerUrl(),
             currentMediaId,
         ) { media, serverUrl, id ->
-            Triple(media, serverUrl, id)
+            Triple(media, serverUrl.orEmpty(), id)
         }.flatMapLatest { (media, serverUrl, id) ->
             channelFlow {
                 ShowMedia(media, id)?.let {

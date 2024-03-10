@@ -19,6 +19,7 @@ import kotlinx.coroutines.flow.Flow
 
 interface ServerUseCase {
     fun observeServerUrl(): Flow<String>
+    fun observeMaybeServerUrl(): Flow<String?>
     fun getServerUrl(): String?
     suspend fun setServerUrl(serverUrl: String)
 }
