@@ -15,12 +15,7 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.ui
 
-import androidx.compose.animation.AnimatedContent
-import androidx.compose.animation.fadeIn
-import androidx.compose.animation.fadeOut
-import androidx.compose.animation.slideInVertically
-import androidx.compose.animation.slideOutVertically
-import androidx.compose.animation.togetherWith
+import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Arrangement.spacedBy
 import androidx.compose.foundation.layout.Spacer
@@ -77,6 +72,9 @@ fun LightboxBottomActionBarEdit(
     index: Int,
     action: (LightboxAction) -> Unit,
 ) {
+    BackHandler {
+        action(HideEditOptions)
+    }
     LazyRow(
         modifier = Modifier
             .recomposeHighlighter()
