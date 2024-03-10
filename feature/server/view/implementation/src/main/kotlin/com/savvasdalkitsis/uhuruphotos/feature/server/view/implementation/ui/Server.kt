@@ -65,6 +65,7 @@ import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.IconOutlineButton
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.OkDialog
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.ToggleableButtonWithIcon
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.UpNavButton
+import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.WhatIsLibrePhotosButton
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.state.rememberCollapsibleGroupState
 
 @Composable
@@ -128,18 +129,8 @@ internal fun Server(
                             action(UrlTyped(it))
                         },
                     )
-                    OutlinedButton(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(8.dp),
-                        onClick = { action(ShowHelp) }
-                    ) {
-                        Icon(
-                            painter = painterResource(id = drawable.ic_help),
-                            contentDescription = null
-                        )
-                        Spacer(modifier = Modifier.width(8.dp))
-                        Text(stringResource(string.what_is_libre_photos))
+                    WhatIsLibrePhotosButton {
+                        action(ShowHelp)
                     }
                 }
                 Spacer(modifier = Modifier.weight(1f))

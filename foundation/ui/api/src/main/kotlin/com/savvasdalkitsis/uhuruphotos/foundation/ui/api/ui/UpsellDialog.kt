@@ -19,6 +19,10 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material.OutlinedButton
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -32,6 +36,9 @@ fun UpsellDialog(
     onNeverAgain: (() -> Unit)? = null,
     onLogin: () -> Unit,
 ) {
+    var showHelpDialog by remember {
+        mutableStateOf(false)
+    }
     MultiButtonDialog(
         title = stringResource(R.string.advanced_feature_title),
         dismissButton = {
@@ -45,19 +52,30 @@ fun UpsellDialog(
             }
         },
         onDismiss = onDismiss,
-        extraButtons = if (onNeverAgain != null) listOf {
-            OutlinedButton(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .recomposeHighlighter(),
-                onClick = onNeverAgain
-            ) {
-                Text(stringResource(R.string.do_not_show_again))
+        extraButtons = {
+            WhatIsLibrePhotosButton {
+                showHelpDialog = true
             }
-        } else emptyList(),
+            if (onNeverAgain != null) {
+                OutlinedButton(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .recomposeHighlighter(),
+                    onClick = onNeverAgain
+                ) {
+                    Text(stringResource(R.string.do_not_show_again))
+                }
+            }
+        },
         confirmButton = { LoginButton(onLogin = onLogin) },
     ) {
         Text(stringResource(R.string.advanced_feature_body))
+    }
+    if (showHelpDialog) {
+        WhatIsLibrePhotosDialog {
+            showHelpDialog = false
+            onDismiss()
+        }
     }
 }
 
@@ -67,8 +85,7 @@ private fun UpsellDialogPreview() {
     PreviewAppTheme {
         UpsellDialog(
             onDismiss = {},
-            onNeverAgain = {},
-            onLogin = {}
-        )
+            onNeverAgain = {}
+        ) {}
     }
 }

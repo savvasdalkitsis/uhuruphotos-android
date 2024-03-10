@@ -82,7 +82,6 @@ internal fun Library(
         UpsellDialog(
             onDismiss = { action(DismissUpsellDialog)},
             onNeverAgain = { action(DoNotShowUpsellAgainFrom(source)) },
-            onLogin = { action(Login) },
-        )
+        ) { action(Login) }
     }
 }

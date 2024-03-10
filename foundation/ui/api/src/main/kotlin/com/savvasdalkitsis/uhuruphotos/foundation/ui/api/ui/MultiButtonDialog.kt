@@ -29,13 +29,14 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.savvasdalkitsis.uhuruphotos.foundation.compose.api.recomposeHighlighter
 import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
+import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.layout.ReverseDirection
 
 @Composable
 fun MultiButtonDialog(
     title: String,
     onDismiss: () -> Unit,
     confirmButton: @Composable FlowRowScope.() -> Unit,
-    extraButtons: List<@Composable RowScope.()-> Unit> = emptyList(),
+    extraButtons: @Composable RowScope.()-> Unit = {},
     negativeButtonText: String = stringResource(string.no),
     dismissButton: @Composable FlowRowScope.() -> Unit = {
         OutlinedButton(
@@ -62,11 +63,16 @@ fun MultiButtonDialog(
             }
         },
         buttons = {
-            for (button in extraButtons) {
-                button()
+            ReverseDirection {
+                extraButtons()
             }
-            dismissButton()
-            confirmButton()
+            ReverseDirection {
+                dismissButton()
+            }
+
+            ReverseDirection {
+                confirmButton()
+            }
         },
     )
 }

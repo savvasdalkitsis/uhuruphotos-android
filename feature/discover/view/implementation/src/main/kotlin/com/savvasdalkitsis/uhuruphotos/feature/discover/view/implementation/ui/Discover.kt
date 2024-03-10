@@ -41,14 +41,12 @@ import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.UpsellDialog
     if (state.showLoginUpsellDialogFromPeople) {
         UpsellDialog(
             onDismiss = { action(DismissUpsellLogin) },
-            onNeverAgain = { action(DoNotShowUpsellAgain) },
-            onLogin = { action(Login) }
-        )
+            onNeverAgain = { action(DoNotShowUpsellAgain) }
+        ) { action(Login) }
     }
     if (state.showLoginUpsellDialogFromSearch) {
         UpsellDialog(
-            onDismiss = { action(DismissUpsellLogin) },
-            onLogin = { action(Login) }
-        )
+            onDismiss = { action(DismissUpsellLogin) }
+        ) { action(Login) }
     }
 }

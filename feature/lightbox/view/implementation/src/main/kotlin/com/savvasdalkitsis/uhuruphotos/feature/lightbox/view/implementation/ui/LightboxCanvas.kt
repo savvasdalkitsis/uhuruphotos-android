@@ -202,9 +202,8 @@ fun LightboxCanvas(
             }
             if (state.showUpsellDialog) {
                 UpsellDialog(
-                    onDismiss = { action(DismissUpsellDialog) },
-                    onLogin = { action(Login) }
-                )
+                    onDismiss = { action(DismissUpsellDialog) }
+                ) { action(Login) }
             }
             if (state.missingPermissions.isNotEmpty()) {
                 permissionLauncher.launch(state.missingPermissions.toTypedArray())
