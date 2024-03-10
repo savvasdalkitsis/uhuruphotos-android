@@ -32,11 +32,14 @@ import com.savvasdalkitsis.uhuruphotos.feature.site.domain.api.usecase.SiteUseCa
 import com.savvasdalkitsis.uhuruphotos.feature.upload.domain.api.model.UploadCapability
 import com.savvasdalkitsis.uhuruphotos.feature.upload.domain.api.model.UploadCapability.CanUpload
 import com.savvasdalkitsis.uhuruphotos.feature.upload.domain.api.model.UploadCapability.CannotUpload
+import com.savvasdalkitsis.uhuruphotos.feature.upload.domain.api.model.UploadCapability.NotSetUpWithAServer
 import com.savvasdalkitsis.uhuruphotos.feature.upload.domain.api.model.UploadCapability.UnableToCheck
 import com.savvasdalkitsis.uhuruphotos.feature.upload.domain.api.model.UploadItem
 import com.savvasdalkitsis.uhuruphotos.feature.upload.domain.api.usecase.UploadUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.upload.domain.api.work.UploadWorkScheduler
 import com.savvasdalkitsis.uhuruphotos.feature.user.domain.api.usecase.UserUseCase
+import com.savvasdalkitsis.uhuruphotos.feature.welcome.domain.api.usecase.WelcomeUseCase
+import com.savvasdalkitsis.uhuruphotos.feature.welcome.domain.api.usecase.get
 import com.savvasdalkitsis.uhuruphotos.foundation.log.api.log
 import com.savvasdalkitsis.uhuruphotos.foundation.log.api.runCatchingWithLog
 import com.savvasdalkitsis.uhuruphotos.foundation.result.api.SimpleResult
@@ -59,19 +62,27 @@ class UploadUseCase @Inject constructor(
     private val uploadWorkScheduler: UploadWorkScheduler,
     private val chunkedUploader: ChunkedUploader,
     private val settingsUseCase: SettingsUseCase,
+    private val welcomeUseCase: WelcomeUseCase,
 ) : UploadUseCase {
 
-    override suspend fun canUpload(): UploadCapability = siteUseCase.getSiteOptions()
-        .map {
-            when {
-                it.allowUpload -> CanUpload
-                else -> CannotUpload
-            }
-        }
-        .getOrElse {
-            log(it)
-            UnableToCheck
-        }
+    override suspend fun canUpload(): UploadCapability =
+        welcomeUseCase.get(
+            withoutRemoteAccess = { NotSetUpWithAServer },
+            withRemoteAccess = {
+                siteUseCase.getSiteOptions()
+                    .map {
+                        when {
+                            it.allowUpload -> CanUpload
+                            else -> CannotUpload
+                        }
+                    }
+                    .getOrElse {
+                        log(it)
+                        UnableToCheck
+                    }
+            },
+        )
+
 
     override suspend fun scheduleUpload(
         force: Boolean,

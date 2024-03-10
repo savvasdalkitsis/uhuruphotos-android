@@ -16,5 +16,5 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.feature.upload.domain.api.model
 
 enum class UploadCapability {
-    CanUpload, CannotUpload, UnableToCheck
+    CanUpload, CannotUpload, UnableToCheck, NotSetUpWithAServer,
 }

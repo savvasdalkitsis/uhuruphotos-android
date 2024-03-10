@@ -20,10 +20,12 @@ import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.LightboxMutation.Loading
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.LightboxMutation.ShowCannotCheckUploadStatusDialog
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.LightboxMutation.ShowCannotUploadDialog
+import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.LightboxMutation.ShowUpsellDialog
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.ui.state.LightboxState
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.ui.state.SingleMediaItemState
 import com.savvasdalkitsis.uhuruphotos.feature.upload.domain.api.model.UploadCapability.CanUpload
 import com.savvasdalkitsis.uhuruphotos.feature.upload.domain.api.model.UploadCapability.CannotUpload
+import com.savvasdalkitsis.uhuruphotos.feature.upload.domain.api.model.UploadCapability.NotSetUpWithAServer
 import com.savvasdalkitsis.uhuruphotos.feature.upload.domain.api.model.UploadCapability.UnableToCheck
 import com.savvasdalkitsis.uhuruphotos.feature.upload.domain.api.model.UploadItem
 import kotlinx.coroutines.flow.flow
@@ -40,6 +42,7 @@ data class UploadToServer(val mediaItemState: SingleMediaItemState) : LightboxAc
                 CanUpload -> uploadUseCase.scheduleUpload(items = arrayOf(UploadItem(id.value, id.contentUri)))
                 CannotUpload -> emit(ShowCannotUploadDialog)
                 UnableToCheck -> emit(ShowCannotCheckUploadStatusDialog)
+                NotSetUpWithAServer -> emit(ShowUpsellDialog(true))
             }
             emit(FinishedLoading)
         }

@@ -45,8 +45,10 @@ import com.savvasdalkitsis.uhuruphotos.feature.auth.view.api.navigation.LocalSer
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.actions.DeleteLocalKeepRemoteMediaItem
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.actions.DismissConfirmationDialogs
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.actions.DismissErrorMessage
+import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.actions.DismissUpsellDialog
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.actions.FullMediaDataLoaded
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.actions.LightboxAction
+import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.actions.Login
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.actions.RestoreMediaItem
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.actions.ShowInfo
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.actions.ToggleUI
@@ -61,6 +63,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.upload.view.api.ui.state.UploadEr
 import com.savvasdalkitsis.uhuruphotos.foundation.compose.api.recomposeHighlighter
 import com.savvasdalkitsis.uhuruphotos.foundation.image.api.ui.FullSizeImage
 import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
+import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.UpsellDialog
 import com.savvasdalkitsis.uhuruphotos.foundation.video.api.ui.Video
 import dev.shreyaspatil.permissionflow.compose.rememberPermissionFlowRequestLauncher
 
@@ -196,6 +199,12 @@ fun LightboxCanvas(
                 UploadErrorDialog(
                     mode = UploadErrorDialogMode.ERROR_CHECKING,
                 ) { action(DismissConfirmationDialogs) }
+            }
+            if (state.showUpsellDialog) {
+                UpsellDialog(
+                    onDismiss = { action(DismissUpsellDialog) },
+                    onLogin = { action(Login) }
+                )
             }
             if (state.missingPermissions.isNotEmpty()) {
                 permissionLauncher.launch(state.missingPermissions.toTypedArray())

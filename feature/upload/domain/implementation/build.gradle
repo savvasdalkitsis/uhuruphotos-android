@@ -17,6 +17,7 @@ dependencies {
             project(":feature:site:domain:api"),
             project(":feature:upload:domain:api"),
             project(":feature:user:domain:api"),
+            project(":feature:welcome:domain:api"),
             project(":foundation:initializer:api"),
             project(":foundation:log:api"),
             project(":foundation:notification:api"),

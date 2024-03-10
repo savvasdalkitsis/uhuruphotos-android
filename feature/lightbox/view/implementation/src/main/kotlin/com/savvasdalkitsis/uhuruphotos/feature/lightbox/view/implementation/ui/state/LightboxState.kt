@@ -34,6 +34,7 @@ data class LightboxState(
     val showRestorationConfirmationDialog: Boolean = false,
     val showCannotUploadDialog: Boolean = false,
     val showCannotCheckUploadStatusDialog: Boolean = false,
+    val showUpsellDialog: Boolean = false,
     val infoSheetHidden: Boolean = true,
     val showRestoreButton: Boolean = false,
     val missingPermissions: ImmutableList<String> = persistentListOf(),

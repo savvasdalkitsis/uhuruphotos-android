@@ -179,6 +179,10 @@ sealed class LightboxMutation(
     data object ShowCannotCheckUploadStatusDialog : LightboxMutation({
         it.copy(showCannotCheckUploadStatusDialog = true)
     })
+
+    data class ShowUpsellDialog(val show: Boolean) : LightboxMutation({
+        it.copy(showUpsellDialog = show)
+    })
 }
 
 private fun LightboxState.copyItem(

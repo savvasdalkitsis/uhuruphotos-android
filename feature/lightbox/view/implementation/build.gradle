@@ -52,6 +52,7 @@ dependencies {
             project(":feature:portfolio:domain:api"),
             project(":feature:search:domain:api"),
             project(":feature:search:view:api"),
+            project(":feature:server:view:api"),
             project(":feature:trash:domain:api"),
             project(":feature:upload:domain:api"),
             project(":feature:upload:view:api"),

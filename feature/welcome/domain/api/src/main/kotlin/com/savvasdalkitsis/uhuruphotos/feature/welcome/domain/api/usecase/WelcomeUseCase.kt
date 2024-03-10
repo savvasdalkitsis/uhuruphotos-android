@@ -36,3 +36,14 @@ fun <T> WelcomeUseCase.flow(
         else -> withoutRemoteAccess
     }
 }
+
+suspend fun <T> WelcomeUseCase.get(
+    withRemoteAccess: suspend () -> T,
+    withoutRemoteAccess: suspend () -> T,
+): T {
+    val welcomeStatus = getWelcomeStatus()
+    return when {
+        welcomeStatus.hasRemoteAccess -> withRemoteAccess()
+        else -> withoutRemoteAccess()
+    }
+}
