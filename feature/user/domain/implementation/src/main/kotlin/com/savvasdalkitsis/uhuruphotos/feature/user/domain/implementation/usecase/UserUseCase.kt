@@ -15,13 +15,24 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.user.domain.implementation.usecase
 
+import com.github.michaelbull.result.Err
 import com.github.michaelbull.result.Ok
 import com.github.michaelbull.result.Result
-import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.user.User
+import com.savvasdalkitsis.uhuruphotos.feature.user.domain.api.model.RemoteUserModel
+import com.savvasdalkitsis.uhuruphotos.feature.user.domain.api.model.User
+import com.savvasdalkitsis.uhuruphotos.feature.user.domain.api.model.User.LocalUser
+import com.savvasdalkitsis.uhuruphotos.feature.user.domain.api.model.User.RemoteUser
+import com.savvasdalkitsis.uhuruphotos.feature.user.domain.api.model.UserNotRemoteException
 import com.savvasdalkitsis.uhuruphotos.feature.user.domain.api.usecase.UserUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.user.domain.implementation.repository.UserRepository
+import com.savvasdalkitsis.uhuruphotos.feature.welcome.domain.api.usecase.WelcomeUseCase
+import com.savvasdalkitsis.uhuruphotos.feature.welcome.domain.api.usecase.flow
+import com.savvasdalkitsis.uhuruphotos.feature.welcome.domain.api.usecase.get
 import com.savvasdalkitsis.uhuruphotos.foundation.launchers.api.onIO
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.filterNotNull
+import kotlinx.coroutines.flow.flowOf
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onEach
 import se.ansman.dagger.auto.AutoBind
 import javax.inject.Inject
@@ -29,19 +40,33 @@ import javax.inject.Inject
 @AutoBind
 internal class UserUseCase @Inject constructor(
     private val userRepository: UserRepository,
+    private val welcomeUseCase: WelcomeUseCase,
 ) : UserUseCase {
 
-    override fun observeUser(): Flow<User?> = userRepository.observeUser()
-        .onEach { user ->
-            if (user == null) {
-                onIO { userRepository.refreshUser() }
+    override fun observeUser(): Flow<User> =
+        welcomeUseCase.flow(
+            withoutRemoteAccess = flowOf(LocalUser),
+            withRemoteAccess = userRepository.observeUser()
+                .onEach { user ->
+                    if (user == null) {
+                        onIO { userRepository.refreshUser() }
+                    }
+                }
+                .filterNotNull()
+                .map { RemoteUser(it) }
+        )
+
+    override suspend fun getRemoteUserOrRefresh(): Result<RemoteUserModel, Throwable> =
+        welcomeUseCase.get(
+            withoutRemoteAccess = { Err(UserNotRemoteException()) },
+            withRemoteAccess = {
+                userRepository.getUser()?.let { Ok(it) } ?: userRepository.refreshUser()
             }
+        )
+
+    override suspend fun refreshRemoteUser() {
+        if (welcomeUseCase.getWelcomeStatus().hasRemoteAccess) {
+            userRepository.refreshUser()
         }
-
-    override suspend fun getUserOrRefresh(): Result<User, Throwable> =
-        userRepository.getUser()?.let { Ok(it) } ?: userRepository.refreshUser()
-
-    override suspend fun refreshUser() {
-        userRepository.refreshUser()
     }
 }

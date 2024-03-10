@@ -131,7 +131,7 @@ class UploadUseCase @Inject constructor(
         progress: suspend (current: Long, total: Long) -> Unit,
     ): SimpleResult = binding {
         val mediaItem = localMediaItem(item).bind()
-        val user = userUseCase.getUserOrRefresh().bind()
+        val user = userUseCase.getRemoteUserOrRefresh().bind()
 
         if (force || !exists(mediaItem.md5, user).bind()) {
             if (force || !uploadRepository.isCompleted(item.id)) {

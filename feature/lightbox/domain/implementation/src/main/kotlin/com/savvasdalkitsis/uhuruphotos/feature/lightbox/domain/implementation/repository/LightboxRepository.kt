@@ -78,7 +78,7 @@ class LightboxRepository @Inject constructor(
             localMediaUseCase.observeLocalMediaItem(value),
             userUseCase.observeUser(),
         ) { item, user ->
-            item.toLightboxDetails(user?.id).upsert(value.toString())
+            item.toLightboxDetails(user.id).upsert(value.toString())
             null
         }.filterNotNull()
     )

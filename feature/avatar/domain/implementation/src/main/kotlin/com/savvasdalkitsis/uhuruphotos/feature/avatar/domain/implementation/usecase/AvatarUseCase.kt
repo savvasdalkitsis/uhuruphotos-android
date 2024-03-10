@@ -25,13 +25,14 @@ import com.savvasdalkitsis.uhuruphotos.feature.jobs.domain.api.model.JobStatus.F
 import com.savvasdalkitsis.uhuruphotos.feature.jobs.domain.api.model.JobStatus.InProgress
 import com.savvasdalkitsis.uhuruphotos.feature.jobs.domain.api.model.JobsStatus
 import com.savvasdalkitsis.uhuruphotos.feature.jobs.domain.api.usecase.JobsUseCase
+import com.savvasdalkitsis.uhuruphotos.feature.user.domain.api.model.User
 import com.savvasdalkitsis.uhuruphotos.feature.user.domain.api.usecase.UserUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.welcome.domain.api.usecase.WelcomeUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.welcome.domain.api.usecase.flow
 import dagger.hilt.android.scopes.ActivityRetainedScoped
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.combine
-import kotlinx.coroutines.flow.filterNotNull
+import kotlinx.coroutines.flow.filterIsInstance
 import kotlinx.coroutines.flow.map
 import se.ansman.dagger.auto.AutoBind
 import javax.inject.Inject
@@ -50,15 +51,16 @@ class AvatarUseCase @Inject constructor(
             AvatarState(syncState = jobsStatus.syncState())
         },
         withRemoteAccess = combine(
-            userUseCase.observeUser().filterNotNull(),
+            userUseCase.observeUser().filterIsInstance(User.RemoteUser::class),
             jobsUseCase.observeJobsStatusFilteredBySettings(),
             serverUseCase.observeServerUrl(),
         ) { user, jobsStatus, serverUrl ->
+            val model = user.model
             AvatarState(
-                avatarUrl = user.avatar?.let { "$serverUrl$it" },
+                avatarUrl = model.avatar?.let { "$serverUrl$it" },
                 syncState = jobsStatus.syncState(),
-                initials = user.firstName.initial() + user.lastName.initial(),
-                userFullName = "${user.firstName} ${user.lastName}",
+                initials = model.firstName.initial() + model.lastName.initial(),
+                userFullName = "${model.firstName} ${model.lastName}",
                 serverUrl = serverUrl,
             )
         },

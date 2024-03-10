@@ -92,7 +92,7 @@ class RemoteMediaUseCase @Inject constructor(
         remoteMediaRepository.getHiddenMedia()
 
     override suspend fun setMediaItemFavourite(id: String, favourite: Boolean): SimpleResult =
-        userUseCase.getUserOrRefresh().andThenTry {
+        userUseCase.getRemoteUserOrRefresh().andThenTry {
             remoteMediaRepository.setMediaItemRating(id, it.favoriteMinRating?.takeIf { favourite } ?: 0)
             remoteMediaItemWorkScheduler.scheduleMediaItemFavourite(id, favourite)
         }.simple()
@@ -258,12 +258,12 @@ class RemoteMediaUseCase @Inject constructor(
     }
 
     private suspend fun <T> withFavouriteThreshold(action: suspend (Int) -> T): Result<T, Throwable> =
-        userUseCase.getUserOrRefresh().andThenTry {
+        userUseCase.getRemoteUserOrRefresh().andThenTry {
             action(it.favoriteMinRating!!)
         }
 
     private suspend fun resultWithFavouriteThreshold(action: suspend (Int) -> SimpleResult): SimpleResult =
-        userUseCase.getUserOrRefresh().andThenTry {
+        userUseCase.getRemoteUserOrRefresh().andThenTry {
             action(it.favoriteMinRating!!).getOrThrow()
         }
 }

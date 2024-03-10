@@ -63,7 +63,7 @@ data object Load : AccountOverviewAction() {
         }
     ).onStart {
         onIO {
-            userUseCase.refreshUser()
+            userUseCase.refreshRemoteUser()
         }
     }
 }

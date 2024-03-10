@@ -28,7 +28,6 @@ import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.entities.media.DbRe
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.entities.media.DbRemoteMediaItemSummary
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.entities.media.latLng
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.extensions.isVideo
-import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.user.User
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaCollection
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaCollectionSource
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaDay
@@ -63,6 +62,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.api.model.des
 import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.api.usecase.RemoteMediaUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.people.domain.api.usecase.PeopleUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.people.view.api.ui.state.toPerson
+import com.savvasdalkitsis.uhuruphotos.feature.user.domain.api.model.User
 import com.savvasdalkitsis.uhuruphotos.feature.user.domain.api.usecase.UserUseCase
 import com.savvasdalkitsis.uhuruphotos.foundation.date.api.DateDisplayer
 import com.savvasdalkitsis.uhuruphotos.foundation.date.api.DateParser
@@ -105,15 +105,15 @@ class MediaUseCase @Inject constructor(
 
     private fun combineLocalMediaItemsWithUser(
         localMediaItems: LocalMediaItems,
-        user: User?
+        user: User
     ) = when (localMediaItems) {
         is LocalMediaItems.Found -> {
             MediaItemsOnDevice.Found(
                 primaryFolder = localMediaItems.primaryLocalMediaFolder?.let { (folder, items) ->
-                    folder to items.map { it.toMediaItem(user?.id) }
+                    folder to items.map { it.toMediaItem(user.id) }
                 },
                 mediaFolders = localMediaItems.localMediaFolders.map { (folder, items) ->
-                    folder to items.map { it.toMediaItem(user?.id) }
+                    folder to items.map { it.toMediaItem(user.id) }
                 }
             )
         }
@@ -132,7 +132,7 @@ class MediaUseCase @Inject constructor(
                 is LocalFolder.Found -> {
                     MediaFolderOnDevice.Found(
                         mediaItems.bucket.first to mediaItems.bucket.second.map {
-                            it.toMediaItem(user?.id)
+                            it.toMediaItem(user.id)
                         }
                     )
                 }
@@ -229,7 +229,7 @@ class MediaUseCase @Inject constructor(
             localMediaUseCase.observeLocalMediaItem(value),
             userUseCase.observeUser(),
         ) { item, user ->
-            item.toMediaItemDetails(user?.id)
+            item.toMediaItemDetails(user.id)
         }
 
     private fun LocalMediaItem.toMediaItemDetails(userId: Int?): MediaItemDetails =
@@ -244,7 +244,7 @@ class MediaUseCase @Inject constructor(
         )
 
     private suspend fun DbRemoteMediaItemDetails.toMediaItemDetails(): MediaItemDetails {
-        val favouriteThreshold = userUseCase.getUserOrRefresh().getOr(null)?.favoriteMinRating
+        val favouriteThreshold = userUseCase.getRemoteUserOrRefresh().getOr(null)?.favoriteMinRating
         val people = peopleUseCase.getPeopleByName().ifEmpty {
             peopleUseCase.refreshPeople()
             peopleUseCase.getPeopleByName()
@@ -351,7 +351,7 @@ class MediaUseCase @Inject constructor(
         remoteMediaUseCase.refreshFavouriteMedia()
 
     override suspend fun toMediaCollection(groups: Group<String, MediaCollectionSource>): List<MediaCollection> {
-        val favouriteThreshold = userUseCase.getUserOrRefresh()
+        val favouriteThreshold = userUseCase.getRemoteUserOrRefresh()
             .andThenTry { it.favoriteMinRating!! }
         return groups.items
             .map { (id, source) ->
@@ -361,7 +361,7 @@ class MediaUseCase @Inject constructor(
     }
 
     override suspend fun List<MediaCollectionSource>.toMediaCollections(): List<MediaCollection> {
-        val favouriteThreshold = userUseCase.getUserOrRefresh()
+        val favouriteThreshold = userUseCase.getRemoteUserOrRefresh()
             .andThenTry { it.favoriteMinRating!! }
         return groupBy { dateDisplayer.dateString(it.date) }
             .map { (date, items) ->
@@ -434,7 +434,7 @@ class MediaUseCase @Inject constructor(
     }
 
     private suspend fun <T> withFavouriteThreshold(action: suspend (Int) -> T): Result<T, Throwable> =
-        userUseCase.getUserOrRefresh().andThenTry {
+        userUseCase.getRemoteUserOrRefresh().andThenTry {
             action(it.favoriteMinRating!!)
         }
 

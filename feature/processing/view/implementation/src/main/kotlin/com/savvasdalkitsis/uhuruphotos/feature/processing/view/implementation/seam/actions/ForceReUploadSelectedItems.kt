@@ -34,7 +34,7 @@ data object ForceReUploadSelectedItems : ProcessingAction() {
         selectedItems.forEach { (item, _) ->
             uploadUseCase.markAsNotProcessing(item.id)
         }
-        userUseCase.getUserOrRefresh().onSuccess { user ->
+        userUseCase.getRemoteUserOrRefresh().onSuccess { user ->
             selectedItems.forEach { (_, md5) ->
                 try {
                     remoteMediaUseCase.deleteMediaItemNow(md5.toMediaItemHash(user.id).hash)
