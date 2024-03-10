@@ -1,0 +1,10 @@
+* New icon for empty content view
+* Option to remember choice to not allow notifications
+* Local media scan header/footer visible by default.
+* Adding 'What is LibrePhotos' button on upsell dialog
+* Pressing Back when edit options are shown dismisses them instead of navigating back
+* Local-only user fixes:
+-- Fixing not showing details in lightbox
+-- Adding upsell dialog to upload button in lightbox
+-- Not showing 'connection to server lost' banner on feed
+-- Fixing 'Share' and 'Use As' actions
