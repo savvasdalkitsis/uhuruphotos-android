@@ -1,0 +1,6 @@
+* Massive rework of the lightbox
+-- Support for very large images using subsampling
+-- User scrolls up to see details instead of a sheet
+-- Pulling down to dismiss shows the previous screen underneath
+-- Performance improvements
+* Local sync header in feed doesn't jump in and out of view for short running jobs
