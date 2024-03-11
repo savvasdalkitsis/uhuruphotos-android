@@ -192,14 +192,14 @@ class RemoteMediaUseCase @Inject constructor(
                 mediaHashes = listOf(id),
             )
         )
-        if (shouldDeleteLocally(response)) {
+        if (shouldDeleteLocallyHashed(response)) {
             remoteMediaRepository.deleteMediaItem(id)
             return true
         }
         return false
     }
 
-    private fun shouldDeleteLocally(response: Response<RemoteMediaHashOperationResponseServiceModel>) =
+    private fun shouldDeleteLocallyHashed(response: Response<RemoteMediaHashOperationResponseServiceModel>) =
         response.code() == 404 ||
                 (response.code() in 200..299 && response.body()?.status == true)
 
