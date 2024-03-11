@@ -41,6 +41,7 @@ class HeatMapNavigationTarget @Inject constructor(
             themeMode = settingsUIUseCase.observeThemeModeState(),
             route = route,
             viewModel = HeatMapViewModel::class,
+            scoped = true,
         ) { state, action ->
             HeatMap(state, action)
         }

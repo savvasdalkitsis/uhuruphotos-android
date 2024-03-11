@@ -41,6 +41,7 @@ class HomeNavigationTarget @Inject constructor(
             themeMode = settingsUIUseCase.observeThemeModeState(),
             route = route,
             viewModel = HomeViewModel::class,
+            scoped = true,
         ) { state, action ->
             Home(state, action)
         }

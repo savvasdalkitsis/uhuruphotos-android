@@ -43,6 +43,7 @@ internal class SettingsNavigationTarget @Inject constructor(
             themeMode = settingsUIUseCase.observeThemeModeState(),
             route = route,
             viewModel = SettingsViewModel::class,
+            scoped = true,
         ) { state, actions ->
             Settings(settingsViewStateController, state, actions)
         }

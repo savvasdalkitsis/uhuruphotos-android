@@ -27,6 +27,7 @@ dependencies {
             libs.retrofit.core,
             libs.retrofit.moshi,
             libs.sqldelight.coroutines,
+            libs.telephoto,
             libs.zoomable,
             project(":feature:album:auto:domain:api"),
             project(":feature:album:user:domain:api"),

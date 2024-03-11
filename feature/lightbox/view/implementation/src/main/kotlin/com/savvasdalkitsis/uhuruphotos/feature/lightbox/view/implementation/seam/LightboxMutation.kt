@@ -183,6 +183,10 @@ sealed class LightboxMutation(
     data class ShowUpsellDialog(val show: Boolean) : LightboxMutation({
         it.copy(showUpsellDialog = show)
     })
+
+    data class ShowActionsOverlay(val show: Boolean) : LightboxMutation({
+        it.copy(showActionsOverlay = show)
+    })
 }
 
 private fun LightboxState.copyItem(

@@ -41,6 +41,7 @@ internal class ServerNavigationTarget @Inject constructor(
             themeMode = settingsUIUseCase.observeThemeModeState(),
             route = route,
             viewModel = ServerViewModel::class,
+            scoped = true,
         ) { state, actions ->
             Server(state, actions)
         }

@@ -41,6 +41,7 @@ internal class HiddenPhotosNavigationTarget @Inject constructor(
             themeMode = settingsUIUseCase.observeThemeModeState(),
             route = route,
             viewModel = HiddenPhotosViewModel::class,
+            scoped = true,
         ) { state, action ->
             HiddenPhotosAlbumPage(state, action)
         }

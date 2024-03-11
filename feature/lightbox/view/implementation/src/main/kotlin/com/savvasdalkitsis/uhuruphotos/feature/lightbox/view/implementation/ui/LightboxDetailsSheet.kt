@@ -22,18 +22,10 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.MaterialTheme
-import androidx.compose.material.ModalBottomSheetState
-import androidx.compose.material.ModalBottomSheetValue
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.DisposableEffect
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.unit.dp
-import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.actions.HideInfo
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.actions.LightboxAction
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.ui.info.LightboxInfoDateTime
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.ui.info.LightboxInfoGps
@@ -45,11 +37,10 @@ import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.ui.s
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.insets.insetsBottom
 
 @Composable
-fun LightboxInfoSheet(
+fun LightboxDetailsSheet(
     modifier: Modifier = Modifier,
     state: LightboxState,
     index: Int,
-    sheetState: ModalBottomSheetState,
     action: (LightboxAction) -> Unit,
 ) {
     val mediaItem = state.media[index]
@@ -59,8 +50,6 @@ fun LightboxInfoSheet(
     ) {
         Column(
             verticalArrangement = Arrangement.spacedBy(16.dp),
-            modifier = Modifier
-                .verticalScroll(rememberScrollState())
         ) {
             Column(
                 verticalArrangement = Arrangement.spacedBy(24.dp),
@@ -77,23 +66,6 @@ fun LightboxInfoSheet(
                 LightboxInfoMetadata(mediaItem, action)
 
                 Spacer(modifier = Modifier.height(insetsBottom()))
-            }
-        }
-    }
-
-    val layoutDirection = LocalLayoutDirection.current
-    LaunchedEffect(state.infoSheetHidden, layoutDirection) {
-        when  {
-            state.infoSheetHidden -> {
-                sheetState.hide()
-            }
-            else -> sheetState.show()
-        }
-    }
-    if (sheetState.currentValue != ModalBottomSheetValue.Hidden) {
-        DisposableEffect(Unit) {
-            onDispose {
-                action(HideInfo)
             }
         }
     }

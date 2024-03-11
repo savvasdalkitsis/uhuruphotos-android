@@ -41,6 +41,7 @@ internal class UndatedNavigationTarget @Inject constructor(
             settingsUIUseCase.observeThemeModeState(),
             route,
             UndatedViewModel::class,
+            scoped = true,
         ) { state, action ->
             Undated(
                     state,

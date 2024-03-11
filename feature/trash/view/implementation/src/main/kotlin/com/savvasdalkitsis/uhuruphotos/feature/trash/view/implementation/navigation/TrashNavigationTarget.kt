@@ -40,6 +40,7 @@ internal class TrashNavigationTarget @Inject constructor(
             themeMode = settingsUIUseCase.observeThemeModeState(),
             route = route,
             viewModel = TrashViewModel::class,
+            scoped = true,
         ) { state, action ->
             TrashAlbumPage(state, action)
         }

@@ -15,30 +15,34 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.ui
 
+import androidx.compose.foundation.ScrollState
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.requiredHeight
+import androidx.compose.foundation.layout.requiredWidth
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.MaterialTheme
+import androidx.compose.material.pullrefresh.pullRefresh
+import androidx.compose.material.pullrefresh.rememberPullRefreshState
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.derivedStateOf
+import androidx.compose.runtime.MutableFloatState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.platform.LocalDensity
-import androidx.compose.ui.platform.LocalView
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import com.mxalbert.zoomable.OverZoomConfig
-import com.mxalbert.zoomable.Zoomable
-import com.mxalbert.zoomable.rememberZoomableState
+import androidx.compose.ui.unit.times
 import com.radusalagean.infobarcompose.InfoBar
 import com.radusalagean.infobarcompose.InfoBarMessage
 import com.savvasdalkitsis.uhuruphotos.feature.auth.view.api.navigation.LocalServerUrl
@@ -50,7 +54,6 @@ import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.actions.LightboxAction
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.actions.Login
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.actions.RestoreMediaItem
-import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.actions.ShowInfo
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.actions.ToggleUI
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.actions.TrashMediaItem
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.actions.UpPressed
@@ -66,148 +69,156 @@ import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.UpsellDialog
 import com.savvasdalkitsis.uhuruphotos.foundation.video.api.ui.Video
 import dev.shreyaspatil.permissionflow.compose.rememberPermissionFlowRequestLauncher
+import me.saket.telephoto.zoomable.ZoomableState
+import me.saket.telephoto.zoomable.rememberZoomableImageState
+import me.saket.telephoto.zoomable.zoomable
 
 @Composable
 fun LightboxCanvas(
     action: (LightboxAction) -> Unit,
     state: LightboxState,
     index: Int,
-    contentPadding: PaddingValues
+    contentPadding: PaddingValues,
+    scrollState: ScrollState,
+    lightboxAlpha: MutableFloatState,
+    zoomableState: ZoomableState
 ) {
-    val permissionLauncher = rememberPermissionFlowRequestLauncher()
-    val zoomState = rememberZoomableState(
-        minScale = 0.6f,
-        maxScale = 6f,
-        overZoomConfig = OverZoomConfig(1f, 4f)
-    )
-    val offset by remember {
-        // reflection call until, hopefully, this is implemented:
-        // https://github.com/mxalbert1996/Zoomable/issues/17
-        val dismissDragOffsetY = zoomState.javaClass.declaredMethods
-            .find { it.name == "getDismissDragOffsetY\$zoomable_release" }!!
-        derivedStateOf {
-            dismissDragOffsetY.invoke(zoomState) as Float
-        }
-    }
-    val density = LocalDensity.current
-    val showInfo by remember {
-        derivedStateOf {
-            with(density) { offset.toDp() < (-64).dp }
-        }
-    }
-    val navigateBack by remember {
-        derivedStateOf {
-            with(density) { offset.toDp() > 64.dp }
-        }
-    }
-
-    LaunchedEffect(showInfo) {
-        if (showInfo) {
-            action(ShowInfo)
-        }
-    }
-    val view = LocalView.current
-    LaunchedEffect(navigateBack) {
-        if (navigateBack) {
-            view.post {
-                action(UpPressed)
-            }
-        }
-    }
-    Zoomable(
-        state = zoomState,
-        onTap = { action(ToggleUI) },
-        dismissGestureEnabled = true,
+    BoxWithConstraints(
+        modifier = Modifier
+            .fillMaxSize(),
     ) {
-        Box(
+        var refreshing by remember {
+            mutableStateOf(false)
+        }
+        val refreshHeight = 48.dp
+        val refreshState = rememberPullRefreshState(
+            refreshing = refreshing,
+            onRefresh = {
+                refreshing = true
+                action(UpPressed)
+            },
+            refreshThreshold = refreshHeight,
+        )
+        lightboxAlpha.floatValue = if (refreshing) 0f else 1 - refreshState.progress
+        Column(
             modifier = Modifier
                 .fillMaxSize()
                 .background(MaterialTheme.colors.background)
                 .recomposeHighlighter()
+                .pullRefresh(refreshState)
+                .verticalScroll(scrollState)
         ) {
+            Spacer(
+                modifier = Modifier
+                    .recomposeHighlighter()
+                    .fillMaxWidth()
+                    .height(refreshState.progress * refreshHeight),
+            )
             val mediaItem = state.media[index]
             val serverUrl = LocalServerUrl.current
-            when {
-                mediaItem.id.isVideo -> Video(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .align(Alignment.Center),
-                    videoUrl = remember(serverUrl, mediaItem.id) {
-                        mediaItem.id.fullResUri(serverUrl)
-                    },
-                    videoThumbnailUrl = remember(serverUrl, mediaItem.id) {
-                        mediaItem.id.thumbnailUri(serverUrl)
-                    },
-                    play = true,
-                    onFinishedLoading = { action(FullMediaDataLoaded(mediaItem)) },
-                )
-                else -> FullSizeImage(
-                    modifier = Modifier
-                        .recomposeHighlighter()
-                        .fillMaxWidth()
-                        .align(Alignment.Center),
-                    lowResUrl = remember(serverUrl, mediaItem.id) {
-                        mediaItem.id.thumbnailUri(serverUrl)
-                    },
-                    fullResUrl = remember(serverUrl, mediaItem.id) {
-                        mediaItem.id.fullResUri(serverUrl)
-                    },
-                    onFullResImageLoaded = { action(FullMediaDataLoaded(mediaItem)) },
-                    contentScale = ContentScale.Fit,
-                    contentDescription = stringResource(string.photo),
-                )
-            }
-            Column {
-                Spacer(modifier = Modifier.height(contentPadding.calculateTopPadding()))
-                InfoBar(offeredMessage = state.errorMessage?.let {
-                    InfoBarMessage(textStringResId = it)
-                }) {
-                    action(DismissErrorMessage)
+            Box(modifier = Modifier
+                .requiredWidth(this@BoxWithConstraints.maxWidth)
+                .requiredHeight(this@BoxWithConstraints.maxHeight)
+                .fillMaxSize()
+            ) {
+                when {
+                    mediaItem.id.isVideo -> Box(modifier = Modifier
+                        .fillMaxSize()
+                        .zoomable(zoomableState,
+                            onClick = { action(ToggleUI) }
+                        )) {
+                        Video(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .align(Alignment.Center),
+                            videoUrl = remember(serverUrl, mediaItem.id) {
+                                mediaItem.id.fullResUri(serverUrl)
+                            },
+                            videoThumbnailUrl = remember(serverUrl, mediaItem.id) {
+                                mediaItem.id.thumbnailUri(serverUrl)
+                            },
+                            play = true,
+                            onFinishedLoading = { action(FullMediaDataLoaded(mediaItem)) },
+                        )
+                    }
+                    else -> FullSizeImage(
+                        modifier = Modifier
+                            .recomposeHighlighter()
+                            .fillMaxSize()
+                            .align(Alignment.Center),
+                        lowResUrl = remember(serverUrl, mediaItem.id) {
+                            mediaItem.id.thumbnailUri(serverUrl)
+                        },
+                        fullResUrl = remember(serverUrl, mediaItem.id) {
+                            mediaItem.id.fullResUri(serverUrl)
+                        },
+                        onFullResImageLoaded = { action(FullMediaDataLoaded(mediaItem)) },
+                        contentScale = ContentScale.Fit,
+                        contentDescription = stringResource(string.photo),
+                        zoomableState = rememberZoomableImageState(zoomableState),
+                        onClick = { action(ToggleUI) },
+                    )
                 }
             }
-            if (state.showTrashingConfirmationDialog) {
-                TrashPermissionDialog(
-                    mediaItemCount = 1,
-                    onDismiss = { action(DismissConfirmationDialogs) }
-                ) { action(TrashMediaItem) }
+            LightboxDetailsSheet(
+                state = state,
+                index = index,
+                action = action
+            )
+        }
+
+        Column {
+            Spacer(modifier = Modifier.height(contentPadding.calculateTopPadding()))
+            InfoBar(offeredMessage = state.errorMessage?.let {
+                InfoBarMessage(textStringResId = it)
+            }) {
+                action(DismissErrorMessage)
             }
-            if (state.showDeleteConfirmationDialog) {
-                DeletePermissionDialog(
-                    mediaItemCount = 1,
-                    onDismiss = { action(DismissConfirmationDialogs) }
-                ) { action(TrashMediaItem) }
-            }
-            if (state.showFullySyncedDeleteConfirmationDialog) {
-                DeleteFullySyncedPermissionDialog(
-                    onDismiss = { action(DismissConfirmationDialogs) },
-                    onDeleteLocalTrashRemote =  { action(TrashMediaItem) },
-                    onDeleteLocal =  { action(DeleteLocalKeepRemoteMediaItem) },
-                )
-            }
-            if (state.showRestorationConfirmationDialog) {
-                RestorePermissionDialog(
-                    mediaItemCount = 1,
-                    onDismiss = { action(DismissConfirmationDialogs) }
-                ) { action(RestoreMediaItem) }
-            }
-            if (state.showCannotUploadDialog) {
-                UploadErrorDialog(
-                    mode = UploadErrorDialogMode.NOT_ALLOWED,
-                ) { action(DismissConfirmationDialogs) }
-            }
-            if (state.showCannotCheckUploadStatusDialog) {
-                UploadErrorDialog(
-                    mode = UploadErrorDialogMode.ERROR_CHECKING,
-                ) { action(DismissConfirmationDialogs) }
-            }
-            if (state.showUpsellDialog) {
-                UpsellDialog(
-                    onDismiss = { action(DismissUpsellDialog) }
-                ) { action(Login) }
-            }
-            if (state.missingPermissions.isNotEmpty()) {
-                permissionLauncher.launch(state.missingPermissions.toTypedArray())
-            }
+        }
+
+        if (state.showTrashingConfirmationDialog) {
+            TrashPermissionDialog(
+                mediaItemCount = 1,
+                onDismiss = { action(DismissConfirmationDialogs) }
+            ) { action(TrashMediaItem) }
+        }
+        if (state.showDeleteConfirmationDialog) {
+            DeletePermissionDialog(
+                mediaItemCount = 1,
+                onDismiss = { action(DismissConfirmationDialogs) }
+            ) { action(TrashMediaItem) }
+        }
+        if (state.showFullySyncedDeleteConfirmationDialog) {
+            DeleteFullySyncedPermissionDialog(
+                onDismiss = { action(DismissConfirmationDialogs) },
+                onDeleteLocalTrashRemote =  { action(TrashMediaItem) },
+                onDeleteLocal =  { action(DeleteLocalKeepRemoteMediaItem) },
+            )
+        }
+        if (state.showRestorationConfirmationDialog) {
+            RestorePermissionDialog(
+                mediaItemCount = 1,
+                onDismiss = { action(DismissConfirmationDialogs) }
+            ) { action(RestoreMediaItem) }
+        }
+        if (state.showCannotUploadDialog) {
+            UploadErrorDialog(
+                mode = UploadErrorDialogMode.NOT_ALLOWED,
+            ) { action(DismissConfirmationDialogs) }
+        }
+        if (state.showCannotCheckUploadStatusDialog) {
+            UploadErrorDialog(
+                mode = UploadErrorDialogMode.ERROR_CHECKING,
+            ) { action(DismissConfirmationDialogs) }
+        }
+        if (state.showUpsellDialog) {
+            UpsellDialog(
+                onDismiss = { action(DismissUpsellDialog) }
+            ) { action(Login) }
+        }
+        val permissionLauncher = rememberPermissionFlowRequestLauncher()
+        if (state.missingPermissions.isNotEmpty()) {
+            permissionLauncher.launch(state.missingPermissions.toTypedArray())
         }
     }
 }

@@ -41,6 +41,7 @@ internal class FavouritesNavigationTarget @Inject constructor(
             themeMode = settingsUIUseCase.observeThemeModeState(),
             route = route,
             viewModel = FavouritesViewModel::class,
+            scoped = true,
         ) { state, action ->
             Gallery(
                 state = state,

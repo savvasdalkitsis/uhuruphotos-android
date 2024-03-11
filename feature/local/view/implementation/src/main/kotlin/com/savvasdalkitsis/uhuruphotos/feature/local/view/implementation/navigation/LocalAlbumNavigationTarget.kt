@@ -41,6 +41,7 @@ internal class LocalAlbumNavigationTarget @Inject constructor(
             themeMode = settingsUIUseCase.observeThemeModeState(),
             route = route,
             viewModel = LocalAlbumViewModel::class,
+            scoped = true,
         ) { state, action ->
             LocalAlbumPage(state, action)
         }

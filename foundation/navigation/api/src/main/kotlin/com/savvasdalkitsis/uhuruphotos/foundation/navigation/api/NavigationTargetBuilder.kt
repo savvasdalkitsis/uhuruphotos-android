@@ -28,6 +28,7 @@ interface NavigationTargetBuilder {
         themeMode: StateFlow<ThemeMode>,
         route: R,
         viewModel: KClass<VM>,
+        scoped: Boolean,
         content: @Composable (state: S, actions: (A) -> Unit) -> Unit,
     )
 }

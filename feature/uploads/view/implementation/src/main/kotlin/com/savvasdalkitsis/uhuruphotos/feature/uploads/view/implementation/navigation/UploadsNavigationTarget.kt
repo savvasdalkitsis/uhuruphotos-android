@@ -41,6 +41,7 @@ internal class UploadsNavigationTarget @Inject constructor(
             settingsUIUseCase.observeThemeModeState(),
             route,
             UploadsViewModel::class,
+            scoped = true,
         ) { state, action ->
             Uploads(
                 state,

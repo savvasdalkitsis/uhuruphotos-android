@@ -41,6 +41,7 @@ class WebLoginNavigationTarget @Inject constructor(
             themeMode = settingsUIUseCase.observeThemeModeState(),
             route = route,
             viewModel = WebLoginViewModel::class,
+            scoped = true,
         ) { state, _ ->
             WebLogin(state)
         }

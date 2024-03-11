@@ -41,6 +41,7 @@ internal class EditNavigationTarget @Inject constructor(
             themeMode = MutableStateFlow(ThemeMode.DARK_MODE),
             route = route,
             viewModel = EditViewModel::class,
+            scoped = true,
         ) { state, actions ->
             Edit(
                 state,

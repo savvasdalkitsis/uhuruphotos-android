@@ -22,10 +22,14 @@ import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
+import androidx.lifecycle.HasDefaultViewModelProviderFactory
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelStoreOwner
 import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.viewmodel.CreationExtras
 import androidx.lifecycle.viewmodel.compose.LocalViewModelStoreOwner
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.savvasdalkitsis.uhuruphotos.foundation.log.api.log
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.NavigationRoute
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.NavigationTargetBuilder
@@ -34,6 +38,7 @@ import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.AppTheme
 import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.ThemeMode
 import com.sebaslogen.resaca.ScopedViewModelContainer
 import com.sebaslogen.resaca.generateKeysAndObserveLifecycle
+import com.sebaslogen.resaca.hilt.createHiltViewModelFactory
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.cancelChildren
 import kotlinx.coroutines.flow.StateFlow
@@ -49,9 +54,14 @@ class NavigationTargetBuilder @Inject constructor() : NavigationTargetBuilder {
         themeMode: StateFlow<ThemeMode>,
         route: R,
         viewModel: KClass<VM>,
+        scoped: Boolean,
         content: @Composable (state: S, actions: (A) -> Unit) -> Unit,
     ) {
-        val model: VM = hiltViewModelScoped(route.toString(), viewModel)
+        val model: VM = if (scoped) {
+            hiltViewModelScoped(route.toString(), viewModel)
+        } else {
+            hiltViewModel(route.toString(), viewModel)
+        }
 
         val keyboard = LocalSoftwareKeyboardController.current
         DisposableEffect(route) {
@@ -73,6 +83,33 @@ class NavigationTargetBuilder @Inject constructor() : NavigationTargetBuilder {
             content(state, model::action)
         }
     }
+
+    @Composable
+    private fun <VM : ViewModel> hiltViewModel(
+        key: String? = null,
+        clazz: KClass<VM>,
+        viewModelStoreOwner: ViewModelStoreOwner = checkNotNull(LocalViewModelStoreOwner.current) {
+            "No ViewModelStoreOwner was provided via LocalViewModelStoreOwner"
+        },
+    ): VM {
+        val factory = createHiltViewModelFactory(viewModelStoreOwner)
+        return viewModel(key, factory, clazz)
+    }
+
+    @Composable
+    private fun <VM : ViewModel> viewModel(
+        key: String? = null,
+        factory: ViewModelProvider.Factory? = null,
+        clazz: KClass<VM>,
+        viewModelStoreOwner: ViewModelStoreOwner = checkNotNull(LocalViewModelStoreOwner.current) {
+            "No ViewModelStoreOwner was provided via LocalViewModelStoreOwner"
+        },
+        extras: CreationExtras = if (viewModelStoreOwner is HasDefaultViewModelProviderFactory) {
+            viewModelStoreOwner.defaultViewModelCreationExtras
+        } else {
+            CreationExtras.Empty
+        }
+    ): VM = viewModel(clazz.java, viewModelStoreOwner, key, factory, extras)
 
     @Composable
     private fun <T : ViewModel> hiltViewModelScoped(key: Any? = null, clazz: KClass<T>, defaultArguments: Bundle = Bundle.EMPTY): T {

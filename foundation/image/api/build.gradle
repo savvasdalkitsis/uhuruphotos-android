@@ -20,6 +20,7 @@ dependencies {
             libs.coil.gif,
             libs.coil.video,
             libs.hilt,
+            libs.telephoto,
             libs.videocache,
     )
 }

@@ -41,6 +41,7 @@ internal class SearchNavigationTarget @Inject constructor(
             settingsUIUseCase.observeThemeModeState(),
             route,
             SearchViewModel::class,
+            scoped = true,
         ) { state, action ->
             Search(
                 state,

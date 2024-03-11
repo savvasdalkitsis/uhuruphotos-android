@@ -41,6 +41,7 @@ class PeopleNavigationTarget @Inject constructor(
             themeMode = settingsUIUseCase.observeThemeModeState(),
             route = route,
             viewModel = PeopleViewModel::class,
+            scoped = true,
         ) { state, actions ->
             People(state, actions)
         }

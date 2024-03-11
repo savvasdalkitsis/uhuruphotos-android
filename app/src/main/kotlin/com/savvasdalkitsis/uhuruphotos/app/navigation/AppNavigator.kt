@@ -45,9 +45,12 @@ import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.NavigationRoute
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.NavigationTargetRegistry
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.Navigator
 import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.window.LocalSystemUiController
+import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.LocalScreenshotState
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.implementation.usecase.UiUseCase
 import com.savvasdalkitsis.uhuruphotos.foundation.video.api.ExoplayerProvider
 import com.savvasdalkitsis.uhuruphotos.foundation.video.api.LocalExoPlayerProvider
+import com.smarttoolfactory.screenshot.ScreenshotBox
+import com.smarttoolfactory.screenshot.rememberScreenshotState
 import javax.inject.Inject
 
 class AppNavigator @Inject constructor(
@@ -76,6 +79,7 @@ class AppNavigator @Inject constructor(
         val animateVideoThumbnails = settingsUIUseCase.observeAnimateVideoThumbnails().collectAsState(
             initial = true
         )
+        val screenshotState = rememberScreenshotState()
         CompositionLocalProvider(
             LocalExoPlayerProvider provides exoplayerProvider,
             LocalAnimatedVideoThumbnails provides animateVideoThumbnails.value,
@@ -85,14 +89,19 @@ class AppNavigator @Inject constructor(
             LocalThumbnailWithNetworkCacheImageLoader provides thumbnailImageWithNetworkCacheSupportLoader,
             LocalNavigator provides navigator,
             LocalServerUrl provides serverUseCase.getServerUrl(),
+            LocalScreenshotState provides screenshotState,
         ) {
-            NodeHost(integrationPoint = integrationPoint) { buildContext ->
-                val backStack: BackStack<NavigationRoute> = BackStack(
-                    initialElement = HomeNavigationRoute,
-                    savedStateMap = buildContext.savedStateMap,
-                )
-                navigator.backStack = backStack
-                NavigationTree(buildContext, navigationRegistry, backStack)
+            ScreenshotBox(screenshotState = screenshotState) {
+                NodeHost(
+                    integrationPoint = integrationPoint,
+                ) { buildContext ->
+                    val backStack: BackStack<NavigationRoute> = BackStack(
+                        initialElement = HomeNavigationRoute,
+                        savedStateMap = buildContext.savedStateMap,
+                    )
+                    navigator.backStack = backStack
+                    NavigationTree(buildContext, navigationRegistry, backStack)
+                }
             }
         }
         LaunchedEffect(Unit) {

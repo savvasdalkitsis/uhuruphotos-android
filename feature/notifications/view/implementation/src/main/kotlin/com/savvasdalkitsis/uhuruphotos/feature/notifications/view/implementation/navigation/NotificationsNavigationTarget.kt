@@ -41,6 +41,7 @@ internal class NotificationsNavigationTarget @Inject constructor(
             settingsUIUseCase.observeThemeModeState(),
             route,
             NotificationsViewModel::class,
+            scoped = true,
         ) { state, action ->
             Notifications(
                     state,

@@ -41,6 +41,7 @@ internal class AutoAlbumNavigationTarget @Inject constructor(
             themeMode = settingsUIUseCase.observeThemeModeState(),
             route = route,
             viewModel = AutoAlbumViewModel::class,
+            scoped = true,
         ) { state, action ->
             Gallery(
                 state = state,

@@ -32,9 +32,11 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.ExperimentalComposeApi
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
@@ -51,13 +53,16 @@ import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.state.Ce
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.state.CelState
 import com.savvasdalkitsis.uhuruphotos.foundation.compose.api.recomposeHighlighter
 import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
+import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.LocalScreenshotState
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.grid.SmartGrid
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.grid.SmartGridItemScope
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.grid.SmartGridScrollbarThumb
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.grid.SmartGridState
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.grid.rememberSmartGridState
 import kotlinx.collections.immutable.ImmutableList
+import kotlinx.coroutines.launch
 
+@OptIn(ExperimentalComposeApi::class)
 @Composable
 internal fun SmartCollage(
     modifier: Modifier = Modifier,
@@ -144,10 +149,17 @@ internal fun SmartCollage(
                             maintainAspectRatio -> cel.mediaItem.ratio
                             else -> 1f
                         }
+                        val screenshotState = LocalScreenshotState.current
+                        val scope = rememberCoroutineScope()
                         Cel(
                             modifier = Modifier.animateItemPlacement(),
                             state = cel,
-                            onSelected = onCelSelected,
+                            onSelected = {
+                                scope.launch {
+                                    screenshotState.capture()
+                                    onCelSelected(cel)
+                                }
+                            },
                             aspectRatio = aspectRatio,
                             contentScale = when {
                                 maintainAspectRatio -> ContentScale.FillBounds

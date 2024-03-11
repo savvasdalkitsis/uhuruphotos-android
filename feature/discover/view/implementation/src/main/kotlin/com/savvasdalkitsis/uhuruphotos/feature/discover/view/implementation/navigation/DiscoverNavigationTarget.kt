@@ -45,6 +45,7 @@ class DiscoverNavigationTarget @Inject constructor(
             themeMode = settingsUIUseCase.observeThemeModeState(),
             route = route,
             viewModel = DiscoverViewModel::class,
+            scoped = true,
         ) { state, actions ->
             DiscoverPage(
                 state.first,

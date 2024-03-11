@@ -41,6 +41,7 @@ internal class ProcessingNavigationTarget @Inject constructor(
             settingsUIUseCase.observeThemeModeState(),
             route,
             ProcessingViewModel::class,
+            scoped = true,
         ) { state, action ->
             Processing(
                 state,

@@ -49,7 +49,7 @@ fun SwipeRefresh(
                 .align(Alignment.TopCenter)
                 .padding(indicatorPadding),
             refreshing = isRefreshing,
-            state = refreshState
+            state = refreshState,
         )
     }
 }

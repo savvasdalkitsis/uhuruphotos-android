@@ -46,6 +46,7 @@ class LibraryNavigationTarget @Inject constructor(
             themeMode = settingsUIUseCase.observeThemeModeState(),
             route = route,
             viewModel = LibraryViewModel::class,
+            scoped = true,
         ) { state, actions ->
             Library(
                 state = state.first,

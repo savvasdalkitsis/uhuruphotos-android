@@ -41,6 +41,7 @@ internal class WelcomeNavigationTarget @Inject constructor(
             settingsUIUseCase.observeThemeModeState(),
             route,
             WelcomeViewModel::class,
+            scoped = true,
         ) { state, action ->
             Welcome(
                 state = state,

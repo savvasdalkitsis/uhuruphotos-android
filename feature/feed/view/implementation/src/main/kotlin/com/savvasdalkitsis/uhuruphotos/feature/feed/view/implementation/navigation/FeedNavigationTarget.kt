@@ -46,6 +46,7 @@ internal class FeedNavigationTarget @Inject constructor(
             themeMode = settingsUIUseCase.observeThemeModeState(),
             route = route,
             viewModel = FeedViewModel::class,
+            scoped = false,
         ) { state, actions ->
             Feed(
                 state.first,

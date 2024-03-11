@@ -41,6 +41,7 @@ internal class VideosNavigationTarget @Inject constructor(
             settingsUIUseCase.observeThemeModeState(),
             route,
             VideosViewModel::class,
+            scoped = true,
         ) { state, action ->
             Videos(
                     state,

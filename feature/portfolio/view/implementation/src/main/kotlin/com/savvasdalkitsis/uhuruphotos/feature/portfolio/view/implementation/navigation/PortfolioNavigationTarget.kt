@@ -41,6 +41,7 @@ internal class PortfolioNavigationTarget @Inject constructor(
             settingsUIUseCase.observeThemeModeState(),
             route,
             PortfolioViewModel::class,
+            scoped = true,
         ) { state, action ->
             Portfolio(
                     state,

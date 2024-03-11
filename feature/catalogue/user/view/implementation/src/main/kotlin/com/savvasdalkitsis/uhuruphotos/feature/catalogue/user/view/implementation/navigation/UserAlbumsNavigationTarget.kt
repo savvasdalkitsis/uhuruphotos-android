@@ -41,6 +41,7 @@ class UserAlbumsNavigationTarget @Inject constructor(
             themeMode = settingsUIUseCase.observeThemeModeState(),
             route = route,
             viewModel = UserAlbumsViewModel::class,
+            scoped = true,
         ) { state, actions ->
             UserAlbums(
                 state = state,

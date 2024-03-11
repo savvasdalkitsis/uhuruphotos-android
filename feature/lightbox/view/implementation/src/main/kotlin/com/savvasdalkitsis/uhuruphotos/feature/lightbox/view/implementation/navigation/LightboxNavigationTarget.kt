@@ -41,6 +41,7 @@ class LightboxNavigationTarget @Inject constructor(
             themeMode = MutableStateFlow(ThemeMode.DARK_MODE),
             route = route,
             viewModel = LightboxViewModel::class,
+            scoped = true,
         ) { state, actions ->
             Lightbox(state, actions)
         }
