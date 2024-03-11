@@ -56,6 +56,8 @@ interface RemoteMediaUseCase {
 
     fun trashMediaItem(id: String)
 
+    suspend fun trashMediaItemNow(id: String): Boolean
+
     fun deleteMediaItems(vararg ids: String)
 
     suspend fun deleteMediaItemNow(id: String): Boolean

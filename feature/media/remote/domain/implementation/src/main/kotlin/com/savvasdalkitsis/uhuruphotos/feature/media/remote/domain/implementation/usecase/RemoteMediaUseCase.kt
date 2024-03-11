@@ -36,6 +36,8 @@ import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.implementatio
 import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.implementation.service.RemoteMediaService
 import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.implementation.service.model.RemoteMediaHashOperationResponseServiceModel
 import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.implementation.service.model.RemoteMediaItemDeleteRequestServiceModel
+import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.implementation.service.model.RemoteMediaItemDeletedRequestServiceModel
+import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.implementation.service.model.RemoteMediaOperationResponseServiceModel
 import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.implementation.worker.RemoteMediaItemWorkScheduler
 import com.savvasdalkitsis.uhuruphotos.feature.settings.domain.api.usecase.SettingsUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.user.domain.api.usecase.UserUseCase
@@ -153,6 +155,30 @@ class RemoteMediaUseCase @Inject constructor(
     override fun trashMediaItem(id: String) {
         remoteMediaItemWorkScheduler.scheduleMediaItemTrashing(id)
     }
+
+    override suspend fun trashMediaItemNow(id: String): Boolean {
+        val response = remoteMediaService.setMediaItemDeleted(
+            RemoteMediaItemDeletedRequestServiceModel(
+                mediaHashes = listOf(id),
+                deleted = true,
+            )
+        )
+        return if (shouldTrashLocally(response)) {
+            remoteMediaRepository.trashMediaItem(id)
+            true
+        } else if (shouldDeleteLocally(response)) {
+            remoteMediaRepository.deleteMediaItem(id)
+            true
+        } else {
+            false
+        }
+    }
+
+    private fun shouldTrashLocally(response: Response<RemoteMediaOperationResponseServiceModel>) =
+        response.code() in 200..299 && response.body()?.status == true
+
+    private fun shouldDeleteLocally(response: Response<RemoteMediaOperationResponseServiceModel>) =
+        response.code() == 404
 
     override fun deleteMediaItems(vararg ids: String) {
         for (id in ids) {

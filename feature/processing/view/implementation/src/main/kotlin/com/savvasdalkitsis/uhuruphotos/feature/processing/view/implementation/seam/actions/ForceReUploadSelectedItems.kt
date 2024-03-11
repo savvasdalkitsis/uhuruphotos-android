@@ -37,7 +37,9 @@ data object ForceReUploadSelectedItems : ProcessingAction() {
         userUseCase.getRemoteUserOrRefresh().onSuccess { user ->
             selectedItems.forEach { (_, md5) ->
                 try {
-                    remoteMediaUseCase.deleteMediaItemNow(md5.toMediaItemHash(user.id).hash)
+                    val id = md5.toMediaItemHash(user.id).hash
+                    remoteMediaUseCase.trashMediaItemNow(id)
+                    remoteMediaUseCase.deleteMediaItemNow(id)
                 } catch (e: Exception) {
                     log(e)
                 }
