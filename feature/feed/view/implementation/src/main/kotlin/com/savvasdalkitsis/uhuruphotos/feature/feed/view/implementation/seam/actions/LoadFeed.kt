@@ -91,7 +91,7 @@ data object LoadFeed : FeedAction() {
     private fun FeedActionsContext.localMediaSyncStatus() =
         jobsUseCase.observeJobsStatusFilteredBySettings().map { it.jobs[Job.LOCAL_MEDIA_SYNC] }.map {
             ShowLocalMediaSyncRunning(it == JobStatus.Queued || it is JobStatus.InProgress)
-        }
+        }.debounce(4000)
 
     private fun FeedActionsContext.localMediaPermissionHeader() =
         mediaUseCase.observeLocalMedia()
