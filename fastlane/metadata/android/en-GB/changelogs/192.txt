@@ -1,0 +1,3 @@
+* Fixing cel move animations in galleries and feed
+* Fixing loading low res image in lightbox until full one is downloaded
+* Fixing issue with fling gestures in lightbox
