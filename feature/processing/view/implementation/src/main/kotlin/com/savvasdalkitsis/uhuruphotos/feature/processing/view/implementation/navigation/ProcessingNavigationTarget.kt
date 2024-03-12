@@ -15,38 +15,22 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.processing.view.implementation.navigation
 
-import androidx.compose.runtime.Composable
 import com.savvasdalkitsis.uhuruphotos.feature.processing.view.api.navigation.ProcessingNavigationRoute
 import com.savvasdalkitsis.uhuruphotos.feature.processing.view.implementation.ui.Processing
 import com.savvasdalkitsis.uhuruphotos.feature.processing.view.implementation.viewmodel.ProcessingViewModel
-import com.savvasdalkitsis.uhuruphotos.feature.settings.domain.api.usecase.SettingsUIUseCase
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.NavigationTarget
-import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.NavigationTargetBuilder
-import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.NavigationTargetRegistry
+import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.ViewModelNavigationTarget
 import se.ansman.dagger.auto.AutoInitialize
 import javax.inject.Inject
 import javax.inject.Singleton
 
 @AutoInitialize
 @Singleton
-internal class ProcessingNavigationTarget @Inject constructor(
-    private val settingsUIUseCase: SettingsUIUseCase,
-    private val navigationTargetBuilder: NavigationTargetBuilder,
-    registry: NavigationTargetRegistry,
-) : NavigationTarget<ProcessingNavigationRoute>(ProcessingNavigationRoute::class, registry) {
-
-    @Composable
-    override fun View(route: ProcessingNavigationRoute) = with(navigationTargetBuilder) {
-        ViewModelView(
-            settingsUIUseCase.observeThemeModeState(),
-            route,
-            ProcessingViewModel::class,
-            scoped = true,
-        ) { state, action ->
-            Processing(
-                state,
-                action,
-            )
-        }
+class ProcessingNavigationTarget @Inject constructor(
+) : NavigationTarget<ProcessingNavigationRoute> by ViewModelNavigationTarget(
+    ProcessingViewModel::class,
+    ProcessingNavigationRoute::class,
+    view = { state, action ->
+        Processing(state, action)
     }
-}
+)

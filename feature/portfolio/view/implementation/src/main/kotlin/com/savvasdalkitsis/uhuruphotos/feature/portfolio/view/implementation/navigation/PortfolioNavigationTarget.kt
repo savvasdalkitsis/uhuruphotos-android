@@ -15,38 +15,22 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.portfolio.view.implementation.navigation
 
-import androidx.compose.runtime.Composable
 import com.savvasdalkitsis.uhuruphotos.feature.portfolio.view.api.navigation.PortfolioNavigationRoute
 import com.savvasdalkitsis.uhuruphotos.feature.portfolio.view.implementation.ui.Portfolio
 import com.savvasdalkitsis.uhuruphotos.feature.portfolio.view.implementation.viewmodel.PortfolioViewModel
-import com.savvasdalkitsis.uhuruphotos.feature.settings.domain.api.usecase.SettingsUIUseCase
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.NavigationTarget
-import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.NavigationTargetBuilder
-import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.NavigationTargetRegistry
+import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.ViewModelNavigationTarget
 import se.ansman.dagger.auto.AutoInitialize
 import javax.inject.Inject
 import javax.inject.Singleton
 
 @AutoInitialize
 @Singleton
-internal class PortfolioNavigationTarget @Inject constructor(
-    private val settingsUIUseCase: SettingsUIUseCase,
-    private val navigationTargetBuilder: NavigationTargetBuilder,
-    registry: NavigationTargetRegistry,
-) : NavigationTarget<PortfolioNavigationRoute>(PortfolioNavigationRoute::class, registry) {
-
-    @Composable
-    override fun View(route: PortfolioNavigationRoute) = with(navigationTargetBuilder) {
-        ViewModelView(
-            settingsUIUseCase.observeThemeModeState(),
-            route,
-            PortfolioViewModel::class,
-            scoped = true,
-        ) { state, action ->
-            Portfolio(
-                    state,
-                    action,
-            )
-        }
+class PortfolioNavigationTarget @Inject constructor(
+) : NavigationTarget<PortfolioNavigationRoute> by ViewModelNavigationTarget(
+    PortfolioViewModel::class,
+    PortfolioNavigationRoute::class,
+    view = { state, action ->
+        Portfolio(state, action)
     }
-}
+)

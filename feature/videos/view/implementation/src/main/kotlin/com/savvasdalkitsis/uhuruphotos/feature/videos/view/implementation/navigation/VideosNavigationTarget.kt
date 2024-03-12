@@ -15,38 +15,22 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.videos.view.implementation.navigation
 
-import androidx.compose.runtime.Composable
-import com.savvasdalkitsis.uhuruphotos.feature.settings.domain.api.usecase.SettingsUIUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.videos.view.api.navigation.VideosNavigationRoute
 import com.savvasdalkitsis.uhuruphotos.feature.videos.view.implementation.ui.Videos
 import com.savvasdalkitsis.uhuruphotos.feature.videos.view.implementation.viewmodel.VideosViewModel
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.NavigationTarget
-import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.NavigationTargetBuilder
-import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.NavigationTargetRegistry
+import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.ViewModelNavigationTarget
 import se.ansman.dagger.auto.AutoInitialize
 import javax.inject.Inject
 import javax.inject.Singleton
 
 @AutoInitialize
 @Singleton
-internal class VideosNavigationTarget @Inject constructor(
-    private val settingsUIUseCase: SettingsUIUseCase,
-    private val navigationTargetBuilder: NavigationTargetBuilder,
-    registry: NavigationTargetRegistry,
-) : NavigationTarget<VideosNavigationRoute>(VideosNavigationRoute::class, registry) {
-
-    @Composable
-    override fun View(route: VideosNavigationRoute) = with(navigationTargetBuilder) {
-        ViewModelView(
-            settingsUIUseCase.observeThemeModeState(),
-            route,
-            VideosViewModel::class,
-            scoped = true,
-        ) { state, action ->
-            Videos(
-                    state,
-                    action,
-            )
-        }
+class VideosNavigationTarget @Inject constructor(
+) : NavigationTarget<VideosNavigationRoute> by ViewModelNavigationTarget(
+    VideosViewModel::class,
+    VideosNavigationRoute::class,
+    view = { state, action ->
+        Videos(state, action)
     }
-}
+)

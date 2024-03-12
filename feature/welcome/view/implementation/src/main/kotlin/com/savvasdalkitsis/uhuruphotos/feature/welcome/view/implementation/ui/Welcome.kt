@@ -45,6 +45,7 @@ import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.R.drawable
 import com.savvasdalkitsis.uhuruphotos.foundation.permissions.api.ui.PermissionsState
 import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
 import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.PreviewAppTheme
+import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.ThemeMode
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.ActionIcon
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.CommonScaffold
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.FullLoading
@@ -126,7 +127,7 @@ private fun WelcomePreview(@PreviewParameter(WelcomePreviews::class) state: Welc
 @Preview
 @Composable
 private fun WelcomePreviewDark(@PreviewParameter(WelcomePreviews::class) state: WelcomeState) {
-    PreviewAppTheme(darkTheme = true) {
+    PreviewAppTheme(theme = ThemeMode.DARK_MODE) {
         Welcome(
             state = state,
         ) {}

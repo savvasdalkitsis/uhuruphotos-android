@@ -15,37 +15,22 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.{{cookiecutter.project_slug}}.view.implementation.navigation
 
-import androidx.compose.runtime.Composable
 import com.savvasdalkitsis.uhuruphotos.feature.{{cookiecutter.project_slug}}.view.api.navigation.{{cookiecutter.project_slug.capitalize()}}NavigationRoute
-import com.savvasdalkitsis.uhuruphotos.feature.{{cookiecutter.project_slug}}.view.implementation.viewmodel.{{cookiecutter.project_slug.capitalize()}}ViewModel
 import com.savvasdalkitsis.uhuruphotos.feature.{{cookiecutter.project_slug}}.view.implementation.ui.{{cookiecutter.project_slug.capitalize()}}
-import com.savvasdalkitsis.uhuruphotos.feature.settings.domain.api.usecase.SettingsUIUseCase
+import com.savvasdalkitsis.uhuruphotos.feature.{{cookiecutter.project_slug}}.view.implementation.viewmodel.{{cookiecutter.project_slug.capitalize()}}ViewModel
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.NavigationTarget
-import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.NavigationTargetBuilder
-import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.NavigationTargetRegistry
+import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.ViewModelNavigationTarget
 import se.ansman.dagger.auto.AutoInitialize
 import javax.inject.Inject
 import javax.inject.Singleton
 
 @AutoInitialize
 @Singleton
-internal class {{cookiecutter.project_slug.capitalize()}}NavigationTarget @Inject constructor(
-    private val settingsUIUseCase: SettingsUIUseCase,
-    private val navigationTargetBuilder: NavigationTargetBuilder,
-    registry: NavigationTargetRegistry,
-) : NavigationTarget<{{cookiecutter.project_slug.capitalize()}}NavigationRoute>({{cookiecutter.project_slug.capitalize()}}NavigationRoute::class, registry) {
-
-    @Composable
-    override fun View(route: {{cookiecutter.project_slug.capitalize()}}NavigationRoute) = with(navigationTargetBuilder) {
-        ViewModelView(
-            settingsUIUseCase.observeThemeModeState(),
-            route,
-            {{cookiecutter.project_slug.capitalize()}}ViewModel::class,
-        ) { state, action ->
-            {{cookiecutter.project_slug.capitalize()}}(
-                    state,
-                    action,
-            )
-        }
+class {{cookiecutter.project_slug.capitalize()}}NavigationTarget @Inject constructor(
+) : NavigationTarget<{{cookiecutter.project_slug.capitalize()}}NavigationRoute> by ViewModelNavigationTarget(
+    {{cookiecutter.project_slug.capitalize()}}ViewModel::class,
+    {{cookiecutter.project_slug.capitalize()}}NavigationRoute::class,
+    view = { state, action ->
+        {{cookiecutter.project_slug.capitalize()}}(state, action)
     }
-}
+)

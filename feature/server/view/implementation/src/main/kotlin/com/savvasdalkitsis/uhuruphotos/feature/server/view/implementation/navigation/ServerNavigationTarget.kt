@@ -15,35 +15,22 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.server.view.implementation.navigation
 
-import androidx.compose.runtime.Composable
 import com.savvasdalkitsis.uhuruphotos.feature.server.view.api.navigation.ServerNavigationRoute
 import com.savvasdalkitsis.uhuruphotos.feature.server.view.implementation.ui.Server
 import com.savvasdalkitsis.uhuruphotos.feature.server.view.implementation.viewmodel.ServerViewModel
-import com.savvasdalkitsis.uhuruphotos.feature.settings.domain.api.usecase.SettingsUIUseCase
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.NavigationTarget
-import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.NavigationTargetBuilder
-import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.NavigationTargetRegistry
+import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.ViewModelNavigationTarget
 import se.ansman.dagger.auto.AutoInitialize
 import javax.inject.Inject
 import javax.inject.Singleton
 
 @AutoInitialize
 @Singleton
-internal class ServerNavigationTarget @Inject constructor(
-    registry: NavigationTargetRegistry,
-    private val settingsUIUseCase: SettingsUIUseCase,
-    private val navigationTargetBuilder: NavigationTargetBuilder,
-) : NavigationTarget<ServerNavigationRoute>(ServerNavigationRoute::class, registry) {
-
-    @Composable
-    override fun View(route: ServerNavigationRoute) = with(navigationTargetBuilder) {
-        ViewModelView(
-            themeMode = settingsUIUseCase.observeThemeModeState(),
-            route = route,
-            viewModel = ServerViewModel::class,
-            scoped = true,
-        ) { state, actions ->
-            Server(state, actions)
-        }
+class ServerNavigationTarget @Inject constructor(
+) : NavigationTarget<ServerNavigationRoute> by ViewModelNavigationTarget(
+    ServerViewModel::class,
+    ServerNavigationRoute::class,
+    view = { state, action ->
+        Server(state, action)
     }
-}
+)

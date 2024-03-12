@@ -15,14 +15,11 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.home.view.implementation.navigation
 
-import androidx.compose.runtime.Composable
 import com.savvasdalkitsis.uhuruphotos.feature.home.view.api.navigation.HomeNavigationRoute
 import com.savvasdalkitsis.uhuruphotos.feature.home.view.implementation.ui.Home
 import com.savvasdalkitsis.uhuruphotos.feature.home.view.implementation.viewmodel.HomeViewModel
-import com.savvasdalkitsis.uhuruphotos.feature.settings.domain.api.usecase.SettingsUIUseCase
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.NavigationTarget
-import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.NavigationTargetBuilder
-import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.NavigationTargetRegistry
+import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.ViewModelNavigationTarget
 import se.ansman.dagger.auto.AutoInitialize
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -30,20 +27,10 @@ import javax.inject.Singleton
 @AutoInitialize
 @Singleton
 class HomeNavigationTarget @Inject constructor(
-    registry: NavigationTargetRegistry,
-    private val settingsUIUseCase: SettingsUIUseCase,
-    private val navigationTargetBuilder: NavigationTargetBuilder,
-) : NavigationTarget<HomeNavigationRoute>(HomeNavigationRoute::class, registry) {
-
-    @Composable
-    override fun View(route: HomeNavigationRoute) = with(navigationTargetBuilder) {
-        ViewModelView(
-            themeMode = settingsUIUseCase.observeThemeModeState(),
-            route = route,
-            viewModel = HomeViewModel::class,
-            scoped = true,
-        ) { state, action ->
-            Home(state, action)
-        }
+) : NavigationTarget<HomeNavigationRoute> by ViewModelNavigationTarget(
+    HomeViewModel::class,
+    HomeNavigationRoute::class,
+    view = { state, action ->
+        Home(state, action)
     }
-}
+)

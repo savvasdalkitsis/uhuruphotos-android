@@ -30,8 +30,9 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
 import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.R
-import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.AppTheme
+import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.ContentTheme
 import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.CustomColors
+import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.ThemeMode
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.DynamicIcon
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.TextWithIcon
 
@@ -43,7 +44,7 @@ internal fun RowScope.WelcomeUseCase(
     tint: Color? = null,
     onClick: () -> Unit,
 ) {
-    AppTheme(darkTheme = false) {
+    ContentTheme(theme = ThemeMode.LIGHT_MODE) {
         Card(
             modifier = Modifier
                 .weight(1f)

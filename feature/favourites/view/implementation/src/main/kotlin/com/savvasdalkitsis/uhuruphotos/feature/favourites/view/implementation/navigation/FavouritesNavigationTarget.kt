@@ -15,38 +15,22 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.favourites.view.implementation.navigation
 
-import androidx.compose.runtime.Composable
 import com.savvasdalkitsis.uhuruphotos.feature.favourites.view.api.navigation.FavouritesNavigationRoute
 import com.savvasdalkitsis.uhuruphotos.feature.favourites.view.implementation.viewmodel.FavouritesViewModel
 import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.ui.Gallery
-import com.savvasdalkitsis.uhuruphotos.feature.settings.domain.api.usecase.SettingsUIUseCase
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.NavigationTarget
-import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.NavigationTargetBuilder
-import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.NavigationTargetRegistry
+import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.ViewModelNavigationTarget
 import se.ansman.dagger.auto.AutoInitialize
 import javax.inject.Inject
 import javax.inject.Singleton
 
 @AutoInitialize
 @Singleton
-internal class FavouritesNavigationTarget @Inject constructor(
-    registry: NavigationTargetRegistry,
-    private val settingsUIUseCase: SettingsUIUseCase,
-    private val navigationTargetBuilder: NavigationTargetBuilder,
-) : NavigationTarget<FavouritesNavigationRoute>(FavouritesNavigationRoute::class, registry) {
-
-    @Composable
-    override fun View(route: FavouritesNavigationRoute) = with(navigationTargetBuilder) {
-        ViewModelView(
-            themeMode = settingsUIUseCase.observeThemeModeState(),
-            route = route,
-            viewModel = FavouritesViewModel::class,
-            scoped = true,
-        ) { state, action ->
-            Gallery(
-                state = state,
-                action = action,
-            )
-        }
+class FavouritesNavigationTarget @Inject constructor(
+) : NavigationTarget<FavouritesNavigationRoute> by ViewModelNavigationTarget(
+    FavouritesViewModel::class,
+    FavouritesNavigationRoute::class,
+    view = { state, action ->
+        Gallery(state, action = action)
     }
-}
+)

@@ -31,8 +31,8 @@ import javax.inject.Inject
 import com.savvasdalkitsis.uhuruphotos.feature.account.view.api.seam.actions.Load as LoadAccount
 import com.savvasdalkitsis.uhuruphotos.feature.library.view.implementation.seam.actions.Load as LoadLibrary
 
-private typealias LibraryCompositeState = Pair<LibraryState, AccountOverviewState>
-private typealias LibraryCompositeAction = Either<LibraryAction, AccountOverviewAction>
+internal typealias LibraryCompositeState = Pair<LibraryState, AccountOverviewState>
+internal typealias LibraryCompositeAction = Either<LibraryAction, AccountOverviewAction>
 
 @HiltViewModel
 internal class LibraryViewModel @Inject constructor(

@@ -15,19 +15,11 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.library.view.implementation.navigation
 
-import androidx.compose.runtime.Composable
-import com.savvasdalkitsis.uhuruphotos.feature.account.view.api.ui.AccountOverviewActionBar
-import com.savvasdalkitsis.uhuruphotos.feature.account.view.api.ui.AccountOverviewContent
-import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.PredefinedCollageDisplay
 import com.savvasdalkitsis.uhuruphotos.feature.library.view.api.navigation.LibraryNavigationRoute
 import com.savvasdalkitsis.uhuruphotos.feature.library.view.implementation.ui.Library
 import com.savvasdalkitsis.uhuruphotos.feature.library.view.implementation.viewmodel.LibraryViewModel
-import com.savvasdalkitsis.uhuruphotos.feature.settings.domain.api.usecase.SettingsUIUseCase
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.NavigationTarget
-import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.NavigationTargetBuilder
-import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.NavigationTargetRegistry
-import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.Either.Left
-import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.Either.Right
+import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.ViewModelNavigationTarget
 import se.ansman.dagger.auto.AutoInitialize
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -35,35 +27,10 @@ import javax.inject.Singleton
 @AutoInitialize
 @Singleton
 class LibraryNavigationTarget @Inject constructor(
-    registry: NavigationTargetRegistry,
-    private val settingsUIUseCase: SettingsUIUseCase,
-    private val navigationTargetBuilder: NavigationTargetBuilder,
-) : NavigationTarget<LibraryNavigationRoute>(LibraryNavigationRoute::class, registry) {
-
-    @Composable
-    override fun View(route: LibraryNavigationRoute) = with(navigationTargetBuilder) {
-        ViewModelView(
-            themeMode = settingsUIUseCase.observeThemeModeState(),
-            route = route,
-            viewModel = LibraryViewModel::class,
-            scoped = true,
-        ) { state, actions ->
-            Library(
-                state = state.first,
-                homeFeedDisplay = PredefinedCollageDisplay.default,
-                isShowingPopUp = state.second.showAccountOverview,
-                action = { actions(Left(it)) },
-                actionBarContent = {
-                    AccountOverviewActionBar(state.second) {
-                        actions(Right(it))
-                    }
-                }
-            ) {
-                AccountOverviewContent(state.second) {
-                    actions(Right(it))
-                }
-            }
-        }
+) : NavigationTarget<LibraryNavigationRoute> by ViewModelNavigationTarget(
+    LibraryViewModel::class,
+    LibraryNavigationRoute::class,
+    view = { state, action ->
+        Library(state, action)
     }
-
-}
+)

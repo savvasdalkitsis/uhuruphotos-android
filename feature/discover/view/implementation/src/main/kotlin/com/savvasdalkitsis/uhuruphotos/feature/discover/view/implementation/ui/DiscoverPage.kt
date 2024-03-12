@@ -24,15 +24,43 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import com.savvasdalkitsis.uhuruphotos.feature.account.view.api.ui.AccountOverviewActionBar
+import com.savvasdalkitsis.uhuruphotos.feature.account.view.api.ui.AccountOverviewContent
 import com.savvasdalkitsis.uhuruphotos.feature.discover.view.implementation.seam.actions.DiscoverAction
 import com.savvasdalkitsis.uhuruphotos.feature.discover.view.implementation.ui.state.DiscoverState
+import com.savvasdalkitsis.uhuruphotos.feature.discover.view.implementation.viewmodel.DiscoverCompositeAction
+import com.savvasdalkitsis.uhuruphotos.feature.discover.view.implementation.viewmodel.DiscoverCompositeState
 import com.savvasdalkitsis.uhuruphotos.feature.home.view.api.ui.HomeScaffold
 import com.savvasdalkitsis.uhuruphotos.foundation.compose.api.blurIf
+import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.Either
 import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.Logo
 
 @Composable
-fun DiscoverPage(
+internal fun DiscoverPage(
+    state: DiscoverCompositeState,
+    actions: (DiscoverCompositeAction) -> Unit,
+) {
+    DiscoverPage(
+        state.first,
+        isShowingPopUp = state.second.showAccountOverview,
+        action = {
+            actions(Either.Left(it))
+        },
+        actionBarContent = {
+            AccountOverviewActionBar(state.second) {
+                actions(Either.Right(it))
+            }
+        },
+    ) {
+        AccountOverviewContent(state.second) {
+            actions(Either.Right(it))
+        }
+    }
+}
+
+@Composable
+private fun DiscoverPage(
     state: DiscoverState,
     isShowingPopUp: Boolean,
     action: (DiscoverAction) -> Unit,

@@ -23,7 +23,10 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import com.savvasdalkitsis.uhuruphotos.feature.account.view.api.ui.AccountOverviewActionBar
+import com.savvasdalkitsis.uhuruphotos.feature.account.view.api.ui.AccountOverviewContent
 import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.CollageDisplay
+import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.PredefinedCollageDisplay
 import com.savvasdalkitsis.uhuruphotos.feature.home.view.api.ui.HomeScaffold
 import com.savvasdalkitsis.uhuruphotos.feature.library.view.implementation.seam.actions.DismissUpsellDialog
 import com.savvasdalkitsis.uhuruphotos.feature.library.view.implementation.seam.actions.DoNotShowUpsellAgainFrom
@@ -31,7 +34,10 @@ import com.savvasdalkitsis.uhuruphotos.feature.library.view.implementation.seam.
 import com.savvasdalkitsis.uhuruphotos.feature.library.view.implementation.seam.actions.Login
 import com.savvasdalkitsis.uhuruphotos.feature.library.view.implementation.seam.actions.Refresh
 import com.savvasdalkitsis.uhuruphotos.feature.library.view.implementation.ui.state.LibraryState
+import com.savvasdalkitsis.uhuruphotos.feature.library.view.implementation.viewmodel.LibraryCompositeAction
+import com.savvasdalkitsis.uhuruphotos.feature.library.view.implementation.viewmodel.LibraryCompositeState
 import com.savvasdalkitsis.uhuruphotos.foundation.compose.api.blurIf
+import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.Either
 import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.FullLoading
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.Logo
@@ -40,6 +46,28 @@ import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.UpsellDialog
 
 @Composable
 internal fun Library(
+    state: LibraryCompositeState,
+    actions: (LibraryCompositeAction) -> Unit,
+) {
+    Library(
+        state = state.first,
+        homeFeedDisplay = PredefinedCollageDisplay.default,
+        isShowingPopUp = state.second.showAccountOverview,
+        action = { actions(Either.Left(it)) },
+        actionBarContent = {
+            AccountOverviewActionBar(state.second) {
+                actions(Either.Right(it))
+            }
+        }
+    ) {
+        AccountOverviewContent(state.second) {
+            actions(Either.Right(it))
+        }
+    }
+}
+
+@Composable
+private fun Library(
     state: LibraryState,
     homeFeedDisplay: CollageDisplay,
     isShowingPopUp: Boolean,

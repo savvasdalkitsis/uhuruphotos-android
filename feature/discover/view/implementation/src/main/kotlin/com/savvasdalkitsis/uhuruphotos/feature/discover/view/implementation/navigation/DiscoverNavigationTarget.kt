@@ -15,18 +15,11 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.discover.view.implementation.navigation
 
-import androidx.compose.runtime.Composable
-import com.savvasdalkitsis.uhuruphotos.feature.account.view.api.ui.AccountOverviewActionBar
-import com.savvasdalkitsis.uhuruphotos.feature.account.view.api.ui.AccountOverviewContent
 import com.savvasdalkitsis.uhuruphotos.feature.discover.view.api.navigation.DiscoverNavigationRoute
 import com.savvasdalkitsis.uhuruphotos.feature.discover.view.implementation.ui.DiscoverPage
 import com.savvasdalkitsis.uhuruphotos.feature.discover.view.implementation.viewmodel.DiscoverViewModel
-import com.savvasdalkitsis.uhuruphotos.feature.settings.domain.api.usecase.SettingsUIUseCase
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.NavigationTarget
-import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.NavigationTargetBuilder
-import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.NavigationTargetRegistry
-import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.Either.Left
-import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.Either.Right
+import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.ViewModelNavigationTarget
 import se.ansman.dagger.auto.AutoInitialize
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -34,35 +27,10 @@ import javax.inject.Singleton
 @AutoInitialize
 @Singleton
 class DiscoverNavigationTarget @Inject constructor(
-    registry: NavigationTargetRegistry,
-    private val settingsUIUseCase: SettingsUIUseCase,
-    private val navigationTargetBuilder: NavigationTargetBuilder,
-) : NavigationTarget<DiscoverNavigationRoute>(DiscoverNavigationRoute::class, registry) {
-
-    @Composable
-    override fun View(route: DiscoverNavigationRoute) = with(navigationTargetBuilder) {
-        ViewModelView(
-            themeMode = settingsUIUseCase.observeThemeModeState(),
-            route = route,
-            viewModel = DiscoverViewModel::class,
-            scoped = true,
-        ) { state, actions ->
-            DiscoverPage(
-                state.first,
-                isShowingPopUp = state.second.showAccountOverview,
-                action = {
-                    actions(Left(it))
-                },
-                actionBarContent = {
-                    AccountOverviewActionBar(state.second) {
-                        actions(Right(it))
-                    }
-                },
-            ) {
-                AccountOverviewContent(state.second) {
-                    actions(Right(it))
-                }
-            }
-        }
+) : NavigationTarget<DiscoverNavigationRoute> by ViewModelNavigationTarget(
+    DiscoverViewModel::class,
+    DiscoverNavigationRoute::class,
+    view = { state, action ->
+        DiscoverPage(state, action)
     }
-}
+)

@@ -16,6 +16,7 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.foundation.theme.api
 
 import android.graphics.drawable.ColorDrawable
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.material.darkColors
@@ -78,11 +79,16 @@ data object CustomColors {
 }
 
 @Composable
-fun AppTheme(
-    darkTheme: Boolean,
+fun ContentTheme(
+    theme: ThemeMode = LocalThemeMode.current,
     content: @Composable () -> Unit
 ) {
-    val colors = if (darkTheme) {
+    val isDark = when (theme) {
+        ThemeMode.FOLLOW_SYSTEM -> isSystemInDarkTheme()
+        ThemeMode.DARK_MODE -> true
+        ThemeMode.LIGHT_MODE -> false
+    }
+    val colors = if (isDark) {
         DarkColorPalette
     } else {
         LightColorPalette
@@ -93,6 +99,16 @@ fun AppTheme(
         typography = Typography,
         shapes = Shapes,
     ) {
+        content()
+    }
+}
+
+@Composable
+fun AppTheme(
+    theme: ThemeMode = LocalThemeMode.current,
+    content: @Composable () -> Unit
+) {
+    ContentTheme(theme) {
         val isLight = MaterialTheme.colors.isLight
         val systemUiController = LocalSystemUiController.current
         SideEffect {
@@ -107,7 +123,7 @@ fun AppTheme(
 
 @Composable
 fun PreviewAppTheme(
-    darkTheme: Boolean = false,
+    theme: ThemeMode = ThemeMode.LIGHT_MODE,
     content: @Composable () -> Unit,
 ) {
     val drawable = ColorDrawable(android.graphics.Color.CYAN)
@@ -123,7 +139,7 @@ fun PreviewAppTheme(
         LocalThumbnailWithNetworkCacheImageLoader provides imageLoader,
         LocalFullImageLoader provides imageLoader,
     ) {
-        AppTheme(darkTheme = darkTheme) {
+        AppTheme(theme = theme) {
             Surface {
                 content()
             }

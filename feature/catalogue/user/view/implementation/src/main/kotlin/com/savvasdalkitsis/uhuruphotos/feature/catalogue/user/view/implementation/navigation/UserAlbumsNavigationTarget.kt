@@ -15,14 +15,11 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.catalogue.user.view.implementation.navigation
 
-import androidx.compose.runtime.Composable
 import com.savvasdalkitsis.uhuruphotos.feature.catalogue.user.view.api.navigation.UserAlbumsNavigationRoute
 import com.savvasdalkitsis.uhuruphotos.feature.catalogue.user.view.implementation.ui.UserAlbums
 import com.savvasdalkitsis.uhuruphotos.feature.catalogue.user.view.implementation.viewmodel.UserAlbumsViewModel
-import com.savvasdalkitsis.uhuruphotos.feature.settings.domain.api.usecase.SettingsUIUseCase
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.NavigationTarget
-import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.NavigationTargetBuilder
-import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.NavigationTargetRegistry
+import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.ViewModelNavigationTarget
 import se.ansman.dagger.auto.AutoInitialize
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -30,23 +27,10 @@ import javax.inject.Singleton
 @AutoInitialize
 @Singleton
 class UserAlbumsNavigationTarget @Inject constructor(
-    registry: NavigationTargetRegistry,
-    private val settingsUIUseCase: SettingsUIUseCase,
-    private val navigationTargetBuilder: NavigationTargetBuilder,
-) : NavigationTarget<UserAlbumsNavigationRoute>(UserAlbumsNavigationRoute::class, registry) {
-
-    @Composable
-    override fun View(route: UserAlbumsNavigationRoute) = with(navigationTargetBuilder) {
-        ViewModelView(
-            themeMode = settingsUIUseCase.observeThemeModeState(),
-            route = route,
-            viewModel = UserAlbumsViewModel::class,
-            scoped = true,
-        ) { state, actions ->
-            UserAlbums(
-                state = state,
-                action = actions,
-            )
-        }
+) : NavigationTarget<UserAlbumsNavigationRoute> by ViewModelNavigationTarget(
+    UserAlbumsViewModel::class,
+    UserAlbumsNavigationRoute::class,
+    view = { state, action ->
+        UserAlbums(state, action)
     }
-}
+)

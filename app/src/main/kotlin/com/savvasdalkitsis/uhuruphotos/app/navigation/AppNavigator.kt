@@ -42,8 +42,8 @@ import com.savvasdalkitsis.uhuruphotos.foundation.map.api.model.LocalMapProvider
 import com.savvasdalkitsis.uhuruphotos.foundation.map.api.model.MapProvider
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.LocalNavigator
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.NavigationRoute
-import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.NavigationTargetRegistry
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.Navigator
+import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.LocalThemeMode
 import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.window.LocalSystemUiController
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.LocalScreenshotState
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.implementation.usecase.UiUseCase
@@ -54,7 +54,6 @@ import com.smarttoolfactory.screenshot.rememberScreenshotState
 import javax.inject.Inject
 
 class AppNavigator @Inject constructor(
-    private val navigationRegistry: NavigationTargetRegistry,
     private val navigator: Navigator,
     private val uiUseCase: UiUseCase,
     private val exoplayerProvider: ExoplayerProvider,
@@ -80,6 +79,7 @@ class AppNavigator @Inject constructor(
             initial = true
         )
         val screenshotState = rememberScreenshotState()
+        val themeMode by settingsUIUseCase.observeThemeModeState().collectAsState()
         CompositionLocalProvider(
             LocalExoPlayerProvider provides exoplayerProvider,
             LocalAnimatedVideoThumbnails provides animateVideoThumbnails.value,
@@ -90,6 +90,7 @@ class AppNavigator @Inject constructor(
             LocalNavigator provides navigator,
             LocalServerUrl provides serverUseCase.getServerUrl(),
             LocalScreenshotState provides screenshotState,
+            LocalThemeMode provides themeMode,
         ) {
             ScreenshotBox(screenshotState = screenshotState) {
                 NodeHost(
@@ -100,7 +101,7 @@ class AppNavigator @Inject constructor(
                         savedStateMap = buildContext.savedStateMap,
                     )
                     navigator.backStack = backStack
-                    NavigationTree(buildContext, navigationRegistry, backStack)
+                    NavigationTree(buildContext, backStack)
                 }
             }
         }

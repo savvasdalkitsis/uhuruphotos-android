@@ -15,38 +15,22 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.uploads.view.implementation.navigation
 
-import androidx.compose.runtime.Composable
-import com.savvasdalkitsis.uhuruphotos.feature.settings.domain.api.usecase.SettingsUIUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.uploads.view.api.navigation.UploadsNavigationRoute
 import com.savvasdalkitsis.uhuruphotos.feature.uploads.view.implementation.ui.Uploads
 import com.savvasdalkitsis.uhuruphotos.feature.uploads.view.implementation.viewmodel.UploadsViewModel
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.NavigationTarget
-import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.NavigationTargetBuilder
-import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.NavigationTargetRegistry
+import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.ViewModelNavigationTarget
 import se.ansman.dagger.auto.AutoInitialize
 import javax.inject.Inject
 import javax.inject.Singleton
 
 @AutoInitialize
 @Singleton
-internal class UploadsNavigationTarget @Inject constructor(
-    private val settingsUIUseCase: SettingsUIUseCase,
-    private val navigationTargetBuilder: NavigationTargetBuilder,
-    registry: NavigationTargetRegistry,
-) : NavigationTarget<UploadsNavigationRoute>(UploadsNavigationRoute::class, registry) {
-
-    @Composable
-    override fun View(route: UploadsNavigationRoute) = with(navigationTargetBuilder) {
-        ViewModelView(
-            settingsUIUseCase.observeThemeModeState(),
-            route,
-            UploadsViewModel::class,
-            scoped = true,
-        ) { state, action ->
-            Uploads(
-                state,
-                action,
-            )
-        }
+class UploadsNavigationTarget @Inject constructor(
+) : NavigationTarget<UploadsNavigationRoute> by ViewModelNavigationTarget(
+    UploadsViewModel::class,
+    UploadsNavigationRoute::class,
+    view = { state, action ->
+        Uploads(state, action)
     }
-}
+)

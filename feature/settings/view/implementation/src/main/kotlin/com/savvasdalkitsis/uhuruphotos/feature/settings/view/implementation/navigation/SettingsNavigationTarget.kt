@@ -15,37 +15,24 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.navigation
 
-import androidx.compose.runtime.Composable
-import com.savvasdalkitsis.uhuruphotos.feature.settings.domain.api.usecase.SettingsUIUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.api.navigation.SettingsNavigationRoute
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.ui.Settings
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.ui.controller.SettingsViewStateController
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.viewmodel.SettingsViewModel
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.NavigationTarget
-import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.NavigationTargetBuilder
-import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.NavigationTargetRegistry
+import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.ViewModelNavigationTarget
 import se.ansman.dagger.auto.AutoInitialize
 import javax.inject.Inject
 import javax.inject.Singleton
 
 @AutoInitialize
 @Singleton
-internal class SettingsNavigationTarget @Inject constructor(
-    registry: NavigationTargetRegistry,
-    private val settingsUIUseCase: SettingsUIUseCase,
-    private val settingsViewStateController: SettingsViewStateController,
-    private val navigationTargetBuilder: NavigationTargetBuilder,
-) : NavigationTarget<SettingsNavigationRoute>(SettingsNavigationRoute::class, registry) {
-
-    @Composable
-    override fun View(route: SettingsNavigationRoute) = with(navigationTargetBuilder) {
-        ViewModelView(
-            themeMode = settingsUIUseCase.observeThemeModeState(),
-            route = route,
-            viewModel = SettingsViewModel::class,
-            scoped = true,
-        ) { state, actions ->
-            Settings(settingsViewStateController, state, actions)
-        }
+class SettingsNavigationTarget @Inject constructor(
+    settingsViewStateController: SettingsViewStateController,
+) : NavigationTarget<SettingsNavigationRoute> by ViewModelNavigationTarget(
+    SettingsViewModel::class,
+    SettingsNavigationRoute::class,
+    view = { state, action ->
+        Settings(settingsViewStateController, state, action)
     }
-}
+)

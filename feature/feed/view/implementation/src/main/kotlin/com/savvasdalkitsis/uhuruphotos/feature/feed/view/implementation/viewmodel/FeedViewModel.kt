@@ -31,8 +31,8 @@ import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.Either
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
-private typealias FeedCompositeState = Pair<FeedState, AccountOverviewState>
-private typealias FeedCompositeAction = Either<FeedAction, AccountOverviewAction>
+typealias FeedCompositeState = Pair<FeedState, AccountOverviewState>
+typealias FeedCompositeAction = Either<FeedAction, AccountOverviewAction>
 
 @HiltViewModel
 internal class FeedViewModel @Inject constructor(

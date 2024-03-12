@@ -31,14 +31,14 @@ import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.Either
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
-private typealias SearchCompositeState = Pair<DiscoverState, AccountOverviewState>
-private typealias SearchCompositeAction = Either<DiscoverAction, AccountOverviewAction>
+typealias DiscoverCompositeState = Pair<DiscoverState, AccountOverviewState>
+typealias DiscoverCompositeAction = Either<DiscoverAction, AccountOverviewAction>
 
 @HiltViewModel
 class DiscoverViewModel @Inject constructor(
     discoverActionsContext: DiscoverActionsContext,
     accountOverviewActionsContext: AccountOverviewActionsContext,
-) : NavigationViewModel<SearchCompositeState, SearchCompositeAction, DiscoverNavigationRoute>(
+) : NavigationViewModel<DiscoverCompositeState, DiscoverCompositeAction, DiscoverNavigationRoute>(
     CompositeActionHandler(
         ActionHandlerWithContext(discoverActionsContext),
         ActionHandlerWithContext(accountOverviewActionsContext),

@@ -15,38 +15,22 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.search.view.implementation.navigation
 
-import androidx.compose.runtime.Composable
 import com.savvasdalkitsis.uhuruphotos.feature.search.view.api.navigation.SearchNavigationRoute
 import com.savvasdalkitsis.uhuruphotos.feature.search.view.implementation.ui.Search
 import com.savvasdalkitsis.uhuruphotos.feature.search.view.implementation.viewmodel.SearchViewModel
-import com.savvasdalkitsis.uhuruphotos.feature.settings.domain.api.usecase.SettingsUIUseCase
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.NavigationTarget
-import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.NavigationTargetBuilder
-import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.NavigationTargetRegistry
+import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.ViewModelNavigationTarget
 import se.ansman.dagger.auto.AutoInitialize
 import javax.inject.Inject
 import javax.inject.Singleton
 
 @AutoInitialize
 @Singleton
-internal class SearchNavigationTarget @Inject constructor(
-    private val settingsUIUseCase: SettingsUIUseCase,
-    private val navigationTargetBuilder: NavigationTargetBuilder,
-    registry: NavigationTargetRegistry,
-) : NavigationTarget<SearchNavigationRoute>(SearchNavigationRoute::class, registry) {
-
-    @Composable
-    override fun View(route: SearchNavigationRoute) = with(navigationTargetBuilder) {
-        ViewModelView(
-            settingsUIUseCase.observeThemeModeState(),
-            route,
-            SearchViewModel::class,
-            scoped = true,
-        ) { state, action ->
-            Search(
-                state,
-                action,
-            )
-        }
+class SearchNavigationTarget @Inject constructor(
+) : NavigationTarget<SearchNavigationRoute> by ViewModelNavigationTarget(
+    SearchViewModel::class,
+    SearchNavigationRoute::class,
+    view = { state, action ->
+        Search(state, action)
     }
-}
+)

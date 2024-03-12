@@ -52,6 +52,7 @@ import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.R.drawable
 import com.savvasdalkitsis.uhuruphotos.foundation.image.api.ui.Thumbnail
 import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.CustomColors
 import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.PreviewAppTheme
+import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.ThemeMode
 
 @Composable
 fun Avatar(
@@ -125,7 +126,7 @@ private fun AvatarPreview(@PreviewParameter(AvatarPreviews::class) state: Avatar
         PreviewAppTheme {
             Avatar(state = state)
         }
-        PreviewAppTheme(darkTheme = true) {
+        PreviewAppTheme(theme = ThemeMode.DARK_MODE) {
             Avatar(state = state)
         }
     }

@@ -68,6 +68,7 @@ import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.R.drawable
 import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.R.raw
 import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
 import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.PreviewAppTheme
+import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.ThemeMode
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.ActionIcon
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.CollapsibleGroup
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.ToggleableButtonWithIcon
@@ -358,7 +359,7 @@ private fun AccountOverviewPreview() {
 @Preview
 @Composable
 private fun AccountOverviewDarkPreview() {
-    PreviewAppTheme(darkTheme = true) {
+    PreviewAppTheme(theme = ThemeMode.DARK_MODE) {
         AccountOverview(
             modifier = Modifier.fillMaxWidth(),
             state = AccountOverviewState(

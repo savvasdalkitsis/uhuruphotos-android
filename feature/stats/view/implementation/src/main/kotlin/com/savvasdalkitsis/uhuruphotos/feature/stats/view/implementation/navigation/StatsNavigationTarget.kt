@@ -15,37 +15,22 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.stats.view.implementation.navigation
 
-import androidx.compose.runtime.Composable
-import com.savvasdalkitsis.uhuruphotos.feature.settings.domain.api.usecase.SettingsUIUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.stats.view.api.navigation.StatsNavigationRoute
 import com.savvasdalkitsis.uhuruphotos.feature.stats.view.implementation.ui.Stats
 import com.savvasdalkitsis.uhuruphotos.feature.stats.view.implementation.viewmodel.StatsViewModel
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.NavigationTarget
-import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.NavigationTargetBuilder
-import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.NavigationTargetRegistry
+import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.ViewModelNavigationTarget
 import se.ansman.dagger.auto.AutoInitialize
 import javax.inject.Inject
 import javax.inject.Singleton
 
 @AutoInitialize
 @Singleton
-internal class StatsNavigationTarget @Inject constructor(
-    private val settingsUIUseCase: SettingsUIUseCase,
-    private val navigationTargetBuilder: NavigationTargetBuilder,
-    registry: NavigationTargetRegistry,
-) : NavigationTarget<StatsNavigationRoute>(StatsNavigationRoute::class, registry) {
-
-    @Composable
-    override fun View(route: StatsNavigationRoute) = with(navigationTargetBuilder) {
-        ViewModelView(
-            settingsUIUseCase.observeThemeModeState(),
-            route,
-            StatsViewModel::class,
-            scoped = true,
-        ) { state, _ ->
-            Stats(
-                state,
-            )
-        }
+class StatsNavigationTarget @Inject constructor(
+) : NavigationTarget<StatsNavigationRoute> by ViewModelNavigationTarget(
+    StatsViewModel::class,
+    StatsNavigationRoute::class,
+    view = { state, _ ->
+        Stats(state)
     }
-}
+)

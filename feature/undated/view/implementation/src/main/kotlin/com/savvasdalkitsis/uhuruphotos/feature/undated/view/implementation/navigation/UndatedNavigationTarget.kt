@@ -15,38 +15,22 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.undated.view.implementation.navigation
 
-import androidx.compose.runtime.Composable
-import com.savvasdalkitsis.uhuruphotos.feature.settings.domain.api.usecase.SettingsUIUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.undated.view.api.navigation.UndatedNavigationRoute
 import com.savvasdalkitsis.uhuruphotos.feature.undated.view.implementation.ui.Undated
 import com.savvasdalkitsis.uhuruphotos.feature.undated.view.implementation.viewmodel.UndatedViewModel
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.NavigationTarget
-import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.NavigationTargetBuilder
-import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.NavigationTargetRegistry
+import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.ViewModelNavigationTarget
 import se.ansman.dagger.auto.AutoInitialize
 import javax.inject.Inject
 import javax.inject.Singleton
 
 @AutoInitialize
 @Singleton
-internal class UndatedNavigationTarget @Inject constructor(
-    private val settingsUIUseCase: SettingsUIUseCase,
-    private val navigationTargetBuilder: NavigationTargetBuilder,
-    registry: NavigationTargetRegistry,
-) : NavigationTarget<UndatedNavigationRoute>(UndatedNavigationRoute::class, registry) {
-
-    @Composable
-    override fun View(route: UndatedNavigationRoute) = with(navigationTargetBuilder) {
-        ViewModelView(
-            settingsUIUseCase.observeThemeModeState(),
-            route,
-            UndatedViewModel::class,
-            scoped = true,
-        ) { state, action ->
-            Undated(
-                    state,
-                    action,
-            )
-        }
+class UndatedNavigationTarget @Inject constructor(
+) : NavigationTarget<UndatedNavigationRoute> by ViewModelNavigationTarget(
+    UndatedViewModel::class,
+    UndatedNavigationRoute::class,
+    view = { state, action ->
+        Undated(state, action)
     }
-}
+)

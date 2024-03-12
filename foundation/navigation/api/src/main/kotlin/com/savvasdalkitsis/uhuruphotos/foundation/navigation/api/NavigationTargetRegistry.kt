@@ -15,12 +15,9 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.foundation.navigation.api
 
-import javax.inject.Inject
-import javax.inject.Singleton
 import kotlin.reflect.KClass
 
-@Singleton
-class NavigationTargetRegistry @Inject constructor() {
+object NavigationTargetRegistry {
 
     val registry: Map<KClass<NavigationRoute>, NavigationTarget<NavigationRoute>> get() = targets
 

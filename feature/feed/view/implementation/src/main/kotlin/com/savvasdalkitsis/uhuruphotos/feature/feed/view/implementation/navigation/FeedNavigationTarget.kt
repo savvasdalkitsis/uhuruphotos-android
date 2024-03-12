@@ -15,57 +15,23 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.navigation
 
-import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.runtime.Composable
-import com.savvasdalkitsis.uhuruphotos.feature.account.view.api.ui.AccountOverviewActionBar
-import com.savvasdalkitsis.uhuruphotos.feature.account.view.api.ui.AccountOverviewContent
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.api.navigation.FeedNavigationRoute
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.ui.Feed
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.viewmodel.FeedViewModel
-import com.savvasdalkitsis.uhuruphotos.feature.settings.domain.api.usecase.SettingsUIUseCase
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.NavigationTarget
-import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.NavigationTargetBuilder
-import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.NavigationTargetRegistry
-import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.Either.Left
-import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.Either.Right
+import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.ViewModelNavigationTarget
 import se.ansman.dagger.auto.AutoInitialize
 import javax.inject.Inject
 import javax.inject.Singleton
 
 @AutoInitialize
 @Singleton
-internal class FeedNavigationTarget @Inject constructor(
-    registry: NavigationTargetRegistry,
-    private val settingsUIUseCase: SettingsUIUseCase,
-    private val navigationTargetBuilder: NavigationTargetBuilder,
-) : NavigationTarget<FeedNavigationRoute>(FeedNavigationRoute::class, registry) {
-
-    @Composable
-    override fun View(route: FeedNavigationRoute) = with(navigationTargetBuilder) {
-        ViewModelView(
-            themeMode = settingsUIUseCase.observeThemeModeState(),
-            route = route,
-            viewModel = FeedViewModel::class,
-            scoped = false,
-        ) { state, actions ->
-            Feed(
-                state.first,
-                isShowingPopUp = state.second.showAccountOverview,
-                action = {
-                    actions(Left(it))
-                },
-                actionBarContent = {
-                    AnimatedVisibility(visible = !state.first.hasSelection) {
-                        AccountOverviewActionBar(state.second) {
-                            actions(Right(it))
-                        }
-                    }
-                }
-            ) {
-                AccountOverviewContent(state.second) {
-                    actions(Right(it))
-                }
-            }
-        }
+class FeedNavigationTarget @Inject constructor(
+) : NavigationTarget<FeedNavigationRoute> by ViewModelNavigationTarget(
+    FeedViewModel::class,
+    FeedNavigationRoute::class,
+    viewModelScopedToComposable = false,
+    view = { state, action ->
+        Feed(state, action)
     }
-}
+)

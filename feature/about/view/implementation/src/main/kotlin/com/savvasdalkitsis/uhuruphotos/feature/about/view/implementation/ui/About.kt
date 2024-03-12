@@ -50,6 +50,7 @@ import com.savvasdalkitsis.uhuruphotos.foundation.compose.api.recomposeHighlight
 import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.R.drawable
 import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
 import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.PreviewAppTheme
+import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.ThemeMode
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.CommonScaffold
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.UpNavButton
 import my.nanihadesuka.compose.InternalLazyColumnScrollbar
@@ -189,7 +190,7 @@ private fun AboutHeaderPreview() {
 @Preview
 @Composable
 private fun AboutHeaderDarkPreview() {
-    PreviewAppTheme(darkTheme = true) {
+    PreviewAppTheme(theme = ThemeMode.DARK_MODE) {
         AboutHeader(AboutState("0.0.999")) {}
     }
 }

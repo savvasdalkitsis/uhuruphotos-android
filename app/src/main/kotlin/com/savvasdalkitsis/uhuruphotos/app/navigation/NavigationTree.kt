@@ -31,7 +31,6 @@ import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.NavigationTarge
 
 class NavigationTree(
     buildContext: BuildContext,
-    private val navigationRegistry: NavigationTargetRegistry,
     private val backStack: BackStack<NavigationRoute>,
 ) : ParentNode<NavigationRoute>(
     navModel = backStack,
@@ -48,7 +47,7 @@ class NavigationTree(
             CompositionLocalProvider(
                 LocalBackStack provides { backStack }
             ) {
-                navigationRegistry.registry[navTarget::class]!!.View(navTarget)
+                NavigationTargetRegistry.registry[navTarget::class]!!.NavigationRootView(navTarget)
             }
         }
 }

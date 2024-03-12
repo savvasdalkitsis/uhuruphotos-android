@@ -15,14 +15,11 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.person.view.implementation.navigation
 
-import androidx.compose.runtime.Composable
 import com.savvasdalkitsis.uhuruphotos.feature.person.view.api.navigation.PersonNavigationRoute
 import com.savvasdalkitsis.uhuruphotos.feature.person.view.implementation.ui.Person
 import com.savvasdalkitsis.uhuruphotos.feature.person.view.implementation.viewmodel.PersonViewModel
-import com.savvasdalkitsis.uhuruphotos.feature.settings.domain.api.usecase.SettingsUIUseCase
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.NavigationTarget
-import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.NavigationTargetBuilder
-import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.NavigationTargetRegistry
+import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.ViewModelNavigationTarget
 import se.ansman.dagger.auto.AutoInitialize
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -30,20 +27,10 @@ import javax.inject.Singleton
 @AutoInitialize
 @Singleton
 class PersonNavigationTarget @Inject constructor(
-    registry: NavigationTargetRegistry,
-    private val settingsUIUseCase: SettingsUIUseCase,
-    private val navigationTargetBuilder: NavigationTargetBuilder,
-) : NavigationTarget<PersonNavigationRoute>(PersonNavigationRoute::class, registry) {
-
-    @Composable
-    override fun View(route: PersonNavigationRoute) = with(navigationTargetBuilder) {
-        ViewModelView(
-            themeMode = settingsUIUseCase.observeThemeModeState(),
-            route = route,
-            viewModel = PersonViewModel::class,
-            scoped = true,
-        ) { state, actions ->
-            Person(state, actions)
-        }
+) : NavigationTarget<PersonNavigationRoute> by ViewModelNavigationTarget(
+    PersonViewModel::class,
+    PersonNavigationRoute::class,
+    view = { state, action ->
+        Person(state, action)
     }
-}
+)

@@ -15,6 +15,7 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.ui
 
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
@@ -24,6 +25,8 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalDensity
+import com.savvasdalkitsis.uhuruphotos.feature.account.view.api.ui.AccountOverviewActionBar
+import com.savvasdalkitsis.uhuruphotos.feature.account.view.api.ui.AccountOverviewContent
 import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.Collage
 import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.PredefinedCollageDisplay
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.api.ui.state.FeedMediaItemSyncDisplay.ALWAYS_OFF
@@ -41,6 +44,8 @@ import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.act
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.actions.TrashRemoteAndDeleteLocalSelectedCels
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.actions.TrashRemoteSelectedCels
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.ui.state.FeedState
+import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.viewmodel.FeedCompositeAction
+import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.viewmodel.FeedCompositeState
 import com.savvasdalkitsis.uhuruphotos.feature.home.view.api.ui.HomeScaffold
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.DeleteFullySyncedPermissionDialog
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.DeletePermissionDialog
@@ -48,6 +53,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.TrashPer
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.state.CelSelectionMode
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.state.CelState
 import com.savvasdalkitsis.uhuruphotos.foundation.compose.api.blurIf
+import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.Either
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.SwipeRefresh
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.grid.SmartGridState
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.grid.rememberSmartGridState
@@ -56,6 +62,31 @@ import kotlinx.coroutines.launch
 
 @Composable
 internal fun Feed(
+    state: FeedCompositeState,
+    actions: (FeedCompositeAction) -> Unit,
+) {
+    Feed(
+        state.first,
+        isShowingPopUp = state.second.showAccountOverview,
+        action = {
+            actions(Either.Left(it))
+        },
+        actionBarContent = {
+            AnimatedVisibility(visible = !state.first.hasSelection) {
+                AccountOverviewActionBar(state.second) {
+                    actions(Either.Right(it))
+                }
+            }
+        }
+    ) {
+        AccountOverviewContent(state.second) {
+            actions(Either.Right(it))
+        }
+    }
+}
+
+@Composable
+private fun Feed(
     state: FeedState,
     isShowingPopUp: Boolean,
     action: (FeedAction) -> Unit,

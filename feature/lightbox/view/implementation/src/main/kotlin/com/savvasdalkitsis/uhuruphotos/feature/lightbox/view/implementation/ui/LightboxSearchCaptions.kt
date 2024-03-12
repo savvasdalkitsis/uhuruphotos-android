@@ -44,6 +44,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.ui.s
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaId
 import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
 import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.PreviewAppTheme
+import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.ThemeMode
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.SectionHeader
 import kotlinx.collections.immutable.toPersistentSet
 
@@ -117,7 +118,7 @@ private fun CaptionsPreview() {
 @Preview
 @Composable
 private fun CaptionsPreviewDark() {
-    PreviewAppTheme(darkTheme = true) {
+    PreviewAppTheme(theme = ThemeMode.DARK_MODE) {
         CaptionsPreviewContent()
     }
 }

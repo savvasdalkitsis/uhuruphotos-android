@@ -15,14 +15,11 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.auth.view.implementation.navigation
 
-import androidx.compose.runtime.Composable
 import com.savvasdalkitsis.uhuruphotos.feature.auth.view.api.navigation.WebLoginNavigationRoute
 import com.savvasdalkitsis.uhuruphotos.feature.auth.view.implementation.ui.WebLogin
 import com.savvasdalkitsis.uhuruphotos.feature.auth.view.implementation.viewmodel.WebLoginViewModel
-import com.savvasdalkitsis.uhuruphotos.feature.settings.domain.api.usecase.SettingsUIUseCase
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.NavigationTarget
-import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.NavigationTargetBuilder
-import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.NavigationTargetRegistry
+import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.ViewModelNavigationTarget
 import se.ansman.dagger.auto.AutoInitialize
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -30,20 +27,10 @@ import javax.inject.Singleton
 @AutoInitialize
 @Singleton
 class WebLoginNavigationTarget @Inject constructor(
-    registry: NavigationTargetRegistry,
-    private val settingsUIUseCase: SettingsUIUseCase,
-    private val navigationTargetBuilder: NavigationTargetBuilder,
-) : NavigationTarget<WebLoginNavigationRoute>(WebLoginNavigationRoute::class, registry) {
-
-    @Composable
-    override fun View(route: WebLoginNavigationRoute) = with(navigationTargetBuilder) {
-        ViewModelView(
-            themeMode = settingsUIUseCase.observeThemeModeState(),
-            route = route,
-            viewModel = WebLoginViewModel::class,
-            scoped = true,
-        ) { state, _ ->
-            WebLogin(state)
-        }
+) : NavigationTarget<WebLoginNavigationRoute> by ViewModelNavigationTarget(
+    WebLoginViewModel::class,
+    WebLoginNavigationRoute::class,
+    view = { state, _ ->
+        WebLogin(state)
     }
-}
+)
