@@ -71,7 +71,7 @@ fun Cel(
 ) {
     @Composable
     fun cel(
-        celModifier: Modifier = modifier,
+        celModifier: Modifier = Modifier,
     ) {
         Cel(
             celModifier,
@@ -85,6 +85,7 @@ fun Cel(
     }
     when (selectionMode) {
         CHECKABLE -> Checkable(
+            modifier = modifier,
             id = state.mediaItem.id,
             selectionMode = state.selectionMode,
             onClick = { onSelected(state) },
@@ -92,8 +93,8 @@ fun Cel(
         ) {
             cel()
         }
-        SELECTABLE -> cel(celModifier = Modifier.clickable { onSelected(state) })
-        NONE -> cel()
+        SELECTABLE -> cel(celModifier = modifier.clickable { onSelected(state) })
+        NONE -> cel(celModifier = modifier)
     }
 }
 
