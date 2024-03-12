@@ -67,10 +67,13 @@ internal fun LightboxScaffold(
     }
     BackPressHandler {
         scope.launch {
-            if (showingActionsOverlay) {
-                action(UpPressed)
-            } else {
+            val scrolledDown = !showingActionsOverlay
+            if (scrolledDown) {
                 scrollState.animateScrollTo(0)
+            } else if ((zoomableState.zoomFraction ?: 0f) > 0f){
+                zoomableState.resetZoom()
+            } else {
+                action(UpPressed)
             }
         }
     }

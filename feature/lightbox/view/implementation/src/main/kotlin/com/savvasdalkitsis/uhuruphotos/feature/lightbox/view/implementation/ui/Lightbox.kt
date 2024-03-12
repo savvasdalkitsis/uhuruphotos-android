@@ -74,7 +74,7 @@ internal fun Lightbox(
         userScrollEnabled = true,
     ) { index ->
         val zoomableState = rememberZoomableState(
-            zoomSpec = ZoomSpec(maxZoomFactor = 4f)
+            zoomSpec = ZoomSpec(maxZoomFactor = 3f)
         )
         val scrollState = rememberScrollState()
         LightboxScaffold(state, index, action, lightboxAlpha, zoomableState, scrollState)

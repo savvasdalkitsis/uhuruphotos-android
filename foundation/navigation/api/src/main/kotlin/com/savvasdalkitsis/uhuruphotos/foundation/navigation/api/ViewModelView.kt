@@ -56,9 +56,7 @@ fun <S : Any, A : Any, VM : NavigationViewModel<S, A, R>, R : NavigationRoute> V
         keyboard?.hide()
         viewModel.onRouteSet(route)
         onDispose {
-            if (viewModelScopedToComposable) {
-                viewModel.viewModelScope.coroutineContext[Job]?.cancelChildren()
-            }
+            viewModel.viewModelScope.coroutineContext[Job]?.cancelChildren()
         }
     }
     val state by viewModel.state.collectAsState()
