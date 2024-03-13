@@ -34,6 +34,9 @@ data object Load : WelcomeAction() {
     override fun handle(state: WelcomeState): Flow<Mutation<WelcomeState>> = merge(
         flowOf(SetLoading(true)),
         welcomeUseCase.observeWelcomeStatus().map { status ->
+            if (!status.hasLocalAccess) {
+                localMediaUseCase.markLocalMediaSyncedBefore(false)
+            }
             SetUseCases(
                 localMediaSelected = status.hasLocalAccess,
                 cloudMediaSelected = status.hasRemoteAccess,

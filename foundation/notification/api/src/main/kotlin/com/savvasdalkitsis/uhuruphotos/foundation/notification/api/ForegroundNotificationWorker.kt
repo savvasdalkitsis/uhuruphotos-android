@@ -16,6 +16,8 @@ limitations under the License.
 
 package com.savvasdalkitsis.uhuruphotos.foundation.notification.api
 
+import android.annotation.SuppressLint
+import android.app.Notification
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.icu.text.NumberFormat.getIntegerInstance
@@ -44,6 +46,7 @@ abstract class ForegroundNotificationWorker<BR>(
 
     private val notificationManager = NotificationManagerCompat.from(applicationContext)
 
+    @SuppressLint("MissingPermission")
     final override suspend fun doWork(): Result = withContext(dispatcher) {
         try {
             setForeground(getForegroundInfo())
@@ -51,15 +54,20 @@ abstract class ForegroundNotificationWorker<BR>(
             // ignore
         }
         try {
-            updateProgress(0)
             work()
         } catch (e: Exception) {
             log(e)
             Result.failure()
         } finally {
             notificationManager.cancel(notificationId)
+        }.also {
+            getFinishedNotification(it)?.let { (id, notification) ->
+                notificationManager.notify(id, notification)
+            }
         }
     }
+
+    open fun getFinishedNotification(result: Result): Pair<Int, Notification>? = null
 
     abstract suspend fun work(): Result
 
@@ -77,25 +85,26 @@ abstract class ForegroundNotificationWorker<BR>(
         )
     }
 
+    @SuppressLint("MissingPermission")
     suspend fun updateProgress(progress: Int, text: String? = null) {
         setProgress(workDataOf(Progress to progress))
 
         notificationManager.notify(notificationId, foregroundInfoBuilder.buildNotification(
-            applicationContext,
-            notificationTitle,
-            notificationChannelId,
-            progress,
-            text,
-            cancelBroadcastReceiver,
+            context = applicationContext,
+            title = notificationTitle,
+            channel = notificationChannelId,
+            progress = progress,
+            text = text,
+            cancelBroadcastReceiver = cancelBroadcastReceiver,
         ))
     }
 
     override suspend fun getForegroundInfo(): ForegroundInfo = foregroundInfoBuilder.build(
-        applicationContext,
-        notificationTitle,
-        notificationId,
-        notificationChannelId,
-        0,
+        context = applicationContext,
+        title = notificationTitle,
+        notificationId = notificationId,
+        channel = notificationChannelId,
+        progress = null, // indeterminate
     )
 
     companion object {

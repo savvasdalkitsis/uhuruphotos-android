@@ -55,4 +55,7 @@ interface LocalMediaUseCase {
     suspend fun getDefaultFolderId(): Int?
 
     fun clearAll()
+
+    fun markLocalMediaSyncedBefore(synced: Boolean)
+    fun hasLocalMediaBeenSyncedBefore(): Boolean
 }

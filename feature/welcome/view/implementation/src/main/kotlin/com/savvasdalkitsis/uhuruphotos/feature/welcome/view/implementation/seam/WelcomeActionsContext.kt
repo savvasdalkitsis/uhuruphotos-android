@@ -17,6 +17,7 @@ package com.savvasdalkitsis.uhuruphotos.feature.welcome.view.implementation.seam
 
 import android.content.Context
 import com.savvasdalkitsis.uhuruphotos.feature.auth.domain.api.usecase.AuthenticationLoginUseCase
+import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.usecase.LocalMediaUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.welcome.domain.api.usecase.WelcomeUseCase
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.Navigator
 import dagger.hilt.android.qualifiers.ApplicationContext
@@ -26,5 +27,6 @@ internal class WelcomeActionsContext @Inject constructor(
     val welcomeUseCase: WelcomeUseCase,
     val authenticationLoginUseCase: AuthenticationLoginUseCase,
     val navigator: Navigator,
+    val localMediaUseCase: LocalMediaUseCase,
     @ApplicationContext val context: Context,
 )

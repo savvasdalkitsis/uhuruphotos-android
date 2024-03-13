@@ -37,6 +37,8 @@ import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.model.Loca
 import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.model.LocalMediaItem
 import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.model.LocalMediaItems
 import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.model.LocalPermissions
+import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.model.LocalPermissions.Granted
+import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.model.LocalPermissions.RequiresPermissions
 import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.model.Md5Hash
 import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.model.MediaOrientation
 import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.usecase.LocalMediaUseCase
@@ -117,7 +119,7 @@ class LocalMediaUseCase @Inject constructor(
         observePermissionsState().flatMapLatest { permissions ->
             resetMediaStoreIfNeeded()
             when (permissions) {
-                is LocalPermissions.RequiresPermissions -> flowOf(LocalFolder.RequiresPermissions(permissions.deniedPermissions))
+                is RequiresPermissions -> flowOf(LocalFolder.RequiresPermissions(permissions.deniedPermissions))
                 else -> localMediaRepository.observeFolder(folderId).map { media ->
                     media.toItems()
                         .groupBy(LocalMediaItem::bucket)
@@ -139,12 +141,12 @@ class LocalMediaUseCase @Inject constructor(
         observePermissionsState().flatMapLatest { permissions ->
             resetMediaStoreIfNeeded()
             when (permissions) {
-                is LocalPermissions.RequiresPermissions -> flowOf(
+                is RequiresPermissions -> flowOf(
                     LocalMediaItems.RequiresPermissions(
                         permissions.deniedPermissions
                     )
                 )
-                LocalPermissions.Granted -> localMediaRepository.observeMedia()
+                Granted -> localMediaRepository.observeMedia()
                     .distinctUntilChanged().map { itemDetails ->
                         foundLocalMediaItems(itemDetails)
                     }
@@ -154,10 +156,10 @@ class LocalMediaUseCase @Inject constructor(
     override suspend fun getLocalMediaItems(): LocalMediaItems {
         resetMediaStoreIfNeeded()
         return when (val permissions = checkPermissions(*requiredPermissions)) {
-            is LocalPermissions.RequiresPermissions -> LocalMediaItems.RequiresPermissions(
+            is RequiresPermissions -> LocalMediaItems.RequiresPermissions(
                 permissions.deniedPermissions
             )
-            LocalPermissions.Granted -> foundLocalMediaItems(localMediaRepository.getMedia())
+            Granted -> foundLocalMediaItems(localMediaRepository.getMedia())
         }
     }
 
@@ -188,8 +190,8 @@ class LocalMediaUseCase @Inject constructor(
     private fun observePermissionsState(vararg permissions: String): Flow<LocalPermissions>  =
         permissionFlow.getMultiplePermissionState(*permissions).map {
             when {
-                !it.allGranted -> LocalPermissions.RequiresPermissions(it.deniedPermissions)
-                else -> LocalPermissions.Granted
+                !it.allGranted -> RequiresPermissions(it.deniedPermissions)
+                else -> Granted
             }
         }
 
@@ -237,6 +239,10 @@ class LocalMediaUseCase @Inject constructor(
     override suspend fun refreshAll(
         onProgressChange: suspend (current: Int, total: Int) -> Unit,
     ) {
+        val permissions = checkPermissions(*requiredPermissions)
+        if (permissions is RequiresPermissions){
+            throw IllegalStateException("App does not have permissions: $permissions")
+        }
         resetMediaStoreIfNeeded()
         localMediaRepository.refresh(onProgressChange)
     }
@@ -246,9 +252,9 @@ class LocalMediaUseCase @Inject constructor(
             ContextCompat.checkSelfPermission(context, it) != PERMISSION_GRANTED
         }
         return if (missing.isEmpty()) {
-            LocalPermissions.Granted
+            Granted
         } else {
-            LocalPermissions.RequiresPermissions(missing)
+            RequiresPermissions(missing)
         }
     }
 
@@ -311,6 +317,13 @@ class LocalMediaUseCase @Inject constructor(
     override fun clearAll() {
         localMediaRepository.clearAll()
     }
+
+    override fun markLocalMediaSyncedBefore(synced: Boolean) {
+        localMediaRepository.markLocalMediaSyncedBefore(synced)
+    }
+
+    override fun hasLocalMediaBeenSyncedBefore(): Boolean =
+        localMediaRepository.hasLocalMediaBeenSyncedBefore()
 
     private suspend fun resetMediaStoreIfNeeded() {
         with (mediaStoreVersionRepository) {

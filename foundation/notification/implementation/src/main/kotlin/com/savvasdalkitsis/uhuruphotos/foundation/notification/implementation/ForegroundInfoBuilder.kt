@@ -40,7 +40,12 @@ internal class ForegroundInfoBuilder @Inject constructor(
         channel: String,
         progress: Int?,
     ): ForegroundInfo {
-        val notification = buildNotification<BroadcastReceiver>(context, title, channel, progress)
+        val notification = buildNotification<BroadcastReceiver>(
+            context = context,
+            title = title,
+            channel = channel,
+            progress = progress
+        )
         return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
             ForegroundInfo(
                 notificationId,
@@ -60,6 +65,8 @@ internal class ForegroundInfoBuilder @Inject constructor(
         title: Int,
         channel: String,
         progress: Int?,
+        showProgress: Boolean,
+        autoCancel: Boolean,
         text: String?,
         cancelBroadcastReceiver: Class<BR>?,
     ) = NotificationCompat.Builder(context, channel)
@@ -73,7 +80,14 @@ internal class ForegroundInfoBuilder @Inject constructor(
         ))
         .setSmallIcon(drawable.ic_notification)
         .setPriority(NotificationCompat.PRIORITY_LOW)
-        .setProgress(100, progress ?: 0, progress == null)
+        .setAutoCancel(autoCancel)
+        .run {
+            if (showProgress) {
+                setProgress(100, progress ?: 0, progress == null)
+            } else {
+                this
+            }
+        }
         .run {
             if (cancelBroadcastReceiver != null) {
                 addAction(drawable.ic_cancel, context.getString(string.cancel),

@@ -15,6 +15,8 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.implementation.worker
 
+import android.annotation.SuppressLint
+import android.app.Notification
 import android.content.BroadcastReceiver
 import android.content.Context
 import androidx.hilt.work.HiltWorker
@@ -23,6 +25,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.usecase.Lo
 import com.savvasdalkitsis.uhuruphotos.foundation.log.api.log
 import com.savvasdalkitsis.uhuruphotos.foundation.notification.api.ForegroundInfoBuilder
 import com.savvasdalkitsis.uhuruphotos.foundation.notification.api.ForegroundNotificationWorker
+import com.savvasdalkitsis.uhuruphotos.foundation.notification.api.NotificationChannels
 import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedInject
@@ -30,10 +33,10 @@ import kotlinx.coroutines.delay
 
 @HiltWorker
 internal class LocalMediaSyncWorker @AssistedInject constructor(
-    @Assisted context: Context,
+    @Assisted private val context: Context,
     @Assisted private val params: WorkerParameters,
     private val localMediaUseCase: LocalMediaUseCase,
-    foregroundInfoBuilder: ForegroundInfoBuilder,
+    private val foregroundInfoBuilder: ForegroundInfoBuilder,
 ) : ForegroundNotificationWorker<BroadcastReceiver>(
     context,
     params,
@@ -45,7 +48,6 @@ internal class LocalMediaSyncWorker @AssistedInject constructor(
     override suspend fun work(): Result {
         log { "Starting local media sync" }
         return try {
-            updateProgress(0)
             localMediaUseCase.refreshAll { current, total ->
                 delay(100)
                 updateProgress(current, total)
@@ -57,9 +59,28 @@ internal class LocalMediaSyncWorker @AssistedInject constructor(
         }
     }
 
+    @SuppressLint("RestrictedApi")
+    override fun getFinishedNotification(
+        result: Result,
+    ): Pair<Int, Notification>? =
+        if (result is Result.Success && !localMediaUseCase.hasLocalMediaBeenSyncedBefore()) {
+            localMediaUseCase.markLocalMediaSyncedBefore(true)
+            FINISHED_NOTIFICATION_ID to foregroundInfoBuilder.buildNotification<BroadcastReceiver>(
+                context = context,
+                title = string.local_media_scan_completed,
+                channel = NotificationChannels.Jobs.id,
+                showProgress = false,
+                autoCancel = true,
+                text = context.getString(string.local_media_scan_completed_description),
+            )
+        } else {
+            null
+        }
+
     companion object {
         // string value needs to remain as is for backwards compatibility
         const val WORK_NAME = "syncMediaStore"
         private const val NOTIFICATION_ID = 1280
+        private const val FINISHED_NOTIFICATION_ID = 1289
     }
 }

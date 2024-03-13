@@ -34,7 +34,9 @@ interface ForegroundInfoBuilder {
         context: Context,
         title: Int,
         channel: String,
-        progress: Int?,
+        progress: Int? = null,
+        showProgress: Boolean = true,
+        autoCancel: Boolean = false,
         text: String? = null,
         cancelBroadcastReceiver: Class<BR>? = null,
     ): Notification

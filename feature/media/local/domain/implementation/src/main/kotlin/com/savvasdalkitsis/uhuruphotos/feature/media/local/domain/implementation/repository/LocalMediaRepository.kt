@@ -44,6 +44,10 @@ import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.implementation
 import com.savvasdalkitsis.uhuruphotos.foundation.exif.api.usecase.ExifUseCase
 import com.savvasdalkitsis.uhuruphotos.foundation.log.api.log
 import com.savvasdalkitsis.uhuruphotos.foundation.log.api.runCatchingWithLog
+import com.savvasdalkitsis.uhuruphotos.foundation.preferences.api.PlainTextPreferences
+import com.savvasdalkitsis.uhuruphotos.foundation.preferences.api.Preferences
+import com.savvasdalkitsis.uhuruphotos.foundation.preferences.api.get
+import com.savvasdalkitsis.uhuruphotos.foundation.preferences.api.set
 import com.savvasdalkitsis.uhuruphotos.foundation.result.api.simple
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.Dispatchers
@@ -67,7 +71,11 @@ class LocalMediaRepository @Inject constructor(
     @LocalMediaModule.LocalMediaDateTimeFormat
     private val dateTimeFormat: DateTimeFormatter,
     private val bitmapUseCase: BitmapUseCase,
+    @PlainTextPreferences
+    private val preferences: Preferences,
 ) {
+
+    private val keyLocalSyncedBefore = "keyLocalSyncedBefore"
 
     fun observeMedia(): Flow<List<LocalMediaItemDetails>> = localMediaItemDetailsQueries.getItems()
         .asFlow().mapToList(Dispatchers.IO).distinctUntilChanged()
@@ -235,6 +243,13 @@ class LocalMediaRepository @Inject constructor(
 
     fun removeItemsFromDb(vararg ids: Long) =
         localMediaItemDetailsQueries.delete(ids.toList())
+
+
+    fun markLocalMediaSyncedBefore(synced: Boolean) = preferences.set(keyLocalSyncedBefore, synced)
+
+    fun hasLocalMediaBeenSyncedBefore(): Boolean =
+        // true by default for users that had the app before this was introduced
+        preferences.get(keyLocalSyncedBefore, true)
 
     private val thumbWidth = 400
 

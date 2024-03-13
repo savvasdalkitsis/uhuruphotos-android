@@ -50,6 +50,7 @@ class UploadWorker @AssistedInject constructor(
             contentUri = params.inputData.getString(KEY_CONTENT_URI)!!
         )
         val force = params.inputData.getBoolean(KEY_FORCE, false)
+        updateProgress(0)
 
         val result = uploadUseCase.upload(item = item, force = force) { current, total ->
             updateProgress(current, total)

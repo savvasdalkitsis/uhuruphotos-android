@@ -388,4 +388,6 @@
     <string name="local_media_rescan">Re-scan local media from scratch</string>
     <string name="remember_choice">Remember choice</string>
     <string name="privacy_policy">Privacy policy</string>
+    <string name="local_media_scan_completed">Local media scanning has completed</string>
+    <string name="local_media_scan_completed_description">The initial scanning of the local media of your device has completed. Tap here to open the app</string>
 </resources>
