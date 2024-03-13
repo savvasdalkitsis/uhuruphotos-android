@@ -387,4 +387,5 @@
     <string name="local_media">Local media</string>
     <string name="local_media_rescan">Re-scan local media from scratch</string>
     <string name="remember_choice">Remember choice</string>
+    <string name="privacy_policy">Privacy policy</string>
 </resources>

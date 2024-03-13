@@ -18,7 +18,6 @@ package com.savvasdalkitsis.uhuruphotos.feature.welcome.view.implementation.ui.c
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.sizeIn
 import androidx.compose.material.OutlinedButton
@@ -29,11 +28,14 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.savvasdalkitsis.uhuruphotos.feature.welcome.view.implementation.R.raw
 import com.savvasdalkitsis.uhuruphotos.feature.welcome.view.implementation.seam.actions.LogOut
+import com.savvasdalkitsis.uhuruphotos.feature.welcome.view.implementation.seam.actions.NavigateToPrivacyPolicy
 import com.savvasdalkitsis.uhuruphotos.feature.welcome.view.implementation.seam.actions.ShowLibrePhotosHelp
 import com.savvasdalkitsis.uhuruphotos.feature.welcome.view.implementation.seam.actions.WelcomeAction
 import com.savvasdalkitsis.uhuruphotos.feature.welcome.view.implementation.ui.state.WelcomeState
+import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.R.drawable
 import com.savvasdalkitsis.uhuruphotos.foundation.permissions.api.ui.PermissionsState
-import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R
+import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
+import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.IconOutlineButton
 
 @Composable
 internal fun WelcomeLoadedContent(
@@ -44,17 +46,22 @@ internal fun WelcomeLoadedContent(
     Column(
         verticalArrangement = Arrangement.spacedBy(8.dp)
     ) {
-        if (state.cloudMediaSelected) {
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.spacedBy(32.dp),
-            ) {
-                Spacer(modifier = Modifier.weight(1f))
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.spacedBy(32.dp),
+        ) {
+            IconOutlineButton(
+                modifier = Modifier.weight(1f),
+                icon = drawable.ic_book_open,
+                onClick = { action(NavigateToPrivacyPolicy) },
+                text = stringResource(string.privacy_policy)
+            )
+            if (state.cloudMediaSelected) {
                 OutlinedButton(
                     modifier = Modifier.weight(1f),
                     onClick = { action(LogOut) }
                 ) {
-                    Text(stringResource(R.string.log_out))
+                    Text(stringResource(string.log_out))
                 }
             }
         }
@@ -64,14 +71,14 @@ internal fun WelcomeLoadedContent(
         ) {
             WelcomeUseCase(
                 raw.animation_local_media,
-                R.string.manage_media_on_device,
+                string.manage_media_on_device,
                 state.localMediaSelected,
             ) {
                 permissionState.askForPermissions()
             }
             WelcomeUseCase(
                 if (state.localMediaSelected) raw.animation_cloud_backup else raw.animation_cloud,
-                if (state.localMediaSelected) R.string.backup_media_on_cloud else R.string.manage_media_on_cloud,
+                if (state.localMediaSelected) string.backup_media_on_cloud else string.manage_media_on_cloud,
                 state.cloudMediaSelected,
             ) {
                 action(ShowLibrePhotosHelp)

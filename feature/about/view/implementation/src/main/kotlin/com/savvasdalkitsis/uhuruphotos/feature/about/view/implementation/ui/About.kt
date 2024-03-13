@@ -44,6 +44,7 @@ import com.mikepenz.aboutlibraries.ui.compose.LibrariesContainer
 import com.savvasdalkitsis.uhuruphotos.feature.about.view.implementation.seam.actions.AboutAction
 import com.savvasdalkitsis.uhuruphotos.feature.about.view.implementation.seam.actions.Donate
 import com.savvasdalkitsis.uhuruphotos.feature.about.view.implementation.seam.actions.NavigateToGithub
+import com.savvasdalkitsis.uhuruphotos.feature.about.view.implementation.seam.actions.NavigateToPrivacyPolicy
 import com.savvasdalkitsis.uhuruphotos.feature.about.view.implementation.seam.actions.SendFeedback
 import com.savvasdalkitsis.uhuruphotos.feature.about.view.implementation.ui.state.AboutState
 import com.savvasdalkitsis.uhuruphotos.foundation.compose.api.recomposeHighlighter
@@ -52,6 +53,7 @@ import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
 import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.PreviewAppTheme
 import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.ThemeMode
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.CommonScaffold
+import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.IconOutlineButton
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.UpNavButton
 import my.nanihadesuka.compose.InternalLazyColumnScrollbar
 import my.nanihadesuka.compose.ScrollbarSelectionMode
@@ -161,20 +163,35 @@ private fun AboutHeader(
                 Text(text = stringResource(string.donate))
             }
         }
-        OutlinedButton(
+        Row(
             modifier = Modifier
                 .recomposeHighlighter()
                 .fillMaxWidth(),
-            onClick = { action(SendFeedback) },
+            horizontalArrangement = spacedBy(8.dp),
         ) {
-            Icon(
-                painter = painterResource(drawable.ic_feedback),
-                contentDescription = null
+            OutlinedButton(
+                modifier = Modifier
+                    .recomposeHighlighter()
+                    .weight(1f),
+                onClick = { action(SendFeedback) },
+            ) {
+                Icon(
+                    painter = painterResource(drawable.ic_feedback),
+                    contentDescription = null
+                )
+                Spacer(
+                    modifier = Modifier
+                        .recomposeHighlighter()
+                        .width(8.dp)
+                )
+                Text(text = stringResource(string.feedback))
+            }
+            IconOutlineButton(
+                modifier = Modifier.weight(1f),
+                icon = drawable.ic_book_open,
+                onClick = { action(NavigateToPrivacyPolicy) },
+                text = stringResource(string.privacy_policy)
             )
-            Spacer(modifier = Modifier
-                .recomposeHighlighter()
-                .width(8.dp))
-            Text(text = stringResource(string.feedback))
         }
     }
 }
