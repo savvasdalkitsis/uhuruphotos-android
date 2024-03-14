@@ -58,4 +58,7 @@ interface LocalMediaUseCase {
 
     fun markLocalMediaSyncedBefore(synced: Boolean)
     fun hasLocalMediaBeenSyncedBefore(): Boolean
+    fun startScanningOtherFolders()
+    fun doNotScanOtherFolders()
+    fun areOtherFoldersBeingScanned(): Flow<Boolean>
 }

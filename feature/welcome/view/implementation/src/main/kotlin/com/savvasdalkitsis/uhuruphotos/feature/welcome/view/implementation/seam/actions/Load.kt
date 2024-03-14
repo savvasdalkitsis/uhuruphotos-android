@@ -36,6 +36,7 @@ data object Load : WelcomeAction() {
         welcomeUseCase.observeWelcomeStatus().map { status ->
             if (!status.hasLocalAccess) {
                 localMediaUseCase.markLocalMediaSyncedBefore(false)
+                localMediaUseCase.doNotScanOtherFolders()
             }
             SetUseCases(
                 localMediaSelected = status.hasLocalAccess,

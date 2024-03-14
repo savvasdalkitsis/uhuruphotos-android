@@ -25,6 +25,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.implementation
 import com.savvasdalkitsis.uhuruphotos.foundation.preferences.api.PlainTextPreferences
 import com.savvasdalkitsis.uhuruphotos.foundation.preferences.api.Preferences
 import com.savvasdalkitsis.uhuruphotos.foundation.preferences.api.get
+import com.savvasdalkitsis.uhuruphotos.foundation.preferences.api.observe
 import com.savvasdalkitsis.uhuruphotos.foundation.preferences.api.set
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
@@ -40,13 +41,14 @@ class LocalMediaFolderRepository @Inject constructor(
 ) {
 
     // string value needs to remain as is for backwards compatibility
-    private val defaultFolderId = "defaultBucketId"
+    private val keyDefaultFolderId = "defaultBucketId"
+    private val keyShouldScanOtherFolders = "keyShouldScanOtherFolders"
 
-    suspend fun getDefaultLocalFolderId(): Int? = preferences.get<Int?>(defaultFolderId, null) ?:
+    suspend fun getDefaultLocalFolderId(): Int? = preferences.get<Int?>(keyDefaultFolderId, null) ?:
         localMediaService.getDefaultBucketId()?.also(::setDefaultFolderId)
 
     fun setDefaultFolderId(folderId: Int) {
-        preferences.set(defaultFolderId, folderId)
+        preferences.set(keyDefaultFolderId, folderId)
     }
 
     fun observeFolders(): Flow<Set<LocalMediaFolder>> =
@@ -58,6 +60,20 @@ class LocalMediaFolderRepository @Inject constructor(
 
     suspend fun getFolders(): Set<LocalMediaFolder> =
         localMediaItemDetailsQueries.getBuckets().awaitList().toMediaBuckets()
+
+    fun shouldScanOtherFolders(): Boolean =
+        // true by default for users that had the app before this was introduced
+        // will be set to false during Welcome
+        preferences.get(keyShouldScanOtherFolders, true)
+
+    fun observeScanningOtherFolders(): Flow<Boolean> =
+        // true by default for users that had the app before this was introduced
+        // will be set to false during Welcome
+        preferences.observe(keyShouldScanOtherFolders, true)
+
+    fun setScanningOtherFolders(scanning: Boolean) {
+        preferences.set(keyShouldScanOtherFolders, scanning)
+    }
 
     private fun List<GetBuckets>.toMediaBuckets(): Set<LocalMediaFolder> = map {
         LocalMediaFolder(it.bucketId, it.bucketName)

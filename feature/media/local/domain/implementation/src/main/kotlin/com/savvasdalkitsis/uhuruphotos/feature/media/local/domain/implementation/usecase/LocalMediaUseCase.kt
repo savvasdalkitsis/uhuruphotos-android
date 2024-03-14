@@ -48,6 +48,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.implementation
 import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.implementation.repository.LocalMediaRepository
 import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.implementation.repository.MediaStoreVersionRepository
 import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.implementation.worker.LocalMediaSyncWorker
+import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.implementation.worker.LocalMediaWorkScheduler
 import com.savvasdalkitsis.uhuruphotos.foundation.date.api.DateDisplayer
 import com.savvasdalkitsis.uhuruphotos.foundation.date.api.module.DateModule.ParsingDateFormat
 import com.savvasdalkitsis.uhuruphotos.foundation.date.api.module.DateModule.ParsingDateTimeFormat
@@ -86,6 +87,7 @@ class LocalMediaUseCase @Inject constructor(
     private val mediaStoreVersionRepository: MediaStoreVersionRepository,
     private val workerStatusUseCase: WorkerStatusUseCase,
     private val bitmapUseCase: BitmapUseCase,
+    private val localMediaWorkScheduler: LocalMediaWorkScheduler,
 ) : LocalMediaUseCase {
 
     private val apiQPermissions = if (SDK_INT >= Q) {
@@ -246,6 +248,18 @@ class LocalMediaUseCase @Inject constructor(
         resetMediaStoreIfNeeded()
         localMediaRepository.refresh(onProgressChange)
     }
+
+    override fun startScanningOtherFolders() {
+        localMediaFolderRepository.setScanningOtherFolders(true)
+        localMediaWorkScheduler.scheduleLocalMediaSyncNow()
+    }
+
+    override fun doNotScanOtherFolders() {
+        localMediaFolderRepository.setScanningOtherFolders(false)
+    }
+
+    override fun areOtherFoldersBeingScanned(): Flow<Boolean> =
+        localMediaFolderRepository.observeScanningOtherFolders()
 
     private fun checkPermissions(vararg permissions: String): LocalPermissions {
         val missing = permissions.filter {

@@ -23,6 +23,7 @@ sealed class LibraryLocalMedia {
     data class RequiresPermissions(val deniedPermissions: List<String>) : LibraryLocalMedia()
 
     data class Found(
-        val buckets: List<Pair<LocalMediaFolder, VitrineState>>
+        val buckets: List<Pair<LocalMediaFolder, VitrineState>>,
+        val scanningOtherFolders: Boolean,
     ) : LibraryLocalMedia()
 }

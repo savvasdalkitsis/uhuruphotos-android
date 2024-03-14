@@ -34,7 +34,9 @@ import com.savvasdalkitsis.uhuruphotos.feature.library.view.implementation.ui.st
 import com.savvasdalkitsis.uhuruphotos.feature.library.view.implementation.ui.state.LibraryLocalMedia
 import com.savvasdalkitsis.uhuruphotos.feature.library.view.implementation.ui.state.LibraryState
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItem
-import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemsOnDevice
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemsOnDevice.Error
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemsOnDevice.Found
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemsOnDevice.RequiresPermissions
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.state.CelState
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.state.VitrineState
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.state.toCel
@@ -43,6 +45,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.model.Loca
 import com.savvasdalkitsis.uhuruphotos.feature.welcome.domain.api.usecase.flow
 import com.savvasdalkitsis.uhuruphotos.foundation.coroutines.api.safelyOnStartIgnoring
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.flowOf
@@ -81,25 +84,24 @@ data object Load : LibraryAction() {
 
     context(LibraryActionsContext)
     private fun localAlbums() =
-        mediaUseCase.observeLocalMedia()
-            .debounce(200)
-            .map { media ->
-                when (media) {
-                    is MediaItemsOnDevice.Found -> {
-                        refreshLocalMedia()
-                        val primary = listOfNotNull(media.primaryFolder)
-                        val vitrines = (primary + media.mediaFolders).map { it.toVitrine() }
-                        LibraryLocalMedia.Found(vitrines)
-                    }
-
-                    is MediaItemsOnDevice.RequiresPermissions ->
-                        LibraryLocalMedia.RequiresPermissions(media.deniedPermissions)
-
-                    is MediaItemsOnDevice.Error -> LibraryLocalMedia.Found(emptyList())
+        combine(
+            mediaUseCase.observeLocalMedia()
+                .debounce(200),
+            localMediaUseCase.areOtherFoldersBeingScanned(),
+        ) { media, scanningOtherFolders ->
+            when (media) {
+                is Found -> {
+                    refreshLocalMedia()
+                    val primary = listOfNotNull(media.primaryFolder)
+                    val vitrines = (primary + media.mediaFolders).map { it.toVitrine() }
+                    LibraryLocalMedia.Found(vitrines, scanningOtherFolders)
                 }
+
+                is RequiresPermissions ->
+                    LibraryLocalMedia.RequiresPermissions(media.deniedPermissions)
+                is Error -> LibraryLocalMedia.Found(emptyList(), scanningOtherFolders)
             }
-            .distinctUntilChanged()
-            .map(::DisplayLocalAlbums)
+        }.distinctUntilChanged().map(::DisplayLocalAlbums)
 
     context(LibraryActionsContext)
     private fun userAlbums() = welcomeUseCase.flow(

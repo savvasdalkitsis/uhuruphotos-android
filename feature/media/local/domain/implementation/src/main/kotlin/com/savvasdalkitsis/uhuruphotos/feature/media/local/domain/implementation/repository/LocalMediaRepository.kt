@@ -96,11 +96,16 @@ class LocalMediaRepository @Inject constructor(
     ) {
         val camera = localMediaFolderRepository.getDefaultLocalFolderId()
         val cameraPhotos = (camera?.let { localMediaService.getPhotosForBucket(it) } ?: emptyList())
-            .sortedByDescending { it.dateTaken }
         val cameraVideos = (camera?.let { localMediaService.getVideosForBucket(it) } ?: emptyList())
-            .sortedByDescending { it.dateTaken }
-        val photos = localMediaService.getPhotos() - cameraPhotos.toSet()
-        val videos = localMediaService.getVideos() - cameraVideos.toSet()
+
+        val photos = when {
+            localMediaFolderRepository.shouldScanOtherFolders() -> localMediaService.getPhotos() - cameraPhotos.toSet()
+            else -> emptySet()
+        }
+        val videos =  when {
+            localMediaFolderRepository.shouldScanOtherFolders() -> localMediaService.getVideos() - cameraVideos.toSet()
+            else -> emptySet()
+        }
         val cameraItems = (cameraPhotos + cameraVideos).sortedByDescending { it.dateTaken }
         (cameraItems + photos + videos)
             .processAndInsertItems(onProgressChange = onProgressChange)
@@ -249,6 +254,7 @@ class LocalMediaRepository @Inject constructor(
 
     fun hasLocalMediaBeenSyncedBefore(): Boolean =
         // true by default for users that had the app before this was introduced
+        // will be set to false during Welcome
         preferences.get(keyLocalSyncedBefore, true)
 
     private val thumbWidth = 400

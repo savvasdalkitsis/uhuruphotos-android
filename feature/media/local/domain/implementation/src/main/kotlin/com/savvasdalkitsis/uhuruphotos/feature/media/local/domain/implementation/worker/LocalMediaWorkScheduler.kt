@@ -18,12 +18,10 @@ package com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.implementatio
 import androidx.work.ExistingWorkPolicy
 import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.worker.LocalMediaWorkScheduler
 import com.savvasdalkitsis.uhuruphotos.foundation.worker.api.usecase.WorkScheduleUseCase
-import dagger.hilt.android.scopes.ActivityRetainedScoped
 import se.ansman.dagger.auto.AutoBind
 import javax.inject.Inject
 
 @AutoBind
-@ActivityRetainedScoped
 class LocalMediaWorkScheduler @Inject constructor(
     private val workScheduleUseCase: WorkScheduleUseCase,
 ): LocalMediaWorkScheduler {
@@ -33,6 +31,14 @@ class LocalMediaWorkScheduler @Inject constructor(
             workName = LocalMediaSyncWorker.WORK_NAME,
             klass = LocalMediaSyncWorker::class,
             existingWorkPolicy = ExistingWorkPolicy.KEEP,
+        )
+    }
+
+    override fun scheduleLocalMediaSyncNow() {
+        workScheduleUseCase.scheduleNow(
+            workName = LocalMediaSyncWorker.WORK_NAME,
+            klass = LocalMediaSyncWorker::class,
+            existingWorkPolicy = ExistingWorkPolicy.REPLACE,
         )
     }
 
