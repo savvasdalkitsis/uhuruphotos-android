@@ -33,6 +33,7 @@ import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.FullLoading
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.SelectionMode.SELECTED
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.SelectionMode.UNSELECTED
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.UpNavButton
+import kotlinx.collections.immutable.persistentListOf
 import kotlinx.collections.immutable.toPersistentList
 
 @Composable
@@ -45,7 +46,7 @@ internal fun Portfolio(
         navigationIcon = { UpNavButton() },
     ) { contentPadding ->
         when(state.localMedia) {
-            is Found -> PortfolioGrid(contentPadding, state.localMedia, action)
+            is Found -> PortfolioGrid(contentPadding, state.localMedia, state.showScanOther, action)
             Loading -> FullLoading()
             is RequiresPermissions -> PortfolioMissingPermissions(state.localMedia.deniedPermissions)
         }
@@ -60,6 +61,17 @@ private fun PortfolioPreview() {
             Found(
                 List(50) { state(it) }.toPersistentList()
             )
+        ))
+    }
+}
+
+@Preview
+@Composable
+private fun PortfolioNotOthersPreview() {
+    PreviewAppTheme {
+        Portfolio(state = PortfolioState(
+            localMedia = Found(persistentListOf(state(1))),
+            showScanOther = true,
         ))
     }
 }
@@ -81,7 +93,7 @@ private fun PortfolioNoPermissionsPreview() {
 }
 
 @Composable
-private fun state(index: Int) = PortfolioCelState(
+internal fun state(index: Int) = PortfolioCelState(
     selection = if (index % 2 == 0) SELECTED else UNSELECTED,
     clickable = index > 0,
     folder = LocalMediaFolder(index, "Folder $index"),

@@ -16,19 +16,30 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.feature.portfolio.view.implementation.ui
 
 import androidx.compose.foundation.layout.Arrangement.spacedBy
+import androidx.compose.foundation.layout.BoxScope
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.savvasdalkitsis.uhuruphotos.feature.portfolio.view.implementation.seam.actions.PortfolioAction
+import com.savvasdalkitsis.uhuruphotos.feature.portfolio.view.implementation.seam.actions.StartScanningOtherFolders
 import com.savvasdalkitsis.uhuruphotos.feature.portfolio.view.implementation.ui.state.PortfolioItems
+import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.R.drawable
+import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.PreviewAppTheme
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.layout.plus
+import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.IconOutlineButton
+import kotlinx.collections.immutable.persistentListOf
+import kotlinx.collections.immutable.toPersistentList
 
 @Composable
-fun PortfolioGrid(
-    contentPadding: PaddingValues,
+fun BoxScope.PortfolioGrid(
+    contentPadding: PaddingValues = PaddingValues(),
     localMedia: PortfolioItems.Found,
+    showScanOther: Boolean,
     action: (PortfolioAction) -> Unit
 ) {
     val padding = 4.dp
@@ -43,5 +54,39 @@ fun PortfolioGrid(
                 PortfolioCel(cel, action)
             }
         }
+    }
+    if (showScanOther) {
+        IconOutlineButton(
+            modifier = Modifier.align(Alignment.Center),
+            icon = drawable.ic_folder,
+            text = "Scan other device folders",
+        ) {
+            action(StartScanningOtherFolders)
+        }
+    }
+}
+@Preview
+@Composable
+private fun PortfolioGridPreview() {
+    PreviewAppTheme {
+        PortfolioGrid(
+            localMedia = PortfolioItems.Found(
+                List(50) { state(it) }.toPersistentList()
+            ),
+            showScanOther = false,
+        ) {}
+    }
+}
+
+@Preview
+@Composable
+private fun PortfolioGridNotOthersPreview() {
+    PreviewAppTheme {
+        PortfolioGrid(
+            localMedia = PortfolioItems.Found(
+                persistentListOf(state(1))
+            ),
+            showScanOther = true,
+        ) {}
     }
 }

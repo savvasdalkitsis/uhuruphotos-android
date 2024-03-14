@@ -17,6 +17,8 @@ package com.savvasdalkitsis.uhuruphotos.foundation.theme.api
 
 import android.graphics.drawable.ColorDrawable
 import androidx.compose.foundation.isSystemInDarkTheme
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.BoxScope
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.material.darkColors
@@ -124,7 +126,7 @@ fun AppTheme(
 @Composable
 fun PreviewAppTheme(
     theme: ThemeMode = ThemeMode.LIGHT_MODE,
-    content: @Composable () -> Unit,
+    content: @Composable BoxScope.() -> Unit,
 ) {
     val drawable = ColorDrawable(android.graphics.Color.CYAN)
     val imageLoader = ImageLoader.Builder(LocalContext.current)
@@ -141,7 +143,9 @@ fun PreviewAppTheme(
     ) {
         AppTheme(theme = theme) {
             Surface {
-                content()
+                Box {
+                    content()
+                }
             }
         }
     }

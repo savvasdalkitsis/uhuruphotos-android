@@ -32,9 +32,9 @@ import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.SelectionMode.SELECT
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.SelectionMode.UNDEFINED
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.SelectionMode.UNSELECTED
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.emitAll
 import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.flow.map
 
 data class Load(val route: PortfolioNavigationRoute) : PortfolioAction() {
 
@@ -42,7 +42,10 @@ data class Load(val route: PortfolioNavigationRoute) : PortfolioAction() {
     override fun handle(state: PortfolioState): Flow<Mutation<PortfolioState>> = flow {
         emit(PortfolioMutation.ChangeTitle(route.title))
         emitAll(
-            portfolioUseCase.observePortfolio().map { portfolio ->
+            combine(
+                portfolioUseCase.observePortfolio(),
+                localMediaUseCase.areOtherFoldersBeingScanned(),
+            ) { portfolio, scanningOther ->
                 when(portfolio) {
                     is Found -> PortfolioMutation.DisplayPortfolio(portfolio.items.map { item ->
                         PortfolioCelState(
@@ -58,7 +61,7 @@ data class Load(val route: PortfolioNavigationRoute) : PortfolioAction() {
                             folder = item.folder,
                             vitrine = VitrineState(item.items.map { it.toCel() }),
                         )
-                    })
+                    }, scanningOther)
                     is RequiresPermissions -> RequestPermissions(portfolio.deniedPermissions)
                     Error -> ShowError
                 }
