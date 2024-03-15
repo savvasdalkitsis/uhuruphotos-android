@@ -22,6 +22,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
 import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.PreviewAppTheme
+import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.AlertText
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.YesNoDialog
 import dev.shreyaspatil.permissionflow.compose.rememberPermissionFlowRequestLauncher
 
@@ -43,6 +44,9 @@ internal fun PermissionsShowRationaleDialog(
         no = stringResource(string.cancel),
     ) {
         Text(stringResource(string.need_permissions_to_manage_gallery))
+        AlertText(
+            text = stringResource(string.local_media_scan_warning)
+        )
     }
 }
 

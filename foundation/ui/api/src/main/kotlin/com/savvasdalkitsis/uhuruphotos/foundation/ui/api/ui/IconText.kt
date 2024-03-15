@@ -41,11 +41,12 @@ fun IconText(
     @DrawableRes icon: Int,
     text: String,
     style: TextStyle = LocalTextStyle.current,
-    tint: Color = LocalContentColor.current.copy(alpha = LocalContentAlpha.current)
+    tint: Color = LocalContentColor.current.copy(alpha = LocalContentAlpha.current),
+    verticalAlignment: Alignment.Vertical = Alignment.CenterVertically,
 ) {
     Row(
         modifier = modifier,
-        verticalAlignment = Alignment.CenterVertically
+        verticalAlignment = verticalAlignment,
     ) {
         Icon(
             painter = painterResource(id = icon),
