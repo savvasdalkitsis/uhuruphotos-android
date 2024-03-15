@@ -1,0 +1,4 @@
+* Adding link to privacy policy to welcome and about screens
+* Scanning only the camera folder by default. A new button to scan other folders is added to the library and local folders view
+* Showing a notification when the initial scan finished to prompt the user to return to the app
+* Showing a warning to the user about the initial scan potentially taking a long time
