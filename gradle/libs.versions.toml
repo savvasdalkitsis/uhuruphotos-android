@@ -1,5 +1,5 @@
 [versions]
-about = "10.10.0"
+about = "11.1.0"
 accompanist = "0.34.0"
 agp = "8.3.0"
 androidx-hilt = "1.2.0"
@@ -18,7 +18,7 @@ kotlin = "1.9.22"
 kotlinx = "1.8.0"
 lumberjack = "6.0.2"
 media3 = "1.3.0"
-mockk = "1.13.9"
+mockk = "1.13.10"
 moshi = "1.15.1"
 okhttp = "5.0.0-alpha.11"
 permissions = "1.2.0"
@@ -130,7 +130,7 @@ lumberjack-extension-feedback = { module = "com.github.MFlisar.Lumberjack:extens
 lumberjack-extension-notification = { module = "com.github.MFlisar.Lumberjack:extension-notification", version.ref = "lumberjack" }
 lumberjack-extension-viewer = { module = "com.github.MFlisar.Lumberjack:extension-viewer", version.ref = "lumberjack" }
 mapbox = "com.mapbox.maps:android:10.9.1"
-maplibre = "org.maplibre.gl:android-sdk:10.2.0"
+maplibre = "org.maplibre.gl:android-sdk:10.3.0"
 maplibre-annotations = "org.maplibre.gl:android-plugin-annotation-v9:2.0.2"
 maps = { module = "com.google.android.gms:play-services-maps", version.ref = "gms" }
 maps-compose = "com.google.maps.android:maps-compose:4.3.3"
@@ -150,7 +150,7 @@ remember = "dev.burnoo:compose-remember-preference:1.0.2"
 reorder = "org.burnoutcrew.composereorderable:reorderable:0.9.6"
 resaca-core = { module = "io.github.sebaslogen:resaca", version.ref = "resaca" }
 resaca-hilt = { module = "io.github.sebaslogen:resacahilt", version.ref = "resaca" }
-result = "com.michael-bull.kotlin-result:kotlin-result:1.1.18"
+result = "com.michael-bull.kotlin-result:kotlin-result:1.1.20"
 result-coroutines = "com.michael-bull.kotlin-result:kotlin-result-coroutines:1.1.20"
 retrofit-core = { module = "com.squareup.retrofit2:retrofit", version.ref = "retrofit" }
 retrofit-moshi = { module = "com.squareup.retrofit2:converter-moshi", version.ref = "retrofit" }
