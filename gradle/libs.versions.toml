@@ -151,7 +151,7 @@ reorder = "org.burnoutcrew.composereorderable:reorderable:0.9.6"
 resaca-core = { module = "io.github.sebaslogen:resaca", version.ref = "resaca" }
 resaca-hilt = { module = "io.github.sebaslogen:resacahilt", version.ref = "resaca" }
 result = "com.michael-bull.kotlin-result:kotlin-result:1.1.20"
-result-coroutines = "com.michael-bull.kotlin-result:kotlin-result-coroutines:1.1.20"
+result-coroutines = "com.michael-bull.kotlin-result:kotlin-result-coroutines:1.1.21"
 retrofit-core = { module = "com.squareup.retrofit2:retrofit", version.ref = "retrofit" }
 retrofit-moshi = { module = "com.squareup.retrofit2:converter-moshi", version.ref = "retrofit" }
 scrollbar = "com.github.nanihadesuka:LazyColumnScrollbar:1.9.0"
