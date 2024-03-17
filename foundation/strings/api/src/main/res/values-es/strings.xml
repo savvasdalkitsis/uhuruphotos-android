@@ -394,4 +394,15 @@
     <string name="cloud_sync_charging_changed">Cambian los requisitos de tarificación para la sincronización en la nube</string>
     <string name="cloud_sync_network_changed">Cambian los requisitos de red para la sincronización en la nube</string>
     <string name="privacy_policy">Política de privacidad</string>
+    <string name="local_media_scan_completed">El escaneo de medios locales ha sido completado</string>
+    <string name="local_media_scan_completed_description">El escaneo inicial de los medios locales de tu dispositivo ha sido completado. Toque aquí para abrir la aplicación</string>
+    <string name="local_media_scan_warning">La aplicacion iniciará el escaneo de la carpeta de tu cámara, la cual, dependiendo de la cantidad de medios en ella, podría tomar mucho tiempo y usar algo de tu batería. Este es un proceso de una vez.</string>
+    <string name="view_logs">Registros de vistas</string>
+    <string name="logs">Registros</string>
+    <string name="unsecured_server">Servidor no asegurado</string>
+    <string name="unsecured_server_are_you_sure">¿Estás seguro que quieres conectarte a un servidor no asegurado?</string>
+    <string name="unsecured_server_not_encrypted">El servidor se comunica sobre http plano y no está encriptado: %s</string>
+    <string name="local_media">Medios locales</string>
+    <string name="local_media_rescan">Reescanear medios locales desde cero</string>
+    <string name="remember_choice">Recordar elecciones</string>
 </resources>
