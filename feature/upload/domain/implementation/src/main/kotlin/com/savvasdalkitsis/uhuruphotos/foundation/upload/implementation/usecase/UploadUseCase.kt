@@ -19,7 +19,7 @@ import androidx.work.NetworkType
 import com.github.michaelbull.result.Err
 import com.github.michaelbull.result.Ok
 import com.github.michaelbull.result.Result
-import com.github.michaelbull.result.coroutines.binding.binding
+import com.github.michaelbull.result.coroutines.coroutineBinding
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.media.upload.ProcessingMediaItems
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.user.User
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.toMediaItemHash
@@ -129,7 +129,7 @@ class UploadUseCase @Inject constructor(
         item: UploadItem,
         force: Boolean,
         progress: suspend (current: Long, total: Long) -> Unit,
-    ): SimpleResult = binding {
+    ): SimpleResult = coroutineBinding {
         val mediaItem = localMediaItem(item).bind()
         val user = userUseCase.getRemoteUserOrRefresh().bind()
 

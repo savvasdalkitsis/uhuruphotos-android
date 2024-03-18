@@ -19,8 +19,6 @@ import android.content.Context
 import androidx.hilt.work.HiltWorker
 import androidx.work.CoroutineWorker
 import androidx.work.WorkerParameters
-import com.github.michaelbull.result.Err
-import com.github.michaelbull.result.Ok
 import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.implementation.repository.RemoteMediaRepository
 import com.savvasdalkitsis.uhuruphotos.foundation.notification.api.ForegroundInfoBuilder
 import com.savvasdalkitsis.uhuruphotos.foundation.notification.api.NotificationChannels
@@ -36,15 +34,17 @@ class RemoteMediaItemDetailsRetrieveWorker @AssistedInject constructor(
     private val foregroundInfoBuilder: ForegroundInfoBuilder,
 ) : CoroutineWorker(context, params) {
 
-    override suspend fun doWork(): Result =
-        when (remoteMediaRepository.refreshDetailsNow(params.inputData.getString(KEY_ID)!!)) {
-            is Ok -> Result.success()
-            is Err -> if (params.runAttemptCount < 2) {
+    override suspend fun doWork(): Result {
+        val result = remoteMediaRepository.refreshDetailsNow(params.inputData.getString(KEY_ID)!!)
+        return when  {
+            result.isOk -> Result.success()
+            else -> if (params.runAttemptCount < 2) {
                 Result.retry()
             } else {
                 Result.failure()
             }
         }
+    }
 
     override suspend fun getForegroundInfo() = foregroundInfoBuilder.build(
         applicationContext,

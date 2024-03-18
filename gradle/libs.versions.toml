@@ -23,6 +23,7 @@ moshi = "1.15.1"
 okhttp = "5.0.0-alpha.11"
 permissions = "1.2.0"
 resaca = "3.2.0"
+result = "2.0.0"
 retrofit = "2.9.0"
 sqldelight = "2.0.1"
 
@@ -150,8 +151,8 @@ remember = "dev.burnoo:compose-remember-preference:1.0.2"
 reorder = "org.burnoutcrew.composereorderable:reorderable:0.9.6"
 resaca-core = { module = "io.github.sebaslogen:resaca", version.ref = "resaca" }
 resaca-hilt = { module = "io.github.sebaslogen:resacahilt", version.ref = "resaca" }
-result = "com.michael-bull.kotlin-result:kotlin-result:1.1.20"
-result-coroutines = "com.michael-bull.kotlin-result:kotlin-result-coroutines:1.1.20"
+result = { module = "com.michael-bull.kotlin-result:kotlin-result", version.ref = "result" }
+result-coroutines = { module = "com.michael-bull.kotlin-result:kotlin-result-coroutines", version.ref = "result" }
 retrofit-core = { module = "com.squareup.retrofit2:retrofit", version.ref = "retrofit" }
 retrofit-moshi = { module = "com.squareup.retrofit2:converter-moshi", version.ref = "retrofit" }
 scrollbar = "com.github.nanihadesuka:LazyColumnScrollbar:1.9.0"
@@ -205,6 +206,10 @@ permissions = [
 resaca = [
     "resaca-core",
     "resaca-hilt",
+]
+result = [
+    "result",
+    "result-coroutines",
 ]
 test = [
     "junit",

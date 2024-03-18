@@ -15,7 +15,6 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.catalogue.user.view.implementation.seam
 
-import com.github.michaelbull.result.Err
 import com.savvasdalkitsis.uhuruphotos.feature.auth.domain.api.usecase.ServerUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.catalogue.user.domain.api.usecase.UserAlbumsUseCase
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.Navigator
@@ -39,7 +38,7 @@ class UserAlbumsActionsContext @Inject constructor(
     suspend fun refreshAlbums() {
         _loading.emit(true)
         val result = userAlbumsUseCase.refreshUserAlbums()
-        if (result is Err) {
+        if (result.isErr) {
             toaster.show(R.string.error_loading_user_albums)
         }
         // delaying to give ui time to receive the new albums before

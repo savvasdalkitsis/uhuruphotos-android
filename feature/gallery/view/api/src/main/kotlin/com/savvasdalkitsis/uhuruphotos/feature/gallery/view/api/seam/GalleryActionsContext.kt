@@ -15,7 +15,6 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam
 
-import com.github.michaelbull.result.Err
 import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.CollageDisplay
 import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.PredefinedCollageDisplay
 import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.GalleryMutation.Loading
@@ -72,7 +71,7 @@ class GalleryActionsContext @AssistedInject constructor(
     suspend fun refreshGallery() {
         _loading.emit(Loading(true))
         val result = galleryRefresher(galleryId.id)
-        if (result is Err) {
+        if (result.isErr) {
             toaster.show(R.string.error_loading_album)
         }
         _loading.emit(Loading(false))

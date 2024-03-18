@@ -17,7 +17,7 @@ package com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.model
 
 sealed class LocalMediaItemDeletion {
 
-    object Success : LocalMediaItemDeletion()
+    data object Success : LocalMediaItemDeletion()
     data class Error(val e: Throwable) : LocalMediaItemDeletion()
     data class RequiresPermissions(val deniedPermissions: List<String>) : LocalMediaItemDeletion()
 }

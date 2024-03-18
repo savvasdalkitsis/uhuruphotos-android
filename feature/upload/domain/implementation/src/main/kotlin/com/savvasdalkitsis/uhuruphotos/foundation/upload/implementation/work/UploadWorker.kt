@@ -18,13 +18,13 @@ package com.savvasdalkitsis.uhuruphotos.foundation.upload.implementation.work
 import android.content.Context
 import androidx.hilt.work.HiltWorker
 import androidx.work.WorkerParameters
-import com.github.michaelbull.result.Err
-import com.github.michaelbull.result.Ok
+import com.github.michaelbull.result.Result
 import com.savvasdalkitsis.uhuruphotos.feature.upload.domain.api.model.UploadItem
 import com.savvasdalkitsis.uhuruphotos.feature.upload.domain.api.usecase.UploadUseCase
 import com.savvasdalkitsis.uhuruphotos.foundation.log.api.log
 import com.savvasdalkitsis.uhuruphotos.foundation.notification.api.ForegroundInfoBuilder
 import com.savvasdalkitsis.uhuruphotos.foundation.notification.api.ForegroundNotificationWorker
+import com.savvasdalkitsis.uhuruphotos.foundation.result.api.SimpleResult
 import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedInject
@@ -56,13 +56,13 @@ class UploadWorker @AssistedInject constructor(
             updateProgress(current, total)
         }
 
-        return when (result) {
-            is Ok -> Result.success()
-            is Err -> result.failOrRetry(item.id)
+        return when {
+            result.isOk -> Result.success()
+            else -> result.failOrRetry(item.id)
         }
     }
 
-    private fun Err<Throwable>.failOrRetry(itemId: Long) = if (params.runAttemptCount < 4) {
+    private fun SimpleResult.failOrRetry(itemId: Long) = if (params.runAttemptCount < 4) {
         log(error) { "Failed to upload item $itemId, retrying" }
         Result.retry()
     } else {

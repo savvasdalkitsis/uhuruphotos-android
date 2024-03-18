@@ -18,7 +18,7 @@ package com.savvasdalkitsis.uhuruphotos.foundation.upload.implementation.work
 import android.content.Context
 import androidx.hilt.work.HiltWorker
 import androidx.work.WorkerParameters
-import com.github.michaelbull.result.coroutines.binding.binding
+import com.github.michaelbull.result.coroutines.coroutineBinding
 import com.github.michaelbull.result.getOr
 import com.github.michaelbull.result.onFailure
 import com.savvasdalkitsis.uhuruphotos.feature.feed.domain.api.usecase.FeedUseCase
@@ -52,7 +52,7 @@ class UploadPostCompletionWorker @AssistedInject constructor(
 
     private val itemId get() = params.inputData.getLong(KEY_ITEM_ID, -1)
 
-    override suspend fun work(): Result = binding {
+    override suspend fun work(): Result = coroutineBinding {
         val hash = params.inputData.getString(KEY_HASH)!!
         when (val status = mediaUseCase.getRemoteMediaItemSummary(hash).bind()) {
             is Found -> {

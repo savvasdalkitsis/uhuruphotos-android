@@ -15,7 +15,6 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.people.view.implementation.seam
 
-import com.github.michaelbull.result.Err
 import com.savvasdalkitsis.uhuruphotos.feature.auth.domain.api.usecase.ServerUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.people.domain.api.usecase.PeopleUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.people.view.implementation.ui.state.SortOrder
@@ -42,7 +41,7 @@ class PeopleActionsContext @Inject constructor(
     suspend fun refresh() {
         _loading.emit(true)
         val result = peopleUseCase.refreshPeople()
-        if (result is Err) {
+        if (result.isErr) {
             toaster.show(R.string.error_refreshing_people)
         }
         _loading.emit(false)

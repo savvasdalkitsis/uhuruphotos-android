@@ -15,7 +15,6 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.hidden.view.implementation.seam
 
-import com.github.michaelbull.result.Err
 import com.github.michaelbull.result.Ok
 import com.github.michaelbull.result.getOr
 import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.Cluster
@@ -65,7 +64,7 @@ internal class HiddenPhotosAlbumPageActionsContext @Inject constructor(
 
                         else -> Ok(Unit)
                     }
-                    if (proceed is Err) {
+                    if (proceed.isErr) {
                         flow {
                             navigator.navigateUp()
                         }

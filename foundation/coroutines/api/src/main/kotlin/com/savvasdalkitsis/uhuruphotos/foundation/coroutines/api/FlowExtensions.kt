@@ -58,7 +58,7 @@ fun <T> Flow<T>.onStartWithResult(
         .onStart {
             CoroutineScope(currentCoroutineContext() + Dispatchers.IO).launch {
                 val result = block()
-                if (result is Err) {
+                if (result.isErr) {
                     send(Err(result.error))
                 }
             }

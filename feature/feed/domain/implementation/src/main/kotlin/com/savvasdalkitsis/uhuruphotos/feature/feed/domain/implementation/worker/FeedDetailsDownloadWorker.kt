@@ -18,9 +18,7 @@ package com.savvasdalkitsis.uhuruphotos.feature.feed.domain.implementation.worke
 import android.content.Context
 import androidx.hilt.work.HiltWorker
 import androidx.work.WorkerParameters
-import com.github.michaelbull.result.Err
-import com.github.michaelbull.result.Ok
-import com.github.michaelbull.result.coroutines.binding.binding
+import com.github.michaelbull.result.coroutines.coroutineBinding
 import com.savvasdalkitsis.uhuruphotos.feature.feed.domain.api.model.FeedFetchType
 import com.savvasdalkitsis.uhuruphotos.feature.feed.domain.api.usecase.FeedUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.feed.domain.implementation.broadcast.CancelFeedDetailsDownloadWorkBroadcastReceiver
@@ -55,7 +53,7 @@ internal class FeedDetailsDownloadWorker @AssistedInject constructor(
         val items = feedUseCase.observeFeed(FeedFetchType.ALL, loadSmallInitialChunk = false).first()
             .flatMap { it.mediaItems }.mapNotNull { it.id.findRemote }
         val total = items.size
-        val result = binding {
+        val result = coroutineBinding {
             items.forEachIndexed { current, item ->
                 val retrieval = mediaUseCase.refreshDetailsNowIfMissing(item).bind()
                 if (retrieval == CHANGED) {
@@ -65,9 +63,9 @@ internal class FeedDetailsDownloadWorker @AssistedInject constructor(
                 updateProgress(current, total)
             }
         }
-        return when(result) {
-            is Ok -> Result.success()
-            is Err -> failOrRetry()
+        return when {
+            result.isOk -> Result.success()
+            else -> failOrRetry()
         }
     }
 

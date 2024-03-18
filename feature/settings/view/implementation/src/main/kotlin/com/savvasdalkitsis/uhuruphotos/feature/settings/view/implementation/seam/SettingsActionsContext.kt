@@ -68,7 +68,7 @@ internal class SettingsActionsContext @Inject constructor(
                 true,
             )
         }
-        if (proceed is Ok) {
+        if (proceed.isOk) {
             change(required)
         }
     }

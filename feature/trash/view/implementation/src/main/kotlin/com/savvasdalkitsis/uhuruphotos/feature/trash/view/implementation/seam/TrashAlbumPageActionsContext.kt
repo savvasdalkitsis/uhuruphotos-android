@@ -15,7 +15,6 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.trash.view.implementation.seam
 
-import com.github.michaelbull.result.Err
 import com.github.michaelbull.result.Ok
 import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.Cluster
 import com.savvasdalkitsis.uhuruphotos.feature.gallery.view.api.seam.GalleryActionsContextFactory
@@ -63,7 +62,7 @@ internal class TrashAlbumPageActionsContext @Inject constructor(
 
                         else -> Ok(Unit)
                     }
-                    if (proceed is Err) {
+                    if (proceed.isErr) {
                         flow {
                             navigator.navigateUp()
                         }
