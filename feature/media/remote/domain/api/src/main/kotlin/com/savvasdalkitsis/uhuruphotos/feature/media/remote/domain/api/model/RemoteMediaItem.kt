@@ -40,6 +40,18 @@ data class RemoteMediaItem(
     @field:Json(name = "video") val video: Boolean,
     @field:Json(name = "rating") val rating: Int,
     @field:Json(name = "people") val people: List<RemoteMediaItemPeople>?,
+    @field:Json(name = "size") val size: Long?,
+    @field:Json(name = "height") val height: Int?,
+    @field:Json(name = "width") val width: Int?,
+    @field:Json(name = "focal_length") val focalLength: Double?,
+    @field:Json(name = "fstop") val fStop: Double?,
+    @field:Json(name = "iso") val iso: String?,
+    @field:Json(name = "shutter_speed") val shutterSpeed: String?,
+    @field:Json(name = "lens") val lens: String?,
+    @field:Json(name = "camera") val camera: String?,
+    @field:Json(name = "focalLength35Equivalent") val focalLength35Equivalent: String?,
+    @field:Json(name = "digitalZoomRatio") val digitalZoomRatio: String?,
+    @field:Json(name = "subjectDistance") val subjectDistance: String?,
 )
 
 private val RemoteMediaItem.serializePeople: String?
