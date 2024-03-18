@@ -16,6 +16,9 @@ limitations under the License.
 
 package com.savvasdalkitsis.uhuruphotos.foundation.image.api.ui
 
+import android.graphics.drawable.BitmapDrawable
+import android.os.Build.VERSION.SDK_INT
+import android.os.Build.VERSION_CODES.UPSIDE_DOWN_CAKE
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
@@ -24,6 +27,7 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import coil.request.ImageRequest
 import coil.request.SuccessResult
+import com.savvasdalkitsis.uhuruphotos.foundation.image.api.hdr.setHDR
 import me.saket.telephoto.zoomable.ZoomableImage
 import me.saket.telephoto.zoomable.ZoomableImageState
 
@@ -47,6 +51,7 @@ fun FullSizeImage(
             .listener(remember {
                 object : ImageRequest.Listener {
                     override fun onSuccess(request: ImageRequest, result: SuccessResult) {
+                        context.setHDR(result.isHDR)
                         onFullResImageLoaded()
                     }
                 }
@@ -58,3 +63,9 @@ fun FullSizeImage(
         contentDescription = contentDescription,
     )
 }
+
+private val SuccessResult.isHDR: Boolean
+    get() = when {
+        SDK_INT >= UPSIDE_DOWN_CAKE -> (drawable as? BitmapDrawable)?.bitmap?.hasGainmap() == true
+        else -> false
+    }
