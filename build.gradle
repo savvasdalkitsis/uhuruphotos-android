@@ -11,7 +11,6 @@ buildscript {
 }
 plugins {
     alias(libs.plugins.moduleGraph)
-    alias(libs.plugins.scabbard)
     alias(libs.plugins.sonarqube)
 
     alias(libs.plugins.about) apply false
@@ -25,10 +24,6 @@ plugins {
     alias(libs.plugins.powerassert) apply false
     alias(libs.plugins.redacted) apply false
     alias(libs.plugins.sqldelight) apply false
-}
-
-scabbard {
-    enabled true
 }
 
 tasks.register('clean', Delete) {

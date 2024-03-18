@@ -40,7 +40,6 @@ mapsSecrets = "com.google.android.libraries.mapsplatform.secrets-gradle-plugin:2
 moduleGraph = "com.savvasdalkitsis.module-dependency-graph:0.12"
 powerassert = "com.bnorm.power.kotlin-power-assert:0.13.0"
 redacted = "dev.zacsweers.redacted:1.7.1"
-scabbard = "scabbard.gradle:0.5.0"
 sonarqube = "org.sonarqube:4.4.1.3373"
 sqldelight = { id = "app.cash.sqldelight", version.ref = "sqldelight" }
 
