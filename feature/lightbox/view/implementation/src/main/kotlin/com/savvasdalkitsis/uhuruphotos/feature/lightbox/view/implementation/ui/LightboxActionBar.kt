@@ -17,6 +17,7 @@ package com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.ui
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.ScrollState
+import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.runtime.Composable
@@ -37,6 +38,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.ui.state.LightboxState
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemSyncState.LOCAL_ONLY
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemSyncState.REMOTE_ONLY
+import com.savvasdalkitsis.uhuruphotos.foundation.dismiss.api.ui.PullToDismissState
 import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.R.drawable
 import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.ActionIcon
@@ -44,63 +46,72 @@ import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.ToggleableActionIcon
 import kotlinx.coroutines.launch
 
 @Composable
-fun LightboxActionBar(
+fun RowScope.LightboxActionBar(
     state: LightboxState,
     index: Int,
     action: (LightboxAction) -> Unit,
     scrollState: ScrollState,
+    dismissState: PullToDismissState,
 ) {
     val item = state.media[index]
     AnimatedVisibility(visible = state.isLoading) {
         if (state.isLoading) {
-            CircularProgressIndicator(
-                modifier = Modifier
-                    .size(26.dp)
-            )
+            LightboxDismissProgressAware(dismissState) {
+                CircularProgressIndicator(
+                    modifier = Modifier
+                        .size(26.dp)
+                )
+            }
         }
     }
     if (item.showAddToPortfolioIcon) {
-        ToggleableActionIcon(
-            modifier = Modifier.alpha(
-                if (item.addToPortfolioIconEnabled) 1f else 0.7f
-            ),
-            onClick = {
-                action(ContributeToPortfolio(item, !item.inPortfolio))
-            },
-            enabled = item.addToPortfolioIconEnabled,
-            icon = drawable.ic_feed,
-            selected = item.inPortfolio,
-            contentDescription = stringResource(string.show_on_feed)
-        )
+        LightboxDismissProgressAware(dismissState) {
+            ToggleableActionIcon(
+                modifier = Modifier.alpha(
+                    if (item.addToPortfolioIconEnabled) 1f else 0.7f
+                ),
+                onClick = {
+                    action(ContributeToPortfolio(item, !item.inPortfolio))
+                },
+                enabled = item.addToPortfolioIconEnabled,
+                icon = drawable.ic_feed,
+                selected = item.inPortfolio,
+                contentDescription = stringResource(string.show_on_feed)
+            )
+        }
     }
     item.mediaItemSyncState?.let { syncState ->
-        ActionIcon(
-            modifier = Modifier.alpha(syncState.lightBoxIconAlpha),
-            onClick = {
-                if (syncState == REMOTE_ONLY) {
-                    action(DownloadOriginal(item))
-                }
-                if (syncState == LOCAL_ONLY) {
-                    action(UploadToServer(item))
-                }
-            },
-            enabled = syncState.enabled,
-            icon = syncState.lightBoxIcon,
-            contentDescription = stringResource(syncState.contentDescription)
-        )
+        LightboxDismissProgressAware(dismissState) {
+            ActionIcon(
+                modifier = Modifier.alpha(syncState.lightBoxIconAlpha),
+                onClick = {
+                    if (syncState == REMOTE_ONLY) {
+                        action(DownloadOriginal(item))
+                    }
+                    if (syncState == LOCAL_ONLY) {
+                        action(UploadToServer(item))
+                    }
+                },
+                enabled = syncState.enabled,
+                icon = syncState.lightBoxIcon,
+                contentDescription = stringResource(syncState.contentDescription)
+            )
+        }
     }
     AnimatedVisibility(visible = item.showFavouriteIcon && item.isFavourite != null) {
         if (item.showFavouriteIcon && item.isFavourite != null) {
-            ActionIcon(
-                onClick = { action(SetFavourite(!item.isFavourite)) },
-                icon = if (item.isFavourite) drawable.ic_favourite else drawable.ic_not_favourite,
-                contentDescription = stringResource(
-                    when {
-                        item.isFavourite -> string.remove_favourite
-                        else -> string.favourite
-                    }
+            LightboxDismissProgressAware(dismissState) {
+                ActionIcon(
+                    onClick = { action(SetFavourite(!item.isFavourite)) },
+                    icon = if (item.isFavourite) drawable.ic_favourite else drawable.ic_not_favourite,
+                    contentDescription = stringResource(
+                        when {
+                            item.isFavourite -> string.remove_favourite
+                            else -> string.favourite
+                        }
+                    )
                 )
-            )
+            }
         }
     }
     val scope = rememberCoroutineScope()
@@ -114,14 +125,16 @@ fun LightboxActionBar(
         }
     }
     AnimatedVisibility(visible = showInfoButton) {
-        ActionIcon(
-            onClick = {
-                scope.launch {
-                    scrollState.animateScrollTo(threshold + 1)
-                }
-            },
-            icon = drawable.ic_info,
-            contentDescription = stringResource(string.info),
-        )
+        LightboxDismissProgressAware(dismissState) {
+            ActionIcon(
+                onClick = {
+                    scope.launch {
+                        scrollState.animateScrollTo(threshold + 1)
+                    }
+                },
+                icon = drawable.ic_info,
+                contentDescription = stringResource(string.info),
+            )
+        }
     }
 }

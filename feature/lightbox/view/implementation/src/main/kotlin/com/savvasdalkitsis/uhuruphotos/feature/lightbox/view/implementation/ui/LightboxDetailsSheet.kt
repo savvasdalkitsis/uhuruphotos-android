@@ -38,14 +38,13 @@ import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.insets.insetsBottom
 
 @Composable
 fun LightboxDetailsSheet(
-    modifier: Modifier = Modifier,
     state: LightboxState,
     index: Int,
     action: (LightboxAction) -> Unit,
 ) {
     val mediaItem = state.media[index]
     Box(
-        modifier = modifier
+        modifier = Modifier
             .background(MaterialTheme.colors.background)
     ) {
         Column(

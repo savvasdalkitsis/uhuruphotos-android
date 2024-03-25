@@ -15,26 +15,16 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.ui
 
-import androidx.compose.foundation.Image
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableFloatStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.snapshotFlow
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.alpha
-import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.unit.dp
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.actions.ChangedToPage
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.actions.LightboxAction
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.ui.state.LightboxState
-import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.LocalScreenshotState
 import kotlinx.coroutines.flow.collectLatest
 import me.saket.telephoto.zoomable.ZoomSpec
 import me.saket.telephoto.zoomable.rememberZoomableState
@@ -48,26 +38,11 @@ internal fun Lightbox(
         initialPage = state.currentIndex,
         pageCount = { state.media.size },
     )
-    val lightboxAlpha = remember {
-        mutableFloatStateOf(1f)
-    }
 
     LaunchedEffect(state.currentIndex) {
         pagerState.scrollToPage(state.currentIndex)
     }
-    val screenshotState = LocalScreenshotState.current
-    val root by screenshotState.bitmapState
-    root?.let { bitmap ->
-        if (lightboxAlpha.floatValue < 1f) {
-            Box(modifier = Modifier.fillMaxSize()) {
-                Image(bitmap = remember {
-                    bitmap.asImageBitmap()
-                }, contentDescription = null)
-            }
-        }
-    }
     HorizontalPager(
-        modifier = Modifier.alpha(lightboxAlpha.floatValue),
         state = pagerState,
         pageSpacing = 12.dp,
         key = { page -> state.media.getOrNull(page)?.id?.value ?: page.toString() },
@@ -77,7 +52,7 @@ internal fun Lightbox(
             zoomSpec = ZoomSpec(maxZoomFactor = 3f)
         )
         val scrollState = rememberScrollState()
-        LightboxScaffold(state, index, action, lightboxAlpha, zoomableState, scrollState)
+        LightboxScaffold(state, index, action, zoomableState, scrollState)
         if (pagerState.settledPage != index) {
             LaunchedEffect(Unit) {
                 zoomableState.resetZoom(withAnimation = false)

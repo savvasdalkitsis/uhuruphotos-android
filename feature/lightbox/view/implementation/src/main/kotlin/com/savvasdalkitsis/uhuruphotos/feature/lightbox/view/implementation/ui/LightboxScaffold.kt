@@ -22,7 +22,6 @@ import androidx.compose.foundation.ScrollState
 import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass.Companion.Compact
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.MutableFloatState
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
@@ -35,6 +34,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.actions.ShowActionsOverlay
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.actions.UpPressed
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.ui.state.LightboxState
+import com.savvasdalkitsis.uhuruphotos.foundation.dismiss.api.ui.rememberPullToDismissState
 import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.window.LocalWindowSize
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.BackPressHandler
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.CommonScaffold
@@ -48,13 +48,15 @@ internal fun LightboxScaffold(
     state: LightboxState,
     index: Int,
     action: (LightboxAction) -> Unit,
-    lightboxAlpha: MutableFloatState,
     zoomableState: ZoomableState,
     scrollState: ScrollState,
 ) {
     val scope = rememberCoroutineScope()
     val density = LocalDensity.current
 
+    val dismissState = rememberPullToDismissState(
+        onDismiss = { action(UpPressed) },
+    )
     val showingActionsOverlay by remember {
         derivedStateOf {
             scrollState.value < with(density) {
@@ -85,18 +87,22 @@ internal fun LightboxScaffold(
                 enter = slideInVertically(initialOffsetY = { it }),
                 exit = slideOutVertically(targetOffsetY = { it }),
             ) {
-                LightboxBottomActionBar(state, index, action)
+                LightboxDismissProgressAware(dismissState) {
+                    LightboxBottomActionBar(state, index, action)
+                }
             }
         },
         actionBarContent = {
-            LightboxActionBar(state, index, action, scrollState)
+            LightboxActionBar(state, index, action, scrollState, dismissState)
         },
         toolbarColor = { Color.Transparent },
         bottomBarColor = { Color.Transparent },
         topBarDisplayed = state.showUI,
         bottomBarDisplayed = state.showUI,
         navigationIcon = {
-            UpNavButton { action(UpPressed) }
+            LightboxDismissProgressAware(dismissState) {
+                UpNavButton { action(UpPressed) }
+            }
         },
     ) { contentPadding ->
         val serverUrl = LocalServerUrl.current
@@ -104,9 +110,10 @@ internal fun LightboxScaffold(
         val thumbnailUri = remember(serverUrl, mediaItem.id) {
             mediaItem.id.thumbnailUri(serverUrl)
         }
+
         when {
             state.isLoading && thumbnailUri.isEmpty() -> FullLoading()
-            else -> LightboxCanvas(action, state, index, contentPadding, scrollState, lightboxAlpha, zoomableState)
+            else -> LightboxCanvas(action, state, index, contentPadding, scrollState, zoomableState, dismissState)
         }
     }
 }

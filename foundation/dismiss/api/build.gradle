@@ -1,0 +1,19 @@
+android {
+    buildFeatures {
+        compose true
+    }
+    composeOptions {
+        kotlinCompilerExtensionVersion libs.versions.compose.compiler.get()
+    }
+    namespace 'com.savvasdalkitsis.uhuruphotos.foundation.dismiss.api'
+}
+
+dependencies {
+
+    implementation(
+            libs.androidx.core,
+            libs.androidx.compose.animation.base,
+            libs.androidx.compose.foundation,
+            libs.androidx.compose.ui,
+    )
+}
