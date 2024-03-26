@@ -28,6 +28,9 @@ import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.Med
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemMetadata
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.filterNotNull
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.onStart
 import se.ansman.dagger.auto.AutoBind
 import javax.inject.Inject
 
@@ -45,17 +48,21 @@ class LightboxUseCase @Inject constructor(
             is Local -> id.observeDetails()
             is Group -> {
                 val localDetails = id.findLocals.map { it.observeDetails() }
-                val remoteDetails = id.findRemote?.observeDetails()
+                val remoteDetails = id.findRemote?.observeDetails()?.startEmpty()
+
 
                 val details = listOfNotNull(*(localDetails + remoteDetails).toTypedArray())
                 combine(*details.toTypedArray()) { items ->
                     items.reduce { first, second ->
-                        first.mergeWith(second)
+                        first?.mergeWith(second)
                     }
-                }
+                }.filterNotNull()
             }
         }
     }
+
+    private fun Flow<LightboxDetails>.startEmpty(): Flow<LightboxDetails?> =
+        map<LightboxDetails, LightboxDetails?> { it }.onStart { emit(null) }
 
     override suspend fun saveMetadata(id: MediaId<*>, metadata: MediaItemMetadata) = with(lightboxRepository) {
         when (id) {

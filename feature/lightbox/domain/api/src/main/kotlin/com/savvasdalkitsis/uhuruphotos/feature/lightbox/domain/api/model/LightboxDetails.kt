@@ -27,22 +27,22 @@ data class LightboxDetails(
     val remotePaths: Set<String> = emptySet(),
     val localPaths: Set<String> = emptySet(),
     val hash: MediaItemHash? = null,
-    val peopleInMediaItem: List<People>,
+    val peopleInMediaItem: List<People> = emptyList(),
     val searchCaptions: Set<String> = emptySet(),
     val size: String? = null,
-    val exifData: ExifData,
+    val exifData: ExifData = ExifData(),
 ) {
 
-    fun mergeWith(other: LightboxDetails): LightboxDetails = copy(
-        formattedDateTime = formattedDateTime ?: other.formattedDateTime,
-        location = location.orEmpty().ifBlank { other.location },
-        latLon = latLon ?: other.latLon,
-        remotePaths = remotePaths + other.remotePaths,
-        localPaths = localPaths + other.localPaths,
-        hash = hash ?: other.hash,
-        peopleInMediaItem = peopleInMediaItem.ifEmpty { other.peopleInMediaItem },
-        searchCaptions = searchCaptions + other.searchCaptions,
-        size = size ?: other.size,
-        exifData = exifData.mergeWith(other.exifData)
+    fun mergeWith(other: LightboxDetails?): LightboxDetails = copy(
+        formattedDateTime = formattedDateTime ?: other?.formattedDateTime,
+        location = location.orEmpty().ifBlank { other?.location },
+        latLon = latLon ?: other?.latLon,
+        remotePaths = remotePaths + other?.remotePaths.orEmpty(),
+        localPaths = localPaths + other?.localPaths.orEmpty(),
+        hash = hash ?: other?.hash,
+        peopleInMediaItem = peopleInMediaItem.ifEmpty { other?.peopleInMediaItem.orEmpty() },
+        searchCaptions = searchCaptions + other?.searchCaptions.orEmpty(),
+        size = size ?: other?.size,
+        exifData = exifData.mergeWith(other?.exifData)
     )
 }
