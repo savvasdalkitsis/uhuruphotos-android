@@ -39,6 +39,7 @@ import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.LocalNavigator
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.Navigator
 import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
 import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.PreviewAppTheme
+import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.AlertText
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.CollapsibleGroup
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.YesNoDialog
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.state.rememberCollapsibleGroupState
@@ -88,6 +89,9 @@ internal fun PermissionsShowAccessRequestDialog(
                 Text(stringResource(string.navigate_to_settings))
             }
         }
+        AlertText(
+            text = stringResource(string.local_media_scan_warning)
+        )
     }
 }
 

@@ -25,10 +25,7 @@ internal fun PermissionsCheck(
     state.Compose()
     val permissionLauncher = rememberPermissionFlowRequestLauncher()
 
-    if (state.showRationale?.value == true) {
-        PermissionsShowRationaleDialog(state, permissionLauncher)
-    }
-    if (state.showAccessRequest?.value == true) {
+    if (state.showRationale?.value == true || state.showAccessRequest?.value == true) {
         PermissionsShowAccessRequestDialog(state, permissionLauncher)
     }
 }
