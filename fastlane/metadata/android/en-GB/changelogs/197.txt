@@ -1,0 +1,2 @@
+* Fixing back button when zoomed in or scrolled in the lightbox
+* Improving loading of lightbox details for fully synced items
