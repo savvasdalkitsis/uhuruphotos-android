@@ -1,0 +1,2 @@
+* Pull to dismiss in Lightbox is now better
+* Showing the warning about local media scanning in all permissions dialogs
