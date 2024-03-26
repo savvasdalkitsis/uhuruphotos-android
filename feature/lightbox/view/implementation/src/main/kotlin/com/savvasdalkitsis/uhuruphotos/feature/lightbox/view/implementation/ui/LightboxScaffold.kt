@@ -21,26 +21,17 @@ import androidx.compose.animation.slideOutVertically
 import androidx.compose.foundation.ScrollState
 import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass.Companion.Compact
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.derivedStateOf
-import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalDensity
-import androidx.compose.ui.unit.dp
 import com.savvasdalkitsis.uhuruphotos.feature.auth.view.api.navigation.LocalServerUrl
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.actions.LightboxAction
-import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.actions.ShowActionsOverlay
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.actions.UpPressed
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.ui.state.LightboxState
 import com.savvasdalkitsis.uhuruphotos.foundation.dismiss.api.ui.rememberPullToDismissState
 import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.window.LocalWindowSize
-import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.BackPressHandler
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.CommonScaffold
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.FullLoading
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.UpNavButton
-import kotlinx.coroutines.launch
 import me.saket.telephoto.zoomable.ZoomableState
 
 @Composable
@@ -51,34 +42,9 @@ internal fun LightboxScaffold(
     zoomableState: ZoomableState,
     scrollState: ScrollState,
 ) {
-    val scope = rememberCoroutineScope()
-    val density = LocalDensity.current
-
     val dismissState = rememberPullToDismissState(
         onDismiss = { action(UpPressed) },
     )
-    val showingActionsOverlay by remember {
-        derivedStateOf {
-            scrollState.value < with(density) {
-                48.dp.toPx()
-            }
-        }
-    }
-    LaunchedEffect(showingActionsOverlay) {
-        action(ShowActionsOverlay(showingActionsOverlay))
-    }
-    BackPressHandler {
-        scope.launch {
-            val scrolledDown = !showingActionsOverlay
-            if (scrolledDown) {
-                scrollState.animateScrollTo(0)
-            } else if ((zoomableState.zoomFraction ?: 0f) > 0f){
-                zoomableState.resetZoom()
-            } else {
-                action(UpPressed)
-            }
-        }
-    }
     CommonScaffold(
         title = { },
         bottomBarContent = {

@@ -20,10 +20,15 @@ import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.derivedStateOf
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.snapshotFlow
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.dp
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.actions.ChangedToPage
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.actions.LightboxAction
+import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.actions.ShowActionsOverlay
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.ui.state.LightboxState
 import kotlinx.coroutines.flow.collectLatest
 import me.saket.telephoto.zoomable.ZoomSpec
@@ -38,6 +43,7 @@ internal fun Lightbox(
         initialPage = state.currentIndex,
         pageCount = { state.media.size },
     )
+    val density = LocalDensity.current
 
     LaunchedEffect(state.currentIndex) {
         pagerState.scrollToPage(state.currentIndex)
@@ -53,7 +59,20 @@ internal fun Lightbox(
         )
         val scrollState = rememberScrollState()
         LightboxScaffold(state, index, action, zoomableState, scrollState)
-        if (pagerState.settledPage != index) {
+
+        val showingActionsOverlay by remember {
+            derivedStateOf {
+                scrollState.value < with(density) {
+                    48.dp.toPx()
+                }
+            }
+        }
+        LaunchedEffect(showingActionsOverlay) {
+            action(ShowActionsOverlay(showingActionsOverlay))
+        }
+        if (pagerState.settledPage == index) {
+            LightboxBackHandler(showingActionsOverlay, scrollState, zoomableState, action)
+        } else {
             LaunchedEffect(Unit) {
                 zoomableState.resetZoom(withAnimation = false)
                 scrollState.scrollTo(0)
