@@ -28,6 +28,5 @@ data object TrashRemoteAndDeleteLocalSelectedCels : FeedAction() {
         deleteLocalSelectedCels(state) {
             trashRemoteSelectedCels(state)
         }
-        selectionList.clear()
     }
 }

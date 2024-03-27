@@ -84,8 +84,9 @@ internal class FeedActionsContext @Inject constructor(
 
     suspend fun FlowCollector<FeedMutation>.deleteLocalSelectedCels(
         state: FeedState,
-        onSuccess: () -> Unit = {},
-    ) = when (val result = localMediaDeletionUseCase.deleteLocalMediaItems(state.selectedCels
+        onSuccess: suspend () -> Unit = {},
+    ) {
+        when (val result = localMediaDeletionUseCase.deleteLocalMediaItems(state.selectedCels
             .flatMap { it.mediaItem.id.findLocals }
             .map { LocalMediaDeletionRequest(it.value, it.isVideo) }
         )) {
@@ -93,4 +94,6 @@ internal class FeedActionsContext @Inject constructor(
             is RequiresPermissions -> emit(AskForPermissions(result.deniedPermissions))
             Success -> onSuccess()
         }
+        selectionList.clear()
+    }
 }

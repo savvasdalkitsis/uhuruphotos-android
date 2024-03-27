@@ -25,7 +25,6 @@ import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.ui.state
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemSyncState.LOCAL_ONLY
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemSyncState.REMOTE_ONLY
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemSyncState.SYNCED
-import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.model.LocalMediaDeletionRequest
 import kotlinx.coroutines.flow.flow
 
 data object AskForSelectedPhotosTrashing : FeedAction() {
@@ -39,11 +38,7 @@ data object AskForSelectedPhotosTrashing : FeedAction() {
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
                     // On R and later, we have to present the user with a native dialog so no need to show
                     // ours for local only items
-                    localMediaDeletionUseCase.deleteLocalMediaItems(state.selectedCels.flatMap { cel ->
-                        cel.mediaItem.id.findLocals.map { id ->
-                            LocalMediaDeletionRequest(id.value, id.isVideo)
-                        }
-                    })
+                    deleteLocalSelectedCels(state)
                 } else {
                     emit(ShowDeleteConfirmationDialog)
                 }

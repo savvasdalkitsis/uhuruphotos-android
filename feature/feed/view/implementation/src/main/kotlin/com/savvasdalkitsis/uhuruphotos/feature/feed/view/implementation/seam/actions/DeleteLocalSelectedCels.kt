@@ -26,6 +26,5 @@ data object DeleteLocalSelectedCels : FeedAction() {
     ) = flow {
         emit(HideAllConfirmationDialogs)
         deleteLocalSelectedCels(state)
-        selectionList.clear()
     }
 }
