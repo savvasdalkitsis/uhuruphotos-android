@@ -22,29 +22,43 @@ import com.github.michaelbull.result.andThen
 import com.michaelflisar.lumberjack.core.L
 
 fun log(tag: String = "", msg: () -> String) {
-    if (tag.isNotEmpty()) {
-        L.tag(tag).v(msg)
-    } else {
-        L.v(msg)
+    tryIgnore {
+        if (tag.isNotEmpty()) {
+            L.tag(tag).v(msg)
+        } else {
+            L.v(msg)
+        }
     }
 }
 
 fun log(t: Throwable) {
-    tempEnable {
-        L.w(t)
+    try {
+        tempEnable {
+            L.w(t)
+        }
+    } catch (_: Exception) {
+        t.printStackTrace()
     }
 }
 
-
 fun log(t: Throwable, msg: () -> String) {
-    tempEnable {
-        L.w(t, msg)
+    try {
+        tempEnable {
+            L.w(t, msg)
+        }
+    } catch (_: Exception) {
+        println("$msg")
+        t.printStackTrace()
     }
 }
 
 fun logError(t: Throwable) {
-    tempEnable {
-        L.e(t)
+    try {
+        tempEnable {
+            L.e(t)
+        }
+    }  catch (_: Exception) {
+        t.printStackTrace()
     }
 }
 
@@ -54,6 +68,13 @@ data object Log {
         set(value) {
             L.enable(value)
         }
+}
+
+private inline fun tryIgnore(block: () -> Unit) {
+    try {
+        block()
+    } catch (_: Exception) {
+    }
 }
 
 suspend fun <V, U> Result<V, Throwable>.andThenTry(transform: suspend (V) -> U): Result<U, Throwable> = andThen {
