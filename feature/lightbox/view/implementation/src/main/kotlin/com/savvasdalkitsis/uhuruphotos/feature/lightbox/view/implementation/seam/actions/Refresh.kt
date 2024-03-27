@@ -22,12 +22,9 @@ import kotlinx.coroutines.flow.flow
 data object Refresh : LightboxAction() {
 
     context(LightboxActionsContext) override fun handle(
-        state: LightboxState
+        state: LightboxState,
     ) = flow {
-        loadMediaDetails(
-            mediaId = state.currentMediaItem.id,
-            refresh = true,
-        )
+        refreshMediaDetails(mediaId = state.currentMediaItem.id, state.media.toList())
     }
 
 }

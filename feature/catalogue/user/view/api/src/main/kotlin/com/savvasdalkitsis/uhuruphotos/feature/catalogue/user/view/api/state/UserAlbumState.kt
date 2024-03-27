@@ -65,7 +65,7 @@ private fun celState(
         val isVideo = coverIsVideo ?: false
         MediaItemInstance(
             id = MediaId.Remote(it, isVideo),
-            mediaHash = MediaItemHash(it),
+            mediaHash = MediaItemHash.fromRemoteMediaHash(it, 0),
             displayDayDate = null,
             ratio = 1f,
         ).toCel()

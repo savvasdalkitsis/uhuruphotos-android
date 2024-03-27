@@ -19,14 +19,10 @@ import android.content.Context
 import com.github.michaelbull.result.Ok
 import com.github.michaelbull.result.Result
 import com.github.michaelbull.result.combine
-import com.github.michaelbull.result.getOr
-import com.github.michaelbull.result.getOrElse
 import com.github.michaelbull.result.getOrThrow
 import com.github.michaelbull.result.map
-import com.savvasdalkitsis.uhuruphotos.feature.auth.domain.api.usecase.ServerUseCase
-import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.entities.media.DbRemoteMediaItemDetails
+import com.github.michaelbull.result.mapOr
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.entities.media.DbRemoteMediaItemSummary
-import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.entities.media.latLng
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.extensions.isVideo
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaCollection
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaCollectionSource
@@ -39,14 +35,12 @@ import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.Med
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaId.Remote
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaId.Uploading
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItem
-import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemDetails
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemHash
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemInstance
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemsOnDevice
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaOperationResult
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaOperationResult.CHANGED
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaOperationResult.SKIPPED
-import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.toMediaItemHash
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.usecase.MediaUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.model.LocalFolder
 import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.model.LocalMediaItem
@@ -57,19 +51,14 @@ import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.model.Medi
 import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.model.MediaOrientation.ORIENTATION_90
 import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.model.MediaOrientation.ORIENTATION_UNKNOWN
 import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.usecase.LocalMediaUseCase
-import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.api.model.deserializePaths
-import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.api.model.deserializePeopleNames
 import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.api.usecase.RemoteMediaUseCase
-import com.savvasdalkitsis.uhuruphotos.feature.people.domain.api.usecase.PeopleUseCase
-import com.savvasdalkitsis.uhuruphotos.feature.people.view.api.ui.state.toPerson
+import com.savvasdalkitsis.uhuruphotos.feature.user.domain.api.model.RemoteUserModel
 import com.savvasdalkitsis.uhuruphotos.feature.user.domain.api.model.User
 import com.savvasdalkitsis.uhuruphotos.feature.user.domain.api.usecase.UserUseCase
 import com.savvasdalkitsis.uhuruphotos.foundation.date.api.DateDisplayer
 import com.savvasdalkitsis.uhuruphotos.foundation.date.api.DateParser
 import com.savvasdalkitsis.uhuruphotos.foundation.group.api.model.Group
 import com.savvasdalkitsis.uhuruphotos.foundation.log.api.andThenTry
-import com.savvasdalkitsis.uhuruphotos.foundation.map.api.model.LatLon
-import com.savvasdalkitsis.uhuruphotos.foundation.map.api.model.toLatLon
 import com.savvasdalkitsis.uhuruphotos.foundation.result.api.SimpleResult
 import com.savvasdalkitsis.uhuruphotos.foundation.result.api.simple
 import com.savvasdalkitsis.uhuruphotos.foundation.result.api.simpleOk
@@ -87,11 +76,9 @@ import javax.inject.Inject
 class MediaUseCase @Inject constructor(
     private val localMediaUseCase: LocalMediaUseCase,
     private val remoteMediaUseCase: RemoteMediaUseCase,
-    private val serverUseCase: ServerUseCase,
     private val userUseCase: UserUseCase,
     private val dateDisplayer: DateDisplayer,
     private val dateParser: DateParser,
-    private val peopleUseCase: PeopleUseCase,
     @ApplicationContext private val context: Context,
 ) : MediaUseCase {
 
@@ -161,17 +148,18 @@ class MediaUseCase @Inject constructor(
         map { it.mapToMediaItems() }
 
     override suspend fun List<DbRemoteMediaItemSummary>.mapToMediaItems(): Result<List<MediaItem>, Throwable> =
-        withFavouriteThreshold { threshold ->
+        withUser { user ->
             map { dbRecord ->
+                val favouriteThreshold = user.favoriteMinRating
                 val date = dateDisplayer.dateString(dbRecord.date)
                 val day = dateParser.parseDateOrTimeString(dbRecord.date)
                 MediaItemInstance(
                     id = Remote(dbRecord.id, dbRecord.isVideo),
-                    mediaHash = MediaItemHash(dbRecord.id),
+                    mediaHash = MediaItemHash.fromRemoteMediaHash(dbRecord.id, user.id),
                     fallbackColor = dbRecord.dominantColor,
                     displayDayDate = date,
                     sortableDate = dbRecord.date,
-                    isFavourite = (dbRecord.rating ?: 0) >= threshold,
+                    isFavourite = favouriteThreshold != null && (dbRecord.rating ?: 0) >= favouriteThreshold,
                     ratio = dbRecord.aspectRatio ?: 1f,
                     mediaDay = day?.toMediaDay(),
                 )
@@ -179,8 +167,13 @@ class MediaUseCase @Inject constructor(
         }
 
     private fun LocalMediaItem.toMediaItem(userId: Int?) = MediaItemInstance(
-        id = Local(id, bucket.id, video, contentUri, thumbnailPath?.let { "file://$it" } ?: contentUri),
-        mediaHash = md5.toMediaItemHash(userId),
+        id = Local(
+            id,
+            bucket.id,
+            video,
+            contentUri,
+            thumbnailPath?.let { "file://$it" } ?: contentUri),
+        mediaHash = MediaItemHash(md5, userId),
         fallbackColor = fallbackColor,
         displayDayDate = displayDate,
         sortableDate = sortableDate,
@@ -198,76 +191,6 @@ class MediaUseCase @Inject constructor(
                 height to width
         }
         return (w / h.toFloat()).takeIf { it > 0 } ?: 1f
-    }
-
-    override fun observeMediaItemDetails(id: MediaId<*>): Flow<MediaItemDetails> = when (id) {
-        is Remote -> id.observeDetails()
-        is Downloading -> id.remote.observeDetails()
-        is Uploading -> id.local.observeDetails()
-        is Processing -> id.local.observeDetails()
-        is Local -> id.observeDetails()
-        is MediaId.Group -> {
-            val localDetails = id.findLocals.map { it.observeDetails() }
-            val remoteDetails = id.findRemote?.observeDetails()
-
-            val details = listOfNotNull(*(localDetails + remoteDetails).toTypedArray())
-            combine(*details.toTypedArray()) { items ->
-                items.reduce { first, second ->
-                    first.mergeWith(second)
-                }
-            }
-        }
-    }
-
-    private fun Remote.observeDetails() =
-        remoteMediaUseCase.observeRemoteMediaItemDetails(value).map {
-            it.toMediaItemDetails()
-        }
-
-    private fun Local.observeDetails() =
-        combine(
-            localMediaUseCase.observeLocalMediaItem(value),
-            userUseCase.observeUser(),
-        ) { item, user ->
-            item.toMediaItemDetails(user.id)
-        }
-
-    private fun LocalMediaItem.toMediaItemDetails(userId: Int?): MediaItemDetails =
-        MediaItemDetails(
-            formattedDateAndTime = displayDateTime,
-            isFavourite = false,
-            location = "",
-            latLon = latLon?.let { (lat, lon) -> LatLon(lat, lon) },
-            hash = md5.toMediaItemHash(userId),
-            localPaths = setOf(path ?: contentUri),
-            peopleInMediaItem = emptyList(),
-        )
-
-    private suspend fun DbRemoteMediaItemDetails.toMediaItemDetails(): MediaItemDetails {
-        val favouriteThreshold = userUseCase.getRemoteUserOrRefresh().getOr(null)?.favoriteMinRating
-        val people = peopleUseCase.getPeopleByName().ifEmpty {
-            peopleUseCase.refreshPeople()
-            peopleUseCase.getPeopleByName()
-        }
-        val peopleNamesList = peopleNames.orEmpty().deserializePeopleNames
-        val serverUrl = serverUseCase.getServerUrl()!!
-        val peopleInPhoto = people
-            .filter { it.name in peopleNamesList }
-            .map {
-                it.toPerson { url ->
-                    "$serverUrl$url"
-                }
-            }
-        return MediaItemDetails(
-            formattedDateAndTime = dateDisplayer.dateTimeString(timestamp),
-            isFavourite = favouriteThreshold != null && (rating ?: 0) >= favouriteThreshold,
-            location = location.orEmpty(),
-            latLon = latLng?.toLatLon,
-            hash = MediaItemHash(imageHash),
-            remotePaths = imagePath?.deserializePaths ?: emptySet(),
-            peopleInMediaItem = peopleInPhoto,
-            searchCaptions = captions,
-        )
     }
 
     override suspend fun getFavouriteMediaCount(): Result<Long, Throwable> =
@@ -350,36 +273,30 @@ class MediaUseCase @Inject constructor(
     override suspend fun refreshFavouriteMedia() =
         remoteMediaUseCase.refreshFavouriteMedia()
 
-    override suspend fun toMediaCollection(groups: Group<String, MediaCollectionSource>): List<MediaCollection> {
-        val favouriteThreshold = userUseCase.getRemoteUserOrRefresh()
-            .andThenTry { it.favoriteMinRating!! }
-        return groups.items
-            .map { (id, source) ->
-                mediaCollection(id, source, favouriteThreshold)
+    override suspend fun toMediaCollection(groups: Group<String, MediaCollectionSource>): List<MediaCollection> =
+        groups.items
+            .mapNotNull { (id, source) ->
+                mediaCollection(id, source)
             }
             .filter { it.mediaItems.isNotEmpty() }
-    }
 
-    override suspend fun List<MediaCollectionSource>.toMediaCollections(): List<MediaCollection> {
-        val favouriteThreshold = userUseCase.getRemoteUserOrRefresh()
-            .andThenTry { it.favoriteMinRating!! }
-        return groupBy { dateDisplayer.dateString(it.date) }
-            .map { (date, items) ->
-                mediaCollection(date, items, favouriteThreshold)
+    override suspend fun List<MediaCollectionSource>.toMediaCollections(): List<MediaCollection> =
+        groupBy { dateDisplayer.dateString(it.date) }
+            .mapNotNull { (date, items) ->
+                mediaCollection(date, items)
             }
-    }
 
-    private fun mediaCollection(
+    private suspend fun mediaCollection(
         id: String,
         source: List<MediaCollectionSource>,
-        favouriteThreshold: Result<Int, Throwable>
-    ): MediaCollection {
+    ): MediaCollection? = userUseCase.getRemoteUserOrRefresh().mapOr(null) { user ->
+        val favouriteThreshold = user.favoriteMinRating
         val albumDate = source.firstOrNull()?.date
         val albumLocation = source.firstOrNull()?.location
 
         val date = dateDisplayer.dateString(albumDate)
         val day = dateParser.parseDateOrTimeString(albumDate)
-        return MediaCollection(
+        MediaCollection(
             id = id,
             displayTitle = date,
             unformattedDate = albumDate,
@@ -391,15 +308,11 @@ class MediaUseCase @Inject constructor(
                     else -> {
                         MediaItemInstance(
                             id = Remote(photoId, item.isVideo),
-                            mediaHash = MediaItemHash(photoId),
+                            mediaHash = MediaItemHash.fromRemoteMediaHash(photoId, user.id),
                             fallbackColor = item.dominantColor,
                             displayDayDate = date,
                             sortableDate = item.date,
-                            isFavourite = favouriteThreshold
-                                .map {
-                                    (item.rating ?: 0) >= it
-                                }
-                                .getOrElse { false },
+                            isFavourite = favouriteThreshold != null && (item.rating ?: 0) >= favouriteThreshold,
                             ratio = item.aspectRatio ?: 1.0f,
                             latLng = (item.lat?.toDoubleOrNull() to item.lon?.toDoubleOrNull()).notNull(),
                             mediaDay = day?.toMediaDay(),
@@ -433,9 +346,9 @@ class MediaUseCase @Inject constructor(
         }
     }
 
-    private suspend fun <T> withFavouriteThreshold(action: suspend (Int) -> T): Result<T, Throwable> =
+    private suspend fun <T> withUser(action: suspend (RemoteUserModel) -> T): Result<T, Throwable> =
         userUseCase.getRemoteUserOrRefresh().andThenTry {
-            action(it.favoriteMinRating!!)
+            action(it)
         }
 
     private fun DateTime.toMediaDay(): MediaDay = MediaDay(

@@ -150,7 +150,7 @@ private fun FeedMemoryPreview() {
             cels = persistentListOf(CelState(
                 MediaItemInstance(
                     id = MediaId.Local(0L, 0, false, "", ""),
-                    mediaHash = MediaItemHash("hash"),
+                    mediaHash = MediaItemHash.fromRemoteMediaHash("hash", 0),
                 )
             )),
         ), { _, _ -> }, {})

@@ -15,6 +15,7 @@ dependencies {
             project(":feature:user:domain:api"),
             project(":foundation:date:api"),
             project(":foundation:launchers:api"),
+            project(":foundation:log:api"),
     )
     kapt libs.autodagger.kapt
 }

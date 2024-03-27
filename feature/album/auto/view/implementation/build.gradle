@@ -24,6 +24,7 @@ dependencies {
             project(":feature:media:remote:domain:api"),
             project(":feature:people:view:api"),
             project(":feature:settings:domain:api"),
+            project(":feature:user:domain:api"),
             project(":foundation:date:api"),
             project(":foundation:navigation:api"),
             project(":foundation:preferences:api"),

@@ -30,7 +30,7 @@ data class SelectedCel(
     ) = flow<GalleryMutation> {
         navigator.navigateTo(
             LightboxNavigationRoute(
-                id = cel.mediaItem.id,
+                mediaItem = cel.mediaItem,
                 lightboxSequenceDataSource = lightboxSequenceDataSource(galleryId.id),
             )
         )

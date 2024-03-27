@@ -29,7 +29,7 @@ data class FullMediaDataLoaded(val mediaItemState: SingleMediaItemState) : Light
         val serverUrl = serverUseCase.getServerUrl()
         val metadata = metadataUseCase.extractMetadata(mediaItemState.id.fullResUri(serverUrl))
         if (metadata != null) {
-            lightboxUseCase.saveMetadata(mediaItemState.id, metadata)
+            lightboxUseCase.saveMetadata(mediaItemState.mediaHash, metadata)
         }
     }
 

@@ -17,7 +17,6 @@ package com.savvasdalkitsis.uhuruphotos.feature.lightbox.domain.api.model
 
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.people.People
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.ExifData
-import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemHash
 import com.savvasdalkitsis.uhuruphotos.foundation.map.api.model.LatLon
 
 data class LightboxDetails(
@@ -26,23 +25,9 @@ data class LightboxDetails(
     val latLon: LatLon? = null,
     val remotePaths: Set<String> = emptySet(),
     val localPaths: Set<String> = emptySet(),
-    val hash: MediaItemHash? = null,
+    val hash: String? = null,
     val peopleInMediaItem: List<People> = emptyList(),
     val searchCaptions: Set<String> = emptySet(),
     val size: String? = null,
     val exifData: ExifData = ExifData(),
-) {
-
-    fun mergeWith(other: LightboxDetails?): LightboxDetails = copy(
-        formattedDateTime = formattedDateTime ?: other?.formattedDateTime,
-        location = location.orEmpty().ifBlank { other?.location },
-        latLon = latLon ?: other?.latLon,
-        remotePaths = remotePaths + other?.remotePaths.orEmpty(),
-        localPaths = localPaths + other?.localPaths.orEmpty(),
-        hash = hash ?: other?.hash,
-        peopleInMediaItem = peopleInMediaItem.ifEmpty { other?.peopleInMediaItem.orEmpty() },
-        searchCaptions = searchCaptions + other?.searchCaptions.orEmpty(),
-        size = size ?: other?.size,
-        exifData = exifData.mergeWith(other?.exifData)
-    )
-}
+)

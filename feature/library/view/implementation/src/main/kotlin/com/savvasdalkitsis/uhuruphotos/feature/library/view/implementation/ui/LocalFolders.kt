@@ -187,7 +187,7 @@ private fun LocalFoldersWithoutOther() {
 private fun celState(color: String) = CelState(
     MediaItemInstance(
         MediaId.Local(0, 0, false, "", ""),
-        MediaItemHash(""),
+        MediaItemHash.fromRemoteMediaHash("", 0),
         fallbackColor = color
     )
 )

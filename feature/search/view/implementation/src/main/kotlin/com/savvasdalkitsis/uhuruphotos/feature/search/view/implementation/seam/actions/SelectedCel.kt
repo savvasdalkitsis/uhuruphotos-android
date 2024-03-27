@@ -28,7 +28,10 @@ data class SelectedCel(val celState: CelState) : SearchAction() {
         state: SearchState
     ) = flow<SearchMutation> {
         navigator.navigateTo(
-            LightboxNavigationRoute(celState.mediaItem.id, SearchResults(state.query))
+            LightboxNavigationRoute(
+                mediaItem = celState.mediaItem,
+                lightboxSequenceDataSource = SearchResults(state.query)
+            )
         )
     }
 }

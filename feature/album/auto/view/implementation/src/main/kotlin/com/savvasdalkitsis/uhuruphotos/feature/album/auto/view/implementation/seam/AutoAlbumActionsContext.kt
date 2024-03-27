@@ -15,6 +15,7 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.album.auto.view.implementation.seam
 
+import com.github.michaelbull.result.mapOr
 import com.savvasdalkitsis.uhuruphotos.feature.album.auto.domain.api.usecase.AutoAlbumUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.album.auto.view.implementation.state.AutoAlbumCollageDisplay
 import com.savvasdalkitsis.uhuruphotos.feature.auth.domain.api.usecase.ServerUseCase
@@ -27,10 +28,11 @@ import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.Med
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemInstance
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.state.toCel
 import com.savvasdalkitsis.uhuruphotos.feature.people.view.api.ui.state.toPerson
+import com.savvasdalkitsis.uhuruphotos.feature.user.domain.api.usecase.UserUseCase
 import com.savvasdalkitsis.uhuruphotos.foundation.date.api.DateDisplayer
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.state.Title
 import kotlinx.collections.immutable.toPersistentList
-import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.mapNotNull
 import javax.inject.Inject
 
 internal class AutoAlbumActionsContext @Inject constructor(
@@ -38,6 +40,7 @@ internal class AutoAlbumActionsContext @Inject constructor(
     serverUseCase: ServerUseCase,
     dateDisplayer: DateDisplayer,
     galleryActionsContextFactory: GalleryActionsContextFactory,
+    userUseCase: UserUseCase,
 ) {
     val galleryActionsContext = galleryActionsContextFactory.create(
         galleryRefresher = { autoAlbumUseCase.refreshAutoAlbum(it) },
@@ -49,35 +52,41 @@ internal class AutoAlbumActionsContext @Inject constructor(
         galleryDetailsFlow = { albumId ->
             val serverUrl = serverUseCase.getServerUrl()!!
             autoAlbumUseCase.observeAutoAlbumWithPeople(albumId)
-                .map { (photoEntries, people) ->
-                    GalleryDetails(
-                        title = Title.Text(photoEntries.firstOrNull()?.title ?: ""),
-                        people = people.map { person ->
-                            person.toPerson { "$serverUrl$it" }
-                        },
-                        clusters = photoEntries.groupBy { entry ->
-                            dateDisplayer.dateString(entry.timestamp)
-                        }.entries.map { (date, photos) ->
-                            Cluster(
-                                id = date,
-                                unformattedDate = photos.firstOrNull()?.timestamp,
-                                displayTitle = date,
-                                location = null,
-                                cels = photos.map {
-                                    MediaItemInstance(
-                                        id = MediaId.Remote(
-                                            it.photoId.toString(),
-                                            it.video ?: false
-                                        ),
-                                        mediaHash = MediaItemHash(it.photoId.toString()),
-                                        displayDayDate = date,
-                                        sortableDate = it.timestamp,
-                                        isFavourite = it.isFavorite ?: false,
-                                    ).toCel()
-                                }.toPersistentList()
+                .mapNotNull { (photoEntries, people) ->
+                    userUseCase.getRemoteUserOrRefresh()
+                        .mapOr(null) { user ->
+                            GalleryDetails(
+                                title = Title.Text(photoEntries.firstOrNull()?.title ?: ""),
+                                people = people.map { person ->
+                                    person.toPerson { "$serverUrl$it" }
+                                },
+                                clusters = photoEntries.groupBy { entry ->
+                                    dateDisplayer.dateString(entry.timestamp)
+                                }.entries.map { (date, photos) ->
+                                    Cluster(
+                                        id = date,
+                                        unformattedDate = photos.firstOrNull()?.timestamp,
+                                        displayTitle = date,
+                                        location = null,
+                                        cels = photos.map {
+                                            MediaItemInstance(
+                                                id = MediaId.Remote(
+                                                    it.photoId.toString(),
+                                                    it.video ?: false
+                                                ),
+                                                mediaHash = MediaItemHash.fromRemoteMediaHash(
+                                                    it.photoId.toString(),
+                                                    user.id
+                                                ),
+                                                displayDayDate = date,
+                                                sortableDate = it.timestamp,
+                                                isFavourite = it.isFavorite ?: false,
+                                            ).toCel()
+                                        }.toPersistentList()
+                                    )
+                                }
                             )
                         }
-                    )
                 }
         },
         lightboxSequenceDataSource = { AutoAlbum(it) },

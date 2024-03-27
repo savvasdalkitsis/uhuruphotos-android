@@ -13,6 +13,7 @@ dependencies {
             project(":feature:catalogue:auto:domain:api"),
             project(":feature:media:common:domain:api"),
             project(":feature:media:remote:domain:api"),
+            project(":feature:user:domain:api"),
             project(":foundation:log:api"),
             project(":foundation:preferences:api"),
             project(":foundation:strings:api"),

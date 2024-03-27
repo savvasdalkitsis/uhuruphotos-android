@@ -25,5 +25,47 @@ CREATE TABLE lightboxDetails (
 get:
 SELECT * FROM lightboxDetails WHERE id = :id;
 
+touch:
+INSERT OR IGNORE INTO lightboxDetails (id) VALUES (:id);
+
 insert:
 INSERT OR REPLACE INTO lightboxDetails VALUES ?;
+
+updateLocal:
+UPDATE lightboxDetails
+SET formattedDatetime = :formattedDateTime,
+    lat = :lat,
+    lon = :lon,
+    hash = :hash,
+    localPaths = :localPaths
+WHERE
+    id = :id;
+
+updateRemote:
+UPDATE lightboxDetails
+SET formattedDatetime = :formattedDateTime,
+    location = :location,
+    lat = :lat,
+    lon = :lon,
+    hash = :hash,
+    remotePaths = :remotePaths,
+    peopleInMediaItem = :peopleInMediaItem,
+    searchCaptions = :searchCaptions
+WHERE
+    id = :id;
+
+updateMetadata:
+UPDATE lightboxDetails
+SET size = :size,
+    fStop = :fStop,
+    shutterSpeed = :shutterSpeed,
+    isoSpeed = :isoSpeed,
+    camera = :camera,
+    focalLength = :focalLength,
+    focalLength35Equivalent = :focalLength35Equivalent,
+    subjectDistance = :subjectDistance,
+    digitalZoomRatio = :digitalZoomRatio,
+    width = :width,
+    height = :height
+WHERE
+    id = :id;

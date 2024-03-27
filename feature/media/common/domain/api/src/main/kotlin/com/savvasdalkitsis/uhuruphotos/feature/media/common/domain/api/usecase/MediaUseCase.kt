@@ -22,7 +22,6 @@ import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.Med
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaFolderOnDevice
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaId
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItem
-import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemDetails
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemsOnDevice
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaOperationResult
 import com.savvasdalkitsis.uhuruphotos.foundation.group.api.model.Group
@@ -40,8 +39,6 @@ interface MediaUseCase {
     fun observeHiddenMedia(): Flow<Result<List<MediaItem>, Throwable>>
 
     suspend fun List<DbRemoteMediaItemSummary>.mapToMediaItems(): Result<List<MediaItem>, Throwable>
-
-    fun observeMediaItemDetails(id: MediaId<*>): Flow<MediaItemDetails>
 
     suspend fun getFavouriteMediaCount(): Result<Long, Throwable>
 

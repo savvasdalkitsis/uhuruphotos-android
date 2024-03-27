@@ -33,6 +33,8 @@ import com.savvasdalkitsis.uhuruphotos.feature.auth.domain.api.usecase.ServerUse
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.extensions.asyncReturn
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaId.Remote
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.usecase.MediaUseCase
+import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.api.model.deserializePaths
+import com.savvasdalkitsis.uhuruphotos.feature.media.remote.domain.api.usecase.RemoteMediaUseCase
 import com.savvasdalkitsis.uhuruphotos.foundation.log.api.andThenTry
 import com.savvasdalkitsis.uhuruphotos.foundation.log.api.log
 import com.savvasdalkitsis.uhuruphotos.foundation.result.api.SimpleResult
@@ -54,6 +56,7 @@ internal class DownloadUseCase @Inject constructor(
     private val downloadManager: DownloadManager,
     private val downloadingRepository: DownloadingRepository,
     private val mediaUseCase: MediaUseCase,
+    private val remoteMediaUseCase: RemoteMediaUseCase,
     private val authenticationHeadersUseCase: AuthenticationHeadersUseCase,
     private val serverUseCase: ServerUseCase,
 ): DownloadUseCase {
@@ -76,7 +79,8 @@ internal class DownloadUseCase @Inject constructor(
     private suspend fun queueDownload(id: Remote): SimpleResult =
         mediaUseCase.refreshDetailsNowIfMissing(id).andThenTry {
             val serverUrl = serverUseCase.getServerUrl()!!
-            val remotePath = mediaUseCase.observeMediaItemDetails(id).firstOrNull()?.remotePaths?.firstOrNull()
+            val remotePath = remoteMediaUseCase.observeRemoteMediaItemDetails(id.value)
+                .firstOrNull()?.imagePath?.deserializePaths?.firstOrNull()
             val fullFileName = remotePath?.substringAfterLast("/")
 
             val url = id.fullResUri(serverUrl)

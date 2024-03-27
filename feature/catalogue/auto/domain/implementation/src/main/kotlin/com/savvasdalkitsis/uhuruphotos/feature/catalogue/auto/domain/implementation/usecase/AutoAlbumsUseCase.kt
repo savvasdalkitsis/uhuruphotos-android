@@ -16,6 +16,7 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.feature.catalogue.auto.domain.implementation.usecase
 
 import android.content.Context
+import com.github.michaelbull.result.mapOr
 import com.savvasdalkitsis.uhuruphotos.feature.catalogue.auto.domain.api.usecase.AutoAlbumsUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.catalogue.auto.domain.implementation.repository.AutoAlbumsRepository
 import com.savvasdalkitsis.uhuruphotos.feature.catalogue.auto.view.api.state.AutoAlbum
@@ -25,6 +26,8 @@ import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.album.auto.AutoAlbu
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaId.Remote
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemHash
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemInstance
+import com.savvasdalkitsis.uhuruphotos.feature.user.domain.api.model.RemoteUserModel
+import com.savvasdalkitsis.uhuruphotos.feature.user.domain.api.usecase.UserUseCase
 import com.savvasdalkitsis.uhuruphotos.foundation.preferences.api.PlainTextPreferences
 import com.savvasdalkitsis.uhuruphotos.foundation.preferences.api.Preferences
 import com.savvasdalkitsis.uhuruphotos.foundation.preferences.api.get
@@ -34,6 +37,7 @@ import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.filterNotNull
 import se.ansman.dagger.auto.AutoBind
 import javax.inject.Inject
 
@@ -42,6 +46,7 @@ class AutoAlbumsUseCase @Inject constructor(
     private val autoAlbumsRepository: AutoAlbumsRepository,
     @PlainTextPreferences
     private val preferences: Preferences,
+    private val userUseCase: UserUseCase,
     @ApplicationContext private val context: Context,
 ) : AutoAlbumsUseCase {
 
@@ -59,34 +64,43 @@ class AutoAlbumsUseCase @Inject constructor(
             autoAlbumsRepository.observeAutoAlbums(),
             observeAutoAlbumsSorting(),
         ) { albums, sorting ->
-            albums.toAutoAlbums(sorting)
-        }
+            userUseCase.getRemoteUserOrRefresh().mapOr(null) { user ->
+                albums.toAutoAlbums(sorting, user)
+            }
+        }.filterNotNull()
 
     override suspend fun refreshAutoAlbums() =
         autoAlbumsRepository.refreshAutoAlbums()
 
     override suspend fun getAutoAlbums(): List<AutoAlbum> =
-        autoAlbumsRepository.getAutoAlbums()
-            .toAutoAlbums(preferences.get(key, CatalogueSorting.default))
+        userUseCase.getRemoteUserOrRefresh().mapOr(emptyList()) { user ->
+            autoAlbumsRepository.getAutoAlbums()
+                .toAutoAlbums(preferences.get(key, CatalogueSorting.default), user)
+        }
 
-    private fun List<AutoAlbums>.toAutoAlbums(sorting: CatalogueSorting): List<AutoAlbum> =
+    private fun List<AutoAlbums>.toAutoAlbums(
+        sorting: CatalogueSorting,
+        user: RemoteUserModel,
+    ): List<AutoAlbum> =
         sorted(
             sorting,
             timeStamp = { it.timestamp },
             title = { it.title },
-        )
-            .map {
-                AutoAlbum(
-                    id = it.id,
-                    cover = MediaItemInstance(
-                        id = Remote(it.coverPhotoHash, it.coverPhotoIsVideo ?: false),
-                        mediaHash = MediaItemHash(it.coverPhotoHash),
-                        displayDayDate = null,
-                        sortableDate = it.timestamp,
-                        ratio = 1f,
+        ).map {
+            AutoAlbum(
+                id = it.id,
+                cover = MediaItemInstance(
+                    id = Remote(it.coverPhotoHash, it.coverPhotoIsVideo ?: false),
+                    mediaHash = MediaItemHash.fromRemoteMediaHash(
+                        it.coverPhotoHash,
+                        user.id
                     ),
-                    title = it.title ?: context.getString(string.missing_album_title),
-                    photoCount = it.photoCount,
-                )
-            }
+                    displayDayDate = null,
+                    sortableDate = it.timestamp,
+                    ratio = 1f,
+                ),
+                title = it.title ?: context.getString(string.missing_album_title),
+                photoCount = it.photoCount,
+            )
+        }
 }

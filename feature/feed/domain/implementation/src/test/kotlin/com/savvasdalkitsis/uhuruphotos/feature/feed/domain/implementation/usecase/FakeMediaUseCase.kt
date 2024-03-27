@@ -54,7 +54,7 @@ private fun MediaUseCase.mapsRemoteMediaCollections() {
             MediaCollection(id, source.map {
                 MediaItemInstance(
                     id = MediaId.Remote(it.id, it.isVideo),
-                    mediaHash = MediaItemHash(it.mediaItemId ?: "missing"),
+                    mediaHash = MediaItemHash.fromRemoteMediaHash(it.mediaItemId ?: "missing", 0),
                     displayDayDate = id,
                 )
             }, id)

@@ -18,6 +18,7 @@ package com.savvasdalkitsis.uhuruphotos.feature.heatmap.view.implementation.seam
 import com.savvasdalkitsis.uhuruphotos.feature.heatmap.view.implementation.seam.HeatMapActionsContext
 import com.savvasdalkitsis.uhuruphotos.feature.heatmap.view.implementation.seam.HeatMapMutation
 import com.savvasdalkitsis.uhuruphotos.feature.heatmap.view.implementation.ui.state.HeatMapState
+import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.api.model.LightboxSequenceDataSource.Single
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.api.navigation.LightboxNavigationRoute
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.state.CelState
 import kotlinx.coroutines.flow.flow
@@ -28,6 +29,9 @@ data class SelectedCel(
     context(HeatMapActionsContext) override fun handle(
         state: HeatMapState
     ) = flow<HeatMapMutation> {
-        navigator.navigateTo(LightboxNavigationRoute(celState.mediaItem.id))
+        navigator.navigateTo(LightboxNavigationRoute(
+            mediaItem = celState.mediaItem,
+            lightboxSequenceDataSource = Single,
+        ))
     }
 }

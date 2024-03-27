@@ -16,6 +16,7 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.actions
 
 import com.github.michaelbull.result.getOr
+import com.github.michaelbull.result.onFailure
 import com.savvasdalkitsis.uhuruphotos.feature.db.domain.api.portfolio.PortfolioItems
 import com.savvasdalkitsis.uhuruphotos.feature.feed.domain.api.model.FeedFetchType
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.api.model.LightboxSequenceDataSource
@@ -38,6 +39,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.LightboxMutation.Loading
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.LightboxMutation.LoadingDetails
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.LightboxMutation.ReceivedDetails
+import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.LightboxMutation.ShowErrorMessage
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.LightboxMutation.ShowMedia
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.LightboxMutation.ShowRestoreButton
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.ui.state.LightboxState
@@ -46,6 +48,9 @@ import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.ui.s
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaCollection
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaId
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItem
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemHash
+import com.savvasdalkitsis.uhuruphotos.foundation.launchers.api.onIO
+import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.channelFlow
 import kotlinx.coroutines.flow.combine
@@ -58,9 +63,11 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.mapNotNull
 import kotlinx.coroutines.flow.merge
 import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.flow.onStart
 
 data class LoadMediaItem(
     val actionMediaId: MediaId<*>,
+    val actionMediaItemHash: MediaItemHash,
     val sequenceDataSource: LightboxSequenceDataSource,
 ) : LightboxAction() {
 
@@ -69,7 +76,7 @@ data class LoadMediaItem(
     ) = merge(
         flow {
             currentMediaId.emit(actionMediaId)
-            emit(ShowMedia(listOf(actionMediaId.toSingleMediaItemState()), 0))
+            emit(ShowMedia(listOf(actionMediaId.toSingleMediaItemState(mediaHash = actionMediaItemHash)), 0))
 
             if (sequenceDataSource == Trash) {
                 mediaItemType = MediaItemType.TRASHED
@@ -85,15 +92,21 @@ data class LoadMediaItem(
             Triple(media, serverUrl.orEmpty(), id)
         }.flatMapLatest { (media, serverUrl, id) ->
             channelFlow {
-                ShowMedia(media, id)?.let {
-                    send(it)
+                media.find(id)?.let { (index, item) ->
+                    send(ShowMedia(media, index))
                     send(Loading)
                     send(LoadingDetails(id))
-                    lightboxUseCase.observeLightboxItemDetails(id).map { details ->
+                    lightboxUseCase.observeLightboxItemDetails(item.mediaHash).map { details ->
                         ReceivedDetails(id, details, serverUrl)
                     }.onEach {
                         send(FinishedLoading)
                         send(FinishedLoadingDetails(id))
+                    }.onStart {
+                        onIO {
+                            lightboxUseCase.refreshMediaDetails(id, item.mediaHash).onFailure {
+                                send(ShowErrorMessage(string.error_loading_photo_details))
+                            }
+                        }
                     }.collect(this::send)
                 }
             }
@@ -165,20 +178,18 @@ data class LoadMediaItem(
         }
     }
 
-    private fun ShowMedia(
-        mediaItemStates: List<SingleMediaItemState>,
-        id: MediaId<*>,
-    ): ShowMedia? {
-        val index = mediaItemStates.indexOfFirst { it.id.matches(id) }
-        return ShowMedia(mediaItemStates, index).takeIf { index >=0 }
-    }
-
     context(LightboxActionsContext)
     private fun MediaItem.toSingleMediaItemState(
         isInPortfolio: (Long) -> Boolean,
         showAddToPortfolioIcon: Boolean,
         addToPortfolioEnabled: Boolean
-    ) = id.toSingleMediaItemState(isFavourite, isInPortfolio, showAddToPortfolioIcon, addToPortfolioEnabled)
+    ) = id.toSingleMediaItemState(
+        isFavourite = isFavourite,
+        isInPortfolio = isInPortfolio,
+        showAddToPortfolioIcon = showAddToPortfolioIcon,
+        addToPortfolioEnabled = addToPortfolioEnabled,
+        mediaHash = mediaHash
+    )
 
     context(LightboxActionsContext)
     private fun MediaId<*>.toSingleMediaItemState(
@@ -186,6 +197,7 @@ data class LoadMediaItem(
         isInPortfolio: (Long) -> Boolean = { false },
         showAddToPortfolioIcon: Boolean = false,
         addToPortfolioEnabled: Boolean = false,
+        mediaHash: MediaItemHash,
     ) = SingleMediaItemState(
         id = this,
         showFavouriteIcon = preferRemote is MediaId.Remote,
@@ -197,7 +209,8 @@ data class LoadMediaItem(
         addToPortfolioIconEnabled = addToPortfolioEnabled,
         inPortfolio = findLocals.any { isInPortfolio(it.value) },
         mediaItemSyncState = syncState.takeIf { sequenceDataSource.showMediaSyncState },
-        isFavourite = isFavourite
+        isFavourite = isFavourite,
+        mediaHash = mediaHash,
     )
 
     private val MediaId<*>.shouldShowEditButton get() = !isVideo && findLocals.isNotEmpty()

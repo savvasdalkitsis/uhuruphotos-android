@@ -35,7 +35,8 @@ fun mediaCollection(
 ) = MediaCollection(id, items.map { mediaItem(it, date) }, date)
 
 fun mediaGroup(remote: MediaItemInstance, vararg locals: MediaItemInstance) = MediaItemGroup(remote, locals.toSet())
-fun mediaItem(id: MediaId<*>, date: String = "") = MediaItemInstance(id, MediaItemHash(id.value.toString()), displayDayDate = date)
+fun mediaItem(id: MediaId<*>, date: String = "") =
+    MediaItemInstance(id, MediaItemHash.fromRemoteMediaHash(id.value.toString(), 0), displayDayDate = date)
 fun localMediaItem(id: Long, displayDate: String) = mediaItem(local(id), displayDate)
 fun remote(id: String) = MediaId.Remote(id, false)
 fun downloading(id: String) = MediaId.Downloading(id, false)

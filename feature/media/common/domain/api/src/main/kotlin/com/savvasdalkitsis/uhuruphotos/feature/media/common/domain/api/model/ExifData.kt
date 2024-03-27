@@ -26,34 +26,4 @@ data class ExifData(
     val digitalZoomRatio: String? = null,
     val width: Int? = null,
     val height: Int? = null,
-) {
-    val megapixels: String? get() = whSafe { w, h ->
-        "${(w * h.toLong()).mb.round(2)} MP"
-    }
-    val wh: Pair<Int, Int>? get() = whSafe { w, h ->
-        w to h
-    }
-
-    private fun <T> whSafe(action: (Int, Int) -> T) : T? =
-        if (width != null && width != 0 && height != null && height != 0) {
-            action(width, height)
-        } else {
-            null
-        }
-
-    fun mergeWith(other: ExifData?) = ExifData(
-        fStop = fStop ?: other?.fStop,
-        shutterSpeed = shutterSpeed ?: other?.shutterSpeed,
-        isoSpeed = isoSpeed ?: other?.isoSpeed,
-        camera = camera ?: other?.camera,
-        focalLength = focalLength ?: other?.focalLength,
-        focalLength35Equivalent = focalLength35Equivalent ?: other?.focalLength35Equivalent,
-        subjectDistance = subjectDistance ?: other?.subjectDistance,
-        digitalZoomRatio = digitalZoomRatio ?: other?.digitalZoomRatio,
-        width = width ?: other?.width,
-        height = height ?: other?.height,
-    )
-}
-
-private val Long.mb get() = this / 1024 / 1024f
-private fun Float.round(decimals: Int = 2): String = "%.${decimals}f".format(this)
+)

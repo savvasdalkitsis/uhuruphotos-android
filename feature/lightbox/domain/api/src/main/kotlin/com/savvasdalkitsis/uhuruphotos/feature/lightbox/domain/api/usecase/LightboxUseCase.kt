@@ -17,11 +17,14 @@ package com.savvasdalkitsis.uhuruphotos.feature.lightbox.domain.api.usecase
 
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.domain.api.model.LightboxDetails
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaId
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemHash
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemMetadata
+import com.savvasdalkitsis.uhuruphotos.foundation.result.api.SimpleResult
 import kotlinx.coroutines.flow.Flow
 
 interface LightboxUseCase {
 
-    fun observeLightboxItemDetails(id: MediaId<*>): Flow<LightboxDetails>
-    suspend fun saveMetadata(id: MediaId<*>, metadata: MediaItemMetadata)
+    fun observeLightboxItemDetails(mediaHash: MediaItemHash): Flow<LightboxDetails>
+    fun saveMetadata(mediaHash: MediaItemHash, metadata: MediaItemMetadata)
+    suspend fun refreshMediaDetails(mediaId: MediaId<*>, mediaHash: MediaItemHash): SimpleResult
 }

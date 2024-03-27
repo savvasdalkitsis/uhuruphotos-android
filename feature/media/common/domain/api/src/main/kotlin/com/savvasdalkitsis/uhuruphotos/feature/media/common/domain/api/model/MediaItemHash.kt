@@ -15,13 +15,22 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model
 
+import android.os.Parcelable
 import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.model.Md5Hash
+import kotlinx.parcelize.Parcelize
 import kotlinx.serialization.Serializable
 
-@JvmInline
 @Serializable
-value class MediaItemHash(
-    val hash: String,
-)
+@Parcelize
+data class MediaItemHash(
+    val md5: Md5Hash,
+    val userId: Int?,
+) : Parcelable {
+    val hash get() = "${md5.value}${userId?.toString().orEmpty()}"
 
-fun Md5Hash.toMediaItemHash(userId: Int?) = MediaItemHash("$value${userId ?: ""}")
+    companion object {
+        fun fromRemoteMediaHash(hash: String, userId: Int?) = MediaItemHash(
+            Md5Hash(hash.removeSuffix(userId?.toString().orEmpty())), userId,
+        )
+    }
+}

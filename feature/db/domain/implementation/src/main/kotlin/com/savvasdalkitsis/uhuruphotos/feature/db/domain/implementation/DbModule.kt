@@ -16,6 +16,7 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.feature.db.domain.implementation
 
 import android.content.Context
+import androidx.sqlite.db.SupportSQLiteDatabase
 import app.cash.sqldelight.EnumColumnAdapter
 import app.cash.sqldelight.adapter.primitive.FloatColumnAdapter
 import app.cash.sqldelight.adapter.primitive.IntColumnAdapter
@@ -74,7 +75,22 @@ class DbModule {
     @Provides
     @Singleton
     fun driver(@ApplicationContext context: Context): SqlDriver =
-        AndroidSqliteDriver(Database.Schema, context, "uhuruPhotos.db")
+        AndroidSqliteDriver(
+            schema = Database.Schema,
+            context = context,
+            name = "uhuruPhotos.db",
+            callback = object : AndroidSqliteDriver.Callback(Database.Schema) {
+                override fun onConfigure(db: SupportSQLiteDatabase) {
+                    super.onConfigure(db)
+                    setPragma(db, "JOURNAL_MODE = WAL")
+                    setPragma(db, "SYNCHRONOUS = NORMAL")
+                }
+
+                private fun setPragma(db: SupportSQLiteDatabase, pragma: String) {
+                    db.query("PRAGMA $pragma").close()
+                }
+            }
+        )
 
     @Provides
     @Singleton

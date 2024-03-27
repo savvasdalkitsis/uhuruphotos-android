@@ -18,7 +18,9 @@ package com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.ui.
 import android.content.pm.ResolveInfo
 import androidx.annotation.StringRes
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaId
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemHash
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemSyncState
+import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.model.Md5Hash
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
 
@@ -78,4 +80,5 @@ data class SingleMediaItemState(
     val mediaItemSyncState: MediaItemSyncState? = null,
     val showEditApps: ImmutableList<ResolveInfo> = persistentListOf(),
     val details: LightboxDetailsState = LightboxDetailsState(),
+    val mediaHash: MediaItemHash = MediaItemHash(Md5Hash(""), 0),
 )

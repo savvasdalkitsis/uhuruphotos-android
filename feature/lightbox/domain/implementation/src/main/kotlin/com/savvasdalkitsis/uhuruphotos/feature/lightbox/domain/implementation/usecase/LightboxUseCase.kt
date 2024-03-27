@@ -19,18 +19,9 @@ import com.savvasdalkitsis.uhuruphotos.feature.lightbox.domain.api.model.Lightbo
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.domain.api.usecase.LightboxUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.domain.implementation.repository.LightboxRepository
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaId
-import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaId.Downloading
-import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaId.Group
-import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaId.Local
-import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaId.Processing
-import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaId.Remote
-import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaId.Uploading
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemHash
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemMetadata
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.combine
-import kotlinx.coroutines.flow.filterNotNull
-import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.flow.onStart
 import se.ansman.dagger.auto.AutoBind
 import javax.inject.Inject
 
@@ -39,44 +30,14 @@ class LightboxUseCase @Inject constructor(
     private val lightboxRepository: LightboxRepository,
 ) : LightboxUseCase {
 
-    override fun observeLightboxItemDetails(id: MediaId<*>): Flow<LightboxDetails> = with (lightboxRepository) {
-        when (id) {
-            is Remote -> id.observeDetails()
-            is Downloading -> id.remote.observeDetails()
-            is Uploading -> id.local.observeDetails()
-            is Processing -> id.local.observeDetails()
-            is Local -> id.observeDetails()
-            is Group -> {
-                val localDetails = id.findLocals.map { it.observeDetails() }
-                val remoteDetails = id.findRemote?.observeDetails()?.startEmpty()
+    override fun observeLightboxItemDetails(mediaHash: MediaItemHash): Flow<LightboxDetails> =
+        lightboxRepository.observeDetails(mediaHash.md5)
 
+    override suspend fun refreshMediaDetails(mediaId: MediaId<*>, mediaHash: MediaItemHash) =
+        lightboxRepository.refreshDetails(mediaId, mediaHash)
 
-                val details = listOfNotNull(*(localDetails + remoteDetails).toTypedArray())
-                combine(*details.toTypedArray()) { items ->
-                    items.reduce { first, second ->
-                        first?.mergeWith(second)
-                    }
-                }.filterNotNull()
-            }
-        }
+    override fun saveMetadata(mediaHash: MediaItemHash, metadata: MediaItemMetadata) {
+        lightboxRepository.saveMetadata(mediaHash.md5, metadata)
     }
-
-    private fun Flow<LightboxDetails>.startEmpty(): Flow<LightboxDetails?> =
-        map<LightboxDetails, LightboxDetails?> { it }.onStart { emit(null) }
-
-    override suspend fun saveMetadata(id: MediaId<*>, metadata: MediaItemMetadata) = with(lightboxRepository) {
-        when (id) {
-            is Remote -> saveMetadata(id.value, metadata)
-            is Downloading -> saveMetadata(id.remote.value, metadata)
-            is Uploading -> saveMetadata(id.local.value.toString(), metadata)
-            is Processing -> saveMetadata(id.local.value.toString(), metadata)
-            is Local -> saveMetadata(id.value.toString(), metadata)
-            is Group -> {
-                id.findRemote?.let { saveMetadata(it.value, metadata) }
-                id.findLocals.forEach { saveMetadata(it.value.toString(), metadata) }
-            }
-        }
-    }
-
 }
 

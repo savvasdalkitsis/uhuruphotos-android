@@ -21,7 +21,6 @@ import android.content.Context
 import android.net.Uri
 import com.github.michaelbull.result.Err
 import com.github.michaelbull.result.Ok
-import com.github.michaelbull.result.Result
 import com.github.michaelbull.result.onFailure
 import com.github.michaelbull.result.onSuccess
 import com.savvasdalkitsis.uhuruphotos.feature.album.auto.domain.api.usecase.AutoAlbumUseCase
@@ -36,7 +35,6 @@ import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.LightboxDeletionCategory.REMOTE_ITEM_TRASHED
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.LightboxMutation.AskForPermissions
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.LightboxMutation.FinishedLoading
-import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.LightboxMutation.FinishedLoadingDetails
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.LightboxMutation.HideAllConfirmationDialogs
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.LightboxMutation.Loading
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.LightboxMutation.LoadingDetails
@@ -69,7 +67,7 @@ import com.savvasdalkitsis.uhuruphotos.foundation.log.api.log
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.Navigator
 import com.savvasdalkitsis.uhuruphotos.foundation.result.api.SimpleResult
 import com.savvasdalkitsis.uhuruphotos.foundation.share.api.usecase.ShareUseCase
-import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R
+import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
 import com.savvasdalkitsis.uhuruphotos.foundation.toaster.api.usecase.ToasterUseCase
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.usecase.UiUseCase
 import com.savvasdalktsis.uhuruphotos.feature.download.domain.api.usecase.DownloadUseCase
@@ -168,26 +166,26 @@ internal class LightboxActionsContext @Inject constructor(
             }
     }
 
-    suspend fun FlowCollector<LightboxMutation>.loadMediaDetails(
+    suspend fun FlowCollector<LightboxMutation>.refreshMediaDetails(
         mediaId: MediaId<*>,
-        refresh: Boolean = false,
+        media: List<SingleMediaItemState>,
     ) {
-        emit(Loading)
-        emit(LoadingDetails(mediaId))
-        loadDetails(mediaId, refresh).onFailure {
-            emit(ShowErrorMessage(R.string.error_loading_photo_details))
+        media.find(mediaId)?.let { (_, item) ->
+            emit(Loading)
+            emit(LoadingDetails(mediaId))
+            lightboxUseCase.refreshMediaDetails(mediaId, item.mediaHash).onFailure {
+                emit(ShowErrorMessage(string.error_loading_photo_details))
+            }
         }
-        emit(FinishedLoading)
-        emit(FinishedLoadingDetails(mediaId))
     }
 
-    private suspend fun loadDetails(
-        mediaId: MediaId<*>,
-        refresh: Boolean,
-    ): Result<Any, Throwable> = if (refresh) {
-        mediaUseCase.refreshDetailsNow(mediaId)
-    } else {
-        mediaUseCase.refreshDetailsNowIfMissing(mediaId)
+    fun List<SingleMediaItemState>.find(id: MediaId<*>): Pair<Int, SingleMediaItemState>? {
+        val index = indexOfFirst { it.id.matches(id) }
+        return if (index >= 0) {
+            index to get(index)
+        } else {
+            null
+        }
     }
 
     internal fun LightboxActionsContext.cropLocal(

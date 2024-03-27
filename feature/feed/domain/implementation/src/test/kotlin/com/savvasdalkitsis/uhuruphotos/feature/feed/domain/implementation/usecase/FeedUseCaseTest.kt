@@ -242,5 +242,5 @@ class FeedUseCaseTest {
         assertThat(awaitItem(), sameBeanAs(collections))
     }
 
-    private fun MediaItemInstance.withHash(hash: String) = copy(mediaHash = MediaItemHash(hash))
+    private fun MediaItemInstance.withHash(hash: String) = copy(mediaHash = MediaItemHash.fromRemoteMediaHash(hash, 0))
 }
