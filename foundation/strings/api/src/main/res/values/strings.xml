@@ -391,4 +391,10 @@
     <string name="local_media_scan_completed">Local media scanning has completed</string>
     <string name="local_media_scan_completed_description">The initial scanning of the local media of your device has completed. Tap here to open the app</string>
     <string name="local_media_scan_warning">The app will start scanning your camera folder which, depending on the amount of media in it, might take a long time and use up some of your battery. This is a one-time process.</string>
+    <string name="collage">Collage</string>
+    <string name="collage_spacing">Spacing between collage items: %d</string>
+    <string name="collage_spacing_include_edges">Include spacing on the edges</string>
+    <string name="collage_shape">Shape of collage items</string>
+    <string name="rectangle">Rectangle</string>
+    <string name="rounded_rectangle">Rounded rectangle</string>
 </resources>

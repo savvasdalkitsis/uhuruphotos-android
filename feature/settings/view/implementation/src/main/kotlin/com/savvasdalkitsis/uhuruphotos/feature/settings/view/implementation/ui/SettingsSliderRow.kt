@@ -18,10 +18,9 @@ package com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.ui
 import androidx.annotation.StringRes
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material.Slider
-import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.mutableFloatStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
@@ -38,8 +37,8 @@ internal fun SettingsSliderRow(
     SettingsEntryWithSubtext(
         subtext = subtext,
     ) {
-        var sliderValue by remember { mutableStateOf(initialValue) }
-        Text(text(sliderValue))
+        var sliderValue by remember { mutableFloatStateOf(initialValue) }
+        SettingsTextRow(text(sliderValue))
         Slider(
             modifier = Modifier
                 .fillMaxWidth(),

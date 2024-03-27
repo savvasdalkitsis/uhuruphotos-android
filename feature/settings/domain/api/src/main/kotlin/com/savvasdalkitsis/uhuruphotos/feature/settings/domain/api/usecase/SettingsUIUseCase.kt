@@ -3,6 +3,7 @@ package com.savvasdalkitsis.uhuruphotos.feature.settings.domain.api.usecase
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.api.ui.state.FeedMediaItemSyncDisplay
 import com.savvasdalkitsis.uhuruphotos.foundation.map.api.model.MapProvider
 import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.ThemeMode
+import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.CollageShape
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.StateFlow
 
@@ -23,6 +24,10 @@ interface SettingsUIUseCase {
     fun getShouldShowPrecacheProgress(): Boolean
     fun getShouldShowLocalSyncProgress(): Boolean
     fun getAutoHideFeedNavOnScroll(): Boolean
+    fun getThemeMode(): ThemeMode
+    fun getCollageSpacing(): Int
+    fun getCollageSpacingIncludeEdges(): Boolean
+    fun getCollageShape(): CollageShape
 
     fun observeThemeMode(): Flow<ThemeMode>
     fun observeSearchSuggestionsEnabledMode(): Flow<Boolean>
@@ -38,6 +43,9 @@ interface SettingsUIUseCase {
     fun observeShouldShowPrecacheProgress(): Flow<Boolean>
     fun observeShouldShowLocalSyncProgress(): Flow<Boolean>
     fun observeAutoHideFeedNavOnScroll(): Flow<Boolean>
+    fun observeCollageSpacing(): Flow<Int>
+    fun observeCollageSpacingIncludeEdges(): Flow<Boolean>
+    fun observeCollageShape(): Flow<CollageShape>
 
     fun setThemeMode(mode: ThemeMode)
     fun setSearchSuggestionsEnabled(enabled: Boolean)
@@ -55,5 +63,7 @@ interface SettingsUIUseCase {
     fun setShouldShowPrecacheProgress(show: Boolean)
     fun setShouldShowLocalSyncProgress(show: Boolean)
     fun setAutoHideFeedNavOnScroll(autoHide: Boolean)
-    fun getThemeMode(): ThemeMode
+    fun setCollageSpacing(spacing: Int)
+    fun setCollageSpacingIncludeEdges(include: Boolean)
+    fun setCollageShape(shape: CollageShape)
 }

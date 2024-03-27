@@ -35,6 +35,7 @@ import com.savvasdalkitsis.uhuruphotos.foundation.preferences.api.get
 import com.savvasdalkitsis.uhuruphotos.foundation.preferences.api.observe
 import com.savvasdalkitsis.uhuruphotos.foundation.preferences.api.set
 import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.ThemeMode
+import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.CollageShape
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.DelicateCoroutinesApi
@@ -90,6 +91,12 @@ internal class SettingsUIUseCase @Inject constructor(
     private val shouldShowLocalSyncProgressDefault = true
     private val autoHideFeedNavOnScroll = "autoHideFeedNavOnScroll"
     private val autoHideFeedNavOnScrollDefault = true
+    private val collageSpacing = "collageSpacing"
+    private val collageSpacingDefault = 2
+    private val collageSpacingIncludeEdges = "collageSpacingIncludeEdges"
+    private val collageSpacingIncludeEdgesDefault = false
+    private val collageShape = "collageShape"
+    private val collageShapeDefault = CollageShape.default
 
     override fun getShowLibrary(): Boolean =
         get(showLibrary, showLibraryDefault)
@@ -123,6 +130,12 @@ internal class SettingsUIUseCase @Inject constructor(
         get(shouldShowLocalSyncProgress, shouldShowLocalSyncProgressDefault)
     override fun getAutoHideFeedNavOnScroll(): Boolean =
         get(autoHideFeedNavOnScroll, autoHideFeedNavOnScrollDefault)
+    override fun getCollageSpacing(): Int =
+        get(collageSpacing, collageSpacingDefault)
+    override fun getCollageShape(): CollageShape =
+        get(collageShape, collageShapeDefault)
+    override fun getCollageSpacingIncludeEdges(): Boolean =
+        get(collageSpacingIncludeEdges, collageSpacingIncludeEdgesDefault)
 
     override fun observeThemeMode(): Flow<ThemeMode> =
         observe(themeMode, themeModeDefault)
@@ -161,6 +174,12 @@ internal class SettingsUIUseCase @Inject constructor(
         observe(shouldShowLocalSyncProgress, shouldShowLocalSyncProgressDefault)
     override fun observeAutoHideFeedNavOnScroll(): Flow<Boolean> =
         observe(autoHideFeedNavOnScroll, autoHideFeedNavOnScrollDefault)
+    override fun observeCollageSpacing(): Flow<Int> =
+        observe(collageSpacing, collageSpacingDefault)
+    override fun observeCollageShape(): Flow<CollageShape> =
+        observe(collageShape, collageShapeDefault)
+    override fun observeCollageSpacingIncludeEdges(): Flow<Boolean> =
+        observe(collageSpacingIncludeEdges, collageSpacingIncludeEdgesDefault)
 
     override fun setThemeMode(mode: ThemeMode) {
         set(themeMode, mode)
@@ -224,6 +243,18 @@ internal class SettingsUIUseCase @Inject constructor(
 
     override fun setAutoHideFeedNavOnScroll(autoHide: Boolean) {
         set(autoHideFeedNavOnScroll, autoHide)
+    }
+
+    override fun setCollageSpacing(spacing: Int) {
+        set(collageSpacing, spacing)
+    }
+
+    override fun setCollageShape(shape: CollageShape) {
+        set(collageShape, shape)
+    }
+
+    override fun setCollageSpacingIncludeEdges(include: Boolean) {
+        set(collageSpacingIncludeEdges, include)
     }
 
     private fun MapProvider.mapToAvailable(): MapProvider =

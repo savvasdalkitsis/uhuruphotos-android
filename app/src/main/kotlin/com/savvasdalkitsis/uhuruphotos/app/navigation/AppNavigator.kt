@@ -28,6 +28,9 @@ import com.bumble.appyx.core.integrationpoint.ActivityIntegrationPoint
 import com.bumble.appyx.navmodel.backstack.BackStack
 import com.savvasdalkitsis.uhuruphotos.feature.auth.domain.api.usecase.ServerUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.auth.view.api.navigation.LocalServerUrl
+import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.LocalCollageShapeProvider
+import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.LocalCollageSpacingEdgesProvider
+import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.LocalCollageSpacingProvider
 import com.savvasdalkitsis.uhuruphotos.feature.home.view.api.navigation.HomeNavigationRoute
 import com.savvasdalkitsis.uhuruphotos.feature.settings.domain.api.usecase.SettingsUIUseCase
 import com.savvasdalkitsis.uhuruphotos.foundation.image.api.LocalAnimatedVideoThumbnails
@@ -45,6 +48,7 @@ import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.NavigationRoute
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.Navigator
 import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.LocalThemeMode
 import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.window.LocalSystemUiController
+import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.CollageShape
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.LocalScreenshotState
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.implementation.usecase.UiUseCase
 import com.savvasdalkitsis.uhuruphotos.foundation.video.api.ExoplayerProvider
@@ -80,6 +84,9 @@ class AppNavigator @Inject constructor(
         )
         val screenshotState = rememberScreenshotState()
         val themeMode by settingsUIUseCase.observeThemeModeState().collectAsState()
+        val collageShape by settingsUIUseCase.observeCollageShape().collectAsState(CollageShape.default)
+        val collageSpacing by settingsUIUseCase.observeCollageSpacing().collectAsState(2)
+        val collageSpacingEdges by settingsUIUseCase.observeCollageSpacingIncludeEdges().collectAsState(false)
         CompositionLocalProvider(
             LocalExoPlayerProvider provides exoplayerProvider,
             LocalAnimatedVideoThumbnails provides animateVideoThumbnails.value,
@@ -91,6 +98,9 @@ class AppNavigator @Inject constructor(
             LocalServerUrl provides serverUseCase.getServerUrl(),
             LocalScreenshotState provides screenshotState,
             LocalThemeMode provides themeMode,
+            LocalCollageShapeProvider provides collageShape,
+            LocalCollageSpacingProvider provides collageSpacing,
+            LocalCollageSpacingEdgesProvider provides collageSpacingEdges,
         ) {
             ScreenshotBox(screenshotState = screenshotState) {
                 NodeHost(

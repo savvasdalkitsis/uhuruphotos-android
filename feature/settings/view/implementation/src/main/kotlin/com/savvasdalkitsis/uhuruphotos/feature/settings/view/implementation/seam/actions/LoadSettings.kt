@@ -27,6 +27,9 @@ import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.SettingsMutation.DisplayBiometrics
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.SettingsMutation.DisplayCloudSyncNetworkRequirements
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.SettingsMutation.DisplayCloudSyncRequiresCharging
+import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.SettingsMutation.DisplayCollageShape
+import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.SettingsMutation.DisplayCollageSpacing
+import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.SettingsMutation.DisplayCollageSpacingIncludeEdges
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.SettingsMutation.DisplayFeedDaysToRefresh
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.SettingsMutation.DisplayFeedMediaItemSyncDisplay
 import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.seam.SettingsMutation.DisplayFeedSyncFrequency
@@ -108,6 +111,9 @@ data object LoadSettings : SettingsAction() {
             observeLoggingEnabled().map(::DisplayLoggingEnabled),
             observeSendDatabaseEnabled().map(::DisplaySendDatabaseEnabled),
             observeFeedMediaItemSyncDisplay().map(::DisplayFeedMediaItemSyncDisplay),
+            observeCollageSpacing().map(::DisplayCollageSpacing),
+            observeCollageSpacingIncludeEdges().map(::DisplayCollageSpacingIncludeEdges),
+            observeCollageShape().map(::DisplayCollageShape),
             combine(
                 observeBiometricsRequiredForAppAccess(),
                 observeBiometricsRequiredForHiddenPhotosAccess(),

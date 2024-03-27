@@ -40,6 +40,8 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.LocalLayoutDirection
@@ -53,6 +55,8 @@ import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.state.Ce
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.state.CelState
 import com.savvasdalkitsis.uhuruphotos.foundation.compose.api.recomposeHighlighter
 import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
+import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.CollageShape.RECTANGLE
+import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.CollageShape.ROUNDED_RECTANGLE
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.LocalScreenshotState
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.grid.SmartGrid
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.grid.SmartGridItemScope
@@ -102,17 +106,28 @@ internal fun SmartCollage(
                 }
             }
         }
+        val spacing = LocalCollageSpacingProvider.current.dp
+        val shape = when (LocalCollageShapeProvider.current) {
+            RECTANGLE -> RectangleShape
+            ROUNDED_RECTANGLE -> MaterialTheme.shapes.small
+        }
+        val horizontalExtraSpacing = when {
+            LocalCollageSpacingEdgesProvider.current -> spacing
+            else -> 0.dp
+        }
         SmartGrid(
             modifier = modifier
                 .recomposeHighlighter()
                 .padding(
-                    start = contentPadding.calculateStartPadding(LocalLayoutDirection.current),
-                    end = contentPadding.calculateEndPadding(LocalLayoutDirection.current),
+                    start = contentPadding.calculateStartPadding(LocalLayoutDirection.current) +
+                            horizontalExtraSpacing,
+                    end = contentPadding.calculateEndPadding(LocalLayoutDirection.current) +
+                            horizontalExtraSpacing,
                 ),
             gridState = gridState,
             columns = columnCount,
-            verticalItemSpacing = 2.dp,
-            horizontalArrangement = spacedBy(2.dp),
+            verticalItemSpacing = spacing,
+            horizontalArrangement = spacedBy(spacing),
         ) {
             item("contentPaddingTop", "contentPadding", fullLine = true) {
                 Spacer(modifier = Modifier.height(topPadding))
@@ -152,7 +167,9 @@ internal fun SmartCollage(
                         val screenshotState = LocalScreenshotState.current
                         val scope = rememberCoroutineScope()
                         Cel(
-                            modifier = Modifier.animateItemPlacement(),
+                            modifier = Modifier
+                                .animateItemPlacement()
+                                .clip(shape),
                             state = cel,
                             onSelected = {
                                 scope.launch {

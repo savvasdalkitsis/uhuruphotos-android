@@ -18,10 +18,9 @@ package com.savvasdalkitsis.uhuruphotos.feature.portfolio.view.implementation.ui
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.NamedVitrine
 import com.savvasdalkitsis.uhuruphotos.feature.portfolio.view.implementation.seam.actions.ChangePortfolioItem
 import com.savvasdalkitsis.uhuruphotos.feature.portfolio.view.implementation.seam.actions.NavigateToFolder
@@ -42,7 +41,7 @@ fun PortfolioCel(
     Checkable(
         modifier = Modifier.fillMaxHeight(1f),
         id = cel.folder.id,
-        shape = RoundedCornerShape(12.dp),
+        shape = MaterialTheme.shapes.small,
         selectionMode = cel.selection,
         selectionBackgroundColor = CustomColors.selectedBackground,
         editable = cel.clickable,

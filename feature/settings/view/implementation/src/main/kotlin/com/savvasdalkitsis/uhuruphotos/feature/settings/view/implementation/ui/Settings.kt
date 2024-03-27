@@ -90,6 +90,9 @@ internal fun Settings(
                     CollapsibleGroup(groupState = controller.uiFeed) {
                         SettingsFeedUI(state, action)
                     }
+                    CollapsibleGroup(groupState = controller.uiCollage) {
+                        SettingsCollageUI(state, action)
+                    }
                     CollapsibleGroup(groupState = controller.uiTheme) {
                         SettingsTheme(state, action)
                     }

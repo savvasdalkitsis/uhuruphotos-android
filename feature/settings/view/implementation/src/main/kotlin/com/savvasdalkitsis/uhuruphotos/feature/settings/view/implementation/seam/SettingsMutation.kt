@@ -26,6 +26,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.settings.view.implementation.ui.s
 import com.savvasdalkitsis.uhuruphotos.foundation.map.api.model.MapProvider
 import com.savvasdalkitsis.uhuruphotos.foundation.seam.api.Mutation
 import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.ThemeMode
+import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.CollageShape
 
 sealed class SettingsMutation(
     mutation: Mutation<SettingsState>,
@@ -150,6 +151,18 @@ sealed class SettingsMutation(
 
     data class DisplayFeedMediaItemSyncDisplay(val display: FeedMediaItemSyncDisplay): SettingsMutation({
         it.copy(feedMediaItemSyncDisplay = display)
+    })
+
+    data class DisplayCollageSpacing(val spacing: Int): SettingsMutation({
+        it.copy(collageSpacing = spacing)
+    })
+
+    data class DisplayCollageSpacingIncludeEdges(val include: Boolean): SettingsMutation({
+        it.copy(collageSpacingIncludeEdges = include)
+    })
+
+    data class DisplayCollageShape(val shape: CollageShape): SettingsMutation({
+        it.copy(collageShape = shape)
     })
 
     data class SetRemoteAccess(val hasAccess: Boolean): SettingsMutation({

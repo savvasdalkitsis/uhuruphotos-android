@@ -22,6 +22,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.jobs.domain.api.model.Job
 import com.savvasdalkitsis.uhuruphotos.feature.jobs.view.ui.state.JobState
 import com.savvasdalkitsis.uhuruphotos.feature.settings.domain.api.model.CacheType
 import com.savvasdalkitsis.uhuruphotos.foundation.theme.api.ThemeMode
+import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.CollageShape
 
 data class SettingsState(
     val isLoading: Boolean = true,
@@ -58,4 +59,7 @@ data class SettingsState(
     val shouldShowPrecacheProgress: Boolean = false,
     val shouldShowLocalSyncProgress: Boolean = false,
     val hasRemoteAccess: Boolean = false,
+    val collageSpacing: Int = 2,
+    val collageSpacingIncludeEdges: Boolean = false,
+    val collageShape: CollageShape = CollageShape.default,
 )
