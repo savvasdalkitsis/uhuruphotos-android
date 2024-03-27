@@ -15,6 +15,7 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.uploads.domain.implementation.usecase
 
+import androidx.work.Constraints
 import androidx.work.Data
 import androidx.work.WorkInfo
 import androidx.work.WorkInfo.State
@@ -81,13 +82,15 @@ class UploadsUseCaseTest {
     private fun workInfo(state: State, progress: Int? = null): WorkInfo = WorkInfo(
         fixedUUID,
         state,
+        emptySet(),
         Data.EMPTY,
-        mutableListOf(),
         progress?.let {
             Data(mapOf(ForegroundNotificationWorker.Progress to it))
         } ?: Data.EMPTY,
+        0,
+        0,
+        Constraints.NONE,
         1,
-        1
     )
 
     private data class Values(
