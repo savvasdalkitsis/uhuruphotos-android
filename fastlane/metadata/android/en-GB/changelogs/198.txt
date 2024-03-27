@@ -1,0 +1,6 @@
+* User can now change the look of the collages (the feed and all albums):
+    - The spacing between items is now configurable
+    - The user can choose whether the spacing is included in the edges of the collages
+    - The shape of the items in the collage is configurable between rectangle and rounded rectangle
+* Fix bug where media selection would get stuck after deleting local only media from feed
+* More lightbox media details improvements
