@@ -18,20 +18,25 @@ package com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.grid.staggered
 import androidx.compose.foundation.lazy.staggeredgrid.LazyStaggeredGridScope
 import androidx.compose.foundation.lazy.staggeredgrid.StaggeredGridItemSpan
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.mutableStateOf
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.grid.SmartGridItemScope
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.grid.SmartGridScope
 
-class SmartStaggeredGridScope(
-    private val lazyStaggeredGridScope: LazyStaggeredGridScope,
-) : SmartGridScope {
+class SmartStaggeredGridScope : SmartGridScope {
+
+    val lazyStaggeredGridScope: MutableState<LazyStaggeredGridScope?> = mutableStateOf(null)
+    private val itemScope = SmartStaggeredGridItemScope()
+
     override fun item(
         key: Any?,
         contentType: Any?,
         fullLine: Boolean,
         content: @Composable (SmartGridItemScope.() -> Unit)
     ) {
-        lazyStaggeredGridScope.item(key, contentType, StaggeredGridItemSpan.FullLine.takeIf { fullLine }) {
-            content(SmartStaggeredGridItemScope(this))
+        lazyStaggeredGridScope.value?.item(key, contentType, StaggeredGridItemSpan.FullLine.takeIf { fullLine }) {
+            itemScope.lazyStaggeredGridItemScope.value = this
+            content(itemScope)
         }
     }
 

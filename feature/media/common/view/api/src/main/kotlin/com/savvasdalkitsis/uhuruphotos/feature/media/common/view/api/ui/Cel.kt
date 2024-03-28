@@ -43,6 +43,7 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import com.savvasdalkitsis.uhuruphotos.feature.auth.view.api.navigation.LocalServerUrl
+import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaId
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.state.CelSelectionMode
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.state.CelSelectionMode.CHECKABLE
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.state.CelSelectionMode.NONE
@@ -108,16 +109,42 @@ private fun Cel(
     miniIcons: Boolean = false,
     showSyncState: Boolean = false,
 ) {
-    val mediaItem = state.mediaItem
+    Cel(
+        modifier,
+        aspectRatio,
+        contentScale,
+        shape,
+        miniIcons,
+        showSyncState,
+        state.mediaItem.fallbackColor,
+        state.selectionMode,
+        state.mediaItem.id,
+        state.mediaItem.isFavourite,
+    )
+}
+
+@Composable
+private fun Cel(
+    modifier: Modifier = Modifier,
+    aspectRatio: Float,
+    contentScale: ContentScale = ContentScale.FillBounds,
+    shape: Shape = RectangleShape,
+    miniIcons: Boolean = false,
+    showSyncState: Boolean = false,
+    fallbackColor: String?,
+    selectionMode: SelectionMode,
+    id: MediaId<*>,
+    isFavourite: Boolean,
+) {
     val iconSize = remember(miniIcons) {
         if (miniIcons) 16.dp else 24.dp
     }
-    val fallbackColor = mediaItem.fallbackColor.toColor()
+    val fallback = fallbackColor.toColor()
 
-    val backgroundColor = remember(state.selectionMode) {
-        when (state.selectionMode) {
+    val backgroundColor = remember(selectionMode) {
+        when (selectionMode) {
             SelectionMode.SELECTED -> Color.LightGray
-            else -> fallbackColor
+            else -> fallback
         }
     }
 
@@ -130,25 +157,31 @@ private fun Cel(
         val serverUrl = LocalServerUrl.current
         Thumbnail(
             modifier = Modifier.fillMaxWidth(),
-            url = remember(serverUrl, mediaItem.id) {
-                mediaItem.id.thumbnailUri(serverUrl)
+            url = remember(serverUrl, id) {
+                id.thumbnailUri(serverUrl)
             },
             isVideo = false,//mediaItem.id.isVideo,
             contentScale = contentScale,
             placeholder = backgroundColor.toArgb(),
             contentDescription = null
         )
-        if (mediaItem.id.isVideo) {
+        if (id.isVideo) {
+            val size = remember(miniIcons) {
+                if (miniIcons) 16.dp else 48.dp
+            }
+            val alignment = remember(miniIcons) {
+                if (miniIcons) BottomStart else Center
+            }
             Icon(
                 modifier = Modifier
-                    .size(if (miniIcons) 16.dp else 48.dp)
-                    .align(if (miniIcons) BottomStart else Center),
+                    .size(size)
+                    .align(alignment),
                 painter = painterResource(id = drawable.ic_play_filled),
                 tint = Color.White,
                 contentDescription = null
             )
         }
-        if (mediaItem.isFavourite) {
+        if (isFavourite) {
             Icon(
                 modifier = Modifier
                     .size(iconSize)
@@ -172,7 +205,7 @@ private fun Cel(
                     .padding(2.dp)
                     .alpha(0.7f),
             ) {
-                DynamicIcon(icon = mediaItem.id.syncState.icon, tint = Color.White)
+                DynamicIcon(icon = id.syncState.icon, tint = Color.White)
             }
         }
     }

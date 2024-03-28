@@ -41,6 +41,7 @@ import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.NoContent
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.grid.SmartGridItemScope
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.grid.SmartGridState
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.grid.rememberSmartGridState
+import kotlinx.collections.immutable.ImmutableList
 
 @Composable
 fun Collage(
@@ -63,7 +64,7 @@ fun Collage(
     onClusterRefreshClicked: (Cluster) -> Unit = {},
     onClusterSelectionClicked: (Cluster) -> Unit = {},
 ) = when {
-    (state.isLoading && state.clusters.isEmpty()) || (!state.isEmpty && state.clusters.isEmpty()) -> {
+    isLoading(state.isLoading, state.clusters, state.isEmpty) -> {
         if (loadingAnimation != null) {
             FullLoading {
                 DynamicIcon(icon = loadingAnimation)
@@ -72,12 +73,15 @@ fun Collage(
             FullLoading()
         }
     }
-    !state.isLoading && state.isEmpty && state.clusters.isEmpty() -> emptyContent()
+    isEmpty(state.isLoading, state.clusters, state.isEmpty) -> emptyContent()
     else -> {
         val collageDisplay = state.collageDisplay
         val animatedThumbnails = LocalAnimatedVideoThumbnails.current
+        val animated = remember(animatedThumbnails, collageDisplay) {
+            animatedThumbnails && collageDisplay.allowsAnimatedVideoThumbnails
+        }
         CompositionLocalProvider(
-            LocalAnimatedVideoThumbnails provides (animatedThumbnails && collageDisplay.allowsAnimatedVideoThumbnails)
+            LocalAnimatedVideoThumbnails provides animated
         ) {
             val collageModifier = remember(collageDisplay) {
                 modifier
@@ -119,6 +123,14 @@ fun Collage(
         }
     }
 }
+
+@Composable
+private fun isEmpty(isLoading: Boolean, clusters: ImmutableList<Cluster>, isEmpty: Boolean) =
+    !isLoading && isEmpty && clusters.isEmpty()
+
+@Composable
+private fun isLoading(isLoading: Boolean, clusters: ImmutableList<Cluster>, isEmpty: Boolean) =
+    (isLoading && clusters.isEmpty()) || (!isEmpty && clusters.isEmpty())
 
 @Composable
 private fun CollageDisplay.columnCount(

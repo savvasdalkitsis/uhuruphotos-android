@@ -32,7 +32,6 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.ExperimentalComposeApi
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
@@ -66,7 +65,6 @@ import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.grid.rememberSmartGr
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.coroutines.launch
 
-@OptIn(ExperimentalComposeApi::class)
 @Composable
 internal fun SmartCollage(
     modifier: Modifier = Modifier,
@@ -107,22 +105,34 @@ internal fun SmartCollage(
             }
         }
         val spacing = LocalCollageSpacingProvider.current.dp
-        val shape = when (LocalCollageShapeProvider.current) {
-            RECTANGLE -> RectangleShape
-            ROUNDED_RECTANGLE -> MaterialTheme.shapes.small
+        val currentShape = LocalCollageShapeProvider.current
+        val small = MaterialTheme.shapes.small
+        val shape = remember(currentShape) {
+            when (currentShape) {
+                RECTANGLE -> RectangleShape
+                ROUNDED_RECTANGLE -> small
+            }
         }
-        val horizontalExtraSpacing = when {
-            LocalCollageSpacingEdgesProvider.current -> spacing
-            else -> 0.dp
+        val spacingInEdges = LocalCollageSpacingEdgesProvider.current
+        val horizontalExtraSpacing = remember(spacingInEdges) {
+            when {
+                spacingInEdges -> spacing
+                else -> 0.dp
+            }
+        }
+        val layoutDirection = LocalLayoutDirection.current
+        val start = remember(layoutDirection, horizontalExtraSpacing) {
+            contentPadding.calculateStartPadding(layoutDirection) + horizontalExtraSpacing
+        }
+        val end = remember(layoutDirection, horizontalExtraSpacing) {
+            contentPadding.calculateEndPadding(layoutDirection) + horizontalExtraSpacing
         }
         SmartGrid(
             modifier = modifier
                 .recomposeHighlighter()
                 .padding(
-                    start = contentPadding.calculateStartPadding(LocalLayoutDirection.current) +
-                            horizontalExtraSpacing,
-                    end = contentPadding.calculateEndPadding(LocalLayoutDirection.current) +
-                            horizontalExtraSpacing,
+                    start = start,
+                    end = end,
                 ),
             gridState = gridState,
             columns = columnCount,
@@ -160,9 +170,11 @@ internal fun SmartCollage(
 
                 for (cel in cluster.cels) {
                     item("item:$clusterIndex:" + cel.mediaItem.id.value) {
-                        val aspectRatio = when {
-                            maintainAspectRatio -> cel.mediaItem.ratio
-                            else -> 1f
+                        val aspectRatio = remember(maintainAspectRatio) {
+                            when {
+                                maintainAspectRatio -> cel.mediaItem.ratio
+                                else -> 1f
+                            }
                         }
                         val screenshotState = LocalScreenshotState.current
                         val scope = rememberCoroutineScope()
@@ -178,9 +190,11 @@ internal fun SmartCollage(
                                 }
                             },
                             aspectRatio = aspectRatio,
-                            contentScale = when {
-                                maintainAspectRatio -> ContentScale.FillBounds
-                                else -> ContentScale.Crop
+                            contentScale = remember(maintainAspectRatio) {
+                                when {
+                                    maintainAspectRatio -> ContentScale.FillBounds
+                                    else -> ContentScale.Crop
+                                }
                             },
                             miniIcons = miniIcons,
                             selectionMode = celsSelectionMode,
@@ -250,7 +264,9 @@ private fun BoxScope.StickyHeader(
         label = "persistent cluster",
     ) {
         val interactionSource = remember { MutableInteractionSource() }
-        val cluster = firstOffscreenCluster?.let { state[it] } ?: Cluster("")
+        val cluster = remember(firstOffscreenCluster) {
+            firstOffscreenCluster?.let { state[it] } ?: Cluster("")
+        }
         FeedClusterHeader(
             modifier = Modifier
                 .background(MaterialTheme.colors.background.copy(alpha = 0.8f))
@@ -271,12 +287,19 @@ private fun FeedClusterHeader(
     onClusterRefreshClicked: (Cluster) -> Unit,
     onClusterSelectionClicked: (Cluster) -> Unit,
 ) {
+    val noDate = stringResource(string.no_date)
+    val title = remember(cluster.displayTitle) {
+        cluster.displayTitle.ifEmpty { noDate }
+    }
+    val location = remember(cluster.location, cluster.displayTitle) {
+        cluster.location?.takeIf { cluster.displayTitle.isNotEmpty() }
+    }
     ClusterHeader(
         modifier = modifier
             .recomposeHighlighter(),
         state = cluster,
-        title = cluster.displayTitle.ifEmpty { stringResource(string.no_date) },
-        location = cluster.location?.takeIf { cluster.displayTitle.isNotEmpty() },
+        title = title,
+        location = location,
         showSelectionHeader = showSelectionHeader,
         onRefreshClicked = {
             onClusterRefreshClicked(cluster)

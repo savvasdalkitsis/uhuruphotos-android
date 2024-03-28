@@ -101,17 +101,23 @@ private fun Feed(
             gridState.animateScrollToItem(0, 0)
         }
     }
-    val feedHeadersVisible = state.memories.isNotEmpty()
-            || state.showRequestPermissionForLocalMediaAccess != null
-            || state.localMediaSyncRunning
-            || state.showRequestForCloudSync
-            || state.showLoginBanner
+    val feedHeadersVisible by remember {
+        derivedStateOf {
+            state.memories.isNotEmpty()
+                    || state.showRequestPermissionForLocalMediaAccess != null
+                    || state.localMediaSyncRunning
+                    || state.showRequestForCloudSync
+                    || state.showLoginBanner
+        }
+    }
     val isScrolling = gridState.isScrollInProgress
 
-    val showSyncState = when (state.syncItemDisplay) {
-        SHOW_ON_SCROLL -> isScrolling
-        ALWAYS_ON -> true
-        ALWAYS_OFF -> false
+    val showSyncState = remember(state.syncItemDisplay) {
+        when (state.syncItemDisplay) {
+            SHOW_ON_SCROLL -> isScrolling
+            ALWAYS_ON -> true
+            ALWAYS_OFF -> false
+        }
     }
     val permissionLauncher = rememberPermissionFlowRequestLauncher()
 
@@ -138,9 +144,12 @@ private fun Feed(
         },
         onReselected = { scrollToTop() },
     ) { contentPadding ->
-        val topPadding = with(LocalDensity.current) {
-            contentPadding.calculateTopPadding().toPx()
-        }.toInt()
+        val density = LocalDensity.current
+        val topPadding = remember(density, contentPadding) {
+            with(density) {
+                contentPadding.calculateTopPadding().toPx().toInt()
+            }
+        }
         fun scrollToCel(cel: CelState) {
             coroutineScope.launch {
                 var found = false

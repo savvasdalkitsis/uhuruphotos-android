@@ -18,20 +18,24 @@ package com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.grid.simple
 import androidx.compose.foundation.lazy.grid.GridItemSpan
 import androidx.compose.foundation.lazy.grid.LazyGridScope
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.mutableStateOf
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.grid.SmartGridItemScope
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.grid.SmartGridScope
 
 class SmartSimpleGridScope(
-    private val lazyGridScope: LazyGridScope,
 ) : SmartGridScope {
+    val lazyGridScope: MutableState<LazyGridScope?> = mutableStateOf(null)
+    private val itemScope = SmartSimpleGridItemScope()
     override fun item(
         key: Any?,
         contentType: Any?,
         fullLine: Boolean,
         content: @Composable (SmartGridItemScope.() -> Unit)
     ) {
-        lazyGridScope.item(key, if (fullLine) {{ GridItemSpan(maxLineSpan) }} else null, contentType) {
-            content(SmartSimpleGridItemScope(this))
+        lazyGridScope.value?.item(key, if (fullLine) {{ GridItemSpan(maxLineSpan) }} else null, contentType) {
+            itemScope.lazyGridItemScope.value = this
+            content(itemScope)
         }
     }
 

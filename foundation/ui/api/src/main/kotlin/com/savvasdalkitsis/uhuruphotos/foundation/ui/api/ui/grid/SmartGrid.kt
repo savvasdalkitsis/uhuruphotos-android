@@ -39,6 +39,12 @@ fun SmartGrid(
     horizontalArrangement: Arrangement.Horizontal = Arrangement.spacedBy(0.dp),
     content: SmartGridScope.() -> Unit,
 ) {
+    val staggeredGridScope = remember {
+        SmartStaggeredGridScope()
+    }
+    val simpleGridScope = remember {
+        SmartSimpleGridScope()
+    }
     when(gridState) {
         is SmartStaggeredGridState -> LazyVerticalStaggeredGrid(
             modifier = modifier,
@@ -49,7 +55,8 @@ fun SmartGrid(
             verticalItemSpacing = verticalItemSpacing,
             horizontalArrangement = horizontalArrangement,
         ) {
-            content(SmartStaggeredGridScope(this))
+            staggeredGridScope.lazyStaggeredGridScope.value = this
+            content(staggeredGridScope)
         }
         is SmartSimpleGridState -> LazyVerticalGrid(
             modifier = modifier,
@@ -60,7 +67,8 @@ fun SmartGrid(
             horizontalArrangement = horizontalArrangement,
             verticalArrangement = Arrangement.spacedBy(verticalItemSpacing),
         ) {
-            content(SmartSimpleGridScope(this))
+            simpleGridScope.lazyGridScope.value = this
+            content(simpleGridScope)
         }
     }
 }

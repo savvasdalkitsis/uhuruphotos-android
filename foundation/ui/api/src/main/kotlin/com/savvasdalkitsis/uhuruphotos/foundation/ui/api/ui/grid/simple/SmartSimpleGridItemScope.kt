@@ -16,12 +16,19 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.grid.simple
 
 import androidx.compose.foundation.lazy.grid.LazyGridItemScope
+import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.Stable
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.Modifier
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.grid.SmartGridItemScope
 
-class SmartSimpleGridItemScope(
-    private val lazyGridItemScope: LazyGridItemScope,
-): SmartGridItemScope {
+@Stable
+class SmartSimpleGridItemScope: SmartGridItemScope {
+    val lazyGridItemScope: MutableState<LazyGridItemScope?> = mutableStateOf(null)
     override fun Modifier.animateItemPlacement(): Modifier =
-        with(lazyGridItemScope) { animateItemPlacement() }
+        lazyGridItemScope.value?.let {
+            with(it) {
+                animateItemPlacement()
+            }
+        } ?: this
 }

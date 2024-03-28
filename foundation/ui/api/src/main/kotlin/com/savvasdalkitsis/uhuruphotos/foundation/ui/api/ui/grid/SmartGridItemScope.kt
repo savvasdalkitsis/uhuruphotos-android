@@ -15,8 +15,10 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.grid
 
+import androidx.compose.runtime.Stable
 import androidx.compose.ui.Modifier
 
+@Stable
 interface SmartGridItemScope {
     fun Modifier.animateItemPlacement(): Modifier
 }
