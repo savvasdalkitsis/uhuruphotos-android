@@ -110,13 +110,14 @@ private fun Feed(
                     || state.showLoginBanner
         }
     }
-    val isScrolling = gridState.isScrollInProgress
 
-    val showSyncState = remember(state.syncItemDisplay) {
-        when (state.syncItemDisplay) {
-            SHOW_ON_SCROLL -> isScrolling
-            ALWAYS_ON -> true
-            ALWAYS_OFF -> false
+    val showSyncState by remember {
+        derivedStateOf {
+            when (state.syncItemDisplay) {
+                SHOW_ON_SCROLL -> gridState.isScrollInProgress
+                ALWAYS_ON -> true
+                ALWAYS_OFF -> false
+            }
         }
     }
     val permissionLauncher = rememberPermissionFlowRequestLauncher()
