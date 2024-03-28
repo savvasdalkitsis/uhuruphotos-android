@@ -1,6 +1,5 @@
 plugins {
     id 'kotlin-parcelize'
-    alias(libs.plugins.kotlin.serialization)
 }
 
 android {
@@ -13,8 +12,5 @@ dependencies {
             libs.androidx.work,
             project(":foundation:result:api"),
             project(":foundation:worker:api"),
-    )
-    implementation(
-            libs.kotlinx.serialization.proto,
     )
 }

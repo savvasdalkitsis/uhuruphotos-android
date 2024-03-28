@@ -19,9 +19,7 @@ import android.os.Parcelable
 import androidx.compose.runtime.Immutable
 import com.savvasdalkitsis.uhuruphotos.feature.media.local.domain.api.model.Md5Hash
 import kotlinx.parcelize.Parcelize
-import kotlinx.serialization.Serializable
 
-@Serializable
 @Parcelize
 @Immutable
 data class MediaItemHash(

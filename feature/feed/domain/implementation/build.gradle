@@ -1,6 +1,5 @@
 plugins {
     id 'dagger.hilt.android.plugin'
-    alias(libs.plugins.kotlin.serialization)
 }
 
 android {
@@ -13,7 +12,6 @@ dependencies {
             libs.androidx.work.hilt,
             libs.bundles.autodagger,
             libs.hilt,
-            libs.kotlinx.serialization.proto,
             libs.moshi,
             libs.retrofit.core,
             libs.sqldelight.coroutines,

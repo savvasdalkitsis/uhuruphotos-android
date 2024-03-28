@@ -16,10 +16,8 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model
 
 import androidx.compose.runtime.Immutable
-import kotlinx.serialization.Serializable
 
 @Immutable
-@Serializable
 sealed interface MediaItem {
     val id: MediaId<*>
     val mediaHash: MediaItemHash

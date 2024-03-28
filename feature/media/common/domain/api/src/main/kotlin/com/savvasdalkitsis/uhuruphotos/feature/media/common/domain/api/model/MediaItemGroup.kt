@@ -15,9 +15,6 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model
 
-import kotlinx.serialization.Serializable
-
-@Serializable
 data class MediaItemGroup(
     val remoteInstance: MediaItem? = null,
     val localInstances: Set<MediaItem> = emptySet(),

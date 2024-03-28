@@ -34,7 +34,6 @@ android-library = { id = 'com.android.library', version.ref = "agp" }
 google-services = { id = "com.google.gms.google-services", version.ref = "google-services" }
 kotlin-android = { id = 'org.jetbrains.kotlin.android', version.ref = "kotlin" }
 kotlin-kapt = { id = "org.jetbrains.kotlin.kapt", version.ref = "kotlin" }
-kotlin-serialization = { id = 'org.jetbrains.kotlin.plugin.serialization', version.ref = "kotlin" }
 ksp = "com.google.devtools.ksp:1.9.22-1.0.17"
 mapsSecrets = "com.google.android.libraries.mapsplatform.secrets-gradle-plugin:2.0.1"
 moduleGraph = "com.savvasdalkitsis.module-dependency-graph:0.12"
@@ -119,7 +118,6 @@ kotlin-reflect = { module = "org.jetbrains.kotlin:kotlin-reflect", version.ref =
 kotlinx-coroutines = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-android", version.ref = "kotlinx" }
 kotlinx-coroutines-test = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test", version.ref = "kotlinx" }
 kotlinx-immutable = "org.jetbrains.kotlinx:kotlinx-collections-immutable:0.3.7"
-kotlinx-serialization-proto = "org.jetbrains.kotlinx:kotlinx-serialization-protobuf:1.6.3"
 leaks = "com.squareup.leakcanary:leakcanary-android:2.13"
 lottie = "com.airbnb.android:lottie-compose:6.3.0"
 lumberjack-core = { module = "com.github.MFlisar.Lumberjack:core", version.ref = "lumberjack" }

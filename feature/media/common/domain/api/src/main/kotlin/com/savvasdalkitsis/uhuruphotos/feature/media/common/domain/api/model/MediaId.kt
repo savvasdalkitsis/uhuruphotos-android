@@ -27,7 +27,6 @@ import kotlinx.parcelize.IgnoredOnParcel
 import kotlinx.parcelize.Parcelize
 import java.io.Serializable
 
-@kotlinx.serialization.Serializable
 @Immutable
 sealed class MediaId<T : Serializable> private constructor(
 ) : Parcelable {
@@ -49,26 +48,21 @@ sealed class MediaId<T : Serializable> private constructor(
     val isBothRemoteAndLocal: Boolean get() = findLocals.isNotEmpty() && findRemote != null
 
     @Parcelize
-    @kotlinx.serialization.Serializable
     data class Remote(
         override val value: String,
         override val isVideo: Boolean,
     ): MediaId<String>() {
         @IgnoredOnParcel
         @Transient
-        @kotlinx.serialization.Transient
         override val preferRemote = this
         @IgnoredOnParcel
         @Transient
-        @kotlinx.serialization.Transient
         override val preferLocal = this
         @IgnoredOnParcel
         @Transient
-        @kotlinx.serialization.Transient
         override val findRemote = this
         @IgnoredOnParcel
         @Transient
-        @kotlinx.serialization.Transient
         override val findLocals: Set<Local> = emptySet()
 
         @IgnoredOnParcel
@@ -82,7 +76,6 @@ sealed class MediaId<T : Serializable> private constructor(
     }
 
     @Parcelize
-    @kotlinx.serialization.Serializable
     data class Downloading(
         override val value: String,
         override val isVideo: Boolean,
@@ -92,19 +85,15 @@ sealed class MediaId<T : Serializable> private constructor(
 
         @IgnoredOnParcel
         @Transient
-        @kotlinx.serialization.Transient
         override val preferRemote = remote
         @IgnoredOnParcel
         @Transient
-        @kotlinx.serialization.Transient
         override val preferLocal = this
         @IgnoredOnParcel
         @Transient
-        @kotlinx.serialization.Transient
         override val findRemote = remote
         @IgnoredOnParcel
         @Transient
-        @kotlinx.serialization.Transient
         override val findLocals: Set<Local> = emptySet()
 
         @IgnoredOnParcel
@@ -114,7 +103,6 @@ sealed class MediaId<T : Serializable> private constructor(
     }
 
     @Parcelize
-    @kotlinx.serialization.Serializable
     data class Uploading(
         override val value: Long,
         val folderId: Int,
@@ -127,23 +115,18 @@ sealed class MediaId<T : Serializable> private constructor(
 
         @IgnoredOnParcel
         @Transient
-        @kotlinx.serialization.Transient
         override val preferRemote = this
         @IgnoredOnParcel
         @Transient
-        @kotlinx.serialization.Transient
         override val preferLocal = local
         @IgnoredOnParcel
         @Transient
-        @kotlinx.serialization.Transient
         override val findRemote = null
         @IgnoredOnParcel
         @Transient
-        @kotlinx.serialization.Transient
         override val findLocals: Set<Local> = setOf(local)
 
         @IgnoredOnParcel
-        @kotlinx.serialization.Transient
         override val syncState: MediaItemSyncState = UPLOADING
         override fun fullResUri(serverUrl: String?): String = local.fullResUri(serverUrl)
         override fun thumbnailUri(serverUrl: String?): String = thumbnailUri
@@ -151,7 +134,6 @@ sealed class MediaId<T : Serializable> private constructor(
 
 
     @Parcelize
-    @kotlinx.serialization.Serializable
     data class Processing(
         override val value: Long,
         val folderId: Int,
@@ -164,23 +146,18 @@ sealed class MediaId<T : Serializable> private constructor(
 
         @IgnoredOnParcel
         @Transient
-        @kotlinx.serialization.Transient
         override val preferRemote = this
         @IgnoredOnParcel
         @Transient
-        @kotlinx.serialization.Transient
         override val preferLocal = local
         @IgnoredOnParcel
         @Transient
-        @kotlinx.serialization.Transient
         override val findRemote = null
         @IgnoredOnParcel
         @Transient
-        @kotlinx.serialization.Transient
         override val findLocals: Set<Local> = setOf(local)
 
         @IgnoredOnParcel
-        @kotlinx.serialization.Transient
         override val syncState: MediaItemSyncState = PROCESSING
 
         override fun fullResUri(serverUrl: String?): String = local.fullResUri(serverUrl)
@@ -188,7 +165,6 @@ sealed class MediaId<T : Serializable> private constructor(
     }
 
     @Parcelize
-    @kotlinx.serialization.Serializable
     data class Local(
         override val value: Long,
         val folderId: Int,
@@ -198,23 +174,18 @@ sealed class MediaId<T : Serializable> private constructor(
     ): MediaId<Long>() {
         @IgnoredOnParcel
         @Transient
-        @kotlinx.serialization.Transient
         override val preferRemote = this
         @IgnoredOnParcel
         @Transient
-        @kotlinx.serialization.Transient
         override val preferLocal = this
         @IgnoredOnParcel
         @Transient
-        @kotlinx.serialization.Transient
         override val findRemote = null
         @IgnoredOnParcel
         @Transient
-        @kotlinx.serialization.Transient
         override val findLocals: Set<Local> = setOf(this)
 
         @IgnoredOnParcel
-        @kotlinx.serialization.Transient
         override val syncState: MediaItemSyncState = LOCAL_ONLY
         override fun fullResUri(serverUrl: String?): String = contentUri
         override fun thumbnailUri(serverUrl: String?): String = thumbnailUri
@@ -225,26 +196,21 @@ sealed class MediaId<T : Serializable> private constructor(
 
     @Suppress("DataClassPrivateConstructor")
     @Parcelize
-    @kotlinx.serialization.Serializable
     data class Group private constructor(
         override val value: ArrayList<MediaId<*>>,
         override val isVideo: Boolean,
     ): MediaId<ArrayList<MediaId<*>>>() {
         @IgnoredOnParcel
         @Transient
-        @kotlinx.serialization.Transient
         override val findRemote: Remote? = value.firstNotNullOfOrNull { it.findRemote }
         @IgnoredOnParcel
         @Transient
-        @kotlinx.serialization.Transient
         override val findLocals: Set<Local> = value.flatMap { it.findLocals }.toSet()
         @IgnoredOnParcel
         @Transient
-        @kotlinx.serialization.Transient
         override val preferRemote: MediaId<*> = findRemote ?: value.first()
         @IgnoredOnParcel
         @Transient
-        @kotlinx.serialization.Transient
         override val preferLocal: MediaId<*> = findLocals.firstOrNull() ?: value.first()
 
         @IgnoredOnParcel
