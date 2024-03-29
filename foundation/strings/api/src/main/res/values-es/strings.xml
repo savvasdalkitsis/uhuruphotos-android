@@ -410,4 +410,10 @@
 \nA diferencia de los servicios comerciales que almacenan, escanean e indexan sus fotografías en la nube y las utilizan para entrenar modelos de aprendizaje automático y recopilar datos publicitarios dirigidos a usted, LibrePhotos guarda todas sus fotografías y metadatos en su máquina local.
 \n
 \nSus datos nunca se envían ni se almacenan en un servidor de terceros. Obtenga las mismas funciones potentes que esos servicios comerciales sin renunciar a sus datos personales y su privacidad.</string>
+    <string name="collage">Collage</string>
+    <string name="collage_spacing">Espacio entre elementos del collage: %d</string>
+    <string name="collage_spacing_include_edges">Incluir espaciado en los bordes</string>
+    <string name="collage_shape">Forma de los elementos del collage</string>
+    <string name="rectangle">Rectángulo</string>
+    <string name="rounded_rectangle">Rectángulo redondeado</string>
 </resources>
