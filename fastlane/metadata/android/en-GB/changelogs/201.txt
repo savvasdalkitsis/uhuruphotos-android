@@ -1,0 +1,2 @@
+* Better transition between feed and lightbox
+* Fixing showing sync state on feed while scrolling
