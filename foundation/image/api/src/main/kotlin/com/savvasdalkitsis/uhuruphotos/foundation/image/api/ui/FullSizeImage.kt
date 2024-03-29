@@ -17,19 +17,26 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.foundation.image.api.ui
 
 import android.graphics.drawable.BitmapDrawable
+import android.graphics.drawable.Drawable
 import android.os.Build.VERSION.SDK_INT
 import android.os.Build.VERSION_CODES.UPSIDE_DOWN_CAKE
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import coil.request.ImageRequest
 import coil.request.SuccessResult
 import com.savvasdalkitsis.uhuruphotos.foundation.image.api.hdr.setHDR
-import me.saket.telephoto.zoomable.ZoomableImage
+import com.savvasdalkitsis.uhuruphotos.foundation.image.api.model.LocalFullImageLoader
+import com.savvasdalkitsis.uhuruphotos.foundation.image.api.model.LocalThumbnailImageLoader
 import me.saket.telephoto.zoomable.ZoomableImageState
+import me.saket.telephoto.zoomable.coil.ZoomableAsyncImage
 
 @Composable
 fun FullSizeImage(
@@ -43,22 +50,40 @@ fun FullSizeImage(
     zoomableState: ZoomableImageState,
 ) {
     val context = LocalContext.current
-    ZoomableImage(
-        modifier = modifier
+
+    var thumb by remember {
+        mutableStateOf<Drawable?>(null)
+    }
+    val imageLoader = LocalThumbnailImageLoader.current
+    val request = lowResUrl?.toRequest(
+        onSuccess = { result ->
+            thumb = result.drawable
+        },
+    )
+    LaunchedEffect(lowResUrl) {
+        if (request != null) {
+            imageLoader.execute(request)
+        }
+    }
+
+    ZoomableAsyncImage(
+        modifier = Modifier
             .fillMaxSize(),
-        image = zoomableImageSourceWithPlaceholder(lowResUrl, ImageRequest.Builder(context)
+        imageLoader = LocalFullImageLoader.current,
+        state = zoomableState,
+        onClick = { onClick() },
+        model = ImageRequest.Builder(context)
             .data(fullResUrl)
+            .placeholder(thumb)
             .listener(remember {
                 object : ImageRequest.Listener {
-                    override fun onSuccess(request: ImageRequest, result: SuccessResult) {
+                    override fun onSuccess(request: ImageRequest, result: SuccessResult)  {
                         context.setHDR(result.isHDR)
                         onFullResImageLoaded()
                     }
                 }
             })
-        ),
-        state = zoomableState,
-        onClick = { onClick() },
+            .build(),
         contentScale = contentScale,
         contentDescription = contentDescription,
     )

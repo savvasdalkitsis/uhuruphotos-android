@@ -15,9 +15,19 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui
 
+import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.compositionLocalOf
+import androidx.compose.ui.geometry.Rect
 import com.smarttoolfactory.screenshot.ScreenshotState
 
 val LocalScreenshotState = compositionLocalOf<ScreenshotState> {
+    TODO("Not Implemented")
+}
+
+val LocalSharedElementTransitionProvider = compositionLocalOf<MutableState<Rect?>> {
+    TODO("Not Implemented")
+}
+
+val LocalSharedElementTransitionContentProvider = compositionLocalOf<MutableState<String?>> {
     TODO("Not Implemented")
 }

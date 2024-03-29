@@ -34,19 +34,25 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.geometry.Rect
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.layout.boundsInRoot
+import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import com.savvasdalkitsis.uhuruphotos.feature.auth.view.api.navigation.LocalServerUrl
 import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.Cluster
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.Cel
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.CelSelected
@@ -57,6 +63,8 @@ import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.CollageShape.RECTANGLE
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.CollageShape.ROUNDED_RECTANGLE
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.LocalScreenshotState
+import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.LocalSharedElementTransitionContentProvider
+import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.LocalSharedElementTransitionProvider
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.grid.SmartGrid
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.grid.SmartGridItemScope
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.grid.SmartGridScrollbarThumb
@@ -177,15 +185,36 @@ internal fun SmartCollage(
                             }
                         }
                         val screenshotState = LocalScreenshotState.current
+                        var celBounds by remember(cel.mediaItem.id.value) {
+                            mutableStateOf<Rect?>(null)
+                        }
+                        var sharedElement by LocalSharedElementTransitionProvider.current
+                        var sharedElementContent by LocalSharedElementTransitionContentProvider.current
                         val scope = rememberCoroutineScope()
+                        val serverUrl = LocalServerUrl.current
                         Cel(
                             modifier = Modifier
                                 .animateItemPlacement()
-                                .clip(shape),
+                                .clip(shape)
+                                .onGloballyPositioned { layoutCoordinates ->
+                                    celBounds = layoutCoordinates.boundsInRoot().let {
+                                        if (it.top == 0f) { // might be offscreen on top
+                                            it.copy(
+                                                top = it.bottom - it.width / aspectRatio
+                                            )
+                                        } else { // might be offscreen on bottom
+                                            it.copy(
+                                                bottom = it.top + it.width / aspectRatio
+                                            )
+                                        }
+                                    }
+                                },
                             state = cel,
                             onSelected = {
                                 scope.launch {
                                     screenshotState.capture()
+                                    sharedElement = celBounds
+                                    sharedElementContent = cel.mediaItem.id.thumbnailUri(serverUrl)
                                     onCelSelected(cel)
                                 }
                             },

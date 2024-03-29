@@ -131,7 +131,7 @@ private fun ImageThumbnail(
             LocalThumbnailWithNetworkCacheImageLoader.current
         else
             LocalThumbnailImageLoader.current,
-        model = url.toRequest {
+        model = url?.toRequest {
             onSuccess()
         },
         contentScale = contentScale,

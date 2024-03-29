@@ -84,33 +84,33 @@ fun LightboxCanvas(
             }
         }
 
-        LightboxPreviousScreenBackground(dismissState)
-
-        Column(
-            modifier = Modifier
-                .alpha(1 - dismissState.postDismissProgress)
-                .fillMaxSize()
-                .background(background)
-                .recomposeHighlighter()
-                .pullToDismiss(dismissState)
-                .verticalScroll(scrollState)
-        ) {
-            PullToDismissSpacer(
+        LightboxPreviousScreenBackground(dismissState) {
+            Column(
                 modifier = Modifier
+                    .alpha(1 - dismissState.postDismissProgress)
+                    .fillMaxSize()
+                    .background(background)
                     .recomposeHighlighter()
-                    .fillMaxWidth(),
-                dismissState = dismissState,
-            )
-            Box(modifier = Modifier
-                .scale(0.3f + 0.7f * (1 - dismissState.progress / 2))
-                .offset(y = dismissState.progress * 100.dp)
-                .requiredWidth(this@BoxWithConstraints.maxWidth)
-                .requiredHeight(this@BoxWithConstraints.maxHeight)
-                .fillMaxSize()
+                    .pullToDismiss(dismissState)
+                    .verticalScroll(scrollState)
             ) {
-                LightboxCanvasContent(state.media[index], zoomableState, action)
+                PullToDismissSpacer(
+                    modifier = Modifier
+                        .recomposeHighlighter()
+                        .fillMaxWidth(),
+                    dismissState = dismissState,
+                )
+                Box(modifier = Modifier
+                    .scale(0.3f + 0.7f * (1 - dismissState.progress / 2))
+                    .offset(y = dismissState.progress * 100.dp)
+                    .requiredWidth(this@BoxWithConstraints.maxWidth)
+                    .requiredHeight(this@BoxWithConstraints.maxHeight)
+                    .fillMaxSize()
+                ) {
+                    LightboxCanvasContent(state.media[index], zoomableState, action)
+                }
+                LightboxDetailsSheet(state, index, action)
             }
-            LightboxDetailsSheet(state, index, action)
         }
 
         Column {
