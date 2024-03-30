@@ -16,7 +16,12 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.feature.search.view.api.navigation
 
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.NavigationRoute
+import kotlinx.parcelize.IgnoredOnParcel
 import kotlinx.parcelize.Parcelize
 
 @Parcelize
-data class SearchNavigationRoute(val query: String) : NavigationRoute
+data class SearchNavigationRoute(val query: String) : NavigationRoute {
+
+    @IgnoredOnParcel
+    override val animatePopTransitionTo: Boolean = false
+}

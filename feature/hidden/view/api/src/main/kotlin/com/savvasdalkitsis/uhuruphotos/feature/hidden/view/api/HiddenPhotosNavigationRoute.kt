@@ -16,7 +16,12 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.feature.hidden.view.api
 
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.NavigationRoute
+import kotlinx.parcelize.IgnoredOnParcel
 import kotlinx.parcelize.Parcelize
 
 @Parcelize
-data object HiddenPhotosNavigationRoute : NavigationRoute
+data object HiddenPhotosNavigationRoute : NavigationRoute {
+
+    @IgnoredOnParcel
+    override val animatePopTransitionTo: Boolean = false
+}

@@ -17,4 +17,7 @@ package com.savvasdalkitsis.uhuruphotos.foundation.navigation.api
 
 import android.os.Parcelable
 
-interface NavigationRoute : Parcelable
+interface NavigationRoute : Parcelable {
+    val animateTransitionTo: Boolean get() = true
+    val animatePopTransitionTo: Boolean get() = true
+}

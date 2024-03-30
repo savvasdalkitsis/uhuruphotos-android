@@ -20,6 +20,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.Med
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItem
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.domain.api.model.MediaItemHash
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.NavigationRoute
+import kotlinx.parcelize.IgnoredOnParcel
 import kotlinx.parcelize.Parcelize
 
 @Parcelize
@@ -28,6 +29,10 @@ data class LightboxNavigationRoute(
     val mediaItemHash: MediaItemHash,
     val lightboxSequenceDataSource: LightboxSequenceDataSource = LightboxSequenceDataSource.Single,
 ) : NavigationRoute {
+
+    @IgnoredOnParcel
+    override val animateTransitionTo = false
+
     companion object {
         operator fun invoke(
             mediaItem: MediaItem,

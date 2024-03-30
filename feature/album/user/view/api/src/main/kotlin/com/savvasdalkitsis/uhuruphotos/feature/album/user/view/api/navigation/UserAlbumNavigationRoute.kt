@@ -16,9 +16,14 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.feature.album.user.view.api.navigation
 
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.NavigationRoute
+import kotlinx.parcelize.IgnoredOnParcel
 import kotlinx.parcelize.Parcelize
 
 @Parcelize
 data class UserAlbumNavigationRoute(
     val albumId: Int,
-) : NavigationRoute
+) : NavigationRoute {
+
+    @IgnoredOnParcel
+    override val animatePopTransitionTo: Boolean = false
+}

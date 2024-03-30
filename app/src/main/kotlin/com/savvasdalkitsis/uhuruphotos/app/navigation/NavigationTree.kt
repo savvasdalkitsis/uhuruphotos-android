@@ -24,7 +24,6 @@ import com.bumble.appyx.core.node.Node
 import com.bumble.appyx.core.node.ParentNode
 import com.bumble.appyx.core.node.node
 import com.bumble.appyx.navmodel.backstack.BackStack
-import com.bumble.appyx.navmodel.backstack.transitionhandler.rememberBackstackFader
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.LocalBackStack
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.NavigationRoute
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.NavigationTargetRegistry
@@ -39,7 +38,7 @@ class NavigationTree(
 
     @Composable
     override fun View(modifier: Modifier) {
-        Children(navModel = backStack, transitionHandler = rememberBackstackFader())
+        Children(navModel = backStack, transitionHandler = rememberNavigationRouteAwareBackstackFader())
     }
 
     override fun resolve(navTarget: NavigationRoute, buildContext: BuildContext): Node =

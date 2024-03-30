@@ -16,7 +16,11 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.feature.feed.view.api.navigation
 
 import com.savvasdalkitsis.uhuruphotos.foundation.navigation.api.NavigationRoute
+import kotlinx.parcelize.IgnoredOnParcel
 import kotlinx.parcelize.Parcelize
 
 @Parcelize
-data object FeedNavigationRoute : NavigationRoute
+data object FeedNavigationRoute : NavigationRoute {
+    @IgnoredOnParcel
+    override val animatePopTransitionTo: Boolean = false
+}
