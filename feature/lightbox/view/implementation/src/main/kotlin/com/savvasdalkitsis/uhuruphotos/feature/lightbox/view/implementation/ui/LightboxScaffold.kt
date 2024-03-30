@@ -54,7 +54,7 @@ internal fun LightboxScaffold(
                 exit = slideOutVertically(targetOffsetY = { it }),
             ) {
                 LightboxDismissProgressAware(dismissState) {
-                    LightboxBottomActionBar(state, index, action)
+                    LightboxBottomActionBar(state.media[index], state.showRestoreButton, action)
                 }
             }
         },

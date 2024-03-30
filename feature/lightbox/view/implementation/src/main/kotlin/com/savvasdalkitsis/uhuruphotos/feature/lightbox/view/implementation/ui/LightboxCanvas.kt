@@ -84,6 +84,7 @@ fun LightboxCanvas(
             }
         }
 
+        val mediaItem = state.media[index]
         LightboxPreviousScreenBackground(dismissState) {
             Column(
                 modifier = Modifier
@@ -107,9 +108,9 @@ fun LightboxCanvas(
                     .requiredHeight(this@BoxWithConstraints.maxHeight)
                     .fillMaxSize()
                 ) {
-                    LightboxCanvasContent(state.media[index], zoomableState, action)
+                    LightboxCanvasContent(mediaItem, zoomableState, action)
                 }
-                LightboxDetailsSheet(state, index, action)
+                LightboxDetailsSheet(mediaItem, state.showRestoreButton, action)
             }
         }
 

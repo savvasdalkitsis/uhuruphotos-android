@@ -38,7 +38,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.actions.LightboxAction
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.actions.ShareMediaItem
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.seam.actions.UseMediaItemAs
-import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.ui.state.LightboxState
+import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.ui.state.SingleMediaItemState
 import com.savvasdalkitsis.uhuruphotos.foundation.compose.api.recomposeHighlighter
 import com.savvasdalkitsis.uhuruphotos.foundation.icons.api.R.drawable
 import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
@@ -47,29 +47,28 @@ import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.ActionIconWithText
 
 @Composable
 fun LightboxBottomActionBar(
-    state: LightboxState,
-    index: Int,
+    mediaItem: SingleMediaItemState,
+    showRestoreButton: Boolean,
     action: (LightboxAction) -> Unit,
 ) {
-    val apps = state.media[index].showEditApps
+    val apps = mediaItem.showEditApps
 //    AnimatedContent(
-//        targetState = state.media[index].showEditApps,
+//        targetState = mediaItem.showEditApps,
 //        transitionSpec = {
 //            fadeIn() + slideInVertically { it } togetherWith fadeOut() + slideOutVertically { it }
 //        },
 //        label = "editApps",
 //    ) { apps ->
         when {
-            apps.isEmpty() -> LightboxBottomActionBarOptions(state, index, action)
-            else -> LightboxBottomActionBarEdit(state, index, action)
+            apps.isEmpty() -> LightboxBottomActionBarOptions(mediaItem, showRestoreButton, action)
+            else -> LightboxBottomActionBarEdit(mediaItem, action)
         }
 //    }
 }
 
 @Composable
 fun LightboxBottomActionBarEdit(
-    state: LightboxState,
-    index: Int,
+    mediaItem: SingleMediaItemState,
     action: (LightboxAction) -> Unit,
 ) {
     BackHandler {
@@ -100,7 +99,7 @@ fun LightboxBottomActionBarEdit(
                 text = stringResource(string.crop),
             )
         }
-        state.media[index].showEditApps.forEach { app ->
+        mediaItem.showEditApps.forEach { app ->
             item(app.iconResource) {
                 val pm = LocalContext.current.packageManager
                 ActionIconWithText(
@@ -118,8 +117,8 @@ fun LightboxBottomActionBarEdit(
 
 @Composable
 fun LightboxBottomActionBarOptions(
-    state: LightboxState,
-    index: Int,
+    mediaItem: SingleMediaItemState,
+    showRestoreButton: Boolean,
     action: (LightboxAction) -> Unit,
 ) {
     LazyRow(
@@ -128,7 +127,7 @@ fun LightboxBottomActionBarOptions(
             .fillMaxWidth(),
         horizontalArrangement = Arrangement.SpaceEvenly,
     ) {
-        if (state.media[index].showShareIcon) {
+        if (mediaItem.showShareIcon) {
             item("share") {
                 ActionIconWithText(
                     modifier = Modifier.animateItemPlacement(),
@@ -138,7 +137,7 @@ fun LightboxBottomActionBarOptions(
                 )
             }
         }
-        if (state.media[index].showUseAsIcon) {
+        if (mediaItem.showUseAsIcon) {
             item("useAs") {
                 ActionIconWithText(
                     modifier = Modifier.animateItemPlacement(),
@@ -148,7 +147,7 @@ fun LightboxBottomActionBarOptions(
                 )
             }
         }
-        if (state.media[index].showEditIcon) {
+        if (mediaItem.showEditIcon) {
             item("edit") {
                 ActionIconWithText(
                     modifier = Modifier.animateItemPlacement(),
@@ -158,7 +157,7 @@ fun LightboxBottomActionBarOptions(
                 )
             }
         }
-        if (state.showRestoreButton) {
+        if (showRestoreButton) {
             item("restore") {
                 ActionIconWithText(
                     modifier = Modifier.animateItemPlacement(),
@@ -168,7 +167,7 @@ fun LightboxBottomActionBarOptions(
                 )
             }
         }
-        if (state.media[index].showDeleteButton) {
+        if (mediaItem.showDeleteButton) {
             item("delete") {
                 ActionIconWithText(
                     modifier = Modifier.animateItemPlacement(),

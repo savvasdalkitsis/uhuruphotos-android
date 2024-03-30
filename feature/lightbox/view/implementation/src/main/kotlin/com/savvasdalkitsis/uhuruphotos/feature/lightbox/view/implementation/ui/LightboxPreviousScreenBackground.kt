@@ -54,35 +54,37 @@ internal fun LightboxPreviousScreenBackground(
     dismissState: PullToDismissState,
     content: @Composable () -> Unit,
 ) {
-    var animatingIn by remember {
+    var finishedSharedTransitionAlready by LocalAnimatedSharedTransitionFinished.current
+    val previousScreen = LocalScreenshotState.current.bitmapState.value
+    var animatingSharedElement by remember {
         mutableStateOf(true)
     }
-    val previousScreen = LocalScreenshotState.current.bitmapState.value
     val transition = remember {
         MutableTransitionState(false)
     }.apply {
-        targetState = !animatingIn
+        targetState = !animatingSharedElement
     }
     if (previousScreen == null) {
-        animatingIn = false
+        animatingSharedElement = false
     } else {
         BoxWithConstraints(modifier = Modifier.fillMaxSize()) {
             AnimatedVisibility(
-                visible = animatingIn || dismissState.progress > 0f,
+                visible = animatingSharedElement || dismissState.progress > 0f,
                 enter = EnterTransition.None,
                 exit = fadeOut(),
             ) {
                 Image(
-                    bitmap = remember {
-                        previousScreen.asImageBitmap()
-                    },
+                    bitmap = previousScreen.asImageBitmap(),
                     contentDescription = null,
                 )
             }
 
             val startPosition = LocalSharedElementTransitionProvider.current.value
             val subImage = LocalSharedElementTransitionContentProvider.current.value
-            if (subImage != null && startPosition != null && (!transition.isIdle || animatingIn)) {
+            if (!finishedSharedTransitionAlready && subImage != null && startPosition != null && (!transition.isIdle || animatingSharedElement)) {
+                var subImageBitmap by remember {
+                    mutableStateOf<ImageBitmap?>(null)
+                }
                 val maxWidth = constraints.maxWidth.toFloat()
                 val maxHeight = constraints.maxHeight.toFloat()
                 val startRatio = startPosition.width / startPosition.height
@@ -115,13 +117,9 @@ internal fun LightboxPreviousScreenBackground(
                     },
                     label = "sharedElementAnimation",
                     finishedListener = {
-                        animatingIn = false
+                        animatingSharedElement = false
                     },
                 )
-                var subImageBitmap by remember {
-                    mutableStateOf<ImageBitmap?>(null)
-                }
-                val imageLoader = LocalThumbnailImageLoader.current
                 val request = subImage.toRequest(
                     onSuccess = { result ->
                         subImageBitmap = result.drawable.toBitmapOrNull()?.asImageBitmap()
@@ -131,10 +129,11 @@ internal fun LightboxPreviousScreenBackground(
                         startedAnimation = true
                     }
                 )
+                val imageLoader = LocalThumbnailImageLoader.current
                 LaunchedEffect(subImage) {
                     imageLoader.execute(request)
                 }
-                subImageBitmap?.let {
+                subImageBitmap?.let { it ->
                     val alpha by animateFloatAsState(targetValue = 1f, label = "alpha")
                     with(LocalDensity.current) {
                         Image(
@@ -151,10 +150,17 @@ internal fun LightboxPreviousScreenBackground(
             }
         }
     }
-    AnimatedVisibility(
-        visibleState = transition,
-        enter = fadeIn(),
-    ) {
+    if (finishedSharedTransitionAlready) {
         content()
+    } else {
+        AnimatedVisibility(
+            visibleState = transition,
+            enter = fadeIn(),
+        ) {
+            content()
+            if (transition.isIdle && transition.currentState) {
+                finishedSharedTransitionAlready = true
+            }
+        }
     }
 }

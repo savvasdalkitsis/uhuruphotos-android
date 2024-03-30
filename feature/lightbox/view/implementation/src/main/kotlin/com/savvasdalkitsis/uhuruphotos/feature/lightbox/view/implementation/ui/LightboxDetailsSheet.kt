@@ -33,16 +33,15 @@ import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.ui.i
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.ui.info.LightboxInfoMap
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.ui.info.LightboxInfoMetadata
 import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.ui.info.LightboxInfoPeople
-import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.ui.state.LightboxState
+import com.savvasdalkitsis.uhuruphotos.feature.lightbox.view.implementation.ui.state.SingleMediaItemState
 import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.insets.insetsBottom
 
 @Composable
 fun LightboxDetailsSheet(
-    state: LightboxState,
-    index: Int,
+    mediaItem: SingleMediaItemState,
+    showRestoreButton: Boolean,
     action: (LightboxAction) -> Unit,
 ) {
-    val mediaItem = state.media[index]
     Box(
         modifier = Modifier
             .background(MaterialTheme.colors.background)
@@ -55,7 +54,7 @@ fun LightboxDetailsSheet(
                 modifier = Modifier
                     .padding(16.dp)
             ) {
-                LightboxBottomActionBar(state, index, action)
+                LightboxBottomActionBar(mediaItem, showRestoreButton, action)
                 LightboxInfoDateTime(mediaItem)
                 LightboxInfoPeople(mediaItem, action)
                 LightboxInfoMap(mediaItem, action)

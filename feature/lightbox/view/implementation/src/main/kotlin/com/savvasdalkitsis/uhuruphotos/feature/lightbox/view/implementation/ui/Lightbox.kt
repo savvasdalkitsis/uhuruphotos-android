@@ -19,9 +19,11 @@ import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.platform.LocalDensity
@@ -48,34 +50,40 @@ internal fun Lightbox(
     LaunchedEffect(state.currentIndex) {
         pagerState.scrollToPage(state.currentIndex)
     }
-    HorizontalPager(
-        state = pagerState,
-        pageSpacing = 12.dp,
-        key = { page -> state.media.getOrNull(page)?.id?.value ?: page.toString() },
-        userScrollEnabled = true,
-    ) { index ->
-        val zoomableState = rememberZoomableState(
-            zoomSpec = ZoomSpec(maxZoomFactor = 3f)
-        )
-        val scrollState = rememberScrollState()
-        LightboxScaffold(state, index, action, zoomableState, scrollState)
 
-        val showingActionsOverlay by remember {
-            derivedStateOf {
-                scrollState.value < with(density) {
-                    48.dp.toPx()
+    val sharedTransitionFinished = remember {
+        mutableStateOf(false)
+    }
+    CompositionLocalProvider(LocalAnimatedSharedTransitionFinished provides sharedTransitionFinished) {
+        HorizontalPager(
+            state = pagerState,
+            pageSpacing = 12.dp,
+            key = { page -> state.media.getOrNull(page)?.id?.value ?: page.toString() },
+            userScrollEnabled = true,
+        ) { index ->
+            val zoomableState = rememberZoomableState(
+                zoomSpec = ZoomSpec(maxZoomFactor = 3f)
+            )
+            val scrollState = rememberScrollState()
+            LightboxScaffold(state, index, action, zoomableState, scrollState)
+
+            val showingActionsOverlay by remember {
+                derivedStateOf {
+                    scrollState.value < with(density) {
+                        48.dp.toPx()
+                    }
                 }
             }
-        }
-        LaunchedEffect(showingActionsOverlay) {
-            action(ShowActionsOverlay(showingActionsOverlay))
-        }
-        if (pagerState.settledPage == index) {
-            LightboxBackHandler(showingActionsOverlay, scrollState, zoomableState, action)
-        } else {
-            LaunchedEffect(Unit) {
-                zoomableState.resetZoom(withAnimation = false)
-                scrollState.scrollTo(0)
+            LaunchedEffect(showingActionsOverlay) {
+                action(ShowActionsOverlay(showingActionsOverlay))
+            }
+            if (pagerState.settledPage == index) {
+                LightboxBackHandler(showingActionsOverlay, scrollState, zoomableState, action)
+            } else {
+                LaunchedEffect(Unit) {
+                    zoomableState.resetZoom(withAnimation = false)
+                    scrollState.scrollTo(0)
+                }
             }
         }
     }
