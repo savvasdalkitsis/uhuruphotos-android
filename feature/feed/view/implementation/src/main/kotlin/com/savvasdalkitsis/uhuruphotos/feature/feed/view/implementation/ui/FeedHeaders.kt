@@ -26,12 +26,14 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.actions.DisableBatteryOptimizations
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.actions.EnableCloudSync
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.actions.FeedAction
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.actions.LogIn
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.actions.LogOut
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.actions.MemorySelected
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.actions.NeverAskForCloudSyncRequest
+import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.actions.NeverAskForDisablingBatteryOptimizations
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.actions.NeverAskForLocalMediaAccessPermissionRequest
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.ui.state.FeedState
 import com.savvasdalkitsis.uhuruphotos.feature.media.common.view.api.ui.state.CelState
@@ -76,6 +78,16 @@ fun FeedHeaders(
                     grantText = string.enable,
                     onAccessGranted = { action(EnableCloudSync) },
                     onNeverRemindMeAgain = { action(NeverAskForCloudSyncRequest) },
+                )
+            }
+            if (state.showBatteryOptimizationBanner) {
+                RequestBanner(
+                    modifier = Modifier.padding(4.dp),
+                    description = string.disable_battery_optimizations,
+                    warning = string.battery_optimizations_warning,
+                    grantText = string.disable,
+                    onAccessGranted = { action(DisableBatteryOptimizations) },
+                    onNeverRemindMeAgain = { action(NeverAskForDisablingBatteryOptimizations) },
                 )
             }
             if (state.showLoginBanner) {

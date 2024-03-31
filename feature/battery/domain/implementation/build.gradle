@@ -1,0 +1,17 @@
+android {
+    namespace 'com.savvasdalkitsis.uhuruphotos.feature.battery.domain.implementation'
+}
+
+dependencies {
+    implementation(
+            libs.bundles.autodagger,
+            libs.hilt,
+            project(":feature:battery:domain:api"),
+            project(":foundation:preferences:api"),
+            project(":foundation:system:api"),
+    )
+    testImplementation(
+            libs.bundles.test,
+    )
+    kapt libs.autodagger.kapt
+}

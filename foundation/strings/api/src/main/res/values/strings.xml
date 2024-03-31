@@ -363,6 +363,7 @@
     <string name="cloud_sync">Cloud backup &amp; sync</string>
     <string name="enable_cloud_sync">Enable cloud backup &amp; sync</string>
     <string name="enable">Enable</string>
+    <string name="disable">Disable</string>
     <string name="send_database">Send database with feedback</string>
     <string name="connection_to_server_lost">Connection to server lost</string>
     <string name="forget_server">Forget server</string>
@@ -397,4 +398,6 @@
     <string name="collage_shape">Shape of collage items</string>
     <string name="rectangle">Rectangle</string>
     <string name="rounded_rectangle">Rounded rectangle</string>
+    <string name="disable_battery_optimizations">Disable battery optimizations\n\nWhile battery optimizations are enabled, this app\'s background tasks like media syncing might not run properly</string>
+    <string name="battery_optimizations_warning">This might cause the app to consume more of your battery</string>
 </resources>

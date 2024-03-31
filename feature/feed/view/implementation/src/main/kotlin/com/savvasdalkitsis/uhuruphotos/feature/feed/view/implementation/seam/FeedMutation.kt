@@ -96,6 +96,10 @@ sealed class FeedMutation(
         it.copy(showLoginBanner = show)
     })
 
+    data class ShowBatteryOptimizationBanner(val show: Boolean) : FeedMutation({
+        it.copy(showBatteryOptimizationBanner = show)
+    })
+
     data class ShowLocalMediaSyncRunning(val running: Boolean) : FeedMutation({
         it.copy(localMediaSyncRunning = running)
     })

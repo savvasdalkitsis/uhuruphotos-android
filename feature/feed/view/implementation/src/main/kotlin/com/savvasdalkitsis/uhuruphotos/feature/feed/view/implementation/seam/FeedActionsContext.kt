@@ -18,6 +18,7 @@ package com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam
 import com.savvasdalkitsis.uhuruphotos.feature.auth.domain.api.usecase.AuthenticationLoginUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.auth.domain.api.usecase.ServerUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.avatar.domain.api.usecase.AvatarUseCase
+import com.savvasdalkitsis.uhuruphotos.feature.battery.domain.api.usecase.BatteryUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.feed.domain.api.usecase.FeedUseCase
 import com.savvasdalkitsis.uhuruphotos.feature.feed.domain.api.worker.FeedWorkScheduler
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.SelectionList
@@ -67,6 +68,7 @@ internal class FeedActionsContext @Inject constructor(
     val syncUseCase: SyncUseCase,
     val authenticationLoginUseCase: AuthenticationLoginUseCase,
     val serverUseCase: ServerUseCase,
+    val batteryUseCase: BatteryUseCase,
 ) {
     suspend fun CelState.deselect() {
         selectionList.deselect(mediaItem.id)

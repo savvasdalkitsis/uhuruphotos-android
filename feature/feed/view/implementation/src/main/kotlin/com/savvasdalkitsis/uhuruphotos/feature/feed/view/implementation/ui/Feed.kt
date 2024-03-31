@@ -108,6 +108,7 @@ private fun Feed(
                     || state.localMediaSyncRunning
                     || state.showRequestForCloudSync
                     || state.showLoginBanner
+                    || state.showBatteryOptimizationBanner
         }
     }
 

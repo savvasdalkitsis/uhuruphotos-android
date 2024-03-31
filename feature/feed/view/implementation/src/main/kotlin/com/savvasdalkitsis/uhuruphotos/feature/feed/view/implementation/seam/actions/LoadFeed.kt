@@ -16,6 +16,7 @@ limitations under the License.
 package com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.actions
 
 import com.savvasdalkitsis.uhuruphotos.feature.avatar.view.api.ui.state.SyncState
+import com.savvasdalkitsis.uhuruphotos.feature.battery.domain.api.model.BatteryOptimizationStatus.BATTERY_OPTIMIZED
 import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.Cluster
 import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.PredefinedCollageDisplay
 import com.savvasdalkitsis.uhuruphotos.feature.collage.view.api.ui.state.toCluster
@@ -25,6 +26,7 @@ import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.Fee
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.FeedMutation.HideLocalStoragePermissionRequest
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.FeedMutation.HideMemories
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.FeedMutation.Loading
+import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.FeedMutation.ShowBatteryOptimizationBanner
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.FeedMutation.ShowCloudSyncRequest
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.FeedMutation.ShowClusters
 import com.savvasdalkitsis.uhuruphotos.feature.feed.view.implementation.seam.FeedMutation.ShowLocalMediaSyncRunning
@@ -65,7 +67,13 @@ data object LoadFeed : FeedAction() {
         changeItemSyncDisplay(),
         setAutoHideNav(),
         lostServerConnection(),
+        checkBatterOptimizations(),
     )
+
+    private fun FeedActionsContext.checkBatterOptimizations() =
+        batteryUseCase.observerBatteryOptimizationStatus().distinctUntilChanged().map {
+            ShowBatteryOptimizationBanner(it == BATTERY_OPTIMIZED)
+        }
 
     private fun FeedActionsContext.lostServerConnection() =
         welcomeUseCase.observeWelcomeStatus().map {

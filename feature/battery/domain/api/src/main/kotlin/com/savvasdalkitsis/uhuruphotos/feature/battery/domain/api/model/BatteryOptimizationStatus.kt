@@ -1,5 +1,5 @@
 /*
-Copyright 2022 Savvas Dalkitsis
+Copyright 2024 Savvas Dalkitsis
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -13,11 +13,8 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
  */
-package com.savvasdalkitsis.uhuruphotos.foundation.system.api.usecase
+package com.savvasdalkitsis.uhuruphotos.feature.battery.domain.api.model
 
-interface SystemUseCase {
-
-    fun getAvailableSystemMemoryInMb(): Int
-    fun getAvailableStorageInMb(): Int
-    fun isIgnoringBatteryOptimizations(): BatteryOptimization
+enum class BatteryOptimizationStatus {
+    BATTERY_OPTIMIZED, BATTERY_NOT_OPTIMIZED, NOT_CHECKED
 }

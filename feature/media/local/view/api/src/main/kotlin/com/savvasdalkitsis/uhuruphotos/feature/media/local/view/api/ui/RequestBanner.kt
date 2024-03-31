@@ -24,6 +24,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Button
 import androidx.compose.material.Card
+import androidx.compose.material.OutlinedButton
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -32,11 +33,13 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.savvasdalkitsis.uhuruphotos.foundation.compose.api.recomposeHighlighter
 import com.savvasdalkitsis.uhuruphotos.foundation.strings.api.R.string
+import com.savvasdalkitsis.uhuruphotos.foundation.ui.api.ui.AlertText
 
 @Composable
 fun RequestBanner(
     modifier: Modifier = Modifier,
     @StringRes description: Int,
+    @StringRes warning: Int? = null,
     @StringRes grantText: Int = string.grant_permissions,
     onAccessGranted: () -> Unit,
     onNeverRemindMeAgain: () -> Unit,
@@ -44,6 +47,7 @@ fun RequestBanner(
     RequestBanner(
         modifier = modifier,
         description = description,
+        warning = warning,
         grantButton = {
             Button(
                 modifier = Modifier
@@ -56,7 +60,7 @@ fun RequestBanner(
             }
         },
         denyButton = {
-            Button(
+            OutlinedButton(
                 modifier = Modifier
                     .recomposeHighlighter()
                     .fillMaxWidth()
@@ -75,6 +79,7 @@ fun RequestBanner(
 fun RequestBanner(
     modifier: Modifier = Modifier,
     @StringRes description: Int,
+    @StringRes warning: Int? = null,
     grantButton: @Composable() (RowScope.() -> Unit),
     denyButton: @Composable() (RowScope.() -> Unit),
 ){
@@ -96,14 +101,17 @@ fun RequestBanner(
                 text = stringResource(description),
                 textAlign = TextAlign.Center,
             )
+            if (warning != null) {
+                AlertText(text = stringResource(warning))
+            }
             Row(
                 modifier = Modifier
                     .recomposeHighlighter()
                     .padding(8.dp),
                 horizontalArrangement = Arrangement.spacedBy(8.dp),
             ) {
-                grantButton()
                 denyButton()
+                grantButton()
             }
         }
     }

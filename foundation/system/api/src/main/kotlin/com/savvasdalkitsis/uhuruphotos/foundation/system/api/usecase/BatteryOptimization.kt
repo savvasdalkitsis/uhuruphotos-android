@@ -1,5 +1,5 @@
 /*
-Copyright 2022 Savvas Dalkitsis
+Copyright 2024 Savvas Dalkitsis
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -15,9 +15,7 @@ limitations under the License.
  */
 package com.savvasdalkitsis.uhuruphotos.foundation.system.api.usecase
 
-interface SystemUseCase {
-
-    fun getAvailableSystemMemoryInMb(): Int
-    fun getAvailableStorageInMb(): Int
-    fun isIgnoringBatteryOptimizations(): BatteryOptimization
+sealed class BatteryOptimization {
+    data object NotSupported : BatteryOptimization()
+    data class Supported(val isOptimized: Boolean) : BatteryOptimization()
 }

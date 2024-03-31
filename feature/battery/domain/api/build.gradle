@@ -1,0 +1,9 @@
+android {
+    namespace 'com.savvasdalkitsis.uhuruphotos.feature.battery.domain.api'
+}
+
+dependencies {
+    api(
+            libs.kotlinx.coroutines
+    )
+}

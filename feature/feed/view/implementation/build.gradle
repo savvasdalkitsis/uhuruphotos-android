@@ -25,6 +25,7 @@ dependencies {
             project(":feature:account:view:api"),
             project(":feature:avatar:domain:api"),
             project(":feature:avatar:view:api"),
+            project(":feature:battery:domain:api"),
             project(":feature:collage:view:api"),
             project(":feature:download:domain:api"),
             project(":feature:feed:domain:api"),

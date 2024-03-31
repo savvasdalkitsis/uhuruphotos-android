@@ -18,5 +18,6 @@ dependencies {
             project(":feature:media:common:domain:api"),
             project(":foundation:compose:api"),
             project(":foundation:strings:api"),
+            project(":foundation:ui:api"),
     )
 }
