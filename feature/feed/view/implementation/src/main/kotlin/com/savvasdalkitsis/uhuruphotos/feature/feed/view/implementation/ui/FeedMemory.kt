@@ -153,7 +153,7 @@ private fun FeedMemoryPreview() {
                     mediaHash = MediaItemHash.fromRemoteMediaHash("hash", 0),
                 )
             )),
-        ), { _, _ -> }, {})
+        ), onMemorySelected = { _, _ -> }, onScrollToMemory = {})
     }
 
 }

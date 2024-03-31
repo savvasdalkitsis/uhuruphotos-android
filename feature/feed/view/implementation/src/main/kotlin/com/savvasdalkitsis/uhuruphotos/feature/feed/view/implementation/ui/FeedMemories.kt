@@ -65,7 +65,11 @@ internal fun FeedMemories(
         ) {
             Spacer(modifier = Modifier.width(0.dp))
             for (memory in memories) {
-                FeedMemory(memory, onMemorySelected, onScrollToMemory)
+                FeedMemory(
+                    memory = memory,
+                    onMemorySelected = onMemorySelected,
+                    onScrollToMemory = onScrollToMemory
+                )
             }
             Spacer(modifier = Modifier.width(0.dp))
         }
