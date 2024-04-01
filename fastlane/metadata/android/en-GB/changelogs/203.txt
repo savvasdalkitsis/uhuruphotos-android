@@ -1,0 +1,3 @@
+* Removing flickering between lightbox navigations
+* Banner to disable battery optimizations to make background work more reliable
+* Small fixes with shared element transition
