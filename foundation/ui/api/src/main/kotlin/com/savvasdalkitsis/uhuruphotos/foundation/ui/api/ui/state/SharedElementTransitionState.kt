@@ -48,14 +48,11 @@ class SharedElementTransitionState(
         elementBounds.value = layoutCoordinates
             .boundsInRoot()
             .let {
-                if (it.top == 0f) { // might be offscreen on top
-                    it.copy(
-                        top = it.bottom - it.width / aspectRatio
-                    )
-                } else { // might be offscreen on bottom
-                    it.copy(
-                        bottom = it.top + it.width / aspectRatio
-                    )
+                when (it.top) {
+                    // might be offscreen on top
+                    0f -> it.copy(top = it.bottom - it.width / aspectRatio)
+                    // might be offscreen on bottom
+                    else -> it.copy(bottom = it.top + it.width / aspectRatio)
                 }
             }
     }
@@ -67,6 +64,12 @@ class SharedElementTransitionState(
             sharedElementContent.value = contentUrl
             action()
         }
+    }
+
+    fun clearElementTransition() {
+        screenshotState.bitmapState.value = null
+        sharedElement.value = null
+        sharedElementContent.value = null
     }
 }
 
