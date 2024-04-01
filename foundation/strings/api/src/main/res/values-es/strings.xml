@@ -416,4 +416,9 @@
     <string name="collage_shape">Forma de los elementos del collage</string>
     <string name="rectangle">Rectángulo</string>
     <string name="rounded_rectangle">Rectángulo redondeado</string>
+    <string name="disable">Desactivar</string>
+    <string name="disable_battery_optimizations">Desactivar las optimizaciones de batería
+\n
+\nSi las optimizaciones de batería están activadas, es posible que las tareas en segundo plano de esta aplicación, como la sincronización multimedia, no se ejecuten correctamente</string>
+    <string name="battery_optimizations_warning">Esto puede hacer que la aplicación consuma más batería</string>
 </resources>
